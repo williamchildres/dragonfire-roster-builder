@@ -35,7 +35,11 @@ For Commands, Traits, Habits, affinities, stats, effect tags, observations, or m
 
 Identify whether the data is a Command, Trait, or Habit. Preserve exact wording, then add structured schedules and effects. Use multiple schedules when an ability has multiple independent timings.
 
+Use repeated-attempt fields for independent rolls, repeat fields for once-if-any or once-per-match behavior, stack fields for maximum stack and duration data, and conditional multipliers only when the multiplier itself is verified. If only a Level 1 multiplied value is visible, record that value as directly verified and mark later derived values as calculated.
+
 For Habit data, record unlock Star Rank separately from Habit Level. Habit Level must be null or 0-5.
+
+For Command augmentations granted by Habits, keep the base Command intact and attach the added schedules or effects through `augmentations`.
 
 ## Formation Data
 
@@ -48,5 +52,13 @@ Canonical formulas are unknown unless directly sourced. Account-specific observa
 ## Affinity And Matchups
 
 Dragon affinity and troop-type matchup rules are separate systems. Do not infer a full matchup matrix from one screenshot.
+
+## Pending Official-Site Dragons
+
+If a dragon is verified in-game but is not yet on the official public roster page, set `rosterSourceStatus` to `in-game-verified-pending-official-site`, keep `officialProfileUrl` null, and add screenshot evidence. The official roster checker will report when the dragon later appears publicly.
+
+## Screenshot Policy
+
+Screenshot records may use descriptive source labels, language, capture date, submitter, and manual-review status. Do not commit screenshots, copied game artwork, logos, or private account details unless the repository owner explicitly approves a public asset policy.
 
 Unknown values should stay unknown until evidence is reviewed.

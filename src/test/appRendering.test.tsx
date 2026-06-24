@@ -9,10 +9,10 @@ describe('Dragonfire Roster Lab app', () => {
     render(<App />);
 
     await user.click(screen.getByRole('button', { name: /dragon database/i }));
-    expect(screen.getByText(/showing 28 of 28 dragons/i)).toBeInTheDocument();
+    expect(screen.getByText(/showing 30 of 30 dragons/i)).toBeInTheDocument();
 
     await user.type(screen.getByLabelText(/search by name/i), 'Syrax');
-    expect(screen.getByText(/showing 1 of 28 dragons/i)).toBeInTheDocument();
+    expect(screen.getByText(/showing 1 of 30 dragons/i)).toBeInTheDocument();
     expect(screen.getByRole('heading', { name: 'Syrax' })).toBeInTheDocument();
   });
 

@@ -3,38 +3,41 @@ import { readFile } from 'node:fs/promises';
 import { fileURLToPath } from 'node:url';
 
 const OFFICIAL_URL = 'https://gotdragonfire.com/dragons/';
-const USER_AGENT = 'dragonfire-roster-builder/0.1.0 (+https://github.com/USERNAME/dragonfire-roster-builder)';
+const USER_AGENT =
+  'dragonfire-roster-builder/0.3.0 (+https://github.com/williamchildres/dragonfire-roster-builder)';
 
 const localRoster = [
-  ['Syrax', 'Legendary', 'Sentinel'],
-  ['Vhagar', 'Legendary', 'Warrior'],
-  ['Caraxes', 'Legendary', 'Hunter'],
-  ['Seasmoke', 'Legendary', 'Champion'],
-  ['Solstryker', 'Rare', 'Champion'],
-  ['Crimson', 'Legendary', 'Hunter'],
-  ['Kalspire', 'Legendary', 'Champion'],
-  ['Malachite', 'Legendary', 'Sentinel'],
-  ['Venator', 'Legendary', 'Warrior'],
-  ['Daemoros', 'Epic', 'Warrior'],
-  ['Feskar', 'Epic', 'Champion'],
-  ['Rhysarion', 'Epic', 'Champion'],
-  ['Shadowsong', 'Epic', 'Hunter'],
-  ['Tashix', 'Epic', 'Hunter'],
-  ['Vaeldra', 'Epic', 'Warrior'],
-  ['Velar', 'Epic', 'Sentinel'],
-  ['Zivern', 'Epic', 'Sentinel'],
-  ['Antares', 'Rare', 'Hunter'],
-  ['Shimmer', 'Rare', 'Sentinel'],
-  ['Jagadrix', 'Rare', 'Hunter'],
-  ['Bevlorin', 'Rare', 'Champion'],
-  ['Shadowrend', 'Rare', 'Warrior'],
-  ['Thunderstrike', 'Rare', 'Warrior'],
-  ['Vesper', 'Rare', 'Sentinel'],
-  ['Arulix', 'Rare', 'Champion'],
-  ['Nyrena', 'Rare', 'Champion'],
-  ['Dawnseeker', 'Rare', 'Sentinel'],
-  ['Arrax', 'Rare', 'Warrior'],
-].map(([name, rarity, breed]) => ({ name, rarity, breed }));
+  ['Syrax', 'Legendary', 'Sentinel', 'official-website'],
+  ['Vhagar', 'Legendary', 'Warrior', 'official-website'],
+  ['Caraxes', 'Legendary', 'Hunter', 'official-website'],
+  ['Seasmoke', 'Legendary', 'Champion', 'official-website'],
+  ['Solstryker', 'Rare', 'Champion', 'official-website'],
+  ['Crimson', 'Legendary', 'Hunter', 'official-website'],
+  ['Kalspire', 'Legendary', 'Champion', 'official-website'],
+  ['Malachite', 'Legendary', 'Sentinel', 'official-website'],
+  ['Venator', 'Legendary', 'Warrior', 'official-website'],
+  ['Daemoros', 'Epic', 'Warrior', 'official-website'],
+  ['Feskar', 'Epic', 'Champion', 'official-website'],
+  ['Rhysarion', 'Epic', 'Champion', 'official-website'],
+  ['Shadowsong', 'Epic', 'Hunter', 'official-website'],
+  ['Tashix', 'Epic', 'Hunter', 'official-website'],
+  ['Vaeldra', 'Epic', 'Warrior', 'official-website'],
+  ['Velar', 'Epic', 'Sentinel', 'official-website'],
+  ['Zivern', 'Epic', 'Sentinel', 'official-website'],
+  ['Antares', 'Rare', 'Hunter', 'official-website'],
+  ['Shimmer', 'Rare', 'Sentinel', 'official-website'],
+  ['Jagadrix', 'Rare', 'Hunter', 'official-website'],
+  ['Bevlorin', 'Rare', 'Champion', 'official-website'],
+  ['Shadowrend', 'Rare', 'Warrior', 'official-website'],
+  ['Thunderstrike', 'Rare', 'Warrior', 'official-website'],
+  ['Vesper', 'Rare', 'Sentinel', 'official-website'],
+  ['Arulix', 'Rare', 'Champion', 'official-website'],
+  ['Nyrena', 'Rare', 'Champion', 'official-website'],
+  ['Dawnseeker', 'Rare', 'Sentinel', 'official-website'],
+  ['Arrax', 'Rare', 'Warrior', 'official-website'],
+  ['Sheepstealer', 'Legendary', 'Hunter', 'in-game-verified-pending-official-site'],
+  ['Vermax', 'Epic', 'Warrior', 'in-game-verified-pending-official-site'],
+].map(([name, rarity, breed, rosterSourceStatus]) => ({ name, rarity, breed, rosterSourceStatus }));
 
 export function parseOfficialRoster(html) {
   const names = [...html.matchAll(/\/dragons\/([a-z0-9-]+)\/["']/gi)].map((match) =>
@@ -54,10 +57,17 @@ export function parseOfficialRoster(html) {
 }
 
 export function compareRosters(local, official) {
-  const localByName = new Map(local.map((dragon) => [dragon.name, dragon]));
+  const officialWebsiteLocal = local.filter((dragon) => dragon.rosterSourceStatus === 'official-website');
+  const pendingLocal = local.filter(
+    (dragon) => dragon.rosterSourceStatus === 'in-game-verified-pending-official-site',
+  );
+  const localByName = new Map(officialWebsiteLocal.map((dragon) => [dragon.name, dragon]));
   const officialByName = new Map(official.map((dragon) => [dragon.name, dragon]));
-  const additions = official.filter((dragon) => !localByName.has(dragon.name));
-  const removals = local.filter((dragon) => !officialByName.has(dragon.name));
+  const additions = official.filter(
+    (dragon) => !localByName.has(dragon.name) && !pendingLocal.some((pending) => pending.name === dragon.name),
+  );
+  const removals = officialWebsiteLocal.filter((dragon) => !officialByName.has(dragon.name));
+  const pendingNowOfficial = pendingLocal.filter((dragon) => officialByName.has(dragon.name));
   const changes = official
     .filter((dragon) => localByName.has(dragon.name))
     .filter((dragon) => {
@@ -70,7 +80,18 @@ export function compareRosters(local, official) {
       );
     });
 
-  return { additions, removals, changes };
+  return {
+    additions,
+    removals,
+    changes,
+    pendingNowOfficial,
+    counts: {
+      knownInGame: local.length,
+      officialWebsiteLocal: officialWebsiteLocal.length,
+      pendingOfficialSite: pendingLocal.length,
+      parsedOfficial: official.length,
+    },
+  };
 }
 
 async function main() {
@@ -97,14 +118,18 @@ async function main() {
   }
 
   const diff = compareRosters(localRoster, parsed);
-  if (diff.additions.length || diff.removals.length || diff.changes.length) {
+  if (diff.additions.length || diff.removals.length || diff.changes.length || diff.pendingNowOfficial.length) {
     console.error('Official roster differences were found.');
     console.error(JSON.stringify(diff, null, 2));
     process.exitCode = 1;
     return;
   }
 
-  console.log(`Official roster check passed for ${parsed.length} parsed dragons.`);
+  console.log(
+    `Official roster check passed for ${parsed.length} parsed official dragons. ` +
+      `Known in-game: ${diff.counts.knownInGame}; official-site local: ${diff.counts.officialWebsiteLocal}; ` +
+      `pending official site: ${diff.counts.pendingOfficialSite}.`,
+  );
 }
 
 async function fetchHtml() {

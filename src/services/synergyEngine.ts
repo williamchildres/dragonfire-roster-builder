@@ -41,8 +41,8 @@ export function analyzeFormation(
     .map((entry) => entry.dragon)
     .filter((dragon): dragon is Dragon => Boolean(dragon));
   const missingData = findMissingData(team);
-  const positives = findEffectInteractions(team, rules);
-  const conflicts = findTeamConflicts(team, rules);
+  const positives = [...findEffectInteractions(team, rules), ...findFormationInteractions(formationEntries)];
+  const conflicts = [...findTeamConflicts(team, rules), ...findFormationConflicts(formationEntries)];
   const positionRequirements = findPositionRequirements(formationEntries);
   const unmetRequirements = positionRequirements.filter((item) => item.ruleId.startsWith('unmet-'));
   const confidence = calculateDataConfidence(team);
@@ -56,6 +56,10 @@ export function analyzeFormation(
     warnings.push(
       'Synergy analysis is unavailable because one or more selected dragons do not yet have verified Command, Habit, affinity, or effect-tag data.',
     );
+  }
+
+  if (team.some((dragon) => dragon.id === 'sheepstealer')) {
+    warnings.push('Sheepstealer Stolen Flock has a non-player food-tile schedule; PvP behavior remains separate.');
   }
 
   const score = confidence === 'none' || missingData.length > 0 ? null : Math.max(0, positives.length * 20 - conflicts.length * 15);
@@ -208,6 +212,113 @@ function findPositionRequirements(
         'Lightning Strike needs 1 other Ally within adjacency, but the exact adjacency graph is not independently confirmed.',
       confidence: 'low',
     });
+  }
+
+  return items;
+}
+
+function findFormationConflicts(
+  formationEntries: Array<{ position: FormationPosition; dragon: Dragon | undefined }>,
+): ExplanationItem[] {
+  const entries = formationEntries.filter(
+    (entry): entry is { position: FormationPosition; dragon: Dragon } => Boolean(entry.dragon),
+  );
+  const vanguardRequired = entries.filter((entry) =>
+    [entry.dragon.command, entry.dragon.trait, ...entry.dragon.habits]
+      .filter((ability): ability is NonNullable<typeof ability> => Boolean(ability))
+      .some((ability) => ability.positionRequirement === 'vanguard'),
+  );
+
+  if (vanguardRequired.length < 2) {
+    return [];
+  }
+
+  return [
+    {
+      dragonIds: vanguardRequired.map((entry) => entry.dragon.id),
+      tags: ['VANGUARD_REQUIRED'],
+      ruleId: 'verified-vanguard-position-conflict',
+      title: 'Multiple Vanguard requirements',
+      description:
+        'More than one selected dragon has verified effects that require the exclusive Vanguard position, so at least one requirement will be unmet.',
+      confidence: 'medium',
+    },
+  ];
+}
+
+function findFormationInteractions(
+  formationEntries: Array<{ position: FormationPosition; dragon: Dragon | undefined }>,
+): ExplanationItem[] {
+  const dragonByPosition = new Map(
+    formationEntries
+      .filter((entry): entry is { position: FormationPosition; dragon: Dragon } => Boolean(entry.dragon))
+      .map((entry) => [entry.position, entry.dragon]),
+  );
+  const items: ExplanationItem[] = [];
+  const left = dragonByPosition.get('left-flank');
+  const vanguard = dragonByPosition.get('vanguard');
+  const right = dragonByPosition.get('right-flank');
+
+  if (vanguard?.id === 'malachite' && left?.tags.includes('FIRE_DAMAGE')) {
+    items.push({
+      dragonIds: ['malachite', left.id],
+      tags: ['FIRE_DAMAGE_UP', 'LEFT_FLANK_TARGET'],
+      ruleId: 'malachite-left-fire-verified',
+      title: "Sentinel's Presence supports Left Flank Fire Damage",
+      description: `${left.name} has verified Fire Damage tags and can be placed in Left Flank to benefit from Malachite's Vanguard Trait.`,
+      confidence: 'medium',
+    });
+  }
+
+  if (vanguard?.id === 'sheepstealer' && right?.tags.includes('PHYSICAL_DAMAGE')) {
+    items.push({
+      dragonIds: ['sheepstealer', right.id],
+      tags: ['PHYSICAL_DAMAGE_UP', 'RIGHT_FLANK_TARGET'],
+      ruleId: 'sheepstealer-right-physical-verified',
+      title: "Hunter's Cunning supports Right Flank Physical Damage",
+      description: `${right.name} has verified Physical Damage tags and can benefit from Sheepstealer's Right Flank Physical Damage bonus when Sheepstealer is Vanguard.`,
+      confidence: 'medium',
+    });
+  }
+
+  if (right?.id === 'vermax' && [left, vanguard].some((dragon) => dragon?.tags.includes('TACTICAL_DAMAGE'))) {
+    const tacticalAlly = [left, vanguard].find((dragon) => dragon?.tags.includes('TACTICAL_DAMAGE'));
+    if (tacticalAlly) {
+      items.push({
+        dragonIds: ['vermax', tacticalAlly.id],
+        tags: ['SPREADING_BLAZE', 'TACTICAL_DAMAGE'],
+        ruleId: 'vermax-tactical-ally-spreading-blaze',
+        title: 'Spreading Blaze can target a Tactical ally',
+        description: `${tacticalAlly.name} has verified Tactical Damage tags, making it a candidate for Vermax's Spreading Blaze stack effect.`,
+        confidence: 'medium',
+      });
+    }
+  }
+
+  if (vanguard?.id === 'malachite' && [left, right].some((dragon) => dragon?.id === 'vermax')) {
+    items.push({
+      dragonIds: ['malachite', 'vermax'],
+      tags: ['DOUBLE_STRIKE', 'ADJACENT_TARGET'],
+      ruleId: 'malachite-vermax-double-strike-condition',
+      title: 'Lightning Strike may increase Vermax Basic Attack triggers',
+      description:
+        'Malachite Lightning Strike can grant Double-Strike to one other adjacent ally, and Vermax has an after-Basic-Attack command trigger. The exact adjacency graph remains unresolved.',
+      confidence: 'low',
+    });
+  }
+
+  if (left?.id === 'seasmoke' && [vanguard, right].some((dragon) => dragon?.tags.includes('FIRE_DAMAGE'))) {
+    const fireAlly = [vanguard, right].find((dragon) => dragon?.tags.includes('FIRE_DAMAGE'));
+    if (fireAlly) {
+      items.push({
+        dragonIds: ['seasmoke', fireAlly.id],
+        tags: ['FIRE_DAMAGE_UP', 'ADJACENT_TARGET'],
+        ruleId: 'seasmoke-cunning-ferocity-fire-conditional',
+        title: 'Cunning Ferocity can support Fire Damage allies',
+        description: `${fireAlly.name} has verified Fire Damage tags, but Seasmoke's Cunning Ferocity adjacency targeting needs the exact adjacency graph confirmed.`,
+        confidence: 'low',
+      });
+    }
   }
 
   return items;
