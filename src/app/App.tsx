@@ -40,6 +40,12 @@ import {
   type VerificationStatus,
 } from '../models/dragon';
 import type { SynergyTrace, TraceConfidence, TraceStatus } from '../models/synergy';
+import {
+  buildCapabilityMatrix,
+  deriveDragonEffectProfiles,
+  deriveModifierCapabilities,
+  deriveOutputCapabilities,
+} from '../services/effectCapabilities';
 import { THRESHOLD_BOUNDARY_NOTE } from '../services/formationRules';
 import { analyzeFormation, findAffinityCoverage, findBreedDistribution } from '../services/synergyEngine';
 import {
@@ -976,6 +982,14 @@ function TraceCard({ trace }: { trace: SynergyTrace }) {
           <dd>{trace.providedEffectType ?? unknown}</dd>
         </div>
         <div>
+          <dt>Channel</dt>
+          <dd>{trace.channel ? formatToken(trace.channel) : unknown}</dd>
+        </div>
+        <div>
+          <dt>Match kind</dt>
+          <dd>{trace.matchKind ? formatToken(trace.matchKind) : unknown}</dd>
+        </div>
+        <div>
           <dt>Recipient-side modifier</dt>
           <dd>
             {trace.recipientModifierType
@@ -1012,6 +1026,14 @@ function TraceCard({ trace }: { trace: SynergyTrace }) {
         ))}
       </ul>
       <TraceList title="Matched effect tags and facts" items={trace.matchedFacts} />
+      <TraceList title="Matched output capabilities" items={trace.matchedOutputCapabilityIds ?? []} />
+      <TraceList
+        title="Source-scope compatibility"
+        items={(trace.sourceScopeResults ?? []).map(
+          (match) =>
+            `${match.outputCapabilityId}: ${match.sourceScopeCompatible ? 'compatible' : 'not compatible'}; ${formatToken(match.status)}`,
+        )}
+      />
       <TraceList title="Structured effects" items={trace.effects} />
       <TraceList title="Conflicts" items={trace.conflicts} />
       <TraceList title="Assumptions" items={trace.assumptions} />
@@ -1200,6 +1222,7 @@ function DataStatusSection() {
   const pendingCount = dragons.filter(
     (dragon) => dragon.rosterSourceStatus === 'in-game-verified-pending-official-site',
   ).length;
+  const capabilityMatrix = buildCapabilityMatrix(dragons);
 
   return (
     <section aria-labelledby="status-title">
@@ -1239,6 +1262,34 @@ function DataStatusSection() {
             <span>{statusDescription(status)}</span>
           </div>
         ))}
+      </div>
+      <div className="panel readable">
+        <h3>Effect Capability Matrix</h3>
+        <p>
+          The matrix is derived from normalized output and modifier capabilities. Primary damage is
+          descriptive only; matching uses every verified capability.
+        </p>
+        <div className="table-wrap">
+          <table>
+            <caption>Reviewed dragon effect capabilities</caption>
+            <thead>
+              <tr>
+                {Object.keys(capabilityMatrix[0] ?? {}).map((column) => (
+                  <th key={column}>{column}</th>
+                ))}
+              </tr>
+            </thead>
+            <tbody>
+              {capabilityMatrix.map((row) => (
+                <tr key={row.Dragon}>
+                  {Object.entries(row).map(([column, value]) => (
+                    <td key={column}>{value}</td>
+                  ))}
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
       </div>
       <div className="table-wrap">
         <table>
@@ -1557,6 +1608,7 @@ function DragonDetailsDialog({
             <h3>Ownership</h3>
             <RosterFields dragon={dragon} rosterEntry={rosterEntry} onUpdateRoster={onUpdateRoster} />
           </section>
+          <EffectProfilePanel dragon={dragon} />
           <section className="panel wide-panel">
             <h3>Command</h3>
             {dragon.command ? (
@@ -1887,6 +1939,117 @@ function AbilityCard({
       ) : null}
     </article>
   );
+}
+
+function EffectProfilePanel({ dragon }: { dragon: Dragon }) {
+  const outputs = deriveOutputCapabilities(dragons).filter((capability) => capability.dragonId === dragon.id);
+  const modifiers = deriveModifierCapabilities(dragons).filter((capability) => capability.dragonId === dragon.id);
+  const profile = deriveDragonEffectProfiles(dragons).find((item) => item.dragonId === dragon.id);
+  const deals = [
+    ['Physical Damage', 'physical-damage'],
+    ['Tactical Damage', 'tactical-damage'],
+    ['Fire Damage', 'fire-damage'],
+    ['Recovery', 'recovery'],
+  ] as const;
+  const buffs = [
+    ['Physical Damage Dealt', 'physical-damage', 'dealt'],
+    ['Tactical Damage Dealt', 'tactical-damage', 'dealt'],
+    ['Fire Damage Dealt', 'fire-damage', 'dealt'],
+    ['Recovery Received', 'recovery', 'received'],
+  ] as const;
+
+  return (
+    <section className="panel wide-panel">
+      <h3>Effect Profile</h3>
+      <p>
+        <strong>Primary summary:</strong>{' '}
+        {profile?.primaryDamageChannel ? formatToken(profile.primaryDamageChannel) : unknown}
+        {profile ? ` (${formatToken(profile.primaryDamageChannelBasis)})` : ''}
+      </p>
+      <div className="summary-layout compact">
+        <div>
+          <h4>Deals</h4>
+          <ul className="plain-list">
+            {deals.map(([label, channel]) => {
+              const matches = outputs.filter((capability) => capability.channel === channel);
+              return (
+                <li key={channel}>
+                  <details>
+                    <summary>
+                      <span className="badge">{label}</span>{' '}
+                      {matches.length > 0 ? capabilitySummary(matches) : 'No verified capability'}
+                    </summary>
+                    <CapabilityList items={matches} />
+                  </details>
+                </li>
+              );
+            })}
+          </ul>
+        </div>
+        <div>
+          <h4>Buffs</h4>
+          <ul className="plain-list">
+            {buffs.map(([label, channel, direction]) => {
+              const matches = modifiers.filter(
+                (capability) => capability.channel === channel && capability.direction === direction,
+              );
+              return (
+                <li key={`${channel}-${direction}`}>
+                  <details>
+                    <summary>
+                      <span className="badge">{label}</span>{' '}
+                      {matches.length > 0 ? capabilitySummary(matches) : 'No verified capability'}
+                    </summary>
+                    <CapabilityList items={matches} />
+                  </details>
+                </li>
+              );
+            })}
+          </ul>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+function CapabilityList({
+  items,
+}: {
+  items: Array<{
+    id: string;
+    abilityName: string;
+    currentlyAvailable: boolean;
+    futureAvailable: boolean;
+    conditional: boolean;
+    combatLogConfirmed: boolean;
+    confidence: string;
+  }>;
+}) {
+  if (items.length === 0) {
+    return <p>{unknown}</p>;
+  }
+  return (
+    <ul className="plain-list">
+      {items.map((item) => (
+        <li key={item.id}>
+          <strong>{item.abilityName}</strong> - {item.currentlyAvailable ? 'current' : item.futureAvailable ? 'future/locked' : 'conditional'}
+          {item.conditional ? '; conditional' : ''}
+          {item.combatLogConfirmed ? '; combat-log confirmed' : `; ${formatToken(item.confidence)}`}
+        </li>
+      ))}
+    </ul>
+  );
+}
+
+function capabilitySummary(
+  items: Array<{ currentlyAvailable: boolean; futureAvailable: boolean; conditional: boolean; abilityName: string }>,
+) {
+  const states = [
+    items.some((item) => item.currentlyAvailable) ? 'current' : null,
+    items.some((item) => item.futureAvailable) ? 'future' : null,
+    items.some((item) => item.conditional) ? 'conditional' : null,
+  ].filter(Boolean);
+  return `${states.join(', ') || 'verified'}: ${[...new Set(items.map((item) => item.abilityName))].join(', ')}`;
 }
 
 function ObservationPanel({ dragon }: { dragon: Dragon }) {

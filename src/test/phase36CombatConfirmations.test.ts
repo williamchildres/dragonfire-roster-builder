@@ -88,7 +88,7 @@ describe('Phase 3.6 combat-log confirmations', () => {
   it('traces Malachite Recovery provider and Sheepstealer Recovery Received amplification', () => {
     const formation = { 'left-flank': 'malachite', vanguard: 'sheepstealer', 'right-flank': 'vermax' };
     const traces = analyzeFormationTraces(formation, dragons);
-    const recoveryTrace = traces.find((trace) => trace.ruleId === 'recipient-recovery-amplification')!;
+    const recoveryTrace = traces.find((trace) => trace.matchKind === 'incoming-effect-amplification')!;
     const malachiteTrait = traces.find((trace) => trace.id === 'vanguard-requirement-malachite')!;
     const result = analyzeFormation(formation, dragons, defaultSynergyRules);
 
@@ -114,16 +114,16 @@ describe('Phase 3.6 combat-log confirmations', () => {
     expect(
       analyzeFormationTraces({ 'left-flank': 'malachite', vanguard: 'sheepstealer', 'right-flank': 'vermax' }, dragons, {
         dragonLevels: { sheepstealer: null },
-      }).find((trace) => trace.ruleId === 'recipient-recovery-amplification')?.status,
+      }).find((trace) => trace.matchKind === 'incoming-effect-amplification')?.status,
     ).toBe('unknown');
     expect(
       analyzeFormationTraces({ 'left-flank': 'malachite', vanguard: 'sheepstealer', 'right-flank': 'vermax' }, dragons, {
         dragonLevels: { sheepstealer: 15 },
-      }).find((trace) => trace.ruleId === 'recipient-recovery-amplification')?.status,
+      }).find((trace) => trace.matchKind === 'incoming-effect-amplification')?.status,
     ).toBe('inactive');
     expect(
       analyzeFormationTraces({ 'left-flank': 'malachite', vanguard: 'vermax', 'right-flank': 'sheepstealer' }, dragons)
-        .find((trace) => trace.ruleId === 'recipient-recovery-amplification')?.status,
+        .find((trace) => trace.matchKind === 'incoming-effect-amplification')?.status,
     ).toBe('inactive');
   });
 

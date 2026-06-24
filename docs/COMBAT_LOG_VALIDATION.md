@@ -91,3 +91,15 @@ Do not submit private account details, credentials, exploit instructions, copied
 - Expected interaction: Warden's Rally Recovery can target Sheepstealer, and Hunter's Cunning increases Sheepstealer Recovery Received by 20%
 - Result: confirmed from the combined Warden's Rally targeting, Hunter's Cunning review, and ally-language rules
 - Notes: Exact final Recovery cannot be calculated until the Level and Instinct Recovery formula is known
+
+### 10. Capability Framework Regression Checks
+
+- Status: active website regression suite
+- Game build: `26.6.53509`
+- Expected interaction: capability matching should explain reviewed interactions without dragon-specific pair rules or numerical scores
+- Covered formations:
+  - Malachite / Sheepstealer / Vermax validates Recovery Received amplification and Sheepstealer Physical support to Vermax
+  - Sheepstealer / Malachite / Vermax validates Malachite Fire support to Left Flank Sheepstealer and inactive Sheepstealer Vanguard support
+  - Malachite / Vermax / Seasmoke validates Vermax Tactical Damage stack eligibility for Malachite
+  - Seasmoke / Malachite / Sheepstealer validates Malachite Fire support to Left Flank Seasmoke only
+- Notes: use `npm run report:synergy` to print the current expected trace set before comparing against new combat logs

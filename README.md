@@ -16,6 +16,8 @@ Screenshot placeholder: add a production screenshot after the first GitHub Pages
 - Shareable formation URL hash that preserves positions
 - Synergy engine with structured trace output, audit export, and no unsupported numerical scores
 - Production debug view for active, inactive, potential, blocked, and unknown formation interactions, including provider-to-recipient amplification traces
+- Generic effect-capability framework for Physical Damage, Tactical Damage, Fire Damage, and Recovery matching
+- Damage capability matrix and `npm run report:synergy` review report for the currently populated combat datasets
 - Partially verified combat datasets for Malachite, Seasmoke, Sheepstealer, and Vermax
 - Manual-review records for the current screenshot-normalized datasets
 - Collection state and shard tracking for not-collected, not-hatched, and hatched dragons
@@ -42,6 +44,10 @@ Unqualified Damage Dealt modifiers apply to all qualifying damage sources unless
 
 Formation analysis can now trace provider-to-recipient amplification. For example, Malachite's Warden's Rally provides Recovery to Sheepstealer, and Sheepstealer's Hunter's Cunning increases Recovery Received while Sheepstealer is Level 16+ and deployed in Vanguard. This is a positional tradeoff, not a formation error: Malachite can provide Recovery from a flank while Sentinel's Presence is inactive outside Vanguard.
 
+Phase 3.7 adds a reusable capability framework instead of relying on one-off dragon pair checks. Dragons expose every verified output channel they can produce and every channel modifier they can provide. Outgoing amplification matches a support modifier, such as Fire Damage Dealt, to recipient outputs in the same channel. Incoming amplification matches an ally-targeted output, such as Recovery, to a recipient-side modifier, such as Recovery Received. Mixed-damage dragons are not reduced to a single tag; primary damage is only a human-readable summary.
+
+The framework honors source scope, position requirements, unlock state, user progression, and preview mode. Unqualified damage modifiers apply to all qualifying sources, while explicit exclusions such as "excluding Basic Attacks" block Basic Attack matches. Locked capabilities can appear as future or potential in preview analysis but are not active for the user's current roster.
+
 Threshold wording is interpreted literally: "above 50%" means `> 50`, and "below 50%" means `< 50`. Exactly 50% matches neither wording until combat logs confirm otherwise.
 
 Observation snapshots are account-specific and non-canonical. They may be affected by Dragon Level, Star Rank, Stronghold upgrades, faction bonuses, alliance bonuses, and other modifiers.
@@ -60,7 +66,10 @@ npm run lint
 npm run test
 npm run build
 npm run preview
+npm run report:synergy
 ```
+
+`npm run report:synergy` prints the capability matrix, output capabilities, modifier capabilities, generic amplification rules, required review formations, and unresolved framework assumptions. It is read-only and does not modify source files or localStorage.
 
 ## Official Roster Check
 
@@ -91,6 +100,7 @@ See:
 - `docs/UPDATE_PROCESS.md`
 - `docs/COMBAT_LOG_VALIDATION.md`
 - `docs/SYNERGY_AUDIT.md`
+- `docs/SYNERGY_CAPABILITY_FRAMEWORK.md`
 
 Combat data requires source evidence, field-level verification, and manual-review state when available. Screenshot evidence may be described without committing screenshots or copied game artwork to the public repository. Do not submit credentials, private information, private APIs, extracted assets, or unsourced guesses.
 
@@ -104,7 +114,7 @@ Dragonfire Roster Lab is an unofficial community project and is not affiliated w
 
 ## Project Status
 
-Version `0.4.1` confirms combat-log behavior for Vermax Warrior's Zeal, Sheepstealer Wild Hunt targeting priority, ally-language caster eligibility, and Malachite-to-Sheepstealer Recovery amplification. Local roster schema remains `3`.
+Version `0.4.2` introduces the generic effect-capability and amplification framework. Data schema is `5`; local roster schema remains `3`.
 
 ## Planned Next Steps
 

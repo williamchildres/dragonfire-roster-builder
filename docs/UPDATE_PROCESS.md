@@ -72,10 +72,20 @@ Use this process to keep roster data traceable.
 
 Use the Formation Builder debug view to inspect trace reasoning and export audit JSON. Audit exports include database version, game build, ordered formation positions, user progression context, and structured traces. Use these exports to compare website reasoning against future combat logs; do not persist generated audit matrices in localStorage.
 
+## Capability Framework Updates
+
+1. Add output capabilities only when a sourced ability or combat-log observation verifies the produced channel.
+2. Add modifier capabilities only when the target, direction, channel, source scope, value, and unlock requirements can be represented without guessing.
+3. Keep every verified output channel for mixed-damage dragons. Do not replace capability matching with a single primary damage tag.
+4. Set source scope from explicit wording when present. If wording is unqualified Damage Dealt, use all qualifying sources in the same channel; if wording excludes Basic Attacks, use non-basic attacks.
+5. Model position selectors before declaring a match active. Left Flank, Vanguard, Right Flank, self, any lane, adjacency, and eligible-ally selectors must be explicit.
+6. Mark locked or progression-gated abilities as future or potential in preview mode, not active for the user's current roster.
+7. Update `docs/SYNERGY_CAPABILITY_FRAMEWORK.md`, `npm run report:synergy`, and tests whenever a capability shape or matching rule changes.
+
 ## Official Roster Check
 
 Run `npm run check:roster` to compare official-site local records with the ordinary public roster page. Pending in-game dragons are ignored for removal/addition checks and reported separately if they appear publicly. The parser intentionally never overwrites local data. Website structure may change, so selector maintenance may be required.
 
 ## Versioning
 
-For data releases, update `databaseVersion`, `schemaVersion` when the data shape changes, package version, changelog, and tests together. Phase 3.6 uses database version `0.4.1`, data schema `4`, current documented game build `26.6.53509`, and local roster schema `3`.
+For data releases, update `databaseVersion`, `schemaVersion` when the data shape changes, package version, changelog, and tests together. Phase 3.7 uses database version `0.4.2`, data schema `5`, current documented game build `26.6.53509`, and local roster schema `3`.

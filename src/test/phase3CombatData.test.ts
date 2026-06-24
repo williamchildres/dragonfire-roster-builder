@@ -143,7 +143,8 @@ describe('Phase 3 combat data', () => {
     );
 
     expect(result.score).toBeNull();
-    expect(result.positives.map((item) => item.ruleId)).toContain('sheepstealer-right-physical-verified');
+    expect(result.positives.map((item) => item.ruleId)).toContain('outgoing-effect-amplification');
+    expect(result.positives.find((item) => item.title === 'Physical Damage Support')?.description).toContain('Basic Attack');
     expect(result.conflicts.map((item) => item.ruleId)).toContain('verified-vanguard-position-conflict');
     expect(result.unresolvedAssumptions.join(' ')).toContain('Target selection for multiple Spreading Blaze attempts');
   });

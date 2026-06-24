@@ -59,6 +59,16 @@ Formation analysis returns structured `SynergyTrace` records rather than only di
 
 Provider-to-recipient amplification is modeled without producing a score. A Recovery provider can interact with a recipient's Recovery Received modifier; the trace explains the greater benefit while leaving the exact troop-restoration amount unknown until the full Recovery formula is verified.
 
+## Effect Capabilities
+
+Data schema 5 adds normalized effect capabilities. `OutputCapability` records what a dragon can produce, such as Physical Damage, Tactical Damage, Fire Damage, or Recovery. `ModifierCapability` records channel modifiers, such as Physical Damage Dealt Up or Recovery Received Up. A dragon may have several capabilities in the same channel; do not collapse a mixed kit into one damage tag.
+
+Synergy matching uses capabilities rather than dragon names. Outgoing amplification matches a `dealt` modifier to recipient output capabilities in the same channel. Incoming amplification matches an ally or self output provider to a recipient `received` modifier in the same channel. Both paths check formation targeting, position requirements, user progression, source scope, evidence confidence, and active versus future availability.
+
+`primaryDamageChannel` is descriptive only. It may summarize a reviewed dragon for display, but it must never be used as the matching source when specific output capabilities are available.
+
+Source scopes prevent false matches. `all-qualifying-sources` can match Basic Attacks, Commands, and Habits in the same channel. `non-basic-attacks` can match Commands and Habits but not Basic Attacks. Channel mismatch always blocks a match; Fire Damage support does not apply to Tactical Damage or Physical Damage.
+
 Statuses include active, potential, inactive, blocked, unknown, and not-applicable. Locked Habits and future progression are potential when previewed, not active for the user's current roster. Numerical synergy scores remain null unless enough verified data exists for all selected dragons.
 
 ## User Roster State
