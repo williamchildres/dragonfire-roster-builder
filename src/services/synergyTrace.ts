@@ -14,6 +14,7 @@ import type {
 import {
   THRESHOLD_BOUNDARY_NOTE,
   arePositionsAdjacent,
+  resolveAllyTargets,
   resolveThreeAllyTargets,
 } from './formationRules';
 
@@ -35,6 +36,7 @@ export function analyzeFormationTraces(
   traces.push(...sheepstealerPhysicalSupportTraces(formation, dragons, options));
   traces.push(...vermaxWarriorsZealTraces(formation, dragons, options));
   traces.push(...vermaxSpreadingBlazeTraces(formation, dragons, options));
+  traces.push(...recipientAmplificationTraces(formation, dragons, options));
   traces.push(...malachiteLightningStrikeTraces(formation, dragons, options));
   traces.push(...vanguardConflictTraces(formation, dragons));
   traces.push(...vanguardRequirementTraces(formation, dragons, options));
@@ -273,6 +275,104 @@ function vermaxSpreadingBlazeTraces(
       potentialWhenLocked: true,
     }),
   ];
+}
+
+function recipientAmplificationTraces(
+  formation: FormationAnalysisInput,
+  dragons: Dragon[],
+  options: TraceOptions,
+): SynergyTrace[] {
+  const traces: SynergyTrace[] = [];
+  for (const sourcePosition of FORMATION_POSITIONS) {
+    const provider = findDragon(formation[sourcePosition], dragons);
+    if (!provider) {
+      continue;
+    }
+    for (const providerAbility of allAbilities(provider)) {
+      const recoveryEffects = providerAbility.schedules.flatMap((schedule) =>
+        schedule.effects.filter((effect) => effect.type === 'Recovery'),
+      );
+      for (const recoveryEffect of recoveryEffects) {
+        const targets = resolveAllyTargets(formation, sourcePosition, recoveryEffect);
+        for (const target of targets) {
+          const recipient = findDragon(target.dragonId, dragons);
+          if (!recipient) {
+            continue;
+          }
+          const recipientModifier = allAbilities(recipient).find((ability) =>
+            ability.schedules.some((schedule) =>
+              schedule.effects.some((effect) => effect.type === 'Recovery Received Up'),
+            ),
+          );
+          if (!recipientModifier) {
+            continue;
+          }
+          const modifierEffect = recipientModifier.schedules
+            .flatMap((schedule) => schedule.effects)
+            .find((effect) => effect.type === 'Recovery Received Up');
+          const requirements = [
+            selectedRequirement(provider.id, formation, providerAbility.evidenceIds),
+            selectedRequirement(recipient.id, formation, recipientModifier.evidenceIds),
+            {
+              id: `${providerAbility.id}-provides-recovery`,
+              label: 'Provider effect',
+              expected: 'Recovery',
+              actual: recoveryEffect.type,
+              satisfied: true,
+              evidenceIds: providerAbility.evidenceIds,
+              notes: [`Target scope: ${recoveryEffect.target}, ${recoveryEffect.targetScope}.`],
+            },
+            {
+              id: `${recipient.id}-is-recovery-target`,
+              label: 'Recipient targeted by Recovery',
+              expected: `${recipient.name} is eligible for ${recoveryEffect.target}`,
+              actual: `${recipient.name} in ${formatPosition(target.position)}`,
+              satisfied: true,
+              evidenceIds: providerAbility.evidenceIds,
+              notes: ['Plain Allies wording allows caster eligibility when spatial targeting permits it.'],
+            },
+            ...abilityProgressionRequirements(recipient, recipientModifier, options),
+          ];
+          if (recipientModifier.positionRequirement) {
+            requirements.push(positionRequirement(recipient.id, formation, recipientModifier.positionRequirement, recipientModifier.evidenceIds));
+          }
+          traces.push(makeTrace({
+            id: `${provider.id}-${providerAbility.id}-recovery-amplified-by-${recipient.id}-${recipientModifier.id}`,
+            ruleId: 'recipient-recovery-amplification',
+            source: provider,
+            sourceAbility: providerAbility,
+            recipient,
+            recipientAbility: recipientModifier,
+            title: `${recipient.name} amplifies ${provider.name} Recovery`,
+            explanation:
+              `${recipient.name} receives enhanced Recovery from ${providerAbility.name}. ${recipientModifier.name} increases ${recipient.name}'s Recovery Received while its requirements are met.`,
+            requirements,
+            matchedFacts: [
+              `${providerAbility.name} provides Recovery.`,
+              `${recipientModifier.name} provides Recovery Received +${modifierEffect?.magnitude ?? 'unknown'}%.`,
+            ],
+            effects: [
+              `Provided effect: Recovery`,
+              `Recipient-side modifier: Recovery Received +${modifierEffect?.magnitude ?? 'unknown'}%`,
+            ],
+            assumptions: [],
+            unresolvedQuestions: ['Exact final Recovery amount is unknown because the full Level and Instinct Recovery formula is not known.'],
+            potentialWhenLocked: options.previewMaxRankInteractions,
+            forcedConfidence: provider.id === 'malachite' && recipient.id === 'sheepstealer' ? 'confirmed' : undefined,
+            combatLogConfirmed: provider.id === 'malachite' && recipient.id === 'sheepstealer',
+            providedEffectType: 'Recovery',
+            recipientModifierType: 'Recovery Received Up',
+            recipientModifierAbilityId: recipientModifier.id,
+            recipientModifierValue: modifierEffect?.magnitude ?? null,
+            exactResultKnown: false,
+            exactResultUnknownReason:
+              "Exact final Recovery cannot be calculated because the game's Level and Instinct Recovery formula is unknown.",
+          }));
+        }
+      }
+    }
+  }
+  return traces;
 }
 
 function malachiteLightningStrikeTraces(
@@ -535,6 +635,14 @@ function makeTrace({
   forcedStatus,
   potentialWhenLocked,
   extraConflicts = [],
+  forcedConfidence,
+  combatLogConfirmed = false,
+  providedEffectType = null,
+  recipientModifierType = null,
+  recipientModifierAbilityId = null,
+  recipientModifierValue = null,
+  exactResultKnown,
+  exactResultUnknownReason = null,
 }: {
   id: string;
   ruleId: string;
@@ -552,6 +660,14 @@ function makeTrace({
   forcedStatus?: TraceStatus;
   potentialWhenLocked: boolean | undefined;
   extraConflicts?: string[];
+  forcedConfidence?: SynergyTrace['confidence'];
+  combatLogConfirmed?: boolean;
+  providedEffectType?: string | null;
+  recipientModifierType?: string | null;
+  recipientModifierAbilityId?: string | null;
+  recipientModifierValue?: number | null;
+  exactResultKnown?: boolean;
+  exactResultUnknownReason?: string | null;
 }): SynergyTrace {
   const status = forcedStatus ?? inferStatus(requirements, potentialWhenLocked === true);
   const manualReviews = manualReviewRecords.filter(
@@ -565,12 +681,12 @@ function makeTrace({
     id,
     ruleId,
     status,
-    confidence:
-      hasFollowUp || unresolvedQuestions.length > 0
+    confidence: forcedConfidence ??
+      (hasFollowUp || unresolvedQuestions.length > 0
         ? 'unresolved'
         : hasProvisional
           ? 'medium'
-          : 'confirmed',
+          : 'confirmed'),
     sourceDragonId: source.id,
     sourceAbilityId: sourceAbility?.id ?? null,
     recipientDragonId: recipient?.id ?? null,
@@ -590,6 +706,13 @@ function makeTrace({
     unresolvedQuestions,
     sourceEvidenceIds: sourceAbility?.evidenceIds ?? [],
     recipientEvidenceIds: recipientAbility?.evidenceIds ?? [],
+    providedEffectType,
+    recipientModifierType,
+    recipientModifierAbilityId,
+    recipientModifierValue,
+    combatLogConfirmed,
+    exactResultKnown,
+    exactResultUnknownReason,
   };
 }
 
@@ -752,9 +875,13 @@ function findDragon(dragonId: string | null | undefined, dragons: Dragon[]): Dra
 }
 
 function findAbilityWithTag(dragon: Dragon, tag: Dragon['tags'][number]): AbilityDefinition | null {
+  return allAbilities(dragon)
+    .find((ability) => ability.tags.includes(tag)) ?? null;
+}
+
+function allAbilities(dragon: Dragon): AbilityDefinition[] {
   return [dragon.command, dragon.trait, ...dragon.habits]
     .filter((ability): ability is AbilityDefinition => Boolean(ability))
-    .find((ability) => ability.tags.includes(tag)) ?? null;
 }
 
 function getDragonPosition(formation: FormationAnalysisInput, dragonId: string): FormationPosition | null {

@@ -46,9 +46,12 @@ Do not submit private account details, credentials, exploit instructions, copied
 
 ### 4. Vermax Warrior's Zeal Source Scope
 
-- Status: pending
-- Current interpretation: Physical Damage increase does not apply to Basic Attacks unless verified
-- Validation goal: Confirm whether Warrior's Zeal applies to Commands and Habits only, or also to Basic Attacks
+- Status: confirmed
+- Game build: `26.6.53509`
+- Expected interaction: Warrior's Zeal increases Vermax Physical Damage Dealt from all qualifying Physical Damage sources unless explicitly restricted
+- Observed result: Combat-log observation showed Warrior's Zeal increasing Vermax Basic Attack Physical Damage
+- Evidence: `vermax-warriors-zeal-basic-attack-combat-log-2026-06-24`
+- Notes: Reviewed Dragonfire wording generally states explicitly when Basic Attacks are excluded
 
 ### 5. Stack Refresh And Expiration Behavior
 
@@ -61,3 +64,30 @@ Do not submit private account details, credentials, exploit instructions, copied
 - Status: pending
 - Current handling: Existing structured augmentation remains enabled; detailed presentation and normalization require follow-up
 - Validation goal: Confirm the exact presentation and interaction details for Infectious Wrath's augmentation of Cleansing Wrath
+
+### 7. Wild Hunt Previous-Round Recovery Priority
+
+- Status: confirmed
+- Game build: `26.6.53509`
+- Expected interaction: when no current Prey exists, Wild Hunt prioritizes an eligible enemy that received Recovery during the previous round
+- Observed result: Combat-log observation confirmed the priority during new Prey selection
+- Evidence: `sheepstealer-wild-hunt-recovery-priority-combat-log-2026-06-24`
+- Notes: This does not replace the requirement that no current Prey exists
+
+### 8. Ally Language Caster Eligibility
+
+- Status: confirmed
+- Game build: `26.6.53509`
+- Expected interaction: "Other Ally" and "Other Allies" exclude caster; plain "Ally" and "Allies" allow caster eligibility when otherwise eligible
+- Observed result: repeated manual ability-text review confirmed the wording convention
+- Evidence: `ally-targeting-language-review-2026-06-24`
+- Notes: Spatial targeting still applies; a caster is not adjacent to itself
+
+### 9. Malachite To Sheepstealer Recovery Amplification
+
+- Status: confirmed reasoning example
+- Game build: `26.6.53509`
+- Formation positions: Malachite selected, Sheepstealer deployed in Vanguard
+- Expected interaction: Warden's Rally Recovery can target Sheepstealer, and Hunter's Cunning increases Sheepstealer Recovery Received by 20%
+- Result: confirmed from the combined Warden's Rally targeting, Hunter's Cunning review, and ally-language rules
+- Notes: Exact final Recovery cannot be calculated until the Level and Instinct Recovery formula is known

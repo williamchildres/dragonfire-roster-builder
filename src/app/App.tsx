@@ -558,6 +558,9 @@ function FormationBuilderSection({
   const [auditAbilityFilter, setAuditAbilityFilter] = useState('all');
   const [auditStatusFilter, setAuditStatusFilter] = useState<TraceStatus | 'all'>('all');
   const [auditConfidenceFilter, setAuditConfidenceFilter] = useState<TraceConfidence | 'all'>('all');
+  const [providerEffectFilter, setProviderEffectFilter] = useState('all');
+  const [recipientAmplifierFilter, setRecipientAmplifierFilter] = useState('all');
+  const [combatLogFilter, setCombatLogFilter] = useState<'all' | 'confirmed'>('all');
   const [auditExpanded, setAuditExpanded] = useState(false);
   const selectableDragons = dragons.filter((dragon) => includeUnowned || roster[dragon.id]?.owned);
   const selectedDragons = FORMATION_POSITIONS.map((position) => formation[position])
@@ -566,9 +569,17 @@ function FormationBuilderSection({
   const traceOptions = { roster, previewMaxRankInteractions: previewMaxRank };
   const synergy = analyzeFormation(formation, dragons, defaultSynergyRules);
   const traces = analyzeFormationTraces(formation, dragons, traceOptions);
+  const providerEffects = [...new Set(traces.map((trace) => trace.providedEffectType).filter((value): value is string => Boolean(value)))];
+  const recipientAmplifiers = [...new Set(traces.map((trace) => trace.recipientModifierType).filter((value): value is string => Boolean(value)))];
+  const filteredTraces = traces.filter(
+    (trace) =>
+      (providerEffectFilter === 'all' || trace.providedEffectType === providerEffectFilter) &&
+      (recipientAmplifierFilter === 'all' || trace.recipientModifierType === recipientAmplifierFilter) &&
+      (combatLogFilter === 'all' || trace.combatLogConfirmed === true),
+  );
   const visibleTraces = includeInactiveTraces
-    ? traces
-    : traces.filter((trace) => trace.status === 'active');
+    ? filteredTraces
+    : filteredTraces.filter((trace) => trace.status === 'active');
   const auditEntries = showDebug ? generateFormationAudit(dragons, traceOptions) : [];
   const filteredAuditEntries = auditEntries
     .map((entry) => ({
@@ -818,6 +829,35 @@ function FormationBuilderSection({
                 />
                 Include inactive/potential traces
               </label>
+              <label>
+                Provider effects
+                <select value={providerEffectFilter} onChange={(event) => setProviderEffectFilter(event.target.value)}>
+                  <option value="all">All provider effects</option>
+                  {providerEffects.map((effect) => (
+                    <option key={effect} value={effect}>
+                      {effect}
+                    </option>
+                  ))}
+                </select>
+              </label>
+              <label>
+                Recipient amplifiers
+                <select value={recipientAmplifierFilter} onChange={(event) => setRecipientAmplifierFilter(event.target.value)}>
+                  <option value="all">All recipient amplifiers</option>
+                  {recipientAmplifiers.map((amplifier) => (
+                    <option key={amplifier} value={amplifier}>
+                      {amplifier}
+                    </option>
+                  ))}
+                </select>
+              </label>
+              <label>
+                Combat-log confirmation
+                <select value={combatLogFilter} onChange={(event) => setCombatLogFilter(event.target.value as 'all' | 'confirmed')}>
+                  <option value="all">All traces</option>
+                  <option value="confirmed">Combat-log confirmed</option>
+                </select>
+              </label>
               <button
                 type="button"
                 className="secondary-button"
@@ -930,6 +970,32 @@ function TraceCard({ trace }: { trace: SynergyTrace }) {
         <div>
           <dt>Receiving ability or mechanic</dt>
           <dd>{recipientAbility?.name ?? trace.matchedFacts[0] ?? unknown}</dd>
+        </div>
+        <div>
+          <dt>Provider effect</dt>
+          <dd>{trace.providedEffectType ?? unknown}</dd>
+        </div>
+        <div>
+          <dt>Recipient-side modifier</dt>
+          <dd>
+            {trace.recipientModifierType
+              ? `${trace.recipientModifierType}${trace.recipientModifierValue === null || trace.recipientModifierValue === undefined ? '' : ` +${trace.recipientModifierValue}%`}`
+              : unknown}
+          </dd>
+        </div>
+        <div>
+          <dt>Combat-log confirmation</dt>
+          <dd>{trace.combatLogConfirmed ? `Confirmed in build ${databaseMetadata.currentDocumentedGameBuild}` : unknown}</dd>
+        </div>
+        <div>
+          <dt>Exact result</dt>
+          <dd>
+            {trace.exactResultKnown === true
+              ? 'Known'
+              : trace.exactResultKnown === false
+                ? trace.exactResultUnknownReason ?? 'Unknown'
+                : unknown}
+          </dd>
         </div>
       </dl>
       <p>{trace.explanation}</p>

@@ -29,7 +29,7 @@ describe('Phase 3.5 evidence and review metadata', () => {
   it('uses game build 26.6.53509 for current screenshot evidence and observations', () => {
     const screenshotEvidence = evidenceSources.filter((source) => source.type === 'in-game-screenshot');
 
-    expect(databaseMetadata.databaseVersion).toBe('0.4.0');
+    expect(databaseMetadata.databaseVersion).toBe('0.4.1');
     expect(databaseMetadata.schemaVersion).toBe(4);
     expect(databaseMetadata.currentDocumentedGameBuild).toBe(build);
     expect(screenshotEvidence.length).toBeGreaterThan(0);
@@ -46,11 +46,11 @@ describe('Phase 3.5 evidence and review metadata', () => {
           id: 'seasmoke-infectious-wrath-normalization-review-2026-06-24',
           status: 'needs-follow-up',
         }),
-        expect.objectContaining({ dragonId: 'sheepstealer', scope: 'command', status: 'provisional' }),
+        expect.objectContaining({ dragonId: 'sheepstealer', scope: 'command', status: 'confirmed' }),
         expect.objectContaining({
           dragonId: 'vermax',
           id: 'vermax-warriors-zeal-normalization-review-2026-06-24',
-          status: 'needs-follow-up',
+          status: 'confirmed',
         }),
       ]),
     );
@@ -158,7 +158,7 @@ describe('synergy trace and audit behavior', () => {
     expect(exportPayload).toMatchObject({
       format: 'dragonfire-synergy-audit',
       schemaVersion: 1,
-      databaseVersion: '0.4.0',
+      databaseVersion: '0.4.1',
       gameBuild: build,
     });
   });

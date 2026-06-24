@@ -1,5 +1,17 @@
 # Changelog
 
+## 0.4.1 - 2026-06-24
+
+- Confirmed from combat logs that Vermax Warrior's Zeal increases Vermax Basic Attack Physical Damage.
+- Normalized unqualified Damage Dealt modifiers to all qualifying sources unless wording explicitly restricts or excludes a source.
+- Kept explicit exclusions such as Malachite Forest's Instinct excluding Basic Attacks.
+- Confirmed Sheepstealer Wild Hunt prioritizes an eligible enemy that received Recovery during the previous round when selecting a new Prey.
+- Added reusable Ally versus Other Ally caster-eligibility normalization while preserving spatial targeting constraints.
+- Added recipient-amplification synergy traces for Recovery providers and Recovery Received modifiers.
+- Added the confirmed Malachite Warden's Rally to Sheepstealer Hunter's Cunning Recovery interaction.
+- Expanded the debug view with provider-effect, recipient-amplifier, and combat-log confirmation filters.
+- Kept database schema `4` and local roster schema `3`.
+
 ## 0.4.0 - 2026-06-24
 
 - Updated current screenshot evidence and observation records to game build `26.6.53509`.

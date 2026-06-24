@@ -1,4 +1,11 @@
-import { FORMATION_POSITIONS, type Dragon, type FormationPosition } from '../models/dragon';
+import {
+  FORMATION_POSITIONS,
+  type AbilityEffect,
+  type CasterEligibility,
+  type Dragon,
+  type EffectSourceScope,
+  type FormationPosition,
+} from '../models/dragon';
 import type { FormationAnalysisInput } from '../models/synergy';
 
 export const FORMATION_ADJACENCY: Record<FormationPosition, FormationPosition[]> = {
@@ -48,6 +55,66 @@ export function resolveThreeAllyTargets(
   );
 }
 
+export function inferCasterEligibility(targetText: string): CasterEligibility {
+  const normalized = targetText.toLowerCase();
+  if (/\bother\s+all(?:y|ies)\b/.test(normalized) || /\bother\s+\d*\s*all(?:y|ies)\b/.test(normalized)) {
+    return 'excluded';
+  }
+  if (/\ball(?:y|ies)\b/.test(normalized)) {
+    return 'eligible-if-targeting-allows';
+  }
+  return 'unknown';
+}
+
+export function canTargetCasterByLanguage(effect: AbilityEffect): boolean | null {
+  const eligibility = effect.casterEligibility ?? inferCasterEligibility(effect.target);
+  if (eligibility === 'included') {
+    return true;
+  }
+  if (eligibility === 'excluded') {
+    return false;
+  }
+  if (eligibility === 'eligible-if-targeting-allows') {
+    return true;
+  }
+  return null;
+}
+
+export function canTargetCasterWithScope(effect: AbilityEffect): boolean | null {
+  const languageAllowsCaster = canTargetCasterByLanguage(effect);
+  if (languageAllowsCaster === false) {
+    return false;
+  }
+  if (effect.targetScope === 'self') {
+    return true;
+  }
+  if (effect.targetScope === 'within-adjacency') {
+    return false;
+  }
+  return languageAllowsCaster;
+}
+
+export function resolveAllyTargets(
+  formation: FormationAnalysisInput,
+  sourcePosition: FormationPosition,
+  effect: AbilityEffect,
+): Array<{ position: FormationPosition; dragonId: string }> {
+  if (effect.targetScope === 'self') {
+    const dragonId = formation[sourcePosition];
+    return dragonId ? [{ position: sourcePosition, dragonId }] : [];
+  }
+  if (effect.targetScope === 'within-adjacency') {
+    return getAdjacentPositions(sourcePosition)
+      .map((position) => ({ position, dragonId: formation[position] }))
+      .filter((entry): entry is { position: FormationPosition; dragonId: string } => Boolean(entry.dragonId));
+  }
+  if (effect.casterEligibility === 'excluded' || inferCasterEligibility(effect.target) === 'excluded') {
+    return resolveOtherAllyTargets(formation, sourcePosition);
+  }
+  return FORMATION_POSITIONS.map((position) => ({ position, dragonId: formation[position] }))
+    .filter((entry): entry is { position: FormationPosition; dragonId: string } => Boolean(entry.dragonId));
+}
+
 export function resolveOtherAllyTargets(
   formation: FormationAnalysisInput,
   sourcePosition: FormationPosition,
@@ -65,4 +132,35 @@ export function isAboveThreshold(valuePercent: number, thresholdPercent: number)
 
 export function isBelowThreshold(valuePercent: number, thresholdPercent: number): boolean {
   return valuePercent < thresholdPercent;
+}
+
+export function normalizeDamageSourceScope({
+  effectType,
+  explicitSourceScope,
+  excludes = [],
+}: {
+  effectType: string;
+  explicitSourceScope?: EffectSourceScope;
+  excludes?: string[];
+}): EffectSourceScope {
+  if (explicitSourceScope && explicitSourceScope !== 'unknown') {
+    return explicitSourceScope;
+  }
+  const lowerType = effectType.toLowerCase();
+  const lowerExcludes = excludes.map((exclude) => exclude.toLowerCase());
+  if (!lowerType.includes('damage dealt') && !lowerType.includes('damage up')) {
+    return explicitSourceScope ?? 'unknown';
+  }
+  if (lowerExcludes.some((exclude) => exclude.includes('basic attack'))) {
+    return 'non-basic-attacks';
+  }
+  return 'all-sources';
+}
+
+export function sourceScopeIncludesBasicAttacks(sourceScope: EffectSourceScope): boolean {
+  return sourceScope === 'all-sources' || sourceScope === 'basic-attacks';
+}
+
+export function sourceScopeIncludesCommandsAndHabits(sourceScope: EffectSourceScope): boolean {
+  return sourceScope === 'all-sources' || sourceScope === 'commands-and-habits' || sourceScope === 'commands' || sourceScope === 'habits';
 }

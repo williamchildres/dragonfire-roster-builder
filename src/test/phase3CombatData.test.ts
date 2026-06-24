@@ -91,8 +91,8 @@ describe('Phase 3 combat data', () => {
     expect(commandSchedule.timing).toBe('after-basic-attack');
     expect(commandSchedule.repeat?.mode).toBe('once-if-any-match');
     expect(commandSchedule.effects[1]!.stack?.maximumStacks).toBe(10);
-    expect(traitPhysical.sourceScope).toBe('commands-and-habits');
-    expect(traitPhysical.notes.join(' ')).toContain('Basic Attacks');
+    expect(traitPhysical.sourceScope).toBe('all-sources');
+    expect(traitPhysical.notes.join(' ')).toContain('Basic Attack');
     expect(trial.schedules.map((schedule) => schedule.conditions?.[0]?.thresholdPercent)).toEqual([
       75,
       50,
@@ -145,6 +145,6 @@ describe('Phase 3 combat data', () => {
     expect(result.score).toBeNull();
     expect(result.positives.map((item) => item.ruleId)).toContain('sheepstealer-right-physical-verified');
     expect(result.conflicts.map((item) => item.ruleId)).toContain('verified-vanguard-position-conflict');
-    expect(result.unresolvedAssumptions.join(' ')).toContain('source-scope semantics');
+    expect(result.unresolvedAssumptions.join(' ')).toContain('Target selection for multiple Spreading Blaze attempts');
   });
 });

@@ -16,6 +16,7 @@ import type {
   EffectSourceScope,
   StackConfiguration,
   TargetPriority,
+  CasterEligibility,
 } from '../models/dragon';
 import { databaseMetadata } from './databaseMetadata';
 
@@ -185,6 +186,7 @@ const fixedEffect = ({
   calculated = false,
   targetCount = null,
   includesCaster = null,
+  casterEligibility = 'unknown',
 }: {
   id: string;
   type: string;
@@ -207,6 +209,7 @@ const fixedEffect = ({
   calculated?: boolean;
   targetCount?: number | null;
   includesCaster?: boolean | null;
+  casterEligibility?: CasterEligibility;
 }): AbilityEffect => ({
   id,
   type,
@@ -229,6 +232,7 @@ const fixedEffect = ({
   calculated,
   targetCount,
   includesCaster,
+  casterEligibility,
 });
 
 const schedule = ({
@@ -374,6 +378,7 @@ const malachiteCommand = ability({
           ],
           targetCount: 3,
           includesCaster: true,
+          casterEligibility: 'included',
         }),
       ],
     }),
@@ -490,6 +495,8 @@ const malachiteHabits = [
             durationRounds: 2,
             excludes: ['Basic Attacks'],
             rankedValues: rankedPercents([8, 9.6, 11.2, 13.6, 16]),
+            sourceScope: 'non-basic-attacks',
+            casterEligibility: 'excluded',
           }),
           fixedEffect({
             id: 'forests-instinct-tactical-reduction',
@@ -500,6 +507,7 @@ const malachiteHabits = [
             unit: 'percent',
             durationRounds: 2,
             rankedValues: rankedPercents([8, 9.6, 11.2, 13.6, 16]),
+            casterEligibility: 'excluded',
           }),
         ],
       }),
@@ -580,6 +588,7 @@ const malachiteHabits = [
             unit: 'percent',
             durationRounds: 2,
             notes: ['Advantage increases the target Damage Dealt. Magnitude is fixed in supplied table.'],
+            casterEligibility: 'excluded',
           }),
         ],
       }),
@@ -615,6 +624,7 @@ const malachiteHabits = [
             notes: ['Exact 3 Allies targeting is normalized to all three friendly dragons and includes the caster.'],
             targetCount: 3,
             includesCaster: true,
+            casterEligibility: 'included',
           }),
         ],
       }),
@@ -650,6 +660,7 @@ const malachiteHabits = [
             magnitude: null,
             unit: 'unknown',
             durationRounds: 3,
+            casterEligibility: 'excluded',
           }),
           fixedEffect({
             id: 'lightning-strike-double-strike',
@@ -659,6 +670,7 @@ const malachiteHabits = [
             magnitude: null,
             unit: 'unknown',
             durationRounds: 3,
+            casterEligibility: 'excluded',
           }),
           fixedEffect({
             id: 'lightning-strike-strength',
@@ -669,6 +681,7 @@ const malachiteHabits = [
             unit: 'percent',
             durationRounds: 3,
             scaling: ['Instinct'],
+            casterEligibility: 'excluded',
           }),
         ],
       }),
@@ -952,8 +965,8 @@ const createSeasmoke = (): Dragon => {
           timing: 'start-of-combat',
           targetPriority: 'highest-stat-ally',
           effects: [
-            fixedEffect({ id: 'clever-maneuver-intelligence', type: 'Intelligence Up', target: 'Ally with highest Intelligence', targetScope: 'any-lane', magnitude: null, unit: 'flat', rankedValues: rankedPercents([22, 26.4, 30.8, 37.4, 44]), duration: 'Until end of combat', targetPriority: 'highest-stat-ally' }),
-            fixedEffect({ id: 'clever-maneuver-initiative', type: 'Initiative Up', target: 'Ally with highest Intelligence', targetScope: 'any-lane', magnitude: null, unit: 'percent', rankedValues: rankedPercents([12.5, 15, 17.5, 21.25, 25]), duration: 'Until end of combat', targetPriority: 'highest-stat-ally' }),
+            fixedEffect({ id: 'clever-maneuver-intelligence', type: 'Intelligence Up', target: 'Ally with highest Intelligence', targetScope: 'any-lane', magnitude: null, unit: 'flat', rankedValues: rankedPercents([22, 26.4, 30.8, 37.4, 44]), duration: 'Until end of combat', targetPriority: 'highest-stat-ally', casterEligibility: 'eligible-if-targeting-allows' }),
+            fixedEffect({ id: 'clever-maneuver-initiative', type: 'Initiative Up', target: 'Ally with highest Intelligence', targetScope: 'any-lane', magnitude: null, unit: 'percent', rankedValues: rankedPercents([12.5, 15, 17.5, 21.25, 25]), duration: 'Until end of combat', targetPriority: 'highest-stat-ally', casterEligibility: 'eligible-if-targeting-allows' }),
           ],
         }),
       ],
@@ -961,7 +974,6 @@ const createSeasmoke = (): Dragon => {
       tags: ['BUFF_ALLIES', 'BUFF_INTELLIGENCE', 'BUFF_INITIATIVE'],
       verification: screenshotVerification('Seasmoke Clever Maneuver screenshot'),
       evidenceIds: ['seasmoke-clever-maneuver-2026-06-23'],
-      unresolvedQuestions: ['Whether Seasmoke can select itself as the highest Intelligence ally.'],
     }),
     ability({
       dragonId: 'seasmoke',
@@ -972,7 +984,7 @@ const createSeasmoke = (): Dragon => {
       unlockStarRank: 4,
       rawDescription: 'Start of Combat: Increase Initiative of three Allies in any lane until end of combat, enhanced by Initiative.',
       schedules: [
-        schedule({ id: 'winds-favor-start-combat', timing: 'start-of-combat', effects: [fixedEffect({ id: 'winds-favor-initiative', type: 'Initiative Up', target: '3 Allies', targetScope: 'any-lane', magnitude: null, unit: 'percent', rankedValues: rankedPercents([12.5, 15, 17.5, 21.25, 25]), duration: 'Until end of combat', scaling: ['Initiative'], notes: ['Exact 3 Allies targeting is normalized to all three friendly dragons and includes the caster.'], targetCount: 3, includesCaster: true })] }),
+        schedule({ id: 'winds-favor-start-combat', timing: 'start-of-combat', effects: [fixedEffect({ id: 'winds-favor-initiative', type: 'Initiative Up', target: '3 Allies', targetScope: 'any-lane', magnitude: null, unit: 'percent', rankedValues: rankedPercents([12.5, 15, 17.5, 21.25, 25]), duration: 'Until end of combat', scaling: ['Initiative'], notes: ['Exact 3 Allies targeting is normalized to all three friendly dragons and includes the caster.'], targetCount: 3, includesCaster: true, casterEligibility: 'included' })] }),
       ],
       powerByHabitLevel: standardLegendaryPower,
       tags: ['BUFF_ALLIES', 'BUFF_INITIATIVE'],
@@ -1004,8 +1016,8 @@ const createSeasmoke = (): Dragon => {
       rawDescription: 'Start of Combat: Increase Intelligence and Fire Damage Dealt of two Allies within adjacency until end of combat.',
       schedules: [
         schedule({ id: 'cunning-ferocity-start-combat', timing: 'start-of-combat', effects: [
-          fixedEffect({ id: 'cunning-ferocity-intelligence', type: 'Intelligence Up', target: '2 Allies', targetScope: 'within-adjacency', magnitude: null, unit: 'percent', rankedValues: rankedPercents([7.5, 9, 10.5, 12.75, 15]), scaling: ['Instinct'], duration: 'Until end of combat' }),
-          fixedEffect({ id: 'cunning-ferocity-fire', type: 'Fire Damage Dealt Up', target: '2 Allies', targetScope: 'within-adjacency', magnitude: null, unit: 'percent', rankedValues: rankedPercents([5, 6, 7, 8.5, 10]), duration: 'Until end of combat' }),
+          fixedEffect({ id: 'cunning-ferocity-intelligence', type: 'Intelligence Up', target: '2 Allies', targetScope: 'within-adjacency', magnitude: null, unit: 'percent', rankedValues: rankedPercents([7.5, 9, 10.5, 12.75, 15]), scaling: ['Instinct'], duration: 'Until end of combat', casterEligibility: 'eligible-if-targeting-allows' }),
+          fixedEffect({ id: 'cunning-ferocity-fire', type: 'Fire Damage Dealt Up', target: '2 Allies', targetScope: 'within-adjacency', magnitude: null, unit: 'percent', rankedValues: rankedPercents([5, 6, 7, 8.5, 10]), duration: 'Until end of combat', casterEligibility: 'eligible-if-targeting-allows' }),
         ] }),
       ],
       powerByHabitLevel: standardLegendaryPower,
@@ -1022,8 +1034,8 @@ const createSeasmoke = (): Dragon => {
       unlockStarRank: 10,
       rawDescription: 'Each Round: grant Advantage above 50% Troop Capacity or Resistance below 50% Troop Capacity to 2 other Allies.',
       schedules: [
-        schedule({ id: 'loyal-bond-advantage', timing: 'each-round', triggerChanceByHabitLevel: rankedPercents([10, 13, 16, 20, 25]), conditions: [aboveHalfTroopCapacity], effects: [fixedEffect({ id: 'loyal-bond-advantage-effect', type: 'Advantage', target: '2 other Allies', targetScope: 'any-lane', magnitude: 20, unit: 'percent', durationRounds: 2, conditions: [aboveHalfTroopCapacity] })] }),
-        schedule({ id: 'loyal-bond-resistance', timing: 'each-round', triggerChanceByHabitLevel: rankedPercents([10, 13, 16, 20, 25]), conditions: [belowHalfTroopCapacity], effects: [fixedEffect({ id: 'loyal-bond-resistance-effect', type: 'Resistance', target: '2 other Allies', targetScope: 'any-lane', magnitude: 20, unit: 'percent', durationRounds: 2, conditions: [belowHalfTroopCapacity], notes: ['Exact Resistance semantics unresolved.'] })] }),
+        schedule({ id: 'loyal-bond-advantage', timing: 'each-round', triggerChanceByHabitLevel: rankedPercents([10, 13, 16, 20, 25]), conditions: [aboveHalfTroopCapacity], effects: [fixedEffect({ id: 'loyal-bond-advantage-effect', type: 'Advantage', target: '2 other Allies', targetScope: 'any-lane', magnitude: 20, unit: 'percent', durationRounds: 2, conditions: [aboveHalfTroopCapacity], casterEligibility: 'excluded' })] }),
+        schedule({ id: 'loyal-bond-resistance', timing: 'each-round', triggerChanceByHabitLevel: rankedPercents([10, 13, 16, 20, 25]), conditions: [belowHalfTroopCapacity], effects: [fixedEffect({ id: 'loyal-bond-resistance-effect', type: 'Resistance', target: '2 other Allies', targetScope: 'any-lane', magnitude: 20, unit: 'percent', durationRounds: 2, conditions: [belowHalfTroopCapacity], notes: ['Exact Resistance semantics unresolved.'], casterEligibility: 'excluded' })] }),
       ],
       powerByHabitLevel: finalLegendaryPower,
       tags: ['ADVANTAGE', 'RESISTANCE', 'OTHER_ALLIES_TARGET'],
@@ -1136,6 +1148,10 @@ const createSheepstealer = (): Dragon => {
             durationRounds: 3,
             stack: stack({ statusId: 'prey', maximumStacks: 1, durationRounds: 3 }),
             targetPriority: 'prefer-received-recovery-last-round',
+            notes: [
+              'Combat-log observation confirms that new Prey selection prioritizes an eligible enemy that received Recovery during the previous round.',
+              'Priority applies only when no enemy is currently marked as Prey.',
+            ],
           }),
         ],
       }),
@@ -1161,7 +1177,11 @@ const createSheepstealer = (): Dragon => {
     ],
     tags: ['FIRE_DAMAGE', 'PREY', 'RECOVERY_RECEIVED_DOWN'],
     verification: screenshotVerification('Sheepstealer Wild Hunt summary/glossary screenshots'),
-    evidenceIds: ['sheepstealer-wild-hunt-summary-2026-06-23', 'sheepstealer-wild-hunt-glossary-2026-06-23'],
+    evidenceIds: [
+      'sheepstealer-wild-hunt-summary-2026-06-23',
+      'sheepstealer-wild-hunt-glossary-2026-06-23',
+      'sheepstealer-wild-hunt-recovery-priority-combat-log-2026-06-24',
+    ],
   });
   command.augmentations.push({
     id: 'sheepstealer-savage-claim-augmentation',
@@ -1191,7 +1211,7 @@ const createSheepstealer = (): Dragon => {
         fixedEffect({ id: 'hunters-cunning-right-physical', type: 'Physical Damage Dealt Up', target: 'Right Flank ally', targetScope: 'right-flank', magnitude: 10, unit: 'percent' }),
       ] }),
     ],
-    tags: ['VANGUARD_REQUIRED', 'FIRE_DAMAGE_UP', 'PHYSICAL_DAMAGE_UP'],
+    tags: ['VANGUARD_REQUIRED', 'RECOVERY_RECEIVED_UP', 'FIRE_DAMAGE_UP', 'PHYSICAL_DAMAGE_UP'],
     verification: screenshotVerification("Sheepstealer Hunter's Cunning screenshot"),
     evidenceIds: ['sheepstealer-hunters-cunning-2026-06-23'],
   });
@@ -1304,8 +1324,11 @@ const createVermax = (): Dragon => {
             targetScope: 'self',
             magnitude: 16,
             unit: 'percent',
-            sourceScope: 'commands-and-habits',
-            notes: ['Icon semantics are not fully documented; do not apply to Basic Attacks by default.'],
+            sourceScope: 'all-sources',
+            notes: [
+              'Combat-log observation confirms this applies to Vermax Basic Attack Physical Damage.',
+              'Unqualified Physical Damage Dealt modifiers apply to all qualifying Physical Damage sources unless explicitly restricted.',
+            ],
           }),
           fixedEffect({ id: 'warriors-zeal-left-instinct', type: 'Instinct Up', target: 'Left Flank ally', targetScope: 'left-flank', magnitude: 20, unit: 'flat' }),
           fixedEffect({ id: 'warriors-zeal-left-initiative', type: 'Initiative Up', target: 'Left Flank ally', targetScope: 'left-flank', magnitude: 20, unit: 'flat' }),
@@ -1314,8 +1337,7 @@ const createVermax = (): Dragon => {
     ],
     tags: ['VANGUARD_REQUIRED', 'PHYSICAL_DAMAGE_UP', 'INSTINCT_UP', 'BUFF_INITIATIVE'],
     verification: screenshotVerification("Vermax Warrior's Zeal screenshot"),
-    evidenceIds: ['vermax-warriors-zeal-2026-06-23'],
-    unresolvedQuestions: ['Exact Command/Habit icon source-scope semantics.'],
+    evidenceIds: ['vermax-warriors-zeal-2026-06-23', 'vermax-warriors-zeal-basic-attack-combat-log-2026-06-24'],
   });
 
   const below75 = condition('below-75-troop-capacity', 'target-below-troop-capacity-threshold', 'Below 75% Troop Capacity.', { thresholdPercent: 75, comparison: 'below' });
@@ -1352,7 +1374,7 @@ const createVermax = (): Dragon => {
     affinities: { Cavalry: 'positive', Shieldbearers: 'positive', Archers: 'unknown', Spearmen: 'unknown', Siege: 'unknown' },
     tags: [...new Set<EffectTag>([...command.tags, ...trait.tags, ...habits.flatMap((habit) => habit.tags)])],
     fieldVerification: { identity: screenshotVerification('Vermax main screen screenshot'), command: screenshotVerification('Vermax Spreading Blaze screenshots'), trait: screenshotVerification("Vermax Warrior's Zeal screenshot"), habits: screenshotVerification('Vermax Habit screenshots'), affinities: partialScreenshotVerification('Vermax main screen screenshot') },
-    unresolvedQuestions: ['Command/Habit icon source-scope semantics.', 'Target selection for multiple Spreading Blaze attempts.'],
+    unresolvedQuestions: ['Target selection for multiple Spreading Blaze attempts.'],
   };
 };
 
