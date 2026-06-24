@@ -1,6 +1,6 @@
 # Synergy Capability Framework
 
-Phase 3.7 introduces a generic capability framework for effect-channel matching. The goal is to explain formation interactions from normalized ability facts instead of writing one-off pair checks for specific dragons.
+Phase 3.7 introduced a generic capability framework for effect-channel matching. Phase 3.7.1 clarifies modifier roles, target scope, and availability context. The goal is to explain formation interactions from normalized ability facts instead of writing one-off pair checks for specific dragons.
 
 The framework currently supports four effect channels:
 
@@ -45,18 +45,38 @@ Modifier capabilities record:
 - Unlock and Dragon Level requirements
 - Conditional state and conditions
 - Evidence IDs and confidence
+- Modifier role
+
+## Modifier Roles
+
+Every modifier has one role:
+
+- `self-amplification`: changes the originating dragon's own output or stats. It is reviewable but never creates cross-dragon outgoing support.
+- `ally-support`: targets one or more friendly dragons and may create outgoing amplification traces.
+- `recipient-side-amplification`: makes the receiving dragon benefit more from an effect supplied by another dragon.
+- `enemy-debuff`: changes an enemy's received damage, stats, Recovery, or related properties. It is not direct ally support.
+
+Examples:
+
+- Stolen Flock is self Fire Damage amplification, not team Fire support.
+- Warrior's Zeal is Vermax self Physical Damage amplification, not team Physical support.
+- Rallying Flame is Vermax self Physical Damage amplification, not team Physical support.
+- Hunter's Cunning Physical Damage is ally support for the Right Flank.
+- Hunter's Cunning Recovery Received is recipient-side amplification.
+- Dragon's Cunning enemy Instinct reduction is an enemy debuff.
 
 ## Outgoing Amplification
 
-Outgoing amplification matches a provider modifier to recipient outputs.
+Outgoing amplification matches a provider ally-support modifier to recipient outputs.
 
 The rule is:
 
-1. The modifier direction is `dealt`.
-2. The recipient has one or more output capabilities in the same channel.
-3. Source scope is compatible.
-4. Provider position, recipient position, targeting, unlock, level, and Habit requirements are evaluated.
-5. Matching outputs are aggregated into one normal-view synergy card per provider modifier and recipient.
+1. The modifier role is `ally-support`.
+2. The modifier direction is `dealt`.
+3. The recipient has one or more output capabilities in the same channel.
+4. Source scope is compatible.
+5. Provider position, recipient position, targeting, unlock, level, and Habit requirements are evaluated.
+6. Matching outputs are aggregated into one normal-view synergy card per provider modifier and recipient.
 
 Examples:
 
@@ -71,7 +91,7 @@ Incoming amplification matches an ally or self output to a recipient-side receiv
 The rule is:
 
 1. The provider output targets allies or self.
-2. The recipient has a `received` modifier in the same channel.
+2. The recipient has a `recipient-side-amplification` modifier in the same channel.
 3. Provider targeting includes the recipient.
 4. Recipient modifier requirements are satisfied or marked potential/unknown.
 
@@ -125,6 +145,30 @@ Preview mode:
 
 Unknown Dragon Level produces an unknown requirement instead of silently passing.
 
+## Availability Context
+
+Capabilities carry three availability contexts:
+
+- Canonical availability: base kit versus future Star Rank, Dragon Level, or Habit Level requirements.
+- Observed-account availability: supplied screenshot observations, such as Seasmoke being not hatched.
+- User-roster availability: browser localStorage state. The website can use this in Formation Builder analysis, but the report script cannot inspect it.
+
+Reports must not use the word "current" without context. Prefer labels such as Base kit, Future at Star Rank X, observed account hatched, not hatched in observed account, and user roster unknown.
+
+## Derivation And Integrity
+
+Capabilities are derived from structured `AbilityEffect` data. The only current reviewed exception is Vermax Basic Attack Physical Damage, which is represented because combat logs confirmed Warrior's Zeal affecting it and there is not yet a full canonical Basic Attack model.
+
+Effect tags alone do not create authoritative capabilities. Integrity checks verify:
+
+- Capability IDs are unique.
+- Dragon references exist.
+- Ability-backed capability references exist.
+- Evidence IDs exist.
+- Ally-support capabilities do not target self.
+- Self-amplification and recipient-side amplification target self.
+- No capability is created from tags alone.
+
 ## Trace Aggregation
 
 One support modifier can match multiple recipient outputs. The normal Formation Builder aggregates those into one card to avoid repeated cards for the same support relationship.
@@ -137,7 +181,7 @@ Example:
 
 ## Capability Matrix
 
-The app and `npm run report:synergy` expose the current matrix for Malachite, Seasmoke, Sheepstealer, and Vermax. Each cell shows no verified capability, current capability, future capability, or conditional capability with relevant ability names.
+The app and `npm run report:synergy` expose the matrix for Malachite, Seasmoke, Sheepstealer, and Vermax. The matrix separates Outputs, Supports Allies, and Self / Recipient Modifiers. Each cell names canonical and observed-account availability rather than using ambiguous "current" terminology.
 
 ## Current Limitations
 

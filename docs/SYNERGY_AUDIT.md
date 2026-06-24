@@ -47,13 +47,17 @@ Exact final Recovery is not calculated because the complete Level and Instinct R
 
 The audit view now receives generic capability traces. Output capabilities describe what a dragon can produce in an effect channel. Modifier capabilities describe how an ability changes a channel for a provider, a recipient, or another selected ally. The current channels are Physical Damage, Tactical Damage, Fire Damage, and Recovery.
 
-Outgoing amplification traces match a support modifier with recipient outputs in the same channel. For example, Sheepstealer's Hunter's Cunning can match both Vermax Physical Basic Attack output and Vermax Spreading Blaze Physical Damage output, then aggregate them into one normal-view Physical Damage Support card.
+Outgoing amplification traces match an `ally-support` modifier with recipient outputs in the same channel. For example, Sheepstealer's Hunter's Cunning can match both Vermax Physical Basic Attack output and Vermax Spreading Blaze Physical Damage output, then aggregate them into one normal-view Physical Damage Support card.
 
-Incoming amplification traces match provider outputs to recipient-side modifiers. For example, Malachite's Warden's Rally Recovery can match Sheepstealer's Recovery Received increase. The trace explains the benefit and why the exact result is unknown.
+Self-amplification modifiers are excluded from cross-dragon outgoing support. Stolen Flock does not support another dragon's Fire Damage, Warrior's Zeal does not support another dragon's Physical Damage, and Rallying Flame does not support another dragon's Physical Damage. These self modifiers remain visible in the capability review and debug output.
 
-The debug view keeps child capability matches for review. It shows channel, source-scope compatibility, position compatibility, unlock state, evidence, confidence, and the reason each interaction is active, potential, inactive, or unknown.
+Incoming amplification traces match provider outputs to `recipient-side-amplification` modifiers. For example, Malachite's Warden's Rally Recovery can match Sheepstealer's Recovery Received increase. The trace explains the benefit and why the exact result is unknown.
 
-Run `npm run report:synergy` for a read-only capability report containing the matrix, all current output and modifier capabilities, required formation traces, duplicate warnings, missing source scopes, missing position semantics, and unresolved assumptions.
+Enemy debuffs are not direct ally support and are reserved for a separate future framework. Stat support is visible as other support, but it is not treated as direct Physical, Tactical, Fire, or Recovery amplification.
+
+The debug view keeps child capability matches for review. It shows channel, modifier role, target selector, self-only state, source-scope compatibility, position compatibility, availability context, evidence, confidence, and the reason each interaction is active, potential, inactive, or unknown.
+
+Run `npm run report:synergy` for a read-only capability report containing the revised matrix, availability context, modifier roles, generated cross-dragon synergies, excluded self modifiers, integrity checks, and unresolved assumptions.
 
 ## Threshold Interpretation
 
@@ -76,7 +80,7 @@ Audit JSON uses:
 {
   "format": "dragonfire-synergy-audit",
   "schemaVersion": 1,
-  "databaseVersion": "0.4.2",
+  "databaseVersion": "0.4.3",
   "gameBuild": "26.6.53509",
   "generatedAt": "ISO timestamp",
   "formation": {

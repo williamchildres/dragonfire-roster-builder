@@ -990,6 +990,22 @@ function TraceCard({ trace }: { trace: SynergyTrace }) {
           <dd>{trace.matchKind ? formatToken(trace.matchKind) : unknown}</dd>
         </div>
         <div>
+          <dt>Modifier role</dt>
+          <dd>{trace.modifierRole ? formatToken(trace.modifierRole) : unknown}</dd>
+        </div>
+        <div>
+          <dt>Target selector</dt>
+          <dd>{trace.targetSelectorSummary ?? unknown}</dd>
+        </div>
+        <div>
+          <dt>Self-only modifier</dt>
+          <dd>{trace.modifierSelfOnly === undefined ? unknown : trace.modifierSelfOnly ? 'Yes' : 'No'}</dd>
+        </div>
+        <div>
+          <dt>Availability context</dt>
+          <dd>{trace.availabilityContext ?? unknown}</dd>
+        </div>
+        <div>
           <dt>Recipient-side modifier</dt>
           <dd>
             {trace.recipientModifierType
@@ -1951,11 +1967,18 @@ function EffectProfilePanel({ dragon }: { dragon: Dragon }) {
     ['Fire Damage', 'fire-damage'],
     ['Recovery', 'recovery'],
   ] as const;
-  const buffs = [
-    ['Physical Damage Dealt', 'physical-damage', 'dealt'],
-    ['Tactical Damage Dealt', 'tactical-damage', 'dealt'],
-    ['Fire Damage Dealt', 'fire-damage', 'dealt'],
-    ['Recovery Received', 'recovery', 'received'],
+  const allySupport = [
+    ['Physical Damage support', 'physical-damage'],
+    ['Tactical Damage support', 'tactical-damage'],
+    ['Fire Damage support', 'fire-damage'],
+    ['Other support', 'stat'],
+  ] as const;
+  const selfAmplifiers = [
+    ['Self Physical Damage', 'physical-damage', 'dealt', 'self-amplification'],
+    ['Self Tactical Damage', 'tactical-damage', 'dealt', 'self-amplification'],
+    ['Self Fire Damage', 'fire-damage', 'dealt', 'self-amplification'],
+    ['Recovery Received', 'recovery', 'received', 'recipient-side-amplification'],
+    ['Other self modifiers', 'stat', 'dealt', 'self-amplification'],
   ] as const;
 
   return (
@@ -1987,14 +2010,38 @@ function EffectProfilePanel({ dragon }: { dragon: Dragon }) {
           </ul>
         </div>
         <div>
-          <h4>Buffs</h4>
+          <h4>Supports Allies</h4>
           <ul className="plain-list">
-            {buffs.map(([label, channel, direction]) => {
+            {allySupport.map(([label, channel]) => {
               const matches = modifiers.filter(
-                (capability) => capability.channel === channel && capability.direction === direction,
+                (capability) => capability.channel === channel && capability.role === 'ally-support',
               );
               return (
-                <li key={`${channel}-${direction}`}>
+                <li key={channel}>
+                  <details>
+                    <summary>
+                      <span className="badge">{label}</span>{' '}
+                      {matches.length > 0 ? capabilitySummary(matches) : 'No verified capability'}
+                    </summary>
+                    <CapabilityList items={matches} />
+                  </details>
+                </li>
+              );
+            })}
+          </ul>
+        </div>
+        <div>
+          <h4>Self and Incoming Amplifiers</h4>
+          <ul className="plain-list">
+            {selfAmplifiers.map(([label, channel, direction, role]) => {
+              const matches = modifiers.filter(
+                (capability) =>
+                  capability.channel === channel &&
+                  capability.direction === direction &&
+                  capability.role === role,
+              );
+              return (
+                <li key={`${channel}-${direction}-${role}`}>
                   <details>
                     <summary>
                       <span className="badge">{label}</span>{' '}
@@ -2023,6 +2070,8 @@ function CapabilityList({
     conditional: boolean;
     combatLogConfirmed: boolean;
     confidence: string;
+    role?: string;
+    availability?: { reportLabel: string };
   }>;
 }) {
   if (items.length === 0) {
@@ -2032,7 +2081,8 @@ function CapabilityList({
     <ul className="plain-list">
       {items.map((item) => (
         <li key={item.id}>
-          <strong>{item.abilityName}</strong> - {item.currentlyAvailable ? 'current' : item.futureAvailable ? 'future/locked' : 'conditional'}
+          <strong>{item.abilityName}</strong> - {item.availability?.reportLabel ?? (item.currentlyAvailable ? 'base/current' : item.futureAvailable ? 'future/locked' : 'conditional')}
+          {item.role ? `; ${formatToken(item.role)}` : ''}
           {item.conditional ? '; conditional' : ''}
           {item.combatLogConfirmed ? '; combat-log confirmed' : `; ${formatToken(item.confidence)}`}
         </li>
@@ -2041,12 +2091,9 @@ function CapabilityList({
   );
 }
 
-function capabilitySummary(
-  items: Array<{ currentlyAvailable: boolean; futureAvailable: boolean; conditional: boolean; abilityName: string }>,
-) {
+function capabilitySummary(items: Array<{ conditional: boolean; abilityName: string; availability?: { reportLabel: string } }>) {
   const states = [
-    items.some((item) => item.currentlyAvailable) ? 'current' : null,
-    items.some((item) => item.futureAvailable) ? 'future' : null,
+    ...new Set(items.map((item) => item.availability?.reportLabel).filter(Boolean)),
     items.some((item) => item.conditional) ? 'conditional' : null,
   ].filter(Boolean);
   return `${states.join(', ') || 'verified'}: ${[...new Set(items.map((item) => item.abilityName))].join(', ')}`;

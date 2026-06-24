@@ -1,4 +1,5 @@
 import { databaseMetadata } from '../data/databaseMetadata';
+import { evidenceSources } from '../data/evidence';
 import { dragonObservationSnapshots } from '../data/observations';
 import {
   FORMATION_POSITIONS,
@@ -13,6 +14,7 @@ import type {
   AbilityTarget,
   AmplificationSynergyTrace,
   CapabilityMatch,
+  CapabilityAvailabilityContext,
   CapabilitySourceKind,
   CapabilitySourceScope,
   DragonEffectProfile,
@@ -20,6 +22,7 @@ import type {
   EffectCondition,
   FormationAnalysisInput,
   ModifierCapability,
+  ModifierRole,
   OutputCapability,
   RequirementDefinition,
   RequirementTrace,
@@ -62,6 +65,7 @@ export function deriveOutputCapabilities(dragons: Dragon[]): OutputCapability[] 
         conditions: [],
         currentlyAvailable: true,
         futureAvailable: false,
+        availability: availabilityContext(dragon.id, null, null),
         directlyVerified: true,
         combatLogConfirmed: true,
         confidence: 'confirmed',
@@ -93,6 +97,7 @@ export function deriveOutputCapabilities(dragons: Dragon[]): OutputCapability[] 
           conditions: conditionsForEffect(effect),
           currentlyAvailable: ability.unlockStarRank === null || ability.unlockStarRank <= 1,
           futureAvailable: ability.unlockStarRank !== null && ability.unlockStarRank > 1,
+          availability: availabilityContext(dragon.id, ability.unlockStarRank, ability.minimumDragonLevel),
           directlyVerified: effect.directlyVerified !== false,
           combatLogConfirmed: ability.evidenceIds.some((id) => id.includes('combat-log')),
           confidence: confidenceForAbility(ability),
@@ -138,19 +143,32 @@ export function deriveDragonEffectProfiles(
         dragonId: dragon.id,
         producedChannels,
         outgoingBuffChannels: uniqueChannels(
-          dragonModifiers.filter((capability) => capability.direction === 'dealt').map((capability) => capability.channel),
+          dragonModifiers
+            .filter((capability) => capability.role === 'ally-support' && capability.direction === 'dealt')
+            .map((capability) => capability.channel),
         ).map((channel) => ({
           channel,
           modifierCapabilityIds: dragonModifiers
-            .filter((capability) => capability.direction === 'dealt' && capability.channel === channel)
+            .filter(
+              (capability) =>
+                capability.role === 'ally-support' &&
+                capability.direction === 'dealt' &&
+                capability.channel === channel,
+            )
             .map((capability) => capability.id),
         })),
         incomingAmplifierChannels: uniqueChannels(
-          dragonModifiers.filter((capability) => capability.direction === 'received').map((capability) => capability.channel),
+          dragonModifiers
+            .filter((capability) => capability.role === 'recipient-side-amplification')
+            .map((capability) => capability.channel),
         ).map((channel) => ({
           channel,
           modifierCapabilityIds: dragonModifiers
-            .filter((capability) => capability.direction === 'received' && capability.channel === channel)
+            .filter(
+              (capability) =>
+                capability.role === 'recipient-side-amplification' &&
+                capability.channel === channel,
+            )
             .map((capability) => capability.id),
         })),
         primaryDamageChannel: primaryDamageChannelForDragon(dragon.id),
@@ -183,10 +201,15 @@ export function buildCapabilityMatrix(dragons: Dragon[]): Array<Record<string, s
       'Deals Tactical Damage': matrixCell(outputs, dragon.id, 'tactical-damage'),
       'Deals Fire Damage': matrixCell(outputs, dragon.id, 'fire-damage'),
       'Provides Recovery': matrixCell(outputs, dragon.id, 'recovery'),
-      'Buffs Physical Damage Dealt': matrixModifierCell(modifiers, dragon.id, 'physical-damage', 'dealt'),
-      'Buffs Tactical Damage Dealt': matrixModifierCell(modifiers, dragon.id, 'tactical-damage', 'dealt'),
-      'Buffs Fire Damage Dealt': matrixModifierCell(modifiers, dragon.id, 'fire-damage', 'dealt'),
-      'Buffs Recovery Received': matrixModifierCell(modifiers, dragon.id, 'recovery', 'received'),
+      'Amplifies Ally Physical Damage': matrixModifierCell(modifiers, dragon.id, 'physical-damage', 'dealt', 'ally-support'),
+      'Amplifies Ally Tactical Damage': matrixModifierCell(modifiers, dragon.id, 'tactical-damage', 'dealt', 'ally-support'),
+      'Amplifies Ally Fire Damage': matrixModifierCell(modifiers, dragon.id, 'fire-damage', 'dealt', 'ally-support'),
+      'Other Ally Support': matrixOtherSupportCell(modifiers, dragon.id),
+      'Amplifies Own Physical Damage': matrixModifierCell(modifiers, dragon.id, 'physical-damage', 'dealt', 'self-amplification'),
+      'Amplifies Own Tactical Damage': matrixModifierCell(modifiers, dragon.id, 'tactical-damage', 'dealt', 'self-amplification'),
+      'Amplifies Own Fire Damage': matrixModifierCell(modifiers, dragon.id, 'fire-damage', 'dealt', 'self-amplification'),
+      'Amplifies Own Recovery Received': matrixModifierCell(modifiers, dragon.id, 'recovery', 'received', 'recipient-side-amplification'),
+      'Other Self Amplification': matrixOtherSelfCell(modifiers, dragon.id),
     }));
 }
 
@@ -213,6 +236,53 @@ export function reviewedDragons(dragons: Dragon[]): Dragon[] {
   return dragons.filter((dragon) => reviewedDragonIds.includes(dragon.id));
 }
 
+export function capabilityIntegrityReport(dragons: Dragon[]) {
+  const outputs = deriveOutputCapabilities(dragons);
+  const modifiers = deriveModifierCapabilities(dragons);
+  const dragonIds = new Set(dragons.map((dragon) => dragon.id));
+  const abilityIds = new Set(dragons.flatMap((dragon) => allAbilities(dragon).map((ability) => ability.id)));
+  const evidenceIds = new Set(evidenceSources.map((source) => source.id));
+  const allCapabilities = [...outputs, ...modifiers];
+  const duplicateIds = duplicateWarnings(outputs, modifiers);
+  const missingDragonReferences = allCapabilities
+    .filter((capability) => !dragonIds.has(capability.dragonId))
+    .map((capability) => capability.id);
+  const missingAbilityReferences = allCapabilities
+    .filter((capability) => capability.abilityId !== null && !abilityIds.has(capability.abilityId))
+    .map((capability) => capability.id);
+  const missingEvidenceReferences = allCapabilities
+    .flatMap((capability) =>
+      capability.evidenceIds
+        .filter((evidenceId) => !evidenceIds.has(evidenceId))
+        .map((evidenceId) => `${capability.id}:${evidenceId}`),
+    );
+  const incompatibleRoles = modifiers
+    .filter(
+      (capability) =>
+        (capability.role === 'ally-support' && capability.targetSelector.selection === 'self') ||
+        (capability.role === 'self-amplification' && capability.targetSelector.selection !== 'self') ||
+        (capability.role === 'recipient-side-amplification' && capability.targetSelector.selection !== 'self'),
+    )
+    .map((capability) => capability.id);
+  const tagOnlyCapabilities: string[] = [];
+
+  return {
+    duplicateIds,
+    missingDragonReferences,
+    missingAbilityReferences,
+    missingEvidenceReferences,
+    incompatibleRoles,
+    tagOnlyCapabilities,
+    passed:
+      duplicateIds.length === 0 &&
+      missingDragonReferences.length === 0 &&
+      missingAbilityReferences.length === 0 &&
+      missingEvidenceReferences.length === 0 &&
+      incompatibleRoles.length === 0 &&
+      tagOnlyCapabilities.length === 0,
+  };
+}
+
 function analyzeOutgoingAmplifications(
   formation: FormationAnalysisInput,
   dragons: Dragon[],
@@ -221,11 +291,17 @@ function analyzeOutgoingAmplifications(
   options: CapabilityOptions,
 ): AmplificationSynergyTrace[] {
   const traces: AmplificationSynergyTrace[] = [];
-  for (const modifier of modifiers.filter((capability) => capability.direction === 'dealt' && capability.operation === 'increase')) {
+  for (const modifier of modifiers.filter(
+    (capability) =>
+      capability.role === 'ally-support' &&
+      capability.direction === 'dealt' &&
+      capability.operation === 'increase' &&
+      capability.targetSelector.selection !== 'self',
+  )) {
     const providerPosition = positionOf(formation, modifier.dragonId);
     for (const recipientPosition of FORMATION_POSITIONS) {
       const recipientId = formation[recipientPosition];
-      if (!recipientId || recipientId === modifier.dragonId && modifier.targetSelector.side !== 'self') {
+      if (!recipientId || recipientId === modifier.dragonId) {
         continue;
       }
       const targeting = targetRequirement(modifier, providerPosition, recipientPosition);
@@ -289,6 +365,7 @@ function analyzeIncomingAmplifications(
           modifier.dragonId === recipientId &&
           modifier.channel === output.channel &&
           modifier.direction === 'received' &&
+          modifier.role === 'recipient-side-amplification' &&
           modifier.operation === 'increase',
       );
       for (const modifier of recipientModifiers) {
@@ -385,6 +462,10 @@ function makeAmplificationTrace({
     exactResultUnknownReason: exactUnknownReason(modifier.channel, matchKind),
     matchKind,
     channel: modifier.channel,
+    modifierRole: modifier.role,
+    targetSelectorSummary: targetSelectorSummary(modifier.targetSelector),
+    modifierSelfOnly: modifier.role === 'self-amplification' || modifier.targetSelector.selection === 'self',
+    availabilityContext: modifier.availability.reportLabel,
     modifierCapabilityId: modifier.id,
     matchedOutputCapabilityIds,
     sourceScopeResults: matches,
@@ -399,10 +480,43 @@ function modifierCapabilitiesForEffect(
   const modifiers: ModifierCapability[] = [];
   const damageChannel = modifierChannelForEffect(effect);
   if (damageChannel) {
-    modifiers.push(baseModifier(dragon, ability, effect, damageChannel, 'dealt'));
+    modifiers.push(
+      baseModifier(
+        dragon,
+        ability,
+        effect,
+        damageChannel,
+        effect.type.includes('Received') ? 'received' : 'dealt',
+      ),
+    );
   }
-  if (effect.type === 'Recovery Received Up') {
-    modifiers.push(baseModifier(dragon, ability, effect, 'recovery', 'received'));
+  if (effect.type === 'Stolen Flock' && effect.stack?.statusId === 'stolen-flock') {
+    modifiers.push({
+      ...baseModifier(dragon, ability, effect, 'fire-damage', 'dealt'),
+      id: `${ability.id}-${effect.id}-fire-damage-stack-modifier`,
+      label: `${ability.name}: Fire Damage Dealt per Stolen Flock stack`,
+      role: 'self-amplification',
+      value: effect.stack.valuePerStackFixed,
+      unit: 'stack',
+      sourceScope: 'all-qualifying-sources',
+      stackMaximum: effect.stack.maximumStacks,
+      valuePerStack: effect.stack.valuePerStackFixed,
+      conditional: true,
+    });
+  }
+  if (effect.type === 'Rallying Flame' && effect.stack?.statusId === 'rallying-flame') {
+    modifiers.push({
+      ...baseModifier(dragon, ability, effect, 'physical-damage', 'dealt'),
+      id: `${ability.id}-${effect.id}-physical-damage-stack-modifier`,
+      label: `${ability.name}: Physical Damage Dealt per Rallying Flame stack`,
+      role: 'self-amplification',
+      value: effect.stack.valuePerStackFixed,
+      unit: 'stack',
+      sourceScope: 'all-qualifying-sources',
+      stackMaximum: effect.stack.maximumStacks,
+      valuePerStack: effect.stack.valuePerStackFixed,
+      conditional: true,
+    });
   }
   if (effect.type === 'Spreading Blaze' && effect.stack?.statusId === 'spreading-blaze') {
     modifiers.push({
@@ -446,6 +560,7 @@ function baseModifier(
     label: `${ability.name}: ${effect.type}`,
     channel,
     direction,
+    role: modifierRoleForEffect(effect, direction),
     operation: effect.type.includes('Down') || effect.type.includes('Reduction') ? 'decrease' : 'increase',
     value: effect.magnitude,
     unit: effect.unit === 'percent' ? 'percent' : effect.unit === 'flat' ? 'flat' : 'unknown',
@@ -462,6 +577,7 @@ function baseModifier(
     valuePerStack: effect.stack?.valuePerStackFixed ?? null,
     currentlyAvailable: ability.unlockStarRank === null || ability.unlockStarRank <= 1,
     futureAvailable: ability.unlockStarRank !== null && ability.unlockStarRank > 1,
+    availability: availabilityContext(dragon.id, ability.unlockStarRank, ability.minimumDragonLevel),
     directlyVerified: effect.directlyVerified !== false,
     combatLogConfirmed: ability.evidenceIds.some((id) => id.includes('combat-log')),
     confidence: confidenceForAbility(ability),
@@ -495,7 +611,36 @@ function modifierChannelForEffect(effect: AbilityEffect): EffectChannel | null {
   if (effect.type === 'Fire Damage Dealt Up') {
     return 'fire-damage';
   }
+  if (effect.type === 'Recovery Dealt Up' || effect.type === 'Recovery Received Up' || effect.type === 'Recovery Received Down') {
+    return 'recovery';
+  }
+  if (
+    effect.type === 'Strength Up' ||
+    effect.type === 'Instinct Up' ||
+    effect.type === 'Intelligence Up' ||
+    effect.type === 'Initiative Up' ||
+    effect.type === 'Instinct Down'
+  ) {
+    return 'stat';
+  }
   return null;
+}
+
+function modifierRoleForEffect(effect: AbilityEffect, direction: 'dealt' | 'received'): ModifierRole {
+  const target = targetForEffect(effect);
+  if (target.side === 'enemy') {
+    return 'enemy-debuff';
+  }
+  if (direction === 'received') {
+    return 'recipient-side-amplification';
+  }
+  if (target.selection === 'self' || target.side === 'self') {
+    return 'self-amplification';
+  }
+  if (target.side === 'ally') {
+    return 'ally-support';
+  }
+  return 'enemy-debuff';
 }
 
 function targetForEffect(effect: AbilityEffect): AbilityTarget {
@@ -825,6 +970,75 @@ function sourceKindToScope(sourceKind: CapabilitySourceKind): CapabilitySourceSc
   return 'all-qualifying-sources';
 }
 
+function availabilityContext(
+  dragonId: string,
+  unlockStarRank: number | null,
+  minimumDragonLevel: number | null,
+): CapabilityAvailabilityContext {
+  const observation = dragonObservationSnapshots.find((snapshot) => snapshot.dragonId === dragonId);
+  const canonicalLocked = (unlockStarRank !== null && unlockStarRank > 1);
+  const canonical = canonicalLocked ? 'canonical-locked' : 'canonical-base';
+  const observedAccount = observation?.collection?.state === 'hatched'
+    ? 'observed-available'
+    : observation?.collection
+      ? 'observed-unavailable'
+      : 'unknown';
+  const userRoster = 'unknown';
+  const notes: string[] = [];
+  if (unlockStarRank !== null && unlockStarRank > 1) {
+    notes.push(`Future at Star Rank ${unlockStarRank}.`);
+  }
+  if (minimumDragonLevel !== null) {
+    notes.push(`Requires Dragon Level ${minimumDragonLevel}+.`);
+  }
+  if (observation?.collection?.state === 'not-hatched') {
+    notes.push('Not hatched in observed account.');
+  } else if (observation?.collection?.state === 'not-collected') {
+    notes.push('Not collected in observed account.');
+  } else if (observation?.collection?.state === 'hatched') {
+    notes.push('Unlocked in observed account collection state, subject to level and star requirements.');
+  } else {
+    notes.push('No observed account collection state is recorded.');
+  }
+
+  return {
+    canonical,
+    observedAccount,
+    userRoster,
+    reportLabel: availabilityReportLabel(unlockStarRank, minimumDragonLevel, observation?.collection?.state ?? null),
+    notes,
+  };
+}
+
+function availabilityReportLabel(
+  unlockStarRank: number | null,
+  minimumDragonLevel: number | null,
+  observedState: string | null,
+): string {
+  const canonical = unlockStarRank !== null && unlockStarRank > 1
+    ? `Future at Star Rank ${unlockStarRank}`
+    : 'Base kit';
+  const level = minimumDragonLevel !== null ? `; Level ${minimumDragonLevel}+` : '';
+  const observed = observedState === 'not-hatched'
+    ? '; not hatched in observed account'
+    : observedState === 'not-collected'
+      ? '; not collected in observed account'
+      : observedState === 'hatched'
+        ? '; observed account hatched'
+        : '; observed account unknown';
+  return `${canonical}${level}${observed}`;
+}
+
+function targetSelectorSummary(target: AbilityTarget): string {
+  const count = target.count === null ? 'unknown count' : `${target.count} target${target.count === 1 ? '' : 's'}`;
+  const caster = target.includesCaster === null
+    ? 'caster eligibility unknown'
+    : target.includesCaster
+      ? 'caster eligible'
+      : 'caster excluded';
+  return `${target.side}; ${target.scope}; ${target.selection}; ${count}; ${caster}`;
+}
+
 function outputChannelNames(outputs: OutputCapability[], ids: string[]): string[] {
   return ids.map((id) => outputs.find((output) => output.id === id)?.label ?? id);
 }
@@ -891,6 +1105,8 @@ function channelLabel(channel: EffectChannel): string {
       return 'Fire Damage';
     case 'recovery':
       return 'Recovery';
+    case 'stat':
+      return 'Stat';
   }
 }
 
@@ -911,7 +1127,7 @@ function targetSideForEffect(effect: AbilityEffect): 'ally' | 'enemy' | 'self' {
   if (effect.targetScope === 'self' || effect.target === 'Self') {
     return 'self';
   }
-  return effect.target.toLowerCase().includes('enemy') || effect.target.toLowerCase().includes('prey')
+  return /\benemy\b|\benemies\b|\bprey\b/i.test(effect.target)
     ? 'enemy'
     : 'ally';
 }
@@ -1006,7 +1222,7 @@ function matrixCell(outputs: OutputCapability[], dragonId: string, channel: Effe
     return 'No verified capability';
   }
   return matches
-    .map((capability) => `${capability.currentlyAvailable ? 'Current' : capability.futureAvailable ? 'Future' : 'Conditional'}: ${capability.abilityName}`)
+    .map((capability) => `${capability.availability.reportLabel}: ${capability.abilityName}`)
     .join('; ');
 }
 
@@ -1015,21 +1231,50 @@ function matrixModifierCell(
   dragonId: string,
   channel: EffectChannel,
   direction: 'dealt' | 'received',
+  role: ModifierRole,
 ): string {
   const matches = modifiers.filter(
-    (capability) => capability.dragonId === dragonId && capability.channel === channel && capability.direction === direction,
+    (capability) =>
+      capability.dragonId === dragonId &&
+      capability.channel === channel &&
+      capability.direction === direction &&
+      capability.role === role,
   );
   if (matches.length === 0) {
     return 'No verified capability';
   }
   return matches
-    .map((capability) => `${capability.currentlyAvailable ? 'Current' : capability.futureAvailable ? 'Future' : 'Conditional'}: ${capability.abilityName}`)
+    .map((capability) => `${capability.availability.reportLabel}: ${capability.abilityName}`)
+    .join('; ');
+}
+
+function matrixOtherSupportCell(modifiers: ModifierCapability[], dragonId: string): string {
+  const matches = modifiers.filter(
+    (capability) => capability.dragonId === dragonId && capability.role === 'ally-support' && capability.channel === 'stat',
+  );
+  return matrixCapabilityNames(matches);
+}
+
+function matrixOtherSelfCell(modifiers: ModifierCapability[], dragonId: string): string {
+  const matches = modifiers.filter(
+    (capability) => capability.dragonId === dragonId && capability.role === 'self-amplification' && capability.channel === 'stat',
+  );
+  return matrixCapabilityNames(matches);
+}
+
+function matrixCapabilityNames(capabilities: ModifierCapability[]): string {
+  if (capabilities.length === 0) {
+    return 'No verified capability';
+  }
+  return capabilities
+    .map((capability) => `${capability.availability.reportLabel}: ${capability.abilityName}`)
     .join('; ');
 }
 
 export function frameworkReportData(dragons: Dragon[]) {
   const outputs = deriveOutputCapabilities(dragons).filter((capability) => reviewedDragonIds.includes(capability.dragonId));
   const modifiers = deriveModifierCapabilities(dragons).filter((capability) => reviewedDragonIds.includes(capability.dragonId));
+  const integrity = capabilityIntegrityReport(dragons);
   const formations: Record<string, FormationAnalysisInput> = {
     A: { 'left-flank': 'malachite', vanguard: 'sheepstealer', 'right-flank': 'vermax' },
     B: { 'left-flank': 'sheepstealer', vanguard: 'malachite', 'right-flank': 'vermax' },
@@ -1049,6 +1294,16 @@ export function frameworkReportData(dragons: Dragon[]) {
     profiles: deriveDragonEffectProfiles(dragons, outputs, modifiers),
     formations,
     traces,
+    excludedSelfModifiers: modifiers
+      .filter((capability) => capability.role === 'self-amplification')
+      .map((capability) => ({
+        id: capability.id,
+        dragonId: capability.dragonId,
+        abilityName: capability.abilityName,
+        channel: capability.channel,
+        reason: 'Self-amplification is visible in capability review but excluded from cross-dragon outgoing support matching.',
+      })),
+    integrity,
     warnings: {
       duplicateOrOverlappingCapabilities: duplicateWarnings(outputs, modifiers),
       missingSourceScope: modifiers.filter((capability) => capability.sourceScope === 'unknown').map((capability) => capability.id),

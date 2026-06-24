@@ -45,11 +45,15 @@ For Command augmentations granted by Habits, keep the base Command intact and at
 
 When adding or reviewing combat kits, identify every verified output channel and modifier channel separately. Current channels are Physical Damage, Tactical Damage, Fire Damage, and Recovery. A dragon can have multiple output capabilities in one channel and can have mixed damage channels.
 
-For output capabilities, record the source kind, target side, target count, target scope, unlock requirements, whether the effect is conditional, and evidence IDs. For modifier capabilities, record the channel, dealt or received direction, source scope, target selector, value, unit, unlock requirements, and whether it is chance-based or selection-dependent.
+For output capabilities, record the source kind, target side, target count, target scope, unlock requirements, whether the effect is conditional, and evidence IDs. For modifier capabilities, record the role, channel, dealt or received direction, source scope, target selector, value, unit, unlock requirements, and whether it is chance-based or selection-dependent.
+
+Use `self-amplification` for effects that only modify the originating dragon, `ally-support` for support targeting friendly dragons, `recipient-side-amplification` for effects such as Recovery Received, and `enemy-debuff` for effects applied to enemies. A self-buff does not constitute formation synergy for teammates.
 
 Do not infer a single "main damage type" and use it for matching. Primary damage summaries are display-only. Generic synergy analysis must match support effects to actual capabilities.
 
 Source-scope wording matters. Unqualified Damage Dealt modifiers apply to all qualifying sources in that damage channel. Explicit exclusions such as "excluding Basic Attacks" prevent Basic Attack matches. Unknown Basic Attack damage types should remain unmodeled until verified.
+
+Do not derive authoritative capabilities from tags alone. Tags can help with browsing and search, but a structured effect or explicitly reviewed capability record is required.
 
 ## Formation Data
 

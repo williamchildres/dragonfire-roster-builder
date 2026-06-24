@@ -61,13 +61,19 @@ Provider-to-recipient amplification is modeled without producing a score. A Reco
 
 ## Effect Capabilities
 
-Data schema 5 adds normalized effect capabilities. `OutputCapability` records what a dragon can produce, such as Physical Damage, Tactical Damage, Fire Damage, or Recovery. `ModifierCapability` records channel modifiers, such as Physical Damage Dealt Up or Recovery Received Up. A dragon may have several capabilities in the same channel; do not collapse a mixed kit into one damage tag.
+Data schema 6 stores normalized effect capabilities with explicit modifier role and availability context. `OutputCapability` records what a dragon can produce, such as Physical Damage, Tactical Damage, Fire Damage, or Recovery. `ModifierCapability` records channel modifiers, such as Physical Damage Dealt Up or Recovery Received Up. A dragon may have several capabilities in the same channel; do not collapse a mixed kit into one damage tag.
 
-Synergy matching uses capabilities rather than dragon names. Outgoing amplification matches a `dealt` modifier to recipient output capabilities in the same channel. Incoming amplification matches an ally or self output provider to a recipient `received` modifier in the same channel. Both paths check formation targeting, position requirements, user progression, source scope, evidence confidence, and active versus future availability.
+`ModifierRole` separates self amplification, ally support, recipient-side amplification, and enemy debuffs. Outgoing cross-dragon amplification only uses `ally-support` modifiers. Self amplification is visible in review, but it must not support another dragon. Incoming amplification uses `recipient-side-amplification` modifiers. Enemy debuffs are reserved for a future debuff-exploitation framework.
+
+Synergy matching uses capabilities rather than dragon names. Outgoing amplification matches an ally-support `dealt` modifier to recipient output capabilities in the same channel. Incoming amplification matches an ally or self output provider to a recipient-side `received` modifier in the same channel. Both paths check formation targeting, position requirements, user progression, source scope, evidence confidence, and active versus future availability.
 
 `primaryDamageChannel` is descriptive only. It may summarize a reviewed dragon for display, but it must never be used as the matching source when specific output capabilities are available.
 
 Source scopes prevent false matches. `all-qualifying-sources` can match Basic Attacks, Commands, and Habits in the same channel. `non-basic-attacks` can match Commands and Habits but not Basic Attacks. Channel mismatch always blocks a match; Fire Damage support does not apply to Tactical Damage or Physical Damage.
+
+Capability availability has three contexts: canonical availability describes the kit and unlock requirements; observed-account availability records supplied screenshot state such as Seasmoke being not hatched; user-roster availability comes from browser localStorage and is used by the Formation Builder. The report script cannot inspect a visitor's localStorage, so it does not claim user availability.
+
+Capabilities are derived from structured `AbilityEffect` records plus one reviewed Vermax Basic Attack capability. Effect tags alone do not create authoritative capabilities.
 
 Statuses include active, potential, inactive, blocked, unknown, and not-applicable. Locked Habits and future progression are potential when previewed, not active for the user's current roster. Numerical synergy scores remain null unless enough verified data exists for all selected dragons.
 
