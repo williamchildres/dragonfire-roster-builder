@@ -1,5 +1,16 @@
 # Changelog
 
+## 0.4.2 - 2026-06-24
+
+- Added a generic effect-capability framework for Physical Damage, Tactical Damage, Fire Damage, and Recovery.
+- Added structured output capabilities, modifier capabilities, source-scope compatibility, and effect profiles for Malachite, Seasmoke, Sheepstealer, and Vermax.
+- Migrated outgoing damage support and incoming Recovery amplification to reusable capability matching instead of dragon-specific pair logic.
+- Added generic traces for Sheepstealer Physical support to Vermax, Malachite Fire support, Vermax Spreading Blaze Tactical support, and Malachite Recovery to Sheepstealer Recovery Received.
+- Added a reviewable capability matrix in the app and a read-only `npm run report:synergy` framework report.
+- Added Dragon Details effect-profile sections for Deals and Buffs capability badges.
+- Documented source-scope matching, active versus future capabilities, trace aggregation, and remaining framework assumptions.
+- Increased database version to `0.4.2` and data schema to `5`; local roster schema remains `3`.
+
 ## 0.4.1 - 2026-06-24
 
 - Confirmed from combat logs that Vermax Warrior's Zeal increases Vermax Basic Attack Physical Damage.

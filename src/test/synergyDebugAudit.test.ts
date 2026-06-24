@@ -29,8 +29,8 @@ describe('Phase 3.5 evidence and review metadata', () => {
   it('uses game build 26.6.53509 for current screenshot evidence and observations', () => {
     const screenshotEvidence = evidenceSources.filter((source) => source.type === 'in-game-screenshot');
 
-    expect(databaseMetadata.databaseVersion).toBe('0.4.1');
-    expect(databaseMetadata.schemaVersion).toBe(4);
+    expect(databaseMetadata.databaseVersion).toBe('0.4.2');
+    expect(databaseMetadata.schemaVersion).toBe(5);
     expect(databaseMetadata.currentDocumentedGameBuild).toBe(build);
     expect(screenshotEvidence.length).toBeGreaterThan(0);
     expect(screenshotEvidence.every((source) => source.gameVersion === build)).toBe(true);
@@ -118,9 +118,14 @@ describe('synergy trace and audit behavior', () => {
     const result = analyzeFormation(formation, dragons, defaultSynergyRules);
 
     expect(result.score).toBeNull();
-    expect(traces.find((trace) => trace.ruleId === 'malachite-vanguard-fire-left-flank')).toMatchObject({
+    expect(traces.find((trace) =>
+      trace.matchKind === 'outgoing-effect-amplification' &&
+      trace.sourceDragonId === 'malachite' &&
+      trace.recipientDragonId === 'sheepstealer' &&
+      trace.channel === 'fire-damage',
+    )).toMatchObject({
       status: 'active',
-      confidence: 'medium',
+      confidence: 'confirmed',
     });
     expect(traces.find((trace) => trace.id === 'malachite-lightning-strike-vermax')).toMatchObject({
       status: 'potential',
@@ -136,7 +141,7 @@ describe('synergy trace and audit behavior', () => {
       { dragonLevels: { vermax: null } },
     );
 
-    const unknownLevelTrace = traces.find((trace) => trace.sourceDragonId === 'vermax');
+    const unknownLevelTrace = traces.find((trace) => trace.id === 'vanguard-requirement-vermax');
     expect(
       unknownLevelTrace?.requirements.find((requirement) => requirement.label === 'Dragon Level requirement')
         ?.satisfied,
@@ -158,7 +163,7 @@ describe('synergy trace and audit behavior', () => {
     expect(exportPayload).toMatchObject({
       format: 'dragonfire-synergy-audit',
       schemaVersion: 1,
-      databaseVersion: '0.4.1',
+      databaseVersion: '0.4.2',
       gameBuild: build,
     });
   });
@@ -166,19 +171,29 @@ describe('synergy trace and audit behavior', () => {
   it('covers required known interactions', () => {
     expect(
       analyzeFormationTraces({ 'left-flank': 'sheepstealer', vanguard: 'malachite', 'right-flank': 'vermax' }, dragons).find(
-        (trace) => trace.ruleId === 'malachite-vanguard-fire-left-flank',
+        (trace) =>
+          trace.matchKind === 'outgoing-effect-amplification' &&
+          trace.sourceDragonId === 'malachite' &&
+          trace.recipientDragonId === 'sheepstealer' &&
+          trace.channel === 'fire-damage',
       )?.status,
     ).toBe('active');
     expect(
       analyzeFormationTraces({ 'left-flank': 'seasmoke', vanguard: 'malachite', 'right-flank': 'vermax' }, dragons).find(
-        (trace) => trace.ruleId === 'malachite-vanguard-fire-left-flank',
+        (trace) =>
+          trace.matchKind === 'outgoing-effect-amplification' &&
+          trace.sourceDragonId === 'malachite' &&
+          trace.recipientDragonId === 'seasmoke' &&
+          trace.channel === 'fire-damage',
       )?.status,
     ).toBe('active');
     expect(
       analyzeFormationTraces({ 'left-flank': 'malachite', vanguard: 'sheepstealer', 'right-flank': 'vermax' }, dragons).find(
         (trace) =>
-          trace.ruleId === 'sheepstealer-vanguard-physical-right-flank' &&
-          trace.recipientDragonId === 'vermax',
+          trace.matchKind === 'outgoing-effect-amplification' &&
+          trace.sourceDragonId === 'sheepstealer' &&
+          trace.recipientDragonId === 'vermax' &&
+          trace.channel === 'physical-damage',
       )?.status,
     ).toBe('active');
     expect(

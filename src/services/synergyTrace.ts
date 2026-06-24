@@ -14,9 +14,9 @@ import type {
 import {
   THRESHOLD_BOUNDARY_NOTE,
   arePositionsAdjacent,
-  resolveAllyTargets,
   resolveThreeAllyTargets,
 } from './formationRules';
+import { analyzeCapabilityAmplifications } from './effectCapabilities';
 
 export interface TraceOptions {
   roster?: Record<string, OwnedDragon>;
@@ -32,11 +32,8 @@ export function analyzeFormationTraces(
   options: TraceOptions = {},
 ): SynergyTrace[] {
   const traces: SynergyTrace[] = [];
-  traces.push(...malachiteFireSupportTraces(formation, dragons, options));
-  traces.push(...sheepstealerPhysicalSupportTraces(formation, dragons, options));
+  traces.push(...analyzeCapabilityAmplifications(formation, dragons, options));
   traces.push(...vermaxWarriorsZealTraces(formation, dragons, options));
-  traces.push(...vermaxSpreadingBlazeTraces(formation, dragons, options));
-  traces.push(...recipientAmplificationTraces(formation, dragons, options));
   traces.push(...malachiteLightningStrikeTraces(formation, dragons, options));
   traces.push(...vanguardConflictTraces(formation, dragons));
   traces.push(...vanguardRequirementTraces(formation, dragons, options));
@@ -119,92 +116,6 @@ export function targetPositionsForOtherAllies(
   return FORMATION_POSITIONS.filter((position) => position !== sourcePosition && Boolean(formation[position]));
 }
 
-function malachiteFireSupportTraces(
-  formation: FormationAnalysisInput,
-  dragons: Dragon[],
-  options: TraceOptions,
-): SynergyTrace[] {
-  const source = findDragon('malachite', dragons);
-  if (!source?.trait) {
-    return [];
-  }
-  const trait = source.trait;
-  return FORMATION_POSITIONS.flatMap((position) => {
-    const recipient = findDragon(formation[position], dragons);
-    if (!recipient || recipient.id === 'malachite') {
-      return [];
-    }
-    const fireAbility = findAbilityWithTag(recipient, 'FIRE_DAMAGE');
-    const requirements = [
-      positionRequirement('malachite', formation, 'vanguard', trait.evidenceIds),
-      targetPositionRequirement(position, 'left-flank', trait.evidenceIds),
-      tagRequirement(recipient, 'FIRE_DAMAGE', fireAbility?.evidenceIds ?? []),
-      ...abilityProgressionRequirements(source, trait, options),
-    ];
-    return [
-      makeTrace({
-        id: `malachite-fire-support-${recipient.id}`,
-        ruleId: 'malachite-vanguard-fire-left-flank',
-        source,
-        sourceAbility: trait,
-        recipient,
-        recipientAbility: fireAbility,
-        title: "Sentinel's Presence Fire Damage support",
-        explanation: `${source.name} can increase Fire Damage Dealt by the ally deployed in Left Flank.`,
-        requirements,
-        matchedFacts: fireAbility ? [`${recipient.name} has verified Fire Damage via ${fireAbility.name}.`] : [],
-        effects: ['Fire Damage Dealt +16%'],
-        assumptions: ['Exact damage formula is unknown.'],
-        unresolvedQuestions: [...trait.unresolvedQuestions],
-        potentialWhenLocked: options.previewMaxRankInteractions,
-      }),
-    ];
-  });
-}
-
-function sheepstealerPhysicalSupportTraces(
-  formation: FormationAnalysisInput,
-  dragons: Dragon[],
-  options: TraceOptions,
-): SynergyTrace[] {
-  const source = findDragon('sheepstealer', dragons);
-  if (!source?.trait) {
-    return [];
-  }
-  const trait = source.trait;
-  return FORMATION_POSITIONS.flatMap((position) => {
-    const recipient = findDragon(formation[position], dragons);
-    if (!recipient || recipient.id === 'sheepstealer') {
-      return [];
-    }
-    const physicalAbility = findAbilityWithTag(recipient, 'PHYSICAL_DAMAGE');
-    const requirements = [
-      positionRequirement('sheepstealer', formation, 'vanguard', trait.evidenceIds),
-      targetPositionRequirement(position, 'right-flank', trait.evidenceIds),
-      tagRequirement(recipient, 'PHYSICAL_DAMAGE', physicalAbility?.evidenceIds ?? []),
-      ...abilityProgressionRequirements(source, trait, options),
-    ];
-    return [
-      makeTrace({
-        id: `sheepstealer-physical-support-${recipient.id}`,
-        ruleId: 'sheepstealer-vanguard-physical-right-flank',
-        source,
-        sourceAbility: trait,
-        recipient,
-        recipientAbility: physicalAbility,
-        title: "Hunter's Cunning Physical Damage support",
-        explanation: `${source.name} can increase Physical Damage Dealt for the ally deployed in Right Flank.`,
-        requirements,
-        matchedFacts: physicalAbility ? [`${recipient.name} has verified Physical Damage via ${physicalAbility.name}.`] : [],
-        effects: ['Physical Damage Dealt +10%'],
-        assumptions: [],
-        unresolvedQuestions: [],
-        potentialWhenLocked: options.previewMaxRankInteractions,
-      }),
-    ];
-  });
-}
-
 function vermaxWarriorsZealTraces(
   formation: FormationAnalysisInput,
   dragons: Dragon[],
@@ -233,146 +144,11 @@ function vermaxWarriorsZealTraces(
       requirements,
       matchedFacts: ['Trait target is explicitly Left Flank ally.'],
       effects: ['Left Flank ally Instinct +20 flat', 'Left Flank ally Initiative +20 flat'],
-      assumptions: ['Physical Damage source scope remains conservative and is not applied to Basic Attacks.'],
+      assumptions: ['Warrior\'s Zeal Physical Damage source scope is handled by the generic capability framework.'],
       unresolvedQuestions: [...source.trait.unresolvedQuestions],
       potentialWhenLocked: options.previewMaxRankInteractions,
     }),
   ];
-}
-
-function vermaxSpreadingBlazeTraces(
-  formation: FormationAnalysisInput,
-  dragons: Dragon[],
-  options: TraceOptions,
-): SynergyTrace[] {
-  const source = findDragon('vermax', dragons);
-  const recipient = findDragon('malachite', dragons);
-  if (!source?.command || !recipient?.command || !FORMATION_POSITIONS.some((position) => formation[position] === 'vermax') || !FORMATION_POSITIONS.some((position) => formation[position] === 'malachite')) {
-    return [];
-  }
-  const requirements = [
-    selectedRequirement('vermax', formation, source.command.evidenceIds),
-    selectedRequirement('malachite', formation, recipient.command.evidenceIds),
-    tagRequirement(recipient, 'TACTICAL_DAMAGE', recipient.command.evidenceIds),
-    ...abilityProgressionRequirements(source, source.command, options),
-  ];
-  return [
-    makeTrace({
-      id: 'vermax-spreading-blaze-malachite',
-      ruleId: 'vermax-spreading-blaze-tactical-ally',
-      source,
-      sourceAbility: source.command,
-      recipient,
-      recipientAbility: recipient.command,
-      title: 'Spreading Blaze can target Malachite',
-      explanation: `${source.name} can grant Spreading Blaze to an ally that deals Tactical Damage; ${recipient.name} has Warden's Rally Tactical Damage.`,
-      requirements,
-      matchedFacts: ["Malachite's Warden's Rally deals Tactical Damage."],
-      effects: ['Spreading Blaze stack eligibility'],
-      assumptions: ['Trigger chance and target selection make this potential, not guaranteed.'],
-      unresolvedQuestions: ['Target selection among multiple Tactical Damage allies.'],
-      forcedStatus: 'potential',
-      potentialWhenLocked: true,
-    }),
-  ];
-}
-
-function recipientAmplificationTraces(
-  formation: FormationAnalysisInput,
-  dragons: Dragon[],
-  options: TraceOptions,
-): SynergyTrace[] {
-  const traces: SynergyTrace[] = [];
-  for (const sourcePosition of FORMATION_POSITIONS) {
-    const provider = findDragon(formation[sourcePosition], dragons);
-    if (!provider) {
-      continue;
-    }
-    for (const providerAbility of allAbilities(provider)) {
-      const recoveryEffects = providerAbility.schedules.flatMap((schedule) =>
-        schedule.effects.filter((effect) => effect.type === 'Recovery'),
-      );
-      for (const recoveryEffect of recoveryEffects) {
-        const targets = resolveAllyTargets(formation, sourcePosition, recoveryEffect);
-        for (const target of targets) {
-          const recipient = findDragon(target.dragonId, dragons);
-          if (!recipient) {
-            continue;
-          }
-          const recipientModifier = allAbilities(recipient).find((ability) =>
-            ability.schedules.some((schedule) =>
-              schedule.effects.some((effect) => effect.type === 'Recovery Received Up'),
-            ),
-          );
-          if (!recipientModifier) {
-            continue;
-          }
-          const modifierEffect = recipientModifier.schedules
-            .flatMap((schedule) => schedule.effects)
-            .find((effect) => effect.type === 'Recovery Received Up');
-          const requirements = [
-            selectedRequirement(provider.id, formation, providerAbility.evidenceIds),
-            selectedRequirement(recipient.id, formation, recipientModifier.evidenceIds),
-            {
-              id: `${providerAbility.id}-provides-recovery`,
-              label: 'Provider effect',
-              expected: 'Recovery',
-              actual: recoveryEffect.type,
-              satisfied: true,
-              evidenceIds: providerAbility.evidenceIds,
-              notes: [`Target scope: ${recoveryEffect.target}, ${recoveryEffect.targetScope}.`],
-            },
-            {
-              id: `${recipient.id}-is-recovery-target`,
-              label: 'Recipient targeted by Recovery',
-              expected: `${recipient.name} is eligible for ${recoveryEffect.target}`,
-              actual: `${recipient.name} in ${formatPosition(target.position)}`,
-              satisfied: true,
-              evidenceIds: providerAbility.evidenceIds,
-              notes: ['Plain Allies wording allows caster eligibility when spatial targeting permits it.'],
-            },
-            ...abilityProgressionRequirements(recipient, recipientModifier, options),
-          ];
-          if (recipientModifier.positionRequirement) {
-            requirements.push(positionRequirement(recipient.id, formation, recipientModifier.positionRequirement, recipientModifier.evidenceIds));
-          }
-          traces.push(makeTrace({
-            id: `${provider.id}-${providerAbility.id}-recovery-amplified-by-${recipient.id}-${recipientModifier.id}`,
-            ruleId: 'recipient-recovery-amplification',
-            source: provider,
-            sourceAbility: providerAbility,
-            recipient,
-            recipientAbility: recipientModifier,
-            title: `${recipient.name} amplifies ${provider.name} Recovery`,
-            explanation:
-              `${recipient.name} receives enhanced Recovery from ${providerAbility.name}. ${recipientModifier.name} increases ${recipient.name}'s Recovery Received while its requirements are met.`,
-            requirements,
-            matchedFacts: [
-              `${providerAbility.name} provides Recovery.`,
-              `${recipientModifier.name} provides Recovery Received +${modifierEffect?.magnitude ?? 'unknown'}%.`,
-            ],
-            effects: [
-              `Provided effect: Recovery`,
-              `Recipient-side modifier: Recovery Received +${modifierEffect?.magnitude ?? 'unknown'}%`,
-            ],
-            assumptions: [],
-            unresolvedQuestions: ['Exact final Recovery amount is unknown because the full Level and Instinct Recovery formula is not known.'],
-            potentialWhenLocked: options.previewMaxRankInteractions,
-            forcedConfidence: provider.id === 'malachite' && recipient.id === 'sheepstealer' ? 'confirmed' : undefined,
-            combatLogConfirmed: provider.id === 'malachite' && recipient.id === 'sheepstealer',
-            providedEffectType: 'Recovery',
-            recipientModifierType: 'Recovery Received Up',
-            recipientModifierAbilityId: recipientModifier.id,
-            recipientModifierValue: modifierEffect?.magnitude ?? null,
-            exactResultKnown: false,
-            exactResultUnknownReason:
-              "Exact final Recovery cannot be calculated because the game's Level and Instinct Recovery formula is unknown.",
-          }));
-        }
-      }
-    }
-  }
-  return traces;
 }
 
 function malachiteLightningStrikeTraces(
@@ -840,18 +616,6 @@ function selectedRequirement(
   };
 }
 
-function tagRequirement(dragon: Dragon, tag: Dragon['tags'][number], evidenceIds: string[]): RequirementTrace {
-  return {
-    id: `${dragon.id}-tag-${tag}`,
-    label: 'Matched effect tags',
-    expected: tag,
-    actual: dragon.tags.includes(tag) ? tag : null,
-    satisfied: dragon.tags.includes(tag),
-    evidenceIds,
-    notes: [],
-  };
-}
-
 function adjacencyRequirement(
   sourcePosition: FormationPosition,
   recipientPosition: FormationPosition,
@@ -872,16 +636,6 @@ function adjacencyRequirement(
 
 function findDragon(dragonId: string | null | undefined, dragons: Dragon[]): Dragon | null {
   return dragonId ? dragons.find((dragon) => dragon.id === dragonId) ?? null : null;
-}
-
-function findAbilityWithTag(dragon: Dragon, tag: Dragon['tags'][number]): AbilityDefinition | null {
-  return allAbilities(dragon)
-    .find((ability) => ability.tags.includes(tag)) ?? null;
-}
-
-function allAbilities(dragon: Dragon): AbilityDefinition[] {
-  return [dragon.command, dragon.trait, ...dragon.habits]
-    .filter((ability): ability is AbilityDefinition => Boolean(ability))
 }
 
 function getDragonPosition(formation: FormationAnalysisInput, dragonId: string): FormationPosition | null {

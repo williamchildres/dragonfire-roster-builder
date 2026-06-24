@@ -1,6 +1,6 @@
 {
   "name": "dragonfire-roster-builder",
-  "version": "0.4.1",
+  "version": "0.4.2",
   "private": true,
   "type": "module",
   "scripts": {
@@ -10,7 +10,8 @@
     "test": "vitest run",
     "test:watch": "vitest",
     "preview": "vite preview --host 127.0.0.1",
-    "check:roster": "node scripts/check-official-roster.mjs"
+    "check:roster": "node scripts/check-official-roster.mjs",
+    "report:synergy": "node scripts/report-synergy-framework.mjs"
   },
   "dependencies": {
     "@vitejs/plugin-react": "latest",
