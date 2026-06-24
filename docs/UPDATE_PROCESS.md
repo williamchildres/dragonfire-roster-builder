@@ -17,13 +17,29 @@ Use this process to keep roster data traceable.
 3. Update the active dragon record.
 4. Run the data-integrity tests.
 
-## Adding Commands, Habits, Affinities, Stats, Or Tags
+## Adding Commands, Traits, Habits, Affinities, Stats, Or Tags
 
 1. Add only sourced values.
-2. Attach `sourceIds`.
-3. Set `dataStatus` to the appropriate verification level.
-4. Update synergy rules only when the tags and behavior are verified.
-5. Add tests for any new engine behavior.
+2. Preserve raw wording.
+3. Attach evidence IDs and field-level verification.
+4. Model multiple schedules when timings differ.
+5. Keep Habit unlock Star Rank separate from Habit Level progression.
+6. Set `dataStatus` to the appropriate verification level.
+7. Update synergy rules only when the tags and behavior are verified.
+8. Add tests for any new engine behavior.
+
+## Adding Observation Snapshots
+
+1. Store observations outside the canonical dragon record.
+2. Mark `canonical: false`.
+3. Record Dragon Level, Star Rank, capture date, game version if known, and modifier context.
+4. Do not use observation values for generic comparisons or synergy scores.
+
+## Adding Troop Matchup Rules
+
+1. Store matchup rules separately from dragon affinity.
+2. Add only the verified attacker and defender rows.
+3. Do not infer the complete matrix from one screenshot.
 
 ## Recording Balance Changes
 

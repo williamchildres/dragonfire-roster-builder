@@ -1,4 +1,4 @@
-import type { Dragon, EffectTag, TroopType, VerificationStatus } from './dragon';
+import type { Dragon, EffectTag, FormationPosition, TroopType, VerificationStatus } from './dragon';
 
 export type DataConfidence = 'none' | 'low' | 'medium' | 'high';
 
@@ -31,6 +31,9 @@ export interface SynergyResult {
   confidence: DataConfidence;
   positives: ExplanationItem[];
   conflicts: ExplanationItem[];
+  positionRequirements: ExplanationItem[];
+  unmetRequirements: ExplanationItem[];
+  unresolvedAssumptions: string[];
   warnings: string[];
   missingData: MissingDataItem[];
 }
@@ -39,6 +42,8 @@ export interface BreedDistribution {
   breed: Dragon['breed'];
   count: number;
 }
+
+export type FormationAnalysisInput = Record<FormationPosition, string | null>;
 
 export interface AffinityCoverage {
   troopType: TroopType;

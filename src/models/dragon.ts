@@ -33,31 +33,126 @@ export type EffectTag =
   | 'ON_CRITICAL'
   | 'ON_COMMAND_TRIGGER'
   | 'VANGUARD'
-  | 'REARGUARD';
+  | 'REARGUARD'
+  | 'TACTICAL_DAMAGE'
+  | 'RECOVERY'
+  | 'SAME_LANE_TARGET'
+  | 'ANY_LANE_TARGET'
+  | 'ADJACENT_TARGET'
+  | 'ENHANCED_BY_INSTINCT'
+  | 'ENHANCED_BY_STRENGTH'
+  | 'SCALES_WITH_LEVEL'
+  | 'SPECIFIC_ROUNDS'
+  | 'MULTI_SCHEDULE_COMMAND'
+  | 'RECOVERY_DEALT_UP'
+  | 'INSTINCT_UP'
+  | 'FIRE_DAMAGE_UP'
+  | 'VANGUARD_REQUIRED'
+  | 'LEFT_FLANK_TARGET'
+  | 'BUFF_SELF'
+  | 'BUFF_ALLIES'
+  | 'PHYSICAL_DAMAGE_UP'
+  | 'TACTICAL_DAMAGE_RECEIVED_DOWN'
+  | 'EXCLUDES_BASIC_ATTACKS'
+  | 'OTHER_ALLIES_TARGET'
+  | 'DAMAGE_DEALT_UP'
+  | 'STRENGTH_UP'
+  | 'FIRST_STRIKE'
+  | 'DOUBLE_STRIKE';
 
-export interface CommandDefinition {
-  name: string;
-  description: string;
-  triggerChance: number | null;
-  target: string | null;
-  durationRounds: number | null;
-  tags: EffectTag[];
-  sourceIds: string[];
+export type AbilityKind = 'command' | 'trait' | 'habit';
+
+export type TriggerTiming =
+  | 'passive'
+  | 'start-of-combat'
+  | 'each-round'
+  | 'start-of-round'
+  | 'specific-rounds';
+
+export type FormationPosition = 'left-flank' | 'vanguard' | 'right-flank';
+
+export type TargetScope =
+  | 'self'
+  | 'same-lane'
+  | 'any-lane'
+  | 'within-adjacency'
+  | 'left-flank'
+  | 'unknown';
+
+export type FieldVerificationStatus =
+  | 'unknown'
+  | 'officially-confirmed'
+  | 'screenshot-verified'
+  | 'partially-screenshot-verified'
+  | 'community-unverified'
+  | 'community-verified';
+
+export interface FieldVerification {
+  status: FieldVerificationStatus;
+  source: string;
+  capturedAt: string | null;
+  gameVersion: string | null;
+  reviewedManually: boolean;
 }
 
-export interface HabitDefinition {
+export interface RankedValue {
+  level: 0 | 1 | 2 | 3 | 4 | 5;
+  value: number;
+  unit: 'percent' | 'flat' | 'power';
+}
+
+export interface GlossaryEntry {
+  term: string;
+  definition: string;
+}
+
+export interface AbilityEffect {
   id: string;
+  type: string;
+  target: string;
+  targetScope: TargetScope;
+  magnitude: number | null;
+  unit: 'percent' | 'flat' | 'rate' | 'rounds' | 'unknown';
+  durationRounds: number | null;
+  duration: string | null;
+  scaling: string[];
+  excludes: string[];
+  notes: string[];
+  rankedValues: RankedValue[];
+}
+
+export interface AbilitySchedule {
+  id: string;
+  timing: TriggerTiming;
+  rounds: number[];
+  triggerChanceFixed: number | null;
+  triggerChanceByHabitLevel: RankedValue[];
+  effects: AbilityEffect[];
+}
+
+export interface AbilityDefinition {
+  id: string;
+  dragonId: string;
+  kind: AbilityKind;
   name: string;
-  description: string;
+  abilityClass: 'active' | 'passive' | 'unknown';
   unlockStarRank: number | null;
+  minimumDragonLevel: number | null;
+  rawDescription: string | null;
+  schedules: AbilitySchedule[];
+  powerByHabitLevel: RankedValue[];
+  glossaryEntries: GlossaryEntry[];
   tags: EffectTag[];
-  sourceIds: string[];
+  verification: FieldVerification;
+  evidenceIds: string[];
+  unresolvedQuestions: string[];
+  positionRequirement: FormationPosition | null;
 }
 
 export interface DragonStats {
   strength: number | null;
   intelligence: number | null;
-  instincts: number | null;
+  instinct: number | null;
   initiative: number | null;
 }
 
@@ -72,11 +167,14 @@ export interface Dragon {
   dataStatus: VerificationStatus;
   lastVerified: string;
   notes: string | null;
-  command: CommandDefinition | null;
-  habits: HabitDefinition[];
+  command: AbilityDefinition | null;
+  trait: AbilityDefinition | null;
+  habits: AbilityDefinition[];
   affinities: Record<TroopType, AffinityLevel>;
   stats: DragonStats;
   tags: EffectTag[];
+  fieldVerification: Partial<Record<string, FieldVerification>>;
+  unresolvedQuestions: string[];
 }
 
 export interface OwnedDragon {
@@ -85,16 +183,20 @@ export interface OwnedDragon {
   starRank: number | null;
   reignLevel: number | null;
   notes: string;
+  habitLevels: Record<string, 0 | 1 | 2 | 3 | 4 | 5 | null>;
 }
 
 export interface EvidenceSource {
   id: string;
   type: 'official-page' | 'official-patch-note' | 'in-game-screenshot' | 'community-test';
   title: string;
+  description?: string;
   url: string | null;
   capturedAt: string | null;
+  language?: 'English';
   gameVersion: string | null;
   submittedBy: string | null;
+  reviewedManually?: boolean;
   verificationStatus: VerificationStatus;
 }
 
@@ -112,4 +214,10 @@ export const VERIFICATION_STATUSES: VerificationStatus[] = [
   'community-unverified',
   'community-verified',
   'officially-confirmed',
+];
+
+export const FORMATION_POSITIONS: FormationPosition[] = [
+  'left-flank',
+  'vanguard',
+  'right-flank',
 ];

@@ -1,9 +1,10 @@
-import { TROOP_TYPES, type Dragon } from '../models/dragon';
+import { FORMATION_POSITIONS, TROOP_TYPES, type Dragon, type FormationPosition } from '../models/dragon';
 import type {
   AffinityCoverage,
   BreedDistribution,
   DataConfidence,
   ExplanationItem,
+  FormationAnalysisInput,
   MissingDataItem,
   SynergyResult,
   SynergyRule,
@@ -14,12 +15,36 @@ export function analyzeTeam(
   dragons: Dragon[],
   rules: SynergyRule[],
 ): SynergyResult {
-  const team = dragonIds
-    .map((id) => (id ? dragons.find((dragon) => dragon.id === id) : undefined))
+  return analyzeFormation(
+    {
+      'left-flank': dragonIds[0] ?? null,
+      vanguard: dragonIds[1] ?? null,
+      'right-flank': dragonIds[2] ?? null,
+    },
+    dragons,
+    rules,
+  );
+}
+
+export function analyzeFormation(
+  formation: FormationAnalysisInput,
+  dragons: Dragon[],
+  rules: SynergyRule[],
+): SynergyResult {
+  const formationEntries = FORMATION_POSITIONS.map((position) => ({
+    position,
+    dragon: formation[position]
+      ? dragons.find((dragon) => dragon.id === formation[position])
+      : undefined,
+  }));
+  const team = formationEntries
+    .map((entry) => entry.dragon)
     .filter((dragon): dragon is Dragon => Boolean(dragon));
   const missingData = findMissingData(team);
   const positives = findEffectInteractions(team, rules);
   const conflicts = findTeamConflicts(team, rules);
+  const positionRequirements = findPositionRequirements(formationEntries);
+  const unmetRequirements = positionRequirements.filter((item) => item.ruleId.startsWith('unmet-'));
   const confidence = calculateDataConfidence(team);
   const warnings: string[] = [];
 
@@ -40,6 +65,12 @@ export function analyzeTeam(
     confidence,
     positives,
     conflicts,
+    positionRequirements: positionRequirements.filter((item) => !item.ruleId.startsWith('unmet-')),
+    unmetRequirements,
+    unresolvedAssumptions: [
+      'The exact within-adjacency graph requires confirmation. Formations are not invalidated from unverified adjacency assumptions.',
+      ...team.flatMap((dragon) => dragon.unresolvedQuestions),
+    ],
     warnings,
     missingData,
   };
@@ -120,6 +151,73 @@ function findMissingFields(dragon: Dragon): MissingDataItem['fields'] {
     fields.push('tags');
   }
   return fields;
+}
+
+function findPositionRequirements(
+  formationEntries: Array<{ position: FormationPosition; dragon: Dragon | undefined }>,
+): ExplanationItem[] {
+  const entries = formationEntries.filter(
+    (entry): entry is { position: FormationPosition; dragon: Dragon } => Boolean(entry.dragon),
+  );
+  const items: ExplanationItem[] = [];
+  const positionByDragon = new Map(entries.map((entry) => [entry.dragon.id, entry.position]));
+  const dragonByPosition = new Map(entries.map((entry) => [entry.position, entry.dragon]));
+
+  for (const { dragon, position } of entries) {
+    const abilities = [dragon.command, dragon.trait, ...dragon.habits].filter(
+      (ability): ability is NonNullable<typeof ability> => Boolean(ability),
+    );
+    for (const ability of abilities) {
+      if (!ability.positionRequirement) {
+        continue;
+      }
+      const met = ability.positionRequirement === position;
+      items.push({
+        dragonIds: [dragon.id],
+        tags: ability.tags,
+        ruleId: `${met ? 'met' : 'unmet'}-${ability.id}-${ability.positionRequirement}`,
+        title: `${ability.name} position requirement`,
+        description: `${dragon.name} ${met ? 'meets' : 'does not meet'} ${ability.name}'s ${formatPosition(ability.positionRequirement)} requirement.`,
+        confidence: ability.verification.status === 'screenshot-verified' ? 'medium' : 'low',
+      });
+    }
+  }
+
+  const malachite = entries.find((entry) => entry.dragon.id === 'malachite');
+  const leftFlank = dragonByPosition.get('left-flank');
+  if (malachite?.position === 'vanguard' && leftFlank) {
+    items.push({
+      dragonIds: ['malachite', leftFlank.id],
+      tags: ['FIRE_DAMAGE_UP', 'LEFT_FLANK_TARGET'],
+      ruleId: 'malachite-left-flank-fire-damage',
+      title: "Sentinel's Presence Left Flank bonus",
+      description:
+        "Malachite in Vanguard can increase Fire Damage Dealt for the ally deployed in Left Flank. Whether that ally has verified Fire Damage usage may still be unknown.",
+      confidence: 'medium',
+    });
+  }
+
+  const malachitePosition = positionByDragon.get('malachite');
+  if (malachitePosition) {
+    items.push({
+      dragonIds: ['malachite'],
+      tags: ['ADJACENT_TARGET'],
+      ruleId: 'malachite-adjacency-unresolved',
+      title: 'Lightning Strike adjacency unresolved',
+      description:
+        'Lightning Strike needs 1 other Ally within adjacency, but the exact adjacency graph is not independently confirmed.',
+      confidence: 'low',
+    });
+  }
+
+  return items;
+}
+
+function formatPosition(position: FormationPosition): string {
+  return position
+    .split('-')
+    .map((part) => part.charAt(0).toUpperCase() + part.slice(1))
+    .join(' ');
 }
 
 function buildExplanationsForRule(team: Dragon[], rule: SynergyRule): ExplanationItem[] {
