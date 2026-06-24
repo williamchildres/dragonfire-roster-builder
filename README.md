@@ -18,17 +18,17 @@ Screenshot placeholder: add a production screenshot after the first GitHub Pages
 - Production debug view for active, inactive, potential, blocked, and unknown formation interactions, including provider-to-recipient amplification traces
 - Generic effect-capability framework for Physical Damage, Tactical Damage, Fire Damage, and Recovery matching
 - Damage capability matrix and `npm run report:synergy` review report for the currently populated combat datasets
-- Partially verified combat datasets for Malachite, Seasmoke, Sheepstealer, and Vermax
+- Partially verified combat datasets for Syrax, Caraxes, Malachite, Seasmoke, Sheepstealer, and Vermax
 - Manual-review records for the current screenshot-normalized datasets
 - Collection state and shard tracking for not-collected, not-hatched, and hatched dragons
-- Status glossary entries for screenshot-verified status effects such as Prey, Spreading Blaze, Stolen Flock, Rallying Flame, Advantage, Resistance, and Weakened
+- Status glossary entries for screenshot-verified status effects such as First-Strike, Slow, Burn, Control, Prey, Spreading Blaze, Stolen Flock, Rallying Flame, Advantage, Resistance, and Weakened
 - Canonical stat definitions separated from account-specific observations
 - Dragon troop affinity separated from troop-type matchup rules
 - GitHub Actions CI and GitHub Pages deployment workflows
 
 ## Data Limitations
 
-Most dragons still contain official public identity metadata only. Malachite, Seasmoke, Sheepstealer, and Vermax have partial screenshot-verified combat datasets reviewed against game build `26.6.53509`. Sheepstealer and Vermax are recorded as in-game verified pending official-site dragons, so their official profile URLs are intentionally null until they appear on the public roster page. Canonical base stats, exact scaling formulas, enemy-formation adjacency, stack expiration behavior, and several source details are not guessed. Unknown values display as `Not yet verified`.
+Most dragons still contain official public identity metadata only. Syrax, Caraxes, Malachite, Seasmoke, Sheepstealer, and Vermax have partial screenshot-verified combat datasets reviewed against game build `26.6.53509`. Sheepstealer and Vermax are recorded as in-game verified pending official-site dragons, so their official profile URLs are intentionally null until they appear on the public roster page. Canonical base stats, exact scaling formulas, enemy-formation adjacency, stack expiration behavior, and several source details are not guessed. Unknown values display as `Not yet verified`.
 
 Star Rank is 1-10. Habit Level is separate: `null` means not recorded, `0` means explicitly recorded with no Habit upgrades, and `1-5` are upgraded Habit levels.
 
@@ -49,6 +49,8 @@ Phase 3.7 adds a reusable capability framework instead of relying on one-off dra
 The framework honors source scope, position requirements, unlock state, user progression, and preview mode. Unqualified damage modifiers apply to all qualifying sources, while explicit exclusions such as "excluding Basic Attacks" block Basic Attack matches. Locked capabilities can appear as future or potential in preview analysis but are not active for the user's current roster.
 
 Phase 3.7.1 separates modifier roles. A dragon may amplify its own damage without supporting teammates. Self amplification such as Stolen Flock, Warrior's Zeal, Rallying Flame, and Wise Vigor is shown in capability review but cannot create cross-dragon support traces. Ally support, recipient-side amplification, and enemy debuffs are separate roles. Capability availability is also labeled by context: canonical kit, observed account state, and visitor roster state.
+
+Phase 3.8 adds Syrax and Caraxes combat records and expands the framework with status output capabilities, capability dependencies, and periodic damage definitions. The matcher can now explain status-condition enablement, such as Syrax First-Strike enabling Caraxes Infernal Burst's First-Strike multiplier, stat-scaling support, enemy mitigation reduction, and periodic damage amplification for Burn. These traces remain explanatory and do not produce numerical synergy scores.
 
 Threshold wording is interpreted literally: "above 50%" means `> 50`, and "below 50%" means `< 50`. Exactly 50% matches neither wording until combat logs confirm otherwise.
 
@@ -116,7 +118,7 @@ Dragonfire Roster Lab is an unofficial community project and is not affiliated w
 
 ## Project Status
 
-Version `0.4.3` clarifies capability targeting, modifier roles, and availability context. Data schema is `6`; local roster schema remains `3`.
+Version `0.5.0` adds Syrax and Caraxes combat datasets plus status/stat/periodic dependency tracing. Data schema is `7`; local roster schema remains `3`.
 
 ## Planned Next Steps
 

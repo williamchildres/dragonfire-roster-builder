@@ -6,7 +6,7 @@ Dragonfire Roster Lab separates public roster metadata, verified combat facts, a
 
 Seeded dragon records live in `src/data/dragons.ts`. Most dragons contain official identity metadata only. Unknown combat fields remain null, empty arrays, or `unknown`.
 
-Malachite, Seasmoke, Sheepstealer, and Vermax are partial exceptions: their Commands, Traits, Habits, and some affinities are screenshot verified. Canonical base stats remain unknown.
+Syrax, Caraxes, Malachite, Seasmoke, Sheepstealer, and Vermax are partial exceptions: their Commands, Traits, Habits, and some affinities are screenshot verified. Canonical base stats remain unknown.
 
 `rosterSourceStatus` distinguishes:
 
@@ -61,11 +61,11 @@ Provider-to-recipient amplification is modeled without producing a score. A Reco
 
 ## Effect Capabilities
 
-Data schema 6 stores normalized effect capabilities with explicit modifier role and availability context. `OutputCapability` records what a dragon can produce, such as Physical Damage, Tactical Damage, Fire Damage, or Recovery. `ModifierCapability` records channel modifiers, such as Physical Damage Dealt Up or Recovery Received Up. A dragon may have several capabilities in the same channel; do not collapse a mixed kit into one damage tag.
+Data schema 7 stores normalized effect capabilities with explicit modifier role, availability context, output dependencies, status outputs, and periodic damage definitions. `OutputCapability` records what a dragon can produce, such as Physical Damage, Tactical Damage, Fire Damage, or Recovery. `ModifierCapability` records channel modifiers, such as Physical Damage Dealt Up or Recovery Received Up. `StatusOutputCapability` records statuses such as First-Strike, Slow, Burn, and Resistance. `PeriodicDamageDefinition` records periodic effects such as Burn ticking as Fire Damage. A dragon may have several capabilities in the same channel; do not collapse a mixed kit into one damage tag.
 
 `ModifierRole` separates self amplification, ally support, recipient-side amplification, and enemy debuffs. Outgoing cross-dragon amplification only uses `ally-support` modifiers. Self amplification is visible in review, but it must not support another dragon. Incoming amplification uses `recipient-side-amplification` modifiers. Enemy debuffs are reserved for a future debuff-exploitation framework.
 
-Synergy matching uses capabilities rather than dragon names. Outgoing amplification matches an ally-support `dealt` modifier to recipient output capabilities in the same channel. Incoming amplification matches an ally or self output provider to a recipient-side `received` modifier in the same channel. Both paths check formation targeting, position requirements, user progression, source scope, evidence confidence, and active versus future availability.
+Synergy matching uses capabilities rather than dragon names. Outgoing amplification matches an ally-support `dealt` modifier to recipient output capabilities in the same channel. Incoming amplification matches an ally or self output provider to a recipient-side `received` modifier in the same channel. Status-condition enablement matches a status output to an output dependency such as self First-Strike or any enemy Slow. Stat-scaling support matches ally stat buffs to outputs that scale with that stat. Enemy mitigation reduction matches enemy stat debuffs to outputs mitigated by that target stat. Periodic damage amplification matches channel support to periodic damage definitions such as Burn Fire Damage. These paths check formation targeting, position requirements, user progression, source scope, evidence confidence, and active versus future availability.
 
 `primaryDamageChannel` is descriptive only. It may summarize a reviewed dragon for display, but it must never be used as the matching source when specific output capabilities are available.
 
@@ -73,7 +73,7 @@ Source scopes prevent false matches. `all-qualifying-sources` can match Basic At
 
 Capability availability has three contexts: canonical availability describes the kit and unlock requirements; observed-account availability records supplied screenshot state such as Seasmoke being not hatched; user-roster availability comes from browser localStorage and is used by the Formation Builder. The report script cannot inspect a visitor's localStorage, so it does not claim user availability.
 
-Capabilities are derived from structured `AbilityEffect` records plus one reviewed Vermax Basic Attack capability. Effect tags alone do not create authoritative capabilities.
+Capabilities are derived from structured `AbilityEffect` records plus one reviewed Vermax Basic Attack capability. Effect tags alone do not create authoritative capabilities. Output dependencies are derived from structured scaling, conditional multipliers, and canonical stat relationships; unsupported tags do not create dependencies.
 
 Statuses include active, potential, inactive, blocked, unknown, and not-applicable. Locked Habits and future progression are potential when previewed, not active for the user's current roster. Numerical synergy scores remain null unless enough verified data exists for all selected dragons.
 

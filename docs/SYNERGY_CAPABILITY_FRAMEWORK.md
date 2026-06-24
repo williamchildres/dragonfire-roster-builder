@@ -1,6 +1,6 @@
 # Synergy Capability Framework
 
-Phase 3.7 introduced a generic capability framework for effect-channel matching. Phase 3.7.1 clarifies modifier roles, target scope, and availability context. The goal is to explain formation interactions from normalized ability facts instead of writing one-off pair checks for specific dragons.
+Phase 3.7 introduced a generic capability framework for effect-channel matching. Phase 3.7.1 clarified modifier roles, target scope, and availability context. Phase 3.8 adds Syrax and Caraxes plus status output, dependency, stat-scaling, enemy-mitigation, and periodic-damage tracing. The goal is to explain formation interactions from normalized ability facts instead of writing one-off pair checks for specific dragons.
 
 The framework currently supports four effect channels:
 
@@ -10,6 +10,8 @@ The framework currently supports four effect channels:
 - Recovery
 
 It is designed to extend later to shields, damage-over-time, control effects, damage received modifiers, Basic Attack amplification, command activation, recovery prevention, and similar mechanics.
+
+Status outputs and periodic damage now sit beside the four channel model. First-Strike, Slow, Burn, and Resistance can be represented as status capabilities, while Burn also has a periodic Fire Damage definition. Status capabilities do not automatically become damage outputs unless structured effect data says they produce a channel such as Burn producing Fire Damage.
 
 ## Output Capabilities
 
@@ -25,8 +27,16 @@ Output capabilities record:
 - Unlock Star Rank, Dragon Level, and Habit Level requirements
 - Conditional state and conditions
 - Evidence IDs and confidence
+- Structured dependencies, such as scales with Intelligence, mitigated by target Initiative, requires self First-Strike, or requires any enemy Slow
 
 A dragon may have multiple output capabilities in the same channel. Mixed-damage dragons must retain every verified channel.
+
+Examples added in Phase 3.8:
+
+- Syrax Blazing Fury produces Tactical Damage.
+- Syrax Strategic Revival produces Recovery and depends on any enemy Slow for its conditional 1.5x Recovery.
+- Caraxes Infernal Burst produces Fire Damage and depends on self First-Strike for its conditional 1.5x damage.
+- Caraxes Crippling Inferno produces Burn as periodic Fire Damage and Slow as a status.
 
 ## Modifier Capabilities
 
@@ -100,6 +110,17 @@ Example:
 - Malachite provides Recovery through Warden's Rally. Sheepstealer has Recovery Received +20% from Hunter's Cunning while Level 16+ and deployed in Vanguard. The trace is active when those requirements are met.
 
 The framework does not calculate exact Recovery or final damage amounts because the complete game formulas remain unknown.
+
+## Dependency Traces
+
+Phase 3.8 adds four additional generic trace families:
+
+- `status-condition-enablement`: a status output satisfies a condition on another capability. Example: Syrax can grant First-Strike, and Caraxes Infernal Burst has a verified self First-Strike multiplier.
+- `stat-scaling-support`: ally stat support matches an output that scales with that stat. Example: Caraxes Hunter's Wrath can support Syrax Strategic Revival Recovery through Right Flank Initiative support when Syrax is in Right Flank.
+- `enemy-mitigation-reduction`: enemy stat debuffs match outputs mitigated by that stat. Example: Syrax Flight Mastery can reduce enemy Initiative, which may improve Caraxes Fire Damage outputs because Fire Damage is mitigated by target Initiative.
+- `periodic-damage-amplification`: damage-channel support can apply to periodic damage definitions. Example: Syrax Fire support can amplify Caraxes Burn because Burn is periodic Fire Damage.
+
+These traces are conditional or potential when unlocks, trigger chances, target selection, or exact battlefield state are unresolved. They never produce numerical scores.
 
 ## Source-Scope Matching
 
@@ -181,11 +202,16 @@ Example:
 
 ## Capability Matrix
 
-The app and `npm run report:synergy` expose the matrix for Malachite, Seasmoke, Sheepstealer, and Vermax. The matrix separates Outputs, Supports Allies, and Self / Recipient Modifiers. Each cell names canonical and observed-account availability rather than using ambiguous "current" terminology.
+The app and `npm run report:synergy` expose the matrix for Syrax, Caraxes, Malachite, Seasmoke, Sheepstealer, and Vermax. The matrix separates Outputs, Status Outputs, Supports Allies, and Self / Recipient Modifiers. Each cell names canonical and observed-account availability rather than using ambiguous "current" terminology.
 
 ## Current Limitations
 
 - Vermax Basic Attack Physical Damage is represented as a reviewed capability because a full canonical Basic Attack model does not exist yet.
+- Syrax enemy adjacency semantics for Blazing Fury Tactical Damage remain unresolved.
+- Burn stacking, refresh, and overlapping source behavior remain unresolved.
+- Slow ordering relative to all turn-order modifiers is not fully modeled.
+- Control versus Negative-effect cleanse overlap remains unresolved.
+- Caraxes Blood Wyrm Fire Damage duration and accumulation semantics remain unresolved.
 - Spreading Blaze target selection is chance-based and selection-dependent; exact stack count is unknown.
 - Exact damage, Recovery, and stacking formulas remain unknown.
 - Stack refresh and expiration behavior remains unresolved.

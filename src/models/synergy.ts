@@ -1,4 +1,4 @@
-import type { BattleContext, Dragon, EffectTag, FormationPosition, TargetScope, TroopType, VerificationStatus } from './dragon';
+import type { BattleContext, Dragon, EffectTag, FormationPosition, RankedValue, TargetScope, TroopType, VerificationStatus } from './dragon';
 
 export type DataConfidence = 'none' | 'low' | 'medium' | 'high';
 
@@ -100,7 +100,7 @@ export interface SynergyTrace {
   combatLogConfirmed?: boolean;
   exactResultKnown?: boolean;
   exactResultUnknownReason?: string | null;
-  matchKind?: 'outgoing-effect-amplification' | 'incoming-effect-amplification' | null;
+  matchKind?: SynergyTraceMatchKind | null;
   channel?: EffectChannel | null;
   modifierRole?: ModifierRole | null;
   targetSelectorSummary?: string | null;
@@ -125,6 +125,16 @@ export interface RecipientAmplificationTrace {
 }
 
 export type EffectChannel = 'physical-damage' | 'tactical-damage' | 'fire-damage' | 'recovery' | 'stat';
+
+export type DragonStatId = 'strength' | 'instinct' | 'intelligence' | 'initiative';
+
+export type SynergyTraceMatchKind =
+  | 'outgoing-effect-amplification'
+  | 'incoming-effect-amplification'
+  | 'status-condition-enablement'
+  | 'stat-scaling-support'
+  | 'enemy-mitigation-reduction'
+  | 'periodic-damage-amplification';
 
 export type CapabilitySourceKind = 'basic-attack' | 'command' | 'trait' | 'habit';
 
@@ -215,6 +225,7 @@ export interface OutputCapability {
   requiredHabitLevel: number | null;
   conditional: boolean;
   conditions: EffectCondition[];
+  dependencies: CapabilityDependency[];
   currentlyAvailable: boolean;
   futureAvailable: boolean;
   availability: CapabilityAvailabilityContext;
@@ -267,11 +278,71 @@ export interface CapabilityMatch {
 }
 
 export interface AmplificationSynergyTrace extends SynergyTrace {
-  matchKind: 'outgoing-effect-amplification' | 'incoming-effect-amplification';
+  matchKind: SynergyTraceMatchKind;
   channel: EffectChannel;
   modifierCapabilityId: string;
   matchedOutputCapabilityIds: string[];
   sourceScopeResults: CapabilityMatch[];
+}
+
+export type CapabilityDependencyType =
+  | 'requires-self-status'
+  | 'requires-any-enemy-status'
+  | 'requires-target-status'
+  | 'scales-with-stat'
+  | 'mitigated-by-target-stat'
+  | 'target-prioritizes-channel'
+  | 'target-prioritizes-status'
+  | 'target-prioritizes-lowest-troops'
+  | 'repeat-per-matching-enemy'
+  | 'previous-round-event';
+
+export interface CapabilityDependency {
+  type: CapabilityDependencyType;
+  statusId?: string;
+  statId?: DragonStatId;
+  channel?: EffectChannel;
+  eventId?: string;
+  multiplier?: number;
+  notes: string[];
+}
+
+export interface StatusOutputCapability {
+  id: string;
+  dragonId: string;
+  abilityId: string;
+  abilityName: string;
+  statusId: string;
+  targetSide: CapabilityTargetSide;
+  targetSelector: AbilityTarget;
+  unlockStarRank: number | null;
+  minimumDragonLevel: number | null;
+  requiredHabitLevel: number | null;
+  chanceFixed: number | null;
+  chanceByHabitLevel: RankedValue[];
+  durationRounds: number | null;
+  untilEndOfRound: boolean;
+  untilEndOfCombat: boolean;
+  conditions: EffectCondition[];
+  currentlyAvailable: boolean;
+  futureAvailable: boolean;
+  availability: CapabilityAvailabilityContext;
+  directlyVerified: boolean;
+  evidenceIds: string[];
+}
+
+export interface PeriodicDamageDefinition {
+  statusId: string;
+  dragonId: string;
+  abilityId: string;
+  channel: EffectChannel;
+  damageRateFixed: number | null;
+  damageRateByHabitLevel: RankedValue[];
+  ticksEachRound: boolean;
+  durationRounds: number | null;
+  scalingStat: DragonStatId | null;
+  mitigationStat: DragonStatId | null;
+  evidenceIds: string[];
 }
 
 export interface DragonEffectProfile {

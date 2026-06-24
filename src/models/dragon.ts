@@ -88,7 +88,10 @@ export type EffectTag =
   | 'PANIC'
   | 'WEAKENED'
   | 'ADVANTAGE'
-  | 'COMMAND_AUGMENTATION';
+  | 'COMMAND_AUGMENTATION'
+  | 'SLOW'
+  | 'CONTROL'
+  | 'CLEANSE_NEGATIVE';
 
 export type AbilityKind = 'command' | 'trait' | 'habit';
 
@@ -101,7 +104,8 @@ export type TriggerTiming =
   | 'specific-rounds'
   | 'after-basic-attack'
   | 'on-successful-cleanse'
-  | 'when-marked-target-receives-recovery';
+  | 'when-marked-target-receives-recovery'
+  | 'when-enemy-retreated-previous-round';
 
 export type FormationPosition = 'left-flank' | 'vanguard' | 'right-flank';
 
@@ -133,6 +137,11 @@ export type TargetPriority =
   | 'any-eligible'
   | 'same-lane'
   | 'highest-stat-ally'
+  | 'least-current-troops-ally'
+  | 'prefer-fire-damage-ally'
+  | 'prefer-control-afflicted-ally'
+  | 'prefer-left-flank'
+  | 'prefer-right-flank'
   | 'current-marked-target'
   | 'prefer-received-recovery-last-round'
   | 'prefer-prey'
@@ -145,6 +154,8 @@ export type ConditionKind =
   | 'target-lacks-status'
   | 'no-enemy-has-mark'
   | 'target-received-recovery-previous-round'
+  | 'any-enemy-has-status'
+  | 'previous-round-event'
   | 'target-above-troop-capacity-threshold'
   | 'target-below-troop-capacity-threshold'
   | 'battle-context'
@@ -191,6 +202,16 @@ export interface StackConfiguration {
   valuePerStackFixed: number | null;
   valuePerStackByHabitLevel: RankedValue[];
   refreshBehavior: 'unknown' | 'refresh-all' | 'refresh-stack' | 'independent-duration';
+}
+
+export interface PerTargetEffectCheck {
+  targetCount: number;
+  effects: Array<{
+    effectId: string;
+    independentlyChecked: boolean;
+  }>;
+  targetsCheckedIndependently: boolean;
+  sharedChanceByHabitLevel: RankedValue[];
 }
 
 export interface ConditionalMultiplier {
@@ -252,6 +273,7 @@ export interface AbilityEffect {
   targetCount?: number | null;
   includesCaster?: boolean | null;
   casterEligibility?: CasterEligibility;
+  perTargetEffectCheck?: PerTargetEffectCheck | null;
 }
 
 export interface AbilitySchedule {

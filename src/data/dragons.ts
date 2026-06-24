@@ -17,6 +17,7 @@ import type {
   StackConfiguration,
   TargetPriority,
   CasterEligibility,
+  PerTargetEffectCheck,
 } from '../models/dragon';
 import { databaseMetadata } from './databaseMetadata';
 
@@ -187,6 +188,7 @@ const fixedEffect = ({
   targetCount = null,
   includesCaster = null,
   casterEligibility = 'unknown',
+  perTargetEffectCheck = null,
 }: {
   id: string;
   type: string;
@@ -210,6 +212,7 @@ const fixedEffect = ({
   targetCount?: number | null;
   includesCaster?: boolean | null;
   casterEligibility?: CasterEligibility;
+  perTargetEffectCheck?: PerTargetEffectCheck | null;
 }): AbilityEffect => ({
   id,
   type,
@@ -233,6 +236,7 @@ const fixedEffect = ({
   targetCount,
   includesCaster,
   casterEligibility,
+  perTargetEffectCheck,
 });
 
 const schedule = ({
@@ -334,6 +338,309 @@ const ability = ({
 });
 
 const standardHabitPower = rankedPowers([420, 920, 1500, 2200, 3100]);
+const finalLegendaryPowerEarly = rankedPowers([430, 1000, 1700, 2700, 4000]);
+
+const selfFirstStrikeCondition = condition(
+  'self-has-first-strike',
+  'self-has-status',
+  'Self has First-Strike.',
+  { subject: 'self', statusId: 'first-strike' },
+);
+
+const anyEnemySlowCondition = condition(
+  'any-enemy-has-slow',
+  'any-enemy-has-status',
+  'Any enemy is afflicted with Slow.',
+  { subject: 'enemy', statusId: 'slow' },
+);
+
+const enemyBelowHalfMaximumTroops = condition(
+  'enemy-below-50-maximum-troops',
+  'target-below-troop-capacity-threshold',
+  'Enemy is below 50% maximum Troop Capacity.',
+  { subject: 'enemy', thresholdPercent: 50, comparison: 'below' },
+);
+
+const enemyRetreatedPreviousRound = condition(
+  'enemy-retreated-previous-round',
+  'previous-round-event',
+  'Enemy retreated during the previous round.',
+  { subject: 'enemy' },
+);
+
+const createSyrax = (): Dragon => {
+  const strategicRevivalRecovery = fixedEffect({
+    id: 'strategic-revival-recovery',
+    type: 'Recovery',
+    target: 'Ally with least current troops',
+    targetScope: 'any-lane',
+    magnitude: null,
+    unit: 'rate',
+    rankedValues: rankedPercents([50, 60, 70, 85, 100]),
+    scaling: ['Initiative', 'dragon Level'],
+    targetPriority: 'least-current-troops-ally',
+    conditionalMultipliers: [
+      multiplier('strategic-revival-slow-1-5x', 1.5, anyEnemySlowCondition, 'Recovery is multiplied by 1.5 if any enemy has Slow.', [
+        { level: 1, value: 75, unit: 'percent' },
+      ]),
+    ],
+    notes: ['Higher conditional Recovery values are calculated from the verified 1.5x multiplier.'],
+  });
+  const strategicRevivalResistance = fixedEffect({
+    id: 'strategic-revival-resistance',
+    type: 'Resistance',
+    target: 'Ally with least current troops',
+    targetScope: 'any-lane',
+    magnitude: 20,
+    unit: 'percent',
+    durationRounds: 2,
+    targetPriority: 'least-current-troops-ally',
+    notes: ['Resistance reduces Damage Received.'],
+  });
+  const strategicRevivalSchedule = schedule({
+    id: 'strategic-revival-recovery-rounds',
+    timing: 'specific-rounds',
+    rounds: [2, 5, 8],
+    triggerChanceByHabitLevel: rankedPercents([40, 52, 64, 80, 100]),
+    targetPriority: 'least-current-troops-ally',
+    effects: [strategicRevivalRecovery, strategicRevivalResistance],
+  });
+
+  const command = ability({
+    dragonId: 'syrax',
+    id: 'syrax-blazing-fury',
+    kind: 'command',
+    name: 'Blazing Fury',
+    abilityClass: 'active',
+    unlockStarRank: null,
+    rawDescription:
+      'Each Round: 20% chance to increase Fire Damage Dealt by 10% and grant First-Strike to one Ally in any lane for 2 rounds, prioritizing allies that deal Fire Damage. Rounds 1, 4, 6, 9: deal Tactical Damage to one enemy within adjacency.',
+    schedules: [
+      schedule({
+        id: 'blazing-fury-fire-support',
+        timing: 'each-round',
+        triggerChanceFixed: 20,
+        targetPriority: 'prefer-fire-damage-ally',
+        effects: [
+          fixedEffect({
+            id: 'blazing-fury-fire-damage-up',
+            type: 'Fire Damage Dealt Up',
+            target: '1 Ally',
+            targetScope: 'any-lane',
+            magnitude: 10,
+            unit: 'percent',
+            durationRounds: 2,
+            targetPriority: 'prefer-fire-damage-ally',
+            casterEligibility: 'eligible-if-targeting-allows',
+            notes: ['Selection prioritizes allies with verified Fire Damage output.'],
+          }),
+          fixedEffect({
+            id: 'blazing-fury-first-strike',
+            type: 'First-Strike',
+            target: '1 Ally',
+            targetScope: 'any-lane',
+            magnitude: null,
+            unit: 'unknown',
+            durationRounds: 2,
+            targetPriority: 'prefer-fire-damage-ally',
+            casterEligibility: 'eligible-if-targeting-allows',
+          }),
+        ],
+      }),
+      schedule({
+        id: 'blazing-fury-tactical-damage',
+        timing: 'specific-rounds',
+        rounds: [1, 4, 6, 9],
+        effects: [
+          fixedEffect({
+            id: 'blazing-fury-tactical-rate',
+            type: 'Tactical Damage',
+            target: '1 Enemy',
+            targetScope: 'within-adjacency',
+            magnitude: 110,
+            unit: 'rate',
+            scaling: ['attacker Instinct'],
+            notes: ['Mitigated by target Intelligence.', 'Enemy adjacency semantics are not yet verified.'],
+          }),
+        ],
+      }),
+    ],
+    tags: ['TACTICAL_DAMAGE', 'FIRE_DAMAGE_UP', 'FIRST_STRIKE', 'ANY_LANE_TARGET'],
+    verification: screenshotVerification('Syrax Blazing Fury screenshots'),
+    evidenceIds: ['syrax-blazing-fury-summary-2026-06-24', 'syrax-blazing-fury-details-2026-06-24'],
+    unresolvedQuestions: ['Enemy adjacency semantics for Tactical Damage target.'],
+  });
+  command.augmentations.push({
+    id: 'syrax-strategic-revival-augmentation',
+    sourceAbilityId: 'syrax-strategic-revival',
+    modifiesAbilityId: 'syrax-blazing-fury',
+    minimumDragonStarRank: 6,
+    schedulesAdded: [strategicRevivalSchedule],
+    effectsAdded: strategicRevivalSchedule.effects,
+    rawDescription: 'At 6 Stars, Strategic Revival augments Blazing Fury with Recovery and Resistance on rounds 2, 5, and 8.',
+    evidenceIds: ['syrax-strategic-revival-2026-06-24'],
+  });
+
+  const trait = ability({
+    dragonId: 'syrax',
+    id: 'syrax-sentinels-wit',
+    kind: 'trait',
+    name: "Sentinel's Wit",
+    abilityClass: 'passive',
+    unlockStarRank: 1,
+    minimumDragonLevel: 16,
+    positionRequirement: 'vanguard',
+    rawDescription: 'At Level 16+ and deployed in Vanguard, increase Syrax Tactical Damage Dealt by 16%. Increase Instinct and Initiative of Left Flank ally by +20.',
+    schedules: [
+      schedule({
+        id: 'sentinels-wit-passive',
+        timing: 'passive',
+        effects: [
+          fixedEffect({ id: 'sentinels-wit-tactical', type: 'Tactical Damage Dealt Up', target: 'Self', targetScope: 'self', magnitude: 16, unit: 'percent', sourceScope: 'all-sources' }),
+          fixedEffect({ id: 'sentinels-wit-left-instinct', type: 'Instinct Up', target: 'Left Flank ally', targetScope: 'left-flank', magnitude: 20, unit: 'flat' }),
+          fixedEffect({ id: 'sentinels-wit-left-initiative', type: 'Initiative Up', target: 'Left Flank ally', targetScope: 'left-flank', magnitude: 20, unit: 'flat' }),
+        ],
+      }),
+    ],
+    tags: ['TACTICAL_DAMAGE', 'INSTINCT_UP', 'BUFF_INITIATIVE', 'VANGUARD_REQUIRED', 'LEFT_FLANK_TARGET'],
+    verification: screenshotVerification("Syrax Sentinel's Wit screenshot"),
+    evidenceIds: ['syrax-sentinels-wit-2026-06-24'],
+  });
+
+  const habits = [
+    ability({
+      dragonId: 'syrax', id: 'syrax-mindful-synergy', kind: 'habit', name: 'Mindful Synergy', abilityClass: 'passive', unlockStarRank: 2,
+      rawDescription: 'Start of Combat: increase Intelligence and Instinct of 3 Allies in any lane until end of combat, enhanced by Syrax Initiative.',
+      schedules: [schedule({ id: 'mindful-synergy-start', timing: 'start-of-combat', effects: [
+        fixedEffect({ id: 'mindful-synergy-intelligence', type: 'Intelligence Up', target: '3 Allies', targetScope: 'any-lane', magnitude: null, unit: 'percent', rankedValues: rankedPercents([6.5, 7.8, 9.1, 11.05, 13]), scaling: ['Initiative'], duration: 'Until end of combat', targetCount: 3, includesCaster: true, casterEligibility: 'included' }),
+        fixedEffect({ id: 'mindful-synergy-instinct', type: 'Instinct Up', target: '3 Allies', targetScope: 'any-lane', magnitude: null, unit: 'percent', rankedValues: rankedPercents([6.5, 7.8, 9.1, 11.05, 13]), scaling: ['Initiative'], duration: 'Until end of combat', targetCount: 3, includesCaster: true, casterEligibility: 'included' }),
+      ] })],
+      powerByHabitLevel: standardHabitPower, tags: ['BUFF_INTELLIGENCE', 'BUFF_INSTINCTS', 'BUFF_ALLIES'], verification: screenshotVerification('Syrax Mindful Synergy screenshot'), evidenceIds: ['syrax-mindful-synergy-2026-06-24'], unresolvedQuestions: ['Exact enhanced-by-Initiative formula.'],
+    }),
+    ability({
+      dragonId: 'syrax', id: 'syrax-flight-mastery', kind: 'habit', name: 'Flight Mastery', abilityClass: 'passive', unlockStarRank: 4,
+      rawDescription: 'Start of Combat: increase Initiative of 3 Allies and reduce Initiative of 3 Enemies in any lane until end of combat, enhanced by Syrax Instinct.',
+      schedules: [schedule({ id: 'flight-mastery-start', timing: 'start-of-combat', effects: [
+        fixedEffect({ id: 'flight-mastery-initiative-up', type: 'Initiative Up', target: '3 Allies', targetScope: 'any-lane', magnitude: null, unit: 'percent', rankedValues: rankedPercents([6, 7.2, 8.4, 10.2, 12]), scaling: ['Instinct'], duration: 'Until end of combat', targetCount: 3, includesCaster: true, casterEligibility: 'included' }),
+        fixedEffect({ id: 'flight-mastery-initiative-down', type: 'Initiative Down', target: '3 Enemies', targetScope: 'any-lane', magnitude: null, unit: 'percent', rankedValues: rankedPercents([6, 7.2, 8.4, 10.2, 12]), scaling: ['Instinct'], duration: 'Until end of combat', targetCount: 3 }),
+      ] })],
+      powerByHabitLevel: standardHabitPower, tags: ['BUFF_INITIATIVE', 'DEBUFF_INITIATIVE'], verification: screenshotVerification('Syrax Flight Mastery screenshot'), evidenceIds: ['syrax-flight-mastery-2026-06-24'], unresolvedQuestions: ['Exact enhanced-by-Instinct formula.'],
+    }),
+    ability({
+      dragonId: 'syrax', id: 'syrax-strategic-revival', kind: 'habit', name: 'Strategic Revival', abilityClass: 'passive', unlockStarRank: 6,
+      rawDescription: 'Augments Blazing Fury: Rounds 2, 5, 8 recover the Ally with least current troops. Recovery is multiplied by 1.5 if any enemy has Slow. Chance to grant Resistance (-20%) for 2 rounds.',
+      schedules: [strategicRevivalSchedule], powerByHabitLevel: standardHabitPower, tags: ['COMMAND_AUGMENTATION', 'RECOVERY', 'RESISTANCE'], verification: screenshotVerification('Syrax Strategic Revival screenshot'), evidenceIds: ['syrax-strategic-revival-2026-06-24'], unresolvedQuestions: ['Exact Recovery formula.', 'Higher conditional Recovery values are calculated.'],
+    }),
+    ability({
+      dragonId: 'syrax', id: 'syrax-tactical-inferno', kind: 'habit', name: 'Tactical Inferno', abilityClass: 'passive', unlockStarRank: 8,
+      rawDescription: 'Start of Round 1: increase Tactical Damage Dealt of one Ally, prioritizing Left Flank, and Fire Damage Dealt of one Ally, prioritizing Right Flank, for 3 rounds.',
+      schedules: [schedule({ id: 'tactical-inferno-round-one', timing: 'start-of-round', rounds: [1], effects: [
+        fixedEffect({ id: 'tactical-inferno-tactical', type: 'Tactical Damage Dealt Up', target: '1 Ally, prioritizing Left Flank', targetScope: 'any-lane', magnitude: null, unit: 'percent', durationRounds: 3, rankedValues: rankedPercents([18, 21.6, 25.2, 30.6, 36]), targetPriority: 'prefer-left-flank', notes: ['Preferred position is not an absolute requirement.'] }),
+        fixedEffect({ id: 'tactical-inferno-fire', type: 'Fire Damage Dealt Up', target: '1 Ally, prioritizing Right Flank', targetScope: 'any-lane', magnitude: null, unit: 'percent', durationRounds: 3, rankedValues: rankedPercents([18, 21.6, 25.2, 30.6, 36]), targetPriority: 'prefer-right-flank', notes: ['Preferred position is not an absolute requirement.'] }),
+      ] })],
+      powerByHabitLevel: standardHabitPower, tags: ['TACTICAL_DAMAGE', 'FIRE_DAMAGE_UP', 'BUFF_ALLIES'], verification: screenshotVerification('Syrax Tactical Inferno screenshot'), evidenceIds: ['syrax-tactical-inferno-2026-06-24'], unresolvedQuestions: ['Whether one mixed-damage Ally may receive both modifiers.', 'Fallback selection when preferred flank lacks matching output.'],
+    }),
+    ability({
+      dragonId: 'syrax', id: 'syrax-mothers-mercy', kind: 'habit', name: "Mother's Mercy", abilityClass: 'passive', unlockStarRank: 10,
+      rawDescription: 'Each Round: chance to cleanse two Negative effects and one Control effect from one Ally in any lane, prioritizing Allies afflicted with Control.',
+      schedules: [schedule({ id: 'mothers-mercy-each-round', timing: 'each-round', triggerChanceByHabitLevel: rankedPercents([14, 18.2, 22.4, 28, 35]), targetPriority: 'prefer-control-afflicted-ally', effects: [
+        fixedEffect({ id: 'mothers-mercy-cleanse-negative', type: 'Cleanse Negative', target: '1 Ally', targetScope: 'any-lane', magnitude: 2, unit: 'flat', targetPriority: 'prefer-control-afflicted-ally' }),
+        fixedEffect({ id: 'mothers-mercy-cleanse-control', type: 'Cleanse Control', target: '1 Ally', targetScope: 'any-lane', magnitude: 1, unit: 'flat', targetPriority: 'prefer-control-afflicted-ally', notes: ['Control includes Stun, Stagger, Overwhelm, and Confusion.'] }),
+      ] })],
+      powerByHabitLevel: finalLegendaryPowerEarly, tags: ['CLEANSE_NEGATIVE', 'CONTROL'], verification: screenshotVerification("Syrax Mother's Mercy screenshot"), evidenceIds: ['syrax-mothers-mercy-2026-06-24'], unresolvedQuestions: ['Whether removing one Control also consumes one Negative-effect removal.', 'Selection order when multiple Control effects exist.'],
+    }),
+  ];
+
+  return {
+    ...createDragon('Syrax', 'Legendary', 'Sentinel'),
+    dataStatus: 'community-verified',
+    command,
+    trait,
+    habits,
+    affinities: { Cavalry: 'unknown', Shieldbearers: 'unknown', Archers: 'positive', Spearmen: 'positive', Siege: 'negative' },
+    tags: [...new Set<EffectTag>([...command.tags, ...trait.tags, ...habits.flatMap((habit) => habit.tags)])],
+    fieldVerification: { identity: screenshotVerification('Syrax main screen screenshot'), command: screenshotVerification('Syrax Blazing Fury screenshots'), trait: screenshotVerification("Syrax Sentinel's Wit screenshot"), habits: screenshotVerification('Syrax Habit screenshots'), affinities: partialScreenshotVerification('Syrax main screen screenshot') },
+    unresolvedQuestions: ['Enemy adjacency semantics for Blazing Fury Tactical Damage.', 'Exact stat-scaling formulas.'],
+  };
+};
+
+const createCaraxes = (): Dragon => {
+  const command = ability({
+    dragonId: 'caraxes',
+    id: 'caraxes-infernal-burst',
+    kind: 'command',
+    name: 'Infernal Burst',
+    abilityClass: 'active',
+    unlockStarRank: null,
+    rawDescription: 'Rounds 3, 6, 9: deal Fire Damage to 3 Enemies in any lane (Damage Rate +100%). If Caraxes has First-Strike, damage is multiplied by 1.5 and displayed as +150%.',
+    schedules: [schedule({ id: 'infernal-burst-fire', timing: 'specific-rounds', rounds: [3, 6, 9], effects: [
+      fixedEffect({ id: 'infernal-burst-fire-rate', type: 'Fire Damage', target: '3 Enemies', targetScope: 'any-lane', magnitude: 100, unit: 'rate', scaling: ['attacker Intelligence'], targetCount: 3, notes: ['Mitigated by target Initiative.'], conditionalMultipliers: [multiplier('infernal-burst-first-strike-1-5x', 1.5, selfFirstStrikeCondition, 'If Caraxes has First-Strike, damage is multiplied by 1.5.', [{ level: 1, value: 150, unit: 'percent' }])] }),
+    ] })],
+    tags: ['FIRE_DAMAGE', 'ANY_LANE_TARGET'], verification: screenshotVerification('Caraxes Infernal Burst screenshot'), evidenceIds: ['caraxes-infernal-burst-2026-06-24'],
+  });
+
+  const trait = ability({
+    dragonId: 'caraxes', id: 'caraxes-hunters-wrath', kind: 'trait', name: "Hunter's Wrath", abilityClass: 'passive', unlockStarRank: 1, minimumDragonLevel: 16, positionRequirement: 'vanguard',
+    rawDescription: 'At Level 16+ and deployed in Vanguard, increase Caraxes Fire Damage Dealt by 16%. Increase Strength and Initiative of Right Flank ally by +20.',
+    schedules: [schedule({ id: 'hunters-wrath-passive', timing: 'passive', effects: [
+      fixedEffect({ id: 'hunters-wrath-fire', type: 'Fire Damage Dealt Up', target: 'Self', targetScope: 'self', magnitude: 16, unit: 'percent', sourceScope: 'all-sources' }),
+      fixedEffect({ id: 'hunters-wrath-right-strength', type: 'Strength Up', target: 'Right Flank ally', targetScope: 'right-flank', magnitude: 20, unit: 'flat' }),
+      fixedEffect({ id: 'hunters-wrath-right-initiative', type: 'Initiative Up', target: 'Right Flank ally', targetScope: 'right-flank', magnitude: 20, unit: 'flat' }),
+    ] })],
+    tags: ['FIRE_DAMAGE_UP', 'STRENGTH_UP', 'BUFF_INITIATIVE', 'VANGUARD_REQUIRED', 'RIGHT_FLANK_TARGET'], verification: screenshotVerification("Caraxes Hunter's Wrath screenshot"), evidenceIds: ['caraxes-hunters-wrath-2026-06-24'],
+  });
+
+  const cripplingChance = rankedPercents([10, 12, 14, 17, 20]);
+  const perTargetChecks: PerTargetEffectCheck = {
+    targetCount: 3,
+    effects: [
+      { effectId: 'crippling-inferno-slow', independentlyChecked: true },
+      { effectId: 'crippling-inferno-burn', independentlyChecked: true },
+    ],
+    targetsCheckedIndependently: true,
+    sharedChanceByHabitLevel: cripplingChance,
+  };
+
+  const habits = [
+    ability({ dragonId: 'caraxes', id: 'caraxes-battle-dread', kind: 'habit', name: 'Battle Dread', abilityClass: 'passive', unlockStarRank: 2,
+      rawDescription: 'Start of Combat: reduce Strength and Initiative of 3 Enemies in any lane by -6%, enhanced by Caraxes Intelligence. Progression table shows -6.5% at Level 1.',
+      schedules: [schedule({ id: 'battle-dread-start', timing: 'start-of-combat', effects: [
+        fixedEffect({ id: 'battle-dread-strength-down', type: 'Strength Down', target: '3 Enemies', targetScope: 'any-lane', magnitude: null, unit: 'percent', rankedValues: rankedPercents([6.5, 7.8, 9.1, 11.05, 13]), scaling: ['Intelligence'], targetCount: 3, duration: 'Until end of combat', notes: ['Raw description appears to state -6%; ranked table displays -6.5% at Level 1. Structured values use the ranked table.'] }),
+        fixedEffect({ id: 'battle-dread-initiative-down', type: 'Initiative Down', target: '3 Enemies', targetScope: 'any-lane', magnitude: null, unit: 'percent', rankedValues: rankedPercents([6.5, 7.8, 9.1, 11.05, 13]), scaling: ['Intelligence'], targetCount: 3, duration: 'Until end of combat', notes: ['Raw description appears to state -6%; ranked table displays -6.5% at Level 1. Structured values use the ranked table.'] }),
+      ] })], powerByHabitLevel: standardHabitPower, tags: ['DEBUFF_STRENGTH', 'DEBUFF_INITIATIVE'], verification: screenshotVerification('Caraxes Battle Dread screenshot'), evidenceIds: ['caraxes-battle-dread-2026-06-24'], unresolvedQuestions: ['Raw text/table discrepancy retained.'] }),
+    ability({ dragonId: 'caraxes', id: 'caraxes-dragons-flair', kind: 'habit', name: "Dragon's Flair", abilityClass: 'passive', unlockStarRank: 4,
+      rawDescription: 'Start of Combat: increase Caraxes Fire Damage Dealt until end of combat.',
+      schedules: [schedule({ id: 'dragons-flair-start', timing: 'start-of-combat', effects: [fixedEffect({ id: 'dragons-flair-fire', type: 'Fire Damage Dealt Up', target: 'Self', targetScope: 'self', magnitude: null, unit: 'percent', rankedValues: rankedPercents([12.5, 15, 17.5, 21.25, 25]), duration: 'Until end of combat', sourceScope: 'all-sources' })] })], powerByHabitLevel: standardHabitPower, tags: ['FIRE_DAMAGE_UP', 'BUFF_SELF'], verification: screenshotVerification("Caraxes Dragon's Flair screenshot"), evidenceIds: ['caraxes-dragons-flair-2026-06-24'] }),
+    ability({ dragonId: 'caraxes', id: 'caraxes-crippling-inferno', kind: 'habit', name: 'Crippling Inferno', abilityClass: 'passive', unlockStarRank: 6,
+      rawDescription: 'Each Round: chance to apply Slow and Burn to 3 Enemies in any lane. Each effect is checked separately for each target and lasts 2 rounds.',
+      schedules: [schedule({ id: 'crippling-inferno-each-round', timing: 'each-round', triggerChanceByHabitLevel: cripplingChance, effects: [
+        fixedEffect({ id: 'crippling-inferno-slow', type: 'Slow', target: '3 Enemies', targetScope: 'any-lane', magnitude: null, unit: 'unknown', durationRounds: 2, targetCount: 3, perTargetEffectCheck: perTargetChecks, notes: ['Slow causes the target to attack after all other combatants each round.'] }),
+        fixedEffect({ id: 'crippling-inferno-burn', type: 'Burn', target: '3 Enemies', targetScope: 'any-lane', magnitude: 20, unit: 'rate', durationRounds: 2, targetCount: 3, scaling: ['attacker Intelligence'], perTargetEffectCheck: perTargetChecks, notes: ['Burn deals Fire Damage each round and is mitigated by target Initiative.'] }),
+      ] })], powerByHabitLevel: standardHabitPower, tags: ['SLOW', 'BURN', 'FIRE_DAMAGE'], verification: screenshotVerification('Caraxes Crippling Inferno screenshot'), evidenceIds: ['caraxes-crippling-inferno-2026-06-24'] }),
+    ability({ dragonId: 'caraxes', id: 'caraxes-mass-enfeeble', kind: 'habit', name: 'Mass Enfeeble', abilityClass: 'passive', unlockStarRank: 8,
+      rawDescription: 'Start of Combat: reduce Physical Damage Dealt, excluding Basic Attacks, of 3 Enemies in any lane by -5%. Progression table shows -5.5% at Level 1.',
+      schedules: [schedule({ id: 'mass-enfeeble-start', timing: 'start-of-combat', effects: [fixedEffect({ id: 'mass-enfeeble-physical-down', type: 'Physical Damage Dealt Down', target: '3 Enemies', targetScope: 'any-lane', magnitude: null, unit: 'percent', rankedValues: rankedPercents([5.5, 6.6, 7.7, 9.35, 11]), excludes: ['Basic Attacks'], sourceScope: 'non-basic-attacks', targetCount: 3, duration: 'Until end of combat', notes: ['Raw description appears to state -5%; ranked table displays -5.5% at Level 1. Structured values use the ranked table.'] })] })], powerByHabitLevel: standardHabitPower, tags: ['PHYSICAL_DAMAGE_UP', 'EXCLUDES_BASIC_ATTACKS'], verification: screenshotVerification('Caraxes Mass Enfeeble screenshot'), evidenceIds: ['caraxes-mass-enfeeble-2026-06-24'], unresolvedQuestions: ['Raw text/table discrepancy retained.'] }),
+    ability({ dragonId: 'caraxes', id: 'caraxes-blood-wyrm', kind: 'habit', name: 'Blood Wyrm', abilityClass: 'passive', unlockStarRank: 10,
+      rawDescription: 'Start of Each Round: for each Enemy below 50% maximum Troop Capacity, increase Caraxes Fire Damage Dealt. For each Enemy that retreated during the previous round, apply Recovery to Caraxes, enhanced by Initiative.',
+      schedules: [
+        schedule({ id: 'blood-wyrm-low-troops', timing: 'start-of-each-round', conditions: [enemyBelowHalfMaximumTroops], repeat: { mode: 'once-per-match', condition: enemyBelowHalfMaximumTroops, description: 'Repeat once for each enemy below 50% maximum Troop Capacity. Number of repetitions is battlefield-dependent.' }, effects: [fixedEffect({ id: 'blood-wyrm-fire-up', type: 'Fire Damage Dealt Up', target: 'Self', targetScope: 'self', magnitude: null, unit: 'percent', rankedValues: rankedPercents([8, 10.4, 12.8, 16, 20]), conditions: [enemyBelowHalfMaximumTroops], notes: ['Duration and accumulation semantics are not stated.'], sourceScope: 'all-sources' })] }),
+        schedule({ id: 'blood-wyrm-retreat-recovery', timing: 'when-enemy-retreated-previous-round', conditions: [enemyRetreatedPreviousRound], repeat: { mode: 'once-per-match', condition: enemyRetreatedPreviousRound, description: 'Repeat once for each enemy that retreated during the previous round. Number of repetitions is battlefield-dependent.' }, effects: [fixedEffect({ id: 'blood-wyrm-recovery', type: 'Recovery', target: 'Self', targetScope: 'self', magnitude: null, unit: 'rate', rankedValues: rankedPercents([40, 52, 64, 80, 100]), scaling: ['Initiative'], conditions: [enemyRetreatedPreviousRound], notes: ['Enhanced by Caraxes Initiative.'] })] }),
+      ], powerByHabitLevel: finalLegendaryPowerEarly, tags: ['FIRE_DAMAGE_UP', 'RECOVERY', 'LOW_HEALTH'], verification: screenshotVerification('Caraxes Blood Wyrm screenshot'), evidenceIds: ['caraxes-blood-wyrm-2026-06-24'], unresolvedQuestions: ['Fire Damage increase duration and accumulation semantics are not stated.', 'Exact below 50% equality behavior remains unconfirmed.'] }),
+  ];
+
+  return {
+    ...createDragon('Caraxes', 'Legendary', 'Hunter'),
+    dataStatus: 'community-verified',
+    command,
+    trait,
+    habits,
+    affinities: { Cavalry: 'positive', Shieldbearers: 'unknown', Archers: 'unknown', Spearmen: 'positive', Siege: 'unknown' },
+    tags: [...new Set<EffectTag>([...command.tags, ...trait.tags, ...habits.flatMap((habit) => habit.tags)])],
+    fieldVerification: { identity: screenshotVerification('Caraxes main screen screenshot'), command: screenshotVerification('Caraxes Infernal Burst screenshot'), trait: screenshotVerification("Caraxes Hunter's Wrath screenshot"), habits: screenshotVerification('Caraxes Habit screenshots'), affinities: partialScreenshotVerification('Caraxes main screen screenshot') },
+    unresolvedQuestions: ['Battle Dread and Mass Enfeeble raw text/table discrepancies retained.', 'Blood Wyrm duration and accumulation semantics.'],
+  };
+};
+
 const malachiteCommand = ability({
   id: 'malachite-wardens-rally',
   kind: 'command',
@@ -1379,9 +1686,9 @@ const createVermax = (): Dragon => {
 };
 
 export const dragons: Dragon[] = [
-  createDragon('Syrax', 'Legendary', 'Sentinel'),
+  createSyrax(),
   createDragon('Vhagar', 'Legendary', 'Warrior'),
-  createDragon('Caraxes', 'Legendary', 'Hunter'),
+  createCaraxes(),
   createSeasmoke(),
   createDragon('Solstryker', 'Rare', 'Champion'),
   createDragon('Crimson', 'Legendary', 'Hunter'),

@@ -15,17 +15,22 @@ import type {
   AmplificationSynergyTrace,
   CapabilityMatch,
   CapabilityAvailabilityContext,
+  CapabilityDependency,
   CapabilitySourceKind,
   CapabilitySourceScope,
   DragonEffectProfile,
+  DragonStatId,
   EffectChannel,
   EffectCondition,
   FormationAnalysisInput,
   ModifierCapability,
   ModifierRole,
   OutputCapability,
+  PeriodicDamageDefinition,
   RequirementDefinition,
   RequirementTrace,
+  StatusOutputCapability,
+  SynergyTrace,
   TraceConfidence,
   TraceStatus,
 } from '../models/synergy';
@@ -40,7 +45,7 @@ export interface CapabilityOptions {
   dragonLevels?: Record<string, number | null>;
 }
 
-const reviewedDragonIds = ['malachite', 'seasmoke', 'sheepstealer', 'vermax'];
+const reviewedDragonIds = ['seasmoke', 'malachite', 'sheepstealer', 'vermax', 'syrax', 'caraxes'];
 
 export function deriveOutputCapabilities(dragons: Dragon[]): OutputCapability[] {
   return dragons.flatMap((dragon) => {
@@ -63,6 +68,18 @@ export function deriveOutputCapabilities(dragons: Dragon[]): OutputCapability[] 
         requiredHabitLevel: null,
         conditional: false,
         conditions: [],
+        dependencies: [
+          {
+            type: 'scales-with-stat',
+            statId: 'strength',
+            notes: ['Physical Damage scales with Strength when the damage source is a Physical Basic Attack.'],
+          },
+          {
+            type: 'mitigated-by-target-stat',
+            statId: 'instinct',
+            notes: ['Physical Damage is reduced by the target Instinct.'],
+          },
+        ],
         currentlyAvailable: true,
         futureAvailable: false,
         availability: availabilityContext(dragon.id, null, null),
@@ -95,6 +112,7 @@ export function deriveOutputCapabilities(dragons: Dragon[]): OutputCapability[] 
           requiredHabitLevel: ability.kind === 'habit' ? 1 : null,
           conditional: ability.kind === 'habit' || hasConditions(effect) || effect.stack !== null,
           conditions: conditionsForEffect(effect),
+          dependencies: dependenciesForEffect(effect),
           currentlyAvailable: ability.unlockStarRank === null || ability.unlockStarRank <= 1,
           futureAvailable: ability.unlockStarRank !== null && ability.unlockStarRank > 1,
           availability: availabilityContext(dragon.id, ability.unlockStarRank, ability.minimumDragonLevel),
@@ -114,6 +132,71 @@ export function deriveModifierCapabilities(dragons: Dragon[]): ModifierCapabilit
     allAbilities(dragon).flatMap((ability) =>
       ability.schedules.flatMap((schedule) =>
         schedule.effects.flatMap((effect) => modifierCapabilitiesForEffect(dragon, ability, effect)),
+      ),
+    ),
+  );
+}
+
+export function deriveStatusOutputCapabilities(dragons: Dragon[]): StatusOutputCapability[] {
+  return dragons.flatMap((dragon) =>
+    allAbilities(dragon).flatMap((ability) =>
+      ability.schedules.flatMap((schedule) =>
+        schedule.effects.flatMap((effect) => {
+          const statusId = statusIdForEffect(effect);
+          if (!statusId) {
+            return [];
+          }
+          return [{
+            id: `${ability.id}-${effect.id}-${statusId}-status-output`,
+            dragonId: dragon.id,
+            abilityId: ability.id,
+            abilityName: ability.name,
+            statusId,
+            targetSide: targetSideForEffect(effect),
+            targetSelector: targetForEffect(effect),
+            unlockStarRank: ability.unlockStarRank,
+            minimumDragonLevel: ability.minimumDragonLevel,
+            requiredHabitLevel: ability.kind === 'habit' ? 1 : null,
+            chanceFixed: schedule.triggerChanceFixed,
+            chanceByHabitLevel: schedule.triggerChanceByHabitLevel,
+            durationRounds: effect.durationRounds,
+            untilEndOfRound: effect.duration === 'Until end of current round',
+            untilEndOfCombat: effect.duration === 'Until end of combat' || Boolean(effect.stack?.untilEndOfCombat),
+            conditions: conditionsForEffect(effect),
+            currentlyAvailable: ability.unlockStarRank === null || ability.unlockStarRank <= 1,
+            futureAvailable: ability.unlockStarRank !== null && ability.unlockStarRank > 1,
+            availability: availabilityContext(dragon.id, ability.unlockStarRank, ability.minimumDragonLevel),
+            directlyVerified: effect.directlyVerified !== false,
+            evidenceIds: ability.evidenceIds,
+          }];
+        }),
+      ),
+    ),
+  );
+}
+
+export function derivePeriodicDamageDefinitions(dragons: Dragon[]): PeriodicDamageDefinition[] {
+  return dragons.flatMap((dragon) =>
+    allAbilities(dragon).flatMap((ability) =>
+      ability.schedules.flatMap((schedule) =>
+        schedule.effects.flatMap((effect) => {
+          if (effect.type !== 'Burn') {
+            return [];
+          }
+          return [{
+            statusId: 'burn',
+            dragonId: dragon.id,
+            abilityId: ability.id,
+            channel: 'fire-damage' as const,
+            damageRateFixed: effect.magnitude,
+            damageRateByHabitLevel: effect.rankedValues,
+            ticksEachRound: true,
+            durationRounds: effect.durationRounds,
+            scalingStat: 'intelligence' as const,
+            mitigationStat: 'initiative' as const,
+            evidenceIds: ability.evidenceIds,
+          }];
+        }),
       ),
     ),
   );
@@ -181,12 +264,18 @@ export function analyzeCapabilityAmplifications(
   formation: FormationAnalysisInput,
   dragons: Dragon[],
   options: CapabilityOptions = {},
-): AmplificationSynergyTrace[] {
+): SynergyTrace[] {
   const outputs = deriveOutputCapabilities(dragons);
   const modifiers = deriveModifierCapabilities(dragons);
+  const statusOutputs = deriveStatusOutputCapabilities(dragons);
+  const periodicDamage = derivePeriodicDamageDefinitions(dragons);
   return [
     ...analyzeOutgoingAmplifications(formation, dragons, outputs, modifiers, options),
     ...analyzeIncomingAmplifications(formation, dragons, outputs, modifiers, options),
+    ...analyzeStatusConditionEnablement(formation, dragons, outputs, statusOutputs, options),
+    ...analyzeStatScalingSupport(formation, dragons, outputs, modifiers, options),
+    ...analyzeEnemyMitigationReduction(formation, dragons, outputs, modifiers, options),
+    ...analyzePeriodicDamageAmplification(formation, dragons, periodicDamage, modifiers, options),
   ];
 }
 
@@ -401,6 +490,321 @@ function analyzeIncomingAmplifications(
   return traces;
 }
 
+function analyzeStatusConditionEnablement(
+  formation: FormationAnalysisInput,
+  dragons: Dragon[],
+  outputs: OutputCapability[],
+  statusOutputs: StatusOutputCapability[],
+  options: CapabilityOptions,
+): SynergyTrace[] {
+  const traces: SynergyTrace[] = [];
+  for (const output of outputs) {
+    const dependencies = output.dependencies.filter(isStatusConditionDependency);
+    if (dependencies.length === 0) {
+      continue;
+    }
+    const recipientPosition = positionOf(formation, output.dragonId);
+    if (!recipientPosition) {
+      continue;
+    }
+    for (const dependency of dependencies) {
+      for (const statusOutput of statusOutputs.filter((status) => status.statusId === dependency.statusId)) {
+        if (statusOutput.dragonId === output.dragonId && dependency.type !== 'requires-self-status') {
+          continue;
+        }
+        const providerPosition = positionOf(formation, statusOutput.dragonId);
+        if (!providerPosition) {
+          continue;
+        }
+        const provider = dragonById(dragons, statusOutput.dragonId);
+        const recipient = dragonById(dragons, output.dragonId);
+        if (!provider || !recipient) {
+          continue;
+        }
+        const requirements = [
+          statusProviderRequirement(statusOutput, dependency.type, providerPosition, recipientPosition),
+          ...availabilityRequirements({
+            dragonId: statusOutput.dragonId,
+            abilityId: statusOutput.abilityId,
+            unlockStarRank: statusOutput.unlockStarRank,
+            minimumDragonLevel: statusOutput.minimumDragonLevel,
+            requiredHabitLevel: statusOutput.requiredHabitLevel,
+            evidenceIds: statusOutput.evidenceIds,
+            sourceKind: abilitySourceKind(dragons, statusOutput.dragonId, statusOutput.abilityId),
+          }, options),
+          ...outputRequirementTraces(output, options),
+        ];
+        traces.push(makeDependencyTrace({
+          id: `status-condition-${statusOutput.id}-${output.id}`,
+          matchKind: 'status-condition-enablement',
+          ruleId: 'status-condition-enablement',
+          source: provider,
+          sourceAbilityId: statusOutput.abilityId,
+          recipient,
+          recipientAbilityId: output.abilityId,
+          channel: output.channel,
+          title: `${statusLabel(statusOutput.statusId)} enables ${output.abilityName}`,
+          explanation: `${provider.name} can apply ${statusLabel(statusOutput.statusId)}. ${recipient.name}'s ${output.abilityName} has a verified condition depending on ${statusLabel(statusOutput.statusId)}.`,
+          requirements,
+          matchedFacts: dependency.notes,
+          effects: [`Status condition: ${statusLabel(statusOutput.statusId)}`],
+          sourceEvidenceIds: statusOutput.evidenceIds,
+          recipientEvidenceIds: output.evidenceIds,
+          assumptions: statusOutput.conditions.map((condition) => condition.description),
+          unresolvedQuestions: ['Trigger timing, target selection, and exact uptime are not simulated.'],
+        }));
+      }
+    }
+  }
+  return traces;
+}
+
+function analyzeStatScalingSupport(
+  formation: FormationAnalysisInput,
+  dragons: Dragon[],
+  outputs: OutputCapability[],
+  modifiers: ModifierCapability[],
+  options: CapabilityOptions,
+): SynergyTrace[] {
+  const traces: SynergyTrace[] = [];
+  for (const modifier of modifiers.filter(
+    (capability) => capability.role === 'ally-support' && capability.channel === 'stat' && capability.operation === 'increase',
+  )) {
+    const statId = statIdFromText(modifier.label);
+    if (!statId) {
+      continue;
+    }
+    const providerPosition = positionOf(formation, modifier.dragonId);
+    for (const recipientPosition of FORMATION_POSITIONS) {
+      const recipientId = formation[recipientPosition];
+      if (!recipientId || recipientId === modifier.dragonId) {
+        continue;
+      }
+      const matchedOutputs = outputs.filter(
+        (output) =>
+          output.dragonId === recipientId &&
+          output.dependencies.some((dependency) => dependency.type === 'scales-with-stat' && dependency.statId === statId),
+      );
+      if (matchedOutputs.length === 0) {
+        continue;
+      }
+      const provider = dragonById(dragons, modifier.dragonId);
+      const recipient = dragonById(dragons, recipientId);
+      if (!provider || !recipient) {
+        continue;
+      }
+      const requirements = [
+        targetRequirement(modifier, providerPosition, recipientPosition),
+        ...providerRequirementTraces(modifier, formation, dragons, options),
+        ...matchedOutputs.flatMap((output) => outputRequirementTraces(output, options)),
+      ];
+      traces.push(makeDependencyTrace({
+        id: `stat-scaling-${modifier.id}-${recipientId}-${statId}`,
+        matchKind: 'stat-scaling-support',
+        ruleId: 'stat-scaling-support',
+        source: provider,
+        sourceAbilityId: modifier.abilityId,
+        recipient,
+        recipientAbilityId: matchedOutputs[0]?.abilityId ?? null,
+        channel: 'stat',
+        title: `${statLabel(statId)} Scaling Support`,
+        explanation: `${provider.name}'s ${modifier.abilityName} can increase ${recipient.name}'s ${statLabel(statId)}, which supports ${matchedOutputs.map((output) => output.abilityName).join(', ')}.`,
+        requirements,
+        matchedFacts: matchedOutputs.map((output) => `${output.abilityName} scales with ${statLabel(statId)}.`),
+        effects: [`${statLabel(statId)} support for ${matchedOutputs.map((output) => output.label).join(', ')}`],
+        sourceEvidenceIds: modifier.evidenceIds,
+        recipientEvidenceIds: matchedOutputs.flatMap((output) => output.evidenceIds),
+        assumptions: ['Exact stat-to-effect conversion formula is unknown.'],
+        unresolvedQuestions: ['Final value and stacking order are not calculated.'],
+      }));
+    }
+  }
+  return traces;
+}
+
+function analyzeEnemyMitigationReduction(
+  formation: FormationAnalysisInput,
+  dragons: Dragon[],
+  outputs: OutputCapability[],
+  modifiers: ModifierCapability[],
+  options: CapabilityOptions,
+): SynergyTrace[] {
+  const traces: SynergyTrace[] = [];
+  for (const modifier of modifiers.filter(
+    (capability) => capability.role === 'enemy-debuff' && capability.channel === 'stat' && capability.operation === 'decrease',
+  )) {
+    const statId = statIdFromText(modifier.label);
+    if (!statId) {
+      continue;
+    }
+    const providerPosition = positionOf(formation, modifier.dragonId);
+    if (!providerPosition) {
+      continue;
+    }
+    for (const recipientId of Object.values(formation).filter(Boolean) as string[]) {
+      if (recipientId === modifier.dragonId) {
+        continue;
+      }
+      const matchedOutputs = outputs.filter(
+        (output) =>
+          output.dragonId === recipientId &&
+          output.dependencies.some((dependency) => dependency.type === 'mitigated-by-target-stat' && dependency.statId === statId),
+      );
+      if (matchedOutputs.length === 0) {
+        continue;
+      }
+      const provider = dragonById(dragons, modifier.dragonId);
+      const recipient = dragonById(dragons, recipientId);
+      if (!provider || !recipient) {
+        continue;
+      }
+      const requirements = [
+        ...providerRequirementTraces(modifier, formation, dragons, options),
+        ...matchedOutputs.flatMap((output) => outputRequirementTraces(output, options)),
+      ];
+      traces.push(makeDependencyTrace({
+        id: `enemy-mitigation-${modifier.id}-${recipientId}-${statId}`,
+        matchKind: 'enemy-mitigation-reduction',
+        ruleId: 'enemy-mitigation-reduction',
+        source: provider,
+        sourceAbilityId: modifier.abilityId,
+        recipient,
+        recipientAbilityId: matchedOutputs[0]?.abilityId ?? null,
+        channel: 'stat',
+        title: `${statLabel(statId)} Mitigation Reduction`,
+        explanation: `${provider.name}'s ${modifier.abilityName} can reduce enemy ${statLabel(statId)}. ${recipient.name}'s matching outputs are mitigated by that stat.`,
+        requirements,
+        matchedFacts: matchedOutputs.map((output) => `${output.abilityName} is mitigated by target ${statLabel(statId)}.`),
+        effects: [`Enemy ${statLabel(statId)} reduction may improve ${matchedOutputs.map((output) => output.label).join(', ')}.`],
+        sourceEvidenceIds: modifier.evidenceIds,
+        recipientEvidenceIds: matchedOutputs.flatMap((output) => output.evidenceIds),
+        assumptions: ['Enemy target overlap is not simulated.'],
+        unresolvedQuestions: ['Exact enemy-formation targeting and final mitigation formula are unknown.'],
+      }));
+    }
+  }
+  return traces;
+}
+
+function analyzePeriodicDamageAmplification(
+  formation: FormationAnalysisInput,
+  dragons: Dragon[],
+  periodicDamage: PeriodicDamageDefinition[],
+  modifiers: ModifierCapability[],
+  options: CapabilityOptions,
+): SynergyTrace[] {
+  const traces: SynergyTrace[] = [];
+  for (const modifier of modifiers.filter(
+    (capability) => capability.role === 'ally-support' && capability.direction === 'dealt' && capability.operation === 'increase',
+  )) {
+    const providerPosition = positionOf(formation, modifier.dragonId);
+    for (const periodic of periodicDamage.filter((item) => item.channel === modifier.channel)) {
+      if (periodic.dragonId === modifier.dragonId) {
+        continue;
+      }
+      const recipientPosition = positionOf(formation, periodic.dragonId);
+      if (!recipientPosition) {
+        continue;
+      }
+      const provider = dragonById(dragons, modifier.dragonId);
+      const recipient = dragonById(dragons, periodic.dragonId);
+      if (!provider || !recipient) {
+        continue;
+      }
+      const requirements = [
+        targetRequirement(modifier, providerPosition, recipientPosition),
+        ...providerRequirementTraces(modifier, formation, dragons, options),
+      ];
+      traces.push(makeDependencyTrace({
+        id: `periodic-damage-${modifier.id}-${periodic.abilityId}-${periodic.statusId}`,
+        matchKind: 'periodic-damage-amplification',
+        ruleId: 'periodic-damage-amplification',
+        source: provider,
+        sourceAbilityId: modifier.abilityId,
+        recipient,
+        recipientAbilityId: periodic.abilityId,
+        channel: periodic.channel,
+        title: `${channelLabel(periodic.channel)} Periodic Damage Support`,
+        explanation: `${provider.name}'s ${modifier.abilityName} can amplify ${recipient.name}'s ${statusLabel(periodic.statusId)} periodic ${channelLabel(periodic.channel)}.`,
+        requirements,
+        matchedFacts: [`${statusLabel(periodic.statusId)} ticks each round for ${periodic.durationRounds ?? 'unknown'} rounds.`],
+        effects: [`Periodic ${channelLabel(periodic.channel)} amplification`],
+        sourceEvidenceIds: modifier.evidenceIds,
+        recipientEvidenceIds: periodic.evidenceIds,
+        assumptions: ['Periodic damage is treated as the same effect channel as its damage type.'],
+        unresolvedQuestions: ['Burn stacking, refresh, and overlapping source behavior are unknown.'],
+      }));
+    }
+  }
+  return traces;
+}
+
+function makeDependencyTrace({
+  id,
+  matchKind,
+  ruleId,
+  source,
+  sourceAbilityId,
+  recipient,
+  recipientAbilityId,
+  channel,
+  title,
+  explanation,
+  requirements,
+  matchedFacts,
+  effects,
+  sourceEvidenceIds,
+  recipientEvidenceIds,
+  assumptions,
+  unresolvedQuestions,
+}: {
+  id: string;
+  matchKind: NonNullable<SynergyTrace['matchKind']>;
+  ruleId: string;
+  source: Dragon;
+  sourceAbilityId: string | null;
+  recipient: Dragon;
+  recipientAbilityId: string | null;
+  channel: SynergyTrace['channel'];
+  title: string;
+  explanation: string;
+  requirements: RequirementTrace[];
+  matchedFacts: string[];
+  effects: string[];
+  sourceEvidenceIds: string[];
+  recipientEvidenceIds: string[];
+  assumptions: string[];
+  unresolvedQuestions: string[];
+}): SynergyTrace {
+  return {
+    id,
+    ruleId,
+    status: statusFromRequirements(requirements, true),
+    confidence: 'confirmed',
+    sourceDragonId: source.id,
+    sourceAbilityId,
+    recipientDragonId: recipient.id,
+    recipientAbilityId,
+    title,
+    explanation,
+    requirements,
+    matchedFacts,
+    effects,
+    conflicts: requirements
+      .filter((requirement) => requirement.satisfied === false)
+      .map((requirement) => `${requirement.label}: expected ${requirement.expected}, actual ${requirement.actual ?? 'unknown'}`),
+    assumptions,
+    unresolvedQuestions,
+    sourceEvidenceIds,
+    recipientEvidenceIds,
+    combatLogConfirmed: false,
+    exactResultKnown: false,
+    exactResultUnknownReason: 'Exact final value cannot be calculated because final combat formulas and stacking order are not fully verified.',
+    matchKind,
+    channel,
+  };
+}
+
 function makeAmplificationTrace({
   matchKind,
   provider,
@@ -598,7 +1002,155 @@ function outputChannelForEffect(effect: AbilityEffect): EffectChannel | null {
   if (effect.type === 'Recovery') {
     return 'recovery';
   }
+  if (effect.type === 'Burn') {
+    return 'fire-damage';
+  }
   return null;
+}
+
+function dependenciesForEffect(effect: AbilityEffect): CapabilityDependency[] {
+  const dependencies: CapabilityDependency[] = [
+    ...effect.scaling.flatMap((scaling) => {
+      const statId = statIdFromText(scaling);
+      return statId
+        ? [{
+            type: 'scales-with-stat' as const,
+            statId,
+            notes: [`Effect wording indicates scaling with ${statLabel(statId)}.`],
+          }]
+        : [];
+    }),
+    ...defaultDamageDependencies(effect),
+    ...(effect.conditionalMultipliers ?? []).flatMap((multiplier) =>
+      dependencyForCondition(multiplier.condition, multiplier.multiplier),
+    ),
+    ...(effect.conditions ?? []).flatMap((condition) => dependencyForCondition(condition)),
+  ];
+  return dedupeDependencies(dependencies);
+}
+
+function defaultDamageDependencies(effect: AbilityEffect): CapabilityDependency[] {
+  if (effect.type === 'Physical Damage') {
+    return [
+      { type: 'scales-with-stat' as const, statId: 'strength' as const, notes: ['Physical Damage is increased by Strength.'] },
+      { type: 'mitigated-by-target-stat' as const, statId: 'instinct' as const, notes: ['Physical Damage is reduced by target Instinct.'] },
+    ];
+  }
+  if (effect.type === 'Tactical Damage') {
+    return [
+      { type: 'scales-with-stat' as const, statId: 'instinct' as const, notes: ['Tactical Damage is increased by Instinct.'] },
+      { type: 'mitigated-by-target-stat' as const, statId: 'intelligence' as const, notes: ['Tactical Damage is reduced by target Intelligence.'] },
+    ];
+  }
+  if (effect.type === 'Fire Damage' || effect.type === 'Burn') {
+    return [
+      { type: 'scales-with-stat' as const, statId: 'intelligence' as const, notes: ['Fire Damage is increased by Intelligence.'] },
+      { type: 'mitigated-by-target-stat' as const, statId: 'initiative' as const, notes: ['Fire Damage is reduced by target Initiative.'] },
+    ];
+  }
+  return [];
+}
+
+function dependencyForCondition(
+  condition: { kind: string; statusId: string | null; description: string },
+  multiplier?: number,
+): CapabilityDependency[] {
+  if (condition.kind === 'self-has-status' && condition.statusId) {
+    return [{
+      type: 'requires-self-status' as const,
+      statusId: condition.statusId,
+      multiplier,
+      notes: [condition.description],
+    }];
+  }
+  if (condition.kind === 'any-enemy-has-status' && condition.statusId) {
+    return [{
+      type: 'requires-any-enemy-status' as const,
+      statusId: condition.statusId,
+      multiplier,
+      notes: [condition.description],
+    }];
+  }
+  if (condition.kind === 'target-has-status' && condition.statusId) {
+    return [{
+      type: 'requires-target-status' as const,
+      statusId: condition.statusId,
+      multiplier,
+      notes: [condition.description],
+    }];
+  }
+  if (condition.kind === 'previous-round-event') {
+    return [{
+      type: 'previous-round-event' as const,
+      eventId: condition.description,
+      multiplier,
+      notes: [condition.description],
+    }];
+  }
+  return [];
+}
+
+function isStatusConditionDependency(
+  dependency: CapabilityDependency,
+): dependency is CapabilityDependency & {
+  type: 'requires-self-status' | 'requires-any-enemy-status';
+  statusId: string;
+} {
+  return (
+    (dependency.type === 'requires-self-status' || dependency.type === 'requires-any-enemy-status') &&
+    typeof dependency.statusId === 'string'
+  );
+}
+
+function dedupeDependencies(dependencies: CapabilityDependency[]): CapabilityDependency[] {
+  const seen = new Set<string>();
+  return dependencies.filter((dependency) => {
+    const key = `${dependency.type}:${dependency.statusId ?? ''}:${dependency.statId ?? ''}:${dependency.channel ?? ''}:${dependency.eventId ?? ''}:${dependency.multiplier ?? ''}`;
+    if (seen.has(key)) {
+      return false;
+    }
+    seen.add(key);
+    return true;
+  });
+}
+
+function statIdFromText(text: string): DragonStatId | undefined {
+  if (/strength/i.test(text)) {
+    return 'strength';
+  }
+  if (/instinct/i.test(text)) {
+    return 'instinct';
+  }
+  if (/intelligence/i.test(text)) {
+    return 'intelligence';
+  }
+  if (/initiative/i.test(text)) {
+    return 'initiative';
+  }
+  return undefined;
+}
+
+function statLabel(statId: DragonStatId): string {
+  return statId[0]!.toUpperCase() + statId.slice(1);
+}
+
+function statusIdForEffect(effect: AbilityEffect): string | null {
+  if (effect.type === 'First-Strike') {
+    return 'first-strike';
+  }
+  if (effect.type === 'Slow') {
+    return 'slow';
+  }
+  if (effect.type === 'Burn') {
+    return 'burn';
+  }
+  if (effect.type === 'Resistance') {
+    return 'resistance';
+  }
+  if (effect.type === 'Advantage') {
+    return 'advantage';
+  }
+  return effect.stack?.statusId ?? null;
 }
 
 function modifierChannelForEffect(effect: AbilityEffect): EffectChannel | null {
@@ -611,6 +1163,9 @@ function modifierChannelForEffect(effect: AbilityEffect): EffectChannel | null {
   if (effect.type === 'Fire Damage Dealt Up') {
     return 'fire-damage';
   }
+  if (effect.type === 'Physical Damage Dealt Down') {
+    return 'physical-damage';
+  }
   if (effect.type === 'Recovery Dealt Up' || effect.type === 'Recovery Received Up' || effect.type === 'Recovery Received Down') {
     return 'recovery';
   }
@@ -619,7 +1174,10 @@ function modifierChannelForEffect(effect: AbilityEffect): EffectChannel | null {
     effect.type === 'Instinct Up' ||
     effect.type === 'Intelligence Up' ||
     effect.type === 'Initiative Up' ||
-    effect.type === 'Instinct Down'
+    effect.type === 'Strength Down' ||
+    effect.type === 'Instinct Down' ||
+    effect.type === 'Intelligence Down' ||
+    effect.type === 'Initiative Down'
   ) {
     return 'stat';
   }
@@ -727,6 +1285,42 @@ function outputTargetsRecipient(
   };
 }
 
+function statusProviderRequirement(
+  statusOutput: StatusOutputCapability,
+  dependencyType: 'requires-self-status' | 'requires-any-enemy-status',
+  providerPosition: FormationPosition,
+  recipientPosition: FormationPosition,
+): RequirementTrace {
+  let satisfied: boolean | null = true;
+  let expected: string = statusOutput.targetSelector.scope;
+  if (dependencyType === 'requires-self-status') {
+    if (statusOutput.targetSide === 'self') {
+      satisfied = providerPosition === recipientPosition;
+      expected = 'self-status on recipient';
+    } else if (statusOutput.targetSelector.selection === 'adjacent') {
+      satisfied = arePositionsAdjacent(providerPosition, recipientPosition);
+      expected = `ally adjacent to ${providerPosition}`;
+    } else if (statusOutput.targetSide === 'ally') {
+      satisfied = true;
+      expected = 'ally target can include recipient';
+    } else {
+      satisfied = false;
+    }
+  } else if (statusOutput.targetSide !== 'enemy') {
+    satisfied = false;
+    expected = 'enemy status application';
+  }
+  return {
+    id: `${statusOutput.id}-status-targeting-${recipientPosition}`,
+    label: 'Status targeting compatibility',
+    expected,
+    actual: `provider ${providerPosition}, recipient ${recipientPosition}`,
+    satisfied,
+    evidenceIds: statusOutput.evidenceIds,
+    notes: statusOutput.targetSelector.selection === 'adjacent' ? ['A position is not adjacent to itself.'] : [],
+  };
+}
+
 function sourceScopeRequirement(modifier: ModifierCapability, output: OutputCapability): RequirementTrace {
   const compatible = sourceScopesCompatible(modifier.sourceScope, output.sourceScope);
   return {
@@ -788,6 +1382,19 @@ function outputRequirementTraces(output: OutputCapability, options: CapabilityOp
     evidenceIds: output.evidenceIds,
     sourceKind: output.sourceKind,
   }, options);
+}
+
+function abilitySourceKind(
+  dragons: Dragon[],
+  dragonId: string,
+  abilityId: string | null,
+): CapabilitySourceKind {
+  const dragon = dragonById(dragons, dragonId);
+  if (!dragon) {
+    return 'command';
+  }
+  const ability = allAbilities(dragon).find((item) => item.id === abilityId);
+  return ability?.kind ?? 'command';
 }
 
 function availabilityRequirements({
@@ -1110,6 +1717,13 @@ function channelLabel(channel: EffectChannel): string {
   }
 }
 
+function statusLabel(statusId: string): string {
+  return statusId
+    .split('-')
+    .map((part) => part[0]!.toUpperCase() + part.slice(1))
+    .join('-');
+}
+
 function allAbilities(dragon: Dragon): AbilityDefinition[] {
   return [dragon.command, dragon.trait, ...dragon.habits]
     .filter((ability): ability is AbilityDefinition => Boolean(ability));
@@ -1194,6 +1808,12 @@ function uniqueChannels(channels: EffectChannel[]): EffectChannel[] {
 }
 
 function primaryDamageChannelForDragon(dragonId: string): EffectChannel | null {
+  if (dragonId === 'syrax') {
+    return 'tactical-damage';
+  }
+  if (dragonId === 'caraxes') {
+    return 'fire-damage';
+  }
   if (dragonId === 'malachite') {
     return 'tactical-damage';
   }
@@ -1210,7 +1830,7 @@ function primaryDamageBasisForDragon(dragonId: string): DragonEffectProfile['pri
   if (dragonId === 'vermax') {
     return 'verified-basic-attack-and-kit';
   }
-  if (dragonId === 'malachite' || dragonId === 'sheepstealer') {
+  if (dragonId === 'syrax' || dragonId === 'caraxes' || dragonId === 'malachite' || dragonId === 'sheepstealer') {
     return 'derived';
   }
   return 'unknown';
@@ -1274,12 +1894,18 @@ function matrixCapabilityNames(capabilities: ModifierCapability[]): string {
 export function frameworkReportData(dragons: Dragon[]) {
   const outputs = deriveOutputCapabilities(dragons).filter((capability) => reviewedDragonIds.includes(capability.dragonId));
   const modifiers = deriveModifierCapabilities(dragons).filter((capability) => reviewedDragonIds.includes(capability.dragonId));
+  const statusOutputs = deriveStatusOutputCapabilities(dragons).filter((capability) => reviewedDragonIds.includes(capability.dragonId));
+  const periodicDamage = derivePeriodicDamageDefinitions(dragons).filter((definition) => reviewedDragonIds.includes(definition.dragonId));
   const integrity = capabilityIntegrityReport(dragons);
   const formations: Record<string, FormationAnalysisInput> = {
     A: { 'left-flank': 'malachite', vanguard: 'sheepstealer', 'right-flank': 'vermax' },
     B: { 'left-flank': 'sheepstealer', vanguard: 'malachite', 'right-flank': 'vermax' },
     C: { 'left-flank': 'malachite', vanguard: 'vermax', 'right-flank': 'seasmoke' },
     D: { 'left-flank': 'seasmoke', vanguard: 'malachite', 'right-flank': 'sheepstealer' },
+    E: { 'left-flank': 'caraxes', vanguard: 'syrax', 'right-flank': 'vermax' },
+    F: { 'left-flank': 'syrax', vanguard: 'caraxes', 'right-flank': 'malachite' },
+    G: { 'left-flank': 'caraxes', vanguard: 'syrax', 'right-flank': 'sheepstealer' },
+    H: { 'left-flank': 'syrax', vanguard: 'caraxes', 'right-flank': 'seasmoke' },
   };
   const traces = Object.fromEntries(
     Object.entries(formations).map(([name, formation]) => [name, analyzeCapabilityAmplifications(formation, dragons, { previewMaxRankInteractions: true })]),
@@ -1291,6 +1917,8 @@ export function frameworkReportData(dragons: Dragon[]) {
     matrix: buildCapabilityMatrix(dragons),
     outputs,
     modifiers,
+    statusOutputs,
+    periodicDamage,
     profiles: deriveDragonEffectProfiles(dragons, outputs, modifiers),
     formations,
     traces,

@@ -57,6 +57,15 @@ Enemy debuffs are not direct ally support and are reserved for a separate future
 
 The debug view keeps child capability matches for review. It shows channel, modifier role, target selector, self-only state, source-scope compatibility, position compatibility, availability context, evidence, confidence, and the reason each interaction is active, potential, inactive, or unknown.
 
+Phase 3.8 adds dependency traces:
+
+- Status-condition enablement: status outputs such as First-Strike or Slow can satisfy structured capability conditions.
+- Stat-scaling support: ally stat increases can support outputs that scale with that stat.
+- Enemy mitigation reduction: enemy stat debuffs can support friendly outputs mitigated by that target stat.
+- Periodic damage amplification: damage-channel support can match periodic damage definitions such as Burn Fire Damage.
+
+These are explanatory traces. They may be potential or conditional when unlocks, trigger chances, target selection, exact formulas, or battlefield state are unresolved.
+
 Run `npm run report:synergy` for a read-only capability report containing the revised matrix, availability context, modifier roles, generated cross-dragon synergies, excluded self modifiers, integrity checks, and unresolved assumptions.
 
 ## Threshold Interpretation
@@ -80,7 +89,7 @@ Audit JSON uses:
 {
   "format": "dragonfire-synergy-audit",
   "schemaVersion": 1,
-  "databaseVersion": "0.4.3",
+  "databaseVersion": "0.5.0",
   "gameBuild": "26.6.53509",
   "generatedAt": "ISO timestamp",
   "formation": {

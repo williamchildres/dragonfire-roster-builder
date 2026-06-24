@@ -16,6 +16,7 @@ export interface DragonObservationSnapshot {
   capturedAt: string;
   gameVersion: string | null;
   collection: DragonCollectionProgress | null;
+  displayState?: string | null;
   dragonLevel: number | null;
   starRank: number | null;
   starProgressCurrent?: number | null;

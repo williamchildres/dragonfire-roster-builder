@@ -103,3 +103,40 @@ Do not submit private account details, credentials, exploit instructions, copied
   - Malachite / Vermax / Seasmoke validates Vermax Tactical Damage stack eligibility for Malachite
   - Seasmoke / Malachite / Sheepstealer validates Malachite Fire support to Left Flank Seasmoke only
 - Notes: use `npm run report:synergy` to print the current expected trace set before comparing against new combat logs
+
+### 11. Syrax First-Strike Enables Caraxes Infernal Burst
+
+- Status: pending combat-log confirmation
+- Game build: `26.6.53509`
+- Expected interaction: Syrax Blazing Fury can grant First-Strike to Caraxes; Caraxes Infernal Burst displays a 1.5x Fire Damage multiplier while Caraxes has First-Strike
+- Validation goal: Confirm the trigger/target sequence and whether Caraxes can reliably be selected when multiple Fire Damage allies are present
+- Notes: Current trace is status-condition enablement, not a guaranteed effect
+
+### 12. Caraxes Slow Enables Syrax Strategic Revival
+
+- Status: pending combat-log confirmation
+- Game build: `26.6.53509`
+- Expected interaction: Caraxes Crippling Inferno can apply Slow; Syrax Strategic Revival has a conditional 1.5x Recovery multiplier if any enemy has Slow
+- Validation goal: Confirm timing across rounds and whether any enemy Slow is sufficient regardless of lane
+- Notes: Strategic Revival and Crippling Inferno are both future unlocks in the observed account state
+
+### 13. Caraxes Burn Periodic Damage
+
+- Status: pending combat-log confirmation
+- Game build: `26.6.53509`
+- Expected interaction: Burn deals Fire Damage each round, scales with attacker Intelligence, and is mitigated by target Initiative
+- Validation goal: Confirm tick timing, stacking, refresh behavior, and whether Fire Damage Dealt support affects Burn ticks
+
+### 14. Syrax And Caraxes Stat Scaling Support
+
+- Status: pending formula validation
+- Game build: `26.6.53509`
+- Expected interaction: Syrax and Caraxes stat-support effects can improve outputs that scale with the supported stat
+- Validation goal: Confirm exact formulas for Initiative-enhanced Recovery, Intelligence-enhanced Fire Damage, and enemy Initiative mitigation reduction
+
+### 15. Caraxes Text/Table Discrepancies
+
+- Status: pending follow-up
+- Game build: `26.6.53509`
+- Expected interaction: Battle Dread and Mass Enfeeble preserve the visible discrepancy between raw description and ranked table values
+- Validation goal: Confirm whether the ranked table or raw description controls the applied value at Habit Level 1

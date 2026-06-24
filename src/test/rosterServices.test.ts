@@ -81,7 +81,13 @@ describe('roster storage and import/export', () => {
             starRank: 10,
             reignLevel: 0,
             notes: 'Ready',
-            habitLevels: {},
+            habitLevels: {
+              'syrax-mindful-synergy': 1,
+              'syrax-flight-mastery': 2,
+              'syrax-strategic-revival': 3,
+              'syrax-tactical-inferno': 4,
+              'syrax-mothers-mercy': 5,
+            },
           },
           {
             dragonId: 'malachite',

@@ -134,7 +134,7 @@ describe('Phase 3.7 generic matching', () => {
     );
 
     expect(malachiteTrace).toMatchObject({ status: 'potential' });
-    expect(malachiteTrace?.matchedOutputCapabilityIds.join(' ')).toContain('wardens-rally-tactical-damage');
+    expect(malachiteTrace?.matchedOutputCapabilityIds?.join(' ')).toContain('wardens-rally-tactical-damage');
     expect(seasmokeTrace).toBeUndefined();
   });
 
@@ -176,10 +176,17 @@ describe('Phase 3.7 generic matching', () => {
 });
 
 describe('Phase 3.7 report support', () => {
-  it('builds a four-dragon capability matrix', () => {
+  it('builds a reviewed-dragon capability matrix', () => {
     const matrix = buildCapabilityMatrix(dragons);
 
-    expect(matrix.map((row) => row.Dragon)).toEqual(['Seasmoke', 'Malachite', 'Sheepstealer', 'Vermax']);
+    expect(matrix.map((row) => row.Dragon)).toEqual([
+      'Syrax',
+      'Caraxes',
+      'Seasmoke',
+      'Malachite',
+      'Sheepstealer',
+      'Vermax',
+    ]);
     expect(matrix.find((row) => row.Dragon === 'Vermax')?.['Deals Physical Damage']).toContain('Basic Attack');
   });
 
@@ -189,6 +196,6 @@ describe('Phase 3.7 report support', () => {
     expect(packageJson.scripts['report:synergy']).toBe('node scripts/report-synergy-framework.mjs');
     expect(reportScriptText).toContain('SYNERGY FRAMEWORK REPORT');
     expect(reportScriptText).toContain('Required Trace Results');
-    expect(reportScriptText).toContain('Sheepstealer -> Vermax Physical support');
+    expect(reportScriptText).toContain('Syrax First-Strike -> Caraxes Infernal Burst');
   });
 });

@@ -84,6 +84,8 @@ Use the Formation Builder debug view to inspect trace reasoning and export audit
 8. Record canonical, observed-account, and user-roster availability separately. The report script must not claim browser localStorage availability.
 9. Do not derive authoritative capabilities from effect tags alone. Structured effects or reviewed explicit capabilities are required.
 10. Update `docs/SYNERGY_CAPABILITY_FRAMEWORK.md`, `npm run report:synergy`, and tests whenever a capability shape or matching rule changes.
+11. For schema 7+ data, add output dependencies for verified scaling, mitigation, conditional status requirements, and repeated conditions.
+12. Add `StatusOutputCapability` and `PeriodicDamageDefinition` coverage when an ability applies statuses such as First-Strike, Slow, Burn, or Resistance. Periodic statuses such as Burn should identify their damage channel, scaling stat, mitigation stat, duration, and evidence.
 
 ## Official Roster Check
 
@@ -91,4 +93,4 @@ Run `npm run check:roster` to compare official-site local records with the ordin
 
 ## Versioning
 
-For data releases, update `databaseVersion`, `schemaVersion` when the data shape changes, package version, changelog, and tests together. Phase 3.7.1 uses database version `0.4.3`, data schema `6`, current documented game build `26.6.53509`, and local roster schema `3`.
+For data releases, update `databaseVersion`, `schemaVersion` when the data shape changes, package version, changelog, and tests together. Phase 3.8 uses database version `0.5.0`, data schema `7`, current documented game build `26.6.53509`, and local roster schema `3`.
