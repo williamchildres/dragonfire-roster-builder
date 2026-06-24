@@ -1,11 +1,12 @@
 import type { DragonObservationSnapshot } from '../models/stats';
+import { databaseMetadata } from './databaseMetadata';
 
 export const dragonObservationSnapshots: DragonObservationSnapshot[] = [
   {
     id: 'seasmoke-main-screen-2026-06-23',
     dragonId: 'seasmoke',
     capturedAt: '2026-06-23',
-    gameVersion: null,
+    gameVersion: databaseMetadata.currentDocumentedGameBuild,
     collection: {
       state: 'not-hatched',
       shardsCurrent: 10,
@@ -32,7 +33,7 @@ export const dragonObservationSnapshots: DragonObservationSnapshot[] = [
     id: 'malachite-main-screen-2026-06-23',
     dragonId: 'malachite',
     capturedAt: '2026-06-23',
-    gameVersion: null,
+    gameVersion: databaseMetadata.currentDocumentedGameBuild,
     collection: {
       state: 'hatched',
       shardsCurrent: null,
@@ -59,7 +60,7 @@ export const dragonObservationSnapshots: DragonObservationSnapshot[] = [
     id: 'sheepstealer-main-screen-2026-06-23',
     dragonId: 'sheepstealer',
     capturedAt: '2026-06-23',
-    gameVersion: null,
+    gameVersion: databaseMetadata.currentDocumentedGameBuild,
     collection: {
       state: 'hatched',
       shardsCurrent: null,
@@ -88,7 +89,7 @@ export const dragonObservationSnapshots: DragonObservationSnapshot[] = [
     id: 'vermax-main-screen-2026-06-23',
     dragonId: 'vermax',
     capturedAt: '2026-06-23',
-    gameVersion: null,
+    gameVersion: databaseMetadata.currentDocumentedGameBuild,
     collection: {
       state: 'hatched',
       shardsCurrent: null,

@@ -1,11 +1,12 @@
 import type { FieldVerification } from '../models/dragon';
 import type { TroopMatchupRule } from '../models/stats';
+import { databaseMetadata } from './databaseMetadata';
 
 const screenshotVerification: FieldVerification = {
   status: 'screenshot-verified',
   source: 'Army Builder screenshot',
   capturedAt: '2026-06-23',
-  gameVersion: null,
+  gameVersion: databaseMetadata.currentDocumentedGameBuild,
   reviewedManually: true,
 };
 

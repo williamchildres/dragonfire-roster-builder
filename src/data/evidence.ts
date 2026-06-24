@@ -1,4 +1,5 @@
 import type { EvidenceSource } from '../models/dragon';
+import { databaseMetadata } from './databaseMetadata';
 
 export const evidenceSources: EvidenceSource[] = [
   {
@@ -62,9 +63,23 @@ export const evidenceSources: EvidenceSource[] = [
     url: null,
     capturedAt: '2026-06-23',
     language: 'English' as const,
-    gameVersion: null,
+    gameVersion: databaseMetadata.currentDocumentedGameBuild,
     submittedBy: 'repository owner',
     reviewedManually: true,
     verificationStatus: 'community-verified' as const,
   })),
+  {
+    id: 'malachite-wardens-rally-combat-log-self-recovery-2026-06-24',
+    type: 'manual-combat-log-observation',
+    title: "Warden's Rally Recovery included Malachite",
+    description:
+      'Manual combat-log observation by the repository owner. Raw combat log has not yet been archived in the repository. Observation: Malachite appeared as a recipient of Warden\'s Rally Recovery, confirming that "3 Allies" includes the caster for this effect.',
+    url: null,
+    capturedAt: '2026-06-23',
+    language: 'English',
+    gameVersion: databaseMetadata.currentDocumentedGameBuild,
+    submittedBy: 'repository owner',
+    reviewedManually: true,
+    verificationStatus: 'community-verified',
+  },
 ];

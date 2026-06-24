@@ -1,4 +1,4 @@
-import type { Dragon, EffectTag, FormationPosition, TroopType, VerificationStatus } from './dragon';
+import type { BattleContext, Dragon, EffectTag, FormationPosition, TroopType, VerificationStatus } from './dragon';
 
 export type DataConfidence = 'none' | 'low' | 'medium' | 'high';
 
@@ -36,6 +36,7 @@ export interface SynergyResult {
   unresolvedAssumptions: string[];
   warnings: string[];
   missingData: MissingDataItem[];
+  traces: SynergyTrace[];
 }
 
 export interface BreedDistribution {
@@ -51,4 +52,67 @@ export interface AffinityCoverage {
   neutral: number;
   negative: number;
   unknown: number;
+}
+
+export type TraceStatus =
+  | 'active'
+  | 'potential'
+  | 'inactive'
+  | 'blocked'
+  | 'unknown'
+  | 'not-applicable';
+
+export type TraceConfidence = 'confirmed' | 'high' | 'medium' | 'low' | 'unresolved';
+
+export interface RequirementTrace {
+  id: string;
+  label: string;
+  expected: string;
+  actual: string | null;
+  satisfied: boolean | null;
+  evidenceIds: string[];
+  notes: string[];
+}
+
+export interface SynergyTrace {
+  id: string;
+  ruleId: string;
+  status: TraceStatus;
+  confidence: TraceConfidence;
+  sourceDragonId: string;
+  sourceAbilityId: string | null;
+  recipientDragonId: string | null;
+  recipientAbilityId: string | null;
+  title: string;
+  explanation: string;
+  requirements: RequirementTrace[];
+  matchedFacts: string[];
+  effects: string[];
+  conflicts: string[];
+  assumptions: string[];
+  unresolvedQuestions: string[];
+  sourceEvidenceIds: string[];
+  recipientEvidenceIds: string[];
+}
+
+export interface FormationAuditEntry {
+  formation: FormationAnalysisInput;
+  traces: SynergyTrace[];
+  countsByStatus: Record<TraceStatus, number>;
+}
+
+export interface SynergyAuditExport {
+  format: 'dragonfire-synergy-audit';
+  schemaVersion: 1;
+  databaseVersion: string;
+  gameBuild: string;
+  generatedAt: string;
+  formation: {
+    leftFlank: string | null;
+    vanguard: string | null;
+    rightFlank: string | null;
+  };
+  userProgression: Record<string, unknown>;
+  battleContext: BattleContext;
+  traces: SynergyTrace[];
 }

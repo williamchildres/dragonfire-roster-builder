@@ -35,7 +35,24 @@ Warden's Rally demonstrates the model: round 9 has both Tactical Damage and Reco
 
 Formation positions are Left Flank, Vanguard, and Right Flank. Shared formation links preserve positions.
 
-The exact `within adjacency` graph is unresolved. Current analysis may display adjacency requirements, but it does not invalidate formations solely from an unverified adjacency assumption.
+Friendly formation adjacency is confirmed as a linear graph:
+
+- Left Flank is adjacent only to Vanguard.
+- Vanguard is adjacent to Left Flank and Right Flank.
+- Right Flank is adjacent only to Vanguard.
+- Left Flank and Right Flank are not adjacent to one another.
+
+Enemy-formation adjacency remains separate and must not be inferred from the friendly graph.
+
+Exact "3 Allies" effects in the three-dragon friendly formation target all three friendly dragons and include the caster. This is supported by manual combat-log observation of Warden's Rally Recovery applying to Malachite. Do not generalize that rule to "1 Ally", "2 Allies", "other Allies", "an Ally", or target-priority wording.
+
+Threshold wording is stored with literal operators. For example, "above 50%" means greater than 50 and "below 50%" means less than 50. Exactly 50% is not covered by either phrase until combat-log validation confirms boundary behavior.
+
+## Synergy Traces
+
+Formation analysis returns structured `SynergyTrace` records rather than only display text. Each trace records source and recipient dragons, source and recipient abilities, status, confidence, requirements, matched facts, effects, conflicts, assumptions, unresolved questions, raw evidence IDs, and manual-review context.
+
+Statuses include active, potential, inactive, blocked, unknown, and not-applicable. Locked Habits and future progression are potential when previewed, not active for the user's current roster. Numerical synergy scores remain null unless enough verified data exists for all selected dragons.
 
 ## User Roster State
 
@@ -66,6 +83,8 @@ Dragon troop affinity is stored on the dragon. Troop-type matchup rules live sep
 ## Evidence Sources
 
 Evidence records live in `src/data/evidence.ts`. Screenshot evidence records may use descriptive labels without committing image files or copied artwork to the public repository.
+
+Current screenshot-normalized evidence and observations are documented against game build `26.6.53509`. Manual-review records live in `src/data/manualReviews.ts` and record scope, review status, reviewer, review date, game build, notes, and evidence IDs.
 
 Status glossary records live in `src/data/statusGlossary.ts`. They describe known status wording and unresolved semantics without assigning those statuses to dragons unless a sourced ability does so.
 

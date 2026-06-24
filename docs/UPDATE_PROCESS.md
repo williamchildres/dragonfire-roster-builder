@@ -26,7 +26,7 @@ Use this process to keep roster data traceable.
 4. Model multiple schedules when timings differ.
 5. Use repeated attempts, repeat modes, stack configuration, conditions, target priorities, command augmentations, and source scopes when the screenshot supports them.
 6. Keep Habit unlock Star Rank separate from Habit Level progression.
-7. Store unresolved target inclusion, exact scaling formulas, and exact adjacency as unresolved questions.
+7. Store unresolved target inclusion, exact scaling formulas, enemy-formation assumptions, source-scope ambiguity, and stack-duration behavior as unresolved questions.
 8. Set `dataStatus` to the appropriate verification level.
 9. Update synergy rules only when the tags and behavior are verified.
 10. Add tests for any new engine behavior.
@@ -50,10 +50,23 @@ Use this process to keep roster data traceable.
 2. Add a source with capture date and game version if known.
 3. Update active data only after the source is reviewed.
 
+## Manual Reviews
+
+1. Add or update `ManualReviewRecord` entries in `src/data/manualReviews.ts`.
+2. Record the scope being reviewed, status, review date, reviewer, reviewed game build, notes, and evidence IDs.
+3. Use `confirmed` only when the data matches manual review.
+4. Use `provisional` when a brief review found no mismatch but detailed combat-log validation is still missing.
+5. Use `needs-follow-up` when wording, icons, or presentation require another pass.
+6. Do not block unrelated verified interactions solely because a separate mechanic needs follow-up.
+
+## Synergy Audits
+
+Use the Formation Builder debug view to inspect trace reasoning and export audit JSON. Audit exports include database version, game build, ordered formation positions, user progression context, and structured traces. Use these exports to compare website reasoning against future combat logs; do not persist generated audit matrices in localStorage.
+
 ## Official Roster Check
 
 Run `npm run check:roster` to compare official-site local records with the ordinary public roster page. Pending in-game dragons are ignored for removal/addition checks and reported separately if they appear publicly. The parser intentionally never overwrites local data. Website structure may change, so selector maintenance may be required.
 
 ## Versioning
 
-For data releases, update `databaseVersion`, `schemaVersion` when the data shape changes, package version, changelog, and tests together. Phase 3 uses database version `0.3.0`, data schema `3`, and local roster schema `3`.
+For data releases, update `databaseVersion`, `schemaVersion` when the data shape changes, package version, changelog, and tests together. Phase 3.5 uses database version `0.4.0`, data schema `4`, current documented game build `26.6.53509`, and local roster schema `3`.

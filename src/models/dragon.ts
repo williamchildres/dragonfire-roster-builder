@@ -242,6 +242,8 @@ export interface AbilityEffect {
   conditionalMultipliers?: ConditionalMultiplier[];
   directlyVerified?: boolean;
   calculated?: boolean;
+  targetCount?: number | null;
+  includesCaster?: boolean | null;
 }
 
 export interface AbilitySchedule {
@@ -339,7 +341,12 @@ export interface DragonCollectionProgress {
 
 export interface EvidenceSource {
   id: string;
-  type: 'official-page' | 'official-patch-note' | 'in-game-screenshot' | 'community-test';
+  type:
+    | 'official-page'
+    | 'official-patch-note'
+    | 'in-game-screenshot'
+    | 'community-test'
+    | 'manual-combat-log-observation';
   title: string;
   description?: string;
   url: string | null;
@@ -349,6 +356,25 @@ export interface EvidenceSource {
   submittedBy: string | null;
   reviewedManually?: boolean;
   verificationStatus: VerificationStatus;
+}
+
+export interface ManualReviewRecord {
+  id: string;
+  dragonId: string;
+  scope:
+    | 'identity'
+    | 'command'
+    | 'trait'
+    | 'habits'
+    | 'affinities'
+    | 'synergy-normalization'
+    | 'combat-log-behavior';
+  status: 'confirmed' | 'provisional' | 'needs-follow-up' | 'unreviewed';
+  reviewedAt: string;
+  reviewedAgainstGameBuild: string;
+  reviewer: 'repository-owner';
+  notes: string[];
+  evidenceIds: string[];
 }
 
 export const RARITIES: DragonRarity[] = ['Legendary', 'Epic', 'Rare'];
