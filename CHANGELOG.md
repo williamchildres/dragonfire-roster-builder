@@ -1,5 +1,16 @@
 # Changelog
 
+## 0.5.0 - 2026-06-24
+
+- Added screenshot-verified combat datasets for existing seeded dragons Syrax and Caraxes without changing the 30-dragon roster count.
+- Added Syrax Blazing Fury, Sentinel's Wit, Mindful Synergy, Flight Mastery, Strategic Revival, Tactical Inferno, and Mother's Mercy.
+- Added Caraxes Infernal Burst, Hunter's Wrath, Battle Dread, Dragon's Flair, Crippling Inferno, Mass Enfeeble, and Blood Wyrm.
+- Recorded Syrax and Caraxes not-discovered account observations as noncanonical snapshots.
+- Added status output capabilities, output dependencies, and periodic damage definitions for First-Strike, Slow, Burn, Resistance, and related mechanics.
+- Added generic trace kinds for status-condition enablement, stat-scaling support, enemy mitigation reduction, and periodic damage amplification.
+- Updated the synergy framework report to include Syrax/Caraxes review formations and unresolved assumptions.
+- Increased database version to `0.5.0` and data schema to `7`; local roster schema remains `3`.
+
 ## 0.4.3 - 2026-06-24
 
 - Added explicit `ModifierRole` classification for self amplification, ally support, recipient-side amplification, and enemy debuffs.

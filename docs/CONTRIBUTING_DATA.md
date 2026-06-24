@@ -55,6 +55,15 @@ Source-scope wording matters. Unqualified Damage Dealt modifiers apply to all qu
 
 Do not derive authoritative capabilities from tags alone. Tags can help with browsing and search, but a structured effect or explicitly reviewed capability record is required.
 
+For schema 7+ submissions, also record capability dependencies when the wording supports them:
+
+- Scaling stats, such as Fire Damage increased by Intelligence or Recovery enhanced by Initiative
+- Mitigation stats, such as Fire Damage being reduced by target Initiative
+- Status requirements, such as self First-Strike or any enemy Slow
+- Previous-round events and repeat-per-matching-enemy behavior
+
+Status effects should be modeled separately from damage channels. First-Strike, Slow, Burn, Resistance, Control, and similar mechanics should have glossary coverage when their meaning is known. If a status deals periodic damage, such as Burn dealing Fire Damage each round, add a periodic damage definition rather than relying on tags alone.
+
 ## Formation Data
 
 Record position requirements such as Vanguard, Left Flank, Right Flank, same lane, or within adjacency. Friendly three-dragon adjacency is confirmed as Left Flank - Vanguard - Right Flank, with no direct adjacency between the two flanks. Enemy-formation adjacency remains unverified and must be documented separately.
@@ -77,6 +86,6 @@ If a dragon is verified in-game but is not yet on the official public roster pag
 
 Screenshot records may use descriptive source labels, language, capture date, submitter, and manual-review status. Do not commit screenshots, copied game artwork, logos, or private account details unless the repository owner explicitly approves a public asset policy.
 
-Current screenshot evidence should include the reviewed game build when known. For the current Malachite, Seasmoke, Sheepstealer, Vermax, Army Builder, ability, trait, habit, command, and troop-matchup observations, the reviewed game build is `26.6.53509`.
+Current screenshot evidence should include the reviewed game build when known. For the current Syrax, Caraxes, Malachite, Seasmoke, Sheepstealer, Vermax, Army Builder, ability, trait, habit, command, and troop-matchup observations, the reviewed game build is `26.6.53509`.
 
 Unknown values should stay unknown until evidence is reviewed.

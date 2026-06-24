@@ -17,16 +17,38 @@ export const statusGlossary: StatusGlossaryEntry[] = [
   {
     id: 'resistance',
     term: 'Resistance',
-    definition: 'Displayed as Resistance (-20%) in Seasmoke Loyal Bond.',
-    verification: 'unresolved',
-    unresolvedQuestions: ['Exact game definition is not supplied.'],
+    definition: 'Reduces Damage Received. Magnitude and duration are supplied by the source ability.',
+    verification: 'verified',
+    unresolvedQuestions: ['Stacking and refresh behavior are not yet verified.'],
   },
   {
     id: 'first-strike',
     term: 'First-Strike',
-    definition: 'Target acts before all other combatants each round.',
+    definition:
+      'Target acts before all other combatants each round. Caraxes Infernal Burst separately verifies a First-Strike conditional damage multiplier.',
     verification: 'verified',
     unresolvedQuestions: [],
+  },
+  {
+    id: 'slow',
+    term: 'Slow',
+    definition: 'Target attacks after all other combatants each round.',
+    verification: 'verified',
+    unresolvedQuestions: ['Whether Slow interacts with every turn-order modifier before Initiative is not yet modeled.'],
+  },
+  {
+    id: 'burn',
+    term: 'Burn',
+    definition: 'Deals Fire Damage each round. Verified Burn damage scales with attacker Intelligence and is mitigated by target Initiative.',
+    verification: 'verified',
+    unresolvedQuestions: ['Stacking, refresh, and overlapping Burn-source behavior are not yet verified.'],
+  },
+  {
+    id: 'control',
+    term: 'Control',
+    definition: 'Control is a status category that includes Stun, Stagger, Overwhelm, and Confusion.',
+    verification: 'verified',
+    unresolvedQuestions: ['Whether cleansing one Control also consumes one Negative-effect cleanse slot remains unresolved.'],
   },
   {
     id: 'double-strike',
@@ -111,9 +133,9 @@ export const statusGlossary: StatusGlossaryEntry[] = [
   {
     id: 'negative-effect',
     term: 'Negative Effect',
-    definition: 'A harmful effect that may be removed by cleanse mechanics.',
+    definition: 'A harmful effect that may be removed by cleanse mechanics. Control effects can also be negative effects depending on the effect.',
     verification: 'partially-verified',
-    unresolvedQuestions: ['Complete negative-effect taxonomy is not yet verified.'],
+    unresolvedQuestions: ['Complete negative-effect taxonomy is not yet verified.', 'Cleanse overlap between Control and Negative Effect is unresolved.'],
   },
   {
     id: 'cleanse-positive',
