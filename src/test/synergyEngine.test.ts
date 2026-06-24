@@ -47,6 +47,6 @@ describe('synergy engine', () => {
       troopType: 'Cavalry',
       positive: 2,
     });
-    expect(analyzeTeam(['first', 'second'], [first, second], defaultSynergyRules).score).toBe(20);
+    expect(analyzeTeam(['first', 'second'], [first, second], defaultSynergyRules).score).toBeNull();
   });
 });

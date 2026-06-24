@@ -18,6 +18,7 @@ import { useEffect, useMemo, useRef, useState, type ChangeEvent, type KeyboardEv
 import { databaseMetadata, repository } from '../data/databaseMetadata';
 import { dragons } from '../data/dragons';
 import { evidenceSources } from '../data/evidence';
+import { manualReviewRecords } from '../data/manualReviews';
 import { dragonObservationSnapshots } from '../data/observations';
 import { dragonStatDefinitions } from '../data/statDefinitions';
 import { statusGlossary } from '../data/statusGlossary';
@@ -38,7 +39,15 @@ import {
   type OwnedDragon,
   type VerificationStatus,
 } from '../models/dragon';
+import type { SynergyTrace, TraceConfidence, TraceStatus } from '../models/synergy';
+import { THRESHOLD_BOUNDARY_NOTE } from '../services/formationRules';
 import { analyzeFormation, findAffinityCoverage, findBreedDistribution } from '../services/synergyEngine';
+import {
+  analyzeFormationTraces,
+  createSynergyAuditExport,
+  generateFormationAudit,
+  traceStatusReason,
+} from '../services/synergyTrace';
 import { defaultFilters, filterDragons, sortDragons, type DragonFilters, type DragonSort } from '../services/rosterFilters';
 import {
   createEmptyRoster,
@@ -298,6 +307,7 @@ export function App() {
             onIncludeUnownedChange={setIncludeUnowned}
             onFormationChange={setFormation}
             onShare={() => void shareFormation()}
+            onStatus={setMessage}
           />
         ) : null}
 
@@ -531,6 +541,7 @@ function FormationBuilderSection({
   onIncludeUnownedChange,
   onFormationChange,
   onShare,
+  onStatus,
 }: {
   includeUnowned: boolean;
   roster: Record<string, OwnedDragon>;
@@ -538,18 +549,79 @@ function FormationBuilderSection({
   onIncludeUnownedChange: (value: boolean) => void;
   onFormationChange: (formation: Formation) => void;
   onShare: () => void;
+  onStatus: (message: StatusMessage) => void;
 }) {
+  const [showDebug, setShowDebug] = useState(false);
+  const [includeInactiveTraces, setIncludeInactiveTraces] = useState(false);
+  const [previewMaxRank, setPreviewMaxRank] = useState(false);
+  const [auditDragonFilter, setAuditDragonFilter] = useState('all');
+  const [auditAbilityFilter, setAuditAbilityFilter] = useState('all');
+  const [auditStatusFilter, setAuditStatusFilter] = useState<TraceStatus | 'all'>('all');
+  const [auditConfidenceFilter, setAuditConfidenceFilter] = useState<TraceConfidence | 'all'>('all');
+  const [auditExpanded, setAuditExpanded] = useState(false);
   const selectableDragons = dragons.filter((dragon) => includeUnowned || roster[dragon.id]?.owned);
   const selectedDragons = FORMATION_POSITIONS.map((position) => formation[position])
     .map((id) => dragons.find((dragon) => dragon.id === id))
     .filter((dragon): dragon is Dragon => Boolean(dragon));
+  const traceOptions = { roster, previewMaxRankInteractions: previewMaxRank };
   const synergy = analyzeFormation(formation, dragons, defaultSynergyRules);
+  const traces = analyzeFormationTraces(formation, dragons, traceOptions);
+  const visibleTraces = includeInactiveTraces
+    ? traces
+    : traces.filter((trace) => trace.status === 'active');
+  const auditEntries = showDebug ? generateFormationAudit(dragons, traceOptions) : [];
+  const filteredAuditEntries = auditEntries
+    .map((entry) => ({
+      ...entry,
+      traces: entry.traces.filter(
+        (trace) =>
+          (auditDragonFilter === 'all' ||
+            trace.sourceDragonId === auditDragonFilter ||
+            trace.recipientDragonId === auditDragonFilter) &&
+          (auditAbilityFilter === 'all' ||
+            trace.sourceAbilityId === auditAbilityFilter ||
+            trace.recipientAbilityId === auditAbilityFilter) &&
+          (auditStatusFilter === 'all' || trace.status === auditStatusFilter) &&
+          (auditConfidenceFilter === 'all' || trace.confidence === auditConfidenceFilter),
+      ),
+    }))
+    .filter((entry) => entry.traces.length > 0 || auditStatusFilter === 'all');
   const breedDistribution = findBreedDistribution(selectedDragons);
   const affinityCoverage = findAffinityCoverage(selectedDragons);
   const knownTags = [...new Set(selectedDragons.flatMap((dragon) => dragon.tags))];
+  const auditJson = JSON.stringify(
+    {
+      format: 'dragonfire-synergy-audit-matrix',
+      schemaVersion: 1,
+      databaseVersion: databaseMetadata.databaseVersion,
+      gameBuild: databaseMetadata.currentDocumentedGameBuild,
+      generatedAt: new Date().toISOString(),
+      entries: filteredAuditEntries,
+    },
+    null,
+    2,
+  );
 
   const updatePosition = (position: FormationPosition, nextId: string | null) => {
     onFormationChange(preventDuplicateFormationPlacement(formation, position, nextId));
+  };
+  const copyAuditJson = async () => {
+    try {
+      await navigator.clipboard.writeText(auditJson);
+      onStatus({ kind: 'success', text: 'Synergy audit JSON copied.' });
+    } catch {
+      onStatus({ kind: 'info', text: 'Audit JSON is available in the debug view.' });
+    }
+  };
+  const downloadAuditJson = () => {
+    const blob = new Blob([auditJson], { type: 'application/json' });
+    const url = URL.createObjectURL(blob);
+    const anchor = document.createElement('a');
+    anchor.href = url;
+    anchor.download = `dragonfire-synergy-audit-${new Date().toISOString().slice(0, 10)}.json`;
+    anchor.click();
+    URL.revokeObjectURL(url);
+    onStatus({ kind: 'success', text: 'Synergy audit JSON downloaded.' });
   };
 
   return (
@@ -567,6 +639,22 @@ function FormationBuilderSection({
             onChange={(event) => onIncludeUnownedChange(event.target.checked)}
           />
           Include unowned dragons
+        </label>
+        <label className="check-row">
+          <input
+            type="checkbox"
+            checked={previewMaxRank}
+            onChange={(event) => setPreviewMaxRank(event.target.checked)}
+          />
+          Preview max-rank interactions
+        </label>
+        <label className="check-row">
+          <input
+            type="checkbox"
+            checked={showDebug}
+            onChange={(event) => setShowDebug(event.target.checked)}
+          />
+          Show analysis details
         </label>
         <div className="button-row">
           <button type="button" className="secondary-button" onClick={() => onFormationChange(emptyFormation())}>
@@ -653,18 +741,30 @@ function FormationBuilderSection({
             <strong>Data confidence:</strong> {synergy.confidence}
           </p>
           <p className="notice-text">{defaultAdjacency.note}</p>
+          <p className="notice-text">{THRESHOLD_BOUNDARY_NOTE}</p>
         </div>
         <div className="panel">
           <h3>Formation Analysis</h3>
           <p>
-            <strong>Score:</strong> {synergy.score ?? unknown}
+            <strong>Numerical score:</strong> Not generated. Dragonfire Roster Lab does not assign
+            arbitrary synergy scores from incomplete or conditional data.
           </p>
           {synergy.warnings.map((warning) => (
             <p className="notice-text" key={warning}>
               {warning}
             </p>
           ))}
-          <AnalysisList title="Positive interactions" items={synergy.positives} />
+          <AnalysisList
+            title="Active interactions"
+            items={traces
+              .filter((trace) => trace.status === 'active')
+              .map((trace) => ({
+                ruleId: trace.id,
+                title: trace.title,
+                description: `${trace.explanation} ${traceStatusReason(trace)}`,
+                confidence: trace.confidence,
+              }))}
+          />
           <AnalysisList title="Position requirements" items={synergy.positionRequirements} />
           <AnalysisList title="Unmet requirements" items={synergy.unmetRequirements} />
           <AnalysisList
@@ -705,6 +805,54 @@ function FormationBuilderSection({
           </div>
         </div>
       </div>
+      {showDebug ? (
+        <div className="debug-section">
+          <div className="panel">
+            <h3>Analysis Details</h3>
+            <div className="toolbar">
+              <label className="check-row">
+                <input
+                  type="checkbox"
+                  checked={includeInactiveTraces}
+                  onChange={(event) => setIncludeInactiveTraces(event.target.checked)}
+                />
+                Include inactive/potential traces
+              </label>
+              <button
+                type="button"
+                className="secondary-button"
+                onClick={() => {
+                  const currentExport = createSynergyAuditExport(formation, traces, roster);
+                  void navigator.clipboard.writeText(JSON.stringify(currentExport, null, 2));
+                  onStatus({ kind: 'success', text: 'Current formation audit JSON copied.' });
+                }}
+              >
+                Copy current formation JSON
+              </button>
+            </div>
+            <div className="trace-grid">
+              {visibleTraces.map((trace) => (
+                <TraceCard trace={trace} key={trace.id} />
+              ))}
+            </div>
+          </div>
+          <AuditMatrixSection
+            entries={filteredAuditEntries}
+            expanded={auditExpanded}
+            onExpandedChange={setAuditExpanded}
+            dragonFilter={auditDragonFilter}
+            onDragonFilterChange={setAuditDragonFilter}
+            abilityFilter={auditAbilityFilter}
+            onAbilityFilterChange={setAuditAbilityFilter}
+            statusFilter={auditStatusFilter}
+            onStatusFilterChange={setAuditStatusFilter}
+            confidenceFilter={auditConfidenceFilter}
+            onConfidenceFilterChange={setAuditConfidenceFilter}
+            onCopy={() => void copyAuditJson()}
+            onDownload={downloadAuditJson}
+          />
+        </div>
+      ) : null}
     </section>
   );
 }
@@ -732,6 +880,253 @@ function AnalysisList({
       )}
     </div>
   );
+}
+
+function TraceCard({ trace }: { trace: SynergyTrace }) {
+  const sourceDragon = dragons.find((dragon) => dragon.id === trace.sourceDragonId);
+  const recipientDragon = trace.recipientDragonId
+    ? dragons.find((dragon) => dragon.id === trace.recipientDragonId)
+    : null;
+  const sourceAbility = sourceDragon
+    ? [sourceDragon.command, sourceDragon.trait, ...sourceDragon.habits].find(
+        (ability) => ability?.id === trace.sourceAbilityId,
+      )
+    : null;
+  const recipientAbility = recipientDragon
+    ? [recipientDragon.command, recipientDragon.trait, ...recipientDragon.habits].find(
+        (ability) => ability?.id === trace.recipientAbilityId,
+      )
+    : null;
+  const sourceReviews = manualReviewRecords.filter((review) => review.dragonId === trace.sourceDragonId);
+  const recipientReviews = trace.recipientDragonId
+    ? manualReviewRecords.filter((review) => review.dragonId === trace.recipientDragonId)
+    : [];
+
+  return (
+    <article className="trace-card">
+      <div className="card-topline">
+        <div>
+          <h4>{trace.title}</h4>
+          <p>
+            <span className="badge">{formatToken(trace.status)}</span>
+            <span className="badge">{formatToken(trace.confidence)}</span>
+            <span className="badge">Build {databaseMetadata.currentDocumentedGameBuild}</span>
+          </p>
+        </div>
+      </div>
+      <dl className="detail-list">
+        <div>
+          <dt>Source dragon</dt>
+          <dd>{sourceDragon?.name ?? trace.sourceDragonId}</dd>
+        </div>
+        <div>
+          <dt>Source ability</dt>
+          <dd>{sourceAbility?.name ?? unknown}</dd>
+        </div>
+        <div>
+          <dt>Receiving dragon</dt>
+          <dd>{recipientDragon?.name ?? unknown}</dd>
+        </div>
+        <div>
+          <dt>Receiving ability or mechanic</dt>
+          <dd>{recipientAbility?.name ?? trace.matchedFacts[0] ?? unknown}</dd>
+        </div>
+      </dl>
+      <p>{trace.explanation}</p>
+      <p className="notice-text">{traceStatusReason(trace)}</p>
+      <h5>Requirements</h5>
+      <ul className="plain-list">
+        {trace.requirements.map((requirement) => (
+          <li key={requirement.id}>
+            <strong>{requirement.label}:</strong> expected {requirement.expected}; actual{' '}
+            {requirement.actual ?? unknown}; satisfied{' '}
+            {requirement.satisfied === null ? 'unknown' : requirement.satisfied ? 'yes' : 'no'}
+            {requirement.notes.length > 0 ? `; ${requirement.notes.join(' ')}` : ''}
+          </li>
+        ))}
+      </ul>
+      <TraceList title="Matched effect tags and facts" items={trace.matchedFacts} />
+      <TraceList title="Structured effects" items={trace.effects} />
+      <TraceList title="Conflicts" items={trace.conflicts} />
+      <TraceList title="Assumptions" items={trace.assumptions} />
+      <TraceList title="Unresolved questions" items={trace.unresolvedQuestions} />
+      <TraceList
+        title="Evidence IDs"
+        items={[...trace.sourceEvidenceIds, ...trace.recipientEvidenceIds, ...trace.requirements.flatMap((item) => item.evidenceIds)]}
+      />
+      <TraceList
+        title="Manual-review state"
+        items={[...sourceReviews, ...recipientReviews].map(
+          (review) => `${formatToken(review.scope)}: ${formatToken(review.status)} (${review.reviewedAgainstGameBuild})`,
+        )}
+      />
+      {sourceAbility?.rawDescription ? (
+        <details>
+          <summary>Raw source wording</summary>
+          <p>{sourceAbility.rawDescription}</p>
+        </details>
+      ) : null}
+    </article>
+  );
+}
+
+function TraceList({ title, items }: { title: string; items: string[] }) {
+  return (
+    <div>
+      <h5>{title}</h5>
+      {items.length > 0 ? (
+        <ul className="plain-list">
+          {[...new Set(items)].map((item) => (
+            <li key={item}>{item}</li>
+          ))}
+        </ul>
+      ) : (
+        <p>{unknown}</p>
+      )}
+    </div>
+  );
+}
+
+function AuditMatrixSection({
+  entries,
+  expanded,
+  onExpandedChange,
+  dragonFilter,
+  onDragonFilterChange,
+  abilityFilter,
+  onAbilityFilterChange,
+  statusFilter,
+  onStatusFilterChange,
+  confidenceFilter,
+  onConfidenceFilterChange,
+  onCopy,
+  onDownload,
+}: {
+  entries: Array<{ formation: Formation; traces: SynergyTrace[]; countsByStatus: Record<TraceStatus, number> }>;
+  expanded: boolean;
+  onExpandedChange: (expanded: boolean) => void;
+  dragonFilter: string;
+  onDragonFilterChange: (value: string) => void;
+  abilityFilter: string;
+  onAbilityFilterChange: (value: string) => void;
+  statusFilter: TraceStatus | 'all';
+  onStatusFilterChange: (value: TraceStatus | 'all') => void;
+  confidenceFilter: TraceConfidence | 'all';
+  onConfidenceFilterChange: (value: TraceConfidence | 'all') => void;
+  onCopy: () => void;
+  onDownload: () => void;
+}) {
+  const auditDragons = ['malachite', 'seasmoke', 'sheepstealer', 'vermax']
+    .map((id) => dragons.find((dragon) => dragon.id === id))
+    .filter((dragon): dragon is Dragon => Boolean(dragon));
+  const auditAbilities = auditDragons.flatMap((dragon) =>
+    [dragon.command, dragon.trait, ...dragon.habits]
+      .filter((ability): ability is AbilityDefinition => Boolean(ability))
+      .map((ability) => ({ id: ability.id, label: `${dragon.name}: ${ability.name}` })),
+  );
+
+  return (
+    <section className="panel">
+      <h3>Formation Audit Matrix</h3>
+      <p>
+        Generates all 24 ordered formations from Malachite, Seasmoke, Sheepstealer, and Vermax.
+        This audit is not persisted in localStorage.
+      </p>
+      <div className="filter-panel">
+        <label>
+          Filter by dragon
+          <select value={dragonFilter} onChange={(event) => onDragonFilterChange(event.target.value)}>
+            <option value="all">All dragons</option>
+            {auditDragons.map((dragon) => (
+              <option key={dragon.id} value={dragon.id}>
+                {dragon.name}
+              </option>
+            ))}
+          </select>
+        </label>
+        <label>
+          Filter by source ability
+          <select value={abilityFilter} onChange={(event) => onAbilityFilterChange(event.target.value)}>
+            <option value="all">All abilities</option>
+            {auditAbilities.map((ability) => (
+              <option key={ability.id} value={ability.id}>
+                {ability.label}
+              </option>
+            ))}
+          </select>
+        </label>
+        <label>
+          Filter by status
+          <select value={statusFilter} onChange={(event) => onStatusFilterChange(event.target.value as TraceStatus | 'all')}>
+            <option value="all">All statuses</option>
+            {(['active', 'potential', 'inactive', 'blocked', 'unknown', 'not-applicable'] as TraceStatus[]).map((status) => (
+              <option key={status} value={status}>
+                {formatToken(status)}
+              </option>
+            ))}
+          </select>
+        </label>
+        <label>
+          Filter by confidence
+          <select
+            value={confidenceFilter}
+            onChange={(event) => onConfidenceFilterChange(event.target.value as TraceConfidence | 'all')}
+          >
+            <option value="all">All confidence</option>
+            {(['confirmed', 'high', 'medium', 'low', 'unresolved'] as TraceConfidence[]).map((confidence) => (
+              <option key={confidence} value={confidence}>
+                {formatToken(confidence)}
+              </option>
+            ))}
+          </select>
+        </label>
+      </div>
+      <div className="button-row">
+        <button type="button" className="secondary-button" onClick={() => onExpandedChange(!expanded)}>
+          {expanded ? 'Collapse all' : 'Expand all'}
+        </button>
+        <button type="button" className="secondary-button" onClick={onCopy}>
+          Copy audit JSON
+        </button>
+        <button type="button" className="secondary-button" onClick={onDownload}>
+          Download audit JSON
+        </button>
+      </div>
+      <p className="result-count">Showing {entries.length} audit formations.</p>
+      <div className="audit-grid">
+        {entries.map((entry) => (
+          <article className="mini-panel" key={FORMATION_POSITIONS.map((position) => entry.formation[position]).join('-')}>
+            <h4>
+              {FORMATION_POSITIONS.map((position) => `${positionLabels[position]}: ${dragonName(entry.formation[position])}`).join(' | ')}
+            </h4>
+            <p>
+              Active {entry.countsByStatus.active}; Potential {entry.countsByStatus.potential};
+              Inactive {entry.countsByStatus.inactive}; Blocked {entry.countsByStatus.blocked};
+              Unknown {entry.countsByStatus.unknown}
+            </p>
+            <details open={expanded}>
+              <summary>Trace details</summary>
+              {entry.traces.length > 0 ? (
+                <ul className="plain-list">
+                  {entry.traces.map((trace) => (
+                    <li key={trace.id}>
+                      <strong>{formatToken(trace.status)}:</strong> {trace.title} - {traceStatusReason(trace)}
+                    </li>
+                  ))}
+                </ul>
+              ) : (
+                <p>{unknown}</p>
+              )}
+            </details>
+          </article>
+        ))}
+      </div>
+    </section>
+  );
+}
+
+function dragonName(dragonId: string | null) {
+  return dragonId ? dragons.find((dragon) => dragon.id === dragonId)?.name ?? dragonId : unknown;
 }
 
 function DataStatusSection() {
@@ -837,6 +1232,40 @@ function DataStatusSection() {
           Troop matchup rules are stored separately from dragon troop affinities. Current verified
           matchup records: {troopMatchupRules.length}.
         </p>
+      </div>
+      <div className="panel readable">
+        <h3>Manual Review Records</h3>
+        <p>
+          Current documented game build: <strong>{databaseMetadata.currentDocumentedGameBuild}</strong>.
+          Manual review records are separate from screenshot capture dates and data schema versions.
+        </p>
+        <div className="table-wrap">
+          <table>
+            <caption>Manual review status</caption>
+            <thead>
+              <tr>
+                <th>Dragon</th>
+                <th>Scope</th>
+                <th>Status</th>
+                <th>Reviewed</th>
+                <th>Build</th>
+                <th>Notes</th>
+              </tr>
+            </thead>
+            <tbody>
+              {manualReviewRecords.map((review) => (
+                <tr key={review.id}>
+                  <td>{dragonName(review.dragonId)}</td>
+                  <td>{formatToken(review.scope)}</td>
+                  <td>{formatToken(review.status)}</td>
+                  <td>{review.reviewedAt}</td>
+                  <td>{review.reviewedAgainstGameBuild}</td>
+                  <td>{review.notes.join(' ')}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
       </div>
     </section>
   );

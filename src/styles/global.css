@@ -599,6 +599,34 @@ dd {
   margin-top: 1rem;
 }
 
+.debug-section,
+.trace-grid,
+.audit-grid {
+  display: grid;
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+.trace-grid {
+  grid-template-columns: repeat(auto-fit, minmax(20rem, 1fr));
+}
+
+.audit-grid {
+  grid-template-columns: repeat(auto-fit, minmax(22rem, 1fr));
+}
+
+.trace-card {
+  background: rgba(0, 0, 0, 0.2);
+  border: 1px solid var(--line-soft);
+  border-radius: 0.45rem;
+  padding: 1rem;
+}
+
+.trace-card h5 {
+  color: var(--gold);
+  margin-bottom: 0.35rem;
+}
+
 .plain-list {
   line-height: 1.75;
   margin: 0;

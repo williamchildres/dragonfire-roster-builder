@@ -1,9 +1,10 @@
 export const databaseMetadata = {
-  databaseVersion: '0.3.0',
-  schemaVersion: 3,
-  lastUpdated: '2026-06-23',
+  databaseVersion: '0.4.0',
+  schemaVersion: 4,
+  lastUpdated: '2026-06-24',
   officialRosterLastChecked: '2026-06-23',
-  gameVersion: null,
+  gameVersion: '26.6.53509',
+  currentDocumentedGameBuild: '26.6.53509',
   officialRosterUrl: 'https://gotdragonfire.com/dragons/',
 } as const;
 

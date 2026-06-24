@@ -17,8 +17,10 @@ import type {
   StackConfiguration,
   TargetPriority,
 } from '../models/dragon';
+import { databaseMetadata } from './databaseMetadata';
 
 const verifiedAt = '2026-06-23';
+const verifiedGameBuild = databaseMetadata.currentDocumentedGameBuild;
 const dataStatus = 'official-metadata-only' as const;
 const unknownAffinities: Record<'Cavalry' | 'Shieldbearers' | 'Archers' | 'Spearmen' | 'Siege', AffinityLevel> = {
   Cavalry: 'unknown',
@@ -40,7 +42,7 @@ const screenshotVerification = (source: string): FieldVerification => ({
   status: 'screenshot-verified',
   source,
   capturedAt: verifiedAt,
-  gameVersion: null,
+  gameVersion: verifiedGameBuild,
   reviewedManually: true,
 });
 
@@ -48,7 +50,7 @@ const partialScreenshotVerification = (source: string): FieldVerification => ({
   status: 'partially-screenshot-verified',
   source,
   capturedAt: verifiedAt,
-  gameVersion: null,
+  gameVersion: verifiedGameBuild,
   reviewedManually: true,
 });
 
@@ -181,6 +183,8 @@ const fixedEffect = ({
   conditionalMultipliers = [],
   directlyVerified = true,
   calculated = false,
+  targetCount = null,
+  includesCaster = null,
 }: {
   id: string;
   type: string;
@@ -201,6 +205,8 @@ const fixedEffect = ({
   conditionalMultipliers?: ConditionalMultiplier[];
   directlyVerified?: boolean;
   calculated?: boolean;
+  targetCount?: number | null;
+  includesCaster?: boolean | null;
 }): AbilityEffect => ({
   id,
   type,
@@ -221,6 +227,8 @@ const fixedEffect = ({
   conditionalMultipliers,
   directlyVerified,
   calculated,
+  targetCount,
+  includesCaster,
 });
 
 const schedule = ({
@@ -361,7 +369,11 @@ const malachiteCommand = ability({
           magnitude: 70,
           unit: 'rate',
           scaling: ['dragon Level', 'Instinct'],
-          notes: ['Whether 3 Allies includes Malachite is unresolved.'],
+          notes: [
+            'Manual combat-log observation confirms that 3 Allies includes Malachite as the caster in the three-dragon formation.',
+          ],
+          targetCount: 3,
+          includesCaster: true,
         }),
       ],
     }),
@@ -394,7 +406,6 @@ const malachiteCommand = ability({
     'malachite-wardens-rally-glossary-2026-06-23',
   ],
   unresolvedQuestions: [
-    'Whether "3 Allies" includes Malachite.',
     'Exact Level and Instinct scaling formulas.',
   ],
 });
@@ -601,6 +612,9 @@ const malachiteHabits = [
             duration: 'Until end of combat',
             scaling: ['Strength'],
             rankedValues: rankedPercents([12.5, 15, 17.5, 21.25, 25]),
+            notes: ['Exact 3 Allies targeting is normalized to all three friendly dragons and includes the caster.'],
+            targetCount: 3,
+            includesCaster: true,
           }),
         ],
       }),
@@ -610,7 +624,6 @@ const malachiteHabits = [
     verification: screenshotVerification('Collective Might screenshot'),
     evidenceIds: ['malachite-collective-might-2026-06-23'],
     unresolvedQuestions: [
-      'Does "3 Allies" include Malachite?',
       'Exact enhanced-by-Strength formula.',
     ],
   }),
@@ -682,7 +695,7 @@ const malachiteHabits = [
     ],
     verification: screenshotVerification('Lightning Strike screenshot'),
     evidenceIds: ['malachite-lightning-strike-2026-06-23'],
-    unresolvedQuestions: ['Exact adjacency graph.', 'Exact enhanced-by-Instinct formula.'],
+    unresolvedQuestions: ['Exact enhanced-by-Instinct formula.'],
   }),
 ] satisfies AbilityDefinition[];
 
@@ -724,9 +737,6 @@ const createMalachite = (): Dragon => ({
     formationInteractions: partialScreenshotVerification('Army Builder formation screenshot'),
   },
   unresolvedQuestions: [
-    'Exact adjacency graph for within adjacency effects.',
-    'Whether Warden\'s Rally "3 Allies" includes Malachite.',
-    'Whether Collective Might "3 Allies" includes Malachite.',
     'Exact enhanced-by-Strength formula.',
     'Exact enhanced-by-Instinct formula.',
     'Canonical base stats remain unknown.',
@@ -962,7 +972,7 @@ const createSeasmoke = (): Dragon => {
       unlockStarRank: 4,
       rawDescription: 'Start of Combat: Increase Initiative of three Allies in any lane until end of combat, enhanced by Initiative.',
       schedules: [
-        schedule({ id: 'winds-favor-start-combat', timing: 'start-of-combat', effects: [fixedEffect({ id: 'winds-favor-initiative', type: 'Initiative Up', target: '3 Allies', targetScope: 'any-lane', magnitude: null, unit: 'percent', rankedValues: rankedPercents([12.5, 15, 17.5, 21.25, 25]), duration: 'Until end of combat', scaling: ['Initiative'] })] }),
+        schedule({ id: 'winds-favor-start-combat', timing: 'start-of-combat', effects: [fixedEffect({ id: 'winds-favor-initiative', type: 'Initiative Up', target: '3 Allies', targetScope: 'any-lane', magnitude: null, unit: 'percent', rankedValues: rankedPercents([12.5, 15, 17.5, 21.25, 25]), duration: 'Until end of combat', scaling: ['Initiative'], notes: ['Exact 3 Allies targeting is normalized to all three friendly dragons and includes the caster.'], targetCount: 3, includesCaster: true })] }),
       ],
       powerByHabitLevel: standardLegendaryPower,
       tags: ['BUFF_ALLIES', 'BUFF_INITIATIVE'],
@@ -1040,7 +1050,7 @@ const createSeasmoke = (): Dragon => {
       trait: screenshotVerification("Seasmoke Champion's Brilliance screenshot"),
       habits: screenshotVerification('Seasmoke Habit screenshots'),
     },
-    unresolvedQuestions: ['Exact adjacency graph.', 'Resistance detailed meaning.', 'Panic exact status definition.'],
+    unresolvedQuestions: ['Resistance detailed meaning.', 'Panic exact status definition.', 'Infectious Wrath augmentation presentation requires follow-up review.'],
   };
 };
 
@@ -1212,7 +1222,7 @@ const createSheepstealer = (): Dragon => {
     affinities: { Cavalry: 'positive', Archers: 'positive', Shieldbearers: 'unknown', Spearmen: 'unknown', Siege: 'unknown' },
     tags: [...new Set<EffectTag>([...command.tags, ...trait.tags, ...habits.flatMap((habit) => habit.tags)])],
     fieldVerification: { identity: screenshotVerification('Sheepstealer main screen screenshot'), command: screenshotVerification('Sheepstealer Wild Hunt screenshots'), trait: screenshotVerification("Sheepstealer Hunter's Cunning screenshot"), habits: screenshotVerification('Sheepstealer Habit screenshots'), affinities: partialScreenshotVerification('Sheepstealer main screen screenshot') },
-    unresolvedQuestions: ['Exact adjacency graph.', 'Higher-rank tripled Savage Claim values are calculated from verified multiplier, not directly screenshot verified.'],
+    unresolvedQuestions: ['Higher-rank tripled Savage Claim values are calculated from verified multiplier, not directly screenshot verified.', "Dragon's Cunning scaling scope remains provisional."],
   };
 };
 
@@ -1342,7 +1352,7 @@ const createVermax = (): Dragon => {
     affinities: { Cavalry: 'positive', Shieldbearers: 'positive', Archers: 'unknown', Spearmen: 'unknown', Siege: 'unknown' },
     tags: [...new Set<EffectTag>([...command.tags, ...trait.tags, ...habits.flatMap((habit) => habit.tags)])],
     fieldVerification: { identity: screenshotVerification('Vermax main screen screenshot'), command: screenshotVerification('Vermax Spreading Blaze screenshots'), trait: screenshotVerification("Vermax Warrior's Zeal screenshot"), habits: screenshotVerification('Vermax Habit screenshots'), affinities: partialScreenshotVerification('Vermax main screen screenshot') },
-    unresolvedQuestions: ['Exact adjacency graph.', 'Command/Habit icon source-scope semantics.', 'Target selection for multiple Spreading Blaze attempts.'],
+    unresolvedQuestions: ['Command/Habit icon source-scope semantics.', 'Target selection for multiple Spreading Blaze attempts.'],
   };
 };
 

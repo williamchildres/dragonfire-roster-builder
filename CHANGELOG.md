@@ -1,5 +1,17 @@
 # Changelog
 
+## 0.4.0 - 2026-06-24
+
+- Updated current screenshot evidence and observation records to game build `26.6.53509`.
+- Added structured manual-review records for Malachite, Seasmoke, Sheepstealer, and Vermax.
+- Confirmed the friendly formation adjacency graph: Left Flank and Right Flank are each adjacent to Vanguard, but not to each other.
+- Normalized exact "3 Allies" friendly targeting as all three friendly dragons including the caster, supported by Malachite Warden's Rally combat-log observation.
+- Added structured synergy traces for active, inactive, potential, blocked, unknown, and not-applicable interactions.
+- Added a production Formation Builder debug view with trace details, manual-review state, raw wording, evidence IDs, assumptions, and unresolved questions.
+- Added a debug-only 24-formation audit matrix for Malachite, Seasmoke, Sheepstealer, and Vermax with copy/download JSON export.
+- Documented conservative threshold behavior, combat-log validation, and synergy-audit export usage.
+- Kept local roster schema at `3`; no user data migration is required for this phase.
+
 ## 0.3.0 - 2026-06-23
 
 - Added screenshot-verified combat datasets for Seasmoke, Sheepstealer, and Vermax.

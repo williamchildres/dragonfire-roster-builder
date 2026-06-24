@@ -1,3 +1,4 @@
+import { FORMATION_ADJACENCY } from './formationRules';
 import { FORMATION_POSITIONS, type Dragon, type FormationPosition } from '../models/dragon';
 
 export const TEAM_SIZE = 3;
@@ -16,12 +17,9 @@ export const positionLabels: Record<FormationPosition, string> = {
 };
 
 export const defaultAdjacency = {
-  unresolved: true,
-  note: 'The exact within-adjacency graph requires confirmation. The current visual formation is linear and does not invalidate formations from unverified adjacency assumptions.',
-  likelyAdjacentPairs: [
-    ['left-flank', 'vanguard'],
-    ['vanguard', 'right-flank'],
-  ] satisfies Array<[FormationPosition, FormationPosition]>,
+  unresolved: false,
+  note: 'Confirmed friendly formation adjacency is linear: Left Flank is adjacent to Vanguard, Vanguard is adjacent to both flanks, and Right Flank is adjacent to Vanguard. Left Flank and Right Flank are not adjacent to each other.',
+  graph: FORMATION_ADJACENCY,
 };
 
 export function sanitizeTeamIds(ids: string[], dragons: Dragon[]): Array<string | null> {

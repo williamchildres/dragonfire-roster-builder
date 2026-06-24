@@ -43,7 +43,9 @@ For Command augmentations granted by Habits, keep the base Command intact and at
 
 ## Formation Data
 
-Record position requirements such as Vanguard, Left Flank, Right Flank, same lane, or within adjacency. Do not claim a complete adjacency graph until independently confirmed.
+Record position requirements such as Vanguard, Left Flank, Right Flank, same lane, or within adjacency. Friendly three-dragon adjacency is confirmed as Left Flank - Vanguard - Right Flank, with no direct adjacency between the two flanks. Enemy-formation adjacency remains unverified and must be documented separately.
+
+Exact "3 Allies" friendly targeting is normalized as all three friendly dragons including the caster. Do not apply that rule to "other Allies", smaller target counts, singular "Ally", or target-priority wording unless a source verifies it.
 
 ## Stats And Observations
 
@@ -60,5 +62,7 @@ If a dragon is verified in-game but is not yet on the official public roster pag
 ## Screenshot Policy
 
 Screenshot records may use descriptive source labels, language, capture date, submitter, and manual-review status. Do not commit screenshots, copied game artwork, logos, or private account details unless the repository owner explicitly approves a public asset policy.
+
+Current screenshot evidence should include the reviewed game build when known. For the current Malachite, Seasmoke, Sheepstealer, Vermax, Army Builder, ability, trait, habit, command, and troop-matchup observations, the reviewed game build is `26.6.53509`.
 
 Unknown values should stay unknown until evidence is reviewed.

@@ -9,6 +9,7 @@ import type {
   SynergyResult,
   SynergyRule,
 } from '../models/synergy';
+import { analyzeFormationTraces } from './synergyTrace';
 
 export function analyzeTeam(
   dragonIds: Array<string | null>,
@@ -41,7 +42,18 @@ export function analyzeFormation(
     .map((entry) => entry.dragon)
     .filter((dragon): dragon is Dragon => Boolean(dragon));
   const missingData = findMissingData(team);
-  const positives = [...findEffectInteractions(team, rules), ...findFormationInteractions(formationEntries)];
+  const traces = analyzeFormationTraces(formation, dragons);
+  const tracePositives = traces
+    .filter((trace) => trace.status === 'active' && trace.effects.length > 0)
+    .map((trace) => ({
+      dragonIds: [trace.sourceDragonId, trace.recipientDragonId].filter((id): id is string => Boolean(id)),
+      tags: [],
+      ruleId: trace.ruleId,
+      title: trace.title,
+      description: trace.explanation,
+      confidence: trace.confidence === 'confirmed' || trace.confidence === 'high' ? ('high' as const) : ('medium' as const),
+    }));
+  const positives = [...findEffectInteractions(team, rules), ...findFormationInteractions(formationEntries), ...tracePositives];
   const conflicts = [...findTeamConflicts(team, rules), ...findFormationConflicts(formationEntries)];
   const positionRequirements = findPositionRequirements(formationEntries);
   const unmetRequirements = positionRequirements.filter((item) => item.ruleId.startsWith('unmet-'));
@@ -62,21 +74,20 @@ export function analyzeFormation(
     warnings.push('Sheepstealer Stolen Flock has a non-player food-tile schedule; PvP behavior remains separate.');
   }
 
-  const score = confidence === 'none' || missingData.length > 0 ? null : Math.max(0, positives.length * 20 - conflicts.length * 15);
-
   return {
-    score,
+    score: null,
     confidence,
     positives,
     conflicts,
     positionRequirements: positionRequirements.filter((item) => !item.ruleId.startsWith('unmet-')),
     unmetRequirements,
     unresolvedAssumptions: [
-      'The exact within-adjacency graph requires confirmation. Formations are not invalidated from unverified adjacency assumptions.',
       ...team.flatMap((dragon) => dragon.unresolvedQuestions),
+      ...traces.flatMap((trace) => trace.unresolvedQuestions),
     ],
     warnings,
     missingData,
+    traces,
   };
 }
 
@@ -164,7 +175,6 @@ function findPositionRequirements(
     (entry): entry is { position: FormationPosition; dragon: Dragon } => Boolean(entry.dragon),
   );
   const items: ExplanationItem[] = [];
-  const positionByDragon = new Map(entries.map((entry) => [entry.dragon.id, entry.position]));
   const dragonByPosition = new Map(entries.map((entry) => [entry.position, entry.dragon]));
 
   for (const { dragon, position } of entries) {
@@ -198,19 +208,6 @@ function findPositionRequirements(
       description:
         "Malachite in Vanguard can increase Fire Damage Dealt for the ally deployed in Left Flank. Whether that ally has verified Fire Damage usage may still be unknown.",
       confidence: 'medium',
-    });
-  }
-
-  const malachitePosition = positionByDragon.get('malachite');
-  if (malachitePosition) {
-    items.push({
-      dragonIds: ['malachite'],
-      tags: ['ADJACENT_TARGET'],
-      ruleId: 'malachite-adjacency-unresolved',
-      title: 'Lightning Strike adjacency unresolved',
-      description:
-        'Lightning Strike needs 1 other Ally within adjacency, but the exact adjacency graph is not independently confirmed.',
-      confidence: 'low',
     });
   }
 
@@ -302,7 +299,7 @@ function findFormationInteractions(
       ruleId: 'malachite-vermax-double-strike-condition',
       title: 'Lightning Strike may increase Vermax Basic Attack triggers',
       description:
-        'Malachite Lightning Strike can grant Double-Strike to one other adjacent ally, and Vermax has an after-Basic-Attack command trigger. The exact adjacency graph remains unresolved.',
+        'Malachite Lightning Strike can grant Double-Strike to one other adjacent ally, and Vermax has an after-Basic-Attack command trigger.',
       confidence: 'low',
     });
   }
@@ -315,7 +312,7 @@ function findFormationInteractions(
         tags: ['FIRE_DAMAGE_UP', 'ADJACENT_TARGET'],
         ruleId: 'seasmoke-cunning-ferocity-fire-conditional',
         title: 'Cunning Ferocity can support Fire Damage allies',
-        description: `${fireAlly.name} has verified Fire Damage tags, but Seasmoke's Cunning Ferocity adjacency targeting needs the exact adjacency graph confirmed.`,
+        description: `${fireAlly.name} has verified Fire Damage tags, and Seasmoke's Cunning Ferocity uses confirmed friendly adjacency targeting.`,
         confidence: 'low',
       });
     }

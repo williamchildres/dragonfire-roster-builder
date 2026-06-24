@@ -145,6 +145,6 @@ describe('Phase 3 combat data', () => {
     expect(result.score).toBeNull();
     expect(result.positives.map((item) => item.ruleId)).toContain('sheepstealer-right-physical-verified');
     expect(result.conflicts.map((item) => item.ruleId)).toContain('verified-vanguard-position-conflict');
-    expect(result.unresolvedAssumptions.join(' ')).toContain('adjacency');
+    expect(result.unresolvedAssumptions.join(' ')).toContain('source-scope semantics');
   });
 });

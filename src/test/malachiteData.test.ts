@@ -102,6 +102,6 @@ describe('Malachite verified combat data', () => {
 
     expect(result.score).toBeNull();
     expect(result.positionRequirements.length).toBeGreaterThan(0);
-    expect(result.unresolvedAssumptions.join(' ')).toContain('adjacency');
+    expect(result.unresolvedAssumptions.join(' ')).toContain('Canonical base stats remain unknown');
   });
 });
