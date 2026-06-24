@@ -188,6 +188,7 @@ describe('Phase 3.7 report support', () => {
 
     expect(packageJson.scripts['report:synergy']).toBe('node scripts/report-synergy-framework.mjs');
     expect(reportScriptText).toContain('SYNERGY FRAMEWORK REPORT');
-    expect(reportScriptText).toContain('Formation A');
+    expect(reportScriptText).toContain('Required Trace Results');
+    expect(reportScriptText).toContain('Sheepstealer -> Vermax Physical support');
   });
 });

@@ -102,6 +102,10 @@ export interface SynergyTrace {
   exactResultUnknownReason?: string | null;
   matchKind?: 'outgoing-effect-amplification' | 'incoming-effect-amplification' | null;
   channel?: EffectChannel | null;
+  modifierRole?: ModifierRole | null;
+  targetSelectorSummary?: string | null;
+  modifierSelfOnly?: boolean;
+  availabilityContext?: string | null;
   modifierCapabilityId?: string | null;
   matchedOutputCapabilityIds?: string[];
   sourceScopeResults?: CapabilityMatch[];
@@ -120,7 +124,7 @@ export interface RecipientAmplificationTrace {
   confidence: TraceConfidence;
 }
 
-export type EffectChannel = 'physical-damage' | 'tactical-damage' | 'fire-damage' | 'recovery';
+export type EffectChannel = 'physical-damage' | 'tactical-damage' | 'fire-damage' | 'recovery' | 'stat';
 
 export type CapabilitySourceKind = 'basic-attack' | 'command' | 'trait' | 'habit';
 
@@ -134,6 +138,29 @@ export type CapabilitySourceScope =
   | 'unknown';
 
 export type ModifierDirection = 'dealt' | 'received';
+
+export type ModifierRole =
+  | 'self-amplification'
+  | 'ally-support'
+  | 'recipient-side-amplification'
+  | 'enemy-debuff';
+
+export type CapabilityAvailability =
+  | 'canonical-base'
+  | 'canonical-locked'
+  | 'observed-available'
+  | 'observed-unavailable'
+  | 'user-available'
+  | 'user-locked'
+  | 'unknown';
+
+export interface CapabilityAvailabilityContext {
+  canonical: CapabilityAvailability;
+  observedAccount: CapabilityAvailability;
+  userRoster: CapabilityAvailability;
+  reportLabel: string;
+  notes: string[];
+}
 
 export type CapabilityTargetSide = 'ally' | 'enemy' | 'self';
 
@@ -190,6 +217,7 @@ export interface OutputCapability {
   conditions: EffectCondition[];
   currentlyAvailable: boolean;
   futureAvailable: boolean;
+  availability: CapabilityAvailabilityContext;
   directlyVerified: boolean;
   combatLogConfirmed: boolean;
   confidence: TraceConfidence;
@@ -204,6 +232,7 @@ export interface ModifierCapability {
   label: string;
   channel: EffectChannel;
   direction: ModifierDirection;
+  role: ModifierRole;
   operation: 'increase' | 'decrease';
   value: number | null;
   unit: 'percent' | 'flat' | 'stack' | 'unknown';
@@ -220,6 +249,7 @@ export interface ModifierCapability {
   valuePerStack: number | null;
   currentlyAvailable: boolean;
   futureAvailable: boolean;
+  availability: CapabilityAvailabilityContext;
   directlyVerified: boolean;
   combatLogConfirmed: boolean;
   confidence: TraceConfidence;

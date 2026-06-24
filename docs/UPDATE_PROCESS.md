@@ -76,11 +76,14 @@ Use the Formation Builder debug view to inspect trace reasoning and export audit
 
 1. Add output capabilities only when a sourced ability or combat-log observation verifies the produced channel.
 2. Add modifier capabilities only when the target, direction, channel, source scope, value, and unlock requirements can be represented without guessing.
-3. Keep every verified output channel for mixed-damage dragons. Do not replace capability matching with a single primary damage tag.
-4. Set source scope from explicit wording when present. If wording is unqualified Damage Dealt, use all qualifying sources in the same channel; if wording excludes Basic Attacks, use non-basic attacks.
-5. Model position selectors before declaring a match active. Left Flank, Vanguard, Right Flank, self, any lane, adjacency, and eligible-ally selectors must be explicit.
-6. Mark locked or progression-gated abilities as future or potential in preview mode, not active for the user's current roster.
-7. Update `docs/SYNERGY_CAPABILITY_FRAMEWORK.md`, `npm run report:synergy`, and tests whenever a capability shape or matching rule changes.
+3. Assign one modifier role: self amplification, ally support, recipient-side amplification, or enemy debuff.
+4. Keep self amplification out of outgoing cross-dragon support matching. A dragon may deal or amplify a damage type without supporting that damage type for teammates.
+5. Keep every verified output channel for mixed-damage dragons. Do not replace capability matching with a single primary damage tag.
+6. Set source scope from explicit wording when present. If wording is unqualified Damage Dealt, use all qualifying sources in the same channel; if wording excludes Basic Attacks, use non-basic attacks.
+7. Model position selectors before declaring a match active. Left Flank, Vanguard, Right Flank, self, any lane, adjacency, and eligible-ally selectors must be explicit.
+8. Record canonical, observed-account, and user-roster availability separately. The report script must not claim browser localStorage availability.
+9. Do not derive authoritative capabilities from effect tags alone. Structured effects or reviewed explicit capabilities are required.
+10. Update `docs/SYNERGY_CAPABILITY_FRAMEWORK.md`, `npm run report:synergy`, and tests whenever a capability shape or matching rule changes.
 
 ## Official Roster Check
 
@@ -88,4 +91,4 @@ Run `npm run check:roster` to compare official-site local records with the ordin
 
 ## Versioning
 
-For data releases, update `databaseVersion`, `schemaVersion` when the data shape changes, package version, changelog, and tests together. Phase 3.7 uses database version `0.4.2`, data schema `5`, current documented game build `26.6.53509`, and local roster schema `3`.
+For data releases, update `databaseVersion`, `schemaVersion` when the data shape changes, package version, changelog, and tests together. Phase 3.7.1 uses database version `0.4.3`, data schema `6`, current documented game build `26.6.53509`, and local roster schema `3`.

@@ -48,6 +48,8 @@ Phase 3.7 adds a reusable capability framework instead of relying on one-off dra
 
 The framework honors source scope, position requirements, unlock state, user progression, and preview mode. Unqualified damage modifiers apply to all qualifying sources, while explicit exclusions such as "excluding Basic Attacks" block Basic Attack matches. Locked capabilities can appear as future or potential in preview analysis but are not active for the user's current roster.
 
+Phase 3.7.1 separates modifier roles. A dragon may amplify its own damage without supporting teammates. Self amplification such as Stolen Flock, Warrior's Zeal, Rallying Flame, and Wise Vigor is shown in capability review but cannot create cross-dragon support traces. Ally support, recipient-side amplification, and enemy debuffs are separate roles. Capability availability is also labeled by context: canonical kit, observed account state, and visitor roster state.
+
 Threshold wording is interpreted literally: "above 50%" means `> 50`, and "below 50%" means `< 50`. Exactly 50% matches neither wording until combat logs confirm otherwise.
 
 Observation snapshots are account-specific and non-canonical. They may be affected by Dragon Level, Star Rank, Stronghold upgrades, faction bonuses, alliance bonuses, and other modifiers.
@@ -69,7 +71,7 @@ npm run preview
 npm run report:synergy
 ```
 
-`npm run report:synergy` prints the capability matrix, output capabilities, modifier capabilities, generic amplification rules, required review formations, and unresolved framework assumptions. It is read-only and does not modify source files or localStorage.
+`npm run report:synergy` prints the revised capability matrix, availability context, modifier roles, generated cross-dragon synergies, excluded self modifiers, integrity checks, and unresolved framework assumptions. It is read-only and does not modify source files or localStorage.
 
 ## Official Roster Check
 
@@ -114,7 +116,7 @@ Dragonfire Roster Lab is an unofficial community project and is not affiliated w
 
 ## Project Status
 
-Version `0.4.2` introduces the generic effect-capability and amplification framework. Data schema is `5`; local roster schema remains `3`.
+Version `0.4.3` clarifies capability targeting, modifier roles, and availability context. Data schema is `6`; local roster schema remains `3`.
 
 ## Planned Next Steps
 

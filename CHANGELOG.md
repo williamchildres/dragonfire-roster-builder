@@ -1,5 +1,16 @@
 # Changelog
 
+## 0.4.3 - 2026-06-24
+
+- Added explicit `ModifierRole` classification for self amplification, ally support, recipient-side amplification, and enemy debuffs.
+- Restricted outgoing cross-dragon amplification to `ally-support` modifiers only.
+- Kept self modifiers such as Stolen Flock, Warrior's Zeal, Rallying Flame, and Wise Vigor visible in capability review while excluding them from teammate support traces.
+- Added canonical, observed-account, and user-roster availability context to capabilities and report terminology.
+- Revised the capability matrix to separate outputs, ally support, self amplification, and recipient-side amplification.
+- Added integrity checks for capability references, evidence IDs, duplicate IDs, role/target compatibility, and tag-only derivation.
+- Updated Dragon Details and debug traces with modifier role, target selector, self-only status, and availability context.
+- Increased database version to `0.4.3` and data schema to `6`; local roster schema remains `3`.
+
 ## 0.4.2 - 2026-06-24
 
 - Added a generic effect-capability framework for Physical Damage, Tactical Damage, Fire Damage, and Recovery.
