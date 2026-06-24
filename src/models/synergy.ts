@@ -93,6 +93,26 @@ export interface SynergyTrace {
   unresolvedQuestions: string[];
   sourceEvidenceIds: string[];
   recipientEvidenceIds: string[];
+  providedEffectType?: string | null;
+  recipientModifierType?: string | null;
+  recipientModifierAbilityId?: string | null;
+  recipientModifierValue?: number | null;
+  combatLogConfirmed?: boolean;
+  exactResultKnown?: boolean;
+  exactResultUnknownReason?: string | null;
+}
+
+export interface RecipientAmplificationTrace {
+  providerDragonId: string;
+  providerAbilityId: string;
+  recipientDragonId: string;
+  recipientModifierAbilityId: string;
+  providedEffectType: string;
+  recipientModifierType: string;
+  modifierValue: number | null;
+  requirements: RequirementTrace[];
+  status: TraceStatus;
+  confidence: TraceConfidence;
 }
 
 export interface FormationAuditEntry {

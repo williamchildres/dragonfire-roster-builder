@@ -31,6 +31,15 @@ Use this process to keep roster data traceable.
 9. Update synergy rules only when the tags and behavior are verified.
 10. Add tests for any new engine behavior.
 
+## Normalizing Targeting And Source Scope
+
+1. Treat "Other Ally" and "Other Allies" as excluding the caster.
+2. Treat plain "Ally" and "Allies" as allowing caster eligibility when other targeting rules permit it.
+3. Do not let caster eligibility override spatial rules; a caster is not adjacent to itself.
+4. Treat unqualified Damage Dealt modifiers as applying to all qualifying damage sources unless wording explicitly restricts or excludes a source.
+5. Preserve explicit restrictions such as "excluding Basic Attacks", "from Basic Attacks", "from Commands", "from Habits", or "from Commands and Habits".
+6. Do not infer a Basic Attack damage type when that attack's type is unknown.
+
 ## Adding Observation Snapshots
 
 1. Store observations outside the canonical dragon record.
@@ -69,4 +78,4 @@ Run `npm run check:roster` to compare official-site local records with the ordin
 
 ## Versioning
 
-For data releases, update `databaseVersion`, `schemaVersion` when the data shape changes, package version, changelog, and tests together. Phase 3.5 uses database version `0.4.0`, data schema `4`, current documented game build `26.6.53509`, and local roster schema `3`.
+For data releases, update `databaseVersion`, `schemaVersion` when the data shape changes, package version, changelog, and tests together. Phase 3.6 uses database version `0.4.1`, data schema `4`, current documented game build `26.6.53509`, and local roster schema `3`.

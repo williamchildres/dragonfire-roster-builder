@@ -26,6 +26,7 @@ Commands, Traits, and Habits share `AbilityDefinition`.
 - `repeat` stores once-if-any or once-per-match behavior such as Vermax's Fire-enemy repeats.
 - `augmentations` stores Habit-granted Command additions such as Infectious Wrath and Savage Claim.
 - `conditions`, `targetPriority`, `stack`, `conditionalMultipliers`, and `sourceScope` preserve screenshot mechanics without collapsing them into prose.
+- `casterEligibility` normalizes whether wording includes, excludes, or conditionally allows the caster.
 - `verification` is field-level.
 - `unresolvedQuestions` records mechanics that must not be guessed.
 
@@ -46,11 +47,17 @@ Enemy-formation adjacency remains separate and must not be inferred from the fri
 
 Exact "3 Allies" effects in the three-dragon friendly formation target all three friendly dragons and include the caster. This is supported by manual combat-log observation of Warden's Rally Recovery applying to Malachite. Do not generalize that rule to "1 Ally", "2 Allies", "other Allies", "an Ally", or target-priority wording.
 
+Repeated manual ability-text review confirms a broader wording rule: "Other Ally" and "Other Allies" exclude the caster, while plain "Ally" and "Allies" allow the caster to be selected when otherwise eligible. This language rule does not override spatial requirements. A caster is not adjacent to itself, so an effect targeting Allies within adjacency cannot select the caster solely because the word "other" is absent.
+
+Unqualified Damage Dealt modifiers apply to all qualifying damage sources unless the text explicitly restricts or excludes a source. Explicit restrictions include "excluding Basic Attacks", "from Basic Attacks", "from Commands", "from Habits", or "from Commands and Habits". Vermax Warrior's Zeal is combat-log confirmed to include Basic Attack Physical Damage. Malachite Forest's Instinct remains non-basic because the wording explicitly excludes Basic Attacks.
+
 Threshold wording is stored with literal operators. For example, "above 50%" means greater than 50 and "below 50%" means less than 50. Exactly 50% is not covered by either phrase until combat-log validation confirms boundary behavior.
 
 ## Synergy Traces
 
-Formation analysis returns structured `SynergyTrace` records rather than only display text. Each trace records source and recipient dragons, source and recipient abilities, status, confidence, requirements, matched facts, effects, conflicts, assumptions, unresolved questions, raw evidence IDs, and manual-review context.
+Formation analysis returns structured `SynergyTrace` records rather than only display text. Each trace records source and recipient dragons, source and recipient abilities, status, confidence, requirements, matched facts, effects, conflicts, assumptions, unresolved questions, raw evidence IDs, and manual-review context. Recipient-amplification traces additionally record provider effect type, recipient modifier type, modifier value, combat-log confirmation state, and whether the exact final result is known.
+
+Provider-to-recipient amplification is modeled without producing a score. A Recovery provider can interact with a recipient's Recovery Received modifier; the trace explains the greater benefit while leaving the exact troop-restoration amount unknown until the full Recovery formula is verified.
 
 Statuses include active, potential, inactive, blocked, unknown, and not-applicable. Locked Habits and future progression are potential when previewed, not active for the user's current roster. Numerical synergy scores remain null unless enough verified data exists for all selected dragons.
 

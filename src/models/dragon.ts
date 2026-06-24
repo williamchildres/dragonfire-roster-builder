@@ -45,6 +45,7 @@ export type EffectTag =
   | 'REARGUARD'
   | 'TACTICAL_DAMAGE'
   | 'RECOVERY'
+  | 'RECOVERY_RECEIVED_UP'
   | 'SAME_LANE_TARGET'
   | 'ANY_LANE_TARGET'
   | 'ADJACENT_TARGET'
@@ -120,6 +121,12 @@ export type EffectSourceScope =
   | 'habits'
   | 'commands-and-habits'
   | 'all-sources'
+  | 'unknown';
+
+export type CasterEligibility =
+  | 'included'
+  | 'excluded'
+  | 'eligible-if-targeting-allows'
   | 'unknown';
 
 export type TargetPriority =
@@ -244,6 +251,7 @@ export interface AbilityEffect {
   calculated?: boolean;
   targetCount?: number | null;
   includesCaster?: boolean | null;
+  casterEligibility?: CasterEligibility;
 }
 
 export interface AbilitySchedule {

@@ -14,6 +14,7 @@ Each trace includes:
 - Raw source wording when available
 - Evidence IDs and reviewed game build
 - Manual-review state
+- Provider effect, recipient-side modifier, combat-log confirmation state, and exact-result known/unknown status for amplification traces
 - Assumptions, unresolved questions, and the reason the trace is active or inactive
 
 Active traces represent interactions supported by current formation placement and current user progression. Potential traces represent future, locked, conditional, previewed, or unresolved interactions. Inactive traces identify which requirement failed. Locked Habits are never labeled active for the user's current roster, even when preview mode displays their future interactions.
@@ -30,7 +31,17 @@ Enemy-formation adjacency is not modeled as confirmed data.
 
 ## Three-Allies Behavior
 
-Manual combat-log observation in build `26.6.53509` confirms Malachite can receive Warden's Rally Recovery. Exact "3 Allies" friendly effects are therefore normalized as all three friendly dragons including the caster. "Other Allies" still excludes the caster, and singular or smaller-count Ally wording remains ability-specific unless verified.
+Manual combat-log observation in build `26.6.53509` confirms Malachite can receive Warden's Rally Recovery. Exact "3 Allies" friendly effects are therefore normalized as all three friendly dragons including the caster.
+
+Repeated manual ability-text review confirms that "Other Ally" and "Other Allies" exclude the caster, while plain "Ally" and "Allies" allow caster eligibility when targeting rules otherwise permit it. Spatial targeting still applies; a caster is not adjacent to itself.
+
+## Recipient Amplification
+
+The trace engine detects generic provider-to-recipient amplification. The current verified pattern is Recovery provider plus Recovery Received increase. Malachite's Warden's Rally provides Recovery to three Allies in any lane, and Sheepstealer's Hunter's Cunning increases Sheepstealer Recovery Received by 20% while Sheepstealer is Level 16+ and deployed in Vanguard.
+
+This trace is active when Sheepstealer is Vanguard and its Level requirement is satisfied. Malachite does not need to be Vanguard to provide Warden's Rally Recovery. If Malachite is in a flank, Sentinel's Presence is shown as inactive due to placement while the Recovery amplification can still be active. This is a positional tradeoff rather than a formation error.
+
+Exact final Recovery is not calculated because the complete Level and Instinct Recovery formula is unknown.
 
 ## Threshold Interpretation
 
@@ -53,7 +64,7 @@ Audit JSON uses:
 {
   "format": "dragonfire-synergy-audit",
   "schemaVersion": 1,
-  "databaseVersion": "0.4.0",
+  "databaseVersion": "0.4.1",
   "gameBuild": "26.6.53509",
   "generatedAt": "ISO timestamp",
   "formation": {
