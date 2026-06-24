@@ -2,7 +2,8 @@ import type { Dragon, OwnedDragon } from '../models/dragon';
 
 export const STORAGE_KEY = 'dragonfire-roster-lab:roster';
 export const TEAM_STORAGE_KEY = 'dragonfire-roster-lab:last-team';
-export const ROSTER_SCHEMA_VERSION = 1;
+export const FORMATION_STORAGE_KEY = 'dragonfire-roster-lab:last-formation';
+export const ROSTER_SCHEMA_VERSION = 2;
 export const MAX_NOTES_LENGTH = 1000;
 
 export interface StoredRoster {
@@ -25,6 +26,8 @@ export interface ImportResult {
   errors: string[];
 }
 
+type HabitLevel = OwnedDragon['habitLevels'][string];
+
 const clampText = (value: string) => value.slice(0, MAX_NOTES_LENGTH);
 
 export function createEmptyRoster(dragons: Dragon[]): Record<string, OwnedDragon> {
@@ -37,6 +40,7 @@ export function createEmptyRoster(dragons: Dragon[]): Record<string, OwnedDragon
         starRank: null,
         reignLevel: null,
         notes: '',
+        habitLevels: Object.fromEntries(dragon.habits.map((habit) => [habit.id, null])),
       },
     ]),
   );
@@ -60,6 +64,7 @@ export function normalizeRoster(
       starRank: isValidStarRank(entry.starRank) ? entry.starRank : null,
       reignLevel: isValidReignLevel(entry.reignLevel) ? entry.reignLevel : null,
       notes: typeof entry.notes === 'string' ? clampText(entry.notes) : '',
+      habitLevels: normalizeHabitLevels(dragonHabitIds(entry.dragonId, dragons), entry.habitLevels),
     };
   }
 
@@ -74,11 +79,11 @@ export function loadRoster(storage: Storage, dragons: Dragon[]): Record<string, 
 
   try {
     const parsed = JSON.parse(raw) as Partial<StoredRoster>;
-    if (
-      parsed.format !== 'dragonfire-roster-lab-local' ||
-      parsed.schemaVersion !== ROSTER_SCHEMA_VERSION ||
-      !Array.isArray(parsed.roster)
-    ) {
+    if (parsed.format !== 'dragonfire-roster-lab-local' || !Array.isArray(parsed.roster)) {
+      return createEmptyRoster(dragons);
+    }
+
+    if (parsed.schemaVersion !== 1 && parsed.schemaVersion !== ROSTER_SCHEMA_VERSION) {
       return createEmptyRoster(dragons);
     }
 
@@ -159,7 +164,7 @@ export function validateRosterImport(json: string, dragons: Dragon[]): ImportRes
     }
 
     if (!isValidStarRank(entry.starRank)) {
-      errors.push(`${dragonId}: starRank must be null or an integer from 1 through 5.`);
+      errors.push(`${dragonId}: starRank must be null or an integer from 1 through 10.`);
     }
 
     if (!isValidReignLevel(entry.reignLevel)) {
@@ -172,6 +177,10 @@ export function validateRosterImport(json: string, dragons: Dragon[]): ImportRes
       errors.push(`${dragonId}: notes must be ${MAX_NOTES_LENGTH} characters or fewer.`);
     }
 
+    if (!isValidHabitLevelRecord(entry.habitLevels, dragonHabitIds(dragonId, dragons))) {
+      errors.push(`${dragonId}: habitLevels must contain null or integers from 0 through 5.`);
+    }
+
     if (errors.length === 0) {
       imported.push({
         dragonId,
@@ -179,6 +188,7 @@ export function validateRosterImport(json: string, dragons: Dragon[]): ImportRes
         starRank: entry.starRank as number | null,
         reignLevel: entry.reignLevel as number | null,
         notes: entry.notes as string,
+        habitLevels: normalizeHabitLevels(dragonHabitIds(dragonId, dragons), entry.habitLevels),
       });
     }
   });
@@ -191,7 +201,7 @@ export function validateRosterImport(json: string, dragons: Dragon[]): ImportRes
 }
 
 export function isValidStarRank(value: unknown): value is number | null {
-  return value === null || (Number.isInteger(value) && Number(value) >= 1 && Number(value) <= 5);
+  return value === null || (Number.isInteger(value) && Number(value) >= 1 && Number(value) <= 10);
 }
 
 export function isValidReignLevel(value: unknown): value is number | null {
@@ -200,4 +210,35 @@ export function isValidReignLevel(value: unknown): value is number | null {
 
 function isRecord(value: unknown): value is Record<string, unknown> {
   return typeof value === 'object' && value !== null && !Array.isArray(value);
+}
+
+export function isValidHabitLevel(value: unknown): value is HabitLevel {
+  return value === null || (Number.isInteger(value) && Number(value) >= 0 && Number(value) <= 5);
+}
+
+function dragonHabitIds(dragonId: string, dragons: Dragon[]): string[] {
+  return dragons.find((dragon) => dragon.id === dragonId)?.habits.map((habit) => habit.id) ?? [];
+}
+
+function normalizeHabitLevels(
+  habitIds: string[],
+  value: unknown,
+): Record<string, 0 | 1 | 2 | 3 | 4 | 5 | null> {
+  const provided = isRecord(value) ? value : {};
+  return Object.fromEntries(
+    habitIds.map((habitId) => {
+      const habitLevel = provided[habitId];
+      return [habitId, isValidHabitLevel(habitLevel) ? habitLevel : null];
+    }),
+  );
+}
+
+function isValidHabitLevelRecord(value: unknown, habitIds: string[]): boolean {
+  if (habitIds.length === 0) {
+    return value === undefined || isRecord(value);
+  }
+  if (!isRecord(value)) {
+    return false;
+  }
+  return habitIds.every((habitId) => isValidHabitLevel(value[habitId]));
 }

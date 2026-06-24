@@ -48,4 +48,15 @@ describe('Dragonfire Roster Lab app', () => {
     expect(screen.getByRole('heading', { name: 'Syrax' })).toBeInTheDocument();
     expect(screen.getAllByText('3').length).toBeGreaterThan(0);
   });
+
+  it('renders the three named formation positions', async () => {
+    const user = userEvent.setup();
+    render(<App />);
+
+    await user.click(screen.getAllByRole('button', { name: /formation builder/i })[0]!);
+
+    expect(screen.getByText('Left Flank')).toBeInTheDocument();
+    expect(screen.getByText('Vanguard')).toBeInTheDocument();
+    expect(screen.getByText('Right Flank')).toBeInTheDocument();
+  });
 });

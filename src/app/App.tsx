@@ -18,30 +18,46 @@ import { useEffect, useMemo, useRef, useState, type ChangeEvent, type KeyboardEv
 import { databaseMetadata, repository } from '../data/databaseMetadata';
 import { dragons } from '../data/dragons';
 import { evidenceSources } from '../data/evidence';
+import { dragonObservationSnapshots } from '../data/observations';
+import { dragonStatDefinitions } from '../data/statDefinitions';
 import { defaultSynergyRules } from '../data/synergyRules';
+import { troopMatchupRules } from '../data/troopMatchups';
 import {
   BREEDS,
+  FORMATION_POSITIONS,
   RARITIES,
   TROOP_TYPES,
   VERIFICATION_STATUSES,
+  type AbilityDefinition,
   type Dragon,
   type DragonBreed,
   type DragonRarity,
+  type FormationPosition,
   type OwnedDragon,
   type VerificationStatus,
 } from '../models/dragon';
-import { analyzeTeam, findAffinityCoverage, findBreedDistribution } from '../services/synergyEngine';
+import { analyzeFormation, findAffinityCoverage, findBreedDistribution } from '../services/synergyEngine';
 import { defaultFilters, filterDragons, sortDragons, type DragonFilters, type DragonSort } from '../services/rosterFilters';
 import {
   createEmptyRoster,
+  FORMATION_STORAGE_KEY,
   loadRoster,
   saveRoster,
   serializeRosterExport,
   STORAGE_KEY,
-  TEAM_STORAGE_KEY,
   validateRosterImport,
 } from '../services/rosterStorage';
-import { createShareHash, parseSharedTeam, preventDuplicateSelection, sanitizeTeamIds } from '../services/teamShare';
+import {
+  createFormationShareHash,
+  defaultAdjacency,
+  emptyFormation,
+  moveFormationDragon,
+  parseSharedFormation,
+  positionLabels,
+  preventDuplicateFormationPlacement,
+  sanitizeFormation,
+  type Formation,
+} from '../services/teamShare';
 
 type Section = 'home' | 'database' | 'roster' | 'team' | 'status' | 'about';
 type StatusMessage = { kind: 'success' | 'error' | 'info'; text: string };
@@ -50,7 +66,7 @@ const sectionLabels: Record<Section, string> = {
   home: 'Overview',
   database: 'Dragon Database',
   roster: 'My Roster',
-  team: 'Team Builder',
+  team: 'Formation Builder',
   status: 'Data Status',
   about: 'About',
 };
@@ -68,7 +84,8 @@ const unknown = 'Not yet verified';
 
 export function App() {
   const [activeSection, setActiveSection] = useState<Section>(() =>
-    typeof window !== 'undefined' && parseSharedTeam(window.location.hash, dragons).some(Boolean)
+    typeof window !== 'undefined' &&
+    FORMATION_POSITIONS.some((position) => parseSharedFormation(window.location.hash, dragons)[position])
       ? 'team'
       : 'home',
   );
@@ -81,15 +98,15 @@ export function App() {
   const [selectedDragon, setSelectedDragon] = useState<Dragon | null>(null);
   const [message, setMessage] = useState<StatusMessage | null>(null);
   const [includeUnowned, setIncludeUnowned] = useState(false);
-  const [teamIds, setTeamIds] = useState<Array<string | null>>(() => getInitialTeamIds());
+  const [formation, setFormation] = useState<Formation>(() => getInitialFormation());
 
   useEffect(() => {
     saveRoster(window.localStorage, roster);
   }, [roster]);
 
   useEffect(() => {
-    window.localStorage.setItem(TEAM_STORAGE_KEY, JSON.stringify(teamIds.filter(Boolean)));
-  }, [teamIds]);
+    window.localStorage.setItem(FORMATION_STORAGE_KEY, JSON.stringify(formation));
+  }, [formation]);
 
   const ownedCount = Object.values(roster).filter((entry) => entry.owned).length;
   const verifiedCombatCount = dragons.filter((dragon) =>
@@ -121,6 +138,12 @@ export function App() {
           starRank: null,
           reignLevel: null,
           notes: '',
+          habitLevels: Object.fromEntries(
+            (dragons.find((dragon) => dragon.id === dragonId)?.habits ?? []).map((habit) => [
+              habit.id,
+              null,
+            ]),
+          ),
         }),
         ...patch,
         dragonId,
@@ -172,13 +195,13 @@ export function App() {
     setMessage({ kind: 'info', text: 'Local roster data was cleared.' });
   };
 
-  const shareTeam = async () => {
-    const shareHash = createShareHash(teamIds);
+  const shareFormation = async () => {
+    const shareHash = createFormationShareHash(formation);
     const url = `${window.location.origin}${window.location.pathname}${shareHash}`;
     window.history.replaceState(null, '', shareHash);
     try {
       await navigator.clipboard.writeText(url);
-      setMessage({ kind: 'success', text: 'Team share link copied.' });
+      setMessage({ kind: 'success', text: 'Formation share link copied.' });
     } catch {
       setMessage({ kind: 'info', text: `Share link ready: ${url}` });
     }
@@ -261,13 +284,13 @@ export function App() {
         ) : null}
 
         {activeSection === 'team' ? (
-          <TeamBuilderSection
+          <FormationBuilderSection
             includeUnowned={includeUnowned}
             roster={roster}
-            teamIds={teamIds}
+            formation={formation}
             onIncludeUnownedChange={setIncludeUnowned}
-            onTeamChange={setTeamIds}
-            onShare={() => void shareTeam()}
+            onFormationChange={setFormation}
+            onShare={() => void shareFormation()}
           />
         ) : null}
 
@@ -313,10 +336,10 @@ function HomeSection({
         <div className="dragon-silhouette" />
       </div>
       <div className="hero-copy">
-        <p className="eyebrow">Roster manager and team lab</p>
+        <p className="eyebrow">Roster manager and formation lab</p>
         <h2 id="overview-title">Build your dragon roster without guessing the data.</h2>
         <p>
-          Track ownership, plan three-dragon teams, and prepare for verified community combat data
+          Track ownership, plan three-position formations, and prepare for verified community combat data
           while keeping official identity metadata separate from player notes.
         </p>
         <div className="button-row">
@@ -324,7 +347,7 @@ function HomeSection({
             Browse dragons
           </button>
           <button type="button" className="secondary-button" onClick={onTeam}>
-            Open team builder
+            Open formation builder
           </button>
         </div>
       </div>
@@ -482,40 +505,40 @@ function RosterSection({
   );
 }
 
-function TeamBuilderSection({
+function FormationBuilderSection({
   includeUnowned,
   roster,
-  teamIds,
+  formation,
   onIncludeUnownedChange,
-  onTeamChange,
+  onFormationChange,
   onShare,
 }: {
   includeUnowned: boolean;
   roster: Record<string, OwnedDragon>;
-  teamIds: Array<string | null>;
+  formation: Formation;
   onIncludeUnownedChange: (value: boolean) => void;
-  onTeamChange: (teamIds: Array<string | null>) => void;
+  onFormationChange: (formation: Formation) => void;
   onShare: () => void;
 }) {
   const selectableDragons = dragons.filter((dragon) => includeUnowned || roster[dragon.id]?.owned);
-  const selectedDragons = teamIds
+  const selectedDragons = FORMATION_POSITIONS.map((position) => formation[position])
     .map((id) => dragons.find((dragon) => dragon.id === id))
     .filter((dragon): dragon is Dragon => Boolean(dragon));
-  const synergy = analyzeTeam(teamIds, dragons, defaultSynergyRules);
+  const synergy = analyzeFormation(formation, dragons, defaultSynergyRules);
   const breedDistribution = findBreedDistribution(selectedDragons);
   const affinityCoverage = findAffinityCoverage(selectedDragons);
   const knownTags = [...new Set(selectedDragons.flatMap((dragon) => dragon.tags))];
 
-  const updateSlot = (slot: number, nextId: string | null) => {
-    onTeamChange(preventDuplicateSelection(teamIds, slot, nextId));
+  const updatePosition = (position: FormationPosition, nextId: string | null) => {
+    onFormationChange(preventDuplicateFormationPlacement(formation, position, nextId));
   };
 
   return (
     <section aria-labelledby="team-title">
       <SectionHeading
-        eyebrow="Three-slot planner"
-        title="Team Builder"
-        description="Choose up to three unique dragons and share a URL hash for the current team."
+        eyebrow="Three-position planner"
+        title="Formation Builder"
+        description="Assign one unique dragon to Left Flank, Vanguard, and Right Flank, then share the exact formation."
       />
       <div className="toolbar">
         <label className="check-row">
@@ -527,8 +550,8 @@ function TeamBuilderSection({
           Include unowned dragons
         </label>
         <div className="button-row">
-          <button type="button" className="secondary-button" onClick={() => onTeamChange([null, null, null])}>
-            Clear team
+          <button type="button" className="secondary-button" onClick={() => onFormationChange(emptyFormation())}>
+            Clear formation
           </button>
           <button type="button" className="primary-button" onClick={onShare}>
             <Link size={18} aria-hidden="true" />
@@ -536,47 +559,70 @@ function TeamBuilderSection({
           </button>
         </div>
       </div>
-      <div className="team-slots" aria-label="Team slots">
-        {[0, 1, 2].map((slot) => (
-          <div className="team-slot" key={slot}>
-            <label htmlFor={`team-slot-${slot}`}>Slot {slot + 1}</label>
+      <div className="formation-board" aria-label="Formation positions">
+        {FORMATION_POSITIONS.map((position) => (
+          <div className={`team-slot formation-position ${position}`} key={position}>
+            <p className="position-label">{positionLabels[position]}</p>
+            <label htmlFor={`formation-${position}`}>Dragon</label>
             <select
-              id={`team-slot-${slot}`}
-              value={teamIds[slot] ?? ''}
-              onChange={(event) => updateSlot(slot, event.target.value || null)}
+              id={`formation-${position}`}
+              value={formation[position] ?? ''}
+              onChange={(event) => updatePosition(position, event.target.value || null)}
             >
               <option value="">Choose a dragon</option>
               {selectableDragons.map((dragon) => (
                 <option
                   key={dragon.id}
                   value={dragon.id}
-                  disabled={teamIds.some((id, index) => index !== slot && id === dragon.id)}
+                  disabled={FORMATION_POSITIONS.some(
+                    (existingPosition) =>
+                      existingPosition !== position && formation[existingPosition] === dragon.id,
+                  )}
                 >
                   {dragon.name} ({dragon.rarity}, {dragon.breed})
                 </option>
               ))}
             </select>
-            <button type="button" className="text-button" onClick={() => updateSlot(slot, null)}>
-              Clear slot
-            </button>
+            <div className="button-row">
+              {FORMATION_POSITIONS.filter((target) => target !== position).map((target) => (
+                <button
+                  className="text-button"
+                  key={target}
+                  type="button"
+                  onClick={() => onFormationChange(moveFormationDragon(formation, position, target))}
+                >
+                  Move to {positionLabels[target]}
+                </button>
+              ))}
+              <button type="button" className="text-button" onClick={() => updatePosition(position, null)}>
+                Clear position
+              </button>
+            </div>
           </div>
         ))}
       </div>
       <div className="summary-layout">
         <div className="panel">
-          <h3>Team Summary</h3>
+          <h3>Formation Summary</h3>
           {selectedDragons.length > 0 ? (
             <ul className="plain-list">
-              {selectedDragons.map((dragon) => (
-                <li key={dragon.id}>
-                  <strong>{dragon.name}</strong> · {dragon.rarity} · {dragon.breed}
-                </li>
-              ))}
+              {FORMATION_POSITIONS.map((position) => {
+                const dragon = dragons.find((candidate) => candidate.id === formation[position]);
+                return (
+                  <li key={position}>
+                    <strong>{positionLabels[position]}:</strong>{' '}
+                    {dragon ? `${dragon.name} - ${dragon.rarity} - ${dragon.breed}` : unknown}
+                  </li>
+                );
+              })}
             </ul>
           ) : (
             <p>{unknown}</p>
           )}
-          <Distribution title="Rarity distribution" values={countValues(selectedDragons.map((dragon) => dragon.rarity))} />
+          <Distribution
+            title="Rarity distribution"
+            values={countValues(selectedDragons.map((dragon) => dragon.rarity))}
+          />
           <Distribution
             title="Breed distribution"
             values={Object.fromEntries(breedDistribution.map((item) => [item.breed, item.count]))}
@@ -587,9 +633,10 @@ function TeamBuilderSection({
           <p>
             <strong>Data confidence:</strong> {synergy.confidence}
           </p>
+          <p className="notice-text">{defaultAdjacency.note}</p>
         </div>
         <div className="panel">
-          <h3>Synergy Analysis</h3>
+          <h3>Formation Analysis</h3>
           <p>
             <strong>Score:</strong> {synergy.score ?? unknown}
           </p>
@@ -598,6 +645,20 @@ function TeamBuilderSection({
               {warning}
             </p>
           ))}
+          <AnalysisList title="Positive interactions" items={synergy.positives} />
+          <AnalysisList title="Position requirements" items={synergy.positionRequirements} />
+          <AnalysisList title="Unmet requirements" items={synergy.unmetRequirements} />
+          <AnalysisList
+            title="Unresolved assumptions"
+            items={synergy.unresolvedAssumptions.map((description, index) => ({
+              dragonIds: [],
+              tags: [],
+              ruleId: `unresolved-${index}`,
+              title: 'Unresolved',
+              description,
+              confidence: 'low',
+            }))}
+          />
           <h4>Affinity coverage</h4>
           <div className="table-wrap">
             <table>
@@ -626,6 +687,31 @@ function TeamBuilderSection({
         </div>
       </div>
     </section>
+  );
+}
+
+function AnalysisList({
+  title,
+  items,
+}: {
+  title: string;
+  items: Array<{ ruleId: string; title: string; description: string; confidence: string }>;
+}) {
+  return (
+    <div>
+      <h4>{title}</h4>
+      {items.length > 0 ? (
+        <ul className="plain-list">
+          {items.map((item) => (
+            <li key={item.ruleId}>
+              <strong>{item.title}:</strong> {item.description} Confidence: {item.confidence}
+            </li>
+          ))}
+        </ul>
+      ) : (
+        <p>{unknown}</p>
+      )}
+    </div>
   );
 }
 
@@ -694,6 +780,13 @@ function DataStatusSection() {
             ))}
           </tbody>
         </table>
+      </div>
+      <div className="panel readable">
+        <h3>Troop Matchup Rules</h3>
+        <p>
+          Troop matchup rules are stored separately from dragon troop affinities. Current verified
+          matchup records: {troopMatchupRules.length}.
+        </p>
       </div>
     </section>
   );
@@ -892,14 +985,41 @@ function DragonDetailsDialog({
             <h3>Ownership</h3>
             <RosterFields dragon={dragon} rosterEntry={rosterEntry} onUpdateRoster={onUpdateRoster} />
           </section>
-          <UnknownPanel title="Command" known={Boolean(dragon.command)}>
-            {dragon.command?.description}
-          </UnknownPanel>
-          <UnknownPanel title="Habits" known={dragon.habits.length > 0}>
-            {dragon.habits.map((habit) => habit.name).join(', ')}
-          </UnknownPanel>
+          <section className="panel wide-panel">
+            <h3>Command</h3>
+            {dragon.command ? (
+              <AbilityCard ability={dragon.command} rosterEntry={rosterEntry} onUpdateRoster={onUpdateRoster} />
+            ) : (
+              <p>{unknown}</p>
+            )}
+          </section>
+          <section className="panel wide-panel">
+            <h3>Star Trait</h3>
+            {dragon.trait ? (
+              <AbilityCard ability={dragon.trait} rosterEntry={rosterEntry} onUpdateRoster={onUpdateRoster} />
+            ) : (
+              <p>{unknown}</p>
+            )}
+          </section>
+          <section className="panel wide-panel">
+            <h3>Habits</h3>
+            {dragon.habits.length > 0 ? (
+              <div className="ability-stack">
+                {dragon.habits.map((habit) => (
+                  <AbilityCard
+                    ability={habit}
+                    key={habit.id}
+                    rosterEntry={rosterEntry}
+                    onUpdateRoster={onUpdateRoster}
+                  />
+                ))}
+              </div>
+            ) : (
+              <p>{unknown}</p>
+            )}
+          </section>
           <section className="panel">
-            <h3>Affinities</h3>
+            <h3>Troop Affinities</h3>
             <dl className="detail-list">
               {TROOP_TYPES.map((troop) => (
                 <div key={troop}>
@@ -910,35 +1030,262 @@ function DragonDetailsDialog({
             </dl>
           </section>
           <section className="panel">
-            <h3>Stats</h3>
-            <dl className="detail-list">
-              {Object.entries(dragon.stats).map(([key, value]) => (
-                <div key={key}>
-                  <dt>{titleCase(key)}</dt>
-                  <dd>{value ?? unknown}</dd>
-                </div>
-              ))}
-            </dl>
-          </section>
-          <UnknownPanel title="Tags" known={dragon.tags.length > 0}>
-            {dragon.tags.join(', ')}
-          </UnknownPanel>
-          <section className="panel">
-            <h3>Evidence and Sources</h3>
+            <h3>Stat Definitions</h3>
             <ul className="plain-list">
-              {evidenceSources.map((source) => (
-                <li key={source.id}>
-                  <a href={source.url ?? '#'} target="_blank" rel="noreferrer">
-                    {source.title}
-                  </a>
-                  <span> · {formatStatus(source.verificationStatus)}</span>
+              {dragonStatDefinitions.map((definition) => (
+                <li key={definition.id}>
+                  <strong>{definition.name}:</strong> {definition.description}{' '}
+                  {definition.canonicalFormulaKnown ? 'Formula known.' : 'Formula not yet verified.'}
                 </li>
               ))}
             </ul>
           </section>
+          <ObservationPanel dragon={dragon} />
+          <section className="panel">
+            <h3>Structured Tags</h3>
+            <p>{dragon.tags.length > 0 ? dragon.tags.join(', ') : unknown}</p>
+          </section>
+          <section className="panel">
+            <h3>Evidence</h3>
+            <ul className="plain-list">
+              {evidenceSources
+                .filter(
+                  (source) =>
+                    source.id === 'official-roster-2026-06-23' ||
+                    [dragon.command, dragon.trait, ...dragon.habits]
+                      .filter(Boolean)
+                      .flatMap((ability) => ability?.evidenceIds ?? [])
+                      .includes(source.id) ||
+                    source.id.startsWith(dragon.id),
+                )
+                .map((source) => (
+                <li key={source.id}>
+                  {source.url ? (
+                    <a href={source.url} target="_blank" rel="noreferrer">
+                      {source.title}
+                    </a>
+                  ) : (
+                    <span>{source.title}</span>
+                  )}
+                  <span> - {formatStatus(source.verificationStatus)}</span>
+                </li>
+              ))}
+            </ul>
+          </section>
+          <section className="panel">
+            <h3>Unresolved Questions</h3>
+            {dragon.unresolvedQuestions.length > 0 ? (
+              <ul className="plain-list">
+                {dragon.unresolvedQuestions.map((question) => (
+                  <li key={question}>{question}</li>
+                ))}
+              </ul>
+            ) : (
+              <p>{unknown}</p>
+            )}
+          </section>
         </div>
       </div>
     </div>
+  );
+}
+
+function AbilityCard({
+  ability,
+  rosterEntry,
+  onUpdateRoster,
+}: {
+  ability: AbilityDefinition;
+  rosterEntry?: OwnedDragon;
+  onUpdateRoster: (dragonId: string, patch: Partial<OwnedDragon>) => void;
+}) {
+  const starRank = rosterEntry?.starRank ?? null;
+  const locked =
+    ability.kind === 'habit' &&
+    ability.unlockStarRank !== null &&
+    (starRank === null || starRank < ability.unlockStarRank);
+  const habitLevel = rosterEntry?.habitLevels[ability.id] ?? null;
+
+  return (
+    <article className="ability-card">
+      <div className="card-topline">
+        <div>
+          <h4>{ability.name}</h4>
+          <p>
+            <span className="badge">{titleCase(ability.kind)}</span>
+            <span className="badge">{titleCase(ability.abilityClass)}</span>
+            <span className="badge">{verificationLabel(ability.verification.status)}</span>
+            {locked ? <span className="badge">Locked preview</span> : <span className="badge">Unlocked or available</span>}
+          </p>
+        </div>
+      </div>
+      <dl className="detail-list">
+        <div>
+          <dt>Unlock Star Rank</dt>
+          <dd>{ability.unlockStarRank ?? unknown}</dd>
+        </div>
+        <div>
+          <dt>Minimum Dragon Level</dt>
+          <dd>{ability.minimumDragonLevel ?? unknown}</dd>
+        </div>
+        <div>
+          <dt>Position requirement</dt>
+          <dd>{ability.positionRequirement ? positionLabels[ability.positionRequirement] : unknown}</dd>
+        </div>
+      </dl>
+      {ability.kind === 'habit' ? (
+        <label>
+          Habit Level
+          <select
+            value={habitLevel ?? ''}
+            onChange={(event) =>
+              onUpdateRoster(ability.dragonId, {
+                habitLevels: {
+                  ...(rosterEntry?.habitLevels ?? {}),
+                  [ability.id]: event.target.value === '' ? null : (Number(event.target.value) as 0 | 1 | 2 | 3 | 4 | 5),
+                },
+              })
+            }
+          >
+            <option value="">Not recorded</option>
+            {[0, 1, 2, 3, 4, 5].map((level) => (
+              <option key={level} value={level}>
+                {level}
+              </option>
+            ))}
+          </select>
+        </label>
+      ) : null}
+      <div className="ability-stack">
+        {ability.schedules.map((abilitySchedule) => (
+          <section className="mini-panel" key={abilitySchedule.id}>
+            <h5>{titleCase(abilitySchedule.timing.replaceAll('-', ' '))}</h5>
+            <dl className="detail-list">
+              <div>
+                <dt>Specific rounds</dt>
+                <dd>{abilitySchedule.rounds.length > 0 ? abilitySchedule.rounds.join(', ') : unknown}</dd>
+              </div>
+              <div>
+                <dt>Trigger chance</dt>
+                <dd>
+                  {abilitySchedule.triggerChanceFixed !== null
+                    ? `${abilitySchedule.triggerChanceFixed}%`
+                    : abilitySchedule.triggerChanceByHabitLevel.length > 0
+                      ? rankedLabel(abilitySchedule.triggerChanceByHabitLevel)
+                      : unknown}
+                </dd>
+              </div>
+            </dl>
+            <ul className="plain-list">
+              {abilitySchedule.effects.map((effect) => (
+                <li key={effect.id}>
+                  <strong>{effect.type}</strong> - target: {effect.target}; scope:{' '}
+                  {titleCase(effect.targetScope.replaceAll('-', ' '))}; duration:{' '}
+                  {effect.duration ?? (effect.durationRounds ? `${effect.durationRounds} rounds` : unknown)};
+                  value: {effect.magnitude !== null ? `${effect.magnitude}${effect.unit === 'percent' ? '%' : effect.unit === 'rate' ? '%' : effect.unit === 'flat' ? ' flat' : ''}` : unknown}
+                  {effect.scaling.length > 0 ? `; scaling: ${effect.scaling.join(', ')}` : ''}
+                  {effect.excludes.length > 0 ? `; excludes: ${effect.excludes.join(', ')}` : ''}
+                  {effect.rankedValues.length > 0 ? `; progression: ${rankedLabel(effect.rankedValues)}` : ''}
+                </li>
+              ))}
+            </ul>
+          </section>
+        ))}
+      </div>
+      {ability.powerByHabitLevel.length > 0 ? (
+        <p>
+          <strong>Power progression:</strong> {rankedLabel(ability.powerByHabitLevel)}
+        </p>
+      ) : null}
+      {habitLevel !== null && habitLevel > 0 ? (
+        <p>
+          <strong>Current selected values:</strong> Habit Level {habitLevel}
+        </p>
+      ) : null}
+      {ability.glossaryEntries.length > 0 ? (
+        <ul className="plain-list">
+          {ability.glossaryEntries.map((entry) => (
+            <li key={entry.term}>
+              <strong>{entry.term}:</strong> {entry.definition}
+            </li>
+          ))}
+        </ul>
+      ) : null}
+      <p>
+        <strong>Tags:</strong> {ability.tags.join(', ')}
+      </p>
+      <details>
+        <summary>Raw verified wording</summary>
+        <p>{ability.rawDescription ?? unknown}</p>
+      </details>
+      {ability.unresolvedQuestions.length > 0 ? (
+        <ul className="plain-list">
+          {ability.unresolvedQuestions.map((question) => (
+            <li key={question}>Unresolved: {question}</li>
+          ))}
+        </ul>
+      ) : null}
+    </article>
+  );
+}
+
+function ObservationPanel({ dragon }: { dragon: Dragon }) {
+  const observation = dragonObservationSnapshots.find((snapshot) => snapshot.dragonId === dragon.id);
+  return (
+    <section className="panel">
+      <h3>Account Observation</h3>
+      {observation ? (
+        <>
+          <p className="notice-text">Account-specific observation - not a canonical base-stat record.</p>
+          <dl className="detail-list">
+            <div>
+              <dt>Dragon Level</dt>
+              <dd>{observation.dragonLevel ?? unknown}</dd>
+            </div>
+            <div>
+              <dt>Star Rank</dt>
+              <dd>{observation.starRank ?? unknown}</dd>
+            </div>
+            {Object.entries(observation.combatStats).map(([key, value]) => (
+              <div key={key}>
+                <dt>{titleCase(key)}</dt>
+                <dd>{value ?? unknown}</dd>
+              </div>
+            ))}
+            <div>
+              <dt>March Speed</dt>
+              <dd>{observation.marchSpeed ?? unknown}</dd>
+            </div>
+            <div>
+              <dt>Stamina</dt>
+              <dd>
+                {observation.staminaCurrent !== null && observation.staminaMaximum !== null
+                  ? `${observation.staminaCurrent} / ${observation.staminaMaximum}`
+                  : unknown}
+              </dd>
+            </div>
+            <div>
+              <dt>Troop Capacity</dt>
+              <dd>{observation.troopCapacity ?? unknown}</dd>
+            </div>
+            <div>
+              <dt>Dragon Power</dt>
+              <dd>{observation.dragonPower ?? unknown}</dd>
+            </div>
+            <div>
+              <dt>Modifier context known</dt>
+              <dd>{observation.modifierContextKnown ? 'Known' : 'Unknown'}</dd>
+            </div>
+            <div>
+              <dt>Canonical</dt>
+              <dd>No</dd>
+            </div>
+          </dl>
+        </>
+      ) : (
+        <p>{unknown}</p>
+      )}
+    </section>
   );
 }
 
@@ -974,7 +1321,7 @@ function RosterFields({
           }
         >
           <option value="">Unknown</option>
-          {[1, 2, 3, 4, 5].map((rank) => (
+          {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map((rank) => (
             <option key={rank} value={rank}>
               {rank}
             </option>
@@ -1149,15 +1496,6 @@ function Distribution({ title, values }: { title: string; values: Record<string,
   );
 }
 
-function UnknownPanel({ title, known, children }: { title: string; known: boolean; children: React.ReactNode }) {
-  return (
-    <section className="panel">
-      <h3>{title}</h3>
-      <p>{known ? children : unknown}</p>
-    </section>
-  );
-}
-
 function countValues<T extends string>(values: T[]): Record<T, number> {
   return values.reduce<Record<T, number>>(
     (counts, value) => {
@@ -1168,30 +1506,60 @@ function countValues<T extends string>(values: T[]): Record<T, number> {
   );
 }
 
-function getInitialTeamIds(): Array<string | null> {
+function getInitialFormation(): Formation {
   if (typeof window === 'undefined') {
-    return [null, null, null];
+    return emptyFormation();
   }
 
-  const fromHash = parseSharedTeam(window.location.hash, dragons);
-  if (fromHash.some(Boolean)) {
+  const fromHash = parseSharedFormation(window.location.hash, dragons);
+  if (FORMATION_POSITIONS.some((position) => fromHash[position])) {
     return fromHash;
   }
 
-  const stored = window.localStorage.getItem(TEAM_STORAGE_KEY);
-  if (!stored) {
-    return [null, null, null];
+  const storedFormation = window.localStorage.getItem(FORMATION_STORAGE_KEY);
+  if (storedFormation) {
+    try {
+      const parsed = JSON.parse(storedFormation) as Partial<Formation>;
+      return sanitizeFormation(parsed, dragons);
+    } catch {
+      window.localStorage.removeItem(FORMATION_STORAGE_KEY);
+    }
   }
 
-  try {
-    const parsed = JSON.parse(stored) as unknown;
-    return Array.isArray(parsed)
-      ? sanitizeTeamIds(parsed.filter((id): id is string => typeof id === 'string'), dragons)
-      : [null, null, null];
-  } catch {
-    window.localStorage.removeItem(TEAM_STORAGE_KEY);
-    return [null, null, null];
+  const legacyTeam = window.localStorage.getItem('dragonfire-roster-lab:last-team');
+  if (!legacyTeam) {
+    return emptyFormation();
   }
+  try {
+    const parsed = JSON.parse(legacyTeam) as unknown;
+    if (!Array.isArray(parsed)) {
+      return emptyFormation();
+    }
+    return sanitizeFormation(
+      {
+        'left-flank': typeof parsed[0] === 'string' ? parsed[0] : null,
+        vanguard: typeof parsed[1] === 'string' ? parsed[1] : null,
+        'right-flank': typeof parsed[2] === 'string' ? parsed[2] : null,
+      },
+      dragons,
+    );
+  } catch {
+    window.localStorage.removeItem('dragonfire-roster-lab:last-team');
+    return emptyFormation();
+  }
+}
+
+function rankedLabel(values: Array<{ level: number; value: number; unit: string }>) {
+  return values
+    .map((value) => `L${value.level}: ${value.value}${value.unit === 'percent' ? '%' : value.unit === 'power' ? ' power' : value.unit === 'flat' ? ' flat' : ''}`)
+    .join(', ');
+}
+
+function verificationLabel(status: string) {
+  return status
+    .split('-')
+    .map((part) => titleCase(part))
+    .join(' ');
 }
 
 function formatStatus(status: VerificationStatus) {

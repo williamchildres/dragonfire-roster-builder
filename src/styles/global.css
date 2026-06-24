@@ -361,6 +361,7 @@ main {
 
 .filter-panel,
 .team-slots,
+.formation-board,
 .summary-layout,
 .details-grid {
   display: grid;
@@ -546,12 +547,50 @@ dd {
   margin-bottom: 1rem;
 }
 
-.team-slots {
+.team-slots,
+.formation-board {
   grid-template-columns: repeat(3, minmax(0, 1fr));
 }
 
 .team-slot {
   padding: 1rem;
+}
+
+.formation-position.vanguard {
+  border-color: rgba(255, 211, 107, 0.68);
+}
+
+.position-label {
+  color: var(--focus);
+  font-weight: 900;
+  margin-bottom: 0.75rem;
+}
+
+.wide-panel {
+  grid-column: 1 / -1;
+}
+
+.ability-stack {
+  display: grid;
+  gap: 0.85rem;
+}
+
+.ability-card,
+.mini-panel {
+  background: rgba(0, 0, 0, 0.18);
+  border: 1px solid var(--line-soft);
+  border-radius: 0.45rem;
+  padding: 0.9rem;
+}
+
+.ability-card details {
+  margin-top: 0.75rem;
+}
+
+.ability-card summary {
+  color: var(--gold);
+  cursor: pointer;
+  font-weight: 800;
 }
 
 .summary-layout,
@@ -685,7 +724,8 @@ th {
     order: -1;
   }
 
-  .team-slots {
+  .team-slots,
+  .formation-board {
     grid-template-columns: 1fr;
   }
 }
