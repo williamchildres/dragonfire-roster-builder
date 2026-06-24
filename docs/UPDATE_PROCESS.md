@@ -6,9 +6,10 @@ Use this process to keep roster data traceable.
 
 1. Add a new record to `src/data/dragons.ts`.
 2. Set unknown combat fields to null, empty arrays, or `unknown`.
-3. Add evidence in `src/data/evidence.ts`.
-4. Update `databaseMetadata`.
-5. Add or update data-integrity tests.
+3. Set `rosterSourceStatus` to `official-website` only when the public roster page exists; otherwise use `in-game-verified-pending-official-site` and keep `officialProfileUrl` null.
+4. Add evidence in `src/data/evidence.ts`.
+5. Update `databaseMetadata`.
+6. Add or update data-integrity tests.
 
 ## Changing Rarity Or Breed
 
@@ -23,10 +24,12 @@ Use this process to keep roster data traceable.
 2. Preserve raw wording.
 3. Attach evidence IDs and field-level verification.
 4. Model multiple schedules when timings differ.
-5. Keep Habit unlock Star Rank separate from Habit Level progression.
-6. Set `dataStatus` to the appropriate verification level.
-7. Update synergy rules only when the tags and behavior are verified.
-8. Add tests for any new engine behavior.
+5. Use repeated attempts, repeat modes, stack configuration, conditions, target priorities, command augmentations, and source scopes when the screenshot supports them.
+6. Keep Habit unlock Star Rank separate from Habit Level progression.
+7. Store unresolved target inclusion, exact scaling formulas, and exact adjacency as unresolved questions.
+8. Set `dataStatus` to the appropriate verification level.
+9. Update synergy rules only when the tags and behavior are verified.
+10. Add tests for any new engine behavior.
 
 ## Adding Observation Snapshots
 
@@ -49,4 +52,8 @@ Use this process to keep roster data traceable.
 
 ## Official Roster Check
 
-Run `npm run check:roster` to compare the local roster with the ordinary public roster page. The parser intentionally never overwrites local data. Website structure may change, so selector maintenance may be required.
+Run `npm run check:roster` to compare official-site local records with the ordinary public roster page. Pending in-game dragons are ignored for removal/addition checks and reported separately if they appear publicly. The parser intentionally never overwrites local data. Website structure may change, so selector maintenance may be required.
+
+## Versioning
+
+For data releases, update `databaseVersion`, `schemaVersion` when the data shape changes, package version, changelog, and tests together. Phase 3 uses database version `0.3.0`, data schema `3`, and local roster schema `3`.

@@ -1,4 +1,4 @@
-import type { FieldVerification, TroopType } from './dragon';
+import type { DragonCollectionProgress, FieldVerification, TroopType } from './dragon';
 
 export interface DragonStatDefinition {
   id: string;
@@ -15,8 +15,11 @@ export interface DragonObservationSnapshot {
   dragonId: string;
   capturedAt: string;
   gameVersion: string | null;
+  collection: DragonCollectionProgress | null;
   dragonLevel: number | null;
   starRank: number | null;
+  starProgressCurrent?: number | null;
+  starProgressRequired?: number | null;
   combatStats: {
     strength: number | null;
     instinct: number | null;

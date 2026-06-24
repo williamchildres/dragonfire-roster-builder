@@ -20,6 +20,7 @@ import { dragons } from '../data/dragons';
 import { evidenceSources } from '../data/evidence';
 import { dragonObservationSnapshots } from '../data/observations';
 import { dragonStatDefinitions } from '../data/statDefinitions';
+import { statusGlossary } from '../data/statusGlossary';
 import { defaultSynergyRules } from '../data/synergyRules';
 import { troopMatchupRules } from '../data/troopMatchups';
 import {
@@ -31,6 +32,7 @@ import {
   type AbilityDefinition,
   type Dragon,
   type DragonBreed,
+  type DragonCollectionState,
   type DragonRarity,
   type FormationPosition,
   type OwnedDragon,
@@ -109,8 +111,8 @@ export function App() {
   }, [formation]);
 
   const ownedCount = Object.values(roster).filter((entry) => entry.owned).length;
-  const verifiedCombatCount = dragons.filter((dragon) =>
-    ['community-verified', 'officially-confirmed'].includes(dragon.dataStatus),
+  const verifiedCombatCount = dragons.filter(
+    (dragon) => dragon.command || dragon.trait || dragon.habits.length > 0,
   ).length;
 
   const filteredDragons = useMemo(
@@ -135,6 +137,11 @@ export function App() {
         ...(current[dragonId] ?? {
           dragonId,
           owned: false,
+          collection: {
+            state: 'not-collected',
+            shardsCurrent: null,
+            shardsRequired: null,
+          },
           starRank: null,
           reignLevel: null,
           notes: '',
@@ -340,7 +347,8 @@ function HomeSection({
         <h2 id="overview-title">Build your dragon roster without guessing the data.</h2>
         <p>
           Track ownership, plan three-position formations, and prepare for verified community combat data
-          while keeping official identity metadata separate from player notes.
+        while keeping official-site roster entries, pending in-game observations, and player notes
+        separate from each other.
         </p>
         <div className="button-row">
           <button type="button" className="primary-button" onClick={onBrowse}>
@@ -352,9 +360,20 @@ function HomeSection({
         </div>
       </div>
       <div className="stats-grid" aria-label="Roster summary">
-        <StatCard label="Dragons in database" value={dragons.length} />
+        <StatCard label="Known in-game dragons" value={dragons.length} />
+        <StatCard
+          label="Official-site dragons"
+          value={dragons.filter((dragon) => dragon.rosterSourceStatus === 'official-website').length}
+        />
+        <StatCard
+          label="Pending official site"
+          value={
+            dragons.filter((dragon) => dragon.rosterSourceStatus === 'in-game-verified-pending-official-site')
+              .length
+          }
+        />
         <StatCard label="Owned by you" value={ownedCount} />
-        <StatCard label="Verified combat kits" value={verifiedCombatCount} />
+        <StatCard label="Screenshot combat records" value={verifiedCombatCount} />
         {RARITIES.map((rarity) => (
           <StatCard key={rarity} label={rarity} value={rarityCounts[rarity] ?? 0} />
         ))}
@@ -363,9 +382,9 @@ function HomeSection({
         ))}
       </div>
       <div className="notice-panel">
-        The first dataset contains official public identity metadata only. Commands, Habits,
-        affinities, effect tags, and combat stats remain marked as {unknown} until they are
-        verified from reliable sources.
+        The database now combines official public roster metadata with screenshot-verified combat
+        records for Malachite, Seasmoke, Sheepstealer, and Vermax. Canonical base stats, formulas,
+        and unverified mechanics remain marked as {unknown}.
       </div>
     </section>
   );
@@ -716,27 +735,41 @@ function AnalysisList({
 }
 
 function DataStatusSection() {
+  const officialCount = dragons.filter((dragon) => dragon.rosterSourceStatus === 'official-website').length;
+  const pendingCount = dragons.filter(
+    (dragon) => dragon.rosterSourceStatus === 'in-game-verified-pending-official-site',
+  ).length;
+
   return (
     <section aria-labelledby="status-title">
       <SectionHeading
-        eyebrow={`Database ${databaseMetadata.databaseVersion} · Schema ${databaseMetadata.schemaVersion}`}
+        eyebrow={`Database ${databaseMetadata.databaseVersion} - Schema ${databaseMetadata.schemaVersion}`}
         title="Data Status"
-        description="The current release records official identity metadata and leaves combat fields blank until sourced."
+        description="The current release distinguishes official roster metadata, pending in-game sightings, and screenshot-verified combat fields."
       />
       <div className="panel readable">
         <p>
-          Names, rarity, breed, new flags, and official profile links come from the ordinary public
-          roster pages. Commands, Habits, affinities, stats, and effect tags require community
-          verification before they appear in the app.
+          {officialCount} dragons are listed on the ordinary public roster site. {pendingCount} dragons
+          are verified from in-game screenshots but are pending official public roster pages. Commands,
+          Traits, Habits, affinities, status effects, and combat observations require field-level
+          evidence before they appear in the app.
         </p>
         <p>
           Last verification date: <strong>{databaseMetadata.officialRosterLastChecked}</strong>. Unknown
-          values are not guessed because invented data would make roster planning less useful.
+          values, canonical formulas, exact adjacency, and ambiguous target rules are not guessed because
+          invented data would make roster planning less useful.
         </p>
         <p>
-          Future updates should add source evidence, mark superseded data, and preserve historical
-          values in documentation before UI history tools are added.
+          Account observation snapshots are dynamic player-specific records. They can reflect dragon
+          level, Star Rank, Stronghold upgrades, faction bonuses, alliance bonuses, stamina state, and
+          other modifiers, so they are not used for generic comparison or synergy scoring.
         </p>
+      </div>
+      <div className="stats-grid" aria-label="Data source summary">
+        <StatCard label="Known in-game dragons" value={dragons.length} />
+        <StatCard label="Official-site entries" value={officialCount} />
+        <StatCard label="Pending official site" value={pendingCount} />
+        <StatCard label="Status glossary entries" value={statusGlossary.length} />
       </div>
       <div className="status-legend">
         {VERIFICATION_STATUSES.map((status) => (
@@ -752,8 +785,10 @@ function DataStatusSection() {
           <thead>
             <tr>
               <th>Dragon</th>
+              <th>Roster Source</th>
               <th>Identity</th>
               <th>Command</th>
+              <th>Trait</th>
               <th>Habits</th>
               <th>Affinities</th>
               <th>Stats</th>
@@ -764,18 +799,33 @@ function DataStatusSection() {
             {dragons.map((dragon) => (
               <tr key={dragon.id}>
                 <td>{dragon.name}</td>
-                <td>Complete</td>
-                <td>{dragon.command ? 'Complete' : unknown}</td>
-                <td>{dragon.habits.length > 0 ? 'Complete' : unknown}</td>
+                <td>{formatRosterSourceStatus(dragon.rosterSourceStatus)}</td>
+                <td>{dragon.officialProfileUrl ? 'Official public roster' : 'In-game screenshot'}</td>
+                <td>{dragon.command ? verificationLabel(dragon.command.verification.status) : unknown}</td>
+                <td>{dragon.trait ? verificationLabel(dragon.trait.verification.status) : unknown}</td>
+                <td>{dragon.habits.length > 0 ? 'Screenshot verified' : unknown}</td>
                 <td>
                   {Object.values(dragon.affinities).every((value) => value !== 'unknown')
                     ? 'Complete'
-                    : unknown}
+                    : Object.values(dragon.affinities).some((value) => value !== 'unknown')
+                      ? 'Partial'
+                      : unknown}
                 </td>
                 <td>
-                  {Object.values(dragon.stats).every((value) => value !== null) ? 'Complete' : unknown}
+                  {Object.values(dragon.stats).every((value) => value !== null)
+                    ? 'Canonical complete'
+                    : dragonObservationSnapshots.some((snapshot) => snapshot.dragonId === dragon.id)
+                      ? 'Observation only'
+                      : unknown}
                 </td>
-                <td>{evidenceSources.length > 0 ? 'Roster source recorded' : unknown}</td>
+                <td>
+                  {evidenceSources.some(
+                    (source) =>
+                      source.id === 'official-roster-2026-06-23' || source.id.startsWith(dragon.id),
+                  )
+                    ? 'Recorded'
+                    : unknown}
+                </td>
               </tr>
             ))}
           </tbody>
@@ -835,6 +885,7 @@ function DragonCard({
   onUpdateRoster: (dragonId: string, patch: Partial<OwnedDragon>) => void;
 }) {
   const owned = rosterEntry?.owned === true;
+  const collectionState = rosterEntry?.collection.state ?? 'not-collected';
 
   return (
     <article className={`dragon-card rarity-${dragon.rarity.toLowerCase()}`}>
@@ -845,13 +896,14 @@ function DragonCard({
           <p>
             <span className="badge">{dragon.rarity}</span> <span className="badge">{dragon.breed}</span>
             {dragon.isNew ? <span className="badge new">New</span> : null}
+            <span className="badge">{formatRosterSourceStatus(dragon.rosterSourceStatus)}</span>
           </p>
         </div>
       </div>
       <dl className="compact-details">
         <div>
-          <dt>Owned</dt>
-          <dd>{owned ? 'Owned' : 'Unowned'}</dd>
+          <dt>Collection</dt>
+          <dd>{formatCollectionState(collectionState)}</dd>
         </div>
         <div>
           <dt>Star Rank</dt>
@@ -873,7 +925,16 @@ function DragonCard({
           <input
             type="checkbox"
             checked={owned}
-            onChange={(event) => onUpdateRoster(dragon.id, { owned: event.target.checked })}
+            onChange={(event) =>
+              onUpdateRoster(dragon.id, {
+                owned: event.target.checked,
+                collection: {
+                  state: event.target.checked ? 'hatched' : 'not-collected',
+                  shardsCurrent: rosterEntry?.collection.shardsCurrent ?? null,
+                  shardsRequired: rosterEntry?.collection.shardsRequired ?? null,
+                },
+              })
+            }
           />
           My Roster
         </label>
@@ -973,13 +1034,29 @@ function DragonDetailsDialog({
                 <dd>{formatStatus(dragon.dataStatus)}</dd>
               </div>
               <div>
+                <dt>Roster source</dt>
+                <dd>{formatRosterSourceStatus(dragon.rosterSourceStatus)}</dd>
+              </div>
+              <div>
+                <dt>First observed in game</dt>
+                <dd>{dragon.firstObservedInGame ?? unknown}</dd>
+              </div>
+              <div>
+                <dt>Game version</dt>
+                <dd>{dragon.gameVersion ?? unknown}</dd>
+              </div>
+              <div>
                 <dt>Last verified</dt>
                 <dd>{dragon.lastVerified}</dd>
               </div>
             </dl>
-            <a href={dragon.officialProfileUrl} target="_blank" rel="noreferrer" className="inline-link">
-              Official profile <ExternalLink size={14} aria-hidden="true" />
-            </a>
+            {dragon.officialProfileUrl ? (
+              <a href={dragon.officialProfileUrl} target="_blank" rel="noreferrer" className="inline-link">
+                Official profile <ExternalLink size={14} aria-hidden="true" />
+              </a>
+            ) : (
+              <p className="notice-text">Official profile pending on the public roster site.</p>
+            )}
           </section>
           <section className="panel">
             <h3>Ownership</h3>
@@ -1044,6 +1121,26 @@ function DragonDetailsDialog({
           <section className="panel">
             <h3>Structured Tags</h3>
             <p>{dragon.tags.length > 0 ? dragon.tags.join(', ') : unknown}</p>
+          </section>
+          <section className="panel">
+            <h3>Status Glossary</h3>
+            {statusGlossary.some((entry) =>
+              dragon.tags.some((tag) => tag.toLowerCase().replaceAll('_', '-') === entry.id),
+            ) ? (
+              <ul className="plain-list">
+                {statusGlossary
+                  .filter((entry) =>
+                    dragon.tags.some((tag) => tag.toLowerCase().replaceAll('_', '-') === entry.id),
+                  )
+                  .map((entry) => (
+                    <li key={entry.id}>
+                      <strong>{entry.term}:</strong> {entry.definition}
+                    </li>
+                  ))}
+              </ul>
+            ) : (
+              <p>{unknown}</p>
+            )}
           </section>
           <section className="panel">
             <h3>Evidence</h3>
@@ -1132,6 +1229,10 @@ function AbilityCard({
           <dt>Position requirement</dt>
           <dd>{ability.positionRequirement ? positionLabels[ability.positionRequirement] : unknown}</dd>
         </div>
+        <div>
+          <dt>Evidence</dt>
+          <dd>{ability.evidenceIds.length > 0 ? ability.evidenceIds.length : unknown}</dd>
+        </div>
       </dl>
       {ability.kind === 'habit' ? (
         <label>
@@ -1166,6 +1267,14 @@ function AbilityCard({
                 <dd>{abilitySchedule.rounds.length > 0 ? abilitySchedule.rounds.join(', ') : unknown}</dd>
               </div>
               <div>
+                <dt>Target priority</dt>
+                <dd>{abilitySchedule.targetPriority ? formatToken(abilitySchedule.targetPriority) : unknown}</dd>
+              </div>
+              <div>
+                <dt>Battle context</dt>
+                <dd>{abilitySchedule.battleContext ? formatToken(abilitySchedule.battleContext) : 'Any or unresolved'}</dd>
+              </div>
+              <div>
                 <dt>Trigger chance</dt>
                 <dd>
                   {abilitySchedule.triggerChanceFixed !== null
@@ -1176,6 +1285,30 @@ function AbilityCard({
                 </dd>
               </div>
             </dl>
+            {abilitySchedule.attempts ? (
+              <p>
+                <strong>Attempts:</strong> {abilitySchedule.attempts.attemptCount ?? unknown} attempt(s);
+                chance {abilitySchedule.attempts.chanceFixed ?? unknown}
+                {abilitySchedule.attempts.chanceFixed !== null ? '%' : ''};
+                independently rolled: {abilitySchedule.attempts.independentlyRolled ? 'yes' : 'no'};
+                independently targeted: {abilitySchedule.attempts.independentlyTargeted ? 'yes' : 'no'}
+              </p>
+            ) : null}
+            {abilitySchedule.repeat ? (
+              <p>
+                <strong>Repeat:</strong> {formatToken(abilitySchedule.repeat.mode)} - {abilitySchedule.repeat.description}
+              </p>
+            ) : null}
+            {abilitySchedule.conditions && abilitySchedule.conditions.length > 0 ? (
+              <ul className="plain-list">
+                {abilitySchedule.conditions.map((condition) => (
+                  <li key={condition.id}>
+                    <strong>Condition:</strong> {condition.description}
+                    {condition.unresolved ? ' (unresolved)' : ''}
+                  </li>
+                ))}
+              </ul>
+            ) : null}
             <ul className="plain-list">
               {abilitySchedule.effects.map((effect) => (
                 <li key={effect.id}>
@@ -1186,6 +1319,22 @@ function AbilityCard({
                   {effect.scaling.length > 0 ? `; scaling: ${effect.scaling.join(', ')}` : ''}
                   {effect.excludes.length > 0 ? `; excludes: ${effect.excludes.join(', ')}` : ''}
                   {effect.rankedValues.length > 0 ? `; progression: ${rankedLabel(effect.rankedValues)}` : ''}
+                  {effect.sourceScope ? `; source scope: ${formatToken(effect.sourceScope)}` : ''}
+                  {effect.targetPriority ? `; priority: ${formatToken(effect.targetPriority)}` : ''}
+                  {effect.stack
+                    ? `; stack: ${effect.stack.statusId}, max ${effect.stack.maximumStacks}, ${effect.stack.untilEndOfCombat ? 'until end of combat' : effect.stack.durationRounds ? `${effect.stack.durationRounds} rounds` : 'duration unknown'}${effect.stack.valuePerStackFixed !== null ? `, ${effect.stack.valuePerStackFixed} per stack` : ''}${effect.stack.valuePerStackByHabitLevel.length > 0 ? `, ${rankedLabel(effect.stack.valuePerStackByHabitLevel)} per stack` : ''}`
+                    : ''}
+                  {effect.conditionalMultipliers && effect.conditionalMultipliers.length > 0
+                    ? `; multipliers: ${effect.conditionalMultipliers
+                        .map((item) => `${item.multiplier}x when ${item.condition.description}`)
+                        .join('; ')}`
+                    : ''}
+                  {effect.conditions && effect.conditions.length > 0
+                    ? `; conditions: ${effect.conditions.map((condition) => condition.description).join('; ')}`
+                    : ''}
+                  {effect.calculated ? '; calculated from verified base values' : ''}
+                  {effect.directlyVerified === false ? '; not directly verified' : ''}
+                  {effect.notes.length > 0 ? `; notes: ${effect.notes.join('; ')}` : ''}
                 </li>
               ))}
             </ul>
@@ -1195,6 +1344,10 @@ function AbilityCard({
       {ability.powerByHabitLevel.length > 0 ? (
         <p>
           <strong>Power progression:</strong> {rankedLabel(ability.powerByHabitLevel)}
+        </p>
+      ) : ability.kind === 'habit' ? (
+        <p>
+          <strong>Power progression:</strong> {unknown}
         </p>
       ) : null}
       {habitLevel !== null && habitLevel > 0 ? (
@@ -1214,6 +1367,18 @@ function AbilityCard({
       <p>
         <strong>Tags:</strong> {ability.tags.join(', ')}
       </p>
+      {ability.augmentations.length > 0 ? (
+        <div>
+          <h5>Command Augmentations</h5>
+          <ul className="plain-list">
+            {ability.augmentations.map((augmentation) => (
+              <li key={augmentation.id}>
+                Star {augmentation.minimumDragonStarRank}: {augmentation.rawDescription}
+              </li>
+            ))}
+          </ul>
+        </div>
+      ) : null}
       <details>
         <summary>Raw verified wording</summary>
         <p>{ability.rawDescription ?? unknown}</p>
@@ -1245,6 +1410,27 @@ function ObservationPanel({ dragon }: { dragon: Dragon }) {
             <div>
               <dt>Star Rank</dt>
               <dd>{observation.starRank ?? unknown}</dd>
+            </div>
+            <div>
+              <dt>Star Progress</dt>
+              <dd>
+                {observation.starProgressCurrent !== null && observation.starProgressRequired !== null
+                  ? `${observation.starProgressCurrent} / ${observation.starProgressRequired}`
+                  : unknown}
+              </dd>
+            </div>
+            <div>
+              <dt>Collection</dt>
+              <dd>
+                {observation.collection
+                  ? `${formatCollectionState(observation.collection.state)}${
+                      observation.collection.shardsCurrent !== null &&
+                      observation.collection.shardsRequired !== null
+                        ? ` (${observation.collection.shardsCurrent} / ${observation.collection.shardsRequired} shards)`
+                        : ''
+                    }`
+                  : unknown}
+              </dd>
             </div>
             {Object.entries(observation.combatStats).map(([key, value]) => (
               <div key={key}>
@@ -1300,15 +1486,77 @@ function RosterFields({
   onUpdateRoster: (dragonId: string, patch: Partial<OwnedDragon>) => void;
   compact?: boolean;
 }) {
+  const collection = rosterEntry?.collection ?? {
+    state: 'not-collected' as DragonCollectionState,
+    shardsCurrent: null,
+    shardsRequired: null,
+  };
+  const updateCollection = (patch: Partial<OwnedDragon['collection']>) => {
+    const nextCollection = { ...collection, ...patch };
+    onUpdateRoster(dragon.id, {
+      collection: nextCollection,
+      owned: nextCollection.state === 'hatched',
+    });
+  };
+
   return (
     <div className={compact ? 'roster-fields compact' : 'roster-fields'}>
       <label className="check-row">
         <input
           type="checkbox"
           checked={rosterEntry?.owned === true}
-          onChange={(event) => onUpdateRoster(dragon.id, { owned: event.target.checked })}
+          onChange={(event) =>
+            onUpdateRoster(dragon.id, {
+              owned: event.target.checked,
+              collection: {
+                ...collection,
+                state: event.target.checked ? 'hatched' : 'not-collected',
+              },
+            })
+          }
         />
         Owned
+      </label>
+      <label>
+        Collection State
+        <select
+          value={collection.state}
+          onChange={(event) => updateCollection({ state: event.target.value as DragonCollectionState })}
+        >
+          <option value="not-collected">Not collected</option>
+          <option value="not-hatched">Not hatched</option>
+          <option value="hatched">Hatched</option>
+        </select>
+      </label>
+      <label>
+        Shards
+        <input
+          min={0}
+          step={1}
+          type="number"
+          value={collection.shardsCurrent ?? ''}
+          placeholder="Current"
+          onChange={(event) =>
+            updateCollection({
+              shardsCurrent: event.target.value === '' ? null : Math.max(0, Number.parseInt(event.target.value, 10)),
+            })
+          }
+        />
+      </label>
+      <label>
+        Shards Required
+        <input
+          min={0}
+          step={1}
+          type="number"
+          value={collection.shardsRequired ?? ''}
+          placeholder="Required"
+          onChange={(event) =>
+            updateCollection({
+              shardsRequired: event.target.value === '' ? null : Math.max(0, Number.parseInt(event.target.value, 10)),
+            })
+          }
+        />
       </label>
       <label>
         Star Rank
@@ -1580,6 +1828,35 @@ function statusDescription(status: VerificationStatus) {
     case 'officially-confirmed':
       return 'Confirmed by official public material.';
   }
+}
+
+function formatRosterSourceStatus(status: Dragon['rosterSourceStatus']) {
+  switch (status) {
+    case 'official-website':
+      return 'Official website';
+    case 'in-game-verified-pending-official-site':
+      return 'In-game verified, pending official site';
+    case 'community-unverified':
+      return 'Community unverified';
+  }
+}
+
+function formatCollectionState(state: DragonCollectionState) {
+  switch (state) {
+    case 'not-collected':
+      return 'Not collected';
+    case 'not-hatched':
+      return 'Not hatched';
+    case 'hatched':
+      return 'Hatched';
+  }
+}
+
+function formatToken(value: string) {
+  return value
+    .split('-')
+    .map((part) => titleCase(part))
+    .join(' ');
 }
 
 function titleCase(value: string) {

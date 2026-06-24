@@ -19,6 +19,9 @@ export function fictionalDragon(id: string, name: string, tags: EffectTag[]): Dr
     rarity: 'Rare',
     breed: 'Champion',
     officialProfileUrl: `https://example.test/${id}`,
+    rosterSourceStatus: 'community-unverified',
+    firstObservedInGame: null,
+    gameVersion: null,
     isNew: false,
     dataStatus: 'community-verified',
     lastVerified: '2026-06-23',
@@ -92,5 +95,6 @@ function fictionalAbility(
     evidenceIds: ['synthetic-test-source'],
     unresolvedQuestions: [],
     positionRequirement: null,
+    augmentations: [],
   };
 }

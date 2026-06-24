@@ -12,6 +12,15 @@ export type TroopType = 'Cavalry' | 'Shieldbearers' | 'Archers' | 'Spearmen' | '
 
 export type AffinityLevel = 'positive' | 'neutral' | 'negative' | 'unknown';
 
+export type DragonRosterSourceStatus =
+  | 'official-website'
+  | 'in-game-verified-pending-official-site'
+  | 'community-unverified';
+
+export type DragonCollectionState = 'not-collected' | 'not-hatched' | 'hatched';
+
+export type BattleContext = 'unspecified' | 'pvp' | 'non-player-food-tile' | 'beast-encounter';
+
 export type EffectTag =
   | 'BURN'
   | 'BLEED'
@@ -49,6 +58,7 @@ export type EffectTag =
   | 'FIRE_DAMAGE_UP'
   | 'VANGUARD_REQUIRED'
   | 'LEFT_FLANK_TARGET'
+  | 'RIGHT_FLANK_TARGET'
   | 'BUFF_SELF'
   | 'BUFF_ALLIES'
   | 'PHYSICAL_DAMAGE_UP'
@@ -58,7 +68,26 @@ export type EffectTag =
   | 'DAMAGE_DEALT_UP'
   | 'STRENGTH_UP'
   | 'FIRST_STRIKE'
-  | 'DOUBLE_STRIKE';
+  | 'DOUBLE_STRIKE'
+  | 'CLEANSE_POSITIVE'
+  | 'FIRE_DAMAGE'
+  | 'PHYSICAL_DAMAGE'
+  | 'RECOVERY_RECEIVED_DOWN'
+  | 'DAMAGE_RECEIVED_DOWN'
+  | 'DAMAGE_RECEIVED_UP'
+  | 'FIRE_DAMAGE_RECEIVED_DOWN'
+  | 'SPREADING_BLAZE'
+  | 'INFECTIOUS_WRATH'
+  | 'STOLEN_FLOCK'
+  | 'RALLYING_FLAME'
+  | 'PREY'
+  | 'VULNERABLE'
+  | 'EVADE'
+  | 'RESISTANCE'
+  | 'PANIC'
+  | 'WEAKENED'
+  | 'ADVANTAGE'
+  | 'COMMAND_AUGMENTATION';
 
 export type AbilityKind = 'command' | 'trait' | 'habit';
 
@@ -66,8 +95,12 @@ export type TriggerTiming =
   | 'passive'
   | 'start-of-combat'
   | 'each-round'
+  | 'start-of-each-round'
   | 'start-of-round'
-  | 'specific-rounds';
+  | 'specific-rounds'
+  | 'after-basic-attack'
+  | 'on-successful-cleanse'
+  | 'when-marked-target-receives-recovery';
 
 export type FormationPosition = 'left-flank' | 'vanguard' | 'right-flank';
 
@@ -77,7 +110,90 @@ export type TargetScope =
   | 'any-lane'
   | 'within-adjacency'
   | 'left-flank'
+  | 'right-flank'
   | 'unknown';
+
+export type EffectSourceScope =
+  | 'basic-attacks'
+  | 'non-basic-attacks'
+  | 'commands'
+  | 'habits'
+  | 'commands-and-habits'
+  | 'all-sources'
+  | 'unknown';
+
+export type TargetPriority =
+  | 'any-eligible'
+  | 'same-lane'
+  | 'highest-stat-ally'
+  | 'current-marked-target'
+  | 'prefer-received-recovery-last-round'
+  | 'prefer-prey'
+  | 'within-adjacency'
+  | 'all-allies-matching-threshold'
+  | 'other-allies-excluding-self';
+
+export type ConditionKind =
+  | 'target-has-status'
+  | 'target-lacks-status'
+  | 'no-enemy-has-mark'
+  | 'target-received-recovery-previous-round'
+  | 'target-above-troop-capacity-threshold'
+  | 'target-below-troop-capacity-threshold'
+  | 'battle-context'
+  | 'enemy-deals-fire-damage'
+  | 'ally-deals-tactical-damage'
+  | 'self-has-status'
+  | 'successful-cleanse-occurred'
+  | 'effect-applied-by-enemy'
+  | 'negative-effect-reduces-damage-dealt';
+
+export type RepeatMode = 'none' | 'once-if-any-match' | 'once-per-match';
+
+export interface AbilityCondition {
+  id: string;
+  kind: ConditionKind;
+  subject: 'self' | 'ally' | 'enemy' | 'target' | 'battle';
+  statusId: string | null;
+  thresholdPercent: number | null;
+  comparison: 'above' | 'below' | 'at-or-above' | 'at-or-below' | 'unknown' | null;
+  battleContext: BattleContext | null;
+  description: string;
+  unresolved: boolean;
+}
+
+export interface AttemptConfiguration {
+  attemptCount: number | null;
+  chanceFixed: number | null;
+  chanceByHabitLevel: RankedValue[];
+  independentlyRolled: boolean;
+  independentlyTargeted: boolean;
+}
+
+export interface RepeatConfiguration {
+  mode: RepeatMode;
+  condition: AbilityCondition | null;
+  description: string;
+}
+
+export interface StackConfiguration {
+  statusId: string;
+  maximumStacks: number;
+  durationRounds: number | null;
+  untilEndOfCombat: boolean;
+  valuePerStackFixed: number | null;
+  valuePerStackByHabitLevel: RankedValue[];
+  refreshBehavior: 'unknown' | 'refresh-all' | 'refresh-stack' | 'independent-duration';
+}
+
+export interface ConditionalMultiplier {
+  id: string;
+  multiplier: number;
+  condition: AbilityCondition;
+  directlyVerifiedValues: RankedValue[];
+  calculatedFromVerifiedMultiplier: boolean;
+  description: string;
+}
 
 export type FieldVerificationStatus =
   | 'unknown'
@@ -119,6 +235,13 @@ export interface AbilityEffect {
   excludes: string[];
   notes: string[];
   rankedValues: RankedValue[];
+  sourceScope?: EffectSourceScope;
+  targetPriority?: TargetPriority;
+  conditions?: AbilityCondition[];
+  stack?: StackConfiguration | null;
+  conditionalMultipliers?: ConditionalMultiplier[];
+  directlyVerified?: boolean;
+  calculated?: boolean;
 }
 
 export interface AbilitySchedule {
@@ -128,6 +251,23 @@ export interface AbilitySchedule {
   triggerChanceFixed: number | null;
   triggerChanceByHabitLevel: RankedValue[];
   effects: AbilityEffect[];
+  triggerEvent?: TriggerTiming;
+  attempts?: AttemptConfiguration | null;
+  repeat?: RepeatConfiguration | null;
+  conditions?: AbilityCondition[];
+  targetPriority?: TargetPriority;
+  battleContext?: BattleContext;
+}
+
+export interface AbilityAugmentation {
+  id: string;
+  sourceAbilityId: string;
+  modifiesAbilityId: string;
+  minimumDragonStarRank: number;
+  schedulesAdded: AbilitySchedule[];
+  effectsAdded: AbilityEffect[];
+  rawDescription: string;
+  evidenceIds: string[];
 }
 
 export interface AbilityDefinition {
@@ -147,6 +287,7 @@ export interface AbilityDefinition {
   evidenceIds: string[];
   unresolvedQuestions: string[];
   positionRequirement: FormationPosition | null;
+  augmentations: AbilityAugmentation[];
 }
 
 export interface DragonStats {
@@ -162,7 +303,10 @@ export interface Dragon {
   name: string;
   rarity: DragonRarity;
   breed: DragonBreed;
-  officialProfileUrl: string;
+  officialProfileUrl: string | null;
+  rosterSourceStatus: DragonRosterSourceStatus;
+  firstObservedInGame: string | null;
+  gameVersion: string | null;
   isNew: boolean;
   dataStatus: VerificationStatus;
   lastVerified: string;
@@ -180,10 +324,17 @@ export interface Dragon {
 export interface OwnedDragon {
   dragonId: string;
   owned: boolean;
+  collection: DragonCollectionProgress;
   starRank: number | null;
   reignLevel: number | null;
   notes: string;
   habitLevels: Record<string, 0 | 1 | 2 | 3 | 4 | 5 | null>;
+}
+
+export interface DragonCollectionProgress {
+  state: DragonCollectionState;
+  shardsCurrent: number | null;
+  shardsRequired: number | null;
 }
 
 export interface EvidenceSource {

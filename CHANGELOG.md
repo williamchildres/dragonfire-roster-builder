@@ -1,5 +1,16 @@
 # Changelog
 
+## 0.3.0 - 2026-06-23
+
+- Added screenshot-verified combat datasets for Seasmoke, Sheepstealer, and Vermax.
+- Added Sheepstealer and Vermax as in-game verified dragons pending official public roster pages.
+- Increased the seeded roster to 30 known in-game dragons while keeping official-site counts separate.
+- Added local roster schema 3 with collection state and shard progress migration.
+- Expanded ability modeling with repeated attempts, repeat-per-match rules, command augmentations, stack configuration, condition history, target priority, conditional multipliers, status glossary records, and effect source scopes.
+- Updated formation analysis with factual position requirements and conditional interactions for Malachite, Seasmoke, Sheepstealer, and Vermax without producing unsupported numerical scores.
+- Updated the official roster checker to ignore pending in-game dragons during official-site comparisons and report counts separately.
+- Added tests for the new combat data, pending roster-source status, observations, collection migration, formation interactions, and roster checker behavior.
+
 ## 0.2.0 - 2026-06-23
 
 - Corrected Star Rank to 1-10 and added independent Habit Levels 0-5.

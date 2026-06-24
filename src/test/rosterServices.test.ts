@@ -19,10 +19,10 @@ describe('roster filtering and sorting', () => {
     roster.syrax!.owned = true;
 
     expect(filterDragons(dragons, roster, { ...defaultFilters, search: 'syra' })).toHaveLength(1);
-    expect(filterDragons(dragons, roster, { ...defaultFilters, rarity: 'Legendary' })).toHaveLength(8);
+    expect(filterDragons(dragons, roster, { ...defaultFilters, rarity: 'Legendary' })).toHaveLength(9);
     expect(filterDragons(dragons, roster, { ...defaultFilters, breed: 'Champion' })).toHaveLength(8);
     expect(filterDragons(dragons, roster, { ...defaultFilters, owned: 'owned' })).toHaveLength(1);
-    expect(filterDragons(dragons, roster, { ...defaultFilters, owned: 'unowned' })).toHaveLength(27);
+    expect(filterDragons(dragons, roster, { ...defaultFilters, owned: 'unowned' })).toHaveLength(29);
   });
 
   it('sorts by name, rarity, breed, and star rank', () => {
@@ -66,7 +66,7 @@ describe('roster storage and import/export', () => {
 
     expect(exported.format).toBe('dragonfire-roster-lab');
     expect(exported.schemaVersion).toBe(ROSTER_SCHEMA_VERSION);
-    expect(exported.roster).toHaveLength(28);
+    expect(exported.roster).toHaveLength(30);
   });
 
   it('validates imported roster JSON', () => {
@@ -166,7 +166,93 @@ describe('roster storage and import/export', () => {
     expect(migrated.malachite!.starRank).toBe(1);
     expect(migrated.malachite!.reignLevel).toBe(2);
     expect(migrated.malachite!.notes).toBe('Existing user note');
+    expect(migrated.malachite!.collection.state).toBe('hatched');
     expect(Object.keys(migrated.malachite!.habitLevels)).toHaveLength(5);
     expect(Object.values(migrated.malachite!.habitLevels).every((level) => level === null)).toBe(true);
+  });
+
+  it('migrates schema 2 data to schema 3 collection defaults without clearing values', () => {
+    window.localStorage.setItem(
+      STORAGE_KEY,
+      JSON.stringify({
+        format: 'dragonfire-roster-lab-local',
+        schemaVersion: 2,
+        updatedAt: '2026-06-23T00:00:00.000Z',
+        roster: [
+          {
+            dragonId: 'seasmoke',
+            owned: false,
+            starRank: null,
+            reignLevel: 4,
+            notes: 'Ten shards in screenshot',
+            habitLevels: {},
+          },
+        ],
+      }),
+    );
+
+    const migrated = loadRoster(window.localStorage, dragons);
+
+    expect(migrated.seasmoke!.owned).toBe(false);
+    expect(migrated.seasmoke!.collection).toEqual({
+      state: 'not-collected',
+      shardsCurrent: null,
+      shardsRequired: null,
+    });
+    expect(migrated.seasmoke!.reignLevel).toBe(4);
+    expect(migrated.seasmoke!.notes).toBe('Ten shards in screenshot');
+  });
+
+  it('validates collection state and shard progress during imports', () => {
+    const valid = validateRosterImport(
+      JSON.stringify({
+        format: 'dragonfire-roster-lab',
+        schemaVersion: ROSTER_SCHEMA_VERSION,
+        roster: [
+          {
+            dragonId: 'seasmoke',
+            owned: false,
+            collection: { state: 'not-hatched', shardsCurrent: 10, shardsRequired: 15 },
+            starRank: null,
+            reignLevel: null,
+            notes: '',
+            habitLevels: {
+              'seasmoke-clever-maneuver': null,
+              'seasmoke-winds-favor': null,
+              'seasmoke-infectious-wrath': null,
+              'seasmoke-cunning-ferocity': null,
+              'seasmoke-loyal-bond': null,
+            },
+          },
+        ],
+      }),
+      dragons,
+    );
+    const invalid = validateRosterImport(
+      JSON.stringify({
+        format: 'dragonfire-roster-lab',
+        schemaVersion: ROSTER_SCHEMA_VERSION,
+        roster: [
+          {
+            dragonId: 'seasmoke',
+            owned: false,
+            collection: { state: 'not-hatched', shardsCurrent: -1, shardsRequired: 15 },
+            starRank: null,
+            reignLevel: null,
+            notes: '',
+            habitLevels: {},
+          },
+        ],
+      }),
+      dragons,
+    );
+
+    expect(valid.ok).toBe(true);
+    expect(valid.roster?.seasmoke!.collection).toEqual({
+      state: 'not-hatched',
+      shardsCurrent: 10,
+      shardsRequired: 15,
+    });
+    expect(invalid.ok).toBe(false);
   });
 });

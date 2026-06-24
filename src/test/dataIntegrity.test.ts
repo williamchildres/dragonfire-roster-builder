@@ -3,22 +3,30 @@ import { dragons } from '../data/dragons';
 import { BREEDS, RARITIES, TROOP_TYPES } from '../models/dragon';
 
 describe('seeded dragon data integrity', () => {
-  it('contains exactly 28 seeded dragons and keeps non-Malachite combat data unknown', () => {
-    expect(dragons).toHaveLength(28);
-    expect(new Set(dragons.map((dragon) => dragon.id))).toHaveLength(28);
-    expect(new Set(dragons.map((dragon) => dragon.slug))).toHaveLength(28);
-    expect(new Set(dragons.map((dragon) => dragon.name))).toHaveLength(28);
+  it('contains exactly 30 seeded dragons and keeps unsupported combat data unknown', () => {
+    const combatDragonIds = new Set(['malachite', 'seasmoke', 'sheepstealer', 'vermax']);
+
+    expect(dragons).toHaveLength(30);
+    expect(new Set(dragons.map((dragon) => dragon.id))).toHaveLength(30);
+    expect(new Set(dragons.map((dragon) => dragon.slug))).toHaveLength(30);
+    expect(new Set(dragons.map((dragon) => dragon.name))).toHaveLength(30);
 
     for (const dragon of dragons) {
       expect(RARITIES).toContain(dragon.rarity);
       expect(BREEDS).toContain(dragon.breed);
-      expect(dragon.officialProfileUrl).toBe(`https://gotdragonfire.com/dragons/${dragon.slug}/`);
+      if (dragon.rosterSourceStatus === 'official-website') {
+        expect(dragon.officialProfileUrl).toBe(`https://gotdragonfire.com/dragons/${dragon.slug}/`);
+      } else {
+        expect(dragon.officialProfileUrl).toBeNull();
+      }
 
-      if (dragon.id === 'malachite') {
+      if (combatDragonIds.has(dragon.id)) {
+        expect(dragon.command).not.toBeNull();
         continue;
       }
 
       expect(dragon.dataStatus).toBe('official-metadata-only');
+      expect(dragon.rosterSourceStatus).toBe('official-website');
       expect(dragon.command).toBeNull();
       expect(dragon.trait).toBeNull();
       expect(dragon.habits).toEqual([]);
@@ -31,7 +39,9 @@ describe('seeded dragon data integrity', () => {
   it('marks only the requested new dragons as new', () => {
     const newNames = dragons.filter((dragon) => dragon.isNew).map((dragon) => dragon.name);
 
-    expect(newNames.sort()).toEqual(['Arrax', 'Arulix', 'Dawnseeker', 'Nyrena'].sort());
+    expect(newNames.sort()).toEqual(
+      ['Arrax', 'Arulix', 'Dawnseeker', 'Nyrena', 'Sheepstealer', 'Vermax'].sort(),
+    );
   });
 
   it('stores Malachite as a partially verified dragon without canonical base stats', () => {
@@ -45,5 +55,25 @@ describe('seeded dragon data integrity', () => {
     expect(malachite!.trait?.name).toBe("Sentinel's Presence");
     expect(malachite!.habits).toHaveLength(5);
     expect(Object.values(malachite!.stats).every((value) => value === null)).toBe(true);
+  });
+
+  it('stores Sheepstealer and Vermax as pending official-site in-game dragons', () => {
+    const sheepstealer = dragons.find((dragon) => dragon.id === 'sheepstealer');
+    const vermax = dragons.find((dragon) => dragon.id === 'vermax');
+
+    expect(sheepstealer).toMatchObject({
+      name: 'Sheepstealer',
+      rarity: 'Legendary',
+      breed: 'Hunter',
+      officialProfileUrl: null,
+      rosterSourceStatus: 'in-game-verified-pending-official-site',
+    });
+    expect(vermax).toMatchObject({
+      name: 'Vermax',
+      rarity: 'Epic',
+      breed: 'Warrior',
+      officialProfileUrl: null,
+      rosterSourceStatus: 'in-game-verified-pending-official-site',
+    });
   });
 });
