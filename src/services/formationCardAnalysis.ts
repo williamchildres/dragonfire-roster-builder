@@ -362,6 +362,9 @@ function summarizeTrace(
   if (trace.matchKind === 'status-condition-enablement') {
     return [detail.replace(`${source.name}'s `, '').replace(recipient ? `${recipient.name}'s ` : '', '').replaceAll('1.5x', '1.5×')];
   }
+  if (trace.matchKind === 'status-removal') {
+    return ['Potential Control cleanse; timing, selection, and activation are uncertain.'];
+  }
   if (trace.modifierRole === 'enemy-debuff' || trace.matchKind === 'enemy-mitigation-reduction') {
     return [enemyFacingSummary(trace)];
   }
@@ -776,6 +779,12 @@ function interactionPurpose(trace: SynergyTrace): string | null {
   }
   if (trace.matchKind === 'enemy-mitigation-reduction') {
     return 'Enemy mitigation reduction';
+  }
+  if (trace.matchKind === 'status-condition-enablement') {
+    return 'Conditional status enablement';
+  }
+  if (trace.matchKind === 'status-removal') {
+    return 'Control cleanse';
   }
   if (trace.matchKind === 'incoming-effect-amplification' && trace.recipientModifierType) {
     return `${formatToken(trace.channel ?? 'recovery')} amplification`;

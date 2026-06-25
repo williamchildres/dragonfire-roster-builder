@@ -415,7 +415,7 @@ function buildCapabilityFramework(
   const reviewedOutputs = outputs.filter((capability) => isReviewedDragonId(capability.dragonId));
   const reviewedModifiers = modifiers.filter((capability) => isReviewedDragonId(capability.dragonId));
   return {
-    effectChannels: ['physical-damage', 'tactical-damage', 'fire-damage', 'recovery', 'stat', 'damage-received'],
+    effectChannels: ['physical-damage', 'tactical-damage', 'fire-damage', 'recovery', 'stat', 'damage-received', 'status', 'control'],
     outputCapabilityStructure: [
       'dragonId',
       'abilityId',
@@ -570,8 +570,32 @@ function buildFormationReviewCases(): FormationReviewCaseExport[] {
     ...spec,
     reviewStatus: 'pending',
   }));
+  const legendaryRegressionSpecs: Array<{ caseId: string; label: string; formation: FormationAnalysisInput; reviewerNotes: string[] }> = [
+    {
+      caseId: 'df-lg-01',
+      label: 'DF-LG-01: Left Kalspire / Vanguard Vhagar / Right Venator',
+      formation: { 'left-flank': 'kalspire', vanguard: 'vhagar', 'right-flank': 'venator' },
+      reviewerNotes: ['Legendary regression case for Tactical Strike output role compatibility, Vhagar Warrior\'s Resilience Tactical Damage support, inactive off-Vanguard Legendary traits, self Damage Received isolation, and locked-habit current-mode filtering.'],
+    },
+    {
+      caseId: 'df-lg-03',
+      label: 'DF-LG-03: Left Crimson / Vanguard Vhagar / Right Caraxes',
+      formation: { 'left-flank': 'crimson', vanguard: 'vhagar', 'right-flank': 'caraxes' },
+      reviewerNotes: ['Legendary regression case for preview-only Burn/Taunt/Weakened status enablement, Blood Wyrm self-Recovery targeting isolation, and typed Crimson Vermin\'s Bane mitigation channels.'],
+    },
+    {
+      caseId: 'df-lg-05',
+      label: 'DF-LG-05: Left Kalspire / Vanguard Syrax / Right Vhagar',
+      formation: { 'left-flank': 'kalspire', vanguard: 'syrax', 'right-flank': 'vhagar' },
+      reviewerNotes: ['Legendary regression case for Mother\'s Mercy potential Control cleanse classification, retained timing/selection uncertainty, and Tactical Strike not acting as outgoing support.'],
+    },
+  ];
+  const legendaryRegressionCases = legendaryRegressionSpecs.map((spec) => formationCase({
+    ...spec,
+    reviewStatus: 'confirmed',
+  }));
 
-  return [...phase381Cases, ...nextBatch];
+  return [...phase381Cases, ...nextBatch, ...legendaryRegressionCases];
 }
 
 function formationCase({
@@ -922,7 +946,7 @@ function buildSchemas() {
       'dragonEffectProfiles',
     ],
     properties: {
-    effectChannels: { type: 'array', items: { enum: ['physical-damage', 'tactical-damage', 'fire-damage', 'recovery', 'stat', 'damage-received'] } },
+    effectChannels: { type: 'array', items: { enum: ['physical-damage', 'tactical-damage', 'fire-damage', 'recovery', 'stat', 'damage-received', 'status', 'control'] } },
       modifierRoles: { type: 'array', items: { enum: ['self-amplification', 'ally-support', 'recipient-side-amplification', 'enemy-debuff'] } },
       matchKinds: { type: 'array', items: { type: 'string' } },
       derivedCapabilities: {

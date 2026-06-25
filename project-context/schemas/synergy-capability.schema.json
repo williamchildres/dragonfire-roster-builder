@@ -73,7 +73,9 @@
           "fire-damage",
           "recovery",
           "stat",
-          "damage-received"
+          "damage-received",
+          "status",
+          "control"
         ]
       },
       "type": "array"
