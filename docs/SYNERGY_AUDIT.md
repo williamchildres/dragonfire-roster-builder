@@ -115,6 +115,12 @@ Audit JSON uses:
 Use the export to compare website reasoning with future combat logs. Do not treat audit output as a replacement for evidence review.
 ## Formation Normalization Checks
 
-The synergy report now includes `FORMATION NORMALIZATION RETEST` for Formations 1-8. The report fails if grouped stat cards lose sibling effects, Reactive Instincts or Lightning Strike create simultaneous one-target recipients, Trial by Flame exports thresholds as target counts, defensive subtype titles collapse to generic Damage Received, Champion's Brilliance hides Seasmoke's Level 16 failure, internal interactions appear as cross-dragon normal synergy, Spreading Blaze and Rallying Flame collapse into identical text, or canonical display names are replaced by slugs.
+The synergy report now includes `FORMATION NORMALIZATION RETEST` for Formations 1-8. The report fails if grouped stat cards lose sibling effects, known sibling values collapse to `unknown%`, Reactive Instincts or Lightning Strike create simultaneous one-target recipients, Trial by Flame exports thresholds as target counts or indistinguishable normal cards, defensive subtype titles collapse to generic Damage Received, Champion's Brilliance hides Seasmoke's Level 16 failure, internal interactions appear as cross-dragon normal synergy, Spreading Blaze and Rallying Flame collapse into identical text, or canonical display names are replaced by slugs.
 
 Audit exports retain internal traces, child modifier capability IDs, defensive damage scope, target-selection groups, and requirement ownership so reviewers can compare normal presentation with raw trace evidence.
+
+## Normal Requirement Summary Checks
+
+`npm run report:synergy` also includes `NORMAL REQUIREMENT SUMMARY REVIEW`. It reports the exact normal Unmet requirements for Formations 1-8 in current and preview modes, selected-dragon boundary status, preview-state isolation, cross-formation isolation, duplicate counts, visible-card blocker suppression, Trial by Flame grouping, and multi-effect value formatting.
+
+Normal Unmet requirements are not raw trace requirements. They are presentation summaries rebuilt from current inputs, with visible-card blockers filtered out, hard Trait position failures taking precedence over subordinate progression failures, and semantic duplicate confidence variants collapsed. Debug and audit exports keep the full raw requirement data for reviewers.

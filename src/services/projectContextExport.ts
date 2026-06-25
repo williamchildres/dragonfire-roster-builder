@@ -5,6 +5,7 @@ import { manualReviewRecords } from '../data/manualReviews';
 import { dragonObservationSnapshots } from '../data/observations';
 import { dragonStatDefinitions } from '../data/statDefinitions';
 import { statusGlossary } from '../data/statusGlossary';
+import { defaultSynergyRules } from '../data/synergyRules';
 import { FORMATION_POSITIONS, type AbilityDefinition, type Dragon, type FormationPosition } from '../models/dragon';
 import type { FormationAnalysisInput, ModifierCapability, OutputCapability, SynergyTrace } from '../models/synergy';
 import {
@@ -16,6 +17,7 @@ import {
   sourceScopesCompatible,
 } from './effectCapabilities';
 import { FORMATION_ADJACENCY, validateFormationAdjacencySymmetry } from './formationRules';
+import { analyzeFormation } from './synergyEngine';
 import { analyzeFormationTraces, phase381ReviewFormations } from './synergyTrace';
 
 export const projectContextFormat = 'dragonfire-lab-project-context' as const;
@@ -479,7 +481,7 @@ function buildCapabilityFramework(
     targetingLanguageRules: buildFormationRules().targetingLanguageRules,
     traceStatuses: ['active', 'potential', 'inactive', 'blocked', 'unknown', 'not-applicable'],
     confidenceLevels: ['confirmed', 'high', 'medium', 'low', 'unresolved'],
-    normalViewAggregationBehavior: 'One support modifier can match multiple recipient outputs and aggregate into one normal Formation Builder card. Sibling stat effects from the same ability aggregate into one direct stat support card while stat-scaling child traces remain stat-specific. Single-target and highest-stat effects with multiple eligible recipients are grouped as target-selection interactions, and periodic damage is annotated under its damage channel rather than duplicated as a second normal buff.',
+    normalViewAggregationBehavior: 'One support modifier can match multiple recipient outputs and aggregate into one normal Formation Builder card. Sibling stat effects from the same ability aggregate into one direct stat support card while preserving per-stat values when sibling values differ. Single-target and highest-stat effects with multiple eligible recipients are grouped as target-selection interactions, Trial by Flame is grouped by selected recipients and threshold tiers, and periodic damage is annotated under its damage channel rather than duplicated as a second normal buff. Global normal unmet requirements are a pure current-formation summary: hard selected Trait placement failures first, concrete unowned-card progression blockers only when placement and targeting pass, semantic deduplication, and no blockers already owned by visible normal cards.',
     debugViewBehavior: 'Debug traces retain child modifier capability IDs, child capability matches, source-scope checks, requirements, assumptions, interaction scope, damage scope, target-selection candidates, and evidence IDs.',
     numericalScorePolicy: 'Synergy score remains null; exact formulas are not invented.',
     derivedCapabilities: {
@@ -516,25 +518,25 @@ function buildFormationReviewCases(): FormationReviewCaseExport[] {
       caseId: 'batch-1-formation-1',
       label: 'Batch 1 Formation 1: Left Malachite / Vanguard Sheepstealer / Right Vermax',
       formation: { 'left-flank': 'malachite', vanguard: 'sheepstealer', 'right-flank': 'vermax' },
-      reviewerNotes: ['Pending manual retest after formation analysis normalization. Previous defects included duplicate Recovery traces, duplicate blockers, flank-to-flank Lightning Strike leakage, and a normal PvE Stolen Flock warning. Remaining normalization defects repaired in 0.5.3 included defensive subtype loss, Trial by Flame threshold counts, Reactive Instincts target fan-out, internal interaction leakage, and Spreading Blaze/Rallying Flame identity collapse.'],
+      reviewerNotes: ['Pending manual retest after formation analysis normalization. Previous defects included duplicate Recovery traces, duplicate blockers, flank-to-flank Lightning Strike leakage, and a normal PvE Stolen Flock warning. Remaining normalization defects repaired in 0.5.3 included defensive subtype loss, Trial by Flame threshold counts, Reactive Instincts target fan-out, internal interaction leakage, and Spreading Blaze/Rallying Flame identity collapse. Version 0.5.4 repairs normal unmet-requirement contamination, preview/formation state isolation, visible-card blocker ownership, Trial by Flame normal grouping, and multi-effect value formatting.'],
     },
     {
       caseId: 'batch-1-formation-2',
       label: 'Batch 1 Formation 2: Left Seasmoke / Vanguard Malachite / Right Sheepstealer',
       formation: { 'left-flank': 'seasmoke', vanguard: 'malachite', 'right-flank': 'sheepstealer' },
-      reviewerNotes: ['Pending manual retest after formation analysis normalization. Previous defects included false Fire support to Right Flank Sheepstealer and contradictory Fire-output wording. Remaining normalization defects repaired in 0.5.3 included Lightning Strike one-target grouping, Clever Maneuver sibling aggregation, defensive subtype labels, and provider/recipient blocker attribution.'],
+      reviewerNotes: ['Pending manual retest after formation analysis normalization. Previous defects included false Fire support to Right Flank Sheepstealer and contradictory Fire-output wording. Remaining normalization defects repaired in 0.5.3 included Lightning Strike one-target grouping, Clever Maneuver sibling aggregation, defensive subtype labels, and provider/recipient blocker attribution. Version 0.5.4 repairs normal unmet-requirement contamination, preview/formation state isolation, visible-card blocker ownership, Trial by Flame normal grouping, and multi-effect value formatting.'],
     },
     {
       caseId: 'batch-1-formation-3',
       label: 'Batch 1 Formation 3: Left Malachite / Vanguard Vermax / Right Seasmoke',
       formation: { 'left-flank': 'malachite', vanguard: 'vermax', 'right-flank': 'seasmoke' },
-      reviewerNotes: ["Pending manual retest after formation analysis normalization. Previous defects included repeated Warden's Rally names and imprecise preview blockers. Remaining normalization defects repaired in 0.5.3 included Warrior's Zeal sibling aggregation, Reactive Instincts highest-Instinct selection, defensive subtype labels, and source-ability distinction."],
+      reviewerNotes: ["Pending manual retest after formation analysis normalization. Previous defects included repeated Warden's Rally names and imprecise preview blockers. Remaining normalization defects repaired in 0.5.3 included Warrior's Zeal sibling aggregation, Reactive Instincts highest-Instinct selection, defensive subtype labels, and source-ability distinction. Version 0.5.4 repairs normal unmet-requirement contamination, preview/formation state isolation, visible-card blocker ownership, Trial by Flame normal grouping, and multi-effect value formatting."],
     },
     {
       caseId: 'batch-1-formation-4',
       label: 'Batch 1 Formation 4: Left Malachite / Vanguard Seasmoke / Right Sheepstealer',
       formation: { 'left-flank': 'malachite', vanguard: 'seasmoke', 'right-flank': 'sheepstealer' },
-      reviewerNotes: ["Pending manual retest after formation analysis normalization. Previous defects included missing Champion's Brilliance defensive support and unwanted normal PvE warnings. Remaining normalization defects repaired in 0.5.3 included visible Champion's Brilliance Level 16 failure, inactive support at Seasmoke Level 1, defensive subtype labels, and requirement ownership."],
+      reviewerNotes: ["Pending manual retest after formation analysis normalization. Previous defects included missing Champion's Brilliance defensive support and unwanted normal PvE warnings. Remaining normalization defects repaired in 0.5.3 included visible Champion's Brilliance Level 16 failure, inactive support at Seasmoke Level 1, defensive subtype labels, and requirement ownership. Version 0.5.4 repairs normal unmet-requirement contamination, preview/formation state isolation, visible-card blocker ownership, Trial by Flame normal grouping, and multi-effect value formatting."],
     },
   ];
   const batch2Specs: Array<{ caseId: string; label: string; formation: FormationAnalysisInput; reviewerNotes: string[] }> = [
@@ -542,25 +544,25 @@ function buildFormationReviewCases(): FormationReviewCaseExport[] {
       caseId: 'batch-2-formation-5',
       label: 'Batch 2 Formation 5: Left Caraxes / Vanguard Seasmoke / Right Sheepstealer',
       formation: { 'left-flank': 'caraxes', vanguard: 'seasmoke', 'right-flank': 'sheepstealer' },
-      reviewerNotes: ["Pending manual retest after formation analysis normalization. Previous defects included missing Champion's Brilliance support, impossible Caraxes/Sheepstealer Vanguard effects, Recovery Received leakage, and duplicate Burn support. Remaining normalization defects repaired in 0.5.3 included visible Champion's Brilliance Level 16 failure, Clever Maneuver sibling aggregation, Cunning Ferocity attribution, and provider/recipient blocker ownership."],
+      reviewerNotes: ["Pending manual retest after formation analysis normalization. Previous defects included missing Champion's Brilliance support, impossible Caraxes/Sheepstealer Vanguard effects, Recovery Received leakage, and duplicate Burn support. Remaining normalization defects repaired in 0.5.3 included visible Champion's Brilliance Level 16 failure, Clever Maneuver sibling aggregation, Cunning Ferocity attribution, and provider/recipient blocker ownership. Version 0.5.4 repairs normal unmet-requirement contamination, preview/formation state isolation, visible-card blocker ownership, Trial by Flame normal grouping, and multi-effect value formatting."],
     },
     {
       caseId: 'batch-2-formation-6',
       label: 'Batch 2 Formation 6: Left Malachite / Vanguard Syrax / Right Sheepstealer',
       formation: { 'left-flank': 'malachite', vanguard: 'syrax', 'right-flank': 'sheepstealer' },
-      reviewerNotes: ["Pending manual retest after formation analysis normalization. Previous defects included Hunter's Cunning leakage, repeated Warden's Rally names, and duplicate Recovery traces. Remaining normalization defects repaired in 0.5.3 included Sentinel's Wit sibling aggregation, Lightning Strike one-target adjacency, tactical defensive subtype labels, and internal interaction exclusion."],
+      reviewerNotes: ["Pending manual retest after formation analysis normalization. Previous defects included Hunter's Cunning leakage, repeated Warden's Rally names, and duplicate Recovery traces. Remaining normalization defects repaired in 0.5.3 included Sentinel's Wit sibling aggregation, Lightning Strike one-target adjacency, tactical defensive subtype labels, and internal interaction exclusion. Version 0.5.4 repairs normal unmet-requirement contamination, preview/formation state isolation, visible-card blocker ownership, Trial by Flame normal grouping, and multi-effect value formatting."],
     },
     {
       caseId: 'batch-2-formation-7',
       label: 'Batch 2 Formation 7: Left Syrax / Vanguard Vermax / Right Caraxes',
       formation: { 'left-flank': 'syrax', vanguard: 'vermax', 'right-flank': 'caraxes' },
-      reviewerNotes: ['Pending manual retest after formation analysis normalization. Previous defects included unselected Sheepstealer traces, duplicate Reactive Instincts/Spreading Blaze traces, and duplicate Burn support. Remaining normalization defects repaired in 0.5.3 included Warrior\'s Zeal and Reactive Instincts sibling aggregation, Reactive Instincts highest-Instinct one-target selection, Trial by Flame threshold conditions, and Rallying Flame source identity.'],
+      reviewerNotes: ['Pending manual retest after formation analysis normalization. Previous defects included unselected Sheepstealer traces, duplicate Reactive Instincts/Spreading Blaze traces, and duplicate Burn support. Remaining normalization defects repaired in 0.5.3 included Warrior\'s Zeal and Reactive Instincts sibling aggregation, Reactive Instincts highest-Instinct one-target selection, Trial by Flame threshold conditions, and Rallying Flame source identity. Version 0.5.4 repairs normal unmet-requirement contamination, preview/formation state isolation, visible-card blocker ownership, Trial by Flame normal grouping, and multi-effect value formatting.'],
     },
     {
       caseId: 'batch-2-formation-8',
       label: 'Batch 2 Formation 8: Left Sheepstealer / Vanguard Caraxes / Right Syrax',
       formation: { 'left-flank': 'sheepstealer', vanguard: 'caraxes', 'right-flank': 'syrax' },
-      reviewerNotes: ["Pending manual retest after formation analysis normalization. Previous defects included Sentinel's Wit/Hunter's Cunning leakage, Blazing Fury simultaneous-recipient presentation, and duplicate Burn support. Remaining normalization defects repaired in 0.5.3 included Hunter's Wrath sibling aggregation, canonical Syrax display names, internal interaction exclusion, and one-target competition wording."],
+      reviewerNotes: ["Pending manual retest after formation analysis normalization. Previous defects included Sentinel's Wit/Hunter's Cunning leakage, Blazing Fury simultaneous-recipient presentation, and duplicate Burn support. Remaining normalization defects repaired in 0.5.3 included Hunter's Wrath sibling aggregation, canonical Syrax display names, internal interaction exclusion, and one-target competition wording. Version 0.5.4 repairs normal unmet-requirement contamination, preview/formation state isolation, visible-card blocker ownership, Trial by Flame normal grouping, and multi-effect value formatting."],
     },
   ];
   const nextBatch = [...batch1Specs, ...batch2Specs].map((spec) => formationCase({
@@ -605,8 +607,19 @@ function formationCase({
     importantFalsePositivesToPrevent: falsePositivesForFormation(formation),
     relevantEvidenceIds: allEvidenceIds,
     reviewStatus,
-    reviewerNotes,
+    reviewerNotes: [
+      ...reviewerNotes,
+      normalUnmetSummaryNote('current', formation),
+      normalUnmetSummaryNote('preview', formation),
+      'Normal UI-only unmet summaries are not inserted into raw debug traces; full trace requirements remain exported for audit.',
+    ],
   };
+}
+
+function normalUnmetSummaryNote(mode: 'current' | 'preview', formation: FormationAnalysisInput): string {
+  const options = mode === 'preview' ? { previewMaxRankInteractions: true } : {};
+  const requirements = analyzeFormation(formation, dragons, defaultSynergyRules, options).unmetRequirements.map((item) => `${item.title}: ${item.description}`);
+  return `Expected normal unmet requirements (${mode}): ${requirements.length ? requirements.join(' | ') : 'None identified'}.`;
 }
 
 function buildProjectState(
@@ -642,7 +655,7 @@ function buildProjectState(
       'Evidence, manual reviews, observations, statuses, and stat definitions are separate source modules.',
       'Capability derivation is computed from structured AbilityEffect records in effectCapabilities.ts.',
       'Formation analysis uses structured SynergyTrace records and does not produce an arbitrary numerical score.',
-      'Formation normalization preserves defensive scope, target-selection groups, requirement ownership, source ability identity, and interaction scope.',
+      'Formation normalization preserves defensive scope, target-selection groups, visible-card requirement ownership, source ability identity, interaction scope, pure normal unmet summaries, and debug/export trace retention.',
     ],
     completedPhases: [
       'Phase 3.6 combat confirmations',
@@ -651,8 +664,9 @@ function buildProjectState(
       'Phase 3.8 Syrax and Caraxes combat data with dependency tracing',
       'Phase 3.8.1 formation trace reconciliation',
       'Phase 3.8.2 formation analysis normalization',
+      'Version 0.5.4 normal unmet requirement summary repair',
     ],
-    currentReviewPhase: 'Formation normalization retest and project-context regeneration.',
+    currentReviewPhase: 'Normal unmet requirement summary retest and project-context regeneration.',
     plannedNextPhase: [
       'full formation-output review',
       'UI/tag redesign',
@@ -1003,7 +1017,7 @@ Run \`npm run validate:context\` after generation. The validator checks schema c
 
 ## Formation Normalization
 
-Data schema 9 exports defensive damage scope, threshold conditions separate from target count, highest-stat and one-adjacent target selectors, grouped modifier capability IDs, requirement ownership, source-ability identity, and interaction scope. Internal same-dragon traces remain exported for audit even when normal Formation Analysis excludes them from cross-dragon synergy sections.
+Data schema 9 exports defensive damage scope, threshold conditions separate from target count, highest-stat and one-adjacent target selectors, grouped modifier capability IDs, requirement ownership, source-ability identity, and interaction scope. Normal unmet requirements are presentation summaries only: they are pure per-formation/per-preview results, hide blockers owned by visible cards, dedupe by semantic identity, and apply hard-failure precedence. Internal same-dragon traces and suppressed normal blockers remain exported for audit even when normal Formation Analysis excludes them from cross-dragon synergy sections.
 
 ## Authority
 
@@ -1032,6 +1046,10 @@ ${projectState.currentArchitectureSummary.map((item) => `- ${item}`).join('\n')}
 - Local roster schema: 3
 - Game build: ${databaseMetadata.currentDocumentedGameBuild}
 - Context export: ${contextVersion}
+
+## Normal Requirement Summary
+
+Normal Formation Analysis unmet requirements are concise UI summaries rather than raw trace dumps. Visible interaction cards own their own blockers, global unmet requirements show selected Trait placement failures and concrete unowned-card progression blockers, preview and formation switches do not reuse prior results, and debug/export data keeps the suppressed raw requirements.
 
 ## Populated Dragons
 

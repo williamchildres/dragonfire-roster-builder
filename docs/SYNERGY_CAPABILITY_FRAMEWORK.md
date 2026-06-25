@@ -253,3 +253,13 @@ The app and `npm run report:synergy` expose the matrix for Syrax, Caraxes, Malac
 - Requirement labels should identify provider and recipient-output ownership.
 - `interactionScope` separates cross-dragon, internal, enemy-side, and targeting-fact traces. Internal traces remain available for debug/export but are not cross-dragon normal synergy.
 - Source ability identity is part of normal text; Spreading Blaze and Rallying Flame must remain distinguishable.
+
+## Normal Requirement Summary 0.5.4
+
+- Normal Unmet requirements are a pure result of the current formation, current preview flag, selected dragons, and visible normal traces.
+- The global summary includes standalone selected Trait placement failures and concrete Trait progression failures only when hard formation requirements pass and no visible card owns the blocker.
+- Visible active, conditional, and potential cards own their provider unlock and recipient-output blockers; those blockers stay in the card and are not repeated globally.
+- Semantic deduplication uses requirement kind, source dragon, source ability, expected value, actual value, and material recipient identity rather than generated text or confidence.
+- Preview mode and formation switching must not reuse prior results or module-level accumulators.
+- Trial by Flame normal presentation groups selected recipients and threshold tiers while preserving threshold conditions in exported capabilities.
+- Grouped stat cards may combine sibling effects with the same value; different sibling values must be listed individually.

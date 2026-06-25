@@ -451,9 +451,16 @@ function analyzeOutgoingAmplifications(
   return traces;
 }
 
-function groupDefensiveAllySupportTraces(traces: SynergyTrace[]): SynergyTrace[] {
+function groupDefensiveAllySupportTraces(traces: SynergyTrace[], dragons: Dragon[]): SynergyTrace[] {
+  const trialByFlame = traces.filter((trace) => trace.sourceAbilityId === 'vermax-trial-by-flame');
+  const otherTraces = traces.filter((trace) => trace.sourceAbilityId !== 'vermax-trial-by-flame');
+  const grouped: SynergyTrace[] = [];
+  if (trialByFlame.length > 0) {
+    grouped.push(groupTrialByFlameTrace(trialByFlame, dragons));
+  }
+
   const byAbilityRecipient = new Map<string, SynergyTrace[]>();
-  for (const trace of traces) {
+  for (const trace of otherTraces) {
     const key = [
       trace.sourceDragonId,
       trace.sourceAbilityId ?? '',
@@ -462,24 +469,14 @@ function groupDefensiveAllySupportTraces(traces: SynergyTrace[]): SynergyTrace[]
     ].join('|');
     byAbilityRecipient.set(key, [...(byAbilityRecipient.get(key) ?? []), trace]);
   }
-  return [...byAbilityRecipient.values()].map((items) => {
-    if (items.length === 1 || items[0]?.sourceAbilityId !== 'vermax-trial-by-flame') {
+  grouped.push(...[...byAbilityRecipient.values()].map((items) => {
+    if (items.length === 1) {
       return items[0]!;
     }
-    const first = items[0];
-    const thresholds = uniqueOrdered(
-      items.flatMap((trace) =>
-        trace.matchedFacts
-          .join(' ')
-          .match(/below (\d+)%/gi)
-          ?.map((match) => Number(match.match(/\d+/)?.[0]))
-          .filter((value): value is number => Number.isFinite(value)) ?? [],
-      ).map(String),
-    );
+    const first = items[0]!;
     const reductions = uniqueOrdered(items.flatMap((trace) => trace.effects));
     return {
       ...first,
-      id: `defensive-ally-support-vermax-trial-by-flame-${first.recipientDragonId ?? 'targets'}`,
       status: aggregateStatus(items.map((trace) => trace.status)),
       requirements: dedupeRequirements(items.flatMap((trace) => trace.requirements)),
       matchedFacts: uniqueSorted(items.flatMap((trace) => trace.matchedFacts)),
@@ -491,9 +488,58 @@ function groupDefensiveAllySupportTraces(traces: SynergyTrace[]): SynergyTrace[]
       ]),
       modifierCapabilityId: null,
       modifierCapabilityIds: uniqueSorted(items.flatMap((trace) => trace.modifierCapabilityIds ?? [])),
-      explanation: `Trial by Flame can reduce Fire Damage Received for allies below ${joinEnglishList(thresholds.map((threshold) => `${threshold}%`))} Troop Capacity. The applicable reduction depends on the selected Habit Level and current threshold.`,
     };
-  });
+  }));
+  return grouped;
+}
+
+function groupTrialByFlameTrace(items: SynergyTrace[], dragons: Dragon[]): SynergyTrace {
+  const first = items[0]!;
+  const recipientIds = uniqueSorted(
+    items.map((trace) => trace.recipientDragonId).filter((dragonId): dragonId is string => Boolean(dragonId)),
+  );
+  const recipientNames = recipientIds.map((dragonId) => dragonById(dragons, dragonId)?.name ?? dragonId);
+  const thresholdRows = uniqueOrdered(
+    items.flatMap((trace) => {
+      const threshold = trace.matchedFacts
+        .join(' ')
+        .match(/below (\d+)%/i)?.[1];
+      const effect = trace.effects[0]?.match(/Fire Damage Received decrease (.+)$/)?.[1];
+      return threshold && effect ? [`Below ${threshold}% Troop Capacity: Fire Damage Received -${effect.replace(/^-/, '')}`] : [];
+    }),
+  );
+  return {
+    ...first,
+    id: 'defensive-ally-support-vermax-trial-by-flame-grouped',
+    recipientDragonId: null,
+    recipientAbilityId: null,
+    status: aggregateStatus(items.map((trace) => trace.status)),
+    requirements: dedupeRequirements(items.flatMap((trace) => trace.requirements)),
+    matchedFacts: uniqueSorted(items.flatMap((trace) => trace.matchedFacts)),
+    effects: uniqueSorted(items.flatMap((trace) => trace.effects)),
+    conflicts: uniqueSorted(items.flatMap((trace) => trace.conflicts)),
+    assumptions: uniqueSorted([
+      ...items.flatMap((trace) => trace.assumptions),
+      'Threshold applicability depends on each recipient current Troop Capacity.',
+      'Exact interaction between overlapping threshold tiers is unresolved.',
+      'Cumulative stacking is not assumed.',
+    ]),
+    unresolvedQuestions: uniqueSorted([
+      ...items.flatMap((trace) => trace.unresolvedQuestions),
+      'Exact interaction between overlapping Trial by Flame threshold tiers is unresolved.',
+    ]),
+    recipientEvidenceIds: uniqueSorted(items.flatMap((trace) => trace.recipientEvidenceIds)),
+    modifierCapabilityId: null,
+    modifierCapabilityIds: uniqueSorted(items.flatMap((trace) => trace.modifierCapabilityIds ?? [])),
+    explanation: `Trial by Flame can reduce Fire Damage Received for ${joinEnglishList(recipientNames)} when each satisfies a Troop Capacity threshold. ${thresholdRows.join('; ')}. Threshold applicability depends on each recipient's current Troop Capacity; exact interaction between overlapping threshold tiers is unresolved.`,
+    interactionScope: 'targeting-fact',
+    targetSelectionGroup: {
+      targetCount: recipientIds.length,
+      eligibleRecipientDragonIds: recipientIds,
+      selectionUncertain: false,
+      selection: 'all-matching-condition',
+    },
+  };
 }
 
 function analyzeDefensiveAllySupport(
@@ -559,7 +605,7 @@ function analyzeDefensiveAllySupport(
       }));
     }
   }
-  return groupDefensiveAllySupportTraces(traces);
+  return groupDefensiveAllySupportTraces(traces, dragons);
 }
 
 function groupSingleTargetOutgoingTraces(
@@ -823,7 +869,7 @@ function analyzeDirectStatSupport(
           `${modifier.abilityName} targets ${targetSelectorSummary(modifier.targetSelector)}.`,
           ...targetSelectionFacts(formation, dragons, modifier),
         ],
-        effects: [`${statLabel(statId)} ${modifier.value ?? 'unknown'}${modifier.unit === 'flat' ? ' flat' : modifier.unit === 'percent' ? '%' : ''}`],
+        effects: [`${statLabel(statId)} ${modifierDisplayValue(modifier, options)}`],
         sourceEvidenceIds: modifier.evidenceIds,
         recipientEvidenceIds: [],
         assumptions: [],
@@ -1031,14 +1077,12 @@ function groupDirectStatRecipientTraces(traces: SynergyTrace[], dragons: Dragon[
   const source = dragonById(dragons, first.sourceDragonId);
   const recipient = first.recipientDragonId ? dragonById(dragons, first.recipientDragonId) : null;
   const abilityName = abilityNameForTrace(dragons, first) ?? 'Ability';
-  const statNames = groupedStatNames(traces);
-  const values = uniqueSorted(traces.map((trace) => trace.effects[0]?.replace(/^[A-Za-z]+ /, '').replace(/ flat$/, '') ?? '').filter(Boolean));
-  const valueText = values.length === 1 ? ` by ${values[0]}` : '';
+  const valueText = groupedStatValueText(traces);
   return {
     ...first,
-    id: `direct-stat-support-${first.sourceAbilityId ?? first.sourceDragonId}-${first.recipientDragonId ?? 'target'}-${statNames.join('-').toLowerCase()}`,
+    id: `direct-stat-support-${first.sourceAbilityId ?? first.sourceDragonId}-${first.recipientDragonId ?? 'target'}-${valueText.stats.join('-').toLowerCase()}`,
     title: 'Stat Support',
-    explanation: `${source?.name ?? first.sourceDragonId}'s ${abilityName} ${first.status === 'active' ? 'increases' : 'can increase'} ${recipient?.name ?? first.recipientDragonId ?? 'the selected ally'}'s ${joinEnglishList(statNames)}${valueText}.`,
+    explanation: `${source?.name ?? first.sourceDragonId}'s ${abilityName} ${first.status === 'active' ? 'increases' : 'can increase'} ${recipient?.name ?? first.recipientDragonId ?? 'the selected ally'}'s ${valueText.text}.`,
     requirements: dedupeRequirements(traces.flatMap((trace) => trace.requirements)),
     matchedFacts: uniqueSorted(traces.flatMap((trace) => trace.matchedFacts)),
     effects: uniqueSorted(traces.flatMap((trace) => trace.effects)),
@@ -1054,6 +1098,27 @@ function groupedStatNames(traces: SynergyTrace[]): string[] {
   return uniqueOrdered(
     traces.flatMap((trace) => trace.effects.map((effect) => effect.match(/^(Strength|Instinct|Intelligence|Initiative)\b/)?.[1] ?? '').filter(Boolean)),
   );
+}
+
+function groupedStatValueText(traces: SynergyTrace[]): { stats: string[]; text: string } {
+  const entries = traces.flatMap((trace) =>
+    trace.effects.flatMap((effect) => {
+      const match = effect.match(/^(Strength|Instinct|Intelligence|Initiative)\s+(.+)$/);
+      return match?.[1] && match[2] ? [{ stat: match[1], value: match[2] }] : [];
+    }),
+  );
+  const stats = uniqueOrdered(entries.map((entry) => entry.stat));
+  const values = uniqueOrdered(entries.map((entry) => entry.value));
+  if (entries.length === 0) {
+    return { stats, text: joinEnglishList(stats) };
+  }
+  if (values.length === 1) {
+    return { stats, text: `${joinEnglishList(stats)} by ${values[0]}` };
+  }
+  return {
+    stats,
+    text: joinEnglishList(entries.map((entry) => `${entry.stat} by ${entry.value}`)),
+  };
 }
 
 function abilityNameForTrace(dragons: Dragon[], trace: SynergyTrace): string | null {

@@ -1,5 +1,14 @@
 # Changelog
 
+## 0.5.4 - 2026-06-24
+
+- Replaced raw trace progression collection with a pure normal unmet-requirement summary for the current formation and preview mode.
+- Enforced selected-dragon boundaries, preview isolation, formation isolation, semantic deduplication, visible-card blocker ownership, and hard-failure precedence for normal Unmet requirements.
+- Grouped Trial by Flame normal presentation across selected recipients and threshold tiers without claiming cumulative stacking.
+- Preserved different sibling stat values in grouped cards, including Reactive Instincts Instinct +36% and Initiative +18%.
+- Kept full raw requirements in debug/export while suppressing normal UI duplicates.
+- Increased database version to `0.5.4`; data schema remains `9`, local roster schema remains `3`, and context export version remains `1`.
+
 ## 0.5.3 - 2026-06-24
 
 - Aggregated sibling direct stat effects in normal Formation Analysis cards while preserving child modifier capability IDs in debug output.
