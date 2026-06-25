@@ -18,6 +18,8 @@ const formations: Record<string, FormationAnalysisInput> = {
   '8': { 'left-flank': 'sheepstealer', vanguard: 'caraxes', 'right-flank': 'syrax' },
   '13': { 'left-flank': 'seasmoke', vanguard: 'malachite', 'right-flank': 'sheepstealer' },
   '14': { 'left-flank': 'seasmoke', vanguard: 'sheepstealer', 'right-flank': 'malachite' },
+  '15': { 'left-flank': 'malachite', vanguard: 'sheepstealer', 'right-flank': 'caraxes' },
+  '16': { 'left-flank': 'malachite', vanguard: 'caraxes', 'right-flank': 'sheepstealer' },
 };
 
 function presentation(
@@ -73,7 +75,24 @@ describe('formation card analysis presentation', () => {
     expect(card(result, 'sheepstealer').command?.abilityName).toBe('Wild Hunt');
     expect(card(result, 'caraxes').command?.abilityName).toBe('Infernal Burst');
     expect(card(result, 'syrax').command?.abilityName).toBe('Blazing Fury');
+    expect(card(result, 'sheepstealer').command?.summaryLines).toEqual([
+      'When no enemy has Prey: attempts to apply Prey.',
+      'Rounds 1, 4, 7, and 10: Fire Damage to one enemy.',
+    ]);
     expect(card(result, 'syrax').receives.some((item) => item.abilityName === 'Blazing Fury')).toBe(false);
+  });
+
+  it('separates multi-schedule command summaries by timing and target', () => {
+    const result = presentation('13', false);
+
+    expect(card(result, 'malachite').command?.summaryLines).toEqual([
+      'Rounds 2, 4, 7, and 9: Tactical Damage to one same-lane enemy.',
+      'Rounds 3, 6, and 9: Recovery to three allies.',
+    ]);
+    expect(card(result, 'seasmoke').command?.summaryLines).toEqual([
+      'Each round: three independent 20% attempts to cleanse a positive effect.',
+      'Rounds 3, 6, and 9: Fire Damage to one enemy.',
+    ]);
   });
 
   it('names Cleansing Wrath in Sentinel Presence support summaries', () => {
@@ -89,27 +108,35 @@ describe('formation card analysis presentation', () => {
   });
 
   it('separates Warden Rally Recovery support from Hunter Cunning amplification state', () => {
-    const outsideVanguard = presentation('13', false);
+    const outsideVanguard = presentation('16', false);
     const sheepstealerOutside = card(outsideVanguard, 'sheepstealer');
     const malachiteOutside = card(outsideVanguard, 'malachite');
     const wardenReceives = sheepstealerOutside.receives.find((item) => item.abilityName === "Warden's Rally");
     const wardenProvides = malachiteOutside.provides.find((item) => item.abilityName === "Warden's Rally");
-    const hunterBlocked = sheepstealerOutside.receives.find((item) => item.abilityName === "Hunter's Cunning");
 
     expect(wardenReceives?.state).not.toBe('blocked');
     expect(wardenProvides?.state).not.toBe('blocked');
     expect(wardenReceives?.summary).toContain('Recovery support');
-    expect(hunterBlocked?.state).toBe('blocked');
-    expect(hunterBlocked?.summary).toContain("Hunter's Cunning cannot amplify this Recovery because Sheepstealer is not Vanguard.");
+    expect(wardenReceives?.modifierLines).toContain(
+      "Hunter's Cunning amplification unavailable: Sheepstealer must be Vanguard.",
+    );
+    expect(sheepstealerOutside.receives.some((item) => item.abilityName === "Hunter's Cunning")).toBe(false);
+    expect(malachiteOutside.provides.some((item) => item.abilityName === "Hunter's Cunning")).toBe(false);
 
     const roster = createEmptyRoster(dragons);
     roster.sheepstealer!.owned = true;
     roster.sheepstealer!.collection.state = 'hatched';
     roster.sheepstealer!.reignLevel = 25;
-    const inVanguard = presentation('14', false, { roster });
+    const inVanguard = presentation('15', false, { roster });
     const sheepstealerVanguard = card(inVanguard, 'sheepstealer');
-    const hunterActive = sheepstealerVanguard.receives.find((item) => item.abilityName === "Hunter's Cunning");
-    expect(hunterActive?.state).toBe('active');
+    const malachiteVanguardCase = card(inVanguard, 'malachite');
+    const activeWarden = sheepstealerVanguard.receives.find((item) => item.abilityName === "Warden's Rally");
+    expect(activeWarden?.state).toBe('active');
+    expect(activeWarden?.modifierLines).toContain(
+      "Amplified by Sheepstealer's Hunter's Cunning: Recovery Received +20%.",
+    );
+    expect(sheepstealerVanguard.receives.some((item) => item.abilityName === "Hunter's Cunning")).toBe(false);
+    expect(malachiteVanguardCase.provides.some((item) => item.abilityName === "Hunter's Cunning")).toBe(false);
   });
 
   it('refreshes Champion Brilliance when roster Reign Level changes', () => {

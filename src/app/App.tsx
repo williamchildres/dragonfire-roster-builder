@@ -1040,7 +1040,11 @@ function CommandPanel({ command }: { command: FormationCommandSummary | null }) 
       <p>
         <strong>{command.abilityName}</strong>
       </p>
-      <p>{command.summary}</p>
+      <ul className="interaction-summary-list">
+        {command.summaryLines.map((line) => (
+          <li key={line}>{line}</li>
+        ))}
+      </ul>
       {command.detail !== command.summary ? (
         <>
           <button
@@ -1238,7 +1242,7 @@ function CardInteractionItem({
       <div className="interaction-main">
         <strong className="interaction-ability">{interaction.effectTitle}</strong>
         <ul className="interaction-summary-list">
-          {interaction.summaryLines.map((line) => (
+          {[...interaction.summaryLines, ...interaction.modifierLines].map((line) => (
             <li key={line}>{line}</li>
           ))}
         </ul>
