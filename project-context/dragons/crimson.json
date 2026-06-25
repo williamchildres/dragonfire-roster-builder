@@ -3866,7 +3866,7 @@
   "firstObservedInGame": null,
   "format": "dragonfire-dragon-profile",
   "gameVersion": null,
-  "generatedAt": "2026-06-25T20:57:33.820Z",
+  "generatedAt": "2026-06-25T23:27:35.329Z",
   "habits": [
     {
       "abilityClass": "passive",
@@ -4987,6 +4987,9 @@
     {
       "abilityId": "crimson-hunters-cunning",
       "abilityName": "Hunter's Cunning",
+      "activationChanceByHabitLevel": [],
+      "activationChanceFixed": null,
+      "activationGroupId": null,
       "availability": {
         "canonical": "canonical-base",
         "notes": [
@@ -5007,6 +5010,7 @@
       "direction": "received",
       "directlyVerified": true,
       "dragonId": "crimson",
+      "durationRounds": null,
       "evidenceIds": [
         "crimson-hunters-cunning-2026-06-25"
       ],
@@ -5030,16 +5034,23 @@
       "recipientRequirements": [],
       "requiredHabitLevel": null,
       "role": "recipient-side-amplification",
+      "sourceEffectId": "hunters-cunning-recovery",
       "sourceScope": "unknown",
       "stackMaximum": null,
+      "statusId": null,
       "targetSelector": {
+        "comparisonDirection": null,
+        "comparisonPool": null,
         "count": null,
         "includesCaster": null,
         "position": null,
         "scope": "self",
         "selection": "self",
+        "selectionResource": null,
         "selectionStat": null,
-        "side": "self"
+        "sharedSelectionGroupId": null,
+        "side": "self",
+        "tieBehavior": null
       },
       "unit": "percent",
       "unlockStarRank": 1,
@@ -5049,6 +5060,9 @@
     {
       "abilityId": "crimson-hunters-cunning",
       "abilityName": "Hunter's Cunning",
+      "activationChanceByHabitLevel": [],
+      "activationChanceFixed": null,
+      "activationGroupId": null,
       "availability": {
         "canonical": "canonical-base",
         "notes": [
@@ -5069,6 +5083,7 @@
       "direction": "dealt",
       "directlyVerified": true,
       "dragonId": "crimson",
+      "durationRounds": null,
       "evidenceIds": [
         "crimson-hunters-cunning-2026-06-25"
       ],
@@ -5092,16 +5107,23 @@
       "recipientRequirements": [],
       "requiredHabitLevel": null,
       "role": "self-amplification",
+      "sourceEffectId": "hunters-cunning-intelligence",
       "sourceScope": "unknown",
       "stackMaximum": null,
+      "statusId": null,
       "targetSelector": {
+        "comparisonDirection": null,
+        "comparisonPool": null,
         "count": null,
         "includesCaster": null,
         "position": null,
         "scope": "self",
         "selection": "self",
+        "selectionResource": null,
         "selectionStat": null,
-        "side": "self"
+        "sharedSelectionGroupId": null,
+        "side": "self",
+        "tieBehavior": null
       },
       "unit": "flat",
       "unlockStarRank": 1,
@@ -5111,6 +5133,9 @@
     {
       "abilityId": "crimson-hunters-cunning",
       "abilityName": "Hunter's Cunning",
+      "activationChanceByHabitLevel": [],
+      "activationChanceFixed": null,
+      "activationGroupId": null,
       "availability": {
         "canonical": "canonical-base",
         "notes": [
@@ -5131,6 +5156,7 @@
       "direction": "dealt",
       "directlyVerified": true,
       "dragonId": "crimson",
+      "durationRounds": null,
       "evidenceIds": [
         "crimson-hunters-cunning-2026-06-25"
       ],
@@ -5154,16 +5180,23 @@
       "recipientRequirements": [],
       "requiredHabitLevel": null,
       "role": "ally-support",
+      "sourceEffectId": "hunters-cunning-right-physical",
       "sourceScope": "all-qualifying-sources",
       "stackMaximum": null,
+      "statusId": null,
       "targetSelector": {
+        "comparisonDirection": null,
+        "comparisonPool": null,
         "count": null,
         "includesCaster": null,
         "position": "right-flank",
         "scope": "right-flank",
         "selection": "specific-position",
+        "selectionResource": null,
         "selectionStat": null,
-        "side": "ally"
+        "sharedSelectionGroupId": null,
+        "side": "ally",
+        "tieBehavior": null
       },
       "unit": "percent",
       "unlockStarRank": 1,
@@ -5173,6 +5206,9 @@
     {
       "abilityId": "crimson-enervate",
       "abilityName": "Enervate",
+      "activationChanceByHabitLevel": [],
+      "activationChanceFixed": null,
+      "activationGroupId": null,
       "availability": {
         "canonical": "canonical-locked",
         "notes": [
@@ -5205,6 +5241,7 @@
       "direction": "dealt",
       "directlyVerified": true,
       "dragonId": "crimson",
+      "durationRounds": null,
       "evidenceIds": [
         "crimson-enervate-2026-06-25"
       ],
@@ -5244,16 +5281,23 @@
       "recipientRequirements": [],
       "requiredHabitLevel": 1,
       "role": "enemy-debuff",
+      "sourceEffectId": "enervate-tactical-down",
       "sourceScope": "all-qualifying-sources",
       "stackMaximum": null,
+      "statusId": null,
       "targetSelector": {
+        "comparisonDirection": null,
+        "comparisonPool": null,
         "count": 1,
         "includesCaster": null,
         "position": null,
         "scope": "unknown",
         "selection": "eligible",
+        "selectionResource": null,
         "selectionStat": null,
-        "side": "enemy"
+        "sharedSelectionGroupId": null,
+        "side": "enemy",
+        "tieBehavior": null
       },
       "unit": "percent",
       "unlockStarRank": 2,
@@ -5263,6 +5307,9 @@
     {
       "abilityId": "crimson-dragons-intellect",
       "abilityName": "Dragon's Intellect",
+      "activationChanceByHabitLevel": [],
+      "activationChanceFixed": null,
+      "activationGroupId": null,
       "availability": {
         "canonical": "canonical-locked",
         "notes": [
@@ -5283,6 +5330,7 @@
       "direction": "received",
       "directlyVerified": true,
       "dragonId": "crimson",
+      "durationRounds": null,
       "evidenceIds": [
         "crimson-dragons-intellect-2026-06-25"
       ],
@@ -5322,16 +5370,23 @@
       "recipientRequirements": [],
       "requiredHabitLevel": 1,
       "role": "self-amplification",
+      "sourceEffectId": "dragons-intellect-damage-received",
       "sourceScope": "unknown",
       "stackMaximum": null,
+      "statusId": null,
       "targetSelector": {
+        "comparisonDirection": null,
+        "comparisonPool": null,
         "count": null,
         "includesCaster": null,
         "position": null,
         "scope": "self",
         "selection": "self",
+        "selectionResource": null,
         "selectionStat": null,
-        "side": "self"
+        "sharedSelectionGroupId": null,
+        "side": "self",
+        "tieBehavior": null
       },
       "unit": "percent",
       "unlockStarRank": 4,
@@ -5341,6 +5396,9 @@
     {
       "abilityId": "crimson-dragons-intellect",
       "abilityName": "Dragon's Intellect",
+      "activationChanceByHabitLevel": [],
+      "activationChanceFixed": null,
+      "activationGroupId": null,
       "availability": {
         "canonical": "canonical-locked",
         "notes": [
@@ -5361,6 +5419,7 @@
       "direction": "dealt",
       "directlyVerified": true,
       "dragonId": "crimson",
+      "durationRounds": null,
       "evidenceIds": [
         "crimson-dragons-intellect-2026-06-25"
       ],
@@ -5400,16 +5459,23 @@
       "recipientRequirements": [],
       "requiredHabitLevel": 1,
       "role": "self-amplification",
+      "sourceEffectId": "dragons-intellect-intelligence",
       "sourceScope": "unknown",
       "stackMaximum": null,
+      "statusId": null,
       "targetSelector": {
+        "comparisonDirection": null,
+        "comparisonPool": null,
         "count": null,
         "includesCaster": null,
         "position": null,
         "scope": "self",
         "selection": "self",
+        "selectionResource": null,
         "selectionStat": null,
-        "side": "self"
+        "sharedSelectionGroupId": null,
+        "side": "self",
+        "tieBehavior": null
       },
       "unit": "percent",
       "unlockStarRank": 4,
@@ -5417,8 +5483,124 @@
       "valuePerStack": null
     },
     {
+      "abilityId": "crimson-bloodscale-fury",
+      "abilityName": "Bloodscale Fury",
+      "activationChanceByHabitLevel": [
+        {
+          "level": 1,
+          "unit": "percent",
+          "value": 17.5
+        },
+        {
+          "level": 2,
+          "unit": "percent",
+          "value": 21
+        },
+        {
+          "level": 3,
+          "unit": "percent",
+          "value": 24.5
+        },
+        {
+          "level": 4,
+          "unit": "percent",
+          "value": 29.75
+        },
+        {
+          "level": 5,
+          "unit": "percent",
+          "value": 35
+        }
+      ],
+      "activationChanceFixed": null,
+      "activationGroupId": null,
+      "availability": {
+        "canonical": "canonical-locked",
+        "notes": [
+          "Future at Star Rank 6.",
+          "Not collected in observed account."
+        ],
+        "observedAccount": "observed-unavailable",
+        "reportLabel": "Future at Star Rank 6; not collected in observed account",
+        "userRoster": "unknown"
+      },
+      "channel": "damage-dealt",
+      "combatLogConfirmed": false,
+      "conditional": true,
+      "conditions": [
+        {
+          "description": "Effect-level Weakened chance.",
+          "evidenceIds": [],
+          "id": "bloodscale-fury-each-round-activation-chance",
+          "label": "Effect-level Weakened chance.",
+          "unresolved": false
+        },
+        {
+          "description": "Chance is doubled against a Taunted target.",
+          "evidenceIds": [],
+          "id": "bloodscale-fury-taunt-double",
+          "label": "Chance is doubled against a Taunted target.",
+          "unresolved": false
+        },
+        {
+          "description": "Weakened reduces Damage Dealt according to the verified status glossary.",
+          "evidenceIds": [
+            "crimson-bloodscale-fury-2026-06-25"
+          ],
+          "id": "bloodscale-fury-weakened-weakened-semantic-status-modifier",
+          "label": "Weakened status semantics",
+          "unresolved": false
+        }
+      ],
+      "confidence": "confirmed",
+      "currentlyAvailable": false,
+      "damageScope": null,
+      "direction": "dealt",
+      "directlyVerified": true,
+      "dragonId": "crimson",
+      "durationRounds": 2,
+      "evidenceIds": [
+        "crimson-bloodscale-fury-2026-06-25"
+      ],
+      "futureAvailable": true,
+      "id": "crimson-bloodscale-fury-bloodscale-fury-weakened-weakened-damage-dealt-status-modifier",
+      "label": "Bloodscale Fury: Weakened Damage Dealt reduction",
+      "minimumDragonLevel": null,
+      "operation": "decrease",
+      "providerRequirements": [],
+      "rankedValues": [],
+      "recipientRequirements": [],
+      "requiredHabitLevel": 1,
+      "role": "enemy-debuff",
+      "sourceEffectId": "bloodscale-fury-weakened",
+      "sourceScope": "all-qualifying-sources",
+      "stackMaximum": null,
+      "statusId": "weakened",
+      "targetSelector": {
+        "comparisonDirection": null,
+        "comparisonPool": null,
+        "count": 1,
+        "includesCaster": null,
+        "position": null,
+        "scope": "any-lane",
+        "selection": "any",
+        "selectionResource": null,
+        "selectionStat": null,
+        "sharedSelectionGroupId": null,
+        "side": "enemy",
+        "tieBehavior": null
+      },
+      "unit": "percent",
+      "unlockStarRank": 6,
+      "value": 20,
+      "valuePerStack": null
+    },
+    {
       "abilityId": "crimson-unlikely-hero",
       "abilityName": "Unlikely Hero",
+      "activationChanceByHabitLevel": [],
+      "activationChanceFixed": null,
+      "activationGroupId": null,
       "availability": {
         "canonical": "canonical-locked",
         "notes": [
@@ -5451,6 +5633,7 @@
       "direction": "received",
       "directlyVerified": true,
       "dragonId": "crimson",
+      "durationRounds": null,
       "evidenceIds": [
         "crimson-unlikely-hero-2026-06-25"
       ],
@@ -5490,16 +5673,23 @@
       "recipientRequirements": [],
       "requiredHabitLevel": 1,
       "role": "enemy-debuff",
+      "sourceEffectId": "unlikely-hero-physical-received",
       "sourceScope": "non-basic-attacks",
       "stackMaximum": null,
+      "statusId": null,
       "targetSelector": {
+        "comparisonDirection": null,
+        "comparisonPool": null,
         "count": null,
         "includesCaster": null,
         "position": null,
         "scope": "any-lane",
         "selection": "all-matching-condition",
+        "selectionResource": null,
         "selectionStat": null,
-        "side": "enemy"
+        "sharedSelectionGroupId": null,
+        "side": "enemy",
+        "tieBehavior": null
       },
       "unit": "percent",
       "unlockStarRank": 8,
@@ -5509,6 +5699,9 @@
     {
       "abilityId": "crimson-unlikely-hero",
       "abilityName": "Unlikely Hero",
+      "activationChanceByHabitLevel": [],
+      "activationChanceFixed": null,
+      "activationGroupId": null,
       "availability": {
         "canonical": "canonical-locked",
         "notes": [
@@ -5541,6 +5734,7 @@
       "direction": "received",
       "directlyVerified": true,
       "dragonId": "crimson",
+      "durationRounds": null,
       "evidenceIds": [
         "crimson-unlikely-hero-2026-06-25"
       ],
@@ -5580,16 +5774,23 @@
       "recipientRequirements": [],
       "requiredHabitLevel": 1,
       "role": "enemy-debuff",
+      "sourceEffectId": "unlikely-hero-fire-received",
       "sourceScope": "unknown",
       "stackMaximum": null,
+      "statusId": null,
       "targetSelector": {
+        "comparisonDirection": null,
+        "comparisonPool": null,
         "count": null,
         "includesCaster": null,
         "position": null,
         "scope": "any-lane",
         "selection": "all-matching-condition",
+        "selectionResource": null,
         "selectionStat": null,
-        "side": "enemy"
+        "sharedSelectionGroupId": null,
+        "side": "enemy",
+        "tieBehavior": null
       },
       "unit": "percent",
       "unlockStarRank": 8,
@@ -5599,6 +5800,9 @@
     {
       "abilityId": "crimson-unlikely-hero",
       "abilityName": "Unlikely Hero",
+      "activationChanceByHabitLevel": [],
+      "activationChanceFixed": null,
+      "activationGroupId": null,
       "availability": {
         "canonical": "canonical-locked",
         "notes": [
@@ -5631,6 +5835,7 @@
       "direction": "received",
       "directlyVerified": true,
       "dragonId": "crimson",
+      "durationRounds": null,
       "evidenceIds": [
         "crimson-unlikely-hero-2026-06-25"
       ],
@@ -5670,16 +5875,23 @@
       "recipientRequirements": [],
       "requiredHabitLevel": 1,
       "role": "enemy-debuff",
+      "sourceEffectId": "unlikely-hero-recovery-received-down",
       "sourceScope": "unknown",
       "stackMaximum": null,
+      "statusId": null,
       "targetSelector": {
+        "comparisonDirection": null,
+        "comparisonPool": null,
         "count": null,
         "includesCaster": null,
         "position": null,
         "scope": "any-lane",
         "selection": "all-matching-condition",
+        "selectionResource": null,
         "selectionStat": null,
-        "side": "enemy"
+        "sharedSelectionGroupId": null,
+        "side": "enemy",
+        "tieBehavior": null
       },
       "unit": "percent",
       "unlockStarRank": 8,
@@ -5689,6 +5901,9 @@
     {
       "abilityId": "crimson-vermins-bane",
       "abilityName": "Vermin's Bane",
+      "activationChanceByHabitLevel": [],
+      "activationChanceFixed": 50,
+      "activationGroupId": "vermins-bane-even-rounds-shared-activation",
       "availability": {
         "canonical": "canonical-locked",
         "notes": [
@@ -5717,6 +5932,7 @@
       "direction": "dealt",
       "directlyVerified": true,
       "dragonId": "crimson",
+      "durationRounds": 2,
       "evidenceIds": [
         "crimson-vermins-bane-2026-06-25"
       ],
@@ -5756,16 +5972,23 @@
       "recipientRequirements": [],
       "requiredHabitLevel": 1,
       "role": "enemy-debuff",
+      "sourceEffectId": "vermins-bane-instinct-down",
       "sourceScope": "unknown",
       "stackMaximum": null,
+      "statusId": null,
       "targetSelector": {
+        "comparisonDirection": "highest",
+        "comparisonPool": "enemy-side",
         "count": 1,
         "includesCaster": null,
         "position": null,
         "scope": "any-lane",
         "selection": "highest-stat",
+        "selectionResource": "instinct",
         "selectionStat": "instinct",
-        "side": "enemy"
+        "sharedSelectionGroupId": null,
+        "side": "enemy",
+        "tieBehavior": "candidate-group"
       },
       "unit": "percent",
       "unlockStarRank": 10,
@@ -5775,6 +5998,9 @@
     {
       "abilityId": "crimson-vermins-bane",
       "abilityName": "Vermin's Bane",
+      "activationChanceByHabitLevel": [],
+      "activationChanceFixed": 50,
+      "activationGroupId": "vermins-bane-highest-instinct-enemy",
       "availability": {
         "canonical": "canonical-locked",
         "notes": [
@@ -5803,6 +6029,7 @@
       "direction": "dealt",
       "directlyVerified": true,
       "dragonId": "crimson",
+      "durationRounds": 2,
       "evidenceIds": [
         "crimson-vermins-bane-2026-06-25"
       ],
@@ -5842,16 +6069,23 @@
       "recipientRequirements": [],
       "requiredHabitLevel": 1,
       "role": "enemy-debuff",
+      "sourceEffectId": "vermins-bane-initiative-down",
       "sourceScope": "unknown",
       "stackMaximum": null,
+      "statusId": null,
       "targetSelector": {
+        "comparisonDirection": "highest",
+        "comparisonPool": "enemy-side",
         "count": 1,
         "includesCaster": null,
         "position": null,
         "scope": "any-lane",
         "selection": "highest-stat",
+        "selectionResource": "instinct",
         "selectionStat": "instinct",
-        "side": "enemy"
+        "sharedSelectionGroupId": "vermins-bane-highest-instinct-enemy",
+        "side": "enemy",
+        "tieBehavior": "candidate-group"
       },
       "unit": "percent",
       "unlockStarRank": 10,
@@ -6732,8 +6966,8 @@
   "rosterSourceStatus": "official-website",
   "slug": "crimson",
   "source": {
-    "branch": "fix/legendary-formation-analysis-regressions",
-    "commit": "a7f9ab451670be3f36d1317009d1575349cd06ff",
+    "branch": "fix/eclipse-cover-formation-traces",
+    "commit": "6e4e37a9f5e74a52622a6200c456399e7262d205",
     "databaseVersion": "0.6.0",
     "dataSchemaVersion": 10,
     "gameBuild": "26.6.53509",
@@ -6750,6 +6984,9 @@
     {
       "abilityId": "crimson-bloodscale-terror",
       "abilityName": "Bloodscale Terror",
+      "activationChanceByHabitLevel": [],
+      "activationChanceFixed": 20,
+      "activationGroupId": "bloodscale-terror-stun-odd-shared-activation",
       "availability": {
         "canonical": "canonical-base",
         "notes": [
@@ -6781,15 +7018,21 @@
       "id": "crimson-bloodscale-terror-bloodscale-terror-stun-stun-status-output",
       "minimumDragonLevel": null,
       "requiredHabitLevel": null,
+      "sourceEffectId": "bloodscale-terror-stun",
       "statusId": "stun",
       "targetSelector": {
+        "comparisonDirection": null,
+        "comparisonPool": null,
         "count": 1,
         "includesCaster": null,
         "position": null,
         "scope": "any-lane",
         "selection": "any",
+        "selectionResource": null,
         "selectionStat": null,
-        "side": "enemy"
+        "sharedSelectionGroupId": null,
+        "side": "enemy",
+        "tieBehavior": null
       },
       "targetSide": "enemy",
       "unlockStarRank": null,
@@ -6799,6 +7042,35 @@
     {
       "abilityId": "crimson-bloodscale-fury",
       "abilityName": "Bloodscale Fury",
+      "activationChanceByHabitLevel": [
+        {
+          "level": 1,
+          "unit": "percent",
+          "value": 17.5
+        },
+        {
+          "level": 2,
+          "unit": "percent",
+          "value": 21
+        },
+        {
+          "level": 3,
+          "unit": "percent",
+          "value": 24.5
+        },
+        {
+          "level": 4,
+          "unit": "percent",
+          "value": 29.75
+        },
+        {
+          "level": 5,
+          "unit": "percent",
+          "value": 35
+        }
+      ],
+      "activationChanceFixed": null,
+      "activationGroupId": null,
       "availability": {
         "canonical": "canonical-locked",
         "notes": [
@@ -6864,15 +7136,21 @@
       "id": "crimson-bloodscale-fury-bloodscale-fury-weakened-weakened-status-output",
       "minimumDragonLevel": null,
       "requiredHabitLevel": 1,
+      "sourceEffectId": "bloodscale-fury-weakened",
       "statusId": "weakened",
       "targetSelector": {
+        "comparisonDirection": null,
+        "comparisonPool": null,
         "count": 1,
         "includesCaster": null,
         "position": null,
         "scope": "any-lane",
         "selection": "any",
+        "selectionResource": null,
         "selectionStat": null,
-        "side": "enemy"
+        "sharedSelectionGroupId": null,
+        "side": "enemy",
+        "tieBehavior": null
       },
       "targetSide": "enemy",
       "unlockStarRank": 6,

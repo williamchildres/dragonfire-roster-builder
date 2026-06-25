@@ -4760,7 +4760,7 @@
   "firstObservedInGame": "2026-06-22",
   "format": "dragonfire-dragon-profile",
   "gameVersion": null,
-  "generatedAt": "2026-06-25T20:57:33.820Z",
+  "generatedAt": "2026-06-25T23:27:35.329Z",
   "habits": [
     {
       "abilityClass": "passive",
@@ -6063,6 +6063,9 @@
     {
       "abilityId": "sheepstealer-hunters-cunning",
       "abilityName": "Hunter's Cunning",
+      "activationChanceByHabitLevel": [],
+      "activationChanceFixed": null,
+      "activationGroupId": null,
       "availability": {
         "canonical": "canonical-base",
         "notes": [
@@ -6083,6 +6086,7 @@
       "direction": "received",
       "directlyVerified": true,
       "dragonId": "sheepstealer",
+      "durationRounds": null,
       "evidenceIds": [
         "sheepstealer-hunters-cunning-2026-06-23"
       ],
@@ -6106,16 +6110,23 @@
       "recipientRequirements": [],
       "requiredHabitLevel": null,
       "role": "recipient-side-amplification",
+      "sourceEffectId": "hunters-cunning-recovery-received",
       "sourceScope": "unknown",
       "stackMaximum": null,
+      "statusId": null,
       "targetSelector": {
+        "comparisonDirection": null,
+        "comparisonPool": null,
         "count": null,
         "includesCaster": null,
         "position": null,
         "scope": "self",
         "selection": "self",
+        "selectionResource": null,
         "selectionStat": null,
-        "side": "self"
+        "sharedSelectionGroupId": null,
+        "side": "self",
+        "tieBehavior": null
       },
       "unit": "percent",
       "unlockStarRank": 1,
@@ -6125,6 +6136,9 @@
     {
       "abilityId": "sheepstealer-hunters-cunning",
       "abilityName": "Hunter's Cunning",
+      "activationChanceByHabitLevel": [],
+      "activationChanceFixed": null,
+      "activationGroupId": null,
       "availability": {
         "canonical": "canonical-base",
         "notes": [
@@ -6145,6 +6159,7 @@
       "direction": "dealt",
       "directlyVerified": true,
       "dragonId": "sheepstealer",
+      "durationRounds": null,
       "evidenceIds": [
         "sheepstealer-hunters-cunning-2026-06-23"
       ],
@@ -6168,16 +6183,23 @@
       "recipientRequirements": [],
       "requiredHabitLevel": null,
       "role": "self-amplification",
+      "sourceEffectId": "hunters-cunning-intelligence",
       "sourceScope": "unknown",
       "stackMaximum": null,
+      "statusId": null,
       "targetSelector": {
+        "comparisonDirection": null,
+        "comparisonPool": null,
         "count": null,
         "includesCaster": null,
         "position": null,
         "scope": "self",
         "selection": "self",
+        "selectionResource": null,
         "selectionStat": null,
-        "side": "self"
+        "sharedSelectionGroupId": null,
+        "side": "self",
+        "tieBehavior": null
       },
       "unit": "flat",
       "unlockStarRank": 1,
@@ -6187,6 +6209,9 @@
     {
       "abilityId": "sheepstealer-hunters-cunning",
       "abilityName": "Hunter's Cunning",
+      "activationChanceByHabitLevel": [],
+      "activationChanceFixed": null,
+      "activationGroupId": null,
       "availability": {
         "canonical": "canonical-base",
         "notes": [
@@ -6207,6 +6232,7 @@
       "direction": "dealt",
       "directlyVerified": true,
       "dragonId": "sheepstealer",
+      "durationRounds": null,
       "evidenceIds": [
         "sheepstealer-hunters-cunning-2026-06-23"
       ],
@@ -6230,16 +6256,23 @@
       "recipientRequirements": [],
       "requiredHabitLevel": null,
       "role": "ally-support",
+      "sourceEffectId": "hunters-cunning-right-physical",
       "sourceScope": "all-qualifying-sources",
       "stackMaximum": null,
+      "statusId": null,
       "targetSelector": {
+        "comparisonDirection": null,
+        "comparisonPool": null,
         "count": null,
         "includesCaster": null,
         "position": "right-flank",
         "scope": "right-flank",
         "selection": "specific-position",
+        "selectionResource": null,
         "selectionStat": null,
-        "side": "ally"
+        "sharedSelectionGroupId": null,
+        "side": "ally",
+        "tieBehavior": null
       },
       "unit": "percent",
       "unlockStarRank": 1,
@@ -6249,6 +6282,9 @@
     {
       "abilityId": "sheepstealer-stolen-flock",
       "abilityName": "Stolen Flock",
+      "activationChanceByHabitLevel": [],
+      "activationChanceFixed": null,
+      "activationGroupId": null,
       "availability": {
         "canonical": "canonical-locked",
         "notes": [
@@ -6269,6 +6305,7 @@
       "direction": "dealt",
       "directlyVerified": true,
       "dragonId": "sheepstealer",
+      "durationRounds": null,
       "evidenceIds": [
         "sheepstealer-stolen-flock-2026-06-23"
       ],
@@ -6308,16 +6345,23 @@
       "recipientRequirements": [],
       "requiredHabitLevel": 1,
       "role": "self-amplification",
+      "sourceEffectId": "stolen-flock-pve-fire",
       "sourceScope": "all-qualifying-sources",
       "stackMaximum": null,
+      "statusId": null,
       "targetSelector": {
+        "comparisonDirection": null,
+        "comparisonPool": null,
         "count": null,
         "includesCaster": null,
         "position": null,
         "scope": "self",
         "selection": "self",
+        "selectionResource": null,
         "selectionStat": null,
-        "side": "self"
+        "sharedSelectionGroupId": null,
+        "side": "self",
+        "tieBehavior": null
       },
       "unit": "percent",
       "unlockStarRank": 2,
@@ -6327,6 +6371,9 @@
     {
       "abilityId": "sheepstealer-stolen-flock",
       "abilityName": "Stolen Flock",
+      "activationChanceByHabitLevel": [],
+      "activationChanceFixed": 50,
+      "activationGroupId": null,
       "availability": {
         "canonical": "canonical-locked",
         "notes": [
@@ -6355,6 +6402,7 @@
       "direction": "dealt",
       "directlyVerified": true,
       "dragonId": "sheepstealer",
+      "durationRounds": null,
       "evidenceIds": [
         "sheepstealer-stolen-flock-2026-06-23"
       ],
@@ -6368,16 +6416,23 @@
       "recipientRequirements": [],
       "requiredHabitLevel": 1,
       "role": "self-amplification",
+      "sourceEffectId": "stolen-flock-stack-round",
       "sourceScope": "all-qualifying-sources",
       "stackMaximum": 10,
+      "statusId": "stolen-flock",
       "targetSelector": {
+        "comparisonDirection": null,
+        "comparisonPool": null,
         "count": null,
         "includesCaster": null,
         "position": null,
         "scope": "self",
         "selection": "self",
+        "selectionResource": null,
         "selectionStat": null,
-        "side": "self"
+        "sharedSelectionGroupId": null,
+        "side": "self",
+        "tieBehavior": null
       },
       "unit": "stack",
       "unlockStarRank": 2,
@@ -6387,6 +6442,9 @@
     {
       "abilityId": "sheepstealer-stolen-flock",
       "abilityName": "Stolen Flock",
+      "activationChanceByHabitLevel": [],
+      "activationChanceFixed": null,
+      "activationGroupId": null,
       "availability": {
         "canonical": "canonical-locked",
         "notes": [
@@ -6407,6 +6465,7 @@
       "direction": "dealt",
       "directlyVerified": true,
       "dragonId": "sheepstealer",
+      "durationRounds": null,
       "evidenceIds": [
         "sheepstealer-stolen-flock-2026-06-23"
       ],
@@ -6420,16 +6479,23 @@
       "recipientRequirements": [],
       "requiredHabitLevel": 1,
       "role": "self-amplification",
+      "sourceEffectId": "stolen-flock-stack-recovery",
       "sourceScope": "all-qualifying-sources",
       "stackMaximum": 10,
+      "statusId": "stolen-flock",
       "targetSelector": {
+        "comparisonDirection": null,
+        "comparisonPool": null,
         "count": null,
         "includesCaster": null,
         "position": null,
         "scope": "self",
         "selection": "self",
+        "selectionResource": null,
         "selectionStat": null,
-        "side": "self"
+        "sharedSelectionGroupId": null,
+        "side": "self",
+        "tieBehavior": null
       },
       "unit": "stack",
       "unlockStarRank": 2,
@@ -6439,6 +6505,9 @@
     {
       "abilityId": "sheepstealer-dragons-cunning",
       "abilityName": "Dragon's Cunning",
+      "activationChanceByHabitLevel": [],
+      "activationChanceFixed": null,
+      "activationGroupId": null,
       "availability": {
         "canonical": "canonical-locked",
         "notes": [
@@ -6459,6 +6528,7 @@
       "direction": "dealt",
       "directlyVerified": true,
       "dragonId": "sheepstealer",
+      "durationRounds": null,
       "evidenceIds": [
         "sheepstealer-dragons-cunning-2026-06-23"
       ],
@@ -6498,16 +6568,23 @@
       "recipientRequirements": [],
       "requiredHabitLevel": 1,
       "role": "self-amplification",
+      "sourceEffectId": "dragons-cunning-intelligence",
       "sourceScope": "unknown",
       "stackMaximum": null,
+      "statusId": null,
       "targetSelector": {
+        "comparisonDirection": null,
+        "comparisonPool": null,
         "count": null,
         "includesCaster": null,
         "position": null,
         "scope": "self",
         "selection": "self",
+        "selectionResource": null,
         "selectionStat": null,
-        "side": "self"
+        "sharedSelectionGroupId": null,
+        "side": "self",
+        "tieBehavior": null
       },
       "unit": "percent",
       "unlockStarRank": 4,
@@ -6517,6 +6594,9 @@
     {
       "abilityId": "sheepstealer-dragons-cunning",
       "abilityName": "Dragon's Cunning",
+      "activationChanceByHabitLevel": [],
+      "activationChanceFixed": null,
+      "activationGroupId": null,
       "availability": {
         "canonical": "canonical-locked",
         "notes": [
@@ -6537,6 +6617,7 @@
       "direction": "dealt",
       "directlyVerified": true,
       "dragonId": "sheepstealer",
+      "durationRounds": null,
       "evidenceIds": [
         "sheepstealer-dragons-cunning-2026-06-23"
       ],
@@ -6576,16 +6657,23 @@
       "recipientRequirements": [],
       "requiredHabitLevel": 1,
       "role": "enemy-debuff",
+      "sourceEffectId": "dragons-cunning-instinct-down",
       "sourceScope": "unknown",
       "stackMaximum": null,
+      "statusId": null,
       "targetSelector": {
+        "comparisonDirection": null,
+        "comparisonPool": null,
         "count": 1,
         "includesCaster": null,
         "position": null,
         "scope": "within-adjacency",
         "selection": "one-eligible-adjacent",
+        "selectionResource": null,
         "selectionStat": null,
-        "side": "enemy"
+        "sharedSelectionGroupId": null,
+        "side": "enemy",
+        "tieBehavior": null
       },
       "unit": "percent",
       "unlockStarRank": 4,
@@ -6595,6 +6683,9 @@
     {
       "abilityId": "sheepstealer-wary-beast",
       "abilityName": "Wary Beast",
+      "activationChanceByHabitLevel": [],
+      "activationChanceFixed": null,
+      "activationGroupId": null,
       "availability": {
         "canonical": "canonical-locked",
         "notes": [
@@ -6615,6 +6706,7 @@
       "direction": "received",
       "directlyVerified": true,
       "dragonId": "sheepstealer",
+      "durationRounds": null,
       "evidenceIds": [
         "sheepstealer-wary-beast-2026-06-23"
       ],
@@ -6654,16 +6746,23 @@
       "recipientRequirements": [],
       "requiredHabitLevel": 1,
       "role": "enemy-debuff",
+      "sourceEffectId": "wary-beast-recovery-received-down",
       "sourceScope": "unknown",
       "stackMaximum": null,
+      "statusId": null,
       "targetSelector": {
+        "comparisonDirection": null,
+        "comparisonPool": null,
         "count": 3,
         "includesCaster": null,
         "position": null,
         "scope": "any-lane",
         "selection": "any",
+        "selectionResource": null,
         "selectionStat": null,
-        "side": "enemy"
+        "sharedSelectionGroupId": null,
+        "side": "enemy",
+        "tieBehavior": null
       },
       "unit": "percent",
       "unlockStarRank": 8,
@@ -7585,8 +7684,8 @@
   "rosterSourceStatus": "in-game-verified-pending-official-site",
   "slug": "sheepstealer",
   "source": {
-    "branch": "fix/legendary-formation-analysis-regressions",
-    "commit": "a7f9ab451670be3f36d1317009d1575349cd06ff",
+    "branch": "fix/eclipse-cover-formation-traces",
+    "commit": "6e4e37a9f5e74a52622a6200c456399e7262d205",
     "databaseVersion": "0.6.0",
     "dataSchemaVersion": 10,
     "gameBuild": "26.6.53509",
@@ -7603,6 +7702,9 @@
     {
       "abilityId": "sheepstealer-wild-hunt",
       "abilityName": "Wild Hunt",
+      "activationChanceByHabitLevel": [],
+      "activationChanceFixed": 40,
+      "activationGroupId": null,
       "availability": {
         "canonical": "canonical-base",
         "notes": [
@@ -7636,15 +7738,21 @@
       "id": "sheepstealer-wild-hunt-wild-hunt-prey-prey-status-output",
       "minimumDragonLevel": null,
       "requiredHabitLevel": null,
+      "sourceEffectId": "wild-hunt-prey",
       "statusId": "prey",
       "targetSelector": {
+        "comparisonDirection": null,
+        "comparisonPool": null,
         "count": 1,
         "includesCaster": null,
         "position": null,
         "scope": "any-lane",
         "selection": "any",
+        "selectionResource": null,
         "selectionStat": null,
-        "side": "enemy"
+        "sharedSelectionGroupId": null,
+        "side": "enemy",
+        "tieBehavior": null
       },
       "targetSide": "enemy",
       "unlockStarRank": null,
@@ -7654,6 +7762,9 @@
     {
       "abilityId": "sheepstealer-stolen-flock",
       "abilityName": "Stolen Flock",
+      "activationChanceByHabitLevel": [],
+      "activationChanceFixed": 50,
+      "activationGroupId": null,
       "availability": {
         "canonical": "canonical-locked",
         "notes": [
@@ -7686,15 +7797,21 @@
       "id": "sheepstealer-stolen-flock-stolen-flock-stack-round-stolen-flock-status-output",
       "minimumDragonLevel": null,
       "requiredHabitLevel": 1,
+      "sourceEffectId": "stolen-flock-stack-round",
       "statusId": "stolen-flock",
       "targetSelector": {
+        "comparisonDirection": null,
+        "comparisonPool": null,
         "count": null,
         "includesCaster": null,
         "position": null,
         "scope": "self",
         "selection": "self",
+        "selectionResource": null,
         "selectionStat": null,
-        "side": "self"
+        "sharedSelectionGroupId": null,
+        "side": "self",
+        "tieBehavior": null
       },
       "targetSide": "self",
       "unlockStarRank": 2,
@@ -7704,6 +7821,9 @@
     {
       "abilityId": "sheepstealer-stolen-flock",
       "abilityName": "Stolen Flock",
+      "activationChanceByHabitLevel": [],
+      "activationChanceFixed": null,
+      "activationGroupId": null,
       "availability": {
         "canonical": "canonical-locked",
         "notes": [
@@ -7728,15 +7848,21 @@
       "id": "sheepstealer-stolen-flock-stolen-flock-stack-recovery-stolen-flock-status-output",
       "minimumDragonLevel": null,
       "requiredHabitLevel": 1,
+      "sourceEffectId": "stolen-flock-stack-recovery",
       "statusId": "stolen-flock",
       "targetSelector": {
+        "comparisonDirection": null,
+        "comparisonPool": null,
         "count": null,
         "includesCaster": null,
         "position": null,
         "scope": "self",
         "selection": "self",
+        "selectionResource": null,
         "selectionStat": null,
-        "side": "self"
+        "sharedSelectionGroupId": null,
+        "side": "self",
+        "tieBehavior": null
       },
       "targetSide": "self",
       "unlockStarRank": 2,

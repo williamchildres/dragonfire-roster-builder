@@ -75,6 +75,7 @@
               "physical-damage",
               "tactical-damage",
               "fire-damage",
+              "damage-dealt",
               "recovery",
               "stat",
               "damage-received",

@@ -2901,7 +2901,7 @@
   "firstObservedInGame": null,
   "format": "dragonfire-dragon-profile",
   "gameVersion": null,
-  "generatedAt": "2026-06-25T20:57:33.820Z",
+  "generatedAt": "2026-06-25T23:27:35.329Z",
   "habits": [
     {
       "abilityClass": "passive",
@@ -3840,6 +3840,9 @@
     {
       "abilityId": "malachite-sentinels-presence",
       "abilityName": "Sentinel's Presence",
+      "activationChanceByHabitLevel": [],
+      "activationChanceFixed": null,
+      "activationGroupId": null,
       "availability": {
         "canonical": "canonical-base",
         "notes": [
@@ -3860,6 +3863,7 @@
       "direction": "dealt",
       "directlyVerified": true,
       "dragonId": "malachite",
+      "durationRounds": null,
       "evidenceIds": [
         "malachite-sentinels-presence-2026-06-23"
       ],
@@ -3883,16 +3887,23 @@
       "recipientRequirements": [],
       "requiredHabitLevel": null,
       "role": "self-amplification",
+      "sourceEffectId": "sentinels-presence-recovery-dealt",
       "sourceScope": "unknown",
       "stackMaximum": null,
+      "statusId": null,
       "targetSelector": {
+        "comparisonDirection": null,
+        "comparisonPool": null,
         "count": null,
         "includesCaster": null,
         "position": null,
         "scope": "self",
         "selection": "self",
+        "selectionResource": null,
         "selectionStat": null,
-        "side": "self"
+        "sharedSelectionGroupId": null,
+        "side": "self",
+        "tieBehavior": null
       },
       "unit": "percent",
       "unlockStarRank": 1,
@@ -3902,6 +3913,9 @@
     {
       "abilityId": "malachite-sentinels-presence",
       "abilityName": "Sentinel's Presence",
+      "activationChanceByHabitLevel": [],
+      "activationChanceFixed": null,
+      "activationGroupId": null,
       "availability": {
         "canonical": "canonical-base",
         "notes": [
@@ -3922,6 +3936,7 @@
       "direction": "dealt",
       "directlyVerified": true,
       "dragonId": "malachite",
+      "durationRounds": null,
       "evidenceIds": [
         "malachite-sentinels-presence-2026-06-23"
       ],
@@ -3945,16 +3960,23 @@
       "recipientRequirements": [],
       "requiredHabitLevel": null,
       "role": "self-amplification",
+      "sourceEffectId": "sentinels-presence-instinct",
       "sourceScope": "unknown",
       "stackMaximum": null,
+      "statusId": null,
       "targetSelector": {
+        "comparisonDirection": null,
+        "comparisonPool": null,
         "count": null,
         "includesCaster": null,
         "position": null,
         "scope": "self",
         "selection": "self",
+        "selectionResource": null,
         "selectionStat": null,
-        "side": "self"
+        "sharedSelectionGroupId": null,
+        "side": "self",
+        "tieBehavior": null
       },
       "unit": "flat",
       "unlockStarRank": 1,
@@ -3964,6 +3986,9 @@
     {
       "abilityId": "malachite-sentinels-presence",
       "abilityName": "Sentinel's Presence",
+      "activationChanceByHabitLevel": [],
+      "activationChanceFixed": null,
+      "activationGroupId": null,
       "availability": {
         "canonical": "canonical-base",
         "notes": [
@@ -3984,6 +4009,7 @@
       "direction": "dealt",
       "directlyVerified": true,
       "dragonId": "malachite",
+      "durationRounds": null,
       "evidenceIds": [
         "malachite-sentinels-presence-2026-06-23"
       ],
@@ -4007,16 +4033,23 @@
       "recipientRequirements": [],
       "requiredHabitLevel": null,
       "role": "ally-support",
+      "sourceEffectId": "sentinels-presence-left-flank-fire",
       "sourceScope": "all-qualifying-sources",
       "stackMaximum": null,
+      "statusId": null,
       "targetSelector": {
+        "comparisonDirection": null,
+        "comparisonPool": null,
         "count": null,
         "includesCaster": null,
         "position": "left-flank",
         "scope": "left-flank",
         "selection": "specific-position",
+        "selectionResource": null,
         "selectionStat": null,
-        "side": "ally"
+        "sharedSelectionGroupId": null,
+        "side": "ally",
+        "tieBehavior": null
       },
       "unit": "percent",
       "unlockStarRank": 1,
@@ -4026,6 +4059,9 @@
     {
       "abilityId": "malachite-forests-instinct",
       "abilityName": "Forest's Instinct",
+      "activationChanceByHabitLevel": [],
+      "activationChanceFixed": 35,
+      "activationGroupId": null,
       "availability": {
         "canonical": "canonical-locked",
         "notes": [
@@ -4054,6 +4090,7 @@
       "direction": "dealt",
       "directlyVerified": true,
       "dragonId": "malachite",
+      "durationRounds": 2,
       "evidenceIds": [
         "malachite-forests-instinct-2026-06-23"
       ],
@@ -4093,16 +4130,23 @@
       "recipientRequirements": [],
       "requiredHabitLevel": 1,
       "role": "ally-support",
+      "sourceEffectId": "forests-instinct-physical-damage",
       "sourceScope": "non-basic-attacks",
       "stackMaximum": null,
+      "statusId": null,
       "targetSelector": {
+        "comparisonDirection": null,
+        "comparisonPool": null,
         "count": 2,
         "includesCaster": false,
         "position": null,
         "scope": "any-lane",
         "selection": "any",
+        "selectionResource": null,
         "selectionStat": null,
-        "side": "ally"
+        "sharedSelectionGroupId": null,
+        "side": "ally",
+        "tieBehavior": null
       },
       "unit": "percent",
       "unlockStarRank": 2,
@@ -4112,6 +4156,9 @@
     {
       "abilityId": "malachite-forests-instinct",
       "abilityName": "Forest's Instinct",
+      "activationChanceByHabitLevel": [],
+      "activationChanceFixed": 35,
+      "activationGroupId": null,
       "availability": {
         "canonical": "canonical-locked",
         "notes": [
@@ -4140,6 +4187,7 @@
       "direction": "received",
       "directlyVerified": true,
       "dragonId": "malachite",
+      "durationRounds": 2,
       "evidenceIds": [
         "malachite-forests-instinct-2026-06-23"
       ],
@@ -4179,16 +4227,23 @@
       "recipientRequirements": [],
       "requiredHabitLevel": 1,
       "role": "ally-support",
+      "sourceEffectId": "forests-instinct-tactical-reduction",
       "sourceScope": "unknown",
       "stackMaximum": null,
+      "statusId": null,
       "targetSelector": {
+        "comparisonDirection": null,
+        "comparisonPool": null,
         "count": 2,
         "includesCaster": false,
         "position": null,
         "scope": "any-lane",
         "selection": "any",
+        "selectionResource": null,
         "selectionStat": null,
-        "side": "ally"
+        "sharedSelectionGroupId": null,
+        "side": "ally",
+        "tieBehavior": null
       },
       "unit": "percent",
       "unlockStarRank": 2,
@@ -4198,6 +4253,9 @@
     {
       "abilityId": "malachite-wise-vigor",
       "abilityName": "Wise Vigor",
+      "activationChanceByHabitLevel": [],
+      "activationChanceFixed": null,
+      "activationGroupId": null,
       "availability": {
         "canonical": "canonical-locked",
         "notes": [
@@ -4218,6 +4276,7 @@
       "direction": "dealt",
       "directlyVerified": true,
       "dragonId": "malachite",
+      "durationRounds": null,
       "evidenceIds": [
         "malachite-wise-vigor-2026-06-23"
       ],
@@ -4257,16 +4316,23 @@
       "recipientRequirements": [],
       "requiredHabitLevel": 1,
       "role": "self-amplification",
+      "sourceEffectId": "wise-vigor-instinct",
       "sourceScope": "unknown",
       "stackMaximum": null,
+      "statusId": null,
       "targetSelector": {
+        "comparisonDirection": null,
+        "comparisonPool": null,
         "count": null,
         "includesCaster": null,
         "position": null,
         "scope": "self",
         "selection": "self",
+        "selectionResource": null,
         "selectionStat": null,
-        "side": "self"
+        "sharedSelectionGroupId": null,
+        "side": "self",
+        "tieBehavior": null
       },
       "unit": "percent",
       "unlockStarRank": 4,
@@ -4276,6 +4342,9 @@
     {
       "abilityId": "malachite-wise-vigor",
       "abilityName": "Wise Vigor",
+      "activationChanceByHabitLevel": [],
+      "activationChanceFixed": null,
+      "activationGroupId": null,
       "availability": {
         "canonical": "canonical-locked",
         "notes": [
@@ -4296,6 +4365,7 @@
       "direction": "dealt",
       "directlyVerified": true,
       "dragonId": "malachite",
+      "durationRounds": null,
       "evidenceIds": [
         "malachite-wise-vigor-2026-06-23"
       ],
@@ -4335,16 +4405,23 @@
       "recipientRequirements": [],
       "requiredHabitLevel": 1,
       "role": "self-amplification",
+      "sourceEffectId": "wise-vigor-recovery",
       "sourceScope": "unknown",
       "stackMaximum": null,
+      "statusId": null,
       "targetSelector": {
+        "comparisonDirection": null,
+        "comparisonPool": null,
         "count": null,
         "includesCaster": null,
         "position": null,
         "scope": "self",
         "selection": "self",
+        "selectionResource": null,
         "selectionStat": null,
-        "side": "self"
+        "sharedSelectionGroupId": null,
+        "side": "self",
+        "tieBehavior": null
       },
       "unit": "percent",
       "unlockStarRank": 4,
@@ -4352,8 +4429,117 @@
       "valuePerStack": null
     },
     {
+      "abilityId": "malachite-thunderous-roar",
+      "abilityName": "Thunderous Roar",
+      "activationChanceByHabitLevel": [
+        {
+          "level": 1,
+          "unit": "percent",
+          "value": 10
+        },
+        {
+          "level": 2,
+          "unit": "percent",
+          "value": 12
+        },
+        {
+          "level": 3,
+          "unit": "percent",
+          "value": 14
+        },
+        {
+          "level": 4,
+          "unit": "percent",
+          "value": 17
+        },
+        {
+          "level": 5,
+          "unit": "percent",
+          "value": 20
+        }
+      ],
+      "activationChanceFixed": null,
+      "activationGroupId": null,
+      "availability": {
+        "canonical": "canonical-locked",
+        "notes": [
+          "Future at Star Rank 6.",
+          "Unlocked in observed account collection state, subject to level and star requirements."
+        ],
+        "observedAccount": "observed-available",
+        "reportLabel": "Future at Star Rank 6; observed account hatched",
+        "userRoster": "unknown"
+      },
+      "channel": "damage-dealt",
+      "combatLogConfirmed": false,
+      "conditional": true,
+      "conditions": [
+        {
+          "description": "Activation chance depends on Habit Level for each round.",
+          "evidenceIds": [],
+          "id": "thunderous-roar-each-round-activation-chance",
+          "label": "Activation chance depends on Habit Level for each round.",
+          "unresolved": false
+        },
+        {
+          "description": "Advantage increases Damage Dealt according to the verified status glossary.",
+          "evidenceIds": [
+            "malachite-thunderous-roar-2026-06-23"
+          ],
+          "id": "thunderous-roar-advantage-advantage-semantic-status-modifier",
+          "label": "Advantage status semantics",
+          "unresolved": false
+        }
+      ],
+      "confidence": "confirmed",
+      "currentlyAvailable": false,
+      "damageScope": null,
+      "direction": "dealt",
+      "directlyVerified": true,
+      "dragonId": "malachite",
+      "durationRounds": 2,
+      "evidenceIds": [
+        "malachite-thunderous-roar-2026-06-23"
+      ],
+      "futureAvailable": true,
+      "id": "malachite-thunderous-roar-thunderous-roar-advantage-advantage-damage-dealt-status-modifier",
+      "label": "Thunderous Roar: Advantage Damage Dealt increase",
+      "minimumDragonLevel": null,
+      "operation": "increase",
+      "providerRequirements": [],
+      "rankedValues": [],
+      "recipientRequirements": [],
+      "requiredHabitLevel": 1,
+      "role": "ally-support",
+      "sourceEffectId": "thunderous-roar-advantage",
+      "sourceScope": "all-qualifying-sources",
+      "stackMaximum": null,
+      "statusId": "advantage",
+      "targetSelector": {
+        "comparisonDirection": null,
+        "comparisonPool": null,
+        "count": 2,
+        "includesCaster": false,
+        "position": null,
+        "scope": "any-lane",
+        "selection": "any",
+        "selectionResource": null,
+        "selectionStat": null,
+        "sharedSelectionGroupId": null,
+        "side": "ally",
+        "tieBehavior": null
+      },
+      "unit": "percent",
+      "unlockStarRank": 6,
+      "value": 20,
+      "valuePerStack": null
+    },
+    {
       "abilityId": "malachite-collective-might",
       "abilityName": "Collective Might",
+      "activationChanceByHabitLevel": [],
+      "activationChanceFixed": null,
+      "activationGroupId": null,
       "availability": {
         "canonical": "canonical-locked",
         "notes": [
@@ -4374,6 +4560,7 @@
       "direction": "dealt",
       "directlyVerified": true,
       "dragonId": "malachite",
+      "durationRounds": null,
       "evidenceIds": [
         "malachite-collective-might-2026-06-23"
       ],
@@ -4413,16 +4600,23 @@
       "recipientRequirements": [],
       "requiredHabitLevel": 1,
       "role": "ally-support",
+      "sourceEffectId": "collective-might-strength",
       "sourceScope": "unknown",
       "stackMaximum": null,
+      "statusId": null,
       "targetSelector": {
+        "comparisonDirection": null,
+        "comparisonPool": null,
         "count": 3,
         "includesCaster": true,
         "position": null,
         "scope": "any-lane",
         "selection": "any",
+        "selectionResource": null,
         "selectionStat": null,
-        "side": "ally"
+        "sharedSelectionGroupId": null,
+        "side": "ally",
+        "tieBehavior": null
       },
       "unit": "percent",
       "unlockStarRank": 8,
@@ -4432,6 +4626,35 @@
     {
       "abilityId": "malachite-lightning-strike",
       "abilityName": "Lightning Strike",
+      "activationChanceByHabitLevel": [
+        {
+          "level": 1,
+          "unit": "percent",
+          "value": 40
+        },
+        {
+          "level": 2,
+          "unit": "percent",
+          "value": 52
+        },
+        {
+          "level": 3,
+          "unit": "percent",
+          "value": 64
+        },
+        {
+          "level": 4,
+          "unit": "percent",
+          "value": 80
+        },
+        {
+          "level": 5,
+          "unit": "percent",
+          "value": 100
+        }
+      ],
+      "activationChanceFixed": null,
+      "activationGroupId": null,
       "availability": {
         "canonical": "canonical-locked",
         "notes": [
@@ -4460,6 +4683,7 @@
       "direction": "dealt",
       "directlyVerified": true,
       "dragonId": "malachite",
+      "durationRounds": 3,
       "evidenceIds": [
         "malachite-lightning-strike-2026-06-23"
       ],
@@ -4473,16 +4697,23 @@
       "recipientRequirements": [],
       "requiredHabitLevel": 1,
       "role": "ally-support",
+      "sourceEffectId": "lightning-strike-strength",
       "sourceScope": "unknown",
       "stackMaximum": null,
+      "statusId": null,
       "targetSelector": {
+        "comparisonDirection": null,
+        "comparisonPool": null,
         "count": 1,
         "includesCaster": false,
         "position": null,
         "scope": "within-adjacency",
         "selection": "one-eligible-adjacent",
+        "selectionResource": null,
         "selectionStat": null,
-        "side": "ally"
+        "sharedSelectionGroupId": null,
+        "side": "ally",
+        "tieBehavior": null
       },
       "unit": "percent",
       "unlockStarRank": 10,
@@ -5181,8 +5412,8 @@
   "rosterSourceStatus": "official-website",
   "slug": "malachite",
   "source": {
-    "branch": "fix/legendary-formation-analysis-regressions",
-    "commit": "a7f9ab451670be3f36d1317009d1575349cd06ff",
+    "branch": "fix/eclipse-cover-formation-traces",
+    "commit": "6e4e37a9f5e74a52622a6200c456399e7262d205",
     "databaseVersion": "0.6.0",
     "dataSchemaVersion": 10,
     "gameBuild": "26.6.53509",
@@ -5199,6 +5430,35 @@
     {
       "abilityId": "malachite-thunderous-roar",
       "abilityName": "Thunderous Roar",
+      "activationChanceByHabitLevel": [
+        {
+          "level": 1,
+          "unit": "percent",
+          "value": 10
+        },
+        {
+          "level": 2,
+          "unit": "percent",
+          "value": 12
+        },
+        {
+          "level": 3,
+          "unit": "percent",
+          "value": 14
+        },
+        {
+          "level": 4,
+          "unit": "percent",
+          "value": 17
+        },
+        {
+          "level": 5,
+          "unit": "percent",
+          "value": 20
+        }
+      ],
+      "activationChanceFixed": null,
+      "activationGroupId": null,
       "availability": {
         "canonical": "canonical-locked",
         "notes": [
@@ -5257,15 +5517,21 @@
       "id": "malachite-thunderous-roar-thunderous-roar-advantage-advantage-status-output",
       "minimumDragonLevel": null,
       "requiredHabitLevel": 1,
+      "sourceEffectId": "thunderous-roar-advantage",
       "statusId": "advantage",
       "targetSelector": {
+        "comparisonDirection": null,
+        "comparisonPool": null,
         "count": 2,
         "includesCaster": false,
         "position": null,
         "scope": "any-lane",
         "selection": "any",
+        "selectionResource": null,
         "selectionStat": null,
-        "side": "ally"
+        "sharedSelectionGroupId": null,
+        "side": "ally",
+        "tieBehavior": null
       },
       "targetSide": "ally",
       "unlockStarRank": 6,
@@ -5275,6 +5541,35 @@
     {
       "abilityId": "malachite-lightning-strike",
       "abilityName": "Lightning Strike",
+      "activationChanceByHabitLevel": [
+        {
+          "level": 1,
+          "unit": "percent",
+          "value": 40
+        },
+        {
+          "level": 2,
+          "unit": "percent",
+          "value": 52
+        },
+        {
+          "level": 3,
+          "unit": "percent",
+          "value": 64
+        },
+        {
+          "level": 4,
+          "unit": "percent",
+          "value": 80
+        },
+        {
+          "level": 5,
+          "unit": "percent",
+          "value": 100
+        }
+      ],
+      "activationChanceFixed": null,
+      "activationGroupId": null,
       "availability": {
         "canonical": "canonical-locked",
         "notes": [
@@ -5333,15 +5628,21 @@
       "id": "malachite-lightning-strike-lightning-strike-first-strike-first-strike-status-output",
       "minimumDragonLevel": null,
       "requiredHabitLevel": 1,
+      "sourceEffectId": "lightning-strike-first-strike",
       "statusId": "first-strike",
       "targetSelector": {
+        "comparisonDirection": null,
+        "comparisonPool": null,
         "count": 1,
         "includesCaster": false,
         "position": null,
         "scope": "within-adjacency",
         "selection": "one-eligible-adjacent",
+        "selectionResource": null,
         "selectionStat": null,
-        "side": "ally"
+        "sharedSelectionGroupId": null,
+        "side": "ally",
+        "tieBehavior": null
       },
       "targetSide": "ally",
       "unlockStarRank": 10,
@@ -5351,6 +5652,35 @@
     {
       "abilityId": "malachite-lightning-strike",
       "abilityName": "Lightning Strike",
+      "activationChanceByHabitLevel": [
+        {
+          "level": 1,
+          "unit": "percent",
+          "value": 40
+        },
+        {
+          "level": 2,
+          "unit": "percent",
+          "value": 52
+        },
+        {
+          "level": 3,
+          "unit": "percent",
+          "value": 64
+        },
+        {
+          "level": 4,
+          "unit": "percent",
+          "value": 80
+        },
+        {
+          "level": 5,
+          "unit": "percent",
+          "value": 100
+        }
+      ],
+      "activationChanceFixed": null,
+      "activationGroupId": null,
       "availability": {
         "canonical": "canonical-locked",
         "notes": [
@@ -5409,15 +5739,21 @@
       "id": "malachite-lightning-strike-lightning-strike-double-strike-double-strike-status-output",
       "minimumDragonLevel": null,
       "requiredHabitLevel": 1,
+      "sourceEffectId": "lightning-strike-double-strike",
       "statusId": "double-strike",
       "targetSelector": {
+        "comparisonDirection": null,
+        "comparisonPool": null,
         "count": 1,
         "includesCaster": false,
         "position": null,
         "scope": "within-adjacency",
         "selection": "one-eligible-adjacent",
+        "selectionResource": null,
         "selectionStat": null,
-        "side": "ally"
+        "sharedSelectionGroupId": null,
+        "side": "ally",
+        "tieBehavior": null
       },
       "targetSide": "ally",
       "unlockStarRank": 10,

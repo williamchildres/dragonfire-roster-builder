@@ -365,7 +365,7 @@ function summarizeTrace(
   if (trace.matchKind === 'status-removal') {
     return ['Potential Control cleanse; timing, selection, and activation are uncertain.'];
   }
-  if (trace.modifierRole === 'enemy-debuff' || trace.matchKind === 'enemy-mitigation-reduction') {
+  if (trace.modifierRole === 'enemy-debuff' || trace.matchKind === 'enemy-mitigation-reduction' || trace.matchKind === 'enemy-damage-dealt-reduction') {
     return [enemyFacingSummary(trace)];
   }
   if (trace.channel === 'stat') {
@@ -780,6 +780,9 @@ function interactionPurpose(trace: SynergyTrace): string | null {
   if (trace.matchKind === 'enemy-mitigation-reduction') {
     return 'Enemy mitigation reduction';
   }
+  if (trace.matchKind === 'enemy-damage-dealt-reduction') {
+    return 'Enemy Damage Dealt reduction';
+  }
   if (trace.matchKind === 'status-condition-enablement') {
     return 'Conditional status enablement';
   }
@@ -838,6 +841,9 @@ function formatStatDetail(detail: string): string | null {
 }
 
 function enemyFacingSummary(trace: SynergyTrace): string {
+  if (trace.matchKind === 'enemy-damage-dealt-reduction') {
+    return `${formatToken(trace.channel ?? 'damage-dealt')} reduction on an enemy candidate; target selection and uptime are uncertain.`;
+  }
   const lowered = trace.effects.join(' ').match(/(Strength|Intelligence|Instinct|Initiative)/i)?.[1];
   const channel = trace.sourceAbilityId?.includes('battle-dread') ? 'Fire Damage' : trace.channel ? formatToken(trace.channel) : 'team damage';
   return lowered ? `Lowers enemy ${lowered}, supporting allied ${channel}.` : 'Lowers enemy mitigation for the team.';

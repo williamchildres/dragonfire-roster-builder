@@ -415,7 +415,7 @@ function buildCapabilityFramework(
   const reviewedOutputs = outputs.filter((capability) => isReviewedDragonId(capability.dragonId));
   const reviewedModifiers = modifiers.filter((capability) => isReviewedDragonId(capability.dragonId));
   return {
-    effectChannels: ['physical-damage', 'tactical-damage', 'fire-damage', 'recovery', 'stat', 'damage-received', 'status', 'control'],
+    effectChannels: ['physical-damage', 'tactical-damage', 'fire-damage', 'damage-dealt', 'recovery', 'stat', 'damage-received', 'status', 'control'],
     outputCapabilityStructure: [
       'dragonId',
       'abilityId',
@@ -441,6 +441,11 @@ function buildCapabilityFramework(
       'operation',
       'damageScope',
       'targetSelector',
+      'sourceEffectId',
+      'statusId',
+      'activationGroupId',
+      'activationChanceByHabitLevel',
+      'durationRounds',
       'providerRequirements',
       'recipientRequirements',
       'sourceScope',
@@ -464,6 +469,7 @@ function buildCapabilityFramework(
       'status-condition-enablement',
       'stat-scaling-support',
       'enemy-mitigation-reduction',
+      'enemy-damage-dealt-reduction',
       'periodic-damage-amplification',
       'status-removal',
       'defensive-ally-support',
@@ -946,7 +952,7 @@ function buildSchemas() {
       'dragonEffectProfiles',
     ],
     properties: {
-    effectChannels: { type: 'array', items: { enum: ['physical-damage', 'tactical-damage', 'fire-damage', 'recovery', 'stat', 'damage-received', 'status', 'control'] } },
+    effectChannels: { type: 'array', items: { enum: ['physical-damage', 'tactical-damage', 'fire-damage', 'damage-dealt', 'recovery', 'stat', 'damage-received', 'status', 'control'] } },
       modifierRoles: { type: 'array', items: { enum: ['self-amplification', 'ally-support', 'recipient-side-amplification', 'enemy-debuff'] } },
       matchKinds: { type: 'array', items: { type: 'string' } },
       derivedCapabilities: {

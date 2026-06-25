@@ -3883,7 +3883,7 @@
   "firstObservedInGame": null,
   "format": "dragonfire-dragon-profile",
   "gameVersion": null,
-  "generatedAt": "2026-06-25T20:57:33.820Z",
+  "generatedAt": "2026-06-25T23:27:35.329Z",
   "habits": [
     {
       "abilityClass": "passive",
@@ -4872,6 +4872,9 @@
     {
       "abilityId": "syrax-blazing-fury",
       "abilityName": "Blazing Fury",
+      "activationChanceByHabitLevel": [],
+      "activationChanceFixed": 20,
+      "activationGroupId": null,
       "availability": {
         "canonical": "canonical-base",
         "notes": [
@@ -4899,6 +4902,7 @@
       "direction": "dealt",
       "directlyVerified": true,
       "dragonId": "syrax",
+      "durationRounds": 2,
       "evidenceIds": [
         "syrax-blazing-fury-summary-2026-06-24",
         "syrax-blazing-fury-details-2026-06-24"
@@ -4913,16 +4917,23 @@
       "recipientRequirements": [],
       "requiredHabitLevel": null,
       "role": "ally-support",
+      "sourceEffectId": "blazing-fury-fire-damage-up",
       "sourceScope": "all-qualifying-sources",
       "stackMaximum": null,
+      "statusId": null,
       "targetSelector": {
+        "comparisonDirection": null,
+        "comparisonPool": null,
         "count": 1,
-        "includesCaster": null,
+        "includesCaster": true,
         "position": null,
         "scope": "any-lane",
         "selection": "any",
+        "selectionResource": null,
         "selectionStat": null,
-        "side": "ally"
+        "sharedSelectionGroupId": null,
+        "side": "ally",
+        "tieBehavior": null
       },
       "unit": "percent",
       "unlockStarRank": null,
@@ -4932,6 +4943,9 @@
     {
       "abilityId": "syrax-sentinels-wit",
       "abilityName": "Sentinel's Wit",
+      "activationChanceByHabitLevel": [],
+      "activationChanceFixed": null,
+      "activationGroupId": null,
       "availability": {
         "canonical": "canonical-base",
         "notes": [
@@ -4952,6 +4966,7 @@
       "direction": "dealt",
       "directlyVerified": true,
       "dragonId": "syrax",
+      "durationRounds": null,
       "evidenceIds": [
         "syrax-sentinels-wit-2026-06-24"
       ],
@@ -4975,16 +4990,23 @@
       "recipientRequirements": [],
       "requiredHabitLevel": null,
       "role": "self-amplification",
+      "sourceEffectId": "sentinels-wit-tactical",
       "sourceScope": "all-qualifying-sources",
       "stackMaximum": null,
+      "statusId": null,
       "targetSelector": {
+        "comparisonDirection": null,
+        "comparisonPool": null,
         "count": null,
         "includesCaster": null,
         "position": null,
         "scope": "self",
         "selection": "self",
+        "selectionResource": null,
         "selectionStat": null,
-        "side": "self"
+        "sharedSelectionGroupId": null,
+        "side": "self",
+        "tieBehavior": null
       },
       "unit": "percent",
       "unlockStarRank": 1,
@@ -4994,6 +5016,9 @@
     {
       "abilityId": "syrax-sentinels-wit",
       "abilityName": "Sentinel's Wit",
+      "activationChanceByHabitLevel": [],
+      "activationChanceFixed": null,
+      "activationGroupId": null,
       "availability": {
         "canonical": "canonical-base",
         "notes": [
@@ -5014,6 +5039,7 @@
       "direction": "dealt",
       "directlyVerified": true,
       "dragonId": "syrax",
+      "durationRounds": null,
       "evidenceIds": [
         "syrax-sentinels-wit-2026-06-24"
       ],
@@ -5037,16 +5063,23 @@
       "recipientRequirements": [],
       "requiredHabitLevel": null,
       "role": "ally-support",
+      "sourceEffectId": "sentinels-wit-left-instinct",
       "sourceScope": "unknown",
       "stackMaximum": null,
+      "statusId": null,
       "targetSelector": {
+        "comparisonDirection": null,
+        "comparisonPool": null,
         "count": null,
         "includesCaster": null,
         "position": "left-flank",
         "scope": "left-flank",
         "selection": "specific-position",
+        "selectionResource": null,
         "selectionStat": null,
-        "side": "ally"
+        "sharedSelectionGroupId": null,
+        "side": "ally",
+        "tieBehavior": null
       },
       "unit": "flat",
       "unlockStarRank": 1,
@@ -5056,6 +5089,9 @@
     {
       "abilityId": "syrax-sentinels-wit",
       "abilityName": "Sentinel's Wit",
+      "activationChanceByHabitLevel": [],
+      "activationChanceFixed": null,
+      "activationGroupId": null,
       "availability": {
         "canonical": "canonical-base",
         "notes": [
@@ -5076,6 +5112,7 @@
       "direction": "dealt",
       "directlyVerified": true,
       "dragonId": "syrax",
+      "durationRounds": null,
       "evidenceIds": [
         "syrax-sentinels-wit-2026-06-24"
       ],
@@ -5099,16 +5136,23 @@
       "recipientRequirements": [],
       "requiredHabitLevel": null,
       "role": "ally-support",
+      "sourceEffectId": "sentinels-wit-left-initiative",
       "sourceScope": "unknown",
       "stackMaximum": null,
+      "statusId": null,
       "targetSelector": {
+        "comparisonDirection": null,
+        "comparisonPool": null,
         "count": null,
         "includesCaster": null,
         "position": "left-flank",
         "scope": "left-flank",
         "selection": "specific-position",
+        "selectionResource": null,
         "selectionStat": null,
-        "side": "ally"
+        "sharedSelectionGroupId": null,
+        "side": "ally",
+        "tieBehavior": null
       },
       "unit": "flat",
       "unlockStarRank": 1,
@@ -5118,6 +5162,9 @@
     {
       "abilityId": "syrax-mindful-synergy",
       "abilityName": "Mindful Synergy",
+      "activationChanceByHabitLevel": [],
+      "activationChanceFixed": null,
+      "activationGroupId": null,
       "availability": {
         "canonical": "canonical-locked",
         "notes": [
@@ -5138,6 +5185,7 @@
       "direction": "dealt",
       "directlyVerified": true,
       "dragonId": "syrax",
+      "durationRounds": null,
       "evidenceIds": [
         "syrax-mindful-synergy-2026-06-24"
       ],
@@ -5177,16 +5225,23 @@
       "recipientRequirements": [],
       "requiredHabitLevel": 1,
       "role": "ally-support",
+      "sourceEffectId": "mindful-synergy-intelligence",
       "sourceScope": "unknown",
       "stackMaximum": null,
+      "statusId": null,
       "targetSelector": {
+        "comparisonDirection": null,
+        "comparisonPool": null,
         "count": 3,
         "includesCaster": true,
         "position": null,
         "scope": "any-lane",
         "selection": "any",
+        "selectionResource": null,
         "selectionStat": null,
-        "side": "ally"
+        "sharedSelectionGroupId": null,
+        "side": "ally",
+        "tieBehavior": null
       },
       "unit": "percent",
       "unlockStarRank": 2,
@@ -5196,6 +5251,9 @@
     {
       "abilityId": "syrax-mindful-synergy",
       "abilityName": "Mindful Synergy",
+      "activationChanceByHabitLevel": [],
+      "activationChanceFixed": null,
+      "activationGroupId": null,
       "availability": {
         "canonical": "canonical-locked",
         "notes": [
@@ -5216,6 +5274,7 @@
       "direction": "dealt",
       "directlyVerified": true,
       "dragonId": "syrax",
+      "durationRounds": null,
       "evidenceIds": [
         "syrax-mindful-synergy-2026-06-24"
       ],
@@ -5255,16 +5314,23 @@
       "recipientRequirements": [],
       "requiredHabitLevel": 1,
       "role": "ally-support",
+      "sourceEffectId": "mindful-synergy-instinct",
       "sourceScope": "unknown",
       "stackMaximum": null,
+      "statusId": null,
       "targetSelector": {
+        "comparisonDirection": null,
+        "comparisonPool": null,
         "count": 3,
         "includesCaster": true,
         "position": null,
         "scope": "any-lane",
         "selection": "any",
+        "selectionResource": null,
         "selectionStat": null,
-        "side": "ally"
+        "sharedSelectionGroupId": null,
+        "side": "ally",
+        "tieBehavior": null
       },
       "unit": "percent",
       "unlockStarRank": 2,
@@ -5274,6 +5340,9 @@
     {
       "abilityId": "syrax-flight-mastery",
       "abilityName": "Flight Mastery",
+      "activationChanceByHabitLevel": [],
+      "activationChanceFixed": null,
+      "activationGroupId": null,
       "availability": {
         "canonical": "canonical-locked",
         "notes": [
@@ -5294,6 +5363,7 @@
       "direction": "dealt",
       "directlyVerified": true,
       "dragonId": "syrax",
+      "durationRounds": null,
       "evidenceIds": [
         "syrax-flight-mastery-2026-06-24"
       ],
@@ -5333,16 +5403,23 @@
       "recipientRequirements": [],
       "requiredHabitLevel": 1,
       "role": "ally-support",
+      "sourceEffectId": "flight-mastery-initiative-up",
       "sourceScope": "unknown",
       "stackMaximum": null,
+      "statusId": null,
       "targetSelector": {
+        "comparisonDirection": null,
+        "comparisonPool": null,
         "count": 3,
         "includesCaster": true,
         "position": null,
         "scope": "any-lane",
         "selection": "any",
+        "selectionResource": null,
         "selectionStat": null,
-        "side": "ally"
+        "sharedSelectionGroupId": null,
+        "side": "ally",
+        "tieBehavior": null
       },
       "unit": "percent",
       "unlockStarRank": 4,
@@ -5352,6 +5429,9 @@
     {
       "abilityId": "syrax-flight-mastery",
       "abilityName": "Flight Mastery",
+      "activationChanceByHabitLevel": [],
+      "activationChanceFixed": null,
+      "activationGroupId": null,
       "availability": {
         "canonical": "canonical-locked",
         "notes": [
@@ -5372,6 +5452,7 @@
       "direction": "dealt",
       "directlyVerified": true,
       "dragonId": "syrax",
+      "durationRounds": null,
       "evidenceIds": [
         "syrax-flight-mastery-2026-06-24"
       ],
@@ -5411,16 +5492,23 @@
       "recipientRequirements": [],
       "requiredHabitLevel": 1,
       "role": "enemy-debuff",
+      "sourceEffectId": "flight-mastery-initiative-down",
       "sourceScope": "unknown",
       "stackMaximum": null,
+      "statusId": null,
       "targetSelector": {
+        "comparisonDirection": null,
+        "comparisonPool": null,
         "count": 3,
         "includesCaster": null,
         "position": null,
         "scope": "any-lane",
         "selection": "any",
+        "selectionResource": null,
         "selectionStat": null,
-        "side": "enemy"
+        "sharedSelectionGroupId": null,
+        "side": "enemy",
+        "tieBehavior": null
       },
       "unit": "percent",
       "unlockStarRank": 4,
@@ -5430,6 +5518,9 @@
     {
       "abilityId": "syrax-tactical-inferno",
       "abilityName": "Tactical Inferno",
+      "activationChanceByHabitLevel": [],
+      "activationChanceFixed": null,
+      "activationGroupId": null,
       "availability": {
         "canonical": "canonical-locked",
         "notes": [
@@ -5450,6 +5541,7 @@
       "direction": "dealt",
       "directlyVerified": true,
       "dragonId": "syrax",
+      "durationRounds": 3,
       "evidenceIds": [
         "syrax-tactical-inferno-2026-06-24"
       ],
@@ -5489,16 +5581,23 @@
       "recipientRequirements": [],
       "requiredHabitLevel": 1,
       "role": "ally-support",
+      "sourceEffectId": "tactical-inferno-tactical",
       "sourceScope": "all-qualifying-sources",
       "stackMaximum": null,
+      "statusId": null,
       "targetSelector": {
+        "comparisonDirection": null,
+        "comparisonPool": null,
         "count": 1,
         "includesCaster": null,
         "position": null,
         "scope": "any-lane",
         "selection": "any",
+        "selectionResource": null,
         "selectionStat": null,
-        "side": "ally"
+        "sharedSelectionGroupId": null,
+        "side": "ally",
+        "tieBehavior": null
       },
       "unit": "percent",
       "unlockStarRank": 8,
@@ -5508,6 +5607,9 @@
     {
       "abilityId": "syrax-tactical-inferno",
       "abilityName": "Tactical Inferno",
+      "activationChanceByHabitLevel": [],
+      "activationChanceFixed": null,
+      "activationGroupId": null,
       "availability": {
         "canonical": "canonical-locked",
         "notes": [
@@ -5528,6 +5630,7 @@
       "direction": "dealt",
       "directlyVerified": true,
       "dragonId": "syrax",
+      "durationRounds": 3,
       "evidenceIds": [
         "syrax-tactical-inferno-2026-06-24"
       ],
@@ -5567,16 +5670,23 @@
       "recipientRequirements": [],
       "requiredHabitLevel": 1,
       "role": "ally-support",
+      "sourceEffectId": "tactical-inferno-fire",
       "sourceScope": "all-qualifying-sources",
       "stackMaximum": null,
+      "statusId": null,
       "targetSelector": {
+        "comparisonDirection": null,
+        "comparisonPool": null,
         "count": 1,
         "includesCaster": null,
         "position": null,
         "scope": "any-lane",
         "selection": "any",
+        "selectionResource": null,
         "selectionStat": null,
-        "side": "ally"
+        "sharedSelectionGroupId": null,
+        "side": "ally",
+        "tieBehavior": null
       },
       "unit": "percent",
       "unlockStarRank": 8,
@@ -6422,8 +6532,8 @@
   "rosterSourceStatus": "official-website",
   "slug": "syrax",
   "source": {
-    "branch": "fix/legendary-formation-analysis-regressions",
-    "commit": "a7f9ab451670be3f36d1317009d1575349cd06ff",
+    "branch": "fix/eclipse-cover-formation-traces",
+    "commit": "6e4e37a9f5e74a52622a6200c456399e7262d205",
     "databaseVersion": "0.6.0",
     "dataSchemaVersion": 10,
     "gameBuild": "26.6.53509",
@@ -6440,6 +6550,9 @@
     {
       "abilityId": "syrax-blazing-fury",
       "abilityName": "Blazing Fury",
+      "activationChanceByHabitLevel": [],
+      "activationChanceFixed": 20,
+      "activationGroupId": null,
       "availability": {
         "canonical": "canonical-base",
         "notes": [
@@ -6472,15 +6585,21 @@
       "id": "syrax-blazing-fury-blazing-fury-first-strike-first-strike-status-output",
       "minimumDragonLevel": null,
       "requiredHabitLevel": null,
+      "sourceEffectId": "blazing-fury-first-strike",
       "statusId": "first-strike",
       "targetSelector": {
+        "comparisonDirection": null,
+        "comparisonPool": null,
         "count": 1,
-        "includesCaster": null,
+        "includesCaster": true,
         "position": null,
         "scope": "any-lane",
         "selection": "any",
+        "selectionResource": null,
         "selectionStat": null,
-        "side": "ally"
+        "sharedSelectionGroupId": null,
+        "side": "ally",
+        "tieBehavior": null
       },
       "targetSide": "ally",
       "unlockStarRank": null,
@@ -6490,6 +6609,35 @@
     {
       "abilityId": "syrax-strategic-revival",
       "abilityName": "Strategic Revival",
+      "activationChanceByHabitLevel": [
+        {
+          "level": 1,
+          "unit": "percent",
+          "value": 40
+        },
+        {
+          "level": 2,
+          "unit": "percent",
+          "value": 52
+        },
+        {
+          "level": 3,
+          "unit": "percent",
+          "value": 64
+        },
+        {
+          "level": 4,
+          "unit": "percent",
+          "value": 80
+        },
+        {
+          "level": 5,
+          "unit": "percent",
+          "value": 100
+        }
+      ],
+      "activationChanceFixed": null,
+      "activationGroupId": null,
       "availability": {
         "canonical": "canonical-locked",
         "notes": [
@@ -6548,15 +6696,21 @@
       "id": "syrax-strategic-revival-strategic-revival-resistance-resistance-status-output",
       "minimumDragonLevel": null,
       "requiredHabitLevel": 1,
+      "sourceEffectId": "strategic-revival-resistance",
       "statusId": "resistance",
       "targetSelector": {
-        "count": null,
+        "comparisonDirection": "lowest",
+        "comparisonPool": null,
+        "count": 1,
         "includesCaster": null,
         "position": null,
         "scope": "any-lane",
-        "selection": "any",
+        "selection": "lowest-resource",
+        "selectionResource": "current-troops",
         "selectionStat": null,
-        "side": "ally"
+        "sharedSelectionGroupId": null,
+        "side": "ally",
+        "tieBehavior": null
       },
       "targetSide": "ally",
       "unlockStarRank": 6,
