@@ -6,6 +6,9 @@
 - Normalized card spacing, movement controls, Trait panels, affinity rows, empty sections, and the Formation Affinity Coverage strip for a more compact planner-column layout.
 - Bounded expanded Receives and Provides content in scrollable section bodies while preserving `View N more`, `Show fewer`, overflow counts, relationship highlighting, and keyboard access.
 - Replaced oversized interaction status bubbles with inline badges, added purpose-built compact summaries, per-item Details disclosure, same-ability presentation aggregation, and redundant blocked-Trait suppression while preserving full trace detail and Show analysis details.
+- Added compact Command panels for selected dragons so each card describes the dragon's own Command without counting it as a formation synergy.
+- Refined cross-dragon cards so Receives and Provides identify the source dragon, affected Command, and recipient-owned modifiers separately; Sentinel's Presence names Cleansing Wrath Fire Damage, Warden's Rally Recovery remains separate from Sheepstealer's Hunter's Cunning Recovery Received amplification, and Hunter's Cunning no longer appears as a Malachite-provided benefit.
+- Updated Formation Builder presentation to use current roster Reign Level and progression data, preserve separate active/conditional/blocked/progression-unknown state evaluation, correct `View more`/`Show fewer` expanded behavior, and keep Warden's Rally, Cleansing Wrath, and Wild Hunt Command schedules and targets distinct.
 - Increased database version to `0.5.6`; data schema remains `9`, local roster schema remains `3`, and context export version remains `1`.
 
 ## 0.5.5 - 2026-06-24

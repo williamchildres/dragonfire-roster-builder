@@ -59,6 +59,8 @@ The debug view keeps child capability matches for review. It shows channel, modi
 
 Version 0.5.5 keeps this trace data intact while moving normal player-facing discovery into Formation Builder cards. Show analysis details remains the place for raw trace cards, requirements, evidence IDs, raw effect tags, internal interactions, and audit JSON.
 
+Version 0.5.6 keeps technical/debug traces intact while simplifying normal cards. Command panels describe each selected dragon's own Command and are not synergies. Receives and Provides contain cross-dragon interactions; recipient-side modifiers such as Sheepstealer's Hunter's Cunning remain owned by the recipient and may appear as modifier lines on the benefiting Receives card. The raw Hunter's Cunning trace still appears in technical analysis even though it is not counted as a Malachite-provided benefit.
+
 Version 0.5.2 adds a selected-formation invariant: every friendly source, recipient, matched output, status provider, stat provider, and recipient-side amplifier must belong to one of the three selected formation dragons before a trace can reach normal cards, debug JSON, audit export, report output, or project-context review cases. Debug may retain inactive traces for selected dragons when a hard battlefield requirement fails, but unselected friendly dragons must not appear at all.
 
 Phase 3.8 adds dependency traces:

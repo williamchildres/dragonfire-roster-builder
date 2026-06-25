@@ -21,7 +21,7 @@
   ],
   "currentReviewPhase": "Formation card layout polish validation and project-context regeneration.",
   "format": "dragonfire-project-state",
-  "generatedAt": "2026-06-25T13:45:06.120Z",
+  "generatedAt": "2026-06-25T16:50:40.505Z",
   "plannedNextPhase": [
     "full formation-output review",
     "additional visual QA",
@@ -33,8 +33,8 @@
     "metadataOnlyDragonCount": 24
   },
   "source": {
-    "branch": "feature/formation-card-layout-polish",
-    "commit": "f3042ee26aa774020b87dbed1ffef7b37e85cb02",
+    "branch": "chore/formation-docs-context-export",
+    "commit": "96e0cb6df6957f19eea61aa67b38bfa905aef03c",
     "databaseVersion": "0.5.6",
     "dataSchemaVersion": 9,
     "gameBuild": "26.6.53509",
@@ -45,7 +45,7 @@
     "countingMethod": "static working-tree test declaration scan; runtime pass/fail is reported by npm run test",
     "lastRunStatus": "not-run-by-exporter",
     "runner": "vitest",
-    "testCaseCount": 147,
+    "testCaseCount": 153,
     "testFileCount": 19
   },
   "unresolvedMechanicsCount": 56,

@@ -273,3 +273,6 @@ The app and `npm run report:synergy` expose the matrix for Syrax, Caraxes, Malac
 - Current conditional, max-rank preview, unknown progression, active, and blocked states remain distinct.
 - Per-card affinities derive from existing dragon affinity data; team coverage is summarized separately.
 - Technical trace data remains available through Show analysis details and report/export paths.
+- Version 0.5.6 adds selected-dragon Command panels outside the synergy count. Command panels summarize the dragon's own Command schedules and targets.
+- Recipient-side modifiers remain owned by the recipient dragon in normal presentation. Malachite can provide Warden's Rally Recovery while Sheepstealer's Hunter's Cunning appears only as Sheepstealer's Recovery Received modifier line, not as a Malachite-provided benefit.
+- Receives summaries should name affected Commands where that is the player-facing result, such as Sentinel's Presence increasing Seasmoke's Cleansing Wrath Fire Damage.
