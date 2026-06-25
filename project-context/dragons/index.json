@@ -14,11 +14,11 @@
     },
     {
       "breed": "Warrior",
-      "dataStatus": "official-metadata-only",
+      "dataStatus": "community-verified",
       "file": "dragons/vhagar.json",
       "id": "vhagar",
       "name": "Vhagar",
-      "profileCompleteness": "metadata-only",
+      "profileCompleteness": "detailed-combat-data",
       "rarity": "Legendary",
       "slug": "vhagar"
     },
@@ -54,21 +54,21 @@
     },
     {
       "breed": "Hunter",
-      "dataStatus": "official-metadata-only",
+      "dataStatus": "community-verified",
       "file": "dragons/crimson.json",
       "id": "crimson",
       "name": "Crimson",
-      "profileCompleteness": "metadata-only",
+      "profileCompleteness": "detailed-combat-data",
       "rarity": "Legendary",
       "slug": "crimson"
     },
     {
       "breed": "Champion",
-      "dataStatus": "official-metadata-only",
+      "dataStatus": "community-verified",
       "file": "dragons/kalspire.json",
       "id": "kalspire",
       "name": "Kalspire",
-      "profileCompleteness": "metadata-only",
+      "profileCompleteness": "detailed-combat-data",
       "rarity": "Legendary",
       "slug": "kalspire"
     },
@@ -84,11 +84,11 @@
     },
     {
       "breed": "Warrior",
-      "dataStatus": "official-metadata-only",
+      "dataStatus": "community-verified",
       "file": "dragons/venator.json",
       "id": "venator",
       "name": "Venator",
-      "profileCompleteness": "metadata-only",
+      "profileCompleteness": "detailed-combat-data",
       "rarity": "Legendary",
       "slug": "venator"
     },

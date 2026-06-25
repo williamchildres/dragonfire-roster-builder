@@ -47,7 +47,7 @@ export interface CapabilityOptions {
   dragonLevels?: Record<string, number | null>;
 }
 
-const reviewedDragonIds = ['seasmoke', 'malachite', 'sheepstealer', 'vermax', 'syrax', 'caraxes'];
+const reviewedDragonIds = ['syrax', 'vhagar', 'caraxes', 'seasmoke', 'crimson', 'kalspire', 'malachite', 'venator', 'sheepstealer', 'vermax'];
 
 export function deriveOutputCapabilities(dragons: Dragon[]): OutputCapability[] {
   return dragons.flatMap((dragon) => {
@@ -113,7 +113,7 @@ export function deriveOutputCapabilities(dragons: Dragon[]): OutputCapability[] 
           unlockStarRank: ability.unlockStarRank,
           minimumDragonLevel: ability.minimumDragonLevel,
           requiredHabitLevel: ability.kind === 'habit' ? 1 : null,
-          conditional: ability.kind === 'habit' || hasConditions(effect) || effect.stack !== null || isChanceBasedSchedule(schedule),
+          conditional: ability.kind === 'habit' || hasConditions(effect) || effect.stack !== null || isChanceBasedSchedule(schedule) || Boolean(effect.activationRoll),
           conditions: conditionsForEffect(effect, schedule),
           dependencies: dependenciesForEffect(effect),
           currentlyAvailable: ability.unlockStarRank === null || ability.unlockStarRank <= 1,
@@ -129,6 +129,56 @@ export function deriveOutputCapabilities(dragons: Dragon[]): OutputCapability[] 
     }
     return capabilities;
   });
+}
+
+export function effectiveAbilitySchedules(
+  ability: AbilityDefinition,
+  starRank: number | null,
+): AbilitySchedule[] {
+  let schedules = ability.schedules;
+  for (const augmentation of ability.augmentations) {
+    if (starRank === null || starRank < augmentation.minimumDragonStarRank) {
+      continue;
+    }
+    for (const override of augmentation.scheduleOverrides ?? []) {
+      schedules = schedules.map((schedule) => {
+        if (schedule.id !== override.targetScheduleId) {
+          return schedule;
+        }
+        if (override.operation === 'replace-schedule' && override.replacementSchedule) {
+          return override.replacementSchedule;
+        }
+        if (override.operation === 'replace-effect-roll' && override.targetEffectId && override.replacementEffect) {
+          return {
+            ...schedule,
+            effects: schedule.effects.map((effect) =>
+              effect.id === override.targetEffectId ? override.replacementEffect! : effect,
+            ),
+          };
+        }
+        if (override.operation === 'replace-effect' && override.targetEffectId && override.replacementEffect) {
+          return {
+            ...schedule,
+            effects: schedule.effects.map((effect) =>
+              effect.id === override.targetEffectId ? override.replacementEffect! : effect,
+            ),
+          };
+        }
+        if (override.operation === 'patch-schedule' && override.replacementSchedule) {
+          return {
+            ...schedule,
+            ...override.replacementSchedule,
+            id: schedule.id,
+            effects: override.replacementSchedule.effects.length > 0
+              ? override.replacementSchedule.effects
+              : schedule.effects,
+          };
+        }
+        return schedule;
+      });
+    }
+  }
+  return schedules;
 }
 
 export function deriveModifierCapabilities(dragons: Dragon[]): ModifierCapability[] {
@@ -161,8 +211,12 @@ export function deriveStatusOutputCapabilities(dragons: Dragon[]): StatusOutputC
             unlockStarRank: ability.unlockStarRank,
             minimumDragonLevel: ability.minimumDragonLevel,
             requiredHabitLevel: ability.kind === 'habit' ? 1 : null,
-            chanceFixed: schedule.triggerChanceFixed,
-            chanceByHabitLevel: schedule.triggerChanceByHabitLevel,
+            chanceFixed: effect.activationRoll?.chanceFixed ?? schedule.activationRoll?.chanceFixed ?? schedule.triggerChanceFixed,
+            chanceByHabitLevel: effect.activationRoll?.chanceByHabitLevel.length
+              ? effect.activationRoll.chanceByHabitLevel
+              : schedule.activationRoll?.chanceByHabitLevel.length
+                ? schedule.activationRoll.chanceByHabitLevel
+                : schedule.triggerChanceByHabitLevel,
             durationRounds: effect.durationRounds,
             untilEndOfRound: effect.duration === 'Until end of current round',
             untilEndOfCombat: effect.duration === 'Until end of combat' || Boolean(effect.stack?.untilEndOfCombat),
@@ -184,20 +238,21 @@ export function derivePeriodicDamageDefinitions(dragons: Dragon[]): PeriodicDama
     allAbilities(dragon).flatMap((ability) =>
       ability.schedules.flatMap((schedule) =>
         schedule.effects.flatMap((effect) => {
-          if (effect.type !== 'Burn') {
+          const periodic = periodicDamageForEffect(effect);
+          if (!periodic) {
             return [];
           }
           return [{
-            statusId: 'burn',
+            statusId: periodic.statusId,
             dragonId: dragon.id,
             abilityId: ability.id,
-            channel: 'fire-damage' as const,
+            channel: periodic.channel,
             damageRateFixed: effect.magnitude,
             damageRateByHabitLevel: effect.rankedValues,
             ticksEachRound: true,
             durationRounds: effect.durationRounds,
-            scalingStat: 'intelligence' as const,
-            mitigationStat: 'initiative' as const,
+            scalingStat: periodic.scalingStat,
+            mitigationStat: periodic.mitigationStat,
             evidenceIds: ability.evidenceIds,
           }];
         }),
@@ -284,6 +339,7 @@ export function analyzeCapabilityAmplifications(
     ...analyzeStatScalingSupport(formation, dragons, outputs, modifiers, options),
     ...analyzeEnemyMitigationReduction(formation, dragons, outputs, modifiers, options),
     ...analyzePeriodicDamageAmplification(formation, dragons, periodicDamage, modifiers, options),
+    ...analyzeStatusRemovalSupport(formation, dragons, statusOutputs, options),
   ];
 }
 
@@ -1364,6 +1420,129 @@ function analyzePeriodicDamageAmplification(
   return traces;
 }
 
+function analyzeStatusRemovalSupport(
+  formation: FormationAnalysisInput,
+  dragons: Dragon[],
+  statusOutputs: StatusOutputCapability[],
+  options: CapabilityOptions,
+): SynergyTrace[] {
+  const traces: SynergyTrace[] = [];
+  const controlStatuses = new Set(['stun', 'overwhelm']);
+  for (const cleanser of dragons) {
+    const cleanserPosition = positionOf(formation, cleanser.id);
+    if (!cleanserPosition) {
+      continue;
+    }
+    for (const ability of allAbilities(cleanser)) {
+      for (const schedule of ability.schedules) {
+        for (const effect of schedule.effects.filter((item) => item.type === 'Cleanse Control' || item.type === 'Cleanse Negative')) {
+          if (targetSideForEffect(effect) !== 'ally') {
+            continue;
+          }
+          for (const statusOutput of statusOutputs.filter(
+            (status) =>
+              controlStatuses.has(status.statusId) &&
+              status.targetSide === 'self' &&
+              statusCapabilityVisible(status, options),
+          )) {
+            if (statusOutput.dragonId === cleanser.id) {
+              continue;
+            }
+            const afflictedPosition = positionOf(formation, statusOutput.dragonId);
+            if (!afflictedPosition) {
+              continue;
+            }
+            const afflicted = dragonById(dragons, statusOutput.dragonId);
+            if (!afflicted) {
+              continue;
+            }
+            const requirements = [
+              cleanseTargetRequirement(effect, cleanserPosition, afflictedPosition, ability.evidenceIds),
+              ...availabilityRequirements({
+                dragonId: cleanser.id,
+                abilityId: ability.id,
+                dragonName: cleanser.name,
+                abilityName: ability.name,
+                unlockStarRank: ability.unlockStarRank,
+                minimumDragonLevel: ability.minimumDragonLevel,
+                requiredHabitLevel: ability.kind === 'habit' ? 1 : null,
+                evidenceIds: ability.evidenceIds,
+                sourceKind: ability.kind,
+              }, options),
+              ...availabilityRequirements({
+                dragonId: statusOutput.dragonId,
+                abilityId: statusOutput.abilityId,
+                dragonName: afflicted.name,
+                abilityName: statusOutput.abilityName,
+                unlockStarRank: statusOutput.unlockStarRank,
+                minimumDragonLevel: statusOutput.minimumDragonLevel,
+                requiredHabitLevel: statusOutput.requiredHabitLevel,
+                evidenceIds: statusOutput.evidenceIds,
+                sourceKind: abilitySourceKind(dragons, statusOutput.dragonId, statusOutput.abilityId),
+              }, options),
+            ];
+            traces.push(makeDependencyTrace({
+              id: `status-removal-${ability.id}-${effect.id}-${statusOutput.id}`,
+              matchKind: 'status-removal',
+              ruleId: 'status-removal',
+              source: cleanser,
+              sourceAbilityId: ability.id,
+              recipient: afflicted,
+              recipientAbilityId: statusOutput.abilityId,
+              channel: 'stat',
+              title: `${statusLabel(statusOutput.statusId)} Removal Potential`,
+              explanation: `${cleanser.name}'s ${ability.name} can remove Control-compatible effects from an ally. ${afflicted.name} can be afflicted with ${statusLabel(statusOutput.statusId)}, but timing and target selection are not guaranteed.`,
+              requirements,
+              matchedFacts: [
+                `${ability.name} includes ${effect.type}.`,
+                `${statusOutput.abilityName} can apply ${statusLabel(statusOutput.statusId)} to ${afflicted.name}.`,
+              ],
+              effects: [`Potential ${statusLabel(statusOutput.statusId)} removal`],
+              sourceEvidenceIds: ability.evidenceIds,
+              recipientEvidenceIds: statusOutput.evidenceIds,
+              assumptions: ['Cleanse timing, target selection, and whether removal occurs before the afflicted dragon acts are not simulated.'],
+              unresolvedQuestions: ['Control-removal timing and target selection remain unresolved.'],
+              futureOrConditional: true,
+            }));
+          }
+        }
+      }
+    }
+  }
+  return traces;
+}
+
+function cleanseTargetRequirement(
+  effect: AbilityEffect,
+  cleanserPosition: FormationPosition,
+  afflictedPosition: FormationPosition,
+  evidenceIds: string[],
+): RequirementTrace {
+  let satisfied: boolean | null = true;
+  let expected: string = effect.targetScope;
+  if (effect.targetScope === 'left-flank' || effect.targetScope === 'right-flank') {
+    satisfied = afflictedPosition === effect.targetScope;
+    expected = effect.targetScope;
+  } else if (effect.targetScope === 'within-adjacency') {
+    satisfied = arePositionsAdjacent(cleanserPosition, afflictedPosition);
+    expected = `adjacent to ${cleanserPosition}`;
+  } else if (effect.targetScope === 'self') {
+    satisfied = cleanserPosition === afflictedPosition;
+    expected = 'self';
+  } else if (effect.targetScope === 'unknown') {
+    satisfied = null;
+  }
+  return {
+    id: `${effect.id}-cleanse-targeting-${afflictedPosition}`,
+    label: 'Cleanse target compatibility',
+    expected,
+    actual: `cleanser ${cleanserPosition}, afflicted ${afflictedPosition}`,
+    satisfied,
+    evidenceIds,
+    notes: ['Potential cleanse interactions remain conditional until timing and target selection are combat-log verified.'],
+  };
+}
+
 function makeDependencyTrace({
   id,
   matchKind,
@@ -1659,7 +1838,7 @@ function baseModifier(
     unlockStarRank: ability.unlockStarRank,
     minimumDragonLevel: ability.minimumDragonLevel,
     requiredHabitLevel: ability.kind === 'habit' ? 1 : null,
-    conditional: ability.kind === 'habit' || hasConditions(effect) || isChanceBasedSchedule(schedule),
+    conditional: ability.kind === 'habit' || hasConditions(effect) || isChanceBasedSchedule(schedule) || Boolean(effect.activationRoll),
     conditions: conditionsForEffect(effect, schedule),
     stackMaximum: effect.stack?.maximumStacks ?? null,
     valuePerStack: effect.stack?.valuePerStackFixed ?? null,
@@ -1820,14 +1999,35 @@ function statLabel(statId: DragonStatId): string {
 }
 
 function statusIdForEffect(effect: AbilityEffect): string | null {
+  if (effect.type === 'Stun') {
+    return 'stun';
+  }
+  if (effect.type === 'Taunt') {
+    return 'taunt';
+  }
+  if (effect.type === 'Weakened') {
+    return 'weakened';
+  }
   if (effect.type === 'First-Strike') {
     return 'first-strike';
+  }
+  if (effect.type === 'Double-Strike') {
+    return 'double-strike';
   }
   if (effect.type === 'Slow') {
     return 'slow';
   }
   if (effect.type === 'Burn') {
     return 'burn';
+  }
+  if (effect.type === 'Bleed') {
+    return 'bleed';
+  }
+  if (effect.type === 'Panic') {
+    return 'panic';
+  }
+  if (effect.type === 'Overwhelm') {
+    return 'overwhelm';
   }
   if (effect.type === 'Resistance') {
     return 'resistance';
@@ -1839,13 +2039,28 @@ function statusIdForEffect(effect: AbilityEffect): string | null {
 }
 
 function modifierChannelForEffect(effect: AbilityEffect): EffectChannel | null {
+  if (effect.type === 'Damage Dealt Up' || effect.type === 'Damage Dealt Down') {
+    return 'damage-received';
+  }
   if (effect.type === 'Physical Damage Dealt Up') {
+    return 'physical-damage';
+  }
+  if (effect.type === 'Physical Damage Received Up') {
     return 'physical-damage';
   }
   if (effect.type === 'Tactical Damage Dealt Up') {
     return 'tactical-damage';
   }
+  if (effect.type === 'Tactical Damage Dealt Down') {
+    return 'tactical-damage';
+  }
   if (effect.type === 'Fire Damage Dealt Up') {
+    return 'fire-damage';
+  }
+  if (effect.type === 'Fire Damage Dealt Down') {
+    return 'fire-damage';
+  }
+  if (effect.type === 'Fire Damage Received Up') {
     return 'fire-damage';
   }
   if (effect.type === 'Physical Damage Dealt Down') {
@@ -1859,7 +2074,9 @@ function modifierChannelForEffect(effect: AbilityEffect): EffectChannel | null {
     effect.type === 'Damage Received Reduction' ||
     effect.type === 'Tactical Damage Received Reduction' ||
     effect.type === 'Tactical Damage Received Down' ||
-    effect.type === 'Fire Damage Received Down'
+    effect.type === 'Fire Damage Received Down' ||
+    effect.type === 'Physical Damage Received Down' ||
+    effect.type === 'Physical Damage Received Reduction'
   ) {
     return 'damage-received';
   }
@@ -1911,9 +2128,16 @@ function targetForEffect(effect: AbilityEffect): AbilityTarget {
     : position
       ? 'specific-position'
       : effect.targetPriority === 'highest-stat-ally'
+        || effect.targetPriority === 'highest-stat-enemy'
         ? 'highest-stat'
+        : effect.targetPriority === 'highest-current-troops-ally'
+          || effect.targetPriority === 'highest-current-troops-enemy'
+          || effect.targetPriority === 'least-current-troops-enemy'
+          ? 'highest-stat'
         : effect.targetPriority === 'all-allies-matching-threshold'
           ? 'all-matching-condition'
+          : effect.targetScope === 'opposing-position' || effect.targetPriority === 'opposing-position'
+            ? 'specific-position'
           : effect.targetScope === 'within-adjacency'
             ? 'one-eligible-adjacent'
             : effect.target.includes('deals')
@@ -1928,7 +2152,7 @@ function targetForEffect(effect: AbilityEffect): AbilityTarget {
       : effect.targetCount ?? inferTargetCount(effect.target);
   return {
     side: targetSideForEffect(effect),
-    scope: effect.targetScope,
+    scope: effect.targetScope === 'opposing-position' ? 'same-lane' : effect.targetScope,
     position,
     count,
     includesCaster: effect.includesCaster ?? (effect.casterEligibility === 'excluded' ? false : null),
@@ -1938,7 +2162,16 @@ function targetForEffect(effect: AbilityEffect): AbilityTarget {
 }
 
 function selectionStatForEffect(effect: AbilityEffect): DragonStatId | null {
-  if (effect.targetPriority !== 'highest-stat-ally') {
+  if (
+    effect.targetPriority !== 'highest-stat-ally' &&
+    effect.targetPriority !== 'highest-stat-enemy' &&
+    effect.targetPriority !== 'highest-current-troops-ally' &&
+    effect.targetPriority !== 'highest-current-troops-enemy' &&
+    effect.targetPriority !== 'least-current-troops-enemy'
+  ) {
+    return null;
+  }
+  if (/troops/i.test(effect.target) || effect.targetPriority.includes('troops')) {
     return null;
   }
   if (/highest Strength/i.test(effect.target)) {
@@ -1952,6 +2185,24 @@ function selectionStatForEffect(effect: AbilityEffect): DragonStatId | null {
   }
   if (/highest Initiative/i.test(effect.target)) {
     return 'initiative';
+  }
+  return null;
+}
+
+function periodicDamageForEffect(effect: AbilityEffect): {
+  statusId: string;
+  channel: EffectChannel;
+  scalingStat: DragonStatId | null;
+  mitigationStat: DragonStatId | null;
+} | null {
+  if (effect.type === 'Burn') {
+    return { statusId: 'burn', channel: 'fire-damage', scalingStat: 'intelligence', mitigationStat: 'initiative' };
+  }
+  if (effect.type === 'Bleed') {
+    return { statusId: 'bleed', channel: 'physical-damage', scalingStat: 'strength', mitigationStat: 'instinct' };
+  }
+  if (effect.type === 'Panic') {
+    return { statusId: 'panic', channel: 'tactical-damage', scalingStat: 'instinct', mitigationStat: 'intelligence' };
   }
   return null;
 }
@@ -2728,10 +2979,13 @@ function conditionsForEffect(effect: AbilityEffect, schedule?: AbilitySchedule):
 }
 
 function isChanceBasedSchedule(schedule: AbilitySchedule): boolean {
-  return schedule.triggerChanceFixed !== null || schedule.triggerChanceByHabitLevel.length > 0;
+  return schedule.triggerChanceFixed !== null || schedule.triggerChanceByHabitLevel.length > 0 || Boolean(schedule.activationRoll);
 }
 
 function activationChanceLabel(schedule: AbilitySchedule): string {
+  if (schedule.activationRoll) {
+    return schedule.activationRoll.description;
+  }
   if (schedule.triggerChanceFixed !== null) {
     return `Activation chance ${schedule.triggerChanceFixed}% per ${schedule.timing.replaceAll('-', ' ')}.`;
   }
@@ -2815,6 +3069,15 @@ function primaryDamageChannelForDragon(dragonId: string): EffectChannel | null {
   if (dragonId === 'caraxes') {
     return 'fire-damage';
   }
+  if (dragonId === 'crimson') {
+    return 'fire-damage';
+  }
+  if (dragonId === 'kalspire') {
+    return 'tactical-damage';
+  }
+  if (dragonId === 'vhagar' || dragonId === 'venator') {
+    return 'physical-damage';
+  }
   if (dragonId === 'malachite') {
     return 'tactical-damage';
   }
@@ -2831,7 +3094,7 @@ function primaryDamageBasisForDragon(dragonId: string): DragonEffectProfile['pri
   if (dragonId === 'vermax') {
     return 'verified-basic-attack-and-kit';
   }
-  if (dragonId === 'syrax' || dragonId === 'caraxes' || dragonId === 'malachite' || dragonId === 'sheepstealer') {
+  if (dragonId === 'syrax' || dragonId === 'caraxes' || dragonId === 'crimson' || dragonId === 'kalspire' || dragonId === 'vhagar' || dragonId === 'venator' || dragonId === 'malachite' || dragonId === 'sheepstealer') {
     return 'derived';
   }
   return 'unknown';

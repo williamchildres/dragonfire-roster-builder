@@ -154,6 +154,7 @@ export type SynergyTraceMatchKind =
   | 'stat-scaling-support'
   | 'enemy-mitigation-reduction'
   | 'periodic-damage-amplification'
+  | 'status-removal'
   | 'defensive-ally-support';
 
 export type CapabilitySourceKind = 'basic-attack' | 'command' | 'trait' | 'habit';

@@ -17,11 +17,13 @@
       "rawDescription": "Rounds 3, 6, 9: deal Fire Damage to 3 Enemies in any lane (Damage Rate +100%). If Caraxes has First-Strike, damage is multiplied by 1.5 and displayed as +150%.",
       "schedules": [
         {
+          "activationRoll": null,
           "attempts": null,
           "battleContext": "unspecified",
           "conditions": [],
           "effects": [
             {
+              "activationRoll": null,
               "calculated": false,
               "casterEligibility": "unknown",
               "conditionalMultipliers": [
@@ -68,10 +70,12 @@
               ],
               "sourceScope": "unknown",
               "stack": null,
+              "stackTransitionTrigger": null,
               "target": "3 Enemies",
               "targetCount": 3,
               "targetPriority": "any-eligible",
               "targetScope": "any-lane",
+              "targetSelection": null,
               "type": "Fire Damage",
               "unit": "rate"
             }
@@ -83,6 +87,7 @@
             6,
             9
           ],
+          "roundSelector": null,
           "targetPriority": "any-eligible",
           "timing": "specific-rounds",
           "triggerChanceByHabitLevel": [],
@@ -121,11 +126,13 @@
       "rawDescription": "At Level 16+ and deployed in Vanguard, increase Caraxes Fire Damage Dealt by 16%. Increase Strength and Initiative of Right Flank ally by +20.",
       "schedules": [
         {
+          "activationRoll": null,
           "attempts": null,
           "battleContext": "unspecified",
           "conditions": [],
           "effects": [
             {
+              "activationRoll": null,
               "calculated": false,
               "casterEligibility": "unknown",
               "conditionalMultipliers": [],
@@ -143,14 +150,17 @@
               "scaling": [],
               "sourceScope": "all-sources",
               "stack": null,
+              "stackTransitionTrigger": null,
               "target": "Self",
               "targetCount": null,
               "targetPriority": "any-eligible",
               "targetScope": "self",
+              "targetSelection": null,
               "type": "Fire Damage Dealt Up",
               "unit": "percent"
             },
             {
+              "activationRoll": null,
               "calculated": false,
               "casterEligibility": "unknown",
               "conditionalMultipliers": [],
@@ -168,14 +178,17 @@
               "scaling": [],
               "sourceScope": "unknown",
               "stack": null,
+              "stackTransitionTrigger": null,
               "target": "Right Flank ally",
               "targetCount": null,
               "targetPriority": "any-eligible",
               "targetScope": "right-flank",
+              "targetSelection": null,
               "type": "Strength Up",
               "unit": "flat"
             },
             {
+              "activationRoll": null,
               "calculated": false,
               "casterEligibility": "unknown",
               "conditionalMultipliers": [],
@@ -193,10 +206,12 @@
               "scaling": [],
               "sourceScope": "unknown",
               "stack": null,
+              "stackTransitionTrigger": null,
               "target": "Right Flank ally",
               "targetCount": null,
               "targetPriority": "any-eligible",
               "targetScope": "right-flank",
+              "targetSelection": null,
               "type": "Initiative Up",
               "unit": "flat"
             }
@@ -204,6 +219,7 @@
           "id": "hunters-wrath-passive",
           "repeat": null,
           "rounds": [],
+          "roundSelector": null,
           "targetPriority": "any-eligible",
           "timing": "passive",
           "triggerChanceByHabitLevel": [],
@@ -271,11 +287,13 @@
       "rawDescription": "Start of Combat: reduce Strength and Initiative of 3 Enemies in any lane by -6%, enhanced by Caraxes Intelligence. Progression table shows -6.5% at Level 1.",
       "schedules": [
         {
+          "activationRoll": null,
           "attempts": null,
           "battleContext": "unspecified",
           "conditions": [],
           "effects": [
             {
+              "activationRoll": null,
               "calculated": false,
               "casterEligibility": "unknown",
               "conditionalMultipliers": [],
@@ -323,14 +341,17 @@
               ],
               "sourceScope": "unknown",
               "stack": null,
+              "stackTransitionTrigger": null,
               "target": "3 Enemies",
               "targetCount": 3,
               "targetPriority": "any-eligible",
               "targetScope": "any-lane",
+              "targetSelection": null,
               "type": "Strength Down",
               "unit": "percent"
             },
             {
+              "activationRoll": null,
               "calculated": false,
               "casterEligibility": "unknown",
               "conditionalMultipliers": [],
@@ -378,10 +399,12 @@
               ],
               "sourceScope": "unknown",
               "stack": null,
+              "stackTransitionTrigger": null,
               "target": "3 Enemies",
               "targetCount": 3,
               "targetPriority": "any-eligible",
               "targetScope": "any-lane",
+              "targetSelection": null,
               "type": "Initiative Down",
               "unit": "percent"
             }
@@ -389,6 +412,7 @@
           "id": "battle-dread-start",
           "repeat": null,
           "rounds": [],
+          "roundSelector": null,
           "targetPriority": "any-eligible",
           "timing": "start-of-combat",
           "triggerChanceByHabitLevel": [],
@@ -455,11 +479,13 @@
       "rawDescription": "Start of Combat: increase Caraxes Fire Damage Dealt until end of combat.",
       "schedules": [
         {
+          "activationRoll": null,
           "attempts": null,
           "battleContext": "unspecified",
           "conditions": [],
           "effects": [
             {
+              "activationRoll": null,
               "calculated": false,
               "casterEligibility": "unknown",
               "conditionalMultipliers": [],
@@ -503,10 +529,12 @@
               "scaling": [],
               "sourceScope": "all-sources",
               "stack": null,
+              "stackTransitionTrigger": null,
               "target": "Self",
               "targetCount": null,
               "targetPriority": "any-eligible",
               "targetScope": "self",
+              "targetSelection": null,
               "type": "Fire Damage Dealt Up",
               "unit": "percent"
             }
@@ -514,6 +542,7 @@
           "id": "dragons-flair-start",
           "repeat": null,
           "rounds": [],
+          "roundSelector": null,
           "targetPriority": "any-eligible",
           "timing": "start-of-combat",
           "triggerChanceByHabitLevel": [],
@@ -578,11 +607,13 @@
       "rawDescription": "Each Round: chance to apply Slow and Burn to 3 Enemies in any lane. Each effect is checked separately for each target and lasts 2 rounds.",
       "schedules": [
         {
+          "activationRoll": null,
           "attempts": null,
           "battleContext": "unspecified",
           "conditions": [],
           "effects": [
             {
+              "activationRoll": null,
               "calculated": false,
               "casterEligibility": "unknown",
               "conditionalMultipliers": [],
@@ -642,14 +673,17 @@
               "scaling": [],
               "sourceScope": "unknown",
               "stack": null,
+              "stackTransitionTrigger": null,
               "target": "3 Enemies",
               "targetCount": 3,
               "targetPriority": "any-eligible",
               "targetScope": "any-lane",
+              "targetSelection": null,
               "type": "Slow",
               "unit": "unknown"
             },
             {
+              "activationRoll": null,
               "calculated": false,
               "casterEligibility": "unknown",
               "conditionalMultipliers": [],
@@ -711,10 +745,12 @@
               ],
               "sourceScope": "unknown",
               "stack": null,
+              "stackTransitionTrigger": null,
               "target": "3 Enemies",
               "targetCount": 3,
               "targetPriority": "any-eligible",
               "targetScope": "any-lane",
+              "targetSelection": null,
               "type": "Burn",
               "unit": "rate"
             }
@@ -722,6 +758,7 @@
           "id": "crippling-inferno-each-round",
           "repeat": null,
           "rounds": [],
+          "roundSelector": null,
           "targetPriority": "any-eligible",
           "timing": "each-round",
           "triggerChanceByHabitLevel": [
@@ -813,11 +850,13 @@
       "rawDescription": "Start of Combat: reduce Physical Damage Dealt, excluding Basic Attacks, of 3 Enemies in any lane by -5%. Progression table shows -5.5% at Level 1.",
       "schedules": [
         {
+          "activationRoll": null,
           "attempts": null,
           "battleContext": "unspecified",
           "conditions": [],
           "effects": [
             {
+              "activationRoll": null,
               "calculated": false,
               "casterEligibility": "unknown",
               "conditionalMultipliers": [],
@@ -865,10 +904,12 @@
               "scaling": [],
               "sourceScope": "non-basic-attacks",
               "stack": null,
+              "stackTransitionTrigger": null,
               "target": "3 Enemies",
               "targetCount": 3,
               "targetPriority": "any-eligible",
               "targetScope": "any-lane",
+              "targetSelection": null,
               "type": "Physical Damage Dealt Down",
               "unit": "percent"
             }
@@ -876,6 +917,7 @@
           "id": "mass-enfeeble-start",
           "repeat": null,
           "rounds": [],
+          "roundSelector": null,
           "targetPriority": "any-eligible",
           "timing": "start-of-combat",
           "triggerChanceByHabitLevel": [],
@@ -942,6 +984,7 @@
       "rawDescription": "Start of Each Round: for each Enemy below 50% maximum Troop Capacity, increase Caraxes Fire Damage Dealt. For each Enemy that retreated during the previous round, apply Recovery to Caraxes, enhanced by Initiative.",
       "schedules": [
         {
+          "activationRoll": null,
           "attempts": null,
           "battleContext": "unspecified",
           "conditions": [
@@ -959,6 +1002,7 @@
           ],
           "effects": [
             {
+              "activationRoll": null,
               "calculated": false,
               "casterEligibility": "unknown",
               "conditionalMultipliers": [],
@@ -1016,10 +1060,12 @@
               "scaling": [],
               "sourceScope": "all-sources",
               "stack": null,
+              "stackTransitionTrigger": null,
               "target": "Self",
               "targetCount": null,
               "targetPriority": "any-eligible",
               "targetScope": "self",
+              "targetSelection": null,
               "type": "Fire Damage Dealt Up",
               "unit": "percent"
             }
@@ -1041,6 +1087,7 @@
             "mode": "once-per-match"
           },
           "rounds": [],
+          "roundSelector": null,
           "targetPriority": "any-eligible",
           "timing": "start-of-each-round",
           "triggerChanceByHabitLevel": [],
@@ -1048,6 +1095,7 @@
           "triggerEvent": "start-of-each-round"
         },
         {
+          "activationRoll": null,
           "attempts": null,
           "battleContext": "unspecified",
           "conditions": [
@@ -1065,6 +1113,7 @@
           ],
           "effects": [
             {
+              "activationRoll": null,
               "calculated": false,
               "casterEligibility": "unknown",
               "conditionalMultipliers": [],
@@ -1124,10 +1173,12 @@
               ],
               "sourceScope": "unknown",
               "stack": null,
+              "stackTransitionTrigger": null,
               "target": "Self",
               "targetCount": null,
               "targetPriority": "any-eligible",
               "targetScope": "self",
+              "targetSelection": null,
               "type": "Recovery",
               "unit": "rate"
             }
@@ -1149,6 +1200,7 @@
             "mode": "once-per-match"
           },
           "rounds": [],
+          "roundSelector": null,
           "targetPriority": "any-eligible",
           "timing": "when-enemy-retreated-previous-round",
           "triggerChanceByHabitLevel": [],
@@ -1180,11 +1232,13 @@
       "abilityId": "caraxes-infernal-burst",
       "abilityName": "Infernal Burst",
       "schedule": {
+        "activationRoll": null,
         "attempts": null,
         "battleContext": "unspecified",
         "conditions": [],
         "effects": [
           {
+            "activationRoll": null,
             "calculated": false,
             "casterEligibility": "unknown",
             "conditionalMultipliers": [
@@ -1231,10 +1285,12 @@
             ],
             "sourceScope": "unknown",
             "stack": null,
+            "stackTransitionTrigger": null,
             "target": "3 Enemies",
             "targetCount": 3,
             "targetPriority": "any-eligible",
             "targetScope": "any-lane",
+            "targetSelection": null,
             "type": "Fire Damage",
             "unit": "rate"
           }
@@ -1246,6 +1302,7 @@
           6,
           9
         ],
+        "roundSelector": null,
         "targetPriority": "any-eligible",
         "timing": "specific-rounds",
         "triggerChanceByHabitLevel": [],
@@ -1257,11 +1314,13 @@
       "abilityId": "caraxes-hunters-wrath",
       "abilityName": "Hunter's Wrath",
       "schedule": {
+        "activationRoll": null,
         "attempts": null,
         "battleContext": "unspecified",
         "conditions": [],
         "effects": [
           {
+            "activationRoll": null,
             "calculated": false,
             "casterEligibility": "unknown",
             "conditionalMultipliers": [],
@@ -1279,14 +1338,17 @@
             "scaling": [],
             "sourceScope": "all-sources",
             "stack": null,
+            "stackTransitionTrigger": null,
             "target": "Self",
             "targetCount": null,
             "targetPriority": "any-eligible",
             "targetScope": "self",
+            "targetSelection": null,
             "type": "Fire Damage Dealt Up",
             "unit": "percent"
           },
           {
+            "activationRoll": null,
             "calculated": false,
             "casterEligibility": "unknown",
             "conditionalMultipliers": [],
@@ -1304,14 +1366,17 @@
             "scaling": [],
             "sourceScope": "unknown",
             "stack": null,
+            "stackTransitionTrigger": null,
             "target": "Right Flank ally",
             "targetCount": null,
             "targetPriority": "any-eligible",
             "targetScope": "right-flank",
+            "targetSelection": null,
             "type": "Strength Up",
             "unit": "flat"
           },
           {
+            "activationRoll": null,
             "calculated": false,
             "casterEligibility": "unknown",
             "conditionalMultipliers": [],
@@ -1329,10 +1394,12 @@
             "scaling": [],
             "sourceScope": "unknown",
             "stack": null,
+            "stackTransitionTrigger": null,
             "target": "Right Flank ally",
             "targetCount": null,
             "targetPriority": "any-eligible",
             "targetScope": "right-flank",
+            "targetSelection": null,
             "type": "Initiative Up",
             "unit": "flat"
           }
@@ -1340,6 +1407,7 @@
         "id": "hunters-wrath-passive",
         "repeat": null,
         "rounds": [],
+        "roundSelector": null,
         "targetPriority": "any-eligible",
         "timing": "passive",
         "triggerChanceByHabitLevel": [],
@@ -1351,11 +1419,13 @@
       "abilityId": "caraxes-battle-dread",
       "abilityName": "Battle Dread",
       "schedule": {
+        "activationRoll": null,
         "attempts": null,
         "battleContext": "unspecified",
         "conditions": [],
         "effects": [
           {
+            "activationRoll": null,
             "calculated": false,
             "casterEligibility": "unknown",
             "conditionalMultipliers": [],
@@ -1403,14 +1473,17 @@
             ],
             "sourceScope": "unknown",
             "stack": null,
+            "stackTransitionTrigger": null,
             "target": "3 Enemies",
             "targetCount": 3,
             "targetPriority": "any-eligible",
             "targetScope": "any-lane",
+            "targetSelection": null,
             "type": "Strength Down",
             "unit": "percent"
           },
           {
+            "activationRoll": null,
             "calculated": false,
             "casterEligibility": "unknown",
             "conditionalMultipliers": [],
@@ -1458,10 +1531,12 @@
             ],
             "sourceScope": "unknown",
             "stack": null,
+            "stackTransitionTrigger": null,
             "target": "3 Enemies",
             "targetCount": 3,
             "targetPriority": "any-eligible",
             "targetScope": "any-lane",
+            "targetSelection": null,
             "type": "Initiative Down",
             "unit": "percent"
           }
@@ -1469,6 +1544,7 @@
         "id": "battle-dread-start",
         "repeat": null,
         "rounds": [],
+        "roundSelector": null,
         "targetPriority": "any-eligible",
         "timing": "start-of-combat",
         "triggerChanceByHabitLevel": [],
@@ -1480,11 +1556,13 @@
       "abilityId": "caraxes-dragons-flair",
       "abilityName": "Dragon's Flair",
       "schedule": {
+        "activationRoll": null,
         "attempts": null,
         "battleContext": "unspecified",
         "conditions": [],
         "effects": [
           {
+            "activationRoll": null,
             "calculated": false,
             "casterEligibility": "unknown",
             "conditionalMultipliers": [],
@@ -1528,10 +1606,12 @@
             "scaling": [],
             "sourceScope": "all-sources",
             "stack": null,
+            "stackTransitionTrigger": null,
             "target": "Self",
             "targetCount": null,
             "targetPriority": "any-eligible",
             "targetScope": "self",
+            "targetSelection": null,
             "type": "Fire Damage Dealt Up",
             "unit": "percent"
           }
@@ -1539,6 +1619,7 @@
         "id": "dragons-flair-start",
         "repeat": null,
         "rounds": [],
+        "roundSelector": null,
         "targetPriority": "any-eligible",
         "timing": "start-of-combat",
         "triggerChanceByHabitLevel": [],
@@ -1550,11 +1631,13 @@
       "abilityId": "caraxes-crippling-inferno",
       "abilityName": "Crippling Inferno",
       "schedule": {
+        "activationRoll": null,
         "attempts": null,
         "battleContext": "unspecified",
         "conditions": [],
         "effects": [
           {
+            "activationRoll": null,
             "calculated": false,
             "casterEligibility": "unknown",
             "conditionalMultipliers": [],
@@ -1614,14 +1697,17 @@
             "scaling": [],
             "sourceScope": "unknown",
             "stack": null,
+            "stackTransitionTrigger": null,
             "target": "3 Enemies",
             "targetCount": 3,
             "targetPriority": "any-eligible",
             "targetScope": "any-lane",
+            "targetSelection": null,
             "type": "Slow",
             "unit": "unknown"
           },
           {
+            "activationRoll": null,
             "calculated": false,
             "casterEligibility": "unknown",
             "conditionalMultipliers": [],
@@ -1683,10 +1769,12 @@
             ],
             "sourceScope": "unknown",
             "stack": null,
+            "stackTransitionTrigger": null,
             "target": "3 Enemies",
             "targetCount": 3,
             "targetPriority": "any-eligible",
             "targetScope": "any-lane",
+            "targetSelection": null,
             "type": "Burn",
             "unit": "rate"
           }
@@ -1694,6 +1782,7 @@
         "id": "crippling-inferno-each-round",
         "repeat": null,
         "rounds": [],
+        "roundSelector": null,
         "targetPriority": "any-eligible",
         "timing": "each-round",
         "triggerChanceByHabitLevel": [
@@ -1731,11 +1820,13 @@
       "abilityId": "caraxes-mass-enfeeble",
       "abilityName": "Mass Enfeeble",
       "schedule": {
+        "activationRoll": null,
         "attempts": null,
         "battleContext": "unspecified",
         "conditions": [],
         "effects": [
           {
+            "activationRoll": null,
             "calculated": false,
             "casterEligibility": "unknown",
             "conditionalMultipliers": [],
@@ -1783,10 +1874,12 @@
             "scaling": [],
             "sourceScope": "non-basic-attacks",
             "stack": null,
+            "stackTransitionTrigger": null,
             "target": "3 Enemies",
             "targetCount": 3,
             "targetPriority": "any-eligible",
             "targetScope": "any-lane",
+            "targetSelection": null,
             "type": "Physical Damage Dealt Down",
             "unit": "percent"
           }
@@ -1794,6 +1887,7 @@
         "id": "mass-enfeeble-start",
         "repeat": null,
         "rounds": [],
+        "roundSelector": null,
         "targetPriority": "any-eligible",
         "timing": "start-of-combat",
         "triggerChanceByHabitLevel": [],
@@ -1805,6 +1899,7 @@
       "abilityId": "caraxes-blood-wyrm",
       "abilityName": "Blood Wyrm",
       "schedule": {
+        "activationRoll": null,
         "attempts": null,
         "battleContext": "unspecified",
         "conditions": [
@@ -1822,6 +1917,7 @@
         ],
         "effects": [
           {
+            "activationRoll": null,
             "calculated": false,
             "casterEligibility": "unknown",
             "conditionalMultipliers": [],
@@ -1879,10 +1975,12 @@
             "scaling": [],
             "sourceScope": "all-sources",
             "stack": null,
+            "stackTransitionTrigger": null,
             "target": "Self",
             "targetCount": null,
             "targetPriority": "any-eligible",
             "targetScope": "self",
+            "targetSelection": null,
             "type": "Fire Damage Dealt Up",
             "unit": "percent"
           }
@@ -1904,6 +2002,7 @@
           "mode": "once-per-match"
         },
         "rounds": [],
+        "roundSelector": null,
         "targetPriority": "any-eligible",
         "timing": "start-of-each-round",
         "triggerChanceByHabitLevel": [],
@@ -1915,6 +2014,7 @@
       "abilityId": "caraxes-blood-wyrm",
       "abilityName": "Blood Wyrm",
       "schedule": {
+        "activationRoll": null,
         "attempts": null,
         "battleContext": "unspecified",
         "conditions": [
@@ -1932,6 +2032,7 @@
         ],
         "effects": [
           {
+            "activationRoll": null,
             "calculated": false,
             "casterEligibility": "unknown",
             "conditionalMultipliers": [],
@@ -1991,10 +2092,12 @@
             ],
             "sourceScope": "unknown",
             "stack": null,
+            "stackTransitionTrigger": null,
             "target": "Self",
             "targetCount": null,
             "targetPriority": "any-eligible",
             "targetScope": "self",
+            "targetSelection": null,
             "type": "Recovery",
             "unit": "rate"
           }
@@ -2016,6 +2119,7 @@
           "mode": "once-per-match"
         },
         "rounds": [],
+        "roundSelector": null,
         "targetPriority": "any-eligible",
         "timing": "when-enemy-retreated-previous-round",
         "triggerChanceByHabitLevel": [],
@@ -2092,11 +2196,13 @@
     "rawDescription": "Rounds 3, 6, 9: deal Fire Damage to 3 Enemies in any lane (Damage Rate +100%). If Caraxes has First-Strike, damage is multiplied by 1.5 and displayed as +150%.",
     "schedules": [
       {
+        "activationRoll": null,
         "attempts": null,
         "battleContext": "unspecified",
         "conditions": [],
         "effects": [
           {
+            "activationRoll": null,
             "calculated": false,
             "casterEligibility": "unknown",
             "conditionalMultipliers": [
@@ -2143,10 +2249,12 @@
             ],
             "sourceScope": "unknown",
             "stack": null,
+            "stackTransitionTrigger": null,
             "target": "3 Enemies",
             "targetCount": 3,
             "targetPriority": "any-eligible",
             "targetScope": "any-lane",
+            "targetSelection": null,
             "type": "Fire Damage",
             "unit": "rate"
           }
@@ -2158,6 +2266,7 @@
           6,
           9
         ],
+        "roundSelector": null,
         "targetPriority": "any-eligible",
         "timing": "specific-rounds",
         "triggerChanceByHabitLevel": [],
@@ -2258,6 +2367,7 @@
     {
       "abilityId": "caraxes-infernal-burst",
       "effect": {
+        "activationRoll": null,
         "calculated": false,
         "casterEligibility": "unknown",
         "conditionalMultipliers": [
@@ -2304,10 +2414,12 @@
         ],
         "sourceScope": "unknown",
         "stack": null,
+        "stackTransitionTrigger": null,
         "target": "3 Enemies",
         "targetCount": 3,
         "targetPriority": "any-eligible",
         "targetScope": "any-lane",
+        "targetSelection": null,
         "type": "Fire Damage",
         "unit": "rate"
       },
@@ -2316,6 +2428,7 @@
     {
       "abilityId": "caraxes-hunters-wrath",
       "effect": {
+        "activationRoll": null,
         "calculated": false,
         "casterEligibility": "unknown",
         "conditionalMultipliers": [],
@@ -2333,10 +2446,12 @@
         "scaling": [],
         "sourceScope": "all-sources",
         "stack": null,
+        "stackTransitionTrigger": null,
         "target": "Self",
         "targetCount": null,
         "targetPriority": "any-eligible",
         "targetScope": "self",
+        "targetSelection": null,
         "type": "Fire Damage Dealt Up",
         "unit": "percent"
       },
@@ -2345,6 +2460,7 @@
     {
       "abilityId": "caraxes-hunters-wrath",
       "effect": {
+        "activationRoll": null,
         "calculated": false,
         "casterEligibility": "unknown",
         "conditionalMultipliers": [],
@@ -2362,10 +2478,12 @@
         "scaling": [],
         "sourceScope": "unknown",
         "stack": null,
+        "stackTransitionTrigger": null,
         "target": "Right Flank ally",
         "targetCount": null,
         "targetPriority": "any-eligible",
         "targetScope": "right-flank",
+        "targetSelection": null,
         "type": "Strength Up",
         "unit": "flat"
       },
@@ -2374,6 +2492,7 @@
     {
       "abilityId": "caraxes-hunters-wrath",
       "effect": {
+        "activationRoll": null,
         "calculated": false,
         "casterEligibility": "unknown",
         "conditionalMultipliers": [],
@@ -2391,10 +2510,12 @@
         "scaling": [],
         "sourceScope": "unknown",
         "stack": null,
+        "stackTransitionTrigger": null,
         "target": "Right Flank ally",
         "targetCount": null,
         "targetPriority": "any-eligible",
         "targetScope": "right-flank",
+        "targetSelection": null,
         "type": "Initiative Up",
         "unit": "flat"
       },
@@ -2403,6 +2524,7 @@
     {
       "abilityId": "caraxes-battle-dread",
       "effect": {
+        "activationRoll": null,
         "calculated": false,
         "casterEligibility": "unknown",
         "conditionalMultipliers": [],
@@ -2450,10 +2572,12 @@
         ],
         "sourceScope": "unknown",
         "stack": null,
+        "stackTransitionTrigger": null,
         "target": "3 Enemies",
         "targetCount": 3,
         "targetPriority": "any-eligible",
         "targetScope": "any-lane",
+        "targetSelection": null,
         "type": "Strength Down",
         "unit": "percent"
       },
@@ -2462,6 +2586,7 @@
     {
       "abilityId": "caraxes-battle-dread",
       "effect": {
+        "activationRoll": null,
         "calculated": false,
         "casterEligibility": "unknown",
         "conditionalMultipliers": [],
@@ -2509,10 +2634,12 @@
         ],
         "sourceScope": "unknown",
         "stack": null,
+        "stackTransitionTrigger": null,
         "target": "3 Enemies",
         "targetCount": 3,
         "targetPriority": "any-eligible",
         "targetScope": "any-lane",
+        "targetSelection": null,
         "type": "Initiative Down",
         "unit": "percent"
       },
@@ -2521,6 +2648,7 @@
     {
       "abilityId": "caraxes-dragons-flair",
       "effect": {
+        "activationRoll": null,
         "calculated": false,
         "casterEligibility": "unknown",
         "conditionalMultipliers": [],
@@ -2564,10 +2692,12 @@
         "scaling": [],
         "sourceScope": "all-sources",
         "stack": null,
+        "stackTransitionTrigger": null,
         "target": "Self",
         "targetCount": null,
         "targetPriority": "any-eligible",
         "targetScope": "self",
+        "targetSelection": null,
         "type": "Fire Damage Dealt Up",
         "unit": "percent"
       },
@@ -2576,6 +2706,7 @@
     {
       "abilityId": "caraxes-crippling-inferno",
       "effect": {
+        "activationRoll": null,
         "calculated": false,
         "casterEligibility": "unknown",
         "conditionalMultipliers": [],
@@ -2635,10 +2766,12 @@
         "scaling": [],
         "sourceScope": "unknown",
         "stack": null,
+        "stackTransitionTrigger": null,
         "target": "3 Enemies",
         "targetCount": 3,
         "targetPriority": "any-eligible",
         "targetScope": "any-lane",
+        "targetSelection": null,
         "type": "Slow",
         "unit": "unknown"
       },
@@ -2647,6 +2780,7 @@
     {
       "abilityId": "caraxes-crippling-inferno",
       "effect": {
+        "activationRoll": null,
         "calculated": false,
         "casterEligibility": "unknown",
         "conditionalMultipliers": [],
@@ -2708,10 +2842,12 @@
         ],
         "sourceScope": "unknown",
         "stack": null,
+        "stackTransitionTrigger": null,
         "target": "3 Enemies",
         "targetCount": 3,
         "targetPriority": "any-eligible",
         "targetScope": "any-lane",
+        "targetSelection": null,
         "type": "Burn",
         "unit": "rate"
       },
@@ -2720,6 +2856,7 @@
     {
       "abilityId": "caraxes-mass-enfeeble",
       "effect": {
+        "activationRoll": null,
         "calculated": false,
         "casterEligibility": "unknown",
         "conditionalMultipliers": [],
@@ -2767,10 +2904,12 @@
         "scaling": [],
         "sourceScope": "non-basic-attacks",
         "stack": null,
+        "stackTransitionTrigger": null,
         "target": "3 Enemies",
         "targetCount": 3,
         "targetPriority": "any-eligible",
         "targetScope": "any-lane",
+        "targetSelection": null,
         "type": "Physical Damage Dealt Down",
         "unit": "percent"
       },
@@ -2779,6 +2918,7 @@
     {
       "abilityId": "caraxes-blood-wyrm",
       "effect": {
+        "activationRoll": null,
         "calculated": false,
         "casterEligibility": "unknown",
         "conditionalMultipliers": [],
@@ -2836,10 +2976,12 @@
         "scaling": [],
         "sourceScope": "all-sources",
         "stack": null,
+        "stackTransitionTrigger": null,
         "target": "Self",
         "targetCount": null,
         "targetPriority": "any-eligible",
         "targetScope": "self",
+        "targetSelection": null,
         "type": "Fire Damage Dealt Up",
         "unit": "percent"
       },
@@ -2848,6 +2990,7 @@
     {
       "abilityId": "caraxes-blood-wyrm",
       "effect": {
+        "activationRoll": null,
         "calculated": false,
         "casterEligibility": "unknown",
         "conditionalMultipliers": [],
@@ -2907,10 +3050,12 @@
         ],
         "sourceScope": "unknown",
         "stack": null,
+        "stackTransitionTrigger": null,
         "target": "Self",
         "targetCount": null,
         "targetPriority": "any-eligible",
         "targetScope": "self",
+        "targetSelection": null,
         "type": "Recovery",
         "unit": "rate"
       },
@@ -3026,7 +3171,7 @@
   "firstObservedInGame": null,
   "format": "dragonfire-dragon-profile",
   "gameVersion": null,
-  "generatedAt": "2026-06-25T16:50:40.505Z",
+  "generatedAt": "2026-06-25T20:04:14.138Z",
   "habits": [
     {
       "abilityClass": "passive",
@@ -3071,11 +3216,13 @@
       "rawDescription": "Start of Combat: reduce Strength and Initiative of 3 Enemies in any lane by -6%, enhanced by Caraxes Intelligence. Progression table shows -6.5% at Level 1.",
       "schedules": [
         {
+          "activationRoll": null,
           "attempts": null,
           "battleContext": "unspecified",
           "conditions": [],
           "effects": [
             {
+              "activationRoll": null,
               "calculated": false,
               "casterEligibility": "unknown",
               "conditionalMultipliers": [],
@@ -3123,14 +3270,17 @@
               ],
               "sourceScope": "unknown",
               "stack": null,
+              "stackTransitionTrigger": null,
               "target": "3 Enemies",
               "targetCount": 3,
               "targetPriority": "any-eligible",
               "targetScope": "any-lane",
+              "targetSelection": null,
               "type": "Strength Down",
               "unit": "percent"
             },
             {
+              "activationRoll": null,
               "calculated": false,
               "casterEligibility": "unknown",
               "conditionalMultipliers": [],
@@ -3178,10 +3328,12 @@
               ],
               "sourceScope": "unknown",
               "stack": null,
+              "stackTransitionTrigger": null,
               "target": "3 Enemies",
               "targetCount": 3,
               "targetPriority": "any-eligible",
               "targetScope": "any-lane",
+              "targetSelection": null,
               "type": "Initiative Down",
               "unit": "percent"
             }
@@ -3189,6 +3341,7 @@
           "id": "battle-dread-start",
           "repeat": null,
           "rounds": [],
+          "roundSelector": null,
           "targetPriority": "any-eligible",
           "timing": "start-of-combat",
           "triggerChanceByHabitLevel": [],
@@ -3255,11 +3408,13 @@
       "rawDescription": "Start of Combat: increase Caraxes Fire Damage Dealt until end of combat.",
       "schedules": [
         {
+          "activationRoll": null,
           "attempts": null,
           "battleContext": "unspecified",
           "conditions": [],
           "effects": [
             {
+              "activationRoll": null,
               "calculated": false,
               "casterEligibility": "unknown",
               "conditionalMultipliers": [],
@@ -3303,10 +3458,12 @@
               "scaling": [],
               "sourceScope": "all-sources",
               "stack": null,
+              "stackTransitionTrigger": null,
               "target": "Self",
               "targetCount": null,
               "targetPriority": "any-eligible",
               "targetScope": "self",
+              "targetSelection": null,
               "type": "Fire Damage Dealt Up",
               "unit": "percent"
             }
@@ -3314,6 +3471,7 @@
           "id": "dragons-flair-start",
           "repeat": null,
           "rounds": [],
+          "roundSelector": null,
           "targetPriority": "any-eligible",
           "timing": "start-of-combat",
           "triggerChanceByHabitLevel": [],
@@ -3378,11 +3536,13 @@
       "rawDescription": "Each Round: chance to apply Slow and Burn to 3 Enemies in any lane. Each effect is checked separately for each target and lasts 2 rounds.",
       "schedules": [
         {
+          "activationRoll": null,
           "attempts": null,
           "battleContext": "unspecified",
           "conditions": [],
           "effects": [
             {
+              "activationRoll": null,
               "calculated": false,
               "casterEligibility": "unknown",
               "conditionalMultipliers": [],
@@ -3442,14 +3602,17 @@
               "scaling": [],
               "sourceScope": "unknown",
               "stack": null,
+              "stackTransitionTrigger": null,
               "target": "3 Enemies",
               "targetCount": 3,
               "targetPriority": "any-eligible",
               "targetScope": "any-lane",
+              "targetSelection": null,
               "type": "Slow",
               "unit": "unknown"
             },
             {
+              "activationRoll": null,
               "calculated": false,
               "casterEligibility": "unknown",
               "conditionalMultipliers": [],
@@ -3511,10 +3674,12 @@
               ],
               "sourceScope": "unknown",
               "stack": null,
+              "stackTransitionTrigger": null,
               "target": "3 Enemies",
               "targetCount": 3,
               "targetPriority": "any-eligible",
               "targetScope": "any-lane",
+              "targetSelection": null,
               "type": "Burn",
               "unit": "rate"
             }
@@ -3522,6 +3687,7 @@
           "id": "crippling-inferno-each-round",
           "repeat": null,
           "rounds": [],
+          "roundSelector": null,
           "targetPriority": "any-eligible",
           "timing": "each-round",
           "triggerChanceByHabitLevel": [
@@ -3613,11 +3779,13 @@
       "rawDescription": "Start of Combat: reduce Physical Damage Dealt, excluding Basic Attacks, of 3 Enemies in any lane by -5%. Progression table shows -5.5% at Level 1.",
       "schedules": [
         {
+          "activationRoll": null,
           "attempts": null,
           "battleContext": "unspecified",
           "conditions": [],
           "effects": [
             {
+              "activationRoll": null,
               "calculated": false,
               "casterEligibility": "unknown",
               "conditionalMultipliers": [],
@@ -3665,10 +3833,12 @@
               "scaling": [],
               "sourceScope": "non-basic-attacks",
               "stack": null,
+              "stackTransitionTrigger": null,
               "target": "3 Enemies",
               "targetCount": 3,
               "targetPriority": "any-eligible",
               "targetScope": "any-lane",
+              "targetSelection": null,
               "type": "Physical Damage Dealt Down",
               "unit": "percent"
             }
@@ -3676,6 +3846,7 @@
           "id": "mass-enfeeble-start",
           "repeat": null,
           "rounds": [],
+          "roundSelector": null,
           "targetPriority": "any-eligible",
           "timing": "start-of-combat",
           "triggerChanceByHabitLevel": [],
@@ -3742,6 +3913,7 @@
       "rawDescription": "Start of Each Round: for each Enemy below 50% maximum Troop Capacity, increase Caraxes Fire Damage Dealt. For each Enemy that retreated during the previous round, apply Recovery to Caraxes, enhanced by Initiative.",
       "schedules": [
         {
+          "activationRoll": null,
           "attempts": null,
           "battleContext": "unspecified",
           "conditions": [
@@ -3759,6 +3931,7 @@
           ],
           "effects": [
             {
+              "activationRoll": null,
               "calculated": false,
               "casterEligibility": "unknown",
               "conditionalMultipliers": [],
@@ -3816,10 +3989,12 @@
               "scaling": [],
               "sourceScope": "all-sources",
               "stack": null,
+              "stackTransitionTrigger": null,
               "target": "Self",
               "targetCount": null,
               "targetPriority": "any-eligible",
               "targetScope": "self",
+              "targetSelection": null,
               "type": "Fire Damage Dealt Up",
               "unit": "percent"
             }
@@ -3841,6 +4016,7 @@
             "mode": "once-per-match"
           },
           "rounds": [],
+          "roundSelector": null,
           "targetPriority": "any-eligible",
           "timing": "start-of-each-round",
           "triggerChanceByHabitLevel": [],
@@ -3848,6 +4024,7 @@
           "triggerEvent": "start-of-each-round"
         },
         {
+          "activationRoll": null,
           "attempts": null,
           "battleContext": "unspecified",
           "conditions": [
@@ -3865,6 +4042,7 @@
           ],
           "effects": [
             {
+              "activationRoll": null,
               "calculated": false,
               "casterEligibility": "unknown",
               "conditionalMultipliers": [],
@@ -3924,10 +4102,12 @@
               ],
               "sourceScope": "unknown",
               "stack": null,
+              "stackTransitionTrigger": null,
               "target": "Self",
               "targetCount": null,
               "targetPriority": "any-eligible",
               "targetScope": "self",
+              "targetSelection": null,
               "type": "Recovery",
               "unit": "rate"
             }
@@ -3949,6 +4129,7 @@
             "mode": "once-per-match"
           },
           "rounds": [],
+          "roundSelector": null,
           "targetPriority": "any-eligible",
           "timing": "when-enemy-retreated-previous-round",
           "triggerChanceByHabitLevel": [],
@@ -5504,10 +5685,10 @@
   "rosterSourceStatus": "official-website",
   "slug": "caraxes",
   "source": {
-    "branch": "chore/formation-docs-context-export",
-    "commit": "96e0cb6df6957f19eea61aa67b38bfa905aef03c",
-    "databaseVersion": "0.5.6",
-    "dataSchemaVersion": 9,
+    "branch": "feature/legendary-schema-hardening",
+    "commit": "1b2913abd3b37ddde3fc456f7c4c9154b3a35a48",
+    "databaseVersion": "0.6.0",
+    "dataSchemaVersion": 10,
     "gameBuild": "26.6.53509",
     "localRosterSchemaVersion": 3,
     "repository": "https://github.com/williamchildres/dragonfire-roster-builder"
@@ -5707,11 +5888,13 @@
     "rawDescription": "At Level 16+ and deployed in Vanguard, increase Caraxes Fire Damage Dealt by 16%. Increase Strength and Initiative of Right Flank ally by +20.",
     "schedules": [
       {
+        "activationRoll": null,
         "attempts": null,
         "battleContext": "unspecified",
         "conditions": [],
         "effects": [
           {
+            "activationRoll": null,
             "calculated": false,
             "casterEligibility": "unknown",
             "conditionalMultipliers": [],
@@ -5729,14 +5912,17 @@
             "scaling": [],
             "sourceScope": "all-sources",
             "stack": null,
+            "stackTransitionTrigger": null,
             "target": "Self",
             "targetCount": null,
             "targetPriority": "any-eligible",
             "targetScope": "self",
+            "targetSelection": null,
             "type": "Fire Damage Dealt Up",
             "unit": "percent"
           },
           {
+            "activationRoll": null,
             "calculated": false,
             "casterEligibility": "unknown",
             "conditionalMultipliers": [],
@@ -5754,14 +5940,17 @@
             "scaling": [],
             "sourceScope": "unknown",
             "stack": null,
+            "stackTransitionTrigger": null,
             "target": "Right Flank ally",
             "targetCount": null,
             "targetPriority": "any-eligible",
             "targetScope": "right-flank",
+            "targetSelection": null,
             "type": "Strength Up",
             "unit": "flat"
           },
           {
+            "activationRoll": null,
             "calculated": false,
             "casterEligibility": "unknown",
             "conditionalMultipliers": [],
@@ -5779,10 +5968,12 @@
             "scaling": [],
             "sourceScope": "unknown",
             "stack": null,
+            "stackTransitionTrigger": null,
             "target": "Right Flank ally",
             "targetCount": null,
             "targetPriority": "any-eligible",
             "targetScope": "right-flank",
+            "targetSelection": null,
             "type": "Initiative Up",
             "unit": "flat"
           }
@@ -5790,6 +5981,7 @@
         "id": "hunters-wrath-passive",
         "repeat": null,
         "rounds": [],
+        "roundSelector": null,
         "targetPriority": "any-eligible",
         "timing": "passive",
         "triggerChanceByHabitLevel": [],
