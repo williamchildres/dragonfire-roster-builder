@@ -83,6 +83,8 @@ Source scopes prevent false matches. `all-qualifying-sources` can match Basic At
 
 Capability availability has three contexts: canonical availability describes the kit and unlock requirements; observed-account availability records supplied screenshot state such as Seasmoke being not hatched; user-roster availability comes from browser localStorage and is used by the Formation Builder. The report script cannot inspect a visitor's localStorage, so it does not claim user availability.
 
+Formation Builder stores selected formation slots as dragon IDs and resolves current dragon and local roster records when recalculating analysis. Reign Level, Star Rank, collection state, and Habit Levels from the current roster entry must invalidate presentation state; selected cards must not retain stale progression snapshots after a roster edit or reload.
+
 Capabilities are derived from structured `AbilityEffect` records plus one reviewed Vermax Basic Attack capability. Effect tags alone do not create authoritative capabilities. Output dependencies are derived from structured scaling, conditional multipliers, and canonical stat relationships; unsupported tags do not create dependencies.
 
 Statuses include active, potential, inactive, blocked, unknown, and not-applicable. Locked Habits and future progression are potential when previewed, not active for the user's current roster. Numerical synergy scores remain null unless enough verified data exists for all selected dragons.
