@@ -1,15 +1,17 @@
 # Synergy Capability Framework
 
-Phase 3.7 introduced a generic capability framework for effect-channel matching. Phase 3.7.1 clarified modifier roles, target scope, and availability context. Phase 3.8 adds Syrax and Caraxes plus status output, dependency, stat-scaling, enemy-mitigation, and periodic-damage tracing. The goal is to explain formation interactions from normalized ability facts instead of writing one-off pair checks for specific dragons.
+Phase 3.7 introduced a generic capability framework for effect-channel matching. Phase 3.7.1 clarified modifier roles, target scope, and availability context. Phase 3.8 adds Syrax and Caraxes plus status output, dependency, stat-scaling, enemy-mitigation, and periodic-damage tracing. Version 0.5.2 adds direct defensive ally support, selected-formation trace boundaries, hard-requirement precedence, and normal-view aggregation rules. The goal is to explain formation interactions from normalized ability facts instead of writing one-off pair checks for specific dragons.
 
-The framework currently supports four effect channels:
+The framework currently supports these effect channels:
 
 - Physical Damage
 - Tactical Damage
 - Fire Damage
 - Recovery
+- Stat
+- Damage Received
 
-It is designed to extend later to shields, damage-over-time, control effects, damage received modifiers, Basic Attack amplification, command activation, recovery prevention, and similar mechanics.
+The `damage-received` channel is intentionally generic so later schema revisions can split it into physical, tactical, or fire Damage Received when verified behavior requires that detail.
 
 Status outputs and periodic damage now sit beside the four channel model. First-Strike, Slow, Burn, and Resistance can be represented as status capabilities, while Burn also has a periodic Fire Damage definition. Status capabilities do not automatically become damage outputs unless structured effect data says they produce a channel such as Burn producing Fire Damage.
 
@@ -74,6 +76,7 @@ Examples:
 - Hunter's Cunning Physical Damage is ally support for the Right Flank.
 - Hunter's Cunning Recovery Received is recipient-side amplification.
 - Dragon's Cunning enemy Instinct reduction is an enemy debuff.
+- Champion's Brilliance Right Flank Damage Received reduction is defensive ally support, not outgoing damage support and not recipient-side Recovery amplification.
 
 ## Outgoing Amplification
 
@@ -111,14 +114,19 @@ Example:
 
 The framework does not calculate exact Recovery or final damage amounts because the complete game formulas remain unknown.
 
+## Defensive Ally Support
+
+Defensive ally support matches a provider's ally-targeted `received` modifier directly to the selected recipient. It does not require the recipient to produce a damage output. Champion's Brilliance is the first confirmed example: Seasmoke in Vanguard can reduce Damage Received for the Right Flank ally. This is represented by `defensive-ally-support` with channel `damage-received`.
+
 ## Dependency Traces
 
-Phase 3.8 adds four additional generic trace families:
+Phase 3.8 and 0.5.2 add additional generic trace families:
 
 - `status-condition-enablement`: a status output satisfies a condition on another capability. Example: Syrax can grant First-Strike, and Caraxes Infernal Burst has a verified self First-Strike multiplier.
 - `stat-scaling-support`: ally stat support matches an output that scales with that stat. Example: Caraxes Hunter's Wrath can support Syrax Strategic Revival Recovery through Right Flank Initiative support when Syrax is in Right Flank.
 - `enemy-mitigation-reduction`: enemy stat debuffs match outputs mitigated by that stat. Example: Syrax Flight Mastery can reduce enemy Initiative, which may improve Caraxes Fire Damage outputs because Fire Damage is mitigated by target Initiative.
 - `periodic-damage-amplification`: damage-channel support can apply to periodic damage definitions. Example: Syrax Fire support can amplify Caraxes Burn because Burn is periodic Fire Damage.
+- `defensive-ally-support`: direct defensive teammate support such as Damage Received reduction.
 
 These traces are conditional or potential when unlocks, trigger chances, target selection, or exact battlefield state are unresolved. They never produce numerical scores.
 
@@ -130,6 +138,15 @@ Phase 3.8.1 adds direct position stat-support traces and clarifies presentation:
 - Activation means the effect actually triggers, selects that target, and overlaps the relevant timing window.
 - Chance-based or selection-dependent support is shown as conditional or potential, never guaranteed.
 - Targeting facts, threshold notes, and contextual PvE facts are debug/audit details unless they modify or benefit another selected dragon.
+
+Version 0.5.2 adds aggregation requirements:
+
+- Normal parent traces are deduplicated by semantic identity, not explanation text.
+- Requirements are deduplicated by requirement identity so repeated Habit unlock or selected Habit Level blockers display once.
+- Repeated ability names are grouped with output context, such as "Warden's Rally: Tactical Damage and Recovery".
+- Single-target ally effects with multiple eligible selected recipients become one target-selection interaction instead of simultaneous recipient cards.
+- Periodic damage such as Burn is listed as a qualifying Fire output and retained as debug metadata, not displayed as a second normal buff.
+- Unselected friendly dragons cannot appear in formation traces, matched outputs, debug JSON, reports, or project-context review cases.
 
 ## Source-Scope Matching
 

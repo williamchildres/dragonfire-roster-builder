@@ -77,10 +77,6 @@ export function analyzeFormation(
     );
   }
 
-  if (team.some((dragon) => dragon.id === 'sheepstealer')) {
-    warnings.push('Sheepstealer Stolen Flock has a non-player food-tile schedule; PvP behavior remains separate.');
-  }
-
   return {
     score: null,
     confidence,
@@ -213,7 +209,7 @@ function findPositionRequirements(
       ruleId: 'malachite-left-flank-fire-damage',
       title: "Sentinel's Presence Left Flank bonus",
       description:
-        "Malachite in Vanguard can increase Fire Damage Dealt for the ally deployed in Left Flank. Whether that ally has verified Fire Damage usage may still be unknown.",
+        "Malachite in Vanguard can increase Fire Damage Dealt for the ally deployed in Left Flank.",
       confidence: 'medium',
     });
   }

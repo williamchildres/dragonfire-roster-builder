@@ -72,7 +72,8 @@
           "tactical-damage",
           "fire-damage",
           "recovery",
-          "stat"
+          "stat",
+          "damage-received"
         ]
       },
       "type": "array"

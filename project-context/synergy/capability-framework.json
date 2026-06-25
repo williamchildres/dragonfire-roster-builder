@@ -911,6 +911,65 @@
         "valuePerStack": null
       },
       {
+        "abilityId": "seasmoke-champions-brilliance",
+        "abilityName": "Champion's Brilliance",
+        "availability": {
+          "canonical": "canonical-base",
+          "notes": [
+            "Requires Dragon Level 16+.",
+            "Not hatched in observed account."
+          ],
+          "observedAccount": "observed-unavailable",
+          "reportLabel": "Base kit; Level 16+; not hatched in observed account",
+          "userRoster": "unknown"
+        },
+        "channel": "damage-received",
+        "combatLogConfirmed": false,
+        "conditional": false,
+        "conditions": [],
+        "confidence": "confirmed",
+        "currentlyAvailable": true,
+        "direction": "received",
+        "directlyVerified": true,
+        "dragonId": "seasmoke",
+        "evidenceIds": [
+          "seasmoke-champions-brilliance-2026-06-23"
+        ],
+        "futureAvailable": false,
+        "id": "seasmoke-champions-brilliance-seasmoke-right-flank-dr-down-damage-received-received-modifier",
+        "label": "Champion's Brilliance: Damage Received Down",
+        "minimumDragonLevel": 16,
+        "operation": "decrease",
+        "providerRequirements": [
+          {
+            "evidenceIds": [
+              "seasmoke-champions-brilliance-2026-06-23"
+            ],
+            "expected": "vanguard",
+            "id": "seasmoke-champions-brilliance-provider-position-vanguard",
+            "kind": "provider-position",
+            "label": "Provider position requirement"
+          }
+        ],
+        "recipientRequirements": [],
+        "requiredHabitLevel": null,
+        "role": "ally-support",
+        "sourceScope": "unknown",
+        "stackMaximum": null,
+        "targetSelector": {
+          "count": null,
+          "includesCaster": null,
+          "position": "right-flank",
+          "scope": "right-flank",
+          "selection": "specific-position",
+          "side": "ally"
+        },
+        "unit": "percent",
+        "unlockStarRank": 1,
+        "value": 8,
+        "valuePerStack": null
+      },
+      {
         "abilityId": "seasmoke-clever-maneuver",
         "abilityName": "Clever Maneuver",
         "availability": {
@@ -1257,6 +1316,63 @@
         "requiredHabitLevel": 1,
         "role": "ally-support",
         "sourceScope": "non-basic-attacks",
+        "stackMaximum": null,
+        "targetSelector": {
+          "count": 2,
+          "includesCaster": null,
+          "position": null,
+          "scope": "any-lane",
+          "selection": "any",
+          "side": "ally"
+        },
+        "unit": "percent",
+        "unlockStarRank": 2,
+        "value": 8,
+        "valuePerStack": null
+      },
+      {
+        "abilityId": "malachite-forests-instinct",
+        "abilityName": "Forest's Instinct",
+        "availability": {
+          "canonical": "canonical-locked",
+          "notes": [
+            "Future at Star Rank 2.",
+            "Unlocked in observed account collection state, subject to level and star requirements."
+          ],
+          "observedAccount": "observed-available",
+          "reportLabel": "Future at Star Rank 2; observed account hatched",
+          "userRoster": "unknown"
+        },
+        "channel": "damage-received",
+        "combatLogConfirmed": false,
+        "conditional": true,
+        "conditions": [
+          {
+            "description": "Activation chance 35% per each round.",
+            "evidenceIds": [],
+            "id": "forests-instinct-each-round-activation-chance",
+            "label": "Activation chance 35% per each round.",
+            "unresolved": false
+          }
+        ],
+        "confidence": "confirmed",
+        "currentlyAvailable": false,
+        "direction": "received",
+        "directlyVerified": true,
+        "dragonId": "malachite",
+        "evidenceIds": [
+          "malachite-forests-instinct-2026-06-23"
+        ],
+        "futureAvailable": true,
+        "id": "malachite-forests-instinct-forests-instinct-tactical-reduction-damage-received-received-modifier",
+        "label": "Forest's Instinct: Tactical Damage Received Reduction",
+        "minimumDragonLevel": null,
+        "operation": "decrease",
+        "providerRequirements": [],
+        "recipientRequirements": [],
+        "requiredHabitLevel": 1,
+        "role": "ally-support",
+        "sourceScope": "unknown",
         "stackMaximum": null,
         "targetSelector": {
           "count": 2,
@@ -1623,6 +1739,177 @@
         "unit": "flat",
         "unlockStarRank": 1,
         "value": 20,
+        "valuePerStack": null
+      },
+      {
+        "abilityId": "vermax-trial-by-flame",
+        "abilityName": "Trial by Flame",
+        "availability": {
+          "canonical": "canonical-locked",
+          "notes": [
+            "Future at Star Rank 2.",
+            "Unlocked in observed account collection state, subject to level and star requirements."
+          ],
+          "observedAccount": "observed-available",
+          "reportLabel": "Future at Star Rank 2; observed account hatched",
+          "userRoster": "unknown"
+        },
+        "channel": "damage-received",
+        "combatLogConfirmed": false,
+        "conditional": true,
+        "conditions": [
+          {
+            "description": "Below 75% Troop Capacity.",
+            "evidenceIds": [],
+            "id": "below-75-troop-capacity",
+            "label": "Below 75% Troop Capacity.",
+            "unresolved": false
+          }
+        ],
+        "confidence": "confirmed",
+        "currentlyAvailable": false,
+        "direction": "received",
+        "directlyVerified": true,
+        "dragonId": "vermax",
+        "evidenceIds": [
+          "vermax-trial-by-flame-2026-06-23"
+        ],
+        "futureAvailable": true,
+        "id": "vermax-trial-by-flame-trial-below-75-fire-reduction-damage-received-received-modifier",
+        "label": "Trial by Flame: Fire Damage Received Down",
+        "minimumDragonLevel": null,
+        "operation": "decrease",
+        "providerRequirements": [],
+        "recipientRequirements": [],
+        "requiredHabitLevel": 1,
+        "role": "ally-support",
+        "sourceScope": "unknown",
+        "stackMaximum": null,
+        "targetSelector": {
+          "count": 75,
+          "includesCaster": null,
+          "position": null,
+          "scope": "any-lane",
+          "selection": "any",
+          "side": "ally"
+        },
+        "unit": "percent",
+        "unlockStarRank": 2,
+        "value": null,
+        "valuePerStack": null
+      },
+      {
+        "abilityId": "vermax-trial-by-flame",
+        "abilityName": "Trial by Flame",
+        "availability": {
+          "canonical": "canonical-locked",
+          "notes": [
+            "Future at Star Rank 2.",
+            "Unlocked in observed account collection state, subject to level and star requirements."
+          ],
+          "observedAccount": "observed-available",
+          "reportLabel": "Future at Star Rank 2; observed account hatched",
+          "userRoster": "unknown"
+        },
+        "channel": "damage-received",
+        "combatLogConfirmed": false,
+        "conditional": true,
+        "conditions": [
+          {
+            "description": "Below 50% Troop Capacity.",
+            "evidenceIds": [],
+            "id": "below-50-troop-capacity",
+            "label": "Below 50% Troop Capacity.",
+            "unresolved": false
+          }
+        ],
+        "confidence": "confirmed",
+        "currentlyAvailable": false,
+        "direction": "received",
+        "directlyVerified": true,
+        "dragonId": "vermax",
+        "evidenceIds": [
+          "vermax-trial-by-flame-2026-06-23"
+        ],
+        "futureAvailable": true,
+        "id": "vermax-trial-by-flame-trial-below-50-fire-reduction-damage-received-received-modifier",
+        "label": "Trial by Flame: Fire Damage Received Down",
+        "minimumDragonLevel": null,
+        "operation": "decrease",
+        "providerRequirements": [],
+        "recipientRequirements": [],
+        "requiredHabitLevel": 1,
+        "role": "ally-support",
+        "sourceScope": "unknown",
+        "stackMaximum": null,
+        "targetSelector": {
+          "count": 50,
+          "includesCaster": null,
+          "position": null,
+          "scope": "any-lane",
+          "selection": "any",
+          "side": "ally"
+        },
+        "unit": "percent",
+        "unlockStarRank": 2,
+        "value": null,
+        "valuePerStack": null
+      },
+      {
+        "abilityId": "vermax-trial-by-flame",
+        "abilityName": "Trial by Flame",
+        "availability": {
+          "canonical": "canonical-locked",
+          "notes": [
+            "Future at Star Rank 2.",
+            "Unlocked in observed account collection state, subject to level and star requirements."
+          ],
+          "observedAccount": "observed-available",
+          "reportLabel": "Future at Star Rank 2; observed account hatched",
+          "userRoster": "unknown"
+        },
+        "channel": "damage-received",
+        "combatLogConfirmed": false,
+        "conditional": true,
+        "conditions": [
+          {
+            "description": "Below 25% Troop Capacity.",
+            "evidenceIds": [],
+            "id": "below-25-troop-capacity",
+            "label": "Below 25% Troop Capacity.",
+            "unresolved": false
+          }
+        ],
+        "confidence": "confirmed",
+        "currentlyAvailable": false,
+        "direction": "received",
+        "directlyVerified": true,
+        "dragonId": "vermax",
+        "evidenceIds": [
+          "vermax-trial-by-flame-2026-06-23"
+        ],
+        "futureAvailable": true,
+        "id": "vermax-trial-by-flame-trial-below-25-fire-reduction-damage-received-received-modifier",
+        "label": "Trial by Flame: Fire Damage Received Down",
+        "minimumDragonLevel": null,
+        "operation": "decrease",
+        "providerRequirements": [],
+        "recipientRequirements": [],
+        "requiredHabitLevel": 1,
+        "role": "ally-support",
+        "sourceScope": "unknown",
+        "stackMaximum": null,
+        "targetSelector": {
+          "count": 25,
+          "includesCaster": null,
+          "position": null,
+          "scope": "any-lane",
+          "selection": "any",
+          "side": "ally"
+        },
+        "unit": "percent",
+        "unlockStarRank": 2,
+        "value": null,
         "valuePerStack": null
       },
       {
@@ -3994,6 +4281,55 @@
           "reportLabel": "Future at Star Rank 8; observed account hatched",
           "userRoster": "unknown"
         },
+        "channel": "damage-received",
+        "combatLogConfirmed": false,
+        "conditional": true,
+        "conditions": [],
+        "confidence": "confirmed",
+        "currentlyAvailable": false,
+        "direction": "received",
+        "directlyVerified": true,
+        "dragonId": "vermax",
+        "evidenceIds": [
+          "vermax-dragons-valor-2026-06-23"
+        ],
+        "futureAvailable": true,
+        "id": "vermax-dragons-valor-dragons-valor-dr-down-damage-received-received-modifier",
+        "label": "Dragon's Valor: Damage Received Down",
+        "minimumDragonLevel": null,
+        "operation": "decrease",
+        "providerRequirements": [],
+        "recipientRequirements": [],
+        "requiredHabitLevel": 1,
+        "role": "self-amplification",
+        "sourceScope": "unknown",
+        "stackMaximum": null,
+        "targetSelector": {
+          "count": null,
+          "includesCaster": null,
+          "position": null,
+          "scope": "self",
+          "selection": "self",
+          "side": "self"
+        },
+        "unit": "percent",
+        "unlockStarRank": 8,
+        "value": null,
+        "valuePerStack": null
+      },
+      {
+        "abilityId": "vermax-dragons-valor",
+        "abilityName": "Dragon's Valor",
+        "availability": {
+          "canonical": "canonical-locked",
+          "notes": [
+            "Future at Star Rank 8.",
+            "Unlocked in observed account collection state, subject to level and star requirements."
+          ],
+          "observedAccount": "observed-available",
+          "reportLabel": "Future at Star Rank 8; observed account hatched",
+          "userRoster": "unknown"
+        },
         "channel": "stat",
         "combatLogConfirmed": false,
         "conditional": true,
@@ -5312,7 +5648,8 @@
     "tactical-damage",
     "fire-damage",
     "recovery",
-    "stat"
+    "stat",
+    "damage-received"
   ],
   "matchKinds": [
     "outgoing-effect-amplification",
@@ -5320,7 +5657,8 @@
     "status-condition-enablement",
     "stat-scaling-support",
     "enemy-mitigation-reduction",
-    "periodic-damage-amplification"
+    "periodic-damage-amplification",
+    "defensive-ally-support"
   ],
   "modifierCapabilityStructure": [
     "dragonId",
@@ -5342,7 +5680,7 @@
     "recipient-side-amplification",
     "enemy-debuff"
   ],
-  "normalViewAggregationBehavior": "One support modifier can match multiple recipient outputs and aggregate into one normal Formation Builder card.",
+  "normalViewAggregationBehavior": "One support modifier can match multiple recipient outputs and aggregate into one normal Formation Builder card. Single-target effects with multiple eligible recipients are grouped as target-selection interactions, and periodic damage is annotated under its damage channel rather than duplicated as a second normal buff.",
   "numericalScorePolicy": "Synergy score remains null; exact formulas are not invented.",
   "outputCapabilityStructure": [
     "dragonId",

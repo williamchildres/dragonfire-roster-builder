@@ -86,6 +86,11 @@ Use the Formation Builder debug view to inspect trace reasoning and export audit
 10. Update `docs/SYNERGY_CAPABILITY_FRAMEWORK.md`, `npm run report:synergy`, and tests whenever a capability shape or matching rule changes.
 11. For schema 7+ data, add output dependencies for verified scaling, mitigation, conditional status requirements, and repeated conditions.
 12. Add `StatusOutputCapability` and `PeriodicDamageDefinition` coverage when an ability applies statuses such as First-Strike, Slow, Burn, or Resistance. Periodic statuses such as Burn should identify their damage channel, scaling stat, mitigation stat, duration, and evidence.
+13. For schema 8+ data, model direct defensive teammate support with the `damage-received` channel and `defensive-ally-support` trace kind when the ability directly reduces Damage Received for an ally.
+14. Enforce selected-formation boundaries before presenting, exporting, reporting, or validating traces. Do not generate all-roster traces and hide them only in the UI.
+15. Keep hard battlefield requirements above progression requirements. Preview mode may unlock future progression but must not override failed position, adjacency, target, source-scope, caster-exclusion, or selected-formation requirements.
+16. When a target selector has count 1 and multiple selected recipients qualify, present a target-selection group rather than simultaneous recipient support.
+17. Keep periodic damage in the damage channel's normal interaction and as debug metadata; do not show it as a second normal buff.
 
 ## Official Roster Check
 
@@ -93,4 +98,4 @@ Run `npm run check:roster` to compare official-site local records with the ordin
 
 ## Versioning
 
-For data releases, update `databaseVersion`, `schemaVersion` when the data shape changes, package version, changelog, and tests together. Phase 3.8.1 uses database version `0.5.1`, data schema `7`, current documented game build `26.6.53509`, and local roster schema `3`.
+For data releases, update `databaseVersion`, `schemaVersion` when the data shape changes, package version, changelog, and tests together. Version 0.5.2 uses database version `0.5.2`, data schema `8`, current documented game build `26.6.53509`, and local roster schema `3`.

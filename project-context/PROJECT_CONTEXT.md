@@ -13,8 +13,8 @@ Dragonfire Roster Lab records verified dragon roster data, combat mechanics, syn
 
 ## Versions
 
-- Database: 0.5.1
-- Data schema: 7
+- Database: 0.5.2
+- Data schema: 8
 - Local roster schema: 3
 - Game build: 26.6.53509
 - Context export: 1
@@ -44,7 +44,7 @@ All other known dragons remain metadata-only unless their typed source records c
 
 ## Synergy Framework
 
-The framework derives output capabilities, modifier capabilities, status outputs, periodic damage, and dependencies from structured ability effects. Current trace families are outgoing-effect-amplification, incoming-effect-amplification, status-condition-enablement, stat-scaling-support, enemy-mitigation-reduction, and periodic-damage-amplification.
+The framework derives output capabilities, modifier capabilities, status outputs, periodic damage, and dependencies from structured ability effects. Current trace families are outgoing-effect-amplification, incoming-effect-amplification, status-condition-enablement, stat-scaling-support, enemy-mitigation-reduction, periodic-damage-amplification, and defensive-ally-support.
 
 ## Unresolved Mechanics
 
@@ -67,7 +67,7 @@ The framework derives output capabilities, modifier capabilities, status outputs
 - malachite-wardens-rally-exact-level-and-instinct-scaling-formulas: Exact Level and Instinct scaling formulas.
 - seasmoke-infectious-wrath-augmentation-presentation-requires-follow-up-review: Infectious Wrath augmentation presentation requires follow-up review.
 - seasmoke-loyal-bond-exactly-50-troop-capacity-boundary: Exactly 50% Troop Capacity boundary.
-- seasmoke-loyal-bond-resistance-detailed-meaning: Resistance detailed meaning.
+- seasmoke-loyal-bond-resistance-stacking-refresh-and-multiple-source-combination: Resistance stacking, refresh, and multiple-source combination.
 
 ## Review Plan
 

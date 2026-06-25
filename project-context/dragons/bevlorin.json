@@ -20,7 +20,7 @@
   "firstObservedInGame": null,
   "format": "dragonfire-dragon-profile",
   "gameVersion": null,
-  "generatedAt": "2026-06-25T00:29:16.911Z",
+  "generatedAt": "2026-06-25T01:19:13.742Z",
   "habits": [],
   "id": "bevlorin",
   "isNew": false,
@@ -42,10 +42,10 @@
   "rosterSourceStatus": "official-website",
   "slug": "bevlorin",
   "source": {
-    "branch": "feature/project-context-export",
-    "commit": "2cb422d38207fdda378f64504014ac34ff255e24",
-    "databaseVersion": "0.5.1",
-    "dataSchemaVersion": 7,
+    "branch": "feature/formation-analysis-repair",
+    "commit": "33308a9be3432c3b1fe16b500e64069bd93f1dee",
+    "databaseVersion": "0.5.2",
+    "dataSchemaVersion": 8,
     "gameBuild": "26.6.53509",
     "localRosterSchemaVersion": 3,
     "repository": "https://github.com/williamchildres/dragonfire-roster-builder"

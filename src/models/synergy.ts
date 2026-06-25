@@ -109,6 +109,11 @@ export interface SynergyTrace {
   modifierCapabilityId?: string | null;
   matchedOutputCapabilityIds?: string[];
   sourceScopeResults?: CapabilityMatch[];
+  targetSelectionGroup?: {
+    targetCount: number;
+    eligibleRecipientDragonIds: string[];
+    selectionUncertain: boolean;
+  };
 }
 
 export interface RecipientAmplificationTrace {
@@ -124,7 +129,7 @@ export interface RecipientAmplificationTrace {
   confidence: TraceConfidence;
 }
 
-export type EffectChannel = 'physical-damage' | 'tactical-damage' | 'fire-damage' | 'recovery' | 'stat';
+export type EffectChannel = 'physical-damage' | 'tactical-damage' | 'fire-damage' | 'recovery' | 'stat' | 'damage-received';
 
 export type DragonStatId = 'strength' | 'instinct' | 'intelligence' | 'initiative';
 
@@ -134,7 +139,8 @@ export type SynergyTraceMatchKind =
   | 'status-condition-enablement'
   | 'stat-scaling-support'
   | 'enemy-mitigation-reduction'
-  | 'periodic-damage-amplification';
+  | 'periodic-damage-amplification'
+  | 'defensive-ally-support';
 
 export type CapabilitySourceKind = 'basic-attack' | 'command' | 'trait' | 'habit';
 

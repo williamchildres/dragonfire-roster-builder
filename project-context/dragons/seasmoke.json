@@ -1335,7 +1335,7 @@
               "includesCaster": null,
               "magnitude": 20,
               "notes": [
-                "Exact Resistance semantics unresolved."
+                "Resistance reduces Damage Received. Exact stacking and refresh behavior remain unresolved."
               ],
               "perTargetEffectCheck": null,
               "rankedValues": [],
@@ -1394,7 +1394,7 @@
       "unlockStarRank": 10,
       "unresolvedQuestions": [
         "Exactly 50% Troop Capacity boundary.",
-        "Resistance detailed meaning."
+        "Resistance stacking, refresh, and multiple-source combination."
       ],
       "verification": {
         "capturedAt": "2026-06-23",
@@ -2177,7 +2177,7 @@
             "includesCaster": null,
             "magnitude": 20,
             "notes": [
-              "Exact Resistance semantics unresolved."
+              "Resistance reduces Damage Received. Exact stacking and refresh behavior remain unresolved."
             ],
             "perTargetEffectCheck": null,
             "rankedValues": [],
@@ -3333,7 +3333,7 @@
         "includesCaster": null,
         "magnitude": 20,
         "notes": [
-          "Exact Resistance semantics unresolved."
+          "Resistance reduces Damage Received. Exact stacking and refresh behavior remain unresolved."
         ],
         "perTargetEffectCheck": null,
         "rankedValues": [],
@@ -3472,7 +3472,7 @@
   "firstObservedInGame": null,
   "format": "dragonfire-dragon-profile",
   "gameVersion": null,
-  "generatedAt": "2026-06-25T00:29:16.911Z",
+  "generatedAt": "2026-06-25T01:19:13.742Z",
   "habits": [
     {
       "abilityClass": "passive",
@@ -4277,7 +4277,7 @@
               "includesCaster": null,
               "magnitude": 20,
               "notes": [
-                "Exact Resistance semantics unresolved."
+                "Resistance reduces Damage Received. Exact stacking and refresh behavior remain unresolved."
               ],
               "perTargetEffectCheck": null,
               "rankedValues": [],
@@ -4336,7 +4336,7 @@
       "unlockStarRank": 10,
       "unresolvedQuestions": [
         "Exactly 50% Troop Capacity boundary.",
-        "Resistance detailed meaning."
+        "Resistance stacking, refresh, and multiple-source combination."
       ],
       "verification": {
         "capturedAt": "2026-06-23",
@@ -4608,6 +4608,65 @@
       "unit": "flat",
       "unlockStarRank": 1,
       "value": 15,
+      "valuePerStack": null
+    },
+    {
+      "abilityId": "seasmoke-champions-brilliance",
+      "abilityName": "Champion's Brilliance",
+      "availability": {
+        "canonical": "canonical-base",
+        "notes": [
+          "Requires Dragon Level 16+.",
+          "Not hatched in observed account."
+        ],
+        "observedAccount": "observed-unavailable",
+        "reportLabel": "Base kit; Level 16+; not hatched in observed account",
+        "userRoster": "unknown"
+      },
+      "channel": "damage-received",
+      "combatLogConfirmed": false,
+      "conditional": false,
+      "conditions": [],
+      "confidence": "confirmed",
+      "currentlyAvailable": true,
+      "direction": "received",
+      "directlyVerified": true,
+      "dragonId": "seasmoke",
+      "evidenceIds": [
+        "seasmoke-champions-brilliance-2026-06-23"
+      ],
+      "futureAvailable": false,
+      "id": "seasmoke-champions-brilliance-seasmoke-right-flank-dr-down-damage-received-received-modifier",
+      "label": "Champion's Brilliance: Damage Received Down",
+      "minimumDragonLevel": 16,
+      "operation": "decrease",
+      "providerRequirements": [
+        {
+          "evidenceIds": [
+            "seasmoke-champions-brilliance-2026-06-23"
+          ],
+          "expected": "vanguard",
+          "id": "seasmoke-champions-brilliance-provider-position-vanguard",
+          "kind": "provider-position",
+          "label": "Provider position requirement"
+        }
+      ],
+      "recipientRequirements": [],
+      "requiredHabitLevel": null,
+      "role": "ally-support",
+      "sourceScope": "unknown",
+      "stackMaximum": null,
+      "targetSelector": {
+        "count": null,
+        "includesCaster": null,
+        "position": "right-flank",
+        "scope": "right-flank",
+        "selection": "specific-position",
+        "side": "ally"
+      },
+      "unit": "percent",
+      "unlockStarRank": 1,
+      "value": 8,
       "valuePerStack": null
     },
     {
@@ -5625,10 +5684,10 @@
   "rosterSourceStatus": "official-website",
   "slug": "seasmoke",
   "source": {
-    "branch": "feature/project-context-export",
-    "commit": "2cb422d38207fdda378f64504014ac34ff255e24",
-    "databaseVersion": "0.5.1",
-    "dataSchemaVersion": 7,
+    "branch": "feature/formation-analysis-repair",
+    "commit": "33308a9be3432c3b1fe16b500e64069bd93f1dee",
+    "databaseVersion": "0.5.2",
+    "dataSchemaVersion": 8,
     "gameBuild": "26.6.53509",
     "localRosterSchemaVersion": 3,
     "repository": "https://github.com/williamchildres/dragonfire-roster-builder"
@@ -5979,7 +6038,8 @@
     "Exactly 50% Troop Capacity boundary.",
     "Infectious Wrath augmentation presentation requires follow-up review.",
     "Panic exact status definition.",
-    "Resistance detailed meaning."
+    "Resistance stacking, refresh, and final mitigation formula.",
+    "Resistance stacking, refresh, and multiple-source combination."
   ],
   "verificationBySection": {
     "affinities": {

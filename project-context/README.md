@@ -6,7 +6,7 @@ This directory is generated from the current typed repository source. Do not man
 
 - `dragonfire-project-context.json`: consolidated machine-readable context with source metadata, roster summary, all dragon profiles, formation rules, capability framework, reviews, evidence, review cases, and unresolved mechanics.
 - `project-state.json`: current versions, branch/commit, counts, architecture summary, phases, and next-phase plan.
-- `formation-review-cases.json`: completed Phase 3.8.1 cases plus the pending next review batch.
+- `formation-review-cases.json`: completed Phase 3.8.1 cases plus pending Batch 1 and Batch 2 formation repair review cases.
 - `unresolved-mechanics.json`: stable unresolved mechanic records.
 - `dragons/index.json` and `dragons/*.json`: one profile per known dragon.
 - `synergy/*.json`: capability framework, formation rules, and expected interaction traces.

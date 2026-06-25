@@ -1,5 +1,16 @@
 # Changelog
 
+## 0.5.2 - 2026-06-24
+
+- Repaired Formation Analysis so trace generation starts inside the three selected formation dragons and rejects unselected friendly sources, recipients, matched outputs, status providers, stat providers, and recipient-side amplifiers.
+- Added hard-requirement precedence so failed provider position, recipient position, adjacency, source-scope, targeting, and selected-formation requirements cannot become active or potential because progression is unknown or previewed.
+- Added `damage-received` defensive ally support and `defensive-ally-support` traces, including Seasmoke Champion's Brilliance Right Flank Damage Received support.
+- Deduplicated normal parent traces and displayed requirements, aggregated repeated ability outputs with effect context, grouped single-target recipient competition, and kept periodic damage as debug metadata instead of a second normal buff.
+- Removed PvE-only Stolen Flock warnings from normal PvP formation summaries and changed empty debug sections to "None identified".
+- Corrected Resistance glossary/source wording to verified Damage Received reduction while retaining narrower stacking, refresh, and final formula questions.
+- Expanded generated formation review cases to twelve cases and regenerated project-context schema support for the defensive channel and trace kind.
+- Increased database version to `0.5.2` and data schema to `8`; local roster schema remains `3`.
+
 ## 0.5.1 - 2026-06-24
 
 - Reconciled Formation Builder normal analysis, debug traces, audit exports, and framework report data around the shared formation trace generator.

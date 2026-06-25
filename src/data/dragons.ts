@@ -1342,13 +1342,13 @@ const createSeasmoke = (): Dragon => {
       rawDescription: 'Each Round: grant Advantage above 50% Troop Capacity or Resistance below 50% Troop Capacity to 2 other Allies.',
       schedules: [
         schedule({ id: 'loyal-bond-advantage', timing: 'each-round', triggerChanceByHabitLevel: rankedPercents([10, 13, 16, 20, 25]), conditions: [aboveHalfTroopCapacity], effects: [fixedEffect({ id: 'loyal-bond-advantage-effect', type: 'Advantage', target: '2 other Allies', targetScope: 'any-lane', magnitude: 20, unit: 'percent', durationRounds: 2, conditions: [aboveHalfTroopCapacity], casterEligibility: 'excluded' })] }),
-        schedule({ id: 'loyal-bond-resistance', timing: 'each-round', triggerChanceByHabitLevel: rankedPercents([10, 13, 16, 20, 25]), conditions: [belowHalfTroopCapacity], effects: [fixedEffect({ id: 'loyal-bond-resistance-effect', type: 'Resistance', target: '2 other Allies', targetScope: 'any-lane', magnitude: 20, unit: 'percent', durationRounds: 2, conditions: [belowHalfTroopCapacity], notes: ['Exact Resistance semantics unresolved.'], casterEligibility: 'excluded' })] }),
+        schedule({ id: 'loyal-bond-resistance', timing: 'each-round', triggerChanceByHabitLevel: rankedPercents([10, 13, 16, 20, 25]), conditions: [belowHalfTroopCapacity], effects: [fixedEffect({ id: 'loyal-bond-resistance-effect', type: 'Resistance', target: '2 other Allies', targetScope: 'any-lane', magnitude: 20, unit: 'percent', durationRounds: 2, conditions: [belowHalfTroopCapacity], notes: ['Resistance reduces Damage Received. Exact stacking and refresh behavior remain unresolved.'], casterEligibility: 'excluded' })] }),
       ],
       powerByHabitLevel: finalLegendaryPower,
       tags: ['ADVANTAGE', 'RESISTANCE', 'OTHER_ALLIES_TARGET'],
       verification: screenshotVerification('Seasmoke Loyal Bond screenshot'),
       evidenceIds: ['seasmoke-loyal-bond-2026-06-23'],
-      unresolvedQuestions: ['Exactly 50% Troop Capacity boundary.', 'Resistance detailed meaning.'],
+      unresolvedQuestions: ['Exactly 50% Troop Capacity boundary.', 'Resistance stacking, refresh, and multiple-source combination.'],
     }),
   ];
 
@@ -1369,7 +1369,7 @@ const createSeasmoke = (): Dragon => {
       trait: screenshotVerification("Seasmoke Champion's Brilliance screenshot"),
       habits: screenshotVerification('Seasmoke Habit screenshots'),
     },
-    unresolvedQuestions: ['Resistance detailed meaning.', 'Panic exact status definition.', 'Infectious Wrath augmentation presentation requires follow-up review.'],
+    unresolvedQuestions: ['Resistance stacking, refresh, and final mitigation formula.', 'Panic exact status definition.', 'Infectious Wrath augmentation presentation requires follow-up review.'],
   };
 };
 

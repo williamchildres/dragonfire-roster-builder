@@ -57,12 +57,15 @@ Enemy debuffs are not direct ally support and are reserved for a separate future
 
 The debug view keeps child capability matches for review. It shows channel, modifier role, target selector, self-only state, source-scope compatibility, position compatibility, availability context, evidence, confidence, and the reason each interaction is active, potential, inactive, or unknown.
 
+Version 0.5.2 adds a selected-formation invariant: every friendly source, recipient, matched output, status provider, stat provider, and recipient-side amplifier must belong to one of the three selected formation dragons before a trace can reach normal cards, debug JSON, audit export, report output, or project-context review cases. Debug may retain inactive traces for selected dragons when a hard battlefield requirement fails, but unselected friendly dragons must not appear at all.
+
 Phase 3.8 adds dependency traces:
 
 - Status-condition enablement: status outputs such as First-Strike or Slow can satisfy structured capability conditions.
 - Stat-scaling support: ally stat increases can support outputs that scale with that stat.
 - Enemy mitigation reduction: enemy stat debuffs can support friendly outputs mitigated by that target stat.
 - Periodic damage amplification: damage-channel support can match periodic damage definitions such as Burn Fire Damage.
+- Defensive ally support: direct defensive teammate support such as Damage Received reduction can match a selected recipient without requiring the recipient to produce an output capability.
 
 These are explanatory traces. They may be potential or conditional when unlocks, trigger chances, target selection, exact formulas, or battlefield state are unresolved.
 
@@ -70,7 +73,9 @@ Phase 3.8.1 reconciles Formation Builder normal cards, debug traces, audit expor
 
 Capability eligibility is separate from effect activation. If a recipient qualifies for Blazing Fury Fire support, the trace may still be conditional because the effect has a 20% trigger chance, two-round duration, and target-priority rules. Locked Habits appear as potential only in max-rank preview or when user progression unlocks them.
 
-Run `npm run report:synergy` for a read-only capability report containing the revised matrix, availability context, modifier roles, generated cross-dragon synergies, excluded self modifiers, integrity checks, and unresolved assumptions.
+Hard battlefield failures take precedence over progression. Failed provider position, recipient position, adjacency, target side, specific-position target, source scope, explicit caster exclusion, or selected-formation membership cannot be promoted to active, potential, or unknown by preview mode or missing Level/Star/Habit data.
+
+Run `npm run report:synergy` for a read-only capability report containing the revised matrix, availability context, modifier roles, generated cross-dragon synergies, Formation Analysis repair review, exact reviewed formation outputs, integrity checks, and unresolved assumptions.
 
 ## Threshold Interpretation
 
@@ -93,7 +98,7 @@ Audit JSON uses:
 {
   "format": "dragonfire-synergy-audit",
   "schemaVersion": 1,
-  "databaseVersion": "0.5.1",
+  "databaseVersion": "0.5.2",
   "gameBuild": "26.6.53509",
   "generatedAt": "ISO timestamp",
   "formation": {
