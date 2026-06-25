@@ -29,7 +29,7 @@ function dragon(id: string) {
 describe('Phase 3.8 Syrax and Caraxes data', () => {
   it('keeps roster size stable and versions the data schema', () => {
     expect(dragons).toHaveLength(30);
-    expect(databaseMetadata.databaseVersion).toBe('0.5.0');
+    expect(databaseMetadata.databaseVersion).toBe('0.5.1');
     expect(databaseMetadata.schemaVersion).toBe(7);
     expect(databaseMetadata.currentDocumentedGameBuild).toBe('26.6.53509');
   });
@@ -205,7 +205,13 @@ describe('Phase 3.8 generic trace behavior', () => {
       { 'left-flank': 'malachite', vanguard: 'caraxes', 'right-flank': 'syrax' },
       dragons,
       { previewMaxRankInteractions: true },
-    ).find((item) => item.matchKind === 'stat-scaling-support' && item.sourceDragonId === 'caraxes' && item.recipientDragonId === 'syrax');
+    ).find(
+      (item) =>
+        item.ruleId === 'stat-scaling-support' &&
+        item.matchKind === 'stat-scaling-support' &&
+        item.sourceDragonId === 'caraxes' &&
+        item.recipientDragonId === 'syrax',
+    );
     const mitigationTrace = analyzeCapabilityAmplifications(
       { 'left-flank': 'caraxes', vanguard: 'syrax', 'right-flank': 'sheepstealer' },
       dragons,

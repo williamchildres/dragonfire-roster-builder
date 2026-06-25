@@ -9,7 +9,8 @@ import type {
   SynergyResult,
   SynergyRule,
 } from '../models/synergy';
-import { analyzeFormationTraces } from './synergyTrace';
+import { analyzeFormationTraces, dedupeTraceMessages, isNormalSynergyTrace } from './synergyTrace';
+import type { TraceOptions } from './synergyTrace';
 
 export function analyzeTeam(
   dragonIds: Array<string | null>,
@@ -31,6 +32,7 @@ export function analyzeFormation(
   formation: FormationAnalysisInput,
   dragons: Dragon[],
   rules: SynergyRule[],
+  options: TraceOptions = {},
 ): SynergyResult {
   const formationEntries = FORMATION_POSITIONS.map((position) => ({
     position,
@@ -42,9 +44,9 @@ export function analyzeFormation(
     .map((entry) => entry.dragon)
     .filter((dragon): dragon is Dragon => Boolean(dragon));
   const missingData = findMissingData(team);
-  const traces = analyzeFormationTraces(formation, dragons);
+  const traces = analyzeFormationTraces(formation, dragons, options);
   const tracePositives = traces
-    .filter((trace) => trace.status === 'active' && trace.effects.length > 0)
+    .filter((trace) => trace.status === 'active' && trace.effects.length > 0 && isNormalSynergyTrace(trace))
     .map((trace) => ({
       dragonIds: [trace.sourceDragonId, trace.recipientDragonId].filter((id): id is string => Boolean(id)),
       tags: [],
@@ -64,7 +66,12 @@ export function analyzeFormation(
     warnings.push('Select at least two dragons before reviewing team interactions.');
   }
 
-  if (missingData.length > 0) {
+  const hasStructuredAnalysis = traces.some((trace) => isNormalSynergyTrace(trace));
+  if (missingData.length > 0 && hasStructuredAnalysis) {
+    warnings.push(
+      'Partial analysis generated. Some interactions depend on locked abilities, chance, target selection, or unresolved formulas.',
+    );
+  } else if (missingData.length > 0) {
     warnings.push(
       'Synergy analysis is unavailable because one or more selected dragons do not yet have verified Command, Habit, affinity, or effect-tag data.',
     );
@@ -81,10 +88,10 @@ export function analyzeFormation(
     conflicts,
     positionRequirements: positionRequirements.filter((item) => !item.ruleId.startsWith('unmet-')),
     unmetRequirements,
-    unresolvedAssumptions: [
+    unresolvedAssumptions: dedupeTraceMessages([
       ...team.flatMap((dragon) => dragon.unresolvedQuestions),
       ...traces.flatMap((trace) => trace.unresolvedQuestions),
-    ],
+    ]),
     warnings,
     missingData,
     traces,

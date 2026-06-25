@@ -53,6 +53,8 @@ import {
   createSynergyAuditExport,
   generateFormationAudit,
   traceStatusReason,
+  isConditionalTrace,
+  isNormalSynergyTrace,
 } from '../services/synergyTrace';
 import { defaultFilters, filterDragons, sortDragons, type DragonFilters, type DragonSort } from '../services/rosterFilters';
 import {
@@ -573,7 +575,7 @@ function FormationBuilderSection({
     .map((id) => dragons.find((dragon) => dragon.id === id))
     .filter((dragon): dragon is Dragon => Boolean(dragon));
   const traceOptions = { roster, previewMaxRankInteractions: previewMaxRank };
-  const synergy = analyzeFormation(formation, dragons, defaultSynergyRules);
+  const synergy = analyzeFormation(formation, dragons, defaultSynergyRules, traceOptions);
   const traces = analyzeFormationTraces(formation, dragons, traceOptions);
   const providerEffects = [...new Set(traces.map((trace) => trace.providedEffectType).filter((value): value is string => Boolean(value)))];
   const recipientAmplifiers = [...new Set(traces.map((trace) => trace.recipientModifierType).filter((value): value is string => Boolean(value)))];
@@ -774,7 +776,18 @@ function FormationBuilderSection({
           <AnalysisList
             title="Active interactions"
             items={traces
-              .filter((trace) => trace.status === 'active')
+              .filter((trace) => trace.status === 'active' && isNormalSynergyTrace(trace))
+              .map((trace) => ({
+                ruleId: trace.id,
+                title: trace.title,
+                description: `${trace.explanation} ${traceStatusReason(trace)}`,
+                confidence: trace.confidence,
+              }))}
+          />
+          <AnalysisList
+            title="Conditional and potential interactions"
+            items={traces
+              .filter((trace) => isConditionalTrace(trace) && isNormalSynergyTrace(trace))
               .map((trace) => ({
                 ruleId: trace.id,
                 title: trace.title,

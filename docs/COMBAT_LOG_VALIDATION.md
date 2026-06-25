@@ -140,3 +140,17 @@ Do not submit private account details, credentials, exploit instructions, copied
 - Game build: `26.6.53509`
 - Expected interaction: Battle Dread and Mass Enfeeble preserve the visible discrepancy between raw description and ranked table values
 - Validation goal: Confirm whether the ranked table or raw description controls the applied value at Habit Level 1
+
+### 16. Phase 3.8.1 Formation Trace Review
+
+- Status: website regression suite
+- Game build: `26.6.53509`
+- Formation A: Left Flank Malachite, Vanguard Caraxes, Right Flank Syrax
+  - Expected: Syrax Fire support and First-Strike can target Caraxes; Hunter's Wrath supports Right Flank Syrax; Slow to Strategic Revival is preview-only unless unlocked
+- Formation B: Left Flank Caraxes, Vanguard Syrax, Right Flank Malachite
+  - Expected: Syrax Fire support and First-Strike can target Caraxes; Sentinel's Wit supports Left Flank Caraxes; Hunter's Wrath is inactive
+- Formation C: Left Flank Malachite, Vanguard Syrax, Right Flank Caraxes
+  - Expected: Sentinel's Wit supports Malachite Instinct and Initiative; Malachite Instinct scaling matches Warden's Rally Tactical Damage and Recovery; Tactical Inferno preview prefers Right Flank Caraxes
+- Formation D: Left Flank Syrax, Vanguard Caraxes, Right Flank Malachite
+  - Expected: Hunter's Wrath supports Right Flank Malachite and does not support Left Flank Syrax; Slow to Strategic Revival is preview-only unless unlocked
+- Notes: Warden's Rally self-inclusion remains a confirmed targeting fact, not a standalone active synergy
