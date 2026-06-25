@@ -58,6 +58,7 @@ import {
   buildFormationCardPresentation,
   getCompactInteractions,
   type FormationCardAnalysis,
+  type FormationCommandSummary,
   type FormationCardInteraction,
   type FormationCardInteractionState,
   type FormationTraitStatus,
@@ -986,6 +987,7 @@ function FormationPositionCard({
       </div>
       {dragon ? (
         <>
+          <CommandPanel command={card.command} />
           <TraitStatusPanel status={card.traitStatus} />
           <DragonAffinityStrip dragonName={dragon.name} favorable={card.affinities.favorable} unfavorable={card.affinities.unfavorable} />
           <div className="interaction-panels">
@@ -1015,6 +1017,52 @@ function FormationPositionCard({
         <p className="empty-card-note">Choose a dragon to see Trait, affinity, and interaction details.</p>
       )}
     </article>
+  );
+}
+
+function CommandPanel({ command }: { command: FormationCommandSummary | null }) {
+  const [detailsOpen, setDetailsOpen] = useState(false);
+  const detailsId = command ? `command-details-${command.dragonId}` : undefined;
+  if (!command) {
+    return (
+      <section className="card-mini-section command-panel" aria-label="Command">
+        <h4>Command</h4>
+        <p>Command data not yet verified.</p>
+      </section>
+    );
+  }
+  return (
+    <section className="card-mini-section command-panel" aria-label="Command">
+      <div className="mini-section-heading">
+        <h4>Command</h4>
+        <span className="count-pill">{command.label}</span>
+      </div>
+      <p>
+        <strong>{command.abilityName}</strong>
+      </p>
+      <p>{command.summary}</p>
+      {command.detail !== command.summary ? (
+        <>
+          <button
+            type="button"
+            className="text-button compact-action interaction-details-toggle"
+            aria-expanded={detailsOpen}
+            aria-controls={detailsId}
+            onClick={() => setDetailsOpen((current) => !current)}
+          >
+            {detailsOpen ? 'Hide details' : 'Details'}
+          </button>
+          {detailsOpen ? (
+            <div className="interaction-details" id={detailsId}>
+              <strong>Full Command text</strong>
+              {command.detail.split(/\n\n+/).map((paragraph) => (
+                <p key={paragraph}>{paragraph}</p>
+              ))}
+            </div>
+          ) : null}
+        </>
+      ) : null}
+    </section>
   );
 }
 

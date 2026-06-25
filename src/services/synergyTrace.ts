@@ -601,7 +601,7 @@ function abilityProgressionRequirements(
   const starRank = rosterEntry?.starRank ?? observation?.starRank ?? null;
   const dragonLevel = Object.hasOwn(options.dragonLevels ?? {}, dragon.id)
     ? (options.dragonLevels?.[dragon.id] ?? null)
-    : (observation?.dragonLevel ?? null);
+    : (rosterEntry?.reignLevel ?? observation?.dragonLevel ?? null);
   const habitLevel = rosterEntry?.habitLevels[ability.id] ?? null;
   const requirements: RequirementTrace[] = [];
   if (options.roster) {

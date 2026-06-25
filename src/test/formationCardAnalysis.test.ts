@@ -1,11 +1,13 @@
 import { describe, expect, it } from 'vitest';
 import { dragons } from '../data/dragons';
+import type { OwnedDragon } from '../models/dragon';
 import type { FormationAnalysisInput } from '../models/synergy';
 import {
   buildFormationCardPresentation,
   canonicalCardText,
   getCompactInteractions,
 } from '../services/formationCardAnalysis';
+import { createEmptyRoster } from '../services/rosterStorage';
 import { analyzeFormationTraces } from '../services/synergyTrace';
 
 const preview = { previewMaxRankInteractions: true };
@@ -14,11 +16,18 @@ const formations: Record<string, FormationAnalysisInput> = {
   '1': { 'left-flank': 'malachite', vanguard: 'sheepstealer', 'right-flank': 'vermax' },
   '4': { 'left-flank': 'malachite', vanguard: 'seasmoke', 'right-flank': 'sheepstealer' },
   '8': { 'left-flank': 'sheepstealer', vanguard: 'caraxes', 'right-flank': 'syrax' },
+  '13': { 'left-flank': 'seasmoke', vanguard: 'malachite', 'right-flank': 'sheepstealer' },
+  '14': { 'left-flank': 'seasmoke', vanguard: 'sheepstealer', 'right-flank': 'malachite' },
 };
 
-function presentation(formationId: string, previewEnabled = false) {
+function presentation(
+  formationId: string,
+  previewEnabled = false,
+  options: { roster?: Record<string, OwnedDragon> } = {},
+) {
   const formation = formations[formationId]!;
-  const traces = analyzeFormationTraces(formation, dragons, previewEnabled ? preview : {});
+  const traceOptions = { ...(previewEnabled ? preview : {}), ...options };
+  const traces = analyzeFormationTraces(formation, dragons, traceOptions);
   return buildFormationCardPresentation(formation, dragons, traces, { previewEnabled });
 }
 
@@ -52,6 +61,71 @@ describe('formation card analysis presentation', () => {
     expect(caraxes.receives.find((item) => item.abilityName === 'Blazing Fury')?.relationshipId).toBe(
       syrax.provides.find((item) => item.abilityName === 'Blazing Fury')?.relationshipId,
     );
+  });
+
+  it('adds command summaries without counting them as cross-dragon synergies', () => {
+    const result = presentation('8', false);
+
+    for (const dragonId of ['sheepstealer', 'caraxes', 'syrax']) {
+      const dragonCard = card(result, dragonId);
+      expect(dragonCard.command).toMatchObject({ label: 'Command' });
+    }
+    expect(card(result, 'sheepstealer').command?.abilityName).toBe('Wild Hunt');
+    expect(card(result, 'caraxes').command?.abilityName).toBe('Infernal Burst');
+    expect(card(result, 'syrax').command?.abilityName).toBe('Blazing Fury');
+    expect(card(result, 'syrax').receives.some((item) => item.abilityName === 'Blazing Fury')).toBe(false);
+  });
+
+  it('names Cleansing Wrath in Sentinel Presence support summaries', () => {
+    const result = presentation('13', false);
+    const seasmoke = card(result, 'seasmoke');
+    const malachite = card(result, 'malachite');
+
+    const receives = seasmoke.receives.find((item) => item.abilityName === "Sentinel's Presence");
+    const provides = malachite.provides.find((item) => item.abilityName === "Sentinel's Presence");
+    expect(seasmoke.command?.abilityName).toBe('Cleansing Wrath');
+    expect(receives?.summaryLines).toContain('Increases Cleansing Wrath Fire Damage.');
+    expect(provides?.summaryLines).toContain('Increases Cleansing Wrath Fire Damage.');
+  });
+
+  it('separates Warden Rally Recovery support from Hunter Cunning amplification state', () => {
+    const outsideVanguard = presentation('13', false);
+    const sheepstealerOutside = card(outsideVanguard, 'sheepstealer');
+    const malachiteOutside = card(outsideVanguard, 'malachite');
+    const wardenReceives = sheepstealerOutside.receives.find((item) => item.abilityName === "Warden's Rally");
+    const wardenProvides = malachiteOutside.provides.find((item) => item.abilityName === "Warden's Rally");
+    const hunterBlocked = sheepstealerOutside.receives.find((item) => item.abilityName === "Hunter's Cunning");
+
+    expect(wardenReceives?.state).not.toBe('blocked');
+    expect(wardenProvides?.state).not.toBe('blocked');
+    expect(wardenReceives?.summary).toContain('Recovery support');
+    expect(hunterBlocked?.state).toBe('blocked');
+    expect(hunterBlocked?.summary).toContain("Hunter's Cunning cannot amplify this Recovery because Sheepstealer is not Vanguard.");
+
+    const roster = createEmptyRoster(dragons);
+    roster.sheepstealer!.owned = true;
+    roster.sheepstealer!.collection.state = 'hatched';
+    roster.sheepstealer!.reignLevel = 25;
+    const inVanguard = presentation('14', false, { roster });
+    const sheepstealerVanguard = card(inVanguard, 'sheepstealer');
+    const hunterActive = sheepstealerVanguard.receives.find((item) => item.abilityName === "Hunter's Cunning");
+    expect(hunterActive?.state).toBe('active');
+  });
+
+  it('refreshes Champion Brilliance when roster Reign Level changes', () => {
+    const roster = createEmptyRoster(dragons);
+    roster.seasmoke!.owned = true;
+    roster.seasmoke!.collection.state = 'hatched';
+    roster.sheepstealer!.owned = true;
+    roster.sheepstealer!.collection.state = 'hatched';
+    roster.seasmoke!.reignLevel = 1;
+
+    const blocked = presentation('4', false, { roster });
+    expect(card(blocked, 'seasmoke').traitStatus).toMatchObject({ state: 'blocked' });
+
+    roster.seasmoke!.reignLevel = 25;
+    const refreshed = presentation('4', false, { roster });
+    expect(card(refreshed, 'seasmoke').traitStatus?.state).not.toBe('blocked');
   });
 
   it('aggregates same-ability current interactions without losing child trace ids', () => {

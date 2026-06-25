@@ -1,4 +1,4 @@
-import { FORMATION_POSITIONS, TROOP_TYPES, type Dragon, type FormationPosition, type TroopType } from '../models/dragon';
+import { FORMATION_POSITIONS, TROOP_TYPES, type AbilityDefinition, type Dragon, type FormationPosition, type TroopType } from '../models/dragon';
 import type { FormationAnalysisInput, RequirementTrace, SynergyTrace, TraceConfidence, TraceStatus } from '../models/synergy';
 import { isNormalSynergyTrace } from './synergyTrace';
 
@@ -43,6 +43,14 @@ export interface FormationTraitStatus {
   detail: string;
 }
 
+export interface FormationCommandSummary {
+  dragonId: string;
+  abilityName: string;
+  label: 'Command';
+  summary: string;
+  detail: string;
+}
+
 export interface FormationCardAffinitySummary {
   favorable: TroopType[];
   unfavorable: TroopType[];
@@ -54,6 +62,7 @@ export interface FormationCardAnalysis {
   dragonId: string | null;
   receives: FormationCardInteraction[];
   provides: FormationCardInteraction[];
+  command: FormationCommandSummary | null;
   traitStatus: FormationTraitStatus | null;
   affinities: FormationCardAffinitySummary;
   overflow: {
@@ -170,6 +179,7 @@ export function buildFormationCardPresentation(
       dragonId: dragon?.id ?? null,
       receives,
       provides,
+      command: dragon ? deriveCommandSummary(dragon) : null,
       traitStatus: dragon ? deriveTraitStatus(dragon, position, traces) : null,
       affinities: dragon ? deriveCardAffinities(dragon) : emptyAffinities(),
       overflow: {
@@ -252,7 +262,10 @@ function toCardInteraction({
   candidateIndex: number | null;
   candidateTotal: number | null;
 }): FormationCardInteraction {
-  const abilityName = getAbilityName(source, trace.sourceAbilityId);
+  const abilityName =
+    trace.matchKind === 'incoming-effect-amplification' && trace.recipientModifierAbilityId && recipient
+      ? getAbilityName(recipient, trace.recipientModifierAbilityId)
+      : getAbilityName(source, trace.sourceAbilityId);
   const state = traceState(trace, previewEnabled);
   const detail = canonicalCardText(trace.explanation, allDragons);
   const summaryLines = summarizeTrace(trace, source, recipient, detail, {
@@ -328,14 +341,63 @@ function summarizeTrace(
   if (trace.modifierRole === 'enemy-debuff' || trace.matchKind === 'enemy-mitigation-reduction') {
     return [enemyFacingSummary(trace)];
   }
+  if (
+    trace.matchKind === 'incoming-effect-amplification' &&
+    trace.recipientModifierAbilityId === 'sheepstealer-hunters-cunning' &&
+    trace.status === 'inactive' &&
+    trace.requirements.some((requirement) => requirement.satisfied === false && /position/i.test(requirement.label))
+  ) {
+    return ["Hunter's Cunning cannot amplify this Recovery because Sheepstealer is not Vanguard."];
+  }
+  if (trace.matchKind === 'incoming-effect-amplification' && trace.recipientModifierType) {
+    const modifier = trace.recipientModifierType.replace(/ Up$/i, '');
+    return [`${modifier} can amplify this ${formatToken(trace.channel ?? 'effect')}.`];
+  }
   if (trace.channel === 'stat') {
     return [formatStatEffects(trace.effects) ?? formatStatDetail(detail) ?? detail];
   }
   if (trace.channel) {
+    const recipientCommand = recipient?.command;
+    if (recipientCommand && trace.recipientAbilityId?.includes(recipientCommand.id)) {
+      return [`Increases ${recipientCommand.name} ${formatToken(trace.channel)}.`];
+    }
     const channel = formatToken(trace.damageScope ? `${trace.damageScope}-damage-received` : trace.channel);
     return [`${channel} support${recipient ? ` for ${recipient.name}` : ''}.`];
   }
   return [detail.replaceAll('1.5x', '1.5×')];
+}
+
+function deriveCommandSummary(dragon: Dragon): FormationCommandSummary | null {
+  if (!dragon.command) {
+    return null;
+  }
+  return {
+    dragonId: dragon.id,
+    abilityName: dragon.command.name,
+    label: 'Command',
+    summary: commandSummary(dragon.command),
+    detail: dragon.command.rawDescription ?? commandSummary(dragon.command),
+  };
+}
+
+function commandSummary(command: AbilityDefinition): string {
+  const firstSchedule = command.schedules[0];
+  const effects = command.schedules.flatMap((schedule) => schedule.effects);
+  const primary = effects[0];
+  if (!primary) {
+    return command.rawDescription?.split(/\n\n|(?<=\.)\s+/)[0] ?? `${command.name} command details are not yet verified.`;
+  }
+  const timing = firstSchedule ? scheduleTiming(firstSchedule.timing, firstSchedule.rounds) : 'Command';
+  const effectNames = unique(effects.map((effect) => effect.type));
+  const target = primary.target ? ` to ${primary.target}` : '';
+  return `${timing}: ${joinEnglishList(effectNames)}${target}.`;
+}
+
+function scheduleTiming(timing: string, rounds: number[]): string {
+  if (rounds.length > 0) {
+    return `Rounds ${joinEnglishList(rounds.map(String))}`;
+  }
+  return formatToken(timing);
 }
 
 function traceState(trace: SynergyTrace, previewEnabled = false): FormationCardInteractionState {
@@ -590,6 +652,7 @@ function dedupeInteractions(interactions: FormationCardInteraction[]): Formation
   for (const interaction of interactions) {
     const key = [
       interaction.relationshipId,
+      interaction.abilityName,
       interaction.summary,
       interaction.state,
       interaction.isCandidate ? 'candidate' : 'direct',
@@ -603,6 +666,9 @@ function dedupeInteractions(interactions: FormationCardInteraction[]): Formation
 
 function isRedundantBlockedTraitTrace(trace: SynergyTrace, source: Dragon, previewEnabled: boolean): boolean {
   if (source.trait?.id !== trace.sourceAbilityId || traceState(trace, previewEnabled) !== 'blocked') {
+    return false;
+  }
+  if (trace.recipientModifierType) {
     return false;
   }
   return trace.requirements.some(
@@ -629,6 +695,9 @@ function interactionPurpose(trace: SynergyTrace): string | null {
   }
   if (trace.matchKind === 'enemy-mitigation-reduction') {
     return 'Enemy mitigation reduction';
+  }
+  if (trace.matchKind === 'incoming-effect-amplification' && trace.recipientModifierType) {
+    return `${formatToken(trace.channel ?? 'recovery')} amplification`;
   }
   if (trace.channel === 'stat') {
     return 'Stat support';
