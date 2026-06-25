@@ -244,3 +244,12 @@ The app and `npm run report:synergy` expose the matrix for Syrax, Caraxes, Malac
 - Sheepstealer Dragon's Cunning scaling scope remains provisional.
 - Infectious Wrath augmentation presentation remains needs-follow-up.
 - Enemy-formation adjacency is not confirmed.
+## Formation Normalization 0.5.3
+
+- Direct stat support aggregates sibling effects from the same ability and recipient-selection group. Debug traces retain every child modifier capability ID, and stat-scaling traces remain selective by stat.
+- Defensive ally support carries `damageScope`: `all`, `physical`, `tactical`, or `fire`. Normal titles must preserve the subtype.
+- Thresholds are conditions, not target counts. Trial by Flame exports strict below 75%, 50%, and 25% Troop Capacity conditions with `targetSelector.count` left null.
+- Highest-stat and one-adjacent selectors are one-target selectors. Unique observed stat winners resolve to one recipient; ties or missing stat values create grouped candidate interactions.
+- Requirement labels should identify provider and recipient-output ownership.
+- `interactionScope` separates cross-dragon, internal, enemy-side, and targeting-fact traces. Internal traces remain available for debug/export but are not cross-dragon normal synergy.
+- Source ability identity is part of normal text; Spreading Blaze and Rallying Flame must remain distinguishable.

@@ -1003,6 +1003,14 @@ function TraceCard({ trace }: { trace: SynergyTrace }) {
           <dd>{trace.matchKind ? formatToken(trace.matchKind) : unknown}</dd>
         </div>
         <div>
+          <dt>Interaction scope</dt>
+          <dd>{trace.interactionScope ? formatToken(trace.interactionScope) : unknown}</dd>
+        </div>
+        <div>
+          <dt>Damage scope</dt>
+          <dd>{trace.damageScope ? formatToken(trace.damageScope) : unknown}</dd>
+        </div>
+        <div>
           <dt>Modifier role</dt>
           <dd>{trace.modifierRole ? formatToken(trace.modifierRole) : unknown}</dd>
         </div>
@@ -1055,6 +1063,7 @@ function TraceCard({ trace }: { trace: SynergyTrace }) {
         ))}
       </ul>
       <TraceList title="Matched effect tags and facts" items={trace.matchedFacts} />
+      <TraceList title="Modifier capabilities" items={trace.modifierCapabilityIds ?? (trace.modifierCapabilityId ? [trace.modifierCapabilityId] : [])} />
       <TraceList title="Matched output capabilities" items={trace.matchedOutputCapabilityIds ?? []} />
       <TraceList
         title="Source-scope compatibility"

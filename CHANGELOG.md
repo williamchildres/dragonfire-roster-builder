@@ -1,5 +1,17 @@
 # Changelog
 
+## 0.5.3 - 2026-06-24
+
+- Aggregated sibling direct stat effects in normal Formation Analysis cards while preserving child modifier capability IDs in debug output.
+- Added defensive `damageScope` normalization for all, tactical, and fire Damage Received support.
+- Corrected Trial by Flame troop-capacity thresholds to strict below conditions instead of target counts, with Level 5 ranked values available in max-rank preview.
+- Normalized highest-stat and one-adjacent target selection for Reactive Instincts and Lightning Strike so one-target effects do not appear to buff multiple recipients simultaneously.
+- Kept Champion's Brilliance inactive for observed Level 1 Seasmoke and surfaced the Level 16 requirement failure in Unmet requirements; max-rank Habit preview does not change Dragon Level.
+- Added source-ability-specific normal text for Spreading Blaze and Rallying Flame.
+- Attributed provider and recipient-output progression blockers with dragon and ability ownership.
+- Classified interaction scope and excluded internal same-dragon interactions from cross-dragon normal sections while preserving them in debug/export.
+- Increased database version to `0.5.3` and data schema to `9`; local roster schema remains `3` and context export version remains `1`.
+
 ## 0.5.2 - 2026-06-24
 
 - Repaired Formation Analysis so trace generation starts inside the three selected formation dragons and rejects unselected friendly sources, recipients, matched outputs, status providers, stat providers, and recipient-side amplifiers.

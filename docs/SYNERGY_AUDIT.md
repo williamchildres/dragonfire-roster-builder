@@ -113,3 +113,8 @@ Audit JSON uses:
 ```
 
 Use the export to compare website reasoning with future combat logs. Do not treat audit output as a replacement for evidence review.
+## Formation Normalization Checks
+
+The synergy report now includes `FORMATION NORMALIZATION RETEST` for Formations 1-8. The report fails if grouped stat cards lose sibling effects, Reactive Instincts or Lightning Strike create simultaneous one-target recipients, Trial by Flame exports thresholds as target counts, defensive subtype titles collapse to generic Damage Received, Champion's Brilliance hides Seasmoke's Level 16 failure, internal interactions appear as cross-dragon normal synergy, Spreading Blaze and Rallying Flame collapse into identical text, or canonical display names are replaced by slugs.
+
+Audit exports retain internal traces, child modifier capability IDs, defensive damage scope, target-selection groups, and requirement ownership so reviewers can compare normal presentation with raw trace evidence.
