@@ -3472,7 +3472,7 @@
   "firstObservedInGame": null,
   "format": "dragonfire-dragon-profile",
   "gameVersion": null,
-  "generatedAt": "2026-06-25T01:19:13.742Z",
+  "generatedAt": "2026-06-25T02:16:23.860Z",
   "habits": [
     {
       "abilityClass": "passive",
@@ -4452,6 +4452,7 @@
       "conditions": [],
       "confidence": "confirmed",
       "currentlyAvailable": true,
+      "damageScope": null,
       "direction": "dealt",
       "directlyVerified": true,
       "dragonId": "seasmoke",
@@ -4474,6 +4475,7 @@
           "label": "Provider position requirement"
         }
       ],
+      "rankedValues": [],
       "recipientRequirements": [],
       "requiredHabitLevel": null,
       "role": "self-amplification",
@@ -4485,6 +4487,7 @@
         "position": null,
         "scope": "self",
         "selection": "self",
+        "selectionStat": null,
         "side": "self"
       },
       "unit": "flat",
@@ -4511,6 +4514,7 @@
       "conditions": [],
       "confidence": "confirmed",
       "currentlyAvailable": true,
+      "damageScope": null,
       "direction": "dealt",
       "directlyVerified": true,
       "dragonId": "seasmoke",
@@ -4533,6 +4537,7 @@
           "label": "Provider position requirement"
         }
       ],
+      "rankedValues": [],
       "recipientRequirements": [],
       "requiredHabitLevel": null,
       "role": "self-amplification",
@@ -4544,6 +4549,7 @@
         "position": null,
         "scope": "self",
         "selection": "self",
+        "selectionStat": null,
         "side": "self"
       },
       "unit": "flat",
@@ -4570,6 +4576,7 @@
       "conditions": [],
       "confidence": "confirmed",
       "currentlyAvailable": true,
+      "damageScope": null,
       "direction": "dealt",
       "directlyVerified": true,
       "dragonId": "seasmoke",
@@ -4592,6 +4599,7 @@
           "label": "Provider position requirement"
         }
       ],
+      "rankedValues": [],
       "recipientRequirements": [],
       "requiredHabitLevel": null,
       "role": "self-amplification",
@@ -4603,6 +4611,7 @@
         "position": null,
         "scope": "self",
         "selection": "self",
+        "selectionStat": null,
         "side": "self"
       },
       "unit": "flat",
@@ -4629,6 +4638,7 @@
       "conditions": [],
       "confidence": "confirmed",
       "currentlyAvailable": true,
+      "damageScope": "all",
       "direction": "received",
       "directlyVerified": true,
       "dragonId": "seasmoke",
@@ -4651,6 +4661,7 @@
           "label": "Provider position requirement"
         }
       ],
+      "rankedValues": [],
       "recipientRequirements": [],
       "requiredHabitLevel": null,
       "role": "ally-support",
@@ -4662,6 +4673,7 @@
         "position": "right-flank",
         "scope": "right-flank",
         "selection": "specific-position",
+        "selectionStat": null,
         "side": "ally"
       },
       "unit": "percent",
@@ -4688,6 +4700,7 @@
       "conditions": [],
       "confidence": "confirmed",
       "currentlyAvailable": false,
+      "damageScope": null,
       "direction": "dealt",
       "directlyVerified": true,
       "dragonId": "seasmoke",
@@ -4700,17 +4713,45 @@
       "minimumDragonLevel": null,
       "operation": "increase",
       "providerRequirements": [],
+      "rankedValues": [
+        {
+          "level": 1,
+          "unit": "percent",
+          "value": 22
+        },
+        {
+          "level": 2,
+          "unit": "percent",
+          "value": 26.4
+        },
+        {
+          "level": 3,
+          "unit": "percent",
+          "value": 30.8
+        },
+        {
+          "level": 4,
+          "unit": "percent",
+          "value": 37.4
+        },
+        {
+          "level": 5,
+          "unit": "percent",
+          "value": 44
+        }
+      ],
       "recipientRequirements": [],
       "requiredHabitLevel": 1,
       "role": "ally-support",
       "sourceScope": "unknown",
       "stackMaximum": null,
       "targetSelector": {
-        "count": null,
+        "count": 1,
         "includesCaster": null,
         "position": null,
         "scope": "any-lane",
-        "selection": "any",
+        "selection": "highest-stat",
+        "selectionStat": "intelligence",
         "side": "ally"
       },
       "unit": "flat",
@@ -4737,6 +4778,7 @@
       "conditions": [],
       "confidence": "confirmed",
       "currentlyAvailable": false,
+      "damageScope": null,
       "direction": "dealt",
       "directlyVerified": true,
       "dragonId": "seasmoke",
@@ -4749,17 +4791,45 @@
       "minimumDragonLevel": null,
       "operation": "increase",
       "providerRequirements": [],
+      "rankedValues": [
+        {
+          "level": 1,
+          "unit": "percent",
+          "value": 12.5
+        },
+        {
+          "level": 2,
+          "unit": "percent",
+          "value": 15
+        },
+        {
+          "level": 3,
+          "unit": "percent",
+          "value": 17.5
+        },
+        {
+          "level": 4,
+          "unit": "percent",
+          "value": 21.25
+        },
+        {
+          "level": 5,
+          "unit": "percent",
+          "value": 25
+        }
+      ],
       "recipientRequirements": [],
       "requiredHabitLevel": 1,
       "role": "ally-support",
       "sourceScope": "unknown",
       "stackMaximum": null,
       "targetSelector": {
-        "count": null,
+        "count": 1,
         "includesCaster": null,
         "position": null,
         "scope": "any-lane",
-        "selection": "any",
+        "selection": "highest-stat",
+        "selectionStat": "intelligence",
         "side": "ally"
       },
       "unit": "percent",
@@ -4786,6 +4856,7 @@
       "conditions": [],
       "confidence": "confirmed",
       "currentlyAvailable": false,
+      "damageScope": null,
       "direction": "dealt",
       "directlyVerified": true,
       "dragonId": "seasmoke",
@@ -4798,6 +4869,33 @@
       "minimumDragonLevel": null,
       "operation": "increase",
       "providerRequirements": [],
+      "rankedValues": [
+        {
+          "level": 1,
+          "unit": "percent",
+          "value": 12.5
+        },
+        {
+          "level": 2,
+          "unit": "percent",
+          "value": 15
+        },
+        {
+          "level": 3,
+          "unit": "percent",
+          "value": 17.5
+        },
+        {
+          "level": 4,
+          "unit": "percent",
+          "value": 21.25
+        },
+        {
+          "level": 5,
+          "unit": "percent",
+          "value": 25
+        }
+      ],
       "recipientRequirements": [],
       "requiredHabitLevel": 1,
       "role": "ally-support",
@@ -4809,6 +4907,7 @@
         "position": null,
         "scope": "any-lane",
         "selection": "any",
+        "selectionStat": null,
         "side": "ally"
       },
       "unit": "percent",
@@ -4835,6 +4934,7 @@
       "conditions": [],
       "confidence": "confirmed",
       "currentlyAvailable": false,
+      "damageScope": null,
       "direction": "dealt",
       "directlyVerified": true,
       "dragonId": "seasmoke",
@@ -4847,17 +4947,45 @@
       "minimumDragonLevel": null,
       "operation": "increase",
       "providerRequirements": [],
+      "rankedValues": [
+        {
+          "level": 1,
+          "unit": "percent",
+          "value": 7.5
+        },
+        {
+          "level": 2,
+          "unit": "percent",
+          "value": 9
+        },
+        {
+          "level": 3,
+          "unit": "percent",
+          "value": 10.5
+        },
+        {
+          "level": 4,
+          "unit": "percent",
+          "value": 12.75
+        },
+        {
+          "level": 5,
+          "unit": "percent",
+          "value": 15
+        }
+      ],
       "recipientRequirements": [],
       "requiredHabitLevel": 1,
       "role": "ally-support",
       "sourceScope": "unknown",
       "stackMaximum": null,
       "targetSelector": {
-        "count": 2,
+        "count": 1,
         "includesCaster": null,
         "position": null,
         "scope": "within-adjacency",
-        "selection": "adjacent",
+        "selection": "one-eligible-adjacent",
+        "selectionStat": null,
         "side": "ally"
       },
       "unit": "percent",
@@ -4884,6 +5012,7 @@
       "conditions": [],
       "confidence": "confirmed",
       "currentlyAvailable": false,
+      "damageScope": null,
       "direction": "dealt",
       "directlyVerified": true,
       "dragonId": "seasmoke",
@@ -4896,17 +5025,45 @@
       "minimumDragonLevel": null,
       "operation": "increase",
       "providerRequirements": [],
+      "rankedValues": [
+        {
+          "level": 1,
+          "unit": "percent",
+          "value": 5
+        },
+        {
+          "level": 2,
+          "unit": "percent",
+          "value": 6
+        },
+        {
+          "level": 3,
+          "unit": "percent",
+          "value": 7
+        },
+        {
+          "level": 4,
+          "unit": "percent",
+          "value": 8.5
+        },
+        {
+          "level": 5,
+          "unit": "percent",
+          "value": 10
+        }
+      ],
       "recipientRequirements": [],
       "requiredHabitLevel": 1,
       "role": "ally-support",
       "sourceScope": "all-qualifying-sources",
       "stackMaximum": null,
       "targetSelector": {
-        "count": 2,
+        "count": 1,
         "includesCaster": null,
         "position": null,
         "scope": "within-adjacency",
-        "selection": "adjacent",
+        "selection": "one-eligible-adjacent",
+        "selectionStat": null,
         "side": "ally"
       },
       "unit": "percent",
@@ -5684,10 +5841,10 @@
   "rosterSourceStatus": "official-website",
   "slug": "seasmoke",
   "source": {
-    "branch": "feature/formation-analysis-repair",
-    "commit": "33308a9be3432c3b1fe16b500e64069bd93f1dee",
-    "databaseVersion": "0.5.2",
-    "dataSchemaVersion": 8,
+    "branch": "feature/formation-analysis-normalization",
+    "commit": "60bafb88955e0d0e0f3ddc29512c1176a3f3abbd",
+    "databaseVersion": "0.5.3",
+    "dataSchemaVersion": 9,
     "gameBuild": "26.6.53509",
     "localRosterSchemaVersion": 3,
     "repository": "https://github.com/williamchildres/dragonfire-roster-builder"
@@ -5749,10 +5906,14 @@
           "unresolved": false
         },
         {
+          "comparison": "above",
           "description": "Target is above 50% Troop Capacity.",
           "evidenceIds": [],
           "id": "target-above-50-troop-capacity",
+          "kind": "target-above-troop-capacity-threshold",
           "label": "Target is above 50% Troop Capacity.",
+          "subject": "target",
+          "thresholdPercent": 50,
           "unresolved": false
         }
       ],
@@ -5770,10 +5931,11 @@
       "statusId": "advantage",
       "targetSelector": {
         "count": 2,
-        "includesCaster": null,
+        "includesCaster": false,
         "position": null,
         "scope": "any-lane",
         "selection": "any",
+        "selectionStat": null,
         "side": "ally"
       },
       "targetSide": "ally",
@@ -5831,10 +5993,14 @@
           "unresolved": false
         },
         {
+          "comparison": "below",
           "description": "Target is below 50% Troop Capacity.",
           "evidenceIds": [],
           "id": "target-below-50-troop-capacity",
+          "kind": "target-below-troop-capacity-threshold",
           "label": "Target is below 50% Troop Capacity.",
+          "subject": "target",
+          "thresholdPercent": 50,
           "unresolved": false
         }
       ],
@@ -5852,10 +6018,11 @@
       "statusId": "resistance",
       "targetSelector": {
         "count": 2,
-        "includesCaster": null,
+        "includesCaster": false,
         "position": null,
         "scope": "any-lane",
         "selection": "any",
+        "selectionStat": null,
         "side": "ally"
       },
       "targetSide": "ally",

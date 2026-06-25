@@ -10,11 +10,12 @@ Dragonfire Roster Lab records verified dragon roster data, combat mechanics, syn
 - Evidence, manual reviews, observations, statuses, and stat definitions are separate source modules.
 - Capability derivation is computed from structured AbilityEffect records in effectCapabilities.ts.
 - Formation analysis uses structured SynergyTrace records and does not produce an arbitrary numerical score.
+- Formation normalization preserves defensive scope, target-selection groups, requirement ownership, source ability identity, and interaction scope.
 
 ## Versions
 
-- Database: 0.5.2
-- Data schema: 8
+- Database: 0.5.3
+- Data schema: 9
 - Local roster schema: 3
 - Game build: 26.6.53509
 - Context export: 1
@@ -41,6 +42,11 @@ All other known dragons remain metadata-only unless their typed source records c
 - Recipient-side amplification may create incoming amplification.
 - Enemy debuffs are separate from ally support.
 - No arbitrary numerical synergy score is generated.
+- Defensive damage scope preserves all, physical, tactical, and fire Damage Received subtypes.
+- Troop thresholds are structured conditions, not target counts.
+- Highest-stat and one-adjacent effects target one recipient or one grouped candidate set.
+- Internal same-dragon traces are preserved for debug/export but are not cross-dragon normal synergy.
+- Max-rank preview does not override a known failed Dragon Level requirement.
 
 ## Synergy Framework
 
@@ -71,7 +77,7 @@ The framework derives output capabilities, modifier capabilities, status outputs
 
 ## Review Plan
 
-Current review phase: Project context export and next formation-output review preparation.
+Current review phase: Formation normalization retest and project-context regeneration.
 
 Planned next phase:
 

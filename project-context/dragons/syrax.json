@@ -3666,7 +3666,7 @@
   "firstObservedInGame": null,
   "format": "dragonfire-dragon-profile",
   "gameVersion": null,
-  "generatedAt": "2026-06-25T01:19:13.742Z",
+  "generatedAt": "2026-06-25T02:16:23.860Z",
   "habits": [
     {
       "abilityClass": "passive",
@@ -4638,6 +4638,7 @@
       ],
       "confidence": "confirmed",
       "currentlyAvailable": true,
+      "damageScope": null,
       "direction": "dealt",
       "directlyVerified": true,
       "dragonId": "syrax",
@@ -4651,6 +4652,7 @@
       "minimumDragonLevel": null,
       "operation": "increase",
       "providerRequirements": [],
+      "rankedValues": [],
       "recipientRequirements": [],
       "requiredHabitLevel": null,
       "role": "ally-support",
@@ -4662,6 +4664,7 @@
         "position": null,
         "scope": "any-lane",
         "selection": "any",
+        "selectionStat": null,
         "side": "ally"
       },
       "unit": "percent",
@@ -4688,6 +4691,7 @@
       "conditions": [],
       "confidence": "confirmed",
       "currentlyAvailable": true,
+      "damageScope": null,
       "direction": "dealt",
       "directlyVerified": true,
       "dragonId": "syrax",
@@ -4710,6 +4714,7 @@
           "label": "Provider position requirement"
         }
       ],
+      "rankedValues": [],
       "recipientRequirements": [],
       "requiredHabitLevel": null,
       "role": "self-amplification",
@@ -4721,6 +4726,7 @@
         "position": null,
         "scope": "self",
         "selection": "self",
+        "selectionStat": null,
         "side": "self"
       },
       "unit": "percent",
@@ -4747,6 +4753,7 @@
       "conditions": [],
       "confidence": "confirmed",
       "currentlyAvailable": true,
+      "damageScope": null,
       "direction": "dealt",
       "directlyVerified": true,
       "dragonId": "syrax",
@@ -4769,6 +4776,7 @@
           "label": "Provider position requirement"
         }
       ],
+      "rankedValues": [],
       "recipientRequirements": [],
       "requiredHabitLevel": null,
       "role": "ally-support",
@@ -4780,6 +4788,7 @@
         "position": "left-flank",
         "scope": "left-flank",
         "selection": "specific-position",
+        "selectionStat": null,
         "side": "ally"
       },
       "unit": "flat",
@@ -4806,6 +4815,7 @@
       "conditions": [],
       "confidence": "confirmed",
       "currentlyAvailable": true,
+      "damageScope": null,
       "direction": "dealt",
       "directlyVerified": true,
       "dragonId": "syrax",
@@ -4828,6 +4838,7 @@
           "label": "Provider position requirement"
         }
       ],
+      "rankedValues": [],
       "recipientRequirements": [],
       "requiredHabitLevel": null,
       "role": "ally-support",
@@ -4839,6 +4850,7 @@
         "position": "left-flank",
         "scope": "left-flank",
         "selection": "specific-position",
+        "selectionStat": null,
         "side": "ally"
       },
       "unit": "flat",
@@ -4865,6 +4877,7 @@
       "conditions": [],
       "confidence": "confirmed",
       "currentlyAvailable": false,
+      "damageScope": null,
       "direction": "dealt",
       "directlyVerified": true,
       "dragonId": "syrax",
@@ -4877,6 +4890,33 @@
       "minimumDragonLevel": null,
       "operation": "increase",
       "providerRequirements": [],
+      "rankedValues": [
+        {
+          "level": 1,
+          "unit": "percent",
+          "value": 6.5
+        },
+        {
+          "level": 2,
+          "unit": "percent",
+          "value": 7.8
+        },
+        {
+          "level": 3,
+          "unit": "percent",
+          "value": 9.1
+        },
+        {
+          "level": 4,
+          "unit": "percent",
+          "value": 11.05
+        },
+        {
+          "level": 5,
+          "unit": "percent",
+          "value": 13
+        }
+      ],
       "recipientRequirements": [],
       "requiredHabitLevel": 1,
       "role": "ally-support",
@@ -4888,6 +4928,7 @@
         "position": null,
         "scope": "any-lane",
         "selection": "any",
+        "selectionStat": null,
         "side": "ally"
       },
       "unit": "percent",
@@ -4914,6 +4955,7 @@
       "conditions": [],
       "confidence": "confirmed",
       "currentlyAvailable": false,
+      "damageScope": null,
       "direction": "dealt",
       "directlyVerified": true,
       "dragonId": "syrax",
@@ -4926,6 +4968,33 @@
       "minimumDragonLevel": null,
       "operation": "increase",
       "providerRequirements": [],
+      "rankedValues": [
+        {
+          "level": 1,
+          "unit": "percent",
+          "value": 6.5
+        },
+        {
+          "level": 2,
+          "unit": "percent",
+          "value": 7.8
+        },
+        {
+          "level": 3,
+          "unit": "percent",
+          "value": 9.1
+        },
+        {
+          "level": 4,
+          "unit": "percent",
+          "value": 11.05
+        },
+        {
+          "level": 5,
+          "unit": "percent",
+          "value": 13
+        }
+      ],
       "recipientRequirements": [],
       "requiredHabitLevel": 1,
       "role": "ally-support",
@@ -4937,6 +5006,7 @@
         "position": null,
         "scope": "any-lane",
         "selection": "any",
+        "selectionStat": null,
         "side": "ally"
       },
       "unit": "percent",
@@ -4963,6 +5033,7 @@
       "conditions": [],
       "confidence": "confirmed",
       "currentlyAvailable": false,
+      "damageScope": null,
       "direction": "dealt",
       "directlyVerified": true,
       "dragonId": "syrax",
@@ -4975,6 +5046,33 @@
       "minimumDragonLevel": null,
       "operation": "increase",
       "providerRequirements": [],
+      "rankedValues": [
+        {
+          "level": 1,
+          "unit": "percent",
+          "value": 6
+        },
+        {
+          "level": 2,
+          "unit": "percent",
+          "value": 7.2
+        },
+        {
+          "level": 3,
+          "unit": "percent",
+          "value": 8.4
+        },
+        {
+          "level": 4,
+          "unit": "percent",
+          "value": 10.2
+        },
+        {
+          "level": 5,
+          "unit": "percent",
+          "value": 12
+        }
+      ],
       "recipientRequirements": [],
       "requiredHabitLevel": 1,
       "role": "ally-support",
@@ -4986,6 +5084,7 @@
         "position": null,
         "scope": "any-lane",
         "selection": "any",
+        "selectionStat": null,
         "side": "ally"
       },
       "unit": "percent",
@@ -5012,6 +5111,7 @@
       "conditions": [],
       "confidence": "confirmed",
       "currentlyAvailable": false,
+      "damageScope": null,
       "direction": "dealt",
       "directlyVerified": true,
       "dragonId": "syrax",
@@ -5024,6 +5124,33 @@
       "minimumDragonLevel": null,
       "operation": "decrease",
       "providerRequirements": [],
+      "rankedValues": [
+        {
+          "level": 1,
+          "unit": "percent",
+          "value": 6
+        },
+        {
+          "level": 2,
+          "unit": "percent",
+          "value": 7.2
+        },
+        {
+          "level": 3,
+          "unit": "percent",
+          "value": 8.4
+        },
+        {
+          "level": 4,
+          "unit": "percent",
+          "value": 10.2
+        },
+        {
+          "level": 5,
+          "unit": "percent",
+          "value": 12
+        }
+      ],
       "recipientRequirements": [],
       "requiredHabitLevel": 1,
       "role": "enemy-debuff",
@@ -5035,6 +5162,7 @@
         "position": null,
         "scope": "any-lane",
         "selection": "any",
+        "selectionStat": null,
         "side": "enemy"
       },
       "unit": "percent",
@@ -5061,6 +5189,7 @@
       "conditions": [],
       "confidence": "confirmed",
       "currentlyAvailable": false,
+      "damageScope": null,
       "direction": "dealt",
       "directlyVerified": true,
       "dragonId": "syrax",
@@ -5073,6 +5202,33 @@
       "minimumDragonLevel": null,
       "operation": "increase",
       "providerRequirements": [],
+      "rankedValues": [
+        {
+          "level": 1,
+          "unit": "percent",
+          "value": 18
+        },
+        {
+          "level": 2,
+          "unit": "percent",
+          "value": 21.6
+        },
+        {
+          "level": 3,
+          "unit": "percent",
+          "value": 25.2
+        },
+        {
+          "level": 4,
+          "unit": "percent",
+          "value": 30.6
+        },
+        {
+          "level": 5,
+          "unit": "percent",
+          "value": 36
+        }
+      ],
       "recipientRequirements": [],
       "requiredHabitLevel": 1,
       "role": "ally-support",
@@ -5084,6 +5240,7 @@
         "position": null,
         "scope": "any-lane",
         "selection": "any",
+        "selectionStat": null,
         "side": "ally"
       },
       "unit": "percent",
@@ -5110,6 +5267,7 @@
       "conditions": [],
       "confidence": "confirmed",
       "currentlyAvailable": false,
+      "damageScope": null,
       "direction": "dealt",
       "directlyVerified": true,
       "dragonId": "syrax",
@@ -5122,6 +5280,33 @@
       "minimumDragonLevel": null,
       "operation": "increase",
       "providerRequirements": [],
+      "rankedValues": [
+        {
+          "level": 1,
+          "unit": "percent",
+          "value": 18
+        },
+        {
+          "level": 2,
+          "unit": "percent",
+          "value": 21.6
+        },
+        {
+          "level": 3,
+          "unit": "percent",
+          "value": 25.2
+        },
+        {
+          "level": 4,
+          "unit": "percent",
+          "value": 30.6
+        },
+        {
+          "level": 5,
+          "unit": "percent",
+          "value": 36
+        }
+      ],
       "recipientRequirements": [],
       "requiredHabitLevel": 1,
       "role": "ally-support",
@@ -5133,6 +5318,7 @@
         "position": null,
         "scope": "any-lane",
         "selection": "any",
+        "selectionStat": null,
         "side": "ally"
       },
       "unit": "percent",
@@ -5979,10 +6165,10 @@
   "rosterSourceStatus": "official-website",
   "slug": "syrax",
   "source": {
-    "branch": "feature/formation-analysis-repair",
-    "commit": "33308a9be3432c3b1fe16b500e64069bd93f1dee",
-    "databaseVersion": "0.5.2",
-    "dataSchemaVersion": 8,
+    "branch": "feature/formation-analysis-normalization",
+    "commit": "60bafb88955e0d0e0f3ddc29512c1176a3f3abbd",
+    "databaseVersion": "0.5.3",
+    "dataSchemaVersion": 9,
     "gameBuild": "26.6.53509",
     "localRosterSchemaVersion": 3,
     "repository": "https://github.com/williamchildres/dragonfire-roster-builder"
@@ -6036,6 +6222,7 @@
         "position": null,
         "scope": "any-lane",
         "selection": "any",
+        "selectionStat": null,
         "side": "ally"
       },
       "targetSide": "ally",
@@ -6111,6 +6298,7 @@
         "position": null,
         "scope": "any-lane",
         "selection": "any",
+        "selectionStat": null,
         "side": "ally"
       },
       "targetSide": "ally",

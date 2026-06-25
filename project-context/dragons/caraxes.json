@@ -3026,7 +3026,7 @@
   "firstObservedInGame": null,
   "format": "dragonfire-dragon-profile",
   "gameVersion": null,
-  "generatedAt": "2026-06-25T01:19:13.742Z",
+  "generatedAt": "2026-06-25T02:16:23.860Z",
   "habits": [
     {
       "abilityClass": "passive",
@@ -4025,6 +4025,7 @@
       "conditions": [],
       "confidence": "confirmed",
       "currentlyAvailable": true,
+      "damageScope": null,
       "direction": "dealt",
       "directlyVerified": true,
       "dragonId": "caraxes",
@@ -4047,6 +4048,7 @@
           "label": "Provider position requirement"
         }
       ],
+      "rankedValues": [],
       "recipientRequirements": [],
       "requiredHabitLevel": null,
       "role": "self-amplification",
@@ -4058,6 +4060,7 @@
         "position": null,
         "scope": "self",
         "selection": "self",
+        "selectionStat": null,
         "side": "self"
       },
       "unit": "percent",
@@ -4084,6 +4087,7 @@
       "conditions": [],
       "confidence": "confirmed",
       "currentlyAvailable": true,
+      "damageScope": null,
       "direction": "dealt",
       "directlyVerified": true,
       "dragonId": "caraxes",
@@ -4106,6 +4110,7 @@
           "label": "Provider position requirement"
         }
       ],
+      "rankedValues": [],
       "recipientRequirements": [],
       "requiredHabitLevel": null,
       "role": "ally-support",
@@ -4117,6 +4122,7 @@
         "position": "right-flank",
         "scope": "right-flank",
         "selection": "specific-position",
+        "selectionStat": null,
         "side": "ally"
       },
       "unit": "flat",
@@ -4143,6 +4149,7 @@
       "conditions": [],
       "confidence": "confirmed",
       "currentlyAvailable": true,
+      "damageScope": null,
       "direction": "dealt",
       "directlyVerified": true,
       "dragonId": "caraxes",
@@ -4165,6 +4172,7 @@
           "label": "Provider position requirement"
         }
       ],
+      "rankedValues": [],
       "recipientRequirements": [],
       "requiredHabitLevel": null,
       "role": "ally-support",
@@ -4176,6 +4184,7 @@
         "position": "right-flank",
         "scope": "right-flank",
         "selection": "specific-position",
+        "selectionStat": null,
         "side": "ally"
       },
       "unit": "flat",
@@ -4202,6 +4211,7 @@
       "conditions": [],
       "confidence": "confirmed",
       "currentlyAvailable": false,
+      "damageScope": null,
       "direction": "dealt",
       "directlyVerified": true,
       "dragonId": "caraxes",
@@ -4214,6 +4224,33 @@
       "minimumDragonLevel": null,
       "operation": "decrease",
       "providerRequirements": [],
+      "rankedValues": [
+        {
+          "level": 1,
+          "unit": "percent",
+          "value": 6.5
+        },
+        {
+          "level": 2,
+          "unit": "percent",
+          "value": 7.8
+        },
+        {
+          "level": 3,
+          "unit": "percent",
+          "value": 9.1
+        },
+        {
+          "level": 4,
+          "unit": "percent",
+          "value": 11.05
+        },
+        {
+          "level": 5,
+          "unit": "percent",
+          "value": 13
+        }
+      ],
       "recipientRequirements": [],
       "requiredHabitLevel": 1,
       "role": "enemy-debuff",
@@ -4225,6 +4262,7 @@
         "position": null,
         "scope": "any-lane",
         "selection": "any",
+        "selectionStat": null,
         "side": "enemy"
       },
       "unit": "percent",
@@ -4251,6 +4289,7 @@
       "conditions": [],
       "confidence": "confirmed",
       "currentlyAvailable": false,
+      "damageScope": null,
       "direction": "dealt",
       "directlyVerified": true,
       "dragonId": "caraxes",
@@ -4263,6 +4302,33 @@
       "minimumDragonLevel": null,
       "operation": "decrease",
       "providerRequirements": [],
+      "rankedValues": [
+        {
+          "level": 1,
+          "unit": "percent",
+          "value": 6.5
+        },
+        {
+          "level": 2,
+          "unit": "percent",
+          "value": 7.8
+        },
+        {
+          "level": 3,
+          "unit": "percent",
+          "value": 9.1
+        },
+        {
+          "level": 4,
+          "unit": "percent",
+          "value": 11.05
+        },
+        {
+          "level": 5,
+          "unit": "percent",
+          "value": 13
+        }
+      ],
       "recipientRequirements": [],
       "requiredHabitLevel": 1,
       "role": "enemy-debuff",
@@ -4274,6 +4340,7 @@
         "position": null,
         "scope": "any-lane",
         "selection": "any",
+        "selectionStat": null,
         "side": "enemy"
       },
       "unit": "percent",
@@ -4300,6 +4367,7 @@
       "conditions": [],
       "confidence": "confirmed",
       "currentlyAvailable": false,
+      "damageScope": null,
       "direction": "dealt",
       "directlyVerified": true,
       "dragonId": "caraxes",
@@ -4312,6 +4380,33 @@
       "minimumDragonLevel": null,
       "operation": "increase",
       "providerRequirements": [],
+      "rankedValues": [
+        {
+          "level": 1,
+          "unit": "percent",
+          "value": 12.5
+        },
+        {
+          "level": 2,
+          "unit": "percent",
+          "value": 15
+        },
+        {
+          "level": 3,
+          "unit": "percent",
+          "value": 17.5
+        },
+        {
+          "level": 4,
+          "unit": "percent",
+          "value": 21.25
+        },
+        {
+          "level": 5,
+          "unit": "percent",
+          "value": 25
+        }
+      ],
       "recipientRequirements": [],
       "requiredHabitLevel": 1,
       "role": "self-amplification",
@@ -4323,6 +4418,7 @@
         "position": null,
         "scope": "self",
         "selection": "self",
+        "selectionStat": null,
         "side": "self"
       },
       "unit": "percent",
@@ -4349,6 +4445,7 @@
       "conditions": [],
       "confidence": "confirmed",
       "currentlyAvailable": false,
+      "damageScope": null,
       "direction": "dealt",
       "directlyVerified": true,
       "dragonId": "caraxes",
@@ -4361,6 +4458,33 @@
       "minimumDragonLevel": null,
       "operation": "decrease",
       "providerRequirements": [],
+      "rankedValues": [
+        {
+          "level": 1,
+          "unit": "percent",
+          "value": 5.5
+        },
+        {
+          "level": 2,
+          "unit": "percent",
+          "value": 6.6
+        },
+        {
+          "level": 3,
+          "unit": "percent",
+          "value": 7.7
+        },
+        {
+          "level": 4,
+          "unit": "percent",
+          "value": 9.35
+        },
+        {
+          "level": 5,
+          "unit": "percent",
+          "value": 11
+        }
+      ],
       "recipientRequirements": [],
       "requiredHabitLevel": 1,
       "role": "enemy-debuff",
@@ -4372,6 +4496,7 @@
         "position": null,
         "scope": "any-lane",
         "selection": "any",
+        "selectionStat": null,
         "side": "enemy"
       },
       "unit": "percent",
@@ -4397,15 +4522,20 @@
       "conditional": true,
       "conditions": [
         {
+          "comparison": "below",
           "description": "Enemy is below 50% maximum Troop Capacity.",
           "evidenceIds": [],
           "id": "enemy-below-50-maximum-troops",
+          "kind": "target-below-troop-capacity-threshold",
           "label": "Enemy is below 50% maximum Troop Capacity.",
+          "subject": "enemy",
+          "thresholdPercent": 50,
           "unresolved": false
         }
       ],
       "confidence": "confirmed",
       "currentlyAvailable": false,
+      "damageScope": null,
       "direction": "dealt",
       "directlyVerified": true,
       "dragonId": "caraxes",
@@ -4418,6 +4548,33 @@
       "minimumDragonLevel": null,
       "operation": "increase",
       "providerRequirements": [],
+      "rankedValues": [
+        {
+          "level": 1,
+          "unit": "percent",
+          "value": 8
+        },
+        {
+          "level": 2,
+          "unit": "percent",
+          "value": 10.4
+        },
+        {
+          "level": 3,
+          "unit": "percent",
+          "value": 12.8
+        },
+        {
+          "level": 4,
+          "unit": "percent",
+          "value": 16
+        },
+        {
+          "level": 5,
+          "unit": "percent",
+          "value": 20
+        }
+      ],
       "recipientRequirements": [],
       "requiredHabitLevel": 1,
       "role": "self-amplification",
@@ -4429,6 +4586,7 @@
         "position": null,
         "scope": "self",
         "selection": "self",
+        "selectionStat": null,
         "side": "self"
       },
       "unit": "percent",
@@ -4624,10 +4782,14 @@
       "conditional": true,
       "conditions": [
         {
+          "comparison": null,
           "description": "Enemy retreated during the previous round.",
           "evidenceIds": [],
           "id": "enemy-retreated-previous-round",
+          "kind": "previous-round-event",
           "label": "Enemy retreated during the previous round.",
+          "subject": "enemy",
+          "thresholdPercent": null,
           "unresolved": false
         }
       ],
@@ -5342,10 +5504,10 @@
   "rosterSourceStatus": "official-website",
   "slug": "caraxes",
   "source": {
-    "branch": "feature/formation-analysis-repair",
-    "commit": "33308a9be3432c3b1fe16b500e64069bd93f1dee",
-    "databaseVersion": "0.5.2",
-    "dataSchemaVersion": 8,
+    "branch": "feature/formation-analysis-normalization",
+    "commit": "60bafb88955e0d0e0f3ddc29512c1176a3f3abbd",
+    "databaseVersion": "0.5.3",
+    "dataSchemaVersion": 9,
     "gameBuild": "26.6.53509",
     "localRosterSchemaVersion": 3,
     "repository": "https://github.com/williamchildres/dragonfire-roster-builder"
@@ -5425,6 +5587,7 @@
         "position": null,
         "scope": "any-lane",
         "selection": "any",
+        "selectionStat": null,
         "side": "enemy"
       },
       "targetSide": "enemy",
@@ -5500,6 +5663,7 @@
         "position": null,
         "scope": "any-lane",
         "selection": "any",
+        "selectionStat": null,
         "side": "enemy"
       },
       "targetSide": "enemy",

@@ -4530,7 +4530,7 @@
   "firstObservedInGame": "2026-06-22",
   "format": "dragonfire-dragon-profile",
   "gameVersion": null,
-  "generatedAt": "2026-06-25T01:19:13.742Z",
+  "generatedAt": "2026-06-25T02:16:23.860Z",
   "habits": [
     {
       "abilityClass": "passive",
@@ -5798,6 +5798,7 @@
       "conditions": [],
       "confidence": "confirmed",
       "currentlyAvailable": true,
+      "damageScope": null,
       "direction": "received",
       "directlyVerified": true,
       "dragonId": "sheepstealer",
@@ -5820,6 +5821,7 @@
           "label": "Provider position requirement"
         }
       ],
+      "rankedValues": [],
       "recipientRequirements": [],
       "requiredHabitLevel": null,
       "role": "recipient-side-amplification",
@@ -5831,6 +5833,7 @@
         "position": null,
         "scope": "self",
         "selection": "self",
+        "selectionStat": null,
         "side": "self"
       },
       "unit": "percent",
@@ -5857,6 +5860,7 @@
       "conditions": [],
       "confidence": "confirmed",
       "currentlyAvailable": true,
+      "damageScope": null,
       "direction": "dealt",
       "directlyVerified": true,
       "dragonId": "sheepstealer",
@@ -5879,6 +5883,7 @@
           "label": "Provider position requirement"
         }
       ],
+      "rankedValues": [],
       "recipientRequirements": [],
       "requiredHabitLevel": null,
       "role": "self-amplification",
@@ -5890,6 +5895,7 @@
         "position": null,
         "scope": "self",
         "selection": "self",
+        "selectionStat": null,
         "side": "self"
       },
       "unit": "flat",
@@ -5916,6 +5922,7 @@
       "conditions": [],
       "confidence": "confirmed",
       "currentlyAvailable": true,
+      "damageScope": null,
       "direction": "dealt",
       "directlyVerified": true,
       "dragonId": "sheepstealer",
@@ -5938,6 +5945,7 @@
           "label": "Provider position requirement"
         }
       ],
+      "rankedValues": [],
       "recipientRequirements": [],
       "requiredHabitLevel": null,
       "role": "ally-support",
@@ -5949,6 +5957,7 @@
         "position": "right-flank",
         "scope": "right-flank",
         "selection": "specific-position",
+        "selectionStat": null,
         "side": "ally"
       },
       "unit": "percent",
@@ -5975,6 +5984,7 @@
       "conditions": [],
       "confidence": "confirmed",
       "currentlyAvailable": false,
+      "damageScope": null,
       "direction": "dealt",
       "directlyVerified": true,
       "dragonId": "sheepstealer",
@@ -5987,6 +5997,33 @@
       "minimumDragonLevel": null,
       "operation": "increase",
       "providerRequirements": [],
+      "rankedValues": [
+        {
+          "level": 1,
+          "unit": "percent",
+          "value": 10
+        },
+        {
+          "level": 2,
+          "unit": "percent",
+          "value": 12
+        },
+        {
+          "level": 3,
+          "unit": "percent",
+          "value": 14
+        },
+        {
+          "level": 4,
+          "unit": "percent",
+          "value": 17
+        },
+        {
+          "level": 5,
+          "unit": "percent",
+          "value": 20
+        }
+      ],
       "recipientRequirements": [],
       "requiredHabitLevel": 1,
       "role": "self-amplification",
@@ -5998,6 +6035,7 @@
         "position": null,
         "scope": "self",
         "selection": "self",
+        "selectionStat": null,
         "side": "self"
       },
       "unit": "percent",
@@ -6032,6 +6070,7 @@
       ],
       "confidence": "confirmed",
       "currentlyAvailable": false,
+      "damageScope": null,
       "direction": "dealt",
       "directlyVerified": true,
       "dragonId": "sheepstealer",
@@ -6044,6 +6083,7 @@
       "minimumDragonLevel": null,
       "operation": "increase",
       "providerRequirements": [],
+      "rankedValues": [],
       "recipientRequirements": [],
       "requiredHabitLevel": 1,
       "role": "self-amplification",
@@ -6055,6 +6095,7 @@
         "position": null,
         "scope": "self",
         "selection": "self",
+        "selectionStat": null,
         "side": "self"
       },
       "unit": "stack",
@@ -6081,6 +6122,7 @@
       "conditions": [],
       "confidence": "confirmed",
       "currentlyAvailable": false,
+      "damageScope": null,
       "direction": "dealt",
       "directlyVerified": true,
       "dragonId": "sheepstealer",
@@ -6093,6 +6135,7 @@
       "minimumDragonLevel": null,
       "operation": "increase",
       "providerRequirements": [],
+      "rankedValues": [],
       "recipientRequirements": [],
       "requiredHabitLevel": 1,
       "role": "self-amplification",
@@ -6104,6 +6147,7 @@
         "position": null,
         "scope": "self",
         "selection": "self",
+        "selectionStat": null,
         "side": "self"
       },
       "unit": "stack",
@@ -6130,6 +6174,7 @@
       "conditions": [],
       "confidence": "confirmed",
       "currentlyAvailable": false,
+      "damageScope": null,
       "direction": "dealt",
       "directlyVerified": true,
       "dragonId": "sheepstealer",
@@ -6142,6 +6187,33 @@
       "minimumDragonLevel": null,
       "operation": "increase",
       "providerRequirements": [],
+      "rankedValues": [
+        {
+          "level": 1,
+          "unit": "percent",
+          "value": 16
+        },
+        {
+          "level": 2,
+          "unit": "percent",
+          "value": 19.2
+        },
+        {
+          "level": 3,
+          "unit": "percent",
+          "value": 22.4
+        },
+        {
+          "level": 4,
+          "unit": "percent",
+          "value": 27.2
+        },
+        {
+          "level": 5,
+          "unit": "percent",
+          "value": 32
+        }
+      ],
       "recipientRequirements": [],
       "requiredHabitLevel": 1,
       "role": "self-amplification",
@@ -6153,6 +6225,7 @@
         "position": null,
         "scope": "self",
         "selection": "self",
+        "selectionStat": null,
         "side": "self"
       },
       "unit": "percent",
@@ -6179,6 +6252,7 @@
       "conditions": [],
       "confidence": "confirmed",
       "currentlyAvailable": false,
+      "damageScope": null,
       "direction": "dealt",
       "directlyVerified": true,
       "dragonId": "sheepstealer",
@@ -6191,17 +6265,45 @@
       "minimumDragonLevel": null,
       "operation": "decrease",
       "providerRequirements": [],
+      "rankedValues": [
+        {
+          "level": 1,
+          "unit": "percent",
+          "value": 12
+        },
+        {
+          "level": 2,
+          "unit": "percent",
+          "value": 14.4
+        },
+        {
+          "level": 3,
+          "unit": "percent",
+          "value": 16.8
+        },
+        {
+          "level": 4,
+          "unit": "percent",
+          "value": 20.4
+        },
+        {
+          "level": 5,
+          "unit": "percent",
+          "value": 24
+        }
+      ],
       "recipientRequirements": [],
       "requiredHabitLevel": 1,
       "role": "enemy-debuff",
       "sourceScope": "unknown",
       "stackMaximum": null,
       "targetSelector": {
-        "count": 2,
+        "count": 1,
         "includesCaster": null,
         "position": null,
         "scope": "within-adjacency",
-        "selection": "adjacent",
+        "selection": "one-eligible-adjacent",
+        "selectionStat": null,
         "side": "enemy"
       },
       "unit": "percent",
@@ -6228,6 +6330,7 @@
       "conditions": [],
       "confidence": "confirmed",
       "currentlyAvailable": false,
+      "damageScope": null,
       "direction": "received",
       "directlyVerified": true,
       "dragonId": "sheepstealer",
@@ -6240,6 +6343,33 @@
       "minimumDragonLevel": null,
       "operation": "decrease",
       "providerRequirements": [],
+      "rankedValues": [
+        {
+          "level": 1,
+          "unit": "percent",
+          "value": 10
+        },
+        {
+          "level": 2,
+          "unit": "percent",
+          "value": 12
+        },
+        {
+          "level": 3,
+          "unit": "percent",
+          "value": 14
+        },
+        {
+          "level": 4,
+          "unit": "percent",
+          "value": 17
+        },
+        {
+          "level": 5,
+          "unit": "percent",
+          "value": 20
+        }
+      ],
       "recipientRequirements": [],
       "requiredHabitLevel": 1,
       "role": "enemy-debuff",
@@ -6251,6 +6381,7 @@
         "position": null,
         "scope": "any-lane",
         "selection": "any",
+        "selectionStat": null,
         "side": "enemy"
       },
       "unit": "percent",
@@ -7173,10 +7304,10 @@
   "rosterSourceStatus": "in-game-verified-pending-official-site",
   "slug": "sheepstealer",
   "source": {
-    "branch": "feature/formation-analysis-repair",
-    "commit": "33308a9be3432c3b1fe16b500e64069bd93f1dee",
-    "databaseVersion": "0.5.2",
-    "dataSchemaVersion": 8,
+    "branch": "feature/formation-analysis-normalization",
+    "commit": "60bafb88955e0d0e0f3ddc29512c1176a3f3abbd",
+    "databaseVersion": "0.5.3",
+    "dataSchemaVersion": 9,
     "gameBuild": "26.6.53509",
     "localRosterSchemaVersion": 3,
     "repository": "https://github.com/williamchildres/dragonfire-roster-builder"
@@ -7231,6 +7362,7 @@
         "position": null,
         "scope": "any-lane",
         "selection": "any",
+        "selectionStat": null,
         "side": "enemy"
       },
       "targetSide": "enemy",
@@ -7280,6 +7412,7 @@
         "position": null,
         "scope": "self",
         "selection": "self",
+        "selectionStat": null,
         "side": "self"
       },
       "targetSide": "self",
@@ -7321,6 +7454,7 @@
         "position": null,
         "scope": "self",
         "selection": "self",
+        "selectionStat": null,
         "side": "self"
       },
       "targetSide": "self",

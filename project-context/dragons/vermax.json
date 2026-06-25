@@ -3457,7 +3457,7 @@
   "firstObservedInGame": "2026-06-22",
   "format": "dragonfire-dragon-profile",
   "gameVersion": null,
-  "generatedAt": "2026-06-25T01:19:13.742Z",
+  "generatedAt": "2026-06-25T02:16:23.860Z",
   "habits": [
     {
       "abilityClass": "passive",
@@ -4552,10 +4552,14 @@
       "conditional": true,
       "conditions": [
         {
+          "comparison": null,
           "description": "Ally deals Tactical Damage.",
           "evidenceIds": [],
           "id": "ally-deals-tactical-damage",
+          "kind": "ally-deals-tactical-damage",
           "label": "Ally deals Tactical Damage.",
+          "subject": "ally",
+          "thresholdPercent": null,
           "unresolved": false
         },
         {
@@ -4571,6 +4575,7 @@
       ],
       "confidence": "confirmed",
       "currentlyAvailable": true,
+      "damageScope": null,
       "direction": "dealt",
       "directlyVerified": true,
       "dragonId": "vermax",
@@ -4584,6 +4589,7 @@
       "minimumDragonLevel": null,
       "operation": "increase",
       "providerRequirements": [],
+      "rankedValues": [],
       "recipientRequirements": [],
       "requiredHabitLevel": null,
       "role": "ally-support",
@@ -4595,6 +4601,7 @@
         "position": null,
         "scope": "any-lane",
         "selection": "eligible",
+        "selectionStat": null,
         "side": "ally"
       },
       "unit": "stack",
@@ -4621,6 +4628,7 @@
       "conditions": [],
       "confidence": "confirmed",
       "currentlyAvailable": true,
+      "damageScope": null,
       "direction": "dealt",
       "directlyVerified": true,
       "dragonId": "vermax",
@@ -4645,6 +4653,7 @@
           "label": "Provider position requirement"
         }
       ],
+      "rankedValues": [],
       "recipientRequirements": [],
       "requiredHabitLevel": null,
       "role": "self-amplification",
@@ -4656,6 +4665,7 @@
         "position": null,
         "scope": "self",
         "selection": "self",
+        "selectionStat": null,
         "side": "self"
       },
       "unit": "percent",
@@ -4682,6 +4692,7 @@
       "conditions": [],
       "confidence": "confirmed",
       "currentlyAvailable": true,
+      "damageScope": null,
       "direction": "dealt",
       "directlyVerified": true,
       "dragonId": "vermax",
@@ -4706,6 +4717,7 @@
           "label": "Provider position requirement"
         }
       ],
+      "rankedValues": [],
       "recipientRequirements": [],
       "requiredHabitLevel": null,
       "role": "ally-support",
@@ -4717,6 +4729,7 @@
         "position": "left-flank",
         "scope": "left-flank",
         "selection": "specific-position",
+        "selectionStat": null,
         "side": "ally"
       },
       "unit": "flat",
@@ -4743,6 +4756,7 @@
       "conditions": [],
       "confidence": "confirmed",
       "currentlyAvailable": true,
+      "damageScope": null,
       "direction": "dealt",
       "directlyVerified": true,
       "dragonId": "vermax",
@@ -4767,6 +4781,7 @@
           "label": "Provider position requirement"
         }
       ],
+      "rankedValues": [],
       "recipientRequirements": [],
       "requiredHabitLevel": null,
       "role": "ally-support",
@@ -4778,6 +4793,7 @@
         "position": "left-flank",
         "scope": "left-flank",
         "selection": "specific-position",
+        "selectionStat": null,
         "side": "ally"
       },
       "unit": "flat",
@@ -4803,15 +4819,20 @@
       "conditional": true,
       "conditions": [
         {
+          "comparison": "below",
           "description": "Below 75% Troop Capacity.",
           "evidenceIds": [],
           "id": "below-75-troop-capacity",
+          "kind": "target-below-troop-capacity-threshold",
           "label": "Below 75% Troop Capacity.",
+          "subject": "target",
+          "thresholdPercent": 75,
           "unresolved": false
         }
       ],
       "confidence": "confirmed",
       "currentlyAvailable": false,
+      "damageScope": "fire",
       "direction": "received",
       "directlyVerified": true,
       "dragonId": "vermax",
@@ -4824,17 +4845,45 @@
       "minimumDragonLevel": null,
       "operation": "decrease",
       "providerRequirements": [],
+      "rankedValues": [
+        {
+          "level": 1,
+          "unit": "percent",
+          "value": 5
+        },
+        {
+          "level": 2,
+          "unit": "percent",
+          "value": 6
+        },
+        {
+          "level": 3,
+          "unit": "percent",
+          "value": 7
+        },
+        {
+          "level": 4,
+          "unit": "percent",
+          "value": 8.5
+        },
+        {
+          "level": 5,
+          "unit": "percent",
+          "value": 10
+        }
+      ],
       "recipientRequirements": [],
       "requiredHabitLevel": 1,
       "role": "ally-support",
       "sourceScope": "unknown",
       "stackMaximum": null,
       "targetSelector": {
-        "count": 75,
+        "count": null,
         "includesCaster": null,
         "position": null,
         "scope": "any-lane",
-        "selection": "any",
+        "selection": "all-matching-condition",
+        "selectionStat": null,
         "side": "ally"
       },
       "unit": "percent",
@@ -4860,15 +4909,20 @@
       "conditional": true,
       "conditions": [
         {
+          "comparison": "below",
           "description": "Below 50% Troop Capacity.",
           "evidenceIds": [],
           "id": "below-50-troop-capacity",
+          "kind": "target-below-troop-capacity-threshold",
           "label": "Below 50% Troop Capacity.",
+          "subject": "target",
+          "thresholdPercent": 50,
           "unresolved": false
         }
       ],
       "confidence": "confirmed",
       "currentlyAvailable": false,
+      "damageScope": "fire",
       "direction": "received",
       "directlyVerified": true,
       "dragonId": "vermax",
@@ -4881,17 +4935,45 @@
       "minimumDragonLevel": null,
       "operation": "decrease",
       "providerRequirements": [],
+      "rankedValues": [
+        {
+          "level": 1,
+          "unit": "percent",
+          "value": 10
+        },
+        {
+          "level": 2,
+          "unit": "percent",
+          "value": 12
+        },
+        {
+          "level": 3,
+          "unit": "percent",
+          "value": 14
+        },
+        {
+          "level": 4,
+          "unit": "percent",
+          "value": 17
+        },
+        {
+          "level": 5,
+          "unit": "percent",
+          "value": 20
+        }
+      ],
       "recipientRequirements": [],
       "requiredHabitLevel": 1,
       "role": "ally-support",
       "sourceScope": "unknown",
       "stackMaximum": null,
       "targetSelector": {
-        "count": 50,
+        "count": null,
         "includesCaster": null,
         "position": null,
         "scope": "any-lane",
-        "selection": "any",
+        "selection": "all-matching-condition",
+        "selectionStat": null,
         "side": "ally"
       },
       "unit": "percent",
@@ -4917,15 +4999,20 @@
       "conditional": true,
       "conditions": [
         {
+          "comparison": "below",
           "description": "Below 25% Troop Capacity.",
           "evidenceIds": [],
           "id": "below-25-troop-capacity",
+          "kind": "target-below-troop-capacity-threshold",
           "label": "Below 25% Troop Capacity.",
+          "subject": "target",
+          "thresholdPercent": 25,
           "unresolved": false
         }
       ],
       "confidence": "confirmed",
       "currentlyAvailable": false,
+      "damageScope": "fire",
       "direction": "received",
       "directlyVerified": true,
       "dragonId": "vermax",
@@ -4938,17 +5025,45 @@
       "minimumDragonLevel": null,
       "operation": "decrease",
       "providerRequirements": [],
+      "rankedValues": [
+        {
+          "level": 1,
+          "unit": "percent",
+          "value": 15
+        },
+        {
+          "level": 2,
+          "unit": "percent",
+          "value": 18
+        },
+        {
+          "level": 3,
+          "unit": "percent",
+          "value": 21
+        },
+        {
+          "level": 4,
+          "unit": "percent",
+          "value": 25.5
+        },
+        {
+          "level": 5,
+          "unit": "percent",
+          "value": 30
+        }
+      ],
       "recipientRequirements": [],
       "requiredHabitLevel": 1,
       "role": "ally-support",
       "sourceScope": "unknown",
       "stackMaximum": null,
       "targetSelector": {
-        "count": 25,
+        "count": null,
         "includesCaster": null,
         "position": null,
         "scope": "any-lane",
-        "selection": "any",
+        "selection": "all-matching-condition",
+        "selectionStat": null,
         "side": "ally"
       },
       "unit": "percent",
@@ -4975,6 +5090,7 @@
       "conditions": [],
       "confidence": "confirmed",
       "currentlyAvailable": false,
+      "damageScope": null,
       "direction": "dealt",
       "directlyVerified": true,
       "dragonId": "vermax",
@@ -4987,17 +5103,45 @@
       "minimumDragonLevel": null,
       "operation": "increase",
       "providerRequirements": [],
+      "rankedValues": [
+        {
+          "level": 1,
+          "unit": "percent",
+          "value": 18
+        },
+        {
+          "level": 2,
+          "unit": "percent",
+          "value": 21.6
+        },
+        {
+          "level": 3,
+          "unit": "percent",
+          "value": 25.2
+        },
+        {
+          "level": 4,
+          "unit": "percent",
+          "value": 30.6
+        },
+        {
+          "level": 5,
+          "unit": "percent",
+          "value": 36
+        }
+      ],
       "recipientRequirements": [],
       "requiredHabitLevel": 1,
       "role": "ally-support",
       "sourceScope": "unknown",
       "stackMaximum": null,
       "targetSelector": {
-        "count": null,
+        "count": 1,
         "includesCaster": null,
         "position": null,
         "scope": "any-lane",
-        "selection": "any",
+        "selection": "highest-stat",
+        "selectionStat": "instinct",
         "side": "ally"
       },
       "unit": "percent",
@@ -5024,6 +5168,7 @@
       "conditions": [],
       "confidence": "confirmed",
       "currentlyAvailable": false,
+      "damageScope": null,
       "direction": "dealt",
       "directlyVerified": true,
       "dragonId": "vermax",
@@ -5036,17 +5181,45 @@
       "minimumDragonLevel": null,
       "operation": "increase",
       "providerRequirements": [],
+      "rankedValues": [
+        {
+          "level": 1,
+          "unit": "percent",
+          "value": 9
+        },
+        {
+          "level": 2,
+          "unit": "percent",
+          "value": 10.8
+        },
+        {
+          "level": 3,
+          "unit": "percent",
+          "value": 12.6
+        },
+        {
+          "level": 4,
+          "unit": "percent",
+          "value": 15.3
+        },
+        {
+          "level": 5,
+          "unit": "percent",
+          "value": 18
+        }
+      ],
       "recipientRequirements": [],
       "requiredHabitLevel": 1,
       "role": "ally-support",
       "sourceScope": "unknown",
       "stackMaximum": null,
       "targetSelector": {
-        "count": null,
+        "count": 1,
         "includesCaster": null,
         "position": null,
         "scope": "any-lane",
-        "selection": "any",
+        "selection": "highest-stat",
+        "selectionStat": "instinct",
         "side": "ally"
       },
       "unit": "percent",
@@ -5081,6 +5254,7 @@
       ],
       "confidence": "confirmed",
       "currentlyAvailable": false,
+      "damageScope": null,
       "direction": "dealt",
       "directlyVerified": true,
       "dragonId": "vermax",
@@ -5093,6 +5267,7 @@
       "minimumDragonLevel": null,
       "operation": "increase",
       "providerRequirements": [],
+      "rankedValues": [],
       "recipientRequirements": [],
       "requiredHabitLevel": 1,
       "role": "self-amplification",
@@ -5104,6 +5279,7 @@
         "position": null,
         "scope": "self",
         "selection": "self",
+        "selectionStat": null,
         "side": "self"
       },
       "unit": "stack",
@@ -5136,10 +5312,14 @@
           "unresolved": false
         },
         {
+          "comparison": null,
           "description": "Ally deals Tactical Damage.",
           "evidenceIds": [],
           "id": "ally-deals-tactical-damage",
+          "kind": "ally-deals-tactical-damage",
           "label": "Ally deals Tactical Damage.",
+          "subject": "ally",
+          "thresholdPercent": null,
           "unresolved": false
         },
         {
@@ -5154,6 +5334,7 @@
       ],
       "confidence": "confirmed",
       "currentlyAvailable": false,
+      "damageScope": null,
       "direction": "dealt",
       "directlyVerified": true,
       "dragonId": "vermax",
@@ -5166,6 +5347,7 @@
       "minimumDragonLevel": null,
       "operation": "increase",
       "providerRequirements": [],
+      "rankedValues": [],
       "recipientRequirements": [],
       "requiredHabitLevel": 1,
       "role": "ally-support",
@@ -5177,6 +5359,7 @@
         "position": null,
         "scope": "any-lane",
         "selection": "eligible",
+        "selectionStat": null,
         "side": "ally"
       },
       "unit": "stack",
@@ -5203,6 +5386,7 @@
       "conditions": [],
       "confidence": "confirmed",
       "currentlyAvailable": false,
+      "damageScope": "all",
       "direction": "received",
       "directlyVerified": true,
       "dragonId": "vermax",
@@ -5215,6 +5399,33 @@
       "minimumDragonLevel": null,
       "operation": "decrease",
       "providerRequirements": [],
+      "rankedValues": [
+        {
+          "level": 1,
+          "unit": "percent",
+          "value": 5
+        },
+        {
+          "level": 2,
+          "unit": "percent",
+          "value": 6
+        },
+        {
+          "level": 3,
+          "unit": "percent",
+          "value": 7
+        },
+        {
+          "level": 4,
+          "unit": "percent",
+          "value": 8.5
+        },
+        {
+          "level": 5,
+          "unit": "percent",
+          "value": 10
+        }
+      ],
       "recipientRequirements": [],
       "requiredHabitLevel": 1,
       "role": "self-amplification",
@@ -5226,6 +5437,7 @@
         "position": null,
         "scope": "self",
         "selection": "self",
+        "selectionStat": null,
         "side": "self"
       },
       "unit": "percent",
@@ -5252,6 +5464,7 @@
       "conditions": [],
       "confidence": "confirmed",
       "currentlyAvailable": false,
+      "damageScope": null,
       "direction": "dealt",
       "directlyVerified": true,
       "dragonId": "vermax",
@@ -5264,6 +5477,33 @@
       "minimumDragonLevel": null,
       "operation": "increase",
       "providerRequirements": [],
+      "rankedValues": [
+        {
+          "level": 1,
+          "unit": "percent",
+          "value": 8.5
+        },
+        {
+          "level": 2,
+          "unit": "percent",
+          "value": 10.2
+        },
+        {
+          "level": 3,
+          "unit": "percent",
+          "value": 11.9
+        },
+        {
+          "level": 4,
+          "unit": "percent",
+          "value": 14.45
+        },
+        {
+          "level": 5,
+          "unit": "percent",
+          "value": 17
+        }
+      ],
       "recipientRequirements": [],
       "requiredHabitLevel": 1,
       "role": "self-amplification",
@@ -5275,6 +5515,7 @@
         "position": null,
         "scope": "self",
         "selection": "self",
+        "selectionStat": null,
         "side": "self"
       },
       "unit": "percent",
@@ -6098,10 +6339,10 @@
   "rosterSourceStatus": "in-game-verified-pending-official-site",
   "slug": "vermax",
   "source": {
-    "branch": "feature/formation-analysis-repair",
-    "commit": "33308a9be3432c3b1fe16b500e64069bd93f1dee",
-    "databaseVersion": "0.5.2",
-    "dataSchemaVersion": 8,
+    "branch": "feature/formation-analysis-normalization",
+    "commit": "60bafb88955e0d0e0f3ddc29512c1176a3f3abbd",
+    "databaseVersion": "0.5.3",
+    "dataSchemaVersion": 9,
     "gameBuild": "26.6.53509",
     "localRosterSchemaVersion": 3,
     "repository": "https://github.com/williamchildres/dragonfire-roster-builder"
@@ -6129,10 +6370,14 @@
       "chanceFixed": null,
       "conditions": [
         {
+          "comparison": null,
           "description": "Ally deals Tactical Damage.",
           "evidenceIds": [],
           "id": "ally-deals-tactical-damage",
+          "kind": "ally-deals-tactical-damage",
           "label": "Ally deals Tactical Damage.",
+          "subject": "ally",
+          "thresholdPercent": null,
           "unresolved": false
         }
       ],
@@ -6155,6 +6400,7 @@
         "position": null,
         "scope": "any-lane",
         "selection": "eligible",
+        "selectionStat": null,
         "side": "ally"
       },
       "targetSide": "ally",
@@ -6230,6 +6476,7 @@
         "position": null,
         "scope": "self",
         "selection": "self",
+        "selectionStat": null,
         "side": "self"
       },
       "targetSide": "self",
@@ -6287,10 +6534,14 @@
           "unresolved": false
         },
         {
+          "comparison": null,
           "description": "Ally deals Tactical Damage.",
           "evidenceIds": [],
           "id": "ally-deals-tactical-damage",
+          "kind": "ally-deals-tactical-damage",
           "label": "Ally deals Tactical Damage.",
+          "subject": "ally",
+          "thresholdPercent": null,
           "unresolved": false
         }
       ],
@@ -6312,6 +6563,7 @@
         "position": null,
         "scope": "any-lane",
         "selection": "eligible",
+        "selectionStat": null,
         "side": "ally"
       },
       "targetSide": "ally",
@@ -6394,6 +6646,7 @@
         "position": null,
         "scope": "self",
         "selection": "self",
+        "selectionStat": null,
         "side": "self"
       },
       "targetSide": "self",
