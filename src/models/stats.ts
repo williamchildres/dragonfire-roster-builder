@@ -30,6 +30,7 @@ export interface DragonObservationSnapshot {
   marchSpeed: string | null;
   staminaCurrent: number | null;
   staminaMaximum: number | null;
+  staminaDisplayText?: string | null;
   troopCapacity: number | null;
   dragonPower: number | null;
   modifierContextKnown: boolean;

@@ -8,7 +8,8 @@
     "Phase 3.8.2 formation analysis normalization",
     "Version 0.5.4 normal unmet requirement summary repair",
     "Version 0.5.5 formation card analysis presentation redesign",
-    "Version 0.5.6 formation card layout polish"
+    "Version 0.5.6 formation card layout polish",
+    "Version 0.6.0 legendary dragon schema hardening"
   ],
   "contextVersion": 1,
   "currentArchitectureSummary": [
@@ -19,24 +20,24 @@
     "Formation normalization preserves defensive scope, target-selection groups, visible-card requirement ownership, source ability identity, interaction scope, pure normal unmet summaries, and debug/export trace retention.",
     "Formation card presentation maps existing normal traces into per-dragon Receives, Provides, Trait status, affinity, candidate, and preview summaries without changing mechanics; layout polish keeps desktop cards equal-height with bounded interaction regions, inline badges, readable summaries, per-item Details, and presentation-only aggregation."
   ],
-  "currentReviewPhase": "Formation card layout polish validation and project-context regeneration.",
+  "currentReviewPhase": "Legendary dragon schema hardening validation and project-context regeneration.",
   "format": "dragonfire-project-state",
-  "generatedAt": "2026-06-25T13:45:06.120Z",
+  "generatedAt": "2026-06-25T19:52:27.796Z",
   "plannedNextPhase": [
     "full formation-output review",
     "additional visual QA",
-    "then additional dragons"
+    "then non-Legendary dragon batches"
   ],
   "rosterCounts": {
-    "detailedDataDragonCount": 6,
+    "detailedDataDragonCount": 10,
     "knownRosterCount": 30,
-    "metadataOnlyDragonCount": 24
+    "metadataOnlyDragonCount": 20
   },
   "source": {
-    "branch": "feature/formation-card-layout-polish",
-    "commit": "f3042ee26aa774020b87dbed1ffef7b37e85cb02",
-    "databaseVersion": "0.5.6",
-    "dataSchemaVersion": 9,
+    "branch": "feature/legendary-schema-hardening",
+    "commit": "96e0cb6df6957f19eea61aa67b38bfa905aef03c",
+    "databaseVersion": "0.6.0",
+    "dataSchemaVersion": 10,
     "gameBuild": "26.6.53509",
     "localRosterSchemaVersion": 3,
     "repository": "https://github.com/williamchildres/dragonfire-roster-builder"
@@ -45,14 +46,14 @@
     "countingMethod": "static working-tree test declaration scan; runtime pass/fail is reported by npm run test",
     "lastRunStatus": "not-run-by-exporter",
     "runner": "vitest",
-    "testCaseCount": 147,
-    "testFileCount": 19
+    "testCaseCount": 161,
+    "testFileCount": 20
   },
-  "unresolvedMechanicsCount": 56,
+  "unresolvedMechanicsCount": 100,
   "versions": {
     "contextVersion": 1,
-    "databaseVersion": "0.5.6",
-    "dataSchemaVersion": 9,
+    "databaseVersion": "0.6.0",
+    "dataSchemaVersion": 10,
     "gameBuild": "26.6.53509",
     "localRosterSchemaVersion": 3
   }

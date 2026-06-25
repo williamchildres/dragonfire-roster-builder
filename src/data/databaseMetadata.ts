@@ -1,7 +1,7 @@
 export const databaseMetadata = {
-  databaseVersion: '0.5.6',
-  schemaVersion: 9,
-  lastUpdated: '2026-06-24',
+  databaseVersion: '0.6.0',
+  schemaVersion: 10,
+  lastUpdated: '2026-06-25',
   officialRosterLastChecked: '2026-06-23',
   gameVersion: '26.6.53509',
   currentDocumentedGameBuild: '26.6.53509',

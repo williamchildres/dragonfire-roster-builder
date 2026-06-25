@@ -523,6 +523,381 @@
     ]
   },
   {
+    "assumptions": [],
+    "channel": "recovery",
+    "confidence": "confirmed",
+    "conflicts": [
+      "syrax - Strategic Revival Habit unlock requirement: expected Star Rank 6+, actual preview enabled",
+      "syrax - Strategic Revival Selected Habit Level: expected Habit Level 1+ or preview, actual preview enabled"
+    ],
+    "damageScope": null,
+    "effects": [
+      "Recovery support"
+    ],
+    "exactResultKnown": false,
+    "exactResultUnknownReason": "Exact final value cannot be calculated because final combat formulas and stacking order are not fully verified.",
+    "explanation": "Syrax's Strategic Revival can provide Recovery to Malachite.",
+    "id": "ally-output-support-syrax-strategic-revival-strategic-revival-recovery-output-malachite",
+    "interactionScope": "cross-dragon",
+    "matchedOutputCapabilityIds": [],
+    "matchKind": "outgoing-effect-amplification",
+    "modifierCapabilityId": null,
+    "modifierCapabilityIds": [],
+    "recipientAbilityId": "syrax-strategic-revival-strategic-revival-recovery-output",
+    "recipientDragonId": "malachite",
+    "recipientEvidenceIds": [],
+    "requirements": [
+      {
+        "actual": "provider right-flank, recipient left-flank",
+        "evidenceIds": [
+          "syrax-strategic-revival-2026-06-24"
+        ],
+        "expected": "any-lane",
+        "id": "syrax-strategic-revival-strategic-revival-recovery-output-targets-left-flank",
+        "label": "Provider targeting includes recipient",
+        "notes": [],
+        "satisfied": true
+      },
+      {
+        "actual": "preview enabled",
+        "evidenceIds": [
+          "syrax-strategic-revival-2026-06-24"
+        ],
+        "expected": "Star Rank 6+",
+        "id": "syrax-syrax-strategic-revival-star-rank",
+        "label": "syrax - Strategic Revival Habit unlock requirement",
+        "notes": [],
+        "satisfied": false
+      },
+      {
+        "actual": "preview enabled",
+        "evidenceIds": [
+          "syrax-strategic-revival-2026-06-24"
+        ],
+        "expected": "Habit Level 1+ or preview",
+        "id": "syrax-syrax-strategic-revival-habit-level",
+        "label": "syrax - Strategic Revival Selected Habit Level",
+        "notes": [
+          "Locked Habit capabilities are potential in preview mode, not active for current roster."
+        ],
+        "satisfied": false
+      }
+    ],
+    "ruleId": "ally-output-support",
+    "sourceAbilityId": "syrax-strategic-revival",
+    "sourceDragonId": "syrax",
+    "sourceEvidenceIds": [
+      "syrax-strategic-revival-2026-06-24"
+    ],
+    "status": "potential",
+    "targetSelectionGroup": null,
+    "title": "Strategic Revival Recovery support",
+    "unresolvedQuestions": [
+      "Exact final Recovery amount is unknown because the full Level and Instinct Recovery formula is not known."
+    ]
+  },
+  {
+    "assumptions": [],
+    "channel": "recovery",
+    "confidence": "confirmed",
+    "conflicts": [
+      "syrax - Strategic Revival Habit unlock requirement: expected Star Rank 6+, actual preview enabled",
+      "syrax - Strategic Revival Selected Habit Level: expected Habit Level 1+ or preview, actual preview enabled"
+    ],
+    "damageScope": null,
+    "effects": [
+      "Recovery support"
+    ],
+    "exactResultKnown": false,
+    "exactResultUnknownReason": "Exact final value cannot be calculated because final combat formulas and stacking order are not fully verified.",
+    "explanation": "Syrax's Strategic Revival can provide Recovery to Caraxes.",
+    "id": "ally-output-support-syrax-strategic-revival-strategic-revival-recovery-output-caraxes",
+    "interactionScope": "cross-dragon",
+    "matchedOutputCapabilityIds": [],
+    "matchKind": "outgoing-effect-amplification",
+    "modifierCapabilityId": null,
+    "modifierCapabilityIds": [],
+    "recipientAbilityId": "syrax-strategic-revival-strategic-revival-recovery-output",
+    "recipientDragonId": "caraxes",
+    "recipientEvidenceIds": [],
+    "requirements": [
+      {
+        "actual": "provider right-flank, recipient vanguard",
+        "evidenceIds": [
+          "syrax-strategic-revival-2026-06-24"
+        ],
+        "expected": "any-lane",
+        "id": "syrax-strategic-revival-strategic-revival-recovery-output-targets-vanguard",
+        "label": "Provider targeting includes recipient",
+        "notes": [],
+        "satisfied": true
+      },
+      {
+        "actual": "preview enabled",
+        "evidenceIds": [
+          "syrax-strategic-revival-2026-06-24"
+        ],
+        "expected": "Star Rank 6+",
+        "id": "syrax-syrax-strategic-revival-star-rank",
+        "label": "syrax - Strategic Revival Habit unlock requirement",
+        "notes": [],
+        "satisfied": false
+      },
+      {
+        "actual": "preview enabled",
+        "evidenceIds": [
+          "syrax-strategic-revival-2026-06-24"
+        ],
+        "expected": "Habit Level 1+ or preview",
+        "id": "syrax-syrax-strategic-revival-habit-level",
+        "label": "syrax - Strategic Revival Selected Habit Level",
+        "notes": [
+          "Locked Habit capabilities are potential in preview mode, not active for current roster."
+        ],
+        "satisfied": false
+      }
+    ],
+    "ruleId": "ally-output-support",
+    "sourceAbilityId": "syrax-strategic-revival",
+    "sourceDragonId": "syrax",
+    "sourceEvidenceIds": [
+      "syrax-strategic-revival-2026-06-24"
+    ],
+    "status": "potential",
+    "targetSelectionGroup": null,
+    "title": "Strategic Revival Recovery support",
+    "unresolvedQuestions": [
+      "Exact final Recovery amount is unknown because the full Level and Instinct Recovery formula is not known."
+    ]
+  },
+  {
+    "assumptions": [],
+    "channel": "recovery",
+    "confidence": "confirmed",
+    "conflicts": [
+      "syrax - Strategic Revival Habit unlock requirement: expected Star Rank 6+, actual preview enabled",
+      "syrax - Strategic Revival Selected Habit Level: expected Habit Level 1+ or preview, actual preview enabled"
+    ],
+    "damageScope": null,
+    "effects": [
+      "Recovery support"
+    ],
+    "exactResultKnown": false,
+    "exactResultUnknownReason": "Exact final value cannot be calculated because final combat formulas and stacking order are not fully verified.",
+    "explanation": "Syrax's Strategic Revival can provide Recovery to Syrax.",
+    "id": "ally-output-support-syrax-strategic-revival-strategic-revival-recovery-output-syrax",
+    "interactionScope": "internal",
+    "matchedOutputCapabilityIds": [],
+    "matchKind": "outgoing-effect-amplification",
+    "modifierCapabilityId": null,
+    "modifierCapabilityIds": [],
+    "recipientAbilityId": "syrax-strategic-revival-strategic-revival-recovery-output",
+    "recipientDragonId": "syrax",
+    "recipientEvidenceIds": [],
+    "requirements": [
+      {
+        "actual": "provider right-flank, recipient right-flank",
+        "evidenceIds": [
+          "syrax-strategic-revival-2026-06-24"
+        ],
+        "expected": "any-lane",
+        "id": "syrax-strategic-revival-strategic-revival-recovery-output-targets-right-flank",
+        "label": "Provider targeting includes recipient",
+        "notes": [],
+        "satisfied": true
+      },
+      {
+        "actual": "preview enabled",
+        "evidenceIds": [
+          "syrax-strategic-revival-2026-06-24"
+        ],
+        "expected": "Star Rank 6+",
+        "id": "syrax-syrax-strategic-revival-star-rank",
+        "label": "syrax - Strategic Revival Habit unlock requirement",
+        "notes": [],
+        "satisfied": false
+      },
+      {
+        "actual": "preview enabled",
+        "evidenceIds": [
+          "syrax-strategic-revival-2026-06-24"
+        ],
+        "expected": "Habit Level 1+ or preview",
+        "id": "syrax-syrax-strategic-revival-habit-level",
+        "label": "syrax - Strategic Revival Selected Habit Level",
+        "notes": [
+          "Locked Habit capabilities are potential in preview mode, not active for current roster."
+        ],
+        "satisfied": false
+      }
+    ],
+    "ruleId": "ally-output-support",
+    "sourceAbilityId": "syrax-strategic-revival",
+    "sourceDragonId": "syrax",
+    "sourceEvidenceIds": [
+      "syrax-strategic-revival-2026-06-24"
+    ],
+    "status": "potential",
+    "targetSelectionGroup": null,
+    "title": "Strategic Revival Recovery support",
+    "unresolvedQuestions": [
+      "Exact final Recovery amount is unknown because the full Level and Instinct Recovery formula is not known."
+    ]
+  },
+  {
+    "assumptions": [],
+    "channel": "recovery",
+    "confidence": "confirmed",
+    "conflicts": [],
+    "damageScope": null,
+    "effects": [
+      "Recovery support"
+    ],
+    "exactResultKnown": false,
+    "exactResultUnknownReason": "Exact final value cannot be calculated because final combat formulas and stacking order are not fully verified.",
+    "explanation": "Malachite's Warden's Rally can provide Recovery to Malachite.",
+    "id": "ally-output-support-malachite-wardens-rally-wardens-rally-recovery-rate-output-malachite",
+    "interactionScope": "internal",
+    "matchedOutputCapabilityIds": [],
+    "matchKind": "outgoing-effect-amplification",
+    "modifierCapabilityId": null,
+    "modifierCapabilityIds": [],
+    "recipientAbilityId": "malachite-wardens-rally-wardens-rally-recovery-rate-output",
+    "recipientDragonId": "malachite",
+    "recipientEvidenceIds": [],
+    "requirements": [
+      {
+        "actual": "provider left-flank, recipient left-flank",
+        "evidenceIds": [
+          "malachite-wardens-rally-summary-2026-06-23",
+          "malachite-wardens-rally-glossary-2026-06-23"
+        ],
+        "expected": "any-lane",
+        "id": "malachite-wardens-rally-wardens-rally-recovery-rate-output-targets-left-flank",
+        "label": "Provider targeting includes recipient",
+        "notes": [
+          "Exact 3 Allies includes all friendly dragons, including caster."
+        ],
+        "satisfied": true
+      }
+    ],
+    "ruleId": "ally-output-support",
+    "sourceAbilityId": "malachite-wardens-rally",
+    "sourceDragonId": "malachite",
+    "sourceEvidenceIds": [
+      "malachite-wardens-rally-summary-2026-06-23",
+      "malachite-wardens-rally-glossary-2026-06-23"
+    ],
+    "status": "active",
+    "targetSelectionGroup": null,
+    "title": "Warden's Rally Recovery support",
+    "unresolvedQuestions": [
+      "Exact final Recovery amount is unknown because the full Level and Instinct Recovery formula is not known."
+    ]
+  },
+  {
+    "assumptions": [],
+    "channel": "recovery",
+    "confidence": "confirmed",
+    "conflicts": [],
+    "damageScope": null,
+    "effects": [
+      "Recovery support"
+    ],
+    "exactResultKnown": false,
+    "exactResultUnknownReason": "Exact final value cannot be calculated because final combat formulas and stacking order are not fully verified.",
+    "explanation": "Malachite's Warden's Rally can provide Recovery to Caraxes.",
+    "id": "ally-output-support-malachite-wardens-rally-wardens-rally-recovery-rate-output-caraxes",
+    "interactionScope": "cross-dragon",
+    "matchedOutputCapabilityIds": [],
+    "matchKind": "outgoing-effect-amplification",
+    "modifierCapabilityId": null,
+    "modifierCapabilityIds": [],
+    "recipientAbilityId": "malachite-wardens-rally-wardens-rally-recovery-rate-output",
+    "recipientDragonId": "caraxes",
+    "recipientEvidenceIds": [],
+    "requirements": [
+      {
+        "actual": "provider left-flank, recipient vanguard",
+        "evidenceIds": [
+          "malachite-wardens-rally-summary-2026-06-23",
+          "malachite-wardens-rally-glossary-2026-06-23"
+        ],
+        "expected": "any-lane",
+        "id": "malachite-wardens-rally-wardens-rally-recovery-rate-output-targets-vanguard",
+        "label": "Provider targeting includes recipient",
+        "notes": [
+          "Exact 3 Allies includes all friendly dragons, including caster."
+        ],
+        "satisfied": true
+      }
+    ],
+    "ruleId": "ally-output-support",
+    "sourceAbilityId": "malachite-wardens-rally",
+    "sourceDragonId": "malachite",
+    "sourceEvidenceIds": [
+      "malachite-wardens-rally-summary-2026-06-23",
+      "malachite-wardens-rally-glossary-2026-06-23"
+    ],
+    "status": "active",
+    "targetSelectionGroup": null,
+    "title": "Warden's Rally Recovery support",
+    "unresolvedQuestions": [
+      "Exact final Recovery amount is unknown because the full Level and Instinct Recovery formula is not known."
+    ]
+  },
+  {
+    "assumptions": [],
+    "channel": "recovery",
+    "confidence": "confirmed",
+    "conflicts": [],
+    "damageScope": null,
+    "effects": [
+      "Recovery support"
+    ],
+    "exactResultKnown": false,
+    "exactResultUnknownReason": "Exact final value cannot be calculated because final combat formulas and stacking order are not fully verified.",
+    "explanation": "Malachite's Warden's Rally can provide Recovery to Syrax.",
+    "id": "ally-output-support-malachite-wardens-rally-wardens-rally-recovery-rate-output-syrax",
+    "interactionScope": "cross-dragon",
+    "matchedOutputCapabilityIds": [],
+    "matchKind": "outgoing-effect-amplification",
+    "modifierCapabilityId": null,
+    "modifierCapabilityIds": [],
+    "recipientAbilityId": "malachite-wardens-rally-wardens-rally-recovery-rate-output",
+    "recipientDragonId": "syrax",
+    "recipientEvidenceIds": [],
+    "requirements": [
+      {
+        "actual": "provider left-flank, recipient right-flank",
+        "evidenceIds": [
+          "malachite-wardens-rally-summary-2026-06-23",
+          "malachite-wardens-rally-glossary-2026-06-23"
+        ],
+        "expected": "any-lane",
+        "id": "malachite-wardens-rally-wardens-rally-recovery-rate-output-targets-right-flank",
+        "label": "Provider targeting includes recipient",
+        "notes": [
+          "Exact 3 Allies includes all friendly dragons, including caster."
+        ],
+        "satisfied": true
+      }
+    ],
+    "ruleId": "ally-output-support",
+    "sourceAbilityId": "malachite-wardens-rally",
+    "sourceDragonId": "malachite",
+    "sourceEvidenceIds": [
+      "malachite-wardens-rally-summary-2026-06-23",
+      "malachite-wardens-rally-glossary-2026-06-23"
+    ],
+    "status": "active",
+    "targetSelectionGroup": null,
+    "title": "Warden's Rally Recovery support",
+    "unresolvedQuestions": [
+      "Exact final Recovery amount is unknown because the full Level and Instinct Recovery formula is not known."
+    ]
+  },
+  {
     "assumptions": [
       "Activation chance depends on Habit Level for each round.",
       "Status application chance depends on Habit Level.",
@@ -2980,6 +3355,381 @@
     ]
   },
   {
+    "assumptions": [],
+    "channel": "recovery",
+    "confidence": "confirmed",
+    "conflicts": [
+      "syrax - Strategic Revival Habit unlock requirement: expected Star Rank 6+, actual preview enabled",
+      "syrax - Strategic Revival Selected Habit Level: expected Habit Level 1+ or preview, actual preview enabled"
+    ],
+    "damageScope": null,
+    "effects": [
+      "Recovery support"
+    ],
+    "exactResultKnown": false,
+    "exactResultUnknownReason": "Exact final value cannot be calculated because final combat formulas and stacking order are not fully verified.",
+    "explanation": "Syrax's Strategic Revival can provide Recovery to Caraxes.",
+    "id": "ally-output-support-syrax-strategic-revival-strategic-revival-recovery-output-caraxes",
+    "interactionScope": "cross-dragon",
+    "matchedOutputCapabilityIds": [],
+    "matchKind": "outgoing-effect-amplification",
+    "modifierCapabilityId": null,
+    "modifierCapabilityIds": [],
+    "recipientAbilityId": "syrax-strategic-revival-strategic-revival-recovery-output",
+    "recipientDragonId": "caraxes",
+    "recipientEvidenceIds": [],
+    "requirements": [
+      {
+        "actual": "provider vanguard, recipient left-flank",
+        "evidenceIds": [
+          "syrax-strategic-revival-2026-06-24"
+        ],
+        "expected": "any-lane",
+        "id": "syrax-strategic-revival-strategic-revival-recovery-output-targets-left-flank",
+        "label": "Provider targeting includes recipient",
+        "notes": [],
+        "satisfied": true
+      },
+      {
+        "actual": "preview enabled",
+        "evidenceIds": [
+          "syrax-strategic-revival-2026-06-24"
+        ],
+        "expected": "Star Rank 6+",
+        "id": "syrax-syrax-strategic-revival-star-rank",
+        "label": "syrax - Strategic Revival Habit unlock requirement",
+        "notes": [],
+        "satisfied": false
+      },
+      {
+        "actual": "preview enabled",
+        "evidenceIds": [
+          "syrax-strategic-revival-2026-06-24"
+        ],
+        "expected": "Habit Level 1+ or preview",
+        "id": "syrax-syrax-strategic-revival-habit-level",
+        "label": "syrax - Strategic Revival Selected Habit Level",
+        "notes": [
+          "Locked Habit capabilities are potential in preview mode, not active for current roster."
+        ],
+        "satisfied": false
+      }
+    ],
+    "ruleId": "ally-output-support",
+    "sourceAbilityId": "syrax-strategic-revival",
+    "sourceDragonId": "syrax",
+    "sourceEvidenceIds": [
+      "syrax-strategic-revival-2026-06-24"
+    ],
+    "status": "potential",
+    "targetSelectionGroup": null,
+    "title": "Strategic Revival Recovery support",
+    "unresolvedQuestions": [
+      "Exact final Recovery amount is unknown because the full Level and Instinct Recovery formula is not known."
+    ]
+  },
+  {
+    "assumptions": [],
+    "channel": "recovery",
+    "confidence": "confirmed",
+    "conflicts": [
+      "syrax - Strategic Revival Habit unlock requirement: expected Star Rank 6+, actual preview enabled",
+      "syrax - Strategic Revival Selected Habit Level: expected Habit Level 1+ or preview, actual preview enabled"
+    ],
+    "damageScope": null,
+    "effects": [
+      "Recovery support"
+    ],
+    "exactResultKnown": false,
+    "exactResultUnknownReason": "Exact final value cannot be calculated because final combat formulas and stacking order are not fully verified.",
+    "explanation": "Syrax's Strategic Revival can provide Recovery to Syrax.",
+    "id": "ally-output-support-syrax-strategic-revival-strategic-revival-recovery-output-syrax",
+    "interactionScope": "internal",
+    "matchedOutputCapabilityIds": [],
+    "matchKind": "outgoing-effect-amplification",
+    "modifierCapabilityId": null,
+    "modifierCapabilityIds": [],
+    "recipientAbilityId": "syrax-strategic-revival-strategic-revival-recovery-output",
+    "recipientDragonId": "syrax",
+    "recipientEvidenceIds": [],
+    "requirements": [
+      {
+        "actual": "provider vanguard, recipient vanguard",
+        "evidenceIds": [
+          "syrax-strategic-revival-2026-06-24"
+        ],
+        "expected": "any-lane",
+        "id": "syrax-strategic-revival-strategic-revival-recovery-output-targets-vanguard",
+        "label": "Provider targeting includes recipient",
+        "notes": [],
+        "satisfied": true
+      },
+      {
+        "actual": "preview enabled",
+        "evidenceIds": [
+          "syrax-strategic-revival-2026-06-24"
+        ],
+        "expected": "Star Rank 6+",
+        "id": "syrax-syrax-strategic-revival-star-rank",
+        "label": "syrax - Strategic Revival Habit unlock requirement",
+        "notes": [],
+        "satisfied": false
+      },
+      {
+        "actual": "preview enabled",
+        "evidenceIds": [
+          "syrax-strategic-revival-2026-06-24"
+        ],
+        "expected": "Habit Level 1+ or preview",
+        "id": "syrax-syrax-strategic-revival-habit-level",
+        "label": "syrax - Strategic Revival Selected Habit Level",
+        "notes": [
+          "Locked Habit capabilities are potential in preview mode, not active for current roster."
+        ],
+        "satisfied": false
+      }
+    ],
+    "ruleId": "ally-output-support",
+    "sourceAbilityId": "syrax-strategic-revival",
+    "sourceDragonId": "syrax",
+    "sourceEvidenceIds": [
+      "syrax-strategic-revival-2026-06-24"
+    ],
+    "status": "potential",
+    "targetSelectionGroup": null,
+    "title": "Strategic Revival Recovery support",
+    "unresolvedQuestions": [
+      "Exact final Recovery amount is unknown because the full Level and Instinct Recovery formula is not known."
+    ]
+  },
+  {
+    "assumptions": [],
+    "channel": "recovery",
+    "confidence": "confirmed",
+    "conflicts": [
+      "syrax - Strategic Revival Habit unlock requirement: expected Star Rank 6+, actual preview enabled",
+      "syrax - Strategic Revival Selected Habit Level: expected Habit Level 1+ or preview, actual preview enabled"
+    ],
+    "damageScope": null,
+    "effects": [
+      "Recovery support"
+    ],
+    "exactResultKnown": false,
+    "exactResultUnknownReason": "Exact final value cannot be calculated because final combat formulas and stacking order are not fully verified.",
+    "explanation": "Syrax's Strategic Revival can provide Recovery to Malachite.",
+    "id": "ally-output-support-syrax-strategic-revival-strategic-revival-recovery-output-malachite",
+    "interactionScope": "cross-dragon",
+    "matchedOutputCapabilityIds": [],
+    "matchKind": "outgoing-effect-amplification",
+    "modifierCapabilityId": null,
+    "modifierCapabilityIds": [],
+    "recipientAbilityId": "syrax-strategic-revival-strategic-revival-recovery-output",
+    "recipientDragonId": "malachite",
+    "recipientEvidenceIds": [],
+    "requirements": [
+      {
+        "actual": "provider vanguard, recipient right-flank",
+        "evidenceIds": [
+          "syrax-strategic-revival-2026-06-24"
+        ],
+        "expected": "any-lane",
+        "id": "syrax-strategic-revival-strategic-revival-recovery-output-targets-right-flank",
+        "label": "Provider targeting includes recipient",
+        "notes": [],
+        "satisfied": true
+      },
+      {
+        "actual": "preview enabled",
+        "evidenceIds": [
+          "syrax-strategic-revival-2026-06-24"
+        ],
+        "expected": "Star Rank 6+",
+        "id": "syrax-syrax-strategic-revival-star-rank",
+        "label": "syrax - Strategic Revival Habit unlock requirement",
+        "notes": [],
+        "satisfied": false
+      },
+      {
+        "actual": "preview enabled",
+        "evidenceIds": [
+          "syrax-strategic-revival-2026-06-24"
+        ],
+        "expected": "Habit Level 1+ or preview",
+        "id": "syrax-syrax-strategic-revival-habit-level",
+        "label": "syrax - Strategic Revival Selected Habit Level",
+        "notes": [
+          "Locked Habit capabilities are potential in preview mode, not active for current roster."
+        ],
+        "satisfied": false
+      }
+    ],
+    "ruleId": "ally-output-support",
+    "sourceAbilityId": "syrax-strategic-revival",
+    "sourceDragonId": "syrax",
+    "sourceEvidenceIds": [
+      "syrax-strategic-revival-2026-06-24"
+    ],
+    "status": "potential",
+    "targetSelectionGroup": null,
+    "title": "Strategic Revival Recovery support",
+    "unresolvedQuestions": [
+      "Exact final Recovery amount is unknown because the full Level and Instinct Recovery formula is not known."
+    ]
+  },
+  {
+    "assumptions": [],
+    "channel": "recovery",
+    "confidence": "confirmed",
+    "conflicts": [],
+    "damageScope": null,
+    "effects": [
+      "Recovery support"
+    ],
+    "exactResultKnown": false,
+    "exactResultUnknownReason": "Exact final value cannot be calculated because final combat formulas and stacking order are not fully verified.",
+    "explanation": "Malachite's Warden's Rally can provide Recovery to Caraxes.",
+    "id": "ally-output-support-malachite-wardens-rally-wardens-rally-recovery-rate-output-caraxes",
+    "interactionScope": "cross-dragon",
+    "matchedOutputCapabilityIds": [],
+    "matchKind": "outgoing-effect-amplification",
+    "modifierCapabilityId": null,
+    "modifierCapabilityIds": [],
+    "recipientAbilityId": "malachite-wardens-rally-wardens-rally-recovery-rate-output",
+    "recipientDragonId": "caraxes",
+    "recipientEvidenceIds": [],
+    "requirements": [
+      {
+        "actual": "provider right-flank, recipient left-flank",
+        "evidenceIds": [
+          "malachite-wardens-rally-summary-2026-06-23",
+          "malachite-wardens-rally-glossary-2026-06-23"
+        ],
+        "expected": "any-lane",
+        "id": "malachite-wardens-rally-wardens-rally-recovery-rate-output-targets-left-flank",
+        "label": "Provider targeting includes recipient",
+        "notes": [
+          "Exact 3 Allies includes all friendly dragons, including caster."
+        ],
+        "satisfied": true
+      }
+    ],
+    "ruleId": "ally-output-support",
+    "sourceAbilityId": "malachite-wardens-rally",
+    "sourceDragonId": "malachite",
+    "sourceEvidenceIds": [
+      "malachite-wardens-rally-summary-2026-06-23",
+      "malachite-wardens-rally-glossary-2026-06-23"
+    ],
+    "status": "active",
+    "targetSelectionGroup": null,
+    "title": "Warden's Rally Recovery support",
+    "unresolvedQuestions": [
+      "Exact final Recovery amount is unknown because the full Level and Instinct Recovery formula is not known."
+    ]
+  },
+  {
+    "assumptions": [],
+    "channel": "recovery",
+    "confidence": "confirmed",
+    "conflicts": [],
+    "damageScope": null,
+    "effects": [
+      "Recovery support"
+    ],
+    "exactResultKnown": false,
+    "exactResultUnknownReason": "Exact final value cannot be calculated because final combat formulas and stacking order are not fully verified.",
+    "explanation": "Malachite's Warden's Rally can provide Recovery to Syrax.",
+    "id": "ally-output-support-malachite-wardens-rally-wardens-rally-recovery-rate-output-syrax",
+    "interactionScope": "cross-dragon",
+    "matchedOutputCapabilityIds": [],
+    "matchKind": "outgoing-effect-amplification",
+    "modifierCapabilityId": null,
+    "modifierCapabilityIds": [],
+    "recipientAbilityId": "malachite-wardens-rally-wardens-rally-recovery-rate-output",
+    "recipientDragonId": "syrax",
+    "recipientEvidenceIds": [],
+    "requirements": [
+      {
+        "actual": "provider right-flank, recipient vanguard",
+        "evidenceIds": [
+          "malachite-wardens-rally-summary-2026-06-23",
+          "malachite-wardens-rally-glossary-2026-06-23"
+        ],
+        "expected": "any-lane",
+        "id": "malachite-wardens-rally-wardens-rally-recovery-rate-output-targets-vanguard",
+        "label": "Provider targeting includes recipient",
+        "notes": [
+          "Exact 3 Allies includes all friendly dragons, including caster."
+        ],
+        "satisfied": true
+      }
+    ],
+    "ruleId": "ally-output-support",
+    "sourceAbilityId": "malachite-wardens-rally",
+    "sourceDragonId": "malachite",
+    "sourceEvidenceIds": [
+      "malachite-wardens-rally-summary-2026-06-23",
+      "malachite-wardens-rally-glossary-2026-06-23"
+    ],
+    "status": "active",
+    "targetSelectionGroup": null,
+    "title": "Warden's Rally Recovery support",
+    "unresolvedQuestions": [
+      "Exact final Recovery amount is unknown because the full Level and Instinct Recovery formula is not known."
+    ]
+  },
+  {
+    "assumptions": [],
+    "channel": "recovery",
+    "confidence": "confirmed",
+    "conflicts": [],
+    "damageScope": null,
+    "effects": [
+      "Recovery support"
+    ],
+    "exactResultKnown": false,
+    "exactResultUnknownReason": "Exact final value cannot be calculated because final combat formulas and stacking order are not fully verified.",
+    "explanation": "Malachite's Warden's Rally can provide Recovery to Malachite.",
+    "id": "ally-output-support-malachite-wardens-rally-wardens-rally-recovery-rate-output-malachite",
+    "interactionScope": "internal",
+    "matchedOutputCapabilityIds": [],
+    "matchKind": "outgoing-effect-amplification",
+    "modifierCapabilityId": null,
+    "modifierCapabilityIds": [],
+    "recipientAbilityId": "malachite-wardens-rally-wardens-rally-recovery-rate-output",
+    "recipientDragonId": "malachite",
+    "recipientEvidenceIds": [],
+    "requirements": [
+      {
+        "actual": "provider right-flank, recipient right-flank",
+        "evidenceIds": [
+          "malachite-wardens-rally-summary-2026-06-23",
+          "malachite-wardens-rally-glossary-2026-06-23"
+        ],
+        "expected": "any-lane",
+        "id": "malachite-wardens-rally-wardens-rally-recovery-rate-output-targets-right-flank",
+        "label": "Provider targeting includes recipient",
+        "notes": [
+          "Exact 3 Allies includes all friendly dragons, including caster."
+        ],
+        "satisfied": true
+      }
+    ],
+    "ruleId": "ally-output-support",
+    "sourceAbilityId": "malachite-wardens-rally",
+    "sourceDragonId": "malachite",
+    "sourceEvidenceIds": [
+      "malachite-wardens-rally-summary-2026-06-23",
+      "malachite-wardens-rally-glossary-2026-06-23"
+    ],
+    "status": "active",
+    "targetSelectionGroup": null,
+    "title": "Warden's Rally Recovery support",
+    "unresolvedQuestions": [
+      "Exact final Recovery amount is unknown because the full Level and Instinct Recovery formula is not known."
+    ]
+  },
+  {
     "assumptions": [
       "Activation chance depends on Habit Level for each round.",
       "Status application chance depends on Habit Level.",
@@ -5348,6 +6098,381 @@
     ]
   },
   {
+    "assumptions": [],
+    "channel": "recovery",
+    "confidence": "confirmed",
+    "conflicts": [
+      "syrax - Strategic Revival Habit unlock requirement: expected Star Rank 6+, actual preview enabled",
+      "syrax - Strategic Revival Selected Habit Level: expected Habit Level 1+ or preview, actual preview enabled"
+    ],
+    "damageScope": null,
+    "effects": [
+      "Recovery support"
+    ],
+    "exactResultKnown": false,
+    "exactResultUnknownReason": "Exact final value cannot be calculated because final combat formulas and stacking order are not fully verified.",
+    "explanation": "Syrax's Strategic Revival can provide Recovery to Malachite.",
+    "id": "ally-output-support-syrax-strategic-revival-strategic-revival-recovery-output-malachite",
+    "interactionScope": "cross-dragon",
+    "matchedOutputCapabilityIds": [],
+    "matchKind": "outgoing-effect-amplification",
+    "modifierCapabilityId": null,
+    "modifierCapabilityIds": [],
+    "recipientAbilityId": "syrax-strategic-revival-strategic-revival-recovery-output",
+    "recipientDragonId": "malachite",
+    "recipientEvidenceIds": [],
+    "requirements": [
+      {
+        "actual": "provider vanguard, recipient left-flank",
+        "evidenceIds": [
+          "syrax-strategic-revival-2026-06-24"
+        ],
+        "expected": "any-lane",
+        "id": "syrax-strategic-revival-strategic-revival-recovery-output-targets-left-flank",
+        "label": "Provider targeting includes recipient",
+        "notes": [],
+        "satisfied": true
+      },
+      {
+        "actual": "preview enabled",
+        "evidenceIds": [
+          "syrax-strategic-revival-2026-06-24"
+        ],
+        "expected": "Star Rank 6+",
+        "id": "syrax-syrax-strategic-revival-star-rank",
+        "label": "syrax - Strategic Revival Habit unlock requirement",
+        "notes": [],
+        "satisfied": false
+      },
+      {
+        "actual": "preview enabled",
+        "evidenceIds": [
+          "syrax-strategic-revival-2026-06-24"
+        ],
+        "expected": "Habit Level 1+ or preview",
+        "id": "syrax-syrax-strategic-revival-habit-level",
+        "label": "syrax - Strategic Revival Selected Habit Level",
+        "notes": [
+          "Locked Habit capabilities are potential in preview mode, not active for current roster."
+        ],
+        "satisfied": false
+      }
+    ],
+    "ruleId": "ally-output-support",
+    "sourceAbilityId": "syrax-strategic-revival",
+    "sourceDragonId": "syrax",
+    "sourceEvidenceIds": [
+      "syrax-strategic-revival-2026-06-24"
+    ],
+    "status": "potential",
+    "targetSelectionGroup": null,
+    "title": "Strategic Revival Recovery support",
+    "unresolvedQuestions": [
+      "Exact final Recovery amount is unknown because the full Level and Instinct Recovery formula is not known."
+    ]
+  },
+  {
+    "assumptions": [],
+    "channel": "recovery",
+    "confidence": "confirmed",
+    "conflicts": [
+      "syrax - Strategic Revival Habit unlock requirement: expected Star Rank 6+, actual preview enabled",
+      "syrax - Strategic Revival Selected Habit Level: expected Habit Level 1+ or preview, actual preview enabled"
+    ],
+    "damageScope": null,
+    "effects": [
+      "Recovery support"
+    ],
+    "exactResultKnown": false,
+    "exactResultUnknownReason": "Exact final value cannot be calculated because final combat formulas and stacking order are not fully verified.",
+    "explanation": "Syrax's Strategic Revival can provide Recovery to Syrax.",
+    "id": "ally-output-support-syrax-strategic-revival-strategic-revival-recovery-output-syrax",
+    "interactionScope": "internal",
+    "matchedOutputCapabilityIds": [],
+    "matchKind": "outgoing-effect-amplification",
+    "modifierCapabilityId": null,
+    "modifierCapabilityIds": [],
+    "recipientAbilityId": "syrax-strategic-revival-strategic-revival-recovery-output",
+    "recipientDragonId": "syrax",
+    "recipientEvidenceIds": [],
+    "requirements": [
+      {
+        "actual": "provider vanguard, recipient vanguard",
+        "evidenceIds": [
+          "syrax-strategic-revival-2026-06-24"
+        ],
+        "expected": "any-lane",
+        "id": "syrax-strategic-revival-strategic-revival-recovery-output-targets-vanguard",
+        "label": "Provider targeting includes recipient",
+        "notes": [],
+        "satisfied": true
+      },
+      {
+        "actual": "preview enabled",
+        "evidenceIds": [
+          "syrax-strategic-revival-2026-06-24"
+        ],
+        "expected": "Star Rank 6+",
+        "id": "syrax-syrax-strategic-revival-star-rank",
+        "label": "syrax - Strategic Revival Habit unlock requirement",
+        "notes": [],
+        "satisfied": false
+      },
+      {
+        "actual": "preview enabled",
+        "evidenceIds": [
+          "syrax-strategic-revival-2026-06-24"
+        ],
+        "expected": "Habit Level 1+ or preview",
+        "id": "syrax-syrax-strategic-revival-habit-level",
+        "label": "syrax - Strategic Revival Selected Habit Level",
+        "notes": [
+          "Locked Habit capabilities are potential in preview mode, not active for current roster."
+        ],
+        "satisfied": false
+      }
+    ],
+    "ruleId": "ally-output-support",
+    "sourceAbilityId": "syrax-strategic-revival",
+    "sourceDragonId": "syrax",
+    "sourceEvidenceIds": [
+      "syrax-strategic-revival-2026-06-24"
+    ],
+    "status": "potential",
+    "targetSelectionGroup": null,
+    "title": "Strategic Revival Recovery support",
+    "unresolvedQuestions": [
+      "Exact final Recovery amount is unknown because the full Level and Instinct Recovery formula is not known."
+    ]
+  },
+  {
+    "assumptions": [],
+    "channel": "recovery",
+    "confidence": "confirmed",
+    "conflicts": [
+      "syrax - Strategic Revival Habit unlock requirement: expected Star Rank 6+, actual preview enabled",
+      "syrax - Strategic Revival Selected Habit Level: expected Habit Level 1+ or preview, actual preview enabled"
+    ],
+    "damageScope": null,
+    "effects": [
+      "Recovery support"
+    ],
+    "exactResultKnown": false,
+    "exactResultUnknownReason": "Exact final value cannot be calculated because final combat formulas and stacking order are not fully verified.",
+    "explanation": "Syrax's Strategic Revival can provide Recovery to Caraxes.",
+    "id": "ally-output-support-syrax-strategic-revival-strategic-revival-recovery-output-caraxes",
+    "interactionScope": "cross-dragon",
+    "matchedOutputCapabilityIds": [],
+    "matchKind": "outgoing-effect-amplification",
+    "modifierCapabilityId": null,
+    "modifierCapabilityIds": [],
+    "recipientAbilityId": "syrax-strategic-revival-strategic-revival-recovery-output",
+    "recipientDragonId": "caraxes",
+    "recipientEvidenceIds": [],
+    "requirements": [
+      {
+        "actual": "provider vanguard, recipient right-flank",
+        "evidenceIds": [
+          "syrax-strategic-revival-2026-06-24"
+        ],
+        "expected": "any-lane",
+        "id": "syrax-strategic-revival-strategic-revival-recovery-output-targets-right-flank",
+        "label": "Provider targeting includes recipient",
+        "notes": [],
+        "satisfied": true
+      },
+      {
+        "actual": "preview enabled",
+        "evidenceIds": [
+          "syrax-strategic-revival-2026-06-24"
+        ],
+        "expected": "Star Rank 6+",
+        "id": "syrax-syrax-strategic-revival-star-rank",
+        "label": "syrax - Strategic Revival Habit unlock requirement",
+        "notes": [],
+        "satisfied": false
+      },
+      {
+        "actual": "preview enabled",
+        "evidenceIds": [
+          "syrax-strategic-revival-2026-06-24"
+        ],
+        "expected": "Habit Level 1+ or preview",
+        "id": "syrax-syrax-strategic-revival-habit-level",
+        "label": "syrax - Strategic Revival Selected Habit Level",
+        "notes": [
+          "Locked Habit capabilities are potential in preview mode, not active for current roster."
+        ],
+        "satisfied": false
+      }
+    ],
+    "ruleId": "ally-output-support",
+    "sourceAbilityId": "syrax-strategic-revival",
+    "sourceDragonId": "syrax",
+    "sourceEvidenceIds": [
+      "syrax-strategic-revival-2026-06-24"
+    ],
+    "status": "potential",
+    "targetSelectionGroup": null,
+    "title": "Strategic Revival Recovery support",
+    "unresolvedQuestions": [
+      "Exact final Recovery amount is unknown because the full Level and Instinct Recovery formula is not known."
+    ]
+  },
+  {
+    "assumptions": [],
+    "channel": "recovery",
+    "confidence": "confirmed",
+    "conflicts": [],
+    "damageScope": null,
+    "effects": [
+      "Recovery support"
+    ],
+    "exactResultKnown": false,
+    "exactResultUnknownReason": "Exact final value cannot be calculated because final combat formulas and stacking order are not fully verified.",
+    "explanation": "Malachite's Warden's Rally can provide Recovery to Malachite.",
+    "id": "ally-output-support-malachite-wardens-rally-wardens-rally-recovery-rate-output-malachite",
+    "interactionScope": "internal",
+    "matchedOutputCapabilityIds": [],
+    "matchKind": "outgoing-effect-amplification",
+    "modifierCapabilityId": null,
+    "modifierCapabilityIds": [],
+    "recipientAbilityId": "malachite-wardens-rally-wardens-rally-recovery-rate-output",
+    "recipientDragonId": "malachite",
+    "recipientEvidenceIds": [],
+    "requirements": [
+      {
+        "actual": "provider left-flank, recipient left-flank",
+        "evidenceIds": [
+          "malachite-wardens-rally-summary-2026-06-23",
+          "malachite-wardens-rally-glossary-2026-06-23"
+        ],
+        "expected": "any-lane",
+        "id": "malachite-wardens-rally-wardens-rally-recovery-rate-output-targets-left-flank",
+        "label": "Provider targeting includes recipient",
+        "notes": [
+          "Exact 3 Allies includes all friendly dragons, including caster."
+        ],
+        "satisfied": true
+      }
+    ],
+    "ruleId": "ally-output-support",
+    "sourceAbilityId": "malachite-wardens-rally",
+    "sourceDragonId": "malachite",
+    "sourceEvidenceIds": [
+      "malachite-wardens-rally-summary-2026-06-23",
+      "malachite-wardens-rally-glossary-2026-06-23"
+    ],
+    "status": "active",
+    "targetSelectionGroup": null,
+    "title": "Warden's Rally Recovery support",
+    "unresolvedQuestions": [
+      "Exact final Recovery amount is unknown because the full Level and Instinct Recovery formula is not known."
+    ]
+  },
+  {
+    "assumptions": [],
+    "channel": "recovery",
+    "confidence": "confirmed",
+    "conflicts": [],
+    "damageScope": null,
+    "effects": [
+      "Recovery support"
+    ],
+    "exactResultKnown": false,
+    "exactResultUnknownReason": "Exact final value cannot be calculated because final combat formulas and stacking order are not fully verified.",
+    "explanation": "Malachite's Warden's Rally can provide Recovery to Syrax.",
+    "id": "ally-output-support-malachite-wardens-rally-wardens-rally-recovery-rate-output-syrax",
+    "interactionScope": "cross-dragon",
+    "matchedOutputCapabilityIds": [],
+    "matchKind": "outgoing-effect-amplification",
+    "modifierCapabilityId": null,
+    "modifierCapabilityIds": [],
+    "recipientAbilityId": "malachite-wardens-rally-wardens-rally-recovery-rate-output",
+    "recipientDragonId": "syrax",
+    "recipientEvidenceIds": [],
+    "requirements": [
+      {
+        "actual": "provider left-flank, recipient vanguard",
+        "evidenceIds": [
+          "malachite-wardens-rally-summary-2026-06-23",
+          "malachite-wardens-rally-glossary-2026-06-23"
+        ],
+        "expected": "any-lane",
+        "id": "malachite-wardens-rally-wardens-rally-recovery-rate-output-targets-vanguard",
+        "label": "Provider targeting includes recipient",
+        "notes": [
+          "Exact 3 Allies includes all friendly dragons, including caster."
+        ],
+        "satisfied": true
+      }
+    ],
+    "ruleId": "ally-output-support",
+    "sourceAbilityId": "malachite-wardens-rally",
+    "sourceDragonId": "malachite",
+    "sourceEvidenceIds": [
+      "malachite-wardens-rally-summary-2026-06-23",
+      "malachite-wardens-rally-glossary-2026-06-23"
+    ],
+    "status": "active",
+    "targetSelectionGroup": null,
+    "title": "Warden's Rally Recovery support",
+    "unresolvedQuestions": [
+      "Exact final Recovery amount is unknown because the full Level and Instinct Recovery formula is not known."
+    ]
+  },
+  {
+    "assumptions": [],
+    "channel": "recovery",
+    "confidence": "confirmed",
+    "conflicts": [],
+    "damageScope": null,
+    "effects": [
+      "Recovery support"
+    ],
+    "exactResultKnown": false,
+    "exactResultUnknownReason": "Exact final value cannot be calculated because final combat formulas and stacking order are not fully verified.",
+    "explanation": "Malachite's Warden's Rally can provide Recovery to Caraxes.",
+    "id": "ally-output-support-malachite-wardens-rally-wardens-rally-recovery-rate-output-caraxes",
+    "interactionScope": "cross-dragon",
+    "matchedOutputCapabilityIds": [],
+    "matchKind": "outgoing-effect-amplification",
+    "modifierCapabilityId": null,
+    "modifierCapabilityIds": [],
+    "recipientAbilityId": "malachite-wardens-rally-wardens-rally-recovery-rate-output",
+    "recipientDragonId": "caraxes",
+    "recipientEvidenceIds": [],
+    "requirements": [
+      {
+        "actual": "provider left-flank, recipient right-flank",
+        "evidenceIds": [
+          "malachite-wardens-rally-summary-2026-06-23",
+          "malachite-wardens-rally-glossary-2026-06-23"
+        ],
+        "expected": "any-lane",
+        "id": "malachite-wardens-rally-wardens-rally-recovery-rate-output-targets-right-flank",
+        "label": "Provider targeting includes recipient",
+        "notes": [
+          "Exact 3 Allies includes all friendly dragons, including caster."
+        ],
+        "satisfied": true
+      }
+    ],
+    "ruleId": "ally-output-support",
+    "sourceAbilityId": "malachite-wardens-rally",
+    "sourceDragonId": "malachite",
+    "sourceEvidenceIds": [
+      "malachite-wardens-rally-summary-2026-06-23",
+      "malachite-wardens-rally-glossary-2026-06-23"
+    ],
+    "status": "active",
+    "targetSelectionGroup": null,
+    "title": "Warden's Rally Recovery support",
+    "unresolvedQuestions": [
+      "Exact final Recovery amount is unknown because the full Level and Instinct Recovery formula is not known."
+    ]
+  },
+  {
     "assumptions": [
       "Activation chance depends on Habit Level for each round.",
       "Status application chance depends on Habit Level.",
@@ -7595,6 +8720,381 @@
     "title": "Fire Damage Support",
     "unresolvedQuestions": [
       "Exact final modified amount is unknown."
+    ]
+  },
+  {
+    "assumptions": [],
+    "channel": "recovery",
+    "confidence": "confirmed",
+    "conflicts": [
+      "syrax - Strategic Revival Habit unlock requirement: expected Star Rank 6+, actual preview enabled",
+      "syrax - Strategic Revival Selected Habit Level: expected Habit Level 1+ or preview, actual preview enabled"
+    ],
+    "damageScope": null,
+    "effects": [
+      "Recovery support"
+    ],
+    "exactResultKnown": false,
+    "exactResultUnknownReason": "Exact final value cannot be calculated because final combat formulas and stacking order are not fully verified.",
+    "explanation": "Syrax's Strategic Revival can provide Recovery to Syrax.",
+    "id": "ally-output-support-syrax-strategic-revival-strategic-revival-recovery-output-syrax",
+    "interactionScope": "internal",
+    "matchedOutputCapabilityIds": [],
+    "matchKind": "outgoing-effect-amplification",
+    "modifierCapabilityId": null,
+    "modifierCapabilityIds": [],
+    "recipientAbilityId": "syrax-strategic-revival-strategic-revival-recovery-output",
+    "recipientDragonId": "syrax",
+    "recipientEvidenceIds": [],
+    "requirements": [
+      {
+        "actual": "provider left-flank, recipient left-flank",
+        "evidenceIds": [
+          "syrax-strategic-revival-2026-06-24"
+        ],
+        "expected": "any-lane",
+        "id": "syrax-strategic-revival-strategic-revival-recovery-output-targets-left-flank",
+        "label": "Provider targeting includes recipient",
+        "notes": [],
+        "satisfied": true
+      },
+      {
+        "actual": "preview enabled",
+        "evidenceIds": [
+          "syrax-strategic-revival-2026-06-24"
+        ],
+        "expected": "Star Rank 6+",
+        "id": "syrax-syrax-strategic-revival-star-rank",
+        "label": "syrax - Strategic Revival Habit unlock requirement",
+        "notes": [],
+        "satisfied": false
+      },
+      {
+        "actual": "preview enabled",
+        "evidenceIds": [
+          "syrax-strategic-revival-2026-06-24"
+        ],
+        "expected": "Habit Level 1+ or preview",
+        "id": "syrax-syrax-strategic-revival-habit-level",
+        "label": "syrax - Strategic Revival Selected Habit Level",
+        "notes": [
+          "Locked Habit capabilities are potential in preview mode, not active for current roster."
+        ],
+        "satisfied": false
+      }
+    ],
+    "ruleId": "ally-output-support",
+    "sourceAbilityId": "syrax-strategic-revival",
+    "sourceDragonId": "syrax",
+    "sourceEvidenceIds": [
+      "syrax-strategic-revival-2026-06-24"
+    ],
+    "status": "potential",
+    "targetSelectionGroup": null,
+    "title": "Strategic Revival Recovery support",
+    "unresolvedQuestions": [
+      "Exact final Recovery amount is unknown because the full Level and Instinct Recovery formula is not known."
+    ]
+  },
+  {
+    "assumptions": [],
+    "channel": "recovery",
+    "confidence": "confirmed",
+    "conflicts": [
+      "syrax - Strategic Revival Habit unlock requirement: expected Star Rank 6+, actual preview enabled",
+      "syrax - Strategic Revival Selected Habit Level: expected Habit Level 1+ or preview, actual preview enabled"
+    ],
+    "damageScope": null,
+    "effects": [
+      "Recovery support"
+    ],
+    "exactResultKnown": false,
+    "exactResultUnknownReason": "Exact final value cannot be calculated because final combat formulas and stacking order are not fully verified.",
+    "explanation": "Syrax's Strategic Revival can provide Recovery to Caraxes.",
+    "id": "ally-output-support-syrax-strategic-revival-strategic-revival-recovery-output-caraxes",
+    "interactionScope": "cross-dragon",
+    "matchedOutputCapabilityIds": [],
+    "matchKind": "outgoing-effect-amplification",
+    "modifierCapabilityId": null,
+    "modifierCapabilityIds": [],
+    "recipientAbilityId": "syrax-strategic-revival-strategic-revival-recovery-output",
+    "recipientDragonId": "caraxes",
+    "recipientEvidenceIds": [],
+    "requirements": [
+      {
+        "actual": "provider left-flank, recipient vanguard",
+        "evidenceIds": [
+          "syrax-strategic-revival-2026-06-24"
+        ],
+        "expected": "any-lane",
+        "id": "syrax-strategic-revival-strategic-revival-recovery-output-targets-vanguard",
+        "label": "Provider targeting includes recipient",
+        "notes": [],
+        "satisfied": true
+      },
+      {
+        "actual": "preview enabled",
+        "evidenceIds": [
+          "syrax-strategic-revival-2026-06-24"
+        ],
+        "expected": "Star Rank 6+",
+        "id": "syrax-syrax-strategic-revival-star-rank",
+        "label": "syrax - Strategic Revival Habit unlock requirement",
+        "notes": [],
+        "satisfied": false
+      },
+      {
+        "actual": "preview enabled",
+        "evidenceIds": [
+          "syrax-strategic-revival-2026-06-24"
+        ],
+        "expected": "Habit Level 1+ or preview",
+        "id": "syrax-syrax-strategic-revival-habit-level",
+        "label": "syrax - Strategic Revival Selected Habit Level",
+        "notes": [
+          "Locked Habit capabilities are potential in preview mode, not active for current roster."
+        ],
+        "satisfied": false
+      }
+    ],
+    "ruleId": "ally-output-support",
+    "sourceAbilityId": "syrax-strategic-revival",
+    "sourceDragonId": "syrax",
+    "sourceEvidenceIds": [
+      "syrax-strategic-revival-2026-06-24"
+    ],
+    "status": "potential",
+    "targetSelectionGroup": null,
+    "title": "Strategic Revival Recovery support",
+    "unresolvedQuestions": [
+      "Exact final Recovery amount is unknown because the full Level and Instinct Recovery formula is not known."
+    ]
+  },
+  {
+    "assumptions": [],
+    "channel": "recovery",
+    "confidence": "confirmed",
+    "conflicts": [
+      "syrax - Strategic Revival Habit unlock requirement: expected Star Rank 6+, actual preview enabled",
+      "syrax - Strategic Revival Selected Habit Level: expected Habit Level 1+ or preview, actual preview enabled"
+    ],
+    "damageScope": null,
+    "effects": [
+      "Recovery support"
+    ],
+    "exactResultKnown": false,
+    "exactResultUnknownReason": "Exact final value cannot be calculated because final combat formulas and stacking order are not fully verified.",
+    "explanation": "Syrax's Strategic Revival can provide Recovery to Malachite.",
+    "id": "ally-output-support-syrax-strategic-revival-strategic-revival-recovery-output-malachite",
+    "interactionScope": "cross-dragon",
+    "matchedOutputCapabilityIds": [],
+    "matchKind": "outgoing-effect-amplification",
+    "modifierCapabilityId": null,
+    "modifierCapabilityIds": [],
+    "recipientAbilityId": "syrax-strategic-revival-strategic-revival-recovery-output",
+    "recipientDragonId": "malachite",
+    "recipientEvidenceIds": [],
+    "requirements": [
+      {
+        "actual": "provider left-flank, recipient right-flank",
+        "evidenceIds": [
+          "syrax-strategic-revival-2026-06-24"
+        ],
+        "expected": "any-lane",
+        "id": "syrax-strategic-revival-strategic-revival-recovery-output-targets-right-flank",
+        "label": "Provider targeting includes recipient",
+        "notes": [],
+        "satisfied": true
+      },
+      {
+        "actual": "preview enabled",
+        "evidenceIds": [
+          "syrax-strategic-revival-2026-06-24"
+        ],
+        "expected": "Star Rank 6+",
+        "id": "syrax-syrax-strategic-revival-star-rank",
+        "label": "syrax - Strategic Revival Habit unlock requirement",
+        "notes": [],
+        "satisfied": false
+      },
+      {
+        "actual": "preview enabled",
+        "evidenceIds": [
+          "syrax-strategic-revival-2026-06-24"
+        ],
+        "expected": "Habit Level 1+ or preview",
+        "id": "syrax-syrax-strategic-revival-habit-level",
+        "label": "syrax - Strategic Revival Selected Habit Level",
+        "notes": [
+          "Locked Habit capabilities are potential in preview mode, not active for current roster."
+        ],
+        "satisfied": false
+      }
+    ],
+    "ruleId": "ally-output-support",
+    "sourceAbilityId": "syrax-strategic-revival",
+    "sourceDragonId": "syrax",
+    "sourceEvidenceIds": [
+      "syrax-strategic-revival-2026-06-24"
+    ],
+    "status": "potential",
+    "targetSelectionGroup": null,
+    "title": "Strategic Revival Recovery support",
+    "unresolvedQuestions": [
+      "Exact final Recovery amount is unknown because the full Level and Instinct Recovery formula is not known."
+    ]
+  },
+  {
+    "assumptions": [],
+    "channel": "recovery",
+    "confidence": "confirmed",
+    "conflicts": [],
+    "damageScope": null,
+    "effects": [
+      "Recovery support"
+    ],
+    "exactResultKnown": false,
+    "exactResultUnknownReason": "Exact final value cannot be calculated because final combat formulas and stacking order are not fully verified.",
+    "explanation": "Malachite's Warden's Rally can provide Recovery to Syrax.",
+    "id": "ally-output-support-malachite-wardens-rally-wardens-rally-recovery-rate-output-syrax",
+    "interactionScope": "cross-dragon",
+    "matchedOutputCapabilityIds": [],
+    "matchKind": "outgoing-effect-amplification",
+    "modifierCapabilityId": null,
+    "modifierCapabilityIds": [],
+    "recipientAbilityId": "malachite-wardens-rally-wardens-rally-recovery-rate-output",
+    "recipientDragonId": "syrax",
+    "recipientEvidenceIds": [],
+    "requirements": [
+      {
+        "actual": "provider right-flank, recipient left-flank",
+        "evidenceIds": [
+          "malachite-wardens-rally-summary-2026-06-23",
+          "malachite-wardens-rally-glossary-2026-06-23"
+        ],
+        "expected": "any-lane",
+        "id": "malachite-wardens-rally-wardens-rally-recovery-rate-output-targets-left-flank",
+        "label": "Provider targeting includes recipient",
+        "notes": [
+          "Exact 3 Allies includes all friendly dragons, including caster."
+        ],
+        "satisfied": true
+      }
+    ],
+    "ruleId": "ally-output-support",
+    "sourceAbilityId": "malachite-wardens-rally",
+    "sourceDragonId": "malachite",
+    "sourceEvidenceIds": [
+      "malachite-wardens-rally-summary-2026-06-23",
+      "malachite-wardens-rally-glossary-2026-06-23"
+    ],
+    "status": "active",
+    "targetSelectionGroup": null,
+    "title": "Warden's Rally Recovery support",
+    "unresolvedQuestions": [
+      "Exact final Recovery amount is unknown because the full Level and Instinct Recovery formula is not known."
+    ]
+  },
+  {
+    "assumptions": [],
+    "channel": "recovery",
+    "confidence": "confirmed",
+    "conflicts": [],
+    "damageScope": null,
+    "effects": [
+      "Recovery support"
+    ],
+    "exactResultKnown": false,
+    "exactResultUnknownReason": "Exact final value cannot be calculated because final combat formulas and stacking order are not fully verified.",
+    "explanation": "Malachite's Warden's Rally can provide Recovery to Caraxes.",
+    "id": "ally-output-support-malachite-wardens-rally-wardens-rally-recovery-rate-output-caraxes",
+    "interactionScope": "cross-dragon",
+    "matchedOutputCapabilityIds": [],
+    "matchKind": "outgoing-effect-amplification",
+    "modifierCapabilityId": null,
+    "modifierCapabilityIds": [],
+    "recipientAbilityId": "malachite-wardens-rally-wardens-rally-recovery-rate-output",
+    "recipientDragonId": "caraxes",
+    "recipientEvidenceIds": [],
+    "requirements": [
+      {
+        "actual": "provider right-flank, recipient vanguard",
+        "evidenceIds": [
+          "malachite-wardens-rally-summary-2026-06-23",
+          "malachite-wardens-rally-glossary-2026-06-23"
+        ],
+        "expected": "any-lane",
+        "id": "malachite-wardens-rally-wardens-rally-recovery-rate-output-targets-vanguard",
+        "label": "Provider targeting includes recipient",
+        "notes": [
+          "Exact 3 Allies includes all friendly dragons, including caster."
+        ],
+        "satisfied": true
+      }
+    ],
+    "ruleId": "ally-output-support",
+    "sourceAbilityId": "malachite-wardens-rally",
+    "sourceDragonId": "malachite",
+    "sourceEvidenceIds": [
+      "malachite-wardens-rally-summary-2026-06-23",
+      "malachite-wardens-rally-glossary-2026-06-23"
+    ],
+    "status": "active",
+    "targetSelectionGroup": null,
+    "title": "Warden's Rally Recovery support",
+    "unresolvedQuestions": [
+      "Exact final Recovery amount is unknown because the full Level and Instinct Recovery formula is not known."
+    ]
+  },
+  {
+    "assumptions": [],
+    "channel": "recovery",
+    "confidence": "confirmed",
+    "conflicts": [],
+    "damageScope": null,
+    "effects": [
+      "Recovery support"
+    ],
+    "exactResultKnown": false,
+    "exactResultUnknownReason": "Exact final value cannot be calculated because final combat formulas and stacking order are not fully verified.",
+    "explanation": "Malachite's Warden's Rally can provide Recovery to Malachite.",
+    "id": "ally-output-support-malachite-wardens-rally-wardens-rally-recovery-rate-output-malachite",
+    "interactionScope": "internal",
+    "matchedOutputCapabilityIds": [],
+    "matchKind": "outgoing-effect-amplification",
+    "modifierCapabilityId": null,
+    "modifierCapabilityIds": [],
+    "recipientAbilityId": "malachite-wardens-rally-wardens-rally-recovery-rate-output",
+    "recipientDragonId": "malachite",
+    "recipientEvidenceIds": [],
+    "requirements": [
+      {
+        "actual": "provider right-flank, recipient right-flank",
+        "evidenceIds": [
+          "malachite-wardens-rally-summary-2026-06-23",
+          "malachite-wardens-rally-glossary-2026-06-23"
+        ],
+        "expected": "any-lane",
+        "id": "malachite-wardens-rally-wardens-rally-recovery-rate-output-targets-right-flank",
+        "label": "Provider targeting includes recipient",
+        "notes": [
+          "Exact 3 Allies includes all friendly dragons, including caster."
+        ],
+        "satisfied": true
+      }
+    ],
+    "ruleId": "ally-output-support",
+    "sourceAbilityId": "malachite-wardens-rally",
+    "sourceDragonId": "malachite",
+    "sourceEvidenceIds": [
+      "malachite-wardens-rally-summary-2026-06-23",
+      "malachite-wardens-rally-glossary-2026-06-23"
+    ],
+    "status": "active",
+    "targetSelectionGroup": null,
+    "title": "Warden's Rally Recovery support",
+    "unresolvedQuestions": [
+      "Exact final Recovery amount is unknown because the full Level and Instinct Recovery formula is not known."
     ]
   },
   {
@@ -10009,6 +11509,159 @@
     ]
   },
   {
+    "assumptions": [],
+    "channel": "recovery",
+    "confidence": "confirmed",
+    "conflicts": [],
+    "damageScope": null,
+    "effects": [
+      "Recovery support"
+    ],
+    "exactResultKnown": false,
+    "exactResultUnknownReason": "Exact final value cannot be calculated because final combat formulas and stacking order are not fully verified.",
+    "explanation": "Malachite's Warden's Rally can provide Recovery to Malachite.",
+    "id": "ally-output-support-malachite-wardens-rally-wardens-rally-recovery-rate-output-malachite",
+    "interactionScope": "internal",
+    "matchedOutputCapabilityIds": [],
+    "matchKind": "outgoing-effect-amplification",
+    "modifierCapabilityId": null,
+    "modifierCapabilityIds": [],
+    "recipientAbilityId": "malachite-wardens-rally-wardens-rally-recovery-rate-output",
+    "recipientDragonId": "malachite",
+    "recipientEvidenceIds": [],
+    "requirements": [
+      {
+        "actual": "provider left-flank, recipient left-flank",
+        "evidenceIds": [
+          "malachite-wardens-rally-summary-2026-06-23",
+          "malachite-wardens-rally-glossary-2026-06-23"
+        ],
+        "expected": "any-lane",
+        "id": "malachite-wardens-rally-wardens-rally-recovery-rate-output-targets-left-flank",
+        "label": "Provider targeting includes recipient",
+        "notes": [
+          "Exact 3 Allies includes all friendly dragons, including caster."
+        ],
+        "satisfied": true
+      }
+    ],
+    "ruleId": "ally-output-support",
+    "sourceAbilityId": "malachite-wardens-rally",
+    "sourceDragonId": "malachite",
+    "sourceEvidenceIds": [
+      "malachite-wardens-rally-summary-2026-06-23",
+      "malachite-wardens-rally-glossary-2026-06-23"
+    ],
+    "status": "active",
+    "targetSelectionGroup": null,
+    "title": "Warden's Rally Recovery support",
+    "unresolvedQuestions": [
+      "Exact final Recovery amount is unknown because the full Level and Instinct Recovery formula is not known."
+    ]
+  },
+  {
+    "assumptions": [],
+    "channel": "recovery",
+    "confidence": "confirmed",
+    "conflicts": [],
+    "damageScope": null,
+    "effects": [
+      "Recovery support"
+    ],
+    "exactResultKnown": false,
+    "exactResultUnknownReason": "Exact final value cannot be calculated because final combat formulas and stacking order are not fully verified.",
+    "explanation": "Malachite's Warden's Rally can provide Recovery to Sheepstealer.",
+    "id": "ally-output-support-malachite-wardens-rally-wardens-rally-recovery-rate-output-sheepstealer",
+    "interactionScope": "cross-dragon",
+    "matchedOutputCapabilityIds": [],
+    "matchKind": "outgoing-effect-amplification",
+    "modifierCapabilityId": null,
+    "modifierCapabilityIds": [],
+    "recipientAbilityId": "malachite-wardens-rally-wardens-rally-recovery-rate-output",
+    "recipientDragonId": "sheepstealer",
+    "recipientEvidenceIds": [],
+    "requirements": [
+      {
+        "actual": "provider left-flank, recipient vanguard",
+        "evidenceIds": [
+          "malachite-wardens-rally-summary-2026-06-23",
+          "malachite-wardens-rally-glossary-2026-06-23"
+        ],
+        "expected": "any-lane",
+        "id": "malachite-wardens-rally-wardens-rally-recovery-rate-output-targets-vanguard",
+        "label": "Provider targeting includes recipient",
+        "notes": [
+          "Exact 3 Allies includes all friendly dragons, including caster."
+        ],
+        "satisfied": true
+      }
+    ],
+    "ruleId": "ally-output-support",
+    "sourceAbilityId": "malachite-wardens-rally",
+    "sourceDragonId": "malachite",
+    "sourceEvidenceIds": [
+      "malachite-wardens-rally-summary-2026-06-23",
+      "malachite-wardens-rally-glossary-2026-06-23"
+    ],
+    "status": "active",
+    "targetSelectionGroup": null,
+    "title": "Warden's Rally Recovery support",
+    "unresolvedQuestions": [
+      "Exact final Recovery amount is unknown because the full Level and Instinct Recovery formula is not known."
+    ]
+  },
+  {
+    "assumptions": [],
+    "channel": "recovery",
+    "confidence": "confirmed",
+    "conflicts": [],
+    "damageScope": null,
+    "effects": [
+      "Recovery support"
+    ],
+    "exactResultKnown": false,
+    "exactResultUnknownReason": "Exact final value cannot be calculated because final combat formulas and stacking order are not fully verified.",
+    "explanation": "Malachite's Warden's Rally can provide Recovery to Vermax.",
+    "id": "ally-output-support-malachite-wardens-rally-wardens-rally-recovery-rate-output-vermax",
+    "interactionScope": "cross-dragon",
+    "matchedOutputCapabilityIds": [],
+    "matchKind": "outgoing-effect-amplification",
+    "modifierCapabilityId": null,
+    "modifierCapabilityIds": [],
+    "recipientAbilityId": "malachite-wardens-rally-wardens-rally-recovery-rate-output",
+    "recipientDragonId": "vermax",
+    "recipientEvidenceIds": [],
+    "requirements": [
+      {
+        "actual": "provider left-flank, recipient right-flank",
+        "evidenceIds": [
+          "malachite-wardens-rally-summary-2026-06-23",
+          "malachite-wardens-rally-glossary-2026-06-23"
+        ],
+        "expected": "any-lane",
+        "id": "malachite-wardens-rally-wardens-rally-recovery-rate-output-targets-right-flank",
+        "label": "Provider targeting includes recipient",
+        "notes": [
+          "Exact 3 Allies includes all friendly dragons, including caster."
+        ],
+        "satisfied": true
+      }
+    ],
+    "ruleId": "ally-output-support",
+    "sourceAbilityId": "malachite-wardens-rally",
+    "sourceDragonId": "malachite",
+    "sourceEvidenceIds": [
+      "malachite-wardens-rally-summary-2026-06-23",
+      "malachite-wardens-rally-glossary-2026-06-23"
+    ],
+    "status": "active",
+    "targetSelectionGroup": null,
+    "title": "Warden's Rally Recovery support",
+    "unresolvedQuestions": [
+      "Exact final Recovery amount is unknown because the full Level and Instinct Recovery formula is not known."
+    ]
+  },
+  {
     "assumptions": [
       "Cumulative stacking is not assumed.",
       "Exact interaction between overlapping threshold tiers is unresolved.",
@@ -12033,6 +13686,159 @@
   },
   {
     "assumptions": [],
+    "channel": "recovery",
+    "confidence": "confirmed",
+    "conflicts": [],
+    "damageScope": null,
+    "effects": [
+      "Recovery support"
+    ],
+    "exactResultKnown": false,
+    "exactResultUnknownReason": "Exact final value cannot be calculated because final combat formulas and stacking order are not fully verified.",
+    "explanation": "Malachite's Warden's Rally can provide Recovery to Seasmoke.",
+    "id": "ally-output-support-malachite-wardens-rally-wardens-rally-recovery-rate-output-seasmoke",
+    "interactionScope": "cross-dragon",
+    "matchedOutputCapabilityIds": [],
+    "matchKind": "outgoing-effect-amplification",
+    "modifierCapabilityId": null,
+    "modifierCapabilityIds": [],
+    "recipientAbilityId": "malachite-wardens-rally-wardens-rally-recovery-rate-output",
+    "recipientDragonId": "seasmoke",
+    "recipientEvidenceIds": [],
+    "requirements": [
+      {
+        "actual": "provider vanguard, recipient left-flank",
+        "evidenceIds": [
+          "malachite-wardens-rally-summary-2026-06-23",
+          "malachite-wardens-rally-glossary-2026-06-23"
+        ],
+        "expected": "any-lane",
+        "id": "malachite-wardens-rally-wardens-rally-recovery-rate-output-targets-left-flank",
+        "label": "Provider targeting includes recipient",
+        "notes": [
+          "Exact 3 Allies includes all friendly dragons, including caster."
+        ],
+        "satisfied": true
+      }
+    ],
+    "ruleId": "ally-output-support",
+    "sourceAbilityId": "malachite-wardens-rally",
+    "sourceDragonId": "malachite",
+    "sourceEvidenceIds": [
+      "malachite-wardens-rally-summary-2026-06-23",
+      "malachite-wardens-rally-glossary-2026-06-23"
+    ],
+    "status": "active",
+    "targetSelectionGroup": null,
+    "title": "Warden's Rally Recovery support",
+    "unresolvedQuestions": [
+      "Exact final Recovery amount is unknown because the full Level and Instinct Recovery formula is not known."
+    ]
+  },
+  {
+    "assumptions": [],
+    "channel": "recovery",
+    "confidence": "confirmed",
+    "conflicts": [],
+    "damageScope": null,
+    "effects": [
+      "Recovery support"
+    ],
+    "exactResultKnown": false,
+    "exactResultUnknownReason": "Exact final value cannot be calculated because final combat formulas and stacking order are not fully verified.",
+    "explanation": "Malachite's Warden's Rally can provide Recovery to Malachite.",
+    "id": "ally-output-support-malachite-wardens-rally-wardens-rally-recovery-rate-output-malachite",
+    "interactionScope": "internal",
+    "matchedOutputCapabilityIds": [],
+    "matchKind": "outgoing-effect-amplification",
+    "modifierCapabilityId": null,
+    "modifierCapabilityIds": [],
+    "recipientAbilityId": "malachite-wardens-rally-wardens-rally-recovery-rate-output",
+    "recipientDragonId": "malachite",
+    "recipientEvidenceIds": [],
+    "requirements": [
+      {
+        "actual": "provider vanguard, recipient vanguard",
+        "evidenceIds": [
+          "malachite-wardens-rally-summary-2026-06-23",
+          "malachite-wardens-rally-glossary-2026-06-23"
+        ],
+        "expected": "any-lane",
+        "id": "malachite-wardens-rally-wardens-rally-recovery-rate-output-targets-vanguard",
+        "label": "Provider targeting includes recipient",
+        "notes": [
+          "Exact 3 Allies includes all friendly dragons, including caster."
+        ],
+        "satisfied": true
+      }
+    ],
+    "ruleId": "ally-output-support",
+    "sourceAbilityId": "malachite-wardens-rally",
+    "sourceDragonId": "malachite",
+    "sourceEvidenceIds": [
+      "malachite-wardens-rally-summary-2026-06-23",
+      "malachite-wardens-rally-glossary-2026-06-23"
+    ],
+    "status": "active",
+    "targetSelectionGroup": null,
+    "title": "Warden's Rally Recovery support",
+    "unresolvedQuestions": [
+      "Exact final Recovery amount is unknown because the full Level and Instinct Recovery formula is not known."
+    ]
+  },
+  {
+    "assumptions": [],
+    "channel": "recovery",
+    "confidence": "confirmed",
+    "conflicts": [],
+    "damageScope": null,
+    "effects": [
+      "Recovery support"
+    ],
+    "exactResultKnown": false,
+    "exactResultUnknownReason": "Exact final value cannot be calculated because final combat formulas and stacking order are not fully verified.",
+    "explanation": "Malachite's Warden's Rally can provide Recovery to Sheepstealer.",
+    "id": "ally-output-support-malachite-wardens-rally-wardens-rally-recovery-rate-output-sheepstealer",
+    "interactionScope": "cross-dragon",
+    "matchedOutputCapabilityIds": [],
+    "matchKind": "outgoing-effect-amplification",
+    "modifierCapabilityId": null,
+    "modifierCapabilityIds": [],
+    "recipientAbilityId": "malachite-wardens-rally-wardens-rally-recovery-rate-output",
+    "recipientDragonId": "sheepstealer",
+    "recipientEvidenceIds": [],
+    "requirements": [
+      {
+        "actual": "provider vanguard, recipient right-flank",
+        "evidenceIds": [
+          "malachite-wardens-rally-summary-2026-06-23",
+          "malachite-wardens-rally-glossary-2026-06-23"
+        ],
+        "expected": "any-lane",
+        "id": "malachite-wardens-rally-wardens-rally-recovery-rate-output-targets-right-flank",
+        "label": "Provider targeting includes recipient",
+        "notes": [
+          "Exact 3 Allies includes all friendly dragons, including caster."
+        ],
+        "satisfied": true
+      }
+    ],
+    "ruleId": "ally-output-support",
+    "sourceAbilityId": "malachite-wardens-rally",
+    "sourceDragonId": "malachite",
+    "sourceEvidenceIds": [
+      "malachite-wardens-rally-summary-2026-06-23",
+      "malachite-wardens-rally-glossary-2026-06-23"
+    ],
+    "status": "active",
+    "targetSelectionGroup": null,
+    "title": "Warden's Rally Recovery support",
+    "unresolvedQuestions": [
+      "Exact final Recovery amount is unknown because the full Level and Instinct Recovery formula is not known."
+    ]
+  },
+  {
+    "assumptions": [],
     "channel": "damage-received",
     "confidence": "confirmed",
     "conflicts": [
@@ -13825,6 +15631,159 @@
     "unresolvedQuestions": [
       "Exact final number of Spreading Blaze stacks is unknown.",
       "Target choice may not be guaranteed when multiple eligible allies exist."
+    ]
+  },
+  {
+    "assumptions": [],
+    "channel": "recovery",
+    "confidence": "confirmed",
+    "conflicts": [],
+    "damageScope": null,
+    "effects": [
+      "Recovery support"
+    ],
+    "exactResultKnown": false,
+    "exactResultUnknownReason": "Exact final value cannot be calculated because final combat formulas and stacking order are not fully verified.",
+    "explanation": "Malachite's Warden's Rally can provide Recovery to Malachite.",
+    "id": "ally-output-support-malachite-wardens-rally-wardens-rally-recovery-rate-output-malachite",
+    "interactionScope": "internal",
+    "matchedOutputCapabilityIds": [],
+    "matchKind": "outgoing-effect-amplification",
+    "modifierCapabilityId": null,
+    "modifierCapabilityIds": [],
+    "recipientAbilityId": "malachite-wardens-rally-wardens-rally-recovery-rate-output",
+    "recipientDragonId": "malachite",
+    "recipientEvidenceIds": [],
+    "requirements": [
+      {
+        "actual": "provider left-flank, recipient left-flank",
+        "evidenceIds": [
+          "malachite-wardens-rally-summary-2026-06-23",
+          "malachite-wardens-rally-glossary-2026-06-23"
+        ],
+        "expected": "any-lane",
+        "id": "malachite-wardens-rally-wardens-rally-recovery-rate-output-targets-left-flank",
+        "label": "Provider targeting includes recipient",
+        "notes": [
+          "Exact 3 Allies includes all friendly dragons, including caster."
+        ],
+        "satisfied": true
+      }
+    ],
+    "ruleId": "ally-output-support",
+    "sourceAbilityId": "malachite-wardens-rally",
+    "sourceDragonId": "malachite",
+    "sourceEvidenceIds": [
+      "malachite-wardens-rally-summary-2026-06-23",
+      "malachite-wardens-rally-glossary-2026-06-23"
+    ],
+    "status": "active",
+    "targetSelectionGroup": null,
+    "title": "Warden's Rally Recovery support",
+    "unresolvedQuestions": [
+      "Exact final Recovery amount is unknown because the full Level and Instinct Recovery formula is not known."
+    ]
+  },
+  {
+    "assumptions": [],
+    "channel": "recovery",
+    "confidence": "confirmed",
+    "conflicts": [],
+    "damageScope": null,
+    "effects": [
+      "Recovery support"
+    ],
+    "exactResultKnown": false,
+    "exactResultUnknownReason": "Exact final value cannot be calculated because final combat formulas and stacking order are not fully verified.",
+    "explanation": "Malachite's Warden's Rally can provide Recovery to Vermax.",
+    "id": "ally-output-support-malachite-wardens-rally-wardens-rally-recovery-rate-output-vermax",
+    "interactionScope": "cross-dragon",
+    "matchedOutputCapabilityIds": [],
+    "matchKind": "outgoing-effect-amplification",
+    "modifierCapabilityId": null,
+    "modifierCapabilityIds": [],
+    "recipientAbilityId": "malachite-wardens-rally-wardens-rally-recovery-rate-output",
+    "recipientDragonId": "vermax",
+    "recipientEvidenceIds": [],
+    "requirements": [
+      {
+        "actual": "provider left-flank, recipient vanguard",
+        "evidenceIds": [
+          "malachite-wardens-rally-summary-2026-06-23",
+          "malachite-wardens-rally-glossary-2026-06-23"
+        ],
+        "expected": "any-lane",
+        "id": "malachite-wardens-rally-wardens-rally-recovery-rate-output-targets-vanguard",
+        "label": "Provider targeting includes recipient",
+        "notes": [
+          "Exact 3 Allies includes all friendly dragons, including caster."
+        ],
+        "satisfied": true
+      }
+    ],
+    "ruleId": "ally-output-support",
+    "sourceAbilityId": "malachite-wardens-rally",
+    "sourceDragonId": "malachite",
+    "sourceEvidenceIds": [
+      "malachite-wardens-rally-summary-2026-06-23",
+      "malachite-wardens-rally-glossary-2026-06-23"
+    ],
+    "status": "active",
+    "targetSelectionGroup": null,
+    "title": "Warden's Rally Recovery support",
+    "unresolvedQuestions": [
+      "Exact final Recovery amount is unknown because the full Level and Instinct Recovery formula is not known."
+    ]
+  },
+  {
+    "assumptions": [],
+    "channel": "recovery",
+    "confidence": "confirmed",
+    "conflicts": [],
+    "damageScope": null,
+    "effects": [
+      "Recovery support"
+    ],
+    "exactResultKnown": false,
+    "exactResultUnknownReason": "Exact final value cannot be calculated because final combat formulas and stacking order are not fully verified.",
+    "explanation": "Malachite's Warden's Rally can provide Recovery to Seasmoke.",
+    "id": "ally-output-support-malachite-wardens-rally-wardens-rally-recovery-rate-output-seasmoke",
+    "interactionScope": "cross-dragon",
+    "matchedOutputCapabilityIds": [],
+    "matchKind": "outgoing-effect-amplification",
+    "modifierCapabilityId": null,
+    "modifierCapabilityIds": [],
+    "recipientAbilityId": "malachite-wardens-rally-wardens-rally-recovery-rate-output",
+    "recipientDragonId": "seasmoke",
+    "recipientEvidenceIds": [],
+    "requirements": [
+      {
+        "actual": "provider left-flank, recipient right-flank",
+        "evidenceIds": [
+          "malachite-wardens-rally-summary-2026-06-23",
+          "malachite-wardens-rally-glossary-2026-06-23"
+        ],
+        "expected": "any-lane",
+        "id": "malachite-wardens-rally-wardens-rally-recovery-rate-output-targets-right-flank",
+        "label": "Provider targeting includes recipient",
+        "notes": [
+          "Exact 3 Allies includes all friendly dragons, including caster."
+        ],
+        "satisfied": true
+      }
+    ],
+    "ruleId": "ally-output-support",
+    "sourceAbilityId": "malachite-wardens-rally",
+    "sourceDragonId": "malachite",
+    "sourceEvidenceIds": [
+      "malachite-wardens-rally-summary-2026-06-23",
+      "malachite-wardens-rally-glossary-2026-06-23"
+    ],
+    "status": "active",
+    "targetSelectionGroup": null,
+    "title": "Warden's Rally Recovery support",
+    "unresolvedQuestions": [
+      "Exact final Recovery amount is unknown because the full Level and Instinct Recovery formula is not known."
     ]
   },
   {
@@ -16442,6 +18401,159 @@
     "status": "inactive",
     "targetSelectionGroup": null,
     "title": "Sheepstealer amplifies Sheepstealer Recovery",
+    "unresolvedQuestions": [
+      "Exact final Recovery amount is unknown because the full Level and Instinct Recovery formula is not known."
+    ]
+  },
+  {
+    "assumptions": [],
+    "channel": "recovery",
+    "confidence": "confirmed",
+    "conflicts": [],
+    "damageScope": null,
+    "effects": [
+      "Recovery support"
+    ],
+    "exactResultKnown": false,
+    "exactResultUnknownReason": "Exact final value cannot be calculated because final combat formulas and stacking order are not fully verified.",
+    "explanation": "Malachite's Warden's Rally can provide Recovery to Malachite.",
+    "id": "ally-output-support-malachite-wardens-rally-wardens-rally-recovery-rate-output-malachite",
+    "interactionScope": "internal",
+    "matchedOutputCapabilityIds": [],
+    "matchKind": "outgoing-effect-amplification",
+    "modifierCapabilityId": null,
+    "modifierCapabilityIds": [],
+    "recipientAbilityId": "malachite-wardens-rally-wardens-rally-recovery-rate-output",
+    "recipientDragonId": "malachite",
+    "recipientEvidenceIds": [],
+    "requirements": [
+      {
+        "actual": "provider left-flank, recipient left-flank",
+        "evidenceIds": [
+          "malachite-wardens-rally-summary-2026-06-23",
+          "malachite-wardens-rally-glossary-2026-06-23"
+        ],
+        "expected": "any-lane",
+        "id": "malachite-wardens-rally-wardens-rally-recovery-rate-output-targets-left-flank",
+        "label": "Provider targeting includes recipient",
+        "notes": [
+          "Exact 3 Allies includes all friendly dragons, including caster."
+        ],
+        "satisfied": true
+      }
+    ],
+    "ruleId": "ally-output-support",
+    "sourceAbilityId": "malachite-wardens-rally",
+    "sourceDragonId": "malachite",
+    "sourceEvidenceIds": [
+      "malachite-wardens-rally-summary-2026-06-23",
+      "malachite-wardens-rally-glossary-2026-06-23"
+    ],
+    "status": "active",
+    "targetSelectionGroup": null,
+    "title": "Warden's Rally Recovery support",
+    "unresolvedQuestions": [
+      "Exact final Recovery amount is unknown because the full Level and Instinct Recovery formula is not known."
+    ]
+  },
+  {
+    "assumptions": [],
+    "channel": "recovery",
+    "confidence": "confirmed",
+    "conflicts": [],
+    "damageScope": null,
+    "effects": [
+      "Recovery support"
+    ],
+    "exactResultKnown": false,
+    "exactResultUnknownReason": "Exact final value cannot be calculated because final combat formulas and stacking order are not fully verified.",
+    "explanation": "Malachite's Warden's Rally can provide Recovery to Seasmoke.",
+    "id": "ally-output-support-malachite-wardens-rally-wardens-rally-recovery-rate-output-seasmoke",
+    "interactionScope": "cross-dragon",
+    "matchedOutputCapabilityIds": [],
+    "matchKind": "outgoing-effect-amplification",
+    "modifierCapabilityId": null,
+    "modifierCapabilityIds": [],
+    "recipientAbilityId": "malachite-wardens-rally-wardens-rally-recovery-rate-output",
+    "recipientDragonId": "seasmoke",
+    "recipientEvidenceIds": [],
+    "requirements": [
+      {
+        "actual": "provider left-flank, recipient vanguard",
+        "evidenceIds": [
+          "malachite-wardens-rally-summary-2026-06-23",
+          "malachite-wardens-rally-glossary-2026-06-23"
+        ],
+        "expected": "any-lane",
+        "id": "malachite-wardens-rally-wardens-rally-recovery-rate-output-targets-vanguard",
+        "label": "Provider targeting includes recipient",
+        "notes": [
+          "Exact 3 Allies includes all friendly dragons, including caster."
+        ],
+        "satisfied": true
+      }
+    ],
+    "ruleId": "ally-output-support",
+    "sourceAbilityId": "malachite-wardens-rally",
+    "sourceDragonId": "malachite",
+    "sourceEvidenceIds": [
+      "malachite-wardens-rally-summary-2026-06-23",
+      "malachite-wardens-rally-glossary-2026-06-23"
+    ],
+    "status": "active",
+    "targetSelectionGroup": null,
+    "title": "Warden's Rally Recovery support",
+    "unresolvedQuestions": [
+      "Exact final Recovery amount is unknown because the full Level and Instinct Recovery formula is not known."
+    ]
+  },
+  {
+    "assumptions": [],
+    "channel": "recovery",
+    "confidence": "confirmed",
+    "conflicts": [],
+    "damageScope": null,
+    "effects": [
+      "Recovery support"
+    ],
+    "exactResultKnown": false,
+    "exactResultUnknownReason": "Exact final value cannot be calculated because final combat formulas and stacking order are not fully verified.",
+    "explanation": "Malachite's Warden's Rally can provide Recovery to Sheepstealer.",
+    "id": "ally-output-support-malachite-wardens-rally-wardens-rally-recovery-rate-output-sheepstealer",
+    "interactionScope": "cross-dragon",
+    "matchedOutputCapabilityIds": [],
+    "matchKind": "outgoing-effect-amplification",
+    "modifierCapabilityId": null,
+    "modifierCapabilityIds": [],
+    "recipientAbilityId": "malachite-wardens-rally-wardens-rally-recovery-rate-output",
+    "recipientDragonId": "sheepstealer",
+    "recipientEvidenceIds": [],
+    "requirements": [
+      {
+        "actual": "provider left-flank, recipient right-flank",
+        "evidenceIds": [
+          "malachite-wardens-rally-summary-2026-06-23",
+          "malachite-wardens-rally-glossary-2026-06-23"
+        ],
+        "expected": "any-lane",
+        "id": "malachite-wardens-rally-wardens-rally-recovery-rate-output-targets-right-flank",
+        "label": "Provider targeting includes recipient",
+        "notes": [
+          "Exact 3 Allies includes all friendly dragons, including caster."
+        ],
+        "satisfied": true
+      }
+    ],
+    "ruleId": "ally-output-support",
+    "sourceAbilityId": "malachite-wardens-rally",
+    "sourceDragonId": "malachite",
+    "sourceEvidenceIds": [
+      "malachite-wardens-rally-summary-2026-06-23",
+      "malachite-wardens-rally-glossary-2026-06-23"
+    ],
+    "status": "active",
+    "targetSelectionGroup": null,
+    "title": "Warden's Rally Recovery support",
     "unresolvedQuestions": [
       "Exact final Recovery amount is unknown because the full Level and Instinct Recovery formula is not known."
     ]
@@ -20740,6 +22852,381 @@
   },
   {
     "assumptions": [],
+    "channel": "recovery",
+    "confidence": "confirmed",
+    "conflicts": [
+      "syrax - Strategic Revival Habit unlock requirement: expected Star Rank 6+, actual preview enabled",
+      "syrax - Strategic Revival Selected Habit Level: expected Habit Level 1+ or preview, actual preview enabled"
+    ],
+    "damageScope": null,
+    "effects": [
+      "Recovery support"
+    ],
+    "exactResultKnown": false,
+    "exactResultUnknownReason": "Exact final value cannot be calculated because final combat formulas and stacking order are not fully verified.",
+    "explanation": "Syrax's Strategic Revival can provide Recovery to Malachite.",
+    "id": "ally-output-support-syrax-strategic-revival-strategic-revival-recovery-output-malachite",
+    "interactionScope": "cross-dragon",
+    "matchedOutputCapabilityIds": [],
+    "matchKind": "outgoing-effect-amplification",
+    "modifierCapabilityId": null,
+    "modifierCapabilityIds": [],
+    "recipientAbilityId": "syrax-strategic-revival-strategic-revival-recovery-output",
+    "recipientDragonId": "malachite",
+    "recipientEvidenceIds": [],
+    "requirements": [
+      {
+        "actual": "provider vanguard, recipient left-flank",
+        "evidenceIds": [
+          "syrax-strategic-revival-2026-06-24"
+        ],
+        "expected": "any-lane",
+        "id": "syrax-strategic-revival-strategic-revival-recovery-output-targets-left-flank",
+        "label": "Provider targeting includes recipient",
+        "notes": [],
+        "satisfied": true
+      },
+      {
+        "actual": "preview enabled",
+        "evidenceIds": [
+          "syrax-strategic-revival-2026-06-24"
+        ],
+        "expected": "Star Rank 6+",
+        "id": "syrax-syrax-strategic-revival-star-rank",
+        "label": "syrax - Strategic Revival Habit unlock requirement",
+        "notes": [],
+        "satisfied": false
+      },
+      {
+        "actual": "preview enabled",
+        "evidenceIds": [
+          "syrax-strategic-revival-2026-06-24"
+        ],
+        "expected": "Habit Level 1+ or preview",
+        "id": "syrax-syrax-strategic-revival-habit-level",
+        "label": "syrax - Strategic Revival Selected Habit Level",
+        "notes": [
+          "Locked Habit capabilities are potential in preview mode, not active for current roster."
+        ],
+        "satisfied": false
+      }
+    ],
+    "ruleId": "ally-output-support",
+    "sourceAbilityId": "syrax-strategic-revival",
+    "sourceDragonId": "syrax",
+    "sourceEvidenceIds": [
+      "syrax-strategic-revival-2026-06-24"
+    ],
+    "status": "potential",
+    "targetSelectionGroup": null,
+    "title": "Strategic Revival Recovery support",
+    "unresolvedQuestions": [
+      "Exact final Recovery amount is unknown because the full Level and Instinct Recovery formula is not known."
+    ]
+  },
+  {
+    "assumptions": [],
+    "channel": "recovery",
+    "confidence": "confirmed",
+    "conflicts": [
+      "syrax - Strategic Revival Habit unlock requirement: expected Star Rank 6+, actual preview enabled",
+      "syrax - Strategic Revival Selected Habit Level: expected Habit Level 1+ or preview, actual preview enabled"
+    ],
+    "damageScope": null,
+    "effects": [
+      "Recovery support"
+    ],
+    "exactResultKnown": false,
+    "exactResultUnknownReason": "Exact final value cannot be calculated because final combat formulas and stacking order are not fully verified.",
+    "explanation": "Syrax's Strategic Revival can provide Recovery to Syrax.",
+    "id": "ally-output-support-syrax-strategic-revival-strategic-revival-recovery-output-syrax",
+    "interactionScope": "internal",
+    "matchedOutputCapabilityIds": [],
+    "matchKind": "outgoing-effect-amplification",
+    "modifierCapabilityId": null,
+    "modifierCapabilityIds": [],
+    "recipientAbilityId": "syrax-strategic-revival-strategic-revival-recovery-output",
+    "recipientDragonId": "syrax",
+    "recipientEvidenceIds": [],
+    "requirements": [
+      {
+        "actual": "provider vanguard, recipient vanguard",
+        "evidenceIds": [
+          "syrax-strategic-revival-2026-06-24"
+        ],
+        "expected": "any-lane",
+        "id": "syrax-strategic-revival-strategic-revival-recovery-output-targets-vanguard",
+        "label": "Provider targeting includes recipient",
+        "notes": [],
+        "satisfied": true
+      },
+      {
+        "actual": "preview enabled",
+        "evidenceIds": [
+          "syrax-strategic-revival-2026-06-24"
+        ],
+        "expected": "Star Rank 6+",
+        "id": "syrax-syrax-strategic-revival-star-rank",
+        "label": "syrax - Strategic Revival Habit unlock requirement",
+        "notes": [],
+        "satisfied": false
+      },
+      {
+        "actual": "preview enabled",
+        "evidenceIds": [
+          "syrax-strategic-revival-2026-06-24"
+        ],
+        "expected": "Habit Level 1+ or preview",
+        "id": "syrax-syrax-strategic-revival-habit-level",
+        "label": "syrax - Strategic Revival Selected Habit Level",
+        "notes": [
+          "Locked Habit capabilities are potential in preview mode, not active for current roster."
+        ],
+        "satisfied": false
+      }
+    ],
+    "ruleId": "ally-output-support",
+    "sourceAbilityId": "syrax-strategic-revival",
+    "sourceDragonId": "syrax",
+    "sourceEvidenceIds": [
+      "syrax-strategic-revival-2026-06-24"
+    ],
+    "status": "potential",
+    "targetSelectionGroup": null,
+    "title": "Strategic Revival Recovery support",
+    "unresolvedQuestions": [
+      "Exact final Recovery amount is unknown because the full Level and Instinct Recovery formula is not known."
+    ]
+  },
+  {
+    "assumptions": [],
+    "channel": "recovery",
+    "confidence": "confirmed",
+    "conflicts": [
+      "syrax - Strategic Revival Habit unlock requirement: expected Star Rank 6+, actual preview enabled",
+      "syrax - Strategic Revival Selected Habit Level: expected Habit Level 1+ or preview, actual preview enabled"
+    ],
+    "damageScope": null,
+    "effects": [
+      "Recovery support"
+    ],
+    "exactResultKnown": false,
+    "exactResultUnknownReason": "Exact final value cannot be calculated because final combat formulas and stacking order are not fully verified.",
+    "explanation": "Syrax's Strategic Revival can provide Recovery to Sheepstealer.",
+    "id": "ally-output-support-syrax-strategic-revival-strategic-revival-recovery-output-sheepstealer",
+    "interactionScope": "cross-dragon",
+    "matchedOutputCapabilityIds": [],
+    "matchKind": "outgoing-effect-amplification",
+    "modifierCapabilityId": null,
+    "modifierCapabilityIds": [],
+    "recipientAbilityId": "syrax-strategic-revival-strategic-revival-recovery-output",
+    "recipientDragonId": "sheepstealer",
+    "recipientEvidenceIds": [],
+    "requirements": [
+      {
+        "actual": "provider vanguard, recipient right-flank",
+        "evidenceIds": [
+          "syrax-strategic-revival-2026-06-24"
+        ],
+        "expected": "any-lane",
+        "id": "syrax-strategic-revival-strategic-revival-recovery-output-targets-right-flank",
+        "label": "Provider targeting includes recipient",
+        "notes": [],
+        "satisfied": true
+      },
+      {
+        "actual": "preview enabled",
+        "evidenceIds": [
+          "syrax-strategic-revival-2026-06-24"
+        ],
+        "expected": "Star Rank 6+",
+        "id": "syrax-syrax-strategic-revival-star-rank",
+        "label": "syrax - Strategic Revival Habit unlock requirement",
+        "notes": [],
+        "satisfied": false
+      },
+      {
+        "actual": "preview enabled",
+        "evidenceIds": [
+          "syrax-strategic-revival-2026-06-24"
+        ],
+        "expected": "Habit Level 1+ or preview",
+        "id": "syrax-syrax-strategic-revival-habit-level",
+        "label": "syrax - Strategic Revival Selected Habit Level",
+        "notes": [
+          "Locked Habit capabilities are potential in preview mode, not active for current roster."
+        ],
+        "satisfied": false
+      }
+    ],
+    "ruleId": "ally-output-support",
+    "sourceAbilityId": "syrax-strategic-revival",
+    "sourceDragonId": "syrax",
+    "sourceEvidenceIds": [
+      "syrax-strategic-revival-2026-06-24"
+    ],
+    "status": "potential",
+    "targetSelectionGroup": null,
+    "title": "Strategic Revival Recovery support",
+    "unresolvedQuestions": [
+      "Exact final Recovery amount is unknown because the full Level and Instinct Recovery formula is not known."
+    ]
+  },
+  {
+    "assumptions": [],
+    "channel": "recovery",
+    "confidence": "confirmed",
+    "conflicts": [],
+    "damageScope": null,
+    "effects": [
+      "Recovery support"
+    ],
+    "exactResultKnown": false,
+    "exactResultUnknownReason": "Exact final value cannot be calculated because final combat formulas and stacking order are not fully verified.",
+    "explanation": "Malachite's Warden's Rally can provide Recovery to Malachite.",
+    "id": "ally-output-support-malachite-wardens-rally-wardens-rally-recovery-rate-output-malachite",
+    "interactionScope": "internal",
+    "matchedOutputCapabilityIds": [],
+    "matchKind": "outgoing-effect-amplification",
+    "modifierCapabilityId": null,
+    "modifierCapabilityIds": [],
+    "recipientAbilityId": "malachite-wardens-rally-wardens-rally-recovery-rate-output",
+    "recipientDragonId": "malachite",
+    "recipientEvidenceIds": [],
+    "requirements": [
+      {
+        "actual": "provider left-flank, recipient left-flank",
+        "evidenceIds": [
+          "malachite-wardens-rally-summary-2026-06-23",
+          "malachite-wardens-rally-glossary-2026-06-23"
+        ],
+        "expected": "any-lane",
+        "id": "malachite-wardens-rally-wardens-rally-recovery-rate-output-targets-left-flank",
+        "label": "Provider targeting includes recipient",
+        "notes": [
+          "Exact 3 Allies includes all friendly dragons, including caster."
+        ],
+        "satisfied": true
+      }
+    ],
+    "ruleId": "ally-output-support",
+    "sourceAbilityId": "malachite-wardens-rally",
+    "sourceDragonId": "malachite",
+    "sourceEvidenceIds": [
+      "malachite-wardens-rally-summary-2026-06-23",
+      "malachite-wardens-rally-glossary-2026-06-23"
+    ],
+    "status": "active",
+    "targetSelectionGroup": null,
+    "title": "Warden's Rally Recovery support",
+    "unresolvedQuestions": [
+      "Exact final Recovery amount is unknown because the full Level and Instinct Recovery formula is not known."
+    ]
+  },
+  {
+    "assumptions": [],
+    "channel": "recovery",
+    "confidence": "confirmed",
+    "conflicts": [],
+    "damageScope": null,
+    "effects": [
+      "Recovery support"
+    ],
+    "exactResultKnown": false,
+    "exactResultUnknownReason": "Exact final value cannot be calculated because final combat formulas and stacking order are not fully verified.",
+    "explanation": "Malachite's Warden's Rally can provide Recovery to Syrax.",
+    "id": "ally-output-support-malachite-wardens-rally-wardens-rally-recovery-rate-output-syrax",
+    "interactionScope": "cross-dragon",
+    "matchedOutputCapabilityIds": [],
+    "matchKind": "outgoing-effect-amplification",
+    "modifierCapabilityId": null,
+    "modifierCapabilityIds": [],
+    "recipientAbilityId": "malachite-wardens-rally-wardens-rally-recovery-rate-output",
+    "recipientDragonId": "syrax",
+    "recipientEvidenceIds": [],
+    "requirements": [
+      {
+        "actual": "provider left-flank, recipient vanguard",
+        "evidenceIds": [
+          "malachite-wardens-rally-summary-2026-06-23",
+          "malachite-wardens-rally-glossary-2026-06-23"
+        ],
+        "expected": "any-lane",
+        "id": "malachite-wardens-rally-wardens-rally-recovery-rate-output-targets-vanguard",
+        "label": "Provider targeting includes recipient",
+        "notes": [
+          "Exact 3 Allies includes all friendly dragons, including caster."
+        ],
+        "satisfied": true
+      }
+    ],
+    "ruleId": "ally-output-support",
+    "sourceAbilityId": "malachite-wardens-rally",
+    "sourceDragonId": "malachite",
+    "sourceEvidenceIds": [
+      "malachite-wardens-rally-summary-2026-06-23",
+      "malachite-wardens-rally-glossary-2026-06-23"
+    ],
+    "status": "active",
+    "targetSelectionGroup": null,
+    "title": "Warden's Rally Recovery support",
+    "unresolvedQuestions": [
+      "Exact final Recovery amount is unknown because the full Level and Instinct Recovery formula is not known."
+    ]
+  },
+  {
+    "assumptions": [],
+    "channel": "recovery",
+    "confidence": "confirmed",
+    "conflicts": [],
+    "damageScope": null,
+    "effects": [
+      "Recovery support"
+    ],
+    "exactResultKnown": false,
+    "exactResultUnknownReason": "Exact final value cannot be calculated because final combat formulas and stacking order are not fully verified.",
+    "explanation": "Malachite's Warden's Rally can provide Recovery to Sheepstealer.",
+    "id": "ally-output-support-malachite-wardens-rally-wardens-rally-recovery-rate-output-sheepstealer",
+    "interactionScope": "cross-dragon",
+    "matchedOutputCapabilityIds": [],
+    "matchKind": "outgoing-effect-amplification",
+    "modifierCapabilityId": null,
+    "modifierCapabilityIds": [],
+    "recipientAbilityId": "malachite-wardens-rally-wardens-rally-recovery-rate-output",
+    "recipientDragonId": "sheepstealer",
+    "recipientEvidenceIds": [],
+    "requirements": [
+      {
+        "actual": "provider left-flank, recipient right-flank",
+        "evidenceIds": [
+          "malachite-wardens-rally-summary-2026-06-23",
+          "malachite-wardens-rally-glossary-2026-06-23"
+        ],
+        "expected": "any-lane",
+        "id": "malachite-wardens-rally-wardens-rally-recovery-rate-output-targets-right-flank",
+        "label": "Provider targeting includes recipient",
+        "notes": [
+          "Exact 3 Allies includes all friendly dragons, including caster."
+        ],
+        "satisfied": true
+      }
+    ],
+    "ruleId": "ally-output-support",
+    "sourceAbilityId": "malachite-wardens-rally",
+    "sourceDragonId": "malachite",
+    "sourceEvidenceIds": [
+      "malachite-wardens-rally-summary-2026-06-23",
+      "malachite-wardens-rally-glossary-2026-06-23"
+    ],
+    "status": "active",
+    "targetSelectionGroup": null,
+    "title": "Warden's Rally Recovery support",
+    "unresolvedQuestions": [
+      "Exact final Recovery amount is unknown because the full Level and Instinct Recovery formula is not known."
+    ]
+  },
+  {
+    "assumptions": [],
     "channel": "damage-received",
     "confidence": "confirmed",
     "conflicts": [
@@ -22345,6 +24832,228 @@
     "unresolvedQuestions": [
       "Exact final number of Spreading Blaze stacks is unknown.",
       "Target choice may not be guaranteed when multiple eligible allies exist."
+    ]
+  },
+  {
+    "assumptions": [],
+    "channel": "recovery",
+    "confidence": "confirmed",
+    "conflicts": [
+      "syrax - Strategic Revival Habit unlock requirement: expected Star Rank 6+, actual preview enabled",
+      "syrax - Strategic Revival Selected Habit Level: expected Habit Level 1+ or preview, actual preview enabled"
+    ],
+    "damageScope": null,
+    "effects": [
+      "Recovery support"
+    ],
+    "exactResultKnown": false,
+    "exactResultUnknownReason": "Exact final value cannot be calculated because final combat formulas and stacking order are not fully verified.",
+    "explanation": "Syrax's Strategic Revival can provide Recovery to Syrax.",
+    "id": "ally-output-support-syrax-strategic-revival-strategic-revival-recovery-output-syrax",
+    "interactionScope": "internal",
+    "matchedOutputCapabilityIds": [],
+    "matchKind": "outgoing-effect-amplification",
+    "modifierCapabilityId": null,
+    "modifierCapabilityIds": [],
+    "recipientAbilityId": "syrax-strategic-revival-strategic-revival-recovery-output",
+    "recipientDragonId": "syrax",
+    "recipientEvidenceIds": [],
+    "requirements": [
+      {
+        "actual": "provider left-flank, recipient left-flank",
+        "evidenceIds": [
+          "syrax-strategic-revival-2026-06-24"
+        ],
+        "expected": "any-lane",
+        "id": "syrax-strategic-revival-strategic-revival-recovery-output-targets-left-flank",
+        "label": "Provider targeting includes recipient",
+        "notes": [],
+        "satisfied": true
+      },
+      {
+        "actual": "preview enabled",
+        "evidenceIds": [
+          "syrax-strategic-revival-2026-06-24"
+        ],
+        "expected": "Star Rank 6+",
+        "id": "syrax-syrax-strategic-revival-star-rank",
+        "label": "syrax - Strategic Revival Habit unlock requirement",
+        "notes": [],
+        "satisfied": false
+      },
+      {
+        "actual": "preview enabled",
+        "evidenceIds": [
+          "syrax-strategic-revival-2026-06-24"
+        ],
+        "expected": "Habit Level 1+ or preview",
+        "id": "syrax-syrax-strategic-revival-habit-level",
+        "label": "syrax - Strategic Revival Selected Habit Level",
+        "notes": [
+          "Locked Habit capabilities are potential in preview mode, not active for current roster."
+        ],
+        "satisfied": false
+      }
+    ],
+    "ruleId": "ally-output-support",
+    "sourceAbilityId": "syrax-strategic-revival",
+    "sourceDragonId": "syrax",
+    "sourceEvidenceIds": [
+      "syrax-strategic-revival-2026-06-24"
+    ],
+    "status": "potential",
+    "targetSelectionGroup": null,
+    "title": "Strategic Revival Recovery support",
+    "unresolvedQuestions": [
+      "Exact final Recovery amount is unknown because the full Level and Instinct Recovery formula is not known."
+    ]
+  },
+  {
+    "assumptions": [],
+    "channel": "recovery",
+    "confidence": "confirmed",
+    "conflicts": [
+      "syrax - Strategic Revival Habit unlock requirement: expected Star Rank 6+, actual preview enabled",
+      "syrax - Strategic Revival Selected Habit Level: expected Habit Level 1+ or preview, actual preview enabled"
+    ],
+    "damageScope": null,
+    "effects": [
+      "Recovery support"
+    ],
+    "exactResultKnown": false,
+    "exactResultUnknownReason": "Exact final value cannot be calculated because final combat formulas and stacking order are not fully verified.",
+    "explanation": "Syrax's Strategic Revival can provide Recovery to Vermax.",
+    "id": "ally-output-support-syrax-strategic-revival-strategic-revival-recovery-output-vermax",
+    "interactionScope": "cross-dragon",
+    "matchedOutputCapabilityIds": [],
+    "matchKind": "outgoing-effect-amplification",
+    "modifierCapabilityId": null,
+    "modifierCapabilityIds": [],
+    "recipientAbilityId": "syrax-strategic-revival-strategic-revival-recovery-output",
+    "recipientDragonId": "vermax",
+    "recipientEvidenceIds": [],
+    "requirements": [
+      {
+        "actual": "provider left-flank, recipient vanguard",
+        "evidenceIds": [
+          "syrax-strategic-revival-2026-06-24"
+        ],
+        "expected": "any-lane",
+        "id": "syrax-strategic-revival-strategic-revival-recovery-output-targets-vanguard",
+        "label": "Provider targeting includes recipient",
+        "notes": [],
+        "satisfied": true
+      },
+      {
+        "actual": "preview enabled",
+        "evidenceIds": [
+          "syrax-strategic-revival-2026-06-24"
+        ],
+        "expected": "Star Rank 6+",
+        "id": "syrax-syrax-strategic-revival-star-rank",
+        "label": "syrax - Strategic Revival Habit unlock requirement",
+        "notes": [],
+        "satisfied": false
+      },
+      {
+        "actual": "preview enabled",
+        "evidenceIds": [
+          "syrax-strategic-revival-2026-06-24"
+        ],
+        "expected": "Habit Level 1+ or preview",
+        "id": "syrax-syrax-strategic-revival-habit-level",
+        "label": "syrax - Strategic Revival Selected Habit Level",
+        "notes": [
+          "Locked Habit capabilities are potential in preview mode, not active for current roster."
+        ],
+        "satisfied": false
+      }
+    ],
+    "ruleId": "ally-output-support",
+    "sourceAbilityId": "syrax-strategic-revival",
+    "sourceDragonId": "syrax",
+    "sourceEvidenceIds": [
+      "syrax-strategic-revival-2026-06-24"
+    ],
+    "status": "potential",
+    "targetSelectionGroup": null,
+    "title": "Strategic Revival Recovery support",
+    "unresolvedQuestions": [
+      "Exact final Recovery amount is unknown because the full Level and Instinct Recovery formula is not known."
+    ]
+  },
+  {
+    "assumptions": [],
+    "channel": "recovery",
+    "confidence": "confirmed",
+    "conflicts": [
+      "syrax - Strategic Revival Habit unlock requirement: expected Star Rank 6+, actual preview enabled",
+      "syrax - Strategic Revival Selected Habit Level: expected Habit Level 1+ or preview, actual preview enabled"
+    ],
+    "damageScope": null,
+    "effects": [
+      "Recovery support"
+    ],
+    "exactResultKnown": false,
+    "exactResultUnknownReason": "Exact final value cannot be calculated because final combat formulas and stacking order are not fully verified.",
+    "explanation": "Syrax's Strategic Revival can provide Recovery to Caraxes.",
+    "id": "ally-output-support-syrax-strategic-revival-strategic-revival-recovery-output-caraxes",
+    "interactionScope": "cross-dragon",
+    "matchedOutputCapabilityIds": [],
+    "matchKind": "outgoing-effect-amplification",
+    "modifierCapabilityId": null,
+    "modifierCapabilityIds": [],
+    "recipientAbilityId": "syrax-strategic-revival-strategic-revival-recovery-output",
+    "recipientDragonId": "caraxes",
+    "recipientEvidenceIds": [],
+    "requirements": [
+      {
+        "actual": "provider left-flank, recipient right-flank",
+        "evidenceIds": [
+          "syrax-strategic-revival-2026-06-24"
+        ],
+        "expected": "any-lane",
+        "id": "syrax-strategic-revival-strategic-revival-recovery-output-targets-right-flank",
+        "label": "Provider targeting includes recipient",
+        "notes": [],
+        "satisfied": true
+      },
+      {
+        "actual": "preview enabled",
+        "evidenceIds": [
+          "syrax-strategic-revival-2026-06-24"
+        ],
+        "expected": "Star Rank 6+",
+        "id": "syrax-syrax-strategic-revival-star-rank",
+        "label": "syrax - Strategic Revival Habit unlock requirement",
+        "notes": [],
+        "satisfied": false
+      },
+      {
+        "actual": "preview enabled",
+        "evidenceIds": [
+          "syrax-strategic-revival-2026-06-24"
+        ],
+        "expected": "Habit Level 1+ or preview",
+        "id": "syrax-syrax-strategic-revival-habit-level",
+        "label": "syrax - Strategic Revival Selected Habit Level",
+        "notes": [
+          "Locked Habit capabilities are potential in preview mode, not active for current roster."
+        ],
+        "satisfied": false
+      }
+    ],
+    "ruleId": "ally-output-support",
+    "sourceAbilityId": "syrax-strategic-revival",
+    "sourceDragonId": "syrax",
+    "sourceEvidenceIds": [
+      "syrax-strategic-revival-2026-06-24"
+    ],
+    "status": "potential",
+    "targetSelectionGroup": null,
+    "title": "Strategic Revival Recovery support",
+    "unresolvedQuestions": [
+      "Exact final Recovery amount is unknown because the full Level and Instinct Recovery formula is not known."
     ]
   },
   {
@@ -24743,6 +27452,228 @@
     "status": "inactive",
     "targetSelectionGroup": null,
     "title": "Sheepstealer amplifies Sheepstealer Recovery",
+    "unresolvedQuestions": [
+      "Exact final Recovery amount is unknown because the full Level and Instinct Recovery formula is not known."
+    ]
+  },
+  {
+    "assumptions": [],
+    "channel": "recovery",
+    "confidence": "confirmed",
+    "conflicts": [
+      "syrax - Strategic Revival Habit unlock requirement: expected Star Rank 6+, actual preview enabled",
+      "syrax - Strategic Revival Selected Habit Level: expected Habit Level 1+ or preview, actual preview enabled"
+    ],
+    "damageScope": null,
+    "effects": [
+      "Recovery support"
+    ],
+    "exactResultKnown": false,
+    "exactResultUnknownReason": "Exact final value cannot be calculated because final combat formulas and stacking order are not fully verified.",
+    "explanation": "Syrax's Strategic Revival can provide Recovery to Sheepstealer.",
+    "id": "ally-output-support-syrax-strategic-revival-strategic-revival-recovery-output-sheepstealer",
+    "interactionScope": "cross-dragon",
+    "matchedOutputCapabilityIds": [],
+    "matchKind": "outgoing-effect-amplification",
+    "modifierCapabilityId": null,
+    "modifierCapabilityIds": [],
+    "recipientAbilityId": "syrax-strategic-revival-strategic-revival-recovery-output",
+    "recipientDragonId": "sheepstealer",
+    "recipientEvidenceIds": [],
+    "requirements": [
+      {
+        "actual": "provider right-flank, recipient left-flank",
+        "evidenceIds": [
+          "syrax-strategic-revival-2026-06-24"
+        ],
+        "expected": "any-lane",
+        "id": "syrax-strategic-revival-strategic-revival-recovery-output-targets-left-flank",
+        "label": "Provider targeting includes recipient",
+        "notes": [],
+        "satisfied": true
+      },
+      {
+        "actual": "preview enabled",
+        "evidenceIds": [
+          "syrax-strategic-revival-2026-06-24"
+        ],
+        "expected": "Star Rank 6+",
+        "id": "syrax-syrax-strategic-revival-star-rank",
+        "label": "syrax - Strategic Revival Habit unlock requirement",
+        "notes": [],
+        "satisfied": false
+      },
+      {
+        "actual": "preview enabled",
+        "evidenceIds": [
+          "syrax-strategic-revival-2026-06-24"
+        ],
+        "expected": "Habit Level 1+ or preview",
+        "id": "syrax-syrax-strategic-revival-habit-level",
+        "label": "syrax - Strategic Revival Selected Habit Level",
+        "notes": [
+          "Locked Habit capabilities are potential in preview mode, not active for current roster."
+        ],
+        "satisfied": false
+      }
+    ],
+    "ruleId": "ally-output-support",
+    "sourceAbilityId": "syrax-strategic-revival",
+    "sourceDragonId": "syrax",
+    "sourceEvidenceIds": [
+      "syrax-strategic-revival-2026-06-24"
+    ],
+    "status": "potential",
+    "targetSelectionGroup": null,
+    "title": "Strategic Revival Recovery support",
+    "unresolvedQuestions": [
+      "Exact final Recovery amount is unknown because the full Level and Instinct Recovery formula is not known."
+    ]
+  },
+  {
+    "assumptions": [],
+    "channel": "recovery",
+    "confidence": "confirmed",
+    "conflicts": [
+      "syrax - Strategic Revival Habit unlock requirement: expected Star Rank 6+, actual preview enabled",
+      "syrax - Strategic Revival Selected Habit Level: expected Habit Level 1+ or preview, actual preview enabled"
+    ],
+    "damageScope": null,
+    "effects": [
+      "Recovery support"
+    ],
+    "exactResultKnown": false,
+    "exactResultUnknownReason": "Exact final value cannot be calculated because final combat formulas and stacking order are not fully verified.",
+    "explanation": "Syrax's Strategic Revival can provide Recovery to Caraxes.",
+    "id": "ally-output-support-syrax-strategic-revival-strategic-revival-recovery-output-caraxes",
+    "interactionScope": "cross-dragon",
+    "matchedOutputCapabilityIds": [],
+    "matchKind": "outgoing-effect-amplification",
+    "modifierCapabilityId": null,
+    "modifierCapabilityIds": [],
+    "recipientAbilityId": "syrax-strategic-revival-strategic-revival-recovery-output",
+    "recipientDragonId": "caraxes",
+    "recipientEvidenceIds": [],
+    "requirements": [
+      {
+        "actual": "provider right-flank, recipient vanguard",
+        "evidenceIds": [
+          "syrax-strategic-revival-2026-06-24"
+        ],
+        "expected": "any-lane",
+        "id": "syrax-strategic-revival-strategic-revival-recovery-output-targets-vanguard",
+        "label": "Provider targeting includes recipient",
+        "notes": [],
+        "satisfied": true
+      },
+      {
+        "actual": "preview enabled",
+        "evidenceIds": [
+          "syrax-strategic-revival-2026-06-24"
+        ],
+        "expected": "Star Rank 6+",
+        "id": "syrax-syrax-strategic-revival-star-rank",
+        "label": "syrax - Strategic Revival Habit unlock requirement",
+        "notes": [],
+        "satisfied": false
+      },
+      {
+        "actual": "preview enabled",
+        "evidenceIds": [
+          "syrax-strategic-revival-2026-06-24"
+        ],
+        "expected": "Habit Level 1+ or preview",
+        "id": "syrax-syrax-strategic-revival-habit-level",
+        "label": "syrax - Strategic Revival Selected Habit Level",
+        "notes": [
+          "Locked Habit capabilities are potential in preview mode, not active for current roster."
+        ],
+        "satisfied": false
+      }
+    ],
+    "ruleId": "ally-output-support",
+    "sourceAbilityId": "syrax-strategic-revival",
+    "sourceDragonId": "syrax",
+    "sourceEvidenceIds": [
+      "syrax-strategic-revival-2026-06-24"
+    ],
+    "status": "potential",
+    "targetSelectionGroup": null,
+    "title": "Strategic Revival Recovery support",
+    "unresolvedQuestions": [
+      "Exact final Recovery amount is unknown because the full Level and Instinct Recovery formula is not known."
+    ]
+  },
+  {
+    "assumptions": [],
+    "channel": "recovery",
+    "confidence": "confirmed",
+    "conflicts": [
+      "syrax - Strategic Revival Habit unlock requirement: expected Star Rank 6+, actual preview enabled",
+      "syrax - Strategic Revival Selected Habit Level: expected Habit Level 1+ or preview, actual preview enabled"
+    ],
+    "damageScope": null,
+    "effects": [
+      "Recovery support"
+    ],
+    "exactResultKnown": false,
+    "exactResultUnknownReason": "Exact final value cannot be calculated because final combat formulas and stacking order are not fully verified.",
+    "explanation": "Syrax's Strategic Revival can provide Recovery to Syrax.",
+    "id": "ally-output-support-syrax-strategic-revival-strategic-revival-recovery-output-syrax",
+    "interactionScope": "internal",
+    "matchedOutputCapabilityIds": [],
+    "matchKind": "outgoing-effect-amplification",
+    "modifierCapabilityId": null,
+    "modifierCapabilityIds": [],
+    "recipientAbilityId": "syrax-strategic-revival-strategic-revival-recovery-output",
+    "recipientDragonId": "syrax",
+    "recipientEvidenceIds": [],
+    "requirements": [
+      {
+        "actual": "provider right-flank, recipient right-flank",
+        "evidenceIds": [
+          "syrax-strategic-revival-2026-06-24"
+        ],
+        "expected": "any-lane",
+        "id": "syrax-strategic-revival-strategic-revival-recovery-output-targets-right-flank",
+        "label": "Provider targeting includes recipient",
+        "notes": [],
+        "satisfied": true
+      },
+      {
+        "actual": "preview enabled",
+        "evidenceIds": [
+          "syrax-strategic-revival-2026-06-24"
+        ],
+        "expected": "Star Rank 6+",
+        "id": "syrax-syrax-strategic-revival-star-rank",
+        "label": "syrax - Strategic Revival Habit unlock requirement",
+        "notes": [],
+        "satisfied": false
+      },
+      {
+        "actual": "preview enabled",
+        "evidenceIds": [
+          "syrax-strategic-revival-2026-06-24"
+        ],
+        "expected": "Habit Level 1+ or preview",
+        "id": "syrax-syrax-strategic-revival-habit-level",
+        "label": "syrax - Strategic Revival Selected Habit Level",
+        "notes": [
+          "Locked Habit capabilities are potential in preview mode, not active for current roster."
+        ],
+        "satisfied": false
+      }
+    ],
+    "ruleId": "ally-output-support",
+    "sourceAbilityId": "syrax-strategic-revival",
+    "sourceDragonId": "syrax",
+    "sourceEvidenceIds": [
+      "syrax-strategic-revival-2026-06-24"
+    ],
+    "status": "potential",
+    "targetSelectionGroup": null,
+    "title": "Strategic Revival Recovery support",
     "unresolvedQuestions": [
       "Exact final Recovery amount is unknown because the full Level and Instinct Recovery formula is not known."
     ]

@@ -1,51 +1,5540 @@
 {
-  "abilities": [],
-  "abilitySchedules": [],
+  "abilities": [
+    {
+      "abilityClass": "active",
+      "augmentations": [
+        {
+          "effectsAdded": [],
+          "evidenceIds": [
+            "venator-feral-precision-2026-06-25"
+          ],
+          "id": "venator-feral-precision-augmentation",
+          "minimumDragonStarRank": 6,
+          "modifiesAbilityId": "venator-feral-strike",
+          "rawDescription": "Feral Precision augments Feral Strike damage and Double-Strike chance.",
+          "scheduleOverrides": [
+            {
+              "description": "Feral Precision replaces the base Double-Strike chance; it does not add a second roll.",
+              "evidenceIds": [
+                "venator-feral-precision-2026-06-25"
+              ],
+              "id": "feral-precision-double-strike-override",
+              "operation": "replace-effect-roll",
+              "replacementEffect": {
+                "activationRoll": null,
+                "calculated": false,
+                "casterEligibility": "unknown",
+                "conditionalMultipliers": [],
+                "conditions": [],
+                "directlyVerified": true,
+                "duration": null,
+                "durationRounds": 2,
+                "excludes": [],
+                "id": "feral-strike-double-strike",
+                "includesCaster": null,
+                "magnitude": null,
+                "notes": [],
+                "perTargetEffectCheck": null,
+                "rankedValues": [],
+                "scaling": [],
+                "sourceScope": "unknown",
+                "stack": null,
+                "stackTransitionTrigger": null,
+                "target": "Self",
+                "targetCount": null,
+                "targetPriority": "any-eligible",
+                "targetScope": "self",
+                "targetSelection": null,
+                "type": "Double-Strike",
+                "unit": "unknown"
+              },
+              "replacementSchedule": {
+                "activationRoll": {
+                  "chanceByHabitLevel": [
+                    {
+                      "level": 1,
+                      "unit": "percent",
+                      "value": 40
+                    },
+                    {
+                      "level": 2,
+                      "unit": "percent",
+                      "value": 42
+                    },
+                    {
+                      "level": 3,
+                      "unit": "percent",
+                      "value": 44
+                    },
+                    {
+                      "level": 4,
+                      "unit": "percent",
+                      "value": 47
+                    },
+                    {
+                      "level": 5,
+                      "unit": "percent",
+                      "value": 50
+                    }
+                  ],
+                  "chanceFixed": null,
+                  "description": "Feral Precision replaces the base Double-Strike chance on rounds 4, 6, and 8.",
+                  "scope": "schedule-shared",
+                  "targetStatusConditionalChances": [],
+                  "unresolved": false
+                },
+                "attempts": null,
+                "battleContext": "unspecified",
+                "conditions": [],
+                "effects": [
+                  {
+                    "activationRoll": null,
+                    "calculated": false,
+                    "casterEligibility": "unknown",
+                    "conditionalMultipliers": [],
+                    "conditions": [],
+                    "directlyVerified": true,
+                    "duration": null,
+                    "durationRounds": 2,
+                    "excludes": [],
+                    "id": "feral-strike-double-strike",
+                    "includesCaster": null,
+                    "magnitude": null,
+                    "notes": [],
+                    "perTargetEffectCheck": null,
+                    "rankedValues": [],
+                    "scaling": [],
+                    "sourceScope": "unknown",
+                    "stack": null,
+                    "stackTransitionTrigger": null,
+                    "target": "Self",
+                    "targetCount": null,
+                    "targetPriority": "any-eligible",
+                    "targetScope": "self",
+                    "targetSelection": null,
+                    "type": "Double-Strike",
+                    "unit": "unknown"
+                  }
+                ],
+                "id": "feral-strike-double-strike-feral-precision",
+                "repeat": null,
+                "rounds": [
+                  4,
+                  6,
+                  8
+                ],
+                "roundSelector": {
+                  "kind": "explicit",
+                  "rounds": [
+                    4,
+                    6,
+                    8
+                  ]
+                },
+                "targetPriority": "any-eligible",
+                "timing": "specific-rounds",
+                "triggerChanceByHabitLevel": [
+                  {
+                    "level": 1,
+                    "unit": "percent",
+                    "value": 40
+                  },
+                  {
+                    "level": 2,
+                    "unit": "percent",
+                    "value": 42
+                  },
+                  {
+                    "level": 3,
+                    "unit": "percent",
+                    "value": 44
+                  },
+                  {
+                    "level": 4,
+                    "unit": "percent",
+                    "value": 47
+                  },
+                  {
+                    "level": 5,
+                    "unit": "percent",
+                    "value": 50
+                  }
+                ],
+                "triggerChanceFixed": null,
+                "triggerEvent": "specific-rounds"
+              },
+              "targetEffectId": "feral-strike-double-strike",
+              "targetScheduleId": "feral-strike-double-strike-rounds"
+            }
+          ],
+          "schedulesAdded": [],
+          "sourceAbilityId": "venator-feral-precision"
+        }
+      ],
+      "dragonId": "venator",
+      "evidenceIds": [
+        "venator-feral-strike-summary-2026-06-25"
+      ],
+      "glossaryEntries": [
+        {
+          "definition": "Grants a second Basic Attack each round.",
+          "term": "Double-Strike"
+        }
+      ],
+      "id": "venator-feral-strike",
+      "kind": "command",
+      "minimumDragonLevel": null,
+      "name": "Feral Strike",
+      "positionRequirement": null,
+      "powerByHabitLevel": [],
+      "rawDescription": "After each Basic Attack: deal two independently targeted Physical Damage instances. Rounds 4, 6, and 8: 30% chance to gain Double-Strike for two rounds. Classified as Command while preserving Attack Modifier presentation.",
+      "schedules": [
+        {
+          "activationRoll": null,
+          "attempts": null,
+          "battleContext": "unspecified",
+          "conditions": [],
+          "effects": [
+            {
+              "activationRoll": null,
+              "calculated": false,
+              "casterEligibility": "unknown",
+              "conditionalMultipliers": [],
+              "conditions": [],
+              "directlyVerified": true,
+              "duration": null,
+              "durationRounds": null,
+              "excludes": [],
+              "id": "feral-strike-physical-instances",
+              "includesCaster": null,
+              "magnitude": 20,
+              "notes": [
+                "Two Physical Damage instances select independently; the same enemy may receive both."
+              ],
+              "perTargetEffectCheck": null,
+              "rankedValues": [],
+              "scaling": [
+                "attacker Strength"
+              ],
+              "sourceScope": "unknown",
+              "stack": null,
+              "stackTransitionTrigger": null,
+              "target": "1 Enemy per damage instance",
+              "targetCount": 1,
+              "targetPriority": "any-eligible",
+              "targetScope": "any-lane",
+              "targetSelection": {
+                "comparisonDirection": null,
+                "comparisonPool": null,
+                "comparisonStat": null,
+                "distinctness": "no-distinctness-requirement",
+                "fallback": null,
+                "preference": null,
+                "references": [],
+                "repeatedInstances": {
+                  "count": 2,
+                  "eachInstanceSelectsSeparately": true,
+                  "sameTargetAllowed": true
+                },
+                "sharedSelectionGroupId": null,
+                "tieBehavior": null
+              },
+              "type": "Physical Damage",
+              "unit": "rate"
+            }
+          ],
+          "id": "feral-strike-after-basic",
+          "repeat": null,
+          "rounds": [],
+          "roundSelector": {
+            "kind": "after-basic-attack"
+          },
+          "targetPriority": "any-eligible",
+          "timing": "after-basic-attack",
+          "triggerChanceByHabitLevel": [],
+          "triggerChanceFixed": null,
+          "triggerEvent": "after-basic-attack"
+        },
+        {
+          "activationRoll": {
+            "chanceByHabitLevel": [],
+            "chanceFixed": 30,
+            "description": "One base Double-Strike chance on rounds 4, 6, and 8.",
+            "scope": "schedule-shared",
+            "targetStatusConditionalChances": [],
+            "unresolved": false
+          },
+          "attempts": null,
+          "battleContext": "unspecified",
+          "conditions": [],
+          "effects": [
+            {
+              "activationRoll": null,
+              "calculated": false,
+              "casterEligibility": "unknown",
+              "conditionalMultipliers": [],
+              "conditions": [],
+              "directlyVerified": true,
+              "duration": null,
+              "durationRounds": 2,
+              "excludes": [],
+              "id": "feral-strike-double-strike",
+              "includesCaster": null,
+              "magnitude": null,
+              "notes": [],
+              "perTargetEffectCheck": null,
+              "rankedValues": [],
+              "scaling": [],
+              "sourceScope": "unknown",
+              "stack": null,
+              "stackTransitionTrigger": null,
+              "target": "Self",
+              "targetCount": null,
+              "targetPriority": "any-eligible",
+              "targetScope": "self",
+              "targetSelection": null,
+              "type": "Double-Strike",
+              "unit": "unknown"
+            }
+          ],
+          "id": "feral-strike-double-strike-rounds",
+          "repeat": null,
+          "rounds": [
+            4,
+            6,
+            8
+          ],
+          "roundSelector": {
+            "kind": "explicit",
+            "rounds": [
+              4,
+              6,
+              8
+            ]
+          },
+          "targetPriority": "any-eligible",
+          "timing": "specific-rounds",
+          "triggerChanceByHabitLevel": [],
+          "triggerChanceFixed": 30,
+          "triggerEvent": "specific-rounds"
+        }
+      ],
+      "tags": [
+        "PHYSICAL_DAMAGE",
+        "DOUBLE_STRIKE"
+      ],
+      "unlockStarRank": null,
+      "unresolvedQuestions": [
+        "Feral Strike activation from Double-Strike's second Basic Attack.",
+        "Same-round Double-Strike timing.",
+        "Ordering between the fixed-round check and the Basic Attack.",
+        "Exact Double-Strike duration counting."
+      ],
+      "verification": {
+        "capturedAt": "2026-06-25",
+        "gameVersion": "26.6.53509",
+        "reviewedManually": true,
+        "source": "Venator Feral Strike screenshots",
+        "status": "screenshot-verified"
+      }
+    },
+    {
+      "abilityClass": "passive",
+      "augmentations": [],
+      "dragonId": "venator",
+      "evidenceIds": [
+        "venator-warriors-zeal-2026-06-25"
+      ],
+      "glossaryEntries": [],
+      "id": "venator-warriors-zeal",
+      "kind": "trait",
+      "minimumDragonLevel": 16,
+      "name": "Warrior's Zeal",
+      "positionRequirement": "vanguard",
+      "powerByHabitLevel": [],
+      "rawDescription": "At Level 16+ and deployed in Vanguard: increase Venator Physical Damage from Commands and Habits by 16%; Left Flank ally Instinct and Initiative +20.",
+      "schedules": [
+        {
+          "activationRoll": null,
+          "attempts": null,
+          "battleContext": "unspecified",
+          "conditions": [],
+          "effects": [
+            {
+              "activationRoll": null,
+              "calculated": false,
+              "casterEligibility": "unknown",
+              "conditionalMultipliers": [],
+              "conditions": [],
+              "directlyVerified": true,
+              "duration": null,
+              "durationRounds": null,
+              "excludes": [],
+              "id": "warriors-zeal-command-habit-physical",
+              "includesCaster": null,
+              "magnitude": 16,
+              "notes": [
+                "Does not amplify raw Basic Attacks."
+              ],
+              "perTargetEffectCheck": null,
+              "rankedValues": [],
+              "scaling": [],
+              "sourceScope": "commands-and-habits",
+              "stack": null,
+              "stackTransitionTrigger": null,
+              "target": "Self",
+              "targetCount": null,
+              "targetPriority": "any-eligible",
+              "targetScope": "self",
+              "targetSelection": null,
+              "type": "Physical Damage Dealt Up",
+              "unit": "percent"
+            },
+            {
+              "activationRoll": null,
+              "calculated": false,
+              "casterEligibility": "unknown",
+              "conditionalMultipliers": [],
+              "conditions": [],
+              "directlyVerified": true,
+              "duration": null,
+              "durationRounds": null,
+              "excludes": [],
+              "id": "warriors-zeal-left-instinct",
+              "includesCaster": null,
+              "magnitude": 20,
+              "notes": [],
+              "perTargetEffectCheck": null,
+              "rankedValues": [],
+              "scaling": [],
+              "sourceScope": "unknown",
+              "stack": null,
+              "stackTransitionTrigger": null,
+              "target": "Left Flank ally",
+              "targetCount": null,
+              "targetPriority": "any-eligible",
+              "targetScope": "left-flank",
+              "targetSelection": null,
+              "type": "Instinct Up",
+              "unit": "flat"
+            },
+            {
+              "activationRoll": null,
+              "calculated": false,
+              "casterEligibility": "unknown",
+              "conditionalMultipliers": [],
+              "conditions": [],
+              "directlyVerified": true,
+              "duration": null,
+              "durationRounds": null,
+              "excludes": [],
+              "id": "warriors-zeal-left-initiative",
+              "includesCaster": null,
+              "magnitude": 20,
+              "notes": [],
+              "perTargetEffectCheck": null,
+              "rankedValues": [],
+              "scaling": [],
+              "sourceScope": "unknown",
+              "stack": null,
+              "stackTransitionTrigger": null,
+              "target": "Left Flank ally",
+              "targetCount": null,
+              "targetPriority": "any-eligible",
+              "targetScope": "left-flank",
+              "targetSelection": null,
+              "type": "Initiative Up",
+              "unit": "flat"
+            }
+          ],
+          "id": "warriors-zeal-passive",
+          "repeat": null,
+          "rounds": [],
+          "roundSelector": {
+            "kind": "passive"
+          },
+          "targetPriority": "any-eligible",
+          "timing": "passive",
+          "triggerChanceByHabitLevel": [],
+          "triggerChanceFixed": null,
+          "triggerEvent": "passive"
+        }
+      ],
+      "tags": [
+        "PHYSICAL_DAMAGE_UP",
+        "INSTINCT_UP",
+        "BUFF_INITIATIVE",
+        "LEFT_FLANK_TARGET",
+        "VANGUARD_REQUIRED"
+      ],
+      "unlockStarRank": 1,
+      "unresolvedQuestions": [],
+      "verification": {
+        "capturedAt": "2026-06-25",
+        "gameVersion": "26.6.53509",
+        "reviewedManually": true,
+        "source": "Venator Warrior's Zeal screenshot",
+        "status": "screenshot-verified"
+      }
+    },
+    {
+      "abilityClass": "passive",
+      "augmentations": [],
+      "dragonId": "venator",
+      "evidenceIds": [
+        "venator-hunters-bane-2026-06-25"
+      ],
+      "glossaryEntries": [],
+      "id": "venator-hunters-bane",
+      "kind": "habit",
+      "minimumDragonLevel": null,
+      "name": "Hunter's Bane",
+      "positionRequirement": null,
+      "powerByHabitLevel": [
+        {
+          "level": 1,
+          "unit": "power",
+          "value": 420
+        },
+        {
+          "level": 2,
+          "unit": "power",
+          "value": 920
+        },
+        {
+          "level": 3,
+          "unit": "power",
+          "value": 1500
+        },
+        {
+          "level": 4,
+          "unit": "power",
+          "value": 2200
+        },
+        {
+          "level": 5,
+          "unit": "power",
+          "value": 3100
+        }
+      ],
+      "rawDescription": "Start of Combat: reduce Intelligence of one enemy in any lane, preferring Hunter breed with fallback, enhanced by Venator's Strength. Screenshot states no duration.",
+      "schedules": [
+        {
+          "activationRoll": null,
+          "attempts": null,
+          "battleContext": "unspecified",
+          "conditions": [],
+          "effects": [
+            {
+              "activationRoll": null,
+              "calculated": false,
+              "casterEligibility": "unknown",
+              "conditionalMultipliers": [],
+              "conditions": [],
+              "directlyVerified": true,
+              "duration": null,
+              "durationRounds": null,
+              "excludes": [],
+              "id": "hunters-bane-intelligence-down",
+              "includesCaster": null,
+              "magnitude": null,
+              "notes": [],
+              "perTargetEffectCheck": null,
+              "rankedValues": [
+                {
+                  "level": 1,
+                  "unit": "percent",
+                  "value": 30
+                },
+                {
+                  "level": 2,
+                  "unit": "percent",
+                  "value": 36
+                },
+                {
+                  "level": 3,
+                  "unit": "percent",
+                  "value": 42
+                },
+                {
+                  "level": 4,
+                  "unit": "percent",
+                  "value": 51
+                },
+                {
+                  "level": 5,
+                  "unit": "percent",
+                  "value": 60
+                }
+              ],
+              "scaling": [
+                "enhanced by Venator Strength"
+              ],
+              "sourceScope": "unknown",
+              "stack": null,
+              "stackTransitionTrigger": null,
+              "target": "1 Enemy, prioritizing Hunter breed",
+              "targetCount": null,
+              "targetPriority": "prefer-hunter",
+              "targetScope": "any-lane",
+              "targetSelection": {
+                "comparisonDirection": null,
+                "comparisonPool": null,
+                "comparisonStat": null,
+                "distinctness": "unknown",
+                "fallback": "another eligible enemy",
+                "preference": "Hunter breed",
+                "references": [],
+                "repeatedInstances": null,
+                "sharedSelectionGroupId": null,
+                "tieBehavior": null
+              },
+              "type": "Intelligence Down",
+              "unit": "percent"
+            }
+          ],
+          "id": "hunters-bane-start",
+          "repeat": null,
+          "rounds": [],
+          "roundSelector": {
+            "kind": "start-of-combat"
+          },
+          "targetPriority": "any-eligible",
+          "timing": "start-of-combat",
+          "triggerChanceByHabitLevel": [],
+          "triggerChanceFixed": null,
+          "triggerEvent": "start-of-combat"
+        }
+      ],
+      "tags": [
+        "DEBUFF_INTELLIGENCE"
+      ],
+      "unlockStarRank": 2,
+      "unresolvedQuestions": [
+        "Hunter's Bane duration.",
+        "Hunter's Bane Strength enhancement formula."
+      ],
+      "verification": {
+        "capturedAt": "2026-06-25",
+        "gameVersion": "26.6.53509",
+        "reviewedManually": true,
+        "source": "Venator Hunter's Bane screenshot",
+        "status": "screenshot-verified"
+      }
+    },
+    {
+      "abilityClass": "passive",
+      "augmentations": [],
+      "dragonId": "venator",
+      "evidenceIds": [
+        "venator-dragons-might-2026-06-25"
+      ],
+      "glossaryEntries": [],
+      "id": "venator-dragons-might",
+      "kind": "habit",
+      "minimumDragonLevel": null,
+      "name": "Dragon's Might",
+      "positionRequirement": null,
+      "powerByHabitLevel": [
+        {
+          "level": 1,
+          "unit": "power",
+          "value": 420
+        },
+        {
+          "level": 2,
+          "unit": "power",
+          "value": 920
+        },
+        {
+          "level": 3,
+          "unit": "power",
+          "value": 1500
+        },
+        {
+          "level": 4,
+          "unit": "power",
+          "value": 2200
+        },
+        {
+          "level": 5,
+          "unit": "power",
+          "value": 3100
+        }
+      ],
+      "rawDescription": "Start of Combat until end of combat: increase Venator Physical Damage Dealt excluding Basic Attacks.",
+      "schedules": [
+        {
+          "activationRoll": null,
+          "attempts": null,
+          "battleContext": "unspecified",
+          "conditions": [],
+          "effects": [
+            {
+              "activationRoll": null,
+              "calculated": false,
+              "casterEligibility": "unknown",
+              "conditionalMultipliers": [],
+              "conditions": [],
+              "directlyVerified": true,
+              "duration": "Until end of combat",
+              "durationRounds": null,
+              "excludes": [
+                "Basic Attacks"
+              ],
+              "id": "dragons-might-physical",
+              "includesCaster": null,
+              "magnitude": null,
+              "notes": [],
+              "perTargetEffectCheck": null,
+              "rankedValues": [
+                {
+                  "level": 1,
+                  "unit": "percent",
+                  "value": 12.5
+                },
+                {
+                  "level": 2,
+                  "unit": "percent",
+                  "value": 15
+                },
+                {
+                  "level": 3,
+                  "unit": "percent",
+                  "value": 17.5
+                },
+                {
+                  "level": 4,
+                  "unit": "percent",
+                  "value": 21.25
+                },
+                {
+                  "level": 5,
+                  "unit": "percent",
+                  "value": 25
+                }
+              ],
+              "scaling": [],
+              "sourceScope": "non-basic-attacks",
+              "stack": null,
+              "stackTransitionTrigger": null,
+              "target": "Self",
+              "targetCount": null,
+              "targetPriority": "any-eligible",
+              "targetScope": "self",
+              "targetSelection": null,
+              "type": "Physical Damage Dealt Up",
+              "unit": "percent"
+            }
+          ],
+          "id": "dragons-might-start",
+          "repeat": null,
+          "rounds": [],
+          "roundSelector": {
+            "kind": "start-of-combat"
+          },
+          "targetPriority": "any-eligible",
+          "timing": "start-of-combat",
+          "triggerChanceByHabitLevel": [],
+          "triggerChanceFixed": null,
+          "triggerEvent": "start-of-combat"
+        }
+      ],
+      "tags": [
+        "PHYSICAL_DAMAGE_UP"
+      ],
+      "unlockStarRank": 4,
+      "unresolvedQuestions": [],
+      "verification": {
+        "capturedAt": "2026-06-25",
+        "gameVersion": "26.6.53509",
+        "reviewedManually": true,
+        "source": "Venator Dragon's Might screenshot",
+        "status": "screenshot-verified"
+      }
+    },
+    {
+      "abilityClass": "passive",
+      "augmentations": [],
+      "dragonId": "venator",
+      "evidenceIds": [
+        "venator-feral-precision-2026-06-25"
+      ],
+      "glossaryEntries": [],
+      "id": "venator-feral-precision",
+      "kind": "habit",
+      "minimumDragonLevel": null,
+      "name": "Feral Precision",
+      "positionRequirement": null,
+      "powerByHabitLevel": [
+        {
+          "level": 1,
+          "unit": "power",
+          "value": 420
+        },
+        {
+          "level": 2,
+          "unit": "power",
+          "value": 920
+        },
+        {
+          "level": 3,
+          "unit": "power",
+          "value": 1500
+        },
+        {
+          "level": 4,
+          "unit": "power",
+          "value": 2200
+        },
+        {
+          "level": 5,
+          "unit": "power",
+          "value": 3100
+        }
+      ],
+      "rawDescription": "Augments Feral Strike: add one Physical Damage instance targeting the enemy with least current troops and replace Double-Strike chance on rounds 4, 6, and 8.",
+      "schedules": [
+        {
+          "activationRoll": null,
+          "attempts": null,
+          "battleContext": "unspecified",
+          "conditions": [],
+          "effects": [
+            {
+              "activationRoll": null,
+              "calculated": false,
+              "casterEligibility": "unknown",
+              "conditionalMultipliers": [],
+              "conditions": [],
+              "directlyVerified": true,
+              "duration": null,
+              "durationRounds": null,
+              "excludes": [],
+              "id": "feral-precision-additional-physical",
+              "includesCaster": null,
+              "magnitude": null,
+              "notes": [],
+              "perTargetEffectCheck": null,
+              "rankedValues": [
+                {
+                  "level": 1,
+                  "unit": "percent",
+                  "value": 20
+                },
+                {
+                  "level": 2,
+                  "unit": "percent",
+                  "value": 24
+                },
+                {
+                  "level": 3,
+                  "unit": "percent",
+                  "value": 28
+                },
+                {
+                  "level": 4,
+                  "unit": "percent",
+                  "value": 34
+                },
+                {
+                  "level": 5,
+                  "unit": "percent",
+                  "value": 40
+                }
+              ],
+              "scaling": [
+                "attacker Strength"
+              ],
+              "sourceScope": "unknown",
+              "stack": null,
+              "stackTransitionTrigger": null,
+              "target": "Enemy with least current troops",
+              "targetCount": null,
+              "targetPriority": "least-current-troops-enemy",
+              "targetScope": "any-lane",
+              "targetSelection": {
+                "comparisonDirection": "lowest",
+                "comparisonPool": "enemy-side",
+                "comparisonStat": "current-troops",
+                "distinctness": "unknown",
+                "fallback": null,
+                "preference": null,
+                "references": [],
+                "repeatedInstances": null,
+                "sharedSelectionGroupId": null,
+                "tieBehavior": "candidate-group"
+              },
+              "type": "Physical Damage",
+              "unit": "rate"
+            }
+          ],
+          "id": "feral-precision-after-basic",
+          "repeat": null,
+          "rounds": [],
+          "roundSelector": {
+            "kind": "after-basic-attack"
+          },
+          "targetPriority": "any-eligible",
+          "timing": "after-basic-attack",
+          "triggerChanceByHabitLevel": [],
+          "triggerChanceFixed": null,
+          "triggerEvent": "after-basic-attack"
+        }
+      ],
+      "tags": [
+        "COMMAND_AUGMENTATION",
+        "PHYSICAL_DAMAGE"
+      ],
+      "unlockStarRank": 6,
+      "unresolvedQuestions": [],
+      "verification": {
+        "capturedAt": "2026-06-25",
+        "gameVersion": "26.6.53509",
+        "reviewedManually": true,
+        "source": "Venator Feral Precision screenshot",
+        "status": "screenshot-verified"
+      }
+    },
+    {
+      "abilityClass": "passive",
+      "augmentations": [],
+      "dragonId": "venator",
+      "evidenceIds": [
+        "venator-armor-break-2026-06-25"
+      ],
+      "glossaryEntries": [],
+      "id": "venator-armor-break",
+      "kind": "habit",
+      "minimumDragonLevel": null,
+      "name": "Armor Break",
+      "positionRequirement": null,
+      "powerByHabitLevel": [
+        {
+          "level": 1,
+          "unit": "power",
+          "value": 420
+        },
+        {
+          "level": 2,
+          "unit": "power",
+          "value": 920
+        },
+        {
+          "level": 3,
+          "unit": "power",
+          "value": 1500
+        },
+        {
+          "level": 4,
+          "unit": "power",
+          "value": 2200
+        },
+        {
+          "level": 5,
+          "unit": "power",
+          "value": 3100
+        }
+      ],
+      "rawDescription": "Start of Combat until end of combat: increase Physical Damage Received by one opposing enemy. Opposing-position is provisionally normalized to same-lane enemy for formation compatibility.",
+      "schedules": [
+        {
+          "activationRoll": null,
+          "attempts": null,
+          "battleContext": "unspecified",
+          "conditions": [],
+          "effects": [
+            {
+              "activationRoll": null,
+              "calculated": false,
+              "casterEligibility": "unknown",
+              "conditionalMultipliers": [],
+              "conditions": [],
+              "directlyVerified": true,
+              "duration": "Until end of combat",
+              "durationRounds": null,
+              "excludes": [],
+              "id": "armor-break-physical-received",
+              "includesCaster": null,
+              "magnitude": null,
+              "notes": [],
+              "perTargetEffectCheck": null,
+              "rankedValues": [
+                {
+                  "level": 1,
+                  "unit": "percent",
+                  "value": 8
+                },
+                {
+                  "level": 2,
+                  "unit": "percent",
+                  "value": 9.6
+                },
+                {
+                  "level": 3,
+                  "unit": "percent",
+                  "value": 11.2
+                },
+                {
+                  "level": 4,
+                  "unit": "percent",
+                  "value": 13.6
+                },
+                {
+                  "level": 5,
+                  "unit": "percent",
+                  "value": 16
+                }
+              ],
+              "scaling": [],
+              "sourceScope": "unknown",
+              "stack": null,
+              "stackTransitionTrigger": null,
+              "target": "1 opposing enemy",
+              "targetCount": null,
+              "targetPriority": "opposing-position",
+              "targetScope": "opposing-position",
+              "targetSelection": {
+                "comparisonDirection": null,
+                "comparisonPool": null,
+                "comparisonStat": null,
+                "distinctness": "no-distinctness-requirement",
+                "fallback": null,
+                "preference": null,
+                "references": [
+                  {
+                    "description": "Enemy occupying Venator's lane, retained as provisional interpretation.",
+                    "id": "opposing-position-enemy",
+                    "kind": "opposing-position-enemy",
+                    "referencedEffectId": null
+                  }
+                ],
+                "repeatedInstances": null,
+                "sharedSelectionGroupId": null,
+                "tieBehavior": null
+              },
+              "type": "Physical Damage Received Up",
+              "unit": "percent"
+            }
+          ],
+          "id": "armor-break-start",
+          "repeat": null,
+          "rounds": [],
+          "roundSelector": {
+            "kind": "start-of-combat"
+          },
+          "targetPriority": "any-eligible",
+          "timing": "start-of-combat",
+          "triggerChanceByHabitLevel": [],
+          "triggerChanceFixed": null,
+          "triggerEvent": "start-of-combat"
+        }
+      ],
+      "tags": [
+        "PHYSICAL_DAMAGE_UP"
+      ],
+      "unlockStarRank": 8,
+      "unresolvedQuestions": [
+        "Opposing-position interpretation retained as provisional."
+      ],
+      "verification": {
+        "capturedAt": "2026-06-25",
+        "gameVersion": "26.6.53509",
+        "reviewedManually": true,
+        "source": "Venator Armor Break screenshot",
+        "status": "screenshot-verified"
+      }
+    },
+    {
+      "abilityClass": "passive",
+      "augmentations": [],
+      "dragonId": "venator",
+      "evidenceIds": [
+        "venator-desperate-ambush-2026-06-25"
+      ],
+      "glossaryEntries": [
+        {
+          "definition": "Prevents Active Commands and Habits, but does not prevent Basic Attacks.",
+          "term": "Overwhelm"
+        }
+      ],
+      "id": "venator-desperate-ambush",
+      "kind": "habit",
+      "minimumDragonLevel": null,
+      "name": "Desperate Ambush",
+      "positionRequirement": null,
+      "powerByHabitLevel": [
+        {
+          "level": 1,
+          "unit": "power",
+          "value": 430
+        },
+        {
+          "level": 2,
+          "unit": "power",
+          "value": 1000
+        },
+        {
+          "level": 3,
+          "unit": "power",
+          "value": 1700
+        },
+        {
+          "level": 4,
+          "unit": "power",
+          "value": 2700
+        },
+        {
+          "level": 5,
+          "unit": "power",
+          "value": 4000
+        }
+      ],
+      "rawDescription": "Each round, when Venator is strictly below 50% Troop Capacity: select one enemy, preferring Hunter breed, deal Physical Damage, then attempt Overwhelm on that same selected target for two rounds.",
+      "schedules": [
+        {
+          "activationRoll": null,
+          "attempts": null,
+          "battleContext": "unspecified",
+          "conditions": [
+            {
+              "battleContext": null,
+              "comparison": "below",
+              "description": "Venator is strictly below 50% Troop Capacity.",
+              "id": "self-strictly-below-50-troops",
+              "kind": "target-below-troop-capacity-threshold",
+              "statusId": null,
+              "subject": "self",
+              "thresholdPercent": 50,
+              "unresolved": false
+            }
+          ],
+          "effects": [
+            {
+              "activationRoll": null,
+              "calculated": false,
+              "casterEligibility": "unknown",
+              "conditionalMultipliers": [],
+              "conditions": [
+                {
+                  "battleContext": null,
+                  "comparison": "below",
+                  "description": "Venator is strictly below 50% Troop Capacity.",
+                  "id": "self-strictly-below-50-troops",
+                  "kind": "target-below-troop-capacity-threshold",
+                  "statusId": null,
+                  "subject": "self",
+                  "thresholdPercent": 50,
+                  "unresolved": false
+                }
+              ],
+              "directlyVerified": true,
+              "duration": null,
+              "durationRounds": null,
+              "excludes": [],
+              "id": "desperate-ambush-physical",
+              "includesCaster": null,
+              "magnitude": null,
+              "notes": [],
+              "perTargetEffectCheck": null,
+              "rankedValues": [
+                {
+                  "level": 1,
+                  "unit": "percent",
+                  "value": 60
+                },
+                {
+                  "level": 2,
+                  "unit": "percent",
+                  "value": 78
+                },
+                {
+                  "level": 3,
+                  "unit": "percent",
+                  "value": 96
+                },
+                {
+                  "level": 4,
+                  "unit": "percent",
+                  "value": 120
+                },
+                {
+                  "level": 5,
+                  "unit": "percent",
+                  "value": 150
+                }
+              ],
+              "scaling": [
+                "attacker Strength"
+              ],
+              "sourceScope": "unknown",
+              "stack": null,
+              "stackTransitionTrigger": null,
+              "target": "1 Enemy, prioritizing Hunter breed",
+              "targetCount": null,
+              "targetPriority": "prefer-hunter",
+              "targetScope": "any-lane",
+              "targetSelection": {
+                "comparisonDirection": null,
+                "comparisonPool": null,
+                "comparisonStat": null,
+                "distinctness": "unknown",
+                "fallback": "another eligible enemy",
+                "preference": "Hunter breed",
+                "references": [],
+                "repeatedInstances": null,
+                "sharedSelectionGroupId": "desperate-ambush-target",
+                "tieBehavior": null
+              },
+              "type": "Physical Damage",
+              "unit": "rate"
+            },
+            {
+              "activationRoll": {
+                "chanceByHabitLevel": [
+                  {
+                    "level": 1,
+                    "unit": "percent",
+                    "value": 12
+                  },
+                  {
+                    "level": 2,
+                    "unit": "percent",
+                    "value": 15.6
+                  },
+                  {
+                    "level": 3,
+                    "unit": "percent",
+                    "value": 19.2
+                  },
+                  {
+                    "level": 4,
+                    "unit": "percent",
+                    "value": 24
+                  },
+                  {
+                    "level": 5,
+                    "unit": "percent",
+                    "value": 30
+                  }
+                ],
+                "chanceFixed": null,
+                "description": "Overwhelm chance applies to the same target damaged by this activation.",
+                "scope": "effect",
+                "targetStatusConditionalChances": [],
+                "unresolved": false
+              },
+              "calculated": false,
+              "casterEligibility": "unknown",
+              "conditionalMultipliers": [],
+              "conditions": [
+                {
+                  "battleContext": null,
+                  "comparison": "below",
+                  "description": "Venator is strictly below 50% Troop Capacity.",
+                  "id": "self-strictly-below-50-troops",
+                  "kind": "target-below-troop-capacity-threshold",
+                  "statusId": null,
+                  "subject": "self",
+                  "thresholdPercent": 50,
+                  "unresolved": false
+                }
+              ],
+              "directlyVerified": true,
+              "duration": null,
+              "durationRounds": 2,
+              "excludes": [],
+              "id": "desperate-ambush-overwhelm",
+              "includesCaster": null,
+              "magnitude": null,
+              "notes": [],
+              "perTargetEffectCheck": null,
+              "rankedValues": [
+                {
+                  "level": 1,
+                  "unit": "percent",
+                  "value": 12
+                },
+                {
+                  "level": 2,
+                  "unit": "percent",
+                  "value": 15.6
+                },
+                {
+                  "level": 3,
+                  "unit": "percent",
+                  "value": 19.2
+                },
+                {
+                  "level": 4,
+                  "unit": "percent",
+                  "value": 24
+                },
+                {
+                  "level": 5,
+                  "unit": "percent",
+                  "value": 30
+                }
+              ],
+              "scaling": [],
+              "sourceScope": "unknown",
+              "stack": null,
+              "stackTransitionTrigger": null,
+              "target": "Same selected target damaged by Desperate Ambush",
+              "targetCount": null,
+              "targetPriority": "any-eligible",
+              "targetScope": "any-lane",
+              "targetSelection": {
+                "comparisonDirection": null,
+                "comparisonPool": null,
+                "comparisonStat": null,
+                "distinctness": "same-target-required",
+                "fallback": null,
+                "preference": null,
+                "references": [
+                  {
+                    "description": "Overwhelm uses the damage target.",
+                    "id": "desperate-ambush-damage-target",
+                    "kind": "same-target-as-effect",
+                    "referencedEffectId": "desperate-ambush-physical"
+                  }
+                ],
+                "repeatedInstances": null,
+                "sharedSelectionGroupId": "desperate-ambush-target",
+                "tieBehavior": null
+              },
+              "type": "Overwhelm",
+              "unit": "unknown"
+            }
+          ],
+          "id": "desperate-ambush-each-round",
+          "repeat": null,
+          "rounds": [],
+          "roundSelector": {
+            "kind": "each-round"
+          },
+          "targetPriority": "any-eligible",
+          "timing": "each-round",
+          "triggerChanceByHabitLevel": [],
+          "triggerChanceFixed": null,
+          "triggerEvent": "each-round"
+        }
+      ],
+      "tags": [
+        "PHYSICAL_DAMAGE",
+        "OVERWHELM",
+        "CONTROL"
+      ],
+      "unlockStarRank": 10,
+      "unresolvedQuestions": [
+        "Exactly 50% Troop Capacity behavior."
+      ],
+      "verification": {
+        "capturedAt": "2026-06-25",
+        "gameVersion": "26.6.53509",
+        "reviewedManually": true,
+        "source": "Venator Desperate Ambush screenshot",
+        "status": "screenshot-verified"
+      }
+    }
+  ],
+  "abilitySchedules": [
+    {
+      "abilityId": "venator-feral-strike",
+      "abilityName": "Feral Strike",
+      "schedule": {
+        "activationRoll": null,
+        "attempts": null,
+        "battleContext": "unspecified",
+        "conditions": [],
+        "effects": [
+          {
+            "activationRoll": null,
+            "calculated": false,
+            "casterEligibility": "unknown",
+            "conditionalMultipliers": [],
+            "conditions": [],
+            "directlyVerified": true,
+            "duration": null,
+            "durationRounds": null,
+            "excludes": [],
+            "id": "feral-strike-physical-instances",
+            "includesCaster": null,
+            "magnitude": 20,
+            "notes": [
+              "Two Physical Damage instances select independently; the same enemy may receive both."
+            ],
+            "perTargetEffectCheck": null,
+            "rankedValues": [],
+            "scaling": [
+              "attacker Strength"
+            ],
+            "sourceScope": "unknown",
+            "stack": null,
+            "stackTransitionTrigger": null,
+            "target": "1 Enemy per damage instance",
+            "targetCount": 1,
+            "targetPriority": "any-eligible",
+            "targetScope": "any-lane",
+            "targetSelection": {
+              "comparisonDirection": null,
+              "comparisonPool": null,
+              "comparisonStat": null,
+              "distinctness": "no-distinctness-requirement",
+              "fallback": null,
+              "preference": null,
+              "references": [],
+              "repeatedInstances": {
+                "count": 2,
+                "eachInstanceSelectsSeparately": true,
+                "sameTargetAllowed": true
+              },
+              "sharedSelectionGroupId": null,
+              "tieBehavior": null
+            },
+            "type": "Physical Damage",
+            "unit": "rate"
+          }
+        ],
+        "id": "feral-strike-after-basic",
+        "repeat": null,
+        "rounds": [],
+        "roundSelector": {
+          "kind": "after-basic-attack"
+        },
+        "targetPriority": "any-eligible",
+        "timing": "after-basic-attack",
+        "triggerChanceByHabitLevel": [],
+        "triggerChanceFixed": null,
+        "triggerEvent": "after-basic-attack"
+      }
+    },
+    {
+      "abilityId": "venator-feral-strike",
+      "abilityName": "Feral Strike",
+      "schedule": {
+        "activationRoll": {
+          "chanceByHabitLevel": [],
+          "chanceFixed": 30,
+          "description": "One base Double-Strike chance on rounds 4, 6, and 8.",
+          "scope": "schedule-shared",
+          "targetStatusConditionalChances": [],
+          "unresolved": false
+        },
+        "attempts": null,
+        "battleContext": "unspecified",
+        "conditions": [],
+        "effects": [
+          {
+            "activationRoll": null,
+            "calculated": false,
+            "casterEligibility": "unknown",
+            "conditionalMultipliers": [],
+            "conditions": [],
+            "directlyVerified": true,
+            "duration": null,
+            "durationRounds": 2,
+            "excludes": [],
+            "id": "feral-strike-double-strike",
+            "includesCaster": null,
+            "magnitude": null,
+            "notes": [],
+            "perTargetEffectCheck": null,
+            "rankedValues": [],
+            "scaling": [],
+            "sourceScope": "unknown",
+            "stack": null,
+            "stackTransitionTrigger": null,
+            "target": "Self",
+            "targetCount": null,
+            "targetPriority": "any-eligible",
+            "targetScope": "self",
+            "targetSelection": null,
+            "type": "Double-Strike",
+            "unit": "unknown"
+          }
+        ],
+        "id": "feral-strike-double-strike-rounds",
+        "repeat": null,
+        "rounds": [
+          4,
+          6,
+          8
+        ],
+        "roundSelector": {
+          "kind": "explicit",
+          "rounds": [
+            4,
+            6,
+            8
+          ]
+        },
+        "targetPriority": "any-eligible",
+        "timing": "specific-rounds",
+        "triggerChanceByHabitLevel": [],
+        "triggerChanceFixed": 30,
+        "triggerEvent": "specific-rounds"
+      }
+    },
+    {
+      "abilityId": "venator-warriors-zeal",
+      "abilityName": "Warrior's Zeal",
+      "schedule": {
+        "activationRoll": null,
+        "attempts": null,
+        "battleContext": "unspecified",
+        "conditions": [],
+        "effects": [
+          {
+            "activationRoll": null,
+            "calculated": false,
+            "casterEligibility": "unknown",
+            "conditionalMultipliers": [],
+            "conditions": [],
+            "directlyVerified": true,
+            "duration": null,
+            "durationRounds": null,
+            "excludes": [],
+            "id": "warriors-zeal-command-habit-physical",
+            "includesCaster": null,
+            "magnitude": 16,
+            "notes": [
+              "Does not amplify raw Basic Attacks."
+            ],
+            "perTargetEffectCheck": null,
+            "rankedValues": [],
+            "scaling": [],
+            "sourceScope": "commands-and-habits",
+            "stack": null,
+            "stackTransitionTrigger": null,
+            "target": "Self",
+            "targetCount": null,
+            "targetPriority": "any-eligible",
+            "targetScope": "self",
+            "targetSelection": null,
+            "type": "Physical Damage Dealt Up",
+            "unit": "percent"
+          },
+          {
+            "activationRoll": null,
+            "calculated": false,
+            "casterEligibility": "unknown",
+            "conditionalMultipliers": [],
+            "conditions": [],
+            "directlyVerified": true,
+            "duration": null,
+            "durationRounds": null,
+            "excludes": [],
+            "id": "warriors-zeal-left-instinct",
+            "includesCaster": null,
+            "magnitude": 20,
+            "notes": [],
+            "perTargetEffectCheck": null,
+            "rankedValues": [],
+            "scaling": [],
+            "sourceScope": "unknown",
+            "stack": null,
+            "stackTransitionTrigger": null,
+            "target": "Left Flank ally",
+            "targetCount": null,
+            "targetPriority": "any-eligible",
+            "targetScope": "left-flank",
+            "targetSelection": null,
+            "type": "Instinct Up",
+            "unit": "flat"
+          },
+          {
+            "activationRoll": null,
+            "calculated": false,
+            "casterEligibility": "unknown",
+            "conditionalMultipliers": [],
+            "conditions": [],
+            "directlyVerified": true,
+            "duration": null,
+            "durationRounds": null,
+            "excludes": [],
+            "id": "warriors-zeal-left-initiative",
+            "includesCaster": null,
+            "magnitude": 20,
+            "notes": [],
+            "perTargetEffectCheck": null,
+            "rankedValues": [],
+            "scaling": [],
+            "sourceScope": "unknown",
+            "stack": null,
+            "stackTransitionTrigger": null,
+            "target": "Left Flank ally",
+            "targetCount": null,
+            "targetPriority": "any-eligible",
+            "targetScope": "left-flank",
+            "targetSelection": null,
+            "type": "Initiative Up",
+            "unit": "flat"
+          }
+        ],
+        "id": "warriors-zeal-passive",
+        "repeat": null,
+        "rounds": [],
+        "roundSelector": {
+          "kind": "passive"
+        },
+        "targetPriority": "any-eligible",
+        "timing": "passive",
+        "triggerChanceByHabitLevel": [],
+        "triggerChanceFixed": null,
+        "triggerEvent": "passive"
+      }
+    },
+    {
+      "abilityId": "venator-hunters-bane",
+      "abilityName": "Hunter's Bane",
+      "schedule": {
+        "activationRoll": null,
+        "attempts": null,
+        "battleContext": "unspecified",
+        "conditions": [],
+        "effects": [
+          {
+            "activationRoll": null,
+            "calculated": false,
+            "casterEligibility": "unknown",
+            "conditionalMultipliers": [],
+            "conditions": [],
+            "directlyVerified": true,
+            "duration": null,
+            "durationRounds": null,
+            "excludes": [],
+            "id": "hunters-bane-intelligence-down",
+            "includesCaster": null,
+            "magnitude": null,
+            "notes": [],
+            "perTargetEffectCheck": null,
+            "rankedValues": [
+              {
+                "level": 1,
+                "unit": "percent",
+                "value": 30
+              },
+              {
+                "level": 2,
+                "unit": "percent",
+                "value": 36
+              },
+              {
+                "level": 3,
+                "unit": "percent",
+                "value": 42
+              },
+              {
+                "level": 4,
+                "unit": "percent",
+                "value": 51
+              },
+              {
+                "level": 5,
+                "unit": "percent",
+                "value": 60
+              }
+            ],
+            "scaling": [
+              "enhanced by Venator Strength"
+            ],
+            "sourceScope": "unknown",
+            "stack": null,
+            "stackTransitionTrigger": null,
+            "target": "1 Enemy, prioritizing Hunter breed",
+            "targetCount": null,
+            "targetPriority": "prefer-hunter",
+            "targetScope": "any-lane",
+            "targetSelection": {
+              "comparisonDirection": null,
+              "comparisonPool": null,
+              "comparisonStat": null,
+              "distinctness": "unknown",
+              "fallback": "another eligible enemy",
+              "preference": "Hunter breed",
+              "references": [],
+              "repeatedInstances": null,
+              "sharedSelectionGroupId": null,
+              "tieBehavior": null
+            },
+            "type": "Intelligence Down",
+            "unit": "percent"
+          }
+        ],
+        "id": "hunters-bane-start",
+        "repeat": null,
+        "rounds": [],
+        "roundSelector": {
+          "kind": "start-of-combat"
+        },
+        "targetPriority": "any-eligible",
+        "timing": "start-of-combat",
+        "triggerChanceByHabitLevel": [],
+        "triggerChanceFixed": null,
+        "triggerEvent": "start-of-combat"
+      }
+    },
+    {
+      "abilityId": "venator-dragons-might",
+      "abilityName": "Dragon's Might",
+      "schedule": {
+        "activationRoll": null,
+        "attempts": null,
+        "battleContext": "unspecified",
+        "conditions": [],
+        "effects": [
+          {
+            "activationRoll": null,
+            "calculated": false,
+            "casterEligibility": "unknown",
+            "conditionalMultipliers": [],
+            "conditions": [],
+            "directlyVerified": true,
+            "duration": "Until end of combat",
+            "durationRounds": null,
+            "excludes": [
+              "Basic Attacks"
+            ],
+            "id": "dragons-might-physical",
+            "includesCaster": null,
+            "magnitude": null,
+            "notes": [],
+            "perTargetEffectCheck": null,
+            "rankedValues": [
+              {
+                "level": 1,
+                "unit": "percent",
+                "value": 12.5
+              },
+              {
+                "level": 2,
+                "unit": "percent",
+                "value": 15
+              },
+              {
+                "level": 3,
+                "unit": "percent",
+                "value": 17.5
+              },
+              {
+                "level": 4,
+                "unit": "percent",
+                "value": 21.25
+              },
+              {
+                "level": 5,
+                "unit": "percent",
+                "value": 25
+              }
+            ],
+            "scaling": [],
+            "sourceScope": "non-basic-attacks",
+            "stack": null,
+            "stackTransitionTrigger": null,
+            "target": "Self",
+            "targetCount": null,
+            "targetPriority": "any-eligible",
+            "targetScope": "self",
+            "targetSelection": null,
+            "type": "Physical Damage Dealt Up",
+            "unit": "percent"
+          }
+        ],
+        "id": "dragons-might-start",
+        "repeat": null,
+        "rounds": [],
+        "roundSelector": {
+          "kind": "start-of-combat"
+        },
+        "targetPriority": "any-eligible",
+        "timing": "start-of-combat",
+        "triggerChanceByHabitLevel": [],
+        "triggerChanceFixed": null,
+        "triggerEvent": "start-of-combat"
+      }
+    },
+    {
+      "abilityId": "venator-feral-precision",
+      "abilityName": "Feral Precision",
+      "schedule": {
+        "activationRoll": null,
+        "attempts": null,
+        "battleContext": "unspecified",
+        "conditions": [],
+        "effects": [
+          {
+            "activationRoll": null,
+            "calculated": false,
+            "casterEligibility": "unknown",
+            "conditionalMultipliers": [],
+            "conditions": [],
+            "directlyVerified": true,
+            "duration": null,
+            "durationRounds": null,
+            "excludes": [],
+            "id": "feral-precision-additional-physical",
+            "includesCaster": null,
+            "magnitude": null,
+            "notes": [],
+            "perTargetEffectCheck": null,
+            "rankedValues": [
+              {
+                "level": 1,
+                "unit": "percent",
+                "value": 20
+              },
+              {
+                "level": 2,
+                "unit": "percent",
+                "value": 24
+              },
+              {
+                "level": 3,
+                "unit": "percent",
+                "value": 28
+              },
+              {
+                "level": 4,
+                "unit": "percent",
+                "value": 34
+              },
+              {
+                "level": 5,
+                "unit": "percent",
+                "value": 40
+              }
+            ],
+            "scaling": [
+              "attacker Strength"
+            ],
+            "sourceScope": "unknown",
+            "stack": null,
+            "stackTransitionTrigger": null,
+            "target": "Enemy with least current troops",
+            "targetCount": null,
+            "targetPriority": "least-current-troops-enemy",
+            "targetScope": "any-lane",
+            "targetSelection": {
+              "comparisonDirection": "lowest",
+              "comparisonPool": "enemy-side",
+              "comparisonStat": "current-troops",
+              "distinctness": "unknown",
+              "fallback": null,
+              "preference": null,
+              "references": [],
+              "repeatedInstances": null,
+              "sharedSelectionGroupId": null,
+              "tieBehavior": "candidate-group"
+            },
+            "type": "Physical Damage",
+            "unit": "rate"
+          }
+        ],
+        "id": "feral-precision-after-basic",
+        "repeat": null,
+        "rounds": [],
+        "roundSelector": {
+          "kind": "after-basic-attack"
+        },
+        "targetPriority": "any-eligible",
+        "timing": "after-basic-attack",
+        "triggerChanceByHabitLevel": [],
+        "triggerChanceFixed": null,
+        "triggerEvent": "after-basic-attack"
+      }
+    },
+    {
+      "abilityId": "venator-armor-break",
+      "abilityName": "Armor Break",
+      "schedule": {
+        "activationRoll": null,
+        "attempts": null,
+        "battleContext": "unspecified",
+        "conditions": [],
+        "effects": [
+          {
+            "activationRoll": null,
+            "calculated": false,
+            "casterEligibility": "unknown",
+            "conditionalMultipliers": [],
+            "conditions": [],
+            "directlyVerified": true,
+            "duration": "Until end of combat",
+            "durationRounds": null,
+            "excludes": [],
+            "id": "armor-break-physical-received",
+            "includesCaster": null,
+            "magnitude": null,
+            "notes": [],
+            "perTargetEffectCheck": null,
+            "rankedValues": [
+              {
+                "level": 1,
+                "unit": "percent",
+                "value": 8
+              },
+              {
+                "level": 2,
+                "unit": "percent",
+                "value": 9.6
+              },
+              {
+                "level": 3,
+                "unit": "percent",
+                "value": 11.2
+              },
+              {
+                "level": 4,
+                "unit": "percent",
+                "value": 13.6
+              },
+              {
+                "level": 5,
+                "unit": "percent",
+                "value": 16
+              }
+            ],
+            "scaling": [],
+            "sourceScope": "unknown",
+            "stack": null,
+            "stackTransitionTrigger": null,
+            "target": "1 opposing enemy",
+            "targetCount": null,
+            "targetPriority": "opposing-position",
+            "targetScope": "opposing-position",
+            "targetSelection": {
+              "comparisonDirection": null,
+              "comparisonPool": null,
+              "comparisonStat": null,
+              "distinctness": "no-distinctness-requirement",
+              "fallback": null,
+              "preference": null,
+              "references": [
+                {
+                  "description": "Enemy occupying Venator's lane, retained as provisional interpretation.",
+                  "id": "opposing-position-enemy",
+                  "kind": "opposing-position-enemy",
+                  "referencedEffectId": null
+                }
+              ],
+              "repeatedInstances": null,
+              "sharedSelectionGroupId": null,
+              "tieBehavior": null
+            },
+            "type": "Physical Damage Received Up",
+            "unit": "percent"
+          }
+        ],
+        "id": "armor-break-start",
+        "repeat": null,
+        "rounds": [],
+        "roundSelector": {
+          "kind": "start-of-combat"
+        },
+        "targetPriority": "any-eligible",
+        "timing": "start-of-combat",
+        "triggerChanceByHabitLevel": [],
+        "triggerChanceFixed": null,
+        "triggerEvent": "start-of-combat"
+      }
+    },
+    {
+      "abilityId": "venator-desperate-ambush",
+      "abilityName": "Desperate Ambush",
+      "schedule": {
+        "activationRoll": null,
+        "attempts": null,
+        "battleContext": "unspecified",
+        "conditions": [
+          {
+            "battleContext": null,
+            "comparison": "below",
+            "description": "Venator is strictly below 50% Troop Capacity.",
+            "id": "self-strictly-below-50-troops",
+            "kind": "target-below-troop-capacity-threshold",
+            "statusId": null,
+            "subject": "self",
+            "thresholdPercent": 50,
+            "unresolved": false
+          }
+        ],
+        "effects": [
+          {
+            "activationRoll": null,
+            "calculated": false,
+            "casterEligibility": "unknown",
+            "conditionalMultipliers": [],
+            "conditions": [
+              {
+                "battleContext": null,
+                "comparison": "below",
+                "description": "Venator is strictly below 50% Troop Capacity.",
+                "id": "self-strictly-below-50-troops",
+                "kind": "target-below-troop-capacity-threshold",
+                "statusId": null,
+                "subject": "self",
+                "thresholdPercent": 50,
+                "unresolved": false
+              }
+            ],
+            "directlyVerified": true,
+            "duration": null,
+            "durationRounds": null,
+            "excludes": [],
+            "id": "desperate-ambush-physical",
+            "includesCaster": null,
+            "magnitude": null,
+            "notes": [],
+            "perTargetEffectCheck": null,
+            "rankedValues": [
+              {
+                "level": 1,
+                "unit": "percent",
+                "value": 60
+              },
+              {
+                "level": 2,
+                "unit": "percent",
+                "value": 78
+              },
+              {
+                "level": 3,
+                "unit": "percent",
+                "value": 96
+              },
+              {
+                "level": 4,
+                "unit": "percent",
+                "value": 120
+              },
+              {
+                "level": 5,
+                "unit": "percent",
+                "value": 150
+              }
+            ],
+            "scaling": [
+              "attacker Strength"
+            ],
+            "sourceScope": "unknown",
+            "stack": null,
+            "stackTransitionTrigger": null,
+            "target": "1 Enemy, prioritizing Hunter breed",
+            "targetCount": null,
+            "targetPriority": "prefer-hunter",
+            "targetScope": "any-lane",
+            "targetSelection": {
+              "comparisonDirection": null,
+              "comparisonPool": null,
+              "comparisonStat": null,
+              "distinctness": "unknown",
+              "fallback": "another eligible enemy",
+              "preference": "Hunter breed",
+              "references": [],
+              "repeatedInstances": null,
+              "sharedSelectionGroupId": "desperate-ambush-target",
+              "tieBehavior": null
+            },
+            "type": "Physical Damage",
+            "unit": "rate"
+          },
+          {
+            "activationRoll": {
+              "chanceByHabitLevel": [
+                {
+                  "level": 1,
+                  "unit": "percent",
+                  "value": 12
+                },
+                {
+                  "level": 2,
+                  "unit": "percent",
+                  "value": 15.6
+                },
+                {
+                  "level": 3,
+                  "unit": "percent",
+                  "value": 19.2
+                },
+                {
+                  "level": 4,
+                  "unit": "percent",
+                  "value": 24
+                },
+                {
+                  "level": 5,
+                  "unit": "percent",
+                  "value": 30
+                }
+              ],
+              "chanceFixed": null,
+              "description": "Overwhelm chance applies to the same target damaged by this activation.",
+              "scope": "effect",
+              "targetStatusConditionalChances": [],
+              "unresolved": false
+            },
+            "calculated": false,
+            "casterEligibility": "unknown",
+            "conditionalMultipliers": [],
+            "conditions": [
+              {
+                "battleContext": null,
+                "comparison": "below",
+                "description": "Venator is strictly below 50% Troop Capacity.",
+                "id": "self-strictly-below-50-troops",
+                "kind": "target-below-troop-capacity-threshold",
+                "statusId": null,
+                "subject": "self",
+                "thresholdPercent": 50,
+                "unresolved": false
+              }
+            ],
+            "directlyVerified": true,
+            "duration": null,
+            "durationRounds": 2,
+            "excludes": [],
+            "id": "desperate-ambush-overwhelm",
+            "includesCaster": null,
+            "magnitude": null,
+            "notes": [],
+            "perTargetEffectCheck": null,
+            "rankedValues": [
+              {
+                "level": 1,
+                "unit": "percent",
+                "value": 12
+              },
+              {
+                "level": 2,
+                "unit": "percent",
+                "value": 15.6
+              },
+              {
+                "level": 3,
+                "unit": "percent",
+                "value": 19.2
+              },
+              {
+                "level": 4,
+                "unit": "percent",
+                "value": 24
+              },
+              {
+                "level": 5,
+                "unit": "percent",
+                "value": 30
+              }
+            ],
+            "scaling": [],
+            "sourceScope": "unknown",
+            "stack": null,
+            "stackTransitionTrigger": null,
+            "target": "Same selected target damaged by Desperate Ambush",
+            "targetCount": null,
+            "targetPriority": "any-eligible",
+            "targetScope": "any-lane",
+            "targetSelection": {
+              "comparisonDirection": null,
+              "comparisonPool": null,
+              "comparisonStat": null,
+              "distinctness": "same-target-required",
+              "fallback": null,
+              "preference": null,
+              "references": [
+                {
+                  "description": "Overwhelm uses the damage target.",
+                  "id": "desperate-ambush-damage-target",
+                  "kind": "same-target-as-effect",
+                  "referencedEffectId": "desperate-ambush-physical"
+                }
+              ],
+              "repeatedInstances": null,
+              "sharedSelectionGroupId": "desperate-ambush-target",
+              "tieBehavior": null
+            },
+            "type": "Overwhelm",
+            "unit": "unknown"
+          }
+        ],
+        "id": "desperate-ambush-each-round",
+        "repeat": null,
+        "rounds": [],
+        "roundSelector": {
+          "kind": "each-round"
+        },
+        "targetPriority": "any-eligible",
+        "timing": "each-round",
+        "triggerChanceByHabitLevel": [],
+        "triggerChanceFixed": null,
+        "triggerEvent": "each-round"
+      }
+    }
+  ],
   "affinities": {
     "Archers": "unknown",
     "Cavalry": "unknown",
-    "Shieldbearers": "unknown",
+    "Shieldbearers": "positive",
     "Siege": "unknown",
-    "Spearmen": "unknown"
+    "Spearmen": "positive"
   },
   "attempts": [],
-  "availabilityRequirements": [],
+  "availabilityRequirements": [
+    {
+      "abilityId": "venator-warriors-zeal",
+      "type": "star-rank",
+      "value": 1
+    },
+    {
+      "abilityId": "venator-warriors-zeal",
+      "type": "minimum-dragon-level",
+      "value": 16
+    },
+    {
+      "abilityId": "venator-warriors-zeal",
+      "type": "position-requirement",
+      "value": "vanguard"
+    },
+    {
+      "abilityId": "venator-hunters-bane",
+      "type": "habit-unlock-star-rank",
+      "value": 2
+    },
+    {
+      "abilityId": "venator-dragons-might",
+      "type": "habit-unlock-star-rank",
+      "value": 4
+    },
+    {
+      "abilityId": "venator-feral-precision",
+      "type": "habit-unlock-star-rank",
+      "value": 6
+    },
+    {
+      "abilityId": "venator-armor-break",
+      "type": "habit-unlock-star-rank",
+      "value": 8
+    },
+    {
+      "abilityId": "venator-desperate-ambush",
+      "type": "habit-unlock-star-rank",
+      "value": 10
+    }
+  ],
   "breed": "Warrior",
-  "command": null,
+  "command": {
+    "abilityClass": "active",
+    "augmentations": [
+      {
+        "effectsAdded": [],
+        "evidenceIds": [
+          "venator-feral-precision-2026-06-25"
+        ],
+        "id": "venator-feral-precision-augmentation",
+        "minimumDragonStarRank": 6,
+        "modifiesAbilityId": "venator-feral-strike",
+        "rawDescription": "Feral Precision augments Feral Strike damage and Double-Strike chance.",
+        "scheduleOverrides": [
+          {
+            "description": "Feral Precision replaces the base Double-Strike chance; it does not add a second roll.",
+            "evidenceIds": [
+              "venator-feral-precision-2026-06-25"
+            ],
+            "id": "feral-precision-double-strike-override",
+            "operation": "replace-effect-roll",
+            "replacementEffect": {
+              "activationRoll": null,
+              "calculated": false,
+              "casterEligibility": "unknown",
+              "conditionalMultipliers": [],
+              "conditions": [],
+              "directlyVerified": true,
+              "duration": null,
+              "durationRounds": 2,
+              "excludes": [],
+              "id": "feral-strike-double-strike",
+              "includesCaster": null,
+              "magnitude": null,
+              "notes": [],
+              "perTargetEffectCheck": null,
+              "rankedValues": [],
+              "scaling": [],
+              "sourceScope": "unknown",
+              "stack": null,
+              "stackTransitionTrigger": null,
+              "target": "Self",
+              "targetCount": null,
+              "targetPriority": "any-eligible",
+              "targetScope": "self",
+              "targetSelection": null,
+              "type": "Double-Strike",
+              "unit": "unknown"
+            },
+            "replacementSchedule": {
+              "activationRoll": {
+                "chanceByHabitLevel": [
+                  {
+                    "level": 1,
+                    "unit": "percent",
+                    "value": 40
+                  },
+                  {
+                    "level": 2,
+                    "unit": "percent",
+                    "value": 42
+                  },
+                  {
+                    "level": 3,
+                    "unit": "percent",
+                    "value": 44
+                  },
+                  {
+                    "level": 4,
+                    "unit": "percent",
+                    "value": 47
+                  },
+                  {
+                    "level": 5,
+                    "unit": "percent",
+                    "value": 50
+                  }
+                ],
+                "chanceFixed": null,
+                "description": "Feral Precision replaces the base Double-Strike chance on rounds 4, 6, and 8.",
+                "scope": "schedule-shared",
+                "targetStatusConditionalChances": [],
+                "unresolved": false
+              },
+              "attempts": null,
+              "battleContext": "unspecified",
+              "conditions": [],
+              "effects": [
+                {
+                  "activationRoll": null,
+                  "calculated": false,
+                  "casterEligibility": "unknown",
+                  "conditionalMultipliers": [],
+                  "conditions": [],
+                  "directlyVerified": true,
+                  "duration": null,
+                  "durationRounds": 2,
+                  "excludes": [],
+                  "id": "feral-strike-double-strike",
+                  "includesCaster": null,
+                  "magnitude": null,
+                  "notes": [],
+                  "perTargetEffectCheck": null,
+                  "rankedValues": [],
+                  "scaling": [],
+                  "sourceScope": "unknown",
+                  "stack": null,
+                  "stackTransitionTrigger": null,
+                  "target": "Self",
+                  "targetCount": null,
+                  "targetPriority": "any-eligible",
+                  "targetScope": "self",
+                  "targetSelection": null,
+                  "type": "Double-Strike",
+                  "unit": "unknown"
+                }
+              ],
+              "id": "feral-strike-double-strike-feral-precision",
+              "repeat": null,
+              "rounds": [
+                4,
+                6,
+                8
+              ],
+              "roundSelector": {
+                "kind": "explicit",
+                "rounds": [
+                  4,
+                  6,
+                  8
+                ]
+              },
+              "targetPriority": "any-eligible",
+              "timing": "specific-rounds",
+              "triggerChanceByHabitLevel": [
+                {
+                  "level": 1,
+                  "unit": "percent",
+                  "value": 40
+                },
+                {
+                  "level": 2,
+                  "unit": "percent",
+                  "value": 42
+                },
+                {
+                  "level": 3,
+                  "unit": "percent",
+                  "value": 44
+                },
+                {
+                  "level": 4,
+                  "unit": "percent",
+                  "value": 47
+                },
+                {
+                  "level": 5,
+                  "unit": "percent",
+                  "value": 50
+                }
+              ],
+              "triggerChanceFixed": null,
+              "triggerEvent": "specific-rounds"
+            },
+            "targetEffectId": "feral-strike-double-strike",
+            "targetScheduleId": "feral-strike-double-strike-rounds"
+          }
+        ],
+        "schedulesAdded": [],
+        "sourceAbilityId": "venator-feral-precision"
+      }
+    ],
+    "dragonId": "venator",
+    "evidenceIds": [
+      "venator-feral-strike-summary-2026-06-25"
+    ],
+    "glossaryEntries": [
+      {
+        "definition": "Grants a second Basic Attack each round.",
+        "term": "Double-Strike"
+      }
+    ],
+    "id": "venator-feral-strike",
+    "kind": "command",
+    "minimumDragonLevel": null,
+    "name": "Feral Strike",
+    "positionRequirement": null,
+    "powerByHabitLevel": [],
+    "rawDescription": "After each Basic Attack: deal two independently targeted Physical Damage instances. Rounds 4, 6, and 8: 30% chance to gain Double-Strike for two rounds. Classified as Command while preserving Attack Modifier presentation.",
+    "schedules": [
+      {
+        "activationRoll": null,
+        "attempts": null,
+        "battleContext": "unspecified",
+        "conditions": [],
+        "effects": [
+          {
+            "activationRoll": null,
+            "calculated": false,
+            "casterEligibility": "unknown",
+            "conditionalMultipliers": [],
+            "conditions": [],
+            "directlyVerified": true,
+            "duration": null,
+            "durationRounds": null,
+            "excludes": [],
+            "id": "feral-strike-physical-instances",
+            "includesCaster": null,
+            "magnitude": 20,
+            "notes": [
+              "Two Physical Damage instances select independently; the same enemy may receive both."
+            ],
+            "perTargetEffectCheck": null,
+            "rankedValues": [],
+            "scaling": [
+              "attacker Strength"
+            ],
+            "sourceScope": "unknown",
+            "stack": null,
+            "stackTransitionTrigger": null,
+            "target": "1 Enemy per damage instance",
+            "targetCount": 1,
+            "targetPriority": "any-eligible",
+            "targetScope": "any-lane",
+            "targetSelection": {
+              "comparisonDirection": null,
+              "comparisonPool": null,
+              "comparisonStat": null,
+              "distinctness": "no-distinctness-requirement",
+              "fallback": null,
+              "preference": null,
+              "references": [],
+              "repeatedInstances": {
+                "count": 2,
+                "eachInstanceSelectsSeparately": true,
+                "sameTargetAllowed": true
+              },
+              "sharedSelectionGroupId": null,
+              "tieBehavior": null
+            },
+            "type": "Physical Damage",
+            "unit": "rate"
+          }
+        ],
+        "id": "feral-strike-after-basic",
+        "repeat": null,
+        "rounds": [],
+        "roundSelector": {
+          "kind": "after-basic-attack"
+        },
+        "targetPriority": "any-eligible",
+        "timing": "after-basic-attack",
+        "triggerChanceByHabitLevel": [],
+        "triggerChanceFixed": null,
+        "triggerEvent": "after-basic-attack"
+      },
+      {
+        "activationRoll": {
+          "chanceByHabitLevel": [],
+          "chanceFixed": 30,
+          "description": "One base Double-Strike chance on rounds 4, 6, and 8.",
+          "scope": "schedule-shared",
+          "targetStatusConditionalChances": [],
+          "unresolved": false
+        },
+        "attempts": null,
+        "battleContext": "unspecified",
+        "conditions": [],
+        "effects": [
+          {
+            "activationRoll": null,
+            "calculated": false,
+            "casterEligibility": "unknown",
+            "conditionalMultipliers": [],
+            "conditions": [],
+            "directlyVerified": true,
+            "duration": null,
+            "durationRounds": 2,
+            "excludes": [],
+            "id": "feral-strike-double-strike",
+            "includesCaster": null,
+            "magnitude": null,
+            "notes": [],
+            "perTargetEffectCheck": null,
+            "rankedValues": [],
+            "scaling": [],
+            "sourceScope": "unknown",
+            "stack": null,
+            "stackTransitionTrigger": null,
+            "target": "Self",
+            "targetCount": null,
+            "targetPriority": "any-eligible",
+            "targetScope": "self",
+            "targetSelection": null,
+            "type": "Double-Strike",
+            "unit": "unknown"
+          }
+        ],
+        "id": "feral-strike-double-strike-rounds",
+        "repeat": null,
+        "rounds": [
+          4,
+          6,
+          8
+        ],
+        "roundSelector": {
+          "kind": "explicit",
+          "rounds": [
+            4,
+            6,
+            8
+          ]
+        },
+        "targetPriority": "any-eligible",
+        "timing": "specific-rounds",
+        "triggerChanceByHabitLevel": [],
+        "triggerChanceFixed": 30,
+        "triggerEvent": "specific-rounds"
+      }
+    ],
+    "tags": [
+      "PHYSICAL_DAMAGE",
+      "DOUBLE_STRIKE"
+    ],
+    "unlockStarRank": null,
+    "unresolvedQuestions": [
+      "Feral Strike activation from Double-Strike's second Basic Attack.",
+      "Same-round Double-Strike timing.",
+      "Ordering between the fixed-round check and the Basic Attack.",
+      "Exact Double-Strike duration counting."
+    ],
+    "verification": {
+      "capturedAt": "2026-06-25",
+      "gameVersion": "26.6.53509",
+      "reviewedManually": true,
+      "source": "Venator Feral Strike screenshots",
+      "status": "screenshot-verified"
+    }
+  },
   "contextVersion": 1,
-  "dataStatus": "official-metadata-only",
-  "dependencies": [],
-  "effects": [],
-  "evidenceReferences": [],
+  "dataStatus": "community-verified",
+  "dependencies": [
+    {
+      "dependency": {
+        "notes": [
+          "Effect wording indicates scaling with Strength."
+        ],
+        "statId": "strength",
+        "type": "scales-with-stat"
+      },
+      "outputCapabilityId": "venator-feral-strike-feral-strike-physical-instances-output"
+    },
+    {
+      "dependency": {
+        "notes": [
+          "Physical Damage is reduced by target Instinct."
+        ],
+        "statId": "instinct",
+        "type": "mitigated-by-target-stat"
+      },
+      "outputCapabilityId": "venator-feral-strike-feral-strike-physical-instances-output"
+    },
+    {
+      "dependency": {
+        "notes": [
+          "Effect wording indicates scaling with Strength."
+        ],
+        "statId": "strength",
+        "type": "scales-with-stat"
+      },
+      "outputCapabilityId": "venator-feral-precision-feral-precision-additional-physical-output"
+    },
+    {
+      "dependency": {
+        "notes": [
+          "Physical Damage is reduced by target Instinct."
+        ],
+        "statId": "instinct",
+        "type": "mitigated-by-target-stat"
+      },
+      "outputCapabilityId": "venator-feral-precision-feral-precision-additional-physical-output"
+    },
+    {
+      "dependency": {
+        "notes": [
+          "Effect wording indicates scaling with Strength."
+        ],
+        "statId": "strength",
+        "type": "scales-with-stat"
+      },
+      "outputCapabilityId": "venator-desperate-ambush-desperate-ambush-physical-output"
+    },
+    {
+      "dependency": {
+        "notes": [
+          "Physical Damage is reduced by target Instinct."
+        ],
+        "statId": "instinct",
+        "type": "mitigated-by-target-stat"
+      },
+      "outputCapabilityId": "venator-desperate-ambush-desperate-ambush-physical-output"
+    }
+  ],
+  "effects": [
+    {
+      "abilityId": "venator-feral-strike",
+      "effect": {
+        "activationRoll": null,
+        "calculated": false,
+        "casterEligibility": "unknown",
+        "conditionalMultipliers": [],
+        "conditions": [],
+        "directlyVerified": true,
+        "duration": null,
+        "durationRounds": null,
+        "excludes": [],
+        "id": "feral-strike-physical-instances",
+        "includesCaster": null,
+        "magnitude": 20,
+        "notes": [
+          "Two Physical Damage instances select independently; the same enemy may receive both."
+        ],
+        "perTargetEffectCheck": null,
+        "rankedValues": [],
+        "scaling": [
+          "attacker Strength"
+        ],
+        "sourceScope": "unknown",
+        "stack": null,
+        "stackTransitionTrigger": null,
+        "target": "1 Enemy per damage instance",
+        "targetCount": 1,
+        "targetPriority": "any-eligible",
+        "targetScope": "any-lane",
+        "targetSelection": {
+          "comparisonDirection": null,
+          "comparisonPool": null,
+          "comparisonStat": null,
+          "distinctness": "no-distinctness-requirement",
+          "fallback": null,
+          "preference": null,
+          "references": [],
+          "repeatedInstances": {
+            "count": 2,
+            "eachInstanceSelectsSeparately": true,
+            "sameTargetAllowed": true
+          },
+          "sharedSelectionGroupId": null,
+          "tieBehavior": null
+        },
+        "type": "Physical Damage",
+        "unit": "rate"
+      },
+      "scheduleId": "feral-strike-after-basic"
+    },
+    {
+      "abilityId": "venator-feral-strike",
+      "effect": {
+        "activationRoll": null,
+        "calculated": false,
+        "casterEligibility": "unknown",
+        "conditionalMultipliers": [],
+        "conditions": [],
+        "directlyVerified": true,
+        "duration": null,
+        "durationRounds": 2,
+        "excludes": [],
+        "id": "feral-strike-double-strike",
+        "includesCaster": null,
+        "magnitude": null,
+        "notes": [],
+        "perTargetEffectCheck": null,
+        "rankedValues": [],
+        "scaling": [],
+        "sourceScope": "unknown",
+        "stack": null,
+        "stackTransitionTrigger": null,
+        "target": "Self",
+        "targetCount": null,
+        "targetPriority": "any-eligible",
+        "targetScope": "self",
+        "targetSelection": null,
+        "type": "Double-Strike",
+        "unit": "unknown"
+      },
+      "scheduleId": "feral-strike-double-strike-rounds"
+    },
+    {
+      "abilityId": "venator-warriors-zeal",
+      "effect": {
+        "activationRoll": null,
+        "calculated": false,
+        "casterEligibility": "unknown",
+        "conditionalMultipliers": [],
+        "conditions": [],
+        "directlyVerified": true,
+        "duration": null,
+        "durationRounds": null,
+        "excludes": [],
+        "id": "warriors-zeal-command-habit-physical",
+        "includesCaster": null,
+        "magnitude": 16,
+        "notes": [
+          "Does not amplify raw Basic Attacks."
+        ],
+        "perTargetEffectCheck": null,
+        "rankedValues": [],
+        "scaling": [],
+        "sourceScope": "commands-and-habits",
+        "stack": null,
+        "stackTransitionTrigger": null,
+        "target": "Self",
+        "targetCount": null,
+        "targetPriority": "any-eligible",
+        "targetScope": "self",
+        "targetSelection": null,
+        "type": "Physical Damage Dealt Up",
+        "unit": "percent"
+      },
+      "scheduleId": "warriors-zeal-passive"
+    },
+    {
+      "abilityId": "venator-warriors-zeal",
+      "effect": {
+        "activationRoll": null,
+        "calculated": false,
+        "casterEligibility": "unknown",
+        "conditionalMultipliers": [],
+        "conditions": [],
+        "directlyVerified": true,
+        "duration": null,
+        "durationRounds": null,
+        "excludes": [],
+        "id": "warriors-zeal-left-instinct",
+        "includesCaster": null,
+        "magnitude": 20,
+        "notes": [],
+        "perTargetEffectCheck": null,
+        "rankedValues": [],
+        "scaling": [],
+        "sourceScope": "unknown",
+        "stack": null,
+        "stackTransitionTrigger": null,
+        "target": "Left Flank ally",
+        "targetCount": null,
+        "targetPriority": "any-eligible",
+        "targetScope": "left-flank",
+        "targetSelection": null,
+        "type": "Instinct Up",
+        "unit": "flat"
+      },
+      "scheduleId": "warriors-zeal-passive"
+    },
+    {
+      "abilityId": "venator-warriors-zeal",
+      "effect": {
+        "activationRoll": null,
+        "calculated": false,
+        "casterEligibility": "unknown",
+        "conditionalMultipliers": [],
+        "conditions": [],
+        "directlyVerified": true,
+        "duration": null,
+        "durationRounds": null,
+        "excludes": [],
+        "id": "warriors-zeal-left-initiative",
+        "includesCaster": null,
+        "magnitude": 20,
+        "notes": [],
+        "perTargetEffectCheck": null,
+        "rankedValues": [],
+        "scaling": [],
+        "sourceScope": "unknown",
+        "stack": null,
+        "stackTransitionTrigger": null,
+        "target": "Left Flank ally",
+        "targetCount": null,
+        "targetPriority": "any-eligible",
+        "targetScope": "left-flank",
+        "targetSelection": null,
+        "type": "Initiative Up",
+        "unit": "flat"
+      },
+      "scheduleId": "warriors-zeal-passive"
+    },
+    {
+      "abilityId": "venator-hunters-bane",
+      "effect": {
+        "activationRoll": null,
+        "calculated": false,
+        "casterEligibility": "unknown",
+        "conditionalMultipliers": [],
+        "conditions": [],
+        "directlyVerified": true,
+        "duration": null,
+        "durationRounds": null,
+        "excludes": [],
+        "id": "hunters-bane-intelligence-down",
+        "includesCaster": null,
+        "magnitude": null,
+        "notes": [],
+        "perTargetEffectCheck": null,
+        "rankedValues": [
+          {
+            "level": 1,
+            "unit": "percent",
+            "value": 30
+          },
+          {
+            "level": 2,
+            "unit": "percent",
+            "value": 36
+          },
+          {
+            "level": 3,
+            "unit": "percent",
+            "value": 42
+          },
+          {
+            "level": 4,
+            "unit": "percent",
+            "value": 51
+          },
+          {
+            "level": 5,
+            "unit": "percent",
+            "value": 60
+          }
+        ],
+        "scaling": [
+          "enhanced by Venator Strength"
+        ],
+        "sourceScope": "unknown",
+        "stack": null,
+        "stackTransitionTrigger": null,
+        "target": "1 Enemy, prioritizing Hunter breed",
+        "targetCount": null,
+        "targetPriority": "prefer-hunter",
+        "targetScope": "any-lane",
+        "targetSelection": {
+          "comparisonDirection": null,
+          "comparisonPool": null,
+          "comparisonStat": null,
+          "distinctness": "unknown",
+          "fallback": "another eligible enemy",
+          "preference": "Hunter breed",
+          "references": [],
+          "repeatedInstances": null,
+          "sharedSelectionGroupId": null,
+          "tieBehavior": null
+        },
+        "type": "Intelligence Down",
+        "unit": "percent"
+      },
+      "scheduleId": "hunters-bane-start"
+    },
+    {
+      "abilityId": "venator-dragons-might",
+      "effect": {
+        "activationRoll": null,
+        "calculated": false,
+        "casterEligibility": "unknown",
+        "conditionalMultipliers": [],
+        "conditions": [],
+        "directlyVerified": true,
+        "duration": "Until end of combat",
+        "durationRounds": null,
+        "excludes": [
+          "Basic Attacks"
+        ],
+        "id": "dragons-might-physical",
+        "includesCaster": null,
+        "magnitude": null,
+        "notes": [],
+        "perTargetEffectCheck": null,
+        "rankedValues": [
+          {
+            "level": 1,
+            "unit": "percent",
+            "value": 12.5
+          },
+          {
+            "level": 2,
+            "unit": "percent",
+            "value": 15
+          },
+          {
+            "level": 3,
+            "unit": "percent",
+            "value": 17.5
+          },
+          {
+            "level": 4,
+            "unit": "percent",
+            "value": 21.25
+          },
+          {
+            "level": 5,
+            "unit": "percent",
+            "value": 25
+          }
+        ],
+        "scaling": [],
+        "sourceScope": "non-basic-attacks",
+        "stack": null,
+        "stackTransitionTrigger": null,
+        "target": "Self",
+        "targetCount": null,
+        "targetPriority": "any-eligible",
+        "targetScope": "self",
+        "targetSelection": null,
+        "type": "Physical Damage Dealt Up",
+        "unit": "percent"
+      },
+      "scheduleId": "dragons-might-start"
+    },
+    {
+      "abilityId": "venator-feral-precision",
+      "effect": {
+        "activationRoll": null,
+        "calculated": false,
+        "casterEligibility": "unknown",
+        "conditionalMultipliers": [],
+        "conditions": [],
+        "directlyVerified": true,
+        "duration": null,
+        "durationRounds": null,
+        "excludes": [],
+        "id": "feral-precision-additional-physical",
+        "includesCaster": null,
+        "magnitude": null,
+        "notes": [],
+        "perTargetEffectCheck": null,
+        "rankedValues": [
+          {
+            "level": 1,
+            "unit": "percent",
+            "value": 20
+          },
+          {
+            "level": 2,
+            "unit": "percent",
+            "value": 24
+          },
+          {
+            "level": 3,
+            "unit": "percent",
+            "value": 28
+          },
+          {
+            "level": 4,
+            "unit": "percent",
+            "value": 34
+          },
+          {
+            "level": 5,
+            "unit": "percent",
+            "value": 40
+          }
+        ],
+        "scaling": [
+          "attacker Strength"
+        ],
+        "sourceScope": "unknown",
+        "stack": null,
+        "stackTransitionTrigger": null,
+        "target": "Enemy with least current troops",
+        "targetCount": null,
+        "targetPriority": "least-current-troops-enemy",
+        "targetScope": "any-lane",
+        "targetSelection": {
+          "comparisonDirection": "lowest",
+          "comparisonPool": "enemy-side",
+          "comparisonStat": "current-troops",
+          "distinctness": "unknown",
+          "fallback": null,
+          "preference": null,
+          "references": [],
+          "repeatedInstances": null,
+          "sharedSelectionGroupId": null,
+          "tieBehavior": "candidate-group"
+        },
+        "type": "Physical Damage",
+        "unit": "rate"
+      },
+      "scheduleId": "feral-precision-after-basic"
+    },
+    {
+      "abilityId": "venator-armor-break",
+      "effect": {
+        "activationRoll": null,
+        "calculated": false,
+        "casterEligibility": "unknown",
+        "conditionalMultipliers": [],
+        "conditions": [],
+        "directlyVerified": true,
+        "duration": "Until end of combat",
+        "durationRounds": null,
+        "excludes": [],
+        "id": "armor-break-physical-received",
+        "includesCaster": null,
+        "magnitude": null,
+        "notes": [],
+        "perTargetEffectCheck": null,
+        "rankedValues": [
+          {
+            "level": 1,
+            "unit": "percent",
+            "value": 8
+          },
+          {
+            "level": 2,
+            "unit": "percent",
+            "value": 9.6
+          },
+          {
+            "level": 3,
+            "unit": "percent",
+            "value": 11.2
+          },
+          {
+            "level": 4,
+            "unit": "percent",
+            "value": 13.6
+          },
+          {
+            "level": 5,
+            "unit": "percent",
+            "value": 16
+          }
+        ],
+        "scaling": [],
+        "sourceScope": "unknown",
+        "stack": null,
+        "stackTransitionTrigger": null,
+        "target": "1 opposing enemy",
+        "targetCount": null,
+        "targetPriority": "opposing-position",
+        "targetScope": "opposing-position",
+        "targetSelection": {
+          "comparisonDirection": null,
+          "comparisonPool": null,
+          "comparisonStat": null,
+          "distinctness": "no-distinctness-requirement",
+          "fallback": null,
+          "preference": null,
+          "references": [
+            {
+              "description": "Enemy occupying Venator's lane, retained as provisional interpretation.",
+              "id": "opposing-position-enemy",
+              "kind": "opposing-position-enemy",
+              "referencedEffectId": null
+            }
+          ],
+          "repeatedInstances": null,
+          "sharedSelectionGroupId": null,
+          "tieBehavior": null
+        },
+        "type": "Physical Damage Received Up",
+        "unit": "percent"
+      },
+      "scheduleId": "armor-break-start"
+    },
+    {
+      "abilityId": "venator-desperate-ambush",
+      "effect": {
+        "activationRoll": null,
+        "calculated": false,
+        "casterEligibility": "unknown",
+        "conditionalMultipliers": [],
+        "conditions": [
+          {
+            "battleContext": null,
+            "comparison": "below",
+            "description": "Venator is strictly below 50% Troop Capacity.",
+            "id": "self-strictly-below-50-troops",
+            "kind": "target-below-troop-capacity-threshold",
+            "statusId": null,
+            "subject": "self",
+            "thresholdPercent": 50,
+            "unresolved": false
+          }
+        ],
+        "directlyVerified": true,
+        "duration": null,
+        "durationRounds": null,
+        "excludes": [],
+        "id": "desperate-ambush-physical",
+        "includesCaster": null,
+        "magnitude": null,
+        "notes": [],
+        "perTargetEffectCheck": null,
+        "rankedValues": [
+          {
+            "level": 1,
+            "unit": "percent",
+            "value": 60
+          },
+          {
+            "level": 2,
+            "unit": "percent",
+            "value": 78
+          },
+          {
+            "level": 3,
+            "unit": "percent",
+            "value": 96
+          },
+          {
+            "level": 4,
+            "unit": "percent",
+            "value": 120
+          },
+          {
+            "level": 5,
+            "unit": "percent",
+            "value": 150
+          }
+        ],
+        "scaling": [
+          "attacker Strength"
+        ],
+        "sourceScope": "unknown",
+        "stack": null,
+        "stackTransitionTrigger": null,
+        "target": "1 Enemy, prioritizing Hunter breed",
+        "targetCount": null,
+        "targetPriority": "prefer-hunter",
+        "targetScope": "any-lane",
+        "targetSelection": {
+          "comparisonDirection": null,
+          "comparisonPool": null,
+          "comparisonStat": null,
+          "distinctness": "unknown",
+          "fallback": "another eligible enemy",
+          "preference": "Hunter breed",
+          "references": [],
+          "repeatedInstances": null,
+          "sharedSelectionGroupId": "desperate-ambush-target",
+          "tieBehavior": null
+        },
+        "type": "Physical Damage",
+        "unit": "rate"
+      },
+      "scheduleId": "desperate-ambush-each-round"
+    },
+    {
+      "abilityId": "venator-desperate-ambush",
+      "effect": {
+        "activationRoll": {
+          "chanceByHabitLevel": [
+            {
+              "level": 1,
+              "unit": "percent",
+              "value": 12
+            },
+            {
+              "level": 2,
+              "unit": "percent",
+              "value": 15.6
+            },
+            {
+              "level": 3,
+              "unit": "percent",
+              "value": 19.2
+            },
+            {
+              "level": 4,
+              "unit": "percent",
+              "value": 24
+            },
+            {
+              "level": 5,
+              "unit": "percent",
+              "value": 30
+            }
+          ],
+          "chanceFixed": null,
+          "description": "Overwhelm chance applies to the same target damaged by this activation.",
+          "scope": "effect",
+          "targetStatusConditionalChances": [],
+          "unresolved": false
+        },
+        "calculated": false,
+        "casterEligibility": "unknown",
+        "conditionalMultipliers": [],
+        "conditions": [
+          {
+            "battleContext": null,
+            "comparison": "below",
+            "description": "Venator is strictly below 50% Troop Capacity.",
+            "id": "self-strictly-below-50-troops",
+            "kind": "target-below-troop-capacity-threshold",
+            "statusId": null,
+            "subject": "self",
+            "thresholdPercent": 50,
+            "unresolved": false
+          }
+        ],
+        "directlyVerified": true,
+        "duration": null,
+        "durationRounds": 2,
+        "excludes": [],
+        "id": "desperate-ambush-overwhelm",
+        "includesCaster": null,
+        "magnitude": null,
+        "notes": [],
+        "perTargetEffectCheck": null,
+        "rankedValues": [
+          {
+            "level": 1,
+            "unit": "percent",
+            "value": 12
+          },
+          {
+            "level": 2,
+            "unit": "percent",
+            "value": 15.6
+          },
+          {
+            "level": 3,
+            "unit": "percent",
+            "value": 19.2
+          },
+          {
+            "level": 4,
+            "unit": "percent",
+            "value": 24
+          },
+          {
+            "level": 5,
+            "unit": "percent",
+            "value": 30
+          }
+        ],
+        "scaling": [],
+        "sourceScope": "unknown",
+        "stack": null,
+        "stackTransitionTrigger": null,
+        "target": "Same selected target damaged by Desperate Ambush",
+        "targetCount": null,
+        "targetPriority": "any-eligible",
+        "targetScope": "any-lane",
+        "targetSelection": {
+          "comparisonDirection": null,
+          "comparisonPool": null,
+          "comparisonStat": null,
+          "distinctness": "same-target-required",
+          "fallback": null,
+          "preference": null,
+          "references": [
+            {
+              "description": "Overwhelm uses the damage target.",
+              "id": "desperate-ambush-damage-target",
+              "kind": "same-target-as-effect",
+              "referencedEffectId": "desperate-ambush-physical"
+            }
+          ],
+          "repeatedInstances": null,
+          "sharedSelectionGroupId": "desperate-ambush-target",
+          "tieBehavior": null
+        },
+        "type": "Overwhelm",
+        "unit": "unknown"
+      },
+      "scheduleId": "desperate-ambush-each-round"
+    }
+  ],
+  "evidenceReferences": [
+    {
+      "capturedAt": "2026-06-25",
+      "description": "Descriptive evidence label only. Screenshot files are not committed to the public repository.",
+      "gameVersion": "26.6.53509",
+      "id": "venator-main-screen-2026-06-25",
+      "language": "English",
+      "reviewedManually": true,
+      "submittedBy": "repository owner",
+      "title": "Venator main screen",
+      "type": "in-game-screenshot",
+      "url": null,
+      "verificationStatus": "community-verified"
+    },
+    {
+      "capturedAt": "2026-06-25",
+      "description": "Descriptive evidence label only. Screenshot files are not committed to the public repository.",
+      "gameVersion": "26.6.53509",
+      "id": "venator-feral-strike-summary-2026-06-25",
+      "language": "English",
+      "reviewedManually": true,
+      "submittedBy": "repository owner",
+      "title": "Venator Feral Strike summary",
+      "type": "in-game-screenshot",
+      "url": null,
+      "verificationStatus": "community-verified"
+    },
+    {
+      "capturedAt": "2026-06-25",
+      "description": "Descriptive evidence label only. Screenshot files are not committed to the public repository.",
+      "gameVersion": "26.6.53509",
+      "id": "venator-warriors-zeal-2026-06-25",
+      "language": "English",
+      "reviewedManually": true,
+      "submittedBy": "repository owner",
+      "title": "Venator Warrior's Zeal",
+      "type": "in-game-screenshot",
+      "url": null,
+      "verificationStatus": "community-verified"
+    },
+    {
+      "capturedAt": "2026-06-25",
+      "description": "Descriptive evidence label only. Screenshot files are not committed to the public repository.",
+      "gameVersion": "26.6.53509",
+      "id": "venator-hunters-bane-2026-06-25",
+      "language": "English",
+      "reviewedManually": true,
+      "submittedBy": "repository owner",
+      "title": "Venator Hunter's Bane",
+      "type": "in-game-screenshot",
+      "url": null,
+      "verificationStatus": "community-verified"
+    },
+    {
+      "capturedAt": "2026-06-25",
+      "description": "Descriptive evidence label only. Screenshot files are not committed to the public repository.",
+      "gameVersion": "26.6.53509",
+      "id": "venator-dragons-might-2026-06-25",
+      "language": "English",
+      "reviewedManually": true,
+      "submittedBy": "repository owner",
+      "title": "Venator Dragon's Might",
+      "type": "in-game-screenshot",
+      "url": null,
+      "verificationStatus": "community-verified"
+    },
+    {
+      "capturedAt": "2026-06-25",
+      "description": "Descriptive evidence label only. Screenshot files are not committed to the public repository.",
+      "gameVersion": "26.6.53509",
+      "id": "venator-feral-precision-2026-06-25",
+      "language": "English",
+      "reviewedManually": true,
+      "submittedBy": "repository owner",
+      "title": "Venator Feral Precision",
+      "type": "in-game-screenshot",
+      "url": null,
+      "verificationStatus": "community-verified"
+    },
+    {
+      "capturedAt": "2026-06-25",
+      "description": "Descriptive evidence label only. Screenshot files are not committed to the public repository.",
+      "gameVersion": "26.6.53509",
+      "id": "venator-armor-break-2026-06-25",
+      "language": "English",
+      "reviewedManually": true,
+      "submittedBy": "repository owner",
+      "title": "Venator Armor Break",
+      "type": "in-game-screenshot",
+      "url": null,
+      "verificationStatus": "community-verified"
+    },
+    {
+      "capturedAt": "2026-06-25",
+      "description": "Descriptive evidence label only. Screenshot files are not committed to the public repository.",
+      "gameVersion": "26.6.53509",
+      "id": "venator-desperate-ambush-2026-06-25",
+      "language": "English",
+      "reviewedManually": true,
+      "submittedBy": "repository owner",
+      "title": "Venator Desperate Ambush",
+      "type": "in-game-screenshot",
+      "url": null,
+      "verificationStatus": "community-verified"
+    }
+  ],
   "firstObservedInGame": null,
   "format": "dragonfire-dragon-profile",
   "gameVersion": null,
-  "generatedAt": "2026-06-25T13:45:06.120Z",
-  "habits": [],
+  "generatedAt": "2026-06-25T19:52:27.796Z",
+  "habits": [
+    {
+      "abilityClass": "passive",
+      "augmentations": [],
+      "dragonId": "venator",
+      "evidenceIds": [
+        "venator-hunters-bane-2026-06-25"
+      ],
+      "glossaryEntries": [],
+      "id": "venator-hunters-bane",
+      "kind": "habit",
+      "minimumDragonLevel": null,
+      "name": "Hunter's Bane",
+      "positionRequirement": null,
+      "powerByHabitLevel": [
+        {
+          "level": 1,
+          "unit": "power",
+          "value": 420
+        },
+        {
+          "level": 2,
+          "unit": "power",
+          "value": 920
+        },
+        {
+          "level": 3,
+          "unit": "power",
+          "value": 1500
+        },
+        {
+          "level": 4,
+          "unit": "power",
+          "value": 2200
+        },
+        {
+          "level": 5,
+          "unit": "power",
+          "value": 3100
+        }
+      ],
+      "rawDescription": "Start of Combat: reduce Intelligence of one enemy in any lane, preferring Hunter breed with fallback, enhanced by Venator's Strength. Screenshot states no duration.",
+      "schedules": [
+        {
+          "activationRoll": null,
+          "attempts": null,
+          "battleContext": "unspecified",
+          "conditions": [],
+          "effects": [
+            {
+              "activationRoll": null,
+              "calculated": false,
+              "casterEligibility": "unknown",
+              "conditionalMultipliers": [],
+              "conditions": [],
+              "directlyVerified": true,
+              "duration": null,
+              "durationRounds": null,
+              "excludes": [],
+              "id": "hunters-bane-intelligence-down",
+              "includesCaster": null,
+              "magnitude": null,
+              "notes": [],
+              "perTargetEffectCheck": null,
+              "rankedValues": [
+                {
+                  "level": 1,
+                  "unit": "percent",
+                  "value": 30
+                },
+                {
+                  "level": 2,
+                  "unit": "percent",
+                  "value": 36
+                },
+                {
+                  "level": 3,
+                  "unit": "percent",
+                  "value": 42
+                },
+                {
+                  "level": 4,
+                  "unit": "percent",
+                  "value": 51
+                },
+                {
+                  "level": 5,
+                  "unit": "percent",
+                  "value": 60
+                }
+              ],
+              "scaling": [
+                "enhanced by Venator Strength"
+              ],
+              "sourceScope": "unknown",
+              "stack": null,
+              "stackTransitionTrigger": null,
+              "target": "1 Enemy, prioritizing Hunter breed",
+              "targetCount": null,
+              "targetPriority": "prefer-hunter",
+              "targetScope": "any-lane",
+              "targetSelection": {
+                "comparisonDirection": null,
+                "comparisonPool": null,
+                "comparisonStat": null,
+                "distinctness": "unknown",
+                "fallback": "another eligible enemy",
+                "preference": "Hunter breed",
+                "references": [],
+                "repeatedInstances": null,
+                "sharedSelectionGroupId": null,
+                "tieBehavior": null
+              },
+              "type": "Intelligence Down",
+              "unit": "percent"
+            }
+          ],
+          "id": "hunters-bane-start",
+          "repeat": null,
+          "rounds": [],
+          "roundSelector": {
+            "kind": "start-of-combat"
+          },
+          "targetPriority": "any-eligible",
+          "timing": "start-of-combat",
+          "triggerChanceByHabitLevel": [],
+          "triggerChanceFixed": null,
+          "triggerEvent": "start-of-combat"
+        }
+      ],
+      "tags": [
+        "DEBUFF_INTELLIGENCE"
+      ],
+      "unlockStarRank": 2,
+      "unresolvedQuestions": [
+        "Hunter's Bane duration.",
+        "Hunter's Bane Strength enhancement formula."
+      ],
+      "verification": {
+        "capturedAt": "2026-06-25",
+        "gameVersion": "26.6.53509",
+        "reviewedManually": true,
+        "source": "Venator Hunter's Bane screenshot",
+        "status": "screenshot-verified"
+      }
+    },
+    {
+      "abilityClass": "passive",
+      "augmentations": [],
+      "dragonId": "venator",
+      "evidenceIds": [
+        "venator-dragons-might-2026-06-25"
+      ],
+      "glossaryEntries": [],
+      "id": "venator-dragons-might",
+      "kind": "habit",
+      "minimumDragonLevel": null,
+      "name": "Dragon's Might",
+      "positionRequirement": null,
+      "powerByHabitLevel": [
+        {
+          "level": 1,
+          "unit": "power",
+          "value": 420
+        },
+        {
+          "level": 2,
+          "unit": "power",
+          "value": 920
+        },
+        {
+          "level": 3,
+          "unit": "power",
+          "value": 1500
+        },
+        {
+          "level": 4,
+          "unit": "power",
+          "value": 2200
+        },
+        {
+          "level": 5,
+          "unit": "power",
+          "value": 3100
+        }
+      ],
+      "rawDescription": "Start of Combat until end of combat: increase Venator Physical Damage Dealt excluding Basic Attacks.",
+      "schedules": [
+        {
+          "activationRoll": null,
+          "attempts": null,
+          "battleContext": "unspecified",
+          "conditions": [],
+          "effects": [
+            {
+              "activationRoll": null,
+              "calculated": false,
+              "casterEligibility": "unknown",
+              "conditionalMultipliers": [],
+              "conditions": [],
+              "directlyVerified": true,
+              "duration": "Until end of combat",
+              "durationRounds": null,
+              "excludes": [
+                "Basic Attacks"
+              ],
+              "id": "dragons-might-physical",
+              "includesCaster": null,
+              "magnitude": null,
+              "notes": [],
+              "perTargetEffectCheck": null,
+              "rankedValues": [
+                {
+                  "level": 1,
+                  "unit": "percent",
+                  "value": 12.5
+                },
+                {
+                  "level": 2,
+                  "unit": "percent",
+                  "value": 15
+                },
+                {
+                  "level": 3,
+                  "unit": "percent",
+                  "value": 17.5
+                },
+                {
+                  "level": 4,
+                  "unit": "percent",
+                  "value": 21.25
+                },
+                {
+                  "level": 5,
+                  "unit": "percent",
+                  "value": 25
+                }
+              ],
+              "scaling": [],
+              "sourceScope": "non-basic-attacks",
+              "stack": null,
+              "stackTransitionTrigger": null,
+              "target": "Self",
+              "targetCount": null,
+              "targetPriority": "any-eligible",
+              "targetScope": "self",
+              "targetSelection": null,
+              "type": "Physical Damage Dealt Up",
+              "unit": "percent"
+            }
+          ],
+          "id": "dragons-might-start",
+          "repeat": null,
+          "rounds": [],
+          "roundSelector": {
+            "kind": "start-of-combat"
+          },
+          "targetPriority": "any-eligible",
+          "timing": "start-of-combat",
+          "triggerChanceByHabitLevel": [],
+          "triggerChanceFixed": null,
+          "triggerEvent": "start-of-combat"
+        }
+      ],
+      "tags": [
+        "PHYSICAL_DAMAGE_UP"
+      ],
+      "unlockStarRank": 4,
+      "unresolvedQuestions": [],
+      "verification": {
+        "capturedAt": "2026-06-25",
+        "gameVersion": "26.6.53509",
+        "reviewedManually": true,
+        "source": "Venator Dragon's Might screenshot",
+        "status": "screenshot-verified"
+      }
+    },
+    {
+      "abilityClass": "passive",
+      "augmentations": [],
+      "dragonId": "venator",
+      "evidenceIds": [
+        "venator-feral-precision-2026-06-25"
+      ],
+      "glossaryEntries": [],
+      "id": "venator-feral-precision",
+      "kind": "habit",
+      "minimumDragonLevel": null,
+      "name": "Feral Precision",
+      "positionRequirement": null,
+      "powerByHabitLevel": [
+        {
+          "level": 1,
+          "unit": "power",
+          "value": 420
+        },
+        {
+          "level": 2,
+          "unit": "power",
+          "value": 920
+        },
+        {
+          "level": 3,
+          "unit": "power",
+          "value": 1500
+        },
+        {
+          "level": 4,
+          "unit": "power",
+          "value": 2200
+        },
+        {
+          "level": 5,
+          "unit": "power",
+          "value": 3100
+        }
+      ],
+      "rawDescription": "Augments Feral Strike: add one Physical Damage instance targeting the enemy with least current troops and replace Double-Strike chance on rounds 4, 6, and 8.",
+      "schedules": [
+        {
+          "activationRoll": null,
+          "attempts": null,
+          "battleContext": "unspecified",
+          "conditions": [],
+          "effects": [
+            {
+              "activationRoll": null,
+              "calculated": false,
+              "casterEligibility": "unknown",
+              "conditionalMultipliers": [],
+              "conditions": [],
+              "directlyVerified": true,
+              "duration": null,
+              "durationRounds": null,
+              "excludes": [],
+              "id": "feral-precision-additional-physical",
+              "includesCaster": null,
+              "magnitude": null,
+              "notes": [],
+              "perTargetEffectCheck": null,
+              "rankedValues": [
+                {
+                  "level": 1,
+                  "unit": "percent",
+                  "value": 20
+                },
+                {
+                  "level": 2,
+                  "unit": "percent",
+                  "value": 24
+                },
+                {
+                  "level": 3,
+                  "unit": "percent",
+                  "value": 28
+                },
+                {
+                  "level": 4,
+                  "unit": "percent",
+                  "value": 34
+                },
+                {
+                  "level": 5,
+                  "unit": "percent",
+                  "value": 40
+                }
+              ],
+              "scaling": [
+                "attacker Strength"
+              ],
+              "sourceScope": "unknown",
+              "stack": null,
+              "stackTransitionTrigger": null,
+              "target": "Enemy with least current troops",
+              "targetCount": null,
+              "targetPriority": "least-current-troops-enemy",
+              "targetScope": "any-lane",
+              "targetSelection": {
+                "comparisonDirection": "lowest",
+                "comparisonPool": "enemy-side",
+                "comparisonStat": "current-troops",
+                "distinctness": "unknown",
+                "fallback": null,
+                "preference": null,
+                "references": [],
+                "repeatedInstances": null,
+                "sharedSelectionGroupId": null,
+                "tieBehavior": "candidate-group"
+              },
+              "type": "Physical Damage",
+              "unit": "rate"
+            }
+          ],
+          "id": "feral-precision-after-basic",
+          "repeat": null,
+          "rounds": [],
+          "roundSelector": {
+            "kind": "after-basic-attack"
+          },
+          "targetPriority": "any-eligible",
+          "timing": "after-basic-attack",
+          "triggerChanceByHabitLevel": [],
+          "triggerChanceFixed": null,
+          "triggerEvent": "after-basic-attack"
+        }
+      ],
+      "tags": [
+        "COMMAND_AUGMENTATION",
+        "PHYSICAL_DAMAGE"
+      ],
+      "unlockStarRank": 6,
+      "unresolvedQuestions": [],
+      "verification": {
+        "capturedAt": "2026-06-25",
+        "gameVersion": "26.6.53509",
+        "reviewedManually": true,
+        "source": "Venator Feral Precision screenshot",
+        "status": "screenshot-verified"
+      }
+    },
+    {
+      "abilityClass": "passive",
+      "augmentations": [],
+      "dragonId": "venator",
+      "evidenceIds": [
+        "venator-armor-break-2026-06-25"
+      ],
+      "glossaryEntries": [],
+      "id": "venator-armor-break",
+      "kind": "habit",
+      "minimumDragonLevel": null,
+      "name": "Armor Break",
+      "positionRequirement": null,
+      "powerByHabitLevel": [
+        {
+          "level": 1,
+          "unit": "power",
+          "value": 420
+        },
+        {
+          "level": 2,
+          "unit": "power",
+          "value": 920
+        },
+        {
+          "level": 3,
+          "unit": "power",
+          "value": 1500
+        },
+        {
+          "level": 4,
+          "unit": "power",
+          "value": 2200
+        },
+        {
+          "level": 5,
+          "unit": "power",
+          "value": 3100
+        }
+      ],
+      "rawDescription": "Start of Combat until end of combat: increase Physical Damage Received by one opposing enemy. Opposing-position is provisionally normalized to same-lane enemy for formation compatibility.",
+      "schedules": [
+        {
+          "activationRoll": null,
+          "attempts": null,
+          "battleContext": "unspecified",
+          "conditions": [],
+          "effects": [
+            {
+              "activationRoll": null,
+              "calculated": false,
+              "casterEligibility": "unknown",
+              "conditionalMultipliers": [],
+              "conditions": [],
+              "directlyVerified": true,
+              "duration": "Until end of combat",
+              "durationRounds": null,
+              "excludes": [],
+              "id": "armor-break-physical-received",
+              "includesCaster": null,
+              "magnitude": null,
+              "notes": [],
+              "perTargetEffectCheck": null,
+              "rankedValues": [
+                {
+                  "level": 1,
+                  "unit": "percent",
+                  "value": 8
+                },
+                {
+                  "level": 2,
+                  "unit": "percent",
+                  "value": 9.6
+                },
+                {
+                  "level": 3,
+                  "unit": "percent",
+                  "value": 11.2
+                },
+                {
+                  "level": 4,
+                  "unit": "percent",
+                  "value": 13.6
+                },
+                {
+                  "level": 5,
+                  "unit": "percent",
+                  "value": 16
+                }
+              ],
+              "scaling": [],
+              "sourceScope": "unknown",
+              "stack": null,
+              "stackTransitionTrigger": null,
+              "target": "1 opposing enemy",
+              "targetCount": null,
+              "targetPriority": "opposing-position",
+              "targetScope": "opposing-position",
+              "targetSelection": {
+                "comparisonDirection": null,
+                "comparisonPool": null,
+                "comparisonStat": null,
+                "distinctness": "no-distinctness-requirement",
+                "fallback": null,
+                "preference": null,
+                "references": [
+                  {
+                    "description": "Enemy occupying Venator's lane, retained as provisional interpretation.",
+                    "id": "opposing-position-enemy",
+                    "kind": "opposing-position-enemy",
+                    "referencedEffectId": null
+                  }
+                ],
+                "repeatedInstances": null,
+                "sharedSelectionGroupId": null,
+                "tieBehavior": null
+              },
+              "type": "Physical Damage Received Up",
+              "unit": "percent"
+            }
+          ],
+          "id": "armor-break-start",
+          "repeat": null,
+          "rounds": [],
+          "roundSelector": {
+            "kind": "start-of-combat"
+          },
+          "targetPriority": "any-eligible",
+          "timing": "start-of-combat",
+          "triggerChanceByHabitLevel": [],
+          "triggerChanceFixed": null,
+          "triggerEvent": "start-of-combat"
+        }
+      ],
+      "tags": [
+        "PHYSICAL_DAMAGE_UP"
+      ],
+      "unlockStarRank": 8,
+      "unresolvedQuestions": [
+        "Opposing-position interpretation retained as provisional."
+      ],
+      "verification": {
+        "capturedAt": "2026-06-25",
+        "gameVersion": "26.6.53509",
+        "reviewedManually": true,
+        "source": "Venator Armor Break screenshot",
+        "status": "screenshot-verified"
+      }
+    },
+    {
+      "abilityClass": "passive",
+      "augmentations": [],
+      "dragonId": "venator",
+      "evidenceIds": [
+        "venator-desperate-ambush-2026-06-25"
+      ],
+      "glossaryEntries": [
+        {
+          "definition": "Prevents Active Commands and Habits, but does not prevent Basic Attacks.",
+          "term": "Overwhelm"
+        }
+      ],
+      "id": "venator-desperate-ambush",
+      "kind": "habit",
+      "minimumDragonLevel": null,
+      "name": "Desperate Ambush",
+      "positionRequirement": null,
+      "powerByHabitLevel": [
+        {
+          "level": 1,
+          "unit": "power",
+          "value": 430
+        },
+        {
+          "level": 2,
+          "unit": "power",
+          "value": 1000
+        },
+        {
+          "level": 3,
+          "unit": "power",
+          "value": 1700
+        },
+        {
+          "level": 4,
+          "unit": "power",
+          "value": 2700
+        },
+        {
+          "level": 5,
+          "unit": "power",
+          "value": 4000
+        }
+      ],
+      "rawDescription": "Each round, when Venator is strictly below 50% Troop Capacity: select one enemy, preferring Hunter breed, deal Physical Damage, then attempt Overwhelm on that same selected target for two rounds.",
+      "schedules": [
+        {
+          "activationRoll": null,
+          "attempts": null,
+          "battleContext": "unspecified",
+          "conditions": [
+            {
+              "battleContext": null,
+              "comparison": "below",
+              "description": "Venator is strictly below 50% Troop Capacity.",
+              "id": "self-strictly-below-50-troops",
+              "kind": "target-below-troop-capacity-threshold",
+              "statusId": null,
+              "subject": "self",
+              "thresholdPercent": 50,
+              "unresolved": false
+            }
+          ],
+          "effects": [
+            {
+              "activationRoll": null,
+              "calculated": false,
+              "casterEligibility": "unknown",
+              "conditionalMultipliers": [],
+              "conditions": [
+                {
+                  "battleContext": null,
+                  "comparison": "below",
+                  "description": "Venator is strictly below 50% Troop Capacity.",
+                  "id": "self-strictly-below-50-troops",
+                  "kind": "target-below-troop-capacity-threshold",
+                  "statusId": null,
+                  "subject": "self",
+                  "thresholdPercent": 50,
+                  "unresolved": false
+                }
+              ],
+              "directlyVerified": true,
+              "duration": null,
+              "durationRounds": null,
+              "excludes": [],
+              "id": "desperate-ambush-physical",
+              "includesCaster": null,
+              "magnitude": null,
+              "notes": [],
+              "perTargetEffectCheck": null,
+              "rankedValues": [
+                {
+                  "level": 1,
+                  "unit": "percent",
+                  "value": 60
+                },
+                {
+                  "level": 2,
+                  "unit": "percent",
+                  "value": 78
+                },
+                {
+                  "level": 3,
+                  "unit": "percent",
+                  "value": 96
+                },
+                {
+                  "level": 4,
+                  "unit": "percent",
+                  "value": 120
+                },
+                {
+                  "level": 5,
+                  "unit": "percent",
+                  "value": 150
+                }
+              ],
+              "scaling": [
+                "attacker Strength"
+              ],
+              "sourceScope": "unknown",
+              "stack": null,
+              "stackTransitionTrigger": null,
+              "target": "1 Enemy, prioritizing Hunter breed",
+              "targetCount": null,
+              "targetPriority": "prefer-hunter",
+              "targetScope": "any-lane",
+              "targetSelection": {
+                "comparisonDirection": null,
+                "comparisonPool": null,
+                "comparisonStat": null,
+                "distinctness": "unknown",
+                "fallback": "another eligible enemy",
+                "preference": "Hunter breed",
+                "references": [],
+                "repeatedInstances": null,
+                "sharedSelectionGroupId": "desperate-ambush-target",
+                "tieBehavior": null
+              },
+              "type": "Physical Damage",
+              "unit": "rate"
+            },
+            {
+              "activationRoll": {
+                "chanceByHabitLevel": [
+                  {
+                    "level": 1,
+                    "unit": "percent",
+                    "value": 12
+                  },
+                  {
+                    "level": 2,
+                    "unit": "percent",
+                    "value": 15.6
+                  },
+                  {
+                    "level": 3,
+                    "unit": "percent",
+                    "value": 19.2
+                  },
+                  {
+                    "level": 4,
+                    "unit": "percent",
+                    "value": 24
+                  },
+                  {
+                    "level": 5,
+                    "unit": "percent",
+                    "value": 30
+                  }
+                ],
+                "chanceFixed": null,
+                "description": "Overwhelm chance applies to the same target damaged by this activation.",
+                "scope": "effect",
+                "targetStatusConditionalChances": [],
+                "unresolved": false
+              },
+              "calculated": false,
+              "casterEligibility": "unknown",
+              "conditionalMultipliers": [],
+              "conditions": [
+                {
+                  "battleContext": null,
+                  "comparison": "below",
+                  "description": "Venator is strictly below 50% Troop Capacity.",
+                  "id": "self-strictly-below-50-troops",
+                  "kind": "target-below-troop-capacity-threshold",
+                  "statusId": null,
+                  "subject": "self",
+                  "thresholdPercent": 50,
+                  "unresolved": false
+                }
+              ],
+              "directlyVerified": true,
+              "duration": null,
+              "durationRounds": 2,
+              "excludes": [],
+              "id": "desperate-ambush-overwhelm",
+              "includesCaster": null,
+              "magnitude": null,
+              "notes": [],
+              "perTargetEffectCheck": null,
+              "rankedValues": [
+                {
+                  "level": 1,
+                  "unit": "percent",
+                  "value": 12
+                },
+                {
+                  "level": 2,
+                  "unit": "percent",
+                  "value": 15.6
+                },
+                {
+                  "level": 3,
+                  "unit": "percent",
+                  "value": 19.2
+                },
+                {
+                  "level": 4,
+                  "unit": "percent",
+                  "value": 24
+                },
+                {
+                  "level": 5,
+                  "unit": "percent",
+                  "value": 30
+                }
+              ],
+              "scaling": [],
+              "sourceScope": "unknown",
+              "stack": null,
+              "stackTransitionTrigger": null,
+              "target": "Same selected target damaged by Desperate Ambush",
+              "targetCount": null,
+              "targetPriority": "any-eligible",
+              "targetScope": "any-lane",
+              "targetSelection": {
+                "comparisonDirection": null,
+                "comparisonPool": null,
+                "comparisonStat": null,
+                "distinctness": "same-target-required",
+                "fallback": null,
+                "preference": null,
+                "references": [
+                  {
+                    "description": "Overwhelm uses the damage target.",
+                    "id": "desperate-ambush-damage-target",
+                    "kind": "same-target-as-effect",
+                    "referencedEffectId": "desperate-ambush-physical"
+                  }
+                ],
+                "repeatedInstances": null,
+                "sharedSelectionGroupId": "desperate-ambush-target",
+                "tieBehavior": null
+              },
+              "type": "Overwhelm",
+              "unit": "unknown"
+            }
+          ],
+          "id": "desperate-ambush-each-round",
+          "repeat": null,
+          "rounds": [],
+          "roundSelector": {
+            "kind": "each-round"
+          },
+          "targetPriority": "any-eligible",
+          "timing": "each-round",
+          "triggerChanceByHabitLevel": [],
+          "triggerChanceFixed": null,
+          "triggerEvent": "each-round"
+        }
+      ],
+      "tags": [
+        "PHYSICAL_DAMAGE",
+        "OVERWHELM",
+        "CONTROL"
+      ],
+      "unlockStarRank": 10,
+      "unresolvedQuestions": [
+        "Exactly 50% Troop Capacity behavior."
+      ],
+      "verification": {
+        "capturedAt": "2026-06-25",
+        "gameVersion": "26.6.53509",
+        "reviewedManually": true,
+        "source": "Venator Desperate Ambush screenshot",
+        "status": "screenshot-verified"
+      }
+    }
+  ],
   "id": "venator",
   "isNew": false,
-  "lastVerified": "2026-06-23",
-  "manualReviewReferences": [],
-  "modifierCapabilities": [],
-  "modifierRoles": [],
+  "lastVerified": "2026-06-25",
+  "manualReviewReferences": [
+    {
+      "dragonId": "venator",
+      "evidenceIds": [
+        "venator-main-screen-2026-06-25",
+        "venator-feral-strike-summary-2026-06-25",
+        "venator-warriors-zeal-2026-06-25",
+        "venator-hunters-bane-2026-06-25",
+        "venator-dragons-might-2026-06-25",
+        "venator-feral-precision-2026-06-25",
+        "venator-armor-break-2026-06-25",
+        "venator-desperate-ambush-2026-06-25"
+      ],
+      "id": "venator-combat-data-review-2026-06-25",
+      "notes": [
+        "Venator command, trait, affinities, observation state, and five Habits were normalized from screenshot evidence.",
+        "Feral Strike stores two independently targeted Physical Damage instances and allows the same enemy to receive both.",
+        "Feral Precision is modeled as a Double-Strike chance override on rounds 4, 6, and 8, not a second roll.",
+        "Armor Break opposing-position targeting is retained as provisional and normalized to same-lane compatibility."
+      ],
+      "reviewedAgainstGameBuild": "26.6.53509",
+      "reviewedAt": "2026-06-25",
+      "reviewer": "repository-owner",
+      "scope": "habits",
+      "status": "confirmed"
+    }
+  ],
+  "modifierCapabilities": [
+    {
+      "abilityId": "venator-warriors-zeal",
+      "abilityName": "Warrior's Zeal",
+      "availability": {
+        "canonical": "canonical-base",
+        "notes": [
+          "Requires Dragon Level 16+.",
+          "Not collected in observed account."
+        ],
+        "observedAccount": "observed-unavailable",
+        "reportLabel": "Base kit; Level 16+; not collected in observed account",
+        "userRoster": "unknown"
+      },
+      "channel": "physical-damage",
+      "combatLogConfirmed": false,
+      "conditional": false,
+      "conditions": [],
+      "confidence": "confirmed",
+      "currentlyAvailable": true,
+      "damageScope": null,
+      "direction": "dealt",
+      "directlyVerified": true,
+      "dragonId": "venator",
+      "evidenceIds": [
+        "venator-warriors-zeal-2026-06-25"
+      ],
+      "futureAvailable": false,
+      "id": "venator-warriors-zeal-warriors-zeal-command-habit-physical-physical-damage-dealt-modifier",
+      "label": "Warrior's Zeal: Physical Damage Dealt Up",
+      "minimumDragonLevel": 16,
+      "operation": "increase",
+      "providerRequirements": [
+        {
+          "evidenceIds": [
+            "venator-warriors-zeal-2026-06-25"
+          ],
+          "expected": "vanguard",
+          "id": "venator-warriors-zeal-provider-position-vanguard",
+          "kind": "provider-position",
+          "label": "Provider position requirement"
+        }
+      ],
+      "rankedValues": [],
+      "recipientRequirements": [],
+      "requiredHabitLevel": null,
+      "role": "self-amplification",
+      "sourceScope": "commands-and-habits",
+      "stackMaximum": null,
+      "targetSelector": {
+        "count": null,
+        "includesCaster": null,
+        "position": null,
+        "scope": "self",
+        "selection": "self",
+        "selectionStat": null,
+        "side": "self"
+      },
+      "unit": "percent",
+      "unlockStarRank": 1,
+      "value": 16,
+      "valuePerStack": null
+    },
+    {
+      "abilityId": "venator-warriors-zeal",
+      "abilityName": "Warrior's Zeal",
+      "availability": {
+        "canonical": "canonical-base",
+        "notes": [
+          "Requires Dragon Level 16+.",
+          "Not collected in observed account."
+        ],
+        "observedAccount": "observed-unavailable",
+        "reportLabel": "Base kit; Level 16+; not collected in observed account",
+        "userRoster": "unknown"
+      },
+      "channel": "stat",
+      "combatLogConfirmed": false,
+      "conditional": false,
+      "conditions": [],
+      "confidence": "confirmed",
+      "currentlyAvailable": true,
+      "damageScope": null,
+      "direction": "dealt",
+      "directlyVerified": true,
+      "dragonId": "venator",
+      "evidenceIds": [
+        "venator-warriors-zeal-2026-06-25"
+      ],
+      "futureAvailable": false,
+      "id": "venator-warriors-zeal-warriors-zeal-left-instinct-stat-dealt-modifier",
+      "label": "Warrior's Zeal: Instinct Up",
+      "minimumDragonLevel": 16,
+      "operation": "increase",
+      "providerRequirements": [
+        {
+          "evidenceIds": [
+            "venator-warriors-zeal-2026-06-25"
+          ],
+          "expected": "vanguard",
+          "id": "venator-warriors-zeal-provider-position-vanguard",
+          "kind": "provider-position",
+          "label": "Provider position requirement"
+        }
+      ],
+      "rankedValues": [],
+      "recipientRequirements": [],
+      "requiredHabitLevel": null,
+      "role": "ally-support",
+      "sourceScope": "unknown",
+      "stackMaximum": null,
+      "targetSelector": {
+        "count": null,
+        "includesCaster": null,
+        "position": "left-flank",
+        "scope": "left-flank",
+        "selection": "specific-position",
+        "selectionStat": null,
+        "side": "ally"
+      },
+      "unit": "flat",
+      "unlockStarRank": 1,
+      "value": 20,
+      "valuePerStack": null
+    },
+    {
+      "abilityId": "venator-warriors-zeal",
+      "abilityName": "Warrior's Zeal",
+      "availability": {
+        "canonical": "canonical-base",
+        "notes": [
+          "Requires Dragon Level 16+.",
+          "Not collected in observed account."
+        ],
+        "observedAccount": "observed-unavailable",
+        "reportLabel": "Base kit; Level 16+; not collected in observed account",
+        "userRoster": "unknown"
+      },
+      "channel": "stat",
+      "combatLogConfirmed": false,
+      "conditional": false,
+      "conditions": [],
+      "confidence": "confirmed",
+      "currentlyAvailable": true,
+      "damageScope": null,
+      "direction": "dealt",
+      "directlyVerified": true,
+      "dragonId": "venator",
+      "evidenceIds": [
+        "venator-warriors-zeal-2026-06-25"
+      ],
+      "futureAvailable": false,
+      "id": "venator-warriors-zeal-warriors-zeal-left-initiative-stat-dealt-modifier",
+      "label": "Warrior's Zeal: Initiative Up",
+      "minimumDragonLevel": 16,
+      "operation": "increase",
+      "providerRequirements": [
+        {
+          "evidenceIds": [
+            "venator-warriors-zeal-2026-06-25"
+          ],
+          "expected": "vanguard",
+          "id": "venator-warriors-zeal-provider-position-vanguard",
+          "kind": "provider-position",
+          "label": "Provider position requirement"
+        }
+      ],
+      "rankedValues": [],
+      "recipientRequirements": [],
+      "requiredHabitLevel": null,
+      "role": "ally-support",
+      "sourceScope": "unknown",
+      "stackMaximum": null,
+      "targetSelector": {
+        "count": null,
+        "includesCaster": null,
+        "position": "left-flank",
+        "scope": "left-flank",
+        "selection": "specific-position",
+        "selectionStat": null,
+        "side": "ally"
+      },
+      "unit": "flat",
+      "unlockStarRank": 1,
+      "value": 20,
+      "valuePerStack": null
+    },
+    {
+      "abilityId": "venator-hunters-bane",
+      "abilityName": "Hunter's Bane",
+      "availability": {
+        "canonical": "canonical-locked",
+        "notes": [
+          "Future at Star Rank 2.",
+          "Not collected in observed account."
+        ],
+        "observedAccount": "observed-unavailable",
+        "reportLabel": "Future at Star Rank 2; not collected in observed account",
+        "userRoster": "unknown"
+      },
+      "channel": "stat",
+      "combatLogConfirmed": false,
+      "conditional": true,
+      "conditions": [],
+      "confidence": "confirmed",
+      "currentlyAvailable": false,
+      "damageScope": null,
+      "direction": "dealt",
+      "directlyVerified": true,
+      "dragonId": "venator",
+      "evidenceIds": [
+        "venator-hunters-bane-2026-06-25"
+      ],
+      "futureAvailable": true,
+      "id": "venator-hunters-bane-hunters-bane-intelligence-down-stat-dealt-modifier",
+      "label": "Hunter's Bane: Intelligence Down",
+      "minimumDragonLevel": null,
+      "operation": "decrease",
+      "providerRequirements": [],
+      "rankedValues": [
+        {
+          "level": 1,
+          "unit": "percent",
+          "value": 30
+        },
+        {
+          "level": 2,
+          "unit": "percent",
+          "value": 36
+        },
+        {
+          "level": 3,
+          "unit": "percent",
+          "value": 42
+        },
+        {
+          "level": 4,
+          "unit": "percent",
+          "value": 51
+        },
+        {
+          "level": 5,
+          "unit": "percent",
+          "value": 60
+        }
+      ],
+      "recipientRequirements": [],
+      "requiredHabitLevel": 1,
+      "role": "enemy-debuff",
+      "sourceScope": "unknown",
+      "stackMaximum": null,
+      "targetSelector": {
+        "count": 1,
+        "includesCaster": null,
+        "position": null,
+        "scope": "any-lane",
+        "selection": "any",
+        "selectionStat": null,
+        "side": "enemy"
+      },
+      "unit": "percent",
+      "unlockStarRank": 2,
+      "value": null,
+      "valuePerStack": null
+    },
+    {
+      "abilityId": "venator-dragons-might",
+      "abilityName": "Dragon's Might",
+      "availability": {
+        "canonical": "canonical-locked",
+        "notes": [
+          "Future at Star Rank 4.",
+          "Not collected in observed account."
+        ],
+        "observedAccount": "observed-unavailable",
+        "reportLabel": "Future at Star Rank 4; not collected in observed account",
+        "userRoster": "unknown"
+      },
+      "channel": "physical-damage",
+      "combatLogConfirmed": false,
+      "conditional": true,
+      "conditions": [],
+      "confidence": "confirmed",
+      "currentlyAvailable": false,
+      "damageScope": null,
+      "direction": "dealt",
+      "directlyVerified": true,
+      "dragonId": "venator",
+      "evidenceIds": [
+        "venator-dragons-might-2026-06-25"
+      ],
+      "futureAvailable": true,
+      "id": "venator-dragons-might-dragons-might-physical-physical-damage-dealt-modifier",
+      "label": "Dragon's Might: Physical Damage Dealt Up",
+      "minimumDragonLevel": null,
+      "operation": "increase",
+      "providerRequirements": [],
+      "rankedValues": [
+        {
+          "level": 1,
+          "unit": "percent",
+          "value": 12.5
+        },
+        {
+          "level": 2,
+          "unit": "percent",
+          "value": 15
+        },
+        {
+          "level": 3,
+          "unit": "percent",
+          "value": 17.5
+        },
+        {
+          "level": 4,
+          "unit": "percent",
+          "value": 21.25
+        },
+        {
+          "level": 5,
+          "unit": "percent",
+          "value": 25
+        }
+      ],
+      "recipientRequirements": [],
+      "requiredHabitLevel": 1,
+      "role": "self-amplification",
+      "sourceScope": "non-basic-attacks",
+      "stackMaximum": null,
+      "targetSelector": {
+        "count": null,
+        "includesCaster": null,
+        "position": null,
+        "scope": "self",
+        "selection": "self",
+        "selectionStat": null,
+        "side": "self"
+      },
+      "unit": "percent",
+      "unlockStarRank": 4,
+      "value": null,
+      "valuePerStack": null
+    },
+    {
+      "abilityId": "venator-armor-break",
+      "abilityName": "Armor Break",
+      "availability": {
+        "canonical": "canonical-locked",
+        "notes": [
+          "Future at Star Rank 8.",
+          "Not collected in observed account."
+        ],
+        "observedAccount": "observed-unavailable",
+        "reportLabel": "Future at Star Rank 8; not collected in observed account",
+        "userRoster": "unknown"
+      },
+      "channel": "physical-damage",
+      "combatLogConfirmed": false,
+      "conditional": true,
+      "conditions": [],
+      "confidence": "confirmed",
+      "currentlyAvailable": false,
+      "damageScope": "physical",
+      "direction": "received",
+      "directlyVerified": true,
+      "dragonId": "venator",
+      "evidenceIds": [
+        "venator-armor-break-2026-06-25"
+      ],
+      "futureAvailable": true,
+      "id": "venator-armor-break-armor-break-physical-received-physical-damage-received-modifier",
+      "label": "Armor Break: Physical Damage Received Up",
+      "minimumDragonLevel": null,
+      "operation": "increase",
+      "providerRequirements": [],
+      "rankedValues": [
+        {
+          "level": 1,
+          "unit": "percent",
+          "value": 8
+        },
+        {
+          "level": 2,
+          "unit": "percent",
+          "value": 9.6
+        },
+        {
+          "level": 3,
+          "unit": "percent",
+          "value": 11.2
+        },
+        {
+          "level": 4,
+          "unit": "percent",
+          "value": 13.6
+        },
+        {
+          "level": 5,
+          "unit": "percent",
+          "value": 16
+        }
+      ],
+      "recipientRequirements": [],
+      "requiredHabitLevel": 1,
+      "role": "enemy-debuff",
+      "sourceScope": "unknown",
+      "stackMaximum": null,
+      "targetSelector": {
+        "count": 1,
+        "includesCaster": null,
+        "position": null,
+        "scope": "same-lane",
+        "selection": "specific-position",
+        "selectionStat": null,
+        "side": "enemy"
+      },
+      "unit": "percent",
+      "unlockStarRank": 8,
+      "value": null,
+      "valuePerStack": null
+    }
+  ],
+  "modifierRoles": [
+    "ally-support",
+    "enemy-debuff",
+    "self-amplification"
+  ],
   "name": "Venator",
   "notes": null,
-  "observationSnapshots": [],
+  "observationSnapshots": [
+    {
+      "canonical": false,
+      "capturedAt": "2026-06-25",
+      "collection": {
+        "shardsCurrent": 0,
+        "shardsRequired": null,
+        "state": "not-collected"
+      },
+      "combatStats": {
+        "initiative": null,
+        "instinct": null,
+        "intelligence": null,
+        "strength": null
+      },
+      "displayState": "Not Discovered",
+      "dragonId": "venator",
+      "dragonLevel": null,
+      "dragonPower": 0,
+      "evidenceIds": [
+        "venator-main-screen-2026-06-25"
+      ],
+      "gameVersion": "26.6.53509",
+      "id": "venator-main-screen-2026-06-25",
+      "marchSpeed": null,
+      "modifierContextKnown": false,
+      "sourceScope": "noncanonical-account-observation",
+      "staminaCurrent": null,
+      "staminaMaximum": null,
+      "starRank": null,
+      "troopCapacity": 1450
+    }
+  ],
   "officialProfileUrl": "https://gotdragonfire.com/dragons/venator/",
-  "outputCapabilities": [],
+  "outputCapabilities": [
+    {
+      "abilityId": "venator-feral-strike",
+      "abilityName": "Feral Strike",
+      "availability": {
+        "canonical": "canonical-base",
+        "notes": [
+          "Not collected in observed account."
+        ],
+        "observedAccount": "observed-unavailable",
+        "reportLabel": "Base kit; not collected in observed account",
+        "userRoster": "unknown"
+      },
+      "channel": "physical-damage",
+      "combatLogConfirmed": false,
+      "conditional": false,
+      "conditions": [],
+      "confidence": "confirmed",
+      "currentlyAvailable": true,
+      "dependencies": [
+        {
+          "notes": [
+            "Effect wording indicates scaling with Strength."
+          ],
+          "statId": "strength",
+          "type": "scales-with-stat"
+        },
+        {
+          "notes": [
+            "Physical Damage is reduced by target Instinct."
+          ],
+          "statId": "instinct",
+          "type": "mitigated-by-target-stat"
+        }
+      ],
+      "directlyVerified": true,
+      "dragonId": "venator",
+      "evidenceIds": [
+        "venator-feral-strike-summary-2026-06-25"
+      ],
+      "futureAvailable": false,
+      "id": "venator-feral-strike-feral-strike-physical-instances-output",
+      "label": "Feral Strike: Physical Damage",
+      "minimumDragonLevel": null,
+      "requiredHabitLevel": null,
+      "sourceKind": "command",
+      "sourceScope": "commands",
+      "targetCount": 1,
+      "targetScope": "any-lane",
+      "targetSide": "enemy",
+      "unlockStarRank": null
+    },
+    {
+      "abilityId": "venator-feral-precision",
+      "abilityName": "Feral Precision",
+      "availability": {
+        "canonical": "canonical-locked",
+        "notes": [
+          "Future at Star Rank 6.",
+          "Not collected in observed account."
+        ],
+        "observedAccount": "observed-unavailable",
+        "reportLabel": "Future at Star Rank 6; not collected in observed account",
+        "userRoster": "unknown"
+      },
+      "channel": "physical-damage",
+      "combatLogConfirmed": false,
+      "conditional": true,
+      "conditions": [],
+      "confidence": "confirmed",
+      "currentlyAvailable": false,
+      "dependencies": [
+        {
+          "notes": [
+            "Effect wording indicates scaling with Strength."
+          ],
+          "statId": "strength",
+          "type": "scales-with-stat"
+        },
+        {
+          "notes": [
+            "Physical Damage is reduced by target Instinct."
+          ],
+          "statId": "instinct",
+          "type": "mitigated-by-target-stat"
+        }
+      ],
+      "directlyVerified": true,
+      "dragonId": "venator",
+      "evidenceIds": [
+        "venator-feral-precision-2026-06-25"
+      ],
+      "futureAvailable": true,
+      "id": "venator-feral-precision-feral-precision-additional-physical-output",
+      "label": "Feral Precision: Physical Damage",
+      "minimumDragonLevel": null,
+      "requiredHabitLevel": 1,
+      "sourceKind": "habit",
+      "sourceScope": "habits",
+      "targetCount": null,
+      "targetScope": "any-lane",
+      "targetSide": "enemy",
+      "unlockStarRank": 6
+    },
+    {
+      "abilityId": "venator-desperate-ambush",
+      "abilityName": "Desperate Ambush",
+      "availability": {
+        "canonical": "canonical-locked",
+        "notes": [
+          "Future at Star Rank 10.",
+          "Not collected in observed account."
+        ],
+        "observedAccount": "observed-unavailable",
+        "reportLabel": "Future at Star Rank 10; not collected in observed account",
+        "userRoster": "unknown"
+      },
+      "channel": "physical-damage",
+      "combatLogConfirmed": false,
+      "conditional": true,
+      "conditions": [
+        {
+          "comparison": "below",
+          "description": "Venator is strictly below 50% Troop Capacity.",
+          "evidenceIds": [],
+          "id": "self-strictly-below-50-troops",
+          "kind": "target-below-troop-capacity-threshold",
+          "label": "Venator is strictly below 50% Troop Capacity.",
+          "subject": "self",
+          "thresholdPercent": 50,
+          "unresolved": false
+        }
+      ],
+      "confidence": "confirmed",
+      "currentlyAvailable": false,
+      "dependencies": [
+        {
+          "notes": [
+            "Effect wording indicates scaling with Strength."
+          ],
+          "statId": "strength",
+          "type": "scales-with-stat"
+        },
+        {
+          "notes": [
+            "Physical Damage is reduced by target Instinct."
+          ],
+          "statId": "instinct",
+          "type": "mitigated-by-target-stat"
+        }
+      ],
+      "directlyVerified": true,
+      "dragonId": "venator",
+      "evidenceIds": [
+        "venator-desperate-ambush-2026-06-25"
+      ],
+      "futureAvailable": true,
+      "id": "venator-desperate-ambush-desperate-ambush-physical-output",
+      "label": "Desperate Ambush: Physical Damage",
+      "minimumDragonLevel": null,
+      "requiredHabitLevel": 1,
+      "sourceKind": "habit",
+      "sourceScope": "habits",
+      "targetCount": 1,
+      "targetScope": "any-lane",
+      "targetSide": "enemy",
+      "unlockStarRank": 10
+    }
+  ],
   "periodicDamage": [],
-  "profileCompleteness": "metadata-only",
-  "rankedValues": [],
+  "profileCompleteness": "detailed-combat-data",
+  "rankedValues": [
+    {
+      "abilityId": "venator-hunters-bane",
+      "rankedValue": {
+        "level": 1,
+        "unit": "power",
+        "value": 420
+      },
+      "source": "powerByHabitLevel"
+    },
+    {
+      "abilityId": "venator-hunters-bane",
+      "rankedValue": {
+        "level": 2,
+        "unit": "power",
+        "value": 920
+      },
+      "source": "powerByHabitLevel"
+    },
+    {
+      "abilityId": "venator-hunters-bane",
+      "rankedValue": {
+        "level": 3,
+        "unit": "power",
+        "value": 1500
+      },
+      "source": "powerByHabitLevel"
+    },
+    {
+      "abilityId": "venator-hunters-bane",
+      "rankedValue": {
+        "level": 4,
+        "unit": "power",
+        "value": 2200
+      },
+      "source": "powerByHabitLevel"
+    },
+    {
+      "abilityId": "venator-hunters-bane",
+      "rankedValue": {
+        "level": 5,
+        "unit": "power",
+        "value": 3100
+      },
+      "source": "powerByHabitLevel"
+    },
+    {
+      "abilityId": "venator-hunters-bane",
+      "effectId": "hunters-bane-intelligence-down",
+      "rankedValue": {
+        "level": 1,
+        "unit": "percent",
+        "value": 30
+      },
+      "scheduleId": "hunters-bane-start",
+      "source": "effect.rankedValues"
+    },
+    {
+      "abilityId": "venator-hunters-bane",
+      "effectId": "hunters-bane-intelligence-down",
+      "rankedValue": {
+        "level": 2,
+        "unit": "percent",
+        "value": 36
+      },
+      "scheduleId": "hunters-bane-start",
+      "source": "effect.rankedValues"
+    },
+    {
+      "abilityId": "venator-hunters-bane",
+      "effectId": "hunters-bane-intelligence-down",
+      "rankedValue": {
+        "level": 3,
+        "unit": "percent",
+        "value": 42
+      },
+      "scheduleId": "hunters-bane-start",
+      "source": "effect.rankedValues"
+    },
+    {
+      "abilityId": "venator-hunters-bane",
+      "effectId": "hunters-bane-intelligence-down",
+      "rankedValue": {
+        "level": 4,
+        "unit": "percent",
+        "value": 51
+      },
+      "scheduleId": "hunters-bane-start",
+      "source": "effect.rankedValues"
+    },
+    {
+      "abilityId": "venator-hunters-bane",
+      "effectId": "hunters-bane-intelligence-down",
+      "rankedValue": {
+        "level": 5,
+        "unit": "percent",
+        "value": 60
+      },
+      "scheduleId": "hunters-bane-start",
+      "source": "effect.rankedValues"
+    },
+    {
+      "abilityId": "venator-dragons-might",
+      "rankedValue": {
+        "level": 1,
+        "unit": "power",
+        "value": 420
+      },
+      "source": "powerByHabitLevel"
+    },
+    {
+      "abilityId": "venator-dragons-might",
+      "rankedValue": {
+        "level": 2,
+        "unit": "power",
+        "value": 920
+      },
+      "source": "powerByHabitLevel"
+    },
+    {
+      "abilityId": "venator-dragons-might",
+      "rankedValue": {
+        "level": 3,
+        "unit": "power",
+        "value": 1500
+      },
+      "source": "powerByHabitLevel"
+    },
+    {
+      "abilityId": "venator-dragons-might",
+      "rankedValue": {
+        "level": 4,
+        "unit": "power",
+        "value": 2200
+      },
+      "source": "powerByHabitLevel"
+    },
+    {
+      "abilityId": "venator-dragons-might",
+      "rankedValue": {
+        "level": 5,
+        "unit": "power",
+        "value": 3100
+      },
+      "source": "powerByHabitLevel"
+    },
+    {
+      "abilityId": "venator-dragons-might",
+      "effectId": "dragons-might-physical",
+      "rankedValue": {
+        "level": 1,
+        "unit": "percent",
+        "value": 12.5
+      },
+      "scheduleId": "dragons-might-start",
+      "source": "effect.rankedValues"
+    },
+    {
+      "abilityId": "venator-dragons-might",
+      "effectId": "dragons-might-physical",
+      "rankedValue": {
+        "level": 2,
+        "unit": "percent",
+        "value": 15
+      },
+      "scheduleId": "dragons-might-start",
+      "source": "effect.rankedValues"
+    },
+    {
+      "abilityId": "venator-dragons-might",
+      "effectId": "dragons-might-physical",
+      "rankedValue": {
+        "level": 3,
+        "unit": "percent",
+        "value": 17.5
+      },
+      "scheduleId": "dragons-might-start",
+      "source": "effect.rankedValues"
+    },
+    {
+      "abilityId": "venator-dragons-might",
+      "effectId": "dragons-might-physical",
+      "rankedValue": {
+        "level": 4,
+        "unit": "percent",
+        "value": 21.25
+      },
+      "scheduleId": "dragons-might-start",
+      "source": "effect.rankedValues"
+    },
+    {
+      "abilityId": "venator-dragons-might",
+      "effectId": "dragons-might-physical",
+      "rankedValue": {
+        "level": 5,
+        "unit": "percent",
+        "value": 25
+      },
+      "scheduleId": "dragons-might-start",
+      "source": "effect.rankedValues"
+    },
+    {
+      "abilityId": "venator-feral-precision",
+      "rankedValue": {
+        "level": 1,
+        "unit": "power",
+        "value": 420
+      },
+      "source": "powerByHabitLevel"
+    },
+    {
+      "abilityId": "venator-feral-precision",
+      "rankedValue": {
+        "level": 2,
+        "unit": "power",
+        "value": 920
+      },
+      "source": "powerByHabitLevel"
+    },
+    {
+      "abilityId": "venator-feral-precision",
+      "rankedValue": {
+        "level": 3,
+        "unit": "power",
+        "value": 1500
+      },
+      "source": "powerByHabitLevel"
+    },
+    {
+      "abilityId": "venator-feral-precision",
+      "rankedValue": {
+        "level": 4,
+        "unit": "power",
+        "value": 2200
+      },
+      "source": "powerByHabitLevel"
+    },
+    {
+      "abilityId": "venator-feral-precision",
+      "rankedValue": {
+        "level": 5,
+        "unit": "power",
+        "value": 3100
+      },
+      "source": "powerByHabitLevel"
+    },
+    {
+      "abilityId": "venator-feral-precision",
+      "effectId": "feral-precision-additional-physical",
+      "rankedValue": {
+        "level": 1,
+        "unit": "percent",
+        "value": 20
+      },
+      "scheduleId": "feral-precision-after-basic",
+      "source": "effect.rankedValues"
+    },
+    {
+      "abilityId": "venator-feral-precision",
+      "effectId": "feral-precision-additional-physical",
+      "rankedValue": {
+        "level": 2,
+        "unit": "percent",
+        "value": 24
+      },
+      "scheduleId": "feral-precision-after-basic",
+      "source": "effect.rankedValues"
+    },
+    {
+      "abilityId": "venator-feral-precision",
+      "effectId": "feral-precision-additional-physical",
+      "rankedValue": {
+        "level": 3,
+        "unit": "percent",
+        "value": 28
+      },
+      "scheduleId": "feral-precision-after-basic",
+      "source": "effect.rankedValues"
+    },
+    {
+      "abilityId": "venator-feral-precision",
+      "effectId": "feral-precision-additional-physical",
+      "rankedValue": {
+        "level": 4,
+        "unit": "percent",
+        "value": 34
+      },
+      "scheduleId": "feral-precision-after-basic",
+      "source": "effect.rankedValues"
+    },
+    {
+      "abilityId": "venator-feral-precision",
+      "effectId": "feral-precision-additional-physical",
+      "rankedValue": {
+        "level": 5,
+        "unit": "percent",
+        "value": 40
+      },
+      "scheduleId": "feral-precision-after-basic",
+      "source": "effect.rankedValues"
+    },
+    {
+      "abilityId": "venator-armor-break",
+      "rankedValue": {
+        "level": 1,
+        "unit": "power",
+        "value": 420
+      },
+      "source": "powerByHabitLevel"
+    },
+    {
+      "abilityId": "venator-armor-break",
+      "rankedValue": {
+        "level": 2,
+        "unit": "power",
+        "value": 920
+      },
+      "source": "powerByHabitLevel"
+    },
+    {
+      "abilityId": "venator-armor-break",
+      "rankedValue": {
+        "level": 3,
+        "unit": "power",
+        "value": 1500
+      },
+      "source": "powerByHabitLevel"
+    },
+    {
+      "abilityId": "venator-armor-break",
+      "rankedValue": {
+        "level": 4,
+        "unit": "power",
+        "value": 2200
+      },
+      "source": "powerByHabitLevel"
+    },
+    {
+      "abilityId": "venator-armor-break",
+      "rankedValue": {
+        "level": 5,
+        "unit": "power",
+        "value": 3100
+      },
+      "source": "powerByHabitLevel"
+    },
+    {
+      "abilityId": "venator-armor-break",
+      "effectId": "armor-break-physical-received",
+      "rankedValue": {
+        "level": 1,
+        "unit": "percent",
+        "value": 8
+      },
+      "scheduleId": "armor-break-start",
+      "source": "effect.rankedValues"
+    },
+    {
+      "abilityId": "venator-armor-break",
+      "effectId": "armor-break-physical-received",
+      "rankedValue": {
+        "level": 2,
+        "unit": "percent",
+        "value": 9.6
+      },
+      "scheduleId": "armor-break-start",
+      "source": "effect.rankedValues"
+    },
+    {
+      "abilityId": "venator-armor-break",
+      "effectId": "armor-break-physical-received",
+      "rankedValue": {
+        "level": 3,
+        "unit": "percent",
+        "value": 11.2
+      },
+      "scheduleId": "armor-break-start",
+      "source": "effect.rankedValues"
+    },
+    {
+      "abilityId": "venator-armor-break",
+      "effectId": "armor-break-physical-received",
+      "rankedValue": {
+        "level": 4,
+        "unit": "percent",
+        "value": 13.6
+      },
+      "scheduleId": "armor-break-start",
+      "source": "effect.rankedValues"
+    },
+    {
+      "abilityId": "venator-armor-break",
+      "effectId": "armor-break-physical-received",
+      "rankedValue": {
+        "level": 5,
+        "unit": "percent",
+        "value": 16
+      },
+      "scheduleId": "armor-break-start",
+      "source": "effect.rankedValues"
+    },
+    {
+      "abilityId": "venator-desperate-ambush",
+      "rankedValue": {
+        "level": 1,
+        "unit": "power",
+        "value": 430
+      },
+      "source": "powerByHabitLevel"
+    },
+    {
+      "abilityId": "venator-desperate-ambush",
+      "rankedValue": {
+        "level": 2,
+        "unit": "power",
+        "value": 1000
+      },
+      "source": "powerByHabitLevel"
+    },
+    {
+      "abilityId": "venator-desperate-ambush",
+      "rankedValue": {
+        "level": 3,
+        "unit": "power",
+        "value": 1700
+      },
+      "source": "powerByHabitLevel"
+    },
+    {
+      "abilityId": "venator-desperate-ambush",
+      "rankedValue": {
+        "level": 4,
+        "unit": "power",
+        "value": 2700
+      },
+      "source": "powerByHabitLevel"
+    },
+    {
+      "abilityId": "venator-desperate-ambush",
+      "rankedValue": {
+        "level": 5,
+        "unit": "power",
+        "value": 4000
+      },
+      "source": "powerByHabitLevel"
+    },
+    {
+      "abilityId": "venator-desperate-ambush",
+      "effectId": "desperate-ambush-physical",
+      "rankedValue": {
+        "level": 1,
+        "unit": "percent",
+        "value": 60
+      },
+      "scheduleId": "desperate-ambush-each-round",
+      "source": "effect.rankedValues"
+    },
+    {
+      "abilityId": "venator-desperate-ambush",
+      "effectId": "desperate-ambush-physical",
+      "rankedValue": {
+        "level": 2,
+        "unit": "percent",
+        "value": 78
+      },
+      "scheduleId": "desperate-ambush-each-round",
+      "source": "effect.rankedValues"
+    },
+    {
+      "abilityId": "venator-desperate-ambush",
+      "effectId": "desperate-ambush-physical",
+      "rankedValue": {
+        "level": 3,
+        "unit": "percent",
+        "value": 96
+      },
+      "scheduleId": "desperate-ambush-each-round",
+      "source": "effect.rankedValues"
+    },
+    {
+      "abilityId": "venator-desperate-ambush",
+      "effectId": "desperate-ambush-physical",
+      "rankedValue": {
+        "level": 4,
+        "unit": "percent",
+        "value": 120
+      },
+      "scheduleId": "desperate-ambush-each-round",
+      "source": "effect.rankedValues"
+    },
+    {
+      "abilityId": "venator-desperate-ambush",
+      "effectId": "desperate-ambush-physical",
+      "rankedValue": {
+        "level": 5,
+        "unit": "percent",
+        "value": 150
+      },
+      "scheduleId": "desperate-ambush-each-round",
+      "source": "effect.rankedValues"
+    },
+    {
+      "abilityId": "venator-desperate-ambush",
+      "effectId": "desperate-ambush-overwhelm",
+      "rankedValue": {
+        "level": 1,
+        "unit": "percent",
+        "value": 12
+      },
+      "scheduleId": "desperate-ambush-each-round",
+      "source": "effect.rankedValues"
+    },
+    {
+      "abilityId": "venator-desperate-ambush",
+      "effectId": "desperate-ambush-overwhelm",
+      "rankedValue": {
+        "level": 2,
+        "unit": "percent",
+        "value": 15.6
+      },
+      "scheduleId": "desperate-ambush-each-round",
+      "source": "effect.rankedValues"
+    },
+    {
+      "abilityId": "venator-desperate-ambush",
+      "effectId": "desperate-ambush-overwhelm",
+      "rankedValue": {
+        "level": 3,
+        "unit": "percent",
+        "value": 19.2
+      },
+      "scheduleId": "desperate-ambush-each-round",
+      "source": "effect.rankedValues"
+    },
+    {
+      "abilityId": "venator-desperate-ambush",
+      "effectId": "desperate-ambush-overwhelm",
+      "rankedValue": {
+        "level": 4,
+        "unit": "percent",
+        "value": 24
+      },
+      "scheduleId": "desperate-ambush-each-round",
+      "source": "effect.rankedValues"
+    },
+    {
+      "abilityId": "venator-desperate-ambush",
+      "effectId": "desperate-ambush-overwhelm",
+      "rankedValue": {
+        "level": 5,
+        "unit": "percent",
+        "value": 30
+      },
+      "scheduleId": "desperate-ambush-each-round",
+      "source": "effect.rankedValues"
+    }
+  ],
   "rarity": "Legendary",
-  "rawDescriptions": [],
+  "rawDescriptions": [
+    {
+      "abilityId": "venator-feral-strike",
+      "abilityName": "Feral Strike",
+      "kind": "command",
+      "rawDescription": "After each Basic Attack: deal two independently targeted Physical Damage instances. Rounds 4, 6, and 8: 30% chance to gain Double-Strike for two rounds. Classified as Command while preserving Attack Modifier presentation."
+    },
+    {
+      "abilityId": "venator-warriors-zeal",
+      "abilityName": "Warrior's Zeal",
+      "kind": "trait",
+      "rawDescription": "At Level 16+ and deployed in Vanguard: increase Venator Physical Damage from Commands and Habits by 16%; Left Flank ally Instinct and Initiative +20."
+    },
+    {
+      "abilityId": "venator-hunters-bane",
+      "abilityName": "Hunter's Bane",
+      "kind": "habit",
+      "rawDescription": "Start of Combat: reduce Intelligence of one enemy in any lane, preferring Hunter breed with fallback, enhanced by Venator's Strength. Screenshot states no duration."
+    },
+    {
+      "abilityId": "venator-dragons-might",
+      "abilityName": "Dragon's Might",
+      "kind": "habit",
+      "rawDescription": "Start of Combat until end of combat: increase Venator Physical Damage Dealt excluding Basic Attacks."
+    },
+    {
+      "abilityId": "venator-feral-precision",
+      "abilityName": "Feral Precision",
+      "kind": "habit",
+      "rawDescription": "Augments Feral Strike: add one Physical Damage instance targeting the enemy with least current troops and replace Double-Strike chance on rounds 4, 6, and 8."
+    },
+    {
+      "abilityId": "venator-armor-break",
+      "abilityName": "Armor Break",
+      "kind": "habit",
+      "rawDescription": "Start of Combat until end of combat: increase Physical Damage Received by one opposing enemy. Opposing-position is provisionally normalized to same-lane enemy for formation compatibility."
+    },
+    {
+      "abilityId": "venator-desperate-ambush",
+      "abilityName": "Desperate Ambush",
+      "kind": "habit",
+      "rawDescription": "Each round, when Venator is strictly below 50% Troop Capacity: select one enemy, preferring Hunter breed, deal Physical Damage, then attempt Overwhelm on that same selected target for two rounds."
+    }
+  ],
   "repetitions": [],
   "rosterSourceStatus": "official-website",
   "slug": "venator",
   "source": {
-    "branch": "feature/formation-card-layout-polish",
-    "commit": "f3042ee26aa774020b87dbed1ffef7b37e85cb02",
-    "databaseVersion": "0.5.6",
-    "dataSchemaVersion": 9,
+    "branch": "feature/legendary-schema-hardening",
+    "commit": "96e0cb6df6957f19eea61aa67b38bfa905aef03c",
+    "databaseVersion": "0.6.0",
+    "dataSchemaVersion": 10,
     "gameBuild": "26.6.53509",
     "localRosterSchemaVersion": 3,
     "repository": "https://github.com/williamchildres/dragonfire-roster-builder"
@@ -56,17 +5545,328 @@
     "intelligence": null,
     "strength": null
   },
-  "statusOutputs": [],
-  "tags": [],
-  "trait": null,
-  "unresolvedQuestions": [],
+  "statusOutputs": [
+    {
+      "abilityId": "venator-feral-strike",
+      "abilityName": "Feral Strike",
+      "availability": {
+        "canonical": "canonical-base",
+        "notes": [
+          "Not collected in observed account."
+        ],
+        "observedAccount": "observed-unavailable",
+        "reportLabel": "Base kit; not collected in observed account",
+        "userRoster": "unknown"
+      },
+      "chanceByHabitLevel": [],
+      "chanceFixed": 30,
+      "conditions": [
+        {
+          "description": "One base Double-Strike chance on rounds 4, 6, and 8.",
+          "evidenceIds": [],
+          "id": "feral-strike-double-strike-rounds-activation-chance",
+          "label": "One base Double-Strike chance on rounds 4, 6, and 8.",
+          "unresolved": false
+        }
+      ],
+      "currentlyAvailable": true,
+      "directlyVerified": true,
+      "dragonId": "venator",
+      "durationRounds": 2,
+      "evidenceIds": [
+        "venator-feral-strike-summary-2026-06-25"
+      ],
+      "futureAvailable": false,
+      "id": "venator-feral-strike-feral-strike-double-strike-double-strike-status-output",
+      "minimumDragonLevel": null,
+      "requiredHabitLevel": null,
+      "statusId": "double-strike",
+      "targetSelector": {
+        "count": null,
+        "includesCaster": null,
+        "position": null,
+        "scope": "self",
+        "selection": "self",
+        "selectionStat": null,
+        "side": "self"
+      },
+      "targetSide": "self",
+      "unlockStarRank": null,
+      "untilEndOfCombat": false,
+      "untilEndOfRound": false
+    },
+    {
+      "abilityId": "venator-desperate-ambush",
+      "abilityName": "Desperate Ambush",
+      "availability": {
+        "canonical": "canonical-locked",
+        "notes": [
+          "Future at Star Rank 10.",
+          "Not collected in observed account."
+        ],
+        "observedAccount": "observed-unavailable",
+        "reportLabel": "Future at Star Rank 10; not collected in observed account",
+        "userRoster": "unknown"
+      },
+      "chanceByHabitLevel": [
+        {
+          "level": 1,
+          "unit": "percent",
+          "value": 12
+        },
+        {
+          "level": 2,
+          "unit": "percent",
+          "value": 15.6
+        },
+        {
+          "level": 3,
+          "unit": "percent",
+          "value": 19.2
+        },
+        {
+          "level": 4,
+          "unit": "percent",
+          "value": 24
+        },
+        {
+          "level": 5,
+          "unit": "percent",
+          "value": 30
+        }
+      ],
+      "chanceFixed": null,
+      "conditions": [
+        {
+          "comparison": "below",
+          "description": "Venator is strictly below 50% Troop Capacity.",
+          "evidenceIds": [],
+          "id": "self-strictly-below-50-troops",
+          "kind": "target-below-troop-capacity-threshold",
+          "label": "Venator is strictly below 50% Troop Capacity.",
+          "subject": "self",
+          "thresholdPercent": 50,
+          "unresolved": false
+        }
+      ],
+      "currentlyAvailable": false,
+      "directlyVerified": true,
+      "dragonId": "venator",
+      "durationRounds": 2,
+      "evidenceIds": [
+        "venator-desperate-ambush-2026-06-25"
+      ],
+      "futureAvailable": true,
+      "id": "venator-desperate-ambush-desperate-ambush-overwhelm-overwhelm-status-output",
+      "minimumDragonLevel": null,
+      "requiredHabitLevel": 1,
+      "statusId": "overwhelm",
+      "targetSelector": {
+        "count": null,
+        "includesCaster": null,
+        "position": null,
+        "scope": "any-lane",
+        "selection": "any",
+        "selectionStat": null,
+        "side": "ally"
+      },
+      "targetSide": "ally",
+      "unlockStarRank": 10,
+      "untilEndOfCombat": false,
+      "untilEndOfRound": false
+    }
+  ],
+  "tags": [
+    "PHYSICAL_DAMAGE",
+    "DOUBLE_STRIKE",
+    "PHYSICAL_DAMAGE_UP",
+    "INSTINCT_UP",
+    "BUFF_INITIATIVE",
+    "LEFT_FLANK_TARGET",
+    "VANGUARD_REQUIRED",
+    "DEBUFF_INTELLIGENCE",
+    "COMMAND_AUGMENTATION",
+    "OVERWHELM",
+    "CONTROL"
+  ],
+  "trait": {
+    "abilityClass": "passive",
+    "augmentations": [],
+    "dragonId": "venator",
+    "evidenceIds": [
+      "venator-warriors-zeal-2026-06-25"
+    ],
+    "glossaryEntries": [],
+    "id": "venator-warriors-zeal",
+    "kind": "trait",
+    "minimumDragonLevel": 16,
+    "name": "Warrior's Zeal",
+    "positionRequirement": "vanguard",
+    "powerByHabitLevel": [],
+    "rawDescription": "At Level 16+ and deployed in Vanguard: increase Venator Physical Damage from Commands and Habits by 16%; Left Flank ally Instinct and Initiative +20.",
+    "schedules": [
+      {
+        "activationRoll": null,
+        "attempts": null,
+        "battleContext": "unspecified",
+        "conditions": [],
+        "effects": [
+          {
+            "activationRoll": null,
+            "calculated": false,
+            "casterEligibility": "unknown",
+            "conditionalMultipliers": [],
+            "conditions": [],
+            "directlyVerified": true,
+            "duration": null,
+            "durationRounds": null,
+            "excludes": [],
+            "id": "warriors-zeal-command-habit-physical",
+            "includesCaster": null,
+            "magnitude": 16,
+            "notes": [
+              "Does not amplify raw Basic Attacks."
+            ],
+            "perTargetEffectCheck": null,
+            "rankedValues": [],
+            "scaling": [],
+            "sourceScope": "commands-and-habits",
+            "stack": null,
+            "stackTransitionTrigger": null,
+            "target": "Self",
+            "targetCount": null,
+            "targetPriority": "any-eligible",
+            "targetScope": "self",
+            "targetSelection": null,
+            "type": "Physical Damage Dealt Up",
+            "unit": "percent"
+          },
+          {
+            "activationRoll": null,
+            "calculated": false,
+            "casterEligibility": "unknown",
+            "conditionalMultipliers": [],
+            "conditions": [],
+            "directlyVerified": true,
+            "duration": null,
+            "durationRounds": null,
+            "excludes": [],
+            "id": "warriors-zeal-left-instinct",
+            "includesCaster": null,
+            "magnitude": 20,
+            "notes": [],
+            "perTargetEffectCheck": null,
+            "rankedValues": [],
+            "scaling": [],
+            "sourceScope": "unknown",
+            "stack": null,
+            "stackTransitionTrigger": null,
+            "target": "Left Flank ally",
+            "targetCount": null,
+            "targetPriority": "any-eligible",
+            "targetScope": "left-flank",
+            "targetSelection": null,
+            "type": "Instinct Up",
+            "unit": "flat"
+          },
+          {
+            "activationRoll": null,
+            "calculated": false,
+            "casterEligibility": "unknown",
+            "conditionalMultipliers": [],
+            "conditions": [],
+            "directlyVerified": true,
+            "duration": null,
+            "durationRounds": null,
+            "excludes": [],
+            "id": "warriors-zeal-left-initiative",
+            "includesCaster": null,
+            "magnitude": 20,
+            "notes": [],
+            "perTargetEffectCheck": null,
+            "rankedValues": [],
+            "scaling": [],
+            "sourceScope": "unknown",
+            "stack": null,
+            "stackTransitionTrigger": null,
+            "target": "Left Flank ally",
+            "targetCount": null,
+            "targetPriority": "any-eligible",
+            "targetScope": "left-flank",
+            "targetSelection": null,
+            "type": "Initiative Up",
+            "unit": "flat"
+          }
+        ],
+        "id": "warriors-zeal-passive",
+        "repeat": null,
+        "rounds": [],
+        "roundSelector": {
+          "kind": "passive"
+        },
+        "targetPriority": "any-eligible",
+        "timing": "passive",
+        "triggerChanceByHabitLevel": [],
+        "triggerChanceFixed": null,
+        "triggerEvent": "passive"
+      }
+    ],
+    "tags": [
+      "PHYSICAL_DAMAGE_UP",
+      "INSTINCT_UP",
+      "BUFF_INITIATIVE",
+      "LEFT_FLANK_TARGET",
+      "VANGUARD_REQUIRED"
+    ],
+    "unlockStarRank": 1,
+    "unresolvedQuestions": [],
+    "verification": {
+      "capturedAt": "2026-06-25",
+      "gameVersion": "26.6.53509",
+      "reviewedManually": true,
+      "source": "Venator Warrior's Zeal screenshot",
+      "status": "screenshot-verified"
+    }
+  },
+  "unresolvedQuestions": [
+    "Exact Double-Strike duration counting.",
+    "Exactly 50% Troop Capacity behavior.",
+    "Feral Strike activation from Double-Strike's second Basic Attack.",
+    "Hunter's Bane duration.",
+    "Hunter's Bane Strength enhancement formula.",
+    "Observed values include Troop Capacity and Dragon Power only; combat stats, March Speed, and Stamina remain unknown.",
+    "Opposing-position interpretation retained as provisional.",
+    "Ordering between the fixed-round check and the Basic Attack.",
+    "Same-round Double-Strike timing."
+  ],
   "verificationBySection": {
+    "affinities": {
+      "capturedAt": "2026-06-23",
+      "gameVersion": "26.6.53509",
+      "reviewedManually": true,
+      "source": "Venator main screen screenshot",
+      "status": "partially-screenshot-verified"
+    },
     "breed": {
       "capturedAt": "2026-06-23",
       "gameVersion": null,
       "reviewedManually": true,
       "source": "Official public roster page",
       "status": "officially-confirmed"
+    },
+    "command": {
+      "capturedAt": "2026-06-25",
+      "gameVersion": "26.6.53509",
+      "reviewedManually": true,
+      "source": "Venator Feral Strike screenshots",
+      "status": "screenshot-verified"
+    },
+    "habits": {
+      "capturedAt": "2026-06-25",
+      "gameVersion": "26.6.53509",
+      "reviewedManually": true,
+      "source": "Venator Habit screenshots",
+      "status": "screenshot-verified"
     },
     "identity": {
       "capturedAt": "2026-06-23",
@@ -81,6 +5881,13 @@
       "reviewedManually": true,
       "source": "Official public roster page",
       "status": "officially-confirmed"
+    },
+    "trait": {
+      "capturedAt": "2026-06-25",
+      "gameVersion": "26.6.53509",
+      "reviewedManually": true,
+      "source": "Venator Warrior's Zeal screenshot",
+      "status": "screenshot-verified"
     }
   }
 }

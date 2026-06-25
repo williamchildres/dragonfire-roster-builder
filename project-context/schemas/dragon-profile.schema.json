@@ -148,10 +148,10 @@
           "type": "string"
         },
         "databaseVersion": {
-          "const": "0.5.6"
+          "const": "0.6.0"
         },
         "dataSchemaVersion": {
-          "const": 9
+          "const": 10
         },
         "gameBuild": {
           "const": "26.6.53509"

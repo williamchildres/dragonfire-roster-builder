@@ -6,6 +6,7 @@
         {
           "effectsAdded": [
             {
+              "activationRoll": null,
               "calculated": false,
               "casterEligibility": "unknown",
               "conditionalMultipliers": [
@@ -74,14 +75,17 @@
               "scaling": [],
               "sourceScope": "unknown",
               "stack": null,
+              "stackTransitionTrigger": null,
               "target": "Prey",
               "targetCount": null,
               "targetPriority": "any-eligible",
               "targetScope": "any-lane",
+              "targetSelection": null,
               "type": "Fire Damage",
               "unit": "rate"
             },
             {
+              "activationRoll": null,
               "calculated": false,
               "casterEligibility": "unknown",
               "conditionalMultipliers": [
@@ -153,10 +157,12 @@
               ],
               "sourceScope": "unknown",
               "stack": null,
+              "stackTransitionTrigger": null,
               "target": "Self",
               "targetCount": null,
               "targetPriority": "any-eligible",
               "targetScope": "self",
+              "targetSelection": null,
               "type": "Recovery",
               "unit": "rate"
             }
@@ -170,6 +176,7 @@
           "rawDescription": "At 10 Stars, Savage Claim augments Wild Hunt while Sheepstealer has a Prey.",
           "schedulesAdded": [
             {
+              "activationRoll": null,
               "attempts": null,
               "battleContext": "unspecified",
               "conditions": [
@@ -187,6 +194,7 @@
               ],
               "effects": [
                 {
+                  "activationRoll": null,
                   "calculated": false,
                   "casterEligibility": "unknown",
                   "conditionalMultipliers": [
@@ -255,14 +263,17 @@
                   "scaling": [],
                   "sourceScope": "unknown",
                   "stack": null,
+                  "stackTransitionTrigger": null,
                   "target": "Prey",
                   "targetCount": null,
                   "targetPriority": "any-eligible",
                   "targetScope": "any-lane",
+                  "targetSelection": null,
                   "type": "Fire Damage",
                   "unit": "rate"
                 },
                 {
+                  "activationRoll": null,
                   "calculated": false,
                   "casterEligibility": "unknown",
                   "conditionalMultipliers": [
@@ -334,10 +345,12 @@
                   ],
                   "sourceScope": "unknown",
                   "stack": null,
+                  "stackTransitionTrigger": null,
                   "target": "Self",
                   "targetCount": null,
                   "targetPriority": "any-eligible",
                   "targetScope": "self",
+                  "targetSelection": null,
                   "type": "Recovery",
                   "unit": "rate"
                 }
@@ -345,6 +358,7 @@
               "id": "savage-claim-each-round",
               "repeat": null,
               "rounds": [],
+              "roundSelector": null,
               "targetPriority": "any-eligible",
               "timing": "each-round",
               "triggerChanceByHabitLevel": [],
@@ -371,6 +385,7 @@
       "rawDescription": "Each Round: if no enemy is currently marked as Prey, 40% chance to apply Prey. Rounds 1, 4, 7, 10: Fire Damage to one enemy, prioritizing Prey. Damage is doubled against Prey.",
       "schedules": [
         {
+          "activationRoll": null,
           "attempts": null,
           "battleContext": "unspecified",
           "conditions": [
@@ -388,6 +403,7 @@
           ],
           "effects": [
             {
+              "activationRoll": null,
               "calculated": false,
               "casterEligibility": "unknown",
               "conditionalMultipliers": [],
@@ -416,10 +432,12 @@
                 "valuePerStackByHabitLevel": [],
                 "valuePerStackFixed": null
               },
+              "stackTransitionTrigger": null,
               "target": "1 Enemy",
               "targetCount": null,
               "targetPriority": "prefer-received-recovery-last-round",
               "targetScope": "any-lane",
+              "targetSelection": null,
               "type": "Prey",
               "unit": "percent"
             }
@@ -427,6 +445,7 @@
           "id": "wild-hunt-apply-prey",
           "repeat": null,
           "rounds": [],
+          "roundSelector": null,
           "targetPriority": "prefer-received-recovery-last-round",
           "timing": "each-round",
           "triggerChanceByHabitLevel": [],
@@ -434,11 +453,13 @@
           "triggerEvent": "each-round"
         },
         {
+          "activationRoll": null,
           "attempts": null,
           "battleContext": "unspecified",
           "conditions": [],
           "effects": [
             {
+              "activationRoll": null,
               "calculated": false,
               "casterEligibility": "unknown",
               "conditionalMultipliers": [
@@ -479,10 +500,12 @@
               ],
               "sourceScope": "unknown",
               "stack": null,
+              "stackTransitionTrigger": null,
               "target": "1 Enemy",
               "targetCount": null,
               "targetPriority": "any-eligible",
               "targetScope": "any-lane",
+              "targetSelection": null,
               "type": "Fire Damage",
               "unit": "rate"
             }
@@ -495,6 +518,7 @@
             7,
             10
           ],
+          "roundSelector": null,
           "targetPriority": "prefer-prey",
           "timing": "specific-rounds",
           "triggerChanceByHabitLevel": [],
@@ -534,11 +558,13 @@
       "rawDescription": "At Level 16+ and deployed in Vanguard, increase self Recovery Received +20%, self Intelligence +25, and Right Flank ally Physical Damage Dealt +10%.",
       "schedules": [
         {
+          "activationRoll": null,
           "attempts": null,
           "battleContext": "unspecified",
           "conditions": [],
           "effects": [
             {
+              "activationRoll": null,
               "calculated": false,
               "casterEligibility": "unknown",
               "conditionalMultipliers": [],
@@ -556,14 +582,17 @@
               "scaling": [],
               "sourceScope": "unknown",
               "stack": null,
+              "stackTransitionTrigger": null,
               "target": "Self",
               "targetCount": null,
               "targetPriority": "any-eligible",
               "targetScope": "self",
+              "targetSelection": null,
               "type": "Recovery Received Up",
               "unit": "percent"
             },
             {
+              "activationRoll": null,
               "calculated": false,
               "casterEligibility": "unknown",
               "conditionalMultipliers": [],
@@ -581,14 +610,17 @@
               "scaling": [],
               "sourceScope": "unknown",
               "stack": null,
+              "stackTransitionTrigger": null,
               "target": "Self",
               "targetCount": null,
               "targetPriority": "any-eligible",
               "targetScope": "self",
+              "targetSelection": null,
               "type": "Intelligence Up",
               "unit": "flat"
             },
             {
+              "activationRoll": null,
               "calculated": false,
               "casterEligibility": "unknown",
               "conditionalMultipliers": [],
@@ -606,10 +638,12 @@
               "scaling": [],
               "sourceScope": "unknown",
               "stack": null,
+              "stackTransitionTrigger": null,
               "target": "Right Flank ally",
               "targetCount": null,
               "targetPriority": "any-eligible",
               "targetScope": "right-flank",
+              "targetSelection": null,
               "type": "Physical Damage Dealt Up",
               "unit": "percent"
             }
@@ -617,6 +651,7 @@
           "id": "hunters-cunning-passive",
           "repeat": null,
           "rounds": [],
+          "roundSelector": null,
           "targetPriority": "any-eligible",
           "timing": "passive",
           "triggerChanceByHabitLevel": [],
@@ -683,6 +718,7 @@
       "rawDescription": "PvE Fire Damage bonus and Stolen Flock stacks from each round or when Prey receives Recovery.",
       "schedules": [
         {
+          "activationRoll": null,
           "attempts": null,
           "battleContext": "non-player-food-tile",
           "conditions": [
@@ -700,6 +736,7 @@
           ],
           "effects": [
             {
+              "activationRoll": null,
               "calculated": false,
               "casterEligibility": "unknown",
               "conditionalMultipliers": [],
@@ -743,10 +780,12 @@
               "scaling": [],
               "sourceScope": "unknown",
               "stack": null,
+              "stackTransitionTrigger": null,
               "target": "Self",
               "targetCount": null,
               "targetPriority": "any-eligible",
               "targetScope": "self",
+              "targetSelection": null,
               "type": "Fire Damage Dealt Up",
               "unit": "percent"
             }
@@ -754,6 +793,7 @@
           "id": "stolen-flock-pve",
           "repeat": null,
           "rounds": [],
+          "roundSelector": null,
           "targetPriority": "any-eligible",
           "timing": "start-of-combat",
           "triggerChanceByHabitLevel": [],
@@ -761,11 +801,13 @@
           "triggerEvent": "start-of-combat"
         },
         {
+          "activationRoll": null,
           "attempts": null,
           "battleContext": "unspecified",
           "conditions": [],
           "effects": [
             {
+              "activationRoll": null,
               "calculated": false,
               "casterEligibility": "unknown",
               "conditionalMultipliers": [],
@@ -817,10 +859,12 @@
                 ],
                 "valuePerStackFixed": null
               },
+              "stackTransitionTrigger": null,
               "target": "Self",
               "targetCount": null,
               "targetPriority": "any-eligible",
               "targetScope": "self",
+              "targetSelection": null,
               "type": "Stolen Flock",
               "unit": "flat"
             }
@@ -828,6 +872,7 @@
           "id": "stolen-flock-each-round-stack",
           "repeat": null,
           "rounds": [],
+          "roundSelector": null,
           "targetPriority": "any-eligible",
           "timing": "each-round",
           "triggerChanceByHabitLevel": [],
@@ -835,6 +880,7 @@
           "triggerEvent": "each-round"
         },
         {
+          "activationRoll": null,
           "attempts": null,
           "battleContext": "unspecified",
           "conditions": [
@@ -852,6 +898,7 @@
           ],
           "effects": [
             {
+              "activationRoll": null,
               "calculated": false,
               "casterEligibility": "unknown",
               "conditionalMultipliers": [],
@@ -903,10 +950,12 @@
                 ],
                 "valuePerStackFixed": null
               },
+              "stackTransitionTrigger": null,
               "target": "Self",
               "targetCount": null,
               "targetPriority": "any-eligible",
               "targetScope": "self",
+              "targetSelection": null,
               "type": "Stolen Flock",
               "unit": "flat"
             }
@@ -914,6 +963,7 @@
           "id": "stolen-flock-prey-recovery-stack",
           "repeat": null,
           "rounds": [],
+          "roundSelector": null,
           "targetPriority": "any-eligible",
           "timing": "when-marked-target-receives-recovery",
           "triggerChanceByHabitLevel": [],
@@ -978,11 +1028,13 @@
       "rawDescription": "Start of Combat: increase self Intelligence and reduce Instinct of two enemies within adjacency, enhanced by Initiative.",
       "schedules": [
         {
+          "activationRoll": null,
           "attempts": null,
           "battleContext": "unspecified",
           "conditions": [],
           "effects": [
             {
+              "activationRoll": null,
               "calculated": false,
               "casterEligibility": "unknown",
               "conditionalMultipliers": [],
@@ -1026,14 +1078,17 @@
               "scaling": [],
               "sourceScope": "unknown",
               "stack": null,
+              "stackTransitionTrigger": null,
               "target": "Self",
               "targetCount": null,
               "targetPriority": "any-eligible",
               "targetScope": "self",
+              "targetSelection": null,
               "type": "Intelligence Up",
               "unit": "percent"
             },
             {
+              "activationRoll": null,
               "calculated": false,
               "casterEligibility": "unknown",
               "conditionalMultipliers": [],
@@ -1079,10 +1134,12 @@
               ],
               "sourceScope": "unknown",
               "stack": null,
+              "stackTransitionTrigger": null,
               "target": "2 Enemies",
               "targetCount": null,
               "targetPriority": "any-eligible",
               "targetScope": "within-adjacency",
+              "targetSelection": null,
               "type": "Instinct Down",
               "unit": "percent"
             }
@@ -1090,6 +1147,7 @@
           "id": "dragons-cunning-start",
           "repeat": null,
           "rounds": [],
+          "roundSelector": null,
           "targetPriority": "any-eligible",
           "timing": "start-of-combat",
           "triggerChanceByHabitLevel": [],
@@ -1156,6 +1214,7 @@
       "rawDescription": "Each Round: apply Vulnerable to Prey, doubled chance if Prey received Recovery last round; cleanse Sheepstealer if Prey is above 50% Troop Capacity.",
       "schedules": [
         {
+          "activationRoll": null,
           "attempts": null,
           "battleContext": "unspecified",
           "conditions": [
@@ -1173,6 +1232,7 @@
           ],
           "effects": [
             {
+              "activationRoll": null,
               "calculated": false,
               "casterEligibility": "unknown",
               "conditionalMultipliers": [
@@ -1209,10 +1269,12 @@
               "scaling": [],
               "sourceScope": "unknown",
               "stack": null,
+              "stackTransitionTrigger": null,
               "target": "Prey",
               "targetCount": null,
               "targetPriority": "any-eligible",
               "targetScope": "any-lane",
+              "targetSelection": null,
               "type": "Vulnerable",
               "unit": "percent"
             }
@@ -1220,6 +1282,7 @@
           "id": "baited-kill-vulnerable",
           "repeat": null,
           "rounds": [],
+          "roundSelector": null,
           "targetPriority": "any-eligible",
           "timing": "each-round",
           "triggerChanceByHabitLevel": [
@@ -1253,6 +1316,7 @@
           "triggerEvent": "each-round"
         },
         {
+          "activationRoll": null,
           "attempts": null,
           "battleContext": "unspecified",
           "conditions": [
@@ -1281,6 +1345,7 @@
           ],
           "effects": [
             {
+              "activationRoll": null,
               "calculated": false,
               "casterEligibility": "unknown",
               "conditionalMultipliers": [],
@@ -1298,10 +1363,12 @@
               "scaling": [],
               "sourceScope": "unknown",
               "stack": null,
+              "stackTransitionTrigger": null,
               "target": "Self",
               "targetCount": null,
               "targetPriority": "any-eligible",
               "targetScope": "self",
+              "targetSelection": null,
               "type": "Cleanse Negative",
               "unit": "flat"
             }
@@ -1309,6 +1376,7 @@
           "id": "baited-kill-cleanse",
           "repeat": null,
           "rounds": [],
+          "roundSelector": null,
           "targetPriority": "any-eligible",
           "timing": "each-round",
           "triggerChanceByHabitLevel": [
@@ -1399,6 +1467,7 @@
       "rawDescription": "Start of Each Round: if Prey is above 50% Troop Capacity gain Evade. Start of Combat reduce Recovery Received of three enemies.",
       "schedules": [
         {
+          "activationRoll": null,
           "attempts": null,
           "battleContext": "unspecified",
           "conditions": [
@@ -1416,6 +1485,7 @@
           ],
           "effects": [
             {
+              "activationRoll": null,
               "calculated": false,
               "casterEligibility": "unknown",
               "conditionalMultipliers": [],
@@ -1459,10 +1529,12 @@
               "scaling": [],
               "sourceScope": "unknown",
               "stack": null,
+              "stackTransitionTrigger": null,
               "target": "Self",
               "targetCount": null,
               "targetPriority": "any-eligible",
               "targetScope": "self",
+              "targetSelection": null,
               "type": "Evade",
               "unit": "percent"
             }
@@ -1470,6 +1542,7 @@
           "id": "wary-beast-evade",
           "repeat": null,
           "rounds": [],
+          "roundSelector": null,
           "targetPriority": "any-eligible",
           "timing": "start-of-each-round",
           "triggerChanceByHabitLevel": [],
@@ -1477,11 +1550,13 @@
           "triggerEvent": "start-of-each-round"
         },
         {
+          "activationRoll": null,
           "attempts": null,
           "battleContext": "unspecified",
           "conditions": [],
           "effects": [
             {
+              "activationRoll": null,
               "calculated": false,
               "casterEligibility": "unknown",
               "conditionalMultipliers": [],
@@ -1525,10 +1600,12 @@
               "scaling": [],
               "sourceScope": "unknown",
               "stack": null,
+              "stackTransitionTrigger": null,
               "target": "3 Enemies",
               "targetCount": null,
               "targetPriority": "any-eligible",
               "targetScope": "any-lane",
+              "targetSelection": null,
               "type": "Recovery Received Down",
               "unit": "percent"
             }
@@ -1536,6 +1613,7 @@
           "id": "wary-beast-recovery-down",
           "repeat": null,
           "rounds": [],
+          "roundSelector": null,
           "targetPriority": "any-eligible",
           "timing": "start-of-combat",
           "triggerChanceByHabitLevel": [],
@@ -1600,6 +1678,7 @@
       "rawDescription": "Augments Wild Hunt: each round while Sheepstealer has Prey, deal Fire Damage to Prey and apply Recovery to Sheepstealer; triple both if Prey received Recovery previous round.",
       "schedules": [
         {
+          "activationRoll": null,
           "attempts": null,
           "battleContext": "unspecified",
           "conditions": [
@@ -1617,6 +1696,7 @@
           ],
           "effects": [
             {
+              "activationRoll": null,
               "calculated": false,
               "casterEligibility": "unknown",
               "conditionalMultipliers": [
@@ -1685,14 +1765,17 @@
               "scaling": [],
               "sourceScope": "unknown",
               "stack": null,
+              "stackTransitionTrigger": null,
               "target": "Prey",
               "targetCount": null,
               "targetPriority": "any-eligible",
               "targetScope": "any-lane",
+              "targetSelection": null,
               "type": "Fire Damage",
               "unit": "rate"
             },
             {
+              "activationRoll": null,
               "calculated": false,
               "casterEligibility": "unknown",
               "conditionalMultipliers": [
@@ -1764,10 +1847,12 @@
               ],
               "sourceScope": "unknown",
               "stack": null,
+              "stackTransitionTrigger": null,
               "target": "Self",
               "targetCount": null,
               "targetPriority": "any-eligible",
               "targetScope": "self",
+              "targetSelection": null,
               "type": "Recovery",
               "unit": "rate"
             }
@@ -1775,6 +1860,7 @@
           "id": "savage-claim-each-round",
           "repeat": null,
           "rounds": [],
+          "roundSelector": null,
           "targetPriority": "any-eligible",
           "timing": "each-round",
           "triggerChanceByHabitLevel": [],
@@ -1803,6 +1889,7 @@
       "abilityId": "sheepstealer-wild-hunt",
       "abilityName": "Wild Hunt",
       "schedule": {
+        "activationRoll": null,
         "attempts": null,
         "battleContext": "unspecified",
         "conditions": [
@@ -1820,6 +1907,7 @@
         ],
         "effects": [
           {
+            "activationRoll": null,
             "calculated": false,
             "casterEligibility": "unknown",
             "conditionalMultipliers": [],
@@ -1848,10 +1936,12 @@
               "valuePerStackByHabitLevel": [],
               "valuePerStackFixed": null
             },
+            "stackTransitionTrigger": null,
             "target": "1 Enemy",
             "targetCount": null,
             "targetPriority": "prefer-received-recovery-last-round",
             "targetScope": "any-lane",
+            "targetSelection": null,
             "type": "Prey",
             "unit": "percent"
           }
@@ -1859,6 +1949,7 @@
         "id": "wild-hunt-apply-prey",
         "repeat": null,
         "rounds": [],
+        "roundSelector": null,
         "targetPriority": "prefer-received-recovery-last-round",
         "timing": "each-round",
         "triggerChanceByHabitLevel": [],
@@ -1870,11 +1961,13 @@
       "abilityId": "sheepstealer-wild-hunt",
       "abilityName": "Wild Hunt",
       "schedule": {
+        "activationRoll": null,
         "attempts": null,
         "battleContext": "unspecified",
         "conditions": [],
         "effects": [
           {
+            "activationRoll": null,
             "calculated": false,
             "casterEligibility": "unknown",
             "conditionalMultipliers": [
@@ -1915,10 +2008,12 @@
             ],
             "sourceScope": "unknown",
             "stack": null,
+            "stackTransitionTrigger": null,
             "target": "1 Enemy",
             "targetCount": null,
             "targetPriority": "any-eligible",
             "targetScope": "any-lane",
+            "targetSelection": null,
             "type": "Fire Damage",
             "unit": "rate"
           }
@@ -1931,6 +2026,7 @@
           7,
           10
         ],
+        "roundSelector": null,
         "targetPriority": "prefer-prey",
         "timing": "specific-rounds",
         "triggerChanceByHabitLevel": [],
@@ -1942,11 +2038,13 @@
       "abilityId": "sheepstealer-hunters-cunning",
       "abilityName": "Hunter's Cunning",
       "schedule": {
+        "activationRoll": null,
         "attempts": null,
         "battleContext": "unspecified",
         "conditions": [],
         "effects": [
           {
+            "activationRoll": null,
             "calculated": false,
             "casterEligibility": "unknown",
             "conditionalMultipliers": [],
@@ -1964,14 +2062,17 @@
             "scaling": [],
             "sourceScope": "unknown",
             "stack": null,
+            "stackTransitionTrigger": null,
             "target": "Self",
             "targetCount": null,
             "targetPriority": "any-eligible",
             "targetScope": "self",
+            "targetSelection": null,
             "type": "Recovery Received Up",
             "unit": "percent"
           },
           {
+            "activationRoll": null,
             "calculated": false,
             "casterEligibility": "unknown",
             "conditionalMultipliers": [],
@@ -1989,14 +2090,17 @@
             "scaling": [],
             "sourceScope": "unknown",
             "stack": null,
+            "stackTransitionTrigger": null,
             "target": "Self",
             "targetCount": null,
             "targetPriority": "any-eligible",
             "targetScope": "self",
+            "targetSelection": null,
             "type": "Intelligence Up",
             "unit": "flat"
           },
           {
+            "activationRoll": null,
             "calculated": false,
             "casterEligibility": "unknown",
             "conditionalMultipliers": [],
@@ -2014,10 +2118,12 @@
             "scaling": [],
             "sourceScope": "unknown",
             "stack": null,
+            "stackTransitionTrigger": null,
             "target": "Right Flank ally",
             "targetCount": null,
             "targetPriority": "any-eligible",
             "targetScope": "right-flank",
+            "targetSelection": null,
             "type": "Physical Damage Dealt Up",
             "unit": "percent"
           }
@@ -2025,6 +2131,7 @@
         "id": "hunters-cunning-passive",
         "repeat": null,
         "rounds": [],
+        "roundSelector": null,
         "targetPriority": "any-eligible",
         "timing": "passive",
         "triggerChanceByHabitLevel": [],
@@ -2036,6 +2143,7 @@
       "abilityId": "sheepstealer-stolen-flock",
       "abilityName": "Stolen Flock",
       "schedule": {
+        "activationRoll": null,
         "attempts": null,
         "battleContext": "non-player-food-tile",
         "conditions": [
@@ -2053,6 +2161,7 @@
         ],
         "effects": [
           {
+            "activationRoll": null,
             "calculated": false,
             "casterEligibility": "unknown",
             "conditionalMultipliers": [],
@@ -2096,10 +2205,12 @@
             "scaling": [],
             "sourceScope": "unknown",
             "stack": null,
+            "stackTransitionTrigger": null,
             "target": "Self",
             "targetCount": null,
             "targetPriority": "any-eligible",
             "targetScope": "self",
+            "targetSelection": null,
             "type": "Fire Damage Dealt Up",
             "unit": "percent"
           }
@@ -2107,6 +2218,7 @@
         "id": "stolen-flock-pve",
         "repeat": null,
         "rounds": [],
+        "roundSelector": null,
         "targetPriority": "any-eligible",
         "timing": "start-of-combat",
         "triggerChanceByHabitLevel": [],
@@ -2118,11 +2230,13 @@
       "abilityId": "sheepstealer-stolen-flock",
       "abilityName": "Stolen Flock",
       "schedule": {
+        "activationRoll": null,
         "attempts": null,
         "battleContext": "unspecified",
         "conditions": [],
         "effects": [
           {
+            "activationRoll": null,
             "calculated": false,
             "casterEligibility": "unknown",
             "conditionalMultipliers": [],
@@ -2174,10 +2288,12 @@
               ],
               "valuePerStackFixed": null
             },
+            "stackTransitionTrigger": null,
             "target": "Self",
             "targetCount": null,
             "targetPriority": "any-eligible",
             "targetScope": "self",
+            "targetSelection": null,
             "type": "Stolen Flock",
             "unit": "flat"
           }
@@ -2185,6 +2301,7 @@
         "id": "stolen-flock-each-round-stack",
         "repeat": null,
         "rounds": [],
+        "roundSelector": null,
         "targetPriority": "any-eligible",
         "timing": "each-round",
         "triggerChanceByHabitLevel": [],
@@ -2196,6 +2313,7 @@
       "abilityId": "sheepstealer-stolen-flock",
       "abilityName": "Stolen Flock",
       "schedule": {
+        "activationRoll": null,
         "attempts": null,
         "battleContext": "unspecified",
         "conditions": [
@@ -2213,6 +2331,7 @@
         ],
         "effects": [
           {
+            "activationRoll": null,
             "calculated": false,
             "casterEligibility": "unknown",
             "conditionalMultipliers": [],
@@ -2264,10 +2383,12 @@
               ],
               "valuePerStackFixed": null
             },
+            "stackTransitionTrigger": null,
             "target": "Self",
             "targetCount": null,
             "targetPriority": "any-eligible",
             "targetScope": "self",
+            "targetSelection": null,
             "type": "Stolen Flock",
             "unit": "flat"
           }
@@ -2275,6 +2396,7 @@
         "id": "stolen-flock-prey-recovery-stack",
         "repeat": null,
         "rounds": [],
+        "roundSelector": null,
         "targetPriority": "any-eligible",
         "timing": "when-marked-target-receives-recovery",
         "triggerChanceByHabitLevel": [],
@@ -2286,11 +2408,13 @@
       "abilityId": "sheepstealer-dragons-cunning",
       "abilityName": "Dragon's Cunning",
       "schedule": {
+        "activationRoll": null,
         "attempts": null,
         "battleContext": "unspecified",
         "conditions": [],
         "effects": [
           {
+            "activationRoll": null,
             "calculated": false,
             "casterEligibility": "unknown",
             "conditionalMultipliers": [],
@@ -2334,14 +2458,17 @@
             "scaling": [],
             "sourceScope": "unknown",
             "stack": null,
+            "stackTransitionTrigger": null,
             "target": "Self",
             "targetCount": null,
             "targetPriority": "any-eligible",
             "targetScope": "self",
+            "targetSelection": null,
             "type": "Intelligence Up",
             "unit": "percent"
           },
           {
+            "activationRoll": null,
             "calculated": false,
             "casterEligibility": "unknown",
             "conditionalMultipliers": [],
@@ -2387,10 +2514,12 @@
             ],
             "sourceScope": "unknown",
             "stack": null,
+            "stackTransitionTrigger": null,
             "target": "2 Enemies",
             "targetCount": null,
             "targetPriority": "any-eligible",
             "targetScope": "within-adjacency",
+            "targetSelection": null,
             "type": "Instinct Down",
             "unit": "percent"
           }
@@ -2398,6 +2527,7 @@
         "id": "dragons-cunning-start",
         "repeat": null,
         "rounds": [],
+        "roundSelector": null,
         "targetPriority": "any-eligible",
         "timing": "start-of-combat",
         "triggerChanceByHabitLevel": [],
@@ -2409,6 +2539,7 @@
       "abilityId": "sheepstealer-baited-kill",
       "abilityName": "Baited Kill",
       "schedule": {
+        "activationRoll": null,
         "attempts": null,
         "battleContext": "unspecified",
         "conditions": [
@@ -2426,6 +2557,7 @@
         ],
         "effects": [
           {
+            "activationRoll": null,
             "calculated": false,
             "casterEligibility": "unknown",
             "conditionalMultipliers": [
@@ -2462,10 +2594,12 @@
             "scaling": [],
             "sourceScope": "unknown",
             "stack": null,
+            "stackTransitionTrigger": null,
             "target": "Prey",
             "targetCount": null,
             "targetPriority": "any-eligible",
             "targetScope": "any-lane",
+            "targetSelection": null,
             "type": "Vulnerable",
             "unit": "percent"
           }
@@ -2473,6 +2607,7 @@
         "id": "baited-kill-vulnerable",
         "repeat": null,
         "rounds": [],
+        "roundSelector": null,
         "targetPriority": "any-eligible",
         "timing": "each-round",
         "triggerChanceByHabitLevel": [
@@ -2510,6 +2645,7 @@
       "abilityId": "sheepstealer-baited-kill",
       "abilityName": "Baited Kill",
       "schedule": {
+        "activationRoll": null,
         "attempts": null,
         "battleContext": "unspecified",
         "conditions": [
@@ -2538,6 +2674,7 @@
         ],
         "effects": [
           {
+            "activationRoll": null,
             "calculated": false,
             "casterEligibility": "unknown",
             "conditionalMultipliers": [],
@@ -2555,10 +2692,12 @@
             "scaling": [],
             "sourceScope": "unknown",
             "stack": null,
+            "stackTransitionTrigger": null,
             "target": "Self",
             "targetCount": null,
             "targetPriority": "any-eligible",
             "targetScope": "self",
+            "targetSelection": null,
             "type": "Cleanse Negative",
             "unit": "flat"
           }
@@ -2566,6 +2705,7 @@
         "id": "baited-kill-cleanse",
         "repeat": null,
         "rounds": [],
+        "roundSelector": null,
         "targetPriority": "any-eligible",
         "timing": "each-round",
         "triggerChanceByHabitLevel": [
@@ -2603,6 +2743,7 @@
       "abilityId": "sheepstealer-wary-beast",
       "abilityName": "Wary Beast",
       "schedule": {
+        "activationRoll": null,
         "attempts": null,
         "battleContext": "unspecified",
         "conditions": [
@@ -2620,6 +2761,7 @@
         ],
         "effects": [
           {
+            "activationRoll": null,
             "calculated": false,
             "casterEligibility": "unknown",
             "conditionalMultipliers": [],
@@ -2663,10 +2805,12 @@
             "scaling": [],
             "sourceScope": "unknown",
             "stack": null,
+            "stackTransitionTrigger": null,
             "target": "Self",
             "targetCount": null,
             "targetPriority": "any-eligible",
             "targetScope": "self",
+            "targetSelection": null,
             "type": "Evade",
             "unit": "percent"
           }
@@ -2674,6 +2818,7 @@
         "id": "wary-beast-evade",
         "repeat": null,
         "rounds": [],
+        "roundSelector": null,
         "targetPriority": "any-eligible",
         "timing": "start-of-each-round",
         "triggerChanceByHabitLevel": [],
@@ -2685,11 +2830,13 @@
       "abilityId": "sheepstealer-wary-beast",
       "abilityName": "Wary Beast",
       "schedule": {
+        "activationRoll": null,
         "attempts": null,
         "battleContext": "unspecified",
         "conditions": [],
         "effects": [
           {
+            "activationRoll": null,
             "calculated": false,
             "casterEligibility": "unknown",
             "conditionalMultipliers": [],
@@ -2733,10 +2880,12 @@
             "scaling": [],
             "sourceScope": "unknown",
             "stack": null,
+            "stackTransitionTrigger": null,
             "target": "3 Enemies",
             "targetCount": null,
             "targetPriority": "any-eligible",
             "targetScope": "any-lane",
+            "targetSelection": null,
             "type": "Recovery Received Down",
             "unit": "percent"
           }
@@ -2744,6 +2893,7 @@
         "id": "wary-beast-recovery-down",
         "repeat": null,
         "rounds": [],
+        "roundSelector": null,
         "targetPriority": "any-eligible",
         "timing": "start-of-combat",
         "triggerChanceByHabitLevel": [],
@@ -2755,6 +2905,7 @@
       "abilityId": "sheepstealer-savage-claim",
       "abilityName": "Savage Claim",
       "schedule": {
+        "activationRoll": null,
         "attempts": null,
         "battleContext": "unspecified",
         "conditions": [
@@ -2772,6 +2923,7 @@
         ],
         "effects": [
           {
+            "activationRoll": null,
             "calculated": false,
             "casterEligibility": "unknown",
             "conditionalMultipliers": [
@@ -2840,14 +2992,17 @@
             "scaling": [],
             "sourceScope": "unknown",
             "stack": null,
+            "stackTransitionTrigger": null,
             "target": "Prey",
             "targetCount": null,
             "targetPriority": "any-eligible",
             "targetScope": "any-lane",
+            "targetSelection": null,
             "type": "Fire Damage",
             "unit": "rate"
           },
           {
+            "activationRoll": null,
             "calculated": false,
             "casterEligibility": "unknown",
             "conditionalMultipliers": [
@@ -2919,10 +3074,12 @@
             ],
             "sourceScope": "unknown",
             "stack": null,
+            "stackTransitionTrigger": null,
             "target": "Self",
             "targetCount": null,
             "targetPriority": "any-eligible",
             "targetScope": "self",
+            "targetSelection": null,
             "type": "Recovery",
             "unit": "rate"
           }
@@ -2930,6 +3087,7 @@
         "id": "savage-claim-each-round",
         "repeat": null,
         "rounds": [],
+        "roundSelector": null,
         "targetPriority": "any-eligible",
         "timing": "each-round",
         "triggerChanceByHabitLevel": [],
@@ -2995,6 +3153,7 @@
       {
         "effectsAdded": [
           {
+            "activationRoll": null,
             "calculated": false,
             "casterEligibility": "unknown",
             "conditionalMultipliers": [
@@ -3063,14 +3222,17 @@
             "scaling": [],
             "sourceScope": "unknown",
             "stack": null,
+            "stackTransitionTrigger": null,
             "target": "Prey",
             "targetCount": null,
             "targetPriority": "any-eligible",
             "targetScope": "any-lane",
+            "targetSelection": null,
             "type": "Fire Damage",
             "unit": "rate"
           },
           {
+            "activationRoll": null,
             "calculated": false,
             "casterEligibility": "unknown",
             "conditionalMultipliers": [
@@ -3142,10 +3304,12 @@
             ],
             "sourceScope": "unknown",
             "stack": null,
+            "stackTransitionTrigger": null,
             "target": "Self",
             "targetCount": null,
             "targetPriority": "any-eligible",
             "targetScope": "self",
+            "targetSelection": null,
             "type": "Recovery",
             "unit": "rate"
           }
@@ -3159,6 +3323,7 @@
         "rawDescription": "At 10 Stars, Savage Claim augments Wild Hunt while Sheepstealer has a Prey.",
         "schedulesAdded": [
           {
+            "activationRoll": null,
             "attempts": null,
             "battleContext": "unspecified",
             "conditions": [
@@ -3176,6 +3341,7 @@
             ],
             "effects": [
               {
+                "activationRoll": null,
                 "calculated": false,
                 "casterEligibility": "unknown",
                 "conditionalMultipliers": [
@@ -3244,14 +3410,17 @@
                 "scaling": [],
                 "sourceScope": "unknown",
                 "stack": null,
+                "stackTransitionTrigger": null,
                 "target": "Prey",
                 "targetCount": null,
                 "targetPriority": "any-eligible",
                 "targetScope": "any-lane",
+                "targetSelection": null,
                 "type": "Fire Damage",
                 "unit": "rate"
               },
               {
+                "activationRoll": null,
                 "calculated": false,
                 "casterEligibility": "unknown",
                 "conditionalMultipliers": [
@@ -3323,10 +3492,12 @@
                 ],
                 "sourceScope": "unknown",
                 "stack": null,
+                "stackTransitionTrigger": null,
                 "target": "Self",
                 "targetCount": null,
                 "targetPriority": "any-eligible",
                 "targetScope": "self",
+                "targetSelection": null,
                 "type": "Recovery",
                 "unit": "rate"
               }
@@ -3334,6 +3505,7 @@
             "id": "savage-claim-each-round",
             "repeat": null,
             "rounds": [],
+            "roundSelector": null,
             "targetPriority": "any-eligible",
             "timing": "each-round",
             "triggerChanceByHabitLevel": [],
@@ -3360,6 +3532,7 @@
     "rawDescription": "Each Round: if no enemy is currently marked as Prey, 40% chance to apply Prey. Rounds 1, 4, 7, 10: Fire Damage to one enemy, prioritizing Prey. Damage is doubled against Prey.",
     "schedules": [
       {
+        "activationRoll": null,
         "attempts": null,
         "battleContext": "unspecified",
         "conditions": [
@@ -3377,6 +3550,7 @@
         ],
         "effects": [
           {
+            "activationRoll": null,
             "calculated": false,
             "casterEligibility": "unknown",
             "conditionalMultipliers": [],
@@ -3405,10 +3579,12 @@
               "valuePerStackByHabitLevel": [],
               "valuePerStackFixed": null
             },
+            "stackTransitionTrigger": null,
             "target": "1 Enemy",
             "targetCount": null,
             "targetPriority": "prefer-received-recovery-last-round",
             "targetScope": "any-lane",
+            "targetSelection": null,
             "type": "Prey",
             "unit": "percent"
           }
@@ -3416,6 +3592,7 @@
         "id": "wild-hunt-apply-prey",
         "repeat": null,
         "rounds": [],
+        "roundSelector": null,
         "targetPriority": "prefer-received-recovery-last-round",
         "timing": "each-round",
         "triggerChanceByHabitLevel": [],
@@ -3423,11 +3600,13 @@
         "triggerEvent": "each-round"
       },
       {
+        "activationRoll": null,
         "attempts": null,
         "battleContext": "unspecified",
         "conditions": [],
         "effects": [
           {
+            "activationRoll": null,
             "calculated": false,
             "casterEligibility": "unknown",
             "conditionalMultipliers": [
@@ -3468,10 +3647,12 @@
             ],
             "sourceScope": "unknown",
             "stack": null,
+            "stackTransitionTrigger": null,
             "target": "1 Enemy",
             "targetCount": null,
             "targetPriority": "any-eligible",
             "targetScope": "any-lane",
+            "targetSelection": null,
             "type": "Fire Damage",
             "unit": "rate"
           }
@@ -3484,6 +3665,7 @@
           7,
           10
         ],
+        "roundSelector": null,
         "targetPriority": "prefer-prey",
         "timing": "specific-rounds",
         "triggerChanceByHabitLevel": [],
@@ -3575,6 +3757,7 @@
     {
       "abilityId": "sheepstealer-wild-hunt",
       "effect": {
+        "activationRoll": null,
         "calculated": false,
         "casterEligibility": "unknown",
         "conditionalMultipliers": [],
@@ -3603,10 +3786,12 @@
           "valuePerStackByHabitLevel": [],
           "valuePerStackFixed": null
         },
+        "stackTransitionTrigger": null,
         "target": "1 Enemy",
         "targetCount": null,
         "targetPriority": "prefer-received-recovery-last-round",
         "targetScope": "any-lane",
+        "targetSelection": null,
         "type": "Prey",
         "unit": "percent"
       },
@@ -3615,6 +3800,7 @@
     {
       "abilityId": "sheepstealer-wild-hunt",
       "effect": {
+        "activationRoll": null,
         "calculated": false,
         "casterEligibility": "unknown",
         "conditionalMultipliers": [
@@ -3655,10 +3841,12 @@
         ],
         "sourceScope": "unknown",
         "stack": null,
+        "stackTransitionTrigger": null,
         "target": "1 Enemy",
         "targetCount": null,
         "targetPriority": "any-eligible",
         "targetScope": "any-lane",
+        "targetSelection": null,
         "type": "Fire Damage",
         "unit": "rate"
       },
@@ -3667,6 +3855,7 @@
     {
       "abilityId": "sheepstealer-hunters-cunning",
       "effect": {
+        "activationRoll": null,
         "calculated": false,
         "casterEligibility": "unknown",
         "conditionalMultipliers": [],
@@ -3684,10 +3873,12 @@
         "scaling": [],
         "sourceScope": "unknown",
         "stack": null,
+        "stackTransitionTrigger": null,
         "target": "Self",
         "targetCount": null,
         "targetPriority": "any-eligible",
         "targetScope": "self",
+        "targetSelection": null,
         "type": "Recovery Received Up",
         "unit": "percent"
       },
@@ -3696,6 +3887,7 @@
     {
       "abilityId": "sheepstealer-hunters-cunning",
       "effect": {
+        "activationRoll": null,
         "calculated": false,
         "casterEligibility": "unknown",
         "conditionalMultipliers": [],
@@ -3713,10 +3905,12 @@
         "scaling": [],
         "sourceScope": "unknown",
         "stack": null,
+        "stackTransitionTrigger": null,
         "target": "Self",
         "targetCount": null,
         "targetPriority": "any-eligible",
         "targetScope": "self",
+        "targetSelection": null,
         "type": "Intelligence Up",
         "unit": "flat"
       },
@@ -3725,6 +3919,7 @@
     {
       "abilityId": "sheepstealer-hunters-cunning",
       "effect": {
+        "activationRoll": null,
         "calculated": false,
         "casterEligibility": "unknown",
         "conditionalMultipliers": [],
@@ -3742,10 +3937,12 @@
         "scaling": [],
         "sourceScope": "unknown",
         "stack": null,
+        "stackTransitionTrigger": null,
         "target": "Right Flank ally",
         "targetCount": null,
         "targetPriority": "any-eligible",
         "targetScope": "right-flank",
+        "targetSelection": null,
         "type": "Physical Damage Dealt Up",
         "unit": "percent"
       },
@@ -3754,6 +3951,7 @@
     {
       "abilityId": "sheepstealer-stolen-flock",
       "effect": {
+        "activationRoll": null,
         "calculated": false,
         "casterEligibility": "unknown",
         "conditionalMultipliers": [],
@@ -3797,10 +3995,12 @@
         "scaling": [],
         "sourceScope": "unknown",
         "stack": null,
+        "stackTransitionTrigger": null,
         "target": "Self",
         "targetCount": null,
         "targetPriority": "any-eligible",
         "targetScope": "self",
+        "targetSelection": null,
         "type": "Fire Damage Dealt Up",
         "unit": "percent"
       },
@@ -3809,6 +4009,7 @@
     {
       "abilityId": "sheepstealer-stolen-flock",
       "effect": {
+        "activationRoll": null,
         "calculated": false,
         "casterEligibility": "unknown",
         "conditionalMultipliers": [],
@@ -3860,10 +4061,12 @@
           ],
           "valuePerStackFixed": null
         },
+        "stackTransitionTrigger": null,
         "target": "Self",
         "targetCount": null,
         "targetPriority": "any-eligible",
         "targetScope": "self",
+        "targetSelection": null,
         "type": "Stolen Flock",
         "unit": "flat"
       },
@@ -3872,6 +4075,7 @@
     {
       "abilityId": "sheepstealer-stolen-flock",
       "effect": {
+        "activationRoll": null,
         "calculated": false,
         "casterEligibility": "unknown",
         "conditionalMultipliers": [],
@@ -3923,10 +4127,12 @@
           ],
           "valuePerStackFixed": null
         },
+        "stackTransitionTrigger": null,
         "target": "Self",
         "targetCount": null,
         "targetPriority": "any-eligible",
         "targetScope": "self",
+        "targetSelection": null,
         "type": "Stolen Flock",
         "unit": "flat"
       },
@@ -3935,6 +4141,7 @@
     {
       "abilityId": "sheepstealer-dragons-cunning",
       "effect": {
+        "activationRoll": null,
         "calculated": false,
         "casterEligibility": "unknown",
         "conditionalMultipliers": [],
@@ -3978,10 +4185,12 @@
         "scaling": [],
         "sourceScope": "unknown",
         "stack": null,
+        "stackTransitionTrigger": null,
         "target": "Self",
         "targetCount": null,
         "targetPriority": "any-eligible",
         "targetScope": "self",
+        "targetSelection": null,
         "type": "Intelligence Up",
         "unit": "percent"
       },
@@ -3990,6 +4199,7 @@
     {
       "abilityId": "sheepstealer-dragons-cunning",
       "effect": {
+        "activationRoll": null,
         "calculated": false,
         "casterEligibility": "unknown",
         "conditionalMultipliers": [],
@@ -4035,10 +4245,12 @@
         ],
         "sourceScope": "unknown",
         "stack": null,
+        "stackTransitionTrigger": null,
         "target": "2 Enemies",
         "targetCount": null,
         "targetPriority": "any-eligible",
         "targetScope": "within-adjacency",
+        "targetSelection": null,
         "type": "Instinct Down",
         "unit": "percent"
       },
@@ -4047,6 +4259,7 @@
     {
       "abilityId": "sheepstealer-baited-kill",
       "effect": {
+        "activationRoll": null,
         "calculated": false,
         "casterEligibility": "unknown",
         "conditionalMultipliers": [
@@ -4083,10 +4296,12 @@
         "scaling": [],
         "sourceScope": "unknown",
         "stack": null,
+        "stackTransitionTrigger": null,
         "target": "Prey",
         "targetCount": null,
         "targetPriority": "any-eligible",
         "targetScope": "any-lane",
+        "targetSelection": null,
         "type": "Vulnerable",
         "unit": "percent"
       },
@@ -4095,6 +4310,7 @@
     {
       "abilityId": "sheepstealer-baited-kill",
       "effect": {
+        "activationRoll": null,
         "calculated": false,
         "casterEligibility": "unknown",
         "conditionalMultipliers": [],
@@ -4112,10 +4328,12 @@
         "scaling": [],
         "sourceScope": "unknown",
         "stack": null,
+        "stackTransitionTrigger": null,
         "target": "Self",
         "targetCount": null,
         "targetPriority": "any-eligible",
         "targetScope": "self",
+        "targetSelection": null,
         "type": "Cleanse Negative",
         "unit": "flat"
       },
@@ -4124,6 +4342,7 @@
     {
       "abilityId": "sheepstealer-wary-beast",
       "effect": {
+        "activationRoll": null,
         "calculated": false,
         "casterEligibility": "unknown",
         "conditionalMultipliers": [],
@@ -4167,10 +4386,12 @@
         "scaling": [],
         "sourceScope": "unknown",
         "stack": null,
+        "stackTransitionTrigger": null,
         "target": "Self",
         "targetCount": null,
         "targetPriority": "any-eligible",
         "targetScope": "self",
+        "targetSelection": null,
         "type": "Evade",
         "unit": "percent"
       },
@@ -4179,6 +4400,7 @@
     {
       "abilityId": "sheepstealer-wary-beast",
       "effect": {
+        "activationRoll": null,
         "calculated": false,
         "casterEligibility": "unknown",
         "conditionalMultipliers": [],
@@ -4222,10 +4444,12 @@
         "scaling": [],
         "sourceScope": "unknown",
         "stack": null,
+        "stackTransitionTrigger": null,
         "target": "3 Enemies",
         "targetCount": null,
         "targetPriority": "any-eligible",
         "targetScope": "any-lane",
+        "targetSelection": null,
         "type": "Recovery Received Down",
         "unit": "percent"
       },
@@ -4234,6 +4458,7 @@
     {
       "abilityId": "sheepstealer-savage-claim",
       "effect": {
+        "activationRoll": null,
         "calculated": false,
         "casterEligibility": "unknown",
         "conditionalMultipliers": [
@@ -4302,10 +4527,12 @@
         "scaling": [],
         "sourceScope": "unknown",
         "stack": null,
+        "stackTransitionTrigger": null,
         "target": "Prey",
         "targetCount": null,
         "targetPriority": "any-eligible",
         "targetScope": "any-lane",
+        "targetSelection": null,
         "type": "Fire Damage",
         "unit": "rate"
       },
@@ -4314,6 +4541,7 @@
     {
       "abilityId": "sheepstealer-savage-claim",
       "effect": {
+        "activationRoll": null,
         "calculated": false,
         "casterEligibility": "unknown",
         "conditionalMultipliers": [
@@ -4385,10 +4613,12 @@
         ],
         "sourceScope": "unknown",
         "stack": null,
+        "stackTransitionTrigger": null,
         "target": "Self",
         "targetCount": null,
         "targetPriority": "any-eligible",
         "targetScope": "self",
+        "targetSelection": null,
         "type": "Recovery",
         "unit": "rate"
       },
@@ -4530,7 +4760,7 @@
   "firstObservedInGame": "2026-06-22",
   "format": "dragonfire-dragon-profile",
   "gameVersion": null,
-  "generatedAt": "2026-06-25T13:45:06.120Z",
+  "generatedAt": "2026-06-25T19:52:27.796Z",
   "habits": [
     {
       "abilityClass": "passive",
@@ -4575,6 +4805,7 @@
       "rawDescription": "PvE Fire Damage bonus and Stolen Flock stacks from each round or when Prey receives Recovery.",
       "schedules": [
         {
+          "activationRoll": null,
           "attempts": null,
           "battleContext": "non-player-food-tile",
           "conditions": [
@@ -4592,6 +4823,7 @@
           ],
           "effects": [
             {
+              "activationRoll": null,
               "calculated": false,
               "casterEligibility": "unknown",
               "conditionalMultipliers": [],
@@ -4635,10 +4867,12 @@
               "scaling": [],
               "sourceScope": "unknown",
               "stack": null,
+              "stackTransitionTrigger": null,
               "target": "Self",
               "targetCount": null,
               "targetPriority": "any-eligible",
               "targetScope": "self",
+              "targetSelection": null,
               "type": "Fire Damage Dealt Up",
               "unit": "percent"
             }
@@ -4646,6 +4880,7 @@
           "id": "stolen-flock-pve",
           "repeat": null,
           "rounds": [],
+          "roundSelector": null,
           "targetPriority": "any-eligible",
           "timing": "start-of-combat",
           "triggerChanceByHabitLevel": [],
@@ -4653,11 +4888,13 @@
           "triggerEvent": "start-of-combat"
         },
         {
+          "activationRoll": null,
           "attempts": null,
           "battleContext": "unspecified",
           "conditions": [],
           "effects": [
             {
+              "activationRoll": null,
               "calculated": false,
               "casterEligibility": "unknown",
               "conditionalMultipliers": [],
@@ -4709,10 +4946,12 @@
                 ],
                 "valuePerStackFixed": null
               },
+              "stackTransitionTrigger": null,
               "target": "Self",
               "targetCount": null,
               "targetPriority": "any-eligible",
               "targetScope": "self",
+              "targetSelection": null,
               "type": "Stolen Flock",
               "unit": "flat"
             }
@@ -4720,6 +4959,7 @@
           "id": "stolen-flock-each-round-stack",
           "repeat": null,
           "rounds": [],
+          "roundSelector": null,
           "targetPriority": "any-eligible",
           "timing": "each-round",
           "triggerChanceByHabitLevel": [],
@@ -4727,6 +4967,7 @@
           "triggerEvent": "each-round"
         },
         {
+          "activationRoll": null,
           "attempts": null,
           "battleContext": "unspecified",
           "conditions": [
@@ -4744,6 +4985,7 @@
           ],
           "effects": [
             {
+              "activationRoll": null,
               "calculated": false,
               "casterEligibility": "unknown",
               "conditionalMultipliers": [],
@@ -4795,10 +5037,12 @@
                 ],
                 "valuePerStackFixed": null
               },
+              "stackTransitionTrigger": null,
               "target": "Self",
               "targetCount": null,
               "targetPriority": "any-eligible",
               "targetScope": "self",
+              "targetSelection": null,
               "type": "Stolen Flock",
               "unit": "flat"
             }
@@ -4806,6 +5050,7 @@
           "id": "stolen-flock-prey-recovery-stack",
           "repeat": null,
           "rounds": [],
+          "roundSelector": null,
           "targetPriority": "any-eligible",
           "timing": "when-marked-target-receives-recovery",
           "triggerChanceByHabitLevel": [],
@@ -4870,11 +5115,13 @@
       "rawDescription": "Start of Combat: increase self Intelligence and reduce Instinct of two enemies within adjacency, enhanced by Initiative.",
       "schedules": [
         {
+          "activationRoll": null,
           "attempts": null,
           "battleContext": "unspecified",
           "conditions": [],
           "effects": [
             {
+              "activationRoll": null,
               "calculated": false,
               "casterEligibility": "unknown",
               "conditionalMultipliers": [],
@@ -4918,14 +5165,17 @@
               "scaling": [],
               "sourceScope": "unknown",
               "stack": null,
+              "stackTransitionTrigger": null,
               "target": "Self",
               "targetCount": null,
               "targetPriority": "any-eligible",
               "targetScope": "self",
+              "targetSelection": null,
               "type": "Intelligence Up",
               "unit": "percent"
             },
             {
+              "activationRoll": null,
               "calculated": false,
               "casterEligibility": "unknown",
               "conditionalMultipliers": [],
@@ -4971,10 +5221,12 @@
               ],
               "sourceScope": "unknown",
               "stack": null,
+              "stackTransitionTrigger": null,
               "target": "2 Enemies",
               "targetCount": null,
               "targetPriority": "any-eligible",
               "targetScope": "within-adjacency",
+              "targetSelection": null,
               "type": "Instinct Down",
               "unit": "percent"
             }
@@ -4982,6 +5234,7 @@
           "id": "dragons-cunning-start",
           "repeat": null,
           "rounds": [],
+          "roundSelector": null,
           "targetPriority": "any-eligible",
           "timing": "start-of-combat",
           "triggerChanceByHabitLevel": [],
@@ -5048,6 +5301,7 @@
       "rawDescription": "Each Round: apply Vulnerable to Prey, doubled chance if Prey received Recovery last round; cleanse Sheepstealer if Prey is above 50% Troop Capacity.",
       "schedules": [
         {
+          "activationRoll": null,
           "attempts": null,
           "battleContext": "unspecified",
           "conditions": [
@@ -5065,6 +5319,7 @@
           ],
           "effects": [
             {
+              "activationRoll": null,
               "calculated": false,
               "casterEligibility": "unknown",
               "conditionalMultipliers": [
@@ -5101,10 +5356,12 @@
               "scaling": [],
               "sourceScope": "unknown",
               "stack": null,
+              "stackTransitionTrigger": null,
               "target": "Prey",
               "targetCount": null,
               "targetPriority": "any-eligible",
               "targetScope": "any-lane",
+              "targetSelection": null,
               "type": "Vulnerable",
               "unit": "percent"
             }
@@ -5112,6 +5369,7 @@
           "id": "baited-kill-vulnerable",
           "repeat": null,
           "rounds": [],
+          "roundSelector": null,
           "targetPriority": "any-eligible",
           "timing": "each-round",
           "triggerChanceByHabitLevel": [
@@ -5145,6 +5403,7 @@
           "triggerEvent": "each-round"
         },
         {
+          "activationRoll": null,
           "attempts": null,
           "battleContext": "unspecified",
           "conditions": [
@@ -5173,6 +5432,7 @@
           ],
           "effects": [
             {
+              "activationRoll": null,
               "calculated": false,
               "casterEligibility": "unknown",
               "conditionalMultipliers": [],
@@ -5190,10 +5450,12 @@
               "scaling": [],
               "sourceScope": "unknown",
               "stack": null,
+              "stackTransitionTrigger": null,
               "target": "Self",
               "targetCount": null,
               "targetPriority": "any-eligible",
               "targetScope": "self",
+              "targetSelection": null,
               "type": "Cleanse Negative",
               "unit": "flat"
             }
@@ -5201,6 +5463,7 @@
           "id": "baited-kill-cleanse",
           "repeat": null,
           "rounds": [],
+          "roundSelector": null,
           "targetPriority": "any-eligible",
           "timing": "each-round",
           "triggerChanceByHabitLevel": [
@@ -5291,6 +5554,7 @@
       "rawDescription": "Start of Each Round: if Prey is above 50% Troop Capacity gain Evade. Start of Combat reduce Recovery Received of three enemies.",
       "schedules": [
         {
+          "activationRoll": null,
           "attempts": null,
           "battleContext": "unspecified",
           "conditions": [
@@ -5308,6 +5572,7 @@
           ],
           "effects": [
             {
+              "activationRoll": null,
               "calculated": false,
               "casterEligibility": "unknown",
               "conditionalMultipliers": [],
@@ -5351,10 +5616,12 @@
               "scaling": [],
               "sourceScope": "unknown",
               "stack": null,
+              "stackTransitionTrigger": null,
               "target": "Self",
               "targetCount": null,
               "targetPriority": "any-eligible",
               "targetScope": "self",
+              "targetSelection": null,
               "type": "Evade",
               "unit": "percent"
             }
@@ -5362,6 +5629,7 @@
           "id": "wary-beast-evade",
           "repeat": null,
           "rounds": [],
+          "roundSelector": null,
           "targetPriority": "any-eligible",
           "timing": "start-of-each-round",
           "triggerChanceByHabitLevel": [],
@@ -5369,11 +5637,13 @@
           "triggerEvent": "start-of-each-round"
         },
         {
+          "activationRoll": null,
           "attempts": null,
           "battleContext": "unspecified",
           "conditions": [],
           "effects": [
             {
+              "activationRoll": null,
               "calculated": false,
               "casterEligibility": "unknown",
               "conditionalMultipliers": [],
@@ -5417,10 +5687,12 @@
               "scaling": [],
               "sourceScope": "unknown",
               "stack": null,
+              "stackTransitionTrigger": null,
               "target": "3 Enemies",
               "targetCount": null,
               "targetPriority": "any-eligible",
               "targetScope": "any-lane",
+              "targetSelection": null,
               "type": "Recovery Received Down",
               "unit": "percent"
             }
@@ -5428,6 +5700,7 @@
           "id": "wary-beast-recovery-down",
           "repeat": null,
           "rounds": [],
+          "roundSelector": null,
           "targetPriority": "any-eligible",
           "timing": "start-of-combat",
           "triggerChanceByHabitLevel": [],
@@ -5492,6 +5765,7 @@
       "rawDescription": "Augments Wild Hunt: each round while Sheepstealer has Prey, deal Fire Damage to Prey and apply Recovery to Sheepstealer; triple both if Prey received Recovery previous round.",
       "schedules": [
         {
+          "activationRoll": null,
           "attempts": null,
           "battleContext": "unspecified",
           "conditions": [
@@ -5509,6 +5783,7 @@
           ],
           "effects": [
             {
+              "activationRoll": null,
               "calculated": false,
               "casterEligibility": "unknown",
               "conditionalMultipliers": [
@@ -5577,14 +5852,17 @@
               "scaling": [],
               "sourceScope": "unknown",
               "stack": null,
+              "stackTransitionTrigger": null,
               "target": "Prey",
               "targetCount": null,
               "targetPriority": "any-eligible",
               "targetScope": "any-lane",
+              "targetSelection": null,
               "type": "Fire Damage",
               "unit": "rate"
             },
             {
+              "activationRoll": null,
               "calculated": false,
               "casterEligibility": "unknown",
               "conditionalMultipliers": [
@@ -5656,10 +5934,12 @@
               ],
               "sourceScope": "unknown",
               "stack": null,
+              "stackTransitionTrigger": null,
               "target": "Self",
               "targetCount": null,
               "targetPriority": "any-eligible",
               "targetScope": "self",
+              "targetSelection": null,
               "type": "Recovery",
               "unit": "rate"
             }
@@ -5667,6 +5947,7 @@
           "id": "savage-claim-each-round",
           "repeat": null,
           "rounds": [],
+          "roundSelector": null,
           "targetPriority": "any-eligible",
           "timing": "each-round",
           "triggerChanceByHabitLevel": [],
@@ -7304,10 +7585,10 @@
   "rosterSourceStatus": "in-game-verified-pending-official-site",
   "slug": "sheepstealer",
   "source": {
-    "branch": "feature/formation-card-layout-polish",
-    "commit": "f3042ee26aa774020b87dbed1ffef7b37e85cb02",
-    "databaseVersion": "0.5.6",
-    "dataSchemaVersion": 9,
+    "branch": "feature/legendary-schema-hardening",
+    "commit": "96e0cb6df6957f19eea61aa67b38bfa905aef03c",
+    "databaseVersion": "0.6.0",
+    "dataSchemaVersion": 10,
     "gameBuild": "26.6.53509",
     "localRosterSchemaVersion": 3,
     "repository": "https://github.com/williamchildres/dragonfire-roster-builder"
@@ -7497,11 +7778,13 @@
     "rawDescription": "At Level 16+ and deployed in Vanguard, increase self Recovery Received +20%, self Intelligence +25, and Right Flank ally Physical Damage Dealt +10%.",
     "schedules": [
       {
+        "activationRoll": null,
         "attempts": null,
         "battleContext": "unspecified",
         "conditions": [],
         "effects": [
           {
+            "activationRoll": null,
             "calculated": false,
             "casterEligibility": "unknown",
             "conditionalMultipliers": [],
@@ -7519,14 +7802,17 @@
             "scaling": [],
             "sourceScope": "unknown",
             "stack": null,
+            "stackTransitionTrigger": null,
             "target": "Self",
             "targetCount": null,
             "targetPriority": "any-eligible",
             "targetScope": "self",
+            "targetSelection": null,
             "type": "Recovery Received Up",
             "unit": "percent"
           },
           {
+            "activationRoll": null,
             "calculated": false,
             "casterEligibility": "unknown",
             "conditionalMultipliers": [],
@@ -7544,14 +7830,17 @@
             "scaling": [],
             "sourceScope": "unknown",
             "stack": null,
+            "stackTransitionTrigger": null,
             "target": "Self",
             "targetCount": null,
             "targetPriority": "any-eligible",
             "targetScope": "self",
+            "targetSelection": null,
             "type": "Intelligence Up",
             "unit": "flat"
           },
           {
+            "activationRoll": null,
             "calculated": false,
             "casterEligibility": "unknown",
             "conditionalMultipliers": [],
@@ -7569,10 +7858,12 @@
             "scaling": [],
             "sourceScope": "unknown",
             "stack": null,
+            "stackTransitionTrigger": null,
             "target": "Right Flank ally",
             "targetCount": null,
             "targetPriority": "any-eligible",
             "targetScope": "right-flank",
+            "targetSelection": null,
             "type": "Physical Damage Dealt Up",
             "unit": "percent"
           }
@@ -7580,6 +7871,7 @@
         "id": "hunters-cunning-passive",
         "repeat": null,
         "rounds": [],
+        "roundSelector": null,
         "targetPriority": "any-eligible",
         "timing": "passive",
         "triggerChanceByHabitLevel": [],

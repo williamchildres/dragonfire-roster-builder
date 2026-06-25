@@ -6,6 +6,7 @@
         {
           "effectsAdded": [
             {
+              "activationRoll": null,
               "calculated": false,
               "casterEligibility": "unknown",
               "conditionalMultipliers": [
@@ -68,10 +69,12 @@
               "scaling": [],
               "sourceScope": "unknown",
               "stack": null,
+              "stackTransitionTrigger": null,
               "target": "2 Enemies",
               "targetCount": null,
               "targetPriority": "any-eligible",
               "targetScope": "within-adjacency",
+              "targetSelection": null,
               "type": "Physical Damage",
               "unit": "rate"
             }
@@ -85,11 +88,13 @@
           "rawDescription": "At 6+ Stars, successful Cleanse applies Infectious Wrath and adds scheduled Physical Damage.",
           "schedulesAdded": [
             {
+              "activationRoll": null,
               "attempts": null,
               "battleContext": "unspecified",
               "conditions": [],
               "effects": [
                 {
+                  "activationRoll": null,
                   "calculated": false,
                   "casterEligibility": "unknown",
                   "conditionalMultipliers": [],
@@ -141,10 +146,12 @@
                     ],
                     "valuePerStackFixed": null
                   },
+                  "stackTransitionTrigger": null,
                   "target": "Cleansed enemy",
                   "targetCount": null,
                   "targetPriority": "any-eligible",
                   "targetScope": "any-lane",
+                  "targetSelection": null,
                   "type": "Infectious Wrath",
                   "unit": "flat"
                 }
@@ -152,6 +159,7 @@
               "id": "infectious-wrath-on-cleanse",
               "repeat": null,
               "rounds": [],
+              "roundSelector": null,
               "targetPriority": "any-eligible",
               "timing": "on-successful-cleanse",
               "triggerChanceByHabitLevel": [],
@@ -159,11 +167,13 @@
               "triggerEvent": "on-successful-cleanse"
             },
             {
+              "activationRoll": null,
               "attempts": null,
               "battleContext": "unspecified",
               "conditions": [],
               "effects": [
                 {
+                  "activationRoll": null,
                   "calculated": false,
                   "casterEligibility": "unknown",
                   "conditionalMultipliers": [
@@ -226,10 +236,12 @@
                   "scaling": [],
                   "sourceScope": "unknown",
                   "stack": null,
+                  "stackTransitionTrigger": null,
                   "target": "2 Enemies",
                   "targetCount": null,
                   "targetPriority": "any-eligible",
                   "targetScope": "within-adjacency",
+                  "targetSelection": null,
                   "type": "Physical Damage",
                   "unit": "rate"
                 }
@@ -241,6 +253,7 @@
                 6,
                 9
               ],
+              "roundSelector": null,
               "targetPriority": "any-eligible",
               "timing": "specific-rounds",
               "triggerChanceByHabitLevel": [],
@@ -275,6 +288,7 @@
       "rawDescription": "Each Round: up to three independent 20% Cleanse attempts. Rounds 3, 6, 9: Fire Damage to one enemy in the same lane (Damage Rate: +190%).",
       "schedules": [
         {
+          "activationRoll": null,
           "attempts": {
             "attemptCount": 3,
             "chanceByHabitLevel": [],
@@ -286,6 +300,7 @@
           "conditions": [],
           "effects": [
             {
+              "activationRoll": null,
               "calculated": false,
               "casterEligibility": "unknown",
               "conditionalMultipliers": [],
@@ -303,10 +318,12 @@
               "scaling": [],
               "sourceScope": "unknown",
               "stack": null,
+              "stackTransitionTrigger": null,
               "target": "1 Enemy",
               "targetCount": null,
               "targetPriority": "any-eligible",
               "targetScope": "any-lane",
+              "targetSelection": null,
               "type": "Cleanse Positive",
               "unit": "flat"
             }
@@ -314,6 +331,7 @@
           "id": "cleansing-wrath-cleanse-positive",
           "repeat": null,
           "rounds": [],
+          "roundSelector": null,
           "targetPriority": "any-eligible",
           "timing": "each-round",
           "triggerChanceByHabitLevel": [],
@@ -321,11 +339,13 @@
           "triggerEvent": "each-round"
         },
         {
+          "activationRoll": null,
           "attempts": null,
           "battleContext": "unspecified",
           "conditions": [],
           "effects": [
             {
+              "activationRoll": null,
               "calculated": false,
               "casterEligibility": "unknown",
               "conditionalMultipliers": [],
@@ -347,10 +367,12 @@
               ],
               "sourceScope": "unknown",
               "stack": null,
+              "stackTransitionTrigger": null,
               "target": "1 Enemy",
               "targetCount": null,
               "targetPriority": "any-eligible",
               "targetScope": "same-lane",
+              "targetSelection": null,
               "type": "Fire Damage",
               "unit": "rate"
             }
@@ -362,6 +384,7 @@
             6,
             9
           ],
+          "roundSelector": null,
           "targetPriority": "any-eligible",
           "timing": "specific-rounds",
           "triggerChanceByHabitLevel": [],
@@ -401,11 +424,13 @@
       "rawDescription": "At Level 16+ and deployed in the Vanguard, increase self Strength, Intelligence, and Instinct by +15. Reduce Damage Received of the Right Flank ally by 8%.",
       "schedules": [
         {
+          "activationRoll": null,
           "attempts": null,
           "battleContext": "unspecified",
           "conditions": [],
           "effects": [
             {
+              "activationRoll": null,
               "calculated": false,
               "casterEligibility": "unknown",
               "conditionalMultipliers": [],
@@ -423,14 +448,17 @@
               "scaling": [],
               "sourceScope": "unknown",
               "stack": null,
+              "stackTransitionTrigger": null,
               "target": "Self",
               "targetCount": null,
               "targetPriority": "any-eligible",
               "targetScope": "self",
+              "targetSelection": null,
               "type": "Strength Up",
               "unit": "flat"
             },
             {
+              "activationRoll": null,
               "calculated": false,
               "casterEligibility": "unknown",
               "conditionalMultipliers": [],
@@ -448,14 +476,17 @@
               "scaling": [],
               "sourceScope": "unknown",
               "stack": null,
+              "stackTransitionTrigger": null,
               "target": "Self",
               "targetCount": null,
               "targetPriority": "any-eligible",
               "targetScope": "self",
+              "targetSelection": null,
               "type": "Intelligence Up",
               "unit": "flat"
             },
             {
+              "activationRoll": null,
               "calculated": false,
               "casterEligibility": "unknown",
               "conditionalMultipliers": [],
@@ -473,14 +504,17 @@
               "scaling": [],
               "sourceScope": "unknown",
               "stack": null,
+              "stackTransitionTrigger": null,
               "target": "Self",
               "targetCount": null,
               "targetPriority": "any-eligible",
               "targetScope": "self",
+              "targetSelection": null,
               "type": "Instinct Up",
               "unit": "flat"
             },
             {
+              "activationRoll": null,
               "calculated": false,
               "casterEligibility": "unknown",
               "conditionalMultipliers": [],
@@ -498,10 +532,12 @@
               "scaling": [],
               "sourceScope": "unknown",
               "stack": null,
+              "stackTransitionTrigger": null,
               "target": "Right Flank ally",
               "targetCount": null,
               "targetPriority": "any-eligible",
               "targetScope": "right-flank",
+              "targetSelection": null,
               "type": "Damage Received Down",
               "unit": "percent"
             }
@@ -509,6 +545,7 @@
           "id": "champions-brilliance-passive",
           "repeat": null,
           "rounds": [],
+          "roundSelector": null,
           "targetPriority": "any-eligible",
           "timing": "passive",
           "triggerChanceByHabitLevel": [],
@@ -575,11 +612,13 @@
       "rawDescription": "Start of Combat: Increase Intelligence and Initiative of the ally with highest Intelligence until end of combat.",
       "schedules": [
         {
+          "activationRoll": null,
           "attempts": null,
           "battleContext": "unspecified",
           "conditions": [],
           "effects": [
             {
+              "activationRoll": null,
               "calculated": false,
               "casterEligibility": "eligible-if-targeting-allows",
               "conditionalMultipliers": [],
@@ -623,14 +662,17 @@
               "scaling": [],
               "sourceScope": "unknown",
               "stack": null,
+              "stackTransitionTrigger": null,
               "target": "Ally with highest Intelligence",
               "targetCount": null,
               "targetPriority": "highest-stat-ally",
               "targetScope": "any-lane",
+              "targetSelection": null,
               "type": "Intelligence Up",
               "unit": "flat"
             },
             {
+              "activationRoll": null,
               "calculated": false,
               "casterEligibility": "eligible-if-targeting-allows",
               "conditionalMultipliers": [],
@@ -674,10 +716,12 @@
               "scaling": [],
               "sourceScope": "unknown",
               "stack": null,
+              "stackTransitionTrigger": null,
               "target": "Ally with highest Intelligence",
               "targetCount": null,
               "targetPriority": "highest-stat-ally",
               "targetScope": "any-lane",
+              "targetSelection": null,
               "type": "Initiative Up",
               "unit": "percent"
             }
@@ -685,6 +729,7 @@
           "id": "clever-maneuver-start-combat",
           "repeat": null,
           "rounds": [],
+          "roundSelector": null,
           "targetPriority": "highest-stat-ally",
           "timing": "start-of-combat",
           "triggerChanceByHabitLevel": [],
@@ -750,11 +795,13 @@
       "rawDescription": "Start of Combat: Increase Initiative of three Allies in any lane until end of combat, enhanced by Initiative.",
       "schedules": [
         {
+          "activationRoll": null,
           "attempts": null,
           "battleContext": "unspecified",
           "conditions": [],
           "effects": [
             {
+              "activationRoll": null,
               "calculated": false,
               "casterEligibility": "included",
               "conditionalMultipliers": [],
@@ -802,10 +849,12 @@
               ],
               "sourceScope": "unknown",
               "stack": null,
+              "stackTransitionTrigger": null,
               "target": "3 Allies",
               "targetCount": 3,
               "targetPriority": "any-eligible",
               "targetScope": "any-lane",
+              "targetSelection": null,
               "type": "Initiative Up",
               "unit": "percent"
             }
@@ -813,6 +862,7 @@
           "id": "winds-favor-start-combat",
           "repeat": null,
           "rounds": [],
+          "roundSelector": null,
           "targetPriority": "any-eligible",
           "timing": "start-of-combat",
           "triggerChanceByHabitLevel": [],
@@ -879,11 +929,13 @@
       "rawDescription": "Augments Cleansing Wrath with Infectious Wrath stacks and Panic-conditional Physical Damage.",
       "schedules": [
         {
+          "activationRoll": null,
           "attempts": null,
           "battleContext": "unspecified",
           "conditions": [],
           "effects": [
             {
+              "activationRoll": null,
               "calculated": false,
               "casterEligibility": "unknown",
               "conditionalMultipliers": [
@@ -946,10 +998,12 @@
               "scaling": [],
               "sourceScope": "unknown",
               "stack": null,
+              "stackTransitionTrigger": null,
               "target": "2 Enemies",
               "targetCount": null,
               "targetPriority": "any-eligible",
               "targetScope": "within-adjacency",
+              "targetSelection": null,
               "type": "Physical Damage",
               "unit": "rate"
             }
@@ -961,6 +1015,7 @@
             6,
             9
           ],
+          "roundSelector": null,
           "targetPriority": "any-eligible",
           "timing": "specific-rounds",
           "triggerChanceByHabitLevel": [],
@@ -1027,11 +1082,13 @@
       "rawDescription": "Start of Combat: Increase Intelligence and Fire Damage Dealt of two Allies within adjacency until end of combat.",
       "schedules": [
         {
+          "activationRoll": null,
           "attempts": null,
           "battleContext": "unspecified",
           "conditions": [],
           "effects": [
             {
+              "activationRoll": null,
               "calculated": false,
               "casterEligibility": "eligible-if-targeting-allows",
               "conditionalMultipliers": [],
@@ -1077,14 +1134,17 @@
               ],
               "sourceScope": "unknown",
               "stack": null,
+              "stackTransitionTrigger": null,
               "target": "2 Allies",
               "targetCount": null,
               "targetPriority": "any-eligible",
               "targetScope": "within-adjacency",
+              "targetSelection": null,
               "type": "Intelligence Up",
               "unit": "percent"
             },
             {
+              "activationRoll": null,
               "calculated": false,
               "casterEligibility": "eligible-if-targeting-allows",
               "conditionalMultipliers": [],
@@ -1128,10 +1188,12 @@
               "scaling": [],
               "sourceScope": "unknown",
               "stack": null,
+              "stackTransitionTrigger": null,
               "target": "2 Allies",
               "targetCount": null,
               "targetPriority": "any-eligible",
               "targetScope": "within-adjacency",
+              "targetSelection": null,
               "type": "Fire Damage Dealt Up",
               "unit": "percent"
             }
@@ -1139,6 +1201,7 @@
           "id": "cunning-ferocity-start-combat",
           "repeat": null,
           "rounds": [],
+          "roundSelector": null,
           "targetPriority": "any-eligible",
           "timing": "start-of-combat",
           "triggerChanceByHabitLevel": [],
@@ -1204,6 +1267,7 @@
       "rawDescription": "Each Round: grant Advantage above 50% Troop Capacity or Resistance below 50% Troop Capacity to 2 other Allies.",
       "schedules": [
         {
+          "activationRoll": null,
           "attempts": null,
           "battleContext": "unspecified",
           "conditions": [
@@ -1221,6 +1285,7 @@
           ],
           "effects": [
             {
+              "activationRoll": null,
               "calculated": false,
               "casterEligibility": "excluded",
               "conditionalMultipliers": [],
@@ -1250,10 +1315,12 @@
               "scaling": [],
               "sourceScope": "unknown",
               "stack": null,
+              "stackTransitionTrigger": null,
               "target": "2 other Allies",
               "targetCount": null,
               "targetPriority": "any-eligible",
               "targetScope": "any-lane",
+              "targetSelection": null,
               "type": "Advantage",
               "unit": "percent"
             }
@@ -1261,6 +1328,7 @@
           "id": "loyal-bond-advantage",
           "repeat": null,
           "rounds": [],
+          "roundSelector": null,
           "targetPriority": "any-eligible",
           "timing": "each-round",
           "triggerChanceByHabitLevel": [
@@ -1294,6 +1362,7 @@
           "triggerEvent": "each-round"
         },
         {
+          "activationRoll": null,
           "attempts": null,
           "battleContext": "unspecified",
           "conditions": [
@@ -1311,6 +1380,7 @@
           ],
           "effects": [
             {
+              "activationRoll": null,
               "calculated": false,
               "casterEligibility": "excluded",
               "conditionalMultipliers": [],
@@ -1342,10 +1412,12 @@
               "scaling": [],
               "sourceScope": "unknown",
               "stack": null,
+              "stackTransitionTrigger": null,
               "target": "2 other Allies",
               "targetCount": null,
               "targetPriority": "any-eligible",
               "targetScope": "any-lane",
+              "targetSelection": null,
               "type": "Resistance",
               "unit": "percent"
             }
@@ -1353,6 +1425,7 @@
           "id": "loyal-bond-resistance",
           "repeat": null,
           "rounds": [],
+          "roundSelector": null,
           "targetPriority": "any-eligible",
           "timing": "each-round",
           "triggerChanceByHabitLevel": [
@@ -1410,6 +1483,7 @@
       "abilityId": "seasmoke-cleansing-wrath",
       "abilityName": "Cleansing Wrath",
       "schedule": {
+        "activationRoll": null,
         "attempts": {
           "attemptCount": 3,
           "chanceByHabitLevel": [],
@@ -1421,6 +1495,7 @@
         "conditions": [],
         "effects": [
           {
+            "activationRoll": null,
             "calculated": false,
             "casterEligibility": "unknown",
             "conditionalMultipliers": [],
@@ -1438,10 +1513,12 @@
             "scaling": [],
             "sourceScope": "unknown",
             "stack": null,
+            "stackTransitionTrigger": null,
             "target": "1 Enemy",
             "targetCount": null,
             "targetPriority": "any-eligible",
             "targetScope": "any-lane",
+            "targetSelection": null,
             "type": "Cleanse Positive",
             "unit": "flat"
           }
@@ -1449,6 +1526,7 @@
         "id": "cleansing-wrath-cleanse-positive",
         "repeat": null,
         "rounds": [],
+        "roundSelector": null,
         "targetPriority": "any-eligible",
         "timing": "each-round",
         "triggerChanceByHabitLevel": [],
@@ -1460,11 +1538,13 @@
       "abilityId": "seasmoke-cleansing-wrath",
       "abilityName": "Cleansing Wrath",
       "schedule": {
+        "activationRoll": null,
         "attempts": null,
         "battleContext": "unspecified",
         "conditions": [],
         "effects": [
           {
+            "activationRoll": null,
             "calculated": false,
             "casterEligibility": "unknown",
             "conditionalMultipliers": [],
@@ -1486,10 +1566,12 @@
             ],
             "sourceScope": "unknown",
             "stack": null,
+            "stackTransitionTrigger": null,
             "target": "1 Enemy",
             "targetCount": null,
             "targetPriority": "any-eligible",
             "targetScope": "same-lane",
+            "targetSelection": null,
             "type": "Fire Damage",
             "unit": "rate"
           }
@@ -1501,6 +1583,7 @@
           6,
           9
         ],
+        "roundSelector": null,
         "targetPriority": "any-eligible",
         "timing": "specific-rounds",
         "triggerChanceByHabitLevel": [],
@@ -1512,11 +1595,13 @@
       "abilityId": "seasmoke-champions-brilliance",
       "abilityName": "Champion's Brilliance",
       "schedule": {
+        "activationRoll": null,
         "attempts": null,
         "battleContext": "unspecified",
         "conditions": [],
         "effects": [
           {
+            "activationRoll": null,
             "calculated": false,
             "casterEligibility": "unknown",
             "conditionalMultipliers": [],
@@ -1534,14 +1619,17 @@
             "scaling": [],
             "sourceScope": "unknown",
             "stack": null,
+            "stackTransitionTrigger": null,
             "target": "Self",
             "targetCount": null,
             "targetPriority": "any-eligible",
             "targetScope": "self",
+            "targetSelection": null,
             "type": "Strength Up",
             "unit": "flat"
           },
           {
+            "activationRoll": null,
             "calculated": false,
             "casterEligibility": "unknown",
             "conditionalMultipliers": [],
@@ -1559,14 +1647,17 @@
             "scaling": [],
             "sourceScope": "unknown",
             "stack": null,
+            "stackTransitionTrigger": null,
             "target": "Self",
             "targetCount": null,
             "targetPriority": "any-eligible",
             "targetScope": "self",
+            "targetSelection": null,
             "type": "Intelligence Up",
             "unit": "flat"
           },
           {
+            "activationRoll": null,
             "calculated": false,
             "casterEligibility": "unknown",
             "conditionalMultipliers": [],
@@ -1584,14 +1675,17 @@
             "scaling": [],
             "sourceScope": "unknown",
             "stack": null,
+            "stackTransitionTrigger": null,
             "target": "Self",
             "targetCount": null,
             "targetPriority": "any-eligible",
             "targetScope": "self",
+            "targetSelection": null,
             "type": "Instinct Up",
             "unit": "flat"
           },
           {
+            "activationRoll": null,
             "calculated": false,
             "casterEligibility": "unknown",
             "conditionalMultipliers": [],
@@ -1609,10 +1703,12 @@
             "scaling": [],
             "sourceScope": "unknown",
             "stack": null,
+            "stackTransitionTrigger": null,
             "target": "Right Flank ally",
             "targetCount": null,
             "targetPriority": "any-eligible",
             "targetScope": "right-flank",
+            "targetSelection": null,
             "type": "Damage Received Down",
             "unit": "percent"
           }
@@ -1620,6 +1716,7 @@
         "id": "champions-brilliance-passive",
         "repeat": null,
         "rounds": [],
+        "roundSelector": null,
         "targetPriority": "any-eligible",
         "timing": "passive",
         "triggerChanceByHabitLevel": [],
@@ -1631,11 +1728,13 @@
       "abilityId": "seasmoke-clever-maneuver",
       "abilityName": "Clever Maneuver",
       "schedule": {
+        "activationRoll": null,
         "attempts": null,
         "battleContext": "unspecified",
         "conditions": [],
         "effects": [
           {
+            "activationRoll": null,
             "calculated": false,
             "casterEligibility": "eligible-if-targeting-allows",
             "conditionalMultipliers": [],
@@ -1679,14 +1778,17 @@
             "scaling": [],
             "sourceScope": "unknown",
             "stack": null,
+            "stackTransitionTrigger": null,
             "target": "Ally with highest Intelligence",
             "targetCount": null,
             "targetPriority": "highest-stat-ally",
             "targetScope": "any-lane",
+            "targetSelection": null,
             "type": "Intelligence Up",
             "unit": "flat"
           },
           {
+            "activationRoll": null,
             "calculated": false,
             "casterEligibility": "eligible-if-targeting-allows",
             "conditionalMultipliers": [],
@@ -1730,10 +1832,12 @@
             "scaling": [],
             "sourceScope": "unknown",
             "stack": null,
+            "stackTransitionTrigger": null,
             "target": "Ally with highest Intelligence",
             "targetCount": null,
             "targetPriority": "highest-stat-ally",
             "targetScope": "any-lane",
+            "targetSelection": null,
             "type": "Initiative Up",
             "unit": "percent"
           }
@@ -1741,6 +1845,7 @@
         "id": "clever-maneuver-start-combat",
         "repeat": null,
         "rounds": [],
+        "roundSelector": null,
         "targetPriority": "highest-stat-ally",
         "timing": "start-of-combat",
         "triggerChanceByHabitLevel": [],
@@ -1752,11 +1857,13 @@
       "abilityId": "seasmoke-winds-favor",
       "abilityName": "Wind's Favor",
       "schedule": {
+        "activationRoll": null,
         "attempts": null,
         "battleContext": "unspecified",
         "conditions": [],
         "effects": [
           {
+            "activationRoll": null,
             "calculated": false,
             "casterEligibility": "included",
             "conditionalMultipliers": [],
@@ -1804,10 +1911,12 @@
             ],
             "sourceScope": "unknown",
             "stack": null,
+            "stackTransitionTrigger": null,
             "target": "3 Allies",
             "targetCount": 3,
             "targetPriority": "any-eligible",
             "targetScope": "any-lane",
+            "targetSelection": null,
             "type": "Initiative Up",
             "unit": "percent"
           }
@@ -1815,6 +1924,7 @@
         "id": "winds-favor-start-combat",
         "repeat": null,
         "rounds": [],
+        "roundSelector": null,
         "targetPriority": "any-eligible",
         "timing": "start-of-combat",
         "triggerChanceByHabitLevel": [],
@@ -1826,11 +1936,13 @@
       "abilityId": "seasmoke-infectious-wrath",
       "abilityName": "Infectious Wrath",
       "schedule": {
+        "activationRoll": null,
         "attempts": null,
         "battleContext": "unspecified",
         "conditions": [],
         "effects": [
           {
+            "activationRoll": null,
             "calculated": false,
             "casterEligibility": "unknown",
             "conditionalMultipliers": [
@@ -1893,10 +2005,12 @@
             "scaling": [],
             "sourceScope": "unknown",
             "stack": null,
+            "stackTransitionTrigger": null,
             "target": "2 Enemies",
             "targetCount": null,
             "targetPriority": "any-eligible",
             "targetScope": "within-adjacency",
+            "targetSelection": null,
             "type": "Physical Damage",
             "unit": "rate"
           }
@@ -1908,6 +2022,7 @@
           6,
           9
         ],
+        "roundSelector": null,
         "targetPriority": "any-eligible",
         "timing": "specific-rounds",
         "triggerChanceByHabitLevel": [],
@@ -1919,11 +2034,13 @@
       "abilityId": "seasmoke-cunning-ferocity",
       "abilityName": "Cunning Ferocity",
       "schedule": {
+        "activationRoll": null,
         "attempts": null,
         "battleContext": "unspecified",
         "conditions": [],
         "effects": [
           {
+            "activationRoll": null,
             "calculated": false,
             "casterEligibility": "eligible-if-targeting-allows",
             "conditionalMultipliers": [],
@@ -1969,14 +2086,17 @@
             ],
             "sourceScope": "unknown",
             "stack": null,
+            "stackTransitionTrigger": null,
             "target": "2 Allies",
             "targetCount": null,
             "targetPriority": "any-eligible",
             "targetScope": "within-adjacency",
+            "targetSelection": null,
             "type": "Intelligence Up",
             "unit": "percent"
           },
           {
+            "activationRoll": null,
             "calculated": false,
             "casterEligibility": "eligible-if-targeting-allows",
             "conditionalMultipliers": [],
@@ -2020,10 +2140,12 @@
             "scaling": [],
             "sourceScope": "unknown",
             "stack": null,
+            "stackTransitionTrigger": null,
             "target": "2 Allies",
             "targetCount": null,
             "targetPriority": "any-eligible",
             "targetScope": "within-adjacency",
+            "targetSelection": null,
             "type": "Fire Damage Dealt Up",
             "unit": "percent"
           }
@@ -2031,6 +2153,7 @@
         "id": "cunning-ferocity-start-combat",
         "repeat": null,
         "rounds": [],
+        "roundSelector": null,
         "targetPriority": "any-eligible",
         "timing": "start-of-combat",
         "triggerChanceByHabitLevel": [],
@@ -2042,6 +2165,7 @@
       "abilityId": "seasmoke-loyal-bond",
       "abilityName": "Loyal Bond",
       "schedule": {
+        "activationRoll": null,
         "attempts": null,
         "battleContext": "unspecified",
         "conditions": [
@@ -2059,6 +2183,7 @@
         ],
         "effects": [
           {
+            "activationRoll": null,
             "calculated": false,
             "casterEligibility": "excluded",
             "conditionalMultipliers": [],
@@ -2088,10 +2213,12 @@
             "scaling": [],
             "sourceScope": "unknown",
             "stack": null,
+            "stackTransitionTrigger": null,
             "target": "2 other Allies",
             "targetCount": null,
             "targetPriority": "any-eligible",
             "targetScope": "any-lane",
+            "targetSelection": null,
             "type": "Advantage",
             "unit": "percent"
           }
@@ -2099,6 +2226,7 @@
         "id": "loyal-bond-advantage",
         "repeat": null,
         "rounds": [],
+        "roundSelector": null,
         "targetPriority": "any-eligible",
         "timing": "each-round",
         "triggerChanceByHabitLevel": [
@@ -2136,6 +2264,7 @@
       "abilityId": "seasmoke-loyal-bond",
       "abilityName": "Loyal Bond",
       "schedule": {
+        "activationRoll": null,
         "attempts": null,
         "battleContext": "unspecified",
         "conditions": [
@@ -2153,6 +2282,7 @@
         ],
         "effects": [
           {
+            "activationRoll": null,
             "calculated": false,
             "casterEligibility": "excluded",
             "conditionalMultipliers": [],
@@ -2184,10 +2314,12 @@
             "scaling": [],
             "sourceScope": "unknown",
             "stack": null,
+            "stackTransitionTrigger": null,
             "target": "2 other Allies",
             "targetCount": null,
             "targetPriority": "any-eligible",
             "targetScope": "any-lane",
+            "targetSelection": null,
             "type": "Resistance",
             "unit": "percent"
           }
@@ -2195,6 +2327,7 @@
         "id": "loyal-bond-resistance",
         "repeat": null,
         "rounds": [],
+        "roundSelector": null,
         "targetPriority": "any-eligible",
         "timing": "each-round",
         "triggerChanceByHabitLevel": [
@@ -2298,6 +2431,7 @@
       {
         "effectsAdded": [
           {
+            "activationRoll": null,
             "calculated": false,
             "casterEligibility": "unknown",
             "conditionalMultipliers": [
@@ -2360,10 +2494,12 @@
             "scaling": [],
             "sourceScope": "unknown",
             "stack": null,
+            "stackTransitionTrigger": null,
             "target": "2 Enemies",
             "targetCount": null,
             "targetPriority": "any-eligible",
             "targetScope": "within-adjacency",
+            "targetSelection": null,
             "type": "Physical Damage",
             "unit": "rate"
           }
@@ -2377,11 +2513,13 @@
         "rawDescription": "At 6+ Stars, successful Cleanse applies Infectious Wrath and adds scheduled Physical Damage.",
         "schedulesAdded": [
           {
+            "activationRoll": null,
             "attempts": null,
             "battleContext": "unspecified",
             "conditions": [],
             "effects": [
               {
+                "activationRoll": null,
                 "calculated": false,
                 "casterEligibility": "unknown",
                 "conditionalMultipliers": [],
@@ -2433,10 +2571,12 @@
                   ],
                   "valuePerStackFixed": null
                 },
+                "stackTransitionTrigger": null,
                 "target": "Cleansed enemy",
                 "targetCount": null,
                 "targetPriority": "any-eligible",
                 "targetScope": "any-lane",
+                "targetSelection": null,
                 "type": "Infectious Wrath",
                 "unit": "flat"
               }
@@ -2444,6 +2584,7 @@
             "id": "infectious-wrath-on-cleanse",
             "repeat": null,
             "rounds": [],
+            "roundSelector": null,
             "targetPriority": "any-eligible",
             "timing": "on-successful-cleanse",
             "triggerChanceByHabitLevel": [],
@@ -2451,11 +2592,13 @@
             "triggerEvent": "on-successful-cleanse"
           },
           {
+            "activationRoll": null,
             "attempts": null,
             "battleContext": "unspecified",
             "conditions": [],
             "effects": [
               {
+                "activationRoll": null,
                 "calculated": false,
                 "casterEligibility": "unknown",
                 "conditionalMultipliers": [
@@ -2518,10 +2661,12 @@
                 "scaling": [],
                 "sourceScope": "unknown",
                 "stack": null,
+                "stackTransitionTrigger": null,
                 "target": "2 Enemies",
                 "targetCount": null,
                 "targetPriority": "any-eligible",
                 "targetScope": "within-adjacency",
+                "targetSelection": null,
                 "type": "Physical Damage",
                 "unit": "rate"
               }
@@ -2533,6 +2678,7 @@
               6,
               9
             ],
+            "roundSelector": null,
             "targetPriority": "any-eligible",
             "timing": "specific-rounds",
             "triggerChanceByHabitLevel": [],
@@ -2567,6 +2713,7 @@
     "rawDescription": "Each Round: up to three independent 20% Cleanse attempts. Rounds 3, 6, 9: Fire Damage to one enemy in the same lane (Damage Rate: +190%).",
     "schedules": [
       {
+        "activationRoll": null,
         "attempts": {
           "attemptCount": 3,
           "chanceByHabitLevel": [],
@@ -2578,6 +2725,7 @@
         "conditions": [],
         "effects": [
           {
+            "activationRoll": null,
             "calculated": false,
             "casterEligibility": "unknown",
             "conditionalMultipliers": [],
@@ -2595,10 +2743,12 @@
             "scaling": [],
             "sourceScope": "unknown",
             "stack": null,
+            "stackTransitionTrigger": null,
             "target": "1 Enemy",
             "targetCount": null,
             "targetPriority": "any-eligible",
             "targetScope": "any-lane",
+            "targetSelection": null,
             "type": "Cleanse Positive",
             "unit": "flat"
           }
@@ -2606,6 +2756,7 @@
         "id": "cleansing-wrath-cleanse-positive",
         "repeat": null,
         "rounds": [],
+        "roundSelector": null,
         "targetPriority": "any-eligible",
         "timing": "each-round",
         "triggerChanceByHabitLevel": [],
@@ -2613,11 +2764,13 @@
         "triggerEvent": "each-round"
       },
       {
+        "activationRoll": null,
         "attempts": null,
         "battleContext": "unspecified",
         "conditions": [],
         "effects": [
           {
+            "activationRoll": null,
             "calculated": false,
             "casterEligibility": "unknown",
             "conditionalMultipliers": [],
@@ -2639,10 +2792,12 @@
             ],
             "sourceScope": "unknown",
             "stack": null,
+            "stackTransitionTrigger": null,
             "target": "1 Enemy",
             "targetCount": null,
             "targetPriority": "any-eligible",
             "targetScope": "same-lane",
+            "targetSelection": null,
             "type": "Fire Damage",
             "unit": "rate"
           }
@@ -2654,6 +2809,7 @@
           6,
           9
         ],
+        "roundSelector": null,
         "targetPriority": "any-eligible",
         "timing": "specific-rounds",
         "triggerChanceByHabitLevel": [],
@@ -2735,6 +2891,7 @@
     {
       "abilityId": "seasmoke-cleansing-wrath",
       "effect": {
+        "activationRoll": null,
         "calculated": false,
         "casterEligibility": "unknown",
         "conditionalMultipliers": [],
@@ -2752,10 +2909,12 @@
         "scaling": [],
         "sourceScope": "unknown",
         "stack": null,
+        "stackTransitionTrigger": null,
         "target": "1 Enemy",
         "targetCount": null,
         "targetPriority": "any-eligible",
         "targetScope": "any-lane",
+        "targetSelection": null,
         "type": "Cleanse Positive",
         "unit": "flat"
       },
@@ -2764,6 +2923,7 @@
     {
       "abilityId": "seasmoke-cleansing-wrath",
       "effect": {
+        "activationRoll": null,
         "calculated": false,
         "casterEligibility": "unknown",
         "conditionalMultipliers": [],
@@ -2785,10 +2945,12 @@
         ],
         "sourceScope": "unknown",
         "stack": null,
+        "stackTransitionTrigger": null,
         "target": "1 Enemy",
         "targetCount": null,
         "targetPriority": "any-eligible",
         "targetScope": "same-lane",
+        "targetSelection": null,
         "type": "Fire Damage",
         "unit": "rate"
       },
@@ -2797,6 +2959,7 @@
     {
       "abilityId": "seasmoke-champions-brilliance",
       "effect": {
+        "activationRoll": null,
         "calculated": false,
         "casterEligibility": "unknown",
         "conditionalMultipliers": [],
@@ -2814,10 +2977,12 @@
         "scaling": [],
         "sourceScope": "unknown",
         "stack": null,
+        "stackTransitionTrigger": null,
         "target": "Self",
         "targetCount": null,
         "targetPriority": "any-eligible",
         "targetScope": "self",
+        "targetSelection": null,
         "type": "Strength Up",
         "unit": "flat"
       },
@@ -2826,6 +2991,7 @@
     {
       "abilityId": "seasmoke-champions-brilliance",
       "effect": {
+        "activationRoll": null,
         "calculated": false,
         "casterEligibility": "unknown",
         "conditionalMultipliers": [],
@@ -2843,10 +3009,12 @@
         "scaling": [],
         "sourceScope": "unknown",
         "stack": null,
+        "stackTransitionTrigger": null,
         "target": "Self",
         "targetCount": null,
         "targetPriority": "any-eligible",
         "targetScope": "self",
+        "targetSelection": null,
         "type": "Intelligence Up",
         "unit": "flat"
       },
@@ -2855,6 +3023,7 @@
     {
       "abilityId": "seasmoke-champions-brilliance",
       "effect": {
+        "activationRoll": null,
         "calculated": false,
         "casterEligibility": "unknown",
         "conditionalMultipliers": [],
@@ -2872,10 +3041,12 @@
         "scaling": [],
         "sourceScope": "unknown",
         "stack": null,
+        "stackTransitionTrigger": null,
         "target": "Self",
         "targetCount": null,
         "targetPriority": "any-eligible",
         "targetScope": "self",
+        "targetSelection": null,
         "type": "Instinct Up",
         "unit": "flat"
       },
@@ -2884,6 +3055,7 @@
     {
       "abilityId": "seasmoke-champions-brilliance",
       "effect": {
+        "activationRoll": null,
         "calculated": false,
         "casterEligibility": "unknown",
         "conditionalMultipliers": [],
@@ -2901,10 +3073,12 @@
         "scaling": [],
         "sourceScope": "unknown",
         "stack": null,
+        "stackTransitionTrigger": null,
         "target": "Right Flank ally",
         "targetCount": null,
         "targetPriority": "any-eligible",
         "targetScope": "right-flank",
+        "targetSelection": null,
         "type": "Damage Received Down",
         "unit": "percent"
       },
@@ -2913,6 +3087,7 @@
     {
       "abilityId": "seasmoke-clever-maneuver",
       "effect": {
+        "activationRoll": null,
         "calculated": false,
         "casterEligibility": "eligible-if-targeting-allows",
         "conditionalMultipliers": [],
@@ -2956,10 +3131,12 @@
         "scaling": [],
         "sourceScope": "unknown",
         "stack": null,
+        "stackTransitionTrigger": null,
         "target": "Ally with highest Intelligence",
         "targetCount": null,
         "targetPriority": "highest-stat-ally",
         "targetScope": "any-lane",
+        "targetSelection": null,
         "type": "Intelligence Up",
         "unit": "flat"
       },
@@ -2968,6 +3145,7 @@
     {
       "abilityId": "seasmoke-clever-maneuver",
       "effect": {
+        "activationRoll": null,
         "calculated": false,
         "casterEligibility": "eligible-if-targeting-allows",
         "conditionalMultipliers": [],
@@ -3011,10 +3189,12 @@
         "scaling": [],
         "sourceScope": "unknown",
         "stack": null,
+        "stackTransitionTrigger": null,
         "target": "Ally with highest Intelligence",
         "targetCount": null,
         "targetPriority": "highest-stat-ally",
         "targetScope": "any-lane",
+        "targetSelection": null,
         "type": "Initiative Up",
         "unit": "percent"
       },
@@ -3023,6 +3203,7 @@
     {
       "abilityId": "seasmoke-winds-favor",
       "effect": {
+        "activationRoll": null,
         "calculated": false,
         "casterEligibility": "included",
         "conditionalMultipliers": [],
@@ -3070,10 +3251,12 @@
         ],
         "sourceScope": "unknown",
         "stack": null,
+        "stackTransitionTrigger": null,
         "target": "3 Allies",
         "targetCount": 3,
         "targetPriority": "any-eligible",
         "targetScope": "any-lane",
+        "targetSelection": null,
         "type": "Initiative Up",
         "unit": "percent"
       },
@@ -3082,6 +3265,7 @@
     {
       "abilityId": "seasmoke-infectious-wrath",
       "effect": {
+        "activationRoll": null,
         "calculated": false,
         "casterEligibility": "unknown",
         "conditionalMultipliers": [
@@ -3144,10 +3328,12 @@
         "scaling": [],
         "sourceScope": "unknown",
         "stack": null,
+        "stackTransitionTrigger": null,
         "target": "2 Enemies",
         "targetCount": null,
         "targetPriority": "any-eligible",
         "targetScope": "within-adjacency",
+        "targetSelection": null,
         "type": "Physical Damage",
         "unit": "rate"
       },
@@ -3156,6 +3342,7 @@
     {
       "abilityId": "seasmoke-cunning-ferocity",
       "effect": {
+        "activationRoll": null,
         "calculated": false,
         "casterEligibility": "eligible-if-targeting-allows",
         "conditionalMultipliers": [],
@@ -3201,10 +3388,12 @@
         ],
         "sourceScope": "unknown",
         "stack": null,
+        "stackTransitionTrigger": null,
         "target": "2 Allies",
         "targetCount": null,
         "targetPriority": "any-eligible",
         "targetScope": "within-adjacency",
+        "targetSelection": null,
         "type": "Intelligence Up",
         "unit": "percent"
       },
@@ -3213,6 +3402,7 @@
     {
       "abilityId": "seasmoke-cunning-ferocity",
       "effect": {
+        "activationRoll": null,
         "calculated": false,
         "casterEligibility": "eligible-if-targeting-allows",
         "conditionalMultipliers": [],
@@ -3256,10 +3446,12 @@
         "scaling": [],
         "sourceScope": "unknown",
         "stack": null,
+        "stackTransitionTrigger": null,
         "target": "2 Allies",
         "targetCount": null,
         "targetPriority": "any-eligible",
         "targetScope": "within-adjacency",
+        "targetSelection": null,
         "type": "Fire Damage Dealt Up",
         "unit": "percent"
       },
@@ -3268,6 +3460,7 @@
     {
       "abilityId": "seasmoke-loyal-bond",
       "effect": {
+        "activationRoll": null,
         "calculated": false,
         "casterEligibility": "excluded",
         "conditionalMultipliers": [],
@@ -3297,10 +3490,12 @@
         "scaling": [],
         "sourceScope": "unknown",
         "stack": null,
+        "stackTransitionTrigger": null,
         "target": "2 other Allies",
         "targetCount": null,
         "targetPriority": "any-eligible",
         "targetScope": "any-lane",
+        "targetSelection": null,
         "type": "Advantage",
         "unit": "percent"
       },
@@ -3309,6 +3504,7 @@
     {
       "abilityId": "seasmoke-loyal-bond",
       "effect": {
+        "activationRoll": null,
         "calculated": false,
         "casterEligibility": "excluded",
         "conditionalMultipliers": [],
@@ -3340,10 +3536,12 @@
         "scaling": [],
         "sourceScope": "unknown",
         "stack": null,
+        "stackTransitionTrigger": null,
         "target": "2 other Allies",
         "targetCount": null,
         "targetPriority": "any-eligible",
         "targetScope": "any-lane",
+        "targetSelection": null,
         "type": "Resistance",
         "unit": "percent"
       },
@@ -3472,7 +3670,7 @@
   "firstObservedInGame": null,
   "format": "dragonfire-dragon-profile",
   "gameVersion": null,
-  "generatedAt": "2026-06-25T13:45:06.120Z",
+  "generatedAt": "2026-06-25T19:52:27.796Z",
   "habits": [
     {
       "abilityClass": "passive",
@@ -3517,11 +3715,13 @@
       "rawDescription": "Start of Combat: Increase Intelligence and Initiative of the ally with highest Intelligence until end of combat.",
       "schedules": [
         {
+          "activationRoll": null,
           "attempts": null,
           "battleContext": "unspecified",
           "conditions": [],
           "effects": [
             {
+              "activationRoll": null,
               "calculated": false,
               "casterEligibility": "eligible-if-targeting-allows",
               "conditionalMultipliers": [],
@@ -3565,14 +3765,17 @@
               "scaling": [],
               "sourceScope": "unknown",
               "stack": null,
+              "stackTransitionTrigger": null,
               "target": "Ally with highest Intelligence",
               "targetCount": null,
               "targetPriority": "highest-stat-ally",
               "targetScope": "any-lane",
+              "targetSelection": null,
               "type": "Intelligence Up",
               "unit": "flat"
             },
             {
+              "activationRoll": null,
               "calculated": false,
               "casterEligibility": "eligible-if-targeting-allows",
               "conditionalMultipliers": [],
@@ -3616,10 +3819,12 @@
               "scaling": [],
               "sourceScope": "unknown",
               "stack": null,
+              "stackTransitionTrigger": null,
               "target": "Ally with highest Intelligence",
               "targetCount": null,
               "targetPriority": "highest-stat-ally",
               "targetScope": "any-lane",
+              "targetSelection": null,
               "type": "Initiative Up",
               "unit": "percent"
             }
@@ -3627,6 +3832,7 @@
           "id": "clever-maneuver-start-combat",
           "repeat": null,
           "rounds": [],
+          "roundSelector": null,
           "targetPriority": "highest-stat-ally",
           "timing": "start-of-combat",
           "triggerChanceByHabitLevel": [],
@@ -3692,11 +3898,13 @@
       "rawDescription": "Start of Combat: Increase Initiative of three Allies in any lane until end of combat, enhanced by Initiative.",
       "schedules": [
         {
+          "activationRoll": null,
           "attempts": null,
           "battleContext": "unspecified",
           "conditions": [],
           "effects": [
             {
+              "activationRoll": null,
               "calculated": false,
               "casterEligibility": "included",
               "conditionalMultipliers": [],
@@ -3744,10 +3952,12 @@
               ],
               "sourceScope": "unknown",
               "stack": null,
+              "stackTransitionTrigger": null,
               "target": "3 Allies",
               "targetCount": 3,
               "targetPriority": "any-eligible",
               "targetScope": "any-lane",
+              "targetSelection": null,
               "type": "Initiative Up",
               "unit": "percent"
             }
@@ -3755,6 +3965,7 @@
           "id": "winds-favor-start-combat",
           "repeat": null,
           "rounds": [],
+          "roundSelector": null,
           "targetPriority": "any-eligible",
           "timing": "start-of-combat",
           "triggerChanceByHabitLevel": [],
@@ -3821,11 +4032,13 @@
       "rawDescription": "Augments Cleansing Wrath with Infectious Wrath stacks and Panic-conditional Physical Damage.",
       "schedules": [
         {
+          "activationRoll": null,
           "attempts": null,
           "battleContext": "unspecified",
           "conditions": [],
           "effects": [
             {
+              "activationRoll": null,
               "calculated": false,
               "casterEligibility": "unknown",
               "conditionalMultipliers": [
@@ -3888,10 +4101,12 @@
               "scaling": [],
               "sourceScope": "unknown",
               "stack": null,
+              "stackTransitionTrigger": null,
               "target": "2 Enemies",
               "targetCount": null,
               "targetPriority": "any-eligible",
               "targetScope": "within-adjacency",
+              "targetSelection": null,
               "type": "Physical Damage",
               "unit": "rate"
             }
@@ -3903,6 +4118,7 @@
             6,
             9
           ],
+          "roundSelector": null,
           "targetPriority": "any-eligible",
           "timing": "specific-rounds",
           "triggerChanceByHabitLevel": [],
@@ -3969,11 +4185,13 @@
       "rawDescription": "Start of Combat: Increase Intelligence and Fire Damage Dealt of two Allies within adjacency until end of combat.",
       "schedules": [
         {
+          "activationRoll": null,
           "attempts": null,
           "battleContext": "unspecified",
           "conditions": [],
           "effects": [
             {
+              "activationRoll": null,
               "calculated": false,
               "casterEligibility": "eligible-if-targeting-allows",
               "conditionalMultipliers": [],
@@ -4019,14 +4237,17 @@
               ],
               "sourceScope": "unknown",
               "stack": null,
+              "stackTransitionTrigger": null,
               "target": "2 Allies",
               "targetCount": null,
               "targetPriority": "any-eligible",
               "targetScope": "within-adjacency",
+              "targetSelection": null,
               "type": "Intelligence Up",
               "unit": "percent"
             },
             {
+              "activationRoll": null,
               "calculated": false,
               "casterEligibility": "eligible-if-targeting-allows",
               "conditionalMultipliers": [],
@@ -4070,10 +4291,12 @@
               "scaling": [],
               "sourceScope": "unknown",
               "stack": null,
+              "stackTransitionTrigger": null,
               "target": "2 Allies",
               "targetCount": null,
               "targetPriority": "any-eligible",
               "targetScope": "within-adjacency",
+              "targetSelection": null,
               "type": "Fire Damage Dealt Up",
               "unit": "percent"
             }
@@ -4081,6 +4304,7 @@
           "id": "cunning-ferocity-start-combat",
           "repeat": null,
           "rounds": [],
+          "roundSelector": null,
           "targetPriority": "any-eligible",
           "timing": "start-of-combat",
           "triggerChanceByHabitLevel": [],
@@ -4146,6 +4370,7 @@
       "rawDescription": "Each Round: grant Advantage above 50% Troop Capacity or Resistance below 50% Troop Capacity to 2 other Allies.",
       "schedules": [
         {
+          "activationRoll": null,
           "attempts": null,
           "battleContext": "unspecified",
           "conditions": [
@@ -4163,6 +4388,7 @@
           ],
           "effects": [
             {
+              "activationRoll": null,
               "calculated": false,
               "casterEligibility": "excluded",
               "conditionalMultipliers": [],
@@ -4192,10 +4418,12 @@
               "scaling": [],
               "sourceScope": "unknown",
               "stack": null,
+              "stackTransitionTrigger": null,
               "target": "2 other Allies",
               "targetCount": null,
               "targetPriority": "any-eligible",
               "targetScope": "any-lane",
+              "targetSelection": null,
               "type": "Advantage",
               "unit": "percent"
             }
@@ -4203,6 +4431,7 @@
           "id": "loyal-bond-advantage",
           "repeat": null,
           "rounds": [],
+          "roundSelector": null,
           "targetPriority": "any-eligible",
           "timing": "each-round",
           "triggerChanceByHabitLevel": [
@@ -4236,6 +4465,7 @@
           "triggerEvent": "each-round"
         },
         {
+          "activationRoll": null,
           "attempts": null,
           "battleContext": "unspecified",
           "conditions": [
@@ -4253,6 +4483,7 @@
           ],
           "effects": [
             {
+              "activationRoll": null,
               "calculated": false,
               "casterEligibility": "excluded",
               "conditionalMultipliers": [],
@@ -4284,10 +4515,12 @@
               "scaling": [],
               "sourceScope": "unknown",
               "stack": null,
+              "stackTransitionTrigger": null,
               "target": "2 other Allies",
               "targetCount": null,
               "targetPriority": "any-eligible",
               "targetScope": "any-lane",
+              "targetSelection": null,
               "type": "Resistance",
               "unit": "percent"
             }
@@ -4295,6 +4528,7 @@
           "id": "loyal-bond-resistance",
           "repeat": null,
           "rounds": [],
+          "roundSelector": null,
           "targetPriority": "any-eligible",
           "timing": "each-round",
           "triggerChanceByHabitLevel": [
@@ -5841,10 +6075,10 @@
   "rosterSourceStatus": "official-website",
   "slug": "seasmoke",
   "source": {
-    "branch": "feature/formation-card-layout-polish",
-    "commit": "f3042ee26aa774020b87dbed1ffef7b37e85cb02",
-    "databaseVersion": "0.5.6",
-    "dataSchemaVersion": 9,
+    "branch": "feature/legendary-schema-hardening",
+    "commit": "96e0cb6df6957f19eea61aa67b38bfa905aef03c",
+    "databaseVersion": "0.6.0",
+    "dataSchemaVersion": 10,
     "gameBuild": "26.6.53509",
     "localRosterSchemaVersion": 3,
     "repository": "https://github.com/williamchildres/dragonfire-roster-builder"
@@ -6069,11 +6303,13 @@
     "rawDescription": "At Level 16+ and deployed in the Vanguard, increase self Strength, Intelligence, and Instinct by +15. Reduce Damage Received of the Right Flank ally by 8%.",
     "schedules": [
       {
+        "activationRoll": null,
         "attempts": null,
         "battleContext": "unspecified",
         "conditions": [],
         "effects": [
           {
+            "activationRoll": null,
             "calculated": false,
             "casterEligibility": "unknown",
             "conditionalMultipliers": [],
@@ -6091,14 +6327,17 @@
             "scaling": [],
             "sourceScope": "unknown",
             "stack": null,
+            "stackTransitionTrigger": null,
             "target": "Self",
             "targetCount": null,
             "targetPriority": "any-eligible",
             "targetScope": "self",
+            "targetSelection": null,
             "type": "Strength Up",
             "unit": "flat"
           },
           {
+            "activationRoll": null,
             "calculated": false,
             "casterEligibility": "unknown",
             "conditionalMultipliers": [],
@@ -6116,14 +6355,17 @@
             "scaling": [],
             "sourceScope": "unknown",
             "stack": null,
+            "stackTransitionTrigger": null,
             "target": "Self",
             "targetCount": null,
             "targetPriority": "any-eligible",
             "targetScope": "self",
+            "targetSelection": null,
             "type": "Intelligence Up",
             "unit": "flat"
           },
           {
+            "activationRoll": null,
             "calculated": false,
             "casterEligibility": "unknown",
             "conditionalMultipliers": [],
@@ -6141,14 +6383,17 @@
             "scaling": [],
             "sourceScope": "unknown",
             "stack": null,
+            "stackTransitionTrigger": null,
             "target": "Self",
             "targetCount": null,
             "targetPriority": "any-eligible",
             "targetScope": "self",
+            "targetSelection": null,
             "type": "Instinct Up",
             "unit": "flat"
           },
           {
+            "activationRoll": null,
             "calculated": false,
             "casterEligibility": "unknown",
             "conditionalMultipliers": [],
@@ -6166,10 +6411,12 @@
             "scaling": [],
             "sourceScope": "unknown",
             "stack": null,
+            "stackTransitionTrigger": null,
             "target": "Right Flank ally",
             "targetCount": null,
             "targetPriority": "any-eligible",
             "targetScope": "right-flank",
+            "targetSelection": null,
             "type": "Damage Received Down",
             "unit": "percent"
           }
@@ -6177,6 +6424,7 @@
         "id": "champions-brilliance-passive",
         "repeat": null,
         "rounds": [],
+        "roundSelector": null,
         "targetPriority": "any-eligible",
         "timing": "passive",
         "triggerChanceByHabitLevel": [],
