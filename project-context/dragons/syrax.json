@@ -1,0 +1,6315 @@
+{
+  "abilities": [
+    {
+      "abilityClass": "active",
+      "augmentations": [
+        {
+          "effectsAdded": [
+            {
+              "calculated": false,
+              "casterEligibility": "unknown",
+              "conditionalMultipliers": [
+                {
+                  "calculatedFromVerifiedMultiplier": true,
+                  "condition": {
+                    "battleContext": null,
+                    "comparison": null,
+                    "description": "Any enemy is afflicted with Slow.",
+                    "id": "any-enemy-has-slow",
+                    "kind": "any-enemy-has-status",
+                    "statusId": "slow",
+                    "subject": "enemy",
+                    "thresholdPercent": null,
+                    "unresolved": false
+                  },
+                  "description": "Recovery is multiplied by 1.5 if any enemy has Slow.",
+                  "directlyVerifiedValues": [
+                    {
+                      "level": 1,
+                      "unit": "percent",
+                      "value": 75
+                    }
+                  ],
+                  "id": "strategic-revival-slow-1-5x",
+                  "multiplier": 1.5
+                }
+              ],
+              "conditions": [],
+              "directlyVerified": true,
+              "duration": null,
+              "durationRounds": null,
+              "excludes": [],
+              "id": "strategic-revival-recovery",
+              "includesCaster": null,
+              "magnitude": null,
+              "notes": [
+                "Higher conditional Recovery values are calculated from the verified 1.5x multiplier."
+              ],
+              "perTargetEffectCheck": null,
+              "rankedValues": [
+                {
+                  "level": 1,
+                  "unit": "percent",
+                  "value": 50
+                },
+                {
+                  "level": 2,
+                  "unit": "percent",
+                  "value": 60
+                },
+                {
+                  "level": 3,
+                  "unit": "percent",
+                  "value": 70
+                },
+                {
+                  "level": 4,
+                  "unit": "percent",
+                  "value": 85
+                },
+                {
+                  "level": 5,
+                  "unit": "percent",
+                  "value": 100
+                }
+              ],
+              "scaling": [
+                "Initiative",
+                "dragon Level"
+              ],
+              "sourceScope": "unknown",
+              "stack": null,
+              "target": "Ally with least current troops",
+              "targetCount": null,
+              "targetPriority": "least-current-troops-ally",
+              "targetScope": "any-lane",
+              "type": "Recovery",
+              "unit": "rate"
+            },
+            {
+              "calculated": false,
+              "casterEligibility": "unknown",
+              "conditionalMultipliers": [],
+              "conditions": [],
+              "directlyVerified": true,
+              "duration": null,
+              "durationRounds": 2,
+              "excludes": [],
+              "id": "strategic-revival-resistance",
+              "includesCaster": null,
+              "magnitude": 20,
+              "notes": [
+                "Resistance reduces Damage Received."
+              ],
+              "perTargetEffectCheck": null,
+              "rankedValues": [],
+              "scaling": [],
+              "sourceScope": "unknown",
+              "stack": null,
+              "target": "Ally with least current troops",
+              "targetCount": null,
+              "targetPriority": "least-current-troops-ally",
+              "targetScope": "any-lane",
+              "type": "Resistance",
+              "unit": "percent"
+            }
+          ],
+          "evidenceIds": [
+            "syrax-strategic-revival-2026-06-24"
+          ],
+          "id": "syrax-strategic-revival-augmentation",
+          "minimumDragonStarRank": 6,
+          "modifiesAbilityId": "syrax-blazing-fury",
+          "rawDescription": "At 6 Stars, Strategic Revival augments Blazing Fury with Recovery and Resistance on rounds 2, 5, and 8.",
+          "schedulesAdded": [
+            {
+              "attempts": null,
+              "battleContext": "unspecified",
+              "conditions": [],
+              "effects": [
+                {
+                  "calculated": false,
+                  "casterEligibility": "unknown",
+                  "conditionalMultipliers": [
+                    {
+                      "calculatedFromVerifiedMultiplier": true,
+                      "condition": {
+                        "battleContext": null,
+                        "comparison": null,
+                        "description": "Any enemy is afflicted with Slow.",
+                        "id": "any-enemy-has-slow",
+                        "kind": "any-enemy-has-status",
+                        "statusId": "slow",
+                        "subject": "enemy",
+                        "thresholdPercent": null,
+                        "unresolved": false
+                      },
+                      "description": "Recovery is multiplied by 1.5 if any enemy has Slow.",
+                      "directlyVerifiedValues": [
+                        {
+                          "level": 1,
+                          "unit": "percent",
+                          "value": 75
+                        }
+                      ],
+                      "id": "strategic-revival-slow-1-5x",
+                      "multiplier": 1.5
+                    }
+                  ],
+                  "conditions": [],
+                  "directlyVerified": true,
+                  "duration": null,
+                  "durationRounds": null,
+                  "excludes": [],
+                  "id": "strategic-revival-recovery",
+                  "includesCaster": null,
+                  "magnitude": null,
+                  "notes": [
+                    "Higher conditional Recovery values are calculated from the verified 1.5x multiplier."
+                  ],
+                  "perTargetEffectCheck": null,
+                  "rankedValues": [
+                    {
+                      "level": 1,
+                      "unit": "percent",
+                      "value": 50
+                    },
+                    {
+                      "level": 2,
+                      "unit": "percent",
+                      "value": 60
+                    },
+                    {
+                      "level": 3,
+                      "unit": "percent",
+                      "value": 70
+                    },
+                    {
+                      "level": 4,
+                      "unit": "percent",
+                      "value": 85
+                    },
+                    {
+                      "level": 5,
+                      "unit": "percent",
+                      "value": 100
+                    }
+                  ],
+                  "scaling": [
+                    "Initiative",
+                    "dragon Level"
+                  ],
+                  "sourceScope": "unknown",
+                  "stack": null,
+                  "target": "Ally with least current troops",
+                  "targetCount": null,
+                  "targetPriority": "least-current-troops-ally",
+                  "targetScope": "any-lane",
+                  "type": "Recovery",
+                  "unit": "rate"
+                },
+                {
+                  "calculated": false,
+                  "casterEligibility": "unknown",
+                  "conditionalMultipliers": [],
+                  "conditions": [],
+                  "directlyVerified": true,
+                  "duration": null,
+                  "durationRounds": 2,
+                  "excludes": [],
+                  "id": "strategic-revival-resistance",
+                  "includesCaster": null,
+                  "magnitude": 20,
+                  "notes": [
+                    "Resistance reduces Damage Received."
+                  ],
+                  "perTargetEffectCheck": null,
+                  "rankedValues": [],
+                  "scaling": [],
+                  "sourceScope": "unknown",
+                  "stack": null,
+                  "target": "Ally with least current troops",
+                  "targetCount": null,
+                  "targetPriority": "least-current-troops-ally",
+                  "targetScope": "any-lane",
+                  "type": "Resistance",
+                  "unit": "percent"
+                }
+              ],
+              "id": "strategic-revival-recovery-rounds",
+              "repeat": null,
+              "rounds": [
+                2,
+                5,
+                8
+              ],
+              "targetPriority": "least-current-troops-ally",
+              "timing": "specific-rounds",
+              "triggerChanceByHabitLevel": [
+                {
+                  "level": 1,
+                  "unit": "percent",
+                  "value": 40
+                },
+                {
+                  "level": 2,
+                  "unit": "percent",
+                  "value": 52
+                },
+                {
+                  "level": 3,
+                  "unit": "percent",
+                  "value": 64
+                },
+                {
+                  "level": 4,
+                  "unit": "percent",
+                  "value": 80
+                },
+                {
+                  "level": 5,
+                  "unit": "percent",
+                  "value": 100
+                }
+              ],
+              "triggerChanceFixed": null,
+              "triggerEvent": "specific-rounds"
+            }
+          ],
+          "sourceAbilityId": "syrax-strategic-revival"
+        }
+      ],
+      "dragonId": "syrax",
+      "evidenceIds": [
+        "syrax-blazing-fury-summary-2026-06-24",
+        "syrax-blazing-fury-details-2026-06-24"
+      ],
+      "glossaryEntries": [],
+      "id": "syrax-blazing-fury",
+      "kind": "command",
+      "minimumDragonLevel": null,
+      "name": "Blazing Fury",
+      "positionRequirement": null,
+      "powerByHabitLevel": [],
+      "rawDescription": "Each Round: 20% chance to increase Fire Damage Dealt by 10% and grant First-Strike to one Ally in any lane for 2 rounds, prioritizing allies that deal Fire Damage. Rounds 1, 4, 6, 9: deal Tactical Damage to one enemy within adjacency.",
+      "schedules": [
+        {
+          "attempts": null,
+          "battleContext": "unspecified",
+          "conditions": [],
+          "effects": [
+            {
+              "calculated": false,
+              "casterEligibility": "eligible-if-targeting-allows",
+              "conditionalMultipliers": [],
+              "conditions": [],
+              "directlyVerified": true,
+              "duration": null,
+              "durationRounds": 2,
+              "excludes": [],
+              "id": "blazing-fury-fire-damage-up",
+              "includesCaster": null,
+              "magnitude": 10,
+              "notes": [
+                "Selection prioritizes allies with verified Fire Damage output."
+              ],
+              "perTargetEffectCheck": null,
+              "rankedValues": [],
+              "scaling": [],
+              "sourceScope": "unknown",
+              "stack": null,
+              "target": "1 Ally",
+              "targetCount": null,
+              "targetPriority": "prefer-fire-damage-ally",
+              "targetScope": "any-lane",
+              "type": "Fire Damage Dealt Up",
+              "unit": "percent"
+            },
+            {
+              "calculated": false,
+              "casterEligibility": "eligible-if-targeting-allows",
+              "conditionalMultipliers": [],
+              "conditions": [],
+              "directlyVerified": true,
+              "duration": null,
+              "durationRounds": 2,
+              "excludes": [],
+              "id": "blazing-fury-first-strike",
+              "includesCaster": null,
+              "magnitude": null,
+              "notes": [],
+              "perTargetEffectCheck": null,
+              "rankedValues": [],
+              "scaling": [],
+              "sourceScope": "unknown",
+              "stack": null,
+              "target": "1 Ally",
+              "targetCount": null,
+              "targetPriority": "prefer-fire-damage-ally",
+              "targetScope": "any-lane",
+              "type": "First-Strike",
+              "unit": "unknown"
+            }
+          ],
+          "id": "blazing-fury-fire-support",
+          "repeat": null,
+          "rounds": [],
+          "targetPriority": "prefer-fire-damage-ally",
+          "timing": "each-round",
+          "triggerChanceByHabitLevel": [],
+          "triggerChanceFixed": 20,
+          "triggerEvent": "each-round"
+        },
+        {
+          "attempts": null,
+          "battleContext": "unspecified",
+          "conditions": [],
+          "effects": [
+            {
+              "calculated": false,
+              "casterEligibility": "unknown",
+              "conditionalMultipliers": [],
+              "conditions": [],
+              "directlyVerified": true,
+              "duration": null,
+              "durationRounds": null,
+              "excludes": [],
+              "id": "blazing-fury-tactical-rate",
+              "includesCaster": null,
+              "magnitude": 110,
+              "notes": [
+                "Mitigated by target Intelligence.",
+                "Enemy adjacency semantics are not yet verified."
+              ],
+              "perTargetEffectCheck": null,
+              "rankedValues": [],
+              "scaling": [
+                "attacker Instinct"
+              ],
+              "sourceScope": "unknown",
+              "stack": null,
+              "target": "1 Enemy",
+              "targetCount": null,
+              "targetPriority": "any-eligible",
+              "targetScope": "within-adjacency",
+              "type": "Tactical Damage",
+              "unit": "rate"
+            }
+          ],
+          "id": "blazing-fury-tactical-damage",
+          "repeat": null,
+          "rounds": [
+            1,
+            4,
+            6,
+            9
+          ],
+          "targetPriority": "any-eligible",
+          "timing": "specific-rounds",
+          "triggerChanceByHabitLevel": [],
+          "triggerChanceFixed": null,
+          "triggerEvent": "specific-rounds"
+        }
+      ],
+      "tags": [
+        "TACTICAL_DAMAGE",
+        "FIRE_DAMAGE_UP",
+        "FIRST_STRIKE",
+        "ANY_LANE_TARGET"
+      ],
+      "unlockStarRank": null,
+      "unresolvedQuestions": [
+        "Enemy adjacency semantics for Tactical Damage target."
+      ],
+      "verification": {
+        "capturedAt": "2026-06-23",
+        "gameVersion": "26.6.53509",
+        "reviewedManually": true,
+        "source": "Syrax Blazing Fury screenshots",
+        "status": "screenshot-verified"
+      }
+    },
+    {
+      "abilityClass": "passive",
+      "augmentations": [],
+      "dragonId": "syrax",
+      "evidenceIds": [
+        "syrax-sentinels-wit-2026-06-24"
+      ],
+      "glossaryEntries": [],
+      "id": "syrax-sentinels-wit",
+      "kind": "trait",
+      "minimumDragonLevel": 16,
+      "name": "Sentinel's Wit",
+      "positionRequirement": "vanguard",
+      "powerByHabitLevel": [],
+      "rawDescription": "At Level 16+ and deployed in Vanguard, increase Syrax Tactical Damage Dealt by 16%. Increase Instinct and Initiative of Left Flank ally by +20.",
+      "schedules": [
+        {
+          "attempts": null,
+          "battleContext": "unspecified",
+          "conditions": [],
+          "effects": [
+            {
+              "calculated": false,
+              "casterEligibility": "unknown",
+              "conditionalMultipliers": [],
+              "conditions": [],
+              "directlyVerified": true,
+              "duration": null,
+              "durationRounds": null,
+              "excludes": [],
+              "id": "sentinels-wit-tactical",
+              "includesCaster": null,
+              "magnitude": 16,
+              "notes": [],
+              "perTargetEffectCheck": null,
+              "rankedValues": [],
+              "scaling": [],
+              "sourceScope": "all-sources",
+              "stack": null,
+              "target": "Self",
+              "targetCount": null,
+              "targetPriority": "any-eligible",
+              "targetScope": "self",
+              "type": "Tactical Damage Dealt Up",
+              "unit": "percent"
+            },
+            {
+              "calculated": false,
+              "casterEligibility": "unknown",
+              "conditionalMultipliers": [],
+              "conditions": [],
+              "directlyVerified": true,
+              "duration": null,
+              "durationRounds": null,
+              "excludes": [],
+              "id": "sentinels-wit-left-instinct",
+              "includesCaster": null,
+              "magnitude": 20,
+              "notes": [],
+              "perTargetEffectCheck": null,
+              "rankedValues": [],
+              "scaling": [],
+              "sourceScope": "unknown",
+              "stack": null,
+              "target": "Left Flank ally",
+              "targetCount": null,
+              "targetPriority": "any-eligible",
+              "targetScope": "left-flank",
+              "type": "Instinct Up",
+              "unit": "flat"
+            },
+            {
+              "calculated": false,
+              "casterEligibility": "unknown",
+              "conditionalMultipliers": [],
+              "conditions": [],
+              "directlyVerified": true,
+              "duration": null,
+              "durationRounds": null,
+              "excludes": [],
+              "id": "sentinels-wit-left-initiative",
+              "includesCaster": null,
+              "magnitude": 20,
+              "notes": [],
+              "perTargetEffectCheck": null,
+              "rankedValues": [],
+              "scaling": [],
+              "sourceScope": "unknown",
+              "stack": null,
+              "target": "Left Flank ally",
+              "targetCount": null,
+              "targetPriority": "any-eligible",
+              "targetScope": "left-flank",
+              "type": "Initiative Up",
+              "unit": "flat"
+            }
+          ],
+          "id": "sentinels-wit-passive",
+          "repeat": null,
+          "rounds": [],
+          "targetPriority": "any-eligible",
+          "timing": "passive",
+          "triggerChanceByHabitLevel": [],
+          "triggerChanceFixed": null,
+          "triggerEvent": "passive"
+        }
+      ],
+      "tags": [
+        "TACTICAL_DAMAGE",
+        "INSTINCT_UP",
+        "BUFF_INITIATIVE",
+        "VANGUARD_REQUIRED",
+        "LEFT_FLANK_TARGET"
+      ],
+      "unlockStarRank": 1,
+      "unresolvedQuestions": [],
+      "verification": {
+        "capturedAt": "2026-06-23",
+        "gameVersion": "26.6.53509",
+        "reviewedManually": true,
+        "source": "Syrax Sentinel's Wit screenshot",
+        "status": "screenshot-verified"
+      }
+    },
+    {
+      "abilityClass": "passive",
+      "augmentations": [],
+      "dragonId": "syrax",
+      "evidenceIds": [
+        "syrax-mindful-synergy-2026-06-24"
+      ],
+      "glossaryEntries": [],
+      "id": "syrax-mindful-synergy",
+      "kind": "habit",
+      "minimumDragonLevel": null,
+      "name": "Mindful Synergy",
+      "positionRequirement": null,
+      "powerByHabitLevel": [
+        {
+          "level": 1,
+          "unit": "power",
+          "value": 420
+        },
+        {
+          "level": 2,
+          "unit": "power",
+          "value": 920
+        },
+        {
+          "level": 3,
+          "unit": "power",
+          "value": 1500
+        },
+        {
+          "level": 4,
+          "unit": "power",
+          "value": 2200
+        },
+        {
+          "level": 5,
+          "unit": "power",
+          "value": 3100
+        }
+      ],
+      "rawDescription": "Start of Combat: increase Intelligence and Instinct of 3 Allies in any lane until end of combat, enhanced by Syrax Initiative.",
+      "schedules": [
+        {
+          "attempts": null,
+          "battleContext": "unspecified",
+          "conditions": [],
+          "effects": [
+            {
+              "calculated": false,
+              "casterEligibility": "included",
+              "conditionalMultipliers": [],
+              "conditions": [],
+              "directlyVerified": true,
+              "duration": "Until end of combat",
+              "durationRounds": null,
+              "excludes": [],
+              "id": "mindful-synergy-intelligence",
+              "includesCaster": true,
+              "magnitude": null,
+              "notes": [],
+              "perTargetEffectCheck": null,
+              "rankedValues": [
+                {
+                  "level": 1,
+                  "unit": "percent",
+                  "value": 6.5
+                },
+                {
+                  "level": 2,
+                  "unit": "percent",
+                  "value": 7.8
+                },
+                {
+                  "level": 3,
+                  "unit": "percent",
+                  "value": 9.1
+                },
+                {
+                  "level": 4,
+                  "unit": "percent",
+                  "value": 11.05
+                },
+                {
+                  "level": 5,
+                  "unit": "percent",
+                  "value": 13
+                }
+              ],
+              "scaling": [
+                "Initiative"
+              ],
+              "sourceScope": "unknown",
+              "stack": null,
+              "target": "3 Allies",
+              "targetCount": 3,
+              "targetPriority": "any-eligible",
+              "targetScope": "any-lane",
+              "type": "Intelligence Up",
+              "unit": "percent"
+            },
+            {
+              "calculated": false,
+              "casterEligibility": "included",
+              "conditionalMultipliers": [],
+              "conditions": [],
+              "directlyVerified": true,
+              "duration": "Until end of combat",
+              "durationRounds": null,
+              "excludes": [],
+              "id": "mindful-synergy-instinct",
+              "includesCaster": true,
+              "magnitude": null,
+              "notes": [],
+              "perTargetEffectCheck": null,
+              "rankedValues": [
+                {
+                  "level": 1,
+                  "unit": "percent",
+                  "value": 6.5
+                },
+                {
+                  "level": 2,
+                  "unit": "percent",
+                  "value": 7.8
+                },
+                {
+                  "level": 3,
+                  "unit": "percent",
+                  "value": 9.1
+                },
+                {
+                  "level": 4,
+                  "unit": "percent",
+                  "value": 11.05
+                },
+                {
+                  "level": 5,
+                  "unit": "percent",
+                  "value": 13
+                }
+              ],
+              "scaling": [
+                "Initiative"
+              ],
+              "sourceScope": "unknown",
+              "stack": null,
+              "target": "3 Allies",
+              "targetCount": 3,
+              "targetPriority": "any-eligible",
+              "targetScope": "any-lane",
+              "type": "Instinct Up",
+              "unit": "percent"
+            }
+          ],
+          "id": "mindful-synergy-start",
+          "repeat": null,
+          "rounds": [],
+          "targetPriority": "any-eligible",
+          "timing": "start-of-combat",
+          "triggerChanceByHabitLevel": [],
+          "triggerChanceFixed": null,
+          "triggerEvent": "start-of-combat"
+        }
+      ],
+      "tags": [
+        "BUFF_INTELLIGENCE",
+        "BUFF_INSTINCTS",
+        "BUFF_ALLIES"
+      ],
+      "unlockStarRank": 2,
+      "unresolvedQuestions": [
+        "Exact enhanced-by-Initiative formula."
+      ],
+      "verification": {
+        "capturedAt": "2026-06-23",
+        "gameVersion": "26.6.53509",
+        "reviewedManually": true,
+        "source": "Syrax Mindful Synergy screenshot",
+        "status": "screenshot-verified"
+      }
+    },
+    {
+      "abilityClass": "passive",
+      "augmentations": [],
+      "dragonId": "syrax",
+      "evidenceIds": [
+        "syrax-flight-mastery-2026-06-24"
+      ],
+      "glossaryEntries": [],
+      "id": "syrax-flight-mastery",
+      "kind": "habit",
+      "minimumDragonLevel": null,
+      "name": "Flight Mastery",
+      "positionRequirement": null,
+      "powerByHabitLevel": [
+        {
+          "level": 1,
+          "unit": "power",
+          "value": 420
+        },
+        {
+          "level": 2,
+          "unit": "power",
+          "value": 920
+        },
+        {
+          "level": 3,
+          "unit": "power",
+          "value": 1500
+        },
+        {
+          "level": 4,
+          "unit": "power",
+          "value": 2200
+        },
+        {
+          "level": 5,
+          "unit": "power",
+          "value": 3100
+        }
+      ],
+      "rawDescription": "Start of Combat: increase Initiative of 3 Allies and reduce Initiative of 3 Enemies in any lane until end of combat, enhanced by Syrax Instinct.",
+      "schedules": [
+        {
+          "attempts": null,
+          "battleContext": "unspecified",
+          "conditions": [],
+          "effects": [
+            {
+              "calculated": false,
+              "casterEligibility": "included",
+              "conditionalMultipliers": [],
+              "conditions": [],
+              "directlyVerified": true,
+              "duration": "Until end of combat",
+              "durationRounds": null,
+              "excludes": [],
+              "id": "flight-mastery-initiative-up",
+              "includesCaster": true,
+              "magnitude": null,
+              "notes": [],
+              "perTargetEffectCheck": null,
+              "rankedValues": [
+                {
+                  "level": 1,
+                  "unit": "percent",
+                  "value": 6
+                },
+                {
+                  "level": 2,
+                  "unit": "percent",
+                  "value": 7.2
+                },
+                {
+                  "level": 3,
+                  "unit": "percent",
+                  "value": 8.4
+                },
+                {
+                  "level": 4,
+                  "unit": "percent",
+                  "value": 10.2
+                },
+                {
+                  "level": 5,
+                  "unit": "percent",
+                  "value": 12
+                }
+              ],
+              "scaling": [
+                "Instinct"
+              ],
+              "sourceScope": "unknown",
+              "stack": null,
+              "target": "3 Allies",
+              "targetCount": 3,
+              "targetPriority": "any-eligible",
+              "targetScope": "any-lane",
+              "type": "Initiative Up",
+              "unit": "percent"
+            },
+            {
+              "calculated": false,
+              "casterEligibility": "unknown",
+              "conditionalMultipliers": [],
+              "conditions": [],
+              "directlyVerified": true,
+              "duration": "Until end of combat",
+              "durationRounds": null,
+              "excludes": [],
+              "id": "flight-mastery-initiative-down",
+              "includesCaster": null,
+              "magnitude": null,
+              "notes": [],
+              "perTargetEffectCheck": null,
+              "rankedValues": [
+                {
+                  "level": 1,
+                  "unit": "percent",
+                  "value": 6
+                },
+                {
+                  "level": 2,
+                  "unit": "percent",
+                  "value": 7.2
+                },
+                {
+                  "level": 3,
+                  "unit": "percent",
+                  "value": 8.4
+                },
+                {
+                  "level": 4,
+                  "unit": "percent",
+                  "value": 10.2
+                },
+                {
+                  "level": 5,
+                  "unit": "percent",
+                  "value": 12
+                }
+              ],
+              "scaling": [
+                "Instinct"
+              ],
+              "sourceScope": "unknown",
+              "stack": null,
+              "target": "3 Enemies",
+              "targetCount": 3,
+              "targetPriority": "any-eligible",
+              "targetScope": "any-lane",
+              "type": "Initiative Down",
+              "unit": "percent"
+            }
+          ],
+          "id": "flight-mastery-start",
+          "repeat": null,
+          "rounds": [],
+          "targetPriority": "any-eligible",
+          "timing": "start-of-combat",
+          "triggerChanceByHabitLevel": [],
+          "triggerChanceFixed": null,
+          "triggerEvent": "start-of-combat"
+        }
+      ],
+      "tags": [
+        "BUFF_INITIATIVE",
+        "DEBUFF_INITIATIVE"
+      ],
+      "unlockStarRank": 4,
+      "unresolvedQuestions": [
+        "Exact enhanced-by-Instinct formula."
+      ],
+      "verification": {
+        "capturedAt": "2026-06-23",
+        "gameVersion": "26.6.53509",
+        "reviewedManually": true,
+        "source": "Syrax Flight Mastery screenshot",
+        "status": "screenshot-verified"
+      }
+    },
+    {
+      "abilityClass": "passive",
+      "augmentations": [],
+      "dragonId": "syrax",
+      "evidenceIds": [
+        "syrax-strategic-revival-2026-06-24"
+      ],
+      "glossaryEntries": [],
+      "id": "syrax-strategic-revival",
+      "kind": "habit",
+      "minimumDragonLevel": null,
+      "name": "Strategic Revival",
+      "positionRequirement": null,
+      "powerByHabitLevel": [
+        {
+          "level": 1,
+          "unit": "power",
+          "value": 420
+        },
+        {
+          "level": 2,
+          "unit": "power",
+          "value": 920
+        },
+        {
+          "level": 3,
+          "unit": "power",
+          "value": 1500
+        },
+        {
+          "level": 4,
+          "unit": "power",
+          "value": 2200
+        },
+        {
+          "level": 5,
+          "unit": "power",
+          "value": 3100
+        }
+      ],
+      "rawDescription": "Augments Blazing Fury: Rounds 2, 5, 8 recover the Ally with least current troops. Recovery is multiplied by 1.5 if any enemy has Slow. Chance to grant Resistance (-20%) for 2 rounds.",
+      "schedules": [
+        {
+          "attempts": null,
+          "battleContext": "unspecified",
+          "conditions": [],
+          "effects": [
+            {
+              "calculated": false,
+              "casterEligibility": "unknown",
+              "conditionalMultipliers": [
+                {
+                  "calculatedFromVerifiedMultiplier": true,
+                  "condition": {
+                    "battleContext": null,
+                    "comparison": null,
+                    "description": "Any enemy is afflicted with Slow.",
+                    "id": "any-enemy-has-slow",
+                    "kind": "any-enemy-has-status",
+                    "statusId": "slow",
+                    "subject": "enemy",
+                    "thresholdPercent": null,
+                    "unresolved": false
+                  },
+                  "description": "Recovery is multiplied by 1.5 if any enemy has Slow.",
+                  "directlyVerifiedValues": [
+                    {
+                      "level": 1,
+                      "unit": "percent",
+                      "value": 75
+                    }
+                  ],
+                  "id": "strategic-revival-slow-1-5x",
+                  "multiplier": 1.5
+                }
+              ],
+              "conditions": [],
+              "directlyVerified": true,
+              "duration": null,
+              "durationRounds": null,
+              "excludes": [],
+              "id": "strategic-revival-recovery",
+              "includesCaster": null,
+              "magnitude": null,
+              "notes": [
+                "Higher conditional Recovery values are calculated from the verified 1.5x multiplier."
+              ],
+              "perTargetEffectCheck": null,
+              "rankedValues": [
+                {
+                  "level": 1,
+                  "unit": "percent",
+                  "value": 50
+                },
+                {
+                  "level": 2,
+                  "unit": "percent",
+                  "value": 60
+                },
+                {
+                  "level": 3,
+                  "unit": "percent",
+                  "value": 70
+                },
+                {
+                  "level": 4,
+                  "unit": "percent",
+                  "value": 85
+                },
+                {
+                  "level": 5,
+                  "unit": "percent",
+                  "value": 100
+                }
+              ],
+              "scaling": [
+                "Initiative",
+                "dragon Level"
+              ],
+              "sourceScope": "unknown",
+              "stack": null,
+              "target": "Ally with least current troops",
+              "targetCount": null,
+              "targetPriority": "least-current-troops-ally",
+              "targetScope": "any-lane",
+              "type": "Recovery",
+              "unit": "rate"
+            },
+            {
+              "calculated": false,
+              "casterEligibility": "unknown",
+              "conditionalMultipliers": [],
+              "conditions": [],
+              "directlyVerified": true,
+              "duration": null,
+              "durationRounds": 2,
+              "excludes": [],
+              "id": "strategic-revival-resistance",
+              "includesCaster": null,
+              "magnitude": 20,
+              "notes": [
+                "Resistance reduces Damage Received."
+              ],
+              "perTargetEffectCheck": null,
+              "rankedValues": [],
+              "scaling": [],
+              "sourceScope": "unknown",
+              "stack": null,
+              "target": "Ally with least current troops",
+              "targetCount": null,
+              "targetPriority": "least-current-troops-ally",
+              "targetScope": "any-lane",
+              "type": "Resistance",
+              "unit": "percent"
+            }
+          ],
+          "id": "strategic-revival-recovery-rounds",
+          "repeat": null,
+          "rounds": [
+            2,
+            5,
+            8
+          ],
+          "targetPriority": "least-current-troops-ally",
+          "timing": "specific-rounds",
+          "triggerChanceByHabitLevel": [
+            {
+              "level": 1,
+              "unit": "percent",
+              "value": 40
+            },
+            {
+              "level": 2,
+              "unit": "percent",
+              "value": 52
+            },
+            {
+              "level": 3,
+              "unit": "percent",
+              "value": 64
+            },
+            {
+              "level": 4,
+              "unit": "percent",
+              "value": 80
+            },
+            {
+              "level": 5,
+              "unit": "percent",
+              "value": 100
+            }
+          ],
+          "triggerChanceFixed": null,
+          "triggerEvent": "specific-rounds"
+        }
+      ],
+      "tags": [
+        "COMMAND_AUGMENTATION",
+        "RECOVERY",
+        "RESISTANCE"
+      ],
+      "unlockStarRank": 6,
+      "unresolvedQuestions": [
+        "Exact Recovery formula.",
+        "Higher conditional Recovery values are calculated."
+      ],
+      "verification": {
+        "capturedAt": "2026-06-23",
+        "gameVersion": "26.6.53509",
+        "reviewedManually": true,
+        "source": "Syrax Strategic Revival screenshot",
+        "status": "screenshot-verified"
+      }
+    },
+    {
+      "abilityClass": "passive",
+      "augmentations": [],
+      "dragonId": "syrax",
+      "evidenceIds": [
+        "syrax-tactical-inferno-2026-06-24"
+      ],
+      "glossaryEntries": [],
+      "id": "syrax-tactical-inferno",
+      "kind": "habit",
+      "minimumDragonLevel": null,
+      "name": "Tactical Inferno",
+      "positionRequirement": null,
+      "powerByHabitLevel": [
+        {
+          "level": 1,
+          "unit": "power",
+          "value": 420
+        },
+        {
+          "level": 2,
+          "unit": "power",
+          "value": 920
+        },
+        {
+          "level": 3,
+          "unit": "power",
+          "value": 1500
+        },
+        {
+          "level": 4,
+          "unit": "power",
+          "value": 2200
+        },
+        {
+          "level": 5,
+          "unit": "power",
+          "value": 3100
+        }
+      ],
+      "rawDescription": "Start of Round 1: increase Tactical Damage Dealt of one Ally, prioritizing Left Flank, and Fire Damage Dealt of one Ally, prioritizing Right Flank, for 3 rounds.",
+      "schedules": [
+        {
+          "attempts": null,
+          "battleContext": "unspecified",
+          "conditions": [],
+          "effects": [
+            {
+              "calculated": false,
+              "casterEligibility": "unknown",
+              "conditionalMultipliers": [],
+              "conditions": [],
+              "directlyVerified": true,
+              "duration": null,
+              "durationRounds": 3,
+              "excludes": [],
+              "id": "tactical-inferno-tactical",
+              "includesCaster": null,
+              "magnitude": null,
+              "notes": [
+                "Preferred position is not an absolute requirement."
+              ],
+              "perTargetEffectCheck": null,
+              "rankedValues": [
+                {
+                  "level": 1,
+                  "unit": "percent",
+                  "value": 18
+                },
+                {
+                  "level": 2,
+                  "unit": "percent",
+                  "value": 21.6
+                },
+                {
+                  "level": 3,
+                  "unit": "percent",
+                  "value": 25.2
+                },
+                {
+                  "level": 4,
+                  "unit": "percent",
+                  "value": 30.6
+                },
+                {
+                  "level": 5,
+                  "unit": "percent",
+                  "value": 36
+                }
+              ],
+              "scaling": [],
+              "sourceScope": "unknown",
+              "stack": null,
+              "target": "1 Ally, prioritizing Left Flank",
+              "targetCount": null,
+              "targetPriority": "prefer-left-flank",
+              "targetScope": "any-lane",
+              "type": "Tactical Damage Dealt Up",
+              "unit": "percent"
+            },
+            {
+              "calculated": false,
+              "casterEligibility": "unknown",
+              "conditionalMultipliers": [],
+              "conditions": [],
+              "directlyVerified": true,
+              "duration": null,
+              "durationRounds": 3,
+              "excludes": [],
+              "id": "tactical-inferno-fire",
+              "includesCaster": null,
+              "magnitude": null,
+              "notes": [
+                "Preferred position is not an absolute requirement."
+              ],
+              "perTargetEffectCheck": null,
+              "rankedValues": [
+                {
+                  "level": 1,
+                  "unit": "percent",
+                  "value": 18
+                },
+                {
+                  "level": 2,
+                  "unit": "percent",
+                  "value": 21.6
+                },
+                {
+                  "level": 3,
+                  "unit": "percent",
+                  "value": 25.2
+                },
+                {
+                  "level": 4,
+                  "unit": "percent",
+                  "value": 30.6
+                },
+                {
+                  "level": 5,
+                  "unit": "percent",
+                  "value": 36
+                }
+              ],
+              "scaling": [],
+              "sourceScope": "unknown",
+              "stack": null,
+              "target": "1 Ally, prioritizing Right Flank",
+              "targetCount": null,
+              "targetPriority": "prefer-right-flank",
+              "targetScope": "any-lane",
+              "type": "Fire Damage Dealt Up",
+              "unit": "percent"
+            }
+          ],
+          "id": "tactical-inferno-round-one",
+          "repeat": null,
+          "rounds": [
+            1
+          ],
+          "targetPriority": "any-eligible",
+          "timing": "start-of-round",
+          "triggerChanceByHabitLevel": [],
+          "triggerChanceFixed": null,
+          "triggerEvent": "start-of-round"
+        }
+      ],
+      "tags": [
+        "TACTICAL_DAMAGE",
+        "FIRE_DAMAGE_UP",
+        "BUFF_ALLIES"
+      ],
+      "unlockStarRank": 8,
+      "unresolvedQuestions": [
+        "Whether one mixed-damage Ally may receive both modifiers.",
+        "Fallback selection when preferred flank lacks matching output."
+      ],
+      "verification": {
+        "capturedAt": "2026-06-23",
+        "gameVersion": "26.6.53509",
+        "reviewedManually": true,
+        "source": "Syrax Tactical Inferno screenshot",
+        "status": "screenshot-verified"
+      }
+    },
+    {
+      "abilityClass": "passive",
+      "augmentations": [],
+      "dragonId": "syrax",
+      "evidenceIds": [
+        "syrax-mothers-mercy-2026-06-24"
+      ],
+      "glossaryEntries": [],
+      "id": "syrax-mothers-mercy",
+      "kind": "habit",
+      "minimumDragonLevel": null,
+      "name": "Mother's Mercy",
+      "positionRequirement": null,
+      "powerByHabitLevel": [
+        {
+          "level": 1,
+          "unit": "power",
+          "value": 430
+        },
+        {
+          "level": 2,
+          "unit": "power",
+          "value": 1000
+        },
+        {
+          "level": 3,
+          "unit": "power",
+          "value": 1700
+        },
+        {
+          "level": 4,
+          "unit": "power",
+          "value": 2700
+        },
+        {
+          "level": 5,
+          "unit": "power",
+          "value": 4000
+        }
+      ],
+      "rawDescription": "Each Round: chance to cleanse two Negative effects and one Control effect from one Ally in any lane, prioritizing Allies afflicted with Control.",
+      "schedules": [
+        {
+          "attempts": null,
+          "battleContext": "unspecified",
+          "conditions": [],
+          "effects": [
+            {
+              "calculated": false,
+              "casterEligibility": "unknown",
+              "conditionalMultipliers": [],
+              "conditions": [],
+              "directlyVerified": true,
+              "duration": null,
+              "durationRounds": null,
+              "excludes": [],
+              "id": "mothers-mercy-cleanse-negative",
+              "includesCaster": null,
+              "magnitude": 2,
+              "notes": [],
+              "perTargetEffectCheck": null,
+              "rankedValues": [],
+              "scaling": [],
+              "sourceScope": "unknown",
+              "stack": null,
+              "target": "1 Ally",
+              "targetCount": null,
+              "targetPriority": "prefer-control-afflicted-ally",
+              "targetScope": "any-lane",
+              "type": "Cleanse Negative",
+              "unit": "flat"
+            },
+            {
+              "calculated": false,
+              "casterEligibility": "unknown",
+              "conditionalMultipliers": [],
+              "conditions": [],
+              "directlyVerified": true,
+              "duration": null,
+              "durationRounds": null,
+              "excludes": [],
+              "id": "mothers-mercy-cleanse-control",
+              "includesCaster": null,
+              "magnitude": 1,
+              "notes": [
+                "Control includes Stun, Stagger, Overwhelm, and Confusion."
+              ],
+              "perTargetEffectCheck": null,
+              "rankedValues": [],
+              "scaling": [],
+              "sourceScope": "unknown",
+              "stack": null,
+              "target": "1 Ally",
+              "targetCount": null,
+              "targetPriority": "prefer-control-afflicted-ally",
+              "targetScope": "any-lane",
+              "type": "Cleanse Control",
+              "unit": "flat"
+            }
+          ],
+          "id": "mothers-mercy-each-round",
+          "repeat": null,
+          "rounds": [],
+          "targetPriority": "prefer-control-afflicted-ally",
+          "timing": "each-round",
+          "triggerChanceByHabitLevel": [
+            {
+              "level": 1,
+              "unit": "percent",
+              "value": 14
+            },
+            {
+              "level": 2,
+              "unit": "percent",
+              "value": 18.2
+            },
+            {
+              "level": 3,
+              "unit": "percent",
+              "value": 22.4
+            },
+            {
+              "level": 4,
+              "unit": "percent",
+              "value": 28
+            },
+            {
+              "level": 5,
+              "unit": "percent",
+              "value": 35
+            }
+          ],
+          "triggerChanceFixed": null,
+          "triggerEvent": "each-round"
+        }
+      ],
+      "tags": [
+        "CLEANSE_NEGATIVE",
+        "CONTROL"
+      ],
+      "unlockStarRank": 10,
+      "unresolvedQuestions": [
+        "Whether removing one Control also consumes one Negative-effect removal.",
+        "Selection order when multiple Control effects exist."
+      ],
+      "verification": {
+        "capturedAt": "2026-06-23",
+        "gameVersion": "26.6.53509",
+        "reviewedManually": true,
+        "source": "Syrax Mother's Mercy screenshot",
+        "status": "screenshot-verified"
+      }
+    }
+  ],
+  "abilitySchedules": [
+    {
+      "abilityId": "syrax-blazing-fury",
+      "abilityName": "Blazing Fury",
+      "schedule": {
+        "attempts": null,
+        "battleContext": "unspecified",
+        "conditions": [],
+        "effects": [
+          {
+            "calculated": false,
+            "casterEligibility": "eligible-if-targeting-allows",
+            "conditionalMultipliers": [],
+            "conditions": [],
+            "directlyVerified": true,
+            "duration": null,
+            "durationRounds": 2,
+            "excludes": [],
+            "id": "blazing-fury-fire-damage-up",
+            "includesCaster": null,
+            "magnitude": 10,
+            "notes": [
+              "Selection prioritizes allies with verified Fire Damage output."
+            ],
+            "perTargetEffectCheck": null,
+            "rankedValues": [],
+            "scaling": [],
+            "sourceScope": "unknown",
+            "stack": null,
+            "target": "1 Ally",
+            "targetCount": null,
+            "targetPriority": "prefer-fire-damage-ally",
+            "targetScope": "any-lane",
+            "type": "Fire Damage Dealt Up",
+            "unit": "percent"
+          },
+          {
+            "calculated": false,
+            "casterEligibility": "eligible-if-targeting-allows",
+            "conditionalMultipliers": [],
+            "conditions": [],
+            "directlyVerified": true,
+            "duration": null,
+            "durationRounds": 2,
+            "excludes": [],
+            "id": "blazing-fury-first-strike",
+            "includesCaster": null,
+            "magnitude": null,
+            "notes": [],
+            "perTargetEffectCheck": null,
+            "rankedValues": [],
+            "scaling": [],
+            "sourceScope": "unknown",
+            "stack": null,
+            "target": "1 Ally",
+            "targetCount": null,
+            "targetPriority": "prefer-fire-damage-ally",
+            "targetScope": "any-lane",
+            "type": "First-Strike",
+            "unit": "unknown"
+          }
+        ],
+        "id": "blazing-fury-fire-support",
+        "repeat": null,
+        "rounds": [],
+        "targetPriority": "prefer-fire-damage-ally",
+        "timing": "each-round",
+        "triggerChanceByHabitLevel": [],
+        "triggerChanceFixed": 20,
+        "triggerEvent": "each-round"
+      }
+    },
+    {
+      "abilityId": "syrax-blazing-fury",
+      "abilityName": "Blazing Fury",
+      "schedule": {
+        "attempts": null,
+        "battleContext": "unspecified",
+        "conditions": [],
+        "effects": [
+          {
+            "calculated": false,
+            "casterEligibility": "unknown",
+            "conditionalMultipliers": [],
+            "conditions": [],
+            "directlyVerified": true,
+            "duration": null,
+            "durationRounds": null,
+            "excludes": [],
+            "id": "blazing-fury-tactical-rate",
+            "includesCaster": null,
+            "magnitude": 110,
+            "notes": [
+              "Mitigated by target Intelligence.",
+              "Enemy adjacency semantics are not yet verified."
+            ],
+            "perTargetEffectCheck": null,
+            "rankedValues": [],
+            "scaling": [
+              "attacker Instinct"
+            ],
+            "sourceScope": "unknown",
+            "stack": null,
+            "target": "1 Enemy",
+            "targetCount": null,
+            "targetPriority": "any-eligible",
+            "targetScope": "within-adjacency",
+            "type": "Tactical Damage",
+            "unit": "rate"
+          }
+        ],
+        "id": "blazing-fury-tactical-damage",
+        "repeat": null,
+        "rounds": [
+          1,
+          4,
+          6,
+          9
+        ],
+        "targetPriority": "any-eligible",
+        "timing": "specific-rounds",
+        "triggerChanceByHabitLevel": [],
+        "triggerChanceFixed": null,
+        "triggerEvent": "specific-rounds"
+      }
+    },
+    {
+      "abilityId": "syrax-sentinels-wit",
+      "abilityName": "Sentinel's Wit",
+      "schedule": {
+        "attempts": null,
+        "battleContext": "unspecified",
+        "conditions": [],
+        "effects": [
+          {
+            "calculated": false,
+            "casterEligibility": "unknown",
+            "conditionalMultipliers": [],
+            "conditions": [],
+            "directlyVerified": true,
+            "duration": null,
+            "durationRounds": null,
+            "excludes": [],
+            "id": "sentinels-wit-tactical",
+            "includesCaster": null,
+            "magnitude": 16,
+            "notes": [],
+            "perTargetEffectCheck": null,
+            "rankedValues": [],
+            "scaling": [],
+            "sourceScope": "all-sources",
+            "stack": null,
+            "target": "Self",
+            "targetCount": null,
+            "targetPriority": "any-eligible",
+            "targetScope": "self",
+            "type": "Tactical Damage Dealt Up",
+            "unit": "percent"
+          },
+          {
+            "calculated": false,
+            "casterEligibility": "unknown",
+            "conditionalMultipliers": [],
+            "conditions": [],
+            "directlyVerified": true,
+            "duration": null,
+            "durationRounds": null,
+            "excludes": [],
+            "id": "sentinels-wit-left-instinct",
+            "includesCaster": null,
+            "magnitude": 20,
+            "notes": [],
+            "perTargetEffectCheck": null,
+            "rankedValues": [],
+            "scaling": [],
+            "sourceScope": "unknown",
+            "stack": null,
+            "target": "Left Flank ally",
+            "targetCount": null,
+            "targetPriority": "any-eligible",
+            "targetScope": "left-flank",
+            "type": "Instinct Up",
+            "unit": "flat"
+          },
+          {
+            "calculated": false,
+            "casterEligibility": "unknown",
+            "conditionalMultipliers": [],
+            "conditions": [],
+            "directlyVerified": true,
+            "duration": null,
+            "durationRounds": null,
+            "excludes": [],
+            "id": "sentinels-wit-left-initiative",
+            "includesCaster": null,
+            "magnitude": 20,
+            "notes": [],
+            "perTargetEffectCheck": null,
+            "rankedValues": [],
+            "scaling": [],
+            "sourceScope": "unknown",
+            "stack": null,
+            "target": "Left Flank ally",
+            "targetCount": null,
+            "targetPriority": "any-eligible",
+            "targetScope": "left-flank",
+            "type": "Initiative Up",
+            "unit": "flat"
+          }
+        ],
+        "id": "sentinels-wit-passive",
+        "repeat": null,
+        "rounds": [],
+        "targetPriority": "any-eligible",
+        "timing": "passive",
+        "triggerChanceByHabitLevel": [],
+        "triggerChanceFixed": null,
+        "triggerEvent": "passive"
+      }
+    },
+    {
+      "abilityId": "syrax-mindful-synergy",
+      "abilityName": "Mindful Synergy",
+      "schedule": {
+        "attempts": null,
+        "battleContext": "unspecified",
+        "conditions": [],
+        "effects": [
+          {
+            "calculated": false,
+            "casterEligibility": "included",
+            "conditionalMultipliers": [],
+            "conditions": [],
+            "directlyVerified": true,
+            "duration": "Until end of combat",
+            "durationRounds": null,
+            "excludes": [],
+            "id": "mindful-synergy-intelligence",
+            "includesCaster": true,
+            "magnitude": null,
+            "notes": [],
+            "perTargetEffectCheck": null,
+            "rankedValues": [
+              {
+                "level": 1,
+                "unit": "percent",
+                "value": 6.5
+              },
+              {
+                "level": 2,
+                "unit": "percent",
+                "value": 7.8
+              },
+              {
+                "level": 3,
+                "unit": "percent",
+                "value": 9.1
+              },
+              {
+                "level": 4,
+                "unit": "percent",
+                "value": 11.05
+              },
+              {
+                "level": 5,
+                "unit": "percent",
+                "value": 13
+              }
+            ],
+            "scaling": [
+              "Initiative"
+            ],
+            "sourceScope": "unknown",
+            "stack": null,
+            "target": "3 Allies",
+            "targetCount": 3,
+            "targetPriority": "any-eligible",
+            "targetScope": "any-lane",
+            "type": "Intelligence Up",
+            "unit": "percent"
+          },
+          {
+            "calculated": false,
+            "casterEligibility": "included",
+            "conditionalMultipliers": [],
+            "conditions": [],
+            "directlyVerified": true,
+            "duration": "Until end of combat",
+            "durationRounds": null,
+            "excludes": [],
+            "id": "mindful-synergy-instinct",
+            "includesCaster": true,
+            "magnitude": null,
+            "notes": [],
+            "perTargetEffectCheck": null,
+            "rankedValues": [
+              {
+                "level": 1,
+                "unit": "percent",
+                "value": 6.5
+              },
+              {
+                "level": 2,
+                "unit": "percent",
+                "value": 7.8
+              },
+              {
+                "level": 3,
+                "unit": "percent",
+                "value": 9.1
+              },
+              {
+                "level": 4,
+                "unit": "percent",
+                "value": 11.05
+              },
+              {
+                "level": 5,
+                "unit": "percent",
+                "value": 13
+              }
+            ],
+            "scaling": [
+              "Initiative"
+            ],
+            "sourceScope": "unknown",
+            "stack": null,
+            "target": "3 Allies",
+            "targetCount": 3,
+            "targetPriority": "any-eligible",
+            "targetScope": "any-lane",
+            "type": "Instinct Up",
+            "unit": "percent"
+          }
+        ],
+        "id": "mindful-synergy-start",
+        "repeat": null,
+        "rounds": [],
+        "targetPriority": "any-eligible",
+        "timing": "start-of-combat",
+        "triggerChanceByHabitLevel": [],
+        "triggerChanceFixed": null,
+        "triggerEvent": "start-of-combat"
+      }
+    },
+    {
+      "abilityId": "syrax-flight-mastery",
+      "abilityName": "Flight Mastery",
+      "schedule": {
+        "attempts": null,
+        "battleContext": "unspecified",
+        "conditions": [],
+        "effects": [
+          {
+            "calculated": false,
+            "casterEligibility": "included",
+            "conditionalMultipliers": [],
+            "conditions": [],
+            "directlyVerified": true,
+            "duration": "Until end of combat",
+            "durationRounds": null,
+            "excludes": [],
+            "id": "flight-mastery-initiative-up",
+            "includesCaster": true,
+            "magnitude": null,
+            "notes": [],
+            "perTargetEffectCheck": null,
+            "rankedValues": [
+              {
+                "level": 1,
+                "unit": "percent",
+                "value": 6
+              },
+              {
+                "level": 2,
+                "unit": "percent",
+                "value": 7.2
+              },
+              {
+                "level": 3,
+                "unit": "percent",
+                "value": 8.4
+              },
+              {
+                "level": 4,
+                "unit": "percent",
+                "value": 10.2
+              },
+              {
+                "level": 5,
+                "unit": "percent",
+                "value": 12
+              }
+            ],
+            "scaling": [
+              "Instinct"
+            ],
+            "sourceScope": "unknown",
+            "stack": null,
+            "target": "3 Allies",
+            "targetCount": 3,
+            "targetPriority": "any-eligible",
+            "targetScope": "any-lane",
+            "type": "Initiative Up",
+            "unit": "percent"
+          },
+          {
+            "calculated": false,
+            "casterEligibility": "unknown",
+            "conditionalMultipliers": [],
+            "conditions": [],
+            "directlyVerified": true,
+            "duration": "Until end of combat",
+            "durationRounds": null,
+            "excludes": [],
+            "id": "flight-mastery-initiative-down",
+            "includesCaster": null,
+            "magnitude": null,
+            "notes": [],
+            "perTargetEffectCheck": null,
+            "rankedValues": [
+              {
+                "level": 1,
+                "unit": "percent",
+                "value": 6
+              },
+              {
+                "level": 2,
+                "unit": "percent",
+                "value": 7.2
+              },
+              {
+                "level": 3,
+                "unit": "percent",
+                "value": 8.4
+              },
+              {
+                "level": 4,
+                "unit": "percent",
+                "value": 10.2
+              },
+              {
+                "level": 5,
+                "unit": "percent",
+                "value": 12
+              }
+            ],
+            "scaling": [
+              "Instinct"
+            ],
+            "sourceScope": "unknown",
+            "stack": null,
+            "target": "3 Enemies",
+            "targetCount": 3,
+            "targetPriority": "any-eligible",
+            "targetScope": "any-lane",
+            "type": "Initiative Down",
+            "unit": "percent"
+          }
+        ],
+        "id": "flight-mastery-start",
+        "repeat": null,
+        "rounds": [],
+        "targetPriority": "any-eligible",
+        "timing": "start-of-combat",
+        "triggerChanceByHabitLevel": [],
+        "triggerChanceFixed": null,
+        "triggerEvent": "start-of-combat"
+      }
+    },
+    {
+      "abilityId": "syrax-strategic-revival",
+      "abilityName": "Strategic Revival",
+      "schedule": {
+        "attempts": null,
+        "battleContext": "unspecified",
+        "conditions": [],
+        "effects": [
+          {
+            "calculated": false,
+            "casterEligibility": "unknown",
+            "conditionalMultipliers": [
+              {
+                "calculatedFromVerifiedMultiplier": true,
+                "condition": {
+                  "battleContext": null,
+                  "comparison": null,
+                  "description": "Any enemy is afflicted with Slow.",
+                  "id": "any-enemy-has-slow",
+                  "kind": "any-enemy-has-status",
+                  "statusId": "slow",
+                  "subject": "enemy",
+                  "thresholdPercent": null,
+                  "unresolved": false
+                },
+                "description": "Recovery is multiplied by 1.5 if any enemy has Slow.",
+                "directlyVerifiedValues": [
+                  {
+                    "level": 1,
+                    "unit": "percent",
+                    "value": 75
+                  }
+                ],
+                "id": "strategic-revival-slow-1-5x",
+                "multiplier": 1.5
+              }
+            ],
+            "conditions": [],
+            "directlyVerified": true,
+            "duration": null,
+            "durationRounds": null,
+            "excludes": [],
+            "id": "strategic-revival-recovery",
+            "includesCaster": null,
+            "magnitude": null,
+            "notes": [
+              "Higher conditional Recovery values are calculated from the verified 1.5x multiplier."
+            ],
+            "perTargetEffectCheck": null,
+            "rankedValues": [
+              {
+                "level": 1,
+                "unit": "percent",
+                "value": 50
+              },
+              {
+                "level": 2,
+                "unit": "percent",
+                "value": 60
+              },
+              {
+                "level": 3,
+                "unit": "percent",
+                "value": 70
+              },
+              {
+                "level": 4,
+                "unit": "percent",
+                "value": 85
+              },
+              {
+                "level": 5,
+                "unit": "percent",
+                "value": 100
+              }
+            ],
+            "scaling": [
+              "Initiative",
+              "dragon Level"
+            ],
+            "sourceScope": "unknown",
+            "stack": null,
+            "target": "Ally with least current troops",
+            "targetCount": null,
+            "targetPriority": "least-current-troops-ally",
+            "targetScope": "any-lane",
+            "type": "Recovery",
+            "unit": "rate"
+          },
+          {
+            "calculated": false,
+            "casterEligibility": "unknown",
+            "conditionalMultipliers": [],
+            "conditions": [],
+            "directlyVerified": true,
+            "duration": null,
+            "durationRounds": 2,
+            "excludes": [],
+            "id": "strategic-revival-resistance",
+            "includesCaster": null,
+            "magnitude": 20,
+            "notes": [
+              "Resistance reduces Damage Received."
+            ],
+            "perTargetEffectCheck": null,
+            "rankedValues": [],
+            "scaling": [],
+            "sourceScope": "unknown",
+            "stack": null,
+            "target": "Ally with least current troops",
+            "targetCount": null,
+            "targetPriority": "least-current-troops-ally",
+            "targetScope": "any-lane",
+            "type": "Resistance",
+            "unit": "percent"
+          }
+        ],
+        "id": "strategic-revival-recovery-rounds",
+        "repeat": null,
+        "rounds": [
+          2,
+          5,
+          8
+        ],
+        "targetPriority": "least-current-troops-ally",
+        "timing": "specific-rounds",
+        "triggerChanceByHabitLevel": [
+          {
+            "level": 1,
+            "unit": "percent",
+            "value": 40
+          },
+          {
+            "level": 2,
+            "unit": "percent",
+            "value": 52
+          },
+          {
+            "level": 3,
+            "unit": "percent",
+            "value": 64
+          },
+          {
+            "level": 4,
+            "unit": "percent",
+            "value": 80
+          },
+          {
+            "level": 5,
+            "unit": "percent",
+            "value": 100
+          }
+        ],
+        "triggerChanceFixed": null,
+        "triggerEvent": "specific-rounds"
+      }
+    },
+    {
+      "abilityId": "syrax-tactical-inferno",
+      "abilityName": "Tactical Inferno",
+      "schedule": {
+        "attempts": null,
+        "battleContext": "unspecified",
+        "conditions": [],
+        "effects": [
+          {
+            "calculated": false,
+            "casterEligibility": "unknown",
+            "conditionalMultipliers": [],
+            "conditions": [],
+            "directlyVerified": true,
+            "duration": null,
+            "durationRounds": 3,
+            "excludes": [],
+            "id": "tactical-inferno-tactical",
+            "includesCaster": null,
+            "magnitude": null,
+            "notes": [
+              "Preferred position is not an absolute requirement."
+            ],
+            "perTargetEffectCheck": null,
+            "rankedValues": [
+              {
+                "level": 1,
+                "unit": "percent",
+                "value": 18
+              },
+              {
+                "level": 2,
+                "unit": "percent",
+                "value": 21.6
+              },
+              {
+                "level": 3,
+                "unit": "percent",
+                "value": 25.2
+              },
+              {
+                "level": 4,
+                "unit": "percent",
+                "value": 30.6
+              },
+              {
+                "level": 5,
+                "unit": "percent",
+                "value": 36
+              }
+            ],
+            "scaling": [],
+            "sourceScope": "unknown",
+            "stack": null,
+            "target": "1 Ally, prioritizing Left Flank",
+            "targetCount": null,
+            "targetPriority": "prefer-left-flank",
+            "targetScope": "any-lane",
+            "type": "Tactical Damage Dealt Up",
+            "unit": "percent"
+          },
+          {
+            "calculated": false,
+            "casterEligibility": "unknown",
+            "conditionalMultipliers": [],
+            "conditions": [],
+            "directlyVerified": true,
+            "duration": null,
+            "durationRounds": 3,
+            "excludes": [],
+            "id": "tactical-inferno-fire",
+            "includesCaster": null,
+            "magnitude": null,
+            "notes": [
+              "Preferred position is not an absolute requirement."
+            ],
+            "perTargetEffectCheck": null,
+            "rankedValues": [
+              {
+                "level": 1,
+                "unit": "percent",
+                "value": 18
+              },
+              {
+                "level": 2,
+                "unit": "percent",
+                "value": 21.6
+              },
+              {
+                "level": 3,
+                "unit": "percent",
+                "value": 25.2
+              },
+              {
+                "level": 4,
+                "unit": "percent",
+                "value": 30.6
+              },
+              {
+                "level": 5,
+                "unit": "percent",
+                "value": 36
+              }
+            ],
+            "scaling": [],
+            "sourceScope": "unknown",
+            "stack": null,
+            "target": "1 Ally, prioritizing Right Flank",
+            "targetCount": null,
+            "targetPriority": "prefer-right-flank",
+            "targetScope": "any-lane",
+            "type": "Fire Damage Dealt Up",
+            "unit": "percent"
+          }
+        ],
+        "id": "tactical-inferno-round-one",
+        "repeat": null,
+        "rounds": [
+          1
+        ],
+        "targetPriority": "any-eligible",
+        "timing": "start-of-round",
+        "triggerChanceByHabitLevel": [],
+        "triggerChanceFixed": null,
+        "triggerEvent": "start-of-round"
+      }
+    },
+    {
+      "abilityId": "syrax-mothers-mercy",
+      "abilityName": "Mother's Mercy",
+      "schedule": {
+        "attempts": null,
+        "battleContext": "unspecified",
+        "conditions": [],
+        "effects": [
+          {
+            "calculated": false,
+            "casterEligibility": "unknown",
+            "conditionalMultipliers": [],
+            "conditions": [],
+            "directlyVerified": true,
+            "duration": null,
+            "durationRounds": null,
+            "excludes": [],
+            "id": "mothers-mercy-cleanse-negative",
+            "includesCaster": null,
+            "magnitude": 2,
+            "notes": [],
+            "perTargetEffectCheck": null,
+            "rankedValues": [],
+            "scaling": [],
+            "sourceScope": "unknown",
+            "stack": null,
+            "target": "1 Ally",
+            "targetCount": null,
+            "targetPriority": "prefer-control-afflicted-ally",
+            "targetScope": "any-lane",
+            "type": "Cleanse Negative",
+            "unit": "flat"
+          },
+          {
+            "calculated": false,
+            "casterEligibility": "unknown",
+            "conditionalMultipliers": [],
+            "conditions": [],
+            "directlyVerified": true,
+            "duration": null,
+            "durationRounds": null,
+            "excludes": [],
+            "id": "mothers-mercy-cleanse-control",
+            "includesCaster": null,
+            "magnitude": 1,
+            "notes": [
+              "Control includes Stun, Stagger, Overwhelm, and Confusion."
+            ],
+            "perTargetEffectCheck": null,
+            "rankedValues": [],
+            "scaling": [],
+            "sourceScope": "unknown",
+            "stack": null,
+            "target": "1 Ally",
+            "targetCount": null,
+            "targetPriority": "prefer-control-afflicted-ally",
+            "targetScope": "any-lane",
+            "type": "Cleanse Control",
+            "unit": "flat"
+          }
+        ],
+        "id": "mothers-mercy-each-round",
+        "repeat": null,
+        "rounds": [],
+        "targetPriority": "prefer-control-afflicted-ally",
+        "timing": "each-round",
+        "triggerChanceByHabitLevel": [
+          {
+            "level": 1,
+            "unit": "percent",
+            "value": 14
+          },
+          {
+            "level": 2,
+            "unit": "percent",
+            "value": 18.2
+          },
+          {
+            "level": 3,
+            "unit": "percent",
+            "value": 22.4
+          },
+          {
+            "level": 4,
+            "unit": "percent",
+            "value": 28
+          },
+          {
+            "level": 5,
+            "unit": "percent",
+            "value": 35
+          }
+        ],
+        "triggerChanceFixed": null,
+        "triggerEvent": "each-round"
+      }
+    }
+  ],
+  "affinities": {
+    "Archers": "positive",
+    "Cavalry": "unknown",
+    "Shieldbearers": "unknown",
+    "Siege": "negative",
+    "Spearmen": "positive"
+  },
+  "attempts": [],
+  "availabilityRequirements": [
+    {
+      "abilityId": "syrax-sentinels-wit",
+      "type": "star-rank",
+      "value": 1
+    },
+    {
+      "abilityId": "syrax-sentinels-wit",
+      "type": "minimum-dragon-level",
+      "value": 16
+    },
+    {
+      "abilityId": "syrax-sentinels-wit",
+      "type": "position-requirement",
+      "value": "vanguard"
+    },
+    {
+      "abilityId": "syrax-mindful-synergy",
+      "type": "habit-unlock-star-rank",
+      "value": 2
+    },
+    {
+      "abilityId": "syrax-flight-mastery",
+      "type": "habit-unlock-star-rank",
+      "value": 4
+    },
+    {
+      "abilityId": "syrax-strategic-revival",
+      "type": "habit-unlock-star-rank",
+      "value": 6
+    },
+    {
+      "abilityId": "syrax-tactical-inferno",
+      "type": "habit-unlock-star-rank",
+      "value": 8
+    },
+    {
+      "abilityId": "syrax-mothers-mercy",
+      "type": "habit-unlock-star-rank",
+      "value": 10
+    }
+  ],
+  "breed": "Sentinel",
+  "command": {
+    "abilityClass": "active",
+    "augmentations": [
+      {
+        "effectsAdded": [
+          {
+            "calculated": false,
+            "casterEligibility": "unknown",
+            "conditionalMultipliers": [
+              {
+                "calculatedFromVerifiedMultiplier": true,
+                "condition": {
+                  "battleContext": null,
+                  "comparison": null,
+                  "description": "Any enemy is afflicted with Slow.",
+                  "id": "any-enemy-has-slow",
+                  "kind": "any-enemy-has-status",
+                  "statusId": "slow",
+                  "subject": "enemy",
+                  "thresholdPercent": null,
+                  "unresolved": false
+                },
+                "description": "Recovery is multiplied by 1.5 if any enemy has Slow.",
+                "directlyVerifiedValues": [
+                  {
+                    "level": 1,
+                    "unit": "percent",
+                    "value": 75
+                  }
+                ],
+                "id": "strategic-revival-slow-1-5x",
+                "multiplier": 1.5
+              }
+            ],
+            "conditions": [],
+            "directlyVerified": true,
+            "duration": null,
+            "durationRounds": null,
+            "excludes": [],
+            "id": "strategic-revival-recovery",
+            "includesCaster": null,
+            "magnitude": null,
+            "notes": [
+              "Higher conditional Recovery values are calculated from the verified 1.5x multiplier."
+            ],
+            "perTargetEffectCheck": null,
+            "rankedValues": [
+              {
+                "level": 1,
+                "unit": "percent",
+                "value": 50
+              },
+              {
+                "level": 2,
+                "unit": "percent",
+                "value": 60
+              },
+              {
+                "level": 3,
+                "unit": "percent",
+                "value": 70
+              },
+              {
+                "level": 4,
+                "unit": "percent",
+                "value": 85
+              },
+              {
+                "level": 5,
+                "unit": "percent",
+                "value": 100
+              }
+            ],
+            "scaling": [
+              "Initiative",
+              "dragon Level"
+            ],
+            "sourceScope": "unknown",
+            "stack": null,
+            "target": "Ally with least current troops",
+            "targetCount": null,
+            "targetPriority": "least-current-troops-ally",
+            "targetScope": "any-lane",
+            "type": "Recovery",
+            "unit": "rate"
+          },
+          {
+            "calculated": false,
+            "casterEligibility": "unknown",
+            "conditionalMultipliers": [],
+            "conditions": [],
+            "directlyVerified": true,
+            "duration": null,
+            "durationRounds": 2,
+            "excludes": [],
+            "id": "strategic-revival-resistance",
+            "includesCaster": null,
+            "magnitude": 20,
+            "notes": [
+              "Resistance reduces Damage Received."
+            ],
+            "perTargetEffectCheck": null,
+            "rankedValues": [],
+            "scaling": [],
+            "sourceScope": "unknown",
+            "stack": null,
+            "target": "Ally with least current troops",
+            "targetCount": null,
+            "targetPriority": "least-current-troops-ally",
+            "targetScope": "any-lane",
+            "type": "Resistance",
+            "unit": "percent"
+          }
+        ],
+        "evidenceIds": [
+          "syrax-strategic-revival-2026-06-24"
+        ],
+        "id": "syrax-strategic-revival-augmentation",
+        "minimumDragonStarRank": 6,
+        "modifiesAbilityId": "syrax-blazing-fury",
+        "rawDescription": "At 6 Stars, Strategic Revival augments Blazing Fury with Recovery and Resistance on rounds 2, 5, and 8.",
+        "schedulesAdded": [
+          {
+            "attempts": null,
+            "battleContext": "unspecified",
+            "conditions": [],
+            "effects": [
+              {
+                "calculated": false,
+                "casterEligibility": "unknown",
+                "conditionalMultipliers": [
+                  {
+                    "calculatedFromVerifiedMultiplier": true,
+                    "condition": {
+                      "battleContext": null,
+                      "comparison": null,
+                      "description": "Any enemy is afflicted with Slow.",
+                      "id": "any-enemy-has-slow",
+                      "kind": "any-enemy-has-status",
+                      "statusId": "slow",
+                      "subject": "enemy",
+                      "thresholdPercent": null,
+                      "unresolved": false
+                    },
+                    "description": "Recovery is multiplied by 1.5 if any enemy has Slow.",
+                    "directlyVerifiedValues": [
+                      {
+                        "level": 1,
+                        "unit": "percent",
+                        "value": 75
+                      }
+                    ],
+                    "id": "strategic-revival-slow-1-5x",
+                    "multiplier": 1.5
+                  }
+                ],
+                "conditions": [],
+                "directlyVerified": true,
+                "duration": null,
+                "durationRounds": null,
+                "excludes": [],
+                "id": "strategic-revival-recovery",
+                "includesCaster": null,
+                "magnitude": null,
+                "notes": [
+                  "Higher conditional Recovery values are calculated from the verified 1.5x multiplier."
+                ],
+                "perTargetEffectCheck": null,
+                "rankedValues": [
+                  {
+                    "level": 1,
+                    "unit": "percent",
+                    "value": 50
+                  },
+                  {
+                    "level": 2,
+                    "unit": "percent",
+                    "value": 60
+                  },
+                  {
+                    "level": 3,
+                    "unit": "percent",
+                    "value": 70
+                  },
+                  {
+                    "level": 4,
+                    "unit": "percent",
+                    "value": 85
+                  },
+                  {
+                    "level": 5,
+                    "unit": "percent",
+                    "value": 100
+                  }
+                ],
+                "scaling": [
+                  "Initiative",
+                  "dragon Level"
+                ],
+                "sourceScope": "unknown",
+                "stack": null,
+                "target": "Ally with least current troops",
+                "targetCount": null,
+                "targetPriority": "least-current-troops-ally",
+                "targetScope": "any-lane",
+                "type": "Recovery",
+                "unit": "rate"
+              },
+              {
+                "calculated": false,
+                "casterEligibility": "unknown",
+                "conditionalMultipliers": [],
+                "conditions": [],
+                "directlyVerified": true,
+                "duration": null,
+                "durationRounds": 2,
+                "excludes": [],
+                "id": "strategic-revival-resistance",
+                "includesCaster": null,
+                "magnitude": 20,
+                "notes": [
+                  "Resistance reduces Damage Received."
+                ],
+                "perTargetEffectCheck": null,
+                "rankedValues": [],
+                "scaling": [],
+                "sourceScope": "unknown",
+                "stack": null,
+                "target": "Ally with least current troops",
+                "targetCount": null,
+                "targetPriority": "least-current-troops-ally",
+                "targetScope": "any-lane",
+                "type": "Resistance",
+                "unit": "percent"
+              }
+            ],
+            "id": "strategic-revival-recovery-rounds",
+            "repeat": null,
+            "rounds": [
+              2,
+              5,
+              8
+            ],
+            "targetPriority": "least-current-troops-ally",
+            "timing": "specific-rounds",
+            "triggerChanceByHabitLevel": [
+              {
+                "level": 1,
+                "unit": "percent",
+                "value": 40
+              },
+              {
+                "level": 2,
+                "unit": "percent",
+                "value": 52
+              },
+              {
+                "level": 3,
+                "unit": "percent",
+                "value": 64
+              },
+              {
+                "level": 4,
+                "unit": "percent",
+                "value": 80
+              },
+              {
+                "level": 5,
+                "unit": "percent",
+                "value": 100
+              }
+            ],
+            "triggerChanceFixed": null,
+            "triggerEvent": "specific-rounds"
+          }
+        ],
+        "sourceAbilityId": "syrax-strategic-revival"
+      }
+    ],
+    "dragonId": "syrax",
+    "evidenceIds": [
+      "syrax-blazing-fury-summary-2026-06-24",
+      "syrax-blazing-fury-details-2026-06-24"
+    ],
+    "glossaryEntries": [],
+    "id": "syrax-blazing-fury",
+    "kind": "command",
+    "minimumDragonLevel": null,
+    "name": "Blazing Fury",
+    "positionRequirement": null,
+    "powerByHabitLevel": [],
+    "rawDescription": "Each Round: 20% chance to increase Fire Damage Dealt by 10% and grant First-Strike to one Ally in any lane for 2 rounds, prioritizing allies that deal Fire Damage. Rounds 1, 4, 6, 9: deal Tactical Damage to one enemy within adjacency.",
+    "schedules": [
+      {
+        "attempts": null,
+        "battleContext": "unspecified",
+        "conditions": [],
+        "effects": [
+          {
+            "calculated": false,
+            "casterEligibility": "eligible-if-targeting-allows",
+            "conditionalMultipliers": [],
+            "conditions": [],
+            "directlyVerified": true,
+            "duration": null,
+            "durationRounds": 2,
+            "excludes": [],
+            "id": "blazing-fury-fire-damage-up",
+            "includesCaster": null,
+            "magnitude": 10,
+            "notes": [
+              "Selection prioritizes allies with verified Fire Damage output."
+            ],
+            "perTargetEffectCheck": null,
+            "rankedValues": [],
+            "scaling": [],
+            "sourceScope": "unknown",
+            "stack": null,
+            "target": "1 Ally",
+            "targetCount": null,
+            "targetPriority": "prefer-fire-damage-ally",
+            "targetScope": "any-lane",
+            "type": "Fire Damage Dealt Up",
+            "unit": "percent"
+          },
+          {
+            "calculated": false,
+            "casterEligibility": "eligible-if-targeting-allows",
+            "conditionalMultipliers": [],
+            "conditions": [],
+            "directlyVerified": true,
+            "duration": null,
+            "durationRounds": 2,
+            "excludes": [],
+            "id": "blazing-fury-first-strike",
+            "includesCaster": null,
+            "magnitude": null,
+            "notes": [],
+            "perTargetEffectCheck": null,
+            "rankedValues": [],
+            "scaling": [],
+            "sourceScope": "unknown",
+            "stack": null,
+            "target": "1 Ally",
+            "targetCount": null,
+            "targetPriority": "prefer-fire-damage-ally",
+            "targetScope": "any-lane",
+            "type": "First-Strike",
+            "unit": "unknown"
+          }
+        ],
+        "id": "blazing-fury-fire-support",
+        "repeat": null,
+        "rounds": [],
+        "targetPriority": "prefer-fire-damage-ally",
+        "timing": "each-round",
+        "triggerChanceByHabitLevel": [],
+        "triggerChanceFixed": 20,
+        "triggerEvent": "each-round"
+      },
+      {
+        "attempts": null,
+        "battleContext": "unspecified",
+        "conditions": [],
+        "effects": [
+          {
+            "calculated": false,
+            "casterEligibility": "unknown",
+            "conditionalMultipliers": [],
+            "conditions": [],
+            "directlyVerified": true,
+            "duration": null,
+            "durationRounds": null,
+            "excludes": [],
+            "id": "blazing-fury-tactical-rate",
+            "includesCaster": null,
+            "magnitude": 110,
+            "notes": [
+              "Mitigated by target Intelligence.",
+              "Enemy adjacency semantics are not yet verified."
+            ],
+            "perTargetEffectCheck": null,
+            "rankedValues": [],
+            "scaling": [
+              "attacker Instinct"
+            ],
+            "sourceScope": "unknown",
+            "stack": null,
+            "target": "1 Enemy",
+            "targetCount": null,
+            "targetPriority": "any-eligible",
+            "targetScope": "within-adjacency",
+            "type": "Tactical Damage",
+            "unit": "rate"
+          }
+        ],
+        "id": "blazing-fury-tactical-damage",
+        "repeat": null,
+        "rounds": [
+          1,
+          4,
+          6,
+          9
+        ],
+        "targetPriority": "any-eligible",
+        "timing": "specific-rounds",
+        "triggerChanceByHabitLevel": [],
+        "triggerChanceFixed": null,
+        "triggerEvent": "specific-rounds"
+      }
+    ],
+    "tags": [
+      "TACTICAL_DAMAGE",
+      "FIRE_DAMAGE_UP",
+      "FIRST_STRIKE",
+      "ANY_LANE_TARGET"
+    ],
+    "unlockStarRank": null,
+    "unresolvedQuestions": [
+      "Enemy adjacency semantics for Tactical Damage target."
+    ],
+    "verification": {
+      "capturedAt": "2026-06-23",
+      "gameVersion": "26.6.53509",
+      "reviewedManually": true,
+      "source": "Syrax Blazing Fury screenshots",
+      "status": "screenshot-verified"
+    }
+  },
+  "contextVersion": 1,
+  "dataStatus": "community-verified",
+  "dependencies": [
+    {
+      "dependency": {
+        "notes": [
+          "Effect wording indicates scaling with Instinct."
+        ],
+        "statId": "instinct",
+        "type": "scales-with-stat"
+      },
+      "outputCapabilityId": "syrax-blazing-fury-blazing-fury-tactical-rate-output"
+    },
+    {
+      "dependency": {
+        "notes": [
+          "Tactical Damage is reduced by target Intelligence."
+        ],
+        "statId": "intelligence",
+        "type": "mitigated-by-target-stat"
+      },
+      "outputCapabilityId": "syrax-blazing-fury-blazing-fury-tactical-rate-output"
+    },
+    {
+      "dependency": {
+        "notes": [
+          "Effect wording indicates scaling with Initiative."
+        ],
+        "statId": "initiative",
+        "type": "scales-with-stat"
+      },
+      "outputCapabilityId": "syrax-strategic-revival-strategic-revival-recovery-output"
+    },
+    {
+      "dependency": {
+        "multiplier": 1.5,
+        "notes": [
+          "Any enemy is afflicted with Slow."
+        ],
+        "statusId": "slow",
+        "type": "requires-any-enemy-status"
+      },
+      "outputCapabilityId": "syrax-strategic-revival-strategic-revival-recovery-output"
+    }
+  ],
+  "effects": [
+    {
+      "abilityId": "syrax-blazing-fury",
+      "effect": {
+        "calculated": false,
+        "casterEligibility": "eligible-if-targeting-allows",
+        "conditionalMultipliers": [],
+        "conditions": [],
+        "directlyVerified": true,
+        "duration": null,
+        "durationRounds": 2,
+        "excludes": [],
+        "id": "blazing-fury-fire-damage-up",
+        "includesCaster": null,
+        "magnitude": 10,
+        "notes": [
+          "Selection prioritizes allies with verified Fire Damage output."
+        ],
+        "perTargetEffectCheck": null,
+        "rankedValues": [],
+        "scaling": [],
+        "sourceScope": "unknown",
+        "stack": null,
+        "target": "1 Ally",
+        "targetCount": null,
+        "targetPriority": "prefer-fire-damage-ally",
+        "targetScope": "any-lane",
+        "type": "Fire Damage Dealt Up",
+        "unit": "percent"
+      },
+      "scheduleId": "blazing-fury-fire-support"
+    },
+    {
+      "abilityId": "syrax-blazing-fury",
+      "effect": {
+        "calculated": false,
+        "casterEligibility": "eligible-if-targeting-allows",
+        "conditionalMultipliers": [],
+        "conditions": [],
+        "directlyVerified": true,
+        "duration": null,
+        "durationRounds": 2,
+        "excludes": [],
+        "id": "blazing-fury-first-strike",
+        "includesCaster": null,
+        "magnitude": null,
+        "notes": [],
+        "perTargetEffectCheck": null,
+        "rankedValues": [],
+        "scaling": [],
+        "sourceScope": "unknown",
+        "stack": null,
+        "target": "1 Ally",
+        "targetCount": null,
+        "targetPriority": "prefer-fire-damage-ally",
+        "targetScope": "any-lane",
+        "type": "First-Strike",
+        "unit": "unknown"
+      },
+      "scheduleId": "blazing-fury-fire-support"
+    },
+    {
+      "abilityId": "syrax-blazing-fury",
+      "effect": {
+        "calculated": false,
+        "casterEligibility": "unknown",
+        "conditionalMultipliers": [],
+        "conditions": [],
+        "directlyVerified": true,
+        "duration": null,
+        "durationRounds": null,
+        "excludes": [],
+        "id": "blazing-fury-tactical-rate",
+        "includesCaster": null,
+        "magnitude": 110,
+        "notes": [
+          "Mitigated by target Intelligence.",
+          "Enemy adjacency semantics are not yet verified."
+        ],
+        "perTargetEffectCheck": null,
+        "rankedValues": [],
+        "scaling": [
+          "attacker Instinct"
+        ],
+        "sourceScope": "unknown",
+        "stack": null,
+        "target": "1 Enemy",
+        "targetCount": null,
+        "targetPriority": "any-eligible",
+        "targetScope": "within-adjacency",
+        "type": "Tactical Damage",
+        "unit": "rate"
+      },
+      "scheduleId": "blazing-fury-tactical-damage"
+    },
+    {
+      "abilityId": "syrax-sentinels-wit",
+      "effect": {
+        "calculated": false,
+        "casterEligibility": "unknown",
+        "conditionalMultipliers": [],
+        "conditions": [],
+        "directlyVerified": true,
+        "duration": null,
+        "durationRounds": null,
+        "excludes": [],
+        "id": "sentinels-wit-tactical",
+        "includesCaster": null,
+        "magnitude": 16,
+        "notes": [],
+        "perTargetEffectCheck": null,
+        "rankedValues": [],
+        "scaling": [],
+        "sourceScope": "all-sources",
+        "stack": null,
+        "target": "Self",
+        "targetCount": null,
+        "targetPriority": "any-eligible",
+        "targetScope": "self",
+        "type": "Tactical Damage Dealt Up",
+        "unit": "percent"
+      },
+      "scheduleId": "sentinels-wit-passive"
+    },
+    {
+      "abilityId": "syrax-sentinels-wit",
+      "effect": {
+        "calculated": false,
+        "casterEligibility": "unknown",
+        "conditionalMultipliers": [],
+        "conditions": [],
+        "directlyVerified": true,
+        "duration": null,
+        "durationRounds": null,
+        "excludes": [],
+        "id": "sentinels-wit-left-instinct",
+        "includesCaster": null,
+        "magnitude": 20,
+        "notes": [],
+        "perTargetEffectCheck": null,
+        "rankedValues": [],
+        "scaling": [],
+        "sourceScope": "unknown",
+        "stack": null,
+        "target": "Left Flank ally",
+        "targetCount": null,
+        "targetPriority": "any-eligible",
+        "targetScope": "left-flank",
+        "type": "Instinct Up",
+        "unit": "flat"
+      },
+      "scheduleId": "sentinels-wit-passive"
+    },
+    {
+      "abilityId": "syrax-sentinels-wit",
+      "effect": {
+        "calculated": false,
+        "casterEligibility": "unknown",
+        "conditionalMultipliers": [],
+        "conditions": [],
+        "directlyVerified": true,
+        "duration": null,
+        "durationRounds": null,
+        "excludes": [],
+        "id": "sentinels-wit-left-initiative",
+        "includesCaster": null,
+        "magnitude": 20,
+        "notes": [],
+        "perTargetEffectCheck": null,
+        "rankedValues": [],
+        "scaling": [],
+        "sourceScope": "unknown",
+        "stack": null,
+        "target": "Left Flank ally",
+        "targetCount": null,
+        "targetPriority": "any-eligible",
+        "targetScope": "left-flank",
+        "type": "Initiative Up",
+        "unit": "flat"
+      },
+      "scheduleId": "sentinels-wit-passive"
+    },
+    {
+      "abilityId": "syrax-mindful-synergy",
+      "effect": {
+        "calculated": false,
+        "casterEligibility": "included",
+        "conditionalMultipliers": [],
+        "conditions": [],
+        "directlyVerified": true,
+        "duration": "Until end of combat",
+        "durationRounds": null,
+        "excludes": [],
+        "id": "mindful-synergy-intelligence",
+        "includesCaster": true,
+        "magnitude": null,
+        "notes": [],
+        "perTargetEffectCheck": null,
+        "rankedValues": [
+          {
+            "level": 1,
+            "unit": "percent",
+            "value": 6.5
+          },
+          {
+            "level": 2,
+            "unit": "percent",
+            "value": 7.8
+          },
+          {
+            "level": 3,
+            "unit": "percent",
+            "value": 9.1
+          },
+          {
+            "level": 4,
+            "unit": "percent",
+            "value": 11.05
+          },
+          {
+            "level": 5,
+            "unit": "percent",
+            "value": 13
+          }
+        ],
+        "scaling": [
+          "Initiative"
+        ],
+        "sourceScope": "unknown",
+        "stack": null,
+        "target": "3 Allies",
+        "targetCount": 3,
+        "targetPriority": "any-eligible",
+        "targetScope": "any-lane",
+        "type": "Intelligence Up",
+        "unit": "percent"
+      },
+      "scheduleId": "mindful-synergy-start"
+    },
+    {
+      "abilityId": "syrax-mindful-synergy",
+      "effect": {
+        "calculated": false,
+        "casterEligibility": "included",
+        "conditionalMultipliers": [],
+        "conditions": [],
+        "directlyVerified": true,
+        "duration": "Until end of combat",
+        "durationRounds": null,
+        "excludes": [],
+        "id": "mindful-synergy-instinct",
+        "includesCaster": true,
+        "magnitude": null,
+        "notes": [],
+        "perTargetEffectCheck": null,
+        "rankedValues": [
+          {
+            "level": 1,
+            "unit": "percent",
+            "value": 6.5
+          },
+          {
+            "level": 2,
+            "unit": "percent",
+            "value": 7.8
+          },
+          {
+            "level": 3,
+            "unit": "percent",
+            "value": 9.1
+          },
+          {
+            "level": 4,
+            "unit": "percent",
+            "value": 11.05
+          },
+          {
+            "level": 5,
+            "unit": "percent",
+            "value": 13
+          }
+        ],
+        "scaling": [
+          "Initiative"
+        ],
+        "sourceScope": "unknown",
+        "stack": null,
+        "target": "3 Allies",
+        "targetCount": 3,
+        "targetPriority": "any-eligible",
+        "targetScope": "any-lane",
+        "type": "Instinct Up",
+        "unit": "percent"
+      },
+      "scheduleId": "mindful-synergy-start"
+    },
+    {
+      "abilityId": "syrax-flight-mastery",
+      "effect": {
+        "calculated": false,
+        "casterEligibility": "included",
+        "conditionalMultipliers": [],
+        "conditions": [],
+        "directlyVerified": true,
+        "duration": "Until end of combat",
+        "durationRounds": null,
+        "excludes": [],
+        "id": "flight-mastery-initiative-up",
+        "includesCaster": true,
+        "magnitude": null,
+        "notes": [],
+        "perTargetEffectCheck": null,
+        "rankedValues": [
+          {
+            "level": 1,
+            "unit": "percent",
+            "value": 6
+          },
+          {
+            "level": 2,
+            "unit": "percent",
+            "value": 7.2
+          },
+          {
+            "level": 3,
+            "unit": "percent",
+            "value": 8.4
+          },
+          {
+            "level": 4,
+            "unit": "percent",
+            "value": 10.2
+          },
+          {
+            "level": 5,
+            "unit": "percent",
+            "value": 12
+          }
+        ],
+        "scaling": [
+          "Instinct"
+        ],
+        "sourceScope": "unknown",
+        "stack": null,
+        "target": "3 Allies",
+        "targetCount": 3,
+        "targetPriority": "any-eligible",
+        "targetScope": "any-lane",
+        "type": "Initiative Up",
+        "unit": "percent"
+      },
+      "scheduleId": "flight-mastery-start"
+    },
+    {
+      "abilityId": "syrax-flight-mastery",
+      "effect": {
+        "calculated": false,
+        "casterEligibility": "unknown",
+        "conditionalMultipliers": [],
+        "conditions": [],
+        "directlyVerified": true,
+        "duration": "Until end of combat",
+        "durationRounds": null,
+        "excludes": [],
+        "id": "flight-mastery-initiative-down",
+        "includesCaster": null,
+        "magnitude": null,
+        "notes": [],
+        "perTargetEffectCheck": null,
+        "rankedValues": [
+          {
+            "level": 1,
+            "unit": "percent",
+            "value": 6
+          },
+          {
+            "level": 2,
+            "unit": "percent",
+            "value": 7.2
+          },
+          {
+            "level": 3,
+            "unit": "percent",
+            "value": 8.4
+          },
+          {
+            "level": 4,
+            "unit": "percent",
+            "value": 10.2
+          },
+          {
+            "level": 5,
+            "unit": "percent",
+            "value": 12
+          }
+        ],
+        "scaling": [
+          "Instinct"
+        ],
+        "sourceScope": "unknown",
+        "stack": null,
+        "target": "3 Enemies",
+        "targetCount": 3,
+        "targetPriority": "any-eligible",
+        "targetScope": "any-lane",
+        "type": "Initiative Down",
+        "unit": "percent"
+      },
+      "scheduleId": "flight-mastery-start"
+    },
+    {
+      "abilityId": "syrax-strategic-revival",
+      "effect": {
+        "calculated": false,
+        "casterEligibility": "unknown",
+        "conditionalMultipliers": [
+          {
+            "calculatedFromVerifiedMultiplier": true,
+            "condition": {
+              "battleContext": null,
+              "comparison": null,
+              "description": "Any enemy is afflicted with Slow.",
+              "id": "any-enemy-has-slow",
+              "kind": "any-enemy-has-status",
+              "statusId": "slow",
+              "subject": "enemy",
+              "thresholdPercent": null,
+              "unresolved": false
+            },
+            "description": "Recovery is multiplied by 1.5 if any enemy has Slow.",
+            "directlyVerifiedValues": [
+              {
+                "level": 1,
+                "unit": "percent",
+                "value": 75
+              }
+            ],
+            "id": "strategic-revival-slow-1-5x",
+            "multiplier": 1.5
+          }
+        ],
+        "conditions": [],
+        "directlyVerified": true,
+        "duration": null,
+        "durationRounds": null,
+        "excludes": [],
+        "id": "strategic-revival-recovery",
+        "includesCaster": null,
+        "magnitude": null,
+        "notes": [
+          "Higher conditional Recovery values are calculated from the verified 1.5x multiplier."
+        ],
+        "perTargetEffectCheck": null,
+        "rankedValues": [
+          {
+            "level": 1,
+            "unit": "percent",
+            "value": 50
+          },
+          {
+            "level": 2,
+            "unit": "percent",
+            "value": 60
+          },
+          {
+            "level": 3,
+            "unit": "percent",
+            "value": 70
+          },
+          {
+            "level": 4,
+            "unit": "percent",
+            "value": 85
+          },
+          {
+            "level": 5,
+            "unit": "percent",
+            "value": 100
+          }
+        ],
+        "scaling": [
+          "Initiative",
+          "dragon Level"
+        ],
+        "sourceScope": "unknown",
+        "stack": null,
+        "target": "Ally with least current troops",
+        "targetCount": null,
+        "targetPriority": "least-current-troops-ally",
+        "targetScope": "any-lane",
+        "type": "Recovery",
+        "unit": "rate"
+      },
+      "scheduleId": "strategic-revival-recovery-rounds"
+    },
+    {
+      "abilityId": "syrax-strategic-revival",
+      "effect": {
+        "calculated": false,
+        "casterEligibility": "unknown",
+        "conditionalMultipliers": [],
+        "conditions": [],
+        "directlyVerified": true,
+        "duration": null,
+        "durationRounds": 2,
+        "excludes": [],
+        "id": "strategic-revival-resistance",
+        "includesCaster": null,
+        "magnitude": 20,
+        "notes": [
+          "Resistance reduces Damage Received."
+        ],
+        "perTargetEffectCheck": null,
+        "rankedValues": [],
+        "scaling": [],
+        "sourceScope": "unknown",
+        "stack": null,
+        "target": "Ally with least current troops",
+        "targetCount": null,
+        "targetPriority": "least-current-troops-ally",
+        "targetScope": "any-lane",
+        "type": "Resistance",
+        "unit": "percent"
+      },
+      "scheduleId": "strategic-revival-recovery-rounds"
+    },
+    {
+      "abilityId": "syrax-tactical-inferno",
+      "effect": {
+        "calculated": false,
+        "casterEligibility": "unknown",
+        "conditionalMultipliers": [],
+        "conditions": [],
+        "directlyVerified": true,
+        "duration": null,
+        "durationRounds": 3,
+        "excludes": [],
+        "id": "tactical-inferno-tactical",
+        "includesCaster": null,
+        "magnitude": null,
+        "notes": [
+          "Preferred position is not an absolute requirement."
+        ],
+        "perTargetEffectCheck": null,
+        "rankedValues": [
+          {
+            "level": 1,
+            "unit": "percent",
+            "value": 18
+          },
+          {
+            "level": 2,
+            "unit": "percent",
+            "value": 21.6
+          },
+          {
+            "level": 3,
+            "unit": "percent",
+            "value": 25.2
+          },
+          {
+            "level": 4,
+            "unit": "percent",
+            "value": 30.6
+          },
+          {
+            "level": 5,
+            "unit": "percent",
+            "value": 36
+          }
+        ],
+        "scaling": [],
+        "sourceScope": "unknown",
+        "stack": null,
+        "target": "1 Ally, prioritizing Left Flank",
+        "targetCount": null,
+        "targetPriority": "prefer-left-flank",
+        "targetScope": "any-lane",
+        "type": "Tactical Damage Dealt Up",
+        "unit": "percent"
+      },
+      "scheduleId": "tactical-inferno-round-one"
+    },
+    {
+      "abilityId": "syrax-tactical-inferno",
+      "effect": {
+        "calculated": false,
+        "casterEligibility": "unknown",
+        "conditionalMultipliers": [],
+        "conditions": [],
+        "directlyVerified": true,
+        "duration": null,
+        "durationRounds": 3,
+        "excludes": [],
+        "id": "tactical-inferno-fire",
+        "includesCaster": null,
+        "magnitude": null,
+        "notes": [
+          "Preferred position is not an absolute requirement."
+        ],
+        "perTargetEffectCheck": null,
+        "rankedValues": [
+          {
+            "level": 1,
+            "unit": "percent",
+            "value": 18
+          },
+          {
+            "level": 2,
+            "unit": "percent",
+            "value": 21.6
+          },
+          {
+            "level": 3,
+            "unit": "percent",
+            "value": 25.2
+          },
+          {
+            "level": 4,
+            "unit": "percent",
+            "value": 30.6
+          },
+          {
+            "level": 5,
+            "unit": "percent",
+            "value": 36
+          }
+        ],
+        "scaling": [],
+        "sourceScope": "unknown",
+        "stack": null,
+        "target": "1 Ally, prioritizing Right Flank",
+        "targetCount": null,
+        "targetPriority": "prefer-right-flank",
+        "targetScope": "any-lane",
+        "type": "Fire Damage Dealt Up",
+        "unit": "percent"
+      },
+      "scheduleId": "tactical-inferno-round-one"
+    },
+    {
+      "abilityId": "syrax-mothers-mercy",
+      "effect": {
+        "calculated": false,
+        "casterEligibility": "unknown",
+        "conditionalMultipliers": [],
+        "conditions": [],
+        "directlyVerified": true,
+        "duration": null,
+        "durationRounds": null,
+        "excludes": [],
+        "id": "mothers-mercy-cleanse-negative",
+        "includesCaster": null,
+        "magnitude": 2,
+        "notes": [],
+        "perTargetEffectCheck": null,
+        "rankedValues": [],
+        "scaling": [],
+        "sourceScope": "unknown",
+        "stack": null,
+        "target": "1 Ally",
+        "targetCount": null,
+        "targetPriority": "prefer-control-afflicted-ally",
+        "targetScope": "any-lane",
+        "type": "Cleanse Negative",
+        "unit": "flat"
+      },
+      "scheduleId": "mothers-mercy-each-round"
+    },
+    {
+      "abilityId": "syrax-mothers-mercy",
+      "effect": {
+        "calculated": false,
+        "casterEligibility": "unknown",
+        "conditionalMultipliers": [],
+        "conditions": [],
+        "directlyVerified": true,
+        "duration": null,
+        "durationRounds": null,
+        "excludes": [],
+        "id": "mothers-mercy-cleanse-control",
+        "includesCaster": null,
+        "magnitude": 1,
+        "notes": [
+          "Control includes Stun, Stagger, Overwhelm, and Confusion."
+        ],
+        "perTargetEffectCheck": null,
+        "rankedValues": [],
+        "scaling": [],
+        "sourceScope": "unknown",
+        "stack": null,
+        "target": "1 Ally",
+        "targetCount": null,
+        "targetPriority": "prefer-control-afflicted-ally",
+        "targetScope": "any-lane",
+        "type": "Cleanse Control",
+        "unit": "flat"
+      },
+      "scheduleId": "mothers-mercy-each-round"
+    }
+  ],
+  "evidenceReferences": [
+    {
+      "capturedAt": "2026-06-24",
+      "description": "Descriptive evidence label only. Screenshot files are not committed to the public repository.",
+      "gameVersion": "26.6.53509",
+      "id": "syrax-main-screen-2026-06-24",
+      "language": "English",
+      "reviewedManually": true,
+      "submittedBy": "repository owner",
+      "title": "Syrax main screen",
+      "type": "in-game-screenshot",
+      "url": null,
+      "verificationStatus": "community-verified"
+    },
+    {
+      "capturedAt": "2026-06-24",
+      "description": "Descriptive evidence label only. Screenshot files are not committed to the public repository.",
+      "gameVersion": "26.6.53509",
+      "id": "syrax-sentinels-wit-2026-06-24",
+      "language": "English",
+      "reviewedManually": true,
+      "submittedBy": "repository owner",
+      "title": "Syrax Sentinel's Wit",
+      "type": "in-game-screenshot",
+      "url": null,
+      "verificationStatus": "community-verified"
+    },
+    {
+      "capturedAt": "2026-06-24",
+      "description": "Descriptive evidence label only. Screenshot files are not committed to the public repository.",
+      "gameVersion": "26.6.53509",
+      "id": "syrax-blazing-fury-summary-2026-06-24",
+      "language": "English",
+      "reviewedManually": true,
+      "submittedBy": "repository owner",
+      "title": "Syrax Blazing Fury summary",
+      "type": "in-game-screenshot",
+      "url": null,
+      "verificationStatus": "community-verified"
+    },
+    {
+      "capturedAt": "2026-06-24",
+      "description": "Descriptive evidence label only. Screenshot files are not committed to the public repository.",
+      "gameVersion": "26.6.53509",
+      "id": "syrax-blazing-fury-details-2026-06-24",
+      "language": "English",
+      "reviewedManually": true,
+      "submittedBy": "repository owner",
+      "title": "Syrax Blazing Fury details",
+      "type": "in-game-screenshot",
+      "url": null,
+      "verificationStatus": "community-verified"
+    },
+    {
+      "capturedAt": "2026-06-24",
+      "description": "Descriptive evidence label only. Screenshot files are not committed to the public repository.",
+      "gameVersion": "26.6.53509",
+      "id": "syrax-mindful-synergy-2026-06-24",
+      "language": "English",
+      "reviewedManually": true,
+      "submittedBy": "repository owner",
+      "title": "Syrax Mindful Synergy",
+      "type": "in-game-screenshot",
+      "url": null,
+      "verificationStatus": "community-verified"
+    },
+    {
+      "capturedAt": "2026-06-24",
+      "description": "Descriptive evidence label only. Screenshot files are not committed to the public repository.",
+      "gameVersion": "26.6.53509",
+      "id": "syrax-flight-mastery-2026-06-24",
+      "language": "English",
+      "reviewedManually": true,
+      "submittedBy": "repository owner",
+      "title": "Syrax Flight Mastery",
+      "type": "in-game-screenshot",
+      "url": null,
+      "verificationStatus": "community-verified"
+    },
+    {
+      "capturedAt": "2026-06-24",
+      "description": "Descriptive evidence label only. Screenshot files are not committed to the public repository.",
+      "gameVersion": "26.6.53509",
+      "id": "syrax-strategic-revival-2026-06-24",
+      "language": "English",
+      "reviewedManually": true,
+      "submittedBy": "repository owner",
+      "title": "Syrax Strategic Revival",
+      "type": "in-game-screenshot",
+      "url": null,
+      "verificationStatus": "community-verified"
+    },
+    {
+      "capturedAt": "2026-06-24",
+      "description": "Descriptive evidence label only. Screenshot files are not committed to the public repository.",
+      "gameVersion": "26.6.53509",
+      "id": "syrax-tactical-inferno-2026-06-24",
+      "language": "English",
+      "reviewedManually": true,
+      "submittedBy": "repository owner",
+      "title": "Syrax Tactical Inferno",
+      "type": "in-game-screenshot",
+      "url": null,
+      "verificationStatus": "community-verified"
+    },
+    {
+      "capturedAt": "2026-06-24",
+      "description": "Descriptive evidence label only. Screenshot files are not committed to the public repository.",
+      "gameVersion": "26.6.53509",
+      "id": "syrax-mothers-mercy-2026-06-24",
+      "language": "English",
+      "reviewedManually": true,
+      "submittedBy": "repository owner",
+      "title": "Syrax Mother's Mercy",
+      "type": "in-game-screenshot",
+      "url": null,
+      "verificationStatus": "community-verified"
+    }
+  ],
+  "firstObservedInGame": null,
+  "format": "dragonfire-dragon-profile",
+  "gameVersion": null,
+  "generatedAt": "2026-06-25T00:29:16.911Z",
+  "habits": [
+    {
+      "abilityClass": "passive",
+      "augmentations": [],
+      "dragonId": "syrax",
+      "evidenceIds": [
+        "syrax-mindful-synergy-2026-06-24"
+      ],
+      "glossaryEntries": [],
+      "id": "syrax-mindful-synergy",
+      "kind": "habit",
+      "minimumDragonLevel": null,
+      "name": "Mindful Synergy",
+      "positionRequirement": null,
+      "powerByHabitLevel": [
+        {
+          "level": 1,
+          "unit": "power",
+          "value": 420
+        },
+        {
+          "level": 2,
+          "unit": "power",
+          "value": 920
+        },
+        {
+          "level": 3,
+          "unit": "power",
+          "value": 1500
+        },
+        {
+          "level": 4,
+          "unit": "power",
+          "value": 2200
+        },
+        {
+          "level": 5,
+          "unit": "power",
+          "value": 3100
+        }
+      ],
+      "rawDescription": "Start of Combat: increase Intelligence and Instinct of 3 Allies in any lane until end of combat, enhanced by Syrax Initiative.",
+      "schedules": [
+        {
+          "attempts": null,
+          "battleContext": "unspecified",
+          "conditions": [],
+          "effects": [
+            {
+              "calculated": false,
+              "casterEligibility": "included",
+              "conditionalMultipliers": [],
+              "conditions": [],
+              "directlyVerified": true,
+              "duration": "Until end of combat",
+              "durationRounds": null,
+              "excludes": [],
+              "id": "mindful-synergy-intelligence",
+              "includesCaster": true,
+              "magnitude": null,
+              "notes": [],
+              "perTargetEffectCheck": null,
+              "rankedValues": [
+                {
+                  "level": 1,
+                  "unit": "percent",
+                  "value": 6.5
+                },
+                {
+                  "level": 2,
+                  "unit": "percent",
+                  "value": 7.8
+                },
+                {
+                  "level": 3,
+                  "unit": "percent",
+                  "value": 9.1
+                },
+                {
+                  "level": 4,
+                  "unit": "percent",
+                  "value": 11.05
+                },
+                {
+                  "level": 5,
+                  "unit": "percent",
+                  "value": 13
+                }
+              ],
+              "scaling": [
+                "Initiative"
+              ],
+              "sourceScope": "unknown",
+              "stack": null,
+              "target": "3 Allies",
+              "targetCount": 3,
+              "targetPriority": "any-eligible",
+              "targetScope": "any-lane",
+              "type": "Intelligence Up",
+              "unit": "percent"
+            },
+            {
+              "calculated": false,
+              "casterEligibility": "included",
+              "conditionalMultipliers": [],
+              "conditions": [],
+              "directlyVerified": true,
+              "duration": "Until end of combat",
+              "durationRounds": null,
+              "excludes": [],
+              "id": "mindful-synergy-instinct",
+              "includesCaster": true,
+              "magnitude": null,
+              "notes": [],
+              "perTargetEffectCheck": null,
+              "rankedValues": [
+                {
+                  "level": 1,
+                  "unit": "percent",
+                  "value": 6.5
+                },
+                {
+                  "level": 2,
+                  "unit": "percent",
+                  "value": 7.8
+                },
+                {
+                  "level": 3,
+                  "unit": "percent",
+                  "value": 9.1
+                },
+                {
+                  "level": 4,
+                  "unit": "percent",
+                  "value": 11.05
+                },
+                {
+                  "level": 5,
+                  "unit": "percent",
+                  "value": 13
+                }
+              ],
+              "scaling": [
+                "Initiative"
+              ],
+              "sourceScope": "unknown",
+              "stack": null,
+              "target": "3 Allies",
+              "targetCount": 3,
+              "targetPriority": "any-eligible",
+              "targetScope": "any-lane",
+              "type": "Instinct Up",
+              "unit": "percent"
+            }
+          ],
+          "id": "mindful-synergy-start",
+          "repeat": null,
+          "rounds": [],
+          "targetPriority": "any-eligible",
+          "timing": "start-of-combat",
+          "triggerChanceByHabitLevel": [],
+          "triggerChanceFixed": null,
+          "triggerEvent": "start-of-combat"
+        }
+      ],
+      "tags": [
+        "BUFF_INTELLIGENCE",
+        "BUFF_INSTINCTS",
+        "BUFF_ALLIES"
+      ],
+      "unlockStarRank": 2,
+      "unresolvedQuestions": [
+        "Exact enhanced-by-Initiative formula."
+      ],
+      "verification": {
+        "capturedAt": "2026-06-23",
+        "gameVersion": "26.6.53509",
+        "reviewedManually": true,
+        "source": "Syrax Mindful Synergy screenshot",
+        "status": "screenshot-verified"
+      }
+    },
+    {
+      "abilityClass": "passive",
+      "augmentations": [],
+      "dragonId": "syrax",
+      "evidenceIds": [
+        "syrax-flight-mastery-2026-06-24"
+      ],
+      "glossaryEntries": [],
+      "id": "syrax-flight-mastery",
+      "kind": "habit",
+      "minimumDragonLevel": null,
+      "name": "Flight Mastery",
+      "positionRequirement": null,
+      "powerByHabitLevel": [
+        {
+          "level": 1,
+          "unit": "power",
+          "value": 420
+        },
+        {
+          "level": 2,
+          "unit": "power",
+          "value": 920
+        },
+        {
+          "level": 3,
+          "unit": "power",
+          "value": 1500
+        },
+        {
+          "level": 4,
+          "unit": "power",
+          "value": 2200
+        },
+        {
+          "level": 5,
+          "unit": "power",
+          "value": 3100
+        }
+      ],
+      "rawDescription": "Start of Combat: increase Initiative of 3 Allies and reduce Initiative of 3 Enemies in any lane until end of combat, enhanced by Syrax Instinct.",
+      "schedules": [
+        {
+          "attempts": null,
+          "battleContext": "unspecified",
+          "conditions": [],
+          "effects": [
+            {
+              "calculated": false,
+              "casterEligibility": "included",
+              "conditionalMultipliers": [],
+              "conditions": [],
+              "directlyVerified": true,
+              "duration": "Until end of combat",
+              "durationRounds": null,
+              "excludes": [],
+              "id": "flight-mastery-initiative-up",
+              "includesCaster": true,
+              "magnitude": null,
+              "notes": [],
+              "perTargetEffectCheck": null,
+              "rankedValues": [
+                {
+                  "level": 1,
+                  "unit": "percent",
+                  "value": 6
+                },
+                {
+                  "level": 2,
+                  "unit": "percent",
+                  "value": 7.2
+                },
+                {
+                  "level": 3,
+                  "unit": "percent",
+                  "value": 8.4
+                },
+                {
+                  "level": 4,
+                  "unit": "percent",
+                  "value": 10.2
+                },
+                {
+                  "level": 5,
+                  "unit": "percent",
+                  "value": 12
+                }
+              ],
+              "scaling": [
+                "Instinct"
+              ],
+              "sourceScope": "unknown",
+              "stack": null,
+              "target": "3 Allies",
+              "targetCount": 3,
+              "targetPriority": "any-eligible",
+              "targetScope": "any-lane",
+              "type": "Initiative Up",
+              "unit": "percent"
+            },
+            {
+              "calculated": false,
+              "casterEligibility": "unknown",
+              "conditionalMultipliers": [],
+              "conditions": [],
+              "directlyVerified": true,
+              "duration": "Until end of combat",
+              "durationRounds": null,
+              "excludes": [],
+              "id": "flight-mastery-initiative-down",
+              "includesCaster": null,
+              "magnitude": null,
+              "notes": [],
+              "perTargetEffectCheck": null,
+              "rankedValues": [
+                {
+                  "level": 1,
+                  "unit": "percent",
+                  "value": 6
+                },
+                {
+                  "level": 2,
+                  "unit": "percent",
+                  "value": 7.2
+                },
+                {
+                  "level": 3,
+                  "unit": "percent",
+                  "value": 8.4
+                },
+                {
+                  "level": 4,
+                  "unit": "percent",
+                  "value": 10.2
+                },
+                {
+                  "level": 5,
+                  "unit": "percent",
+                  "value": 12
+                }
+              ],
+              "scaling": [
+                "Instinct"
+              ],
+              "sourceScope": "unknown",
+              "stack": null,
+              "target": "3 Enemies",
+              "targetCount": 3,
+              "targetPriority": "any-eligible",
+              "targetScope": "any-lane",
+              "type": "Initiative Down",
+              "unit": "percent"
+            }
+          ],
+          "id": "flight-mastery-start",
+          "repeat": null,
+          "rounds": [],
+          "targetPriority": "any-eligible",
+          "timing": "start-of-combat",
+          "triggerChanceByHabitLevel": [],
+          "triggerChanceFixed": null,
+          "triggerEvent": "start-of-combat"
+        }
+      ],
+      "tags": [
+        "BUFF_INITIATIVE",
+        "DEBUFF_INITIATIVE"
+      ],
+      "unlockStarRank": 4,
+      "unresolvedQuestions": [
+        "Exact enhanced-by-Instinct formula."
+      ],
+      "verification": {
+        "capturedAt": "2026-06-23",
+        "gameVersion": "26.6.53509",
+        "reviewedManually": true,
+        "source": "Syrax Flight Mastery screenshot",
+        "status": "screenshot-verified"
+      }
+    },
+    {
+      "abilityClass": "passive",
+      "augmentations": [],
+      "dragonId": "syrax",
+      "evidenceIds": [
+        "syrax-strategic-revival-2026-06-24"
+      ],
+      "glossaryEntries": [],
+      "id": "syrax-strategic-revival",
+      "kind": "habit",
+      "minimumDragonLevel": null,
+      "name": "Strategic Revival",
+      "positionRequirement": null,
+      "powerByHabitLevel": [
+        {
+          "level": 1,
+          "unit": "power",
+          "value": 420
+        },
+        {
+          "level": 2,
+          "unit": "power",
+          "value": 920
+        },
+        {
+          "level": 3,
+          "unit": "power",
+          "value": 1500
+        },
+        {
+          "level": 4,
+          "unit": "power",
+          "value": 2200
+        },
+        {
+          "level": 5,
+          "unit": "power",
+          "value": 3100
+        }
+      ],
+      "rawDescription": "Augments Blazing Fury: Rounds 2, 5, 8 recover the Ally with least current troops. Recovery is multiplied by 1.5 if any enemy has Slow. Chance to grant Resistance (-20%) for 2 rounds.",
+      "schedules": [
+        {
+          "attempts": null,
+          "battleContext": "unspecified",
+          "conditions": [],
+          "effects": [
+            {
+              "calculated": false,
+              "casterEligibility": "unknown",
+              "conditionalMultipliers": [
+                {
+                  "calculatedFromVerifiedMultiplier": true,
+                  "condition": {
+                    "battleContext": null,
+                    "comparison": null,
+                    "description": "Any enemy is afflicted with Slow.",
+                    "id": "any-enemy-has-slow",
+                    "kind": "any-enemy-has-status",
+                    "statusId": "slow",
+                    "subject": "enemy",
+                    "thresholdPercent": null,
+                    "unresolved": false
+                  },
+                  "description": "Recovery is multiplied by 1.5 if any enemy has Slow.",
+                  "directlyVerifiedValues": [
+                    {
+                      "level": 1,
+                      "unit": "percent",
+                      "value": 75
+                    }
+                  ],
+                  "id": "strategic-revival-slow-1-5x",
+                  "multiplier": 1.5
+                }
+              ],
+              "conditions": [],
+              "directlyVerified": true,
+              "duration": null,
+              "durationRounds": null,
+              "excludes": [],
+              "id": "strategic-revival-recovery",
+              "includesCaster": null,
+              "magnitude": null,
+              "notes": [
+                "Higher conditional Recovery values are calculated from the verified 1.5x multiplier."
+              ],
+              "perTargetEffectCheck": null,
+              "rankedValues": [
+                {
+                  "level": 1,
+                  "unit": "percent",
+                  "value": 50
+                },
+                {
+                  "level": 2,
+                  "unit": "percent",
+                  "value": 60
+                },
+                {
+                  "level": 3,
+                  "unit": "percent",
+                  "value": 70
+                },
+                {
+                  "level": 4,
+                  "unit": "percent",
+                  "value": 85
+                },
+                {
+                  "level": 5,
+                  "unit": "percent",
+                  "value": 100
+                }
+              ],
+              "scaling": [
+                "Initiative",
+                "dragon Level"
+              ],
+              "sourceScope": "unknown",
+              "stack": null,
+              "target": "Ally with least current troops",
+              "targetCount": null,
+              "targetPriority": "least-current-troops-ally",
+              "targetScope": "any-lane",
+              "type": "Recovery",
+              "unit": "rate"
+            },
+            {
+              "calculated": false,
+              "casterEligibility": "unknown",
+              "conditionalMultipliers": [],
+              "conditions": [],
+              "directlyVerified": true,
+              "duration": null,
+              "durationRounds": 2,
+              "excludes": [],
+              "id": "strategic-revival-resistance",
+              "includesCaster": null,
+              "magnitude": 20,
+              "notes": [
+                "Resistance reduces Damage Received."
+              ],
+              "perTargetEffectCheck": null,
+              "rankedValues": [],
+              "scaling": [],
+              "sourceScope": "unknown",
+              "stack": null,
+              "target": "Ally with least current troops",
+              "targetCount": null,
+              "targetPriority": "least-current-troops-ally",
+              "targetScope": "any-lane",
+              "type": "Resistance",
+              "unit": "percent"
+            }
+          ],
+          "id": "strategic-revival-recovery-rounds",
+          "repeat": null,
+          "rounds": [
+            2,
+            5,
+            8
+          ],
+          "targetPriority": "least-current-troops-ally",
+          "timing": "specific-rounds",
+          "triggerChanceByHabitLevel": [
+            {
+              "level": 1,
+              "unit": "percent",
+              "value": 40
+            },
+            {
+              "level": 2,
+              "unit": "percent",
+              "value": 52
+            },
+            {
+              "level": 3,
+              "unit": "percent",
+              "value": 64
+            },
+            {
+              "level": 4,
+              "unit": "percent",
+              "value": 80
+            },
+            {
+              "level": 5,
+              "unit": "percent",
+              "value": 100
+            }
+          ],
+          "triggerChanceFixed": null,
+          "triggerEvent": "specific-rounds"
+        }
+      ],
+      "tags": [
+        "COMMAND_AUGMENTATION",
+        "RECOVERY",
+        "RESISTANCE"
+      ],
+      "unlockStarRank": 6,
+      "unresolvedQuestions": [
+        "Exact Recovery formula.",
+        "Higher conditional Recovery values are calculated."
+      ],
+      "verification": {
+        "capturedAt": "2026-06-23",
+        "gameVersion": "26.6.53509",
+        "reviewedManually": true,
+        "source": "Syrax Strategic Revival screenshot",
+        "status": "screenshot-verified"
+      }
+    },
+    {
+      "abilityClass": "passive",
+      "augmentations": [],
+      "dragonId": "syrax",
+      "evidenceIds": [
+        "syrax-tactical-inferno-2026-06-24"
+      ],
+      "glossaryEntries": [],
+      "id": "syrax-tactical-inferno",
+      "kind": "habit",
+      "minimumDragonLevel": null,
+      "name": "Tactical Inferno",
+      "positionRequirement": null,
+      "powerByHabitLevel": [
+        {
+          "level": 1,
+          "unit": "power",
+          "value": 420
+        },
+        {
+          "level": 2,
+          "unit": "power",
+          "value": 920
+        },
+        {
+          "level": 3,
+          "unit": "power",
+          "value": 1500
+        },
+        {
+          "level": 4,
+          "unit": "power",
+          "value": 2200
+        },
+        {
+          "level": 5,
+          "unit": "power",
+          "value": 3100
+        }
+      ],
+      "rawDescription": "Start of Round 1: increase Tactical Damage Dealt of one Ally, prioritizing Left Flank, and Fire Damage Dealt of one Ally, prioritizing Right Flank, for 3 rounds.",
+      "schedules": [
+        {
+          "attempts": null,
+          "battleContext": "unspecified",
+          "conditions": [],
+          "effects": [
+            {
+              "calculated": false,
+              "casterEligibility": "unknown",
+              "conditionalMultipliers": [],
+              "conditions": [],
+              "directlyVerified": true,
+              "duration": null,
+              "durationRounds": 3,
+              "excludes": [],
+              "id": "tactical-inferno-tactical",
+              "includesCaster": null,
+              "magnitude": null,
+              "notes": [
+                "Preferred position is not an absolute requirement."
+              ],
+              "perTargetEffectCheck": null,
+              "rankedValues": [
+                {
+                  "level": 1,
+                  "unit": "percent",
+                  "value": 18
+                },
+                {
+                  "level": 2,
+                  "unit": "percent",
+                  "value": 21.6
+                },
+                {
+                  "level": 3,
+                  "unit": "percent",
+                  "value": 25.2
+                },
+                {
+                  "level": 4,
+                  "unit": "percent",
+                  "value": 30.6
+                },
+                {
+                  "level": 5,
+                  "unit": "percent",
+                  "value": 36
+                }
+              ],
+              "scaling": [],
+              "sourceScope": "unknown",
+              "stack": null,
+              "target": "1 Ally, prioritizing Left Flank",
+              "targetCount": null,
+              "targetPriority": "prefer-left-flank",
+              "targetScope": "any-lane",
+              "type": "Tactical Damage Dealt Up",
+              "unit": "percent"
+            },
+            {
+              "calculated": false,
+              "casterEligibility": "unknown",
+              "conditionalMultipliers": [],
+              "conditions": [],
+              "directlyVerified": true,
+              "duration": null,
+              "durationRounds": 3,
+              "excludes": [],
+              "id": "tactical-inferno-fire",
+              "includesCaster": null,
+              "magnitude": null,
+              "notes": [
+                "Preferred position is not an absolute requirement."
+              ],
+              "perTargetEffectCheck": null,
+              "rankedValues": [
+                {
+                  "level": 1,
+                  "unit": "percent",
+                  "value": 18
+                },
+                {
+                  "level": 2,
+                  "unit": "percent",
+                  "value": 21.6
+                },
+                {
+                  "level": 3,
+                  "unit": "percent",
+                  "value": 25.2
+                },
+                {
+                  "level": 4,
+                  "unit": "percent",
+                  "value": 30.6
+                },
+                {
+                  "level": 5,
+                  "unit": "percent",
+                  "value": 36
+                }
+              ],
+              "scaling": [],
+              "sourceScope": "unknown",
+              "stack": null,
+              "target": "1 Ally, prioritizing Right Flank",
+              "targetCount": null,
+              "targetPriority": "prefer-right-flank",
+              "targetScope": "any-lane",
+              "type": "Fire Damage Dealt Up",
+              "unit": "percent"
+            }
+          ],
+          "id": "tactical-inferno-round-one",
+          "repeat": null,
+          "rounds": [
+            1
+          ],
+          "targetPriority": "any-eligible",
+          "timing": "start-of-round",
+          "triggerChanceByHabitLevel": [],
+          "triggerChanceFixed": null,
+          "triggerEvent": "start-of-round"
+        }
+      ],
+      "tags": [
+        "TACTICAL_DAMAGE",
+        "FIRE_DAMAGE_UP",
+        "BUFF_ALLIES"
+      ],
+      "unlockStarRank": 8,
+      "unresolvedQuestions": [
+        "Whether one mixed-damage Ally may receive both modifiers.",
+        "Fallback selection when preferred flank lacks matching output."
+      ],
+      "verification": {
+        "capturedAt": "2026-06-23",
+        "gameVersion": "26.6.53509",
+        "reviewedManually": true,
+        "source": "Syrax Tactical Inferno screenshot",
+        "status": "screenshot-verified"
+      }
+    },
+    {
+      "abilityClass": "passive",
+      "augmentations": [],
+      "dragonId": "syrax",
+      "evidenceIds": [
+        "syrax-mothers-mercy-2026-06-24"
+      ],
+      "glossaryEntries": [],
+      "id": "syrax-mothers-mercy",
+      "kind": "habit",
+      "minimumDragonLevel": null,
+      "name": "Mother's Mercy",
+      "positionRequirement": null,
+      "powerByHabitLevel": [
+        {
+          "level": 1,
+          "unit": "power",
+          "value": 430
+        },
+        {
+          "level": 2,
+          "unit": "power",
+          "value": 1000
+        },
+        {
+          "level": 3,
+          "unit": "power",
+          "value": 1700
+        },
+        {
+          "level": 4,
+          "unit": "power",
+          "value": 2700
+        },
+        {
+          "level": 5,
+          "unit": "power",
+          "value": 4000
+        }
+      ],
+      "rawDescription": "Each Round: chance to cleanse two Negative effects and one Control effect from one Ally in any lane, prioritizing Allies afflicted with Control.",
+      "schedules": [
+        {
+          "attempts": null,
+          "battleContext": "unspecified",
+          "conditions": [],
+          "effects": [
+            {
+              "calculated": false,
+              "casterEligibility": "unknown",
+              "conditionalMultipliers": [],
+              "conditions": [],
+              "directlyVerified": true,
+              "duration": null,
+              "durationRounds": null,
+              "excludes": [],
+              "id": "mothers-mercy-cleanse-negative",
+              "includesCaster": null,
+              "magnitude": 2,
+              "notes": [],
+              "perTargetEffectCheck": null,
+              "rankedValues": [],
+              "scaling": [],
+              "sourceScope": "unknown",
+              "stack": null,
+              "target": "1 Ally",
+              "targetCount": null,
+              "targetPriority": "prefer-control-afflicted-ally",
+              "targetScope": "any-lane",
+              "type": "Cleanse Negative",
+              "unit": "flat"
+            },
+            {
+              "calculated": false,
+              "casterEligibility": "unknown",
+              "conditionalMultipliers": [],
+              "conditions": [],
+              "directlyVerified": true,
+              "duration": null,
+              "durationRounds": null,
+              "excludes": [],
+              "id": "mothers-mercy-cleanse-control",
+              "includesCaster": null,
+              "magnitude": 1,
+              "notes": [
+                "Control includes Stun, Stagger, Overwhelm, and Confusion."
+              ],
+              "perTargetEffectCheck": null,
+              "rankedValues": [],
+              "scaling": [],
+              "sourceScope": "unknown",
+              "stack": null,
+              "target": "1 Ally",
+              "targetCount": null,
+              "targetPriority": "prefer-control-afflicted-ally",
+              "targetScope": "any-lane",
+              "type": "Cleanse Control",
+              "unit": "flat"
+            }
+          ],
+          "id": "mothers-mercy-each-round",
+          "repeat": null,
+          "rounds": [],
+          "targetPriority": "prefer-control-afflicted-ally",
+          "timing": "each-round",
+          "triggerChanceByHabitLevel": [
+            {
+              "level": 1,
+              "unit": "percent",
+              "value": 14
+            },
+            {
+              "level": 2,
+              "unit": "percent",
+              "value": 18.2
+            },
+            {
+              "level": 3,
+              "unit": "percent",
+              "value": 22.4
+            },
+            {
+              "level": 4,
+              "unit": "percent",
+              "value": 28
+            },
+            {
+              "level": 5,
+              "unit": "percent",
+              "value": 35
+            }
+          ],
+          "triggerChanceFixed": null,
+          "triggerEvent": "each-round"
+        }
+      ],
+      "tags": [
+        "CLEANSE_NEGATIVE",
+        "CONTROL"
+      ],
+      "unlockStarRank": 10,
+      "unresolvedQuestions": [
+        "Whether removing one Control also consumes one Negative-effect removal.",
+        "Selection order when multiple Control effects exist."
+      ],
+      "verification": {
+        "capturedAt": "2026-06-23",
+        "gameVersion": "26.6.53509",
+        "reviewedManually": true,
+        "source": "Syrax Mother's Mercy screenshot",
+        "status": "screenshot-verified"
+      }
+    }
+  ],
+  "id": "syrax",
+  "isNew": false,
+  "lastVerified": "2026-06-23",
+  "manualReviewReferences": [
+    {
+      "dragonId": "syrax",
+      "evidenceIds": [
+        "syrax-main-screen-2026-06-24",
+        "syrax-sentinels-wit-2026-06-24",
+        "syrax-blazing-fury-summary-2026-06-24",
+        "syrax-blazing-fury-details-2026-06-24",
+        "syrax-mindful-synergy-2026-06-24",
+        "syrax-flight-mastery-2026-06-24",
+        "syrax-strategic-revival-2026-06-24",
+        "syrax-tactical-inferno-2026-06-24",
+        "syrax-mothers-mercy-2026-06-24"
+      ],
+      "id": "syrax-combat-data-review-2026-06-24",
+      "notes": [
+        "Syrax command, trait, affinities, observation state, and five Habits were normalized from screenshot evidence.",
+        "Enemy adjacency for Blazing Fury Tactical Damage remains unresolved and is kept as an explicit assumption.",
+        "Observation values are account-specific and not canonical base stats."
+      ],
+      "reviewedAgainstGameBuild": "26.6.53509",
+      "reviewedAt": "2026-06-24",
+      "reviewer": "repository-owner",
+      "scope": "habits",
+      "status": "confirmed"
+    }
+  ],
+  "modifierCapabilities": [
+    {
+      "abilityId": "syrax-blazing-fury",
+      "abilityName": "Blazing Fury",
+      "availability": {
+        "canonical": "canonical-base",
+        "notes": [
+          "Not collected in observed account."
+        ],
+        "observedAccount": "observed-unavailable",
+        "reportLabel": "Base kit; not collected in observed account",
+        "userRoster": "unknown"
+      },
+      "channel": "fire-damage",
+      "combatLogConfirmed": false,
+      "conditional": true,
+      "conditions": [
+        {
+          "description": "Activation chance 20% per each round.",
+          "evidenceIds": [],
+          "id": "blazing-fury-fire-support-activation-chance",
+          "label": "Activation chance 20% per each round.",
+          "unresolved": false
+        }
+      ],
+      "confidence": "confirmed",
+      "currentlyAvailable": true,
+      "direction": "dealt",
+      "directlyVerified": true,
+      "dragonId": "syrax",
+      "evidenceIds": [
+        "syrax-blazing-fury-summary-2026-06-24",
+        "syrax-blazing-fury-details-2026-06-24"
+      ],
+      "futureAvailable": false,
+      "id": "syrax-blazing-fury-blazing-fury-fire-damage-up-fire-damage-dealt-modifier",
+      "label": "Blazing Fury: Fire Damage Dealt Up",
+      "minimumDragonLevel": null,
+      "operation": "increase",
+      "providerRequirements": [],
+      "recipientRequirements": [],
+      "requiredHabitLevel": null,
+      "role": "ally-support",
+      "sourceScope": "all-qualifying-sources",
+      "stackMaximum": null,
+      "targetSelector": {
+        "count": 1,
+        "includesCaster": null,
+        "position": null,
+        "scope": "any-lane",
+        "selection": "any",
+        "side": "ally"
+      },
+      "unit": "percent",
+      "unlockStarRank": null,
+      "value": 10,
+      "valuePerStack": null
+    },
+    {
+      "abilityId": "syrax-sentinels-wit",
+      "abilityName": "Sentinel's Wit",
+      "availability": {
+        "canonical": "canonical-base",
+        "notes": [
+          "Requires Dragon Level 16+.",
+          "Not collected in observed account."
+        ],
+        "observedAccount": "observed-unavailable",
+        "reportLabel": "Base kit; Level 16+; not collected in observed account",
+        "userRoster": "unknown"
+      },
+      "channel": "tactical-damage",
+      "combatLogConfirmed": false,
+      "conditional": false,
+      "conditions": [],
+      "confidence": "confirmed",
+      "currentlyAvailable": true,
+      "direction": "dealt",
+      "directlyVerified": true,
+      "dragonId": "syrax",
+      "evidenceIds": [
+        "syrax-sentinels-wit-2026-06-24"
+      ],
+      "futureAvailable": false,
+      "id": "syrax-sentinels-wit-sentinels-wit-tactical-tactical-damage-dealt-modifier",
+      "label": "Sentinel's Wit: Tactical Damage Dealt Up",
+      "minimumDragonLevel": 16,
+      "operation": "increase",
+      "providerRequirements": [
+        {
+          "evidenceIds": [
+            "syrax-sentinels-wit-2026-06-24"
+          ],
+          "expected": "vanguard",
+          "id": "syrax-sentinels-wit-provider-position-vanguard",
+          "kind": "provider-position",
+          "label": "Provider position requirement"
+        }
+      ],
+      "recipientRequirements": [],
+      "requiredHabitLevel": null,
+      "role": "self-amplification",
+      "sourceScope": "all-qualifying-sources",
+      "stackMaximum": null,
+      "targetSelector": {
+        "count": null,
+        "includesCaster": null,
+        "position": null,
+        "scope": "self",
+        "selection": "self",
+        "side": "self"
+      },
+      "unit": "percent",
+      "unlockStarRank": 1,
+      "value": 16,
+      "valuePerStack": null
+    },
+    {
+      "abilityId": "syrax-sentinels-wit",
+      "abilityName": "Sentinel's Wit",
+      "availability": {
+        "canonical": "canonical-base",
+        "notes": [
+          "Requires Dragon Level 16+.",
+          "Not collected in observed account."
+        ],
+        "observedAccount": "observed-unavailable",
+        "reportLabel": "Base kit; Level 16+; not collected in observed account",
+        "userRoster": "unknown"
+      },
+      "channel": "stat",
+      "combatLogConfirmed": false,
+      "conditional": false,
+      "conditions": [],
+      "confidence": "confirmed",
+      "currentlyAvailable": true,
+      "direction": "dealt",
+      "directlyVerified": true,
+      "dragonId": "syrax",
+      "evidenceIds": [
+        "syrax-sentinels-wit-2026-06-24"
+      ],
+      "futureAvailable": false,
+      "id": "syrax-sentinels-wit-sentinels-wit-left-instinct-stat-dealt-modifier",
+      "label": "Sentinel's Wit: Instinct Up",
+      "minimumDragonLevel": 16,
+      "operation": "increase",
+      "providerRequirements": [
+        {
+          "evidenceIds": [
+            "syrax-sentinels-wit-2026-06-24"
+          ],
+          "expected": "vanguard",
+          "id": "syrax-sentinels-wit-provider-position-vanguard",
+          "kind": "provider-position",
+          "label": "Provider position requirement"
+        }
+      ],
+      "recipientRequirements": [],
+      "requiredHabitLevel": null,
+      "role": "ally-support",
+      "sourceScope": "unknown",
+      "stackMaximum": null,
+      "targetSelector": {
+        "count": null,
+        "includesCaster": null,
+        "position": "left-flank",
+        "scope": "left-flank",
+        "selection": "specific-position",
+        "side": "ally"
+      },
+      "unit": "flat",
+      "unlockStarRank": 1,
+      "value": 20,
+      "valuePerStack": null
+    },
+    {
+      "abilityId": "syrax-sentinels-wit",
+      "abilityName": "Sentinel's Wit",
+      "availability": {
+        "canonical": "canonical-base",
+        "notes": [
+          "Requires Dragon Level 16+.",
+          "Not collected in observed account."
+        ],
+        "observedAccount": "observed-unavailable",
+        "reportLabel": "Base kit; Level 16+; not collected in observed account",
+        "userRoster": "unknown"
+      },
+      "channel": "stat",
+      "combatLogConfirmed": false,
+      "conditional": false,
+      "conditions": [],
+      "confidence": "confirmed",
+      "currentlyAvailable": true,
+      "direction": "dealt",
+      "directlyVerified": true,
+      "dragonId": "syrax",
+      "evidenceIds": [
+        "syrax-sentinels-wit-2026-06-24"
+      ],
+      "futureAvailable": false,
+      "id": "syrax-sentinels-wit-sentinels-wit-left-initiative-stat-dealt-modifier",
+      "label": "Sentinel's Wit: Initiative Up",
+      "minimumDragonLevel": 16,
+      "operation": "increase",
+      "providerRequirements": [
+        {
+          "evidenceIds": [
+            "syrax-sentinels-wit-2026-06-24"
+          ],
+          "expected": "vanguard",
+          "id": "syrax-sentinels-wit-provider-position-vanguard",
+          "kind": "provider-position",
+          "label": "Provider position requirement"
+        }
+      ],
+      "recipientRequirements": [],
+      "requiredHabitLevel": null,
+      "role": "ally-support",
+      "sourceScope": "unknown",
+      "stackMaximum": null,
+      "targetSelector": {
+        "count": null,
+        "includesCaster": null,
+        "position": "left-flank",
+        "scope": "left-flank",
+        "selection": "specific-position",
+        "side": "ally"
+      },
+      "unit": "flat",
+      "unlockStarRank": 1,
+      "value": 20,
+      "valuePerStack": null
+    },
+    {
+      "abilityId": "syrax-mindful-synergy",
+      "abilityName": "Mindful Synergy",
+      "availability": {
+        "canonical": "canonical-locked",
+        "notes": [
+          "Future at Star Rank 2.",
+          "Not collected in observed account."
+        ],
+        "observedAccount": "observed-unavailable",
+        "reportLabel": "Future at Star Rank 2; not collected in observed account",
+        "userRoster": "unknown"
+      },
+      "channel": "stat",
+      "combatLogConfirmed": false,
+      "conditional": true,
+      "conditions": [],
+      "confidence": "confirmed",
+      "currentlyAvailable": false,
+      "direction": "dealt",
+      "directlyVerified": true,
+      "dragonId": "syrax",
+      "evidenceIds": [
+        "syrax-mindful-synergy-2026-06-24"
+      ],
+      "futureAvailable": true,
+      "id": "syrax-mindful-synergy-mindful-synergy-intelligence-stat-dealt-modifier",
+      "label": "Mindful Synergy: Intelligence Up",
+      "minimumDragonLevel": null,
+      "operation": "increase",
+      "providerRequirements": [],
+      "recipientRequirements": [],
+      "requiredHabitLevel": 1,
+      "role": "ally-support",
+      "sourceScope": "unknown",
+      "stackMaximum": null,
+      "targetSelector": {
+        "count": 3,
+        "includesCaster": true,
+        "position": null,
+        "scope": "any-lane",
+        "selection": "any",
+        "side": "ally"
+      },
+      "unit": "percent",
+      "unlockStarRank": 2,
+      "value": null,
+      "valuePerStack": null
+    },
+    {
+      "abilityId": "syrax-mindful-synergy",
+      "abilityName": "Mindful Synergy",
+      "availability": {
+        "canonical": "canonical-locked",
+        "notes": [
+          "Future at Star Rank 2.",
+          "Not collected in observed account."
+        ],
+        "observedAccount": "observed-unavailable",
+        "reportLabel": "Future at Star Rank 2; not collected in observed account",
+        "userRoster": "unknown"
+      },
+      "channel": "stat",
+      "combatLogConfirmed": false,
+      "conditional": true,
+      "conditions": [],
+      "confidence": "confirmed",
+      "currentlyAvailable": false,
+      "direction": "dealt",
+      "directlyVerified": true,
+      "dragonId": "syrax",
+      "evidenceIds": [
+        "syrax-mindful-synergy-2026-06-24"
+      ],
+      "futureAvailable": true,
+      "id": "syrax-mindful-synergy-mindful-synergy-instinct-stat-dealt-modifier",
+      "label": "Mindful Synergy: Instinct Up",
+      "minimumDragonLevel": null,
+      "operation": "increase",
+      "providerRequirements": [],
+      "recipientRequirements": [],
+      "requiredHabitLevel": 1,
+      "role": "ally-support",
+      "sourceScope": "unknown",
+      "stackMaximum": null,
+      "targetSelector": {
+        "count": 3,
+        "includesCaster": true,
+        "position": null,
+        "scope": "any-lane",
+        "selection": "any",
+        "side": "ally"
+      },
+      "unit": "percent",
+      "unlockStarRank": 2,
+      "value": null,
+      "valuePerStack": null
+    },
+    {
+      "abilityId": "syrax-flight-mastery",
+      "abilityName": "Flight Mastery",
+      "availability": {
+        "canonical": "canonical-locked",
+        "notes": [
+          "Future at Star Rank 4.",
+          "Not collected in observed account."
+        ],
+        "observedAccount": "observed-unavailable",
+        "reportLabel": "Future at Star Rank 4; not collected in observed account",
+        "userRoster": "unknown"
+      },
+      "channel": "stat",
+      "combatLogConfirmed": false,
+      "conditional": true,
+      "conditions": [],
+      "confidence": "confirmed",
+      "currentlyAvailable": false,
+      "direction": "dealt",
+      "directlyVerified": true,
+      "dragonId": "syrax",
+      "evidenceIds": [
+        "syrax-flight-mastery-2026-06-24"
+      ],
+      "futureAvailable": true,
+      "id": "syrax-flight-mastery-flight-mastery-initiative-up-stat-dealt-modifier",
+      "label": "Flight Mastery: Initiative Up",
+      "minimumDragonLevel": null,
+      "operation": "increase",
+      "providerRequirements": [],
+      "recipientRequirements": [],
+      "requiredHabitLevel": 1,
+      "role": "ally-support",
+      "sourceScope": "unknown",
+      "stackMaximum": null,
+      "targetSelector": {
+        "count": 3,
+        "includesCaster": true,
+        "position": null,
+        "scope": "any-lane",
+        "selection": "any",
+        "side": "ally"
+      },
+      "unit": "percent",
+      "unlockStarRank": 4,
+      "value": null,
+      "valuePerStack": null
+    },
+    {
+      "abilityId": "syrax-flight-mastery",
+      "abilityName": "Flight Mastery",
+      "availability": {
+        "canonical": "canonical-locked",
+        "notes": [
+          "Future at Star Rank 4.",
+          "Not collected in observed account."
+        ],
+        "observedAccount": "observed-unavailable",
+        "reportLabel": "Future at Star Rank 4; not collected in observed account",
+        "userRoster": "unknown"
+      },
+      "channel": "stat",
+      "combatLogConfirmed": false,
+      "conditional": true,
+      "conditions": [],
+      "confidence": "confirmed",
+      "currentlyAvailable": false,
+      "direction": "dealt",
+      "directlyVerified": true,
+      "dragonId": "syrax",
+      "evidenceIds": [
+        "syrax-flight-mastery-2026-06-24"
+      ],
+      "futureAvailable": true,
+      "id": "syrax-flight-mastery-flight-mastery-initiative-down-stat-dealt-modifier",
+      "label": "Flight Mastery: Initiative Down",
+      "minimumDragonLevel": null,
+      "operation": "decrease",
+      "providerRequirements": [],
+      "recipientRequirements": [],
+      "requiredHabitLevel": 1,
+      "role": "enemy-debuff",
+      "sourceScope": "unknown",
+      "stackMaximum": null,
+      "targetSelector": {
+        "count": 3,
+        "includesCaster": null,
+        "position": null,
+        "scope": "any-lane",
+        "selection": "any",
+        "side": "enemy"
+      },
+      "unit": "percent",
+      "unlockStarRank": 4,
+      "value": null,
+      "valuePerStack": null
+    },
+    {
+      "abilityId": "syrax-tactical-inferno",
+      "abilityName": "Tactical Inferno",
+      "availability": {
+        "canonical": "canonical-locked",
+        "notes": [
+          "Future at Star Rank 8.",
+          "Not collected in observed account."
+        ],
+        "observedAccount": "observed-unavailable",
+        "reportLabel": "Future at Star Rank 8; not collected in observed account",
+        "userRoster": "unknown"
+      },
+      "channel": "tactical-damage",
+      "combatLogConfirmed": false,
+      "conditional": true,
+      "conditions": [],
+      "confidence": "confirmed",
+      "currentlyAvailable": false,
+      "direction": "dealt",
+      "directlyVerified": true,
+      "dragonId": "syrax",
+      "evidenceIds": [
+        "syrax-tactical-inferno-2026-06-24"
+      ],
+      "futureAvailable": true,
+      "id": "syrax-tactical-inferno-tactical-inferno-tactical-tactical-damage-dealt-modifier",
+      "label": "Tactical Inferno: Tactical Damage Dealt Up",
+      "minimumDragonLevel": null,
+      "operation": "increase",
+      "providerRequirements": [],
+      "recipientRequirements": [],
+      "requiredHabitLevel": 1,
+      "role": "ally-support",
+      "sourceScope": "all-qualifying-sources",
+      "stackMaximum": null,
+      "targetSelector": {
+        "count": 1,
+        "includesCaster": null,
+        "position": null,
+        "scope": "any-lane",
+        "selection": "any",
+        "side": "ally"
+      },
+      "unit": "percent",
+      "unlockStarRank": 8,
+      "value": null,
+      "valuePerStack": null
+    },
+    {
+      "abilityId": "syrax-tactical-inferno",
+      "abilityName": "Tactical Inferno",
+      "availability": {
+        "canonical": "canonical-locked",
+        "notes": [
+          "Future at Star Rank 8.",
+          "Not collected in observed account."
+        ],
+        "observedAccount": "observed-unavailable",
+        "reportLabel": "Future at Star Rank 8; not collected in observed account",
+        "userRoster": "unknown"
+      },
+      "channel": "fire-damage",
+      "combatLogConfirmed": false,
+      "conditional": true,
+      "conditions": [],
+      "confidence": "confirmed",
+      "currentlyAvailable": false,
+      "direction": "dealt",
+      "directlyVerified": true,
+      "dragonId": "syrax",
+      "evidenceIds": [
+        "syrax-tactical-inferno-2026-06-24"
+      ],
+      "futureAvailable": true,
+      "id": "syrax-tactical-inferno-tactical-inferno-fire-fire-damage-dealt-modifier",
+      "label": "Tactical Inferno: Fire Damage Dealt Up",
+      "minimumDragonLevel": null,
+      "operation": "increase",
+      "providerRequirements": [],
+      "recipientRequirements": [],
+      "requiredHabitLevel": 1,
+      "role": "ally-support",
+      "sourceScope": "all-qualifying-sources",
+      "stackMaximum": null,
+      "targetSelector": {
+        "count": 1,
+        "includesCaster": null,
+        "position": null,
+        "scope": "any-lane",
+        "selection": "any",
+        "side": "ally"
+      },
+      "unit": "percent",
+      "unlockStarRank": 8,
+      "value": null,
+      "valuePerStack": null
+    }
+  ],
+  "modifierRoles": [
+    "ally-support",
+    "enemy-debuff",
+    "self-amplification"
+  ],
+  "name": "Syrax",
+  "notes": null,
+  "observationSnapshots": [
+    {
+      "canonical": false,
+      "capturedAt": "2026-06-24",
+      "collection": {
+        "shardsCurrent": 0,
+        "shardsRequired": null,
+        "state": "not-collected"
+      },
+      "combatStats": {
+        "initiative": 70.4,
+        "instinct": 64.9,
+        "intelligence": 56.5,
+        "strength": 46.3
+      },
+      "displayState": "Not Discovered",
+      "dragonId": "syrax",
+      "dragonLevel": null,
+      "dragonPower": 0,
+      "evidenceIds": [
+        "syrax-main-screen-2026-06-24"
+      ],
+      "gameVersion": "26.6.53509",
+      "id": "syrax-main-screen-2026-06-24",
+      "marchSpeed": "Very Fast",
+      "modifierContextKnown": false,
+      "sourceScope": "noncanonical-account-observation",
+      "staminaCurrent": 0,
+      "staminaMaximum": null,
+      "starRank": null,
+      "troopCapacity": 1450
+    }
+  ],
+  "officialProfileUrl": "https://gotdragonfire.com/dragons/syrax/",
+  "outputCapabilities": [
+    {
+      "abilityId": "syrax-blazing-fury",
+      "abilityName": "Blazing Fury",
+      "availability": {
+        "canonical": "canonical-base",
+        "notes": [
+          "Not collected in observed account."
+        ],
+        "observedAccount": "observed-unavailable",
+        "reportLabel": "Base kit; not collected in observed account",
+        "userRoster": "unknown"
+      },
+      "channel": "tactical-damage",
+      "combatLogConfirmed": false,
+      "conditional": false,
+      "conditions": [],
+      "confidence": "confirmed",
+      "currentlyAvailable": true,
+      "dependencies": [
+        {
+          "notes": [
+            "Effect wording indicates scaling with Instinct."
+          ],
+          "statId": "instinct",
+          "type": "scales-with-stat"
+        },
+        {
+          "notes": [
+            "Tactical Damage is reduced by target Intelligence."
+          ],
+          "statId": "intelligence",
+          "type": "mitigated-by-target-stat"
+        }
+      ],
+      "directlyVerified": true,
+      "dragonId": "syrax",
+      "evidenceIds": [
+        "syrax-blazing-fury-summary-2026-06-24",
+        "syrax-blazing-fury-details-2026-06-24"
+      ],
+      "futureAvailable": false,
+      "id": "syrax-blazing-fury-blazing-fury-tactical-rate-output",
+      "label": "Blazing Fury: Tactical Damage",
+      "minimumDragonLevel": null,
+      "requiredHabitLevel": null,
+      "sourceKind": "command",
+      "sourceScope": "commands",
+      "targetCount": 1,
+      "targetScope": "within-adjacency",
+      "targetSide": "enemy",
+      "unlockStarRank": null
+    },
+    {
+      "abilityId": "syrax-strategic-revival",
+      "abilityName": "Strategic Revival",
+      "availability": {
+        "canonical": "canonical-locked",
+        "notes": [
+          "Future at Star Rank 6.",
+          "Not collected in observed account."
+        ],
+        "observedAccount": "observed-unavailable",
+        "reportLabel": "Future at Star Rank 6; not collected in observed account",
+        "userRoster": "unknown"
+      },
+      "channel": "recovery",
+      "combatLogConfirmed": false,
+      "conditional": true,
+      "conditions": [
+        {
+          "description": "Activation chance depends on Habit Level for specific rounds.",
+          "evidenceIds": [],
+          "id": "strategic-revival-recovery-rounds-activation-chance",
+          "label": "Activation chance depends on Habit Level for specific rounds.",
+          "unresolved": false
+        },
+        {
+          "description": "Recovery is multiplied by 1.5 if any enemy has Slow.",
+          "evidenceIds": [],
+          "id": "strategic-revival-slow-1-5x",
+          "label": "Recovery is multiplied by 1.5 if any enemy has Slow.",
+          "unresolved": false
+        }
+      ],
+      "confidence": "confirmed",
+      "currentlyAvailable": false,
+      "dependencies": [
+        {
+          "notes": [
+            "Effect wording indicates scaling with Initiative."
+          ],
+          "statId": "initiative",
+          "type": "scales-with-stat"
+        },
+        {
+          "multiplier": 1.5,
+          "notes": [
+            "Any enemy is afflicted with Slow."
+          ],
+          "statusId": "slow",
+          "type": "requires-any-enemy-status"
+        }
+      ],
+      "directlyVerified": true,
+      "dragonId": "syrax",
+      "evidenceIds": [
+        "syrax-strategic-revival-2026-06-24"
+      ],
+      "futureAvailable": true,
+      "id": "syrax-strategic-revival-strategic-revival-recovery-output",
+      "label": "Strategic Revival: Recovery",
+      "minimumDragonLevel": null,
+      "requiredHabitLevel": 1,
+      "sourceKind": "habit",
+      "sourceScope": "habits",
+      "targetCount": null,
+      "targetScope": "any-lane",
+      "targetSide": "ally",
+      "unlockStarRank": 6
+    }
+  ],
+  "periodicDamage": [],
+  "profileCompleteness": "detailed-combat-data",
+  "rankedValues": [
+    {
+      "abilityId": "syrax-mindful-synergy",
+      "rankedValue": {
+        "level": 1,
+        "unit": "power",
+        "value": 420
+      },
+      "source": "powerByHabitLevel"
+    },
+    {
+      "abilityId": "syrax-mindful-synergy",
+      "rankedValue": {
+        "level": 2,
+        "unit": "power",
+        "value": 920
+      },
+      "source": "powerByHabitLevel"
+    },
+    {
+      "abilityId": "syrax-mindful-synergy",
+      "rankedValue": {
+        "level": 3,
+        "unit": "power",
+        "value": 1500
+      },
+      "source": "powerByHabitLevel"
+    },
+    {
+      "abilityId": "syrax-mindful-synergy",
+      "rankedValue": {
+        "level": 4,
+        "unit": "power",
+        "value": 2200
+      },
+      "source": "powerByHabitLevel"
+    },
+    {
+      "abilityId": "syrax-mindful-synergy",
+      "rankedValue": {
+        "level": 5,
+        "unit": "power",
+        "value": 3100
+      },
+      "source": "powerByHabitLevel"
+    },
+    {
+      "abilityId": "syrax-mindful-synergy",
+      "effectId": "mindful-synergy-intelligence",
+      "rankedValue": {
+        "level": 1,
+        "unit": "percent",
+        "value": 6.5
+      },
+      "scheduleId": "mindful-synergy-start",
+      "source": "effect.rankedValues"
+    },
+    {
+      "abilityId": "syrax-mindful-synergy",
+      "effectId": "mindful-synergy-intelligence",
+      "rankedValue": {
+        "level": 2,
+        "unit": "percent",
+        "value": 7.8
+      },
+      "scheduleId": "mindful-synergy-start",
+      "source": "effect.rankedValues"
+    },
+    {
+      "abilityId": "syrax-mindful-synergy",
+      "effectId": "mindful-synergy-intelligence",
+      "rankedValue": {
+        "level": 3,
+        "unit": "percent",
+        "value": 9.1
+      },
+      "scheduleId": "mindful-synergy-start",
+      "source": "effect.rankedValues"
+    },
+    {
+      "abilityId": "syrax-mindful-synergy",
+      "effectId": "mindful-synergy-intelligence",
+      "rankedValue": {
+        "level": 4,
+        "unit": "percent",
+        "value": 11.05
+      },
+      "scheduleId": "mindful-synergy-start",
+      "source": "effect.rankedValues"
+    },
+    {
+      "abilityId": "syrax-mindful-synergy",
+      "effectId": "mindful-synergy-intelligence",
+      "rankedValue": {
+        "level": 5,
+        "unit": "percent",
+        "value": 13
+      },
+      "scheduleId": "mindful-synergy-start",
+      "source": "effect.rankedValues"
+    },
+    {
+      "abilityId": "syrax-mindful-synergy",
+      "effectId": "mindful-synergy-instinct",
+      "rankedValue": {
+        "level": 1,
+        "unit": "percent",
+        "value": 6.5
+      },
+      "scheduleId": "mindful-synergy-start",
+      "source": "effect.rankedValues"
+    },
+    {
+      "abilityId": "syrax-mindful-synergy",
+      "effectId": "mindful-synergy-instinct",
+      "rankedValue": {
+        "level": 2,
+        "unit": "percent",
+        "value": 7.8
+      },
+      "scheduleId": "mindful-synergy-start",
+      "source": "effect.rankedValues"
+    },
+    {
+      "abilityId": "syrax-mindful-synergy",
+      "effectId": "mindful-synergy-instinct",
+      "rankedValue": {
+        "level": 3,
+        "unit": "percent",
+        "value": 9.1
+      },
+      "scheduleId": "mindful-synergy-start",
+      "source": "effect.rankedValues"
+    },
+    {
+      "abilityId": "syrax-mindful-synergy",
+      "effectId": "mindful-synergy-instinct",
+      "rankedValue": {
+        "level": 4,
+        "unit": "percent",
+        "value": 11.05
+      },
+      "scheduleId": "mindful-synergy-start",
+      "source": "effect.rankedValues"
+    },
+    {
+      "abilityId": "syrax-mindful-synergy",
+      "effectId": "mindful-synergy-instinct",
+      "rankedValue": {
+        "level": 5,
+        "unit": "percent",
+        "value": 13
+      },
+      "scheduleId": "mindful-synergy-start",
+      "source": "effect.rankedValues"
+    },
+    {
+      "abilityId": "syrax-flight-mastery",
+      "rankedValue": {
+        "level": 1,
+        "unit": "power",
+        "value": 420
+      },
+      "source": "powerByHabitLevel"
+    },
+    {
+      "abilityId": "syrax-flight-mastery",
+      "rankedValue": {
+        "level": 2,
+        "unit": "power",
+        "value": 920
+      },
+      "source": "powerByHabitLevel"
+    },
+    {
+      "abilityId": "syrax-flight-mastery",
+      "rankedValue": {
+        "level": 3,
+        "unit": "power",
+        "value": 1500
+      },
+      "source": "powerByHabitLevel"
+    },
+    {
+      "abilityId": "syrax-flight-mastery",
+      "rankedValue": {
+        "level": 4,
+        "unit": "power",
+        "value": 2200
+      },
+      "source": "powerByHabitLevel"
+    },
+    {
+      "abilityId": "syrax-flight-mastery",
+      "rankedValue": {
+        "level": 5,
+        "unit": "power",
+        "value": 3100
+      },
+      "source": "powerByHabitLevel"
+    },
+    {
+      "abilityId": "syrax-flight-mastery",
+      "effectId": "flight-mastery-initiative-up",
+      "rankedValue": {
+        "level": 1,
+        "unit": "percent",
+        "value": 6
+      },
+      "scheduleId": "flight-mastery-start",
+      "source": "effect.rankedValues"
+    },
+    {
+      "abilityId": "syrax-flight-mastery",
+      "effectId": "flight-mastery-initiative-up",
+      "rankedValue": {
+        "level": 2,
+        "unit": "percent",
+        "value": 7.2
+      },
+      "scheduleId": "flight-mastery-start",
+      "source": "effect.rankedValues"
+    },
+    {
+      "abilityId": "syrax-flight-mastery",
+      "effectId": "flight-mastery-initiative-up",
+      "rankedValue": {
+        "level": 3,
+        "unit": "percent",
+        "value": 8.4
+      },
+      "scheduleId": "flight-mastery-start",
+      "source": "effect.rankedValues"
+    },
+    {
+      "abilityId": "syrax-flight-mastery",
+      "effectId": "flight-mastery-initiative-up",
+      "rankedValue": {
+        "level": 4,
+        "unit": "percent",
+        "value": 10.2
+      },
+      "scheduleId": "flight-mastery-start",
+      "source": "effect.rankedValues"
+    },
+    {
+      "abilityId": "syrax-flight-mastery",
+      "effectId": "flight-mastery-initiative-up",
+      "rankedValue": {
+        "level": 5,
+        "unit": "percent",
+        "value": 12
+      },
+      "scheduleId": "flight-mastery-start",
+      "source": "effect.rankedValues"
+    },
+    {
+      "abilityId": "syrax-flight-mastery",
+      "effectId": "flight-mastery-initiative-down",
+      "rankedValue": {
+        "level": 1,
+        "unit": "percent",
+        "value": 6
+      },
+      "scheduleId": "flight-mastery-start",
+      "source": "effect.rankedValues"
+    },
+    {
+      "abilityId": "syrax-flight-mastery",
+      "effectId": "flight-mastery-initiative-down",
+      "rankedValue": {
+        "level": 2,
+        "unit": "percent",
+        "value": 7.2
+      },
+      "scheduleId": "flight-mastery-start",
+      "source": "effect.rankedValues"
+    },
+    {
+      "abilityId": "syrax-flight-mastery",
+      "effectId": "flight-mastery-initiative-down",
+      "rankedValue": {
+        "level": 3,
+        "unit": "percent",
+        "value": 8.4
+      },
+      "scheduleId": "flight-mastery-start",
+      "source": "effect.rankedValues"
+    },
+    {
+      "abilityId": "syrax-flight-mastery",
+      "effectId": "flight-mastery-initiative-down",
+      "rankedValue": {
+        "level": 4,
+        "unit": "percent",
+        "value": 10.2
+      },
+      "scheduleId": "flight-mastery-start",
+      "source": "effect.rankedValues"
+    },
+    {
+      "abilityId": "syrax-flight-mastery",
+      "effectId": "flight-mastery-initiative-down",
+      "rankedValue": {
+        "level": 5,
+        "unit": "percent",
+        "value": 12
+      },
+      "scheduleId": "flight-mastery-start",
+      "source": "effect.rankedValues"
+    },
+    {
+      "abilityId": "syrax-strategic-revival",
+      "rankedValue": {
+        "level": 1,
+        "unit": "power",
+        "value": 420
+      },
+      "source": "powerByHabitLevel"
+    },
+    {
+      "abilityId": "syrax-strategic-revival",
+      "rankedValue": {
+        "level": 2,
+        "unit": "power",
+        "value": 920
+      },
+      "source": "powerByHabitLevel"
+    },
+    {
+      "abilityId": "syrax-strategic-revival",
+      "rankedValue": {
+        "level": 3,
+        "unit": "power",
+        "value": 1500
+      },
+      "source": "powerByHabitLevel"
+    },
+    {
+      "abilityId": "syrax-strategic-revival",
+      "rankedValue": {
+        "level": 4,
+        "unit": "power",
+        "value": 2200
+      },
+      "source": "powerByHabitLevel"
+    },
+    {
+      "abilityId": "syrax-strategic-revival",
+      "rankedValue": {
+        "level": 5,
+        "unit": "power",
+        "value": 3100
+      },
+      "source": "powerByHabitLevel"
+    },
+    {
+      "abilityId": "syrax-strategic-revival",
+      "effectId": "strategic-revival-recovery",
+      "rankedValue": {
+        "level": 1,
+        "unit": "percent",
+        "value": 50
+      },
+      "scheduleId": "strategic-revival-recovery-rounds",
+      "source": "effect.rankedValues"
+    },
+    {
+      "abilityId": "syrax-strategic-revival",
+      "effectId": "strategic-revival-recovery",
+      "rankedValue": {
+        "level": 2,
+        "unit": "percent",
+        "value": 60
+      },
+      "scheduleId": "strategic-revival-recovery-rounds",
+      "source": "effect.rankedValues"
+    },
+    {
+      "abilityId": "syrax-strategic-revival",
+      "effectId": "strategic-revival-recovery",
+      "rankedValue": {
+        "level": 3,
+        "unit": "percent",
+        "value": 70
+      },
+      "scheduleId": "strategic-revival-recovery-rounds",
+      "source": "effect.rankedValues"
+    },
+    {
+      "abilityId": "syrax-strategic-revival",
+      "effectId": "strategic-revival-recovery",
+      "rankedValue": {
+        "level": 4,
+        "unit": "percent",
+        "value": 85
+      },
+      "scheduleId": "strategic-revival-recovery-rounds",
+      "source": "effect.rankedValues"
+    },
+    {
+      "abilityId": "syrax-strategic-revival",
+      "effectId": "strategic-revival-recovery",
+      "rankedValue": {
+        "level": 5,
+        "unit": "percent",
+        "value": 100
+      },
+      "scheduleId": "strategic-revival-recovery-rounds",
+      "source": "effect.rankedValues"
+    },
+    {
+      "abilityId": "syrax-strategic-revival",
+      "effectId": "strategic-revival-recovery",
+      "multiplierId": "strategic-revival-slow-1-5x",
+      "rankedValue": {
+        "level": 1,
+        "unit": "percent",
+        "value": 75
+      },
+      "scheduleId": "strategic-revival-recovery-rounds",
+      "source": "conditionalMultiplier.directlyVerifiedValues"
+    },
+    {
+      "abilityId": "syrax-tactical-inferno",
+      "rankedValue": {
+        "level": 1,
+        "unit": "power",
+        "value": 420
+      },
+      "source": "powerByHabitLevel"
+    },
+    {
+      "abilityId": "syrax-tactical-inferno",
+      "rankedValue": {
+        "level": 2,
+        "unit": "power",
+        "value": 920
+      },
+      "source": "powerByHabitLevel"
+    },
+    {
+      "abilityId": "syrax-tactical-inferno",
+      "rankedValue": {
+        "level": 3,
+        "unit": "power",
+        "value": 1500
+      },
+      "source": "powerByHabitLevel"
+    },
+    {
+      "abilityId": "syrax-tactical-inferno",
+      "rankedValue": {
+        "level": 4,
+        "unit": "power",
+        "value": 2200
+      },
+      "source": "powerByHabitLevel"
+    },
+    {
+      "abilityId": "syrax-tactical-inferno",
+      "rankedValue": {
+        "level": 5,
+        "unit": "power",
+        "value": 3100
+      },
+      "source": "powerByHabitLevel"
+    },
+    {
+      "abilityId": "syrax-tactical-inferno",
+      "effectId": "tactical-inferno-tactical",
+      "rankedValue": {
+        "level": 1,
+        "unit": "percent",
+        "value": 18
+      },
+      "scheduleId": "tactical-inferno-round-one",
+      "source": "effect.rankedValues"
+    },
+    {
+      "abilityId": "syrax-tactical-inferno",
+      "effectId": "tactical-inferno-tactical",
+      "rankedValue": {
+        "level": 2,
+        "unit": "percent",
+        "value": 21.6
+      },
+      "scheduleId": "tactical-inferno-round-one",
+      "source": "effect.rankedValues"
+    },
+    {
+      "abilityId": "syrax-tactical-inferno",
+      "effectId": "tactical-inferno-tactical",
+      "rankedValue": {
+        "level": 3,
+        "unit": "percent",
+        "value": 25.2
+      },
+      "scheduleId": "tactical-inferno-round-one",
+      "source": "effect.rankedValues"
+    },
+    {
+      "abilityId": "syrax-tactical-inferno",
+      "effectId": "tactical-inferno-tactical",
+      "rankedValue": {
+        "level": 4,
+        "unit": "percent",
+        "value": 30.6
+      },
+      "scheduleId": "tactical-inferno-round-one",
+      "source": "effect.rankedValues"
+    },
+    {
+      "abilityId": "syrax-tactical-inferno",
+      "effectId": "tactical-inferno-tactical",
+      "rankedValue": {
+        "level": 5,
+        "unit": "percent",
+        "value": 36
+      },
+      "scheduleId": "tactical-inferno-round-one",
+      "source": "effect.rankedValues"
+    },
+    {
+      "abilityId": "syrax-tactical-inferno",
+      "effectId": "tactical-inferno-fire",
+      "rankedValue": {
+        "level": 1,
+        "unit": "percent",
+        "value": 18
+      },
+      "scheduleId": "tactical-inferno-round-one",
+      "source": "effect.rankedValues"
+    },
+    {
+      "abilityId": "syrax-tactical-inferno",
+      "effectId": "tactical-inferno-fire",
+      "rankedValue": {
+        "level": 2,
+        "unit": "percent",
+        "value": 21.6
+      },
+      "scheduleId": "tactical-inferno-round-one",
+      "source": "effect.rankedValues"
+    },
+    {
+      "abilityId": "syrax-tactical-inferno",
+      "effectId": "tactical-inferno-fire",
+      "rankedValue": {
+        "level": 3,
+        "unit": "percent",
+        "value": 25.2
+      },
+      "scheduleId": "tactical-inferno-round-one",
+      "source": "effect.rankedValues"
+    },
+    {
+      "abilityId": "syrax-tactical-inferno",
+      "effectId": "tactical-inferno-fire",
+      "rankedValue": {
+        "level": 4,
+        "unit": "percent",
+        "value": 30.6
+      },
+      "scheduleId": "tactical-inferno-round-one",
+      "source": "effect.rankedValues"
+    },
+    {
+      "abilityId": "syrax-tactical-inferno",
+      "effectId": "tactical-inferno-fire",
+      "rankedValue": {
+        "level": 5,
+        "unit": "percent",
+        "value": 36
+      },
+      "scheduleId": "tactical-inferno-round-one",
+      "source": "effect.rankedValues"
+    },
+    {
+      "abilityId": "syrax-mothers-mercy",
+      "rankedValue": {
+        "level": 1,
+        "unit": "power",
+        "value": 430
+      },
+      "source": "powerByHabitLevel"
+    },
+    {
+      "abilityId": "syrax-mothers-mercy",
+      "rankedValue": {
+        "level": 2,
+        "unit": "power",
+        "value": 1000
+      },
+      "source": "powerByHabitLevel"
+    },
+    {
+      "abilityId": "syrax-mothers-mercy",
+      "rankedValue": {
+        "level": 3,
+        "unit": "power",
+        "value": 1700
+      },
+      "source": "powerByHabitLevel"
+    },
+    {
+      "abilityId": "syrax-mothers-mercy",
+      "rankedValue": {
+        "level": 4,
+        "unit": "power",
+        "value": 2700
+      },
+      "source": "powerByHabitLevel"
+    },
+    {
+      "abilityId": "syrax-mothers-mercy",
+      "rankedValue": {
+        "level": 5,
+        "unit": "power",
+        "value": 4000
+      },
+      "source": "powerByHabitLevel"
+    }
+  ],
+  "rarity": "Legendary",
+  "rawDescriptions": [
+    {
+      "abilityId": "syrax-blazing-fury",
+      "abilityName": "Blazing Fury",
+      "kind": "command",
+      "rawDescription": "Each Round: 20% chance to increase Fire Damage Dealt by 10% and grant First-Strike to one Ally in any lane for 2 rounds, prioritizing allies that deal Fire Damage. Rounds 1, 4, 6, 9: deal Tactical Damage to one enemy within adjacency."
+    },
+    {
+      "abilityId": "syrax-sentinels-wit",
+      "abilityName": "Sentinel's Wit",
+      "kind": "trait",
+      "rawDescription": "At Level 16+ and deployed in Vanguard, increase Syrax Tactical Damage Dealt by 16%. Increase Instinct and Initiative of Left Flank ally by +20."
+    },
+    {
+      "abilityId": "syrax-mindful-synergy",
+      "abilityName": "Mindful Synergy",
+      "kind": "habit",
+      "rawDescription": "Start of Combat: increase Intelligence and Instinct of 3 Allies in any lane until end of combat, enhanced by Syrax Initiative."
+    },
+    {
+      "abilityId": "syrax-flight-mastery",
+      "abilityName": "Flight Mastery",
+      "kind": "habit",
+      "rawDescription": "Start of Combat: increase Initiative of 3 Allies and reduce Initiative of 3 Enemies in any lane until end of combat, enhanced by Syrax Instinct."
+    },
+    {
+      "abilityId": "syrax-strategic-revival",
+      "abilityName": "Strategic Revival",
+      "kind": "habit",
+      "rawDescription": "Augments Blazing Fury: Rounds 2, 5, 8 recover the Ally with least current troops. Recovery is multiplied by 1.5 if any enemy has Slow. Chance to grant Resistance (-20%) for 2 rounds."
+    },
+    {
+      "abilityId": "syrax-tactical-inferno",
+      "abilityName": "Tactical Inferno",
+      "kind": "habit",
+      "rawDescription": "Start of Round 1: increase Tactical Damage Dealt of one Ally, prioritizing Left Flank, and Fire Damage Dealt of one Ally, prioritizing Right Flank, for 3 rounds."
+    },
+    {
+      "abilityId": "syrax-mothers-mercy",
+      "abilityName": "Mother's Mercy",
+      "kind": "habit",
+      "rawDescription": "Each Round: chance to cleanse two Negative effects and one Control effect from one Ally in any lane, prioritizing Allies afflicted with Control."
+    }
+  ],
+  "repetitions": [],
+  "rosterSourceStatus": "official-website",
+  "slug": "syrax",
+  "source": {
+    "branch": "feature/project-context-export",
+    "commit": "2cb422d38207fdda378f64504014ac34ff255e24",
+    "databaseVersion": "0.5.1",
+    "dataSchemaVersion": 7,
+    "gameBuild": "26.6.53509",
+    "localRosterSchemaVersion": 3,
+    "repository": "https://github.com/williamchildres/dragonfire-roster-builder"
+  },
+  "stats": {
+    "initiative": null,
+    "instinct": null,
+    "intelligence": null,
+    "strength": null
+  },
+  "statusOutputs": [
+    {
+      "abilityId": "syrax-blazing-fury",
+      "abilityName": "Blazing Fury",
+      "availability": {
+        "canonical": "canonical-base",
+        "notes": [
+          "Not collected in observed account."
+        ],
+        "observedAccount": "observed-unavailable",
+        "reportLabel": "Base kit; not collected in observed account",
+        "userRoster": "unknown"
+      },
+      "chanceByHabitLevel": [],
+      "chanceFixed": 20,
+      "conditions": [
+        {
+          "description": "Activation chance 20% per each round.",
+          "evidenceIds": [],
+          "id": "blazing-fury-fire-support-activation-chance",
+          "label": "Activation chance 20% per each round.",
+          "unresolved": false
+        }
+      ],
+      "currentlyAvailable": true,
+      "directlyVerified": true,
+      "dragonId": "syrax",
+      "durationRounds": 2,
+      "evidenceIds": [
+        "syrax-blazing-fury-summary-2026-06-24",
+        "syrax-blazing-fury-details-2026-06-24"
+      ],
+      "futureAvailable": false,
+      "id": "syrax-blazing-fury-blazing-fury-first-strike-first-strike-status-output",
+      "minimumDragonLevel": null,
+      "requiredHabitLevel": null,
+      "statusId": "first-strike",
+      "targetSelector": {
+        "count": 1,
+        "includesCaster": null,
+        "position": null,
+        "scope": "any-lane",
+        "selection": "any",
+        "side": "ally"
+      },
+      "targetSide": "ally",
+      "unlockStarRank": null,
+      "untilEndOfCombat": false,
+      "untilEndOfRound": false
+    },
+    {
+      "abilityId": "syrax-strategic-revival",
+      "abilityName": "Strategic Revival",
+      "availability": {
+        "canonical": "canonical-locked",
+        "notes": [
+          "Future at Star Rank 6.",
+          "Not collected in observed account."
+        ],
+        "observedAccount": "observed-unavailable",
+        "reportLabel": "Future at Star Rank 6; not collected in observed account",
+        "userRoster": "unknown"
+      },
+      "chanceByHabitLevel": [
+        {
+          "level": 1,
+          "unit": "percent",
+          "value": 40
+        },
+        {
+          "level": 2,
+          "unit": "percent",
+          "value": 52
+        },
+        {
+          "level": 3,
+          "unit": "percent",
+          "value": 64
+        },
+        {
+          "level": 4,
+          "unit": "percent",
+          "value": 80
+        },
+        {
+          "level": 5,
+          "unit": "percent",
+          "value": 100
+        }
+      ],
+      "chanceFixed": null,
+      "conditions": [
+        {
+          "description": "Activation chance depends on Habit Level for specific rounds.",
+          "evidenceIds": [],
+          "id": "strategic-revival-recovery-rounds-activation-chance",
+          "label": "Activation chance depends on Habit Level for specific rounds.",
+          "unresolved": false
+        }
+      ],
+      "currentlyAvailable": false,
+      "directlyVerified": true,
+      "dragonId": "syrax",
+      "durationRounds": 2,
+      "evidenceIds": [
+        "syrax-strategic-revival-2026-06-24"
+      ],
+      "futureAvailable": true,
+      "id": "syrax-strategic-revival-strategic-revival-resistance-resistance-status-output",
+      "minimumDragonLevel": null,
+      "requiredHabitLevel": 1,
+      "statusId": "resistance",
+      "targetSelector": {
+        "count": null,
+        "includesCaster": null,
+        "position": null,
+        "scope": "any-lane",
+        "selection": "any",
+        "side": "ally"
+      },
+      "targetSide": "ally",
+      "unlockStarRank": 6,
+      "untilEndOfCombat": false,
+      "untilEndOfRound": false
+    }
+  ],
+  "tags": [
+    "TACTICAL_DAMAGE",
+    "FIRE_DAMAGE_UP",
+    "FIRST_STRIKE",
+    "ANY_LANE_TARGET",
+    "INSTINCT_UP",
+    "BUFF_INITIATIVE",
+    "VANGUARD_REQUIRED",
+    "LEFT_FLANK_TARGET",
+    "BUFF_INTELLIGENCE",
+    "BUFF_INSTINCTS",
+    "BUFF_ALLIES",
+    "DEBUFF_INITIATIVE",
+    "COMMAND_AUGMENTATION",
+    "RECOVERY",
+    "RESISTANCE",
+    "CLEANSE_NEGATIVE",
+    "CONTROL"
+  ],
+  "trait": {
+    "abilityClass": "passive",
+    "augmentations": [],
+    "dragonId": "syrax",
+    "evidenceIds": [
+      "syrax-sentinels-wit-2026-06-24"
+    ],
+    "glossaryEntries": [],
+    "id": "syrax-sentinels-wit",
+    "kind": "trait",
+    "minimumDragonLevel": 16,
+    "name": "Sentinel's Wit",
+    "positionRequirement": "vanguard",
+    "powerByHabitLevel": [],
+    "rawDescription": "At Level 16+ and deployed in Vanguard, increase Syrax Tactical Damage Dealt by 16%. Increase Instinct and Initiative of Left Flank ally by +20.",
+    "schedules": [
+      {
+        "attempts": null,
+        "battleContext": "unspecified",
+        "conditions": [],
+        "effects": [
+          {
+            "calculated": false,
+            "casterEligibility": "unknown",
+            "conditionalMultipliers": [],
+            "conditions": [],
+            "directlyVerified": true,
+            "duration": null,
+            "durationRounds": null,
+            "excludes": [],
+            "id": "sentinels-wit-tactical",
+            "includesCaster": null,
+            "magnitude": 16,
+            "notes": [],
+            "perTargetEffectCheck": null,
+            "rankedValues": [],
+            "scaling": [],
+            "sourceScope": "all-sources",
+            "stack": null,
+            "target": "Self",
+            "targetCount": null,
+            "targetPriority": "any-eligible",
+            "targetScope": "self",
+            "type": "Tactical Damage Dealt Up",
+            "unit": "percent"
+          },
+          {
+            "calculated": false,
+            "casterEligibility": "unknown",
+            "conditionalMultipliers": [],
+            "conditions": [],
+            "directlyVerified": true,
+            "duration": null,
+            "durationRounds": null,
+            "excludes": [],
+            "id": "sentinels-wit-left-instinct",
+            "includesCaster": null,
+            "magnitude": 20,
+            "notes": [],
+            "perTargetEffectCheck": null,
+            "rankedValues": [],
+            "scaling": [],
+            "sourceScope": "unknown",
+            "stack": null,
+            "target": "Left Flank ally",
+            "targetCount": null,
+            "targetPriority": "any-eligible",
+            "targetScope": "left-flank",
+            "type": "Instinct Up",
+            "unit": "flat"
+          },
+          {
+            "calculated": false,
+            "casterEligibility": "unknown",
+            "conditionalMultipliers": [],
+            "conditions": [],
+            "directlyVerified": true,
+            "duration": null,
+            "durationRounds": null,
+            "excludes": [],
+            "id": "sentinels-wit-left-initiative",
+            "includesCaster": null,
+            "magnitude": 20,
+            "notes": [],
+            "perTargetEffectCheck": null,
+            "rankedValues": [],
+            "scaling": [],
+            "sourceScope": "unknown",
+            "stack": null,
+            "target": "Left Flank ally",
+            "targetCount": null,
+            "targetPriority": "any-eligible",
+            "targetScope": "left-flank",
+            "type": "Initiative Up",
+            "unit": "flat"
+          }
+        ],
+        "id": "sentinels-wit-passive",
+        "repeat": null,
+        "rounds": [],
+        "targetPriority": "any-eligible",
+        "timing": "passive",
+        "triggerChanceByHabitLevel": [],
+        "triggerChanceFixed": null,
+        "triggerEvent": "passive"
+      }
+    ],
+    "tags": [
+      "TACTICAL_DAMAGE",
+      "INSTINCT_UP",
+      "BUFF_INITIATIVE",
+      "VANGUARD_REQUIRED",
+      "LEFT_FLANK_TARGET"
+    ],
+    "unlockStarRank": 1,
+    "unresolvedQuestions": [],
+    "verification": {
+      "capturedAt": "2026-06-23",
+      "gameVersion": "26.6.53509",
+      "reviewedManually": true,
+      "source": "Syrax Sentinel's Wit screenshot",
+      "status": "screenshot-verified"
+    }
+  },
+  "unresolvedQuestions": [
+    "Enemy adjacency semantics for Blazing Fury Tactical Damage.",
+    "Enemy adjacency semantics for Tactical Damage target.",
+    "Exact enhanced-by-Initiative formula.",
+    "Exact enhanced-by-Instinct formula.",
+    "Exact Recovery formula.",
+    "Exact stat-scaling formulas.",
+    "Fallback selection when preferred flank lacks matching output.",
+    "Higher conditional Recovery values are calculated.",
+    "Selection order when multiple Control effects exist.",
+    "Whether one mixed-damage Ally may receive both modifiers.",
+    "Whether removing one Control also consumes one Negative-effect removal."
+  ],
+  "verificationBySection": {
+    "affinities": {
+      "capturedAt": "2026-06-23",
+      "gameVersion": "26.6.53509",
+      "reviewedManually": true,
+      "source": "Syrax main screen screenshot",
+      "status": "partially-screenshot-verified"
+    },
+    "command": {
+      "capturedAt": "2026-06-23",
+      "gameVersion": "26.6.53509",
+      "reviewedManually": true,
+      "source": "Syrax Blazing Fury screenshots",
+      "status": "screenshot-verified"
+    },
+    "habits": {
+      "capturedAt": "2026-06-23",
+      "gameVersion": "26.6.53509",
+      "reviewedManually": true,
+      "source": "Syrax Habit screenshots",
+      "status": "screenshot-verified"
+    },
+    "identity": {
+      "capturedAt": "2026-06-23",
+      "gameVersion": "26.6.53509",
+      "reviewedManually": true,
+      "source": "Syrax main screen screenshot",
+      "status": "screenshot-verified"
+    },
+    "trait": {
+      "capturedAt": "2026-06-23",
+      "gameVersion": "26.6.53509",
+      "reviewedManually": true,
+      "source": "Syrax Sentinel's Wit screenshot",
+      "status": "screenshot-verified"
+    }
+  }
+}

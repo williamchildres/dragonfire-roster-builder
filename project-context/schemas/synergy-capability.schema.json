@@ -1,0 +1,117 @@
+{
+  "$id": "synergy-capability.schema.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "properties": {
+    "derivedCapabilities": {
+      "properties": {
+        "abilityDependencies": {
+          "items": {
+            "type": "object"
+          },
+          "type": "array"
+        },
+        "allySupport": {
+          "items": {
+            "type": "object"
+          },
+          "type": "array"
+        },
+        "enemyDebuffs": {
+          "items": {
+            "type": "object"
+          },
+          "type": "array"
+        },
+        "outputs": {
+          "items": {
+            "type": "object"
+          },
+          "type": "array"
+        },
+        "periodicDamage": {
+          "items": {
+            "type": "object"
+          },
+          "type": "array"
+        },
+        "recipientSideAmplification": {
+          "items": {
+            "type": "object"
+          },
+          "type": "array"
+        },
+        "selfAmplification": {
+          "items": {
+            "type": "object"
+          },
+          "type": "array"
+        },
+        "statusOutputs": {
+          "items": {
+            "type": "object"
+          },
+          "type": "array"
+        }
+      },
+      "required": [
+        "outputs",
+        "allySupport",
+        "selfAmplification",
+        "recipientSideAmplification",
+        "enemyDebuffs",
+        "statusOutputs",
+        "periodicDamage",
+        "abilityDependencies"
+      ],
+      "type": "object"
+    },
+    "effectChannels": {
+      "items": {
+        "enum": [
+          "physical-damage",
+          "tactical-damage",
+          "fire-damage",
+          "recovery",
+          "stat"
+        ]
+      },
+      "type": "array"
+    },
+    "matchKinds": {
+      "items": {
+        "type": "string"
+      },
+      "type": "array"
+    },
+    "modifierRoles": {
+      "items": {
+        "enum": [
+          "self-amplification",
+          "ally-support",
+          "recipient-side-amplification",
+          "enemy-debuff"
+        ]
+      },
+      "type": "array"
+    }
+  },
+  "required": [
+    "effectChannels",
+    "outputCapabilityStructure",
+    "modifierCapabilityStructure",
+    "modifierRoles",
+    "availabilityModel",
+    "matchKinds",
+    "sourceScopeCompatibilityRules",
+    "positionCompatibilityRules",
+    "targetingLanguageRules",
+    "traceStatuses",
+    "confidenceLevels",
+    "normalViewAggregationBehavior",
+    "debugViewBehavior",
+    "numericalScorePolicy",
+    "derivedCapabilities",
+    "dragonEffectProfiles"
+  ],
+  "type": "object"
+}

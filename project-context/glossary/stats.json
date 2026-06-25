@@ -1,0 +1,88 @@
+[
+  {
+    "canonicalFormulaKnown": false,
+    "category": "combat",
+    "defensiveEffects": [],
+    "description": "Increases Physical Damage Dealt in combat.",
+    "id": "strength",
+    "name": "Strength",
+    "offensiveEffects": [
+      "Increases Physical Damage Dealt"
+    ]
+  },
+  {
+    "canonicalFormulaKnown": false,
+    "category": "combat",
+    "defensiveEffects": [
+      "Reduces Physical Damage Received"
+    ],
+    "description": "Increases Tactical Damage Dealt and reduces Physical Damage Received.",
+    "id": "instinct",
+    "name": "Instinct",
+    "offensiveEffects": [
+      "Increases Tactical Damage Dealt"
+    ]
+  },
+  {
+    "canonicalFormulaKnown": false,
+    "category": "combat",
+    "defensiveEffects": [
+      "Reduces Tactical Damage Received"
+    ],
+    "description": "Increases Fire Damage Dealt and reduces Tactical Damage Received.",
+    "id": "intelligence",
+    "name": "Intelligence",
+    "offensiveEffects": [
+      "Increases Fire Damage Dealt"
+    ]
+  },
+  {
+    "canonicalFormulaKnown": false,
+    "category": "combat",
+    "defensiveEffects": [
+      "Reduces Fire Damage Received"
+    ],
+    "description": "Reduces Fire Damage Received and determines turn order in combat.",
+    "id": "initiative",
+    "name": "Initiative",
+    "offensiveEffects": [
+      "Determines turn order in combat"
+    ]
+  },
+  {
+    "canonicalFormulaKnown": false,
+    "category": "operational",
+    "defensiveEffects": [],
+    "description": "Rate of travel to the destination.",
+    "id": "march-speed",
+    "name": "March Speed",
+    "offensiveEffects": []
+  },
+  {
+    "canonicalFormulaKnown": false,
+    "category": "operational",
+    "defensiveEffects": [],
+    "description": "Dragon actions consume Stamina. Dragons recover 1 Stamina every 4.5 minutes.",
+    "id": "stamina",
+    "name": "Stamina",
+    "offensiveEffects": []
+  },
+  {
+    "canonicalFormulaKnown": false,
+    "category": "derived",
+    "defensiveEffects": [],
+    "description": "Number of troops the dragon can carry. Displayed in-game as base value plus upgrades.",
+    "id": "troop-capacity",
+    "name": "Troop Capacity",
+    "offensiveEffects": []
+  },
+  {
+    "canonicalFormulaKnown": false,
+    "category": "derived",
+    "defensiveEffects": [],
+    "description": "Aggregate power affected by levels, Star Rank, Habits, and other progression.",
+    "id": "dragon-power",
+    "name": "Dragon Power",
+    "offensiveEffects": []
+  }
+]

@@ -1,0 +1,5730 @@
+{
+  "availabilityModel": {
+    "contexts": [
+      "canonical",
+      "observedAccount",
+      "userRoster"
+    ],
+    "currentMode": "Locked abilities do not create active matches.",
+    "previewMode": "Future abilities may generate potential matches."
+  },
+  "confidenceLevels": [
+    "confirmed",
+    "high",
+    "medium",
+    "low",
+    "unresolved"
+  ],
+  "debugViewBehavior": "Debug traces retain child capability matches, source-scope checks, requirements, assumptions, and evidence IDs.",
+  "derivedCapabilities": {
+    "abilityDependencies": [
+      {
+        "abilityId": "syrax-blazing-fury",
+        "dependency": {
+          "notes": [
+            "Effect wording indicates scaling with Instinct."
+          ],
+          "statId": "instinct",
+          "type": "scales-with-stat"
+        },
+        "dragonId": "syrax",
+        "outputCapabilityId": "syrax-blazing-fury-blazing-fury-tactical-rate-output"
+      },
+      {
+        "abilityId": "syrax-blazing-fury",
+        "dependency": {
+          "notes": [
+            "Tactical Damage is reduced by target Intelligence."
+          ],
+          "statId": "intelligence",
+          "type": "mitigated-by-target-stat"
+        },
+        "dragonId": "syrax",
+        "outputCapabilityId": "syrax-blazing-fury-blazing-fury-tactical-rate-output"
+      },
+      {
+        "abilityId": "syrax-strategic-revival",
+        "dependency": {
+          "notes": [
+            "Effect wording indicates scaling with Initiative."
+          ],
+          "statId": "initiative",
+          "type": "scales-with-stat"
+        },
+        "dragonId": "syrax",
+        "outputCapabilityId": "syrax-strategic-revival-strategic-revival-recovery-output"
+      },
+      {
+        "abilityId": "syrax-strategic-revival",
+        "dependency": {
+          "multiplier": 1.5,
+          "notes": [
+            "Any enemy is afflicted with Slow."
+          ],
+          "statusId": "slow",
+          "type": "requires-any-enemy-status"
+        },
+        "dragonId": "syrax",
+        "outputCapabilityId": "syrax-strategic-revival-strategic-revival-recovery-output"
+      },
+      {
+        "abilityId": "caraxes-infernal-burst",
+        "dependency": {
+          "notes": [
+            "Effect wording indicates scaling with Intelligence."
+          ],
+          "statId": "intelligence",
+          "type": "scales-with-stat"
+        },
+        "dragonId": "caraxes",
+        "outputCapabilityId": "caraxes-infernal-burst-infernal-burst-fire-rate-output"
+      },
+      {
+        "abilityId": "caraxes-infernal-burst",
+        "dependency": {
+          "notes": [
+            "Fire Damage is reduced by target Initiative."
+          ],
+          "statId": "initiative",
+          "type": "mitigated-by-target-stat"
+        },
+        "dragonId": "caraxes",
+        "outputCapabilityId": "caraxes-infernal-burst-infernal-burst-fire-rate-output"
+      },
+      {
+        "abilityId": "caraxes-infernal-burst",
+        "dependency": {
+          "multiplier": 1.5,
+          "notes": [
+            "Self has First-Strike."
+          ],
+          "statusId": "first-strike",
+          "type": "requires-self-status"
+        },
+        "dragonId": "caraxes",
+        "outputCapabilityId": "caraxes-infernal-burst-infernal-burst-fire-rate-output"
+      },
+      {
+        "abilityId": "caraxes-crippling-inferno",
+        "dependency": {
+          "notes": [
+            "Effect wording indicates scaling with Intelligence."
+          ],
+          "statId": "intelligence",
+          "type": "scales-with-stat"
+        },
+        "dragonId": "caraxes",
+        "outputCapabilityId": "caraxes-crippling-inferno-crippling-inferno-burn-output"
+      },
+      {
+        "abilityId": "caraxes-crippling-inferno",
+        "dependency": {
+          "notes": [
+            "Fire Damage is reduced by target Initiative."
+          ],
+          "statId": "initiative",
+          "type": "mitigated-by-target-stat"
+        },
+        "dragonId": "caraxes",
+        "outputCapabilityId": "caraxes-crippling-inferno-crippling-inferno-burn-output"
+      },
+      {
+        "abilityId": "caraxes-blood-wyrm",
+        "dependency": {
+          "notes": [
+            "Effect wording indicates scaling with Initiative."
+          ],
+          "statId": "initiative",
+          "type": "scales-with-stat"
+        },
+        "dragonId": "caraxes",
+        "outputCapabilityId": "caraxes-blood-wyrm-blood-wyrm-recovery-output"
+      },
+      {
+        "abilityId": "caraxes-blood-wyrm",
+        "dependency": {
+          "eventId": "Enemy retreated during the previous round.",
+          "notes": [
+            "Enemy retreated during the previous round."
+          ],
+          "type": "previous-round-event"
+        },
+        "dragonId": "caraxes",
+        "outputCapabilityId": "caraxes-blood-wyrm-blood-wyrm-recovery-output"
+      },
+      {
+        "abilityId": "seasmoke-cleansing-wrath",
+        "dependency": {
+          "notes": [
+            "Effect wording indicates scaling with Intelligence."
+          ],
+          "statId": "intelligence",
+          "type": "scales-with-stat"
+        },
+        "dragonId": "seasmoke",
+        "outputCapabilityId": "seasmoke-cleansing-wrath-cleansing-wrath-fire-damage-rate-output"
+      },
+      {
+        "abilityId": "seasmoke-cleansing-wrath",
+        "dependency": {
+          "notes": [
+            "Fire Damage is reduced by target Initiative."
+          ],
+          "statId": "initiative",
+          "type": "mitigated-by-target-stat"
+        },
+        "dragonId": "seasmoke",
+        "outputCapabilityId": "seasmoke-cleansing-wrath-cleansing-wrath-fire-damage-rate-output"
+      },
+      {
+        "abilityId": "seasmoke-infectious-wrath",
+        "dependency": {
+          "notes": [
+            "Physical Damage is increased by Strength."
+          ],
+          "statId": "strength",
+          "type": "scales-with-stat"
+        },
+        "dragonId": "seasmoke",
+        "outputCapabilityId": "seasmoke-infectious-wrath-infectious-wrath-physical-damage-rate-output"
+      },
+      {
+        "abilityId": "seasmoke-infectious-wrath",
+        "dependency": {
+          "notes": [
+            "Physical Damage is reduced by target Instinct."
+          ],
+          "statId": "instinct",
+          "type": "mitigated-by-target-stat"
+        },
+        "dragonId": "seasmoke",
+        "outputCapabilityId": "seasmoke-infectious-wrath-infectious-wrath-physical-damage-rate-output"
+      },
+      {
+        "abilityId": "seasmoke-infectious-wrath",
+        "dependency": {
+          "multiplier": 2,
+          "notes": [
+            "Target has Panic."
+          ],
+          "statusId": "panic",
+          "type": "requires-target-status"
+        },
+        "dragonId": "seasmoke",
+        "outputCapabilityId": "seasmoke-infectious-wrath-infectious-wrath-physical-damage-rate-output"
+      },
+      {
+        "abilityId": "malachite-wardens-rally",
+        "dependency": {
+          "notes": [
+            "Effect wording indicates scaling with Instinct."
+          ],
+          "statId": "instinct",
+          "type": "scales-with-stat"
+        },
+        "dragonId": "malachite",
+        "outputCapabilityId": "malachite-wardens-rally-wardens-rally-tactical-damage-rate-output"
+      },
+      {
+        "abilityId": "malachite-wardens-rally",
+        "dependency": {
+          "notes": [
+            "Tactical Damage is reduced by target Intelligence."
+          ],
+          "statId": "intelligence",
+          "type": "mitigated-by-target-stat"
+        },
+        "dragonId": "malachite",
+        "outputCapabilityId": "malachite-wardens-rally-wardens-rally-tactical-damage-rate-output"
+      },
+      {
+        "abilityId": "malachite-wardens-rally",
+        "dependency": {
+          "notes": [
+            "Effect wording indicates scaling with Instinct."
+          ],
+          "statId": "instinct",
+          "type": "scales-with-stat"
+        },
+        "dragonId": "malachite",
+        "outputCapabilityId": "malachite-wardens-rally-wardens-rally-recovery-rate-output"
+      },
+      {
+        "abilityId": "sheepstealer-wild-hunt",
+        "dependency": {
+          "notes": [
+            "Effect wording indicates scaling with Intelligence."
+          ],
+          "statId": "intelligence",
+          "type": "scales-with-stat"
+        },
+        "dragonId": "sheepstealer",
+        "outputCapabilityId": "sheepstealer-wild-hunt-wild-hunt-fire-damage-rate-output"
+      },
+      {
+        "abilityId": "sheepstealer-wild-hunt",
+        "dependency": {
+          "notes": [
+            "Fire Damage is reduced by target Initiative."
+          ],
+          "statId": "initiative",
+          "type": "mitigated-by-target-stat"
+        },
+        "dragonId": "sheepstealer",
+        "outputCapabilityId": "sheepstealer-wild-hunt-wild-hunt-fire-damage-rate-output"
+      },
+      {
+        "abilityId": "sheepstealer-wild-hunt",
+        "dependency": {
+          "multiplier": 2,
+          "notes": [
+            "Target is Sheepstealer Prey."
+          ],
+          "statusId": "prey",
+          "type": "requires-target-status"
+        },
+        "dragonId": "sheepstealer",
+        "outputCapabilityId": "sheepstealer-wild-hunt-wild-hunt-fire-damage-rate-output"
+      },
+      {
+        "abilityId": "sheepstealer-savage-claim",
+        "dependency": {
+          "notes": [
+            "Fire Damage is increased by Intelligence."
+          ],
+          "statId": "intelligence",
+          "type": "scales-with-stat"
+        },
+        "dragonId": "sheepstealer",
+        "outputCapabilityId": "sheepstealer-savage-claim-savage-claim-fire-damage-output"
+      },
+      {
+        "abilityId": "sheepstealer-savage-claim",
+        "dependency": {
+          "notes": [
+            "Fire Damage is reduced by target Initiative."
+          ],
+          "statId": "initiative",
+          "type": "mitigated-by-target-stat"
+        },
+        "dragonId": "sheepstealer",
+        "outputCapabilityId": "sheepstealer-savage-claim-savage-claim-fire-damage-output"
+      },
+      {
+        "abilityId": "sheepstealer-savage-claim",
+        "dependency": {
+          "notes": [
+            "Effect wording indicates scaling with Intelligence."
+          ],
+          "statId": "intelligence",
+          "type": "scales-with-stat"
+        },
+        "dragonId": "sheepstealer",
+        "outputCapabilityId": "sheepstealer-savage-claim-savage-claim-recovery-output"
+      },
+      {
+        "abilityId": null,
+        "dependency": {
+          "notes": [
+            "Physical Damage scales with Strength when the damage source is a Physical Basic Attack."
+          ],
+          "statId": "strength",
+          "type": "scales-with-stat"
+        },
+        "dragonId": "vermax",
+        "outputCapabilityId": "vermax-basic-attack-physical"
+      },
+      {
+        "abilityId": null,
+        "dependency": {
+          "notes": [
+            "Physical Damage is reduced by the target Instinct."
+          ],
+          "statId": "instinct",
+          "type": "mitigated-by-target-stat"
+        },
+        "dragonId": "vermax",
+        "outputCapabilityId": "vermax-basic-attack-physical"
+      },
+      {
+        "abilityId": "vermax-spreading-blaze",
+        "dependency": {
+          "notes": [
+            "Effect wording indicates scaling with Strength."
+          ],
+          "statId": "strength",
+          "type": "scales-with-stat"
+        },
+        "dragonId": "vermax",
+        "outputCapabilityId": "vermax-spreading-blaze-spreading-blaze-physical-damage-output"
+      },
+      {
+        "abilityId": "vermax-spreading-blaze",
+        "dependency": {
+          "notes": [
+            "Physical Damage is reduced by target Instinct."
+          ],
+          "statId": "instinct",
+          "type": "mitigated-by-target-stat"
+        },
+        "dragonId": "vermax",
+        "outputCapabilityId": "vermax-spreading-blaze-spreading-blaze-physical-damage-output"
+      }
+    ],
+    "allySupport": [
+      {
+        "abilityId": "syrax-blazing-fury",
+        "abilityName": "Blazing Fury",
+        "availability": {
+          "canonical": "canonical-base",
+          "notes": [
+            "Not collected in observed account."
+          ],
+          "observedAccount": "observed-unavailable",
+          "reportLabel": "Base kit; not collected in observed account",
+          "userRoster": "unknown"
+        },
+        "channel": "fire-damage",
+        "combatLogConfirmed": false,
+        "conditional": true,
+        "conditions": [
+          {
+            "description": "Activation chance 20% per each round.",
+            "evidenceIds": [],
+            "id": "blazing-fury-fire-support-activation-chance",
+            "label": "Activation chance 20% per each round.",
+            "unresolved": false
+          }
+        ],
+        "confidence": "confirmed",
+        "currentlyAvailable": true,
+        "direction": "dealt",
+        "directlyVerified": true,
+        "dragonId": "syrax",
+        "evidenceIds": [
+          "syrax-blazing-fury-summary-2026-06-24",
+          "syrax-blazing-fury-details-2026-06-24"
+        ],
+        "futureAvailable": false,
+        "id": "syrax-blazing-fury-blazing-fury-fire-damage-up-fire-damage-dealt-modifier",
+        "label": "Blazing Fury: Fire Damage Dealt Up",
+        "minimumDragonLevel": null,
+        "operation": "increase",
+        "providerRequirements": [],
+        "recipientRequirements": [],
+        "requiredHabitLevel": null,
+        "role": "ally-support",
+        "sourceScope": "all-qualifying-sources",
+        "stackMaximum": null,
+        "targetSelector": {
+          "count": 1,
+          "includesCaster": null,
+          "position": null,
+          "scope": "any-lane",
+          "selection": "any",
+          "side": "ally"
+        },
+        "unit": "percent",
+        "unlockStarRank": null,
+        "value": 10,
+        "valuePerStack": null
+      },
+      {
+        "abilityId": "syrax-sentinels-wit",
+        "abilityName": "Sentinel's Wit",
+        "availability": {
+          "canonical": "canonical-base",
+          "notes": [
+            "Requires Dragon Level 16+.",
+            "Not collected in observed account."
+          ],
+          "observedAccount": "observed-unavailable",
+          "reportLabel": "Base kit; Level 16+; not collected in observed account",
+          "userRoster": "unknown"
+        },
+        "channel": "stat",
+        "combatLogConfirmed": false,
+        "conditional": false,
+        "conditions": [],
+        "confidence": "confirmed",
+        "currentlyAvailable": true,
+        "direction": "dealt",
+        "directlyVerified": true,
+        "dragonId": "syrax",
+        "evidenceIds": [
+          "syrax-sentinels-wit-2026-06-24"
+        ],
+        "futureAvailable": false,
+        "id": "syrax-sentinels-wit-sentinels-wit-left-instinct-stat-dealt-modifier",
+        "label": "Sentinel's Wit: Instinct Up",
+        "minimumDragonLevel": 16,
+        "operation": "increase",
+        "providerRequirements": [
+          {
+            "evidenceIds": [
+              "syrax-sentinels-wit-2026-06-24"
+            ],
+            "expected": "vanguard",
+            "id": "syrax-sentinels-wit-provider-position-vanguard",
+            "kind": "provider-position",
+            "label": "Provider position requirement"
+          }
+        ],
+        "recipientRequirements": [],
+        "requiredHabitLevel": null,
+        "role": "ally-support",
+        "sourceScope": "unknown",
+        "stackMaximum": null,
+        "targetSelector": {
+          "count": null,
+          "includesCaster": null,
+          "position": "left-flank",
+          "scope": "left-flank",
+          "selection": "specific-position",
+          "side": "ally"
+        },
+        "unit": "flat",
+        "unlockStarRank": 1,
+        "value": 20,
+        "valuePerStack": null
+      },
+      {
+        "abilityId": "syrax-sentinels-wit",
+        "abilityName": "Sentinel's Wit",
+        "availability": {
+          "canonical": "canonical-base",
+          "notes": [
+            "Requires Dragon Level 16+.",
+            "Not collected in observed account."
+          ],
+          "observedAccount": "observed-unavailable",
+          "reportLabel": "Base kit; Level 16+; not collected in observed account",
+          "userRoster": "unknown"
+        },
+        "channel": "stat",
+        "combatLogConfirmed": false,
+        "conditional": false,
+        "conditions": [],
+        "confidence": "confirmed",
+        "currentlyAvailable": true,
+        "direction": "dealt",
+        "directlyVerified": true,
+        "dragonId": "syrax",
+        "evidenceIds": [
+          "syrax-sentinels-wit-2026-06-24"
+        ],
+        "futureAvailable": false,
+        "id": "syrax-sentinels-wit-sentinels-wit-left-initiative-stat-dealt-modifier",
+        "label": "Sentinel's Wit: Initiative Up",
+        "minimumDragonLevel": 16,
+        "operation": "increase",
+        "providerRequirements": [
+          {
+            "evidenceIds": [
+              "syrax-sentinels-wit-2026-06-24"
+            ],
+            "expected": "vanguard",
+            "id": "syrax-sentinels-wit-provider-position-vanguard",
+            "kind": "provider-position",
+            "label": "Provider position requirement"
+          }
+        ],
+        "recipientRequirements": [],
+        "requiredHabitLevel": null,
+        "role": "ally-support",
+        "sourceScope": "unknown",
+        "stackMaximum": null,
+        "targetSelector": {
+          "count": null,
+          "includesCaster": null,
+          "position": "left-flank",
+          "scope": "left-flank",
+          "selection": "specific-position",
+          "side": "ally"
+        },
+        "unit": "flat",
+        "unlockStarRank": 1,
+        "value": 20,
+        "valuePerStack": null
+      },
+      {
+        "abilityId": "syrax-mindful-synergy",
+        "abilityName": "Mindful Synergy",
+        "availability": {
+          "canonical": "canonical-locked",
+          "notes": [
+            "Future at Star Rank 2.",
+            "Not collected in observed account."
+          ],
+          "observedAccount": "observed-unavailable",
+          "reportLabel": "Future at Star Rank 2; not collected in observed account",
+          "userRoster": "unknown"
+        },
+        "channel": "stat",
+        "combatLogConfirmed": false,
+        "conditional": true,
+        "conditions": [],
+        "confidence": "confirmed",
+        "currentlyAvailable": false,
+        "direction": "dealt",
+        "directlyVerified": true,
+        "dragonId": "syrax",
+        "evidenceIds": [
+          "syrax-mindful-synergy-2026-06-24"
+        ],
+        "futureAvailable": true,
+        "id": "syrax-mindful-synergy-mindful-synergy-intelligence-stat-dealt-modifier",
+        "label": "Mindful Synergy: Intelligence Up",
+        "minimumDragonLevel": null,
+        "operation": "increase",
+        "providerRequirements": [],
+        "recipientRequirements": [],
+        "requiredHabitLevel": 1,
+        "role": "ally-support",
+        "sourceScope": "unknown",
+        "stackMaximum": null,
+        "targetSelector": {
+          "count": 3,
+          "includesCaster": true,
+          "position": null,
+          "scope": "any-lane",
+          "selection": "any",
+          "side": "ally"
+        },
+        "unit": "percent",
+        "unlockStarRank": 2,
+        "value": null,
+        "valuePerStack": null
+      },
+      {
+        "abilityId": "syrax-mindful-synergy",
+        "abilityName": "Mindful Synergy",
+        "availability": {
+          "canonical": "canonical-locked",
+          "notes": [
+            "Future at Star Rank 2.",
+            "Not collected in observed account."
+          ],
+          "observedAccount": "observed-unavailable",
+          "reportLabel": "Future at Star Rank 2; not collected in observed account",
+          "userRoster": "unknown"
+        },
+        "channel": "stat",
+        "combatLogConfirmed": false,
+        "conditional": true,
+        "conditions": [],
+        "confidence": "confirmed",
+        "currentlyAvailable": false,
+        "direction": "dealt",
+        "directlyVerified": true,
+        "dragonId": "syrax",
+        "evidenceIds": [
+          "syrax-mindful-synergy-2026-06-24"
+        ],
+        "futureAvailable": true,
+        "id": "syrax-mindful-synergy-mindful-synergy-instinct-stat-dealt-modifier",
+        "label": "Mindful Synergy: Instinct Up",
+        "minimumDragonLevel": null,
+        "operation": "increase",
+        "providerRequirements": [],
+        "recipientRequirements": [],
+        "requiredHabitLevel": 1,
+        "role": "ally-support",
+        "sourceScope": "unknown",
+        "stackMaximum": null,
+        "targetSelector": {
+          "count": 3,
+          "includesCaster": true,
+          "position": null,
+          "scope": "any-lane",
+          "selection": "any",
+          "side": "ally"
+        },
+        "unit": "percent",
+        "unlockStarRank": 2,
+        "value": null,
+        "valuePerStack": null
+      },
+      {
+        "abilityId": "syrax-flight-mastery",
+        "abilityName": "Flight Mastery",
+        "availability": {
+          "canonical": "canonical-locked",
+          "notes": [
+            "Future at Star Rank 4.",
+            "Not collected in observed account."
+          ],
+          "observedAccount": "observed-unavailable",
+          "reportLabel": "Future at Star Rank 4; not collected in observed account",
+          "userRoster": "unknown"
+        },
+        "channel": "stat",
+        "combatLogConfirmed": false,
+        "conditional": true,
+        "conditions": [],
+        "confidence": "confirmed",
+        "currentlyAvailable": false,
+        "direction": "dealt",
+        "directlyVerified": true,
+        "dragonId": "syrax",
+        "evidenceIds": [
+          "syrax-flight-mastery-2026-06-24"
+        ],
+        "futureAvailable": true,
+        "id": "syrax-flight-mastery-flight-mastery-initiative-up-stat-dealt-modifier",
+        "label": "Flight Mastery: Initiative Up",
+        "minimumDragonLevel": null,
+        "operation": "increase",
+        "providerRequirements": [],
+        "recipientRequirements": [],
+        "requiredHabitLevel": 1,
+        "role": "ally-support",
+        "sourceScope": "unknown",
+        "stackMaximum": null,
+        "targetSelector": {
+          "count": 3,
+          "includesCaster": true,
+          "position": null,
+          "scope": "any-lane",
+          "selection": "any",
+          "side": "ally"
+        },
+        "unit": "percent",
+        "unlockStarRank": 4,
+        "value": null,
+        "valuePerStack": null
+      },
+      {
+        "abilityId": "syrax-tactical-inferno",
+        "abilityName": "Tactical Inferno",
+        "availability": {
+          "canonical": "canonical-locked",
+          "notes": [
+            "Future at Star Rank 8.",
+            "Not collected in observed account."
+          ],
+          "observedAccount": "observed-unavailable",
+          "reportLabel": "Future at Star Rank 8; not collected in observed account",
+          "userRoster": "unknown"
+        },
+        "channel": "tactical-damage",
+        "combatLogConfirmed": false,
+        "conditional": true,
+        "conditions": [],
+        "confidence": "confirmed",
+        "currentlyAvailable": false,
+        "direction": "dealt",
+        "directlyVerified": true,
+        "dragonId": "syrax",
+        "evidenceIds": [
+          "syrax-tactical-inferno-2026-06-24"
+        ],
+        "futureAvailable": true,
+        "id": "syrax-tactical-inferno-tactical-inferno-tactical-tactical-damage-dealt-modifier",
+        "label": "Tactical Inferno: Tactical Damage Dealt Up",
+        "minimumDragonLevel": null,
+        "operation": "increase",
+        "providerRequirements": [],
+        "recipientRequirements": [],
+        "requiredHabitLevel": 1,
+        "role": "ally-support",
+        "sourceScope": "all-qualifying-sources",
+        "stackMaximum": null,
+        "targetSelector": {
+          "count": 1,
+          "includesCaster": null,
+          "position": null,
+          "scope": "any-lane",
+          "selection": "any",
+          "side": "ally"
+        },
+        "unit": "percent",
+        "unlockStarRank": 8,
+        "value": null,
+        "valuePerStack": null
+      },
+      {
+        "abilityId": "syrax-tactical-inferno",
+        "abilityName": "Tactical Inferno",
+        "availability": {
+          "canonical": "canonical-locked",
+          "notes": [
+            "Future at Star Rank 8.",
+            "Not collected in observed account."
+          ],
+          "observedAccount": "observed-unavailable",
+          "reportLabel": "Future at Star Rank 8; not collected in observed account",
+          "userRoster": "unknown"
+        },
+        "channel": "fire-damage",
+        "combatLogConfirmed": false,
+        "conditional": true,
+        "conditions": [],
+        "confidence": "confirmed",
+        "currentlyAvailable": false,
+        "direction": "dealt",
+        "directlyVerified": true,
+        "dragonId": "syrax",
+        "evidenceIds": [
+          "syrax-tactical-inferno-2026-06-24"
+        ],
+        "futureAvailable": true,
+        "id": "syrax-tactical-inferno-tactical-inferno-fire-fire-damage-dealt-modifier",
+        "label": "Tactical Inferno: Fire Damage Dealt Up",
+        "minimumDragonLevel": null,
+        "operation": "increase",
+        "providerRequirements": [],
+        "recipientRequirements": [],
+        "requiredHabitLevel": 1,
+        "role": "ally-support",
+        "sourceScope": "all-qualifying-sources",
+        "stackMaximum": null,
+        "targetSelector": {
+          "count": 1,
+          "includesCaster": null,
+          "position": null,
+          "scope": "any-lane",
+          "selection": "any",
+          "side": "ally"
+        },
+        "unit": "percent",
+        "unlockStarRank": 8,
+        "value": null,
+        "valuePerStack": null
+      },
+      {
+        "abilityId": "caraxes-hunters-wrath",
+        "abilityName": "Hunter's Wrath",
+        "availability": {
+          "canonical": "canonical-base",
+          "notes": [
+            "Requires Dragon Level 16+.",
+            "Not collected in observed account."
+          ],
+          "observedAccount": "observed-unavailable",
+          "reportLabel": "Base kit; Level 16+; not collected in observed account",
+          "userRoster": "unknown"
+        },
+        "channel": "stat",
+        "combatLogConfirmed": false,
+        "conditional": false,
+        "conditions": [],
+        "confidence": "confirmed",
+        "currentlyAvailable": true,
+        "direction": "dealt",
+        "directlyVerified": true,
+        "dragonId": "caraxes",
+        "evidenceIds": [
+          "caraxes-hunters-wrath-2026-06-24"
+        ],
+        "futureAvailable": false,
+        "id": "caraxes-hunters-wrath-hunters-wrath-right-strength-stat-dealt-modifier",
+        "label": "Hunter's Wrath: Strength Up",
+        "minimumDragonLevel": 16,
+        "operation": "increase",
+        "providerRequirements": [
+          {
+            "evidenceIds": [
+              "caraxes-hunters-wrath-2026-06-24"
+            ],
+            "expected": "vanguard",
+            "id": "caraxes-hunters-wrath-provider-position-vanguard",
+            "kind": "provider-position",
+            "label": "Provider position requirement"
+          }
+        ],
+        "recipientRequirements": [],
+        "requiredHabitLevel": null,
+        "role": "ally-support",
+        "sourceScope": "unknown",
+        "stackMaximum": null,
+        "targetSelector": {
+          "count": null,
+          "includesCaster": null,
+          "position": "right-flank",
+          "scope": "right-flank",
+          "selection": "specific-position",
+          "side": "ally"
+        },
+        "unit": "flat",
+        "unlockStarRank": 1,
+        "value": 20,
+        "valuePerStack": null
+      },
+      {
+        "abilityId": "caraxes-hunters-wrath",
+        "abilityName": "Hunter's Wrath",
+        "availability": {
+          "canonical": "canonical-base",
+          "notes": [
+            "Requires Dragon Level 16+.",
+            "Not collected in observed account."
+          ],
+          "observedAccount": "observed-unavailable",
+          "reportLabel": "Base kit; Level 16+; not collected in observed account",
+          "userRoster": "unknown"
+        },
+        "channel": "stat",
+        "combatLogConfirmed": false,
+        "conditional": false,
+        "conditions": [],
+        "confidence": "confirmed",
+        "currentlyAvailable": true,
+        "direction": "dealt",
+        "directlyVerified": true,
+        "dragonId": "caraxes",
+        "evidenceIds": [
+          "caraxes-hunters-wrath-2026-06-24"
+        ],
+        "futureAvailable": false,
+        "id": "caraxes-hunters-wrath-hunters-wrath-right-initiative-stat-dealt-modifier",
+        "label": "Hunter's Wrath: Initiative Up",
+        "minimumDragonLevel": 16,
+        "operation": "increase",
+        "providerRequirements": [
+          {
+            "evidenceIds": [
+              "caraxes-hunters-wrath-2026-06-24"
+            ],
+            "expected": "vanguard",
+            "id": "caraxes-hunters-wrath-provider-position-vanguard",
+            "kind": "provider-position",
+            "label": "Provider position requirement"
+          }
+        ],
+        "recipientRequirements": [],
+        "requiredHabitLevel": null,
+        "role": "ally-support",
+        "sourceScope": "unknown",
+        "stackMaximum": null,
+        "targetSelector": {
+          "count": null,
+          "includesCaster": null,
+          "position": "right-flank",
+          "scope": "right-flank",
+          "selection": "specific-position",
+          "side": "ally"
+        },
+        "unit": "flat",
+        "unlockStarRank": 1,
+        "value": 20,
+        "valuePerStack": null
+      },
+      {
+        "abilityId": "seasmoke-clever-maneuver",
+        "abilityName": "Clever Maneuver",
+        "availability": {
+          "canonical": "canonical-locked",
+          "notes": [
+            "Future at Star Rank 2.",
+            "Not hatched in observed account."
+          ],
+          "observedAccount": "observed-unavailable",
+          "reportLabel": "Future at Star Rank 2; not hatched in observed account",
+          "userRoster": "unknown"
+        },
+        "channel": "stat",
+        "combatLogConfirmed": false,
+        "conditional": true,
+        "conditions": [],
+        "confidence": "confirmed",
+        "currentlyAvailable": false,
+        "direction": "dealt",
+        "directlyVerified": true,
+        "dragonId": "seasmoke",
+        "evidenceIds": [
+          "seasmoke-clever-maneuver-2026-06-23"
+        ],
+        "futureAvailable": true,
+        "id": "seasmoke-clever-maneuver-clever-maneuver-intelligence-stat-dealt-modifier",
+        "label": "Clever Maneuver: Intelligence Up",
+        "minimumDragonLevel": null,
+        "operation": "increase",
+        "providerRequirements": [],
+        "recipientRequirements": [],
+        "requiredHabitLevel": 1,
+        "role": "ally-support",
+        "sourceScope": "unknown",
+        "stackMaximum": null,
+        "targetSelector": {
+          "count": null,
+          "includesCaster": null,
+          "position": null,
+          "scope": "any-lane",
+          "selection": "any",
+          "side": "ally"
+        },
+        "unit": "flat",
+        "unlockStarRank": 2,
+        "value": null,
+        "valuePerStack": null
+      },
+      {
+        "abilityId": "seasmoke-clever-maneuver",
+        "abilityName": "Clever Maneuver",
+        "availability": {
+          "canonical": "canonical-locked",
+          "notes": [
+            "Future at Star Rank 2.",
+            "Not hatched in observed account."
+          ],
+          "observedAccount": "observed-unavailable",
+          "reportLabel": "Future at Star Rank 2; not hatched in observed account",
+          "userRoster": "unknown"
+        },
+        "channel": "stat",
+        "combatLogConfirmed": false,
+        "conditional": true,
+        "conditions": [],
+        "confidence": "confirmed",
+        "currentlyAvailable": false,
+        "direction": "dealt",
+        "directlyVerified": true,
+        "dragonId": "seasmoke",
+        "evidenceIds": [
+          "seasmoke-clever-maneuver-2026-06-23"
+        ],
+        "futureAvailable": true,
+        "id": "seasmoke-clever-maneuver-clever-maneuver-initiative-stat-dealt-modifier",
+        "label": "Clever Maneuver: Initiative Up",
+        "minimumDragonLevel": null,
+        "operation": "increase",
+        "providerRequirements": [],
+        "recipientRequirements": [],
+        "requiredHabitLevel": 1,
+        "role": "ally-support",
+        "sourceScope": "unknown",
+        "stackMaximum": null,
+        "targetSelector": {
+          "count": null,
+          "includesCaster": null,
+          "position": null,
+          "scope": "any-lane",
+          "selection": "any",
+          "side": "ally"
+        },
+        "unit": "percent",
+        "unlockStarRank": 2,
+        "value": null,
+        "valuePerStack": null
+      },
+      {
+        "abilityId": "seasmoke-winds-favor",
+        "abilityName": "Wind's Favor",
+        "availability": {
+          "canonical": "canonical-locked",
+          "notes": [
+            "Future at Star Rank 4.",
+            "Not hatched in observed account."
+          ],
+          "observedAccount": "observed-unavailable",
+          "reportLabel": "Future at Star Rank 4; not hatched in observed account",
+          "userRoster": "unknown"
+        },
+        "channel": "stat",
+        "combatLogConfirmed": false,
+        "conditional": true,
+        "conditions": [],
+        "confidence": "confirmed",
+        "currentlyAvailable": false,
+        "direction": "dealt",
+        "directlyVerified": true,
+        "dragonId": "seasmoke",
+        "evidenceIds": [
+          "seasmoke-winds-favor-2026-06-23"
+        ],
+        "futureAvailable": true,
+        "id": "seasmoke-winds-favor-winds-favor-initiative-stat-dealt-modifier",
+        "label": "Wind's Favor: Initiative Up",
+        "minimumDragonLevel": null,
+        "operation": "increase",
+        "providerRequirements": [],
+        "recipientRequirements": [],
+        "requiredHabitLevel": 1,
+        "role": "ally-support",
+        "sourceScope": "unknown",
+        "stackMaximum": null,
+        "targetSelector": {
+          "count": 3,
+          "includesCaster": true,
+          "position": null,
+          "scope": "any-lane",
+          "selection": "any",
+          "side": "ally"
+        },
+        "unit": "percent",
+        "unlockStarRank": 4,
+        "value": null,
+        "valuePerStack": null
+      },
+      {
+        "abilityId": "seasmoke-cunning-ferocity",
+        "abilityName": "Cunning Ferocity",
+        "availability": {
+          "canonical": "canonical-locked",
+          "notes": [
+            "Future at Star Rank 8.",
+            "Not hatched in observed account."
+          ],
+          "observedAccount": "observed-unavailable",
+          "reportLabel": "Future at Star Rank 8; not hatched in observed account",
+          "userRoster": "unknown"
+        },
+        "channel": "stat",
+        "combatLogConfirmed": false,
+        "conditional": true,
+        "conditions": [],
+        "confidence": "confirmed",
+        "currentlyAvailable": false,
+        "direction": "dealt",
+        "directlyVerified": true,
+        "dragonId": "seasmoke",
+        "evidenceIds": [
+          "seasmoke-cunning-ferocity-2026-06-23"
+        ],
+        "futureAvailable": true,
+        "id": "seasmoke-cunning-ferocity-cunning-ferocity-intelligence-stat-dealt-modifier",
+        "label": "Cunning Ferocity: Intelligence Up",
+        "minimumDragonLevel": null,
+        "operation": "increase",
+        "providerRequirements": [],
+        "recipientRequirements": [],
+        "requiredHabitLevel": 1,
+        "role": "ally-support",
+        "sourceScope": "unknown",
+        "stackMaximum": null,
+        "targetSelector": {
+          "count": 2,
+          "includesCaster": null,
+          "position": null,
+          "scope": "within-adjacency",
+          "selection": "adjacent",
+          "side": "ally"
+        },
+        "unit": "percent",
+        "unlockStarRank": 8,
+        "value": null,
+        "valuePerStack": null
+      },
+      {
+        "abilityId": "seasmoke-cunning-ferocity",
+        "abilityName": "Cunning Ferocity",
+        "availability": {
+          "canonical": "canonical-locked",
+          "notes": [
+            "Future at Star Rank 8.",
+            "Not hatched in observed account."
+          ],
+          "observedAccount": "observed-unavailable",
+          "reportLabel": "Future at Star Rank 8; not hatched in observed account",
+          "userRoster": "unknown"
+        },
+        "channel": "fire-damage",
+        "combatLogConfirmed": false,
+        "conditional": true,
+        "conditions": [],
+        "confidence": "confirmed",
+        "currentlyAvailable": false,
+        "direction": "dealt",
+        "directlyVerified": true,
+        "dragonId": "seasmoke",
+        "evidenceIds": [
+          "seasmoke-cunning-ferocity-2026-06-23"
+        ],
+        "futureAvailable": true,
+        "id": "seasmoke-cunning-ferocity-cunning-ferocity-fire-fire-damage-dealt-modifier",
+        "label": "Cunning Ferocity: Fire Damage Dealt Up",
+        "minimumDragonLevel": null,
+        "operation": "increase",
+        "providerRequirements": [],
+        "recipientRequirements": [],
+        "requiredHabitLevel": 1,
+        "role": "ally-support",
+        "sourceScope": "all-qualifying-sources",
+        "stackMaximum": null,
+        "targetSelector": {
+          "count": 2,
+          "includesCaster": null,
+          "position": null,
+          "scope": "within-adjacency",
+          "selection": "adjacent",
+          "side": "ally"
+        },
+        "unit": "percent",
+        "unlockStarRank": 8,
+        "value": null,
+        "valuePerStack": null
+      },
+      {
+        "abilityId": "malachite-sentinels-presence",
+        "abilityName": "Sentinel's Presence",
+        "availability": {
+          "canonical": "canonical-base",
+          "notes": [
+            "Requires Dragon Level 16+.",
+            "Unlocked in observed account collection state, subject to level and star requirements."
+          ],
+          "observedAccount": "observed-available",
+          "reportLabel": "Base kit; Level 16+; observed account hatched",
+          "userRoster": "unknown"
+        },
+        "channel": "fire-damage",
+        "combatLogConfirmed": false,
+        "conditional": false,
+        "conditions": [],
+        "confidence": "confirmed",
+        "currentlyAvailable": true,
+        "direction": "dealt",
+        "directlyVerified": true,
+        "dragonId": "malachite",
+        "evidenceIds": [
+          "malachite-sentinels-presence-2026-06-23"
+        ],
+        "futureAvailable": false,
+        "id": "malachite-sentinels-presence-sentinels-presence-left-flank-fire-fire-damage-dealt-modifier",
+        "label": "Sentinel's Presence: Fire Damage Dealt Up",
+        "minimumDragonLevel": 16,
+        "operation": "increase",
+        "providerRequirements": [
+          {
+            "evidenceIds": [
+              "malachite-sentinels-presence-2026-06-23"
+            ],
+            "expected": "vanguard",
+            "id": "malachite-sentinels-presence-provider-position-vanguard",
+            "kind": "provider-position",
+            "label": "Provider position requirement"
+          }
+        ],
+        "recipientRequirements": [],
+        "requiredHabitLevel": null,
+        "role": "ally-support",
+        "sourceScope": "all-qualifying-sources",
+        "stackMaximum": null,
+        "targetSelector": {
+          "count": null,
+          "includesCaster": null,
+          "position": "left-flank",
+          "scope": "left-flank",
+          "selection": "specific-position",
+          "side": "ally"
+        },
+        "unit": "percent",
+        "unlockStarRank": 1,
+        "value": 16,
+        "valuePerStack": null
+      },
+      {
+        "abilityId": "malachite-forests-instinct",
+        "abilityName": "Forest's Instinct",
+        "availability": {
+          "canonical": "canonical-locked",
+          "notes": [
+            "Future at Star Rank 2.",
+            "Unlocked in observed account collection state, subject to level and star requirements."
+          ],
+          "observedAccount": "observed-available",
+          "reportLabel": "Future at Star Rank 2; observed account hatched",
+          "userRoster": "unknown"
+        },
+        "channel": "physical-damage",
+        "combatLogConfirmed": false,
+        "conditional": true,
+        "conditions": [
+          {
+            "description": "Activation chance 35% per each round.",
+            "evidenceIds": [],
+            "id": "forests-instinct-each-round-activation-chance",
+            "label": "Activation chance 35% per each round.",
+            "unresolved": false
+          }
+        ],
+        "confidence": "confirmed",
+        "currentlyAvailable": false,
+        "direction": "dealt",
+        "directlyVerified": true,
+        "dragonId": "malachite",
+        "evidenceIds": [
+          "malachite-forests-instinct-2026-06-23"
+        ],
+        "futureAvailable": true,
+        "id": "malachite-forests-instinct-forests-instinct-physical-damage-physical-damage-dealt-modifier",
+        "label": "Forest's Instinct: Physical Damage Dealt Up",
+        "minimumDragonLevel": null,
+        "operation": "increase",
+        "providerRequirements": [],
+        "recipientRequirements": [],
+        "requiredHabitLevel": 1,
+        "role": "ally-support",
+        "sourceScope": "non-basic-attacks",
+        "stackMaximum": null,
+        "targetSelector": {
+          "count": 2,
+          "includesCaster": null,
+          "position": null,
+          "scope": "any-lane",
+          "selection": "any",
+          "side": "ally"
+        },
+        "unit": "percent",
+        "unlockStarRank": 2,
+        "value": 8,
+        "valuePerStack": null
+      },
+      {
+        "abilityId": "malachite-collective-might",
+        "abilityName": "Collective Might",
+        "availability": {
+          "canonical": "canonical-locked",
+          "notes": [
+            "Future at Star Rank 8.",
+            "Unlocked in observed account collection state, subject to level and star requirements."
+          ],
+          "observedAccount": "observed-available",
+          "reportLabel": "Future at Star Rank 8; observed account hatched",
+          "userRoster": "unknown"
+        },
+        "channel": "stat",
+        "combatLogConfirmed": false,
+        "conditional": true,
+        "conditions": [],
+        "confidence": "confirmed",
+        "currentlyAvailable": false,
+        "direction": "dealt",
+        "directlyVerified": true,
+        "dragonId": "malachite",
+        "evidenceIds": [
+          "malachite-collective-might-2026-06-23"
+        ],
+        "futureAvailable": true,
+        "id": "malachite-collective-might-collective-might-strength-stat-dealt-modifier",
+        "label": "Collective Might: Strength Up",
+        "minimumDragonLevel": null,
+        "operation": "increase",
+        "providerRequirements": [],
+        "recipientRequirements": [],
+        "requiredHabitLevel": 1,
+        "role": "ally-support",
+        "sourceScope": "unknown",
+        "stackMaximum": null,
+        "targetSelector": {
+          "count": 3,
+          "includesCaster": true,
+          "position": null,
+          "scope": "any-lane",
+          "selection": "any",
+          "side": "ally"
+        },
+        "unit": "percent",
+        "unlockStarRank": 8,
+        "value": 12.5,
+        "valuePerStack": null
+      },
+      {
+        "abilityId": "malachite-lightning-strike",
+        "abilityName": "Lightning Strike",
+        "availability": {
+          "canonical": "canonical-locked",
+          "notes": [
+            "Future at Star Rank 10.",
+            "Unlocked in observed account collection state, subject to level and star requirements."
+          ],
+          "observedAccount": "observed-available",
+          "reportLabel": "Future at Star Rank 10; observed account hatched",
+          "userRoster": "unknown"
+        },
+        "channel": "stat",
+        "combatLogConfirmed": false,
+        "conditional": true,
+        "conditions": [
+          {
+            "description": "Activation chance depends on Habit Level for start of round.",
+            "evidenceIds": [],
+            "id": "lightning-strike-round-one-activation-chance",
+            "label": "Activation chance depends on Habit Level for start of round.",
+            "unresolved": false
+          }
+        ],
+        "confidence": "confirmed",
+        "currentlyAvailable": false,
+        "direction": "dealt",
+        "directlyVerified": true,
+        "dragonId": "malachite",
+        "evidenceIds": [
+          "malachite-lightning-strike-2026-06-23"
+        ],
+        "futureAvailable": true,
+        "id": "malachite-lightning-strike-lightning-strike-strength-stat-dealt-modifier",
+        "label": "Lightning Strike: Strength Up",
+        "minimumDragonLevel": null,
+        "operation": "increase",
+        "providerRequirements": [],
+        "recipientRequirements": [],
+        "requiredHabitLevel": 1,
+        "role": "ally-support",
+        "sourceScope": "unknown",
+        "stackMaximum": null,
+        "targetSelector": {
+          "count": 1,
+          "includesCaster": null,
+          "position": null,
+          "scope": "within-adjacency",
+          "selection": "adjacent",
+          "side": "ally"
+        },
+        "unit": "percent",
+        "unlockStarRank": 10,
+        "value": 25,
+        "valuePerStack": null
+      },
+      {
+        "abilityId": "sheepstealer-hunters-cunning",
+        "abilityName": "Hunter's Cunning",
+        "availability": {
+          "canonical": "canonical-base",
+          "notes": [
+            "Requires Dragon Level 16+.",
+            "Unlocked in observed account collection state, subject to level and star requirements."
+          ],
+          "observedAccount": "observed-available",
+          "reportLabel": "Base kit; Level 16+; observed account hatched",
+          "userRoster": "unknown"
+        },
+        "channel": "physical-damage",
+        "combatLogConfirmed": false,
+        "conditional": false,
+        "conditions": [],
+        "confidence": "confirmed",
+        "currentlyAvailable": true,
+        "direction": "dealt",
+        "directlyVerified": true,
+        "dragonId": "sheepstealer",
+        "evidenceIds": [
+          "sheepstealer-hunters-cunning-2026-06-23"
+        ],
+        "futureAvailable": false,
+        "id": "sheepstealer-hunters-cunning-hunters-cunning-right-physical-physical-damage-dealt-modifier",
+        "label": "Hunter's Cunning: Physical Damage Dealt Up",
+        "minimumDragonLevel": 16,
+        "operation": "increase",
+        "providerRequirements": [
+          {
+            "evidenceIds": [
+              "sheepstealer-hunters-cunning-2026-06-23"
+            ],
+            "expected": "vanguard",
+            "id": "sheepstealer-hunters-cunning-provider-position-vanguard",
+            "kind": "provider-position",
+            "label": "Provider position requirement"
+          }
+        ],
+        "recipientRequirements": [],
+        "requiredHabitLevel": null,
+        "role": "ally-support",
+        "sourceScope": "all-qualifying-sources",
+        "stackMaximum": null,
+        "targetSelector": {
+          "count": null,
+          "includesCaster": null,
+          "position": "right-flank",
+          "scope": "right-flank",
+          "selection": "specific-position",
+          "side": "ally"
+        },
+        "unit": "percent",
+        "unlockStarRank": 1,
+        "value": 10,
+        "valuePerStack": null
+      },
+      {
+        "abilityId": "vermax-spreading-blaze",
+        "abilityName": "Spreading Blaze",
+        "availability": {
+          "canonical": "canonical-base",
+          "notes": [
+            "Unlocked in observed account collection state, subject to level and star requirements."
+          ],
+          "observedAccount": "observed-available",
+          "reportLabel": "Base kit; observed account hatched",
+          "userRoster": "unknown"
+        },
+        "channel": "tactical-damage",
+        "combatLogConfirmed": false,
+        "conditional": true,
+        "conditions": [
+          {
+            "description": "Ally deals Tactical Damage.",
+            "evidenceIds": [],
+            "id": "ally-deals-tactical-damage",
+            "label": "Ally deals Tactical Damage.",
+            "unresolved": false
+          },
+          {
+            "description": "Spreading Blaze stacks require the trigger chance and target selection to select this ally.",
+            "evidenceIds": [
+              "vermax-spreading-blaze-summary-2026-06-23",
+              "vermax-spreading-blaze-glossary-2026-06-23"
+            ],
+            "id": "chance-and-selection-dependent",
+            "label": "Chance and selection dependent",
+            "unresolved": false
+          }
+        ],
+        "confidence": "confirmed",
+        "currentlyAvailable": true,
+        "direction": "dealt",
+        "directlyVerified": true,
+        "dragonId": "vermax",
+        "evidenceIds": [
+          "vermax-spreading-blaze-summary-2026-06-23",
+          "vermax-spreading-blaze-glossary-2026-06-23"
+        ],
+        "futureAvailable": false,
+        "id": "vermax-spreading-blaze-spreading-blaze-stack-tactical-damage-stack-modifier",
+        "label": "Spreading Blaze: Tactical Damage Dealt per Spreading Blaze stack",
+        "minimumDragonLevel": null,
+        "operation": "increase",
+        "providerRequirements": [],
+        "recipientRequirements": [],
+        "requiredHabitLevel": null,
+        "role": "ally-support",
+        "sourceScope": "all-qualifying-sources",
+        "stackMaximum": 10,
+        "targetSelector": {
+          "count": 1,
+          "includesCaster": null,
+          "position": null,
+          "scope": "any-lane",
+          "selection": "eligible",
+          "side": "ally"
+        },
+        "unit": "stack",
+        "unlockStarRank": null,
+        "value": 2.5,
+        "valuePerStack": 2.5
+      },
+      {
+        "abilityId": "vermax-warriors-zeal",
+        "abilityName": "Warrior's Zeal",
+        "availability": {
+          "canonical": "canonical-base",
+          "notes": [
+            "Requires Dragon Level 16+.",
+            "Unlocked in observed account collection state, subject to level and star requirements."
+          ],
+          "observedAccount": "observed-available",
+          "reportLabel": "Base kit; Level 16+; observed account hatched",
+          "userRoster": "unknown"
+        },
+        "channel": "stat",
+        "combatLogConfirmed": true,
+        "conditional": false,
+        "conditions": [],
+        "confidence": "confirmed",
+        "currentlyAvailable": true,
+        "direction": "dealt",
+        "directlyVerified": true,
+        "dragonId": "vermax",
+        "evidenceIds": [
+          "vermax-warriors-zeal-2026-06-23",
+          "vermax-warriors-zeal-basic-attack-combat-log-2026-06-24"
+        ],
+        "futureAvailable": false,
+        "id": "vermax-warriors-zeal-warriors-zeal-left-instinct-stat-dealt-modifier",
+        "label": "Warrior's Zeal: Instinct Up",
+        "minimumDragonLevel": 16,
+        "operation": "increase",
+        "providerRequirements": [
+          {
+            "evidenceIds": [
+              "vermax-warriors-zeal-2026-06-23",
+              "vermax-warriors-zeal-basic-attack-combat-log-2026-06-24"
+            ],
+            "expected": "vanguard",
+            "id": "vermax-warriors-zeal-provider-position-vanguard",
+            "kind": "provider-position",
+            "label": "Provider position requirement"
+          }
+        ],
+        "recipientRequirements": [],
+        "requiredHabitLevel": null,
+        "role": "ally-support",
+        "sourceScope": "unknown",
+        "stackMaximum": null,
+        "targetSelector": {
+          "count": null,
+          "includesCaster": null,
+          "position": "left-flank",
+          "scope": "left-flank",
+          "selection": "specific-position",
+          "side": "ally"
+        },
+        "unit": "flat",
+        "unlockStarRank": 1,
+        "value": 20,
+        "valuePerStack": null
+      },
+      {
+        "abilityId": "vermax-warriors-zeal",
+        "abilityName": "Warrior's Zeal",
+        "availability": {
+          "canonical": "canonical-base",
+          "notes": [
+            "Requires Dragon Level 16+.",
+            "Unlocked in observed account collection state, subject to level and star requirements."
+          ],
+          "observedAccount": "observed-available",
+          "reportLabel": "Base kit; Level 16+; observed account hatched",
+          "userRoster": "unknown"
+        },
+        "channel": "stat",
+        "combatLogConfirmed": true,
+        "conditional": false,
+        "conditions": [],
+        "confidence": "confirmed",
+        "currentlyAvailable": true,
+        "direction": "dealt",
+        "directlyVerified": true,
+        "dragonId": "vermax",
+        "evidenceIds": [
+          "vermax-warriors-zeal-2026-06-23",
+          "vermax-warriors-zeal-basic-attack-combat-log-2026-06-24"
+        ],
+        "futureAvailable": false,
+        "id": "vermax-warriors-zeal-warriors-zeal-left-initiative-stat-dealt-modifier",
+        "label": "Warrior's Zeal: Initiative Up",
+        "minimumDragonLevel": 16,
+        "operation": "increase",
+        "providerRequirements": [
+          {
+            "evidenceIds": [
+              "vermax-warriors-zeal-2026-06-23",
+              "vermax-warriors-zeal-basic-attack-combat-log-2026-06-24"
+            ],
+            "expected": "vanguard",
+            "id": "vermax-warriors-zeal-provider-position-vanguard",
+            "kind": "provider-position",
+            "label": "Provider position requirement"
+          }
+        ],
+        "recipientRequirements": [],
+        "requiredHabitLevel": null,
+        "role": "ally-support",
+        "sourceScope": "unknown",
+        "stackMaximum": null,
+        "targetSelector": {
+          "count": null,
+          "includesCaster": null,
+          "position": "left-flank",
+          "scope": "left-flank",
+          "selection": "specific-position",
+          "side": "ally"
+        },
+        "unit": "flat",
+        "unlockStarRank": 1,
+        "value": 20,
+        "valuePerStack": null
+      },
+      {
+        "abilityId": "vermax-reactive-instincts",
+        "abilityName": "Reactive Instincts",
+        "availability": {
+          "canonical": "canonical-locked",
+          "notes": [
+            "Future at Star Rank 4.",
+            "Unlocked in observed account collection state, subject to level and star requirements."
+          ],
+          "observedAccount": "observed-available",
+          "reportLabel": "Future at Star Rank 4; observed account hatched",
+          "userRoster": "unknown"
+        },
+        "channel": "stat",
+        "combatLogConfirmed": false,
+        "conditional": true,
+        "conditions": [],
+        "confidence": "confirmed",
+        "currentlyAvailable": false,
+        "direction": "dealt",
+        "directlyVerified": true,
+        "dragonId": "vermax",
+        "evidenceIds": [
+          "vermax-reactive-instincts-2026-06-23"
+        ],
+        "futureAvailable": true,
+        "id": "vermax-reactive-instincts-reactive-instincts-instinct-stat-dealt-modifier",
+        "label": "Reactive Instincts: Instinct Up",
+        "minimumDragonLevel": null,
+        "operation": "increase",
+        "providerRequirements": [],
+        "recipientRequirements": [],
+        "requiredHabitLevel": 1,
+        "role": "ally-support",
+        "sourceScope": "unknown",
+        "stackMaximum": null,
+        "targetSelector": {
+          "count": null,
+          "includesCaster": null,
+          "position": null,
+          "scope": "any-lane",
+          "selection": "any",
+          "side": "ally"
+        },
+        "unit": "percent",
+        "unlockStarRank": 4,
+        "value": null,
+        "valuePerStack": null
+      },
+      {
+        "abilityId": "vermax-reactive-instincts",
+        "abilityName": "Reactive Instincts",
+        "availability": {
+          "canonical": "canonical-locked",
+          "notes": [
+            "Future at Star Rank 4.",
+            "Unlocked in observed account collection state, subject to level and star requirements."
+          ],
+          "observedAccount": "observed-available",
+          "reportLabel": "Future at Star Rank 4; observed account hatched",
+          "userRoster": "unknown"
+        },
+        "channel": "stat",
+        "combatLogConfirmed": false,
+        "conditional": true,
+        "conditions": [],
+        "confidence": "confirmed",
+        "currentlyAvailable": false,
+        "direction": "dealt",
+        "directlyVerified": true,
+        "dragonId": "vermax",
+        "evidenceIds": [
+          "vermax-reactive-instincts-2026-06-23"
+        ],
+        "futureAvailable": true,
+        "id": "vermax-reactive-instincts-reactive-instincts-initiative-stat-dealt-modifier",
+        "label": "Reactive Instincts: Initiative Up",
+        "minimumDragonLevel": null,
+        "operation": "increase",
+        "providerRequirements": [],
+        "recipientRequirements": [],
+        "requiredHabitLevel": 1,
+        "role": "ally-support",
+        "sourceScope": "unknown",
+        "stackMaximum": null,
+        "targetSelector": {
+          "count": null,
+          "includesCaster": null,
+          "position": null,
+          "scope": "any-lane",
+          "selection": "any",
+          "side": "ally"
+        },
+        "unit": "percent",
+        "unlockStarRank": 4,
+        "value": null,
+        "valuePerStack": null
+      },
+      {
+        "abilityId": "vermax-rallying-flame",
+        "abilityName": "Rallying Flame",
+        "availability": {
+          "canonical": "canonical-locked",
+          "notes": [
+            "Future at Star Rank 6.",
+            "Unlocked in observed account collection state, subject to level and star requirements."
+          ],
+          "observedAccount": "observed-available",
+          "reportLabel": "Future at Star Rank 6; observed account hatched",
+          "userRoster": "unknown"
+        },
+        "channel": "tactical-damage",
+        "combatLogConfirmed": false,
+        "conditional": true,
+        "conditions": [
+          {
+            "description": "Activation chance depends on Habit Level for start of combat.",
+            "evidenceIds": [],
+            "id": "rallying-flame-start-activation-chance",
+            "label": "Activation chance depends on Habit Level for start of combat.",
+            "unresolved": false
+          },
+          {
+            "description": "Ally deals Tactical Damage.",
+            "evidenceIds": [],
+            "id": "ally-deals-tactical-damage",
+            "label": "Ally deals Tactical Damage.",
+            "unresolved": false
+          },
+          {
+            "description": "Spreading Blaze stacks require the trigger chance and target selection to select this ally.",
+            "evidenceIds": [
+              "vermax-rallying-flame-2026-06-23"
+            ],
+            "id": "chance-and-selection-dependent",
+            "label": "Chance and selection dependent",
+            "unresolved": false
+          }
+        ],
+        "confidence": "confirmed",
+        "currentlyAvailable": false,
+        "direction": "dealt",
+        "directlyVerified": true,
+        "dragonId": "vermax",
+        "evidenceIds": [
+          "vermax-rallying-flame-2026-06-23"
+        ],
+        "futureAvailable": true,
+        "id": "vermax-rallying-flame-rallying-flame-spreading-blaze-stack-tactical-damage-stack-modifier",
+        "label": "Rallying Flame: Tactical Damage Dealt per Spreading Blaze stack",
+        "minimumDragonLevel": null,
+        "operation": "increase",
+        "providerRequirements": [],
+        "recipientRequirements": [],
+        "requiredHabitLevel": 1,
+        "role": "ally-support",
+        "sourceScope": "all-qualifying-sources",
+        "stackMaximum": 10,
+        "targetSelector": {
+          "count": 1,
+          "includesCaster": null,
+          "position": null,
+          "scope": "any-lane",
+          "selection": "eligible",
+          "side": "ally"
+        },
+        "unit": "stack",
+        "unlockStarRank": 6,
+        "value": 2.5,
+        "valuePerStack": 2.5
+      }
+    ],
+    "enemyDebuffs": [
+      {
+        "abilityId": "syrax-flight-mastery",
+        "abilityName": "Flight Mastery",
+        "availability": {
+          "canonical": "canonical-locked",
+          "notes": [
+            "Future at Star Rank 4.",
+            "Not collected in observed account."
+          ],
+          "observedAccount": "observed-unavailable",
+          "reportLabel": "Future at Star Rank 4; not collected in observed account",
+          "userRoster": "unknown"
+        },
+        "channel": "stat",
+        "combatLogConfirmed": false,
+        "conditional": true,
+        "conditions": [],
+        "confidence": "confirmed",
+        "currentlyAvailable": false,
+        "direction": "dealt",
+        "directlyVerified": true,
+        "dragonId": "syrax",
+        "evidenceIds": [
+          "syrax-flight-mastery-2026-06-24"
+        ],
+        "futureAvailable": true,
+        "id": "syrax-flight-mastery-flight-mastery-initiative-down-stat-dealt-modifier",
+        "label": "Flight Mastery: Initiative Down",
+        "minimumDragonLevel": null,
+        "operation": "decrease",
+        "providerRequirements": [],
+        "recipientRequirements": [],
+        "requiredHabitLevel": 1,
+        "role": "enemy-debuff",
+        "sourceScope": "unknown",
+        "stackMaximum": null,
+        "targetSelector": {
+          "count": 3,
+          "includesCaster": null,
+          "position": null,
+          "scope": "any-lane",
+          "selection": "any",
+          "side": "enemy"
+        },
+        "unit": "percent",
+        "unlockStarRank": 4,
+        "value": null,
+        "valuePerStack": null
+      },
+      {
+        "abilityId": "caraxes-battle-dread",
+        "abilityName": "Battle Dread",
+        "availability": {
+          "canonical": "canonical-locked",
+          "notes": [
+            "Future at Star Rank 2.",
+            "Not collected in observed account."
+          ],
+          "observedAccount": "observed-unavailable",
+          "reportLabel": "Future at Star Rank 2; not collected in observed account",
+          "userRoster": "unknown"
+        },
+        "channel": "stat",
+        "combatLogConfirmed": false,
+        "conditional": true,
+        "conditions": [],
+        "confidence": "confirmed",
+        "currentlyAvailable": false,
+        "direction": "dealt",
+        "directlyVerified": true,
+        "dragonId": "caraxes",
+        "evidenceIds": [
+          "caraxes-battle-dread-2026-06-24"
+        ],
+        "futureAvailable": true,
+        "id": "caraxes-battle-dread-battle-dread-strength-down-stat-dealt-modifier",
+        "label": "Battle Dread: Strength Down",
+        "minimumDragonLevel": null,
+        "operation": "decrease",
+        "providerRequirements": [],
+        "recipientRequirements": [],
+        "requiredHabitLevel": 1,
+        "role": "enemy-debuff",
+        "sourceScope": "unknown",
+        "stackMaximum": null,
+        "targetSelector": {
+          "count": 3,
+          "includesCaster": null,
+          "position": null,
+          "scope": "any-lane",
+          "selection": "any",
+          "side": "enemy"
+        },
+        "unit": "percent",
+        "unlockStarRank": 2,
+        "value": null,
+        "valuePerStack": null
+      },
+      {
+        "abilityId": "caraxes-battle-dread",
+        "abilityName": "Battle Dread",
+        "availability": {
+          "canonical": "canonical-locked",
+          "notes": [
+            "Future at Star Rank 2.",
+            "Not collected in observed account."
+          ],
+          "observedAccount": "observed-unavailable",
+          "reportLabel": "Future at Star Rank 2; not collected in observed account",
+          "userRoster": "unknown"
+        },
+        "channel": "stat",
+        "combatLogConfirmed": false,
+        "conditional": true,
+        "conditions": [],
+        "confidence": "confirmed",
+        "currentlyAvailable": false,
+        "direction": "dealt",
+        "directlyVerified": true,
+        "dragonId": "caraxes",
+        "evidenceIds": [
+          "caraxes-battle-dread-2026-06-24"
+        ],
+        "futureAvailable": true,
+        "id": "caraxes-battle-dread-battle-dread-initiative-down-stat-dealt-modifier",
+        "label": "Battle Dread: Initiative Down",
+        "minimumDragonLevel": null,
+        "operation": "decrease",
+        "providerRequirements": [],
+        "recipientRequirements": [],
+        "requiredHabitLevel": 1,
+        "role": "enemy-debuff",
+        "sourceScope": "unknown",
+        "stackMaximum": null,
+        "targetSelector": {
+          "count": 3,
+          "includesCaster": null,
+          "position": null,
+          "scope": "any-lane",
+          "selection": "any",
+          "side": "enemy"
+        },
+        "unit": "percent",
+        "unlockStarRank": 2,
+        "value": null,
+        "valuePerStack": null
+      },
+      {
+        "abilityId": "caraxes-mass-enfeeble",
+        "abilityName": "Mass Enfeeble",
+        "availability": {
+          "canonical": "canonical-locked",
+          "notes": [
+            "Future at Star Rank 8.",
+            "Not collected in observed account."
+          ],
+          "observedAccount": "observed-unavailable",
+          "reportLabel": "Future at Star Rank 8; not collected in observed account",
+          "userRoster": "unknown"
+        },
+        "channel": "physical-damage",
+        "combatLogConfirmed": false,
+        "conditional": true,
+        "conditions": [],
+        "confidence": "confirmed",
+        "currentlyAvailable": false,
+        "direction": "dealt",
+        "directlyVerified": true,
+        "dragonId": "caraxes",
+        "evidenceIds": [
+          "caraxes-mass-enfeeble-2026-06-24"
+        ],
+        "futureAvailable": true,
+        "id": "caraxes-mass-enfeeble-mass-enfeeble-physical-down-physical-damage-dealt-modifier",
+        "label": "Mass Enfeeble: Physical Damage Dealt Down",
+        "minimumDragonLevel": null,
+        "operation": "decrease",
+        "providerRequirements": [],
+        "recipientRequirements": [],
+        "requiredHabitLevel": 1,
+        "role": "enemy-debuff",
+        "sourceScope": "non-basic-attacks",
+        "stackMaximum": null,
+        "targetSelector": {
+          "count": 3,
+          "includesCaster": null,
+          "position": null,
+          "scope": "any-lane",
+          "selection": "any",
+          "side": "enemy"
+        },
+        "unit": "percent",
+        "unlockStarRank": 8,
+        "value": null,
+        "valuePerStack": null
+      },
+      {
+        "abilityId": "sheepstealer-dragons-cunning",
+        "abilityName": "Dragon's Cunning",
+        "availability": {
+          "canonical": "canonical-locked",
+          "notes": [
+            "Future at Star Rank 4.",
+            "Unlocked in observed account collection state, subject to level and star requirements."
+          ],
+          "observedAccount": "observed-available",
+          "reportLabel": "Future at Star Rank 4; observed account hatched",
+          "userRoster": "unknown"
+        },
+        "channel": "stat",
+        "combatLogConfirmed": false,
+        "conditional": true,
+        "conditions": [],
+        "confidence": "confirmed",
+        "currentlyAvailable": false,
+        "direction": "dealt",
+        "directlyVerified": true,
+        "dragonId": "sheepstealer",
+        "evidenceIds": [
+          "sheepstealer-dragons-cunning-2026-06-23"
+        ],
+        "futureAvailable": true,
+        "id": "sheepstealer-dragons-cunning-dragons-cunning-instinct-down-stat-dealt-modifier",
+        "label": "Dragon's Cunning: Instinct Down",
+        "minimumDragonLevel": null,
+        "operation": "decrease",
+        "providerRequirements": [],
+        "recipientRequirements": [],
+        "requiredHabitLevel": 1,
+        "role": "enemy-debuff",
+        "sourceScope": "unknown",
+        "stackMaximum": null,
+        "targetSelector": {
+          "count": 2,
+          "includesCaster": null,
+          "position": null,
+          "scope": "within-adjacency",
+          "selection": "adjacent",
+          "side": "enemy"
+        },
+        "unit": "percent",
+        "unlockStarRank": 4,
+        "value": null,
+        "valuePerStack": null
+      },
+      {
+        "abilityId": "sheepstealer-wary-beast",
+        "abilityName": "Wary Beast",
+        "availability": {
+          "canonical": "canonical-locked",
+          "notes": [
+            "Future at Star Rank 8.",
+            "Unlocked in observed account collection state, subject to level and star requirements."
+          ],
+          "observedAccount": "observed-available",
+          "reportLabel": "Future at Star Rank 8; observed account hatched",
+          "userRoster": "unknown"
+        },
+        "channel": "recovery",
+        "combatLogConfirmed": false,
+        "conditional": true,
+        "conditions": [],
+        "confidence": "confirmed",
+        "currentlyAvailable": false,
+        "direction": "received",
+        "directlyVerified": true,
+        "dragonId": "sheepstealer",
+        "evidenceIds": [
+          "sheepstealer-wary-beast-2026-06-23"
+        ],
+        "futureAvailable": true,
+        "id": "sheepstealer-wary-beast-wary-beast-recovery-received-down-recovery-received-modifier",
+        "label": "Wary Beast: Recovery Received Down",
+        "minimumDragonLevel": null,
+        "operation": "decrease",
+        "providerRequirements": [],
+        "recipientRequirements": [],
+        "requiredHabitLevel": 1,
+        "role": "enemy-debuff",
+        "sourceScope": "unknown",
+        "stackMaximum": null,
+        "targetSelector": {
+          "count": 3,
+          "includesCaster": null,
+          "position": null,
+          "scope": "any-lane",
+          "selection": "any",
+          "side": "enemy"
+        },
+        "unit": "percent",
+        "unlockStarRank": 8,
+        "value": null,
+        "valuePerStack": null
+      }
+    ],
+    "outputs": [
+      {
+        "abilityId": "syrax-blazing-fury",
+        "abilityName": "Blazing Fury",
+        "availability": {
+          "canonical": "canonical-base",
+          "notes": [
+            "Not collected in observed account."
+          ],
+          "observedAccount": "observed-unavailable",
+          "reportLabel": "Base kit; not collected in observed account",
+          "userRoster": "unknown"
+        },
+        "channel": "tactical-damage",
+        "combatLogConfirmed": false,
+        "conditional": false,
+        "conditions": [],
+        "confidence": "confirmed",
+        "currentlyAvailable": true,
+        "dependencies": [
+          {
+            "notes": [
+              "Effect wording indicates scaling with Instinct."
+            ],
+            "statId": "instinct",
+            "type": "scales-with-stat"
+          },
+          {
+            "notes": [
+              "Tactical Damage is reduced by target Intelligence."
+            ],
+            "statId": "intelligence",
+            "type": "mitigated-by-target-stat"
+          }
+        ],
+        "directlyVerified": true,
+        "dragonId": "syrax",
+        "evidenceIds": [
+          "syrax-blazing-fury-summary-2026-06-24",
+          "syrax-blazing-fury-details-2026-06-24"
+        ],
+        "futureAvailable": false,
+        "id": "syrax-blazing-fury-blazing-fury-tactical-rate-output",
+        "label": "Blazing Fury: Tactical Damage",
+        "minimumDragonLevel": null,
+        "requiredHabitLevel": null,
+        "sourceKind": "command",
+        "sourceScope": "commands",
+        "targetCount": 1,
+        "targetScope": "within-adjacency",
+        "targetSide": "enemy",
+        "unlockStarRank": null
+      },
+      {
+        "abilityId": "syrax-strategic-revival",
+        "abilityName": "Strategic Revival",
+        "availability": {
+          "canonical": "canonical-locked",
+          "notes": [
+            "Future at Star Rank 6.",
+            "Not collected in observed account."
+          ],
+          "observedAccount": "observed-unavailable",
+          "reportLabel": "Future at Star Rank 6; not collected in observed account",
+          "userRoster": "unknown"
+        },
+        "channel": "recovery",
+        "combatLogConfirmed": false,
+        "conditional": true,
+        "conditions": [
+          {
+            "description": "Activation chance depends on Habit Level for specific rounds.",
+            "evidenceIds": [],
+            "id": "strategic-revival-recovery-rounds-activation-chance",
+            "label": "Activation chance depends on Habit Level for specific rounds.",
+            "unresolved": false
+          },
+          {
+            "description": "Recovery is multiplied by 1.5 if any enemy has Slow.",
+            "evidenceIds": [],
+            "id": "strategic-revival-slow-1-5x",
+            "label": "Recovery is multiplied by 1.5 if any enemy has Slow.",
+            "unresolved": false
+          }
+        ],
+        "confidence": "confirmed",
+        "currentlyAvailable": false,
+        "dependencies": [
+          {
+            "notes": [
+              "Effect wording indicates scaling with Initiative."
+            ],
+            "statId": "initiative",
+            "type": "scales-with-stat"
+          },
+          {
+            "multiplier": 1.5,
+            "notes": [
+              "Any enemy is afflicted with Slow."
+            ],
+            "statusId": "slow",
+            "type": "requires-any-enemy-status"
+          }
+        ],
+        "directlyVerified": true,
+        "dragonId": "syrax",
+        "evidenceIds": [
+          "syrax-strategic-revival-2026-06-24"
+        ],
+        "futureAvailable": true,
+        "id": "syrax-strategic-revival-strategic-revival-recovery-output",
+        "label": "Strategic Revival: Recovery",
+        "minimumDragonLevel": null,
+        "requiredHabitLevel": 1,
+        "sourceKind": "habit",
+        "sourceScope": "habits",
+        "targetCount": null,
+        "targetScope": "any-lane",
+        "targetSide": "ally",
+        "unlockStarRank": 6
+      },
+      {
+        "abilityId": "caraxes-infernal-burst",
+        "abilityName": "Infernal Burst",
+        "availability": {
+          "canonical": "canonical-base",
+          "notes": [
+            "Not collected in observed account."
+          ],
+          "observedAccount": "observed-unavailable",
+          "reportLabel": "Base kit; not collected in observed account",
+          "userRoster": "unknown"
+        },
+        "channel": "fire-damage",
+        "combatLogConfirmed": false,
+        "conditional": true,
+        "conditions": [
+          {
+            "description": "If Caraxes has First-Strike, damage is multiplied by 1.5.",
+            "evidenceIds": [],
+            "id": "infernal-burst-first-strike-1-5x",
+            "label": "If Caraxes has First-Strike, damage is multiplied by 1.5.",
+            "unresolved": false
+          }
+        ],
+        "confidence": "confirmed",
+        "currentlyAvailable": true,
+        "dependencies": [
+          {
+            "notes": [
+              "Effect wording indicates scaling with Intelligence."
+            ],
+            "statId": "intelligence",
+            "type": "scales-with-stat"
+          },
+          {
+            "notes": [
+              "Fire Damage is reduced by target Initiative."
+            ],
+            "statId": "initiative",
+            "type": "mitigated-by-target-stat"
+          },
+          {
+            "multiplier": 1.5,
+            "notes": [
+              "Self has First-Strike."
+            ],
+            "statusId": "first-strike",
+            "type": "requires-self-status"
+          }
+        ],
+        "directlyVerified": true,
+        "dragonId": "caraxes",
+        "evidenceIds": [
+          "caraxes-infernal-burst-2026-06-24"
+        ],
+        "futureAvailable": false,
+        "id": "caraxes-infernal-burst-infernal-burst-fire-rate-output",
+        "label": "Infernal Burst: Fire Damage",
+        "minimumDragonLevel": null,
+        "requiredHabitLevel": null,
+        "sourceKind": "command",
+        "sourceScope": "commands",
+        "targetCount": 3,
+        "targetScope": "any-lane",
+        "targetSide": "enemy",
+        "unlockStarRank": null
+      },
+      {
+        "abilityId": "caraxes-crippling-inferno",
+        "abilityName": "Crippling Inferno",
+        "availability": {
+          "canonical": "canonical-locked",
+          "notes": [
+            "Future at Star Rank 6.",
+            "Not collected in observed account."
+          ],
+          "observedAccount": "observed-unavailable",
+          "reportLabel": "Future at Star Rank 6; not collected in observed account",
+          "userRoster": "unknown"
+        },
+        "channel": "fire-damage",
+        "combatLogConfirmed": false,
+        "conditional": true,
+        "conditions": [
+          {
+            "description": "Activation chance depends on Habit Level for each round.",
+            "evidenceIds": [],
+            "id": "crippling-inferno-each-round-activation-chance",
+            "label": "Activation chance depends on Habit Level for each round.",
+            "unresolved": false
+          }
+        ],
+        "confidence": "confirmed",
+        "currentlyAvailable": false,
+        "dependencies": [
+          {
+            "notes": [
+              "Effect wording indicates scaling with Intelligence."
+            ],
+            "statId": "intelligence",
+            "type": "scales-with-stat"
+          },
+          {
+            "notes": [
+              "Fire Damage is reduced by target Initiative."
+            ],
+            "statId": "initiative",
+            "type": "mitigated-by-target-stat"
+          }
+        ],
+        "directlyVerified": true,
+        "dragonId": "caraxes",
+        "evidenceIds": [
+          "caraxes-crippling-inferno-2026-06-24"
+        ],
+        "futureAvailable": true,
+        "id": "caraxes-crippling-inferno-crippling-inferno-burn-output",
+        "label": "Crippling Inferno: Burn",
+        "minimumDragonLevel": null,
+        "requiredHabitLevel": 1,
+        "sourceKind": "habit",
+        "sourceScope": "habits",
+        "targetCount": 3,
+        "targetScope": "any-lane",
+        "targetSide": "enemy",
+        "unlockStarRank": 6
+      },
+      {
+        "abilityId": "caraxes-blood-wyrm",
+        "abilityName": "Blood Wyrm",
+        "availability": {
+          "canonical": "canonical-locked",
+          "notes": [
+            "Future at Star Rank 10.",
+            "Not collected in observed account."
+          ],
+          "observedAccount": "observed-unavailable",
+          "reportLabel": "Future at Star Rank 10; not collected in observed account",
+          "userRoster": "unknown"
+        },
+        "channel": "recovery",
+        "combatLogConfirmed": false,
+        "conditional": true,
+        "conditions": [
+          {
+            "description": "Enemy retreated during the previous round.",
+            "evidenceIds": [],
+            "id": "enemy-retreated-previous-round",
+            "label": "Enemy retreated during the previous round.",
+            "unresolved": false
+          }
+        ],
+        "confidence": "confirmed",
+        "currentlyAvailable": false,
+        "dependencies": [
+          {
+            "notes": [
+              "Effect wording indicates scaling with Initiative."
+            ],
+            "statId": "initiative",
+            "type": "scales-with-stat"
+          },
+          {
+            "eventId": "Enemy retreated during the previous round.",
+            "notes": [
+              "Enemy retreated during the previous round."
+            ],
+            "type": "previous-round-event"
+          }
+        ],
+        "directlyVerified": true,
+        "dragonId": "caraxes",
+        "evidenceIds": [
+          "caraxes-blood-wyrm-2026-06-24"
+        ],
+        "futureAvailable": true,
+        "id": "caraxes-blood-wyrm-blood-wyrm-recovery-output",
+        "label": "Blood Wyrm: Recovery",
+        "minimumDragonLevel": null,
+        "requiredHabitLevel": 1,
+        "sourceKind": "habit",
+        "sourceScope": "habits",
+        "targetCount": null,
+        "targetScope": "self",
+        "targetSide": "self",
+        "unlockStarRank": 10
+      },
+      {
+        "abilityId": "seasmoke-cleansing-wrath",
+        "abilityName": "Cleansing Wrath",
+        "availability": {
+          "canonical": "canonical-base",
+          "notes": [
+            "Not hatched in observed account."
+          ],
+          "observedAccount": "observed-unavailable",
+          "reportLabel": "Base kit; not hatched in observed account",
+          "userRoster": "unknown"
+        },
+        "channel": "fire-damage",
+        "combatLogConfirmed": false,
+        "conditional": false,
+        "conditions": [],
+        "confidence": "confirmed",
+        "currentlyAvailable": true,
+        "dependencies": [
+          {
+            "notes": [
+              "Effect wording indicates scaling with Intelligence."
+            ],
+            "statId": "intelligence",
+            "type": "scales-with-stat"
+          },
+          {
+            "notes": [
+              "Fire Damage is reduced by target Initiative."
+            ],
+            "statId": "initiative",
+            "type": "mitigated-by-target-stat"
+          }
+        ],
+        "directlyVerified": true,
+        "dragonId": "seasmoke",
+        "evidenceIds": [
+          "seasmoke-cleansing-wrath-summary-2026-06-23",
+          "seasmoke-cleansing-wrath-glossary-2026-06-23"
+        ],
+        "futureAvailable": false,
+        "id": "seasmoke-cleansing-wrath-cleansing-wrath-fire-damage-rate-output",
+        "label": "Cleansing Wrath: Fire Damage",
+        "minimumDragonLevel": null,
+        "requiredHabitLevel": null,
+        "sourceKind": "command",
+        "sourceScope": "commands",
+        "targetCount": 1,
+        "targetScope": "same-lane",
+        "targetSide": "enemy",
+        "unlockStarRank": null
+      },
+      {
+        "abilityId": "seasmoke-infectious-wrath",
+        "abilityName": "Infectious Wrath",
+        "availability": {
+          "canonical": "canonical-locked",
+          "notes": [
+            "Future at Star Rank 6.",
+            "Not hatched in observed account."
+          ],
+          "observedAccount": "observed-unavailable",
+          "reportLabel": "Future at Star Rank 6; not hatched in observed account",
+          "userRoster": "unknown"
+        },
+        "channel": "physical-damage",
+        "combatLogConfirmed": false,
+        "conditional": true,
+        "conditions": [
+          {
+            "description": "Damage is doubled when target has Panic.",
+            "evidenceIds": [],
+            "id": "panic-double-damage",
+            "label": "Damage is doubled when target has Panic.",
+            "unresolved": false
+          }
+        ],
+        "confidence": "confirmed",
+        "currentlyAvailable": false,
+        "dependencies": [
+          {
+            "notes": [
+              "Physical Damage is increased by Strength."
+            ],
+            "statId": "strength",
+            "type": "scales-with-stat"
+          },
+          {
+            "notes": [
+              "Physical Damage is reduced by target Instinct."
+            ],
+            "statId": "instinct",
+            "type": "mitigated-by-target-stat"
+          },
+          {
+            "multiplier": 2,
+            "notes": [
+              "Target has Panic."
+            ],
+            "statusId": "panic",
+            "type": "requires-target-status"
+          }
+        ],
+        "directlyVerified": true,
+        "dragonId": "seasmoke",
+        "evidenceIds": [
+          "seasmoke-infectious-wrath-2026-06-23"
+        ],
+        "futureAvailable": true,
+        "id": "seasmoke-infectious-wrath-infectious-wrath-physical-damage-rate-output",
+        "label": "Infectious Wrath: Physical Damage",
+        "minimumDragonLevel": null,
+        "requiredHabitLevel": 1,
+        "sourceKind": "habit",
+        "sourceScope": "habits",
+        "targetCount": 2,
+        "targetScope": "within-adjacency",
+        "targetSide": "enemy",
+        "unlockStarRank": 6
+      },
+      {
+        "abilityId": "malachite-wardens-rally",
+        "abilityName": "Warden's Rally",
+        "availability": {
+          "canonical": "canonical-base",
+          "notes": [
+            "Unlocked in observed account collection state, subject to level and star requirements."
+          ],
+          "observedAccount": "observed-available",
+          "reportLabel": "Base kit; observed account hatched",
+          "userRoster": "unknown"
+        },
+        "channel": "tactical-damage",
+        "combatLogConfirmed": false,
+        "conditional": false,
+        "conditions": [],
+        "confidence": "confirmed",
+        "currentlyAvailable": true,
+        "dependencies": [
+          {
+            "notes": [
+              "Effect wording indicates scaling with Instinct."
+            ],
+            "statId": "instinct",
+            "type": "scales-with-stat"
+          },
+          {
+            "notes": [
+              "Tactical Damage is reduced by target Intelligence."
+            ],
+            "statId": "intelligence",
+            "type": "mitigated-by-target-stat"
+          }
+        ],
+        "directlyVerified": true,
+        "dragonId": "malachite",
+        "evidenceIds": [
+          "malachite-wardens-rally-summary-2026-06-23",
+          "malachite-wardens-rally-glossary-2026-06-23"
+        ],
+        "futureAvailable": false,
+        "id": "malachite-wardens-rally-wardens-rally-tactical-damage-rate-output",
+        "label": "Warden's Rally: Tactical Damage",
+        "minimumDragonLevel": null,
+        "requiredHabitLevel": null,
+        "sourceKind": "command",
+        "sourceScope": "commands",
+        "targetCount": 1,
+        "targetScope": "same-lane",
+        "targetSide": "enemy",
+        "unlockStarRank": null
+      },
+      {
+        "abilityId": "malachite-wardens-rally",
+        "abilityName": "Warden's Rally",
+        "availability": {
+          "canonical": "canonical-base",
+          "notes": [
+            "Unlocked in observed account collection state, subject to level and star requirements."
+          ],
+          "observedAccount": "observed-available",
+          "reportLabel": "Base kit; observed account hatched",
+          "userRoster": "unknown"
+        },
+        "channel": "recovery",
+        "combatLogConfirmed": false,
+        "conditional": false,
+        "conditions": [],
+        "confidence": "confirmed",
+        "currentlyAvailable": true,
+        "dependencies": [
+          {
+            "notes": [
+              "Effect wording indicates scaling with Instinct."
+            ],
+            "statId": "instinct",
+            "type": "scales-with-stat"
+          }
+        ],
+        "directlyVerified": true,
+        "dragonId": "malachite",
+        "evidenceIds": [
+          "malachite-wardens-rally-summary-2026-06-23",
+          "malachite-wardens-rally-glossary-2026-06-23"
+        ],
+        "futureAvailable": false,
+        "id": "malachite-wardens-rally-wardens-rally-recovery-rate-output",
+        "label": "Warden's Rally: Recovery",
+        "minimumDragonLevel": null,
+        "requiredHabitLevel": null,
+        "sourceKind": "command",
+        "sourceScope": "commands",
+        "targetCount": 3,
+        "targetScope": "any-lane",
+        "targetSide": "ally",
+        "unlockStarRank": null
+      },
+      {
+        "abilityId": "sheepstealer-wild-hunt",
+        "abilityName": "Wild Hunt",
+        "availability": {
+          "canonical": "canonical-base",
+          "notes": [
+            "Unlocked in observed account collection state, subject to level and star requirements."
+          ],
+          "observedAccount": "observed-available",
+          "reportLabel": "Base kit; observed account hatched",
+          "userRoster": "unknown"
+        },
+        "channel": "fire-damage",
+        "combatLogConfirmed": true,
+        "conditional": true,
+        "conditions": [
+          {
+            "description": "Damage is doubled against Prey.",
+            "evidenceIds": [],
+            "id": "wild-hunt-prey-double",
+            "label": "Damage is doubled against Prey.",
+            "unresolved": false
+          }
+        ],
+        "confidence": "confirmed",
+        "currentlyAvailable": true,
+        "dependencies": [
+          {
+            "notes": [
+              "Effect wording indicates scaling with Intelligence."
+            ],
+            "statId": "intelligence",
+            "type": "scales-with-stat"
+          },
+          {
+            "notes": [
+              "Fire Damage is reduced by target Initiative."
+            ],
+            "statId": "initiative",
+            "type": "mitigated-by-target-stat"
+          },
+          {
+            "multiplier": 2,
+            "notes": [
+              "Target is Sheepstealer Prey."
+            ],
+            "statusId": "prey",
+            "type": "requires-target-status"
+          }
+        ],
+        "directlyVerified": true,
+        "dragonId": "sheepstealer",
+        "evidenceIds": [
+          "sheepstealer-wild-hunt-summary-2026-06-23",
+          "sheepstealer-wild-hunt-glossary-2026-06-23",
+          "sheepstealer-wild-hunt-recovery-priority-combat-log-2026-06-24"
+        ],
+        "futureAvailable": false,
+        "id": "sheepstealer-wild-hunt-wild-hunt-fire-damage-rate-output",
+        "label": "Wild Hunt: Fire Damage",
+        "minimumDragonLevel": null,
+        "requiredHabitLevel": null,
+        "sourceKind": "command",
+        "sourceScope": "commands",
+        "targetCount": 1,
+        "targetScope": "any-lane",
+        "targetSide": "enemy",
+        "unlockStarRank": null
+      },
+      {
+        "abilityId": "sheepstealer-savage-claim",
+        "abilityName": "Savage Claim",
+        "availability": {
+          "canonical": "canonical-locked",
+          "notes": [
+            "Future at Star Rank 10.",
+            "Unlocked in observed account collection state, subject to level and star requirements."
+          ],
+          "observedAccount": "observed-available",
+          "reportLabel": "Future at Star Rank 10; observed account hatched",
+          "userRoster": "unknown"
+        },
+        "channel": "fire-damage",
+        "combatLogConfirmed": false,
+        "conditional": true,
+        "conditions": [
+          {
+            "description": "Triple Fire Damage if Prey received Recovery during the previous round.",
+            "evidenceIds": [],
+            "id": "savage-claim-recovery-triple-fire",
+            "label": "Triple Fire Damage if Prey received Recovery during the previous round.",
+            "unresolved": false
+          }
+        ],
+        "confidence": "confirmed",
+        "currentlyAvailable": false,
+        "dependencies": [
+          {
+            "notes": [
+              "Fire Damage is increased by Intelligence."
+            ],
+            "statId": "intelligence",
+            "type": "scales-with-stat"
+          },
+          {
+            "notes": [
+              "Fire Damage is reduced by target Initiative."
+            ],
+            "statId": "initiative",
+            "type": "mitigated-by-target-stat"
+          }
+        ],
+        "directlyVerified": true,
+        "dragonId": "sheepstealer",
+        "evidenceIds": [
+          "sheepstealer-savage-claim-2026-06-23"
+        ],
+        "futureAvailable": true,
+        "id": "sheepstealer-savage-claim-savage-claim-fire-damage-output",
+        "label": "Savage Claim: Fire Damage",
+        "minimumDragonLevel": null,
+        "requiredHabitLevel": 1,
+        "sourceKind": "habit",
+        "sourceScope": "habits",
+        "targetCount": null,
+        "targetScope": "any-lane",
+        "targetSide": "enemy",
+        "unlockStarRank": 10
+      },
+      {
+        "abilityId": "sheepstealer-savage-claim",
+        "abilityName": "Savage Claim",
+        "availability": {
+          "canonical": "canonical-locked",
+          "notes": [
+            "Future at Star Rank 10.",
+            "Unlocked in observed account collection state, subject to level and star requirements."
+          ],
+          "observedAccount": "observed-available",
+          "reportLabel": "Future at Star Rank 10; observed account hatched",
+          "userRoster": "unknown"
+        },
+        "channel": "recovery",
+        "combatLogConfirmed": false,
+        "conditional": true,
+        "conditions": [
+          {
+            "description": "Triple Recovery if Prey received Recovery during the previous round.",
+            "evidenceIds": [],
+            "id": "savage-claim-recovery-triple",
+            "label": "Triple Recovery if Prey received Recovery during the previous round.",
+            "unresolved": false
+          }
+        ],
+        "confidence": "confirmed",
+        "currentlyAvailable": false,
+        "dependencies": [
+          {
+            "notes": [
+              "Effect wording indicates scaling with Intelligence."
+            ],
+            "statId": "intelligence",
+            "type": "scales-with-stat"
+          }
+        ],
+        "directlyVerified": true,
+        "dragonId": "sheepstealer",
+        "evidenceIds": [
+          "sheepstealer-savage-claim-2026-06-23"
+        ],
+        "futureAvailable": true,
+        "id": "sheepstealer-savage-claim-savage-claim-recovery-output",
+        "label": "Savage Claim: Recovery",
+        "minimumDragonLevel": null,
+        "requiredHabitLevel": 1,
+        "sourceKind": "habit",
+        "sourceScope": "habits",
+        "targetCount": null,
+        "targetScope": "self",
+        "targetSide": "self",
+        "unlockStarRank": 10
+      },
+      {
+        "abilityId": null,
+        "abilityName": "Basic Attack",
+        "availability": {
+          "canonical": "canonical-base",
+          "notes": [
+            "Unlocked in observed account collection state, subject to level and star requirements."
+          ],
+          "observedAccount": "observed-available",
+          "reportLabel": "Base kit; observed account hatched",
+          "userRoster": "unknown"
+        },
+        "channel": "physical-damage",
+        "combatLogConfirmed": true,
+        "conditional": false,
+        "conditions": [],
+        "confidence": "confirmed",
+        "currentlyAvailable": true,
+        "dependencies": [
+          {
+            "notes": [
+              "Physical Damage scales with Strength when the damage source is a Physical Basic Attack."
+            ],
+            "statId": "strength",
+            "type": "scales-with-stat"
+          },
+          {
+            "notes": [
+              "Physical Damage is reduced by the target Instinct."
+            ],
+            "statId": "instinct",
+            "type": "mitigated-by-target-stat"
+          }
+        ],
+        "directlyVerified": true,
+        "dragonId": "vermax",
+        "evidenceIds": [
+          "vermax-warriors-zeal-basic-attack-combat-log-2026-06-24"
+        ],
+        "futureAvailable": false,
+        "id": "vermax-basic-attack-physical",
+        "label": "Physical Basic Attack",
+        "minimumDragonLevel": null,
+        "requiredHabitLevel": null,
+        "sourceKind": "basic-attack",
+        "sourceScope": "basic-attacks",
+        "targetCount": 1,
+        "targetScope": "same-lane",
+        "targetSide": "enemy",
+        "unlockStarRank": null
+      },
+      {
+        "abilityId": "vermax-spreading-blaze",
+        "abilityName": "Spreading Blaze",
+        "availability": {
+          "canonical": "canonical-base",
+          "notes": [
+            "Unlocked in observed account collection state, subject to level and star requirements."
+          ],
+          "observedAccount": "observed-available",
+          "reportLabel": "Base kit; observed account hatched",
+          "userRoster": "unknown"
+        },
+        "channel": "physical-damage",
+        "combatLogConfirmed": false,
+        "conditional": false,
+        "conditions": [],
+        "confidence": "confirmed",
+        "currentlyAvailable": true,
+        "dependencies": [
+          {
+            "notes": [
+              "Effect wording indicates scaling with Strength."
+            ],
+            "statId": "strength",
+            "type": "scales-with-stat"
+          },
+          {
+            "notes": [
+              "Physical Damage is reduced by target Instinct."
+            ],
+            "statId": "instinct",
+            "type": "mitigated-by-target-stat"
+          }
+        ],
+        "directlyVerified": true,
+        "dragonId": "vermax",
+        "evidenceIds": [
+          "vermax-spreading-blaze-summary-2026-06-23",
+          "vermax-spreading-blaze-glossary-2026-06-23"
+        ],
+        "futureAvailable": false,
+        "id": "vermax-spreading-blaze-spreading-blaze-physical-damage-output",
+        "label": "Spreading Blaze: Physical Damage",
+        "minimumDragonLevel": null,
+        "requiredHabitLevel": null,
+        "sourceKind": "command",
+        "sourceScope": "commands",
+        "targetCount": 1,
+        "targetScope": "same-lane",
+        "targetSide": "enemy",
+        "unlockStarRank": null
+      }
+    ],
+    "periodicDamage": [
+      {
+        "abilityId": "caraxes-crippling-inferno",
+        "channel": "fire-damage",
+        "damageRateByHabitLevel": [],
+        "damageRateFixed": 20,
+        "dragonId": "caraxes",
+        "durationRounds": 2,
+        "evidenceIds": [
+          "caraxes-crippling-inferno-2026-06-24"
+        ],
+        "mitigationStat": "initiative",
+        "scalingStat": "intelligence",
+        "statusId": "burn",
+        "ticksEachRound": true
+      }
+    ],
+    "recipientSideAmplification": [
+      {
+        "abilityId": "sheepstealer-hunters-cunning",
+        "abilityName": "Hunter's Cunning",
+        "availability": {
+          "canonical": "canonical-base",
+          "notes": [
+            "Requires Dragon Level 16+.",
+            "Unlocked in observed account collection state, subject to level and star requirements."
+          ],
+          "observedAccount": "observed-available",
+          "reportLabel": "Base kit; Level 16+; observed account hatched",
+          "userRoster": "unknown"
+        },
+        "channel": "recovery",
+        "combatLogConfirmed": false,
+        "conditional": false,
+        "conditions": [],
+        "confidence": "confirmed",
+        "currentlyAvailable": true,
+        "direction": "received",
+        "directlyVerified": true,
+        "dragonId": "sheepstealer",
+        "evidenceIds": [
+          "sheepstealer-hunters-cunning-2026-06-23"
+        ],
+        "futureAvailable": false,
+        "id": "sheepstealer-hunters-cunning-hunters-cunning-recovery-received-recovery-received-modifier",
+        "label": "Hunter's Cunning: Recovery Received Up",
+        "minimumDragonLevel": 16,
+        "operation": "increase",
+        "providerRequirements": [
+          {
+            "evidenceIds": [
+              "sheepstealer-hunters-cunning-2026-06-23"
+            ],
+            "expected": "vanguard",
+            "id": "sheepstealer-hunters-cunning-provider-position-vanguard",
+            "kind": "provider-position",
+            "label": "Provider position requirement"
+          }
+        ],
+        "recipientRequirements": [],
+        "requiredHabitLevel": null,
+        "role": "recipient-side-amplification",
+        "sourceScope": "unknown",
+        "stackMaximum": null,
+        "targetSelector": {
+          "count": null,
+          "includesCaster": null,
+          "position": null,
+          "scope": "self",
+          "selection": "self",
+          "side": "self"
+        },
+        "unit": "percent",
+        "unlockStarRank": 1,
+        "value": 20,
+        "valuePerStack": null
+      }
+    ],
+    "selfAmplification": [
+      {
+        "abilityId": "syrax-sentinels-wit",
+        "abilityName": "Sentinel's Wit",
+        "availability": {
+          "canonical": "canonical-base",
+          "notes": [
+            "Requires Dragon Level 16+.",
+            "Not collected in observed account."
+          ],
+          "observedAccount": "observed-unavailable",
+          "reportLabel": "Base kit; Level 16+; not collected in observed account",
+          "userRoster": "unknown"
+        },
+        "channel": "tactical-damage",
+        "combatLogConfirmed": false,
+        "conditional": false,
+        "conditions": [],
+        "confidence": "confirmed",
+        "currentlyAvailable": true,
+        "direction": "dealt",
+        "directlyVerified": true,
+        "dragonId": "syrax",
+        "evidenceIds": [
+          "syrax-sentinels-wit-2026-06-24"
+        ],
+        "futureAvailable": false,
+        "id": "syrax-sentinels-wit-sentinels-wit-tactical-tactical-damage-dealt-modifier",
+        "label": "Sentinel's Wit: Tactical Damage Dealt Up",
+        "minimumDragonLevel": 16,
+        "operation": "increase",
+        "providerRequirements": [
+          {
+            "evidenceIds": [
+              "syrax-sentinels-wit-2026-06-24"
+            ],
+            "expected": "vanguard",
+            "id": "syrax-sentinels-wit-provider-position-vanguard",
+            "kind": "provider-position",
+            "label": "Provider position requirement"
+          }
+        ],
+        "recipientRequirements": [],
+        "requiredHabitLevel": null,
+        "role": "self-amplification",
+        "sourceScope": "all-qualifying-sources",
+        "stackMaximum": null,
+        "targetSelector": {
+          "count": null,
+          "includesCaster": null,
+          "position": null,
+          "scope": "self",
+          "selection": "self",
+          "side": "self"
+        },
+        "unit": "percent",
+        "unlockStarRank": 1,
+        "value": 16,
+        "valuePerStack": null
+      },
+      {
+        "abilityId": "caraxes-hunters-wrath",
+        "abilityName": "Hunter's Wrath",
+        "availability": {
+          "canonical": "canonical-base",
+          "notes": [
+            "Requires Dragon Level 16+.",
+            "Not collected in observed account."
+          ],
+          "observedAccount": "observed-unavailable",
+          "reportLabel": "Base kit; Level 16+; not collected in observed account",
+          "userRoster": "unknown"
+        },
+        "channel": "fire-damage",
+        "combatLogConfirmed": false,
+        "conditional": false,
+        "conditions": [],
+        "confidence": "confirmed",
+        "currentlyAvailable": true,
+        "direction": "dealt",
+        "directlyVerified": true,
+        "dragonId": "caraxes",
+        "evidenceIds": [
+          "caraxes-hunters-wrath-2026-06-24"
+        ],
+        "futureAvailable": false,
+        "id": "caraxes-hunters-wrath-hunters-wrath-fire-fire-damage-dealt-modifier",
+        "label": "Hunter's Wrath: Fire Damage Dealt Up",
+        "minimumDragonLevel": 16,
+        "operation": "increase",
+        "providerRequirements": [
+          {
+            "evidenceIds": [
+              "caraxes-hunters-wrath-2026-06-24"
+            ],
+            "expected": "vanguard",
+            "id": "caraxes-hunters-wrath-provider-position-vanguard",
+            "kind": "provider-position",
+            "label": "Provider position requirement"
+          }
+        ],
+        "recipientRequirements": [],
+        "requiredHabitLevel": null,
+        "role": "self-amplification",
+        "sourceScope": "all-qualifying-sources",
+        "stackMaximum": null,
+        "targetSelector": {
+          "count": null,
+          "includesCaster": null,
+          "position": null,
+          "scope": "self",
+          "selection": "self",
+          "side": "self"
+        },
+        "unit": "percent",
+        "unlockStarRank": 1,
+        "value": 16,
+        "valuePerStack": null
+      },
+      {
+        "abilityId": "caraxes-dragons-flair",
+        "abilityName": "Dragon's Flair",
+        "availability": {
+          "canonical": "canonical-locked",
+          "notes": [
+            "Future at Star Rank 4.",
+            "Not collected in observed account."
+          ],
+          "observedAccount": "observed-unavailable",
+          "reportLabel": "Future at Star Rank 4; not collected in observed account",
+          "userRoster": "unknown"
+        },
+        "channel": "fire-damage",
+        "combatLogConfirmed": false,
+        "conditional": true,
+        "conditions": [],
+        "confidence": "confirmed",
+        "currentlyAvailable": false,
+        "direction": "dealt",
+        "directlyVerified": true,
+        "dragonId": "caraxes",
+        "evidenceIds": [
+          "caraxes-dragons-flair-2026-06-24"
+        ],
+        "futureAvailable": true,
+        "id": "caraxes-dragons-flair-dragons-flair-fire-fire-damage-dealt-modifier",
+        "label": "Dragon's Flair: Fire Damage Dealt Up",
+        "minimumDragonLevel": null,
+        "operation": "increase",
+        "providerRequirements": [],
+        "recipientRequirements": [],
+        "requiredHabitLevel": 1,
+        "role": "self-amplification",
+        "sourceScope": "all-qualifying-sources",
+        "stackMaximum": null,
+        "targetSelector": {
+          "count": null,
+          "includesCaster": null,
+          "position": null,
+          "scope": "self",
+          "selection": "self",
+          "side": "self"
+        },
+        "unit": "percent",
+        "unlockStarRank": 4,
+        "value": null,
+        "valuePerStack": null
+      },
+      {
+        "abilityId": "caraxes-blood-wyrm",
+        "abilityName": "Blood Wyrm",
+        "availability": {
+          "canonical": "canonical-locked",
+          "notes": [
+            "Future at Star Rank 10.",
+            "Not collected in observed account."
+          ],
+          "observedAccount": "observed-unavailable",
+          "reportLabel": "Future at Star Rank 10; not collected in observed account",
+          "userRoster": "unknown"
+        },
+        "channel": "fire-damage",
+        "combatLogConfirmed": false,
+        "conditional": true,
+        "conditions": [
+          {
+            "description": "Enemy is below 50% maximum Troop Capacity.",
+            "evidenceIds": [],
+            "id": "enemy-below-50-maximum-troops",
+            "label": "Enemy is below 50% maximum Troop Capacity.",
+            "unresolved": false
+          }
+        ],
+        "confidence": "confirmed",
+        "currentlyAvailable": false,
+        "direction": "dealt",
+        "directlyVerified": true,
+        "dragonId": "caraxes",
+        "evidenceIds": [
+          "caraxes-blood-wyrm-2026-06-24"
+        ],
+        "futureAvailable": true,
+        "id": "caraxes-blood-wyrm-blood-wyrm-fire-up-fire-damage-dealt-modifier",
+        "label": "Blood Wyrm: Fire Damage Dealt Up",
+        "minimumDragonLevel": null,
+        "operation": "increase",
+        "providerRequirements": [],
+        "recipientRequirements": [],
+        "requiredHabitLevel": 1,
+        "role": "self-amplification",
+        "sourceScope": "all-qualifying-sources",
+        "stackMaximum": null,
+        "targetSelector": {
+          "count": null,
+          "includesCaster": null,
+          "position": null,
+          "scope": "self",
+          "selection": "self",
+          "side": "self"
+        },
+        "unit": "percent",
+        "unlockStarRank": 10,
+        "value": null,
+        "valuePerStack": null
+      },
+      {
+        "abilityId": "seasmoke-champions-brilliance",
+        "abilityName": "Champion's Brilliance",
+        "availability": {
+          "canonical": "canonical-base",
+          "notes": [
+            "Requires Dragon Level 16+.",
+            "Not hatched in observed account."
+          ],
+          "observedAccount": "observed-unavailable",
+          "reportLabel": "Base kit; Level 16+; not hatched in observed account",
+          "userRoster": "unknown"
+        },
+        "channel": "stat",
+        "combatLogConfirmed": false,
+        "conditional": false,
+        "conditions": [],
+        "confidence": "confirmed",
+        "currentlyAvailable": true,
+        "direction": "dealt",
+        "directlyVerified": true,
+        "dragonId": "seasmoke",
+        "evidenceIds": [
+          "seasmoke-champions-brilliance-2026-06-23"
+        ],
+        "futureAvailable": false,
+        "id": "seasmoke-champions-brilliance-seasmoke-strength-flat-stat-dealt-modifier",
+        "label": "Champion's Brilliance: Strength Up",
+        "minimumDragonLevel": 16,
+        "operation": "increase",
+        "providerRequirements": [
+          {
+            "evidenceIds": [
+              "seasmoke-champions-brilliance-2026-06-23"
+            ],
+            "expected": "vanguard",
+            "id": "seasmoke-champions-brilliance-provider-position-vanguard",
+            "kind": "provider-position",
+            "label": "Provider position requirement"
+          }
+        ],
+        "recipientRequirements": [],
+        "requiredHabitLevel": null,
+        "role": "self-amplification",
+        "sourceScope": "unknown",
+        "stackMaximum": null,
+        "targetSelector": {
+          "count": null,
+          "includesCaster": null,
+          "position": null,
+          "scope": "self",
+          "selection": "self",
+          "side": "self"
+        },
+        "unit": "flat",
+        "unlockStarRank": 1,
+        "value": 15,
+        "valuePerStack": null
+      },
+      {
+        "abilityId": "seasmoke-champions-brilliance",
+        "abilityName": "Champion's Brilliance",
+        "availability": {
+          "canonical": "canonical-base",
+          "notes": [
+            "Requires Dragon Level 16+.",
+            "Not hatched in observed account."
+          ],
+          "observedAccount": "observed-unavailable",
+          "reportLabel": "Base kit; Level 16+; not hatched in observed account",
+          "userRoster": "unknown"
+        },
+        "channel": "stat",
+        "combatLogConfirmed": false,
+        "conditional": false,
+        "conditions": [],
+        "confidence": "confirmed",
+        "currentlyAvailable": true,
+        "direction": "dealt",
+        "directlyVerified": true,
+        "dragonId": "seasmoke",
+        "evidenceIds": [
+          "seasmoke-champions-brilliance-2026-06-23"
+        ],
+        "futureAvailable": false,
+        "id": "seasmoke-champions-brilliance-seasmoke-intelligence-flat-stat-dealt-modifier",
+        "label": "Champion's Brilliance: Intelligence Up",
+        "minimumDragonLevel": 16,
+        "operation": "increase",
+        "providerRequirements": [
+          {
+            "evidenceIds": [
+              "seasmoke-champions-brilliance-2026-06-23"
+            ],
+            "expected": "vanguard",
+            "id": "seasmoke-champions-brilliance-provider-position-vanguard",
+            "kind": "provider-position",
+            "label": "Provider position requirement"
+          }
+        ],
+        "recipientRequirements": [],
+        "requiredHabitLevel": null,
+        "role": "self-amplification",
+        "sourceScope": "unknown",
+        "stackMaximum": null,
+        "targetSelector": {
+          "count": null,
+          "includesCaster": null,
+          "position": null,
+          "scope": "self",
+          "selection": "self",
+          "side": "self"
+        },
+        "unit": "flat",
+        "unlockStarRank": 1,
+        "value": 15,
+        "valuePerStack": null
+      },
+      {
+        "abilityId": "seasmoke-champions-brilliance",
+        "abilityName": "Champion's Brilliance",
+        "availability": {
+          "canonical": "canonical-base",
+          "notes": [
+            "Requires Dragon Level 16+.",
+            "Not hatched in observed account."
+          ],
+          "observedAccount": "observed-unavailable",
+          "reportLabel": "Base kit; Level 16+; not hatched in observed account",
+          "userRoster": "unknown"
+        },
+        "channel": "stat",
+        "combatLogConfirmed": false,
+        "conditional": false,
+        "conditions": [],
+        "confidence": "confirmed",
+        "currentlyAvailable": true,
+        "direction": "dealt",
+        "directlyVerified": true,
+        "dragonId": "seasmoke",
+        "evidenceIds": [
+          "seasmoke-champions-brilliance-2026-06-23"
+        ],
+        "futureAvailable": false,
+        "id": "seasmoke-champions-brilliance-seasmoke-instinct-flat-stat-dealt-modifier",
+        "label": "Champion's Brilliance: Instinct Up",
+        "minimumDragonLevel": 16,
+        "operation": "increase",
+        "providerRequirements": [
+          {
+            "evidenceIds": [
+              "seasmoke-champions-brilliance-2026-06-23"
+            ],
+            "expected": "vanguard",
+            "id": "seasmoke-champions-brilliance-provider-position-vanguard",
+            "kind": "provider-position",
+            "label": "Provider position requirement"
+          }
+        ],
+        "recipientRequirements": [],
+        "requiredHabitLevel": null,
+        "role": "self-amplification",
+        "sourceScope": "unknown",
+        "stackMaximum": null,
+        "targetSelector": {
+          "count": null,
+          "includesCaster": null,
+          "position": null,
+          "scope": "self",
+          "selection": "self",
+          "side": "self"
+        },
+        "unit": "flat",
+        "unlockStarRank": 1,
+        "value": 15,
+        "valuePerStack": null
+      },
+      {
+        "abilityId": "malachite-sentinels-presence",
+        "abilityName": "Sentinel's Presence",
+        "availability": {
+          "canonical": "canonical-base",
+          "notes": [
+            "Requires Dragon Level 16+.",
+            "Unlocked in observed account collection state, subject to level and star requirements."
+          ],
+          "observedAccount": "observed-available",
+          "reportLabel": "Base kit; Level 16+; observed account hatched",
+          "userRoster": "unknown"
+        },
+        "channel": "recovery",
+        "combatLogConfirmed": false,
+        "conditional": false,
+        "conditions": [],
+        "confidence": "confirmed",
+        "currentlyAvailable": true,
+        "direction": "dealt",
+        "directlyVerified": true,
+        "dragonId": "malachite",
+        "evidenceIds": [
+          "malachite-sentinels-presence-2026-06-23"
+        ],
+        "futureAvailable": false,
+        "id": "malachite-sentinels-presence-sentinels-presence-recovery-dealt-recovery-dealt-modifier",
+        "label": "Sentinel's Presence: Recovery Dealt Up",
+        "minimumDragonLevel": 16,
+        "operation": "increase",
+        "providerRequirements": [
+          {
+            "evidenceIds": [
+              "malachite-sentinels-presence-2026-06-23"
+            ],
+            "expected": "vanguard",
+            "id": "malachite-sentinels-presence-provider-position-vanguard",
+            "kind": "provider-position",
+            "label": "Provider position requirement"
+          }
+        ],
+        "recipientRequirements": [],
+        "requiredHabitLevel": null,
+        "role": "self-amplification",
+        "sourceScope": "unknown",
+        "stackMaximum": null,
+        "targetSelector": {
+          "count": null,
+          "includesCaster": null,
+          "position": null,
+          "scope": "self",
+          "selection": "self",
+          "side": "self"
+        },
+        "unit": "percent",
+        "unlockStarRank": 1,
+        "value": 15,
+        "valuePerStack": null
+      },
+      {
+        "abilityId": "malachite-sentinels-presence",
+        "abilityName": "Sentinel's Presence",
+        "availability": {
+          "canonical": "canonical-base",
+          "notes": [
+            "Requires Dragon Level 16+.",
+            "Unlocked in observed account collection state, subject to level and star requirements."
+          ],
+          "observedAccount": "observed-available",
+          "reportLabel": "Base kit; Level 16+; observed account hatched",
+          "userRoster": "unknown"
+        },
+        "channel": "stat",
+        "combatLogConfirmed": false,
+        "conditional": false,
+        "conditions": [],
+        "confidence": "confirmed",
+        "currentlyAvailable": true,
+        "direction": "dealt",
+        "directlyVerified": true,
+        "dragonId": "malachite",
+        "evidenceIds": [
+          "malachite-sentinels-presence-2026-06-23"
+        ],
+        "futureAvailable": false,
+        "id": "malachite-sentinels-presence-sentinels-presence-instinct-stat-dealt-modifier",
+        "label": "Sentinel's Presence: Instinct Up",
+        "minimumDragonLevel": 16,
+        "operation": "increase",
+        "providerRequirements": [
+          {
+            "evidenceIds": [
+              "malachite-sentinels-presence-2026-06-23"
+            ],
+            "expected": "vanguard",
+            "id": "malachite-sentinels-presence-provider-position-vanguard",
+            "kind": "provider-position",
+            "label": "Provider position requirement"
+          }
+        ],
+        "recipientRequirements": [],
+        "requiredHabitLevel": null,
+        "role": "self-amplification",
+        "sourceScope": "unknown",
+        "stackMaximum": null,
+        "targetSelector": {
+          "count": null,
+          "includesCaster": null,
+          "position": null,
+          "scope": "self",
+          "selection": "self",
+          "side": "self"
+        },
+        "unit": "flat",
+        "unlockStarRank": 1,
+        "value": 25,
+        "valuePerStack": null
+      },
+      {
+        "abilityId": "malachite-wise-vigor",
+        "abilityName": "Wise Vigor",
+        "availability": {
+          "canonical": "canonical-locked",
+          "notes": [
+            "Future at Star Rank 4.",
+            "Unlocked in observed account collection state, subject to level and star requirements."
+          ],
+          "observedAccount": "observed-available",
+          "reportLabel": "Future at Star Rank 4; observed account hatched",
+          "userRoster": "unknown"
+        },
+        "channel": "stat",
+        "combatLogConfirmed": false,
+        "conditional": true,
+        "conditions": [],
+        "confidence": "confirmed",
+        "currentlyAvailable": false,
+        "direction": "dealt",
+        "directlyVerified": true,
+        "dragonId": "malachite",
+        "evidenceIds": [
+          "malachite-wise-vigor-2026-06-23"
+        ],
+        "futureAvailable": true,
+        "id": "malachite-wise-vigor-wise-vigor-instinct-stat-dealt-modifier",
+        "label": "Wise Vigor: Instinct Up",
+        "minimumDragonLevel": null,
+        "operation": "increase",
+        "providerRequirements": [],
+        "recipientRequirements": [],
+        "requiredHabitLevel": 1,
+        "role": "self-amplification",
+        "sourceScope": "unknown",
+        "stackMaximum": null,
+        "targetSelector": {
+          "count": null,
+          "includesCaster": null,
+          "position": null,
+          "scope": "self",
+          "selection": "self",
+          "side": "self"
+        },
+        "unit": "percent",
+        "unlockStarRank": 4,
+        "value": 20,
+        "valuePerStack": null
+      },
+      {
+        "abilityId": "malachite-wise-vigor",
+        "abilityName": "Wise Vigor",
+        "availability": {
+          "canonical": "canonical-locked",
+          "notes": [
+            "Future at Star Rank 4.",
+            "Unlocked in observed account collection state, subject to level and star requirements."
+          ],
+          "observedAccount": "observed-available",
+          "reportLabel": "Future at Star Rank 4; observed account hatched",
+          "userRoster": "unknown"
+        },
+        "channel": "recovery",
+        "combatLogConfirmed": false,
+        "conditional": true,
+        "conditions": [],
+        "confidence": "confirmed",
+        "currentlyAvailable": false,
+        "direction": "dealt",
+        "directlyVerified": true,
+        "dragonId": "malachite",
+        "evidenceIds": [
+          "malachite-wise-vigor-2026-06-23"
+        ],
+        "futureAvailable": true,
+        "id": "malachite-wise-vigor-wise-vigor-recovery-recovery-dealt-modifier",
+        "label": "Wise Vigor: Recovery Dealt Up",
+        "minimumDragonLevel": null,
+        "operation": "increase",
+        "providerRequirements": [],
+        "recipientRequirements": [],
+        "requiredHabitLevel": 1,
+        "role": "self-amplification",
+        "sourceScope": "unknown",
+        "stackMaximum": null,
+        "targetSelector": {
+          "count": null,
+          "includesCaster": null,
+          "position": null,
+          "scope": "self",
+          "selection": "self",
+          "side": "self"
+        },
+        "unit": "percent",
+        "unlockStarRank": 4,
+        "value": 20,
+        "valuePerStack": null
+      },
+      {
+        "abilityId": "sheepstealer-hunters-cunning",
+        "abilityName": "Hunter's Cunning",
+        "availability": {
+          "canonical": "canonical-base",
+          "notes": [
+            "Requires Dragon Level 16+.",
+            "Unlocked in observed account collection state, subject to level and star requirements."
+          ],
+          "observedAccount": "observed-available",
+          "reportLabel": "Base kit; Level 16+; observed account hatched",
+          "userRoster": "unknown"
+        },
+        "channel": "stat",
+        "combatLogConfirmed": false,
+        "conditional": false,
+        "conditions": [],
+        "confidence": "confirmed",
+        "currentlyAvailable": true,
+        "direction": "dealt",
+        "directlyVerified": true,
+        "dragonId": "sheepstealer",
+        "evidenceIds": [
+          "sheepstealer-hunters-cunning-2026-06-23"
+        ],
+        "futureAvailable": false,
+        "id": "sheepstealer-hunters-cunning-hunters-cunning-intelligence-stat-dealt-modifier",
+        "label": "Hunter's Cunning: Intelligence Up",
+        "minimumDragonLevel": 16,
+        "operation": "increase",
+        "providerRequirements": [
+          {
+            "evidenceIds": [
+              "sheepstealer-hunters-cunning-2026-06-23"
+            ],
+            "expected": "vanguard",
+            "id": "sheepstealer-hunters-cunning-provider-position-vanguard",
+            "kind": "provider-position",
+            "label": "Provider position requirement"
+          }
+        ],
+        "recipientRequirements": [],
+        "requiredHabitLevel": null,
+        "role": "self-amplification",
+        "sourceScope": "unknown",
+        "stackMaximum": null,
+        "targetSelector": {
+          "count": null,
+          "includesCaster": null,
+          "position": null,
+          "scope": "self",
+          "selection": "self",
+          "side": "self"
+        },
+        "unit": "flat",
+        "unlockStarRank": 1,
+        "value": 25,
+        "valuePerStack": null
+      },
+      {
+        "abilityId": "sheepstealer-stolen-flock",
+        "abilityName": "Stolen Flock",
+        "availability": {
+          "canonical": "canonical-locked",
+          "notes": [
+            "Future at Star Rank 2.",
+            "Unlocked in observed account collection state, subject to level and star requirements."
+          ],
+          "observedAccount": "observed-available",
+          "reportLabel": "Future at Star Rank 2; observed account hatched",
+          "userRoster": "unknown"
+        },
+        "channel": "fire-damage",
+        "combatLogConfirmed": false,
+        "conditional": true,
+        "conditions": [],
+        "confidence": "confirmed",
+        "currentlyAvailable": false,
+        "direction": "dealt",
+        "directlyVerified": true,
+        "dragonId": "sheepstealer",
+        "evidenceIds": [
+          "sheepstealer-stolen-flock-2026-06-23"
+        ],
+        "futureAvailable": true,
+        "id": "sheepstealer-stolen-flock-stolen-flock-pve-fire-fire-damage-dealt-modifier",
+        "label": "Stolen Flock: Fire Damage Dealt Up",
+        "minimumDragonLevel": null,
+        "operation": "increase",
+        "providerRequirements": [],
+        "recipientRequirements": [],
+        "requiredHabitLevel": 1,
+        "role": "self-amplification",
+        "sourceScope": "all-qualifying-sources",
+        "stackMaximum": null,
+        "targetSelector": {
+          "count": null,
+          "includesCaster": null,
+          "position": null,
+          "scope": "self",
+          "selection": "self",
+          "side": "self"
+        },
+        "unit": "percent",
+        "unlockStarRank": 2,
+        "value": null,
+        "valuePerStack": null
+      },
+      {
+        "abilityId": "sheepstealer-stolen-flock",
+        "abilityName": "Stolen Flock",
+        "availability": {
+          "canonical": "canonical-locked",
+          "notes": [
+            "Future at Star Rank 2.",
+            "Unlocked in observed account collection state, subject to level and star requirements."
+          ],
+          "observedAccount": "observed-available",
+          "reportLabel": "Future at Star Rank 2; observed account hatched",
+          "userRoster": "unknown"
+        },
+        "channel": "fire-damage",
+        "combatLogConfirmed": false,
+        "conditional": true,
+        "conditions": [
+          {
+            "description": "Activation chance 50% per each round.",
+            "evidenceIds": [],
+            "id": "stolen-flock-each-round-stack-activation-chance",
+            "label": "Activation chance 50% per each round.",
+            "unresolved": false
+          }
+        ],
+        "confidence": "confirmed",
+        "currentlyAvailable": false,
+        "direction": "dealt",
+        "directlyVerified": true,
+        "dragonId": "sheepstealer",
+        "evidenceIds": [
+          "sheepstealer-stolen-flock-2026-06-23"
+        ],
+        "futureAvailable": true,
+        "id": "sheepstealer-stolen-flock-stolen-flock-stack-round-fire-damage-stack-modifier",
+        "label": "Stolen Flock: Fire Damage Dealt per Stolen Flock stack",
+        "minimumDragonLevel": null,
+        "operation": "increase",
+        "providerRequirements": [],
+        "recipientRequirements": [],
+        "requiredHabitLevel": 1,
+        "role": "self-amplification",
+        "sourceScope": "all-qualifying-sources",
+        "stackMaximum": 10,
+        "targetSelector": {
+          "count": null,
+          "includesCaster": null,
+          "position": null,
+          "scope": "self",
+          "selection": "self",
+          "side": "self"
+        },
+        "unit": "stack",
+        "unlockStarRank": 2,
+        "value": null,
+        "valuePerStack": null
+      },
+      {
+        "abilityId": "sheepstealer-stolen-flock",
+        "abilityName": "Stolen Flock",
+        "availability": {
+          "canonical": "canonical-locked",
+          "notes": [
+            "Future at Star Rank 2.",
+            "Unlocked in observed account collection state, subject to level and star requirements."
+          ],
+          "observedAccount": "observed-available",
+          "reportLabel": "Future at Star Rank 2; observed account hatched",
+          "userRoster": "unknown"
+        },
+        "channel": "fire-damage",
+        "combatLogConfirmed": false,
+        "conditional": true,
+        "conditions": [],
+        "confidence": "confirmed",
+        "currentlyAvailable": false,
+        "direction": "dealt",
+        "directlyVerified": true,
+        "dragonId": "sheepstealer",
+        "evidenceIds": [
+          "sheepstealer-stolen-flock-2026-06-23"
+        ],
+        "futureAvailable": true,
+        "id": "sheepstealer-stolen-flock-stolen-flock-stack-recovery-fire-damage-stack-modifier",
+        "label": "Stolen Flock: Fire Damage Dealt per Stolen Flock stack",
+        "minimumDragonLevel": null,
+        "operation": "increase",
+        "providerRequirements": [],
+        "recipientRequirements": [],
+        "requiredHabitLevel": 1,
+        "role": "self-amplification",
+        "sourceScope": "all-qualifying-sources",
+        "stackMaximum": 10,
+        "targetSelector": {
+          "count": null,
+          "includesCaster": null,
+          "position": null,
+          "scope": "self",
+          "selection": "self",
+          "side": "self"
+        },
+        "unit": "stack",
+        "unlockStarRank": 2,
+        "value": null,
+        "valuePerStack": null
+      },
+      {
+        "abilityId": "sheepstealer-dragons-cunning",
+        "abilityName": "Dragon's Cunning",
+        "availability": {
+          "canonical": "canonical-locked",
+          "notes": [
+            "Future at Star Rank 4.",
+            "Unlocked in observed account collection state, subject to level and star requirements."
+          ],
+          "observedAccount": "observed-available",
+          "reportLabel": "Future at Star Rank 4; observed account hatched",
+          "userRoster": "unknown"
+        },
+        "channel": "stat",
+        "combatLogConfirmed": false,
+        "conditional": true,
+        "conditions": [],
+        "confidence": "confirmed",
+        "currentlyAvailable": false,
+        "direction": "dealt",
+        "directlyVerified": true,
+        "dragonId": "sheepstealer",
+        "evidenceIds": [
+          "sheepstealer-dragons-cunning-2026-06-23"
+        ],
+        "futureAvailable": true,
+        "id": "sheepstealer-dragons-cunning-dragons-cunning-intelligence-stat-dealt-modifier",
+        "label": "Dragon's Cunning: Intelligence Up",
+        "minimumDragonLevel": null,
+        "operation": "increase",
+        "providerRequirements": [],
+        "recipientRequirements": [],
+        "requiredHabitLevel": 1,
+        "role": "self-amplification",
+        "sourceScope": "unknown",
+        "stackMaximum": null,
+        "targetSelector": {
+          "count": null,
+          "includesCaster": null,
+          "position": null,
+          "scope": "self",
+          "selection": "self",
+          "side": "self"
+        },
+        "unit": "percent",
+        "unlockStarRank": 4,
+        "value": null,
+        "valuePerStack": null
+      },
+      {
+        "abilityId": "vermax-warriors-zeal",
+        "abilityName": "Warrior's Zeal",
+        "availability": {
+          "canonical": "canonical-base",
+          "notes": [
+            "Requires Dragon Level 16+.",
+            "Unlocked in observed account collection state, subject to level and star requirements."
+          ],
+          "observedAccount": "observed-available",
+          "reportLabel": "Base kit; Level 16+; observed account hatched",
+          "userRoster": "unknown"
+        },
+        "channel": "physical-damage",
+        "combatLogConfirmed": true,
+        "conditional": false,
+        "conditions": [],
+        "confidence": "confirmed",
+        "currentlyAvailable": true,
+        "direction": "dealt",
+        "directlyVerified": true,
+        "dragonId": "vermax",
+        "evidenceIds": [
+          "vermax-warriors-zeal-2026-06-23",
+          "vermax-warriors-zeal-basic-attack-combat-log-2026-06-24"
+        ],
+        "futureAvailable": false,
+        "id": "vermax-warriors-zeal-warriors-zeal-physical-physical-damage-dealt-modifier",
+        "label": "Warrior's Zeal: Physical Damage Dealt Up",
+        "minimumDragonLevel": 16,
+        "operation": "increase",
+        "providerRequirements": [
+          {
+            "evidenceIds": [
+              "vermax-warriors-zeal-2026-06-23",
+              "vermax-warriors-zeal-basic-attack-combat-log-2026-06-24"
+            ],
+            "expected": "vanguard",
+            "id": "vermax-warriors-zeal-provider-position-vanguard",
+            "kind": "provider-position",
+            "label": "Provider position requirement"
+          }
+        ],
+        "recipientRequirements": [],
+        "requiredHabitLevel": null,
+        "role": "self-amplification",
+        "sourceScope": "all-qualifying-sources",
+        "stackMaximum": null,
+        "targetSelector": {
+          "count": null,
+          "includesCaster": null,
+          "position": null,
+          "scope": "self",
+          "selection": "self",
+          "side": "self"
+        },
+        "unit": "percent",
+        "unlockStarRank": 1,
+        "value": 16,
+        "valuePerStack": null
+      },
+      {
+        "abilityId": "vermax-rallying-flame",
+        "abilityName": "Rallying Flame",
+        "availability": {
+          "canonical": "canonical-locked",
+          "notes": [
+            "Future at Star Rank 6.",
+            "Unlocked in observed account collection state, subject to level and star requirements."
+          ],
+          "observedAccount": "observed-available",
+          "reportLabel": "Future at Star Rank 6; observed account hatched",
+          "userRoster": "unknown"
+        },
+        "channel": "physical-damage",
+        "combatLogConfirmed": false,
+        "conditional": true,
+        "conditions": [
+          {
+            "description": "Activation chance depends on Habit Level for start of combat.",
+            "evidenceIds": [],
+            "id": "rallying-flame-start-activation-chance",
+            "label": "Activation chance depends on Habit Level for start of combat.",
+            "unresolved": false
+          }
+        ],
+        "confidence": "confirmed",
+        "currentlyAvailable": false,
+        "direction": "dealt",
+        "directlyVerified": true,
+        "dragonId": "vermax",
+        "evidenceIds": [
+          "vermax-rallying-flame-2026-06-23"
+        ],
+        "futureAvailable": true,
+        "id": "vermax-rallying-flame-rallying-flame-stack-physical-damage-stack-modifier",
+        "label": "Rallying Flame: Physical Damage Dealt per Rallying Flame stack",
+        "minimumDragonLevel": null,
+        "operation": "increase",
+        "providerRequirements": [],
+        "recipientRequirements": [],
+        "requiredHabitLevel": 1,
+        "role": "self-amplification",
+        "sourceScope": "all-qualifying-sources",
+        "stackMaximum": 4,
+        "targetSelector": {
+          "count": null,
+          "includesCaster": null,
+          "position": null,
+          "scope": "self",
+          "selection": "self",
+          "side": "self"
+        },
+        "unit": "stack",
+        "unlockStarRank": 6,
+        "value": 5,
+        "valuePerStack": 5
+      },
+      {
+        "abilityId": "vermax-dragons-valor",
+        "abilityName": "Dragon's Valor",
+        "availability": {
+          "canonical": "canonical-locked",
+          "notes": [
+            "Future at Star Rank 8.",
+            "Unlocked in observed account collection state, subject to level and star requirements."
+          ],
+          "observedAccount": "observed-available",
+          "reportLabel": "Future at Star Rank 8; observed account hatched",
+          "userRoster": "unknown"
+        },
+        "channel": "stat",
+        "combatLogConfirmed": false,
+        "conditional": true,
+        "conditions": [],
+        "confidence": "confirmed",
+        "currentlyAvailable": false,
+        "direction": "dealt",
+        "directlyVerified": true,
+        "dragonId": "vermax",
+        "evidenceIds": [
+          "vermax-dragons-valor-2026-06-23"
+        ],
+        "futureAvailable": true,
+        "id": "vermax-dragons-valor-dragons-valor-strength-stat-dealt-modifier",
+        "label": "Dragon's Valor: Strength Up",
+        "minimumDragonLevel": null,
+        "operation": "increase",
+        "providerRequirements": [],
+        "recipientRequirements": [],
+        "requiredHabitLevel": 1,
+        "role": "self-amplification",
+        "sourceScope": "unknown",
+        "stackMaximum": null,
+        "targetSelector": {
+          "count": null,
+          "includesCaster": null,
+          "position": null,
+          "scope": "self",
+          "selection": "self",
+          "side": "self"
+        },
+        "unit": "percent",
+        "unlockStarRank": 8,
+        "value": null,
+        "valuePerStack": null
+      }
+    ],
+    "statusOutputs": [
+      {
+        "abilityId": "syrax-blazing-fury",
+        "abilityName": "Blazing Fury",
+        "availability": {
+          "canonical": "canonical-base",
+          "notes": [
+            "Not collected in observed account."
+          ],
+          "observedAccount": "observed-unavailable",
+          "reportLabel": "Base kit; not collected in observed account",
+          "userRoster": "unknown"
+        },
+        "chanceByHabitLevel": [],
+        "chanceFixed": 20,
+        "conditions": [
+          {
+            "description": "Activation chance 20% per each round.",
+            "evidenceIds": [],
+            "id": "blazing-fury-fire-support-activation-chance",
+            "label": "Activation chance 20% per each round.",
+            "unresolved": false
+          }
+        ],
+        "currentlyAvailable": true,
+        "directlyVerified": true,
+        "dragonId": "syrax",
+        "durationRounds": 2,
+        "evidenceIds": [
+          "syrax-blazing-fury-summary-2026-06-24",
+          "syrax-blazing-fury-details-2026-06-24"
+        ],
+        "futureAvailable": false,
+        "id": "syrax-blazing-fury-blazing-fury-first-strike-first-strike-status-output",
+        "minimumDragonLevel": null,
+        "requiredHabitLevel": null,
+        "statusId": "first-strike",
+        "targetSelector": {
+          "count": 1,
+          "includesCaster": null,
+          "position": null,
+          "scope": "any-lane",
+          "selection": "any",
+          "side": "ally"
+        },
+        "targetSide": "ally",
+        "unlockStarRank": null,
+        "untilEndOfCombat": false,
+        "untilEndOfRound": false
+      },
+      {
+        "abilityId": "syrax-strategic-revival",
+        "abilityName": "Strategic Revival",
+        "availability": {
+          "canonical": "canonical-locked",
+          "notes": [
+            "Future at Star Rank 6.",
+            "Not collected in observed account."
+          ],
+          "observedAccount": "observed-unavailable",
+          "reportLabel": "Future at Star Rank 6; not collected in observed account",
+          "userRoster": "unknown"
+        },
+        "chanceByHabitLevel": [
+          {
+            "level": 1,
+            "unit": "percent",
+            "value": 40
+          },
+          {
+            "level": 2,
+            "unit": "percent",
+            "value": 52
+          },
+          {
+            "level": 3,
+            "unit": "percent",
+            "value": 64
+          },
+          {
+            "level": 4,
+            "unit": "percent",
+            "value": 80
+          },
+          {
+            "level": 5,
+            "unit": "percent",
+            "value": 100
+          }
+        ],
+        "chanceFixed": null,
+        "conditions": [
+          {
+            "description": "Activation chance depends on Habit Level for specific rounds.",
+            "evidenceIds": [],
+            "id": "strategic-revival-recovery-rounds-activation-chance",
+            "label": "Activation chance depends on Habit Level for specific rounds.",
+            "unresolved": false
+          }
+        ],
+        "currentlyAvailable": false,
+        "directlyVerified": true,
+        "dragonId": "syrax",
+        "durationRounds": 2,
+        "evidenceIds": [
+          "syrax-strategic-revival-2026-06-24"
+        ],
+        "futureAvailable": true,
+        "id": "syrax-strategic-revival-strategic-revival-resistance-resistance-status-output",
+        "minimumDragonLevel": null,
+        "requiredHabitLevel": 1,
+        "statusId": "resistance",
+        "targetSelector": {
+          "count": null,
+          "includesCaster": null,
+          "position": null,
+          "scope": "any-lane",
+          "selection": "any",
+          "side": "ally"
+        },
+        "targetSide": "ally",
+        "unlockStarRank": 6,
+        "untilEndOfCombat": false,
+        "untilEndOfRound": false
+      },
+      {
+        "abilityId": "caraxes-crippling-inferno",
+        "abilityName": "Crippling Inferno",
+        "availability": {
+          "canonical": "canonical-locked",
+          "notes": [
+            "Future at Star Rank 6.",
+            "Not collected in observed account."
+          ],
+          "observedAccount": "observed-unavailable",
+          "reportLabel": "Future at Star Rank 6; not collected in observed account",
+          "userRoster": "unknown"
+        },
+        "chanceByHabitLevel": [
+          {
+            "level": 1,
+            "unit": "percent",
+            "value": 10
+          },
+          {
+            "level": 2,
+            "unit": "percent",
+            "value": 12
+          },
+          {
+            "level": 3,
+            "unit": "percent",
+            "value": 14
+          },
+          {
+            "level": 4,
+            "unit": "percent",
+            "value": 17
+          },
+          {
+            "level": 5,
+            "unit": "percent",
+            "value": 20
+          }
+        ],
+        "chanceFixed": null,
+        "conditions": [
+          {
+            "description": "Activation chance depends on Habit Level for each round.",
+            "evidenceIds": [],
+            "id": "crippling-inferno-each-round-activation-chance",
+            "label": "Activation chance depends on Habit Level for each round.",
+            "unresolved": false
+          }
+        ],
+        "currentlyAvailable": false,
+        "directlyVerified": true,
+        "dragonId": "caraxes",
+        "durationRounds": 2,
+        "evidenceIds": [
+          "caraxes-crippling-inferno-2026-06-24"
+        ],
+        "futureAvailable": true,
+        "id": "caraxes-crippling-inferno-crippling-inferno-slow-slow-status-output",
+        "minimumDragonLevel": null,
+        "requiredHabitLevel": 1,
+        "statusId": "slow",
+        "targetSelector": {
+          "count": 3,
+          "includesCaster": null,
+          "position": null,
+          "scope": "any-lane",
+          "selection": "any",
+          "side": "enemy"
+        },
+        "targetSide": "enemy",
+        "unlockStarRank": 6,
+        "untilEndOfCombat": false,
+        "untilEndOfRound": false
+      },
+      {
+        "abilityId": "caraxes-crippling-inferno",
+        "abilityName": "Crippling Inferno",
+        "availability": {
+          "canonical": "canonical-locked",
+          "notes": [
+            "Future at Star Rank 6.",
+            "Not collected in observed account."
+          ],
+          "observedAccount": "observed-unavailable",
+          "reportLabel": "Future at Star Rank 6; not collected in observed account",
+          "userRoster": "unknown"
+        },
+        "chanceByHabitLevel": [
+          {
+            "level": 1,
+            "unit": "percent",
+            "value": 10
+          },
+          {
+            "level": 2,
+            "unit": "percent",
+            "value": 12
+          },
+          {
+            "level": 3,
+            "unit": "percent",
+            "value": 14
+          },
+          {
+            "level": 4,
+            "unit": "percent",
+            "value": 17
+          },
+          {
+            "level": 5,
+            "unit": "percent",
+            "value": 20
+          }
+        ],
+        "chanceFixed": null,
+        "conditions": [
+          {
+            "description": "Activation chance depends on Habit Level for each round.",
+            "evidenceIds": [],
+            "id": "crippling-inferno-each-round-activation-chance",
+            "label": "Activation chance depends on Habit Level for each round.",
+            "unresolved": false
+          }
+        ],
+        "currentlyAvailable": false,
+        "directlyVerified": true,
+        "dragonId": "caraxes",
+        "durationRounds": 2,
+        "evidenceIds": [
+          "caraxes-crippling-inferno-2026-06-24"
+        ],
+        "futureAvailable": true,
+        "id": "caraxes-crippling-inferno-crippling-inferno-burn-burn-status-output",
+        "minimumDragonLevel": null,
+        "requiredHabitLevel": 1,
+        "statusId": "burn",
+        "targetSelector": {
+          "count": 3,
+          "includesCaster": null,
+          "position": null,
+          "scope": "any-lane",
+          "selection": "any",
+          "side": "enemy"
+        },
+        "targetSide": "enemy",
+        "unlockStarRank": 6,
+        "untilEndOfCombat": false,
+        "untilEndOfRound": false
+      },
+      {
+        "abilityId": "seasmoke-loyal-bond",
+        "abilityName": "Loyal Bond",
+        "availability": {
+          "canonical": "canonical-locked",
+          "notes": [
+            "Future at Star Rank 10.",
+            "Not hatched in observed account."
+          ],
+          "observedAccount": "observed-unavailable",
+          "reportLabel": "Future at Star Rank 10; not hatched in observed account",
+          "userRoster": "unknown"
+        },
+        "chanceByHabitLevel": [
+          {
+            "level": 1,
+            "unit": "percent",
+            "value": 10
+          },
+          {
+            "level": 2,
+            "unit": "percent",
+            "value": 13
+          },
+          {
+            "level": 3,
+            "unit": "percent",
+            "value": 16
+          },
+          {
+            "level": 4,
+            "unit": "percent",
+            "value": 20
+          },
+          {
+            "level": 5,
+            "unit": "percent",
+            "value": 25
+          }
+        ],
+        "chanceFixed": null,
+        "conditions": [
+          {
+            "description": "Activation chance depends on Habit Level for each round.",
+            "evidenceIds": [],
+            "id": "loyal-bond-advantage-activation-chance",
+            "label": "Activation chance depends on Habit Level for each round.",
+            "unresolved": false
+          },
+          {
+            "description": "Target is above 50% Troop Capacity.",
+            "evidenceIds": [],
+            "id": "target-above-50-troop-capacity",
+            "label": "Target is above 50% Troop Capacity.",
+            "unresolved": false
+          }
+        ],
+        "currentlyAvailable": false,
+        "directlyVerified": true,
+        "dragonId": "seasmoke",
+        "durationRounds": 2,
+        "evidenceIds": [
+          "seasmoke-loyal-bond-2026-06-23"
+        ],
+        "futureAvailable": true,
+        "id": "seasmoke-loyal-bond-loyal-bond-advantage-effect-advantage-status-output",
+        "minimumDragonLevel": null,
+        "requiredHabitLevel": 1,
+        "statusId": "advantage",
+        "targetSelector": {
+          "count": 2,
+          "includesCaster": null,
+          "position": null,
+          "scope": "any-lane",
+          "selection": "any",
+          "side": "ally"
+        },
+        "targetSide": "ally",
+        "unlockStarRank": 10,
+        "untilEndOfCombat": false,
+        "untilEndOfRound": false
+      },
+      {
+        "abilityId": "seasmoke-loyal-bond",
+        "abilityName": "Loyal Bond",
+        "availability": {
+          "canonical": "canonical-locked",
+          "notes": [
+            "Future at Star Rank 10.",
+            "Not hatched in observed account."
+          ],
+          "observedAccount": "observed-unavailable",
+          "reportLabel": "Future at Star Rank 10; not hatched in observed account",
+          "userRoster": "unknown"
+        },
+        "chanceByHabitLevel": [
+          {
+            "level": 1,
+            "unit": "percent",
+            "value": 10
+          },
+          {
+            "level": 2,
+            "unit": "percent",
+            "value": 13
+          },
+          {
+            "level": 3,
+            "unit": "percent",
+            "value": 16
+          },
+          {
+            "level": 4,
+            "unit": "percent",
+            "value": 20
+          },
+          {
+            "level": 5,
+            "unit": "percent",
+            "value": 25
+          }
+        ],
+        "chanceFixed": null,
+        "conditions": [
+          {
+            "description": "Activation chance depends on Habit Level for each round.",
+            "evidenceIds": [],
+            "id": "loyal-bond-resistance-activation-chance",
+            "label": "Activation chance depends on Habit Level for each round.",
+            "unresolved": false
+          },
+          {
+            "description": "Target is below 50% Troop Capacity.",
+            "evidenceIds": [],
+            "id": "target-below-50-troop-capacity",
+            "label": "Target is below 50% Troop Capacity.",
+            "unresolved": false
+          }
+        ],
+        "currentlyAvailable": false,
+        "directlyVerified": true,
+        "dragonId": "seasmoke",
+        "durationRounds": 2,
+        "evidenceIds": [
+          "seasmoke-loyal-bond-2026-06-23"
+        ],
+        "futureAvailable": true,
+        "id": "seasmoke-loyal-bond-loyal-bond-resistance-effect-resistance-status-output",
+        "minimumDragonLevel": null,
+        "requiredHabitLevel": 1,
+        "statusId": "resistance",
+        "targetSelector": {
+          "count": 2,
+          "includesCaster": null,
+          "position": null,
+          "scope": "any-lane",
+          "selection": "any",
+          "side": "ally"
+        },
+        "targetSide": "ally",
+        "unlockStarRank": 10,
+        "untilEndOfCombat": false,
+        "untilEndOfRound": false
+      },
+      {
+        "abilityId": "malachite-thunderous-roar",
+        "abilityName": "Thunderous Roar",
+        "availability": {
+          "canonical": "canonical-locked",
+          "notes": [
+            "Future at Star Rank 6.",
+            "Unlocked in observed account collection state, subject to level and star requirements."
+          ],
+          "observedAccount": "observed-available",
+          "reportLabel": "Future at Star Rank 6; observed account hatched",
+          "userRoster": "unknown"
+        },
+        "chanceByHabitLevel": [
+          {
+            "level": 1,
+            "unit": "percent",
+            "value": 10
+          },
+          {
+            "level": 2,
+            "unit": "percent",
+            "value": 12
+          },
+          {
+            "level": 3,
+            "unit": "percent",
+            "value": 14
+          },
+          {
+            "level": 4,
+            "unit": "percent",
+            "value": 17
+          },
+          {
+            "level": 5,
+            "unit": "percent",
+            "value": 20
+          }
+        ],
+        "chanceFixed": null,
+        "conditions": [
+          {
+            "description": "Activation chance depends on Habit Level for each round.",
+            "evidenceIds": [],
+            "id": "thunderous-roar-each-round-activation-chance",
+            "label": "Activation chance depends on Habit Level for each round.",
+            "unresolved": false
+          }
+        ],
+        "currentlyAvailable": false,
+        "directlyVerified": true,
+        "dragonId": "malachite",
+        "durationRounds": 2,
+        "evidenceIds": [
+          "malachite-thunderous-roar-2026-06-23"
+        ],
+        "futureAvailable": true,
+        "id": "malachite-thunderous-roar-thunderous-roar-advantage-advantage-status-output",
+        "minimumDragonLevel": null,
+        "requiredHabitLevel": 1,
+        "statusId": "advantage",
+        "targetSelector": {
+          "count": 2,
+          "includesCaster": null,
+          "position": null,
+          "scope": "any-lane",
+          "selection": "any",
+          "side": "ally"
+        },
+        "targetSide": "ally",
+        "unlockStarRank": 6,
+        "untilEndOfCombat": false,
+        "untilEndOfRound": false
+      },
+      {
+        "abilityId": "malachite-lightning-strike",
+        "abilityName": "Lightning Strike",
+        "availability": {
+          "canonical": "canonical-locked",
+          "notes": [
+            "Future at Star Rank 10.",
+            "Unlocked in observed account collection state, subject to level and star requirements."
+          ],
+          "observedAccount": "observed-available",
+          "reportLabel": "Future at Star Rank 10; observed account hatched",
+          "userRoster": "unknown"
+        },
+        "chanceByHabitLevel": [
+          {
+            "level": 1,
+            "unit": "percent",
+            "value": 40
+          },
+          {
+            "level": 2,
+            "unit": "percent",
+            "value": 52
+          },
+          {
+            "level": 3,
+            "unit": "percent",
+            "value": 64
+          },
+          {
+            "level": 4,
+            "unit": "percent",
+            "value": 80
+          },
+          {
+            "level": 5,
+            "unit": "percent",
+            "value": 100
+          }
+        ],
+        "chanceFixed": null,
+        "conditions": [
+          {
+            "description": "Activation chance depends on Habit Level for start of round.",
+            "evidenceIds": [],
+            "id": "lightning-strike-round-one-activation-chance",
+            "label": "Activation chance depends on Habit Level for start of round.",
+            "unresolved": false
+          }
+        ],
+        "currentlyAvailable": false,
+        "directlyVerified": true,
+        "dragonId": "malachite",
+        "durationRounds": 3,
+        "evidenceIds": [
+          "malachite-lightning-strike-2026-06-23"
+        ],
+        "futureAvailable": true,
+        "id": "malachite-lightning-strike-lightning-strike-first-strike-first-strike-status-output",
+        "minimumDragonLevel": null,
+        "requiredHabitLevel": 1,
+        "statusId": "first-strike",
+        "targetSelector": {
+          "count": 1,
+          "includesCaster": null,
+          "position": null,
+          "scope": "within-adjacency",
+          "selection": "adjacent",
+          "side": "ally"
+        },
+        "targetSide": "ally",
+        "unlockStarRank": 10,
+        "untilEndOfCombat": false,
+        "untilEndOfRound": false
+      },
+      {
+        "abilityId": "sheepstealer-wild-hunt",
+        "abilityName": "Wild Hunt",
+        "availability": {
+          "canonical": "canonical-base",
+          "notes": [
+            "Unlocked in observed account collection state, subject to level and star requirements."
+          ],
+          "observedAccount": "observed-available",
+          "reportLabel": "Base kit; observed account hatched",
+          "userRoster": "unknown"
+        },
+        "chanceByHabitLevel": [],
+        "chanceFixed": 40,
+        "conditions": [
+          {
+            "description": "Activation chance 40% per each round.",
+            "evidenceIds": [],
+            "id": "wild-hunt-apply-prey-activation-chance",
+            "label": "Activation chance 40% per each round.",
+            "unresolved": false
+          }
+        ],
+        "currentlyAvailable": true,
+        "directlyVerified": true,
+        "dragonId": "sheepstealer",
+        "durationRounds": 3,
+        "evidenceIds": [
+          "sheepstealer-wild-hunt-summary-2026-06-23",
+          "sheepstealer-wild-hunt-glossary-2026-06-23",
+          "sheepstealer-wild-hunt-recovery-priority-combat-log-2026-06-24"
+        ],
+        "futureAvailable": false,
+        "id": "sheepstealer-wild-hunt-wild-hunt-prey-prey-status-output",
+        "minimumDragonLevel": null,
+        "requiredHabitLevel": null,
+        "statusId": "prey",
+        "targetSelector": {
+          "count": 1,
+          "includesCaster": null,
+          "position": null,
+          "scope": "any-lane",
+          "selection": "any",
+          "side": "enemy"
+        },
+        "targetSide": "enemy",
+        "unlockStarRank": null,
+        "untilEndOfCombat": false,
+        "untilEndOfRound": false
+      },
+      {
+        "abilityId": "sheepstealer-stolen-flock",
+        "abilityName": "Stolen Flock",
+        "availability": {
+          "canonical": "canonical-locked",
+          "notes": [
+            "Future at Star Rank 2.",
+            "Unlocked in observed account collection state, subject to level and star requirements."
+          ],
+          "observedAccount": "observed-available",
+          "reportLabel": "Future at Star Rank 2; observed account hatched",
+          "userRoster": "unknown"
+        },
+        "chanceByHabitLevel": [],
+        "chanceFixed": 50,
+        "conditions": [
+          {
+            "description": "Activation chance 50% per each round.",
+            "evidenceIds": [],
+            "id": "stolen-flock-each-round-stack-activation-chance",
+            "label": "Activation chance 50% per each round.",
+            "unresolved": false
+          }
+        ],
+        "currentlyAvailable": false,
+        "directlyVerified": true,
+        "dragonId": "sheepstealer",
+        "durationRounds": null,
+        "evidenceIds": [
+          "sheepstealer-stolen-flock-2026-06-23"
+        ],
+        "futureAvailable": true,
+        "id": "sheepstealer-stolen-flock-stolen-flock-stack-round-stolen-flock-status-output",
+        "minimumDragonLevel": null,
+        "requiredHabitLevel": 1,
+        "statusId": "stolen-flock",
+        "targetSelector": {
+          "count": null,
+          "includesCaster": null,
+          "position": null,
+          "scope": "self",
+          "selection": "self",
+          "side": "self"
+        },
+        "targetSide": "self",
+        "unlockStarRank": 2,
+        "untilEndOfCombat": true,
+        "untilEndOfRound": false
+      },
+      {
+        "abilityId": "sheepstealer-stolen-flock",
+        "abilityName": "Stolen Flock",
+        "availability": {
+          "canonical": "canonical-locked",
+          "notes": [
+            "Future at Star Rank 2.",
+            "Unlocked in observed account collection state, subject to level and star requirements."
+          ],
+          "observedAccount": "observed-available",
+          "reportLabel": "Future at Star Rank 2; observed account hatched",
+          "userRoster": "unknown"
+        },
+        "chanceByHabitLevel": [],
+        "chanceFixed": null,
+        "conditions": [],
+        "currentlyAvailable": false,
+        "directlyVerified": true,
+        "dragonId": "sheepstealer",
+        "durationRounds": null,
+        "evidenceIds": [
+          "sheepstealer-stolen-flock-2026-06-23"
+        ],
+        "futureAvailable": true,
+        "id": "sheepstealer-stolen-flock-stolen-flock-stack-recovery-stolen-flock-status-output",
+        "minimumDragonLevel": null,
+        "requiredHabitLevel": 1,
+        "statusId": "stolen-flock",
+        "targetSelector": {
+          "count": null,
+          "includesCaster": null,
+          "position": null,
+          "scope": "self",
+          "selection": "self",
+          "side": "self"
+        },
+        "targetSide": "self",
+        "unlockStarRank": 2,
+        "untilEndOfCombat": true,
+        "untilEndOfRound": false
+      },
+      {
+        "abilityId": "vermax-spreading-blaze",
+        "abilityName": "Spreading Blaze",
+        "availability": {
+          "canonical": "canonical-base",
+          "notes": [
+            "Unlocked in observed account collection state, subject to level and star requirements."
+          ],
+          "observedAccount": "observed-available",
+          "reportLabel": "Base kit; observed account hatched",
+          "userRoster": "unknown"
+        },
+        "chanceByHabitLevel": [],
+        "chanceFixed": null,
+        "conditions": [
+          {
+            "description": "Ally deals Tactical Damage.",
+            "evidenceIds": [],
+            "id": "ally-deals-tactical-damage",
+            "label": "Ally deals Tactical Damage.",
+            "unresolved": false
+          }
+        ],
+        "currentlyAvailable": true,
+        "directlyVerified": true,
+        "dragonId": "vermax",
+        "durationRounds": null,
+        "evidenceIds": [
+          "vermax-spreading-blaze-summary-2026-06-23",
+          "vermax-spreading-blaze-glossary-2026-06-23"
+        ],
+        "futureAvailable": false,
+        "id": "vermax-spreading-blaze-spreading-blaze-stack-spreading-blaze-status-output",
+        "minimumDragonLevel": null,
+        "requiredHabitLevel": null,
+        "statusId": "spreading-blaze",
+        "targetSelector": {
+          "count": 1,
+          "includesCaster": null,
+          "position": null,
+          "scope": "any-lane",
+          "selection": "eligible",
+          "side": "ally"
+        },
+        "targetSide": "ally",
+        "unlockStarRank": null,
+        "untilEndOfCombat": true,
+        "untilEndOfRound": false
+      },
+      {
+        "abilityId": "vermax-rallying-flame",
+        "abilityName": "Rallying Flame",
+        "availability": {
+          "canonical": "canonical-locked",
+          "notes": [
+            "Future at Star Rank 6.",
+            "Unlocked in observed account collection state, subject to level and star requirements."
+          ],
+          "observedAccount": "observed-available",
+          "reportLabel": "Future at Star Rank 6; observed account hatched",
+          "userRoster": "unknown"
+        },
+        "chanceByHabitLevel": [
+          {
+            "level": 1,
+            "unit": "percent",
+            "value": 50
+          },
+          {
+            "level": 2,
+            "unit": "percent",
+            "value": 60
+          },
+          {
+            "level": 3,
+            "unit": "percent",
+            "value": 70
+          },
+          {
+            "level": 4,
+            "unit": "percent",
+            "value": 85
+          },
+          {
+            "level": 5,
+            "unit": "percent",
+            "value": 100
+          }
+        ],
+        "chanceFixed": null,
+        "conditions": [
+          {
+            "description": "Activation chance depends on Habit Level for start of combat.",
+            "evidenceIds": [],
+            "id": "rallying-flame-start-activation-chance",
+            "label": "Activation chance depends on Habit Level for start of combat.",
+            "unresolved": false
+          }
+        ],
+        "currentlyAvailable": false,
+        "directlyVerified": true,
+        "dragonId": "vermax",
+        "durationRounds": null,
+        "evidenceIds": [
+          "vermax-rallying-flame-2026-06-23"
+        ],
+        "futureAvailable": true,
+        "id": "vermax-rallying-flame-rallying-flame-stack-rallying-flame-status-output",
+        "minimumDragonLevel": null,
+        "requiredHabitLevel": 1,
+        "statusId": "rallying-flame",
+        "targetSelector": {
+          "count": null,
+          "includesCaster": null,
+          "position": null,
+          "scope": "self",
+          "selection": "self",
+          "side": "self"
+        },
+        "targetSide": "self",
+        "unlockStarRank": 6,
+        "untilEndOfCombat": true,
+        "untilEndOfRound": false
+      },
+      {
+        "abilityId": "vermax-rallying-flame",
+        "abilityName": "Rallying Flame",
+        "availability": {
+          "canonical": "canonical-locked",
+          "notes": [
+            "Future at Star Rank 6.",
+            "Unlocked in observed account collection state, subject to level and star requirements."
+          ],
+          "observedAccount": "observed-available",
+          "reportLabel": "Future at Star Rank 6; observed account hatched",
+          "userRoster": "unknown"
+        },
+        "chanceByHabitLevel": [
+          {
+            "level": 1,
+            "unit": "percent",
+            "value": 50
+          },
+          {
+            "level": 2,
+            "unit": "percent",
+            "value": 60
+          },
+          {
+            "level": 3,
+            "unit": "percent",
+            "value": 70
+          },
+          {
+            "level": 4,
+            "unit": "percent",
+            "value": 85
+          },
+          {
+            "level": 5,
+            "unit": "percent",
+            "value": 100
+          }
+        ],
+        "chanceFixed": null,
+        "conditions": [
+          {
+            "description": "Activation chance depends on Habit Level for start of combat.",
+            "evidenceIds": [],
+            "id": "rallying-flame-start-activation-chance",
+            "label": "Activation chance depends on Habit Level for start of combat.",
+            "unresolved": false
+          },
+          {
+            "description": "Ally deals Tactical Damage.",
+            "evidenceIds": [],
+            "id": "ally-deals-tactical-damage",
+            "label": "Ally deals Tactical Damage.",
+            "unresolved": false
+          }
+        ],
+        "currentlyAvailable": false,
+        "directlyVerified": true,
+        "dragonId": "vermax",
+        "durationRounds": null,
+        "evidenceIds": [
+          "vermax-rallying-flame-2026-06-23"
+        ],
+        "futureAvailable": true,
+        "id": "vermax-rallying-flame-rallying-flame-spreading-blaze-stack-spreading-blaze-status-output",
+        "minimumDragonLevel": null,
+        "requiredHabitLevel": 1,
+        "statusId": "spreading-blaze",
+        "targetSelector": {
+          "count": 1,
+          "includesCaster": null,
+          "position": null,
+          "scope": "any-lane",
+          "selection": "eligible",
+          "side": "ally"
+        },
+        "targetSide": "ally",
+        "unlockStarRank": 6,
+        "untilEndOfCombat": true,
+        "untilEndOfRound": false
+      },
+      {
+        "abilityId": "vermax-unyielding-resolve",
+        "abilityName": "Unyielding Resolve",
+        "availability": {
+          "canonical": "canonical-locked",
+          "notes": [
+            "Future at Star Rank 10.",
+            "Unlocked in observed account collection state, subject to level and star requirements."
+          ],
+          "observedAccount": "observed-available",
+          "reportLabel": "Future at Star Rank 10; observed account hatched",
+          "userRoster": "unknown"
+        },
+        "chanceByHabitLevel": [
+          {
+            "level": 1,
+            "unit": "percent",
+            "value": 20
+          },
+          {
+            "level": 2,
+            "unit": "percent",
+            "value": 26
+          },
+          {
+            "level": 3,
+            "unit": "percent",
+            "value": 32
+          },
+          {
+            "level": 4,
+            "unit": "percent",
+            "value": 40
+          },
+          {
+            "level": 5,
+            "unit": "percent",
+            "value": 50
+          }
+        ],
+        "chanceFixed": null,
+        "conditions": [
+          {
+            "description": "Activation chance depends on Habit Level for start of each round.",
+            "evidenceIds": [],
+            "id": "unyielding-resolve-start-round-activation-chance",
+            "label": "Activation chance depends on Habit Level for start of each round.",
+            "unresolved": false
+          },
+          {
+            "description": "If Vermax is afflicted with Weakened, multiply trigger chance by 1.5.",
+            "evidenceIds": [],
+            "id": "weakened-advantage-1-5x",
+            "label": "If Vermax is afflicted with Weakened, multiply trigger chance by 1.5.",
+            "unresolved": false
+          }
+        ],
+        "currentlyAvailable": false,
+        "directlyVerified": true,
+        "dragonId": "vermax",
+        "durationRounds": 2,
+        "evidenceIds": [
+          "vermax-unyielding-resolve-2026-06-23"
+        ],
+        "futureAvailable": true,
+        "id": "vermax-unyielding-resolve-unyielding-resolve-advantage-advantage-status-output",
+        "minimumDragonLevel": null,
+        "requiredHabitLevel": 1,
+        "statusId": "advantage",
+        "targetSelector": {
+          "count": null,
+          "includesCaster": null,
+          "position": null,
+          "scope": "self",
+          "selection": "self",
+          "side": "self"
+        },
+        "targetSide": "self",
+        "unlockStarRank": 10,
+        "untilEndOfCombat": false,
+        "untilEndOfRound": false
+      }
+    ]
+  },
+  "dragonEffectProfiles": [
+    {
+      "dragonId": "syrax",
+      "incomingAmplifierChannels": [],
+      "outgoingBuffChannels": [
+        {
+          "channel": "fire-damage",
+          "modifierCapabilityIds": [
+            "syrax-blazing-fury-blazing-fury-fire-damage-up-fire-damage-dealt-modifier",
+            "syrax-tactical-inferno-tactical-inferno-fire-fire-damage-dealt-modifier"
+          ]
+        },
+        {
+          "channel": "stat",
+          "modifierCapabilityIds": [
+            "syrax-sentinels-wit-sentinels-wit-left-instinct-stat-dealt-modifier",
+            "syrax-sentinels-wit-sentinels-wit-left-initiative-stat-dealt-modifier",
+            "syrax-mindful-synergy-mindful-synergy-intelligence-stat-dealt-modifier",
+            "syrax-mindful-synergy-mindful-synergy-instinct-stat-dealt-modifier",
+            "syrax-flight-mastery-flight-mastery-initiative-up-stat-dealt-modifier"
+          ]
+        },
+        {
+          "channel": "tactical-damage",
+          "modifierCapabilityIds": [
+            "syrax-tactical-inferno-tactical-inferno-tactical-tactical-damage-dealt-modifier"
+          ]
+        }
+      ],
+      "primaryDamageChannel": "tactical-damage",
+      "primaryDamageChannelBasis": "derived",
+      "producedChannels": [
+        {
+          "capabilityIds": [
+            "syrax-blazing-fury-blazing-fury-tactical-rate-output"
+          ],
+          "channel": "tactical-damage",
+          "confidence": "confirmed",
+          "currentlyAvailable": true,
+          "futureAvailable": false
+        },
+        {
+          "capabilityIds": [
+            "syrax-strategic-revival-strategic-revival-recovery-output"
+          ],
+          "channel": "recovery",
+          "confidence": "confirmed",
+          "currentlyAvailable": false,
+          "futureAvailable": true
+        }
+      ]
+    },
+    {
+      "dragonId": "caraxes",
+      "incomingAmplifierChannels": [],
+      "outgoingBuffChannels": [
+        {
+          "channel": "stat",
+          "modifierCapabilityIds": [
+            "caraxes-hunters-wrath-hunters-wrath-right-strength-stat-dealt-modifier",
+            "caraxes-hunters-wrath-hunters-wrath-right-initiative-stat-dealt-modifier"
+          ]
+        }
+      ],
+      "primaryDamageChannel": "fire-damage",
+      "primaryDamageChannelBasis": "derived",
+      "producedChannels": [
+        {
+          "capabilityIds": [
+            "caraxes-infernal-burst-infernal-burst-fire-rate-output",
+            "caraxes-crippling-inferno-crippling-inferno-burn-output"
+          ],
+          "channel": "fire-damage",
+          "confidence": "confirmed",
+          "currentlyAvailable": true,
+          "futureAvailable": true
+        },
+        {
+          "capabilityIds": [
+            "caraxes-blood-wyrm-blood-wyrm-recovery-output"
+          ],
+          "channel": "recovery",
+          "confidence": "confirmed",
+          "currentlyAvailable": false,
+          "futureAvailable": true
+        }
+      ]
+    },
+    {
+      "dragonId": "seasmoke",
+      "incomingAmplifierChannels": [],
+      "outgoingBuffChannels": [
+        {
+          "channel": "stat",
+          "modifierCapabilityIds": [
+            "seasmoke-clever-maneuver-clever-maneuver-intelligence-stat-dealt-modifier",
+            "seasmoke-clever-maneuver-clever-maneuver-initiative-stat-dealt-modifier",
+            "seasmoke-winds-favor-winds-favor-initiative-stat-dealt-modifier",
+            "seasmoke-cunning-ferocity-cunning-ferocity-intelligence-stat-dealt-modifier"
+          ]
+        },
+        {
+          "channel": "fire-damage",
+          "modifierCapabilityIds": [
+            "seasmoke-cunning-ferocity-cunning-ferocity-fire-fire-damage-dealt-modifier"
+          ]
+        }
+      ],
+      "primaryDamageChannel": null,
+      "primaryDamageChannelBasis": "unknown",
+      "producedChannels": [
+        {
+          "capabilityIds": [
+            "seasmoke-cleansing-wrath-cleansing-wrath-fire-damage-rate-output"
+          ],
+          "channel": "fire-damage",
+          "confidence": "confirmed",
+          "currentlyAvailable": true,
+          "futureAvailable": false
+        },
+        {
+          "capabilityIds": [
+            "seasmoke-infectious-wrath-infectious-wrath-physical-damage-rate-output"
+          ],
+          "channel": "physical-damage",
+          "confidence": "confirmed",
+          "currentlyAvailable": false,
+          "futureAvailable": true
+        }
+      ]
+    },
+    {
+      "dragonId": "malachite",
+      "incomingAmplifierChannels": [],
+      "outgoingBuffChannels": [
+        {
+          "channel": "fire-damage",
+          "modifierCapabilityIds": [
+            "malachite-sentinels-presence-sentinels-presence-left-flank-fire-fire-damage-dealt-modifier"
+          ]
+        },
+        {
+          "channel": "physical-damage",
+          "modifierCapabilityIds": [
+            "malachite-forests-instinct-forests-instinct-physical-damage-physical-damage-dealt-modifier"
+          ]
+        },
+        {
+          "channel": "stat",
+          "modifierCapabilityIds": [
+            "malachite-collective-might-collective-might-strength-stat-dealt-modifier",
+            "malachite-lightning-strike-lightning-strike-strength-stat-dealt-modifier"
+          ]
+        }
+      ],
+      "primaryDamageChannel": "tactical-damage",
+      "primaryDamageChannelBasis": "derived",
+      "producedChannels": [
+        {
+          "capabilityIds": [
+            "malachite-wardens-rally-wardens-rally-tactical-damage-rate-output"
+          ],
+          "channel": "tactical-damage",
+          "confidence": "confirmed",
+          "currentlyAvailable": true,
+          "futureAvailable": false
+        },
+        {
+          "capabilityIds": [
+            "malachite-wardens-rally-wardens-rally-recovery-rate-output"
+          ],
+          "channel": "recovery",
+          "confidence": "confirmed",
+          "currentlyAvailable": true,
+          "futureAvailable": false
+        }
+      ]
+    },
+    {
+      "dragonId": "sheepstealer",
+      "incomingAmplifierChannels": [
+        {
+          "channel": "recovery",
+          "modifierCapabilityIds": [
+            "sheepstealer-hunters-cunning-hunters-cunning-recovery-received-recovery-received-modifier"
+          ]
+        }
+      ],
+      "outgoingBuffChannels": [
+        {
+          "channel": "physical-damage",
+          "modifierCapabilityIds": [
+            "sheepstealer-hunters-cunning-hunters-cunning-right-physical-physical-damage-dealt-modifier"
+          ]
+        }
+      ],
+      "primaryDamageChannel": "fire-damage",
+      "primaryDamageChannelBasis": "derived",
+      "producedChannels": [
+        {
+          "capabilityIds": [
+            "sheepstealer-wild-hunt-wild-hunt-fire-damage-rate-output",
+            "sheepstealer-savage-claim-savage-claim-fire-damage-output"
+          ],
+          "channel": "fire-damage",
+          "confidence": "confirmed",
+          "currentlyAvailable": true,
+          "futureAvailable": true
+        },
+        {
+          "capabilityIds": [
+            "sheepstealer-savage-claim-savage-claim-recovery-output"
+          ],
+          "channel": "recovery",
+          "confidence": "confirmed",
+          "currentlyAvailable": false,
+          "futureAvailable": true
+        }
+      ]
+    },
+    {
+      "dragonId": "vermax",
+      "incomingAmplifierChannels": [],
+      "outgoingBuffChannels": [
+        {
+          "channel": "tactical-damage",
+          "modifierCapabilityIds": [
+            "vermax-spreading-blaze-spreading-blaze-stack-tactical-damage-stack-modifier",
+            "vermax-rallying-flame-rallying-flame-spreading-blaze-stack-tactical-damage-stack-modifier"
+          ]
+        },
+        {
+          "channel": "stat",
+          "modifierCapabilityIds": [
+            "vermax-warriors-zeal-warriors-zeal-left-instinct-stat-dealt-modifier",
+            "vermax-warriors-zeal-warriors-zeal-left-initiative-stat-dealt-modifier",
+            "vermax-reactive-instincts-reactive-instincts-instinct-stat-dealt-modifier",
+            "vermax-reactive-instincts-reactive-instincts-initiative-stat-dealt-modifier"
+          ]
+        }
+      ],
+      "primaryDamageChannel": "physical-damage",
+      "primaryDamageChannelBasis": "verified-basic-attack-and-kit",
+      "producedChannels": [
+        {
+          "capabilityIds": [
+            "vermax-basic-attack-physical",
+            "vermax-spreading-blaze-spreading-blaze-physical-damage-output"
+          ],
+          "channel": "physical-damage",
+          "confidence": "confirmed",
+          "currentlyAvailable": true,
+          "futureAvailable": false
+        }
+      ]
+    }
+  ],
+  "effectChannels": [
+    "physical-damage",
+    "tactical-damage",
+    "fire-damage",
+    "recovery",
+    "stat"
+  ],
+  "matchKinds": [
+    "outgoing-effect-amplification",
+    "incoming-effect-amplification",
+    "status-condition-enablement",
+    "stat-scaling-support",
+    "enemy-mitigation-reduction",
+    "periodic-damage-amplification"
+  ],
+  "modifierCapabilityStructure": [
+    "dragonId",
+    "abilityId",
+    "channel",
+    "direction",
+    "role",
+    "operation",
+    "targetSelector",
+    "providerRequirements",
+    "recipientRequirements",
+    "sourceScope",
+    "availability",
+    "evidenceIds"
+  ],
+  "modifierRoles": [
+    "self-amplification",
+    "ally-support",
+    "recipient-side-amplification",
+    "enemy-debuff"
+  ],
+  "normalViewAggregationBehavior": "One support modifier can match multiple recipient outputs and aggregate into one normal Formation Builder card.",
+  "numericalScorePolicy": "Synergy score remains null; exact formulas are not invented.",
+  "outputCapabilityStructure": [
+    "dragonId",
+    "abilityId",
+    "channel",
+    "sourceKind",
+    "sourceScope",
+    "targetSide",
+    "targetScope",
+    "unlockStarRank",
+    "minimumDragonLevel",
+    "requiredHabitLevel",
+    "conditions",
+    "dependencies",
+    "availability",
+    "evidenceIds"
+  ],
+  "positionCompatibilityRules": {
+    "adjacency": {
+      "left-flank": [
+        "vanguard"
+      ],
+      "right-flank": [
+        "vanguard"
+      ],
+      "vanguard": [
+        "left-flank",
+        "right-flank"
+      ]
+    },
+    "adjacencySymmetric": true,
+    "positions": [
+      {
+        "id": "left-flank",
+        "label": "Left Flank"
+      },
+      {
+        "id": "vanguard",
+        "label": "Vanguard"
+      },
+      {
+        "id": "right-flank",
+        "label": "Right Flank"
+      }
+    ],
+    "targetingLanguageRules": [
+      {
+        "casterEligibility": "eligible-if-targeting-allows",
+        "id": "plain-ally-caster-eligible",
+        "notes": [
+          "Plain Ally/Allies may include the caster when targeting permits."
+        ],
+        "wording": "Ally / Allies"
+      },
+      {
+        "casterEligibility": "excluded",
+        "id": "other-ally-caster-excluded",
+        "notes": [
+          "Other Ally/Other Allies excludes the caster."
+        ],
+        "wording": "Other Ally / Other Allies"
+      },
+      {
+        "casterEligibility": "excluded-by-spatial-rule",
+        "id": "spatial-self-adjacency-exclusion",
+        "notes": [
+          "A caster is not adjacent to itself."
+        ],
+        "wording": "within adjacency"
+      }
+    ],
+    "thresholdRules": [
+      {
+        "description": "Above and below threshold wording is interpreted strictly until combat logs prove otherwise.",
+        "id": "strict-threshold-language"
+      }
+    ]
+  },
+  "sourceScopeCompatibilityRules": [
+    {
+      "compatible": true,
+      "modifierScope": "all-qualifying-sources",
+      "outputScope": "any same-channel source"
+    },
+    {
+      "compatible": true,
+      "modifierScope": "non-basic-attacks",
+      "outputScope": "commands-or-habits"
+    },
+    {
+      "compatible": true,
+      "modifierScope": "commands-and-habits",
+      "outputScope": "commands-or-habits"
+    },
+    {
+      "compatible": false,
+      "modifierScope": "unknown",
+      "outputScope": "any"
+    },
+    {
+      "id": "computed-matrix",
+      "matrix": [
+        {
+          "compatible": true,
+          "modifierScope": "basic-attacks",
+          "outputScope": "basic-attacks"
+        },
+        {
+          "compatible": false,
+          "modifierScope": "basic-attacks",
+          "outputScope": "commands"
+        },
+        {
+          "compatible": false,
+          "modifierScope": "basic-attacks",
+          "outputScope": "habits"
+        },
+        {
+          "compatible": false,
+          "modifierScope": "basic-attacks",
+          "outputScope": "commands-and-habits"
+        },
+        {
+          "compatible": false,
+          "modifierScope": "basic-attacks",
+          "outputScope": "non-basic-attacks"
+        },
+        {
+          "compatible": false,
+          "modifierScope": "basic-attacks",
+          "outputScope": "all-qualifying-sources"
+        },
+        {
+          "compatible": false,
+          "modifierScope": "basic-attacks",
+          "outputScope": "unknown"
+        },
+        {
+          "compatible": false,
+          "modifierScope": "commands",
+          "outputScope": "basic-attacks"
+        },
+        {
+          "compatible": true,
+          "modifierScope": "commands",
+          "outputScope": "commands"
+        },
+        {
+          "compatible": false,
+          "modifierScope": "commands",
+          "outputScope": "habits"
+        },
+        {
+          "compatible": false,
+          "modifierScope": "commands",
+          "outputScope": "commands-and-habits"
+        },
+        {
+          "compatible": false,
+          "modifierScope": "commands",
+          "outputScope": "non-basic-attacks"
+        },
+        {
+          "compatible": false,
+          "modifierScope": "commands",
+          "outputScope": "all-qualifying-sources"
+        },
+        {
+          "compatible": false,
+          "modifierScope": "commands",
+          "outputScope": "unknown"
+        },
+        {
+          "compatible": false,
+          "modifierScope": "habits",
+          "outputScope": "basic-attacks"
+        },
+        {
+          "compatible": false,
+          "modifierScope": "habits",
+          "outputScope": "commands"
+        },
+        {
+          "compatible": true,
+          "modifierScope": "habits",
+          "outputScope": "habits"
+        },
+        {
+          "compatible": false,
+          "modifierScope": "habits",
+          "outputScope": "commands-and-habits"
+        },
+        {
+          "compatible": false,
+          "modifierScope": "habits",
+          "outputScope": "non-basic-attacks"
+        },
+        {
+          "compatible": false,
+          "modifierScope": "habits",
+          "outputScope": "all-qualifying-sources"
+        },
+        {
+          "compatible": false,
+          "modifierScope": "habits",
+          "outputScope": "unknown"
+        },
+        {
+          "compatible": false,
+          "modifierScope": "commands-and-habits",
+          "outputScope": "basic-attacks"
+        },
+        {
+          "compatible": true,
+          "modifierScope": "commands-and-habits",
+          "outputScope": "commands"
+        },
+        {
+          "compatible": true,
+          "modifierScope": "commands-and-habits",
+          "outputScope": "habits"
+        },
+        {
+          "compatible": true,
+          "modifierScope": "commands-and-habits",
+          "outputScope": "commands-and-habits"
+        },
+        {
+          "compatible": false,
+          "modifierScope": "commands-and-habits",
+          "outputScope": "non-basic-attacks"
+        },
+        {
+          "compatible": false,
+          "modifierScope": "commands-and-habits",
+          "outputScope": "all-qualifying-sources"
+        },
+        {
+          "compatible": false,
+          "modifierScope": "commands-and-habits",
+          "outputScope": "unknown"
+        },
+        {
+          "compatible": false,
+          "modifierScope": "non-basic-attacks",
+          "outputScope": "basic-attacks"
+        },
+        {
+          "compatible": true,
+          "modifierScope": "non-basic-attacks",
+          "outputScope": "commands"
+        },
+        {
+          "compatible": true,
+          "modifierScope": "non-basic-attacks",
+          "outputScope": "habits"
+        },
+        {
+          "compatible": true,
+          "modifierScope": "non-basic-attacks",
+          "outputScope": "commands-and-habits"
+        },
+        {
+          "compatible": true,
+          "modifierScope": "non-basic-attacks",
+          "outputScope": "non-basic-attacks"
+        },
+        {
+          "compatible": true,
+          "modifierScope": "non-basic-attacks",
+          "outputScope": "all-qualifying-sources"
+        },
+        {
+          "compatible": false,
+          "modifierScope": "non-basic-attacks",
+          "outputScope": "unknown"
+        },
+        {
+          "compatible": true,
+          "modifierScope": "all-qualifying-sources",
+          "outputScope": "basic-attacks"
+        },
+        {
+          "compatible": true,
+          "modifierScope": "all-qualifying-sources",
+          "outputScope": "commands"
+        },
+        {
+          "compatible": true,
+          "modifierScope": "all-qualifying-sources",
+          "outputScope": "habits"
+        },
+        {
+          "compatible": true,
+          "modifierScope": "all-qualifying-sources",
+          "outputScope": "commands-and-habits"
+        },
+        {
+          "compatible": true,
+          "modifierScope": "all-qualifying-sources",
+          "outputScope": "non-basic-attacks"
+        },
+        {
+          "compatible": true,
+          "modifierScope": "all-qualifying-sources",
+          "outputScope": "all-qualifying-sources"
+        },
+        {
+          "compatible": false,
+          "modifierScope": "all-qualifying-sources",
+          "outputScope": "unknown"
+        },
+        {
+          "compatible": false,
+          "modifierScope": "unknown",
+          "outputScope": "basic-attacks"
+        },
+        {
+          "compatible": false,
+          "modifierScope": "unknown",
+          "outputScope": "commands"
+        },
+        {
+          "compatible": false,
+          "modifierScope": "unknown",
+          "outputScope": "habits"
+        },
+        {
+          "compatible": false,
+          "modifierScope": "unknown",
+          "outputScope": "commands-and-habits"
+        },
+        {
+          "compatible": false,
+          "modifierScope": "unknown",
+          "outputScope": "non-basic-attacks"
+        },
+        {
+          "compatible": false,
+          "modifierScope": "unknown",
+          "outputScope": "all-qualifying-sources"
+        },
+        {
+          "compatible": false,
+          "modifierScope": "unknown",
+          "outputScope": "unknown"
+        }
+      ]
+    }
+  ],
+  "targetingLanguageRules": [
+    {
+      "casterEligibility": "eligible-if-targeting-allows",
+      "id": "plain-ally-caster-eligible",
+      "notes": [
+        "Plain Ally/Allies may include the caster when targeting permits."
+      ],
+      "wording": "Ally / Allies"
+    },
+    {
+      "casterEligibility": "excluded",
+      "id": "other-ally-caster-excluded",
+      "notes": [
+        "Other Ally/Other Allies excludes the caster."
+      ],
+      "wording": "Other Ally / Other Allies"
+    },
+    {
+      "casterEligibility": "excluded-by-spatial-rule",
+      "id": "spatial-self-adjacency-exclusion",
+      "notes": [
+        "A caster is not adjacent to itself."
+      ],
+      "wording": "within adjacency"
+    }
+  ],
+  "traceStatuses": [
+    "active",
+    "potential",
+    "inactive",
+    "blocked",
+    "unknown",
+    "not-applicable"
+  ]
+}
