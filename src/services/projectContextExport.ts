@@ -612,6 +612,7 @@ function formationCase({
       normalUnmetSummaryNote('current', formation),
       normalUnmetSummaryNote('preview', formation),
       'Normal UI-only unmet summaries are not inserted into raw debug traces; full trace requirements remain exported for audit.',
+      'Version 0.5.5 adds card-level presentation for Receives, Provides, Trait status, affinity chips, target candidates, preview labels, and overflow without changing trace mechanics.',
     ],
   };
 }
@@ -656,6 +657,7 @@ function buildProjectState(
       'Capability derivation is computed from structured AbilityEffect records in effectCapabilities.ts.',
       'Formation analysis uses structured SynergyTrace records and does not produce an arbitrary numerical score.',
       'Formation normalization preserves defensive scope, target-selection groups, visible-card requirement ownership, source ability identity, interaction scope, pure normal unmet summaries, and debug/export trace retention.',
+      'Formation card presentation maps existing normal traces into per-dragon Receives, Provides, Trait status, affinity, candidate, and preview summaries without changing mechanics.',
     ],
     completedPhases: [
       'Phase 3.6 combat confirmations',
@@ -665,11 +667,12 @@ function buildProjectState(
       'Phase 3.8.1 formation trace reconciliation',
       'Phase 3.8.2 formation analysis normalization',
       'Version 0.5.4 normal unmet requirement summary repair',
+      'Version 0.5.5 formation card analysis presentation redesign',
     ],
-    currentReviewPhase: 'Normal unmet requirement summary retest and project-context regeneration.',
+    currentReviewPhase: 'Formation card presentation retest and project-context regeneration.',
     plannedNextPhase: [
       'full formation-output review',
-      'UI/tag redesign',
+      'additional visual QA',
       'then additional dragons',
     ],
     unresolvedMechanicsCount: unresolvedMechanics.length,
@@ -1019,6 +1022,10 @@ Run \`npm run validate:context\` after generation. The validator checks schema c
 
 Data schema 9 exports defensive damage scope, threshold conditions separate from target count, highest-stat and one-adjacent target selectors, grouped modifier capability IDs, requirement ownership, source-ability identity, and interaction scope. Normal unmet requirements are presentation summaries only: they are pure per-formation/per-preview results, hide blockers owned by visible cards, dedupe by semantic identity, and apply hard-failure precedence. Internal same-dragon traces and suppressed normal blockers remain exported for audit even when normal Formation Analysis excludes them from cross-dragon synergy sections.
 
+## Formation Card Presentation
+
+Version 0.5.5 adds a UI-only card presentation layer. It maps normal traces into per-position Receives, Provides, Trait status, affinity chips, candidate-target labels, preview labels, and overflow counts. Raw/debug traces, requirements, evidence IDs, internal interactions, and expected formation-review cases remain exported for audit.
+
 ## Authority
 
 The authoritative source remains the typed source data under \`src/data\`, \`src/models\`, and \`src/services\`. Generated JSON exists so external systems can understand the project without reading TypeScript.
@@ -1050,6 +1057,10 @@ ${projectState.currentArchitectureSummary.map((item) => `- ${item}`).join('\n')}
 ## Normal Requirement Summary
 
 Normal Formation Analysis unmet requirements are concise UI summaries rather than raw trace dumps. Visible interaction cards own their own blockers, global unmet requirements show selected Trait placement failures and concrete unowned-card progression blockers, preview and formation switches do not reuse prior results, and debug/export data keeps the suppressed raw requirements.
+
+## Formation Card Presentation
+
+Formation Builder cards are the primary normal UI for dragon-specific benefits. Receives and Provides derive from normal traces, target-selection groups use candidate wording, per-dragon affinities use existing affinity data, and raw effect tags are hidden from the normal Formation Summary. Technical analysis preserves the full trace set.
 
 ## Populated Dragons
 

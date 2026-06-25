@@ -1,14 +1,19 @@
 import {
   BookOpen,
+  CheckCircle2,
+  CircleDashed,
   Database,
   Download,
   ExternalLink,
   Flame,
+  HelpCircle,
   Home,
   Info,
   Link,
+  Lock,
   RotateCcw,
   Shield,
+  Sparkles,
   Swords,
   Upload,
   Users,
@@ -37,6 +42,7 @@ import {
   type DragonRarity,
   type FormationPosition,
   type OwnedDragon,
+  type TroopType,
   type VerificationStatus,
 } from '../models/dragon';
 import type { SynergyTrace, TraceConfidence, TraceStatus } from '../models/synergy';
@@ -49,11 +55,19 @@ import {
 import { THRESHOLD_BOUNDARY_NOTE } from '../services/formationRules';
 import { analyzeFormation, findAffinityCoverage, findBreedDistribution } from '../services/synergyEngine';
 import {
+  buildFormationCardPresentation,
+  getCompactInteractions,
+  type FormationCardAnalysis,
+  type FormationCardInteraction,
+  type FormationCardInteractionState,
+  type FormationTraitStatus,
+  type FormationAffinityTeamSummary,
+} from '../services/formationCardAnalysis';
+import {
   analyzeFormationTraces,
   createSynergyAuditExport,
   generateFormationAudit,
   traceStatusReason,
-  isConditionalTrace,
   isNormalSynergyTrace,
 } from '../services/synergyTrace';
 import { defaultFilters, filterDragons, sortDragons, type DragonFilters, type DragonSort } from '../services/rosterFilters';
@@ -570,6 +584,8 @@ function FormationBuilderSection({
   const [recipientAmplifierFilter, setRecipientAmplifierFilter] = useState('all');
   const [combatLogFilter, setCombatLogFilter] = useState<'all' | 'confirmed'>('all');
   const [auditExpanded, setAuditExpanded] = useState(false);
+  const [expandedCardSections, setExpandedCardSections] = useState<Record<string, boolean>>({});
+  const [activeRelationship, setActiveRelationship] = useState<string | null>(null);
   const selectableDragons = dragons.filter((dragon) => includeUnowned || roster[dragon.id]?.owned);
   const selectedDragons = FORMATION_POSITIONS.map((position) => formation[position])
     .map((id) => dragons.find((dragon) => dragon.id === id))
@@ -577,6 +593,7 @@ function FormationBuilderSection({
   const traceOptions = { roster, previewMaxRankInteractions: previewMaxRank };
   const synergy = analyzeFormation(formation, dragons, defaultSynergyRules, traceOptions);
   const traces = analyzeFormationTraces(formation, dragons, traceOptions);
+  const cardPresentation = buildFormationCardPresentation(formation, dragons, traces, { previewEnabled: previewMaxRank });
   const providerEffects = [...new Set(traces.map((trace) => trace.providedEffectType).filter((value): value is string => Boolean(value)))];
   const recipientAmplifiers = [...new Set(traces.map((trace) => trace.recipientModifierType).filter((value): value is string => Boolean(value)))];
   const filteredTraces = traces.filter(
@@ -608,6 +625,12 @@ function FormationBuilderSection({
   const breedDistribution = findBreedDistribution(selectedDragons);
   const affinityCoverage = findAffinityCoverage(selectedDragons);
   const knownTags = [...new Set(selectedDragons.flatMap((dragon) => dragon.tags))];
+  const normalTraces = traces.filter(isNormalSynergyTrace);
+  const interactionCounts = {
+    active: normalTraces.filter((trace) => trace.status === 'active').length,
+    conditional: normalTraces.filter((trace) => trace.status === 'potential' || trace.status === 'unknown').length,
+    preview: cardPresentation.cards.flatMap((card) => [...card.receives, ...card.provides]).filter((item) => item.isPreview).length,
+  };
   const auditJson = JSON.stringify(
     {
       format: 'dragonfire-synergy-audit-matrix',
@@ -686,47 +709,23 @@ function FormationBuilderSection({
         </div>
       </div>
       <div className="formation-board" aria-label="Formation positions">
-        {FORMATION_POSITIONS.map((position) => (
-          <div className={`team-slot formation-position ${position}`} key={position}>
-            <p className="position-label">{positionLabels[position]}</p>
-            <label htmlFor={`formation-${position}`}>Dragon</label>
-            <select
-              id={`formation-${position}`}
-              value={formation[position] ?? ''}
-              onChange={(event) => updatePosition(position, event.target.value || null)}
-            >
-              <option value="">Choose a dragon</option>
-              {selectableDragons.map((dragon) => (
-                <option
-                  key={dragon.id}
-                  value={dragon.id}
-                  disabled={FORMATION_POSITIONS.some(
-                    (existingPosition) =>
-                      existingPosition !== position && formation[existingPosition] === dragon.id,
-                  )}
-                >
-                  {dragon.name} ({dragon.rarity}, {dragon.breed})
-                </option>
-              ))}
-            </select>
-            <div className="button-row">
-              {FORMATION_POSITIONS.filter((target) => target !== position).map((target) => (
-                <button
-                  className="text-button"
-                  key={target}
-                  type="button"
-                  onClick={() => onFormationChange(moveFormationDragon(formation, position, target))}
-                >
-                  Move to {positionLabels[target]}
-                </button>
-              ))}
-              <button type="button" className="text-button" onClick={() => updatePosition(position, null)}>
-                Clear position
-              </button>
-            </div>
-          </div>
+        {cardPresentation.cards.map((card) => (
+          <FormationPositionCard
+            key={card.position}
+            card={card}
+            formation={formation}
+            selectableDragons={selectableDragons}
+            activeRelationship={activeRelationship}
+            expandedSections={expandedCardSections}
+            onExpandedSectionsChange={setExpandedCardSections}
+            onRelationshipActive={setActiveRelationship}
+            onDragonChange={(nextId) => updatePosition(card.position, nextId)}
+            onMove={(target) => onFormationChange(moveFormationDragon(formation, card.position, target))}
+            onClear={() => updatePosition(card.position, null)}
+          />
         ))}
       </div>
+      <FormationAffinitySummaryStrip summary={cardPresentation.teamAffinity} />
       <div className="summary-layout">
         <div className="panel">
           <h3>Formation Summary</h3>
@@ -754,7 +753,13 @@ function FormationBuilderSection({
             values={Object.fromEntries(breedDistribution.map((item) => [item.breed, item.count]))}
           />
           <p>
-            <strong>Known effect tags:</strong> {knownTags.length > 0 ? knownTags.join(', ') : unknown}
+            <strong>Active interactions:</strong> {interactionCounts.active}
+          </p>
+          <p>
+            <strong>Conditional interactions:</strong> {interactionCounts.conditional}
+          </p>
+          <p>
+            <strong>Max-rank preview interactions:</strong> {previewMaxRank ? interactionCounts.preview : 0}
           </p>
           <p>
             <strong>Data confidence:</strong> {synergy.confidence}
@@ -773,32 +778,10 @@ function FormationBuilderSection({
               {warning}
             </p>
           ))}
+          <TeamInteractionSummary traces={normalTraces} />
+          <AnalysisList title="Formation blockers" items={synergy.unmetRequirements} />
           <AnalysisList
-            title="Active interactions"
-            items={traces
-              .filter((trace) => trace.status === 'active' && isNormalSynergyTrace(trace))
-              .map((trace) => ({
-                ruleId: trace.id,
-                title: trace.title,
-                description: `${trace.explanation} ${traceStatusReason(trace)}`,
-                confidence: trace.confidence,
-              }))}
-          />
-          <AnalysisList
-            title="Conditional and potential interactions"
-            items={traces
-              .filter((trace) => isConditionalTrace(trace) && isNormalSynergyTrace(trace))
-              .map((trace) => ({
-                ruleId: trace.id,
-                title: trace.title,
-                description: `${trace.explanation} ${traceStatusReason(trace)}`,
-                confidence: trace.confidence,
-              }))}
-          />
-          <AnalysisList title="Position requirements" items={synergy.positionRequirements} />
-          <AnalysisList title="Unmet requirements" items={synergy.unmetRequirements} />
-          <AnalysisList
-            title="Unresolved assumptions"
+            title="Unresolved conditions"
             items={synergy.unresolvedAssumptions.map((description, index) => ({
               dragonIds: [],
               tags: [],
@@ -808,37 +791,50 @@ function FormationBuilderSection({
               confidence: 'low',
             }))}
           />
-          <h4>Affinity coverage</h4>
-          <div className="table-wrap">
-            <table>
-              <thead>
-                <tr>
-                  <th>Troop</th>
-                  <th>Positive</th>
-                  <th>Neutral</th>
-                  <th>Negative</th>
-                  <th>Unknown</th>
-                </tr>
-              </thead>
-              <tbody>
-                {affinityCoverage.map((row) => (
-                  <tr key={row.troopType}>
-                    <td>{row.troopType}</td>
-                    <td>{row.positive}</td>
-                    <td>{row.neutral}</td>
-                    <td>{row.negative}</td>
-                    <td>{row.unknown}</td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
+          <details className="technical-toggle" open={showDebug}>
+            <summary>Technical analysis status</summary>
+            <p>
+              Full trace cards, requirements, confidence, evidence IDs, internal interactions, and raw effect
+              tags are available when Show analysis details is enabled.
+            </p>
+          </details>
         </div>
       </div>
       {showDebug ? (
         <div className="debug-section">
           <div className="panel">
             <h3>Analysis Details</h3>
+            <details>
+              <summary>Raw effect tags</summary>
+              <p>{knownTags.length > 0 ? knownTags.join(', ') : unknown}</p>
+            </details>
+            <details>
+              <summary>Raw affinity coverage</summary>
+              <div className="table-wrap">
+                <table>
+                  <thead>
+                    <tr>
+                      <th>Troop</th>
+                      <th>Positive</th>
+                      <th>Neutral</th>
+                      <th>Negative</th>
+                      <th>Unknown</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {affinityCoverage.map((row) => (
+                      <tr key={row.troopType}>
+                        <td>{row.troopType}</td>
+                        <td>{row.positive}</td>
+                        <td>{row.neutral}</td>
+                        <td>{row.negative}</td>
+                        <td>{row.unknown}</td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            </details>
             <div className="toolbar">
               <label className="check-row">
                 <input
@@ -913,6 +909,359 @@ function FormationBuilderSection({
         </div>
       ) : null}
     </section>
+  );
+}
+
+function FormationPositionCard({
+  card,
+  formation,
+  selectableDragons,
+  activeRelationship,
+  expandedSections,
+  onExpandedSectionsChange,
+  onRelationshipActive,
+  onDragonChange,
+  onMove,
+  onClear,
+}: {
+  card: FormationCardAnalysis;
+  formation: Formation;
+  selectableDragons: Dragon[];
+  activeRelationship: string | null;
+  expandedSections: Record<string, boolean>;
+  onExpandedSectionsChange: (value: Record<string, boolean>) => void;
+  onRelationshipActive: (relationshipId: string | null) => void;
+  onDragonChange: (dragonId: string | null) => void;
+  onMove: (position: FormationPosition) => void;
+  onClear: () => void;
+}) {
+  const dragon = card.dragonId ? dragons.find((candidate) => candidate.id === card.dragonId) ?? null : null;
+  const cardRelationships = [...card.receives, ...card.provides].map((item) => item.relationshipId);
+  const isRelationshipActive = activeRelationship !== null && cardRelationships.includes(activeRelationship);
+
+  return (
+    <article
+      className={`team-slot formation-position ${card.position}${isRelationshipActive ? ' relationship-active' : ''}`}
+      aria-labelledby={`formation-card-${card.position}`}
+    >
+      <div className="position-card-heading">
+        <p className="position-label" id={`formation-card-${card.position}`}>
+          {positionLabels[card.position]}
+        </p>
+        {card.position === 'vanguard' ? <span className="vanguard-badge" aria-label="Vanguard badge">Center</span> : null}
+      </div>
+      <label htmlFor={`formation-${card.position}`}>Dragon</label>
+      <select
+        id={`formation-${card.position}`}
+        value={formation[card.position] ?? ''}
+        onChange={(event) => onDragonChange(event.target.value || null)}
+      >
+        <option value="">Choose a dragon</option>
+        {selectableDragons.map((candidate) => (
+          <option
+            key={candidate.id}
+            value={candidate.id}
+            disabled={FORMATION_POSITIONS.some(
+              (existingPosition) =>
+                existingPosition !== card.position && formation[existingPosition] === candidate.id,
+            )}
+          >
+            {candidate.name} ({candidate.rarity}, {candidate.breed})
+          </option>
+        ))}
+      </select>
+      <div className="movement-controls" aria-label={`${positionLabels[card.position]} movement controls`}>
+        {FORMATION_POSITIONS.filter((target) => target !== card.position).map((target) => (
+          <button className="text-button compact-action" key={target} type="button" onClick={() => onMove(target)}>
+            Move to {positionLabels[target]}
+          </button>
+        ))}
+        <button type="button" className="text-button compact-action" onClick={onClear}>
+          Clear position
+        </button>
+      </div>
+      {dragon ? (
+        <>
+          <TraitStatusPanel status={card.traitStatus} />
+          <DragonAffinityStrip dragonName={dragon.name} favorable={card.affinities.favorable} unfavorable={card.affinities.unfavorable} />
+          <CardInteractionSection
+            cardKey={`${card.dragonId}-receives`}
+            title="Receives"
+            emptyText="No teammate benefits identified."
+            interactions={card.receives}
+            expandedSections={expandedSections}
+            onExpandedSectionsChange={onExpandedSectionsChange}
+            activeRelationship={activeRelationship}
+            onRelationshipActive={onRelationshipActive}
+          />
+          <CardInteractionSection
+            cardKey={`${card.dragonId}-provides`}
+            title="Provides"
+            emptyText="No outgoing benefits identified."
+            interactions={card.provides}
+            expandedSections={expandedSections}
+            onExpandedSectionsChange={onExpandedSectionsChange}
+            activeRelationship={activeRelationship}
+            onRelationshipActive={onRelationshipActive}
+          />
+        </>
+      ) : (
+        <p className="empty-card-note">Choose a dragon to see Trait, affinity, and interaction details.</p>
+      )}
+    </article>
+  );
+}
+
+function TraitStatusPanel({ status }: { status: FormationTraitStatus | null }) {
+  if (!status) {
+    return (
+      <section className="card-mini-section" aria-label="Trait status">
+        <h4>Trait</h4>
+        <p>Trait data not yet verified.</p>
+      </section>
+    );
+  }
+  return (
+    <section className="card-mini-section" aria-label="Trait status">
+      <h4>Trait</h4>
+      <StateBadge state={status.state} label={status.label} />
+      <p>
+        <strong>{status.abilityName}</strong>
+      </p>
+      <p>{status.summary}</p>
+    </section>
+  );
+}
+
+function DragonAffinityStrip({
+  dragonName,
+  favorable,
+  unfavorable,
+}: {
+  dragonName: string;
+  favorable: TroopType[];
+  unfavorable: TroopType[];
+}) {
+  return (
+    <section className="card-mini-section" aria-label={`${dragonName} affinities`}>
+      <h4>Affinities</h4>
+      <div className="affinity-row">
+        <span className="affinity-label">Favorable</span>
+        <AffinityIconList troopTypes={favorable} polarity="positive" emptyText="None verified" />
+      </div>
+      <div className="affinity-row">
+        <span className="affinity-label">Unfavorable</span>
+        <AffinityIconList troopTypes={unfavorable} polarity="negative" emptyText="None verified" />
+      </div>
+    </section>
+  );
+}
+
+function AffinityIconList({
+  troopTypes,
+  polarity,
+  emptyText,
+}: {
+  troopTypes: TroopType[];
+  polarity: 'positive' | 'negative';
+  emptyText: string;
+}) {
+  if (troopTypes.length === 0) {
+    return <span className="muted-inline">{emptyText}</span>;
+  }
+  return (
+    <span className="affinity-icons">
+      {troopTypes.map((troopType) => (
+        <span
+          className={`affinity-chip ${polarity}`}
+          key={troopType}
+          title={`${polarity === 'positive' ? 'Favorable' : 'Unfavorable'} affinity: ${troopType}`}
+          aria-label={`${polarity === 'positive' ? 'Favorable' : 'Unfavorable'} affinity: ${troopType}`}
+        >
+          <span aria-hidden="true">{polarity === 'positive' ? '+' : '-'}</span>
+          {troopType}
+        </span>
+      ))}
+    </span>
+  );
+}
+
+function CardInteractionSection({
+  cardKey,
+  title,
+  emptyText,
+  interactions,
+  expandedSections,
+  onExpandedSectionsChange,
+  activeRelationship,
+  onRelationshipActive,
+}: {
+  cardKey: string;
+  title: string;
+  emptyText: string;
+  interactions: FormationCardInteraction[];
+  expandedSections: Record<string, boolean>;
+  onExpandedSectionsChange: (value: Record<string, boolean>) => void;
+  activeRelationship: string | null;
+  onRelationshipActive: (relationshipId: string | null) => void;
+}) {
+  const expanded = expandedSections[cardKey] === true;
+  const visible = getCompactInteractions(interactions, expanded);
+  const overflow = Math.max(0, interactions.length - visible.length);
+  return (
+    <section className="card-mini-section interaction-section" aria-labelledby={`${cardKey}-title`}>
+      <div className="interaction-section-heading">
+        <h4 id={`${cardKey}-title`}>{title}</h4>
+        <span className="count-pill">{interactions.length}</span>
+      </div>
+      {visible.length > 0 ? (
+        <ul className="card-interaction-list">
+          {visible.map((interaction) => (
+            <li key={interaction.id}>
+              <CardInteractionItem
+                interaction={interaction}
+                active={activeRelationship === interaction.relationshipId}
+                onRelationshipActive={onRelationshipActive}
+              />
+            </li>
+          ))}
+        </ul>
+      ) : (
+        <p>{emptyText}</p>
+      )}
+      {interactions.length > 3 ? (
+        <button
+          type="button"
+          className="text-button compact-action"
+          aria-expanded={expanded}
+          onClick={() => onExpandedSectionsChange({ ...expandedSections, [cardKey]: !expanded })}
+        >
+          {expanded ? 'Show fewer' : `View ${overflow} more`}
+        </button>
+      ) : null}
+    </section>
+  );
+}
+
+function CardInteractionItem({
+  interaction,
+  active,
+  onRelationshipActive,
+}: {
+  interaction: FormationCardInteraction;
+  active: boolean;
+  onRelationshipActive: (relationshipId: string | null) => void;
+}) {
+  return (
+    <button
+      type="button"
+      className={`card-interaction-item state-${interaction.state}${active ? ' is-linked' : ''}`}
+      onFocus={() => onRelationshipActive(interaction.relationshipId)}
+      onBlur={() => onRelationshipActive(null)}
+      onMouseEnter={() => onRelationshipActive(interaction.relationshipId)}
+      onMouseLeave={() => onRelationshipActive(null)}
+      onClick={() => onRelationshipActive(active ? null : interaction.relationshipId)}
+      aria-pressed={active}
+    >
+      <StateBadge state={interaction.state} label={stateLabel(interaction.state)} />
+      <span className="interaction-main">
+        <strong>
+          {interaction.sourceName}
+          {interaction.recipientName ? ` - ${interaction.recipientName}` : interaction.targetLabel ? ` - ${interaction.targetLabel}` : ''}
+        </strong>
+        <span>{interaction.abilityName}</span>
+        <span>{interaction.summary}</span>
+        {interaction.isCandidate ? <span className="target-note">Target not guaranteed</span> : null}
+        {interaction.isEnemyFacing ? <span className="target-note">Enemy-facing team benefit</span> : null}
+      </span>
+    </button>
+  );
+}
+
+function StateBadge({ state, label }: { state: FormationCardInteractionState; label: string }) {
+  const Icon =
+    state === 'active'
+      ? CheckCircle2
+      : state === 'conditional'
+        ? CircleDashed
+        : state === 'preview'
+          ? Sparkles
+          : state === 'unknown'
+            ? HelpCircle
+            : Lock;
+  return (
+    <span className={`state-badge state-${state}`} title={label} aria-label={label}>
+      <Icon size={14} aria-hidden="true" />
+      <span>{label}</span>
+    </span>
+  );
+}
+
+function FormationAffinitySummaryStrip({ summary }: { summary: FormationAffinityTeamSummary }) {
+  return (
+    <section className="panel team-affinity-strip" aria-labelledby="formation-affinity-title">
+      <h3 id="formation-affinity-title">Formation Affinity Coverage</h3>
+      <AffinitySummaryGroup title="Covered" polarity="positive" items={summary.covered} />
+      <AffinitySummaryGroup title="Weak or missing" polarity="unknown" items={summary.weakOrMissing} />
+      <AffinitySummaryGroup title="Conflicts or vulnerabilities" polarity="negative" items={summary.conflicts} />
+    </section>
+  );
+}
+
+function AffinitySummaryGroup({
+  title,
+  polarity,
+  items,
+}: {
+  title: string;
+  polarity: 'positive' | 'negative' | 'unknown';
+  items: Array<{ troopType: TroopType; dragonNames: string[] }>;
+}) {
+  return (
+    <div>
+      <h4>{title}</h4>
+      {items.length > 0 ? (
+        <div className="affinity-icons">
+          {items.map((item) => (
+            <span
+              className={`affinity-chip ${polarity}`}
+              key={item.troopType}
+              title={item.dragonNames.length > 0 ? item.dragonNames.join(', ') : 'No positive coverage'}
+              aria-label={`${title}: ${item.troopType}. ${
+                item.dragonNames.length > 0 ? `Contributed by ${item.dragonNames.join(', ')}` : 'No positive coverage'
+              }`}
+            >
+              <span aria-hidden="true">{polarity === 'positive' ? '+' : polarity === 'negative' ? '-' : '?'}</span>
+              {item.troopType}
+            </span>
+          ))}
+        </div>
+      ) : (
+        <p>None identified</p>
+      )}
+    </div>
+  );
+}
+
+function TeamInteractionSummary({ traces }: { traces: SynergyTrace[] }) {
+  const targetSelection = traces.filter((trace) => trace.targetSelectionGroup);
+  const chains = traces.filter((trace) => trace.matchKind === 'status-condition-enablement');
+  const enemyFacing = traces.filter(
+    (trace) => trace.modifierRole === 'enemy-debuff' || trace.matchKind === 'enemy-mitigation-reduction',
+  );
+  const multiTarget = traces.filter(
+    (trace) => !trace.targetSelectionGroup && trace.recipientDragonId && trace.matchedOutputCapabilityIds && trace.matchedOutputCapabilityIds.length > 1,
+  );
+  return (
+    <div>
+      <h4>Team interactions</h4>
+      <ul className="plain-list">
+        <li>Target-selection competition: {targetSelection.length}</li>
+        <li>Multi-dragon chains: {chains.length}</li>
+        <li>Multi-output support: {multiTarget.length}</li>
+        <li>Enemy mitigation effects: {enemyFacing.length}</li>
+      </ul>
+    </div>
   );
 }
 
@@ -2584,6 +2933,21 @@ function formatToken(value: string) {
     .split('-')
     .map((part) => titleCase(part))
     .join(' ');
+}
+
+function stateLabel(state: FormationCardInteractionState) {
+  switch (state) {
+    case 'active':
+      return 'Active';
+    case 'conditional':
+      return 'Conditional';
+    case 'preview':
+      return 'Max-rank preview';
+    case 'unknown':
+      return 'Progression unknown';
+    case 'blocked':
+      return 'Blocked';
+  }
 }
 
 function titleCase(value: string) {

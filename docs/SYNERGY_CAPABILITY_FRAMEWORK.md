@@ -263,3 +263,13 @@ The app and `npm run report:synergy` expose the matrix for Syrax, Caraxes, Malac
 - Preview mode and formation switching must not reuse prior results or module-level accumulators.
 - Trial by Flame normal presentation groups selected recipients and threshold tiers while preserving threshold conditions in exported capabilities.
 - Grouped stat cards may combine sibling effects with the same value; different sibling values must be listed individually.
+
+## Formation Card Presentation 0.5.5
+
+- `formationCardAnalysis` is a pure presentation transform over existing normal traces.
+- Receives maps selected recipient traces to the recipient card; Provides maps selected source traces to the source card.
+- Target-selection groups create one provider item plus candidate recipient items that explicitly say the selected target is not guaranteed.
+- Enemy-facing debuffs stay on the provider card as team benefits.
+- Current conditional, max-rank preview, unknown progression, active, and blocked states remain distinct.
+- Per-card affinities derive from existing dragon affinity data; team coverage is summarized separately.
+- Technical trace data remains available through Show analysis details and report/export paths.

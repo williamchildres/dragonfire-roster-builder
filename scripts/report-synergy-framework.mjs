@@ -70,11 +70,13 @@ try {
   const { analyzeFormation } = await server.ssrLoadModule('/src/services/synergyEngine.ts');
   const { defaultSynergyRules } = await server.ssrLoadModule('/src/data/synergyRules.ts');
   const { deriveModifierCapabilities } = await server.ssrLoadModule('/src/services/effectCapabilities.ts');
+  const { buildFormationCardPresentation } = await server.ssrLoadModule('/src/services/formationCardAnalysis.ts');
 
   const failures = [];
   const repairRows = [];
   const normalizationRows = [];
   const normalRequirementRows = [];
+  const formationCardRows = [];
   let duplicateCollapsed = 0;
   let duplicateRequirementCount = 0;
   let singleTargetGroups = 0;
@@ -135,11 +137,56 @@ try {
       const normalText = JSON.stringify(normalVisible);
       const formationResult = analyzeFormation(formation, dragons, defaultSynergyRules, mode === 'preview' ? { previewMaxRankInteractions: true } : {});
       const normalRequirements = formationResult.unmetRequirements.map(summaryLine);
+      const cardPresentation = buildFormationCardPresentation(formation, dragons, traces, { previewEnabled: mode === 'preview' });
+      const cardInteractions = cardPresentation.cards.flatMap((card) => [...card.receives, ...card.provides]);
+      const cardText = JSON.stringify(cardInteractions.map((item) => [item.sourceName, item.recipientName, item.abilityName, item.summary, item.detail]));
       const expectedNormal = expectedNormalSummaries[id];
       if (JSON.stringify(normalRequirements) !== JSON.stringify(expectedNormal)) {
         failures.push(`Formation ${id} ${mode}: normal unmet requirements differ from expected. Actual: ${normalRequirements.join(' | ') || 'None identified'}`);
       }
       const selectedIds = new Set(Object.values(formation).filter(Boolean));
+      const selectedCards = new Set(cardPresentation.cards.map((card) => card.dragonId).filter(Boolean));
+      const interactionOffCard = cardInteractions.find((item) =>
+        !selectedIds.has(item.sourceDragonId) || (item.recipientDragonId && !selectedIds.has(item.recipientDragonId))
+      );
+      if (interactionOffCard) {
+        failures.push(`Formation ${id} ${mode}: card presentation mapped an interaction outside selected cards: ${interactionOffCard.id}`);
+      }
+      if ([...selectedIds].some((dragonId) => !selectedCards.has(dragonId))) {
+        failures.push(`Formation ${id} ${mode}: selected dragon is missing a presentation card.`);
+      }
+      const internalCardInteraction = cardInteractions.find((item) => item.sourceDragonId === item.recipientDragonId);
+      if (internalCardInteraction) {
+        failures.push(`Formation ${id} ${mode}: internal interaction appears in card Receives/Provides: ${internalCardInteraction.id}`);
+      }
+      const guaranteedCandidate = cardInteractions.find((item) =>
+        item.candidateTotal === 2 && !/not guaranteed|eligible recipients/i.test(`${item.summary} ${item.targetLabel ?? ''}`)
+      );
+      if (guaranteedCandidate) {
+        failures.push(`Formation ${id} ${mode}: one-target candidate is shown as guaranteed: ${guaranteedCandidate.id}`);
+      }
+      if (mode === 'current' && cardInteractions.some((item) => item.isPreview)) {
+        failures.push(`Formation ${id} current: preview card state leaked into current presentation.`);
+      }
+      if (mode === 'preview' && traces.some((trace) => trace.status === 'potential') && !cardInteractions.some((item) => item.state === 'preview' || item.state === 'conditional')) {
+        failures.push(`Formation ${id} preview: preview and conditional states were not represented on cards.`);
+      }
+      if (/\b(caraxes|sheepstealer|syrax|malachite|seasmoke|vermax) - [A-Z]/.test(cardText)) {
+        failures.push(`Formation ${id} ${mode}: raw lowercase slug appears in normal card text.`);
+      }
+      if (cardPresentation.technicalTraceCount !== traces.length) {
+        failures.push(`Formation ${id} ${mode}: technical analysis lost traces during card presentation.`);
+      }
+      const affinityLabelMissing = cardPresentation.cards.some((card) =>
+        [...card.affinities.favorable, ...card.affinities.unfavorable].some((troopType) => typeof troopType !== 'string' || troopType.length === 0)
+      );
+      if (affinityLabelMissing) {
+        failures.push(`Formation ${id} ${mode}: affinity icon lacks an accessible player-facing name.`);
+      }
+      const normalSummaryFields = ['dragons', 'rarity distribution', 'breed distribution', 'affinity coverage', 'interaction counts', 'warnings'];
+      if (normalSummaryFields.some((field) => /^[A-Z0-9_]+$/.test(field))) {
+        failures.push(`Formation ${id} ${mode}: raw effect tag appears in normal Formation Summary.`);
+      }
       const unselectedRequirement = formationResult.unmetRequirements.find((item) =>
         item.dragonIds.some((dragonId) => !selectedIds.has(dragonId)) ||
         [...selectedIds].every((dragonId) => !summaryLine(item).includes(displayName(dragonId, dragons))) &&
@@ -260,6 +307,24 @@ try {
           : 'Not present.',
         multiEffect: normalVisible.filter((trace) => (trace.modifierCapabilityIds?.length ?? 0) > 1).map((trace) => trace.explanation),
       });
+      formationCardRows.push({
+        formation: id,
+        mode,
+        cards: cardPresentation.cards.map((card) => ({
+          name: card.dragonId ? displayName(card.dragonId, dragons) : 'Empty',
+          receives: card.receives.length,
+          provides: card.provides.length,
+          candidates: card.receives.filter((item) => item.isCandidate).length,
+          trait: card.traitStatus ? `${card.traitStatus.label}: ${card.traitStatus.abilityName}` : 'No verified Trait',
+          favorable: card.affinities.favorable.length,
+          unfavorable: card.affinities.unfavorable.length,
+          overflow: card.overflow.receives + card.overflow.provides,
+        })),
+        grouped: normalVisible.filter((trace) => trace.targetSelectionGroup || trace.matchKind === 'status-condition-enablement' || trace.matchKind === 'enemy-mitigation-reduction').length,
+        technical: cardPresentation.technicalTraceCount,
+        canonical: /\b(caraxes|sheepstealer|syrax) - [A-Z]/.test(cardText) ? 'failed' : 'passed',
+        boundary: interactionOffCard ? 'failed' : 'passed',
+      });
     }
   }
 
@@ -340,6 +405,18 @@ try {
     console.log(`- Requirements suppressed because they are owned by visible cards: ${row.visibleSuppressed}.`);
     console.log(`- Trial by Flame grouped presentation: ${row.trialByFlame}`);
     console.log(`- Multi-effect value formatting result: ${row.multiEffect.length ? row.multiEffect.join(' | ') : 'No grouped multi-effect stat card in this mode.'}`);
+  }
+
+  section('FORMATION CARD PRESENTATION REVIEW');
+  for (const row of formationCardRows) {
+    console.log(`Formation ${row.formation} ${row.mode}:`);
+    for (const card of row.cards) {
+      console.log(`- ${card.name}: receives ${card.receives}; provides ${card.provides}; candidate targets ${card.candidates}; trait ${card.trait}; favorable affinities ${card.favorable}; unfavorable affinities ${card.unfavorable}; overflow ${card.overflow}.`);
+    }
+    console.log(`- Team-level grouped interaction count: ${row.grouped}.`);
+    console.log(`- Technical-detail trace count: ${row.technical}.`);
+    console.log(`- Canonical formatting result: ${row.canonical}.`);
+    console.log(`- Unselected-dragon boundary result: ${row.boundary}.`);
   }
 
   section('Required Trace Results');

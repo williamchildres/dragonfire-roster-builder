@@ -98,7 +98,7 @@ Run `npm run check:roster` to compare official-site local records with the ordin
 
 ## Versioning
 
-For data releases, update `databaseVersion`, `schemaVersion` when the data shape changes, package version, changelog, and tests together. Version 0.5.4 uses database version `0.5.4`, data schema `9`, current documented game build `26.6.53509`, context export version `1`, and local roster schema `3`.
+For data releases, update `databaseVersion`, `schemaVersion` when the data shape changes, package version, changelog, and tests together. Version 0.5.5 uses database version `0.5.5`, data schema `9`, current documented game build `26.6.53509`, context export version `1`, and local roster schema `3`.
 ## Formation Analysis Normalization Checklist
 
 When updating ability data or trace logic, verify that defensive modifiers keep `damageScope`, troop thresholds stay in structured conditions rather than `targetSelector.count`, highest-stat selectors record `selectionStat`, one-target selectors do not create simultaneous normal recipient cards, provider and recipient-output blockers keep ownership labels, and internal same-dragon traces remain debug/export data rather than cross-dragon normal synergy. Max-rank preview may preview locked Star Rank and Habit Level data, but it must not override a known failed Dragon Level requirement.
@@ -106,3 +106,7 @@ When updating ability data or trace logic, verify that defensive modifiers keep 
 Normal Unmet requirements have a narrower contract than raw traces. Rebuild them from the current formation and current preview mode only; keep selected-dragon boundaries independent of trace filtering; suppress requirements already shown on visible normal cards; apply hard Trait position failures before Dragon Level, Star Rank, target, or output blockers; dedupe by semantic identity rather than confidence or display text; and preserve full raw requirements in debug/export.
 
 Run `npm run report:synergy` after any change touching Formation Analysis. The report must pass the `FORMATION NORMALIZATION RETEST` and `NORMAL REQUIREMENT SUMMARY REVIEW` sections before project-context export.
+
+## Formation Card Presentation Checklist
+
+When changing Formation Builder presentation, keep `formationCardAnalysis` as a pure transform over existing normal traces. Verify Receives and Provides stay inside selected cards, internal interactions stay out of normal cards, one-target candidate groups never imply guaranteed selection, preview state is distinct from current conditional state, raw effect tags stay in technical details, and full traces remain available in Show analysis details. Run `npm run report:synergy` and confirm the `FORMATION CARD PRESENTATION REVIEW` section passes.
