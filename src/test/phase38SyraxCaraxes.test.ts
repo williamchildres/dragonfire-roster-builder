@@ -29,8 +29,8 @@ function dragon(id: string) {
 describe('Phase 3.8 Syrax and Caraxes data', () => {
   it('keeps roster size stable and versions the data schema', () => {
     expect(dragons).toHaveLength(30);
-    expect(databaseMetadata.databaseVersion).toBe('0.5.2');
-    expect(databaseMetadata.schemaVersion).toBe(8);
+    expect(databaseMetadata.databaseVersion).toBe('0.5.3');
+    expect(databaseMetadata.schemaVersion).toBe(9);
     expect(databaseMetadata.currentDocumentedGameBuild).toBe('26.6.53509');
   });
 

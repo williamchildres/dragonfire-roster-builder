@@ -132,7 +132,7 @@ describe("Champion's Brilliance defensive support", () => {
         recipientDragonId: 'sheepstealer',
         channel: 'damage-received',
       });
-      expect(['active', 'potential', 'unknown']).toContain(rightFlankSupport?.status);
+      expect(rightFlankSupport?.status).toBe('inactive');
       expect(rightFlankSupport?.matchedOutputCapabilityIds ?? []).toEqual([]);
       expect(defensive.some((trace) =>
         trace.status !== 'inactive' &&
@@ -165,7 +165,7 @@ describe('aggregation and target selection presentation', () => {
         trace.targetSelectionGroup,
     );
 
-    expect(grouped?.targetSelectionGroup).toEqual({
+    expect(grouped?.targetSelectionGroup).toMatchObject({
       targetCount: 1,
       eligibleRecipientDragonIds: ['caraxes', 'sheepstealer'],
       selectionUncertain: true,

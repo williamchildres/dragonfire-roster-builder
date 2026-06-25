@@ -30,10 +30,13 @@ try {
     assertSelectedFormationTraceInvariant,
     isNormalSynergyTrace,
   } = await server.ssrLoadModule('/src/services/synergyTrace.ts');
+  const { analyzeFormation } = await server.ssrLoadModule('/src/services/synergyEngine.ts');
+  const { defaultSynergyRules } = await server.ssrLoadModule('/src/data/synergyRules.ts');
   const { deriveModifierCapabilities } = await server.ssrLoadModule('/src/services/effectCapabilities.ts');
 
   const failures = [];
   const repairRows = [];
+  const normalizationRows = [];
   let duplicateCollapsed = 0;
   let duplicateRequirementCount = 0;
   let singleTargetGroups = 0;
@@ -90,6 +93,44 @@ try {
       }
       singleTargetGroups += traces.filter((trace) => trace.targetSelectionGroup?.targetCount === 1).length;
       periodicDebugTraces += traces.filter((trace) => trace.matchKind === 'periodic-damage-amplification').length;
+      const normalVisible = traces.filter((trace) => isNormalSynergyTrace(trace) && ['active', 'potential', 'unknown'].includes(trace.status));
+      const normalText = JSON.stringify(normalVisible);
+      const formationResult = analyzeFormation(formation, dragons, defaultSynergyRules, mode === 'preview' ? { previewMaxRankInteractions: true } : {});
+      if (['4', '5'].includes(id) && !formationResult.unmetRequirements.some((item) => item.description.includes("Champion's Brilliance Dragon Level requirement: Seasmoke is Level 1 and requires Level 16."))) {
+        failures.push(`Formation ${id} ${mode}: Champion's Brilliance Level failure is hidden.`);
+      }
+      if (/syrax's Blazing Fury/.test(normalText)) {
+        failures.push(`Formation ${id} ${mode}: slug display leaked into normal text.`);
+      }
+      if (normalVisible.some((trace) => trace.interactionScope === 'internal')) {
+        failures.push(`Formation ${id} ${mode}: internal interaction appears in cross-dragon normal sections.`);
+      }
+      if (normalVisible.some((trace) => trace.sourceAbilityId === 'vermax-reactive-instincts' && trace.ruleId === 'direct-stat-support' && trace.recipientDragonId && traces.some((other) => other !== trace && other.sourceAbilityId === 'vermax-reactive-instincts' && other.ruleId === 'direct-stat-support' && other.recipientDragonId && other.recipientDragonId !== trace.recipientDragonId))) {
+        failures.push(`Formation ${id} ${mode}: Reactive Instincts creates simultaneous recipient cards.`);
+      }
+      if (normalVisible.some((trace) => trace.sourceAbilityId === 'malachite-lightning-strike' && trace.ruleId === 'direct-stat-support' && trace.recipientDragonId)) {
+        const count = normalVisible.filter((trace) => trace.sourceAbilityId === 'malachite-lightning-strike' && trace.ruleId === 'direct-stat-support' && trace.recipientDragonId).length;
+        if (count > 1) failures.push(`Formation ${id} ${mode}: Lightning Strike creates simultaneous recipient cards.`);
+      }
+      if (normalVisible.some((trace) => trace.sourceAbilityId === 'malachite-forests-instinct' && trace.title === 'Damage Received Support')) {
+        failures.push(`Formation ${id} ${mode}: Forest's Instinct displays as all-damage reduction.`);
+      }
+      if (normalVisible.some((trace) => trace.sourceAbilityId === 'vermax-trial-by-flame' && trace.title === 'Damage Received Support')) {
+        failures.push(`Formation ${id} ${mode}: Trial by Flame displays as all-damage reduction.`);
+      }
+      for (const abilityId of ['vermax-warriors-zeal', 'syrax-sentinels-wit', 'caraxes-hunters-wrath', 'seasmoke-clever-maneuver', 'vermax-reactive-instincts']) {
+        const grouped = normalVisible.find((trace) => trace.sourceAbilityId === abilityId && trace.ruleId === 'direct-stat-support');
+        if (grouped && (grouped.modifierCapabilityIds?.length ?? 0) > 1) {
+          const expectedStats = abilityId === 'caraxes-hunters-wrath'
+            ? ['Strength', 'Initiative']
+            : abilityId === 'seasmoke-clever-maneuver'
+              ? ['Intelligence', 'Initiative']
+              : ['Instinct', 'Initiative'];
+          if (!expectedStats.every((stat) => grouped.explanation.includes(stat))) {
+            failures.push(`Formation ${id} ${mode}: sibling effect lost from ${abilityId}.`);
+          }
+        }
+      }
       repairRows.push({
         formation: id,
         mode,
@@ -101,12 +142,29 @@ try {
         inactive: traces.filter((trace) => trace.status === 'inactive').length,
         output: traces.filter((trace) => isNormalSynergyTrace(trace) && ['active', 'potential', 'unknown'].includes(trace.status)).map(traceLine),
       });
+      normalizationRows.push({
+        formation: id,
+        mode,
+        currentNormal: normalVisible.map(traceLine),
+        internalExcluded: traces.filter((trace) => trace.interactionScope === 'internal').length,
+        multiEffect: normalVisible.filter((trace) => (trace.modifierCapabilityIds?.length ?? 0) > 1).map((trace) => `${trace.title}: ${trace.explanation}`),
+        defensiveScopes: normalVisible.filter((trace) => trace.channel === 'damage-received').map((trace) => `${trace.title}: ${trace.damageScope ?? 'none'}`),
+        targetGroups: normalVisible.filter((trace) => trace.targetSelectionGroup).map((trace) => `${trace.title}: ${trace.explanation}`),
+        requirementAttribution: traces.flatMap((trace) => trace.requirements.map((requirement) => requirement.label)).filter((label) => / - |Dragon Level requirement/.test(label)).slice(0, 12),
+        championLevel: formationResult.unmetRequirements.map((item) => item.description).filter((description) => description.includes("Champion's Brilliance Dragon Level requirement")),
+        sourceIdentity: normalVisible.filter((trace) => ['vermax-spreading-blaze', 'vermax-rallying-flame'].includes(trace.sourceAbilityId)).map((trace) => trace.title),
+      });
     }
   }
 
   const championsBrilliance = deriveModifierCapabilities(dragons).find((capability) =>
     capability.id === 'seasmoke-champions-brilliance-seasmoke-right-flank-dr-down-damage-received-received-modifier'
   );
+  const trialThresholdCountBug = deriveModifierCapabilities(dragons).some((capability) =>
+    capability.abilityId === 'vermax-trial-by-flame' && [75, 50, 25].includes(capability.targetSelector.count)
+  );
+  if (trialThresholdCountBug) failures.push('Trial by Flame uses a threshold as target count.');
+  if (championsBrilliance?.damageScope !== 'all') failures.push("Champion's Brilliance defensive damage scope is not all.");
   const resistance = statusGlossary.find((status) => status.id === 'resistance');
 
   console.log(`- Selected-dragon invariant result: ${failures.some((item) => item.includes('unselected')) ? 'failed' : 'passed'}`);
@@ -132,6 +190,20 @@ try {
     } else {
       for (const line of row.output) console.log(`- ${line}`);
     }
+  }
+
+  section('FORMATION NORMALIZATION RETEST');
+  for (const row of normalizationRows) {
+    console.log(`Formation ${row.formation} ${row.mode}:`);
+    console.log(`- Current normal interactions: ${row.currentNormal.length ? row.currentNormal.join(' | ') : 'None identified'}`);
+    console.log(`- Preview normal interactions: reported in paired preview rows above.`);
+    console.log(`- Internal interactions excluded from normal: ${row.internalExcluded}.`);
+    console.log(`- Multi-effect aggregation result: ${row.multiEffect.length ? row.multiEffect.join(' | ') : 'No grouped multi-effect stat card in this mode.'}`);
+    console.log(`- Defensive damage scope: ${row.defensiveScopes.length ? row.defensiveScopes.join(' | ') : 'No defensive support in this mode.'}`);
+    console.log(`- Target-selection group result: ${row.targetGroups.length ? row.targetGroups.join(' | ') : 'No grouped target selection in this mode.'}`);
+    console.log(`- Provider and recipient requirement attribution: ${row.requirementAttribution.length ? row.requirementAttribution.join(' | ') : 'No attributed progression blockers in this mode.'}`);
+    console.log(`- Champion's Brilliance Level requirement result: ${row.championLevel.length ? row.championLevel.join(' | ') : 'No Champion Level failure for this formation/mode.'}`);
+    console.log(`- Spreading Blaze versus Rallying Flame distinction: ${row.sourceIdentity.length ? row.sourceIdentity.join(' | ') : 'Not present.'}`);
   }
 
   section('Required Trace Results');

@@ -30,7 +30,11 @@ Run `npm run export:context`. For reproducible test output, pass `-- --generated
 
 ## Validation
 
-Run `npm run validate:context` after generation. The validator checks schema conformance, dragon counts, source references, version agreement, metadata-only dragon constraints, modular/consolidated agreement, and private-path or token leakage.
+Run `npm run validate:context` after generation. The validator checks schema conformance, dragon counts, source references, version agreement, metadata-only dragon constraints, modular/consolidated agreement, Trial by Flame threshold targeting, and private-path or token leakage.
+
+## Formation Normalization
+
+Data schema 9 exports defensive damage scope, threshold conditions separate from target count, highest-stat and one-adjacent target selectors, grouped modifier capability IDs, requirement ownership, source-ability identity, and interaction scope. Internal same-dragon traces remain exported for audit even when normal Formation Analysis excludes them from cross-dragon synergy sections.
 
 ## Authority
 

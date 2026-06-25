@@ -49,3 +49,8 @@ Expected highlights: Hunter's Wrath supports Right Flank Syrax Strength and Init
 ## Manual Retest Status
 
 Batch 1 and Batch 2 cases are exported with `reviewStatus: pending`. They must not be marked confirmed until normal mode, preview mode, debug JSON, and the synergy report are manually retested against the merged build.
+## Formation Normalization Follow-Up
+
+Manual retesting of Formations 1-8 left presentation and normalization defects rather than new dragon-data gaps. Version 0.5.3 addresses them by aggregating multi-effect direct stat support, preserving defensive damage subtype, representing Trial by Flame thresholds as strict below conditions, resolving Reactive Instincts as highest Instinct one-target support, grouping Lightning Strike adjacent candidates, distinguishing Spreading Blaze from Rallying Flame, attributing provider and recipient-output blockers, excluding internal same-dragon interactions from normal cross-dragon sections, and using canonical dragon display names.
+
+Champion's Brilliance remains inactive in Formations 4 and 5 because observed Seasmoke is Level 1 and the trait requires Level 16. Its Vanguard position and Right Flank targeting can pass while the Level requirement fails; max-rank Habit preview does not change Dragon Level.

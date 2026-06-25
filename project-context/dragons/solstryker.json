@@ -20,7 +20,7 @@
   "firstObservedInGame": null,
   "format": "dragonfire-dragon-profile",
   "gameVersion": null,
-  "generatedAt": "2026-06-25T01:19:13.742Z",
+  "generatedAt": "2026-06-25T02:16:23.860Z",
   "habits": [],
   "id": "solstryker",
   "isNew": false,
@@ -42,10 +42,10 @@
   "rosterSourceStatus": "official-website",
   "slug": "solstryker",
   "source": {
-    "branch": "feature/formation-analysis-repair",
-    "commit": "33308a9be3432c3b1fe16b500e64069bd93f1dee",
-    "databaseVersion": "0.5.2",
-    "dataSchemaVersion": 8,
+    "branch": "feature/formation-analysis-normalization",
+    "commit": "60bafb88955e0d0e0f3ddc29512c1176a3f3abbd",
+    "databaseVersion": "0.5.3",
+    "dataSchemaVersion": 9,
     "gameBuild": "26.6.53509",
     "localRosterSchemaVersion": 3,
     "repository": "https://github.com/williamchildres/dragonfire-roster-builder"

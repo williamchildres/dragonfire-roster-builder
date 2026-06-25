@@ -107,12 +107,22 @@ export interface SynergyTrace {
   modifierSelfOnly?: boolean;
   availabilityContext?: string | null;
   modifierCapabilityId?: string | null;
+  modifierCapabilityIds?: string[];
   matchedOutputCapabilityIds?: string[];
   sourceScopeResults?: CapabilityMatch[];
+  interactionScope?: InteractionScope;
+  damageScope?: DefensiveDamageScope | null;
   targetSelectionGroup?: {
     targetCount: number;
     eligibleRecipientDragonIds: string[];
     selectionUncertain: boolean;
+    selection?: AbilityTarget['selection'];
+    selectionStat?: DragonStatId | null;
+    candidateStats?: Array<{
+      dragonId: string;
+      statId: DragonStatId;
+      value: number | null;
+    }>;
   };
 }
 
@@ -132,6 +142,10 @@ export interface RecipientAmplificationTrace {
 export type EffectChannel = 'physical-damage' | 'tactical-damage' | 'fire-damage' | 'recovery' | 'stat' | 'damage-received';
 
 export type DragonStatId = 'strength' | 'instinct' | 'intelligence' | 'initiative';
+
+export type DefensiveDamageScope = 'all' | 'physical' | 'tactical' | 'fire';
+
+export type InteractionScope = 'cross-dragon' | 'internal' | 'enemy-side' | 'targeting-fact';
 
 export type SynergyTraceMatchKind =
   | 'outgoing-effect-amplification'
@@ -186,6 +200,10 @@ export interface EffectCondition {
   description: string;
   evidenceIds: string[];
   unresolved: boolean;
+  kind?: string;
+  subject?: string | null;
+  comparison?: string | null;
+  thresholdPercent?: number | null;
 }
 
 export interface AbilityTarget {
@@ -194,7 +212,17 @@ export interface AbilityTarget {
   position: FormationPosition | null;
   count: number | null;
   includesCaster: boolean | null;
-  selection: 'self' | 'specific-position' | 'any' | 'adjacent' | 'eligible' | 'unknown';
+  selection:
+    | 'self'
+    | 'specific-position'
+    | 'any'
+    | 'adjacent'
+    | 'eligible'
+    | 'highest-stat'
+    | 'one-eligible-adjacent'
+    | 'all-matching-condition'
+    | 'unknown';
+  selectionStat?: DragonStatId | null;
 }
 
 export interface RequirementDefinition {
@@ -252,7 +280,9 @@ export interface ModifierCapability {
   role: ModifierRole;
   operation: 'increase' | 'decrease';
   value: number | null;
+  rankedValues: RankedValue[];
   unit: 'percent' | 'flat' | 'stack' | 'unknown';
+  damageScope: DefensiveDamageScope | null;
   sourceScope: CapabilitySourceScope;
   targetSelector: AbilityTarget;
   providerRequirements: RequirementDefinition[];

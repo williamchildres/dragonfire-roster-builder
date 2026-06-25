@@ -212,6 +212,7 @@ export function validateProjectContextFiles(serializedFiles: Record<string, stri
   validateNoLocalPathsOrSecrets(serializedFiles, errors);
   validateVersions(parsed, errors);
   validateDragonExports(parsed, errors);
+  validateFormationNormalizationExports(parsed, errors);
   validateReferences(parsed, errors);
   validateConsolidatedAgreement(parsed, errors);
   validateDeterministicFiles(serializedFiles, expected.files, errors);
@@ -225,6 +226,27 @@ export function validateProjectContextFiles(serializedFiles: Record<string, stri
       schemaValidatedFiles,
     },
   };
+}
+
+function validateFormationNormalizationExports(parsed: Map<string, JsonValue>, errors: string[]) {
+  const framework = parsed.get('project-context/synergy/capability-framework.json');
+  if (!isJsonObject(framework) || !isJsonObject(framework.derivedCapabilities)) {
+    return;
+  }
+  for (const collectionName of ['allySupport', 'selfAmplification', 'recipientSideAmplification'] as const) {
+    const collection = framework.derivedCapabilities[collectionName];
+    if (!Array.isArray(collection)) {
+      continue;
+    }
+    for (const item of collection) {
+      if (!isJsonObject(item) || item.abilityId !== 'vermax-trial-by-flame' || !isJsonObject(item.targetSelector)) {
+        continue;
+      }
+      if ([75, 50, 25].includes(Number(item.targetSelector.count))) {
+        errors.push('Trial by Flame exported a troop threshold as targetSelector.count.');
+      }
+    }
+  }
 }
 
 function buildDragonProfiles(
@@ -415,13 +437,19 @@ function buildCapabilityFramework(
       'direction',
       'role',
       'operation',
+      'damageScope',
       'targetSelector',
       'providerRequirements',
       'recipientRequirements',
       'sourceScope',
+      'rankedValues',
+      'conditions',
       'availability',
       'evidenceIds',
     ],
+    defensiveDamageScopes: ['all', 'physical', 'tactical', 'fire'],
+    targetSelectionModes: ['self', 'specific-position', 'any', 'adjacent', 'eligible', 'highest-stat', 'one-eligible-adjacent', 'all-matching-condition', 'unknown'],
+    interactionScopes: ['cross-dragon', 'internal', 'enemy-side', 'targeting-fact'],
     modifierRoles: ['self-amplification', 'ally-support', 'recipient-side-amplification', 'enemy-debuff'],
     availabilityModel: {
       contexts: ['canonical', 'observedAccount', 'userRoster'],
@@ -451,8 +479,8 @@ function buildCapabilityFramework(
     targetingLanguageRules: buildFormationRules().targetingLanguageRules,
     traceStatuses: ['active', 'potential', 'inactive', 'blocked', 'unknown', 'not-applicable'],
     confidenceLevels: ['confirmed', 'high', 'medium', 'low', 'unresolved'],
-    normalViewAggregationBehavior: 'One support modifier can match multiple recipient outputs and aggregate into one normal Formation Builder card. Single-target effects with multiple eligible recipients are grouped as target-selection interactions, and periodic damage is annotated under its damage channel rather than duplicated as a second normal buff.',
-    debugViewBehavior: 'Debug traces retain child capability matches, source-scope checks, requirements, assumptions, and evidence IDs.',
+    normalViewAggregationBehavior: 'One support modifier can match multiple recipient outputs and aggregate into one normal Formation Builder card. Sibling stat effects from the same ability aggregate into one direct stat support card while stat-scaling child traces remain stat-specific. Single-target and highest-stat effects with multiple eligible recipients are grouped as target-selection interactions, and periodic damage is annotated under its damage channel rather than duplicated as a second normal buff.',
+    debugViewBehavior: 'Debug traces retain child modifier capability IDs, child capability matches, source-scope checks, requirements, assumptions, interaction scope, damage scope, target-selection candidates, and evidence IDs.',
     numericalScorePolicy: 'Synergy score remains null; exact formulas are not invented.',
     derivedCapabilities: {
       outputs: reviewedOutputs,
@@ -488,25 +516,25 @@ function buildFormationReviewCases(): FormationReviewCaseExport[] {
       caseId: 'batch-1-formation-1',
       label: 'Batch 1 Formation 1: Left Malachite / Vanguard Sheepstealer / Right Vermax',
       formation: { 'left-flank': 'malachite', vanguard: 'sheepstealer', 'right-flank': 'vermax' },
-      reviewerNotes: ['Pending manual retest after formation analysis repair. Previous defects included duplicate Recovery traces, duplicate blockers, flank-to-flank Lightning Strike leakage, and a normal PvE Stolen Flock warning.'],
+      reviewerNotes: ['Pending manual retest after formation analysis normalization. Previous defects included duplicate Recovery traces, duplicate blockers, flank-to-flank Lightning Strike leakage, and a normal PvE Stolen Flock warning. Remaining normalization defects repaired in 0.5.3 included defensive subtype loss, Trial by Flame threshold counts, Reactive Instincts target fan-out, internal interaction leakage, and Spreading Blaze/Rallying Flame identity collapse.'],
     },
     {
       caseId: 'batch-1-formation-2',
       label: 'Batch 1 Formation 2: Left Seasmoke / Vanguard Malachite / Right Sheepstealer',
       formation: { 'left-flank': 'seasmoke', vanguard: 'malachite', 'right-flank': 'sheepstealer' },
-      reviewerNotes: ['Pending manual retest after formation analysis repair. Previous defects included false Fire support to Right Flank Sheepstealer and contradictory Fire-output wording.'],
+      reviewerNotes: ['Pending manual retest after formation analysis normalization. Previous defects included false Fire support to Right Flank Sheepstealer and contradictory Fire-output wording. Remaining normalization defects repaired in 0.5.3 included Lightning Strike one-target grouping, Clever Maneuver sibling aggregation, defensive subtype labels, and provider/recipient blocker attribution.'],
     },
     {
       caseId: 'batch-1-formation-3',
       label: 'Batch 1 Formation 3: Left Malachite / Vanguard Vermax / Right Seasmoke',
       formation: { 'left-flank': 'malachite', vanguard: 'vermax', 'right-flank': 'seasmoke' },
-      reviewerNotes: ["Pending manual retest after formation analysis repair. Previous defects included repeated Warden's Rally names and imprecise preview blockers."],
+      reviewerNotes: ["Pending manual retest after formation analysis normalization. Previous defects included repeated Warden's Rally names and imprecise preview blockers. Remaining normalization defects repaired in 0.5.3 included Warrior's Zeal sibling aggregation, Reactive Instincts highest-Instinct selection, defensive subtype labels, and source-ability distinction."],
     },
     {
       caseId: 'batch-1-formation-4',
       label: 'Batch 1 Formation 4: Left Malachite / Vanguard Seasmoke / Right Sheepstealer',
       formation: { 'left-flank': 'malachite', vanguard: 'seasmoke', 'right-flank': 'sheepstealer' },
-      reviewerNotes: ["Pending manual retest after formation analysis repair. Previous defects included missing Champion's Brilliance defensive support and unwanted normal PvE warnings."],
+      reviewerNotes: ["Pending manual retest after formation analysis normalization. Previous defects included missing Champion's Brilliance defensive support and unwanted normal PvE warnings. Remaining normalization defects repaired in 0.5.3 included visible Champion's Brilliance Level 16 failure, inactive support at Seasmoke Level 1, defensive subtype labels, and requirement ownership."],
     },
   ];
   const batch2Specs: Array<{ caseId: string; label: string; formation: FormationAnalysisInput; reviewerNotes: string[] }> = [
@@ -514,25 +542,25 @@ function buildFormationReviewCases(): FormationReviewCaseExport[] {
       caseId: 'batch-2-formation-5',
       label: 'Batch 2 Formation 5: Left Caraxes / Vanguard Seasmoke / Right Sheepstealer',
       formation: { 'left-flank': 'caraxes', vanguard: 'seasmoke', 'right-flank': 'sheepstealer' },
-      reviewerNotes: ["Pending manual retest after formation analysis repair. Previous defects included missing Champion's Brilliance support, impossible Caraxes/Sheepstealer Vanguard effects, Recovery Received leakage, and duplicate Burn support."],
+      reviewerNotes: ["Pending manual retest after formation analysis normalization. Previous defects included missing Champion's Brilliance support, impossible Caraxes/Sheepstealer Vanguard effects, Recovery Received leakage, and duplicate Burn support. Remaining normalization defects repaired in 0.5.3 included visible Champion's Brilliance Level 16 failure, Clever Maneuver sibling aggregation, Cunning Ferocity attribution, and provider/recipient blocker ownership."],
     },
     {
       caseId: 'batch-2-formation-6',
       label: 'Batch 2 Formation 6: Left Malachite / Vanguard Syrax / Right Sheepstealer',
       formation: { 'left-flank': 'malachite', vanguard: 'syrax', 'right-flank': 'sheepstealer' },
-      reviewerNotes: ["Pending manual retest after formation analysis repair. Previous defects included Hunter's Cunning leakage, repeated Warden's Rally names, and duplicate Recovery traces."],
+      reviewerNotes: ["Pending manual retest after formation analysis normalization. Previous defects included Hunter's Cunning leakage, repeated Warden's Rally names, and duplicate Recovery traces. Remaining normalization defects repaired in 0.5.3 included Sentinel's Wit sibling aggregation, Lightning Strike one-target adjacency, tactical defensive subtype labels, and internal interaction exclusion."],
     },
     {
       caseId: 'batch-2-formation-7',
       label: 'Batch 2 Formation 7: Left Syrax / Vanguard Vermax / Right Caraxes',
       formation: { 'left-flank': 'syrax', vanguard: 'vermax', 'right-flank': 'caraxes' },
-      reviewerNotes: ['Pending manual retest after formation analysis repair. Previous defects included unselected Sheepstealer traces, duplicate Reactive Instincts/Spreading Blaze traces, and duplicate Burn support.'],
+      reviewerNotes: ['Pending manual retest after formation analysis normalization. Previous defects included unselected Sheepstealer traces, duplicate Reactive Instincts/Spreading Blaze traces, and duplicate Burn support. Remaining normalization defects repaired in 0.5.3 included Warrior\'s Zeal and Reactive Instincts sibling aggregation, Reactive Instincts highest-Instinct one-target selection, Trial by Flame threshold conditions, and Rallying Flame source identity.'],
     },
     {
       caseId: 'batch-2-formation-8',
       label: 'Batch 2 Formation 8: Left Sheepstealer / Vanguard Caraxes / Right Syrax',
       formation: { 'left-flank': 'sheepstealer', vanguard: 'caraxes', 'right-flank': 'syrax' },
-      reviewerNotes: ["Pending manual retest after formation analysis repair. Previous defects included Sentinel's Wit/Hunter's Cunning leakage, Blazing Fury simultaneous-recipient presentation, and duplicate Burn support."],
+      reviewerNotes: ["Pending manual retest after formation analysis normalization. Previous defects included Sentinel's Wit/Hunter's Cunning leakage, Blazing Fury simultaneous-recipient presentation, and duplicate Burn support. Remaining normalization defects repaired in 0.5.3 included Hunter's Wrath sibling aggregation, canonical Syrax display names, internal interaction exclusion, and one-target competition wording."],
     },
   ];
   const nextBatch = [...batch1Specs, ...batch2Specs].map((spec) => formationCase({
@@ -614,6 +642,7 @@ function buildProjectState(
       'Evidence, manual reviews, observations, statuses, and stat definitions are separate source modules.',
       'Capability derivation is computed from structured AbilityEffect records in effectCapabilities.ts.',
       'Formation analysis uses structured SynergyTrace records and does not produce an arbitrary numerical score.',
+      'Formation normalization preserves defensive scope, target-selection groups, requirement ownership, source ability identity, and interaction scope.',
     ],
     completedPhases: [
       'Phase 3.6 combat confirmations',
@@ -621,8 +650,9 @@ function buildProjectState(
       'Phase 3.7.1 capability scope review',
       'Phase 3.8 Syrax and Caraxes combat data with dependency tracing',
       'Phase 3.8.1 formation trace reconciliation',
+      'Phase 3.8.2 formation analysis normalization',
     ],
-    currentReviewPhase: 'Project context export and next formation-output review preparation.',
+    currentReviewPhase: 'Formation normalization retest and project-context regeneration.',
     plannedNextPhase: [
       'full formation-output review',
       'UI/tag redesign',
@@ -969,7 +999,11 @@ Run \`npm run export:context\`. For reproducible test output, pass \`-- --genera
 
 ## Validation
 
-Run \`npm run validate:context\` after generation. The validator checks schema conformance, dragon counts, source references, version agreement, metadata-only dragon constraints, modular/consolidated agreement, and private-path or token leakage.
+Run \`npm run validate:context\` after generation. The validator checks schema conformance, dragon counts, source references, version agreement, metadata-only dragon constraints, modular/consolidated agreement, Trial by Flame threshold targeting, and private-path or token leakage.
+
+## Formation Normalization
+
+Data schema 9 exports defensive damage scope, threshold conditions separate from target count, highest-stat and one-adjacent target selectors, grouped modifier capability IDs, requirement ownership, source-ability identity, and interaction scope. Internal same-dragon traces remain exported for audit even when normal Formation Analysis excludes them from cross-dragon synergy sections.
 
 ## Authority
 
@@ -1016,6 +1050,11 @@ All other known dragons remain metadata-only unless their typed source records c
 - Recipient-side amplification may create incoming amplification.
 - Enemy debuffs are separate from ally support.
 - No arbitrary numerical synergy score is generated.
+- Defensive damage scope preserves all, physical, tactical, and fire Damage Received subtypes.
+- Troop thresholds are structured conditions, not target counts.
+- Highest-stat and one-adjacent effects target one recipient or one grouped candidate set.
+- Internal same-dragon traces are preserved for debug/export but are not cross-dragon normal synergy.
+- Max-rank preview does not override a known failed Dragon Level requirement.
 
 ## Synergy Framework
 
@@ -1358,6 +1397,10 @@ function traceSummary(trace: SynergyTrace) {
     requirements: trace.requirements,
     matchedOutputCapabilityIds: trace.matchedOutputCapabilityIds ?? [],
     modifierCapabilityId: trace.modifierCapabilityId ?? null,
+    modifierCapabilityIds: trace.modifierCapabilityIds ?? [],
+    interactionScope: trace.interactionScope ?? null,
+    damageScope: trace.damageScope ?? null,
+    targetSelectionGroup: trace.targetSelectionGroup ?? null,
     exactResultKnown: trace.exactResultKnown ?? null,
     exactResultUnknownReason: trace.exactResultUnknownReason ?? null,
   };

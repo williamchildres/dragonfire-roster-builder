@@ -52,8 +52,11 @@ export function analyzeFormationTraces(
 
 export function isNormalSynergyTrace(trace: SynergyTrace): boolean {
   return (
-    (Boolean(trace.matchKind) && trace.matchKind !== 'periodic-damage-amplification') ||
-    trace.ruleId === 'malachite-lightning-strike-vermax-basic-trigger'
+    trace.interactionScope !== 'internal' &&
+    (
+      (Boolean(trace.matchKind) && trace.matchKind !== 'periodic-damage-amplification') ||
+      trace.ruleId === 'malachite-lightning-strike-vermax-basic-trigger'
+    )
   );
 }
 
@@ -562,6 +565,7 @@ function makeTrace({
     combatLogConfirmed,
     exactResultKnown,
     exactResultUnknownReason,
+    interactionScope: source.id === recipient?.id ? 'internal' : recipient ? 'cross-dragon' : 'targeting-fact',
   };
 }
 

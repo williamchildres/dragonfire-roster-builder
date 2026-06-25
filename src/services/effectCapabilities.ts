@@ -19,6 +19,7 @@ import type {
   CapabilityDependency,
   CapabilitySourceKind,
   CapabilitySourceScope,
+  DefensiveDamageScope,
   DragonEffectProfile,
   DragonStatId,
   EffectChannel,
@@ -437,7 +438,9 @@ function analyzeOutgoingAmplifications(
         modifier,
         matches: compatible,
         requirements: mergeRequirements(compatible),
-        title: supportTitle(modifier.channel),
+        title: modifier.abilityId === 'vermax-spreading-blaze' || modifier.abilityId === 'vermax-rallying-flame'
+          ? `${modifier.abilityName} Support`
+          : supportTitle(modifier.channel),
         explanation: outgoingExplanation(provider.name, modifier, recipient.name, compatible, outputs),
         assumptions: outgoingAssumptions(modifier, compatible),
         unresolvedQuestions: unresolvedForModifier(modifier),
@@ -446,6 +449,51 @@ function analyzeOutgoingAmplifications(
     traces.push(...groupSingleTargetOutgoingTraces(modifier, modifierTraces, outputs, dragons));
   }
   return traces;
+}
+
+function groupDefensiveAllySupportTraces(traces: SynergyTrace[]): SynergyTrace[] {
+  const byAbilityRecipient = new Map<string, SynergyTrace[]>();
+  for (const trace of traces) {
+    const key = [
+      trace.sourceDragonId,
+      trace.sourceAbilityId ?? '',
+      trace.recipientDragonId ?? '',
+      trace.damageScope ?? '',
+    ].join('|');
+    byAbilityRecipient.set(key, [...(byAbilityRecipient.get(key) ?? []), trace]);
+  }
+  return [...byAbilityRecipient.values()].map((items) => {
+    if (items.length === 1 || items[0]?.sourceAbilityId !== 'vermax-trial-by-flame') {
+      return items[0]!;
+    }
+    const first = items[0];
+    const thresholds = uniqueOrdered(
+      items.flatMap((trace) =>
+        trace.matchedFacts
+          .join(' ')
+          .match(/below (\d+)%/gi)
+          ?.map((match) => Number(match.match(/\d+/)?.[0]))
+          .filter((value): value is number => Number.isFinite(value)) ?? [],
+      ).map(String),
+    );
+    const reductions = uniqueOrdered(items.flatMap((trace) => trace.effects));
+    return {
+      ...first,
+      id: `defensive-ally-support-vermax-trial-by-flame-${first.recipientDragonId ?? 'targets'}`,
+      status: aggregateStatus(items.map((trace) => trace.status)),
+      requirements: dedupeRequirements(items.flatMap((trace) => trace.requirements)),
+      matchedFacts: uniqueSorted(items.flatMap((trace) => trace.matchedFacts)),
+      effects: reductions,
+      conflicts: uniqueSorted(items.flatMap((trace) => trace.conflicts)),
+      assumptions: uniqueSorted([
+        ...items.flatMap((trace) => trace.assumptions),
+        'Threshold tiers are alternatives based on current Troop Capacity and selected Habit Level; cumulative stacking is not assumed.',
+      ]),
+      modifierCapabilityId: null,
+      modifierCapabilityIds: uniqueSorted(items.flatMap((trace) => trace.modifierCapabilityIds ?? [])),
+      explanation: `Trial by Flame can reduce Fire Damage Received for allies below ${joinEnglishList(thresholds.map((threshold) => `${threshold}%`))} Troop Capacity. The applicable reduction depends on the selected Habit Level and current threshold.`,
+    };
+  });
 }
 
 function analyzeDefensiveAllySupport(
@@ -482,6 +530,8 @@ function analyzeDefensiveAllySupport(
         targetRequirement(modifier, providerPosition, recipientPosition),
         ...providerRequirementTraces(modifier, formation, dragons, options),
       ]);
+      const damageLabel = damageReceivedLabel(modifier.damageScope);
+      const displayValue = modifierDisplayValue(modifier, options);
       traces.push(makeDependencyTrace({
         id: `defensive-ally-support-${modifier.id}-${recipientId}`,
         matchKind: 'defensive-ally-support',
@@ -491,21 +541,25 @@ function analyzeDefensiveAllySupport(
         recipient,
         recipientAbilityId: null,
         channel: 'damage-received',
-        title: 'Damage Received Support',
-        explanation: `${provider.name}'s ${modifier.abilityName} can reduce ${recipient.name}'s Damage Received by ${modifier.value ?? 'unknown'}${modifier.unit === 'percent' ? '%' : ''}.`,
+        title: `${damageLabel} Support`,
+        explanation: `${provider.name}'s ${modifier.abilityName} can reduce ${recipient.name}'s ${damageLabel} by ${displayValue}.`,
         requirements,
-        matchedFacts: [`${modifier.abilityName} targets ${targetSelectorSummary(modifier.targetSelector)}.`],
-        effects: [`Damage Received ${modifier.operation} ${modifier.value ?? 'unknown'}${modifier.unit === 'percent' ? '%' : ''}`],
+        matchedFacts: [
+          `${modifier.abilityName} targets ${targetSelectorSummary(modifier.targetSelector)}.`,
+          ...modifier.conditions.map((condition) => condition.description),
+        ],
+        effects: [`${damageLabel} ${modifier.operation} ${displayValue}`],
         sourceEvidenceIds: modifier.evidenceIds,
         recipientEvidenceIds: [],
         assumptions: [],
         unresolvedQuestions: [],
         futureOrConditional: modifier.futureAvailable || modifier.conditional,
         modifier,
+        damageScope: modifier.damageScope,
       }));
     }
   }
-  return traces;
+  return groupDefensiveAllySupportTraces(traces);
 }
 
 function groupSingleTargetOutgoingTraces(
@@ -519,6 +573,7 @@ function groupSingleTargetOutgoingTraces(
     modifier.targetSelector.count !== 1 ||
     eligible.length <= 1 ||
     modifier.targetSelector.selection === 'specific-position' ||
+    modifier.targetSelector.selection === 'one-eligible-adjacent' ||
     modifier.targetSelector.selection === 'adjacent'
   ) {
     return traces;
@@ -537,6 +592,7 @@ function groupSingleTargetOutgoingTraces(
     .map((dragonId) => dragonById(dragons, dragonId)?.name ?? dragonId)
     .join(' and ');
   const outputLabels = outputChannelNames(outputs, matchedOutputCapabilityIds);
+  const providerName = dragonById(dragons, first.sourceDragonId)?.name ?? first.sourceDragonId;
 
   return [
     {
@@ -547,7 +603,7 @@ function groupSingleTargetOutgoingTraces(
       status: aggregateStatus(eligible.map((trace) => trace.status)),
       title: `${channelLabel(modifier.channel)} Target Selection`,
       explanation:
-        `${first.sourceDragonId}'s ${modifier.abilityName} can target one ${channelLabel(modifier.channel)} ally. Eligible recipients are ${recipientNames}. The selected recipient is not guaranteed. Qualifying outputs: ${outputLabels.join(', ')}.`,
+        `${providerName}'s ${modifier.abilityName} can target one ${channelLabel(modifier.channel)} ally. Eligible recipients are ${recipientNames}. The selected recipient is not guaranteed. Qualifying outputs: ${outputLabels.join(', ')}.`,
       requirements: dedupeRequirements(eligible.flatMap((trace) => trace.requirements)),
       matchedFacts: uniqueSorted([
         ...eligible.flatMap((trace) => trace.matchedFacts),
@@ -562,10 +618,14 @@ function groupSingleTargetOutgoingTraces(
       recipientEvidenceIds: uniqueSorted(eligible.flatMap((trace) => trace.recipientEvidenceIds)),
       matchedOutputCapabilityIds,
       sourceScopeResults,
+      modifierCapabilityIds: uniqueSorted(eligible.flatMap((trace) => trace.modifierCapabilityIds ?? [trace.modifierCapabilityId ?? '']).filter(Boolean)),
+      interactionScope: 'targeting-fact',
       targetSelectionGroup: {
         targetCount: 1,
         eligibleRecipientDragonIds,
         selectionUncertain: true,
+        selection: modifier.targetSelector.selection,
+        selectionStat: modifier.targetSelector.selectionStat ?? null,
       },
     },
     ...traces.filter((trace) => !eligible.includes(trace)),
@@ -674,6 +734,8 @@ function analyzeStatusConditionEnablement(
           ...availabilityRequirements({
             dragonId: statusOutput.dragonId,
             abilityId: statusOutput.abilityId,
+            dragonName: provider.name,
+            abilityName: statusOutput.abilityName,
             unlockStarRank: statusOutput.unlockStarRank,
             minimumDragonLevel: statusOutput.minimumDragonLevel,
             requiredHabitLevel: statusOutput.requiredHabitLevel,
@@ -731,7 +793,7 @@ function analyzeDirectStatSupport(
       continue;
     }
     const providerPosition = positionOf(formation, modifier.dragonId);
-    for (const recipientPosition of FORMATION_POSITIONS) {
+    for (const recipientPosition of targetCandidatePositions(formation, dragons, modifier, providerPosition)) {
       const recipientId = formation[recipientPosition];
       if (!recipientId || recipientId === modifier.dragonId) {
         continue;
@@ -757,17 +819,21 @@ function analyzeDirectStatSupport(
         title: `${statLabel(statId)} Stat Support`,
         explanation: `${provider.name}'s ${modifier.abilityName} can increase ${recipient.name}'s ${statLabel(statId)}.`,
         requirements,
-        matchedFacts: [`${modifier.abilityName} targets ${targetSelectorSummary(modifier.targetSelector)}.`],
+        matchedFacts: [
+          `${modifier.abilityName} targets ${targetSelectorSummary(modifier.targetSelector)}.`,
+          ...targetSelectionFacts(formation, dragons, modifier),
+        ],
         effects: [`${statLabel(statId)} ${modifier.value ?? 'unknown'}${modifier.unit === 'flat' ? ' flat' : modifier.unit === 'percent' ? '%' : ''}`],
         sourceEvidenceIds: modifier.evidenceIds,
         recipientEvidenceIds: [],
         assumptions: [],
         unresolvedQuestions: [],
         futureOrConditional: modifier.futureAvailable || modifier.conditional,
+        modifier,
       }));
     }
   }
-  return traces;
+  return groupDirectStatSupportTraces(traces, dragons);
 }
 
 function analyzeStatScalingSupport(
@@ -790,7 +856,7 @@ function analyzeStatScalingSupport(
       continue;
     }
     const providerPosition = positionOf(formation, modifier.dragonId);
-    for (const recipientPosition of FORMATION_POSITIONS) {
+    for (const recipientPosition of targetCandidatePositions(formation, dragons, modifier, providerPosition)) {
       const recipientId = formation[recipientPosition];
       if (!recipientId || recipientId === modifier.dragonId) {
         continue;
@@ -837,6 +903,203 @@ function analyzeStatScalingSupport(
     }
   }
   return traces;
+}
+
+function targetCandidatePositions(
+  formation: FormationAnalysisInput,
+  dragons: Dragon[],
+  modifier: ModifierCapability,
+  providerPosition: FormationPosition | null,
+): FormationPosition[] {
+  const eligible = FORMATION_POSITIONS.filter((position) => {
+    const dragonId = formation[position];
+    if (!dragonId || dragonId === modifier.dragonId) {
+      return false;
+    }
+    return targetRequirement(modifier, providerPosition, position).satisfied !== false;
+  });
+  if (modifier.targetSelector.selection !== 'highest-stat' || !modifier.targetSelector.selectionStat) {
+    return eligible;
+  }
+
+  const statId = modifier.targetSelector.selectionStat;
+  const candidateValues = eligible.map((position) => ({
+    position,
+    value: observedStatValue(dragons, formation[position]!, statId),
+  }));
+  if (candidateValues.some((candidate) => candidate.value === null)) {
+    return eligible;
+  }
+  const max = Math.max(...candidateValues.map((candidate) => candidate.value ?? Number.NEGATIVE_INFINITY));
+  return candidateValues.filter((candidate) => candidate.value === max).map((candidate) => candidate.position);
+}
+
+function groupDirectStatSupportTraces(traces: SynergyTrace[], dragons: Dragon[]): SynergyTrace[] {
+  const byAbility = new Map<string, SynergyTrace[]>();
+  for (const trace of traces) {
+    const key = [
+      trace.sourceDragonId,
+      trace.sourceAbilityId ?? '',
+      trace.targetSelectorSummary ?? '',
+    ].join('|');
+    byAbility.set(key, [...(byAbility.get(key) ?? []), trace]);
+  }
+
+  const grouped: SynergyTrace[] = [];
+  for (const abilityTraces of byAbility.values()) {
+    const recipientIds = uniqueSorted(
+      abilityTraces.map((trace) => trace.recipientDragonId).filter((dragonId): dragonId is string => Boolean(dragonId)),
+    );
+    const isOneTarget = abilityTraces.some((trace) => /; 1 target;/.test(trace.targetSelectorSummary ?? ''));
+    if (isOneTarget && recipientIds.length > 1) {
+      grouped.push(groupDirectStatTargetSelection(abilityTraces, recipientIds, dragons));
+      continue;
+    }
+
+    const byRecipient = new Map<string, SynergyTrace[]>();
+    for (const trace of abilityTraces) {
+      const key = trace.recipientDragonId ?? trace.id;
+      byRecipient.set(key, [...(byRecipient.get(key) ?? []), trace]);
+    }
+    for (const recipientTraces of byRecipient.values()) {
+      grouped.push(groupDirectStatRecipientTraces(recipientTraces, dragons));
+    }
+  }
+  return grouped;
+}
+
+function groupDirectStatTargetSelection(
+  traces: SynergyTrace[],
+  recipientIds: string[],
+  dragons: Dragon[],
+): SynergyTrace {
+  const first = traces[0]!;
+  const sourceName = dragonById(dragons, first.sourceDragonId)?.name ?? first.sourceDragonId;
+  const abilityName = abilityNameForTrace(dragons, first) ?? 'Ability';
+  const recipientNames = recipientIds.map((dragonId) => dragonById(dragons, dragonId)?.name ?? dragonId);
+  const statNames = groupedStatNames(traces);
+  const isLightning = first.sourceAbilityId === 'malachite-lightning-strike';
+  const selectionStat = selectionStatFromTrace(first);
+  const explanation = isLightning
+    ? `Lightning Strike can target one adjacent ally. Eligible recipients: ${joinEnglishList(recipientNames)}. The selected recipient is not guaranteed.`
+    : selectionStat
+      ? `${sourceName}'s ${abilityName} can increase ${joinEnglishList(statNames)} for one ally selected by highest ${statLabel(selectionStat)}. Eligible recipients: ${joinEnglishList(recipientNames)}. The selected recipient is not guaranteed.`
+      : `${sourceName}'s ${abilityName} can increase ${joinEnglishList(statNames)} for one eligible ally. Eligible recipients: ${joinEnglishList(recipientNames)}. The selected recipient is not guaranteed.`;
+  return {
+    ...first,
+    id: `direct-stat-target-selection-${first.sourceAbilityId ?? first.sourceDragonId}`,
+    recipientDragonId: null,
+    recipientAbilityId: null,
+    status: aggregateStatus(traces.map((trace) => trace.status)),
+    title: 'Stat Target Selection',
+    explanation,
+    requirements: dedupeRequirements(traces.flatMap((trace) => trace.requirements)),
+    matchedFacts: uniqueSorted(traces.flatMap((trace) => trace.matchedFacts)),
+    effects: uniqueSorted(traces.flatMap((trace) => trace.effects)),
+    conflicts: [],
+    assumptions: uniqueSorted([
+      ...traces.flatMap((trace) => trace.assumptions),
+      'Target count is one, so eligible recipients compete for the same activation.',
+    ]),
+    unresolvedQuestions: uniqueSorted(traces.flatMap((trace) => trace.unresolvedQuestions)),
+    recipientEvidenceIds: uniqueSorted(traces.flatMap((trace) => trace.recipientEvidenceIds)),
+    modifierCapabilityId: null,
+    modifierCapabilityIds: uniqueSorted(traces.flatMap((trace) => trace.modifierCapabilityIds ?? [])),
+    interactionScope: 'targeting-fact',
+    targetSelectionGroup: {
+      targetCount: 1,
+      eligibleRecipientDragonIds: recipientIds,
+      selectionUncertain: true,
+      selection: selectionStat ? 'highest-stat' : 'one-eligible-adjacent',
+      selectionStat,
+      candidateStats: selectionStat
+        ? recipientIds.map((dragonId) => ({
+            dragonId,
+            statId: selectionStat,
+            value: observedStatValue(dragons, dragonId, selectionStat),
+          }))
+        : undefined,
+    },
+  };
+}
+
+function groupDirectStatRecipientTraces(traces: SynergyTrace[], dragons: Dragon[]): SynergyTrace {
+  if (traces.length === 1) {
+    return traces[0]!;
+  }
+  const first = traces[0]!;
+  const source = dragonById(dragons, first.sourceDragonId);
+  const recipient = first.recipientDragonId ? dragonById(dragons, first.recipientDragonId) : null;
+  const abilityName = abilityNameForTrace(dragons, first) ?? 'Ability';
+  const statNames = groupedStatNames(traces);
+  const values = uniqueSorted(traces.map((trace) => trace.effects[0]?.replace(/^[A-Za-z]+ /, '').replace(/ flat$/, '') ?? '').filter(Boolean));
+  const valueText = values.length === 1 ? ` by ${values[0]}` : '';
+  return {
+    ...first,
+    id: `direct-stat-support-${first.sourceAbilityId ?? first.sourceDragonId}-${first.recipientDragonId ?? 'target'}-${statNames.join('-').toLowerCase()}`,
+    title: 'Stat Support',
+    explanation: `${source?.name ?? first.sourceDragonId}'s ${abilityName} ${first.status === 'active' ? 'increases' : 'can increase'} ${recipient?.name ?? first.recipientDragonId ?? 'the selected ally'}'s ${joinEnglishList(statNames)}${valueText}.`,
+    requirements: dedupeRequirements(traces.flatMap((trace) => trace.requirements)),
+    matchedFacts: uniqueSorted(traces.flatMap((trace) => trace.matchedFacts)),
+    effects: uniqueSorted(traces.flatMap((trace) => trace.effects)),
+    conflicts: uniqueSorted(traces.flatMap((trace) => trace.conflicts)),
+    assumptions: uniqueSorted(traces.flatMap((trace) => trace.assumptions)),
+    unresolvedQuestions: uniqueSorted(traces.flatMap((trace) => trace.unresolvedQuestions)),
+    modifierCapabilityId: null,
+    modifierCapabilityIds: uniqueSorted(traces.flatMap((trace) => trace.modifierCapabilityIds ?? [])),
+  };
+}
+
+function groupedStatNames(traces: SynergyTrace[]): string[] {
+  return uniqueOrdered(
+    traces.flatMap((trace) => trace.effects.map((effect) => effect.match(/^(Strength|Instinct|Intelligence|Initiative)\b/)?.[1] ?? '').filter(Boolean)),
+  );
+}
+
+function abilityNameForTrace(dragons: Dragon[], trace: SynergyTrace): string | null {
+  const source = dragonById(dragons, trace.sourceDragonId);
+  return source ? allAbilities(source).find((ability) => ability.id === trace.sourceAbilityId)?.name ?? null : null;
+}
+
+function selectionStatFromTrace(trace: SynergyTrace): DragonStatId | null {
+  const summary = trace.targetSelectorSummary ?? '';
+  if (/highest-stat.*selection stat strength|highest Strength/i.test(summary)) {
+    return 'strength';
+  }
+  if (/highest-stat.*selection stat intelligence|highest Intelligence/i.test(summary)) {
+    return 'intelligence';
+  }
+  if (/highest-stat.*selection stat instinct|highest Instinct/i.test(summary)) {
+    return 'instinct';
+  }
+  if (/highest-stat.*selection stat initiative|highest Initiative/i.test(summary)) {
+    return 'initiative';
+  }
+  return null;
+}
+
+function observedStatValue(dragons: Dragon[], dragonId: string, statId: DragonStatId): number | null {
+  const dragon = dragonById(dragons, dragonId);
+  const canonical = dragon?.stats[statId] ?? null;
+  if (canonical !== null) {
+    return canonical;
+  }
+  return dragonObservationSnapshots.find((snapshot) => snapshot.dragonId === dragonId)?.combatStats[statId] ?? null;
+}
+
+function targetSelectionFacts(
+  formation: FormationAnalysisInput,
+  dragons: Dragon[],
+  modifier: ModifierCapability,
+): string[] {
+  if (modifier.targetSelector.selection !== 'highest-stat' || !modifier.targetSelector.selectionStat) {
+    return [];
+  }
+  const statId = modifier.targetSelector.selectionStat;
+  return FORMATION_POSITIONS
+    .map((position) => formation[position])
+    .filter((dragonId): dragonId is string => Boolean(dragonId && dragonId !== modifier.dragonId))
+    .map((dragonId) => `${dragonById(dragons, dragonId)?.name ?? dragonId} ${statLabel(statId)}: ${observedStatValue(dragons, dragonId, statId) ?? 'unknown'}.`);
 }
 
 function analyzeEnemyMitigationReduction(
@@ -990,6 +1253,7 @@ function makeDependencyTrace({
   futureOrConditional = true,
   modifier = null,
   targetSelectionGroup,
+  damageScope = null,
 }: {
   id: string;
   matchKind: NonNullable<SynergyTrace['matchKind']>;
@@ -1011,6 +1275,7 @@ function makeDependencyTrace({
   futureOrConditional?: boolean;
   modifier?: ModifierCapability | null;
   targetSelectionGroup?: SynergyTrace['targetSelectionGroup'];
+  damageScope?: DefensiveDamageScope | null;
 }): SynergyTrace {
   const dedupedRequirements = dedupeRequirements(requirements);
   return {
@@ -1044,6 +1309,9 @@ function makeDependencyTrace({
     modifierSelfOnly: modifier ? modifier.role === 'self-amplification' || modifier.targetSelector.selection === 'self' : undefined,
     availabilityContext: modifier?.availability.reportLabel,
     modifierCapabilityId: modifier?.id ?? undefined,
+    modifierCapabilityIds: modifier ? [modifier.id] : undefined,
+    interactionScope: interactionScopeForTrace(source.id, recipient.id, matchKind),
+    damageScope,
     targetSelectionGroup,
   };
 }
@@ -1147,8 +1415,11 @@ function makeAmplificationTrace({
     modifierSelfOnly: modifier.role === 'self-amplification' || modifier.targetSelector.selection === 'self',
     availabilityContext: modifier.availability.reportLabel,
     modifierCapabilityId: modifier.id,
+    modifierCapabilityIds: [modifier.id],
     matchedOutputCapabilityIds,
     sourceScopeResults: matches,
+    interactionScope: interactionScopeForTrace(provider.id, recipient.id, matchKind),
+    damageScope: modifier.damageScope,
   };
 }
 
@@ -1246,7 +1517,9 @@ function baseModifier(
     role: modifierRoleForEffect(effect, direction),
     operation: effect.type.includes('Down') || effect.type.includes('Reduction') ? 'decrease' : 'increase',
     value: effect.magnitude,
+    rankedValues: effect.rankedValues,
     unit: effect.unit === 'percent' ? 'percent' : effect.unit === 'flat' ? 'flat' : 'unknown',
+    damageScope: defensiveDamageScopeForEffect(effect),
     sourceScope: capabilitySourceScope(effect.sourceScope, effect),
     targetSelector: targetForEffect(effect),
     providerRequirements: requirementDefinitionsForAbility(ability),
@@ -1394,16 +1667,17 @@ function dedupeDependencies(dependencies: CapabilityDependency[]): CapabilityDep
 }
 
 function statIdFromText(text: string): DragonStatId | undefined {
-  if (/strength/i.test(text)) {
+  const statText = text.includes(':') ? text.split(':').slice(1).join(':') : text;
+  if (/strength/i.test(statText)) {
     return 'strength';
   }
-  if (/instinct/i.test(text)) {
+  if (/instinct/i.test(statText)) {
     return 'instinct';
   }
-  if (/intelligence/i.test(text)) {
+  if (/intelligence/i.test(statText)) {
     return 'intelligence';
   }
-  if (/initiative/i.test(text)) {
+  if (/initiative/i.test(statText)) {
     return 'initiative';
   }
   return undefined;
@@ -1499,25 +1773,55 @@ function targetForEffect(effect: AbilityEffect): AbilityTarget {
   const position = effect.targetScope === 'left-flank' || effect.targetScope === 'right-flank'
     ? effect.targetScope
     : null;
+  const selectionStat = selectionStatForEffect(effect);
   const selection = effect.targetScope === 'self'
     ? 'self'
     : position
       ? 'specific-position'
-      : effect.targetScope === 'within-adjacency'
-        ? 'adjacent'
-        : effect.target.includes('deals')
-          ? 'eligible'
-          : effect.targetScope === 'any-lane'
-            ? 'any'
-            : 'unknown';
+      : effect.targetPriority === 'highest-stat-ally'
+        ? 'highest-stat'
+        : effect.targetPriority === 'all-allies-matching-threshold'
+          ? 'all-matching-condition'
+          : effect.targetScope === 'within-adjacency'
+            ? 'one-eligible-adjacent'
+            : effect.target.includes('deals')
+              ? 'eligible'
+              : effect.targetScope === 'any-lane'
+                ? 'any'
+                : 'unknown';
+  const count = selection === 'all-matching-condition'
+    ? null
+    : selection === 'highest-stat' || selection === 'one-eligible-adjacent'
+      ? 1
+      : effect.targetCount ?? inferTargetCount(effect.target);
   return {
     side: targetSideForEffect(effect),
     scope: effect.targetScope,
     position,
-    count: effect.targetCount ?? inferTargetCount(effect.target),
-    includesCaster: effect.includesCaster ?? null,
+    count,
+    includesCaster: effect.includesCaster ?? (effect.casterEligibility === 'excluded' ? false : null),
     selection,
+    selectionStat,
   };
+}
+
+function selectionStatForEffect(effect: AbilityEffect): DragonStatId | null {
+  if (effect.targetPriority !== 'highest-stat-ally') {
+    return null;
+  }
+  if (/highest Strength/i.test(effect.target)) {
+    return 'strength';
+  }
+  if (/highest Intelligence/i.test(effect.target)) {
+    return 'intelligence';
+  }
+  if (/highest Instinct/i.test(effect.target)) {
+    return 'instinct';
+  }
+  if (/highest Initiative/i.test(effect.target)) {
+    return 'initiative';
+  }
+  return null;
 }
 
 function targetRequirement(
@@ -1536,9 +1840,14 @@ function targetRequirement(
   } else if (selector.position) {
     satisfied = recipientPosition === selector.position;
     expected = selector.position;
-  } else if (selector.selection === 'adjacent') {
+  } else if (selector.selection === 'adjacent' || selector.selection === 'one-eligible-adjacent') {
     satisfied = arePositionsAdjacent(providerPosition, recipientPosition);
     expected = `adjacent to ${providerPosition}`;
+  } else if (selector.selection === 'highest-stat' || selector.selection === 'all-matching-condition') {
+    satisfied = true;
+    expected = selector.selection === 'highest-stat'
+      ? `highest ${selector.selectionStat ? statLabel(selector.selectionStat) : 'stat'} ally`
+      : 'all allies matching threshold condition';
   } else if (selector.selection === 'any' || selector.selection === 'eligible') {
     satisfied = true;
   } else {
@@ -1551,7 +1860,9 @@ function targetRequirement(
     actual: providerPosition ? `provider ${providerPosition}, recipient ${recipientPosition}` : null,
     satisfied,
     evidenceIds: modifier.evidenceIds,
-    notes: selector.selection === 'adjacent' ? ['Friendly adjacency is Left Flank - Vanguard - Right Flank.'] : [],
+    notes: selector.selection === 'adjacent' || selector.selection === 'one-eligible-adjacent'
+      ? ['Friendly adjacency is Left Flank - Vanguard - Right Flank.']
+      : [],
   };
 }
 
@@ -1591,7 +1902,7 @@ function statusProviderRequirement(
     if (statusOutput.targetSide === 'self') {
       satisfied = providerPosition === recipientPosition;
       expected = 'self-status on recipient';
-    } else if (statusOutput.targetSelector.selection === 'adjacent') {
+    } else if (statusOutput.targetSelector.selection === 'adjacent' || statusOutput.targetSelector.selection === 'one-eligible-adjacent') {
       satisfied = arePositionsAdjacent(providerPosition, recipientPosition);
       expected = `ally adjacent to ${providerPosition}`;
     } else if (statusOutput.targetSide === 'ally') {
@@ -1611,7 +1922,9 @@ function statusProviderRequirement(
     actual: `provider ${providerPosition}, recipient ${recipientPosition}`,
     satisfied,
     evidenceIds: statusOutput.evidenceIds,
-    notes: statusOutput.targetSelector.selection === 'adjacent' ? ['A position is not adjacent to itself.'] : [],
+    notes: statusOutput.targetSelector.selection === 'adjacent' || statusOutput.targetSelector.selection === 'one-eligible-adjacent'
+      ? ['A position is not adjacent to itself.']
+      : [],
   };
 }
 
@@ -1657,6 +1970,8 @@ function providerRequirementTraces(
     ...availabilityRequirements({
       dragonId: modifier.dragonId,
       abilityId: modifier.abilityId,
+      dragonName: dragon?.name ?? modifier.dragonId,
+      abilityName: modifier.abilityName,
       unlockStarRank: modifier.unlockStarRank,
       minimumDragonLevel: modifier.minimumDragonLevel,
       requiredHabitLevel: modifier.requiredHabitLevel,
@@ -1670,6 +1985,8 @@ function outputRequirementTraces(output: OutputCapability, options: CapabilityOp
   return availabilityRequirements({
     dragonId: output.dragonId,
     abilityId: output.abilityId,
+    dragonName: output.dragonId,
+    abilityName: output.abilityName,
     unlockStarRank: output.unlockStarRank,
     minimumDragonLevel: output.minimumDragonLevel,
     requiredHabitLevel: output.requiredHabitLevel,
@@ -1694,6 +2011,8 @@ function abilitySourceKind(
 function availabilityRequirements({
   dragonId,
   abilityId,
+  dragonName,
+  abilityName,
   unlockStarRank,
   minimumDragonLevel,
   requiredHabitLevel,
@@ -1702,6 +2021,8 @@ function availabilityRequirements({
 }: {
   dragonId: string;
   abilityId: string | null;
+  dragonName?: string;
+  abilityName?: string;
   unlockStarRank: number | null;
   minimumDragonLevel: number | null;
   requiredHabitLevel: number | null;
@@ -1716,15 +2037,16 @@ function availabilityRequirements({
     : (observation?.dragonLevel ?? null);
   const habitLevel = abilityId ? rosterEntry?.habitLevels[abilityId] ?? null : null;
   const requirements: RequirementTrace[] = [];
+  const owner = abilityName ? `${dragonName ?? dragonId} - ${abilityName}` : (dragonName ?? dragonId);
   if (minimumDragonLevel !== null) {
     const satisfied = dragonLevel === null
-      ? (options.previewMaxRankInteractions ? false : null)
+      ? null
       : dragonLevel >= minimumDragonLevel;
     requirements.push({
       id: `${dragonId}-${abilityId ?? 'basic'}-level`,
-      label: 'Dragon Level requirement',
+      label: `${owner} Dragon Level requirement`,
       expected: `Level ${minimumDragonLevel}+`,
-      actual: dragonLevel === null ? (options.previewMaxRankInteractions ? 'preview enabled' : null) : `Level ${dragonLevel}`,
+      actual: dragonLevel === null ? null : `Level ${dragonLevel}`,
       satisfied,
       evidenceIds,
       notes: [],
@@ -1736,7 +2058,7 @@ function availabilityRequirements({
       : starRank >= unlockStarRank;
     requirements.push({
       id: `${dragonId}-${abilityId ?? 'basic'}-star-rank`,
-      label: sourceKind === 'habit' ? 'Habit unlock requirement' : 'Star Rank requirement',
+      label: sourceKind === 'habit' ? `${owner} Habit unlock requirement` : `${owner} Star Rank requirement`,
       expected: `Star Rank ${unlockStarRank}+`,
       actual: starRank === null ? (options.previewMaxRankInteractions ? 'preview enabled' : null) : `Star Rank ${starRank}`,
       satisfied,
@@ -1750,7 +2072,7 @@ function availabilityRequirements({
       : habitLevel >= requiredHabitLevel;
     requirements.push({
       id: `${dragonId}-${abilityId}-habit-level`,
-      label: 'Selected Habit Level',
+      label: `${owner} Selected Habit Level`,
       expected: `Habit Level ${requiredHabitLevel}+ or preview`,
       actual: habitLevel === null ? (options.previewMaxRankInteractions ? 'preview enabled' : null) : `Habit Level ${habitLevel}`,
       satisfied,
@@ -1903,6 +2225,12 @@ function statusFromRequirements(requirements: RequirementTrace[], futureOrCondit
   if (failed.some(isHardRequirement)) {
     return 'inactive';
   }
+  if (failed.some((requirement) => /Dragon Level/.test(requirement.label) && requirement.actual !== 'preview enabled')) {
+    return 'inactive';
+  }
+  if (failed.length > 0 && !futureOrConditional) {
+    return 'inactive';
+  }
   if (requirements.some((requirement) => requirement.satisfied === null)) {
     return 'unknown';
   }
@@ -2036,7 +2364,64 @@ function targetSelectorSummary(target: AbilityTarget): string {
     : target.includesCaster
       ? 'caster eligible'
       : 'caster excluded';
-  return `${target.side}; ${target.scope}; ${target.selection}; ${count}; ${caster}`;
+  const stat = target.selectionStat ? `; selection stat ${target.selectionStat}` : '';
+  return `${target.side}; ${target.scope}; ${target.selection}; ${count}; ${caster}${stat}`;
+}
+
+function defensiveDamageScopeForEffect(effect: AbilityEffect): DefensiveDamageScope | null {
+  if (!/Damage Received/i.test(effect.type)) {
+    return null;
+  }
+  if (/Tactical Damage Received/i.test(effect.type)) {
+    return 'tactical';
+  }
+  if (/Fire Damage Received/i.test(effect.type)) {
+    return 'fire';
+  }
+  if (/Physical Damage Received/i.test(effect.type)) {
+    return 'physical';
+  }
+  return 'all';
+}
+
+function damageReceivedLabel(scope: DefensiveDamageScope | null): string {
+  switch (scope) {
+    case 'physical':
+      return 'Physical Damage Received';
+    case 'tactical':
+      return 'Tactical Damage Received';
+    case 'fire':
+      return 'Fire Damage Received';
+    case 'all':
+    case null:
+      return 'Damage Received';
+  }
+}
+
+function modifierDisplayValue(modifier: ModifierCapability, options: CapabilityOptions): string {
+  const rankedValue = options.previewMaxRankInteractions
+    ? modifier.rankedValues.find((value) => value.level === 5)
+    : undefined;
+  const value = rankedValue?.value ?? modifier.value;
+  if (value === null) {
+    return 'unknown';
+  }
+  const unit = rankedValue?.unit ?? modifier.unit;
+  return `${value}${unit === 'percent' ? '%' : unit === 'flat' ? ' flat' : ''}`;
+}
+
+function interactionScopeForTrace(
+  sourceDragonId: string,
+  recipientDragonId: string | null,
+  matchKind: SynergyTrace['matchKind'],
+): SynergyTrace['interactionScope'] {
+  if (matchKind === 'enemy-mitigation-reduction') {
+    return 'enemy-side';
+  }
+  if (!recipientDragonId) {
+    return 'targeting-fact';
+  }
+  return sourceDragonId === recipientDragonId ? 'internal' : 'cross-dragon';
 }
 
 function outputChannelNames(outputs: OutputCapability[], ids: string[]): string[] {
@@ -2073,7 +2458,10 @@ function outgoingExplanation(
   if (modifier.dragonId === 'sheepstealer' && modifier.channel === 'physical-damage') {
     return `${providerName}'s ${modifier.abilityName} increases ${recipientName}'s Physical Damage Dealt by ${modifier.value ?? 'unknown'}%. Qualifying outputs: ${labels}.`;
   }
-  if (modifier.dragonId === 'vermax' && modifier.channel === 'tactical-damage') {
+  if (modifier.dragonId === 'vermax' && modifier.abilityId === 'vermax-rallying-flame' && modifier.channel === 'tactical-damage') {
+    return `${modifier.abilityName} may grant additional Spreading Blaze stacks to ${recipientName}. Each granted stack increases Tactical Damage Dealt by ${modifier.valuePerStack ?? 'unknown'}%, up to ${modifier.stackMaximum ?? 'unknown'} stacks. Qualifying outputs: ${labels}.`;
+  }
+  if (modifier.dragonId === 'vermax' && modifier.abilityId === 'vermax-spreading-blaze' && modifier.channel === 'tactical-damage') {
     return `${recipientName} is eligible to receive Spreading Blaze because it has verified Tactical Damage output. Each granted stack increases Tactical Damage Dealt by ${modifier.valuePerStack ?? 'unknown'}%, up to ${modifier.stackMaximum ?? 'unknown'} stacks.`;
   }
   if (modifier.dragonId === 'syrax' && modifier.abilityId === 'syrax-blazing-fury' && modifier.channel === 'fire-damage') {
@@ -2192,6 +2580,10 @@ function conditionsForEffect(effect: AbilityEffect, schedule?: AbilitySchedule):
       description: condition.description,
       evidenceIds: [],
       unresolved: condition.unresolved,
+      kind: condition.kind,
+      subject: condition.subject,
+      comparison: condition.comparison,
+      thresholdPercent: condition.thresholdPercent,
     })),
     ...(effect.conditionalMultipliers ?? []).map((condition) => ({
       id: condition.id,
@@ -2249,6 +2641,18 @@ function uniqueChannels(channels: EffectChannel[]): EffectChannel[] {
 
 function uniqueSorted(values: string[]): string[] {
   return [...new Set(values)].sort((a, b) => a.localeCompare(b));
+}
+
+function uniqueOrdered(values: string[]): string[] {
+  const seen = new Set<string>();
+  const ordered: string[] = [];
+  for (const value of values) {
+    if (!seen.has(value)) {
+      seen.add(value);
+      ordered.push(value);
+    }
+  }
+  return ordered;
 }
 
 function selectedFormationDragonIds(formation: FormationAnalysisInput): Set<string> {
