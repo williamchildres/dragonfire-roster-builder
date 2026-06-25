@@ -38,7 +38,7 @@ Data schema 9 exports defensive damage scope, threshold conditions separate from
 
 ## Formation Card Presentation
 
-Version 0.5.5 adds a UI-only card presentation layer. It maps normal traces into per-position Receives, Provides, Trait status, affinity chips, candidate-target labels, preview labels, and overflow counts. Raw/debug traces, requirements, evidence IDs, internal interactions, and expected formation-review cases remain exported for audit.
+Version 0.5.6 keeps the UI-only card presentation layer and adds a layout contract: desktop cards align as equal-height planner columns, controls stay in normal top-to-bottom flow, Receives and Provides collapse to three compact items, expanded sections use bounded scrollable bodies, and full trace detail remains available for audit and accessibility. Raw/debug traces, requirements, evidence IDs, internal interactions, and expected formation-review cases remain exported for audit.
 
 ## Authority
 

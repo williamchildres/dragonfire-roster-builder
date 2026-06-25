@@ -7,7 +7,8 @@
     "Phase 3.8.1 formation trace reconciliation",
     "Phase 3.8.2 formation analysis normalization",
     "Version 0.5.4 normal unmet requirement summary repair",
-    "Version 0.5.5 formation card analysis presentation redesign"
+    "Version 0.5.5 formation card analysis presentation redesign",
+    "Version 0.5.6 formation card layout polish"
   ],
   "contextVersion": 1,
   "currentArchitectureSummary": [
@@ -16,11 +17,11 @@
     "Capability derivation is computed from structured AbilityEffect records in effectCapabilities.ts.",
     "Formation analysis uses structured SynergyTrace records and does not produce an arbitrary numerical score.",
     "Formation normalization preserves defensive scope, target-selection groups, visible-card requirement ownership, source ability identity, interaction scope, pure normal unmet summaries, and debug/export trace retention.",
-    "Formation card presentation maps existing normal traces into per-dragon Receives, Provides, Trait status, affinity, candidate, and preview summaries without changing mechanics."
+    "Formation card presentation maps existing normal traces into per-dragon Receives, Provides, Trait status, affinity, candidate, and preview summaries without changing mechanics; layout polish keeps desktop cards equal-height with bounded interaction regions."
   ],
-  "currentReviewPhase": "Formation card presentation retest and project-context regeneration.",
+  "currentReviewPhase": "Formation card layout polish validation and project-context regeneration.",
   "format": "dragonfire-project-state",
-  "generatedAt": "2026-06-25T04:29:56.747Z",
+  "generatedAt": "2026-06-25T05:03:27.389Z",
   "plannedNextPhase": [
     "full formation-output review",
     "additional visual QA",
@@ -32,9 +33,9 @@
     "metadataOnlyDragonCount": 24
   },
   "source": {
-    "branch": "feature/formation-card-analysis-ui",
-    "commit": "015d98140b7ccd60eb199667f237665f357400fd",
-    "databaseVersion": "0.5.5",
+    "branch": "feature/formation-card-layout-polish",
+    "commit": "78ac2a2b780fce599c0edf8af0be22a2a1c54e81",
+    "databaseVersion": "0.5.6",
     "dataSchemaVersion": 9,
     "gameBuild": "26.6.53509",
     "localRosterSchemaVersion": 3,
@@ -44,13 +45,13 @@
     "countingMethod": "static working-tree test declaration scan; runtime pass/fail is reported by npm run test",
     "lastRunStatus": "not-run-by-exporter",
     "runner": "vitest",
-    "testCaseCount": 142,
+    "testCaseCount": 145,
     "testFileCount": 19
   },
   "unresolvedMechanicsCount": 56,
   "versions": {
     "contextVersion": 1,
-    "databaseVersion": "0.5.5",
+    "databaseVersion": "0.5.6",
     "dataSchemaVersion": 9,
     "gameBuild": "26.6.53509",
     "localRosterSchemaVersion": 3
