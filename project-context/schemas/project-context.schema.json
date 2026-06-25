@@ -274,7 +274,7 @@
                 "type": "string"
               },
               "databaseVersion": {
-                "const": "0.5.4"
+                "const": "0.5.5"
               },
               "dataSchemaVersion": {
                 "const": 9
@@ -484,7 +484,7 @@
           "type": "string"
         },
         "databaseVersion": {
-          "const": "0.5.4"
+          "const": "0.5.5"
         },
         "dataSchemaVersion": {
           "const": 9
