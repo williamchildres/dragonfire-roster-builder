@@ -3986,7 +3986,7 @@
   "firstObservedInGame": null,
   "format": "dragonfire-dragon-profile",
   "gameVersion": null,
-  "generatedAt": "2026-06-25T20:57:33.820Z",
+  "generatedAt": "2026-06-25T23:27:35.329Z",
   "habits": [
     {
       "abilityClass": "passive",
@@ -5146,6 +5146,9 @@
     {
       "abilityId": "kalspire-champions-brilliance",
       "abilityName": "Champion's Brilliance",
+      "activationChanceByHabitLevel": [],
+      "activationChanceFixed": null,
+      "activationGroupId": null,
       "availability": {
         "canonical": "canonical-base",
         "notes": [
@@ -5166,6 +5169,7 @@
       "direction": "dealt",
       "directlyVerified": true,
       "dragonId": "kalspire",
+      "durationRounds": null,
       "evidenceIds": [
         "kalspire-champions-brilliance-2026-06-25"
       ],
@@ -5189,16 +5193,23 @@
       "recipientRequirements": [],
       "requiredHabitLevel": null,
       "role": "self-amplification",
+      "sourceEffectId": "champions-brilliance-strength",
       "sourceScope": "unknown",
       "stackMaximum": null,
+      "statusId": null,
       "targetSelector": {
+        "comparisonDirection": null,
+        "comparisonPool": null,
         "count": null,
         "includesCaster": null,
         "position": null,
         "scope": "self",
         "selection": "self",
+        "selectionResource": null,
         "selectionStat": null,
-        "side": "self"
+        "sharedSelectionGroupId": null,
+        "side": "self",
+        "tieBehavior": null
       },
       "unit": "flat",
       "unlockStarRank": 1,
@@ -5208,6 +5219,9 @@
     {
       "abilityId": "kalspire-champions-brilliance",
       "abilityName": "Champion's Brilliance",
+      "activationChanceByHabitLevel": [],
+      "activationChanceFixed": null,
+      "activationGroupId": null,
       "availability": {
         "canonical": "canonical-base",
         "notes": [
@@ -5228,6 +5242,7 @@
       "direction": "dealt",
       "directlyVerified": true,
       "dragonId": "kalspire",
+      "durationRounds": null,
       "evidenceIds": [
         "kalspire-champions-brilliance-2026-06-25"
       ],
@@ -5251,16 +5266,23 @@
       "recipientRequirements": [],
       "requiredHabitLevel": null,
       "role": "self-amplification",
+      "sourceEffectId": "champions-brilliance-intelligence",
       "sourceScope": "unknown",
       "stackMaximum": null,
+      "statusId": null,
       "targetSelector": {
+        "comparisonDirection": null,
+        "comparisonPool": null,
         "count": null,
         "includesCaster": null,
         "position": null,
         "scope": "self",
         "selection": "self",
+        "selectionResource": null,
         "selectionStat": null,
-        "side": "self"
+        "sharedSelectionGroupId": null,
+        "side": "self",
+        "tieBehavior": null
       },
       "unit": "flat",
       "unlockStarRank": 1,
@@ -5270,6 +5292,9 @@
     {
       "abilityId": "kalspire-champions-brilliance",
       "abilityName": "Champion's Brilliance",
+      "activationChanceByHabitLevel": [],
+      "activationChanceFixed": null,
+      "activationGroupId": null,
       "availability": {
         "canonical": "canonical-base",
         "notes": [
@@ -5290,6 +5315,7 @@
       "direction": "dealt",
       "directlyVerified": true,
       "dragonId": "kalspire",
+      "durationRounds": null,
       "evidenceIds": [
         "kalspire-champions-brilliance-2026-06-25"
       ],
@@ -5313,16 +5339,23 @@
       "recipientRequirements": [],
       "requiredHabitLevel": null,
       "role": "self-amplification",
+      "sourceEffectId": "champions-brilliance-instinct",
       "sourceScope": "unknown",
       "stackMaximum": null,
+      "statusId": null,
       "targetSelector": {
+        "comparisonDirection": null,
+        "comparisonPool": null,
         "count": null,
         "includesCaster": null,
         "position": null,
         "scope": "self",
         "selection": "self",
+        "selectionResource": null,
         "selectionStat": null,
-        "side": "self"
+        "sharedSelectionGroupId": null,
+        "side": "self",
+        "tieBehavior": null
       },
       "unit": "flat",
       "unlockStarRank": 1,
@@ -5332,6 +5365,9 @@
     {
       "abilityId": "kalspire-champions-brilliance",
       "abilityName": "Champion's Brilliance",
+      "activationChanceByHabitLevel": [],
+      "activationChanceFixed": null,
+      "activationGroupId": null,
       "availability": {
         "canonical": "canonical-base",
         "notes": [
@@ -5352,6 +5388,7 @@
       "direction": "received",
       "directlyVerified": true,
       "dragonId": "kalspire",
+      "durationRounds": null,
       "evidenceIds": [
         "kalspire-champions-brilliance-2026-06-25"
       ],
@@ -5375,16 +5412,23 @@
       "recipientRequirements": [],
       "requiredHabitLevel": null,
       "role": "ally-support",
+      "sourceEffectId": "champions-brilliance-right-damage-received",
       "sourceScope": "all-qualifying-sources",
       "stackMaximum": null,
+      "statusId": null,
       "targetSelector": {
+        "comparisonDirection": null,
+        "comparisonPool": null,
         "count": null,
         "includesCaster": null,
         "position": "right-flank",
         "scope": "right-flank",
         "selection": "specific-position",
+        "selectionResource": null,
         "selectionStat": null,
-        "side": "ally"
+        "sharedSelectionGroupId": null,
+        "side": "ally",
+        "tieBehavior": null
       },
       "unit": "percent",
       "unlockStarRank": 1,
@@ -5394,6 +5438,9 @@
     {
       "abilityId": "kalspire-robust-insight",
       "abilityName": "Robust Insight",
+      "activationChanceByHabitLevel": [],
+      "activationChanceFixed": null,
+      "activationGroupId": null,
       "availability": {
         "canonical": "canonical-locked",
         "notes": [
@@ -5414,6 +5461,7 @@
       "direction": "dealt",
       "directlyVerified": true,
       "dragonId": "kalspire",
+      "durationRounds": null,
       "evidenceIds": [
         "kalspire-robust-insight-2026-06-25"
       ],
@@ -5453,16 +5501,23 @@
       "recipientRequirements": [],
       "requiredHabitLevel": 1,
       "role": "self-amplification",
+      "sourceEffectId": "robust-insight-strength",
       "sourceScope": "unknown",
       "stackMaximum": null,
+      "statusId": null,
       "targetSelector": {
+        "comparisonDirection": null,
+        "comparisonPool": null,
         "count": null,
         "includesCaster": null,
         "position": null,
         "scope": "self",
         "selection": "self",
+        "selectionResource": null,
         "selectionStat": null,
-        "side": "self"
+        "sharedSelectionGroupId": null,
+        "side": "self",
+        "tieBehavior": null
       },
       "unit": "percent",
       "unlockStarRank": 2,
@@ -5472,6 +5527,9 @@
     {
       "abilityId": "kalspire-robust-insight",
       "abilityName": "Robust Insight",
+      "activationChanceByHabitLevel": [],
+      "activationChanceFixed": null,
+      "activationGroupId": null,
       "availability": {
         "canonical": "canonical-locked",
         "notes": [
@@ -5492,6 +5550,7 @@
       "direction": "dealt",
       "directlyVerified": true,
       "dragonId": "kalspire",
+      "durationRounds": null,
       "evidenceIds": [
         "kalspire-robust-insight-2026-06-25"
       ],
@@ -5531,16 +5590,23 @@
       "recipientRequirements": [],
       "requiredHabitLevel": 1,
       "role": "self-amplification",
+      "sourceEffectId": "robust-insight-instinct",
       "sourceScope": "unknown",
       "stackMaximum": null,
+      "statusId": null,
       "targetSelector": {
+        "comparisonDirection": null,
+        "comparisonPool": null,
         "count": null,
         "includesCaster": null,
         "position": null,
         "scope": "self",
         "selection": "self",
+        "selectionResource": null,
         "selectionStat": null,
-        "side": "self"
+        "sharedSelectionGroupId": null,
+        "side": "self",
+        "tieBehavior": null
       },
       "unit": "percent",
       "unlockStarRank": 2,
@@ -5550,6 +5616,9 @@
     {
       "abilityId": "kalspire-battle-cunning",
       "abilityName": "Battle Cunning",
+      "activationChanceByHabitLevel": [],
+      "activationChanceFixed": null,
+      "activationGroupId": null,
       "availability": {
         "canonical": "canonical-locked",
         "notes": [
@@ -5570,6 +5639,7 @@
       "direction": "dealt",
       "directlyVerified": true,
       "dragonId": "kalspire",
+      "durationRounds": null,
       "evidenceIds": [
         "kalspire-battle-cunning-2026-06-25"
       ],
@@ -5609,16 +5679,23 @@
       "recipientRequirements": [],
       "requiredHabitLevel": 1,
       "role": "enemy-debuff",
+      "sourceEffectId": "battle-cunning-strength-down",
       "sourceScope": "unknown",
       "stackMaximum": null,
+      "statusId": null,
       "targetSelector": {
+        "comparisonDirection": null,
+        "comparisonPool": null,
         "count": 3,
         "includesCaster": null,
         "position": null,
         "scope": "any-lane",
         "selection": "any",
+        "selectionResource": null,
         "selectionStat": null,
-        "side": "enemy"
+        "sharedSelectionGroupId": null,
+        "side": "enemy",
+        "tieBehavior": null
       },
       "unit": "percent",
       "unlockStarRank": 4,
@@ -5628,6 +5705,9 @@
     {
       "abilityId": "kalspire-battle-cunning",
       "abilityName": "Battle Cunning",
+      "activationChanceByHabitLevel": [],
+      "activationChanceFixed": null,
+      "activationGroupId": null,
       "availability": {
         "canonical": "canonical-locked",
         "notes": [
@@ -5648,6 +5728,7 @@
       "direction": "dealt",
       "directlyVerified": true,
       "dragonId": "kalspire",
+      "durationRounds": null,
       "evidenceIds": [
         "kalspire-battle-cunning-2026-06-25"
       ],
@@ -5687,16 +5768,23 @@
       "recipientRequirements": [],
       "requiredHabitLevel": 1,
       "role": "enemy-debuff",
+      "sourceEffectId": "battle-cunning-intelligence-down",
       "sourceScope": "unknown",
       "stackMaximum": null,
+      "statusId": null,
       "targetSelector": {
+        "comparisonDirection": null,
+        "comparisonPool": null,
         "count": 3,
         "includesCaster": null,
         "position": null,
         "scope": "any-lane",
         "selection": "any",
+        "selectionResource": null,
         "selectionStat": null,
-        "side": "enemy"
+        "sharedSelectionGroupId": null,
+        "side": "enemy",
+        "tieBehavior": null
       },
       "unit": "percent",
       "unlockStarRank": 4,
@@ -5706,6 +5794,9 @@
     {
       "abilityId": "kalspire-dragons-insight",
       "abilityName": "Dragon's Insight",
+      "activationChanceByHabitLevel": [],
+      "activationChanceFixed": null,
+      "activationGroupId": null,
       "availability": {
         "canonical": "canonical-locked",
         "notes": [
@@ -5726,6 +5817,7 @@
       "direction": "received",
       "directlyVerified": true,
       "dragonId": "kalspire",
+      "durationRounds": null,
       "evidenceIds": [
         "kalspire-dragons-insight-2026-06-25"
       ],
@@ -5765,16 +5857,23 @@
       "recipientRequirements": [],
       "requiredHabitLevel": 1,
       "role": "self-amplification",
+      "sourceEffectId": "dragons-insight-damage-received",
       "sourceScope": "unknown",
       "stackMaximum": null,
+      "statusId": null,
       "targetSelector": {
+        "comparisonDirection": null,
+        "comparisonPool": null,
         "count": null,
         "includesCaster": null,
         "position": null,
         "scope": "self",
         "selection": "self",
+        "selectionResource": null,
         "selectionStat": null,
-        "side": "self"
+        "sharedSelectionGroupId": null,
+        "side": "self",
+        "tieBehavior": null
       },
       "unit": "percent",
       "unlockStarRank": 8,
@@ -5784,6 +5883,9 @@
     {
       "abilityId": "kalspire-dragons-insight",
       "abilityName": "Dragon's Insight",
+      "activationChanceByHabitLevel": [],
+      "activationChanceFixed": null,
+      "activationGroupId": null,
       "availability": {
         "canonical": "canonical-locked",
         "notes": [
@@ -5804,6 +5906,7 @@
       "direction": "dealt",
       "directlyVerified": true,
       "dragonId": "kalspire",
+      "durationRounds": null,
       "evidenceIds": [
         "kalspire-dragons-insight-2026-06-25"
       ],
@@ -5843,16 +5946,23 @@
       "recipientRequirements": [],
       "requiredHabitLevel": 1,
       "role": "self-amplification",
+      "sourceEffectId": "dragons-insight-instinct",
       "sourceScope": "unknown",
       "stackMaximum": null,
+      "statusId": null,
       "targetSelector": {
+        "comparisonDirection": null,
+        "comparisonPool": null,
         "count": null,
         "includesCaster": null,
         "position": null,
         "scope": "self",
         "selection": "self",
+        "selectionResource": null,
         "selectionStat": null,
-        "side": "self"
+        "sharedSelectionGroupId": null,
+        "side": "self",
+        "tieBehavior": null
       },
       "unit": "percent",
       "unlockStarRank": 8,
@@ -5862,6 +5972,9 @@
     {
       "abilityId": "kalspire-radiant-conqueror",
       "abilityName": "Radiant Conqueror",
+      "activationChanceByHabitLevel": [],
+      "activationChanceFixed": null,
+      "activationGroupId": null,
       "availability": {
         "canonical": "canonical-locked",
         "notes": [
@@ -5882,6 +5995,7 @@
       "direction": "received",
       "directlyVerified": true,
       "dragonId": "kalspire",
+      "durationRounds": 1,
       "evidenceIds": [
         "kalspire-radiant-conqueror-2026-06-25"
       ],
@@ -5895,16 +6009,23 @@
       "recipientRequirements": [],
       "requiredHabitLevel": 1,
       "role": "self-amplification",
+      "sourceEffectId": "radiant-conqueror-damage-received",
       "sourceScope": "unknown",
       "stackMaximum": null,
+      "statusId": null,
       "targetSelector": {
+        "comparisonDirection": null,
+        "comparisonPool": null,
         "count": null,
         "includesCaster": null,
         "position": null,
         "scope": "self",
         "selection": "self",
+        "selectionResource": null,
         "selectionStat": null,
-        "side": "self"
+        "sharedSelectionGroupId": null,
+        "side": "self",
+        "tieBehavior": null
       },
       "unit": "percent",
       "unlockStarRank": 10,
@@ -5914,6 +6035,9 @@
     {
       "abilityId": "kalspire-radiant-conqueror",
       "abilityName": "Radiant Conqueror",
+      "activationChanceByHabitLevel": [],
+      "activationChanceFixed": null,
+      "activationGroupId": null,
       "availability": {
         "canonical": "canonical-locked",
         "notes": [
@@ -5934,6 +6058,7 @@
       "direction": "dealt",
       "directlyVerified": true,
       "dragonId": "kalspire",
+      "durationRounds": 5,
       "evidenceIds": [
         "kalspire-radiant-conqueror-2026-06-25"
       ],
@@ -5973,16 +6098,23 @@
       "recipientRequirements": [],
       "requiredHabitLevel": 1,
       "role": "enemy-debuff",
+      "sourceEffectId": "radiant-conqueror-physical-down",
       "sourceScope": "non-basic-attacks",
       "stackMaximum": null,
+      "statusId": null,
       "targetSelector": {
+        "comparisonDirection": "highest",
+        "comparisonPool": "enemy-side",
         "count": 1,
         "includesCaster": null,
         "position": null,
         "scope": "any-lane",
         "selection": "highest-stat",
+        "selectionResource": "strength",
         "selectionStat": "strength",
-        "side": "enemy"
+        "sharedSelectionGroupId": null,
+        "side": "enemy",
+        "tieBehavior": "candidate-group"
       },
       "unit": "percent",
       "unlockStarRank": 10,
@@ -5992,6 +6124,9 @@
     {
       "abilityId": "kalspire-radiant-conqueror",
       "abilityName": "Radiant Conqueror",
+      "activationChanceByHabitLevel": [],
+      "activationChanceFixed": null,
+      "activationGroupId": null,
       "availability": {
         "canonical": "canonical-locked",
         "notes": [
@@ -6012,6 +6147,7 @@
       "direction": "dealt",
       "directlyVerified": true,
       "dragonId": "kalspire",
+      "durationRounds": 5,
       "evidenceIds": [
         "kalspire-radiant-conqueror-2026-06-25"
       ],
@@ -6051,16 +6187,23 @@
       "recipientRequirements": [],
       "requiredHabitLevel": 1,
       "role": "enemy-debuff",
+      "sourceEffectId": "radiant-conqueror-fire-down",
       "sourceScope": "all-qualifying-sources",
       "stackMaximum": null,
+      "statusId": null,
       "targetSelector": {
+        "comparisonDirection": "highest",
+        "comparisonPool": "enemy-side",
         "count": 1,
         "includesCaster": null,
         "position": null,
         "scope": "any-lane",
         "selection": "highest-stat",
+        "selectionResource": "intelligence",
         "selectionStat": "intelligence",
-        "side": "enemy"
+        "sharedSelectionGroupId": null,
+        "side": "enemy",
+        "tieBehavior": "candidate-group"
       },
       "unit": "percent",
       "unlockStarRank": 10,
@@ -7100,8 +7243,8 @@
   "rosterSourceStatus": "official-website",
   "slug": "kalspire",
   "source": {
-    "branch": "fix/legendary-formation-analysis-regressions",
-    "commit": "a7f9ab451670be3f36d1317009d1575349cd06ff",
+    "branch": "fix/eclipse-cover-formation-traces",
+    "commit": "6e4e37a9f5e74a52622a6200c456399e7262d205",
     "databaseVersion": "0.6.0",
     "dataSchemaVersion": 10,
     "gameBuild": "26.6.53509",
@@ -7118,6 +7261,9 @@
     {
       "abilityId": "kalspire-tactical-strike",
       "abilityName": "Tactical Strike",
+      "activationChanceByHabitLevel": [],
+      "activationChanceFixed": 30,
+      "activationGroupId": null,
       "availability": {
         "canonical": "canonical-base",
         "notes": [
@@ -7141,15 +7287,21 @@
       "id": "kalspire-tactical-strike-tactical-strike-bleed-bleed-status-output",
       "minimumDragonLevel": null,
       "requiredHabitLevel": null,
+      "sourceEffectId": "tactical-strike-bleed",
       "statusId": "bleed",
       "targetSelector": {
+        "comparisonDirection": null,
+        "comparisonPool": null,
         "count": 1,
         "includesCaster": null,
         "position": null,
         "scope": "within-adjacency",
         "selection": "one-eligible-adjacent",
+        "selectionResource": null,
         "selectionStat": null,
-        "side": "enemy"
+        "sharedSelectionGroupId": null,
+        "side": "enemy",
+        "tieBehavior": null
       },
       "targetSide": "enemy",
       "unlockStarRank": null,
@@ -7159,6 +7311,35 @@
     {
       "abilityId": "kalspire-tactical-assault",
       "abilityName": "Tactical Assault",
+      "activationChanceByHabitLevel": [
+        {
+          "level": 1,
+          "unit": "percent",
+          "value": 15
+        },
+        {
+          "level": 2,
+          "unit": "percent",
+          "value": 18
+        },
+        {
+          "level": 3,
+          "unit": "percent",
+          "value": 21
+        },
+        {
+          "level": 4,
+          "unit": "percent",
+          "value": 25.5
+        },
+        {
+          "level": 5,
+          "unit": "percent",
+          "value": 30
+        }
+      ],
+      "activationChanceFixed": null,
+      "activationGroupId": null,
       "availability": {
         "canonical": "canonical-locked",
         "notes": [
@@ -7209,15 +7390,21 @@
       "id": "kalspire-tactical-assault-tactical-assault-panic-panic-status-output",
       "minimumDragonLevel": null,
       "requiredHabitLevel": 1,
+      "sourceEffectId": "tactical-assault-panic",
       "statusId": "panic",
       "targetSelector": {
+        "comparisonDirection": null,
+        "comparisonPool": null,
         "count": 1,
         "includesCaster": null,
         "position": null,
         "scope": "within-adjacency",
         "selection": "one-eligible-adjacent",
+        "selectionResource": null,
         "selectionStat": null,
-        "side": "enemy"
+        "sharedSelectionGroupId": null,
+        "side": "enemy",
+        "tieBehavior": null
       },
       "targetSide": "enemy",
       "unlockStarRank": 6,
@@ -7227,6 +7414,9 @@
     {
       "abilityId": "kalspire-radiant-conqueror",
       "abilityName": "Radiant Conqueror",
+      "activationChanceByHabitLevel": [],
+      "activationChanceFixed": null,
+      "activationGroupId": null,
       "availability": {
         "canonical": "canonical-locked",
         "notes": [
@@ -7251,15 +7441,21 @@
       "id": "kalspire-radiant-conqueror-radiant-conqueror-self-stun-stun-status-output",
       "minimumDragonLevel": null,
       "requiredHabitLevel": 1,
+      "sourceEffectId": "radiant-conqueror-self-stun",
       "statusId": "stun",
       "targetSelector": {
+        "comparisonDirection": null,
+        "comparisonPool": null,
         "count": null,
         "includesCaster": null,
         "position": null,
         "scope": "self",
         "selection": "self",
+        "selectionResource": null,
         "selectionStat": null,
-        "side": "self"
+        "sharedSelectionGroupId": null,
+        "side": "self",
+        "tieBehavior": null
       },
       "targetSide": "self",
       "unlockStarRank": 10,

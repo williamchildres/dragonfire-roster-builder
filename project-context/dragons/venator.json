@@ -3398,7 +3398,7 @@
   "firstObservedInGame": null,
   "format": "dragonfire-dragon-profile",
   "gameVersion": null,
-  "generatedAt": "2026-06-25T20:57:33.820Z",
+  "generatedAt": "2026-06-25T23:27:35.329Z",
   "habits": [
     {
       "abilityClass": "passive",
@@ -4295,6 +4295,9 @@
     {
       "abilityId": "venator-warriors-zeal",
       "abilityName": "Warrior's Zeal",
+      "activationChanceByHabitLevel": [],
+      "activationChanceFixed": null,
+      "activationGroupId": null,
       "availability": {
         "canonical": "canonical-base",
         "notes": [
@@ -4315,6 +4318,7 @@
       "direction": "dealt",
       "directlyVerified": true,
       "dragonId": "venator",
+      "durationRounds": null,
       "evidenceIds": [
         "venator-warriors-zeal-2026-06-25"
       ],
@@ -4338,16 +4342,23 @@
       "recipientRequirements": [],
       "requiredHabitLevel": null,
       "role": "self-amplification",
+      "sourceEffectId": "warriors-zeal-command-habit-physical",
       "sourceScope": "commands-and-habits",
       "stackMaximum": null,
+      "statusId": null,
       "targetSelector": {
+        "comparisonDirection": null,
+        "comparisonPool": null,
         "count": null,
         "includesCaster": null,
         "position": null,
         "scope": "self",
         "selection": "self",
+        "selectionResource": null,
         "selectionStat": null,
-        "side": "self"
+        "sharedSelectionGroupId": null,
+        "side": "self",
+        "tieBehavior": null
       },
       "unit": "percent",
       "unlockStarRank": 1,
@@ -4357,6 +4368,9 @@
     {
       "abilityId": "venator-warriors-zeal",
       "abilityName": "Warrior's Zeal",
+      "activationChanceByHabitLevel": [],
+      "activationChanceFixed": null,
+      "activationGroupId": null,
       "availability": {
         "canonical": "canonical-base",
         "notes": [
@@ -4377,6 +4391,7 @@
       "direction": "dealt",
       "directlyVerified": true,
       "dragonId": "venator",
+      "durationRounds": null,
       "evidenceIds": [
         "venator-warriors-zeal-2026-06-25"
       ],
@@ -4400,16 +4415,23 @@
       "recipientRequirements": [],
       "requiredHabitLevel": null,
       "role": "ally-support",
+      "sourceEffectId": "warriors-zeal-left-instinct",
       "sourceScope": "unknown",
       "stackMaximum": null,
+      "statusId": null,
       "targetSelector": {
+        "comparisonDirection": null,
+        "comparisonPool": null,
         "count": null,
         "includesCaster": null,
         "position": "left-flank",
         "scope": "left-flank",
         "selection": "specific-position",
+        "selectionResource": null,
         "selectionStat": null,
-        "side": "ally"
+        "sharedSelectionGroupId": null,
+        "side": "ally",
+        "tieBehavior": null
       },
       "unit": "flat",
       "unlockStarRank": 1,
@@ -4419,6 +4441,9 @@
     {
       "abilityId": "venator-warriors-zeal",
       "abilityName": "Warrior's Zeal",
+      "activationChanceByHabitLevel": [],
+      "activationChanceFixed": null,
+      "activationGroupId": null,
       "availability": {
         "canonical": "canonical-base",
         "notes": [
@@ -4439,6 +4464,7 @@
       "direction": "dealt",
       "directlyVerified": true,
       "dragonId": "venator",
+      "durationRounds": null,
       "evidenceIds": [
         "venator-warriors-zeal-2026-06-25"
       ],
@@ -4462,16 +4488,23 @@
       "recipientRequirements": [],
       "requiredHabitLevel": null,
       "role": "ally-support",
+      "sourceEffectId": "warriors-zeal-left-initiative",
       "sourceScope": "unknown",
       "stackMaximum": null,
+      "statusId": null,
       "targetSelector": {
+        "comparisonDirection": null,
+        "comparisonPool": null,
         "count": null,
         "includesCaster": null,
         "position": "left-flank",
         "scope": "left-flank",
         "selection": "specific-position",
+        "selectionResource": null,
         "selectionStat": null,
-        "side": "ally"
+        "sharedSelectionGroupId": null,
+        "side": "ally",
+        "tieBehavior": null
       },
       "unit": "flat",
       "unlockStarRank": 1,
@@ -4481,6 +4514,9 @@
     {
       "abilityId": "venator-hunters-bane",
       "abilityName": "Hunter's Bane",
+      "activationChanceByHabitLevel": [],
+      "activationChanceFixed": null,
+      "activationGroupId": null,
       "availability": {
         "canonical": "canonical-locked",
         "notes": [
@@ -4501,6 +4537,7 @@
       "direction": "dealt",
       "directlyVerified": true,
       "dragonId": "venator",
+      "durationRounds": null,
       "evidenceIds": [
         "venator-hunters-bane-2026-06-25"
       ],
@@ -4540,16 +4577,23 @@
       "recipientRequirements": [],
       "requiredHabitLevel": 1,
       "role": "enemy-debuff",
+      "sourceEffectId": "hunters-bane-intelligence-down",
       "sourceScope": "unknown",
       "stackMaximum": null,
+      "statusId": null,
       "targetSelector": {
+        "comparisonDirection": null,
+        "comparisonPool": null,
         "count": 1,
         "includesCaster": null,
         "position": null,
         "scope": "any-lane",
         "selection": "any",
+        "selectionResource": null,
         "selectionStat": null,
-        "side": "enemy"
+        "sharedSelectionGroupId": null,
+        "side": "enemy",
+        "tieBehavior": null
       },
       "unit": "percent",
       "unlockStarRank": 2,
@@ -4559,6 +4603,9 @@
     {
       "abilityId": "venator-dragons-might",
       "abilityName": "Dragon's Might",
+      "activationChanceByHabitLevel": [],
+      "activationChanceFixed": null,
+      "activationGroupId": null,
       "availability": {
         "canonical": "canonical-locked",
         "notes": [
@@ -4579,6 +4626,7 @@
       "direction": "dealt",
       "directlyVerified": true,
       "dragonId": "venator",
+      "durationRounds": null,
       "evidenceIds": [
         "venator-dragons-might-2026-06-25"
       ],
@@ -4618,16 +4666,23 @@
       "recipientRequirements": [],
       "requiredHabitLevel": 1,
       "role": "self-amplification",
+      "sourceEffectId": "dragons-might-physical",
       "sourceScope": "non-basic-attacks",
       "stackMaximum": null,
+      "statusId": null,
       "targetSelector": {
+        "comparisonDirection": null,
+        "comparisonPool": null,
         "count": null,
         "includesCaster": null,
         "position": null,
         "scope": "self",
         "selection": "self",
+        "selectionResource": null,
         "selectionStat": null,
-        "side": "self"
+        "sharedSelectionGroupId": null,
+        "side": "self",
+        "tieBehavior": null
       },
       "unit": "percent",
       "unlockStarRank": 4,
@@ -4637,6 +4692,9 @@
     {
       "abilityId": "venator-armor-break",
       "abilityName": "Armor Break",
+      "activationChanceByHabitLevel": [],
+      "activationChanceFixed": null,
+      "activationGroupId": null,
       "availability": {
         "canonical": "canonical-locked",
         "notes": [
@@ -4657,6 +4715,7 @@
       "direction": "received",
       "directlyVerified": true,
       "dragonId": "venator",
+      "durationRounds": null,
       "evidenceIds": [
         "venator-armor-break-2026-06-25"
       ],
@@ -4696,16 +4755,23 @@
       "recipientRequirements": [],
       "requiredHabitLevel": 1,
       "role": "enemy-debuff",
+      "sourceEffectId": "armor-break-physical-received",
       "sourceScope": "unknown",
       "stackMaximum": null,
+      "statusId": null,
       "targetSelector": {
+        "comparisonDirection": null,
+        "comparisonPool": null,
         "count": 1,
         "includesCaster": null,
         "position": null,
         "scope": "same-lane",
         "selection": "specific-position",
+        "selectionResource": null,
         "selectionStat": null,
-        "side": "enemy"
+        "sharedSelectionGroupId": null,
+        "side": "enemy",
+        "tieBehavior": null
       },
       "unit": "percent",
       "unlockStarRank": 8,
@@ -5531,8 +5597,8 @@
   "rosterSourceStatus": "official-website",
   "slug": "venator",
   "source": {
-    "branch": "fix/legendary-formation-analysis-regressions",
-    "commit": "a7f9ab451670be3f36d1317009d1575349cd06ff",
+    "branch": "fix/eclipse-cover-formation-traces",
+    "commit": "6e4e37a9f5e74a52622a6200c456399e7262d205",
     "databaseVersion": "0.6.0",
     "dataSchemaVersion": 10,
     "gameBuild": "26.6.53509",
@@ -5549,6 +5615,9 @@
     {
       "abilityId": "venator-feral-strike",
       "abilityName": "Feral Strike",
+      "activationChanceByHabitLevel": [],
+      "activationChanceFixed": 30,
+      "activationGroupId": "feral-strike-double-strike-rounds-shared-activation",
       "availability": {
         "canonical": "canonical-base",
         "notes": [
@@ -5580,15 +5649,21 @@
       "id": "venator-feral-strike-feral-strike-double-strike-double-strike-status-output",
       "minimumDragonLevel": null,
       "requiredHabitLevel": null,
+      "sourceEffectId": "feral-strike-double-strike",
       "statusId": "double-strike",
       "targetSelector": {
+        "comparisonDirection": null,
+        "comparisonPool": null,
         "count": null,
         "includesCaster": null,
         "position": null,
         "scope": "self",
         "selection": "self",
+        "selectionResource": null,
         "selectionStat": null,
-        "side": "self"
+        "sharedSelectionGroupId": null,
+        "side": "self",
+        "tieBehavior": null
       },
       "targetSide": "self",
       "unlockStarRank": null,
@@ -5598,6 +5673,35 @@
     {
       "abilityId": "venator-desperate-ambush",
       "abilityName": "Desperate Ambush",
+      "activationChanceByHabitLevel": [
+        {
+          "level": 1,
+          "unit": "percent",
+          "value": 12
+        },
+        {
+          "level": 2,
+          "unit": "percent",
+          "value": 15.6
+        },
+        {
+          "level": 3,
+          "unit": "percent",
+          "value": 19.2
+        },
+        {
+          "level": 4,
+          "unit": "percent",
+          "value": 24
+        },
+        {
+          "level": 5,
+          "unit": "percent",
+          "value": 30
+        }
+      ],
+      "activationChanceFixed": null,
+      "activationGroupId": "desperate-ambush-target",
       "availability": {
         "canonical": "canonical-locked",
         "notes": [
@@ -5660,15 +5764,21 @@
       "id": "venator-desperate-ambush-desperate-ambush-overwhelm-overwhelm-status-output",
       "minimumDragonLevel": null,
       "requiredHabitLevel": 1,
+      "sourceEffectId": "desperate-ambush-overwhelm",
       "statusId": "overwhelm",
       "targetSelector": {
+        "comparisonDirection": null,
+        "comparisonPool": null,
         "count": null,
         "includesCaster": null,
         "position": null,
         "scope": "any-lane",
         "selection": "any",
+        "selectionResource": null,
         "selectionStat": null,
-        "side": "enemy"
+        "sharedSelectionGroupId": "desperate-ambush-target",
+        "side": "enemy",
+        "tieBehavior": null
       },
       "targetSide": "enemy",
       "unlockStarRank": 10,

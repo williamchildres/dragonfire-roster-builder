@@ -1,6 +1,7 @@
 import { databaseMetadata } from '../data/databaseMetadata';
 import { evidenceSources } from '../data/evidence';
 import { dragonObservationSnapshots } from '../data/observations';
+import { statusGlossary } from '../data/statusGlossary';
 import {
   FORMATION_POSITIONS,
   type AbilityDefinition,
@@ -10,6 +11,7 @@ import {
   type EffectSourceScope,
   type FormationPosition,
   type OwnedDragon,
+  type RankedValue,
 } from '../models/dragon';
 import type {
   AbilityTarget,
@@ -226,6 +228,10 @@ export function deriveStatusOutputCapabilities(dragons: Dragon[]): StatusOutputC
             availability: availabilityContext(dragon.id, ability.unlockStarRank, ability.minimumDragonLevel),
             directlyVerified: effect.directlyVerified !== false,
             evidenceIds: ability.evidenceIds,
+            sourceEffectId: effect.id,
+            activationGroupId: activationGroupId(schedule, effect),
+            activationChanceFixed: effect.activationRoll?.chanceFixed ?? schedule.activationRoll?.chanceFixed ?? schedule.triggerChanceFixed,
+            activationChanceByHabitLevel: activationChanceByHabitLevel(schedule, effect),
           }];
         }),
       ),
@@ -339,6 +345,7 @@ export function analyzeCapabilityAmplifications(
     ...analyzeDirectStatSupport(formation, dragons, modifiers, options),
     ...analyzeStatScalingSupport(formation, dragons, outputs, modifiers, options),
     ...analyzeEnemyMitigationReduction(formation, dragons, outputs, modifiers, options),
+    ...analyzeEnemyDamageDealtReductions(formation, dragons, modifiers, options),
     ...analyzePeriodicDamageAmplification(formation, dragons, periodicDamage, modifiers, options),
     ...analyzeStatusRemovalSupport(formation, dragons, statusOutputs, options),
   ];
@@ -453,6 +460,12 @@ export function sourceScopesCompatible(
   return modifierScope === outputScope;
 }
 
+function modifierMatchesOutputChannel(modifierChannel: EffectChannel, outputChannel: EffectChannel): boolean {
+  return modifierChannel === 'damage-dealt'
+    ? isDamageChannel(outputChannel)
+    : modifierChannel === outputChannel;
+}
+
 export function reviewedDragons(dragons: Dragon[]): Dragon[] {
   return dragons.filter((dragon) => reviewedDragonIds.includes(dragon.id));
 }
@@ -527,14 +540,14 @@ function analyzeOutgoingAmplifications(
     const modifierTraces: AmplificationSynergyTrace[] = [];
     for (const recipientPosition of FORMATION_POSITIONS) {
       const recipientId = formation[recipientPosition];
-      if (!recipientId || recipientId === modifier.dragonId) {
+      if (!recipientId || (recipientId === modifier.dragonId && modifier.targetSelector.includesCaster !== true)) {
         continue;
       }
       const targeting = targetRequirement(modifier, providerPosition, recipientPosition);
       const candidateOutputs = outputs.filter(
         (output) =>
           output.dragonId === recipientId &&
-          output.channel === modifier.channel &&
+          modifierMatchesOutputChannel(modifier.channel, output.channel) &&
           outputCapabilityVisible(output, options),
       );
       const matches = candidateOutputs.map((output) =>
@@ -797,6 +810,9 @@ function groupSingleTargetOutgoingTraces(
         selectionUncertain: true,
         selection: modifier.targetSelector.selection,
         selectionStat: modifier.targetSelector.selectionStat ?? null,
+        selectionResource: modifier.targetSelector.selectionResource ?? modifier.targetSelector.selectionStat ?? null,
+        comparisonDirection: modifier.targetSelector.comparisonDirection ?? null,
+        comparisonPool: modifier.targetSelector.comparisonPool ?? null,
       },
     },
     ...traces.filter((trace) => !eligible.includes(trace)),
@@ -1196,11 +1212,14 @@ function targetCandidatePositions(
 ): FormationPosition[] {
   const eligible = FORMATION_POSITIONS.filter((position) => {
     const dragonId = formation[position];
-    if (!dragonId || dragonId === modifier.dragonId) {
+    if (!dragonId || (dragonId === modifier.dragonId && modifier.targetSelector.includesCaster !== true)) {
       return false;
     }
     return targetRequirement(modifier, providerPosition, position).satisfied !== false;
   });
+  if (modifier.targetSelector.selectionResource === 'current-troops') {
+    return eligible;
+  }
   if (modifier.targetSelector.selection !== 'highest-stat' || !modifier.targetSelector.selectionStat) {
     return eligible;
   }
@@ -1490,6 +1509,72 @@ function mitigationChannelForStat(statId: DragonStatId): EffectChannel | null {
     case 'strength':
       return null;
   }
+}
+
+function analyzeEnemyDamageDealtReductions(
+  formation: FormationAnalysisInput,
+  dragons: Dragon[],
+  modifiers: ModifierCapability[],
+  options: CapabilityOptions,
+): SynergyTrace[] {
+  const traces: SynergyTrace[] = [];
+  for (const modifier of modifiers.filter(
+    (capability) =>
+      capability.role === 'enemy-debuff' &&
+      capability.direction === 'dealt' &&
+      capability.operation === 'decrease' &&
+      modifierCapabilityVisible(capability, options),
+  )) {
+    const providerPosition = positionOf(formation, modifier.dragonId);
+    const provider = dragonById(dragons, modifier.dragonId);
+    if (!providerPosition || !provider) {
+      continue;
+    }
+    const requirements = providerRequirementTraces(modifier, formation, dragons, options);
+    traces.push({
+      id: `enemy-damage-dealt-reduction-${modifier.id}`,
+      ruleId: 'enemy-damage-dealt-reduction',
+      status: statusFromRequirements(requirements, modifier.futureAvailable || modifier.conditional),
+      confidence: modifier.confidence,
+      sourceDragonId: provider.id,
+      sourceAbilityId: modifier.abilityId,
+      recipientDragonId: null,
+      recipientAbilityId: null,
+      title: `${channelLabel(modifier.channel)} Enemy Reduction`,
+      explanation: `${provider.name}'s ${modifier.abilityName} can reduce enemy ${channelLabel(modifier.channel)}. Enemy target selection is tracked as an enemy-side candidate group, not a named friendly recipient.`,
+      requirements,
+      matchedFacts: [
+        `${modifier.abilityName} targets ${targetSelectorSummary(modifier.targetSelector)}.`,
+        ...modifier.conditions.map((condition) => condition.description),
+        ...(modifier.activationGroupId ? [`Shared activation group: ${modifier.activationGroupId}.`] : []),
+        ...activationChanceFacts(modifier),
+      ],
+      effects: [`Enemy ${channelLabel(modifier.channel)} ${modifier.operation} ${modifierDisplayValue(modifier, options)}`],
+      conflicts: requirements
+        .filter((requirement) => requirement.satisfied === false)
+        .map((requirement) => `${requirement.label}: expected ${requirement.expected}, actual ${requirement.actual ?? 'unknown'}`),
+      assumptions: [
+        'Enemy target selection is not resolved because enemy formation members and current troop values are unavailable.',
+        'Activation chance and uptime are not treated as guaranteed.',
+      ],
+      unresolvedQuestions: ['Enemy-side current-troop tie-breaking, final uptime, and stacking/refresh behavior remain unresolved.'],
+      sourceEvidenceIds: modifier.evidenceIds,
+      recipientEvidenceIds: [],
+      combatLogConfirmed: modifier.combatLogConfirmed,
+      exactResultKnown: false,
+      exactResultUnknownReason: 'Exact final reduced enemy damage cannot be calculated because target selection, uptime, stacking, and final formulas are unresolved.',
+      matchKind: 'enemy-damage-dealt-reduction',
+      channel: modifier.channel,
+      modifierRole: modifier.role,
+      targetSelectorSummary: targetSelectorSummary(modifier.targetSelector),
+      modifierSelfOnly: false,
+      availabilityContext: modifier.availability.reportLabel,
+      modifierCapabilityId: modifier.id,
+      modifierCapabilityIds: [modifier.id],
+      interactionScope: 'enemy-side',
+    });
+  }
+  return traces;
 }
 
 function analyzePeriodicDamageAmplification(
@@ -1833,7 +1918,14 @@ function makeAmplificationTrace({
     title,
     explanation,
     requirements: dedupedRequirements,
-    matchedFacts: matches.map((match) => `Matched ${match.outputCapabilityId}.`),
+    matchedFacts: [
+      `${modifier.abilityName} targets ${targetSelectorSummary(modifier.targetSelector)}.`,
+      ...(modifier.statusId ? [`Status semantic: ${statusLabel(modifier.statusId)}.`] : []),
+      ...(modifier.sourceEffectId ? [`Source effect ID: ${modifier.sourceEffectId}.`] : []),
+      ...(modifier.activationGroupId ? [`Shared activation group: ${modifier.activationGroupId}.`] : []),
+      ...activationChanceFacts(modifier),
+      ...matches.map((match) => `Matched ${match.outputCapabilityId}.`),
+    ],
     effects: [
       `${channelLabel(modifier.channel)} ${modifier.direction === 'dealt' ? 'Dealt' : 'Received'} ${modifier.operation} ${modifier.value ?? 'unknown'}${modifier.unit === 'percent' ? '%' : modifier.unit === 'stack' ? ' per stack' : ''}`,
     ],
@@ -1886,6 +1978,7 @@ function modifierCapabilitiesForEffect(
       ),
     );
   }
+  modifiers.push(...statusSemanticModifiersForEffect(dragon, ability, schedule, effect));
   if (effect.type === 'Stolen Flock' && effect.stack?.statusId === 'stolen-flock') {
     modifiers.push({
       ...baseModifier(dragon, ability, schedule, effect, 'fire-damage', 'dealt'),
@@ -1941,6 +2034,57 @@ function modifierCapabilitiesForEffect(
   return modifiers;
 }
 
+function statusSemanticModifiersForEffect(
+  dragon: Dragon,
+  ability: AbilityDefinition,
+  schedule: AbilitySchedule,
+  effect: AbilityEffect,
+): ModifierCapability[] {
+  const semantic = statusModifierSemantic(effect);
+  if (!semantic) {
+    return [];
+  }
+  return [baseModifier(dragon, ability, schedule, effect, 'damage-dealt', 'dealt')].map((modifier) => ({
+    ...modifier,
+    id: `${ability.id}-${effect.id}-${semantic.statusId}-damage-dealt-status-modifier`,
+    label: `${ability.name}: ${statusLabel(semantic.statusId)} ${semantic.operation === 'increase' ? 'Damage Dealt increase' : 'Damage Dealt reduction'}`,
+    operation: semantic.operation,
+    sourceScope: 'all-qualifying-sources',
+    value: effect.magnitude,
+    rankedValues: effect.rankedValues,
+    unit: effect.unit === 'percent' ? 'percent' : 'unknown',
+    statusId: semantic.statusId,
+    conditions: [
+      ...conditionsForEffect(effect, schedule),
+      {
+        id: `${effect.id}-${semantic.statusId}-semantic-status-modifier`,
+        label: `${statusLabel(semantic.statusId)} status semantics`,
+        description: `${statusLabel(semantic.statusId)} ${semantic.operation === 'increase' ? 'increases' : 'reduces'} Damage Dealt according to the verified status glossary.`,
+        evidenceIds: ability.evidenceIds,
+        unresolved: false,
+      },
+    ],
+  }));
+}
+
+function statusModifierSemantic(effect: AbilityEffect): { statusId: string; operation: 'increase' | 'decrease' } | null {
+  const statusId = statusIdForEffect(effect);
+  if (!statusId) {
+    return null;
+  }
+  const entry = statusGlossary.find((item) => item.id === statusId);
+  if (!entry || entry.verification === 'unresolved') {
+    return null;
+  }
+  if (/increases?\s+damage dealt/i.test(entry.definition)) {
+    return { statusId, operation: 'increase' };
+  }
+  if (/reduces?\s+damage dealt/i.test(entry.definition)) {
+    return { statusId, operation: 'decrease' };
+  }
+  return null;
+}
+
 function baseModifier(
   dragon: Dragon,
   ability: AbilityDefinition,
@@ -1981,7 +2125,28 @@ function baseModifier(
     combatLogConfirmed: ability.evidenceIds.some((id) => id.includes('combat-log')),
     confidence: confidenceForAbility(ability),
     evidenceIds: ability.evidenceIds,
+    sourceEffectId: effect.id,
+    statusId: statusIdForEffect(effect),
+    activationGroupId: activationGroupId(schedule, effect),
+    activationChanceFixed: effect.activationRoll?.chanceFixed ?? schedule.activationRoll?.chanceFixed ?? schedule.triggerChanceFixed,
+    activationChanceByHabitLevel: activationChanceByHabitLevel(schedule, effect),
+    durationRounds: effect.durationRounds,
   };
+}
+
+function activationGroupId(schedule: AbilitySchedule, effect: AbilityEffect): string | null {
+  return effect.targetSelection?.sharedSelectionGroupId ??
+    (schedule.activationRoll?.scope === 'schedule-shared' ? `${schedule.id}-shared-activation` : null);
+}
+
+function activationChanceByHabitLevel(schedule: AbilitySchedule, effect: AbilityEffect): RankedValue[] {
+  if (effect.activationRoll?.chanceByHabitLevel.length) {
+    return effect.activationRoll.chanceByHabitLevel;
+  }
+  if (schedule.activationRoll?.chanceByHabitLevel.length) {
+    return schedule.activationRoll.chanceByHabitLevel;
+  }
+  return schedule.triggerChanceByHabitLevel;
 }
 
 function outputChannelForEffect(effect: AbilityEffect): EffectChannel | null {
@@ -2236,7 +2401,7 @@ function statusIdForEffect(effect: AbilityEffect): string | null {
 
 function modifierChannelForEffect(effect: AbilityEffect): EffectChannel | null {
   if (effect.type === 'Damage Dealt Up' || effect.type === 'Damage Dealt Down') {
-    return 'damage-received';
+    return 'damage-dealt';
   }
   if (effect.type === 'Physical Damage Dealt Up') {
     return 'physical-damage';
@@ -2319,6 +2484,7 @@ function targetForEffect(effect: AbilityEffect): AbilityTarget {
     ? effect.targetScope
     : null;
   const selectionStat = selectionStatForEffect(effect);
+  const selectionResource = selectionResourceForEffect(effect);
   const selection = effect.targetScope === 'self'
     ? 'self'
     : position
@@ -2328,8 +2494,10 @@ function targetForEffect(effect: AbilityEffect): AbilityTarget {
         ? 'highest-stat'
         : effect.targetPriority === 'highest-current-troops-ally'
           || effect.targetPriority === 'highest-current-troops-enemy'
-          || effect.targetPriority === 'least-current-troops-enemy'
-          ? 'highest-stat'
+          ? 'highest-resource'
+          : effect.targetPriority === 'least-current-troops-ally'
+            || effect.targetPriority === 'least-current-troops-enemy'
+            ? 'lowest-resource'
         : effect.targetPriority === 'all-allies-matching-threshold'
           ? 'all-matching-condition'
           : effect.targetScope === 'opposing-position' || effect.targetPriority === 'opposing-position'
@@ -2343,7 +2511,7 @@ function targetForEffect(effect: AbilityEffect): AbilityTarget {
                 : 'unknown';
   const count = selection === 'all-matching-condition'
     ? null
-    : selection === 'highest-stat' || selection === 'one-eligible-adjacent'
+    : selection === 'highest-stat' || selection === 'highest-resource' || selection === 'lowest-resource' || selection === 'one-eligible-adjacent'
       ? 1
       : effect.targetCount ?? inferTargetCount(effect.target);
   return {
@@ -2351,23 +2519,22 @@ function targetForEffect(effect: AbilityEffect): AbilityTarget {
     scope: effect.targetScope === 'opposing-position' ? 'same-lane' : effect.targetScope,
     position,
     count,
-    includesCaster: effect.includesCaster ?? (effect.casterEligibility === 'excluded' ? false : null),
+    includesCaster: effect.includesCaster ?? (effect.casterEligibility === 'excluded' ? false : effect.casterEligibility === 'eligible-if-targeting-allows' ? true : null),
     selection,
     selectionStat,
+    selectionResource,
+    comparisonDirection: effect.targetSelection?.comparisonDirection ?? (selection === 'highest-resource' ? 'highest' : selection === 'lowest-resource' ? 'lowest' : null),
+    comparisonPool: effect.targetSelection?.comparisonPool ?? null,
+    tieBehavior: effect.targetSelection?.tieBehavior ?? null,
+    sharedSelectionGroupId: effect.targetSelection?.sharedSelectionGroupId ?? null,
   };
 }
 
 function selectionStatForEffect(effect: AbilityEffect): DragonStatId | null {
   if (
     effect.targetPriority !== 'highest-stat-ally' &&
-    effect.targetPriority !== 'highest-stat-enemy' &&
-    effect.targetPriority !== 'highest-current-troops-ally' &&
-    effect.targetPriority !== 'highest-current-troops-enemy' &&
-    effect.targetPriority !== 'least-current-troops-enemy'
+    effect.targetPriority !== 'highest-stat-enemy'
   ) {
-    return null;
-  }
-  if (/troops/i.test(effect.target) || effect.targetPriority.includes('troops')) {
     return null;
   }
   if (/highest Strength/i.test(effect.target)) {
@@ -2383,6 +2550,18 @@ function selectionStatForEffect(effect: AbilityEffect): DragonStatId | null {
     return 'initiative';
   }
   return null;
+}
+
+function selectionResourceForEffect(effect: AbilityEffect): 'current-troops' | DragonStatId | null {
+  if (
+    effect.targetPriority === 'highest-current-troops-ally' ||
+    effect.targetPriority === 'highest-current-troops-enemy' ||
+    effect.targetPriority === 'least-current-troops-ally' ||
+    effect.targetPriority === 'least-current-troops-enemy'
+  ) {
+    return 'current-troops';
+  }
+  return selectionStatForEffect(effect);
 }
 
 function periodicDamageForEffect(effect: AbilityEffect): {
@@ -2422,11 +2601,11 @@ function targetRequirement(
   } else if (selector.selection === 'adjacent' || selector.selection === 'one-eligible-adjacent') {
     satisfied = arePositionsAdjacent(providerPosition, recipientPosition);
     expected = `adjacent to ${providerPosition}`;
-  } else if (selector.selection === 'highest-stat' || selector.selection === 'all-matching-condition') {
+  } else if (selector.selection === 'highest-stat' || selector.selection === 'highest-resource' || selector.selection === 'lowest-resource' || selector.selection === 'all-matching-condition') {
     satisfied = true;
-    expected = selector.selection === 'highest-stat'
-      ? `highest ${selector.selectionStat ? statLabel(selector.selectionStat) : 'stat'} ally`
-      : 'all allies matching threshold condition';
+    expected = selector.selection === 'all-matching-condition'
+      ? 'all allies matching threshold condition'
+      : `${selector.comparisonDirection ?? (selector.selection === 'lowest-resource' ? 'lowest' : 'highest')} ${selector.selectionResource ?? selector.selectionStat ?? 'resource'} ${selector.side}`;
   } else if (selector.selection === 'any' || selector.selection === 'eligible') {
     satisfied = true;
   } else {
@@ -2947,7 +3126,12 @@ function targetSelectorSummary(target: AbilityTarget): string {
       ? 'caster eligible'
       : 'caster excluded';
   const stat = target.selectionStat ? `; selection stat ${target.selectionStat}` : '';
-  return `${target.side}; ${target.scope}; ${target.selection}; ${count}; ${caster}${stat}`;
+  const resource = target.selectionResource ? `; selection resource ${target.selectionResource}` : '';
+  const direction = target.comparisonDirection ? `; comparison ${target.comparisonDirection}` : '';
+  const pool = target.comparisonPool ? `; comparison pool ${target.comparisonPool}` : '';
+  const tie = target.tieBehavior ? `; tie behavior ${target.tieBehavior}` : '';
+  const group = target.sharedSelectionGroupId ? `; shared group ${target.sharedSelectionGroupId}` : '';
+  return `${target.side}; ${target.scope}; ${target.selection}; ${count}; ${caster}${stat}${resource}${direction}${pool}${tie}${group}`;
 }
 
 function defensiveDamageScopeForEffect(effect: AbilityEffect): DefensiveDamageScope | null {
@@ -2990,6 +3174,16 @@ function modifierDisplayValue(modifier: ModifierCapability, options: CapabilityO
   }
   const unit = rankedValue?.unit ?? modifier.unit;
   return `${value}${unit === 'percent' ? '%' : unit === 'flat' ? ' flat' : ''}`;
+}
+
+function activationChanceFacts(modifier: ModifierCapability): string[] {
+  if (modifier.activationChanceFixed !== null && modifier.activationChanceFixed !== undefined) {
+    return [`Activation chance: ${modifier.activationChanceFixed}%.`];
+  }
+  if (modifier.activationChanceByHabitLevel?.length) {
+    return [`Activation chance by Habit Level: ${modifier.activationChanceByHabitLevel.map((value) => `${value.value}%`).join(', ')}.`];
+  }
+  return [];
 }
 
 function interactionScopeForTrace(
@@ -3063,6 +3257,12 @@ function outgoingAssumptions(modifier: ModifierCapability, matches: CapabilityMa
   if (matches.length > 1) {
     assumptions.push('Multiple qualifying outputs are aggregated into one normal synergy trace.');
   }
+  if (modifier.activationGroupId) {
+    assumptions.push(`Effects with shared activation group ${modifier.activationGroupId} use one activation roll; uptime is not calculated.`);
+  }
+  if (modifier.targetSelector.selectionResource === 'current-troops') {
+    assumptions.push('Current troop values and tie-breaking are not resolved; eligible recipients remain candidates.');
+  }
   return assumptions;
 }
 
@@ -3098,6 +3298,8 @@ function channelLabel(channel: EffectChannel): string {
       return 'Tactical Damage';
     case 'fire-damage':
       return 'Fire Damage';
+    case 'damage-dealt':
+      return 'Damage Dealt';
     case 'recovery':
       return 'Recovery';
     case 'stat':

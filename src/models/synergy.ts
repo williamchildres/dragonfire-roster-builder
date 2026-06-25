@@ -118,6 +118,9 @@ export interface SynergyTrace {
     selectionUncertain: boolean;
     selection?: AbilityTarget['selection'];
     selectionStat?: DragonStatId | null;
+    selectionResource?: TargetSelectionResource | null;
+    comparisonDirection?: AbilityTarget['comparisonDirection'];
+    comparisonPool?: AbilityTarget['comparisonPool'];
     candidateStats?: Array<{
       dragonId: string;
       statId: DragonStatId;
@@ -139,9 +142,10 @@ export interface RecipientAmplificationTrace {
   confidence: TraceConfidence;
 }
 
-export type EffectChannel = 'physical-damage' | 'tactical-damage' | 'fire-damage' | 'recovery' | 'stat' | 'damage-received' | 'status' | 'control';
+export type EffectChannel = 'physical-damage' | 'tactical-damage' | 'fire-damage' | 'damage-dealt' | 'recovery' | 'stat' | 'damage-received' | 'status' | 'control';
 
 export type DragonStatId = 'strength' | 'instinct' | 'intelligence' | 'initiative';
+export type TargetSelectionResource = DragonStatId | 'current-troops';
 
 export type DefensiveDamageScope = 'all' | 'physical' | 'tactical' | 'fire';
 
@@ -153,6 +157,7 @@ export type SynergyTraceMatchKind =
   | 'status-condition-enablement'
   | 'stat-scaling-support'
   | 'enemy-mitigation-reduction'
+  | 'enemy-damage-dealt-reduction'
   | 'periodic-damage-amplification'
   | 'status-removal'
   | 'defensive-ally-support';
@@ -222,8 +227,15 @@ export interface AbilityTarget {
     | 'highest-stat'
     | 'one-eligible-adjacent'
     | 'all-matching-condition'
+    | 'highest-resource'
+    | 'lowest-resource'
     | 'unknown';
   selectionStat?: DragonStatId | null;
+  selectionResource?: TargetSelectionResource | null;
+  comparisonDirection?: 'highest' | 'lowest' | null;
+  comparisonPool?: 'ally-side' | 'enemy-side' | null;
+  tieBehavior?: 'candidate-group' | 'unknown' | null;
+  sharedSelectionGroupId?: string | null;
 }
 
 export interface RequirementDefinition {
@@ -268,6 +280,12 @@ export interface OutputCapability {
   combatLogConfirmed: boolean;
   confidence: TraceConfidence;
   evidenceIds: string[];
+  sourceEffectId?: string | null;
+  statusId?: string | null;
+  activationGroupId?: string | null;
+  activationChanceFixed?: number | null;
+  activationChanceByHabitLevel?: RankedValue[];
+  durationRounds?: number | null;
 }
 
 export interface ModifierCapability {
@@ -302,6 +320,12 @@ export interface ModifierCapability {
   combatLogConfirmed: boolean;
   confidence: TraceConfidence;
   evidenceIds: string[];
+  sourceEffectId?: string | null;
+  statusId?: string | null;
+  activationGroupId?: string | null;
+  activationChanceFixed?: number | null;
+  activationChanceByHabitLevel?: RankedValue[];
+  durationRounds?: number | null;
 }
 
 export interface CapabilityMatch {
@@ -366,6 +390,10 @@ export interface StatusOutputCapability {
   availability: CapabilityAvailabilityContext;
   directlyVerified: boolean;
   evidenceIds: string[];
+  sourceEffectId?: string | null;
+  activationGroupId?: string | null;
+  activationChanceFixed?: number | null;
+  activationChanceByHabitLevel?: RankedValue[];
 }
 
 export interface PeriodicDamageDefinition {

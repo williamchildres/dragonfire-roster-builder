@@ -3645,7 +3645,7 @@
   "firstObservedInGame": "2026-06-22",
   "format": "dragonfire-dragon-profile",
   "gameVersion": null,
-  "generatedAt": "2026-06-25T20:57:33.820Z",
+  "generatedAt": "2026-06-25T23:27:35.329Z",
   "habits": [
     {
       "abilityClass": "passive",
@@ -4773,6 +4773,9 @@
     {
       "abilityId": "vermax-spreading-blaze",
       "abilityName": "Spreading Blaze",
+      "activationChanceByHabitLevel": [],
+      "activationChanceFixed": null,
+      "activationGroupId": null,
       "availability": {
         "canonical": "canonical-base",
         "notes": [
@@ -4814,6 +4817,7 @@
       "direction": "dealt",
       "directlyVerified": true,
       "dragonId": "vermax",
+      "durationRounds": null,
       "evidenceIds": [
         "vermax-spreading-blaze-summary-2026-06-23",
         "vermax-spreading-blaze-glossary-2026-06-23"
@@ -4828,16 +4832,23 @@
       "recipientRequirements": [],
       "requiredHabitLevel": null,
       "role": "ally-support",
+      "sourceEffectId": "spreading-blaze-stack",
       "sourceScope": "all-qualifying-sources",
       "stackMaximum": 10,
+      "statusId": "spreading-blaze",
       "targetSelector": {
+        "comparisonDirection": null,
+        "comparisonPool": null,
         "count": 1,
         "includesCaster": null,
         "position": null,
         "scope": "any-lane",
         "selection": "eligible",
+        "selectionResource": null,
         "selectionStat": null,
-        "side": "ally"
+        "sharedSelectionGroupId": null,
+        "side": "ally",
+        "tieBehavior": null
       },
       "unit": "stack",
       "unlockStarRank": null,
@@ -4847,6 +4858,9 @@
     {
       "abilityId": "vermax-warriors-zeal",
       "abilityName": "Warrior's Zeal",
+      "activationChanceByHabitLevel": [],
+      "activationChanceFixed": null,
+      "activationGroupId": null,
       "availability": {
         "canonical": "canonical-base",
         "notes": [
@@ -4867,6 +4881,7 @@
       "direction": "dealt",
       "directlyVerified": true,
       "dragonId": "vermax",
+      "durationRounds": null,
       "evidenceIds": [
         "vermax-warriors-zeal-2026-06-23",
         "vermax-warriors-zeal-basic-attack-combat-log-2026-06-24"
@@ -4892,16 +4907,23 @@
       "recipientRequirements": [],
       "requiredHabitLevel": null,
       "role": "self-amplification",
+      "sourceEffectId": "warriors-zeal-physical",
       "sourceScope": "all-qualifying-sources",
       "stackMaximum": null,
+      "statusId": null,
       "targetSelector": {
+        "comparisonDirection": null,
+        "comparisonPool": null,
         "count": null,
         "includesCaster": null,
         "position": null,
         "scope": "self",
         "selection": "self",
+        "selectionResource": null,
         "selectionStat": null,
-        "side": "self"
+        "sharedSelectionGroupId": null,
+        "side": "self",
+        "tieBehavior": null
       },
       "unit": "percent",
       "unlockStarRank": 1,
@@ -4911,6 +4933,9 @@
     {
       "abilityId": "vermax-warriors-zeal",
       "abilityName": "Warrior's Zeal",
+      "activationChanceByHabitLevel": [],
+      "activationChanceFixed": null,
+      "activationGroupId": null,
       "availability": {
         "canonical": "canonical-base",
         "notes": [
@@ -4931,6 +4956,7 @@
       "direction": "dealt",
       "directlyVerified": true,
       "dragonId": "vermax",
+      "durationRounds": null,
       "evidenceIds": [
         "vermax-warriors-zeal-2026-06-23",
         "vermax-warriors-zeal-basic-attack-combat-log-2026-06-24"
@@ -4956,16 +4982,23 @@
       "recipientRequirements": [],
       "requiredHabitLevel": null,
       "role": "ally-support",
+      "sourceEffectId": "warriors-zeal-left-instinct",
       "sourceScope": "unknown",
       "stackMaximum": null,
+      "statusId": null,
       "targetSelector": {
+        "comparisonDirection": null,
+        "comparisonPool": null,
         "count": null,
         "includesCaster": null,
         "position": "left-flank",
         "scope": "left-flank",
         "selection": "specific-position",
+        "selectionResource": null,
         "selectionStat": null,
-        "side": "ally"
+        "sharedSelectionGroupId": null,
+        "side": "ally",
+        "tieBehavior": null
       },
       "unit": "flat",
       "unlockStarRank": 1,
@@ -4975,6 +5008,9 @@
     {
       "abilityId": "vermax-warriors-zeal",
       "abilityName": "Warrior's Zeal",
+      "activationChanceByHabitLevel": [],
+      "activationChanceFixed": null,
+      "activationGroupId": null,
       "availability": {
         "canonical": "canonical-base",
         "notes": [
@@ -4995,6 +5031,7 @@
       "direction": "dealt",
       "directlyVerified": true,
       "dragonId": "vermax",
+      "durationRounds": null,
       "evidenceIds": [
         "vermax-warriors-zeal-2026-06-23",
         "vermax-warriors-zeal-basic-attack-combat-log-2026-06-24"
@@ -5020,16 +5057,23 @@
       "recipientRequirements": [],
       "requiredHabitLevel": null,
       "role": "ally-support",
+      "sourceEffectId": "warriors-zeal-left-initiative",
       "sourceScope": "unknown",
       "stackMaximum": null,
+      "statusId": null,
       "targetSelector": {
+        "comparisonDirection": null,
+        "comparisonPool": null,
         "count": null,
         "includesCaster": null,
         "position": "left-flank",
         "scope": "left-flank",
         "selection": "specific-position",
+        "selectionResource": null,
         "selectionStat": null,
-        "side": "ally"
+        "sharedSelectionGroupId": null,
+        "side": "ally",
+        "tieBehavior": null
       },
       "unit": "flat",
       "unlockStarRank": 1,
@@ -5039,6 +5083,9 @@
     {
       "abilityId": "vermax-trial-by-flame",
       "abilityName": "Trial by Flame",
+      "activationChanceByHabitLevel": [],
+      "activationChanceFixed": null,
+      "activationGroupId": null,
       "availability": {
         "canonical": "canonical-locked",
         "notes": [
@@ -5071,6 +5118,7 @@
       "direction": "received",
       "directlyVerified": true,
       "dragonId": "vermax",
+      "durationRounds": null,
       "evidenceIds": [
         "vermax-trial-by-flame-2026-06-23"
       ],
@@ -5110,16 +5158,23 @@
       "recipientRequirements": [],
       "requiredHabitLevel": 1,
       "role": "ally-support",
+      "sourceEffectId": "trial-below-75-fire-reduction",
       "sourceScope": "unknown",
       "stackMaximum": null,
+      "statusId": null,
       "targetSelector": {
+        "comparisonDirection": null,
+        "comparisonPool": null,
         "count": null,
         "includesCaster": null,
         "position": null,
         "scope": "any-lane",
         "selection": "all-matching-condition",
+        "selectionResource": null,
         "selectionStat": null,
-        "side": "ally"
+        "sharedSelectionGroupId": null,
+        "side": "ally",
+        "tieBehavior": null
       },
       "unit": "percent",
       "unlockStarRank": 2,
@@ -5129,6 +5184,9 @@
     {
       "abilityId": "vermax-trial-by-flame",
       "abilityName": "Trial by Flame",
+      "activationChanceByHabitLevel": [],
+      "activationChanceFixed": null,
+      "activationGroupId": null,
       "availability": {
         "canonical": "canonical-locked",
         "notes": [
@@ -5161,6 +5219,7 @@
       "direction": "received",
       "directlyVerified": true,
       "dragonId": "vermax",
+      "durationRounds": null,
       "evidenceIds": [
         "vermax-trial-by-flame-2026-06-23"
       ],
@@ -5200,16 +5259,23 @@
       "recipientRequirements": [],
       "requiredHabitLevel": 1,
       "role": "ally-support",
+      "sourceEffectId": "trial-below-50-fire-reduction",
       "sourceScope": "unknown",
       "stackMaximum": null,
+      "statusId": null,
       "targetSelector": {
+        "comparisonDirection": null,
+        "comparisonPool": null,
         "count": null,
         "includesCaster": null,
         "position": null,
         "scope": "any-lane",
         "selection": "all-matching-condition",
+        "selectionResource": null,
         "selectionStat": null,
-        "side": "ally"
+        "sharedSelectionGroupId": null,
+        "side": "ally",
+        "tieBehavior": null
       },
       "unit": "percent",
       "unlockStarRank": 2,
@@ -5219,6 +5285,9 @@
     {
       "abilityId": "vermax-trial-by-flame",
       "abilityName": "Trial by Flame",
+      "activationChanceByHabitLevel": [],
+      "activationChanceFixed": null,
+      "activationGroupId": null,
       "availability": {
         "canonical": "canonical-locked",
         "notes": [
@@ -5251,6 +5320,7 @@
       "direction": "received",
       "directlyVerified": true,
       "dragonId": "vermax",
+      "durationRounds": null,
       "evidenceIds": [
         "vermax-trial-by-flame-2026-06-23"
       ],
@@ -5290,16 +5360,23 @@
       "recipientRequirements": [],
       "requiredHabitLevel": 1,
       "role": "ally-support",
+      "sourceEffectId": "trial-below-25-fire-reduction",
       "sourceScope": "unknown",
       "stackMaximum": null,
+      "statusId": null,
       "targetSelector": {
+        "comparisonDirection": null,
+        "comparisonPool": null,
         "count": null,
         "includesCaster": null,
         "position": null,
         "scope": "any-lane",
         "selection": "all-matching-condition",
+        "selectionResource": null,
         "selectionStat": null,
-        "side": "ally"
+        "sharedSelectionGroupId": null,
+        "side": "ally",
+        "tieBehavior": null
       },
       "unit": "percent",
       "unlockStarRank": 2,
@@ -5309,6 +5386,9 @@
     {
       "abilityId": "vermax-reactive-instincts",
       "abilityName": "Reactive Instincts",
+      "activationChanceByHabitLevel": [],
+      "activationChanceFixed": null,
+      "activationGroupId": null,
       "availability": {
         "canonical": "canonical-locked",
         "notes": [
@@ -5329,6 +5409,7 @@
       "direction": "dealt",
       "directlyVerified": true,
       "dragonId": "vermax",
+      "durationRounds": null,
       "evidenceIds": [
         "vermax-reactive-instincts-2026-06-23"
       ],
@@ -5368,16 +5449,23 @@
       "recipientRequirements": [],
       "requiredHabitLevel": 1,
       "role": "ally-support",
+      "sourceEffectId": "reactive-instincts-instinct",
       "sourceScope": "unknown",
       "stackMaximum": null,
+      "statusId": null,
       "targetSelector": {
+        "comparisonDirection": null,
+        "comparisonPool": null,
         "count": 1,
         "includesCaster": null,
         "position": null,
         "scope": "any-lane",
         "selection": "highest-stat",
+        "selectionResource": "instinct",
         "selectionStat": "instinct",
-        "side": "ally"
+        "sharedSelectionGroupId": null,
+        "side": "ally",
+        "tieBehavior": null
       },
       "unit": "percent",
       "unlockStarRank": 4,
@@ -5387,6 +5475,9 @@
     {
       "abilityId": "vermax-reactive-instincts",
       "abilityName": "Reactive Instincts",
+      "activationChanceByHabitLevel": [],
+      "activationChanceFixed": null,
+      "activationGroupId": null,
       "availability": {
         "canonical": "canonical-locked",
         "notes": [
@@ -5407,6 +5498,7 @@
       "direction": "dealt",
       "directlyVerified": true,
       "dragonId": "vermax",
+      "durationRounds": null,
       "evidenceIds": [
         "vermax-reactive-instincts-2026-06-23"
       ],
@@ -5446,16 +5538,23 @@
       "recipientRequirements": [],
       "requiredHabitLevel": 1,
       "role": "ally-support",
+      "sourceEffectId": "reactive-instincts-initiative",
       "sourceScope": "unknown",
       "stackMaximum": null,
+      "statusId": null,
       "targetSelector": {
+        "comparisonDirection": null,
+        "comparisonPool": null,
         "count": 1,
         "includesCaster": null,
         "position": null,
         "scope": "any-lane",
         "selection": "highest-stat",
+        "selectionResource": "instinct",
         "selectionStat": "instinct",
-        "side": "ally"
+        "sharedSelectionGroupId": null,
+        "side": "ally",
+        "tieBehavior": null
       },
       "unit": "percent",
       "unlockStarRank": 4,
@@ -5465,6 +5564,35 @@
     {
       "abilityId": "vermax-rallying-flame",
       "abilityName": "Rallying Flame",
+      "activationChanceByHabitLevel": [
+        {
+          "level": 1,
+          "unit": "percent",
+          "value": 50
+        },
+        {
+          "level": 2,
+          "unit": "percent",
+          "value": 60
+        },
+        {
+          "level": 3,
+          "unit": "percent",
+          "value": 70
+        },
+        {
+          "level": 4,
+          "unit": "percent",
+          "value": 85
+        },
+        {
+          "level": 5,
+          "unit": "percent",
+          "value": 100
+        }
+      ],
+      "activationChanceFixed": null,
+      "activationGroupId": null,
       "availability": {
         "canonical": "canonical-locked",
         "notes": [
@@ -5493,6 +5621,7 @@
       "direction": "dealt",
       "directlyVerified": true,
       "dragonId": "vermax",
+      "durationRounds": null,
       "evidenceIds": [
         "vermax-rallying-flame-2026-06-23"
       ],
@@ -5506,16 +5635,23 @@
       "recipientRequirements": [],
       "requiredHabitLevel": 1,
       "role": "self-amplification",
+      "sourceEffectId": "rallying-flame-stack",
       "sourceScope": "all-qualifying-sources",
       "stackMaximum": 4,
+      "statusId": "rallying-flame",
       "targetSelector": {
+        "comparisonDirection": null,
+        "comparisonPool": null,
         "count": null,
         "includesCaster": null,
         "position": null,
         "scope": "self",
         "selection": "self",
+        "selectionResource": null,
         "selectionStat": null,
-        "side": "self"
+        "sharedSelectionGroupId": null,
+        "side": "self",
+        "tieBehavior": null
       },
       "unit": "stack",
       "unlockStarRank": 6,
@@ -5525,6 +5661,35 @@
     {
       "abilityId": "vermax-rallying-flame",
       "abilityName": "Rallying Flame",
+      "activationChanceByHabitLevel": [
+        {
+          "level": 1,
+          "unit": "percent",
+          "value": 50
+        },
+        {
+          "level": 2,
+          "unit": "percent",
+          "value": 60
+        },
+        {
+          "level": 3,
+          "unit": "percent",
+          "value": 70
+        },
+        {
+          "level": 4,
+          "unit": "percent",
+          "value": 85
+        },
+        {
+          "level": 5,
+          "unit": "percent",
+          "value": 100
+        }
+      ],
+      "activationChanceFixed": null,
+      "activationGroupId": null,
       "availability": {
         "canonical": "canonical-locked",
         "notes": [
@@ -5573,6 +5738,7 @@
       "direction": "dealt",
       "directlyVerified": true,
       "dragonId": "vermax",
+      "durationRounds": null,
       "evidenceIds": [
         "vermax-rallying-flame-2026-06-23"
       ],
@@ -5586,16 +5752,23 @@
       "recipientRequirements": [],
       "requiredHabitLevel": 1,
       "role": "ally-support",
+      "sourceEffectId": "rallying-flame-spreading-blaze-stack",
       "sourceScope": "all-qualifying-sources",
       "stackMaximum": 10,
+      "statusId": "spreading-blaze",
       "targetSelector": {
+        "comparisonDirection": null,
+        "comparisonPool": null,
         "count": 1,
         "includesCaster": null,
         "position": null,
         "scope": "any-lane",
         "selection": "eligible",
+        "selectionResource": null,
         "selectionStat": null,
-        "side": "ally"
+        "sharedSelectionGroupId": null,
+        "side": "ally",
+        "tieBehavior": null
       },
       "unit": "stack",
       "unlockStarRank": 6,
@@ -5605,6 +5778,9 @@
     {
       "abilityId": "vermax-dragons-valor",
       "abilityName": "Dragon's Valor",
+      "activationChanceByHabitLevel": [],
+      "activationChanceFixed": null,
+      "activationGroupId": null,
       "availability": {
         "canonical": "canonical-locked",
         "notes": [
@@ -5625,6 +5801,7 @@
       "direction": "received",
       "directlyVerified": true,
       "dragonId": "vermax",
+      "durationRounds": null,
       "evidenceIds": [
         "vermax-dragons-valor-2026-06-23"
       ],
@@ -5664,16 +5841,23 @@
       "recipientRequirements": [],
       "requiredHabitLevel": 1,
       "role": "self-amplification",
+      "sourceEffectId": "dragons-valor-dr-down",
       "sourceScope": "unknown",
       "stackMaximum": null,
+      "statusId": null,
       "targetSelector": {
+        "comparisonDirection": null,
+        "comparisonPool": null,
         "count": null,
         "includesCaster": null,
         "position": null,
         "scope": "self",
         "selection": "self",
+        "selectionResource": null,
         "selectionStat": null,
-        "side": "self"
+        "sharedSelectionGroupId": null,
+        "side": "self",
+        "tieBehavior": null
       },
       "unit": "percent",
       "unlockStarRank": 8,
@@ -5683,6 +5867,9 @@
     {
       "abilityId": "vermax-dragons-valor",
       "abilityName": "Dragon's Valor",
+      "activationChanceByHabitLevel": [],
+      "activationChanceFixed": null,
+      "activationGroupId": null,
       "availability": {
         "canonical": "canonical-locked",
         "notes": [
@@ -5703,6 +5890,7 @@
       "direction": "dealt",
       "directlyVerified": true,
       "dragonId": "vermax",
+      "durationRounds": null,
       "evidenceIds": [
         "vermax-dragons-valor-2026-06-23"
       ],
@@ -5742,20 +5930,140 @@
       "recipientRequirements": [],
       "requiredHabitLevel": 1,
       "role": "self-amplification",
+      "sourceEffectId": "dragons-valor-strength",
       "sourceScope": "unknown",
       "stackMaximum": null,
+      "statusId": null,
       "targetSelector": {
+        "comparisonDirection": null,
+        "comparisonPool": null,
         "count": null,
         "includesCaster": null,
         "position": null,
         "scope": "self",
         "selection": "self",
+        "selectionResource": null,
         "selectionStat": null,
-        "side": "self"
+        "sharedSelectionGroupId": null,
+        "side": "self",
+        "tieBehavior": null
       },
       "unit": "percent",
       "unlockStarRank": 8,
       "value": null,
+      "valuePerStack": null
+    },
+    {
+      "abilityId": "vermax-unyielding-resolve",
+      "abilityName": "Unyielding Resolve",
+      "activationChanceByHabitLevel": [
+        {
+          "level": 1,
+          "unit": "percent",
+          "value": 20
+        },
+        {
+          "level": 2,
+          "unit": "percent",
+          "value": 26
+        },
+        {
+          "level": 3,
+          "unit": "percent",
+          "value": 32
+        },
+        {
+          "level": 4,
+          "unit": "percent",
+          "value": 40
+        },
+        {
+          "level": 5,
+          "unit": "percent",
+          "value": 50
+        }
+      ],
+      "activationChanceFixed": null,
+      "activationGroupId": null,
+      "availability": {
+        "canonical": "canonical-locked",
+        "notes": [
+          "Future at Star Rank 10.",
+          "Unlocked in observed account collection state, subject to level and star requirements."
+        ],
+        "observedAccount": "observed-available",
+        "reportLabel": "Future at Star Rank 10; observed account hatched",
+        "userRoster": "unknown"
+      },
+      "channel": "damage-dealt",
+      "combatLogConfirmed": false,
+      "conditional": true,
+      "conditions": [
+        {
+          "description": "Activation chance depends on Habit Level for start of each round.",
+          "evidenceIds": [],
+          "id": "unyielding-resolve-start-round-activation-chance",
+          "label": "Activation chance depends on Habit Level for start of each round.",
+          "unresolved": false
+        },
+        {
+          "description": "If Vermax is afflicted with Weakened, multiply trigger chance by 1.5.",
+          "evidenceIds": [],
+          "id": "weakened-advantage-1-5x",
+          "label": "If Vermax is afflicted with Weakened, multiply trigger chance by 1.5.",
+          "unresolved": false
+        },
+        {
+          "description": "Advantage increases Damage Dealt according to the verified status glossary.",
+          "evidenceIds": [
+            "vermax-unyielding-resolve-2026-06-23"
+          ],
+          "id": "unyielding-resolve-advantage-advantage-semantic-status-modifier",
+          "label": "Advantage status semantics",
+          "unresolved": false
+        }
+      ],
+      "confidence": "confirmed",
+      "currentlyAvailable": false,
+      "damageScope": null,
+      "direction": "dealt",
+      "directlyVerified": true,
+      "dragonId": "vermax",
+      "durationRounds": 2,
+      "evidenceIds": [
+        "vermax-unyielding-resolve-2026-06-23"
+      ],
+      "futureAvailable": true,
+      "id": "vermax-unyielding-resolve-unyielding-resolve-advantage-advantage-damage-dealt-status-modifier",
+      "label": "Unyielding Resolve: Advantage Damage Dealt increase",
+      "minimumDragonLevel": null,
+      "operation": "increase",
+      "providerRequirements": [],
+      "rankedValues": [],
+      "recipientRequirements": [],
+      "requiredHabitLevel": 1,
+      "role": "self-amplification",
+      "sourceEffectId": "unyielding-resolve-advantage",
+      "sourceScope": "all-qualifying-sources",
+      "stackMaximum": null,
+      "statusId": "advantage",
+      "targetSelector": {
+        "comparisonDirection": null,
+        "comparisonPool": null,
+        "count": null,
+        "includesCaster": null,
+        "position": null,
+        "scope": "self",
+        "selection": "self",
+        "selectionResource": null,
+        "selectionStat": null,
+        "sharedSelectionGroupId": null,
+        "side": "self",
+        "tieBehavior": null
+      },
+      "unit": "percent",
+      "unlockStarRank": 10,
+      "value": 15,
       "valuePerStack": null
     }
   ],
@@ -6574,8 +6882,8 @@
   "rosterSourceStatus": "in-game-verified-pending-official-site",
   "slug": "vermax",
   "source": {
-    "branch": "fix/legendary-formation-analysis-regressions",
-    "commit": "a7f9ab451670be3f36d1317009d1575349cd06ff",
+    "branch": "fix/eclipse-cover-formation-traces",
+    "commit": "6e4e37a9f5e74a52622a6200c456399e7262d205",
     "databaseVersion": "0.6.0",
     "dataSchemaVersion": 10,
     "gameBuild": "26.6.53509",
@@ -6592,6 +6900,9 @@
     {
       "abilityId": "vermax-spreading-blaze",
       "abilityName": "Spreading Blaze",
+      "activationChanceByHabitLevel": [],
+      "activationChanceFixed": null,
+      "activationGroupId": null,
       "availability": {
         "canonical": "canonical-base",
         "notes": [
@@ -6628,15 +6939,21 @@
       "id": "vermax-spreading-blaze-spreading-blaze-stack-spreading-blaze-status-output",
       "minimumDragonLevel": null,
       "requiredHabitLevel": null,
+      "sourceEffectId": "spreading-blaze-stack",
       "statusId": "spreading-blaze",
       "targetSelector": {
+        "comparisonDirection": null,
+        "comparisonPool": null,
         "count": 1,
         "includesCaster": null,
         "position": null,
         "scope": "any-lane",
         "selection": "eligible",
+        "selectionResource": null,
         "selectionStat": null,
-        "side": "ally"
+        "sharedSelectionGroupId": null,
+        "side": "ally",
+        "tieBehavior": null
       },
       "targetSide": "ally",
       "unlockStarRank": null,
@@ -6646,6 +6963,35 @@
     {
       "abilityId": "vermax-rallying-flame",
       "abilityName": "Rallying Flame",
+      "activationChanceByHabitLevel": [
+        {
+          "level": 1,
+          "unit": "percent",
+          "value": 50
+        },
+        {
+          "level": 2,
+          "unit": "percent",
+          "value": 60
+        },
+        {
+          "level": 3,
+          "unit": "percent",
+          "value": 70
+        },
+        {
+          "level": 4,
+          "unit": "percent",
+          "value": 85
+        },
+        {
+          "level": 5,
+          "unit": "percent",
+          "value": 100
+        }
+      ],
+      "activationChanceFixed": null,
+      "activationGroupId": null,
       "availability": {
         "canonical": "canonical-locked",
         "notes": [
@@ -6704,15 +7050,21 @@
       "id": "vermax-rallying-flame-rallying-flame-stack-rallying-flame-status-output",
       "minimumDragonLevel": null,
       "requiredHabitLevel": 1,
+      "sourceEffectId": "rallying-flame-stack",
       "statusId": "rallying-flame",
       "targetSelector": {
+        "comparisonDirection": null,
+        "comparisonPool": null,
         "count": null,
         "includesCaster": null,
         "position": null,
         "scope": "self",
         "selection": "self",
+        "selectionResource": null,
         "selectionStat": null,
-        "side": "self"
+        "sharedSelectionGroupId": null,
+        "side": "self",
+        "tieBehavior": null
       },
       "targetSide": "self",
       "unlockStarRank": 6,
@@ -6722,6 +7074,35 @@
     {
       "abilityId": "vermax-rallying-flame",
       "abilityName": "Rallying Flame",
+      "activationChanceByHabitLevel": [
+        {
+          "level": 1,
+          "unit": "percent",
+          "value": 50
+        },
+        {
+          "level": 2,
+          "unit": "percent",
+          "value": 60
+        },
+        {
+          "level": 3,
+          "unit": "percent",
+          "value": 70
+        },
+        {
+          "level": 4,
+          "unit": "percent",
+          "value": 85
+        },
+        {
+          "level": 5,
+          "unit": "percent",
+          "value": 100
+        }
+      ],
+      "activationChanceFixed": null,
+      "activationGroupId": null,
       "availability": {
         "canonical": "canonical-locked",
         "notes": [
@@ -6791,15 +7172,21 @@
       "id": "vermax-rallying-flame-rallying-flame-spreading-blaze-stack-spreading-blaze-status-output",
       "minimumDragonLevel": null,
       "requiredHabitLevel": 1,
+      "sourceEffectId": "rallying-flame-spreading-blaze-stack",
       "statusId": "spreading-blaze",
       "targetSelector": {
+        "comparisonDirection": null,
+        "comparisonPool": null,
         "count": 1,
         "includesCaster": null,
         "position": null,
         "scope": "any-lane",
         "selection": "eligible",
+        "selectionResource": null,
         "selectionStat": null,
-        "side": "ally"
+        "sharedSelectionGroupId": null,
+        "side": "ally",
+        "tieBehavior": null
       },
       "targetSide": "ally",
       "unlockStarRank": 6,
@@ -6809,6 +7196,35 @@
     {
       "abilityId": "vermax-unyielding-resolve",
       "abilityName": "Unyielding Resolve",
+      "activationChanceByHabitLevel": [
+        {
+          "level": 1,
+          "unit": "percent",
+          "value": 20
+        },
+        {
+          "level": 2,
+          "unit": "percent",
+          "value": 26
+        },
+        {
+          "level": 3,
+          "unit": "percent",
+          "value": 32
+        },
+        {
+          "level": 4,
+          "unit": "percent",
+          "value": 40
+        },
+        {
+          "level": 5,
+          "unit": "percent",
+          "value": 50
+        }
+      ],
+      "activationChanceFixed": null,
+      "activationGroupId": null,
       "availability": {
         "canonical": "canonical-locked",
         "notes": [
@@ -6874,15 +7290,21 @@
       "id": "vermax-unyielding-resolve-unyielding-resolve-advantage-advantage-status-output",
       "minimumDragonLevel": null,
       "requiredHabitLevel": 1,
+      "sourceEffectId": "unyielding-resolve-advantage",
       "statusId": "advantage",
       "targetSelector": {
+        "comparisonDirection": null,
+        "comparisonPool": null,
         "count": null,
         "includesCaster": null,
         "position": null,
         "scope": "self",
         "selection": "self",
+        "selectionResource": null,
         "selectionStat": null,
-        "side": "self"
+        "sharedSelectionGroupId": null,
+        "side": "self",
+        "tieBehavior": null
       },
       "targetSide": "self",
       "unlockStarRank": 10,

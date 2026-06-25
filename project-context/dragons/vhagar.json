@@ -3564,7 +3564,7 @@
   "firstObservedInGame": null,
   "format": "dragonfire-dragon-profile",
   "gameVersion": null,
-  "generatedAt": "2026-06-25T20:57:33.820Z",
+  "generatedAt": "2026-06-25T23:27:35.329Z",
   "habits": [
     {
       "abilityClass": "passive",
@@ -4670,6 +4670,9 @@
     {
       "abilityId": "vhagar-warriors-resilience",
       "abilityName": "Warrior's Resilience",
+      "activationChanceByHabitLevel": [],
+      "activationChanceFixed": null,
+      "activationGroupId": null,
       "availability": {
         "canonical": "canonical-base",
         "notes": [
@@ -4690,6 +4693,7 @@
       "direction": "received",
       "directlyVerified": true,
       "dragonId": "vhagar",
+      "durationRounds": null,
       "evidenceIds": [
         "vhagar-warriors-resilience-2026-06-25"
       ],
@@ -4713,16 +4717,23 @@
       "recipientRequirements": [],
       "requiredHabitLevel": null,
       "role": "self-amplification",
+      "sourceEffectId": "warriors-resilience-damage-received",
       "sourceScope": "all-qualifying-sources",
       "stackMaximum": null,
+      "statusId": null,
       "targetSelector": {
+        "comparisonDirection": null,
+        "comparisonPool": null,
         "count": null,
         "includesCaster": null,
         "position": null,
         "scope": "self",
         "selection": "self",
+        "selectionResource": null,
         "selectionStat": null,
-        "side": "self"
+        "sharedSelectionGroupId": null,
+        "side": "self",
+        "tieBehavior": null
       },
       "unit": "percent",
       "unlockStarRank": 1,
@@ -4732,6 +4743,9 @@
     {
       "abilityId": "vhagar-warriors-resilience",
       "abilityName": "Warrior's Resilience",
+      "activationChanceByHabitLevel": [],
+      "activationChanceFixed": null,
+      "activationGroupId": null,
       "availability": {
         "canonical": "canonical-base",
         "notes": [
@@ -4752,6 +4766,7 @@
       "direction": "dealt",
       "directlyVerified": true,
       "dragonId": "vhagar",
+      "durationRounds": null,
       "evidenceIds": [
         "vhagar-warriors-resilience-2026-06-25"
       ],
@@ -4775,16 +4790,23 @@
       "recipientRequirements": [],
       "requiredHabitLevel": null,
       "role": "ally-support",
+      "sourceEffectId": "warriors-resilience-left-tactical",
       "sourceScope": "all-qualifying-sources",
       "stackMaximum": null,
+      "statusId": null,
       "targetSelector": {
+        "comparisonDirection": null,
+        "comparisonPool": null,
         "count": null,
         "includesCaster": null,
         "position": "left-flank",
         "scope": "left-flank",
         "selection": "specific-position",
+        "selectionResource": null,
         "selectionStat": null,
-        "side": "ally"
+        "sharedSelectionGroupId": null,
+        "side": "ally",
+        "tieBehavior": null
       },
       "unit": "percent",
       "unlockStarRank": 1,
@@ -4794,6 +4816,9 @@
     {
       "abilityId": "vhagar-ancestral-shield",
       "abilityName": "Ancestral Shield",
+      "activationChanceByHabitLevel": [],
+      "activationChanceFixed": null,
+      "activationGroupId": null,
       "availability": {
         "canonical": "canonical-locked",
         "notes": [
@@ -4814,6 +4839,7 @@
       "direction": "received",
       "directlyVerified": true,
       "dragonId": "vhagar",
+      "durationRounds": 3,
       "evidenceIds": [
         "vhagar-ancestral-shield-2026-06-25"
       ],
@@ -4853,16 +4879,23 @@
       "recipientRequirements": [],
       "requiredHabitLevel": 1,
       "role": "self-amplification",
+      "sourceEffectId": "ancestral-shield-physical-received",
       "sourceScope": "unknown",
       "stackMaximum": null,
+      "statusId": null,
       "targetSelector": {
+        "comparisonDirection": null,
+        "comparisonPool": null,
         "count": null,
         "includesCaster": null,
         "position": null,
         "scope": "self",
         "selection": "self",
+        "selectionResource": null,
         "selectionStat": null,
-        "side": "self"
+        "sharedSelectionGroupId": null,
+        "side": "self",
+        "tieBehavior": null
       },
       "unit": "percent",
       "unlockStarRank": 2,
@@ -4872,6 +4905,9 @@
     {
       "abilityId": "vhagar-ancestral-shield",
       "abilityName": "Ancestral Shield",
+      "activationChanceByHabitLevel": [],
+      "activationChanceFixed": null,
+      "activationGroupId": null,
       "availability": {
         "canonical": "canonical-locked",
         "notes": [
@@ -4892,6 +4928,7 @@
       "direction": "received",
       "directlyVerified": true,
       "dragonId": "vhagar",
+      "durationRounds": 3,
       "evidenceIds": [
         "vhagar-ancestral-shield-2026-06-25"
       ],
@@ -4931,16 +4968,23 @@
       "recipientRequirements": [],
       "requiredHabitLevel": 1,
       "role": "self-amplification",
+      "sourceEffectId": "ancestral-shield-tactical-received",
       "sourceScope": "unknown",
       "stackMaximum": null,
+      "statusId": null,
       "targetSelector": {
+        "comparisonDirection": null,
+        "comparisonPool": null,
         "count": null,
         "includesCaster": null,
         "position": null,
         "scope": "self",
         "selection": "self",
+        "selectionResource": null,
         "selectionStat": null,
-        "side": "self"
+        "sharedSelectionGroupId": null,
+        "side": "self",
+        "tieBehavior": null
       },
       "unit": "percent",
       "unlockStarRank": 2,
@@ -4950,6 +4994,9 @@
     {
       "abilityId": "vhagar-ancestral-shield",
       "abilityName": "Ancestral Shield",
+      "activationChanceByHabitLevel": [],
+      "activationChanceFixed": null,
+      "activationGroupId": null,
       "availability": {
         "canonical": "canonical-locked",
         "notes": [
@@ -4970,6 +5017,7 @@
       "direction": "received",
       "directlyVerified": true,
       "dragonId": "vhagar",
+      "durationRounds": null,
       "evidenceIds": [
         "vhagar-ancestral-shield-2026-06-25"
       ],
@@ -5009,16 +5057,23 @@
       "recipientRequirements": [],
       "requiredHabitLevel": 1,
       "role": "recipient-side-amplification",
+      "sourceEffectId": "ancestral-shield-recovery-received",
       "sourceScope": "unknown",
       "stackMaximum": null,
+      "statusId": null,
       "targetSelector": {
+        "comparisonDirection": null,
+        "comparisonPool": null,
         "count": null,
         "includesCaster": null,
         "position": null,
         "scope": "self",
         "selection": "self",
+        "selectionResource": null,
         "selectionStat": null,
-        "side": "self"
+        "sharedSelectionGroupId": null,
+        "side": "self",
+        "tieBehavior": null
       },
       "unit": "percent",
       "unlockStarRank": 2,
@@ -5028,6 +5083,9 @@
     {
       "abilityId": "vhagar-battle-leader",
       "abilityName": "Battle Leader",
+      "activationChanceByHabitLevel": [],
+      "activationChanceFixed": null,
+      "activationGroupId": null,
       "availability": {
         "canonical": "canonical-locked",
         "notes": [
@@ -5048,6 +5106,7 @@
       "direction": "dealt",
       "directlyVerified": true,
       "dragonId": "vhagar",
+      "durationRounds": null,
       "evidenceIds": [
         "vhagar-battle-leader-2026-06-25"
       ],
@@ -5087,16 +5146,23 @@
       "recipientRequirements": [],
       "requiredHabitLevel": 1,
       "role": "ally-support",
+      "sourceEffectId": "battle-leader-physical",
       "sourceScope": "non-basic-attacks",
       "stackMaximum": null,
+      "statusId": null,
       "targetSelector": {
+        "comparisonDirection": null,
+        "comparisonPool": null,
         "count": 1,
         "includesCaster": null,
         "position": null,
         "scope": "any-lane",
         "selection": "any",
+        "selectionResource": null,
         "selectionStat": null,
-        "side": "ally"
+        "sharedSelectionGroupId": null,
+        "side": "ally",
+        "tieBehavior": null
       },
       "unit": "percent",
       "unlockStarRank": 4,
@@ -5104,8 +5170,223 @@
       "valuePerStack": null
     },
     {
+      "abilityId": "vhagar-eclipse-cover",
+      "abilityName": "Eclipse Cover",
+      "activationChanceByHabitLevel": [
+        {
+          "level": 1,
+          "unit": "percent",
+          "value": 17.5
+        },
+        {
+          "level": 2,
+          "unit": "percent",
+          "value": 21
+        },
+        {
+          "level": 3,
+          "unit": "percent",
+          "value": 24.5
+        },
+        {
+          "level": 4,
+          "unit": "percent",
+          "value": 29.8
+        },
+        {
+          "level": 5,
+          "unit": "percent",
+          "value": 35
+        }
+      ],
+      "activationChanceFixed": null,
+      "activationGroupId": "eclipse-cover-shared-roll",
+      "availability": {
+        "canonical": "canonical-locked",
+        "notes": [
+          "Future at Star Rank 6.",
+          "Not hatched in observed account."
+        ],
+        "observedAccount": "observed-unavailable",
+        "reportLabel": "Future at Star Rank 6; not hatched in observed account",
+        "userRoster": "unknown"
+      },
+      "channel": "damage-dealt",
+      "combatLogConfirmed": false,
+      "conditional": true,
+      "conditions": [
+        {
+          "description": "One shared activation roll applies both effects.",
+          "evidenceIds": [],
+          "id": "eclipse-cover-rounds-3-7-activation-chance",
+          "label": "One shared activation roll applies both effects.",
+          "unresolved": false
+        },
+        {
+          "description": "Advantage increases Damage Dealt according to the verified status glossary.",
+          "evidenceIds": [
+            "vhagar-eclipse-cover-2026-06-25"
+          ],
+          "id": "eclipse-cover-advantage-advantage-semantic-status-modifier",
+          "label": "Advantage status semantics",
+          "unresolved": false
+        }
+      ],
+      "confidence": "confirmed",
+      "currentlyAvailable": false,
+      "damageScope": null,
+      "direction": "dealt",
+      "directlyVerified": true,
+      "dragonId": "vhagar",
+      "durationRounds": 2,
+      "evidenceIds": [
+        "vhagar-eclipse-cover-2026-06-25"
+      ],
+      "futureAvailable": true,
+      "id": "vhagar-eclipse-cover-eclipse-cover-advantage-advantage-damage-dealt-status-modifier",
+      "label": "Eclipse Cover: Advantage Damage Dealt increase",
+      "minimumDragonLevel": null,
+      "operation": "increase",
+      "providerRequirements": [],
+      "rankedValues": [],
+      "recipientRequirements": [],
+      "requiredHabitLevel": 1,
+      "role": "ally-support",
+      "sourceEffectId": "eclipse-cover-advantage",
+      "sourceScope": "all-qualifying-sources",
+      "stackMaximum": null,
+      "statusId": "advantage",
+      "targetSelector": {
+        "comparisonDirection": "highest",
+        "comparisonPool": "ally-side",
+        "count": 1,
+        "includesCaster": true,
+        "position": null,
+        "scope": "any-lane",
+        "selection": "highest-resource",
+        "selectionResource": "current-troops",
+        "selectionStat": null,
+        "sharedSelectionGroupId": "eclipse-cover-shared-roll",
+        "side": "ally",
+        "tieBehavior": "candidate-group"
+      },
+      "unit": "percent",
+      "unlockStarRank": 6,
+      "value": 20,
+      "valuePerStack": null
+    },
+    {
+      "abilityId": "vhagar-eclipse-cover",
+      "abilityName": "Eclipse Cover",
+      "activationChanceByHabitLevel": [
+        {
+          "level": 1,
+          "unit": "percent",
+          "value": 17.5
+        },
+        {
+          "level": 2,
+          "unit": "percent",
+          "value": 21
+        },
+        {
+          "level": 3,
+          "unit": "percent",
+          "value": 24.5
+        },
+        {
+          "level": 4,
+          "unit": "percent",
+          "value": 29.8
+        },
+        {
+          "level": 5,
+          "unit": "percent",
+          "value": 35
+        }
+      ],
+      "activationChanceFixed": null,
+      "activationGroupId": "eclipse-cover-shared-roll",
+      "availability": {
+        "canonical": "canonical-locked",
+        "notes": [
+          "Future at Star Rank 6.",
+          "Not hatched in observed account."
+        ],
+        "observedAccount": "observed-unavailable",
+        "reportLabel": "Future at Star Rank 6; not hatched in observed account",
+        "userRoster": "unknown"
+      },
+      "channel": "damage-dealt",
+      "combatLogConfirmed": false,
+      "conditional": true,
+      "conditions": [
+        {
+          "description": "One shared activation roll applies both effects.",
+          "evidenceIds": [],
+          "id": "eclipse-cover-rounds-3-7-activation-chance",
+          "label": "One shared activation roll applies both effects.",
+          "unresolved": false
+        },
+        {
+          "description": "Weakened reduces Damage Dealt according to the verified status glossary.",
+          "evidenceIds": [
+            "vhagar-eclipse-cover-2026-06-25"
+          ],
+          "id": "eclipse-cover-weakened-weakened-semantic-status-modifier",
+          "label": "Weakened status semantics",
+          "unresolved": false
+        }
+      ],
+      "confidence": "confirmed",
+      "currentlyAvailable": false,
+      "damageScope": null,
+      "direction": "dealt",
+      "directlyVerified": true,
+      "dragonId": "vhagar",
+      "durationRounds": 2,
+      "evidenceIds": [
+        "vhagar-eclipse-cover-2026-06-25"
+      ],
+      "futureAvailable": true,
+      "id": "vhagar-eclipse-cover-eclipse-cover-weakened-weakened-damage-dealt-status-modifier",
+      "label": "Eclipse Cover: Weakened Damage Dealt reduction",
+      "minimumDragonLevel": null,
+      "operation": "decrease",
+      "providerRequirements": [],
+      "rankedValues": [],
+      "recipientRequirements": [],
+      "requiredHabitLevel": 1,
+      "role": "enemy-debuff",
+      "sourceEffectId": "eclipse-cover-weakened",
+      "sourceScope": "all-qualifying-sources",
+      "stackMaximum": null,
+      "statusId": "weakened",
+      "targetSelector": {
+        "comparisonDirection": "highest",
+        "comparisonPool": "enemy-side",
+        "count": 1,
+        "includesCaster": null,
+        "position": null,
+        "scope": "any-lane",
+        "selection": "highest-resource",
+        "selectionResource": "current-troops",
+        "selectionStat": null,
+        "sharedSelectionGroupId": "eclipse-cover-shared-roll",
+        "side": "enemy",
+        "tieBehavior": "candidate-group"
+      },
+      "unit": "percent",
+      "unlockStarRank": 6,
+      "value": 20,
+      "valuePerStack": null
+    },
+    {
       "abilityId": "vhagar-blazing-onslaught",
       "abilityName": "Blazing Onslaught",
+      "activationChanceByHabitLevel": [],
+      "activationChanceFixed": null,
+      "activationGroupId": null,
       "availability": {
         "canonical": "canonical-locked",
         "notes": [
@@ -5126,6 +5407,7 @@
       "direction": "received",
       "directlyVerified": true,
       "dragonId": "vhagar",
+      "durationRounds": 3,
       "evidenceIds": [
         "vhagar-blazing-onslaught-2026-06-25"
       ],
@@ -5165,16 +5447,23 @@
       "recipientRequirements": [],
       "requiredHabitLevel": 1,
       "role": "enemy-debuff",
+      "sourceEffectId": "blazing-onslaught-fire-received",
       "sourceScope": "unknown",
       "stackMaximum": null,
+      "statusId": null,
       "targetSelector": {
+        "comparisonDirection": null,
+        "comparisonPool": null,
         "count": 1,
         "includesCaster": null,
         "position": null,
         "scope": "any-lane",
         "selection": "any",
+        "selectionResource": null,
         "selectionStat": null,
-        "side": "enemy"
+        "sharedSelectionGroupId": null,
+        "side": "enemy",
+        "tieBehavior": null
       },
       "unit": "percent",
       "unlockStarRank": 8,
@@ -5184,6 +5473,9 @@
     {
       "abilityId": "vhagar-blazing-onslaught",
       "abilityName": "Blazing Onslaught",
+      "activationChanceByHabitLevel": [],
+      "activationChanceFixed": null,
+      "activationGroupId": null,
       "availability": {
         "canonical": "canonical-locked",
         "notes": [
@@ -5204,6 +5496,7 @@
       "direction": "received",
       "directlyVerified": true,
       "dragonId": "vhagar",
+      "durationRounds": 3,
       "evidenceIds": [
         "vhagar-blazing-onslaught-2026-06-25"
       ],
@@ -5243,16 +5536,23 @@
       "recipientRequirements": [],
       "requiredHabitLevel": 1,
       "role": "enemy-debuff",
+      "sourceEffectId": "blazing-onslaught-physical-received",
       "sourceScope": "non-basic-attacks",
       "stackMaximum": null,
+      "statusId": null,
       "targetSelector": {
+        "comparisonDirection": null,
+        "comparisonPool": null,
         "count": 1,
         "includesCaster": null,
         "position": null,
         "scope": "any-lane",
         "selection": "any",
+        "selectionResource": null,
         "selectionStat": null,
-        "side": "enemy"
+        "sharedSelectionGroupId": null,
+        "side": "enemy",
+        "tieBehavior": null
       },
       "unit": "percent",
       "unlockStarRank": 8,
@@ -6083,8 +6383,8 @@
   "rosterSourceStatus": "official-website",
   "slug": "vhagar",
   "source": {
-    "branch": "fix/legendary-formation-analysis-regressions",
-    "commit": "a7f9ab451670be3f36d1317009d1575349cd06ff",
+    "branch": "fix/eclipse-cover-formation-traces",
+    "commit": "6e4e37a9f5e74a52622a6200c456399e7262d205",
     "databaseVersion": "0.6.0",
     "dataSchemaVersion": 10,
     "gameBuild": "26.6.53509",
@@ -6101,6 +6401,9 @@
     {
       "abilityId": "vhagar-fiery-bonds",
       "abilityName": "Fiery Bonds",
+      "activationChanceByHabitLevel": [],
+      "activationChanceFixed": 25,
+      "activationGroupId": null,
       "availability": {
         "canonical": "canonical-base",
         "notes": [
@@ -6139,15 +6442,21 @@
       "id": "vhagar-fiery-bonds-fiery-bonds-taunt-taunt-status-output",
       "minimumDragonLevel": null,
       "requiredHabitLevel": null,
+      "sourceEffectId": "fiery-bonds-taunt",
       "statusId": "taunt",
       "targetSelector": {
+        "comparisonDirection": null,
+        "comparisonPool": null,
         "count": 3,
         "includesCaster": null,
         "position": null,
         "scope": "any-lane",
         "selection": "any",
+        "selectionResource": null,
         "selectionStat": null,
-        "side": "enemy"
+        "sharedSelectionGroupId": null,
+        "side": "enemy",
+        "tieBehavior": null
       },
       "targetSide": "enemy",
       "unlockStarRank": null,
@@ -6157,6 +6466,35 @@
     {
       "abilityId": "vhagar-eclipse-cover",
       "abilityName": "Eclipse Cover",
+      "activationChanceByHabitLevel": [
+        {
+          "level": 1,
+          "unit": "percent",
+          "value": 17.5
+        },
+        {
+          "level": 2,
+          "unit": "percent",
+          "value": 21
+        },
+        {
+          "level": 3,
+          "unit": "percent",
+          "value": 24.5
+        },
+        {
+          "level": 4,
+          "unit": "percent",
+          "value": 29.8
+        },
+        {
+          "level": 5,
+          "unit": "percent",
+          "value": 35
+        }
+      ],
+      "activationChanceFixed": null,
+      "activationGroupId": "eclipse-cover-shared-roll",
       "availability": {
         "canonical": "canonical-locked",
         "notes": [
@@ -6215,15 +6553,21 @@
       "id": "vhagar-eclipse-cover-eclipse-cover-advantage-advantage-status-output",
       "minimumDragonLevel": null,
       "requiredHabitLevel": 1,
+      "sourceEffectId": "eclipse-cover-advantage",
       "statusId": "advantage",
       "targetSelector": {
+        "comparisonDirection": "highest",
+        "comparisonPool": "ally-side",
         "count": 1,
-        "includesCaster": null,
+        "includesCaster": true,
         "position": null,
         "scope": "any-lane",
-        "selection": "highest-stat",
+        "selection": "highest-resource",
+        "selectionResource": "current-troops",
         "selectionStat": null,
-        "side": "ally"
+        "sharedSelectionGroupId": "eclipse-cover-shared-roll",
+        "side": "ally",
+        "tieBehavior": "candidate-group"
       },
       "targetSide": "ally",
       "unlockStarRank": 6,
@@ -6233,6 +6577,35 @@
     {
       "abilityId": "vhagar-eclipse-cover",
       "abilityName": "Eclipse Cover",
+      "activationChanceByHabitLevel": [
+        {
+          "level": 1,
+          "unit": "percent",
+          "value": 17.5
+        },
+        {
+          "level": 2,
+          "unit": "percent",
+          "value": 21
+        },
+        {
+          "level": 3,
+          "unit": "percent",
+          "value": 24.5
+        },
+        {
+          "level": 4,
+          "unit": "percent",
+          "value": 29.8
+        },
+        {
+          "level": 5,
+          "unit": "percent",
+          "value": 35
+        }
+      ],
+      "activationChanceFixed": null,
+      "activationGroupId": "eclipse-cover-shared-roll",
       "availability": {
         "canonical": "canonical-locked",
         "notes": [
@@ -6291,15 +6664,21 @@
       "id": "vhagar-eclipse-cover-eclipse-cover-weakened-weakened-status-output",
       "minimumDragonLevel": null,
       "requiredHabitLevel": 1,
+      "sourceEffectId": "eclipse-cover-weakened",
       "statusId": "weakened",
       "targetSelector": {
+        "comparisonDirection": "highest",
+        "comparisonPool": "enemy-side",
         "count": 1,
         "includesCaster": null,
         "position": null,
         "scope": "any-lane",
-        "selection": "highest-stat",
+        "selection": "highest-resource",
+        "selectionResource": "current-troops",
         "selectionStat": null,
-        "side": "enemy"
+        "sharedSelectionGroupId": "eclipse-cover-shared-roll",
+        "side": "enemy",
+        "tieBehavior": "candidate-group"
       },
       "targetSide": "enemy",
       "unlockStarRank": 6,
@@ -6309,6 +6688,9 @@
     {
       "abilityId": "vhagar-skyward-titan",
       "abilityName": "Skyward Titan",
+      "activationChanceByHabitLevel": [],
+      "activationChanceFixed": 30,
+      "activationGroupId": "skyward-titan-bulwark-shared-activation",
       "availability": {
         "canonical": "canonical-locked",
         "notes": [
@@ -6341,15 +6723,21 @@
       "id": "vhagar-skyward-titan-skyward-titan-bulwark-stack-bulwark-status-output",
       "minimumDragonLevel": null,
       "requiredHabitLevel": 1,
+      "sourceEffectId": "skyward-titan-bulwark-stack",
       "statusId": "bulwark",
       "targetSelector": {
+        "comparisonDirection": null,
+        "comparisonPool": null,
         "count": null,
         "includesCaster": null,
         "position": null,
         "scope": "self",
         "selection": "self",
+        "selectionResource": null,
         "selectionStat": null,
-        "side": "self"
+        "sharedSelectionGroupId": null,
+        "side": "self",
+        "tieBehavior": null
       },
       "targetSide": "self",
       "unlockStarRank": 10,

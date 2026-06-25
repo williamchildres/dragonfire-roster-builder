@@ -3,6 +3,11 @@ import { dragons } from '../data/dragons';
 import type { AbilityDefinition } from '../models/dragon';
 import type { FormationAnalysisInput, SynergyTrace } from '../models/synergy';
 import { buildFormationCardPresentation } from '../services/formationCardAnalysis';
+import {
+  deriveModifierCapabilities,
+  deriveStatusOutputCapabilities,
+} from '../services/effectCapabilities';
+import { buildProjectContextFiles } from '../services/projectContextExport';
 import { createEmptyRoster } from '../services/rosterStorage';
 import { analyzeFormationTraces, isNormalSynergyTrace } from '../services/synergyTrace';
 
@@ -228,5 +233,158 @@ describe('legendary formation analysis regression fixes', () => {
         channel: 'tactical-damage',
       }),
     ]));
+  });
+
+  it('keeps Eclipse Cover inactive at Star Rank 1 in current mode', () => {
+    const formation: FormationAnalysisInput = { 'left-flank': 'crimson', vanguard: 'vhagar', 'right-flank': 'kalspire' };
+    const current = traces(formation);
+    const eclipseTraces = current.filter((trace) => trace.sourceAbilityId === 'vhagar-eclipse-cover');
+
+    expect(eclipseTraces.some((trace) => trace.status === 'active')).toBe(false);
+    expect(eclipseTraces.some((trace) =>
+      trace.status === 'active' &&
+      (
+        trace.matchKind === 'outgoing-effect-amplification' ||
+        trace.matchKind === 'enemy-damage-dealt-reduction'
+      )
+    )).toBe(false);
+  });
+
+  it('surfaces Eclipse Cover status-derived modifiers and candidate targeting in preview mode', () => {
+    const formation: FormationAnalysisInput = { 'left-flank': 'crimson', vanguard: 'vhagar', 'right-flank': 'kalspire' };
+    const previewTraces = normalTraces(formation, true);
+    const statusOutputs = deriveStatusOutputCapabilities(dragons).filter((status) => status.abilityId === 'vhagar-eclipse-cover');
+    const modifiers = deriveModifierCapabilities(dragons).filter((modifier) => modifier.abilityId === 'vhagar-eclipse-cover');
+
+    expect(previewTraces.some((trace) => trace.sourceAbilityId === 'vhagar-eclipse-cover')).toBe(true);
+    expect(statusOutputs).toEqual(expect.arrayContaining([
+      expect.objectContaining({ statusId: 'advantage', sourceEffectId: 'eclipse-cover-advantage' }),
+      expect.objectContaining({ statusId: 'weakened', sourceEffectId: 'eclipse-cover-weakened' }),
+    ]));
+
+    const advantageModifier = modifiers.find((modifier) => modifier.statusId === 'advantage');
+    const weakenedModifier = modifiers.find((modifier) => modifier.statusId === 'weakened');
+    expect(advantageModifier).toMatchObject({
+      channel: 'damage-dealt',
+      role: 'ally-support',
+      operation: 'increase',
+      value: 20,
+      sourceEffectId: 'eclipse-cover-advantage',
+      activationGroupId: 'eclipse-cover-shared-roll',
+      durationRounds: 2,
+    });
+    expect(advantageModifier?.targetSelector.selection).toBe('highest-resource');
+    expect(advantageModifier?.targetSelector.selectionResource).toBe('current-troops');
+    expect(advantageModifier?.targetSelector.comparisonDirection).toBe('highest');
+    expect(advantageModifier?.targetSelector.comparisonPool).toBe('ally-side');
+    expect(advantageModifier?.targetSelector.includesCaster).toBe(true);
+    expect(advantageModifier?.targetSelector.tieBehavior).toBe('candidate-group');
+    expect(weakenedModifier).toMatchObject({
+      channel: 'damage-dealt',
+      role: 'enemy-debuff',
+      operation: 'decrease',
+      value: 20,
+      sourceEffectId: 'eclipse-cover-weakened',
+      activationGroupId: 'eclipse-cover-shared-roll',
+      durationRounds: 2,
+    });
+    expect(weakenedModifier?.targetSelector.selection).toBe('highest-resource');
+    expect(weakenedModifier?.targetSelector.selectionResource).toBe('current-troops');
+    expect(weakenedModifier?.targetSelector.comparisonDirection).toBe('highest');
+    expect(weakenedModifier?.targetSelector.comparisonPool).toBe('enemy-side');
+    expect(weakenedModifier?.targetSelector.tieBehavior).toBe('candidate-group');
+    expect(advantageModifier?.activationChanceByHabitLevel?.map((value) => value.value)).toEqual([17.5, 21, 24.5, 29.8, 35]);
+    expect(weakenedModifier?.activationGroupId).toBe(advantageModifier?.activationGroupId);
+
+    const advantageTrace = previewTraces.find((trace) =>
+      trace.sourceAbilityId === 'vhagar-eclipse-cover' &&
+      trace.matchKind === 'outgoing-effect-amplification' &&
+      trace.channel === 'damage-dealt'
+    );
+    expect(advantageTrace).toBeDefined();
+    expect(advantageTrace?.status).toBe('potential');
+    expect(advantageTrace?.recipientDragonId).toBeNull();
+    expect(advantageTrace?.targetSelectionGroup).toMatchObject({
+      targetCount: 1,
+      selectionUncertain: true,
+      selection: 'highest-resource',
+      selectionResource: 'current-troops',
+      comparisonDirection: 'highest',
+      comparisonPool: 'ally-side',
+    });
+    expect(advantageTrace?.targetSelectionGroup?.eligibleRecipientDragonIds.sort()).toEqual(['crimson', 'kalspire', 'vhagar']);
+    expect(advantageTrace?.matchedFacts.some((fact) => /Shared activation group: eclipse-cover-shared-roll/.test(fact))).toBe(true);
+    expect(advantageTrace?.matchedFacts.some((fact) => /17.5%.*35%/.test(fact))).toBe(true);
+    expect(advantageTrace?.assumptions.some((assumption) => /uptime is not calculated/i.test(assumption))).toBe(true);
+    expect(advantageTrace?.assumptions.some((assumption) => /Current troop values and tie-breaking are not resolved/i.test(assumption))).toBe(true);
+
+    const weakenedTrace = previewTraces.find((trace) =>
+      trace.sourceAbilityId === 'vhagar-eclipse-cover' &&
+      trace.matchKind === 'enemy-damage-dealt-reduction' &&
+      trace.channel === 'damage-dealt'
+    );
+    expect(weakenedTrace).toMatchObject({
+      status: 'potential',
+      recipientDragonId: null,
+      interactionScope: 'enemy-side',
+      modifierRole: 'enemy-debuff',
+    });
+    expect(weakenedTrace?.targetSelectorSummary).toContain('selection resource current-troops');
+    expect(weakenedTrace?.targetSelectorSummary).toContain('comparison pool enemy-side');
+    expect(weakenedTrace?.assumptions.join(' ')).toMatch(/enemy formation members and current troop values are unavailable/i);
+
+    const presentation = buildFormationCardPresentation(formation, dragons, previewTraces, { previewEnabled: true });
+    const vhagar = presentation.cards.find((card) => card.dragonId === 'vhagar');
+    expect(vhagar?.provides.some((item) => item.abilityName === 'Eclipse Cover' && /Damage Dealt Enemy Reduction/i.test(item.title))).toBe(true);
+    expect(vhagar?.provides.some((item) => item.abilityName === 'Eclipse Cover' && /Damage Dealt/i.test(item.title))).toBe(true);
+  });
+
+  it('derives status modifiers only for statuses with verified Damage Dealt semantics', () => {
+    const statusOutputs = deriveStatusOutputCapabilities(dragons);
+    const modifiers = deriveModifierCapabilities(dragons);
+
+    expect(statusOutputs.some((status) => status.statusId === 'advantage' && status.abilityId === 'vhagar-eclipse-cover')).toBe(true);
+    expect(statusOutputs.some((status) => status.statusId === 'weakened' && status.abilityId === 'vhagar-eclipse-cover')).toBe(true);
+    expect(modifiers.some((modifier) => modifier.statusId === 'advantage' && modifier.role === 'ally-support' && modifier.channel === 'damage-dealt')).toBe(true);
+    expect(modifiers.some((modifier) => modifier.statusId === 'weakened' && modifier.role === 'enemy-debuff' && modifier.channel === 'damage-dealt')).toBe(true);
+    expect(modifiers.some((modifier) => modifier.statusId === 'taunt' || modifier.statusId === 'burn')).toBe(false);
+  });
+
+  it('exports Eclipse Cover shared activation metadata through project context generation', () => {
+    const exportSet = buildProjectContextFiles({
+      generatedAt: '2026-06-25T00:00:00.000Z',
+      branch: 'fix/eclipse-cover-formation-traces',
+      commit: '0123456789abcdef0123456789abcdef01234567',
+    });
+    const vhagar = JSON.parse(exportSet.files['project-context/dragons/vhagar.json']!) as {
+      modifierCapabilities: Array<{
+        abilityId: string;
+        statusId?: string;
+        sourceEffectId?: string;
+        activationGroupId?: string;
+        activationChanceByHabitLevel?: Array<{ value: number }>;
+        targetSelector?: {
+          selectionResource?: string;
+          comparisonPool?: string;
+          includesCaster?: boolean | null;
+        };
+      }>;
+      statusOutputs: Array<{ abilityId: string; statusId: string; activationGroupId?: string }>;
+    };
+
+    const eclipseModifiers = vhagar.modifierCapabilities.filter((modifier) => modifier.abilityId === 'vhagar-eclipse-cover');
+    expect(eclipseModifiers.map((modifier) => modifier.statusId)).toEqual(expect.arrayContaining(['advantage', 'weakened']));
+    expect(new Set(eclipseModifiers.map((modifier) => modifier.activationGroupId))).toEqual(new Set(['eclipse-cover-shared-roll']));
+    expect(eclipseModifiers[0]?.activationChanceByHabitLevel?.map((value) => value.value)).toEqual([17.5, 21, 24.5, 29.8, 35]);
+    expect(eclipseModifiers.find((modifier) => modifier.statusId === 'advantage')?.targetSelector).toMatchObject({
+      selectionResource: 'current-troops',
+      comparisonPool: 'ally-side',
+      includesCaster: true,
+    });
+    expect(eclipseModifiers.find((modifier) => modifier.statusId === 'weakened')?.targetSelector).toMatchObject({
+      selectionResource: 'current-troops',
+      comparisonPool: 'enemy-side',
+    });
+    expect(vhagar.statusOutputs.filter((status) => status.abilityId === 'vhagar-eclipse-cover').map((status) => status.statusId)).toEqual(expect.arrayContaining(['advantage', 'weakened']));
   });
 });

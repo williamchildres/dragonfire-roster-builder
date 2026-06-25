@@ -3171,7 +3171,7 @@
   "firstObservedInGame": null,
   "format": "dragonfire-dragon-profile",
   "gameVersion": null,
-  "generatedAt": "2026-06-25T20:57:33.820Z",
+  "generatedAt": "2026-06-25T23:27:35.329Z",
   "habits": [
     {
       "abilityClass": "passive",
@@ -4190,6 +4190,9 @@
     {
       "abilityId": "caraxes-hunters-wrath",
       "abilityName": "Hunter's Wrath",
+      "activationChanceByHabitLevel": [],
+      "activationChanceFixed": null,
+      "activationGroupId": null,
       "availability": {
         "canonical": "canonical-base",
         "notes": [
@@ -4210,6 +4213,7 @@
       "direction": "dealt",
       "directlyVerified": true,
       "dragonId": "caraxes",
+      "durationRounds": null,
       "evidenceIds": [
         "caraxes-hunters-wrath-2026-06-24"
       ],
@@ -4233,16 +4237,23 @@
       "recipientRequirements": [],
       "requiredHabitLevel": null,
       "role": "self-amplification",
+      "sourceEffectId": "hunters-wrath-fire",
       "sourceScope": "all-qualifying-sources",
       "stackMaximum": null,
+      "statusId": null,
       "targetSelector": {
+        "comparisonDirection": null,
+        "comparisonPool": null,
         "count": null,
         "includesCaster": null,
         "position": null,
         "scope": "self",
         "selection": "self",
+        "selectionResource": null,
         "selectionStat": null,
-        "side": "self"
+        "sharedSelectionGroupId": null,
+        "side": "self",
+        "tieBehavior": null
       },
       "unit": "percent",
       "unlockStarRank": 1,
@@ -4252,6 +4263,9 @@
     {
       "abilityId": "caraxes-hunters-wrath",
       "abilityName": "Hunter's Wrath",
+      "activationChanceByHabitLevel": [],
+      "activationChanceFixed": null,
+      "activationGroupId": null,
       "availability": {
         "canonical": "canonical-base",
         "notes": [
@@ -4272,6 +4286,7 @@
       "direction": "dealt",
       "directlyVerified": true,
       "dragonId": "caraxes",
+      "durationRounds": null,
       "evidenceIds": [
         "caraxes-hunters-wrath-2026-06-24"
       ],
@@ -4295,16 +4310,23 @@
       "recipientRequirements": [],
       "requiredHabitLevel": null,
       "role": "ally-support",
+      "sourceEffectId": "hunters-wrath-right-strength",
       "sourceScope": "unknown",
       "stackMaximum": null,
+      "statusId": null,
       "targetSelector": {
+        "comparisonDirection": null,
+        "comparisonPool": null,
         "count": null,
         "includesCaster": null,
         "position": "right-flank",
         "scope": "right-flank",
         "selection": "specific-position",
+        "selectionResource": null,
         "selectionStat": null,
-        "side": "ally"
+        "sharedSelectionGroupId": null,
+        "side": "ally",
+        "tieBehavior": null
       },
       "unit": "flat",
       "unlockStarRank": 1,
@@ -4314,6 +4336,9 @@
     {
       "abilityId": "caraxes-hunters-wrath",
       "abilityName": "Hunter's Wrath",
+      "activationChanceByHabitLevel": [],
+      "activationChanceFixed": null,
+      "activationGroupId": null,
       "availability": {
         "canonical": "canonical-base",
         "notes": [
@@ -4334,6 +4359,7 @@
       "direction": "dealt",
       "directlyVerified": true,
       "dragonId": "caraxes",
+      "durationRounds": null,
       "evidenceIds": [
         "caraxes-hunters-wrath-2026-06-24"
       ],
@@ -4357,16 +4383,23 @@
       "recipientRequirements": [],
       "requiredHabitLevel": null,
       "role": "ally-support",
+      "sourceEffectId": "hunters-wrath-right-initiative",
       "sourceScope": "unknown",
       "stackMaximum": null,
+      "statusId": null,
       "targetSelector": {
+        "comparisonDirection": null,
+        "comparisonPool": null,
         "count": null,
         "includesCaster": null,
         "position": "right-flank",
         "scope": "right-flank",
         "selection": "specific-position",
+        "selectionResource": null,
         "selectionStat": null,
-        "side": "ally"
+        "sharedSelectionGroupId": null,
+        "side": "ally",
+        "tieBehavior": null
       },
       "unit": "flat",
       "unlockStarRank": 1,
@@ -4376,6 +4409,9 @@
     {
       "abilityId": "caraxes-battle-dread",
       "abilityName": "Battle Dread",
+      "activationChanceByHabitLevel": [],
+      "activationChanceFixed": null,
+      "activationGroupId": null,
       "availability": {
         "canonical": "canonical-locked",
         "notes": [
@@ -4396,6 +4432,7 @@
       "direction": "dealt",
       "directlyVerified": true,
       "dragonId": "caraxes",
+      "durationRounds": null,
       "evidenceIds": [
         "caraxes-battle-dread-2026-06-24"
       ],
@@ -4435,16 +4472,23 @@
       "recipientRequirements": [],
       "requiredHabitLevel": 1,
       "role": "enemy-debuff",
+      "sourceEffectId": "battle-dread-strength-down",
       "sourceScope": "unknown",
       "stackMaximum": null,
+      "statusId": null,
       "targetSelector": {
+        "comparisonDirection": null,
+        "comparisonPool": null,
         "count": 3,
         "includesCaster": null,
         "position": null,
         "scope": "any-lane",
         "selection": "any",
+        "selectionResource": null,
         "selectionStat": null,
-        "side": "enemy"
+        "sharedSelectionGroupId": null,
+        "side": "enemy",
+        "tieBehavior": null
       },
       "unit": "percent",
       "unlockStarRank": 2,
@@ -4454,6 +4498,9 @@
     {
       "abilityId": "caraxes-battle-dread",
       "abilityName": "Battle Dread",
+      "activationChanceByHabitLevel": [],
+      "activationChanceFixed": null,
+      "activationGroupId": null,
       "availability": {
         "canonical": "canonical-locked",
         "notes": [
@@ -4474,6 +4521,7 @@
       "direction": "dealt",
       "directlyVerified": true,
       "dragonId": "caraxes",
+      "durationRounds": null,
       "evidenceIds": [
         "caraxes-battle-dread-2026-06-24"
       ],
@@ -4513,16 +4561,23 @@
       "recipientRequirements": [],
       "requiredHabitLevel": 1,
       "role": "enemy-debuff",
+      "sourceEffectId": "battle-dread-initiative-down",
       "sourceScope": "unknown",
       "stackMaximum": null,
+      "statusId": null,
       "targetSelector": {
+        "comparisonDirection": null,
+        "comparisonPool": null,
         "count": 3,
         "includesCaster": null,
         "position": null,
         "scope": "any-lane",
         "selection": "any",
+        "selectionResource": null,
         "selectionStat": null,
-        "side": "enemy"
+        "sharedSelectionGroupId": null,
+        "side": "enemy",
+        "tieBehavior": null
       },
       "unit": "percent",
       "unlockStarRank": 2,
@@ -4532,6 +4587,9 @@
     {
       "abilityId": "caraxes-dragons-flair",
       "abilityName": "Dragon's Flair",
+      "activationChanceByHabitLevel": [],
+      "activationChanceFixed": null,
+      "activationGroupId": null,
       "availability": {
         "canonical": "canonical-locked",
         "notes": [
@@ -4552,6 +4610,7 @@
       "direction": "dealt",
       "directlyVerified": true,
       "dragonId": "caraxes",
+      "durationRounds": null,
       "evidenceIds": [
         "caraxes-dragons-flair-2026-06-24"
       ],
@@ -4591,16 +4650,23 @@
       "recipientRequirements": [],
       "requiredHabitLevel": 1,
       "role": "self-amplification",
+      "sourceEffectId": "dragons-flair-fire",
       "sourceScope": "all-qualifying-sources",
       "stackMaximum": null,
+      "statusId": null,
       "targetSelector": {
+        "comparisonDirection": null,
+        "comparisonPool": null,
         "count": null,
         "includesCaster": null,
         "position": null,
         "scope": "self",
         "selection": "self",
+        "selectionResource": null,
         "selectionStat": null,
-        "side": "self"
+        "sharedSelectionGroupId": null,
+        "side": "self",
+        "tieBehavior": null
       },
       "unit": "percent",
       "unlockStarRank": 4,
@@ -4610,6 +4676,9 @@
     {
       "abilityId": "caraxes-mass-enfeeble",
       "abilityName": "Mass Enfeeble",
+      "activationChanceByHabitLevel": [],
+      "activationChanceFixed": null,
+      "activationGroupId": null,
       "availability": {
         "canonical": "canonical-locked",
         "notes": [
@@ -4630,6 +4699,7 @@
       "direction": "dealt",
       "directlyVerified": true,
       "dragonId": "caraxes",
+      "durationRounds": null,
       "evidenceIds": [
         "caraxes-mass-enfeeble-2026-06-24"
       ],
@@ -4669,16 +4739,23 @@
       "recipientRequirements": [],
       "requiredHabitLevel": 1,
       "role": "enemy-debuff",
+      "sourceEffectId": "mass-enfeeble-physical-down",
       "sourceScope": "non-basic-attacks",
       "stackMaximum": null,
+      "statusId": null,
       "targetSelector": {
+        "comparisonDirection": null,
+        "comparisonPool": null,
         "count": 3,
         "includesCaster": null,
         "position": null,
         "scope": "any-lane",
         "selection": "any",
+        "selectionResource": null,
         "selectionStat": null,
-        "side": "enemy"
+        "sharedSelectionGroupId": null,
+        "side": "enemy",
+        "tieBehavior": null
       },
       "unit": "percent",
       "unlockStarRank": 8,
@@ -4688,6 +4765,9 @@
     {
       "abilityId": "caraxes-blood-wyrm",
       "abilityName": "Blood Wyrm",
+      "activationChanceByHabitLevel": [],
+      "activationChanceFixed": null,
+      "activationGroupId": null,
       "availability": {
         "canonical": "canonical-locked",
         "notes": [
@@ -4720,6 +4800,7 @@
       "direction": "dealt",
       "directlyVerified": true,
       "dragonId": "caraxes",
+      "durationRounds": null,
       "evidenceIds": [
         "caraxes-blood-wyrm-2026-06-24"
       ],
@@ -4759,16 +4840,23 @@
       "recipientRequirements": [],
       "requiredHabitLevel": 1,
       "role": "self-amplification",
+      "sourceEffectId": "blood-wyrm-fire-up",
       "sourceScope": "all-qualifying-sources",
       "stackMaximum": null,
+      "statusId": null,
       "targetSelector": {
+        "comparisonDirection": null,
+        "comparisonPool": null,
         "count": null,
         "includesCaster": null,
         "position": null,
         "scope": "self",
         "selection": "self",
+        "selectionResource": null,
         "selectionStat": null,
-        "side": "self"
+        "sharedSelectionGroupId": null,
+        "side": "self",
+        "tieBehavior": null
       },
       "unit": "percent",
       "unlockStarRank": 10,
@@ -5685,8 +5773,8 @@
   "rosterSourceStatus": "official-website",
   "slug": "caraxes",
   "source": {
-    "branch": "fix/legendary-formation-analysis-regressions",
-    "commit": "a7f9ab451670be3f36d1317009d1575349cd06ff",
+    "branch": "fix/eclipse-cover-formation-traces",
+    "commit": "6e4e37a9f5e74a52622a6200c456399e7262d205",
     "databaseVersion": "0.6.0",
     "dataSchemaVersion": 10,
     "gameBuild": "26.6.53509",
@@ -5703,6 +5791,35 @@
     {
       "abilityId": "caraxes-crippling-inferno",
       "abilityName": "Crippling Inferno",
+      "activationChanceByHabitLevel": [
+        {
+          "level": 1,
+          "unit": "percent",
+          "value": 10
+        },
+        {
+          "level": 2,
+          "unit": "percent",
+          "value": 12
+        },
+        {
+          "level": 3,
+          "unit": "percent",
+          "value": 14
+        },
+        {
+          "level": 4,
+          "unit": "percent",
+          "value": 17
+        },
+        {
+          "level": 5,
+          "unit": "percent",
+          "value": 20
+        }
+      ],
+      "activationChanceFixed": null,
+      "activationGroupId": null,
       "availability": {
         "canonical": "canonical-locked",
         "notes": [
@@ -5761,15 +5878,21 @@
       "id": "caraxes-crippling-inferno-crippling-inferno-slow-slow-status-output",
       "minimumDragonLevel": null,
       "requiredHabitLevel": 1,
+      "sourceEffectId": "crippling-inferno-slow",
       "statusId": "slow",
       "targetSelector": {
+        "comparisonDirection": null,
+        "comparisonPool": null,
         "count": 3,
         "includesCaster": null,
         "position": null,
         "scope": "any-lane",
         "selection": "any",
+        "selectionResource": null,
         "selectionStat": null,
-        "side": "enemy"
+        "sharedSelectionGroupId": null,
+        "side": "enemy",
+        "tieBehavior": null
       },
       "targetSide": "enemy",
       "unlockStarRank": 6,
@@ -5779,6 +5902,35 @@
     {
       "abilityId": "caraxes-crippling-inferno",
       "abilityName": "Crippling Inferno",
+      "activationChanceByHabitLevel": [
+        {
+          "level": 1,
+          "unit": "percent",
+          "value": 10
+        },
+        {
+          "level": 2,
+          "unit": "percent",
+          "value": 12
+        },
+        {
+          "level": 3,
+          "unit": "percent",
+          "value": 14
+        },
+        {
+          "level": 4,
+          "unit": "percent",
+          "value": 17
+        },
+        {
+          "level": 5,
+          "unit": "percent",
+          "value": 20
+        }
+      ],
+      "activationChanceFixed": null,
+      "activationGroupId": null,
       "availability": {
         "canonical": "canonical-locked",
         "notes": [
@@ -5837,15 +5989,21 @@
       "id": "caraxes-crippling-inferno-crippling-inferno-burn-burn-status-output",
       "minimumDragonLevel": null,
       "requiredHabitLevel": 1,
+      "sourceEffectId": "crippling-inferno-burn",
       "statusId": "burn",
       "targetSelector": {
+        "comparisonDirection": null,
+        "comparisonPool": null,
         "count": 3,
         "includesCaster": null,
         "position": null,
         "scope": "any-lane",
         "selection": "any",
+        "selectionResource": null,
         "selectionStat": null,
-        "side": "enemy"
+        "sharedSelectionGroupId": null,
+        "side": "enemy",
+        "tieBehavior": null
       },
       "targetSide": "enemy",
       "unlockStarRank": 6,

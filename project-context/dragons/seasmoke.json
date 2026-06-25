@@ -3670,7 +3670,7 @@
   "firstObservedInGame": null,
   "format": "dragonfire-dragon-profile",
   "gameVersion": null,
-  "generatedAt": "2026-06-25T20:57:33.820Z",
+  "generatedAt": "2026-06-25T23:27:35.329Z",
   "habits": [
     {
       "abilityClass": "passive",
@@ -4670,6 +4670,9 @@
     {
       "abilityId": "seasmoke-champions-brilliance",
       "abilityName": "Champion's Brilliance",
+      "activationChanceByHabitLevel": [],
+      "activationChanceFixed": null,
+      "activationGroupId": null,
       "availability": {
         "canonical": "canonical-base",
         "notes": [
@@ -4690,6 +4693,7 @@
       "direction": "dealt",
       "directlyVerified": true,
       "dragonId": "seasmoke",
+      "durationRounds": null,
       "evidenceIds": [
         "seasmoke-champions-brilliance-2026-06-23"
       ],
@@ -4713,16 +4717,23 @@
       "recipientRequirements": [],
       "requiredHabitLevel": null,
       "role": "self-amplification",
+      "sourceEffectId": "seasmoke-strength-flat",
       "sourceScope": "unknown",
       "stackMaximum": null,
+      "statusId": null,
       "targetSelector": {
+        "comparisonDirection": null,
+        "comparisonPool": null,
         "count": null,
         "includesCaster": null,
         "position": null,
         "scope": "self",
         "selection": "self",
+        "selectionResource": null,
         "selectionStat": null,
-        "side": "self"
+        "sharedSelectionGroupId": null,
+        "side": "self",
+        "tieBehavior": null
       },
       "unit": "flat",
       "unlockStarRank": 1,
@@ -4732,6 +4743,9 @@
     {
       "abilityId": "seasmoke-champions-brilliance",
       "abilityName": "Champion's Brilliance",
+      "activationChanceByHabitLevel": [],
+      "activationChanceFixed": null,
+      "activationGroupId": null,
       "availability": {
         "canonical": "canonical-base",
         "notes": [
@@ -4752,6 +4766,7 @@
       "direction": "dealt",
       "directlyVerified": true,
       "dragonId": "seasmoke",
+      "durationRounds": null,
       "evidenceIds": [
         "seasmoke-champions-brilliance-2026-06-23"
       ],
@@ -4775,16 +4790,23 @@
       "recipientRequirements": [],
       "requiredHabitLevel": null,
       "role": "self-amplification",
+      "sourceEffectId": "seasmoke-intelligence-flat",
       "sourceScope": "unknown",
       "stackMaximum": null,
+      "statusId": null,
       "targetSelector": {
+        "comparisonDirection": null,
+        "comparisonPool": null,
         "count": null,
         "includesCaster": null,
         "position": null,
         "scope": "self",
         "selection": "self",
+        "selectionResource": null,
         "selectionStat": null,
-        "side": "self"
+        "sharedSelectionGroupId": null,
+        "side": "self",
+        "tieBehavior": null
       },
       "unit": "flat",
       "unlockStarRank": 1,
@@ -4794,6 +4816,9 @@
     {
       "abilityId": "seasmoke-champions-brilliance",
       "abilityName": "Champion's Brilliance",
+      "activationChanceByHabitLevel": [],
+      "activationChanceFixed": null,
+      "activationGroupId": null,
       "availability": {
         "canonical": "canonical-base",
         "notes": [
@@ -4814,6 +4839,7 @@
       "direction": "dealt",
       "directlyVerified": true,
       "dragonId": "seasmoke",
+      "durationRounds": null,
       "evidenceIds": [
         "seasmoke-champions-brilliance-2026-06-23"
       ],
@@ -4837,16 +4863,23 @@
       "recipientRequirements": [],
       "requiredHabitLevel": null,
       "role": "self-amplification",
+      "sourceEffectId": "seasmoke-instinct-flat",
       "sourceScope": "unknown",
       "stackMaximum": null,
+      "statusId": null,
       "targetSelector": {
+        "comparisonDirection": null,
+        "comparisonPool": null,
         "count": null,
         "includesCaster": null,
         "position": null,
         "scope": "self",
         "selection": "self",
+        "selectionResource": null,
         "selectionStat": null,
-        "side": "self"
+        "sharedSelectionGroupId": null,
+        "side": "self",
+        "tieBehavior": null
       },
       "unit": "flat",
       "unlockStarRank": 1,
@@ -4856,6 +4889,9 @@
     {
       "abilityId": "seasmoke-champions-brilliance",
       "abilityName": "Champion's Brilliance",
+      "activationChanceByHabitLevel": [],
+      "activationChanceFixed": null,
+      "activationGroupId": null,
       "availability": {
         "canonical": "canonical-base",
         "notes": [
@@ -4876,6 +4912,7 @@
       "direction": "received",
       "directlyVerified": true,
       "dragonId": "seasmoke",
+      "durationRounds": null,
       "evidenceIds": [
         "seasmoke-champions-brilliance-2026-06-23"
       ],
@@ -4899,16 +4936,23 @@
       "recipientRequirements": [],
       "requiredHabitLevel": null,
       "role": "ally-support",
+      "sourceEffectId": "seasmoke-right-flank-dr-down",
       "sourceScope": "unknown",
       "stackMaximum": null,
+      "statusId": null,
       "targetSelector": {
+        "comparisonDirection": null,
+        "comparisonPool": null,
         "count": null,
         "includesCaster": null,
         "position": "right-flank",
         "scope": "right-flank",
         "selection": "specific-position",
+        "selectionResource": null,
         "selectionStat": null,
-        "side": "ally"
+        "sharedSelectionGroupId": null,
+        "side": "ally",
+        "tieBehavior": null
       },
       "unit": "percent",
       "unlockStarRank": 1,
@@ -4918,6 +4962,9 @@
     {
       "abilityId": "seasmoke-clever-maneuver",
       "abilityName": "Clever Maneuver",
+      "activationChanceByHabitLevel": [],
+      "activationChanceFixed": null,
+      "activationGroupId": null,
       "availability": {
         "canonical": "canonical-locked",
         "notes": [
@@ -4938,6 +4985,7 @@
       "direction": "dealt",
       "directlyVerified": true,
       "dragonId": "seasmoke",
+      "durationRounds": null,
       "evidenceIds": [
         "seasmoke-clever-maneuver-2026-06-23"
       ],
@@ -4977,16 +5025,23 @@
       "recipientRequirements": [],
       "requiredHabitLevel": 1,
       "role": "ally-support",
+      "sourceEffectId": "clever-maneuver-intelligence",
       "sourceScope": "unknown",
       "stackMaximum": null,
+      "statusId": null,
       "targetSelector": {
+        "comparisonDirection": null,
+        "comparisonPool": null,
         "count": 1,
-        "includesCaster": null,
+        "includesCaster": true,
         "position": null,
         "scope": "any-lane",
         "selection": "highest-stat",
+        "selectionResource": "intelligence",
         "selectionStat": "intelligence",
-        "side": "ally"
+        "sharedSelectionGroupId": null,
+        "side": "ally",
+        "tieBehavior": null
       },
       "unit": "flat",
       "unlockStarRank": 2,
@@ -4996,6 +5051,9 @@
     {
       "abilityId": "seasmoke-clever-maneuver",
       "abilityName": "Clever Maneuver",
+      "activationChanceByHabitLevel": [],
+      "activationChanceFixed": null,
+      "activationGroupId": null,
       "availability": {
         "canonical": "canonical-locked",
         "notes": [
@@ -5016,6 +5074,7 @@
       "direction": "dealt",
       "directlyVerified": true,
       "dragonId": "seasmoke",
+      "durationRounds": null,
       "evidenceIds": [
         "seasmoke-clever-maneuver-2026-06-23"
       ],
@@ -5055,16 +5114,23 @@
       "recipientRequirements": [],
       "requiredHabitLevel": 1,
       "role": "ally-support",
+      "sourceEffectId": "clever-maneuver-initiative",
       "sourceScope": "unknown",
       "stackMaximum": null,
+      "statusId": null,
       "targetSelector": {
+        "comparisonDirection": null,
+        "comparisonPool": null,
         "count": 1,
-        "includesCaster": null,
+        "includesCaster": true,
         "position": null,
         "scope": "any-lane",
         "selection": "highest-stat",
+        "selectionResource": "intelligence",
         "selectionStat": "intelligence",
-        "side": "ally"
+        "sharedSelectionGroupId": null,
+        "side": "ally",
+        "tieBehavior": null
       },
       "unit": "percent",
       "unlockStarRank": 2,
@@ -5074,6 +5140,9 @@
     {
       "abilityId": "seasmoke-winds-favor",
       "abilityName": "Wind's Favor",
+      "activationChanceByHabitLevel": [],
+      "activationChanceFixed": null,
+      "activationGroupId": null,
       "availability": {
         "canonical": "canonical-locked",
         "notes": [
@@ -5094,6 +5163,7 @@
       "direction": "dealt",
       "directlyVerified": true,
       "dragonId": "seasmoke",
+      "durationRounds": null,
       "evidenceIds": [
         "seasmoke-winds-favor-2026-06-23"
       ],
@@ -5133,16 +5203,23 @@
       "recipientRequirements": [],
       "requiredHabitLevel": 1,
       "role": "ally-support",
+      "sourceEffectId": "winds-favor-initiative",
       "sourceScope": "unknown",
       "stackMaximum": null,
+      "statusId": null,
       "targetSelector": {
+        "comparisonDirection": null,
+        "comparisonPool": null,
         "count": 3,
         "includesCaster": true,
         "position": null,
         "scope": "any-lane",
         "selection": "any",
+        "selectionResource": null,
         "selectionStat": null,
-        "side": "ally"
+        "sharedSelectionGroupId": null,
+        "side": "ally",
+        "tieBehavior": null
       },
       "unit": "percent",
       "unlockStarRank": 4,
@@ -5152,6 +5229,9 @@
     {
       "abilityId": "seasmoke-cunning-ferocity",
       "abilityName": "Cunning Ferocity",
+      "activationChanceByHabitLevel": [],
+      "activationChanceFixed": null,
+      "activationGroupId": null,
       "availability": {
         "canonical": "canonical-locked",
         "notes": [
@@ -5172,6 +5252,7 @@
       "direction": "dealt",
       "directlyVerified": true,
       "dragonId": "seasmoke",
+      "durationRounds": null,
       "evidenceIds": [
         "seasmoke-cunning-ferocity-2026-06-23"
       ],
@@ -5211,16 +5292,23 @@
       "recipientRequirements": [],
       "requiredHabitLevel": 1,
       "role": "ally-support",
+      "sourceEffectId": "cunning-ferocity-intelligence",
       "sourceScope": "unknown",
       "stackMaximum": null,
+      "statusId": null,
       "targetSelector": {
+        "comparisonDirection": null,
+        "comparisonPool": null,
         "count": 1,
-        "includesCaster": null,
+        "includesCaster": true,
         "position": null,
         "scope": "within-adjacency",
         "selection": "one-eligible-adjacent",
+        "selectionResource": null,
         "selectionStat": null,
-        "side": "ally"
+        "sharedSelectionGroupId": null,
+        "side": "ally",
+        "tieBehavior": null
       },
       "unit": "percent",
       "unlockStarRank": 8,
@@ -5230,6 +5318,9 @@
     {
       "abilityId": "seasmoke-cunning-ferocity",
       "abilityName": "Cunning Ferocity",
+      "activationChanceByHabitLevel": [],
+      "activationChanceFixed": null,
+      "activationGroupId": null,
       "availability": {
         "canonical": "canonical-locked",
         "notes": [
@@ -5250,6 +5341,7 @@
       "direction": "dealt",
       "directlyVerified": true,
       "dragonId": "seasmoke",
+      "durationRounds": null,
       "evidenceIds": [
         "seasmoke-cunning-ferocity-2026-06-23"
       ],
@@ -5289,20 +5381,144 @@
       "recipientRequirements": [],
       "requiredHabitLevel": 1,
       "role": "ally-support",
+      "sourceEffectId": "cunning-ferocity-fire",
       "sourceScope": "all-qualifying-sources",
       "stackMaximum": null,
+      "statusId": null,
       "targetSelector": {
+        "comparisonDirection": null,
+        "comparisonPool": null,
         "count": 1,
-        "includesCaster": null,
+        "includesCaster": true,
         "position": null,
         "scope": "within-adjacency",
         "selection": "one-eligible-adjacent",
+        "selectionResource": null,
         "selectionStat": null,
-        "side": "ally"
+        "sharedSelectionGroupId": null,
+        "side": "ally",
+        "tieBehavior": null
       },
       "unit": "percent",
       "unlockStarRank": 8,
       "value": null,
+      "valuePerStack": null
+    },
+    {
+      "abilityId": "seasmoke-loyal-bond",
+      "abilityName": "Loyal Bond",
+      "activationChanceByHabitLevel": [
+        {
+          "level": 1,
+          "unit": "percent",
+          "value": 10
+        },
+        {
+          "level": 2,
+          "unit": "percent",
+          "value": 13
+        },
+        {
+          "level": 3,
+          "unit": "percent",
+          "value": 16
+        },
+        {
+          "level": 4,
+          "unit": "percent",
+          "value": 20
+        },
+        {
+          "level": 5,
+          "unit": "percent",
+          "value": 25
+        }
+      ],
+      "activationChanceFixed": null,
+      "activationGroupId": null,
+      "availability": {
+        "canonical": "canonical-locked",
+        "notes": [
+          "Future at Star Rank 10.",
+          "Not hatched in observed account."
+        ],
+        "observedAccount": "observed-unavailable",
+        "reportLabel": "Future at Star Rank 10; not hatched in observed account",
+        "userRoster": "unknown"
+      },
+      "channel": "damage-dealt",
+      "combatLogConfirmed": false,
+      "conditional": true,
+      "conditions": [
+        {
+          "description": "Activation chance depends on Habit Level for each round.",
+          "evidenceIds": [],
+          "id": "loyal-bond-advantage-activation-chance",
+          "label": "Activation chance depends on Habit Level for each round.",
+          "unresolved": false
+        },
+        {
+          "comparison": "above",
+          "description": "Target is above 50% Troop Capacity.",
+          "evidenceIds": [],
+          "id": "target-above-50-troop-capacity",
+          "kind": "target-above-troop-capacity-threshold",
+          "label": "Target is above 50% Troop Capacity.",
+          "subject": "target",
+          "thresholdPercent": 50,
+          "unresolved": false
+        },
+        {
+          "description": "Advantage increases Damage Dealt according to the verified status glossary.",
+          "evidenceIds": [
+            "seasmoke-loyal-bond-2026-06-23"
+          ],
+          "id": "loyal-bond-advantage-effect-advantage-semantic-status-modifier",
+          "label": "Advantage status semantics",
+          "unresolved": false
+        }
+      ],
+      "confidence": "confirmed",
+      "currentlyAvailable": false,
+      "damageScope": null,
+      "direction": "dealt",
+      "directlyVerified": true,
+      "dragonId": "seasmoke",
+      "durationRounds": 2,
+      "evidenceIds": [
+        "seasmoke-loyal-bond-2026-06-23"
+      ],
+      "futureAvailable": true,
+      "id": "seasmoke-loyal-bond-loyal-bond-advantage-effect-advantage-damage-dealt-status-modifier",
+      "label": "Loyal Bond: Advantage Damage Dealt increase",
+      "minimumDragonLevel": null,
+      "operation": "increase",
+      "providerRequirements": [],
+      "rankedValues": [],
+      "recipientRequirements": [],
+      "requiredHabitLevel": 1,
+      "role": "ally-support",
+      "sourceEffectId": "loyal-bond-advantage-effect",
+      "sourceScope": "all-qualifying-sources",
+      "stackMaximum": null,
+      "statusId": "advantage",
+      "targetSelector": {
+        "comparisonDirection": null,
+        "comparisonPool": null,
+        "count": 2,
+        "includesCaster": false,
+        "position": null,
+        "scope": "any-lane",
+        "selection": "any",
+        "selectionResource": null,
+        "selectionStat": null,
+        "sharedSelectionGroupId": null,
+        "side": "ally",
+        "tieBehavior": null
+      },
+      "unit": "percent",
+      "unlockStarRank": 10,
+      "value": 20,
       "valuePerStack": null
     }
   ],
@@ -6075,8 +6291,8 @@
   "rosterSourceStatus": "official-website",
   "slug": "seasmoke",
   "source": {
-    "branch": "fix/legendary-formation-analysis-regressions",
-    "commit": "a7f9ab451670be3f36d1317009d1575349cd06ff",
+    "branch": "fix/eclipse-cover-formation-traces",
+    "commit": "6e4e37a9f5e74a52622a6200c456399e7262d205",
     "databaseVersion": "0.6.0",
     "dataSchemaVersion": 10,
     "gameBuild": "26.6.53509",
@@ -6093,6 +6309,35 @@
     {
       "abilityId": "seasmoke-loyal-bond",
       "abilityName": "Loyal Bond",
+      "activationChanceByHabitLevel": [
+        {
+          "level": 1,
+          "unit": "percent",
+          "value": 10
+        },
+        {
+          "level": 2,
+          "unit": "percent",
+          "value": 13
+        },
+        {
+          "level": 3,
+          "unit": "percent",
+          "value": 16
+        },
+        {
+          "level": 4,
+          "unit": "percent",
+          "value": 20
+        },
+        {
+          "level": 5,
+          "unit": "percent",
+          "value": 25
+        }
+      ],
+      "activationChanceFixed": null,
+      "activationGroupId": null,
       "availability": {
         "canonical": "canonical-locked",
         "notes": [
@@ -6162,15 +6407,21 @@
       "id": "seasmoke-loyal-bond-loyal-bond-advantage-effect-advantage-status-output",
       "minimumDragonLevel": null,
       "requiredHabitLevel": 1,
+      "sourceEffectId": "loyal-bond-advantage-effect",
       "statusId": "advantage",
       "targetSelector": {
+        "comparisonDirection": null,
+        "comparisonPool": null,
         "count": 2,
         "includesCaster": false,
         "position": null,
         "scope": "any-lane",
         "selection": "any",
+        "selectionResource": null,
         "selectionStat": null,
-        "side": "ally"
+        "sharedSelectionGroupId": null,
+        "side": "ally",
+        "tieBehavior": null
       },
       "targetSide": "ally",
       "unlockStarRank": 10,
@@ -6180,6 +6431,35 @@
     {
       "abilityId": "seasmoke-loyal-bond",
       "abilityName": "Loyal Bond",
+      "activationChanceByHabitLevel": [
+        {
+          "level": 1,
+          "unit": "percent",
+          "value": 10
+        },
+        {
+          "level": 2,
+          "unit": "percent",
+          "value": 13
+        },
+        {
+          "level": 3,
+          "unit": "percent",
+          "value": 16
+        },
+        {
+          "level": 4,
+          "unit": "percent",
+          "value": 20
+        },
+        {
+          "level": 5,
+          "unit": "percent",
+          "value": 25
+        }
+      ],
+      "activationChanceFixed": null,
+      "activationGroupId": null,
       "availability": {
         "canonical": "canonical-locked",
         "notes": [
@@ -6249,15 +6529,21 @@
       "id": "seasmoke-loyal-bond-loyal-bond-resistance-effect-resistance-status-output",
       "minimumDragonLevel": null,
       "requiredHabitLevel": 1,
+      "sourceEffectId": "loyal-bond-resistance-effect",
       "statusId": "resistance",
       "targetSelector": {
+        "comparisonDirection": null,
+        "comparisonPool": null,
         "count": 2,
         "includesCaster": false,
         "position": null,
         "scope": "any-lane",
         "selection": "any",
+        "selectionResource": null,
         "selectionStat": null,
-        "side": "ally"
+        "sharedSelectionGroupId": null,
+        "side": "ally",
+        "tieBehavior": null
       },
       "targetSide": "ally",
       "unlockStarRank": 10,
