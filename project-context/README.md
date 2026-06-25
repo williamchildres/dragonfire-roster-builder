@@ -34,7 +34,7 @@ Run `npm run validate:context` after generation. The validator checks schema con
 
 ## Formation Normalization
 
-Data schema 9 exports defensive damage scope, threshold conditions separate from target count, highest-stat and one-adjacent target selectors, grouped modifier capability IDs, requirement ownership, source-ability identity, and interaction scope. Internal same-dragon traces remain exported for audit even when normal Formation Analysis excludes them from cross-dragon synergy sections.
+Data schema 9 exports defensive damage scope, threshold conditions separate from target count, highest-stat and one-adjacent target selectors, grouped modifier capability IDs, requirement ownership, source-ability identity, and interaction scope. Normal unmet requirements are presentation summaries only: they are pure per-formation/per-preview results, hide blockers owned by visible cards, dedupe by semantic identity, and apply hard-failure precedence. Internal same-dragon traces and suppressed normal blockers remain exported for audit even when normal Formation Analysis excludes them from cross-dragon synergy sections.
 
 ## Authority
 

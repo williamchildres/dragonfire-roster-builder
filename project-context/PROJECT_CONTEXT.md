@@ -10,15 +10,19 @@ Dragonfire Roster Lab records verified dragon roster data, combat mechanics, syn
 - Evidence, manual reviews, observations, statuses, and stat definitions are separate source modules.
 - Capability derivation is computed from structured AbilityEffect records in effectCapabilities.ts.
 - Formation analysis uses structured SynergyTrace records and does not produce an arbitrary numerical score.
-- Formation normalization preserves defensive scope, target-selection groups, requirement ownership, source ability identity, and interaction scope.
+- Formation normalization preserves defensive scope, target-selection groups, visible-card requirement ownership, source ability identity, interaction scope, pure normal unmet summaries, and debug/export trace retention.
 
 ## Versions
 
-- Database: 0.5.3
+- Database: 0.5.4
 - Data schema: 9
 - Local roster schema: 3
 - Game build: 26.6.53509
 - Context export: 1
+
+## Normal Requirement Summary
+
+Normal Formation Analysis unmet requirements are concise UI summaries rather than raw trace dumps. Visible interaction cards own their own blockers, global unmet requirements show selected Trait placement failures and concrete unowned-card progression blockers, preview and formation switches do not reuse prior results, and debug/export data keeps the suppressed raw requirements.
 
 ## Populated Dragons
 
@@ -77,7 +81,7 @@ The framework derives output capabilities, modifier capabilities, status outputs
 
 ## Review Plan
 
-Current review phase: Formation normalization retest and project-context regeneration.
+Current review phase: Normal unmet requirement summary retest and project-context regeneration.
 
 Planned next phase:
 

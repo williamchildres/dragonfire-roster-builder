@@ -5,7 +5,8 @@
     "Phase 3.7.1 capability scope review",
     "Phase 3.8 Syrax and Caraxes combat data with dependency tracing",
     "Phase 3.8.1 formation trace reconciliation",
-    "Phase 3.8.2 formation analysis normalization"
+    "Phase 3.8.2 formation analysis normalization",
+    "Version 0.5.4 normal unmet requirement summary repair"
   ],
   "contextVersion": 1,
   "currentArchitectureSummary": [
@@ -13,11 +14,11 @@
     "Evidence, manual reviews, observations, statuses, and stat definitions are separate source modules.",
     "Capability derivation is computed from structured AbilityEffect records in effectCapabilities.ts.",
     "Formation analysis uses structured SynergyTrace records and does not produce an arbitrary numerical score.",
-    "Formation normalization preserves defensive scope, target-selection groups, requirement ownership, source ability identity, and interaction scope."
+    "Formation normalization preserves defensive scope, target-selection groups, visible-card requirement ownership, source ability identity, interaction scope, pure normal unmet summaries, and debug/export trace retention."
   ],
-  "currentReviewPhase": "Formation normalization retest and project-context regeneration.",
+  "currentReviewPhase": "Normal unmet requirement summary retest and project-context regeneration.",
   "format": "dragonfire-project-state",
-  "generatedAt": "2026-06-25T02:16:23.860Z",
+  "generatedAt": "2026-06-25T02:56:17.697Z",
   "plannedNextPhase": [
     "full formation-output review",
     "UI/tag redesign",
@@ -29,9 +30,9 @@
     "metadataOnlyDragonCount": 24
   },
   "source": {
-    "branch": "feature/formation-analysis-normalization",
-    "commit": "60bafb88955e0d0e0f3ddc29512c1176a3f3abbd",
-    "databaseVersion": "0.5.3",
+    "branch": "feature/unmet-requirements-summary-repair",
+    "commit": "2928261952b71e440c502215d8b5d24764f1f1f4",
+    "databaseVersion": "0.5.4",
     "dataSchemaVersion": 9,
     "gameBuild": "26.6.53509",
     "localRosterSchemaVersion": 3,
@@ -41,13 +42,13 @@
     "countingMethod": "static working-tree test declaration scan; runtime pass/fail is reported by npm run test",
     "lastRunStatus": "not-run-by-exporter",
     "runner": "vitest",
-    "testCaseCount": 128,
-    "testFileCount": 17
+    "testCaseCount": 134,
+    "testFileCount": 18
   },
   "unresolvedMechanicsCount": 56,
   "versions": {
     "contextVersion": 1,
-    "databaseVersion": "0.5.3",
+    "databaseVersion": "0.5.4",
     "dataSchemaVersion": 9,
     "gameBuild": "26.6.53509",
     "localRosterSchemaVersion": 3
