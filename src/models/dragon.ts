@@ -88,6 +88,9 @@ export type EffectTag =
   | 'PANIC'
   | 'WEAKENED'
   | 'ADVANTAGE'
+  | 'TAUNT'
+  | 'OVERWHELM'
+  | 'BULWARK'
   | 'COMMAND_AUGMENTATION'
   | 'SLOW'
   | 'CONTROL'
@@ -103,6 +106,7 @@ export type TriggerTiming =
   | 'start-of-round'
   | 'specific-rounds'
   | 'after-basic-attack'
+  | 'on-stack-count-gained'
   | 'on-successful-cleanse'
   | 'when-marked-target-receives-recovery'
   | 'when-enemy-retreated-previous-round';
@@ -116,6 +120,7 @@ export type TargetScope =
   | 'within-adjacency'
   | 'left-flank'
   | 'right-flank'
+  | 'opposing-position'
   | 'unknown';
 
 export type EffectSourceScope =
@@ -142,7 +147,17 @@ export type TargetPriority =
   | 'prefer-control-afflicted-ally'
   | 'prefer-left-flank'
   | 'prefer-right-flank'
+  | 'prefer-hunter'
+  | 'prefer-not-stunned'
   | 'current-marked-target'
+  | 'original-basic-attack-target'
+  | 'same-as-referenced-effect'
+  | 'distinct-from-referenced-target'
+  | 'highest-stat-enemy'
+  | 'highest-current-troops-ally'
+  | 'highest-current-troops-enemy'
+  | 'least-current-troops-enemy'
+  | 'opposing-position'
   | 'prefer-received-recovery-last-round'
   | 'prefer-prey'
   | 'within-adjacency'
@@ -167,6 +182,87 @@ export type ConditionKind =
   | 'negative-effect-reduces-damage-dealt';
 
 export type RepeatMode = 'none' | 'once-if-any-match' | 'once-per-match';
+
+export type RoundSelector =
+  | { kind: 'explicit'; rounds: number[] }
+  | { kind: 'odd' }
+  | { kind: 'even' }
+  | { kind: 'range'; startRound: number; endRound: number }
+  | { kind: 'each-round' }
+  | { kind: 'start-of-round'; round: number }
+  | { kind: 'start-of-combat' }
+  | { kind: 'passive' }
+  | { kind: 'after-basic-attack' };
+
+export type RollScope =
+  | 'schedule-shared'
+  | 'effect'
+  | 'independent-per-target'
+  | 'unknown';
+
+export interface ActivationRoll {
+  scope: RollScope;
+  chanceFixed: number | null;
+  chanceByHabitLevel: RankedValue[];
+  targetStatusConditionalChances: Array<{
+    statusId: string;
+    chanceFixed: number | null;
+    chanceByHabitLevel: RankedValue[];
+    multiplier: number | null;
+    description: string;
+  }>;
+  description: string;
+  unresolved: boolean;
+}
+
+export interface TargetReference {
+  id: string;
+  kind:
+    | 'original-basic-attack-target'
+    | 'effect-target'
+    | 'same-target-as-effect'
+    | 'distinct-from-effect-target'
+    | 'another-target'
+    | 'opposing-position-enemy';
+  referencedEffectId: string | null;
+  description: string;
+}
+
+export interface TargetSelectionDetails {
+  preference: string | null;
+  fallback: string | null;
+  comparisonStat: 'strength' | 'instinct' | 'intelligence' | 'initiative' | 'current-troops' | null;
+  comparisonDirection: 'highest' | 'lowest' | null;
+  comparisonPool: 'ally-side' | 'enemy-side' | null;
+  tieBehavior: 'candidate-group' | 'unknown' | null;
+  distinctness: 'must-be-distinct' | 'same-target-required' | 'no-distinctness-requirement' | 'explicitly-another-target' | 'unknown';
+  references: TargetReference[];
+  sharedSelectionGroupId: string | null;
+  repeatedInstances: {
+    count: number;
+    eachInstanceSelectsSeparately: boolean;
+    sameTargetAllowed: boolean;
+  } | null;
+}
+
+export interface StackTransitionTrigger {
+  statusId: string;
+  stackCount: number;
+  transition: 'gaining-nth-stack';
+  oncePerTransition: boolean;
+  description: string;
+}
+
+export interface AbilityScheduleOverride {
+  id: string;
+  targetScheduleId: string;
+  targetEffectId: string | null;
+  operation: 'replace-schedule' | 'replace-effect-roll' | 'replace-effect' | 'patch-schedule';
+  replacementSchedule: AbilitySchedule | null;
+  replacementEffect: AbilityEffect | null;
+  evidenceIds: string[];
+  description: string;
+}
 
 export interface AbilityCondition {
   id: string;
@@ -274,16 +370,21 @@ export interface AbilityEffect {
   includesCaster?: boolean | null;
   casterEligibility?: CasterEligibility;
   perTargetEffectCheck?: PerTargetEffectCheck | null;
+  activationRoll?: ActivationRoll | null;
+  targetSelection?: TargetSelectionDetails | null;
+  stackTransitionTrigger?: StackTransitionTrigger | null;
 }
 
 export interface AbilitySchedule {
   id: string;
   timing: TriggerTiming;
   rounds: number[];
+  roundSelector?: RoundSelector | null;
   triggerChanceFixed: number | null;
   triggerChanceByHabitLevel: RankedValue[];
   effects: AbilityEffect[];
   triggerEvent?: TriggerTiming;
+  activationRoll?: ActivationRoll | null;
   attempts?: AttemptConfiguration | null;
   repeat?: RepeatConfiguration | null;
   conditions?: AbilityCondition[];
@@ -298,6 +399,7 @@ export interface AbilityAugmentation {
   minimumDragonStarRank: number;
   schedulesAdded: AbilitySchedule[];
   effectsAdded: AbilityEffect[];
+  scheduleOverrides?: AbilityScheduleOverride[];
   rawDescription: string;
   evidenceIds: string[];
 }

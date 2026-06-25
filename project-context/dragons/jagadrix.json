@@ -20,7 +20,7 @@
   "firstObservedInGame": null,
   "format": "dragonfire-dragon-profile",
   "gameVersion": null,
-  "generatedAt": "2026-06-25T16:50:40.505Z",
+  "generatedAt": "2026-06-25T20:04:14.138Z",
   "habits": [],
   "id": "jagadrix",
   "isNew": false,
@@ -42,10 +42,10 @@
   "rosterSourceStatus": "official-website",
   "slug": "jagadrix",
   "source": {
-    "branch": "chore/formation-docs-context-export",
-    "commit": "96e0cb6df6957f19eea61aa67b38bfa905aef03c",
-    "databaseVersion": "0.5.6",
-    "dataSchemaVersion": 9,
+    "branch": "feature/legendary-schema-hardening",
+    "commit": "1b2913abd3b37ddde3fc456f7c4c9154b3a35a48",
+    "databaseVersion": "0.6.0",
+    "dataSchemaVersion": 10,
     "gameBuild": "26.6.53509",
     "localRosterSchemaVersion": 3,
     "repository": "https://github.com/williamchildres/dragonfire-roster-builder"

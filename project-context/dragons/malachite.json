@@ -27,11 +27,13 @@
       "rawDescription": "Rounds 2, 4, 7, 9: Deal Tactical Damage to 1 Enemy in the same lane (Damage Rate: +100%).\n\nRounds 3, 6, 9: Apply Recovery to 3 Allies in any lane (Recovery Rate: +70%, enhanced by Instinct).",
       "schedules": [
         {
+          "activationRoll": null,
           "attempts": null,
           "battleContext": "unspecified",
           "conditions": [],
           "effects": [
             {
+              "activationRoll": null,
               "calculated": false,
               "casterEligibility": "unknown",
               "conditionalMultipliers": [],
@@ -53,10 +55,12 @@
               ],
               "sourceScope": "unknown",
               "stack": null,
+              "stackTransitionTrigger": null,
               "target": "1 Enemy",
               "targetCount": null,
               "targetPriority": "any-eligible",
               "targetScope": "same-lane",
+              "targetSelection": null,
               "type": "Tactical Damage",
               "unit": "rate"
             }
@@ -69,6 +73,7 @@
             7,
             9
           ],
+          "roundSelector": null,
           "targetPriority": "any-eligible",
           "timing": "specific-rounds",
           "triggerChanceByHabitLevel": [],
@@ -76,11 +81,13 @@
           "triggerEvent": "specific-rounds"
         },
         {
+          "activationRoll": null,
           "attempts": null,
           "battleContext": "unspecified",
           "conditions": [],
           "effects": [
             {
+              "activationRoll": null,
               "calculated": false,
               "casterEligibility": "included",
               "conditionalMultipliers": [],
@@ -103,10 +110,12 @@
               ],
               "sourceScope": "unknown",
               "stack": null,
+              "stackTransitionTrigger": null,
               "target": "3 Allies",
               "targetCount": 3,
               "targetPriority": "any-eligible",
               "targetScope": "any-lane",
+              "targetSelection": null,
               "type": "Recovery",
               "unit": "rate"
             }
@@ -118,6 +127,7 @@
             6,
             9
           ],
+          "roundSelector": null,
           "targetPriority": "any-eligible",
           "timing": "specific-rounds",
           "triggerChanceByHabitLevel": [],
@@ -164,11 +174,13 @@
       "rawDescription": "At Level 16+ and deployed in the Vanguard Increase your Recovery Dealt by +15% and Instinct by +25. Increase Fire Damage Dealt by +16% of the Ally deployed in the Left Flank.",
       "schedules": [
         {
+          "activationRoll": null,
           "attempts": null,
           "battleContext": "unspecified",
           "conditions": [],
           "effects": [
             {
+              "activationRoll": null,
               "calculated": false,
               "casterEligibility": "unknown",
               "conditionalMultipliers": [],
@@ -186,14 +198,17 @@
               "scaling": [],
               "sourceScope": "unknown",
               "stack": null,
+              "stackTransitionTrigger": null,
               "target": "Self",
               "targetCount": null,
               "targetPriority": "any-eligible",
               "targetScope": "self",
+              "targetSelection": null,
               "type": "Recovery Dealt Up",
               "unit": "percent"
             },
             {
+              "activationRoll": null,
               "calculated": false,
               "casterEligibility": "unknown",
               "conditionalMultipliers": [],
@@ -211,14 +226,17 @@
               "scaling": [],
               "sourceScope": "unknown",
               "stack": null,
+              "stackTransitionTrigger": null,
               "target": "Self",
               "targetCount": null,
               "targetPriority": "any-eligible",
               "targetScope": "self",
+              "targetSelection": null,
               "type": "Instinct Up",
               "unit": "flat"
             },
             {
+              "activationRoll": null,
               "calculated": false,
               "casterEligibility": "unknown",
               "conditionalMultipliers": [],
@@ -236,10 +254,12 @@
               "scaling": [],
               "sourceScope": "unknown",
               "stack": null,
+              "stackTransitionTrigger": null,
               "target": "Ally deployed in Left Flank",
               "targetCount": null,
               "targetPriority": "any-eligible",
               "targetScope": "left-flank",
+              "targetSelection": null,
               "type": "Fire Damage Dealt Up",
               "unit": "percent"
             }
@@ -247,6 +267,7 @@
           "id": "sentinels-presence-passive",
           "repeat": null,
           "rounds": [],
+          "roundSelector": null,
           "targetPriority": "any-eligible",
           "timing": "passive",
           "triggerChanceByHabitLevel": [],
@@ -316,11 +337,13 @@
       "rawDescription": "Each Round: 35% chance to increase the Physical Damage Dealt (excluding Basic Attacks) by +8% and reduce the Tactical Damage Received by -8% of 2 other Allies in any lane for 2 round(s).",
       "schedules": [
         {
+          "activationRoll": null,
           "attempts": null,
           "battleContext": "unspecified",
           "conditions": [],
           "effects": [
             {
+              "activationRoll": null,
               "calculated": false,
               "casterEligibility": "excluded",
               "conditionalMultipliers": [],
@@ -366,14 +389,17 @@
               "scaling": [],
               "sourceScope": "non-basic-attacks",
               "stack": null,
+              "stackTransitionTrigger": null,
               "target": "2 other Allies",
               "targetCount": null,
               "targetPriority": "any-eligible",
               "targetScope": "any-lane",
+              "targetSelection": null,
               "type": "Physical Damage Dealt Up",
               "unit": "percent"
             },
             {
+              "activationRoll": null,
               "calculated": false,
               "casterEligibility": "excluded",
               "conditionalMultipliers": [],
@@ -417,10 +443,12 @@
               "scaling": [],
               "sourceScope": "unknown",
               "stack": null,
+              "stackTransitionTrigger": null,
               "target": "2 other Allies",
               "targetCount": null,
               "targetPriority": "any-eligible",
               "targetScope": "any-lane",
+              "targetSelection": null,
               "type": "Tactical Damage Received Reduction",
               "unit": "percent"
             }
@@ -428,6 +456,7 @@
           "id": "forests-instinct-each-round",
           "repeat": null,
           "rounds": [],
+          "roundSelector": null,
           "targetPriority": "any-eligible",
           "timing": "each-round",
           "triggerChanceByHabitLevel": [],
@@ -496,11 +525,13 @@
       "rawDescription": "Start of Combat: Increase your Instinct by +20% and Recovery Dealt by +20% until the end of combat.",
       "schedules": [
         {
+          "activationRoll": null,
           "attempts": null,
           "battleContext": "unspecified",
           "conditions": [],
           "effects": [
             {
+              "activationRoll": null,
               "calculated": false,
               "casterEligibility": "unknown",
               "conditionalMultipliers": [],
@@ -544,14 +575,17 @@
               "scaling": [],
               "sourceScope": "unknown",
               "stack": null,
+              "stackTransitionTrigger": null,
               "target": "Self",
               "targetCount": null,
               "targetPriority": "any-eligible",
               "targetScope": "self",
+              "targetSelection": null,
               "type": "Instinct Up",
               "unit": "percent"
             },
             {
+              "activationRoll": null,
               "calculated": false,
               "casterEligibility": "unknown",
               "conditionalMultipliers": [],
@@ -595,10 +629,12 @@
               "scaling": [],
               "sourceScope": "unknown",
               "stack": null,
+              "stackTransitionTrigger": null,
               "target": "Self",
               "targetCount": null,
               "targetPriority": "any-eligible",
               "targetScope": "self",
+              "targetSelection": null,
               "type": "Recovery Dealt Up",
               "unit": "percent"
             }
@@ -606,6 +642,7 @@
           "id": "wise-vigor-start-combat",
           "repeat": null,
           "rounds": [],
+          "roundSelector": null,
           "targetPriority": "any-eligible",
           "timing": "start-of-combat",
           "triggerChanceByHabitLevel": [],
@@ -671,11 +708,13 @@
       "rawDescription": "Each Round: 10% chance to grant Advantage (+20%) to 2 other Allies in any lane for 2 round(s). Advantage increases the target's Damage Dealt.",
       "schedules": [
         {
+          "activationRoll": null,
           "attempts": null,
           "battleContext": "unspecified",
           "conditions": [],
           "effects": [
             {
+              "activationRoll": null,
               "calculated": false,
               "casterEligibility": "excluded",
               "conditionalMultipliers": [],
@@ -695,10 +734,12 @@
               "scaling": [],
               "sourceScope": "unknown",
               "stack": null,
+              "stackTransitionTrigger": null,
               "target": "2 other Allies",
               "targetCount": null,
               "targetPriority": "any-eligible",
               "targetScope": "any-lane",
+              "targetSelection": null,
               "type": "Advantage",
               "unit": "percent"
             }
@@ -706,6 +747,7 @@
           "id": "thunderous-roar-each-round",
           "repeat": null,
           "rounds": [],
+          "roundSelector": null,
           "targetPriority": "any-eligible",
           "timing": "each-round",
           "triggerChanceByHabitLevel": [
@@ -798,11 +840,13 @@
       "rawDescription": "Start of Combat: Increase Strength by +12.5% (enhanced by Strength) of 3 Allies in any lane until the end of combat.",
       "schedules": [
         {
+          "activationRoll": null,
           "attempts": null,
           "battleContext": "unspecified",
           "conditions": [],
           "effects": [
             {
+              "activationRoll": null,
               "calculated": false,
               "casterEligibility": "included",
               "conditionalMultipliers": [],
@@ -850,10 +894,12 @@
               ],
               "sourceScope": "unknown",
               "stack": null,
+              "stackTransitionTrigger": null,
               "target": "3 Allies",
               "targetCount": 3,
               "targetPriority": "any-eligible",
               "targetScope": "any-lane",
+              "targetSelection": null,
               "type": "Strength Up",
               "unit": "percent"
             }
@@ -861,6 +907,7 @@
           "id": "collective-might-start-combat",
           "repeat": null,
           "rounds": [],
+          "roundSelector": null,
           "targetPriority": "any-eligible",
           "timing": "start-of-combat",
           "triggerChanceByHabitLevel": [],
@@ -938,11 +985,13 @@
       "rawDescription": "Start of Round 1: 40% chance to grant First-Strike, Double-Strike, and increase Strength by +25% (enhanced by Instinct) of 1 other Ally within adjacency for 3 round(s).",
       "schedules": [
         {
+          "activationRoll": null,
           "attempts": null,
           "battleContext": "unspecified",
           "conditions": [],
           "effects": [
             {
+              "activationRoll": null,
               "calculated": false,
               "casterEligibility": "excluded",
               "conditionalMultipliers": [],
@@ -960,14 +1009,17 @@
               "scaling": [],
               "sourceScope": "unknown",
               "stack": null,
+              "stackTransitionTrigger": null,
               "target": "1 other Ally",
               "targetCount": null,
               "targetPriority": "any-eligible",
               "targetScope": "within-adjacency",
+              "targetSelection": null,
               "type": "First-Strike",
               "unit": "unknown"
             },
             {
+              "activationRoll": null,
               "calculated": false,
               "casterEligibility": "excluded",
               "conditionalMultipliers": [],
@@ -985,14 +1037,17 @@
               "scaling": [],
               "sourceScope": "unknown",
               "stack": null,
+              "stackTransitionTrigger": null,
               "target": "1 other Ally",
               "targetCount": null,
               "targetPriority": "any-eligible",
               "targetScope": "within-adjacency",
+              "targetSelection": null,
               "type": "Double-Strike",
               "unit": "unknown"
             },
             {
+              "activationRoll": null,
               "calculated": false,
               "casterEligibility": "excluded",
               "conditionalMultipliers": [],
@@ -1012,10 +1067,12 @@
               ],
               "sourceScope": "unknown",
               "stack": null,
+              "stackTransitionTrigger": null,
               "target": "1 other Ally",
               "targetCount": null,
               "targetPriority": "any-eligible",
               "targetScope": "within-adjacency",
+              "targetSelection": null,
               "type": "Strength Up",
               "unit": "percent"
             }
@@ -1025,6 +1082,7 @@
           "rounds": [
             1
           ],
+          "roundSelector": null,
           "targetPriority": "any-eligible",
           "timing": "start-of-round",
           "triggerChanceByHabitLevel": [
@@ -1085,11 +1143,13 @@
       "abilityId": "malachite-wardens-rally",
       "abilityName": "Warden's Rally",
       "schedule": {
+        "activationRoll": null,
         "attempts": null,
         "battleContext": "unspecified",
         "conditions": [],
         "effects": [
           {
+            "activationRoll": null,
             "calculated": false,
             "casterEligibility": "unknown",
             "conditionalMultipliers": [],
@@ -1111,10 +1171,12 @@
             ],
             "sourceScope": "unknown",
             "stack": null,
+            "stackTransitionTrigger": null,
             "target": "1 Enemy",
             "targetCount": null,
             "targetPriority": "any-eligible",
             "targetScope": "same-lane",
+            "targetSelection": null,
             "type": "Tactical Damage",
             "unit": "rate"
           }
@@ -1127,6 +1189,7 @@
           7,
           9
         ],
+        "roundSelector": null,
         "targetPriority": "any-eligible",
         "timing": "specific-rounds",
         "triggerChanceByHabitLevel": [],
@@ -1138,11 +1201,13 @@
       "abilityId": "malachite-wardens-rally",
       "abilityName": "Warden's Rally",
       "schedule": {
+        "activationRoll": null,
         "attempts": null,
         "battleContext": "unspecified",
         "conditions": [],
         "effects": [
           {
+            "activationRoll": null,
             "calculated": false,
             "casterEligibility": "included",
             "conditionalMultipliers": [],
@@ -1165,10 +1230,12 @@
             ],
             "sourceScope": "unknown",
             "stack": null,
+            "stackTransitionTrigger": null,
             "target": "3 Allies",
             "targetCount": 3,
             "targetPriority": "any-eligible",
             "targetScope": "any-lane",
+            "targetSelection": null,
             "type": "Recovery",
             "unit": "rate"
           }
@@ -1180,6 +1247,7 @@
           6,
           9
         ],
+        "roundSelector": null,
         "targetPriority": "any-eligible",
         "timing": "specific-rounds",
         "triggerChanceByHabitLevel": [],
@@ -1191,11 +1259,13 @@
       "abilityId": "malachite-sentinels-presence",
       "abilityName": "Sentinel's Presence",
       "schedule": {
+        "activationRoll": null,
         "attempts": null,
         "battleContext": "unspecified",
         "conditions": [],
         "effects": [
           {
+            "activationRoll": null,
             "calculated": false,
             "casterEligibility": "unknown",
             "conditionalMultipliers": [],
@@ -1213,14 +1283,17 @@
             "scaling": [],
             "sourceScope": "unknown",
             "stack": null,
+            "stackTransitionTrigger": null,
             "target": "Self",
             "targetCount": null,
             "targetPriority": "any-eligible",
             "targetScope": "self",
+            "targetSelection": null,
             "type": "Recovery Dealt Up",
             "unit": "percent"
           },
           {
+            "activationRoll": null,
             "calculated": false,
             "casterEligibility": "unknown",
             "conditionalMultipliers": [],
@@ -1238,14 +1311,17 @@
             "scaling": [],
             "sourceScope": "unknown",
             "stack": null,
+            "stackTransitionTrigger": null,
             "target": "Self",
             "targetCount": null,
             "targetPriority": "any-eligible",
             "targetScope": "self",
+            "targetSelection": null,
             "type": "Instinct Up",
             "unit": "flat"
           },
           {
+            "activationRoll": null,
             "calculated": false,
             "casterEligibility": "unknown",
             "conditionalMultipliers": [],
@@ -1263,10 +1339,12 @@
             "scaling": [],
             "sourceScope": "unknown",
             "stack": null,
+            "stackTransitionTrigger": null,
             "target": "Ally deployed in Left Flank",
             "targetCount": null,
             "targetPriority": "any-eligible",
             "targetScope": "left-flank",
+            "targetSelection": null,
             "type": "Fire Damage Dealt Up",
             "unit": "percent"
           }
@@ -1274,6 +1352,7 @@
         "id": "sentinels-presence-passive",
         "repeat": null,
         "rounds": [],
+        "roundSelector": null,
         "targetPriority": "any-eligible",
         "timing": "passive",
         "triggerChanceByHabitLevel": [],
@@ -1285,11 +1364,13 @@
       "abilityId": "malachite-forests-instinct",
       "abilityName": "Forest's Instinct",
       "schedule": {
+        "activationRoll": null,
         "attempts": null,
         "battleContext": "unspecified",
         "conditions": [],
         "effects": [
           {
+            "activationRoll": null,
             "calculated": false,
             "casterEligibility": "excluded",
             "conditionalMultipliers": [],
@@ -1335,14 +1416,17 @@
             "scaling": [],
             "sourceScope": "non-basic-attacks",
             "stack": null,
+            "stackTransitionTrigger": null,
             "target": "2 other Allies",
             "targetCount": null,
             "targetPriority": "any-eligible",
             "targetScope": "any-lane",
+            "targetSelection": null,
             "type": "Physical Damage Dealt Up",
             "unit": "percent"
           },
           {
+            "activationRoll": null,
             "calculated": false,
             "casterEligibility": "excluded",
             "conditionalMultipliers": [],
@@ -1386,10 +1470,12 @@
             "scaling": [],
             "sourceScope": "unknown",
             "stack": null,
+            "stackTransitionTrigger": null,
             "target": "2 other Allies",
             "targetCount": null,
             "targetPriority": "any-eligible",
             "targetScope": "any-lane",
+            "targetSelection": null,
             "type": "Tactical Damage Received Reduction",
             "unit": "percent"
           }
@@ -1397,6 +1483,7 @@
         "id": "forests-instinct-each-round",
         "repeat": null,
         "rounds": [],
+        "roundSelector": null,
         "targetPriority": "any-eligible",
         "timing": "each-round",
         "triggerChanceByHabitLevel": [],
@@ -1408,11 +1495,13 @@
       "abilityId": "malachite-wise-vigor",
       "abilityName": "Wise Vigor",
       "schedule": {
+        "activationRoll": null,
         "attempts": null,
         "battleContext": "unspecified",
         "conditions": [],
         "effects": [
           {
+            "activationRoll": null,
             "calculated": false,
             "casterEligibility": "unknown",
             "conditionalMultipliers": [],
@@ -1456,14 +1545,17 @@
             "scaling": [],
             "sourceScope": "unknown",
             "stack": null,
+            "stackTransitionTrigger": null,
             "target": "Self",
             "targetCount": null,
             "targetPriority": "any-eligible",
             "targetScope": "self",
+            "targetSelection": null,
             "type": "Instinct Up",
             "unit": "percent"
           },
           {
+            "activationRoll": null,
             "calculated": false,
             "casterEligibility": "unknown",
             "conditionalMultipliers": [],
@@ -1507,10 +1599,12 @@
             "scaling": [],
             "sourceScope": "unknown",
             "stack": null,
+            "stackTransitionTrigger": null,
             "target": "Self",
             "targetCount": null,
             "targetPriority": "any-eligible",
             "targetScope": "self",
+            "targetSelection": null,
             "type": "Recovery Dealt Up",
             "unit": "percent"
           }
@@ -1518,6 +1612,7 @@
         "id": "wise-vigor-start-combat",
         "repeat": null,
         "rounds": [],
+        "roundSelector": null,
         "targetPriority": "any-eligible",
         "timing": "start-of-combat",
         "triggerChanceByHabitLevel": [],
@@ -1529,11 +1624,13 @@
       "abilityId": "malachite-thunderous-roar",
       "abilityName": "Thunderous Roar",
       "schedule": {
+        "activationRoll": null,
         "attempts": null,
         "battleContext": "unspecified",
         "conditions": [],
         "effects": [
           {
+            "activationRoll": null,
             "calculated": false,
             "casterEligibility": "excluded",
             "conditionalMultipliers": [],
@@ -1553,10 +1650,12 @@
             "scaling": [],
             "sourceScope": "unknown",
             "stack": null,
+            "stackTransitionTrigger": null,
             "target": "2 other Allies",
             "targetCount": null,
             "targetPriority": "any-eligible",
             "targetScope": "any-lane",
+            "targetSelection": null,
             "type": "Advantage",
             "unit": "percent"
           }
@@ -1564,6 +1663,7 @@
         "id": "thunderous-roar-each-round",
         "repeat": null,
         "rounds": [],
+        "roundSelector": null,
         "targetPriority": "any-eligible",
         "timing": "each-round",
         "triggerChanceByHabitLevel": [
@@ -1601,11 +1701,13 @@
       "abilityId": "malachite-collective-might",
       "abilityName": "Collective Might",
       "schedule": {
+        "activationRoll": null,
         "attempts": null,
         "battleContext": "unspecified",
         "conditions": [],
         "effects": [
           {
+            "activationRoll": null,
             "calculated": false,
             "casterEligibility": "included",
             "conditionalMultipliers": [],
@@ -1653,10 +1755,12 @@
             ],
             "sourceScope": "unknown",
             "stack": null,
+            "stackTransitionTrigger": null,
             "target": "3 Allies",
             "targetCount": 3,
             "targetPriority": "any-eligible",
             "targetScope": "any-lane",
+            "targetSelection": null,
             "type": "Strength Up",
             "unit": "percent"
           }
@@ -1664,6 +1768,7 @@
         "id": "collective-might-start-combat",
         "repeat": null,
         "rounds": [],
+        "roundSelector": null,
         "targetPriority": "any-eligible",
         "timing": "start-of-combat",
         "triggerChanceByHabitLevel": [],
@@ -1675,11 +1780,13 @@
       "abilityId": "malachite-lightning-strike",
       "abilityName": "Lightning Strike",
       "schedule": {
+        "activationRoll": null,
         "attempts": null,
         "battleContext": "unspecified",
         "conditions": [],
         "effects": [
           {
+            "activationRoll": null,
             "calculated": false,
             "casterEligibility": "excluded",
             "conditionalMultipliers": [],
@@ -1697,14 +1804,17 @@
             "scaling": [],
             "sourceScope": "unknown",
             "stack": null,
+            "stackTransitionTrigger": null,
             "target": "1 other Ally",
             "targetCount": null,
             "targetPriority": "any-eligible",
             "targetScope": "within-adjacency",
+            "targetSelection": null,
             "type": "First-Strike",
             "unit": "unknown"
           },
           {
+            "activationRoll": null,
             "calculated": false,
             "casterEligibility": "excluded",
             "conditionalMultipliers": [],
@@ -1722,14 +1832,17 @@
             "scaling": [],
             "sourceScope": "unknown",
             "stack": null,
+            "stackTransitionTrigger": null,
             "target": "1 other Ally",
             "targetCount": null,
             "targetPriority": "any-eligible",
             "targetScope": "within-adjacency",
+            "targetSelection": null,
             "type": "Double-Strike",
             "unit": "unknown"
           },
           {
+            "activationRoll": null,
             "calculated": false,
             "casterEligibility": "excluded",
             "conditionalMultipliers": [],
@@ -1749,10 +1862,12 @@
             ],
             "sourceScope": "unknown",
             "stack": null,
+            "stackTransitionTrigger": null,
             "target": "1 other Ally",
             "targetCount": null,
             "targetPriority": "any-eligible",
             "targetScope": "within-adjacency",
+            "targetSelection": null,
             "type": "Strength Up",
             "unit": "percent"
           }
@@ -1762,6 +1877,7 @@
         "rounds": [
           1
         ],
+        "roundSelector": null,
         "targetPriority": "any-eligible",
         "timing": "start-of-round",
         "triggerChanceByHabitLevel": [
@@ -1874,11 +1990,13 @@
     "rawDescription": "Rounds 2, 4, 7, 9: Deal Tactical Damage to 1 Enemy in the same lane (Damage Rate: +100%).\n\nRounds 3, 6, 9: Apply Recovery to 3 Allies in any lane (Recovery Rate: +70%, enhanced by Instinct).",
     "schedules": [
       {
+        "activationRoll": null,
         "attempts": null,
         "battleContext": "unspecified",
         "conditions": [],
         "effects": [
           {
+            "activationRoll": null,
             "calculated": false,
             "casterEligibility": "unknown",
             "conditionalMultipliers": [],
@@ -1900,10 +2018,12 @@
             ],
             "sourceScope": "unknown",
             "stack": null,
+            "stackTransitionTrigger": null,
             "target": "1 Enemy",
             "targetCount": null,
             "targetPriority": "any-eligible",
             "targetScope": "same-lane",
+            "targetSelection": null,
             "type": "Tactical Damage",
             "unit": "rate"
           }
@@ -1916,6 +2036,7 @@
           7,
           9
         ],
+        "roundSelector": null,
         "targetPriority": "any-eligible",
         "timing": "specific-rounds",
         "triggerChanceByHabitLevel": [],
@@ -1923,11 +2044,13 @@
         "triggerEvent": "specific-rounds"
       },
       {
+        "activationRoll": null,
         "attempts": null,
         "battleContext": "unspecified",
         "conditions": [],
         "effects": [
           {
+            "activationRoll": null,
             "calculated": false,
             "casterEligibility": "included",
             "conditionalMultipliers": [],
@@ -1950,10 +2073,12 @@
             ],
             "sourceScope": "unknown",
             "stack": null,
+            "stackTransitionTrigger": null,
             "target": "3 Allies",
             "targetCount": 3,
             "targetPriority": "any-eligible",
             "targetScope": "any-lane",
+            "targetSelection": null,
             "type": "Recovery",
             "unit": "rate"
           }
@@ -1965,6 +2090,7 @@
           6,
           9
         ],
+        "roundSelector": null,
         "targetPriority": "any-eligible",
         "timing": "specific-rounds",
         "triggerChanceByHabitLevel": [],
@@ -2032,6 +2158,7 @@
     {
       "abilityId": "malachite-wardens-rally",
       "effect": {
+        "activationRoll": null,
         "calculated": false,
         "casterEligibility": "unknown",
         "conditionalMultipliers": [],
@@ -2053,10 +2180,12 @@
         ],
         "sourceScope": "unknown",
         "stack": null,
+        "stackTransitionTrigger": null,
         "target": "1 Enemy",
         "targetCount": null,
         "targetPriority": "any-eligible",
         "targetScope": "same-lane",
+        "targetSelection": null,
         "type": "Tactical Damage",
         "unit": "rate"
       },
@@ -2065,6 +2194,7 @@
     {
       "abilityId": "malachite-wardens-rally",
       "effect": {
+        "activationRoll": null,
         "calculated": false,
         "casterEligibility": "included",
         "conditionalMultipliers": [],
@@ -2087,10 +2217,12 @@
         ],
         "sourceScope": "unknown",
         "stack": null,
+        "stackTransitionTrigger": null,
         "target": "3 Allies",
         "targetCount": 3,
         "targetPriority": "any-eligible",
         "targetScope": "any-lane",
+        "targetSelection": null,
         "type": "Recovery",
         "unit": "rate"
       },
@@ -2099,6 +2231,7 @@
     {
       "abilityId": "malachite-sentinels-presence",
       "effect": {
+        "activationRoll": null,
         "calculated": false,
         "casterEligibility": "unknown",
         "conditionalMultipliers": [],
@@ -2116,10 +2249,12 @@
         "scaling": [],
         "sourceScope": "unknown",
         "stack": null,
+        "stackTransitionTrigger": null,
         "target": "Self",
         "targetCount": null,
         "targetPriority": "any-eligible",
         "targetScope": "self",
+        "targetSelection": null,
         "type": "Recovery Dealt Up",
         "unit": "percent"
       },
@@ -2128,6 +2263,7 @@
     {
       "abilityId": "malachite-sentinels-presence",
       "effect": {
+        "activationRoll": null,
         "calculated": false,
         "casterEligibility": "unknown",
         "conditionalMultipliers": [],
@@ -2145,10 +2281,12 @@
         "scaling": [],
         "sourceScope": "unknown",
         "stack": null,
+        "stackTransitionTrigger": null,
         "target": "Self",
         "targetCount": null,
         "targetPriority": "any-eligible",
         "targetScope": "self",
+        "targetSelection": null,
         "type": "Instinct Up",
         "unit": "flat"
       },
@@ -2157,6 +2295,7 @@
     {
       "abilityId": "malachite-sentinels-presence",
       "effect": {
+        "activationRoll": null,
         "calculated": false,
         "casterEligibility": "unknown",
         "conditionalMultipliers": [],
@@ -2174,10 +2313,12 @@
         "scaling": [],
         "sourceScope": "unknown",
         "stack": null,
+        "stackTransitionTrigger": null,
         "target": "Ally deployed in Left Flank",
         "targetCount": null,
         "targetPriority": "any-eligible",
         "targetScope": "left-flank",
+        "targetSelection": null,
         "type": "Fire Damage Dealt Up",
         "unit": "percent"
       },
@@ -2186,6 +2327,7 @@
     {
       "abilityId": "malachite-forests-instinct",
       "effect": {
+        "activationRoll": null,
         "calculated": false,
         "casterEligibility": "excluded",
         "conditionalMultipliers": [],
@@ -2231,10 +2373,12 @@
         "scaling": [],
         "sourceScope": "non-basic-attacks",
         "stack": null,
+        "stackTransitionTrigger": null,
         "target": "2 other Allies",
         "targetCount": null,
         "targetPriority": "any-eligible",
         "targetScope": "any-lane",
+        "targetSelection": null,
         "type": "Physical Damage Dealt Up",
         "unit": "percent"
       },
@@ -2243,6 +2387,7 @@
     {
       "abilityId": "malachite-forests-instinct",
       "effect": {
+        "activationRoll": null,
         "calculated": false,
         "casterEligibility": "excluded",
         "conditionalMultipliers": [],
@@ -2286,10 +2431,12 @@
         "scaling": [],
         "sourceScope": "unknown",
         "stack": null,
+        "stackTransitionTrigger": null,
         "target": "2 other Allies",
         "targetCount": null,
         "targetPriority": "any-eligible",
         "targetScope": "any-lane",
+        "targetSelection": null,
         "type": "Tactical Damage Received Reduction",
         "unit": "percent"
       },
@@ -2298,6 +2445,7 @@
     {
       "abilityId": "malachite-wise-vigor",
       "effect": {
+        "activationRoll": null,
         "calculated": false,
         "casterEligibility": "unknown",
         "conditionalMultipliers": [],
@@ -2341,10 +2489,12 @@
         "scaling": [],
         "sourceScope": "unknown",
         "stack": null,
+        "stackTransitionTrigger": null,
         "target": "Self",
         "targetCount": null,
         "targetPriority": "any-eligible",
         "targetScope": "self",
+        "targetSelection": null,
         "type": "Instinct Up",
         "unit": "percent"
       },
@@ -2353,6 +2503,7 @@
     {
       "abilityId": "malachite-wise-vigor",
       "effect": {
+        "activationRoll": null,
         "calculated": false,
         "casterEligibility": "unknown",
         "conditionalMultipliers": [],
@@ -2396,10 +2547,12 @@
         "scaling": [],
         "sourceScope": "unknown",
         "stack": null,
+        "stackTransitionTrigger": null,
         "target": "Self",
         "targetCount": null,
         "targetPriority": "any-eligible",
         "targetScope": "self",
+        "targetSelection": null,
         "type": "Recovery Dealt Up",
         "unit": "percent"
       },
@@ -2408,6 +2561,7 @@
     {
       "abilityId": "malachite-thunderous-roar",
       "effect": {
+        "activationRoll": null,
         "calculated": false,
         "casterEligibility": "excluded",
         "conditionalMultipliers": [],
@@ -2427,10 +2581,12 @@
         "scaling": [],
         "sourceScope": "unknown",
         "stack": null,
+        "stackTransitionTrigger": null,
         "target": "2 other Allies",
         "targetCount": null,
         "targetPriority": "any-eligible",
         "targetScope": "any-lane",
+        "targetSelection": null,
         "type": "Advantage",
         "unit": "percent"
       },
@@ -2439,6 +2595,7 @@
     {
       "abilityId": "malachite-collective-might",
       "effect": {
+        "activationRoll": null,
         "calculated": false,
         "casterEligibility": "included",
         "conditionalMultipliers": [],
@@ -2486,10 +2643,12 @@
         ],
         "sourceScope": "unknown",
         "stack": null,
+        "stackTransitionTrigger": null,
         "target": "3 Allies",
         "targetCount": 3,
         "targetPriority": "any-eligible",
         "targetScope": "any-lane",
+        "targetSelection": null,
         "type": "Strength Up",
         "unit": "percent"
       },
@@ -2498,6 +2657,7 @@
     {
       "abilityId": "malachite-lightning-strike",
       "effect": {
+        "activationRoll": null,
         "calculated": false,
         "casterEligibility": "excluded",
         "conditionalMultipliers": [],
@@ -2515,10 +2675,12 @@
         "scaling": [],
         "sourceScope": "unknown",
         "stack": null,
+        "stackTransitionTrigger": null,
         "target": "1 other Ally",
         "targetCount": null,
         "targetPriority": "any-eligible",
         "targetScope": "within-adjacency",
+        "targetSelection": null,
         "type": "First-Strike",
         "unit": "unknown"
       },
@@ -2527,6 +2689,7 @@
     {
       "abilityId": "malachite-lightning-strike",
       "effect": {
+        "activationRoll": null,
         "calculated": false,
         "casterEligibility": "excluded",
         "conditionalMultipliers": [],
@@ -2544,10 +2707,12 @@
         "scaling": [],
         "sourceScope": "unknown",
         "stack": null,
+        "stackTransitionTrigger": null,
         "target": "1 other Ally",
         "targetCount": null,
         "targetPriority": "any-eligible",
         "targetScope": "within-adjacency",
+        "targetSelection": null,
         "type": "Double-Strike",
         "unit": "unknown"
       },
@@ -2556,6 +2721,7 @@
     {
       "abilityId": "malachite-lightning-strike",
       "effect": {
+        "activationRoll": null,
         "calculated": false,
         "casterEligibility": "excluded",
         "conditionalMultipliers": [],
@@ -2575,10 +2741,12 @@
         ],
         "sourceScope": "unknown",
         "stack": null,
+        "stackTransitionTrigger": null,
         "target": "1 other Ally",
         "targetCount": null,
         "targetPriority": "any-eligible",
         "targetScope": "within-adjacency",
+        "targetSelection": null,
         "type": "Strength Up",
         "unit": "percent"
       },
@@ -2733,7 +2901,7 @@
   "firstObservedInGame": null,
   "format": "dragonfire-dragon-profile",
   "gameVersion": null,
-  "generatedAt": "2026-06-25T16:50:40.505Z",
+  "generatedAt": "2026-06-25T20:04:14.138Z",
   "habits": [
     {
       "abilityClass": "passive",
@@ -2778,11 +2946,13 @@
       "rawDescription": "Each Round: 35% chance to increase the Physical Damage Dealt (excluding Basic Attacks) by +8% and reduce the Tactical Damage Received by -8% of 2 other Allies in any lane for 2 round(s).",
       "schedules": [
         {
+          "activationRoll": null,
           "attempts": null,
           "battleContext": "unspecified",
           "conditions": [],
           "effects": [
             {
+              "activationRoll": null,
               "calculated": false,
               "casterEligibility": "excluded",
               "conditionalMultipliers": [],
@@ -2828,14 +2998,17 @@
               "scaling": [],
               "sourceScope": "non-basic-attacks",
               "stack": null,
+              "stackTransitionTrigger": null,
               "target": "2 other Allies",
               "targetCount": null,
               "targetPriority": "any-eligible",
               "targetScope": "any-lane",
+              "targetSelection": null,
               "type": "Physical Damage Dealt Up",
               "unit": "percent"
             },
             {
+              "activationRoll": null,
               "calculated": false,
               "casterEligibility": "excluded",
               "conditionalMultipliers": [],
@@ -2879,10 +3052,12 @@
               "scaling": [],
               "sourceScope": "unknown",
               "stack": null,
+              "stackTransitionTrigger": null,
               "target": "2 other Allies",
               "targetCount": null,
               "targetPriority": "any-eligible",
               "targetScope": "any-lane",
+              "targetSelection": null,
               "type": "Tactical Damage Received Reduction",
               "unit": "percent"
             }
@@ -2890,6 +3065,7 @@
           "id": "forests-instinct-each-round",
           "repeat": null,
           "rounds": [],
+          "roundSelector": null,
           "targetPriority": "any-eligible",
           "timing": "each-round",
           "triggerChanceByHabitLevel": [],
@@ -2958,11 +3134,13 @@
       "rawDescription": "Start of Combat: Increase your Instinct by +20% and Recovery Dealt by +20% until the end of combat.",
       "schedules": [
         {
+          "activationRoll": null,
           "attempts": null,
           "battleContext": "unspecified",
           "conditions": [],
           "effects": [
             {
+              "activationRoll": null,
               "calculated": false,
               "casterEligibility": "unknown",
               "conditionalMultipliers": [],
@@ -3006,14 +3184,17 @@
               "scaling": [],
               "sourceScope": "unknown",
               "stack": null,
+              "stackTransitionTrigger": null,
               "target": "Self",
               "targetCount": null,
               "targetPriority": "any-eligible",
               "targetScope": "self",
+              "targetSelection": null,
               "type": "Instinct Up",
               "unit": "percent"
             },
             {
+              "activationRoll": null,
               "calculated": false,
               "casterEligibility": "unknown",
               "conditionalMultipliers": [],
@@ -3057,10 +3238,12 @@
               "scaling": [],
               "sourceScope": "unknown",
               "stack": null,
+              "stackTransitionTrigger": null,
               "target": "Self",
               "targetCount": null,
               "targetPriority": "any-eligible",
               "targetScope": "self",
+              "targetSelection": null,
               "type": "Recovery Dealt Up",
               "unit": "percent"
             }
@@ -3068,6 +3251,7 @@
           "id": "wise-vigor-start-combat",
           "repeat": null,
           "rounds": [],
+          "roundSelector": null,
           "targetPriority": "any-eligible",
           "timing": "start-of-combat",
           "triggerChanceByHabitLevel": [],
@@ -3133,11 +3317,13 @@
       "rawDescription": "Each Round: 10% chance to grant Advantage (+20%) to 2 other Allies in any lane for 2 round(s). Advantage increases the target's Damage Dealt.",
       "schedules": [
         {
+          "activationRoll": null,
           "attempts": null,
           "battleContext": "unspecified",
           "conditions": [],
           "effects": [
             {
+              "activationRoll": null,
               "calculated": false,
               "casterEligibility": "excluded",
               "conditionalMultipliers": [],
@@ -3157,10 +3343,12 @@
               "scaling": [],
               "sourceScope": "unknown",
               "stack": null,
+              "stackTransitionTrigger": null,
               "target": "2 other Allies",
               "targetCount": null,
               "targetPriority": "any-eligible",
               "targetScope": "any-lane",
+              "targetSelection": null,
               "type": "Advantage",
               "unit": "percent"
             }
@@ -3168,6 +3356,7 @@
           "id": "thunderous-roar-each-round",
           "repeat": null,
           "rounds": [],
+          "roundSelector": null,
           "targetPriority": "any-eligible",
           "timing": "each-round",
           "triggerChanceByHabitLevel": [
@@ -3260,11 +3449,13 @@
       "rawDescription": "Start of Combat: Increase Strength by +12.5% (enhanced by Strength) of 3 Allies in any lane until the end of combat.",
       "schedules": [
         {
+          "activationRoll": null,
           "attempts": null,
           "battleContext": "unspecified",
           "conditions": [],
           "effects": [
             {
+              "activationRoll": null,
               "calculated": false,
               "casterEligibility": "included",
               "conditionalMultipliers": [],
@@ -3312,10 +3503,12 @@
               ],
               "sourceScope": "unknown",
               "stack": null,
+              "stackTransitionTrigger": null,
               "target": "3 Allies",
               "targetCount": 3,
               "targetPriority": "any-eligible",
               "targetScope": "any-lane",
+              "targetSelection": null,
               "type": "Strength Up",
               "unit": "percent"
             }
@@ -3323,6 +3516,7 @@
           "id": "collective-might-start-combat",
           "repeat": null,
           "rounds": [],
+          "roundSelector": null,
           "targetPriority": "any-eligible",
           "timing": "start-of-combat",
           "triggerChanceByHabitLevel": [],
@@ -3400,11 +3594,13 @@
       "rawDescription": "Start of Round 1: 40% chance to grant First-Strike, Double-Strike, and increase Strength by +25% (enhanced by Instinct) of 1 other Ally within adjacency for 3 round(s).",
       "schedules": [
         {
+          "activationRoll": null,
           "attempts": null,
           "battleContext": "unspecified",
           "conditions": [],
           "effects": [
             {
+              "activationRoll": null,
               "calculated": false,
               "casterEligibility": "excluded",
               "conditionalMultipliers": [],
@@ -3422,14 +3618,17 @@
               "scaling": [],
               "sourceScope": "unknown",
               "stack": null,
+              "stackTransitionTrigger": null,
               "target": "1 other Ally",
               "targetCount": null,
               "targetPriority": "any-eligible",
               "targetScope": "within-adjacency",
+              "targetSelection": null,
               "type": "First-Strike",
               "unit": "unknown"
             },
             {
+              "activationRoll": null,
               "calculated": false,
               "casterEligibility": "excluded",
               "conditionalMultipliers": [],
@@ -3447,14 +3646,17 @@
               "scaling": [],
               "sourceScope": "unknown",
               "stack": null,
+              "stackTransitionTrigger": null,
               "target": "1 other Ally",
               "targetCount": null,
               "targetPriority": "any-eligible",
               "targetScope": "within-adjacency",
+              "targetSelection": null,
               "type": "Double-Strike",
               "unit": "unknown"
             },
             {
+              "activationRoll": null,
               "calculated": false,
               "casterEligibility": "excluded",
               "conditionalMultipliers": [],
@@ -3474,10 +3676,12 @@
               ],
               "sourceScope": "unknown",
               "stack": null,
+              "stackTransitionTrigger": null,
               "target": "1 other Ally",
               "targetCount": null,
               "targetPriority": "any-eligible",
               "targetScope": "within-adjacency",
+              "targetSelection": null,
               "type": "Strength Up",
               "unit": "percent"
             }
@@ -3487,6 +3691,7 @@
           "rounds": [
             1
           ],
+          "roundSelector": null,
           "targetPriority": "any-eligible",
           "timing": "start-of-round",
           "triggerChanceByHabitLevel": [
@@ -4976,10 +5181,10 @@
   "rosterSourceStatus": "official-website",
   "slug": "malachite",
   "source": {
-    "branch": "chore/formation-docs-context-export",
-    "commit": "96e0cb6df6957f19eea61aa67b38bfa905aef03c",
-    "databaseVersion": "0.5.6",
-    "dataSchemaVersion": 9,
+    "branch": "feature/legendary-schema-hardening",
+    "commit": "1b2913abd3b37ddde3fc456f7c4c9154b3a35a48",
+    "databaseVersion": "0.6.0",
+    "dataSchemaVersion": 10,
     "gameBuild": "26.6.53509",
     "localRosterSchemaVersion": 3,
     "repository": "https://github.com/williamchildres/dragonfire-roster-builder"
@@ -5142,6 +5347,82 @@
       "unlockStarRank": 10,
       "untilEndOfCombat": false,
       "untilEndOfRound": false
+    },
+    {
+      "abilityId": "malachite-lightning-strike",
+      "abilityName": "Lightning Strike",
+      "availability": {
+        "canonical": "canonical-locked",
+        "notes": [
+          "Future at Star Rank 10.",
+          "Unlocked in observed account collection state, subject to level and star requirements."
+        ],
+        "observedAccount": "observed-available",
+        "reportLabel": "Future at Star Rank 10; observed account hatched",
+        "userRoster": "unknown"
+      },
+      "chanceByHabitLevel": [
+        {
+          "level": 1,
+          "unit": "percent",
+          "value": 40
+        },
+        {
+          "level": 2,
+          "unit": "percent",
+          "value": 52
+        },
+        {
+          "level": 3,
+          "unit": "percent",
+          "value": 64
+        },
+        {
+          "level": 4,
+          "unit": "percent",
+          "value": 80
+        },
+        {
+          "level": 5,
+          "unit": "percent",
+          "value": 100
+        }
+      ],
+      "chanceFixed": null,
+      "conditions": [
+        {
+          "description": "Activation chance depends on Habit Level for start of round.",
+          "evidenceIds": [],
+          "id": "lightning-strike-round-one-activation-chance",
+          "label": "Activation chance depends on Habit Level for start of round.",
+          "unresolved": false
+        }
+      ],
+      "currentlyAvailable": false,
+      "directlyVerified": true,
+      "dragonId": "malachite",
+      "durationRounds": 3,
+      "evidenceIds": [
+        "malachite-lightning-strike-2026-06-23"
+      ],
+      "futureAvailable": true,
+      "id": "malachite-lightning-strike-lightning-strike-double-strike-double-strike-status-output",
+      "minimumDragonLevel": null,
+      "requiredHabitLevel": 1,
+      "statusId": "double-strike",
+      "targetSelector": {
+        "count": 1,
+        "includesCaster": false,
+        "position": null,
+        "scope": "within-adjacency",
+        "selection": "one-eligible-adjacent",
+        "selectionStat": null,
+        "side": "ally"
+      },
+      "targetSide": "ally",
+      "unlockStarRank": 10,
+      "untilEndOfCombat": false,
+      "untilEndOfRound": false
     }
   ],
   "tags": [
@@ -5188,11 +5469,13 @@
     "rawDescription": "At Level 16+ and deployed in the Vanguard Increase your Recovery Dealt by +15% and Instinct by +25. Increase Fire Damage Dealt by +16% of the Ally deployed in the Left Flank.",
     "schedules": [
       {
+        "activationRoll": null,
         "attempts": null,
         "battleContext": "unspecified",
         "conditions": [],
         "effects": [
           {
+            "activationRoll": null,
             "calculated": false,
             "casterEligibility": "unknown",
             "conditionalMultipliers": [],
@@ -5210,14 +5493,17 @@
             "scaling": [],
             "sourceScope": "unknown",
             "stack": null,
+            "stackTransitionTrigger": null,
             "target": "Self",
             "targetCount": null,
             "targetPriority": "any-eligible",
             "targetScope": "self",
+            "targetSelection": null,
             "type": "Recovery Dealt Up",
             "unit": "percent"
           },
           {
+            "activationRoll": null,
             "calculated": false,
             "casterEligibility": "unknown",
             "conditionalMultipliers": [],
@@ -5235,14 +5521,17 @@
             "scaling": [],
             "sourceScope": "unknown",
             "stack": null,
+            "stackTransitionTrigger": null,
             "target": "Self",
             "targetCount": null,
             "targetPriority": "any-eligible",
             "targetScope": "self",
+            "targetSelection": null,
             "type": "Instinct Up",
             "unit": "flat"
           },
           {
+            "activationRoll": null,
             "calculated": false,
             "casterEligibility": "unknown",
             "conditionalMultipliers": [],
@@ -5260,10 +5549,12 @@
             "scaling": [],
             "sourceScope": "unknown",
             "stack": null,
+            "stackTransitionTrigger": null,
             "target": "Ally deployed in Left Flank",
             "targetCount": null,
             "targetPriority": "any-eligible",
             "targetScope": "left-flank",
+            "targetSelection": null,
             "type": "Fire Damage Dealt Up",
             "unit": "percent"
           }
@@ -5271,6 +5562,7 @@
         "id": "sentinels-presence-passive",
         "repeat": null,
         "rounds": [],
+        "roundSelector": null,
         "targetPriority": "any-eligible",
         "timing": "passive",
         "triggerChanceByHabitLevel": [],

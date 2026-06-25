@@ -74,6 +74,54 @@
         "outputCapabilityId": "syrax-strategic-revival-strategic-revival-recovery-output"
       },
       {
+        "abilityId": "vhagar-fiery-bonds",
+        "dependency": {
+          "notes": [
+            "Effect wording indicates scaling with Strength."
+          ],
+          "statId": "strength",
+          "type": "scales-with-stat"
+        },
+        "dragonId": "vhagar",
+        "outputCapabilityId": "vhagar-fiery-bonds-fiery-bonds-physical-damage-output"
+      },
+      {
+        "abilityId": "vhagar-fiery-bonds",
+        "dependency": {
+          "notes": [
+            "Physical Damage is reduced by target Instinct."
+          ],
+          "statId": "instinct",
+          "type": "mitigated-by-target-stat"
+        },
+        "dragonId": "vhagar",
+        "outputCapabilityId": "vhagar-fiery-bonds-fiery-bonds-physical-damage-output"
+      },
+      {
+        "abilityId": "vhagar-skyward-titan",
+        "dependency": {
+          "notes": [
+            "Effect wording indicates scaling with Strength."
+          ],
+          "statId": "strength",
+          "type": "scales-with-stat"
+        },
+        "dragonId": "vhagar",
+        "outputCapabilityId": "vhagar-skyward-titan-skyward-titan-third-stack-damage-output"
+      },
+      {
+        "abilityId": "vhagar-skyward-titan",
+        "dependency": {
+          "notes": [
+            "Physical Damage is reduced by target Instinct."
+          ],
+          "statId": "instinct",
+          "type": "mitigated-by-target-stat"
+        },
+        "dragonId": "vhagar",
+        "outputCapabilityId": "vhagar-skyward-titan-skyward-titan-third-stack-damage-output"
+      },
+      {
         "abilityId": "caraxes-infernal-burst",
         "dependency": {
           "notes": [
@@ -220,6 +268,78 @@
         "outputCapabilityId": "seasmoke-infectious-wrath-infectious-wrath-physical-damage-rate-output"
       },
       {
+        "abilityId": "crimson-bloodscale-terror",
+        "dependency": {
+          "notes": [
+            "Effect wording indicates scaling with Intelligence."
+          ],
+          "statId": "intelligence",
+          "type": "scales-with-stat"
+        },
+        "dragonId": "crimson",
+        "outputCapabilityId": "crimson-bloodscale-terror-bloodscale-terror-fire-damage-output"
+      },
+      {
+        "abilityId": "crimson-bloodscale-terror",
+        "dependency": {
+          "notes": [
+            "Fire Damage is reduced by target Initiative."
+          ],
+          "statId": "initiative",
+          "type": "mitigated-by-target-stat"
+        },
+        "dragonId": "crimson",
+        "outputCapabilityId": "crimson-bloodscale-terror-bloodscale-terror-fire-damage-output"
+      },
+      {
+        "abilityId": "kalspire-tactical-strike",
+        "dependency": {
+          "notes": [
+            "Effect wording indicates scaling with Instinct."
+          ],
+          "statId": "instinct",
+          "type": "scales-with-stat"
+        },
+        "dragonId": "kalspire",
+        "outputCapabilityId": "kalspire-tactical-strike-tactical-strike-tactical-damage-output"
+      },
+      {
+        "abilityId": "kalspire-tactical-strike",
+        "dependency": {
+          "notes": [
+            "Tactical Damage is reduced by target Intelligence."
+          ],
+          "statId": "intelligence",
+          "type": "mitigated-by-target-stat"
+        },
+        "dragonId": "kalspire",
+        "outputCapabilityId": "kalspire-tactical-strike-tactical-strike-tactical-damage-output"
+      },
+      {
+        "abilityId": "kalspire-tactical-assault",
+        "dependency": {
+          "notes": [
+            "Effect wording indicates scaling with Strength."
+          ],
+          "statId": "strength",
+          "type": "scales-with-stat"
+        },
+        "dragonId": "kalspire",
+        "outputCapabilityId": "kalspire-tactical-assault-tactical-assault-physical-damage-output"
+      },
+      {
+        "abilityId": "kalspire-tactical-assault",
+        "dependency": {
+          "notes": [
+            "Physical Damage is reduced by target Instinct."
+          ],
+          "statId": "instinct",
+          "type": "mitigated-by-target-stat"
+        },
+        "dragonId": "kalspire",
+        "outputCapabilityId": "kalspire-tactical-assault-tactical-assault-physical-damage-output"
+      },
+      {
         "abilityId": "malachite-wardens-rally",
         "dependency": {
           "notes": [
@@ -254,6 +374,78 @@
         },
         "dragonId": "malachite",
         "outputCapabilityId": "malachite-wardens-rally-wardens-rally-recovery-rate-output"
+      },
+      {
+        "abilityId": "venator-feral-strike",
+        "dependency": {
+          "notes": [
+            "Effect wording indicates scaling with Strength."
+          ],
+          "statId": "strength",
+          "type": "scales-with-stat"
+        },
+        "dragonId": "venator",
+        "outputCapabilityId": "venator-feral-strike-feral-strike-physical-instances-output"
+      },
+      {
+        "abilityId": "venator-feral-strike",
+        "dependency": {
+          "notes": [
+            "Physical Damage is reduced by target Instinct."
+          ],
+          "statId": "instinct",
+          "type": "mitigated-by-target-stat"
+        },
+        "dragonId": "venator",
+        "outputCapabilityId": "venator-feral-strike-feral-strike-physical-instances-output"
+      },
+      {
+        "abilityId": "venator-feral-precision",
+        "dependency": {
+          "notes": [
+            "Effect wording indicates scaling with Strength."
+          ],
+          "statId": "strength",
+          "type": "scales-with-stat"
+        },
+        "dragonId": "venator",
+        "outputCapabilityId": "venator-feral-precision-feral-precision-additional-physical-output"
+      },
+      {
+        "abilityId": "venator-feral-precision",
+        "dependency": {
+          "notes": [
+            "Physical Damage is reduced by target Instinct."
+          ],
+          "statId": "instinct",
+          "type": "mitigated-by-target-stat"
+        },
+        "dragonId": "venator",
+        "outputCapabilityId": "venator-feral-precision-feral-precision-additional-physical-output"
+      },
+      {
+        "abilityId": "venator-desperate-ambush",
+        "dependency": {
+          "notes": [
+            "Effect wording indicates scaling with Strength."
+          ],
+          "statId": "strength",
+          "type": "scales-with-stat"
+        },
+        "dragonId": "venator",
+        "outputCapabilityId": "venator-desperate-ambush-desperate-ambush-physical-output"
+      },
+      {
+        "abilityId": "venator-desperate-ambush",
+        "dependency": {
+          "notes": [
+            "Physical Damage is reduced by target Instinct."
+          ],
+          "statId": "instinct",
+          "type": "mitigated-by-target-stat"
+        },
+        "dragonId": "venator",
+        "outputCapabilityId": "venator-desperate-ambush-desperate-ambush-physical-output"
       },
       {
         "abilityId": "sheepstealer-wild-hunt",
@@ -953,6 +1145,146 @@
         "valuePerStack": null
       },
       {
+        "abilityId": "vhagar-warriors-resilience",
+        "abilityName": "Warrior's Resilience",
+        "availability": {
+          "canonical": "canonical-base",
+          "notes": [
+            "Requires Dragon Level 16+.",
+            "Not hatched in observed account."
+          ],
+          "observedAccount": "observed-unavailable",
+          "reportLabel": "Base kit; Level 16+; not hatched in observed account",
+          "userRoster": "unknown"
+        },
+        "channel": "tactical-damage",
+        "combatLogConfirmed": false,
+        "conditional": false,
+        "conditions": [],
+        "confidence": "confirmed",
+        "currentlyAvailable": true,
+        "damageScope": null,
+        "direction": "dealt",
+        "directlyVerified": true,
+        "dragonId": "vhagar",
+        "evidenceIds": [
+          "vhagar-warriors-resilience-2026-06-25"
+        ],
+        "futureAvailable": false,
+        "id": "vhagar-warriors-resilience-warriors-resilience-left-tactical-tactical-damage-dealt-modifier",
+        "label": "Warrior's Resilience: Tactical Damage Dealt Up",
+        "minimumDragonLevel": 16,
+        "operation": "increase",
+        "providerRequirements": [
+          {
+            "evidenceIds": [
+              "vhagar-warriors-resilience-2026-06-25"
+            ],
+            "expected": "vanguard",
+            "id": "vhagar-warriors-resilience-provider-position-vanguard",
+            "kind": "provider-position",
+            "label": "Provider position requirement"
+          }
+        ],
+        "rankedValues": [],
+        "recipientRequirements": [],
+        "requiredHabitLevel": null,
+        "role": "ally-support",
+        "sourceScope": "all-qualifying-sources",
+        "stackMaximum": null,
+        "targetSelector": {
+          "count": null,
+          "includesCaster": null,
+          "position": "left-flank",
+          "scope": "left-flank",
+          "selection": "specific-position",
+          "selectionStat": null,
+          "side": "ally"
+        },
+        "unit": "percent",
+        "unlockStarRank": 1,
+        "value": 16,
+        "valuePerStack": null
+      },
+      {
+        "abilityId": "vhagar-battle-leader",
+        "abilityName": "Battle Leader",
+        "availability": {
+          "canonical": "canonical-locked",
+          "notes": [
+            "Future at Star Rank 4.",
+            "Not hatched in observed account."
+          ],
+          "observedAccount": "observed-unavailable",
+          "reportLabel": "Future at Star Rank 4; not hatched in observed account",
+          "userRoster": "unknown"
+        },
+        "channel": "physical-damage",
+        "combatLogConfirmed": false,
+        "conditional": true,
+        "conditions": [],
+        "confidence": "confirmed",
+        "currentlyAvailable": false,
+        "damageScope": null,
+        "direction": "dealt",
+        "directlyVerified": true,
+        "dragonId": "vhagar",
+        "evidenceIds": [
+          "vhagar-battle-leader-2026-06-25"
+        ],
+        "futureAvailable": true,
+        "id": "vhagar-battle-leader-battle-leader-physical-physical-damage-dealt-modifier",
+        "label": "Battle Leader: Physical Damage Dealt Up",
+        "minimumDragonLevel": null,
+        "operation": "increase",
+        "providerRequirements": [],
+        "rankedValues": [
+          {
+            "level": 1,
+            "unit": "percent",
+            "value": 12.5
+          },
+          {
+            "level": 2,
+            "unit": "percent",
+            "value": 15
+          },
+          {
+            "level": 3,
+            "unit": "percent",
+            "value": 17.5
+          },
+          {
+            "level": 4,
+            "unit": "percent",
+            "value": 21.25
+          },
+          {
+            "level": 5,
+            "unit": "percent",
+            "value": 25
+          }
+        ],
+        "recipientRequirements": [],
+        "requiredHabitLevel": 1,
+        "role": "ally-support",
+        "sourceScope": "non-basic-attacks",
+        "stackMaximum": null,
+        "targetSelector": {
+          "count": 1,
+          "includesCaster": null,
+          "position": null,
+          "scope": "any-lane",
+          "selection": "any",
+          "selectionStat": null,
+          "side": "ally"
+        },
+        "unit": "percent",
+        "unlockStarRank": 4,
+        "value": null,
+        "valuePerStack": null
+      },
+      {
         "abilityId": "caraxes-hunters-wrath",
         "abilityName": "Hunter's Wrath",
         "availability": {
@@ -1529,6 +1861,130 @@
         "valuePerStack": null
       },
       {
+        "abilityId": "crimson-hunters-cunning",
+        "abilityName": "Hunter's Cunning",
+        "availability": {
+          "canonical": "canonical-base",
+          "notes": [
+            "Requires Dragon Level 16+.",
+            "Not collected in observed account."
+          ],
+          "observedAccount": "observed-unavailable",
+          "reportLabel": "Base kit; Level 16+; not collected in observed account",
+          "userRoster": "unknown"
+        },
+        "channel": "physical-damage",
+        "combatLogConfirmed": false,
+        "conditional": false,
+        "conditions": [],
+        "confidence": "confirmed",
+        "currentlyAvailable": true,
+        "damageScope": null,
+        "direction": "dealt",
+        "directlyVerified": true,
+        "dragonId": "crimson",
+        "evidenceIds": [
+          "crimson-hunters-cunning-2026-06-25"
+        ],
+        "futureAvailable": false,
+        "id": "crimson-hunters-cunning-hunters-cunning-right-physical-physical-damage-dealt-modifier",
+        "label": "Hunter's Cunning: Physical Damage Dealt Up",
+        "minimumDragonLevel": 16,
+        "operation": "increase",
+        "providerRequirements": [
+          {
+            "evidenceIds": [
+              "crimson-hunters-cunning-2026-06-25"
+            ],
+            "expected": "vanguard",
+            "id": "crimson-hunters-cunning-provider-position-vanguard",
+            "kind": "provider-position",
+            "label": "Provider position requirement"
+          }
+        ],
+        "rankedValues": [],
+        "recipientRequirements": [],
+        "requiredHabitLevel": null,
+        "role": "ally-support",
+        "sourceScope": "all-qualifying-sources",
+        "stackMaximum": null,
+        "targetSelector": {
+          "count": null,
+          "includesCaster": null,
+          "position": "right-flank",
+          "scope": "right-flank",
+          "selection": "specific-position",
+          "selectionStat": null,
+          "side": "ally"
+        },
+        "unit": "percent",
+        "unlockStarRank": 1,
+        "value": 10,
+        "valuePerStack": null
+      },
+      {
+        "abilityId": "kalspire-champions-brilliance",
+        "abilityName": "Champion's Brilliance",
+        "availability": {
+          "canonical": "canonical-base",
+          "notes": [
+            "Requires Dragon Level 16+.",
+            "Not hatched in observed account."
+          ],
+          "observedAccount": "observed-unavailable",
+          "reportLabel": "Base kit; Level 16+; not hatched in observed account",
+          "userRoster": "unknown"
+        },
+        "channel": "damage-received",
+        "combatLogConfirmed": false,
+        "conditional": false,
+        "conditions": [],
+        "confidence": "confirmed",
+        "currentlyAvailable": true,
+        "damageScope": "all",
+        "direction": "received",
+        "directlyVerified": true,
+        "dragonId": "kalspire",
+        "evidenceIds": [
+          "kalspire-champions-brilliance-2026-06-25"
+        ],
+        "futureAvailable": false,
+        "id": "kalspire-champions-brilliance-champions-brilliance-right-damage-received-damage-received-received-modifier",
+        "label": "Champion's Brilliance: Damage Received Down",
+        "minimumDragonLevel": 16,
+        "operation": "decrease",
+        "providerRequirements": [
+          {
+            "evidenceIds": [
+              "kalspire-champions-brilliance-2026-06-25"
+            ],
+            "expected": "vanguard",
+            "id": "kalspire-champions-brilliance-provider-position-vanguard",
+            "kind": "provider-position",
+            "label": "Provider position requirement"
+          }
+        ],
+        "rankedValues": [],
+        "recipientRequirements": [],
+        "requiredHabitLevel": null,
+        "role": "ally-support",
+        "sourceScope": "all-qualifying-sources",
+        "stackMaximum": null,
+        "targetSelector": {
+          "count": null,
+          "includesCaster": null,
+          "position": "right-flank",
+          "scope": "right-flank",
+          "selection": "specific-position",
+          "selectionStat": null,
+          "side": "ally"
+        },
+        "unit": "percent",
+        "unlockStarRank": 1,
+        "value": 8,
+        "valuePerStack": null
+      },
+      {
         "abilityId": "malachite-sentinels-presence",
         "abilityName": "Sentinel's Presence",
         "availability": {
@@ -1898,6 +2354,130 @@
         "unit": "percent",
         "unlockStarRank": 10,
         "value": 25,
+        "valuePerStack": null
+      },
+      {
+        "abilityId": "venator-warriors-zeal",
+        "abilityName": "Warrior's Zeal",
+        "availability": {
+          "canonical": "canonical-base",
+          "notes": [
+            "Requires Dragon Level 16+.",
+            "Not collected in observed account."
+          ],
+          "observedAccount": "observed-unavailable",
+          "reportLabel": "Base kit; Level 16+; not collected in observed account",
+          "userRoster": "unknown"
+        },
+        "channel": "stat",
+        "combatLogConfirmed": false,
+        "conditional": false,
+        "conditions": [],
+        "confidence": "confirmed",
+        "currentlyAvailable": true,
+        "damageScope": null,
+        "direction": "dealt",
+        "directlyVerified": true,
+        "dragonId": "venator",
+        "evidenceIds": [
+          "venator-warriors-zeal-2026-06-25"
+        ],
+        "futureAvailable": false,
+        "id": "venator-warriors-zeal-warriors-zeal-left-instinct-stat-dealt-modifier",
+        "label": "Warrior's Zeal: Instinct Up",
+        "minimumDragonLevel": 16,
+        "operation": "increase",
+        "providerRequirements": [
+          {
+            "evidenceIds": [
+              "venator-warriors-zeal-2026-06-25"
+            ],
+            "expected": "vanguard",
+            "id": "venator-warriors-zeal-provider-position-vanguard",
+            "kind": "provider-position",
+            "label": "Provider position requirement"
+          }
+        ],
+        "rankedValues": [],
+        "recipientRequirements": [],
+        "requiredHabitLevel": null,
+        "role": "ally-support",
+        "sourceScope": "unknown",
+        "stackMaximum": null,
+        "targetSelector": {
+          "count": null,
+          "includesCaster": null,
+          "position": "left-flank",
+          "scope": "left-flank",
+          "selection": "specific-position",
+          "selectionStat": null,
+          "side": "ally"
+        },
+        "unit": "flat",
+        "unlockStarRank": 1,
+        "value": 20,
+        "valuePerStack": null
+      },
+      {
+        "abilityId": "venator-warriors-zeal",
+        "abilityName": "Warrior's Zeal",
+        "availability": {
+          "canonical": "canonical-base",
+          "notes": [
+            "Requires Dragon Level 16+.",
+            "Not collected in observed account."
+          ],
+          "observedAccount": "observed-unavailable",
+          "reportLabel": "Base kit; Level 16+; not collected in observed account",
+          "userRoster": "unknown"
+        },
+        "channel": "stat",
+        "combatLogConfirmed": false,
+        "conditional": false,
+        "conditions": [],
+        "confidence": "confirmed",
+        "currentlyAvailable": true,
+        "damageScope": null,
+        "direction": "dealt",
+        "directlyVerified": true,
+        "dragonId": "venator",
+        "evidenceIds": [
+          "venator-warriors-zeal-2026-06-25"
+        ],
+        "futureAvailable": false,
+        "id": "venator-warriors-zeal-warriors-zeal-left-initiative-stat-dealt-modifier",
+        "label": "Warrior's Zeal: Initiative Up",
+        "minimumDragonLevel": 16,
+        "operation": "increase",
+        "providerRequirements": [
+          {
+            "evidenceIds": [
+              "venator-warriors-zeal-2026-06-25"
+            ],
+            "expected": "vanguard",
+            "id": "venator-warriors-zeal-provider-position-vanguard",
+            "kind": "provider-position",
+            "label": "Provider position requirement"
+          }
+        ],
+        "rankedValues": [],
+        "recipientRequirements": [],
+        "requiredHabitLevel": null,
+        "role": "ally-support",
+        "sourceScope": "unknown",
+        "stackMaximum": null,
+        "targetSelector": {
+          "count": null,
+          "includesCaster": null,
+          "position": "left-flank",
+          "scope": "left-flank",
+          "selection": "specific-position",
+          "selectionStat": null,
+          "side": "ally"
+        },
+        "unit": "flat",
+        "unlockStarRank": 1,
+        "value": 20,
         "valuePerStack": null
       },
       {
@@ -2751,6 +3331,162 @@
         "valuePerStack": null
       },
       {
+        "abilityId": "vhagar-blazing-onslaught",
+        "abilityName": "Blazing Onslaught",
+        "availability": {
+          "canonical": "canonical-locked",
+          "notes": [
+            "Future at Star Rank 8.",
+            "Not hatched in observed account."
+          ],
+          "observedAccount": "observed-unavailable",
+          "reportLabel": "Future at Star Rank 8; not hatched in observed account",
+          "userRoster": "unknown"
+        },
+        "channel": "fire-damage",
+        "combatLogConfirmed": false,
+        "conditional": true,
+        "conditions": [],
+        "confidence": "confirmed",
+        "currentlyAvailable": false,
+        "damageScope": "fire",
+        "direction": "received",
+        "directlyVerified": true,
+        "dragonId": "vhagar",
+        "evidenceIds": [
+          "vhagar-blazing-onslaught-2026-06-25"
+        ],
+        "futureAvailable": true,
+        "id": "vhagar-blazing-onslaught-blazing-onslaught-fire-received-fire-damage-received-modifier",
+        "label": "Blazing Onslaught: Fire Damage Received Up",
+        "minimumDragonLevel": null,
+        "operation": "increase",
+        "providerRequirements": [],
+        "rankedValues": [
+          {
+            "level": 1,
+            "unit": "percent",
+            "value": 18
+          },
+          {
+            "level": 2,
+            "unit": "percent",
+            "value": 21.6
+          },
+          {
+            "level": 3,
+            "unit": "percent",
+            "value": 25.2
+          },
+          {
+            "level": 4,
+            "unit": "percent",
+            "value": 30.6
+          },
+          {
+            "level": 5,
+            "unit": "percent",
+            "value": 36
+          }
+        ],
+        "recipientRequirements": [],
+        "requiredHabitLevel": 1,
+        "role": "enemy-debuff",
+        "sourceScope": "unknown",
+        "stackMaximum": null,
+        "targetSelector": {
+          "count": 1,
+          "includesCaster": null,
+          "position": null,
+          "scope": "any-lane",
+          "selection": "any",
+          "selectionStat": null,
+          "side": "enemy"
+        },
+        "unit": "percent",
+        "unlockStarRank": 8,
+        "value": null,
+        "valuePerStack": null
+      },
+      {
+        "abilityId": "vhagar-blazing-onslaught",
+        "abilityName": "Blazing Onslaught",
+        "availability": {
+          "canonical": "canonical-locked",
+          "notes": [
+            "Future at Star Rank 8.",
+            "Not hatched in observed account."
+          ],
+          "observedAccount": "observed-unavailable",
+          "reportLabel": "Future at Star Rank 8; not hatched in observed account",
+          "userRoster": "unknown"
+        },
+        "channel": "physical-damage",
+        "combatLogConfirmed": false,
+        "conditional": true,
+        "conditions": [],
+        "confidence": "confirmed",
+        "currentlyAvailable": false,
+        "damageScope": "physical",
+        "direction": "received",
+        "directlyVerified": true,
+        "dragonId": "vhagar",
+        "evidenceIds": [
+          "vhagar-blazing-onslaught-2026-06-25"
+        ],
+        "futureAvailable": true,
+        "id": "vhagar-blazing-onslaught-blazing-onslaught-physical-received-physical-damage-received-modifier",
+        "label": "Blazing Onslaught: Physical Damage Received Up",
+        "minimumDragonLevel": null,
+        "operation": "increase",
+        "providerRequirements": [],
+        "rankedValues": [
+          {
+            "level": 1,
+            "unit": "percent",
+            "value": 18
+          },
+          {
+            "level": 2,
+            "unit": "percent",
+            "value": 21.6
+          },
+          {
+            "level": 3,
+            "unit": "percent",
+            "value": 25.2
+          },
+          {
+            "level": 4,
+            "unit": "percent",
+            "value": 30.6
+          },
+          {
+            "level": 5,
+            "unit": "percent",
+            "value": 36
+          }
+        ],
+        "recipientRequirements": [],
+        "requiredHabitLevel": 1,
+        "role": "enemy-debuff",
+        "sourceScope": "non-basic-attacks",
+        "stackMaximum": null,
+        "targetSelector": {
+          "count": 1,
+          "includesCaster": null,
+          "position": null,
+          "scope": "any-lane",
+          "selection": "any",
+          "selectionStat": null,
+          "side": "enemy"
+        },
+        "unit": "percent",
+        "unlockStarRank": 8,
+        "value": null,
+        "valuePerStack": null
+      },
+      {
         "abilityId": "caraxes-battle-dread",
         "abilityName": "Battle Dread",
         "availability": {
@@ -2976,6 +3712,1006 @@
           "position": null,
           "scope": "any-lane",
           "selection": "any",
+          "selectionStat": null,
+          "side": "enemy"
+        },
+        "unit": "percent",
+        "unlockStarRank": 8,
+        "value": null,
+        "valuePerStack": null
+      },
+      {
+        "abilityId": "crimson-enervate",
+        "abilityName": "Enervate",
+        "availability": {
+          "canonical": "canonical-locked",
+          "notes": [
+            "Future at Star Rank 2.",
+            "Not collected in observed account."
+          ],
+          "observedAccount": "observed-unavailable",
+          "reportLabel": "Future at Star Rank 2; not collected in observed account",
+          "userRoster": "unknown"
+        },
+        "channel": "tactical-damage",
+        "combatLogConfirmed": false,
+        "conditional": true,
+        "conditions": [
+          {
+            "comparison": null,
+            "description": "Enemy deals Tactical Damage.",
+            "evidenceIds": [],
+            "id": "enemy-deals-tactical-damage",
+            "kind": "ally-deals-tactical-damage",
+            "label": "Enemy deals Tactical Damage.",
+            "subject": "enemy",
+            "thresholdPercent": null,
+            "unresolved": false
+          }
+        ],
+        "confidence": "confirmed",
+        "currentlyAvailable": false,
+        "damageScope": null,
+        "direction": "dealt",
+        "directlyVerified": true,
+        "dragonId": "crimson",
+        "evidenceIds": [
+          "crimson-enervate-2026-06-25"
+        ],
+        "futureAvailable": true,
+        "id": "crimson-enervate-enervate-tactical-down-tactical-damage-dealt-modifier",
+        "label": "Enervate: Tactical Damage Dealt Down",
+        "minimumDragonLevel": null,
+        "operation": "decrease",
+        "providerRequirements": [],
+        "rankedValues": [
+          {
+            "level": 1,
+            "unit": "percent",
+            "value": 13.5
+          },
+          {
+            "level": 2,
+            "unit": "percent",
+            "value": 16.2
+          },
+          {
+            "level": 3,
+            "unit": "percent",
+            "value": 18.9
+          },
+          {
+            "level": 4,
+            "unit": "percent",
+            "value": 22.95
+          },
+          {
+            "level": 5,
+            "unit": "percent",
+            "value": 27
+          }
+        ],
+        "recipientRequirements": [],
+        "requiredHabitLevel": 1,
+        "role": "enemy-debuff",
+        "sourceScope": "all-qualifying-sources",
+        "stackMaximum": null,
+        "targetSelector": {
+          "count": 1,
+          "includesCaster": null,
+          "position": null,
+          "scope": "unknown",
+          "selection": "eligible",
+          "selectionStat": null,
+          "side": "enemy"
+        },
+        "unit": "percent",
+        "unlockStarRank": 2,
+        "value": null,
+        "valuePerStack": null
+      },
+      {
+        "abilityId": "crimson-unlikely-hero",
+        "abilityName": "Unlikely Hero",
+        "availability": {
+          "canonical": "canonical-locked",
+          "notes": [
+            "Future at Star Rank 8.",
+            "Not collected in observed account."
+          ],
+          "observedAccount": "observed-unavailable",
+          "reportLabel": "Future at Star Rank 8; not collected in observed account",
+          "userRoster": "unknown"
+        },
+        "channel": "physical-damage",
+        "combatLogConfirmed": false,
+        "conditional": true,
+        "conditions": [
+          {
+            "comparison": "above",
+            "description": "Enemy is strictly above 75% maximum Troop Capacity.",
+            "evidenceIds": [],
+            "id": "enemy-strictly-above-75-troops",
+            "kind": "target-above-troop-capacity-threshold",
+            "label": "Enemy is strictly above 75% maximum Troop Capacity.",
+            "subject": "enemy",
+            "thresholdPercent": 75,
+            "unresolved": false
+          }
+        ],
+        "confidence": "confirmed",
+        "currentlyAvailable": false,
+        "damageScope": "physical",
+        "direction": "received",
+        "directlyVerified": true,
+        "dragonId": "crimson",
+        "evidenceIds": [
+          "crimson-unlikely-hero-2026-06-25"
+        ],
+        "futureAvailable": true,
+        "id": "crimson-unlikely-hero-unlikely-hero-physical-received-physical-damage-received-modifier",
+        "label": "Unlikely Hero: Physical Damage Received Up",
+        "minimumDragonLevel": null,
+        "operation": "increase",
+        "providerRequirements": [],
+        "rankedValues": [
+          {
+            "level": 1,
+            "unit": "percent",
+            "value": 10
+          },
+          {
+            "level": 2,
+            "unit": "percent",
+            "value": 12
+          },
+          {
+            "level": 3,
+            "unit": "percent",
+            "value": 14
+          },
+          {
+            "level": 4,
+            "unit": "percent",
+            "value": 17
+          },
+          {
+            "level": 5,
+            "unit": "percent",
+            "value": 20
+          }
+        ],
+        "recipientRequirements": [],
+        "requiredHabitLevel": 1,
+        "role": "enemy-debuff",
+        "sourceScope": "non-basic-attacks",
+        "stackMaximum": null,
+        "targetSelector": {
+          "count": null,
+          "includesCaster": null,
+          "position": null,
+          "scope": "any-lane",
+          "selection": "all-matching-condition",
+          "selectionStat": null,
+          "side": "enemy"
+        },
+        "unit": "percent",
+        "unlockStarRank": 8,
+        "value": null,
+        "valuePerStack": null
+      },
+      {
+        "abilityId": "crimson-unlikely-hero",
+        "abilityName": "Unlikely Hero",
+        "availability": {
+          "canonical": "canonical-locked",
+          "notes": [
+            "Future at Star Rank 8.",
+            "Not collected in observed account."
+          ],
+          "observedAccount": "observed-unavailable",
+          "reportLabel": "Future at Star Rank 8; not collected in observed account",
+          "userRoster": "unknown"
+        },
+        "channel": "fire-damage",
+        "combatLogConfirmed": false,
+        "conditional": true,
+        "conditions": [
+          {
+            "comparison": "above",
+            "description": "Enemy is strictly above 75% maximum Troop Capacity.",
+            "evidenceIds": [],
+            "id": "enemy-strictly-above-75-troops",
+            "kind": "target-above-troop-capacity-threshold",
+            "label": "Enemy is strictly above 75% maximum Troop Capacity.",
+            "subject": "enemy",
+            "thresholdPercent": 75,
+            "unresolved": false
+          }
+        ],
+        "confidence": "confirmed",
+        "currentlyAvailable": false,
+        "damageScope": "fire",
+        "direction": "received",
+        "directlyVerified": true,
+        "dragonId": "crimson",
+        "evidenceIds": [
+          "crimson-unlikely-hero-2026-06-25"
+        ],
+        "futureAvailable": true,
+        "id": "crimson-unlikely-hero-unlikely-hero-fire-received-fire-damage-received-modifier",
+        "label": "Unlikely Hero: Fire Damage Received Up",
+        "minimumDragonLevel": null,
+        "operation": "increase",
+        "providerRequirements": [],
+        "rankedValues": [
+          {
+            "level": 1,
+            "unit": "percent",
+            "value": 10
+          },
+          {
+            "level": 2,
+            "unit": "percent",
+            "value": 12
+          },
+          {
+            "level": 3,
+            "unit": "percent",
+            "value": 14
+          },
+          {
+            "level": 4,
+            "unit": "percent",
+            "value": 17
+          },
+          {
+            "level": 5,
+            "unit": "percent",
+            "value": 20
+          }
+        ],
+        "recipientRequirements": [],
+        "requiredHabitLevel": 1,
+        "role": "enemy-debuff",
+        "sourceScope": "unknown",
+        "stackMaximum": null,
+        "targetSelector": {
+          "count": null,
+          "includesCaster": null,
+          "position": null,
+          "scope": "any-lane",
+          "selection": "all-matching-condition",
+          "selectionStat": null,
+          "side": "enemy"
+        },
+        "unit": "percent",
+        "unlockStarRank": 8,
+        "value": null,
+        "valuePerStack": null
+      },
+      {
+        "abilityId": "crimson-unlikely-hero",
+        "abilityName": "Unlikely Hero",
+        "availability": {
+          "canonical": "canonical-locked",
+          "notes": [
+            "Future at Star Rank 8.",
+            "Not collected in observed account."
+          ],
+          "observedAccount": "observed-unavailable",
+          "reportLabel": "Future at Star Rank 8; not collected in observed account",
+          "userRoster": "unknown"
+        },
+        "channel": "recovery",
+        "combatLogConfirmed": false,
+        "conditional": true,
+        "conditions": [
+          {
+            "comparison": "below",
+            "description": "Enemy is strictly below 25% maximum Troop Capacity.",
+            "evidenceIds": [],
+            "id": "enemy-strictly-below-25-troops",
+            "kind": "target-below-troop-capacity-threshold",
+            "label": "Enemy is strictly below 25% maximum Troop Capacity.",
+            "subject": "enemy",
+            "thresholdPercent": 25,
+            "unresolved": false
+          }
+        ],
+        "confidence": "confirmed",
+        "currentlyAvailable": false,
+        "damageScope": null,
+        "direction": "received",
+        "directlyVerified": true,
+        "dragonId": "crimson",
+        "evidenceIds": [
+          "crimson-unlikely-hero-2026-06-25"
+        ],
+        "futureAvailable": true,
+        "id": "crimson-unlikely-hero-unlikely-hero-recovery-received-down-recovery-received-modifier",
+        "label": "Unlikely Hero: Recovery Received Down",
+        "minimumDragonLevel": null,
+        "operation": "decrease",
+        "providerRequirements": [],
+        "rankedValues": [
+          {
+            "level": 1,
+            "unit": "percent",
+            "value": 20
+          },
+          {
+            "level": 2,
+            "unit": "percent",
+            "value": 24
+          },
+          {
+            "level": 3,
+            "unit": "percent",
+            "value": 28
+          },
+          {
+            "level": 4,
+            "unit": "percent",
+            "value": 34
+          },
+          {
+            "level": 5,
+            "unit": "percent",
+            "value": 40
+          }
+        ],
+        "recipientRequirements": [],
+        "requiredHabitLevel": 1,
+        "role": "enemy-debuff",
+        "sourceScope": "unknown",
+        "stackMaximum": null,
+        "targetSelector": {
+          "count": null,
+          "includesCaster": null,
+          "position": null,
+          "scope": "any-lane",
+          "selection": "all-matching-condition",
+          "selectionStat": null,
+          "side": "enemy"
+        },
+        "unit": "percent",
+        "unlockStarRank": 8,
+        "value": null,
+        "valuePerStack": null
+      },
+      {
+        "abilityId": "crimson-vermins-bane",
+        "abilityName": "Vermin's Bane",
+        "availability": {
+          "canonical": "canonical-locked",
+          "notes": [
+            "Future at Star Rank 10.",
+            "Not collected in observed account."
+          ],
+          "observedAccount": "observed-unavailable",
+          "reportLabel": "Future at Star Rank 10; not collected in observed account",
+          "userRoster": "unknown"
+        },
+        "channel": "stat",
+        "combatLogConfirmed": false,
+        "conditional": true,
+        "conditions": [
+          {
+            "description": "One fixed activation roll for the even-round stat reductions.",
+            "evidenceIds": [],
+            "id": "vermins-bane-even-rounds-activation-chance",
+            "label": "One fixed activation roll for the even-round stat reductions.",
+            "unresolved": false
+          }
+        ],
+        "confidence": "confirmed",
+        "currentlyAvailable": false,
+        "damageScope": null,
+        "direction": "dealt",
+        "directlyVerified": true,
+        "dragonId": "crimson",
+        "evidenceIds": [
+          "crimson-vermins-bane-2026-06-25"
+        ],
+        "futureAvailable": true,
+        "id": "crimson-vermins-bane-vermins-bane-instinct-down-stat-dealt-modifier",
+        "label": "Vermin's Bane: Instinct Down",
+        "minimumDragonLevel": null,
+        "operation": "decrease",
+        "providerRequirements": [],
+        "rankedValues": [
+          {
+            "level": 1,
+            "unit": "percent",
+            "value": 12
+          },
+          {
+            "level": 2,
+            "unit": "percent",
+            "value": 15.6
+          },
+          {
+            "level": 3,
+            "unit": "percent",
+            "value": 19.2
+          },
+          {
+            "level": 4,
+            "unit": "percent",
+            "value": 24
+          },
+          {
+            "level": 5,
+            "unit": "percent",
+            "value": 30
+          }
+        ],
+        "recipientRequirements": [],
+        "requiredHabitLevel": 1,
+        "role": "enemy-debuff",
+        "sourceScope": "unknown",
+        "stackMaximum": null,
+        "targetSelector": {
+          "count": 1,
+          "includesCaster": null,
+          "position": null,
+          "scope": "any-lane",
+          "selection": "highest-stat",
+          "selectionStat": "instinct",
+          "side": "enemy"
+        },
+        "unit": "percent",
+        "unlockStarRank": 10,
+        "value": null,
+        "valuePerStack": null
+      },
+      {
+        "abilityId": "crimson-vermins-bane",
+        "abilityName": "Vermin's Bane",
+        "availability": {
+          "canonical": "canonical-locked",
+          "notes": [
+            "Future at Star Rank 10.",
+            "Not collected in observed account."
+          ],
+          "observedAccount": "observed-unavailable",
+          "reportLabel": "Future at Star Rank 10; not collected in observed account",
+          "userRoster": "unknown"
+        },
+        "channel": "stat",
+        "combatLogConfirmed": false,
+        "conditional": true,
+        "conditions": [
+          {
+            "description": "One fixed activation roll for the even-round stat reductions.",
+            "evidenceIds": [],
+            "id": "vermins-bane-even-rounds-activation-chance",
+            "label": "One fixed activation roll for the even-round stat reductions.",
+            "unresolved": false
+          }
+        ],
+        "confidence": "confirmed",
+        "currentlyAvailable": false,
+        "damageScope": null,
+        "direction": "dealt",
+        "directlyVerified": true,
+        "dragonId": "crimson",
+        "evidenceIds": [
+          "crimson-vermins-bane-2026-06-25"
+        ],
+        "futureAvailable": true,
+        "id": "crimson-vermins-bane-vermins-bane-initiative-down-stat-dealt-modifier",
+        "label": "Vermin's Bane: Initiative Down",
+        "minimumDragonLevel": null,
+        "operation": "decrease",
+        "providerRequirements": [],
+        "rankedValues": [
+          {
+            "level": 1,
+            "unit": "percent",
+            "value": 12
+          },
+          {
+            "level": 2,
+            "unit": "percent",
+            "value": 15.6
+          },
+          {
+            "level": 3,
+            "unit": "percent",
+            "value": 19.2
+          },
+          {
+            "level": 4,
+            "unit": "percent",
+            "value": 24
+          },
+          {
+            "level": 5,
+            "unit": "percent",
+            "value": 30
+          }
+        ],
+        "recipientRequirements": [],
+        "requiredHabitLevel": 1,
+        "role": "enemy-debuff",
+        "sourceScope": "unknown",
+        "stackMaximum": null,
+        "targetSelector": {
+          "count": 1,
+          "includesCaster": null,
+          "position": null,
+          "scope": "any-lane",
+          "selection": "highest-stat",
+          "selectionStat": "instinct",
+          "side": "enemy"
+        },
+        "unit": "percent",
+        "unlockStarRank": 10,
+        "value": null,
+        "valuePerStack": null
+      },
+      {
+        "abilityId": "kalspire-battle-cunning",
+        "abilityName": "Battle Cunning",
+        "availability": {
+          "canonical": "canonical-locked",
+          "notes": [
+            "Future at Star Rank 4.",
+            "Not hatched in observed account."
+          ],
+          "observedAccount": "observed-unavailable",
+          "reportLabel": "Future at Star Rank 4; not hatched in observed account",
+          "userRoster": "unknown"
+        },
+        "channel": "stat",
+        "combatLogConfirmed": false,
+        "conditional": true,
+        "conditions": [],
+        "confidence": "confirmed",
+        "currentlyAvailable": false,
+        "damageScope": null,
+        "direction": "dealt",
+        "directlyVerified": true,
+        "dragonId": "kalspire",
+        "evidenceIds": [
+          "kalspire-battle-cunning-2026-06-25"
+        ],
+        "futureAvailable": true,
+        "id": "kalspire-battle-cunning-battle-cunning-strength-down-stat-dealt-modifier",
+        "label": "Battle Cunning: Strength Down",
+        "minimumDragonLevel": null,
+        "operation": "decrease",
+        "providerRequirements": [],
+        "rankedValues": [
+          {
+            "level": 1,
+            "unit": "percent",
+            "value": 6.5
+          },
+          {
+            "level": 2,
+            "unit": "percent",
+            "value": 7.8
+          },
+          {
+            "level": 3,
+            "unit": "percent",
+            "value": 9.1
+          },
+          {
+            "level": 4,
+            "unit": "percent",
+            "value": 11.05
+          },
+          {
+            "level": 5,
+            "unit": "percent",
+            "value": 13
+          }
+        ],
+        "recipientRequirements": [],
+        "requiredHabitLevel": 1,
+        "role": "enemy-debuff",
+        "sourceScope": "unknown",
+        "stackMaximum": null,
+        "targetSelector": {
+          "count": 3,
+          "includesCaster": null,
+          "position": null,
+          "scope": "any-lane",
+          "selection": "any",
+          "selectionStat": null,
+          "side": "enemy"
+        },
+        "unit": "percent",
+        "unlockStarRank": 4,
+        "value": null,
+        "valuePerStack": null
+      },
+      {
+        "abilityId": "kalspire-battle-cunning",
+        "abilityName": "Battle Cunning",
+        "availability": {
+          "canonical": "canonical-locked",
+          "notes": [
+            "Future at Star Rank 4.",
+            "Not hatched in observed account."
+          ],
+          "observedAccount": "observed-unavailable",
+          "reportLabel": "Future at Star Rank 4; not hatched in observed account",
+          "userRoster": "unknown"
+        },
+        "channel": "stat",
+        "combatLogConfirmed": false,
+        "conditional": true,
+        "conditions": [],
+        "confidence": "confirmed",
+        "currentlyAvailable": false,
+        "damageScope": null,
+        "direction": "dealt",
+        "directlyVerified": true,
+        "dragonId": "kalspire",
+        "evidenceIds": [
+          "kalspire-battle-cunning-2026-06-25"
+        ],
+        "futureAvailable": true,
+        "id": "kalspire-battle-cunning-battle-cunning-intelligence-down-stat-dealt-modifier",
+        "label": "Battle Cunning: Intelligence Down",
+        "minimumDragonLevel": null,
+        "operation": "decrease",
+        "providerRequirements": [],
+        "rankedValues": [
+          {
+            "level": 1,
+            "unit": "percent",
+            "value": 6.5
+          },
+          {
+            "level": 2,
+            "unit": "percent",
+            "value": 7.8
+          },
+          {
+            "level": 3,
+            "unit": "percent",
+            "value": 9.1
+          },
+          {
+            "level": 4,
+            "unit": "percent",
+            "value": 11.05
+          },
+          {
+            "level": 5,
+            "unit": "percent",
+            "value": 13
+          }
+        ],
+        "recipientRequirements": [],
+        "requiredHabitLevel": 1,
+        "role": "enemy-debuff",
+        "sourceScope": "unknown",
+        "stackMaximum": null,
+        "targetSelector": {
+          "count": 3,
+          "includesCaster": null,
+          "position": null,
+          "scope": "any-lane",
+          "selection": "any",
+          "selectionStat": null,
+          "side": "enemy"
+        },
+        "unit": "percent",
+        "unlockStarRank": 4,
+        "value": null,
+        "valuePerStack": null
+      },
+      {
+        "abilityId": "kalspire-radiant-conqueror",
+        "abilityName": "Radiant Conqueror",
+        "availability": {
+          "canonical": "canonical-locked",
+          "notes": [
+            "Future at Star Rank 10.",
+            "Not hatched in observed account."
+          ],
+          "observedAccount": "observed-unavailable",
+          "reportLabel": "Future at Star Rank 10; not hatched in observed account",
+          "userRoster": "unknown"
+        },
+        "channel": "physical-damage",
+        "combatLogConfirmed": false,
+        "conditional": true,
+        "conditions": [],
+        "confidence": "confirmed",
+        "currentlyAvailable": false,
+        "damageScope": null,
+        "direction": "dealt",
+        "directlyVerified": true,
+        "dragonId": "kalspire",
+        "evidenceIds": [
+          "kalspire-radiant-conqueror-2026-06-25"
+        ],
+        "futureAvailable": true,
+        "id": "kalspire-radiant-conqueror-radiant-conqueror-physical-down-physical-damage-dealt-modifier",
+        "label": "Radiant Conqueror: Physical Damage Dealt Down",
+        "minimumDragonLevel": null,
+        "operation": "decrease",
+        "providerRequirements": [],
+        "rankedValues": [
+          {
+            "level": 1,
+            "unit": "percent",
+            "value": 10
+          },
+          {
+            "level": 2,
+            "unit": "percent",
+            "value": 13
+          },
+          {
+            "level": 3,
+            "unit": "percent",
+            "value": 16
+          },
+          {
+            "level": 4,
+            "unit": "percent",
+            "value": 20
+          },
+          {
+            "level": 5,
+            "unit": "percent",
+            "value": 25
+          }
+        ],
+        "recipientRequirements": [],
+        "requiredHabitLevel": 1,
+        "role": "enemy-debuff",
+        "sourceScope": "non-basic-attacks",
+        "stackMaximum": null,
+        "targetSelector": {
+          "count": 1,
+          "includesCaster": null,
+          "position": null,
+          "scope": "any-lane",
+          "selection": "highest-stat",
+          "selectionStat": "strength",
+          "side": "enemy"
+        },
+        "unit": "percent",
+        "unlockStarRank": 10,
+        "value": null,
+        "valuePerStack": null
+      },
+      {
+        "abilityId": "kalspire-radiant-conqueror",
+        "abilityName": "Radiant Conqueror",
+        "availability": {
+          "canonical": "canonical-locked",
+          "notes": [
+            "Future at Star Rank 10.",
+            "Not hatched in observed account."
+          ],
+          "observedAccount": "observed-unavailable",
+          "reportLabel": "Future at Star Rank 10; not hatched in observed account",
+          "userRoster": "unknown"
+        },
+        "channel": "fire-damage",
+        "combatLogConfirmed": false,
+        "conditional": true,
+        "conditions": [],
+        "confidence": "confirmed",
+        "currentlyAvailable": false,
+        "damageScope": null,
+        "direction": "dealt",
+        "directlyVerified": true,
+        "dragonId": "kalspire",
+        "evidenceIds": [
+          "kalspire-radiant-conqueror-2026-06-25"
+        ],
+        "futureAvailable": true,
+        "id": "kalspire-radiant-conqueror-radiant-conqueror-fire-down-fire-damage-dealt-modifier",
+        "label": "Radiant Conqueror: Fire Damage Dealt Down",
+        "minimumDragonLevel": null,
+        "operation": "decrease",
+        "providerRequirements": [],
+        "rankedValues": [
+          {
+            "level": 1,
+            "unit": "percent",
+            "value": 10
+          },
+          {
+            "level": 2,
+            "unit": "percent",
+            "value": 13
+          },
+          {
+            "level": 3,
+            "unit": "percent",
+            "value": 16
+          },
+          {
+            "level": 4,
+            "unit": "percent",
+            "value": 20
+          },
+          {
+            "level": 5,
+            "unit": "percent",
+            "value": 25
+          }
+        ],
+        "recipientRequirements": [],
+        "requiredHabitLevel": 1,
+        "role": "enemy-debuff",
+        "sourceScope": "all-qualifying-sources",
+        "stackMaximum": null,
+        "targetSelector": {
+          "count": 1,
+          "includesCaster": null,
+          "position": null,
+          "scope": "any-lane",
+          "selection": "highest-stat",
+          "selectionStat": "intelligence",
+          "side": "enemy"
+        },
+        "unit": "percent",
+        "unlockStarRank": 10,
+        "value": null,
+        "valuePerStack": null
+      },
+      {
+        "abilityId": "venator-hunters-bane",
+        "abilityName": "Hunter's Bane",
+        "availability": {
+          "canonical": "canonical-locked",
+          "notes": [
+            "Future at Star Rank 2.",
+            "Not collected in observed account."
+          ],
+          "observedAccount": "observed-unavailable",
+          "reportLabel": "Future at Star Rank 2; not collected in observed account",
+          "userRoster": "unknown"
+        },
+        "channel": "stat",
+        "combatLogConfirmed": false,
+        "conditional": true,
+        "conditions": [],
+        "confidence": "confirmed",
+        "currentlyAvailable": false,
+        "damageScope": null,
+        "direction": "dealt",
+        "directlyVerified": true,
+        "dragonId": "venator",
+        "evidenceIds": [
+          "venator-hunters-bane-2026-06-25"
+        ],
+        "futureAvailable": true,
+        "id": "venator-hunters-bane-hunters-bane-intelligence-down-stat-dealt-modifier",
+        "label": "Hunter's Bane: Intelligence Down",
+        "minimumDragonLevel": null,
+        "operation": "decrease",
+        "providerRequirements": [],
+        "rankedValues": [
+          {
+            "level": 1,
+            "unit": "percent",
+            "value": 30
+          },
+          {
+            "level": 2,
+            "unit": "percent",
+            "value": 36
+          },
+          {
+            "level": 3,
+            "unit": "percent",
+            "value": 42
+          },
+          {
+            "level": 4,
+            "unit": "percent",
+            "value": 51
+          },
+          {
+            "level": 5,
+            "unit": "percent",
+            "value": 60
+          }
+        ],
+        "recipientRequirements": [],
+        "requiredHabitLevel": 1,
+        "role": "enemy-debuff",
+        "sourceScope": "unknown",
+        "stackMaximum": null,
+        "targetSelector": {
+          "count": 1,
+          "includesCaster": null,
+          "position": null,
+          "scope": "any-lane",
+          "selection": "any",
+          "selectionStat": null,
+          "side": "enemy"
+        },
+        "unit": "percent",
+        "unlockStarRank": 2,
+        "value": null,
+        "valuePerStack": null
+      },
+      {
+        "abilityId": "venator-armor-break",
+        "abilityName": "Armor Break",
+        "availability": {
+          "canonical": "canonical-locked",
+          "notes": [
+            "Future at Star Rank 8.",
+            "Not collected in observed account."
+          ],
+          "observedAccount": "observed-unavailable",
+          "reportLabel": "Future at Star Rank 8; not collected in observed account",
+          "userRoster": "unknown"
+        },
+        "channel": "physical-damage",
+        "combatLogConfirmed": false,
+        "conditional": true,
+        "conditions": [],
+        "confidence": "confirmed",
+        "currentlyAvailable": false,
+        "damageScope": "physical",
+        "direction": "received",
+        "directlyVerified": true,
+        "dragonId": "venator",
+        "evidenceIds": [
+          "venator-armor-break-2026-06-25"
+        ],
+        "futureAvailable": true,
+        "id": "venator-armor-break-armor-break-physical-received-physical-damage-received-modifier",
+        "label": "Armor Break: Physical Damage Received Up",
+        "minimumDragonLevel": null,
+        "operation": "increase",
+        "providerRequirements": [],
+        "rankedValues": [
+          {
+            "level": 1,
+            "unit": "percent",
+            "value": 8
+          },
+          {
+            "level": 2,
+            "unit": "percent",
+            "value": 9.6
+          },
+          {
+            "level": 3,
+            "unit": "percent",
+            "value": 11.2
+          },
+          {
+            "level": 4,
+            "unit": "percent",
+            "value": 13.6
+          },
+          {
+            "level": 5,
+            "unit": "percent",
+            "value": 16
+          }
+        ],
+        "recipientRequirements": [],
+        "requiredHabitLevel": 1,
+        "role": "enemy-debuff",
+        "sourceScope": "unknown",
+        "stackMaximum": null,
+        "targetSelector": {
+          "count": 1,
+          "includesCaster": null,
+          "position": null,
+          "scope": "same-lane",
+          "selection": "specific-position",
           "selectionStat": null,
           "side": "enemy"
         },
@@ -3261,6 +4997,109 @@
         "targetScope": "any-lane",
         "targetSide": "ally",
         "unlockStarRank": 6
+      },
+      {
+        "abilityId": "vhagar-fiery-bonds",
+        "abilityName": "Fiery Bonds",
+        "availability": {
+          "canonical": "canonical-base",
+          "notes": [
+            "Not hatched in observed account."
+          ],
+          "observedAccount": "observed-unavailable",
+          "reportLabel": "Base kit; not hatched in observed account",
+          "userRoster": "unknown"
+        },
+        "channel": "physical-damage",
+        "combatLogConfirmed": false,
+        "conditional": false,
+        "conditions": [],
+        "confidence": "confirmed",
+        "currentlyAvailable": true,
+        "dependencies": [
+          {
+            "notes": [
+              "Effect wording indicates scaling with Strength."
+            ],
+            "statId": "strength",
+            "type": "scales-with-stat"
+          },
+          {
+            "notes": [
+              "Physical Damage is reduced by target Instinct."
+            ],
+            "statId": "instinct",
+            "type": "mitigated-by-target-stat"
+          }
+        ],
+        "directlyVerified": true,
+        "dragonId": "vhagar",
+        "evidenceIds": [
+          "vhagar-fiery-bonds-summary-2026-06-25"
+        ],
+        "futureAvailable": false,
+        "id": "vhagar-fiery-bonds-fiery-bonds-physical-damage-output",
+        "label": "Fiery Bonds: Physical Damage",
+        "minimumDragonLevel": null,
+        "requiredHabitLevel": null,
+        "sourceKind": "command",
+        "sourceScope": "commands",
+        "targetCount": 1,
+        "targetScope": "within-adjacency",
+        "targetSide": "enemy",
+        "unlockStarRank": null
+      },
+      {
+        "abilityId": "vhagar-skyward-titan",
+        "abilityName": "Skyward Titan",
+        "availability": {
+          "canonical": "canonical-locked",
+          "notes": [
+            "Future at Star Rank 10.",
+            "Not hatched in observed account."
+          ],
+          "observedAccount": "observed-unavailable",
+          "reportLabel": "Future at Star Rank 10; not hatched in observed account",
+          "userRoster": "unknown"
+        },
+        "channel": "physical-damage",
+        "combatLogConfirmed": false,
+        "conditional": true,
+        "conditions": [],
+        "confidence": "confirmed",
+        "currentlyAvailable": false,
+        "dependencies": [
+          {
+            "notes": [
+              "Effect wording indicates scaling with Strength."
+            ],
+            "statId": "strength",
+            "type": "scales-with-stat"
+          },
+          {
+            "notes": [
+              "Physical Damage is reduced by target Instinct."
+            ],
+            "statId": "instinct",
+            "type": "mitigated-by-target-stat"
+          }
+        ],
+        "directlyVerified": true,
+        "dragonId": "vhagar",
+        "evidenceIds": [
+          "vhagar-skyward-titan-2026-06-25"
+        ],
+        "futureAvailable": true,
+        "id": "vhagar-skyward-titan-skyward-titan-third-stack-damage-output",
+        "label": "Skyward Titan: Physical Damage",
+        "minimumDragonLevel": null,
+        "requiredHabitLevel": 1,
+        "sourceKind": "habit",
+        "sourceScope": "habits",
+        "targetCount": 1,
+        "targetScope": "same-lane",
+        "targetSide": "enemy",
+        "unlockStarRank": 10
       },
       {
         "abilityId": "caraxes-infernal-burst",
@@ -3574,6 +5413,160 @@
         "unlockStarRank": 6
       },
       {
+        "abilityId": "crimson-bloodscale-terror",
+        "abilityName": "Bloodscale Terror",
+        "availability": {
+          "canonical": "canonical-base",
+          "notes": [
+            "Not collected in observed account."
+          ],
+          "observedAccount": "observed-unavailable",
+          "reportLabel": "Base kit; not collected in observed account",
+          "userRoster": "unknown"
+        },
+        "channel": "fire-damage",
+        "combatLogConfirmed": false,
+        "conditional": false,
+        "conditions": [],
+        "confidence": "confirmed",
+        "currentlyAvailable": true,
+        "dependencies": [
+          {
+            "notes": [
+              "Effect wording indicates scaling with Intelligence."
+            ],
+            "statId": "intelligence",
+            "type": "scales-with-stat"
+          },
+          {
+            "notes": [
+              "Fire Damage is reduced by target Initiative."
+            ],
+            "statId": "initiative",
+            "type": "mitigated-by-target-stat"
+          }
+        ],
+        "directlyVerified": true,
+        "dragonId": "crimson",
+        "evidenceIds": [
+          "crimson-bloodscale-terror-summary-2026-06-25"
+        ],
+        "futureAvailable": false,
+        "id": "crimson-bloodscale-terror-bloodscale-terror-fire-damage-output",
+        "label": "Bloodscale Terror: Fire Damage",
+        "minimumDragonLevel": null,
+        "requiredHabitLevel": null,
+        "sourceKind": "command",
+        "sourceScope": "commands",
+        "targetCount": 1,
+        "targetScope": "any-lane",
+        "targetSide": "enemy",
+        "unlockStarRank": null
+      },
+      {
+        "abilityId": "kalspire-tactical-strike",
+        "abilityName": "Tactical Strike",
+        "availability": {
+          "canonical": "canonical-base",
+          "notes": [
+            "Not hatched in observed account."
+          ],
+          "observedAccount": "observed-unavailable",
+          "reportLabel": "Base kit; not hatched in observed account",
+          "userRoster": "unknown"
+        },
+        "channel": "tactical-damage",
+        "combatLogConfirmed": false,
+        "conditional": false,
+        "conditions": [],
+        "confidence": "confirmed",
+        "currentlyAvailable": true,
+        "dependencies": [
+          {
+            "notes": [
+              "Effect wording indicates scaling with Instinct."
+            ],
+            "statId": "instinct",
+            "type": "scales-with-stat"
+          },
+          {
+            "notes": [
+              "Tactical Damage is reduced by target Intelligence."
+            ],
+            "statId": "intelligence",
+            "type": "mitigated-by-target-stat"
+          }
+        ],
+        "directlyVerified": true,
+        "dragonId": "kalspire",
+        "evidenceIds": [
+          "kalspire-tactical-strike-summary-2026-06-25"
+        ],
+        "futureAvailable": false,
+        "id": "kalspire-tactical-strike-tactical-strike-tactical-damage-output",
+        "label": "Tactical Strike: Tactical Damage",
+        "minimumDragonLevel": null,
+        "requiredHabitLevel": null,
+        "sourceKind": "command",
+        "sourceScope": "commands",
+        "targetCount": null,
+        "targetScope": "any-lane",
+        "targetSide": "ally",
+        "unlockStarRank": null
+      },
+      {
+        "abilityId": "kalspire-tactical-assault",
+        "abilityName": "Tactical Assault",
+        "availability": {
+          "canonical": "canonical-locked",
+          "notes": [
+            "Future at Star Rank 6.",
+            "Not hatched in observed account."
+          ],
+          "observedAccount": "observed-unavailable",
+          "reportLabel": "Future at Star Rank 6; not hatched in observed account",
+          "userRoster": "unknown"
+        },
+        "channel": "physical-damage",
+        "combatLogConfirmed": false,
+        "conditional": true,
+        "conditions": [],
+        "confidence": "confirmed",
+        "currentlyAvailable": false,
+        "dependencies": [
+          {
+            "notes": [
+              "Effect wording indicates scaling with Strength."
+            ],
+            "statId": "strength",
+            "type": "scales-with-stat"
+          },
+          {
+            "notes": [
+              "Physical Damage is reduced by target Instinct."
+            ],
+            "statId": "instinct",
+            "type": "mitigated-by-target-stat"
+          }
+        ],
+        "directlyVerified": true,
+        "dragonId": "kalspire",
+        "evidenceIds": [
+          "kalspire-tactical-assault-2026-06-25"
+        ],
+        "futureAvailable": true,
+        "id": "kalspire-tactical-assault-tactical-assault-physical-damage-output",
+        "label": "Tactical Assault: Physical Damage",
+        "minimumDragonLevel": null,
+        "requiredHabitLevel": 1,
+        "sourceKind": "habit",
+        "sourceScope": "habits",
+        "targetCount": null,
+        "targetScope": "within-adjacency",
+        "targetSide": "enemy",
+        "unlockStarRank": 6
+      },
+      {
         "abilityId": "malachite-wardens-rally",
         "abilityName": "Warden's Rally",
         "availability": {
@@ -3669,6 +5662,173 @@
         "targetScope": "any-lane",
         "targetSide": "ally",
         "unlockStarRank": null
+      },
+      {
+        "abilityId": "venator-feral-strike",
+        "abilityName": "Feral Strike",
+        "availability": {
+          "canonical": "canonical-base",
+          "notes": [
+            "Not collected in observed account."
+          ],
+          "observedAccount": "observed-unavailable",
+          "reportLabel": "Base kit; not collected in observed account",
+          "userRoster": "unknown"
+        },
+        "channel": "physical-damage",
+        "combatLogConfirmed": false,
+        "conditional": false,
+        "conditions": [],
+        "confidence": "confirmed",
+        "currentlyAvailable": true,
+        "dependencies": [
+          {
+            "notes": [
+              "Effect wording indicates scaling with Strength."
+            ],
+            "statId": "strength",
+            "type": "scales-with-stat"
+          },
+          {
+            "notes": [
+              "Physical Damage is reduced by target Instinct."
+            ],
+            "statId": "instinct",
+            "type": "mitigated-by-target-stat"
+          }
+        ],
+        "directlyVerified": true,
+        "dragonId": "venator",
+        "evidenceIds": [
+          "venator-feral-strike-summary-2026-06-25"
+        ],
+        "futureAvailable": false,
+        "id": "venator-feral-strike-feral-strike-physical-instances-output",
+        "label": "Feral Strike: Physical Damage",
+        "minimumDragonLevel": null,
+        "requiredHabitLevel": null,
+        "sourceKind": "command",
+        "sourceScope": "commands",
+        "targetCount": 1,
+        "targetScope": "any-lane",
+        "targetSide": "enemy",
+        "unlockStarRank": null
+      },
+      {
+        "abilityId": "venator-feral-precision",
+        "abilityName": "Feral Precision",
+        "availability": {
+          "canonical": "canonical-locked",
+          "notes": [
+            "Future at Star Rank 6.",
+            "Not collected in observed account."
+          ],
+          "observedAccount": "observed-unavailable",
+          "reportLabel": "Future at Star Rank 6; not collected in observed account",
+          "userRoster": "unknown"
+        },
+        "channel": "physical-damage",
+        "combatLogConfirmed": false,
+        "conditional": true,
+        "conditions": [],
+        "confidence": "confirmed",
+        "currentlyAvailable": false,
+        "dependencies": [
+          {
+            "notes": [
+              "Effect wording indicates scaling with Strength."
+            ],
+            "statId": "strength",
+            "type": "scales-with-stat"
+          },
+          {
+            "notes": [
+              "Physical Damage is reduced by target Instinct."
+            ],
+            "statId": "instinct",
+            "type": "mitigated-by-target-stat"
+          }
+        ],
+        "directlyVerified": true,
+        "dragonId": "venator",
+        "evidenceIds": [
+          "venator-feral-precision-2026-06-25"
+        ],
+        "futureAvailable": true,
+        "id": "venator-feral-precision-feral-precision-additional-physical-output",
+        "label": "Feral Precision: Physical Damage",
+        "minimumDragonLevel": null,
+        "requiredHabitLevel": 1,
+        "sourceKind": "habit",
+        "sourceScope": "habits",
+        "targetCount": null,
+        "targetScope": "any-lane",
+        "targetSide": "enemy",
+        "unlockStarRank": 6
+      },
+      {
+        "abilityId": "venator-desperate-ambush",
+        "abilityName": "Desperate Ambush",
+        "availability": {
+          "canonical": "canonical-locked",
+          "notes": [
+            "Future at Star Rank 10.",
+            "Not collected in observed account."
+          ],
+          "observedAccount": "observed-unavailable",
+          "reportLabel": "Future at Star Rank 10; not collected in observed account",
+          "userRoster": "unknown"
+        },
+        "channel": "physical-damage",
+        "combatLogConfirmed": false,
+        "conditional": true,
+        "conditions": [
+          {
+            "comparison": "below",
+            "description": "Venator is strictly below 50% Troop Capacity.",
+            "evidenceIds": [],
+            "id": "self-strictly-below-50-troops",
+            "kind": "target-below-troop-capacity-threshold",
+            "label": "Venator is strictly below 50% Troop Capacity.",
+            "subject": "self",
+            "thresholdPercent": 50,
+            "unresolved": false
+          }
+        ],
+        "confidence": "confirmed",
+        "currentlyAvailable": false,
+        "dependencies": [
+          {
+            "notes": [
+              "Effect wording indicates scaling with Strength."
+            ],
+            "statId": "strength",
+            "type": "scales-with-stat"
+          },
+          {
+            "notes": [
+              "Physical Damage is reduced by target Instinct."
+            ],
+            "statId": "instinct",
+            "type": "mitigated-by-target-stat"
+          }
+        ],
+        "directlyVerified": true,
+        "dragonId": "venator",
+        "evidenceIds": [
+          "venator-desperate-ambush-2026-06-25"
+        ],
+        "futureAvailable": true,
+        "id": "venator-desperate-ambush-desperate-ambush-physical-output",
+        "label": "Desperate Ambush: Physical Damage",
+        "minimumDragonLevel": null,
+        "requiredHabitLevel": 1,
+        "sourceKind": "habit",
+        "sourceScope": "habits",
+        "targetCount": 1,
+        "targetScope": "any-lane",
+        "targetSide": "enemy",
+        "unlockStarRank": 10
       },
       {
         "abilityId": "sheepstealer-wild-hunt",
@@ -3971,9 +6131,205 @@
         "scalingStat": "intelligence",
         "statusId": "burn",
         "ticksEachRound": true
+      },
+      {
+        "abilityId": "kalspire-tactical-strike",
+        "channel": "physical-damage",
+        "damageRateByHabitLevel": [],
+        "damageRateFixed": 20,
+        "dragonId": "kalspire",
+        "durationRounds": 2,
+        "evidenceIds": [
+          "kalspire-tactical-strike-summary-2026-06-25"
+        ],
+        "mitigationStat": "instinct",
+        "scalingStat": "strength",
+        "statusId": "bleed",
+        "ticksEachRound": true
+      },
+      {
+        "abilityId": "kalspire-tactical-assault",
+        "channel": "tactical-damage",
+        "damageRateByHabitLevel": [
+          {
+            "level": 1,
+            "unit": "percent",
+            "value": 15
+          },
+          {
+            "level": 2,
+            "unit": "percent",
+            "value": 18
+          },
+          {
+            "level": 3,
+            "unit": "percent",
+            "value": 21
+          },
+          {
+            "level": 4,
+            "unit": "percent",
+            "value": 25.5
+          },
+          {
+            "level": 5,
+            "unit": "percent",
+            "value": 30
+          }
+        ],
+        "damageRateFixed": 20,
+        "dragonId": "kalspire",
+        "durationRounds": 2,
+        "evidenceIds": [
+          "kalspire-tactical-assault-2026-06-25"
+        ],
+        "mitigationStat": "intelligence",
+        "scalingStat": "instinct",
+        "statusId": "panic",
+        "ticksEachRound": true
       }
     ],
     "recipientSideAmplification": [
+      {
+        "abilityId": "vhagar-ancestral-shield",
+        "abilityName": "Ancestral Shield",
+        "availability": {
+          "canonical": "canonical-locked",
+          "notes": [
+            "Future at Star Rank 2.",
+            "Not hatched in observed account."
+          ],
+          "observedAccount": "observed-unavailable",
+          "reportLabel": "Future at Star Rank 2; not hatched in observed account",
+          "userRoster": "unknown"
+        },
+        "channel": "recovery",
+        "combatLogConfirmed": false,
+        "conditional": true,
+        "conditions": [],
+        "confidence": "confirmed",
+        "currentlyAvailable": false,
+        "damageScope": null,
+        "direction": "received",
+        "directlyVerified": true,
+        "dragonId": "vhagar",
+        "evidenceIds": [
+          "vhagar-ancestral-shield-2026-06-25"
+        ],
+        "futureAvailable": true,
+        "id": "vhagar-ancestral-shield-ancestral-shield-recovery-received-recovery-received-modifier",
+        "label": "Ancestral Shield: Recovery Received Up",
+        "minimumDragonLevel": null,
+        "operation": "increase",
+        "providerRequirements": [],
+        "rankedValues": [
+          {
+            "level": 1,
+            "unit": "percent",
+            "value": 15
+          },
+          {
+            "level": 2,
+            "unit": "percent",
+            "value": 18
+          },
+          {
+            "level": 3,
+            "unit": "percent",
+            "value": 21
+          },
+          {
+            "level": 4,
+            "unit": "percent",
+            "value": 25.5
+          },
+          {
+            "level": 5,
+            "unit": "percent",
+            "value": 30
+          }
+        ],
+        "recipientRequirements": [],
+        "requiredHabitLevel": 1,
+        "role": "recipient-side-amplification",
+        "sourceScope": "unknown",
+        "stackMaximum": null,
+        "targetSelector": {
+          "count": null,
+          "includesCaster": null,
+          "position": null,
+          "scope": "self",
+          "selection": "self",
+          "selectionStat": null,
+          "side": "self"
+        },
+        "unit": "percent",
+        "unlockStarRank": 2,
+        "value": null,
+        "valuePerStack": null
+      },
+      {
+        "abilityId": "crimson-hunters-cunning",
+        "abilityName": "Hunter's Cunning",
+        "availability": {
+          "canonical": "canonical-base",
+          "notes": [
+            "Requires Dragon Level 16+.",
+            "Not collected in observed account."
+          ],
+          "observedAccount": "observed-unavailable",
+          "reportLabel": "Base kit; Level 16+; not collected in observed account",
+          "userRoster": "unknown"
+        },
+        "channel": "recovery",
+        "combatLogConfirmed": false,
+        "conditional": false,
+        "conditions": [],
+        "confidence": "confirmed",
+        "currentlyAvailable": true,
+        "damageScope": null,
+        "direction": "received",
+        "directlyVerified": true,
+        "dragonId": "crimson",
+        "evidenceIds": [
+          "crimson-hunters-cunning-2026-06-25"
+        ],
+        "futureAvailable": false,
+        "id": "crimson-hunters-cunning-hunters-cunning-recovery-recovery-received-modifier",
+        "label": "Hunter's Cunning: Recovery Received Up",
+        "minimumDragonLevel": 16,
+        "operation": "increase",
+        "providerRequirements": [
+          {
+            "evidenceIds": [
+              "crimson-hunters-cunning-2026-06-25"
+            ],
+            "expected": "vanguard",
+            "id": "crimson-hunters-cunning-provider-position-vanguard",
+            "kind": "provider-position",
+            "label": "Provider position requirement"
+          }
+        ],
+        "rankedValues": [],
+        "recipientRequirements": [],
+        "requiredHabitLevel": null,
+        "role": "recipient-side-amplification",
+        "sourceScope": "unknown",
+        "stackMaximum": null,
+        "targetSelector": {
+          "count": null,
+          "includesCaster": null,
+          "position": null,
+          "scope": "self",
+          "selection": "self",
+          "selectionStat": null,
+          "side": "self"
+        },
+        "unit": "percent",
+        "unlockStarRank": 1,
+        "value": 20,
+        "valuePerStack": null
+      },
       {
         "abilityId": "sheepstealer-hunters-cunning",
         "abilityName": "Hunter's Cunning",
@@ -4098,6 +6454,224 @@
         "unit": "percent",
         "unlockStarRank": 1,
         "value": 16,
+        "valuePerStack": null
+      },
+      {
+        "abilityId": "vhagar-warriors-resilience",
+        "abilityName": "Warrior's Resilience",
+        "availability": {
+          "canonical": "canonical-base",
+          "notes": [
+            "Requires Dragon Level 16+.",
+            "Not hatched in observed account."
+          ],
+          "observedAccount": "observed-unavailable",
+          "reportLabel": "Base kit; Level 16+; not hatched in observed account",
+          "userRoster": "unknown"
+        },
+        "channel": "damage-received",
+        "combatLogConfirmed": false,
+        "conditional": false,
+        "conditions": [],
+        "confidence": "confirmed",
+        "currentlyAvailable": true,
+        "damageScope": "all",
+        "direction": "received",
+        "directlyVerified": true,
+        "dragonId": "vhagar",
+        "evidenceIds": [
+          "vhagar-warriors-resilience-2026-06-25"
+        ],
+        "futureAvailable": false,
+        "id": "vhagar-warriors-resilience-warriors-resilience-damage-received-damage-received-received-modifier",
+        "label": "Warrior's Resilience: Damage Received Down",
+        "minimumDragonLevel": 16,
+        "operation": "decrease",
+        "providerRequirements": [
+          {
+            "evidenceIds": [
+              "vhagar-warriors-resilience-2026-06-25"
+            ],
+            "expected": "vanguard",
+            "id": "vhagar-warriors-resilience-provider-position-vanguard",
+            "kind": "provider-position",
+            "label": "Provider position requirement"
+          }
+        ],
+        "rankedValues": [],
+        "recipientRequirements": [],
+        "requiredHabitLevel": null,
+        "role": "self-amplification",
+        "sourceScope": "all-qualifying-sources",
+        "stackMaximum": null,
+        "targetSelector": {
+          "count": null,
+          "includesCaster": null,
+          "position": null,
+          "scope": "self",
+          "selection": "self",
+          "selectionStat": null,
+          "side": "self"
+        },
+        "unit": "percent",
+        "unlockStarRank": 1,
+        "value": 8,
+        "valuePerStack": null
+      },
+      {
+        "abilityId": "vhagar-ancestral-shield",
+        "abilityName": "Ancestral Shield",
+        "availability": {
+          "canonical": "canonical-locked",
+          "notes": [
+            "Future at Star Rank 2.",
+            "Not hatched in observed account."
+          ],
+          "observedAccount": "observed-unavailable",
+          "reportLabel": "Future at Star Rank 2; not hatched in observed account",
+          "userRoster": "unknown"
+        },
+        "channel": "damage-received",
+        "combatLogConfirmed": false,
+        "conditional": true,
+        "conditions": [],
+        "confidence": "confirmed",
+        "currentlyAvailable": false,
+        "damageScope": "physical",
+        "direction": "received",
+        "directlyVerified": true,
+        "dragonId": "vhagar",
+        "evidenceIds": [
+          "vhagar-ancestral-shield-2026-06-25"
+        ],
+        "futureAvailable": true,
+        "id": "vhagar-ancestral-shield-ancestral-shield-physical-received-damage-received-received-modifier",
+        "label": "Ancestral Shield: Physical Damage Received Down",
+        "minimumDragonLevel": null,
+        "operation": "decrease",
+        "providerRequirements": [],
+        "rankedValues": [
+          {
+            "level": 1,
+            "unit": "percent",
+            "value": 12
+          },
+          {
+            "level": 2,
+            "unit": "percent",
+            "value": 14.4
+          },
+          {
+            "level": 3,
+            "unit": "percent",
+            "value": 16.8
+          },
+          {
+            "level": 4,
+            "unit": "percent",
+            "value": 20.4
+          },
+          {
+            "level": 5,
+            "unit": "percent",
+            "value": 24
+          }
+        ],
+        "recipientRequirements": [],
+        "requiredHabitLevel": 1,
+        "role": "self-amplification",
+        "sourceScope": "unknown",
+        "stackMaximum": null,
+        "targetSelector": {
+          "count": null,
+          "includesCaster": null,
+          "position": null,
+          "scope": "self",
+          "selection": "self",
+          "selectionStat": null,
+          "side": "self"
+        },
+        "unit": "percent",
+        "unlockStarRank": 2,
+        "value": null,
+        "valuePerStack": null
+      },
+      {
+        "abilityId": "vhagar-ancestral-shield",
+        "abilityName": "Ancestral Shield",
+        "availability": {
+          "canonical": "canonical-locked",
+          "notes": [
+            "Future at Star Rank 2.",
+            "Not hatched in observed account."
+          ],
+          "observedAccount": "observed-unavailable",
+          "reportLabel": "Future at Star Rank 2; not hatched in observed account",
+          "userRoster": "unknown"
+        },
+        "channel": "damage-received",
+        "combatLogConfirmed": false,
+        "conditional": true,
+        "conditions": [],
+        "confidence": "confirmed",
+        "currentlyAvailable": false,
+        "damageScope": "tactical",
+        "direction": "received",
+        "directlyVerified": true,
+        "dragonId": "vhagar",
+        "evidenceIds": [
+          "vhagar-ancestral-shield-2026-06-25"
+        ],
+        "futureAvailable": true,
+        "id": "vhagar-ancestral-shield-ancestral-shield-tactical-received-damage-received-received-modifier",
+        "label": "Ancestral Shield: Tactical Damage Received Down",
+        "minimumDragonLevel": null,
+        "operation": "decrease",
+        "providerRequirements": [],
+        "rankedValues": [
+          {
+            "level": 1,
+            "unit": "percent",
+            "value": 12
+          },
+          {
+            "level": 2,
+            "unit": "percent",
+            "value": 14.4
+          },
+          {
+            "level": 3,
+            "unit": "percent",
+            "value": 16.8
+          },
+          {
+            "level": 4,
+            "unit": "percent",
+            "value": 20.4
+          },
+          {
+            "level": 5,
+            "unit": "percent",
+            "value": 24
+          }
+        ],
+        "recipientRequirements": [],
+        "requiredHabitLevel": 1,
+        "role": "self-amplification",
+        "sourceScope": "unknown",
+        "stackMaximum": null,
+        "targetSelector": {
+          "count": null,
+          "includesCaster": null,
+          "position": null,
+          "scope": "self",
+          "selection": "self",
+          "selectionStat": null,
+          "side": "self"
+        },
+        "unit": "percent",
+        "unlockStarRank": 2,
+        "value": null,
         "valuePerStack": null
       },
       {
@@ -4517,6 +7091,774 @@
         "valuePerStack": null
       },
       {
+        "abilityId": "crimson-hunters-cunning",
+        "abilityName": "Hunter's Cunning",
+        "availability": {
+          "canonical": "canonical-base",
+          "notes": [
+            "Requires Dragon Level 16+.",
+            "Not collected in observed account."
+          ],
+          "observedAccount": "observed-unavailable",
+          "reportLabel": "Base kit; Level 16+; not collected in observed account",
+          "userRoster": "unknown"
+        },
+        "channel": "stat",
+        "combatLogConfirmed": false,
+        "conditional": false,
+        "conditions": [],
+        "confidence": "confirmed",
+        "currentlyAvailable": true,
+        "damageScope": null,
+        "direction": "dealt",
+        "directlyVerified": true,
+        "dragonId": "crimson",
+        "evidenceIds": [
+          "crimson-hunters-cunning-2026-06-25"
+        ],
+        "futureAvailable": false,
+        "id": "crimson-hunters-cunning-hunters-cunning-intelligence-stat-dealt-modifier",
+        "label": "Hunter's Cunning: Intelligence Up",
+        "minimumDragonLevel": 16,
+        "operation": "increase",
+        "providerRequirements": [
+          {
+            "evidenceIds": [
+              "crimson-hunters-cunning-2026-06-25"
+            ],
+            "expected": "vanguard",
+            "id": "crimson-hunters-cunning-provider-position-vanguard",
+            "kind": "provider-position",
+            "label": "Provider position requirement"
+          }
+        ],
+        "rankedValues": [],
+        "recipientRequirements": [],
+        "requiredHabitLevel": null,
+        "role": "self-amplification",
+        "sourceScope": "unknown",
+        "stackMaximum": null,
+        "targetSelector": {
+          "count": null,
+          "includesCaster": null,
+          "position": null,
+          "scope": "self",
+          "selection": "self",
+          "selectionStat": null,
+          "side": "self"
+        },
+        "unit": "flat",
+        "unlockStarRank": 1,
+        "value": 25,
+        "valuePerStack": null
+      },
+      {
+        "abilityId": "crimson-dragons-intellect",
+        "abilityName": "Dragon's Intellect",
+        "availability": {
+          "canonical": "canonical-locked",
+          "notes": [
+            "Future at Star Rank 4.",
+            "Not collected in observed account."
+          ],
+          "observedAccount": "observed-unavailable",
+          "reportLabel": "Future at Star Rank 4; not collected in observed account",
+          "userRoster": "unknown"
+        },
+        "channel": "damage-received",
+        "combatLogConfirmed": false,
+        "conditional": true,
+        "conditions": [],
+        "confidence": "confirmed",
+        "currentlyAvailable": false,
+        "damageScope": "all",
+        "direction": "received",
+        "directlyVerified": true,
+        "dragonId": "crimson",
+        "evidenceIds": [
+          "crimson-dragons-intellect-2026-06-25"
+        ],
+        "futureAvailable": true,
+        "id": "crimson-dragons-intellect-dragons-intellect-damage-received-damage-received-received-modifier",
+        "label": "Dragon's Intellect: Damage Received Down",
+        "minimumDragonLevel": null,
+        "operation": "decrease",
+        "providerRequirements": [],
+        "rankedValues": [
+          {
+            "level": 1,
+            "unit": "percent",
+            "value": 6
+          },
+          {
+            "level": 2,
+            "unit": "percent",
+            "value": 7.2
+          },
+          {
+            "level": 3,
+            "unit": "percent",
+            "value": 8.4
+          },
+          {
+            "level": 4,
+            "unit": "percent",
+            "value": 10.2
+          },
+          {
+            "level": 5,
+            "unit": "percent",
+            "value": 12
+          }
+        ],
+        "recipientRequirements": [],
+        "requiredHabitLevel": 1,
+        "role": "self-amplification",
+        "sourceScope": "unknown",
+        "stackMaximum": null,
+        "targetSelector": {
+          "count": null,
+          "includesCaster": null,
+          "position": null,
+          "scope": "self",
+          "selection": "self",
+          "selectionStat": null,
+          "side": "self"
+        },
+        "unit": "percent",
+        "unlockStarRank": 4,
+        "value": null,
+        "valuePerStack": null
+      },
+      {
+        "abilityId": "crimson-dragons-intellect",
+        "abilityName": "Dragon's Intellect",
+        "availability": {
+          "canonical": "canonical-locked",
+          "notes": [
+            "Future at Star Rank 4.",
+            "Not collected in observed account."
+          ],
+          "observedAccount": "observed-unavailable",
+          "reportLabel": "Future at Star Rank 4; not collected in observed account",
+          "userRoster": "unknown"
+        },
+        "channel": "stat",
+        "combatLogConfirmed": false,
+        "conditional": true,
+        "conditions": [],
+        "confidence": "confirmed",
+        "currentlyAvailable": false,
+        "damageScope": null,
+        "direction": "dealt",
+        "directlyVerified": true,
+        "dragonId": "crimson",
+        "evidenceIds": [
+          "crimson-dragons-intellect-2026-06-25"
+        ],
+        "futureAvailable": true,
+        "id": "crimson-dragons-intellect-dragons-intellect-intelligence-stat-dealt-modifier",
+        "label": "Dragon's Intellect: Intelligence Up",
+        "minimumDragonLevel": null,
+        "operation": "increase",
+        "providerRequirements": [],
+        "rankedValues": [
+          {
+            "level": 1,
+            "unit": "percent",
+            "value": 12
+          },
+          {
+            "level": 2,
+            "unit": "percent",
+            "value": 14.4
+          },
+          {
+            "level": 3,
+            "unit": "percent",
+            "value": 16.8
+          },
+          {
+            "level": 4,
+            "unit": "percent",
+            "value": 20.4
+          },
+          {
+            "level": 5,
+            "unit": "percent",
+            "value": 24
+          }
+        ],
+        "recipientRequirements": [],
+        "requiredHabitLevel": 1,
+        "role": "self-amplification",
+        "sourceScope": "unknown",
+        "stackMaximum": null,
+        "targetSelector": {
+          "count": null,
+          "includesCaster": null,
+          "position": null,
+          "scope": "self",
+          "selection": "self",
+          "selectionStat": null,
+          "side": "self"
+        },
+        "unit": "percent",
+        "unlockStarRank": 4,
+        "value": null,
+        "valuePerStack": null
+      },
+      {
+        "abilityId": "kalspire-champions-brilliance",
+        "abilityName": "Champion's Brilliance",
+        "availability": {
+          "canonical": "canonical-base",
+          "notes": [
+            "Requires Dragon Level 16+.",
+            "Not hatched in observed account."
+          ],
+          "observedAccount": "observed-unavailable",
+          "reportLabel": "Base kit; Level 16+; not hatched in observed account",
+          "userRoster": "unknown"
+        },
+        "channel": "stat",
+        "combatLogConfirmed": false,
+        "conditional": false,
+        "conditions": [],
+        "confidence": "confirmed",
+        "currentlyAvailable": true,
+        "damageScope": null,
+        "direction": "dealt",
+        "directlyVerified": true,
+        "dragonId": "kalspire",
+        "evidenceIds": [
+          "kalspire-champions-brilliance-2026-06-25"
+        ],
+        "futureAvailable": false,
+        "id": "kalspire-champions-brilliance-champions-brilliance-strength-stat-dealt-modifier",
+        "label": "Champion's Brilliance: Strength Up",
+        "minimumDragonLevel": 16,
+        "operation": "increase",
+        "providerRequirements": [
+          {
+            "evidenceIds": [
+              "kalspire-champions-brilliance-2026-06-25"
+            ],
+            "expected": "vanguard",
+            "id": "kalspire-champions-brilliance-provider-position-vanguard",
+            "kind": "provider-position",
+            "label": "Provider position requirement"
+          }
+        ],
+        "rankedValues": [],
+        "recipientRequirements": [],
+        "requiredHabitLevel": null,
+        "role": "self-amplification",
+        "sourceScope": "unknown",
+        "stackMaximum": null,
+        "targetSelector": {
+          "count": null,
+          "includesCaster": null,
+          "position": null,
+          "scope": "self",
+          "selection": "self",
+          "selectionStat": null,
+          "side": "self"
+        },
+        "unit": "flat",
+        "unlockStarRank": 1,
+        "value": 15,
+        "valuePerStack": null
+      },
+      {
+        "abilityId": "kalspire-champions-brilliance",
+        "abilityName": "Champion's Brilliance",
+        "availability": {
+          "canonical": "canonical-base",
+          "notes": [
+            "Requires Dragon Level 16+.",
+            "Not hatched in observed account."
+          ],
+          "observedAccount": "observed-unavailable",
+          "reportLabel": "Base kit; Level 16+; not hatched in observed account",
+          "userRoster": "unknown"
+        },
+        "channel": "stat",
+        "combatLogConfirmed": false,
+        "conditional": false,
+        "conditions": [],
+        "confidence": "confirmed",
+        "currentlyAvailable": true,
+        "damageScope": null,
+        "direction": "dealt",
+        "directlyVerified": true,
+        "dragonId": "kalspire",
+        "evidenceIds": [
+          "kalspire-champions-brilliance-2026-06-25"
+        ],
+        "futureAvailable": false,
+        "id": "kalspire-champions-brilliance-champions-brilliance-intelligence-stat-dealt-modifier",
+        "label": "Champion's Brilliance: Intelligence Up",
+        "minimumDragonLevel": 16,
+        "operation": "increase",
+        "providerRequirements": [
+          {
+            "evidenceIds": [
+              "kalspire-champions-brilliance-2026-06-25"
+            ],
+            "expected": "vanguard",
+            "id": "kalspire-champions-brilliance-provider-position-vanguard",
+            "kind": "provider-position",
+            "label": "Provider position requirement"
+          }
+        ],
+        "rankedValues": [],
+        "recipientRequirements": [],
+        "requiredHabitLevel": null,
+        "role": "self-amplification",
+        "sourceScope": "unknown",
+        "stackMaximum": null,
+        "targetSelector": {
+          "count": null,
+          "includesCaster": null,
+          "position": null,
+          "scope": "self",
+          "selection": "self",
+          "selectionStat": null,
+          "side": "self"
+        },
+        "unit": "flat",
+        "unlockStarRank": 1,
+        "value": 15,
+        "valuePerStack": null
+      },
+      {
+        "abilityId": "kalspire-champions-brilliance",
+        "abilityName": "Champion's Brilliance",
+        "availability": {
+          "canonical": "canonical-base",
+          "notes": [
+            "Requires Dragon Level 16+.",
+            "Not hatched in observed account."
+          ],
+          "observedAccount": "observed-unavailable",
+          "reportLabel": "Base kit; Level 16+; not hatched in observed account",
+          "userRoster": "unknown"
+        },
+        "channel": "stat",
+        "combatLogConfirmed": false,
+        "conditional": false,
+        "conditions": [],
+        "confidence": "confirmed",
+        "currentlyAvailable": true,
+        "damageScope": null,
+        "direction": "dealt",
+        "directlyVerified": true,
+        "dragonId": "kalspire",
+        "evidenceIds": [
+          "kalspire-champions-brilliance-2026-06-25"
+        ],
+        "futureAvailable": false,
+        "id": "kalspire-champions-brilliance-champions-brilliance-instinct-stat-dealt-modifier",
+        "label": "Champion's Brilliance: Instinct Up",
+        "minimumDragonLevel": 16,
+        "operation": "increase",
+        "providerRequirements": [
+          {
+            "evidenceIds": [
+              "kalspire-champions-brilliance-2026-06-25"
+            ],
+            "expected": "vanguard",
+            "id": "kalspire-champions-brilliance-provider-position-vanguard",
+            "kind": "provider-position",
+            "label": "Provider position requirement"
+          }
+        ],
+        "rankedValues": [],
+        "recipientRequirements": [],
+        "requiredHabitLevel": null,
+        "role": "self-amplification",
+        "sourceScope": "unknown",
+        "stackMaximum": null,
+        "targetSelector": {
+          "count": null,
+          "includesCaster": null,
+          "position": null,
+          "scope": "self",
+          "selection": "self",
+          "selectionStat": null,
+          "side": "self"
+        },
+        "unit": "flat",
+        "unlockStarRank": 1,
+        "value": 15,
+        "valuePerStack": null
+      },
+      {
+        "abilityId": "kalspire-robust-insight",
+        "abilityName": "Robust Insight",
+        "availability": {
+          "canonical": "canonical-locked",
+          "notes": [
+            "Future at Star Rank 2.",
+            "Not hatched in observed account."
+          ],
+          "observedAccount": "observed-unavailable",
+          "reportLabel": "Future at Star Rank 2; not hatched in observed account",
+          "userRoster": "unknown"
+        },
+        "channel": "stat",
+        "combatLogConfirmed": false,
+        "conditional": true,
+        "conditions": [],
+        "confidence": "confirmed",
+        "currentlyAvailable": false,
+        "damageScope": null,
+        "direction": "dealt",
+        "directlyVerified": true,
+        "dragonId": "kalspire",
+        "evidenceIds": [
+          "kalspire-robust-insight-2026-06-25"
+        ],
+        "futureAvailable": true,
+        "id": "kalspire-robust-insight-robust-insight-strength-stat-dealt-modifier",
+        "label": "Robust Insight: Strength Up",
+        "minimumDragonLevel": null,
+        "operation": "increase",
+        "providerRequirements": [],
+        "rankedValues": [
+          {
+            "level": 1,
+            "unit": "percent",
+            "value": 20
+          },
+          {
+            "level": 2,
+            "unit": "percent",
+            "value": 24
+          },
+          {
+            "level": 3,
+            "unit": "percent",
+            "value": 28
+          },
+          {
+            "level": 4,
+            "unit": "percent",
+            "value": 34
+          },
+          {
+            "level": 5,
+            "unit": "percent",
+            "value": 40
+          }
+        ],
+        "recipientRequirements": [],
+        "requiredHabitLevel": 1,
+        "role": "self-amplification",
+        "sourceScope": "unknown",
+        "stackMaximum": null,
+        "targetSelector": {
+          "count": null,
+          "includesCaster": null,
+          "position": null,
+          "scope": "self",
+          "selection": "self",
+          "selectionStat": null,
+          "side": "self"
+        },
+        "unit": "percent",
+        "unlockStarRank": 2,
+        "value": null,
+        "valuePerStack": null
+      },
+      {
+        "abilityId": "kalspire-robust-insight",
+        "abilityName": "Robust Insight",
+        "availability": {
+          "canonical": "canonical-locked",
+          "notes": [
+            "Future at Star Rank 2.",
+            "Not hatched in observed account."
+          ],
+          "observedAccount": "observed-unavailable",
+          "reportLabel": "Future at Star Rank 2; not hatched in observed account",
+          "userRoster": "unknown"
+        },
+        "channel": "stat",
+        "combatLogConfirmed": false,
+        "conditional": true,
+        "conditions": [],
+        "confidence": "confirmed",
+        "currentlyAvailable": false,
+        "damageScope": null,
+        "direction": "dealt",
+        "directlyVerified": true,
+        "dragonId": "kalspire",
+        "evidenceIds": [
+          "kalspire-robust-insight-2026-06-25"
+        ],
+        "futureAvailable": true,
+        "id": "kalspire-robust-insight-robust-insight-instinct-stat-dealt-modifier",
+        "label": "Robust Insight: Instinct Up",
+        "minimumDragonLevel": null,
+        "operation": "increase",
+        "providerRequirements": [],
+        "rankedValues": [
+          {
+            "level": 1,
+            "unit": "percent",
+            "value": 20
+          },
+          {
+            "level": 2,
+            "unit": "percent",
+            "value": 24
+          },
+          {
+            "level": 3,
+            "unit": "percent",
+            "value": 28
+          },
+          {
+            "level": 4,
+            "unit": "percent",
+            "value": 34
+          },
+          {
+            "level": 5,
+            "unit": "percent",
+            "value": 40
+          }
+        ],
+        "recipientRequirements": [],
+        "requiredHabitLevel": 1,
+        "role": "self-amplification",
+        "sourceScope": "unknown",
+        "stackMaximum": null,
+        "targetSelector": {
+          "count": null,
+          "includesCaster": null,
+          "position": null,
+          "scope": "self",
+          "selection": "self",
+          "selectionStat": null,
+          "side": "self"
+        },
+        "unit": "percent",
+        "unlockStarRank": 2,
+        "value": null,
+        "valuePerStack": null
+      },
+      {
+        "abilityId": "kalspire-dragons-insight",
+        "abilityName": "Dragon's Insight",
+        "availability": {
+          "canonical": "canonical-locked",
+          "notes": [
+            "Future at Star Rank 8.",
+            "Not hatched in observed account."
+          ],
+          "observedAccount": "observed-unavailable",
+          "reportLabel": "Future at Star Rank 8; not hatched in observed account",
+          "userRoster": "unknown"
+        },
+        "channel": "damage-received",
+        "combatLogConfirmed": false,
+        "conditional": true,
+        "conditions": [],
+        "confidence": "confirmed",
+        "currentlyAvailable": false,
+        "damageScope": "all",
+        "direction": "received",
+        "directlyVerified": true,
+        "dragonId": "kalspire",
+        "evidenceIds": [
+          "kalspire-dragons-insight-2026-06-25"
+        ],
+        "futureAvailable": true,
+        "id": "kalspire-dragons-insight-dragons-insight-damage-received-damage-received-received-modifier",
+        "label": "Dragon's Insight: Damage Received Down",
+        "minimumDragonLevel": null,
+        "operation": "decrease",
+        "providerRequirements": [],
+        "rankedValues": [
+          {
+            "level": 1,
+            "unit": "percent",
+            "value": 6
+          },
+          {
+            "level": 2,
+            "unit": "percent",
+            "value": 7.2
+          },
+          {
+            "level": 3,
+            "unit": "percent",
+            "value": 8.4
+          },
+          {
+            "level": 4,
+            "unit": "percent",
+            "value": 10.2
+          },
+          {
+            "level": 5,
+            "unit": "percent",
+            "value": 12
+          }
+        ],
+        "recipientRequirements": [],
+        "requiredHabitLevel": 1,
+        "role": "self-amplification",
+        "sourceScope": "unknown",
+        "stackMaximum": null,
+        "targetSelector": {
+          "count": null,
+          "includesCaster": null,
+          "position": null,
+          "scope": "self",
+          "selection": "self",
+          "selectionStat": null,
+          "side": "self"
+        },
+        "unit": "percent",
+        "unlockStarRank": 8,
+        "value": null,
+        "valuePerStack": null
+      },
+      {
+        "abilityId": "kalspire-dragons-insight",
+        "abilityName": "Dragon's Insight",
+        "availability": {
+          "canonical": "canonical-locked",
+          "notes": [
+            "Future at Star Rank 8.",
+            "Not hatched in observed account."
+          ],
+          "observedAccount": "observed-unavailable",
+          "reportLabel": "Future at Star Rank 8; not hatched in observed account",
+          "userRoster": "unknown"
+        },
+        "channel": "stat",
+        "combatLogConfirmed": false,
+        "conditional": true,
+        "conditions": [],
+        "confidence": "confirmed",
+        "currentlyAvailable": false,
+        "damageScope": null,
+        "direction": "dealt",
+        "directlyVerified": true,
+        "dragonId": "kalspire",
+        "evidenceIds": [
+          "kalspire-dragons-insight-2026-06-25"
+        ],
+        "futureAvailable": true,
+        "id": "kalspire-dragons-insight-dragons-insight-instinct-stat-dealt-modifier",
+        "label": "Dragon's Insight: Instinct Up",
+        "minimumDragonLevel": null,
+        "operation": "increase",
+        "providerRequirements": [],
+        "rankedValues": [
+          {
+            "level": 1,
+            "unit": "percent",
+            "value": 12
+          },
+          {
+            "level": 2,
+            "unit": "percent",
+            "value": 14.4
+          },
+          {
+            "level": 3,
+            "unit": "percent",
+            "value": 16.8
+          },
+          {
+            "level": 4,
+            "unit": "percent",
+            "value": 20.4
+          },
+          {
+            "level": 5,
+            "unit": "percent",
+            "value": 24
+          }
+        ],
+        "recipientRequirements": [],
+        "requiredHabitLevel": 1,
+        "role": "self-amplification",
+        "sourceScope": "unknown",
+        "stackMaximum": null,
+        "targetSelector": {
+          "count": null,
+          "includesCaster": null,
+          "position": null,
+          "scope": "self",
+          "selection": "self",
+          "selectionStat": null,
+          "side": "self"
+        },
+        "unit": "percent",
+        "unlockStarRank": 8,
+        "value": null,
+        "valuePerStack": null
+      },
+      {
+        "abilityId": "kalspire-radiant-conqueror",
+        "abilityName": "Radiant Conqueror",
+        "availability": {
+          "canonical": "canonical-locked",
+          "notes": [
+            "Future at Star Rank 10.",
+            "Not hatched in observed account."
+          ],
+          "observedAccount": "observed-unavailable",
+          "reportLabel": "Future at Star Rank 10; not hatched in observed account",
+          "userRoster": "unknown"
+        },
+        "channel": "damage-received",
+        "combatLogConfirmed": false,
+        "conditional": true,
+        "conditions": [],
+        "confidence": "confirmed",
+        "currentlyAvailable": false,
+        "damageScope": "all",
+        "direction": "received",
+        "directlyVerified": true,
+        "dragonId": "kalspire",
+        "evidenceIds": [
+          "kalspire-radiant-conqueror-2026-06-25"
+        ],
+        "futureAvailable": true,
+        "id": "kalspire-radiant-conqueror-radiant-conqueror-damage-received-damage-received-received-modifier",
+        "label": "Radiant Conqueror: Damage Received Down",
+        "minimumDragonLevel": null,
+        "operation": "decrease",
+        "providerRequirements": [],
+        "rankedValues": [],
+        "recipientRequirements": [],
+        "requiredHabitLevel": 1,
+        "role": "self-amplification",
+        "sourceScope": "unknown",
+        "stackMaximum": null,
+        "targetSelector": {
+          "count": null,
+          "includesCaster": null,
+          "position": null,
+          "scope": "self",
+          "selection": "self",
+          "selectionStat": null,
+          "side": "self"
+        },
+        "unit": "percent",
+        "unlockStarRank": 10,
+        "value": 50,
+        "valuePerStack": null
+      },
+      {
         "abilityId": "malachite-sentinels-presence",
         "abilityName": "Sentinel's Presence",
         "availability": {
@@ -4794,6 +8136,146 @@
         "unit": "percent",
         "unlockStarRank": 4,
         "value": 20,
+        "valuePerStack": null
+      },
+      {
+        "abilityId": "venator-warriors-zeal",
+        "abilityName": "Warrior's Zeal",
+        "availability": {
+          "canonical": "canonical-base",
+          "notes": [
+            "Requires Dragon Level 16+.",
+            "Not collected in observed account."
+          ],
+          "observedAccount": "observed-unavailable",
+          "reportLabel": "Base kit; Level 16+; not collected in observed account",
+          "userRoster": "unknown"
+        },
+        "channel": "physical-damage",
+        "combatLogConfirmed": false,
+        "conditional": false,
+        "conditions": [],
+        "confidence": "confirmed",
+        "currentlyAvailable": true,
+        "damageScope": null,
+        "direction": "dealt",
+        "directlyVerified": true,
+        "dragonId": "venator",
+        "evidenceIds": [
+          "venator-warriors-zeal-2026-06-25"
+        ],
+        "futureAvailable": false,
+        "id": "venator-warriors-zeal-warriors-zeal-command-habit-physical-physical-damage-dealt-modifier",
+        "label": "Warrior's Zeal: Physical Damage Dealt Up",
+        "minimumDragonLevel": 16,
+        "operation": "increase",
+        "providerRequirements": [
+          {
+            "evidenceIds": [
+              "venator-warriors-zeal-2026-06-25"
+            ],
+            "expected": "vanguard",
+            "id": "venator-warriors-zeal-provider-position-vanguard",
+            "kind": "provider-position",
+            "label": "Provider position requirement"
+          }
+        ],
+        "rankedValues": [],
+        "recipientRequirements": [],
+        "requiredHabitLevel": null,
+        "role": "self-amplification",
+        "sourceScope": "commands-and-habits",
+        "stackMaximum": null,
+        "targetSelector": {
+          "count": null,
+          "includesCaster": null,
+          "position": null,
+          "scope": "self",
+          "selection": "self",
+          "selectionStat": null,
+          "side": "self"
+        },
+        "unit": "percent",
+        "unlockStarRank": 1,
+        "value": 16,
+        "valuePerStack": null
+      },
+      {
+        "abilityId": "venator-dragons-might",
+        "abilityName": "Dragon's Might",
+        "availability": {
+          "canonical": "canonical-locked",
+          "notes": [
+            "Future at Star Rank 4.",
+            "Not collected in observed account."
+          ],
+          "observedAccount": "observed-unavailable",
+          "reportLabel": "Future at Star Rank 4; not collected in observed account",
+          "userRoster": "unknown"
+        },
+        "channel": "physical-damage",
+        "combatLogConfirmed": false,
+        "conditional": true,
+        "conditions": [],
+        "confidence": "confirmed",
+        "currentlyAvailable": false,
+        "damageScope": null,
+        "direction": "dealt",
+        "directlyVerified": true,
+        "dragonId": "venator",
+        "evidenceIds": [
+          "venator-dragons-might-2026-06-25"
+        ],
+        "futureAvailable": true,
+        "id": "venator-dragons-might-dragons-might-physical-physical-damage-dealt-modifier",
+        "label": "Dragon's Might: Physical Damage Dealt Up",
+        "minimumDragonLevel": null,
+        "operation": "increase",
+        "providerRequirements": [],
+        "rankedValues": [
+          {
+            "level": 1,
+            "unit": "percent",
+            "value": 12.5
+          },
+          {
+            "level": 2,
+            "unit": "percent",
+            "value": 15
+          },
+          {
+            "level": 3,
+            "unit": "percent",
+            "value": 17.5
+          },
+          {
+            "level": 4,
+            "unit": "percent",
+            "value": 21.25
+          },
+          {
+            "level": 5,
+            "unit": "percent",
+            "value": 25
+          }
+        ],
+        "recipientRequirements": [],
+        "requiredHabitLevel": 1,
+        "role": "self-amplification",
+        "sourceScope": "non-basic-attacks",
+        "stackMaximum": null,
+        "targetSelector": {
+          "count": null,
+          "includesCaster": null,
+          "position": null,
+          "scope": "self",
+          "selection": "self",
+          "selectionStat": null,
+          "side": "self"
+        },
+        "unit": "percent",
+        "unlockStarRank": 4,
+        "value": null,
         "valuePerStack": null
       },
       {
@@ -5535,6 +9017,264 @@
         "untilEndOfRound": false
       },
       {
+        "abilityId": "vhagar-fiery-bonds",
+        "abilityName": "Fiery Bonds",
+        "availability": {
+          "canonical": "canonical-base",
+          "notes": [
+            "Not hatched in observed account."
+          ],
+          "observedAccount": "observed-unavailable",
+          "reportLabel": "Base kit; not hatched in observed account",
+          "userRoster": "unknown"
+        },
+        "chanceByHabitLevel": [],
+        "chanceFixed": 25,
+        "conditions": [
+          {
+            "description": "Taunt chance applies to three targets, but shared versus per-target roll scope is not stated.",
+            "evidenceIds": [],
+            "id": "fiery-bonds-taunt-activation-chance",
+            "label": "Taunt chance applies to three targets, but shared versus per-target roll scope is not stated.",
+            "unresolved": false
+          },
+          {
+            "description": "Chance is doubled against a Burned target.",
+            "evidenceIds": [],
+            "id": "fiery-bonds-burn-double",
+            "label": "Chance is doubled against a Burned target.",
+            "unresolved": false
+          }
+        ],
+        "currentlyAvailable": true,
+        "directlyVerified": true,
+        "dragonId": "vhagar",
+        "durationRounds": 2,
+        "evidenceIds": [
+          "vhagar-fiery-bonds-summary-2026-06-25"
+        ],
+        "futureAvailable": false,
+        "id": "vhagar-fiery-bonds-fiery-bonds-taunt-taunt-status-output",
+        "minimumDragonLevel": null,
+        "requiredHabitLevel": null,
+        "statusId": "taunt",
+        "targetSelector": {
+          "count": 3,
+          "includesCaster": null,
+          "position": null,
+          "scope": "any-lane",
+          "selection": "any",
+          "selectionStat": null,
+          "side": "enemy"
+        },
+        "targetSide": "enemy",
+        "unlockStarRank": null,
+        "untilEndOfCombat": false,
+        "untilEndOfRound": false
+      },
+      {
+        "abilityId": "vhagar-eclipse-cover",
+        "abilityName": "Eclipse Cover",
+        "availability": {
+          "canonical": "canonical-locked",
+          "notes": [
+            "Future at Star Rank 6.",
+            "Not hatched in observed account."
+          ],
+          "observedAccount": "observed-unavailable",
+          "reportLabel": "Future at Star Rank 6; not hatched in observed account",
+          "userRoster": "unknown"
+        },
+        "chanceByHabitLevel": [
+          {
+            "level": 1,
+            "unit": "percent",
+            "value": 17.5
+          },
+          {
+            "level": 2,
+            "unit": "percent",
+            "value": 21
+          },
+          {
+            "level": 3,
+            "unit": "percent",
+            "value": 24.5
+          },
+          {
+            "level": 4,
+            "unit": "percent",
+            "value": 29.8
+          },
+          {
+            "level": 5,
+            "unit": "percent",
+            "value": 35
+          }
+        ],
+        "chanceFixed": null,
+        "conditions": [
+          {
+            "description": "One shared activation roll applies both effects.",
+            "evidenceIds": [],
+            "id": "eclipse-cover-rounds-3-7-activation-chance",
+            "label": "One shared activation roll applies both effects.",
+            "unresolved": false
+          }
+        ],
+        "currentlyAvailable": false,
+        "directlyVerified": true,
+        "dragonId": "vhagar",
+        "durationRounds": 2,
+        "evidenceIds": [
+          "vhagar-eclipse-cover-2026-06-25"
+        ],
+        "futureAvailable": true,
+        "id": "vhagar-eclipse-cover-eclipse-cover-advantage-advantage-status-output",
+        "minimumDragonLevel": null,
+        "requiredHabitLevel": 1,
+        "statusId": "advantage",
+        "targetSelector": {
+          "count": 1,
+          "includesCaster": null,
+          "position": null,
+          "scope": "any-lane",
+          "selection": "highest-stat",
+          "selectionStat": null,
+          "side": "ally"
+        },
+        "targetSide": "ally",
+        "unlockStarRank": 6,
+        "untilEndOfCombat": false,
+        "untilEndOfRound": false
+      },
+      {
+        "abilityId": "vhagar-eclipse-cover",
+        "abilityName": "Eclipse Cover",
+        "availability": {
+          "canonical": "canonical-locked",
+          "notes": [
+            "Future at Star Rank 6.",
+            "Not hatched in observed account."
+          ],
+          "observedAccount": "observed-unavailable",
+          "reportLabel": "Future at Star Rank 6; not hatched in observed account",
+          "userRoster": "unknown"
+        },
+        "chanceByHabitLevel": [
+          {
+            "level": 1,
+            "unit": "percent",
+            "value": 17.5
+          },
+          {
+            "level": 2,
+            "unit": "percent",
+            "value": 21
+          },
+          {
+            "level": 3,
+            "unit": "percent",
+            "value": 24.5
+          },
+          {
+            "level": 4,
+            "unit": "percent",
+            "value": 29.8
+          },
+          {
+            "level": 5,
+            "unit": "percent",
+            "value": 35
+          }
+        ],
+        "chanceFixed": null,
+        "conditions": [
+          {
+            "description": "One shared activation roll applies both effects.",
+            "evidenceIds": [],
+            "id": "eclipse-cover-rounds-3-7-activation-chance",
+            "label": "One shared activation roll applies both effects.",
+            "unresolved": false
+          }
+        ],
+        "currentlyAvailable": false,
+        "directlyVerified": true,
+        "dragonId": "vhagar",
+        "durationRounds": 2,
+        "evidenceIds": [
+          "vhagar-eclipse-cover-2026-06-25"
+        ],
+        "futureAvailable": true,
+        "id": "vhagar-eclipse-cover-eclipse-cover-weakened-weakened-status-output",
+        "minimumDragonLevel": null,
+        "requiredHabitLevel": 1,
+        "statusId": "weakened",
+        "targetSelector": {
+          "count": 1,
+          "includesCaster": null,
+          "position": null,
+          "scope": "any-lane",
+          "selection": "highest-stat",
+          "selectionStat": null,
+          "side": "enemy"
+        },
+        "targetSide": "enemy",
+        "unlockStarRank": 6,
+        "untilEndOfCombat": false,
+        "untilEndOfRound": false
+      },
+      {
+        "abilityId": "vhagar-skyward-titan",
+        "abilityName": "Skyward Titan",
+        "availability": {
+          "canonical": "canonical-locked",
+          "notes": [
+            "Future at Star Rank 10.",
+            "Not hatched in observed account."
+          ],
+          "observedAccount": "observed-unavailable",
+          "reportLabel": "Future at Star Rank 10; not hatched in observed account",
+          "userRoster": "unknown"
+        },
+        "chanceByHabitLevel": [],
+        "chanceFixed": 30,
+        "conditions": [
+          {
+            "description": "One chance to gain a Bulwark stack each round.",
+            "evidenceIds": [],
+            "id": "skyward-titan-bulwark-activation-chance",
+            "label": "One chance to gain a Bulwark stack each round.",
+            "unresolved": false
+          }
+        ],
+        "currentlyAvailable": false,
+        "directlyVerified": true,
+        "dragonId": "vhagar",
+        "durationRounds": null,
+        "evidenceIds": [
+          "vhagar-skyward-titan-2026-06-25"
+        ],
+        "futureAvailable": true,
+        "id": "vhagar-skyward-titan-skyward-titan-bulwark-stack-bulwark-status-output",
+        "minimumDragonLevel": null,
+        "requiredHabitLevel": 1,
+        "statusId": "bulwark",
+        "targetSelector": {
+          "count": null,
+          "includesCaster": null,
+          "position": null,
+          "scope": "self",
+          "selection": "self",
+          "selectionStat": null,
+          "side": "self"
+        },
+        "targetSide": "self",
+        "unlockStarRank": 10,
+        "untilEndOfCombat": true,
+        "untilEndOfRound": false
+      },
+      {
         "abilityId": "caraxes-crippling-inferno",
         "abilityName": "Crippling Inferno",
         "availability": {
@@ -5861,6 +9601,289 @@
         "untilEndOfRound": false
       },
       {
+        "abilityId": "crimson-bloodscale-terror",
+        "abilityName": "Bloodscale Terror",
+        "availability": {
+          "canonical": "canonical-base",
+          "notes": [
+            "Not collected in observed account."
+          ],
+          "observedAccount": "observed-unavailable",
+          "reportLabel": "Base kit; not collected in observed account",
+          "userRoster": "unknown"
+        },
+        "chanceByHabitLevel": [],
+        "chanceFixed": 20,
+        "conditions": [
+          {
+            "description": "One fixed Stun chance on odd-numbered rounds.",
+            "evidenceIds": [],
+            "id": "bloodscale-terror-stun-odd-activation-chance",
+            "label": "One fixed Stun chance on odd-numbered rounds.",
+            "unresolved": false
+          }
+        ],
+        "currentlyAvailable": true,
+        "directlyVerified": true,
+        "dragonId": "crimson",
+        "durationRounds": 2,
+        "evidenceIds": [
+          "crimson-bloodscale-terror-summary-2026-06-25"
+        ],
+        "futureAvailable": false,
+        "id": "crimson-bloodscale-terror-bloodscale-terror-stun-stun-status-output",
+        "minimumDragonLevel": null,
+        "requiredHabitLevel": null,
+        "statusId": "stun",
+        "targetSelector": {
+          "count": 1,
+          "includesCaster": null,
+          "position": null,
+          "scope": "any-lane",
+          "selection": "any",
+          "selectionStat": null,
+          "side": "enemy"
+        },
+        "targetSide": "enemy",
+        "unlockStarRank": null,
+        "untilEndOfCombat": false,
+        "untilEndOfRound": false
+      },
+      {
+        "abilityId": "crimson-bloodscale-fury",
+        "abilityName": "Bloodscale Fury",
+        "availability": {
+          "canonical": "canonical-locked",
+          "notes": [
+            "Future at Star Rank 6.",
+            "Not collected in observed account."
+          ],
+          "observedAccount": "observed-unavailable",
+          "reportLabel": "Future at Star Rank 6; not collected in observed account",
+          "userRoster": "unknown"
+        },
+        "chanceByHabitLevel": [
+          {
+            "level": 1,
+            "unit": "percent",
+            "value": 17.5
+          },
+          {
+            "level": 2,
+            "unit": "percent",
+            "value": 21
+          },
+          {
+            "level": 3,
+            "unit": "percent",
+            "value": 24.5
+          },
+          {
+            "level": 4,
+            "unit": "percent",
+            "value": 29.75
+          },
+          {
+            "level": 5,
+            "unit": "percent",
+            "value": 35
+          }
+        ],
+        "chanceFixed": null,
+        "conditions": [
+          {
+            "description": "Effect-level Weakened chance.",
+            "evidenceIds": [],
+            "id": "bloodscale-fury-each-round-activation-chance",
+            "label": "Effect-level Weakened chance.",
+            "unresolved": false
+          },
+          {
+            "description": "Chance is doubled against a Taunted target.",
+            "evidenceIds": [],
+            "id": "bloodscale-fury-taunt-double",
+            "label": "Chance is doubled against a Taunted target.",
+            "unresolved": false
+          }
+        ],
+        "currentlyAvailable": false,
+        "directlyVerified": true,
+        "dragonId": "crimson",
+        "durationRounds": 2,
+        "evidenceIds": [
+          "crimson-bloodscale-fury-2026-06-25"
+        ],
+        "futureAvailable": true,
+        "id": "crimson-bloodscale-fury-bloodscale-fury-weakened-weakened-status-output",
+        "minimumDragonLevel": null,
+        "requiredHabitLevel": 1,
+        "statusId": "weakened",
+        "targetSelector": {
+          "count": 1,
+          "includesCaster": null,
+          "position": null,
+          "scope": "any-lane",
+          "selection": "any",
+          "selectionStat": null,
+          "side": "enemy"
+        },
+        "targetSide": "enemy",
+        "unlockStarRank": 6,
+        "untilEndOfCombat": false,
+        "untilEndOfRound": false
+      },
+      {
+        "abilityId": "kalspire-tactical-strike",
+        "abilityName": "Tactical Strike",
+        "availability": {
+          "canonical": "canonical-base",
+          "notes": [
+            "Not hatched in observed account."
+          ],
+          "observedAccount": "observed-unavailable",
+          "reportLabel": "Base kit; not hatched in observed account",
+          "userRoster": "unknown"
+        },
+        "chanceByHabitLevel": [],
+        "chanceFixed": 30,
+        "conditions": [],
+        "currentlyAvailable": true,
+        "directlyVerified": true,
+        "dragonId": "kalspire",
+        "durationRounds": 2,
+        "evidenceIds": [
+          "kalspire-tactical-strike-summary-2026-06-25"
+        ],
+        "futureAvailable": false,
+        "id": "kalspire-tactical-strike-tactical-strike-bleed-bleed-status-output",
+        "minimumDragonLevel": null,
+        "requiredHabitLevel": null,
+        "statusId": "bleed",
+        "targetSelector": {
+          "count": 1,
+          "includesCaster": null,
+          "position": null,
+          "scope": "within-adjacency",
+          "selection": "one-eligible-adjacent",
+          "selectionStat": null,
+          "side": "enemy"
+        },
+        "targetSide": "enemy",
+        "unlockStarRank": null,
+        "untilEndOfCombat": false,
+        "untilEndOfRound": false
+      },
+      {
+        "abilityId": "kalspire-tactical-assault",
+        "abilityName": "Tactical Assault",
+        "availability": {
+          "canonical": "canonical-locked",
+          "notes": [
+            "Future at Star Rank 6.",
+            "Not hatched in observed account."
+          ],
+          "observedAccount": "observed-unavailable",
+          "reportLabel": "Future at Star Rank 6; not hatched in observed account",
+          "userRoster": "unknown"
+        },
+        "chanceByHabitLevel": [
+          {
+            "level": 1,
+            "unit": "percent",
+            "value": 15
+          },
+          {
+            "level": 2,
+            "unit": "percent",
+            "value": 18
+          },
+          {
+            "level": 3,
+            "unit": "percent",
+            "value": 21
+          },
+          {
+            "level": 4,
+            "unit": "percent",
+            "value": 25.5
+          },
+          {
+            "level": 5,
+            "unit": "percent",
+            "value": 30
+          }
+        ],
+        "chanceFixed": null,
+        "conditions": [],
+        "currentlyAvailable": false,
+        "directlyVerified": true,
+        "dragonId": "kalspire",
+        "durationRounds": 2,
+        "evidenceIds": [
+          "kalspire-tactical-assault-2026-06-25"
+        ],
+        "futureAvailable": true,
+        "id": "kalspire-tactical-assault-tactical-assault-panic-panic-status-output",
+        "minimumDragonLevel": null,
+        "requiredHabitLevel": 1,
+        "statusId": "panic",
+        "targetSelector": {
+          "count": 1,
+          "includesCaster": null,
+          "position": null,
+          "scope": "within-adjacency",
+          "selection": "one-eligible-adjacent",
+          "selectionStat": null,
+          "side": "enemy"
+        },
+        "targetSide": "enemy",
+        "unlockStarRank": 6,
+        "untilEndOfCombat": false,
+        "untilEndOfRound": false
+      },
+      {
+        "abilityId": "kalspire-radiant-conqueror",
+        "abilityName": "Radiant Conqueror",
+        "availability": {
+          "canonical": "canonical-locked",
+          "notes": [
+            "Future at Star Rank 10.",
+            "Not hatched in observed account."
+          ],
+          "observedAccount": "observed-unavailable",
+          "reportLabel": "Future at Star Rank 10; not hatched in observed account",
+          "userRoster": "unknown"
+        },
+        "chanceByHabitLevel": [],
+        "chanceFixed": null,
+        "conditions": [],
+        "currentlyAvailable": false,
+        "directlyVerified": true,
+        "dragonId": "kalspire",
+        "durationRounds": 1,
+        "evidenceIds": [
+          "kalspire-radiant-conqueror-2026-06-25"
+        ],
+        "futureAvailable": true,
+        "id": "kalspire-radiant-conqueror-radiant-conqueror-self-stun-stun-status-output",
+        "minimumDragonLevel": null,
+        "requiredHabitLevel": 1,
+        "statusId": "stun",
+        "targetSelector": {
+          "count": null,
+          "includesCaster": null,
+          "position": null,
+          "scope": "self",
+          "selection": "self",
+          "selectionStat": null,
+          "side": "self"
+        },
+        "targetSide": "self",
+        "unlockStarRank": 10,
+        "untilEndOfCombat": false,
+        "untilEndOfRound": false
+      },
+      {
         "abilityId": "malachite-thunderous-roar",
         "abilityName": "Thunderous Roar",
         "availability": {
@@ -6004,6 +10027,211 @@
           "position": null,
           "scope": "within-adjacency",
           "selection": "one-eligible-adjacent",
+          "selectionStat": null,
+          "side": "ally"
+        },
+        "targetSide": "ally",
+        "unlockStarRank": 10,
+        "untilEndOfCombat": false,
+        "untilEndOfRound": false
+      },
+      {
+        "abilityId": "malachite-lightning-strike",
+        "abilityName": "Lightning Strike",
+        "availability": {
+          "canonical": "canonical-locked",
+          "notes": [
+            "Future at Star Rank 10.",
+            "Unlocked in observed account collection state, subject to level and star requirements."
+          ],
+          "observedAccount": "observed-available",
+          "reportLabel": "Future at Star Rank 10; observed account hatched",
+          "userRoster": "unknown"
+        },
+        "chanceByHabitLevel": [
+          {
+            "level": 1,
+            "unit": "percent",
+            "value": 40
+          },
+          {
+            "level": 2,
+            "unit": "percent",
+            "value": 52
+          },
+          {
+            "level": 3,
+            "unit": "percent",
+            "value": 64
+          },
+          {
+            "level": 4,
+            "unit": "percent",
+            "value": 80
+          },
+          {
+            "level": 5,
+            "unit": "percent",
+            "value": 100
+          }
+        ],
+        "chanceFixed": null,
+        "conditions": [
+          {
+            "description": "Activation chance depends on Habit Level for start of round.",
+            "evidenceIds": [],
+            "id": "lightning-strike-round-one-activation-chance",
+            "label": "Activation chance depends on Habit Level for start of round.",
+            "unresolved": false
+          }
+        ],
+        "currentlyAvailable": false,
+        "directlyVerified": true,
+        "dragonId": "malachite",
+        "durationRounds": 3,
+        "evidenceIds": [
+          "malachite-lightning-strike-2026-06-23"
+        ],
+        "futureAvailable": true,
+        "id": "malachite-lightning-strike-lightning-strike-double-strike-double-strike-status-output",
+        "minimumDragonLevel": null,
+        "requiredHabitLevel": 1,
+        "statusId": "double-strike",
+        "targetSelector": {
+          "count": 1,
+          "includesCaster": false,
+          "position": null,
+          "scope": "within-adjacency",
+          "selection": "one-eligible-adjacent",
+          "selectionStat": null,
+          "side": "ally"
+        },
+        "targetSide": "ally",
+        "unlockStarRank": 10,
+        "untilEndOfCombat": false,
+        "untilEndOfRound": false
+      },
+      {
+        "abilityId": "venator-feral-strike",
+        "abilityName": "Feral Strike",
+        "availability": {
+          "canonical": "canonical-base",
+          "notes": [
+            "Not collected in observed account."
+          ],
+          "observedAccount": "observed-unavailable",
+          "reportLabel": "Base kit; not collected in observed account",
+          "userRoster": "unknown"
+        },
+        "chanceByHabitLevel": [],
+        "chanceFixed": 30,
+        "conditions": [
+          {
+            "description": "One base Double-Strike chance on rounds 4, 6, and 8.",
+            "evidenceIds": [],
+            "id": "feral-strike-double-strike-rounds-activation-chance",
+            "label": "One base Double-Strike chance on rounds 4, 6, and 8.",
+            "unresolved": false
+          }
+        ],
+        "currentlyAvailable": true,
+        "directlyVerified": true,
+        "dragonId": "venator",
+        "durationRounds": 2,
+        "evidenceIds": [
+          "venator-feral-strike-summary-2026-06-25"
+        ],
+        "futureAvailable": false,
+        "id": "venator-feral-strike-feral-strike-double-strike-double-strike-status-output",
+        "minimumDragonLevel": null,
+        "requiredHabitLevel": null,
+        "statusId": "double-strike",
+        "targetSelector": {
+          "count": null,
+          "includesCaster": null,
+          "position": null,
+          "scope": "self",
+          "selection": "self",
+          "selectionStat": null,
+          "side": "self"
+        },
+        "targetSide": "self",
+        "unlockStarRank": null,
+        "untilEndOfCombat": false,
+        "untilEndOfRound": false
+      },
+      {
+        "abilityId": "venator-desperate-ambush",
+        "abilityName": "Desperate Ambush",
+        "availability": {
+          "canonical": "canonical-locked",
+          "notes": [
+            "Future at Star Rank 10.",
+            "Not collected in observed account."
+          ],
+          "observedAccount": "observed-unavailable",
+          "reportLabel": "Future at Star Rank 10; not collected in observed account",
+          "userRoster": "unknown"
+        },
+        "chanceByHabitLevel": [
+          {
+            "level": 1,
+            "unit": "percent",
+            "value": 12
+          },
+          {
+            "level": 2,
+            "unit": "percent",
+            "value": 15.6
+          },
+          {
+            "level": 3,
+            "unit": "percent",
+            "value": 19.2
+          },
+          {
+            "level": 4,
+            "unit": "percent",
+            "value": 24
+          },
+          {
+            "level": 5,
+            "unit": "percent",
+            "value": 30
+          }
+        ],
+        "chanceFixed": null,
+        "conditions": [
+          {
+            "comparison": "below",
+            "description": "Venator is strictly below 50% Troop Capacity.",
+            "evidenceIds": [],
+            "id": "self-strictly-below-50-troops",
+            "kind": "target-below-troop-capacity-threshold",
+            "label": "Venator is strictly below 50% Troop Capacity.",
+            "subject": "self",
+            "thresholdPercent": 50,
+            "unresolved": false
+          }
+        ],
+        "currentlyAvailable": false,
+        "directlyVerified": true,
+        "dragonId": "venator",
+        "durationRounds": 2,
+        "evidenceIds": [
+          "venator-desperate-ambush-2026-06-25"
+        ],
+        "futureAvailable": true,
+        "id": "venator-desperate-ambush-desperate-ambush-overwhelm-overwhelm-status-output",
+        "minimumDragonLevel": null,
+        "requiredHabitLevel": 1,
+        "statusId": "overwhelm",
+        "targetSelector": {
+          "count": null,
+          "includesCaster": null,
+          "position": null,
+          "scope": "any-lane",
+          "selection": "any",
           "selectionStat": null,
           "side": "ally"
         },
@@ -6510,6 +10738,45 @@
       ]
     },
     {
+      "dragonId": "vhagar",
+      "incomingAmplifierChannels": [
+        {
+          "channel": "recovery",
+          "modifierCapabilityIds": [
+            "vhagar-ancestral-shield-ancestral-shield-recovery-received-recovery-received-modifier"
+          ]
+        }
+      ],
+      "outgoingBuffChannels": [
+        {
+          "channel": "tactical-damage",
+          "modifierCapabilityIds": [
+            "vhagar-warriors-resilience-warriors-resilience-left-tactical-tactical-damage-dealt-modifier"
+          ]
+        },
+        {
+          "channel": "physical-damage",
+          "modifierCapabilityIds": [
+            "vhagar-battle-leader-battle-leader-physical-physical-damage-dealt-modifier"
+          ]
+        }
+      ],
+      "primaryDamageChannel": "physical-damage",
+      "primaryDamageChannelBasis": "derived",
+      "producedChannels": [
+        {
+          "capabilityIds": [
+            "vhagar-fiery-bonds-fiery-bonds-physical-damage-output",
+            "vhagar-skyward-titan-skyward-titan-third-stack-damage-output"
+          ],
+          "channel": "physical-damage",
+          "confidence": "confirmed",
+          "currentlyAvailable": true,
+          "futureAvailable": true
+        }
+      ]
+    },
+    {
       "dragonId": "caraxes",
       "incomingAmplifierChannels": [],
       "outgoingBuffChannels": [
@@ -6589,6 +10856,65 @@
       ]
     },
     {
+      "dragonId": "crimson",
+      "incomingAmplifierChannels": [
+        {
+          "channel": "recovery",
+          "modifierCapabilityIds": [
+            "crimson-hunters-cunning-hunters-cunning-recovery-recovery-received-modifier"
+          ]
+        }
+      ],
+      "outgoingBuffChannels": [
+        {
+          "channel": "physical-damage",
+          "modifierCapabilityIds": [
+            "crimson-hunters-cunning-hunters-cunning-right-physical-physical-damage-dealt-modifier"
+          ]
+        }
+      ],
+      "primaryDamageChannel": "fire-damage",
+      "primaryDamageChannelBasis": "derived",
+      "producedChannels": [
+        {
+          "capabilityIds": [
+            "crimson-bloodscale-terror-bloodscale-terror-fire-damage-output"
+          ],
+          "channel": "fire-damage",
+          "confidence": "confirmed",
+          "currentlyAvailable": true,
+          "futureAvailable": false
+        }
+      ]
+    },
+    {
+      "dragonId": "kalspire",
+      "incomingAmplifierChannels": [],
+      "outgoingBuffChannels": [],
+      "primaryDamageChannel": "tactical-damage",
+      "primaryDamageChannelBasis": "derived",
+      "producedChannels": [
+        {
+          "capabilityIds": [
+            "kalspire-tactical-strike-tactical-strike-tactical-damage-output"
+          ],
+          "channel": "tactical-damage",
+          "confidence": "confirmed",
+          "currentlyAvailable": true,
+          "futureAvailable": false
+        },
+        {
+          "capabilityIds": [
+            "kalspire-tactical-assault-tactical-assault-physical-damage-output"
+          ],
+          "channel": "physical-damage",
+          "confidence": "confirmed",
+          "currentlyAvailable": false,
+          "futureAvailable": true
+        }
+      ]
+    },
+    {
       "dragonId": "malachite",
       "incomingAmplifierChannels": [],
       "outgoingBuffChannels": [
@@ -6632,6 +10958,34 @@
           "confidence": "confirmed",
           "currentlyAvailable": true,
           "futureAvailable": false
+        }
+      ]
+    },
+    {
+      "dragonId": "venator",
+      "incomingAmplifierChannels": [],
+      "outgoingBuffChannels": [
+        {
+          "channel": "stat",
+          "modifierCapabilityIds": [
+            "venator-warriors-zeal-warriors-zeal-left-instinct-stat-dealt-modifier",
+            "venator-warriors-zeal-warriors-zeal-left-initiative-stat-dealt-modifier"
+          ]
+        }
+      ],
+      "primaryDamageChannel": "physical-damage",
+      "primaryDamageChannelBasis": "derived",
+      "producedChannels": [
+        {
+          "capabilityIds": [
+            "venator-feral-strike-feral-strike-physical-instances-output",
+            "venator-feral-precision-feral-precision-additional-physical-output",
+            "venator-desperate-ambush-desperate-ambush-physical-output"
+          ],
+          "channel": "physical-damage",
+          "confidence": "confirmed",
+          "currentlyAvailable": true,
+          "futureAvailable": true
         }
       ]
     },
@@ -6735,6 +11089,7 @@
     "stat-scaling-support",
     "enemy-mitigation-reduction",
     "periodic-damage-amplification",
+    "status-removal",
     "defensive-ally-support"
   ],
   "modifierCapabilityStructure": [
@@ -7146,6 +11501,9 @@
     "highest-stat",
     "one-eligible-adjacent",
     "all-matching-condition",
+    "opposing-position",
+    "shared-target-group",
+    "prior-target-reference",
     "unknown"
   ],
   "traceStatuses": [

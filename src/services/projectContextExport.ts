@@ -22,7 +22,7 @@ import { analyzeFormationTraces, phase381ReviewFormations } from './synergyTrace
 
 export const projectContextFormat = 'dragonfire-lab-project-context' as const;
 export const contextVersion = 1;
-export const populatedDragonIds = ['malachite', 'seasmoke', 'sheepstealer', 'vermax', 'syrax', 'caraxes'] as const;
+export const populatedDragonIds = ['syrax', 'vhagar', 'caraxes', 'seasmoke', 'crimson', 'kalspire', 'malachite', 'venator', 'sheepstealer', 'vermax'] as const;
 
 export interface ProjectContextBuildOptions {
   generatedAt: string;
@@ -450,7 +450,7 @@ function buildCapabilityFramework(
       'evidenceIds',
     ],
     defensiveDamageScopes: ['all', 'physical', 'tactical', 'fire'],
-    targetSelectionModes: ['self', 'specific-position', 'any', 'adjacent', 'eligible', 'highest-stat', 'one-eligible-adjacent', 'all-matching-condition', 'unknown'],
+    targetSelectionModes: ['self', 'specific-position', 'any', 'adjacent', 'eligible', 'highest-stat', 'one-eligible-adjacent', 'all-matching-condition', 'opposing-position', 'shared-target-group', 'prior-target-reference', 'unknown'],
     interactionScopes: ['cross-dragon', 'internal', 'enemy-side', 'targeting-fact'],
     modifierRoles: ['self-amplification', 'ally-support', 'recipient-side-amplification', 'enemy-debuff'],
     availabilityModel: {
@@ -465,6 +465,7 @@ function buildCapabilityFramework(
       'stat-scaling-support',
       'enemy-mitigation-reduction',
       'periodic-damage-amplification',
+      'status-removal',
       'defensive-ally-support',
     ],
     sourceScopeCompatibilityRules: [
@@ -670,12 +671,13 @@ function buildProjectState(
       'Version 0.5.4 normal unmet requirement summary repair',
       'Version 0.5.5 formation card analysis presentation redesign',
       'Version 0.5.6 formation card layout polish',
+      'Version 0.6.0 legendary dragon schema hardening',
     ],
-    currentReviewPhase: 'Formation card layout polish validation and project-context regeneration.',
+    currentReviewPhase: 'Legendary dragon schema hardening validation and project-context regeneration.',
     plannedNextPhase: [
       'full formation-output review',
       'additional visual QA',
-      'then additional dragons',
+      'then non-Legendary dragon batches',
     ],
     unresolvedMechanicsCount: unresolvedMechanics.length,
   };
@@ -740,6 +742,10 @@ function buildUnresolvedMechanics() {
     ['global-stack-refresh-expiration', 'Stack refresh and expiration behavior remains unresolved.'],
     ['global-enemy-formation-adjacency', 'Enemy-formation adjacency is not confirmed.'],
     ['global-threshold-boundaries', 'Exact threshold boundary behavior such as exactly 50% remains unconfirmed.'],
+    ['global-extra-basic-attack-trigger-chaining', 'Double-Strike and other extra-Basic-Attack trigger chaining remain unresolved.'],
+    ['global-periodic-status-timing-refresh-overlap', 'Periodic status first-tick, refresh, stacking, and overlapping-source behavior remain unresolved.'],
+    ['global-enhanced-by-stat-formulas', 'Exact enhanced-by-stat formulas remain unresolved.'],
+    ['global-dynamic-selector-tie-breaking', 'Tie-breaking for dynamic stat and troop selectors remains unresolved.'],
     ['global-numerical-score-policy', 'No numerical synergy score is generated until formulas are verified.'],
   ] as const;
   for (const [stableId, description] of globalMechanics) {
@@ -1022,7 +1028,7 @@ Run \`npm run validate:context\` after generation. The validator checks schema c
 
 ## Formation Normalization
 
-Data schema 9 exports defensive damage scope, threshold conditions separate from target count, highest-stat and one-adjacent target selectors, grouped modifier capability IDs, requirement ownership, source-ability identity, and interaction scope. Normal unmet requirements are presentation summaries only: they are pure per-formation/per-preview results, hide blockers owned by visible cards, dedupe by semantic identity, and apply hard-failure precedence. Internal same-dragon traces and suppressed normal blockers remain exported for audit even when normal Formation Analysis excludes them from cross-dragon synergy sections.
+Data schema 10 exports defensive damage scope, threshold conditions separate from target count, generalized round selectors, activation roll scopes, augmentation schedule overrides, target references, repeated independently targeted instances, stack transition triggers, highest-stat/troop candidate groups, opposing-position targeting, grouped modifier capability IDs, requirement ownership, source-ability identity, and interaction scope. Normal unmet requirements are presentation summaries only: they are pure per-formation/per-preview results, hide blockers owned by visible cards, dedupe by semantic identity, and apply hard-failure precedence. Internal same-dragon traces and suppressed normal blockers remain exported for audit even when normal Formation Analysis excludes them from cross-dragon synergy sections.
 
 ## Formation Card Presentation
 

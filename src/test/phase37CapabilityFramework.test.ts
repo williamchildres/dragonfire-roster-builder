@@ -181,9 +181,13 @@ describe('Phase 3.7 report support', () => {
 
     expect(matrix.map((row) => row.Dragon)).toEqual([
       'Syrax',
+      'Vhagar',
       'Caraxes',
       'Seasmoke',
+      'Crimson',
+      'Kalspire',
       'Malachite',
+      'Venator',
       'Sheepstealer',
       'Vermax',
     ]);

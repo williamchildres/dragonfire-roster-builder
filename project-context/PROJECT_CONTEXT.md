@@ -15,8 +15,8 @@ Dragonfire Roster Lab records verified dragon roster data, combat mechanics, syn
 
 ## Versions
 
-- Database: 0.5.6
-- Data schema: 9
+- Database: 0.6.0
+- Data schema: 10
 - Local roster schema: 3
 - Game build: 26.6.53509
 - Context export: 1
@@ -31,12 +31,16 @@ Formation Builder cards are the primary normal UI for dragon-specific benefits. 
 
 ## Populated Dragons
 
-- Malachite
+- Syrax
+- Vhagar
+- Caraxes
 - Seasmoke
+- Crimson
+- Kalspire
+- Malachite
+- Venator
 - Sheepstealer
 - Vermax
-- Syrax
-- Caraxes
 
 All other known dragons remain metadata-only unless their typed source records contain verified combat data.
 
@@ -69,29 +73,29 @@ The framework derives output capabilities, modifier capabilities, status outputs
 - caraxes-blood-wyrm-exact-below-50-equality-behavior-remains-unconfirmed: Exact below 50% equality behavior remains unconfirmed.
 - caraxes-blood-wyrm-fire-damage-increase-duration-and-accumulation-semantics-are-not-stated: Fire Damage increase duration and accumulation semantics are not stated.
 - caraxes-mass-enfeeble-raw-text-table-discrepancy-retained: Raw text/table discrepancy retained.
+- crimson-bloodscale-fury-bloodscale-fury-rounded-prose-table-discrepancy: Bloodscale Fury rounded prose/table discrepancy.
+- crimson-bloodscale-fury-bloodscale-fury-target-preference-behavior-when-all-targets-are-stunned: Bloodscale Fury target preference behavior when all targets are Stunned.
+- crimson-enervate-enervate-prose-table-discrepancy: Enervate prose/table discrepancy.
+- crimson-enervate-enervate-target-lane-scope-is-not-stated: Enervate target lane scope is not stated.
+- crimson-observed-preview-stats-are-account-specific-not-canonical-base-stats: Observed preview stats are account-specific, not canonical base stats.
+- crimson-unlikely-hero-exact-25-and-75-threshold-equality-behavior: Exact 25% and 75% threshold equality behavior.
+- crimson-unlikely-hero-unlikely-hero-table-says-damage-dealt-while-full-text-says-damage-received: Unlikely Hero table says Damage Dealt while full text says Damage Received.
+- crimson-vermins-bane-exact-intelligence-enhancement-for-vermin-s-bane: Exact Intelligence enhancement for Vermin's Bane.
+- global-dynamic-selector-tie-breaking: Tie-breaking for dynamic stat and troop selectors remains unresolved.
 - global-enemy-formation-adjacency: Enemy-formation adjacency is not confirmed.
+- global-enhanced-by-stat-formulas: Exact enhanced-by-stat formulas remain unresolved.
 - global-exact-damage-recovery-formulas: Exact damage, Recovery, and stacking formulas remain unknown.
+- global-extra-basic-attack-trigger-chaining: Double-Strike and other extra-Basic-Attack trigger chaining remain unresolved.
 - global-numerical-score-policy: No numerical synergy score is generated until formulas are verified.
-- global-stack-refresh-expiration: Stack refresh and expiration behavior remains unresolved.
-- global-threshold-boundaries: Exact threshold boundary behavior such as exactly 50% remains unconfirmed.
-- malachite-canonical-base-stats-remain-unknown: Canonical base stats remain unknown.
-- malachite-collective-might-exact-enhanced-by-strength-formula: Exact enhanced-by-Strength formula.
-- malachite-exact-enhanced-by-instinct-formula: Exact enhanced-by-Instinct formula.
-- malachite-exact-enhanced-by-strength-formula: Exact enhanced-by-Strength formula.
-- malachite-lightning-strike-exact-enhanced-by-instinct-formula: Exact enhanced-by-Instinct formula.
-- malachite-wardens-rally-exact-level-and-instinct-scaling-formulas: Exact Level and Instinct scaling formulas.
-- seasmoke-infectious-wrath-augmentation-presentation-requires-follow-up-review: Infectious Wrath augmentation presentation requires follow-up review.
-- seasmoke-loyal-bond-exactly-50-troop-capacity-boundary: Exactly 50% Troop Capacity boundary.
-- seasmoke-loyal-bond-resistance-stacking-refresh-and-multiple-source-combination: Resistance stacking, refresh, and multiple-source combination.
 
 ## Review Plan
 
-Current review phase: Formation card layout polish validation and project-context regeneration.
+Current review phase: Legendary dragon schema hardening validation and project-context regeneration.
 
 Planned next phase:
 
 - full formation-output review
 - additional visual QA
-- then additional dragons
+- then non-Legendary dragon batches
 
 Additional dragon-data work should happen after the formation-output review and UI/tag redesign.

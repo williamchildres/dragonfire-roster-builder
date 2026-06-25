@@ -18,6 +18,10 @@ import type {
   TargetPriority,
   CasterEligibility,
   PerTargetEffectCheck,
+  ActivationRoll,
+  TargetSelectionDetails,
+  RoundSelector,
+  StackTransitionTrigger,
 } from '../models/dragon';
 import { databaseMetadata } from './databaseMetadata';
 
@@ -44,6 +48,14 @@ const screenshotVerification = (source: string): FieldVerification => ({
   status: 'screenshot-verified',
   source,
   capturedAt: verifiedAt,
+  gameVersion: verifiedGameBuild,
+  reviewedManually: true,
+});
+
+const screenshotVerificationAt = (source: string, capturedAt: string): FieldVerification => ({
+  status: 'screenshot-verified',
+  source,
+  capturedAt,
   gameVersion: verifiedGameBuild,
   reviewedManually: true,
 });
@@ -189,6 +201,9 @@ const fixedEffect = ({
   includesCaster = null,
   casterEligibility = 'unknown',
   perTargetEffectCheck = null,
+  activationRoll = null,
+  targetSelection = null,
+  stackTransitionTrigger = null,
 }: {
   id: string;
   type: string;
@@ -213,6 +228,9 @@ const fixedEffect = ({
   includesCaster?: boolean | null;
   casterEligibility?: CasterEligibility;
   perTargetEffectCheck?: PerTargetEffectCheck | null;
+  activationRoll?: ActivationRoll | null;
+  targetSelection?: TargetSelectionDetails | null;
+  stackTransitionTrigger?: StackTransitionTrigger | null;
 }): AbilityEffect => ({
   id,
   type,
@@ -237,14 +255,19 @@ const fixedEffect = ({
   includesCaster,
   casterEligibility,
   perTargetEffectCheck,
+  activationRoll,
+  targetSelection,
+  stackTransitionTrigger,
 });
 
 const schedule = ({
   id,
   timing,
   rounds = [],
+  roundSelector = null,
   triggerChanceFixed = null,
   triggerChanceByHabitLevel = [],
+  activationRoll = null,
   effects,
   attempts = null,
   repeat = null,
@@ -255,8 +278,10 @@ const schedule = ({
   id: string;
   timing: TriggerTiming;
   rounds?: number[];
+  roundSelector?: RoundSelector | null;
   triggerChanceFixed?: number | null;
   triggerChanceByHabitLevel?: RankedValue[];
+  activationRoll?: ActivationRoll | null;
   effects: AbilityEffect[];
   attempts?: AbilitySchedule['attempts'];
   repeat?: AbilitySchedule['repeat'];
@@ -267,10 +292,12 @@ const schedule = ({
   id,
   timing,
   rounds,
+  roundSelector,
   triggerChanceFixed,
   triggerChanceByHabitLevel,
   effects,
   triggerEvent: timing,
+  activationRoll,
   attempts,
   repeat,
   conditions,
@@ -1685,16 +1712,233 @@ const createVermax = (): Dragon => {
   };
 };
 
+const combat20260625 = '2026-06-25';
+const standardLegendaryPower20260625 = rankedPowers([420, 920, 1500, 2200, 3100]);
+
+const roll = ({
+  scope,
+  chanceFixed = null,
+  chanceByHabitLevel = [],
+  description,
+  unresolved = false,
+  targetStatusConditionalChances = [],
+}: Pick<ActivationRoll, 'scope' | 'description'> & Partial<Omit<ActivationRoll, 'scope' | 'description'>>): ActivationRoll => ({
+  scope,
+  chanceFixed,
+  chanceByHabitLevel,
+  targetStatusConditionalChances,
+  description,
+  unresolved,
+});
+
+const targetSelection = (details: Partial<TargetSelectionDetails>): TargetSelectionDetails => ({
+  preference: details.preference ?? null,
+  fallback: details.fallback ?? null,
+  comparisonStat: details.comparisonStat ?? null,
+  comparisonDirection: details.comparisonDirection ?? null,
+  comparisonPool: details.comparisonPool ?? null,
+  tieBehavior: details.tieBehavior ?? null,
+  distinctness: details.distinctness ?? 'unknown',
+  references: details.references ?? [],
+  sharedSelectionGroupId: details.sharedSelectionGroupId ?? null,
+  repeatedInstances: details.repeatedInstances ?? null,
+});
+
+const createCrimson = (): Dragon => {
+  const tauntedTarget = condition('target-has-taunt', 'target-has-status', 'Target has Taunt.', { statusId: 'taunt' });
+  const above75 = condition('enemy-strictly-above-75-troops', 'target-above-troop-capacity-threshold', 'Enemy is strictly above 75% maximum Troop Capacity.', { subject: 'enemy', thresholdPercent: 75, comparison: 'above' });
+  const below25 = condition('enemy-strictly-below-25-troops', 'target-below-troop-capacity-threshold', 'Enemy is strictly below 25% maximum Troop Capacity.', { subject: 'enemy', thresholdPercent: 25, comparison: 'below' });
+
+  const roundOneReplacement = schedule({
+    id: 'bloodscale-terror-round-one-stun-vermins-bane',
+    timing: 'start-of-round',
+    rounds: [1],
+    roundSelector: { kind: 'start-of-round', round: 1 },
+    triggerChanceByHabitLevel: rankedPercents([40, 52, 64, 80, 100]),
+    activationRoll: roll({ scope: 'schedule-shared', chanceByHabitLevel: rankedPercents([40, 52, 64, 80, 100]), description: "Vermin's Bane replaces Bloodscale Terror's Round 1 Stun chance." }),
+    effects: [fixedEffect({ id: 'bloodscale-terror-stun-round-one', type: 'Stun', target: '1 Enemy', targetScope: 'any-lane', magnitude: null, unit: 'unknown', durationRounds: 2 })],
+  });
+
+  const command = ability({
+    dragonId: 'crimson',
+    id: 'crimson-bloodscale-terror',
+    kind: 'command',
+    name: 'Bloodscale Terror',
+    abilityClass: 'active',
+    unlockStarRank: null,
+    rawDescription: 'Odd-numbered rounds: 20% chance to afflict Stun on one enemy in any lane for two rounds. Rounds 2, 5, and 8: deal Fire Damage to one enemy in any lane, Damage Rate +140%, scaling with Intelligence and mitigated by target Initiative.',
+    schedules: [
+      schedule({
+        id: 'bloodscale-terror-stun-odd',
+        timing: 'specific-rounds',
+        roundSelector: { kind: 'odd' },
+        triggerChanceFixed: 20,
+        activationRoll: roll({ scope: 'schedule-shared', chanceFixed: 20, description: 'One fixed Stun chance on odd-numbered rounds.' }),
+        effects: [fixedEffect({ id: 'bloodscale-terror-stun', type: 'Stun', target: '1 Enemy', targetScope: 'any-lane', magnitude: null, unit: 'unknown', durationRounds: 2 })],
+      }),
+      schedule({
+        id: 'bloodscale-terror-fire-rounds',
+        timing: 'specific-rounds',
+        rounds: [2, 5, 8],
+        roundSelector: { kind: 'explicit', rounds: [2, 5, 8] },
+        effects: [fixedEffect({ id: 'bloodscale-terror-fire-damage', type: 'Fire Damage', target: '1 Enemy', targetScope: 'any-lane', magnitude: 140, unit: 'rate', scaling: ['attacker Intelligence'], notes: ['Mitigated by target Initiative.'] })],
+      }),
+    ],
+    powerByHabitLevel: [],
+    glossaryEntries: [{ term: 'Stun', definition: 'Prevents Commands, Habits, and Basic Attacks.' }],
+    tags: ['STUN', 'FIRE_DAMAGE', 'ANY_LANE_TARGET', 'SPECIFIC_ROUNDS'],
+    verification: screenshotVerificationAt('Crimson Bloodscale Terror screenshots', combat20260625),
+    evidenceIds: ['crimson-bloodscale-terror-summary-2026-06-25'],
+  });
+
+  command.augmentations.push({
+    id: 'crimson-vermins-bane-augmentation',
+    sourceAbilityId: 'crimson-vermins-bane',
+    modifiesAbilityId: 'crimson-bloodscale-terror',
+    minimumDragonStarRank: 10,
+    schedulesAdded: [],
+    effectsAdded: [],
+    scheduleOverrides: [{
+      id: 'vermins-bane-round-one-stun-override',
+      targetScheduleId: 'bloodscale-terror-stun-odd',
+      targetEffectId: 'bloodscale-terror-stun',
+      operation: 'replace-effect-roll',
+      replacementSchedule: roundOneReplacement,
+      replacementEffect: roundOneReplacement.effects[0]!,
+      evidenceIds: ['crimson-vermins-bane-2026-06-25'],
+      description: "At Star Rank 10, Vermin's Bane replaces the ordinary Round 1 Stun chance; it does not add a second roll.",
+    }],
+    rawDescription: "Vermin's Bane augments Bloodscale Terror by replacing the Round 1 Stun chance.",
+    evidenceIds: ['crimson-vermins-bane-2026-06-25'],
+  });
+
+  const trait = ability({
+    dragonId: 'crimson',
+    id: 'crimson-hunters-cunning',
+    kind: 'trait',
+    name: "Hunter's Cunning",
+    abilityClass: 'passive',
+    unlockStarRank: 1,
+    minimumDragonLevel: 16,
+    positionRequirement: 'vanguard',
+    rawDescription: 'At Level 16+ and deployed in Vanguard, Crimson Recovery Received +20%, Crimson Intelligence +25, and Right Flank ally Physical Damage Dealt +10%.',
+    schedules: [schedule({ id: 'hunters-cunning-passive', timing: 'passive', roundSelector: { kind: 'passive' }, effects: [
+      fixedEffect({ id: 'hunters-cunning-recovery', type: 'Recovery Received Up', target: 'Self', targetScope: 'self', magnitude: 20, unit: 'percent' }),
+      fixedEffect({ id: 'hunters-cunning-intelligence', type: 'Intelligence Up', target: 'Self', targetScope: 'self', magnitude: 25, unit: 'flat' }),
+      fixedEffect({ id: 'hunters-cunning-right-physical', type: 'Physical Damage Dealt Up', target: 'Right Flank ally', targetScope: 'right-flank', magnitude: 10, unit: 'percent' }),
+    ] })],
+    tags: ['RECOVERY_RECEIVED_UP', 'BUFF_INTELLIGENCE', 'PHYSICAL_DAMAGE_UP', 'RIGHT_FLANK_TARGET', 'VANGUARD_REQUIRED'],
+    verification: screenshotVerificationAt("Crimson Hunter's Cunning screenshot", combat20260625),
+    evidenceIds: ['crimson-hunters-cunning-2026-06-25'],
+  });
+
+  const habits = [
+    ability({ dragonId: 'crimson', id: 'crimson-enervate', kind: 'habit', name: 'Enervate', abilityClass: 'passive', unlockStarRank: 2, rawDescription: 'Start of Combat: select one enemy that deals Tactical Damage. Reduce its Tactical Damage Dealt until end of combat. Prose rounds L1 to -13%; table shows -13.5%.', schedules: [schedule({ id: 'enervate-start', timing: 'start-of-combat', roundSelector: { kind: 'start-of-combat' }, effects: [fixedEffect({ id: 'enervate-tactical-down', type: 'Tactical Damage Dealt Down', target: '1 enemy that deals Tactical Damage', targetScope: 'unknown', magnitude: null, unit: 'percent', rankedValues: rankedPercents([13.5, 16.2, 18.9, 22.95, 27]), duration: 'Until end of combat', conditions: [condition('enemy-deals-tactical-damage', 'ally-deals-tactical-damage', 'Enemy deals Tactical Damage.', { subject: 'enemy' })] })] })], powerByHabitLevel: standardLegendaryPower20260625, tags: ['TACTICAL_DAMAGE'], verification: screenshotVerificationAt('Crimson Enervate screenshot', combat20260625), evidenceIds: ['crimson-enervate-2026-06-25'], unresolvedQuestions: ['Enervate prose/table discrepancy.', 'Enervate target lane scope is not stated.'] }),
+    ability({ dragonId: 'crimson', id: 'crimson-dragons-intellect', kind: 'habit', name: "Dragon's Intellect", abilityClass: 'passive', unlockStarRank: 4, rawDescription: 'Start of Combat until end of combat: reduce Damage Received and increase Intelligence.', schedules: [schedule({ id: 'dragons-intellect-start', timing: 'start-of-combat', roundSelector: { kind: 'start-of-combat' }, effects: [
+      fixedEffect({ id: 'dragons-intellect-damage-received', type: 'Damage Received Down', target: 'Self', targetScope: 'self', magnitude: null, unit: 'percent', rankedValues: rankedPercents([6, 7.2, 8.4, 10.2, 12]), duration: 'Until end of combat' }),
+      fixedEffect({ id: 'dragons-intellect-intelligence', type: 'Intelligence Up', target: 'Self', targetScope: 'self', magnitude: null, unit: 'percent', rankedValues: rankedPercents([12, 14.4, 16.8, 20.4, 24]), duration: 'Until end of combat' }),
+    ] })], powerByHabitLevel: standardLegendaryPower20260625, tags: ['DAMAGE_RECEIVED_DOWN', 'BUFF_INTELLIGENCE'], verification: screenshotVerificationAt("Crimson Dragon's Intellect screenshot", combat20260625), evidenceIds: ['crimson-dragons-intellect-2026-06-25'] }),
+    ability({ dragonId: 'crimson', id: 'crimson-bloodscale-fury', kind: 'habit', name: 'Bloodscale Fury', abilityClass: 'passive', unlockStarRank: 6, rawDescription: 'Each Round: afflict Weakened on one enemy in any lane, preferring a target not already Stunned. Chance is doubled against a target with Taunt. Prose rounds L1 to 18%; table shows 17.5%.', schedules: [schedule({ id: 'bloodscale-fury-each-round', timing: 'each-round', roundSelector: { kind: 'each-round' }, triggerChanceByHabitLevel: rankedPercents([17.5, 21, 24.5, 29.75, 35]), activationRoll: roll({ scope: 'effect', chanceByHabitLevel: rankedPercents([17.5, 21, 24.5, 29.75, 35]), description: 'Effect-level Weakened chance.', targetStatusConditionalChances: [{ statusId: 'taunt', chanceFixed: null, chanceByHabitLevel: rankedPercents([35, 42, 49, 59.5, 70]), multiplier: 2, description: 'Chance is doubled against a Taunted target.' }] }), effects: [fixedEffect({ id: 'bloodscale-fury-weakened', type: 'Weakened', target: '1 Enemy, preferring a target not already Stunned', targetScope: 'any-lane', magnitude: 20, unit: 'percent', durationRounds: 2, targetPriority: 'prefer-not-stunned', conditionalMultipliers: [multiplier('bloodscale-fury-taunt-double', 2, tauntedTarget, 'Chance is doubled against a Taunted target.', rankedPercents([35, 42, 49, 59.5, 70]))], targetSelection: targetSelection({ preference: 'target not already Stunned', fallback: 'another eligible enemy', distinctness: 'no-distinctness-requirement' }) })] })], powerByHabitLevel: standardLegendaryPower20260625, tags: ['WEAKENED', 'ANY_LANE_TARGET'], verification: screenshotVerificationAt('Crimson Bloodscale Fury screenshot', combat20260625), evidenceIds: ['crimson-bloodscale-fury-2026-06-25'], unresolvedQuestions: ['Bloodscale Fury rounded prose/table discrepancy.', 'Bloodscale Fury target preference behavior when all targets are Stunned.'] }),
+    ability({ dragonId: 'crimson', id: 'crimson-unlikely-hero', kind: 'habit', name: 'Unlikely Hero', abilityClass: 'passive', unlockStarRank: 8, rawDescription: 'Start of each round: enemies strictly above 75% max Troop Capacity receive increased non-Basic Physical Damage and Fire Damage until end of round; enemies strictly below 25% receive reduced Recovery. Table visually says Damage Dealt, text says Damage Received.', schedules: [schedule({ id: 'unlikely-hero-start-round', timing: 'start-of-each-round', roundSelector: { kind: 'each-round' }, effects: [
+      fixedEffect({ id: 'unlikely-hero-physical-received', type: 'Physical Damage Received Up', target: 'All enemies strictly above 75% maximum Troop Capacity', targetScope: 'any-lane', magnitude: null, unit: 'percent', rankedValues: rankedPercents([10, 12, 14, 17, 20]), duration: 'Until end of current round', excludes: ['Basic Attacks'], sourceScope: 'non-basic-attacks', conditions: [above75], targetPriority: 'all-allies-matching-threshold' }),
+      fixedEffect({ id: 'unlikely-hero-fire-received', type: 'Fire Damage Received Up', target: 'All enemies strictly above 75% maximum Troop Capacity', targetScope: 'any-lane', magnitude: null, unit: 'percent', rankedValues: rankedPercents([10, 12, 14, 17, 20]), duration: 'Until end of current round', conditions: [above75], targetPriority: 'all-allies-matching-threshold' }),
+      fixedEffect({ id: 'unlikely-hero-recovery-received-down', type: 'Recovery Received Down', target: 'All enemies strictly below 25% maximum Troop Capacity', targetScope: 'any-lane', magnitude: null, unit: 'percent', rankedValues: rankedPercents([20, 24, 28, 34, 40]), duration: 'Until end of current round', conditions: [below25], targetPriority: 'all-allies-matching-threshold' }),
+    ] })], powerByHabitLevel: standardLegendaryPower20260625, tags: ['PHYSICAL_DAMAGE_UP', 'FIRE_DAMAGE', 'RECOVERY_RECEIVED_DOWN'], verification: screenshotVerificationAt('Crimson Unlikely Hero screenshot', combat20260625), evidenceIds: ['crimson-unlikely-hero-2026-06-25'], unresolvedQuestions: ['Unlikely Hero table says Damage Dealt while full text says Damage Received.', 'Exact 25% and 75% threshold equality behavior.'] }),
+    ability({ dragonId: 'crimson', id: 'crimson-vermins-bane', kind: 'habit', name: "Vermin's Bane", abilityClass: 'passive', unlockStarRank: 10, rawDescription: "Augments Bloodscale Terror: replace Round 1 Stun chance and on even-numbered rounds has 50% chance to reduce Instinct and Initiative of the enemy with highest Instinct for two rounds, enhanced by Crimson's Intelligence.", schedules: [schedule({ id: 'vermins-bane-even-rounds', timing: 'specific-rounds', roundSelector: { kind: 'even' }, triggerChanceFixed: 50, activationRoll: roll({ scope: 'schedule-shared', chanceFixed: 50, description: 'One fixed activation roll for the even-round stat reductions.' }), targetPriority: 'highest-stat-enemy', effects: [
+      fixedEffect({ id: 'vermins-bane-instinct-down', type: 'Instinct Down', target: 'Enemy with highest Instinct', targetScope: 'any-lane', magnitude: null, unit: 'percent', rankedValues: rankedPercents([12, 15.6, 19.2, 24, 30]), durationRounds: 2, scaling: ['enhanced by Crimson Intelligence'], targetPriority: 'highest-stat-enemy', targetSelection: targetSelection({ comparisonStat: 'instinct', comparisonDirection: 'highest', comparisonPool: 'enemy-side', tieBehavior: 'candidate-group' }) }),
+      fixedEffect({ id: 'vermins-bane-initiative-down', type: 'Initiative Down', target: 'Enemy with highest Instinct', targetScope: 'any-lane', magnitude: null, unit: 'percent', rankedValues: rankedPercents([12, 15.6, 19.2, 24, 30]), durationRounds: 2, scaling: ['enhanced by Crimson Intelligence'], targetPriority: 'highest-stat-enemy', targetSelection: targetSelection({ comparisonStat: 'instinct', comparisonDirection: 'highest', comparisonPool: 'enemy-side', tieBehavior: 'candidate-group', sharedSelectionGroupId: 'vermins-bane-highest-instinct-enemy' }) }),
+    ] })], powerByHabitLevel: finalLegendaryPowerEarly, tags: ['COMMAND_AUGMENTATION', 'DEBUFF_INSTINCTS', 'DEBUFF_INITIATIVE'], verification: screenshotVerificationAt("Crimson Vermin's Bane screenshot", combat20260625), evidenceIds: ['crimson-vermins-bane-2026-06-25'], unresolvedQuestions: ["Exact Intelligence enhancement for Vermin's Bane."] }),
+  ];
+
+  return {
+    ...createDragon('Crimson', 'Legendary', 'Hunter'),
+    dataStatus: 'community-verified',
+    lastVerified: combat20260625,
+    command,
+    trait,
+    habits,
+    affinities: { Cavalry: 'unknown', Shieldbearers: 'unknown', Archers: 'positive', Spearmen: 'positive', Siege: 'positive' },
+    tags: [...new Set<EffectTag>([...command.tags, ...trait.tags, ...habits.flatMap((habit) => habit.tags)])],
+    fieldVerification: { identity: officialMetadataVerification, rarity: officialMetadataVerification, breed: officialMetadataVerification, command: screenshotVerificationAt('Crimson Bloodscale Terror screenshots', combat20260625), trait: screenshotVerificationAt("Crimson Hunter's Cunning screenshot", combat20260625), habits: screenshotVerificationAt('Crimson Habit screenshots', combat20260625), affinities: partialScreenshotVerification('Crimson main screen screenshot') },
+    unresolvedQuestions: ['Observed preview stats are account-specific, not canonical base stats.'],
+  };
+};
+
+const createKalspire = (): Dragon => {
+  const command = ability({ dragonId: 'kalspire', id: 'kalspire-tactical-strike', kind: 'command', name: 'Tactical Strike', abilityClass: 'active', unlockStarRank: null, rawDescription: 'After each Basic Attack: deal Tactical Damage to the original Basic Attack target. Attempt Bleed on the original Basic Attack target and one other enemy within adjacency; checks are independent per target. Classified as Command while preserving Attack Modifier presentation.', schedules: [schedule({ id: 'tactical-strike-after-basic', timing: 'after-basic-attack', roundSelector: { kind: 'after-basic-attack' }, effects: [
+    fixedEffect({ id: 'tactical-strike-tactical-damage', type: 'Tactical Damage', target: 'Original Basic Attack target', targetScope: 'any-lane', magnitude: 50, unit: 'rate', scaling: ['attacker Instinct'], notes: ['Mitigated by target Intelligence.'], targetPriority: 'original-basic-attack-target', targetSelection: targetSelection({ references: [{ id: 'original-basic-attack-target', kind: 'original-basic-attack-target', referencedEffectId: null, description: 'Use the target of the Basic Attack that triggered Tactical Strike.' }], distinctness: 'same-target-required' }) }),
+    fixedEffect({ id: 'tactical-strike-bleed', type: 'Bleed', target: 'Original Basic Attack target and one other enemy within adjacency', targetScope: 'within-adjacency', magnitude: 20, unit: 'rate', durationRounds: 2, perTargetEffectCheck: { targetCount: 2, effects: [{ effectId: 'tactical-strike-bleed', independentlyChecked: true }], targetsCheckedIndependently: true, sharedChanceByHabitLevel: [] }, activationRoll: roll({ scope: 'independent-per-target', chanceFixed: 30, description: 'Bleed checks are separate for each target.' }), targetSelection: targetSelection({ references: [{ id: 'original-basic-attack-target', kind: 'original-basic-attack-target', referencedEffectId: null, description: 'First checked target is the original Basic Attack target.' }, { id: 'other-adjacent-enemy', kind: 'distinct-from-effect-target', referencedEffectId: 'tactical-strike-tactical-damage', description: 'Second checked target is another enemy within adjacency.' }], distinctness: 'explicitly-another-target' }), notes: ['Bleed is periodic Physical Damage, +20% each round.'] }),
+  ] })], tags: ['TACTICAL_DAMAGE', 'BLEED', 'ADJACENT_TARGET'], verification: screenshotVerificationAt('Kalspire Tactical Strike screenshots', combat20260625), evidenceIds: ['kalspire-tactical-strike-summary-2026-06-25'], unresolvedQuestions: ['Enemy adjacency reference point.', 'Bleed refresh and first-tick timing.'] });
+
+  const trait = ability({ dragonId: 'kalspire', id: 'kalspire-champions-brilliance', kind: 'trait', name: "Champion's Brilliance", abilityClass: 'passive', unlockStarRank: 1, minimumDragonLevel: 16, positionRequirement: 'vanguard', rawDescription: 'At Level 16+ and deployed in Vanguard: Kalspire Strength, Intelligence, and Instinct +15; Right Flank ally Damage Received -8%.', schedules: [schedule({ id: 'champions-brilliance-passive', timing: 'passive', roundSelector: { kind: 'passive' }, effects: [
+    fixedEffect({ id: 'champions-brilliance-strength', type: 'Strength Up', target: 'Self', targetScope: 'self', magnitude: 15, unit: 'flat' }),
+    fixedEffect({ id: 'champions-brilliance-intelligence', type: 'Intelligence Up', target: 'Self', targetScope: 'self', magnitude: 15, unit: 'flat' }),
+    fixedEffect({ id: 'champions-brilliance-instinct', type: 'Instinct Up', target: 'Self', targetScope: 'self', magnitude: 15, unit: 'flat' }),
+    fixedEffect({ id: 'champions-brilliance-right-damage-received', type: 'Damage Received Down', target: 'Right Flank ally', targetScope: 'right-flank', magnitude: 8, unit: 'percent', sourceScope: 'all-sources' }),
+  ] })], tags: ['STRENGTH_UP', 'BUFF_INTELLIGENCE', 'INSTINCT_UP', 'DAMAGE_RECEIVED_DOWN', 'RIGHT_FLANK_TARGET', 'VANGUARD_REQUIRED'], verification: screenshotVerificationAt("Kalspire Champion's Brilliance screenshot", combat20260625), evidenceIds: ['kalspire-champions-brilliance-2026-06-25'] });
+
+  const habits = [
+    ability({ dragonId: 'kalspire', id: 'kalspire-robust-insight', kind: 'habit', name: 'Robust Insight', abilityClass: 'passive', unlockStarRank: 2, rawDescription: 'Start of Combat until end of combat: increase Kalspire Strength and Instinct.', schedules: [schedule({ id: 'robust-insight-start', timing: 'start-of-combat', roundSelector: { kind: 'start-of-combat' }, effects: [fixedEffect({ id: 'robust-insight-strength', type: 'Strength Up', target: 'Self', targetScope: 'self', magnitude: null, unit: 'percent', rankedValues: rankedPercents([20, 24, 28, 34, 40]), duration: 'Until end of combat' }), fixedEffect({ id: 'robust-insight-instinct', type: 'Instinct Up', target: 'Self', targetScope: 'self', magnitude: null, unit: 'percent', rankedValues: rankedPercents([20, 24, 28, 34, 40]), duration: 'Until end of combat' })] })], powerByHabitLevel: standardLegendaryPower20260625, tags: ['STRENGTH_UP', 'INSTINCT_UP'], verification: screenshotVerificationAt('Kalspire Robust Insight screenshot', combat20260625), evidenceIds: ['kalspire-robust-insight-2026-06-25'] }),
+    ability({ dragonId: 'kalspire', id: 'kalspire-battle-cunning', kind: 'habit', name: 'Battle Cunning', abilityClass: 'passive', unlockStarRank: 4, rawDescription: 'Start of Combat until end of combat: target three enemies in any lane. Reduce Strength and Intelligence, enhanced by Instinct. Prose rounds L1 to -6%; table shows -6.5%.', schedules: [schedule({ id: 'battle-cunning-start', timing: 'start-of-combat', roundSelector: { kind: 'start-of-combat' }, effects: [fixedEffect({ id: 'battle-cunning-strength-down', type: 'Strength Down', target: '3 Enemies', targetScope: 'any-lane', magnitude: null, unit: 'percent', rankedValues: rankedPercents([6.5, 7.8, 9.1, 11.05, 13]), duration: 'Until end of combat', scaling: ['enhanced by Kalspire Instinct'], targetCount: 3 }), fixedEffect({ id: 'battle-cunning-intelligence-down', type: 'Intelligence Down', target: '3 Enemies', targetScope: 'any-lane', magnitude: null, unit: 'percent', rankedValues: rankedPercents([6.5, 7.8, 9.1, 11.05, 13]), duration: 'Until end of combat', scaling: ['enhanced by Kalspire Instinct'], targetCount: 3 })] })], powerByHabitLevel: standardLegendaryPower20260625, tags: ['DEBUFF_STRENGTH', 'DEBUFF_INTELLIGENCE'], verification: screenshotVerificationAt('Kalspire Battle Cunning screenshot', combat20260625), evidenceIds: ['kalspire-battle-cunning-2026-06-25'], unresolvedQuestions: ['Battle Cunning Instinct enhancement formula.', 'Highest-stat tie-breaking.'] }),
+    ability({ dragonId: 'kalspire', id: 'kalspire-tactical-assault', kind: 'habit', name: 'Tactical Assault', abilityClass: 'passive', unlockStarRank: 6, rawDescription: 'Augments Tactical Strike: after each Basic Attack, select one enemy within adjacency that was not the original Basic Attack target, deal Physical Damage, then attempt Panic on that target and one other distinct adjacent enemy. Panic checks are independent per target.', schedules: [schedule({ id: 'tactical-assault-after-basic', timing: 'after-basic-attack', roundSelector: { kind: 'after-basic-attack' }, effects: [
+      fixedEffect({ id: 'tactical-assault-physical-damage', type: 'Physical Damage', target: 'One enemy within adjacency that was not the original Basic Attack target', targetScope: 'within-adjacency', magnitude: null, unit: 'rate', rankedValues: rankedPercents([25, 30, 35, 42.5, 50]), scaling: ['attacker Strength'], targetSelection: targetSelection({ references: [{ id: 'not-original-basic-attack-target', kind: 'distinct-from-effect-target', referencedEffectId: 'tactical-strike-tactical-damage', description: 'Physical Damage target is distinct from the original Basic Attack target.' }], distinctness: 'must-be-distinct' }) }),
+      fixedEffect({ id: 'tactical-assault-panic', type: 'Panic', target: 'Physical Damage target and one other distinct enemy within adjacency', targetScope: 'within-adjacency', magnitude: 20, unit: 'rate', durationRounds: 2, rankedValues: rankedPercents([15, 18, 21, 25.5, 30]), activationRoll: roll({ scope: 'independent-per-target', chanceByHabitLevel: rankedPercents([15, 18, 21, 25.5, 30]), description: 'Panic checks are separate for each target.' }), targetSelection: targetSelection({ references: [{ id: 'panic-first-target', kind: 'same-target-as-effect', referencedEffectId: 'tactical-assault-physical-damage', description: 'First Panic check uses the Physical Damage target.' }, { id: 'panic-second-target', kind: 'distinct-from-effect-target', referencedEffectId: 'tactical-assault-physical-damage', description: 'Second Panic check uses another distinct adjacent enemy.' }], distinctness: 'explicitly-another-target' }), notes: ['Panic is periodic Tactical Damage, +20% each round.'] }),
+    ] })], powerByHabitLevel: standardLegendaryPower20260625, tags: ['COMMAND_AUGMENTATION', 'PHYSICAL_DAMAGE', 'PANIC', 'ADJACENT_TARGET'], verification: screenshotVerificationAt('Kalspire Tactical Assault screenshot', combat20260625), evidenceIds: ['kalspire-tactical-assault-2026-06-25'], unresolvedQuestions: ['Enemy adjacency reference point.', 'Panic refresh and first-tick timing.'] }),
+    ability({ dragonId: 'kalspire', id: 'kalspire-dragons-insight', kind: 'habit', name: "Dragon's Insight", abilityClass: 'passive', unlockStarRank: 8, rawDescription: 'Start of Combat until end of combat: reduce Damage Received and increase Instinct.', schedules: [schedule({ id: 'dragons-insight-start', timing: 'start-of-combat', roundSelector: { kind: 'start-of-combat' }, effects: [fixedEffect({ id: 'dragons-insight-damage-received', type: 'Damage Received Down', target: 'Self', targetScope: 'self', magnitude: null, unit: 'percent', rankedValues: rankedPercents([6, 7.2, 8.4, 10.2, 12]), duration: 'Until end of combat' }), fixedEffect({ id: 'dragons-insight-instinct', type: 'Instinct Up', target: 'Self', targetScope: 'self', magnitude: null, unit: 'percent', rankedValues: rankedPercents([12, 14.4, 16.8, 20.4, 24]), duration: 'Until end of combat' })] })], powerByHabitLevel: standardLegendaryPower20260625, tags: ['DAMAGE_RECEIVED_DOWN', 'INSTINCT_UP'], verification: screenshotVerificationAt("Kalspire Dragon's Insight screenshot", combat20260625), evidenceIds: ['kalspire-dragons-insight-2026-06-25'] }),
+    ability({ dragonId: 'kalspire', id: 'kalspire-radiant-conqueror', kind: 'habit', name: 'Radiant Conqueror', abilityClass: 'passive', unlockStarRank: 10, rawDescription: 'Start of Round 1 for one round: Kalspire Damage Received -50% and Kalspire is afflicted with Stun. Start of Round 2 for five rounds: reduce non-Basic Physical Damage Dealt of enemy with highest Strength and Fire Damage Dealt of enemy with highest Intelligence. The selected enemies may be same or different.', schedules: [
+      schedule({ id: 'radiant-conqueror-round-one', timing: 'start-of-round', rounds: [1], roundSelector: { kind: 'start-of-round', round: 1 }, effects: [fixedEffect({ id: 'radiant-conqueror-damage-received', type: 'Damage Received Down', target: 'Self', targetScope: 'self', magnitude: 50, unit: 'percent', durationRounds: 1 }), fixedEffect({ id: 'radiant-conqueror-self-stun', type: 'Stun', target: 'Self', targetScope: 'self', magnitude: null, unit: 'unknown', durationRounds: 1, notes: ['Real self-inflicted Control status.'] })] }),
+      schedule({ id: 'radiant-conqueror-round-two', timing: 'start-of-round', rounds: [2], roundSelector: { kind: 'start-of-round', round: 2 }, effects: [fixedEffect({ id: 'radiant-conqueror-physical-down', type: 'Physical Damage Dealt Down', target: 'Enemy with highest Strength', targetScope: 'any-lane', magnitude: null, unit: 'percent', rankedValues: rankedPercents([10, 13, 16, 20, 25]), durationRounds: 5, excludes: ['Basic Attacks'], sourceScope: 'non-basic-attacks', targetPriority: 'highest-stat-enemy', targetSelection: targetSelection({ comparisonStat: 'strength', comparisonDirection: 'highest', comparisonPool: 'enemy-side', tieBehavior: 'candidate-group' }) }), fixedEffect({ id: 'radiant-conqueror-fire-down', type: 'Fire Damage Dealt Down', target: 'Enemy with highest Intelligence', targetScope: 'any-lane', magnitude: null, unit: 'percent', rankedValues: rankedPercents([10, 13, 16, 20, 25]), durationRounds: 5, targetPriority: 'highest-stat-enemy', targetSelection: targetSelection({ comparisonStat: 'intelligence', comparisonDirection: 'highest', comparisonPool: 'enemy-side', tieBehavior: 'candidate-group', distinctness: 'no-distinctness-requirement' }) })] }),
+    ], powerByHabitLevel: finalLegendaryPowerEarly, tags: ['STUN', 'CONTROL', 'PHYSICAL_DAMAGE_UP', 'FIRE_DAMAGE'], verification: screenshotVerificationAt('Kalspire Radiant Conqueror screenshot', combat20260625), evidenceIds: ['kalspire-radiant-conqueror-2026-06-25'], unresolvedQuestions: ['Whether a legal allied cleanse can remove Radiant Conqueror Stun before Kalspire acts.', 'Highest-stat tie-breaking.'] }),
+  ];
+  return { ...createDragon('Kalspire', 'Legendary', 'Champion'), dataStatus: 'community-verified', lastVerified: combat20260625, command, trait, habits, affinities: { Cavalry: 'positive', Shieldbearers: 'positive', Siege: 'positive', Archers: 'unknown', Spearmen: 'unknown' }, tags: [...new Set<EffectTag>([...command.tags, ...trait.tags, ...habits.flatMap((habit) => habit.tags)])], fieldVerification: { identity: officialMetadataVerification, rarity: officialMetadataVerification, breed: officialMetadataVerification, command: screenshotVerificationAt('Kalspire Tactical Strike screenshots', combat20260625), trait: screenshotVerificationAt("Kalspire Champion's Brilliance screenshot", combat20260625), habits: screenshotVerificationAt('Kalspire Habit screenshots', combat20260625), affinities: partialScreenshotVerification('Kalspire main screen screenshot') }, unresolvedQuestions: ['Observed preview stats are account-specific, not canonical base stats.', 'Enemy-formation adjacency semantics.'] };
+};
+
+const createVhagar = (): Dragon => {
+  const burnedTarget = condition('target-has-burn', 'target-has-status', 'Target has Burn.', { statusId: 'burn' });
+  const command = ability({ dragonId: 'vhagar', id: 'vhagar-fiery-bonds', kind: 'command', name: 'Fiery Bonds', abilityClass: 'active', unlockStarRank: null, rawDescription: 'Each round: 25% chance to afflict Taunt on three enemies in any lane for two rounds, doubled to 50% against Burned targets. Even-numbered rounds: deal Physical Damage to one enemy within adjacency, Damage Rate +120%. Taunt roll scope is not stated.', schedules: [
+    schedule({ id: 'fiery-bonds-taunt', timing: 'each-round', roundSelector: { kind: 'each-round' }, triggerChanceFixed: 25, activationRoll: roll({ scope: 'unknown', chanceFixed: 25, description: 'Taunt chance applies to three targets, but shared versus per-target roll scope is not stated.', unresolved: true, targetStatusConditionalChances: [{ statusId: 'burn', chanceFixed: 50, chanceByHabitLevel: [], multiplier: 2, description: 'Chance is doubled against a Burned target.' }] }), effects: [fixedEffect({ id: 'fiery-bonds-taunt', type: 'Taunt', target: '3 Enemies', targetScope: 'any-lane', magnitude: null, unit: 'unknown', durationRounds: 2, targetCount: 3, conditionalMultipliers: [multiplier('fiery-bonds-burn-double', 2, burnedTarget, 'Chance is doubled against a Burned target.', [{ level: 0, value: 50, unit: 'percent' }])], activationRoll: roll({ scope: 'unknown', chanceFixed: 25, description: 'Shared versus per-target Taunt roll is unresolved.', unresolved: true }) })] }),
+    schedule({ id: 'fiery-bonds-even-physical', timing: 'specific-rounds', roundSelector: { kind: 'even' }, effects: [fixedEffect({ id: 'fiery-bonds-physical-damage', type: 'Physical Damage', target: '1 Enemy within adjacency', targetScope: 'within-adjacency', magnitude: 120, unit: 'rate', scaling: ['attacker Strength'], notes: ['Mitigated by target Instinct.', 'Enemy adjacency semantics remain unresolved.'] })] }),
+  ], glossaryEntries: [{ term: 'Taunt', definition: 'Forces the target to launch its Basic Attack against the dragon that applied Taunt.' }], tags: ['TAUNT', 'PHYSICAL_DAMAGE', 'ADJACENT_TARGET'], verification: screenshotVerificationAt('Vhagar Fiery Bonds screenshots', combat20260625), evidenceIds: ['vhagar-fiery-bonds-summary-2026-06-25'], unresolvedQuestions: ['Fiery Bonds shared-roll versus per-target Taunt checks.', 'Enemy adjacency.'] });
+  const trait = ability({ dragonId: 'vhagar', id: 'vhagar-warriors-resilience', kind: 'trait', name: "Warrior's Resilience", abilityClass: 'passive', unlockStarRank: 1, minimumDragonLevel: 16, positionRequirement: 'vanguard', rawDescription: 'At Level 16+ and deployed in Vanguard: Vhagar Damage Received -8%; Left Flank ally Tactical Damage Dealt +16%.', schedules: [schedule({ id: 'warriors-resilience-passive', timing: 'passive', roundSelector: { kind: 'passive' }, effects: [fixedEffect({ id: 'warriors-resilience-damage-received', type: 'Damage Received Down', target: 'Self', targetScope: 'self', magnitude: 8, unit: 'percent', sourceScope: 'all-sources' }), fixedEffect({ id: 'warriors-resilience-left-tactical', type: 'Tactical Damage Dealt Up', target: 'Left Flank ally', targetScope: 'left-flank', magnitude: 16, unit: 'percent' })] })], tags: ['DAMAGE_RECEIVED_DOWN', 'TACTICAL_DAMAGE', 'LEFT_FLANK_TARGET', 'VANGUARD_REQUIRED'], verification: screenshotVerificationAt("Vhagar Warrior's Resilience screenshot", combat20260625), evidenceIds: ['vhagar-warriors-resilience-2026-06-25'] });
+  const habits = [
+    ability({ dragonId: 'vhagar', id: 'vhagar-ancestral-shield', kind: 'habit', name: 'Ancestral Shield', abilityClass: 'passive', unlockStarRank: 2, rawDescription: 'Start of Round 1 for three rounds: reduce Physical and Tactical Damage Received. Start of Round 4 until end of combat: increase Recovery Received.', schedules: [schedule({ id: 'ancestral-shield-round-one', timing: 'start-of-round', rounds: [1], roundSelector: { kind: 'start-of-round', round: 1 }, effects: [fixedEffect({ id: 'ancestral-shield-physical-received', type: 'Physical Damage Received Down', target: 'Self', targetScope: 'self', magnitude: null, unit: 'percent', rankedValues: rankedPercents([12, 14.4, 16.8, 20.4, 24]), durationRounds: 3 }), fixedEffect({ id: 'ancestral-shield-tactical-received', type: 'Tactical Damage Received Down', target: 'Self', targetScope: 'self', magnitude: null, unit: 'percent', rankedValues: rankedPercents([12, 14.4, 16.8, 20.4, 24]), durationRounds: 3 })] }), schedule({ id: 'ancestral-shield-round-four', timing: 'start-of-round', rounds: [4], roundSelector: { kind: 'start-of-round', round: 4 }, effects: [fixedEffect({ id: 'ancestral-shield-recovery-received', type: 'Recovery Received Up', target: 'Self', targetScope: 'self', magnitude: null, unit: 'percent', rankedValues: rankedPercents([15, 18, 21, 25.5, 30]), duration: 'Until end of combat' })] })], powerByHabitLevel: standardLegendaryPower20260625, tags: ['DAMAGE_RECEIVED_DOWN', 'RECOVERY_RECEIVED_UP'], verification: screenshotVerificationAt('Vhagar Ancestral Shield screenshot', combat20260625), evidenceIds: ['vhagar-ancestral-shield-2026-06-25'] }),
+    ability({ dragonId: 'vhagar', id: 'vhagar-battle-leader', kind: 'habit', name: 'Battle Leader', abilityClass: 'passive', unlockStarRank: 4, rawDescription: 'Start of Combat until end of combat: select one ally in any lane, preferring Right Flank with fallback, and increase Physical Damage Dealt excluding Basic Attacks.', schedules: [schedule({ id: 'battle-leader-start', timing: 'start-of-combat', roundSelector: { kind: 'start-of-combat' }, effects: [fixedEffect({ id: 'battle-leader-physical', type: 'Physical Damage Dealt Up', target: '1 Ally, prioritizing Right Flank', targetScope: 'any-lane', magnitude: null, unit: 'percent', rankedValues: rankedPercents([12.5, 15, 17.5, 21.25, 25]), duration: 'Until end of combat', excludes: ['Basic Attacks'], sourceScope: 'non-basic-attacks', targetPriority: 'prefer-right-flank', targetSelection: targetSelection({ preference: 'Right Flank', fallback: 'another eligible ally', distinctness: 'no-distinctness-requirement' }) })] })], powerByHabitLevel: standardLegendaryPower20260625, tags: ['PHYSICAL_DAMAGE_UP'], verification: screenshotVerificationAt('Vhagar Battle Leader screenshot', combat20260625), evidenceIds: ['vhagar-battle-leader-2026-06-25'], unresolvedQuestions: ['Target selection when a preferred flank is absent.'] }),
+    ability({ dragonId: 'vhagar', id: 'vhagar-eclipse-cover', kind: 'habit', name: 'Eclipse Cover', abilityClass: 'passive', unlockStarRank: 6, rawDescription: 'Rounds 3 through 7 inclusive: one shared ranked activation roll. On success, grant Advantage to the ally with most current troops and Weakened to the enemy with most current troops for two rounds. Prose rounds L1 to 18%; table shows 17.5%.', schedules: [schedule({ id: 'eclipse-cover-rounds-3-7', timing: 'specific-rounds', roundSelector: { kind: 'range', startRound: 3, endRound: 7 }, triggerChanceByHabitLevel: rankedPercents([17.5, 21, 24.5, 29.8, 35]), activationRoll: roll({ scope: 'schedule-shared', chanceByHabitLevel: rankedPercents([17.5, 21, 24.5, 29.8, 35]), description: 'One shared activation roll applies both effects.' }), effects: [fixedEffect({ id: 'eclipse-cover-advantage', type: 'Advantage', target: 'Ally with most current troops', targetScope: 'any-lane', magnitude: 20, unit: 'percent', durationRounds: 2, targetPriority: 'highest-current-troops-ally', casterEligibility: 'eligible-if-targeting-allows', targetSelection: targetSelection({ comparisonStat: 'current-troops', comparisonDirection: 'highest', comparisonPool: 'ally-side', tieBehavior: 'candidate-group', sharedSelectionGroupId: 'eclipse-cover-shared-roll' }) }), fixedEffect({ id: 'eclipse-cover-weakened', type: 'Weakened', target: 'Enemy with most current troops', targetScope: 'any-lane', magnitude: 20, unit: 'percent', durationRounds: 2, targetPriority: 'highest-current-troops-enemy', targetSelection: targetSelection({ comparisonStat: 'current-troops', comparisonDirection: 'highest', comparisonPool: 'enemy-side', tieBehavior: 'candidate-group', sharedSelectionGroupId: 'eclipse-cover-shared-roll' }) })] })], powerByHabitLevel: standardLegendaryPower20260625, tags: ['ADVANTAGE', 'WEAKENED'], verification: screenshotVerificationAt('Vhagar Eclipse Cover screenshot', combat20260625), evidenceIds: ['vhagar-eclipse-cover-2026-06-25'], unresolvedQuestions: ['Most-troops tie-breaking.'] }),
+    ability({ dragonId: 'vhagar', id: 'vhagar-blazing-onslaught', kind: 'habit', name: 'Blazing Onslaught', abilityClass: 'passive', unlockStarRank: 8, rawDescription: 'Start of Round 1 for three rounds: increase Fire Damage Received on one enemy preferring Left Flank, and Physical Damage Received excluding Basic Attacks on one enemy preferring Right Flank. Effects select independently; distinct targets are not required.', schedules: [schedule({ id: 'blazing-onslaught-round-one', timing: 'start-of-round', rounds: [1], roundSelector: { kind: 'start-of-round', round: 1 }, effects: [fixedEffect({ id: 'blazing-onslaught-fire-received', type: 'Fire Damage Received Up', target: '1 Enemy, prioritizing Left Flank', targetScope: 'any-lane', magnitude: null, unit: 'percent', rankedValues: rankedPercents([18, 21.6, 25.2, 30.6, 36]), durationRounds: 3, targetPriority: 'prefer-left-flank', targetSelection: targetSelection({ preference: 'Left Flank', fallback: 'another eligible enemy', distinctness: 'no-distinctness-requirement' }) }), fixedEffect({ id: 'blazing-onslaught-physical-received', type: 'Physical Damage Received Up', target: '1 Enemy, prioritizing Right Flank', targetScope: 'any-lane', magnitude: null, unit: 'percent', rankedValues: rankedPercents([18, 21.6, 25.2, 30.6, 36]), durationRounds: 3, excludes: ['Basic Attacks'], sourceScope: 'non-basic-attacks', targetPriority: 'prefer-right-flank', targetSelection: targetSelection({ preference: 'Right Flank', fallback: 'another eligible enemy', distinctness: 'no-distinctness-requirement' }) })] })], powerByHabitLevel: standardLegendaryPower20260625, tags: ['FIRE_DAMAGE', 'PHYSICAL_DAMAGE_UP'], verification: screenshotVerificationAt('Vhagar Blazing Onslaught screenshot', combat20260625), evidenceIds: ['vhagar-blazing-onslaught-2026-06-25'], unresolvedQuestions: ['Target selection when a preferred flank is absent.'] }),
+    ability({ dragonId: 'vhagar', id: 'vhagar-skyward-titan', kind: 'habit', name: 'Skyward Titan', abilityClass: 'passive', unlockStarRank: 10, rawDescription: 'Each round: 30% chance to gain one Bulwark stack, max five, until end of combat. Each stack increases Strength and reduces Physical/Tactical Damage Received. When Vhagar gains the third Bulwark stack, deal Physical Damage to one enemy in the same lane.', schedules: [schedule({ id: 'skyward-titan-bulwark', timing: 'each-round', roundSelector: { kind: 'each-round' }, triggerChanceFixed: 30, activationRoll: roll({ scope: 'schedule-shared', chanceFixed: 30, description: 'One chance to gain a Bulwark stack each round.' }), effects: [fixedEffect({ id: 'skyward-titan-bulwark-stack', type: 'Bulwark', target: 'Self', targetScope: 'self', magnitude: 1, unit: 'flat', stack: stack({ statusId: 'bulwark', maximumStacks: 5, untilEndOfCombat: true, valuePerStackByHabitLevel: rankedPercents([5, 6.5, 8, 10, 12.5]) }), notes: ['Each stack increases Strength and reduces Physical/Tactical Damage Received; defense L1 table value is -2.5%.'] })] }), schedule({ id: 'skyward-titan-third-stack', timing: 'on-stack-count-gained', roundSelector: { kind: 'each-round' }, effects: [fixedEffect({ id: 'skyward-titan-third-stack-damage', type: 'Physical Damage', target: '1 Enemy in the same lane', targetScope: 'same-lane', magnitude: null, unit: 'rate', rankedValues: rankedPercents([100, 130, 160, 200, 250]), scaling: ['attacker Strength'], stackTransitionTrigger: { statusId: 'bulwark', stackCount: 3, transition: 'gaining-nth-stack', oncePerTransition: true, description: 'Triggers when Vhagar gains the third Bulwark stack, not continuously while at three or more stacks.' } })] })], powerByHabitLevel: finalLegendaryPowerEarly, tags: ['BULWARK', 'STRENGTH_UP', 'DAMAGE_RECEIVED_DOWN', 'PHYSICAL_DAMAGE'], verification: screenshotVerificationAt('Vhagar Skyward Titan screenshot', combat20260625), evidenceIds: ['vhagar-skyward-titan-2026-06-25'], unresolvedQuestions: ['Bulwark stack acquisition and exact trigger ordering.'] }),
+  ];
+  return { ...createDragon('Vhagar', 'Legendary', 'Warrior'), dataStatus: 'community-verified', lastVerified: combat20260625, command, trait, habits, affinities: { Shieldbearers: 'positive', Archers: 'positive', Siege: 'positive', Cavalry: 'unknown', Spearmen: 'unknown' }, tags: [...new Set<EffectTag>([...command.tags, ...trait.tags, ...habits.flatMap((habit) => habit.tags)])], fieldVerification: { identity: officialMetadataVerification, rarity: officialMetadataVerification, breed: officialMetadataVerification, command: screenshotVerificationAt('Vhagar Fiery Bonds screenshots', combat20260625), trait: screenshotVerificationAt("Vhagar Warrior's Resilience screenshot", combat20260625), habits: screenshotVerificationAt('Vhagar Habit screenshots', combat20260625), affinities: partialScreenshotVerification('Vhagar main screen screenshot') }, unresolvedQuestions: ['Observed preview stats are account-specific, not canonical base stats.', 'Enemy adjacency.'] };
+};
+
+const createVenator = (): Dragon => {
+  const doubleStrikeReplacement = schedule({ id: 'feral-strike-double-strike-feral-precision', timing: 'specific-rounds', rounds: [4, 6, 8], roundSelector: { kind: 'explicit', rounds: [4, 6, 8] }, triggerChanceByHabitLevel: rankedPercents([40, 42, 44, 47, 50]), activationRoll: roll({ scope: 'schedule-shared', chanceByHabitLevel: rankedPercents([40, 42, 44, 47, 50]), description: 'Feral Precision replaces the base Double-Strike chance on rounds 4, 6, and 8.' }), effects: [fixedEffect({ id: 'feral-strike-double-strike', type: 'Double-Strike', target: 'Self', targetScope: 'self', magnitude: null, unit: 'unknown', durationRounds: 2 })] });
+  const command = ability({ dragonId: 'venator', id: 'venator-feral-strike', kind: 'command', name: 'Feral Strike', abilityClass: 'active', unlockStarRank: null, rawDescription: 'After each Basic Attack: deal two independently targeted Physical Damage instances. Rounds 4, 6, and 8: 30% chance to gain Double-Strike for two rounds. Classified as Command while preserving Attack Modifier presentation.', schedules: [
+    schedule({ id: 'feral-strike-after-basic', timing: 'after-basic-attack', roundSelector: { kind: 'after-basic-attack' }, effects: [fixedEffect({ id: 'feral-strike-physical-instances', type: 'Physical Damage', target: '1 Enemy per damage instance', targetScope: 'any-lane', magnitude: 20, unit: 'rate', scaling: ['attacker Strength'], targetCount: 1, targetSelection: targetSelection({ repeatedInstances: { count: 2, eachInstanceSelectsSeparately: true, sameTargetAllowed: true }, distinctness: 'no-distinctness-requirement' }), notes: ['Two Physical Damage instances select independently; the same enemy may receive both.'] })] }),
+    schedule({ id: 'feral-strike-double-strike-rounds', timing: 'specific-rounds', rounds: [4, 6, 8], roundSelector: { kind: 'explicit', rounds: [4, 6, 8] }, triggerChanceFixed: 30, activationRoll: roll({ scope: 'schedule-shared', chanceFixed: 30, description: 'One base Double-Strike chance on rounds 4, 6, and 8.' }), effects: [fixedEffect({ id: 'feral-strike-double-strike', type: 'Double-Strike', target: 'Self', targetScope: 'self', magnitude: null, unit: 'unknown', durationRounds: 2 })] }),
+  ], glossaryEntries: [{ term: 'Double-Strike', definition: 'Grants a second Basic Attack each round.' }], tags: ['PHYSICAL_DAMAGE', 'DOUBLE_STRIKE'], verification: screenshotVerificationAt('Venator Feral Strike screenshots', combat20260625), evidenceIds: ['venator-feral-strike-summary-2026-06-25'], unresolvedQuestions: ["Feral Strike activation from Double-Strike's second Basic Attack.", 'Same-round Double-Strike timing.', 'Ordering between the fixed-round check and the Basic Attack.', 'Exact Double-Strike duration counting.'] });
+  command.augmentations.push({ id: 'venator-feral-precision-augmentation', sourceAbilityId: 'venator-feral-precision', modifiesAbilityId: 'venator-feral-strike', minimumDragonStarRank: 6, schedulesAdded: [], effectsAdded: [], scheduleOverrides: [{ id: 'feral-precision-double-strike-override', targetScheduleId: 'feral-strike-double-strike-rounds', targetEffectId: 'feral-strike-double-strike', operation: 'replace-effect-roll', replacementSchedule: doubleStrikeReplacement, replacementEffect: doubleStrikeReplacement.effects[0]!, evidenceIds: ['venator-feral-precision-2026-06-25'], description: 'Feral Precision replaces the base Double-Strike chance; it does not add a second roll.' }], rawDescription: 'Feral Precision augments Feral Strike damage and Double-Strike chance.', evidenceIds: ['venator-feral-precision-2026-06-25'] });
+  const trait = ability({ dragonId: 'venator', id: 'venator-warriors-zeal', kind: 'trait', name: "Warrior's Zeal", abilityClass: 'passive', unlockStarRank: 1, minimumDragonLevel: 16, positionRequirement: 'vanguard', rawDescription: 'At Level 16+ and deployed in Vanguard: increase Venator Physical Damage from Commands and Habits by 16%; Left Flank ally Instinct and Initiative +20.', schedules: [schedule({ id: 'warriors-zeal-passive', timing: 'passive', roundSelector: { kind: 'passive' }, effects: [fixedEffect({ id: 'warriors-zeal-command-habit-physical', type: 'Physical Damage Dealt Up', target: 'Self', targetScope: 'self', magnitude: 16, unit: 'percent', sourceScope: 'commands-and-habits', notes: ['Does not amplify raw Basic Attacks.'] }), fixedEffect({ id: 'warriors-zeal-left-instinct', type: 'Instinct Up', target: 'Left Flank ally', targetScope: 'left-flank', magnitude: 20, unit: 'flat' }), fixedEffect({ id: 'warriors-zeal-left-initiative', type: 'Initiative Up', target: 'Left Flank ally', targetScope: 'left-flank', magnitude: 20, unit: 'flat' })] })], tags: ['PHYSICAL_DAMAGE_UP', 'INSTINCT_UP', 'BUFF_INITIATIVE', 'LEFT_FLANK_TARGET', 'VANGUARD_REQUIRED'], verification: screenshotVerificationAt("Venator Warrior's Zeal screenshot", combat20260625), evidenceIds: ['venator-warriors-zeal-2026-06-25'] });
+  const below50Self = condition('self-strictly-below-50-troops', 'target-below-troop-capacity-threshold', 'Venator is strictly below 50% Troop Capacity.', { subject: 'self', thresholdPercent: 50, comparison: 'below' });
+  const habits = [
+    ability({ dragonId: 'venator', id: 'venator-hunters-bane', kind: 'habit', name: "Hunter's Bane", abilityClass: 'passive', unlockStarRank: 2, rawDescription: "Start of Combat: reduce Intelligence of one enemy in any lane, preferring Hunter breed with fallback, enhanced by Venator's Strength. Screenshot states no duration.", schedules: [schedule({ id: 'hunters-bane-start', timing: 'start-of-combat', roundSelector: { kind: 'start-of-combat' }, effects: [fixedEffect({ id: 'hunters-bane-intelligence-down', type: 'Intelligence Down', target: '1 Enemy, prioritizing Hunter breed', targetScope: 'any-lane', magnitude: null, unit: 'percent', rankedValues: rankedPercents([30, 36, 42, 51, 60]), scaling: ['enhanced by Venator Strength'], targetPriority: 'prefer-hunter', targetSelection: targetSelection({ preference: 'Hunter breed', fallback: 'another eligible enemy' }) })] })], powerByHabitLevel: standardLegendaryPower20260625, tags: ['DEBUFF_INTELLIGENCE'], verification: screenshotVerificationAt("Venator Hunter's Bane screenshot", combat20260625), evidenceIds: ['venator-hunters-bane-2026-06-25'], unresolvedQuestions: ["Hunter's Bane duration.", "Hunter's Bane Strength enhancement formula."] }),
+    ability({ dragonId: 'venator', id: 'venator-dragons-might', kind: 'habit', name: "Dragon's Might", abilityClass: 'passive', unlockStarRank: 4, rawDescription: 'Start of Combat until end of combat: increase Venator Physical Damage Dealt excluding Basic Attacks.', schedules: [schedule({ id: 'dragons-might-start', timing: 'start-of-combat', roundSelector: { kind: 'start-of-combat' }, effects: [fixedEffect({ id: 'dragons-might-physical', type: 'Physical Damage Dealt Up', target: 'Self', targetScope: 'self', magnitude: null, unit: 'percent', rankedValues: rankedPercents([12.5, 15, 17.5, 21.25, 25]), duration: 'Until end of combat', excludes: ['Basic Attacks'], sourceScope: 'non-basic-attacks' })] })], powerByHabitLevel: standardLegendaryPower20260625, tags: ['PHYSICAL_DAMAGE_UP'], verification: screenshotVerificationAt("Venator Dragon's Might screenshot", combat20260625), evidenceIds: ['venator-dragons-might-2026-06-25'] }),
+    ability({ dragonId: 'venator', id: 'venator-feral-precision', kind: 'habit', name: 'Feral Precision', abilityClass: 'passive', unlockStarRank: 6, rawDescription: 'Augments Feral Strike: add one Physical Damage instance targeting the enemy with least current troops and replace Double-Strike chance on rounds 4, 6, and 8.', schedules: [schedule({ id: 'feral-precision-after-basic', timing: 'after-basic-attack', roundSelector: { kind: 'after-basic-attack' }, effects: [fixedEffect({ id: 'feral-precision-additional-physical', type: 'Physical Damage', target: 'Enemy with least current troops', targetScope: 'any-lane', magnitude: null, unit: 'rate', rankedValues: rankedPercents([20, 24, 28, 34, 40]), scaling: ['attacker Strength'], targetPriority: 'least-current-troops-enemy', targetSelection: targetSelection({ comparisonStat: 'current-troops', comparisonDirection: 'lowest', comparisonPool: 'enemy-side', tieBehavior: 'candidate-group' }) })] })], powerByHabitLevel: standardLegendaryPower20260625, tags: ['COMMAND_AUGMENTATION', 'PHYSICAL_DAMAGE'], verification: screenshotVerificationAt('Venator Feral Precision screenshot', combat20260625), evidenceIds: ['venator-feral-precision-2026-06-25'] }),
+    ability({ dragonId: 'venator', id: 'venator-armor-break', kind: 'habit', name: 'Armor Break', abilityClass: 'passive', unlockStarRank: 8, rawDescription: 'Start of Combat until end of combat: increase Physical Damage Received by one opposing enemy. Opposing-position is provisionally normalized to same-lane enemy for formation compatibility.', schedules: [schedule({ id: 'armor-break-start', timing: 'start-of-combat', roundSelector: { kind: 'start-of-combat' }, effects: [fixedEffect({ id: 'armor-break-physical-received', type: 'Physical Damage Received Up', target: '1 opposing enemy', targetScope: 'opposing-position', magnitude: null, unit: 'percent', rankedValues: rankedPercents([8, 9.6, 11.2, 13.6, 16]), duration: 'Until end of combat', targetPriority: 'opposing-position', targetSelection: targetSelection({ references: [{ id: 'opposing-position-enemy', kind: 'opposing-position-enemy', referencedEffectId: null, description: "Enemy occupying Venator's lane, retained as provisional interpretation." }], distinctness: 'no-distinctness-requirement' }) })] })], powerByHabitLevel: standardLegendaryPower20260625, tags: ['PHYSICAL_DAMAGE_UP'], verification: screenshotVerificationAt('Venator Armor Break screenshot', combat20260625), evidenceIds: ['venator-armor-break-2026-06-25'], unresolvedQuestions: ['Opposing-position interpretation retained as provisional.'] }),
+    ability({ dragonId: 'venator', id: 'venator-desperate-ambush', kind: 'habit', name: 'Desperate Ambush', abilityClass: 'passive', unlockStarRank: 10, rawDescription: 'Each round, when Venator is strictly below 50% Troop Capacity: select one enemy, preferring Hunter breed, deal Physical Damage, then attempt Overwhelm on that same selected target for two rounds.', schedules: [schedule({ id: 'desperate-ambush-each-round', timing: 'each-round', roundSelector: { kind: 'each-round' }, conditions: [below50Self], effects: [fixedEffect({ id: 'desperate-ambush-physical', type: 'Physical Damage', target: '1 Enemy, prioritizing Hunter breed', targetScope: 'any-lane', magnitude: null, unit: 'rate', rankedValues: rankedPercents([60, 78, 96, 120, 150]), scaling: ['attacker Strength'], conditions: [below50Self], targetPriority: 'prefer-hunter', targetSelection: targetSelection({ preference: 'Hunter breed', fallback: 'another eligible enemy', sharedSelectionGroupId: 'desperate-ambush-target' }) }), fixedEffect({ id: 'desperate-ambush-overwhelm', type: 'Overwhelm', target: 'Same selected target damaged by Desperate Ambush', targetScope: 'any-lane', magnitude: null, unit: 'unknown', durationRounds: 2, rankedValues: rankedPercents([12, 15.6, 19.2, 24, 30]), conditions: [below50Self], activationRoll: roll({ scope: 'effect', chanceByHabitLevel: rankedPercents([12, 15.6, 19.2, 24, 30]), description: 'Overwhelm chance applies to the same target damaged by this activation.' }), targetSelection: targetSelection({ references: [{ id: 'desperate-ambush-damage-target', kind: 'same-target-as-effect', referencedEffectId: 'desperate-ambush-physical', description: 'Overwhelm uses the damage target.' }], sharedSelectionGroupId: 'desperate-ambush-target', distinctness: 'same-target-required' }) })] })], powerByHabitLevel: finalLegendaryPowerEarly, glossaryEntries: [{ term: 'Overwhelm', definition: 'Prevents Active Commands and Habits, but does not prevent Basic Attacks.' }], tags: ['PHYSICAL_DAMAGE', 'OVERWHELM', 'CONTROL'], verification: screenshotVerificationAt('Venator Desperate Ambush screenshot', combat20260625), evidenceIds: ['venator-desperate-ambush-2026-06-25'], unresolvedQuestions: ['Exactly 50% Troop Capacity behavior.'] }),
+  ];
+  return { ...createDragon('Venator', 'Legendary', 'Warrior'), dataStatus: 'community-verified', lastVerified: combat20260625, command, trait, habits, affinities: { Spearmen: 'positive', Shieldbearers: 'positive', Cavalry: 'unknown', Archers: 'unknown', Siege: 'unknown' }, tags: [...new Set<EffectTag>([...command.tags, ...trait.tags, ...habits.flatMap((habit) => habit.tags)])], fieldVerification: { identity: officialMetadataVerification, rarity: officialMetadataVerification, breed: officialMetadataVerification, command: screenshotVerificationAt('Venator Feral Strike screenshots', combat20260625), trait: screenshotVerificationAt("Venator Warrior's Zeal screenshot", combat20260625), habits: screenshotVerificationAt('Venator Habit screenshots', combat20260625), affinities: partialScreenshotVerification('Venator main screen screenshot') }, unresolvedQuestions: ['Observed values include Troop Capacity and Dragon Power only; combat stats, March Speed, and Stamina remain unknown.'] };
+};
+
 export const dragons: Dragon[] = [
   createSyrax(),
-  createDragon('Vhagar', 'Legendary', 'Warrior'),
+  createVhagar(),
   createCaraxes(),
   createSeasmoke(),
   createDragon('Solstryker', 'Rare', 'Champion'),
-  createDragon('Crimson', 'Legendary', 'Hunter'),
-  createDragon('Kalspire', 'Legendary', 'Champion'),
+  createCrimson(),
+  createKalspire(),
   createMalachite(),
-  createDragon('Venator', 'Legendary', 'Warrior'),
+  createVenator(),
   createDragon('Daemoros', 'Epic', 'Warrior'),
   createDragon('Feskar', 'Epic', 'Champion'),
   createDragon('Rhysarion', 'Epic', 'Champion'),

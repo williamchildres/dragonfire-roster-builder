@@ -6,6 +6,7 @@
         {
           "effectsAdded": [
             {
+              "activationRoll": null,
               "calculated": false,
               "casterEligibility": "unknown",
               "conditionalMultipliers": [
@@ -79,14 +80,17 @@
               ],
               "sourceScope": "unknown",
               "stack": null,
+              "stackTransitionTrigger": null,
               "target": "Ally with least current troops",
               "targetCount": null,
               "targetPriority": "least-current-troops-ally",
               "targetScope": "any-lane",
+              "targetSelection": null,
               "type": "Recovery",
               "unit": "rate"
             },
             {
+              "activationRoll": null,
               "calculated": false,
               "casterEligibility": "unknown",
               "conditionalMultipliers": [],
@@ -106,10 +110,12 @@
               "scaling": [],
               "sourceScope": "unknown",
               "stack": null,
+              "stackTransitionTrigger": null,
               "target": "Ally with least current troops",
               "targetCount": null,
               "targetPriority": "least-current-troops-ally",
               "targetScope": "any-lane",
+              "targetSelection": null,
               "type": "Resistance",
               "unit": "percent"
             }
@@ -123,11 +129,13 @@
           "rawDescription": "At 6 Stars, Strategic Revival augments Blazing Fury with Recovery and Resistance on rounds 2, 5, and 8.",
           "schedulesAdded": [
             {
+              "activationRoll": null,
               "attempts": null,
               "battleContext": "unspecified",
               "conditions": [],
               "effects": [
                 {
+                  "activationRoll": null,
                   "calculated": false,
                   "casterEligibility": "unknown",
                   "conditionalMultipliers": [
@@ -201,14 +209,17 @@
                   ],
                   "sourceScope": "unknown",
                   "stack": null,
+                  "stackTransitionTrigger": null,
                   "target": "Ally with least current troops",
                   "targetCount": null,
                   "targetPriority": "least-current-troops-ally",
                   "targetScope": "any-lane",
+                  "targetSelection": null,
                   "type": "Recovery",
                   "unit": "rate"
                 },
                 {
+                  "activationRoll": null,
                   "calculated": false,
                   "casterEligibility": "unknown",
                   "conditionalMultipliers": [],
@@ -228,10 +239,12 @@
                   "scaling": [],
                   "sourceScope": "unknown",
                   "stack": null,
+                  "stackTransitionTrigger": null,
                   "target": "Ally with least current troops",
                   "targetCount": null,
                   "targetPriority": "least-current-troops-ally",
                   "targetScope": "any-lane",
+                  "targetSelection": null,
                   "type": "Resistance",
                   "unit": "percent"
                 }
@@ -243,6 +256,7 @@
                 5,
                 8
               ],
+              "roundSelector": null,
               "targetPriority": "least-current-troops-ally",
               "timing": "specific-rounds",
               "triggerChanceByHabitLevel": [
@@ -294,11 +308,13 @@
       "rawDescription": "Each Round: 20% chance to increase Fire Damage Dealt by 10% and grant First-Strike to one Ally in any lane for 2 rounds, prioritizing allies that deal Fire Damage. Rounds 1, 4, 6, 9: deal Tactical Damage to one enemy within adjacency.",
       "schedules": [
         {
+          "activationRoll": null,
           "attempts": null,
           "battleContext": "unspecified",
           "conditions": [],
           "effects": [
             {
+              "activationRoll": null,
               "calculated": false,
               "casterEligibility": "eligible-if-targeting-allows",
               "conditionalMultipliers": [],
@@ -318,14 +334,17 @@
               "scaling": [],
               "sourceScope": "unknown",
               "stack": null,
+              "stackTransitionTrigger": null,
               "target": "1 Ally",
               "targetCount": null,
               "targetPriority": "prefer-fire-damage-ally",
               "targetScope": "any-lane",
+              "targetSelection": null,
               "type": "Fire Damage Dealt Up",
               "unit": "percent"
             },
             {
+              "activationRoll": null,
               "calculated": false,
               "casterEligibility": "eligible-if-targeting-allows",
               "conditionalMultipliers": [],
@@ -343,10 +362,12 @@
               "scaling": [],
               "sourceScope": "unknown",
               "stack": null,
+              "stackTransitionTrigger": null,
               "target": "1 Ally",
               "targetCount": null,
               "targetPriority": "prefer-fire-damage-ally",
               "targetScope": "any-lane",
+              "targetSelection": null,
               "type": "First-Strike",
               "unit": "unknown"
             }
@@ -354,6 +375,7 @@
           "id": "blazing-fury-fire-support",
           "repeat": null,
           "rounds": [],
+          "roundSelector": null,
           "targetPriority": "prefer-fire-damage-ally",
           "timing": "each-round",
           "triggerChanceByHabitLevel": [],
@@ -361,11 +383,13 @@
           "triggerEvent": "each-round"
         },
         {
+          "activationRoll": null,
           "attempts": null,
           "battleContext": "unspecified",
           "conditions": [],
           "effects": [
             {
+              "activationRoll": null,
               "calculated": false,
               "casterEligibility": "unknown",
               "conditionalMultipliers": [],
@@ -388,10 +412,12 @@
               ],
               "sourceScope": "unknown",
               "stack": null,
+              "stackTransitionTrigger": null,
               "target": "1 Enemy",
               "targetCount": null,
               "targetPriority": "any-eligible",
               "targetScope": "within-adjacency",
+              "targetSelection": null,
               "type": "Tactical Damage",
               "unit": "rate"
             }
@@ -404,6 +430,7 @@
             6,
             9
           ],
+          "roundSelector": null,
           "targetPriority": "any-eligible",
           "timing": "specific-rounds",
           "triggerChanceByHabitLevel": [],
@@ -446,11 +473,13 @@
       "rawDescription": "At Level 16+ and deployed in Vanguard, increase Syrax Tactical Damage Dealt by 16%. Increase Instinct and Initiative of Left Flank ally by +20.",
       "schedules": [
         {
+          "activationRoll": null,
           "attempts": null,
           "battleContext": "unspecified",
           "conditions": [],
           "effects": [
             {
+              "activationRoll": null,
               "calculated": false,
               "casterEligibility": "unknown",
               "conditionalMultipliers": [],
@@ -468,14 +497,17 @@
               "scaling": [],
               "sourceScope": "all-sources",
               "stack": null,
+              "stackTransitionTrigger": null,
               "target": "Self",
               "targetCount": null,
               "targetPriority": "any-eligible",
               "targetScope": "self",
+              "targetSelection": null,
               "type": "Tactical Damage Dealt Up",
               "unit": "percent"
             },
             {
+              "activationRoll": null,
               "calculated": false,
               "casterEligibility": "unknown",
               "conditionalMultipliers": [],
@@ -493,14 +525,17 @@
               "scaling": [],
               "sourceScope": "unknown",
               "stack": null,
+              "stackTransitionTrigger": null,
               "target": "Left Flank ally",
               "targetCount": null,
               "targetPriority": "any-eligible",
               "targetScope": "left-flank",
+              "targetSelection": null,
               "type": "Instinct Up",
               "unit": "flat"
             },
             {
+              "activationRoll": null,
               "calculated": false,
               "casterEligibility": "unknown",
               "conditionalMultipliers": [],
@@ -518,10 +553,12 @@
               "scaling": [],
               "sourceScope": "unknown",
               "stack": null,
+              "stackTransitionTrigger": null,
               "target": "Left Flank ally",
               "targetCount": null,
               "targetPriority": "any-eligible",
               "targetScope": "left-flank",
+              "targetSelection": null,
               "type": "Initiative Up",
               "unit": "flat"
             }
@@ -529,6 +566,7 @@
           "id": "sentinels-wit-passive",
           "repeat": null,
           "rounds": [],
+          "roundSelector": null,
           "targetPriority": "any-eligible",
           "timing": "passive",
           "triggerChanceByHabitLevel": [],
@@ -596,11 +634,13 @@
       "rawDescription": "Start of Combat: increase Intelligence and Instinct of 3 Allies in any lane until end of combat, enhanced by Syrax Initiative.",
       "schedules": [
         {
+          "activationRoll": null,
           "attempts": null,
           "battleContext": "unspecified",
           "conditions": [],
           "effects": [
             {
+              "activationRoll": null,
               "calculated": false,
               "casterEligibility": "included",
               "conditionalMultipliers": [],
@@ -646,14 +686,17 @@
               ],
               "sourceScope": "unknown",
               "stack": null,
+              "stackTransitionTrigger": null,
               "target": "3 Allies",
               "targetCount": 3,
               "targetPriority": "any-eligible",
               "targetScope": "any-lane",
+              "targetSelection": null,
               "type": "Intelligence Up",
               "unit": "percent"
             },
             {
+              "activationRoll": null,
               "calculated": false,
               "casterEligibility": "included",
               "conditionalMultipliers": [],
@@ -699,10 +742,12 @@
               ],
               "sourceScope": "unknown",
               "stack": null,
+              "stackTransitionTrigger": null,
               "target": "3 Allies",
               "targetCount": 3,
               "targetPriority": "any-eligible",
               "targetScope": "any-lane",
+              "targetSelection": null,
               "type": "Instinct Up",
               "unit": "percent"
             }
@@ -710,6 +755,7 @@
           "id": "mindful-synergy-start",
           "repeat": null,
           "rounds": [],
+          "roundSelector": null,
           "targetPriority": "any-eligible",
           "timing": "start-of-combat",
           "triggerChanceByHabitLevel": [],
@@ -777,11 +823,13 @@
       "rawDescription": "Start of Combat: increase Initiative of 3 Allies and reduce Initiative of 3 Enemies in any lane until end of combat, enhanced by Syrax Instinct.",
       "schedules": [
         {
+          "activationRoll": null,
           "attempts": null,
           "battleContext": "unspecified",
           "conditions": [],
           "effects": [
             {
+              "activationRoll": null,
               "calculated": false,
               "casterEligibility": "included",
               "conditionalMultipliers": [],
@@ -827,14 +875,17 @@
               ],
               "sourceScope": "unknown",
               "stack": null,
+              "stackTransitionTrigger": null,
               "target": "3 Allies",
               "targetCount": 3,
               "targetPriority": "any-eligible",
               "targetScope": "any-lane",
+              "targetSelection": null,
               "type": "Initiative Up",
               "unit": "percent"
             },
             {
+              "activationRoll": null,
               "calculated": false,
               "casterEligibility": "unknown",
               "conditionalMultipliers": [],
@@ -880,10 +931,12 @@
               ],
               "sourceScope": "unknown",
               "stack": null,
+              "stackTransitionTrigger": null,
               "target": "3 Enemies",
               "targetCount": 3,
               "targetPriority": "any-eligible",
               "targetScope": "any-lane",
+              "targetSelection": null,
               "type": "Initiative Down",
               "unit": "percent"
             }
@@ -891,6 +944,7 @@
           "id": "flight-mastery-start",
           "repeat": null,
           "rounds": [],
+          "roundSelector": null,
           "targetPriority": "any-eligible",
           "timing": "start-of-combat",
           "triggerChanceByHabitLevel": [],
@@ -957,11 +1011,13 @@
       "rawDescription": "Augments Blazing Fury: Rounds 2, 5, 8 recover the Ally with least current troops. Recovery is multiplied by 1.5 if any enemy has Slow. Chance to grant Resistance (-20%) for 2 rounds.",
       "schedules": [
         {
+          "activationRoll": null,
           "attempts": null,
           "battleContext": "unspecified",
           "conditions": [],
           "effects": [
             {
+              "activationRoll": null,
               "calculated": false,
               "casterEligibility": "unknown",
               "conditionalMultipliers": [
@@ -1035,14 +1091,17 @@
               ],
               "sourceScope": "unknown",
               "stack": null,
+              "stackTransitionTrigger": null,
               "target": "Ally with least current troops",
               "targetCount": null,
               "targetPriority": "least-current-troops-ally",
               "targetScope": "any-lane",
+              "targetSelection": null,
               "type": "Recovery",
               "unit": "rate"
             },
             {
+              "activationRoll": null,
               "calculated": false,
               "casterEligibility": "unknown",
               "conditionalMultipliers": [],
@@ -1062,10 +1121,12 @@
               "scaling": [],
               "sourceScope": "unknown",
               "stack": null,
+              "stackTransitionTrigger": null,
               "target": "Ally with least current troops",
               "targetCount": null,
               "targetPriority": "least-current-troops-ally",
               "targetScope": "any-lane",
+              "targetSelection": null,
               "type": "Resistance",
               "unit": "percent"
             }
@@ -1077,6 +1138,7 @@
             5,
             8
           ],
+          "roundSelector": null,
           "targetPriority": "least-current-troops-ally",
           "timing": "specific-rounds",
           "triggerChanceByHabitLevel": [
@@ -1171,11 +1233,13 @@
       "rawDescription": "Start of Round 1: increase Tactical Damage Dealt of one Ally, prioritizing Left Flank, and Fire Damage Dealt of one Ally, prioritizing Right Flank, for 3 rounds.",
       "schedules": [
         {
+          "activationRoll": null,
           "attempts": null,
           "battleContext": "unspecified",
           "conditions": [],
           "effects": [
             {
+              "activationRoll": null,
               "calculated": false,
               "casterEligibility": "unknown",
               "conditionalMultipliers": [],
@@ -1221,14 +1285,17 @@
               "scaling": [],
               "sourceScope": "unknown",
               "stack": null,
+              "stackTransitionTrigger": null,
               "target": "1 Ally, prioritizing Left Flank",
               "targetCount": null,
               "targetPriority": "prefer-left-flank",
               "targetScope": "any-lane",
+              "targetSelection": null,
               "type": "Tactical Damage Dealt Up",
               "unit": "percent"
             },
             {
+              "activationRoll": null,
               "calculated": false,
               "casterEligibility": "unknown",
               "conditionalMultipliers": [],
@@ -1274,10 +1341,12 @@
               "scaling": [],
               "sourceScope": "unknown",
               "stack": null,
+              "stackTransitionTrigger": null,
               "target": "1 Ally, prioritizing Right Flank",
               "targetCount": null,
               "targetPriority": "prefer-right-flank",
               "targetScope": "any-lane",
+              "targetSelection": null,
               "type": "Fire Damage Dealt Up",
               "unit": "percent"
             }
@@ -1287,6 +1356,7 @@
           "rounds": [
             1
           ],
+          "roundSelector": null,
           "targetPriority": "any-eligible",
           "timing": "start-of-round",
           "triggerChanceByHabitLevel": [],
@@ -1355,11 +1425,13 @@
       "rawDescription": "Each Round: chance to cleanse two Negative effects and one Control effect from one Ally in any lane, prioritizing Allies afflicted with Control.",
       "schedules": [
         {
+          "activationRoll": null,
           "attempts": null,
           "battleContext": "unspecified",
           "conditions": [],
           "effects": [
             {
+              "activationRoll": null,
               "calculated": false,
               "casterEligibility": "unknown",
               "conditionalMultipliers": [],
@@ -1377,14 +1449,17 @@
               "scaling": [],
               "sourceScope": "unknown",
               "stack": null,
+              "stackTransitionTrigger": null,
               "target": "1 Ally",
               "targetCount": null,
               "targetPriority": "prefer-control-afflicted-ally",
               "targetScope": "any-lane",
+              "targetSelection": null,
               "type": "Cleanse Negative",
               "unit": "flat"
             },
             {
+              "activationRoll": null,
               "calculated": false,
               "casterEligibility": "unknown",
               "conditionalMultipliers": [],
@@ -1404,10 +1479,12 @@
               "scaling": [],
               "sourceScope": "unknown",
               "stack": null,
+              "stackTransitionTrigger": null,
               "target": "1 Ally",
               "targetCount": null,
               "targetPriority": "prefer-control-afflicted-ally",
               "targetScope": "any-lane",
+              "targetSelection": null,
               "type": "Cleanse Control",
               "unit": "flat"
             }
@@ -1415,6 +1492,7 @@
           "id": "mothers-mercy-each-round",
           "repeat": null,
           "rounds": [],
+          "roundSelector": null,
           "targetPriority": "prefer-control-afflicted-ally",
           "timing": "each-round",
           "triggerChanceByHabitLevel": [
@@ -1471,11 +1549,13 @@
       "abilityId": "syrax-blazing-fury",
       "abilityName": "Blazing Fury",
       "schedule": {
+        "activationRoll": null,
         "attempts": null,
         "battleContext": "unspecified",
         "conditions": [],
         "effects": [
           {
+            "activationRoll": null,
             "calculated": false,
             "casterEligibility": "eligible-if-targeting-allows",
             "conditionalMultipliers": [],
@@ -1495,14 +1575,17 @@
             "scaling": [],
             "sourceScope": "unknown",
             "stack": null,
+            "stackTransitionTrigger": null,
             "target": "1 Ally",
             "targetCount": null,
             "targetPriority": "prefer-fire-damage-ally",
             "targetScope": "any-lane",
+            "targetSelection": null,
             "type": "Fire Damage Dealt Up",
             "unit": "percent"
           },
           {
+            "activationRoll": null,
             "calculated": false,
             "casterEligibility": "eligible-if-targeting-allows",
             "conditionalMultipliers": [],
@@ -1520,10 +1603,12 @@
             "scaling": [],
             "sourceScope": "unknown",
             "stack": null,
+            "stackTransitionTrigger": null,
             "target": "1 Ally",
             "targetCount": null,
             "targetPriority": "prefer-fire-damage-ally",
             "targetScope": "any-lane",
+            "targetSelection": null,
             "type": "First-Strike",
             "unit": "unknown"
           }
@@ -1531,6 +1616,7 @@
         "id": "blazing-fury-fire-support",
         "repeat": null,
         "rounds": [],
+        "roundSelector": null,
         "targetPriority": "prefer-fire-damage-ally",
         "timing": "each-round",
         "triggerChanceByHabitLevel": [],
@@ -1542,11 +1628,13 @@
       "abilityId": "syrax-blazing-fury",
       "abilityName": "Blazing Fury",
       "schedule": {
+        "activationRoll": null,
         "attempts": null,
         "battleContext": "unspecified",
         "conditions": [],
         "effects": [
           {
+            "activationRoll": null,
             "calculated": false,
             "casterEligibility": "unknown",
             "conditionalMultipliers": [],
@@ -1569,10 +1657,12 @@
             ],
             "sourceScope": "unknown",
             "stack": null,
+            "stackTransitionTrigger": null,
             "target": "1 Enemy",
             "targetCount": null,
             "targetPriority": "any-eligible",
             "targetScope": "within-adjacency",
+            "targetSelection": null,
             "type": "Tactical Damage",
             "unit": "rate"
           }
@@ -1585,6 +1675,7 @@
           6,
           9
         ],
+        "roundSelector": null,
         "targetPriority": "any-eligible",
         "timing": "specific-rounds",
         "triggerChanceByHabitLevel": [],
@@ -1596,11 +1687,13 @@
       "abilityId": "syrax-sentinels-wit",
       "abilityName": "Sentinel's Wit",
       "schedule": {
+        "activationRoll": null,
         "attempts": null,
         "battleContext": "unspecified",
         "conditions": [],
         "effects": [
           {
+            "activationRoll": null,
             "calculated": false,
             "casterEligibility": "unknown",
             "conditionalMultipliers": [],
@@ -1618,14 +1711,17 @@
             "scaling": [],
             "sourceScope": "all-sources",
             "stack": null,
+            "stackTransitionTrigger": null,
             "target": "Self",
             "targetCount": null,
             "targetPriority": "any-eligible",
             "targetScope": "self",
+            "targetSelection": null,
             "type": "Tactical Damage Dealt Up",
             "unit": "percent"
           },
           {
+            "activationRoll": null,
             "calculated": false,
             "casterEligibility": "unknown",
             "conditionalMultipliers": [],
@@ -1643,14 +1739,17 @@
             "scaling": [],
             "sourceScope": "unknown",
             "stack": null,
+            "stackTransitionTrigger": null,
             "target": "Left Flank ally",
             "targetCount": null,
             "targetPriority": "any-eligible",
             "targetScope": "left-flank",
+            "targetSelection": null,
             "type": "Instinct Up",
             "unit": "flat"
           },
           {
+            "activationRoll": null,
             "calculated": false,
             "casterEligibility": "unknown",
             "conditionalMultipliers": [],
@@ -1668,10 +1767,12 @@
             "scaling": [],
             "sourceScope": "unknown",
             "stack": null,
+            "stackTransitionTrigger": null,
             "target": "Left Flank ally",
             "targetCount": null,
             "targetPriority": "any-eligible",
             "targetScope": "left-flank",
+            "targetSelection": null,
             "type": "Initiative Up",
             "unit": "flat"
           }
@@ -1679,6 +1780,7 @@
         "id": "sentinels-wit-passive",
         "repeat": null,
         "rounds": [],
+        "roundSelector": null,
         "targetPriority": "any-eligible",
         "timing": "passive",
         "triggerChanceByHabitLevel": [],
@@ -1690,11 +1792,13 @@
       "abilityId": "syrax-mindful-synergy",
       "abilityName": "Mindful Synergy",
       "schedule": {
+        "activationRoll": null,
         "attempts": null,
         "battleContext": "unspecified",
         "conditions": [],
         "effects": [
           {
+            "activationRoll": null,
             "calculated": false,
             "casterEligibility": "included",
             "conditionalMultipliers": [],
@@ -1740,14 +1844,17 @@
             ],
             "sourceScope": "unknown",
             "stack": null,
+            "stackTransitionTrigger": null,
             "target": "3 Allies",
             "targetCount": 3,
             "targetPriority": "any-eligible",
             "targetScope": "any-lane",
+            "targetSelection": null,
             "type": "Intelligence Up",
             "unit": "percent"
           },
           {
+            "activationRoll": null,
             "calculated": false,
             "casterEligibility": "included",
             "conditionalMultipliers": [],
@@ -1793,10 +1900,12 @@
             ],
             "sourceScope": "unknown",
             "stack": null,
+            "stackTransitionTrigger": null,
             "target": "3 Allies",
             "targetCount": 3,
             "targetPriority": "any-eligible",
             "targetScope": "any-lane",
+            "targetSelection": null,
             "type": "Instinct Up",
             "unit": "percent"
           }
@@ -1804,6 +1913,7 @@
         "id": "mindful-synergy-start",
         "repeat": null,
         "rounds": [],
+        "roundSelector": null,
         "targetPriority": "any-eligible",
         "timing": "start-of-combat",
         "triggerChanceByHabitLevel": [],
@@ -1815,11 +1925,13 @@
       "abilityId": "syrax-flight-mastery",
       "abilityName": "Flight Mastery",
       "schedule": {
+        "activationRoll": null,
         "attempts": null,
         "battleContext": "unspecified",
         "conditions": [],
         "effects": [
           {
+            "activationRoll": null,
             "calculated": false,
             "casterEligibility": "included",
             "conditionalMultipliers": [],
@@ -1865,14 +1977,17 @@
             ],
             "sourceScope": "unknown",
             "stack": null,
+            "stackTransitionTrigger": null,
             "target": "3 Allies",
             "targetCount": 3,
             "targetPriority": "any-eligible",
             "targetScope": "any-lane",
+            "targetSelection": null,
             "type": "Initiative Up",
             "unit": "percent"
           },
           {
+            "activationRoll": null,
             "calculated": false,
             "casterEligibility": "unknown",
             "conditionalMultipliers": [],
@@ -1918,10 +2033,12 @@
             ],
             "sourceScope": "unknown",
             "stack": null,
+            "stackTransitionTrigger": null,
             "target": "3 Enemies",
             "targetCount": 3,
             "targetPriority": "any-eligible",
             "targetScope": "any-lane",
+            "targetSelection": null,
             "type": "Initiative Down",
             "unit": "percent"
           }
@@ -1929,6 +2046,7 @@
         "id": "flight-mastery-start",
         "repeat": null,
         "rounds": [],
+        "roundSelector": null,
         "targetPriority": "any-eligible",
         "timing": "start-of-combat",
         "triggerChanceByHabitLevel": [],
@@ -1940,11 +2058,13 @@
       "abilityId": "syrax-strategic-revival",
       "abilityName": "Strategic Revival",
       "schedule": {
+        "activationRoll": null,
         "attempts": null,
         "battleContext": "unspecified",
         "conditions": [],
         "effects": [
           {
+            "activationRoll": null,
             "calculated": false,
             "casterEligibility": "unknown",
             "conditionalMultipliers": [
@@ -2018,14 +2138,17 @@
             ],
             "sourceScope": "unknown",
             "stack": null,
+            "stackTransitionTrigger": null,
             "target": "Ally with least current troops",
             "targetCount": null,
             "targetPriority": "least-current-troops-ally",
             "targetScope": "any-lane",
+            "targetSelection": null,
             "type": "Recovery",
             "unit": "rate"
           },
           {
+            "activationRoll": null,
             "calculated": false,
             "casterEligibility": "unknown",
             "conditionalMultipliers": [],
@@ -2045,10 +2168,12 @@
             "scaling": [],
             "sourceScope": "unknown",
             "stack": null,
+            "stackTransitionTrigger": null,
             "target": "Ally with least current troops",
             "targetCount": null,
             "targetPriority": "least-current-troops-ally",
             "targetScope": "any-lane",
+            "targetSelection": null,
             "type": "Resistance",
             "unit": "percent"
           }
@@ -2060,6 +2185,7 @@
           5,
           8
         ],
+        "roundSelector": null,
         "targetPriority": "least-current-troops-ally",
         "timing": "specific-rounds",
         "triggerChanceByHabitLevel": [
@@ -2097,11 +2223,13 @@
       "abilityId": "syrax-tactical-inferno",
       "abilityName": "Tactical Inferno",
       "schedule": {
+        "activationRoll": null,
         "attempts": null,
         "battleContext": "unspecified",
         "conditions": [],
         "effects": [
           {
+            "activationRoll": null,
             "calculated": false,
             "casterEligibility": "unknown",
             "conditionalMultipliers": [],
@@ -2147,14 +2275,17 @@
             "scaling": [],
             "sourceScope": "unknown",
             "stack": null,
+            "stackTransitionTrigger": null,
             "target": "1 Ally, prioritizing Left Flank",
             "targetCount": null,
             "targetPriority": "prefer-left-flank",
             "targetScope": "any-lane",
+            "targetSelection": null,
             "type": "Tactical Damage Dealt Up",
             "unit": "percent"
           },
           {
+            "activationRoll": null,
             "calculated": false,
             "casterEligibility": "unknown",
             "conditionalMultipliers": [],
@@ -2200,10 +2331,12 @@
             "scaling": [],
             "sourceScope": "unknown",
             "stack": null,
+            "stackTransitionTrigger": null,
             "target": "1 Ally, prioritizing Right Flank",
             "targetCount": null,
             "targetPriority": "prefer-right-flank",
             "targetScope": "any-lane",
+            "targetSelection": null,
             "type": "Fire Damage Dealt Up",
             "unit": "percent"
           }
@@ -2213,6 +2346,7 @@
         "rounds": [
           1
         ],
+        "roundSelector": null,
         "targetPriority": "any-eligible",
         "timing": "start-of-round",
         "triggerChanceByHabitLevel": [],
@@ -2224,11 +2358,13 @@
       "abilityId": "syrax-mothers-mercy",
       "abilityName": "Mother's Mercy",
       "schedule": {
+        "activationRoll": null,
         "attempts": null,
         "battleContext": "unspecified",
         "conditions": [],
         "effects": [
           {
+            "activationRoll": null,
             "calculated": false,
             "casterEligibility": "unknown",
             "conditionalMultipliers": [],
@@ -2246,14 +2382,17 @@
             "scaling": [],
             "sourceScope": "unknown",
             "stack": null,
+            "stackTransitionTrigger": null,
             "target": "1 Ally",
             "targetCount": null,
             "targetPriority": "prefer-control-afflicted-ally",
             "targetScope": "any-lane",
+            "targetSelection": null,
             "type": "Cleanse Negative",
             "unit": "flat"
           },
           {
+            "activationRoll": null,
             "calculated": false,
             "casterEligibility": "unknown",
             "conditionalMultipliers": [],
@@ -2273,10 +2412,12 @@
             "scaling": [],
             "sourceScope": "unknown",
             "stack": null,
+            "stackTransitionTrigger": null,
             "target": "1 Ally",
             "targetCount": null,
             "targetPriority": "prefer-control-afflicted-ally",
             "targetScope": "any-lane",
+            "targetSelection": null,
             "type": "Cleanse Control",
             "unit": "flat"
           }
@@ -2284,6 +2425,7 @@
         "id": "mothers-mercy-each-round",
         "repeat": null,
         "rounds": [],
+        "roundSelector": null,
         "targetPriority": "prefer-control-afflicted-ally",
         "timing": "each-round",
         "triggerChanceByHabitLevel": [
@@ -2375,6 +2517,7 @@
       {
         "effectsAdded": [
           {
+            "activationRoll": null,
             "calculated": false,
             "casterEligibility": "unknown",
             "conditionalMultipliers": [
@@ -2448,14 +2591,17 @@
             ],
             "sourceScope": "unknown",
             "stack": null,
+            "stackTransitionTrigger": null,
             "target": "Ally with least current troops",
             "targetCount": null,
             "targetPriority": "least-current-troops-ally",
             "targetScope": "any-lane",
+            "targetSelection": null,
             "type": "Recovery",
             "unit": "rate"
           },
           {
+            "activationRoll": null,
             "calculated": false,
             "casterEligibility": "unknown",
             "conditionalMultipliers": [],
@@ -2475,10 +2621,12 @@
             "scaling": [],
             "sourceScope": "unknown",
             "stack": null,
+            "stackTransitionTrigger": null,
             "target": "Ally with least current troops",
             "targetCount": null,
             "targetPriority": "least-current-troops-ally",
             "targetScope": "any-lane",
+            "targetSelection": null,
             "type": "Resistance",
             "unit": "percent"
           }
@@ -2492,11 +2640,13 @@
         "rawDescription": "At 6 Stars, Strategic Revival augments Blazing Fury with Recovery and Resistance on rounds 2, 5, and 8.",
         "schedulesAdded": [
           {
+            "activationRoll": null,
             "attempts": null,
             "battleContext": "unspecified",
             "conditions": [],
             "effects": [
               {
+                "activationRoll": null,
                 "calculated": false,
                 "casterEligibility": "unknown",
                 "conditionalMultipliers": [
@@ -2570,14 +2720,17 @@
                 ],
                 "sourceScope": "unknown",
                 "stack": null,
+                "stackTransitionTrigger": null,
                 "target": "Ally with least current troops",
                 "targetCount": null,
                 "targetPriority": "least-current-troops-ally",
                 "targetScope": "any-lane",
+                "targetSelection": null,
                 "type": "Recovery",
                 "unit": "rate"
               },
               {
+                "activationRoll": null,
                 "calculated": false,
                 "casterEligibility": "unknown",
                 "conditionalMultipliers": [],
@@ -2597,10 +2750,12 @@
                 "scaling": [],
                 "sourceScope": "unknown",
                 "stack": null,
+                "stackTransitionTrigger": null,
                 "target": "Ally with least current troops",
                 "targetCount": null,
                 "targetPriority": "least-current-troops-ally",
                 "targetScope": "any-lane",
+                "targetSelection": null,
                 "type": "Resistance",
                 "unit": "percent"
               }
@@ -2612,6 +2767,7 @@
               5,
               8
             ],
+            "roundSelector": null,
             "targetPriority": "least-current-troops-ally",
             "timing": "specific-rounds",
             "triggerChanceByHabitLevel": [
@@ -2663,11 +2819,13 @@
     "rawDescription": "Each Round: 20% chance to increase Fire Damage Dealt by 10% and grant First-Strike to one Ally in any lane for 2 rounds, prioritizing allies that deal Fire Damage. Rounds 1, 4, 6, 9: deal Tactical Damage to one enemy within adjacency.",
     "schedules": [
       {
+        "activationRoll": null,
         "attempts": null,
         "battleContext": "unspecified",
         "conditions": [],
         "effects": [
           {
+            "activationRoll": null,
             "calculated": false,
             "casterEligibility": "eligible-if-targeting-allows",
             "conditionalMultipliers": [],
@@ -2687,14 +2845,17 @@
             "scaling": [],
             "sourceScope": "unknown",
             "stack": null,
+            "stackTransitionTrigger": null,
             "target": "1 Ally",
             "targetCount": null,
             "targetPriority": "prefer-fire-damage-ally",
             "targetScope": "any-lane",
+            "targetSelection": null,
             "type": "Fire Damage Dealt Up",
             "unit": "percent"
           },
           {
+            "activationRoll": null,
             "calculated": false,
             "casterEligibility": "eligible-if-targeting-allows",
             "conditionalMultipliers": [],
@@ -2712,10 +2873,12 @@
             "scaling": [],
             "sourceScope": "unknown",
             "stack": null,
+            "stackTransitionTrigger": null,
             "target": "1 Ally",
             "targetCount": null,
             "targetPriority": "prefer-fire-damage-ally",
             "targetScope": "any-lane",
+            "targetSelection": null,
             "type": "First-Strike",
             "unit": "unknown"
           }
@@ -2723,6 +2886,7 @@
         "id": "blazing-fury-fire-support",
         "repeat": null,
         "rounds": [],
+        "roundSelector": null,
         "targetPriority": "prefer-fire-damage-ally",
         "timing": "each-round",
         "triggerChanceByHabitLevel": [],
@@ -2730,11 +2894,13 @@
         "triggerEvent": "each-round"
       },
       {
+        "activationRoll": null,
         "attempts": null,
         "battleContext": "unspecified",
         "conditions": [],
         "effects": [
           {
+            "activationRoll": null,
             "calculated": false,
             "casterEligibility": "unknown",
             "conditionalMultipliers": [],
@@ -2757,10 +2923,12 @@
             ],
             "sourceScope": "unknown",
             "stack": null,
+            "stackTransitionTrigger": null,
             "target": "1 Enemy",
             "targetCount": null,
             "targetPriority": "any-eligible",
             "targetScope": "within-adjacency",
+            "targetSelection": null,
             "type": "Tactical Damage",
             "unit": "rate"
           }
@@ -2773,6 +2941,7 @@
           6,
           9
         ],
+        "roundSelector": null,
         "targetPriority": "any-eligible",
         "timing": "specific-rounds",
         "triggerChanceByHabitLevel": [],
@@ -2847,6 +3016,7 @@
     {
       "abilityId": "syrax-blazing-fury",
       "effect": {
+        "activationRoll": null,
         "calculated": false,
         "casterEligibility": "eligible-if-targeting-allows",
         "conditionalMultipliers": [],
@@ -2866,10 +3036,12 @@
         "scaling": [],
         "sourceScope": "unknown",
         "stack": null,
+        "stackTransitionTrigger": null,
         "target": "1 Ally",
         "targetCount": null,
         "targetPriority": "prefer-fire-damage-ally",
         "targetScope": "any-lane",
+        "targetSelection": null,
         "type": "Fire Damage Dealt Up",
         "unit": "percent"
       },
@@ -2878,6 +3050,7 @@
     {
       "abilityId": "syrax-blazing-fury",
       "effect": {
+        "activationRoll": null,
         "calculated": false,
         "casterEligibility": "eligible-if-targeting-allows",
         "conditionalMultipliers": [],
@@ -2895,10 +3068,12 @@
         "scaling": [],
         "sourceScope": "unknown",
         "stack": null,
+        "stackTransitionTrigger": null,
         "target": "1 Ally",
         "targetCount": null,
         "targetPriority": "prefer-fire-damage-ally",
         "targetScope": "any-lane",
+        "targetSelection": null,
         "type": "First-Strike",
         "unit": "unknown"
       },
@@ -2907,6 +3082,7 @@
     {
       "abilityId": "syrax-blazing-fury",
       "effect": {
+        "activationRoll": null,
         "calculated": false,
         "casterEligibility": "unknown",
         "conditionalMultipliers": [],
@@ -2929,10 +3105,12 @@
         ],
         "sourceScope": "unknown",
         "stack": null,
+        "stackTransitionTrigger": null,
         "target": "1 Enemy",
         "targetCount": null,
         "targetPriority": "any-eligible",
         "targetScope": "within-adjacency",
+        "targetSelection": null,
         "type": "Tactical Damage",
         "unit": "rate"
       },
@@ -2941,6 +3119,7 @@
     {
       "abilityId": "syrax-sentinels-wit",
       "effect": {
+        "activationRoll": null,
         "calculated": false,
         "casterEligibility": "unknown",
         "conditionalMultipliers": [],
@@ -2958,10 +3137,12 @@
         "scaling": [],
         "sourceScope": "all-sources",
         "stack": null,
+        "stackTransitionTrigger": null,
         "target": "Self",
         "targetCount": null,
         "targetPriority": "any-eligible",
         "targetScope": "self",
+        "targetSelection": null,
         "type": "Tactical Damage Dealt Up",
         "unit": "percent"
       },
@@ -2970,6 +3151,7 @@
     {
       "abilityId": "syrax-sentinels-wit",
       "effect": {
+        "activationRoll": null,
         "calculated": false,
         "casterEligibility": "unknown",
         "conditionalMultipliers": [],
@@ -2987,10 +3169,12 @@
         "scaling": [],
         "sourceScope": "unknown",
         "stack": null,
+        "stackTransitionTrigger": null,
         "target": "Left Flank ally",
         "targetCount": null,
         "targetPriority": "any-eligible",
         "targetScope": "left-flank",
+        "targetSelection": null,
         "type": "Instinct Up",
         "unit": "flat"
       },
@@ -2999,6 +3183,7 @@
     {
       "abilityId": "syrax-sentinels-wit",
       "effect": {
+        "activationRoll": null,
         "calculated": false,
         "casterEligibility": "unknown",
         "conditionalMultipliers": [],
@@ -3016,10 +3201,12 @@
         "scaling": [],
         "sourceScope": "unknown",
         "stack": null,
+        "stackTransitionTrigger": null,
         "target": "Left Flank ally",
         "targetCount": null,
         "targetPriority": "any-eligible",
         "targetScope": "left-flank",
+        "targetSelection": null,
         "type": "Initiative Up",
         "unit": "flat"
       },
@@ -3028,6 +3215,7 @@
     {
       "abilityId": "syrax-mindful-synergy",
       "effect": {
+        "activationRoll": null,
         "calculated": false,
         "casterEligibility": "included",
         "conditionalMultipliers": [],
@@ -3073,10 +3261,12 @@
         ],
         "sourceScope": "unknown",
         "stack": null,
+        "stackTransitionTrigger": null,
         "target": "3 Allies",
         "targetCount": 3,
         "targetPriority": "any-eligible",
         "targetScope": "any-lane",
+        "targetSelection": null,
         "type": "Intelligence Up",
         "unit": "percent"
       },
@@ -3085,6 +3275,7 @@
     {
       "abilityId": "syrax-mindful-synergy",
       "effect": {
+        "activationRoll": null,
         "calculated": false,
         "casterEligibility": "included",
         "conditionalMultipliers": [],
@@ -3130,10 +3321,12 @@
         ],
         "sourceScope": "unknown",
         "stack": null,
+        "stackTransitionTrigger": null,
         "target": "3 Allies",
         "targetCount": 3,
         "targetPriority": "any-eligible",
         "targetScope": "any-lane",
+        "targetSelection": null,
         "type": "Instinct Up",
         "unit": "percent"
       },
@@ -3142,6 +3335,7 @@
     {
       "abilityId": "syrax-flight-mastery",
       "effect": {
+        "activationRoll": null,
         "calculated": false,
         "casterEligibility": "included",
         "conditionalMultipliers": [],
@@ -3187,10 +3381,12 @@
         ],
         "sourceScope": "unknown",
         "stack": null,
+        "stackTransitionTrigger": null,
         "target": "3 Allies",
         "targetCount": 3,
         "targetPriority": "any-eligible",
         "targetScope": "any-lane",
+        "targetSelection": null,
         "type": "Initiative Up",
         "unit": "percent"
       },
@@ -3199,6 +3395,7 @@
     {
       "abilityId": "syrax-flight-mastery",
       "effect": {
+        "activationRoll": null,
         "calculated": false,
         "casterEligibility": "unknown",
         "conditionalMultipliers": [],
@@ -3244,10 +3441,12 @@
         ],
         "sourceScope": "unknown",
         "stack": null,
+        "stackTransitionTrigger": null,
         "target": "3 Enemies",
         "targetCount": 3,
         "targetPriority": "any-eligible",
         "targetScope": "any-lane",
+        "targetSelection": null,
         "type": "Initiative Down",
         "unit": "percent"
       },
@@ -3256,6 +3455,7 @@
     {
       "abilityId": "syrax-strategic-revival",
       "effect": {
+        "activationRoll": null,
         "calculated": false,
         "casterEligibility": "unknown",
         "conditionalMultipliers": [
@@ -3329,10 +3529,12 @@
         ],
         "sourceScope": "unknown",
         "stack": null,
+        "stackTransitionTrigger": null,
         "target": "Ally with least current troops",
         "targetCount": null,
         "targetPriority": "least-current-troops-ally",
         "targetScope": "any-lane",
+        "targetSelection": null,
         "type": "Recovery",
         "unit": "rate"
       },
@@ -3341,6 +3543,7 @@
     {
       "abilityId": "syrax-strategic-revival",
       "effect": {
+        "activationRoll": null,
         "calculated": false,
         "casterEligibility": "unknown",
         "conditionalMultipliers": [],
@@ -3360,10 +3563,12 @@
         "scaling": [],
         "sourceScope": "unknown",
         "stack": null,
+        "stackTransitionTrigger": null,
         "target": "Ally with least current troops",
         "targetCount": null,
         "targetPriority": "least-current-troops-ally",
         "targetScope": "any-lane",
+        "targetSelection": null,
         "type": "Resistance",
         "unit": "percent"
       },
@@ -3372,6 +3577,7 @@
     {
       "abilityId": "syrax-tactical-inferno",
       "effect": {
+        "activationRoll": null,
         "calculated": false,
         "casterEligibility": "unknown",
         "conditionalMultipliers": [],
@@ -3417,10 +3623,12 @@
         "scaling": [],
         "sourceScope": "unknown",
         "stack": null,
+        "stackTransitionTrigger": null,
         "target": "1 Ally, prioritizing Left Flank",
         "targetCount": null,
         "targetPriority": "prefer-left-flank",
         "targetScope": "any-lane",
+        "targetSelection": null,
         "type": "Tactical Damage Dealt Up",
         "unit": "percent"
       },
@@ -3429,6 +3637,7 @@
     {
       "abilityId": "syrax-tactical-inferno",
       "effect": {
+        "activationRoll": null,
         "calculated": false,
         "casterEligibility": "unknown",
         "conditionalMultipliers": [],
@@ -3474,10 +3683,12 @@
         "scaling": [],
         "sourceScope": "unknown",
         "stack": null,
+        "stackTransitionTrigger": null,
         "target": "1 Ally, prioritizing Right Flank",
         "targetCount": null,
         "targetPriority": "prefer-right-flank",
         "targetScope": "any-lane",
+        "targetSelection": null,
         "type": "Fire Damage Dealt Up",
         "unit": "percent"
       },
@@ -3486,6 +3697,7 @@
     {
       "abilityId": "syrax-mothers-mercy",
       "effect": {
+        "activationRoll": null,
         "calculated": false,
         "casterEligibility": "unknown",
         "conditionalMultipliers": [],
@@ -3503,10 +3715,12 @@
         "scaling": [],
         "sourceScope": "unknown",
         "stack": null,
+        "stackTransitionTrigger": null,
         "target": "1 Ally",
         "targetCount": null,
         "targetPriority": "prefer-control-afflicted-ally",
         "targetScope": "any-lane",
+        "targetSelection": null,
         "type": "Cleanse Negative",
         "unit": "flat"
       },
@@ -3515,6 +3729,7 @@
     {
       "abilityId": "syrax-mothers-mercy",
       "effect": {
+        "activationRoll": null,
         "calculated": false,
         "casterEligibility": "unknown",
         "conditionalMultipliers": [],
@@ -3534,10 +3749,12 @@
         "scaling": [],
         "sourceScope": "unknown",
         "stack": null,
+        "stackTransitionTrigger": null,
         "target": "1 Ally",
         "targetCount": null,
         "targetPriority": "prefer-control-afflicted-ally",
         "targetScope": "any-lane",
+        "targetSelection": null,
         "type": "Cleanse Control",
         "unit": "flat"
       },
@@ -3666,7 +3883,7 @@
   "firstObservedInGame": null,
   "format": "dragonfire-dragon-profile",
   "gameVersion": null,
-  "generatedAt": "2026-06-25T16:50:40.505Z",
+  "generatedAt": "2026-06-25T20:04:14.138Z",
   "habits": [
     {
       "abilityClass": "passive",
@@ -3711,11 +3928,13 @@
       "rawDescription": "Start of Combat: increase Intelligence and Instinct of 3 Allies in any lane until end of combat, enhanced by Syrax Initiative.",
       "schedules": [
         {
+          "activationRoll": null,
           "attempts": null,
           "battleContext": "unspecified",
           "conditions": [],
           "effects": [
             {
+              "activationRoll": null,
               "calculated": false,
               "casterEligibility": "included",
               "conditionalMultipliers": [],
@@ -3761,14 +3980,17 @@
               ],
               "sourceScope": "unknown",
               "stack": null,
+              "stackTransitionTrigger": null,
               "target": "3 Allies",
               "targetCount": 3,
               "targetPriority": "any-eligible",
               "targetScope": "any-lane",
+              "targetSelection": null,
               "type": "Intelligence Up",
               "unit": "percent"
             },
             {
+              "activationRoll": null,
               "calculated": false,
               "casterEligibility": "included",
               "conditionalMultipliers": [],
@@ -3814,10 +4036,12 @@
               ],
               "sourceScope": "unknown",
               "stack": null,
+              "stackTransitionTrigger": null,
               "target": "3 Allies",
               "targetCount": 3,
               "targetPriority": "any-eligible",
               "targetScope": "any-lane",
+              "targetSelection": null,
               "type": "Instinct Up",
               "unit": "percent"
             }
@@ -3825,6 +4049,7 @@
           "id": "mindful-synergy-start",
           "repeat": null,
           "rounds": [],
+          "roundSelector": null,
           "targetPriority": "any-eligible",
           "timing": "start-of-combat",
           "triggerChanceByHabitLevel": [],
@@ -3892,11 +4117,13 @@
       "rawDescription": "Start of Combat: increase Initiative of 3 Allies and reduce Initiative of 3 Enemies in any lane until end of combat, enhanced by Syrax Instinct.",
       "schedules": [
         {
+          "activationRoll": null,
           "attempts": null,
           "battleContext": "unspecified",
           "conditions": [],
           "effects": [
             {
+              "activationRoll": null,
               "calculated": false,
               "casterEligibility": "included",
               "conditionalMultipliers": [],
@@ -3942,14 +4169,17 @@
               ],
               "sourceScope": "unknown",
               "stack": null,
+              "stackTransitionTrigger": null,
               "target": "3 Allies",
               "targetCount": 3,
               "targetPriority": "any-eligible",
               "targetScope": "any-lane",
+              "targetSelection": null,
               "type": "Initiative Up",
               "unit": "percent"
             },
             {
+              "activationRoll": null,
               "calculated": false,
               "casterEligibility": "unknown",
               "conditionalMultipliers": [],
@@ -3995,10 +4225,12 @@
               ],
               "sourceScope": "unknown",
               "stack": null,
+              "stackTransitionTrigger": null,
               "target": "3 Enemies",
               "targetCount": 3,
               "targetPriority": "any-eligible",
               "targetScope": "any-lane",
+              "targetSelection": null,
               "type": "Initiative Down",
               "unit": "percent"
             }
@@ -4006,6 +4238,7 @@
           "id": "flight-mastery-start",
           "repeat": null,
           "rounds": [],
+          "roundSelector": null,
           "targetPriority": "any-eligible",
           "timing": "start-of-combat",
           "triggerChanceByHabitLevel": [],
@@ -4072,11 +4305,13 @@
       "rawDescription": "Augments Blazing Fury: Rounds 2, 5, 8 recover the Ally with least current troops. Recovery is multiplied by 1.5 if any enemy has Slow. Chance to grant Resistance (-20%) for 2 rounds.",
       "schedules": [
         {
+          "activationRoll": null,
           "attempts": null,
           "battleContext": "unspecified",
           "conditions": [],
           "effects": [
             {
+              "activationRoll": null,
               "calculated": false,
               "casterEligibility": "unknown",
               "conditionalMultipliers": [
@@ -4150,14 +4385,17 @@
               ],
               "sourceScope": "unknown",
               "stack": null,
+              "stackTransitionTrigger": null,
               "target": "Ally with least current troops",
               "targetCount": null,
               "targetPriority": "least-current-troops-ally",
               "targetScope": "any-lane",
+              "targetSelection": null,
               "type": "Recovery",
               "unit": "rate"
             },
             {
+              "activationRoll": null,
               "calculated": false,
               "casterEligibility": "unknown",
               "conditionalMultipliers": [],
@@ -4177,10 +4415,12 @@
               "scaling": [],
               "sourceScope": "unknown",
               "stack": null,
+              "stackTransitionTrigger": null,
               "target": "Ally with least current troops",
               "targetCount": null,
               "targetPriority": "least-current-troops-ally",
               "targetScope": "any-lane",
+              "targetSelection": null,
               "type": "Resistance",
               "unit": "percent"
             }
@@ -4192,6 +4432,7 @@
             5,
             8
           ],
+          "roundSelector": null,
           "targetPriority": "least-current-troops-ally",
           "timing": "specific-rounds",
           "triggerChanceByHabitLevel": [
@@ -4286,11 +4527,13 @@
       "rawDescription": "Start of Round 1: increase Tactical Damage Dealt of one Ally, prioritizing Left Flank, and Fire Damage Dealt of one Ally, prioritizing Right Flank, for 3 rounds.",
       "schedules": [
         {
+          "activationRoll": null,
           "attempts": null,
           "battleContext": "unspecified",
           "conditions": [],
           "effects": [
             {
+              "activationRoll": null,
               "calculated": false,
               "casterEligibility": "unknown",
               "conditionalMultipliers": [],
@@ -4336,14 +4579,17 @@
               "scaling": [],
               "sourceScope": "unknown",
               "stack": null,
+              "stackTransitionTrigger": null,
               "target": "1 Ally, prioritizing Left Flank",
               "targetCount": null,
               "targetPriority": "prefer-left-flank",
               "targetScope": "any-lane",
+              "targetSelection": null,
               "type": "Tactical Damage Dealt Up",
               "unit": "percent"
             },
             {
+              "activationRoll": null,
               "calculated": false,
               "casterEligibility": "unknown",
               "conditionalMultipliers": [],
@@ -4389,10 +4635,12 @@
               "scaling": [],
               "sourceScope": "unknown",
               "stack": null,
+              "stackTransitionTrigger": null,
               "target": "1 Ally, prioritizing Right Flank",
               "targetCount": null,
               "targetPriority": "prefer-right-flank",
               "targetScope": "any-lane",
+              "targetSelection": null,
               "type": "Fire Damage Dealt Up",
               "unit": "percent"
             }
@@ -4402,6 +4650,7 @@
           "rounds": [
             1
           ],
+          "roundSelector": null,
           "targetPriority": "any-eligible",
           "timing": "start-of-round",
           "triggerChanceByHabitLevel": [],
@@ -4470,11 +4719,13 @@
       "rawDescription": "Each Round: chance to cleanse two Negative effects and one Control effect from one Ally in any lane, prioritizing Allies afflicted with Control.",
       "schedules": [
         {
+          "activationRoll": null,
           "attempts": null,
           "battleContext": "unspecified",
           "conditions": [],
           "effects": [
             {
+              "activationRoll": null,
               "calculated": false,
               "casterEligibility": "unknown",
               "conditionalMultipliers": [],
@@ -4492,14 +4743,17 @@
               "scaling": [],
               "sourceScope": "unknown",
               "stack": null,
+              "stackTransitionTrigger": null,
               "target": "1 Ally",
               "targetCount": null,
               "targetPriority": "prefer-control-afflicted-ally",
               "targetScope": "any-lane",
+              "targetSelection": null,
               "type": "Cleanse Negative",
               "unit": "flat"
             },
             {
+              "activationRoll": null,
               "calculated": false,
               "casterEligibility": "unknown",
               "conditionalMultipliers": [],
@@ -4519,10 +4773,12 @@
               "scaling": [],
               "sourceScope": "unknown",
               "stack": null,
+              "stackTransitionTrigger": null,
               "target": "1 Ally",
               "targetCount": null,
               "targetPriority": "prefer-control-afflicted-ally",
               "targetScope": "any-lane",
+              "targetSelection": null,
               "type": "Cleanse Control",
               "unit": "flat"
             }
@@ -4530,6 +4786,7 @@
           "id": "mothers-mercy-each-round",
           "repeat": null,
           "rounds": [],
+          "roundSelector": null,
           "targetPriority": "prefer-control-afflicted-ally",
           "timing": "each-round",
           "triggerChanceByHabitLevel": [
@@ -6165,10 +6422,10 @@
   "rosterSourceStatus": "official-website",
   "slug": "syrax",
   "source": {
-    "branch": "chore/formation-docs-context-export",
-    "commit": "96e0cb6df6957f19eea61aa67b38bfa905aef03c",
-    "databaseVersion": "0.5.6",
-    "dataSchemaVersion": 9,
+    "branch": "feature/legendary-schema-hardening",
+    "commit": "1b2913abd3b37ddde3fc456f7c4c9154b3a35a48",
+    "databaseVersion": "0.6.0",
+    "dataSchemaVersion": 10,
     "gameBuild": "26.6.53509",
     "localRosterSchemaVersion": 3,
     "repository": "https://github.com/williamchildres/dragonfire-roster-builder"
@@ -6343,11 +6600,13 @@
     "rawDescription": "At Level 16+ and deployed in Vanguard, increase Syrax Tactical Damage Dealt by 16%. Increase Instinct and Initiative of Left Flank ally by +20.",
     "schedules": [
       {
+        "activationRoll": null,
         "attempts": null,
         "battleContext": "unspecified",
         "conditions": [],
         "effects": [
           {
+            "activationRoll": null,
             "calculated": false,
             "casterEligibility": "unknown",
             "conditionalMultipliers": [],
@@ -6365,14 +6624,17 @@
             "scaling": [],
             "sourceScope": "all-sources",
             "stack": null,
+            "stackTransitionTrigger": null,
             "target": "Self",
             "targetCount": null,
             "targetPriority": "any-eligible",
             "targetScope": "self",
+            "targetSelection": null,
             "type": "Tactical Damage Dealt Up",
             "unit": "percent"
           },
           {
+            "activationRoll": null,
             "calculated": false,
             "casterEligibility": "unknown",
             "conditionalMultipliers": [],
@@ -6390,14 +6652,17 @@
             "scaling": [],
             "sourceScope": "unknown",
             "stack": null,
+            "stackTransitionTrigger": null,
             "target": "Left Flank ally",
             "targetCount": null,
             "targetPriority": "any-eligible",
             "targetScope": "left-flank",
+            "targetSelection": null,
             "type": "Instinct Up",
             "unit": "flat"
           },
           {
+            "activationRoll": null,
             "calculated": false,
             "casterEligibility": "unknown",
             "conditionalMultipliers": [],
@@ -6415,10 +6680,12 @@
             "scaling": [],
             "sourceScope": "unknown",
             "stack": null,
+            "stackTransitionTrigger": null,
             "target": "Left Flank ally",
             "targetCount": null,
             "targetPriority": "any-eligible",
             "targetScope": "left-flank",
+            "targetSelection": null,
             "type": "Initiative Up",
             "unit": "flat"
           }
@@ -6426,6 +6693,7 @@
         "id": "sentinels-wit-passive",
         "repeat": null,
         "rounds": [],
+        "roundSelector": null,
         "targetPriority": "any-eligible",
         "timing": "passive",
         "triggerChanceByHabitLevel": [],
