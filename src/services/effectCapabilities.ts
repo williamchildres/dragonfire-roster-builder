@@ -277,6 +277,7 @@ export function analyzeCapabilityAmplifications(
   return [
     ...analyzeOutgoingAmplifications(formation, dragons, outputs, modifiers, options),
     ...analyzeIncomingAmplifications(formation, dragons, outputs, modifiers, options),
+    ...analyzeAllyOutputSupport(formation, dragons, outputs, options),
     ...analyzeStatusConditionEnablement(formation, dragons, outputs, statusOutputs, options),
     ...analyzeDefensiveAllySupport(formation, dragons, modifiers, options),
     ...analyzeDirectStatSupport(formation, dragons, modifiers, options),
@@ -284,6 +285,72 @@ export function analyzeCapabilityAmplifications(
     ...analyzeEnemyMitigationReduction(formation, dragons, outputs, modifiers, options),
     ...analyzePeriodicDamageAmplification(formation, dragons, periodicDamage, modifiers, options),
   ];
+}
+
+function analyzeAllyOutputSupport(
+  formation: FormationAnalysisInput,
+  dragons: Dragon[],
+  outputs: OutputCapability[],
+  options: CapabilityOptions,
+): SynergyTrace[] {
+  const traces: SynergyTrace[] = [];
+  for (const output of outputs.filter(
+    (capability) =>
+      capability.targetSide === 'ally' &&
+      capability.targetCount !== 1 &&
+      outputCapabilityVisible(capability, options),
+  )) {
+    const providerPosition = positionOf(formation, output.dragonId);
+    if (!providerPosition) {
+      continue;
+    }
+    const provider = dragonById(dragons, output.dragonId);
+    if (!provider) {
+      continue;
+    }
+    for (const recipientPosition of FORMATION_POSITIONS) {
+      const recipientId = formation[recipientPosition];
+      if (!recipientId) {
+        continue;
+      }
+      const recipient = dragonById(dragons, recipientId);
+      if (!recipient) {
+        continue;
+      }
+      const targeting = outputTargetsRecipient(output, providerPosition, recipientPosition);
+      const sourceAbility = allAbilities(provider).find((ability) => ability.id === output.abilityId);
+      const requirements = dedupeRequirements([
+        targeting,
+        ...(sourceAbility
+          ? requirementDefinitionsForAbility(sourceAbility).map((requirement) =>
+              resolveRequirement(requirement, output.dragonId, formation, options),
+            )
+          : []),
+        ...outputRequirementTraces(output, options),
+      ]);
+      traces.push(makeDependencyTrace({
+        id: `ally-output-support-${output.id}-${recipientId}`,
+        matchKind: 'outgoing-effect-amplification',
+        ruleId: 'ally-output-support',
+        source: provider,
+        sourceAbilityId: output.abilityId,
+        recipient,
+        recipientAbilityId: output.id,
+        channel: output.channel,
+        title: `${output.abilityName} ${channelLabel(output.channel)} support`,
+        explanation: `${provider.name}'s ${output.abilityName} can provide ${channelLabel(output.channel)} to ${recipient.name}.`,
+        requirements,
+        matchedFacts: [`${output.abilityName} targets ${output.targetCount ?? 'unknown'} ally target(s).`],
+        effects: [`${channelLabel(output.channel)} support`],
+        sourceEvidenceIds: output.evidenceIds,
+        recipientEvidenceIds: [],
+        assumptions: [],
+        unresolvedQuestions: output.channel === 'recovery' ? ['Exact final Recovery amount is unknown because the full Level and Instinct Recovery formula is not known.'] : [],
+        futureOrConditional: output.futureAvailable || output.conditional,
+      }));
+    }
+  }
+  return traces;
 }
 
 export function buildCapabilityMatrix(dragons: Dragon[]): Array<Record<string, string>> {
@@ -2041,7 +2108,7 @@ function providerRequirementTraces(
       minimumDragonLevel: modifier.minimumDragonLevel,
       requiredHabitLevel: modifier.requiredHabitLevel,
       evidenceIds: modifier.evidenceIds,
-      sourceKind: dragon?.trait?.id === modifier.abilityId ? 'trait' : 'habit',
+      sourceKind: abilitySourceKind(dragons, modifier.dragonId, modifier.abilityId),
     }, options),
   ];
 }
@@ -2099,7 +2166,7 @@ function availabilityRequirements({
   const starRank = rosterEntry?.starRank ?? observation?.starRank ?? null;
   const dragonLevel = Object.hasOwn(options.dragonLevels ?? {}, dragonId)
     ? (options.dragonLevels?.[dragonId] ?? null)
-    : (observation?.dragonLevel ?? null);
+    : (rosterEntry?.reignLevel ?? observation?.dragonLevel ?? null);
   const habitLevel = abilityId ? rosterEntry?.habitLevels[abilityId] ?? null : null;
   const requirements: RequirementTrace[] = [];
   const owner = abilityName ? `${dragonName ?? dragonId} - ${abilityName}` : (dragonName ?? dragonId);

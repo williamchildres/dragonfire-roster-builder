@@ -651,6 +651,18 @@ dd {
   margin: 0;
 }
 
+.mini-section-heading {
+  align-items: center;
+  display: flex;
+  gap: 0.5rem;
+  justify-content: space-between;
+  min-width: 0;
+}
+
+.mini-section-heading h4 {
+  min-width: 0;
+}
+
 .empty-card-note,
 .muted-inline {
   color: var(--muted);
@@ -661,6 +673,11 @@ dd {
 }
 
 .card-mini-section[aria-label='Trait status'] {
+  align-content: start;
+  min-height: 8.2rem;
+}
+
+.command-panel {
   align-content: start;
   min-height: 8.2rem;
 }
@@ -725,14 +742,16 @@ dd {
 }
 
 .interaction-section-body {
+  max-height: 24rem;
   min-height: 6.2rem;
   min-width: 0;
   overflow-x: hidden;
-  overflow-y: hidden;
+  overflow-y: auto;
+  scrollbar-color: rgba(255, 211, 107, 0.45) rgba(0, 0, 0, 0.18);
 }
 
 .interaction-section.is-expanded .interaction-section-body {
-  max-height: 19rem;
+  max-height: 42rem;
   overflow-y: auto;
   padding-right: 0.2rem;
   scrollbar-color: rgba(255, 211, 107, 0.55) rgba(0, 0, 0, 0.2);

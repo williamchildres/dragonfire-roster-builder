@@ -75,6 +75,7 @@ describe('Dragonfire Roster Lab app', () => {
     for (const name of ['Left Flank', 'Vanguard', 'Right Flank']) {
       const positionCard = screen.getByRole('article', { name });
       expect(within(positionCard).getByLabelText(/movement controls/i)).toBeInTheDocument();
+      expect(within(positionCard).getByRole('region', { name: 'Command' })).toBeInTheDocument();
       expect(within(positionCard).getByRole('region', { name: /trait status/i })).toBeInTheDocument();
       expect(within(positionCard).getByRole('region', { name: /affinities/i })).toBeInTheDocument();
       expect(within(positionCard).getByRole('region', { name: 'Receives' })).toBeInTheDocument();
@@ -83,6 +84,7 @@ describe('Dragonfire Roster Lab app', () => {
 
     const syrax = screen.getByRole('article', { name: 'Right Flank' });
     const provides = within(syrax).getByRole('region', { name: 'Provides' });
+    const collapsedCount = provides.querySelectorAll('.card-interaction-item').length;
     expect(provides.querySelectorAll('.card-interaction-item').length).toBeLessThanOrEqual(3);
     const expand = within(provides).getByRole('button', { name: /view \d+ more/i });
     expect(expand).toHaveAttribute('aria-expanded', 'false');
@@ -91,6 +93,56 @@ describe('Dragonfire Roster Lab app', () => {
 
     expect(within(provides).getByRole('button', { name: /show fewer/i })).toHaveAttribute('aria-expanded', 'true');
     expect(provides.querySelectorAll('.card-interaction-item').length).toBeGreaterThan(3);
+    expect(provides.querySelectorAll('.card-interaction-item').length).toBeGreaterThan(collapsedCount);
+
+    await user.click(within(provides).getByRole('button', { name: /show fewer/i }));
+
+    expect(within(provides).getByRole('button', { name: /view \d+ more/i })).toHaveAttribute('aria-expanded', 'false');
+    expect(provides.querySelectorAll('.card-interaction-item')).toHaveLength(collapsedCount);
+  });
+
+  it('refreshes Formation Builder trait status after roster level changes', async () => {
+    const user = userEvent.setup();
+    render(<App />);
+
+    await user.click(screen.getByRole('button', { name: /dragon database/i }));
+    await user.type(screen.getByLabelText(/search by name/i), 'Seasmoke');
+    const seasmokeCard = screen.getByRole('heading', { name: 'Seasmoke' }).closest('article');
+    expect(seasmokeCard).not.toBeNull();
+    await user.click(within(seasmokeCard as HTMLElement).getByLabelText(/my roster/i));
+    await user.click(within(seasmokeCard as HTMLElement).getByRole('button', { name: /view details/i }));
+    let seasmokeDialog = screen.getByRole('dialog', { name: /seasmoke/i });
+    await user.clear(within(seasmokeDialog).getByLabelText(/reign level/i));
+    await user.type(within(seasmokeDialog).getByLabelText(/reign level/i), '1');
+    await user.click(within(seasmokeDialog).getByRole('button', { name: /close details/i }));
+
+    await user.click(screen.getAllByRole('button', { name: /formation builder/i })[0]!);
+    await user.click(screen.getByLabelText(/include unowned dragons/i));
+    const selectors = screen.getAllByLabelText('Dragon');
+    await user.selectOptions(selectors[1]!, 'seasmoke');
+    await user.selectOptions(selectors[2]!, 'sheepstealer');
+
+    const vanguard = screen.getByRole('article', { name: 'Vanguard' });
+    expect(within(vanguard).getByRole('region', { name: /trait status/i })).toHaveTextContent(
+      'Requires Level 16+; current Level 1',
+    );
+
+    await user.click(screen.getByRole('button', { name: /dragon database/i }));
+    const updatedSeasmokeCard = screen.getByRole('heading', { name: 'Seasmoke' }).closest('article');
+    expect(updatedSeasmokeCard).not.toBeNull();
+    await user.click(within(updatedSeasmokeCard as HTMLElement).getByRole('button', { name: /view details/i }));
+    seasmokeDialog = screen.getByRole('dialog', { name: /seasmoke/i });
+    await user.clear(within(seasmokeDialog).getByLabelText(/reign level/i));
+    await user.type(within(seasmokeDialog).getByLabelText(/reign level/i), '25');
+    await user.click(within(seasmokeDialog).getByRole('button', { name: /close details/i }));
+
+    await user.click(screen.getAllByRole('button', { name: /formation builder/i })[0]!);
+
+    const updatedVanguard = screen.getByRole('article', { name: 'Vanguard' });
+    expect(within(updatedVanguard).getByRole('region', { name: /trait status/i })).not.toHaveTextContent('Trait inactive');
+    expect(within(updatedVanguard).getByRole('region', { name: /trait status/i })).toHaveTextContent(
+      "Champion's Brilliance",
+    );
   });
 
   it('keeps compact interaction summaries readable and exposes full details', async () => {
