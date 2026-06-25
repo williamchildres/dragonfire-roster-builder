@@ -52,6 +52,8 @@ Phase 3.7.1 separates modifier roles. A dragon may amplify its own damage withou
 
 Phase 3.8 adds Syrax and Caraxes combat records and expands the framework with status output capabilities, capability dependencies, and periodic damage definitions. The matcher can now explain status-condition enablement, such as Syrax First-Strike enabling Caraxes Infernal Burst's First-Strike multiplier, stat-scaling support, enemy mitigation reduction, and periodic damage amplification for Burn. These traces remain explanatory and do not produce numerical synergy scores.
 
+Phase 3.8.1 reconciles normal Formation Analysis, debug traces, audit exports, and the framework report around the same trace generator. Normal analysis distinguishes eligibility from activation: a dragon can be an eligible target for a support effect while actual execution remains chance-based, target-selection-dependent, locked, or timing-dependent. Targeting facts such as Warden's Rally including Malachite are not displayed as standalone synergies unless another dragon meaningfully modifies or benefits from that effect.
+
 Threshold wording is interpreted literally: "above 50%" means `> 50`, and "below 50%" means `< 50`. Exactly 50% matches neither wording until combat logs confirm otherwise.
 
 Observation snapshots are account-specific and non-canonical. They may be affected by Dragon Level, Star Rank, Stronghold upgrades, faction bonuses, alliance bonuses, and other modifiers.
@@ -118,7 +120,7 @@ Dragonfire Roster Lab is an unofficial community project and is not affiliated w
 
 ## Project Status
 
-Version `0.5.0` adds Syrax and Caraxes combat datasets plus status/stat/periodic dependency tracing. Data schema is `7`; local roster schema remains `3`.
+Version `0.5.1` fixes Formation Builder trace presentation for Phase 3.8 interactions. Data schema is `7`; local roster schema remains `3`.
 
 ## Planned Next Steps
 

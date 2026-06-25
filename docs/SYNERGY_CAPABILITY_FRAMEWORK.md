@@ -122,6 +122,15 @@ Phase 3.8 adds four additional generic trace families:
 
 These traces are conditional or potential when unlocks, trigger chances, target selection, or exact battlefield state are unresolved. They never produce numerical scores.
 
+Phase 3.8.1 adds direct position stat-support traces and clarifies presentation:
+
+- Direct stat support records the verified flank stat bonus even when no output dependency consumes that stat.
+- Stat-scaling support is a child reasoning layer that appears only when the recipient has an output dependency for the supported stat.
+- Eligibility means the target and channel match.
+- Activation means the effect actually triggers, selects that target, and overlaps the relevant timing window.
+- Chance-based or selection-dependent support is shown as conditional or potential, never guaranteed.
+- Targeting facts, threshold notes, and contextual PvE facts are debug/audit details unless they modify or benefit another selected dragon.
+
 ## Source-Scope Matching
 
 Source scope prevents support from matching the wrong output source.

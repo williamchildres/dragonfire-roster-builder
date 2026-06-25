@@ -66,6 +66,10 @@ Phase 3.8 adds dependency traces:
 
 These are explanatory traces. They may be potential or conditional when unlocks, trigger chances, target selection, exact formulas, or battlefield state are unresolved.
 
+Phase 3.8.1 reconciles Formation Builder normal cards, debug traces, audit exports, and framework report data around the same trace generator. Normal analysis should show cross-dragon interactions and direct position support, while debug details may also show targeting facts, threshold notes, and contextual audit facts. A targeting fact is not a synergy by itself. For example, Warden's Rally Recovery including Malachite is confirmed and visible in debug targeting details, but it is not a normal active synergy unless another dragon modifies or benefits from that Recovery.
+
+Capability eligibility is separate from effect activation. If a recipient qualifies for Blazing Fury Fire support, the trace may still be conditional because the effect has a 20% trigger chance, two-round duration, and target-priority rules. Locked Habits appear as potential only in max-rank preview or when user progression unlocks them.
+
 Run `npm run report:synergy` for a read-only capability report containing the revised matrix, availability context, modifier roles, generated cross-dragon synergies, excluded self modifiers, integrity checks, and unresolved assumptions.
 
 ## Threshold Interpretation
@@ -89,7 +93,7 @@ Audit JSON uses:
 {
   "format": "dragonfire-synergy-audit",
   "schemaVersion": 1,
-  "databaseVersion": "0.5.0",
+  "databaseVersion": "0.5.1",
   "gameBuild": "26.6.53509",
   "generatedAt": "ISO timestamp",
   "formation": {

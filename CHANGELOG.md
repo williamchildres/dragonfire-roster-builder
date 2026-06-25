@@ -1,5 +1,15 @@
 # Changelog
 
+## 0.5.1 - 2026-06-24
+
+- Reconciled Formation Builder normal analysis, debug traces, audit exports, and framework report data around the shared formation trace generator.
+- Surfaced Syrax First-Strike support to Caraxes Infernal Burst and Caraxes Slow support to Syrax Strategic Revival with conditional/potential status.
+- Added direct flank stat-support traces for Syrax Sentinel's Wit and Caraxes Hunter's Wrath, with separate stat-scaling child traces when verified output dependencies match.
+- Moved Warden's Rally self-inclusion out of normal active synergies; it remains a confirmed debug targeting fact and evidence detail.
+- Replaced the broad unavailable banner with a partial-analysis notice when structured traces exist but data is locked, chance-based, selection-dependent, or formula-limited.
+- Deduplicated normal unresolved assumptions while preserving per-trace debug links.
+- Increased database version to `0.5.1`; data schema remains `7` and local roster schema remains `3`.
+
 ## 0.5.0 - 2026-06-24
 
 - Added screenshot-verified combat datasets for existing seeded dragons Syrax and Caraxes without changing the 30-dragon roster count.

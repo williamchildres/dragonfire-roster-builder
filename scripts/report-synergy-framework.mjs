@@ -1,4 +1,4 @@
-const databaseVersion = '0.5.0';
+const databaseVersion = '0.5.1';
 const schemaVersion = 7;
 const localRosterSchema = 3;
 const gameBuild = '26.6.53509';
@@ -174,14 +174,17 @@ const genericMatchingRules = [
 ];
 
 const requiredTraceResults = [
-  'Syrax First-Strike -> Caraxes Infernal Burst: status-condition-enablement, potential/conditional, exact uptime unknown.',
-  'Caraxes Slow -> Syrax Strategic Revival: status-condition-enablement, future/conditional, requires Crippling Inferno and Strategic Revival unlocks.',
-  'Syrax Mindful Synergy Intelligence -> Caraxes Fire outputs: stat-scaling-support, future/potential.',
-  "Caraxes Hunter's Wrath Initiative -> Syrax Strategic Revival Recovery when Syrax is Right Flank: stat-scaling-support, position dependent.",
-  'Syrax Flight Mastery Initiative Down -> Caraxes Fire outputs: enemy-mitigation-reduction, future/potential.',
-  'Syrax Fire support -> Caraxes Burn: periodic-damage-amplification, Burn stacking and refresh unresolved.',
-  "Caraxes Hunter's Wrath self Fire amplification: excluded from cross-dragon support.",
-  "Syrax Sentinel's Wit self Tactical amplification: excluded from cross-dragon support.",
+  'Formation A: Left Malachite / Vanguard Caraxes / Right Syrax.',
+  "A normal: Syrax Blazing Fury Fire support -> Caraxes; Syrax First-Strike -> Caraxes Infernal Burst; Hunter's Wrath Right Flank Strength and Initiative -> Syrax; Sentinel's Wit inactive; Warden's Rally self-targeting is debug-only.",
+  'A preview: Caraxes Slow -> Syrax Strategic Revival; Caraxes Initiative support -> Syrax Strategic Revival scaling.',
+  'Formation B: Left Caraxes / Vanguard Syrax / Right Malachite.',
+  "B normal: Syrax Blazing Fury Fire support -> Caraxes; Syrax First-Strike -> Caraxes Infernal Burst; Sentinel's Wit Left Flank Instinct and Initiative -> Caraxes; Hunter's Wrath inactive.",
+  'Formation C: Left Malachite / Vanguard Syrax / Right Caraxes.',
+  "C normal: Syrax Blazing Fury Fire support -> Caraxes; Syrax First-Strike -> Caraxes Infernal Burst; Sentinel's Wit Left Flank Instinct and Initiative -> Malachite; Instinct scaling support matches Warden's Rally Tactical Damage and Recovery.",
+  'C preview: Tactical Inferno Fire support prefers Right Flank Caraxes and matches Infernal Burst plus Burn.',
+  'Formation D: Left Syrax / Vanguard Caraxes / Right Malachite.',
+  "D normal: Syrax Blazing Fury Fire support -> Caraxes; Syrax First-Strike -> Caraxes Infernal Burst; Hunter's Wrath Right Flank Strength and Initiative -> Malachite; no Hunter's Wrath stat support is applied to Left Flank Syrax; Sentinel's Wit inactive.",
+  'D preview: Caraxes Slow -> Syrax Strategic Revival.',
 ];
 
 const unresolved = [
@@ -202,6 +205,7 @@ function section(title) {
 console.log('SYNERGY FRAMEWORK REPORT');
 console.log(`Database ${databaseVersion} | Schema ${schemaVersion} | Local roster schema ${localRosterSchema} | Game build ${gameBuild}`);
 console.log('Phase 3.8: Syrax and Caraxes combat data plus status/stat/periodic dependency tracing.');
+console.log('Phase 3.8.1: Formation Builder, debug traces, audit exports, and this report are reconciled around the same authoritative trace generator.');
 
 section('Availability Context');
 console.log('- Canonical availability: base kit versus future Star/Level/Habit unlocks.');

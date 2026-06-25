@@ -26,6 +26,13 @@ export interface TraceOptions {
 
 const auditDragonIds = ['malachite', 'seasmoke', 'sheepstealer', 'vermax'] as const;
 
+export const phase381ReviewFormations: Record<'A' | 'B' | 'C' | 'D', FormationAnalysisInput> = {
+  A: { 'left-flank': 'malachite', vanguard: 'caraxes', 'right-flank': 'syrax' },
+  B: { 'left-flank': 'caraxes', vanguard: 'syrax', 'right-flank': 'malachite' },
+  C: { 'left-flank': 'malachite', vanguard: 'syrax', 'right-flank': 'caraxes' },
+  D: { 'left-flank': 'syrax', vanguard: 'caraxes', 'right-flank': 'malachite' },
+};
+
 export function analyzeFormationTraces(
   formation: FormationAnalysisInput,
   dragons: Dragon[],
@@ -41,6 +48,28 @@ export function analyzeFormationTraces(
   traces.push(...thresholdBoundaryTraces(formation, dragons));
   traces.push(...contextualPveTraces(formation, dragons));
   return traces;
+}
+
+export function isNormalSynergyTrace(trace: SynergyTrace): boolean {
+  return Boolean(trace.matchKind) || trace.ruleId === 'malachite-lightning-strike-vermax-basic-trigger';
+}
+
+export function isConditionalTrace(trace: SynergyTrace): boolean {
+  return trace.status === 'potential' || trace.status === 'unknown';
+}
+
+export function dedupeTraceMessages(messages: string[]): string[] {
+  const seen = new Set<string>();
+  const deduped: string[] = [];
+  for (const message of messages) {
+    const key = message.toLowerCase().replace(/[^a-z0-9]+/g, ' ').trim();
+    if (!key || seen.has(key)) {
+      continue;
+    }
+    seen.add(key);
+    deduped.push(message);
+  }
+  return deduped;
 }
 
 export function generateFormationAudit(
@@ -315,11 +344,31 @@ function wardenRecoverySelfInclusionTraces(
       matchedFacts: ["Malachite appeared as a Warden's Rally Recovery recipient in combat logs."],
       effects: ['Recovery target set includes Malachite when three friendly dragons are present.'],
       assumptions: [],
-      unresolvedQuestions: ['Exact Recovery formula remains unknown.'],
-      forcedStatus: 'active',
+      unresolvedQuestions: [],
+      forcedStatus: 'not-applicable',
       potentialWhenLocked: false,
+      forcedConfidence: 'confirmed',
+      combatLogConfirmed: true,
     }),
   ];
+}
+
+export function frameworkTraceReportData(
+  dragons: Dragon[] = defaultDragons,
+  options: TraceOptions = { previewMaxRankInteractions: true },
+) {
+  return {
+    databaseVersion: databaseMetadata.databaseVersion,
+    schemaVersion: databaseMetadata.schemaVersion,
+    gameBuild: databaseMetadata.currentDocumentedGameBuild,
+    formations: phase381ReviewFormations,
+    traces: Object.fromEntries(
+      Object.entries(phase381ReviewFormations).map(([name, formation]) => [
+        name,
+        analyzeFormationTraces(formation, dragons, options),
+      ]),
+    ),
+  };
 }
 
 function thresholdBoundaryTraces(formation: FormationAnalysisInput, dragons: Dragon[]): SynergyTrace[] {

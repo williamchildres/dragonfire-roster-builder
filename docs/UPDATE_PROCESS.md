@@ -93,4 +93,4 @@ Run `npm run check:roster` to compare official-site local records with the ordin
 
 ## Versioning
 
-For data releases, update `databaseVersion`, `schemaVersion` when the data shape changes, package version, changelog, and tests together. Phase 3.8 uses database version `0.5.0`, data schema `7`, current documented game build `26.6.53509`, and local roster schema `3`.
+For data releases, update `databaseVersion`, `schemaVersion` when the data shape changes, package version, changelog, and tests together. Phase 3.8.1 uses database version `0.5.1`, data schema `7`, current documented game build `26.6.53509`, and local roster schema `3`.
