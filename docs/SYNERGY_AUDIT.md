@@ -57,6 +57,8 @@ Enemy debuffs are not direct ally support and are reserved for a separate future
 
 The debug view keeps child capability matches for review. It shows channel, modifier role, target selector, self-only state, source-scope compatibility, position compatibility, availability context, evidence, confidence, and the reason each interaction is active, potential, inactive, or unknown.
 
+Version 0.5.5 keeps this trace data intact while moving normal player-facing discovery into Formation Builder cards. Show analysis details remains the place for raw trace cards, requirements, evidence IDs, raw effect tags, internal interactions, and audit JSON.
+
 Version 0.5.2 adds a selected-formation invariant: every friendly source, recipient, matched output, status provider, stat provider, and recipient-side amplifier must belong to one of the three selected formation dragons before a trace can reach normal cards, debug JSON, audit export, report output, or project-context review cases. Debug may retain inactive traces for selected dragons when a hard battlefield requirement fails, but unselected friendly dragons must not appear at all.
 
 Phase 3.8 adds dependency traces:
@@ -75,7 +77,7 @@ Capability eligibility is separate from effect activation. If a recipient qualif
 
 Hard battlefield failures take precedence over progression. Failed provider position, recipient position, adjacency, target side, specific-position target, source scope, explicit caster exclusion, or selected-formation membership cannot be promoted to active, potential, or unknown by preview mode or missing Level/Star/Habit data.
 
-Run `npm run report:synergy` for a read-only capability report containing the revised matrix, availability context, modifier roles, generated cross-dragon synergies, Formation Analysis repair review, exact reviewed formation outputs, integrity checks, and unresolved assumptions.
+Run `npm run report:synergy` for a read-only capability report containing the revised matrix, availability context, modifier roles, generated cross-dragon synergies, Formation Analysis repair review, Formation Card Presentation Review, exact reviewed formation outputs, integrity checks, and unresolved assumptions.
 
 ## Threshold Interpretation
 

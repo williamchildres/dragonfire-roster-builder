@@ -11,10 +11,11 @@ Dragonfire Roster Lab records verified dragon roster data, combat mechanics, syn
 - Capability derivation is computed from structured AbilityEffect records in effectCapabilities.ts.
 - Formation analysis uses structured SynergyTrace records and does not produce an arbitrary numerical score.
 - Formation normalization preserves defensive scope, target-selection groups, visible-card requirement ownership, source ability identity, interaction scope, pure normal unmet summaries, and debug/export trace retention.
+- Formation card presentation maps existing normal traces into per-dragon Receives, Provides, Trait status, affinity, candidate, and preview summaries without changing mechanics.
 
 ## Versions
 
-- Database: 0.5.4
+- Database: 0.5.5
 - Data schema: 9
 - Local roster schema: 3
 - Game build: 26.6.53509
@@ -23,6 +24,10 @@ Dragonfire Roster Lab records verified dragon roster data, combat mechanics, syn
 ## Normal Requirement Summary
 
 Normal Formation Analysis unmet requirements are concise UI summaries rather than raw trace dumps. Visible interaction cards own their own blockers, global unmet requirements show selected Trait placement failures and concrete unowned-card progression blockers, preview and formation switches do not reuse prior results, and debug/export data keeps the suppressed raw requirements.
+
+## Formation Card Presentation
+
+Formation Builder cards are the primary normal UI for dragon-specific benefits. Receives and Provides derive from normal traces, target-selection groups use candidate wording, per-dragon affinities use existing affinity data, and raw effect tags are hidden from the normal Formation Summary. Technical analysis preserves the full trace set.
 
 ## Populated Dragons
 
@@ -81,12 +86,12 @@ The framework derives output capabilities, modifier capabilities, status outputs
 
 ## Review Plan
 
-Current review phase: Normal unmet requirement summary retest and project-context regeneration.
+Current review phase: Formation card presentation retest and project-context regeneration.
 
 Planned next phase:
 
 - full formation-output review
-- UI/tag redesign
+- additional visual QA
 - then additional dragons
 
 Additional dragon-data work should happen after the formation-output review and UI/tag redesign.

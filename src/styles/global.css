@@ -560,10 +560,212 @@ dd {
   border-color: rgba(255, 211, 107, 0.68);
 }
 
+.formation-position {
+  display: grid;
+  gap: 0.85rem;
+  transition:
+    border-color 150ms ease,
+    background-color 150ms ease;
+}
+
+.formation-position.relationship-active {
+  background: linear-gradient(180deg, rgba(255, 211, 107, 0.13), rgba(255, 255, 255, 0.035));
+  border-color: rgba(255, 211, 107, 0.9);
+}
+
+.position-card-heading,
+.interaction-section-heading,
+.affinity-row {
+  align-items: center;
+  display: flex;
+  gap: 0.5rem;
+  justify-content: space-between;
+}
+
 .position-label {
   color: var(--focus);
   font-weight: 900;
-  margin-bottom: 0.75rem;
+  margin-bottom: 0;
+}
+
+.vanguard-badge,
+.count-pill {
+  border: 1px solid rgba(255, 211, 107, 0.46);
+  border-radius: 999px;
+  color: var(--focus);
+  font-size: 0.72rem;
+  font-weight: 900;
+  padding: 0.2rem 0.48rem;
+}
+
+.movement-controls {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.45rem;
+}
+
+.compact-action {
+  min-height: 2.1rem;
+  padding: 0.2rem 0.45rem;
+}
+
+.card-mini-section {
+  background: rgba(0, 0, 0, 0.16);
+  border: 1px solid var(--line-soft);
+  border-radius: 0.45rem;
+  display: grid;
+  gap: 0.45rem;
+  padding: 0.75rem;
+}
+
+.card-mini-section h4 {
+  margin: 0;
+}
+
+.card-mini-section p {
+  margin: 0;
+}
+
+.empty-card-note,
+.muted-inline {
+  color: var(--muted);
+}
+
+.affinity-row {
+  justify-content: flex-start;
+}
+
+.affinity-label {
+  color: var(--muted);
+  flex: 0 0 6.4rem;
+  font-size: 0.84rem;
+  font-weight: 800;
+}
+
+.affinity-icons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem;
+}
+
+.affinity-chip,
+.state-badge {
+  align-items: center;
+  border: 1px solid var(--line-soft);
+  border-radius: 999px;
+  display: inline-flex;
+  font-size: 0.76rem;
+  font-weight: 900;
+  gap: 0.25rem;
+  line-height: 1.2;
+  padding: 0.24rem 0.5rem;
+}
+
+.affinity-chip.positive {
+  background: rgba(127, 176, 143, 0.18);
+  border-color: rgba(127, 176, 143, 0.62);
+}
+
+.affinity-chip.negative {
+  background: rgba(211, 108, 87, 0.17);
+  border-color: rgba(211, 108, 87, 0.64);
+}
+
+.affinity-chip.unknown {
+  background: rgba(122, 161, 184, 0.14);
+  border-color: rgba(122, 161, 184, 0.5);
+}
+
+.card-interaction-list {
+  display: grid;
+  gap: 0.45rem;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.card-interaction-item {
+  background: rgba(255, 255, 255, 0.035);
+  border: 1px solid var(--line-soft);
+  border-radius: 0.45rem;
+  color: var(--text);
+  cursor: pointer;
+  display: grid;
+  gap: 0.45rem;
+  padding: 0.6rem;
+  text-align: left;
+  width: 100%;
+}
+
+.card-interaction-item.is-linked {
+  border-color: rgba(255, 211, 107, 0.9);
+  background: rgba(255, 211, 107, 0.1);
+}
+
+.interaction-main {
+  display: grid;
+  gap: 0.18rem;
+  line-height: 1.35;
+}
+
+.interaction-main span {
+  color: var(--muted);
+}
+
+.target-note {
+  color: #fff2cc !important;
+  font-weight: 800;
+}
+
+.state-badge {
+  justify-self: start;
+}
+
+.state-active {
+  border-color: rgba(127, 176, 143, 0.7);
+}
+
+.state-conditional,
+.state-preview {
+  border-color: rgba(215, 180, 104, 0.75);
+}
+
+.state-unknown {
+  border-color: rgba(122, 161, 184, 0.66);
+}
+
+.state-blocked {
+  border-color: rgba(211, 108, 87, 0.72);
+}
+
+.state-badge.state-active {
+  background: rgba(127, 176, 143, 0.18);
+}
+
+.state-badge.state-conditional,
+.state-badge.state-preview {
+  background: rgba(215, 180, 104, 0.16);
+}
+
+.state-badge.state-unknown {
+  background: rgba(122, 161, 184, 0.16);
+}
+
+.state-badge.state-blocked {
+  background: rgba(211, 108, 87, 0.16);
+}
+
+.team-affinity-strip {
+  display: grid;
+  gap: 0.75rem;
+  grid-template-columns: 1.2fr repeat(3, minmax(0, 1fr));
+  margin-top: 1rem;
+}
+
+.team-affinity-strip h3,
+.team-affinity-strip h4,
+.technical-toggle p {
+  margin: 0;
 }
 
 .wide-panel {
@@ -754,6 +956,10 @@ th {
 
   .team-slots,
   .formation-board {
+    grid-template-columns: 1fr;
+  }
+
+  .team-affinity-strip {
     grid-template-columns: 1fr;
   }
 }

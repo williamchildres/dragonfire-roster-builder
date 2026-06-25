@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.5.5 - 2026-06-24
+
+- Redesigned Formation Builder position cards to show dragon-specific Trait status, affinities, Receives, Provides, target-candidate state, preview state, and overflow controls.
+- Added a pure card-presentation mapper over existing normal Formation Analysis traces without changing trace mechanics or game rules.
+- Reworked the normal Formation Summary to remove raw effect tags and moved raw tags/coverage into technical analysis details.
+- Added a compact team affinity strip, team-level interaction summary, relationship hover/focus highlighting, and focused presentation/report tests.
+- Increased database version to `0.5.5`; data schema remains `9`, local roster schema remains `3`, and context export version remains `1`.
+
 ## 0.5.4 - 2026-06-24
 
 - Replaced raw trace progression collection with a pure normal unmet-requirement summary for the current formation and preview mode.

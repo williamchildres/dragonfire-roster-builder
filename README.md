@@ -12,6 +12,7 @@ Screenshot placeholder: add a production screenshot after the first GitHub Pages
 - Versioned localStorage persistence with schema migration
 - JSON roster export and runtime-validated import
 - Three-position Formation Builder for Left Flank, Vanguard, and Right Flank
+- Enhanced Formation Builder cards with inline Trait status, affinity chips, Receives, Provides, target-candidate labels, max-rank preview labels, and overflow controls
 - Confirmed linear formation adjacency: Left Flank and Right Flank each touch Vanguard, but not each other
 - Shareable formation URL hash that preserves positions
 - Synergy engine with structured trace output, audit export, and no unsupported numerical scores
@@ -60,6 +61,8 @@ Version 0.5.3 normalizes Formation Analysis presentation without changing the ro
 
 Version 0.5.4 repairs normal Unmet requirements as a pure presentation summary for the current formation and preview mode. Global unmet items now show selected Trait placement failures and concrete progression blockers only when hard placement and targeting pass, while blockers already displayed on visible active or potential cards stay on those cards. The summary dedupes by semantic identity, uses canonical names, resets across preview toggles and formation switches, and preserves raw debug/export requirements. Trial by Flame groups selected recipients and threshold tiers in one normal card, and grouped stat cards keep different sibling values such as Reactive Instincts Instinct +36% and Initiative +18%.
 
+Version 0.5.5 moves dragon-specific presentation into the three Formation Builder cards. A pure card-presentation layer maps existing normal traces into Receives, Provides, Trait status, affinities, candidate-target labels, preview labels, and overflow sections without changing the trace engine or verified game mechanics. Raw effect tags now live in technical analysis details instead of the normal Formation Summary.
+
 Threshold wording is interpreted literally: "above 50%" means `> 50`, and "below 50%" means `< 50`. Exactly 50% matches neither wording until combat logs confirm otherwise.
 
 Observation snapshots are account-specific and non-canonical. They may be affected by Dragon Level, Star Rank, Stronghold upgrades, faction bonuses, alliance bonuses, and other modifiers.
@@ -81,7 +84,7 @@ npm run preview
 npm run report:synergy
 ```
 
-`npm run report:synergy` prints the revised capability matrix, availability context, modifier roles, generated cross-dragon synergies, Formation Analysis repair review, Normal Requirement Summary Review, exact current/preview outputs for the eight reviewed formations, integrity checks, and unresolved framework assumptions. It is read-only and does not modify source files or localStorage.
+`npm run report:synergy` prints the revised capability matrix, availability context, modifier roles, generated cross-dragon synergies, Formation Analysis repair review, Normal Requirement Summary Review, Formation Card Presentation Review, exact current/preview outputs for the eight reviewed formations, integrity checks, and unresolved framework assumptions. It is read-only and does not modify source files or localStorage.
 
 ## Official Roster Check
 
@@ -114,6 +117,7 @@ See:
 - `docs/SYNERGY_AUDIT.md`
 - `docs/SYNERGY_CAPABILITY_FRAMEWORK.md`
 - `docs/FORMATION_REVIEW_FINDINGS.md`
+- `docs/FORMATION_BUILDER_UI.md`
 
 Combat data requires source evidence, field-level verification, and manual-review state when available. Screenshot evidence may be described without committing screenshots or copied game artwork to the public repository. Do not submit credentials, private information, private APIs, extracted assets, or unsourced guesses.
 
@@ -127,7 +131,7 @@ Dragonfire Roster Lab is an unofficial community project and is not affiliated w
 
 ## Project Status
 
-Version `0.5.4` repairs normal unmet requirement summaries, Trial by Flame grouping, and multi-effect value formatting. Data schema is `9`; local roster schema remains `3`.
+Version `0.5.5` redesigns Formation Builder card presentation while preserving the verified trace engine. Data schema is `9`; local roster schema remains `3`.
 
 ## Planned Next Steps
 

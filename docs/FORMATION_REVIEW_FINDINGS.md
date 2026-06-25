@@ -60,3 +60,9 @@ Champion's Brilliance remains inactive in Formations 4 and 5 because observed Se
 Version 0.5.4 narrows normal Unmet requirements to a pure current-analysis summary. The section is rebuilt fresh for each formation and preview mode, includes only selected-dragon standalone blockers, applies hard Trait placement precedence before progression, dedupes by semantic identity, and suppresses blockers already owned by visible active or potential cards. Raw/debug trace requirements, including suppressed Habit unlocks and recipient-output blockers, remain exported for audit.
 
 Expected Batch 1 and Batch 2 normal summaries are now recorded in generated formation review case notes for current and preview modes. Review status remains `pending` until normal mode, preview mode, debug JSON, and `npm run report:synergy` are manually verified after this repair.
+
+## Formation Card Presentation Follow-Up
+
+Version 0.5.5 adds a UI-only presentation layer over the same normal traces. Formation cards now show dragon-specific Receives, Provides, Trait status, favorable and unfavorable affinities, candidate-target wording, current versus max-rank preview state, and overflow counts. The lower Formation Analysis is now a team-level summary plus blockers, unresolved conditions, and hidden technical details.
+
+The engine trace mechanics and expected interactions are unchanged. `npm run report:synergy` now includes a Formation Card Presentation Review for Formations 1-8 in current and preview modes.

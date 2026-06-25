@@ -36,6 +36,10 @@ Run `npm run validate:context` after generation. The validator checks schema con
 
 Data schema 9 exports defensive damage scope, threshold conditions separate from target count, highest-stat and one-adjacent target selectors, grouped modifier capability IDs, requirement ownership, source-ability identity, and interaction scope. Normal unmet requirements are presentation summaries only: they are pure per-formation/per-preview results, hide blockers owned by visible cards, dedupe by semantic identity, and apply hard-failure precedence. Internal same-dragon traces and suppressed normal blockers remain exported for audit even when normal Formation Analysis excludes them from cross-dragon synergy sections.
 
+## Formation Card Presentation
+
+Version 0.5.5 adds a UI-only card presentation layer. It maps normal traces into per-position Receives, Provides, Trait status, affinity chips, candidate-target labels, preview labels, and overflow counts. Raw/debug traces, requirements, evidence IDs, internal interactions, and expected formation-review cases remain exported for audit.
+
 ## Authority
 
 The authoritative source remains the typed source data under `src/data`, `src/models`, and `src/services`. Generated JSON exists so external systems can understand the project without reading TypeScript.
