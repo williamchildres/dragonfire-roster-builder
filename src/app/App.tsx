@@ -944,66 +944,72 @@ function FormationPositionCard({
       className={`team-slot formation-position ${card.position}${isRelationshipActive ? ' relationship-active' : ''}`}
       aria-labelledby={`formation-card-${card.position}`}
     >
-      <div className="position-card-heading">
-        <p className="position-label" id={`formation-card-${card.position}`}>
-          {positionLabels[card.position]}
-        </p>
-        {card.position === 'vanguard' ? <span className="vanguard-badge" aria-label="Vanguard badge">Center</span> : null}
-      </div>
-      <label htmlFor={`formation-${card.position}`}>Dragon</label>
-      <select
-        id={`formation-${card.position}`}
-        value={formation[card.position] ?? ''}
-        onChange={(event) => onDragonChange(event.target.value || null)}
-      >
-        <option value="">Choose a dragon</option>
-        {selectableDragons.map((candidate) => (
-          <option
-            key={candidate.id}
-            value={candidate.id}
-            disabled={FORMATION_POSITIONS.some(
-              (existingPosition) =>
-                existingPosition !== card.position && formation[existingPosition] === candidate.id,
-            )}
+      <div className="position-card-top">
+        <div className="position-card-heading">
+          <p className="position-label" id={`formation-card-${card.position}`}>
+            {positionLabels[card.position]}
+          </p>
+          {card.position === 'vanguard' ? <span className="vanguard-badge" aria-label="Vanguard badge">Center</span> : null}
+        </div>
+        <div className="position-controls">
+          <label htmlFor={`formation-${card.position}`}>Dragon</label>
+          <select
+            id={`formation-${card.position}`}
+            value={formation[card.position] ?? ''}
+            onChange={(event) => onDragonChange(event.target.value || null)}
           >
-            {candidate.name} ({candidate.rarity}, {candidate.breed})
-          </option>
-        ))}
-      </select>
-      <div className="movement-controls" aria-label={`${positionLabels[card.position]} movement controls`}>
-        {FORMATION_POSITIONS.filter((target) => target !== card.position).map((target) => (
-          <button className="text-button compact-action" key={target} type="button" onClick={() => onMove(target)}>
-            Move to {positionLabels[target]}
-          </button>
-        ))}
-        <button type="button" className="text-button compact-action" onClick={onClear}>
-          Clear position
-        </button>
+            <option value="">Choose a dragon</option>
+            {selectableDragons.map((candidate) => (
+              <option
+                key={candidate.id}
+                value={candidate.id}
+                disabled={FORMATION_POSITIONS.some(
+                  (existingPosition) =>
+                    existingPosition !== card.position && formation[existingPosition] === candidate.id,
+                )}
+              >
+                {candidate.name} ({candidate.rarity}, {candidate.breed})
+              </option>
+            ))}
+          </select>
+          <div className="movement-controls" aria-label={`${positionLabels[card.position]} movement controls`}>
+            {FORMATION_POSITIONS.filter((target) => target !== card.position).map((target) => (
+              <button className="secondary-button compact-action" key={target} type="button" onClick={() => onMove(target)}>
+                Move to {positionLabels[target]}
+              </button>
+            ))}
+            <button type="button" className="secondary-button compact-action clear-position-action" onClick={onClear}>
+              Clear position
+            </button>
+          </div>
+        </div>
       </div>
       {dragon ? (
         <>
           <TraitStatusPanel status={card.traitStatus} />
           <DragonAffinityStrip dragonName={dragon.name} favorable={card.affinities.favorable} unfavorable={card.affinities.unfavorable} />
-          <CardInteractionSection
-            cardKey={`${card.dragonId}-receives`}
-            title="Receives"
-            emptyText="No teammate benefits identified."
-            interactions={card.receives}
-            expandedSections={expandedSections}
-            onExpandedSectionsChange={onExpandedSectionsChange}
-            activeRelationship={activeRelationship}
-            onRelationshipActive={onRelationshipActive}
-          />
-          <CardInteractionSection
-            cardKey={`${card.dragonId}-provides`}
-            title="Provides"
-            emptyText="No outgoing benefits identified."
-            interactions={card.provides}
-            expandedSections={expandedSections}
-            onExpandedSectionsChange={onExpandedSectionsChange}
-            activeRelationship={activeRelationship}
-            onRelationshipActive={onRelationshipActive}
-          />
+          <div className="interaction-panels">
+            <CardInteractionSection
+              cardKey={`${card.dragonId}-receives`}
+              title="Receives"
+              emptyText="No incoming benefits identified"
+              interactions={card.receives}
+              expandedSections={expandedSections}
+              onExpandedSectionsChange={onExpandedSectionsChange}
+              activeRelationship={activeRelationship}
+              onRelationshipActive={onRelationshipActive}
+            />
+            <CardInteractionSection
+              cardKey={`${card.dragonId}-provides`}
+              title="Provides"
+              emptyText="No outgoing benefits identified"
+              interactions={card.provides}
+              expandedSections={expandedSections}
+              onExpandedSectionsChange={onExpandedSectionsChange}
+              activeRelationship={activeRelationship}
+              onRelationshipActive={onRelationshipActive}
+            />
+          </div>
         </>
       ) : (
         <p className="empty-card-note">Choose a dragon to see Trait, affinity, and interaction details.</p>
@@ -1108,32 +1114,44 @@ function CardInteractionSection({
   const expanded = expandedSections[cardKey] === true;
   const visible = getCompactInteractions(interactions, expanded);
   const overflow = Math.max(0, interactions.length - visible.length);
+  const listId = `${cardKey}-list`;
   return (
-    <section className="card-mini-section interaction-section" aria-labelledby={`${cardKey}-title`}>
+    <section
+      className={`card-mini-section interaction-section${expanded ? ' is-expanded' : ''}${interactions.length === 0 ? ' is-empty' : ''}`}
+      aria-labelledby={`${cardKey}-title`}
+    >
       <div className="interaction-section-heading">
         <h4 id={`${cardKey}-title`}>{title}</h4>
         <span className="count-pill">{interactions.length}</span>
       </div>
-      {visible.length > 0 ? (
-        <ul className="card-interaction-list">
-          {visible.map((interaction) => (
-            <li key={interaction.id}>
-              <CardInteractionItem
-                interaction={interaction}
-                active={activeRelationship === interaction.relationshipId}
-                onRelationshipActive={onRelationshipActive}
-              />
-            </li>
-          ))}
-        </ul>
-      ) : (
-        <p>{emptyText}</p>
-      )}
+      <div
+        id={listId}
+        className="interaction-section-body"
+        aria-label={`${title} interactions`}
+        tabIndex={expanded && interactions.length > 3 ? 0 : undefined}
+      >
+        {visible.length > 0 ? (
+          <ul className="card-interaction-list">
+            {visible.map((interaction) => (
+              <li key={interaction.id}>
+                <CardInteractionItem
+                  interaction={interaction}
+                  active={activeRelationship === interaction.relationshipId}
+                  onRelationshipActive={onRelationshipActive}
+                />
+              </li>
+            ))}
+          </ul>
+        ) : (
+          <p className="interaction-empty-state">{emptyText}</p>
+        )}
+      </div>
       {interactions.length > 3 ? (
         <button
           type="button"
           className="text-button compact-action"
           aria-expanded={expanded}
+          aria-controls={listId}
           onClick={() => onExpandedSectionsChange({ ...expandedSections, [cardKey]: !expanded })}
         >
           {expanded ? 'Show fewer' : `View ${overflow} more`}
@@ -1162,6 +1180,7 @@ function CardInteractionItem({
       onMouseLeave={() => onRelationshipActive(null)}
       onClick={() => onRelationshipActive(active ? null : interaction.relationshipId)}
       aria-pressed={active}
+      aria-label={`${stateLabel(interaction.state)}. ${relationshipText(interaction)}. ${interaction.abilityName}. ${interaction.summary}. Full detail: ${interaction.detail}`}
     >
       <StateBadge state={interaction.state} label={stateLabel(interaction.state)} />
       <span className="interaction-main">
@@ -1173,6 +1192,7 @@ function CardInteractionItem({
         <span>{interaction.summary}</span>
         {interaction.isCandidate ? <span className="target-note">Target not guaranteed</span> : null}
         {interaction.isEnemyFacing ? <span className="target-note">Enemy-facing team benefit</span> : null}
+        <span className="sr-only">Full detail: {interaction.detail}</span>
       </span>
     </button>
   );
@@ -1188,11 +1208,12 @@ function StateBadge({ state, label }: { state: FormationCardInteractionState; la
           ? Sparkles
           : state === 'unknown'
             ? HelpCircle
-            : Lock;
+      : Lock;
+  const visibleLabel = state === 'preview' ? 'Preview' : label;
   return (
     <span className={`state-badge state-${state}`} title={label} aria-label={label}>
       <Icon size={14} aria-hidden="true" />
-      <span>{label}</span>
+      <span>{visibleLabel}</span>
     </span>
   );
 }
@@ -2948,6 +2969,16 @@ function stateLabel(state: FormationCardInteractionState) {
     case 'blocked':
       return 'Blocked';
   }
+}
+
+function relationshipText(interaction: FormationCardInteraction) {
+  if (interaction.recipientName) {
+    return `${interaction.sourceName} to ${interaction.recipientName}`;
+  }
+  if (interaction.targetLabel) {
+    return `${interaction.sourceName} to ${interaction.targetLabel}`;
+  }
+  return `${interaction.sourceName} team benefit`;
 }
 
 function titleCase(value: string) {
