@@ -268,14 +268,16 @@ export function analyzeCapabilityAmplifications(
   dragons: Dragon[],
   options: CapabilityOptions = {},
 ): SynergyTrace[] {
-  const outputs = deriveOutputCapabilities(dragons);
-  const modifiers = deriveModifierCapabilities(dragons);
-  const statusOutputs = deriveStatusOutputCapabilities(dragons);
-  const periodicDamage = derivePeriodicDamageDefinitions(dragons);
+  const selectedDragonIds = selectedFormationDragonIds(formation);
+  const outputs = deriveOutputCapabilities(dragons).filter((capability) => selectedDragonIds.has(capability.dragonId));
+  const modifiers = deriveModifierCapabilities(dragons).filter((capability) => selectedDragonIds.has(capability.dragonId));
+  const statusOutputs = deriveStatusOutputCapabilities(dragons).filter((capability) => selectedDragonIds.has(capability.dragonId));
+  const periodicDamage = derivePeriodicDamageDefinitions(dragons).filter((definition) => selectedDragonIds.has(definition.dragonId));
   return [
     ...analyzeOutgoingAmplifications(formation, dragons, outputs, modifiers, options),
     ...analyzeIncomingAmplifications(formation, dragons, outputs, modifiers, options),
     ...analyzeStatusConditionEnablement(formation, dragons, outputs, statusOutputs, options),
+    ...analyzeDefensiveAllySupport(formation, dragons, modifiers, options),
     ...analyzeDirectStatSupport(formation, dragons, modifiers, options),
     ...analyzeStatScalingSupport(formation, dragons, outputs, modifiers, options),
     ...analyzeEnemyMitigationReduction(formation, dragons, outputs, modifiers, options),
@@ -393,6 +395,10 @@ function analyzeOutgoingAmplifications(
       modifierCapabilityVisible(capability, options),
   )) {
     const providerPosition = positionOf(formation, modifier.dragonId);
+    if (!providerPosition) {
+      continue;
+    }
+    const modifierTraces: AmplificationSynergyTrace[] = [];
     for (const recipientPosition of FORMATION_POSITIONS) {
       const recipientId = formation[recipientPosition];
       if (!recipientId || recipientId === modifier.dragonId) {
@@ -422,7 +428,7 @@ function analyzeOutgoingAmplifications(
       if (!recipient || !provider) {
         continue;
       }
-      traces.push(makeAmplificationTrace({
+      modifierTraces.push(makeAmplificationTrace({
         matchKind: 'outgoing-effect-amplification',
         provider,
         providerAbilityId: modifier.abilityId,
@@ -437,8 +443,133 @@ function analyzeOutgoingAmplifications(
         unresolvedQuestions: unresolvedForModifier(modifier),
       }));
     }
+    traces.push(...groupSingleTargetOutgoingTraces(modifier, modifierTraces, outputs, dragons));
   }
   return traces;
+}
+
+function analyzeDefensiveAllySupport(
+  formation: FormationAnalysisInput,
+  dragons: Dragon[],
+  modifiers: ModifierCapability[],
+  options: CapabilityOptions,
+): SynergyTrace[] {
+  const traces: SynergyTrace[] = [];
+  for (const modifier of modifiers.filter(
+    (capability) =>
+      capability.role === 'ally-support' &&
+      capability.direction === 'received' &&
+      capability.channel === 'damage-received' &&
+      capability.operation === 'decrease' &&
+      capability.targetSelector.selection !== 'self' &&
+      modifierCapabilityVisible(capability, options),
+  )) {
+    const providerPosition = positionOf(formation, modifier.dragonId);
+    if (!providerPosition) {
+      continue;
+    }
+    for (const recipientPosition of FORMATION_POSITIONS) {
+      const recipientId = formation[recipientPosition];
+      if (!recipientId || recipientId === modifier.dragonId) {
+        continue;
+      }
+      const provider = dragonById(dragons, modifier.dragonId);
+      const recipient = dragonById(dragons, recipientId);
+      if (!provider || !recipient) {
+        continue;
+      }
+      const requirements = dedupeRequirements([
+        targetRequirement(modifier, providerPosition, recipientPosition),
+        ...providerRequirementTraces(modifier, formation, dragons, options),
+      ]);
+      traces.push(makeDependencyTrace({
+        id: `defensive-ally-support-${modifier.id}-${recipientId}`,
+        matchKind: 'defensive-ally-support',
+        ruleId: 'defensive-ally-support',
+        source: provider,
+        sourceAbilityId: modifier.abilityId,
+        recipient,
+        recipientAbilityId: null,
+        channel: 'damage-received',
+        title: 'Damage Received Support',
+        explanation: `${provider.name}'s ${modifier.abilityName} can reduce ${recipient.name}'s Damage Received by ${modifier.value ?? 'unknown'}${modifier.unit === 'percent' ? '%' : ''}.`,
+        requirements,
+        matchedFacts: [`${modifier.abilityName} targets ${targetSelectorSummary(modifier.targetSelector)}.`],
+        effects: [`Damage Received ${modifier.operation} ${modifier.value ?? 'unknown'}${modifier.unit === 'percent' ? '%' : ''}`],
+        sourceEvidenceIds: modifier.evidenceIds,
+        recipientEvidenceIds: [],
+        assumptions: [],
+        unresolvedQuestions: [],
+        futureOrConditional: modifier.futureAvailable || modifier.conditional,
+        modifier,
+      }));
+    }
+  }
+  return traces;
+}
+
+function groupSingleTargetOutgoingTraces(
+  modifier: ModifierCapability,
+  traces: AmplificationSynergyTrace[],
+  outputs: OutputCapability[],
+  dragons: Dragon[],
+): AmplificationSynergyTrace[] {
+  const eligible = traces.filter((trace) => !['inactive', 'blocked', 'not-applicable'].includes(trace.status));
+  if (
+    modifier.targetSelector.count !== 1 ||
+    eligible.length <= 1 ||
+    modifier.targetSelector.selection === 'specific-position' ||
+    modifier.targetSelector.selection === 'adjacent'
+  ) {
+    return traces;
+  }
+
+  const first = eligible[0]!;
+  const eligibleRecipientDragonIds = eligible
+    .map((trace) => trace.recipientDragonId)
+    .filter((dragonId): dragonId is string => Boolean(dragonId))
+    .sort();
+  const matchedOutputCapabilityIds = uniqueSorted(
+    eligible.flatMap((trace) => trace.matchedOutputCapabilityIds ?? []),
+  );
+  const sourceScopeResults = eligible.flatMap((trace) => trace.sourceScopeResults ?? []);
+  const recipientNames = eligibleRecipientDragonIds
+    .map((dragonId) => dragonById(dragons, dragonId)?.name ?? dragonId)
+    .join(' and ');
+  const outputLabels = outputChannelNames(outputs, matchedOutputCapabilityIds);
+
+  return [
+    {
+      ...first,
+      id: `target-selection-${modifier.id}-${modifier.channel}`,
+      recipientDragonId: null,
+      recipientAbilityId: null,
+      status: aggregateStatus(eligible.map((trace) => trace.status)),
+      title: `${channelLabel(modifier.channel)} Target Selection`,
+      explanation:
+        `${first.sourceDragonId}'s ${modifier.abilityName} can target one ${channelLabel(modifier.channel)} ally. Eligible recipients are ${recipientNames}. The selected recipient is not guaranteed. Qualifying outputs: ${outputLabels.join(', ')}.`,
+      requirements: dedupeRequirements(eligible.flatMap((trace) => trace.requirements)),
+      matchedFacts: uniqueSorted([
+        ...eligible.flatMap((trace) => trace.matchedFacts),
+        ...eligibleRecipientDragonIds.map((dragonId) => `Eligible recipient: ${dragonId}.`),
+      ]),
+      effects: uniqueSorted(eligible.flatMap((trace) => trace.effects)),
+      conflicts: [],
+      assumptions: uniqueSorted([
+        ...eligible.flatMap((trace) => trace.assumptions),
+        'Target count is one, so eligible recipients compete for the same activation.',
+      ]),
+      recipientEvidenceIds: uniqueSorted(eligible.flatMap((trace) => trace.recipientEvidenceIds)),
+      matchedOutputCapabilityIds,
+      sourceScopeResults,
+      targetSelectionGroup: {
+        targetCount: 1,
+        eligibleRecipientDragonIds,
+        selectionUncertain: true,
+      },
+    },
+    ...traces.filter((trace) => !eligible.includes(trace)),
+  ];
 }
 
 function analyzeIncomingAmplifications(
@@ -693,10 +824,10 @@ function analyzeStatScalingSupport(
         recipientAbilityId: matchedOutputs[0]?.abilityId ?? null,
         channel: 'stat',
         title: `${statLabel(statId)} Scaling Support`,
-        explanation: `${provider.name}'s ${modifier.abilityName} can increase ${recipient.name}'s ${statLabel(statId)}, which supports ${matchedOutputs.map((output) => output.abilityName).join(', ')}.`,
+        explanation: `${provider.name}'s ${modifier.abilityName} can increase ${recipient.name}'s ${statLabel(statId)}, which supports ${abilityOutputSummary(matchedOutputs)}.`,
         requirements,
         matchedFacts: matchedOutputs.map((output) => `${output.abilityName} scales with ${statLabel(statId)}.`),
-        effects: [`${statLabel(statId)} support for ${matchedOutputs.map((output) => output.label).join(', ')}`],
+        effects: [`${statLabel(statId)} support for ${abilityOutputSummary(matchedOutputs)}`],
         sourceEvidenceIds: modifier.evidenceIds,
         recipientEvidenceIds: matchedOutputs.flatMap((output) => output.evidenceIds),
         assumptions: ['Exact stat-to-effect conversion formula is unknown.'],
@@ -857,6 +988,8 @@ function makeDependencyTrace({
   assumptions,
   unresolvedQuestions,
   futureOrConditional = true,
+  modifier = null,
+  targetSelectionGroup,
 }: {
   id: string;
   matchKind: NonNullable<SynergyTrace['matchKind']>;
@@ -876,11 +1009,14 @@ function makeDependencyTrace({
   assumptions: string[];
   unresolvedQuestions: string[];
   futureOrConditional?: boolean;
+  modifier?: ModifierCapability | null;
+  targetSelectionGroup?: SynergyTrace['targetSelectionGroup'];
 }): SynergyTrace {
+  const dedupedRequirements = dedupeRequirements(requirements);
   return {
     id,
     ruleId,
-    status: statusFromRequirements(requirements, futureOrConditional),
+    status: statusFromRequirements(dedupedRequirements, futureOrConditional),
     confidence: 'confirmed',
     sourceDragonId: source.id,
     sourceAbilityId,
@@ -888,10 +1024,10 @@ function makeDependencyTrace({
     recipientAbilityId,
     title,
     explanation,
-    requirements,
+    requirements: dedupedRequirements,
     matchedFacts,
     effects,
-    conflicts: requirements
+    conflicts: dedupedRequirements
       .filter((requirement) => requirement.satisfied === false)
       .map((requirement) => `${requirement.label}: expected ${requirement.expected}, actual ${requirement.actual ?? 'unknown'}`),
     assumptions,
@@ -903,6 +1039,12 @@ function makeDependencyTrace({
     exactResultUnknownReason: 'Exact final value cannot be calculated because final combat formulas and stacking order are not fully verified.',
     matchKind,
     channel,
+    modifierRole: modifier?.role,
+    targetSelectorSummary: modifier ? targetSelectorSummary(modifier.targetSelector) : undefined,
+    modifierSelfOnly: modifier ? modifier.role === 'self-amplification' || modifier.targetSelector.selection === 'self' : undefined,
+    availabilityContext: modifier?.availability.reportLabel,
+    modifierCapabilityId: modifier?.id ?? undefined,
+    targetSelectionGroup,
   };
 }
 
@@ -967,6 +1109,7 @@ function makeAmplificationTrace({
 }): AmplificationSynergyTrace {
   const status = aggregateStatus(matches.map((match) => match.status));
   const matchedOutputCapabilityIds = matches.map((match) => match.outputCapabilityId);
+  const dedupedRequirements = dedupeRequirements(requirements);
   return {
     id: `${matchKind}-${modifier.id}-${recipient.id}`,
     ruleId: matchKind,
@@ -978,12 +1121,12 @@ function makeAmplificationTrace({
     recipientAbilityId,
     title,
     explanation,
-    requirements,
+    requirements: dedupedRequirements,
     matchedFacts: matches.map((match) => `Matched ${match.outputCapabilityId}.`),
     effects: [
       `${channelLabel(modifier.channel)} ${modifier.direction === 'dealt' ? 'Dealt' : 'Received'} ${modifier.operation} ${modifier.value ?? 'unknown'}${modifier.unit === 'percent' ? '%' : modifier.unit === 'stack' ? ' per stack' : ''}`,
     ],
-    conflicts: requirements
+    conflicts: dedupedRequirements
       .filter((requirement) => requirement.satisfied === false)
       .map((requirement) => `${requirement.label}: expected ${requirement.expected}, actual ${requirement.actual ?? 'unknown'}`),
     assumptions,
@@ -1306,6 +1449,15 @@ function modifierChannelForEffect(effect: AbilityEffect): EffectChannel | null {
     return 'recovery';
   }
   if (
+    effect.type === 'Damage Received Down' ||
+    effect.type === 'Damage Received Reduction' ||
+    effect.type === 'Tactical Damage Received Reduction' ||
+    effect.type === 'Tactical Damage Received Down' ||
+    effect.type === 'Fire Damage Received Down'
+  ) {
+    return 'damage-received';
+  }
+  if (
     effect.type === 'Strength Up' ||
     effect.type === 'Instinct Up' ||
     effect.type === 'Intelligence Up' ||
@@ -1324,6 +1476,12 @@ function modifierRoleForEffect(effect: AbilityEffect, direction: 'dealt' | 'rece
   const target = targetForEffect(effect);
   if (target.side === 'enemy') {
     return 'enemy-debuff';
+  }
+  if (direction === 'received' && /Damage Received/i.test(effect.type) && target.side === 'ally') {
+    return 'ally-support';
+  }
+  if (direction === 'received' && /Damage Received/i.test(effect.type) && (target.selection === 'self' || target.side === 'self')) {
+    return 'self-amplification';
   }
   if (direction === 'received') {
     return 'recipient-side-amplification';
@@ -1737,18 +1895,12 @@ function requirementDefinitionsForAbility(ability: AbilityDefinition): Requireme
 }
 
 function mergeRequirements(matches: CapabilityMatch[]): RequirementTrace[] {
-  const byId = new Map<string, RequirementTrace>();
-  for (const match of matches) {
-    for (const requirement of match.requirements) {
-      byId.set(requirement.id, requirement);
-    }
-  }
-  return [...byId.values()];
+  return dedupeRequirements(matches.flatMap((match) => match.requirements));
 }
 
 function statusFromRequirements(requirements: RequirementTrace[], futureOrConditional: boolean): TraceStatus {
   const failed = requirements.filter((requirement) => requirement.satisfied === false);
-  if (failed.some((requirement) => /Position compatibility|Source-scope compatibility|Provider targeting/.test(requirement.label))) {
+  if (failed.some(isHardRequirement)) {
     return 'inactive';
   }
   if (requirements.some((requirement) => requirement.satisfied === null)) {
@@ -1761,6 +1913,12 @@ function statusFromRequirements(requirements: RequirementTrace[], futureOrCondit
     return 'potential';
   }
   return 'inactive';
+}
+
+function isHardRequirement(requirement: RequirementTrace): boolean {
+  return /selected in formation|\b[a-z0-9-]+-selected\b|provider position|required source position|required target position|position compatibility|source-scope compatibility|provider targeting|status targeting|adjacency|explicit caster|battlefield/i.test(
+    `${requirement.id} ${requirement.label}`,
+  );
 }
 
 function aggregateStatus(statuses: TraceStatus[]): TraceStatus {
@@ -1885,6 +2043,25 @@ function outputChannelNames(outputs: OutputCapability[], ids: string[]): string[
   return ids.map((id) => outputs.find((output) => output.id === id)?.label ?? id);
 }
 
+function abilityOutputSummary(outputs: OutputCapability[]): string {
+  const byAbility = new Map<string, Set<string>>();
+  for (const output of outputs) {
+    const channels = byAbility.get(output.abilityName) ?? new Set<string>();
+    channels.add(channelLabel(output.channel));
+    byAbility.set(output.abilityName, channels);
+  }
+  return [...byAbility.entries()]
+    .map(([abilityName, channels]) => `${abilityName}: ${joinEnglishList([...channels])}`)
+    .join('; ');
+}
+
+function joinEnglishList(items: string[]): string {
+  if (items.length <= 1) {
+    return items[0] ?? '';
+  }
+  return `${items.slice(0, -1).join(', ')} and ${items.at(-1)}`;
+}
+
 function outgoingExplanation(
   providerName: string,
   modifier: ModifierCapability,
@@ -1955,6 +2132,8 @@ function channelLabel(channel: EffectChannel): string {
       return 'Recovery';
     case 'stat':
       return 'Stat';
+    case 'damage-received':
+      return 'Damage Received';
   }
 }
 
@@ -2066,6 +2245,31 @@ function mergeConfidence(confidences: TraceConfidence[]): TraceConfidence {
 
 function uniqueChannels(channels: EffectChannel[]): EffectChannel[] {
   return [...new Set(channels)];
+}
+
+function uniqueSorted(values: string[]): string[] {
+  return [...new Set(values)].sort((a, b) => a.localeCompare(b));
+}
+
+function selectedFormationDragonIds(formation: FormationAnalysisInput): Set<string> {
+  return new Set(Object.values(formation).filter((dragonId): dragonId is string => Boolean(dragonId)));
+}
+
+function dedupeRequirements(requirements: RequirementTrace[]): RequirementTrace[] {
+  const byKey = new Map<string, RequirementTrace>();
+  for (const requirement of requirements) {
+    const key = [
+      requirement.id,
+      requirement.label,
+      requirement.expected,
+      requirement.actual ?? '',
+      String(requirement.satisfied),
+    ].join('|');
+    if (!byKey.has(key)) {
+      byKey.set(key, requirement);
+    }
+  }
+  return [...byKey.values()];
 }
 
 function primaryDamageChannelForDragon(dragonId: string): EffectChannel | null {

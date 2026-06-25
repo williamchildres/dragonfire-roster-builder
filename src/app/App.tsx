@@ -935,7 +935,7 @@ function AnalysisList({
           ))}
         </ul>
       ) : (
-        <p>{unknown}</p>
+        <p>None identified</p>
       )}
     </div>
   );

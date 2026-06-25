@@ -391,7 +391,7 @@ function buildCapabilityFramework(
   const reviewedOutputs = outputs.filter((capability) => isReviewedDragonId(capability.dragonId));
   const reviewedModifiers = modifiers.filter((capability) => isReviewedDragonId(capability.dragonId));
   return {
-    effectChannels: ['physical-damage', 'tactical-damage', 'fire-damage', 'recovery', 'stat'],
+    effectChannels: ['physical-damage', 'tactical-damage', 'fire-damage', 'recovery', 'stat', 'damage-received'],
     outputCapabilityStructure: [
       'dragonId',
       'abilityId',
@@ -435,6 +435,7 @@ function buildCapabilityFramework(
       'stat-scaling-support',
       'enemy-mitigation-reduction',
       'periodic-damage-amplification',
+      'defensive-ally-support',
     ],
     sourceScopeCompatibilityRules: [
       { modifierScope: 'all-qualifying-sources', outputScope: 'any same-channel source', compatible: true },
@@ -450,7 +451,7 @@ function buildCapabilityFramework(
     targetingLanguageRules: buildFormationRules().targetingLanguageRules,
     traceStatuses: ['active', 'potential', 'inactive', 'blocked', 'unknown', 'not-applicable'],
     confidenceLevels: ['confirmed', 'high', 'medium', 'low', 'unresolved'],
-    normalViewAggregationBehavior: 'One support modifier can match multiple recipient outputs and aggregate into one normal Formation Builder card.',
+    normalViewAggregationBehavior: 'One support modifier can match multiple recipient outputs and aggregate into one normal Formation Builder card. Single-target effects with multiple eligible recipients are grouped as target-selection interactions, and periodic damage is annotated under its damage channel rather than duplicated as a second normal buff.',
     debugViewBehavior: 'Debug traces retain child capability matches, source-scope checks, requirements, assumptions, and evidence IDs.',
     numericalScorePolicy: 'Synergy score remains null; exact formulas are not invented.',
     derivedCapabilities: {
@@ -482,32 +483,61 @@ function buildFormationReviewCases(): FormationReviewCaseExport[] {
       reviewerNotes: ['Completed Phase 3.8.1 Syrax/Caraxes formation review case.'],
     }),
   );
-  const nextBatchSpecs: Array<{ caseId: string; label: string; formation: FormationAnalysisInput }> = [
+  const batch1Specs: Array<{ caseId: string; label: string; formation: FormationAnalysisInput; reviewerNotes: string[] }> = [
     {
-      caseId: 'next-review-1',
-      label: 'Left Malachite / Vanguard Sheepstealer / Right Vermax',
+      caseId: 'batch-1-formation-1',
+      label: 'Batch 1 Formation 1: Left Malachite / Vanguard Sheepstealer / Right Vermax',
       formation: { 'left-flank': 'malachite', vanguard: 'sheepstealer', 'right-flank': 'vermax' },
+      reviewerNotes: ['Pending manual retest after formation analysis repair. Previous defects included duplicate Recovery traces, duplicate blockers, flank-to-flank Lightning Strike leakage, and a normal PvE Stolen Flock warning.'],
     },
     {
-      caseId: 'next-review-2',
-      label: 'Left Seasmoke / Vanguard Malachite / Right Sheepstealer',
+      caseId: 'batch-1-formation-2',
+      label: 'Batch 1 Formation 2: Left Seasmoke / Vanguard Malachite / Right Sheepstealer',
       formation: { 'left-flank': 'seasmoke', vanguard: 'malachite', 'right-flank': 'sheepstealer' },
+      reviewerNotes: ['Pending manual retest after formation analysis repair. Previous defects included false Fire support to Right Flank Sheepstealer and contradictory Fire-output wording.'],
     },
     {
-      caseId: 'next-review-3',
-      label: 'Left Malachite / Vanguard Vermax / Right Seasmoke',
+      caseId: 'batch-1-formation-3',
+      label: 'Batch 1 Formation 3: Left Malachite / Vanguard Vermax / Right Seasmoke',
       formation: { 'left-flank': 'malachite', vanguard: 'vermax', 'right-flank': 'seasmoke' },
+      reviewerNotes: ["Pending manual retest after formation analysis repair. Previous defects included repeated Warden's Rally names and imprecise preview blockers."],
     },
     {
-      caseId: 'next-review-4',
-      label: 'Left Malachite / Vanguard Seasmoke / Right Sheepstealer',
+      caseId: 'batch-1-formation-4',
+      label: 'Batch 1 Formation 4: Left Malachite / Vanguard Seasmoke / Right Sheepstealer',
       formation: { 'left-flank': 'malachite', vanguard: 'seasmoke', 'right-flank': 'sheepstealer' },
+      reviewerNotes: ["Pending manual retest after formation analysis repair. Previous defects included missing Champion's Brilliance defensive support and unwanted normal PvE warnings."],
     },
   ];
-  const nextBatch = nextBatchSpecs.map((spec) => formationCase({
+  const batch2Specs: Array<{ caseId: string; label: string; formation: FormationAnalysisInput; reviewerNotes: string[] }> = [
+    {
+      caseId: 'batch-2-formation-5',
+      label: 'Batch 2 Formation 5: Left Caraxes / Vanguard Seasmoke / Right Sheepstealer',
+      formation: { 'left-flank': 'caraxes', vanguard: 'seasmoke', 'right-flank': 'sheepstealer' },
+      reviewerNotes: ["Pending manual retest after formation analysis repair. Previous defects included missing Champion's Brilliance support, impossible Caraxes/Sheepstealer Vanguard effects, Recovery Received leakage, and duplicate Burn support."],
+    },
+    {
+      caseId: 'batch-2-formation-6',
+      label: 'Batch 2 Formation 6: Left Malachite / Vanguard Syrax / Right Sheepstealer',
+      formation: { 'left-flank': 'malachite', vanguard: 'syrax', 'right-flank': 'sheepstealer' },
+      reviewerNotes: ["Pending manual retest after formation analysis repair. Previous defects included Hunter's Cunning leakage, repeated Warden's Rally names, and duplicate Recovery traces."],
+    },
+    {
+      caseId: 'batch-2-formation-7',
+      label: 'Batch 2 Formation 7: Left Syrax / Vanguard Vermax / Right Caraxes',
+      formation: { 'left-flank': 'syrax', vanguard: 'vermax', 'right-flank': 'caraxes' },
+      reviewerNotes: ['Pending manual retest after formation analysis repair. Previous defects included unselected Sheepstealer traces, duplicate Reactive Instincts/Spreading Blaze traces, and duplicate Burn support.'],
+    },
+    {
+      caseId: 'batch-2-formation-8',
+      label: 'Batch 2 Formation 8: Left Sheepstealer / Vanguard Caraxes / Right Syrax',
+      formation: { 'left-flank': 'sheepstealer', vanguard: 'caraxes', 'right-flank': 'syrax' },
+      reviewerNotes: ["Pending manual retest after formation analysis repair. Previous defects included Sentinel's Wit/Hunter's Cunning leakage, Blazing Fury simultaneous-recipient presentation, and duplicate Burn support."],
+    },
+  ];
+  const nextBatch = [...batch1Specs, ...batch2Specs].map((spec) => formationCase({
     ...spec,
     reviewStatus: 'pending',
-    reviewerNotes: ['Pending next full formation-output review batch; do not mark confirmed until manually reviewed.'],
   }));
 
   return [...phase381Cases, ...nextBatch];
@@ -837,7 +867,7 @@ function buildSchemas() {
       'dragonEffectProfiles',
     ],
     properties: {
-      effectChannels: { type: 'array', items: { enum: ['physical-damage', 'tactical-damage', 'fire-damage', 'recovery', 'stat'] } },
+    effectChannels: { type: 'array', items: { enum: ['physical-damage', 'tactical-damage', 'fire-damage', 'recovery', 'stat', 'damage-received'] } },
       modifierRoles: { type: 'array', items: { enum: ['self-amplification', 'ally-support', 'recipient-side-amplification', 'enemy-debuff'] } },
       matchKinds: { type: 'array', items: { type: 'string' } },
       derivedCapabilities: {
@@ -915,7 +945,7 @@ This directory is generated from the current typed repository source. Do not man
 
 - \`dragonfire-project-context.json\`: consolidated machine-readable context with source metadata, roster summary, all dragon profiles, formation rules, capability framework, reviews, evidence, review cases, and unresolved mechanics.
 - \`project-state.json\`: current versions, branch/commit, counts, architecture summary, phases, and next-phase plan.
-- \`formation-review-cases.json\`: completed Phase 3.8.1 cases plus the pending next review batch.
+- \`formation-review-cases.json\`: completed Phase 3.8.1 cases plus pending Batch 1 and Batch 2 formation repair review cases.
 - \`unresolved-mechanics.json\`: stable unresolved mechanic records.
 - \`dragons/index.json\` and \`dragons/*.json\`: one profile per known dragon.
 - \`synergy/*.json\`: capability framework, formation rules, and expected interaction traces.
@@ -989,7 +1019,7 @@ All other known dragons remain metadata-only unless their typed source records c
 
 ## Synergy Framework
 
-The framework derives output capabilities, modifier capabilities, status outputs, periodic damage, and dependencies from structured ability effects. Current trace families are outgoing-effect-amplification, incoming-effect-amplification, status-condition-enablement, stat-scaling-support, enemy-mitigation-reduction, and periodic-damage-amplification.
+The framework derives output capabilities, modifier capabilities, status outputs, periodic damage, and dependencies from structured ability effects. Current trace families are outgoing-effect-amplification, incoming-effect-amplification, status-condition-enablement, stat-scaling-support, enemy-mitigation-reduction, periodic-damage-amplification, and defensive-ally-support.
 
 ## Unresolved Mechanics
 

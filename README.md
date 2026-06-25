@@ -16,7 +16,7 @@ Screenshot placeholder: add a production screenshot after the first GitHub Pages
 - Shareable formation URL hash that preserves positions
 - Synergy engine with structured trace output, audit export, and no unsupported numerical scores
 - Production debug view for active, inactive, potential, blocked, and unknown formation interactions, including provider-to-recipient amplification traces
-- Generic effect-capability framework for Physical Damage, Tactical Damage, Fire Damage, and Recovery matching
+- Generic effect-capability framework for Physical Damage, Tactical Damage, Fire Damage, Recovery, stat, and Damage Received support matching
 - Damage capability matrix and `npm run report:synergy` review report for the currently populated combat datasets
 - Partially verified combat datasets for Syrax, Caraxes, Malachite, Seasmoke, Sheepstealer, and Vermax
 - Manual-review records for the current screenshot-normalized datasets
@@ -54,6 +54,8 @@ Phase 3.8 adds Syrax and Caraxes combat records and expands the framework with s
 
 Phase 3.8.1 reconciles normal Formation Analysis, debug traces, audit exports, and the framework report around the same trace generator. Normal analysis distinguishes eligibility from activation: a dragon can be an eligible target for a support effect while actual execution remains chance-based, target-selection-dependent, locked, or timing-dependent. Targeting facts such as Warden's Rally including Malachite are not displayed as standalone synergies unless another dragon meaningfully modifies or benefits from that effect.
 
+Version 0.5.2 repairs Formation Analysis filtering and aggregation. Every friendly trace reference is constrained to the three selected formation dragons before normal presentation, debug output, reports, and project-context exports. Hard battlefield failures such as provider position, recipient position, adjacency, source scope, and selected-formation membership take precedence over unknown level or previewed progression. Damage Received ally support is modeled separately from outgoing damage amplification and recipient-side Recovery amplification; Seasmoke Champion's Brilliance now produces a Right Flank defensive support trace. Single-target effects with multiple eligible recipients are grouped as target-selection interactions, and Burn remains a Fire output with periodic debug metadata rather than a second normal buff.
+
 Threshold wording is interpreted literally: "above 50%" means `> 50`, and "below 50%" means `< 50`. Exactly 50% matches neither wording until combat logs confirm otherwise.
 
 Observation snapshots are account-specific and non-canonical. They may be affected by Dragon Level, Star Rank, Stronghold upgrades, faction bonuses, alliance bonuses, and other modifiers.
@@ -75,7 +77,7 @@ npm run preview
 npm run report:synergy
 ```
 
-`npm run report:synergy` prints the revised capability matrix, availability context, modifier roles, generated cross-dragon synergies, excluded self modifiers, integrity checks, and unresolved framework assumptions. It is read-only and does not modify source files or localStorage.
+`npm run report:synergy` prints the revised capability matrix, availability context, modifier roles, generated cross-dragon synergies, Formation Analysis repair review, exact current/preview outputs for the eight reviewed formations, integrity checks, and unresolved framework assumptions. It is read-only and does not modify source files or localStorage.
 
 ## Official Roster Check
 
@@ -107,6 +109,7 @@ See:
 - `docs/COMBAT_LOG_VALIDATION.md`
 - `docs/SYNERGY_AUDIT.md`
 - `docs/SYNERGY_CAPABILITY_FRAMEWORK.md`
+- `docs/FORMATION_REVIEW_FINDINGS.md`
 
 Combat data requires source evidence, field-level verification, and manual-review state when available. Screenshot evidence may be described without committing screenshots or copied game artwork to the public repository. Do not submit credentials, private information, private APIs, extracted assets, or unsourced guesses.
 
@@ -121,6 +124,7 @@ Dragonfire Roster Lab is an unofficial community project and is not affiliated w
 ## Project Status
 
 Version `0.5.1` fixes Formation Builder trace presentation for Phase 3.8 interactions. Data schema is `7`; local roster schema remains `3`.
+Version `0.5.2` repairs Formation Analysis selected-dragon filtering, defensive support, hard-requirement precedence, trace aggregation, and project-context review cases. Data schema is `8`; local roster schema remains `3`.
 
 ## Planned Next Steps
 

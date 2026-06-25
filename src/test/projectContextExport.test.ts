@@ -126,21 +126,25 @@ describe('project context export', () => {
     expect(context.unresolvedMechanics).toHaveLength(unresolved.length);
   });
 
-  it('exports formation review cases with confirmed Phase 3.8.1 cases and pending next batch', () => {
+  it('exports formation review cases with confirmed Phase 3.8.1 cases and pending repair batches', () => {
     const exportSet = buildProjectContextFiles(fixedOptions);
     const cases = jsonFile<Array<{ caseId: string; reviewStatus: string; currentModeExpectedInteractions: unknown[]; previewModeExpectedInteractions: unknown[] }>>(
       exportSet.files,
       'project-context/formation-review-cases.json',
     );
 
-    expect(cases).toHaveLength(8);
+    expect(cases).toHaveLength(12);
     expect(cases.filter((reviewCase) => reviewCase.caseId.startsWith('phase-3-8-1-')).map((reviewCase) => reviewCase.reviewStatus)).toEqual([
       'confirmed',
       'confirmed',
       'confirmed',
       'confirmed',
     ]);
-    expect(cases.filter((reviewCase) => reviewCase.caseId.startsWith('next-review-')).map((reviewCase) => reviewCase.reviewStatus)).toEqual([
+    expect(cases.filter((reviewCase) => /^batch-[12]-formation-/.test(reviewCase.caseId)).map((reviewCase) => reviewCase.reviewStatus)).toEqual([
+      'pending',
+      'pending',
+      'pending',
+      'pending',
       'pending',
       'pending',
       'pending',

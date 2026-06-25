@@ -47,11 +47,14 @@ export function analyzeFormationTraces(
   traces.push(...wardenRecoverySelfInclusionTraces(formation, dragons));
   traces.push(...thresholdBoundaryTraces(formation, dragons));
   traces.push(...contextualPveTraces(formation, dragons));
-  return traces;
+  return dedupeFormationTraces(enforceSelectedFormationBoundary(formation, traces));
 }
 
 export function isNormalSynergyTrace(trace: SynergyTrace): boolean {
-  return Boolean(trace.matchKind) || trace.ruleId === 'malachite-lightning-strike-vermax-basic-trigger';
+  return (
+    (Boolean(trace.matchKind) && trace.matchKind !== 'periodic-damage-amplification') ||
+    trace.ruleId === 'malachite-lightning-strike-vermax-basic-trigger'
+  );
 }
 
 export function isConditionalTrace(trace: SynergyTrace): boolean {
@@ -70,6 +73,23 @@ export function dedupeTraceMessages(messages: string[]): string[] {
     deduped.push(message);
   }
   return deduped;
+}
+
+export function assertSelectedFormationTraceInvariant(
+  formation: FormationAnalysisInput,
+  traces: SynergyTrace[],
+): { passed: boolean; violations: string[] } {
+  const selectedDragonIds = selectedFormationDragonIds(formation);
+  const violations: string[] = [];
+  for (const trace of traces) {
+    if (!selectedDragonIds.has(trace.sourceDragonId)) {
+      violations.push(`${trace.id}: source ${trace.sourceDragonId} is not selected`);
+    }
+    if (trace.recipientDragonId && !selectedDragonIds.has(trace.recipientDragonId)) {
+      violations.push(`${trace.id}: recipient ${trace.recipientDragonId} is not selected`);
+    }
+  }
+  return { passed: violations.length === 0, violations };
 }
 
 export function generateFormationAudit(
@@ -494,7 +514,11 @@ function makeTrace({
   exactResultKnown?: boolean;
   exactResultUnknownReason?: string | null;
 }): SynergyTrace {
-  const status = forcedStatus ?? inferStatus(requirements, potentialWhenLocked === true);
+  const inferredStatus = inferStatus(requirements, potentialWhenLocked === true);
+  const hasHardFailure = requirements.some((requirement) => requirement.satisfied === false && isHardRequirement(requirement));
+  const status = forcedStatus === 'potential' && hasHardFailure
+    ? inferredStatus
+    : (forcedStatus ?? inferredStatus);
   const manualReviews = manualReviewRecords.filter(
     (review) =>
       review.dragonId === source.id ||
@@ -542,16 +566,25 @@ function makeTrace({
 }
 
 function inferStatus(requirements: RequirementTrace[], potentialWhenLocked: boolean): TraceStatus {
+  const failed = requirements.filter((requirement) => requirement.satisfied === false);
+  if (failed.some(isHardRequirement)) {
+    return 'inactive';
+  }
   if (requirements.some((requirement) => requirement.satisfied === null)) {
     return 'unknown';
   }
-  const failed = requirements.filter((requirement) => requirement.satisfied === false);
   if (failed.length === 0) {
     return 'active';
   }
   return potentialWhenLocked && failed.some((requirement) => /Star Rank|Habit Level|Dragon Level|Collection state/.test(requirement.label))
     ? 'potential'
     : 'inactive';
+}
+
+function isHardRequirement(requirement: RequirementTrace): boolean {
+  return /selected in formation|\b[a-z0-9-]+-selected\b|provider position|required source position|required target position|position compatibility|source-scope compatibility|provider targeting|status targeting|adjacency|explicit caster|battlefield/i.test(
+    `${requirement.id} ${requirement.label}`,
+  );
 }
 
 function abilityProgressionRequirements(
@@ -723,4 +756,97 @@ function countTraceStatuses(traces: SynergyTrace[]): Record<TraceStatus, number>
     counts[trace.status] += 1;
   }
   return counts;
+}
+
+function enforceSelectedFormationBoundary(
+  formation: FormationAnalysisInput,
+  traces: SynergyTrace[],
+): SynergyTrace[] {
+  const selectedDragonIds = selectedFormationDragonIds(formation);
+  return traces.filter(
+    (trace) =>
+      selectedDragonIds.has(trace.sourceDragonId) &&
+      (!trace.recipientDragonId || selectedDragonIds.has(trace.recipientDragonId)) &&
+      (trace.matchedOutputCapabilityIds ?? []).every((capabilityId) => selectedDragonIds.has(capabilityId.split('-')[0] ?? '')),
+  );
+}
+
+function dedupeFormationTraces(traces: SynergyTrace[]): SynergyTrace[] {
+  const byKey = new Map<string, SynergyTrace>();
+  for (const trace of traces.map((item) => ({
+    ...item,
+    requirements: dedupeRequirements(item.requirements),
+  }))) {
+    const key = semanticTraceKey(trace);
+    const existing = byKey.get(key);
+    if (!existing) {
+      byKey.set(key, trace);
+      continue;
+    }
+    byKey.set(key, {
+      ...existing,
+      requirements: dedupeRequirements([...existing.requirements, ...trace.requirements]),
+      matchedFacts: unique([...existing.matchedFacts, ...trace.matchedFacts]),
+      effects: unique([...existing.effects, ...trace.effects]),
+      conflicts: unique([...existing.conflicts, ...trace.conflicts]),
+      assumptions: unique([
+        ...existing.assumptions,
+        ...trace.assumptions,
+        'Structurally duplicate raw traces were collapsed.',
+      ]),
+      unresolvedQuestions: unique([...existing.unresolvedQuestions, ...trace.unresolvedQuestions]),
+      sourceEvidenceIds: unique([...existing.sourceEvidenceIds, ...trace.sourceEvidenceIds]),
+      recipientEvidenceIds: unique([...existing.recipientEvidenceIds, ...trace.recipientEvidenceIds]),
+      matchedOutputCapabilityIds: unique([
+        ...(existing.matchedOutputCapabilityIds ?? []),
+        ...(trace.matchedOutputCapabilityIds ?? []),
+      ]),
+      sourceScopeResults: [
+        ...(existing.sourceScopeResults ?? []),
+        ...(trace.sourceScopeResults ?? []),
+      ],
+    });
+  }
+  return [...byKey.values()];
+}
+
+function semanticTraceKey(trace: SynergyTrace): string {
+  return [
+    trace.matchKind ?? trace.ruleId,
+    trace.sourceDragonId,
+    trace.sourceAbilityId ?? '',
+    trace.recipientDragonId ?? '',
+    trace.recipientAbilityId ?? '',
+    trace.matchKind === 'defensive-ally-support' ? '' : (trace.modifierCapabilityId ?? ''),
+    trace.channel ?? '',
+    trace.targetSelectionGroup
+      ? `selection:${trace.targetSelectionGroup.targetCount}:${trace.targetSelectionGroup.eligibleRecipientDragonIds.join(',')}`
+      : '',
+    [...(trace.matchedOutputCapabilityIds ?? [])].sort().join(','),
+  ].join('|');
+}
+
+function selectedFormationDragonIds(formation: FormationAnalysisInput): Set<string> {
+  return new Set(Object.values(formation).filter((dragonId): dragonId is string => Boolean(dragonId)));
+}
+
+function dedupeRequirements(requirements: RequirementTrace[]): RequirementTrace[] {
+  const byKey = new Map<string, RequirementTrace>();
+  for (const requirement of requirements) {
+    const key = [
+      requirement.id,
+      requirement.label,
+      requirement.expected,
+      requirement.actual ?? '',
+      String(requirement.satisfied),
+    ].join('|');
+    if (!byKey.has(key)) {
+      byKey.set(key, requirement);
+    }
+  }
+  return [...byKey.values()];
+}
+
+function unique<T>(values: T[]): T[] {
+  return [...new Set(values)];
 }

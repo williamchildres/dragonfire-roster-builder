@@ -98,6 +98,14 @@ Do not submit private account details, credentials, exploit instructions, copied
 - Game build: `26.6.53509`
 - Expected interaction: capability matching should explain reviewed interactions without dragon-specific pair rules or numerical scores
 - Covered formations:
+
+### 11. Formation Analysis Repair Review
+
+- Status: pending manual retest after merge
+- Game build: `26.6.53509`
+- Expected interaction: the eight Batch 1/Batch 2 formations match the generated current and preview traces without unselected friendly dragons, hard-failed potential traces, duplicate parent traces, duplicate requirements, simultaneous single-target recipient cards, or duplicate normal Burn support
+- Validation goal: compare normal Formation Analysis, preview mode, debug JSON, and `npm run report:synergy` output against the reviewed expectations
+- Notes: Champion's Brilliance should reduce Damage Received only for the Right Flank ally when Seasmoke is Vanguard; Resistance already means Damage Received reduction, while stacking/refresh/final formula remain unresolved
   - Malachite / Sheepstealer / Vermax validates Recovery Received amplification and Sheepstealer Physical support to Vermax
   - Sheepstealer / Malachite / Vermax validates Malachite Fire support to Left Flank Sheepstealer and inactive Sheepstealer Vanguard support
   - Malachite / Vermax / Seasmoke validates Vermax Tactical Damage stack eligibility for Malachite
