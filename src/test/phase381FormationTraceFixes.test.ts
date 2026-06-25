@@ -30,7 +30,7 @@ describe('Phase 3.8.1 trace pipeline reconciliation', () => {
   it('uses the same trace generator for framework report formations and Formation Analysis', () => {
     const report = frameworkTraceReportData(dragons, preview);
 
-    expect(report.databaseVersion).toBe('0.5.5');
+    expect(report.databaseVersion).toBe('0.5.6');
     for (const [name, formation] of Object.entries(phase381ReviewFormations)) {
       expect(report.traces[name]!.map((trace) => trace.id)).toEqual(
         analyzeFormationTraces(formation, dragons, preview).map((trace) => trace.id),

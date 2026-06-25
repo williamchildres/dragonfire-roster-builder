@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.5.6 - 2026-06-24
+
+- Polished Formation Builder card layout so desktop position cards use equal-width, equal-height columns without stretching blank space through the selector and movement-control area.
+- Normalized card spacing, movement controls, Trait panels, affinity rows, empty sections, and the Formation Affinity Coverage strip for a more compact planner-column layout.
+- Bounded expanded Receives and Provides content in scrollable section bodies while preserving `View N more`, `Show fewer`, overflow counts, relationship highlighting, and keyboard access.
+- Kept compact interaction summaries in the upper cards while preserving full trace detail through accessible text and Show analysis details.
+- Increased database version to `0.5.6`; data schema remains `9`, local roster schema remains `3`, and context export version remains `1`.
+
 ## 0.5.5 - 2026-06-24
 
 - Redesigned Formation Builder position cards to show dragon-specific Trait status, affinities, Receives, Provides, target-candidate state, preview state, and overflow controls.

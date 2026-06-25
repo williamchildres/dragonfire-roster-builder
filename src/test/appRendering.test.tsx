@@ -59,4 +59,80 @@ describe('Dragonfire Roster Lab app', () => {
     expect(screen.getByText('Vanguard')).toBeInTheDocument();
     expect(screen.getByText('Right Flank')).toBeInTheDocument();
   });
+
+  it('renders selected formation cards with normalized regions and compact interaction overflow', async () => {
+    const user = userEvent.setup();
+    render(<App />);
+
+    await user.click(screen.getAllByRole('button', { name: /formation builder/i })[0]!);
+    await user.click(screen.getByLabelText(/include unowned dragons/i));
+    await user.click(screen.getByLabelText(/preview max-rank interactions/i));
+    const selectors = screen.getAllByLabelText('Dragon');
+    await user.selectOptions(selectors[0]!, 'sheepstealer');
+    await user.selectOptions(selectors[1]!, 'caraxes');
+    await user.selectOptions(selectors[2]!, 'syrax');
+
+    for (const name of ['Left Flank', 'Vanguard', 'Right Flank']) {
+      const positionCard = screen.getByRole('article', { name });
+      expect(within(positionCard).getByLabelText(/movement controls/i)).toBeInTheDocument();
+      expect(within(positionCard).getByRole('region', { name: /trait status/i })).toBeInTheDocument();
+      expect(within(positionCard).getByRole('region', { name: /affinities/i })).toBeInTheDocument();
+      expect(within(positionCard).getByRole('region', { name: 'Receives' })).toBeInTheDocument();
+      expect(within(positionCard).getByRole('region', { name: 'Provides' })).toBeInTheDocument();
+    }
+
+    const syrax = screen.getByRole('article', { name: 'Right Flank' });
+    const provides = within(syrax).getByRole('region', { name: 'Provides' });
+    expect(provides.querySelectorAll('.card-interaction-item').length).toBeLessThanOrEqual(3);
+    const expand = within(provides).getByRole('button', { name: /view \d+ more/i });
+    expect(expand).toHaveAttribute('aria-expanded', 'false');
+
+    await user.click(expand);
+
+    expect(within(provides).getByRole('button', { name: /show fewer/i })).toHaveAttribute('aria-expanded', 'true');
+    expect(provides.querySelectorAll('.card-interaction-item').length).toBeGreaterThan(3);
+  });
+
+  it('keeps compact interaction summaries accessible while preserving full trace detail', async () => {
+    const user = userEvent.setup();
+    render(<App />);
+
+    await user.click(screen.getAllByRole('button', { name: /formation builder/i })[0]!);
+    await user.click(screen.getByLabelText(/include unowned dragons/i));
+    await user.click(screen.getByLabelText(/preview max-rank interactions/i));
+    const selectors = screen.getAllByLabelText('Dragon');
+    await user.selectOptions(selectors[0]!, 'sheepstealer');
+    await user.selectOptions(selectors[1]!, 'caraxes');
+    await user.selectOptions(selectors[2]!, 'syrax');
+
+    const caraxes = screen.getByRole('article', { name: 'Vanguard' });
+    const receives = within(caraxes).getByRole('region', { name: 'Receives' });
+    await user.click(within(receives).getByRole('button', { name: /view \d+ more/i }));
+
+    const candidate = within(receives).getByRole('button', {
+      name: /Blazing Fury.*target not guaranteed.*Full detail/i,
+    });
+    expect(candidate).toHaveTextContent('Preview');
+    expect(candidate).toHaveTextContent('Syrax');
+    expect(candidate).toHaveTextContent('Caraxes');
+    expect(candidate).toHaveTextContent('Blazing Fury');
+    expect(candidate).toHaveTextContent('Target not guaranteed');
+  });
+
+  it('renders consistent empty Receives and Provides sections for low-content cards', async () => {
+    const user = userEvent.setup();
+    render(<App />);
+
+    await user.click(screen.getAllByRole('button', { name: /formation builder/i })[0]!);
+    await user.click(screen.getByLabelText(/include unowned dragons/i));
+    await user.selectOptions(screen.getAllByLabelText('Dragon')[0]!, 'sheepstealer');
+
+    const sheepstealer = screen.getByRole('article', { name: 'Left Flank' });
+    expect(within(sheepstealer).getByRole('region', { name: 'Receives' })).toHaveTextContent(
+      'No incoming benefits identified',
+    );
+    expect(within(sheepstealer).getByRole('region', { name: 'Provides' })).toHaveTextContent(
+      'No outgoing benefits identified',
+    );
+  });
 });

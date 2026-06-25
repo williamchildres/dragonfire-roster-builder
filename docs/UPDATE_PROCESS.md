@@ -98,7 +98,7 @@ Run `npm run check:roster` to compare official-site local records with the ordin
 
 ## Versioning
 
-For data releases, update `databaseVersion`, `schemaVersion` when the data shape changes, package version, changelog, and tests together. Version 0.5.5 uses database version `0.5.5`, data schema `9`, current documented game build `26.6.53509`, context export version `1`, and local roster schema `3`.
+For data releases, update `databaseVersion`, `schemaVersion` when the data shape changes, package version, changelog, and tests together. Version 0.5.6 uses database version `0.5.6`, data schema `9`, current documented game build `26.6.53509`, context export version `1`, and local roster schema `3`.
 ## Formation Analysis Normalization Checklist
 
 When updating ability data or trace logic, verify that defensive modifiers keep `damageScope`, troop thresholds stay in structured conditions rather than `targetSelector.count`, highest-stat selectors record `selectionStat`, one-target selectors do not create simultaneous normal recipient cards, provider and recipient-output blockers keep ownership labels, and internal same-dragon traces remain debug/export data rather than cross-dragon normal synergy. Max-rank preview may preview locked Star Rank and Habit Level data, but it must not override a known failed Dragon Level requirement.
@@ -110,3 +110,5 @@ Run `npm run report:synergy` after any change touching Formation Analysis. The r
 ## Formation Card Presentation Checklist
 
 When changing Formation Builder presentation, keep `formationCardAnalysis` as a pure transform over existing normal traces. Verify Receives and Provides stay inside selected cards, internal interactions stay out of normal cards, one-target candidate groups never imply guaranteed selection, preview state is distinct from current conditional state, raw effect tags stay in technical details, and full traces remain available in Show analysis details. Run `npm run report:synergy` and confirm the `FORMATION CARD PRESENTATION REVIEW` section passes.
+
+For layout-only card work, verify the three desktop cards use equal-width/equal-height outer columns while card internals remain normal top-to-bottom flow. Movement controls should use the same labeled grid across Left Flank, Vanguard, and Right Flank. Receives and Provides should show at most three compact items when collapsed, keep accurate overflow counts, expand inside bounded keyboard-reachable scroll regions, and preserve full trace text through accessible detail or technical analysis. Mobile cards should stack in natural height with no horizontal page scrolling.

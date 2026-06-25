@@ -12,7 +12,7 @@ Screenshot placeholder: add a production screenshot after the first GitHub Pages
 - Versioned localStorage persistence with schema migration
 - JSON roster export and runtime-validated import
 - Three-position Formation Builder for Left Flank, Vanguard, and Right Flank
-- Enhanced Formation Builder cards with inline Trait status, affinity chips, Receives, Provides, target-candidate labels, max-rank preview labels, and overflow controls
+- Enhanced Formation Builder cards with equal-height desktop columns, inline Trait status, affinity chips, bounded Receives/Provides regions, target-candidate labels, max-rank preview labels, compact summaries, and overflow controls
 - Confirmed linear formation adjacency: Left Flank and Right Flank each touch Vanguard, but not each other
 - Shareable formation URL hash that preserves positions
 - Synergy engine with structured trace output, audit export, and no unsupported numerical scores
@@ -62,6 +62,8 @@ Version 0.5.3 normalizes Formation Analysis presentation without changing the ro
 Version 0.5.4 repairs normal Unmet requirements as a pure presentation summary for the current formation and preview mode. Global unmet items now show selected Trait placement failures and concrete progression blockers only when hard placement and targeting pass, while blockers already displayed on visible active or potential cards stay on those cards. The summary dedupes by semantic identity, uses canonical names, resets across preview toggles and formation switches, and preserves raw debug/export requirements. Trial by Flame groups selected recipients and threshold tiers in one normal card, and grouped stat cards keep different sibling values such as Reactive Instincts Instinct +36% and Initiative +18%.
 
 Version 0.5.5 moves dragon-specific presentation into the three Formation Builder cards. A pure card-presentation layer maps existing normal traces into Receives, Provides, Trait status, affinities, candidate-target labels, preview labels, and overflow sections without changing the trace engine or verified game mechanics. Raw effect tags now live in technical analysis details instead of the normal Formation Summary.
+
+Version 0.5.6 polishes those cards into consistent planner columns. Desktop and wide tablet layouts stretch the three outer cards to equal row height while keeping the position heading, selector, movement controls, Trait, affinities, Receives, and Provides in normal top-to-bottom flow. Receives and Provides show three compact items by default, expand inside bounded scrollable regions, preserve overflow counts, and keep full trace detail available to assistive technology and Show analysis details. Mobile cards stack in natural height without forced desktop spacing.
 
 Threshold wording is interpreted literally: "above 50%" means `> 50`, and "below 50%" means `< 50`. Exactly 50% matches neither wording until combat logs confirm otherwise.
 
@@ -131,7 +133,7 @@ Dragonfire Roster Lab is an unofficial community project and is not affiliated w
 
 ## Project Status
 
-Version `0.5.5` redesigns Formation Builder card presentation while preserving the verified trace engine. Data schema is `9`; local roster schema remains `3`.
+Version `0.5.6` polishes Formation Builder card layout while preserving the verified trace engine. Data schema is `9`; local roster schema remains `3`.
 
 ## Planned Next Steps
 
