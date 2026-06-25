@@ -1,0 +1,5697 @@
+{
+  "abilities": [
+    {
+      "abilityClass": "active",
+      "augmentations": [],
+      "dragonId": "caraxes",
+      "evidenceIds": [
+        "caraxes-infernal-burst-2026-06-24"
+      ],
+      "glossaryEntries": [],
+      "id": "caraxes-infernal-burst",
+      "kind": "command",
+      "minimumDragonLevel": null,
+      "name": "Infernal Burst",
+      "positionRequirement": null,
+      "powerByHabitLevel": [],
+      "rawDescription": "Rounds 3, 6, 9: deal Fire Damage to 3 Enemies in any lane (Damage Rate +100%). If Caraxes has First-Strike, damage is multiplied by 1.5 and displayed as +150%.",
+      "schedules": [
+        {
+          "attempts": null,
+          "battleContext": "unspecified",
+          "conditions": [],
+          "effects": [
+            {
+              "calculated": false,
+              "casterEligibility": "unknown",
+              "conditionalMultipliers": [
+                {
+                  "calculatedFromVerifiedMultiplier": true,
+                  "condition": {
+                    "battleContext": null,
+                    "comparison": null,
+                    "description": "Self has First-Strike.",
+                    "id": "self-has-first-strike",
+                    "kind": "self-has-status",
+                    "statusId": "first-strike",
+                    "subject": "self",
+                    "thresholdPercent": null,
+                    "unresolved": false
+                  },
+                  "description": "If Caraxes has First-Strike, damage is multiplied by 1.5.",
+                  "directlyVerifiedValues": [
+                    {
+                      "level": 1,
+                      "unit": "percent",
+                      "value": 150
+                    }
+                  ],
+                  "id": "infernal-burst-first-strike-1-5x",
+                  "multiplier": 1.5
+                }
+              ],
+              "conditions": [],
+              "directlyVerified": true,
+              "duration": null,
+              "durationRounds": null,
+              "excludes": [],
+              "id": "infernal-burst-fire-rate",
+              "includesCaster": null,
+              "magnitude": 100,
+              "notes": [
+                "Mitigated by target Initiative."
+              ],
+              "perTargetEffectCheck": null,
+              "rankedValues": [],
+              "scaling": [
+                "attacker Intelligence"
+              ],
+              "sourceScope": "unknown",
+              "stack": null,
+              "target": "3 Enemies",
+              "targetCount": 3,
+              "targetPriority": "any-eligible",
+              "targetScope": "any-lane",
+              "type": "Fire Damage",
+              "unit": "rate"
+            }
+          ],
+          "id": "infernal-burst-fire",
+          "repeat": null,
+          "rounds": [
+            3,
+            6,
+            9
+          ],
+          "targetPriority": "any-eligible",
+          "timing": "specific-rounds",
+          "triggerChanceByHabitLevel": [],
+          "triggerChanceFixed": null,
+          "triggerEvent": "specific-rounds"
+        }
+      ],
+      "tags": [
+        "FIRE_DAMAGE",
+        "ANY_LANE_TARGET"
+      ],
+      "unlockStarRank": null,
+      "unresolvedQuestions": [],
+      "verification": {
+        "capturedAt": "2026-06-23",
+        "gameVersion": "26.6.53509",
+        "reviewedManually": true,
+        "source": "Caraxes Infernal Burst screenshot",
+        "status": "screenshot-verified"
+      }
+    },
+    {
+      "abilityClass": "passive",
+      "augmentations": [],
+      "dragonId": "caraxes",
+      "evidenceIds": [
+        "caraxes-hunters-wrath-2026-06-24"
+      ],
+      "glossaryEntries": [],
+      "id": "caraxes-hunters-wrath",
+      "kind": "trait",
+      "minimumDragonLevel": 16,
+      "name": "Hunter's Wrath",
+      "positionRequirement": "vanguard",
+      "powerByHabitLevel": [],
+      "rawDescription": "At Level 16+ and deployed in Vanguard, increase Caraxes Fire Damage Dealt by 16%. Increase Strength and Initiative of Right Flank ally by +20.",
+      "schedules": [
+        {
+          "attempts": null,
+          "battleContext": "unspecified",
+          "conditions": [],
+          "effects": [
+            {
+              "calculated": false,
+              "casterEligibility": "unknown",
+              "conditionalMultipliers": [],
+              "conditions": [],
+              "directlyVerified": true,
+              "duration": null,
+              "durationRounds": null,
+              "excludes": [],
+              "id": "hunters-wrath-fire",
+              "includesCaster": null,
+              "magnitude": 16,
+              "notes": [],
+              "perTargetEffectCheck": null,
+              "rankedValues": [],
+              "scaling": [],
+              "sourceScope": "all-sources",
+              "stack": null,
+              "target": "Self",
+              "targetCount": null,
+              "targetPriority": "any-eligible",
+              "targetScope": "self",
+              "type": "Fire Damage Dealt Up",
+              "unit": "percent"
+            },
+            {
+              "calculated": false,
+              "casterEligibility": "unknown",
+              "conditionalMultipliers": [],
+              "conditions": [],
+              "directlyVerified": true,
+              "duration": null,
+              "durationRounds": null,
+              "excludes": [],
+              "id": "hunters-wrath-right-strength",
+              "includesCaster": null,
+              "magnitude": 20,
+              "notes": [],
+              "perTargetEffectCheck": null,
+              "rankedValues": [],
+              "scaling": [],
+              "sourceScope": "unknown",
+              "stack": null,
+              "target": "Right Flank ally",
+              "targetCount": null,
+              "targetPriority": "any-eligible",
+              "targetScope": "right-flank",
+              "type": "Strength Up",
+              "unit": "flat"
+            },
+            {
+              "calculated": false,
+              "casterEligibility": "unknown",
+              "conditionalMultipliers": [],
+              "conditions": [],
+              "directlyVerified": true,
+              "duration": null,
+              "durationRounds": null,
+              "excludes": [],
+              "id": "hunters-wrath-right-initiative",
+              "includesCaster": null,
+              "magnitude": 20,
+              "notes": [],
+              "perTargetEffectCheck": null,
+              "rankedValues": [],
+              "scaling": [],
+              "sourceScope": "unknown",
+              "stack": null,
+              "target": "Right Flank ally",
+              "targetCount": null,
+              "targetPriority": "any-eligible",
+              "targetScope": "right-flank",
+              "type": "Initiative Up",
+              "unit": "flat"
+            }
+          ],
+          "id": "hunters-wrath-passive",
+          "repeat": null,
+          "rounds": [],
+          "targetPriority": "any-eligible",
+          "timing": "passive",
+          "triggerChanceByHabitLevel": [],
+          "triggerChanceFixed": null,
+          "triggerEvent": "passive"
+        }
+      ],
+      "tags": [
+        "FIRE_DAMAGE_UP",
+        "STRENGTH_UP",
+        "BUFF_INITIATIVE",
+        "VANGUARD_REQUIRED",
+        "RIGHT_FLANK_TARGET"
+      ],
+      "unlockStarRank": 1,
+      "unresolvedQuestions": [],
+      "verification": {
+        "capturedAt": "2026-06-23",
+        "gameVersion": "26.6.53509",
+        "reviewedManually": true,
+        "source": "Caraxes Hunter's Wrath screenshot",
+        "status": "screenshot-verified"
+      }
+    },
+    {
+      "abilityClass": "passive",
+      "augmentations": [],
+      "dragonId": "caraxes",
+      "evidenceIds": [
+        "caraxes-battle-dread-2026-06-24"
+      ],
+      "glossaryEntries": [],
+      "id": "caraxes-battle-dread",
+      "kind": "habit",
+      "minimumDragonLevel": null,
+      "name": "Battle Dread",
+      "positionRequirement": null,
+      "powerByHabitLevel": [
+        {
+          "level": 1,
+          "unit": "power",
+          "value": 420
+        },
+        {
+          "level": 2,
+          "unit": "power",
+          "value": 920
+        },
+        {
+          "level": 3,
+          "unit": "power",
+          "value": 1500
+        },
+        {
+          "level": 4,
+          "unit": "power",
+          "value": 2200
+        },
+        {
+          "level": 5,
+          "unit": "power",
+          "value": 3100
+        }
+      ],
+      "rawDescription": "Start of Combat: reduce Strength and Initiative of 3 Enemies in any lane by -6%, enhanced by Caraxes Intelligence. Progression table shows -6.5% at Level 1.",
+      "schedules": [
+        {
+          "attempts": null,
+          "battleContext": "unspecified",
+          "conditions": [],
+          "effects": [
+            {
+              "calculated": false,
+              "casterEligibility": "unknown",
+              "conditionalMultipliers": [],
+              "conditions": [],
+              "directlyVerified": true,
+              "duration": "Until end of combat",
+              "durationRounds": null,
+              "excludes": [],
+              "id": "battle-dread-strength-down",
+              "includesCaster": null,
+              "magnitude": null,
+              "notes": [
+                "Raw description appears to state -6%; ranked table displays -6.5% at Level 1. Structured values use the ranked table."
+              ],
+              "perTargetEffectCheck": null,
+              "rankedValues": [
+                {
+                  "level": 1,
+                  "unit": "percent",
+                  "value": 6.5
+                },
+                {
+                  "level": 2,
+                  "unit": "percent",
+                  "value": 7.8
+                },
+                {
+                  "level": 3,
+                  "unit": "percent",
+                  "value": 9.1
+                },
+                {
+                  "level": 4,
+                  "unit": "percent",
+                  "value": 11.05
+                },
+                {
+                  "level": 5,
+                  "unit": "percent",
+                  "value": 13
+                }
+              ],
+              "scaling": [
+                "Intelligence"
+              ],
+              "sourceScope": "unknown",
+              "stack": null,
+              "target": "3 Enemies",
+              "targetCount": 3,
+              "targetPriority": "any-eligible",
+              "targetScope": "any-lane",
+              "type": "Strength Down",
+              "unit": "percent"
+            },
+            {
+              "calculated": false,
+              "casterEligibility": "unknown",
+              "conditionalMultipliers": [],
+              "conditions": [],
+              "directlyVerified": true,
+              "duration": "Until end of combat",
+              "durationRounds": null,
+              "excludes": [],
+              "id": "battle-dread-initiative-down",
+              "includesCaster": null,
+              "magnitude": null,
+              "notes": [
+                "Raw description appears to state -6%; ranked table displays -6.5% at Level 1. Structured values use the ranked table."
+              ],
+              "perTargetEffectCheck": null,
+              "rankedValues": [
+                {
+                  "level": 1,
+                  "unit": "percent",
+                  "value": 6.5
+                },
+                {
+                  "level": 2,
+                  "unit": "percent",
+                  "value": 7.8
+                },
+                {
+                  "level": 3,
+                  "unit": "percent",
+                  "value": 9.1
+                },
+                {
+                  "level": 4,
+                  "unit": "percent",
+                  "value": 11.05
+                },
+                {
+                  "level": 5,
+                  "unit": "percent",
+                  "value": 13
+                }
+              ],
+              "scaling": [
+                "Intelligence"
+              ],
+              "sourceScope": "unknown",
+              "stack": null,
+              "target": "3 Enemies",
+              "targetCount": 3,
+              "targetPriority": "any-eligible",
+              "targetScope": "any-lane",
+              "type": "Initiative Down",
+              "unit": "percent"
+            }
+          ],
+          "id": "battle-dread-start",
+          "repeat": null,
+          "rounds": [],
+          "targetPriority": "any-eligible",
+          "timing": "start-of-combat",
+          "triggerChanceByHabitLevel": [],
+          "triggerChanceFixed": null,
+          "triggerEvent": "start-of-combat"
+        }
+      ],
+      "tags": [
+        "DEBUFF_STRENGTH",
+        "DEBUFF_INITIATIVE"
+      ],
+      "unlockStarRank": 2,
+      "unresolvedQuestions": [
+        "Raw text/table discrepancy retained."
+      ],
+      "verification": {
+        "capturedAt": "2026-06-23",
+        "gameVersion": "26.6.53509",
+        "reviewedManually": true,
+        "source": "Caraxes Battle Dread screenshot",
+        "status": "screenshot-verified"
+      }
+    },
+    {
+      "abilityClass": "passive",
+      "augmentations": [],
+      "dragonId": "caraxes",
+      "evidenceIds": [
+        "caraxes-dragons-flair-2026-06-24"
+      ],
+      "glossaryEntries": [],
+      "id": "caraxes-dragons-flair",
+      "kind": "habit",
+      "minimumDragonLevel": null,
+      "name": "Dragon's Flair",
+      "positionRequirement": null,
+      "powerByHabitLevel": [
+        {
+          "level": 1,
+          "unit": "power",
+          "value": 420
+        },
+        {
+          "level": 2,
+          "unit": "power",
+          "value": 920
+        },
+        {
+          "level": 3,
+          "unit": "power",
+          "value": 1500
+        },
+        {
+          "level": 4,
+          "unit": "power",
+          "value": 2200
+        },
+        {
+          "level": 5,
+          "unit": "power",
+          "value": 3100
+        }
+      ],
+      "rawDescription": "Start of Combat: increase Caraxes Fire Damage Dealt until end of combat.",
+      "schedules": [
+        {
+          "attempts": null,
+          "battleContext": "unspecified",
+          "conditions": [],
+          "effects": [
+            {
+              "calculated": false,
+              "casterEligibility": "unknown",
+              "conditionalMultipliers": [],
+              "conditions": [],
+              "directlyVerified": true,
+              "duration": "Until end of combat",
+              "durationRounds": null,
+              "excludes": [],
+              "id": "dragons-flair-fire",
+              "includesCaster": null,
+              "magnitude": null,
+              "notes": [],
+              "perTargetEffectCheck": null,
+              "rankedValues": [
+                {
+                  "level": 1,
+                  "unit": "percent",
+                  "value": 12.5
+                },
+                {
+                  "level": 2,
+                  "unit": "percent",
+                  "value": 15
+                },
+                {
+                  "level": 3,
+                  "unit": "percent",
+                  "value": 17.5
+                },
+                {
+                  "level": 4,
+                  "unit": "percent",
+                  "value": 21.25
+                },
+                {
+                  "level": 5,
+                  "unit": "percent",
+                  "value": 25
+                }
+              ],
+              "scaling": [],
+              "sourceScope": "all-sources",
+              "stack": null,
+              "target": "Self",
+              "targetCount": null,
+              "targetPriority": "any-eligible",
+              "targetScope": "self",
+              "type": "Fire Damage Dealt Up",
+              "unit": "percent"
+            }
+          ],
+          "id": "dragons-flair-start",
+          "repeat": null,
+          "rounds": [],
+          "targetPriority": "any-eligible",
+          "timing": "start-of-combat",
+          "triggerChanceByHabitLevel": [],
+          "triggerChanceFixed": null,
+          "triggerEvent": "start-of-combat"
+        }
+      ],
+      "tags": [
+        "FIRE_DAMAGE_UP",
+        "BUFF_SELF"
+      ],
+      "unlockStarRank": 4,
+      "unresolvedQuestions": [],
+      "verification": {
+        "capturedAt": "2026-06-23",
+        "gameVersion": "26.6.53509",
+        "reviewedManually": true,
+        "source": "Caraxes Dragon's Flair screenshot",
+        "status": "screenshot-verified"
+      }
+    },
+    {
+      "abilityClass": "passive",
+      "augmentations": [],
+      "dragonId": "caraxes",
+      "evidenceIds": [
+        "caraxes-crippling-inferno-2026-06-24"
+      ],
+      "glossaryEntries": [],
+      "id": "caraxes-crippling-inferno",
+      "kind": "habit",
+      "minimumDragonLevel": null,
+      "name": "Crippling Inferno",
+      "positionRequirement": null,
+      "powerByHabitLevel": [
+        {
+          "level": 1,
+          "unit": "power",
+          "value": 420
+        },
+        {
+          "level": 2,
+          "unit": "power",
+          "value": 920
+        },
+        {
+          "level": 3,
+          "unit": "power",
+          "value": 1500
+        },
+        {
+          "level": 4,
+          "unit": "power",
+          "value": 2200
+        },
+        {
+          "level": 5,
+          "unit": "power",
+          "value": 3100
+        }
+      ],
+      "rawDescription": "Each Round: chance to apply Slow and Burn to 3 Enemies in any lane. Each effect is checked separately for each target and lasts 2 rounds.",
+      "schedules": [
+        {
+          "attempts": null,
+          "battleContext": "unspecified",
+          "conditions": [],
+          "effects": [
+            {
+              "calculated": false,
+              "casterEligibility": "unknown",
+              "conditionalMultipliers": [],
+              "conditions": [],
+              "directlyVerified": true,
+              "duration": null,
+              "durationRounds": 2,
+              "excludes": [],
+              "id": "crippling-inferno-slow",
+              "includesCaster": null,
+              "magnitude": null,
+              "notes": [
+                "Slow causes the target to attack after all other combatants each round."
+              ],
+              "perTargetEffectCheck": {
+                "effects": [
+                  {
+                    "effectId": "crippling-inferno-slow",
+                    "independentlyChecked": true
+                  },
+                  {
+                    "effectId": "crippling-inferno-burn",
+                    "independentlyChecked": true
+                  }
+                ],
+                "sharedChanceByHabitLevel": [
+                  {
+                    "level": 1,
+                    "unit": "percent",
+                    "value": 10
+                  },
+                  {
+                    "level": 2,
+                    "unit": "percent",
+                    "value": 12
+                  },
+                  {
+                    "level": 3,
+                    "unit": "percent",
+                    "value": 14
+                  },
+                  {
+                    "level": 4,
+                    "unit": "percent",
+                    "value": 17
+                  },
+                  {
+                    "level": 5,
+                    "unit": "percent",
+                    "value": 20
+                  }
+                ],
+                "targetCount": 3,
+                "targetsCheckedIndependently": true
+              },
+              "rankedValues": [],
+              "scaling": [],
+              "sourceScope": "unknown",
+              "stack": null,
+              "target": "3 Enemies",
+              "targetCount": 3,
+              "targetPriority": "any-eligible",
+              "targetScope": "any-lane",
+              "type": "Slow",
+              "unit": "unknown"
+            },
+            {
+              "calculated": false,
+              "casterEligibility": "unknown",
+              "conditionalMultipliers": [],
+              "conditions": [],
+              "directlyVerified": true,
+              "duration": null,
+              "durationRounds": 2,
+              "excludes": [],
+              "id": "crippling-inferno-burn",
+              "includesCaster": null,
+              "magnitude": 20,
+              "notes": [
+                "Burn deals Fire Damage each round and is mitigated by target Initiative."
+              ],
+              "perTargetEffectCheck": {
+                "effects": [
+                  {
+                    "effectId": "crippling-inferno-slow",
+                    "independentlyChecked": true
+                  },
+                  {
+                    "effectId": "crippling-inferno-burn",
+                    "independentlyChecked": true
+                  }
+                ],
+                "sharedChanceByHabitLevel": [
+                  {
+                    "level": 1,
+                    "unit": "percent",
+                    "value": 10
+                  },
+                  {
+                    "level": 2,
+                    "unit": "percent",
+                    "value": 12
+                  },
+                  {
+                    "level": 3,
+                    "unit": "percent",
+                    "value": 14
+                  },
+                  {
+                    "level": 4,
+                    "unit": "percent",
+                    "value": 17
+                  },
+                  {
+                    "level": 5,
+                    "unit": "percent",
+                    "value": 20
+                  }
+                ],
+                "targetCount": 3,
+                "targetsCheckedIndependently": true
+              },
+              "rankedValues": [],
+              "scaling": [
+                "attacker Intelligence"
+              ],
+              "sourceScope": "unknown",
+              "stack": null,
+              "target": "3 Enemies",
+              "targetCount": 3,
+              "targetPriority": "any-eligible",
+              "targetScope": "any-lane",
+              "type": "Burn",
+              "unit": "rate"
+            }
+          ],
+          "id": "crippling-inferno-each-round",
+          "repeat": null,
+          "rounds": [],
+          "targetPriority": "any-eligible",
+          "timing": "each-round",
+          "triggerChanceByHabitLevel": [
+            {
+              "level": 1,
+              "unit": "percent",
+              "value": 10
+            },
+            {
+              "level": 2,
+              "unit": "percent",
+              "value": 12
+            },
+            {
+              "level": 3,
+              "unit": "percent",
+              "value": 14
+            },
+            {
+              "level": 4,
+              "unit": "percent",
+              "value": 17
+            },
+            {
+              "level": 5,
+              "unit": "percent",
+              "value": 20
+            }
+          ],
+          "triggerChanceFixed": null,
+          "triggerEvent": "each-round"
+        }
+      ],
+      "tags": [
+        "SLOW",
+        "BURN",
+        "FIRE_DAMAGE"
+      ],
+      "unlockStarRank": 6,
+      "unresolvedQuestions": [],
+      "verification": {
+        "capturedAt": "2026-06-23",
+        "gameVersion": "26.6.53509",
+        "reviewedManually": true,
+        "source": "Caraxes Crippling Inferno screenshot",
+        "status": "screenshot-verified"
+      }
+    },
+    {
+      "abilityClass": "passive",
+      "augmentations": [],
+      "dragonId": "caraxes",
+      "evidenceIds": [
+        "caraxes-mass-enfeeble-2026-06-24"
+      ],
+      "glossaryEntries": [],
+      "id": "caraxes-mass-enfeeble",
+      "kind": "habit",
+      "minimumDragonLevel": null,
+      "name": "Mass Enfeeble",
+      "positionRequirement": null,
+      "powerByHabitLevel": [
+        {
+          "level": 1,
+          "unit": "power",
+          "value": 420
+        },
+        {
+          "level": 2,
+          "unit": "power",
+          "value": 920
+        },
+        {
+          "level": 3,
+          "unit": "power",
+          "value": 1500
+        },
+        {
+          "level": 4,
+          "unit": "power",
+          "value": 2200
+        },
+        {
+          "level": 5,
+          "unit": "power",
+          "value": 3100
+        }
+      ],
+      "rawDescription": "Start of Combat: reduce Physical Damage Dealt, excluding Basic Attacks, of 3 Enemies in any lane by -5%. Progression table shows -5.5% at Level 1.",
+      "schedules": [
+        {
+          "attempts": null,
+          "battleContext": "unspecified",
+          "conditions": [],
+          "effects": [
+            {
+              "calculated": false,
+              "casterEligibility": "unknown",
+              "conditionalMultipliers": [],
+              "conditions": [],
+              "directlyVerified": true,
+              "duration": "Until end of combat",
+              "durationRounds": null,
+              "excludes": [
+                "Basic Attacks"
+              ],
+              "id": "mass-enfeeble-physical-down",
+              "includesCaster": null,
+              "magnitude": null,
+              "notes": [
+                "Raw description appears to state -5%; ranked table displays -5.5% at Level 1. Structured values use the ranked table."
+              ],
+              "perTargetEffectCheck": null,
+              "rankedValues": [
+                {
+                  "level": 1,
+                  "unit": "percent",
+                  "value": 5.5
+                },
+                {
+                  "level": 2,
+                  "unit": "percent",
+                  "value": 6.6
+                },
+                {
+                  "level": 3,
+                  "unit": "percent",
+                  "value": 7.7
+                },
+                {
+                  "level": 4,
+                  "unit": "percent",
+                  "value": 9.35
+                },
+                {
+                  "level": 5,
+                  "unit": "percent",
+                  "value": 11
+                }
+              ],
+              "scaling": [],
+              "sourceScope": "non-basic-attacks",
+              "stack": null,
+              "target": "3 Enemies",
+              "targetCount": 3,
+              "targetPriority": "any-eligible",
+              "targetScope": "any-lane",
+              "type": "Physical Damage Dealt Down",
+              "unit": "percent"
+            }
+          ],
+          "id": "mass-enfeeble-start",
+          "repeat": null,
+          "rounds": [],
+          "targetPriority": "any-eligible",
+          "timing": "start-of-combat",
+          "triggerChanceByHabitLevel": [],
+          "triggerChanceFixed": null,
+          "triggerEvent": "start-of-combat"
+        }
+      ],
+      "tags": [
+        "PHYSICAL_DAMAGE_UP",
+        "EXCLUDES_BASIC_ATTACKS"
+      ],
+      "unlockStarRank": 8,
+      "unresolvedQuestions": [
+        "Raw text/table discrepancy retained."
+      ],
+      "verification": {
+        "capturedAt": "2026-06-23",
+        "gameVersion": "26.6.53509",
+        "reviewedManually": true,
+        "source": "Caraxes Mass Enfeeble screenshot",
+        "status": "screenshot-verified"
+      }
+    },
+    {
+      "abilityClass": "passive",
+      "augmentations": [],
+      "dragonId": "caraxes",
+      "evidenceIds": [
+        "caraxes-blood-wyrm-2026-06-24"
+      ],
+      "glossaryEntries": [],
+      "id": "caraxes-blood-wyrm",
+      "kind": "habit",
+      "minimumDragonLevel": null,
+      "name": "Blood Wyrm",
+      "positionRequirement": null,
+      "powerByHabitLevel": [
+        {
+          "level": 1,
+          "unit": "power",
+          "value": 430
+        },
+        {
+          "level": 2,
+          "unit": "power",
+          "value": 1000
+        },
+        {
+          "level": 3,
+          "unit": "power",
+          "value": 1700
+        },
+        {
+          "level": 4,
+          "unit": "power",
+          "value": 2700
+        },
+        {
+          "level": 5,
+          "unit": "power",
+          "value": 4000
+        }
+      ],
+      "rawDescription": "Start of Each Round: for each Enemy below 50% maximum Troop Capacity, increase Caraxes Fire Damage Dealt. For each Enemy that retreated during the previous round, apply Recovery to Caraxes, enhanced by Initiative.",
+      "schedules": [
+        {
+          "attempts": null,
+          "battleContext": "unspecified",
+          "conditions": [
+            {
+              "battleContext": null,
+              "comparison": "below",
+              "description": "Enemy is below 50% maximum Troop Capacity.",
+              "id": "enemy-below-50-maximum-troops",
+              "kind": "target-below-troop-capacity-threshold",
+              "statusId": null,
+              "subject": "enemy",
+              "thresholdPercent": 50,
+              "unresolved": false
+            }
+          ],
+          "effects": [
+            {
+              "calculated": false,
+              "casterEligibility": "unknown",
+              "conditionalMultipliers": [],
+              "conditions": [
+                {
+                  "battleContext": null,
+                  "comparison": "below",
+                  "description": "Enemy is below 50% maximum Troop Capacity.",
+                  "id": "enemy-below-50-maximum-troops",
+                  "kind": "target-below-troop-capacity-threshold",
+                  "statusId": null,
+                  "subject": "enemy",
+                  "thresholdPercent": 50,
+                  "unresolved": false
+                }
+              ],
+              "directlyVerified": true,
+              "duration": null,
+              "durationRounds": null,
+              "excludes": [],
+              "id": "blood-wyrm-fire-up",
+              "includesCaster": null,
+              "magnitude": null,
+              "notes": [
+                "Duration and accumulation semantics are not stated."
+              ],
+              "perTargetEffectCheck": null,
+              "rankedValues": [
+                {
+                  "level": 1,
+                  "unit": "percent",
+                  "value": 8
+                },
+                {
+                  "level": 2,
+                  "unit": "percent",
+                  "value": 10.4
+                },
+                {
+                  "level": 3,
+                  "unit": "percent",
+                  "value": 12.8
+                },
+                {
+                  "level": 4,
+                  "unit": "percent",
+                  "value": 16
+                },
+                {
+                  "level": 5,
+                  "unit": "percent",
+                  "value": 20
+                }
+              ],
+              "scaling": [],
+              "sourceScope": "all-sources",
+              "stack": null,
+              "target": "Self",
+              "targetCount": null,
+              "targetPriority": "any-eligible",
+              "targetScope": "self",
+              "type": "Fire Damage Dealt Up",
+              "unit": "percent"
+            }
+          ],
+          "id": "blood-wyrm-low-troops",
+          "repeat": {
+            "condition": {
+              "battleContext": null,
+              "comparison": "below",
+              "description": "Enemy is below 50% maximum Troop Capacity.",
+              "id": "enemy-below-50-maximum-troops",
+              "kind": "target-below-troop-capacity-threshold",
+              "statusId": null,
+              "subject": "enemy",
+              "thresholdPercent": 50,
+              "unresolved": false
+            },
+            "description": "Repeat once for each enemy below 50% maximum Troop Capacity. Number of repetitions is battlefield-dependent.",
+            "mode": "once-per-match"
+          },
+          "rounds": [],
+          "targetPriority": "any-eligible",
+          "timing": "start-of-each-round",
+          "triggerChanceByHabitLevel": [],
+          "triggerChanceFixed": null,
+          "triggerEvent": "start-of-each-round"
+        },
+        {
+          "attempts": null,
+          "battleContext": "unspecified",
+          "conditions": [
+            {
+              "battleContext": null,
+              "comparison": null,
+              "description": "Enemy retreated during the previous round.",
+              "id": "enemy-retreated-previous-round",
+              "kind": "previous-round-event",
+              "statusId": null,
+              "subject": "enemy",
+              "thresholdPercent": null,
+              "unresolved": false
+            }
+          ],
+          "effects": [
+            {
+              "calculated": false,
+              "casterEligibility": "unknown",
+              "conditionalMultipliers": [],
+              "conditions": [
+                {
+                  "battleContext": null,
+                  "comparison": null,
+                  "description": "Enemy retreated during the previous round.",
+                  "id": "enemy-retreated-previous-round",
+                  "kind": "previous-round-event",
+                  "statusId": null,
+                  "subject": "enemy",
+                  "thresholdPercent": null,
+                  "unresolved": false
+                }
+              ],
+              "directlyVerified": true,
+              "duration": null,
+              "durationRounds": null,
+              "excludes": [],
+              "id": "blood-wyrm-recovery",
+              "includesCaster": null,
+              "magnitude": null,
+              "notes": [
+                "Enhanced by Caraxes Initiative."
+              ],
+              "perTargetEffectCheck": null,
+              "rankedValues": [
+                {
+                  "level": 1,
+                  "unit": "percent",
+                  "value": 40
+                },
+                {
+                  "level": 2,
+                  "unit": "percent",
+                  "value": 52
+                },
+                {
+                  "level": 3,
+                  "unit": "percent",
+                  "value": 64
+                },
+                {
+                  "level": 4,
+                  "unit": "percent",
+                  "value": 80
+                },
+                {
+                  "level": 5,
+                  "unit": "percent",
+                  "value": 100
+                }
+              ],
+              "scaling": [
+                "Initiative"
+              ],
+              "sourceScope": "unknown",
+              "stack": null,
+              "target": "Self",
+              "targetCount": null,
+              "targetPriority": "any-eligible",
+              "targetScope": "self",
+              "type": "Recovery",
+              "unit": "rate"
+            }
+          ],
+          "id": "blood-wyrm-retreat-recovery",
+          "repeat": {
+            "condition": {
+              "battleContext": null,
+              "comparison": null,
+              "description": "Enemy retreated during the previous round.",
+              "id": "enemy-retreated-previous-round",
+              "kind": "previous-round-event",
+              "statusId": null,
+              "subject": "enemy",
+              "thresholdPercent": null,
+              "unresolved": false
+            },
+            "description": "Repeat once for each enemy that retreated during the previous round. Number of repetitions is battlefield-dependent.",
+            "mode": "once-per-match"
+          },
+          "rounds": [],
+          "targetPriority": "any-eligible",
+          "timing": "when-enemy-retreated-previous-round",
+          "triggerChanceByHabitLevel": [],
+          "triggerChanceFixed": null,
+          "triggerEvent": "when-enemy-retreated-previous-round"
+        }
+      ],
+      "tags": [
+        "FIRE_DAMAGE_UP",
+        "RECOVERY",
+        "LOW_HEALTH"
+      ],
+      "unlockStarRank": 10,
+      "unresolvedQuestions": [
+        "Fire Damage increase duration and accumulation semantics are not stated.",
+        "Exact below 50% equality behavior remains unconfirmed."
+      ],
+      "verification": {
+        "capturedAt": "2026-06-23",
+        "gameVersion": "26.6.53509",
+        "reviewedManually": true,
+        "source": "Caraxes Blood Wyrm screenshot",
+        "status": "screenshot-verified"
+      }
+    }
+  ],
+  "abilitySchedules": [
+    {
+      "abilityId": "caraxes-infernal-burst",
+      "abilityName": "Infernal Burst",
+      "schedule": {
+        "attempts": null,
+        "battleContext": "unspecified",
+        "conditions": [],
+        "effects": [
+          {
+            "calculated": false,
+            "casterEligibility": "unknown",
+            "conditionalMultipliers": [
+              {
+                "calculatedFromVerifiedMultiplier": true,
+                "condition": {
+                  "battleContext": null,
+                  "comparison": null,
+                  "description": "Self has First-Strike.",
+                  "id": "self-has-first-strike",
+                  "kind": "self-has-status",
+                  "statusId": "first-strike",
+                  "subject": "self",
+                  "thresholdPercent": null,
+                  "unresolved": false
+                },
+                "description": "If Caraxes has First-Strike, damage is multiplied by 1.5.",
+                "directlyVerifiedValues": [
+                  {
+                    "level": 1,
+                    "unit": "percent",
+                    "value": 150
+                  }
+                ],
+                "id": "infernal-burst-first-strike-1-5x",
+                "multiplier": 1.5
+              }
+            ],
+            "conditions": [],
+            "directlyVerified": true,
+            "duration": null,
+            "durationRounds": null,
+            "excludes": [],
+            "id": "infernal-burst-fire-rate",
+            "includesCaster": null,
+            "magnitude": 100,
+            "notes": [
+              "Mitigated by target Initiative."
+            ],
+            "perTargetEffectCheck": null,
+            "rankedValues": [],
+            "scaling": [
+              "attacker Intelligence"
+            ],
+            "sourceScope": "unknown",
+            "stack": null,
+            "target": "3 Enemies",
+            "targetCount": 3,
+            "targetPriority": "any-eligible",
+            "targetScope": "any-lane",
+            "type": "Fire Damage",
+            "unit": "rate"
+          }
+        ],
+        "id": "infernal-burst-fire",
+        "repeat": null,
+        "rounds": [
+          3,
+          6,
+          9
+        ],
+        "targetPriority": "any-eligible",
+        "timing": "specific-rounds",
+        "triggerChanceByHabitLevel": [],
+        "triggerChanceFixed": null,
+        "triggerEvent": "specific-rounds"
+      }
+    },
+    {
+      "abilityId": "caraxes-hunters-wrath",
+      "abilityName": "Hunter's Wrath",
+      "schedule": {
+        "attempts": null,
+        "battleContext": "unspecified",
+        "conditions": [],
+        "effects": [
+          {
+            "calculated": false,
+            "casterEligibility": "unknown",
+            "conditionalMultipliers": [],
+            "conditions": [],
+            "directlyVerified": true,
+            "duration": null,
+            "durationRounds": null,
+            "excludes": [],
+            "id": "hunters-wrath-fire",
+            "includesCaster": null,
+            "magnitude": 16,
+            "notes": [],
+            "perTargetEffectCheck": null,
+            "rankedValues": [],
+            "scaling": [],
+            "sourceScope": "all-sources",
+            "stack": null,
+            "target": "Self",
+            "targetCount": null,
+            "targetPriority": "any-eligible",
+            "targetScope": "self",
+            "type": "Fire Damage Dealt Up",
+            "unit": "percent"
+          },
+          {
+            "calculated": false,
+            "casterEligibility": "unknown",
+            "conditionalMultipliers": [],
+            "conditions": [],
+            "directlyVerified": true,
+            "duration": null,
+            "durationRounds": null,
+            "excludes": [],
+            "id": "hunters-wrath-right-strength",
+            "includesCaster": null,
+            "magnitude": 20,
+            "notes": [],
+            "perTargetEffectCheck": null,
+            "rankedValues": [],
+            "scaling": [],
+            "sourceScope": "unknown",
+            "stack": null,
+            "target": "Right Flank ally",
+            "targetCount": null,
+            "targetPriority": "any-eligible",
+            "targetScope": "right-flank",
+            "type": "Strength Up",
+            "unit": "flat"
+          },
+          {
+            "calculated": false,
+            "casterEligibility": "unknown",
+            "conditionalMultipliers": [],
+            "conditions": [],
+            "directlyVerified": true,
+            "duration": null,
+            "durationRounds": null,
+            "excludes": [],
+            "id": "hunters-wrath-right-initiative",
+            "includesCaster": null,
+            "magnitude": 20,
+            "notes": [],
+            "perTargetEffectCheck": null,
+            "rankedValues": [],
+            "scaling": [],
+            "sourceScope": "unknown",
+            "stack": null,
+            "target": "Right Flank ally",
+            "targetCount": null,
+            "targetPriority": "any-eligible",
+            "targetScope": "right-flank",
+            "type": "Initiative Up",
+            "unit": "flat"
+          }
+        ],
+        "id": "hunters-wrath-passive",
+        "repeat": null,
+        "rounds": [],
+        "targetPriority": "any-eligible",
+        "timing": "passive",
+        "triggerChanceByHabitLevel": [],
+        "triggerChanceFixed": null,
+        "triggerEvent": "passive"
+      }
+    },
+    {
+      "abilityId": "caraxes-battle-dread",
+      "abilityName": "Battle Dread",
+      "schedule": {
+        "attempts": null,
+        "battleContext": "unspecified",
+        "conditions": [],
+        "effects": [
+          {
+            "calculated": false,
+            "casterEligibility": "unknown",
+            "conditionalMultipliers": [],
+            "conditions": [],
+            "directlyVerified": true,
+            "duration": "Until end of combat",
+            "durationRounds": null,
+            "excludes": [],
+            "id": "battle-dread-strength-down",
+            "includesCaster": null,
+            "magnitude": null,
+            "notes": [
+              "Raw description appears to state -6%; ranked table displays -6.5% at Level 1. Structured values use the ranked table."
+            ],
+            "perTargetEffectCheck": null,
+            "rankedValues": [
+              {
+                "level": 1,
+                "unit": "percent",
+                "value": 6.5
+              },
+              {
+                "level": 2,
+                "unit": "percent",
+                "value": 7.8
+              },
+              {
+                "level": 3,
+                "unit": "percent",
+                "value": 9.1
+              },
+              {
+                "level": 4,
+                "unit": "percent",
+                "value": 11.05
+              },
+              {
+                "level": 5,
+                "unit": "percent",
+                "value": 13
+              }
+            ],
+            "scaling": [
+              "Intelligence"
+            ],
+            "sourceScope": "unknown",
+            "stack": null,
+            "target": "3 Enemies",
+            "targetCount": 3,
+            "targetPriority": "any-eligible",
+            "targetScope": "any-lane",
+            "type": "Strength Down",
+            "unit": "percent"
+          },
+          {
+            "calculated": false,
+            "casterEligibility": "unknown",
+            "conditionalMultipliers": [],
+            "conditions": [],
+            "directlyVerified": true,
+            "duration": "Until end of combat",
+            "durationRounds": null,
+            "excludes": [],
+            "id": "battle-dread-initiative-down",
+            "includesCaster": null,
+            "magnitude": null,
+            "notes": [
+              "Raw description appears to state -6%; ranked table displays -6.5% at Level 1. Structured values use the ranked table."
+            ],
+            "perTargetEffectCheck": null,
+            "rankedValues": [
+              {
+                "level": 1,
+                "unit": "percent",
+                "value": 6.5
+              },
+              {
+                "level": 2,
+                "unit": "percent",
+                "value": 7.8
+              },
+              {
+                "level": 3,
+                "unit": "percent",
+                "value": 9.1
+              },
+              {
+                "level": 4,
+                "unit": "percent",
+                "value": 11.05
+              },
+              {
+                "level": 5,
+                "unit": "percent",
+                "value": 13
+              }
+            ],
+            "scaling": [
+              "Intelligence"
+            ],
+            "sourceScope": "unknown",
+            "stack": null,
+            "target": "3 Enemies",
+            "targetCount": 3,
+            "targetPriority": "any-eligible",
+            "targetScope": "any-lane",
+            "type": "Initiative Down",
+            "unit": "percent"
+          }
+        ],
+        "id": "battle-dread-start",
+        "repeat": null,
+        "rounds": [],
+        "targetPriority": "any-eligible",
+        "timing": "start-of-combat",
+        "triggerChanceByHabitLevel": [],
+        "triggerChanceFixed": null,
+        "triggerEvent": "start-of-combat"
+      }
+    },
+    {
+      "abilityId": "caraxes-dragons-flair",
+      "abilityName": "Dragon's Flair",
+      "schedule": {
+        "attempts": null,
+        "battleContext": "unspecified",
+        "conditions": [],
+        "effects": [
+          {
+            "calculated": false,
+            "casterEligibility": "unknown",
+            "conditionalMultipliers": [],
+            "conditions": [],
+            "directlyVerified": true,
+            "duration": "Until end of combat",
+            "durationRounds": null,
+            "excludes": [],
+            "id": "dragons-flair-fire",
+            "includesCaster": null,
+            "magnitude": null,
+            "notes": [],
+            "perTargetEffectCheck": null,
+            "rankedValues": [
+              {
+                "level": 1,
+                "unit": "percent",
+                "value": 12.5
+              },
+              {
+                "level": 2,
+                "unit": "percent",
+                "value": 15
+              },
+              {
+                "level": 3,
+                "unit": "percent",
+                "value": 17.5
+              },
+              {
+                "level": 4,
+                "unit": "percent",
+                "value": 21.25
+              },
+              {
+                "level": 5,
+                "unit": "percent",
+                "value": 25
+              }
+            ],
+            "scaling": [],
+            "sourceScope": "all-sources",
+            "stack": null,
+            "target": "Self",
+            "targetCount": null,
+            "targetPriority": "any-eligible",
+            "targetScope": "self",
+            "type": "Fire Damage Dealt Up",
+            "unit": "percent"
+          }
+        ],
+        "id": "dragons-flair-start",
+        "repeat": null,
+        "rounds": [],
+        "targetPriority": "any-eligible",
+        "timing": "start-of-combat",
+        "triggerChanceByHabitLevel": [],
+        "triggerChanceFixed": null,
+        "triggerEvent": "start-of-combat"
+      }
+    },
+    {
+      "abilityId": "caraxes-crippling-inferno",
+      "abilityName": "Crippling Inferno",
+      "schedule": {
+        "attempts": null,
+        "battleContext": "unspecified",
+        "conditions": [],
+        "effects": [
+          {
+            "calculated": false,
+            "casterEligibility": "unknown",
+            "conditionalMultipliers": [],
+            "conditions": [],
+            "directlyVerified": true,
+            "duration": null,
+            "durationRounds": 2,
+            "excludes": [],
+            "id": "crippling-inferno-slow",
+            "includesCaster": null,
+            "magnitude": null,
+            "notes": [
+              "Slow causes the target to attack after all other combatants each round."
+            ],
+            "perTargetEffectCheck": {
+              "effects": [
+                {
+                  "effectId": "crippling-inferno-slow",
+                  "independentlyChecked": true
+                },
+                {
+                  "effectId": "crippling-inferno-burn",
+                  "independentlyChecked": true
+                }
+              ],
+              "sharedChanceByHabitLevel": [
+                {
+                  "level": 1,
+                  "unit": "percent",
+                  "value": 10
+                },
+                {
+                  "level": 2,
+                  "unit": "percent",
+                  "value": 12
+                },
+                {
+                  "level": 3,
+                  "unit": "percent",
+                  "value": 14
+                },
+                {
+                  "level": 4,
+                  "unit": "percent",
+                  "value": 17
+                },
+                {
+                  "level": 5,
+                  "unit": "percent",
+                  "value": 20
+                }
+              ],
+              "targetCount": 3,
+              "targetsCheckedIndependently": true
+            },
+            "rankedValues": [],
+            "scaling": [],
+            "sourceScope": "unknown",
+            "stack": null,
+            "target": "3 Enemies",
+            "targetCount": 3,
+            "targetPriority": "any-eligible",
+            "targetScope": "any-lane",
+            "type": "Slow",
+            "unit": "unknown"
+          },
+          {
+            "calculated": false,
+            "casterEligibility": "unknown",
+            "conditionalMultipliers": [],
+            "conditions": [],
+            "directlyVerified": true,
+            "duration": null,
+            "durationRounds": 2,
+            "excludes": [],
+            "id": "crippling-inferno-burn",
+            "includesCaster": null,
+            "magnitude": 20,
+            "notes": [
+              "Burn deals Fire Damage each round and is mitigated by target Initiative."
+            ],
+            "perTargetEffectCheck": {
+              "effects": [
+                {
+                  "effectId": "crippling-inferno-slow",
+                  "independentlyChecked": true
+                },
+                {
+                  "effectId": "crippling-inferno-burn",
+                  "independentlyChecked": true
+                }
+              ],
+              "sharedChanceByHabitLevel": [
+                {
+                  "level": 1,
+                  "unit": "percent",
+                  "value": 10
+                },
+                {
+                  "level": 2,
+                  "unit": "percent",
+                  "value": 12
+                },
+                {
+                  "level": 3,
+                  "unit": "percent",
+                  "value": 14
+                },
+                {
+                  "level": 4,
+                  "unit": "percent",
+                  "value": 17
+                },
+                {
+                  "level": 5,
+                  "unit": "percent",
+                  "value": 20
+                }
+              ],
+              "targetCount": 3,
+              "targetsCheckedIndependently": true
+            },
+            "rankedValues": [],
+            "scaling": [
+              "attacker Intelligence"
+            ],
+            "sourceScope": "unknown",
+            "stack": null,
+            "target": "3 Enemies",
+            "targetCount": 3,
+            "targetPriority": "any-eligible",
+            "targetScope": "any-lane",
+            "type": "Burn",
+            "unit": "rate"
+          }
+        ],
+        "id": "crippling-inferno-each-round",
+        "repeat": null,
+        "rounds": [],
+        "targetPriority": "any-eligible",
+        "timing": "each-round",
+        "triggerChanceByHabitLevel": [
+          {
+            "level": 1,
+            "unit": "percent",
+            "value": 10
+          },
+          {
+            "level": 2,
+            "unit": "percent",
+            "value": 12
+          },
+          {
+            "level": 3,
+            "unit": "percent",
+            "value": 14
+          },
+          {
+            "level": 4,
+            "unit": "percent",
+            "value": 17
+          },
+          {
+            "level": 5,
+            "unit": "percent",
+            "value": 20
+          }
+        ],
+        "triggerChanceFixed": null,
+        "triggerEvent": "each-round"
+      }
+    },
+    {
+      "abilityId": "caraxes-mass-enfeeble",
+      "abilityName": "Mass Enfeeble",
+      "schedule": {
+        "attempts": null,
+        "battleContext": "unspecified",
+        "conditions": [],
+        "effects": [
+          {
+            "calculated": false,
+            "casterEligibility": "unknown",
+            "conditionalMultipliers": [],
+            "conditions": [],
+            "directlyVerified": true,
+            "duration": "Until end of combat",
+            "durationRounds": null,
+            "excludes": [
+              "Basic Attacks"
+            ],
+            "id": "mass-enfeeble-physical-down",
+            "includesCaster": null,
+            "magnitude": null,
+            "notes": [
+              "Raw description appears to state -5%; ranked table displays -5.5% at Level 1. Structured values use the ranked table."
+            ],
+            "perTargetEffectCheck": null,
+            "rankedValues": [
+              {
+                "level": 1,
+                "unit": "percent",
+                "value": 5.5
+              },
+              {
+                "level": 2,
+                "unit": "percent",
+                "value": 6.6
+              },
+              {
+                "level": 3,
+                "unit": "percent",
+                "value": 7.7
+              },
+              {
+                "level": 4,
+                "unit": "percent",
+                "value": 9.35
+              },
+              {
+                "level": 5,
+                "unit": "percent",
+                "value": 11
+              }
+            ],
+            "scaling": [],
+            "sourceScope": "non-basic-attacks",
+            "stack": null,
+            "target": "3 Enemies",
+            "targetCount": 3,
+            "targetPriority": "any-eligible",
+            "targetScope": "any-lane",
+            "type": "Physical Damage Dealt Down",
+            "unit": "percent"
+          }
+        ],
+        "id": "mass-enfeeble-start",
+        "repeat": null,
+        "rounds": [],
+        "targetPriority": "any-eligible",
+        "timing": "start-of-combat",
+        "triggerChanceByHabitLevel": [],
+        "triggerChanceFixed": null,
+        "triggerEvent": "start-of-combat"
+      }
+    },
+    {
+      "abilityId": "caraxes-blood-wyrm",
+      "abilityName": "Blood Wyrm",
+      "schedule": {
+        "attempts": null,
+        "battleContext": "unspecified",
+        "conditions": [
+          {
+            "battleContext": null,
+            "comparison": "below",
+            "description": "Enemy is below 50% maximum Troop Capacity.",
+            "id": "enemy-below-50-maximum-troops",
+            "kind": "target-below-troop-capacity-threshold",
+            "statusId": null,
+            "subject": "enemy",
+            "thresholdPercent": 50,
+            "unresolved": false
+          }
+        ],
+        "effects": [
+          {
+            "calculated": false,
+            "casterEligibility": "unknown",
+            "conditionalMultipliers": [],
+            "conditions": [
+              {
+                "battleContext": null,
+                "comparison": "below",
+                "description": "Enemy is below 50% maximum Troop Capacity.",
+                "id": "enemy-below-50-maximum-troops",
+                "kind": "target-below-troop-capacity-threshold",
+                "statusId": null,
+                "subject": "enemy",
+                "thresholdPercent": 50,
+                "unresolved": false
+              }
+            ],
+            "directlyVerified": true,
+            "duration": null,
+            "durationRounds": null,
+            "excludes": [],
+            "id": "blood-wyrm-fire-up",
+            "includesCaster": null,
+            "magnitude": null,
+            "notes": [
+              "Duration and accumulation semantics are not stated."
+            ],
+            "perTargetEffectCheck": null,
+            "rankedValues": [
+              {
+                "level": 1,
+                "unit": "percent",
+                "value": 8
+              },
+              {
+                "level": 2,
+                "unit": "percent",
+                "value": 10.4
+              },
+              {
+                "level": 3,
+                "unit": "percent",
+                "value": 12.8
+              },
+              {
+                "level": 4,
+                "unit": "percent",
+                "value": 16
+              },
+              {
+                "level": 5,
+                "unit": "percent",
+                "value": 20
+              }
+            ],
+            "scaling": [],
+            "sourceScope": "all-sources",
+            "stack": null,
+            "target": "Self",
+            "targetCount": null,
+            "targetPriority": "any-eligible",
+            "targetScope": "self",
+            "type": "Fire Damage Dealt Up",
+            "unit": "percent"
+          }
+        ],
+        "id": "blood-wyrm-low-troops",
+        "repeat": {
+          "condition": {
+            "battleContext": null,
+            "comparison": "below",
+            "description": "Enemy is below 50% maximum Troop Capacity.",
+            "id": "enemy-below-50-maximum-troops",
+            "kind": "target-below-troop-capacity-threshold",
+            "statusId": null,
+            "subject": "enemy",
+            "thresholdPercent": 50,
+            "unresolved": false
+          },
+          "description": "Repeat once for each enemy below 50% maximum Troop Capacity. Number of repetitions is battlefield-dependent.",
+          "mode": "once-per-match"
+        },
+        "rounds": [],
+        "targetPriority": "any-eligible",
+        "timing": "start-of-each-round",
+        "triggerChanceByHabitLevel": [],
+        "triggerChanceFixed": null,
+        "triggerEvent": "start-of-each-round"
+      }
+    },
+    {
+      "abilityId": "caraxes-blood-wyrm",
+      "abilityName": "Blood Wyrm",
+      "schedule": {
+        "attempts": null,
+        "battleContext": "unspecified",
+        "conditions": [
+          {
+            "battleContext": null,
+            "comparison": null,
+            "description": "Enemy retreated during the previous round.",
+            "id": "enemy-retreated-previous-round",
+            "kind": "previous-round-event",
+            "statusId": null,
+            "subject": "enemy",
+            "thresholdPercent": null,
+            "unresolved": false
+          }
+        ],
+        "effects": [
+          {
+            "calculated": false,
+            "casterEligibility": "unknown",
+            "conditionalMultipliers": [],
+            "conditions": [
+              {
+                "battleContext": null,
+                "comparison": null,
+                "description": "Enemy retreated during the previous round.",
+                "id": "enemy-retreated-previous-round",
+                "kind": "previous-round-event",
+                "statusId": null,
+                "subject": "enemy",
+                "thresholdPercent": null,
+                "unresolved": false
+              }
+            ],
+            "directlyVerified": true,
+            "duration": null,
+            "durationRounds": null,
+            "excludes": [],
+            "id": "blood-wyrm-recovery",
+            "includesCaster": null,
+            "magnitude": null,
+            "notes": [
+              "Enhanced by Caraxes Initiative."
+            ],
+            "perTargetEffectCheck": null,
+            "rankedValues": [
+              {
+                "level": 1,
+                "unit": "percent",
+                "value": 40
+              },
+              {
+                "level": 2,
+                "unit": "percent",
+                "value": 52
+              },
+              {
+                "level": 3,
+                "unit": "percent",
+                "value": 64
+              },
+              {
+                "level": 4,
+                "unit": "percent",
+                "value": 80
+              },
+              {
+                "level": 5,
+                "unit": "percent",
+                "value": 100
+              }
+            ],
+            "scaling": [
+              "Initiative"
+            ],
+            "sourceScope": "unknown",
+            "stack": null,
+            "target": "Self",
+            "targetCount": null,
+            "targetPriority": "any-eligible",
+            "targetScope": "self",
+            "type": "Recovery",
+            "unit": "rate"
+          }
+        ],
+        "id": "blood-wyrm-retreat-recovery",
+        "repeat": {
+          "condition": {
+            "battleContext": null,
+            "comparison": null,
+            "description": "Enemy retreated during the previous round.",
+            "id": "enemy-retreated-previous-round",
+            "kind": "previous-round-event",
+            "statusId": null,
+            "subject": "enemy",
+            "thresholdPercent": null,
+            "unresolved": false
+          },
+          "description": "Repeat once for each enemy that retreated during the previous round. Number of repetitions is battlefield-dependent.",
+          "mode": "once-per-match"
+        },
+        "rounds": [],
+        "targetPriority": "any-eligible",
+        "timing": "when-enemy-retreated-previous-round",
+        "triggerChanceByHabitLevel": [],
+        "triggerChanceFixed": null,
+        "triggerEvent": "when-enemy-retreated-previous-round"
+      }
+    }
+  ],
+  "affinities": {
+    "Archers": "unknown",
+    "Cavalry": "positive",
+    "Shieldbearers": "unknown",
+    "Siege": "unknown",
+    "Spearmen": "positive"
+  },
+  "attempts": [],
+  "availabilityRequirements": [
+    {
+      "abilityId": "caraxes-hunters-wrath",
+      "type": "star-rank",
+      "value": 1
+    },
+    {
+      "abilityId": "caraxes-hunters-wrath",
+      "type": "minimum-dragon-level",
+      "value": 16
+    },
+    {
+      "abilityId": "caraxes-hunters-wrath",
+      "type": "position-requirement",
+      "value": "vanguard"
+    },
+    {
+      "abilityId": "caraxes-battle-dread",
+      "type": "habit-unlock-star-rank",
+      "value": 2
+    },
+    {
+      "abilityId": "caraxes-dragons-flair",
+      "type": "habit-unlock-star-rank",
+      "value": 4
+    },
+    {
+      "abilityId": "caraxes-crippling-inferno",
+      "type": "habit-unlock-star-rank",
+      "value": 6
+    },
+    {
+      "abilityId": "caraxes-mass-enfeeble",
+      "type": "habit-unlock-star-rank",
+      "value": 8
+    },
+    {
+      "abilityId": "caraxes-blood-wyrm",
+      "type": "habit-unlock-star-rank",
+      "value": 10
+    }
+  ],
+  "breed": "Hunter",
+  "command": {
+    "abilityClass": "active",
+    "augmentations": [],
+    "dragonId": "caraxes",
+    "evidenceIds": [
+      "caraxes-infernal-burst-2026-06-24"
+    ],
+    "glossaryEntries": [],
+    "id": "caraxes-infernal-burst",
+    "kind": "command",
+    "minimumDragonLevel": null,
+    "name": "Infernal Burst",
+    "positionRequirement": null,
+    "powerByHabitLevel": [],
+    "rawDescription": "Rounds 3, 6, 9: deal Fire Damage to 3 Enemies in any lane (Damage Rate +100%). If Caraxes has First-Strike, damage is multiplied by 1.5 and displayed as +150%.",
+    "schedules": [
+      {
+        "attempts": null,
+        "battleContext": "unspecified",
+        "conditions": [],
+        "effects": [
+          {
+            "calculated": false,
+            "casterEligibility": "unknown",
+            "conditionalMultipliers": [
+              {
+                "calculatedFromVerifiedMultiplier": true,
+                "condition": {
+                  "battleContext": null,
+                  "comparison": null,
+                  "description": "Self has First-Strike.",
+                  "id": "self-has-first-strike",
+                  "kind": "self-has-status",
+                  "statusId": "first-strike",
+                  "subject": "self",
+                  "thresholdPercent": null,
+                  "unresolved": false
+                },
+                "description": "If Caraxes has First-Strike, damage is multiplied by 1.5.",
+                "directlyVerifiedValues": [
+                  {
+                    "level": 1,
+                    "unit": "percent",
+                    "value": 150
+                  }
+                ],
+                "id": "infernal-burst-first-strike-1-5x",
+                "multiplier": 1.5
+              }
+            ],
+            "conditions": [],
+            "directlyVerified": true,
+            "duration": null,
+            "durationRounds": null,
+            "excludes": [],
+            "id": "infernal-burst-fire-rate",
+            "includesCaster": null,
+            "magnitude": 100,
+            "notes": [
+              "Mitigated by target Initiative."
+            ],
+            "perTargetEffectCheck": null,
+            "rankedValues": [],
+            "scaling": [
+              "attacker Intelligence"
+            ],
+            "sourceScope": "unknown",
+            "stack": null,
+            "target": "3 Enemies",
+            "targetCount": 3,
+            "targetPriority": "any-eligible",
+            "targetScope": "any-lane",
+            "type": "Fire Damage",
+            "unit": "rate"
+          }
+        ],
+        "id": "infernal-burst-fire",
+        "repeat": null,
+        "rounds": [
+          3,
+          6,
+          9
+        ],
+        "targetPriority": "any-eligible",
+        "timing": "specific-rounds",
+        "triggerChanceByHabitLevel": [],
+        "triggerChanceFixed": null,
+        "triggerEvent": "specific-rounds"
+      }
+    ],
+    "tags": [
+      "FIRE_DAMAGE",
+      "ANY_LANE_TARGET"
+    ],
+    "unlockStarRank": null,
+    "unresolvedQuestions": [],
+    "verification": {
+      "capturedAt": "2026-06-23",
+      "gameVersion": "26.6.53509",
+      "reviewedManually": true,
+      "source": "Caraxes Infernal Burst screenshot",
+      "status": "screenshot-verified"
+    }
+  },
+  "contextVersion": 1,
+  "dataStatus": "community-verified",
+  "dependencies": [
+    {
+      "dependency": {
+        "notes": [
+          "Effect wording indicates scaling with Intelligence."
+        ],
+        "statId": "intelligence",
+        "type": "scales-with-stat"
+      },
+      "outputCapabilityId": "caraxes-infernal-burst-infernal-burst-fire-rate-output"
+    },
+    {
+      "dependency": {
+        "notes": [
+          "Fire Damage is reduced by target Initiative."
+        ],
+        "statId": "initiative",
+        "type": "mitigated-by-target-stat"
+      },
+      "outputCapabilityId": "caraxes-infernal-burst-infernal-burst-fire-rate-output"
+    },
+    {
+      "dependency": {
+        "multiplier": 1.5,
+        "notes": [
+          "Self has First-Strike."
+        ],
+        "statusId": "first-strike",
+        "type": "requires-self-status"
+      },
+      "outputCapabilityId": "caraxes-infernal-burst-infernal-burst-fire-rate-output"
+    },
+    {
+      "dependency": {
+        "notes": [
+          "Effect wording indicates scaling with Intelligence."
+        ],
+        "statId": "intelligence",
+        "type": "scales-with-stat"
+      },
+      "outputCapabilityId": "caraxes-crippling-inferno-crippling-inferno-burn-output"
+    },
+    {
+      "dependency": {
+        "notes": [
+          "Fire Damage is reduced by target Initiative."
+        ],
+        "statId": "initiative",
+        "type": "mitigated-by-target-stat"
+      },
+      "outputCapabilityId": "caraxes-crippling-inferno-crippling-inferno-burn-output"
+    },
+    {
+      "dependency": {
+        "notes": [
+          "Effect wording indicates scaling with Initiative."
+        ],
+        "statId": "initiative",
+        "type": "scales-with-stat"
+      },
+      "outputCapabilityId": "caraxes-blood-wyrm-blood-wyrm-recovery-output"
+    },
+    {
+      "dependency": {
+        "eventId": "Enemy retreated during the previous round.",
+        "notes": [
+          "Enemy retreated during the previous round."
+        ],
+        "type": "previous-round-event"
+      },
+      "outputCapabilityId": "caraxes-blood-wyrm-blood-wyrm-recovery-output"
+    }
+  ],
+  "effects": [
+    {
+      "abilityId": "caraxes-infernal-burst",
+      "effect": {
+        "calculated": false,
+        "casterEligibility": "unknown",
+        "conditionalMultipliers": [
+          {
+            "calculatedFromVerifiedMultiplier": true,
+            "condition": {
+              "battleContext": null,
+              "comparison": null,
+              "description": "Self has First-Strike.",
+              "id": "self-has-first-strike",
+              "kind": "self-has-status",
+              "statusId": "first-strike",
+              "subject": "self",
+              "thresholdPercent": null,
+              "unresolved": false
+            },
+            "description": "If Caraxes has First-Strike, damage is multiplied by 1.5.",
+            "directlyVerifiedValues": [
+              {
+                "level": 1,
+                "unit": "percent",
+                "value": 150
+              }
+            ],
+            "id": "infernal-burst-first-strike-1-5x",
+            "multiplier": 1.5
+          }
+        ],
+        "conditions": [],
+        "directlyVerified": true,
+        "duration": null,
+        "durationRounds": null,
+        "excludes": [],
+        "id": "infernal-burst-fire-rate",
+        "includesCaster": null,
+        "magnitude": 100,
+        "notes": [
+          "Mitigated by target Initiative."
+        ],
+        "perTargetEffectCheck": null,
+        "rankedValues": [],
+        "scaling": [
+          "attacker Intelligence"
+        ],
+        "sourceScope": "unknown",
+        "stack": null,
+        "target": "3 Enemies",
+        "targetCount": 3,
+        "targetPriority": "any-eligible",
+        "targetScope": "any-lane",
+        "type": "Fire Damage",
+        "unit": "rate"
+      },
+      "scheduleId": "infernal-burst-fire"
+    },
+    {
+      "abilityId": "caraxes-hunters-wrath",
+      "effect": {
+        "calculated": false,
+        "casterEligibility": "unknown",
+        "conditionalMultipliers": [],
+        "conditions": [],
+        "directlyVerified": true,
+        "duration": null,
+        "durationRounds": null,
+        "excludes": [],
+        "id": "hunters-wrath-fire",
+        "includesCaster": null,
+        "magnitude": 16,
+        "notes": [],
+        "perTargetEffectCheck": null,
+        "rankedValues": [],
+        "scaling": [],
+        "sourceScope": "all-sources",
+        "stack": null,
+        "target": "Self",
+        "targetCount": null,
+        "targetPriority": "any-eligible",
+        "targetScope": "self",
+        "type": "Fire Damage Dealt Up",
+        "unit": "percent"
+      },
+      "scheduleId": "hunters-wrath-passive"
+    },
+    {
+      "abilityId": "caraxes-hunters-wrath",
+      "effect": {
+        "calculated": false,
+        "casterEligibility": "unknown",
+        "conditionalMultipliers": [],
+        "conditions": [],
+        "directlyVerified": true,
+        "duration": null,
+        "durationRounds": null,
+        "excludes": [],
+        "id": "hunters-wrath-right-strength",
+        "includesCaster": null,
+        "magnitude": 20,
+        "notes": [],
+        "perTargetEffectCheck": null,
+        "rankedValues": [],
+        "scaling": [],
+        "sourceScope": "unknown",
+        "stack": null,
+        "target": "Right Flank ally",
+        "targetCount": null,
+        "targetPriority": "any-eligible",
+        "targetScope": "right-flank",
+        "type": "Strength Up",
+        "unit": "flat"
+      },
+      "scheduleId": "hunters-wrath-passive"
+    },
+    {
+      "abilityId": "caraxes-hunters-wrath",
+      "effect": {
+        "calculated": false,
+        "casterEligibility": "unknown",
+        "conditionalMultipliers": [],
+        "conditions": [],
+        "directlyVerified": true,
+        "duration": null,
+        "durationRounds": null,
+        "excludes": [],
+        "id": "hunters-wrath-right-initiative",
+        "includesCaster": null,
+        "magnitude": 20,
+        "notes": [],
+        "perTargetEffectCheck": null,
+        "rankedValues": [],
+        "scaling": [],
+        "sourceScope": "unknown",
+        "stack": null,
+        "target": "Right Flank ally",
+        "targetCount": null,
+        "targetPriority": "any-eligible",
+        "targetScope": "right-flank",
+        "type": "Initiative Up",
+        "unit": "flat"
+      },
+      "scheduleId": "hunters-wrath-passive"
+    },
+    {
+      "abilityId": "caraxes-battle-dread",
+      "effect": {
+        "calculated": false,
+        "casterEligibility": "unknown",
+        "conditionalMultipliers": [],
+        "conditions": [],
+        "directlyVerified": true,
+        "duration": "Until end of combat",
+        "durationRounds": null,
+        "excludes": [],
+        "id": "battle-dread-strength-down",
+        "includesCaster": null,
+        "magnitude": null,
+        "notes": [
+          "Raw description appears to state -6%; ranked table displays -6.5% at Level 1. Structured values use the ranked table."
+        ],
+        "perTargetEffectCheck": null,
+        "rankedValues": [
+          {
+            "level": 1,
+            "unit": "percent",
+            "value": 6.5
+          },
+          {
+            "level": 2,
+            "unit": "percent",
+            "value": 7.8
+          },
+          {
+            "level": 3,
+            "unit": "percent",
+            "value": 9.1
+          },
+          {
+            "level": 4,
+            "unit": "percent",
+            "value": 11.05
+          },
+          {
+            "level": 5,
+            "unit": "percent",
+            "value": 13
+          }
+        ],
+        "scaling": [
+          "Intelligence"
+        ],
+        "sourceScope": "unknown",
+        "stack": null,
+        "target": "3 Enemies",
+        "targetCount": 3,
+        "targetPriority": "any-eligible",
+        "targetScope": "any-lane",
+        "type": "Strength Down",
+        "unit": "percent"
+      },
+      "scheduleId": "battle-dread-start"
+    },
+    {
+      "abilityId": "caraxes-battle-dread",
+      "effect": {
+        "calculated": false,
+        "casterEligibility": "unknown",
+        "conditionalMultipliers": [],
+        "conditions": [],
+        "directlyVerified": true,
+        "duration": "Until end of combat",
+        "durationRounds": null,
+        "excludes": [],
+        "id": "battle-dread-initiative-down",
+        "includesCaster": null,
+        "magnitude": null,
+        "notes": [
+          "Raw description appears to state -6%; ranked table displays -6.5% at Level 1. Structured values use the ranked table."
+        ],
+        "perTargetEffectCheck": null,
+        "rankedValues": [
+          {
+            "level": 1,
+            "unit": "percent",
+            "value": 6.5
+          },
+          {
+            "level": 2,
+            "unit": "percent",
+            "value": 7.8
+          },
+          {
+            "level": 3,
+            "unit": "percent",
+            "value": 9.1
+          },
+          {
+            "level": 4,
+            "unit": "percent",
+            "value": 11.05
+          },
+          {
+            "level": 5,
+            "unit": "percent",
+            "value": 13
+          }
+        ],
+        "scaling": [
+          "Intelligence"
+        ],
+        "sourceScope": "unknown",
+        "stack": null,
+        "target": "3 Enemies",
+        "targetCount": 3,
+        "targetPriority": "any-eligible",
+        "targetScope": "any-lane",
+        "type": "Initiative Down",
+        "unit": "percent"
+      },
+      "scheduleId": "battle-dread-start"
+    },
+    {
+      "abilityId": "caraxes-dragons-flair",
+      "effect": {
+        "calculated": false,
+        "casterEligibility": "unknown",
+        "conditionalMultipliers": [],
+        "conditions": [],
+        "directlyVerified": true,
+        "duration": "Until end of combat",
+        "durationRounds": null,
+        "excludes": [],
+        "id": "dragons-flair-fire",
+        "includesCaster": null,
+        "magnitude": null,
+        "notes": [],
+        "perTargetEffectCheck": null,
+        "rankedValues": [
+          {
+            "level": 1,
+            "unit": "percent",
+            "value": 12.5
+          },
+          {
+            "level": 2,
+            "unit": "percent",
+            "value": 15
+          },
+          {
+            "level": 3,
+            "unit": "percent",
+            "value": 17.5
+          },
+          {
+            "level": 4,
+            "unit": "percent",
+            "value": 21.25
+          },
+          {
+            "level": 5,
+            "unit": "percent",
+            "value": 25
+          }
+        ],
+        "scaling": [],
+        "sourceScope": "all-sources",
+        "stack": null,
+        "target": "Self",
+        "targetCount": null,
+        "targetPriority": "any-eligible",
+        "targetScope": "self",
+        "type": "Fire Damage Dealt Up",
+        "unit": "percent"
+      },
+      "scheduleId": "dragons-flair-start"
+    },
+    {
+      "abilityId": "caraxes-crippling-inferno",
+      "effect": {
+        "calculated": false,
+        "casterEligibility": "unknown",
+        "conditionalMultipliers": [],
+        "conditions": [],
+        "directlyVerified": true,
+        "duration": null,
+        "durationRounds": 2,
+        "excludes": [],
+        "id": "crippling-inferno-slow",
+        "includesCaster": null,
+        "magnitude": null,
+        "notes": [
+          "Slow causes the target to attack after all other combatants each round."
+        ],
+        "perTargetEffectCheck": {
+          "effects": [
+            {
+              "effectId": "crippling-inferno-slow",
+              "independentlyChecked": true
+            },
+            {
+              "effectId": "crippling-inferno-burn",
+              "independentlyChecked": true
+            }
+          ],
+          "sharedChanceByHabitLevel": [
+            {
+              "level": 1,
+              "unit": "percent",
+              "value": 10
+            },
+            {
+              "level": 2,
+              "unit": "percent",
+              "value": 12
+            },
+            {
+              "level": 3,
+              "unit": "percent",
+              "value": 14
+            },
+            {
+              "level": 4,
+              "unit": "percent",
+              "value": 17
+            },
+            {
+              "level": 5,
+              "unit": "percent",
+              "value": 20
+            }
+          ],
+          "targetCount": 3,
+          "targetsCheckedIndependently": true
+        },
+        "rankedValues": [],
+        "scaling": [],
+        "sourceScope": "unknown",
+        "stack": null,
+        "target": "3 Enemies",
+        "targetCount": 3,
+        "targetPriority": "any-eligible",
+        "targetScope": "any-lane",
+        "type": "Slow",
+        "unit": "unknown"
+      },
+      "scheduleId": "crippling-inferno-each-round"
+    },
+    {
+      "abilityId": "caraxes-crippling-inferno",
+      "effect": {
+        "calculated": false,
+        "casterEligibility": "unknown",
+        "conditionalMultipliers": [],
+        "conditions": [],
+        "directlyVerified": true,
+        "duration": null,
+        "durationRounds": 2,
+        "excludes": [],
+        "id": "crippling-inferno-burn",
+        "includesCaster": null,
+        "magnitude": 20,
+        "notes": [
+          "Burn deals Fire Damage each round and is mitigated by target Initiative."
+        ],
+        "perTargetEffectCheck": {
+          "effects": [
+            {
+              "effectId": "crippling-inferno-slow",
+              "independentlyChecked": true
+            },
+            {
+              "effectId": "crippling-inferno-burn",
+              "independentlyChecked": true
+            }
+          ],
+          "sharedChanceByHabitLevel": [
+            {
+              "level": 1,
+              "unit": "percent",
+              "value": 10
+            },
+            {
+              "level": 2,
+              "unit": "percent",
+              "value": 12
+            },
+            {
+              "level": 3,
+              "unit": "percent",
+              "value": 14
+            },
+            {
+              "level": 4,
+              "unit": "percent",
+              "value": 17
+            },
+            {
+              "level": 5,
+              "unit": "percent",
+              "value": 20
+            }
+          ],
+          "targetCount": 3,
+          "targetsCheckedIndependently": true
+        },
+        "rankedValues": [],
+        "scaling": [
+          "attacker Intelligence"
+        ],
+        "sourceScope": "unknown",
+        "stack": null,
+        "target": "3 Enemies",
+        "targetCount": 3,
+        "targetPriority": "any-eligible",
+        "targetScope": "any-lane",
+        "type": "Burn",
+        "unit": "rate"
+      },
+      "scheduleId": "crippling-inferno-each-round"
+    },
+    {
+      "abilityId": "caraxes-mass-enfeeble",
+      "effect": {
+        "calculated": false,
+        "casterEligibility": "unknown",
+        "conditionalMultipliers": [],
+        "conditions": [],
+        "directlyVerified": true,
+        "duration": "Until end of combat",
+        "durationRounds": null,
+        "excludes": [
+          "Basic Attacks"
+        ],
+        "id": "mass-enfeeble-physical-down",
+        "includesCaster": null,
+        "magnitude": null,
+        "notes": [
+          "Raw description appears to state -5%; ranked table displays -5.5% at Level 1. Structured values use the ranked table."
+        ],
+        "perTargetEffectCheck": null,
+        "rankedValues": [
+          {
+            "level": 1,
+            "unit": "percent",
+            "value": 5.5
+          },
+          {
+            "level": 2,
+            "unit": "percent",
+            "value": 6.6
+          },
+          {
+            "level": 3,
+            "unit": "percent",
+            "value": 7.7
+          },
+          {
+            "level": 4,
+            "unit": "percent",
+            "value": 9.35
+          },
+          {
+            "level": 5,
+            "unit": "percent",
+            "value": 11
+          }
+        ],
+        "scaling": [],
+        "sourceScope": "non-basic-attacks",
+        "stack": null,
+        "target": "3 Enemies",
+        "targetCount": 3,
+        "targetPriority": "any-eligible",
+        "targetScope": "any-lane",
+        "type": "Physical Damage Dealt Down",
+        "unit": "percent"
+      },
+      "scheduleId": "mass-enfeeble-start"
+    },
+    {
+      "abilityId": "caraxes-blood-wyrm",
+      "effect": {
+        "calculated": false,
+        "casterEligibility": "unknown",
+        "conditionalMultipliers": [],
+        "conditions": [
+          {
+            "battleContext": null,
+            "comparison": "below",
+            "description": "Enemy is below 50% maximum Troop Capacity.",
+            "id": "enemy-below-50-maximum-troops",
+            "kind": "target-below-troop-capacity-threshold",
+            "statusId": null,
+            "subject": "enemy",
+            "thresholdPercent": 50,
+            "unresolved": false
+          }
+        ],
+        "directlyVerified": true,
+        "duration": null,
+        "durationRounds": null,
+        "excludes": [],
+        "id": "blood-wyrm-fire-up",
+        "includesCaster": null,
+        "magnitude": null,
+        "notes": [
+          "Duration and accumulation semantics are not stated."
+        ],
+        "perTargetEffectCheck": null,
+        "rankedValues": [
+          {
+            "level": 1,
+            "unit": "percent",
+            "value": 8
+          },
+          {
+            "level": 2,
+            "unit": "percent",
+            "value": 10.4
+          },
+          {
+            "level": 3,
+            "unit": "percent",
+            "value": 12.8
+          },
+          {
+            "level": 4,
+            "unit": "percent",
+            "value": 16
+          },
+          {
+            "level": 5,
+            "unit": "percent",
+            "value": 20
+          }
+        ],
+        "scaling": [],
+        "sourceScope": "all-sources",
+        "stack": null,
+        "target": "Self",
+        "targetCount": null,
+        "targetPriority": "any-eligible",
+        "targetScope": "self",
+        "type": "Fire Damage Dealt Up",
+        "unit": "percent"
+      },
+      "scheduleId": "blood-wyrm-low-troops"
+    },
+    {
+      "abilityId": "caraxes-blood-wyrm",
+      "effect": {
+        "calculated": false,
+        "casterEligibility": "unknown",
+        "conditionalMultipliers": [],
+        "conditions": [
+          {
+            "battleContext": null,
+            "comparison": null,
+            "description": "Enemy retreated during the previous round.",
+            "id": "enemy-retreated-previous-round",
+            "kind": "previous-round-event",
+            "statusId": null,
+            "subject": "enemy",
+            "thresholdPercent": null,
+            "unresolved": false
+          }
+        ],
+        "directlyVerified": true,
+        "duration": null,
+        "durationRounds": null,
+        "excludes": [],
+        "id": "blood-wyrm-recovery",
+        "includesCaster": null,
+        "magnitude": null,
+        "notes": [
+          "Enhanced by Caraxes Initiative."
+        ],
+        "perTargetEffectCheck": null,
+        "rankedValues": [
+          {
+            "level": 1,
+            "unit": "percent",
+            "value": 40
+          },
+          {
+            "level": 2,
+            "unit": "percent",
+            "value": 52
+          },
+          {
+            "level": 3,
+            "unit": "percent",
+            "value": 64
+          },
+          {
+            "level": 4,
+            "unit": "percent",
+            "value": 80
+          },
+          {
+            "level": 5,
+            "unit": "percent",
+            "value": 100
+          }
+        ],
+        "scaling": [
+          "Initiative"
+        ],
+        "sourceScope": "unknown",
+        "stack": null,
+        "target": "Self",
+        "targetCount": null,
+        "targetPriority": "any-eligible",
+        "targetScope": "self",
+        "type": "Recovery",
+        "unit": "rate"
+      },
+      "scheduleId": "blood-wyrm-retreat-recovery"
+    }
+  ],
+  "evidenceReferences": [
+    {
+      "capturedAt": "2026-06-24",
+      "description": "Descriptive evidence label only. Screenshot files are not committed to the public repository.",
+      "gameVersion": "26.6.53509",
+      "id": "caraxes-main-screen-2026-06-24",
+      "language": "English",
+      "reviewedManually": true,
+      "submittedBy": "repository owner",
+      "title": "Caraxes main screen",
+      "type": "in-game-screenshot",
+      "url": null,
+      "verificationStatus": "community-verified"
+    },
+    {
+      "capturedAt": "2026-06-24",
+      "description": "Descriptive evidence label only. Screenshot files are not committed to the public repository.",
+      "gameVersion": "26.6.53509",
+      "id": "caraxes-hunters-wrath-2026-06-24",
+      "language": "English",
+      "reviewedManually": true,
+      "submittedBy": "repository owner",
+      "title": "Caraxes Hunter's Wrath",
+      "type": "in-game-screenshot",
+      "url": null,
+      "verificationStatus": "community-verified"
+    },
+    {
+      "capturedAt": "2026-06-24",
+      "description": "Descriptive evidence label only. Screenshot files are not committed to the public repository.",
+      "gameVersion": "26.6.53509",
+      "id": "caraxes-infernal-burst-2026-06-24",
+      "language": "English",
+      "reviewedManually": true,
+      "submittedBy": "repository owner",
+      "title": "Caraxes Infernal Burst",
+      "type": "in-game-screenshot",
+      "url": null,
+      "verificationStatus": "community-verified"
+    },
+    {
+      "capturedAt": "2026-06-24",
+      "description": "Descriptive evidence label only. Screenshot files are not committed to the public repository.",
+      "gameVersion": "26.6.53509",
+      "id": "caraxes-battle-dread-2026-06-24",
+      "language": "English",
+      "reviewedManually": true,
+      "submittedBy": "repository owner",
+      "title": "Caraxes Battle Dread",
+      "type": "in-game-screenshot",
+      "url": null,
+      "verificationStatus": "community-verified"
+    },
+    {
+      "capturedAt": "2026-06-24",
+      "description": "Descriptive evidence label only. Screenshot files are not committed to the public repository.",
+      "gameVersion": "26.6.53509",
+      "id": "caraxes-dragons-flair-2026-06-24",
+      "language": "English",
+      "reviewedManually": true,
+      "submittedBy": "repository owner",
+      "title": "Caraxes Dragon's Flair",
+      "type": "in-game-screenshot",
+      "url": null,
+      "verificationStatus": "community-verified"
+    },
+    {
+      "capturedAt": "2026-06-24",
+      "description": "Descriptive evidence label only. Screenshot files are not committed to the public repository.",
+      "gameVersion": "26.6.53509",
+      "id": "caraxes-crippling-inferno-2026-06-24",
+      "language": "English",
+      "reviewedManually": true,
+      "submittedBy": "repository owner",
+      "title": "Caraxes Crippling Inferno",
+      "type": "in-game-screenshot",
+      "url": null,
+      "verificationStatus": "community-verified"
+    },
+    {
+      "capturedAt": "2026-06-24",
+      "description": "Descriptive evidence label only. Screenshot files are not committed to the public repository.",
+      "gameVersion": "26.6.53509",
+      "id": "caraxes-mass-enfeeble-2026-06-24",
+      "language": "English",
+      "reviewedManually": true,
+      "submittedBy": "repository owner",
+      "title": "Caraxes Mass Enfeeble",
+      "type": "in-game-screenshot",
+      "url": null,
+      "verificationStatus": "community-verified"
+    },
+    {
+      "capturedAt": "2026-06-24",
+      "description": "Descriptive evidence label only. Screenshot files are not committed to the public repository.",
+      "gameVersion": "26.6.53509",
+      "id": "caraxes-blood-wyrm-2026-06-24",
+      "language": "English",
+      "reviewedManually": true,
+      "submittedBy": "repository owner",
+      "title": "Caraxes Blood Wyrm",
+      "type": "in-game-screenshot",
+      "url": null,
+      "verificationStatus": "community-verified"
+    }
+  ],
+  "firstObservedInGame": null,
+  "format": "dragonfire-dragon-profile",
+  "gameVersion": null,
+  "generatedAt": "2026-06-25T00:29:16.911Z",
+  "habits": [
+    {
+      "abilityClass": "passive",
+      "augmentations": [],
+      "dragonId": "caraxes",
+      "evidenceIds": [
+        "caraxes-battle-dread-2026-06-24"
+      ],
+      "glossaryEntries": [],
+      "id": "caraxes-battle-dread",
+      "kind": "habit",
+      "minimumDragonLevel": null,
+      "name": "Battle Dread",
+      "positionRequirement": null,
+      "powerByHabitLevel": [
+        {
+          "level": 1,
+          "unit": "power",
+          "value": 420
+        },
+        {
+          "level": 2,
+          "unit": "power",
+          "value": 920
+        },
+        {
+          "level": 3,
+          "unit": "power",
+          "value": 1500
+        },
+        {
+          "level": 4,
+          "unit": "power",
+          "value": 2200
+        },
+        {
+          "level": 5,
+          "unit": "power",
+          "value": 3100
+        }
+      ],
+      "rawDescription": "Start of Combat: reduce Strength and Initiative of 3 Enemies in any lane by -6%, enhanced by Caraxes Intelligence. Progression table shows -6.5% at Level 1.",
+      "schedules": [
+        {
+          "attempts": null,
+          "battleContext": "unspecified",
+          "conditions": [],
+          "effects": [
+            {
+              "calculated": false,
+              "casterEligibility": "unknown",
+              "conditionalMultipliers": [],
+              "conditions": [],
+              "directlyVerified": true,
+              "duration": "Until end of combat",
+              "durationRounds": null,
+              "excludes": [],
+              "id": "battle-dread-strength-down",
+              "includesCaster": null,
+              "magnitude": null,
+              "notes": [
+                "Raw description appears to state -6%; ranked table displays -6.5% at Level 1. Structured values use the ranked table."
+              ],
+              "perTargetEffectCheck": null,
+              "rankedValues": [
+                {
+                  "level": 1,
+                  "unit": "percent",
+                  "value": 6.5
+                },
+                {
+                  "level": 2,
+                  "unit": "percent",
+                  "value": 7.8
+                },
+                {
+                  "level": 3,
+                  "unit": "percent",
+                  "value": 9.1
+                },
+                {
+                  "level": 4,
+                  "unit": "percent",
+                  "value": 11.05
+                },
+                {
+                  "level": 5,
+                  "unit": "percent",
+                  "value": 13
+                }
+              ],
+              "scaling": [
+                "Intelligence"
+              ],
+              "sourceScope": "unknown",
+              "stack": null,
+              "target": "3 Enemies",
+              "targetCount": 3,
+              "targetPriority": "any-eligible",
+              "targetScope": "any-lane",
+              "type": "Strength Down",
+              "unit": "percent"
+            },
+            {
+              "calculated": false,
+              "casterEligibility": "unknown",
+              "conditionalMultipliers": [],
+              "conditions": [],
+              "directlyVerified": true,
+              "duration": "Until end of combat",
+              "durationRounds": null,
+              "excludes": [],
+              "id": "battle-dread-initiative-down",
+              "includesCaster": null,
+              "magnitude": null,
+              "notes": [
+                "Raw description appears to state -6%; ranked table displays -6.5% at Level 1. Structured values use the ranked table."
+              ],
+              "perTargetEffectCheck": null,
+              "rankedValues": [
+                {
+                  "level": 1,
+                  "unit": "percent",
+                  "value": 6.5
+                },
+                {
+                  "level": 2,
+                  "unit": "percent",
+                  "value": 7.8
+                },
+                {
+                  "level": 3,
+                  "unit": "percent",
+                  "value": 9.1
+                },
+                {
+                  "level": 4,
+                  "unit": "percent",
+                  "value": 11.05
+                },
+                {
+                  "level": 5,
+                  "unit": "percent",
+                  "value": 13
+                }
+              ],
+              "scaling": [
+                "Intelligence"
+              ],
+              "sourceScope": "unknown",
+              "stack": null,
+              "target": "3 Enemies",
+              "targetCount": 3,
+              "targetPriority": "any-eligible",
+              "targetScope": "any-lane",
+              "type": "Initiative Down",
+              "unit": "percent"
+            }
+          ],
+          "id": "battle-dread-start",
+          "repeat": null,
+          "rounds": [],
+          "targetPriority": "any-eligible",
+          "timing": "start-of-combat",
+          "triggerChanceByHabitLevel": [],
+          "triggerChanceFixed": null,
+          "triggerEvent": "start-of-combat"
+        }
+      ],
+      "tags": [
+        "DEBUFF_STRENGTH",
+        "DEBUFF_INITIATIVE"
+      ],
+      "unlockStarRank": 2,
+      "unresolvedQuestions": [
+        "Raw text/table discrepancy retained."
+      ],
+      "verification": {
+        "capturedAt": "2026-06-23",
+        "gameVersion": "26.6.53509",
+        "reviewedManually": true,
+        "source": "Caraxes Battle Dread screenshot",
+        "status": "screenshot-verified"
+      }
+    },
+    {
+      "abilityClass": "passive",
+      "augmentations": [],
+      "dragonId": "caraxes",
+      "evidenceIds": [
+        "caraxes-dragons-flair-2026-06-24"
+      ],
+      "glossaryEntries": [],
+      "id": "caraxes-dragons-flair",
+      "kind": "habit",
+      "minimumDragonLevel": null,
+      "name": "Dragon's Flair",
+      "positionRequirement": null,
+      "powerByHabitLevel": [
+        {
+          "level": 1,
+          "unit": "power",
+          "value": 420
+        },
+        {
+          "level": 2,
+          "unit": "power",
+          "value": 920
+        },
+        {
+          "level": 3,
+          "unit": "power",
+          "value": 1500
+        },
+        {
+          "level": 4,
+          "unit": "power",
+          "value": 2200
+        },
+        {
+          "level": 5,
+          "unit": "power",
+          "value": 3100
+        }
+      ],
+      "rawDescription": "Start of Combat: increase Caraxes Fire Damage Dealt until end of combat.",
+      "schedules": [
+        {
+          "attempts": null,
+          "battleContext": "unspecified",
+          "conditions": [],
+          "effects": [
+            {
+              "calculated": false,
+              "casterEligibility": "unknown",
+              "conditionalMultipliers": [],
+              "conditions": [],
+              "directlyVerified": true,
+              "duration": "Until end of combat",
+              "durationRounds": null,
+              "excludes": [],
+              "id": "dragons-flair-fire",
+              "includesCaster": null,
+              "magnitude": null,
+              "notes": [],
+              "perTargetEffectCheck": null,
+              "rankedValues": [
+                {
+                  "level": 1,
+                  "unit": "percent",
+                  "value": 12.5
+                },
+                {
+                  "level": 2,
+                  "unit": "percent",
+                  "value": 15
+                },
+                {
+                  "level": 3,
+                  "unit": "percent",
+                  "value": 17.5
+                },
+                {
+                  "level": 4,
+                  "unit": "percent",
+                  "value": 21.25
+                },
+                {
+                  "level": 5,
+                  "unit": "percent",
+                  "value": 25
+                }
+              ],
+              "scaling": [],
+              "sourceScope": "all-sources",
+              "stack": null,
+              "target": "Self",
+              "targetCount": null,
+              "targetPriority": "any-eligible",
+              "targetScope": "self",
+              "type": "Fire Damage Dealt Up",
+              "unit": "percent"
+            }
+          ],
+          "id": "dragons-flair-start",
+          "repeat": null,
+          "rounds": [],
+          "targetPriority": "any-eligible",
+          "timing": "start-of-combat",
+          "triggerChanceByHabitLevel": [],
+          "triggerChanceFixed": null,
+          "triggerEvent": "start-of-combat"
+        }
+      ],
+      "tags": [
+        "FIRE_DAMAGE_UP",
+        "BUFF_SELF"
+      ],
+      "unlockStarRank": 4,
+      "unresolvedQuestions": [],
+      "verification": {
+        "capturedAt": "2026-06-23",
+        "gameVersion": "26.6.53509",
+        "reviewedManually": true,
+        "source": "Caraxes Dragon's Flair screenshot",
+        "status": "screenshot-verified"
+      }
+    },
+    {
+      "abilityClass": "passive",
+      "augmentations": [],
+      "dragonId": "caraxes",
+      "evidenceIds": [
+        "caraxes-crippling-inferno-2026-06-24"
+      ],
+      "glossaryEntries": [],
+      "id": "caraxes-crippling-inferno",
+      "kind": "habit",
+      "minimumDragonLevel": null,
+      "name": "Crippling Inferno",
+      "positionRequirement": null,
+      "powerByHabitLevel": [
+        {
+          "level": 1,
+          "unit": "power",
+          "value": 420
+        },
+        {
+          "level": 2,
+          "unit": "power",
+          "value": 920
+        },
+        {
+          "level": 3,
+          "unit": "power",
+          "value": 1500
+        },
+        {
+          "level": 4,
+          "unit": "power",
+          "value": 2200
+        },
+        {
+          "level": 5,
+          "unit": "power",
+          "value": 3100
+        }
+      ],
+      "rawDescription": "Each Round: chance to apply Slow and Burn to 3 Enemies in any lane. Each effect is checked separately for each target and lasts 2 rounds.",
+      "schedules": [
+        {
+          "attempts": null,
+          "battleContext": "unspecified",
+          "conditions": [],
+          "effects": [
+            {
+              "calculated": false,
+              "casterEligibility": "unknown",
+              "conditionalMultipliers": [],
+              "conditions": [],
+              "directlyVerified": true,
+              "duration": null,
+              "durationRounds": 2,
+              "excludes": [],
+              "id": "crippling-inferno-slow",
+              "includesCaster": null,
+              "magnitude": null,
+              "notes": [
+                "Slow causes the target to attack after all other combatants each round."
+              ],
+              "perTargetEffectCheck": {
+                "effects": [
+                  {
+                    "effectId": "crippling-inferno-slow",
+                    "independentlyChecked": true
+                  },
+                  {
+                    "effectId": "crippling-inferno-burn",
+                    "independentlyChecked": true
+                  }
+                ],
+                "sharedChanceByHabitLevel": [
+                  {
+                    "level": 1,
+                    "unit": "percent",
+                    "value": 10
+                  },
+                  {
+                    "level": 2,
+                    "unit": "percent",
+                    "value": 12
+                  },
+                  {
+                    "level": 3,
+                    "unit": "percent",
+                    "value": 14
+                  },
+                  {
+                    "level": 4,
+                    "unit": "percent",
+                    "value": 17
+                  },
+                  {
+                    "level": 5,
+                    "unit": "percent",
+                    "value": 20
+                  }
+                ],
+                "targetCount": 3,
+                "targetsCheckedIndependently": true
+              },
+              "rankedValues": [],
+              "scaling": [],
+              "sourceScope": "unknown",
+              "stack": null,
+              "target": "3 Enemies",
+              "targetCount": 3,
+              "targetPriority": "any-eligible",
+              "targetScope": "any-lane",
+              "type": "Slow",
+              "unit": "unknown"
+            },
+            {
+              "calculated": false,
+              "casterEligibility": "unknown",
+              "conditionalMultipliers": [],
+              "conditions": [],
+              "directlyVerified": true,
+              "duration": null,
+              "durationRounds": 2,
+              "excludes": [],
+              "id": "crippling-inferno-burn",
+              "includesCaster": null,
+              "magnitude": 20,
+              "notes": [
+                "Burn deals Fire Damage each round and is mitigated by target Initiative."
+              ],
+              "perTargetEffectCheck": {
+                "effects": [
+                  {
+                    "effectId": "crippling-inferno-slow",
+                    "independentlyChecked": true
+                  },
+                  {
+                    "effectId": "crippling-inferno-burn",
+                    "independentlyChecked": true
+                  }
+                ],
+                "sharedChanceByHabitLevel": [
+                  {
+                    "level": 1,
+                    "unit": "percent",
+                    "value": 10
+                  },
+                  {
+                    "level": 2,
+                    "unit": "percent",
+                    "value": 12
+                  },
+                  {
+                    "level": 3,
+                    "unit": "percent",
+                    "value": 14
+                  },
+                  {
+                    "level": 4,
+                    "unit": "percent",
+                    "value": 17
+                  },
+                  {
+                    "level": 5,
+                    "unit": "percent",
+                    "value": 20
+                  }
+                ],
+                "targetCount": 3,
+                "targetsCheckedIndependently": true
+              },
+              "rankedValues": [],
+              "scaling": [
+                "attacker Intelligence"
+              ],
+              "sourceScope": "unknown",
+              "stack": null,
+              "target": "3 Enemies",
+              "targetCount": 3,
+              "targetPriority": "any-eligible",
+              "targetScope": "any-lane",
+              "type": "Burn",
+              "unit": "rate"
+            }
+          ],
+          "id": "crippling-inferno-each-round",
+          "repeat": null,
+          "rounds": [],
+          "targetPriority": "any-eligible",
+          "timing": "each-round",
+          "triggerChanceByHabitLevel": [
+            {
+              "level": 1,
+              "unit": "percent",
+              "value": 10
+            },
+            {
+              "level": 2,
+              "unit": "percent",
+              "value": 12
+            },
+            {
+              "level": 3,
+              "unit": "percent",
+              "value": 14
+            },
+            {
+              "level": 4,
+              "unit": "percent",
+              "value": 17
+            },
+            {
+              "level": 5,
+              "unit": "percent",
+              "value": 20
+            }
+          ],
+          "triggerChanceFixed": null,
+          "triggerEvent": "each-round"
+        }
+      ],
+      "tags": [
+        "SLOW",
+        "BURN",
+        "FIRE_DAMAGE"
+      ],
+      "unlockStarRank": 6,
+      "unresolvedQuestions": [],
+      "verification": {
+        "capturedAt": "2026-06-23",
+        "gameVersion": "26.6.53509",
+        "reviewedManually": true,
+        "source": "Caraxes Crippling Inferno screenshot",
+        "status": "screenshot-verified"
+      }
+    },
+    {
+      "abilityClass": "passive",
+      "augmentations": [],
+      "dragonId": "caraxes",
+      "evidenceIds": [
+        "caraxes-mass-enfeeble-2026-06-24"
+      ],
+      "glossaryEntries": [],
+      "id": "caraxes-mass-enfeeble",
+      "kind": "habit",
+      "minimumDragonLevel": null,
+      "name": "Mass Enfeeble",
+      "positionRequirement": null,
+      "powerByHabitLevel": [
+        {
+          "level": 1,
+          "unit": "power",
+          "value": 420
+        },
+        {
+          "level": 2,
+          "unit": "power",
+          "value": 920
+        },
+        {
+          "level": 3,
+          "unit": "power",
+          "value": 1500
+        },
+        {
+          "level": 4,
+          "unit": "power",
+          "value": 2200
+        },
+        {
+          "level": 5,
+          "unit": "power",
+          "value": 3100
+        }
+      ],
+      "rawDescription": "Start of Combat: reduce Physical Damage Dealt, excluding Basic Attacks, of 3 Enemies in any lane by -5%. Progression table shows -5.5% at Level 1.",
+      "schedules": [
+        {
+          "attempts": null,
+          "battleContext": "unspecified",
+          "conditions": [],
+          "effects": [
+            {
+              "calculated": false,
+              "casterEligibility": "unknown",
+              "conditionalMultipliers": [],
+              "conditions": [],
+              "directlyVerified": true,
+              "duration": "Until end of combat",
+              "durationRounds": null,
+              "excludes": [
+                "Basic Attacks"
+              ],
+              "id": "mass-enfeeble-physical-down",
+              "includesCaster": null,
+              "magnitude": null,
+              "notes": [
+                "Raw description appears to state -5%; ranked table displays -5.5% at Level 1. Structured values use the ranked table."
+              ],
+              "perTargetEffectCheck": null,
+              "rankedValues": [
+                {
+                  "level": 1,
+                  "unit": "percent",
+                  "value": 5.5
+                },
+                {
+                  "level": 2,
+                  "unit": "percent",
+                  "value": 6.6
+                },
+                {
+                  "level": 3,
+                  "unit": "percent",
+                  "value": 7.7
+                },
+                {
+                  "level": 4,
+                  "unit": "percent",
+                  "value": 9.35
+                },
+                {
+                  "level": 5,
+                  "unit": "percent",
+                  "value": 11
+                }
+              ],
+              "scaling": [],
+              "sourceScope": "non-basic-attacks",
+              "stack": null,
+              "target": "3 Enemies",
+              "targetCount": 3,
+              "targetPriority": "any-eligible",
+              "targetScope": "any-lane",
+              "type": "Physical Damage Dealt Down",
+              "unit": "percent"
+            }
+          ],
+          "id": "mass-enfeeble-start",
+          "repeat": null,
+          "rounds": [],
+          "targetPriority": "any-eligible",
+          "timing": "start-of-combat",
+          "triggerChanceByHabitLevel": [],
+          "triggerChanceFixed": null,
+          "triggerEvent": "start-of-combat"
+        }
+      ],
+      "tags": [
+        "PHYSICAL_DAMAGE_UP",
+        "EXCLUDES_BASIC_ATTACKS"
+      ],
+      "unlockStarRank": 8,
+      "unresolvedQuestions": [
+        "Raw text/table discrepancy retained."
+      ],
+      "verification": {
+        "capturedAt": "2026-06-23",
+        "gameVersion": "26.6.53509",
+        "reviewedManually": true,
+        "source": "Caraxes Mass Enfeeble screenshot",
+        "status": "screenshot-verified"
+      }
+    },
+    {
+      "abilityClass": "passive",
+      "augmentations": [],
+      "dragonId": "caraxes",
+      "evidenceIds": [
+        "caraxes-blood-wyrm-2026-06-24"
+      ],
+      "glossaryEntries": [],
+      "id": "caraxes-blood-wyrm",
+      "kind": "habit",
+      "minimumDragonLevel": null,
+      "name": "Blood Wyrm",
+      "positionRequirement": null,
+      "powerByHabitLevel": [
+        {
+          "level": 1,
+          "unit": "power",
+          "value": 430
+        },
+        {
+          "level": 2,
+          "unit": "power",
+          "value": 1000
+        },
+        {
+          "level": 3,
+          "unit": "power",
+          "value": 1700
+        },
+        {
+          "level": 4,
+          "unit": "power",
+          "value": 2700
+        },
+        {
+          "level": 5,
+          "unit": "power",
+          "value": 4000
+        }
+      ],
+      "rawDescription": "Start of Each Round: for each Enemy below 50% maximum Troop Capacity, increase Caraxes Fire Damage Dealt. For each Enemy that retreated during the previous round, apply Recovery to Caraxes, enhanced by Initiative.",
+      "schedules": [
+        {
+          "attempts": null,
+          "battleContext": "unspecified",
+          "conditions": [
+            {
+              "battleContext": null,
+              "comparison": "below",
+              "description": "Enemy is below 50% maximum Troop Capacity.",
+              "id": "enemy-below-50-maximum-troops",
+              "kind": "target-below-troop-capacity-threshold",
+              "statusId": null,
+              "subject": "enemy",
+              "thresholdPercent": 50,
+              "unresolved": false
+            }
+          ],
+          "effects": [
+            {
+              "calculated": false,
+              "casterEligibility": "unknown",
+              "conditionalMultipliers": [],
+              "conditions": [
+                {
+                  "battleContext": null,
+                  "comparison": "below",
+                  "description": "Enemy is below 50% maximum Troop Capacity.",
+                  "id": "enemy-below-50-maximum-troops",
+                  "kind": "target-below-troop-capacity-threshold",
+                  "statusId": null,
+                  "subject": "enemy",
+                  "thresholdPercent": 50,
+                  "unresolved": false
+                }
+              ],
+              "directlyVerified": true,
+              "duration": null,
+              "durationRounds": null,
+              "excludes": [],
+              "id": "blood-wyrm-fire-up",
+              "includesCaster": null,
+              "magnitude": null,
+              "notes": [
+                "Duration and accumulation semantics are not stated."
+              ],
+              "perTargetEffectCheck": null,
+              "rankedValues": [
+                {
+                  "level": 1,
+                  "unit": "percent",
+                  "value": 8
+                },
+                {
+                  "level": 2,
+                  "unit": "percent",
+                  "value": 10.4
+                },
+                {
+                  "level": 3,
+                  "unit": "percent",
+                  "value": 12.8
+                },
+                {
+                  "level": 4,
+                  "unit": "percent",
+                  "value": 16
+                },
+                {
+                  "level": 5,
+                  "unit": "percent",
+                  "value": 20
+                }
+              ],
+              "scaling": [],
+              "sourceScope": "all-sources",
+              "stack": null,
+              "target": "Self",
+              "targetCount": null,
+              "targetPriority": "any-eligible",
+              "targetScope": "self",
+              "type": "Fire Damage Dealt Up",
+              "unit": "percent"
+            }
+          ],
+          "id": "blood-wyrm-low-troops",
+          "repeat": {
+            "condition": {
+              "battleContext": null,
+              "comparison": "below",
+              "description": "Enemy is below 50% maximum Troop Capacity.",
+              "id": "enemy-below-50-maximum-troops",
+              "kind": "target-below-troop-capacity-threshold",
+              "statusId": null,
+              "subject": "enemy",
+              "thresholdPercent": 50,
+              "unresolved": false
+            },
+            "description": "Repeat once for each enemy below 50% maximum Troop Capacity. Number of repetitions is battlefield-dependent.",
+            "mode": "once-per-match"
+          },
+          "rounds": [],
+          "targetPriority": "any-eligible",
+          "timing": "start-of-each-round",
+          "triggerChanceByHabitLevel": [],
+          "triggerChanceFixed": null,
+          "triggerEvent": "start-of-each-round"
+        },
+        {
+          "attempts": null,
+          "battleContext": "unspecified",
+          "conditions": [
+            {
+              "battleContext": null,
+              "comparison": null,
+              "description": "Enemy retreated during the previous round.",
+              "id": "enemy-retreated-previous-round",
+              "kind": "previous-round-event",
+              "statusId": null,
+              "subject": "enemy",
+              "thresholdPercent": null,
+              "unresolved": false
+            }
+          ],
+          "effects": [
+            {
+              "calculated": false,
+              "casterEligibility": "unknown",
+              "conditionalMultipliers": [],
+              "conditions": [
+                {
+                  "battleContext": null,
+                  "comparison": null,
+                  "description": "Enemy retreated during the previous round.",
+                  "id": "enemy-retreated-previous-round",
+                  "kind": "previous-round-event",
+                  "statusId": null,
+                  "subject": "enemy",
+                  "thresholdPercent": null,
+                  "unresolved": false
+                }
+              ],
+              "directlyVerified": true,
+              "duration": null,
+              "durationRounds": null,
+              "excludes": [],
+              "id": "blood-wyrm-recovery",
+              "includesCaster": null,
+              "magnitude": null,
+              "notes": [
+                "Enhanced by Caraxes Initiative."
+              ],
+              "perTargetEffectCheck": null,
+              "rankedValues": [
+                {
+                  "level": 1,
+                  "unit": "percent",
+                  "value": 40
+                },
+                {
+                  "level": 2,
+                  "unit": "percent",
+                  "value": 52
+                },
+                {
+                  "level": 3,
+                  "unit": "percent",
+                  "value": 64
+                },
+                {
+                  "level": 4,
+                  "unit": "percent",
+                  "value": 80
+                },
+                {
+                  "level": 5,
+                  "unit": "percent",
+                  "value": 100
+                }
+              ],
+              "scaling": [
+                "Initiative"
+              ],
+              "sourceScope": "unknown",
+              "stack": null,
+              "target": "Self",
+              "targetCount": null,
+              "targetPriority": "any-eligible",
+              "targetScope": "self",
+              "type": "Recovery",
+              "unit": "rate"
+            }
+          ],
+          "id": "blood-wyrm-retreat-recovery",
+          "repeat": {
+            "condition": {
+              "battleContext": null,
+              "comparison": null,
+              "description": "Enemy retreated during the previous round.",
+              "id": "enemy-retreated-previous-round",
+              "kind": "previous-round-event",
+              "statusId": null,
+              "subject": "enemy",
+              "thresholdPercent": null,
+              "unresolved": false
+            },
+            "description": "Repeat once for each enemy that retreated during the previous round. Number of repetitions is battlefield-dependent.",
+            "mode": "once-per-match"
+          },
+          "rounds": [],
+          "targetPriority": "any-eligible",
+          "timing": "when-enemy-retreated-previous-round",
+          "triggerChanceByHabitLevel": [],
+          "triggerChanceFixed": null,
+          "triggerEvent": "when-enemy-retreated-previous-round"
+        }
+      ],
+      "tags": [
+        "FIRE_DAMAGE_UP",
+        "RECOVERY",
+        "LOW_HEALTH"
+      ],
+      "unlockStarRank": 10,
+      "unresolvedQuestions": [
+        "Fire Damage increase duration and accumulation semantics are not stated.",
+        "Exact below 50% equality behavior remains unconfirmed."
+      ],
+      "verification": {
+        "capturedAt": "2026-06-23",
+        "gameVersion": "26.6.53509",
+        "reviewedManually": true,
+        "source": "Caraxes Blood Wyrm screenshot",
+        "status": "screenshot-verified"
+      }
+    }
+  ],
+  "id": "caraxes",
+  "isNew": false,
+  "lastVerified": "2026-06-23",
+  "manualReviewReferences": [
+    {
+      "dragonId": "caraxes",
+      "evidenceIds": [
+        "caraxes-main-screen-2026-06-24",
+        "caraxes-hunters-wrath-2026-06-24",
+        "caraxes-infernal-burst-2026-06-24",
+        "caraxes-battle-dread-2026-06-24",
+        "caraxes-dragons-flair-2026-06-24",
+        "caraxes-crippling-inferno-2026-06-24",
+        "caraxes-mass-enfeeble-2026-06-24",
+        "caraxes-blood-wyrm-2026-06-24"
+      ],
+      "id": "caraxes-combat-data-review-2026-06-24",
+      "notes": [
+        "Caraxes command, trait, affinities, observation state, and five Habits were normalized from screenshot evidence.",
+        "Crippling Inferno stores Slow and Burn as independently checked per target.",
+        "Battle Dread and Mass Enfeeble preserve the visible text/table discrepancy.",
+        "Observation values are account-specific and not canonical base stats."
+      ],
+      "reviewedAgainstGameBuild": "26.6.53509",
+      "reviewedAt": "2026-06-24",
+      "reviewer": "repository-owner",
+      "scope": "habits",
+      "status": "confirmed"
+    }
+  ],
+  "modifierCapabilities": [
+    {
+      "abilityId": "caraxes-hunters-wrath",
+      "abilityName": "Hunter's Wrath",
+      "availability": {
+        "canonical": "canonical-base",
+        "notes": [
+          "Requires Dragon Level 16+.",
+          "Not collected in observed account."
+        ],
+        "observedAccount": "observed-unavailable",
+        "reportLabel": "Base kit; Level 16+; not collected in observed account",
+        "userRoster": "unknown"
+      },
+      "channel": "fire-damage",
+      "combatLogConfirmed": false,
+      "conditional": false,
+      "conditions": [],
+      "confidence": "confirmed",
+      "currentlyAvailable": true,
+      "direction": "dealt",
+      "directlyVerified": true,
+      "dragonId": "caraxes",
+      "evidenceIds": [
+        "caraxes-hunters-wrath-2026-06-24"
+      ],
+      "futureAvailable": false,
+      "id": "caraxes-hunters-wrath-hunters-wrath-fire-fire-damage-dealt-modifier",
+      "label": "Hunter's Wrath: Fire Damage Dealt Up",
+      "minimumDragonLevel": 16,
+      "operation": "increase",
+      "providerRequirements": [
+        {
+          "evidenceIds": [
+            "caraxes-hunters-wrath-2026-06-24"
+          ],
+          "expected": "vanguard",
+          "id": "caraxes-hunters-wrath-provider-position-vanguard",
+          "kind": "provider-position",
+          "label": "Provider position requirement"
+        }
+      ],
+      "recipientRequirements": [],
+      "requiredHabitLevel": null,
+      "role": "self-amplification",
+      "sourceScope": "all-qualifying-sources",
+      "stackMaximum": null,
+      "targetSelector": {
+        "count": null,
+        "includesCaster": null,
+        "position": null,
+        "scope": "self",
+        "selection": "self",
+        "side": "self"
+      },
+      "unit": "percent",
+      "unlockStarRank": 1,
+      "value": 16,
+      "valuePerStack": null
+    },
+    {
+      "abilityId": "caraxes-hunters-wrath",
+      "abilityName": "Hunter's Wrath",
+      "availability": {
+        "canonical": "canonical-base",
+        "notes": [
+          "Requires Dragon Level 16+.",
+          "Not collected in observed account."
+        ],
+        "observedAccount": "observed-unavailable",
+        "reportLabel": "Base kit; Level 16+; not collected in observed account",
+        "userRoster": "unknown"
+      },
+      "channel": "stat",
+      "combatLogConfirmed": false,
+      "conditional": false,
+      "conditions": [],
+      "confidence": "confirmed",
+      "currentlyAvailable": true,
+      "direction": "dealt",
+      "directlyVerified": true,
+      "dragonId": "caraxes",
+      "evidenceIds": [
+        "caraxes-hunters-wrath-2026-06-24"
+      ],
+      "futureAvailable": false,
+      "id": "caraxes-hunters-wrath-hunters-wrath-right-strength-stat-dealt-modifier",
+      "label": "Hunter's Wrath: Strength Up",
+      "minimumDragonLevel": 16,
+      "operation": "increase",
+      "providerRequirements": [
+        {
+          "evidenceIds": [
+            "caraxes-hunters-wrath-2026-06-24"
+          ],
+          "expected": "vanguard",
+          "id": "caraxes-hunters-wrath-provider-position-vanguard",
+          "kind": "provider-position",
+          "label": "Provider position requirement"
+        }
+      ],
+      "recipientRequirements": [],
+      "requiredHabitLevel": null,
+      "role": "ally-support",
+      "sourceScope": "unknown",
+      "stackMaximum": null,
+      "targetSelector": {
+        "count": null,
+        "includesCaster": null,
+        "position": "right-flank",
+        "scope": "right-flank",
+        "selection": "specific-position",
+        "side": "ally"
+      },
+      "unit": "flat",
+      "unlockStarRank": 1,
+      "value": 20,
+      "valuePerStack": null
+    },
+    {
+      "abilityId": "caraxes-hunters-wrath",
+      "abilityName": "Hunter's Wrath",
+      "availability": {
+        "canonical": "canonical-base",
+        "notes": [
+          "Requires Dragon Level 16+.",
+          "Not collected in observed account."
+        ],
+        "observedAccount": "observed-unavailable",
+        "reportLabel": "Base kit; Level 16+; not collected in observed account",
+        "userRoster": "unknown"
+      },
+      "channel": "stat",
+      "combatLogConfirmed": false,
+      "conditional": false,
+      "conditions": [],
+      "confidence": "confirmed",
+      "currentlyAvailable": true,
+      "direction": "dealt",
+      "directlyVerified": true,
+      "dragonId": "caraxes",
+      "evidenceIds": [
+        "caraxes-hunters-wrath-2026-06-24"
+      ],
+      "futureAvailable": false,
+      "id": "caraxes-hunters-wrath-hunters-wrath-right-initiative-stat-dealt-modifier",
+      "label": "Hunter's Wrath: Initiative Up",
+      "minimumDragonLevel": 16,
+      "operation": "increase",
+      "providerRequirements": [
+        {
+          "evidenceIds": [
+            "caraxes-hunters-wrath-2026-06-24"
+          ],
+          "expected": "vanguard",
+          "id": "caraxes-hunters-wrath-provider-position-vanguard",
+          "kind": "provider-position",
+          "label": "Provider position requirement"
+        }
+      ],
+      "recipientRequirements": [],
+      "requiredHabitLevel": null,
+      "role": "ally-support",
+      "sourceScope": "unknown",
+      "stackMaximum": null,
+      "targetSelector": {
+        "count": null,
+        "includesCaster": null,
+        "position": "right-flank",
+        "scope": "right-flank",
+        "selection": "specific-position",
+        "side": "ally"
+      },
+      "unit": "flat",
+      "unlockStarRank": 1,
+      "value": 20,
+      "valuePerStack": null
+    },
+    {
+      "abilityId": "caraxes-battle-dread",
+      "abilityName": "Battle Dread",
+      "availability": {
+        "canonical": "canonical-locked",
+        "notes": [
+          "Future at Star Rank 2.",
+          "Not collected in observed account."
+        ],
+        "observedAccount": "observed-unavailable",
+        "reportLabel": "Future at Star Rank 2; not collected in observed account",
+        "userRoster": "unknown"
+      },
+      "channel": "stat",
+      "combatLogConfirmed": false,
+      "conditional": true,
+      "conditions": [],
+      "confidence": "confirmed",
+      "currentlyAvailable": false,
+      "direction": "dealt",
+      "directlyVerified": true,
+      "dragonId": "caraxes",
+      "evidenceIds": [
+        "caraxes-battle-dread-2026-06-24"
+      ],
+      "futureAvailable": true,
+      "id": "caraxes-battle-dread-battle-dread-strength-down-stat-dealt-modifier",
+      "label": "Battle Dread: Strength Down",
+      "minimumDragonLevel": null,
+      "operation": "decrease",
+      "providerRequirements": [],
+      "recipientRequirements": [],
+      "requiredHabitLevel": 1,
+      "role": "enemy-debuff",
+      "sourceScope": "unknown",
+      "stackMaximum": null,
+      "targetSelector": {
+        "count": 3,
+        "includesCaster": null,
+        "position": null,
+        "scope": "any-lane",
+        "selection": "any",
+        "side": "enemy"
+      },
+      "unit": "percent",
+      "unlockStarRank": 2,
+      "value": null,
+      "valuePerStack": null
+    },
+    {
+      "abilityId": "caraxes-battle-dread",
+      "abilityName": "Battle Dread",
+      "availability": {
+        "canonical": "canonical-locked",
+        "notes": [
+          "Future at Star Rank 2.",
+          "Not collected in observed account."
+        ],
+        "observedAccount": "observed-unavailable",
+        "reportLabel": "Future at Star Rank 2; not collected in observed account",
+        "userRoster": "unknown"
+      },
+      "channel": "stat",
+      "combatLogConfirmed": false,
+      "conditional": true,
+      "conditions": [],
+      "confidence": "confirmed",
+      "currentlyAvailable": false,
+      "direction": "dealt",
+      "directlyVerified": true,
+      "dragonId": "caraxes",
+      "evidenceIds": [
+        "caraxes-battle-dread-2026-06-24"
+      ],
+      "futureAvailable": true,
+      "id": "caraxes-battle-dread-battle-dread-initiative-down-stat-dealt-modifier",
+      "label": "Battle Dread: Initiative Down",
+      "minimumDragonLevel": null,
+      "operation": "decrease",
+      "providerRequirements": [],
+      "recipientRequirements": [],
+      "requiredHabitLevel": 1,
+      "role": "enemy-debuff",
+      "sourceScope": "unknown",
+      "stackMaximum": null,
+      "targetSelector": {
+        "count": 3,
+        "includesCaster": null,
+        "position": null,
+        "scope": "any-lane",
+        "selection": "any",
+        "side": "enemy"
+      },
+      "unit": "percent",
+      "unlockStarRank": 2,
+      "value": null,
+      "valuePerStack": null
+    },
+    {
+      "abilityId": "caraxes-dragons-flair",
+      "abilityName": "Dragon's Flair",
+      "availability": {
+        "canonical": "canonical-locked",
+        "notes": [
+          "Future at Star Rank 4.",
+          "Not collected in observed account."
+        ],
+        "observedAccount": "observed-unavailable",
+        "reportLabel": "Future at Star Rank 4; not collected in observed account",
+        "userRoster": "unknown"
+      },
+      "channel": "fire-damage",
+      "combatLogConfirmed": false,
+      "conditional": true,
+      "conditions": [],
+      "confidence": "confirmed",
+      "currentlyAvailable": false,
+      "direction": "dealt",
+      "directlyVerified": true,
+      "dragonId": "caraxes",
+      "evidenceIds": [
+        "caraxes-dragons-flair-2026-06-24"
+      ],
+      "futureAvailable": true,
+      "id": "caraxes-dragons-flair-dragons-flair-fire-fire-damage-dealt-modifier",
+      "label": "Dragon's Flair: Fire Damage Dealt Up",
+      "minimumDragonLevel": null,
+      "operation": "increase",
+      "providerRequirements": [],
+      "recipientRequirements": [],
+      "requiredHabitLevel": 1,
+      "role": "self-amplification",
+      "sourceScope": "all-qualifying-sources",
+      "stackMaximum": null,
+      "targetSelector": {
+        "count": null,
+        "includesCaster": null,
+        "position": null,
+        "scope": "self",
+        "selection": "self",
+        "side": "self"
+      },
+      "unit": "percent",
+      "unlockStarRank": 4,
+      "value": null,
+      "valuePerStack": null
+    },
+    {
+      "abilityId": "caraxes-mass-enfeeble",
+      "abilityName": "Mass Enfeeble",
+      "availability": {
+        "canonical": "canonical-locked",
+        "notes": [
+          "Future at Star Rank 8.",
+          "Not collected in observed account."
+        ],
+        "observedAccount": "observed-unavailable",
+        "reportLabel": "Future at Star Rank 8; not collected in observed account",
+        "userRoster": "unknown"
+      },
+      "channel": "physical-damage",
+      "combatLogConfirmed": false,
+      "conditional": true,
+      "conditions": [],
+      "confidence": "confirmed",
+      "currentlyAvailable": false,
+      "direction": "dealt",
+      "directlyVerified": true,
+      "dragonId": "caraxes",
+      "evidenceIds": [
+        "caraxes-mass-enfeeble-2026-06-24"
+      ],
+      "futureAvailable": true,
+      "id": "caraxes-mass-enfeeble-mass-enfeeble-physical-down-physical-damage-dealt-modifier",
+      "label": "Mass Enfeeble: Physical Damage Dealt Down",
+      "minimumDragonLevel": null,
+      "operation": "decrease",
+      "providerRequirements": [],
+      "recipientRequirements": [],
+      "requiredHabitLevel": 1,
+      "role": "enemy-debuff",
+      "sourceScope": "non-basic-attacks",
+      "stackMaximum": null,
+      "targetSelector": {
+        "count": 3,
+        "includesCaster": null,
+        "position": null,
+        "scope": "any-lane",
+        "selection": "any",
+        "side": "enemy"
+      },
+      "unit": "percent",
+      "unlockStarRank": 8,
+      "value": null,
+      "valuePerStack": null
+    },
+    {
+      "abilityId": "caraxes-blood-wyrm",
+      "abilityName": "Blood Wyrm",
+      "availability": {
+        "canonical": "canonical-locked",
+        "notes": [
+          "Future at Star Rank 10.",
+          "Not collected in observed account."
+        ],
+        "observedAccount": "observed-unavailable",
+        "reportLabel": "Future at Star Rank 10; not collected in observed account",
+        "userRoster": "unknown"
+      },
+      "channel": "fire-damage",
+      "combatLogConfirmed": false,
+      "conditional": true,
+      "conditions": [
+        {
+          "description": "Enemy is below 50% maximum Troop Capacity.",
+          "evidenceIds": [],
+          "id": "enemy-below-50-maximum-troops",
+          "label": "Enemy is below 50% maximum Troop Capacity.",
+          "unresolved": false
+        }
+      ],
+      "confidence": "confirmed",
+      "currentlyAvailable": false,
+      "direction": "dealt",
+      "directlyVerified": true,
+      "dragonId": "caraxes",
+      "evidenceIds": [
+        "caraxes-blood-wyrm-2026-06-24"
+      ],
+      "futureAvailable": true,
+      "id": "caraxes-blood-wyrm-blood-wyrm-fire-up-fire-damage-dealt-modifier",
+      "label": "Blood Wyrm: Fire Damage Dealt Up",
+      "minimumDragonLevel": null,
+      "operation": "increase",
+      "providerRequirements": [],
+      "recipientRequirements": [],
+      "requiredHabitLevel": 1,
+      "role": "self-amplification",
+      "sourceScope": "all-qualifying-sources",
+      "stackMaximum": null,
+      "targetSelector": {
+        "count": null,
+        "includesCaster": null,
+        "position": null,
+        "scope": "self",
+        "selection": "self",
+        "side": "self"
+      },
+      "unit": "percent",
+      "unlockStarRank": 10,
+      "value": null,
+      "valuePerStack": null
+    }
+  ],
+  "modifierRoles": [
+    "ally-support",
+    "enemy-debuff",
+    "self-amplification"
+  ],
+  "name": "Caraxes",
+  "notes": null,
+  "observationSnapshots": [
+    {
+      "canonical": false,
+      "capturedAt": "2026-06-24",
+      "collection": {
+        "shardsCurrent": 0,
+        "shardsRequired": null,
+        "state": "not-collected"
+      },
+      "combatStats": {
+        "initiative": 62.7,
+        "instinct": 40.7,
+        "intelligence": 75.7,
+        "strength": 57.6
+      },
+      "displayState": "Not Discovered",
+      "dragonId": "caraxes",
+      "dragonLevel": null,
+      "dragonPower": 0,
+      "evidenceIds": [
+        "caraxes-main-screen-2026-06-24"
+      ],
+      "gameVersion": "26.6.53509",
+      "id": "caraxes-main-screen-2026-06-24",
+      "marchSpeed": "Average",
+      "modifierContextKnown": false,
+      "sourceScope": "noncanonical-account-observation",
+      "staminaCurrent": 0,
+      "staminaMaximum": null,
+      "starRank": null,
+      "troopCapacity": 1450
+    }
+  ],
+  "officialProfileUrl": "https://gotdragonfire.com/dragons/caraxes/",
+  "outputCapabilities": [
+    {
+      "abilityId": "caraxes-infernal-burst",
+      "abilityName": "Infernal Burst",
+      "availability": {
+        "canonical": "canonical-base",
+        "notes": [
+          "Not collected in observed account."
+        ],
+        "observedAccount": "observed-unavailable",
+        "reportLabel": "Base kit; not collected in observed account",
+        "userRoster": "unknown"
+      },
+      "channel": "fire-damage",
+      "combatLogConfirmed": false,
+      "conditional": true,
+      "conditions": [
+        {
+          "description": "If Caraxes has First-Strike, damage is multiplied by 1.5.",
+          "evidenceIds": [],
+          "id": "infernal-burst-first-strike-1-5x",
+          "label": "If Caraxes has First-Strike, damage is multiplied by 1.5.",
+          "unresolved": false
+        }
+      ],
+      "confidence": "confirmed",
+      "currentlyAvailable": true,
+      "dependencies": [
+        {
+          "notes": [
+            "Effect wording indicates scaling with Intelligence."
+          ],
+          "statId": "intelligence",
+          "type": "scales-with-stat"
+        },
+        {
+          "notes": [
+            "Fire Damage is reduced by target Initiative."
+          ],
+          "statId": "initiative",
+          "type": "mitigated-by-target-stat"
+        },
+        {
+          "multiplier": 1.5,
+          "notes": [
+            "Self has First-Strike."
+          ],
+          "statusId": "first-strike",
+          "type": "requires-self-status"
+        }
+      ],
+      "directlyVerified": true,
+      "dragonId": "caraxes",
+      "evidenceIds": [
+        "caraxes-infernal-burst-2026-06-24"
+      ],
+      "futureAvailable": false,
+      "id": "caraxes-infernal-burst-infernal-burst-fire-rate-output",
+      "label": "Infernal Burst: Fire Damage",
+      "minimumDragonLevel": null,
+      "requiredHabitLevel": null,
+      "sourceKind": "command",
+      "sourceScope": "commands",
+      "targetCount": 3,
+      "targetScope": "any-lane",
+      "targetSide": "enemy",
+      "unlockStarRank": null
+    },
+    {
+      "abilityId": "caraxes-crippling-inferno",
+      "abilityName": "Crippling Inferno",
+      "availability": {
+        "canonical": "canonical-locked",
+        "notes": [
+          "Future at Star Rank 6.",
+          "Not collected in observed account."
+        ],
+        "observedAccount": "observed-unavailable",
+        "reportLabel": "Future at Star Rank 6; not collected in observed account",
+        "userRoster": "unknown"
+      },
+      "channel": "fire-damage",
+      "combatLogConfirmed": false,
+      "conditional": true,
+      "conditions": [
+        {
+          "description": "Activation chance depends on Habit Level for each round.",
+          "evidenceIds": [],
+          "id": "crippling-inferno-each-round-activation-chance",
+          "label": "Activation chance depends on Habit Level for each round.",
+          "unresolved": false
+        }
+      ],
+      "confidence": "confirmed",
+      "currentlyAvailable": false,
+      "dependencies": [
+        {
+          "notes": [
+            "Effect wording indicates scaling with Intelligence."
+          ],
+          "statId": "intelligence",
+          "type": "scales-with-stat"
+        },
+        {
+          "notes": [
+            "Fire Damage is reduced by target Initiative."
+          ],
+          "statId": "initiative",
+          "type": "mitigated-by-target-stat"
+        }
+      ],
+      "directlyVerified": true,
+      "dragonId": "caraxes",
+      "evidenceIds": [
+        "caraxes-crippling-inferno-2026-06-24"
+      ],
+      "futureAvailable": true,
+      "id": "caraxes-crippling-inferno-crippling-inferno-burn-output",
+      "label": "Crippling Inferno: Burn",
+      "minimumDragonLevel": null,
+      "requiredHabitLevel": 1,
+      "sourceKind": "habit",
+      "sourceScope": "habits",
+      "targetCount": 3,
+      "targetScope": "any-lane",
+      "targetSide": "enemy",
+      "unlockStarRank": 6
+    },
+    {
+      "abilityId": "caraxes-blood-wyrm",
+      "abilityName": "Blood Wyrm",
+      "availability": {
+        "canonical": "canonical-locked",
+        "notes": [
+          "Future at Star Rank 10.",
+          "Not collected in observed account."
+        ],
+        "observedAccount": "observed-unavailable",
+        "reportLabel": "Future at Star Rank 10; not collected in observed account",
+        "userRoster": "unknown"
+      },
+      "channel": "recovery",
+      "combatLogConfirmed": false,
+      "conditional": true,
+      "conditions": [
+        {
+          "description": "Enemy retreated during the previous round.",
+          "evidenceIds": [],
+          "id": "enemy-retreated-previous-round",
+          "label": "Enemy retreated during the previous round.",
+          "unresolved": false
+        }
+      ],
+      "confidence": "confirmed",
+      "currentlyAvailable": false,
+      "dependencies": [
+        {
+          "notes": [
+            "Effect wording indicates scaling with Initiative."
+          ],
+          "statId": "initiative",
+          "type": "scales-with-stat"
+        },
+        {
+          "eventId": "Enemy retreated during the previous round.",
+          "notes": [
+            "Enemy retreated during the previous round."
+          ],
+          "type": "previous-round-event"
+        }
+      ],
+      "directlyVerified": true,
+      "dragonId": "caraxes",
+      "evidenceIds": [
+        "caraxes-blood-wyrm-2026-06-24"
+      ],
+      "futureAvailable": true,
+      "id": "caraxes-blood-wyrm-blood-wyrm-recovery-output",
+      "label": "Blood Wyrm: Recovery",
+      "minimumDragonLevel": null,
+      "requiredHabitLevel": 1,
+      "sourceKind": "habit",
+      "sourceScope": "habits",
+      "targetCount": null,
+      "targetScope": "self",
+      "targetSide": "self",
+      "unlockStarRank": 10
+    }
+  ],
+  "periodicDamage": [
+    {
+      "abilityId": "caraxes-crippling-inferno",
+      "channel": "fire-damage",
+      "damageRateByHabitLevel": [],
+      "damageRateFixed": 20,
+      "dragonId": "caraxes",
+      "durationRounds": 2,
+      "evidenceIds": [
+        "caraxes-crippling-inferno-2026-06-24"
+      ],
+      "mitigationStat": "initiative",
+      "scalingStat": "intelligence",
+      "statusId": "burn",
+      "ticksEachRound": true
+    }
+  ],
+  "profileCompleteness": "detailed-combat-data",
+  "rankedValues": [
+    {
+      "abilityId": "caraxes-infernal-burst",
+      "effectId": "infernal-burst-fire-rate",
+      "multiplierId": "infernal-burst-first-strike-1-5x",
+      "rankedValue": {
+        "level": 1,
+        "unit": "percent",
+        "value": 150
+      },
+      "scheduleId": "infernal-burst-fire",
+      "source": "conditionalMultiplier.directlyVerifiedValues"
+    },
+    {
+      "abilityId": "caraxes-battle-dread",
+      "rankedValue": {
+        "level": 1,
+        "unit": "power",
+        "value": 420
+      },
+      "source": "powerByHabitLevel"
+    },
+    {
+      "abilityId": "caraxes-battle-dread",
+      "rankedValue": {
+        "level": 2,
+        "unit": "power",
+        "value": 920
+      },
+      "source": "powerByHabitLevel"
+    },
+    {
+      "abilityId": "caraxes-battle-dread",
+      "rankedValue": {
+        "level": 3,
+        "unit": "power",
+        "value": 1500
+      },
+      "source": "powerByHabitLevel"
+    },
+    {
+      "abilityId": "caraxes-battle-dread",
+      "rankedValue": {
+        "level": 4,
+        "unit": "power",
+        "value": 2200
+      },
+      "source": "powerByHabitLevel"
+    },
+    {
+      "abilityId": "caraxes-battle-dread",
+      "rankedValue": {
+        "level": 5,
+        "unit": "power",
+        "value": 3100
+      },
+      "source": "powerByHabitLevel"
+    },
+    {
+      "abilityId": "caraxes-battle-dread",
+      "effectId": "battle-dread-strength-down",
+      "rankedValue": {
+        "level": 1,
+        "unit": "percent",
+        "value": 6.5
+      },
+      "scheduleId": "battle-dread-start",
+      "source": "effect.rankedValues"
+    },
+    {
+      "abilityId": "caraxes-battle-dread",
+      "effectId": "battle-dread-strength-down",
+      "rankedValue": {
+        "level": 2,
+        "unit": "percent",
+        "value": 7.8
+      },
+      "scheduleId": "battle-dread-start",
+      "source": "effect.rankedValues"
+    },
+    {
+      "abilityId": "caraxes-battle-dread",
+      "effectId": "battle-dread-strength-down",
+      "rankedValue": {
+        "level": 3,
+        "unit": "percent",
+        "value": 9.1
+      },
+      "scheduleId": "battle-dread-start",
+      "source": "effect.rankedValues"
+    },
+    {
+      "abilityId": "caraxes-battle-dread",
+      "effectId": "battle-dread-strength-down",
+      "rankedValue": {
+        "level": 4,
+        "unit": "percent",
+        "value": 11.05
+      },
+      "scheduleId": "battle-dread-start",
+      "source": "effect.rankedValues"
+    },
+    {
+      "abilityId": "caraxes-battle-dread",
+      "effectId": "battle-dread-strength-down",
+      "rankedValue": {
+        "level": 5,
+        "unit": "percent",
+        "value": 13
+      },
+      "scheduleId": "battle-dread-start",
+      "source": "effect.rankedValues"
+    },
+    {
+      "abilityId": "caraxes-battle-dread",
+      "effectId": "battle-dread-initiative-down",
+      "rankedValue": {
+        "level": 1,
+        "unit": "percent",
+        "value": 6.5
+      },
+      "scheduleId": "battle-dread-start",
+      "source": "effect.rankedValues"
+    },
+    {
+      "abilityId": "caraxes-battle-dread",
+      "effectId": "battle-dread-initiative-down",
+      "rankedValue": {
+        "level": 2,
+        "unit": "percent",
+        "value": 7.8
+      },
+      "scheduleId": "battle-dread-start",
+      "source": "effect.rankedValues"
+    },
+    {
+      "abilityId": "caraxes-battle-dread",
+      "effectId": "battle-dread-initiative-down",
+      "rankedValue": {
+        "level": 3,
+        "unit": "percent",
+        "value": 9.1
+      },
+      "scheduleId": "battle-dread-start",
+      "source": "effect.rankedValues"
+    },
+    {
+      "abilityId": "caraxes-battle-dread",
+      "effectId": "battle-dread-initiative-down",
+      "rankedValue": {
+        "level": 4,
+        "unit": "percent",
+        "value": 11.05
+      },
+      "scheduleId": "battle-dread-start",
+      "source": "effect.rankedValues"
+    },
+    {
+      "abilityId": "caraxes-battle-dread",
+      "effectId": "battle-dread-initiative-down",
+      "rankedValue": {
+        "level": 5,
+        "unit": "percent",
+        "value": 13
+      },
+      "scheduleId": "battle-dread-start",
+      "source": "effect.rankedValues"
+    },
+    {
+      "abilityId": "caraxes-dragons-flair",
+      "rankedValue": {
+        "level": 1,
+        "unit": "power",
+        "value": 420
+      },
+      "source": "powerByHabitLevel"
+    },
+    {
+      "abilityId": "caraxes-dragons-flair",
+      "rankedValue": {
+        "level": 2,
+        "unit": "power",
+        "value": 920
+      },
+      "source": "powerByHabitLevel"
+    },
+    {
+      "abilityId": "caraxes-dragons-flair",
+      "rankedValue": {
+        "level": 3,
+        "unit": "power",
+        "value": 1500
+      },
+      "source": "powerByHabitLevel"
+    },
+    {
+      "abilityId": "caraxes-dragons-flair",
+      "rankedValue": {
+        "level": 4,
+        "unit": "power",
+        "value": 2200
+      },
+      "source": "powerByHabitLevel"
+    },
+    {
+      "abilityId": "caraxes-dragons-flair",
+      "rankedValue": {
+        "level": 5,
+        "unit": "power",
+        "value": 3100
+      },
+      "source": "powerByHabitLevel"
+    },
+    {
+      "abilityId": "caraxes-dragons-flair",
+      "effectId": "dragons-flair-fire",
+      "rankedValue": {
+        "level": 1,
+        "unit": "percent",
+        "value": 12.5
+      },
+      "scheduleId": "dragons-flair-start",
+      "source": "effect.rankedValues"
+    },
+    {
+      "abilityId": "caraxes-dragons-flair",
+      "effectId": "dragons-flair-fire",
+      "rankedValue": {
+        "level": 2,
+        "unit": "percent",
+        "value": 15
+      },
+      "scheduleId": "dragons-flair-start",
+      "source": "effect.rankedValues"
+    },
+    {
+      "abilityId": "caraxes-dragons-flair",
+      "effectId": "dragons-flair-fire",
+      "rankedValue": {
+        "level": 3,
+        "unit": "percent",
+        "value": 17.5
+      },
+      "scheduleId": "dragons-flair-start",
+      "source": "effect.rankedValues"
+    },
+    {
+      "abilityId": "caraxes-dragons-flair",
+      "effectId": "dragons-flair-fire",
+      "rankedValue": {
+        "level": 4,
+        "unit": "percent",
+        "value": 21.25
+      },
+      "scheduleId": "dragons-flair-start",
+      "source": "effect.rankedValues"
+    },
+    {
+      "abilityId": "caraxes-dragons-flair",
+      "effectId": "dragons-flair-fire",
+      "rankedValue": {
+        "level": 5,
+        "unit": "percent",
+        "value": 25
+      },
+      "scheduleId": "dragons-flair-start",
+      "source": "effect.rankedValues"
+    },
+    {
+      "abilityId": "caraxes-crippling-inferno",
+      "rankedValue": {
+        "level": 1,
+        "unit": "power",
+        "value": 420
+      },
+      "source": "powerByHabitLevel"
+    },
+    {
+      "abilityId": "caraxes-crippling-inferno",
+      "rankedValue": {
+        "level": 2,
+        "unit": "power",
+        "value": 920
+      },
+      "source": "powerByHabitLevel"
+    },
+    {
+      "abilityId": "caraxes-crippling-inferno",
+      "rankedValue": {
+        "level": 3,
+        "unit": "power",
+        "value": 1500
+      },
+      "source": "powerByHabitLevel"
+    },
+    {
+      "abilityId": "caraxes-crippling-inferno",
+      "rankedValue": {
+        "level": 4,
+        "unit": "power",
+        "value": 2200
+      },
+      "source": "powerByHabitLevel"
+    },
+    {
+      "abilityId": "caraxes-crippling-inferno",
+      "rankedValue": {
+        "level": 5,
+        "unit": "power",
+        "value": 3100
+      },
+      "source": "powerByHabitLevel"
+    },
+    {
+      "abilityId": "caraxes-mass-enfeeble",
+      "rankedValue": {
+        "level": 1,
+        "unit": "power",
+        "value": 420
+      },
+      "source": "powerByHabitLevel"
+    },
+    {
+      "abilityId": "caraxes-mass-enfeeble",
+      "rankedValue": {
+        "level": 2,
+        "unit": "power",
+        "value": 920
+      },
+      "source": "powerByHabitLevel"
+    },
+    {
+      "abilityId": "caraxes-mass-enfeeble",
+      "rankedValue": {
+        "level": 3,
+        "unit": "power",
+        "value": 1500
+      },
+      "source": "powerByHabitLevel"
+    },
+    {
+      "abilityId": "caraxes-mass-enfeeble",
+      "rankedValue": {
+        "level": 4,
+        "unit": "power",
+        "value": 2200
+      },
+      "source": "powerByHabitLevel"
+    },
+    {
+      "abilityId": "caraxes-mass-enfeeble",
+      "rankedValue": {
+        "level": 5,
+        "unit": "power",
+        "value": 3100
+      },
+      "source": "powerByHabitLevel"
+    },
+    {
+      "abilityId": "caraxes-mass-enfeeble",
+      "effectId": "mass-enfeeble-physical-down",
+      "rankedValue": {
+        "level": 1,
+        "unit": "percent",
+        "value": 5.5
+      },
+      "scheduleId": "mass-enfeeble-start",
+      "source": "effect.rankedValues"
+    },
+    {
+      "abilityId": "caraxes-mass-enfeeble",
+      "effectId": "mass-enfeeble-physical-down",
+      "rankedValue": {
+        "level": 2,
+        "unit": "percent",
+        "value": 6.6
+      },
+      "scheduleId": "mass-enfeeble-start",
+      "source": "effect.rankedValues"
+    },
+    {
+      "abilityId": "caraxes-mass-enfeeble",
+      "effectId": "mass-enfeeble-physical-down",
+      "rankedValue": {
+        "level": 3,
+        "unit": "percent",
+        "value": 7.7
+      },
+      "scheduleId": "mass-enfeeble-start",
+      "source": "effect.rankedValues"
+    },
+    {
+      "abilityId": "caraxes-mass-enfeeble",
+      "effectId": "mass-enfeeble-physical-down",
+      "rankedValue": {
+        "level": 4,
+        "unit": "percent",
+        "value": 9.35
+      },
+      "scheduleId": "mass-enfeeble-start",
+      "source": "effect.rankedValues"
+    },
+    {
+      "abilityId": "caraxes-mass-enfeeble",
+      "effectId": "mass-enfeeble-physical-down",
+      "rankedValue": {
+        "level": 5,
+        "unit": "percent",
+        "value": 11
+      },
+      "scheduleId": "mass-enfeeble-start",
+      "source": "effect.rankedValues"
+    },
+    {
+      "abilityId": "caraxes-blood-wyrm",
+      "rankedValue": {
+        "level": 1,
+        "unit": "power",
+        "value": 430
+      },
+      "source": "powerByHabitLevel"
+    },
+    {
+      "abilityId": "caraxes-blood-wyrm",
+      "rankedValue": {
+        "level": 2,
+        "unit": "power",
+        "value": 1000
+      },
+      "source": "powerByHabitLevel"
+    },
+    {
+      "abilityId": "caraxes-blood-wyrm",
+      "rankedValue": {
+        "level": 3,
+        "unit": "power",
+        "value": 1700
+      },
+      "source": "powerByHabitLevel"
+    },
+    {
+      "abilityId": "caraxes-blood-wyrm",
+      "rankedValue": {
+        "level": 4,
+        "unit": "power",
+        "value": 2700
+      },
+      "source": "powerByHabitLevel"
+    },
+    {
+      "abilityId": "caraxes-blood-wyrm",
+      "rankedValue": {
+        "level": 5,
+        "unit": "power",
+        "value": 4000
+      },
+      "source": "powerByHabitLevel"
+    },
+    {
+      "abilityId": "caraxes-blood-wyrm",
+      "effectId": "blood-wyrm-fire-up",
+      "rankedValue": {
+        "level": 1,
+        "unit": "percent",
+        "value": 8
+      },
+      "scheduleId": "blood-wyrm-low-troops",
+      "source": "effect.rankedValues"
+    },
+    {
+      "abilityId": "caraxes-blood-wyrm",
+      "effectId": "blood-wyrm-fire-up",
+      "rankedValue": {
+        "level": 2,
+        "unit": "percent",
+        "value": 10.4
+      },
+      "scheduleId": "blood-wyrm-low-troops",
+      "source": "effect.rankedValues"
+    },
+    {
+      "abilityId": "caraxes-blood-wyrm",
+      "effectId": "blood-wyrm-fire-up",
+      "rankedValue": {
+        "level": 3,
+        "unit": "percent",
+        "value": 12.8
+      },
+      "scheduleId": "blood-wyrm-low-troops",
+      "source": "effect.rankedValues"
+    },
+    {
+      "abilityId": "caraxes-blood-wyrm",
+      "effectId": "blood-wyrm-fire-up",
+      "rankedValue": {
+        "level": 4,
+        "unit": "percent",
+        "value": 16
+      },
+      "scheduleId": "blood-wyrm-low-troops",
+      "source": "effect.rankedValues"
+    },
+    {
+      "abilityId": "caraxes-blood-wyrm",
+      "effectId": "blood-wyrm-fire-up",
+      "rankedValue": {
+        "level": 5,
+        "unit": "percent",
+        "value": 20
+      },
+      "scheduleId": "blood-wyrm-low-troops",
+      "source": "effect.rankedValues"
+    },
+    {
+      "abilityId": "caraxes-blood-wyrm",
+      "effectId": "blood-wyrm-recovery",
+      "rankedValue": {
+        "level": 1,
+        "unit": "percent",
+        "value": 40
+      },
+      "scheduleId": "blood-wyrm-retreat-recovery",
+      "source": "effect.rankedValues"
+    },
+    {
+      "abilityId": "caraxes-blood-wyrm",
+      "effectId": "blood-wyrm-recovery",
+      "rankedValue": {
+        "level": 2,
+        "unit": "percent",
+        "value": 52
+      },
+      "scheduleId": "blood-wyrm-retreat-recovery",
+      "source": "effect.rankedValues"
+    },
+    {
+      "abilityId": "caraxes-blood-wyrm",
+      "effectId": "blood-wyrm-recovery",
+      "rankedValue": {
+        "level": 3,
+        "unit": "percent",
+        "value": 64
+      },
+      "scheduleId": "blood-wyrm-retreat-recovery",
+      "source": "effect.rankedValues"
+    },
+    {
+      "abilityId": "caraxes-blood-wyrm",
+      "effectId": "blood-wyrm-recovery",
+      "rankedValue": {
+        "level": 4,
+        "unit": "percent",
+        "value": 80
+      },
+      "scheduleId": "blood-wyrm-retreat-recovery",
+      "source": "effect.rankedValues"
+    },
+    {
+      "abilityId": "caraxes-blood-wyrm",
+      "effectId": "blood-wyrm-recovery",
+      "rankedValue": {
+        "level": 5,
+        "unit": "percent",
+        "value": 100
+      },
+      "scheduleId": "blood-wyrm-retreat-recovery",
+      "source": "effect.rankedValues"
+    }
+  ],
+  "rarity": "Legendary",
+  "rawDescriptions": [
+    {
+      "abilityId": "caraxes-infernal-burst",
+      "abilityName": "Infernal Burst",
+      "kind": "command",
+      "rawDescription": "Rounds 3, 6, 9: deal Fire Damage to 3 Enemies in any lane (Damage Rate +100%). If Caraxes has First-Strike, damage is multiplied by 1.5 and displayed as +150%."
+    },
+    {
+      "abilityId": "caraxes-hunters-wrath",
+      "abilityName": "Hunter's Wrath",
+      "kind": "trait",
+      "rawDescription": "At Level 16+ and deployed in Vanguard, increase Caraxes Fire Damage Dealt by 16%. Increase Strength and Initiative of Right Flank ally by +20."
+    },
+    {
+      "abilityId": "caraxes-battle-dread",
+      "abilityName": "Battle Dread",
+      "kind": "habit",
+      "rawDescription": "Start of Combat: reduce Strength and Initiative of 3 Enemies in any lane by -6%, enhanced by Caraxes Intelligence. Progression table shows -6.5% at Level 1."
+    },
+    {
+      "abilityId": "caraxes-dragons-flair",
+      "abilityName": "Dragon's Flair",
+      "kind": "habit",
+      "rawDescription": "Start of Combat: increase Caraxes Fire Damage Dealt until end of combat."
+    },
+    {
+      "abilityId": "caraxes-crippling-inferno",
+      "abilityName": "Crippling Inferno",
+      "kind": "habit",
+      "rawDescription": "Each Round: chance to apply Slow and Burn to 3 Enemies in any lane. Each effect is checked separately for each target and lasts 2 rounds."
+    },
+    {
+      "abilityId": "caraxes-mass-enfeeble",
+      "abilityName": "Mass Enfeeble",
+      "kind": "habit",
+      "rawDescription": "Start of Combat: reduce Physical Damage Dealt, excluding Basic Attacks, of 3 Enemies in any lane by -5%. Progression table shows -5.5% at Level 1."
+    },
+    {
+      "abilityId": "caraxes-blood-wyrm",
+      "abilityName": "Blood Wyrm",
+      "kind": "habit",
+      "rawDescription": "Start of Each Round: for each Enemy below 50% maximum Troop Capacity, increase Caraxes Fire Damage Dealt. For each Enemy that retreated during the previous round, apply Recovery to Caraxes, enhanced by Initiative."
+    }
+  ],
+  "repetitions": [
+    {
+      "abilityId": "caraxes-blood-wyrm",
+      "repeat": {
+        "condition": {
+          "battleContext": null,
+          "comparison": "below",
+          "description": "Enemy is below 50% maximum Troop Capacity.",
+          "id": "enemy-below-50-maximum-troops",
+          "kind": "target-below-troop-capacity-threshold",
+          "statusId": null,
+          "subject": "enemy",
+          "thresholdPercent": 50,
+          "unresolved": false
+        },
+        "description": "Repeat once for each enemy below 50% maximum Troop Capacity. Number of repetitions is battlefield-dependent.",
+        "mode": "once-per-match"
+      },
+      "scheduleId": "blood-wyrm-low-troops"
+    },
+    {
+      "abilityId": "caraxes-blood-wyrm",
+      "repeat": {
+        "condition": {
+          "battleContext": null,
+          "comparison": null,
+          "description": "Enemy retreated during the previous round.",
+          "id": "enemy-retreated-previous-round",
+          "kind": "previous-round-event",
+          "statusId": null,
+          "subject": "enemy",
+          "thresholdPercent": null,
+          "unresolved": false
+        },
+        "description": "Repeat once for each enemy that retreated during the previous round. Number of repetitions is battlefield-dependent.",
+        "mode": "once-per-match"
+      },
+      "scheduleId": "blood-wyrm-retreat-recovery"
+    }
+  ],
+  "rosterSourceStatus": "official-website",
+  "slug": "caraxes",
+  "source": {
+    "branch": "feature/project-context-export",
+    "commit": "2cb422d38207fdda378f64504014ac34ff255e24",
+    "databaseVersion": "0.5.1",
+    "dataSchemaVersion": 7,
+    "gameBuild": "26.6.53509",
+    "localRosterSchemaVersion": 3,
+    "repository": "https://github.com/williamchildres/dragonfire-roster-builder"
+  },
+  "stats": {
+    "initiative": null,
+    "instinct": null,
+    "intelligence": null,
+    "strength": null
+  },
+  "statusOutputs": [
+    {
+      "abilityId": "caraxes-crippling-inferno",
+      "abilityName": "Crippling Inferno",
+      "availability": {
+        "canonical": "canonical-locked",
+        "notes": [
+          "Future at Star Rank 6.",
+          "Not collected in observed account."
+        ],
+        "observedAccount": "observed-unavailable",
+        "reportLabel": "Future at Star Rank 6; not collected in observed account",
+        "userRoster": "unknown"
+      },
+      "chanceByHabitLevel": [
+        {
+          "level": 1,
+          "unit": "percent",
+          "value": 10
+        },
+        {
+          "level": 2,
+          "unit": "percent",
+          "value": 12
+        },
+        {
+          "level": 3,
+          "unit": "percent",
+          "value": 14
+        },
+        {
+          "level": 4,
+          "unit": "percent",
+          "value": 17
+        },
+        {
+          "level": 5,
+          "unit": "percent",
+          "value": 20
+        }
+      ],
+      "chanceFixed": null,
+      "conditions": [
+        {
+          "description": "Activation chance depends on Habit Level for each round.",
+          "evidenceIds": [],
+          "id": "crippling-inferno-each-round-activation-chance",
+          "label": "Activation chance depends on Habit Level for each round.",
+          "unresolved": false
+        }
+      ],
+      "currentlyAvailable": false,
+      "directlyVerified": true,
+      "dragonId": "caraxes",
+      "durationRounds": 2,
+      "evidenceIds": [
+        "caraxes-crippling-inferno-2026-06-24"
+      ],
+      "futureAvailable": true,
+      "id": "caraxes-crippling-inferno-crippling-inferno-slow-slow-status-output",
+      "minimumDragonLevel": null,
+      "requiredHabitLevel": 1,
+      "statusId": "slow",
+      "targetSelector": {
+        "count": 3,
+        "includesCaster": null,
+        "position": null,
+        "scope": "any-lane",
+        "selection": "any",
+        "side": "enemy"
+      },
+      "targetSide": "enemy",
+      "unlockStarRank": 6,
+      "untilEndOfCombat": false,
+      "untilEndOfRound": false
+    },
+    {
+      "abilityId": "caraxes-crippling-inferno",
+      "abilityName": "Crippling Inferno",
+      "availability": {
+        "canonical": "canonical-locked",
+        "notes": [
+          "Future at Star Rank 6.",
+          "Not collected in observed account."
+        ],
+        "observedAccount": "observed-unavailable",
+        "reportLabel": "Future at Star Rank 6; not collected in observed account",
+        "userRoster": "unknown"
+      },
+      "chanceByHabitLevel": [
+        {
+          "level": 1,
+          "unit": "percent",
+          "value": 10
+        },
+        {
+          "level": 2,
+          "unit": "percent",
+          "value": 12
+        },
+        {
+          "level": 3,
+          "unit": "percent",
+          "value": 14
+        },
+        {
+          "level": 4,
+          "unit": "percent",
+          "value": 17
+        },
+        {
+          "level": 5,
+          "unit": "percent",
+          "value": 20
+        }
+      ],
+      "chanceFixed": null,
+      "conditions": [
+        {
+          "description": "Activation chance depends on Habit Level for each round.",
+          "evidenceIds": [],
+          "id": "crippling-inferno-each-round-activation-chance",
+          "label": "Activation chance depends on Habit Level for each round.",
+          "unresolved": false
+        }
+      ],
+      "currentlyAvailable": false,
+      "directlyVerified": true,
+      "dragonId": "caraxes",
+      "durationRounds": 2,
+      "evidenceIds": [
+        "caraxes-crippling-inferno-2026-06-24"
+      ],
+      "futureAvailable": true,
+      "id": "caraxes-crippling-inferno-crippling-inferno-burn-burn-status-output",
+      "minimumDragonLevel": null,
+      "requiredHabitLevel": 1,
+      "statusId": "burn",
+      "targetSelector": {
+        "count": 3,
+        "includesCaster": null,
+        "position": null,
+        "scope": "any-lane",
+        "selection": "any",
+        "side": "enemy"
+      },
+      "targetSide": "enemy",
+      "unlockStarRank": 6,
+      "untilEndOfCombat": false,
+      "untilEndOfRound": false
+    }
+  ],
+  "tags": [
+    "FIRE_DAMAGE",
+    "ANY_LANE_TARGET",
+    "FIRE_DAMAGE_UP",
+    "STRENGTH_UP",
+    "BUFF_INITIATIVE",
+    "VANGUARD_REQUIRED",
+    "RIGHT_FLANK_TARGET",
+    "DEBUFF_STRENGTH",
+    "DEBUFF_INITIATIVE",
+    "BUFF_SELF",
+    "SLOW",
+    "BURN",
+    "PHYSICAL_DAMAGE_UP",
+    "EXCLUDES_BASIC_ATTACKS",
+    "RECOVERY",
+    "LOW_HEALTH"
+  ],
+  "trait": {
+    "abilityClass": "passive",
+    "augmentations": [],
+    "dragonId": "caraxes",
+    "evidenceIds": [
+      "caraxes-hunters-wrath-2026-06-24"
+    ],
+    "glossaryEntries": [],
+    "id": "caraxes-hunters-wrath",
+    "kind": "trait",
+    "minimumDragonLevel": 16,
+    "name": "Hunter's Wrath",
+    "positionRequirement": "vanguard",
+    "powerByHabitLevel": [],
+    "rawDescription": "At Level 16+ and deployed in Vanguard, increase Caraxes Fire Damage Dealt by 16%. Increase Strength and Initiative of Right Flank ally by +20.",
+    "schedules": [
+      {
+        "attempts": null,
+        "battleContext": "unspecified",
+        "conditions": [],
+        "effects": [
+          {
+            "calculated": false,
+            "casterEligibility": "unknown",
+            "conditionalMultipliers": [],
+            "conditions": [],
+            "directlyVerified": true,
+            "duration": null,
+            "durationRounds": null,
+            "excludes": [],
+            "id": "hunters-wrath-fire",
+            "includesCaster": null,
+            "magnitude": 16,
+            "notes": [],
+            "perTargetEffectCheck": null,
+            "rankedValues": [],
+            "scaling": [],
+            "sourceScope": "all-sources",
+            "stack": null,
+            "target": "Self",
+            "targetCount": null,
+            "targetPriority": "any-eligible",
+            "targetScope": "self",
+            "type": "Fire Damage Dealt Up",
+            "unit": "percent"
+          },
+          {
+            "calculated": false,
+            "casterEligibility": "unknown",
+            "conditionalMultipliers": [],
+            "conditions": [],
+            "directlyVerified": true,
+            "duration": null,
+            "durationRounds": null,
+            "excludes": [],
+            "id": "hunters-wrath-right-strength",
+            "includesCaster": null,
+            "magnitude": 20,
+            "notes": [],
+            "perTargetEffectCheck": null,
+            "rankedValues": [],
+            "scaling": [],
+            "sourceScope": "unknown",
+            "stack": null,
+            "target": "Right Flank ally",
+            "targetCount": null,
+            "targetPriority": "any-eligible",
+            "targetScope": "right-flank",
+            "type": "Strength Up",
+            "unit": "flat"
+          },
+          {
+            "calculated": false,
+            "casterEligibility": "unknown",
+            "conditionalMultipliers": [],
+            "conditions": [],
+            "directlyVerified": true,
+            "duration": null,
+            "durationRounds": null,
+            "excludes": [],
+            "id": "hunters-wrath-right-initiative",
+            "includesCaster": null,
+            "magnitude": 20,
+            "notes": [],
+            "perTargetEffectCheck": null,
+            "rankedValues": [],
+            "scaling": [],
+            "sourceScope": "unknown",
+            "stack": null,
+            "target": "Right Flank ally",
+            "targetCount": null,
+            "targetPriority": "any-eligible",
+            "targetScope": "right-flank",
+            "type": "Initiative Up",
+            "unit": "flat"
+          }
+        ],
+        "id": "hunters-wrath-passive",
+        "repeat": null,
+        "rounds": [],
+        "targetPriority": "any-eligible",
+        "timing": "passive",
+        "triggerChanceByHabitLevel": [],
+        "triggerChanceFixed": null,
+        "triggerEvent": "passive"
+      }
+    ],
+    "tags": [
+      "FIRE_DAMAGE_UP",
+      "STRENGTH_UP",
+      "BUFF_INITIATIVE",
+      "VANGUARD_REQUIRED",
+      "RIGHT_FLANK_TARGET"
+    ],
+    "unlockStarRank": 1,
+    "unresolvedQuestions": [],
+    "verification": {
+      "capturedAt": "2026-06-23",
+      "gameVersion": "26.6.53509",
+      "reviewedManually": true,
+      "source": "Caraxes Hunter's Wrath screenshot",
+      "status": "screenshot-verified"
+    }
+  },
+  "unresolvedQuestions": [
+    "Battle Dread and Mass Enfeeble raw text/table discrepancies retained.",
+    "Blood Wyrm duration and accumulation semantics.",
+    "Exact below 50% equality behavior remains unconfirmed.",
+    "Fire Damage increase duration and accumulation semantics are not stated.",
+    "Raw text/table discrepancy retained."
+  ],
+  "verificationBySection": {
+    "affinities": {
+      "capturedAt": "2026-06-23",
+      "gameVersion": "26.6.53509",
+      "reviewedManually": true,
+      "source": "Caraxes main screen screenshot",
+      "status": "partially-screenshot-verified"
+    },
+    "command": {
+      "capturedAt": "2026-06-23",
+      "gameVersion": "26.6.53509",
+      "reviewedManually": true,
+      "source": "Caraxes Infernal Burst screenshot",
+      "status": "screenshot-verified"
+    },
+    "habits": {
+      "capturedAt": "2026-06-23",
+      "gameVersion": "26.6.53509",
+      "reviewedManually": true,
+      "source": "Caraxes Habit screenshots",
+      "status": "screenshot-verified"
+    },
+    "identity": {
+      "capturedAt": "2026-06-23",
+      "gameVersion": "26.6.53509",
+      "reviewedManually": true,
+      "source": "Caraxes main screen screenshot",
+      "status": "screenshot-verified"
+    },
+    "trait": {
+      "capturedAt": "2026-06-23",
+      "gameVersion": "26.6.53509",
+      "reviewedManually": true,
+      "source": "Caraxes Hunter's Wrath screenshot",
+      "status": "screenshot-verified"
+    }
+  }
+}

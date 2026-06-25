@@ -1,0 +1,230 @@
+{
+  "$id": "dragon-profile.schema.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "properties": {
+    "abilities": {
+      "items": {
+        "type": "object"
+      },
+      "type": "array"
+    },
+    "breed": {
+      "enum": [
+        "Champion",
+        "Hunter",
+        "Sentinel",
+        "Warrior"
+      ]
+    },
+    "command": {
+      "anyOf": [
+        {
+          "type": "object"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "contextVersion": {
+      "const": 1
+    },
+    "dataStatus": {
+      "type": "string"
+    },
+    "firstObservedInGame": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "format": {
+      "const": "dragonfire-dragon-profile"
+    },
+    "gameVersion": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "generatedAt": {
+      "type": "string"
+    },
+    "habits": {
+      "items": {
+        "type": "object"
+      },
+      "type": "array"
+    },
+    "id": {
+      "type": "string"
+    },
+    "isNew": {
+      "type": "boolean"
+    },
+    "lastVerified": {
+      "type": "string"
+    },
+    "modifierCapabilities": {
+      "items": {
+        "type": "object"
+      },
+      "type": "array"
+    },
+    "name": {
+      "type": "string"
+    },
+    "notes": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "observationSnapshots": {
+      "items": {
+        "type": "object"
+      },
+      "type": "array"
+    },
+    "officialProfileUrl": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "outputCapabilities": {
+      "items": {
+        "type": "object"
+      },
+      "type": "array"
+    },
+    "periodicDamage": {
+      "items": {
+        "type": "object"
+      },
+      "type": "array"
+    },
+    "profileCompleteness": {
+      "enum": [
+        "detailed-combat-data",
+        "metadata-only"
+      ]
+    },
+    "rarity": {
+      "enum": [
+        "Legendary",
+        "Epic",
+        "Rare"
+      ]
+    },
+    "rosterSourceStatus": {
+      "type": "string"
+    },
+    "slug": {
+      "type": "string"
+    },
+    "source": {
+      "properties": {
+        "branch": {
+          "type": "string"
+        },
+        "commit": {
+          "type": "string"
+        },
+        "databaseVersion": {
+          "const": "0.5.1"
+        },
+        "dataSchemaVersion": {
+          "const": 7
+        },
+        "gameBuild": {
+          "const": "26.6.53509"
+        },
+        "localRosterSchemaVersion": {
+          "const": 3
+        },
+        "repository": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "repository",
+        "branch",
+        "commit",
+        "databaseVersion",
+        "dataSchemaVersion",
+        "localRosterSchemaVersion",
+        "gameBuild"
+      ],
+      "type": "object"
+    },
+    "statusOutputs": {
+      "items": {
+        "type": "object"
+      },
+      "type": "array"
+    },
+    "trait": {
+      "anyOf": [
+        {
+          "type": "object"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "unresolvedQuestions": {
+      "items": {
+        "type": "string"
+      },
+      "type": "array"
+    }
+  },
+  "required": [
+    "format",
+    "contextVersion",
+    "generatedAt",
+    "source",
+    "id",
+    "slug",
+    "name",
+    "rarity",
+    "breed",
+    "officialProfileUrl",
+    "rosterSourceStatus",
+    "dataStatus",
+    "verificationBySection",
+    "affinities",
+    "command",
+    "trait",
+    "habits",
+    "abilities",
+    "outputCapabilities",
+    "modifierCapabilities",
+    "statusOutputs",
+    "periodicDamage",
+    "observationSnapshots",
+    "evidenceReferences",
+    "manualReviewReferences",
+    "unresolvedQuestions",
+    "profileCompleteness"
+  ],
+  "type": "object"
+}

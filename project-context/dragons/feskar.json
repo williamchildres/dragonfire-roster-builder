@@ -1,0 +1,86 @@
+{
+  "abilities": [],
+  "abilitySchedules": [],
+  "affinities": {
+    "Archers": "unknown",
+    "Cavalry": "unknown",
+    "Shieldbearers": "unknown",
+    "Siege": "unknown",
+    "Spearmen": "unknown"
+  },
+  "attempts": [],
+  "availabilityRequirements": [],
+  "breed": "Champion",
+  "command": null,
+  "contextVersion": 1,
+  "dataStatus": "official-metadata-only",
+  "dependencies": [],
+  "effects": [],
+  "evidenceReferences": [],
+  "firstObservedInGame": null,
+  "format": "dragonfire-dragon-profile",
+  "gameVersion": null,
+  "generatedAt": "2026-06-25T00:29:16.911Z",
+  "habits": [],
+  "id": "feskar",
+  "isNew": false,
+  "lastVerified": "2026-06-23",
+  "manualReviewReferences": [],
+  "modifierCapabilities": [],
+  "modifierRoles": [],
+  "name": "Feskar",
+  "notes": null,
+  "observationSnapshots": [],
+  "officialProfileUrl": "https://gotdragonfire.com/dragons/feskar/",
+  "outputCapabilities": [],
+  "periodicDamage": [],
+  "profileCompleteness": "metadata-only",
+  "rankedValues": [],
+  "rarity": "Epic",
+  "rawDescriptions": [],
+  "repetitions": [],
+  "rosterSourceStatus": "official-website",
+  "slug": "feskar",
+  "source": {
+    "branch": "feature/project-context-export",
+    "commit": "2cb422d38207fdda378f64504014ac34ff255e24",
+    "databaseVersion": "0.5.1",
+    "dataSchemaVersion": 7,
+    "gameBuild": "26.6.53509",
+    "localRosterSchemaVersion": 3,
+    "repository": "https://github.com/williamchildres/dragonfire-roster-builder"
+  },
+  "stats": {
+    "initiative": null,
+    "instinct": null,
+    "intelligence": null,
+    "strength": null
+  },
+  "statusOutputs": [],
+  "tags": [],
+  "trait": null,
+  "unresolvedQuestions": [],
+  "verificationBySection": {
+    "breed": {
+      "capturedAt": "2026-06-23",
+      "gameVersion": null,
+      "reviewedManually": true,
+      "source": "Official public roster page",
+      "status": "officially-confirmed"
+    },
+    "identity": {
+      "capturedAt": "2026-06-23",
+      "gameVersion": null,
+      "reviewedManually": true,
+      "source": "Official public roster page",
+      "status": "officially-confirmed"
+    },
+    "rarity": {
+      "capturedAt": "2026-06-23",
+      "gameVersion": null,
+      "reviewedManually": true,
+      "source": "Official public roster page",
+      "status": "officially-confirmed"
+    }
+  }
+}

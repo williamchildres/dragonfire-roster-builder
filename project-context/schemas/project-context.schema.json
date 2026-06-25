@@ -1,0 +1,550 @@
+{
+  "$id": "project-context.schema.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "properties": {
+    "capabilityFramework": {
+      "$id": "synergy-capability.schema.json",
+      "$schema": "https://json-schema.org/draft/2020-12/schema",
+      "properties": {
+        "derivedCapabilities": {
+          "properties": {
+            "abilityDependencies": {
+              "items": {
+                "type": "object"
+              },
+              "type": "array"
+            },
+            "allySupport": {
+              "items": {
+                "type": "object"
+              },
+              "type": "array"
+            },
+            "enemyDebuffs": {
+              "items": {
+                "type": "object"
+              },
+              "type": "array"
+            },
+            "outputs": {
+              "items": {
+                "type": "object"
+              },
+              "type": "array"
+            },
+            "periodicDamage": {
+              "items": {
+                "type": "object"
+              },
+              "type": "array"
+            },
+            "recipientSideAmplification": {
+              "items": {
+                "type": "object"
+              },
+              "type": "array"
+            },
+            "selfAmplification": {
+              "items": {
+                "type": "object"
+              },
+              "type": "array"
+            },
+            "statusOutputs": {
+              "items": {
+                "type": "object"
+              },
+              "type": "array"
+            }
+          },
+          "required": [
+            "outputs",
+            "allySupport",
+            "selfAmplification",
+            "recipientSideAmplification",
+            "enemyDebuffs",
+            "statusOutputs",
+            "periodicDamage",
+            "abilityDependencies"
+          ],
+          "type": "object"
+        },
+        "effectChannels": {
+          "items": {
+            "enum": [
+              "physical-damage",
+              "tactical-damage",
+              "fire-damage",
+              "recovery",
+              "stat"
+            ]
+          },
+          "type": "array"
+        },
+        "matchKinds": {
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "modifierRoles": {
+          "items": {
+            "enum": [
+              "self-amplification",
+              "ally-support",
+              "recipient-side-amplification",
+              "enemy-debuff"
+            ]
+          },
+          "type": "array"
+        }
+      },
+      "required": [
+        "effectChannels",
+        "outputCapabilityStructure",
+        "modifierCapabilityStructure",
+        "modifierRoles",
+        "availabilityModel",
+        "matchKinds",
+        "sourceScopeCompatibilityRules",
+        "positionCompatibilityRules",
+        "targetingLanguageRules",
+        "traceStatuses",
+        "confidenceLevels",
+        "normalViewAggregationBehavior",
+        "debugViewBehavior",
+        "numericalScorePolicy",
+        "derivedCapabilities",
+        "dragonEffectProfiles"
+      ],
+      "type": "object"
+    },
+    "contextVersion": {
+      "const": 1
+    },
+    "dragons": {
+      "items": {
+        "$id": "dragon-profile.schema.json",
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "properties": {
+          "abilities": {
+            "items": {
+              "type": "object"
+            },
+            "type": "array"
+          },
+          "breed": {
+            "enum": [
+              "Champion",
+              "Hunter",
+              "Sentinel",
+              "Warrior"
+            ]
+          },
+          "command": {
+            "anyOf": [
+              {
+                "type": "object"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "contextVersion": {
+            "const": 1
+          },
+          "dataStatus": {
+            "type": "string"
+          },
+          "firstObservedInGame": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "format": {
+            "const": "dragonfire-dragon-profile"
+          },
+          "gameVersion": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "generatedAt": {
+            "type": "string"
+          },
+          "habits": {
+            "items": {
+              "type": "object"
+            },
+            "type": "array"
+          },
+          "id": {
+            "type": "string"
+          },
+          "isNew": {
+            "type": "boolean"
+          },
+          "lastVerified": {
+            "type": "string"
+          },
+          "modifierCapabilities": {
+            "items": {
+              "type": "object"
+            },
+            "type": "array"
+          },
+          "name": {
+            "type": "string"
+          },
+          "notes": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "observationSnapshots": {
+            "items": {
+              "type": "object"
+            },
+            "type": "array"
+          },
+          "officialProfileUrl": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "outputCapabilities": {
+            "items": {
+              "type": "object"
+            },
+            "type": "array"
+          },
+          "periodicDamage": {
+            "items": {
+              "type": "object"
+            },
+            "type": "array"
+          },
+          "profileCompleteness": {
+            "enum": [
+              "detailed-combat-data",
+              "metadata-only"
+            ]
+          },
+          "rarity": {
+            "enum": [
+              "Legendary",
+              "Epic",
+              "Rare"
+            ]
+          },
+          "rosterSourceStatus": {
+            "type": "string"
+          },
+          "slug": {
+            "type": "string"
+          },
+          "source": {
+            "properties": {
+              "branch": {
+                "type": "string"
+              },
+              "commit": {
+                "type": "string"
+              },
+              "databaseVersion": {
+                "const": "0.5.1"
+              },
+              "dataSchemaVersion": {
+                "const": 7
+              },
+              "gameBuild": {
+                "const": "26.6.53509"
+              },
+              "localRosterSchemaVersion": {
+                "const": 3
+              },
+              "repository": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "repository",
+              "branch",
+              "commit",
+              "databaseVersion",
+              "dataSchemaVersion",
+              "localRosterSchemaVersion",
+              "gameBuild"
+            ],
+            "type": "object"
+          },
+          "statusOutputs": {
+            "items": {
+              "type": "object"
+            },
+            "type": "array"
+          },
+          "trait": {
+            "anyOf": [
+              {
+                "type": "object"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "unresolvedQuestions": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array"
+          }
+        },
+        "required": [
+          "format",
+          "contextVersion",
+          "generatedAt",
+          "source",
+          "id",
+          "slug",
+          "name",
+          "rarity",
+          "breed",
+          "officialProfileUrl",
+          "rosterSourceStatus",
+          "dataStatus",
+          "verificationBySection",
+          "affinities",
+          "command",
+          "trait",
+          "habits",
+          "abilities",
+          "outputCapabilities",
+          "modifierCapabilities",
+          "statusOutputs",
+          "periodicDamage",
+          "observationSnapshots",
+          "evidenceReferences",
+          "manualReviewReferences",
+          "unresolvedQuestions",
+          "profileCompleteness"
+        ],
+        "type": "object"
+      },
+      "type": "array"
+    },
+    "evidenceSummary": {
+      "items": {
+        "type": "object"
+      },
+      "type": "array"
+    },
+    "expectedInteractions": {
+      "items": {
+        "type": "object"
+      },
+      "type": "array"
+    },
+    "format": {
+      "const": "dragonfire-lab-project-context"
+    },
+    "formationReviewCases": {
+      "items": {
+        "$id": "formation-review-case.schema.json",
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "properties": {
+          "caseId": {
+            "type": "string"
+          },
+          "currentModeExpectedInteractions": {
+            "items": {
+              "type": "object"
+            },
+            "type": "array"
+          },
+          "expectedExclusions": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array"
+          },
+          "expectedInactiveTraits": {
+            "items": {
+              "type": "object"
+            },
+            "type": "array"
+          },
+          "formation": {
+            "type": "object"
+          },
+          "formationDragonIds": {
+            "type": "object"
+          },
+          "importantFalsePositivesToPrevent": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array"
+          },
+          "label": {
+            "type": "string"
+          },
+          "previewModeExpectedInteractions": {
+            "items": {
+              "type": "object"
+            },
+            "type": "array"
+          },
+          "relevantEvidenceIds": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array"
+          },
+          "reviewerNotes": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array"
+          },
+          "reviewStatus": {
+            "enum": [
+              "pending",
+              "confirmed",
+              "contradicted",
+              "needs-correction"
+            ]
+          }
+        },
+        "required": [
+          "caseId",
+          "label",
+          "formation",
+          "formationDragonIds",
+          "currentModeExpectedInteractions",
+          "previewModeExpectedInteractions",
+          "expectedInactiveTraits",
+          "expectedExclusions",
+          "importantFalsePositivesToPrevent",
+          "relevantEvidenceIds",
+          "reviewStatus",
+          "reviewerNotes"
+        ],
+        "type": "object"
+      },
+      "type": "array"
+    },
+    "formationRules": {
+      "type": "object"
+    },
+    "generatedAt": {
+      "type": "string"
+    },
+    "manualReviews": {
+      "items": {
+        "type": "object"
+      },
+      "type": "array"
+    },
+    "projectRules": {
+      "type": "object"
+    },
+    "rosterSummary": {
+      "type": "object"
+    },
+    "source": {
+      "properties": {
+        "branch": {
+          "type": "string"
+        },
+        "commit": {
+          "type": "string"
+        },
+        "databaseVersion": {
+          "const": "0.5.1"
+        },
+        "dataSchemaVersion": {
+          "const": 7
+        },
+        "gameBuild": {
+          "const": "26.6.53509"
+        },
+        "localRosterSchemaVersion": {
+          "const": 3
+        },
+        "repository": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "repository",
+        "branch",
+        "commit",
+        "databaseVersion",
+        "dataSchemaVersion",
+        "localRosterSchemaVersion",
+        "gameBuild"
+      ],
+      "type": "object"
+    },
+    "statDefinitions": {
+      "items": {
+        "type": "object"
+      },
+      "type": "array"
+    },
+    "statusGlossary": {
+      "items": {
+        "type": "object"
+      },
+      "type": "array"
+    },
+    "unresolvedMechanics": {
+      "items": {
+        "type": "object"
+      },
+      "type": "array"
+    }
+  },
+  "required": [
+    "format",
+    "contextVersion",
+    "generatedAt",
+    "source",
+    "projectRules",
+    "rosterSummary",
+    "dragons",
+    "statusGlossary",
+    "statDefinitions",
+    "formationRules",
+    "capabilityFramework",
+    "expectedInteractions",
+    "manualReviews",
+    "evidenceSummary",
+    "formationReviewCases",
+    "unresolvedMechanics"
+  ],
+  "type": "object"
+}

@@ -1,0 +1,61 @@
+{
+  "adjacency": {
+    "left-flank": [
+      "vanguard"
+    ],
+    "right-flank": [
+      "vanguard"
+    ],
+    "vanguard": [
+      "left-flank",
+      "right-flank"
+    ]
+  },
+  "adjacencySymmetric": true,
+  "positions": [
+    {
+      "id": "left-flank",
+      "label": "Left Flank"
+    },
+    {
+      "id": "vanguard",
+      "label": "Vanguard"
+    },
+    {
+      "id": "right-flank",
+      "label": "Right Flank"
+    }
+  ],
+  "targetingLanguageRules": [
+    {
+      "casterEligibility": "eligible-if-targeting-allows",
+      "id": "plain-ally-caster-eligible",
+      "notes": [
+        "Plain Ally/Allies may include the caster when targeting permits."
+      ],
+      "wording": "Ally / Allies"
+    },
+    {
+      "casterEligibility": "excluded",
+      "id": "other-ally-caster-excluded",
+      "notes": [
+        "Other Ally/Other Allies excludes the caster."
+      ],
+      "wording": "Other Ally / Other Allies"
+    },
+    {
+      "casterEligibility": "excluded-by-spatial-rule",
+      "id": "spatial-self-adjacency-exclusion",
+      "notes": [
+        "A caster is not adjacent to itself."
+      ],
+      "wording": "within adjacency"
+    }
+  ],
+  "thresholdRules": [
+    {
+      "description": "Above and below threshold wording is interpreted strictly until combat logs prove otherwise.",
+      "id": "strict-threshold-language"
+    }
+  ]
+}

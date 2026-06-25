@@ -1,0 +1,6035 @@
+{
+  "abilities": [
+    {
+      "abilityClass": "active",
+      "augmentations": [
+        {
+          "effectsAdded": [
+            {
+              "calculated": false,
+              "casterEligibility": "unknown",
+              "conditionalMultipliers": [
+                {
+                  "calculatedFromVerifiedMultiplier": true,
+                  "condition": {
+                    "battleContext": null,
+                    "comparison": null,
+                    "description": "Target has Panic.",
+                    "id": "target-has-panic",
+                    "kind": "target-has-status",
+                    "statusId": "panic",
+                    "subject": "target",
+                    "thresholdPercent": null,
+                    "unresolved": false
+                  },
+                  "description": "Damage is doubled when target has Panic.",
+                  "directlyVerifiedValues": [],
+                  "id": "panic-double-damage",
+                  "multiplier": 2
+                }
+              ],
+              "conditions": [],
+              "directlyVerified": true,
+              "duration": null,
+              "durationRounds": null,
+              "excludes": [],
+              "id": "infectious-wrath-physical-damage-rate",
+              "includesCaster": null,
+              "magnitude": null,
+              "notes": [],
+              "perTargetEffectCheck": null,
+              "rankedValues": [
+                {
+                  "level": 1,
+                  "unit": "percent",
+                  "value": 30
+                },
+                {
+                  "level": 2,
+                  "unit": "percent",
+                  "value": 36
+                },
+                {
+                  "level": 3,
+                  "unit": "percent",
+                  "value": 42
+                },
+                {
+                  "level": 4,
+                  "unit": "percent",
+                  "value": 51
+                },
+                {
+                  "level": 5,
+                  "unit": "percent",
+                  "value": 60
+                }
+              ],
+              "scaling": [],
+              "sourceScope": "unknown",
+              "stack": null,
+              "target": "2 Enemies",
+              "targetCount": null,
+              "targetPriority": "any-eligible",
+              "targetScope": "within-adjacency",
+              "type": "Physical Damage",
+              "unit": "rate"
+            }
+          ],
+          "evidenceIds": [
+            "seasmoke-infectious-wrath-2026-06-23"
+          ],
+          "id": "seasmoke-infectious-wrath-augmentation",
+          "minimumDragonStarRank": 6,
+          "modifiesAbilityId": "seasmoke-cleansing-wrath",
+          "rawDescription": "At 6+ Stars, successful Cleanse applies Infectious Wrath and adds scheduled Physical Damage.",
+          "schedulesAdded": [
+            {
+              "attempts": null,
+              "battleContext": "unspecified",
+              "conditions": [],
+              "effects": [
+                {
+                  "calculated": false,
+                  "casterEligibility": "unknown",
+                  "conditionalMultipliers": [],
+                  "conditions": [],
+                  "directlyVerified": true,
+                  "duration": null,
+                  "durationRounds": null,
+                  "excludes": [],
+                  "id": "infectious-wrath-stack",
+                  "includesCaster": null,
+                  "magnitude": 1,
+                  "notes": [],
+                  "perTargetEffectCheck": null,
+                  "rankedValues": [],
+                  "scaling": [],
+                  "sourceScope": "unknown",
+                  "stack": {
+                    "durationRounds": 3,
+                    "maximumStacks": 3,
+                    "refreshBehavior": "unknown",
+                    "statusId": "infectious-wrath",
+                    "untilEndOfCombat": false,
+                    "valuePerStackByHabitLevel": [
+                      {
+                        "level": 1,
+                        "unit": "percent",
+                        "value": 15
+                      },
+                      {
+                        "level": 2,
+                        "unit": "percent",
+                        "value": 18
+                      },
+                      {
+                        "level": 3,
+                        "unit": "percent",
+                        "value": 21
+                      },
+                      {
+                        "level": 4,
+                        "unit": "percent",
+                        "value": 25.5
+                      },
+                      {
+                        "level": 5,
+                        "unit": "percent",
+                        "value": 30
+                      }
+                    ],
+                    "valuePerStackFixed": null
+                  },
+                  "target": "Cleansed enemy",
+                  "targetCount": null,
+                  "targetPriority": "any-eligible",
+                  "targetScope": "any-lane",
+                  "type": "Infectious Wrath",
+                  "unit": "flat"
+                }
+              ],
+              "id": "infectious-wrath-on-cleanse",
+              "repeat": null,
+              "rounds": [],
+              "targetPriority": "any-eligible",
+              "timing": "on-successful-cleanse",
+              "triggerChanceByHabitLevel": [],
+              "triggerChanceFixed": null,
+              "triggerEvent": "on-successful-cleanse"
+            },
+            {
+              "attempts": null,
+              "battleContext": "unspecified",
+              "conditions": [],
+              "effects": [
+                {
+                  "calculated": false,
+                  "casterEligibility": "unknown",
+                  "conditionalMultipliers": [
+                    {
+                      "calculatedFromVerifiedMultiplier": true,
+                      "condition": {
+                        "battleContext": null,
+                        "comparison": null,
+                        "description": "Target has Panic.",
+                        "id": "target-has-panic",
+                        "kind": "target-has-status",
+                        "statusId": "panic",
+                        "subject": "target",
+                        "thresholdPercent": null,
+                        "unresolved": false
+                      },
+                      "description": "Damage is doubled when target has Panic.",
+                      "directlyVerifiedValues": [],
+                      "id": "panic-double-damage",
+                      "multiplier": 2
+                    }
+                  ],
+                  "conditions": [],
+                  "directlyVerified": true,
+                  "duration": null,
+                  "durationRounds": null,
+                  "excludes": [],
+                  "id": "infectious-wrath-physical-damage-rate",
+                  "includesCaster": null,
+                  "magnitude": null,
+                  "notes": [],
+                  "perTargetEffectCheck": null,
+                  "rankedValues": [
+                    {
+                      "level": 1,
+                      "unit": "percent",
+                      "value": 30
+                    },
+                    {
+                      "level": 2,
+                      "unit": "percent",
+                      "value": 36
+                    },
+                    {
+                      "level": 3,
+                      "unit": "percent",
+                      "value": 42
+                    },
+                    {
+                      "level": 4,
+                      "unit": "percent",
+                      "value": 51
+                    },
+                    {
+                      "level": 5,
+                      "unit": "percent",
+                      "value": 60
+                    }
+                  ],
+                  "scaling": [],
+                  "sourceScope": "unknown",
+                  "stack": null,
+                  "target": "2 Enemies",
+                  "targetCount": null,
+                  "targetPriority": "any-eligible",
+                  "targetScope": "within-adjacency",
+                  "type": "Physical Damage",
+                  "unit": "rate"
+                }
+              ],
+              "id": "infectious-wrath-physical-damage",
+              "repeat": null,
+              "rounds": [
+                3,
+                6,
+                9
+              ],
+              "targetPriority": "any-eligible",
+              "timing": "specific-rounds",
+              "triggerChanceByHabitLevel": [],
+              "triggerChanceFixed": null,
+              "triggerEvent": "specific-rounds"
+            }
+          ],
+          "sourceAbilityId": "seasmoke-infectious-wrath"
+        }
+      ],
+      "dragonId": "seasmoke",
+      "evidenceIds": [
+        "seasmoke-cleansing-wrath-summary-2026-06-23",
+        "seasmoke-cleansing-wrath-glossary-2026-06-23"
+      ],
+      "glossaryEntries": [
+        {
+          "definition": "Fire Damage is increased by attacker Intelligence and mitigated by target Initiative.",
+          "term": "Fire Damage"
+        },
+        {
+          "definition": "Physical Damage is increased by attacker Strength and mitigated by target Instinct.",
+          "term": "Physical Damage"
+        }
+      ],
+      "id": "seasmoke-cleansing-wrath",
+      "kind": "command",
+      "minimumDragonLevel": null,
+      "name": "Cleansing Wrath",
+      "positionRequirement": null,
+      "powerByHabitLevel": [],
+      "rawDescription": "Each Round: up to three independent 20% Cleanse attempts. Rounds 3, 6, 9: Fire Damage to one enemy in the same lane (Damage Rate: +190%).",
+      "schedules": [
+        {
+          "attempts": {
+            "attemptCount": 3,
+            "chanceByHabitLevel": [],
+            "chanceFixed": 20,
+            "independentlyRolled": true,
+            "independentlyTargeted": true
+          },
+          "battleContext": "unspecified",
+          "conditions": [],
+          "effects": [
+            {
+              "calculated": false,
+              "casterEligibility": "unknown",
+              "conditionalMultipliers": [],
+              "conditions": [],
+              "directlyVerified": true,
+              "duration": null,
+              "durationRounds": null,
+              "excludes": [],
+              "id": "cleansing-wrath-cleanse-positive-effect",
+              "includesCaster": null,
+              "magnitude": 1,
+              "notes": [],
+              "perTargetEffectCheck": null,
+              "rankedValues": [],
+              "scaling": [],
+              "sourceScope": "unknown",
+              "stack": null,
+              "target": "1 Enemy",
+              "targetCount": null,
+              "targetPriority": "any-eligible",
+              "targetScope": "any-lane",
+              "type": "Cleanse Positive",
+              "unit": "flat"
+            }
+          ],
+          "id": "cleansing-wrath-cleanse-positive",
+          "repeat": null,
+          "rounds": [],
+          "targetPriority": "any-eligible",
+          "timing": "each-round",
+          "triggerChanceByHabitLevel": [],
+          "triggerChanceFixed": null,
+          "triggerEvent": "each-round"
+        },
+        {
+          "attempts": null,
+          "battleContext": "unspecified",
+          "conditions": [],
+          "effects": [
+            {
+              "calculated": false,
+              "casterEligibility": "unknown",
+              "conditionalMultipliers": [],
+              "conditions": [],
+              "directlyVerified": true,
+              "duration": null,
+              "durationRounds": null,
+              "excludes": [],
+              "id": "cleansing-wrath-fire-damage-rate",
+              "includesCaster": null,
+              "magnitude": 190,
+              "notes": [
+                "Mitigated by target Initiative"
+              ],
+              "perTargetEffectCheck": null,
+              "rankedValues": [],
+              "scaling": [
+                "attacker Intelligence"
+              ],
+              "sourceScope": "unknown",
+              "stack": null,
+              "target": "1 Enemy",
+              "targetCount": null,
+              "targetPriority": "any-eligible",
+              "targetScope": "same-lane",
+              "type": "Fire Damage",
+              "unit": "rate"
+            }
+          ],
+          "id": "cleansing-wrath-fire-damage",
+          "repeat": null,
+          "rounds": [
+            3,
+            6,
+            9
+          ],
+          "targetPriority": "any-eligible",
+          "timing": "specific-rounds",
+          "triggerChanceByHabitLevel": [],
+          "triggerChanceFixed": null,
+          "triggerEvent": "specific-rounds"
+        }
+      ],
+      "tags": [
+        "CLEANSE_POSITIVE",
+        "FIRE_DAMAGE",
+        "SAME_LANE_TARGET"
+      ],
+      "unlockStarRank": null,
+      "unresolvedQuestions": [],
+      "verification": {
+        "capturedAt": "2026-06-23",
+        "gameVersion": "26.6.53509",
+        "reviewedManually": true,
+        "source": "Seasmoke Cleansing Wrath summary/glossary screenshots",
+        "status": "screenshot-verified"
+      }
+    },
+    {
+      "abilityClass": "passive",
+      "augmentations": [],
+      "dragonId": "seasmoke",
+      "evidenceIds": [
+        "seasmoke-champions-brilliance-2026-06-23"
+      ],
+      "glossaryEntries": [],
+      "id": "seasmoke-champions-brilliance",
+      "kind": "trait",
+      "minimumDragonLevel": 16,
+      "name": "Champion's Brilliance",
+      "positionRequirement": "vanguard",
+      "powerByHabitLevel": [],
+      "rawDescription": "At Level 16+ and deployed in the Vanguard, increase self Strength, Intelligence, and Instinct by +15. Reduce Damage Received of the Right Flank ally by 8%.",
+      "schedules": [
+        {
+          "attempts": null,
+          "battleContext": "unspecified",
+          "conditions": [],
+          "effects": [
+            {
+              "calculated": false,
+              "casterEligibility": "unknown",
+              "conditionalMultipliers": [],
+              "conditions": [],
+              "directlyVerified": true,
+              "duration": null,
+              "durationRounds": null,
+              "excludes": [],
+              "id": "seasmoke-strength-flat",
+              "includesCaster": null,
+              "magnitude": 15,
+              "notes": [],
+              "perTargetEffectCheck": null,
+              "rankedValues": [],
+              "scaling": [],
+              "sourceScope": "unknown",
+              "stack": null,
+              "target": "Self",
+              "targetCount": null,
+              "targetPriority": "any-eligible",
+              "targetScope": "self",
+              "type": "Strength Up",
+              "unit": "flat"
+            },
+            {
+              "calculated": false,
+              "casterEligibility": "unknown",
+              "conditionalMultipliers": [],
+              "conditions": [],
+              "directlyVerified": true,
+              "duration": null,
+              "durationRounds": null,
+              "excludes": [],
+              "id": "seasmoke-intelligence-flat",
+              "includesCaster": null,
+              "magnitude": 15,
+              "notes": [],
+              "perTargetEffectCheck": null,
+              "rankedValues": [],
+              "scaling": [],
+              "sourceScope": "unknown",
+              "stack": null,
+              "target": "Self",
+              "targetCount": null,
+              "targetPriority": "any-eligible",
+              "targetScope": "self",
+              "type": "Intelligence Up",
+              "unit": "flat"
+            },
+            {
+              "calculated": false,
+              "casterEligibility": "unknown",
+              "conditionalMultipliers": [],
+              "conditions": [],
+              "directlyVerified": true,
+              "duration": null,
+              "durationRounds": null,
+              "excludes": [],
+              "id": "seasmoke-instinct-flat",
+              "includesCaster": null,
+              "magnitude": 15,
+              "notes": [],
+              "perTargetEffectCheck": null,
+              "rankedValues": [],
+              "scaling": [],
+              "sourceScope": "unknown",
+              "stack": null,
+              "target": "Self",
+              "targetCount": null,
+              "targetPriority": "any-eligible",
+              "targetScope": "self",
+              "type": "Instinct Up",
+              "unit": "flat"
+            },
+            {
+              "calculated": false,
+              "casterEligibility": "unknown",
+              "conditionalMultipliers": [],
+              "conditions": [],
+              "directlyVerified": true,
+              "duration": null,
+              "durationRounds": null,
+              "excludes": [],
+              "id": "seasmoke-right-flank-dr-down",
+              "includesCaster": null,
+              "magnitude": 8,
+              "notes": [],
+              "perTargetEffectCheck": null,
+              "rankedValues": [],
+              "scaling": [],
+              "sourceScope": "unknown",
+              "stack": null,
+              "target": "Right Flank ally",
+              "targetCount": null,
+              "targetPriority": "any-eligible",
+              "targetScope": "right-flank",
+              "type": "Damage Received Down",
+              "unit": "percent"
+            }
+          ],
+          "id": "champions-brilliance-passive",
+          "repeat": null,
+          "rounds": [],
+          "targetPriority": "any-eligible",
+          "timing": "passive",
+          "triggerChanceByHabitLevel": [],
+          "triggerChanceFixed": null,
+          "triggerEvent": "passive"
+        }
+      ],
+      "tags": [
+        "VANGUARD_REQUIRED",
+        "STRENGTH_UP",
+        "INSTINCT_UP",
+        "DAMAGE_RECEIVED_DOWN"
+      ],
+      "unlockStarRank": 1,
+      "unresolvedQuestions": [],
+      "verification": {
+        "capturedAt": "2026-06-23",
+        "gameVersion": "26.6.53509",
+        "reviewedManually": true,
+        "source": "Seasmoke Champion's Brilliance screenshot",
+        "status": "screenshot-verified"
+      }
+    },
+    {
+      "abilityClass": "passive",
+      "augmentations": [],
+      "dragonId": "seasmoke",
+      "evidenceIds": [
+        "seasmoke-clever-maneuver-2026-06-23"
+      ],
+      "glossaryEntries": [],
+      "id": "seasmoke-clever-maneuver",
+      "kind": "habit",
+      "minimumDragonLevel": null,
+      "name": "Clever Maneuver",
+      "positionRequirement": null,
+      "powerByHabitLevel": [
+        {
+          "level": 1,
+          "unit": "power",
+          "value": 420
+        },
+        {
+          "level": 2,
+          "unit": "power",
+          "value": 920
+        },
+        {
+          "level": 3,
+          "unit": "power",
+          "value": 1500
+        },
+        {
+          "level": 4,
+          "unit": "power",
+          "value": 2200
+        },
+        {
+          "level": 5,
+          "unit": "power",
+          "value": 3100
+        }
+      ],
+      "rawDescription": "Start of Combat: Increase Intelligence and Initiative of the ally with highest Intelligence until end of combat.",
+      "schedules": [
+        {
+          "attempts": null,
+          "battleContext": "unspecified",
+          "conditions": [],
+          "effects": [
+            {
+              "calculated": false,
+              "casterEligibility": "eligible-if-targeting-allows",
+              "conditionalMultipliers": [],
+              "conditions": [],
+              "directlyVerified": true,
+              "duration": "Until end of combat",
+              "durationRounds": null,
+              "excludes": [],
+              "id": "clever-maneuver-intelligence",
+              "includesCaster": null,
+              "magnitude": null,
+              "notes": [],
+              "perTargetEffectCheck": null,
+              "rankedValues": [
+                {
+                  "level": 1,
+                  "unit": "percent",
+                  "value": 22
+                },
+                {
+                  "level": 2,
+                  "unit": "percent",
+                  "value": 26.4
+                },
+                {
+                  "level": 3,
+                  "unit": "percent",
+                  "value": 30.8
+                },
+                {
+                  "level": 4,
+                  "unit": "percent",
+                  "value": 37.4
+                },
+                {
+                  "level": 5,
+                  "unit": "percent",
+                  "value": 44
+                }
+              ],
+              "scaling": [],
+              "sourceScope": "unknown",
+              "stack": null,
+              "target": "Ally with highest Intelligence",
+              "targetCount": null,
+              "targetPriority": "highest-stat-ally",
+              "targetScope": "any-lane",
+              "type": "Intelligence Up",
+              "unit": "flat"
+            },
+            {
+              "calculated": false,
+              "casterEligibility": "eligible-if-targeting-allows",
+              "conditionalMultipliers": [],
+              "conditions": [],
+              "directlyVerified": true,
+              "duration": "Until end of combat",
+              "durationRounds": null,
+              "excludes": [],
+              "id": "clever-maneuver-initiative",
+              "includesCaster": null,
+              "magnitude": null,
+              "notes": [],
+              "perTargetEffectCheck": null,
+              "rankedValues": [
+                {
+                  "level": 1,
+                  "unit": "percent",
+                  "value": 12.5
+                },
+                {
+                  "level": 2,
+                  "unit": "percent",
+                  "value": 15
+                },
+                {
+                  "level": 3,
+                  "unit": "percent",
+                  "value": 17.5
+                },
+                {
+                  "level": 4,
+                  "unit": "percent",
+                  "value": 21.25
+                },
+                {
+                  "level": 5,
+                  "unit": "percent",
+                  "value": 25
+                }
+              ],
+              "scaling": [],
+              "sourceScope": "unknown",
+              "stack": null,
+              "target": "Ally with highest Intelligence",
+              "targetCount": null,
+              "targetPriority": "highest-stat-ally",
+              "targetScope": "any-lane",
+              "type": "Initiative Up",
+              "unit": "percent"
+            }
+          ],
+          "id": "clever-maneuver-start-combat",
+          "repeat": null,
+          "rounds": [],
+          "targetPriority": "highest-stat-ally",
+          "timing": "start-of-combat",
+          "triggerChanceByHabitLevel": [],
+          "triggerChanceFixed": null,
+          "triggerEvent": "start-of-combat"
+        }
+      ],
+      "tags": [
+        "BUFF_ALLIES",
+        "BUFF_INTELLIGENCE",
+        "BUFF_INITIATIVE"
+      ],
+      "unlockStarRank": 2,
+      "unresolvedQuestions": [],
+      "verification": {
+        "capturedAt": "2026-06-23",
+        "gameVersion": "26.6.53509",
+        "reviewedManually": true,
+        "source": "Seasmoke Clever Maneuver screenshot",
+        "status": "screenshot-verified"
+      }
+    },
+    {
+      "abilityClass": "passive",
+      "augmentations": [],
+      "dragonId": "seasmoke",
+      "evidenceIds": [
+        "seasmoke-winds-favor-2026-06-23"
+      ],
+      "glossaryEntries": [],
+      "id": "seasmoke-winds-favor",
+      "kind": "habit",
+      "minimumDragonLevel": null,
+      "name": "Wind's Favor",
+      "positionRequirement": null,
+      "powerByHabitLevel": [
+        {
+          "level": 1,
+          "unit": "power",
+          "value": 420
+        },
+        {
+          "level": 2,
+          "unit": "power",
+          "value": 920
+        },
+        {
+          "level": 3,
+          "unit": "power",
+          "value": 1500
+        },
+        {
+          "level": 4,
+          "unit": "power",
+          "value": 2200
+        },
+        {
+          "level": 5,
+          "unit": "power",
+          "value": 3100
+        }
+      ],
+      "rawDescription": "Start of Combat: Increase Initiative of three Allies in any lane until end of combat, enhanced by Initiative.",
+      "schedules": [
+        {
+          "attempts": null,
+          "battleContext": "unspecified",
+          "conditions": [],
+          "effects": [
+            {
+              "calculated": false,
+              "casterEligibility": "included",
+              "conditionalMultipliers": [],
+              "conditions": [],
+              "directlyVerified": true,
+              "duration": "Until end of combat",
+              "durationRounds": null,
+              "excludes": [],
+              "id": "winds-favor-initiative",
+              "includesCaster": true,
+              "magnitude": null,
+              "notes": [
+                "Exact 3 Allies targeting is normalized to all three friendly dragons and includes the caster."
+              ],
+              "perTargetEffectCheck": null,
+              "rankedValues": [
+                {
+                  "level": 1,
+                  "unit": "percent",
+                  "value": 12.5
+                },
+                {
+                  "level": 2,
+                  "unit": "percent",
+                  "value": 15
+                },
+                {
+                  "level": 3,
+                  "unit": "percent",
+                  "value": 17.5
+                },
+                {
+                  "level": 4,
+                  "unit": "percent",
+                  "value": 21.25
+                },
+                {
+                  "level": 5,
+                  "unit": "percent",
+                  "value": 25
+                }
+              ],
+              "scaling": [
+                "Initiative"
+              ],
+              "sourceScope": "unknown",
+              "stack": null,
+              "target": "3 Allies",
+              "targetCount": 3,
+              "targetPriority": "any-eligible",
+              "targetScope": "any-lane",
+              "type": "Initiative Up",
+              "unit": "percent"
+            }
+          ],
+          "id": "winds-favor-start-combat",
+          "repeat": null,
+          "rounds": [],
+          "targetPriority": "any-eligible",
+          "timing": "start-of-combat",
+          "triggerChanceByHabitLevel": [],
+          "triggerChanceFixed": null,
+          "triggerEvent": "start-of-combat"
+        }
+      ],
+      "tags": [
+        "BUFF_ALLIES",
+        "BUFF_INITIATIVE"
+      ],
+      "unlockStarRank": 4,
+      "unresolvedQuestions": [
+        "Exact enhanced-by-Initiative formula."
+      ],
+      "verification": {
+        "capturedAt": "2026-06-23",
+        "gameVersion": "26.6.53509",
+        "reviewedManually": true,
+        "source": "Seasmoke Wind's Favor screenshot",
+        "status": "screenshot-verified"
+      }
+    },
+    {
+      "abilityClass": "passive",
+      "augmentations": [],
+      "dragonId": "seasmoke",
+      "evidenceIds": [
+        "seasmoke-infectious-wrath-2026-06-23"
+      ],
+      "glossaryEntries": [],
+      "id": "seasmoke-infectious-wrath",
+      "kind": "habit",
+      "minimumDragonLevel": null,
+      "name": "Infectious Wrath",
+      "positionRequirement": null,
+      "powerByHabitLevel": [
+        {
+          "level": 1,
+          "unit": "power",
+          "value": 420
+        },
+        {
+          "level": 2,
+          "unit": "power",
+          "value": 920
+        },
+        {
+          "level": 3,
+          "unit": "power",
+          "value": 1500
+        },
+        {
+          "level": 4,
+          "unit": "power",
+          "value": 2200
+        },
+        {
+          "level": 5,
+          "unit": "power",
+          "value": 3100
+        }
+      ],
+      "rawDescription": "Augments Cleansing Wrath with Infectious Wrath stacks and Panic-conditional Physical Damage.",
+      "schedules": [
+        {
+          "attempts": null,
+          "battleContext": "unspecified",
+          "conditions": [],
+          "effects": [
+            {
+              "calculated": false,
+              "casterEligibility": "unknown",
+              "conditionalMultipliers": [
+                {
+                  "calculatedFromVerifiedMultiplier": true,
+                  "condition": {
+                    "battleContext": null,
+                    "comparison": null,
+                    "description": "Target has Panic.",
+                    "id": "target-has-panic",
+                    "kind": "target-has-status",
+                    "statusId": "panic",
+                    "subject": "target",
+                    "thresholdPercent": null,
+                    "unresolved": false
+                  },
+                  "description": "Damage is doubled when target has Panic.",
+                  "directlyVerifiedValues": [],
+                  "id": "panic-double-damage",
+                  "multiplier": 2
+                }
+              ],
+              "conditions": [],
+              "directlyVerified": true,
+              "duration": null,
+              "durationRounds": null,
+              "excludes": [],
+              "id": "infectious-wrath-physical-damage-rate",
+              "includesCaster": null,
+              "magnitude": null,
+              "notes": [],
+              "perTargetEffectCheck": null,
+              "rankedValues": [
+                {
+                  "level": 1,
+                  "unit": "percent",
+                  "value": 30
+                },
+                {
+                  "level": 2,
+                  "unit": "percent",
+                  "value": 36
+                },
+                {
+                  "level": 3,
+                  "unit": "percent",
+                  "value": 42
+                },
+                {
+                  "level": 4,
+                  "unit": "percent",
+                  "value": 51
+                },
+                {
+                  "level": 5,
+                  "unit": "percent",
+                  "value": 60
+                }
+              ],
+              "scaling": [],
+              "sourceScope": "unknown",
+              "stack": null,
+              "target": "2 Enemies",
+              "targetCount": null,
+              "targetPriority": "any-eligible",
+              "targetScope": "within-adjacency",
+              "type": "Physical Damage",
+              "unit": "rate"
+            }
+          ],
+          "id": "infectious-wrath-physical-damage",
+          "repeat": null,
+          "rounds": [
+            3,
+            6,
+            9
+          ],
+          "targetPriority": "any-eligible",
+          "timing": "specific-rounds",
+          "triggerChanceByHabitLevel": [],
+          "triggerChanceFixed": null,
+          "triggerEvent": "specific-rounds"
+        }
+      ],
+      "tags": [
+        "COMMAND_AUGMENTATION",
+        "INFECTIOUS_WRATH",
+        "PHYSICAL_DAMAGE",
+        "PANIC"
+      ],
+      "unlockStarRank": 6,
+      "unresolvedQuestions": [],
+      "verification": {
+        "capturedAt": "2026-06-23",
+        "gameVersion": "26.6.53509",
+        "reviewedManually": true,
+        "source": "Seasmoke Infectious Wrath screenshot",
+        "status": "screenshot-verified"
+      }
+    },
+    {
+      "abilityClass": "passive",
+      "augmentations": [],
+      "dragonId": "seasmoke",
+      "evidenceIds": [
+        "seasmoke-cunning-ferocity-2026-06-23"
+      ],
+      "glossaryEntries": [],
+      "id": "seasmoke-cunning-ferocity",
+      "kind": "habit",
+      "minimumDragonLevel": null,
+      "name": "Cunning Ferocity",
+      "positionRequirement": null,
+      "powerByHabitLevel": [
+        {
+          "level": 1,
+          "unit": "power",
+          "value": 420
+        },
+        {
+          "level": 2,
+          "unit": "power",
+          "value": 920
+        },
+        {
+          "level": 3,
+          "unit": "power",
+          "value": 1500
+        },
+        {
+          "level": 4,
+          "unit": "power",
+          "value": 2200
+        },
+        {
+          "level": 5,
+          "unit": "power",
+          "value": 3100
+        }
+      ],
+      "rawDescription": "Start of Combat: Increase Intelligence and Fire Damage Dealt of two Allies within adjacency until end of combat.",
+      "schedules": [
+        {
+          "attempts": null,
+          "battleContext": "unspecified",
+          "conditions": [],
+          "effects": [
+            {
+              "calculated": false,
+              "casterEligibility": "eligible-if-targeting-allows",
+              "conditionalMultipliers": [],
+              "conditions": [],
+              "directlyVerified": true,
+              "duration": "Until end of combat",
+              "durationRounds": null,
+              "excludes": [],
+              "id": "cunning-ferocity-intelligence",
+              "includesCaster": null,
+              "magnitude": null,
+              "notes": [],
+              "perTargetEffectCheck": null,
+              "rankedValues": [
+                {
+                  "level": 1,
+                  "unit": "percent",
+                  "value": 7.5
+                },
+                {
+                  "level": 2,
+                  "unit": "percent",
+                  "value": 9
+                },
+                {
+                  "level": 3,
+                  "unit": "percent",
+                  "value": 10.5
+                },
+                {
+                  "level": 4,
+                  "unit": "percent",
+                  "value": 12.75
+                },
+                {
+                  "level": 5,
+                  "unit": "percent",
+                  "value": 15
+                }
+              ],
+              "scaling": [
+                "Instinct"
+              ],
+              "sourceScope": "unknown",
+              "stack": null,
+              "target": "2 Allies",
+              "targetCount": null,
+              "targetPriority": "any-eligible",
+              "targetScope": "within-adjacency",
+              "type": "Intelligence Up",
+              "unit": "percent"
+            },
+            {
+              "calculated": false,
+              "casterEligibility": "eligible-if-targeting-allows",
+              "conditionalMultipliers": [],
+              "conditions": [],
+              "directlyVerified": true,
+              "duration": "Until end of combat",
+              "durationRounds": null,
+              "excludes": [],
+              "id": "cunning-ferocity-fire",
+              "includesCaster": null,
+              "magnitude": null,
+              "notes": [],
+              "perTargetEffectCheck": null,
+              "rankedValues": [
+                {
+                  "level": 1,
+                  "unit": "percent",
+                  "value": 5
+                },
+                {
+                  "level": 2,
+                  "unit": "percent",
+                  "value": 6
+                },
+                {
+                  "level": 3,
+                  "unit": "percent",
+                  "value": 7
+                },
+                {
+                  "level": 4,
+                  "unit": "percent",
+                  "value": 8.5
+                },
+                {
+                  "level": 5,
+                  "unit": "percent",
+                  "value": 10
+                }
+              ],
+              "scaling": [],
+              "sourceScope": "unknown",
+              "stack": null,
+              "target": "2 Allies",
+              "targetCount": null,
+              "targetPriority": "any-eligible",
+              "targetScope": "within-adjacency",
+              "type": "Fire Damage Dealt Up",
+              "unit": "percent"
+            }
+          ],
+          "id": "cunning-ferocity-start-combat",
+          "repeat": null,
+          "rounds": [],
+          "targetPriority": "any-eligible",
+          "timing": "start-of-combat",
+          "triggerChanceByHabitLevel": [],
+          "triggerChanceFixed": null,
+          "triggerEvent": "start-of-combat"
+        }
+      ],
+      "tags": [
+        "FIRE_DAMAGE_UP",
+        "BUFF_ALLIES",
+        "ADJACENT_TARGET"
+      ],
+      "unlockStarRank": 8,
+      "unresolvedQuestions": [],
+      "verification": {
+        "capturedAt": "2026-06-23",
+        "gameVersion": "26.6.53509",
+        "reviewedManually": true,
+        "source": "Seasmoke Cunning Ferocity screenshot",
+        "status": "screenshot-verified"
+      }
+    },
+    {
+      "abilityClass": "passive",
+      "augmentations": [],
+      "dragonId": "seasmoke",
+      "evidenceIds": [
+        "seasmoke-loyal-bond-2026-06-23"
+      ],
+      "glossaryEntries": [],
+      "id": "seasmoke-loyal-bond",
+      "kind": "habit",
+      "minimumDragonLevel": null,
+      "name": "Loyal Bond",
+      "positionRequirement": null,
+      "powerByHabitLevel": [
+        {
+          "level": 1,
+          "unit": "power",
+          "value": 430
+        },
+        {
+          "level": 2,
+          "unit": "power",
+          "value": 1000
+        },
+        {
+          "level": 3,
+          "unit": "power",
+          "value": 1700
+        },
+        {
+          "level": 4,
+          "unit": "power",
+          "value": 2700
+        },
+        {
+          "level": 5,
+          "unit": "power",
+          "value": 4000
+        }
+      ],
+      "rawDescription": "Each Round: grant Advantage above 50% Troop Capacity or Resistance below 50% Troop Capacity to 2 other Allies.",
+      "schedules": [
+        {
+          "attempts": null,
+          "battleContext": "unspecified",
+          "conditions": [
+            {
+              "battleContext": null,
+              "comparison": "above",
+              "description": "Target is above 50% Troop Capacity.",
+              "id": "target-above-50-troop-capacity",
+              "kind": "target-above-troop-capacity-threshold",
+              "statusId": null,
+              "subject": "target",
+              "thresholdPercent": 50,
+              "unresolved": false
+            }
+          ],
+          "effects": [
+            {
+              "calculated": false,
+              "casterEligibility": "excluded",
+              "conditionalMultipliers": [],
+              "conditions": [
+                {
+                  "battleContext": null,
+                  "comparison": "above",
+                  "description": "Target is above 50% Troop Capacity.",
+                  "id": "target-above-50-troop-capacity",
+                  "kind": "target-above-troop-capacity-threshold",
+                  "statusId": null,
+                  "subject": "target",
+                  "thresholdPercent": 50,
+                  "unresolved": false
+                }
+              ],
+              "directlyVerified": true,
+              "duration": null,
+              "durationRounds": 2,
+              "excludes": [],
+              "id": "loyal-bond-advantage-effect",
+              "includesCaster": null,
+              "magnitude": 20,
+              "notes": [],
+              "perTargetEffectCheck": null,
+              "rankedValues": [],
+              "scaling": [],
+              "sourceScope": "unknown",
+              "stack": null,
+              "target": "2 other Allies",
+              "targetCount": null,
+              "targetPriority": "any-eligible",
+              "targetScope": "any-lane",
+              "type": "Advantage",
+              "unit": "percent"
+            }
+          ],
+          "id": "loyal-bond-advantage",
+          "repeat": null,
+          "rounds": [],
+          "targetPriority": "any-eligible",
+          "timing": "each-round",
+          "triggerChanceByHabitLevel": [
+            {
+              "level": 1,
+              "unit": "percent",
+              "value": 10
+            },
+            {
+              "level": 2,
+              "unit": "percent",
+              "value": 13
+            },
+            {
+              "level": 3,
+              "unit": "percent",
+              "value": 16
+            },
+            {
+              "level": 4,
+              "unit": "percent",
+              "value": 20
+            },
+            {
+              "level": 5,
+              "unit": "percent",
+              "value": 25
+            }
+          ],
+          "triggerChanceFixed": null,
+          "triggerEvent": "each-round"
+        },
+        {
+          "attempts": null,
+          "battleContext": "unspecified",
+          "conditions": [
+            {
+              "battleContext": null,
+              "comparison": "below",
+              "description": "Target is below 50% Troop Capacity.",
+              "id": "target-below-50-troop-capacity",
+              "kind": "target-below-troop-capacity-threshold",
+              "statusId": null,
+              "subject": "target",
+              "thresholdPercent": 50,
+              "unresolved": false
+            }
+          ],
+          "effects": [
+            {
+              "calculated": false,
+              "casterEligibility": "excluded",
+              "conditionalMultipliers": [],
+              "conditions": [
+                {
+                  "battleContext": null,
+                  "comparison": "below",
+                  "description": "Target is below 50% Troop Capacity.",
+                  "id": "target-below-50-troop-capacity",
+                  "kind": "target-below-troop-capacity-threshold",
+                  "statusId": null,
+                  "subject": "target",
+                  "thresholdPercent": 50,
+                  "unresolved": false
+                }
+              ],
+              "directlyVerified": true,
+              "duration": null,
+              "durationRounds": 2,
+              "excludes": [],
+              "id": "loyal-bond-resistance-effect",
+              "includesCaster": null,
+              "magnitude": 20,
+              "notes": [
+                "Exact Resistance semantics unresolved."
+              ],
+              "perTargetEffectCheck": null,
+              "rankedValues": [],
+              "scaling": [],
+              "sourceScope": "unknown",
+              "stack": null,
+              "target": "2 other Allies",
+              "targetCount": null,
+              "targetPriority": "any-eligible",
+              "targetScope": "any-lane",
+              "type": "Resistance",
+              "unit": "percent"
+            }
+          ],
+          "id": "loyal-bond-resistance",
+          "repeat": null,
+          "rounds": [],
+          "targetPriority": "any-eligible",
+          "timing": "each-round",
+          "triggerChanceByHabitLevel": [
+            {
+              "level": 1,
+              "unit": "percent",
+              "value": 10
+            },
+            {
+              "level": 2,
+              "unit": "percent",
+              "value": 13
+            },
+            {
+              "level": 3,
+              "unit": "percent",
+              "value": 16
+            },
+            {
+              "level": 4,
+              "unit": "percent",
+              "value": 20
+            },
+            {
+              "level": 5,
+              "unit": "percent",
+              "value": 25
+            }
+          ],
+          "triggerChanceFixed": null,
+          "triggerEvent": "each-round"
+        }
+      ],
+      "tags": [
+        "ADVANTAGE",
+        "RESISTANCE",
+        "OTHER_ALLIES_TARGET"
+      ],
+      "unlockStarRank": 10,
+      "unresolvedQuestions": [
+        "Exactly 50% Troop Capacity boundary.",
+        "Resistance detailed meaning."
+      ],
+      "verification": {
+        "capturedAt": "2026-06-23",
+        "gameVersion": "26.6.53509",
+        "reviewedManually": true,
+        "source": "Seasmoke Loyal Bond screenshot",
+        "status": "screenshot-verified"
+      }
+    }
+  ],
+  "abilitySchedules": [
+    {
+      "abilityId": "seasmoke-cleansing-wrath",
+      "abilityName": "Cleansing Wrath",
+      "schedule": {
+        "attempts": {
+          "attemptCount": 3,
+          "chanceByHabitLevel": [],
+          "chanceFixed": 20,
+          "independentlyRolled": true,
+          "independentlyTargeted": true
+        },
+        "battleContext": "unspecified",
+        "conditions": [],
+        "effects": [
+          {
+            "calculated": false,
+            "casterEligibility": "unknown",
+            "conditionalMultipliers": [],
+            "conditions": [],
+            "directlyVerified": true,
+            "duration": null,
+            "durationRounds": null,
+            "excludes": [],
+            "id": "cleansing-wrath-cleanse-positive-effect",
+            "includesCaster": null,
+            "magnitude": 1,
+            "notes": [],
+            "perTargetEffectCheck": null,
+            "rankedValues": [],
+            "scaling": [],
+            "sourceScope": "unknown",
+            "stack": null,
+            "target": "1 Enemy",
+            "targetCount": null,
+            "targetPriority": "any-eligible",
+            "targetScope": "any-lane",
+            "type": "Cleanse Positive",
+            "unit": "flat"
+          }
+        ],
+        "id": "cleansing-wrath-cleanse-positive",
+        "repeat": null,
+        "rounds": [],
+        "targetPriority": "any-eligible",
+        "timing": "each-round",
+        "triggerChanceByHabitLevel": [],
+        "triggerChanceFixed": null,
+        "triggerEvent": "each-round"
+      }
+    },
+    {
+      "abilityId": "seasmoke-cleansing-wrath",
+      "abilityName": "Cleansing Wrath",
+      "schedule": {
+        "attempts": null,
+        "battleContext": "unspecified",
+        "conditions": [],
+        "effects": [
+          {
+            "calculated": false,
+            "casterEligibility": "unknown",
+            "conditionalMultipliers": [],
+            "conditions": [],
+            "directlyVerified": true,
+            "duration": null,
+            "durationRounds": null,
+            "excludes": [],
+            "id": "cleansing-wrath-fire-damage-rate",
+            "includesCaster": null,
+            "magnitude": 190,
+            "notes": [
+              "Mitigated by target Initiative"
+            ],
+            "perTargetEffectCheck": null,
+            "rankedValues": [],
+            "scaling": [
+              "attacker Intelligence"
+            ],
+            "sourceScope": "unknown",
+            "stack": null,
+            "target": "1 Enemy",
+            "targetCount": null,
+            "targetPriority": "any-eligible",
+            "targetScope": "same-lane",
+            "type": "Fire Damage",
+            "unit": "rate"
+          }
+        ],
+        "id": "cleansing-wrath-fire-damage",
+        "repeat": null,
+        "rounds": [
+          3,
+          6,
+          9
+        ],
+        "targetPriority": "any-eligible",
+        "timing": "specific-rounds",
+        "triggerChanceByHabitLevel": [],
+        "triggerChanceFixed": null,
+        "triggerEvent": "specific-rounds"
+      }
+    },
+    {
+      "abilityId": "seasmoke-champions-brilliance",
+      "abilityName": "Champion's Brilliance",
+      "schedule": {
+        "attempts": null,
+        "battleContext": "unspecified",
+        "conditions": [],
+        "effects": [
+          {
+            "calculated": false,
+            "casterEligibility": "unknown",
+            "conditionalMultipliers": [],
+            "conditions": [],
+            "directlyVerified": true,
+            "duration": null,
+            "durationRounds": null,
+            "excludes": [],
+            "id": "seasmoke-strength-flat",
+            "includesCaster": null,
+            "magnitude": 15,
+            "notes": [],
+            "perTargetEffectCheck": null,
+            "rankedValues": [],
+            "scaling": [],
+            "sourceScope": "unknown",
+            "stack": null,
+            "target": "Self",
+            "targetCount": null,
+            "targetPriority": "any-eligible",
+            "targetScope": "self",
+            "type": "Strength Up",
+            "unit": "flat"
+          },
+          {
+            "calculated": false,
+            "casterEligibility": "unknown",
+            "conditionalMultipliers": [],
+            "conditions": [],
+            "directlyVerified": true,
+            "duration": null,
+            "durationRounds": null,
+            "excludes": [],
+            "id": "seasmoke-intelligence-flat",
+            "includesCaster": null,
+            "magnitude": 15,
+            "notes": [],
+            "perTargetEffectCheck": null,
+            "rankedValues": [],
+            "scaling": [],
+            "sourceScope": "unknown",
+            "stack": null,
+            "target": "Self",
+            "targetCount": null,
+            "targetPriority": "any-eligible",
+            "targetScope": "self",
+            "type": "Intelligence Up",
+            "unit": "flat"
+          },
+          {
+            "calculated": false,
+            "casterEligibility": "unknown",
+            "conditionalMultipliers": [],
+            "conditions": [],
+            "directlyVerified": true,
+            "duration": null,
+            "durationRounds": null,
+            "excludes": [],
+            "id": "seasmoke-instinct-flat",
+            "includesCaster": null,
+            "magnitude": 15,
+            "notes": [],
+            "perTargetEffectCheck": null,
+            "rankedValues": [],
+            "scaling": [],
+            "sourceScope": "unknown",
+            "stack": null,
+            "target": "Self",
+            "targetCount": null,
+            "targetPriority": "any-eligible",
+            "targetScope": "self",
+            "type": "Instinct Up",
+            "unit": "flat"
+          },
+          {
+            "calculated": false,
+            "casterEligibility": "unknown",
+            "conditionalMultipliers": [],
+            "conditions": [],
+            "directlyVerified": true,
+            "duration": null,
+            "durationRounds": null,
+            "excludes": [],
+            "id": "seasmoke-right-flank-dr-down",
+            "includesCaster": null,
+            "magnitude": 8,
+            "notes": [],
+            "perTargetEffectCheck": null,
+            "rankedValues": [],
+            "scaling": [],
+            "sourceScope": "unknown",
+            "stack": null,
+            "target": "Right Flank ally",
+            "targetCount": null,
+            "targetPriority": "any-eligible",
+            "targetScope": "right-flank",
+            "type": "Damage Received Down",
+            "unit": "percent"
+          }
+        ],
+        "id": "champions-brilliance-passive",
+        "repeat": null,
+        "rounds": [],
+        "targetPriority": "any-eligible",
+        "timing": "passive",
+        "triggerChanceByHabitLevel": [],
+        "triggerChanceFixed": null,
+        "triggerEvent": "passive"
+      }
+    },
+    {
+      "abilityId": "seasmoke-clever-maneuver",
+      "abilityName": "Clever Maneuver",
+      "schedule": {
+        "attempts": null,
+        "battleContext": "unspecified",
+        "conditions": [],
+        "effects": [
+          {
+            "calculated": false,
+            "casterEligibility": "eligible-if-targeting-allows",
+            "conditionalMultipliers": [],
+            "conditions": [],
+            "directlyVerified": true,
+            "duration": "Until end of combat",
+            "durationRounds": null,
+            "excludes": [],
+            "id": "clever-maneuver-intelligence",
+            "includesCaster": null,
+            "magnitude": null,
+            "notes": [],
+            "perTargetEffectCheck": null,
+            "rankedValues": [
+              {
+                "level": 1,
+                "unit": "percent",
+                "value": 22
+              },
+              {
+                "level": 2,
+                "unit": "percent",
+                "value": 26.4
+              },
+              {
+                "level": 3,
+                "unit": "percent",
+                "value": 30.8
+              },
+              {
+                "level": 4,
+                "unit": "percent",
+                "value": 37.4
+              },
+              {
+                "level": 5,
+                "unit": "percent",
+                "value": 44
+              }
+            ],
+            "scaling": [],
+            "sourceScope": "unknown",
+            "stack": null,
+            "target": "Ally with highest Intelligence",
+            "targetCount": null,
+            "targetPriority": "highest-stat-ally",
+            "targetScope": "any-lane",
+            "type": "Intelligence Up",
+            "unit": "flat"
+          },
+          {
+            "calculated": false,
+            "casterEligibility": "eligible-if-targeting-allows",
+            "conditionalMultipliers": [],
+            "conditions": [],
+            "directlyVerified": true,
+            "duration": "Until end of combat",
+            "durationRounds": null,
+            "excludes": [],
+            "id": "clever-maneuver-initiative",
+            "includesCaster": null,
+            "magnitude": null,
+            "notes": [],
+            "perTargetEffectCheck": null,
+            "rankedValues": [
+              {
+                "level": 1,
+                "unit": "percent",
+                "value": 12.5
+              },
+              {
+                "level": 2,
+                "unit": "percent",
+                "value": 15
+              },
+              {
+                "level": 3,
+                "unit": "percent",
+                "value": 17.5
+              },
+              {
+                "level": 4,
+                "unit": "percent",
+                "value": 21.25
+              },
+              {
+                "level": 5,
+                "unit": "percent",
+                "value": 25
+              }
+            ],
+            "scaling": [],
+            "sourceScope": "unknown",
+            "stack": null,
+            "target": "Ally with highest Intelligence",
+            "targetCount": null,
+            "targetPriority": "highest-stat-ally",
+            "targetScope": "any-lane",
+            "type": "Initiative Up",
+            "unit": "percent"
+          }
+        ],
+        "id": "clever-maneuver-start-combat",
+        "repeat": null,
+        "rounds": [],
+        "targetPriority": "highest-stat-ally",
+        "timing": "start-of-combat",
+        "triggerChanceByHabitLevel": [],
+        "triggerChanceFixed": null,
+        "triggerEvent": "start-of-combat"
+      }
+    },
+    {
+      "abilityId": "seasmoke-winds-favor",
+      "abilityName": "Wind's Favor",
+      "schedule": {
+        "attempts": null,
+        "battleContext": "unspecified",
+        "conditions": [],
+        "effects": [
+          {
+            "calculated": false,
+            "casterEligibility": "included",
+            "conditionalMultipliers": [],
+            "conditions": [],
+            "directlyVerified": true,
+            "duration": "Until end of combat",
+            "durationRounds": null,
+            "excludes": [],
+            "id": "winds-favor-initiative",
+            "includesCaster": true,
+            "magnitude": null,
+            "notes": [
+              "Exact 3 Allies targeting is normalized to all three friendly dragons and includes the caster."
+            ],
+            "perTargetEffectCheck": null,
+            "rankedValues": [
+              {
+                "level": 1,
+                "unit": "percent",
+                "value": 12.5
+              },
+              {
+                "level": 2,
+                "unit": "percent",
+                "value": 15
+              },
+              {
+                "level": 3,
+                "unit": "percent",
+                "value": 17.5
+              },
+              {
+                "level": 4,
+                "unit": "percent",
+                "value": 21.25
+              },
+              {
+                "level": 5,
+                "unit": "percent",
+                "value": 25
+              }
+            ],
+            "scaling": [
+              "Initiative"
+            ],
+            "sourceScope": "unknown",
+            "stack": null,
+            "target": "3 Allies",
+            "targetCount": 3,
+            "targetPriority": "any-eligible",
+            "targetScope": "any-lane",
+            "type": "Initiative Up",
+            "unit": "percent"
+          }
+        ],
+        "id": "winds-favor-start-combat",
+        "repeat": null,
+        "rounds": [],
+        "targetPriority": "any-eligible",
+        "timing": "start-of-combat",
+        "triggerChanceByHabitLevel": [],
+        "triggerChanceFixed": null,
+        "triggerEvent": "start-of-combat"
+      }
+    },
+    {
+      "abilityId": "seasmoke-infectious-wrath",
+      "abilityName": "Infectious Wrath",
+      "schedule": {
+        "attempts": null,
+        "battleContext": "unspecified",
+        "conditions": [],
+        "effects": [
+          {
+            "calculated": false,
+            "casterEligibility": "unknown",
+            "conditionalMultipliers": [
+              {
+                "calculatedFromVerifiedMultiplier": true,
+                "condition": {
+                  "battleContext": null,
+                  "comparison": null,
+                  "description": "Target has Panic.",
+                  "id": "target-has-panic",
+                  "kind": "target-has-status",
+                  "statusId": "panic",
+                  "subject": "target",
+                  "thresholdPercent": null,
+                  "unresolved": false
+                },
+                "description": "Damage is doubled when target has Panic.",
+                "directlyVerifiedValues": [],
+                "id": "panic-double-damage",
+                "multiplier": 2
+              }
+            ],
+            "conditions": [],
+            "directlyVerified": true,
+            "duration": null,
+            "durationRounds": null,
+            "excludes": [],
+            "id": "infectious-wrath-physical-damage-rate",
+            "includesCaster": null,
+            "magnitude": null,
+            "notes": [],
+            "perTargetEffectCheck": null,
+            "rankedValues": [
+              {
+                "level": 1,
+                "unit": "percent",
+                "value": 30
+              },
+              {
+                "level": 2,
+                "unit": "percent",
+                "value": 36
+              },
+              {
+                "level": 3,
+                "unit": "percent",
+                "value": 42
+              },
+              {
+                "level": 4,
+                "unit": "percent",
+                "value": 51
+              },
+              {
+                "level": 5,
+                "unit": "percent",
+                "value": 60
+              }
+            ],
+            "scaling": [],
+            "sourceScope": "unknown",
+            "stack": null,
+            "target": "2 Enemies",
+            "targetCount": null,
+            "targetPriority": "any-eligible",
+            "targetScope": "within-adjacency",
+            "type": "Physical Damage",
+            "unit": "rate"
+          }
+        ],
+        "id": "infectious-wrath-physical-damage",
+        "repeat": null,
+        "rounds": [
+          3,
+          6,
+          9
+        ],
+        "targetPriority": "any-eligible",
+        "timing": "specific-rounds",
+        "triggerChanceByHabitLevel": [],
+        "triggerChanceFixed": null,
+        "triggerEvent": "specific-rounds"
+      }
+    },
+    {
+      "abilityId": "seasmoke-cunning-ferocity",
+      "abilityName": "Cunning Ferocity",
+      "schedule": {
+        "attempts": null,
+        "battleContext": "unspecified",
+        "conditions": [],
+        "effects": [
+          {
+            "calculated": false,
+            "casterEligibility": "eligible-if-targeting-allows",
+            "conditionalMultipliers": [],
+            "conditions": [],
+            "directlyVerified": true,
+            "duration": "Until end of combat",
+            "durationRounds": null,
+            "excludes": [],
+            "id": "cunning-ferocity-intelligence",
+            "includesCaster": null,
+            "magnitude": null,
+            "notes": [],
+            "perTargetEffectCheck": null,
+            "rankedValues": [
+              {
+                "level": 1,
+                "unit": "percent",
+                "value": 7.5
+              },
+              {
+                "level": 2,
+                "unit": "percent",
+                "value": 9
+              },
+              {
+                "level": 3,
+                "unit": "percent",
+                "value": 10.5
+              },
+              {
+                "level": 4,
+                "unit": "percent",
+                "value": 12.75
+              },
+              {
+                "level": 5,
+                "unit": "percent",
+                "value": 15
+              }
+            ],
+            "scaling": [
+              "Instinct"
+            ],
+            "sourceScope": "unknown",
+            "stack": null,
+            "target": "2 Allies",
+            "targetCount": null,
+            "targetPriority": "any-eligible",
+            "targetScope": "within-adjacency",
+            "type": "Intelligence Up",
+            "unit": "percent"
+          },
+          {
+            "calculated": false,
+            "casterEligibility": "eligible-if-targeting-allows",
+            "conditionalMultipliers": [],
+            "conditions": [],
+            "directlyVerified": true,
+            "duration": "Until end of combat",
+            "durationRounds": null,
+            "excludes": [],
+            "id": "cunning-ferocity-fire",
+            "includesCaster": null,
+            "magnitude": null,
+            "notes": [],
+            "perTargetEffectCheck": null,
+            "rankedValues": [
+              {
+                "level": 1,
+                "unit": "percent",
+                "value": 5
+              },
+              {
+                "level": 2,
+                "unit": "percent",
+                "value": 6
+              },
+              {
+                "level": 3,
+                "unit": "percent",
+                "value": 7
+              },
+              {
+                "level": 4,
+                "unit": "percent",
+                "value": 8.5
+              },
+              {
+                "level": 5,
+                "unit": "percent",
+                "value": 10
+              }
+            ],
+            "scaling": [],
+            "sourceScope": "unknown",
+            "stack": null,
+            "target": "2 Allies",
+            "targetCount": null,
+            "targetPriority": "any-eligible",
+            "targetScope": "within-adjacency",
+            "type": "Fire Damage Dealt Up",
+            "unit": "percent"
+          }
+        ],
+        "id": "cunning-ferocity-start-combat",
+        "repeat": null,
+        "rounds": [],
+        "targetPriority": "any-eligible",
+        "timing": "start-of-combat",
+        "triggerChanceByHabitLevel": [],
+        "triggerChanceFixed": null,
+        "triggerEvent": "start-of-combat"
+      }
+    },
+    {
+      "abilityId": "seasmoke-loyal-bond",
+      "abilityName": "Loyal Bond",
+      "schedule": {
+        "attempts": null,
+        "battleContext": "unspecified",
+        "conditions": [
+          {
+            "battleContext": null,
+            "comparison": "above",
+            "description": "Target is above 50% Troop Capacity.",
+            "id": "target-above-50-troop-capacity",
+            "kind": "target-above-troop-capacity-threshold",
+            "statusId": null,
+            "subject": "target",
+            "thresholdPercent": 50,
+            "unresolved": false
+          }
+        ],
+        "effects": [
+          {
+            "calculated": false,
+            "casterEligibility": "excluded",
+            "conditionalMultipliers": [],
+            "conditions": [
+              {
+                "battleContext": null,
+                "comparison": "above",
+                "description": "Target is above 50% Troop Capacity.",
+                "id": "target-above-50-troop-capacity",
+                "kind": "target-above-troop-capacity-threshold",
+                "statusId": null,
+                "subject": "target",
+                "thresholdPercent": 50,
+                "unresolved": false
+              }
+            ],
+            "directlyVerified": true,
+            "duration": null,
+            "durationRounds": 2,
+            "excludes": [],
+            "id": "loyal-bond-advantage-effect",
+            "includesCaster": null,
+            "magnitude": 20,
+            "notes": [],
+            "perTargetEffectCheck": null,
+            "rankedValues": [],
+            "scaling": [],
+            "sourceScope": "unknown",
+            "stack": null,
+            "target": "2 other Allies",
+            "targetCount": null,
+            "targetPriority": "any-eligible",
+            "targetScope": "any-lane",
+            "type": "Advantage",
+            "unit": "percent"
+          }
+        ],
+        "id": "loyal-bond-advantage",
+        "repeat": null,
+        "rounds": [],
+        "targetPriority": "any-eligible",
+        "timing": "each-round",
+        "triggerChanceByHabitLevel": [
+          {
+            "level": 1,
+            "unit": "percent",
+            "value": 10
+          },
+          {
+            "level": 2,
+            "unit": "percent",
+            "value": 13
+          },
+          {
+            "level": 3,
+            "unit": "percent",
+            "value": 16
+          },
+          {
+            "level": 4,
+            "unit": "percent",
+            "value": 20
+          },
+          {
+            "level": 5,
+            "unit": "percent",
+            "value": 25
+          }
+        ],
+        "triggerChanceFixed": null,
+        "triggerEvent": "each-round"
+      }
+    },
+    {
+      "abilityId": "seasmoke-loyal-bond",
+      "abilityName": "Loyal Bond",
+      "schedule": {
+        "attempts": null,
+        "battleContext": "unspecified",
+        "conditions": [
+          {
+            "battleContext": null,
+            "comparison": "below",
+            "description": "Target is below 50% Troop Capacity.",
+            "id": "target-below-50-troop-capacity",
+            "kind": "target-below-troop-capacity-threshold",
+            "statusId": null,
+            "subject": "target",
+            "thresholdPercent": 50,
+            "unresolved": false
+          }
+        ],
+        "effects": [
+          {
+            "calculated": false,
+            "casterEligibility": "excluded",
+            "conditionalMultipliers": [],
+            "conditions": [
+              {
+                "battleContext": null,
+                "comparison": "below",
+                "description": "Target is below 50% Troop Capacity.",
+                "id": "target-below-50-troop-capacity",
+                "kind": "target-below-troop-capacity-threshold",
+                "statusId": null,
+                "subject": "target",
+                "thresholdPercent": 50,
+                "unresolved": false
+              }
+            ],
+            "directlyVerified": true,
+            "duration": null,
+            "durationRounds": 2,
+            "excludes": [],
+            "id": "loyal-bond-resistance-effect",
+            "includesCaster": null,
+            "magnitude": 20,
+            "notes": [
+              "Exact Resistance semantics unresolved."
+            ],
+            "perTargetEffectCheck": null,
+            "rankedValues": [],
+            "scaling": [],
+            "sourceScope": "unknown",
+            "stack": null,
+            "target": "2 other Allies",
+            "targetCount": null,
+            "targetPriority": "any-eligible",
+            "targetScope": "any-lane",
+            "type": "Resistance",
+            "unit": "percent"
+          }
+        ],
+        "id": "loyal-bond-resistance",
+        "repeat": null,
+        "rounds": [],
+        "targetPriority": "any-eligible",
+        "timing": "each-round",
+        "triggerChanceByHabitLevel": [
+          {
+            "level": 1,
+            "unit": "percent",
+            "value": 10
+          },
+          {
+            "level": 2,
+            "unit": "percent",
+            "value": 13
+          },
+          {
+            "level": 3,
+            "unit": "percent",
+            "value": 16
+          },
+          {
+            "level": 4,
+            "unit": "percent",
+            "value": 20
+          },
+          {
+            "level": 5,
+            "unit": "percent",
+            "value": 25
+          }
+        ],
+        "triggerChanceFixed": null,
+        "triggerEvent": "each-round"
+      }
+    }
+  ],
+  "affinities": {
+    "Archers": "positive",
+    "Cavalry": "positive",
+    "Shieldbearers": "unknown",
+    "Siege": "negative",
+    "Spearmen": "unknown"
+  },
+  "attempts": [
+    {
+      "abilityId": "seasmoke-cleansing-wrath",
+      "attempts": {
+        "attemptCount": 3,
+        "chanceByHabitLevel": [],
+        "chanceFixed": 20,
+        "independentlyRolled": true,
+        "independentlyTargeted": true
+      },
+      "scheduleId": "cleansing-wrath-cleanse-positive"
+    }
+  ],
+  "availabilityRequirements": [
+    {
+      "abilityId": "seasmoke-champions-brilliance",
+      "type": "star-rank",
+      "value": 1
+    },
+    {
+      "abilityId": "seasmoke-champions-brilliance",
+      "type": "minimum-dragon-level",
+      "value": 16
+    },
+    {
+      "abilityId": "seasmoke-champions-brilliance",
+      "type": "position-requirement",
+      "value": "vanguard"
+    },
+    {
+      "abilityId": "seasmoke-clever-maneuver",
+      "type": "habit-unlock-star-rank",
+      "value": 2
+    },
+    {
+      "abilityId": "seasmoke-winds-favor",
+      "type": "habit-unlock-star-rank",
+      "value": 4
+    },
+    {
+      "abilityId": "seasmoke-infectious-wrath",
+      "type": "habit-unlock-star-rank",
+      "value": 6
+    },
+    {
+      "abilityId": "seasmoke-cunning-ferocity",
+      "type": "habit-unlock-star-rank",
+      "value": 8
+    },
+    {
+      "abilityId": "seasmoke-loyal-bond",
+      "type": "habit-unlock-star-rank",
+      "value": 10
+    }
+  ],
+  "breed": "Champion",
+  "command": {
+    "abilityClass": "active",
+    "augmentations": [
+      {
+        "effectsAdded": [
+          {
+            "calculated": false,
+            "casterEligibility": "unknown",
+            "conditionalMultipliers": [
+              {
+                "calculatedFromVerifiedMultiplier": true,
+                "condition": {
+                  "battleContext": null,
+                  "comparison": null,
+                  "description": "Target has Panic.",
+                  "id": "target-has-panic",
+                  "kind": "target-has-status",
+                  "statusId": "panic",
+                  "subject": "target",
+                  "thresholdPercent": null,
+                  "unresolved": false
+                },
+                "description": "Damage is doubled when target has Panic.",
+                "directlyVerifiedValues": [],
+                "id": "panic-double-damage",
+                "multiplier": 2
+              }
+            ],
+            "conditions": [],
+            "directlyVerified": true,
+            "duration": null,
+            "durationRounds": null,
+            "excludes": [],
+            "id": "infectious-wrath-physical-damage-rate",
+            "includesCaster": null,
+            "magnitude": null,
+            "notes": [],
+            "perTargetEffectCheck": null,
+            "rankedValues": [
+              {
+                "level": 1,
+                "unit": "percent",
+                "value": 30
+              },
+              {
+                "level": 2,
+                "unit": "percent",
+                "value": 36
+              },
+              {
+                "level": 3,
+                "unit": "percent",
+                "value": 42
+              },
+              {
+                "level": 4,
+                "unit": "percent",
+                "value": 51
+              },
+              {
+                "level": 5,
+                "unit": "percent",
+                "value": 60
+              }
+            ],
+            "scaling": [],
+            "sourceScope": "unknown",
+            "stack": null,
+            "target": "2 Enemies",
+            "targetCount": null,
+            "targetPriority": "any-eligible",
+            "targetScope": "within-adjacency",
+            "type": "Physical Damage",
+            "unit": "rate"
+          }
+        ],
+        "evidenceIds": [
+          "seasmoke-infectious-wrath-2026-06-23"
+        ],
+        "id": "seasmoke-infectious-wrath-augmentation",
+        "minimumDragonStarRank": 6,
+        "modifiesAbilityId": "seasmoke-cleansing-wrath",
+        "rawDescription": "At 6+ Stars, successful Cleanse applies Infectious Wrath and adds scheduled Physical Damage.",
+        "schedulesAdded": [
+          {
+            "attempts": null,
+            "battleContext": "unspecified",
+            "conditions": [],
+            "effects": [
+              {
+                "calculated": false,
+                "casterEligibility": "unknown",
+                "conditionalMultipliers": [],
+                "conditions": [],
+                "directlyVerified": true,
+                "duration": null,
+                "durationRounds": null,
+                "excludes": [],
+                "id": "infectious-wrath-stack",
+                "includesCaster": null,
+                "magnitude": 1,
+                "notes": [],
+                "perTargetEffectCheck": null,
+                "rankedValues": [],
+                "scaling": [],
+                "sourceScope": "unknown",
+                "stack": {
+                  "durationRounds": 3,
+                  "maximumStacks": 3,
+                  "refreshBehavior": "unknown",
+                  "statusId": "infectious-wrath",
+                  "untilEndOfCombat": false,
+                  "valuePerStackByHabitLevel": [
+                    {
+                      "level": 1,
+                      "unit": "percent",
+                      "value": 15
+                    },
+                    {
+                      "level": 2,
+                      "unit": "percent",
+                      "value": 18
+                    },
+                    {
+                      "level": 3,
+                      "unit": "percent",
+                      "value": 21
+                    },
+                    {
+                      "level": 4,
+                      "unit": "percent",
+                      "value": 25.5
+                    },
+                    {
+                      "level": 5,
+                      "unit": "percent",
+                      "value": 30
+                    }
+                  ],
+                  "valuePerStackFixed": null
+                },
+                "target": "Cleansed enemy",
+                "targetCount": null,
+                "targetPriority": "any-eligible",
+                "targetScope": "any-lane",
+                "type": "Infectious Wrath",
+                "unit": "flat"
+              }
+            ],
+            "id": "infectious-wrath-on-cleanse",
+            "repeat": null,
+            "rounds": [],
+            "targetPriority": "any-eligible",
+            "timing": "on-successful-cleanse",
+            "triggerChanceByHabitLevel": [],
+            "triggerChanceFixed": null,
+            "triggerEvent": "on-successful-cleanse"
+          },
+          {
+            "attempts": null,
+            "battleContext": "unspecified",
+            "conditions": [],
+            "effects": [
+              {
+                "calculated": false,
+                "casterEligibility": "unknown",
+                "conditionalMultipliers": [
+                  {
+                    "calculatedFromVerifiedMultiplier": true,
+                    "condition": {
+                      "battleContext": null,
+                      "comparison": null,
+                      "description": "Target has Panic.",
+                      "id": "target-has-panic",
+                      "kind": "target-has-status",
+                      "statusId": "panic",
+                      "subject": "target",
+                      "thresholdPercent": null,
+                      "unresolved": false
+                    },
+                    "description": "Damage is doubled when target has Panic.",
+                    "directlyVerifiedValues": [],
+                    "id": "panic-double-damage",
+                    "multiplier": 2
+                  }
+                ],
+                "conditions": [],
+                "directlyVerified": true,
+                "duration": null,
+                "durationRounds": null,
+                "excludes": [],
+                "id": "infectious-wrath-physical-damage-rate",
+                "includesCaster": null,
+                "magnitude": null,
+                "notes": [],
+                "perTargetEffectCheck": null,
+                "rankedValues": [
+                  {
+                    "level": 1,
+                    "unit": "percent",
+                    "value": 30
+                  },
+                  {
+                    "level": 2,
+                    "unit": "percent",
+                    "value": 36
+                  },
+                  {
+                    "level": 3,
+                    "unit": "percent",
+                    "value": 42
+                  },
+                  {
+                    "level": 4,
+                    "unit": "percent",
+                    "value": 51
+                  },
+                  {
+                    "level": 5,
+                    "unit": "percent",
+                    "value": 60
+                  }
+                ],
+                "scaling": [],
+                "sourceScope": "unknown",
+                "stack": null,
+                "target": "2 Enemies",
+                "targetCount": null,
+                "targetPriority": "any-eligible",
+                "targetScope": "within-adjacency",
+                "type": "Physical Damage",
+                "unit": "rate"
+              }
+            ],
+            "id": "infectious-wrath-physical-damage",
+            "repeat": null,
+            "rounds": [
+              3,
+              6,
+              9
+            ],
+            "targetPriority": "any-eligible",
+            "timing": "specific-rounds",
+            "triggerChanceByHabitLevel": [],
+            "triggerChanceFixed": null,
+            "triggerEvent": "specific-rounds"
+          }
+        ],
+        "sourceAbilityId": "seasmoke-infectious-wrath"
+      }
+    ],
+    "dragonId": "seasmoke",
+    "evidenceIds": [
+      "seasmoke-cleansing-wrath-summary-2026-06-23",
+      "seasmoke-cleansing-wrath-glossary-2026-06-23"
+    ],
+    "glossaryEntries": [
+      {
+        "definition": "Fire Damage is increased by attacker Intelligence and mitigated by target Initiative.",
+        "term": "Fire Damage"
+      },
+      {
+        "definition": "Physical Damage is increased by attacker Strength and mitigated by target Instinct.",
+        "term": "Physical Damage"
+      }
+    ],
+    "id": "seasmoke-cleansing-wrath",
+    "kind": "command",
+    "minimumDragonLevel": null,
+    "name": "Cleansing Wrath",
+    "positionRequirement": null,
+    "powerByHabitLevel": [],
+    "rawDescription": "Each Round: up to three independent 20% Cleanse attempts. Rounds 3, 6, 9: Fire Damage to one enemy in the same lane (Damage Rate: +190%).",
+    "schedules": [
+      {
+        "attempts": {
+          "attemptCount": 3,
+          "chanceByHabitLevel": [],
+          "chanceFixed": 20,
+          "independentlyRolled": true,
+          "independentlyTargeted": true
+        },
+        "battleContext": "unspecified",
+        "conditions": [],
+        "effects": [
+          {
+            "calculated": false,
+            "casterEligibility": "unknown",
+            "conditionalMultipliers": [],
+            "conditions": [],
+            "directlyVerified": true,
+            "duration": null,
+            "durationRounds": null,
+            "excludes": [],
+            "id": "cleansing-wrath-cleanse-positive-effect",
+            "includesCaster": null,
+            "magnitude": 1,
+            "notes": [],
+            "perTargetEffectCheck": null,
+            "rankedValues": [],
+            "scaling": [],
+            "sourceScope": "unknown",
+            "stack": null,
+            "target": "1 Enemy",
+            "targetCount": null,
+            "targetPriority": "any-eligible",
+            "targetScope": "any-lane",
+            "type": "Cleanse Positive",
+            "unit": "flat"
+          }
+        ],
+        "id": "cleansing-wrath-cleanse-positive",
+        "repeat": null,
+        "rounds": [],
+        "targetPriority": "any-eligible",
+        "timing": "each-round",
+        "triggerChanceByHabitLevel": [],
+        "triggerChanceFixed": null,
+        "triggerEvent": "each-round"
+      },
+      {
+        "attempts": null,
+        "battleContext": "unspecified",
+        "conditions": [],
+        "effects": [
+          {
+            "calculated": false,
+            "casterEligibility": "unknown",
+            "conditionalMultipliers": [],
+            "conditions": [],
+            "directlyVerified": true,
+            "duration": null,
+            "durationRounds": null,
+            "excludes": [],
+            "id": "cleansing-wrath-fire-damage-rate",
+            "includesCaster": null,
+            "magnitude": 190,
+            "notes": [
+              "Mitigated by target Initiative"
+            ],
+            "perTargetEffectCheck": null,
+            "rankedValues": [],
+            "scaling": [
+              "attacker Intelligence"
+            ],
+            "sourceScope": "unknown",
+            "stack": null,
+            "target": "1 Enemy",
+            "targetCount": null,
+            "targetPriority": "any-eligible",
+            "targetScope": "same-lane",
+            "type": "Fire Damage",
+            "unit": "rate"
+          }
+        ],
+        "id": "cleansing-wrath-fire-damage",
+        "repeat": null,
+        "rounds": [
+          3,
+          6,
+          9
+        ],
+        "targetPriority": "any-eligible",
+        "timing": "specific-rounds",
+        "triggerChanceByHabitLevel": [],
+        "triggerChanceFixed": null,
+        "triggerEvent": "specific-rounds"
+      }
+    ],
+    "tags": [
+      "CLEANSE_POSITIVE",
+      "FIRE_DAMAGE",
+      "SAME_LANE_TARGET"
+    ],
+    "unlockStarRank": null,
+    "unresolvedQuestions": [],
+    "verification": {
+      "capturedAt": "2026-06-23",
+      "gameVersion": "26.6.53509",
+      "reviewedManually": true,
+      "source": "Seasmoke Cleansing Wrath summary/glossary screenshots",
+      "status": "screenshot-verified"
+    }
+  },
+  "contextVersion": 1,
+  "dataStatus": "community-verified",
+  "dependencies": [
+    {
+      "dependency": {
+        "notes": [
+          "Effect wording indicates scaling with Intelligence."
+        ],
+        "statId": "intelligence",
+        "type": "scales-with-stat"
+      },
+      "outputCapabilityId": "seasmoke-cleansing-wrath-cleansing-wrath-fire-damage-rate-output"
+    },
+    {
+      "dependency": {
+        "notes": [
+          "Fire Damage is reduced by target Initiative."
+        ],
+        "statId": "initiative",
+        "type": "mitigated-by-target-stat"
+      },
+      "outputCapabilityId": "seasmoke-cleansing-wrath-cleansing-wrath-fire-damage-rate-output"
+    },
+    {
+      "dependency": {
+        "notes": [
+          "Physical Damage is increased by Strength."
+        ],
+        "statId": "strength",
+        "type": "scales-with-stat"
+      },
+      "outputCapabilityId": "seasmoke-infectious-wrath-infectious-wrath-physical-damage-rate-output"
+    },
+    {
+      "dependency": {
+        "notes": [
+          "Physical Damage is reduced by target Instinct."
+        ],
+        "statId": "instinct",
+        "type": "mitigated-by-target-stat"
+      },
+      "outputCapabilityId": "seasmoke-infectious-wrath-infectious-wrath-physical-damage-rate-output"
+    },
+    {
+      "dependency": {
+        "multiplier": 2,
+        "notes": [
+          "Target has Panic."
+        ],
+        "statusId": "panic",
+        "type": "requires-target-status"
+      },
+      "outputCapabilityId": "seasmoke-infectious-wrath-infectious-wrath-physical-damage-rate-output"
+    }
+  ],
+  "effects": [
+    {
+      "abilityId": "seasmoke-cleansing-wrath",
+      "effect": {
+        "calculated": false,
+        "casterEligibility": "unknown",
+        "conditionalMultipliers": [],
+        "conditions": [],
+        "directlyVerified": true,
+        "duration": null,
+        "durationRounds": null,
+        "excludes": [],
+        "id": "cleansing-wrath-cleanse-positive-effect",
+        "includesCaster": null,
+        "magnitude": 1,
+        "notes": [],
+        "perTargetEffectCheck": null,
+        "rankedValues": [],
+        "scaling": [],
+        "sourceScope": "unknown",
+        "stack": null,
+        "target": "1 Enemy",
+        "targetCount": null,
+        "targetPriority": "any-eligible",
+        "targetScope": "any-lane",
+        "type": "Cleanse Positive",
+        "unit": "flat"
+      },
+      "scheduleId": "cleansing-wrath-cleanse-positive"
+    },
+    {
+      "abilityId": "seasmoke-cleansing-wrath",
+      "effect": {
+        "calculated": false,
+        "casterEligibility": "unknown",
+        "conditionalMultipliers": [],
+        "conditions": [],
+        "directlyVerified": true,
+        "duration": null,
+        "durationRounds": null,
+        "excludes": [],
+        "id": "cleansing-wrath-fire-damage-rate",
+        "includesCaster": null,
+        "magnitude": 190,
+        "notes": [
+          "Mitigated by target Initiative"
+        ],
+        "perTargetEffectCheck": null,
+        "rankedValues": [],
+        "scaling": [
+          "attacker Intelligence"
+        ],
+        "sourceScope": "unknown",
+        "stack": null,
+        "target": "1 Enemy",
+        "targetCount": null,
+        "targetPriority": "any-eligible",
+        "targetScope": "same-lane",
+        "type": "Fire Damage",
+        "unit": "rate"
+      },
+      "scheduleId": "cleansing-wrath-fire-damage"
+    },
+    {
+      "abilityId": "seasmoke-champions-brilliance",
+      "effect": {
+        "calculated": false,
+        "casterEligibility": "unknown",
+        "conditionalMultipliers": [],
+        "conditions": [],
+        "directlyVerified": true,
+        "duration": null,
+        "durationRounds": null,
+        "excludes": [],
+        "id": "seasmoke-strength-flat",
+        "includesCaster": null,
+        "magnitude": 15,
+        "notes": [],
+        "perTargetEffectCheck": null,
+        "rankedValues": [],
+        "scaling": [],
+        "sourceScope": "unknown",
+        "stack": null,
+        "target": "Self",
+        "targetCount": null,
+        "targetPriority": "any-eligible",
+        "targetScope": "self",
+        "type": "Strength Up",
+        "unit": "flat"
+      },
+      "scheduleId": "champions-brilliance-passive"
+    },
+    {
+      "abilityId": "seasmoke-champions-brilliance",
+      "effect": {
+        "calculated": false,
+        "casterEligibility": "unknown",
+        "conditionalMultipliers": [],
+        "conditions": [],
+        "directlyVerified": true,
+        "duration": null,
+        "durationRounds": null,
+        "excludes": [],
+        "id": "seasmoke-intelligence-flat",
+        "includesCaster": null,
+        "magnitude": 15,
+        "notes": [],
+        "perTargetEffectCheck": null,
+        "rankedValues": [],
+        "scaling": [],
+        "sourceScope": "unknown",
+        "stack": null,
+        "target": "Self",
+        "targetCount": null,
+        "targetPriority": "any-eligible",
+        "targetScope": "self",
+        "type": "Intelligence Up",
+        "unit": "flat"
+      },
+      "scheduleId": "champions-brilliance-passive"
+    },
+    {
+      "abilityId": "seasmoke-champions-brilliance",
+      "effect": {
+        "calculated": false,
+        "casterEligibility": "unknown",
+        "conditionalMultipliers": [],
+        "conditions": [],
+        "directlyVerified": true,
+        "duration": null,
+        "durationRounds": null,
+        "excludes": [],
+        "id": "seasmoke-instinct-flat",
+        "includesCaster": null,
+        "magnitude": 15,
+        "notes": [],
+        "perTargetEffectCheck": null,
+        "rankedValues": [],
+        "scaling": [],
+        "sourceScope": "unknown",
+        "stack": null,
+        "target": "Self",
+        "targetCount": null,
+        "targetPriority": "any-eligible",
+        "targetScope": "self",
+        "type": "Instinct Up",
+        "unit": "flat"
+      },
+      "scheduleId": "champions-brilliance-passive"
+    },
+    {
+      "abilityId": "seasmoke-champions-brilliance",
+      "effect": {
+        "calculated": false,
+        "casterEligibility": "unknown",
+        "conditionalMultipliers": [],
+        "conditions": [],
+        "directlyVerified": true,
+        "duration": null,
+        "durationRounds": null,
+        "excludes": [],
+        "id": "seasmoke-right-flank-dr-down",
+        "includesCaster": null,
+        "magnitude": 8,
+        "notes": [],
+        "perTargetEffectCheck": null,
+        "rankedValues": [],
+        "scaling": [],
+        "sourceScope": "unknown",
+        "stack": null,
+        "target": "Right Flank ally",
+        "targetCount": null,
+        "targetPriority": "any-eligible",
+        "targetScope": "right-flank",
+        "type": "Damage Received Down",
+        "unit": "percent"
+      },
+      "scheduleId": "champions-brilliance-passive"
+    },
+    {
+      "abilityId": "seasmoke-clever-maneuver",
+      "effect": {
+        "calculated": false,
+        "casterEligibility": "eligible-if-targeting-allows",
+        "conditionalMultipliers": [],
+        "conditions": [],
+        "directlyVerified": true,
+        "duration": "Until end of combat",
+        "durationRounds": null,
+        "excludes": [],
+        "id": "clever-maneuver-intelligence",
+        "includesCaster": null,
+        "magnitude": null,
+        "notes": [],
+        "perTargetEffectCheck": null,
+        "rankedValues": [
+          {
+            "level": 1,
+            "unit": "percent",
+            "value": 22
+          },
+          {
+            "level": 2,
+            "unit": "percent",
+            "value": 26.4
+          },
+          {
+            "level": 3,
+            "unit": "percent",
+            "value": 30.8
+          },
+          {
+            "level": 4,
+            "unit": "percent",
+            "value": 37.4
+          },
+          {
+            "level": 5,
+            "unit": "percent",
+            "value": 44
+          }
+        ],
+        "scaling": [],
+        "sourceScope": "unknown",
+        "stack": null,
+        "target": "Ally with highest Intelligence",
+        "targetCount": null,
+        "targetPriority": "highest-stat-ally",
+        "targetScope": "any-lane",
+        "type": "Intelligence Up",
+        "unit": "flat"
+      },
+      "scheduleId": "clever-maneuver-start-combat"
+    },
+    {
+      "abilityId": "seasmoke-clever-maneuver",
+      "effect": {
+        "calculated": false,
+        "casterEligibility": "eligible-if-targeting-allows",
+        "conditionalMultipliers": [],
+        "conditions": [],
+        "directlyVerified": true,
+        "duration": "Until end of combat",
+        "durationRounds": null,
+        "excludes": [],
+        "id": "clever-maneuver-initiative",
+        "includesCaster": null,
+        "magnitude": null,
+        "notes": [],
+        "perTargetEffectCheck": null,
+        "rankedValues": [
+          {
+            "level": 1,
+            "unit": "percent",
+            "value": 12.5
+          },
+          {
+            "level": 2,
+            "unit": "percent",
+            "value": 15
+          },
+          {
+            "level": 3,
+            "unit": "percent",
+            "value": 17.5
+          },
+          {
+            "level": 4,
+            "unit": "percent",
+            "value": 21.25
+          },
+          {
+            "level": 5,
+            "unit": "percent",
+            "value": 25
+          }
+        ],
+        "scaling": [],
+        "sourceScope": "unknown",
+        "stack": null,
+        "target": "Ally with highest Intelligence",
+        "targetCount": null,
+        "targetPriority": "highest-stat-ally",
+        "targetScope": "any-lane",
+        "type": "Initiative Up",
+        "unit": "percent"
+      },
+      "scheduleId": "clever-maneuver-start-combat"
+    },
+    {
+      "abilityId": "seasmoke-winds-favor",
+      "effect": {
+        "calculated": false,
+        "casterEligibility": "included",
+        "conditionalMultipliers": [],
+        "conditions": [],
+        "directlyVerified": true,
+        "duration": "Until end of combat",
+        "durationRounds": null,
+        "excludes": [],
+        "id": "winds-favor-initiative",
+        "includesCaster": true,
+        "magnitude": null,
+        "notes": [
+          "Exact 3 Allies targeting is normalized to all three friendly dragons and includes the caster."
+        ],
+        "perTargetEffectCheck": null,
+        "rankedValues": [
+          {
+            "level": 1,
+            "unit": "percent",
+            "value": 12.5
+          },
+          {
+            "level": 2,
+            "unit": "percent",
+            "value": 15
+          },
+          {
+            "level": 3,
+            "unit": "percent",
+            "value": 17.5
+          },
+          {
+            "level": 4,
+            "unit": "percent",
+            "value": 21.25
+          },
+          {
+            "level": 5,
+            "unit": "percent",
+            "value": 25
+          }
+        ],
+        "scaling": [
+          "Initiative"
+        ],
+        "sourceScope": "unknown",
+        "stack": null,
+        "target": "3 Allies",
+        "targetCount": 3,
+        "targetPriority": "any-eligible",
+        "targetScope": "any-lane",
+        "type": "Initiative Up",
+        "unit": "percent"
+      },
+      "scheduleId": "winds-favor-start-combat"
+    },
+    {
+      "abilityId": "seasmoke-infectious-wrath",
+      "effect": {
+        "calculated": false,
+        "casterEligibility": "unknown",
+        "conditionalMultipliers": [
+          {
+            "calculatedFromVerifiedMultiplier": true,
+            "condition": {
+              "battleContext": null,
+              "comparison": null,
+              "description": "Target has Panic.",
+              "id": "target-has-panic",
+              "kind": "target-has-status",
+              "statusId": "panic",
+              "subject": "target",
+              "thresholdPercent": null,
+              "unresolved": false
+            },
+            "description": "Damage is doubled when target has Panic.",
+            "directlyVerifiedValues": [],
+            "id": "panic-double-damage",
+            "multiplier": 2
+          }
+        ],
+        "conditions": [],
+        "directlyVerified": true,
+        "duration": null,
+        "durationRounds": null,
+        "excludes": [],
+        "id": "infectious-wrath-physical-damage-rate",
+        "includesCaster": null,
+        "magnitude": null,
+        "notes": [],
+        "perTargetEffectCheck": null,
+        "rankedValues": [
+          {
+            "level": 1,
+            "unit": "percent",
+            "value": 30
+          },
+          {
+            "level": 2,
+            "unit": "percent",
+            "value": 36
+          },
+          {
+            "level": 3,
+            "unit": "percent",
+            "value": 42
+          },
+          {
+            "level": 4,
+            "unit": "percent",
+            "value": 51
+          },
+          {
+            "level": 5,
+            "unit": "percent",
+            "value": 60
+          }
+        ],
+        "scaling": [],
+        "sourceScope": "unknown",
+        "stack": null,
+        "target": "2 Enemies",
+        "targetCount": null,
+        "targetPriority": "any-eligible",
+        "targetScope": "within-adjacency",
+        "type": "Physical Damage",
+        "unit": "rate"
+      },
+      "scheduleId": "infectious-wrath-physical-damage"
+    },
+    {
+      "abilityId": "seasmoke-cunning-ferocity",
+      "effect": {
+        "calculated": false,
+        "casterEligibility": "eligible-if-targeting-allows",
+        "conditionalMultipliers": [],
+        "conditions": [],
+        "directlyVerified": true,
+        "duration": "Until end of combat",
+        "durationRounds": null,
+        "excludes": [],
+        "id": "cunning-ferocity-intelligence",
+        "includesCaster": null,
+        "magnitude": null,
+        "notes": [],
+        "perTargetEffectCheck": null,
+        "rankedValues": [
+          {
+            "level": 1,
+            "unit": "percent",
+            "value": 7.5
+          },
+          {
+            "level": 2,
+            "unit": "percent",
+            "value": 9
+          },
+          {
+            "level": 3,
+            "unit": "percent",
+            "value": 10.5
+          },
+          {
+            "level": 4,
+            "unit": "percent",
+            "value": 12.75
+          },
+          {
+            "level": 5,
+            "unit": "percent",
+            "value": 15
+          }
+        ],
+        "scaling": [
+          "Instinct"
+        ],
+        "sourceScope": "unknown",
+        "stack": null,
+        "target": "2 Allies",
+        "targetCount": null,
+        "targetPriority": "any-eligible",
+        "targetScope": "within-adjacency",
+        "type": "Intelligence Up",
+        "unit": "percent"
+      },
+      "scheduleId": "cunning-ferocity-start-combat"
+    },
+    {
+      "abilityId": "seasmoke-cunning-ferocity",
+      "effect": {
+        "calculated": false,
+        "casterEligibility": "eligible-if-targeting-allows",
+        "conditionalMultipliers": [],
+        "conditions": [],
+        "directlyVerified": true,
+        "duration": "Until end of combat",
+        "durationRounds": null,
+        "excludes": [],
+        "id": "cunning-ferocity-fire",
+        "includesCaster": null,
+        "magnitude": null,
+        "notes": [],
+        "perTargetEffectCheck": null,
+        "rankedValues": [
+          {
+            "level": 1,
+            "unit": "percent",
+            "value": 5
+          },
+          {
+            "level": 2,
+            "unit": "percent",
+            "value": 6
+          },
+          {
+            "level": 3,
+            "unit": "percent",
+            "value": 7
+          },
+          {
+            "level": 4,
+            "unit": "percent",
+            "value": 8.5
+          },
+          {
+            "level": 5,
+            "unit": "percent",
+            "value": 10
+          }
+        ],
+        "scaling": [],
+        "sourceScope": "unknown",
+        "stack": null,
+        "target": "2 Allies",
+        "targetCount": null,
+        "targetPriority": "any-eligible",
+        "targetScope": "within-adjacency",
+        "type": "Fire Damage Dealt Up",
+        "unit": "percent"
+      },
+      "scheduleId": "cunning-ferocity-start-combat"
+    },
+    {
+      "abilityId": "seasmoke-loyal-bond",
+      "effect": {
+        "calculated": false,
+        "casterEligibility": "excluded",
+        "conditionalMultipliers": [],
+        "conditions": [
+          {
+            "battleContext": null,
+            "comparison": "above",
+            "description": "Target is above 50% Troop Capacity.",
+            "id": "target-above-50-troop-capacity",
+            "kind": "target-above-troop-capacity-threshold",
+            "statusId": null,
+            "subject": "target",
+            "thresholdPercent": 50,
+            "unresolved": false
+          }
+        ],
+        "directlyVerified": true,
+        "duration": null,
+        "durationRounds": 2,
+        "excludes": [],
+        "id": "loyal-bond-advantage-effect",
+        "includesCaster": null,
+        "magnitude": 20,
+        "notes": [],
+        "perTargetEffectCheck": null,
+        "rankedValues": [],
+        "scaling": [],
+        "sourceScope": "unknown",
+        "stack": null,
+        "target": "2 other Allies",
+        "targetCount": null,
+        "targetPriority": "any-eligible",
+        "targetScope": "any-lane",
+        "type": "Advantage",
+        "unit": "percent"
+      },
+      "scheduleId": "loyal-bond-advantage"
+    },
+    {
+      "abilityId": "seasmoke-loyal-bond",
+      "effect": {
+        "calculated": false,
+        "casterEligibility": "excluded",
+        "conditionalMultipliers": [],
+        "conditions": [
+          {
+            "battleContext": null,
+            "comparison": "below",
+            "description": "Target is below 50% Troop Capacity.",
+            "id": "target-below-50-troop-capacity",
+            "kind": "target-below-troop-capacity-threshold",
+            "statusId": null,
+            "subject": "target",
+            "thresholdPercent": 50,
+            "unresolved": false
+          }
+        ],
+        "directlyVerified": true,
+        "duration": null,
+        "durationRounds": 2,
+        "excludes": [],
+        "id": "loyal-bond-resistance-effect",
+        "includesCaster": null,
+        "magnitude": 20,
+        "notes": [
+          "Exact Resistance semantics unresolved."
+        ],
+        "perTargetEffectCheck": null,
+        "rankedValues": [],
+        "scaling": [],
+        "sourceScope": "unknown",
+        "stack": null,
+        "target": "2 other Allies",
+        "targetCount": null,
+        "targetPriority": "any-eligible",
+        "targetScope": "any-lane",
+        "type": "Resistance",
+        "unit": "percent"
+      },
+      "scheduleId": "loyal-bond-resistance"
+    }
+  ],
+  "evidenceReferences": [
+    {
+      "capturedAt": "2026-06-23",
+      "description": "Descriptive evidence label only. Screenshot files are not committed to the public repository.",
+      "gameVersion": "26.6.53509",
+      "id": "seasmoke-main-screen-2026-06-23",
+      "language": "English",
+      "reviewedManually": true,
+      "submittedBy": "repository owner",
+      "title": "Seasmoke main screen",
+      "type": "in-game-screenshot",
+      "url": null,
+      "verificationStatus": "community-verified"
+    },
+    {
+      "capturedAt": "2026-06-23",
+      "description": "Descriptive evidence label only. Screenshot files are not committed to the public repository.",
+      "gameVersion": "26.6.53509",
+      "id": "seasmoke-champions-brilliance-2026-06-23",
+      "language": "English",
+      "reviewedManually": true,
+      "submittedBy": "repository owner",
+      "title": "Champion's Brilliance",
+      "type": "in-game-screenshot",
+      "url": null,
+      "verificationStatus": "community-verified"
+    },
+    {
+      "capturedAt": "2026-06-23",
+      "description": "Descriptive evidence label only. Screenshot files are not committed to the public repository.",
+      "gameVersion": "26.6.53509",
+      "id": "seasmoke-cleansing-wrath-summary-2026-06-23",
+      "language": "English",
+      "reviewedManually": true,
+      "submittedBy": "repository owner",
+      "title": "Cleansing Wrath summary",
+      "type": "in-game-screenshot",
+      "url": null,
+      "verificationStatus": "community-verified"
+    },
+    {
+      "capturedAt": "2026-06-23",
+      "description": "Descriptive evidence label only. Screenshot files are not committed to the public repository.",
+      "gameVersion": "26.6.53509",
+      "id": "seasmoke-cleansing-wrath-glossary-2026-06-23",
+      "language": "English",
+      "reviewedManually": true,
+      "submittedBy": "repository owner",
+      "title": "Cleansing Wrath glossary",
+      "type": "in-game-screenshot",
+      "url": null,
+      "verificationStatus": "community-verified"
+    },
+    {
+      "capturedAt": "2026-06-23",
+      "description": "Descriptive evidence label only. Screenshot files are not committed to the public repository.",
+      "gameVersion": "26.6.53509",
+      "id": "seasmoke-clever-maneuver-2026-06-23",
+      "language": "English",
+      "reviewedManually": true,
+      "submittedBy": "repository owner",
+      "title": "Clever Maneuver",
+      "type": "in-game-screenshot",
+      "url": null,
+      "verificationStatus": "community-verified"
+    },
+    {
+      "capturedAt": "2026-06-23",
+      "description": "Descriptive evidence label only. Screenshot files are not committed to the public repository.",
+      "gameVersion": "26.6.53509",
+      "id": "seasmoke-winds-favor-2026-06-23",
+      "language": "English",
+      "reviewedManually": true,
+      "submittedBy": "repository owner",
+      "title": "Wind's Favor",
+      "type": "in-game-screenshot",
+      "url": null,
+      "verificationStatus": "community-verified"
+    },
+    {
+      "capturedAt": "2026-06-23",
+      "description": "Descriptive evidence label only. Screenshot files are not committed to the public repository.",
+      "gameVersion": "26.6.53509",
+      "id": "seasmoke-infectious-wrath-2026-06-23",
+      "language": "English",
+      "reviewedManually": true,
+      "submittedBy": "repository owner",
+      "title": "Infectious Wrath",
+      "type": "in-game-screenshot",
+      "url": null,
+      "verificationStatus": "community-verified"
+    },
+    {
+      "capturedAt": "2026-06-23",
+      "description": "Descriptive evidence label only. Screenshot files are not committed to the public repository.",
+      "gameVersion": "26.6.53509",
+      "id": "seasmoke-cunning-ferocity-2026-06-23",
+      "language": "English",
+      "reviewedManually": true,
+      "submittedBy": "repository owner",
+      "title": "Cunning Ferocity",
+      "type": "in-game-screenshot",
+      "url": null,
+      "verificationStatus": "community-verified"
+    },
+    {
+      "capturedAt": "2026-06-23",
+      "description": "Descriptive evidence label only. Screenshot files are not committed to the public repository.",
+      "gameVersion": "26.6.53509",
+      "id": "seasmoke-loyal-bond-2026-06-23",
+      "language": "English",
+      "reviewedManually": true,
+      "submittedBy": "repository owner",
+      "title": "Loyal Bond",
+      "type": "in-game-screenshot",
+      "url": null,
+      "verificationStatus": "community-verified"
+    }
+  ],
+  "firstObservedInGame": null,
+  "format": "dragonfire-dragon-profile",
+  "gameVersion": null,
+  "generatedAt": "2026-06-25T00:29:16.911Z",
+  "habits": [
+    {
+      "abilityClass": "passive",
+      "augmentations": [],
+      "dragonId": "seasmoke",
+      "evidenceIds": [
+        "seasmoke-clever-maneuver-2026-06-23"
+      ],
+      "glossaryEntries": [],
+      "id": "seasmoke-clever-maneuver",
+      "kind": "habit",
+      "minimumDragonLevel": null,
+      "name": "Clever Maneuver",
+      "positionRequirement": null,
+      "powerByHabitLevel": [
+        {
+          "level": 1,
+          "unit": "power",
+          "value": 420
+        },
+        {
+          "level": 2,
+          "unit": "power",
+          "value": 920
+        },
+        {
+          "level": 3,
+          "unit": "power",
+          "value": 1500
+        },
+        {
+          "level": 4,
+          "unit": "power",
+          "value": 2200
+        },
+        {
+          "level": 5,
+          "unit": "power",
+          "value": 3100
+        }
+      ],
+      "rawDescription": "Start of Combat: Increase Intelligence and Initiative of the ally with highest Intelligence until end of combat.",
+      "schedules": [
+        {
+          "attempts": null,
+          "battleContext": "unspecified",
+          "conditions": [],
+          "effects": [
+            {
+              "calculated": false,
+              "casterEligibility": "eligible-if-targeting-allows",
+              "conditionalMultipliers": [],
+              "conditions": [],
+              "directlyVerified": true,
+              "duration": "Until end of combat",
+              "durationRounds": null,
+              "excludes": [],
+              "id": "clever-maneuver-intelligence",
+              "includesCaster": null,
+              "magnitude": null,
+              "notes": [],
+              "perTargetEffectCheck": null,
+              "rankedValues": [
+                {
+                  "level": 1,
+                  "unit": "percent",
+                  "value": 22
+                },
+                {
+                  "level": 2,
+                  "unit": "percent",
+                  "value": 26.4
+                },
+                {
+                  "level": 3,
+                  "unit": "percent",
+                  "value": 30.8
+                },
+                {
+                  "level": 4,
+                  "unit": "percent",
+                  "value": 37.4
+                },
+                {
+                  "level": 5,
+                  "unit": "percent",
+                  "value": 44
+                }
+              ],
+              "scaling": [],
+              "sourceScope": "unknown",
+              "stack": null,
+              "target": "Ally with highest Intelligence",
+              "targetCount": null,
+              "targetPriority": "highest-stat-ally",
+              "targetScope": "any-lane",
+              "type": "Intelligence Up",
+              "unit": "flat"
+            },
+            {
+              "calculated": false,
+              "casterEligibility": "eligible-if-targeting-allows",
+              "conditionalMultipliers": [],
+              "conditions": [],
+              "directlyVerified": true,
+              "duration": "Until end of combat",
+              "durationRounds": null,
+              "excludes": [],
+              "id": "clever-maneuver-initiative",
+              "includesCaster": null,
+              "magnitude": null,
+              "notes": [],
+              "perTargetEffectCheck": null,
+              "rankedValues": [
+                {
+                  "level": 1,
+                  "unit": "percent",
+                  "value": 12.5
+                },
+                {
+                  "level": 2,
+                  "unit": "percent",
+                  "value": 15
+                },
+                {
+                  "level": 3,
+                  "unit": "percent",
+                  "value": 17.5
+                },
+                {
+                  "level": 4,
+                  "unit": "percent",
+                  "value": 21.25
+                },
+                {
+                  "level": 5,
+                  "unit": "percent",
+                  "value": 25
+                }
+              ],
+              "scaling": [],
+              "sourceScope": "unknown",
+              "stack": null,
+              "target": "Ally with highest Intelligence",
+              "targetCount": null,
+              "targetPriority": "highest-stat-ally",
+              "targetScope": "any-lane",
+              "type": "Initiative Up",
+              "unit": "percent"
+            }
+          ],
+          "id": "clever-maneuver-start-combat",
+          "repeat": null,
+          "rounds": [],
+          "targetPriority": "highest-stat-ally",
+          "timing": "start-of-combat",
+          "triggerChanceByHabitLevel": [],
+          "triggerChanceFixed": null,
+          "triggerEvent": "start-of-combat"
+        }
+      ],
+      "tags": [
+        "BUFF_ALLIES",
+        "BUFF_INTELLIGENCE",
+        "BUFF_INITIATIVE"
+      ],
+      "unlockStarRank": 2,
+      "unresolvedQuestions": [],
+      "verification": {
+        "capturedAt": "2026-06-23",
+        "gameVersion": "26.6.53509",
+        "reviewedManually": true,
+        "source": "Seasmoke Clever Maneuver screenshot",
+        "status": "screenshot-verified"
+      }
+    },
+    {
+      "abilityClass": "passive",
+      "augmentations": [],
+      "dragonId": "seasmoke",
+      "evidenceIds": [
+        "seasmoke-winds-favor-2026-06-23"
+      ],
+      "glossaryEntries": [],
+      "id": "seasmoke-winds-favor",
+      "kind": "habit",
+      "minimumDragonLevel": null,
+      "name": "Wind's Favor",
+      "positionRequirement": null,
+      "powerByHabitLevel": [
+        {
+          "level": 1,
+          "unit": "power",
+          "value": 420
+        },
+        {
+          "level": 2,
+          "unit": "power",
+          "value": 920
+        },
+        {
+          "level": 3,
+          "unit": "power",
+          "value": 1500
+        },
+        {
+          "level": 4,
+          "unit": "power",
+          "value": 2200
+        },
+        {
+          "level": 5,
+          "unit": "power",
+          "value": 3100
+        }
+      ],
+      "rawDescription": "Start of Combat: Increase Initiative of three Allies in any lane until end of combat, enhanced by Initiative.",
+      "schedules": [
+        {
+          "attempts": null,
+          "battleContext": "unspecified",
+          "conditions": [],
+          "effects": [
+            {
+              "calculated": false,
+              "casterEligibility": "included",
+              "conditionalMultipliers": [],
+              "conditions": [],
+              "directlyVerified": true,
+              "duration": "Until end of combat",
+              "durationRounds": null,
+              "excludes": [],
+              "id": "winds-favor-initiative",
+              "includesCaster": true,
+              "magnitude": null,
+              "notes": [
+                "Exact 3 Allies targeting is normalized to all three friendly dragons and includes the caster."
+              ],
+              "perTargetEffectCheck": null,
+              "rankedValues": [
+                {
+                  "level": 1,
+                  "unit": "percent",
+                  "value": 12.5
+                },
+                {
+                  "level": 2,
+                  "unit": "percent",
+                  "value": 15
+                },
+                {
+                  "level": 3,
+                  "unit": "percent",
+                  "value": 17.5
+                },
+                {
+                  "level": 4,
+                  "unit": "percent",
+                  "value": 21.25
+                },
+                {
+                  "level": 5,
+                  "unit": "percent",
+                  "value": 25
+                }
+              ],
+              "scaling": [
+                "Initiative"
+              ],
+              "sourceScope": "unknown",
+              "stack": null,
+              "target": "3 Allies",
+              "targetCount": 3,
+              "targetPriority": "any-eligible",
+              "targetScope": "any-lane",
+              "type": "Initiative Up",
+              "unit": "percent"
+            }
+          ],
+          "id": "winds-favor-start-combat",
+          "repeat": null,
+          "rounds": [],
+          "targetPriority": "any-eligible",
+          "timing": "start-of-combat",
+          "triggerChanceByHabitLevel": [],
+          "triggerChanceFixed": null,
+          "triggerEvent": "start-of-combat"
+        }
+      ],
+      "tags": [
+        "BUFF_ALLIES",
+        "BUFF_INITIATIVE"
+      ],
+      "unlockStarRank": 4,
+      "unresolvedQuestions": [
+        "Exact enhanced-by-Initiative formula."
+      ],
+      "verification": {
+        "capturedAt": "2026-06-23",
+        "gameVersion": "26.6.53509",
+        "reviewedManually": true,
+        "source": "Seasmoke Wind's Favor screenshot",
+        "status": "screenshot-verified"
+      }
+    },
+    {
+      "abilityClass": "passive",
+      "augmentations": [],
+      "dragonId": "seasmoke",
+      "evidenceIds": [
+        "seasmoke-infectious-wrath-2026-06-23"
+      ],
+      "glossaryEntries": [],
+      "id": "seasmoke-infectious-wrath",
+      "kind": "habit",
+      "minimumDragonLevel": null,
+      "name": "Infectious Wrath",
+      "positionRequirement": null,
+      "powerByHabitLevel": [
+        {
+          "level": 1,
+          "unit": "power",
+          "value": 420
+        },
+        {
+          "level": 2,
+          "unit": "power",
+          "value": 920
+        },
+        {
+          "level": 3,
+          "unit": "power",
+          "value": 1500
+        },
+        {
+          "level": 4,
+          "unit": "power",
+          "value": 2200
+        },
+        {
+          "level": 5,
+          "unit": "power",
+          "value": 3100
+        }
+      ],
+      "rawDescription": "Augments Cleansing Wrath with Infectious Wrath stacks and Panic-conditional Physical Damage.",
+      "schedules": [
+        {
+          "attempts": null,
+          "battleContext": "unspecified",
+          "conditions": [],
+          "effects": [
+            {
+              "calculated": false,
+              "casterEligibility": "unknown",
+              "conditionalMultipliers": [
+                {
+                  "calculatedFromVerifiedMultiplier": true,
+                  "condition": {
+                    "battleContext": null,
+                    "comparison": null,
+                    "description": "Target has Panic.",
+                    "id": "target-has-panic",
+                    "kind": "target-has-status",
+                    "statusId": "panic",
+                    "subject": "target",
+                    "thresholdPercent": null,
+                    "unresolved": false
+                  },
+                  "description": "Damage is doubled when target has Panic.",
+                  "directlyVerifiedValues": [],
+                  "id": "panic-double-damage",
+                  "multiplier": 2
+                }
+              ],
+              "conditions": [],
+              "directlyVerified": true,
+              "duration": null,
+              "durationRounds": null,
+              "excludes": [],
+              "id": "infectious-wrath-physical-damage-rate",
+              "includesCaster": null,
+              "magnitude": null,
+              "notes": [],
+              "perTargetEffectCheck": null,
+              "rankedValues": [
+                {
+                  "level": 1,
+                  "unit": "percent",
+                  "value": 30
+                },
+                {
+                  "level": 2,
+                  "unit": "percent",
+                  "value": 36
+                },
+                {
+                  "level": 3,
+                  "unit": "percent",
+                  "value": 42
+                },
+                {
+                  "level": 4,
+                  "unit": "percent",
+                  "value": 51
+                },
+                {
+                  "level": 5,
+                  "unit": "percent",
+                  "value": 60
+                }
+              ],
+              "scaling": [],
+              "sourceScope": "unknown",
+              "stack": null,
+              "target": "2 Enemies",
+              "targetCount": null,
+              "targetPriority": "any-eligible",
+              "targetScope": "within-adjacency",
+              "type": "Physical Damage",
+              "unit": "rate"
+            }
+          ],
+          "id": "infectious-wrath-physical-damage",
+          "repeat": null,
+          "rounds": [
+            3,
+            6,
+            9
+          ],
+          "targetPriority": "any-eligible",
+          "timing": "specific-rounds",
+          "triggerChanceByHabitLevel": [],
+          "triggerChanceFixed": null,
+          "triggerEvent": "specific-rounds"
+        }
+      ],
+      "tags": [
+        "COMMAND_AUGMENTATION",
+        "INFECTIOUS_WRATH",
+        "PHYSICAL_DAMAGE",
+        "PANIC"
+      ],
+      "unlockStarRank": 6,
+      "unresolvedQuestions": [],
+      "verification": {
+        "capturedAt": "2026-06-23",
+        "gameVersion": "26.6.53509",
+        "reviewedManually": true,
+        "source": "Seasmoke Infectious Wrath screenshot",
+        "status": "screenshot-verified"
+      }
+    },
+    {
+      "abilityClass": "passive",
+      "augmentations": [],
+      "dragonId": "seasmoke",
+      "evidenceIds": [
+        "seasmoke-cunning-ferocity-2026-06-23"
+      ],
+      "glossaryEntries": [],
+      "id": "seasmoke-cunning-ferocity",
+      "kind": "habit",
+      "minimumDragonLevel": null,
+      "name": "Cunning Ferocity",
+      "positionRequirement": null,
+      "powerByHabitLevel": [
+        {
+          "level": 1,
+          "unit": "power",
+          "value": 420
+        },
+        {
+          "level": 2,
+          "unit": "power",
+          "value": 920
+        },
+        {
+          "level": 3,
+          "unit": "power",
+          "value": 1500
+        },
+        {
+          "level": 4,
+          "unit": "power",
+          "value": 2200
+        },
+        {
+          "level": 5,
+          "unit": "power",
+          "value": 3100
+        }
+      ],
+      "rawDescription": "Start of Combat: Increase Intelligence and Fire Damage Dealt of two Allies within adjacency until end of combat.",
+      "schedules": [
+        {
+          "attempts": null,
+          "battleContext": "unspecified",
+          "conditions": [],
+          "effects": [
+            {
+              "calculated": false,
+              "casterEligibility": "eligible-if-targeting-allows",
+              "conditionalMultipliers": [],
+              "conditions": [],
+              "directlyVerified": true,
+              "duration": "Until end of combat",
+              "durationRounds": null,
+              "excludes": [],
+              "id": "cunning-ferocity-intelligence",
+              "includesCaster": null,
+              "magnitude": null,
+              "notes": [],
+              "perTargetEffectCheck": null,
+              "rankedValues": [
+                {
+                  "level": 1,
+                  "unit": "percent",
+                  "value": 7.5
+                },
+                {
+                  "level": 2,
+                  "unit": "percent",
+                  "value": 9
+                },
+                {
+                  "level": 3,
+                  "unit": "percent",
+                  "value": 10.5
+                },
+                {
+                  "level": 4,
+                  "unit": "percent",
+                  "value": 12.75
+                },
+                {
+                  "level": 5,
+                  "unit": "percent",
+                  "value": 15
+                }
+              ],
+              "scaling": [
+                "Instinct"
+              ],
+              "sourceScope": "unknown",
+              "stack": null,
+              "target": "2 Allies",
+              "targetCount": null,
+              "targetPriority": "any-eligible",
+              "targetScope": "within-adjacency",
+              "type": "Intelligence Up",
+              "unit": "percent"
+            },
+            {
+              "calculated": false,
+              "casterEligibility": "eligible-if-targeting-allows",
+              "conditionalMultipliers": [],
+              "conditions": [],
+              "directlyVerified": true,
+              "duration": "Until end of combat",
+              "durationRounds": null,
+              "excludes": [],
+              "id": "cunning-ferocity-fire",
+              "includesCaster": null,
+              "magnitude": null,
+              "notes": [],
+              "perTargetEffectCheck": null,
+              "rankedValues": [
+                {
+                  "level": 1,
+                  "unit": "percent",
+                  "value": 5
+                },
+                {
+                  "level": 2,
+                  "unit": "percent",
+                  "value": 6
+                },
+                {
+                  "level": 3,
+                  "unit": "percent",
+                  "value": 7
+                },
+                {
+                  "level": 4,
+                  "unit": "percent",
+                  "value": 8.5
+                },
+                {
+                  "level": 5,
+                  "unit": "percent",
+                  "value": 10
+                }
+              ],
+              "scaling": [],
+              "sourceScope": "unknown",
+              "stack": null,
+              "target": "2 Allies",
+              "targetCount": null,
+              "targetPriority": "any-eligible",
+              "targetScope": "within-adjacency",
+              "type": "Fire Damage Dealt Up",
+              "unit": "percent"
+            }
+          ],
+          "id": "cunning-ferocity-start-combat",
+          "repeat": null,
+          "rounds": [],
+          "targetPriority": "any-eligible",
+          "timing": "start-of-combat",
+          "triggerChanceByHabitLevel": [],
+          "triggerChanceFixed": null,
+          "triggerEvent": "start-of-combat"
+        }
+      ],
+      "tags": [
+        "FIRE_DAMAGE_UP",
+        "BUFF_ALLIES",
+        "ADJACENT_TARGET"
+      ],
+      "unlockStarRank": 8,
+      "unresolvedQuestions": [],
+      "verification": {
+        "capturedAt": "2026-06-23",
+        "gameVersion": "26.6.53509",
+        "reviewedManually": true,
+        "source": "Seasmoke Cunning Ferocity screenshot",
+        "status": "screenshot-verified"
+      }
+    },
+    {
+      "abilityClass": "passive",
+      "augmentations": [],
+      "dragonId": "seasmoke",
+      "evidenceIds": [
+        "seasmoke-loyal-bond-2026-06-23"
+      ],
+      "glossaryEntries": [],
+      "id": "seasmoke-loyal-bond",
+      "kind": "habit",
+      "minimumDragonLevel": null,
+      "name": "Loyal Bond",
+      "positionRequirement": null,
+      "powerByHabitLevel": [
+        {
+          "level": 1,
+          "unit": "power",
+          "value": 430
+        },
+        {
+          "level": 2,
+          "unit": "power",
+          "value": 1000
+        },
+        {
+          "level": 3,
+          "unit": "power",
+          "value": 1700
+        },
+        {
+          "level": 4,
+          "unit": "power",
+          "value": 2700
+        },
+        {
+          "level": 5,
+          "unit": "power",
+          "value": 4000
+        }
+      ],
+      "rawDescription": "Each Round: grant Advantage above 50% Troop Capacity or Resistance below 50% Troop Capacity to 2 other Allies.",
+      "schedules": [
+        {
+          "attempts": null,
+          "battleContext": "unspecified",
+          "conditions": [
+            {
+              "battleContext": null,
+              "comparison": "above",
+              "description": "Target is above 50% Troop Capacity.",
+              "id": "target-above-50-troop-capacity",
+              "kind": "target-above-troop-capacity-threshold",
+              "statusId": null,
+              "subject": "target",
+              "thresholdPercent": 50,
+              "unresolved": false
+            }
+          ],
+          "effects": [
+            {
+              "calculated": false,
+              "casterEligibility": "excluded",
+              "conditionalMultipliers": [],
+              "conditions": [
+                {
+                  "battleContext": null,
+                  "comparison": "above",
+                  "description": "Target is above 50% Troop Capacity.",
+                  "id": "target-above-50-troop-capacity",
+                  "kind": "target-above-troop-capacity-threshold",
+                  "statusId": null,
+                  "subject": "target",
+                  "thresholdPercent": 50,
+                  "unresolved": false
+                }
+              ],
+              "directlyVerified": true,
+              "duration": null,
+              "durationRounds": 2,
+              "excludes": [],
+              "id": "loyal-bond-advantage-effect",
+              "includesCaster": null,
+              "magnitude": 20,
+              "notes": [],
+              "perTargetEffectCheck": null,
+              "rankedValues": [],
+              "scaling": [],
+              "sourceScope": "unknown",
+              "stack": null,
+              "target": "2 other Allies",
+              "targetCount": null,
+              "targetPriority": "any-eligible",
+              "targetScope": "any-lane",
+              "type": "Advantage",
+              "unit": "percent"
+            }
+          ],
+          "id": "loyal-bond-advantage",
+          "repeat": null,
+          "rounds": [],
+          "targetPriority": "any-eligible",
+          "timing": "each-round",
+          "triggerChanceByHabitLevel": [
+            {
+              "level": 1,
+              "unit": "percent",
+              "value": 10
+            },
+            {
+              "level": 2,
+              "unit": "percent",
+              "value": 13
+            },
+            {
+              "level": 3,
+              "unit": "percent",
+              "value": 16
+            },
+            {
+              "level": 4,
+              "unit": "percent",
+              "value": 20
+            },
+            {
+              "level": 5,
+              "unit": "percent",
+              "value": 25
+            }
+          ],
+          "triggerChanceFixed": null,
+          "triggerEvent": "each-round"
+        },
+        {
+          "attempts": null,
+          "battleContext": "unspecified",
+          "conditions": [
+            {
+              "battleContext": null,
+              "comparison": "below",
+              "description": "Target is below 50% Troop Capacity.",
+              "id": "target-below-50-troop-capacity",
+              "kind": "target-below-troop-capacity-threshold",
+              "statusId": null,
+              "subject": "target",
+              "thresholdPercent": 50,
+              "unresolved": false
+            }
+          ],
+          "effects": [
+            {
+              "calculated": false,
+              "casterEligibility": "excluded",
+              "conditionalMultipliers": [],
+              "conditions": [
+                {
+                  "battleContext": null,
+                  "comparison": "below",
+                  "description": "Target is below 50% Troop Capacity.",
+                  "id": "target-below-50-troop-capacity",
+                  "kind": "target-below-troop-capacity-threshold",
+                  "statusId": null,
+                  "subject": "target",
+                  "thresholdPercent": 50,
+                  "unresolved": false
+                }
+              ],
+              "directlyVerified": true,
+              "duration": null,
+              "durationRounds": 2,
+              "excludes": [],
+              "id": "loyal-bond-resistance-effect",
+              "includesCaster": null,
+              "magnitude": 20,
+              "notes": [
+                "Exact Resistance semantics unresolved."
+              ],
+              "perTargetEffectCheck": null,
+              "rankedValues": [],
+              "scaling": [],
+              "sourceScope": "unknown",
+              "stack": null,
+              "target": "2 other Allies",
+              "targetCount": null,
+              "targetPriority": "any-eligible",
+              "targetScope": "any-lane",
+              "type": "Resistance",
+              "unit": "percent"
+            }
+          ],
+          "id": "loyal-bond-resistance",
+          "repeat": null,
+          "rounds": [],
+          "targetPriority": "any-eligible",
+          "timing": "each-round",
+          "triggerChanceByHabitLevel": [
+            {
+              "level": 1,
+              "unit": "percent",
+              "value": 10
+            },
+            {
+              "level": 2,
+              "unit": "percent",
+              "value": 13
+            },
+            {
+              "level": 3,
+              "unit": "percent",
+              "value": 16
+            },
+            {
+              "level": 4,
+              "unit": "percent",
+              "value": 20
+            },
+            {
+              "level": 5,
+              "unit": "percent",
+              "value": 25
+            }
+          ],
+          "triggerChanceFixed": null,
+          "triggerEvent": "each-round"
+        }
+      ],
+      "tags": [
+        "ADVANTAGE",
+        "RESISTANCE",
+        "OTHER_ALLIES_TARGET"
+      ],
+      "unlockStarRank": 10,
+      "unresolvedQuestions": [
+        "Exactly 50% Troop Capacity boundary.",
+        "Resistance detailed meaning."
+      ],
+      "verification": {
+        "capturedAt": "2026-06-23",
+        "gameVersion": "26.6.53509",
+        "reviewedManually": true,
+        "source": "Seasmoke Loyal Bond screenshot",
+        "status": "screenshot-verified"
+      }
+    }
+  ],
+  "id": "seasmoke",
+  "isNew": false,
+  "lastVerified": "2026-06-23",
+  "manualReviewReferences": [
+    {
+      "dragonId": "seasmoke",
+      "evidenceIds": [
+        "seasmoke-main-screen-2026-06-23"
+      ],
+      "id": "seasmoke-identity-review-2026-06-24",
+      "notes": [
+        "Seasmoke identity and screenshot-normalized data match the game."
+      ],
+      "reviewedAgainstGameBuild": "26.6.53509",
+      "reviewedAt": "2026-06-24",
+      "reviewer": "repository-owner",
+      "scope": "identity",
+      "status": "confirmed"
+    },
+    {
+      "dragonId": "seasmoke",
+      "evidenceIds": [
+        "seasmoke-cleansing-wrath-summary-2026-06-23"
+      ],
+      "id": "seasmoke-command-review-2026-06-24",
+      "notes": [
+        "Cleansing Wrath transcription matches the game."
+      ],
+      "reviewedAgainstGameBuild": "26.6.53509",
+      "reviewedAt": "2026-06-24",
+      "reviewer": "repository-owner",
+      "scope": "command",
+      "status": "confirmed"
+    },
+    {
+      "dragonId": "seasmoke",
+      "evidenceIds": [
+        "seasmoke-champions-brilliance-2026-06-23"
+      ],
+      "id": "seasmoke-trait-review-2026-06-24",
+      "notes": [
+        "Champion's Brilliance transcription matches the game."
+      ],
+      "reviewedAgainstGameBuild": "26.6.53509",
+      "reviewedAt": "2026-06-24",
+      "reviewer": "repository-owner",
+      "scope": "trait",
+      "status": "confirmed"
+    },
+    {
+      "dragonId": "seasmoke",
+      "evidenceIds": [
+        "seasmoke-clever-maneuver-2026-06-23",
+        "seasmoke-winds-favor-2026-06-23",
+        "seasmoke-infectious-wrath-2026-06-23",
+        "seasmoke-cunning-ferocity-2026-06-23",
+        "seasmoke-loyal-bond-2026-06-23"
+      ],
+      "id": "seasmoke-habits-review-2026-06-24",
+      "notes": [
+        "General Seasmoke Habit screenshot-normalized data matches the game."
+      ],
+      "reviewedAgainstGameBuild": "26.6.53509",
+      "reviewedAt": "2026-06-24",
+      "reviewer": "repository-owner",
+      "scope": "habits",
+      "status": "confirmed"
+    },
+    {
+      "dragonId": "seasmoke",
+      "evidenceIds": [
+        "seasmoke-infectious-wrath-2026-06-23"
+      ],
+      "id": "seasmoke-infectious-wrath-normalization-review-2026-06-24",
+      "notes": [
+        "Infectious Wrath's augmentation of Cleansing Wrath needs detailed presentation review.",
+        "This follow-up does not block ordinary synergy analysis because the unresolved details do not determine the main formation interactions currently modeled."
+      ],
+      "reviewedAgainstGameBuild": "26.6.53509",
+      "reviewedAt": "2026-06-24",
+      "reviewer": "repository-owner",
+      "scope": "synergy-normalization",
+      "status": "needs-follow-up"
+    }
+  ],
+  "modifierCapabilities": [
+    {
+      "abilityId": "seasmoke-champions-brilliance",
+      "abilityName": "Champion's Brilliance",
+      "availability": {
+        "canonical": "canonical-base",
+        "notes": [
+          "Requires Dragon Level 16+.",
+          "Not hatched in observed account."
+        ],
+        "observedAccount": "observed-unavailable",
+        "reportLabel": "Base kit; Level 16+; not hatched in observed account",
+        "userRoster": "unknown"
+      },
+      "channel": "stat",
+      "combatLogConfirmed": false,
+      "conditional": false,
+      "conditions": [],
+      "confidence": "confirmed",
+      "currentlyAvailable": true,
+      "direction": "dealt",
+      "directlyVerified": true,
+      "dragonId": "seasmoke",
+      "evidenceIds": [
+        "seasmoke-champions-brilliance-2026-06-23"
+      ],
+      "futureAvailable": false,
+      "id": "seasmoke-champions-brilliance-seasmoke-strength-flat-stat-dealt-modifier",
+      "label": "Champion's Brilliance: Strength Up",
+      "minimumDragonLevel": 16,
+      "operation": "increase",
+      "providerRequirements": [
+        {
+          "evidenceIds": [
+            "seasmoke-champions-brilliance-2026-06-23"
+          ],
+          "expected": "vanguard",
+          "id": "seasmoke-champions-brilliance-provider-position-vanguard",
+          "kind": "provider-position",
+          "label": "Provider position requirement"
+        }
+      ],
+      "recipientRequirements": [],
+      "requiredHabitLevel": null,
+      "role": "self-amplification",
+      "sourceScope": "unknown",
+      "stackMaximum": null,
+      "targetSelector": {
+        "count": null,
+        "includesCaster": null,
+        "position": null,
+        "scope": "self",
+        "selection": "self",
+        "side": "self"
+      },
+      "unit": "flat",
+      "unlockStarRank": 1,
+      "value": 15,
+      "valuePerStack": null
+    },
+    {
+      "abilityId": "seasmoke-champions-brilliance",
+      "abilityName": "Champion's Brilliance",
+      "availability": {
+        "canonical": "canonical-base",
+        "notes": [
+          "Requires Dragon Level 16+.",
+          "Not hatched in observed account."
+        ],
+        "observedAccount": "observed-unavailable",
+        "reportLabel": "Base kit; Level 16+; not hatched in observed account",
+        "userRoster": "unknown"
+      },
+      "channel": "stat",
+      "combatLogConfirmed": false,
+      "conditional": false,
+      "conditions": [],
+      "confidence": "confirmed",
+      "currentlyAvailable": true,
+      "direction": "dealt",
+      "directlyVerified": true,
+      "dragonId": "seasmoke",
+      "evidenceIds": [
+        "seasmoke-champions-brilliance-2026-06-23"
+      ],
+      "futureAvailable": false,
+      "id": "seasmoke-champions-brilliance-seasmoke-intelligence-flat-stat-dealt-modifier",
+      "label": "Champion's Brilliance: Intelligence Up",
+      "minimumDragonLevel": 16,
+      "operation": "increase",
+      "providerRequirements": [
+        {
+          "evidenceIds": [
+            "seasmoke-champions-brilliance-2026-06-23"
+          ],
+          "expected": "vanguard",
+          "id": "seasmoke-champions-brilliance-provider-position-vanguard",
+          "kind": "provider-position",
+          "label": "Provider position requirement"
+        }
+      ],
+      "recipientRequirements": [],
+      "requiredHabitLevel": null,
+      "role": "self-amplification",
+      "sourceScope": "unknown",
+      "stackMaximum": null,
+      "targetSelector": {
+        "count": null,
+        "includesCaster": null,
+        "position": null,
+        "scope": "self",
+        "selection": "self",
+        "side": "self"
+      },
+      "unit": "flat",
+      "unlockStarRank": 1,
+      "value": 15,
+      "valuePerStack": null
+    },
+    {
+      "abilityId": "seasmoke-champions-brilliance",
+      "abilityName": "Champion's Brilliance",
+      "availability": {
+        "canonical": "canonical-base",
+        "notes": [
+          "Requires Dragon Level 16+.",
+          "Not hatched in observed account."
+        ],
+        "observedAccount": "observed-unavailable",
+        "reportLabel": "Base kit; Level 16+; not hatched in observed account",
+        "userRoster": "unknown"
+      },
+      "channel": "stat",
+      "combatLogConfirmed": false,
+      "conditional": false,
+      "conditions": [],
+      "confidence": "confirmed",
+      "currentlyAvailable": true,
+      "direction": "dealt",
+      "directlyVerified": true,
+      "dragonId": "seasmoke",
+      "evidenceIds": [
+        "seasmoke-champions-brilliance-2026-06-23"
+      ],
+      "futureAvailable": false,
+      "id": "seasmoke-champions-brilliance-seasmoke-instinct-flat-stat-dealt-modifier",
+      "label": "Champion's Brilliance: Instinct Up",
+      "minimumDragonLevel": 16,
+      "operation": "increase",
+      "providerRequirements": [
+        {
+          "evidenceIds": [
+            "seasmoke-champions-brilliance-2026-06-23"
+          ],
+          "expected": "vanguard",
+          "id": "seasmoke-champions-brilliance-provider-position-vanguard",
+          "kind": "provider-position",
+          "label": "Provider position requirement"
+        }
+      ],
+      "recipientRequirements": [],
+      "requiredHabitLevel": null,
+      "role": "self-amplification",
+      "sourceScope": "unknown",
+      "stackMaximum": null,
+      "targetSelector": {
+        "count": null,
+        "includesCaster": null,
+        "position": null,
+        "scope": "self",
+        "selection": "self",
+        "side": "self"
+      },
+      "unit": "flat",
+      "unlockStarRank": 1,
+      "value": 15,
+      "valuePerStack": null
+    },
+    {
+      "abilityId": "seasmoke-clever-maneuver",
+      "abilityName": "Clever Maneuver",
+      "availability": {
+        "canonical": "canonical-locked",
+        "notes": [
+          "Future at Star Rank 2.",
+          "Not hatched in observed account."
+        ],
+        "observedAccount": "observed-unavailable",
+        "reportLabel": "Future at Star Rank 2; not hatched in observed account",
+        "userRoster": "unknown"
+      },
+      "channel": "stat",
+      "combatLogConfirmed": false,
+      "conditional": true,
+      "conditions": [],
+      "confidence": "confirmed",
+      "currentlyAvailable": false,
+      "direction": "dealt",
+      "directlyVerified": true,
+      "dragonId": "seasmoke",
+      "evidenceIds": [
+        "seasmoke-clever-maneuver-2026-06-23"
+      ],
+      "futureAvailable": true,
+      "id": "seasmoke-clever-maneuver-clever-maneuver-intelligence-stat-dealt-modifier",
+      "label": "Clever Maneuver: Intelligence Up",
+      "minimumDragonLevel": null,
+      "operation": "increase",
+      "providerRequirements": [],
+      "recipientRequirements": [],
+      "requiredHabitLevel": 1,
+      "role": "ally-support",
+      "sourceScope": "unknown",
+      "stackMaximum": null,
+      "targetSelector": {
+        "count": null,
+        "includesCaster": null,
+        "position": null,
+        "scope": "any-lane",
+        "selection": "any",
+        "side": "ally"
+      },
+      "unit": "flat",
+      "unlockStarRank": 2,
+      "value": null,
+      "valuePerStack": null
+    },
+    {
+      "abilityId": "seasmoke-clever-maneuver",
+      "abilityName": "Clever Maneuver",
+      "availability": {
+        "canonical": "canonical-locked",
+        "notes": [
+          "Future at Star Rank 2.",
+          "Not hatched in observed account."
+        ],
+        "observedAccount": "observed-unavailable",
+        "reportLabel": "Future at Star Rank 2; not hatched in observed account",
+        "userRoster": "unknown"
+      },
+      "channel": "stat",
+      "combatLogConfirmed": false,
+      "conditional": true,
+      "conditions": [],
+      "confidence": "confirmed",
+      "currentlyAvailable": false,
+      "direction": "dealt",
+      "directlyVerified": true,
+      "dragonId": "seasmoke",
+      "evidenceIds": [
+        "seasmoke-clever-maneuver-2026-06-23"
+      ],
+      "futureAvailable": true,
+      "id": "seasmoke-clever-maneuver-clever-maneuver-initiative-stat-dealt-modifier",
+      "label": "Clever Maneuver: Initiative Up",
+      "minimumDragonLevel": null,
+      "operation": "increase",
+      "providerRequirements": [],
+      "recipientRequirements": [],
+      "requiredHabitLevel": 1,
+      "role": "ally-support",
+      "sourceScope": "unknown",
+      "stackMaximum": null,
+      "targetSelector": {
+        "count": null,
+        "includesCaster": null,
+        "position": null,
+        "scope": "any-lane",
+        "selection": "any",
+        "side": "ally"
+      },
+      "unit": "percent",
+      "unlockStarRank": 2,
+      "value": null,
+      "valuePerStack": null
+    },
+    {
+      "abilityId": "seasmoke-winds-favor",
+      "abilityName": "Wind's Favor",
+      "availability": {
+        "canonical": "canonical-locked",
+        "notes": [
+          "Future at Star Rank 4.",
+          "Not hatched in observed account."
+        ],
+        "observedAccount": "observed-unavailable",
+        "reportLabel": "Future at Star Rank 4; not hatched in observed account",
+        "userRoster": "unknown"
+      },
+      "channel": "stat",
+      "combatLogConfirmed": false,
+      "conditional": true,
+      "conditions": [],
+      "confidence": "confirmed",
+      "currentlyAvailable": false,
+      "direction": "dealt",
+      "directlyVerified": true,
+      "dragonId": "seasmoke",
+      "evidenceIds": [
+        "seasmoke-winds-favor-2026-06-23"
+      ],
+      "futureAvailable": true,
+      "id": "seasmoke-winds-favor-winds-favor-initiative-stat-dealt-modifier",
+      "label": "Wind's Favor: Initiative Up",
+      "minimumDragonLevel": null,
+      "operation": "increase",
+      "providerRequirements": [],
+      "recipientRequirements": [],
+      "requiredHabitLevel": 1,
+      "role": "ally-support",
+      "sourceScope": "unknown",
+      "stackMaximum": null,
+      "targetSelector": {
+        "count": 3,
+        "includesCaster": true,
+        "position": null,
+        "scope": "any-lane",
+        "selection": "any",
+        "side": "ally"
+      },
+      "unit": "percent",
+      "unlockStarRank": 4,
+      "value": null,
+      "valuePerStack": null
+    },
+    {
+      "abilityId": "seasmoke-cunning-ferocity",
+      "abilityName": "Cunning Ferocity",
+      "availability": {
+        "canonical": "canonical-locked",
+        "notes": [
+          "Future at Star Rank 8.",
+          "Not hatched in observed account."
+        ],
+        "observedAccount": "observed-unavailable",
+        "reportLabel": "Future at Star Rank 8; not hatched in observed account",
+        "userRoster": "unknown"
+      },
+      "channel": "stat",
+      "combatLogConfirmed": false,
+      "conditional": true,
+      "conditions": [],
+      "confidence": "confirmed",
+      "currentlyAvailable": false,
+      "direction": "dealt",
+      "directlyVerified": true,
+      "dragonId": "seasmoke",
+      "evidenceIds": [
+        "seasmoke-cunning-ferocity-2026-06-23"
+      ],
+      "futureAvailable": true,
+      "id": "seasmoke-cunning-ferocity-cunning-ferocity-intelligence-stat-dealt-modifier",
+      "label": "Cunning Ferocity: Intelligence Up",
+      "minimumDragonLevel": null,
+      "operation": "increase",
+      "providerRequirements": [],
+      "recipientRequirements": [],
+      "requiredHabitLevel": 1,
+      "role": "ally-support",
+      "sourceScope": "unknown",
+      "stackMaximum": null,
+      "targetSelector": {
+        "count": 2,
+        "includesCaster": null,
+        "position": null,
+        "scope": "within-adjacency",
+        "selection": "adjacent",
+        "side": "ally"
+      },
+      "unit": "percent",
+      "unlockStarRank": 8,
+      "value": null,
+      "valuePerStack": null
+    },
+    {
+      "abilityId": "seasmoke-cunning-ferocity",
+      "abilityName": "Cunning Ferocity",
+      "availability": {
+        "canonical": "canonical-locked",
+        "notes": [
+          "Future at Star Rank 8.",
+          "Not hatched in observed account."
+        ],
+        "observedAccount": "observed-unavailable",
+        "reportLabel": "Future at Star Rank 8; not hatched in observed account",
+        "userRoster": "unknown"
+      },
+      "channel": "fire-damage",
+      "combatLogConfirmed": false,
+      "conditional": true,
+      "conditions": [],
+      "confidence": "confirmed",
+      "currentlyAvailable": false,
+      "direction": "dealt",
+      "directlyVerified": true,
+      "dragonId": "seasmoke",
+      "evidenceIds": [
+        "seasmoke-cunning-ferocity-2026-06-23"
+      ],
+      "futureAvailable": true,
+      "id": "seasmoke-cunning-ferocity-cunning-ferocity-fire-fire-damage-dealt-modifier",
+      "label": "Cunning Ferocity: Fire Damage Dealt Up",
+      "minimumDragonLevel": null,
+      "operation": "increase",
+      "providerRequirements": [],
+      "recipientRequirements": [],
+      "requiredHabitLevel": 1,
+      "role": "ally-support",
+      "sourceScope": "all-qualifying-sources",
+      "stackMaximum": null,
+      "targetSelector": {
+        "count": 2,
+        "includesCaster": null,
+        "position": null,
+        "scope": "within-adjacency",
+        "selection": "adjacent",
+        "side": "ally"
+      },
+      "unit": "percent",
+      "unlockStarRank": 8,
+      "value": null,
+      "valuePerStack": null
+    }
+  ],
+  "modifierRoles": [
+    "ally-support",
+    "self-amplification"
+  ],
+  "name": "Seasmoke",
+  "notes": null,
+  "observationSnapshots": [
+    {
+      "canonical": false,
+      "capturedAt": "2026-06-23",
+      "collection": {
+        "shardsCurrent": 10,
+        "shardsRequired": 15,
+        "state": "not-hatched"
+      },
+      "combatStats": {
+        "initiative": 64.8,
+        "instinct": 53.9,
+        "intelligence": 62.7,
+        "strength": 58.8
+      },
+      "dragonId": "seasmoke",
+      "dragonLevel": 1,
+      "dragonPower": 0,
+      "evidenceIds": [
+        "seasmoke-main-screen-2026-06-23"
+      ],
+      "gameVersion": "26.6.53509",
+      "id": "seasmoke-main-screen-2026-06-23",
+      "marchSpeed": "Fast",
+      "modifierContextKnown": false,
+      "sourceScope": "noncanonical-account-observation",
+      "staminaCurrent": 250,
+      "staminaMaximum": 100,
+      "starRank": null,
+      "troopCapacity": 1450
+    }
+  ],
+  "officialProfileUrl": "https://gotdragonfire.com/dragons/seasmoke/",
+  "outputCapabilities": [
+    {
+      "abilityId": "seasmoke-cleansing-wrath",
+      "abilityName": "Cleansing Wrath",
+      "availability": {
+        "canonical": "canonical-base",
+        "notes": [
+          "Not hatched in observed account."
+        ],
+        "observedAccount": "observed-unavailable",
+        "reportLabel": "Base kit; not hatched in observed account",
+        "userRoster": "unknown"
+      },
+      "channel": "fire-damage",
+      "combatLogConfirmed": false,
+      "conditional": false,
+      "conditions": [],
+      "confidence": "confirmed",
+      "currentlyAvailable": true,
+      "dependencies": [
+        {
+          "notes": [
+            "Effect wording indicates scaling with Intelligence."
+          ],
+          "statId": "intelligence",
+          "type": "scales-with-stat"
+        },
+        {
+          "notes": [
+            "Fire Damage is reduced by target Initiative."
+          ],
+          "statId": "initiative",
+          "type": "mitigated-by-target-stat"
+        }
+      ],
+      "directlyVerified": true,
+      "dragonId": "seasmoke",
+      "evidenceIds": [
+        "seasmoke-cleansing-wrath-summary-2026-06-23",
+        "seasmoke-cleansing-wrath-glossary-2026-06-23"
+      ],
+      "futureAvailable": false,
+      "id": "seasmoke-cleansing-wrath-cleansing-wrath-fire-damage-rate-output",
+      "label": "Cleansing Wrath: Fire Damage",
+      "minimumDragonLevel": null,
+      "requiredHabitLevel": null,
+      "sourceKind": "command",
+      "sourceScope": "commands",
+      "targetCount": 1,
+      "targetScope": "same-lane",
+      "targetSide": "enemy",
+      "unlockStarRank": null
+    },
+    {
+      "abilityId": "seasmoke-infectious-wrath",
+      "abilityName": "Infectious Wrath",
+      "availability": {
+        "canonical": "canonical-locked",
+        "notes": [
+          "Future at Star Rank 6.",
+          "Not hatched in observed account."
+        ],
+        "observedAccount": "observed-unavailable",
+        "reportLabel": "Future at Star Rank 6; not hatched in observed account",
+        "userRoster": "unknown"
+      },
+      "channel": "physical-damage",
+      "combatLogConfirmed": false,
+      "conditional": true,
+      "conditions": [
+        {
+          "description": "Damage is doubled when target has Panic.",
+          "evidenceIds": [],
+          "id": "panic-double-damage",
+          "label": "Damage is doubled when target has Panic.",
+          "unresolved": false
+        }
+      ],
+      "confidence": "confirmed",
+      "currentlyAvailable": false,
+      "dependencies": [
+        {
+          "notes": [
+            "Physical Damage is increased by Strength."
+          ],
+          "statId": "strength",
+          "type": "scales-with-stat"
+        },
+        {
+          "notes": [
+            "Physical Damage is reduced by target Instinct."
+          ],
+          "statId": "instinct",
+          "type": "mitigated-by-target-stat"
+        },
+        {
+          "multiplier": 2,
+          "notes": [
+            "Target has Panic."
+          ],
+          "statusId": "panic",
+          "type": "requires-target-status"
+        }
+      ],
+      "directlyVerified": true,
+      "dragonId": "seasmoke",
+      "evidenceIds": [
+        "seasmoke-infectious-wrath-2026-06-23"
+      ],
+      "futureAvailable": true,
+      "id": "seasmoke-infectious-wrath-infectious-wrath-physical-damage-rate-output",
+      "label": "Infectious Wrath: Physical Damage",
+      "minimumDragonLevel": null,
+      "requiredHabitLevel": 1,
+      "sourceKind": "habit",
+      "sourceScope": "habits",
+      "targetCount": 2,
+      "targetScope": "within-adjacency",
+      "targetSide": "enemy",
+      "unlockStarRank": 6
+    }
+  ],
+  "periodicDamage": [],
+  "profileCompleteness": "detailed-combat-data",
+  "rankedValues": [
+    {
+      "abilityId": "seasmoke-clever-maneuver",
+      "rankedValue": {
+        "level": 1,
+        "unit": "power",
+        "value": 420
+      },
+      "source": "powerByHabitLevel"
+    },
+    {
+      "abilityId": "seasmoke-clever-maneuver",
+      "rankedValue": {
+        "level": 2,
+        "unit": "power",
+        "value": 920
+      },
+      "source": "powerByHabitLevel"
+    },
+    {
+      "abilityId": "seasmoke-clever-maneuver",
+      "rankedValue": {
+        "level": 3,
+        "unit": "power",
+        "value": 1500
+      },
+      "source": "powerByHabitLevel"
+    },
+    {
+      "abilityId": "seasmoke-clever-maneuver",
+      "rankedValue": {
+        "level": 4,
+        "unit": "power",
+        "value": 2200
+      },
+      "source": "powerByHabitLevel"
+    },
+    {
+      "abilityId": "seasmoke-clever-maneuver",
+      "rankedValue": {
+        "level": 5,
+        "unit": "power",
+        "value": 3100
+      },
+      "source": "powerByHabitLevel"
+    },
+    {
+      "abilityId": "seasmoke-clever-maneuver",
+      "effectId": "clever-maneuver-intelligence",
+      "rankedValue": {
+        "level": 1,
+        "unit": "percent",
+        "value": 22
+      },
+      "scheduleId": "clever-maneuver-start-combat",
+      "source": "effect.rankedValues"
+    },
+    {
+      "abilityId": "seasmoke-clever-maneuver",
+      "effectId": "clever-maneuver-intelligence",
+      "rankedValue": {
+        "level": 2,
+        "unit": "percent",
+        "value": 26.4
+      },
+      "scheduleId": "clever-maneuver-start-combat",
+      "source": "effect.rankedValues"
+    },
+    {
+      "abilityId": "seasmoke-clever-maneuver",
+      "effectId": "clever-maneuver-intelligence",
+      "rankedValue": {
+        "level": 3,
+        "unit": "percent",
+        "value": 30.8
+      },
+      "scheduleId": "clever-maneuver-start-combat",
+      "source": "effect.rankedValues"
+    },
+    {
+      "abilityId": "seasmoke-clever-maneuver",
+      "effectId": "clever-maneuver-intelligence",
+      "rankedValue": {
+        "level": 4,
+        "unit": "percent",
+        "value": 37.4
+      },
+      "scheduleId": "clever-maneuver-start-combat",
+      "source": "effect.rankedValues"
+    },
+    {
+      "abilityId": "seasmoke-clever-maneuver",
+      "effectId": "clever-maneuver-intelligence",
+      "rankedValue": {
+        "level": 5,
+        "unit": "percent",
+        "value": 44
+      },
+      "scheduleId": "clever-maneuver-start-combat",
+      "source": "effect.rankedValues"
+    },
+    {
+      "abilityId": "seasmoke-clever-maneuver",
+      "effectId": "clever-maneuver-initiative",
+      "rankedValue": {
+        "level": 1,
+        "unit": "percent",
+        "value": 12.5
+      },
+      "scheduleId": "clever-maneuver-start-combat",
+      "source": "effect.rankedValues"
+    },
+    {
+      "abilityId": "seasmoke-clever-maneuver",
+      "effectId": "clever-maneuver-initiative",
+      "rankedValue": {
+        "level": 2,
+        "unit": "percent",
+        "value": 15
+      },
+      "scheduleId": "clever-maneuver-start-combat",
+      "source": "effect.rankedValues"
+    },
+    {
+      "abilityId": "seasmoke-clever-maneuver",
+      "effectId": "clever-maneuver-initiative",
+      "rankedValue": {
+        "level": 3,
+        "unit": "percent",
+        "value": 17.5
+      },
+      "scheduleId": "clever-maneuver-start-combat",
+      "source": "effect.rankedValues"
+    },
+    {
+      "abilityId": "seasmoke-clever-maneuver",
+      "effectId": "clever-maneuver-initiative",
+      "rankedValue": {
+        "level": 4,
+        "unit": "percent",
+        "value": 21.25
+      },
+      "scheduleId": "clever-maneuver-start-combat",
+      "source": "effect.rankedValues"
+    },
+    {
+      "abilityId": "seasmoke-clever-maneuver",
+      "effectId": "clever-maneuver-initiative",
+      "rankedValue": {
+        "level": 5,
+        "unit": "percent",
+        "value": 25
+      },
+      "scheduleId": "clever-maneuver-start-combat",
+      "source": "effect.rankedValues"
+    },
+    {
+      "abilityId": "seasmoke-winds-favor",
+      "rankedValue": {
+        "level": 1,
+        "unit": "power",
+        "value": 420
+      },
+      "source": "powerByHabitLevel"
+    },
+    {
+      "abilityId": "seasmoke-winds-favor",
+      "rankedValue": {
+        "level": 2,
+        "unit": "power",
+        "value": 920
+      },
+      "source": "powerByHabitLevel"
+    },
+    {
+      "abilityId": "seasmoke-winds-favor",
+      "rankedValue": {
+        "level": 3,
+        "unit": "power",
+        "value": 1500
+      },
+      "source": "powerByHabitLevel"
+    },
+    {
+      "abilityId": "seasmoke-winds-favor",
+      "rankedValue": {
+        "level": 4,
+        "unit": "power",
+        "value": 2200
+      },
+      "source": "powerByHabitLevel"
+    },
+    {
+      "abilityId": "seasmoke-winds-favor",
+      "rankedValue": {
+        "level": 5,
+        "unit": "power",
+        "value": 3100
+      },
+      "source": "powerByHabitLevel"
+    },
+    {
+      "abilityId": "seasmoke-winds-favor",
+      "effectId": "winds-favor-initiative",
+      "rankedValue": {
+        "level": 1,
+        "unit": "percent",
+        "value": 12.5
+      },
+      "scheduleId": "winds-favor-start-combat",
+      "source": "effect.rankedValues"
+    },
+    {
+      "abilityId": "seasmoke-winds-favor",
+      "effectId": "winds-favor-initiative",
+      "rankedValue": {
+        "level": 2,
+        "unit": "percent",
+        "value": 15
+      },
+      "scheduleId": "winds-favor-start-combat",
+      "source": "effect.rankedValues"
+    },
+    {
+      "abilityId": "seasmoke-winds-favor",
+      "effectId": "winds-favor-initiative",
+      "rankedValue": {
+        "level": 3,
+        "unit": "percent",
+        "value": 17.5
+      },
+      "scheduleId": "winds-favor-start-combat",
+      "source": "effect.rankedValues"
+    },
+    {
+      "abilityId": "seasmoke-winds-favor",
+      "effectId": "winds-favor-initiative",
+      "rankedValue": {
+        "level": 4,
+        "unit": "percent",
+        "value": 21.25
+      },
+      "scheduleId": "winds-favor-start-combat",
+      "source": "effect.rankedValues"
+    },
+    {
+      "abilityId": "seasmoke-winds-favor",
+      "effectId": "winds-favor-initiative",
+      "rankedValue": {
+        "level": 5,
+        "unit": "percent",
+        "value": 25
+      },
+      "scheduleId": "winds-favor-start-combat",
+      "source": "effect.rankedValues"
+    },
+    {
+      "abilityId": "seasmoke-infectious-wrath",
+      "rankedValue": {
+        "level": 1,
+        "unit": "power",
+        "value": 420
+      },
+      "source": "powerByHabitLevel"
+    },
+    {
+      "abilityId": "seasmoke-infectious-wrath",
+      "rankedValue": {
+        "level": 2,
+        "unit": "power",
+        "value": 920
+      },
+      "source": "powerByHabitLevel"
+    },
+    {
+      "abilityId": "seasmoke-infectious-wrath",
+      "rankedValue": {
+        "level": 3,
+        "unit": "power",
+        "value": 1500
+      },
+      "source": "powerByHabitLevel"
+    },
+    {
+      "abilityId": "seasmoke-infectious-wrath",
+      "rankedValue": {
+        "level": 4,
+        "unit": "power",
+        "value": 2200
+      },
+      "source": "powerByHabitLevel"
+    },
+    {
+      "abilityId": "seasmoke-infectious-wrath",
+      "rankedValue": {
+        "level": 5,
+        "unit": "power",
+        "value": 3100
+      },
+      "source": "powerByHabitLevel"
+    },
+    {
+      "abilityId": "seasmoke-infectious-wrath",
+      "effectId": "infectious-wrath-physical-damage-rate",
+      "rankedValue": {
+        "level": 1,
+        "unit": "percent",
+        "value": 30
+      },
+      "scheduleId": "infectious-wrath-physical-damage",
+      "source": "effect.rankedValues"
+    },
+    {
+      "abilityId": "seasmoke-infectious-wrath",
+      "effectId": "infectious-wrath-physical-damage-rate",
+      "rankedValue": {
+        "level": 2,
+        "unit": "percent",
+        "value": 36
+      },
+      "scheduleId": "infectious-wrath-physical-damage",
+      "source": "effect.rankedValues"
+    },
+    {
+      "abilityId": "seasmoke-infectious-wrath",
+      "effectId": "infectious-wrath-physical-damage-rate",
+      "rankedValue": {
+        "level": 3,
+        "unit": "percent",
+        "value": 42
+      },
+      "scheduleId": "infectious-wrath-physical-damage",
+      "source": "effect.rankedValues"
+    },
+    {
+      "abilityId": "seasmoke-infectious-wrath",
+      "effectId": "infectious-wrath-physical-damage-rate",
+      "rankedValue": {
+        "level": 4,
+        "unit": "percent",
+        "value": 51
+      },
+      "scheduleId": "infectious-wrath-physical-damage",
+      "source": "effect.rankedValues"
+    },
+    {
+      "abilityId": "seasmoke-infectious-wrath",
+      "effectId": "infectious-wrath-physical-damage-rate",
+      "rankedValue": {
+        "level": 5,
+        "unit": "percent",
+        "value": 60
+      },
+      "scheduleId": "infectious-wrath-physical-damage",
+      "source": "effect.rankedValues"
+    },
+    {
+      "abilityId": "seasmoke-cunning-ferocity",
+      "rankedValue": {
+        "level": 1,
+        "unit": "power",
+        "value": 420
+      },
+      "source": "powerByHabitLevel"
+    },
+    {
+      "abilityId": "seasmoke-cunning-ferocity",
+      "rankedValue": {
+        "level": 2,
+        "unit": "power",
+        "value": 920
+      },
+      "source": "powerByHabitLevel"
+    },
+    {
+      "abilityId": "seasmoke-cunning-ferocity",
+      "rankedValue": {
+        "level": 3,
+        "unit": "power",
+        "value": 1500
+      },
+      "source": "powerByHabitLevel"
+    },
+    {
+      "abilityId": "seasmoke-cunning-ferocity",
+      "rankedValue": {
+        "level": 4,
+        "unit": "power",
+        "value": 2200
+      },
+      "source": "powerByHabitLevel"
+    },
+    {
+      "abilityId": "seasmoke-cunning-ferocity",
+      "rankedValue": {
+        "level": 5,
+        "unit": "power",
+        "value": 3100
+      },
+      "source": "powerByHabitLevel"
+    },
+    {
+      "abilityId": "seasmoke-cunning-ferocity",
+      "effectId": "cunning-ferocity-intelligence",
+      "rankedValue": {
+        "level": 1,
+        "unit": "percent",
+        "value": 7.5
+      },
+      "scheduleId": "cunning-ferocity-start-combat",
+      "source": "effect.rankedValues"
+    },
+    {
+      "abilityId": "seasmoke-cunning-ferocity",
+      "effectId": "cunning-ferocity-intelligence",
+      "rankedValue": {
+        "level": 2,
+        "unit": "percent",
+        "value": 9
+      },
+      "scheduleId": "cunning-ferocity-start-combat",
+      "source": "effect.rankedValues"
+    },
+    {
+      "abilityId": "seasmoke-cunning-ferocity",
+      "effectId": "cunning-ferocity-intelligence",
+      "rankedValue": {
+        "level": 3,
+        "unit": "percent",
+        "value": 10.5
+      },
+      "scheduleId": "cunning-ferocity-start-combat",
+      "source": "effect.rankedValues"
+    },
+    {
+      "abilityId": "seasmoke-cunning-ferocity",
+      "effectId": "cunning-ferocity-intelligence",
+      "rankedValue": {
+        "level": 4,
+        "unit": "percent",
+        "value": 12.75
+      },
+      "scheduleId": "cunning-ferocity-start-combat",
+      "source": "effect.rankedValues"
+    },
+    {
+      "abilityId": "seasmoke-cunning-ferocity",
+      "effectId": "cunning-ferocity-intelligence",
+      "rankedValue": {
+        "level": 5,
+        "unit": "percent",
+        "value": 15
+      },
+      "scheduleId": "cunning-ferocity-start-combat",
+      "source": "effect.rankedValues"
+    },
+    {
+      "abilityId": "seasmoke-cunning-ferocity",
+      "effectId": "cunning-ferocity-fire",
+      "rankedValue": {
+        "level": 1,
+        "unit": "percent",
+        "value": 5
+      },
+      "scheduleId": "cunning-ferocity-start-combat",
+      "source": "effect.rankedValues"
+    },
+    {
+      "abilityId": "seasmoke-cunning-ferocity",
+      "effectId": "cunning-ferocity-fire",
+      "rankedValue": {
+        "level": 2,
+        "unit": "percent",
+        "value": 6
+      },
+      "scheduleId": "cunning-ferocity-start-combat",
+      "source": "effect.rankedValues"
+    },
+    {
+      "abilityId": "seasmoke-cunning-ferocity",
+      "effectId": "cunning-ferocity-fire",
+      "rankedValue": {
+        "level": 3,
+        "unit": "percent",
+        "value": 7
+      },
+      "scheduleId": "cunning-ferocity-start-combat",
+      "source": "effect.rankedValues"
+    },
+    {
+      "abilityId": "seasmoke-cunning-ferocity",
+      "effectId": "cunning-ferocity-fire",
+      "rankedValue": {
+        "level": 4,
+        "unit": "percent",
+        "value": 8.5
+      },
+      "scheduleId": "cunning-ferocity-start-combat",
+      "source": "effect.rankedValues"
+    },
+    {
+      "abilityId": "seasmoke-cunning-ferocity",
+      "effectId": "cunning-ferocity-fire",
+      "rankedValue": {
+        "level": 5,
+        "unit": "percent",
+        "value": 10
+      },
+      "scheduleId": "cunning-ferocity-start-combat",
+      "source": "effect.rankedValues"
+    },
+    {
+      "abilityId": "seasmoke-loyal-bond",
+      "rankedValue": {
+        "level": 1,
+        "unit": "power",
+        "value": 430
+      },
+      "source": "powerByHabitLevel"
+    },
+    {
+      "abilityId": "seasmoke-loyal-bond",
+      "rankedValue": {
+        "level": 2,
+        "unit": "power",
+        "value": 1000
+      },
+      "source": "powerByHabitLevel"
+    },
+    {
+      "abilityId": "seasmoke-loyal-bond",
+      "rankedValue": {
+        "level": 3,
+        "unit": "power",
+        "value": 1700
+      },
+      "source": "powerByHabitLevel"
+    },
+    {
+      "abilityId": "seasmoke-loyal-bond",
+      "rankedValue": {
+        "level": 4,
+        "unit": "power",
+        "value": 2700
+      },
+      "source": "powerByHabitLevel"
+    },
+    {
+      "abilityId": "seasmoke-loyal-bond",
+      "rankedValue": {
+        "level": 5,
+        "unit": "power",
+        "value": 4000
+      },
+      "source": "powerByHabitLevel"
+    }
+  ],
+  "rarity": "Legendary",
+  "rawDescriptions": [
+    {
+      "abilityId": "seasmoke-cleansing-wrath",
+      "abilityName": "Cleansing Wrath",
+      "kind": "command",
+      "rawDescription": "Each Round: up to three independent 20% Cleanse attempts. Rounds 3, 6, 9: Fire Damage to one enemy in the same lane (Damage Rate: +190%)."
+    },
+    {
+      "abilityId": "seasmoke-champions-brilliance",
+      "abilityName": "Champion's Brilliance",
+      "kind": "trait",
+      "rawDescription": "At Level 16+ and deployed in the Vanguard, increase self Strength, Intelligence, and Instinct by +15. Reduce Damage Received of the Right Flank ally by 8%."
+    },
+    {
+      "abilityId": "seasmoke-clever-maneuver",
+      "abilityName": "Clever Maneuver",
+      "kind": "habit",
+      "rawDescription": "Start of Combat: Increase Intelligence and Initiative of the ally with highest Intelligence until end of combat."
+    },
+    {
+      "abilityId": "seasmoke-winds-favor",
+      "abilityName": "Wind's Favor",
+      "kind": "habit",
+      "rawDescription": "Start of Combat: Increase Initiative of three Allies in any lane until end of combat, enhanced by Initiative."
+    },
+    {
+      "abilityId": "seasmoke-infectious-wrath",
+      "abilityName": "Infectious Wrath",
+      "kind": "habit",
+      "rawDescription": "Augments Cleansing Wrath with Infectious Wrath stacks and Panic-conditional Physical Damage."
+    },
+    {
+      "abilityId": "seasmoke-cunning-ferocity",
+      "abilityName": "Cunning Ferocity",
+      "kind": "habit",
+      "rawDescription": "Start of Combat: Increase Intelligence and Fire Damage Dealt of two Allies within adjacency until end of combat."
+    },
+    {
+      "abilityId": "seasmoke-loyal-bond",
+      "abilityName": "Loyal Bond",
+      "kind": "habit",
+      "rawDescription": "Each Round: grant Advantage above 50% Troop Capacity or Resistance below 50% Troop Capacity to 2 other Allies."
+    }
+  ],
+  "repetitions": [],
+  "rosterSourceStatus": "official-website",
+  "slug": "seasmoke",
+  "source": {
+    "branch": "feature/project-context-export",
+    "commit": "2cb422d38207fdda378f64504014ac34ff255e24",
+    "databaseVersion": "0.5.1",
+    "dataSchemaVersion": 7,
+    "gameBuild": "26.6.53509",
+    "localRosterSchemaVersion": 3,
+    "repository": "https://github.com/williamchildres/dragonfire-roster-builder"
+  },
+  "stats": {
+    "initiative": null,
+    "instinct": null,
+    "intelligence": null,
+    "strength": null
+  },
+  "statusOutputs": [
+    {
+      "abilityId": "seasmoke-loyal-bond",
+      "abilityName": "Loyal Bond",
+      "availability": {
+        "canonical": "canonical-locked",
+        "notes": [
+          "Future at Star Rank 10.",
+          "Not hatched in observed account."
+        ],
+        "observedAccount": "observed-unavailable",
+        "reportLabel": "Future at Star Rank 10; not hatched in observed account",
+        "userRoster": "unknown"
+      },
+      "chanceByHabitLevel": [
+        {
+          "level": 1,
+          "unit": "percent",
+          "value": 10
+        },
+        {
+          "level": 2,
+          "unit": "percent",
+          "value": 13
+        },
+        {
+          "level": 3,
+          "unit": "percent",
+          "value": 16
+        },
+        {
+          "level": 4,
+          "unit": "percent",
+          "value": 20
+        },
+        {
+          "level": 5,
+          "unit": "percent",
+          "value": 25
+        }
+      ],
+      "chanceFixed": null,
+      "conditions": [
+        {
+          "description": "Activation chance depends on Habit Level for each round.",
+          "evidenceIds": [],
+          "id": "loyal-bond-advantage-activation-chance",
+          "label": "Activation chance depends on Habit Level for each round.",
+          "unresolved": false
+        },
+        {
+          "description": "Target is above 50% Troop Capacity.",
+          "evidenceIds": [],
+          "id": "target-above-50-troop-capacity",
+          "label": "Target is above 50% Troop Capacity.",
+          "unresolved": false
+        }
+      ],
+      "currentlyAvailable": false,
+      "directlyVerified": true,
+      "dragonId": "seasmoke",
+      "durationRounds": 2,
+      "evidenceIds": [
+        "seasmoke-loyal-bond-2026-06-23"
+      ],
+      "futureAvailable": true,
+      "id": "seasmoke-loyal-bond-loyal-bond-advantage-effect-advantage-status-output",
+      "minimumDragonLevel": null,
+      "requiredHabitLevel": 1,
+      "statusId": "advantage",
+      "targetSelector": {
+        "count": 2,
+        "includesCaster": null,
+        "position": null,
+        "scope": "any-lane",
+        "selection": "any",
+        "side": "ally"
+      },
+      "targetSide": "ally",
+      "unlockStarRank": 10,
+      "untilEndOfCombat": false,
+      "untilEndOfRound": false
+    },
+    {
+      "abilityId": "seasmoke-loyal-bond",
+      "abilityName": "Loyal Bond",
+      "availability": {
+        "canonical": "canonical-locked",
+        "notes": [
+          "Future at Star Rank 10.",
+          "Not hatched in observed account."
+        ],
+        "observedAccount": "observed-unavailable",
+        "reportLabel": "Future at Star Rank 10; not hatched in observed account",
+        "userRoster": "unknown"
+      },
+      "chanceByHabitLevel": [
+        {
+          "level": 1,
+          "unit": "percent",
+          "value": 10
+        },
+        {
+          "level": 2,
+          "unit": "percent",
+          "value": 13
+        },
+        {
+          "level": 3,
+          "unit": "percent",
+          "value": 16
+        },
+        {
+          "level": 4,
+          "unit": "percent",
+          "value": 20
+        },
+        {
+          "level": 5,
+          "unit": "percent",
+          "value": 25
+        }
+      ],
+      "chanceFixed": null,
+      "conditions": [
+        {
+          "description": "Activation chance depends on Habit Level for each round.",
+          "evidenceIds": [],
+          "id": "loyal-bond-resistance-activation-chance",
+          "label": "Activation chance depends on Habit Level for each round.",
+          "unresolved": false
+        },
+        {
+          "description": "Target is below 50% Troop Capacity.",
+          "evidenceIds": [],
+          "id": "target-below-50-troop-capacity",
+          "label": "Target is below 50% Troop Capacity.",
+          "unresolved": false
+        }
+      ],
+      "currentlyAvailable": false,
+      "directlyVerified": true,
+      "dragonId": "seasmoke",
+      "durationRounds": 2,
+      "evidenceIds": [
+        "seasmoke-loyal-bond-2026-06-23"
+      ],
+      "futureAvailable": true,
+      "id": "seasmoke-loyal-bond-loyal-bond-resistance-effect-resistance-status-output",
+      "minimumDragonLevel": null,
+      "requiredHabitLevel": 1,
+      "statusId": "resistance",
+      "targetSelector": {
+        "count": 2,
+        "includesCaster": null,
+        "position": null,
+        "scope": "any-lane",
+        "selection": "any",
+        "side": "ally"
+      },
+      "targetSide": "ally",
+      "unlockStarRank": 10,
+      "untilEndOfCombat": false,
+      "untilEndOfRound": false
+    }
+  ],
+  "tags": [
+    "CLEANSE_POSITIVE",
+    "FIRE_DAMAGE",
+    "SAME_LANE_TARGET",
+    "VANGUARD_REQUIRED",
+    "STRENGTH_UP",
+    "INSTINCT_UP",
+    "DAMAGE_RECEIVED_DOWN",
+    "BUFF_ALLIES",
+    "BUFF_INTELLIGENCE",
+    "BUFF_INITIATIVE",
+    "COMMAND_AUGMENTATION",
+    "INFECTIOUS_WRATH",
+    "PHYSICAL_DAMAGE",
+    "PANIC",
+    "FIRE_DAMAGE_UP",
+    "ADJACENT_TARGET",
+    "ADVANTAGE",
+    "RESISTANCE",
+    "OTHER_ALLIES_TARGET"
+  ],
+  "trait": {
+    "abilityClass": "passive",
+    "augmentations": [],
+    "dragonId": "seasmoke",
+    "evidenceIds": [
+      "seasmoke-champions-brilliance-2026-06-23"
+    ],
+    "glossaryEntries": [],
+    "id": "seasmoke-champions-brilliance",
+    "kind": "trait",
+    "minimumDragonLevel": 16,
+    "name": "Champion's Brilliance",
+    "positionRequirement": "vanguard",
+    "powerByHabitLevel": [],
+    "rawDescription": "At Level 16+ and deployed in the Vanguard, increase self Strength, Intelligence, and Instinct by +15. Reduce Damage Received of the Right Flank ally by 8%.",
+    "schedules": [
+      {
+        "attempts": null,
+        "battleContext": "unspecified",
+        "conditions": [],
+        "effects": [
+          {
+            "calculated": false,
+            "casterEligibility": "unknown",
+            "conditionalMultipliers": [],
+            "conditions": [],
+            "directlyVerified": true,
+            "duration": null,
+            "durationRounds": null,
+            "excludes": [],
+            "id": "seasmoke-strength-flat",
+            "includesCaster": null,
+            "magnitude": 15,
+            "notes": [],
+            "perTargetEffectCheck": null,
+            "rankedValues": [],
+            "scaling": [],
+            "sourceScope": "unknown",
+            "stack": null,
+            "target": "Self",
+            "targetCount": null,
+            "targetPriority": "any-eligible",
+            "targetScope": "self",
+            "type": "Strength Up",
+            "unit": "flat"
+          },
+          {
+            "calculated": false,
+            "casterEligibility": "unknown",
+            "conditionalMultipliers": [],
+            "conditions": [],
+            "directlyVerified": true,
+            "duration": null,
+            "durationRounds": null,
+            "excludes": [],
+            "id": "seasmoke-intelligence-flat",
+            "includesCaster": null,
+            "magnitude": 15,
+            "notes": [],
+            "perTargetEffectCheck": null,
+            "rankedValues": [],
+            "scaling": [],
+            "sourceScope": "unknown",
+            "stack": null,
+            "target": "Self",
+            "targetCount": null,
+            "targetPriority": "any-eligible",
+            "targetScope": "self",
+            "type": "Intelligence Up",
+            "unit": "flat"
+          },
+          {
+            "calculated": false,
+            "casterEligibility": "unknown",
+            "conditionalMultipliers": [],
+            "conditions": [],
+            "directlyVerified": true,
+            "duration": null,
+            "durationRounds": null,
+            "excludes": [],
+            "id": "seasmoke-instinct-flat",
+            "includesCaster": null,
+            "magnitude": 15,
+            "notes": [],
+            "perTargetEffectCheck": null,
+            "rankedValues": [],
+            "scaling": [],
+            "sourceScope": "unknown",
+            "stack": null,
+            "target": "Self",
+            "targetCount": null,
+            "targetPriority": "any-eligible",
+            "targetScope": "self",
+            "type": "Instinct Up",
+            "unit": "flat"
+          },
+          {
+            "calculated": false,
+            "casterEligibility": "unknown",
+            "conditionalMultipliers": [],
+            "conditions": [],
+            "directlyVerified": true,
+            "duration": null,
+            "durationRounds": null,
+            "excludes": [],
+            "id": "seasmoke-right-flank-dr-down",
+            "includesCaster": null,
+            "magnitude": 8,
+            "notes": [],
+            "perTargetEffectCheck": null,
+            "rankedValues": [],
+            "scaling": [],
+            "sourceScope": "unknown",
+            "stack": null,
+            "target": "Right Flank ally",
+            "targetCount": null,
+            "targetPriority": "any-eligible",
+            "targetScope": "right-flank",
+            "type": "Damage Received Down",
+            "unit": "percent"
+          }
+        ],
+        "id": "champions-brilliance-passive",
+        "repeat": null,
+        "rounds": [],
+        "targetPriority": "any-eligible",
+        "timing": "passive",
+        "triggerChanceByHabitLevel": [],
+        "triggerChanceFixed": null,
+        "triggerEvent": "passive"
+      }
+    ],
+    "tags": [
+      "VANGUARD_REQUIRED",
+      "STRENGTH_UP",
+      "INSTINCT_UP",
+      "DAMAGE_RECEIVED_DOWN"
+    ],
+    "unlockStarRank": 1,
+    "unresolvedQuestions": [],
+    "verification": {
+      "capturedAt": "2026-06-23",
+      "gameVersion": "26.6.53509",
+      "reviewedManually": true,
+      "source": "Seasmoke Champion's Brilliance screenshot",
+      "status": "screenshot-verified"
+    }
+  },
+  "unresolvedQuestions": [
+    "Exact enhanced-by-Initiative formula.",
+    "Exactly 50% Troop Capacity boundary.",
+    "Infectious Wrath augmentation presentation requires follow-up review.",
+    "Panic exact status definition.",
+    "Resistance detailed meaning."
+  ],
+  "verificationBySection": {
+    "affinities": {
+      "capturedAt": "2026-06-23",
+      "gameVersion": "26.6.53509",
+      "reviewedManually": true,
+      "source": "Seasmoke main screen screenshot",
+      "status": "partially-screenshot-verified"
+    },
+    "breed": {
+      "capturedAt": "2026-06-23",
+      "gameVersion": null,
+      "reviewedManually": true,
+      "source": "Official public roster page",
+      "status": "officially-confirmed"
+    },
+    "command": {
+      "capturedAt": "2026-06-23",
+      "gameVersion": "26.6.53509",
+      "reviewedManually": true,
+      "source": "Seasmoke Cleansing Wrath screenshots",
+      "status": "screenshot-verified"
+    },
+    "habits": {
+      "capturedAt": "2026-06-23",
+      "gameVersion": "26.6.53509",
+      "reviewedManually": true,
+      "source": "Seasmoke Habit screenshots",
+      "status": "screenshot-verified"
+    },
+    "identity": {
+      "capturedAt": "2026-06-23",
+      "gameVersion": null,
+      "reviewedManually": true,
+      "source": "Official public roster page",
+      "status": "officially-confirmed"
+    },
+    "rarity": {
+      "capturedAt": "2026-06-23",
+      "gameVersion": null,
+      "reviewedManually": true,
+      "source": "Official public roster page",
+      "status": "officially-confirmed"
+    },
+    "trait": {
+      "capturedAt": "2026-06-23",
+      "gameVersion": "26.6.53509",
+      "reviewedManually": true,
+      "source": "Seasmoke Champion's Brilliance screenshot",
+      "status": "screenshot-verified"
+    }
+  }
+}

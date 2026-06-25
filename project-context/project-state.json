@@ -1,0 +1,53 @@
+{
+  "completedPhases": [
+    "Phase 3.6 combat confirmations",
+    "Phase 3.7 capability framework",
+    "Phase 3.7.1 capability scope review",
+    "Phase 3.8 Syrax and Caraxes combat data with dependency tracing",
+    "Phase 3.8.1 formation trace reconciliation"
+  ],
+  "contextVersion": 1,
+  "currentArchitectureSummary": [
+    "Typed dragon records are stored in src/data/dragons.ts.",
+    "Evidence, manual reviews, observations, statuses, and stat definitions are separate source modules.",
+    "Capability derivation is computed from structured AbilityEffect records in effectCapabilities.ts.",
+    "Formation analysis uses structured SynergyTrace records and does not produce an arbitrary numerical score."
+  ],
+  "currentReviewPhase": "Project context export and next formation-output review preparation.",
+  "format": "dragonfire-project-state",
+  "generatedAt": "2026-06-25T00:29:16.911Z",
+  "plannedNextPhase": [
+    "full formation-output review",
+    "UI/tag redesign",
+    "then additional dragons"
+  ],
+  "rosterCounts": {
+    "detailedDataDragonCount": 6,
+    "knownRosterCount": 30,
+    "metadataOnlyDragonCount": 24
+  },
+  "source": {
+    "branch": "feature/project-context-export",
+    "commit": "2cb422d38207fdda378f64504014ac34ff255e24",
+    "databaseVersion": "0.5.1",
+    "dataSchemaVersion": 7,
+    "gameBuild": "26.6.53509",
+    "localRosterSchemaVersion": 3,
+    "repository": "https://github.com/williamchildres/dragonfire-roster-builder"
+  },
+  "testTotals": {
+    "countingMethod": "static working-tree test declaration scan; runtime pass/fail is reported by npm run test",
+    "lastRunStatus": "not-run-by-exporter",
+    "runner": "vitest",
+    "testCaseCount": 109,
+    "testFileCount": 15
+  },
+  "unresolvedMechanicsCount": 56,
+  "versions": {
+    "contextVersion": 1,
+    "databaseVersion": "0.5.1",
+    "dataSchemaVersion": 7,
+    "gameBuild": "26.6.53509",
+    "localRosterSchemaVersion": 3
+  }
+}

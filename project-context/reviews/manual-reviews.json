@@ -1,0 +1,332 @@
+[
+  {
+    "dragonId": "malachite",
+    "evidenceIds": [
+      "malachite-wardens-rally-summary-2026-06-23",
+      "malachite-wardens-rally-combat-log-self-recovery-2026-06-24"
+    ],
+    "id": "malachite-command-review-2026-06-24",
+    "notes": [
+      "Warden's Rally data matches manual in-game observation.",
+      "Combat logs showed Warden's Rally applying Recovery to Malachite itself.",
+      "This confirms that the exact \"3 Allies\" target includes the caster for this effect."
+    ],
+    "reviewedAgainstGameBuild": "26.6.53509",
+    "reviewedAt": "2026-06-24",
+    "reviewer": "repository-owner",
+    "scope": "command",
+    "status": "confirmed"
+  },
+  {
+    "dragonId": "malachite",
+    "evidenceIds": [
+      "malachite-sentinels-presence-2026-06-23"
+    ],
+    "id": "malachite-trait-review-2026-06-24",
+    "notes": [
+      "Sentinel's Presence transcription and normalization match manual review."
+    ],
+    "reviewedAgainstGameBuild": "26.6.53509",
+    "reviewedAt": "2026-06-24",
+    "reviewer": "repository-owner",
+    "scope": "trait",
+    "status": "confirmed"
+  },
+  {
+    "dragonId": "malachite",
+    "evidenceIds": [
+      "malachite-forests-instinct-2026-06-23",
+      "malachite-wise-vigor-2026-06-23",
+      "malachite-thunderous-roar-2026-06-23",
+      "malachite-collective-might-2026-06-23",
+      "malachite-lightning-strike-2026-06-23"
+    ],
+    "id": "malachite-habits-review-2026-06-24",
+    "notes": [
+      "All five Malachite Habits match manual in-game observation."
+    ],
+    "reviewedAgainstGameBuild": "26.6.53509",
+    "reviewedAt": "2026-06-24",
+    "reviewer": "repository-owner",
+    "scope": "habits",
+    "status": "confirmed"
+  },
+  {
+    "dragonId": "malachite",
+    "evidenceIds": [
+      "malachite-wardens-rally-combat-log-self-recovery-2026-06-24"
+    ],
+    "id": "malachite-combat-log-review-2026-06-24",
+    "notes": [
+      "Warden's Rally Recovery selected Malachite as a recipient in combat logs."
+    ],
+    "reviewedAgainstGameBuild": "26.6.53509",
+    "reviewedAt": "2026-06-24",
+    "reviewer": "repository-owner",
+    "scope": "combat-log-behavior",
+    "status": "confirmed"
+  },
+  {
+    "dragonId": "seasmoke",
+    "evidenceIds": [
+      "seasmoke-main-screen-2026-06-23"
+    ],
+    "id": "seasmoke-identity-review-2026-06-24",
+    "notes": [
+      "Seasmoke identity and screenshot-normalized data match the game."
+    ],
+    "reviewedAgainstGameBuild": "26.6.53509",
+    "reviewedAt": "2026-06-24",
+    "reviewer": "repository-owner",
+    "scope": "identity",
+    "status": "confirmed"
+  },
+  {
+    "dragonId": "seasmoke",
+    "evidenceIds": [
+      "seasmoke-cleansing-wrath-summary-2026-06-23"
+    ],
+    "id": "seasmoke-command-review-2026-06-24",
+    "notes": [
+      "Cleansing Wrath transcription matches the game."
+    ],
+    "reviewedAgainstGameBuild": "26.6.53509",
+    "reviewedAt": "2026-06-24",
+    "reviewer": "repository-owner",
+    "scope": "command",
+    "status": "confirmed"
+  },
+  {
+    "dragonId": "seasmoke",
+    "evidenceIds": [
+      "seasmoke-champions-brilliance-2026-06-23"
+    ],
+    "id": "seasmoke-trait-review-2026-06-24",
+    "notes": [
+      "Champion's Brilliance transcription matches the game."
+    ],
+    "reviewedAgainstGameBuild": "26.6.53509",
+    "reviewedAt": "2026-06-24",
+    "reviewer": "repository-owner",
+    "scope": "trait",
+    "status": "confirmed"
+  },
+  {
+    "dragonId": "seasmoke",
+    "evidenceIds": [
+      "seasmoke-clever-maneuver-2026-06-23",
+      "seasmoke-winds-favor-2026-06-23",
+      "seasmoke-infectious-wrath-2026-06-23",
+      "seasmoke-cunning-ferocity-2026-06-23",
+      "seasmoke-loyal-bond-2026-06-23"
+    ],
+    "id": "seasmoke-habits-review-2026-06-24",
+    "notes": [
+      "General Seasmoke Habit screenshot-normalized data matches the game."
+    ],
+    "reviewedAgainstGameBuild": "26.6.53509",
+    "reviewedAt": "2026-06-24",
+    "reviewer": "repository-owner",
+    "scope": "habits",
+    "status": "confirmed"
+  },
+  {
+    "dragonId": "seasmoke",
+    "evidenceIds": [
+      "seasmoke-infectious-wrath-2026-06-23"
+    ],
+    "id": "seasmoke-infectious-wrath-normalization-review-2026-06-24",
+    "notes": [
+      "Infectious Wrath's augmentation of Cleansing Wrath needs detailed presentation review.",
+      "This follow-up does not block ordinary synergy analysis because the unresolved details do not determine the main formation interactions currently modeled."
+    ],
+    "reviewedAgainstGameBuild": "26.6.53509",
+    "reviewedAt": "2026-06-24",
+    "reviewer": "repository-owner",
+    "scope": "synergy-normalization",
+    "status": "needs-follow-up"
+  },
+  {
+    "dragonId": "sheepstealer",
+    "evidenceIds": [
+      "sheepstealer-main-screen-2026-06-23"
+    ],
+    "id": "sheepstealer-identity-review-2026-06-24",
+    "notes": [
+      "Sheepstealer identity is confirmed from in-game screenshots."
+    ],
+    "reviewedAgainstGameBuild": "26.6.53509",
+    "reviewedAt": "2026-06-24",
+    "reviewer": "repository-owner",
+    "scope": "identity",
+    "status": "confirmed"
+  },
+  {
+    "dragonId": "sheepstealer",
+    "evidenceIds": [
+      "sheepstealer-hunters-cunning-2026-06-23"
+    ],
+    "id": "sheepstealer-trait-review-2026-06-24",
+    "notes": [
+      "Hunter's Cunning transcription matches manual review."
+    ],
+    "reviewedAgainstGameBuild": "26.6.53509",
+    "reviewedAt": "2026-06-24",
+    "reviewer": "repository-owner",
+    "scope": "trait",
+    "status": "confirmed"
+  },
+  {
+    "dragonId": "sheepstealer",
+    "evidenceIds": [
+      "sheepstealer-wild-hunt-summary-2026-06-23",
+      "sheepstealer-wild-hunt-recovery-priority-combat-log-2026-06-24"
+    ],
+    "id": "sheepstealer-command-review-2026-06-24",
+    "notes": [
+      "Wild Hunt transcription matches manual review.",
+      "Combat-log observation confirms that new Prey selection prioritizes an eligible enemy that received Recovery during the previous round.",
+      "The priority applies only while no enemy is currently marked as Prey."
+    ],
+    "reviewedAgainstGameBuild": "26.6.53509",
+    "reviewedAt": "2026-06-24",
+    "reviewer": "repository-owner",
+    "scope": "command",
+    "status": "confirmed"
+  },
+  {
+    "dragonId": "sheepstealer",
+    "evidenceIds": [
+      "sheepstealer-stolen-flock-2026-06-23",
+      "sheepstealer-dragons-cunning-2026-06-23",
+      "sheepstealer-baited-kill-2026-06-23",
+      "sheepstealer-wary-beast-2026-06-23",
+      "sheepstealer-savage-claim-2026-06-23"
+    ],
+    "id": "sheepstealer-habits-review-2026-06-24",
+    "notes": [
+      "Brief manual review found no mismatches; detailed combat-log behavior remains pending."
+    ],
+    "reviewedAgainstGameBuild": "26.6.53509",
+    "reviewedAt": "2026-06-24",
+    "reviewer": "repository-owner",
+    "scope": "habits",
+    "status": "provisional"
+  },
+  {
+    "dragonId": "sheepstealer",
+    "evidenceIds": [
+      "sheepstealer-dragons-cunning-2026-06-23"
+    ],
+    "id": "sheepstealer-dragons-cunning-normalization-review-2026-06-24",
+    "notes": [
+      "Current best interpretation: self Intelligence increase is normal, enemy Instinct reduction is enhanced by Initiative.",
+      "Combat-log confirmation is not yet available."
+    ],
+    "reviewedAgainstGameBuild": "26.6.53509",
+    "reviewedAt": "2026-06-24",
+    "reviewer": "repository-owner",
+    "scope": "synergy-normalization",
+    "status": "provisional"
+  },
+  {
+    "dragonId": "vermax",
+    "evidenceIds": [
+      "vermax-main-screen-2026-06-23"
+    ],
+    "id": "vermax-identity-review-2026-06-24",
+    "notes": [
+      "Vermax identity and screenshot transcription are confirmed."
+    ],
+    "reviewedAgainstGameBuild": "26.6.53509",
+    "reviewedAt": "2026-06-24",
+    "reviewer": "repository-owner",
+    "scope": "identity",
+    "status": "confirmed"
+  },
+  {
+    "dragonId": "vermax",
+    "evidenceIds": [
+      "vermax-warriors-zeal-2026-06-23",
+      "vermax-warriors-zeal-basic-attack-combat-log-2026-06-24"
+    ],
+    "id": "vermax-warriors-zeal-normalization-review-2026-06-24",
+    "notes": [
+      "Warrior's Zeal source scope is combat-log confirmed.",
+      "Warrior's Zeal increases Vermax's own Basic Attack Physical Damage.",
+      "The unqualified Physical Damage Dealt modifier applies to all verified Physical Damage sources unless a source explicitly restricts or excludes one."
+    ],
+    "reviewedAgainstGameBuild": "26.6.53509",
+    "reviewedAt": "2026-06-24",
+    "reviewer": "repository-owner",
+    "scope": "synergy-normalization",
+    "status": "confirmed"
+  },
+  {
+    "dragonId": "malachite",
+    "evidenceIds": [
+      "ally-targeting-language-review-2026-06-24"
+    ],
+    "id": "ally-targeting-language-review-2026-06-24",
+    "notes": [
+      "Repeated manual ability-text review confirms that Other Ally and Other Allies exclude the caster.",
+      "Plain Ally and Allies allow the caster to be selected when otherwise eligible.",
+      "Spatial targeting still controls eligibility; a caster is not adjacent to itself."
+    ],
+    "reviewedAgainstGameBuild": "26.6.53509",
+    "reviewedAt": "2026-06-24",
+    "reviewer": "repository-owner",
+    "scope": "synergy-normalization",
+    "status": "confirmed"
+  },
+  {
+    "dragonId": "syrax",
+    "evidenceIds": [
+      "syrax-main-screen-2026-06-24",
+      "syrax-sentinels-wit-2026-06-24",
+      "syrax-blazing-fury-summary-2026-06-24",
+      "syrax-blazing-fury-details-2026-06-24",
+      "syrax-mindful-synergy-2026-06-24",
+      "syrax-flight-mastery-2026-06-24",
+      "syrax-strategic-revival-2026-06-24",
+      "syrax-tactical-inferno-2026-06-24",
+      "syrax-mothers-mercy-2026-06-24"
+    ],
+    "id": "syrax-combat-data-review-2026-06-24",
+    "notes": [
+      "Syrax command, trait, affinities, observation state, and five Habits were normalized from screenshot evidence.",
+      "Enemy adjacency for Blazing Fury Tactical Damage remains unresolved and is kept as an explicit assumption.",
+      "Observation values are account-specific and not canonical base stats."
+    ],
+    "reviewedAgainstGameBuild": "26.6.53509",
+    "reviewedAt": "2026-06-24",
+    "reviewer": "repository-owner",
+    "scope": "habits",
+    "status": "confirmed"
+  },
+  {
+    "dragonId": "caraxes",
+    "evidenceIds": [
+      "caraxes-main-screen-2026-06-24",
+      "caraxes-hunters-wrath-2026-06-24",
+      "caraxes-infernal-burst-2026-06-24",
+      "caraxes-battle-dread-2026-06-24",
+      "caraxes-dragons-flair-2026-06-24",
+      "caraxes-crippling-inferno-2026-06-24",
+      "caraxes-mass-enfeeble-2026-06-24",
+      "caraxes-blood-wyrm-2026-06-24"
+    ],
+    "id": "caraxes-combat-data-review-2026-06-24",
+    "notes": [
+      "Caraxes command, trait, affinities, observation state, and five Habits were normalized from screenshot evidence.",
+      "Crippling Inferno stores Slow and Burn as independently checked per target.",
+      "Battle Dread and Mass Enfeeble preserve the visible text/table discrepancy.",
+      "Observation values are account-specific and not canonical base stats."
+    ],
+    "reviewedAgainstGameBuild": "26.6.53509",
+    "reviewedAt": "2026-06-24",
+    "reviewer": "repository-owner",
+    "scope": "habits",
+    "status": "confirmed"
+  }
+]

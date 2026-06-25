@@ -11,7 +11,9 @@
     "test:watch": "vitest",
     "preview": "vite preview --host 127.0.0.1",
     "check:roster": "node scripts/check-official-roster.mjs",
-    "report:synergy": "node scripts/report-synergy-framework.mjs"
+    "report:synergy": "node scripts/report-synergy-framework.mjs",
+    "export:context": "node scripts/export-project-context.mjs",
+    "validate:context": "node scripts/validate-project-context.mjs"
   },
   "dependencies": {
     "@vitejs/plugin-react": "latest",

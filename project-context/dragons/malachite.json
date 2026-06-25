@@ -1,0 +1,5155 @@
+{
+  "abilities": [
+    {
+      "abilityClass": "active",
+      "augmentations": [],
+      "dragonId": "malachite",
+      "evidenceIds": [
+        "malachite-wardens-rally-summary-2026-06-23",
+        "malachite-wardens-rally-glossary-2026-06-23"
+      ],
+      "glossaryEntries": [
+        {
+          "definition": "Tactical Damage is increased by the attacker's Instinct and mitigated by the target's Intelligence.",
+          "term": "Tactical Damage"
+        },
+        {
+          "definition": "Restores troops to the target. Recovery amount scales with dragon Level and is enhanced by Instinct.",
+          "term": "Recovery"
+        }
+      ],
+      "id": "malachite-wardens-rally",
+      "kind": "command",
+      "minimumDragonLevel": null,
+      "name": "Warden's Rally",
+      "positionRequirement": null,
+      "powerByHabitLevel": [],
+      "rawDescription": "Rounds 2, 4, 7, 9: Deal Tactical Damage to 1 Enemy in the same lane (Damage Rate: +100%).\n\nRounds 3, 6, 9: Apply Recovery to 3 Allies in any lane (Recovery Rate: +70%, enhanced by Instinct).",
+      "schedules": [
+        {
+          "attempts": null,
+          "battleContext": "unspecified",
+          "conditions": [],
+          "effects": [
+            {
+              "calculated": false,
+              "casterEligibility": "unknown",
+              "conditionalMultipliers": [],
+              "conditions": [],
+              "directlyVerified": true,
+              "duration": null,
+              "durationRounds": null,
+              "excludes": [],
+              "id": "wardens-rally-tactical-damage-rate",
+              "includesCaster": null,
+              "magnitude": 100,
+              "notes": [
+                "Mitigated by target Intelligence"
+              ],
+              "perTargetEffectCheck": null,
+              "rankedValues": [],
+              "scaling": [
+                "attacker Instinct"
+              ],
+              "sourceScope": "unknown",
+              "stack": null,
+              "target": "1 Enemy",
+              "targetCount": null,
+              "targetPriority": "any-eligible",
+              "targetScope": "same-lane",
+              "type": "Tactical Damage",
+              "unit": "rate"
+            }
+          ],
+          "id": "wardens-rally-tactical-damage",
+          "repeat": null,
+          "rounds": [
+            2,
+            4,
+            7,
+            9
+          ],
+          "targetPriority": "any-eligible",
+          "timing": "specific-rounds",
+          "triggerChanceByHabitLevel": [],
+          "triggerChanceFixed": null,
+          "triggerEvent": "specific-rounds"
+        },
+        {
+          "attempts": null,
+          "battleContext": "unspecified",
+          "conditions": [],
+          "effects": [
+            {
+              "calculated": false,
+              "casterEligibility": "included",
+              "conditionalMultipliers": [],
+              "conditions": [],
+              "directlyVerified": true,
+              "duration": null,
+              "durationRounds": null,
+              "excludes": [],
+              "id": "wardens-rally-recovery-rate",
+              "includesCaster": true,
+              "magnitude": 70,
+              "notes": [
+                "Manual combat-log observation confirms that 3 Allies includes Malachite as the caster in the three-dragon formation."
+              ],
+              "perTargetEffectCheck": null,
+              "rankedValues": [],
+              "scaling": [
+                "dragon Level",
+                "Instinct"
+              ],
+              "sourceScope": "unknown",
+              "stack": null,
+              "target": "3 Allies",
+              "targetCount": 3,
+              "targetPriority": "any-eligible",
+              "targetScope": "any-lane",
+              "type": "Recovery",
+              "unit": "rate"
+            }
+          ],
+          "id": "wardens-rally-recovery",
+          "repeat": null,
+          "rounds": [
+            3,
+            6,
+            9
+          ],
+          "targetPriority": "any-eligible",
+          "timing": "specific-rounds",
+          "triggerChanceByHabitLevel": [],
+          "triggerChanceFixed": null,
+          "triggerEvent": "specific-rounds"
+        }
+      ],
+      "tags": [
+        "TACTICAL_DAMAGE",
+        "RECOVERY",
+        "SAME_LANE_TARGET",
+        "ANY_LANE_TARGET",
+        "ENHANCED_BY_INSTINCT",
+        "SCALES_WITH_LEVEL",
+        "SPECIFIC_ROUNDS",
+        "MULTI_SCHEDULE_COMMAND"
+      ],
+      "unlockStarRank": null,
+      "unresolvedQuestions": [
+        "Exact Level and Instinct scaling formulas."
+      ],
+      "verification": {
+        "capturedAt": "2026-06-23",
+        "gameVersion": "26.6.53509",
+        "reviewedManually": true,
+        "source": "Warden's Rally summary and glossary screenshots",
+        "status": "screenshot-verified"
+      }
+    },
+    {
+      "abilityClass": "passive",
+      "augmentations": [],
+      "dragonId": "malachite",
+      "evidenceIds": [
+        "malachite-sentinels-presence-2026-06-23"
+      ],
+      "glossaryEntries": [],
+      "id": "malachite-sentinels-presence",
+      "kind": "trait",
+      "minimumDragonLevel": 16,
+      "name": "Sentinel's Presence",
+      "positionRequirement": "vanguard",
+      "powerByHabitLevel": [],
+      "rawDescription": "At Level 16+ and deployed in the Vanguard Increase your Recovery Dealt by +15% and Instinct by +25. Increase Fire Damage Dealt by +16% of the Ally deployed in the Left Flank.",
+      "schedules": [
+        {
+          "attempts": null,
+          "battleContext": "unspecified",
+          "conditions": [],
+          "effects": [
+            {
+              "calculated": false,
+              "casterEligibility": "unknown",
+              "conditionalMultipliers": [],
+              "conditions": [],
+              "directlyVerified": true,
+              "duration": null,
+              "durationRounds": null,
+              "excludes": [],
+              "id": "sentinels-presence-recovery-dealt",
+              "includesCaster": null,
+              "magnitude": 15,
+              "notes": [],
+              "perTargetEffectCheck": null,
+              "rankedValues": [],
+              "scaling": [],
+              "sourceScope": "unknown",
+              "stack": null,
+              "target": "Self",
+              "targetCount": null,
+              "targetPriority": "any-eligible",
+              "targetScope": "self",
+              "type": "Recovery Dealt Up",
+              "unit": "percent"
+            },
+            {
+              "calculated": false,
+              "casterEligibility": "unknown",
+              "conditionalMultipliers": [],
+              "conditions": [],
+              "directlyVerified": true,
+              "duration": null,
+              "durationRounds": null,
+              "excludes": [],
+              "id": "sentinels-presence-instinct",
+              "includesCaster": null,
+              "magnitude": 25,
+              "notes": [],
+              "perTargetEffectCheck": null,
+              "rankedValues": [],
+              "scaling": [],
+              "sourceScope": "unknown",
+              "stack": null,
+              "target": "Self",
+              "targetCount": null,
+              "targetPriority": "any-eligible",
+              "targetScope": "self",
+              "type": "Instinct Up",
+              "unit": "flat"
+            },
+            {
+              "calculated": false,
+              "casterEligibility": "unknown",
+              "conditionalMultipliers": [],
+              "conditions": [],
+              "directlyVerified": true,
+              "duration": null,
+              "durationRounds": null,
+              "excludes": [],
+              "id": "sentinels-presence-left-flank-fire",
+              "includesCaster": null,
+              "magnitude": 16,
+              "notes": [],
+              "perTargetEffectCheck": null,
+              "rankedValues": [],
+              "scaling": [],
+              "sourceScope": "unknown",
+              "stack": null,
+              "target": "Ally deployed in Left Flank",
+              "targetCount": null,
+              "targetPriority": "any-eligible",
+              "targetScope": "left-flank",
+              "type": "Fire Damage Dealt Up",
+              "unit": "percent"
+            }
+          ],
+          "id": "sentinels-presence-passive",
+          "repeat": null,
+          "rounds": [],
+          "targetPriority": "any-eligible",
+          "timing": "passive",
+          "triggerChanceByHabitLevel": [],
+          "triggerChanceFixed": null,
+          "triggerEvent": "passive"
+        }
+      ],
+      "tags": [
+        "RECOVERY_DEALT_UP",
+        "INSTINCT_UP",
+        "FIRE_DAMAGE_UP",
+        "VANGUARD_REQUIRED",
+        "LEFT_FLANK_TARGET",
+        "BUFF_SELF",
+        "BUFF_ALLIES"
+      ],
+      "unlockStarRank": 1,
+      "unresolvedQuestions": [],
+      "verification": {
+        "capturedAt": "2026-06-23",
+        "gameVersion": "26.6.53509",
+        "reviewedManually": true,
+        "source": "Sentinel's Presence screenshot",
+        "status": "screenshot-verified"
+      }
+    },
+    {
+      "abilityClass": "passive",
+      "augmentations": [],
+      "dragonId": "malachite",
+      "evidenceIds": [
+        "malachite-forests-instinct-2026-06-23"
+      ],
+      "glossaryEntries": [],
+      "id": "malachite-forests-instinct",
+      "kind": "habit",
+      "minimumDragonLevel": null,
+      "name": "Forest's Instinct",
+      "positionRequirement": null,
+      "powerByHabitLevel": [
+        {
+          "level": 1,
+          "unit": "power",
+          "value": 420
+        },
+        {
+          "level": 2,
+          "unit": "power",
+          "value": 920
+        },
+        {
+          "level": 3,
+          "unit": "power",
+          "value": 1500
+        },
+        {
+          "level": 4,
+          "unit": "power",
+          "value": 2200
+        },
+        {
+          "level": 5,
+          "unit": "power",
+          "value": 3100
+        }
+      ],
+      "rawDescription": "Each Round: 35% chance to increase the Physical Damage Dealt (excluding Basic Attacks) by +8% and reduce the Tactical Damage Received by -8% of 2 other Allies in any lane for 2 round(s).",
+      "schedules": [
+        {
+          "attempts": null,
+          "battleContext": "unspecified",
+          "conditions": [],
+          "effects": [
+            {
+              "calculated": false,
+              "casterEligibility": "excluded",
+              "conditionalMultipliers": [],
+              "conditions": [],
+              "directlyVerified": true,
+              "duration": null,
+              "durationRounds": 2,
+              "excludes": [
+                "Basic Attacks"
+              ],
+              "id": "forests-instinct-physical-damage",
+              "includesCaster": null,
+              "magnitude": 8,
+              "notes": [],
+              "perTargetEffectCheck": null,
+              "rankedValues": [
+                {
+                  "level": 1,
+                  "unit": "percent",
+                  "value": 8
+                },
+                {
+                  "level": 2,
+                  "unit": "percent",
+                  "value": 9.6
+                },
+                {
+                  "level": 3,
+                  "unit": "percent",
+                  "value": 11.2
+                },
+                {
+                  "level": 4,
+                  "unit": "percent",
+                  "value": 13.6
+                },
+                {
+                  "level": 5,
+                  "unit": "percent",
+                  "value": 16
+                }
+              ],
+              "scaling": [],
+              "sourceScope": "non-basic-attacks",
+              "stack": null,
+              "target": "2 other Allies",
+              "targetCount": null,
+              "targetPriority": "any-eligible",
+              "targetScope": "any-lane",
+              "type": "Physical Damage Dealt Up",
+              "unit": "percent"
+            },
+            {
+              "calculated": false,
+              "casterEligibility": "excluded",
+              "conditionalMultipliers": [],
+              "conditions": [],
+              "directlyVerified": true,
+              "duration": null,
+              "durationRounds": 2,
+              "excludes": [],
+              "id": "forests-instinct-tactical-reduction",
+              "includesCaster": null,
+              "magnitude": 8,
+              "notes": [],
+              "perTargetEffectCheck": null,
+              "rankedValues": [
+                {
+                  "level": 1,
+                  "unit": "percent",
+                  "value": 8
+                },
+                {
+                  "level": 2,
+                  "unit": "percent",
+                  "value": 9.6
+                },
+                {
+                  "level": 3,
+                  "unit": "percent",
+                  "value": 11.2
+                },
+                {
+                  "level": 4,
+                  "unit": "percent",
+                  "value": 13.6
+                },
+                {
+                  "level": 5,
+                  "unit": "percent",
+                  "value": 16
+                }
+              ],
+              "scaling": [],
+              "sourceScope": "unknown",
+              "stack": null,
+              "target": "2 other Allies",
+              "targetCount": null,
+              "targetPriority": "any-eligible",
+              "targetScope": "any-lane",
+              "type": "Tactical Damage Received Reduction",
+              "unit": "percent"
+            }
+          ],
+          "id": "forests-instinct-each-round",
+          "repeat": null,
+          "rounds": [],
+          "targetPriority": "any-eligible",
+          "timing": "each-round",
+          "triggerChanceByHabitLevel": [],
+          "triggerChanceFixed": 35,
+          "triggerEvent": "each-round"
+        }
+      ],
+      "tags": [
+        "PHYSICAL_DAMAGE_UP",
+        "TACTICAL_DAMAGE_RECEIVED_DOWN",
+        "EXCLUDES_BASIC_ATTACKS",
+        "OTHER_ALLIES_TARGET",
+        "ANY_LANE_TARGET",
+        "BUFF_ALLIES"
+      ],
+      "unlockStarRank": 2,
+      "unresolvedQuestions": [],
+      "verification": {
+        "capturedAt": "2026-06-23",
+        "gameVersion": "26.6.53509",
+        "reviewedManually": true,
+        "source": "Forest's Instinct screenshot",
+        "status": "screenshot-verified"
+      }
+    },
+    {
+      "abilityClass": "passive",
+      "augmentations": [],
+      "dragonId": "malachite",
+      "evidenceIds": [
+        "malachite-wise-vigor-2026-06-23"
+      ],
+      "glossaryEntries": [],
+      "id": "malachite-wise-vigor",
+      "kind": "habit",
+      "minimumDragonLevel": null,
+      "name": "Wise Vigor",
+      "positionRequirement": null,
+      "powerByHabitLevel": [
+        {
+          "level": 1,
+          "unit": "power",
+          "value": 420
+        },
+        {
+          "level": 2,
+          "unit": "power",
+          "value": 920
+        },
+        {
+          "level": 3,
+          "unit": "power",
+          "value": 1500
+        },
+        {
+          "level": 4,
+          "unit": "power",
+          "value": 2200
+        },
+        {
+          "level": 5,
+          "unit": "power",
+          "value": 3100
+        }
+      ],
+      "rawDescription": "Start of Combat: Increase your Instinct by +20% and Recovery Dealt by +20% until the end of combat.",
+      "schedules": [
+        {
+          "attempts": null,
+          "battleContext": "unspecified",
+          "conditions": [],
+          "effects": [
+            {
+              "calculated": false,
+              "casterEligibility": "unknown",
+              "conditionalMultipliers": [],
+              "conditions": [],
+              "directlyVerified": true,
+              "duration": "Until end of combat",
+              "durationRounds": null,
+              "excludes": [],
+              "id": "wise-vigor-instinct",
+              "includesCaster": null,
+              "magnitude": 20,
+              "notes": [],
+              "perTargetEffectCheck": null,
+              "rankedValues": [
+                {
+                  "level": 1,
+                  "unit": "percent",
+                  "value": 20
+                },
+                {
+                  "level": 2,
+                  "unit": "percent",
+                  "value": 24
+                },
+                {
+                  "level": 3,
+                  "unit": "percent",
+                  "value": 28
+                },
+                {
+                  "level": 4,
+                  "unit": "percent",
+                  "value": 34
+                },
+                {
+                  "level": 5,
+                  "unit": "percent",
+                  "value": 40
+                }
+              ],
+              "scaling": [],
+              "sourceScope": "unknown",
+              "stack": null,
+              "target": "Self",
+              "targetCount": null,
+              "targetPriority": "any-eligible",
+              "targetScope": "self",
+              "type": "Instinct Up",
+              "unit": "percent"
+            },
+            {
+              "calculated": false,
+              "casterEligibility": "unknown",
+              "conditionalMultipliers": [],
+              "conditions": [],
+              "directlyVerified": true,
+              "duration": "Until end of combat",
+              "durationRounds": null,
+              "excludes": [],
+              "id": "wise-vigor-recovery",
+              "includesCaster": null,
+              "magnitude": 20,
+              "notes": [],
+              "perTargetEffectCheck": null,
+              "rankedValues": [
+                {
+                  "level": 1,
+                  "unit": "percent",
+                  "value": 20
+                },
+                {
+                  "level": 2,
+                  "unit": "percent",
+                  "value": 24
+                },
+                {
+                  "level": 3,
+                  "unit": "percent",
+                  "value": 28
+                },
+                {
+                  "level": 4,
+                  "unit": "percent",
+                  "value": 34
+                },
+                {
+                  "level": 5,
+                  "unit": "percent",
+                  "value": 40
+                }
+              ],
+              "scaling": [],
+              "sourceScope": "unknown",
+              "stack": null,
+              "target": "Self",
+              "targetCount": null,
+              "targetPriority": "any-eligible",
+              "targetScope": "self",
+              "type": "Recovery Dealt Up",
+              "unit": "percent"
+            }
+          ],
+          "id": "wise-vigor-start-combat",
+          "repeat": null,
+          "rounds": [],
+          "targetPriority": "any-eligible",
+          "timing": "start-of-combat",
+          "triggerChanceByHabitLevel": [],
+          "triggerChanceFixed": null,
+          "triggerEvent": "start-of-combat"
+        }
+      ],
+      "tags": [
+        "INSTINCT_UP",
+        "RECOVERY_DEALT_UP",
+        "BUFF_SELF"
+      ],
+      "unlockStarRank": 4,
+      "unresolvedQuestions": [],
+      "verification": {
+        "capturedAt": "2026-06-23",
+        "gameVersion": "26.6.53509",
+        "reviewedManually": true,
+        "source": "Wise Vigor screenshot",
+        "status": "screenshot-verified"
+      }
+    },
+    {
+      "abilityClass": "passive",
+      "augmentations": [],
+      "dragonId": "malachite",
+      "evidenceIds": [
+        "malachite-thunderous-roar-2026-06-23"
+      ],
+      "glossaryEntries": [],
+      "id": "malachite-thunderous-roar",
+      "kind": "habit",
+      "minimumDragonLevel": null,
+      "name": "Thunderous Roar",
+      "positionRequirement": null,
+      "powerByHabitLevel": [
+        {
+          "level": 1,
+          "unit": "power",
+          "value": 420
+        },
+        {
+          "level": 2,
+          "unit": "power",
+          "value": 920
+        },
+        {
+          "level": 3,
+          "unit": "power",
+          "value": 1500
+        },
+        {
+          "level": 4,
+          "unit": "power",
+          "value": 2200
+        },
+        {
+          "level": 5,
+          "unit": "power",
+          "value": 3100
+        }
+      ],
+      "rawDescription": "Each Round: 10% chance to grant Advantage (+20%) to 2 other Allies in any lane for 2 round(s). Advantage increases the target's Damage Dealt.",
+      "schedules": [
+        {
+          "attempts": null,
+          "battleContext": "unspecified",
+          "conditions": [],
+          "effects": [
+            {
+              "calculated": false,
+              "casterEligibility": "excluded",
+              "conditionalMultipliers": [],
+              "conditions": [],
+              "directlyVerified": true,
+              "duration": null,
+              "durationRounds": 2,
+              "excludes": [],
+              "id": "thunderous-roar-advantage",
+              "includesCaster": null,
+              "magnitude": 20,
+              "notes": [
+                "Advantage increases the target Damage Dealt. Magnitude is fixed in supplied table."
+              ],
+              "perTargetEffectCheck": null,
+              "rankedValues": [],
+              "scaling": [],
+              "sourceScope": "unknown",
+              "stack": null,
+              "target": "2 other Allies",
+              "targetCount": null,
+              "targetPriority": "any-eligible",
+              "targetScope": "any-lane",
+              "type": "Advantage",
+              "unit": "percent"
+            }
+          ],
+          "id": "thunderous-roar-each-round",
+          "repeat": null,
+          "rounds": [],
+          "targetPriority": "any-eligible",
+          "timing": "each-round",
+          "triggerChanceByHabitLevel": [
+            {
+              "level": 1,
+              "unit": "percent",
+              "value": 10
+            },
+            {
+              "level": 2,
+              "unit": "percent",
+              "value": 12
+            },
+            {
+              "level": 3,
+              "unit": "percent",
+              "value": 14
+            },
+            {
+              "level": 4,
+              "unit": "percent",
+              "value": 17
+            },
+            {
+              "level": 5,
+              "unit": "percent",
+              "value": 20
+            }
+          ],
+          "triggerChanceFixed": null,
+          "triggerEvent": "each-round"
+        }
+      ],
+      "tags": [
+        "DAMAGE_DEALT_UP",
+        "OTHER_ALLIES_TARGET",
+        "ANY_LANE_TARGET",
+        "BUFF_ALLIES"
+      ],
+      "unlockStarRank": 6,
+      "unresolvedQuestions": [],
+      "verification": {
+        "capturedAt": "2026-06-23",
+        "gameVersion": "26.6.53509",
+        "reviewedManually": true,
+        "source": "Thunderous Roar screenshot",
+        "status": "screenshot-verified"
+      }
+    },
+    {
+      "abilityClass": "passive",
+      "augmentations": [],
+      "dragonId": "malachite",
+      "evidenceIds": [
+        "malachite-collective-might-2026-06-23"
+      ],
+      "glossaryEntries": [],
+      "id": "malachite-collective-might",
+      "kind": "habit",
+      "minimumDragonLevel": null,
+      "name": "Collective Might",
+      "positionRequirement": null,
+      "powerByHabitLevel": [
+        {
+          "level": 1,
+          "unit": "power",
+          "value": 420
+        },
+        {
+          "level": 2,
+          "unit": "power",
+          "value": 920
+        },
+        {
+          "level": 3,
+          "unit": "power",
+          "value": 1500
+        },
+        {
+          "level": 4,
+          "unit": "power",
+          "value": 2200
+        },
+        {
+          "level": 5,
+          "unit": "power",
+          "value": 3100
+        }
+      ],
+      "rawDescription": "Start of Combat: Increase Strength by +12.5% (enhanced by Strength) of 3 Allies in any lane until the end of combat.",
+      "schedules": [
+        {
+          "attempts": null,
+          "battleContext": "unspecified",
+          "conditions": [],
+          "effects": [
+            {
+              "calculated": false,
+              "casterEligibility": "included",
+              "conditionalMultipliers": [],
+              "conditions": [],
+              "directlyVerified": true,
+              "duration": "Until end of combat",
+              "durationRounds": null,
+              "excludes": [],
+              "id": "collective-might-strength",
+              "includesCaster": true,
+              "magnitude": 12.5,
+              "notes": [
+                "Exact 3 Allies targeting is normalized to all three friendly dragons and includes the caster."
+              ],
+              "perTargetEffectCheck": null,
+              "rankedValues": [
+                {
+                  "level": 1,
+                  "unit": "percent",
+                  "value": 12.5
+                },
+                {
+                  "level": 2,
+                  "unit": "percent",
+                  "value": 15
+                },
+                {
+                  "level": 3,
+                  "unit": "percent",
+                  "value": 17.5
+                },
+                {
+                  "level": 4,
+                  "unit": "percent",
+                  "value": 21.25
+                },
+                {
+                  "level": 5,
+                  "unit": "percent",
+                  "value": 25
+                }
+              ],
+              "scaling": [
+                "Strength"
+              ],
+              "sourceScope": "unknown",
+              "stack": null,
+              "target": "3 Allies",
+              "targetCount": 3,
+              "targetPriority": "any-eligible",
+              "targetScope": "any-lane",
+              "type": "Strength Up",
+              "unit": "percent"
+            }
+          ],
+          "id": "collective-might-start-combat",
+          "repeat": null,
+          "rounds": [],
+          "targetPriority": "any-eligible",
+          "timing": "start-of-combat",
+          "triggerChanceByHabitLevel": [],
+          "triggerChanceFixed": null,
+          "triggerEvent": "start-of-combat"
+        }
+      ],
+      "tags": [
+        "STRENGTH_UP",
+        "ENHANCED_BY_STRENGTH",
+        "ANY_LANE_TARGET",
+        "BUFF_ALLIES"
+      ],
+      "unlockStarRank": 8,
+      "unresolvedQuestions": [
+        "Exact enhanced-by-Strength formula."
+      ],
+      "verification": {
+        "capturedAt": "2026-06-23",
+        "gameVersion": "26.6.53509",
+        "reviewedManually": true,
+        "source": "Collective Might screenshot",
+        "status": "screenshot-verified"
+      }
+    },
+    {
+      "abilityClass": "passive",
+      "augmentations": [],
+      "dragonId": "malachite",
+      "evidenceIds": [
+        "malachite-lightning-strike-2026-06-23"
+      ],
+      "glossaryEntries": [
+        {
+          "definition": "Causes the target to act before all other combatants each round.",
+          "term": "First-Strike"
+        },
+        {
+          "definition": "Grants the target a second Basic Attack each round.",
+          "term": "Double-Strike"
+        }
+      ],
+      "id": "malachite-lightning-strike",
+      "kind": "habit",
+      "minimumDragonLevel": null,
+      "name": "Lightning Strike",
+      "positionRequirement": null,
+      "powerByHabitLevel": [
+        {
+          "level": 1,
+          "unit": "power",
+          "value": 430
+        },
+        {
+          "level": 2,
+          "unit": "power",
+          "value": 1000
+        },
+        {
+          "level": 3,
+          "unit": "power",
+          "value": 1700
+        },
+        {
+          "level": 4,
+          "unit": "power",
+          "value": 2700
+        },
+        {
+          "level": 5,
+          "unit": "power",
+          "value": 4000
+        }
+      ],
+      "rawDescription": "Start of Round 1: 40% chance to grant First-Strike, Double-Strike, and increase Strength by +25% (enhanced by Instinct) of 1 other Ally within adjacency for 3 round(s).",
+      "schedules": [
+        {
+          "attempts": null,
+          "battleContext": "unspecified",
+          "conditions": [],
+          "effects": [
+            {
+              "calculated": false,
+              "casterEligibility": "excluded",
+              "conditionalMultipliers": [],
+              "conditions": [],
+              "directlyVerified": true,
+              "duration": null,
+              "durationRounds": 3,
+              "excludes": [],
+              "id": "lightning-strike-first-strike",
+              "includesCaster": null,
+              "magnitude": null,
+              "notes": [],
+              "perTargetEffectCheck": null,
+              "rankedValues": [],
+              "scaling": [],
+              "sourceScope": "unknown",
+              "stack": null,
+              "target": "1 other Ally",
+              "targetCount": null,
+              "targetPriority": "any-eligible",
+              "targetScope": "within-adjacency",
+              "type": "First-Strike",
+              "unit": "unknown"
+            },
+            {
+              "calculated": false,
+              "casterEligibility": "excluded",
+              "conditionalMultipliers": [],
+              "conditions": [],
+              "directlyVerified": true,
+              "duration": null,
+              "durationRounds": 3,
+              "excludes": [],
+              "id": "lightning-strike-double-strike",
+              "includesCaster": null,
+              "magnitude": null,
+              "notes": [],
+              "perTargetEffectCheck": null,
+              "rankedValues": [],
+              "scaling": [],
+              "sourceScope": "unknown",
+              "stack": null,
+              "target": "1 other Ally",
+              "targetCount": null,
+              "targetPriority": "any-eligible",
+              "targetScope": "within-adjacency",
+              "type": "Double-Strike",
+              "unit": "unknown"
+            },
+            {
+              "calculated": false,
+              "casterEligibility": "excluded",
+              "conditionalMultipliers": [],
+              "conditions": [],
+              "directlyVerified": true,
+              "duration": null,
+              "durationRounds": 3,
+              "excludes": [],
+              "id": "lightning-strike-strength",
+              "includesCaster": null,
+              "magnitude": 25,
+              "notes": [],
+              "perTargetEffectCheck": null,
+              "rankedValues": [],
+              "scaling": [
+                "Instinct"
+              ],
+              "sourceScope": "unknown",
+              "stack": null,
+              "target": "1 other Ally",
+              "targetCount": null,
+              "targetPriority": "any-eligible",
+              "targetScope": "within-adjacency",
+              "type": "Strength Up",
+              "unit": "percent"
+            }
+          ],
+          "id": "lightning-strike-round-one",
+          "repeat": null,
+          "rounds": [
+            1
+          ],
+          "targetPriority": "any-eligible",
+          "timing": "start-of-round",
+          "triggerChanceByHabitLevel": [
+            {
+              "level": 1,
+              "unit": "percent",
+              "value": 40
+            },
+            {
+              "level": 2,
+              "unit": "percent",
+              "value": 52
+            },
+            {
+              "level": 3,
+              "unit": "percent",
+              "value": 64
+            },
+            {
+              "level": 4,
+              "unit": "percent",
+              "value": 80
+            },
+            {
+              "level": 5,
+              "unit": "percent",
+              "value": 100
+            }
+          ],
+          "triggerChanceFixed": null,
+          "triggerEvent": "start-of-round"
+        }
+      ],
+      "tags": [
+        "FIRST_STRIKE",
+        "DOUBLE_STRIKE",
+        "STRENGTH_UP",
+        "ENHANCED_BY_INSTINCT",
+        "ADJACENT_TARGET",
+        "OTHER_ALLIES_TARGET",
+        "BUFF_ALLIES"
+      ],
+      "unlockStarRank": 10,
+      "unresolvedQuestions": [
+        "Exact enhanced-by-Instinct formula."
+      ],
+      "verification": {
+        "capturedAt": "2026-06-23",
+        "gameVersion": "26.6.53509",
+        "reviewedManually": true,
+        "source": "Lightning Strike screenshot",
+        "status": "screenshot-verified"
+      }
+    }
+  ],
+  "abilitySchedules": [
+    {
+      "abilityId": "malachite-wardens-rally",
+      "abilityName": "Warden's Rally",
+      "schedule": {
+        "attempts": null,
+        "battleContext": "unspecified",
+        "conditions": [],
+        "effects": [
+          {
+            "calculated": false,
+            "casterEligibility": "unknown",
+            "conditionalMultipliers": [],
+            "conditions": [],
+            "directlyVerified": true,
+            "duration": null,
+            "durationRounds": null,
+            "excludes": [],
+            "id": "wardens-rally-tactical-damage-rate",
+            "includesCaster": null,
+            "magnitude": 100,
+            "notes": [
+              "Mitigated by target Intelligence"
+            ],
+            "perTargetEffectCheck": null,
+            "rankedValues": [],
+            "scaling": [
+              "attacker Instinct"
+            ],
+            "sourceScope": "unknown",
+            "stack": null,
+            "target": "1 Enemy",
+            "targetCount": null,
+            "targetPriority": "any-eligible",
+            "targetScope": "same-lane",
+            "type": "Tactical Damage",
+            "unit": "rate"
+          }
+        ],
+        "id": "wardens-rally-tactical-damage",
+        "repeat": null,
+        "rounds": [
+          2,
+          4,
+          7,
+          9
+        ],
+        "targetPriority": "any-eligible",
+        "timing": "specific-rounds",
+        "triggerChanceByHabitLevel": [],
+        "triggerChanceFixed": null,
+        "triggerEvent": "specific-rounds"
+      }
+    },
+    {
+      "abilityId": "malachite-wardens-rally",
+      "abilityName": "Warden's Rally",
+      "schedule": {
+        "attempts": null,
+        "battleContext": "unspecified",
+        "conditions": [],
+        "effects": [
+          {
+            "calculated": false,
+            "casterEligibility": "included",
+            "conditionalMultipliers": [],
+            "conditions": [],
+            "directlyVerified": true,
+            "duration": null,
+            "durationRounds": null,
+            "excludes": [],
+            "id": "wardens-rally-recovery-rate",
+            "includesCaster": true,
+            "magnitude": 70,
+            "notes": [
+              "Manual combat-log observation confirms that 3 Allies includes Malachite as the caster in the three-dragon formation."
+            ],
+            "perTargetEffectCheck": null,
+            "rankedValues": [],
+            "scaling": [
+              "dragon Level",
+              "Instinct"
+            ],
+            "sourceScope": "unknown",
+            "stack": null,
+            "target": "3 Allies",
+            "targetCount": 3,
+            "targetPriority": "any-eligible",
+            "targetScope": "any-lane",
+            "type": "Recovery",
+            "unit": "rate"
+          }
+        ],
+        "id": "wardens-rally-recovery",
+        "repeat": null,
+        "rounds": [
+          3,
+          6,
+          9
+        ],
+        "targetPriority": "any-eligible",
+        "timing": "specific-rounds",
+        "triggerChanceByHabitLevel": [],
+        "triggerChanceFixed": null,
+        "triggerEvent": "specific-rounds"
+      }
+    },
+    {
+      "abilityId": "malachite-sentinels-presence",
+      "abilityName": "Sentinel's Presence",
+      "schedule": {
+        "attempts": null,
+        "battleContext": "unspecified",
+        "conditions": [],
+        "effects": [
+          {
+            "calculated": false,
+            "casterEligibility": "unknown",
+            "conditionalMultipliers": [],
+            "conditions": [],
+            "directlyVerified": true,
+            "duration": null,
+            "durationRounds": null,
+            "excludes": [],
+            "id": "sentinels-presence-recovery-dealt",
+            "includesCaster": null,
+            "magnitude": 15,
+            "notes": [],
+            "perTargetEffectCheck": null,
+            "rankedValues": [],
+            "scaling": [],
+            "sourceScope": "unknown",
+            "stack": null,
+            "target": "Self",
+            "targetCount": null,
+            "targetPriority": "any-eligible",
+            "targetScope": "self",
+            "type": "Recovery Dealt Up",
+            "unit": "percent"
+          },
+          {
+            "calculated": false,
+            "casterEligibility": "unknown",
+            "conditionalMultipliers": [],
+            "conditions": [],
+            "directlyVerified": true,
+            "duration": null,
+            "durationRounds": null,
+            "excludes": [],
+            "id": "sentinels-presence-instinct",
+            "includesCaster": null,
+            "magnitude": 25,
+            "notes": [],
+            "perTargetEffectCheck": null,
+            "rankedValues": [],
+            "scaling": [],
+            "sourceScope": "unknown",
+            "stack": null,
+            "target": "Self",
+            "targetCount": null,
+            "targetPriority": "any-eligible",
+            "targetScope": "self",
+            "type": "Instinct Up",
+            "unit": "flat"
+          },
+          {
+            "calculated": false,
+            "casterEligibility": "unknown",
+            "conditionalMultipliers": [],
+            "conditions": [],
+            "directlyVerified": true,
+            "duration": null,
+            "durationRounds": null,
+            "excludes": [],
+            "id": "sentinels-presence-left-flank-fire",
+            "includesCaster": null,
+            "magnitude": 16,
+            "notes": [],
+            "perTargetEffectCheck": null,
+            "rankedValues": [],
+            "scaling": [],
+            "sourceScope": "unknown",
+            "stack": null,
+            "target": "Ally deployed in Left Flank",
+            "targetCount": null,
+            "targetPriority": "any-eligible",
+            "targetScope": "left-flank",
+            "type": "Fire Damage Dealt Up",
+            "unit": "percent"
+          }
+        ],
+        "id": "sentinels-presence-passive",
+        "repeat": null,
+        "rounds": [],
+        "targetPriority": "any-eligible",
+        "timing": "passive",
+        "triggerChanceByHabitLevel": [],
+        "triggerChanceFixed": null,
+        "triggerEvent": "passive"
+      }
+    },
+    {
+      "abilityId": "malachite-forests-instinct",
+      "abilityName": "Forest's Instinct",
+      "schedule": {
+        "attempts": null,
+        "battleContext": "unspecified",
+        "conditions": [],
+        "effects": [
+          {
+            "calculated": false,
+            "casterEligibility": "excluded",
+            "conditionalMultipliers": [],
+            "conditions": [],
+            "directlyVerified": true,
+            "duration": null,
+            "durationRounds": 2,
+            "excludes": [
+              "Basic Attacks"
+            ],
+            "id": "forests-instinct-physical-damage",
+            "includesCaster": null,
+            "magnitude": 8,
+            "notes": [],
+            "perTargetEffectCheck": null,
+            "rankedValues": [
+              {
+                "level": 1,
+                "unit": "percent",
+                "value": 8
+              },
+              {
+                "level": 2,
+                "unit": "percent",
+                "value": 9.6
+              },
+              {
+                "level": 3,
+                "unit": "percent",
+                "value": 11.2
+              },
+              {
+                "level": 4,
+                "unit": "percent",
+                "value": 13.6
+              },
+              {
+                "level": 5,
+                "unit": "percent",
+                "value": 16
+              }
+            ],
+            "scaling": [],
+            "sourceScope": "non-basic-attacks",
+            "stack": null,
+            "target": "2 other Allies",
+            "targetCount": null,
+            "targetPriority": "any-eligible",
+            "targetScope": "any-lane",
+            "type": "Physical Damage Dealt Up",
+            "unit": "percent"
+          },
+          {
+            "calculated": false,
+            "casterEligibility": "excluded",
+            "conditionalMultipliers": [],
+            "conditions": [],
+            "directlyVerified": true,
+            "duration": null,
+            "durationRounds": 2,
+            "excludes": [],
+            "id": "forests-instinct-tactical-reduction",
+            "includesCaster": null,
+            "magnitude": 8,
+            "notes": [],
+            "perTargetEffectCheck": null,
+            "rankedValues": [
+              {
+                "level": 1,
+                "unit": "percent",
+                "value": 8
+              },
+              {
+                "level": 2,
+                "unit": "percent",
+                "value": 9.6
+              },
+              {
+                "level": 3,
+                "unit": "percent",
+                "value": 11.2
+              },
+              {
+                "level": 4,
+                "unit": "percent",
+                "value": 13.6
+              },
+              {
+                "level": 5,
+                "unit": "percent",
+                "value": 16
+              }
+            ],
+            "scaling": [],
+            "sourceScope": "unknown",
+            "stack": null,
+            "target": "2 other Allies",
+            "targetCount": null,
+            "targetPriority": "any-eligible",
+            "targetScope": "any-lane",
+            "type": "Tactical Damage Received Reduction",
+            "unit": "percent"
+          }
+        ],
+        "id": "forests-instinct-each-round",
+        "repeat": null,
+        "rounds": [],
+        "targetPriority": "any-eligible",
+        "timing": "each-round",
+        "triggerChanceByHabitLevel": [],
+        "triggerChanceFixed": 35,
+        "triggerEvent": "each-round"
+      }
+    },
+    {
+      "abilityId": "malachite-wise-vigor",
+      "abilityName": "Wise Vigor",
+      "schedule": {
+        "attempts": null,
+        "battleContext": "unspecified",
+        "conditions": [],
+        "effects": [
+          {
+            "calculated": false,
+            "casterEligibility": "unknown",
+            "conditionalMultipliers": [],
+            "conditions": [],
+            "directlyVerified": true,
+            "duration": "Until end of combat",
+            "durationRounds": null,
+            "excludes": [],
+            "id": "wise-vigor-instinct",
+            "includesCaster": null,
+            "magnitude": 20,
+            "notes": [],
+            "perTargetEffectCheck": null,
+            "rankedValues": [
+              {
+                "level": 1,
+                "unit": "percent",
+                "value": 20
+              },
+              {
+                "level": 2,
+                "unit": "percent",
+                "value": 24
+              },
+              {
+                "level": 3,
+                "unit": "percent",
+                "value": 28
+              },
+              {
+                "level": 4,
+                "unit": "percent",
+                "value": 34
+              },
+              {
+                "level": 5,
+                "unit": "percent",
+                "value": 40
+              }
+            ],
+            "scaling": [],
+            "sourceScope": "unknown",
+            "stack": null,
+            "target": "Self",
+            "targetCount": null,
+            "targetPriority": "any-eligible",
+            "targetScope": "self",
+            "type": "Instinct Up",
+            "unit": "percent"
+          },
+          {
+            "calculated": false,
+            "casterEligibility": "unknown",
+            "conditionalMultipliers": [],
+            "conditions": [],
+            "directlyVerified": true,
+            "duration": "Until end of combat",
+            "durationRounds": null,
+            "excludes": [],
+            "id": "wise-vigor-recovery",
+            "includesCaster": null,
+            "magnitude": 20,
+            "notes": [],
+            "perTargetEffectCheck": null,
+            "rankedValues": [
+              {
+                "level": 1,
+                "unit": "percent",
+                "value": 20
+              },
+              {
+                "level": 2,
+                "unit": "percent",
+                "value": 24
+              },
+              {
+                "level": 3,
+                "unit": "percent",
+                "value": 28
+              },
+              {
+                "level": 4,
+                "unit": "percent",
+                "value": 34
+              },
+              {
+                "level": 5,
+                "unit": "percent",
+                "value": 40
+              }
+            ],
+            "scaling": [],
+            "sourceScope": "unknown",
+            "stack": null,
+            "target": "Self",
+            "targetCount": null,
+            "targetPriority": "any-eligible",
+            "targetScope": "self",
+            "type": "Recovery Dealt Up",
+            "unit": "percent"
+          }
+        ],
+        "id": "wise-vigor-start-combat",
+        "repeat": null,
+        "rounds": [],
+        "targetPriority": "any-eligible",
+        "timing": "start-of-combat",
+        "triggerChanceByHabitLevel": [],
+        "triggerChanceFixed": null,
+        "triggerEvent": "start-of-combat"
+      }
+    },
+    {
+      "abilityId": "malachite-thunderous-roar",
+      "abilityName": "Thunderous Roar",
+      "schedule": {
+        "attempts": null,
+        "battleContext": "unspecified",
+        "conditions": [],
+        "effects": [
+          {
+            "calculated": false,
+            "casterEligibility": "excluded",
+            "conditionalMultipliers": [],
+            "conditions": [],
+            "directlyVerified": true,
+            "duration": null,
+            "durationRounds": 2,
+            "excludes": [],
+            "id": "thunderous-roar-advantage",
+            "includesCaster": null,
+            "magnitude": 20,
+            "notes": [
+              "Advantage increases the target Damage Dealt. Magnitude is fixed in supplied table."
+            ],
+            "perTargetEffectCheck": null,
+            "rankedValues": [],
+            "scaling": [],
+            "sourceScope": "unknown",
+            "stack": null,
+            "target": "2 other Allies",
+            "targetCount": null,
+            "targetPriority": "any-eligible",
+            "targetScope": "any-lane",
+            "type": "Advantage",
+            "unit": "percent"
+          }
+        ],
+        "id": "thunderous-roar-each-round",
+        "repeat": null,
+        "rounds": [],
+        "targetPriority": "any-eligible",
+        "timing": "each-round",
+        "triggerChanceByHabitLevel": [
+          {
+            "level": 1,
+            "unit": "percent",
+            "value": 10
+          },
+          {
+            "level": 2,
+            "unit": "percent",
+            "value": 12
+          },
+          {
+            "level": 3,
+            "unit": "percent",
+            "value": 14
+          },
+          {
+            "level": 4,
+            "unit": "percent",
+            "value": 17
+          },
+          {
+            "level": 5,
+            "unit": "percent",
+            "value": 20
+          }
+        ],
+        "triggerChanceFixed": null,
+        "triggerEvent": "each-round"
+      }
+    },
+    {
+      "abilityId": "malachite-collective-might",
+      "abilityName": "Collective Might",
+      "schedule": {
+        "attempts": null,
+        "battleContext": "unspecified",
+        "conditions": [],
+        "effects": [
+          {
+            "calculated": false,
+            "casterEligibility": "included",
+            "conditionalMultipliers": [],
+            "conditions": [],
+            "directlyVerified": true,
+            "duration": "Until end of combat",
+            "durationRounds": null,
+            "excludes": [],
+            "id": "collective-might-strength",
+            "includesCaster": true,
+            "magnitude": 12.5,
+            "notes": [
+              "Exact 3 Allies targeting is normalized to all three friendly dragons and includes the caster."
+            ],
+            "perTargetEffectCheck": null,
+            "rankedValues": [
+              {
+                "level": 1,
+                "unit": "percent",
+                "value": 12.5
+              },
+              {
+                "level": 2,
+                "unit": "percent",
+                "value": 15
+              },
+              {
+                "level": 3,
+                "unit": "percent",
+                "value": 17.5
+              },
+              {
+                "level": 4,
+                "unit": "percent",
+                "value": 21.25
+              },
+              {
+                "level": 5,
+                "unit": "percent",
+                "value": 25
+              }
+            ],
+            "scaling": [
+              "Strength"
+            ],
+            "sourceScope": "unknown",
+            "stack": null,
+            "target": "3 Allies",
+            "targetCount": 3,
+            "targetPriority": "any-eligible",
+            "targetScope": "any-lane",
+            "type": "Strength Up",
+            "unit": "percent"
+          }
+        ],
+        "id": "collective-might-start-combat",
+        "repeat": null,
+        "rounds": [],
+        "targetPriority": "any-eligible",
+        "timing": "start-of-combat",
+        "triggerChanceByHabitLevel": [],
+        "triggerChanceFixed": null,
+        "triggerEvent": "start-of-combat"
+      }
+    },
+    {
+      "abilityId": "malachite-lightning-strike",
+      "abilityName": "Lightning Strike",
+      "schedule": {
+        "attempts": null,
+        "battleContext": "unspecified",
+        "conditions": [],
+        "effects": [
+          {
+            "calculated": false,
+            "casterEligibility": "excluded",
+            "conditionalMultipliers": [],
+            "conditions": [],
+            "directlyVerified": true,
+            "duration": null,
+            "durationRounds": 3,
+            "excludes": [],
+            "id": "lightning-strike-first-strike",
+            "includesCaster": null,
+            "magnitude": null,
+            "notes": [],
+            "perTargetEffectCheck": null,
+            "rankedValues": [],
+            "scaling": [],
+            "sourceScope": "unknown",
+            "stack": null,
+            "target": "1 other Ally",
+            "targetCount": null,
+            "targetPriority": "any-eligible",
+            "targetScope": "within-adjacency",
+            "type": "First-Strike",
+            "unit": "unknown"
+          },
+          {
+            "calculated": false,
+            "casterEligibility": "excluded",
+            "conditionalMultipliers": [],
+            "conditions": [],
+            "directlyVerified": true,
+            "duration": null,
+            "durationRounds": 3,
+            "excludes": [],
+            "id": "lightning-strike-double-strike",
+            "includesCaster": null,
+            "magnitude": null,
+            "notes": [],
+            "perTargetEffectCheck": null,
+            "rankedValues": [],
+            "scaling": [],
+            "sourceScope": "unknown",
+            "stack": null,
+            "target": "1 other Ally",
+            "targetCount": null,
+            "targetPriority": "any-eligible",
+            "targetScope": "within-adjacency",
+            "type": "Double-Strike",
+            "unit": "unknown"
+          },
+          {
+            "calculated": false,
+            "casterEligibility": "excluded",
+            "conditionalMultipliers": [],
+            "conditions": [],
+            "directlyVerified": true,
+            "duration": null,
+            "durationRounds": 3,
+            "excludes": [],
+            "id": "lightning-strike-strength",
+            "includesCaster": null,
+            "magnitude": 25,
+            "notes": [],
+            "perTargetEffectCheck": null,
+            "rankedValues": [],
+            "scaling": [
+              "Instinct"
+            ],
+            "sourceScope": "unknown",
+            "stack": null,
+            "target": "1 other Ally",
+            "targetCount": null,
+            "targetPriority": "any-eligible",
+            "targetScope": "within-adjacency",
+            "type": "Strength Up",
+            "unit": "percent"
+          }
+        ],
+        "id": "lightning-strike-round-one",
+        "repeat": null,
+        "rounds": [
+          1
+        ],
+        "targetPriority": "any-eligible",
+        "timing": "start-of-round",
+        "triggerChanceByHabitLevel": [
+          {
+            "level": 1,
+            "unit": "percent",
+            "value": 40
+          },
+          {
+            "level": 2,
+            "unit": "percent",
+            "value": 52
+          },
+          {
+            "level": 3,
+            "unit": "percent",
+            "value": 64
+          },
+          {
+            "level": 4,
+            "unit": "percent",
+            "value": 80
+          },
+          {
+            "level": 5,
+            "unit": "percent",
+            "value": 100
+          }
+        ],
+        "triggerChanceFixed": null,
+        "triggerEvent": "start-of-round"
+      }
+    }
+  ],
+  "affinities": {
+    "Archers": "negative",
+    "Cavalry": "positive",
+    "Shieldbearers": "positive",
+    "Siege": "unknown",
+    "Spearmen": "unknown"
+  },
+  "attempts": [],
+  "availabilityRequirements": [
+    {
+      "abilityId": "malachite-sentinels-presence",
+      "type": "star-rank",
+      "value": 1
+    },
+    {
+      "abilityId": "malachite-sentinels-presence",
+      "type": "minimum-dragon-level",
+      "value": 16
+    },
+    {
+      "abilityId": "malachite-sentinels-presence",
+      "type": "position-requirement",
+      "value": "vanguard"
+    },
+    {
+      "abilityId": "malachite-forests-instinct",
+      "type": "habit-unlock-star-rank",
+      "value": 2
+    },
+    {
+      "abilityId": "malachite-wise-vigor",
+      "type": "habit-unlock-star-rank",
+      "value": 4
+    },
+    {
+      "abilityId": "malachite-thunderous-roar",
+      "type": "habit-unlock-star-rank",
+      "value": 6
+    },
+    {
+      "abilityId": "malachite-collective-might",
+      "type": "habit-unlock-star-rank",
+      "value": 8
+    },
+    {
+      "abilityId": "malachite-lightning-strike",
+      "type": "habit-unlock-star-rank",
+      "value": 10
+    }
+  ],
+  "breed": "Sentinel",
+  "command": {
+    "abilityClass": "active",
+    "augmentations": [],
+    "dragonId": "malachite",
+    "evidenceIds": [
+      "malachite-wardens-rally-summary-2026-06-23",
+      "malachite-wardens-rally-glossary-2026-06-23"
+    ],
+    "glossaryEntries": [
+      {
+        "definition": "Tactical Damage is increased by the attacker's Instinct and mitigated by the target's Intelligence.",
+        "term": "Tactical Damage"
+      },
+      {
+        "definition": "Restores troops to the target. Recovery amount scales with dragon Level and is enhanced by Instinct.",
+        "term": "Recovery"
+      }
+    ],
+    "id": "malachite-wardens-rally",
+    "kind": "command",
+    "minimumDragonLevel": null,
+    "name": "Warden's Rally",
+    "positionRequirement": null,
+    "powerByHabitLevel": [],
+    "rawDescription": "Rounds 2, 4, 7, 9: Deal Tactical Damage to 1 Enemy in the same lane (Damage Rate: +100%).\n\nRounds 3, 6, 9: Apply Recovery to 3 Allies in any lane (Recovery Rate: +70%, enhanced by Instinct).",
+    "schedules": [
+      {
+        "attempts": null,
+        "battleContext": "unspecified",
+        "conditions": [],
+        "effects": [
+          {
+            "calculated": false,
+            "casterEligibility": "unknown",
+            "conditionalMultipliers": [],
+            "conditions": [],
+            "directlyVerified": true,
+            "duration": null,
+            "durationRounds": null,
+            "excludes": [],
+            "id": "wardens-rally-tactical-damage-rate",
+            "includesCaster": null,
+            "magnitude": 100,
+            "notes": [
+              "Mitigated by target Intelligence"
+            ],
+            "perTargetEffectCheck": null,
+            "rankedValues": [],
+            "scaling": [
+              "attacker Instinct"
+            ],
+            "sourceScope": "unknown",
+            "stack": null,
+            "target": "1 Enemy",
+            "targetCount": null,
+            "targetPriority": "any-eligible",
+            "targetScope": "same-lane",
+            "type": "Tactical Damage",
+            "unit": "rate"
+          }
+        ],
+        "id": "wardens-rally-tactical-damage",
+        "repeat": null,
+        "rounds": [
+          2,
+          4,
+          7,
+          9
+        ],
+        "targetPriority": "any-eligible",
+        "timing": "specific-rounds",
+        "triggerChanceByHabitLevel": [],
+        "triggerChanceFixed": null,
+        "triggerEvent": "specific-rounds"
+      },
+      {
+        "attempts": null,
+        "battleContext": "unspecified",
+        "conditions": [],
+        "effects": [
+          {
+            "calculated": false,
+            "casterEligibility": "included",
+            "conditionalMultipliers": [],
+            "conditions": [],
+            "directlyVerified": true,
+            "duration": null,
+            "durationRounds": null,
+            "excludes": [],
+            "id": "wardens-rally-recovery-rate",
+            "includesCaster": true,
+            "magnitude": 70,
+            "notes": [
+              "Manual combat-log observation confirms that 3 Allies includes Malachite as the caster in the three-dragon formation."
+            ],
+            "perTargetEffectCheck": null,
+            "rankedValues": [],
+            "scaling": [
+              "dragon Level",
+              "Instinct"
+            ],
+            "sourceScope": "unknown",
+            "stack": null,
+            "target": "3 Allies",
+            "targetCount": 3,
+            "targetPriority": "any-eligible",
+            "targetScope": "any-lane",
+            "type": "Recovery",
+            "unit": "rate"
+          }
+        ],
+        "id": "wardens-rally-recovery",
+        "repeat": null,
+        "rounds": [
+          3,
+          6,
+          9
+        ],
+        "targetPriority": "any-eligible",
+        "timing": "specific-rounds",
+        "triggerChanceByHabitLevel": [],
+        "triggerChanceFixed": null,
+        "triggerEvent": "specific-rounds"
+      }
+    ],
+    "tags": [
+      "TACTICAL_DAMAGE",
+      "RECOVERY",
+      "SAME_LANE_TARGET",
+      "ANY_LANE_TARGET",
+      "ENHANCED_BY_INSTINCT",
+      "SCALES_WITH_LEVEL",
+      "SPECIFIC_ROUNDS",
+      "MULTI_SCHEDULE_COMMAND"
+    ],
+    "unlockStarRank": null,
+    "unresolvedQuestions": [
+      "Exact Level and Instinct scaling formulas."
+    ],
+    "verification": {
+      "capturedAt": "2026-06-23",
+      "gameVersion": "26.6.53509",
+      "reviewedManually": true,
+      "source": "Warden's Rally summary and glossary screenshots",
+      "status": "screenshot-verified"
+    }
+  },
+  "contextVersion": 1,
+  "dataStatus": "community-verified",
+  "dependencies": [
+    {
+      "dependency": {
+        "notes": [
+          "Effect wording indicates scaling with Instinct."
+        ],
+        "statId": "instinct",
+        "type": "scales-with-stat"
+      },
+      "outputCapabilityId": "malachite-wardens-rally-wardens-rally-tactical-damage-rate-output"
+    },
+    {
+      "dependency": {
+        "notes": [
+          "Tactical Damage is reduced by target Intelligence."
+        ],
+        "statId": "intelligence",
+        "type": "mitigated-by-target-stat"
+      },
+      "outputCapabilityId": "malachite-wardens-rally-wardens-rally-tactical-damage-rate-output"
+    },
+    {
+      "dependency": {
+        "notes": [
+          "Effect wording indicates scaling with Instinct."
+        ],
+        "statId": "instinct",
+        "type": "scales-with-stat"
+      },
+      "outputCapabilityId": "malachite-wardens-rally-wardens-rally-recovery-rate-output"
+    }
+  ],
+  "effects": [
+    {
+      "abilityId": "malachite-wardens-rally",
+      "effect": {
+        "calculated": false,
+        "casterEligibility": "unknown",
+        "conditionalMultipliers": [],
+        "conditions": [],
+        "directlyVerified": true,
+        "duration": null,
+        "durationRounds": null,
+        "excludes": [],
+        "id": "wardens-rally-tactical-damage-rate",
+        "includesCaster": null,
+        "magnitude": 100,
+        "notes": [
+          "Mitigated by target Intelligence"
+        ],
+        "perTargetEffectCheck": null,
+        "rankedValues": [],
+        "scaling": [
+          "attacker Instinct"
+        ],
+        "sourceScope": "unknown",
+        "stack": null,
+        "target": "1 Enemy",
+        "targetCount": null,
+        "targetPriority": "any-eligible",
+        "targetScope": "same-lane",
+        "type": "Tactical Damage",
+        "unit": "rate"
+      },
+      "scheduleId": "wardens-rally-tactical-damage"
+    },
+    {
+      "abilityId": "malachite-wardens-rally",
+      "effect": {
+        "calculated": false,
+        "casterEligibility": "included",
+        "conditionalMultipliers": [],
+        "conditions": [],
+        "directlyVerified": true,
+        "duration": null,
+        "durationRounds": null,
+        "excludes": [],
+        "id": "wardens-rally-recovery-rate",
+        "includesCaster": true,
+        "magnitude": 70,
+        "notes": [
+          "Manual combat-log observation confirms that 3 Allies includes Malachite as the caster in the three-dragon formation."
+        ],
+        "perTargetEffectCheck": null,
+        "rankedValues": [],
+        "scaling": [
+          "dragon Level",
+          "Instinct"
+        ],
+        "sourceScope": "unknown",
+        "stack": null,
+        "target": "3 Allies",
+        "targetCount": 3,
+        "targetPriority": "any-eligible",
+        "targetScope": "any-lane",
+        "type": "Recovery",
+        "unit": "rate"
+      },
+      "scheduleId": "wardens-rally-recovery"
+    },
+    {
+      "abilityId": "malachite-sentinels-presence",
+      "effect": {
+        "calculated": false,
+        "casterEligibility": "unknown",
+        "conditionalMultipliers": [],
+        "conditions": [],
+        "directlyVerified": true,
+        "duration": null,
+        "durationRounds": null,
+        "excludes": [],
+        "id": "sentinels-presence-recovery-dealt",
+        "includesCaster": null,
+        "magnitude": 15,
+        "notes": [],
+        "perTargetEffectCheck": null,
+        "rankedValues": [],
+        "scaling": [],
+        "sourceScope": "unknown",
+        "stack": null,
+        "target": "Self",
+        "targetCount": null,
+        "targetPriority": "any-eligible",
+        "targetScope": "self",
+        "type": "Recovery Dealt Up",
+        "unit": "percent"
+      },
+      "scheduleId": "sentinels-presence-passive"
+    },
+    {
+      "abilityId": "malachite-sentinels-presence",
+      "effect": {
+        "calculated": false,
+        "casterEligibility": "unknown",
+        "conditionalMultipliers": [],
+        "conditions": [],
+        "directlyVerified": true,
+        "duration": null,
+        "durationRounds": null,
+        "excludes": [],
+        "id": "sentinels-presence-instinct",
+        "includesCaster": null,
+        "magnitude": 25,
+        "notes": [],
+        "perTargetEffectCheck": null,
+        "rankedValues": [],
+        "scaling": [],
+        "sourceScope": "unknown",
+        "stack": null,
+        "target": "Self",
+        "targetCount": null,
+        "targetPriority": "any-eligible",
+        "targetScope": "self",
+        "type": "Instinct Up",
+        "unit": "flat"
+      },
+      "scheduleId": "sentinels-presence-passive"
+    },
+    {
+      "abilityId": "malachite-sentinels-presence",
+      "effect": {
+        "calculated": false,
+        "casterEligibility": "unknown",
+        "conditionalMultipliers": [],
+        "conditions": [],
+        "directlyVerified": true,
+        "duration": null,
+        "durationRounds": null,
+        "excludes": [],
+        "id": "sentinels-presence-left-flank-fire",
+        "includesCaster": null,
+        "magnitude": 16,
+        "notes": [],
+        "perTargetEffectCheck": null,
+        "rankedValues": [],
+        "scaling": [],
+        "sourceScope": "unknown",
+        "stack": null,
+        "target": "Ally deployed in Left Flank",
+        "targetCount": null,
+        "targetPriority": "any-eligible",
+        "targetScope": "left-flank",
+        "type": "Fire Damage Dealt Up",
+        "unit": "percent"
+      },
+      "scheduleId": "sentinels-presence-passive"
+    },
+    {
+      "abilityId": "malachite-forests-instinct",
+      "effect": {
+        "calculated": false,
+        "casterEligibility": "excluded",
+        "conditionalMultipliers": [],
+        "conditions": [],
+        "directlyVerified": true,
+        "duration": null,
+        "durationRounds": 2,
+        "excludes": [
+          "Basic Attacks"
+        ],
+        "id": "forests-instinct-physical-damage",
+        "includesCaster": null,
+        "magnitude": 8,
+        "notes": [],
+        "perTargetEffectCheck": null,
+        "rankedValues": [
+          {
+            "level": 1,
+            "unit": "percent",
+            "value": 8
+          },
+          {
+            "level": 2,
+            "unit": "percent",
+            "value": 9.6
+          },
+          {
+            "level": 3,
+            "unit": "percent",
+            "value": 11.2
+          },
+          {
+            "level": 4,
+            "unit": "percent",
+            "value": 13.6
+          },
+          {
+            "level": 5,
+            "unit": "percent",
+            "value": 16
+          }
+        ],
+        "scaling": [],
+        "sourceScope": "non-basic-attacks",
+        "stack": null,
+        "target": "2 other Allies",
+        "targetCount": null,
+        "targetPriority": "any-eligible",
+        "targetScope": "any-lane",
+        "type": "Physical Damage Dealt Up",
+        "unit": "percent"
+      },
+      "scheduleId": "forests-instinct-each-round"
+    },
+    {
+      "abilityId": "malachite-forests-instinct",
+      "effect": {
+        "calculated": false,
+        "casterEligibility": "excluded",
+        "conditionalMultipliers": [],
+        "conditions": [],
+        "directlyVerified": true,
+        "duration": null,
+        "durationRounds": 2,
+        "excludes": [],
+        "id": "forests-instinct-tactical-reduction",
+        "includesCaster": null,
+        "magnitude": 8,
+        "notes": [],
+        "perTargetEffectCheck": null,
+        "rankedValues": [
+          {
+            "level": 1,
+            "unit": "percent",
+            "value": 8
+          },
+          {
+            "level": 2,
+            "unit": "percent",
+            "value": 9.6
+          },
+          {
+            "level": 3,
+            "unit": "percent",
+            "value": 11.2
+          },
+          {
+            "level": 4,
+            "unit": "percent",
+            "value": 13.6
+          },
+          {
+            "level": 5,
+            "unit": "percent",
+            "value": 16
+          }
+        ],
+        "scaling": [],
+        "sourceScope": "unknown",
+        "stack": null,
+        "target": "2 other Allies",
+        "targetCount": null,
+        "targetPriority": "any-eligible",
+        "targetScope": "any-lane",
+        "type": "Tactical Damage Received Reduction",
+        "unit": "percent"
+      },
+      "scheduleId": "forests-instinct-each-round"
+    },
+    {
+      "abilityId": "malachite-wise-vigor",
+      "effect": {
+        "calculated": false,
+        "casterEligibility": "unknown",
+        "conditionalMultipliers": [],
+        "conditions": [],
+        "directlyVerified": true,
+        "duration": "Until end of combat",
+        "durationRounds": null,
+        "excludes": [],
+        "id": "wise-vigor-instinct",
+        "includesCaster": null,
+        "magnitude": 20,
+        "notes": [],
+        "perTargetEffectCheck": null,
+        "rankedValues": [
+          {
+            "level": 1,
+            "unit": "percent",
+            "value": 20
+          },
+          {
+            "level": 2,
+            "unit": "percent",
+            "value": 24
+          },
+          {
+            "level": 3,
+            "unit": "percent",
+            "value": 28
+          },
+          {
+            "level": 4,
+            "unit": "percent",
+            "value": 34
+          },
+          {
+            "level": 5,
+            "unit": "percent",
+            "value": 40
+          }
+        ],
+        "scaling": [],
+        "sourceScope": "unknown",
+        "stack": null,
+        "target": "Self",
+        "targetCount": null,
+        "targetPriority": "any-eligible",
+        "targetScope": "self",
+        "type": "Instinct Up",
+        "unit": "percent"
+      },
+      "scheduleId": "wise-vigor-start-combat"
+    },
+    {
+      "abilityId": "malachite-wise-vigor",
+      "effect": {
+        "calculated": false,
+        "casterEligibility": "unknown",
+        "conditionalMultipliers": [],
+        "conditions": [],
+        "directlyVerified": true,
+        "duration": "Until end of combat",
+        "durationRounds": null,
+        "excludes": [],
+        "id": "wise-vigor-recovery",
+        "includesCaster": null,
+        "magnitude": 20,
+        "notes": [],
+        "perTargetEffectCheck": null,
+        "rankedValues": [
+          {
+            "level": 1,
+            "unit": "percent",
+            "value": 20
+          },
+          {
+            "level": 2,
+            "unit": "percent",
+            "value": 24
+          },
+          {
+            "level": 3,
+            "unit": "percent",
+            "value": 28
+          },
+          {
+            "level": 4,
+            "unit": "percent",
+            "value": 34
+          },
+          {
+            "level": 5,
+            "unit": "percent",
+            "value": 40
+          }
+        ],
+        "scaling": [],
+        "sourceScope": "unknown",
+        "stack": null,
+        "target": "Self",
+        "targetCount": null,
+        "targetPriority": "any-eligible",
+        "targetScope": "self",
+        "type": "Recovery Dealt Up",
+        "unit": "percent"
+      },
+      "scheduleId": "wise-vigor-start-combat"
+    },
+    {
+      "abilityId": "malachite-thunderous-roar",
+      "effect": {
+        "calculated": false,
+        "casterEligibility": "excluded",
+        "conditionalMultipliers": [],
+        "conditions": [],
+        "directlyVerified": true,
+        "duration": null,
+        "durationRounds": 2,
+        "excludes": [],
+        "id": "thunderous-roar-advantage",
+        "includesCaster": null,
+        "magnitude": 20,
+        "notes": [
+          "Advantage increases the target Damage Dealt. Magnitude is fixed in supplied table."
+        ],
+        "perTargetEffectCheck": null,
+        "rankedValues": [],
+        "scaling": [],
+        "sourceScope": "unknown",
+        "stack": null,
+        "target": "2 other Allies",
+        "targetCount": null,
+        "targetPriority": "any-eligible",
+        "targetScope": "any-lane",
+        "type": "Advantage",
+        "unit": "percent"
+      },
+      "scheduleId": "thunderous-roar-each-round"
+    },
+    {
+      "abilityId": "malachite-collective-might",
+      "effect": {
+        "calculated": false,
+        "casterEligibility": "included",
+        "conditionalMultipliers": [],
+        "conditions": [],
+        "directlyVerified": true,
+        "duration": "Until end of combat",
+        "durationRounds": null,
+        "excludes": [],
+        "id": "collective-might-strength",
+        "includesCaster": true,
+        "magnitude": 12.5,
+        "notes": [
+          "Exact 3 Allies targeting is normalized to all three friendly dragons and includes the caster."
+        ],
+        "perTargetEffectCheck": null,
+        "rankedValues": [
+          {
+            "level": 1,
+            "unit": "percent",
+            "value": 12.5
+          },
+          {
+            "level": 2,
+            "unit": "percent",
+            "value": 15
+          },
+          {
+            "level": 3,
+            "unit": "percent",
+            "value": 17.5
+          },
+          {
+            "level": 4,
+            "unit": "percent",
+            "value": 21.25
+          },
+          {
+            "level": 5,
+            "unit": "percent",
+            "value": 25
+          }
+        ],
+        "scaling": [
+          "Strength"
+        ],
+        "sourceScope": "unknown",
+        "stack": null,
+        "target": "3 Allies",
+        "targetCount": 3,
+        "targetPriority": "any-eligible",
+        "targetScope": "any-lane",
+        "type": "Strength Up",
+        "unit": "percent"
+      },
+      "scheduleId": "collective-might-start-combat"
+    },
+    {
+      "abilityId": "malachite-lightning-strike",
+      "effect": {
+        "calculated": false,
+        "casterEligibility": "excluded",
+        "conditionalMultipliers": [],
+        "conditions": [],
+        "directlyVerified": true,
+        "duration": null,
+        "durationRounds": 3,
+        "excludes": [],
+        "id": "lightning-strike-first-strike",
+        "includesCaster": null,
+        "magnitude": null,
+        "notes": [],
+        "perTargetEffectCheck": null,
+        "rankedValues": [],
+        "scaling": [],
+        "sourceScope": "unknown",
+        "stack": null,
+        "target": "1 other Ally",
+        "targetCount": null,
+        "targetPriority": "any-eligible",
+        "targetScope": "within-adjacency",
+        "type": "First-Strike",
+        "unit": "unknown"
+      },
+      "scheduleId": "lightning-strike-round-one"
+    },
+    {
+      "abilityId": "malachite-lightning-strike",
+      "effect": {
+        "calculated": false,
+        "casterEligibility": "excluded",
+        "conditionalMultipliers": [],
+        "conditions": [],
+        "directlyVerified": true,
+        "duration": null,
+        "durationRounds": 3,
+        "excludes": [],
+        "id": "lightning-strike-double-strike",
+        "includesCaster": null,
+        "magnitude": null,
+        "notes": [],
+        "perTargetEffectCheck": null,
+        "rankedValues": [],
+        "scaling": [],
+        "sourceScope": "unknown",
+        "stack": null,
+        "target": "1 other Ally",
+        "targetCount": null,
+        "targetPriority": "any-eligible",
+        "targetScope": "within-adjacency",
+        "type": "Double-Strike",
+        "unit": "unknown"
+      },
+      "scheduleId": "lightning-strike-round-one"
+    },
+    {
+      "abilityId": "malachite-lightning-strike",
+      "effect": {
+        "calculated": false,
+        "casterEligibility": "excluded",
+        "conditionalMultipliers": [],
+        "conditions": [],
+        "directlyVerified": true,
+        "duration": null,
+        "durationRounds": 3,
+        "excludes": [],
+        "id": "lightning-strike-strength",
+        "includesCaster": null,
+        "magnitude": 25,
+        "notes": [],
+        "perTargetEffectCheck": null,
+        "rankedValues": [],
+        "scaling": [
+          "Instinct"
+        ],
+        "sourceScope": "unknown",
+        "stack": null,
+        "target": "1 other Ally",
+        "targetCount": null,
+        "targetPriority": "any-eligible",
+        "targetScope": "within-adjacency",
+        "type": "Strength Up",
+        "unit": "percent"
+      },
+      "scheduleId": "lightning-strike-round-one"
+    }
+  ],
+  "evidenceReferences": [
+    {
+      "capturedAt": "2026-06-23",
+      "description": "Descriptive evidence label only. Screenshot files are not committed to the public repository.",
+      "gameVersion": "26.6.53509",
+      "id": "malachite-main-screen-2026-06-23",
+      "language": "English",
+      "reviewedManually": true,
+      "submittedBy": "repository owner",
+      "title": "Malachite main screen",
+      "type": "in-game-screenshot",
+      "url": null,
+      "verificationStatus": "community-verified"
+    },
+    {
+      "capturedAt": "2026-06-23",
+      "description": "Descriptive evidence label only. Screenshot files are not committed to the public repository.",
+      "gameVersion": "26.6.53509",
+      "id": "malachite-sentinels-presence-2026-06-23",
+      "language": "English",
+      "reviewedManually": true,
+      "submittedBy": "repository owner",
+      "title": "Sentinel's Presence",
+      "type": "in-game-screenshot",
+      "url": null,
+      "verificationStatus": "community-verified"
+    },
+    {
+      "capturedAt": "2026-06-23",
+      "description": "Descriptive evidence label only. Screenshot files are not committed to the public repository.",
+      "gameVersion": "26.6.53509",
+      "id": "malachite-forests-instinct-2026-06-23",
+      "language": "English",
+      "reviewedManually": true,
+      "submittedBy": "repository owner",
+      "title": "Forest's Instinct",
+      "type": "in-game-screenshot",
+      "url": null,
+      "verificationStatus": "community-verified"
+    },
+    {
+      "capturedAt": "2026-06-23",
+      "description": "Descriptive evidence label only. Screenshot files are not committed to the public repository.",
+      "gameVersion": "26.6.53509",
+      "id": "malachite-wise-vigor-2026-06-23",
+      "language": "English",
+      "reviewedManually": true,
+      "submittedBy": "repository owner",
+      "title": "Wise Vigor",
+      "type": "in-game-screenshot",
+      "url": null,
+      "verificationStatus": "community-verified"
+    },
+    {
+      "capturedAt": "2026-06-23",
+      "description": "Descriptive evidence label only. Screenshot files are not committed to the public repository.",
+      "gameVersion": "26.6.53509",
+      "id": "malachite-thunderous-roar-2026-06-23",
+      "language": "English",
+      "reviewedManually": true,
+      "submittedBy": "repository owner",
+      "title": "Thunderous Roar",
+      "type": "in-game-screenshot",
+      "url": null,
+      "verificationStatus": "community-verified"
+    },
+    {
+      "capturedAt": "2026-06-23",
+      "description": "Descriptive evidence label only. Screenshot files are not committed to the public repository.",
+      "gameVersion": "26.6.53509",
+      "id": "malachite-collective-might-2026-06-23",
+      "language": "English",
+      "reviewedManually": true,
+      "submittedBy": "repository owner",
+      "title": "Collective Might",
+      "type": "in-game-screenshot",
+      "url": null,
+      "verificationStatus": "community-verified"
+    },
+    {
+      "capturedAt": "2026-06-23",
+      "description": "Descriptive evidence label only. Screenshot files are not committed to the public repository.",
+      "gameVersion": "26.6.53509",
+      "id": "malachite-lightning-strike-2026-06-23",
+      "language": "English",
+      "reviewedManually": true,
+      "submittedBy": "repository owner",
+      "title": "Lightning Strike",
+      "type": "in-game-screenshot",
+      "url": null,
+      "verificationStatus": "community-verified"
+    },
+    {
+      "capturedAt": "2026-06-23",
+      "description": "Descriptive evidence label only. Screenshot files are not committed to the public repository.",
+      "gameVersion": "26.6.53509",
+      "id": "malachite-wardens-rally-summary-2026-06-23",
+      "language": "English",
+      "reviewedManually": true,
+      "submittedBy": "repository owner",
+      "title": "Warden's Rally summary",
+      "type": "in-game-screenshot",
+      "url": null,
+      "verificationStatus": "community-verified"
+    },
+    {
+      "capturedAt": "2026-06-23",
+      "description": "Descriptive evidence label only. Screenshot files are not committed to the public repository.",
+      "gameVersion": "26.6.53509",
+      "id": "malachite-wardens-rally-glossary-2026-06-23",
+      "language": "English",
+      "reviewedManually": true,
+      "submittedBy": "repository owner",
+      "title": "Warden's Rally glossary",
+      "type": "in-game-screenshot",
+      "url": null,
+      "verificationStatus": "community-verified"
+    },
+    {
+      "capturedAt": "2026-06-23",
+      "description": "Manual combat-log observation by the repository owner. Raw combat log has not yet been archived in the repository. Observation: Malachite appeared as a recipient of Warden's Rally Recovery, confirming that \"3 Allies\" includes the caster for this effect.",
+      "gameVersion": "26.6.53509",
+      "id": "malachite-wardens-rally-combat-log-self-recovery-2026-06-24",
+      "language": "English",
+      "reviewedManually": true,
+      "submittedBy": "repository owner",
+      "title": "Warden's Rally Recovery included Malachite",
+      "type": "manual-combat-log-observation",
+      "url": null,
+      "verificationStatus": "community-verified"
+    },
+    {
+      "capturedAt": "2026-06-24",
+      "description": "Repeated manual ability-text review confirms that Other Ally and Other Allies exclude the caster, while plain Ally and Allies allow the caster to be selected when spatial targeting rules permit it.",
+      "gameVersion": "26.6.53509",
+      "id": "ally-targeting-language-review-2026-06-24",
+      "language": "English",
+      "reviewedManually": true,
+      "submittedBy": "repository owner",
+      "title": "Ally and Other Ally targeting-language convention",
+      "type": "community-test",
+      "url": null,
+      "verificationStatus": "community-verified"
+    }
+  ],
+  "firstObservedInGame": null,
+  "format": "dragonfire-dragon-profile",
+  "gameVersion": null,
+  "generatedAt": "2026-06-25T00:29:16.911Z",
+  "habits": [
+    {
+      "abilityClass": "passive",
+      "augmentations": [],
+      "dragonId": "malachite",
+      "evidenceIds": [
+        "malachite-forests-instinct-2026-06-23"
+      ],
+      "glossaryEntries": [],
+      "id": "malachite-forests-instinct",
+      "kind": "habit",
+      "minimumDragonLevel": null,
+      "name": "Forest's Instinct",
+      "positionRequirement": null,
+      "powerByHabitLevel": [
+        {
+          "level": 1,
+          "unit": "power",
+          "value": 420
+        },
+        {
+          "level": 2,
+          "unit": "power",
+          "value": 920
+        },
+        {
+          "level": 3,
+          "unit": "power",
+          "value": 1500
+        },
+        {
+          "level": 4,
+          "unit": "power",
+          "value": 2200
+        },
+        {
+          "level": 5,
+          "unit": "power",
+          "value": 3100
+        }
+      ],
+      "rawDescription": "Each Round: 35% chance to increase the Physical Damage Dealt (excluding Basic Attacks) by +8% and reduce the Tactical Damage Received by -8% of 2 other Allies in any lane for 2 round(s).",
+      "schedules": [
+        {
+          "attempts": null,
+          "battleContext": "unspecified",
+          "conditions": [],
+          "effects": [
+            {
+              "calculated": false,
+              "casterEligibility": "excluded",
+              "conditionalMultipliers": [],
+              "conditions": [],
+              "directlyVerified": true,
+              "duration": null,
+              "durationRounds": 2,
+              "excludes": [
+                "Basic Attacks"
+              ],
+              "id": "forests-instinct-physical-damage",
+              "includesCaster": null,
+              "magnitude": 8,
+              "notes": [],
+              "perTargetEffectCheck": null,
+              "rankedValues": [
+                {
+                  "level": 1,
+                  "unit": "percent",
+                  "value": 8
+                },
+                {
+                  "level": 2,
+                  "unit": "percent",
+                  "value": 9.6
+                },
+                {
+                  "level": 3,
+                  "unit": "percent",
+                  "value": 11.2
+                },
+                {
+                  "level": 4,
+                  "unit": "percent",
+                  "value": 13.6
+                },
+                {
+                  "level": 5,
+                  "unit": "percent",
+                  "value": 16
+                }
+              ],
+              "scaling": [],
+              "sourceScope": "non-basic-attacks",
+              "stack": null,
+              "target": "2 other Allies",
+              "targetCount": null,
+              "targetPriority": "any-eligible",
+              "targetScope": "any-lane",
+              "type": "Physical Damage Dealt Up",
+              "unit": "percent"
+            },
+            {
+              "calculated": false,
+              "casterEligibility": "excluded",
+              "conditionalMultipliers": [],
+              "conditions": [],
+              "directlyVerified": true,
+              "duration": null,
+              "durationRounds": 2,
+              "excludes": [],
+              "id": "forests-instinct-tactical-reduction",
+              "includesCaster": null,
+              "magnitude": 8,
+              "notes": [],
+              "perTargetEffectCheck": null,
+              "rankedValues": [
+                {
+                  "level": 1,
+                  "unit": "percent",
+                  "value": 8
+                },
+                {
+                  "level": 2,
+                  "unit": "percent",
+                  "value": 9.6
+                },
+                {
+                  "level": 3,
+                  "unit": "percent",
+                  "value": 11.2
+                },
+                {
+                  "level": 4,
+                  "unit": "percent",
+                  "value": 13.6
+                },
+                {
+                  "level": 5,
+                  "unit": "percent",
+                  "value": 16
+                }
+              ],
+              "scaling": [],
+              "sourceScope": "unknown",
+              "stack": null,
+              "target": "2 other Allies",
+              "targetCount": null,
+              "targetPriority": "any-eligible",
+              "targetScope": "any-lane",
+              "type": "Tactical Damage Received Reduction",
+              "unit": "percent"
+            }
+          ],
+          "id": "forests-instinct-each-round",
+          "repeat": null,
+          "rounds": [],
+          "targetPriority": "any-eligible",
+          "timing": "each-round",
+          "triggerChanceByHabitLevel": [],
+          "triggerChanceFixed": 35,
+          "triggerEvent": "each-round"
+        }
+      ],
+      "tags": [
+        "PHYSICAL_DAMAGE_UP",
+        "TACTICAL_DAMAGE_RECEIVED_DOWN",
+        "EXCLUDES_BASIC_ATTACKS",
+        "OTHER_ALLIES_TARGET",
+        "ANY_LANE_TARGET",
+        "BUFF_ALLIES"
+      ],
+      "unlockStarRank": 2,
+      "unresolvedQuestions": [],
+      "verification": {
+        "capturedAt": "2026-06-23",
+        "gameVersion": "26.6.53509",
+        "reviewedManually": true,
+        "source": "Forest's Instinct screenshot",
+        "status": "screenshot-verified"
+      }
+    },
+    {
+      "abilityClass": "passive",
+      "augmentations": [],
+      "dragonId": "malachite",
+      "evidenceIds": [
+        "malachite-wise-vigor-2026-06-23"
+      ],
+      "glossaryEntries": [],
+      "id": "malachite-wise-vigor",
+      "kind": "habit",
+      "minimumDragonLevel": null,
+      "name": "Wise Vigor",
+      "positionRequirement": null,
+      "powerByHabitLevel": [
+        {
+          "level": 1,
+          "unit": "power",
+          "value": 420
+        },
+        {
+          "level": 2,
+          "unit": "power",
+          "value": 920
+        },
+        {
+          "level": 3,
+          "unit": "power",
+          "value": 1500
+        },
+        {
+          "level": 4,
+          "unit": "power",
+          "value": 2200
+        },
+        {
+          "level": 5,
+          "unit": "power",
+          "value": 3100
+        }
+      ],
+      "rawDescription": "Start of Combat: Increase your Instinct by +20% and Recovery Dealt by +20% until the end of combat.",
+      "schedules": [
+        {
+          "attempts": null,
+          "battleContext": "unspecified",
+          "conditions": [],
+          "effects": [
+            {
+              "calculated": false,
+              "casterEligibility": "unknown",
+              "conditionalMultipliers": [],
+              "conditions": [],
+              "directlyVerified": true,
+              "duration": "Until end of combat",
+              "durationRounds": null,
+              "excludes": [],
+              "id": "wise-vigor-instinct",
+              "includesCaster": null,
+              "magnitude": 20,
+              "notes": [],
+              "perTargetEffectCheck": null,
+              "rankedValues": [
+                {
+                  "level": 1,
+                  "unit": "percent",
+                  "value": 20
+                },
+                {
+                  "level": 2,
+                  "unit": "percent",
+                  "value": 24
+                },
+                {
+                  "level": 3,
+                  "unit": "percent",
+                  "value": 28
+                },
+                {
+                  "level": 4,
+                  "unit": "percent",
+                  "value": 34
+                },
+                {
+                  "level": 5,
+                  "unit": "percent",
+                  "value": 40
+                }
+              ],
+              "scaling": [],
+              "sourceScope": "unknown",
+              "stack": null,
+              "target": "Self",
+              "targetCount": null,
+              "targetPriority": "any-eligible",
+              "targetScope": "self",
+              "type": "Instinct Up",
+              "unit": "percent"
+            },
+            {
+              "calculated": false,
+              "casterEligibility": "unknown",
+              "conditionalMultipliers": [],
+              "conditions": [],
+              "directlyVerified": true,
+              "duration": "Until end of combat",
+              "durationRounds": null,
+              "excludes": [],
+              "id": "wise-vigor-recovery",
+              "includesCaster": null,
+              "magnitude": 20,
+              "notes": [],
+              "perTargetEffectCheck": null,
+              "rankedValues": [
+                {
+                  "level": 1,
+                  "unit": "percent",
+                  "value": 20
+                },
+                {
+                  "level": 2,
+                  "unit": "percent",
+                  "value": 24
+                },
+                {
+                  "level": 3,
+                  "unit": "percent",
+                  "value": 28
+                },
+                {
+                  "level": 4,
+                  "unit": "percent",
+                  "value": 34
+                },
+                {
+                  "level": 5,
+                  "unit": "percent",
+                  "value": 40
+                }
+              ],
+              "scaling": [],
+              "sourceScope": "unknown",
+              "stack": null,
+              "target": "Self",
+              "targetCount": null,
+              "targetPriority": "any-eligible",
+              "targetScope": "self",
+              "type": "Recovery Dealt Up",
+              "unit": "percent"
+            }
+          ],
+          "id": "wise-vigor-start-combat",
+          "repeat": null,
+          "rounds": [],
+          "targetPriority": "any-eligible",
+          "timing": "start-of-combat",
+          "triggerChanceByHabitLevel": [],
+          "triggerChanceFixed": null,
+          "triggerEvent": "start-of-combat"
+        }
+      ],
+      "tags": [
+        "INSTINCT_UP",
+        "RECOVERY_DEALT_UP",
+        "BUFF_SELF"
+      ],
+      "unlockStarRank": 4,
+      "unresolvedQuestions": [],
+      "verification": {
+        "capturedAt": "2026-06-23",
+        "gameVersion": "26.6.53509",
+        "reviewedManually": true,
+        "source": "Wise Vigor screenshot",
+        "status": "screenshot-verified"
+      }
+    },
+    {
+      "abilityClass": "passive",
+      "augmentations": [],
+      "dragonId": "malachite",
+      "evidenceIds": [
+        "malachite-thunderous-roar-2026-06-23"
+      ],
+      "glossaryEntries": [],
+      "id": "malachite-thunderous-roar",
+      "kind": "habit",
+      "minimumDragonLevel": null,
+      "name": "Thunderous Roar",
+      "positionRequirement": null,
+      "powerByHabitLevel": [
+        {
+          "level": 1,
+          "unit": "power",
+          "value": 420
+        },
+        {
+          "level": 2,
+          "unit": "power",
+          "value": 920
+        },
+        {
+          "level": 3,
+          "unit": "power",
+          "value": 1500
+        },
+        {
+          "level": 4,
+          "unit": "power",
+          "value": 2200
+        },
+        {
+          "level": 5,
+          "unit": "power",
+          "value": 3100
+        }
+      ],
+      "rawDescription": "Each Round: 10% chance to grant Advantage (+20%) to 2 other Allies in any lane for 2 round(s). Advantage increases the target's Damage Dealt.",
+      "schedules": [
+        {
+          "attempts": null,
+          "battleContext": "unspecified",
+          "conditions": [],
+          "effects": [
+            {
+              "calculated": false,
+              "casterEligibility": "excluded",
+              "conditionalMultipliers": [],
+              "conditions": [],
+              "directlyVerified": true,
+              "duration": null,
+              "durationRounds": 2,
+              "excludes": [],
+              "id": "thunderous-roar-advantage",
+              "includesCaster": null,
+              "magnitude": 20,
+              "notes": [
+                "Advantage increases the target Damage Dealt. Magnitude is fixed in supplied table."
+              ],
+              "perTargetEffectCheck": null,
+              "rankedValues": [],
+              "scaling": [],
+              "sourceScope": "unknown",
+              "stack": null,
+              "target": "2 other Allies",
+              "targetCount": null,
+              "targetPriority": "any-eligible",
+              "targetScope": "any-lane",
+              "type": "Advantage",
+              "unit": "percent"
+            }
+          ],
+          "id": "thunderous-roar-each-round",
+          "repeat": null,
+          "rounds": [],
+          "targetPriority": "any-eligible",
+          "timing": "each-round",
+          "triggerChanceByHabitLevel": [
+            {
+              "level": 1,
+              "unit": "percent",
+              "value": 10
+            },
+            {
+              "level": 2,
+              "unit": "percent",
+              "value": 12
+            },
+            {
+              "level": 3,
+              "unit": "percent",
+              "value": 14
+            },
+            {
+              "level": 4,
+              "unit": "percent",
+              "value": 17
+            },
+            {
+              "level": 5,
+              "unit": "percent",
+              "value": 20
+            }
+          ],
+          "triggerChanceFixed": null,
+          "triggerEvent": "each-round"
+        }
+      ],
+      "tags": [
+        "DAMAGE_DEALT_UP",
+        "OTHER_ALLIES_TARGET",
+        "ANY_LANE_TARGET",
+        "BUFF_ALLIES"
+      ],
+      "unlockStarRank": 6,
+      "unresolvedQuestions": [],
+      "verification": {
+        "capturedAt": "2026-06-23",
+        "gameVersion": "26.6.53509",
+        "reviewedManually": true,
+        "source": "Thunderous Roar screenshot",
+        "status": "screenshot-verified"
+      }
+    },
+    {
+      "abilityClass": "passive",
+      "augmentations": [],
+      "dragonId": "malachite",
+      "evidenceIds": [
+        "malachite-collective-might-2026-06-23"
+      ],
+      "glossaryEntries": [],
+      "id": "malachite-collective-might",
+      "kind": "habit",
+      "minimumDragonLevel": null,
+      "name": "Collective Might",
+      "positionRequirement": null,
+      "powerByHabitLevel": [
+        {
+          "level": 1,
+          "unit": "power",
+          "value": 420
+        },
+        {
+          "level": 2,
+          "unit": "power",
+          "value": 920
+        },
+        {
+          "level": 3,
+          "unit": "power",
+          "value": 1500
+        },
+        {
+          "level": 4,
+          "unit": "power",
+          "value": 2200
+        },
+        {
+          "level": 5,
+          "unit": "power",
+          "value": 3100
+        }
+      ],
+      "rawDescription": "Start of Combat: Increase Strength by +12.5% (enhanced by Strength) of 3 Allies in any lane until the end of combat.",
+      "schedules": [
+        {
+          "attempts": null,
+          "battleContext": "unspecified",
+          "conditions": [],
+          "effects": [
+            {
+              "calculated": false,
+              "casterEligibility": "included",
+              "conditionalMultipliers": [],
+              "conditions": [],
+              "directlyVerified": true,
+              "duration": "Until end of combat",
+              "durationRounds": null,
+              "excludes": [],
+              "id": "collective-might-strength",
+              "includesCaster": true,
+              "magnitude": 12.5,
+              "notes": [
+                "Exact 3 Allies targeting is normalized to all three friendly dragons and includes the caster."
+              ],
+              "perTargetEffectCheck": null,
+              "rankedValues": [
+                {
+                  "level": 1,
+                  "unit": "percent",
+                  "value": 12.5
+                },
+                {
+                  "level": 2,
+                  "unit": "percent",
+                  "value": 15
+                },
+                {
+                  "level": 3,
+                  "unit": "percent",
+                  "value": 17.5
+                },
+                {
+                  "level": 4,
+                  "unit": "percent",
+                  "value": 21.25
+                },
+                {
+                  "level": 5,
+                  "unit": "percent",
+                  "value": 25
+                }
+              ],
+              "scaling": [
+                "Strength"
+              ],
+              "sourceScope": "unknown",
+              "stack": null,
+              "target": "3 Allies",
+              "targetCount": 3,
+              "targetPriority": "any-eligible",
+              "targetScope": "any-lane",
+              "type": "Strength Up",
+              "unit": "percent"
+            }
+          ],
+          "id": "collective-might-start-combat",
+          "repeat": null,
+          "rounds": [],
+          "targetPriority": "any-eligible",
+          "timing": "start-of-combat",
+          "triggerChanceByHabitLevel": [],
+          "triggerChanceFixed": null,
+          "triggerEvent": "start-of-combat"
+        }
+      ],
+      "tags": [
+        "STRENGTH_UP",
+        "ENHANCED_BY_STRENGTH",
+        "ANY_LANE_TARGET",
+        "BUFF_ALLIES"
+      ],
+      "unlockStarRank": 8,
+      "unresolvedQuestions": [
+        "Exact enhanced-by-Strength formula."
+      ],
+      "verification": {
+        "capturedAt": "2026-06-23",
+        "gameVersion": "26.6.53509",
+        "reviewedManually": true,
+        "source": "Collective Might screenshot",
+        "status": "screenshot-verified"
+      }
+    },
+    {
+      "abilityClass": "passive",
+      "augmentations": [],
+      "dragonId": "malachite",
+      "evidenceIds": [
+        "malachite-lightning-strike-2026-06-23"
+      ],
+      "glossaryEntries": [
+        {
+          "definition": "Causes the target to act before all other combatants each round.",
+          "term": "First-Strike"
+        },
+        {
+          "definition": "Grants the target a second Basic Attack each round.",
+          "term": "Double-Strike"
+        }
+      ],
+      "id": "malachite-lightning-strike",
+      "kind": "habit",
+      "minimumDragonLevel": null,
+      "name": "Lightning Strike",
+      "positionRequirement": null,
+      "powerByHabitLevel": [
+        {
+          "level": 1,
+          "unit": "power",
+          "value": 430
+        },
+        {
+          "level": 2,
+          "unit": "power",
+          "value": 1000
+        },
+        {
+          "level": 3,
+          "unit": "power",
+          "value": 1700
+        },
+        {
+          "level": 4,
+          "unit": "power",
+          "value": 2700
+        },
+        {
+          "level": 5,
+          "unit": "power",
+          "value": 4000
+        }
+      ],
+      "rawDescription": "Start of Round 1: 40% chance to grant First-Strike, Double-Strike, and increase Strength by +25% (enhanced by Instinct) of 1 other Ally within adjacency for 3 round(s).",
+      "schedules": [
+        {
+          "attempts": null,
+          "battleContext": "unspecified",
+          "conditions": [],
+          "effects": [
+            {
+              "calculated": false,
+              "casterEligibility": "excluded",
+              "conditionalMultipliers": [],
+              "conditions": [],
+              "directlyVerified": true,
+              "duration": null,
+              "durationRounds": 3,
+              "excludes": [],
+              "id": "lightning-strike-first-strike",
+              "includesCaster": null,
+              "magnitude": null,
+              "notes": [],
+              "perTargetEffectCheck": null,
+              "rankedValues": [],
+              "scaling": [],
+              "sourceScope": "unknown",
+              "stack": null,
+              "target": "1 other Ally",
+              "targetCount": null,
+              "targetPriority": "any-eligible",
+              "targetScope": "within-adjacency",
+              "type": "First-Strike",
+              "unit": "unknown"
+            },
+            {
+              "calculated": false,
+              "casterEligibility": "excluded",
+              "conditionalMultipliers": [],
+              "conditions": [],
+              "directlyVerified": true,
+              "duration": null,
+              "durationRounds": 3,
+              "excludes": [],
+              "id": "lightning-strike-double-strike",
+              "includesCaster": null,
+              "magnitude": null,
+              "notes": [],
+              "perTargetEffectCheck": null,
+              "rankedValues": [],
+              "scaling": [],
+              "sourceScope": "unknown",
+              "stack": null,
+              "target": "1 other Ally",
+              "targetCount": null,
+              "targetPriority": "any-eligible",
+              "targetScope": "within-adjacency",
+              "type": "Double-Strike",
+              "unit": "unknown"
+            },
+            {
+              "calculated": false,
+              "casterEligibility": "excluded",
+              "conditionalMultipliers": [],
+              "conditions": [],
+              "directlyVerified": true,
+              "duration": null,
+              "durationRounds": 3,
+              "excludes": [],
+              "id": "lightning-strike-strength",
+              "includesCaster": null,
+              "magnitude": 25,
+              "notes": [],
+              "perTargetEffectCheck": null,
+              "rankedValues": [],
+              "scaling": [
+                "Instinct"
+              ],
+              "sourceScope": "unknown",
+              "stack": null,
+              "target": "1 other Ally",
+              "targetCount": null,
+              "targetPriority": "any-eligible",
+              "targetScope": "within-adjacency",
+              "type": "Strength Up",
+              "unit": "percent"
+            }
+          ],
+          "id": "lightning-strike-round-one",
+          "repeat": null,
+          "rounds": [
+            1
+          ],
+          "targetPriority": "any-eligible",
+          "timing": "start-of-round",
+          "triggerChanceByHabitLevel": [
+            {
+              "level": 1,
+              "unit": "percent",
+              "value": 40
+            },
+            {
+              "level": 2,
+              "unit": "percent",
+              "value": 52
+            },
+            {
+              "level": 3,
+              "unit": "percent",
+              "value": 64
+            },
+            {
+              "level": 4,
+              "unit": "percent",
+              "value": 80
+            },
+            {
+              "level": 5,
+              "unit": "percent",
+              "value": 100
+            }
+          ],
+          "triggerChanceFixed": null,
+          "triggerEvent": "start-of-round"
+        }
+      ],
+      "tags": [
+        "FIRST_STRIKE",
+        "DOUBLE_STRIKE",
+        "STRENGTH_UP",
+        "ENHANCED_BY_INSTINCT",
+        "ADJACENT_TARGET",
+        "OTHER_ALLIES_TARGET",
+        "BUFF_ALLIES"
+      ],
+      "unlockStarRank": 10,
+      "unresolvedQuestions": [
+        "Exact enhanced-by-Instinct formula."
+      ],
+      "verification": {
+        "capturedAt": "2026-06-23",
+        "gameVersion": "26.6.53509",
+        "reviewedManually": true,
+        "source": "Lightning Strike screenshot",
+        "status": "screenshot-verified"
+      }
+    }
+  ],
+  "id": "malachite",
+  "isNew": false,
+  "lastVerified": "2026-06-23",
+  "manualReviewReferences": [
+    {
+      "dragonId": "malachite",
+      "evidenceIds": [
+        "malachite-wardens-rally-summary-2026-06-23",
+        "malachite-wardens-rally-combat-log-self-recovery-2026-06-24"
+      ],
+      "id": "malachite-command-review-2026-06-24",
+      "notes": [
+        "Warden's Rally data matches manual in-game observation.",
+        "Combat logs showed Warden's Rally applying Recovery to Malachite itself.",
+        "This confirms that the exact \"3 Allies\" target includes the caster for this effect."
+      ],
+      "reviewedAgainstGameBuild": "26.6.53509",
+      "reviewedAt": "2026-06-24",
+      "reviewer": "repository-owner",
+      "scope": "command",
+      "status": "confirmed"
+    },
+    {
+      "dragonId": "malachite",
+      "evidenceIds": [
+        "malachite-sentinels-presence-2026-06-23"
+      ],
+      "id": "malachite-trait-review-2026-06-24",
+      "notes": [
+        "Sentinel's Presence transcription and normalization match manual review."
+      ],
+      "reviewedAgainstGameBuild": "26.6.53509",
+      "reviewedAt": "2026-06-24",
+      "reviewer": "repository-owner",
+      "scope": "trait",
+      "status": "confirmed"
+    },
+    {
+      "dragonId": "malachite",
+      "evidenceIds": [
+        "malachite-forests-instinct-2026-06-23",
+        "malachite-wise-vigor-2026-06-23",
+        "malachite-thunderous-roar-2026-06-23",
+        "malachite-collective-might-2026-06-23",
+        "malachite-lightning-strike-2026-06-23"
+      ],
+      "id": "malachite-habits-review-2026-06-24",
+      "notes": [
+        "All five Malachite Habits match manual in-game observation."
+      ],
+      "reviewedAgainstGameBuild": "26.6.53509",
+      "reviewedAt": "2026-06-24",
+      "reviewer": "repository-owner",
+      "scope": "habits",
+      "status": "confirmed"
+    },
+    {
+      "dragonId": "malachite",
+      "evidenceIds": [
+        "malachite-wardens-rally-combat-log-self-recovery-2026-06-24"
+      ],
+      "id": "malachite-combat-log-review-2026-06-24",
+      "notes": [
+        "Warden's Rally Recovery selected Malachite as a recipient in combat logs."
+      ],
+      "reviewedAgainstGameBuild": "26.6.53509",
+      "reviewedAt": "2026-06-24",
+      "reviewer": "repository-owner",
+      "scope": "combat-log-behavior",
+      "status": "confirmed"
+    },
+    {
+      "dragonId": "malachite",
+      "evidenceIds": [
+        "ally-targeting-language-review-2026-06-24"
+      ],
+      "id": "ally-targeting-language-review-2026-06-24",
+      "notes": [
+        "Repeated manual ability-text review confirms that Other Ally and Other Allies exclude the caster.",
+        "Plain Ally and Allies allow the caster to be selected when otherwise eligible.",
+        "Spatial targeting still controls eligibility; a caster is not adjacent to itself."
+      ],
+      "reviewedAgainstGameBuild": "26.6.53509",
+      "reviewedAt": "2026-06-24",
+      "reviewer": "repository-owner",
+      "scope": "synergy-normalization",
+      "status": "confirmed"
+    }
+  ],
+  "modifierCapabilities": [
+    {
+      "abilityId": "malachite-sentinels-presence",
+      "abilityName": "Sentinel's Presence",
+      "availability": {
+        "canonical": "canonical-base",
+        "notes": [
+          "Requires Dragon Level 16+.",
+          "Unlocked in observed account collection state, subject to level and star requirements."
+        ],
+        "observedAccount": "observed-available",
+        "reportLabel": "Base kit; Level 16+; observed account hatched",
+        "userRoster": "unknown"
+      },
+      "channel": "recovery",
+      "combatLogConfirmed": false,
+      "conditional": false,
+      "conditions": [],
+      "confidence": "confirmed",
+      "currentlyAvailable": true,
+      "direction": "dealt",
+      "directlyVerified": true,
+      "dragonId": "malachite",
+      "evidenceIds": [
+        "malachite-sentinels-presence-2026-06-23"
+      ],
+      "futureAvailable": false,
+      "id": "malachite-sentinels-presence-sentinels-presence-recovery-dealt-recovery-dealt-modifier",
+      "label": "Sentinel's Presence: Recovery Dealt Up",
+      "minimumDragonLevel": 16,
+      "operation": "increase",
+      "providerRequirements": [
+        {
+          "evidenceIds": [
+            "malachite-sentinels-presence-2026-06-23"
+          ],
+          "expected": "vanguard",
+          "id": "malachite-sentinels-presence-provider-position-vanguard",
+          "kind": "provider-position",
+          "label": "Provider position requirement"
+        }
+      ],
+      "recipientRequirements": [],
+      "requiredHabitLevel": null,
+      "role": "self-amplification",
+      "sourceScope": "unknown",
+      "stackMaximum": null,
+      "targetSelector": {
+        "count": null,
+        "includesCaster": null,
+        "position": null,
+        "scope": "self",
+        "selection": "self",
+        "side": "self"
+      },
+      "unit": "percent",
+      "unlockStarRank": 1,
+      "value": 15,
+      "valuePerStack": null
+    },
+    {
+      "abilityId": "malachite-sentinels-presence",
+      "abilityName": "Sentinel's Presence",
+      "availability": {
+        "canonical": "canonical-base",
+        "notes": [
+          "Requires Dragon Level 16+.",
+          "Unlocked in observed account collection state, subject to level and star requirements."
+        ],
+        "observedAccount": "observed-available",
+        "reportLabel": "Base kit; Level 16+; observed account hatched",
+        "userRoster": "unknown"
+      },
+      "channel": "stat",
+      "combatLogConfirmed": false,
+      "conditional": false,
+      "conditions": [],
+      "confidence": "confirmed",
+      "currentlyAvailable": true,
+      "direction": "dealt",
+      "directlyVerified": true,
+      "dragonId": "malachite",
+      "evidenceIds": [
+        "malachite-sentinels-presence-2026-06-23"
+      ],
+      "futureAvailable": false,
+      "id": "malachite-sentinels-presence-sentinels-presence-instinct-stat-dealt-modifier",
+      "label": "Sentinel's Presence: Instinct Up",
+      "minimumDragonLevel": 16,
+      "operation": "increase",
+      "providerRequirements": [
+        {
+          "evidenceIds": [
+            "malachite-sentinels-presence-2026-06-23"
+          ],
+          "expected": "vanguard",
+          "id": "malachite-sentinels-presence-provider-position-vanguard",
+          "kind": "provider-position",
+          "label": "Provider position requirement"
+        }
+      ],
+      "recipientRequirements": [],
+      "requiredHabitLevel": null,
+      "role": "self-amplification",
+      "sourceScope": "unknown",
+      "stackMaximum": null,
+      "targetSelector": {
+        "count": null,
+        "includesCaster": null,
+        "position": null,
+        "scope": "self",
+        "selection": "self",
+        "side": "self"
+      },
+      "unit": "flat",
+      "unlockStarRank": 1,
+      "value": 25,
+      "valuePerStack": null
+    },
+    {
+      "abilityId": "malachite-sentinels-presence",
+      "abilityName": "Sentinel's Presence",
+      "availability": {
+        "canonical": "canonical-base",
+        "notes": [
+          "Requires Dragon Level 16+.",
+          "Unlocked in observed account collection state, subject to level and star requirements."
+        ],
+        "observedAccount": "observed-available",
+        "reportLabel": "Base kit; Level 16+; observed account hatched",
+        "userRoster": "unknown"
+      },
+      "channel": "fire-damage",
+      "combatLogConfirmed": false,
+      "conditional": false,
+      "conditions": [],
+      "confidence": "confirmed",
+      "currentlyAvailable": true,
+      "direction": "dealt",
+      "directlyVerified": true,
+      "dragonId": "malachite",
+      "evidenceIds": [
+        "malachite-sentinels-presence-2026-06-23"
+      ],
+      "futureAvailable": false,
+      "id": "malachite-sentinels-presence-sentinels-presence-left-flank-fire-fire-damage-dealt-modifier",
+      "label": "Sentinel's Presence: Fire Damage Dealt Up",
+      "minimumDragonLevel": 16,
+      "operation": "increase",
+      "providerRequirements": [
+        {
+          "evidenceIds": [
+            "malachite-sentinels-presence-2026-06-23"
+          ],
+          "expected": "vanguard",
+          "id": "malachite-sentinels-presence-provider-position-vanguard",
+          "kind": "provider-position",
+          "label": "Provider position requirement"
+        }
+      ],
+      "recipientRequirements": [],
+      "requiredHabitLevel": null,
+      "role": "ally-support",
+      "sourceScope": "all-qualifying-sources",
+      "stackMaximum": null,
+      "targetSelector": {
+        "count": null,
+        "includesCaster": null,
+        "position": "left-flank",
+        "scope": "left-flank",
+        "selection": "specific-position",
+        "side": "ally"
+      },
+      "unit": "percent",
+      "unlockStarRank": 1,
+      "value": 16,
+      "valuePerStack": null
+    },
+    {
+      "abilityId": "malachite-forests-instinct",
+      "abilityName": "Forest's Instinct",
+      "availability": {
+        "canonical": "canonical-locked",
+        "notes": [
+          "Future at Star Rank 2.",
+          "Unlocked in observed account collection state, subject to level and star requirements."
+        ],
+        "observedAccount": "observed-available",
+        "reportLabel": "Future at Star Rank 2; observed account hatched",
+        "userRoster": "unknown"
+      },
+      "channel": "physical-damage",
+      "combatLogConfirmed": false,
+      "conditional": true,
+      "conditions": [
+        {
+          "description": "Activation chance 35% per each round.",
+          "evidenceIds": [],
+          "id": "forests-instinct-each-round-activation-chance",
+          "label": "Activation chance 35% per each round.",
+          "unresolved": false
+        }
+      ],
+      "confidence": "confirmed",
+      "currentlyAvailable": false,
+      "direction": "dealt",
+      "directlyVerified": true,
+      "dragonId": "malachite",
+      "evidenceIds": [
+        "malachite-forests-instinct-2026-06-23"
+      ],
+      "futureAvailable": true,
+      "id": "malachite-forests-instinct-forests-instinct-physical-damage-physical-damage-dealt-modifier",
+      "label": "Forest's Instinct: Physical Damage Dealt Up",
+      "minimumDragonLevel": null,
+      "operation": "increase",
+      "providerRequirements": [],
+      "recipientRequirements": [],
+      "requiredHabitLevel": 1,
+      "role": "ally-support",
+      "sourceScope": "non-basic-attacks",
+      "stackMaximum": null,
+      "targetSelector": {
+        "count": 2,
+        "includesCaster": null,
+        "position": null,
+        "scope": "any-lane",
+        "selection": "any",
+        "side": "ally"
+      },
+      "unit": "percent",
+      "unlockStarRank": 2,
+      "value": 8,
+      "valuePerStack": null
+    },
+    {
+      "abilityId": "malachite-wise-vigor",
+      "abilityName": "Wise Vigor",
+      "availability": {
+        "canonical": "canonical-locked",
+        "notes": [
+          "Future at Star Rank 4.",
+          "Unlocked in observed account collection state, subject to level and star requirements."
+        ],
+        "observedAccount": "observed-available",
+        "reportLabel": "Future at Star Rank 4; observed account hatched",
+        "userRoster": "unknown"
+      },
+      "channel": "stat",
+      "combatLogConfirmed": false,
+      "conditional": true,
+      "conditions": [],
+      "confidence": "confirmed",
+      "currentlyAvailable": false,
+      "direction": "dealt",
+      "directlyVerified": true,
+      "dragonId": "malachite",
+      "evidenceIds": [
+        "malachite-wise-vigor-2026-06-23"
+      ],
+      "futureAvailable": true,
+      "id": "malachite-wise-vigor-wise-vigor-instinct-stat-dealt-modifier",
+      "label": "Wise Vigor: Instinct Up",
+      "minimumDragonLevel": null,
+      "operation": "increase",
+      "providerRequirements": [],
+      "recipientRequirements": [],
+      "requiredHabitLevel": 1,
+      "role": "self-amplification",
+      "sourceScope": "unknown",
+      "stackMaximum": null,
+      "targetSelector": {
+        "count": null,
+        "includesCaster": null,
+        "position": null,
+        "scope": "self",
+        "selection": "self",
+        "side": "self"
+      },
+      "unit": "percent",
+      "unlockStarRank": 4,
+      "value": 20,
+      "valuePerStack": null
+    },
+    {
+      "abilityId": "malachite-wise-vigor",
+      "abilityName": "Wise Vigor",
+      "availability": {
+        "canonical": "canonical-locked",
+        "notes": [
+          "Future at Star Rank 4.",
+          "Unlocked in observed account collection state, subject to level and star requirements."
+        ],
+        "observedAccount": "observed-available",
+        "reportLabel": "Future at Star Rank 4; observed account hatched",
+        "userRoster": "unknown"
+      },
+      "channel": "recovery",
+      "combatLogConfirmed": false,
+      "conditional": true,
+      "conditions": [],
+      "confidence": "confirmed",
+      "currentlyAvailable": false,
+      "direction": "dealt",
+      "directlyVerified": true,
+      "dragonId": "malachite",
+      "evidenceIds": [
+        "malachite-wise-vigor-2026-06-23"
+      ],
+      "futureAvailable": true,
+      "id": "malachite-wise-vigor-wise-vigor-recovery-recovery-dealt-modifier",
+      "label": "Wise Vigor: Recovery Dealt Up",
+      "minimumDragonLevel": null,
+      "operation": "increase",
+      "providerRequirements": [],
+      "recipientRequirements": [],
+      "requiredHabitLevel": 1,
+      "role": "self-amplification",
+      "sourceScope": "unknown",
+      "stackMaximum": null,
+      "targetSelector": {
+        "count": null,
+        "includesCaster": null,
+        "position": null,
+        "scope": "self",
+        "selection": "self",
+        "side": "self"
+      },
+      "unit": "percent",
+      "unlockStarRank": 4,
+      "value": 20,
+      "valuePerStack": null
+    },
+    {
+      "abilityId": "malachite-collective-might",
+      "abilityName": "Collective Might",
+      "availability": {
+        "canonical": "canonical-locked",
+        "notes": [
+          "Future at Star Rank 8.",
+          "Unlocked in observed account collection state, subject to level and star requirements."
+        ],
+        "observedAccount": "observed-available",
+        "reportLabel": "Future at Star Rank 8; observed account hatched",
+        "userRoster": "unknown"
+      },
+      "channel": "stat",
+      "combatLogConfirmed": false,
+      "conditional": true,
+      "conditions": [],
+      "confidence": "confirmed",
+      "currentlyAvailable": false,
+      "direction": "dealt",
+      "directlyVerified": true,
+      "dragonId": "malachite",
+      "evidenceIds": [
+        "malachite-collective-might-2026-06-23"
+      ],
+      "futureAvailable": true,
+      "id": "malachite-collective-might-collective-might-strength-stat-dealt-modifier",
+      "label": "Collective Might: Strength Up",
+      "minimumDragonLevel": null,
+      "operation": "increase",
+      "providerRequirements": [],
+      "recipientRequirements": [],
+      "requiredHabitLevel": 1,
+      "role": "ally-support",
+      "sourceScope": "unknown",
+      "stackMaximum": null,
+      "targetSelector": {
+        "count": 3,
+        "includesCaster": true,
+        "position": null,
+        "scope": "any-lane",
+        "selection": "any",
+        "side": "ally"
+      },
+      "unit": "percent",
+      "unlockStarRank": 8,
+      "value": 12.5,
+      "valuePerStack": null
+    },
+    {
+      "abilityId": "malachite-lightning-strike",
+      "abilityName": "Lightning Strike",
+      "availability": {
+        "canonical": "canonical-locked",
+        "notes": [
+          "Future at Star Rank 10.",
+          "Unlocked in observed account collection state, subject to level and star requirements."
+        ],
+        "observedAccount": "observed-available",
+        "reportLabel": "Future at Star Rank 10; observed account hatched",
+        "userRoster": "unknown"
+      },
+      "channel": "stat",
+      "combatLogConfirmed": false,
+      "conditional": true,
+      "conditions": [
+        {
+          "description": "Activation chance depends on Habit Level for start of round.",
+          "evidenceIds": [],
+          "id": "lightning-strike-round-one-activation-chance",
+          "label": "Activation chance depends on Habit Level for start of round.",
+          "unresolved": false
+        }
+      ],
+      "confidence": "confirmed",
+      "currentlyAvailable": false,
+      "direction": "dealt",
+      "directlyVerified": true,
+      "dragonId": "malachite",
+      "evidenceIds": [
+        "malachite-lightning-strike-2026-06-23"
+      ],
+      "futureAvailable": true,
+      "id": "malachite-lightning-strike-lightning-strike-strength-stat-dealt-modifier",
+      "label": "Lightning Strike: Strength Up",
+      "minimumDragonLevel": null,
+      "operation": "increase",
+      "providerRequirements": [],
+      "recipientRequirements": [],
+      "requiredHabitLevel": 1,
+      "role": "ally-support",
+      "sourceScope": "unknown",
+      "stackMaximum": null,
+      "targetSelector": {
+        "count": 1,
+        "includesCaster": null,
+        "position": null,
+        "scope": "within-adjacency",
+        "selection": "adjacent",
+        "side": "ally"
+      },
+      "unit": "percent",
+      "unlockStarRank": 10,
+      "value": 25,
+      "valuePerStack": null
+    }
+  ],
+  "modifierRoles": [
+    "ally-support",
+    "self-amplification"
+  ],
+  "name": "Malachite",
+  "notes": null,
+  "observationSnapshots": [
+    {
+      "canonical": false,
+      "capturedAt": "2026-06-23",
+      "collection": {
+        "shardsCurrent": null,
+        "shardsRequired": null,
+        "state": "hatched"
+      },
+      "combatStats": {
+        "initiative": 111.2,
+        "instinct": 126.5,
+        "intelligence": 99,
+        "strength": 109.6
+      },
+      "dragonId": "malachite",
+      "dragonLevel": 26,
+      "dragonPower": 15400,
+      "evidenceIds": [
+        "malachite-main-screen-2026-06-23"
+      ],
+      "gameVersion": "26.6.53509",
+      "id": "malachite-main-screen-2026-06-23",
+      "marchSpeed": "Fast",
+      "modifierContextKnown": false,
+      "sourceScope": "noncanonical-account-observation",
+      "staminaCurrent": 35,
+      "staminaMaximum": 100,
+      "starRank": 1,
+      "troopCapacity": 3957
+    }
+  ],
+  "officialProfileUrl": "https://gotdragonfire.com/dragons/malachite/",
+  "outputCapabilities": [
+    {
+      "abilityId": "malachite-wardens-rally",
+      "abilityName": "Warden's Rally",
+      "availability": {
+        "canonical": "canonical-base",
+        "notes": [
+          "Unlocked in observed account collection state, subject to level and star requirements."
+        ],
+        "observedAccount": "observed-available",
+        "reportLabel": "Base kit; observed account hatched",
+        "userRoster": "unknown"
+      },
+      "channel": "tactical-damage",
+      "combatLogConfirmed": false,
+      "conditional": false,
+      "conditions": [],
+      "confidence": "confirmed",
+      "currentlyAvailable": true,
+      "dependencies": [
+        {
+          "notes": [
+            "Effect wording indicates scaling with Instinct."
+          ],
+          "statId": "instinct",
+          "type": "scales-with-stat"
+        },
+        {
+          "notes": [
+            "Tactical Damage is reduced by target Intelligence."
+          ],
+          "statId": "intelligence",
+          "type": "mitigated-by-target-stat"
+        }
+      ],
+      "directlyVerified": true,
+      "dragonId": "malachite",
+      "evidenceIds": [
+        "malachite-wardens-rally-summary-2026-06-23",
+        "malachite-wardens-rally-glossary-2026-06-23"
+      ],
+      "futureAvailable": false,
+      "id": "malachite-wardens-rally-wardens-rally-tactical-damage-rate-output",
+      "label": "Warden's Rally: Tactical Damage",
+      "minimumDragonLevel": null,
+      "requiredHabitLevel": null,
+      "sourceKind": "command",
+      "sourceScope": "commands",
+      "targetCount": 1,
+      "targetScope": "same-lane",
+      "targetSide": "enemy",
+      "unlockStarRank": null
+    },
+    {
+      "abilityId": "malachite-wardens-rally",
+      "abilityName": "Warden's Rally",
+      "availability": {
+        "canonical": "canonical-base",
+        "notes": [
+          "Unlocked in observed account collection state, subject to level and star requirements."
+        ],
+        "observedAccount": "observed-available",
+        "reportLabel": "Base kit; observed account hatched",
+        "userRoster": "unknown"
+      },
+      "channel": "recovery",
+      "combatLogConfirmed": false,
+      "conditional": false,
+      "conditions": [],
+      "confidence": "confirmed",
+      "currentlyAvailable": true,
+      "dependencies": [
+        {
+          "notes": [
+            "Effect wording indicates scaling with Instinct."
+          ],
+          "statId": "instinct",
+          "type": "scales-with-stat"
+        }
+      ],
+      "directlyVerified": true,
+      "dragonId": "malachite",
+      "evidenceIds": [
+        "malachite-wardens-rally-summary-2026-06-23",
+        "malachite-wardens-rally-glossary-2026-06-23"
+      ],
+      "futureAvailable": false,
+      "id": "malachite-wardens-rally-wardens-rally-recovery-rate-output",
+      "label": "Warden's Rally: Recovery",
+      "minimumDragonLevel": null,
+      "requiredHabitLevel": null,
+      "sourceKind": "command",
+      "sourceScope": "commands",
+      "targetCount": 3,
+      "targetScope": "any-lane",
+      "targetSide": "ally",
+      "unlockStarRank": null
+    }
+  ],
+  "periodicDamage": [],
+  "profileCompleteness": "detailed-combat-data",
+  "rankedValues": [
+    {
+      "abilityId": "malachite-forests-instinct",
+      "rankedValue": {
+        "level": 1,
+        "unit": "power",
+        "value": 420
+      },
+      "source": "powerByHabitLevel"
+    },
+    {
+      "abilityId": "malachite-forests-instinct",
+      "rankedValue": {
+        "level": 2,
+        "unit": "power",
+        "value": 920
+      },
+      "source": "powerByHabitLevel"
+    },
+    {
+      "abilityId": "malachite-forests-instinct",
+      "rankedValue": {
+        "level": 3,
+        "unit": "power",
+        "value": 1500
+      },
+      "source": "powerByHabitLevel"
+    },
+    {
+      "abilityId": "malachite-forests-instinct",
+      "rankedValue": {
+        "level": 4,
+        "unit": "power",
+        "value": 2200
+      },
+      "source": "powerByHabitLevel"
+    },
+    {
+      "abilityId": "malachite-forests-instinct",
+      "rankedValue": {
+        "level": 5,
+        "unit": "power",
+        "value": 3100
+      },
+      "source": "powerByHabitLevel"
+    },
+    {
+      "abilityId": "malachite-forests-instinct",
+      "effectId": "forests-instinct-physical-damage",
+      "rankedValue": {
+        "level": 1,
+        "unit": "percent",
+        "value": 8
+      },
+      "scheduleId": "forests-instinct-each-round",
+      "source": "effect.rankedValues"
+    },
+    {
+      "abilityId": "malachite-forests-instinct",
+      "effectId": "forests-instinct-physical-damage",
+      "rankedValue": {
+        "level": 2,
+        "unit": "percent",
+        "value": 9.6
+      },
+      "scheduleId": "forests-instinct-each-round",
+      "source": "effect.rankedValues"
+    },
+    {
+      "abilityId": "malachite-forests-instinct",
+      "effectId": "forests-instinct-physical-damage",
+      "rankedValue": {
+        "level": 3,
+        "unit": "percent",
+        "value": 11.2
+      },
+      "scheduleId": "forests-instinct-each-round",
+      "source": "effect.rankedValues"
+    },
+    {
+      "abilityId": "malachite-forests-instinct",
+      "effectId": "forests-instinct-physical-damage",
+      "rankedValue": {
+        "level": 4,
+        "unit": "percent",
+        "value": 13.6
+      },
+      "scheduleId": "forests-instinct-each-round",
+      "source": "effect.rankedValues"
+    },
+    {
+      "abilityId": "malachite-forests-instinct",
+      "effectId": "forests-instinct-physical-damage",
+      "rankedValue": {
+        "level": 5,
+        "unit": "percent",
+        "value": 16
+      },
+      "scheduleId": "forests-instinct-each-round",
+      "source": "effect.rankedValues"
+    },
+    {
+      "abilityId": "malachite-forests-instinct",
+      "effectId": "forests-instinct-tactical-reduction",
+      "rankedValue": {
+        "level": 1,
+        "unit": "percent",
+        "value": 8
+      },
+      "scheduleId": "forests-instinct-each-round",
+      "source": "effect.rankedValues"
+    },
+    {
+      "abilityId": "malachite-forests-instinct",
+      "effectId": "forests-instinct-tactical-reduction",
+      "rankedValue": {
+        "level": 2,
+        "unit": "percent",
+        "value": 9.6
+      },
+      "scheduleId": "forests-instinct-each-round",
+      "source": "effect.rankedValues"
+    },
+    {
+      "abilityId": "malachite-forests-instinct",
+      "effectId": "forests-instinct-tactical-reduction",
+      "rankedValue": {
+        "level": 3,
+        "unit": "percent",
+        "value": 11.2
+      },
+      "scheduleId": "forests-instinct-each-round",
+      "source": "effect.rankedValues"
+    },
+    {
+      "abilityId": "malachite-forests-instinct",
+      "effectId": "forests-instinct-tactical-reduction",
+      "rankedValue": {
+        "level": 4,
+        "unit": "percent",
+        "value": 13.6
+      },
+      "scheduleId": "forests-instinct-each-round",
+      "source": "effect.rankedValues"
+    },
+    {
+      "abilityId": "malachite-forests-instinct",
+      "effectId": "forests-instinct-tactical-reduction",
+      "rankedValue": {
+        "level": 5,
+        "unit": "percent",
+        "value": 16
+      },
+      "scheduleId": "forests-instinct-each-round",
+      "source": "effect.rankedValues"
+    },
+    {
+      "abilityId": "malachite-wise-vigor",
+      "rankedValue": {
+        "level": 1,
+        "unit": "power",
+        "value": 420
+      },
+      "source": "powerByHabitLevel"
+    },
+    {
+      "abilityId": "malachite-wise-vigor",
+      "rankedValue": {
+        "level": 2,
+        "unit": "power",
+        "value": 920
+      },
+      "source": "powerByHabitLevel"
+    },
+    {
+      "abilityId": "malachite-wise-vigor",
+      "rankedValue": {
+        "level": 3,
+        "unit": "power",
+        "value": 1500
+      },
+      "source": "powerByHabitLevel"
+    },
+    {
+      "abilityId": "malachite-wise-vigor",
+      "rankedValue": {
+        "level": 4,
+        "unit": "power",
+        "value": 2200
+      },
+      "source": "powerByHabitLevel"
+    },
+    {
+      "abilityId": "malachite-wise-vigor",
+      "rankedValue": {
+        "level": 5,
+        "unit": "power",
+        "value": 3100
+      },
+      "source": "powerByHabitLevel"
+    },
+    {
+      "abilityId": "malachite-wise-vigor",
+      "effectId": "wise-vigor-instinct",
+      "rankedValue": {
+        "level": 1,
+        "unit": "percent",
+        "value": 20
+      },
+      "scheduleId": "wise-vigor-start-combat",
+      "source": "effect.rankedValues"
+    },
+    {
+      "abilityId": "malachite-wise-vigor",
+      "effectId": "wise-vigor-instinct",
+      "rankedValue": {
+        "level": 2,
+        "unit": "percent",
+        "value": 24
+      },
+      "scheduleId": "wise-vigor-start-combat",
+      "source": "effect.rankedValues"
+    },
+    {
+      "abilityId": "malachite-wise-vigor",
+      "effectId": "wise-vigor-instinct",
+      "rankedValue": {
+        "level": 3,
+        "unit": "percent",
+        "value": 28
+      },
+      "scheduleId": "wise-vigor-start-combat",
+      "source": "effect.rankedValues"
+    },
+    {
+      "abilityId": "malachite-wise-vigor",
+      "effectId": "wise-vigor-instinct",
+      "rankedValue": {
+        "level": 4,
+        "unit": "percent",
+        "value": 34
+      },
+      "scheduleId": "wise-vigor-start-combat",
+      "source": "effect.rankedValues"
+    },
+    {
+      "abilityId": "malachite-wise-vigor",
+      "effectId": "wise-vigor-instinct",
+      "rankedValue": {
+        "level": 5,
+        "unit": "percent",
+        "value": 40
+      },
+      "scheduleId": "wise-vigor-start-combat",
+      "source": "effect.rankedValues"
+    },
+    {
+      "abilityId": "malachite-wise-vigor",
+      "effectId": "wise-vigor-recovery",
+      "rankedValue": {
+        "level": 1,
+        "unit": "percent",
+        "value": 20
+      },
+      "scheduleId": "wise-vigor-start-combat",
+      "source": "effect.rankedValues"
+    },
+    {
+      "abilityId": "malachite-wise-vigor",
+      "effectId": "wise-vigor-recovery",
+      "rankedValue": {
+        "level": 2,
+        "unit": "percent",
+        "value": 24
+      },
+      "scheduleId": "wise-vigor-start-combat",
+      "source": "effect.rankedValues"
+    },
+    {
+      "abilityId": "malachite-wise-vigor",
+      "effectId": "wise-vigor-recovery",
+      "rankedValue": {
+        "level": 3,
+        "unit": "percent",
+        "value": 28
+      },
+      "scheduleId": "wise-vigor-start-combat",
+      "source": "effect.rankedValues"
+    },
+    {
+      "abilityId": "malachite-wise-vigor",
+      "effectId": "wise-vigor-recovery",
+      "rankedValue": {
+        "level": 4,
+        "unit": "percent",
+        "value": 34
+      },
+      "scheduleId": "wise-vigor-start-combat",
+      "source": "effect.rankedValues"
+    },
+    {
+      "abilityId": "malachite-wise-vigor",
+      "effectId": "wise-vigor-recovery",
+      "rankedValue": {
+        "level": 5,
+        "unit": "percent",
+        "value": 40
+      },
+      "scheduleId": "wise-vigor-start-combat",
+      "source": "effect.rankedValues"
+    },
+    {
+      "abilityId": "malachite-thunderous-roar",
+      "rankedValue": {
+        "level": 1,
+        "unit": "power",
+        "value": 420
+      },
+      "source": "powerByHabitLevel"
+    },
+    {
+      "abilityId": "malachite-thunderous-roar",
+      "rankedValue": {
+        "level": 2,
+        "unit": "power",
+        "value": 920
+      },
+      "source": "powerByHabitLevel"
+    },
+    {
+      "abilityId": "malachite-thunderous-roar",
+      "rankedValue": {
+        "level": 3,
+        "unit": "power",
+        "value": 1500
+      },
+      "source": "powerByHabitLevel"
+    },
+    {
+      "abilityId": "malachite-thunderous-roar",
+      "rankedValue": {
+        "level": 4,
+        "unit": "power",
+        "value": 2200
+      },
+      "source": "powerByHabitLevel"
+    },
+    {
+      "abilityId": "malachite-thunderous-roar",
+      "rankedValue": {
+        "level": 5,
+        "unit": "power",
+        "value": 3100
+      },
+      "source": "powerByHabitLevel"
+    },
+    {
+      "abilityId": "malachite-collective-might",
+      "rankedValue": {
+        "level": 1,
+        "unit": "power",
+        "value": 420
+      },
+      "source": "powerByHabitLevel"
+    },
+    {
+      "abilityId": "malachite-collective-might",
+      "rankedValue": {
+        "level": 2,
+        "unit": "power",
+        "value": 920
+      },
+      "source": "powerByHabitLevel"
+    },
+    {
+      "abilityId": "malachite-collective-might",
+      "rankedValue": {
+        "level": 3,
+        "unit": "power",
+        "value": 1500
+      },
+      "source": "powerByHabitLevel"
+    },
+    {
+      "abilityId": "malachite-collective-might",
+      "rankedValue": {
+        "level": 4,
+        "unit": "power",
+        "value": 2200
+      },
+      "source": "powerByHabitLevel"
+    },
+    {
+      "abilityId": "malachite-collective-might",
+      "rankedValue": {
+        "level": 5,
+        "unit": "power",
+        "value": 3100
+      },
+      "source": "powerByHabitLevel"
+    },
+    {
+      "abilityId": "malachite-collective-might",
+      "effectId": "collective-might-strength",
+      "rankedValue": {
+        "level": 1,
+        "unit": "percent",
+        "value": 12.5
+      },
+      "scheduleId": "collective-might-start-combat",
+      "source": "effect.rankedValues"
+    },
+    {
+      "abilityId": "malachite-collective-might",
+      "effectId": "collective-might-strength",
+      "rankedValue": {
+        "level": 2,
+        "unit": "percent",
+        "value": 15
+      },
+      "scheduleId": "collective-might-start-combat",
+      "source": "effect.rankedValues"
+    },
+    {
+      "abilityId": "malachite-collective-might",
+      "effectId": "collective-might-strength",
+      "rankedValue": {
+        "level": 3,
+        "unit": "percent",
+        "value": 17.5
+      },
+      "scheduleId": "collective-might-start-combat",
+      "source": "effect.rankedValues"
+    },
+    {
+      "abilityId": "malachite-collective-might",
+      "effectId": "collective-might-strength",
+      "rankedValue": {
+        "level": 4,
+        "unit": "percent",
+        "value": 21.25
+      },
+      "scheduleId": "collective-might-start-combat",
+      "source": "effect.rankedValues"
+    },
+    {
+      "abilityId": "malachite-collective-might",
+      "effectId": "collective-might-strength",
+      "rankedValue": {
+        "level": 5,
+        "unit": "percent",
+        "value": 25
+      },
+      "scheduleId": "collective-might-start-combat",
+      "source": "effect.rankedValues"
+    },
+    {
+      "abilityId": "malachite-lightning-strike",
+      "rankedValue": {
+        "level": 1,
+        "unit": "power",
+        "value": 430
+      },
+      "source": "powerByHabitLevel"
+    },
+    {
+      "abilityId": "malachite-lightning-strike",
+      "rankedValue": {
+        "level": 2,
+        "unit": "power",
+        "value": 1000
+      },
+      "source": "powerByHabitLevel"
+    },
+    {
+      "abilityId": "malachite-lightning-strike",
+      "rankedValue": {
+        "level": 3,
+        "unit": "power",
+        "value": 1700
+      },
+      "source": "powerByHabitLevel"
+    },
+    {
+      "abilityId": "malachite-lightning-strike",
+      "rankedValue": {
+        "level": 4,
+        "unit": "power",
+        "value": 2700
+      },
+      "source": "powerByHabitLevel"
+    },
+    {
+      "abilityId": "malachite-lightning-strike",
+      "rankedValue": {
+        "level": 5,
+        "unit": "power",
+        "value": 4000
+      },
+      "source": "powerByHabitLevel"
+    }
+  ],
+  "rarity": "Legendary",
+  "rawDescriptions": [
+    {
+      "abilityId": "malachite-wardens-rally",
+      "abilityName": "Warden's Rally",
+      "kind": "command",
+      "rawDescription": "Rounds 2, 4, 7, 9: Deal Tactical Damage to 1 Enemy in the same lane (Damage Rate: +100%).\n\nRounds 3, 6, 9: Apply Recovery to 3 Allies in any lane (Recovery Rate: +70%, enhanced by Instinct)."
+    },
+    {
+      "abilityId": "malachite-sentinels-presence",
+      "abilityName": "Sentinel's Presence",
+      "kind": "trait",
+      "rawDescription": "At Level 16+ and deployed in the Vanguard Increase your Recovery Dealt by +15% and Instinct by +25. Increase Fire Damage Dealt by +16% of the Ally deployed in the Left Flank."
+    },
+    {
+      "abilityId": "malachite-forests-instinct",
+      "abilityName": "Forest's Instinct",
+      "kind": "habit",
+      "rawDescription": "Each Round: 35% chance to increase the Physical Damage Dealt (excluding Basic Attacks) by +8% and reduce the Tactical Damage Received by -8% of 2 other Allies in any lane for 2 round(s)."
+    },
+    {
+      "abilityId": "malachite-wise-vigor",
+      "abilityName": "Wise Vigor",
+      "kind": "habit",
+      "rawDescription": "Start of Combat: Increase your Instinct by +20% and Recovery Dealt by +20% until the end of combat."
+    },
+    {
+      "abilityId": "malachite-thunderous-roar",
+      "abilityName": "Thunderous Roar",
+      "kind": "habit",
+      "rawDescription": "Each Round: 10% chance to grant Advantage (+20%) to 2 other Allies in any lane for 2 round(s). Advantage increases the target's Damage Dealt."
+    },
+    {
+      "abilityId": "malachite-collective-might",
+      "abilityName": "Collective Might",
+      "kind": "habit",
+      "rawDescription": "Start of Combat: Increase Strength by +12.5% (enhanced by Strength) of 3 Allies in any lane until the end of combat."
+    },
+    {
+      "abilityId": "malachite-lightning-strike",
+      "abilityName": "Lightning Strike",
+      "kind": "habit",
+      "rawDescription": "Start of Round 1: 40% chance to grant First-Strike, Double-Strike, and increase Strength by +25% (enhanced by Instinct) of 1 other Ally within adjacency for 3 round(s)."
+    }
+  ],
+  "repetitions": [],
+  "rosterSourceStatus": "official-website",
+  "slug": "malachite",
+  "source": {
+    "branch": "feature/project-context-export",
+    "commit": "2cb422d38207fdda378f64504014ac34ff255e24",
+    "databaseVersion": "0.5.1",
+    "dataSchemaVersion": 7,
+    "gameBuild": "26.6.53509",
+    "localRosterSchemaVersion": 3,
+    "repository": "https://github.com/williamchildres/dragonfire-roster-builder"
+  },
+  "stats": {
+    "initiative": null,
+    "instinct": null,
+    "intelligence": null,
+    "strength": null
+  },
+  "statusOutputs": [
+    {
+      "abilityId": "malachite-thunderous-roar",
+      "abilityName": "Thunderous Roar",
+      "availability": {
+        "canonical": "canonical-locked",
+        "notes": [
+          "Future at Star Rank 6.",
+          "Unlocked in observed account collection state, subject to level and star requirements."
+        ],
+        "observedAccount": "observed-available",
+        "reportLabel": "Future at Star Rank 6; observed account hatched",
+        "userRoster": "unknown"
+      },
+      "chanceByHabitLevel": [
+        {
+          "level": 1,
+          "unit": "percent",
+          "value": 10
+        },
+        {
+          "level": 2,
+          "unit": "percent",
+          "value": 12
+        },
+        {
+          "level": 3,
+          "unit": "percent",
+          "value": 14
+        },
+        {
+          "level": 4,
+          "unit": "percent",
+          "value": 17
+        },
+        {
+          "level": 5,
+          "unit": "percent",
+          "value": 20
+        }
+      ],
+      "chanceFixed": null,
+      "conditions": [
+        {
+          "description": "Activation chance depends on Habit Level for each round.",
+          "evidenceIds": [],
+          "id": "thunderous-roar-each-round-activation-chance",
+          "label": "Activation chance depends on Habit Level for each round.",
+          "unresolved": false
+        }
+      ],
+      "currentlyAvailable": false,
+      "directlyVerified": true,
+      "dragonId": "malachite",
+      "durationRounds": 2,
+      "evidenceIds": [
+        "malachite-thunderous-roar-2026-06-23"
+      ],
+      "futureAvailable": true,
+      "id": "malachite-thunderous-roar-thunderous-roar-advantage-advantage-status-output",
+      "minimumDragonLevel": null,
+      "requiredHabitLevel": 1,
+      "statusId": "advantage",
+      "targetSelector": {
+        "count": 2,
+        "includesCaster": null,
+        "position": null,
+        "scope": "any-lane",
+        "selection": "any",
+        "side": "ally"
+      },
+      "targetSide": "ally",
+      "unlockStarRank": 6,
+      "untilEndOfCombat": false,
+      "untilEndOfRound": false
+    },
+    {
+      "abilityId": "malachite-lightning-strike",
+      "abilityName": "Lightning Strike",
+      "availability": {
+        "canonical": "canonical-locked",
+        "notes": [
+          "Future at Star Rank 10.",
+          "Unlocked in observed account collection state, subject to level and star requirements."
+        ],
+        "observedAccount": "observed-available",
+        "reportLabel": "Future at Star Rank 10; observed account hatched",
+        "userRoster": "unknown"
+      },
+      "chanceByHabitLevel": [
+        {
+          "level": 1,
+          "unit": "percent",
+          "value": 40
+        },
+        {
+          "level": 2,
+          "unit": "percent",
+          "value": 52
+        },
+        {
+          "level": 3,
+          "unit": "percent",
+          "value": 64
+        },
+        {
+          "level": 4,
+          "unit": "percent",
+          "value": 80
+        },
+        {
+          "level": 5,
+          "unit": "percent",
+          "value": 100
+        }
+      ],
+      "chanceFixed": null,
+      "conditions": [
+        {
+          "description": "Activation chance depends on Habit Level for start of round.",
+          "evidenceIds": [],
+          "id": "lightning-strike-round-one-activation-chance",
+          "label": "Activation chance depends on Habit Level for start of round.",
+          "unresolved": false
+        }
+      ],
+      "currentlyAvailable": false,
+      "directlyVerified": true,
+      "dragonId": "malachite",
+      "durationRounds": 3,
+      "evidenceIds": [
+        "malachite-lightning-strike-2026-06-23"
+      ],
+      "futureAvailable": true,
+      "id": "malachite-lightning-strike-lightning-strike-first-strike-first-strike-status-output",
+      "minimumDragonLevel": null,
+      "requiredHabitLevel": 1,
+      "statusId": "first-strike",
+      "targetSelector": {
+        "count": 1,
+        "includesCaster": null,
+        "position": null,
+        "scope": "within-adjacency",
+        "selection": "adjacent",
+        "side": "ally"
+      },
+      "targetSide": "ally",
+      "unlockStarRank": 10,
+      "untilEndOfCombat": false,
+      "untilEndOfRound": false
+    }
+  ],
+  "tags": [
+    "TACTICAL_DAMAGE",
+    "RECOVERY",
+    "SAME_LANE_TARGET",
+    "ANY_LANE_TARGET",
+    "ENHANCED_BY_INSTINCT",
+    "SCALES_WITH_LEVEL",
+    "SPECIFIC_ROUNDS",
+    "MULTI_SCHEDULE_COMMAND",
+    "RECOVERY_DEALT_UP",
+    "INSTINCT_UP",
+    "FIRE_DAMAGE_UP",
+    "VANGUARD_REQUIRED",
+    "LEFT_FLANK_TARGET",
+    "BUFF_SELF",
+    "BUFF_ALLIES",
+    "PHYSICAL_DAMAGE_UP",
+    "TACTICAL_DAMAGE_RECEIVED_DOWN",
+    "EXCLUDES_BASIC_ATTACKS",
+    "OTHER_ALLIES_TARGET",
+    "DAMAGE_DEALT_UP",
+    "STRENGTH_UP",
+    "ENHANCED_BY_STRENGTH",
+    "FIRST_STRIKE",
+    "DOUBLE_STRIKE",
+    "ADJACENT_TARGET"
+  ],
+  "trait": {
+    "abilityClass": "passive",
+    "augmentations": [],
+    "dragonId": "malachite",
+    "evidenceIds": [
+      "malachite-sentinels-presence-2026-06-23"
+    ],
+    "glossaryEntries": [],
+    "id": "malachite-sentinels-presence",
+    "kind": "trait",
+    "minimumDragonLevel": 16,
+    "name": "Sentinel's Presence",
+    "positionRequirement": "vanguard",
+    "powerByHabitLevel": [],
+    "rawDescription": "At Level 16+ and deployed in the Vanguard Increase your Recovery Dealt by +15% and Instinct by +25. Increase Fire Damage Dealt by +16% of the Ally deployed in the Left Flank.",
+    "schedules": [
+      {
+        "attempts": null,
+        "battleContext": "unspecified",
+        "conditions": [],
+        "effects": [
+          {
+            "calculated": false,
+            "casterEligibility": "unknown",
+            "conditionalMultipliers": [],
+            "conditions": [],
+            "directlyVerified": true,
+            "duration": null,
+            "durationRounds": null,
+            "excludes": [],
+            "id": "sentinels-presence-recovery-dealt",
+            "includesCaster": null,
+            "magnitude": 15,
+            "notes": [],
+            "perTargetEffectCheck": null,
+            "rankedValues": [],
+            "scaling": [],
+            "sourceScope": "unknown",
+            "stack": null,
+            "target": "Self",
+            "targetCount": null,
+            "targetPriority": "any-eligible",
+            "targetScope": "self",
+            "type": "Recovery Dealt Up",
+            "unit": "percent"
+          },
+          {
+            "calculated": false,
+            "casterEligibility": "unknown",
+            "conditionalMultipliers": [],
+            "conditions": [],
+            "directlyVerified": true,
+            "duration": null,
+            "durationRounds": null,
+            "excludes": [],
+            "id": "sentinels-presence-instinct",
+            "includesCaster": null,
+            "magnitude": 25,
+            "notes": [],
+            "perTargetEffectCheck": null,
+            "rankedValues": [],
+            "scaling": [],
+            "sourceScope": "unknown",
+            "stack": null,
+            "target": "Self",
+            "targetCount": null,
+            "targetPriority": "any-eligible",
+            "targetScope": "self",
+            "type": "Instinct Up",
+            "unit": "flat"
+          },
+          {
+            "calculated": false,
+            "casterEligibility": "unknown",
+            "conditionalMultipliers": [],
+            "conditions": [],
+            "directlyVerified": true,
+            "duration": null,
+            "durationRounds": null,
+            "excludes": [],
+            "id": "sentinels-presence-left-flank-fire",
+            "includesCaster": null,
+            "magnitude": 16,
+            "notes": [],
+            "perTargetEffectCheck": null,
+            "rankedValues": [],
+            "scaling": [],
+            "sourceScope": "unknown",
+            "stack": null,
+            "target": "Ally deployed in Left Flank",
+            "targetCount": null,
+            "targetPriority": "any-eligible",
+            "targetScope": "left-flank",
+            "type": "Fire Damage Dealt Up",
+            "unit": "percent"
+          }
+        ],
+        "id": "sentinels-presence-passive",
+        "repeat": null,
+        "rounds": [],
+        "targetPriority": "any-eligible",
+        "timing": "passive",
+        "triggerChanceByHabitLevel": [],
+        "triggerChanceFixed": null,
+        "triggerEvent": "passive"
+      }
+    ],
+    "tags": [
+      "RECOVERY_DEALT_UP",
+      "INSTINCT_UP",
+      "FIRE_DAMAGE_UP",
+      "VANGUARD_REQUIRED",
+      "LEFT_FLANK_TARGET",
+      "BUFF_SELF",
+      "BUFF_ALLIES"
+    ],
+    "unlockStarRank": 1,
+    "unresolvedQuestions": [],
+    "verification": {
+      "capturedAt": "2026-06-23",
+      "gameVersion": "26.6.53509",
+      "reviewedManually": true,
+      "source": "Sentinel's Presence screenshot",
+      "status": "screenshot-verified"
+    }
+  },
+  "unresolvedQuestions": [
+    "Canonical base stats remain unknown.",
+    "Exact enhanced-by-Instinct formula.",
+    "Exact enhanced-by-Strength formula.",
+    "Exact Level and Instinct scaling formulas."
+  ],
+  "verificationBySection": {
+    "affinities": {
+      "capturedAt": "2026-06-23",
+      "gameVersion": "26.6.53509",
+      "reviewedManually": true,
+      "source": "Malachite main screen screenshot",
+      "status": "partially-screenshot-verified"
+    },
+    "breed": {
+      "capturedAt": "2026-06-23",
+      "gameVersion": null,
+      "reviewedManually": true,
+      "source": "Official public roster page",
+      "status": "officially-confirmed"
+    },
+    "canonicalBaseStats": {
+      "capturedAt": null,
+      "gameVersion": null,
+      "reviewedManually": true,
+      "source": "No canonical base-stat source verified",
+      "status": "unknown"
+    },
+    "command": {
+      "capturedAt": "2026-06-23",
+      "gameVersion": "26.6.53509",
+      "reviewedManually": true,
+      "source": "Warden's Rally screenshots",
+      "status": "screenshot-verified"
+    },
+    "formationInteractions": {
+      "capturedAt": "2026-06-23",
+      "gameVersion": "26.6.53509",
+      "reviewedManually": true,
+      "source": "Army Builder formation screenshot",
+      "status": "partially-screenshot-verified"
+    },
+    "habits": {
+      "capturedAt": "2026-06-23",
+      "gameVersion": "26.6.53509",
+      "reviewedManually": true,
+      "source": "Malachite Habit screenshots",
+      "status": "screenshot-verified"
+    },
+    "identity": {
+      "capturedAt": "2026-06-23",
+      "gameVersion": null,
+      "reviewedManually": true,
+      "source": "Official public roster page",
+      "status": "officially-confirmed"
+    },
+    "rarity": {
+      "capturedAt": "2026-06-23",
+      "gameVersion": null,
+      "reviewedManually": true,
+      "source": "Official public roster page",
+      "status": "officially-confirmed"
+    },
+    "trait": {
+      "capturedAt": "2026-06-23",
+      "gameVersion": "26.6.53509",
+      "reviewedManually": true,
+      "source": "Sentinel's Presence screenshot",
+      "status": "screenshot-verified"
+    }
+  }
+}

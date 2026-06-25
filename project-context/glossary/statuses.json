@@ -1,0 +1,169 @@
+[
+  {
+    "definition": "Increases Damage Dealt. Magnitude may vary by ability.",
+    "id": "advantage",
+    "term": "Advantage",
+    "unresolvedQuestions": [],
+    "verification": "partially-verified"
+  },
+  {
+    "definition": "Reduces Damage Received. Magnitude and duration are supplied by the source ability.",
+    "id": "resistance",
+    "term": "Resistance",
+    "unresolvedQuestions": [
+      "Stacking and refresh behavior are not yet verified."
+    ],
+    "verification": "verified"
+  },
+  {
+    "definition": "Target acts before all other combatants each round. Caraxes Infernal Burst separately verifies a First-Strike conditional damage multiplier.",
+    "id": "first-strike",
+    "term": "First-Strike",
+    "unresolvedQuestions": [],
+    "verification": "verified"
+  },
+  {
+    "definition": "Target attacks after all other combatants each round.",
+    "id": "slow",
+    "term": "Slow",
+    "unresolvedQuestions": [
+      "Whether Slow interacts with every turn-order modifier before Initiative is not yet modeled."
+    ],
+    "verification": "verified"
+  },
+  {
+    "definition": "Deals Fire Damage each round. Verified Burn damage scales with attacker Intelligence and is mitigated by target Initiative.",
+    "id": "burn",
+    "term": "Burn",
+    "unresolvedQuestions": [
+      "Stacking, refresh, and overlapping Burn-source behavior are not yet verified."
+    ],
+    "verification": "verified"
+  },
+  {
+    "definition": "Control is a status category that includes Stun, Stagger, Overwhelm, and Confusion.",
+    "id": "control",
+    "term": "Control",
+    "unresolvedQuestions": [
+      "Whether cleansing one Control also consumes one Negative-effect cleanse slot remains unresolved."
+    ],
+    "verification": "verified"
+  },
+  {
+    "definition": "Target gains a second Basic Attack each round.",
+    "id": "double-strike",
+    "term": "Double-Strike",
+    "unresolvedQuestions": [],
+    "verification": "verified"
+  },
+  {
+    "definition": "Reduces Recovery Received per stack. Maximum three stacks. Exact per-stack value depends on Seasmoke Habit Level.",
+    "id": "infectious-wrath",
+    "term": "Infectious Wrath",
+    "unresolvedQuestions": [
+      "Refresh behavior is unknown."
+    ],
+    "verification": "verified"
+  },
+  {
+    "definition": "Referenced by Seasmoke as a conditional damage status.",
+    "id": "panic",
+    "term": "Panic",
+    "unresolvedQuestions": [
+      "Exact status definition is not supplied."
+    ],
+    "verification": "unresolved"
+  },
+  {
+    "definition": "Wild Hunt's mark reduces Recovery Received by 30% for three rounds.",
+    "id": "prey",
+    "term": "Prey",
+    "unresolvedQuestions": [],
+    "verification": "verified"
+  },
+  {
+    "definition": "Increases Damage Received.",
+    "id": "vulnerable",
+    "term": "Vulnerable",
+    "unresolvedQuestions": [],
+    "verification": "verified"
+  },
+  {
+    "definition": "Gives each incoming damage instance a chance to be ignored.",
+    "id": "evade",
+    "term": "Evade",
+    "unresolvedQuestions": [],
+    "verification": "verified"
+  },
+  {
+    "definition": "Increases Sheepstealer Fire Damage Dealt per stack. Maximum 10 stacks. Value depends on Habit Level.",
+    "id": "stolen-flock",
+    "term": "Stolen Flock",
+    "unresolvedQuestions": [
+      "Refresh behavior is unknown."
+    ],
+    "verification": "verified"
+  },
+  {
+    "definition": "Increases Vermax Physical Damage Dealt by 5% per stack. Maximum four stacks.",
+    "id": "rallying-flame",
+    "term": "Rallying Flame",
+    "unresolvedQuestions": [
+      "Refresh behavior is unknown."
+    ],
+    "verification": "verified"
+  },
+  {
+    "definition": "Increases Tactical Damage Dealt by 2.5% per stack. Maximum 10 stacks.",
+    "id": "spreading-blaze",
+    "term": "Spreading Blaze",
+    "unresolvedQuestions": [
+      "Refresh behavior is unknown."
+    ],
+    "verification": "verified"
+  },
+  {
+    "definition": "Referenced by Vermax. Status ID is normalized to weakened; raw text may preserve in-game spelling.",
+    "id": "weakened",
+    "term": "Weakened",
+    "unresolvedQuestions": [
+      "Exact status definition is not supplied."
+    ],
+    "verification": "unresolved"
+  },
+  {
+    "definition": "A beneficial effect that may be removed by Cleanse Positive.",
+    "id": "positive-effect",
+    "term": "Positive Effect",
+    "unresolvedQuestions": [
+      "Complete positive-effect taxonomy is not yet verified."
+    ],
+    "verification": "partially-verified"
+  },
+  {
+    "definition": "A harmful effect that may be removed by cleanse mechanics. Control effects can also be negative effects depending on the effect.",
+    "id": "negative-effect",
+    "term": "Negative Effect",
+    "unresolvedQuestions": [
+      "Complete negative-effect taxonomy is not yet verified.",
+      "Cleanse overlap between Control and Negative Effect is unresolved."
+    ],
+    "verification": "partially-verified"
+  },
+  {
+    "definition": "Removes one Positive effect from an enemy.",
+    "id": "cleanse-positive",
+    "term": "Cleanse Positive",
+    "unresolvedQuestions": [],
+    "verification": "verified"
+  },
+  {
+    "definition": "Restores troops to the target. Recovery may scale with Level or attributes by ability.",
+    "id": "recovery",
+    "term": "Recovery",
+    "unresolvedQuestions": [
+      "Exact formulas are not verified."
+    ],
+    "verification": "partially-verified"
+  }
+]
