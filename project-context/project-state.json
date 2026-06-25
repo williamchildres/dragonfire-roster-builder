@@ -17,11 +17,11 @@
     "Capability derivation is computed from structured AbilityEffect records in effectCapabilities.ts.",
     "Formation analysis uses structured SynergyTrace records and does not produce an arbitrary numerical score.",
     "Formation normalization preserves defensive scope, target-selection groups, visible-card requirement ownership, source ability identity, interaction scope, pure normal unmet summaries, and debug/export trace retention.",
-    "Formation card presentation maps existing normal traces into per-dragon Receives, Provides, Trait status, affinity, candidate, and preview summaries without changing mechanics; layout polish keeps desktop cards equal-height with bounded interaction regions."
+    "Formation card presentation maps existing normal traces into per-dragon Receives, Provides, Trait status, affinity, candidate, and preview summaries without changing mechanics; layout polish keeps desktop cards equal-height with bounded interaction regions, inline badges, readable summaries, per-item Details, and presentation-only aggregation."
   ],
   "currentReviewPhase": "Formation card layout polish validation and project-context regeneration.",
   "format": "dragonfire-project-state",
-  "generatedAt": "2026-06-25T05:03:27.389Z",
+  "generatedAt": "2026-06-25T13:45:06.120Z",
   "plannedNextPhase": [
     "full formation-output review",
     "additional visual QA",
@@ -34,7 +34,7 @@
   },
   "source": {
     "branch": "feature/formation-card-layout-polish",
-    "commit": "78ac2a2b780fce599c0edf8af0be22a2a1c54e81",
+    "commit": "f3042ee26aa774020b87dbed1ffef7b37e85cb02",
     "databaseVersion": "0.5.6",
     "dataSchemaVersion": 9,
     "gameBuild": "26.6.53509",
@@ -45,7 +45,7 @@
     "countingMethod": "static working-tree test declaration scan; runtime pass/fail is reported by npm run test",
     "lastRunStatus": "not-run-by-exporter",
     "runner": "vitest",
-    "testCaseCount": 145,
+    "testCaseCount": 147,
     "testFileCount": 19
   },
   "unresolvedMechanicsCount": 56,

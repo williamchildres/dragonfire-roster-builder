@@ -20,7 +20,7 @@
   "firstObservedInGame": null,
   "format": "dragonfire-dragon-profile",
   "gameVersion": null,
-  "generatedAt": "2026-06-25T05:03:27.389Z",
+  "generatedAt": "2026-06-25T13:45:06.120Z",
   "habits": [],
   "id": "zivern",
   "isNew": false,
@@ -43,7 +43,7 @@
   "slug": "zivern",
   "source": {
     "branch": "feature/formation-card-layout-polish",
-    "commit": "78ac2a2b780fce599c0edf8af0be22a2a1c54e81",
+    "commit": "f3042ee26aa774020b87dbed1ffef7b37e85cb02",
     "databaseVersion": "0.5.6",
     "dataSchemaVersion": 9,
     "gameBuild": "26.6.53509",

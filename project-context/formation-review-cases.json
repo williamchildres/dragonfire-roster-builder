@@ -3176,7 +3176,7 @@
       "Expected normal unmet requirements (preview): Sentinel's Presence position requirement: Malachite does not meet Sentinel's Presence's Vanguard requirement. | Sentinel's Wit position requirement: Syrax does not meet Sentinel's Wit's Vanguard requirement..",
       "Normal UI-only unmet summaries are not inserted into raw debug traces; full trace requirements remain exported for audit.",
       "Version 0.5.5 adds card-level presentation for Receives, Provides, Trait status, affinity chips, target candidates, preview labels, and overflow without changing trace mechanics.",
-      "Version 0.5.6 keeps that mapping intact while polishing equal-height desktop cards, compact summaries, bounded Receives/Provides regions, and accessible overflow behavior."
+      "Version 0.5.6 keeps that mapping intact while polishing equal-height desktop cards, inline state badges, purpose-built summaries, per-item Details, same-ability presentation aggregation, redundant blocked-Trait suppression, bounded Receives/Provides regions, and accessible overflow behavior."
     ],
     "reviewStatus": "confirmed"
   },
@@ -6176,7 +6176,7 @@
       "Expected normal unmet requirements (preview): Hunter's Wrath position requirement: Caraxes does not meet Hunter's Wrath's Vanguard requirement. | Sentinel's Presence position requirement: Malachite does not meet Sentinel's Presence's Vanguard requirement..",
       "Normal UI-only unmet summaries are not inserted into raw debug traces; full trace requirements remain exported for audit.",
       "Version 0.5.5 adds card-level presentation for Receives, Provides, Trait status, affinity chips, target candidates, preview labels, and overflow without changing trace mechanics.",
-      "Version 0.5.6 keeps that mapping intact while polishing equal-height desktop cards, compact summaries, bounded Receives/Provides regions, and accessible overflow behavior."
+      "Version 0.5.6 keeps that mapping intact while polishing equal-height desktop cards, inline state badges, purpose-built summaries, per-item Details, same-ability presentation aggregation, redundant blocked-Trait suppression, bounded Receives/Provides regions, and accessible overflow behavior."
     ],
     "reviewStatus": "confirmed"
   },
@@ -9052,7 +9052,7 @@
       "Expected normal unmet requirements (preview): Sentinel's Presence position requirement: Malachite does not meet Sentinel's Presence's Vanguard requirement. | Hunter's Wrath position requirement: Caraxes does not meet Hunter's Wrath's Vanguard requirement..",
       "Normal UI-only unmet summaries are not inserted into raw debug traces; full trace requirements remain exported for audit.",
       "Version 0.5.5 adds card-level presentation for Receives, Provides, Trait status, affinity chips, target candidates, preview labels, and overflow without changing trace mechanics.",
-      "Version 0.5.6 keeps that mapping intact while polishing equal-height desktop cards, compact summaries, bounded Receives/Provides regions, and accessible overflow behavior."
+      "Version 0.5.6 keeps that mapping intact while polishing equal-height desktop cards, inline state badges, purpose-built summaries, per-item Details, same-ability presentation aggregation, redundant blocked-Trait suppression, bounded Receives/Provides regions, and accessible overflow behavior."
     ],
     "reviewStatus": "confirmed"
   },
@@ -11749,7 +11749,7 @@
       "Expected normal unmet requirements (preview): Sentinel's Wit position requirement: Syrax does not meet Sentinel's Wit's Vanguard requirement. | Sentinel's Presence position requirement: Malachite does not meet Sentinel's Presence's Vanguard requirement..",
       "Normal UI-only unmet summaries are not inserted into raw debug traces; full trace requirements remain exported for audit.",
       "Version 0.5.5 adds card-level presentation for Receives, Provides, Trait status, affinity chips, target candidates, preview labels, and overflow without changing trace mechanics.",
-      "Version 0.5.6 keeps that mapping intact while polishing equal-height desktop cards, compact summaries, bounded Receives/Provides regions, and accessible overflow behavior."
+      "Version 0.5.6 keeps that mapping intact while polishing equal-height desktop cards, inline state badges, purpose-built summaries, per-item Details, same-ability presentation aggregation, redundant blocked-Trait suppression, bounded Receives/Provides regions, and accessible overflow behavior."
     ],
     "reviewStatus": "confirmed"
   },
@@ -14579,7 +14579,7 @@
       "Expected normal unmet requirements (preview): Sentinel's Presence position requirement: Malachite does not meet Sentinel's Presence's Vanguard requirement. | Warrior's Zeal position requirement: Vermax does not meet Warrior's Zeal's Vanguard requirement..",
       "Normal UI-only unmet summaries are not inserted into raw debug traces; full trace requirements remain exported for audit.",
       "Version 0.5.5 adds card-level presentation for Receives, Provides, Trait status, affinity chips, target candidates, preview labels, and overflow without changing trace mechanics.",
-      "Version 0.5.6 keeps that mapping intact while polishing equal-height desktop cards, compact summaries, bounded Receives/Provides regions, and accessible overflow behavior."
+      "Version 0.5.6 keeps that mapping intact while polishing equal-height desktop cards, inline state badges, purpose-built summaries, per-item Details, same-ability presentation aggregation, redundant blocked-Trait suppression, bounded Receives/Provides regions, and accessible overflow behavior."
     ],
     "reviewStatus": "pending"
   },
@@ -17444,7 +17444,7 @@
       "Expected normal unmet requirements (preview): Champion's Brilliance position requirement: Seasmoke does not meet Champion's Brilliance's Vanguard requirement. | Hunter's Cunning position requirement: Sheepstealer does not meet Hunter's Cunning's Vanguard requirement..",
       "Normal UI-only unmet summaries are not inserted into raw debug traces; full trace requirements remain exported for audit.",
       "Version 0.5.5 adds card-level presentation for Receives, Provides, Trait status, affinity chips, target candidates, preview labels, and overflow without changing trace mechanics.",
-      "Version 0.5.6 keeps that mapping intact while polishing equal-height desktop cards, compact summaries, bounded Receives/Provides regions, and accessible overflow behavior."
+      "Version 0.5.6 keeps that mapping intact while polishing equal-height desktop cards, inline state badges, purpose-built summaries, per-item Details, same-ability presentation aggregation, redundant blocked-Trait suppression, bounded Receives/Provides regions, and accessible overflow behavior."
     ],
     "reviewStatus": "pending"
   },
@@ -20541,7 +20541,7 @@
       "Expected normal unmet requirements (preview): Sentinel's Presence position requirement: Malachite does not meet Sentinel's Presence's Vanguard requirement. | Champion's Brilliance position requirement: Seasmoke does not meet Champion's Brilliance's Vanguard requirement..",
       "Normal UI-only unmet summaries are not inserted into raw debug traces; full trace requirements remain exported for audit.",
       "Version 0.5.5 adds card-level presentation for Receives, Provides, Trait status, affinity chips, target candidates, preview labels, and overflow without changing trace mechanics.",
-      "Version 0.5.6 keeps that mapping intact while polishing equal-height desktop cards, compact summaries, bounded Receives/Provides regions, and accessible overflow behavior."
+      "Version 0.5.6 keeps that mapping intact while polishing equal-height desktop cards, inline state badges, purpose-built summaries, per-item Details, same-ability presentation aggregation, redundant blocked-Trait suppression, bounded Receives/Provides regions, and accessible overflow behavior."
     ],
     "reviewStatus": "pending"
   },
@@ -23518,7 +23518,7 @@
       "Expected normal unmet requirements (preview): Sentinel's Presence position requirement: Malachite does not meet Sentinel's Presence's Vanguard requirement. | Champion's Brilliance Dragon Level requirement: Seasmoke is Level 1 and requires Level 16. | Hunter's Cunning position requirement: Sheepstealer does not meet Hunter's Cunning's Vanguard requirement..",
       "Normal UI-only unmet summaries are not inserted into raw debug traces; full trace requirements remain exported for audit.",
       "Version 0.5.5 adds card-level presentation for Receives, Provides, Trait status, affinity chips, target candidates, preview labels, and overflow without changing trace mechanics.",
-      "Version 0.5.6 keeps that mapping intact while polishing equal-height desktop cards, compact summaries, bounded Receives/Provides regions, and accessible overflow behavior."
+      "Version 0.5.6 keeps that mapping intact while polishing equal-height desktop cards, inline state badges, purpose-built summaries, per-item Details, same-ability presentation aggregation, redundant blocked-Trait suppression, bounded Receives/Provides regions, and accessible overflow behavior."
     ],
     "reviewStatus": "pending"
   },
@@ -26021,7 +26021,7 @@
       "Expected normal unmet requirements (preview): Hunter's Wrath position requirement: Caraxes does not meet Hunter's Wrath's Vanguard requirement. | Champion's Brilliance Dragon Level requirement: Seasmoke is Level 1 and requires Level 16. | Hunter's Cunning position requirement: Sheepstealer does not meet Hunter's Cunning's Vanguard requirement..",
       "Normal UI-only unmet summaries are not inserted into raw debug traces; full trace requirements remain exported for audit.",
       "Version 0.5.5 adds card-level presentation for Receives, Provides, Trait status, affinity chips, target candidates, preview labels, and overflow without changing trace mechanics.",
-      "Version 0.5.6 keeps that mapping intact while polishing equal-height desktop cards, compact summaries, bounded Receives/Provides regions, and accessible overflow behavior."
+      "Version 0.5.6 keeps that mapping intact while polishing equal-height desktop cards, inline state badges, purpose-built summaries, per-item Details, same-ability presentation aggregation, redundant blocked-Trait suppression, bounded Receives/Provides regions, and accessible overflow behavior."
     ],
     "reviewStatus": "pending"
   },
@@ -28728,7 +28728,7 @@
       "Expected normal unmet requirements (preview): Sentinel's Presence position requirement: Malachite does not meet Sentinel's Presence's Vanguard requirement. | Hunter's Cunning position requirement: Sheepstealer does not meet Hunter's Cunning's Vanguard requirement..",
       "Normal UI-only unmet summaries are not inserted into raw debug traces; full trace requirements remain exported for audit.",
       "Version 0.5.5 adds card-level presentation for Receives, Provides, Trait status, affinity chips, target candidates, preview labels, and overflow without changing trace mechanics.",
-      "Version 0.5.6 keeps that mapping intact while polishing equal-height desktop cards, compact summaries, bounded Receives/Provides regions, and accessible overflow behavior."
+      "Version 0.5.6 keeps that mapping intact while polishing equal-height desktop cards, inline state badges, purpose-built summaries, per-item Details, same-ability presentation aggregation, redundant blocked-Trait suppression, bounded Receives/Provides regions, and accessible overflow behavior."
     ],
     "reviewStatus": "pending"
   },
@@ -31416,7 +31416,7 @@
       "Expected normal unmet requirements (preview): Sentinel's Wit position requirement: Syrax does not meet Sentinel's Wit's Vanguard requirement. | Hunter's Wrath position requirement: Caraxes does not meet Hunter's Wrath's Vanguard requirement..",
       "Normal UI-only unmet summaries are not inserted into raw debug traces; full trace requirements remain exported for audit.",
       "Version 0.5.5 adds card-level presentation for Receives, Provides, Trait status, affinity chips, target candidates, preview labels, and overflow without changing trace mechanics.",
-      "Version 0.5.6 keeps that mapping intact while polishing equal-height desktop cards, compact summaries, bounded Receives/Provides regions, and accessible overflow behavior."
+      "Version 0.5.6 keeps that mapping intact while polishing equal-height desktop cards, inline state badges, purpose-built summaries, per-item Details, same-ability presentation aggregation, redundant blocked-Trait suppression, bounded Receives/Provides regions, and accessible overflow behavior."
     ],
     "reviewStatus": "pending"
   },
@@ -34263,7 +34263,7 @@
       "Expected normal unmet requirements (preview): Hunter's Cunning position requirement: Sheepstealer does not meet Hunter's Cunning's Vanguard requirement. | Sentinel's Wit position requirement: Syrax does not meet Sentinel's Wit's Vanguard requirement..",
       "Normal UI-only unmet summaries are not inserted into raw debug traces; full trace requirements remain exported for audit.",
       "Version 0.5.5 adds card-level presentation for Receives, Provides, Trait status, affinity chips, target candidates, preview labels, and overflow without changing trace mechanics.",
-      "Version 0.5.6 keeps that mapping intact while polishing equal-height desktop cards, compact summaries, bounded Receives/Provides regions, and accessible overflow behavior."
+      "Version 0.5.6 keeps that mapping intact while polishing equal-height desktop cards, inline state badges, purpose-built summaries, per-item Details, same-ability presentation aggregation, redundant blocked-Trait suppression, bounded Receives/Provides regions, and accessible overflow behavior."
     ],
     "reviewStatus": "pending"
   }

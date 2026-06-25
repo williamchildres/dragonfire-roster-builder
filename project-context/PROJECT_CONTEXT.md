@@ -11,7 +11,7 @@ Dragonfire Roster Lab records verified dragon roster data, combat mechanics, syn
 - Capability derivation is computed from structured AbilityEffect records in effectCapabilities.ts.
 - Formation analysis uses structured SynergyTrace records and does not produce an arbitrary numerical score.
 - Formation normalization preserves defensive scope, target-selection groups, visible-card requirement ownership, source ability identity, interaction scope, pure normal unmet summaries, and debug/export trace retention.
-- Formation card presentation maps existing normal traces into per-dragon Receives, Provides, Trait status, affinity, candidate, and preview summaries without changing mechanics; layout polish keeps desktop cards equal-height with bounded interaction regions.
+- Formation card presentation maps existing normal traces into per-dragon Receives, Provides, Trait status, affinity, candidate, and preview summaries without changing mechanics; layout polish keeps desktop cards equal-height with bounded interaction regions, inline badges, readable summaries, per-item Details, and presentation-only aggregation.
 
 ## Versions
 
@@ -27,7 +27,7 @@ Normal Formation Analysis unmet requirements are concise UI summaries rather tha
 
 ## Formation Card Presentation
 
-Formation Builder cards are the primary normal UI for dragon-specific benefits. Receives and Provides derive from normal traces, target-selection groups use candidate wording, per-dragon affinities use existing affinity data, and raw effect tags are hidden from the normal Formation Summary. Desktop cards use equal-height outer columns with bounded interaction regions; mobile cards stack in natural height. Technical analysis preserves the full trace set.
+Formation Builder cards are the primary normal UI for dragon-specific benefits. Receives and Provides derive from normal traces, target-selection groups use candidate wording, per-dragon affinities use existing affinity data, and raw effect tags are hidden from the normal Formation Summary. Desktop cards use equal-height outer columns with bounded interaction regions; mobile cards stack in natural height. Compact items use inline state badges, readable summaries, Details disclosure, same-ability presentation aggregation, and redundant blocked-Trait suppression when Trait status and Formation Blockers already carry the failure. Technical analysis preserves the full trace set.
 
 ## Populated Dragons
 
