@@ -220,7 +220,7 @@ describe('Phase 3.8 generic trace behavior', () => {
 
     expect(statTrace).toMatchObject({ title: 'Initiative Scaling Support' });
     expect(statTrace?.matchedFacts.join(' ')).toContain('Strategic Revival');
-    expect(mitigationTrace).toMatchObject({ title: 'Initiative Mitigation Reduction' });
+    expect(mitigationTrace).toMatchObject({ title: 'Fire Damage Mitigation Reduction', channel: 'fire-damage' });
     expect(mitigationTrace?.matchedFacts.join(' ')).toContain('Infernal Burst');
   });
 

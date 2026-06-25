@@ -5511,7 +5511,7 @@
         "sourceScope": "commands",
         "targetCount": null,
         "targetScope": "any-lane",
-        "targetSide": "ally",
+        "targetSide": "enemy",
         "unlockStarRank": null
       },
       {
@@ -10233,9 +10233,9 @@
           "scope": "any-lane",
           "selection": "any",
           "selectionStat": null,
-          "side": "ally"
+          "side": "enemy"
         },
-        "targetSide": "ally",
+        "targetSide": "enemy",
         "unlockStarRank": 10,
         "untilEndOfCombat": false,
         "untilEndOfRound": false
@@ -11074,7 +11074,9 @@
     "fire-damage",
     "recovery",
     "stat",
-    "damage-received"
+    "damage-received",
+    "status",
+    "control"
   ],
   "interactionScopes": [
     "cross-dragon",

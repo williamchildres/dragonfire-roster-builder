@@ -334,6 +334,7 @@ export function analyzeCapabilityAmplifications(
     ...analyzeIncomingAmplifications(formation, dragons, outputs, modifiers, options),
     ...analyzeAllyOutputSupport(formation, dragons, outputs, options),
     ...analyzeStatusConditionEnablement(formation, dragons, outputs, statusOutputs, options),
+    ...analyzeStatusEffectConditionEnablement(formation, dragons, statusOutputs, options),
     ...analyzeDefensiveAllySupport(formation, dragons, modifiers, options),
     ...analyzeDirectStatSupport(formation, dragons, modifiers, options),
     ...analyzeStatScalingSupport(formation, dragons, outputs, modifiers, options),
@@ -354,6 +355,7 @@ function analyzeAllyOutputSupport(
     (capability) =>
       capability.targetSide === 'ally' &&
       capability.targetCount !== 1 &&
+      !isDamageChannel(capability.channel) &&
       outputCapabilityVisible(capability, options),
   )) {
     const providerPosition = positionOf(formation, output.dragonId);
@@ -834,6 +836,9 @@ function analyzeIncomingAmplifications(
       );
       for (const modifier of recipientModifiers) {
         const targeting = outputTargetsRecipient(output, providerPosition, recipientPosition);
+        if (targeting.satisfied === false) {
+          continue;
+        }
         const match = capabilityMatch(modifier, output, [
           targeting,
           ...outputRequirementTraces(output, options),
@@ -859,6 +864,115 @@ function analyzeIncomingAmplifications(
           assumptions: [],
           unresolvedQuestions: ['Exact final Recovery amount is unknown because the full Level and Instinct Recovery formula is not known.'],
         }));
+      }
+    }
+  }
+  return traces;
+}
+
+function analyzeStatusEffectConditionEnablement(
+  formation: FormationAnalysisInput,
+  dragons: Dragon[],
+  statusOutputs: StatusOutputCapability[],
+  options: CapabilityOptions,
+): SynergyTrace[] {
+  const traces: SynergyTrace[] = [];
+  const selectedDragonIds = selectedFormationDragonIds(formation);
+  for (const dependentDragon of dragons.filter((dragon) => selectedDragonIds.has(dragon.id))) {
+    const dependentPosition = positionOf(formation, dependentDragon.id);
+    if (!dependentPosition) {
+      continue;
+    }
+    for (const ability of allAbilities(dependentDragon)) {
+      if (!capabilityVisible({
+        dragonId: dependentDragon.id,
+        abilityId: ability.id,
+        unlockStarRank: ability.unlockStarRank,
+        minimumDragonLevel: ability.minimumDragonLevel,
+        requiredHabitLevel: ability.kind === 'habit' ? 1 : null,
+        futureAvailable: ability.unlockStarRank !== null && ability.unlockStarRank > 1,
+      }, options)) {
+        continue;
+      }
+      for (const schedule of ability.schedules) {
+        for (const effect of schedule.effects) {
+          if (outputChannelForEffect(effect)) {
+            continue;
+          }
+          const dependencies = statusDependenciesForEffect(effect, schedule);
+          if (dependencies.length === 0) {
+            continue;
+          }
+          for (const dependency of dependencies) {
+            for (const statusOutput of statusOutputs.filter(
+              (status) =>
+                status.statusId === dependency.statusId &&
+                status.dragonId !== dependentDragon.id &&
+                statusCapabilityVisible(status, options),
+            )) {
+              const providerPosition = positionOf(formation, statusOutput.dragonId);
+              const provider = dragonById(dragons, statusOutput.dragonId);
+              if (!providerPosition || !provider) {
+                continue;
+              }
+              const targetCompatibility = statusProviderRequirement(statusOutput, dependency.type, providerPosition, dependentPosition);
+              if (targetCompatibility.satisfied === false) {
+                continue;
+              }
+              const requirements = [
+                targetCompatibility,
+                ...availabilityRequirements({
+                  dragonId: statusOutput.dragonId,
+                  abilityId: statusOutput.abilityId,
+                  dragonName: provider.name,
+                  abilityName: statusOutput.abilityName,
+                  unlockStarRank: statusOutput.unlockStarRank,
+                  minimumDragonLevel: statusOutput.minimumDragonLevel,
+                  requiredHabitLevel: statusOutput.requiredHabitLevel,
+                  evidenceIds: statusOutput.evidenceIds,
+                  sourceKind: abilitySourceKind(dragons, statusOutput.dragonId, statusOutput.abilityId),
+                }, options),
+                ...availabilityRequirements({
+                  dragonId: dependentDragon.id,
+                  abilityId: ability.id,
+                  dragonName: dependentDragon.name,
+                  abilityName: ability.name,
+                  unlockStarRank: ability.unlockStarRank,
+                  minimumDragonLevel: ability.minimumDragonLevel,
+                  requiredHabitLevel: ability.kind === 'habit' ? 1 : null,
+                  evidenceIds: ability.evidenceIds,
+                  sourceKind: ability.kind,
+                }, options),
+              ];
+              traces.push(makeDependencyTrace({
+                id: `status-effect-condition-${statusOutput.id}-${ability.id}-${effect.id}-${dependency.type}-${dependency.statusId}`,
+                matchKind: 'status-condition-enablement',
+                ruleId: 'status-condition-enablement',
+                source: provider,
+                sourceAbilityId: statusOutput.abilityId,
+                recipient: dependentDragon,
+                recipientAbilityId: ability.id,
+                channel: 'status',
+                title: `${statusLabel(statusOutput.statusId)} enables ${ability.name}`,
+                explanation: `${provider.name}'s ${statusOutput.abilityName} can apply ${statusLabel(statusOutput.statusId)}. ${dependentDragon.name}'s ${ability.name} has a verified ${effect.type} condition that depends on the target having ${statusLabel(statusOutput.statusId)}. Target overlap and uptime are not guaranteed.`,
+                requirements,
+                matchedFacts: [
+                  ...dependency.notes,
+                  ...conditionalChanceFacts(effect, dependency.statusId, schedule),
+                ],
+                effects: [`Conditional ${effect.type}: ${statusLabel(statusOutput.statusId)}`],
+                sourceEvidenceIds: statusOutput.evidenceIds,
+                recipientEvidenceIds: ability.evidenceIds,
+                assumptions: [
+                  'The status provider and dependent effect must select the same enemy target.',
+                  'Target overlap, trigger timing, and exact uptime are not simulated.',
+                ],
+                unresolvedQuestions: ['Exact target overlap and final conditional uptime are unresolved.'],
+                futureOrConditional: true,
+              }));
+            }
+          }
+        }
       }
     }
   }
@@ -1309,6 +1423,10 @@ function analyzeEnemyMitigationReduction(
     if (!statId) {
       continue;
     }
+    const mitigationChannel = mitigationChannelForStat(statId);
+    if (!mitigationChannel) {
+      continue;
+    }
     const providerPosition = positionOf(formation, modifier.dragonId);
     if (!providerPosition) {
       continue;
@@ -1320,6 +1438,7 @@ function analyzeEnemyMitigationReduction(
       const matchedOutputs = outputs.filter(
         (output) =>
           output.dragonId === recipientId &&
+          output.channel === mitigationChannel &&
           outputCapabilityVisible(output, options) &&
           output.dependencies.some((dependency) => dependency.type === 'mitigated-by-target-stat' && dependency.statId === statId),
       );
@@ -1343,12 +1462,12 @@ function analyzeEnemyMitigationReduction(
         sourceAbilityId: modifier.abilityId,
         recipient,
         recipientAbilityId: matchedOutputs[0]?.abilityId ?? null,
-        channel: 'stat',
-        title: `${statLabel(statId)} Mitigation Reduction`,
-        explanation: `${provider.name}'s ${modifier.abilityName} can reduce enemy ${statLabel(statId)}. ${recipient.name}'s matching outputs are mitigated by that stat.`,
+        channel: mitigationChannel,
+        title: `${channelLabel(mitigationChannel)} Mitigation Reduction`,
+        explanation: `${provider.name}'s ${modifier.abilityName} can reduce enemy ${statLabel(statId)}. ${recipient.name}'s ${channelLabel(mitigationChannel)} outputs are mitigated by that stat.`,
         requirements,
         matchedFacts: matchedOutputs.map((output) => `${output.abilityName} is mitigated by target ${statLabel(statId)}.`),
-        effects: [`Enemy ${statLabel(statId)} reduction may improve ${matchedOutputs.map((output) => output.label).join(', ')}.`],
+        effects: [`Enemy ${statLabel(statId)} reduction may improve ${channelLabel(mitigationChannel)} outputs: ${matchedOutputs.map((output) => output.label).join(', ')}.`],
         sourceEvidenceIds: modifier.evidenceIds,
         recipientEvidenceIds: matchedOutputs.flatMap((output) => output.evidenceIds),
         assumptions: ['Enemy target overlap is not simulated.'],
@@ -1358,6 +1477,19 @@ function analyzeEnemyMitigationReduction(
     }
   }
   return traces;
+}
+
+function mitigationChannelForStat(statId: DragonStatId): EffectChannel | null {
+  switch (statId) {
+    case 'instinct':
+      return 'physical-damage';
+    case 'intelligence':
+      return 'tactical-damage';
+    case 'initiative':
+      return 'fire-damage';
+    case 'strength':
+      return null;
+  }
 }
 
 function analyzePeriodicDamageAmplification(
@@ -1489,8 +1621,8 @@ function analyzeStatusRemovalSupport(
               sourceAbilityId: ability.id,
               recipient: afflicted,
               recipientAbilityId: statusOutput.abilityId,
-              channel: 'stat',
-              title: `${statusLabel(statusOutput.statusId)} Removal Potential`,
+              channel: 'control',
+              title: 'Control Cleanse',
               explanation: `${cleanser.name}'s ${ability.name} can remove Control-compatible effects from an ally. ${afflicted.name} can be afflicted with ${statusLabel(statusOutput.statusId)}, but timing and target selection are not guaranteed.`,
               requirements,
               matchedFacts: [
@@ -1871,6 +2003,10 @@ function outputChannelForEffect(effect: AbilityEffect): EffectChannel | null {
   return null;
 }
 
+function isDamageChannel(channel: EffectChannel): boolean {
+  return channel === 'physical-damage' || channel === 'tactical-damage' || channel === 'fire-damage';
+}
+
 function dependenciesForEffect(effect: AbilityEffect): CapabilityDependency[] {
   const dependencies: CapabilityDependency[] = [
     ...effect.scaling.flatMap((scaling) => {
@@ -1888,8 +2024,64 @@ function dependenciesForEffect(effect: AbilityEffect): CapabilityDependency[] {
       dependencyForCondition(multiplier.condition, multiplier.multiplier),
     ),
     ...(effect.conditions ?? []).flatMap((condition) => dependencyForCondition(condition)),
+    ...(effect.activationRoll?.targetStatusConditionalChances ?? []).map((condition) => ({
+      type: 'requires-target-status' as const,
+      statusId: condition.statusId,
+      multiplier: condition.multiplier ?? undefined,
+      notes: [condition.description],
+    })),
   ];
   return dedupeDependencies(dependencies);
+}
+
+function statusDependenciesForEffect(effect: AbilityEffect, schedule: AbilitySchedule): Array<CapabilityDependency & {
+  type: 'requires-self-status' | 'requires-any-enemy-status' | 'requires-target-status';
+  statusId: string;
+}> {
+  return dedupeDependencies([
+    ...(effect.conditionalMultipliers ?? []).flatMap((multiplier) =>
+      dependencyForCondition(multiplier.condition, multiplier.multiplier),
+    ),
+    ...(effect.conditions ?? []).flatMap((condition) => dependencyForCondition(condition)),
+    ...(effect.activationRoll?.targetStatusConditionalChances ?? []).map((condition) => ({
+      type: 'requires-target-status' as const,
+      statusId: condition.statusId,
+      multiplier: condition.multiplier ?? undefined,
+      notes: [condition.description],
+    })),
+    ...(schedule.activationRoll?.targetStatusConditionalChances ?? []).map((condition) => ({
+      type: 'requires-target-status' as const,
+      statusId: condition.statusId,
+      multiplier: condition.multiplier ?? undefined,
+      notes: [condition.description],
+    })),
+  ]).filter(isStatusConditionDependency);
+}
+
+function conditionalChanceFacts(effect: AbilityEffect, statusId: string, schedule: AbilitySchedule): string[] {
+  const rollFacts = [
+    ...(effect.activationRoll?.targetStatusConditionalChances ?? []).map((condition) => ({ condition, baseChance: effect.activationRoll?.chanceFixed ?? null })),
+    ...(schedule.activationRoll?.targetStatusConditionalChances ?? []).map((condition) => ({ condition, baseChance: schedule.activationRoll?.chanceFixed ?? null })),
+  ];
+  return [
+    ...rollFacts
+      .filter(({ condition }) => condition.statusId === statusId)
+      .map(({ condition, baseChance }) => {
+        const base = baseChance !== null && baseChance !== undefined
+          ? `${baseChance}%`
+          : 'base chance';
+        const enhanced = condition.chanceFixed !== null && condition.chanceFixed !== undefined
+          ? `${condition.chanceFixed}%`
+          : 'conditional chance';
+        const multiplier = condition.multiplier !== null && condition.multiplier !== undefined
+          ? ` (${condition.multiplier}x)`
+          : '';
+        return `Conditional activation chance: ${base} -> ${enhanced}${multiplier}.`;
+      }),
+    ...(effect.conditionalMultipliers ?? [])
+      .filter((multiplier) => multiplier.condition.statusId === statusId)
+      .map((multiplier) => `Conditional multiplier: ${multiplier.multiplier}x.`),
+  ];
 }
 
 function defaultDamageDependencies(effect: AbilityEffect): CapabilityDependency[] {
@@ -1956,11 +2148,15 @@ function dependencyForCondition(
 function isStatusConditionDependency(
   dependency: CapabilityDependency,
 ): dependency is CapabilityDependency & {
-  type: 'requires-self-status' | 'requires-any-enemy-status';
+  type: 'requires-self-status' | 'requires-any-enemy-status' | 'requires-target-status';
   statusId: string;
 } {
   return (
-    (dependency.type === 'requires-self-status' || dependency.type === 'requires-any-enemy-status') &&
+    (
+      dependency.type === 'requires-self-status' ||
+      dependency.type === 'requires-any-enemy-status' ||
+      dependency.type === 'requires-target-status'
+    ) &&
     typeof dependency.statusId === 'string'
   );
 }
@@ -2275,7 +2471,7 @@ function outputTargetsRecipient(
 
 function statusProviderRequirement(
   statusOutput: StatusOutputCapability,
-  dependencyType: 'requires-self-status' | 'requires-any-enemy-status',
+  dependencyType: 'requires-self-status' | 'requires-any-enemy-status' | 'requires-target-status',
   providerPosition: FormationPosition,
   recipientPosition: FormationPosition,
 ): RequirementTrace {
@@ -2294,6 +2490,9 @@ function statusProviderRequirement(
     } else {
       satisfied = false;
     }
+  } else if (dependencyType === 'requires-target-status') {
+    satisfied = statusOutput.targetSide === 'enemy';
+    expected = 'enemy status application that can overlap the dependent target';
   } else if (statusOutput.targetSide !== 'enemy') {
     satisfied = false;
     expected = 'enemy status application';
@@ -2905,6 +3104,10 @@ function channelLabel(channel: EffectChannel): string {
       return 'Stat';
     case 'damage-received':
       return 'Damage Received';
+    case 'status':
+      return 'Status';
+    case 'control':
+      return 'Control';
   }
 }
 
@@ -2929,12 +3132,23 @@ function positionOf(formation: FormationAnalysisInput, dragonId: string): Format
 }
 
 function targetSideForEffect(effect: AbilityEffect): 'ally' | 'enemy' | 'self' {
-  if (effect.targetScope === 'self' || effect.target === 'Self') {
+  if (effect.targetScope === 'self' || /^Self$/i.test(effect.target)) {
     return 'self';
   }
-  return /\benemy\b|\benemies\b|\bprey\b/i.test(effect.target)
-    ? 'enemy'
-    : 'ally';
+  if (/\bally\b|\ballies\b/i.test(effect.target)) {
+    return 'ally';
+  }
+  if (/\benemy\b|\benemies\b|\bprey\b|\btarget\b/i.test(effect.target)) {
+    return 'enemy';
+  }
+  const channel = outputChannelForEffect(effect);
+  if (channel && isDamageChannel(channel)) {
+    return 'enemy';
+  }
+  if (['Bleed', 'Panic', 'Stun', 'Taunt', 'Weakened', 'Overwhelm'].includes(effect.type)) {
+    return 'enemy';
+  }
+  return 'ally';
 }
 
 function inferTargetCount(target: string): number | null {

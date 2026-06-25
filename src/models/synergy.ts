@@ -139,7 +139,7 @@ export interface RecipientAmplificationTrace {
   confidence: TraceConfidence;
 }
 
-export type EffectChannel = 'physical-damage' | 'tactical-damage' | 'fire-damage' | 'recovery' | 'stat' | 'damage-received';
+export type EffectChannel = 'physical-damage' | 'tactical-damage' | 'fire-damage' | 'recovery' | 'stat' | 'damage-received' | 'status' | 'control';
 
 export type DragonStatId = 'strength' | 'instinct' | 'intelligence' | 'initiative';
 
