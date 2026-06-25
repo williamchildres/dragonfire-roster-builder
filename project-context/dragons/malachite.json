@@ -2733,7 +2733,7 @@
   "firstObservedInGame": null,
   "format": "dragonfire-dragon-profile",
   "gameVersion": null,
-  "generatedAt": "2026-06-25T00:29:16.911Z",
+  "generatedAt": "2026-06-25T01:19:13.742Z",
   "habits": [
     {
       "abilityClass": "passive",
@@ -3867,6 +3867,63 @@
       "valuePerStack": null
     },
     {
+      "abilityId": "malachite-forests-instinct",
+      "abilityName": "Forest's Instinct",
+      "availability": {
+        "canonical": "canonical-locked",
+        "notes": [
+          "Future at Star Rank 2.",
+          "Unlocked in observed account collection state, subject to level and star requirements."
+        ],
+        "observedAccount": "observed-available",
+        "reportLabel": "Future at Star Rank 2; observed account hatched",
+        "userRoster": "unknown"
+      },
+      "channel": "damage-received",
+      "combatLogConfirmed": false,
+      "conditional": true,
+      "conditions": [
+        {
+          "description": "Activation chance 35% per each round.",
+          "evidenceIds": [],
+          "id": "forests-instinct-each-round-activation-chance",
+          "label": "Activation chance 35% per each round.",
+          "unresolved": false
+        }
+      ],
+      "confidence": "confirmed",
+      "currentlyAvailable": false,
+      "direction": "received",
+      "directlyVerified": true,
+      "dragonId": "malachite",
+      "evidenceIds": [
+        "malachite-forests-instinct-2026-06-23"
+      ],
+      "futureAvailable": true,
+      "id": "malachite-forests-instinct-forests-instinct-tactical-reduction-damage-received-received-modifier",
+      "label": "Forest's Instinct: Tactical Damage Received Reduction",
+      "minimumDragonLevel": null,
+      "operation": "decrease",
+      "providerRequirements": [],
+      "recipientRequirements": [],
+      "requiredHabitLevel": 1,
+      "role": "ally-support",
+      "sourceScope": "unknown",
+      "stackMaximum": null,
+      "targetSelector": {
+        "count": 2,
+        "includesCaster": null,
+        "position": null,
+        "scope": "any-lane",
+        "selection": "any",
+        "side": "ally"
+      },
+      "unit": "percent",
+      "unlockStarRank": 2,
+      "value": 8,
+      "valuePerStack": null
+    },
+    {
       "abilityId": "malachite-wise-vigor",
       "abilityName": "Wise Vigor",
       "availability": {
@@ -4762,10 +4819,10 @@
   "rosterSourceStatus": "official-website",
   "slug": "malachite",
   "source": {
-    "branch": "feature/project-context-export",
-    "commit": "2cb422d38207fdda378f64504014ac34ff255e24",
-    "databaseVersion": "0.5.1",
-    "dataSchemaVersion": 7,
+    "branch": "feature/formation-analysis-repair",
+    "commit": "33308a9be3432c3b1fe16b500e64069bd93f1dee",
+    "databaseVersion": "0.5.2",
+    "dataSchemaVersion": 8,
     "gameBuild": "26.6.53509",
     "localRosterSchemaVersion": 3,
     "repository": "https://github.com/williamchildres/dragonfire-roster-builder"

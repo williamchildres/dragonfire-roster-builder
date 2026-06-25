@@ -3457,7 +3457,7 @@
   "firstObservedInGame": "2026-06-22",
   "format": "dragonfire-dragon-profile",
   "gameVersion": null,
-  "generatedAt": "2026-06-25T00:29:16.911Z",
+  "generatedAt": "2026-06-25T01:19:13.742Z",
   "habits": [
     {
       "abilityClass": "passive",
@@ -4786,6 +4786,177 @@
       "valuePerStack": null
     },
     {
+      "abilityId": "vermax-trial-by-flame",
+      "abilityName": "Trial by Flame",
+      "availability": {
+        "canonical": "canonical-locked",
+        "notes": [
+          "Future at Star Rank 2.",
+          "Unlocked in observed account collection state, subject to level and star requirements."
+        ],
+        "observedAccount": "observed-available",
+        "reportLabel": "Future at Star Rank 2; observed account hatched",
+        "userRoster": "unknown"
+      },
+      "channel": "damage-received",
+      "combatLogConfirmed": false,
+      "conditional": true,
+      "conditions": [
+        {
+          "description": "Below 75% Troop Capacity.",
+          "evidenceIds": [],
+          "id": "below-75-troop-capacity",
+          "label": "Below 75% Troop Capacity.",
+          "unresolved": false
+        }
+      ],
+      "confidence": "confirmed",
+      "currentlyAvailable": false,
+      "direction": "received",
+      "directlyVerified": true,
+      "dragonId": "vermax",
+      "evidenceIds": [
+        "vermax-trial-by-flame-2026-06-23"
+      ],
+      "futureAvailable": true,
+      "id": "vermax-trial-by-flame-trial-below-75-fire-reduction-damage-received-received-modifier",
+      "label": "Trial by Flame: Fire Damage Received Down",
+      "minimumDragonLevel": null,
+      "operation": "decrease",
+      "providerRequirements": [],
+      "recipientRequirements": [],
+      "requiredHabitLevel": 1,
+      "role": "ally-support",
+      "sourceScope": "unknown",
+      "stackMaximum": null,
+      "targetSelector": {
+        "count": 75,
+        "includesCaster": null,
+        "position": null,
+        "scope": "any-lane",
+        "selection": "any",
+        "side": "ally"
+      },
+      "unit": "percent",
+      "unlockStarRank": 2,
+      "value": null,
+      "valuePerStack": null
+    },
+    {
+      "abilityId": "vermax-trial-by-flame",
+      "abilityName": "Trial by Flame",
+      "availability": {
+        "canonical": "canonical-locked",
+        "notes": [
+          "Future at Star Rank 2.",
+          "Unlocked in observed account collection state, subject to level and star requirements."
+        ],
+        "observedAccount": "observed-available",
+        "reportLabel": "Future at Star Rank 2; observed account hatched",
+        "userRoster": "unknown"
+      },
+      "channel": "damage-received",
+      "combatLogConfirmed": false,
+      "conditional": true,
+      "conditions": [
+        {
+          "description": "Below 50% Troop Capacity.",
+          "evidenceIds": [],
+          "id": "below-50-troop-capacity",
+          "label": "Below 50% Troop Capacity.",
+          "unresolved": false
+        }
+      ],
+      "confidence": "confirmed",
+      "currentlyAvailable": false,
+      "direction": "received",
+      "directlyVerified": true,
+      "dragonId": "vermax",
+      "evidenceIds": [
+        "vermax-trial-by-flame-2026-06-23"
+      ],
+      "futureAvailable": true,
+      "id": "vermax-trial-by-flame-trial-below-50-fire-reduction-damage-received-received-modifier",
+      "label": "Trial by Flame: Fire Damage Received Down",
+      "minimumDragonLevel": null,
+      "operation": "decrease",
+      "providerRequirements": [],
+      "recipientRequirements": [],
+      "requiredHabitLevel": 1,
+      "role": "ally-support",
+      "sourceScope": "unknown",
+      "stackMaximum": null,
+      "targetSelector": {
+        "count": 50,
+        "includesCaster": null,
+        "position": null,
+        "scope": "any-lane",
+        "selection": "any",
+        "side": "ally"
+      },
+      "unit": "percent",
+      "unlockStarRank": 2,
+      "value": null,
+      "valuePerStack": null
+    },
+    {
+      "abilityId": "vermax-trial-by-flame",
+      "abilityName": "Trial by Flame",
+      "availability": {
+        "canonical": "canonical-locked",
+        "notes": [
+          "Future at Star Rank 2.",
+          "Unlocked in observed account collection state, subject to level and star requirements."
+        ],
+        "observedAccount": "observed-available",
+        "reportLabel": "Future at Star Rank 2; observed account hatched",
+        "userRoster": "unknown"
+      },
+      "channel": "damage-received",
+      "combatLogConfirmed": false,
+      "conditional": true,
+      "conditions": [
+        {
+          "description": "Below 25% Troop Capacity.",
+          "evidenceIds": [],
+          "id": "below-25-troop-capacity",
+          "label": "Below 25% Troop Capacity.",
+          "unresolved": false
+        }
+      ],
+      "confidence": "confirmed",
+      "currentlyAvailable": false,
+      "direction": "received",
+      "directlyVerified": true,
+      "dragonId": "vermax",
+      "evidenceIds": [
+        "vermax-trial-by-flame-2026-06-23"
+      ],
+      "futureAvailable": true,
+      "id": "vermax-trial-by-flame-trial-below-25-fire-reduction-damage-received-received-modifier",
+      "label": "Trial by Flame: Fire Damage Received Down",
+      "minimumDragonLevel": null,
+      "operation": "decrease",
+      "providerRequirements": [],
+      "recipientRequirements": [],
+      "requiredHabitLevel": 1,
+      "role": "ally-support",
+      "sourceScope": "unknown",
+      "stackMaximum": null,
+      "targetSelector": {
+        "count": 25,
+        "includesCaster": null,
+        "position": null,
+        "scope": "any-lane",
+        "selection": "any",
+        "side": "ally"
+      },
+      "unit": "percent",
+      "unlockStarRank": 2,
+      "value": null,
+      "valuePerStack": null
+    },
+    {
       "abilityId": "vermax-reactive-instincts",
       "abilityName": "Reactive Instincts",
       "availability": {
@@ -5012,6 +5183,55 @@
       "unlockStarRank": 6,
       "value": 2.5,
       "valuePerStack": 2.5
+    },
+    {
+      "abilityId": "vermax-dragons-valor",
+      "abilityName": "Dragon's Valor",
+      "availability": {
+        "canonical": "canonical-locked",
+        "notes": [
+          "Future at Star Rank 8.",
+          "Unlocked in observed account collection state, subject to level and star requirements."
+        ],
+        "observedAccount": "observed-available",
+        "reportLabel": "Future at Star Rank 8; observed account hatched",
+        "userRoster": "unknown"
+      },
+      "channel": "damage-received",
+      "combatLogConfirmed": false,
+      "conditional": true,
+      "conditions": [],
+      "confidence": "confirmed",
+      "currentlyAvailable": false,
+      "direction": "received",
+      "directlyVerified": true,
+      "dragonId": "vermax",
+      "evidenceIds": [
+        "vermax-dragons-valor-2026-06-23"
+      ],
+      "futureAvailable": true,
+      "id": "vermax-dragons-valor-dragons-valor-dr-down-damage-received-received-modifier",
+      "label": "Dragon's Valor: Damage Received Down",
+      "minimumDragonLevel": null,
+      "operation": "decrease",
+      "providerRequirements": [],
+      "recipientRequirements": [],
+      "requiredHabitLevel": 1,
+      "role": "self-amplification",
+      "sourceScope": "unknown",
+      "stackMaximum": null,
+      "targetSelector": {
+        "count": null,
+        "includesCaster": null,
+        "position": null,
+        "scope": "self",
+        "selection": "self",
+        "side": "self"
+      },
+      "unit": "percent",
+      "unlockStarRank": 8,
+      "value": null,
+      "valuePerStack": null
     },
     {
       "abilityId": "vermax-dragons-valor",
@@ -5878,10 +6098,10 @@
   "rosterSourceStatus": "in-game-verified-pending-official-site",
   "slug": "vermax",
   "source": {
-    "branch": "feature/project-context-export",
-    "commit": "2cb422d38207fdda378f64504014ac34ff255e24",
-    "databaseVersion": "0.5.1",
-    "dataSchemaVersion": 7,
+    "branch": "feature/formation-analysis-repair",
+    "commit": "33308a9be3432c3b1fe16b500e64069bd93f1dee",
+    "databaseVersion": "0.5.2",
+    "dataSchemaVersion": 8,
     "gameBuild": "26.6.53509",
     "localRosterSchemaVersion": 3,
     "repository": "https://github.com/williamchildres/dragonfire-roster-builder"
