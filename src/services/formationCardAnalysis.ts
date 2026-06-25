@@ -21,6 +21,7 @@ export interface FormationCardInteraction {
   effects: string[];
   requirements: RequirementTrace[];
   confidence: TraceConfidence | 'mixed';
+  modifierLines: string[];
   state: FormationCardInteractionState;
   status: TraceStatus;
   isCandidate: boolean;
@@ -32,6 +33,7 @@ export interface FormationCardInteraction {
   isEnemyFacing: boolean;
   traceId: string;
   traceIds: string[];
+  isRecipientModifier: boolean;
 }
 
 export interface FormationTraitStatus {
@@ -48,6 +50,7 @@ export interface FormationCommandSummary {
   abilityName: string;
   label: 'Command';
   summary: string;
+  summaryLines: string[];
   detail: string;
 }
 
@@ -162,6 +165,12 @@ export function buildFormationCardPresentation(
       candidateIndex: null,
       candidateTotal: null,
     });
+    if (trace.matchKind === 'incoming-effect-amplification' && trace.recipientModifierType) {
+      if (recipient && recipient.id !== source.id && selectedIds.has(recipient.id)) {
+        byDragon.get(recipient.id)?.receives.push(item);
+      }
+      continue;
+    }
     byDragon.get(source.id)?.provides.push(item);
     if (recipient && recipient.id !== source.id && selectedIds.has(recipient.id) && !isEnemyFacing) {
       byDragon.get(recipient.id)?.receives.push(item);
@@ -262,10 +271,7 @@ function toCardInteraction({
   candidateIndex: number | null;
   candidateTotal: number | null;
 }): FormationCardInteraction {
-  const abilityName =
-    trace.matchKind === 'incoming-effect-amplification' && trace.recipientModifierAbilityId && recipient
-      ? getAbilityName(recipient, trace.recipientModifierAbilityId)
-      : getAbilityName(source, trace.sourceAbilityId);
+  const abilityName = getAbilityName(source, trace.sourceAbilityId);
   const state = traceState(trace, previewEnabled);
   const detail = canonicalCardText(trace.explanation, allDragons);
   const summaryLines = summarizeTrace(trace, source, recipient, detail, {
@@ -299,6 +305,7 @@ function toCardInteraction({
     effects: trace.effects,
     requirements: trace.requirements,
     confidence: trace.confidence,
+    modifierLines: modifierLinesForTrace(trace, recipient),
     state,
     status: trace.status,
     isCandidate,
@@ -310,7 +317,24 @@ function toCardInteraction({
     isEnemyFacing: isEnemyFacingTrace(trace),
     traceId: trace.id,
     traceIds: [trace.id],
+    isRecipientModifier: trace.matchKind === 'incoming-effect-amplification' && Boolean(trace.recipientModifierType),
   };
+}
+
+function modifierLinesForTrace(trace: SynergyTrace, recipient: Dragon | null): string[] {
+  if (trace.matchKind !== 'incoming-effect-amplification' || !trace.recipientModifierType || !recipient) {
+    return [];
+  }
+  const abilityName = trace.recipientModifierAbilityId ? getAbilityName(recipient, trace.recipientModifierAbilityId) : 'Recipient modifier';
+  const positionBlocked = trace.status === 'inactive' &&
+    trace.requirements.some((requirement) => requirement.satisfied === false && /position/i.test(requirement.label));
+  if (positionBlocked) {
+    return [`${abilityName} amplification unavailable: ${recipient.name} must be Vanguard.`];
+  }
+  const value = trace.recipientModifierValue === null || trace.recipientModifierValue === undefined
+    ? 'unknown'
+    : `+${trace.recipientModifierValue}%`;
+  return [`Amplified by ${recipient.name}'s ${abilityName}: ${trace.recipientModifierType.replace(/ Up$/i, '')} ${value}.`];
 }
 
 function summarizeTrace(
@@ -341,18 +365,6 @@ function summarizeTrace(
   if (trace.modifierRole === 'enemy-debuff' || trace.matchKind === 'enemy-mitigation-reduction') {
     return [enemyFacingSummary(trace)];
   }
-  if (
-    trace.matchKind === 'incoming-effect-amplification' &&
-    trace.recipientModifierAbilityId === 'sheepstealer-hunters-cunning' &&
-    trace.status === 'inactive' &&
-    trace.requirements.some((requirement) => requirement.satisfied === false && /position/i.test(requirement.label))
-  ) {
-    return ["Hunter's Cunning cannot amplify this Recovery because Sheepstealer is not Vanguard."];
-  }
-  if (trace.matchKind === 'incoming-effect-amplification' && trace.recipientModifierType) {
-    const modifier = trace.recipientModifierType.replace(/ Up$/i, '');
-    return [`${modifier} can amplify this ${formatToken(trace.channel ?? 'effect')}.`];
-  }
   if (trace.channel === 'stat') {
     return [formatStatEffects(trace.effects) ?? formatStatDetail(detail) ?? detail];
   }
@@ -375,22 +387,45 @@ function deriveCommandSummary(dragon: Dragon): FormationCommandSummary | null {
     dragonId: dragon.id,
     abilityName: dragon.command.name,
     label: 'Command',
-    summary: commandSummary(dragon.command),
+    summary: commandSummaryLines(dragon.command).join(' '),
+    summaryLines: commandSummaryLines(dragon.command),
     detail: dragon.command.rawDescription ?? commandSummary(dragon.command),
   };
 }
 
 function commandSummary(command: AbilityDefinition): string {
+  return commandSummaryLines(command).join(' ');
+}
+
+function commandSummaryLines(command: AbilityDefinition): string[] {
+  if (command.id === 'malachite-wardens-rally') {
+    return [
+      'Rounds 2, 4, 7, and 9: Tactical Damage to one same-lane enemy.',
+      'Rounds 3, 6, and 9: Recovery to three allies.',
+    ];
+  }
+  if (command.id === 'seasmoke-cleansing-wrath') {
+    return [
+      'Each round: three independent 20% attempts to cleanse a positive effect.',
+      'Rounds 3, 6, and 9: Fire Damage to one enemy.',
+    ];
+  }
+  if (command.id === 'sheepstealer-wild-hunt') {
+    return [
+      'When no enemy has Prey: attempts to apply Prey.',
+      'Rounds 1, 4, 7, and 10: Fire Damage to one enemy.',
+    ];
+  }
   const firstSchedule = command.schedules[0];
   const effects = command.schedules.flatMap((schedule) => schedule.effects);
   const primary = effects[0];
   if (!primary) {
-    return command.rawDescription?.split(/\n\n|(?<=\.)\s+/)[0] ?? `${command.name} command details are not yet verified.`;
+    return [command.rawDescription?.split(/\n\n|(?<=\.)\s+/)[0] ?? `${command.name} command details are not yet verified.`];
   }
   const timing = firstSchedule ? scheduleTiming(firstSchedule.timing, firstSchedule.rounds) : 'Command';
   const effectNames = unique(effects.map((effect) => effect.type));
   const target = primary.target ? ` to ${primary.target}` : '';
-  return `${timing}: ${joinEnglishList(effectNames)}${target}.`;
+  return [`${timing}: ${joinEnglishList(effectNames)}${target}.`];
 }
 
 function scheduleTiming(timing: string, rounds: number[]): string {
@@ -524,7 +559,50 @@ function prepareInteractions(
   interactions: FormationCardInteraction[],
   direction: 'receives' | 'provides',
 ): FormationCardInteraction[] {
-  return prioritizeInteractions(aggregateInteractions(dedupeInteractions(interactions), direction));
+  return prioritizeInteractions(aggregateInteractions(dedupeInteractions(attachRecipientModifiers(interactions, direction)), direction));
+}
+
+function attachRecipientModifiers(
+  interactions: FormationCardInteraction[],
+  direction: 'receives' | 'provides',
+): FormationCardInteraction[] {
+  if (direction === 'provides') {
+    return interactions.filter((interaction) => !interaction.isRecipientModifier);
+  }
+  const baseItems = interactions.filter((interaction) => !interaction.isRecipientModifier);
+  const modifierItems = interactions.filter((interaction) => interaction.isRecipientModifier);
+  const fallbackModifiers: FormationCardInteraction[] = [];
+
+  for (const modifier of modifierItems) {
+    const target = baseItems.find(
+      (item) =>
+        item.relationshipId === modifier.relationshipId &&
+        item.sourceDragonId === modifier.sourceDragonId &&
+        item.recipientDragonId === modifier.recipientDragonId &&
+        item.abilityName === modifier.abilityName,
+    );
+    if (!target) {
+      fallbackModifiers.push(modifier);
+      continue;
+    }
+    target.modifierLines = unique([...target.modifierLines, ...modifier.modifierLines]);
+    target.details = unique([...target.details, ...modifier.details]);
+    target.effects = unique([...target.effects, ...modifier.effects]);
+    target.requirements = uniqueBy(
+      [...target.requirements, ...modifier.requirements],
+      (requirement) => [
+        requirement.id,
+        requirement.label,
+        requirement.expected,
+        requirement.actual ?? 'unknown',
+        String(requirement.satisfied),
+      ].join('|'),
+    );
+    target.traceIds = unique([...target.traceIds, ...modifier.traceIds]);
+    target.summary = compactSummaryText([...target.summaryLines, ...target.modifierLines], target.candidateTotal);
+  }
+
+  return [...baseItems, ...fallbackModifiers];
 }
 
 function prioritizeInteractions(interactions: FormationCardInteraction[]): FormationCardInteraction[] {
@@ -610,12 +688,14 @@ function mergeInteractions(
     effects: unique(items.flatMap((item) => item.effects)),
     requirements,
     confidence: confidences.length === 1 ? confidences[0]! : 'mixed',
+    modifierLines: unique(items.flatMap((item) => item.modifierLines)),
     isCandidate: items.some((item) => item.isCandidate),
     candidateIndex: first.candidateIndex,
     candidateTotal: mergedCandidateTotal,
     targetSummary: unique(items.map((item) => item.targetSummary).filter((value): value is string => Boolean(value))).join(' | ') || null,
     isEnemyFacing: items.some((item) => item.isEnemyFacing),
     traceIds: unique(items.flatMap((item) => item.traceIds)),
+    isRecipientModifier: items.every((item) => item.isRecipientModifier),
   };
 }
 
@@ -654,6 +734,7 @@ function dedupeInteractions(interactions: FormationCardInteraction[]): Formation
       interaction.relationshipId,
       interaction.abilityName,
       interaction.summary,
+      interaction.modifierLines.join('|'),
       interaction.state,
       interaction.isCandidate ? 'candidate' : 'direct',
     ].join('|');
