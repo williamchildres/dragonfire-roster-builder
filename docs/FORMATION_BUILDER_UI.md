@@ -48,7 +48,13 @@ Receives and Provides show up to three prioritized interactions by default. Prio
 
 Expanded Receives and Provides render all available items inside bounded scrollable section bodies instead of allowing one card to grow without a practical limit. Each section keeps its header and count visible, empty sections keep a compact structural minimum, and `View N more` / `Show fewer` preserves the correct overflow count and `aria-controls` relationship.
 
-Compact interaction items show state, relationship, ability name, one short benefit line, and target/candidate warnings where applicable. The full trace explanation remains available through accessible text and Show analysis details.
+Compact interaction items show relationship, compact inline state badge, ability/effect title, one or more short benefit lines, and target/candidate warnings where applicable. State badges use only their content width and never reserve a large status column. Summaries are generated from structured trace fields rather than the opening words of verbose explanations, so stat values, target uncertainty, and key mechanics remain visible.
+
+Each interaction item includes a Details disclosure. Details exposes the full player-facing explanation, effect details, target-selection behavior, current or preview state, blockers or unknown requirements, and confidence. Show analysis details still preserves raw technical trace cards and evidence, but it is not required just to understand one card item.
+
+When one provider ability creates multiple meaningful effects for the same recipient, the card presentation may aggregate those child traces into one item. For example, Syrax's Blazing Fury can show Fire Damage candidacy and Caraxes First-Strike support together while preserving both child trace IDs for technical analysis. If aggregation would blur distinct purposes, the visible title includes the purpose, such as `Flight Mastery - Enemy mitigation reduction`.
+
+Redundant blocked Trait interactions are suppressed from Receives and Provides when the source card's Trait panel and lower Formation Blockers already explain the hard placement failure. The blocked traces remain available in technical analysis and generated exports.
 
 ## Relationship Highlighting
 
@@ -62,7 +68,7 @@ The lower Formation Analysis panel now summarizes team-level interaction groups,
 
 ## Responsive And Accessibility Behavior
 
-Desktop uses equal-width, equal-height cards in one row where space permits. Tablet and mobile stack without horizontal scrolling while preserving Left Flank, Vanguard, Right Flank order. Stacked cards use natural height rather than forced desktop row height. Movement controls remain keyboard-accessible labeled buttons. Affinity chips and interaction states do not rely on color alone, compact or clamped interaction text keeps full accessible detail, and expanded scroll regions are keyboard reachable without trapping focus.
+Desktop uses equal-width, equal-height cards in one row where space permits. Tablet and mobile stack without horizontal scrolling while preserving Left Flank, Vanguard, Right Flank order. Stacked cards use natural height rather than forced desktop row height. Movement controls remain keyboard-accessible labeled buttons. Affinity chips and interaction states do not rely on color alone, Details controls are keyboard reachable with `aria-expanded` and `aria-controls`, and expanded scroll regions are keyboard reachable without trapping focus.
 
 ## Visual Validation Cases
 
