@@ -54,3 +54,9 @@ Batch 1 and Batch 2 cases are exported with `reviewStatus: pending`. They must n
 Manual retesting of Formations 1-8 left presentation and normalization defects rather than new dragon-data gaps. Version 0.5.3 addresses them by aggregating multi-effect direct stat support, preserving defensive damage subtype, representing Trial by Flame thresholds as strict below conditions, resolving Reactive Instincts as highest Instinct one-target support, grouping Lightning Strike adjacent candidates, distinguishing Spreading Blaze from Rallying Flame, attributing provider and recipient-output blockers, excluding internal same-dragon interactions from normal cross-dragon sections, and using canonical dragon display names.
 
 Champion's Brilliance remains inactive in Formations 4 and 5 because observed Seasmoke is Level 1 and the trait requires Level 16. Its Vanguard position and Right Flank targeting can pass while the Level requirement fails; max-rank Habit preview does not change Dragon Level.
+
+## Normal Requirement Summary Follow-Up
+
+Version 0.5.4 narrows normal Unmet requirements to a pure current-analysis summary. The section is rebuilt fresh for each formation and preview mode, includes only selected-dragon standalone blockers, applies hard Trait placement precedence before progression, dedupes by semantic identity, and suppresses blockers already owned by visible active or potential cards. Raw/debug trace requirements, including suppressed Habit unlocks and recipient-output blockers, remain exported for audit.
+
+Expected Batch 1 and Batch 2 normal summaries are now recorded in generated formation review case notes for current and preview modes. Review status remains `pending` until normal mode, preview mode, debug JSON, and `npm run report:synergy` are manually verified after this repair.

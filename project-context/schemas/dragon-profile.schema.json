@@ -148,7 +148,7 @@
           "type": "string"
         },
         "databaseVersion": {
-          "const": "0.5.3"
+          "const": "0.5.4"
         },
         "dataSchemaVersion": {
           "const": 9

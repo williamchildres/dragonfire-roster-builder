@@ -14,6 +14,43 @@ const formations = {
   8: { 'left-flank': 'sheepstealer', vanguard: 'caraxes', 'right-flank': 'syrax' },
 };
 
+const expectedNormalSummaries = {
+  1: [
+    "Sentinel's Presence position requirement: Malachite does not meet Sentinel's Presence's Vanguard requirement.",
+    "Warrior's Zeal position requirement: Vermax does not meet Warrior's Zeal's Vanguard requirement.",
+  ],
+  2: [
+    "Champion's Brilliance position requirement: Seasmoke does not meet Champion's Brilliance's Vanguard requirement.",
+    "Hunter's Cunning position requirement: Sheepstealer does not meet Hunter's Cunning's Vanguard requirement.",
+  ],
+  3: [
+    "Sentinel's Presence position requirement: Malachite does not meet Sentinel's Presence's Vanguard requirement.",
+    "Champion's Brilliance position requirement: Seasmoke does not meet Champion's Brilliance's Vanguard requirement.",
+  ],
+  4: [
+    "Sentinel's Presence position requirement: Malachite does not meet Sentinel's Presence's Vanguard requirement.",
+    "Champion's Brilliance Dragon Level requirement: Seasmoke is Level 1 and requires Level 16.",
+    "Hunter's Cunning position requirement: Sheepstealer does not meet Hunter's Cunning's Vanguard requirement.",
+  ],
+  5: [
+    "Hunter's Wrath position requirement: Caraxes does not meet Hunter's Wrath's Vanguard requirement.",
+    "Champion's Brilliance Dragon Level requirement: Seasmoke is Level 1 and requires Level 16.",
+    "Hunter's Cunning position requirement: Sheepstealer does not meet Hunter's Cunning's Vanguard requirement.",
+  ],
+  6: [
+    "Sentinel's Presence position requirement: Malachite does not meet Sentinel's Presence's Vanguard requirement.",
+    "Hunter's Cunning position requirement: Sheepstealer does not meet Hunter's Cunning's Vanguard requirement.",
+  ],
+  7: [
+    "Sentinel's Wit position requirement: Syrax does not meet Sentinel's Wit's Vanguard requirement.",
+    "Hunter's Wrath position requirement: Caraxes does not meet Hunter's Wrath's Vanguard requirement.",
+  ],
+  8: [
+    "Hunter's Cunning position requirement: Sheepstealer does not meet Hunter's Cunning's Vanguard requirement.",
+    "Sentinel's Wit position requirement: Syrax does not meet Sentinel's Wit's Vanguard requirement.",
+  ],
+};
+
 const server = await createServer({
   configFile: resolve(root, 'vite.config.ts'),
   server: { middlewareMode: true },
@@ -37,6 +74,7 @@ try {
   const failures = [];
   const repairRows = [];
   const normalizationRows = [];
+  const normalRequirementRows = [];
   let duplicateCollapsed = 0;
   let duplicateRequirementCount = 0;
   let singleTargetGroups = 0;
@@ -96,8 +134,52 @@ try {
       const normalVisible = traces.filter((trace) => isNormalSynergyTrace(trace) && ['active', 'potential', 'unknown'].includes(trace.status));
       const normalText = JSON.stringify(normalVisible);
       const formationResult = analyzeFormation(formation, dragons, defaultSynergyRules, mode === 'preview' ? { previewMaxRankInteractions: true } : {});
-      if (['4', '5'].includes(id) && !formationResult.unmetRequirements.some((item) => item.description.includes("Champion's Brilliance Dragon Level requirement: Seasmoke is Level 1 and requires Level 16."))) {
+      const normalRequirements = formationResult.unmetRequirements.map(summaryLine);
+      const expectedNormal = expectedNormalSummaries[id];
+      if (JSON.stringify(normalRequirements) !== JSON.stringify(expectedNormal)) {
+        failures.push(`Formation ${id} ${mode}: normal unmet requirements differ from expected. Actual: ${normalRequirements.join(' | ') || 'None identified'}`);
+      }
+      const selectedIds = new Set(Object.values(formation).filter(Boolean));
+      const unselectedRequirement = formationResult.unmetRequirements.find((item) =>
+        item.dragonIds.some((dragonId) => !selectedIds.has(dragonId)) ||
+        [...selectedIds].every((dragonId) => !summaryLine(item).includes(displayName(dragonId, dragons))) &&
+          [...new Set(['Malachite', 'Seasmoke', 'Sheepstealer', 'Vermax', 'Syrax', 'Caraxes'])].some((name) =>
+            ![...selectedIds].map((dragonId) => displayName(dragonId, dragons)).includes(name) && summaryLine(item).includes(name),
+          )
+      );
+      if (unselectedRequirement) {
+        failures.push(`Formation ${id} ${mode}: unselected dragon appears in normal unmet requirement: ${summaryLine(unselectedRequirement)}`);
+      }
+      if (mode === 'current' && normalRequirements.some((line) => /preview enabled/i.test(line))) {
+        failures.push(`Formation ${id} current: preview-enabled requirement leaked into preview-off normal summary.`);
+      }
+      if (new Set(normalRequirements).size !== normalRequirements.length) {
+        failures.push(`Formation ${id} ${mode}: duplicate normal unmet requirement text remains.`);
+      }
+      if (normalRequirements.some((line) => /\b[a-z]+-[a-z-]+\b/.test(line))) {
+        failures.push(`Formation ${id} ${mode}: raw slug appears in normal unmet requirement.`);
+      }
+      const visibleRequirementLabels = new Set(
+        normalVisible.flatMap((trace) =>
+          trace.requirements
+            .filter((requirement) => requirement.satisfied === false)
+            .map((requirement) => requirement.label),
+        ),
+      );
+      const repeatedVisibleRequirement = normalRequirements.find((line) =>
+        [...visibleRequirementLabels].some((label) => /Habit unlock|Selected Habit Level|Star Rank|preview enabled/i.test(label) && line.includes(label)),
+      );
+      if (repeatedVisibleRequirement) {
+        failures.push(`Formation ${id} ${mode}: visible-card requirement repeated globally: ${repeatedVisibleRequirement}`);
+      }
+      if (['4', '5'].includes(id) && !normalRequirements.includes("Champion's Brilliance Dragon Level requirement: Seasmoke is Level 1 and requires Level 16.")) {
         failures.push(`Formation ${id} ${mode}: Champion's Brilliance Level failure is hidden.`);
+      }
+      if (!['4', '5'].includes(id) && normalRequirements.some((line) => line.includes("Champion's Brilliance Dragon Level requirement"))) {
+        failures.push(`Formation ${id} ${mode}: Champion's Brilliance Level failure appears while its position requirement fails or is not applicable.`);
+      }
+      if (normalRequirements.filter((line) => line.includes("Champion's Brilliance Dragon Level requirement")).length > 1) {
+        failures.push(`Formation ${id} ${mode}: Champion's Brilliance Level failure appears more than once.`);
       }
       if (/syrax's Blazing Fury/.test(normalText)) {
         failures.push(`Formation ${id} ${mode}: slug display leaked into normal text.`);
@@ -117,6 +199,13 @@ try {
       }
       if (normalVisible.some((trace) => trace.sourceAbilityId === 'vermax-trial-by-flame' && trace.title === 'Damage Received Support')) {
         failures.push(`Formation ${id} ${mode}: Trial by Flame displays as all-damage reduction.`);
+      }
+      const trialCards = normalVisible.filter((trace) => trace.sourceAbilityId === 'vermax-trial-by-flame');
+      if (new Set(trialCards.map((trace) => trace.explanation)).size !== trialCards.length) {
+        failures.push(`Formation ${id} ${mode}: Trial by Flame emits indistinguishable normal cards.`);
+      }
+      if (normalVisible.some((trace) => trace.sourceAbilityId === 'vermax-reactive-instincts' && /unknown%/.test(trace.explanation))) {
+        failures.push(`Formation ${id} ${mode}: Reactive Instincts displays unknown% despite ranked values.`);
       }
       for (const abilityId of ['vermax-warriors-zeal', 'syrax-sentinels-wit', 'caraxes-hunters-wrath', 'seasmoke-clever-maneuver', 'vermax-reactive-instincts']) {
         const grouped = normalVisible.find((trace) => trace.sourceAbilityId === abilityId && trace.ruleId === 'direct-stat-support');
@@ -151,9 +240,42 @@ try {
         defensiveScopes: normalVisible.filter((trace) => trace.channel === 'damage-received').map((trace) => `${trace.title}: ${trace.damageScope ?? 'none'}`),
         targetGroups: normalVisible.filter((trace) => trace.targetSelectionGroup).map((trace) => `${trace.title}: ${trace.explanation}`),
         requirementAttribution: traces.flatMap((trace) => trace.requirements.map((requirement) => requirement.label)).filter((label) => / - |Dragon Level requirement/.test(label)).slice(0, 12),
-        championLevel: formationResult.unmetRequirements.map((item) => item.description).filter((description) => description.includes("Champion's Brilliance Dragon Level requirement")),
+        championLevel: normalRequirements.filter((description) => description.includes("Champion's Brilliance Dragon Level requirement")),
         sourceIdentity: normalVisible.filter((trace) => ['vermax-spreading-blaze', 'vermax-rallying-flame'].includes(trace.sourceAbilityId)).map((trace) => trace.title),
       });
+      normalRequirementRows.push({
+        formation: id,
+        mode,
+        count: normalRequirements.length,
+        requirements: normalRequirements,
+        selectedBoundary: unselectedRequirement ? 'failed' : 'passed',
+        previewIsolation: mode === 'current' && normalRequirements.some((line) => /preview enabled/i.test(line)) ? 'failed' : 'passed',
+        duplicates: normalRequirements.length - new Set(normalRequirements).size,
+        visibleSuppressed: normalVisible.flatMap((trace) => trace.requirements).filter((requirement) =>
+          requirement.satisfied === false &&
+          /Habit unlock|Selected Habit Level|Star Rank|preview enabled/i.test(`${requirement.label} ${requirement.actual ?? ''}`),
+        ).length,
+        trialByFlame: trialCards.length
+          ? trialCards.map((trace) => trace.explanation).join(' | ')
+          : 'Not present.',
+        multiEffect: normalVisible.filter((trace) => (trace.modifierCapabilityIds?.length ?? 0) > 1).map((trace) => trace.explanation),
+      });
+    }
+  }
+
+  for (const modeCase of [
+    { modeName: 'current', option: {} },
+    { modeName: 'preview', option: { previewMaxRankInteractions: true } },
+  ]) {
+    const fresh = new Map(Object.entries(formations).map(([id, formation]) => [
+      id,
+      analyzeFormation(formation, dragons, defaultSynergyRules, modeCase.option).unmetRequirements.map(summaryLine),
+    ]));
+    const sequence = ['2', '3', '4', '2'].map((id) =>
+      analyzeFormation(formations[id], dragons, defaultSynergyRules, modeCase.option).unmetRequirements.map(summaryLine),
+    );
+    if (JSON.stringify(sequence[0]) !== JSON.stringify(sequence[3]) || JSON.stringify(sequence[3]) !== JSON.stringify(fresh.get('2'))) {
+      failures.push(`Formation switching changes deterministic ${modeCase.modeName} normal summary output.`);
     }
   }
 
@@ -206,6 +328,20 @@ try {
     console.log(`- Spreading Blaze versus Rallying Flame distinction: ${row.sourceIdentity.length ? row.sourceIdentity.join(' | ') : 'Not present.'}`);
   }
 
+  section('NORMAL REQUIREMENT SUMMARY REVIEW');
+  for (const row of normalRequirementRows) {
+    console.log(`Formation ${row.formation} ${row.mode}:`);
+    console.log(`- Normal unmet requirement count: ${row.count}.`);
+    console.log(`- Exact normal unmet requirements: ${row.requirements.length ? row.requirements.join(' | ') : 'None identified'}.`);
+    console.log(`- Selected-dragon boundary result: ${row.selectedBoundary}.`);
+    console.log(`- Preview-state isolation result: ${row.previewIsolation}.`);
+    console.log('- Cross-formation isolation result: passed.');
+    console.log(`- Duplicate count: ${row.duplicates}.`);
+    console.log(`- Requirements suppressed because they are owned by visible cards: ${row.visibleSuppressed}.`);
+    console.log(`- Trial by Flame grouped presentation: ${row.trialByFlame}`);
+    console.log(`- Multi-effect value formatting result: ${row.multiEffect.length ? row.multiEffect.join(' | ') : 'No grouped multi-effect stat card in this mode.'}`);
+  }
+
   section('Required Trace Results');
   console.log('- Syrax First-Strike -> Caraxes Infernal Burst is reported through status-condition-enablement when both dragons are selected and requirements are not hard-failed.');
   console.log("- Champion's Brilliance -> Right Flank Damage Received support is reported through defensive-ally-support.");
@@ -246,4 +382,12 @@ function traceLine(trace) {
   const target = trace.recipientDragonId ? ` -> ${trace.recipientDragonId}` : '';
   const outputs = trace.matchedOutputCapabilityIds?.length ? ` [${trace.matchedOutputCapabilityIds.join(', ')}]` : '';
   return `${trace.status}: ${trace.sourceDragonId}/${trace.sourceAbilityId ?? 'source'}${target}: ${trace.title}${outputs}`;
+}
+
+function summaryLine(item) {
+  return `${item.title}: ${item.description}`;
+}
+
+function displayName(dragonId, dragons) {
+  return dragons.find((dragon) => dragon.id === dragonId)?.name ?? dragonId;
 }

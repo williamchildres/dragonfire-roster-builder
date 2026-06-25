@@ -58,6 +58,8 @@ Version 0.5.2 repairs Formation Analysis filtering and aggregation. Every friend
 
 Version 0.5.3 normalizes Formation Analysis presentation without changing the roster or local roster schema. Direct stat support now aggregates sibling effects from the same ability, such as Instinct plus Initiative, while stat-scaling child traces remain stat-specific. Defensive support records `damageScope` so Forest's Instinct remains Tactical Damage Received, Trial by Flame remains Fire Damage Received, and Champion's Brilliance remains all Damage Received. Troop-capacity thresholds are exported as strict below conditions rather than target counts. Highest-stat and one-adjacent target selectors create one recipient or one grouped candidate interaction instead of simultaneous support cards. Internal same-dragon interactions remain in debug/export but are excluded from cross-dragon normal sections. Previewing max Habit rank does not override a failed observed Dragon Level requirement.
 
+Version 0.5.4 repairs normal Unmet requirements as a pure presentation summary for the current formation and preview mode. Global unmet items now show selected Trait placement failures and concrete progression blockers only when hard placement and targeting pass, while blockers already displayed on visible active or potential cards stay on those cards. The summary dedupes by semantic identity, uses canonical names, resets across preview toggles and formation switches, and preserves raw debug/export requirements. Trial by Flame groups selected recipients and threshold tiers in one normal card, and grouped stat cards keep different sibling values such as Reactive Instincts Instinct +36% and Initiative +18%.
+
 Threshold wording is interpreted literally: "above 50%" means `> 50`, and "below 50%" means `< 50`. Exactly 50% matches neither wording until combat logs confirm otherwise.
 
 Observation snapshots are account-specific and non-canonical. They may be affected by Dragon Level, Star Rank, Stronghold upgrades, faction bonuses, alliance bonuses, and other modifiers.
@@ -79,7 +81,7 @@ npm run preview
 npm run report:synergy
 ```
 
-`npm run report:synergy` prints the revised capability matrix, availability context, modifier roles, generated cross-dragon synergies, Formation Analysis repair review, exact current/preview outputs for the eight reviewed formations, integrity checks, and unresolved framework assumptions. It is read-only and does not modify source files or localStorage.
+`npm run report:synergy` prints the revised capability matrix, availability context, modifier roles, generated cross-dragon synergies, Formation Analysis repair review, Normal Requirement Summary Review, exact current/preview outputs for the eight reviewed formations, integrity checks, and unresolved framework assumptions. It is read-only and does not modify source files or localStorage.
 
 ## Official Roster Check
 
@@ -125,8 +127,7 @@ Dragonfire Roster Lab is an unofficial community project and is not affiliated w
 
 ## Project Status
 
-Version `0.5.1` fixes Formation Builder trace presentation for Phase 3.8 interactions. Data schema is `7`; local roster schema remains `3`.
-Version `0.5.2` repairs Formation Analysis selected-dragon filtering, defensive support, hard-requirement precedence, trace aggregation, and project-context review cases. Data schema is `8`; local roster schema remains `3`.
+Version `0.5.4` repairs normal unmet requirement summaries, Trial by Flame grouping, and multi-effect value formatting. Data schema is `9`; local roster schema remains `3`.
 
 ## Planned Next Steps
 

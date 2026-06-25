@@ -11,6 +11,7 @@ import type {
 } from '../models/synergy';
 import { analyzeFormationTraces, dedupeTraceMessages, isNormalSynergyTrace } from './synergyTrace';
 import type { TraceOptions } from './synergyTrace';
+import { buildNormalUnmetRequirements } from './normalUnmetRequirements';
 
 export function analyzeTeam(
   dragonIds: Array<string | null>,
@@ -58,11 +59,20 @@ export function analyzeFormation(
   const positives = [...findEffectInteractions(team, rules), ...tracePositives];
   const conflicts = [...findTeamConflicts(team, rules), ...findFormationConflicts(formationEntries)];
   const positionRequirements = findPositionRequirements(formationEntries);
-  const traceRequirementItems = findTraceRequirementItems(traces, dragons);
-  const unmetRequirements = [
-    ...positionRequirements.filter((item) => item.ruleId.startsWith('unmet-')),
-    ...traceRequirementItems,
-  ];
+  const selectedTraitAbilityIds = new Set(team.map((dragon) => dragon.trait?.id).filter((id): id is string => Boolean(id)));
+  const unmetRequirements = buildNormalUnmetRequirements({
+    formation,
+    previewEnabled: options.previewMaxRankInteractions === true,
+    normalActiveTraces: traces.filter((trace) => trace.status === 'active' && isNormalSynergyTrace(trace)),
+    normalPotentialTraces: traces.filter((trace) => ['potential', 'unknown'].includes(trace.status) && isNormalSynergyTrace(trace)),
+    selectedInactiveTraitTraces: traces.filter((trace) =>
+      trace.status === 'inactive' &&
+      trace.sourceAbilityId !== null &&
+      selectedTraitAbilityIds.has(trace.sourceAbilityId),
+    ),
+    selectedDragons: team,
+    dragonLevels: options.dragonLevels,
+  });
   const confidence = calculateDataConfidence(team);
   const warnings: string[] = [];
 
@@ -96,45 +106,6 @@ export function analyzeFormation(
     missingData,
     traces,
   };
-}
-
-function findTraceRequirementItems(traces: SynergyResult['traces'], dragons: Dragon[]): ExplanationItem[] {
-  const seen = new Set<string>();
-  const items: ExplanationItem[] = [];
-  for (const trace of traces) {
-    for (const requirement of trace.requirements.filter((item) => item.satisfied === false)) {
-      if (!/Dragon Level|Star Rank|Habit unlock|Selected Habit Level/i.test(requirement.label)) {
-        continue;
-      }
-      const key = `${trace.sourceDragonId}|${trace.sourceAbilityId}|${requirement.id}|${requirement.actual}|${requirement.expected}`;
-      if (seen.has(key)) {
-        continue;
-      }
-      seen.add(key);
-      const dragon = dragons.find((candidate) => candidate.id === trace.sourceDragonId);
-      const ability = dragon
-        ? [dragon.command, dragon.trait, ...dragon.habits].find((candidate) => candidate?.id === trace.sourceAbilityId)
-        : null;
-      items.push({
-        dragonIds: [trace.sourceDragonId],
-        tags: [],
-        ruleId: `unmet-${requirement.id}`,
-        title: `${ability?.name ?? trace.sourceAbilityId ?? 'Ability'} ${requirement.label.replace(/^.* - .*? /, '')}`,
-        description: requirementFailureDescription(dragon?.name ?? trace.sourceDragonId, ability?.name ?? trace.sourceAbilityId ?? 'Ability', requirement),
-        confidence: trace.confidence === 'confirmed' || trace.confidence === 'high' ? 'high' : 'medium',
-      });
-    }
-  }
-  return items;
-}
-
-function requirementFailureDescription(dragonName: string, abilityName: string, requirement: SynergyResult['traces'][number]['requirements'][number]): string {
-  if (/Dragon Level requirement/i.test(requirement.label)) {
-    const actual = requirement.actual?.replace(/^Level /, '') ?? 'unknown';
-    const expected = requirement.expected.match(/\d+/)?.[0] ?? requirement.expected;
-    return `${abilityName} Dragon Level requirement: ${dragonName} is Level ${actual} and requires Level ${expected}.`;
-  }
-  return `${dragonName} - ${abilityName}: ${requirement.label} expected ${requirement.expected}; actual ${requirement.actual ?? 'unknown'}.`;
 }
 
 export function calculateDataConfidence(team: Dragon[]): DataConfidence {

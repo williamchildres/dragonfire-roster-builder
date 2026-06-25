@@ -931,7 +931,7 @@
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final value cannot be calculated because final combat formulas and stacking order are not fully verified.",
-    "explanation": "Syrax's Sentinel's Wit can increase Malachite's Instinct and Initiative by 20.",
+    "explanation": "Syrax's Sentinel's Wit can increase Malachite's Instinct and Initiative by 20 flat.",
     "id": "direct-stat-support-syrax-sentinels-wit-malachite-instinct-initiative",
     "interactionScope": "cross-dragon",
     "matchedOutputCapabilityIds": [],
@@ -1022,12 +1022,12 @@
     ],
     "damageScope": null,
     "effects": [
-      "Instinct unknown%",
-      "Intelligence unknown%"
+      "Instinct 13%",
+      "Intelligence 13%"
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final value cannot be calculated because final combat formulas and stacking order are not fully verified.",
-    "explanation": "Syrax's Mindful Synergy can increase Malachite's Intelligence and Instinct by unknown%.",
+    "explanation": "Syrax's Mindful Synergy can increase Malachite's Intelligence and Instinct by 13%.",
     "id": "direct-stat-support-syrax-mindful-synergy-malachite-intelligence-instinct",
     "interactionScope": "cross-dragon",
     "matchedOutputCapabilityIds": [],
@@ -1109,12 +1109,12 @@
     ],
     "damageScope": null,
     "effects": [
-      "Instinct unknown%",
-      "Intelligence unknown%"
+      "Instinct 13%",
+      "Intelligence 13%"
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final value cannot be calculated because final combat formulas and stacking order are not fully verified.",
-    "explanation": "Syrax's Mindful Synergy can increase Caraxes's Intelligence and Instinct by unknown%.",
+    "explanation": "Syrax's Mindful Synergy can increase Caraxes's Intelligence and Instinct by 13%.",
     "id": "direct-stat-support-syrax-mindful-synergy-caraxes-intelligence-instinct",
     "interactionScope": "cross-dragon",
     "matchedOutputCapabilityIds": [],
@@ -1196,7 +1196,7 @@
     ],
     "damageScope": null,
     "effects": [
-      "Initiative unknown%"
+      "Initiative 12%"
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final value cannot be calculated because final combat formulas and stacking order are not fully verified.",
@@ -1270,7 +1270,7 @@
     ],
     "damageScope": null,
     "effects": [
-      "Initiative unknown%"
+      "Initiative 12%"
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final value cannot be calculated because final combat formulas and stacking order are not fully verified.",
@@ -1348,7 +1348,7 @@
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final value cannot be calculated because final combat formulas and stacking order are not fully verified.",
-    "explanation": "Caraxes's Hunter's Wrath can increase Syrax's Strength and Initiative by 20.",
+    "explanation": "Caraxes's Hunter's Wrath can increase Syrax's Strength and Initiative by 20 flat.",
     "id": "direct-stat-support-caraxes-hunters-wrath-syrax-strength-initiative",
     "interactionScope": "cross-dragon",
     "matchedOutputCapabilityIds": [],
@@ -1439,7 +1439,7 @@
     ],
     "damageScope": null,
     "effects": [
-      "Strength 12.5%"
+      "Strength 25%"
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final value cannot be calculated because final combat formulas and stacking order are not fully verified.",
@@ -1513,7 +1513,7 @@
     ],
     "damageScope": null,
     "effects": [
-      "Strength 12.5%"
+      "Strength 25%"
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final value cannot be calculated because final combat formulas and stacking order are not fully verified.",
@@ -3388,7 +3388,7 @@
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final value cannot be calculated because final combat formulas and stacking order are not fully verified.",
-    "explanation": "Syrax's Sentinel's Wit can increase Caraxes's Instinct and Initiative by 20.",
+    "explanation": "Syrax's Sentinel's Wit can increase Caraxes's Instinct and Initiative by 20 flat.",
     "id": "direct-stat-support-syrax-sentinels-wit-caraxes-instinct-initiative",
     "interactionScope": "cross-dragon",
     "matchedOutputCapabilityIds": [],
@@ -3479,12 +3479,12 @@
     ],
     "damageScope": null,
     "effects": [
-      "Instinct unknown%",
-      "Intelligence unknown%"
+      "Instinct 13%",
+      "Intelligence 13%"
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final value cannot be calculated because final combat formulas and stacking order are not fully verified.",
-    "explanation": "Syrax's Mindful Synergy can increase Caraxes's Intelligence and Instinct by unknown%.",
+    "explanation": "Syrax's Mindful Synergy can increase Caraxes's Intelligence and Instinct by 13%.",
     "id": "direct-stat-support-syrax-mindful-synergy-caraxes-intelligence-instinct",
     "interactionScope": "cross-dragon",
     "matchedOutputCapabilityIds": [],
@@ -3566,12 +3566,12 @@
     ],
     "damageScope": null,
     "effects": [
-      "Instinct unknown%",
-      "Intelligence unknown%"
+      "Instinct 13%",
+      "Intelligence 13%"
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final value cannot be calculated because final combat formulas and stacking order are not fully verified.",
-    "explanation": "Syrax's Mindful Synergy can increase Malachite's Intelligence and Instinct by unknown%.",
+    "explanation": "Syrax's Mindful Synergy can increase Malachite's Intelligence and Instinct by 13%.",
     "id": "direct-stat-support-syrax-mindful-synergy-malachite-intelligence-instinct",
     "interactionScope": "cross-dragon",
     "matchedOutputCapabilityIds": [],
@@ -3653,7 +3653,7 @@
     ],
     "damageScope": null,
     "effects": [
-      "Initiative unknown%"
+      "Initiative 12%"
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final value cannot be calculated because final combat formulas and stacking order are not fully verified.",
@@ -3727,7 +3727,7 @@
     ],
     "damageScope": null,
     "effects": [
-      "Initiative unknown%"
+      "Initiative 12%"
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final value cannot be calculated because final combat formulas and stacking order are not fully verified.",
@@ -3806,7 +3806,7 @@
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final value cannot be calculated because final combat formulas and stacking order are not fully verified.",
-    "explanation": "Caraxes's Hunter's Wrath can increase Malachite's Strength and Initiative by 20.",
+    "explanation": "Caraxes's Hunter's Wrath can increase Malachite's Strength and Initiative by 20 flat.",
     "id": "direct-stat-support-caraxes-hunters-wrath-malachite-strength-initiative",
     "interactionScope": "cross-dragon",
     "matchedOutputCapabilityIds": [],
@@ -3897,7 +3897,7 @@
     ],
     "damageScope": null,
     "effects": [
-      "Strength 12.5%"
+      "Strength 25%"
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final value cannot be calculated because final combat formulas and stacking order are not fully verified.",
@@ -3971,7 +3971,7 @@
     ],
     "damageScope": null,
     "effects": [
-      "Strength 12.5%"
+      "Strength 25%"
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final value cannot be calculated because final combat formulas and stacking order are not fully verified.",
@@ -5756,7 +5756,7 @@
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final value cannot be calculated because final combat formulas and stacking order are not fully verified.",
-    "explanation": "Syrax's Sentinel's Wit can increase Malachite's Instinct and Initiative by 20.",
+    "explanation": "Syrax's Sentinel's Wit can increase Malachite's Instinct and Initiative by 20 flat.",
     "id": "direct-stat-support-syrax-sentinels-wit-malachite-instinct-initiative",
     "interactionScope": "cross-dragon",
     "matchedOutputCapabilityIds": [],
@@ -5847,12 +5847,12 @@
     ],
     "damageScope": null,
     "effects": [
-      "Instinct unknown%",
-      "Intelligence unknown%"
+      "Instinct 13%",
+      "Intelligence 13%"
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final value cannot be calculated because final combat formulas and stacking order are not fully verified.",
-    "explanation": "Syrax's Mindful Synergy can increase Malachite's Intelligence and Instinct by unknown%.",
+    "explanation": "Syrax's Mindful Synergy can increase Malachite's Intelligence and Instinct by 13%.",
     "id": "direct-stat-support-syrax-mindful-synergy-malachite-intelligence-instinct",
     "interactionScope": "cross-dragon",
     "matchedOutputCapabilityIds": [],
@@ -5934,12 +5934,12 @@
     ],
     "damageScope": null,
     "effects": [
-      "Instinct unknown%",
-      "Intelligence unknown%"
+      "Instinct 13%",
+      "Intelligence 13%"
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final value cannot be calculated because final combat formulas and stacking order are not fully verified.",
-    "explanation": "Syrax's Mindful Synergy can increase Caraxes's Intelligence and Instinct by unknown%.",
+    "explanation": "Syrax's Mindful Synergy can increase Caraxes's Intelligence and Instinct by 13%.",
     "id": "direct-stat-support-syrax-mindful-synergy-caraxes-intelligence-instinct",
     "interactionScope": "cross-dragon",
     "matchedOutputCapabilityIds": [],
@@ -6021,7 +6021,7 @@
     ],
     "damageScope": null,
     "effects": [
-      "Initiative unknown%"
+      "Initiative 12%"
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final value cannot be calculated because final combat formulas and stacking order are not fully verified.",
@@ -6095,7 +6095,7 @@
     ],
     "damageScope": null,
     "effects": [
-      "Initiative unknown%"
+      "Initiative 12%"
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final value cannot be calculated because final combat formulas and stacking order are not fully verified.",
@@ -6169,7 +6169,7 @@
     ],
     "damageScope": null,
     "effects": [
-      "Strength 12.5%"
+      "Strength 25%"
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final value cannot be calculated because final combat formulas and stacking order are not fully verified.",
@@ -6243,7 +6243,7 @@
     ],
     "damageScope": null,
     "effects": [
-      "Strength 12.5%"
+      "Strength 25%"
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final value cannot be calculated because final combat formulas and stacking order are not fully verified.",
@@ -8001,12 +8001,12 @@
     ],
     "damageScope": null,
     "effects": [
-      "Instinct unknown%",
-      "Intelligence unknown%"
+      "Instinct 13%",
+      "Intelligence 13%"
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final value cannot be calculated because final combat formulas and stacking order are not fully verified.",
-    "explanation": "Syrax's Mindful Synergy can increase Caraxes's Intelligence and Instinct by unknown%.",
+    "explanation": "Syrax's Mindful Synergy can increase Caraxes's Intelligence and Instinct by 13%.",
     "id": "direct-stat-support-syrax-mindful-synergy-caraxes-intelligence-instinct",
     "interactionScope": "cross-dragon",
     "matchedOutputCapabilityIds": [],
@@ -8088,12 +8088,12 @@
     ],
     "damageScope": null,
     "effects": [
-      "Instinct unknown%",
-      "Intelligence unknown%"
+      "Instinct 13%",
+      "Intelligence 13%"
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final value cannot be calculated because final combat formulas and stacking order are not fully verified.",
-    "explanation": "Syrax's Mindful Synergy can increase Malachite's Intelligence and Instinct by unknown%.",
+    "explanation": "Syrax's Mindful Synergy can increase Malachite's Intelligence and Instinct by 13%.",
     "id": "direct-stat-support-syrax-mindful-synergy-malachite-intelligence-instinct",
     "interactionScope": "cross-dragon",
     "matchedOutputCapabilityIds": [],
@@ -8175,7 +8175,7 @@
     ],
     "damageScope": null,
     "effects": [
-      "Initiative unknown%"
+      "Initiative 12%"
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final value cannot be calculated because final combat formulas and stacking order are not fully verified.",
@@ -8249,7 +8249,7 @@
     ],
     "damageScope": null,
     "effects": [
-      "Initiative unknown%"
+      "Initiative 12%"
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final value cannot be calculated because final combat formulas and stacking order are not fully verified.",
@@ -8327,7 +8327,7 @@
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final value cannot be calculated because final combat formulas and stacking order are not fully verified.",
-    "explanation": "Caraxes's Hunter's Wrath can increase Malachite's Strength and Initiative by 20.",
+    "explanation": "Caraxes's Hunter's Wrath can increase Malachite's Strength and Initiative by 20 flat.",
     "id": "direct-stat-support-caraxes-hunters-wrath-malachite-strength-initiative",
     "interactionScope": "cross-dragon",
     "matchedOutputCapabilityIds": [],
@@ -8418,7 +8418,7 @@
     ],
     "damageScope": null,
     "effects": [
-      "Strength 12.5%"
+      "Strength 25%"
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final value cannot be calculated because final combat formulas and stacking order are not fully verified.",
@@ -8492,7 +8492,7 @@
     ],
     "damageScope": null,
     "effects": [
-      "Strength 12.5%"
+      "Strength 25%"
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final value cannot be calculated because final combat formulas and stacking order are not fully verified.",
@@ -10009,6 +10009,153 @@
     ]
   },
   {
+    "assumptions": [
+      "Cumulative stacking is not assumed.",
+      "Exact interaction between overlapping threshold tiers is unresolved.",
+      "Threshold applicability depends on each recipient current Troop Capacity."
+    ],
+    "channel": "damage-received",
+    "confidence": "confirmed",
+    "conflicts": [
+      "Vermax - Trial by Flame Habit unlock requirement: expected Star Rank 2+, actual Star Rank 1",
+      "Vermax - Trial by Flame Selected Habit Level: expected Habit Level 1+ or preview, actual preview enabled"
+    ],
+    "damageScope": "fire",
+    "effects": [
+      "Fire Damage Received decrease 10%",
+      "Fire Damage Received decrease 20%",
+      "Fire Damage Received decrease 30%"
+    ],
+    "exactResultKnown": false,
+    "exactResultUnknownReason": "Exact final value cannot be calculated because final combat formulas and stacking order are not fully verified.",
+    "explanation": "Trial by Flame can reduce Fire Damage Received for Malachite and Sheepstealer when each satisfies a Troop Capacity threshold. Below 75% Troop Capacity: Fire Damage Received -10%; Below 50% Troop Capacity: Fire Damage Received -20%; Below 25% Troop Capacity: Fire Damage Received -30%. Threshold applicability depends on each recipient's current Troop Capacity; exact interaction between overlapping threshold tiers is unresolved.",
+    "id": "defensive-ally-support-vermax-trial-by-flame-grouped",
+    "interactionScope": "targeting-fact",
+    "matchedOutputCapabilityIds": [],
+    "matchKind": "defensive-ally-support",
+    "modifierCapabilityId": null,
+    "modifierCapabilityIds": [
+      "vermax-trial-by-flame-trial-below-25-fire-reduction-damage-received-received-modifier",
+      "vermax-trial-by-flame-trial-below-50-fire-reduction-damage-received-received-modifier",
+      "vermax-trial-by-flame-trial-below-75-fire-reduction-damage-received-received-modifier"
+    ],
+    "recipientAbilityId": null,
+    "recipientDragonId": null,
+    "recipientEvidenceIds": [],
+    "requirements": [
+      {
+        "actual": "provider right-flank, recipient left-flank",
+        "evidenceIds": [
+          "vermax-trial-by-flame-2026-06-23"
+        ],
+        "expected": "all allies matching threshold condition",
+        "id": "vermax-trial-by-flame-trial-below-75-fire-reduction-damage-received-received-modifier-targeting-left-flank",
+        "label": "Position compatibility",
+        "notes": [],
+        "satisfied": true
+      },
+      {
+        "actual": "Star Rank 1",
+        "evidenceIds": [
+          "vermax-trial-by-flame-2026-06-23"
+        ],
+        "expected": "Star Rank 2+",
+        "id": "vermax-vermax-trial-by-flame-star-rank",
+        "label": "Vermax - Trial by Flame Habit unlock requirement",
+        "notes": [],
+        "satisfied": false
+      },
+      {
+        "actual": "preview enabled",
+        "evidenceIds": [
+          "vermax-trial-by-flame-2026-06-23"
+        ],
+        "expected": "Habit Level 1+ or preview",
+        "id": "vermax-vermax-trial-by-flame-habit-level",
+        "label": "Vermax - Trial by Flame Selected Habit Level",
+        "notes": [
+          "Locked Habit capabilities are potential in preview mode, not active for current roster."
+        ],
+        "satisfied": false
+      },
+      {
+        "actual": "provider right-flank, recipient vanguard",
+        "evidenceIds": [
+          "vermax-trial-by-flame-2026-06-23"
+        ],
+        "expected": "all allies matching threshold condition",
+        "id": "vermax-trial-by-flame-trial-below-75-fire-reduction-damage-received-received-modifier-targeting-vanguard",
+        "label": "Position compatibility",
+        "notes": [],
+        "satisfied": true
+      },
+      {
+        "actual": "provider right-flank, recipient left-flank",
+        "evidenceIds": [
+          "vermax-trial-by-flame-2026-06-23"
+        ],
+        "expected": "all allies matching threshold condition",
+        "id": "vermax-trial-by-flame-trial-below-50-fire-reduction-damage-received-received-modifier-targeting-left-flank",
+        "label": "Position compatibility",
+        "notes": [],
+        "satisfied": true
+      },
+      {
+        "actual": "provider right-flank, recipient vanguard",
+        "evidenceIds": [
+          "vermax-trial-by-flame-2026-06-23"
+        ],
+        "expected": "all allies matching threshold condition",
+        "id": "vermax-trial-by-flame-trial-below-50-fire-reduction-damage-received-received-modifier-targeting-vanguard",
+        "label": "Position compatibility",
+        "notes": [],
+        "satisfied": true
+      },
+      {
+        "actual": "provider right-flank, recipient left-flank",
+        "evidenceIds": [
+          "vermax-trial-by-flame-2026-06-23"
+        ],
+        "expected": "all allies matching threshold condition",
+        "id": "vermax-trial-by-flame-trial-below-25-fire-reduction-damage-received-received-modifier-targeting-left-flank",
+        "label": "Position compatibility",
+        "notes": [],
+        "satisfied": true
+      },
+      {
+        "actual": "provider right-flank, recipient vanguard",
+        "evidenceIds": [
+          "vermax-trial-by-flame-2026-06-23"
+        ],
+        "expected": "all allies matching threshold condition",
+        "id": "vermax-trial-by-flame-trial-below-25-fire-reduction-damage-received-received-modifier-targeting-vanguard",
+        "label": "Position compatibility",
+        "notes": [],
+        "satisfied": true
+      }
+    ],
+    "ruleId": "defensive-ally-support",
+    "sourceAbilityId": "vermax-trial-by-flame",
+    "sourceDragonId": "vermax",
+    "sourceEvidenceIds": [
+      "vermax-trial-by-flame-2026-06-23"
+    ],
+    "status": "potential",
+    "targetSelectionGroup": {
+      "eligibleRecipientDragonIds": [
+        "malachite",
+        "sheepstealer"
+      ],
+      "selection": "all-matching-condition",
+      "selectionUncertain": false,
+      "targetCount": 2
+    },
+    "title": "Fire Damage Received Support",
+    "unresolvedQuestions": [
+      "Exact interaction between overlapping Trial by Flame threshold tiers is unresolved."
+    ]
+  },
+  {
     "assumptions": [],
     "channel": "damage-received",
     "confidence": "confirmed",
@@ -10157,210 +10304,6 @@
     "unresolvedQuestions": []
   },
   {
-    "assumptions": [
-      "Threshold tiers are alternatives based on current Troop Capacity and selected Habit Level; cumulative stacking is not assumed."
-    ],
-    "channel": "damage-received",
-    "confidence": "confirmed",
-    "conflicts": [
-      "Vermax - Trial by Flame Habit unlock requirement: expected Star Rank 2+, actual Star Rank 1",
-      "Vermax - Trial by Flame Selected Habit Level: expected Habit Level 1+ or preview, actual preview enabled"
-    ],
-    "damageScope": "fire",
-    "effects": [
-      "Fire Damage Received decrease 10%",
-      "Fire Damage Received decrease 20%",
-      "Fire Damage Received decrease 30%"
-    ],
-    "exactResultKnown": false,
-    "exactResultUnknownReason": "Exact final value cannot be calculated because final combat formulas and stacking order are not fully verified.",
-    "explanation": "Trial by Flame can reduce Fire Damage Received for allies below 75%, 50% and 25% Troop Capacity. The applicable reduction depends on the selected Habit Level and current threshold.",
-    "id": "defensive-ally-support-vermax-trial-by-flame-malachite",
-    "interactionScope": "cross-dragon",
-    "matchedOutputCapabilityIds": [],
-    "matchKind": "defensive-ally-support",
-    "modifierCapabilityId": null,
-    "modifierCapabilityIds": [
-      "vermax-trial-by-flame-trial-below-25-fire-reduction-damage-received-received-modifier",
-      "vermax-trial-by-flame-trial-below-50-fire-reduction-damage-received-received-modifier",
-      "vermax-trial-by-flame-trial-below-75-fire-reduction-damage-received-received-modifier"
-    ],
-    "recipientAbilityId": null,
-    "recipientDragonId": "malachite",
-    "recipientEvidenceIds": [],
-    "requirements": [
-      {
-        "actual": "provider right-flank, recipient left-flank",
-        "evidenceIds": [
-          "vermax-trial-by-flame-2026-06-23"
-        ],
-        "expected": "all allies matching threshold condition",
-        "id": "vermax-trial-by-flame-trial-below-75-fire-reduction-damage-received-received-modifier-targeting-left-flank",
-        "label": "Position compatibility",
-        "notes": [],
-        "satisfied": true
-      },
-      {
-        "actual": "Star Rank 1",
-        "evidenceIds": [
-          "vermax-trial-by-flame-2026-06-23"
-        ],
-        "expected": "Star Rank 2+",
-        "id": "vermax-vermax-trial-by-flame-star-rank",
-        "label": "Vermax - Trial by Flame Habit unlock requirement",
-        "notes": [],
-        "satisfied": false
-      },
-      {
-        "actual": "preview enabled",
-        "evidenceIds": [
-          "vermax-trial-by-flame-2026-06-23"
-        ],
-        "expected": "Habit Level 1+ or preview",
-        "id": "vermax-vermax-trial-by-flame-habit-level",
-        "label": "Vermax - Trial by Flame Selected Habit Level",
-        "notes": [
-          "Locked Habit capabilities are potential in preview mode, not active for current roster."
-        ],
-        "satisfied": false
-      },
-      {
-        "actual": "provider right-flank, recipient left-flank",
-        "evidenceIds": [
-          "vermax-trial-by-flame-2026-06-23"
-        ],
-        "expected": "all allies matching threshold condition",
-        "id": "vermax-trial-by-flame-trial-below-50-fire-reduction-damage-received-received-modifier-targeting-left-flank",
-        "label": "Position compatibility",
-        "notes": [],
-        "satisfied": true
-      },
-      {
-        "actual": "provider right-flank, recipient left-flank",
-        "evidenceIds": [
-          "vermax-trial-by-flame-2026-06-23"
-        ],
-        "expected": "all allies matching threshold condition",
-        "id": "vermax-trial-by-flame-trial-below-25-fire-reduction-damage-received-received-modifier-targeting-left-flank",
-        "label": "Position compatibility",
-        "notes": [],
-        "satisfied": true
-      }
-    ],
-    "ruleId": "defensive-ally-support",
-    "sourceAbilityId": "vermax-trial-by-flame",
-    "sourceDragonId": "vermax",
-    "sourceEvidenceIds": [
-      "vermax-trial-by-flame-2026-06-23"
-    ],
-    "status": "potential",
-    "targetSelectionGroup": null,
-    "title": "Fire Damage Received Support",
-    "unresolvedQuestions": []
-  },
-  {
-    "assumptions": [
-      "Threshold tiers are alternatives based on current Troop Capacity and selected Habit Level; cumulative stacking is not assumed."
-    ],
-    "channel": "damage-received",
-    "confidence": "confirmed",
-    "conflicts": [
-      "Vermax - Trial by Flame Habit unlock requirement: expected Star Rank 2+, actual Star Rank 1",
-      "Vermax - Trial by Flame Selected Habit Level: expected Habit Level 1+ or preview, actual preview enabled"
-    ],
-    "damageScope": "fire",
-    "effects": [
-      "Fire Damage Received decrease 10%",
-      "Fire Damage Received decrease 20%",
-      "Fire Damage Received decrease 30%"
-    ],
-    "exactResultKnown": false,
-    "exactResultUnknownReason": "Exact final value cannot be calculated because final combat formulas and stacking order are not fully verified.",
-    "explanation": "Trial by Flame can reduce Fire Damage Received for allies below 75%, 50% and 25% Troop Capacity. The applicable reduction depends on the selected Habit Level and current threshold.",
-    "id": "defensive-ally-support-vermax-trial-by-flame-sheepstealer",
-    "interactionScope": "cross-dragon",
-    "matchedOutputCapabilityIds": [],
-    "matchKind": "defensive-ally-support",
-    "modifierCapabilityId": null,
-    "modifierCapabilityIds": [
-      "vermax-trial-by-flame-trial-below-25-fire-reduction-damage-received-received-modifier",
-      "vermax-trial-by-flame-trial-below-50-fire-reduction-damage-received-received-modifier",
-      "vermax-trial-by-flame-trial-below-75-fire-reduction-damage-received-received-modifier"
-    ],
-    "recipientAbilityId": null,
-    "recipientDragonId": "sheepstealer",
-    "recipientEvidenceIds": [],
-    "requirements": [
-      {
-        "actual": "provider right-flank, recipient vanguard",
-        "evidenceIds": [
-          "vermax-trial-by-flame-2026-06-23"
-        ],
-        "expected": "all allies matching threshold condition",
-        "id": "vermax-trial-by-flame-trial-below-75-fire-reduction-damage-received-received-modifier-targeting-vanguard",
-        "label": "Position compatibility",
-        "notes": [],
-        "satisfied": true
-      },
-      {
-        "actual": "Star Rank 1",
-        "evidenceIds": [
-          "vermax-trial-by-flame-2026-06-23"
-        ],
-        "expected": "Star Rank 2+",
-        "id": "vermax-vermax-trial-by-flame-star-rank",
-        "label": "Vermax - Trial by Flame Habit unlock requirement",
-        "notes": [],
-        "satisfied": false
-      },
-      {
-        "actual": "preview enabled",
-        "evidenceIds": [
-          "vermax-trial-by-flame-2026-06-23"
-        ],
-        "expected": "Habit Level 1+ or preview",
-        "id": "vermax-vermax-trial-by-flame-habit-level",
-        "label": "Vermax - Trial by Flame Selected Habit Level",
-        "notes": [
-          "Locked Habit capabilities are potential in preview mode, not active for current roster."
-        ],
-        "satisfied": false
-      },
-      {
-        "actual": "provider right-flank, recipient vanguard",
-        "evidenceIds": [
-          "vermax-trial-by-flame-2026-06-23"
-        ],
-        "expected": "all allies matching threshold condition",
-        "id": "vermax-trial-by-flame-trial-below-50-fire-reduction-damage-received-received-modifier-targeting-vanguard",
-        "label": "Position compatibility",
-        "notes": [],
-        "satisfied": true
-      },
-      {
-        "actual": "provider right-flank, recipient vanguard",
-        "evidenceIds": [
-          "vermax-trial-by-flame-2026-06-23"
-        ],
-        "expected": "all allies matching threshold condition",
-        "id": "vermax-trial-by-flame-trial-below-25-fire-reduction-damage-received-received-modifier-targeting-vanguard",
-        "label": "Position compatibility",
-        "notes": [],
-        "satisfied": true
-      }
-    ],
-    "ruleId": "defensive-ally-support",
-    "sourceAbilityId": "vermax-trial-by-flame",
-    "sourceDragonId": "vermax",
-    "sourceEvidenceIds": [
-      "vermax-trial-by-flame-2026-06-23"
-    ],
-    "status": "potential",
-    "targetSelectionGroup": null,
-    "title": "Fire Damage Received Support",
-    "unresolvedQuestions": []
-  },
-  {
     "assumptions": [],
     "channel": "stat",
     "confidence": "confirmed",
@@ -10370,7 +10313,7 @@
     ],
     "damageScope": null,
     "effects": [
-      "Strength 12.5%"
+      "Strength 25%"
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final value cannot be calculated because final combat formulas and stacking order are not fully verified.",
@@ -10444,7 +10387,7 @@
     ],
     "damageScope": null,
     "effects": [
-      "Strength 12.5%"
+      "Strength 25%"
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final value cannot be calculated because final combat formulas and stacking order are not fully verified.",
@@ -10598,7 +10541,7 @@
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final value cannot be calculated because final combat formulas and stacking order are not fully verified.",
-    "explanation": "Vermax's Warrior's Zeal can increase Malachite's Instinct and Initiative by 20.",
+    "explanation": "Vermax's Warrior's Zeal can increase Malachite's Instinct and Initiative by 20 flat.",
     "id": "direct-stat-support-vermax-warriors-zeal-malachite-instinct-initiative",
     "interactionScope": "cross-dragon",
     "matchedOutputCapabilityIds": [],
@@ -10695,12 +10638,12 @@
     ],
     "damageScope": null,
     "effects": [
-      "Initiative unknown%",
-      "Instinct unknown%"
+      "Initiative 18%",
+      "Instinct 36%"
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final value cannot be calculated because final combat formulas and stacking order are not fully verified.",
-    "explanation": "Vermax's Reactive Instincts can increase Malachite's Instinct and Initiative by unknown%.",
+    "explanation": "Vermax's Reactive Instincts can increase Malachite's Instinct by 36% and Initiative by 18%.",
     "id": "direct-stat-support-vermax-reactive-instincts-malachite-instinct-initiative",
     "interactionScope": "cross-dragon",
     "matchedOutputCapabilityIds": [],
@@ -12415,12 +12358,12 @@
     ],
     "damageScope": null,
     "effects": [
-      "Initiative unknown%",
-      "Intelligence unknown flat"
+      "Initiative 25%",
+      "Intelligence 44%"
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final value cannot be calculated because final combat formulas and stacking order are not fully verified.",
-    "explanation": "Seasmoke's Clever Maneuver can increase Sheepstealer's Intelligence and Initiative.",
+    "explanation": "Seasmoke's Clever Maneuver can increase Sheepstealer's Intelligence by 44% and Initiative by 25%.",
     "id": "direct-stat-support-seasmoke-clever-maneuver-sheepstealer-intelligence-initiative",
     "interactionScope": "cross-dragon",
     "matchedOutputCapabilityIds": [],
@@ -12502,7 +12445,7 @@
     ],
     "damageScope": null,
     "effects": [
-      "Initiative unknown%"
+      "Initiative 25%"
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final value cannot be calculated because final combat formulas and stacking order are not fully verified.",
@@ -12576,7 +12519,7 @@
     ],
     "damageScope": null,
     "effects": [
-      "Initiative unknown%"
+      "Initiative 25%"
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final value cannot be calculated because final combat formulas and stacking order are not fully verified.",
@@ -12650,7 +12593,7 @@
     ],
     "damageScope": null,
     "effects": [
-      "Intelligence unknown%"
+      "Intelligence 15%"
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final value cannot be calculated because final combat formulas and stacking order are not fully verified.",
@@ -12726,7 +12669,7 @@
     ],
     "damageScope": null,
     "effects": [
-      "Strength 12.5%"
+      "Strength 25%"
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final value cannot be calculated because final combat formulas and stacking order are not fully verified.",
@@ -12800,7 +12743,7 @@
     ],
     "damageScope": null,
     "effects": [
-      "Strength 12.5%"
+      "Strength 25%"
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final value cannot be calculated because final combat formulas and stacking order are not fully verified.",
@@ -13885,6 +13828,153 @@
     ]
   },
   {
+    "assumptions": [
+      "Cumulative stacking is not assumed.",
+      "Exact interaction between overlapping threshold tiers is unresolved.",
+      "Threshold applicability depends on each recipient current Troop Capacity."
+    ],
+    "channel": "damage-received",
+    "confidence": "confirmed",
+    "conflicts": [
+      "Vermax - Trial by Flame Habit unlock requirement: expected Star Rank 2+, actual Star Rank 1",
+      "Vermax - Trial by Flame Selected Habit Level: expected Habit Level 1+ or preview, actual preview enabled"
+    ],
+    "damageScope": "fire",
+    "effects": [
+      "Fire Damage Received decrease 10%",
+      "Fire Damage Received decrease 20%",
+      "Fire Damage Received decrease 30%"
+    ],
+    "exactResultKnown": false,
+    "exactResultUnknownReason": "Exact final value cannot be calculated because final combat formulas and stacking order are not fully verified.",
+    "explanation": "Trial by Flame can reduce Fire Damage Received for Malachite and Seasmoke when each satisfies a Troop Capacity threshold. Below 75% Troop Capacity: Fire Damage Received -10%; Below 50% Troop Capacity: Fire Damage Received -20%; Below 25% Troop Capacity: Fire Damage Received -30%. Threshold applicability depends on each recipient's current Troop Capacity; exact interaction between overlapping threshold tiers is unresolved.",
+    "id": "defensive-ally-support-vermax-trial-by-flame-grouped",
+    "interactionScope": "targeting-fact",
+    "matchedOutputCapabilityIds": [],
+    "matchKind": "defensive-ally-support",
+    "modifierCapabilityId": null,
+    "modifierCapabilityIds": [
+      "vermax-trial-by-flame-trial-below-25-fire-reduction-damage-received-received-modifier",
+      "vermax-trial-by-flame-trial-below-50-fire-reduction-damage-received-received-modifier",
+      "vermax-trial-by-flame-trial-below-75-fire-reduction-damage-received-received-modifier"
+    ],
+    "recipientAbilityId": null,
+    "recipientDragonId": null,
+    "recipientEvidenceIds": [],
+    "requirements": [
+      {
+        "actual": "provider vanguard, recipient left-flank",
+        "evidenceIds": [
+          "vermax-trial-by-flame-2026-06-23"
+        ],
+        "expected": "all allies matching threshold condition",
+        "id": "vermax-trial-by-flame-trial-below-75-fire-reduction-damage-received-received-modifier-targeting-left-flank",
+        "label": "Position compatibility",
+        "notes": [],
+        "satisfied": true
+      },
+      {
+        "actual": "Star Rank 1",
+        "evidenceIds": [
+          "vermax-trial-by-flame-2026-06-23"
+        ],
+        "expected": "Star Rank 2+",
+        "id": "vermax-vermax-trial-by-flame-star-rank",
+        "label": "Vermax - Trial by Flame Habit unlock requirement",
+        "notes": [],
+        "satisfied": false
+      },
+      {
+        "actual": "preview enabled",
+        "evidenceIds": [
+          "vermax-trial-by-flame-2026-06-23"
+        ],
+        "expected": "Habit Level 1+ or preview",
+        "id": "vermax-vermax-trial-by-flame-habit-level",
+        "label": "Vermax - Trial by Flame Selected Habit Level",
+        "notes": [
+          "Locked Habit capabilities are potential in preview mode, not active for current roster."
+        ],
+        "satisfied": false
+      },
+      {
+        "actual": "provider vanguard, recipient right-flank",
+        "evidenceIds": [
+          "vermax-trial-by-flame-2026-06-23"
+        ],
+        "expected": "all allies matching threshold condition",
+        "id": "vermax-trial-by-flame-trial-below-75-fire-reduction-damage-received-received-modifier-targeting-right-flank",
+        "label": "Position compatibility",
+        "notes": [],
+        "satisfied": true
+      },
+      {
+        "actual": "provider vanguard, recipient left-flank",
+        "evidenceIds": [
+          "vermax-trial-by-flame-2026-06-23"
+        ],
+        "expected": "all allies matching threshold condition",
+        "id": "vermax-trial-by-flame-trial-below-50-fire-reduction-damage-received-received-modifier-targeting-left-flank",
+        "label": "Position compatibility",
+        "notes": [],
+        "satisfied": true
+      },
+      {
+        "actual": "provider vanguard, recipient right-flank",
+        "evidenceIds": [
+          "vermax-trial-by-flame-2026-06-23"
+        ],
+        "expected": "all allies matching threshold condition",
+        "id": "vermax-trial-by-flame-trial-below-50-fire-reduction-damage-received-received-modifier-targeting-right-flank",
+        "label": "Position compatibility",
+        "notes": [],
+        "satisfied": true
+      },
+      {
+        "actual": "provider vanguard, recipient left-flank",
+        "evidenceIds": [
+          "vermax-trial-by-flame-2026-06-23"
+        ],
+        "expected": "all allies matching threshold condition",
+        "id": "vermax-trial-by-flame-trial-below-25-fire-reduction-damage-received-received-modifier-targeting-left-flank",
+        "label": "Position compatibility",
+        "notes": [],
+        "satisfied": true
+      },
+      {
+        "actual": "provider vanguard, recipient right-flank",
+        "evidenceIds": [
+          "vermax-trial-by-flame-2026-06-23"
+        ],
+        "expected": "all allies matching threshold condition",
+        "id": "vermax-trial-by-flame-trial-below-25-fire-reduction-damage-received-received-modifier-targeting-right-flank",
+        "label": "Position compatibility",
+        "notes": [],
+        "satisfied": true
+      }
+    ],
+    "ruleId": "defensive-ally-support",
+    "sourceAbilityId": "vermax-trial-by-flame",
+    "sourceDragonId": "vermax",
+    "sourceEvidenceIds": [
+      "vermax-trial-by-flame-2026-06-23"
+    ],
+    "status": "potential",
+    "targetSelectionGroup": {
+      "eligibleRecipientDragonIds": [
+        "malachite",
+        "seasmoke"
+      ],
+      "selection": "all-matching-condition",
+      "selectionUncertain": false,
+      "targetCount": 2
+    },
+    "title": "Fire Damage Received Support",
+    "unresolvedQuestions": [
+      "Exact interaction between overlapping Trial by Flame threshold tiers is unresolved."
+    ]
+  },
+  {
     "assumptions": [],
     "channel": "damage-received",
     "confidence": "confirmed",
@@ -14203,210 +14293,6 @@
     "unresolvedQuestions": []
   },
   {
-    "assumptions": [
-      "Threshold tiers are alternatives based on current Troop Capacity and selected Habit Level; cumulative stacking is not assumed."
-    ],
-    "channel": "damage-received",
-    "confidence": "confirmed",
-    "conflicts": [
-      "Vermax - Trial by Flame Habit unlock requirement: expected Star Rank 2+, actual Star Rank 1",
-      "Vermax - Trial by Flame Selected Habit Level: expected Habit Level 1+ or preview, actual preview enabled"
-    ],
-    "damageScope": "fire",
-    "effects": [
-      "Fire Damage Received decrease 10%",
-      "Fire Damage Received decrease 20%",
-      "Fire Damage Received decrease 30%"
-    ],
-    "exactResultKnown": false,
-    "exactResultUnknownReason": "Exact final value cannot be calculated because final combat formulas and stacking order are not fully verified.",
-    "explanation": "Trial by Flame can reduce Fire Damage Received for allies below 75%, 50% and 25% Troop Capacity. The applicable reduction depends on the selected Habit Level and current threshold.",
-    "id": "defensive-ally-support-vermax-trial-by-flame-malachite",
-    "interactionScope": "cross-dragon",
-    "matchedOutputCapabilityIds": [],
-    "matchKind": "defensive-ally-support",
-    "modifierCapabilityId": null,
-    "modifierCapabilityIds": [
-      "vermax-trial-by-flame-trial-below-25-fire-reduction-damage-received-received-modifier",
-      "vermax-trial-by-flame-trial-below-50-fire-reduction-damage-received-received-modifier",
-      "vermax-trial-by-flame-trial-below-75-fire-reduction-damage-received-received-modifier"
-    ],
-    "recipientAbilityId": null,
-    "recipientDragonId": "malachite",
-    "recipientEvidenceIds": [],
-    "requirements": [
-      {
-        "actual": "provider vanguard, recipient left-flank",
-        "evidenceIds": [
-          "vermax-trial-by-flame-2026-06-23"
-        ],
-        "expected": "all allies matching threshold condition",
-        "id": "vermax-trial-by-flame-trial-below-75-fire-reduction-damage-received-received-modifier-targeting-left-flank",
-        "label": "Position compatibility",
-        "notes": [],
-        "satisfied": true
-      },
-      {
-        "actual": "Star Rank 1",
-        "evidenceIds": [
-          "vermax-trial-by-flame-2026-06-23"
-        ],
-        "expected": "Star Rank 2+",
-        "id": "vermax-vermax-trial-by-flame-star-rank",
-        "label": "Vermax - Trial by Flame Habit unlock requirement",
-        "notes": [],
-        "satisfied": false
-      },
-      {
-        "actual": "preview enabled",
-        "evidenceIds": [
-          "vermax-trial-by-flame-2026-06-23"
-        ],
-        "expected": "Habit Level 1+ or preview",
-        "id": "vermax-vermax-trial-by-flame-habit-level",
-        "label": "Vermax - Trial by Flame Selected Habit Level",
-        "notes": [
-          "Locked Habit capabilities are potential in preview mode, not active for current roster."
-        ],
-        "satisfied": false
-      },
-      {
-        "actual": "provider vanguard, recipient left-flank",
-        "evidenceIds": [
-          "vermax-trial-by-flame-2026-06-23"
-        ],
-        "expected": "all allies matching threshold condition",
-        "id": "vermax-trial-by-flame-trial-below-50-fire-reduction-damage-received-received-modifier-targeting-left-flank",
-        "label": "Position compatibility",
-        "notes": [],
-        "satisfied": true
-      },
-      {
-        "actual": "provider vanguard, recipient left-flank",
-        "evidenceIds": [
-          "vermax-trial-by-flame-2026-06-23"
-        ],
-        "expected": "all allies matching threshold condition",
-        "id": "vermax-trial-by-flame-trial-below-25-fire-reduction-damage-received-received-modifier-targeting-left-flank",
-        "label": "Position compatibility",
-        "notes": [],
-        "satisfied": true
-      }
-    ],
-    "ruleId": "defensive-ally-support",
-    "sourceAbilityId": "vermax-trial-by-flame",
-    "sourceDragonId": "vermax",
-    "sourceEvidenceIds": [
-      "vermax-trial-by-flame-2026-06-23"
-    ],
-    "status": "potential",
-    "targetSelectionGroup": null,
-    "title": "Fire Damage Received Support",
-    "unresolvedQuestions": []
-  },
-  {
-    "assumptions": [
-      "Threshold tiers are alternatives based on current Troop Capacity and selected Habit Level; cumulative stacking is not assumed."
-    ],
-    "channel": "damage-received",
-    "confidence": "confirmed",
-    "conflicts": [
-      "Vermax - Trial by Flame Habit unlock requirement: expected Star Rank 2+, actual Star Rank 1",
-      "Vermax - Trial by Flame Selected Habit Level: expected Habit Level 1+ or preview, actual preview enabled"
-    ],
-    "damageScope": "fire",
-    "effects": [
-      "Fire Damage Received decrease 10%",
-      "Fire Damage Received decrease 20%",
-      "Fire Damage Received decrease 30%"
-    ],
-    "exactResultKnown": false,
-    "exactResultUnknownReason": "Exact final value cannot be calculated because final combat formulas and stacking order are not fully verified.",
-    "explanation": "Trial by Flame can reduce Fire Damage Received for allies below 75%, 50% and 25% Troop Capacity. The applicable reduction depends on the selected Habit Level and current threshold.",
-    "id": "defensive-ally-support-vermax-trial-by-flame-seasmoke",
-    "interactionScope": "cross-dragon",
-    "matchedOutputCapabilityIds": [],
-    "matchKind": "defensive-ally-support",
-    "modifierCapabilityId": null,
-    "modifierCapabilityIds": [
-      "vermax-trial-by-flame-trial-below-25-fire-reduction-damage-received-received-modifier",
-      "vermax-trial-by-flame-trial-below-50-fire-reduction-damage-received-received-modifier",
-      "vermax-trial-by-flame-trial-below-75-fire-reduction-damage-received-received-modifier"
-    ],
-    "recipientAbilityId": null,
-    "recipientDragonId": "seasmoke",
-    "recipientEvidenceIds": [],
-    "requirements": [
-      {
-        "actual": "provider vanguard, recipient right-flank",
-        "evidenceIds": [
-          "vermax-trial-by-flame-2026-06-23"
-        ],
-        "expected": "all allies matching threshold condition",
-        "id": "vermax-trial-by-flame-trial-below-75-fire-reduction-damage-received-received-modifier-targeting-right-flank",
-        "label": "Position compatibility",
-        "notes": [],
-        "satisfied": true
-      },
-      {
-        "actual": "Star Rank 1",
-        "evidenceIds": [
-          "vermax-trial-by-flame-2026-06-23"
-        ],
-        "expected": "Star Rank 2+",
-        "id": "vermax-vermax-trial-by-flame-star-rank",
-        "label": "Vermax - Trial by Flame Habit unlock requirement",
-        "notes": [],
-        "satisfied": false
-      },
-      {
-        "actual": "preview enabled",
-        "evidenceIds": [
-          "vermax-trial-by-flame-2026-06-23"
-        ],
-        "expected": "Habit Level 1+ or preview",
-        "id": "vermax-vermax-trial-by-flame-habit-level",
-        "label": "Vermax - Trial by Flame Selected Habit Level",
-        "notes": [
-          "Locked Habit capabilities are potential in preview mode, not active for current roster."
-        ],
-        "satisfied": false
-      },
-      {
-        "actual": "provider vanguard, recipient right-flank",
-        "evidenceIds": [
-          "vermax-trial-by-flame-2026-06-23"
-        ],
-        "expected": "all allies matching threshold condition",
-        "id": "vermax-trial-by-flame-trial-below-50-fire-reduction-damage-received-received-modifier-targeting-right-flank",
-        "label": "Position compatibility",
-        "notes": [],
-        "satisfied": true
-      },
-      {
-        "actual": "provider vanguard, recipient right-flank",
-        "evidenceIds": [
-          "vermax-trial-by-flame-2026-06-23"
-        ],
-        "expected": "all allies matching threshold condition",
-        "id": "vermax-trial-by-flame-trial-below-25-fire-reduction-damage-received-received-modifier-targeting-right-flank",
-        "label": "Position compatibility",
-        "notes": [],
-        "satisfied": true
-      }
-    ],
-    "ruleId": "defensive-ally-support",
-    "sourceAbilityId": "vermax-trial-by-flame",
-    "sourceDragonId": "vermax",
-    "sourceEvidenceIds": [
-      "vermax-trial-by-flame-2026-06-23"
-    ],
-    "status": "potential",
-    "targetSelectionGroup": null,
-    "title": "Fire Damage Received Support",
-    "unresolvedQuestions": []
-  },
-  {
     "assumptions": [],
     "channel": "stat",
     "confidence": "confirmed",
@@ -14416,12 +14302,12 @@
     ],
     "damageScope": null,
     "effects": [
-      "Initiative unknown%",
-      "Intelligence unknown flat"
+      "Initiative 25%",
+      "Intelligence 44%"
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final value cannot be calculated because final combat formulas and stacking order are not fully verified.",
-    "explanation": "Seasmoke's Clever Maneuver can increase Malachite's Intelligence and Initiative.",
+    "explanation": "Seasmoke's Clever Maneuver can increase Malachite's Intelligence by 44% and Initiative by 25%.",
     "id": "direct-stat-support-seasmoke-clever-maneuver-malachite-intelligence-initiative",
     "interactionScope": "cross-dragon",
     "matchedOutputCapabilityIds": [],
@@ -14503,7 +14389,7 @@
     ],
     "damageScope": null,
     "effects": [
-      "Initiative unknown%"
+      "Initiative 25%"
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final value cannot be calculated because final combat formulas and stacking order are not fully verified.",
@@ -14577,7 +14463,7 @@
     ],
     "damageScope": null,
     "effects": [
-      "Initiative unknown%"
+      "Initiative 25%"
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final value cannot be calculated because final combat formulas and stacking order are not fully verified.",
@@ -14651,7 +14537,7 @@
     ],
     "damageScope": null,
     "effects": [
-      "Intelligence unknown%"
+      "Intelligence 15%"
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final value cannot be calculated because final combat formulas and stacking order are not fully verified.",
@@ -14727,7 +14613,7 @@
     ],
     "damageScope": null,
     "effects": [
-      "Strength 12.5%"
+      "Strength 25%"
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final value cannot be calculated because final combat formulas and stacking order are not fully verified.",
@@ -14801,7 +14687,7 @@
     ],
     "damageScope": null,
     "effects": [
-      "Strength 12.5%"
+      "Strength 25%"
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final value cannot be calculated because final combat formulas and stacking order are not fully verified.",
@@ -14953,7 +14839,7 @@
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final value cannot be calculated because final combat formulas and stacking order are not fully verified.",
-    "explanation": "Vermax's Warrior's Zeal increases Malachite's Instinct and Initiative by 20.",
+    "explanation": "Vermax's Warrior's Zeal increases Malachite's Instinct and Initiative by 20 flat.",
     "id": "direct-stat-support-vermax-warriors-zeal-malachite-instinct-initiative",
     "interactionScope": "cross-dragon",
     "matchedOutputCapabilityIds": [],
@@ -15050,12 +14936,12 @@
     ],
     "damageScope": null,
     "effects": [
-      "Initiative unknown%",
-      "Instinct unknown%"
+      "Initiative 18%",
+      "Instinct 36%"
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final value cannot be calculated because final combat formulas and stacking order are not fully verified.",
-    "explanation": "Vermax's Reactive Instincts can increase Malachite's Instinct and Initiative by unknown%.",
+    "explanation": "Vermax's Reactive Instincts can increase Malachite's Instinct by 36% and Initiative by 18%.",
     "id": "direct-stat-support-vermax-reactive-instincts-malachite-instinct-initiative",
     "interactionScope": "cross-dragon",
     "matchedOutputCapabilityIds": [],
@@ -16885,12 +16771,12 @@
     ],
     "damageScope": null,
     "effects": [
-      "Initiative unknown%",
-      "Intelligence unknown flat"
+      "Initiative 25%",
+      "Intelligence 44%"
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final value cannot be calculated because final combat formulas and stacking order are not fully verified.",
-    "explanation": "Seasmoke's Clever Maneuver can increase Sheepstealer's Intelligence and Initiative.",
+    "explanation": "Seasmoke's Clever Maneuver can increase Sheepstealer's Intelligence by 44% and Initiative by 25%.",
     "id": "direct-stat-support-seasmoke-clever-maneuver-sheepstealer-intelligence-initiative",
     "interactionScope": "cross-dragon",
     "matchedOutputCapabilityIds": [],
@@ -16972,7 +16858,7 @@
     ],
     "damageScope": null,
     "effects": [
-      "Initiative unknown%"
+      "Initiative 25%"
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final value cannot be calculated because final combat formulas and stacking order are not fully verified.",
@@ -17046,7 +16932,7 @@
     ],
     "damageScope": null,
     "effects": [
-      "Initiative unknown%"
+      "Initiative 25%"
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final value cannot be calculated because final combat formulas and stacking order are not fully verified.",
@@ -17119,7 +17005,7 @@
     "conflicts": [],
     "damageScope": null,
     "effects": [
-      "Intelligence unknown%"
+      "Intelligence 15%"
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final value cannot be calculated because final combat formulas and stacking order are not fully verified.",
@@ -17217,7 +17103,7 @@
     ],
     "damageScope": null,
     "effects": [
-      "Strength 12.5%"
+      "Strength 25%"
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final value cannot be calculated because final combat formulas and stacking order are not fully verified.",
@@ -17291,7 +17177,7 @@
     ],
     "damageScope": null,
     "effects": [
-      "Strength 12.5%"
+      "Strength 25%"
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final value cannot be calculated because final combat formulas and stacking order are not fully verified.",
@@ -18805,7 +18691,7 @@
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final value cannot be calculated because final combat formulas and stacking order are not fully verified.",
-    "explanation": "Caraxes's Hunter's Wrath can increase Sheepstealer's Strength and Initiative by 20.",
+    "explanation": "Caraxes's Hunter's Wrath can increase Sheepstealer's Strength and Initiative by 20 flat.",
     "id": "direct-stat-support-caraxes-hunters-wrath-sheepstealer-strength-initiative",
     "interactionScope": "cross-dragon",
     "matchedOutputCapabilityIds": [],
@@ -18896,12 +18782,12 @@
     ],
     "damageScope": null,
     "effects": [
-      "Initiative unknown%",
-      "Intelligence unknown flat"
+      "Initiative 25%",
+      "Intelligence 44%"
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final value cannot be calculated because final combat formulas and stacking order are not fully verified.",
-    "explanation": "Seasmoke's Clever Maneuver can increase Sheepstealer's Intelligence and Initiative.",
+    "explanation": "Seasmoke's Clever Maneuver can increase Sheepstealer's Intelligence by 44% and Initiative by 25%.",
     "id": "direct-stat-support-seasmoke-clever-maneuver-sheepstealer-intelligence-initiative",
     "interactionScope": "cross-dragon",
     "matchedOutputCapabilityIds": [],
@@ -18983,7 +18869,7 @@
     ],
     "damageScope": null,
     "effects": [
-      "Initiative unknown%"
+      "Initiative 25%"
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final value cannot be calculated because final combat formulas and stacking order are not fully verified.",
@@ -19057,7 +18943,7 @@
     ],
     "damageScope": null,
     "effects": [
-      "Initiative unknown%"
+      "Initiative 25%"
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final value cannot be calculated because final combat formulas and stacking order are not fully verified.",
@@ -19130,7 +19016,7 @@
     "conflicts": [],
     "damageScope": null,
     "effects": [
-      "Intelligence unknown%"
+      "Intelligence 15%"
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final value cannot be calculated because final combat formulas and stacking order are not fully verified.",
@@ -21014,7 +20900,7 @@
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final value cannot be calculated because final combat formulas and stacking order are not fully verified.",
-    "explanation": "Syrax's Sentinel's Wit can increase Malachite's Instinct and Initiative by 20.",
+    "explanation": "Syrax's Sentinel's Wit can increase Malachite's Instinct and Initiative by 20 flat.",
     "id": "direct-stat-support-syrax-sentinels-wit-malachite-instinct-initiative",
     "interactionScope": "cross-dragon",
     "matchedOutputCapabilityIds": [],
@@ -21105,12 +20991,12 @@
     ],
     "damageScope": null,
     "effects": [
-      "Instinct unknown%",
-      "Intelligence unknown%"
+      "Instinct 13%",
+      "Intelligence 13%"
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final value cannot be calculated because final combat formulas and stacking order are not fully verified.",
-    "explanation": "Syrax's Mindful Synergy can increase Malachite's Intelligence and Instinct by unknown%.",
+    "explanation": "Syrax's Mindful Synergy can increase Malachite's Intelligence and Instinct by 13%.",
     "id": "direct-stat-support-syrax-mindful-synergy-malachite-intelligence-instinct",
     "interactionScope": "cross-dragon",
     "matchedOutputCapabilityIds": [],
@@ -21192,12 +21078,12 @@
     ],
     "damageScope": null,
     "effects": [
-      "Instinct unknown%",
-      "Intelligence unknown%"
+      "Instinct 13%",
+      "Intelligence 13%"
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final value cannot be calculated because final combat formulas and stacking order are not fully verified.",
-    "explanation": "Syrax's Mindful Synergy can increase Sheepstealer's Intelligence and Instinct by unknown%.",
+    "explanation": "Syrax's Mindful Synergy can increase Sheepstealer's Intelligence and Instinct by 13%.",
     "id": "direct-stat-support-syrax-mindful-synergy-sheepstealer-intelligence-instinct",
     "interactionScope": "cross-dragon",
     "matchedOutputCapabilityIds": [],
@@ -21279,7 +21165,7 @@
     ],
     "damageScope": null,
     "effects": [
-      "Initiative unknown%"
+      "Initiative 12%"
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final value cannot be calculated because final combat formulas and stacking order are not fully verified.",
@@ -21353,7 +21239,7 @@
     ],
     "damageScope": null,
     "effects": [
-      "Initiative unknown%"
+      "Initiative 12%"
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final value cannot be calculated because final combat formulas and stacking order are not fully verified.",
@@ -21427,7 +21313,7 @@
     ],
     "damageScope": null,
     "effects": [
-      "Strength 12.5%"
+      "Strength 25%"
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final value cannot be calculated because final combat formulas and stacking order are not fully verified.",
@@ -21501,7 +21387,7 @@
     ],
     "damageScope": null,
     "effects": [
-      "Strength 12.5%"
+      "Strength 25%"
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final value cannot be calculated because final combat formulas and stacking order are not fully verified.",
@@ -22627,7 +22513,9 @@
   },
   {
     "assumptions": [
-      "Threshold tiers are alternatives based on current Troop Capacity and selected Habit Level; cumulative stacking is not assumed."
+      "Cumulative stacking is not assumed.",
+      "Exact interaction between overlapping threshold tiers is unresolved.",
+      "Threshold applicability depends on each recipient current Troop Capacity."
     ],
     "channel": "damage-received",
     "confidence": "confirmed",
@@ -22643,9 +22531,9 @@
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final value cannot be calculated because final combat formulas and stacking order are not fully verified.",
-    "explanation": "Trial by Flame can reduce Fire Damage Received for allies below 75%, 50% and 25% Troop Capacity. The applicable reduction depends on the selected Habit Level and current threshold.",
-    "id": "defensive-ally-support-vermax-trial-by-flame-syrax",
-    "interactionScope": "cross-dragon",
+    "explanation": "Trial by Flame can reduce Fire Damage Received for Caraxes and Syrax when each satisfies a Troop Capacity threshold. Below 75% Troop Capacity: Fire Damage Received -10%; Below 50% Troop Capacity: Fire Damage Received -20%; Below 25% Troop Capacity: Fire Damage Received -30%. Threshold applicability depends on each recipient's current Troop Capacity; exact interaction between overlapping threshold tiers is unresolved.",
+    "id": "defensive-ally-support-vermax-trial-by-flame-grouped",
+    "interactionScope": "targeting-fact",
     "matchedOutputCapabilityIds": [],
     "matchKind": "defensive-ally-support",
     "modifierCapabilityId": null,
@@ -22655,7 +22543,7 @@
       "vermax-trial-by-flame-trial-below-75-fire-reduction-damage-received-received-modifier"
     ],
     "recipientAbilityId": null,
-    "recipientDragonId": "syrax",
+    "recipientDragonId": null,
     "recipientEvidenceIds": [],
     "requirements": [
       {
@@ -22694,73 +22582,6 @@
         "satisfied": false
       },
       {
-        "actual": "provider vanguard, recipient left-flank",
-        "evidenceIds": [
-          "vermax-trial-by-flame-2026-06-23"
-        ],
-        "expected": "all allies matching threshold condition",
-        "id": "vermax-trial-by-flame-trial-below-50-fire-reduction-damage-received-received-modifier-targeting-left-flank",
-        "label": "Position compatibility",
-        "notes": [],
-        "satisfied": true
-      },
-      {
-        "actual": "provider vanguard, recipient left-flank",
-        "evidenceIds": [
-          "vermax-trial-by-flame-2026-06-23"
-        ],
-        "expected": "all allies matching threshold condition",
-        "id": "vermax-trial-by-flame-trial-below-25-fire-reduction-damage-received-received-modifier-targeting-left-flank",
-        "label": "Position compatibility",
-        "notes": [],
-        "satisfied": true
-      }
-    ],
-    "ruleId": "defensive-ally-support",
-    "sourceAbilityId": "vermax-trial-by-flame",
-    "sourceDragonId": "vermax",
-    "sourceEvidenceIds": [
-      "vermax-trial-by-flame-2026-06-23"
-    ],
-    "status": "potential",
-    "targetSelectionGroup": null,
-    "title": "Fire Damage Received Support",
-    "unresolvedQuestions": []
-  },
-  {
-    "assumptions": [
-      "Threshold tiers are alternatives based on current Troop Capacity and selected Habit Level; cumulative stacking is not assumed."
-    ],
-    "channel": "damage-received",
-    "confidence": "confirmed",
-    "conflicts": [
-      "Vermax - Trial by Flame Habit unlock requirement: expected Star Rank 2+, actual Star Rank 1",
-      "Vermax - Trial by Flame Selected Habit Level: expected Habit Level 1+ or preview, actual preview enabled"
-    ],
-    "damageScope": "fire",
-    "effects": [
-      "Fire Damage Received decrease 10%",
-      "Fire Damage Received decrease 20%",
-      "Fire Damage Received decrease 30%"
-    ],
-    "exactResultKnown": false,
-    "exactResultUnknownReason": "Exact final value cannot be calculated because final combat formulas and stacking order are not fully verified.",
-    "explanation": "Trial by Flame can reduce Fire Damage Received for allies below 75%, 50% and 25% Troop Capacity. The applicable reduction depends on the selected Habit Level and current threshold.",
-    "id": "defensive-ally-support-vermax-trial-by-flame-caraxes",
-    "interactionScope": "cross-dragon",
-    "matchedOutputCapabilityIds": [],
-    "matchKind": "defensive-ally-support",
-    "modifierCapabilityId": null,
-    "modifierCapabilityIds": [
-      "vermax-trial-by-flame-trial-below-25-fire-reduction-damage-received-received-modifier",
-      "vermax-trial-by-flame-trial-below-50-fire-reduction-damage-received-received-modifier",
-      "vermax-trial-by-flame-trial-below-75-fire-reduction-damage-received-received-modifier"
-    ],
-    "recipientAbilityId": null,
-    "recipientDragonId": "caraxes",
-    "recipientEvidenceIds": [],
-    "requirements": [
-      {
         "actual": "provider vanguard, recipient right-flank",
         "evidenceIds": [
           "vermax-trial-by-flame-2026-06-23"
@@ -22772,28 +22593,15 @@
         "satisfied": true
       },
       {
-        "actual": "Star Rank 1",
+        "actual": "provider vanguard, recipient left-flank",
         "evidenceIds": [
           "vermax-trial-by-flame-2026-06-23"
         ],
-        "expected": "Star Rank 2+",
-        "id": "vermax-vermax-trial-by-flame-star-rank",
-        "label": "Vermax - Trial by Flame Habit unlock requirement",
+        "expected": "all allies matching threshold condition",
+        "id": "vermax-trial-by-flame-trial-below-50-fire-reduction-damage-received-received-modifier-targeting-left-flank",
+        "label": "Position compatibility",
         "notes": [],
-        "satisfied": false
-      },
-      {
-        "actual": "preview enabled",
-        "evidenceIds": [
-          "vermax-trial-by-flame-2026-06-23"
-        ],
-        "expected": "Habit Level 1+ or preview",
-        "id": "vermax-vermax-trial-by-flame-habit-level",
-        "label": "Vermax - Trial by Flame Selected Habit Level",
-        "notes": [
-          "Locked Habit capabilities are potential in preview mode, not active for current roster."
-        ],
-        "satisfied": false
+        "satisfied": true
       },
       {
         "actual": "provider vanguard, recipient right-flank",
@@ -22802,6 +22610,17 @@
         ],
         "expected": "all allies matching threshold condition",
         "id": "vermax-trial-by-flame-trial-below-50-fire-reduction-damage-received-received-modifier-targeting-right-flank",
+        "label": "Position compatibility",
+        "notes": [],
+        "satisfied": true
+      },
+      {
+        "actual": "provider vanguard, recipient left-flank",
+        "evidenceIds": [
+          "vermax-trial-by-flame-2026-06-23"
+        ],
+        "expected": "all allies matching threshold condition",
+        "id": "vermax-trial-by-flame-trial-below-25-fire-reduction-damage-received-received-modifier-targeting-left-flank",
         "label": "Position compatibility",
         "notes": [],
         "satisfied": true
@@ -22825,9 +22644,19 @@
       "vermax-trial-by-flame-2026-06-23"
     ],
     "status": "potential",
-    "targetSelectionGroup": null,
+    "targetSelectionGroup": {
+      "eligibleRecipientDragonIds": [
+        "caraxes",
+        "syrax"
+      ],
+      "selection": "all-matching-condition",
+      "selectionUncertain": false,
+      "targetCount": 2
+    },
     "title": "Fire Damage Received Support",
-    "unresolvedQuestions": []
+    "unresolvedQuestions": [
+      "Exact interaction between overlapping Trial by Flame threshold tiers is unresolved."
+    ]
   },
   {
     "assumptions": [],
@@ -22839,12 +22668,12 @@
     ],
     "damageScope": null,
     "effects": [
-      "Instinct unknown%",
-      "Intelligence unknown%"
+      "Instinct 13%",
+      "Intelligence 13%"
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final value cannot be calculated because final combat formulas and stacking order are not fully verified.",
-    "explanation": "Syrax's Mindful Synergy can increase Vermax's Intelligence and Instinct by unknown%.",
+    "explanation": "Syrax's Mindful Synergy can increase Vermax's Intelligence and Instinct by 13%.",
     "id": "direct-stat-support-syrax-mindful-synergy-vermax-intelligence-instinct",
     "interactionScope": "cross-dragon",
     "matchedOutputCapabilityIds": [],
@@ -22926,12 +22755,12 @@
     ],
     "damageScope": null,
     "effects": [
-      "Instinct unknown%",
-      "Intelligence unknown%"
+      "Instinct 13%",
+      "Intelligence 13%"
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final value cannot be calculated because final combat formulas and stacking order are not fully verified.",
-    "explanation": "Syrax's Mindful Synergy can increase Caraxes's Intelligence and Instinct by unknown%.",
+    "explanation": "Syrax's Mindful Synergy can increase Caraxes's Intelligence and Instinct by 13%.",
     "id": "direct-stat-support-syrax-mindful-synergy-caraxes-intelligence-instinct",
     "interactionScope": "cross-dragon",
     "matchedOutputCapabilityIds": [],
@@ -23013,7 +22842,7 @@
     ],
     "damageScope": null,
     "effects": [
-      "Initiative unknown%"
+      "Initiative 12%"
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final value cannot be calculated because final combat formulas and stacking order are not fully verified.",
@@ -23087,7 +22916,7 @@
     ],
     "damageScope": null,
     "effects": [
-      "Initiative unknown%"
+      "Initiative 12%"
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final value cannot be calculated because final combat formulas and stacking order are not fully verified.",
@@ -23163,7 +22992,7 @@
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final value cannot be calculated because final combat formulas and stacking order are not fully verified.",
-    "explanation": "Vermax's Warrior's Zeal increases Syrax's Instinct and Initiative by 20.",
+    "explanation": "Vermax's Warrior's Zeal increases Syrax's Instinct and Initiative by 20 flat.",
     "id": "direct-stat-support-vermax-warriors-zeal-syrax-instinct-initiative",
     "interactionScope": "cross-dragon",
     "matchedOutputCapabilityIds": [],
@@ -23260,12 +23089,12 @@
     ],
     "damageScope": null,
     "effects": [
-      "Initiative unknown%",
-      "Instinct unknown%"
+      "Initiative 18%",
+      "Instinct 36%"
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final value cannot be calculated because final combat formulas and stacking order are not fully verified.",
-    "explanation": "Vermax's Reactive Instincts can increase Syrax's Instinct and Initiative by unknown%.",
+    "explanation": "Vermax's Reactive Instincts can increase Syrax's Instinct by 36% and Initiative by 18%.",
     "id": "direct-stat-support-vermax-reactive-instincts-syrax-instinct-initiative",
     "interactionScope": "cross-dragon",
     "matchedOutputCapabilityIds": [],
@@ -25097,7 +24926,7 @@
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final value cannot be calculated because final combat formulas and stacking order are not fully verified.",
-    "explanation": "Syrax's Sentinel's Wit can increase Sheepstealer's Instinct and Initiative by 20.",
+    "explanation": "Syrax's Sentinel's Wit can increase Sheepstealer's Instinct and Initiative by 20 flat.",
     "id": "direct-stat-support-syrax-sentinels-wit-sheepstealer-instinct-initiative",
     "interactionScope": "cross-dragon",
     "matchedOutputCapabilityIds": [],
@@ -25188,12 +25017,12 @@
     ],
     "damageScope": null,
     "effects": [
-      "Instinct unknown%",
-      "Intelligence unknown%"
+      "Instinct 13%",
+      "Intelligence 13%"
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final value cannot be calculated because final combat formulas and stacking order are not fully verified.",
-    "explanation": "Syrax's Mindful Synergy can increase Sheepstealer's Intelligence and Instinct by unknown%.",
+    "explanation": "Syrax's Mindful Synergy can increase Sheepstealer's Intelligence and Instinct by 13%.",
     "id": "direct-stat-support-syrax-mindful-synergy-sheepstealer-intelligence-instinct",
     "interactionScope": "cross-dragon",
     "matchedOutputCapabilityIds": [],
@@ -25275,12 +25104,12 @@
     ],
     "damageScope": null,
     "effects": [
-      "Instinct unknown%",
-      "Intelligence unknown%"
+      "Instinct 13%",
+      "Intelligence 13%"
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final value cannot be calculated because final combat formulas and stacking order are not fully verified.",
-    "explanation": "Syrax's Mindful Synergy can increase Caraxes's Intelligence and Instinct by unknown%.",
+    "explanation": "Syrax's Mindful Synergy can increase Caraxes's Intelligence and Instinct by 13%.",
     "id": "direct-stat-support-syrax-mindful-synergy-caraxes-intelligence-instinct",
     "interactionScope": "cross-dragon",
     "matchedOutputCapabilityIds": [],
@@ -25362,7 +25191,7 @@
     ],
     "damageScope": null,
     "effects": [
-      "Initiative unknown%"
+      "Initiative 12%"
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final value cannot be calculated because final combat formulas and stacking order are not fully verified.",
@@ -25436,7 +25265,7 @@
     ],
     "damageScope": null,
     "effects": [
-      "Initiative unknown%"
+      "Initiative 12%"
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final value cannot be calculated because final combat formulas and stacking order are not fully verified.",
@@ -25514,7 +25343,7 @@
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final value cannot be calculated because final combat formulas and stacking order are not fully verified.",
-    "explanation": "Caraxes's Hunter's Wrath can increase Syrax's Strength and Initiative by 20.",
+    "explanation": "Caraxes's Hunter's Wrath can increase Syrax's Strength and Initiative by 20 flat.",
     "id": "direct-stat-support-caraxes-hunters-wrath-syrax-strength-initiative",
     "interactionScope": "cross-dragon",
     "matchedOutputCapabilityIds": [],

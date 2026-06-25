@@ -6760,7 +6760,7 @@
     "recipient-side-amplification",
     "enemy-debuff"
   ],
-  "normalViewAggregationBehavior": "One support modifier can match multiple recipient outputs and aggregate into one normal Formation Builder card. Sibling stat effects from the same ability aggregate into one direct stat support card while stat-scaling child traces remain stat-specific. Single-target and highest-stat effects with multiple eligible recipients are grouped as target-selection interactions, and periodic damage is annotated under its damage channel rather than duplicated as a second normal buff.",
+  "normalViewAggregationBehavior": "One support modifier can match multiple recipient outputs and aggregate into one normal Formation Builder card. Sibling stat effects from the same ability aggregate into one direct stat support card while preserving per-stat values when sibling values differ. Single-target and highest-stat effects with multiple eligible recipients are grouped as target-selection interactions, Trial by Flame is grouped by selected recipients and threshold tiers, and periodic damage is annotated under its damage channel rather than duplicated as a second normal buff. Global normal unmet requirements are a pure current-formation summary: hard selected Trait placement failures first, concrete unowned-card progression blockers only when placement and targeting pass, semantic deduplication, and no blockers already owned by visible normal cards.",
   "numericalScorePolicy": "Synergy score remains null; exact formulas are not invented.",
   "outputCapabilityStructure": [
     "dragonId",

@@ -33,8 +33,8 @@ describe('formation analysis normalization', () => {
     expect(warrior?.explanation).toContain('Instinct and Initiative');
     expect(sentinel?.explanation).toContain('Instinct and Initiative');
     expect(hunter?.explanation).toContain('Strength and Initiative');
-    expect(clever?.explanation).toContain('Intelligence and Initiative');
-    expect(reactive?.explanation).toContain('Instinct and Initiative');
+    expect(clever?.explanation).toContain('Intelligence by 44% and Initiative by 25%');
+    expect(reactive?.explanation).toContain('Instinct by 36% and Initiative by 18%');
     expect(reactive?.modifierCapabilityIds).toEqual(expect.arrayContaining([
       'vermax-reactive-instincts-reactive-instincts-instinct-stat-dealt-modifier',
       'vermax-reactive-instincts-reactive-instincts-initiative-stat-dealt-modifier',
@@ -59,7 +59,7 @@ describe('formation analysis normalization', () => {
       )).toBe(true);
       expect(championRequirements.some((requirement) => requirement.label === 'Provider position requirement' && requirement.satisfied === true)).toBe(true);
       expect(championRequirements.some((requirement) => requirement.label === 'Position compatibility' && requirement.satisfied === true)).toBe(true);
-      expect(result.unmetRequirements.map((item) => item.description)).toContain(
+      expect(result.unmetRequirements.map((item) => `${item.title}: ${item.description}`)).toContain(
         "Champion's Brilliance Dragon Level requirement: Seasmoke is Level 1 and requires Level 16.",
       );
     }
@@ -78,7 +78,7 @@ describe('formation analysis normalization', () => {
 
     const previewTrace = normalTraces('7', preview).find((trace) => trace.sourceAbilityId === 'vermax-trial-by-flame');
     expect(previewTrace?.title).toBe('Fire Damage Received Support');
-    expect(previewTrace?.explanation).toContain('below 75%, 50% and 25% Troop Capacity');
+    expect(previewTrace?.explanation).toContain('Below 75% Troop Capacity: Fire Damage Received -10%');
     expect(previewTrace?.title).not.toBe('Damage Received Support');
   });
 
