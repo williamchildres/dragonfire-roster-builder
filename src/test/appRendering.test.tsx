@@ -93,13 +93,12 @@ describe('Dragonfire Roster Lab app', () => {
     expect(provides.querySelectorAll('.card-interaction-item').length).toBeGreaterThan(3);
   });
 
-  it('keeps compact interaction summaries accessible while preserving full trace detail', async () => {
+  it('keeps compact interaction summaries readable and exposes full details', async () => {
     const user = userEvent.setup();
     render(<App />);
 
     await user.click(screen.getAllByRole('button', { name: /formation builder/i })[0]!);
     await user.click(screen.getByLabelText(/include unowned dragons/i));
-    await user.click(screen.getByLabelText(/preview max-rank interactions/i));
     const selectors = screen.getAllByLabelText('Dragon');
     await user.selectOptions(selectors[0]!, 'sheepstealer');
     await user.selectOptions(selectors[1]!, 'caraxes');
@@ -107,16 +106,38 @@ describe('Dragonfire Roster Lab app', () => {
 
     const caraxes = screen.getByRole('article', { name: 'Vanguard' });
     const receives = within(caraxes).getByRole('region', { name: 'Receives' });
-    await user.click(within(receives).getByRole('button', { name: /view \d+ more/i }));
+    const blazingFuryItem = within(receives).getByText('Blazing Fury').closest('.card-interaction-item');
+    expect(blazingFuryItem).not.toBeNull();
+    expect(blazingFuryItem).toHaveTextContent('Conditional');
+    expect(blazingFuryItem).toHaveTextContent('Syrax → Caraxes');
+    expect(blazingFuryItem).toHaveTextContent('Fire Damage support; one of two eligible recipients.');
+    expect(blazingFuryItem).toHaveTextContent('May receive First-Strike; Infernal Burst deals 1.5× while active.');
+    expect(blazingFuryItem).toHaveTextContent('Target not guaranteed');
+    expect(blazingFuryItem?.querySelector('.interaction-status-bubble')).toBeNull();
 
-    const candidate = within(receives).getByRole('button', {
-      name: /Blazing Fury.*target not guaranteed.*Full detail/i,
-    });
-    expect(candidate).toHaveTextContent('Preview');
-    expect(candidate).toHaveTextContent('Syrax');
-    expect(candidate).toHaveTextContent('Caraxes');
-    expect(candidate).toHaveTextContent('Blazing Fury');
-    expect(candidate).toHaveTextContent('Target not guaranteed');
+    const syrax = screen.getByRole('article', { name: 'Right Flank' });
+    const syraxProvides = within(syrax).getByRole('region', { name: 'Provides' });
+    const providerBlazingFuryItem = within(syraxProvides).getByText('Blazing Fury').closest('.card-interaction-item');
+    expect(providerBlazingFuryItem).not.toBeNull();
+    expect(providerBlazingFuryItem).toHaveTextContent('One Fire recipient is selected: Caraxes or Sheepstealer.');
+    expect(providerBlazingFuryItem).toHaveTextContent('Caraxes may also receive First-Strike for Infernal Burst.');
+    expect(providerBlazingFuryItem).toHaveTextContent('Target not guaranteed');
+
+    const details = within(blazingFuryItem as HTMLElement).getByRole('button', { name: 'Details' });
+    expect(details).toHaveAttribute('aria-expanded', 'false');
+    await user.click(details);
+    expect(within(blazingFuryItem as HTMLElement).getByRole('button', { name: 'Hide details' })).toHaveAttribute(
+      'aria-expanded',
+      'true',
+    );
+    expect(blazingFuryItem).toHaveTextContent('Full explanation');
+    expect(blazingFuryItem).toHaveTextContent('Confidence');
+
+    await user.keyboard('{Enter}');
+    expect(within(blazingFuryItem as HTMLElement).getByRole('button', { name: 'Details' })).toHaveAttribute(
+      'aria-expanded',
+      'false',
+    );
   });
 
   it('renders consistent empty Receives and Provides sections for low-content cards', async () => {

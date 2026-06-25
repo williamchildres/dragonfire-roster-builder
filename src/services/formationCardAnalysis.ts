@@ -1,5 +1,5 @@
 import { FORMATION_POSITIONS, TROOP_TYPES, type Dragon, type FormationPosition, type TroopType } from '../models/dragon';
-import type { FormationAnalysisInput, RequirementTrace, SynergyTrace, TraceStatus } from '../models/synergy';
+import type { FormationAnalysisInput, RequirementTrace, SynergyTrace, TraceConfidence, TraceStatus } from '../models/synergy';
 import { isNormalSynergyTrace } from './synergyTrace';
 
 export type FormationCardInteractionState = 'active' | 'conditional' | 'preview' | 'unknown' | 'blocked';
@@ -12,18 +12,26 @@ export interface FormationCardInteraction {
   sourceName: string;
   recipientName: string | null;
   abilityName: string;
+  effectTitle: string;
   title: string;
   summary: string;
+  summaryLines: string[];
   detail: string;
+  details: string[];
+  effects: string[];
+  requirements: RequirementTrace[];
+  confidence: TraceConfidence | 'mixed';
   state: FormationCardInteractionState;
   status: TraceStatus;
   isCandidate: boolean;
   candidateIndex: number | null;
   candidateTotal: number | null;
   targetLabel: string | null;
+  targetSummary: string | null;
   isPreview: boolean;
   isEnemyFacing: boolean;
   traceId: string;
+  traceIds: string[];
 }
 
 export interface FormationTraitStatus {
@@ -86,6 +94,9 @@ export function buildFormationCardPresentation(
   for (const trace of normalTraces) {
     const source = dragonById.get(trace.sourceDragonId);
     if (!source || !selectedIds.has(trace.sourceDragonId) || trace.interactionScope === 'internal') {
+      continue;
+    }
+    if (isRedundantBlockedTraitTrace(trace, source, options.previewEnabled === true)) {
       continue;
     }
 
@@ -152,8 +163,8 @@ export function buildFormationCardPresentation(
     const dragonId = formation[position];
     const dragon = dragonId ? dragonById.get(dragonId) ?? null : null;
     const mapped = dragon ? byDragon.get(dragon.id) : null;
-    const receives = prioritizeInteractions(mapped?.receives ?? []);
-    const provides = prioritizeInteractions(dedupeInteractions(mapped?.provides ?? []));
+    const receives = prepareInteractions(mapped?.receives ?? [], 'receives');
+    const provides = prepareInteractions(mapped?.provides ?? [], 'provides');
     return {
       position,
       dragonId: dragon?.id ?? null,
@@ -244,12 +255,12 @@ function toCardInteraction({
   const abilityName = getAbilityName(source, trace.sourceAbilityId);
   const state = traceState(trace, previewEnabled);
   const detail = canonicalCardText(trace.explanation, allDragons);
-  const candidateText = isCandidate
-    ? `One of ${candidateTotal ?? 0} eligible recipients; target not guaranteed.`
-    : trace.targetSelectionGroup
-      ? `One of ${candidateTotal ?? trace.targetSelectionGroup.eligibleRecipientDragonIds.length} eligible recipients is selected; target not guaranteed.`
-      : null;
-  const summary = candidateText ?? summarizeTrace(trace, source, recipient, detail);
+  const summaryLines = summarizeTrace(trace, source, recipient, detail, {
+    isCandidate,
+    candidateTotal,
+    targetLabel,
+  });
+  const summary = compactSummaryText(summaryLines, candidateTotal);
   const relationshipId = [
     trace.sourceDragonId,
     trace.sourceAbilityId ?? trace.ruleId,
@@ -266,37 +277,65 @@ function toCardInteraction({
     sourceName: source.name,
     recipientName: recipient?.name ?? null,
     abilityName,
+    effectTitle: interactionEffectTitle(abilityName, trace),
     title: trace.title,
     summary,
+    summaryLines,
     detail,
+    details: [detail],
+    effects: trace.effects,
+    requirements: trace.requirements,
+    confidence: trace.confidence,
     state,
     status: trace.status,
     isCandidate,
     candidateIndex,
     candidateTotal,
     targetLabel,
+    targetSummary: trace.targetSelectorSummary ?? null,
     isPreview: state === 'preview',
     isEnemyFacing: isEnemyFacingTrace(trace),
     traceId: trace.id,
+    traceIds: [trace.id],
   };
 }
 
-function summarizeTrace(trace: SynergyTrace, source: Dragon, recipient: Dragon | null, detail: string): string {
+function summarizeTrace(
+  trace: SynergyTrace,
+  source: Dragon,
+  recipient: Dragon | null,
+  detail: string,
+  target: { isCandidate: boolean; candidateTotal: number | null; targetLabel: string | null },
+): string[] {
+  if (target.isCandidate && trace.channel) {
+    return [
+      `${formatToken(trace.channel)} support; one of ${numberWord(target.candidateTotal ?? 0)} eligible recipients.`,
+    ];
+  }
+  if (trace.targetSelectionGroup && trace.channel) {
+    const targetNames = target.targetLabel ? `: ${target.targetLabel}` : '';
+    return [`One ${formatToken(trace.channel).replace(' Damage', '')} recipient is selected${targetNames}.`];
+  }
+  if (/First-Strike enables Infernal Burst/i.test(trace.title) || /First-Strike.*Infernal Burst/i.test(detail)) {
+    return ['May receive First-Strike; Infernal Burst deals 1.5× while active.'];
+  }
+  if (/Slow enables Strategic Revival/i.test(trace.title) || /Slow.*Strategic Revival/i.test(detail)) {
+    return ['Slow can increase Strategic Revival Recovery to 1.5×.'];
+  }
   if (trace.matchKind === 'status-condition-enablement') {
-    return detail.replace(`${source.name}'s `, '').replace(recipient ? `${recipient.name}'s ` : '', '');
+    return [detail.replace(`${source.name}'s `, '').replace(recipient ? `${recipient.name}'s ` : '', '').replaceAll('1.5x', '1.5×')];
   }
   if (trace.modifierRole === 'enemy-debuff' || trace.matchKind === 'enemy-mitigation-reduction') {
-    return `${getAbilityName(source, trace.sourceAbilityId)} lowers enemy-facing mitigation for the team.`;
+    return [enemyFacingSummary(trace)];
   }
   if (trace.channel === 'stat') {
-    const statLine = detail.match(/increase .*?'s (.+)$/)?.[1];
-    return statLine ? statLine.replace(/ by /g, ' ') : detail;
+    return [formatStatEffects(trace.effects) ?? formatStatDetail(detail) ?? detail];
   }
   if (trace.channel) {
     const channel = formatToken(trace.damageScope ? `${trace.damageScope}-damage-received` : trace.channel);
-    return `${channel} support${recipient ? ` for ${recipient.name}` : ''}.`;
+    return [`${channel} support${recipient ? ` for ${recipient.name}` : ''}.`];
   }
-  return detail;
+  return [detail.replaceAll('1.5x', '1.5×')];
 }
 
 function traceState(trace: SynergyTrace, previewEnabled = false): FormationCardInteractionState {
@@ -419,6 +458,13 @@ function deriveTeamAffinitySummary(team: Dragon[]): FormationAffinityTeamSummary
   };
 }
 
+function prepareInteractions(
+  interactions: FormationCardInteraction[],
+  direction: 'receives' | 'provides',
+): FormationCardInteraction[] {
+  return prioritizeInteractions(aggregateInteractions(dedupeInteractions(interactions), direction));
+}
+
 function prioritizeInteractions(interactions: FormationCardInteraction[]): FormationCardInteraction[] {
   return dedupeInteractions(interactions).sort((left, right) => {
     const state = interactionStatePriority(left.state) - interactionStatePriority(right.state);
@@ -429,6 +475,114 @@ function prioritizeInteractions(interactions: FormationCardInteraction[]): Forma
       `${right.abilityName}${right.recipientName ?? ''}${right.summary}`,
     );
   });
+}
+
+function aggregateInteractions(
+  interactions: FormationCardInteraction[],
+  direction: 'receives' | 'provides',
+): FormationCardInteraction[] {
+  const grouped = new Map<string, FormationCardInteraction[]>();
+  for (const interaction of interactions) {
+    const key =
+      direction === 'receives'
+        ? [
+            interaction.sourceDragonId,
+            interaction.abilityName,
+            interaction.recipientDragonId ?? interaction.targetLabel ?? 'team',
+            interaction.state,
+          ].join('|')
+        : [interaction.sourceDragonId, interaction.abilityName, interaction.state].join('|');
+    grouped.set(key, [...(grouped.get(key) ?? []), interaction]);
+  }
+
+  return [...grouped.values()].flatMap((items) => {
+    const shouldAggregate =
+      items.length > 1 &&
+      (direction === 'receives' ||
+        items.some((item) => item.candidateTotal !== null || item.targetLabel !== null || item.isCandidate));
+    return shouldAggregate ? [mergeInteractions(items, direction)] : items;
+  });
+}
+
+function mergeInteractions(
+  items: FormationCardInteraction[],
+  direction: 'receives' | 'provides',
+): FormationCardInteraction {
+  const first = items[0]!;
+  const targetNames = unique(
+    items.flatMap((item) =>
+      item.targetLabel
+        ? item.targetLabel.split(/\s+or\s+/)
+        : item.recipientName
+          ? [item.recipientName]
+          : [],
+    ),
+  );
+  const summaryLines = mergedSummaryLines(items, direction, targetNames);
+  const mergedCandidateTotal =
+    Math.max(...items.map((item) => item.candidateTotal ?? 0)) ||
+    (direction === 'provides' && targetNames.length > 1 ? targetNames.length : first.candidateTotal);
+  const requirements = uniqueBy(
+    items.flatMap((item) => item.requirements),
+    (requirement) => [
+      requirement.id,
+      requirement.label,
+      requirement.expected,
+      requirement.actual ?? 'unknown',
+      String(requirement.satisfied),
+    ].join('|'),
+  );
+  const confidences = unique(items.map((item) => item.confidence));
+
+  return {
+    ...first,
+    id: `aggregate__${items.map((item) => item.id).join('__')}`,
+    relationshipId: first.relationshipId,
+    targetLabel: direction === 'provides' && targetNames.length > 0 ? targetNames.join(' or ') : first.targetLabel,
+    effectTitle: first.abilityName,
+    title: unique(items.map((item) => item.title)).join(' + '),
+    summaryLines,
+    summary: compactSummaryText(summaryLines, mergedCandidateTotal),
+    detail: items.map((item) => item.detail).join('\n\n'),
+    details: unique(items.flatMap((item) => item.details)),
+    effects: unique(items.flatMap((item) => item.effects)),
+    requirements,
+    confidence: confidences.length === 1 ? confidences[0]! : 'mixed',
+    isCandidate: items.some((item) => item.isCandidate),
+    candidateIndex: first.candidateIndex,
+    candidateTotal: mergedCandidateTotal,
+    targetSummary: unique(items.map((item) => item.targetSummary).filter((value): value is string => Boolean(value))).join(' | ') || null,
+    isEnemyFacing: items.some((item) => item.isEnemyFacing),
+    traceIds: unique(items.flatMap((item) => item.traceIds)),
+  };
+}
+
+function mergedSummaryLines(
+  items: FormationCardInteraction[],
+  direction: 'receives' | 'provides',
+  targetNames: string[],
+): string[] {
+  const lines = unique(items.flatMap((item) => item.summaryLines));
+  if (direction === 'provides' && targetNames.length > 0) {
+    const sourceSelection = lines.find((line) => /recipient is selected/i.test(line));
+    const rest = lines.filter((line) => line !== sourceSelection);
+    return [
+      sourceSelection ?? `One recipient is selected: ${targetNames.join(' or ')}.`,
+      ...rest.map((line) =>
+        /First-Strike.*Infernal Burst/i.test(line) && targetNames.includes('Caraxes')
+          ? 'Caraxes may also receive First-Strike for Infernal Burst.'
+          : line,
+      ),
+    ];
+  }
+  return lines;
+}
+
+function compactSummaryText(summaryLines: string[], candidateTotal: number | null): string {
+  return [
+    ...summaryLines,
+    candidateTotal && candidateTotal > 1 ? 'Target not guaranteed.' : null,
+  ].filter(Boolean).join(' ');
 }
 
 function dedupeInteractions(interactions: FormationCardInteraction[]): FormationCardInteraction[] {
@@ -445,6 +599,127 @@ function dedupeInteractions(interactions: FormationCardInteraction[]): Formation
     }
   }
   return [...byKey.values()];
+}
+
+function isRedundantBlockedTraitTrace(trace: SynergyTrace, source: Dragon, previewEnabled: boolean): boolean {
+  if (source.trait?.id !== trace.sourceAbilityId || traceState(trace, previewEnabled) !== 'blocked') {
+    return false;
+  }
+  return trace.requirements.some(
+    (requirement) =>
+      requirement.satisfied === false &&
+      /position requirement|provider position requirement|position compatibility/i.test(requirement.label),
+  );
+}
+
+function interactionEffectTitle(abilityName: string, trace: SynergyTrace): string {
+  const purpose = interactionPurpose(trace);
+  return purpose ? `${abilityName} - ${purpose}` : abilityName;
+}
+
+function interactionPurpose(trace: SynergyTrace): string | null {
+  if (trace.targetSelectionGroup && trace.channel) {
+    return `${formatToken(trace.channel)} support`;
+  }
+  if (/First-Strike enables Infernal Burst/i.test(trace.title)) {
+    return 'First-Strike support';
+  }
+  if (/Slow enables Strategic Revival/i.test(trace.title)) {
+    return 'Slow support';
+  }
+  if (trace.matchKind === 'enemy-mitigation-reduction') {
+    return 'Enemy mitigation reduction';
+  }
+  if (trace.channel === 'stat') {
+    return 'Stat support';
+  }
+  if (trace.channel) {
+    return `${formatToken(trace.channel)} support`;
+  }
+  return trace.title === 'Stat Support' ? 'Stat support' : trace.title || null;
+}
+
+function formatStatEffects(effects: string[]): string | null {
+  const parsed = effects.flatMap((effect) => {
+    const match = effect.match(/^(.+?)\s+(\d+)\s+(flat|percent)$/i);
+    if (!match) {
+      return [];
+    }
+    return [{
+      stat: match[1]!,
+      value: `${match[3]!.toLowerCase() === 'flat' ? '+' : '+'}${match[2]}${match[3]!.toLowerCase() === 'percent' ? '%' : ''}`,
+    }];
+  });
+  if (parsed.length === 0) {
+    return null;
+  }
+  const order = ['Strength', 'Intelligence', 'Instinct', 'Initiative'];
+  const sorted = parsed.sort((left, right) => order.indexOf(left.stat) - order.indexOf(right.stat));
+  return `${joinEnglishList(sorted.map((item) => `${item.stat} ${item.value}`))}.`;
+}
+
+function formatStatDetail(detail: string): string | null {
+  const valueMatch = detail.match(/increase .*?'s (.+?) by (\d+)(%| flat)/i);
+  if (valueMatch) {
+    const stats = valueMatch[1]!
+      .split(/\s+and\s+|,\s*/)
+      .map((stat) => stat.trim())
+      .filter(Boolean);
+    const suffix = valueMatch[3] === '%' ? '%' : '';
+    return `${joinEnglishList(stats.map((stat) => `${stat} +${valueMatch[2]}${suffix}`))}.`;
+  }
+  const supportMatch = detail.match(/increase .*?'s ([A-Za-z]+)(?:, which supports (.+))?\./i);
+  if (supportMatch?.[2]) {
+    return `${supportMatch[1]} support for ${supportMatch[2].replace(/: /g, ' ')}.`;
+  }
+  if (supportMatch?.[1]) {
+    return `${supportMatch[1]} support.`;
+  }
+  return null;
+}
+
+function enemyFacingSummary(trace: SynergyTrace): string {
+  const lowered = trace.effects.join(' ').match(/(Strength|Intelligence|Instinct|Initiative)/i)?.[1];
+  const channel = trace.sourceAbilityId?.includes('battle-dread') ? 'Fire Damage' : trace.channel ? formatToken(trace.channel) : 'team damage';
+  return lowered ? `Lowers enemy ${lowered}, supporting allied ${channel}.` : 'Lowers enemy mitigation for the team.';
+}
+
+function unique<T>(items: T[]): T[] {
+  return [...new Set(items)];
+}
+
+function uniqueBy<T>(items: T[], keyFor: (item: T) => string): T[] {
+  const byKey = new Map<string, T>();
+  for (const item of items) {
+    const key = keyFor(item);
+    if (!byKey.has(key)) {
+      byKey.set(key, item);
+    }
+  }
+  return [...byKey.values()];
+}
+
+function joinEnglishList(items: string[]): string {
+  if (items.length <= 1) {
+    return items[0] ?? '';
+  }
+  if (items.length === 2) {
+    return `${items[0]} and ${items[1]}`;
+  }
+  return `${items.slice(0, -1).join(', ')}, and ${items.at(-1)}`;
+}
+
+function numberWord(value: number): string {
+  switch (value) {
+    case 1:
+      return 'one';
+    case 2:
+      return 'two';
+    case 3:
+      return 'three';
+    default:
+      return String(value);
+  }
 }
 
 function getAbilityName(source: Dragon, abilityId: string | null): string {

@@ -1170,31 +1170,98 @@ function CardInteractionItem({
   active: boolean;
   onRelationshipActive: (relationshipId: string | null) => void;
 }) {
+  const [detailsOpen, setDetailsOpen] = useState(false);
+  const detailsId = `interaction-details-${interaction.id.replace(/[^a-zA-Z0-9_-]/g, '-')}`;
+  const hasTargetUncertainty = interaction.isCandidate || (interaction.candidateTotal ?? 0) > 1;
   return (
-    <button
-      type="button"
+    <article
       className={`card-interaction-item state-${interaction.state}${active ? ' is-linked' : ''}`}
-      onFocus={() => onRelationshipActive(interaction.relationshipId)}
+      onFocusCapture={() => onRelationshipActive(interaction.relationshipId)}
       onBlur={() => onRelationshipActive(null)}
       onMouseEnter={() => onRelationshipActive(interaction.relationshipId)}
       onMouseLeave={() => onRelationshipActive(null)}
-      onClick={() => onRelationshipActive(active ? null : interaction.relationshipId)}
-      aria-pressed={active}
-      aria-label={`${stateLabel(interaction.state)}. ${relationshipText(interaction)}. ${interaction.abilityName}. ${interaction.summary}. Full detail: ${interaction.detail}`}
     >
-      <StateBadge state={interaction.state} label={stateLabel(interaction.state)} />
-      <span className="interaction-main">
-        <strong>
-          {interaction.sourceName}
-          {interaction.recipientName ? ` - ${interaction.recipientName}` : interaction.targetLabel ? ` - ${interaction.targetLabel}` : ''}
+      <div className="interaction-item-header">
+        <strong className="interaction-relationship" aria-label={relationshipText(interaction)}>
+          {relationshipLabel(interaction)}
         </strong>
-        <span>{interaction.abilityName}</span>
-        <span>{interaction.summary}</span>
-        {interaction.isCandidate ? <span className="target-note">Target not guaranteed</span> : null}
+        <StateBadge state={interaction.state} label={stateLabel(interaction.state)} />
+      </div>
+      <div className="interaction-main">
+        <strong className="interaction-ability">{interaction.effectTitle}</strong>
+        <ul className="interaction-summary-list">
+          {interaction.summaryLines.map((line) => (
+            <li key={line}>{line}</li>
+          ))}
+        </ul>
+        {hasTargetUncertainty ? <span className="target-note">Target not guaranteed</span> : null}
         {interaction.isEnemyFacing ? <span className="target-note">Enemy-facing team benefit</span> : null}
-        <span className="sr-only">Full detail: {interaction.detail}</span>
-      </span>
-    </button>
+      </div>
+      <button
+        type="button"
+        className="text-button compact-action interaction-details-toggle"
+        aria-expanded={detailsOpen}
+        aria-controls={detailsId}
+        onClick={() => setDetailsOpen((current) => !current)}
+      >
+        {detailsOpen ? 'Hide details' : 'Details'}
+      </button>
+      {detailsOpen ? <InteractionDetails id={detailsId} interaction={interaction} /> : null}
+    </article>
+  );
+}
+
+function InteractionDetails({ id, interaction }: { id: string; interaction: FormationCardInteraction }) {
+  const openRequirements = interaction.requirements.filter((requirement) => requirement.satisfied !== true);
+  const hasTargetUncertainty = interaction.isCandidate || (interaction.candidateTotal ?? 0) > 1;
+  return (
+    <div className="interaction-details" id={id}>
+      <div>
+        <strong>Full explanation</strong>
+        {interaction.details.map((detail) => (
+          <p key={detail}>{detail}</p>
+        ))}
+      </div>
+      {interaction.effects.length > 0 ? (
+        <div>
+          <strong>Effect details</strong>
+          <ul className="plain-list compact-list">
+            {interaction.effects.map((effect) => (
+              <li key={effect}>{effect}</li>
+            ))}
+          </ul>
+        </div>
+      ) : null}
+      {interaction.targetSummary || interaction.candidateTotal ? (
+        <div>
+          <strong>Target selection</strong>
+          <p>
+            {interaction.targetSummary ?? `One of ${interaction.candidateTotal ?? 0} eligible recipients.`}
+            {hasTargetUncertainty ? ' Target is not guaranteed.' : ''}
+          </p>
+        </div>
+      ) : null}
+      <div>
+        <strong>State</strong>
+        <p>{stateLabel(interaction.state)}</p>
+      </div>
+      {openRequirements.length > 0 ? (
+        <div>
+          <strong>Blockers or unknown requirements</strong>
+          <ul className="plain-list compact-list">
+            {openRequirements.map((requirement) => (
+              <li key={`${requirement.id}-${requirement.label}`}>
+                {requirement.label}: requires {requirement.expected}; current {requirement.actual ?? 'unknown'}
+              </li>
+            ))}
+          </ul>
+        </div>
+      ) : null}
+      <div>
+        <strong>Confidence</strong>
+        <p>{interaction.confidence === 'mixed' ? 'Mixed' : formatToken(interaction.confidence)}</p>
+      </div>
+    </div>
   );
 }
 
@@ -2973,12 +3040,22 @@ function stateLabel(state: FormationCardInteractionState) {
 
 function relationshipText(interaction: FormationCardInteraction) {
   if (interaction.recipientName) {
-    return `${interaction.sourceName} to ${interaction.recipientName}`;
+    return `${interaction.sourceName} provides an interaction to ${interaction.recipientName}`;
   }
   if (interaction.targetLabel) {
-    return `${interaction.sourceName} to ${interaction.targetLabel}`;
+    return `${interaction.sourceName} provides an interaction to ${interaction.targetLabel}`;
   }
   return `${interaction.sourceName} team benefit`;
+}
+
+function relationshipLabel(interaction: FormationCardInteraction) {
+  if (interaction.recipientName) {
+    return `${interaction.sourceName} → ${interaction.recipientName}`;
+  }
+  if (interaction.targetLabel) {
+    return `${interaction.sourceName} → ${interaction.targetLabel}`;
+  }
+  return `${interaction.sourceName} → Team`;
 }
 
 function titleCase(value: string) {

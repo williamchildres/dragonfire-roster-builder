@@ -47,11 +47,59 @@ describe('formation card analysis presentation', () => {
 
     const providerGroups = syrax.provides.filter((item) => item.abilityName === 'Blazing Fury' || item.abilityName === 'Tactical Inferno');
     expect(providerGroups.filter((item) => item.candidateTotal === 2)).toHaveLength(2);
-    expect(caraxes.receives.some((item) => item.isCandidate && item.summary.includes('target not guaranteed'))).toBe(true);
-    expect(sheepstealer.receives.some((item) => item.isCandidate && item.summary.includes('target not guaranteed'))).toBe(true);
+    expect(caraxes.receives.some((item) => item.isCandidate && item.candidateTotal === 2 && item.summary.includes('Fire Damage support'))).toBe(true);
+    expect(sheepstealer.receives.some((item) => item.isCandidate && item.candidateTotal === 2 && item.summary.includes('Fire Damage support'))).toBe(true);
     expect(caraxes.receives.find((item) => item.abilityName === 'Blazing Fury')?.relationshipId).toBe(
       syrax.provides.find((item) => item.abilityName === 'Blazing Fury')?.relationshipId,
     );
+  });
+
+  it('aggregates same-ability current interactions without losing child trace ids', () => {
+    const result = presentation('8', false);
+    const caraxes = card(result, 'caraxes');
+    const sheepstealer = card(result, 'sheepstealer');
+    const syrax = card(result, 'syrax');
+
+    const caraxesBlazingFury = caraxes.receives.filter((item) => item.abilityName === 'Blazing Fury');
+    expect(caraxesBlazingFury).toHaveLength(1);
+    expect(caraxesBlazingFury[0]?.summaryLines).toEqual(
+      expect.arrayContaining([
+        'Fire Damage support; one of two eligible recipients.',
+        'May receive First-Strike; Infernal Burst deals 1.5× while active.',
+      ]),
+    );
+    expect(caraxesBlazingFury[0]?.traceIds).toHaveLength(2);
+
+    const sheepstealerBlazingFury = sheepstealer.receives.find((item) => item.abilityName === 'Blazing Fury');
+    expect(sheepstealerBlazingFury?.summary).toContain('Fire Damage support');
+    expect(sheepstealerBlazingFury?.summary).not.toContain('First-Strike');
+
+    const syraxBlazingFury = syrax.provides.find((item) => item.abilityName === 'Blazing Fury');
+    expect(syraxBlazingFury?.summaryLines).toEqual(
+      expect.arrayContaining([
+        'One Fire recipient is selected: Caraxes or Sheepstealer.',
+        'Caraxes may also receive First-Strike for Infernal Burst.',
+      ]),
+    );
+    expect(syraxBlazingFury?.candidateTotal).toBe(2);
+    expect(syraxBlazingFury?.summary).toContain('Target not guaranteed.');
+    expect(syraxBlazingFury?.traceIds).toHaveLength(2);
+  });
+
+  it('uses purposeful compact summaries for stat values and suppresses redundant blocked trait cards', () => {
+    const result = presentation('8', false);
+    const syrax = card(result, 'syrax');
+    const sheepstealer = card(result, 'sheepstealer');
+
+    expect(syrax.receives.find((item) => item.abilityName === "Hunter's Wrath")?.summaryLines).toContain(
+      'Strength +20 and Initiative +20.',
+    );
+    expect(sheepstealer.receives.some((item) => item.abilityName === "Sentinel's Wit")).toBe(false);
+    expect(syrax.provides.some((item) => item.abilityName === "Sentinel's Wit")).toBe(false);
+    expect(syrax.traitStatus).toMatchObject({
+      abilityName: "Sentinel's Wit",
+      state: 'blocked',
+    });
   });
 
   it('keeps enemy-facing debuffs on the provider card', () => {
