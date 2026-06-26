@@ -146,6 +146,76 @@ describe('Feskar, Rhysarion, and Shadowsong Epic profiles', () => {
     expect(roster.feskar?.habitLevels['feskar-emerald-inferno']).toBe(savedPreviewHabitLevel);
   });
 
+  it('shows Dawnsong Control-category values and Unyielding Grasp supplier facts', () => {
+    const formation: FormationAnalysisInput = { 'left-flank': 'feskar', vanguard: 'rhysarion', 'right-flank': 'shadowsong' };
+    const roster = ownedRoster(['feskar', 'rhysarion', 'shadowsong'], 1, 0);
+    roster.feskar!.starRank = 10;
+    roster.feskar!.habitLevels['feskar-unyielding-grasp'] = 0;
+    for (const habitId of Object.keys(roster.rhysarion!.habitLevels)) {
+      roster.rhysarion!.habitLevels[habitId] = 5;
+    }
+    const traces = analyzeFormationTraces(formation, dragons, { roster });
+    const cards = buildFormationCardPresentation(formation, dragons, traces, { previewEnabled: false, roster });
+    const trace = traces.find((item) =>
+      item.sourceDragonId === 'feskar' &&
+      item.sourceAbilityId === 'feskar-unyielding-grasp' &&
+      item.recipientDragonId === 'rhysarion' &&
+      item.recipientAbilityId === 'rhysarion-dawnsong' &&
+      item.matchKind === 'status-condition-enablement'
+    );
+    const traceText = trace ? [
+      trace.explanation,
+      ...trace.matchedFacts,
+      ...trace.effects,
+      ...trace.assumptions,
+      ...trace.unresolvedQuestions,
+    ].join(' ') : '';
+    const normalText = cards.cards
+      .find((card) => card.dragonId === 'feskar')?.provides
+      .filter((item) => item.abilityName === 'Unyielding Grasp' && item.recipientDragonId === 'rhysarion')
+      .flatMap((item) => [item.state, item.summary, ...item.summaryLines, ...item.details, ...item.effects])
+      .join(' ') ?? '';
+
+    expect(trace).toMatchObject({
+      status: 'potential',
+      sourceAbilityId: 'feskar-unyielding-grasp',
+      recipientAbilityId: 'rhysarion-dawnsong',
+      matchKind: 'status-condition-enablement',
+    });
+    expect(traceText).toContain('Receiving source effect ID: dawnsong-fire.');
+    expect(traceText).toContain('Supplied status: Stagger.');
+    expect(traceText).toContain('Required status category: Control.');
+    expect(traceText).toContain('Stagger is a verified member of Control.');
+    expect(traceText).toContain('Control category members: Stun, Stagger, Overwhelm and Confusion.');
+    expect(traceText).not.toMatch(/Control category members:.*Burn/i);
+    expect(traceText).not.toMatch(/Control category members:.*Panic/i);
+    expect(traceText).toContain('Timing: Rounds 2, 5, 8.');
+    expect(traceText).toContain('Base Fire Damage Rate: 20%.');
+    expect(traceText).toContain('Enhanced Fire Damage Rate: 30%.');
+    expect(traceText).toContain('Conditional multiplier: 1.5x');
+    expect(traceText).toContain('Required status category: Control.');
+    expect(traceText).toContain('Control must be on the same eligible target.');
+    expect(traceText).toContain('Control on one enemy does not amplify Dawnsong against a different enemy.');
+    expect(traceText).toContain('Control does not alter normal Dawnsong target eligibility.');
+    expect(traceText).toContain('Supplier effective Habit Level: 1.');
+    expect(traceText).toContain('Activation timing: Each round.');
+    expect(traceText).toContain('Activation chance: 10%.');
+    expect(traceText).toContain('Target: one enemy.');
+    expect(traceText).toContain('Lane scope: any lane.');
+    expect(traceText).toContain('Priority: Warriors are prioritized, not guaranteed.');
+    expect(traceText).toContain('Duration: 3 rounds.');
+    expect(traceText).toContain('Stagger application success is unresolved.');
+    expect(traceText).toContain('Selected enemy identity is unresolved.');
+
+    expect(normalText).toContain('conditional');
+    expect(normalText).toContain('Feskar can apply Stagger, which belongs to the Control category.');
+    expect(normalText).toContain('On Rounds 2, 5 and 8, Dawnsong deals Fire Damage at a 20% rate.');
+    expect(normalText).toContain('Against the same target while it has Control, the rate increases 1.5x to 30%.');
+    expect(normalText).toContain('Unyielding Grasp has a 10% chance each round to Stagger one enemy in any lane, prioritizing Warriors, for 3 rounds.');
+    expect(normalText).toContain('Stagger application and target overlap are not guaranteed.');
+    expect(normalText).not.toMatch(/\bL[1-5]\b|Ranked progression/i);
+  });
+
   it('models Rhysarion Control category, other-ally exclusion, harmful friendly impairment, and shared Inspiring Melody target', () => {
     const fire = dragon('rhysarion').command!.schedules[1]!.effects[0]!;
     const echoing = habit('rhysarion', 'rhysarion-echoing-melody').schedules[0]!.effects[0]!;

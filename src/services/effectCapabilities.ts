@@ -1568,8 +1568,16 @@ function analyzeStatusConditionEnablement(
           continue;
         }
         const context = sourceEffectContext(recipient, output.abilityId, output.sourceEffectId);
-        const conditionalFacts = statusOutput.statusId === 'burn' && context
-          ? conditionalMultiplierValueFacts(output, context.effect, statusOutput.statusId, options)
+        const supplierContext = sourceEffectContext(provider, statusOutput.abilityId, statusOutput.sourceEffectId);
+        const enrichStatusTrace = statusOutput.statusId === 'burn' || Boolean(dependency.statusCategoryId);
+        const conditionalFacts = enrichStatusTrace && context
+          ? conditionalMultiplierValueFacts(output, context, statusOutput.statusId, dependency, options)
+          : { facts: [], effects: [], summary: null };
+        const categoryFacts = enrichStatusTrace
+          ? statusCategoryFacts(statusOutput.statusId, dependency)
+          : { facts: [], effects: [], summary: null };
+        const supplierFacts = enrichStatusTrace
+          ? statusSupplierFacts(statusOutput, supplierContext, options)
           : { facts: [], effects: [], summary: null };
         const requirements = [
           statusProviderRequirement(statusOutput, dependency.type, providerPosition, recipientPosition),
@@ -1587,7 +1595,7 @@ function analyzeStatusConditionEnablement(
           ...outputRequirementTraces(output, options),
         ];
         const dependencyLabel = statusDependencyLabel(dependency);
-        const explanation = statusConditionExplanation(provider, statusOutput, recipient, output, dependencyLabel, conditionalFacts);
+        const explanation = statusConditionExplanation(provider, statusOutput, recipient, output, dependencyLabel, conditionalFacts, categoryFacts, supplierFacts);
         traces.push(makeDependencyTrace({
           id: `status-condition-${statusOutput.id}-${output.id}`,
           matchKind: 'status-condition-enablement',
@@ -1603,15 +1611,17 @@ function analyzeStatusConditionEnablement(
           matchedFacts: [
             ...(output.sourceEffectId ? [`Receiving source effect ID: ${output.sourceEffectId}.`] : []),
             ...dependency.notes,
+            ...categoryFacts.facts,
             ...conditionalFacts.facts,
+            ...supplierFacts.facts,
           ],
-          effects: [`Status condition: ${dependencyLabel}`, ...conditionalFacts.effects],
+          effects: [`Status condition: ${dependencyLabel}`, ...categoryFacts.effects, ...conditionalFacts.effects, ...supplierFacts.effects],
           sourceEvidenceIds: statusOutput.evidenceIds,
           recipientEvidenceIds: output.evidenceIds,
           assumptions: [
             ...statusOutput.conditions.map((condition) => condition.description),
             ...statusConditionAssumptions(statusOutput, output),
-            ...(conditionalFacts.summary ? ['Burn application success, enemy identity, target overlap, and conditional uptime are unresolved.'] : []),
+            ...(conditionalFacts.summary ? [`${statusLabel(statusOutput.statusId)} application success, enemy identity, target overlap, and conditional uptime are unresolved.`] : []),
           ],
           unresolvedQuestions: ['Trigger timing, target selection, and exact uptime are not simulated.'],
           futureOrConditional: true,
@@ -2738,6 +2748,8 @@ function statusConditionExplanation(
   output: OutputCapability,
   dependencyLabel = statusLabel(statusOutput.statusId),
   conditionalFacts: { summary: string | null } = { summary: null },
+  categoryFacts: { summary: string | null } = { summary: null },
+  supplierFacts: { summary: string | null } = { summary: null },
 ): string {
   if (statusOutput.statusId === 'first-strike' && output.abilityId === 'caraxes-infernal-burst') {
     return `${provider.name} can grant ${recipient.name} First-Strike. While First-Strike is active, Infernal Burst deals 1.5x damage. Activation and timing are conditional.`;
@@ -2746,17 +2758,24 @@ function statusConditionExplanation(
     return `${provider.name} can apply Slow. ${recipient.name}'s Strategic Revival multiplies Recovery by 1.5x if any enemy has Slow. Activation, unlock state, and timing are conditional.`;
   }
   if (conditionalFacts.summary) {
-    return `${provider.name} can apply ${statusLabel(statusOutput.statusId)}. ${conditionalFacts.summary} Burn application and target overlap are not guaranteed.`;
+    return [
+      `${provider.name} can apply ${statusLabel(statusOutput.statusId)}${categoryFacts.summary ? `, ${categoryFacts.summary}` : ''}.`,
+      conditionalFacts.summary,
+      supplierFacts.summary,
+      `${statusLabel(statusOutput.statusId)} application and target overlap are not guaranteed.`,
+    ].filter(Boolean).join(' ');
   }
   return `${provider.name} can apply ${statusLabel(statusOutput.statusId)}. ${recipient.name}'s ${output.abilityName} has a verified condition depending on ${dependencyLabel}.`;
 }
 
 function conditionalMultiplierValueFacts(
   output: OutputCapability,
-  effect: AbilityEffect,
+  context: { schedule: AbilitySchedule; effect: AbilityEffect },
   statusId: string,
+  dependency: CapabilityDependency & { type: 'requires-self-status' | 'requires-any-enemy-status' | 'requires-target-status' | 'requires-target-status-category' },
   options: CapabilityOptions,
 ): { facts: string[]; effects: string[]; summary: string | null } {
+  const { effect, schedule } = context;
   const multiplier = (effect.conditionalMultipliers ?? []).find((item) =>
     item.condition.statusId === statusId ||
     (item.condition.statusCategoryId ? statusMatchesCategory(statusId, item.condition.statusCategoryId) : false),
@@ -2764,10 +2783,21 @@ function conditionalMultiplierValueFacts(
   if (!multiplier) {
     return { facts: [], effects: [], summary: null };
   }
-  const level = options.previewMaxRankInteractions ? 5 : effectiveHabitLevelForCapability(output, options);
-  const base = rankedValueForHabitLevel(effect.rankedValues, level);
-  const enhanced = multiplier.directlyVerifiedValues.find((value) => value.level === level);
-  if (!base || !enhanced || level === null) {
+  const isHabitRankedOutput = output.requiredHabitLevel !== null;
+  const level = isHabitRankedOutput
+    ? (options.previewMaxRankInteractions ? 5 : effectiveHabitLevelForCapability(output, options))
+    : null;
+  const base = isHabitRankedOutput
+    ? rankedValueForHabitLevel(effect.rankedValues, level)
+    : effect.magnitude !== null
+      ? { level: 0, value: effect.magnitude, unit: effect.unit === 'rate' ? 'percent' as const : effect.unit === 'percent' ? 'percent' as const : 'flat' as const }
+      : undefined;
+  const enhanced = isHabitRankedOutput
+    ? multiplier.directlyVerifiedValues.find((value) => value.level === level)
+    : multiplier.directlyVerifiedValues.length === 1
+      ? multiplier.directlyVerifiedValues[0]
+      : undefined;
+  if (!base || !enhanced || (isHabitRankedOutput && level === null)) {
     return {
       facts: [`Conditional multiplier: ${multiplier.multiplier}x.`],
       effects: [`Conditional multiplier: ${multiplier.multiplier}x`],
@@ -2778,26 +2808,147 @@ function conditionalMultiplierValueFacts(
   const enhancedValue = formatValue(enhanced.value, enhanced.unit);
   const channel = channelLabel(output.channel);
   const eligibility = effect.conditions?.find((condition) => condition.kind === 'target-has-output-capability');
+  const requiredLabel = dependency.statusCategoryId ? statusLabel(dependency.statusCategoryId) : statusLabel(statusId);
+  const basePrefix = isHabitRankedOutput ? 'Base current' : 'Base';
+  const enhancedPrefix = isHabitRankedOutput ? 'Enhanced current' : 'Enhanced';
   const facts = [
-    `Current effective Habit Level: ${level}.`,
-    `Base current ${channel} Rate: ${baseValue}.`,
-    `Enhanced current ${channel} Rate: ${enhancedValue}.`,
+    ...(level ? [`Current effective Habit Level: ${level}.`] : []),
+    scheduleTimingDetail(schedule),
+    `${basePrefix} ${channel} Rate: ${baseValue}.`,
+    `${enhancedPrefix} ${channel} Rate: ${enhancedValue}.`,
     `Conditional multiplier: ${multiplier.multiplier}x.`,
-    `${statusLabel(statusId)} must be on the same eligible target.`,
+    `Required status ${dependency.statusCategoryId ? 'category' : 'condition'}: ${requiredLabel}.`,
+    `${requiredLabel} must be on the same eligible target.`,
+    `${requiredLabel} on one enemy does not amplify ${output.abilityName} against a different enemy.`,
     ...(eligibility?.qualifyingOutput ? [
       `Qualifying enemy capability: ${eligibility.qualifyingOutput.description}.`,
     ] : []),
+    `${requiredLabel} does not alter normal ${output.abilityName} target eligibility.`,
     'Target eligibility remains independently required; the status condition does not make an ineligible enemy eligible.',
-  ];
+  ].filter((fact): fact is string => Boolean(fact));
   return {
     facts,
     effects: [
-      `Base current ${channel} Rate: ${baseValue}`,
-      `Enhanced current ${channel} Rate: ${enhancedValue}`,
+      `${basePrefix} ${channel} Rate: ${baseValue}`,
+      `${enhancedPrefix} ${channel} Rate: ${enhancedValue}`,
       `Conditional multiplier: ${multiplier.multiplier}x`,
     ],
-    summary: `On the same eligible target, ${statusLabel(statusId)} increases ${output.abilityName}'s current ${channel} Rate from ${baseValue} to ${enhancedValue} (${multiplier.multiplier}x).`,
+    summary: `On ${scheduleTimingPhrase(schedule)}, ${output.abilityName} deals ${channel} at a ${baseValue} rate. Against the same target while it has ${requiredLabel}, the rate increases ${multiplier.multiplier}x to ${enhancedValue}.`,
   };
+}
+
+function statusCategoryFacts(
+  statusId: string,
+  dependency: CapabilityDependency & { type: 'requires-self-status' | 'requires-any-enemy-status' | 'requires-target-status' | 'requires-target-status-category' },
+): { facts: string[]; effects: string[]; summary: string | null } {
+  if (!dependency.statusCategoryId) {
+    return { facts: [`Supplied status: ${statusLabel(statusId)}.`], effects: [`Supplied status: ${statusLabel(statusId)}`], summary: null };
+  }
+  const members = statusCategoryMembers[dependency.statusCategoryId] ?? [];
+  const memberLabels = members.map(statusLabel);
+  const category = statusLabel(dependency.statusCategoryId);
+  const supplied = statusLabel(statusId);
+  const isMember = statusMatchesCategory(statusId, dependency.statusCategoryId);
+  return {
+    facts: [
+      `Supplied status: ${supplied}.`,
+      `Required status category: ${category}.`,
+      `Control category members: ${joinEnglishList(memberLabels)}.`,
+      ...(isMember ? [`${supplied} is a verified member of ${category}.`] : []),
+    ],
+    effects: [
+      `Supplied status: ${supplied}`,
+      `Required status category: ${category}`,
+      `${category} members: ${joinEnglishList(memberLabels)}`,
+    ],
+    summary: isMember ? `which belongs to the ${category} category` : null,
+  };
+}
+
+function statusSupplierFacts(
+  statusOutput: StatusOutputCapability,
+  context: { ability: AbilityDefinition; schedule: AbilitySchedule; effect: AbilityEffect } | null,
+  options: CapabilityOptions,
+): { facts: string[]; effects: string[]; summary: string | null } {
+  if (!context) {
+    return { facts: [], effects: [], summary: null };
+  }
+  const { ability, schedule, effect } = context;
+  const level = statusOutput.requiredHabitLevel !== null
+    ? (options.previewMaxRankInteractions ? 5 : effectiveHabitLevelForCapability(statusOutput, options))
+    : null;
+  const chance = statusOutput.chanceFixed !== null && statusOutput.chanceFixed !== undefined
+    ? { value: statusOutput.chanceFixed, unit: 'percent' as const }
+    : rankedValueForHabitLevel(statusOutput.chanceByHabitLevel, level);
+  const chanceText = chance ? formatValue(chance.value, chance.unit) : null;
+  const timing = scheduleTimingDetail(schedule);
+  const targetCount = effect.targetCount ?? statusOutput.targetSelector.count;
+  const targetText = targetCount === 1 ? 'one enemy' : targetCount ? `${targetCount} enemies` : effect.target;
+  const lane = effect.targetScope ? `Lane scope: ${formatTargetScope(effect.targetScope)}.` : null;
+  const priority = effect.targetPriority === 'prefer-warrior' ? 'Priority: Warriors are prioritized, not guaranteed.' : null;
+  const duration = durationDetail(effect);
+  const facts = [
+    `Supplied status: ${statusLabel(statusOutput.statusId)}.`,
+    timing ? timing.replace(/^Timing:/, 'Activation timing:') : null,
+    level ? `Supplier effective Habit Level: ${level}.` : null,
+    chanceText ? `Activation chance: ${chanceText}.` : null,
+    `Target: ${targetText}.`,
+    lane,
+    priority,
+    duration,
+    `${statusLabel(statusOutput.statusId)} application success is unresolved.`,
+    'Selected enemy identity is unresolved.',
+  ].filter((fact): fact is string => Boolean(fact));
+  const summary = chanceText
+    ? `At effective Habit Level ${level ?? 'unknown'}, ${ability.name} has a ${chanceText} chance ${scheduleTimingAdverb(schedule)} to ${statusLabel(statusOutput.statusId)} ${targetText}${effect.targetScope ? ` in ${formatTargetScope(effect.targetScope)}` : ''}${effect.targetPriority === 'prefer-warrior' ? ', prioritizing Warriors' : ''}${effect.durationRounds ? `, for ${effect.durationRounds} rounds` : ''}.`
+    : null;
+  return {
+    facts,
+    effects: [
+      ...(level ? [`Supplier effective Habit Level: ${level}`] : []),
+      ...(chanceText ? [`Activation chance: ${chanceText}`] : []),
+      ...(duration ? [duration] : []),
+      ...(priority ? [priority] : []),
+    ],
+    summary,
+  };
+}
+
+function scheduleTimingPhrase(schedule: AbilitySchedule): string {
+  if (schedule.roundSelector?.kind === 'explicit' && schedule.rounds.length > 0) {
+    return `Rounds ${joinEnglishList(schedule.rounds.map(String))}`;
+  }
+  if (schedule.roundSelector?.kind === 'each-round') {
+    return 'each round';
+  }
+  if (schedule.roundSelector?.kind === 'start-of-round') {
+    return `Start of Round ${schedule.roundSelector.round}`;
+  }
+  if (schedule.roundSelector?.kind === 'start-of-combat') {
+    return 'start of combat';
+  }
+  return schedule.timing.replaceAll('-', ' ');
+}
+
+function scheduleTimingAdverb(schedule: AbilitySchedule): string {
+  if (schedule.roundSelector?.kind === 'each-round') {
+    return 'each round';
+  }
+  const phrase = scheduleTimingPhrase(schedule);
+  return /^rounds|^start/i.test(phrase) ? `on ${phrase}` : phrase;
+}
+
+function formatTargetScope(scope: AbilityEffect['targetScope']): string {
+  if (scope === 'any-lane') {
+    return 'any lane';
+  }
+  if (scope === 'within-adjacency') {
+    return 'within adjacency';
+  }
+  if (scope === 'same-lane') {
+    return 'same lane';
+  }
+  return scope.replaceAll('-', ' ');
 }
 
 function statusConditionAssumptions(statusOutput: StatusOutputCapability, output: OutputCapability): string[] {
