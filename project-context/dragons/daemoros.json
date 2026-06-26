@@ -5938,6 +5938,95 @@
       "unlockStarRank": 8,
       "value": 25,
       "valuePerStack": null
+    },
+    {
+      "abilityId": "daemoros-phantoms-veil",
+      "abilityName": "Phantom's Veil",
+      "activationChanceByHabitLevel": [],
+      "activationChanceFixed": null,
+      "activationGroupId": null,
+      "availability": {
+        "canonical": "canonical-locked",
+        "notes": [
+          "Future at Star Rank 10.",
+          "Unlocked in observed account collection state, subject to level and star requirements."
+        ],
+        "observedAccount": "observed-available",
+        "reportLabel": "Future at Star Rank 10; observed account hatched",
+        "userRoster": "unknown"
+      },
+      "channel": "damage-received",
+      "combatLogConfirmed": false,
+      "conditional": true,
+      "conditions": [],
+      "confidence": "confirmed",
+      "currentlyAvailable": false,
+      "damageScope": "all",
+      "direction": "received",
+      "directlyVerified": true,
+      "dragonId": "daemoros",
+      "durationRounds": null,
+      "evidenceIds": [
+        "daemoros-phantoms-veil-2026-06-26"
+      ],
+      "futureAvailable": true,
+      "id": "daemoros-phantoms-veil-phantoms-veil-exclusive-defense-damage-received-received-modifier",
+      "label": "Phantom's Veil: Exclusive Damage Received Reduction",
+      "minimumDragonLevel": null,
+      "operation": "decrease",
+      "providerRequirements": [],
+      "rankedValues": [
+        {
+          "level": 1,
+          "unit": "percent",
+          "value": 15
+        },
+        {
+          "level": 2,
+          "unit": "percent",
+          "value": 19.5
+        },
+        {
+          "level": 3,
+          "unit": "percent",
+          "value": 24
+        },
+        {
+          "level": 4,
+          "unit": "percent",
+          "value": 30
+        },
+        {
+          "level": 5,
+          "unit": "percent",
+          "value": 37.5
+        }
+      ],
+      "recipientRequirements": [],
+      "requiredHabitLevel": 1,
+      "role": "self-amplification",
+      "sourceEffectId": "phantoms-veil-exclusive-defense",
+      "sourceScope": "all-qualifying-sources",
+      "stackMaximum": null,
+      "statusId": null,
+      "targetSelector": {
+        "comparisonDirection": null,
+        "comparisonPool": null,
+        "count": null,
+        "includesCaster": null,
+        "position": null,
+        "scope": "self",
+        "selection": "self",
+        "selectionResource": null,
+        "selectionStat": null,
+        "sharedSelectionGroupId": null,
+        "side": "self",
+        "tieBehavior": null
+      },
+      "unit": "percent",
+      "unlockStarRank": 10,
+      "value": null,
+      "valuePerStack": null
     }
   ],
   "modifierRoles": [
@@ -6519,8 +6608,8 @@
   "rosterSourceStatus": "in-game-verified-pending-official-site",
   "slug": "daemoros",
   "source": {
-    "branch": "feature/epic-daemoros-vaeldra",
-    "commit": "fc4c158d6d26318bd6c77764e91030835e317112",
+    "branch": "fix/unlocked-habit-default-level",
+    "commit": "1a1f7c9f3da7bff295e3a30cb1f3c8fafdd4ea3e",
     "databaseVersion": "0.6.1",
     "dataSchemaVersion": 11,
     "gameBuild": "26.6.53509",

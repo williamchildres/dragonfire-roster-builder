@@ -16,6 +16,7 @@ import {
   resolveThreeAllyTargets,
 } from './formationRules';
 import { analyzeCapabilityAmplifications } from './effectCapabilities';
+import { resolveEffectiveHabitLevelForAbility } from './habitLevels';
 
 export interface TraceOptions {
   roster?: Record<string, OwnedDragon>;
@@ -559,7 +560,7 @@ function abilityProgressionRequirements(
   const dragonLevel = Object.hasOwn(options.dragonLevels ?? {}, dragon.id)
     ? (options.dragonLevels?.[dragon.id] ?? null)
     : (rosterEntry?.reignLevel ?? observation?.dragonLevel ?? null);
-  const habitLevel = rosterEntry?.habitLevels[ability.id] ?? null;
+  const habitLevel = resolveEffectiveHabitLevelForAbility(ability, rosterEntry, observation?.starRank ?? null);
   const requirements: RequirementTrace[] = [];
   if (options.roster) {
     requirements.push({
@@ -598,11 +599,11 @@ function abilityProgressionRequirements(
     requirements.push({
       id: `${ability.id}-habit-level`,
       label: 'Selected Habit Level',
-      expected: 'Recorded Habit Level 1-5 for current active value, or preview',
+      expected: 'Effective Habit Level 1-5 for current active value, or preview',
       actual: habitLevel === null ? null : `Habit Level ${habitLevel}`,
       satisfied: habitLevel === null ? null : habitLevel > 0,
       evidenceIds: [],
-      notes: ['Habit Level 0 means explicitly no upgrades; null means not recorded.'],
+      notes: ['Unlocked Habits with no explicit saved Habit Level, including null or 0, default to effective Habit Level 1 without mutating roster storage.'],
     });
   }
   return requirements;
