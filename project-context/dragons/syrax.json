@@ -6610,8 +6610,8 @@
   "rosterSourceStatus": "official-website",
   "slug": "syrax",
   "source": {
-    "branch": "fix/enemy-vulnerability-trace-details",
-    "commit": "e1be28ffe19b31211f369e7447455f64b3aa3b72",
+    "branch": "fix/periodic-status-damage-traces",
+    "commit": "9000163008c8856c6eb47ee10a74236759e929a1",
     "databaseVersion": "0.6.1",
     "dataSchemaVersion": 11,
     "gameBuild": "26.6.53509",

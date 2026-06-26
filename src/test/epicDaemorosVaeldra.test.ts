@@ -217,6 +217,100 @@ describe('Daemoros and Vaeldra Epic profiles', () => {
     expect(temptingCards.find((item) => item.effectTitle.includes('Fire'))?.effects.join(' ')).toMatch(/all qualifying Fire Damage sources/);
   });
 
+  it('surfaces Panic periodic Tactical Damage for Instill Fear and Darkening Fear without replacing Infectious Wrath setup', () => {
+    const formation: FormationAnalysisInput = {
+      'left-flank': 'daemoros',
+      vanguard: 'seasmoke',
+      'right-flank': 'vermax',
+    };
+    const currentRoster = roster(['daemoros', 'seasmoke', 'vermax'], 30, 10);
+    const traces = analyzeFormationTraces(formation, dragons, {
+      roster: currentRoster,
+      dragonLevels: { daemoros: 30, seasmoke: 30, vermax: 30 },
+      previewMaxRankInteractions: false,
+    });
+    const panicDamage = traces.filter((trace) =>
+      trace.matchKind === 'periodic-status-damage' &&
+      trace.sourceDragonId === 'daemoros' &&
+      trace.title.includes('Panic periodic Tactical Damage')
+    );
+    const instill = panicDamage.find((trace) => trace.sourceAbilityId === 'daemoros-instill-fear');
+    const darkening = panicDamage.find((trace) => trace.sourceAbilityId === 'daemoros-darkening-fear');
+
+    expect(panicDamage).toHaveLength(2);
+    expect(instill?.effects.join(' ')).toMatch(/Panic deals periodic Tactical Damage each round/);
+    expect(instill?.effects.join(' ')).toMatch(/Damage Rate 20%/);
+    expect(instill?.effects.join(' ')).toMatch(/Duration: 2 rounds/);
+    expect(instill?.effects.join(' ')).toMatch(/Scales with Instinct/);
+    expect(instill?.effects.join(' ')).toMatch(/Mitigated by target Intelligence/);
+    expect(instill?.effects.join(' ')).toMatch(/Activation, target selection, target overlap, and uptime remain conditional/);
+    expect(instill?.effects.join(' ')).toMatch(/Final damage is not calculated/);
+    expect(instill?.recipientDragonId).toBeNull();
+    expect(darkening?.effects.join(' ')).toMatch(/Panic deals periodic Tactical Damage each round/);
+    expect(darkening?.matchedFacts.join(' ')).toMatch(/Darkening Fear has its own activation roll and target selection/);
+
+    expect(traces.some((trace) =>
+      trace.matchKind === 'status-condition-enablement' &&
+      trace.sourceAbilityId === 'daemoros-instill-fear' &&
+      trace.recipientAbilityId === 'seasmoke-infectious-wrath'
+    )).toBe(true);
+    expect(traces.some((trace) =>
+      trace.matchKind === 'status-condition-enablement' &&
+      trace.sourceAbilityId === 'daemoros-darkening-fear' &&
+      trace.recipientAbilityId === 'seasmoke-infectious-wrath'
+    )).toBe(true);
+
+    const presentation = buildFormationCardPresentation(formation, dragons, traces.filter(isNormalSynergyTrace), { previewEnabled: false });
+    const daemoros = presentation.cards.find((card) => card.dragonId === 'daemoros')!;
+    const panicCards = daemoros.provides.filter((item) =>
+      item.effectTitle.includes('Periodic status damage') &&
+      ['Instill Fear', 'Darkening Fear'].includes(item.abilityName)
+    );
+
+    expect(panicCards).toHaveLength(2);
+    expect(panicCards.every((item) => item.isEnemyFacing)).toBe(true);
+    expect(panicCards.every((item) => item.recipientDragonId === null)).toBe(true);
+    expect(presentation.cards.some((card) => card.receives.some((item) => item.effectTitle.includes('Periodic status damage')))).toBe(false);
+  });
+
+  it('surfaces Burn periodic Fire Damage through the shared status-damage path', () => {
+    const formation: FormationAnalysisInput = {
+      'left-flank': 'daemoros',
+      vanguard: 'vaeldra',
+      'right-flank': 'vermax',
+    };
+    const traces = analyzeFormationTraces(formation, dragons, {
+      roster: roster(['daemoros', 'vaeldra', 'vermax'], 30, 10),
+      dragonLevels: { daemoros: 30, vaeldra: 30, vermax: 30 },
+      previewMaxRankInteractions: false,
+    });
+    const burn = traces.find((trace) =>
+      trace.matchKind === 'periodic-status-damage' &&
+      trace.sourceAbilityId === 'daemoros-shadowflame' &&
+      trace.title.includes('Burn periodic Fire Damage')
+    );
+
+    expect(burn).toBeDefined();
+    expect(burn?.effects.join(' ')).toMatch(/Burn deals periodic Fire Damage each round/);
+    expect(burn?.effects.join(' ')).toMatch(/Damage Rate 20%/);
+    expect(burn?.effects.join(' ')).toMatch(/Duration: 2 rounds/);
+    expect(burn?.effects.join(' ')).toMatch(/Scales with Intelligence/);
+    expect(burn?.effects.join(' ')).toMatch(/Mitigated by target Initiative/);
+    expect(burn?.recipientDragonId).toBeNull();
+  });
+
+  it('does not derive periodic damage traces for non-damaging Control statuses', () => {
+    const traces = analyzeFormationTraces(epicFormation, dragons, {
+      roster: roster(['daemoros', 'vaeldra', 'vermax'], 30, 10),
+      dragonLevels: { daemoros: 30, vaeldra: 30, vermax: 30 },
+      previewMaxRankInteractions: true,
+    });
+    expect(traces.some((trace) =>
+      trace.matchKind === 'periodic-status-damage' &&
+      /Confusion|Stagger/i.test(`${trace.title} ${trace.effects.join(' ')}`)
+    )).toBe(false);
+  });
+
   it('keeps incompatible source scopes non-passing', () => {
     expect(sourceScopesCompatible('non-basic-attacks', 'commands')).toBe(true);
     expect(sourceScopesCompatible('non-basic-attacks', 'basic-attacks')).toBe(false);
