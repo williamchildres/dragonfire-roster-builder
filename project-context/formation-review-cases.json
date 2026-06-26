@@ -16701,116 +16701,12 @@
         "unresolvedQuestions": [
           "Final value and stacking order are not calculated."
         ]
-      },
-      {
-        "assumptions": [
-          "Trigger success and target selection are not guaranteed."
-        ],
-        "channel": null,
-        "confidence": "unresolved",
-        "conflicts": [
-          "Adjacency requirement: expected Left Flank adjacent to Right Flank, actual Not adjacent",
-          "Habit unlock requirement: expected Star Rank 10+, actual Star Rank 1"
-        ],
-        "damageScope": null,
-        "effects": [
-          "Potential extra Basic Attack",
-          "Potential additional Spreading Blaze trigger"
-        ],
-        "exactResultKnown": null,
-        "exactResultUnknownReason": null,
-        "explanation": "Lightning Strike can grant Double-Strike to one adjacent ally. Vermax has an after-Basic-Attack Command, so a second Basic Attack can create another Command trigger.",
-        "id": "malachite-lightning-strike-vermax",
-        "interactionScope": "cross-dragon",
-        "matchedOutputCapabilityIds": [],
-        "matchKind": null,
-        "modifierCapabilityId": null,
-        "modifierCapabilityIds": [],
-        "recipientAbilityId": "vermax-spreading-blaze",
-        "recipientDragonId": "vermax",
-        "recipientEvidenceIds": [
-          "vermax-spreading-blaze-summary-2026-06-23",
-          "vermax-spreading-blaze-glossary-2026-06-23"
-        ],
-        "requirements": [
-          {
-            "actual": "Left Flank",
-            "evidenceIds": [
-              "malachite-lightning-strike-2026-06-23"
-            ],
-            "expected": "Selected in formation",
-            "id": "malachite-selected",
-            "label": "malachite selected",
-            "notes": [],
-            "satisfied": true
-          },
-          {
-            "actual": "Right Flank",
-            "evidenceIds": [
-              "vermax-spreading-blaze-summary-2026-06-23",
-              "vermax-spreading-blaze-glossary-2026-06-23"
-            ],
-            "expected": "Selected in formation",
-            "id": "vermax-selected",
-            "label": "vermax selected",
-            "notes": [],
-            "satisfied": true
-          },
-          {
-            "actual": "Not adjacent",
-            "evidenceIds": [
-              "malachite-lightning-strike-2026-06-23"
-            ],
-            "expected": "Left Flank adjacent to Right Flank",
-            "id": "adjacency-left-flank-right-flank",
-            "label": "Adjacency requirement",
-            "notes": [
-              "Friendly adjacency graph is confirmed as Left Flank - Vanguard - Right Flank."
-            ],
-            "satisfied": false
-          },
-          {
-            "actual": "Star Rank 1",
-            "evidenceIds": [
-              "malachite-lightning-strike-2026-06-23"
-            ],
-            "expected": "Star Rank 10+",
-            "id": "malachite-lightning-strike-star-rank",
-            "label": "Habit unlock requirement",
-            "notes": [],
-            "satisfied": false
-          },
-          {
-            "actual": null,
-            "evidenceIds": [],
-            "expected": "Recorded Habit Level 1-5 for current active value, or preview",
-            "id": "malachite-lightning-strike-habit-level",
-            "label": "Selected Habit Level",
-            "notes": [
-              "Habit Level 0 means explicitly no upgrades; null means not recorded."
-            ],
-            "satisfied": null
-          }
-        ],
-        "ruleId": "malachite-lightning-strike-vermax-basic-trigger",
-        "sourceAbilityId": "malachite-lightning-strike",
-        "sourceDragonId": "malachite",
-        "sourceEvidenceIds": [
-          "malachite-lightning-strike-2026-06-23"
-        ],
-        "status": "inactive",
-        "targetSelectionGroup": null,
-        "title": "Lightning Strike may increase Vermax Basic Attack triggers",
-        "unresolvedQuestions": [
-          "Exact enhanced-by-Instinct formula."
-        ]
       }
     ],
     "expectedExclusions": [
       "Fire Damage Support: Position compatibility: expected left-flank, actual provider left-flank, recipient vanguard; Provider position requirement: expected vanguard, actual left-flank; sheepstealer - Savage Claim Habit unlock requirement: expected Star Rank 10+, actual Star Rank 1; sheepstealer - Savage Claim Selected Habit Level: expected Habit Level 1+ or preview, actual preview enabled",
       "Instinct Scaling Support: Provider position requirement: expected vanguard, actual right-flank",
       "Left Flank and Right Flank are not adjacent to one another.",
-      "Lightning Strike may increase Vermax Basic Attack triggers: Adjacency requirement: expected Left Flank adjacent to Right Flank, actual Not adjacent; Habit unlock requirement: expected Star Rank 10+, actual Star Rank 1",
       "Multiple Vanguard Trait requirements: Vanguard exclusivity: expected Only one Vanguard-required Trait can satisfy its placement at a time, actual Malachite in Left Flank, Sheepstealer in Vanguard, Vermax in Right Flank; Malachite's Sentinel's Presence is inactive due to placement.; Vermax's Warrior's Zeal is inactive due to placement.",
       "Sentinel's Presence Vanguard requirement: Required target position: expected Vanguard, actual Left Flank",
       "Stat Support: Provider position requirement: expected vanguard, actual right-flank",
@@ -19278,109 +19174,6 @@
         "title": "Stat Enemy Reduction",
         "unresolvedQuestions": [
           "Enemy-side current-troop tie-breaking, final uptime, and stacking/refresh behavior remain unresolved."
-        ]
-      },
-      {
-        "assumptions": [
-          "Trigger success and target selection are not guaranteed."
-        ],
-        "channel": null,
-        "confidence": "unresolved",
-        "conflicts": [
-          "Adjacency requirement: expected Left Flank adjacent to Right Flank, actual Not adjacent",
-          "Habit unlock requirement: expected Star Rank 10+, actual Star Rank 1"
-        ],
-        "damageScope": null,
-        "effects": [
-          "Potential extra Basic Attack",
-          "Potential additional Spreading Blaze trigger"
-        ],
-        "exactResultKnown": null,
-        "exactResultUnknownReason": null,
-        "explanation": "Lightning Strike can grant Double-Strike to one adjacent ally. Vermax has an after-Basic-Attack Command, so a second Basic Attack can create another Command trigger.",
-        "id": "malachite-lightning-strike-vermax",
-        "interactionScope": "cross-dragon",
-        "matchedOutputCapabilityIds": [],
-        "matchKind": null,
-        "modifierCapabilityId": null,
-        "modifierCapabilityIds": [],
-        "recipientAbilityId": "vermax-spreading-blaze",
-        "recipientDragonId": "vermax",
-        "recipientEvidenceIds": [
-          "vermax-spreading-blaze-summary-2026-06-23",
-          "vermax-spreading-blaze-glossary-2026-06-23"
-        ],
-        "requirements": [
-          {
-            "actual": "Left Flank",
-            "evidenceIds": [
-              "malachite-lightning-strike-2026-06-23"
-            ],
-            "expected": "Selected in formation",
-            "id": "malachite-selected",
-            "label": "malachite selected",
-            "notes": [],
-            "satisfied": true
-          },
-          {
-            "actual": "Right Flank",
-            "evidenceIds": [
-              "vermax-spreading-blaze-summary-2026-06-23",
-              "vermax-spreading-blaze-glossary-2026-06-23"
-            ],
-            "expected": "Selected in formation",
-            "id": "vermax-selected",
-            "label": "vermax selected",
-            "notes": [],
-            "satisfied": true
-          },
-          {
-            "actual": "Not adjacent",
-            "evidenceIds": [
-              "malachite-lightning-strike-2026-06-23"
-            ],
-            "expected": "Left Flank adjacent to Right Flank",
-            "id": "adjacency-left-flank-right-flank",
-            "label": "Adjacency requirement",
-            "notes": [
-              "Friendly adjacency graph is confirmed as Left Flank - Vanguard - Right Flank."
-            ],
-            "satisfied": false
-          },
-          {
-            "actual": "Star Rank 1",
-            "evidenceIds": [
-              "malachite-lightning-strike-2026-06-23"
-            ],
-            "expected": "Star Rank 10+",
-            "id": "malachite-lightning-strike-star-rank",
-            "label": "Habit unlock requirement",
-            "notes": [],
-            "satisfied": false
-          },
-          {
-            "actual": null,
-            "evidenceIds": [],
-            "expected": "Recorded Habit Level 1-5 for current active value, or preview",
-            "id": "malachite-lightning-strike-habit-level",
-            "label": "Selected Habit Level",
-            "notes": [
-              "Habit Level 0 means explicitly no upgrades; null means not recorded."
-            ],
-            "satisfied": null
-          }
-        ],
-        "ruleId": "malachite-lightning-strike-vermax-basic-trigger",
-        "sourceAbilityId": "malachite-lightning-strike",
-        "sourceDragonId": "malachite",
-        "sourceEvidenceIds": [
-          "malachite-lightning-strike-2026-06-23"
-        ],
-        "status": "inactive",
-        "targetSelectionGroup": null,
-        "title": "Lightning Strike may increase Vermax Basic Attack triggers",
-        "unresolvedQuestions": [
-          "Exact enhanced-by-Instinct formula."
         ]
       }
     ],
@@ -24007,108 +23800,6 @@
         "unresolvedQuestions": [
           "Final value and stacking order are not calculated."
         ]
-      },
-      {
-        "assumptions": [
-          "Trigger success and target selection are not guaranteed."
-        ],
-        "channel": null,
-        "confidence": "unresolved",
-        "conflicts": [
-          "Habit unlock requirement: expected Star Rank 10+, actual Star Rank 1"
-        ],
-        "damageScope": null,
-        "effects": [
-          "Potential extra Basic Attack",
-          "Potential additional Spreading Blaze trigger"
-        ],
-        "exactResultKnown": null,
-        "exactResultUnknownReason": null,
-        "explanation": "Lightning Strike can grant Double-Strike to one adjacent ally. Vermax has an after-Basic-Attack Command, so a second Basic Attack can create another Command trigger.",
-        "id": "malachite-lightning-strike-vermax",
-        "interactionScope": "cross-dragon",
-        "matchedOutputCapabilityIds": [],
-        "matchKind": null,
-        "modifierCapabilityId": null,
-        "modifierCapabilityIds": [],
-        "recipientAbilityId": "vermax-spreading-blaze",
-        "recipientDragonId": "vermax",
-        "recipientEvidenceIds": [
-          "vermax-spreading-blaze-summary-2026-06-23",
-          "vermax-spreading-blaze-glossary-2026-06-23"
-        ],
-        "requirements": [
-          {
-            "actual": "Left Flank",
-            "evidenceIds": [
-              "malachite-lightning-strike-2026-06-23"
-            ],
-            "expected": "Selected in formation",
-            "id": "malachite-selected",
-            "label": "malachite selected",
-            "notes": [],
-            "satisfied": true
-          },
-          {
-            "actual": "Vanguard",
-            "evidenceIds": [
-              "vermax-spreading-blaze-summary-2026-06-23",
-              "vermax-spreading-blaze-glossary-2026-06-23"
-            ],
-            "expected": "Selected in formation",
-            "id": "vermax-selected",
-            "label": "vermax selected",
-            "notes": [],
-            "satisfied": true
-          },
-          {
-            "actual": "Adjacent",
-            "evidenceIds": [
-              "malachite-lightning-strike-2026-06-23"
-            ],
-            "expected": "Left Flank adjacent to Vanguard",
-            "id": "adjacency-left-flank-vanguard",
-            "label": "Adjacency requirement",
-            "notes": [
-              "Friendly adjacency graph is confirmed as Left Flank - Vanguard - Right Flank."
-            ],
-            "satisfied": true
-          },
-          {
-            "actual": "Star Rank 1",
-            "evidenceIds": [
-              "malachite-lightning-strike-2026-06-23"
-            ],
-            "expected": "Star Rank 10+",
-            "id": "malachite-lightning-strike-star-rank",
-            "label": "Habit unlock requirement",
-            "notes": [],
-            "satisfied": false
-          },
-          {
-            "actual": null,
-            "evidenceIds": [],
-            "expected": "Recorded Habit Level 1-5 for current active value, or preview",
-            "id": "malachite-lightning-strike-habit-level",
-            "label": "Selected Habit Level",
-            "notes": [
-              "Habit Level 0 means explicitly no upgrades; null means not recorded."
-            ],
-            "satisfied": null
-          }
-        ],
-        "ruleId": "malachite-lightning-strike-vermax-basic-trigger",
-        "sourceAbilityId": "malachite-lightning-strike",
-        "sourceDragonId": "malachite",
-        "sourceEvidenceIds": [
-          "malachite-lightning-strike-2026-06-23"
-        ],
-        "status": "potential",
-        "targetSelectionGroup": null,
-        "title": "Lightning Strike may increase Vermax Basic Attack triggers",
-        "unresolvedQuestions": [
-          "Exact enhanced-by-Instinct formula."
-        ]
       }
     ],
     "expectedExclusions": [
@@ -25537,6 +25228,91 @@
         "title": "Warden's Rally Recovery support",
         "unresolvedQuestions": [
           "Exact final Recovery amount is unknown because the full Level and Instinct Recovery formula is not known."
+        ]
+      },
+      {
+        "assumptions": [
+          "Provider activation is not guaranteed.",
+          "Target selection may choose another eligible recipient.",
+          "Exact uptime, total attacks, final damage, and successful attack effects are not calculated.",
+          "Only the verified after-each-Basic-Attack dependency is represented; broader trigger ordering is unresolved."
+        ],
+        "channel": "status",
+        "confidence": "confirmed",
+        "conflicts": [
+          "Malachite - Lightning Strike Habit unlock requirement: expected Star Rank 10+, actual Star Rank 1",
+          "Malachite - Lightning Strike Selected Habit Level: expected Habit Level 1+ or preview, actual preview enabled"
+        ],
+        "damageScope": null,
+        "effects": [
+          "Potential extra Basic Attack can trigger Spreading Blaze again."
+        ],
+        "exactResultKnown": false,
+        "exactResultUnknownReason": "Exact final value cannot be calculated because final combat formulas and stacking order are not fully verified.",
+        "explanation": "Double-Strike may grant Vermax a second Basic Attack, which can trigger Spreading Blaze again.",
+        "id": "extra-basic-attack-trigger-malachite-lightning-strike-lightning-strike-double-strike-double-strike-status-output-basic-attack-extra-action-vermax-spreading-blaze-after-basic-attack-trigger-vermax",
+        "interactionScope": "cross-dragon",
+        "matchedOutputCapabilityIds": [],
+        "matchKind": "extra-basic-attack-trigger",
+        "modifierCapabilityId": null,
+        "modifierCapabilityIds": [],
+        "recipientAbilityId": "vermax-spreading-blaze",
+        "recipientDragonId": "vermax",
+        "recipientEvidenceIds": [
+          "vermax-spreading-blaze-summary-2026-06-23",
+          "vermax-spreading-blaze-glossary-2026-06-23"
+        ],
+        "requirements": [
+          {
+            "actual": "provider left-flank, recipient vanguard",
+            "evidenceIds": [
+              "malachite-lightning-strike-2026-06-23"
+            ],
+            "expected": "adjacent to left-flank",
+            "id": "malachite-lightning-strike-lightning-strike-double-strike-double-strike-status-output-basic-attack-extra-action-targeting-vanguard",
+            "label": "Extra action recipient compatibility",
+            "notes": [
+              "Friendly adjacency is Left Flank - Vanguard - Right Flank.",
+              "A position is not adjacent to itself."
+            ],
+            "satisfied": true
+          },
+          {
+            "actual": "Star Rank 1",
+            "evidenceIds": [
+              "malachite-lightning-strike-2026-06-23"
+            ],
+            "expected": "Star Rank 10+",
+            "id": "malachite-malachite-lightning-strike-star-rank",
+            "label": "Malachite - Lightning Strike Habit unlock requirement",
+            "notes": [],
+            "satisfied": false
+          },
+          {
+            "actual": "preview enabled",
+            "evidenceIds": [
+              "malachite-lightning-strike-2026-06-23"
+            ],
+            "expected": "Habit Level 1+ or preview",
+            "id": "malachite-malachite-lightning-strike-habit-level",
+            "label": "Malachite - Lightning Strike Selected Habit Level",
+            "notes": [
+              "Locked Habit capabilities are potential in preview mode, not active for current roster."
+            ],
+            "satisfied": false
+          }
+        ],
+        "ruleId": "extra-basic-attack-trigger",
+        "sourceAbilityId": "malachite-lightning-strike",
+        "sourceDragonId": "malachite",
+        "sourceEvidenceIds": [
+          "malachite-lightning-strike-2026-06-23"
+        ],
+        "status": "potential",
+        "targetSelectionGroup": null,
+        "title": "Lightning Strike - Extra Basic Attack trigger",
+        "unresolvedQuestions": [
+          "Exact timing and final combat result from the extra Basic Attack are unresolved."
         ]
       },
       {
@@ -27162,108 +26938,6 @@
         "title": "Instinct Scaling Support",
         "unresolvedQuestions": [
           "Final value and stacking order are not calculated."
-        ]
-      },
-      {
-        "assumptions": [
-          "Trigger success and target selection are not guaranteed."
-        ],
-        "channel": null,
-        "confidence": "unresolved",
-        "conflicts": [
-          "Habit unlock requirement: expected Star Rank 10+, actual Star Rank 1"
-        ],
-        "damageScope": null,
-        "effects": [
-          "Potential extra Basic Attack",
-          "Potential additional Spreading Blaze trigger"
-        ],
-        "exactResultKnown": null,
-        "exactResultUnknownReason": null,
-        "explanation": "Lightning Strike can grant Double-Strike to one adjacent ally. Vermax has an after-Basic-Attack Command, so a second Basic Attack can create another Command trigger.",
-        "id": "malachite-lightning-strike-vermax",
-        "interactionScope": "cross-dragon",
-        "matchedOutputCapabilityIds": [],
-        "matchKind": null,
-        "modifierCapabilityId": null,
-        "modifierCapabilityIds": [],
-        "recipientAbilityId": "vermax-spreading-blaze",
-        "recipientDragonId": "vermax",
-        "recipientEvidenceIds": [
-          "vermax-spreading-blaze-summary-2026-06-23",
-          "vermax-spreading-blaze-glossary-2026-06-23"
-        ],
-        "requirements": [
-          {
-            "actual": "Left Flank",
-            "evidenceIds": [
-              "malachite-lightning-strike-2026-06-23"
-            ],
-            "expected": "Selected in formation",
-            "id": "malachite-selected",
-            "label": "malachite selected",
-            "notes": [],
-            "satisfied": true
-          },
-          {
-            "actual": "Vanguard",
-            "evidenceIds": [
-              "vermax-spreading-blaze-summary-2026-06-23",
-              "vermax-spreading-blaze-glossary-2026-06-23"
-            ],
-            "expected": "Selected in formation",
-            "id": "vermax-selected",
-            "label": "vermax selected",
-            "notes": [],
-            "satisfied": true
-          },
-          {
-            "actual": "Adjacent",
-            "evidenceIds": [
-              "malachite-lightning-strike-2026-06-23"
-            ],
-            "expected": "Left Flank adjacent to Vanguard",
-            "id": "adjacency-left-flank-vanguard",
-            "label": "Adjacency requirement",
-            "notes": [
-              "Friendly adjacency graph is confirmed as Left Flank - Vanguard - Right Flank."
-            ],
-            "satisfied": true
-          },
-          {
-            "actual": "Star Rank 1",
-            "evidenceIds": [
-              "malachite-lightning-strike-2026-06-23"
-            ],
-            "expected": "Star Rank 10+",
-            "id": "malachite-lightning-strike-star-rank",
-            "label": "Habit unlock requirement",
-            "notes": [],
-            "satisfied": false
-          },
-          {
-            "actual": null,
-            "evidenceIds": [],
-            "expected": "Recorded Habit Level 1-5 for current active value, or preview",
-            "id": "malachite-lightning-strike-habit-level",
-            "label": "Selected Habit Level",
-            "notes": [
-              "Habit Level 0 means explicitly no upgrades; null means not recorded."
-            ],
-            "satisfied": null
-          }
-        ],
-        "ruleId": "malachite-lightning-strike-vermax-basic-trigger",
-        "sourceAbilityId": "malachite-lightning-strike",
-        "sourceDragonId": "malachite",
-        "sourceEvidenceIds": [
-          "malachite-lightning-strike-2026-06-23"
-        ],
-        "status": "potential",
-        "targetSelectionGroup": null,
-        "title": "Lightning Strike may increase Vermax Basic Attack triggers",
-        "unresolvedQuestions": [
-          "Exact enhanced-by-Instinct formula."
         ]
       }
     ],

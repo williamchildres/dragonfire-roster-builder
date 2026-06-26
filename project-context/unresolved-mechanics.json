@@ -237,7 +237,7 @@
     "abilityId": null,
     "abilityName": null,
     "currentConservativeBehavior": "Keep the mechanic explanatory or unknown; do not calculate a final amount.",
-    "description": "Double-Strike and other extra-Basic-Attack trigger chaining remain unresolved.",
+    "description": "Extra-Basic-Attack trigger-chain timing, target selection, uptime, and final damage remain unresolved.",
     "dragonId": null,
     "gameBuild": "26.6.53509",
     "scope": "global",
@@ -1048,19 +1048,6 @@
     "gameBuild": "26.6.53509",
     "scope": "dragon:venator",
     "stableId": "venator-feral-strike-exact-double-strike-duration-counting",
-    "status": "pending",
-    "suggestedValidationMethod": "Validate with controlled combat-log review in a formation that isolates this ability or condition.",
-    "whyUnresolved": "The typed source marks this mechanic as unresolved or provisional."
-  },
-  {
-    "abilityId": "venator-feral-strike",
-    "abilityName": "Feral Strike",
-    "currentConservativeBehavior": "Preserve the raw wording, expose the assumption, and avoid final formula or guaranteed activation claims.",
-    "description": "Feral Strike activation from Double-Strike's second Basic Attack.",
-    "dragonId": "venator",
-    "gameBuild": "26.6.53509",
-    "scope": "dragon:venator",
-    "stableId": "venator-feral-strike-feral-strike-activation-from-double-strike-s-second-basic-attack",
     "status": "pending",
     "suggestedValidationMethod": "Validate with controlled combat-log review in a formation that isolates this ability or condition.",
     "whyUnresolved": "The typed source marks this mechanic as unresolved or provisional."

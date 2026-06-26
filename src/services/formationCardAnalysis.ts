@@ -362,6 +362,9 @@ function summarizeTrace(
   if (trace.matchKind === 'status-condition-enablement') {
     return [detail.replace(`${source.name}'s `, '').replace(recipient ? `${recipient.name}'s ` : '', '').replaceAll('1.5x', '1.5×')];
   }
+  if (trace.matchKind === 'extra-basic-attack-trigger') {
+    return [detail.replace(`${source.name}'s `, '').replace(recipient ? `${recipient.name}'s ` : '', '')];
+  }
   if (trace.matchKind === 'status-removal') {
     return ['Potential Control cleanse; timing, selection, and activation are uncertain.'];
   }
@@ -782,6 +785,9 @@ function interactionPurpose(trace: SynergyTrace): string | null {
   }
   if (trace.matchKind === 'enemy-damage-dealt-reduction') {
     return 'Enemy Damage Dealt reduction';
+  }
+  if (trace.matchKind === 'extra-basic-attack-trigger') {
+    return 'Extra Basic Attack trigger';
   }
   if (trace.matchKind === 'status-condition-enablement') {
     return 'Conditional status enablement';

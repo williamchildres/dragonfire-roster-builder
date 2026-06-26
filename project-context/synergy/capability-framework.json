@@ -6104,6 +6104,177 @@
         "valuePerStack": null
       }
     ],
+    "extraActions": [
+      {
+        "abilityId": "malachite-lightning-strike",
+        "abilityName": "Lightning Strike",
+        "actionType": "basic-attack",
+        "activationChanceByHabitLevel": [
+          {
+            "level": 1,
+            "unit": "percent",
+            "value": 40
+          },
+          {
+            "level": 2,
+            "unit": "percent",
+            "value": 52
+          },
+          {
+            "level": 3,
+            "unit": "percent",
+            "value": 64
+          },
+          {
+            "level": 4,
+            "unit": "percent",
+            "value": 80
+          },
+          {
+            "level": 5,
+            "unit": "percent",
+            "value": 100
+          }
+        ],
+        "activationChanceFixed": null,
+        "activationGroupId": null,
+        "availability": {
+          "canonical": "canonical-locked",
+          "notes": [
+            "Future at Star Rank 10.",
+            "Unlocked in observed account collection state, subject to level and star requirements."
+          ],
+          "observedAccount": "observed-available",
+          "reportLabel": "Future at Star Rank 10; observed account hatched",
+          "userRoster": "unknown"
+        },
+        "chanceByHabitLevel": [
+          {
+            "level": 1,
+            "unit": "percent",
+            "value": 40
+          },
+          {
+            "level": 2,
+            "unit": "percent",
+            "value": 52
+          },
+          {
+            "level": 3,
+            "unit": "percent",
+            "value": 64
+          },
+          {
+            "level": 4,
+            "unit": "percent",
+            "value": 80
+          },
+          {
+            "level": 5,
+            "unit": "percent",
+            "value": 100
+          }
+        ],
+        "chanceFixed": null,
+        "conditions": [
+          {
+            "description": "Activation chance depends on Habit Level for start of round.",
+            "evidenceIds": [],
+            "id": "lightning-strike-round-one-activation-chance",
+            "label": "Activation chance depends on Habit Level for start of round.",
+            "unresolved": false
+          }
+        ],
+        "currentlyAvailable": false,
+        "dragonId": "malachite",
+        "durationRounds": 3,
+        "evidenceIds": [
+          "malachite-lightning-strike-2026-06-23"
+        ],
+        "futureAvailable": true,
+        "id": "malachite-lightning-strike-lightning-strike-double-strike-double-strike-status-output-basic-attack-extra-action",
+        "minimumDragonLevel": null,
+        "requiredHabitLevel": 1,
+        "sourceEffectId": "lightning-strike-double-strike",
+        "statusDefinition": "Target gains a second Basic Attack each round.",
+        "statusId": "double-strike",
+        "targetSelector": {
+          "comparisonDirection": null,
+          "comparisonPool": null,
+          "count": 1,
+          "includesCaster": false,
+          "position": null,
+          "scope": "within-adjacency",
+          "selection": "one-eligible-adjacent",
+          "selectionResource": null,
+          "selectionStat": null,
+          "sharedSelectionGroupId": null,
+          "side": "ally",
+          "tieBehavior": null
+        },
+        "targetSide": "ally",
+        "triggerEvent": "after-basic-attack",
+        "unlockStarRank": 10
+      },
+      {
+        "abilityId": "venator-feral-strike",
+        "abilityName": "Feral Strike",
+        "actionType": "basic-attack",
+        "activationChanceByHabitLevel": [],
+        "activationChanceFixed": 30,
+        "activationGroupId": "feral-strike-double-strike-rounds-shared-activation",
+        "availability": {
+          "canonical": "canonical-base",
+          "notes": [
+            "Not collected in observed account."
+          ],
+          "observedAccount": "observed-unavailable",
+          "reportLabel": "Base kit; not collected in observed account",
+          "userRoster": "unknown"
+        },
+        "chanceByHabitLevel": [],
+        "chanceFixed": 30,
+        "conditions": [
+          {
+            "description": "One base Double-Strike chance on rounds 4, 6, and 8.",
+            "evidenceIds": [],
+            "id": "feral-strike-double-strike-rounds-activation-chance",
+            "label": "One base Double-Strike chance on rounds 4, 6, and 8.",
+            "unresolved": false
+          }
+        ],
+        "currentlyAvailable": true,
+        "dragonId": "venator",
+        "durationRounds": 2,
+        "evidenceIds": [
+          "venator-feral-strike-summary-2026-06-25"
+        ],
+        "futureAvailable": false,
+        "id": "venator-feral-strike-feral-strike-double-strike-double-strike-status-output-basic-attack-extra-action",
+        "minimumDragonLevel": null,
+        "requiredHabitLevel": null,
+        "sourceEffectId": "feral-strike-double-strike",
+        "statusDefinition": "Target gains a second Basic Attack each round.",
+        "statusId": "double-strike",
+        "targetSelector": {
+          "comparisonDirection": null,
+          "comparisonPool": null,
+          "count": null,
+          "includesCaster": null,
+          "position": null,
+          "scope": "self",
+          "selection": "self",
+          "selectionResource": null,
+          "selectionStat": null,
+          "sharedSelectionGroupId": null,
+          "side": "self",
+          "tieBehavior": null
+        },
+        "targetSide": "self",
+        "triggerEvent": "after-basic-attack",
+        "unlockStarRank": null
+      }
+    ],
     "outputs": [
       {
         "abilityId": "syrax-blazing-fury",
@@ -13137,6 +13308,141 @@
         "untilEndOfCombat": false,
         "untilEndOfRound": false
       }
+    ],
+    "triggeredAbilities": [
+      {
+        "abilityId": "kalspire-tactical-strike",
+        "abilityName": "Tactical Strike",
+        "availability": {
+          "canonical": "canonical-base",
+          "notes": [
+            "Not hatched in observed account."
+          ],
+          "observedAccount": "observed-unavailable",
+          "reportLabel": "Base kit; not hatched in observed account",
+          "userRoster": "unknown"
+        },
+        "confidence": "confirmed",
+        "currentlyAvailable": true,
+        "dragonId": "kalspire",
+        "evidenceIds": [
+          "kalspire-tactical-strike-summary-2026-06-25"
+        ],
+        "futureAvailable": false,
+        "id": "kalspire-tactical-strike-after-basic-attack-trigger",
+        "minimumDragonLevel": null,
+        "requiredHabitLevel": null,
+        "sourceKind": "command",
+        "triggerEvent": "after-basic-attack",
+        "unlockStarRank": null
+      },
+      {
+        "abilityId": "kalspire-tactical-assault",
+        "abilityName": "Tactical Assault",
+        "availability": {
+          "canonical": "canonical-locked",
+          "notes": [
+            "Future at Star Rank 6.",
+            "Not hatched in observed account."
+          ],
+          "observedAccount": "observed-unavailable",
+          "reportLabel": "Future at Star Rank 6; not hatched in observed account",
+          "userRoster": "unknown"
+        },
+        "confidence": "confirmed",
+        "currentlyAvailable": false,
+        "dragonId": "kalspire",
+        "evidenceIds": [
+          "kalspire-tactical-assault-2026-06-25"
+        ],
+        "futureAvailable": true,
+        "id": "kalspire-tactical-assault-after-basic-attack-trigger",
+        "minimumDragonLevel": null,
+        "requiredHabitLevel": 1,
+        "sourceKind": "habit",
+        "triggerEvent": "after-basic-attack",
+        "unlockStarRank": 6
+      },
+      {
+        "abilityId": "venator-feral-strike",
+        "abilityName": "Feral Strike",
+        "availability": {
+          "canonical": "canonical-base",
+          "notes": [
+            "Not collected in observed account."
+          ],
+          "observedAccount": "observed-unavailable",
+          "reportLabel": "Base kit; not collected in observed account",
+          "userRoster": "unknown"
+        },
+        "confidence": "confirmed",
+        "currentlyAvailable": true,
+        "dragonId": "venator",
+        "evidenceIds": [
+          "venator-feral-strike-summary-2026-06-25"
+        ],
+        "futureAvailable": false,
+        "id": "venator-feral-strike-after-basic-attack-trigger",
+        "minimumDragonLevel": null,
+        "requiredHabitLevel": null,
+        "sourceKind": "command",
+        "triggerEvent": "after-basic-attack",
+        "unlockStarRank": null
+      },
+      {
+        "abilityId": "venator-feral-precision",
+        "abilityName": "Feral Precision",
+        "availability": {
+          "canonical": "canonical-locked",
+          "notes": [
+            "Future at Star Rank 6.",
+            "Not collected in observed account."
+          ],
+          "observedAccount": "observed-unavailable",
+          "reportLabel": "Future at Star Rank 6; not collected in observed account",
+          "userRoster": "unknown"
+        },
+        "confidence": "confirmed",
+        "currentlyAvailable": false,
+        "dragonId": "venator",
+        "evidenceIds": [
+          "venator-feral-precision-2026-06-25"
+        ],
+        "futureAvailable": true,
+        "id": "venator-feral-precision-after-basic-attack-trigger",
+        "minimumDragonLevel": null,
+        "requiredHabitLevel": 1,
+        "sourceKind": "habit",
+        "triggerEvent": "after-basic-attack",
+        "unlockStarRank": 6
+      },
+      {
+        "abilityId": "vermax-spreading-blaze",
+        "abilityName": "Spreading Blaze",
+        "availability": {
+          "canonical": "canonical-base",
+          "notes": [
+            "Unlocked in observed account collection state, subject to level and star requirements."
+          ],
+          "observedAccount": "observed-available",
+          "reportLabel": "Base kit; observed account hatched",
+          "userRoster": "unknown"
+        },
+        "confidence": "confirmed",
+        "currentlyAvailable": true,
+        "dragonId": "vermax",
+        "evidenceIds": [
+          "vermax-spreading-blaze-summary-2026-06-23",
+          "vermax-spreading-blaze-glossary-2026-06-23"
+        ],
+        "futureAvailable": false,
+        "id": "vermax-spreading-blaze-after-basic-attack-trigger",
+        "minimumDragonLevel": null,
+        "requiredHabitLevel": null,
+        "sourceKind": "command",
+        "triggerEvent": "after-basic-attack",
+        "unlockStarRank": null
+      }
     ]
   },
   "dragonEffectProfiles": [
@@ -13560,6 +13866,7 @@
   "matchKinds": [
     "outgoing-effect-amplification",
     "incoming-effect-amplification",
+    "extra-basic-attack-trigger",
     "status-condition-enablement",
     "stat-scaling-support",
     "enemy-mitigation-reduction",

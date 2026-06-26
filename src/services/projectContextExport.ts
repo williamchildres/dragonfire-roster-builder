@@ -10,10 +10,12 @@ import { FORMATION_POSITIONS, type AbilityDefinition, type Dragon, type Formatio
 import type { FormationAnalysisInput, ModifierCapability, OutputCapability, SynergyTrace } from '../models/synergy';
 import {
   deriveDragonEffectProfiles,
+  deriveExtraActionCapabilities,
   deriveModifierCapabilities,
   deriveOutputCapabilities,
   derivePeriodicDamageDefinitions,
   deriveStatusOutputCapabilities,
+  deriveTriggeredAbilityCapabilities,
   sourceScopesCompatible,
 } from './effectCapabilities';
 import { FORMATION_ADJACENCY, validateFormationAdjacencySymmetry } from './formationRules';
@@ -102,10 +104,12 @@ export function buildProjectContextFiles(options: ProjectContextBuildOptions): P
   const outputs = deriveOutputCapabilities(dragons);
   const modifiers = deriveModifierCapabilities(dragons);
   const statusOutputs = deriveStatusOutputCapabilities(dragons);
+  const extraActions = deriveExtraActionCapabilities(dragons);
+  const triggeredAbilities = deriveTriggeredAbilityCapabilities(dragons);
   const periodicDamage = derivePeriodicDamageDefinitions(dragons);
-  const profiles = buildDragonProfiles(options, outputs, modifiers, statusOutputs, periodicDamage);
+  const profiles = buildDragonProfiles(options, outputs, modifiers, statusOutputs, periodicDamage, extraActions, triggeredAbilities);
   const formationRules = buildFormationRules();
-  const capabilityFramework = buildCapabilityFramework(outputs, modifiers, statusOutputs, periodicDamage);
+  const capabilityFramework = buildCapabilityFramework(outputs, modifiers, statusOutputs, periodicDamage, extraActions, triggeredAbilities);
   const formationReviewCases = buildFormationReviewCases();
   const expectedInteractions: unknown[] = [];
   for (const reviewCase of formationReviewCases) {
@@ -257,6 +261,8 @@ function buildDragonProfiles(
   modifiers: ModifierCapability[],
   statusOutputs: ReturnType<typeof deriveStatusOutputCapabilities>,
   periodicDamage: ReturnType<typeof derivePeriodicDamageDefinitions>,
+  extraActions: ReturnType<typeof deriveExtraActionCapabilities>,
+  triggeredAbilities: ReturnType<typeof deriveTriggeredAbilityCapabilities>,
 ) {
   const source = sourceBase(options);
   return dragons.map((dragon) => {
@@ -323,6 +329,8 @@ function buildDragonProfiles(
         repeat: schedule.repeat,
       }))),
       statusOutputs: statusOutputs.filter((capability) => capability.dragonId === dragon.id),
+      extraActionCapabilities: extraActions.filter((capability) => capability.dragonId === dragon.id),
+      triggeredAbilityCapabilities: triggeredAbilities.filter((capability) => capability.dragonId === dragon.id),
       periodicDamage: periodicDamage.filter((definition) => definition.dragonId === dragon.id),
       dependencies: outputs.filter((capability) => capability.dragonId === dragon.id).flatMap((capability) => capability.dependencies.map((dependency) => ({
         outputCapabilityId: capability.id,
@@ -411,9 +419,13 @@ function buildCapabilityFramework(
   modifiers: ModifierCapability[],
   statusOutputs: ReturnType<typeof deriveStatusOutputCapabilities>,
   periodicDamage: ReturnType<typeof derivePeriodicDamageDefinitions>,
+  extraActions: ReturnType<typeof deriveExtraActionCapabilities>,
+  triggeredAbilities: ReturnType<typeof deriveTriggeredAbilityCapabilities>,
 ) {
   const reviewedOutputs = outputs.filter((capability) => isReviewedDragonId(capability.dragonId));
   const reviewedModifiers = modifiers.filter((capability) => isReviewedDragonId(capability.dragonId));
+  const reviewedExtraActions = extraActions.filter((capability) => isReviewedDragonId(capability.dragonId));
+  const reviewedTriggeredAbilities = triggeredAbilities.filter((capability) => isReviewedDragonId(capability.dragonId));
   return {
     effectChannels: ['physical-damage', 'tactical-damage', 'fire-damage', 'damage-dealt', 'recovery', 'stat', 'damage-received', 'status', 'control'],
     outputCapabilityStructure: [
@@ -466,6 +478,7 @@ function buildCapabilityFramework(
     matchKinds: [
       'outgoing-effect-amplification',
       'incoming-effect-amplification',
+      'extra-basic-attack-trigger',
       'status-condition-enablement',
       'stat-scaling-support',
       'enemy-mitigation-reduction',
@@ -498,6 +511,8 @@ function buildCapabilityFramework(
       recipientSideAmplification: reviewedModifiers.filter((capability) => capability.role === 'recipient-side-amplification'),
       enemyDebuffs: reviewedModifiers.filter((capability) => capability.role === 'enemy-debuff'),
       statusOutputs: statusOutputs.filter((capability) => isReviewedDragonId(capability.dragonId)),
+      extraActions: reviewedExtraActions,
+      triggeredAbilities: reviewedTriggeredAbilities,
       periodicDamage: periodicDamage.filter((definition) => isReviewedDragonId(definition.dragonId)),
       abilityDependencies: reviewedOutputs.flatMap((capability) => capability.dependencies.map((dependency) => ({
         outputCapabilityId: capability.id,
@@ -772,7 +787,7 @@ function buildUnresolvedMechanics() {
     ['global-stack-refresh-expiration', 'Stack refresh and expiration behavior remains unresolved.'],
     ['global-enemy-formation-adjacency', 'Enemy-formation adjacency is not confirmed.'],
     ['global-threshold-boundaries', 'Exact threshold boundary behavior such as exactly 50% remains unconfirmed.'],
-    ['global-extra-basic-attack-trigger-chaining', 'Double-Strike and other extra-Basic-Attack trigger chaining remain unresolved.'],
+    ['global-extra-basic-attack-trigger-chaining', 'Extra-Basic-Attack trigger-chain timing, target selection, uptime, and final damage remain unresolved.'],
     ['global-periodic-status-timing-refresh-overlap', 'Periodic status first-tick, refresh, stacking, and overlapping-source behavior remain unresolved.'],
     ['global-enhanced-by-stat-formulas', 'Exact enhanced-by-stat formulas remain unresolved.'],
     ['global-dynamic-selector-tie-breaking', 'Tie-breaking for dynamic stat and troop selectors remains unresolved.'],
@@ -1258,7 +1273,7 @@ function validateDragonExports(parsed: Map<string, JsonValue>, errors: string[])
       if (profile.command !== null || profile.trait !== null || (Array.isArray(profile.habits) && profile.habits.length > 0)) {
         errors.push(`${dragon.slug}: metadata-only dragon gained combat abilities.`);
       }
-      if ((arrayLength(profile.outputCapabilities) + arrayLength(profile.modifierCapabilities) + arrayLength(profile.statusOutputs) + arrayLength(profile.periodicDamage)) > 0) {
+      if ((arrayLength(profile.outputCapabilities) + arrayLength(profile.modifierCapabilities) + arrayLength(profile.statusOutputs) + arrayLength(profile.extraActionCapabilities) + arrayLength(profile.triggeredAbilityCapabilities) + arrayLength(profile.periodicDamage)) > 0) {
         errors.push(`${dragon.slug}: metadata-only dragon gained derived capabilities.`);
       }
     }
@@ -1288,7 +1303,7 @@ function validateReferences(parsed: Map<string, JsonValue>, errors: string[]) {
   }
   const framework = parsed.get('project-context/synergy/capability-framework.json');
   if (isJsonObject(framework) && isJsonObject(framework.derivedCapabilities)) {
-    for (const collectionName of ['outputs', 'allySupport', 'selfAmplification', 'recipientSideAmplification', 'enemyDebuffs', 'statusOutputs'] as const) {
+    for (const collectionName of ['outputs', 'allySupport', 'selfAmplification', 'recipientSideAmplification', 'enemyDebuffs', 'statusOutputs', 'extraActions', 'triggeredAbilities'] as const) {
       const collection = framework.derivedCapabilities[collectionName];
       if (!Array.isArray(collection)) {
         continue;
@@ -1474,7 +1489,7 @@ function traceSummary(trace: SynergyTrace) {
 }
 
 function isExpectedInteractionTrace(trace: SynergyTrace): boolean {
-  return Boolean(trace.matchKind) || trace.ruleId === 'direct-stat-support' || trace.ruleId === 'malachite-lightning-strike-vermax-basic-trigger';
+  return Boolean(trace.matchKind) || trace.ruleId === 'direct-stat-support';
 }
 
 function expectedExclusionsForFormation(formation: FormationAnalysisInput, traces: SynergyTrace[]): string[] {

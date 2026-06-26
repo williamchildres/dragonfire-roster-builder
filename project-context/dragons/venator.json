@@ -325,7 +325,6 @@
       ],
       "unlockStarRank": null,
       "unresolvedQuestions": [
-        "Feral Strike activation from Double-Strike's second Basic Attack.",
         "Same-round Double-Strike timing.",
         "Ordering between the fixed-round check and the Basic Attack.",
         "Exact Double-Strike duration counting."
@@ -2547,7 +2546,6 @@
     ],
     "unlockStarRank": null,
     "unresolvedQuestions": [
-      "Feral Strike activation from Double-Strike's second Basic Attack.",
       "Same-round Double-Strike timing.",
       "Ordering between the fixed-round check and the Basic Attack.",
       "Exact Double-Strike duration counting."
@@ -3395,10 +3393,70 @@
       "verificationStatus": "community-verified"
     }
   ],
+  "extraActionCapabilities": [
+    {
+      "abilityId": "venator-feral-strike",
+      "abilityName": "Feral Strike",
+      "actionType": "basic-attack",
+      "activationChanceByHabitLevel": [],
+      "activationChanceFixed": 30,
+      "activationGroupId": "feral-strike-double-strike-rounds-shared-activation",
+      "availability": {
+        "canonical": "canonical-base",
+        "notes": [
+          "Not collected in observed account."
+        ],
+        "observedAccount": "observed-unavailable",
+        "reportLabel": "Base kit; not collected in observed account",
+        "userRoster": "unknown"
+      },
+      "chanceByHabitLevel": [],
+      "chanceFixed": 30,
+      "conditions": [
+        {
+          "description": "One base Double-Strike chance on rounds 4, 6, and 8.",
+          "evidenceIds": [],
+          "id": "feral-strike-double-strike-rounds-activation-chance",
+          "label": "One base Double-Strike chance on rounds 4, 6, and 8.",
+          "unresolved": false
+        }
+      ],
+      "currentlyAvailable": true,
+      "dragonId": "venator",
+      "durationRounds": 2,
+      "evidenceIds": [
+        "venator-feral-strike-summary-2026-06-25"
+      ],
+      "futureAvailable": false,
+      "id": "venator-feral-strike-feral-strike-double-strike-double-strike-status-output-basic-attack-extra-action",
+      "minimumDragonLevel": null,
+      "requiredHabitLevel": null,
+      "sourceEffectId": "feral-strike-double-strike",
+      "statusDefinition": "Target gains a second Basic Attack each round.",
+      "statusId": "double-strike",
+      "targetSelector": {
+        "comparisonDirection": null,
+        "comparisonPool": null,
+        "count": null,
+        "includesCaster": null,
+        "position": null,
+        "scope": "self",
+        "selection": "self",
+        "selectionResource": null,
+        "selectionStat": null,
+        "sharedSelectionGroupId": null,
+        "side": "self",
+        "tieBehavior": null
+      },
+      "targetSide": "self",
+      "triggerEvent": "after-basic-attack",
+      "unlockStarRank": null
+    }
+  ],
   "firstObservedInGame": null,
   "format": "dragonfire-dragon-profile",
   "gameVersion": null,
-  "generatedAt": "2026-06-25T23:27:35.329Z",
+  "generatedAt": "2026-06-26T00:43:37.772Z",
   "habits": [
     {
       "abilityClass": "passive",
@@ -5597,8 +5655,8 @@
   "rosterSourceStatus": "official-website",
   "slug": "venator",
   "source": {
-    "branch": "fix/eclipse-cover-formation-traces",
-    "commit": "6e4e37a9f5e74a52622a6200c456399e7262d205",
+    "branch": "fix/double-strike-trigger-chains",
+    "commit": "b27dab49d4a5906c6204260fee8fc775dbfa5f5d",
     "databaseVersion": "0.6.0",
     "dataSchemaVersion": 10,
     "gameBuild": "26.6.53509",
@@ -5938,10 +5996,64 @@
       "status": "screenshot-verified"
     }
   },
+  "triggeredAbilityCapabilities": [
+    {
+      "abilityId": "venator-feral-strike",
+      "abilityName": "Feral Strike",
+      "availability": {
+        "canonical": "canonical-base",
+        "notes": [
+          "Not collected in observed account."
+        ],
+        "observedAccount": "observed-unavailable",
+        "reportLabel": "Base kit; not collected in observed account",
+        "userRoster": "unknown"
+      },
+      "confidence": "confirmed",
+      "currentlyAvailable": true,
+      "dragonId": "venator",
+      "evidenceIds": [
+        "venator-feral-strike-summary-2026-06-25"
+      ],
+      "futureAvailable": false,
+      "id": "venator-feral-strike-after-basic-attack-trigger",
+      "minimumDragonLevel": null,
+      "requiredHabitLevel": null,
+      "sourceKind": "command",
+      "triggerEvent": "after-basic-attack",
+      "unlockStarRank": null
+    },
+    {
+      "abilityId": "venator-feral-precision",
+      "abilityName": "Feral Precision",
+      "availability": {
+        "canonical": "canonical-locked",
+        "notes": [
+          "Future at Star Rank 6.",
+          "Not collected in observed account."
+        ],
+        "observedAccount": "observed-unavailable",
+        "reportLabel": "Future at Star Rank 6; not collected in observed account",
+        "userRoster": "unknown"
+      },
+      "confidence": "confirmed",
+      "currentlyAvailable": false,
+      "dragonId": "venator",
+      "evidenceIds": [
+        "venator-feral-precision-2026-06-25"
+      ],
+      "futureAvailable": true,
+      "id": "venator-feral-precision-after-basic-attack-trigger",
+      "minimumDragonLevel": null,
+      "requiredHabitLevel": 1,
+      "sourceKind": "habit",
+      "triggerEvent": "after-basic-attack",
+      "unlockStarRank": 6
+    }
+  ],
   "unresolvedQuestions": [
     "Exact Double-Strike duration counting.",
     "Exactly 50% Troop Capacity behavior.",
-    "Feral Strike activation from Double-Strike's second Basic Attack.",
     "Hunter's Bane duration.",
     "Hunter's Bane Strength enhancement formula.",
     "Observed values include Troop Capacity and Dragon Power only; combat stats, March Speed, and Stamina remain unknown.",

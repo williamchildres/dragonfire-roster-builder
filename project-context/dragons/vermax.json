@@ -3642,10 +3642,11 @@
       "verificationStatus": "community-verified"
     }
   ],
+  "extraActionCapabilities": [],
   "firstObservedInGame": "2026-06-22",
   "format": "dragonfire-dragon-profile",
   "gameVersion": null,
-  "generatedAt": "2026-06-25T23:27:35.329Z",
+  "generatedAt": "2026-06-26T00:43:37.772Z",
   "habits": [
     {
       "abilityClass": "passive",
@@ -6882,8 +6883,8 @@
   "rosterSourceStatus": "in-game-verified-pending-official-site",
   "slug": "vermax",
   "source": {
-    "branch": "fix/eclipse-cover-formation-traces",
-    "commit": "6e4e37a9f5e74a52622a6200c456399e7262d205",
+    "branch": "fix/double-strike-trigger-chains",
+    "commit": "b27dab49d4a5906c6204260fee8fc775dbfa5f5d",
     "databaseVersion": "0.6.0",
     "dataSchemaVersion": 10,
     "gameBuild": "26.6.53509",
@@ -7465,6 +7466,35 @@
       "status": "screenshot-verified"
     }
   },
+  "triggeredAbilityCapabilities": [
+    {
+      "abilityId": "vermax-spreading-blaze",
+      "abilityName": "Spreading Blaze",
+      "availability": {
+        "canonical": "canonical-base",
+        "notes": [
+          "Unlocked in observed account collection state, subject to level and star requirements."
+        ],
+        "observedAccount": "observed-available",
+        "reportLabel": "Base kit; observed account hatched",
+        "userRoster": "unknown"
+      },
+      "confidence": "confirmed",
+      "currentlyAvailable": true,
+      "dragonId": "vermax",
+      "evidenceIds": [
+        "vermax-spreading-blaze-summary-2026-06-23",
+        "vermax-spreading-blaze-glossary-2026-06-23"
+      ],
+      "futureAvailable": false,
+      "id": "vermax-spreading-blaze-after-basic-attack-trigger",
+      "minimumDragonLevel": null,
+      "requiredHabitLevel": null,
+      "sourceKind": "command",
+      "triggerEvent": "after-basic-attack",
+      "unlockStarRank": null
+    }
+  ],
   "unresolvedQuestions": [
     "Exact enhanced-by-Strength formula.",
     "Power progression unknown.",

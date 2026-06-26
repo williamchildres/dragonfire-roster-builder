@@ -13,7 +13,6 @@ import type {
 } from '../models/synergy';
 import {
   THRESHOLD_BOUNDARY_NOTE,
-  arePositionsAdjacent,
   resolveThreeAllyTargets,
 } from './formationRules';
 import { analyzeCapabilityAmplifications } from './effectCapabilities';
@@ -41,7 +40,6 @@ export function analyzeFormationTraces(
   const traces: SynergyTrace[] = [];
   traces.push(...analyzeCapabilityAmplifications(formation, dragons, options));
   traces.push(...vermaxWarriorsZealTraces(formation, dragons, options));
-  traces.push(...malachiteLightningStrikeTraces(formation, dragons, options));
   traces.push(...vanguardConflictTraces(formation, dragons));
   traces.push(...vanguardRequirementTraces(formation, dragons, options));
   traces.push(...wardenRecoverySelfInclusionTraces(formation, dragons));
@@ -55,7 +53,7 @@ export function isNormalSynergyTrace(trace: SynergyTrace): boolean {
     trace.interactionScope !== 'internal' &&
     (
       (Boolean(trace.matchKind) && trace.matchKind !== 'periodic-damage-amplification') ||
-      trace.ruleId === 'malachite-lightning-strike-vermax-basic-trigger'
+      trace.ruleId === 'direct-stat-support'
     )
   );
 }
@@ -199,47 +197,6 @@ function vermaxWarriorsZealTraces(
       assumptions: ['Warrior\'s Zeal Physical Damage source scope is handled by the generic capability framework.'],
       unresolvedQuestions: [...source.trait.unresolvedQuestions],
       potentialWhenLocked: options.previewMaxRankInteractions,
-    }),
-  ];
-}
-
-function malachiteLightningStrikeTraces(
-  formation: FormationAnalysisInput,
-  dragons: Dragon[],
-  options: TraceOptions,
-): SynergyTrace[] {
-  const source = findDragon('malachite', dragons);
-  const recipient = findDragon('vermax', dragons);
-  const sourcePosition = getDragonPosition(formation, 'malachite');
-  const recipientPosition = getDragonPosition(formation, 'vermax');
-  const habit = source?.habits.find((ability) => ability.id === 'malachite-lightning-strike') ?? null;
-  if (!source || !recipient || !habit || !sourcePosition || !recipientPosition) {
-    return [];
-  }
-  const requirements = [
-    selectedRequirement('malachite', formation, habit.evidenceIds),
-    selectedRequirement('vermax', formation, recipient.command?.evidenceIds ?? []),
-    adjacencyRequirement(sourcePosition, recipientPosition, habit.evidenceIds),
-    ...abilityProgressionRequirements(source, habit, options),
-  ];
-  return [
-    makeTrace({
-      id: 'malachite-lightning-strike-vermax',
-      ruleId: 'malachite-lightning-strike-vermax-basic-trigger',
-      source,
-      sourceAbility: habit,
-      recipient,
-      recipientAbility: recipient.command,
-      title: 'Lightning Strike may increase Vermax Basic Attack triggers',
-      explanation:
-        'Lightning Strike can grant Double-Strike to one adjacent ally. Vermax has an after-Basic-Attack Command, so a second Basic Attack can create another Command trigger.',
-      requirements,
-      matchedFacts: ['Lightning Strike grants Double-Strike.', 'Vermax Spreading Blaze triggers after Basic Attacks.'],
-      effects: ['Potential extra Basic Attack', 'Potential additional Spreading Blaze trigger'],
-      assumptions: ['Trigger success and target selection are not guaranteed.'],
-      unresolvedQuestions: ['Exact enhanced-by-Instinct formula.'],
-      forcedStatus: 'potential',
-      potentialWhenLocked: true,
     }),
   ];
 }
@@ -699,24 +656,6 @@ function selectedRequirement(
     satisfied: actual !== null,
     evidenceIds,
     notes: [],
-  };
-}
-
-function adjacencyRequirement(
-  sourcePosition: FormationPosition,
-  recipientPosition: FormationPosition,
-  evidenceIds: string[],
-): RequirementTrace {
-  return {
-    id: `adjacency-${sourcePosition}-${recipientPosition}`,
-    label: 'Adjacency requirement',
-    expected: `${formatPosition(sourcePosition)} adjacent to ${formatPosition(recipientPosition)}`,
-    actual: arePositionsAdjacent(sourcePosition, recipientPosition)
-      ? 'Adjacent'
-      : 'Not adjacent',
-    satisfied: arePositionsAdjacent(sourcePosition, recipientPosition),
-    evidenceIds,
-    notes: ['Friendly adjacency graph is confirmed as Left Flank - Vanguard - Right Flank.'],
   };
 }
 

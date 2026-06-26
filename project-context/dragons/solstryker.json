@@ -17,10 +17,11 @@
   "dependencies": [],
   "effects": [],
   "evidenceReferences": [],
+  "extraActionCapabilities": [],
   "firstObservedInGame": null,
   "format": "dragonfire-dragon-profile",
   "gameVersion": null,
-  "generatedAt": "2026-06-25T23:27:35.329Z",
+  "generatedAt": "2026-06-26T00:43:37.772Z",
   "habits": [],
   "id": "solstryker",
   "isNew": false,
@@ -42,8 +43,8 @@
   "rosterSourceStatus": "official-website",
   "slug": "solstryker",
   "source": {
-    "branch": "fix/eclipse-cover-formation-traces",
-    "commit": "6e4e37a9f5e74a52622a6200c456399e7262d205",
+    "branch": "fix/double-strike-trigger-chains",
+    "commit": "b27dab49d4a5906c6204260fee8fc775dbfa5f5d",
     "databaseVersion": "0.6.0",
     "dataSchemaVersion": 10,
     "gameBuild": "26.6.53509",
@@ -59,6 +60,7 @@
   "statusOutputs": [],
   "tags": [],
   "trait": null,
+  "triggeredAbilityCapabilities": [],
   "unresolvedQuestions": [],
   "verificationBySection": {
     "breed": {

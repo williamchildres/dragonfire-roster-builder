@@ -26,6 +26,7 @@ import type {
   DragonStatId,
   EffectChannel,
   EffectCondition,
+  ExtraActionCapability,
   FormationAnalysisInput,
   ModifierCapability,
   ModifierRole,
@@ -35,6 +36,7 @@ import type {
   RequirementTrace,
   StatusOutputCapability,
   SynergyTrace,
+  TriggeredAbilityCapability,
   TraceConfidence,
   TraceStatus,
 } from '../models/synergy';
@@ -239,6 +241,71 @@ export function deriveStatusOutputCapabilities(dragons: Dragon[]): StatusOutputC
   );
 }
 
+export function deriveExtraActionCapabilities(dragons: Dragon[]): ExtraActionCapability[] {
+  return deriveStatusOutputCapabilities(dragons).flatMap((statusOutput) => {
+    const semantic = extraActionSemanticForStatus(statusOutput.statusId);
+    if (!semantic) {
+      return [];
+    }
+    return [{
+      id: `${statusOutput.id}-${semantic.actionType}-extra-action`,
+      dragonId: statusOutput.dragonId,
+      abilityId: statusOutput.abilityId,
+      abilityName: statusOutput.abilityName,
+      sourceEffectId: statusOutput.sourceEffectId ?? null,
+      statusId: statusOutput.statusId,
+      statusDefinition: semantic.definition,
+      actionType: semantic.actionType,
+      triggerEvent: semantic.triggerEvent,
+      targetSide: statusOutput.targetSide,
+      targetSelector: statusOutput.targetSelector,
+      unlockStarRank: statusOutput.unlockStarRank,
+      minimumDragonLevel: statusOutput.minimumDragonLevel,
+      requiredHabitLevel: statusOutput.requiredHabitLevel,
+      chanceFixed: statusOutput.chanceFixed,
+      chanceByHabitLevel: statusOutput.chanceByHabitLevel,
+      durationRounds: statusOutput.durationRounds,
+      conditions: statusOutput.conditions,
+      currentlyAvailable: statusOutput.currentlyAvailable,
+      futureAvailable: statusOutput.futureAvailable,
+      availability: statusOutput.availability,
+      evidenceIds: statusOutput.evidenceIds,
+      activationGroupId: statusOutput.activationGroupId,
+      activationChanceFixed: statusOutput.activationChanceFixed,
+      activationChanceByHabitLevel: statusOutput.activationChanceByHabitLevel,
+    }];
+  });
+}
+
+export function deriveTriggeredAbilityCapabilities(dragons: Dragon[]): TriggeredAbilityCapability[] {
+  return dragons.flatMap((dragon) =>
+    allAbilities(dragon).flatMap((ability) => {
+      const hasAfterBasicAttackTrigger = ability.schedules.some(
+        (schedule) => schedule.timing === 'after-basic-attack' || schedule.roundSelector?.kind === 'after-basic-attack',
+      );
+      if (!hasAfterBasicAttackTrigger) {
+        return [];
+      }
+      return [{
+        id: `${ability.id}-after-basic-attack-trigger`,
+        dragonId: dragon.id,
+        abilityId: ability.id,
+        abilityName: ability.name,
+        triggerEvent: 'after-basic-attack' as const,
+        sourceKind: ability.kind,
+        unlockStarRank: ability.unlockStarRank,
+        minimumDragonLevel: ability.minimumDragonLevel,
+        requiredHabitLevel: ability.kind === 'habit' ? 1 : null,
+        currentlyAvailable: ability.unlockStarRank === null || ability.unlockStarRank <= 1,
+        futureAvailable: ability.unlockStarRank !== null && ability.unlockStarRank > 1,
+        availability: availabilityContext(dragon.id, ability.unlockStarRank, ability.minimumDragonLevel),
+        confidence: confidenceForAbility(ability),
+        evidenceIds: ability.evidenceIds,
+      }];
+    }),
+  );
+}
+
 export function derivePeriodicDamageDefinitions(dragons: Dragon[]): PeriodicDamageDefinition[] {
   return dragons.flatMap((dragon) =>
     allAbilities(dragon).flatMap((ability) =>
@@ -334,11 +401,14 @@ export function analyzeCapabilityAmplifications(
   const outputs = deriveOutputCapabilities(dragons).filter((capability) => selectedDragonIds.has(capability.dragonId));
   const modifiers = deriveModifierCapabilities(dragons).filter((capability) => selectedDragonIds.has(capability.dragonId));
   const statusOutputs = deriveStatusOutputCapabilities(dragons).filter((capability) => selectedDragonIds.has(capability.dragonId));
+  const extraActions = deriveExtraActionCapabilities(dragons).filter((capability) => selectedDragonIds.has(capability.dragonId));
+  const triggeredAbilities = deriveTriggeredAbilityCapabilities(dragons).filter((capability) => selectedDragonIds.has(capability.dragonId));
   const periodicDamage = derivePeriodicDamageDefinitions(dragons).filter((definition) => selectedDragonIds.has(definition.dragonId));
   return [
     ...analyzeOutgoingAmplifications(formation, dragons, outputs, modifiers, options),
     ...analyzeIncomingAmplifications(formation, dragons, outputs, modifiers, options),
     ...analyzeAllyOutputSupport(formation, dragons, outputs, options),
+    ...analyzeExtraActionTriggerChains(formation, dragons, extraActions, triggeredAbilities, options),
     ...analyzeStatusConditionEnablement(formation, dragons, outputs, statusOutputs, options),
     ...analyzeStatusEffectConditionEnablement(formation, dragons, statusOutputs, options),
     ...analyzeDefensiveAllySupport(formation, dragons, modifiers, options),
@@ -413,6 +483,108 @@ function analyzeAllyOutputSupport(
         unresolvedQuestions: output.channel === 'recovery' ? ['Exact final Recovery amount is unknown because the full Level and Instinct Recovery formula is not known.'] : [],
         futureOrConditional: output.futureAvailable || output.conditional,
       }));
+    }
+  }
+  return traces;
+}
+
+function analyzeExtraActionTriggerChains(
+  formation: FormationAnalysisInput,
+  dragons: Dragon[],
+  extraActions: ExtraActionCapability[],
+  triggeredAbilities: TriggeredAbilityCapability[],
+  options: CapabilityOptions,
+): SynergyTrace[] {
+  const traces: SynergyTrace[] = [];
+  for (const extraAction of extraActions.filter((capability) => extraActionCapabilityVisible(capability, options))) {
+    const providerPosition = positionOf(formation, extraAction.dragonId);
+    const provider = dragonById(dragons, extraAction.dragonId);
+    if (!providerPosition || !provider) {
+      continue;
+    }
+    for (const recipientPosition of FORMATION_POSITIONS) {
+      const recipientId = formation[recipientPosition];
+      if (!recipientId || (recipientId === extraAction.dragonId && extraAction.targetSelector.includesCaster !== true)) {
+        continue;
+      }
+      const targeting = extraActionTargetRequirement(extraAction, providerPosition, recipientPosition);
+      if (targeting.satisfied === false) {
+        continue;
+      }
+      const recipient = dragonById(dragons, recipientId);
+      if (!recipient) {
+        continue;
+      }
+      for (const triggeredAbility of triggeredAbilities.filter(
+        (capability) =>
+          capability.dragonId === recipientId &&
+          capability.triggerEvent === extraAction.triggerEvent &&
+          triggeredAbilityCapabilityVisible(capability, options),
+      )) {
+        const requirements = dedupeRequirements([
+          targeting,
+          ...availabilityRequirements({
+            dragonId: extraAction.dragonId,
+            abilityId: extraAction.abilityId,
+            dragonName: provider.name,
+            abilityName: extraAction.abilityName,
+            unlockStarRank: extraAction.unlockStarRank,
+            minimumDragonLevel: extraAction.minimumDragonLevel,
+            requiredHabitLevel: extraAction.requiredHabitLevel,
+            evidenceIds: extraAction.evidenceIds,
+            sourceKind: abilitySourceKind(dragons, extraAction.dragonId, extraAction.abilityId),
+          }, options),
+          ...availabilityRequirements({
+            dragonId: triggeredAbility.dragonId,
+            abilityId: triggeredAbility.abilityId,
+            dragonName: recipient.name,
+            abilityName: triggeredAbility.abilityName,
+            unlockStarRank: triggeredAbility.unlockStarRank,
+            minimumDragonLevel: triggeredAbility.minimumDragonLevel,
+            requiredHabitLevel: triggeredAbility.requiredHabitLevel,
+            evidenceIds: triggeredAbility.evidenceIds,
+            sourceKind: triggeredAbility.sourceKind,
+          }, options),
+        ]);
+        traces.push(makeDependencyTrace({
+          id: `extra-basic-attack-trigger-${extraAction.id}-${triggeredAbility.id}-${recipientId}`,
+          matchKind: 'extra-basic-attack-trigger',
+          ruleId: 'extra-basic-attack-trigger',
+          source: provider,
+          sourceAbilityId: extraAction.abilityId,
+          recipient,
+          recipientAbilityId: triggeredAbility.abilityId,
+          channel: 'status',
+          title: `${extraAction.abilityName} - Extra Basic Attack trigger`,
+          explanation:
+            `${statusLabel(extraAction.statusId)} may grant ${recipient.name} a second Basic Attack, which can trigger ${triggeredAbility.abilityName} again.`,
+          requirements,
+          matchedFacts: [
+            `Status semantic: ${statusLabel(extraAction.statusId)} - ${extraAction.statusDefinition}`,
+            `Extra action type: ${extraAction.actionType}.`,
+            `Trigger event: ${extraAction.triggerEvent}.`,
+            `Extra action recipient and triggered ability owner: ${recipient.id}.`,
+            `${triggeredAbility.abilityName} triggers after each Basic Attack.`,
+            `${extraAction.abilityName} targets ${targetSelectorSummary(extraAction.targetSelector)}.`,
+            ...(extraAction.sourceEffectId ? [`Source effect ID: ${extraAction.sourceEffectId}.`] : []),
+            ...(extraAction.activationGroupId ? [`Shared activation group: ${extraAction.activationGroupId}.`] : []),
+            ...extraActionActivationChanceFacts(extraAction),
+            ...(extraAction.durationRounds !== null ? [`Duration: ${extraAction.durationRounds} rounds.`] : []),
+          ],
+          effects: [`Potential extra Basic Attack can trigger ${triggeredAbility.abilityName} again.`],
+          sourceEvidenceIds: extraAction.evidenceIds,
+          recipientEvidenceIds: triggeredAbility.evidenceIds,
+          assumptions: [
+            'Provider activation is not guaranteed.',
+            'Target selection may choose another eligible recipient.',
+            'Exact uptime, total attacks, final damage, and successful attack effects are not calculated.',
+            'Only the verified after-each-Basic-Attack dependency is represented; broader trigger ordering is unresolved.',
+          ],
+          unresolvedQuestions: ['Exact timing and final combat result from the extra Basic Attack are unresolved.'],
+          futureOrConditional: extraAction.futureAvailable || triggeredAbility.futureAvailable || extraAction.conditions.length > 0 || extraActionChanceConditional(extraAction),
+          modifier: null,
+        }));
+      }
     }
   }
   return traces;
@@ -2085,6 +2257,25 @@ function statusModifierSemantic(effect: AbilityEffect): { statusId: string; oper
   return null;
 }
 
+function extraActionSemanticForStatus(statusId: string): {
+  actionType: ExtraActionCapability['actionType'];
+  triggerEvent: ExtraActionCapability['triggerEvent'];
+  definition: string;
+} | null {
+  const entry = statusGlossary.find((item) => item.id === statusId);
+  if (!entry || entry.verification === 'unresolved') {
+    return null;
+  }
+  if (/\b(second|additional|extra)\s+Basic Attack\b/i.test(entry.definition)) {
+    return {
+      actionType: 'basic-attack',
+      triggerEvent: 'after-basic-attack',
+      definition: entry.definition,
+    };
+  }
+  return null;
+}
+
 function baseModifier(
   dragon: Dragon,
   ability: AbilityDefinition,
@@ -2624,6 +2815,51 @@ function targetRequirement(
   };
 }
 
+function extraActionTargetRequirement(
+  extraAction: ExtraActionCapability,
+  providerPosition: FormationPosition | null,
+  recipientPosition: FormationPosition,
+): RequirementTrace {
+  const selector = extraAction.targetSelector;
+  let satisfied: boolean | null;
+  let expected: string = selector.scope;
+  if (!providerPosition) {
+    satisfied = false;
+  } else if (selector.includesCaster === false && providerPosition === recipientPosition) {
+    satisfied = false;
+    expected = 'other ally';
+  } else if (selector.selection === 'self') {
+    satisfied = providerPosition === recipientPosition;
+    expected = 'self';
+  } else if (selector.position) {
+    satisfied = recipientPosition === selector.position;
+    expected = selector.position;
+  } else if (selector.selection === 'adjacent' || selector.selection === 'one-eligible-adjacent') {
+    satisfied = arePositionsAdjacent(providerPosition, recipientPosition);
+    expected = `adjacent to ${providerPosition}`;
+  } else if (selector.selection === 'highest-stat' || selector.selection === 'highest-resource' || selector.selection === 'lowest-resource' || selector.selection === 'all-matching-condition') {
+    satisfied = true;
+    expected = selector.selection === 'all-matching-condition'
+      ? 'all allies matching threshold condition'
+      : `${selector.comparisonDirection ?? (selector.selection === 'lowest-resource' ? 'lowest' : 'highest')} ${selector.selectionResource ?? selector.selectionStat ?? 'resource'} ${selector.side}`;
+  } else if (selector.selection === 'any' || selector.selection === 'eligible') {
+    satisfied = true;
+  } else {
+    satisfied = null;
+  }
+  return {
+    id: `${extraAction.id}-targeting-${recipientPosition}`,
+    label: 'Extra action recipient compatibility',
+    expected,
+    actual: providerPosition ? `provider ${providerPosition}, recipient ${recipientPosition}` : null,
+    satisfied,
+    evidenceIds: extraAction.evidenceIds,
+    notes: selector.selection === 'adjacent' || selector.selection === 'one-eligible-adjacent'
+      ? ['Friendly adjacency is Left Flank - Vanguard - Right Flank.', 'A position is not adjacent to itself.']
+      : [],
+  };
+}
+
 function outputTargetsRecipient(
   output: OutputCapability,
   providerPosition: FormationPosition,
@@ -2874,6 +3110,28 @@ function statusCapabilityVisible(statusOutput: StatusOutputCapability, options: 
     minimumDragonLevel: statusOutput.minimumDragonLevel,
     requiredHabitLevel: statusOutput.requiredHabitLevel,
     futureAvailable: statusOutput.futureAvailable,
+  }, options);
+}
+
+function extraActionCapabilityVisible(extraAction: ExtraActionCapability, options: CapabilityOptions): boolean {
+  return capabilityVisible({
+    dragonId: extraAction.dragonId,
+    abilityId: extraAction.abilityId,
+    unlockStarRank: extraAction.unlockStarRank,
+    minimumDragonLevel: extraAction.minimumDragonLevel,
+    requiredHabitLevel: extraAction.requiredHabitLevel,
+    futureAvailable: extraAction.futureAvailable,
+  }, options);
+}
+
+function triggeredAbilityCapabilityVisible(triggeredAbility: TriggeredAbilityCapability, options: CapabilityOptions): boolean {
+  return capabilityVisible({
+    dragonId: triggeredAbility.dragonId,
+    abilityId: triggeredAbility.abilityId,
+    unlockStarRank: triggeredAbility.unlockStarRank,
+    minimumDragonLevel: triggeredAbility.minimumDragonLevel,
+    requiredHabitLevel: triggeredAbility.requiredHabitLevel,
+    futureAvailable: triggeredAbility.futureAvailable,
   }, options);
 }
 
@@ -3184,6 +3442,27 @@ function activationChanceFacts(modifier: ModifierCapability): string[] {
     return [`Activation chance by Habit Level: ${modifier.activationChanceByHabitLevel.map((value) => `${value.value}%`).join(', ')}.`];
   }
   return [];
+}
+
+function extraActionActivationChanceFacts(extraAction: ExtraActionCapability): string[] {
+  const fixedChance = extraAction.activationChanceFixed ?? extraAction.chanceFixed;
+  if (fixedChance !== null && fixedChance !== undefined) {
+    return [`Activation chance: ${fixedChance}%.`];
+  }
+  const rankedChance = extraAction.activationChanceByHabitLevel?.length
+    ? extraAction.activationChanceByHabitLevel
+    : extraAction.chanceByHabitLevel;
+  if (rankedChance.length) {
+    return [`Activation chance by Habit Level: ${rankedChance.map((value) => `${value.value}%`).join(', ')}.`];
+  }
+  return [];
+}
+
+function extraActionChanceConditional(extraAction: ExtraActionCapability): boolean {
+  return extraAction.chanceFixed !== null ||
+    extraAction.chanceByHabitLevel.length > 0 ||
+    extraAction.activationChanceFixed !== null ||
+    Boolean(extraAction.activationChanceByHabitLevel?.length);
 }
 
 function interactionScopeForTrace(
