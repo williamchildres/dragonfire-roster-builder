@@ -838,6 +838,9 @@ function interactionPurpose(trace: SynergyTrace): string | null {
   if (trace.matchKind === 'enemy-damage-received-increase') {
     return `Enemy ${formatToken(trace.channel ?? 'damage-dealt')} vulnerability`;
   }
+  if (trace.matchKind === 'periodic-status-damage') {
+    return 'Periodic status damage';
+  }
   if (trace.matchKind === 'extra-basic-attack-trigger') {
     return 'Extra Basic Attack trigger';
   }
@@ -904,6 +907,10 @@ function enemyFacingSummary(trace: SynergyTrace): string {
   }
   if (trace.matchKind === 'enemy-damage-received-increase') {
     return `Increases ${formatToken(trace.channel ?? 'damage-dealt')} Received for one enemy target.`;
+  }
+  if (trace.matchKind === 'periodic-status-damage') {
+    const status = trace.title.match(/^(.+?)\s+periodic/i)?.[1] ?? 'Status';
+    return `${status} deals periodic ${formatToken(trace.channel ?? 'damage-dealt')} each round; target selection and uptime are uncertain.`;
   }
   const lowered = trace.effects.join(' ').match(/(Strength|Intelligence|Instinct|Initiative)/i)?.[1];
   const channel = trace.sourceAbilityId?.includes('battle-dread') ? 'Fire Damage' : trace.channel ? formatToken(trace.channel) : 'team damage';

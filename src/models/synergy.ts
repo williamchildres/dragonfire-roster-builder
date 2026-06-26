@@ -160,6 +160,7 @@ export type SynergyTraceMatchKind =
   | 'enemy-mitigation-reduction'
   | 'enemy-damage-dealt-reduction'
   | 'enemy-damage-received-increase'
+  | 'periodic-status-damage'
   | 'periodic-damage-amplification'
   | 'status-removal'
   | 'defensive-ally-support';

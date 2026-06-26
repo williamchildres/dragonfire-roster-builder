@@ -3978,6 +3978,83 @@
       },
       {
         "assumptions": [
+          "Periodic status application is conditional on activation and target selection.",
+          "Enemy target overlap is not simulated or guaranteed.",
+          "Uptime is not treated as guaranteed.",
+          "The target selector is preserved as enemy-side metadata rather than assigning a friendly recipient."
+        ],
+        "channel": "fire-damage",
+        "confidence": "confirmed",
+        "conflicts": [
+          "Caraxes - Crippling Inferno Habit unlock requirement: expected Star Rank 6+, actual preview enabled",
+          "Caraxes - Crippling Inferno Selected Habit Level: expected Habit Level 1+ or preview, actual preview enabled"
+        ],
+        "damageScope": null,
+        "effects": [
+          "Burn deals periodic Fire Damage each round.",
+          "Damage Rate 20%.",
+          "Duration: 2 rounds.",
+          "Scales with Intelligence.",
+          "Mitigated by target Initiative.",
+          "Activation, target selection, target overlap, and uptime remain conditional.",
+          "Final damage is not calculated."
+        ],
+        "exactResultKnown": false,
+        "exactResultUnknownReason": "Exact final periodic damage cannot be calculated because target overlap, uptime, stacking, mitigation, and final formulas are unresolved.",
+        "explanation": "Caraxes's Crippling Inferno can apply Burn. Burn deals periodic Fire Damage each round at Damage Rate 20% for 2 rounds. Activation, target selection, target overlap, and uptime remain conditional; final damage is not calculated.",
+        "id": "periodic-status-damage-caraxes-crippling-inferno-crippling-inferno-burn-burn-status-output",
+        "interactionScope": "enemy-side",
+        "matchedOutputCapabilityIds": [],
+        "matchKind": "periodic-status-damage",
+        "modifierCapabilityId": "caraxes-crippling-inferno-crippling-inferno-burn-burn-status-output",
+        "modifierCapabilityIds": [
+          "caraxes-crippling-inferno-crippling-inferno-burn-burn-status-output"
+        ],
+        "recipientAbilityId": null,
+        "recipientDragonId": null,
+        "recipientEvidenceIds": [],
+        "requirements": [
+          {
+            "actual": "preview enabled",
+            "evidenceIds": [
+              "caraxes-crippling-inferno-2026-06-24"
+            ],
+            "expected": "Star Rank 6+",
+            "id": "caraxes-caraxes-crippling-inferno-star-rank",
+            "label": "Caraxes - Crippling Inferno Habit unlock requirement",
+            "notes": [],
+            "satisfied": false
+          },
+          {
+            "actual": "preview enabled",
+            "evidenceIds": [
+              "caraxes-crippling-inferno-2026-06-24"
+            ],
+            "expected": "Habit Level 1+ or preview",
+            "id": "caraxes-caraxes-crippling-inferno-habit-level",
+            "label": "Caraxes - Crippling Inferno Selected Habit Level",
+            "notes": [
+              "Unlocked Habits without an explicit saved Habit Level default to effective Habit Level 1. Locked Habit capabilities are potential in preview mode, not active for current roster."
+            ],
+            "satisfied": false
+          }
+        ],
+        "ruleId": "periodic-status-damage",
+        "sourceAbilityId": "caraxes-crippling-inferno",
+        "sourceDragonId": "caraxes",
+        "sourceEvidenceIds": [
+          "caraxes-crippling-inferno-2026-06-24"
+        ],
+        "status": "potential",
+        "targetSelectionGroup": null,
+        "title": "Burn periodic Fire Damage",
+        "unresolvedQuestions": [
+          "Burn first-tick timing, refresh behavior, stacking, and overlapping-source behavior remain unresolved.",
+          "Exact final damage cannot be calculated because target overlap, uptime, stacking, mitigation, and final formulas are unresolved."
+        ]
+      },
+      {
+        "assumptions": [
           "Periodic damage is treated as the same effect channel as its damage type."
         ],
         "channel": "fire-damage",
@@ -8027,6 +8104,83 @@
       },
       {
         "assumptions": [
+          "Periodic status application is conditional on activation and target selection.",
+          "Enemy target overlap is not simulated or guaranteed.",
+          "Uptime is not treated as guaranteed.",
+          "The target selector is preserved as enemy-side metadata rather than assigning a friendly recipient."
+        ],
+        "channel": "fire-damage",
+        "confidence": "confirmed",
+        "conflicts": [
+          "Caraxes - Crippling Inferno Habit unlock requirement: expected Star Rank 6+, actual preview enabled",
+          "Caraxes - Crippling Inferno Selected Habit Level: expected Habit Level 1+ or preview, actual preview enabled"
+        ],
+        "damageScope": null,
+        "effects": [
+          "Burn deals periodic Fire Damage each round.",
+          "Damage Rate 20%.",
+          "Duration: 2 rounds.",
+          "Scales with Intelligence.",
+          "Mitigated by target Initiative.",
+          "Activation, target selection, target overlap, and uptime remain conditional.",
+          "Final damage is not calculated."
+        ],
+        "exactResultKnown": false,
+        "exactResultUnknownReason": "Exact final periodic damage cannot be calculated because target overlap, uptime, stacking, mitigation, and final formulas are unresolved.",
+        "explanation": "Caraxes's Crippling Inferno can apply Burn. Burn deals periodic Fire Damage each round at Damage Rate 20% for 2 rounds. Activation, target selection, target overlap, and uptime remain conditional; final damage is not calculated.",
+        "id": "periodic-status-damage-caraxes-crippling-inferno-crippling-inferno-burn-burn-status-output",
+        "interactionScope": "enemy-side",
+        "matchedOutputCapabilityIds": [],
+        "matchKind": "periodic-status-damage",
+        "modifierCapabilityId": "caraxes-crippling-inferno-crippling-inferno-burn-burn-status-output",
+        "modifierCapabilityIds": [
+          "caraxes-crippling-inferno-crippling-inferno-burn-burn-status-output"
+        ],
+        "recipientAbilityId": null,
+        "recipientDragonId": null,
+        "recipientEvidenceIds": [],
+        "requirements": [
+          {
+            "actual": "preview enabled",
+            "evidenceIds": [
+              "caraxes-crippling-inferno-2026-06-24"
+            ],
+            "expected": "Star Rank 6+",
+            "id": "caraxes-caraxes-crippling-inferno-star-rank",
+            "label": "Caraxes - Crippling Inferno Habit unlock requirement",
+            "notes": [],
+            "satisfied": false
+          },
+          {
+            "actual": "preview enabled",
+            "evidenceIds": [
+              "caraxes-crippling-inferno-2026-06-24"
+            ],
+            "expected": "Habit Level 1+ or preview",
+            "id": "caraxes-caraxes-crippling-inferno-habit-level",
+            "label": "Caraxes - Crippling Inferno Selected Habit Level",
+            "notes": [
+              "Unlocked Habits without an explicit saved Habit Level default to effective Habit Level 1. Locked Habit capabilities are potential in preview mode, not active for current roster."
+            ],
+            "satisfied": false
+          }
+        ],
+        "ruleId": "periodic-status-damage",
+        "sourceAbilityId": "caraxes-crippling-inferno",
+        "sourceDragonId": "caraxes",
+        "sourceEvidenceIds": [
+          "caraxes-crippling-inferno-2026-06-24"
+        ],
+        "status": "potential",
+        "targetSelectionGroup": null,
+        "title": "Burn periodic Fire Damage",
+        "unresolvedQuestions": [
+          "Burn first-tick timing, refresh behavior, stacking, and overlapping-source behavior remain unresolved.",
+          "Exact final damage cannot be calculated because target overlap, uptime, stacking, mitigation, and final formulas are unresolved."
+        ]
+      },
+      {
+        "assumptions": [
           "Periodic damage is treated as the same effect channel as its damage type."
         ],
         "channel": "fire-damage",
@@ -11950,6 +12104,83 @@
       },
       {
         "assumptions": [
+          "Periodic status application is conditional on activation and target selection.",
+          "Enemy target overlap is not simulated or guaranteed.",
+          "Uptime is not treated as guaranteed.",
+          "The target selector is preserved as enemy-side metadata rather than assigning a friendly recipient."
+        ],
+        "channel": "fire-damage",
+        "confidence": "confirmed",
+        "conflicts": [
+          "Caraxes - Crippling Inferno Habit unlock requirement: expected Star Rank 6+, actual preview enabled",
+          "Caraxes - Crippling Inferno Selected Habit Level: expected Habit Level 1+ or preview, actual preview enabled"
+        ],
+        "damageScope": null,
+        "effects": [
+          "Burn deals periodic Fire Damage each round.",
+          "Damage Rate 20%.",
+          "Duration: 2 rounds.",
+          "Scales with Intelligence.",
+          "Mitigated by target Initiative.",
+          "Activation, target selection, target overlap, and uptime remain conditional.",
+          "Final damage is not calculated."
+        ],
+        "exactResultKnown": false,
+        "exactResultUnknownReason": "Exact final periodic damage cannot be calculated because target overlap, uptime, stacking, mitigation, and final formulas are unresolved.",
+        "explanation": "Caraxes's Crippling Inferno can apply Burn. Burn deals periodic Fire Damage each round at Damage Rate 20% for 2 rounds. Activation, target selection, target overlap, and uptime remain conditional; final damage is not calculated.",
+        "id": "periodic-status-damage-caraxes-crippling-inferno-crippling-inferno-burn-burn-status-output",
+        "interactionScope": "enemy-side",
+        "matchedOutputCapabilityIds": [],
+        "matchKind": "periodic-status-damage",
+        "modifierCapabilityId": "caraxes-crippling-inferno-crippling-inferno-burn-burn-status-output",
+        "modifierCapabilityIds": [
+          "caraxes-crippling-inferno-crippling-inferno-burn-burn-status-output"
+        ],
+        "recipientAbilityId": null,
+        "recipientDragonId": null,
+        "recipientEvidenceIds": [],
+        "requirements": [
+          {
+            "actual": "preview enabled",
+            "evidenceIds": [
+              "caraxes-crippling-inferno-2026-06-24"
+            ],
+            "expected": "Star Rank 6+",
+            "id": "caraxes-caraxes-crippling-inferno-star-rank",
+            "label": "Caraxes - Crippling Inferno Habit unlock requirement",
+            "notes": [],
+            "satisfied": false
+          },
+          {
+            "actual": "preview enabled",
+            "evidenceIds": [
+              "caraxes-crippling-inferno-2026-06-24"
+            ],
+            "expected": "Habit Level 1+ or preview",
+            "id": "caraxes-caraxes-crippling-inferno-habit-level",
+            "label": "Caraxes - Crippling Inferno Selected Habit Level",
+            "notes": [
+              "Unlocked Habits without an explicit saved Habit Level default to effective Habit Level 1. Locked Habit capabilities are potential in preview mode, not active for current roster."
+            ],
+            "satisfied": false
+          }
+        ],
+        "ruleId": "periodic-status-damage",
+        "sourceAbilityId": "caraxes-crippling-inferno",
+        "sourceDragonId": "caraxes",
+        "sourceEvidenceIds": [
+          "caraxes-crippling-inferno-2026-06-24"
+        ],
+        "status": "potential",
+        "targetSelectionGroup": null,
+        "title": "Burn periodic Fire Damage",
+        "unresolvedQuestions": [
+          "Burn first-tick timing, refresh behavior, stacking, and overlapping-source behavior remain unresolved.",
+          "Exact final damage cannot be calculated because target overlap, uptime, stacking, mitigation, and final formulas are unresolved."
+        ]
+      },
+      {
+        "assumptions": [
           "Periodic damage is treated as the same effect channel as its damage type."
         ],
         "channel": "fire-damage",
@@ -15691,6 +15922,83 @@
         "title": "Physical Damage Enemy Reduction",
         "unresolvedQuestions": [
           "Enemy-side current-troop tie-breaking, final uptime, and stacking/refresh behavior remain unresolved."
+        ]
+      },
+      {
+        "assumptions": [
+          "Periodic status application is conditional on activation and target selection.",
+          "Enemy target overlap is not simulated or guaranteed.",
+          "Uptime is not treated as guaranteed.",
+          "The target selector is preserved as enemy-side metadata rather than assigning a friendly recipient."
+        ],
+        "channel": "fire-damage",
+        "confidence": "confirmed",
+        "conflicts": [
+          "Caraxes - Crippling Inferno Habit unlock requirement: expected Star Rank 6+, actual preview enabled",
+          "Caraxes - Crippling Inferno Selected Habit Level: expected Habit Level 1+ or preview, actual preview enabled"
+        ],
+        "damageScope": null,
+        "effects": [
+          "Burn deals periodic Fire Damage each round.",
+          "Damage Rate 20%.",
+          "Duration: 2 rounds.",
+          "Scales with Intelligence.",
+          "Mitigated by target Initiative.",
+          "Activation, target selection, target overlap, and uptime remain conditional.",
+          "Final damage is not calculated."
+        ],
+        "exactResultKnown": false,
+        "exactResultUnknownReason": "Exact final periodic damage cannot be calculated because target overlap, uptime, stacking, mitigation, and final formulas are unresolved.",
+        "explanation": "Caraxes's Crippling Inferno can apply Burn. Burn deals periodic Fire Damage each round at Damage Rate 20% for 2 rounds. Activation, target selection, target overlap, and uptime remain conditional; final damage is not calculated.",
+        "id": "periodic-status-damage-caraxes-crippling-inferno-crippling-inferno-burn-burn-status-output",
+        "interactionScope": "enemy-side",
+        "matchedOutputCapabilityIds": [],
+        "matchKind": "periodic-status-damage",
+        "modifierCapabilityId": "caraxes-crippling-inferno-crippling-inferno-burn-burn-status-output",
+        "modifierCapabilityIds": [
+          "caraxes-crippling-inferno-crippling-inferno-burn-burn-status-output"
+        ],
+        "recipientAbilityId": null,
+        "recipientDragonId": null,
+        "recipientEvidenceIds": [],
+        "requirements": [
+          {
+            "actual": "preview enabled",
+            "evidenceIds": [
+              "caraxes-crippling-inferno-2026-06-24"
+            ],
+            "expected": "Star Rank 6+",
+            "id": "caraxes-caraxes-crippling-inferno-star-rank",
+            "label": "Caraxes - Crippling Inferno Habit unlock requirement",
+            "notes": [],
+            "satisfied": false
+          },
+          {
+            "actual": "preview enabled",
+            "evidenceIds": [
+              "caraxes-crippling-inferno-2026-06-24"
+            ],
+            "expected": "Habit Level 1+ or preview",
+            "id": "caraxes-caraxes-crippling-inferno-habit-level",
+            "label": "Caraxes - Crippling Inferno Selected Habit Level",
+            "notes": [
+              "Unlocked Habits without an explicit saved Habit Level default to effective Habit Level 1. Locked Habit capabilities are potential in preview mode, not active for current roster."
+            ],
+            "satisfied": false
+          }
+        ],
+        "ruleId": "periodic-status-damage",
+        "sourceAbilityId": "caraxes-crippling-inferno",
+        "sourceDragonId": "caraxes",
+        "sourceEvidenceIds": [
+          "caraxes-crippling-inferno-2026-06-24"
+        ],
+        "status": "potential",
+        "targetSelectionGroup": null,
+        "title": "Burn periodic Fire Damage",
+        "unresolvedQuestions": [
+          "Burn first-tick timing, refresh behavior, stacking, and overlapping-source behavior remain unresolved.",
+          "Exact final damage cannot be calculated because target overlap, uptime, stacking, mitigation, and final formulas are unresolved."
         ]
       },
       {
@@ -33920,6 +34228,83 @@
       },
       {
         "assumptions": [
+          "Periodic status application is conditional on activation and target selection.",
+          "Enemy target overlap is not simulated or guaranteed.",
+          "Uptime is not treated as guaranteed.",
+          "The target selector is preserved as enemy-side metadata rather than assigning a friendly recipient."
+        ],
+        "channel": "fire-damage",
+        "confidence": "confirmed",
+        "conflicts": [
+          "Caraxes - Crippling Inferno Habit unlock requirement: expected Star Rank 6+, actual preview enabled",
+          "Caraxes - Crippling Inferno Selected Habit Level: expected Habit Level 1+ or preview, actual preview enabled"
+        ],
+        "damageScope": null,
+        "effects": [
+          "Burn deals periodic Fire Damage each round.",
+          "Damage Rate 20%.",
+          "Duration: 2 rounds.",
+          "Scales with Intelligence.",
+          "Mitigated by target Initiative.",
+          "Activation, target selection, target overlap, and uptime remain conditional.",
+          "Final damage is not calculated."
+        ],
+        "exactResultKnown": false,
+        "exactResultUnknownReason": "Exact final periodic damage cannot be calculated because target overlap, uptime, stacking, mitigation, and final formulas are unresolved.",
+        "explanation": "Caraxes's Crippling Inferno can apply Burn. Burn deals periodic Fire Damage each round at Damage Rate 20% for 2 rounds. Activation, target selection, target overlap, and uptime remain conditional; final damage is not calculated.",
+        "id": "periodic-status-damage-caraxes-crippling-inferno-crippling-inferno-burn-burn-status-output",
+        "interactionScope": "enemy-side",
+        "matchedOutputCapabilityIds": [],
+        "matchKind": "periodic-status-damage",
+        "modifierCapabilityId": "caraxes-crippling-inferno-crippling-inferno-burn-burn-status-output",
+        "modifierCapabilityIds": [
+          "caraxes-crippling-inferno-crippling-inferno-burn-burn-status-output"
+        ],
+        "recipientAbilityId": null,
+        "recipientDragonId": null,
+        "recipientEvidenceIds": [],
+        "requirements": [
+          {
+            "actual": "preview enabled",
+            "evidenceIds": [
+              "caraxes-crippling-inferno-2026-06-24"
+            ],
+            "expected": "Star Rank 6+",
+            "id": "caraxes-caraxes-crippling-inferno-star-rank",
+            "label": "Caraxes - Crippling Inferno Habit unlock requirement",
+            "notes": [],
+            "satisfied": false
+          },
+          {
+            "actual": "preview enabled",
+            "evidenceIds": [
+              "caraxes-crippling-inferno-2026-06-24"
+            ],
+            "expected": "Habit Level 1+ or preview",
+            "id": "caraxes-caraxes-crippling-inferno-habit-level",
+            "label": "Caraxes - Crippling Inferno Selected Habit Level",
+            "notes": [
+              "Unlocked Habits without an explicit saved Habit Level default to effective Habit Level 1. Locked Habit capabilities are potential in preview mode, not active for current roster."
+            ],
+            "satisfied": false
+          }
+        ],
+        "ruleId": "periodic-status-damage",
+        "sourceAbilityId": "caraxes-crippling-inferno",
+        "sourceDragonId": "caraxes",
+        "sourceEvidenceIds": [
+          "caraxes-crippling-inferno-2026-06-24"
+        ],
+        "status": "potential",
+        "targetSelectionGroup": null,
+        "title": "Burn periodic Fire Damage",
+        "unresolvedQuestions": [
+          "Burn first-tick timing, refresh behavior, stacking, and overlapping-source behavior remain unresolved.",
+          "Exact final damage cannot be calculated because target overlap, uptime, stacking, mitigation, and final formulas are unresolved."
+        ]
+      },
+      {
+        "assumptions": [
           "Periodic damage is treated as the same effect channel as its damage type."
         ],
         "channel": "fire-damage",
@@ -40676,6 +41061,83 @@
       },
       {
         "assumptions": [
+          "Periodic status application is conditional on activation and target selection.",
+          "Enemy target overlap is not simulated or guaranteed.",
+          "Uptime is not treated as guaranteed.",
+          "The target selector is preserved as enemy-side metadata rather than assigning a friendly recipient."
+        ],
+        "channel": "fire-damage",
+        "confidence": "confirmed",
+        "conflicts": [
+          "Caraxes - Crippling Inferno Habit unlock requirement: expected Star Rank 6+, actual preview enabled",
+          "Caraxes - Crippling Inferno Selected Habit Level: expected Habit Level 1+ or preview, actual preview enabled"
+        ],
+        "damageScope": null,
+        "effects": [
+          "Burn deals periodic Fire Damage each round.",
+          "Damage Rate 20%.",
+          "Duration: 2 rounds.",
+          "Scales with Intelligence.",
+          "Mitigated by target Initiative.",
+          "Activation, target selection, target overlap, and uptime remain conditional.",
+          "Final damage is not calculated."
+        ],
+        "exactResultKnown": false,
+        "exactResultUnknownReason": "Exact final periodic damage cannot be calculated because target overlap, uptime, stacking, mitigation, and final formulas are unresolved.",
+        "explanation": "Caraxes's Crippling Inferno can apply Burn. Burn deals periodic Fire Damage each round at Damage Rate 20% for 2 rounds. Activation, target selection, target overlap, and uptime remain conditional; final damage is not calculated.",
+        "id": "periodic-status-damage-caraxes-crippling-inferno-crippling-inferno-burn-burn-status-output",
+        "interactionScope": "enemy-side",
+        "matchedOutputCapabilityIds": [],
+        "matchKind": "periodic-status-damage",
+        "modifierCapabilityId": "caraxes-crippling-inferno-crippling-inferno-burn-burn-status-output",
+        "modifierCapabilityIds": [
+          "caraxes-crippling-inferno-crippling-inferno-burn-burn-status-output"
+        ],
+        "recipientAbilityId": null,
+        "recipientDragonId": null,
+        "recipientEvidenceIds": [],
+        "requirements": [
+          {
+            "actual": "preview enabled",
+            "evidenceIds": [
+              "caraxes-crippling-inferno-2026-06-24"
+            ],
+            "expected": "Star Rank 6+",
+            "id": "caraxes-caraxes-crippling-inferno-star-rank",
+            "label": "Caraxes - Crippling Inferno Habit unlock requirement",
+            "notes": [],
+            "satisfied": false
+          },
+          {
+            "actual": "preview enabled",
+            "evidenceIds": [
+              "caraxes-crippling-inferno-2026-06-24"
+            ],
+            "expected": "Habit Level 1+ or preview",
+            "id": "caraxes-caraxes-crippling-inferno-habit-level",
+            "label": "Caraxes - Crippling Inferno Selected Habit Level",
+            "notes": [
+              "Unlocked Habits without an explicit saved Habit Level default to effective Habit Level 1. Locked Habit capabilities are potential in preview mode, not active for current roster."
+            ],
+            "satisfied": false
+          }
+        ],
+        "ruleId": "periodic-status-damage",
+        "sourceAbilityId": "caraxes-crippling-inferno",
+        "sourceDragonId": "caraxes",
+        "sourceEvidenceIds": [
+          "caraxes-crippling-inferno-2026-06-24"
+        ],
+        "status": "potential",
+        "targetSelectionGroup": null,
+        "title": "Burn periodic Fire Damage",
+        "unresolvedQuestions": [
+          "Burn first-tick timing, refresh behavior, stacking, and overlapping-source behavior remain unresolved.",
+          "Exact final damage cannot be calculated because target overlap, uptime, stacking, mitigation, and final formulas are unresolved."
+        ]
+      },
+      {
+        "assumptions": [
           "Periodic damage is treated as the same effect channel as its damage type."
         ],
         "channel": "fire-damage",
@@ -43975,6 +44437,83 @@
       },
       {
         "assumptions": [
+          "Periodic status application is conditional on activation and target selection.",
+          "Enemy target overlap is not simulated or guaranteed.",
+          "Uptime is not treated as guaranteed.",
+          "The target selector is preserved as enemy-side metadata rather than assigning a friendly recipient."
+        ],
+        "channel": "fire-damage",
+        "confidence": "confirmed",
+        "conflicts": [
+          "Caraxes - Crippling Inferno Habit unlock requirement: expected Star Rank 6+, actual preview enabled",
+          "Caraxes - Crippling Inferno Selected Habit Level: expected Habit Level 1+ or preview, actual preview enabled"
+        ],
+        "damageScope": null,
+        "effects": [
+          "Burn deals periodic Fire Damage each round.",
+          "Damage Rate 20%.",
+          "Duration: 2 rounds.",
+          "Scales with Intelligence.",
+          "Mitigated by target Initiative.",
+          "Activation, target selection, target overlap, and uptime remain conditional.",
+          "Final damage is not calculated."
+        ],
+        "exactResultKnown": false,
+        "exactResultUnknownReason": "Exact final periodic damage cannot be calculated because target overlap, uptime, stacking, mitigation, and final formulas are unresolved.",
+        "explanation": "Caraxes's Crippling Inferno can apply Burn. Burn deals periodic Fire Damage each round at Damage Rate 20% for 2 rounds. Activation, target selection, target overlap, and uptime remain conditional; final damage is not calculated.",
+        "id": "periodic-status-damage-caraxes-crippling-inferno-crippling-inferno-burn-burn-status-output",
+        "interactionScope": "enemy-side",
+        "matchedOutputCapabilityIds": [],
+        "matchKind": "periodic-status-damage",
+        "modifierCapabilityId": "caraxes-crippling-inferno-crippling-inferno-burn-burn-status-output",
+        "modifierCapabilityIds": [
+          "caraxes-crippling-inferno-crippling-inferno-burn-burn-status-output"
+        ],
+        "recipientAbilityId": null,
+        "recipientDragonId": null,
+        "recipientEvidenceIds": [],
+        "requirements": [
+          {
+            "actual": "preview enabled",
+            "evidenceIds": [
+              "caraxes-crippling-inferno-2026-06-24"
+            ],
+            "expected": "Star Rank 6+",
+            "id": "caraxes-caraxes-crippling-inferno-star-rank",
+            "label": "Caraxes - Crippling Inferno Habit unlock requirement",
+            "notes": [],
+            "satisfied": false
+          },
+          {
+            "actual": "preview enabled",
+            "evidenceIds": [
+              "caraxes-crippling-inferno-2026-06-24"
+            ],
+            "expected": "Habit Level 1+ or preview",
+            "id": "caraxes-caraxes-crippling-inferno-habit-level",
+            "label": "Caraxes - Crippling Inferno Selected Habit Level",
+            "notes": [
+              "Unlocked Habits without an explicit saved Habit Level default to effective Habit Level 1. Locked Habit capabilities are potential in preview mode, not active for current roster."
+            ],
+            "satisfied": false
+          }
+        ],
+        "ruleId": "periodic-status-damage",
+        "sourceAbilityId": "caraxes-crippling-inferno",
+        "sourceDragonId": "caraxes",
+        "sourceEvidenceIds": [
+          "caraxes-crippling-inferno-2026-06-24"
+        ],
+        "status": "potential",
+        "targetSelectionGroup": null,
+        "title": "Burn periodic Fire Damage",
+        "unresolvedQuestions": [
+          "Burn first-tick timing, refresh behavior, stacking, and overlapping-source behavior remain unresolved.",
+          "Exact final damage cannot be calculated because target overlap, uptime, stacking, mitigation, and final formulas are unresolved."
+        ]
+      },
+      {
+        "assumptions": [
           "Periodic damage is treated as the same effect channel as its damage type."
         ],
         "channel": "fire-damage",
@@ -44587,6 +45126,55 @@
         "title": "Instinct Scaling Support",
         "unresolvedQuestions": [
           "Final value and stacking order are not calculated."
+        ]
+      },
+      {
+        "assumptions": [
+          "Periodic status application is conditional on activation and target selection.",
+          "Enemy target overlap is not simulated or guaranteed.",
+          "Uptime is not treated as guaranteed.",
+          "The target selector is preserved as enemy-side metadata rather than assigning a friendly recipient."
+        ],
+        "channel": "physical-damage",
+        "confidence": "confirmed",
+        "conflicts": [],
+        "damageScope": null,
+        "effects": [
+          "Bleed deals periodic Physical Damage each round.",
+          "Damage Rate 20%.",
+          "Duration: 2 rounds.",
+          "Scales with Strength.",
+          "Mitigated by target Instinct.",
+          "Activation, target selection, target overlap, and uptime remain conditional.",
+          "Final damage is not calculated."
+        ],
+        "exactResultKnown": false,
+        "exactResultUnknownReason": "Exact final periodic damage cannot be calculated because target overlap, uptime, stacking, mitigation, and final formulas are unresolved.",
+        "explanation": "Kalspire's Tactical Strike can apply Bleed. Bleed deals periodic Physical Damage each round at Damage Rate 20% for 2 rounds. Activation, target selection, target overlap, and uptime remain conditional; final damage is not calculated.",
+        "id": "periodic-status-damage-kalspire-tactical-strike-tactical-strike-bleed-bleed-status-output",
+        "interactionScope": "enemy-side",
+        "matchedOutputCapabilityIds": [],
+        "matchKind": "periodic-status-damage",
+        "modifierCapabilityId": "kalspire-tactical-strike-tactical-strike-bleed-bleed-status-output",
+        "modifierCapabilityIds": [
+          "kalspire-tactical-strike-tactical-strike-bleed-bleed-status-output"
+        ],
+        "recipientAbilityId": null,
+        "recipientDragonId": null,
+        "recipientEvidenceIds": [],
+        "requirements": [],
+        "ruleId": "periodic-status-damage",
+        "sourceAbilityId": "kalspire-tactical-strike",
+        "sourceDragonId": "kalspire",
+        "sourceEvidenceIds": [
+          "kalspire-tactical-strike-summary-2026-06-25"
+        ],
+        "status": "potential",
+        "targetSelectionGroup": null,
+        "title": "Bleed periodic Physical Damage",
+        "unresolvedQuestions": [
+          "Bleed first-tick timing, refresh behavior, stacking, and overlapping-source behavior remain unresolved.",
+          "Exact final damage cannot be calculated because target overlap, uptime, stacking, mitigation, and final formulas are unresolved."
         ]
       }
     ],
@@ -46483,6 +47071,132 @@
         "unresolvedQuestions": [
           "Opposing-position selection remains provisional when the source data uses that target wording.",
           "Exact final damage increase cannot be calculated because target overlap, uptime, stacking, and final formulas are unresolved."
+        ]
+      },
+      {
+        "assumptions": [
+          "Periodic status application is conditional on activation and target selection.",
+          "Enemy target overlap is not simulated or guaranteed.",
+          "Uptime is not treated as guaranteed.",
+          "The target selector is preserved as enemy-side metadata rather than assigning a friendly recipient."
+        ],
+        "channel": "physical-damage",
+        "confidence": "confirmed",
+        "conflicts": [],
+        "damageScope": null,
+        "effects": [
+          "Bleed deals periodic Physical Damage each round.",
+          "Damage Rate 20%.",
+          "Duration: 2 rounds.",
+          "Scales with Strength.",
+          "Mitigated by target Instinct.",
+          "Activation, target selection, target overlap, and uptime remain conditional.",
+          "Final damage is not calculated."
+        ],
+        "exactResultKnown": false,
+        "exactResultUnknownReason": "Exact final periodic damage cannot be calculated because target overlap, uptime, stacking, mitigation, and final formulas are unresolved.",
+        "explanation": "Kalspire's Tactical Strike can apply Bleed. Bleed deals periodic Physical Damage each round at Damage Rate 20% for 2 rounds. Activation, target selection, target overlap, and uptime remain conditional; final damage is not calculated.",
+        "id": "periodic-status-damage-kalspire-tactical-strike-tactical-strike-bleed-bleed-status-output",
+        "interactionScope": "enemy-side",
+        "matchedOutputCapabilityIds": [],
+        "matchKind": "periodic-status-damage",
+        "modifierCapabilityId": "kalspire-tactical-strike-tactical-strike-bleed-bleed-status-output",
+        "modifierCapabilityIds": [
+          "kalspire-tactical-strike-tactical-strike-bleed-bleed-status-output"
+        ],
+        "recipientAbilityId": null,
+        "recipientDragonId": null,
+        "recipientEvidenceIds": [],
+        "requirements": [],
+        "ruleId": "periodic-status-damage",
+        "sourceAbilityId": "kalspire-tactical-strike",
+        "sourceDragonId": "kalspire",
+        "sourceEvidenceIds": [
+          "kalspire-tactical-strike-summary-2026-06-25"
+        ],
+        "status": "potential",
+        "targetSelectionGroup": null,
+        "title": "Bleed periodic Physical Damage",
+        "unresolvedQuestions": [
+          "Bleed first-tick timing, refresh behavior, stacking, and overlapping-source behavior remain unresolved.",
+          "Exact final damage cannot be calculated because target overlap, uptime, stacking, mitigation, and final formulas are unresolved."
+        ]
+      },
+      {
+        "assumptions": [
+          "Periodic status application is conditional on activation and target selection.",
+          "Enemy target overlap is not simulated or guaranteed.",
+          "Uptime is not treated as guaranteed.",
+          "The target selector is preserved as enemy-side metadata rather than assigning a friendly recipient."
+        ],
+        "channel": "tactical-damage",
+        "confidence": "confirmed",
+        "conflicts": [
+          "Kalspire - Tactical Assault Habit unlock requirement: expected Star Rank 6+, actual preview enabled",
+          "Kalspire - Tactical Assault Selected Habit Level: expected Habit Level 1+ or preview, actual preview enabled"
+        ],
+        "damageScope": null,
+        "effects": [
+          "Panic deals periodic Tactical Damage each round.",
+          "Damage Rate 30%.",
+          "Duration: 2 rounds.",
+          "Scales with Instinct.",
+          "Mitigated by target Intelligence.",
+          "Activation, target selection, target overlap, and uptime remain conditional.",
+          "Final damage is not calculated."
+        ],
+        "exactResultKnown": false,
+        "exactResultUnknownReason": "Exact final periodic damage cannot be calculated because target overlap, uptime, stacking, mitigation, and final formulas are unresolved.",
+        "explanation": "Kalspire's Tactical Assault can apply Panic. Panic deals periodic Tactical Damage each round at Damage Rate 30% for 2 rounds. Activation, target selection, target overlap, and uptime remain conditional; final damage is not calculated.",
+        "id": "periodic-status-damage-kalspire-tactical-assault-tactical-assault-panic-panic-status-output",
+        "interactionScope": "enemy-side",
+        "matchedOutputCapabilityIds": [],
+        "matchKind": "periodic-status-damage",
+        "modifierCapabilityId": "kalspire-tactical-assault-tactical-assault-panic-panic-status-output",
+        "modifierCapabilityIds": [
+          "kalspire-tactical-assault-tactical-assault-panic-panic-status-output"
+        ],
+        "recipientAbilityId": null,
+        "recipientDragonId": null,
+        "recipientEvidenceIds": [],
+        "requirements": [
+          {
+            "actual": "preview enabled",
+            "evidenceIds": [
+              "kalspire-tactical-assault-2026-06-25"
+            ],
+            "expected": "Star Rank 6+",
+            "id": "kalspire-kalspire-tactical-assault-star-rank",
+            "label": "Kalspire - Tactical Assault Habit unlock requirement",
+            "notes": [],
+            "satisfied": false
+          },
+          {
+            "actual": "preview enabled",
+            "evidenceIds": [
+              "kalspire-tactical-assault-2026-06-25"
+            ],
+            "expected": "Habit Level 1+ or preview",
+            "id": "kalspire-kalspire-tactical-assault-habit-level",
+            "label": "Kalspire - Tactical Assault Selected Habit Level",
+            "notes": [
+              "Unlocked Habits without an explicit saved Habit Level default to effective Habit Level 1. Locked Habit capabilities are potential in preview mode, not active for current roster."
+            ],
+            "satisfied": false
+          }
+        ],
+        "ruleId": "periodic-status-damage",
+        "sourceAbilityId": "kalspire-tactical-assault",
+        "sourceDragonId": "kalspire",
+        "sourceEvidenceIds": [
+          "kalspire-tactical-assault-2026-06-25"
+        ],
+        "status": "potential",
+        "targetSelectionGroup": null,
+        "title": "Panic periodic Tactical Damage",
+        "unresolvedQuestions": [
+          "Panic first-tick timing, refresh behavior, stacking, and overlapping-source behavior remain unresolved.",
+          "Exact final damage cannot be calculated because target overlap, uptime, stacking, mitigation, and final formulas are unresolved."
         ]
       },
       {
@@ -48628,6 +49342,83 @@
           "Opposing-position selection remains provisional when the source data uses that target wording.",
           "Exact final damage increase cannot be calculated because target overlap, uptime, stacking, and final formulas are unresolved."
         ]
+      },
+      {
+        "assumptions": [
+          "Periodic status application is conditional on activation and target selection.",
+          "Enemy target overlap is not simulated or guaranteed.",
+          "Uptime is not treated as guaranteed.",
+          "The target selector is preserved as enemy-side metadata rather than assigning a friendly recipient."
+        ],
+        "channel": "fire-damage",
+        "confidence": "confirmed",
+        "conflicts": [
+          "Caraxes - Crippling Inferno Habit unlock requirement: expected Star Rank 6+, actual preview enabled",
+          "Caraxes - Crippling Inferno Selected Habit Level: expected Habit Level 1+ or preview, actual preview enabled"
+        ],
+        "damageScope": null,
+        "effects": [
+          "Burn deals periodic Fire Damage each round.",
+          "Damage Rate 20%.",
+          "Duration: 2 rounds.",
+          "Scales with Intelligence.",
+          "Mitigated by target Initiative.",
+          "Activation, target selection, target overlap, and uptime remain conditional.",
+          "Final damage is not calculated."
+        ],
+        "exactResultKnown": false,
+        "exactResultUnknownReason": "Exact final periodic damage cannot be calculated because target overlap, uptime, stacking, mitigation, and final formulas are unresolved.",
+        "explanation": "Caraxes's Crippling Inferno can apply Burn. Burn deals periodic Fire Damage each round at Damage Rate 20% for 2 rounds. Activation, target selection, target overlap, and uptime remain conditional; final damage is not calculated.",
+        "id": "periodic-status-damage-caraxes-crippling-inferno-crippling-inferno-burn-burn-status-output",
+        "interactionScope": "enemy-side",
+        "matchedOutputCapabilityIds": [],
+        "matchKind": "periodic-status-damage",
+        "modifierCapabilityId": "caraxes-crippling-inferno-crippling-inferno-burn-burn-status-output",
+        "modifierCapabilityIds": [
+          "caraxes-crippling-inferno-crippling-inferno-burn-burn-status-output"
+        ],
+        "recipientAbilityId": null,
+        "recipientDragonId": null,
+        "recipientEvidenceIds": [],
+        "requirements": [
+          {
+            "actual": "preview enabled",
+            "evidenceIds": [
+              "caraxes-crippling-inferno-2026-06-24"
+            ],
+            "expected": "Star Rank 6+",
+            "id": "caraxes-caraxes-crippling-inferno-star-rank",
+            "label": "Caraxes - Crippling Inferno Habit unlock requirement",
+            "notes": [],
+            "satisfied": false
+          },
+          {
+            "actual": "preview enabled",
+            "evidenceIds": [
+              "caraxes-crippling-inferno-2026-06-24"
+            ],
+            "expected": "Habit Level 1+ or preview",
+            "id": "caraxes-caraxes-crippling-inferno-habit-level",
+            "label": "Caraxes - Crippling Inferno Selected Habit Level",
+            "notes": [
+              "Unlocked Habits without an explicit saved Habit Level default to effective Habit Level 1. Locked Habit capabilities are potential in preview mode, not active for current roster."
+            ],
+            "satisfied": false
+          }
+        ],
+        "ruleId": "periodic-status-damage",
+        "sourceAbilityId": "caraxes-crippling-inferno",
+        "sourceDragonId": "caraxes",
+        "sourceEvidenceIds": [
+          "caraxes-crippling-inferno-2026-06-24"
+        ],
+        "status": "potential",
+        "targetSelectionGroup": null,
+        "title": "Burn periodic Fire Damage",
+        "unresolvedQuestions": [
+          "Burn first-tick timing, refresh behavior, stacking, and overlapping-source behavior remain unresolved.",
+          "Exact final damage cannot be calculated because target overlap, uptime, stacking, mitigation, and final formulas are unresolved."
+        ]
       }
     ],
     "relevantEvidenceIds": [
@@ -49214,6 +50005,55 @@
         "title": "Instinct Scaling Support",
         "unresolvedQuestions": [
           "Final value and stacking order are not calculated."
+        ]
+      },
+      {
+        "assumptions": [
+          "Periodic status application is conditional on activation and target selection.",
+          "Enemy target overlap is not simulated or guaranteed.",
+          "Uptime is not treated as guaranteed.",
+          "The target selector is preserved as enemy-side metadata rather than assigning a friendly recipient."
+        ],
+        "channel": "physical-damage",
+        "confidence": "confirmed",
+        "conflicts": [],
+        "damageScope": null,
+        "effects": [
+          "Bleed deals periodic Physical Damage each round.",
+          "Damage Rate 20%.",
+          "Duration: 2 rounds.",
+          "Scales with Strength.",
+          "Mitigated by target Instinct.",
+          "Activation, target selection, target overlap, and uptime remain conditional.",
+          "Final damage is not calculated."
+        ],
+        "exactResultKnown": false,
+        "exactResultUnknownReason": "Exact final periodic damage cannot be calculated because target overlap, uptime, stacking, mitigation, and final formulas are unresolved.",
+        "explanation": "Kalspire's Tactical Strike can apply Bleed. Bleed deals periodic Physical Damage each round at Damage Rate 20% for 2 rounds. Activation, target selection, target overlap, and uptime remain conditional; final damage is not calculated.",
+        "id": "periodic-status-damage-kalspire-tactical-strike-tactical-strike-bleed-bleed-status-output",
+        "interactionScope": "enemy-side",
+        "matchedOutputCapabilityIds": [],
+        "matchKind": "periodic-status-damage",
+        "modifierCapabilityId": "kalspire-tactical-strike-tactical-strike-bleed-bleed-status-output",
+        "modifierCapabilityIds": [
+          "kalspire-tactical-strike-tactical-strike-bleed-bleed-status-output"
+        ],
+        "recipientAbilityId": null,
+        "recipientDragonId": null,
+        "recipientEvidenceIds": [],
+        "requirements": [],
+        "ruleId": "periodic-status-damage",
+        "sourceAbilityId": "kalspire-tactical-strike",
+        "sourceDragonId": "kalspire",
+        "sourceEvidenceIds": [
+          "kalspire-tactical-strike-summary-2026-06-25"
+        ],
+        "status": "potential",
+        "targetSelectionGroup": null,
+        "title": "Bleed periodic Physical Damage",
+        "unresolvedQuestions": [
+          "Bleed first-tick timing, refresh behavior, stacking, and overlapping-source behavior remain unresolved.",
+          "Exact final damage cannot be calculated because target overlap, uptime, stacking, mitigation, and final formulas are unresolved."
         ]
       }
     ],
@@ -51779,6 +52619,132 @@
         "unresolvedQuestions": [
           "Opposing-position selection remains provisional when the source data uses that target wording.",
           "Exact final damage increase cannot be calculated because target overlap, uptime, stacking, and final formulas are unresolved."
+        ]
+      },
+      {
+        "assumptions": [
+          "Periodic status application is conditional on activation and target selection.",
+          "Enemy target overlap is not simulated or guaranteed.",
+          "Uptime is not treated as guaranteed.",
+          "The target selector is preserved as enemy-side metadata rather than assigning a friendly recipient."
+        ],
+        "channel": "physical-damage",
+        "confidence": "confirmed",
+        "conflicts": [],
+        "damageScope": null,
+        "effects": [
+          "Bleed deals periodic Physical Damage each round.",
+          "Damage Rate 20%.",
+          "Duration: 2 rounds.",
+          "Scales with Strength.",
+          "Mitigated by target Instinct.",
+          "Activation, target selection, target overlap, and uptime remain conditional.",
+          "Final damage is not calculated."
+        ],
+        "exactResultKnown": false,
+        "exactResultUnknownReason": "Exact final periodic damage cannot be calculated because target overlap, uptime, stacking, mitigation, and final formulas are unresolved.",
+        "explanation": "Kalspire's Tactical Strike can apply Bleed. Bleed deals periodic Physical Damage each round at Damage Rate 20% for 2 rounds. Activation, target selection, target overlap, and uptime remain conditional; final damage is not calculated.",
+        "id": "periodic-status-damage-kalspire-tactical-strike-tactical-strike-bleed-bleed-status-output",
+        "interactionScope": "enemy-side",
+        "matchedOutputCapabilityIds": [],
+        "matchKind": "periodic-status-damage",
+        "modifierCapabilityId": "kalspire-tactical-strike-tactical-strike-bleed-bleed-status-output",
+        "modifierCapabilityIds": [
+          "kalspire-tactical-strike-tactical-strike-bleed-bleed-status-output"
+        ],
+        "recipientAbilityId": null,
+        "recipientDragonId": null,
+        "recipientEvidenceIds": [],
+        "requirements": [],
+        "ruleId": "periodic-status-damage",
+        "sourceAbilityId": "kalspire-tactical-strike",
+        "sourceDragonId": "kalspire",
+        "sourceEvidenceIds": [
+          "kalspire-tactical-strike-summary-2026-06-25"
+        ],
+        "status": "potential",
+        "targetSelectionGroup": null,
+        "title": "Bleed periodic Physical Damage",
+        "unresolvedQuestions": [
+          "Bleed first-tick timing, refresh behavior, stacking, and overlapping-source behavior remain unresolved.",
+          "Exact final damage cannot be calculated because target overlap, uptime, stacking, mitigation, and final formulas are unresolved."
+        ]
+      },
+      {
+        "assumptions": [
+          "Periodic status application is conditional on activation and target selection.",
+          "Enemy target overlap is not simulated or guaranteed.",
+          "Uptime is not treated as guaranteed.",
+          "The target selector is preserved as enemy-side metadata rather than assigning a friendly recipient."
+        ],
+        "channel": "tactical-damage",
+        "confidence": "confirmed",
+        "conflicts": [
+          "Kalspire - Tactical Assault Habit unlock requirement: expected Star Rank 6+, actual preview enabled",
+          "Kalspire - Tactical Assault Selected Habit Level: expected Habit Level 1+ or preview, actual preview enabled"
+        ],
+        "damageScope": null,
+        "effects": [
+          "Panic deals periodic Tactical Damage each round.",
+          "Damage Rate 30%.",
+          "Duration: 2 rounds.",
+          "Scales with Instinct.",
+          "Mitigated by target Intelligence.",
+          "Activation, target selection, target overlap, and uptime remain conditional.",
+          "Final damage is not calculated."
+        ],
+        "exactResultKnown": false,
+        "exactResultUnknownReason": "Exact final periodic damage cannot be calculated because target overlap, uptime, stacking, mitigation, and final formulas are unresolved.",
+        "explanation": "Kalspire's Tactical Assault can apply Panic. Panic deals periodic Tactical Damage each round at Damage Rate 30% for 2 rounds. Activation, target selection, target overlap, and uptime remain conditional; final damage is not calculated.",
+        "id": "periodic-status-damage-kalspire-tactical-assault-tactical-assault-panic-panic-status-output",
+        "interactionScope": "enemy-side",
+        "matchedOutputCapabilityIds": [],
+        "matchKind": "periodic-status-damage",
+        "modifierCapabilityId": "kalspire-tactical-assault-tactical-assault-panic-panic-status-output",
+        "modifierCapabilityIds": [
+          "kalspire-tactical-assault-tactical-assault-panic-panic-status-output"
+        ],
+        "recipientAbilityId": null,
+        "recipientDragonId": null,
+        "recipientEvidenceIds": [],
+        "requirements": [
+          {
+            "actual": "preview enabled",
+            "evidenceIds": [
+              "kalspire-tactical-assault-2026-06-25"
+            ],
+            "expected": "Star Rank 6+",
+            "id": "kalspire-kalspire-tactical-assault-star-rank",
+            "label": "Kalspire - Tactical Assault Habit unlock requirement",
+            "notes": [],
+            "satisfied": false
+          },
+          {
+            "actual": "preview enabled",
+            "evidenceIds": [
+              "kalspire-tactical-assault-2026-06-25"
+            ],
+            "expected": "Habit Level 1+ or preview",
+            "id": "kalspire-kalspire-tactical-assault-habit-level",
+            "label": "Kalspire - Tactical Assault Selected Habit Level",
+            "notes": [
+              "Unlocked Habits without an explicit saved Habit Level default to effective Habit Level 1. Locked Habit capabilities are potential in preview mode, not active for current roster."
+            ],
+            "satisfied": false
+          }
+        ],
+        "ruleId": "periodic-status-damage",
+        "sourceAbilityId": "kalspire-tactical-assault",
+        "sourceDragonId": "kalspire",
+        "sourceEvidenceIds": [
+          "kalspire-tactical-assault-2026-06-25"
+        ],
+        "status": "potential",
+        "targetSelectionGroup": null,
+        "title": "Panic periodic Tactical Damage",
+        "unresolvedQuestions": [
+          "Panic first-tick timing, refresh behavior, stacking, and overlapping-source behavior remain unresolved.",
+          "Exact final damage cannot be calculated because target overlap, uptime, stacking, mitigation, and final formulas are unresolved."
         ]
       },
       {

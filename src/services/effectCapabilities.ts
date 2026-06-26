@@ -422,6 +422,7 @@ export function analyzeCapabilityAmplifications(
     ...analyzeEnemyMitigationReduction(formation, dragons, outputs, modifiers, options),
     ...analyzeEnemyDamageDealtReductions(formation, dragons, modifiers, options),
     ...analyzeEnemyDamageReceivedIncreases(formation, dragons, outputs, modifiers, options),
+    ...analyzePeriodicStatusDamage(formation, dragons, periodicDamage, statusOutputs, options),
     ...analyzePeriodicDamageAmplification(formation, dragons, periodicDamage, modifiers, options),
     ...analyzeStatusRemovalSupport(formation, dragons, statusOutputs, options),
   ];
@@ -1855,6 +1856,158 @@ function analyzeEnemyDamageReceivedIncreases(
     });
   }
   return traces;
+}
+
+function analyzePeriodicStatusDamage(
+  formation: FormationAnalysisInput,
+  dragons: Dragon[],
+  periodicDamage: PeriodicDamageDefinition[],
+  statusOutputs: StatusOutputCapability[],
+  options: CapabilityOptions,
+): SynergyTrace[] {
+  const traces: SynergyTrace[] = [];
+  for (const periodic of periodicDamage) {
+    const providerPosition = positionOf(formation, periodic.dragonId);
+    const provider = dragonById(dragons, periodic.dragonId);
+    const statusOutput = statusOutputs.find((output) =>
+      output.dragonId === periodic.dragonId &&
+      output.abilityId === periodic.abilityId &&
+      output.statusId === periodic.statusId,
+    );
+    if (!providerPosition || !provider || !statusOutput || !statusCapabilityVisible(statusOutput, options)) {
+      continue;
+    }
+    const abilityName = statusOutput.abilityName;
+    const status = statusLabel(periodic.statusId);
+    const channel = channelLabel(periodic.channel);
+    const displayValue = periodicDamageDisplayValue(periodic, statusOutput, options);
+    const requirements = availabilityRequirements({
+      dragonId: statusOutput.dragonId,
+      abilityId: statusOutput.abilityId,
+      dragonName: provider.name,
+      abilityName,
+      unlockStarRank: statusOutput.unlockStarRank,
+      minimumDragonLevel: statusOutput.minimumDragonLevel,
+      requiredHabitLevel: statusOutput.requiredHabitLevel,
+      evidenceIds: statusOutput.evidenceIds,
+      sourceKind: abilitySourceKind(dragons, statusOutput.dragonId, statusOutput.abilityId),
+    }, options);
+    const detailLines = periodicDamageDetailLines(periodic, statusOutput, displayValue);
+    traces.push({
+      id: `periodic-status-damage-${statusOutput.id}`,
+      ruleId: 'periodic-status-damage',
+      status: statusFromRequirements(requirements, statusOutput.futureAvailable || statusOutput.conditions.length > 0 || statusChanceConditional(statusOutput)),
+      confidence: 'confirmed',
+      sourceDragonId: provider.id,
+      sourceAbilityId: statusOutput.abilityId,
+      recipientDragonId: null,
+      recipientAbilityId: null,
+      title: `${status} periodic ${channel}`,
+      explanation: `${provider.name}'s ${abilityName} can apply ${status}. ${status} deals periodic ${channel} each round at Damage Rate ${displayValue}${periodic.durationRounds ? ` for ${periodic.durationRounds} rounds` : ''}. Activation, target selection, target overlap, and uptime remain conditional; final damage is not calculated.`,
+      requirements,
+      matchedFacts: [
+        `${abilityName} targets ${targetSelectorSummary(statusOutput.targetSelector)}.`,
+        `Status identity: ${periodic.statusId}.`,
+        `Periodic damage channel: ${periodic.channel}.`,
+        ...detailLines,
+        ...statusOutput.conditions.map((condition) => condition.description),
+        ...activationChanceFactsForStatus(statusOutput),
+      ],
+      effects: detailLines,
+      conflicts: requirements
+        .filter((requirement) => requirement.satisfied === false)
+        .map((requirement) => `${requirement.label}: expected ${requirement.expected}, actual ${requirement.actual ?? 'unknown'}`),
+      assumptions: [
+        'Periodic status application is conditional on activation and target selection.',
+        'Enemy target overlap is not simulated or guaranteed.',
+        'Uptime is not treated as guaranteed.',
+        'The target selector is preserved as enemy-side metadata rather than assigning a friendly recipient.',
+      ],
+      unresolvedQuestions: [
+        `${status} first-tick timing, refresh behavior, stacking, and overlapping-source behavior remain unresolved.`,
+        'Exact final damage cannot be calculated because target overlap, uptime, stacking, mitigation, and final formulas are unresolved.',
+      ],
+      sourceEvidenceIds: statusOutput.evidenceIds,
+      recipientEvidenceIds: [],
+      providedEffectType: `${status} periodic ${channel}`,
+      recipientModifierType: null,
+      recipientModifierAbilityId: null,
+      recipientModifierValue: periodicDamageResolvedValue(periodic, statusOutput, options),
+      combatLogConfirmed: false,
+      exactResultKnown: false,
+      exactResultUnknownReason: 'Exact final periodic damage cannot be calculated because target overlap, uptime, stacking, mitigation, and final formulas are unresolved.',
+      matchKind: 'periodic-status-damage',
+      channel: periodic.channel,
+      modifierRole: 'enemy-debuff',
+      targetSelectorSummary: targetSelectorSummary(statusOutput.targetSelector),
+      modifierSelfOnly: false,
+      availabilityContext: statusOutput.availability.reportLabel,
+      modifierCapabilityId: statusOutput.id,
+      modifierCapabilityIds: [statusOutput.id],
+      interactionScope: 'enemy-side',
+    });
+  }
+  return traces;
+}
+
+function periodicDamageDetailLines(
+  periodic: PeriodicDamageDefinition,
+  statusOutput: StatusOutputCapability,
+  displayValue: string,
+): string[] {
+  const status = statusLabel(periodic.statusId);
+  const channel = channelLabel(periodic.channel);
+  return [
+    `${status} deals periodic ${channel} each round.`,
+    `Damage Rate ${displayValue}.`,
+    periodic.durationRounds ? `Duration: ${periodic.durationRounds} rounds.` : null,
+    periodic.scalingStat ? `Scales with ${formatStatName(periodic.scalingStat)}.` : null,
+    periodic.mitigationStat ? `Mitigated by target ${formatStatName(periodic.mitigationStat)}.` : null,
+    statusOutput.activationGroupId ? `Activation group: ${statusOutput.activationGroupId}.` : null,
+    'Activation, target selection, target overlap, and uptime remain conditional.',
+    'Final damage is not calculated.',
+  ].filter((line): line is string => Boolean(line));
+}
+
+function periodicDamageDisplayValue(
+  periodic: PeriodicDamageDefinition,
+  statusOutput: StatusOutputCapability,
+  options: CapabilityOptions,
+): string {
+  const value = periodicDamageResolvedValue(periodic, statusOutput, options);
+  return value === null ? 'unknown' : `${value}%`;
+}
+
+function periodicDamageResolvedValue(
+  periodic: PeriodicDamageDefinition,
+  statusOutput: StatusOutputCapability,
+  options: CapabilityOptions,
+): number | null {
+  const rankedValue = options.previewMaxRankInteractions
+    ? periodic.damageRateByHabitLevel.find((value) => value.level === 5)
+    : rankedValueForHabitLevel(periodic.damageRateByHabitLevel, effectiveHabitLevelForCapability(statusOutput, options));
+  return rankedValue?.value ?? periodic.damageRateFixed;
+}
+
+function statusChanceConditional(statusOutput: StatusOutputCapability): boolean {
+  return statusOutput.chanceFixed !== null ||
+    statusOutput.chanceByHabitLevel.length > 0 ||
+    statusOutput.activationChanceFixed !== null ||
+    (statusOutput.activationChanceByHabitLevel?.length ?? 0) > 0;
+}
+
+function activationChanceFactsForStatus(statusOutput: StatusOutputCapability): string[] {
+  return [
+    ...(statusOutput.chanceFixed !== null ? [`Status application chance: ${statusOutput.chanceFixed}%.`] : []),
+    ...(statusOutput.chanceByHabitLevel.length > 0 ? ['Status application chance depends on Habit Level.'] : []),
+    ...(statusOutput.activationChanceFixed !== null ? [`Activation chance: ${statusOutput.activationChanceFixed}%.`] : []),
+    ...((statusOutput.activationChanceByHabitLevel?.length ?? 0) > 0 ? ['Activation chance depends on Habit Level.'] : []),
+    ...(statusOutput.activationGroupId ? [`Shared activation group: ${statusOutput.activationGroupId}.`] : []),
+  ];
+}
+
+function formatStatName(stat: DragonStatId): string {
+  return stat.charAt(0).toUpperCase() + stat.slice(1);
 }
 
 function enemyVulnerabilityExplanation(
