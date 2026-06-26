@@ -416,6 +416,7 @@ export function analyzeCapabilityAmplifications(
     ...analyzeStatScalingSupport(formation, dragons, outputs, modifiers, options),
     ...analyzeEnemyMitigationReduction(formation, dragons, outputs, modifiers, options),
     ...analyzeEnemyDamageDealtReductions(formation, dragons, modifiers, options),
+    ...analyzeEnemyDamageReceivedIncreases(formation, dragons, outputs, modifiers, options),
     ...analyzePeriodicDamageAmplification(formation, dragons, periodicDamage, modifiers, options),
     ...analyzeStatusRemovalSupport(formation, dragons, statusOutputs, options),
   ];
@@ -1744,6 +1745,97 @@ function analyzeEnemyDamageDealtReductions(
       modifierCapabilityId: modifier.id,
       modifierCapabilityIds: [modifier.id],
       interactionScope: 'enemy-side',
+    });
+  }
+  return traces;
+}
+
+function analyzeEnemyDamageReceivedIncreases(
+  formation: FormationAnalysisInput,
+  dragons: Dragon[],
+  outputs: OutputCapability[],
+  modifiers: ModifierCapability[],
+  options: CapabilityOptions,
+): SynergyTrace[] {
+  const traces: SynergyTrace[] = [];
+  for (const modifier of modifiers.filter(
+    (capability) =>
+      capability.role === 'enemy-debuff' &&
+      capability.direction === 'received' &&
+      capability.operation === 'increase' &&
+      capability.targetSelector.side === 'enemy' &&
+      isDamageChannel(capability.channel) &&
+      modifierCapabilityVisible(capability, options),
+  )) {
+    const providerPosition = positionOf(formation, modifier.dragonId);
+    const provider = dragonById(dragons, modifier.dragonId);
+    if (!providerPosition || !provider) {
+      continue;
+    }
+    const matchedOutputs = outputs.filter(
+      (output) =>
+        outputCapabilityVisible(output, options) &&
+        modifierMatchesOutputChannel(modifier.channel, output.channel) &&
+        sourceScopesCompatible(modifier.sourceScope, output.sourceScope),
+    );
+    const requirements = providerRequirementTraces(modifier, formation, dragons, options);
+    const outputLabels = outputChannelNames(outputs, matchedOutputs.map((output) => output.id));
+    const channel = channelLabel(modifier.channel);
+    const displayValue = modifierDisplayValue(modifier, options);
+    traces.push({
+      id: `enemy-damage-received-increase-${modifier.id}`,
+      ruleId: 'enemy-damage-received-increase',
+      status: statusFromRequirements(requirements, modifier.futureAvailable || modifier.conditional),
+      confidence: modifier.confidence,
+      sourceDragonId: provider.id,
+      sourceAbilityId: modifier.abilityId,
+      recipientDragonId: null,
+      recipientAbilityId: null,
+      title: `Enemy ${channel} vulnerability`,
+      explanation: `${provider.name}'s ${modifier.abilityName} increases ${channel} Received for one enemy target. Allied ${channel} can benefit when its target overlaps with that enemy.`,
+      requirements,
+      matchedFacts: [
+        `${modifier.abilityName} targets ${targetSelectorSummary(modifier.targetSelector)}.`,
+        `Modifier capability ID: ${modifier.id}.`,
+        `Source scope: ${modifier.sourceScope}.`,
+        ...(modifier.sourceEffectId ? [`Source effect ID: ${modifier.sourceEffectId}.`] : []),
+        ...(outputLabels.length > 0 ? [`Qualifying allied outputs: ${outputLabels.join(', ')}.`] : []),
+        ...modifier.conditions.map((condition) => condition.description),
+        ...activationChanceFacts(modifier),
+      ],
+      effects: [`${channel} Received increase ${displayValue}`],
+      conflicts: requirements
+        .filter((requirement) => requirement.satisfied === false)
+        .map((requirement) => `${requirement.label}: expected ${requirement.expected}, actual ${requirement.actual ?? 'unknown'}`),
+      assumptions: [
+        'Enemy target overlap is not simulated or guaranteed.',
+        'Enemy formation members and lane occupants are not invented.',
+        'The target selector is preserved as enemy-side metadata rather than assigning a friendly recipient.',
+      ],
+      unresolvedQuestions: [
+        'Opposing-position selection remains provisional when the source data uses that target wording.',
+        'Exact final damage increase cannot be calculated because target overlap, uptime, stacking, and final formulas are unresolved.',
+      ],
+      sourceEvidenceIds: modifier.evidenceIds,
+      recipientEvidenceIds: matchedOutputs.flatMap((output) => output.evidenceIds),
+      providedEffectType: `${channel} Received increase`,
+      recipientModifierType: null,
+      recipientModifierAbilityId: null,
+      recipientModifierValue: modifier.value,
+      combatLogConfirmed: modifier.combatLogConfirmed,
+      exactResultKnown: false,
+      exactResultUnknownReason: 'Exact final damage gain cannot be calculated because target overlap, uptime, stacking, and final formulas are unresolved.',
+      matchKind: 'enemy-damage-received-increase',
+      channel: modifier.channel,
+      modifierRole: modifier.role,
+      targetSelectorSummary: targetSelectorSummary(modifier.targetSelector),
+      modifierSelfOnly: false,
+      availabilityContext: modifier.availability.reportLabel,
+      modifierCapabilityId: modifier.id,
+      modifierCapabilityIds: [modifier.id],
+      matchedOutputCapabilityIds: matchedOutputs.map((output) => output.id),
+      interactionScope: 'enemy-side',
+      damageScope: modifier.damageScope,
     });
   }
   return traces;

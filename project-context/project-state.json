@@ -22,7 +22,7 @@
   ],
   "currentReviewPhase": "Legendary dragon schema hardening validation and project-context regeneration.",
   "format": "dragonfire-project-state",
-  "generatedAt": "2026-06-26T00:43:37.772Z",
+  "generatedAt": "2026-06-26T01:47:55.456Z",
   "plannedNextPhase": [
     "full formation-output review",
     "additional visual QA",
@@ -34,8 +34,8 @@
     "metadataOnlyDragonCount": 20
   },
   "source": {
-    "branch": "fix/double-strike-trigger-chains",
-    "commit": "b27dab49d4a5906c6204260fee8fc775dbfa5f5d",
+    "branch": "fix/armor-break-enemy-vulnerability",
+    "commit": "120e6a82f01c645ccbfcd418b54bd925a01ad545",
     "databaseVersion": "0.6.0",
     "dataSchemaVersion": 10,
     "gameBuild": "26.6.53509",
@@ -46,8 +46,8 @@
     "countingMethod": "static working-tree test declaration scan; runtime pass/fail is reported by npm run test",
     "lastRunStatus": "not-run-by-exporter",
     "runner": "vitest",
-    "testCaseCount": 188,
-    "testFileCount": 22
+    "testCaseCount": 198,
+    "testFileCount": 23
   },
   "unresolvedMechanicsCount": 99,
   "versions": {

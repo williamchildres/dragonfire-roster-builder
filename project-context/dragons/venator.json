@@ -3456,7 +3456,7 @@
   "firstObservedInGame": null,
   "format": "dragonfire-dragon-profile",
   "gameVersion": null,
-  "generatedAt": "2026-06-26T00:43:37.772Z",
+  "generatedAt": "2026-06-26T01:47:55.456Z",
   "habits": [
     {
       "abilityClass": "passive",
@@ -4814,7 +4814,7 @@
       "requiredHabitLevel": 1,
       "role": "enemy-debuff",
       "sourceEffectId": "armor-break-physical-received",
-      "sourceScope": "unknown",
+      "sourceScope": "all-qualifying-sources",
       "stackMaximum": null,
       "statusId": null,
       "targetSelector": {
@@ -5655,8 +5655,8 @@
   "rosterSourceStatus": "official-website",
   "slug": "venator",
   "source": {
-    "branch": "fix/double-strike-trigger-chains",
-    "commit": "b27dab49d4a5906c6204260fee8fc775dbfa5f5d",
+    "branch": "fix/armor-break-enemy-vulnerability",
+    "commit": "120e6a82f01c645ccbfcd418b54bd925a01ad545",
     "databaseVersion": "0.6.0",
     "dataSchemaVersion": 10,
     "gameBuild": "26.6.53509",

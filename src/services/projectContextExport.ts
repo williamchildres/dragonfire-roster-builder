@@ -483,6 +483,7 @@ function buildCapabilityFramework(
       'stat-scaling-support',
       'enemy-mitigation-reduction',
       'enemy-damage-dealt-reduction',
+      'enemy-damage-received-increase',
       'periodic-damage-amplification',
       'status-removal',
       'defensive-ally-support',
@@ -609,6 +610,12 @@ function buildFormationReviewCases(): FormationReviewCaseExport[] {
       label: 'DF-LG-05: Left Kalspire / Vanguard Syrax / Right Vhagar',
       formation: { 'left-flank': 'kalspire', vanguard: 'syrax', 'right-flank': 'vhagar' },
       reviewerNotes: ['Legendary regression case for Mother\'s Mercy potential Control cleanse classification, retained timing/selection uncertainty, and Tactical Strike not acting as outgoing support.'],
+    },
+    {
+      caseId: 'df-lg-11',
+      label: 'DF-LG-11: Left Venator / Vanguard Crimson / Right Vhagar',
+      formation: { 'left-flank': 'venator', vanguard: 'crimson', 'right-flank': 'vhagar' },
+      reviewerNotes: ['Legendary regression case for Venator Armor Break enemy Physical Damage Received vulnerability traces, preview-only locked-habit availability, enemy-side presentation, and Hunter\'s Bane comparison behavior. Manual acceptance baseline uses Level 26, Star Rank 1 dragons.'],
     },
   ];
   const legendaryRegressionCases = legendaryRegressionSpecs.map((spec) => formationCase({
@@ -1140,7 +1147,7 @@ All other known dragons remain metadata-only unless their typed source records c
 
 ## Synergy Framework
 
-The framework derives output capabilities, modifier capabilities, status outputs, periodic damage, and dependencies from structured ability effects. Current trace families are outgoing-effect-amplification, incoming-effect-amplification, status-condition-enablement, stat-scaling-support, enemy-mitigation-reduction, periodic-damage-amplification, and defensive-ally-support.
+The framework derives output capabilities, modifier capabilities, status outputs, periodic damage, and dependencies from structured ability effects. Current trace families are outgoing-effect-amplification, incoming-effect-amplification, status-condition-enablement, stat-scaling-support, enemy-mitigation-reduction, enemy-damage-dealt-reduction, enemy-damage-received-increase, periodic-damage-amplification, and defensive-ally-support.
 
 ## Unresolved Mechanics
 

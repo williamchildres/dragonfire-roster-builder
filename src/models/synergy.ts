@@ -159,6 +159,7 @@ export type SynergyTraceMatchKind =
   | 'stat-scaling-support'
   | 'enemy-mitigation-reduction'
   | 'enemy-damage-dealt-reduction'
+  | 'enemy-damage-received-increase'
   | 'periodic-damage-amplification'
   | 'status-removal'
   | 'defensive-ally-support';

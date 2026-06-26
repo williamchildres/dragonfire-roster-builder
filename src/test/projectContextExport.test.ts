@@ -133,7 +133,7 @@ describe('project context export', () => {
       'project-context/formation-review-cases.json',
     );
 
-    expect(cases).toHaveLength(15);
+    expect(cases).toHaveLength(16);
     expect(cases.filter((reviewCase) => reviewCase.caseId.startsWith('phase-3-8-1-')).map((reviewCase) => reviewCase.reviewStatus)).toEqual([
       'confirmed',
       'confirmed',
@@ -150,7 +150,8 @@ describe('project context export', () => {
       'pending',
       'pending',
     ]);
-    expect(cases.filter((reviewCase) => /^df-lg-0[135]$/.test(reviewCase.caseId)).map((reviewCase) => reviewCase.reviewStatus)).toEqual([
+    expect(cases.filter((reviewCase) => /^df-lg-(0[135]|11)$/.test(reviewCase.caseId)).map((reviewCase) => reviewCase.reviewStatus)).toEqual([
+      'confirmed',
       'confirmed',
       'confirmed',
       'confirmed',
