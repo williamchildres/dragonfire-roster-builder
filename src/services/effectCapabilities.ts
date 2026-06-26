@@ -44,6 +44,7 @@ import {
   arePositionsAdjacent,
   normalizeDamageSourceScope,
 } from './formationRules';
+import { rankedValueForHabitLevel, resolveEffectiveHabitLevel } from './habitLevels';
 
 export interface CapabilityOptions {
   roster?: Record<string, OwnedDragon>;
@@ -756,9 +757,10 @@ function analyzeOutgoingAmplifications(
         title: modifier.abilityId === 'vermax-spreading-blaze' || modifier.abilityId === 'vermax-rallying-flame'
           ? `${modifier.abilityName} Support`
           : supportTitle(modifier.channel),
-        explanation: outgoingExplanation(provider.name, modifier, recipient.name, compatible, outputs),
+        explanation: outgoingExplanation(provider.name, modifier, recipient.name, compatible, outputs, options),
         assumptions: outgoingAssumptions(modifier, compatible),
         unresolvedQuestions: unresolvedForModifier(modifier),
+        options,
       }));
     }
     traces.push(...groupSingleTargetOutgoingTraces(modifier, modifierTraces, outputs, dragons));
@@ -1053,9 +1055,10 @@ function analyzeIncomingAmplifications(
           requirements: match.requirements,
           title: `${recipient.name} amplifies ${provider.name} ${channelLabel(output.channel)}`,
           explanation:
-            `${provider.name} provides ${channelLabel(output.channel)} through ${output.abilityName}. ${recipient.name}'s ${modifier.abilityName} increases ${channelLabel(output.channel)} Received by ${modifier.value ?? 'unknown'}${modifier.unit === 'percent' ? '%' : ''}.`,
+            `${provider.name} provides ${channelLabel(output.channel)} through ${output.abilityName}. ${recipient.name}'s ${modifier.abilityName} increases ${channelLabel(output.channel)} Received by ${modifierDisplayValue(modifier, options)}.`,
           assumptions: [],
           unresolvedQuestions: ['Exact final Recovery amount is unknown because the full Level and Instinct Recovery formula is not known.'],
+          options,
         }));
       }
     }
@@ -1825,7 +1828,7 @@ function analyzeEnemyDamageReceivedIncreases(
       providedEffectType: `${channel} Received increase`,
       recipientModifierType: null,
       recipientModifierAbilityId: null,
-      recipientModifierValue: modifier.value,
+      recipientModifierValue: modifierResolvedValue(modifier, options),
       combatLogConfirmed: modifier.combatLogConfirmed,
       exactResultKnown: false,
       exactResultUnknownReason: 'Exact final damage gain cannot be calculated because target overlap, uptime, stacking, and final formulas are unresolved.',
@@ -2157,6 +2160,7 @@ function makeAmplificationTrace({
   explanation,
   assumptions,
   unresolvedQuestions,
+  options,
 }: {
   matchKind: 'outgoing-effect-amplification' | 'incoming-effect-amplification';
   provider: Dragon;
@@ -2170,6 +2174,7 @@ function makeAmplificationTrace({
   explanation: string;
   assumptions: string[];
   unresolvedQuestions: string[];
+  options: CapabilityOptions;
 }): AmplificationSynergyTrace {
   const status = aggregateStatus(matches.map((match) => match.status));
   const matchedOutputCapabilityIds = matches.map((match) => match.outputCapabilityId);
@@ -2195,7 +2200,7 @@ function makeAmplificationTrace({
       ...matches.map((match) => `Matched ${match.outputCapabilityId}.`),
     ],
     effects: [
-      `${channelLabel(modifier.channel)} ${modifier.direction === 'dealt' ? 'Dealt' : 'Received'} ${modifier.operation} ${modifier.value ?? 'unknown'}${modifier.unit === 'percent' ? '%' : modifier.unit === 'stack' ? ' per stack' : ''}`,
+      `${channelLabel(modifier.channel)} ${modifier.direction === 'dealt' ? 'Dealt' : 'Received'} ${modifier.operation} ${modifierDisplayValue(modifier, options)}`,
     ],
     conflicts: dedupedRequirements
       .filter((requirement) => requirement.satisfied === false)
@@ -2207,7 +2212,7 @@ function makeAmplificationTrace({
     providedEffectType: matchKind === 'incoming-effect-amplification' ? channelLabel(modifier.channel) : null,
     recipientModifierType: matchKind === 'incoming-effect-amplification' ? `${channelLabel(modifier.channel)} Received Up` : null,
     recipientModifierAbilityId: modifier.abilityId,
-    recipientModifierValue: modifier.value,
+    recipientModifierValue: modifierResolvedValue(modifier, options),
     combatLogConfirmed: modifier.combatLogConfirmed || matches.some((match) => match.confidence === 'confirmed'),
     exactResultKnown: false,
     exactResultUnknownReason: exactUnknownReason(modifier.channel, matchKind),
@@ -2319,7 +2324,7 @@ function statusSemanticModifiersForEffect(
     operation: semantic.operation,
     sourceScope: 'all-qualifying-sources',
     value: effect.magnitude,
-    rankedValues: effect.rankedValues,
+    rankedValues: effect.rankedValues.length > 0 ? effect.rankedValues : commonEffectOptionRankedValues(effect),
     unit: effect.unit === 'percent' ? 'percent' : 'unknown',
     statusId: semantic.statusId,
     conditions: [
@@ -2391,7 +2396,7 @@ function baseModifier(
     role: modifierRoleForEffect(effect, direction),
     operation: effect.type.includes('Down') || effect.type.includes('Reduction') ? 'decrease' : 'increase',
     value: effect.magnitude,
-    rankedValues: effect.rankedValues,
+    rankedValues: effect.rankedValues.length > 0 ? effect.rankedValues : commonEffectOptionRankedValues(effect),
     unit: effect.unit === 'percent' ? 'percent' : effect.unit === 'flat' ? 'flat' : 'unknown',
     damageScope: defensiveDamageScopeForEffect(effect),
     sourceScope: capabilitySourceScope(effect.sourceScope, effect),
@@ -2434,6 +2439,15 @@ function activationChanceByHabitLevel(schedule: AbilitySchedule, effect: Ability
     return schedule.activationRoll.chanceByHabitLevel;
   }
   return schedule.triggerChanceByHabitLevel;
+}
+
+function commonEffectOptionRankedValues(effect: AbilityEffect): RankedValue[] {
+  const optionValues = effect.effectOptions?.options.map((option) => option.effect.rankedValues) ?? [];
+  if (optionValues.length === 0 || optionValues.some((values) => values.length === 0)) {
+    return [];
+  }
+  const [first, ...rest] = optionValues;
+  return rest.every((values) => JSON.stringify(values) === JSON.stringify(first)) ? first! : [];
 }
 
 function outputChannelForEffect(effect: AbilityEffect): EffectChannel | null {
@@ -2730,7 +2744,8 @@ function modifierChannelForEffect(effect: AbilityEffect): EffectChannel | null {
     effect.type === 'Tactical Damage Received Down' ||
     effect.type === 'Fire Damage Received Down' ||
     effect.type === 'Physical Damage Received Down' ||
-    effect.type === 'Physical Damage Received Reduction'
+    effect.type === 'Physical Damage Received Reduction' ||
+    effect.type === 'Exclusive Damage Received Reduction'
   ) {
     return 'damage-received';
   }
@@ -3134,7 +3149,13 @@ function availabilityRequirements({
   const dragonLevel = Object.hasOwn(options.dragonLevels ?? {}, dragonId)
     ? (options.dragonLevels?.[dragonId] ?? null)
     : (rosterEntry?.reignLevel ?? observation?.dragonLevel ?? null);
-  const habitLevel = abilityId ? rosterEntry?.habitLevels[abilityId] ?? null : null;
+  const habitLevel = abilityId
+    ? resolveEffectiveHabitLevel({
+        unlockStarRank,
+        starRank,
+        savedLevel: rosterEntry?.habitLevels[abilityId],
+      })
+    : null;
   const requirements: RequirementTrace[] = [];
   const owner = abilityName ? `${dragonName ?? dragonId} - ${abilityName}` : (dragonName ?? dragonId);
   if (minimumDragonLevel !== null) {
@@ -3176,7 +3197,7 @@ function availabilityRequirements({
       actual: habitLevel === null ? (options.previewMaxRankInteractions ? 'preview enabled' : null) : `Habit Level ${habitLevel}`,
       satisfied,
       evidenceIds,
-      notes: ['Locked Habit capabilities are potential in preview mode, not active for current roster.'],
+      notes: ['Unlocked Habits without an explicit saved Habit Level default to effective Habit Level 1. Locked Habit capabilities are potential in preview mode, not active for current roster.'],
     });
   }
   return requirements;
@@ -3282,7 +3303,15 @@ function capabilityVisible({
   if (unlockStarRank !== null && (rosterEntry.starRank ?? 0) < unlockStarRank) {
     return false;
   }
-  if (requiredHabitLevel !== null && abilityId && (rosterEntry.habitLevels[abilityId] ?? 0) < requiredHabitLevel) {
+  if (
+    requiredHabitLevel !== null &&
+    abilityId &&
+    (resolveEffectiveHabitLevel({
+      unlockStarRank,
+      starRank: rosterEntry.starRank,
+      savedLevel: rosterEntry.habitLevels[abilityId],
+    }) ?? 0) < requiredHabitLevel
+  ) {
     return false;
   }
   if (minimumDragonLevel !== null) {
@@ -3527,13 +3556,36 @@ function damageReceivedLabel(scope: DefensiveDamageScope | null): string {
 function modifierDisplayValue(modifier: ModifierCapability, options: CapabilityOptions): string {
   const rankedValue = options.previewMaxRankInteractions
     ? modifier.rankedValues.find((value) => value.level === 5)
-    : undefined;
+    : rankedValueForHabitLevel(modifier.rankedValues, effectiveHabitLevelForCapability(modifier, options));
   const value = rankedValue?.value ?? modifier.value;
   if (value === null) {
     return 'unknown';
   }
   const unit = rankedValue?.unit ?? modifier.unit;
   return `${value}${unit === 'percent' ? '%' : unit === 'flat' ? ' flat' : ''}`;
+}
+
+function modifierResolvedValue(modifier: ModifierCapability, options: CapabilityOptions): number | null {
+  const rankedValue = options.previewMaxRankInteractions
+    ? modifier.rankedValues.find((value) => value.level === 5)
+    : rankedValueForHabitLevel(modifier.rankedValues, effectiveHabitLevelForCapability(modifier, options));
+  return rankedValue?.value ?? modifier.value;
+}
+
+function effectiveHabitLevelForCapability(
+  capability: Pick<ModifierCapability, 'dragonId' | 'abilityId' | 'unlockStarRank' | 'requiredHabitLevel'>,
+  options: CapabilityOptions,
+) {
+  if (capability.requiredHabitLevel === null) {
+    return null;
+  }
+  const observation = dragonObservationSnapshots.find((snapshot) => snapshot.dragonId === capability.dragonId);
+  const rosterEntry = options.roster?.[capability.dragonId];
+  return resolveEffectiveHabitLevel({
+    unlockStarRank: capability.unlockStarRank,
+    starRank: rosterEntry?.starRank ?? observation?.starRank ?? null,
+    savedLevel: rosterEntry?.habitLevels[capability.abilityId],
+  });
 }
 
 function activationChanceFacts(modifier: ModifierCapability): string[] {
@@ -3610,10 +3662,11 @@ function outgoingExplanation(
   recipientName: string,
   matches: CapabilityMatch[],
   outputs: OutputCapability[],
+  options: CapabilityOptions,
 ): string {
   const labels = outputChannelNames(outputs, matches.map((match) => match.outputCapabilityId)).join(', ');
   if (modifier.dragonId === 'sheepstealer' && modifier.channel === 'physical-damage') {
-    return `${providerName}'s ${modifier.abilityName} increases ${recipientName}'s Physical Damage Dealt by ${modifier.value ?? 'unknown'}%. Qualifying outputs: ${labels}.`;
+    return `${providerName}'s ${modifier.abilityName} increases ${recipientName}'s Physical Damage Dealt by ${modifierDisplayValue(modifier, options)}. Qualifying outputs: ${labels}.`;
   }
   if (modifier.dragonId === 'vermax' && modifier.abilityId === 'vermax-rallying-flame' && modifier.channel === 'tactical-damage') {
     return `${modifier.abilityName} may grant additional Spreading Blaze stacks to ${recipientName}. Each granted stack increases Tactical Damage Dealt by ${modifier.valuePerStack ?? 'unknown'}%, up to ${modifier.stackMaximum ?? 'unknown'} stacks. Qualifying outputs: ${labels}.`;

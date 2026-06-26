@@ -162,7 +162,7 @@ Unqualified Damage Dealt wording defaults to all qualifying sources. Explicit wo
 
 ## Effect Alternatives
 
-Schema 11 `effectOptions` preserves mechanics that are not simultaneous. Conditional branches such as "Taunt if not already Taunted, otherwise Stagger" may expand into branch-specific status capabilities with conditions retained. One-of choices with an unknown selector, such as selecting exactly one defensive damage scope each round, stay visible in the technical profile but are not derived as multiple concurrent active modifiers.
+Schema 11 `effectOptions` preserves mechanics that are not simultaneous. Conditional branches such as "Taunt if not already Taunted, otherwise Stagger" may expand into branch-specific status capabilities with conditions retained. One-of choices with an unknown selector, such as selecting exactly one defensive damage scope each round, stay visible in the technical profile and may derive one parent self-only capability, but are not flattened into multiple concurrent active modifiers.
 
 ## Position Matching
 
@@ -187,6 +187,8 @@ Current roster mode:
 
 - Active matches require current unlock and progression requirements.
 - Locked abilities do not create active matches.
+- When Star Rank satisfies a Habit unlock, missing, null, or saved Level 0 Habit state resolves to effective Habit Level 1 without mutating local roster storage.
+- Explicit saved Habit Levels 1-5 are preserved while locked by Star Rank and become effective again when the unlock rank is restored.
 
 Preview mode:
 

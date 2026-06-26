@@ -88,7 +88,7 @@ Formation Builder stores selected formation slots as dragon IDs and resolves cur
 
 Capabilities are derived from structured `AbilityEffect` records plus one reviewed Vermax Basic Attack capability. Effect tags alone do not create authoritative capabilities. Output dependencies are derived from structured scaling, conditional multipliers, and canonical stat relationships; unsupported tags do not create dependencies.
 
-Statuses include active, potential, inactive, blocked, unknown, and not-applicable. Locked Habits and future progression are potential when previewed, not active for the user's current roster. Numerical synergy scores remain null unless enough verified data exists for all selected dragons.
+Statuses include active, potential, inactive, blocked, unknown, and not-applicable. Locked Habits and future progression are potential when previewed, not active for the user's current roster. When a current roster dragon satisfies a Habit unlock Star Rank, an unset saved Habit Level resolves to effective Habit Level 1 at runtime without changing stored roster data. Numerical synergy scores remain null unless enough verified data exists for all selected dragons.
 
 ## User Roster State
 
@@ -99,7 +99,7 @@ User state is stored separately in localStorage under schema version 3. It conta
 - `collection`, with `not-collected`, `not-hatched`, or `hatched` plus nullable shard counts
 - `starRank` from 1 through 10, nullable when unknown
 - `reignLevel`
-- `habitLevels`, where `null` means not recorded, `0` means no Habit upgrades, and `1-5` are upgraded levels
+- `habitLevels`, where `null` or `0` means no explicit upgraded level is recorded, and `1-5` are explicit upgraded levels
 - personal `notes`
 
 Schema 1 and 2 data migrates by preserving ownership, Star Rank, Reign Level, notes, Habit Levels when present, and legacy team or formation selections. Existing owned dragons migrate to collection state `hatched`; unowned legacy records migrate to `not-collected`.

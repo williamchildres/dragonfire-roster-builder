@@ -93,7 +93,11 @@ describe('Daemoros and Vaeldra Epic profiles', () => {
       selectorMethod: 'unknown',
     });
     expect(phantom.effectOptions?.options.map((option) => option.id)).toEqual(['physical', 'tactical', 'fire']);
-    expect(modifiers.filter((modifier) => modifier.abilityId === 'daemoros-phantoms-veil')).toHaveLength(0);
+    const phantomModifiers = modifiers.filter((modifier) => modifier.abilityId === 'daemoros-phantoms-veil');
+    expect(phantomModifiers).toHaveLength(1);
+    expect(phantomModifiers[0]?.role).toBe('self-amplification');
+    expect(phantomModifiers[0]?.channel).toBe('damage-received');
+    expect(phantomModifiers[0]?.targetSelector.selection).toBe('self');
 
     expect(sirenBranch.effectOptions).toMatchObject({
       mode: 'conditional-branch',

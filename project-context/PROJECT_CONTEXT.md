@@ -62,6 +62,7 @@ All other known dragons remain metadata-only unless their typed source records c
 - Highest-stat and one-adjacent effects target one recipient or one grouped candidate set.
 - Internal same-dragon traces are preserved for debug/export but are not cross-dragon normal synergy.
 - Max-rank preview does not override a known failed Dragon Level requirement.
+- Unlocked Habits with no explicit saved Habit Level, including null or Level 0, resolve to effective Habit Level 1 at runtime without mutating local roster storage.
 
 ## Synergy Framework
 

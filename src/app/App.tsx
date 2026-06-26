@@ -53,6 +53,7 @@ import {
   deriveOutputCapabilities,
 } from '../services/effectCapabilities';
 import { THRESHOLD_BOUNDARY_NOTE } from '../services/formationRules';
+import { resolveEffectiveHabitLevelForAbility } from '../services/habitLevels';
 import { analyzeFormation, findAffinityCoverage, findBreedDistribution } from '../services/synergyEngine';
 import {
   buildFormationCardPresentation,
@@ -2276,6 +2277,7 @@ function AbilityCard({
     ability.unlockStarRank !== null &&
     (starRank === null || starRank < ability.unlockStarRank);
   const habitLevel = rosterEntry?.habitLevels[ability.id] ?? null;
+  const effectiveHabitLevel = resolveEffectiveHabitLevelForAbility(ability, rosterEntry);
 
   return (
     <article className="ability-card">
@@ -2424,9 +2426,10 @@ function AbilityCard({
           <strong>Power progression:</strong> {unknown}
         </p>
       ) : null}
-      {habitLevel !== null && habitLevel > 0 ? (
+      {effectiveHabitLevel !== null ? (
         <p>
-          <strong>Current selected values:</strong> Habit Level {habitLevel}
+          <strong>Current selected values:</strong> Habit Level {effectiveHabitLevel}
+          {habitLevel === null || habitLevel === 0 ? ' (derived from unlock)' : ''}
         </p>
       ) : null}
       {ability.glossaryEntries.length > 0 ? (
