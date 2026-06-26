@@ -1558,10 +1558,7 @@ function TraceCard({ trace }: { trace: SynergyTrace }) {
       <TraceList title="Matched output capabilities" items={trace.matchedOutputCapabilityIds ?? []} />
       <TraceList
         title="Source-scope compatibility"
-        items={(trace.sourceScopeResults ?? []).map(
-          (match) =>
-            `${match.outputCapabilityId}: ${match.sourceScopeCompatible ? 'compatible' : 'not compatible'}; ${formatToken(match.status)}`,
-        )}
+        items={sourceScopeCompatibilityItems(trace)}
       />
       <TraceList title="Structured effects" items={trace.effects} />
       <TraceList title="Conflicts" items={trace.conflicts} />
@@ -1602,6 +1599,20 @@ function TraceList({ title, items }: { title: string; items: string[] }) {
       )}
     </div>
   );
+}
+
+function sourceScopeCompatibilityItems(trace: SynergyTrace): string[] {
+  const explicit = (trace.sourceScopeResults ?? []).map(
+    (match) =>
+      `${match.outputCapabilityId}: ${match.sourceScopeCompatible ? 'compatible' : 'not compatible'}; ${formatToken(match.status)}`,
+  );
+  if (explicit.length > 0) {
+    return explicit;
+  }
+  const matchedOutputs = trace.matchedOutputCapabilityIds ?? [];
+  return matchedOutputs.length > 0
+    ? matchedOutputs.map((capabilityId) => `${capabilityId}: compatible; matched qualifying output`)
+    : [];
 }
 
 function AuditMatrixSection({

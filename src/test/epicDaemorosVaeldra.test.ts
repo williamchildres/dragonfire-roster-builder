@@ -159,6 +159,70 @@ describe('Daemoros and Vaeldra Epic profiles', () => {
     expect(enemySide.every((trace) => trace.recipientDragonId === null || trace.matchKind === 'enemy-mitigation-reduction')).toBe(true);
   });
 
+  it('renders Tempting Distraction enemy vulnerability details without assigning friendly recipients', () => {
+    const currentRoster = createEmptyRoster(dragons);
+    for (const dragonId of ['daemoros', 'vaeldra', 'vermax']) {
+      const entry = currentRoster[dragonId];
+      expect(entry).toBeDefined();
+      entry!.owned = true;
+      entry!.collection.state = 'hatched';
+      entry!.starRank = dragonId === 'vaeldra' ? 6 : 1;
+      entry!.reignLevel = 30;
+    }
+    const traces = analyzeFormationTraces(epicFormation, dragons, {
+      roster: currentRoster,
+      dragonLevels: { daemoros: 30, vaeldra: 30, vermax: 30 },
+      previewMaxRankInteractions: false,
+    });
+    const temptingTraces = traces.filter((trace) => trace.sourceAbilityId === 'vaeldra-tempting-distraction');
+    const physical = temptingTraces.find((trace) => trace.channel === 'physical-damage');
+    const fire = temptingTraces.find((trace) => trace.channel === 'fire-damage');
+
+    expect(temptingTraces).toHaveLength(2);
+    expect(physical).toMatchObject({
+      status: 'potential',
+      recipientDragonId: null,
+      interactionScope: 'enemy-side',
+      modifierRole: 'enemy-debuff',
+    });
+    expect(fire).toMatchObject({
+      status: 'potential',
+      recipientDragonId: null,
+      interactionScope: 'enemy-side',
+      modifierRole: 'enemy-debuff',
+    });
+    expect(physical?.effects.join(' ')).toMatch(/Vaeldra must successfully apply Taunt/);
+    expect(physical?.effects.join(' ')).toMatch(/same enemy target/);
+    expect(physical?.effects.join(' ')).toMatch(/Physical Damage Received \+6%/);
+    expect(physical?.effects.join(' ')).toMatch(/non-Basic Physical Damage only/);
+    expect(physical?.effects.join(' ')).toMatch(/Duration: 2 rounds/);
+    expect(physical?.effects.join(' ')).toMatch(/Stagger does not trigger this effect/);
+    expect(physical?.effects.join(' ')).toMatch(/Enemy target overlap remains conditional and is not guaranteed/);
+    expect(fire?.effects.join(' ')).toMatch(/Fire Damage Received \+6%/);
+    expect(fire?.effects.join(' ')).toMatch(/all qualifying Fire Damage sources/);
+    expect(physical?.sourceScopeResults?.length).toBeGreaterThan(0);
+    expect(physical?.sourceScopeResults?.every((match) => match.sourceScopeCompatible)).toBe(true);
+    expect(fire?.sourceScopeResults?.length).toBeGreaterThan(0);
+    expect(fire?.sourceScopeResults?.every((match) => match.sourceScopeCompatible)).toBe(true);
+
+    const presentation = buildFormationCardPresentation(epicFormation, dragons, traces.filter(isNormalSynergyTrace), { previewEnabled: false });
+    const vaeldra = presentation.cards.find((card) => card.dragonId === 'vaeldra')!;
+    const temptingCards = vaeldra.provides.filter((item) => item.abilityName === 'Tempting Distraction');
+
+    expect(temptingCards).toHaveLength(2);
+    expect(temptingCards.every((item) => item.isEnemyFacing)).toBe(true);
+    expect(temptingCards.every((item) => item.recipientDragonId === null)).toBe(true);
+    expect(presentation.cards.some((card) => card.receives.some((item) => item.abilityName === 'Tempting Distraction'))).toBe(false);
+    expect(temptingCards.find((item) => item.effectTitle.includes('Physical'))?.effects.join(' ')).toMatch(/non-Basic Physical Damage only/);
+    expect(temptingCards.find((item) => item.effectTitle.includes('Fire'))?.effects.join(' ')).toMatch(/all qualifying Fire Damage sources/);
+  });
+
+  it('keeps incompatible source scopes non-passing', () => {
+    expect(sourceScopesCompatible('non-basic-attacks', 'commands')).toBe(true);
+    expect(sourceScopesCompatible('non-basic-attacks', 'basic-attacks')).toBe(false);
+    expect(sourceScopesCompatible('unknown', 'commands')).toBe(false);
+  });
+
   it('gates Warrior traits and renders normal cards without self-only teammate support', () => {
     const currentRoster = roster(['daemoros', 'vaeldra', 'vermax', 'kalspire'], 30, 1);
     const tacticalRecipientFormation: FormationAnalysisInput = {

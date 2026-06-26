@@ -43,8 +43,8 @@
   "rosterSourceStatus": "official-website",
   "slug": "arulix",
   "source": {
-    "branch": "fix/effect-options-ability-card",
-    "commit": "646074b21b872bcedd898ade6af07c8368e9c7e3",
+    "branch": "fix/enemy-vulnerability-trace-details",
+    "commit": "e1be28ffe19b31211f369e7447455f64b3aa3b72",
     "databaseVersion": "0.6.1",
     "dataSchemaVersion": 11,
     "gameBuild": "26.6.53509",
