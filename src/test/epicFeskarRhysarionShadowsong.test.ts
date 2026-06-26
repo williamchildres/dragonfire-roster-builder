@@ -127,7 +127,7 @@ describe('Feskar, Rhysarion, and Shadowsong Epic profiles', () => {
       expect.objectContaining({ sourceDragonId: 'shadowsong', matchKind: 'enemy-damage-received-increase', sourceAbilityId: 'shadowsong-blazing-onslaught', recipientDragonId: null }),
       expect.objectContaining({ sourceDragonId: 'shadowsong', matchKind: 'periodic-status-damage', sourceAbilityId: 'shadowsong-blazing-conductor', recipientDragonId: null }),
     ]));
-    expect(cards.cards.find((card) => card.dragonId === 'rhysarion')?.provides.some((item) => /friendly impairment/i.test(item.title))).toBe(true);
+    expect(cards.cards.find((card) => card.dragonId === 'rhysarion')?.provides.some((item) => /Damage Dealt reduction at current effective level: 27\.5%|harm/i.test([...item.summaryLines, ...item.details, ...item.effects].join(' ')))).toBe(true);
     expect(cards.cards.some((card) => card.receives.some((item) => /Vulnerable|Burn periodic|enemy.*vulnerability/i.test(item.title)))).toBe(false);
   });
 
@@ -193,14 +193,32 @@ describe('Feskar, Rhysarion, and Shadowsong Epic profiles', () => {
     }
 
     const rhysarionCard = cards.cards.find((card) => card.dragonId === 'rhysarion');
-    const selfRecovery = rhysarionCard?.provides.find((item) =>
-      item.sourceDragonId === 'rhysarion' &&
-      item.recipientDragonId === 'rhysarion' &&
-      item.abilityName === 'Ebbing Fury' &&
-      /Recovery Rate: 25%/.test([...item.summaryLines, ...item.details, ...item.effects].join(' ')),
-    );
-    expect(selfRecovery).toBeDefined();
+    const rhysarionProvides = rhysarionCard?.provides.filter((item) => item.abilityName === 'Ebbing Fury') ?? [];
+    const groupedFriendly = rhysarionProvides.find((item) => !item.isEnemyFacing && item.targetLabel === 'Team');
+    const groupedText = groupedFriendly ? [...groupedFriendly.summaryLines, ...groupedFriendly.details, ...groupedFriendly.effects].join(' ') : '';
+
+    expect(rhysarionProvides.filter((item) => !item.isEnemyFacing)).toHaveLength(1);
+    expect(rhysarionProvides.filter((item) => item.isEnemyFacing)).toHaveLength(1);
+    expect(groupedFriendly).toMatchObject({
+      sourceDragonId: 'rhysarion',
+      recipientDragonId: null,
+      recipientName: 'Team',
+      abilityName: 'Ebbing Fury',
+      title: 'Ebbing Fury',
+    });
+    expect(groupedText).toContain('Applies to Feskar, Rhysarion, and Shadowsong.');
+    expect(groupedText).toContain('Timing: Start of Round 4.');
+    expect(groupedText).toContain('Recovery Rate: 25% at effective Habit Level 1.');
+    expect(groupedText).toContain('Enhanced by Rhysarion Strength.');
+    expect(groupedText).toContain('Final Recovery amount remains unknown.');
     expect(rhysarionCard?.receives.some((item) => item.sourceDragonId === 'rhysarion' && item.recipientDragonId === 'rhysarion' && item.abilityName === 'Ebbing Fury')).toBe(false);
+    for (const recipientId of ['feskar', 'shadowsong']) {
+      const receives = cards.cards.find((card) => card.dragonId === recipientId)?.receives.filter((item) => item.abilityName === 'Ebbing Fury' && item.sourceDragonId === 'rhysarion') ?? [];
+      const text = receives.map((item) => [...item.summaryLines, ...item.details, ...item.effects].join(' ')).join(' ');
+      expect(receives).toHaveLength(1);
+      expect(text).toContain('Recovery Rate: 25% at effective Habit Level 1.');
+      expect(text).toContain('Damage Dealt reduction at current effective level: 27.5%.');
+    }
 
     expect(impairmentTraces.map((trace) => trace.recipientDragonId).sort()).toEqual(['feskar', 'rhysarion', 'shadowsong']);
     for (const trace of impairmentTraces) {
@@ -211,6 +229,10 @@ describe('Feskar, Rhysarion, and Shadowsong Epic profiles', () => {
       expect(text).toContain('harm');
       expect(text).not.toMatch(/\bbenefit\b|amplification/i);
     }
+    expect(groupedText).toContain('Timing: Start of Round 1.');
+    expect(groupedText).toContain('Duration: 3 rounds.');
+    expect(groupedText).toContain('Damage Dealt reduction at current effective level: 27.5%.');
+    expect(groupedText).toContain('harm');
     expect(enemyReduction).toMatchObject({ recipientDragonId: null, interactionScope: 'enemy-side' });
   });
 });
