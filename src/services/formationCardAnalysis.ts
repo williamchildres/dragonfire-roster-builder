@@ -186,8 +186,8 @@ export function buildFormationCardPresentation(
     const dragonId = formation[position];
     const dragon = dragonId ? dragonById.get(dragonId) ?? null : null;
     const mapped = dragon ? byDragon.get(dragon.id) : null;
-    const receives = prepareInteractions(mapped?.receives ?? [], 'receives');
-    const provides = prepareInteractions(mapped?.provides ?? [], 'provides');
+    const receives = prepareInteractions(mapped?.receives ?? [], 'receives', selectedIds);
+    const provides = prepareInteractions(mapped?.provides ?? [], 'provides', selectedIds);
     return {
       position,
       dragonId: dragon?.id ?? null,
@@ -623,8 +623,9 @@ function deriveTeamAffinitySummary(team: Dragon[]): FormationAffinityTeamSummary
 function prepareInteractions(
   interactions: FormationCardInteraction[],
   direction: 'receives' | 'provides',
+  selectedIds: ReadonlySet<string>,
 ): FormationCardInteraction[] {
-  return prioritizeInteractions(aggregateInteractions(dedupeInteractions(attachRecipientModifiers(interactions, direction)), direction));
+  return prioritizeInteractions(aggregateInteractions(dedupeInteractions(attachRecipientModifiers(interactions, direction)), direction, selectedIds));
 }
 
 function attachRecipientModifiers(
@@ -685,6 +686,7 @@ function prioritizeInteractions(interactions: FormationCardInteraction[]): Forma
 function aggregateInteractions(
   interactions: FormationCardInteraction[],
   direction: 'receives' | 'provides',
+  selectedIds: ReadonlySet<string>,
 ): FormationCardInteraction[] {
   const grouped = new Map<string, FormationCardInteraction[]>();
   for (const interaction of interactions) {
@@ -701,17 +703,45 @@ function aggregateInteractions(
   }
 
   return [...grouped.values()].flatMap((items) => {
-    const shouldAggregate =
-      items.length > 1 &&
-      (direction === 'receives' ||
-        items.some((item) => item.candidateTotal !== null || item.targetLabel !== null || item.isCandidate));
-    return shouldAggregate ? [mergeInteractions(items, direction)] : items;
+    if (items.length <= 1) {
+      return items;
+    }
+    if (direction === 'receives') {
+      return [mergeInteractions(items, direction, selectedIds)];
+    }
+    if (items.some((item) => item.candidateTotal !== null || item.targetLabel !== null || item.isCandidate)) {
+      return [mergeInteractions(items, direction, selectedIds)];
+    }
+    return aggregateExactProvidesSubgroups(items, selectedIds);
   });
+}
+
+function aggregateExactProvidesSubgroups(
+  items: FormationCardInteraction[],
+  selectedIds: ReadonlySet<string>,
+): FormationCardInteraction[] {
+  const grouped = new Map<string, FormationCardInteraction[]>();
+  for (const item of items) {
+    const key = [
+      item.status,
+      item.isPreview ? 'preview' : 'current',
+      item.isEnemyFacing ? 'enemy' : 'friendly',
+      providesAggregationMode(item),
+    ].join('|');
+    grouped.set(key, [...(grouped.get(key) ?? []), item]);
+  }
+  return [...grouped.values()].flatMap((group) =>
+    group.length > 1 && canAggregateExactRecipientSet(group)
+      ? [mergeInteractions(group, 'provides', selectedIds, { exactRecipientSet: true })]
+      : group,
+  );
 }
 
 function mergeInteractions(
   items: FormationCardInteraction[],
   direction: 'receives' | 'provides',
+  selectedIds: ReadonlySet<string>,
+  options: { exactRecipientSet?: boolean } = {},
 ): FormationCardInteraction {
   const first = items[0]!;
   const targetNames = unique(
@@ -723,10 +753,15 @@ function mergeInteractions(
           : [],
     ),
   );
-  const summaryLines = mergedSummaryLines(items, direction, targetNames);
+  const targetIds = unique(items.map((item) => item.recipientDragonId).filter((value): value is string => Boolean(value)));
+  const targetLabel = options.exactRecipientSet
+    ? groupedRecipientLabel(targetNames, targetIds, selectedIds)
+    : targetNames.join(' or ');
+  const uniqueTitles = unique(items.map((item) => item.title));
+  const summaryLines = mergedSummaryLines(items, direction, targetNames, options);
   const mergedCandidateTotal =
     Math.max(...items.map((item) => item.candidateTotal ?? 0)) ||
-    (direction === 'provides' && targetNames.length > 1 ? targetNames.length : first.candidateTotal);
+    (!options.exactRecipientSet && direction === 'provides' && targetNames.length > 1 ? targetNames.length : first.candidateTotal);
   const requirements = uniqueBy(
     items.flatMap((item) => item.requirements),
     (requirement) => [
@@ -742,10 +777,14 @@ function mergeInteractions(
   return {
     ...first,
     id: `aggregate__${items.map((item) => item.id).join('__')}`,
-    relationshipId: first.relationshipId,
-    targetLabel: direction === 'provides' && targetNames.length > 0 ? targetNames.join(' or ') : first.targetLabel,
+    relationshipId: options.exactRecipientSet
+      ? `${first.sourceDragonId}__${first.abilityName}__${targetIds.join('_') || 'team'}`
+      : first.relationshipId,
+    recipientDragonId: options.exactRecipientSet ? null : first.recipientDragonId,
+    recipientName: options.exactRecipientSet ? targetLabel : first.recipientName,
+    targetLabel: direction === 'provides' && targetNames.length > 0 ? targetLabel : first.targetLabel,
     effectTitle: first.abilityName,
-    title: unique(items.map((item) => item.title)).join(' + '),
+    title: options.exactRecipientSet && uniqueTitles.length > 1 ? first.abilityName : uniqueTitles.join(' + '),
     summaryLines,
     summary: compactSummaryText(summaryLines, mergedCandidateTotal),
     detail: items.map((item) => item.detail).join('\n\n'),
@@ -768,8 +807,15 @@ function mergedSummaryLines(
   items: FormationCardInteraction[],
   direction: 'receives' | 'provides',
   targetNames: string[],
+  options: { exactRecipientSet?: boolean } = {},
 ): string[] {
   const lines = unique(items.flatMap((item) => item.summaryLines));
+  if (options.exactRecipientSet && direction === 'provides') {
+    return [
+      `Applies to ${joinEnglishList(targetNames)}.`,
+      ...unique(lines.map((line) => normalizeGroupedRecipientLine(line, targetNames))),
+    ];
+  }
   if (direction === 'provides' && targetNames.length > 0) {
     if (items.some((item) => item.targetSelectionMode === 'all-matching-condition')) {
       return lines;
@@ -786,6 +832,98 @@ function mergedSummaryLines(
     ];
   }
   return lines;
+}
+
+function providesAggregationMode(interaction: FormationCardInteraction): string {
+  if (interaction.targetLabel || interaction.candidateTotal !== null || interaction.isCandidate) {
+    return 'target-selection';
+  }
+  if (interaction.recipientDragonId && !interaction.isEnemyFacing) {
+    return 'exact-recipient';
+  }
+  return 'single';
+}
+
+function canAggregateExactRecipientSet(items: FormationCardInteraction[]): boolean {
+  if (
+    items.some((item) =>
+      item.isCandidate ||
+      item.candidateTotal !== null ||
+      item.targetLabel !== null ||
+      item.targetSelectionMode !== null ||
+      item.isEnemyFacing ||
+      !item.recipientDragonId
+    )
+  ) {
+    return false;
+  }
+  const titles = unique(items.map((item) => item.title));
+  if (titles.length > 1 && !isCompatibleFriendlyImpairmentRecoveryGroup(items)) {
+    return false;
+  }
+
+  const recipientsByEffect = new Map<string, Set<string>>();
+  for (const item of items) {
+    const recipientId = item.recipientDragonId;
+    if (!recipientId) {
+      return false;
+    }
+    const key = exactRecipientEffectKey(item);
+    const recipients = recipientsByEffect.get(key) ?? new Set<string>();
+    recipients.add(recipientId);
+    recipientsByEffect.set(key, recipients);
+  }
+  const recipientSets = [...recipientsByEffect.values()].map((recipients) => [...recipients].sort().join('|'));
+  return recipientSets.length > 0 && recipientSets.every((set) => set === recipientSets[0]);
+}
+
+function isCompatibleFriendlyImpairmentRecoveryGroup(items: FormationCardInteraction[]): boolean {
+  const textByItem = items.map((item) => [
+    item.title,
+    item.summary,
+    ...item.summaryLines,
+    ...item.effects,
+    ...item.details,
+  ].join(' '));
+  return (
+    textByItem.some((text) => /Recovery Rate|Recovery support/i.test(text)) &&
+    textByItem.some((text) => /friendly impairment|Damage Dealt reduction|harm/i.test(text))
+  );
+}
+
+function exactRecipientEffectKey(item: FormationCardInteraction): string {
+  return [
+    item.effectTitle,
+    item.title,
+    item.effects.join('|'),
+    item.modifierLines.join('|'),
+    item.status,
+  ].join('::');
+}
+
+function groupedRecipientLabel(
+  targetNames: string[],
+  targetIds: string[],
+  selectedIds: ReadonlySet<string>,
+): string {
+  if (targetIds.length > 0 && targetIds.every((id) => selectedIds.has(id)) && targetIds.length === selectedIds.size) {
+    return 'Team';
+  }
+  return joinEnglishList(targetNames);
+}
+
+function normalizeGroupedRecipientLine(line: string, targetNames: string[]): string {
+  let normalized = line;
+  for (const name of targetNames) {
+    normalized = normalized
+      .replace(new RegExp(`\\s+for ${escapeRegExp(name)}\\.`, 'g'), '.')
+      .replace(new RegExp(`\\b${escapeRegExp(name)}\\b`, 'g'), 'the recipient');
+  }
+  return normalized;
+}
+
+function escapeRegExp(value: string): string {
+  return value.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
 }
 
 function compactSummaryText(summaryLines: string[], candidateTotal: number | null): string {
