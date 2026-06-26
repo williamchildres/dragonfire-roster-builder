@@ -89,6 +89,8 @@ export type EffectTag =
   | 'WEAKENED'
   | 'ADVANTAGE'
   | 'TAUNT'
+  | 'STAGGER'
+  | 'CONFUSION'
   | 'OVERWHELM'
   | 'BULWARK'
   | 'COMMAND_AUGMENTATION'
@@ -108,6 +110,7 @@ export type TriggerTiming =
   | 'after-basic-attack'
   | 'on-stack-count-gained'
   | 'on-successful-cleanse'
+  | 'when-successful-status-application'
   | 'when-marked-target-receives-recovery'
   | 'when-enemy-retreated-previous-round';
 
@@ -178,6 +181,7 @@ export type ConditionKind =
   | 'ally-deals-tactical-damage'
   | 'self-has-status'
   | 'successful-cleanse-occurred'
+  | 'successful-status-application'
   | 'effect-applied-by-enemy'
   | 'negative-effect-reduces-damage-dealt';
 
@@ -272,6 +276,7 @@ export interface AbilityCondition {
   thresholdPercent: number | null;
   comparison: 'above' | 'below' | 'at-or-above' | 'at-or-below' | 'unknown' | null;
   battleContext: BattleContext | null;
+  sourceEffectId: string | null;
   description: string;
   unresolved: boolean;
 }
@@ -317,6 +322,19 @@ export interface ConditionalMultiplier {
   directlyVerifiedValues: RankedValue[];
   calculatedFromVerifiedMultiplier: boolean;
   description: string;
+}
+
+export interface EffectOptionConfiguration {
+  mode: 'one-of' | 'conditional-branch';
+  selectionTiming: string;
+  selectorMethod: 'unknown' | 'condition-per-target';
+  description: string;
+  options: Array<{
+    id: string;
+    label: string;
+    condition: AbilityCondition | null;
+    effect: AbilityEffect;
+  }>;
 }
 
 export type FieldVerificationStatus =
@@ -373,6 +391,7 @@ export interface AbilityEffect {
   activationRoll?: ActivationRoll | null;
   targetSelection?: TargetSelectionDetails | null;
   stackTransitionTrigger?: StackTransitionTrigger | null;
+  effectOptions?: EffectOptionConfiguration | null;
 }
 
 export interface AbilitySchedule {

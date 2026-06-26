@@ -94,6 +94,20 @@ export const statusGlossary: StatusGlossaryEntry[] = [
     unresolvedQuestions: ['Taunt retargeting order relative to other targeting effects is not yet combat-log verified.'],
   },
   {
+    id: 'stagger',
+    term: 'Stagger',
+    definition: 'Control status that prevents Attack Modifier Commands and Basic Attacks on the target turn. It does not automatically block all Commands or Habits.',
+    verification: 'verified',
+    unresolvedQuestions: ['Exact action-denial ordering within a round is not simulated.'],
+  },
+  {
+    id: 'confusion',
+    term: 'Confusion',
+    definition: 'Control status: affected Command, Habit, and Basic Attack actions have a 50% chance to mistake allies and enemies.',
+    verification: 'verified',
+    unresolvedQuestions: ['Redirected target resolution is not simulated.', 'Refresh behavior is not verified.'],
+  },
+  {
     id: 'overwhelm',
     term: 'Overwhelm',
     definition: 'Prevents Active Commands and Habits. It does not prevent Basic Attacks.',

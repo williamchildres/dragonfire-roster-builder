@@ -51,7 +51,7 @@ export interface CapabilityOptions {
   dragonLevels?: Record<string, number | null>;
 }
 
-const reviewedDragonIds = ['syrax', 'vhagar', 'caraxes', 'seasmoke', 'crimson', 'kalspire', 'malachite', 'venator', 'sheepstealer', 'vermax'];
+const reviewedDragonIds = ['syrax', 'vhagar', 'caraxes', 'seasmoke', 'crimson', 'kalspire', 'malachite', 'venator', 'daemoros', 'vaeldra', 'sheepstealer', 'vermax'];
 
 export function deriveOutputCapabilities(dragons: Dragon[]): OutputCapability[] {
   return dragons.flatMap((dragon) => {
@@ -97,7 +97,7 @@ export function deriveOutputCapabilities(dragons: Dragon[]): OutputCapability[] 
     }
     for (const ability of allAbilities(dragon)) {
       for (const schedule of ability.schedules) {
-        for (const effect of schedule.effects) {
+        for (const effect of schedule.effects.flatMap(derivableEffects)) {
         const channel = outputChannelForEffect(effect);
         if (!channel) {
           continue;
@@ -189,7 +189,11 @@ export function deriveModifierCapabilities(dragons: Dragon[]): ModifierCapabilit
   return dragons.flatMap((dragon) =>
     allAbilities(dragon).flatMap((ability) =>
       ability.schedules.flatMap((schedule) =>
-        schedule.effects.flatMap((effect) => modifierCapabilitiesForEffect(dragon, ability, schedule, effect)),
+        schedule.effects.flatMap((effect) =>
+          derivableEffects(effect).flatMap((derivedEffect) =>
+            modifierCapabilitiesForEffect(dragon, ability, schedule, derivedEffect),
+          ),
+        ),
       ),
     ),
   );
@@ -199,43 +203,43 @@ export function deriveStatusOutputCapabilities(dragons: Dragon[]): StatusOutputC
   return dragons.flatMap((dragon) =>
     allAbilities(dragon).flatMap((ability) =>
       ability.schedules.flatMap((schedule) =>
-        schedule.effects.flatMap((effect) => {
-          const statusId = statusIdForEffect(effect);
+        schedule.effects.flatMap((effect) => derivableEffects(effect).flatMap((derivedEffect) => {
+          const statusId = statusIdForEffect(derivedEffect);
           if (!statusId) {
             return [];
           }
           return [{
-            id: `${ability.id}-${effect.id}-${statusId}-status-output`,
+            id: `${ability.id}-${derivedEffect.id}-${statusId}-status-output`,
             dragonId: dragon.id,
             abilityId: ability.id,
             abilityName: ability.name,
             statusId,
-            targetSide: targetSideForEffect(effect),
-            targetSelector: targetForEffect(effect),
+            targetSide: targetSideForEffect(derivedEffect),
+            targetSelector: targetForEffect(derivedEffect),
             unlockStarRank: ability.unlockStarRank,
             minimumDragonLevel: ability.minimumDragonLevel,
             requiredHabitLevel: ability.kind === 'habit' ? 1 : null,
-            chanceFixed: effect.activationRoll?.chanceFixed ?? schedule.activationRoll?.chanceFixed ?? schedule.triggerChanceFixed,
-            chanceByHabitLevel: effect.activationRoll?.chanceByHabitLevel.length
-              ? effect.activationRoll.chanceByHabitLevel
+            chanceFixed: derivedEffect.activationRoll?.chanceFixed ?? schedule.activationRoll?.chanceFixed ?? schedule.triggerChanceFixed,
+            chanceByHabitLevel: derivedEffect.activationRoll?.chanceByHabitLevel.length
+              ? derivedEffect.activationRoll.chanceByHabitLevel
               : schedule.activationRoll?.chanceByHabitLevel.length
                 ? schedule.activationRoll.chanceByHabitLevel
                 : schedule.triggerChanceByHabitLevel,
-            durationRounds: effect.durationRounds,
-            untilEndOfRound: effect.duration === 'Until end of current round',
-            untilEndOfCombat: effect.duration === 'Until end of combat' || Boolean(effect.stack?.untilEndOfCombat),
-            conditions: conditionsForEffect(effect, schedule),
+            durationRounds: derivedEffect.durationRounds,
+            untilEndOfRound: derivedEffect.duration === 'Until end of current round',
+            untilEndOfCombat: derivedEffect.duration === 'Until end of combat' || Boolean(derivedEffect.stack?.untilEndOfCombat),
+            conditions: conditionsForEffect(derivedEffect, schedule),
             currentlyAvailable: ability.unlockStarRank === null || ability.unlockStarRank <= 1,
             futureAvailable: ability.unlockStarRank !== null && ability.unlockStarRank > 1,
             availability: availabilityContext(dragon.id, ability.unlockStarRank, ability.minimumDragonLevel),
-            directlyVerified: effect.directlyVerified !== false,
+            directlyVerified: derivedEffect.directlyVerified !== false,
             evidenceIds: ability.evidenceIds,
-            sourceEffectId: effect.id,
-            activationGroupId: activationGroupId(schedule, effect),
-            activationChanceFixed: effect.activationRoll?.chanceFixed ?? schedule.activationRoll?.chanceFixed ?? schedule.triggerChanceFixed,
-            activationChanceByHabitLevel: activationChanceByHabitLevel(schedule, effect),
+            sourceEffectId: derivedEffect.id,
+            activationGroupId: activationGroupId(schedule, derivedEffect),
+            activationChanceFixed: derivedEffect.activationRoll?.chanceFixed ?? schedule.activationRoll?.chanceFixed ?? schedule.triggerChanceFixed,
+            activationChanceByHabitLevel: activationChanceByHabitLevel(schedule, derivedEffect),
           }];
-        }),
+        })),
       ),
     ),
   );
@@ -310,8 +314,8 @@ export function derivePeriodicDamageDefinitions(dragons: Dragon[]): PeriodicDama
   return dragons.flatMap((dragon) =>
     allAbilities(dragon).flatMap((ability) =>
       ability.schedules.flatMap((schedule) =>
-        schedule.effects.flatMap((effect) => {
-          const periodic = periodicDamageForEffect(effect);
+        schedule.effects.flatMap((effect) => derivableEffects(effect).flatMap((derivedEffect) => {
+          const periodic = periodicDamageForEffect(derivedEffect);
           if (!periodic) {
             return [];
           }
@@ -320,15 +324,15 @@ export function derivePeriodicDamageDefinitions(dragons: Dragon[]): PeriodicDama
             dragonId: dragon.id,
             abilityId: ability.id,
             channel: periodic.channel,
-            damageRateFixed: effect.magnitude,
-            damageRateByHabitLevel: effect.rankedValues,
+            damageRateFixed: derivedEffect.magnitude,
+            damageRateByHabitLevel: derivedEffect.rankedValues,
             ticksEachRound: true,
-            durationRounds: effect.durationRounds,
+            durationRounds: derivedEffect.durationRounds,
             scalingStat: periodic.scalingStat,
             mitigationStat: periodic.mitigationStat,
             evidenceIds: ability.evidenceIds,
           }];
-        }),
+        })),
       ),
     ),
   );
@@ -1084,7 +1088,7 @@ function analyzeStatusEffectConditionEnablement(
         continue;
       }
       for (const schedule of ability.schedules) {
-        for (const effect of schedule.effects) {
+        for (const effect of schedule.effects.flatMap(derivableEffects)) {
           if (outputChannelForEffect(effect)) {
             continue;
           }
@@ -2649,6 +2653,12 @@ function statusIdForEffect(effect: AbilityEffect): string | null {
   if (effect.type === 'Taunt') {
     return 'taunt';
   }
+  if (effect.type === 'Stagger') {
+    return 'stagger';
+  }
+  if (effect.type === 'Confusion') {
+    return 'confusion';
+  }
   if (effect.type === 'Weakened') {
     return 'weakened';
   }
@@ -3694,6 +3704,16 @@ function statusLabel(statusId: string): string {
 function allAbilities(dragon: Dragon): AbilityDefinition[] {
   return [dragon.command, dragon.trait, ...dragon.habits]
     .filter((ability): ability is AbilityDefinition => Boolean(ability));
+}
+
+function derivableEffects(effect: AbilityEffect): AbilityEffect[] {
+  if (!effect.effectOptions) {
+    return [effect];
+  }
+  if (effect.effectOptions.mode === 'one-of') {
+    return [effect];
+  }
+  return effect.effectOptions.options.map((option) => option.effect);
 }
 
 function dragonById(dragons: Dragon[], dragonId: string): Dragon | null {

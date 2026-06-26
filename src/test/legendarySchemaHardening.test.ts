@@ -36,23 +36,25 @@ describe('legendary schema hardening data', () => {
       rosterSummary: { knownRosterCount: number; detailedCombatDataCount: number; metadataOnlyCount: number; detailedCombatDataDragonIds: string[] };
     };
 
-    expect(databaseMetadata.databaseVersion).toBe('0.6.0');
-    expect(databaseMetadata.schemaVersion).toBe(10);
+    expect(databaseMetadata.databaseVersion).toBe('0.6.1');
+    expect(databaseMetadata.schemaVersion).toBe(11);
     expect(context.source.localRosterSchemaVersion).toBe(3);
     expect(context.source.gameBuild).toBe('26.6.53509');
     expect(context.rosterSummary).toMatchObject({
       knownRosterCount: 30,
-      detailedCombatDataCount: 10,
-      metadataOnlyCount: 20,
+      detailedCombatDataCount: 12,
+      metadataOnlyCount: 18,
     });
     expect(context.rosterSummary.detailedCombatDataDragonIds.sort()).toEqual([
       'caraxes',
       'crimson',
+      'daemoros',
       'kalspire',
       'malachite',
       'seasmoke',
       'sheepstealer',
       'syrax',
+      'vaeldra',
       'venator',
       'vermax',
       'vhagar',

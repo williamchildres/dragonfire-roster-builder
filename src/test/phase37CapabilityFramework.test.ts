@@ -188,6 +188,8 @@ describe('Phase 3.7 report support', () => {
       'Kalspire',
       'Malachite',
       'Venator',
+      'Daemoros',
+      'Vaeldra',
       'Sheepstealer',
       'Vermax',
     ]);

@@ -102,6 +102,25 @@
     "verification": "verified"
   },
   {
+    "definition": "Control status that prevents Attack Modifier Commands and Basic Attacks on the target turn. It does not automatically block all Commands or Habits.",
+    "id": "stagger",
+    "term": "Stagger",
+    "unresolvedQuestions": [
+      "Exact action-denial ordering within a round is not simulated."
+    ],
+    "verification": "verified"
+  },
+  {
+    "definition": "Control status: affected Command, Habit, and Basic Attack actions have a 50% chance to mistake allies and enemies.",
+    "id": "confusion",
+    "term": "Confusion",
+    "unresolvedQuestions": [
+      "Redirected target resolution is not simulated.",
+      "Refresh behavior is not verified."
+    ],
+    "verification": "verified"
+  },
+  {
     "definition": "Prevents Active Commands and Habits. It does not prevent Basic Attacks.",
     "id": "overwhelm",
     "term": "Overwhelm",

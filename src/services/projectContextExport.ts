@@ -24,7 +24,7 @@ import { analyzeFormationTraces, phase381ReviewFormations } from './synergyTrace
 
 export const projectContextFormat = 'dragonfire-lab-project-context' as const;
 export const contextVersion = 1;
-export const populatedDragonIds = ['syrax', 'vhagar', 'caraxes', 'seasmoke', 'crimson', 'kalspire', 'malachite', 'venator', 'sheepstealer', 'vermax'] as const;
+export const populatedDragonIds = ['syrax', 'vhagar', 'caraxes', 'seasmoke', 'crimson', 'kalspire', 'malachite', 'venator', 'daemoros', 'vaeldra', 'sheepstealer', 'vermax'] as const;
 
 export interface ProjectContextBuildOptions {
   generatedAt: string;
@@ -726,14 +726,13 @@ function buildProjectState(
       'Version 0.6.0 legendary dragon schema hardening',
       'Legendary/full-profile formation-output validation exit suite',
     ],
-    currentReviewPhase: 'Legendary/full-profile schema-hardening and formation-output validation complete.',
+    currentReviewPhase: 'Legendary/full-profile formation validation complete; Epic ingestion active with Daemoros and Vaeldra as the first detailed Epic batch after Vermax.',
     plannedNextPhase: [
-      'Epic dragon ingestion in batches of two',
+      'continue Epic dragon ingestion in batches of two after the latest merged context is available',
+      'fetch latest merged main and create a new feature branch before each future Epic implementation batch',
       'inspect supplied screenshots and extract Commands, Traits, Habits, targeting, timing, progression, glossary entries, and evidence',
       'compare each mechanic against the current schema and capability framework',
       'identify unsupported, ambiguous, provisional, or unresolved behavior',
-      "wait for William's confirmation before generating an implementation request",
-      'use a fresh Codex context for Epic implementation because it is a materially different workstream',
     ],
     unresolvedMechanicsCount: unresolvedMechanics.length,
   };
