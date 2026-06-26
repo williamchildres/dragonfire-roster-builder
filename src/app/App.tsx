@@ -36,6 +36,7 @@ import {
   TROOP_TYPES,
   VERIFICATION_STATUSES,
   type AbilityDefinition,
+  type AbilityEffect,
   type Dragon,
   type DragonBreed,
   type DragonCollectionState,
@@ -53,7 +54,7 @@ import {
   deriveOutputCapabilities,
 } from '../services/effectCapabilities';
 import { THRESHOLD_BOUNDARY_NOTE } from '../services/formationRules';
-import { resolveEffectiveHabitLevelForAbility } from '../services/habitLevels';
+import { rankedValueForHabitLevel, resolveEffectiveHabitLevelForAbility, type EffectiveHabitLevel } from '../services/habitLevels';
 import { analyzeFormation, findAffinityCoverage, findBreedDistribution } from '../services/synergyEngine';
 import {
   buildFormationCardPresentation,
@@ -2388,29 +2389,7 @@ function AbilityCard({
             <ul className="plain-list">
               {abilitySchedule.effects.map((effect) => (
                 <li key={effect.id}>
-                  <strong>{effect.type}</strong> - target: {effect.target}; scope:{' '}
-                  {titleCase(effect.targetScope.replaceAll('-', ' '))}; duration:{' '}
-                  {effect.duration ?? (effect.durationRounds ? `${effect.durationRounds} rounds` : unknown)};
-                  value: {effect.magnitude !== null ? `${effect.magnitude}${effect.unit === 'percent' ? '%' : effect.unit === 'rate' ? '%' : effect.unit === 'flat' ? ' flat' : ''}` : unknown}
-                  {effect.scaling.length > 0 ? `; scaling: ${effect.scaling.join(', ')}` : ''}
-                  {effect.excludes.length > 0 ? `; excludes: ${effect.excludes.join(', ')}` : ''}
-                  {effect.rankedValues.length > 0 ? `; progression: ${rankedLabel(effect.rankedValues)}` : ''}
-                  {effect.sourceScope ? `; source scope: ${formatToken(effect.sourceScope)}` : ''}
-                  {effect.targetPriority ? `; priority: ${formatToken(effect.targetPriority)}` : ''}
-                  {effect.stack
-                    ? `; stack: ${effect.stack.statusId}, max ${effect.stack.maximumStacks}, ${effect.stack.untilEndOfCombat ? 'until end of combat' : effect.stack.durationRounds ? `${effect.stack.durationRounds} rounds` : 'duration unknown'}${effect.stack.valuePerStackFixed !== null ? `, ${effect.stack.valuePerStackFixed} per stack` : ''}${effect.stack.valuePerStackByHabitLevel.length > 0 ? `, ${rankedLabel(effect.stack.valuePerStackByHabitLevel)} per stack` : ''}`
-                    : ''}
-                  {effect.conditionalMultipliers && effect.conditionalMultipliers.length > 0
-                    ? `; multipliers: ${effect.conditionalMultipliers
-                        .map((item) => `${item.multiplier}x when ${item.condition.description}`)
-                        .join('; ')}`
-                    : ''}
-                  {effect.conditions && effect.conditions.length > 0
-                    ? `; conditions: ${effect.conditions.map((condition) => condition.description).join('; ')}`
-                    : ''}
-                  {effect.calculated ? '; calculated from verified base values' : ''}
-                  {effect.directlyVerified === false ? '; not directly verified' : ''}
-                  {effect.notes.length > 0 ? `; notes: ${effect.notes.join('; ')}` : ''}
+                  <EffectSummary effect={effect} effectiveHabitLevel={effectiveHabitLevel} />
                 </li>
               ))}
             </ul>
@@ -2469,6 +2448,141 @@ function AbilityCard({
       ) : null}
     </article>
   );
+}
+
+function EffectSummary({
+  effect,
+  effectiveHabitLevel,
+}: {
+  effect: AbilityEffect;
+  effectiveHabitLevel: EffectiveHabitLevel | null;
+}) {
+  if (effect.effectOptions) {
+    return <EffectOptionsSummary effect={effect} effectiveHabitLevel={effectiveHabitLevel} />;
+  }
+
+  return (
+    <>
+      <strong>{effect.type}</strong> - target: {effect.target}; scope:{' '}
+      {titleCase(effect.targetScope.replaceAll('-', ' '))}; duration: {effectDurationLabel(effect)}; value:{' '}
+      {effectValueLabel(effect, effectiveHabitLevel)}
+      {effect.rankedValues.length > 0 ? `; progression: ${rankedLabel(effect.rankedValues)}` : ''}
+      {effectDetailSuffix(effect)}
+    </>
+  );
+}
+
+function EffectOptionsSummary({
+  effect,
+  effectiveHabitLevel,
+}: {
+  effect: AbilityEffect;
+  effectiveHabitLevel: EffectiveHabitLevel | null;
+}) {
+  const sharedValue = sharedOptionValueLabel(effect, effectiveHabitLevel);
+  return (
+    <div className="effect-options-summary">
+      <p>
+        <strong>{effect.type}</strong> - target: {effect.target}; scope:{' '}
+        {titleCase(effect.targetScope.replaceAll('-', ' '))}; duration: {effectDurationLabel(effect)}.
+      </p>
+      <p>
+        {effect.effectOptions?.mode === 'one-of'
+          ? 'Mutually exclusive alternatives: exactly one option applies; these reductions are not simultaneous.'
+          : 'Conditional branches: exactly one branch applies to each target based on its condition.'}
+        {' '}Selection timing: {effect.effectOptions?.selectionTiming}. Selector method:{' '}
+        {effect.effectOptions?.selectorMethod === 'unknown' ? 'unknown' : 'condition per target'}.
+      </p>
+      {effect.effectOptions?.description ? <p>{effect.effectOptions.description}</p> : null}
+      {sharedValue ? <p>Current selected value: {sharedValue}.</p> : null}
+      <ul className="plain-list">
+        {effect.effectOptions?.options.map((option) => (
+          <li key={option.id}>
+            {effect.effectOptions?.mode === 'one-of'
+              ? oneOfOptionSummary(option.label, option.effect, effectiveHabitLevel)
+              : conditionalOptionSummary(option.label, option.condition?.description ?? null, option.effect, effectiveHabitLevel)}
+          </li>
+        ))}
+      </ul>
+      {effectDetailSuffix(effect)}
+    </div>
+  );
+}
+
+function oneOfOptionSummary(
+  label: string,
+  optionEffect: AbilityEffect,
+  effectiveHabitLevel: EffectiveHabitLevel | null,
+): string {
+  const value = effectValueLabel(optionEffect, effectiveHabitLevel);
+  const action = optionEffect.type.includes('Down') || optionEffect.type.includes('Reduction') ? 'reduce' : 'apply';
+  const valueText = value === unknown ? '' : ` by ${value}`;
+  return `${label}: ${action} ${label}${valueText}; target ${optionEffect.target}; duration ${effectDurationLabel(optionEffect)}.`;
+}
+
+function conditionalOptionSummary(
+  label: string,
+  condition: string | null,
+  optionEffect: AbilityEffect,
+  effectiveHabitLevel: EffectiveHabitLevel | null,
+): string {
+  const value = effectValueLabel(optionEffect, effectiveHabitLevel);
+  const valueText = value === unknown ? '' : ` by ${value}`;
+  const instead = /already/i.test(label) && !/not already/i.test(label) ? ' instead' : '';
+  const conditionText = condition ? `${condition} ` : '';
+  return `${label}: ${conditionText}apply ${optionEffect.type}${instead}${valueText}; target ${optionEffect.target}; duration ${effectDurationLabel(optionEffect)}.`;
+}
+
+function sharedOptionValueLabel(
+  effect: AbilityEffect,
+  effectiveHabitLevel: EffectiveHabitLevel | null,
+): string | null {
+  const values = effect.effectOptions?.options
+    .map((option) => effectValueLabel(option.effect, effectiveHabitLevel))
+    .filter((value) => value !== unknown) ?? [];
+  if (values.length === 0) {
+    return null;
+  }
+  return values.every((value) => value === values[0]) ? values[0]! : null;
+}
+
+function effectValueLabel(effect: AbilityEffect, effectiveHabitLevel: EffectiveHabitLevel | null): string {
+  const rankedValue = rankedValueForHabitLevel(effect.rankedValues, effectiveHabitLevel);
+  if (rankedValue) {
+    return rankedValueLabel(rankedValue);
+  }
+  if (effect.magnitude !== null) {
+    return `${effect.magnitude}${effect.unit === 'percent' || effect.unit === 'rate' ? '%' : effect.unit === 'flat' ? ' flat' : ''}`;
+  }
+  return unknown;
+}
+
+function effectDurationLabel(effect: AbilityEffect): string {
+  return effect.duration ?? (effect.durationRounds ? `${effect.durationRounds} rounds` : unknown);
+}
+
+function effectDetailSuffix(effect: AbilityEffect): string {
+  return `${effect.scaling.length > 0 ? `; scaling: ${effect.scaling.join(', ')}` : ''}${
+    effect.excludes.length > 0 ? `; excludes: ${effect.excludes.join(', ')}` : ''
+  }${effect.sourceScope ? `; source scope: ${formatToken(effect.sourceScope)}` : ''}${
+    effect.targetPriority ? `; priority: ${formatToken(effect.targetPriority)}` : ''
+  }${
+    effect.stack
+      ? `; stack: ${effect.stack.statusId}, max ${effect.stack.maximumStacks}, ${effect.stack.untilEndOfCombat ? 'until end of combat' : effect.stack.durationRounds ? `${effect.stack.durationRounds} rounds` : 'duration unknown'}${effect.stack.valuePerStackFixed !== null ? `, ${effect.stack.valuePerStackFixed} per stack` : ''}${effect.stack.valuePerStackByHabitLevel.length > 0 ? `, ${rankedLabel(effect.stack.valuePerStackByHabitLevel)} per stack` : ''}`
+      : ''
+  }${
+    effect.conditionalMultipliers && effect.conditionalMultipliers.length > 0
+      ? `; multipliers: ${effect.conditionalMultipliers
+          .map((item) => `${item.multiplier}x when ${item.condition.description}`)
+          .join('; ')}`
+      : ''
+  }${
+    effect.conditions && effect.conditions.length > 0
+      ? `; conditions: ${effect.conditions.map((condition) => condition.description).join('; ')}`
+      : ''
+  }${effect.calculated ? '; calculated from verified base values' : ''}${
+    effect.directlyVerified === false ? '; not directly verified' : ''
+  }${effect.notes.length > 0 ? `; notes: ${effect.notes.join('; ')}` : ''}`;
 }
 
 function EffectProfilePanel({ dragon }: { dragon: Dragon }) {
@@ -3018,8 +3132,12 @@ function getInitialFormation(): Formation {
 
 function rankedLabel(values: Array<{ level: number; value: number; unit: string }>) {
   return values
-    .map((value) => `L${value.level}: ${value.value}${value.unit === 'percent' ? '%' : value.unit === 'power' ? ' power' : value.unit === 'flat' ? ' flat' : ''}`)
+    .map((value) => `L${value.level}: ${rankedValueLabel(value)}`)
     .join(', ');
+}
+
+function rankedValueLabel(value: { value: number; unit: string }) {
+  return `${value.value}${value.unit === 'percent' ? '%' : value.unit === 'power' ? ' power' : value.unit === 'flat' ? ' flat' : ''}`;
 }
 
 function verificationLabel(status: string) {

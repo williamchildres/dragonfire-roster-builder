@@ -2,6 +2,7 @@ import { render, screen, within } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { describe, expect, it } from 'vitest';
 import { App } from '../app/App';
+import { STORAGE_KEY } from '../services/rosterStorage';
 
 describe('Dragonfire Roster Lab app', () => {
   it('renders all dragons through the database and supports search', async () => {
@@ -27,6 +28,90 @@ describe('Dragonfire Roster Lab app', () => {
 
     const dialog = screen.getByRole('dialog', { name: /syrax/i });
     expect(within(dialog).getAllByText('Not yet verified').length).toBeGreaterThan(4);
+  });
+
+  it("renders Phantom's Veil one-of options with derived Level 1 values", async () => {
+    const user = userEvent.setup();
+    render(<App />);
+
+    await user.click(screen.getByRole('button', { name: /dragon database/i }));
+    await user.type(screen.getByLabelText(/search by name/i), 'Daemoros');
+    const daemorosCard = screen.getByRole('heading', { name: 'Daemoros' }).closest('article');
+    expect(daemorosCard).not.toBeNull();
+    await user.click(within(daemorosCard as HTMLElement).getByRole('button', { name: /view details/i }));
+
+    const dialog = screen.getByRole('dialog', { name: /daemoros/i });
+    await user.selectOptions(within(dialog).getByLabelText(/star rank/i), '10');
+    const phantomCard = within(dialog).getByRole('heading', { name: "Phantom's Veil" }).closest('article');
+    expect(phantomCard).not.toBeNull();
+
+    expect(phantomCard).toHaveTextContent('Unlocked or available');
+    expect(phantomCard).toHaveTextContent('Current selected values: Habit Level 1 (derived from unlock)');
+    expect(phantomCard).toHaveTextContent('Current selected value: 15%');
+    expect(phantomCard).toHaveTextContent('Mutually exclusive alternatives: exactly one option applies');
+    expect(phantomCard).toHaveTextContent('these reductions are not simultaneous');
+    expect(phantomCard).toHaveTextContent('Physical Damage Received: reduce Physical Damage Received by 15%');
+    expect(phantomCard).toHaveTextContent('Tactical Damage Received: reduce Tactical Damage Received by 15%');
+    expect(phantomCard).toHaveTextContent('Fire Damage Received: reduce Fire Damage Received by 15%');
+    expect(phantomCard).toHaveTextContent('target Self');
+    expect(phantomCard).toHaveTextContent('duration Until end of current round');
+    expect(phantomCard).toHaveTextContent('Selector method: unknown');
+    expect(phantomCard).not.toHaveTextContent('value: Not yet verified');
+  });
+
+  it("renders Phantom's Veil explicit upgraded and locked-preview option values without mutating Habit storage", async () => {
+    const user = userEvent.setup();
+    render(<App />);
+
+    await user.click(screen.getByRole('button', { name: /dragon database/i }));
+    await user.type(screen.getByLabelText(/search by name/i), 'Daemoros');
+    const daemorosCard = screen.getByRole('heading', { name: 'Daemoros' }).closest('article');
+    expect(daemorosCard).not.toBeNull();
+    await user.click(within(daemorosCard as HTMLElement).getByRole('button', { name: /view details/i }));
+
+    let dialog = screen.getByRole('dialog', { name: /daemoros/i });
+    await user.selectOptions(within(dialog).getByLabelText(/star rank/i), '10');
+    let phantomCard = within(dialog).getByRole('heading', { name: "Phantom's Veil" }).closest('article');
+    expect(phantomCard).not.toBeNull();
+    await user.selectOptions(within(phantomCard as HTMLElement).getByLabelText(/habit level/i), '3');
+
+    expect(phantomCard).toHaveTextContent('Current selected value: 24%');
+    expect(phantomCard).not.toHaveTextContent('Current selected value: 15%');
+    expect(phantomCard).toHaveTextContent('Mutually exclusive alternatives');
+
+    await user.selectOptions(within(dialog).getByLabelText(/star rank/i), '1');
+    await user.selectOptions(within(phantomCard as HTMLElement).getByLabelText(/habit level/i), '');
+    phantomCard = within(dialog).getByRole('heading', { name: "Phantom's Veil" }).closest('article');
+    expect(phantomCard).toHaveTextContent('Locked preview');
+    expect(phantomCard).toHaveTextContent('Mutually exclusive alternatives: exactly one option applies');
+    expect(phantomCard).toHaveTextContent('Physical Damage Received');
+    expect(phantomCard).toHaveTextContent('Tactical Damage Received');
+    expect(phantomCard).toHaveTextContent('Fire Damage Received');
+
+    const stored = JSON.parse(window.localStorage.getItem(STORAGE_KEY) ?? '{}') as {
+      roster?: Array<{ dragonId: string; habitLevels?: Record<string, unknown> }>;
+    };
+    expect(
+      stored.roster?.find((entry) => entry.dragonId === 'daemoros')?.habitLevels?.['daemoros-phantoms-veil'],
+    ).toBeNull();
+
+    await user.click(within(dialog).getByRole('button', { name: /close details/i }));
+    await user.clear(screen.getByLabelText(/search by name/i));
+    await user.type(screen.getByLabelText(/search by name/i), 'Vaeldra');
+    const vaeldraCard = screen.getByRole('heading', { name: 'Vaeldra' }).closest('article');
+    expect(vaeldraCard).not.toBeNull();
+    await user.click(within(vaeldraCard as HTMLElement).getByRole('button', { name: /view details/i }));
+    dialog = screen.getByRole('dialog', { name: /vaeldra/i });
+    const sirensCallCard = within(dialog).getByRole('heading', { name: "Siren's Call" }).closest('article');
+    expect(sirensCallCard).not.toBeNull();
+
+    expect(sirensCallCard).toHaveTextContent('Conditional branches: exactly one branch applies to each target');
+    expect(sirensCallCard).toHaveTextContent('Selector method: condition per target');
+    expect(sirensCallCard).toHaveTextContent('Stagger if already Taunted');
+    expect(sirensCallCard).toHaveTextContent('Target is already Taunted. apply Stagger instead');
+    expect(sirensCallCard).toHaveTextContent('Taunt if not already Taunted');
+    expect(sirensCallCard).toHaveTextContent('Target is not already Taunted. apply Taunt');
+    expect(sirensCallCard).not.toHaveTextContent('apply Taunt and Stagger');
   });
 
   it('persists ownership and star rank after reload', async () => {
