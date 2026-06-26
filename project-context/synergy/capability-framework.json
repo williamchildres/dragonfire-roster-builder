@@ -1697,7 +1697,7 @@
         "requiredHabitLevel": null,
         "role": "ally-support",
         "sourceEffectId": "seasmoke-right-flank-dr-down",
-        "sourceScope": "unknown",
+        "sourceScope": "all-qualifying-sources",
         "stackMaximum": null,
         "statusId": null,
         "targetSelector": {
@@ -2672,7 +2672,7 @@
         "requiredHabitLevel": 1,
         "role": "ally-support",
         "sourceEffectId": "forests-instinct-tactical-reduction",
-        "sourceScope": "unknown",
+        "sourceScope": "all-qualifying-sources",
         "stackMaximum": null,
         "statusId": null,
         "targetSelector": {
@@ -3519,7 +3519,7 @@
         "requiredHabitLevel": 1,
         "role": "ally-support",
         "sourceEffectId": "trial-below-75-fire-reduction",
-        "sourceScope": "unknown",
+        "sourceScope": "all-qualifying-sources",
         "stackMaximum": null,
         "statusId": null,
         "targetSelector": {
@@ -3620,7 +3620,7 @@
         "requiredHabitLevel": 1,
         "role": "ally-support",
         "sourceEffectId": "trial-below-50-fire-reduction",
-        "sourceScope": "unknown",
+        "sourceScope": "all-qualifying-sources",
         "stackMaximum": null,
         "statusId": null,
         "targetSelector": {
@@ -3721,7 +3721,7 @@
         "requiredHabitLevel": 1,
         "role": "ally-support",
         "sourceEffectId": "trial-below-25-fire-reduction",
-        "sourceScope": "unknown",
+        "sourceScope": "all-qualifying-sources",
         "stackMaximum": null,
         "statusId": null,
         "targetSelector": {
@@ -4302,7 +4302,7 @@
         "requiredHabitLevel": 1,
         "role": "enemy-debuff",
         "sourceEffectId": "blazing-onslaught-fire-received",
-        "sourceScope": "unknown",
+        "sourceScope": "all-qualifying-sources",
         "stackMaximum": null,
         "statusId": null,
         "targetSelector": {
@@ -5074,7 +5074,7 @@
         "requiredHabitLevel": 1,
         "role": "enemy-debuff",
         "sourceEffectId": "unlikely-hero-fire-received",
-        "sourceScope": "unknown",
+        "sourceScope": "all-qualifying-sources",
         "stackMaximum": null,
         "statusId": null,
         "targetSelector": {
@@ -5903,7 +5903,7 @@
         "requiredHabitLevel": 1,
         "role": "enemy-debuff",
         "sourceEffectId": "armor-break-physical-received",
-        "sourceScope": "unknown",
+        "sourceScope": "all-qualifying-sources",
         "stackMaximum": null,
         "statusId": null,
         "targetSelector": {
@@ -8038,7 +8038,7 @@
         "requiredHabitLevel": 1,
         "role": "self-amplification",
         "sourceEffectId": "ancestral-shield-physical-received",
-        "sourceScope": "unknown",
+        "sourceScope": "all-qualifying-sources",
         "stackMaximum": null,
         "statusId": null,
         "targetSelector": {
@@ -8127,7 +8127,7 @@
         "requiredHabitLevel": 1,
         "role": "self-amplification",
         "sourceEffectId": "ancestral-shield-tactical-received",
-        "sourceScope": "unknown",
+        "sourceScope": "all-qualifying-sources",
         "stackMaximum": null,
         "statusId": null,
         "targetSelector": {
@@ -8771,7 +8771,7 @@
         "requiredHabitLevel": 1,
         "role": "self-amplification",
         "sourceEffectId": "dragons-intellect-damage-received",
-        "sourceScope": "unknown",
+        "sourceScope": "all-qualifying-sources",
         "stackMaximum": null,
         "statusId": null,
         "targetSelector": {
@@ -9346,7 +9346,7 @@
         "requiredHabitLevel": 1,
         "role": "self-amplification",
         "sourceEffectId": "dragons-insight-damage-received",
-        "sourceScope": "unknown",
+        "sourceScope": "all-qualifying-sources",
         "stackMaximum": null,
         "statusId": null,
         "targetSelector": {
@@ -9498,7 +9498,7 @@
         "requiredHabitLevel": 1,
         "role": "self-amplification",
         "sourceEffectId": "radiant-conqueror-damage-received",
-        "sourceScope": "unknown",
+        "sourceScope": "all-qualifying-sources",
         "stackMaximum": null,
         "statusId": null,
         "targetSelector": {
@@ -10630,7 +10630,7 @@
         "requiredHabitLevel": 1,
         "role": "self-amplification",
         "sourceEffectId": "dragons-valor-dr-down",
-        "sourceScope": "unknown",
+        "sourceScope": "all-qualifying-sources",
         "stackMaximum": null,
         "statusId": null,
         "targetSelector": {
@@ -13871,6 +13871,7 @@
     "stat-scaling-support",
     "enemy-mitigation-reduction",
     "enemy-damage-dealt-reduction",
+    "enemy-damage-received-increase",
     "periodic-damage-amplification",
     "status-removal",
     "defensive-ally-support"

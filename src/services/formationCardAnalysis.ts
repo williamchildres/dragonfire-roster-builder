@@ -786,6 +786,9 @@ function interactionPurpose(trace: SynergyTrace): string | null {
   if (trace.matchKind === 'enemy-damage-dealt-reduction') {
     return 'Enemy Damage Dealt reduction';
   }
+  if (trace.matchKind === 'enemy-damage-received-increase') {
+    return `Enemy ${formatToken(trace.channel ?? 'damage-dealt')} vulnerability`;
+  }
   if (trace.matchKind === 'extra-basic-attack-trigger') {
     return 'Extra Basic Attack trigger';
   }
@@ -849,6 +852,9 @@ function formatStatDetail(detail: string): string | null {
 function enemyFacingSummary(trace: SynergyTrace): string {
   if (trace.matchKind === 'enemy-damage-dealt-reduction') {
     return `${formatToken(trace.channel ?? 'damage-dealt')} reduction on an enemy candidate; target selection and uptime are uncertain.`;
+  }
+  if (trace.matchKind === 'enemy-damage-received-increase') {
+    return `Increases ${formatToken(trace.channel ?? 'damage-dealt')} Received for one enemy target.`;
   }
   const lowered = trace.effects.join(' ').match(/(Strength|Intelligence|Instinct|Initiative)/i)?.[1];
   const channel = trace.sourceAbilityId?.includes('battle-dread') ? 'Fire Damage' : trace.channel ? formatToken(trace.channel) : 'team damage';

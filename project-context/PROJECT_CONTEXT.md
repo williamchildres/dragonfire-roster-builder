@@ -63,7 +63,7 @@ All other known dragons remain metadata-only unless their typed source records c
 
 ## Synergy Framework
 
-The framework derives output capabilities, modifier capabilities, status outputs, periodic damage, and dependencies from structured ability effects. Current trace families are outgoing-effect-amplification, incoming-effect-amplification, status-condition-enablement, stat-scaling-support, enemy-mitigation-reduction, periodic-damage-amplification, and defensive-ally-support.
+The framework derives output capabilities, modifier capabilities, status outputs, periodic damage, and dependencies from structured ability effects. Current trace families are outgoing-effect-amplification, incoming-effect-amplification, status-condition-enablement, stat-scaling-support, enemy-mitigation-reduction, enemy-damage-dealt-reduction, enemy-damage-received-increase, periodic-damage-amplification, and defensive-ally-support.
 
 ## Unresolved Mechanics
 

@@ -148,7 +148,7 @@ export function normalizeDamageSourceScope({
   }
   const lowerType = effectType.toLowerCase();
   const lowerExcludes = excludes.map((exclude) => exclude.toLowerCase());
-  if (!lowerType.includes('damage dealt') && !lowerType.includes('damage up')) {
+  if (!lowerType.includes('damage dealt') && !lowerType.includes('damage received') && !lowerType.includes('damage up')) {
     return explicitSourceScope ?? 'unknown';
   }
   if (lowerExcludes.some((exclude) => exclude.includes('basic attack'))) {
