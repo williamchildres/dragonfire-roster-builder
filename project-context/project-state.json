@@ -23,7 +23,7 @@
   ],
   "currentReviewPhase": "Legendary/full-profile formation validation complete; Epic ingestion active with Daemoros and Vaeldra as the first detailed Epic batch after Vermax.",
   "format": "dragonfire-project-state",
-  "generatedAt": "2026-06-26T05:42:30.492Z",
+  "generatedAt": "2026-06-26T17:32:16.549Z",
   "plannedNextPhase": [
     "continue Epic dragon ingestion in batches of two after the latest merged context is available",
     "fetch latest merged main and create a new feature branch before each future Epic implementation batch",
@@ -32,15 +32,15 @@
     "identify unsupported, ambiguous, provisional, or unresolved behavior"
   ],
   "rosterCounts": {
-    "detailedDataDragonCount": 12,
+    "detailedDataDragonCount": 15,
     "knownRosterCount": 30,
-    "metadataOnlyDragonCount": 18
+    "metadataOnlyDragonCount": 15
   },
   "source": {
-    "branch": "fix/periodic-status-damage-traces",
-    "commit": "9000163008c8856c6eb47ee10a74236759e929a1",
-    "databaseVersion": "0.6.1",
-    "dataSchemaVersion": 11,
+    "branch": "feature/epic-feskar-rhysarion-shadowsong",
+    "commit": "c862dfc491fd4f8ed1f2189211b8b6699061ee99",
+    "databaseVersion": "0.6.2",
+    "dataSchemaVersion": 12,
     "gameBuild": "26.6.53509",
     "localRosterSchemaVersion": 3,
     "repository": "https://github.com/williamchildres/dragonfire-roster-builder"
@@ -49,14 +49,14 @@
     "countingMethod": "static working-tree test declaration scan; runtime pass/fail is reported by npm run test",
     "lastRunStatus": "not-run-by-exporter",
     "runner": "vitest",
-    "testCaseCount": 223,
-    "testFileCount": 25
+    "testCaseCount": 233,
+    "testFileCount": 26
   },
-  "unresolvedMechanicsCount": 132,
+  "unresolvedMechanicsCount": 169,
   "versions": {
     "contextVersion": 1,
-    "databaseVersion": "0.6.1",
-    "dataSchemaVersion": 11,
+    "databaseVersion": "0.6.2",
+    "dataSchemaVersion": 12,
     "gameBuild": "26.6.53509",
     "localRosterSchemaVersion": 3
   }

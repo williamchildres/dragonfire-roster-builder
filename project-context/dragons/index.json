@@ -104,31 +104,31 @@
     },
     {
       "breed": "Champion",
-      "dataStatus": "official-metadata-only",
+      "dataStatus": "community-verified",
       "file": "dragons/feskar.json",
       "id": "feskar",
       "name": "Feskar",
-      "profileCompleteness": "metadata-only",
+      "profileCompleteness": "detailed-combat-data",
       "rarity": "Epic",
       "slug": "feskar"
     },
     {
       "breed": "Champion",
-      "dataStatus": "official-metadata-only",
+      "dataStatus": "community-verified",
       "file": "dragons/rhysarion.json",
       "id": "rhysarion",
       "name": "Rhysarion",
-      "profileCompleteness": "metadata-only",
+      "profileCompleteness": "detailed-combat-data",
       "rarity": "Epic",
       "slug": "rhysarion"
     },
     {
       "breed": "Hunter",
-      "dataStatus": "official-metadata-only",
+      "dataStatus": "community-verified",
       "file": "dragons/shadowsong.json",
       "id": "shadowsong",
       "name": "Shadowsong",
-      "profileCompleteness": "metadata-only",
+      "profileCompleteness": "detailed-combat-data",
       "rarity": "Epic",
       "slug": "shadowsong"
     },

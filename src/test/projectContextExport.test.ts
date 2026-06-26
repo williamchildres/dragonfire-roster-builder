@@ -56,7 +56,7 @@ describe('project context export', () => {
     expect(index.dragons.map((dragon) => dragon.slug).sort()).toEqual(dragons.map((dragon) => dragon.slug).sort());
   });
 
-  it('keeps the ten populated dragons complete and metadata-only dragons empty', () => {
+  it('keeps populated dragons complete and metadata-only dragons empty', () => {
     const exportSet = buildProjectContextFiles(fixedOptions);
 
     for (const dragonId of populatedDragonIds) {

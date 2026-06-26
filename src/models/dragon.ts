@@ -151,6 +151,7 @@ export type TargetPriority =
   | 'prefer-left-flank'
   | 'prefer-right-flank'
   | 'prefer-hunter'
+  | 'prefer-warrior'
   | 'prefer-not-stunned'
   | 'current-marked-target'
   | 'original-basic-attack-target'
@@ -167,8 +168,22 @@ export type TargetPriority =
   | 'all-allies-matching-threshold'
   | 'other-allies-excluding-self';
 
+export type QualifyingOutputChannel =
+  | 'physical-damage'
+  | 'tactical-damage'
+  | 'fire-damage'
+  | 'damage-dealt'
+  | 'recovery';
+
+export interface QualifyingOutputCapabilityCondition {
+  channel: QualifyingOutputChannel;
+  sourceScope: EffectSourceScope;
+  description: string;
+}
+
 export type ConditionKind =
   | 'target-has-status'
+  | 'target-has-status-category'
   | 'target-lacks-status'
   | 'no-enemy-has-mark'
   | 'target-received-recovery-previous-round'
@@ -183,6 +198,7 @@ export type ConditionKind =
   | 'successful-cleanse-occurred'
   | 'successful-status-application'
   | 'effect-applied-by-enemy'
+  | 'target-has-output-capability'
   | 'negative-effect-reduces-damage-dealt';
 
 export type RepeatMode = 'none' | 'once-if-any-match' | 'once-per-match';
@@ -209,7 +225,8 @@ export interface ActivationRoll {
   chanceFixed: number | null;
   chanceByHabitLevel: RankedValue[];
   targetStatusConditionalChances: Array<{
-    statusId: string;
+    statusId?: string | null;
+    statusCategoryId?: string | null;
     chanceFixed: number | null;
     chanceByHabitLevel: RankedValue[];
     multiplier: number | null;
@@ -225,6 +242,7 @@ export interface TargetReference {
     | 'original-basic-attack-target'
     | 'effect-target'
     | 'same-target-as-effect'
+    | 'persistent-selected-target'
     | 'distinct-from-effect-target'
     | 'another-target'
     | 'opposing-position-enemy';
@@ -273,6 +291,8 @@ export interface AbilityCondition {
   kind: ConditionKind;
   subject: 'self' | 'ally' | 'enemy' | 'target' | 'battle';
   statusId: string | null;
+  statusCategoryId: string | null;
+  qualifyingOutput: QualifyingOutputCapabilityCondition | null;
   thresholdPercent: number | null;
   comparison: 'above' | 'below' | 'at-or-above' | 'at-or-below' | 'unknown' | null;
   battleContext: BattleContext | null;
@@ -297,7 +317,7 @@ export interface RepeatConfiguration {
 
 export interface StackConfiguration {
   statusId: string;
-  maximumStacks: number;
+  maximumStacks: number | null;
   durationRounds: number | null;
   untilEndOfCombat: boolean;
   valuePerStackFixed: number | null;

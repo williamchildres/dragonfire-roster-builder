@@ -24,7 +24,7 @@ import { analyzeFormationTraces, phase381ReviewFormations } from './synergyTrace
 
 export const projectContextFormat = 'dragonfire-lab-project-context' as const;
 export const contextVersion = 1;
-export const populatedDragonIds = ['syrax', 'vhagar', 'caraxes', 'seasmoke', 'crimson', 'kalspire', 'malachite', 'venator', 'daemoros', 'vaeldra', 'sheepstealer', 'vermax'] as const;
+export const populatedDragonIds = ['syrax', 'vhagar', 'caraxes', 'seasmoke', 'crimson', 'kalspire', 'malachite', 'venator', 'daemoros', 'vaeldra', 'sheepstealer', 'vermax', 'feskar', 'rhysarion', 'shadowsong'] as const;
 
 export interface ProjectContextBuildOptions {
   generatedAt: string;

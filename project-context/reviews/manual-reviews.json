@@ -1,5 +1,77 @@
 [
   {
+    "dragonId": "feskar",
+    "evidenceIds": [
+      "feskar-main-screen-2026-06-26",
+      "feskar-calculated-assault-2026-06-26",
+      "feskar-champions-brilliance-2026-06-26",
+      "feskar-resilient-bond-2026-06-26",
+      "feskar-insightful-allies-2026-06-26",
+      "feskar-emerald-inferno-2026-06-26",
+      "feskar-quick-witted-2026-06-26",
+      "feskar-unyielding-grasp-2026-06-26"
+    ],
+    "id": "feskar-profile-review-2026-06-26",
+    "notes": [
+      "Feskar Command, Trait, Habits, progression values, affinities, and unresolved mechanics were normalized from user-supplied in-game screenshots.",
+      "Observed account stats are retained only as non-canonical observation data.",
+      "Resilient Bond persistent ally reference and unknown maximum stack count are preserved as typed data."
+    ],
+    "reviewedAgainstGameBuild": "26.6.53509",
+    "reviewedAt": "2026-06-26",
+    "reviewer": "repository-owner",
+    "scope": "habits",
+    "status": "confirmed"
+  },
+  {
+    "dragonId": "rhysarion",
+    "evidenceIds": [
+      "rhysarion-main-screen-2026-06-26",
+      "rhysarion-dawnsong-2026-06-26",
+      "rhysarion-champions-vigor-2026-06-26",
+      "rhysarion-ebbing-fury-2026-06-26",
+      "rhysarion-sharp-resolve-2026-06-26",
+      "rhysarion-echoing-melody-2026-06-26",
+      "rhysarion-unbroken-devotion-2026-06-26",
+      "rhysarion-inspiring-melody-2026-06-26"
+    ],
+    "id": "rhysarion-profile-review-2026-06-26",
+    "notes": [
+      "Rhysarion Command, Trait, Habits, progression values, affinities, and unresolved mechanics were normalized from user-supplied in-game screenshots.",
+      "Control-conditioned Dawnsong uses the verified Control status category only.",
+      "Ebbing Fury allied Damage Dealt reduction is intentionally modeled as a harmful friendly impairment."
+    ],
+    "reviewedAgainstGameBuild": "26.6.53509",
+    "reviewedAt": "2026-06-26",
+    "reviewer": "repository-owner",
+    "scope": "habits",
+    "status": "confirmed"
+  },
+  {
+    "dragonId": "shadowsong",
+    "evidenceIds": [
+      "shadowsong-main-screen-2026-06-26",
+      "shadowsong-breath-of-fire-2026-06-26",
+      "shadowsong-hunters-wrath-2026-06-26",
+      "shadowsong-ensnare-2026-06-26",
+      "shadowsong-blazing-onslaught-2026-06-26",
+      "shadowsong-scorched-earth-2026-06-26",
+      "shadowsong-dragons-intellect-2026-06-26",
+      "shadowsong-blazing-conductor-2026-06-26"
+    ],
+    "id": "shadowsong-profile-review-2026-06-26",
+    "notes": [
+      "Shadowsong Command, Trait, Habits, progression values, affinities, and unresolved mechanics were normalized from user-supplied in-game screenshots.",
+      "Blazing Conductor keeps the two ordered added targets and their Burn chances separate.",
+      "Scorched Earth Panic-conditioned chance is per target; exact roll scope remains unresolved."
+    ],
+    "reviewedAgainstGameBuild": "26.6.53509",
+    "reviewedAt": "2026-06-26",
+    "reviewer": "repository-owner",
+    "scope": "habits",
+    "status": "confirmed"
+  },
+  {
     "dragonId": "malachite",
     "evidenceIds": [
       "malachite-wardens-rally-summary-2026-06-23",
