@@ -210,9 +210,14 @@ describe('Feskar, Rhysarion, and Shadowsong Epic profiles', () => {
     expect(groupedText).toContain('Timing: Start of Round 4.');
     expect(groupedText).toContain('Recovery Rate: 25% at effective Habit Level 1.');
     expect(groupedText).toContain('Enhanced by Rhysarion Strength.');
-    expect(groupedText).toContain('Final Recovery amount remains unknown.');
     expect(groupedText).not.toContain('Ranked progression');
     expect(groupedText).not.toMatch(/\bL[1-5]\b/);
+    expect(groupedText).toContain('Ebbing Fury can harm Feskar, Rhysarion, and Shadowsong by reducing Damage Dealt by 27.5%.');
+    expect(groupedText).not.toContain('Damage Dealt reduction at current effective level');
+    expect((groupedText.match(/can harm/g) ?? [])).toHaveLength(1);
+    expect(groupedText).not.toContain('can harm Feskar by reducing Damage Dealt');
+    expect(groupedText).not.toContain('can harm Rhysarion by reducing Damage Dealt');
+    expect(groupedText).not.toContain('can harm Shadowsong by reducing Damage Dealt');
     expect(rhysarionCard?.receives.some((item) => item.sourceDragonId === 'rhysarion' && item.recipientDragonId === 'rhysarion' && item.abilityName === 'Ebbing Fury')).toBe(false);
     for (const recipientId of ['feskar', 'shadowsong']) {
       const receives = cards.cards.find((card) => card.dragonId === recipientId)?.receives.filter((item) => item.abilityName === 'Ebbing Fury' && item.sourceDragonId === 'rhysarion') ?? [];
@@ -235,7 +240,6 @@ describe('Feskar, Rhysarion, and Shadowsong Epic profiles', () => {
     }
     expect(groupedText).toContain('Timing: Start of Round 1.');
     expect(groupedText).toContain('Duration: 3 rounds.');
-    expect(groupedText).toContain('Damage Dealt reduction at current effective level: 27.5%.');
     expect(groupedText).toContain('harm');
     expect(enemyReduction).toMatchObject({ recipientDragonId: null, interactionScope: 'enemy-side' });
   });
