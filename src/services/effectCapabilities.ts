@@ -1785,10 +1785,14 @@ function analyzeEnemyDamageReceivedIncreases(
         modifierMatchesOutputChannel(modifier.channel, output.channel) &&
         sourceScopesCompatible(modifier.sourceScope, output.sourceScope),
     );
+    const sourceScopeResults = matchedOutputs.map((output) =>
+      capabilityMatch(modifier, output, [sourceScopeRequirement(modifier, output)]),
+    );
     const requirements = providerRequirementTraces(modifier, formation, dragons, options);
     const outputLabels = outputChannelNames(outputs, matchedOutputs.map((output) => output.id));
     const channel = channelLabel(modifier.channel);
     const displayValue = modifierDisplayValue(modifier, options);
+    const enemyVulnerabilityDetails = enemyVulnerabilityDetailLines(modifier, provider.name, channel, displayValue);
     traces.push({
       id: `enemy-damage-received-increase-${modifier.id}`,
       ruleId: 'enemy-damage-received-increase',
@@ -1799,18 +1803,22 @@ function analyzeEnemyDamageReceivedIncreases(
       recipientDragonId: null,
       recipientAbilityId: null,
       title: `Enemy ${channel} vulnerability`,
-      explanation: `${provider.name}'s ${modifier.abilityName} increases ${channel} Received for one enemy target. Allied ${channel} can benefit when its target overlaps with that enemy.`,
+      explanation: enemyVulnerabilityExplanation(modifier, provider.name, channel, displayValue),
       requirements,
       matchedFacts: [
         `${modifier.abilityName} targets ${targetSelectorSummary(modifier.targetSelector)}.`,
         `Modifier capability ID: ${modifier.id}.`,
         `Source scope: ${modifier.sourceScope}.`,
+        ...enemyVulnerabilityDetails,
         ...(modifier.sourceEffectId ? [`Source effect ID: ${modifier.sourceEffectId}.`] : []),
         ...(outputLabels.length > 0 ? [`Qualifying allied outputs: ${outputLabels.join(', ')}.`] : []),
         ...modifier.conditions.map((condition) => condition.description),
         ...activationChanceFacts(modifier),
       ],
-      effects: [`${channel} Received increase ${displayValue}`],
+      effects: [
+        `${channel} Received increase ${displayValue}`,
+        ...enemyVulnerabilityDetails,
+      ],
       conflicts: requirements
         .filter((requirement) => requirement.satisfied === false)
         .map((requirement) => `${requirement.label}: expected ${requirement.expected}, actual ${requirement.actual ?? 'unknown'}`),
@@ -1841,11 +1849,98 @@ function analyzeEnemyDamageReceivedIncreases(
       modifierCapabilityId: modifier.id,
       modifierCapabilityIds: [modifier.id],
       matchedOutputCapabilityIds: matchedOutputs.map((output) => output.id),
+      sourceScopeResults,
       interactionScope: 'enemy-side',
       damageScope: modifier.damageScope,
     });
   }
   return traces;
+}
+
+function enemyVulnerabilityExplanation(
+  modifier: ModifierCapability,
+  providerName: string,
+  channel: string,
+  displayValue: string,
+): string {
+  const trigger = successfulStatusTriggerLine(modifier, providerName);
+  return [
+    `${providerName}'s ${modifier.abilityName} increases ${channel} Received by ${displayValue} for one enemy target.`,
+    trigger,
+    sameEnemyLine(modifier),
+    sourceScopeLine(modifier, channel),
+    durationLine(modifier),
+    staggerExclusionLine(modifier),
+    `Allied ${channel} can benefit only when its target overlaps with that enemy; enemy target overlap remains conditional and is not guaranteed.`,
+  ].filter(Boolean).join(' ');
+}
+
+function enemyVulnerabilityDetailLines(modifier: ModifierCapability, providerName: string, channel: string, displayValue: string): string[] {
+  return [
+    successfulStatusTriggerLine(modifier, providerName),
+    sameEnemyLine(modifier),
+    `${channel} Received ${modifier.operation === 'increase' ? '+' : '-'}${displayValue}.`,
+    sourceScopeLine(modifier, channel),
+    durationLine(modifier),
+    staggerExclusionLine(modifier),
+    'Enemy target overlap remains conditional and is not guaranteed.',
+  ].filter((line): line is string => Boolean(line));
+}
+
+function successfulStatusTriggerLine(modifier: ModifierCapability, providerName: string): string | null {
+  const condition = modifier.conditions.find((item) =>
+    item.kind === 'successful-status-application' || /successfully applied/i.test(item.description),
+  );
+  if (!condition) {
+    return null;
+  }
+  const status = condition.description.match(/\b(Taunt|Stagger|Burn|Panic|Confusion|Overwhelm)\b/i)?.[1];
+  return status
+    ? `${providerName} must successfully apply ${status} to trigger this effect.`
+    : `${condition.description}`;
+}
+
+function sameEnemyLine(modifier: ModifierCapability): string | null {
+  if (modifier.targetSelector.side !== 'enemy') {
+    return null;
+  }
+  const condition = modifier.conditions.find((item) => item.kind === 'successful-status-application');
+  if (condition || /same enemy|same target/i.test(modifier.targetSelector.scope)) {
+    return 'The vulnerability applies to that same enemy target.';
+  }
+  return null;
+}
+
+function sourceScopeLine(modifier: ModifierCapability, channel: string): string {
+  if (modifier.sourceScope === 'non-basic-attacks') {
+    return `Applies to non-Basic ${channel} only.`;
+  }
+  if (modifier.sourceScope === 'all-qualifying-sources') {
+    return `Applies to all qualifying ${channel} sources.`;
+  }
+  if (modifier.sourceScope === 'commands-and-habits') {
+    return `Applies to ${channel} from Commands and Habits.`;
+  }
+  if (modifier.sourceScope === 'commands') {
+    return `Applies to Command ${channel} only.`;
+  }
+  if (modifier.sourceScope === 'habits') {
+    return `Applies to Habit ${channel} only.`;
+  }
+  if (modifier.sourceScope === 'basic-attacks') {
+    return `Applies to Basic Attack ${channel} only.`;
+  }
+  return 'Applicable source scope is not yet verified.';
+}
+
+function durationLine(modifier: ModifierCapability): string | null {
+  return modifier.durationRounds ? `Duration: ${modifier.durationRounds} rounds.` : null;
+}
+
+function staggerExclusionLine(modifier: ModifierCapability): string | null {
+  return modifier.conditions.some((item) => item.kind === 'successful-status-application' && /taunt/i.test(item.description))
+    ? 'Stagger does not trigger this effect.'
+    : null;
 }
 
 function analyzePeriodicDamageAmplification(

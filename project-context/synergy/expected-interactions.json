@@ -36423,11 +36423,15 @@
     ],
     "damageScope": "fire",
     "effects": [
-      "Fire Damage Received increase 36%"
+      "Fire Damage Received increase 36%",
+      "Fire Damage Received +36%.",
+      "Applies to all qualifying Fire Damage sources.",
+      "Duration: 3 rounds.",
+      "Enemy target overlap remains conditional and is not guaranteed."
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final damage gain cannot be calculated because target overlap, uptime, stacking, and final formulas are unresolved.",
-    "explanation": "Vhagar's Blazing Onslaught increases Fire Damage Received for one enemy target. Allied Fire Damage can benefit when its target overlaps with that enemy.",
+    "explanation": "Vhagar's Blazing Onslaught increases Fire Damage Received by 36% for one enemy target. Applies to all qualifying Fire Damage sources. Duration: 3 rounds. Allied Fire Damage can benefit only when its target overlaps with that enemy; enemy target overlap remains conditional and is not guaranteed.",
     "id": "enemy-damage-received-increase-vhagar-blazing-onslaught-blazing-onslaught-fire-received-fire-damage-received-modifier",
     "interactionScope": "enemy-side",
     "matchedOutputCapabilityIds": [],
@@ -36493,11 +36497,15 @@
     ],
     "damageScope": "physical",
     "effects": [
-      "Physical Damage Received increase 36%"
+      "Physical Damage Received increase 36%",
+      "Physical Damage Received +36%.",
+      "Applies to non-Basic Physical Damage only.",
+      "Duration: 3 rounds.",
+      "Enemy target overlap remains conditional and is not guaranteed."
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final damage gain cannot be calculated because target overlap, uptime, stacking, and final formulas are unresolved.",
-    "explanation": "Vhagar's Blazing Onslaught increases Physical Damage Received for one enemy target. Allied Physical Damage can benefit when its target overlaps with that enemy.",
+    "explanation": "Vhagar's Blazing Onslaught increases Physical Damage Received by 36% for one enemy target. Applies to non-Basic Physical Damage only. Duration: 3 rounds. Allied Physical Damage can benefit only when its target overlaps with that enemy; enemy target overlap remains conditional and is not guaranteed.",
     "id": "enemy-damage-received-increase-vhagar-blazing-onslaught-blazing-onslaught-physical-received-physical-damage-received-modifier",
     "interactionScope": "enemy-side",
     "matchedOutputCapabilityIds": [
@@ -36577,11 +36585,14 @@
     ],
     "damageScope": "physical",
     "effects": [
-      "Physical Damage Received increase 16%"
+      "Physical Damage Received increase 16%",
+      "Physical Damage Received +16%.",
+      "Applies to all qualifying Physical Damage sources.",
+      "Enemy target overlap remains conditional and is not guaranteed."
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final damage gain cannot be calculated because target overlap, uptime, stacking, and final formulas are unresolved.",
-    "explanation": "Venator's Armor Break increases Physical Damage Received for one enemy target. Allied Physical Damage can benefit when its target overlaps with that enemy.",
+    "explanation": "Venator's Armor Break increases Physical Damage Received by 16% for one enemy target. Applies to all qualifying Physical Damage sources. Allied Physical Damage can benefit only when its target overlaps with that enemy; enemy target overlap remains conditional and is not guaranteed.",
     "id": "enemy-damage-received-increase-venator-armor-break-armor-break-physical-received-physical-damage-received-modifier",
     "interactionScope": "enemy-side",
     "matchedOutputCapabilityIds": [
@@ -38173,11 +38184,15 @@
     ],
     "damageScope": "fire",
     "effects": [
-      "Fire Damage Received increase 36%"
+      "Fire Damage Received increase 36%",
+      "Fire Damage Received +36%.",
+      "Applies to all qualifying Fire Damage sources.",
+      "Duration: 3 rounds.",
+      "Enemy target overlap remains conditional and is not guaranteed."
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final damage gain cannot be calculated because target overlap, uptime, stacking, and final formulas are unresolved.",
-    "explanation": "Vhagar's Blazing Onslaught increases Fire Damage Received for one enemy target. Allied Fire Damage can benefit when its target overlaps with that enemy.",
+    "explanation": "Vhagar's Blazing Onslaught increases Fire Damage Received by 36% for one enemy target. Applies to all qualifying Fire Damage sources. Duration: 3 rounds. Allied Fire Damage can benefit only when its target overlaps with that enemy; enemy target overlap remains conditional and is not guaranteed.",
     "id": "enemy-damage-received-increase-vhagar-blazing-onslaught-blazing-onslaught-fire-received-fire-damage-received-modifier",
     "interactionScope": "enemy-side",
     "matchedOutputCapabilityIds": [
@@ -38251,11 +38266,15 @@
     ],
     "damageScope": "physical",
     "effects": [
-      "Physical Damage Received increase 36%"
+      "Physical Damage Received increase 36%",
+      "Physical Damage Received +36%.",
+      "Applies to non-Basic Physical Damage only.",
+      "Duration: 3 rounds.",
+      "Enemy target overlap remains conditional and is not guaranteed."
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final damage gain cannot be calculated because target overlap, uptime, stacking, and final formulas are unresolved.",
-    "explanation": "Vhagar's Blazing Onslaught increases Physical Damage Received for one enemy target. Allied Physical Damage can benefit when its target overlaps with that enemy.",
+    "explanation": "Vhagar's Blazing Onslaught increases Physical Damage Received by 36% for one enemy target. Applies to non-Basic Physical Damage only. Duration: 3 rounds. Allied Physical Damage can benefit only when its target overlaps with that enemy; enemy target overlap remains conditional and is not guaranteed.",
     "id": "enemy-damage-received-increase-vhagar-blazing-onslaught-blazing-onslaught-physical-received-physical-damage-received-modifier",
     "interactionScope": "enemy-side",
     "matchedOutputCapabilityIds": [
@@ -38327,11 +38346,14 @@
     ],
     "damageScope": "physical",
     "effects": [
-      "Physical Damage Received increase 20%"
+      "Physical Damage Received increase 20%",
+      "Physical Damage Received +20%.",
+      "Applies to non-Basic Physical Damage only.",
+      "Enemy target overlap remains conditional and is not guaranteed."
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final damage gain cannot be calculated because target overlap, uptime, stacking, and final formulas are unresolved.",
-    "explanation": "Crimson's Unlikely Hero increases Physical Damage Received for one enemy target. Allied Physical Damage can benefit when its target overlaps with that enemy.",
+    "explanation": "Crimson's Unlikely Hero increases Physical Damage Received by 20% for one enemy target. Applies to non-Basic Physical Damage only. Allied Physical Damage can benefit only when its target overlaps with that enemy; enemy target overlap remains conditional and is not guaranteed.",
     "id": "enemy-damage-received-increase-crimson-unlikely-hero-unlikely-hero-physical-received-physical-damage-received-modifier",
     "interactionScope": "enemy-side",
     "matchedOutputCapabilityIds": [
@@ -38403,11 +38425,14 @@
     ],
     "damageScope": "fire",
     "effects": [
-      "Fire Damage Received increase 20%"
+      "Fire Damage Received increase 20%",
+      "Fire Damage Received +20%.",
+      "Applies to all qualifying Fire Damage sources.",
+      "Enemy target overlap remains conditional and is not guaranteed."
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final damage gain cannot be calculated because target overlap, uptime, stacking, and final formulas are unresolved.",
-    "explanation": "Crimson's Unlikely Hero increases Fire Damage Received for one enemy target. Allied Fire Damage can benefit when its target overlaps with that enemy.",
+    "explanation": "Crimson's Unlikely Hero increases Fire Damage Received by 20% for one enemy target. Applies to all qualifying Fire Damage sources. Allied Fire Damage can benefit only when its target overlaps with that enemy; enemy target overlap remains conditional and is not guaranteed.",
     "id": "enemy-damage-received-increase-crimson-unlikely-hero-unlikely-hero-fire-received-fire-damage-received-modifier",
     "interactionScope": "enemy-side",
     "matchedOutputCapabilityIds": [
@@ -40713,11 +40738,15 @@
     ],
     "damageScope": "fire",
     "effects": [
-      "Fire Damage Received increase 36%"
+      "Fire Damage Received increase 36%",
+      "Fire Damage Received +36%.",
+      "Applies to all qualifying Fire Damage sources.",
+      "Duration: 3 rounds.",
+      "Enemy target overlap remains conditional and is not guaranteed."
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final damage gain cannot be calculated because target overlap, uptime, stacking, and final formulas are unresolved.",
-    "explanation": "Vhagar's Blazing Onslaught increases Fire Damage Received for one enemy target. Allied Fire Damage can benefit when its target overlaps with that enemy.",
+    "explanation": "Vhagar's Blazing Onslaught increases Fire Damage Received by 36% for one enemy target. Applies to all qualifying Fire Damage sources. Duration: 3 rounds. Allied Fire Damage can benefit only when its target overlaps with that enemy; enemy target overlap remains conditional and is not guaranteed.",
     "id": "enemy-damage-received-increase-vhagar-blazing-onslaught-blazing-onslaught-fire-received-fire-damage-received-modifier",
     "interactionScope": "enemy-side",
     "matchedOutputCapabilityIds": [],
@@ -40783,11 +40812,15 @@
     ],
     "damageScope": "physical",
     "effects": [
-      "Physical Damage Received increase 36%"
+      "Physical Damage Received increase 36%",
+      "Physical Damage Received +36%.",
+      "Applies to non-Basic Physical Damage only.",
+      "Duration: 3 rounds.",
+      "Enemy target overlap remains conditional and is not guaranteed."
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final damage gain cannot be calculated because target overlap, uptime, stacking, and final formulas are unresolved.",
-    "explanation": "Vhagar's Blazing Onslaught increases Physical Damage Received for one enemy target. Allied Physical Damage can benefit when its target overlaps with that enemy.",
+    "explanation": "Vhagar's Blazing Onslaught increases Physical Damage Received by 36% for one enemy target. Applies to non-Basic Physical Damage only. Duration: 3 rounds. Allied Physical Damage can benefit only when its target overlaps with that enemy; enemy target overlap remains conditional and is not guaranteed.",
     "id": "enemy-damage-received-increase-vhagar-blazing-onslaught-blazing-onslaught-physical-received-physical-damage-received-modifier",
     "interactionScope": "enemy-side",
     "matchedOutputCapabilityIds": [
@@ -42746,11 +42779,15 @@
     ],
     "damageScope": "fire",
     "effects": [
-      "Fire Damage Received increase 36%"
+      "Fire Damage Received increase 36%",
+      "Fire Damage Received +36%.",
+      "Applies to all qualifying Fire Damage sources.",
+      "Duration: 3 rounds.",
+      "Enemy target overlap remains conditional and is not guaranteed."
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final damage gain cannot be calculated because target overlap, uptime, stacking, and final formulas are unresolved.",
-    "explanation": "Vhagar's Blazing Onslaught increases Fire Damage Received for one enemy target. Allied Fire Damage can benefit when its target overlaps with that enemy.",
+    "explanation": "Vhagar's Blazing Onslaught increases Fire Damage Received by 36% for one enemy target. Applies to all qualifying Fire Damage sources. Duration: 3 rounds. Allied Fire Damage can benefit only when its target overlaps with that enemy; enemy target overlap remains conditional and is not guaranteed.",
     "id": "enemy-damage-received-increase-vhagar-blazing-onslaught-blazing-onslaught-fire-received-fire-damage-received-modifier",
     "interactionScope": "enemy-side",
     "matchedOutputCapabilityIds": [
@@ -42820,11 +42857,15 @@
     ],
     "damageScope": "physical",
     "effects": [
-      "Physical Damage Received increase 36%"
+      "Physical Damage Received increase 36%",
+      "Physical Damage Received +36%.",
+      "Applies to non-Basic Physical Damage only.",
+      "Duration: 3 rounds.",
+      "Enemy target overlap remains conditional and is not guaranteed."
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final damage gain cannot be calculated because target overlap, uptime, stacking, and final formulas are unresolved.",
-    "explanation": "Vhagar's Blazing Onslaught increases Physical Damage Received for one enemy target. Allied Physical Damage can benefit when its target overlaps with that enemy.",
+    "explanation": "Vhagar's Blazing Onslaught increases Physical Damage Received by 36% for one enemy target. Applies to non-Basic Physical Damage only. Duration: 3 rounds. Allied Physical Damage can benefit only when its target overlaps with that enemy; enemy target overlap remains conditional and is not guaranteed.",
     "id": "enemy-damage-received-increase-vhagar-blazing-onslaught-blazing-onslaught-physical-received-physical-damage-received-modifier",
     "interactionScope": "enemy-side",
     "matchedOutputCapabilityIds": [
@@ -42902,11 +42943,14 @@
     ],
     "damageScope": "physical",
     "effects": [
-      "Physical Damage Received increase 20%"
+      "Physical Damage Received increase 20%",
+      "Physical Damage Received +20%.",
+      "Applies to non-Basic Physical Damage only.",
+      "Enemy target overlap remains conditional and is not guaranteed."
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final damage gain cannot be calculated because target overlap, uptime, stacking, and final formulas are unresolved.",
-    "explanation": "Crimson's Unlikely Hero increases Physical Damage Received for one enemy target. Allied Physical Damage can benefit when its target overlaps with that enemy.",
+    "explanation": "Crimson's Unlikely Hero increases Physical Damage Received by 20% for one enemy target. Applies to non-Basic Physical Damage only. Allied Physical Damage can benefit only when its target overlaps with that enemy; enemy target overlap remains conditional and is not guaranteed.",
     "id": "enemy-damage-received-increase-crimson-unlikely-hero-unlikely-hero-physical-received-physical-damage-received-modifier",
     "interactionScope": "enemy-side",
     "matchedOutputCapabilityIds": [
@@ -42984,11 +43028,14 @@
     ],
     "damageScope": "fire",
     "effects": [
-      "Fire Damage Received increase 20%"
+      "Fire Damage Received increase 20%",
+      "Fire Damage Received +20%.",
+      "Applies to all qualifying Fire Damage sources.",
+      "Enemy target overlap remains conditional and is not guaranteed."
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final damage gain cannot be calculated because target overlap, uptime, stacking, and final formulas are unresolved.",
-    "explanation": "Crimson's Unlikely Hero increases Fire Damage Received for one enemy target. Allied Fire Damage can benefit when its target overlaps with that enemy.",
+    "explanation": "Crimson's Unlikely Hero increases Fire Damage Received by 20% for one enemy target. Applies to all qualifying Fire Damage sources. Allied Fire Damage can benefit only when its target overlaps with that enemy; enemy target overlap remains conditional and is not guaranteed.",
     "id": "enemy-damage-received-increase-crimson-unlikely-hero-unlikely-hero-fire-received-fire-damage-received-modifier",
     "interactionScope": "enemy-side",
     "matchedOutputCapabilityIds": [
@@ -43058,11 +43105,14 @@
     ],
     "damageScope": "physical",
     "effects": [
-      "Physical Damage Received increase 16%"
+      "Physical Damage Received increase 16%",
+      "Physical Damage Received +16%.",
+      "Applies to all qualifying Physical Damage sources.",
+      "Enemy target overlap remains conditional and is not guaranteed."
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final damage gain cannot be calculated because target overlap, uptime, stacking, and final formulas are unresolved.",
-    "explanation": "Venator's Armor Break increases Physical Damage Received for one enemy target. Allied Physical Damage can benefit when its target overlaps with that enemy.",
+    "explanation": "Venator's Armor Break increases Physical Damage Received by 16% for one enemy target. Applies to all qualifying Physical Damage sources. Allied Physical Damage can benefit only when its target overlaps with that enemy; enemy target overlap remains conditional and is not guaranteed.",
     "id": "enemy-damage-received-increase-venator-armor-break-armor-break-physical-received-physical-damage-received-modifier",
     "interactionScope": "enemy-side",
     "matchedOutputCapabilityIds": [
