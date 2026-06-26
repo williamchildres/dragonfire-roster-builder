@@ -1083,7 +1083,9 @@ function analyzeDefensiveAllySupport(
         explanation: `${provider.name}'s ${modifier.abilityName} can reduce ${recipient.name}'s ${damageLabel} by ${displayValue}.${modifierDetails.length > 0 ? ` ${modifierDetails.join(' ')}` : ''}`,
         requirements,
         matchedFacts: [
+          ...(modifier.sourceEffectId ? [`Source effect ID: ${modifier.sourceEffectId}.`] : []),
           `${modifier.abilityName} targets ${targetSelectorSummary(modifier.targetSelector)}.`,
+          ...defensiveModifierTargetFacts(modifier, context, formation, providerPosition, dragons, recipient.name),
           ...modifierDetails,
           ...modifier.conditions.map((condition) => condition.description),
         ],
@@ -1096,9 +1098,7 @@ function analyzeDefensiveAllySupport(
         modifier,
         damageScope: modifier.damageScope,
       });
-      traces.push(isVisibleSelfDefensiveModifier(modifier) && recipient.id === provider.id
-        ? { ...trace, interactionScope: 'cross-dragon' }
-        : trace);
+      traces.push(trace);
     }
   }
   return groupDefensiveAllySupportTraces(traces, dragons);
@@ -1136,6 +1136,72 @@ function defensiveModifierDetailLines(
     context ? rankedProgressionDetail(context.effect) : null,
     modifier.statusId && modifier.stackMaximum === null ? 'Maximum stack count is not verified.' : null,
   ].filter((detail): detail is string => Boolean(detail));
+}
+
+function defensiveModifierTargetFacts(
+  modifier: ModifierCapability,
+  context: { ability: AbilityDefinition; schedule: AbilitySchedule; effect: AbilityEffect } | null,
+  formation: FormationAnalysisInput,
+  providerPosition: FormationPosition,
+  dragons: Dragon[],
+  recipientName: string,
+): string[] {
+  const effect = context?.effect;
+  if (!effect) {
+    return [];
+  }
+  return [
+    effect.casterEligibility === 'excluded' || effect.includesCaster === false
+      ? 'Caster excluded from this target selection.'
+      : null,
+    effect.targetSelection?.sharedSelectionGroupId
+      ? `Shared selected-target group: ${effect.targetSelection.sharedSelectionGroupId}.`
+      : null,
+    ...((effect.targetSelection?.references ?? []).map((reference) =>
+      `Target reference ${reference.id}: ${reference.description}${reference.referencedEffectId ? ` References source effect ${reference.referencedEffectId}.` : ''}`,
+    )),
+    ...trackedTargetFacts(context, formation, providerPosition, dragons),
+    modifier.targetSelector.sharedSelectionGroupId && modifier.targetSelector.selection === 'one-eligible-adjacent'
+      ? `Resolved selected target in this formation: ${recipientName}.`
+      : null,
+  ].filter((fact): fact is string => Boolean(fact));
+}
+
+function trackedTargetFacts(
+  context: { ability: AbilityDefinition; schedule: AbilitySchedule; effect: AbilityEffect },
+  formation: FormationAnalysisInput,
+  providerPosition: FormationPosition,
+  dragons: Dragon[],
+): string[] {
+  return (context.effect.targetSelection?.references ?? []).flatMap((reference) => {
+    if (reference.kind !== 'persistent-selected-target' || !reference.referencedEffectId) {
+      return [];
+    }
+    const referencedEffect = context.ability.schedules
+      .flatMap((schedule) => schedule.effects.flatMap(derivableEffects))
+      .find((effect) => effect.id === reference.referencedEffectId);
+    if (!referencedEffect) {
+      return [];
+    }
+    const referencedTarget = targetForEffect(referencedEffect);
+    if (referencedTarget.selection !== 'one-eligible-adjacent') {
+      return [];
+    }
+    const adjacentIds = FORMATION_POSITIONS
+      .filter((position) => arePositionsAdjacent(providerPosition, position))
+      .map((position) => formation[position])
+      .filter((dragonId): dragonId is string => Boolean(dragonId));
+    if (referencedTarget.includesCaster === false) {
+      const casterId = formation[providerPosition];
+      const filtered = adjacentIds.filter((dragonId) => dragonId !== casterId);
+      adjacentIds.splice(0, adjacentIds.length, ...filtered);
+    }
+    if (adjacentIds.length !== 1) {
+      return [];
+    }
+    const name = dragonById(dragons, adjacentIds[0]!)?.name ?? adjacentIds[0]!;
+    return [`Tracked selected ally in this formation: ${name}.`];
+  });
 }
 
 function formatCapabilityToken(value: string): string {

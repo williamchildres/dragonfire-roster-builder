@@ -99,7 +99,9 @@ export function buildFormationCardPresentation(
   const selectedIds = new Set(Object.values(formation).filter((dragonId): dragonId is string => Boolean(dragonId)));
   const dragonById = new Map(allDragons.map((dragon) => [dragon.id, dragon]));
   const normalTraces = traces.filter(
-    (trace) => isNormalSynergyTrace(trace) && !(trace.status === 'inactive' && trace.matchKind === 'defensive-ally-support'),
+    (trace) =>
+      (isNormalSynergyTrace(trace) || isVisibleInternalProvidesTrace(trace)) &&
+      !(trace.status === 'inactive' && trace.matchKind === 'defensive-ally-support'),
   );
   const byDragon = new Map<string, { receives: FormationCardInteraction[]; provides: FormationCardInteraction[] }>();
   for (const dragonId of selectedIds) {
@@ -108,7 +110,7 @@ export function buildFormationCardPresentation(
 
   for (const trace of normalTraces) {
     const source = dragonById.get(trace.sourceDragonId);
-    if (!source || !selectedIds.has(trace.sourceDragonId) || trace.interactionScope === 'internal') {
+    if (!source || !selectedIds.has(trace.sourceDragonId) || (trace.interactionScope === 'internal' && !isVisibleInternalProvidesTrace(trace))) {
       continue;
     }
     if (isRedundantBlockedTraitTrace(trace, source, options.previewEnabled === true)) {
@@ -215,6 +217,13 @@ export function buildFormationCardPresentation(
     teamInteractionCount: normalTraces.length,
     technicalTraceCount: traces.length,
   };
+}
+
+function isVisibleInternalProvidesTrace(trace: SynergyTrace): boolean {
+  return trace.matchKind === 'defensive-ally-support' &&
+    trace.modifierSelfOnly === true &&
+    trace.status !== 'inactive' &&
+    [...trace.effects, ...trace.matchedFacts, trace.explanation].some((line) => /Grants 1 .+ stack/i.test(line));
 }
 
 export function getCompactInteractions(
@@ -913,6 +922,9 @@ function synthesizeDefensiveStackLine(
   const scope = text.match(/(Physical|Tactical|Fire)?\s*Damage Received reduction applies to non-Basic Attacks only\./i);
   const timing = text.match(/Timing: Start of combat\./i)?.[0] ?? null;
   const duration = text.match(/Duration: until end of combat\./i)?.[0] ?? null;
+  const maximum = /Maximum stack count is not verified\./i.test(text)
+    ? 'Maximum stack count is unknown.'
+    : null;
   if (!value) {
     return null;
   }
@@ -922,6 +934,7 @@ function synthesizeDefensiveStackLine(
     `${joinEnglishList(targetNames)} each gain 1 ${stackName}.`,
     `Each stack reduces ${damageType} from ${scope ? 'non-Basic Attacks' : 'qualifying sources'} by ${value[2]}.`,
     duration,
+    maximum,
   ].filter(Boolean).join(' ');
 }
 
