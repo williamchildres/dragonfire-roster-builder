@@ -29,6 +29,7 @@ export interface FormationCardInteraction {
   candidateTotal: number | null;
   targetLabel: string | null;
   targetSummary: string | null;
+  targetSelectionMode: NonNullable<SynergyTrace['targetSelectionGroup']>['selection'] | null;
   isPreview: boolean;
   isEnemyFacing: boolean;
   traceId: string;
@@ -112,9 +113,13 @@ export function buildFormationCardPresentation(
       continue;
     }
 
-    if (trace.targetSelectionGroup && trace.targetSelectionGroup.selectionUncertain) {
+    if (trace.targetSelectionGroup) {
       const eligible = trace.targetSelectionGroup.eligibleRecipientDragonIds.filter((dragonId) => selectedIds.has(dragonId));
+      const allMatching = isAllMatchingTargetSelection(trace);
       if (eligible.length === 0) {
+        continue;
+      }
+      if (!trace.targetSelectionGroup.selectionUncertain && !allMatching) {
         continue;
       }
       const providerItem = toCardInteraction({
@@ -123,16 +128,16 @@ export function buildFormationCardPresentation(
         recipient: null,
         allDragons,
         previewEnabled: options.previewEnabled === true,
-        targetLabel: eligible.map((dragonId) => dragonById.get(dragonId)?.name ?? dragonId).join(' or '),
+        targetLabel: joinTargetNames(eligible.map((dragonId) => dragonById.get(dragonId)?.name ?? dragonId), allMatching),
         isCandidate: false,
         candidateIndex: null,
-        candidateTotal: eligible.length,
+        candidateTotal: allMatching ? null : eligible.length,
       });
       byDragon.get(source.id)?.provides.push(providerItem);
 
       eligible.forEach((dragonId, index) => {
         const recipient = dragonById.get(dragonId);
-        if (!recipient || recipient.id === source.id) {
+        if (!recipient || (!allMatching && recipient.id === source.id)) {
           return;
         }
         byDragon.get(recipient.id)?.receives.push(
@@ -142,10 +147,10 @@ export function buildFormationCardPresentation(
             recipient,
             allDragons,
             previewEnabled: options.previewEnabled === true,
-            targetLabel: `Candidate ${index + 1} of ${eligible.length}`,
-            isCandidate: true,
+            targetLabel: allMatching ? null : `Candidate ${index + 1} of ${eligible.length}`,
+            isCandidate: !allMatching,
             candidateIndex: index + 1,
-            candidateTotal: eligible.length,
+            candidateTotal: allMatching ? null : eligible.length,
           }),
         );
       });
@@ -312,7 +317,8 @@ function toCardInteraction({
     candidateIndex,
     candidateTotal,
     targetLabel,
-    targetSummary: trace.targetSelectorSummary ?? null,
+    targetSummary: targetSummaryForCard(trace, allDragons),
+    targetSelectionMode: trace.targetSelectionGroup?.selection ?? null,
     isPreview: state === 'preview',
     isEnemyFacing: isEnemyFacingTrace(trace),
     traceId: trace.id,
@@ -337,6 +343,35 @@ function modifierLinesForTrace(trace: SynergyTrace, recipient: Dragon | null): s
   return [`Amplified by ${recipient.name}'s ${abilityName}: ${trace.recipientModifierType.replace(/ Up$/i, '')} ${value}.`];
 }
 
+function isAllMatchingTargetSelection(trace: SynergyTrace): boolean {
+  return trace.targetSelectionGroup?.selection === 'all-matching-condition';
+}
+
+function joinTargetNames(names: string[], allMatching: boolean): string {
+  return allMatching ? joinEnglishList(names) : names.join(' or ');
+}
+
+function supportChannelLabel(trace: SynergyTrace): string {
+  if (trace.channel === 'damage-received' && trace.damageScope && trace.damageScope !== 'all') {
+    return formatToken(`${trace.damageScope}-damage-received`);
+  }
+  return formatToken(trace.channel ?? 'damage-received');
+}
+
+function targetSummaryForCard(trace: SynergyTrace, allDragons: Dragon[]): string | null {
+  if (!isAllMatchingTargetSelection(trace) || !trace.targetSelectionGroup) {
+    return trace.targetSelectorSummary ?? null;
+  }
+  const dragonById = new Map(allDragons.map((dragon) => [dragon.id, dragon.name]));
+  const names = trace.targetSelectionGroup.eligibleRecipientDragonIds.map((dragonId) => dragonById.get(dragonId) ?? dragonId);
+  const count = trace.targetSelectionGroup.targetCount;
+  return [
+    `All matching allies: ${joinEnglishList(names)}.`,
+    `Known recipient count: ${count}.`,
+    'Each eligible recipient evaluates its own condition.',
+  ].join(' ');
+}
+
 function summarizeTrace(
   trace: SynergyTrace,
   source: Dragon,
@@ -348,6 +383,14 @@ function summarizeTrace(
     return [
       `${formatToken(trace.channel)} support; one of ${numberWord(target.candidateTotal ?? 0)} eligible recipients.`,
     ];
+  }
+  if (isAllMatchingTargetSelection(trace) && trace.channel) {
+    const channel = supportChannelLabel(trace);
+    if (recipient) {
+      return [`${channel} support when ${recipient.name} meets the condition.`];
+    }
+    const targetNames = target.targetLabel ? `${target.targetLabel} can each receive ` : '';
+    return [`${targetNames}${channel} support when their condition is met.`];
   }
   if (trace.targetSelectionGroup && trace.channel) {
     const targetNames = target.targetLabel ? `: ${target.targetLabel}` : '';
@@ -712,6 +755,9 @@ function mergedSummaryLines(
 ): string[] {
   const lines = unique(items.flatMap((item) => item.summaryLines));
   if (direction === 'provides' && targetNames.length > 0) {
+    if (items.some((item) => item.targetSelectionMode === 'all-matching-condition')) {
+      return lines;
+    }
     const sourceSelection = lines.find((line) => /recipient is selected/i.test(line));
     const rest = lines.filter((line) => line !== sourceSelection);
     return [
@@ -771,6 +817,9 @@ function interactionEffectTitle(abilityName: string, trace: SynergyTrace): strin
 }
 
 function interactionPurpose(trace: SynergyTrace): string | null {
+  if (isAllMatchingTargetSelection(trace) && trace.channel) {
+    return `${supportChannelLabel(trace)} support`;
+  }
   if (trace.targetSelectionGroup && trace.channel) {
     return `${formatToken(trace.channel)} support`;
   }

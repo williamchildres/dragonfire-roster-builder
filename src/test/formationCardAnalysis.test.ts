@@ -14,8 +14,10 @@ const preview = { previewMaxRankInteractions: true };
 
 const formations: Record<string, FormationAnalysisInput> = {
   '1': { 'left-flank': 'malachite', vanguard: 'sheepstealer', 'right-flank': 'vermax' },
+  '3': { 'left-flank': 'malachite', vanguard: 'vermax', 'right-flank': 'seasmoke' },
   '4': { 'left-flank': 'malachite', vanguard: 'seasmoke', 'right-flank': 'sheepstealer' },
   '8': { 'left-flank': 'sheepstealer', vanguard: 'caraxes', 'right-flank': 'syrax' },
+  eclipse: { 'left-flank': 'crimson', vanguard: 'vhagar', 'right-flank': 'kalspire' },
   '13': { 'left-flank': 'seasmoke', vanguard: 'malachite', 'right-flank': 'sheepstealer' },
   '14': { 'left-flank': 'seasmoke', vanguard: 'sheepstealer', 'right-flank': 'malachite' },
   '15': { 'left-flank': 'malachite', vanguard: 'sheepstealer', 'right-flank': 'caraxes' },
@@ -37,6 +39,19 @@ function card(result: ReturnType<typeof presentation>, dragonId: string) {
   const match = result.cards.find((item) => item.dragonId === dragonId);
   expect(match).toBeDefined();
   return match!;
+}
+
+function selectedRoster(dragonIds: string[], level = 26, starRank = 1) {
+  const roster = createEmptyRoster(dragons);
+  for (const dragonId of dragonIds) {
+    const entry = roster[dragonId];
+    expect(entry).toBeDefined();
+    entry!.owned = true;
+    entry!.collection.state = 'hatched';
+    entry!.starRank = starRank;
+    entry!.reignLevel = level;
+  }
+  return roster;
 }
 
 describe('formation card analysis presentation', () => {
@@ -63,6 +78,85 @@ describe('formation card analysis presentation', () => {
     expect(caraxes.receives.find((item) => item.abilityName === 'Blazing Fury')?.relationshipId).toBe(
       syrax.provides.find((item) => item.abilityName === 'Blazing Fury')?.relationshipId,
     );
+  });
+
+  it('keeps all-matching defensive support hidden in current mode when locked', () => {
+    const roster = selectedRoster(['malachite', 'vermax', 'seasmoke']);
+    const result = presentation('3', false, { roster });
+
+    const vermax = card(result, 'vermax');
+    const malachite = card(result, 'malachite');
+    const seasmoke = card(result, 'seasmoke');
+
+    expect(vermax.provides.some((item) => item.abilityName === 'Trial by Flame')).toBe(false);
+    expect(malachite.receives.some((item) => item.abilityName === 'Trial by Flame')).toBe(false);
+    expect(seasmoke.receives.some((item) => item.abilityName === 'Trial by Flame')).toBe(false);
+  });
+
+  it('presents all-matching defensive recipients without candidate-selection wording', () => {
+    const roster = selectedRoster(['malachite', 'vermax', 'seasmoke']);
+    const result = presentation('3', true, { roster });
+
+    const vermax = card(result, 'vermax');
+    const malachite = card(result, 'malachite');
+    const seasmoke = card(result, 'seasmoke');
+    const providerCards = vermax.provides.filter((item) => item.abilityName === 'Trial by Flame');
+    const malachiteReceives = malachite.receives.filter((item) => item.abilityName === 'Trial by Flame');
+    const seasmokeReceives = seasmoke.receives.filter((item) => item.abilityName === 'Trial by Flame');
+
+    expect(providerCards).toHaveLength(1);
+    expect(malachiteReceives).toHaveLength(1);
+    expect(seasmokeReceives).toHaveLength(1);
+    expect(vermax.receives.some((item) => item.abilityName === 'Trial by Flame')).toBe(false);
+
+    const provider = providerCards[0]!;
+    expect(provider.state).toBe('preview');
+    expect(provider.effectTitle).toBe('Trial by Flame - Fire Damage Received support');
+    expect(provider.summary).toContain('Malachite and Seasmoke can each receive Fire Damage Received support');
+    expect(provider.summary).not.toMatch(/one .*recipient is selected/i);
+    expect(provider.summary).not.toContain('Target not guaranteed');
+    expect(provider.targetSummary).toContain('All matching allies: Malachite and Seasmoke.');
+    expect(provider.targetSummary).toContain('Known recipient count: 2.');
+    expect(provider.targetSummary).toContain('Each eligible recipient evaluates its own condition.');
+    expect(provider.effects).toEqual(expect.arrayContaining([
+      'Fire Damage Received decrease 10%',
+      'Fire Damage Received decrease 20%',
+      'Fire Damage Received decrease 30%',
+    ]));
+    expect(provider.detail).toContain('Below 75% Troop Capacity: Fire Damage Received -10%');
+    expect(provider.detail).toContain('Below 50% Troop Capacity: Fire Damage Received -20%');
+    expect(provider.detail).toContain('Below 25% Troop Capacity: Fire Damage Received -30%');
+    expect(provider.detail).toContain('exact interaction between overlapping threshold tiers is unresolved');
+    expect(provider.requirements).toEqual(expect.arrayContaining([
+      expect.objectContaining({ label: 'Vermax - Trial by Flame Habit unlock requirement', satisfied: false }),
+      expect.objectContaining({ label: 'Vermax - Trial by Flame Selected Habit Level', satisfied: false }),
+    ]));
+
+    expect(malachiteReceives[0]?.summary).toContain('Fire Damage Received support when Malachite meets the condition.');
+    expect(seasmokeReceives[0]?.summary).toContain('Fire Damage Received support when Seasmoke meets the condition.');
+    expect(malachiteReceives[0]?.summary).not.toContain('Target not guaranteed');
+    expect(seasmokeReceives[0]?.summary).not.toContain('Target not guaranteed');
+    expect(malachiteReceives[0]?.traceIds).toEqual(provider.traceIds);
+    expect(seasmokeReceives[0]?.traceIds).toEqual(provider.traceIds);
+  });
+
+  it('keeps candidate-selection support wording for Eclipse Cover', () => {
+    const roster = selectedRoster(['crimson', 'vhagar', 'kalspire']);
+    const result = presentation('eclipse', true, { roster });
+    const vhagar = card(result, 'vhagar');
+
+    const eclipse = vhagar.provides.find((item) =>
+      item.abilityName === 'Eclipse Cover' &&
+      item.targetSelectionMode &&
+      item.targetSelectionMode !== 'all-matching-condition'
+    );
+
+    expect(eclipse).toBeDefined();
+    expect(eclipse?.targetSelectionMode).not.toBe('all-matching-condition');
+    expect(eclipse?.summary).toMatch(/One Damage Dealt recipient is selected/i);
+    expect(eclipse?.summary).toContain('Target not guaranteed');
+    expect(eclipse?.targetSummary).toContain('highest-resource');
+    expect(eclipse?.targetSummary).toContain('current-troops');
   });
 
   it('adds command summaries without counting them as cross-dragon synergies', () => {
