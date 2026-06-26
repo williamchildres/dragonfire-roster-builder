@@ -597,6 +597,19 @@ function outputValueDetail(output: OutputCapability, effect: AbilityEffect, opti
   return `${label}: ${formatValue(value, unit)}${level ? ` at effective Habit Level ${level}` : ''}.`;
 }
 
+function durationDetail(effect: AbilityEffect): string | null {
+  if (effect.durationRounds) {
+    return `Duration: ${effect.durationRounds} rounds.`;
+  }
+  if (effect.duration === 'Until end of combat' || effect.stack?.untilEndOfCombat) {
+    return 'Duration: until end of combat.';
+  }
+  if (effect.duration === 'Until end of current round') {
+    return 'Duration: until end of current round.';
+  }
+  return null;
+}
+
 function outputResolvedRankedValue(
   output: OutputCapability,
   effect: AbilityEffect,
@@ -939,6 +952,7 @@ function groupDefensiveAllySupportTraces(traces: SynergyTrace[], dragons: Dragon
       trace.sourceAbilityId ?? '',
       trace.recipientDragonId ?? '',
       trace.damageScope ?? '',
+      trace.modifierCapabilityId ?? '',
     ].join('|');
     byAbilityRecipient.set(key, [...(byAbilityRecipient.get(key) ?? []), trace]);
   }
@@ -1024,11 +1038,11 @@ function analyzeDefensiveAllySupport(
   const traces: SynergyTrace[] = [];
   for (const modifier of modifiers.filter(
     (capability) =>
-      capability.role === 'ally-support' &&
+      (capability.role === 'ally-support' || isVisibleSelfDefensiveModifier(capability)) &&
       capability.direction === 'received' &&
       capability.channel === 'damage-received' &&
       capability.operation === 'decrease' &&
-      capability.targetSelector.selection !== 'self' &&
+      (capability.targetSelector.selection !== 'self' || isVisibleSelfDefensiveModifier(capability)) &&
       modifierCapabilityVisible(capability, options),
   )) {
     const providerPosition = positionOf(formation, modifier.dragonId);
@@ -1037,7 +1051,7 @@ function analyzeDefensiveAllySupport(
     }
     for (const recipientPosition of FORMATION_POSITIONS) {
       const recipientId = formation[recipientPosition];
-      if (!recipientId || recipientId === modifier.dragonId) {
+      if (!recipientId || (recipientId === modifier.dragonId && !isVisibleSelfDefensiveModifier(modifier))) {
         continue;
       }
       const provider = dragonById(dragons, modifier.dragonId);
@@ -1045,13 +1059,18 @@ function analyzeDefensiveAllySupport(
       if (!provider || !recipient) {
         continue;
       }
+      const context = sourceEffectContext(provider, modifier.abilityId, modifier.sourceEffectId);
+      const targeting = targetRequirement(modifier, providerPosition, recipientPosition);
       const requirements = dedupeRequirements([
-        targetRequirement(modifier, providerPosition, recipientPosition),
+        targeting,
         ...providerRequirementTraces(modifier, formation, dragons, options),
       ]);
       const damageLabel = damageReceivedLabel(modifier.damageScope);
       const displayValue = modifierDisplayValue(modifier, options);
-      traces.push(makeDependencyTrace({
+      const modifierDetails = modifier.statusId
+        ? defensiveModifierDetailLines(modifier, displayValue, options, context)
+        : [];
+      const trace = makeDependencyTrace({
         id: `defensive-ally-support-${modifier.id}-${recipientId}`,
         matchKind: 'defensive-ally-support',
         ruleId: 'defensive-ally-support',
@@ -1061,24 +1080,70 @@ function analyzeDefensiveAllySupport(
         recipientAbilityId: null,
         channel: 'damage-received',
         title: `${damageLabel} Support`,
-        explanation: `${provider.name}'s ${modifier.abilityName} can reduce ${recipient.name}'s ${damageLabel} by ${displayValue}.`,
+        explanation: `${provider.name}'s ${modifier.abilityName} can reduce ${recipient.name}'s ${damageLabel} by ${displayValue}.${modifierDetails.length > 0 ? ` ${modifierDetails.join(' ')}` : ''}`,
         requirements,
         matchedFacts: [
           `${modifier.abilityName} targets ${targetSelectorSummary(modifier.targetSelector)}.`,
+          ...modifierDetails,
           ...modifier.conditions.map((condition) => condition.description),
         ],
-        effects: [`${damageLabel} ${modifier.operation} ${displayValue}`],
+        effects: [`${damageLabel} ${modifier.operation} ${displayValue}`, ...modifierDetails],
         sourceEvidenceIds: modifier.evidenceIds,
         recipientEvidenceIds: [],
         assumptions: [],
         unresolvedQuestions: [],
-        futureOrConditional: modifier.futureAvailable || modifier.conditional,
+        futureOrConditional: defensiveModifierTraceIsConditional(modifier) || (modifier.futureAvailable && options.previewMaxRankInteractions === true),
         modifier,
         damageScope: modifier.damageScope,
-      }));
+      });
+      traces.push(isVisibleSelfDefensiveModifier(modifier) && recipient.id === provider.id
+        ? { ...trace, interactionScope: 'cross-dragon' }
+        : trace);
     }
   }
   return groupDefensiveAllySupportTraces(traces, dragons);
+}
+
+function isVisibleSelfDefensiveModifier(modifier: ModifierCapability): boolean {
+  return (modifier.role === 'ally-support' || modifier.role === 'self-amplification') &&
+    modifier.direction === 'received' &&
+    modifier.channel === 'damage-received' &&
+    modifier.targetSelector.selection === 'self' &&
+    Boolean(modifier.statusId);
+}
+
+function defensiveModifierTraceIsConditional(modifier: ModifierCapability): boolean {
+  return modifier.conditions.length > 0 ||
+    modifier.activationChanceFixed !== null ||
+    (modifier.activationChanceByHabitLevel?.length ?? 0) > 0;
+}
+
+function defensiveModifierDetailLines(
+  modifier: ModifierCapability,
+  displayValue: string,
+  options: CapabilityOptions,
+  context: { ability: AbilityDefinition; schedule: AbilitySchedule; effect: AbilityEffect } | null,
+): string[] {
+  const effectiveLevel = modifier.rankedValues.length > 0
+    ? (options.previewMaxRankInteractions ? 5 : effectiveHabitLevelForCapability(modifier, options))
+    : null;
+  return [
+    context ? scheduleTimingDetail(context.schedule) : null,
+    modifier.statusId ? `Grants 1 ${formatCapabilityToken(modifier.statusId)} stack.` : null,
+    `${damageReceivedLabel(modifier.damageScope)} reduction: ${displayValue}${effectiveLevel ? ` at effective Habit Level ${effectiveLevel}` : ''}.`,
+    modifier.sourceScope === 'non-basic-attacks' ? `${damageReceivedLabel(modifier.damageScope)} reduction applies to non-Basic Attacks only.` : null,
+    context ? durationDetail(context.effect) : modifier.durationRounds ? `Duration: ${modifier.durationRounds} rounds.` : null,
+    context ? rankedProgressionDetail(context.effect) : null,
+    modifier.statusId && modifier.stackMaximum === null ? 'Maximum stack count is not verified.' : null,
+  ].filter((detail): detail is string => Boolean(detail));
+}
+
+function formatCapabilityToken(value: string): string {
+  return value
+    .split(/[-_\s]+/)
+    .filter(Boolean)
+    .map((part) => `${part.charAt(0).toUpperCase()}${part.slice(1)}`)
+    .join(' ');
 }
 
 function analyzeFriendlyImpairments(

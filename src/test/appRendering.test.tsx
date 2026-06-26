@@ -3,6 +3,7 @@ import userEvent from '@testing-library/user-event';
 import { describe, expect, it } from 'vitest';
 import { App } from '../app/App';
 import { STORAGE_KEY } from '../services/rosterStorage';
+import globalCss from '../styles/global.css?raw';
 
 describe('Dragonfire Roster Lab app', () => {
   it('renders all dragons through the database and supports search', async () => {
@@ -177,13 +178,31 @@ describe('Dragonfire Roster Lab app', () => {
     await user.click(expand);
 
     expect(within(provides).getByRole('button', { name: /show fewer/i })).toHaveAttribute('aria-expanded', 'true');
+    expect(provides).toHaveClass('is-expanded');
     expect(provides.querySelectorAll('.card-interaction-item').length).toBeGreaterThan(3);
     expect(provides.querySelectorAll('.card-interaction-item').length).toBeGreaterThan(collapsedCount);
+
+    const detailsToggle = within(provides).getAllByRole('button', { name: /details/i })[0]!;
+    await user.click(detailsToggle);
+    expect(within(provides).getByText('Full explanation')).toBeInTheDocument();
 
     await user.click(within(provides).getByRole('button', { name: /show fewer/i }));
 
     expect(within(provides).getByRole('button', { name: /view \d+ more/i })).toHaveAttribute('aria-expanded', 'false');
     expect(provides.querySelectorAll('.card-interaction-item')).toHaveLength(collapsedCount);
+  });
+
+  it('allows expanded interaction sections to grow without an internal vertical scroll constraint', () => {
+    const css = globalCss;
+    const expandedRules = [...css.matchAll(/\.interaction-section\.is-expanded \.interaction-section-body\s*\{(?<body>[^}]+)\}/g)]
+      .map((match) => match.groups?.body ?? '');
+    const expandedRule = expandedRules[0] ?? '';
+
+    expect(expandedRule).toContain('max-height: none');
+    expect(expandedRule).toContain('overflow-y: visible');
+    expect(expandedRules.every((body) => !/overflow-y:\s*(auto|scroll)/.test(body))).toBe(true);
+    expect(expandedRules.every((body) => !/max-height:\s*(?:\d|min|max|calc|var)/.test(body))).toBe(true);
+    expect(css.match(/\.interaction-section-body\s*\{(?<body>[^}]+)\}/)?.groups?.body).toContain('overflow-y: auto');
   });
 
   it('refreshes Formation Builder trait status after roster level changes', async () => {
