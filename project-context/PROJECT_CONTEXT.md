@@ -85,7 +85,7 @@ The framework derives output capabilities, modifier capabilities, status outputs
 - global-enemy-formation-adjacency: Enemy-formation adjacency is not confirmed.
 - global-enhanced-by-stat-formulas: Exact enhanced-by-stat formulas remain unresolved.
 - global-exact-damage-recovery-formulas: Exact damage, Recovery, and stacking formulas remain unknown.
-- global-extra-basic-attack-trigger-chaining: Double-Strike and other extra-Basic-Attack trigger chaining remain unresolved.
+- global-extra-basic-attack-trigger-chaining: Extra-Basic-Attack trigger-chain timing, target selection, uptime, and final damage remain unresolved.
 - global-numerical-score-policy: No numerical synergy score is generated until formulas are verified.
 
 ## Review Plan

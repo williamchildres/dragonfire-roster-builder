@@ -3983,10 +3983,11 @@
       "verificationStatus": "community-verified"
     }
   ],
+  "extraActionCapabilities": [],
   "firstObservedInGame": null,
   "format": "dragonfire-dragon-profile",
   "gameVersion": null,
-  "generatedAt": "2026-06-25T23:27:35.329Z",
+  "generatedAt": "2026-06-26T00:43:37.772Z",
   "habits": [
     {
       "abilityClass": "passive",
@@ -7243,8 +7244,8 @@
   "rosterSourceStatus": "official-website",
   "slug": "kalspire",
   "source": {
-    "branch": "fix/eclipse-cover-formation-traces",
-    "commit": "6e4e37a9f5e74a52622a6200c456399e7262d205",
+    "branch": "fix/double-strike-trigger-chains",
+    "commit": "b27dab49d4a5906c6204260fee8fc775dbfa5f5d",
     "databaseVersion": "0.6.0",
     "dataSchemaVersion": 10,
     "gameBuild": "26.6.53509",
@@ -7649,6 +7650,61 @@
       "status": "screenshot-verified"
     }
   },
+  "triggeredAbilityCapabilities": [
+    {
+      "abilityId": "kalspire-tactical-strike",
+      "abilityName": "Tactical Strike",
+      "availability": {
+        "canonical": "canonical-base",
+        "notes": [
+          "Not hatched in observed account."
+        ],
+        "observedAccount": "observed-unavailable",
+        "reportLabel": "Base kit; not hatched in observed account",
+        "userRoster": "unknown"
+      },
+      "confidence": "confirmed",
+      "currentlyAvailable": true,
+      "dragonId": "kalspire",
+      "evidenceIds": [
+        "kalspire-tactical-strike-summary-2026-06-25"
+      ],
+      "futureAvailable": false,
+      "id": "kalspire-tactical-strike-after-basic-attack-trigger",
+      "minimumDragonLevel": null,
+      "requiredHabitLevel": null,
+      "sourceKind": "command",
+      "triggerEvent": "after-basic-attack",
+      "unlockStarRank": null
+    },
+    {
+      "abilityId": "kalspire-tactical-assault",
+      "abilityName": "Tactical Assault",
+      "availability": {
+        "canonical": "canonical-locked",
+        "notes": [
+          "Future at Star Rank 6.",
+          "Not hatched in observed account."
+        ],
+        "observedAccount": "observed-unavailable",
+        "reportLabel": "Future at Star Rank 6; not hatched in observed account",
+        "userRoster": "unknown"
+      },
+      "confidence": "confirmed",
+      "currentlyAvailable": false,
+      "dragonId": "kalspire",
+      "evidenceIds": [
+        "kalspire-tactical-assault-2026-06-25"
+      ],
+      "futureAvailable": true,
+      "id": "kalspire-tactical-assault-after-basic-attack-trigger",
+      "minimumDragonLevel": null,
+      "requiredHabitLevel": 1,
+      "sourceKind": "habit",
+      "triggerEvent": "after-basic-attack",
+      "unlockStarRank": 6
+    }
+  ],
   "unresolvedQuestions": [
     "Battle Cunning Instinct enhancement formula.",
     "Bleed refresh and first-tick timing.",

@@ -2898,10 +2898,123 @@
       "verificationStatus": "community-verified"
     }
   ],
+  "extraActionCapabilities": [
+    {
+      "abilityId": "malachite-lightning-strike",
+      "abilityName": "Lightning Strike",
+      "actionType": "basic-attack",
+      "activationChanceByHabitLevel": [
+        {
+          "level": 1,
+          "unit": "percent",
+          "value": 40
+        },
+        {
+          "level": 2,
+          "unit": "percent",
+          "value": 52
+        },
+        {
+          "level": 3,
+          "unit": "percent",
+          "value": 64
+        },
+        {
+          "level": 4,
+          "unit": "percent",
+          "value": 80
+        },
+        {
+          "level": 5,
+          "unit": "percent",
+          "value": 100
+        }
+      ],
+      "activationChanceFixed": null,
+      "activationGroupId": null,
+      "availability": {
+        "canonical": "canonical-locked",
+        "notes": [
+          "Future at Star Rank 10.",
+          "Unlocked in observed account collection state, subject to level and star requirements."
+        ],
+        "observedAccount": "observed-available",
+        "reportLabel": "Future at Star Rank 10; observed account hatched",
+        "userRoster": "unknown"
+      },
+      "chanceByHabitLevel": [
+        {
+          "level": 1,
+          "unit": "percent",
+          "value": 40
+        },
+        {
+          "level": 2,
+          "unit": "percent",
+          "value": 52
+        },
+        {
+          "level": 3,
+          "unit": "percent",
+          "value": 64
+        },
+        {
+          "level": 4,
+          "unit": "percent",
+          "value": 80
+        },
+        {
+          "level": 5,
+          "unit": "percent",
+          "value": 100
+        }
+      ],
+      "chanceFixed": null,
+      "conditions": [
+        {
+          "description": "Activation chance depends on Habit Level for start of round.",
+          "evidenceIds": [],
+          "id": "lightning-strike-round-one-activation-chance",
+          "label": "Activation chance depends on Habit Level for start of round.",
+          "unresolved": false
+        }
+      ],
+      "currentlyAvailable": false,
+      "dragonId": "malachite",
+      "durationRounds": 3,
+      "evidenceIds": [
+        "malachite-lightning-strike-2026-06-23"
+      ],
+      "futureAvailable": true,
+      "id": "malachite-lightning-strike-lightning-strike-double-strike-double-strike-status-output-basic-attack-extra-action",
+      "minimumDragonLevel": null,
+      "requiredHabitLevel": 1,
+      "sourceEffectId": "lightning-strike-double-strike",
+      "statusDefinition": "Target gains a second Basic Attack each round.",
+      "statusId": "double-strike",
+      "targetSelector": {
+        "comparisonDirection": null,
+        "comparisonPool": null,
+        "count": 1,
+        "includesCaster": false,
+        "position": null,
+        "scope": "within-adjacency",
+        "selection": "one-eligible-adjacent",
+        "selectionResource": null,
+        "selectionStat": null,
+        "sharedSelectionGroupId": null,
+        "side": "ally",
+        "tieBehavior": null
+      },
+      "targetSide": "ally",
+      "triggerEvent": "after-basic-attack",
+      "unlockStarRank": 10
+    }
+  ],
   "firstObservedInGame": null,
   "format": "dragonfire-dragon-profile",
   "gameVersion": null,
-  "generatedAt": "2026-06-25T23:27:35.329Z",
+  "generatedAt": "2026-06-26T00:43:37.772Z",
   "habits": [
     {
       "abilityClass": "passive",
@@ -5412,8 +5525,8 @@
   "rosterSourceStatus": "official-website",
   "slug": "malachite",
   "source": {
-    "branch": "fix/eclipse-cover-formation-traces",
-    "commit": "6e4e37a9f5e74a52622a6200c456399e7262d205",
+    "branch": "fix/double-strike-trigger-chains",
+    "commit": "b27dab49d4a5906c6204260fee8fc775dbfa5f5d",
     "databaseVersion": "0.6.0",
     "dataSchemaVersion": 10,
     "gameBuild": "26.6.53509",
@@ -5925,6 +6038,7 @@
       "status": "screenshot-verified"
     }
   },
+  "triggeredAbilityCapabilities": [],
   "unresolvedQuestions": [
     "Canonical base stats remain unknown.",
     "Exact enhanced-by-Instinct formula.",

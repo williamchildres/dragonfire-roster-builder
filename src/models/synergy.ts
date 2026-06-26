@@ -154,6 +154,7 @@ export type InteractionScope = 'cross-dragon' | 'internal' | 'enemy-side' | 'tar
 export type SynergyTraceMatchKind =
   | 'outgoing-effect-amplification'
   | 'incoming-effect-amplification'
+  | 'extra-basic-attack-trigger'
   | 'status-condition-enablement'
   | 'stat-scaling-support'
   | 'enemy-mitigation-reduction'
@@ -394,6 +395,54 @@ export interface StatusOutputCapability {
   activationGroupId?: string | null;
   activationChanceFixed?: number | null;
   activationChanceByHabitLevel?: RankedValue[];
+}
+
+export type ExtraActionType = 'basic-attack';
+export type TriggerEvent = 'after-basic-attack';
+
+export interface ExtraActionCapability {
+  id: string;
+  dragonId: string;
+  abilityId: string;
+  abilityName: string;
+  sourceEffectId: string | null;
+  statusId: string;
+  statusDefinition: string;
+  actionType: ExtraActionType;
+  triggerEvent: TriggerEvent;
+  targetSide: CapabilityTargetSide;
+  targetSelector: AbilityTarget;
+  unlockStarRank: number | null;
+  minimumDragonLevel: number | null;
+  requiredHabitLevel: number | null;
+  chanceFixed: number | null;
+  chanceByHabitLevel: RankedValue[];
+  durationRounds: number | null;
+  conditions: EffectCondition[];
+  currentlyAvailable: boolean;
+  futureAvailable: boolean;
+  availability: CapabilityAvailabilityContext;
+  evidenceIds: string[];
+  activationGroupId?: string | null;
+  activationChanceFixed?: number | null;
+  activationChanceByHabitLevel?: RankedValue[];
+}
+
+export interface TriggeredAbilityCapability {
+  id: string;
+  dragonId: string;
+  abilityId: string;
+  abilityName: string;
+  triggerEvent: TriggerEvent;
+  sourceKind: CapabilitySourceKind;
+  unlockStarRank: number | null;
+  minimumDragonLevel: number | null;
+  requiredHabitLevel: number | null;
+  currentlyAvailable: boolean;
+  futureAvailable: boolean;
+  availability: CapabilityAvailabilityContext;
+  confidence: TraceConfidence;
+  evidenceIds: string[];
 }
 
 export interface PeriodicDamageDefinition {

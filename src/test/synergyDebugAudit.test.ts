@@ -127,7 +127,11 @@ describe('synergy trace and audit behavior', () => {
       status: 'active',
       confidence: 'confirmed',
     });
-    expect(traces.find((trace) => trace.id === 'malachite-lightning-strike-vermax')).toMatchObject({
+    expect(traces.find((trace) =>
+      trace.matchKind === 'extra-basic-attack-trigger' &&
+      trace.sourceAbilityId === 'malachite-lightning-strike' &&
+      trace.recipientAbilityId === 'vermax-spreading-blaze'
+    )).toMatchObject({
       status: 'potential',
     });
     expect(traces.find((trace) => trace.ruleId === 'verified-vanguard-position-conflict')).toBeDefined();

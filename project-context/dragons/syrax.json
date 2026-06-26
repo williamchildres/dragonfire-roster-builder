@@ -3880,10 +3880,11 @@
       "verificationStatus": "community-verified"
     }
   ],
+  "extraActionCapabilities": [],
   "firstObservedInGame": null,
   "format": "dragonfire-dragon-profile",
   "gameVersion": null,
-  "generatedAt": "2026-06-25T23:27:35.329Z",
+  "generatedAt": "2026-06-26T00:43:37.772Z",
   "habits": [
     {
       "abilityClass": "passive",
@@ -6532,8 +6533,8 @@
   "rosterSourceStatus": "official-website",
   "slug": "syrax",
   "source": {
-    "branch": "fix/eclipse-cover-formation-traces",
-    "commit": "6e4e37a9f5e74a52622a6200c456399e7262d205",
+    "branch": "fix/double-strike-trigger-chains",
+    "commit": "b27dab49d4a5906c6204260fee8fc775dbfa5f5d",
     "databaseVersion": "0.6.0",
     "dataSchemaVersion": 10,
     "gameBuild": "26.6.53509",
@@ -6872,6 +6873,7 @@
       "status": "screenshot-verified"
     }
   },
+  "triggeredAbilityCapabilities": [],
   "unresolvedQuestions": [
     "Enemy adjacency semantics for Blazing Fury Tactical Damage.",
     "Enemy adjacency semantics for Tactical Damage target.",

@@ -22,7 +22,7 @@
   ],
   "currentReviewPhase": "Legendary dragon schema hardening validation and project-context regeneration.",
   "format": "dragonfire-project-state",
-  "generatedAt": "2026-06-25T23:27:35.329Z",
+  "generatedAt": "2026-06-26T00:43:37.772Z",
   "plannedNextPhase": [
     "full formation-output review",
     "additional visual QA",
@@ -34,8 +34,8 @@
     "metadataOnlyDragonCount": 20
   },
   "source": {
-    "branch": "fix/eclipse-cover-formation-traces",
-    "commit": "6e4e37a9f5e74a52622a6200c456399e7262d205",
+    "branch": "fix/double-strike-trigger-chains",
+    "commit": "b27dab49d4a5906c6204260fee8fc775dbfa5f5d",
     "databaseVersion": "0.6.0",
     "dataSchemaVersion": 10,
     "gameBuild": "26.6.53509",
@@ -46,10 +46,10 @@
     "countingMethod": "static working-tree test declaration scan; runtime pass/fail is reported by npm run test",
     "lastRunStatus": "not-run-by-exporter",
     "runner": "vitest",
-    "testCaseCount": 180,
-    "testFileCount": 21
+    "testCaseCount": 188,
+    "testFileCount": 22
   },
-  "unresolvedMechanicsCount": 100,
+  "unresolvedMechanicsCount": 99,
   "versions": {
     "contextVersion": 1,
     "databaseVersion": "0.6.0",
