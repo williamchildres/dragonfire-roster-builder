@@ -420,6 +420,19 @@ function summarizeTrace(
   if (trace.channel === 'stat') {
     return [formatStatEffects(trace.effects) ?? formatStatDetail(detail) ?? detail];
   }
+  if (trace.channel === 'recovery') {
+    const recoveryRate = trace.effects.find((effect) => /Recovery Rate:/i.test(effect));
+    const timing = trace.effects.find((effect) => /Timing:/i.test(effect));
+    const enhancement = trace.effects.find((effect) => /Enhanced by/i.test(effect));
+    return [
+      [
+        `Recovery support${recipient ? ` for ${recipient.name}` : ''}.`,
+        timing,
+        recoveryRate,
+        enhancement,
+      ].filter(Boolean).join(' '),
+    ];
+  }
   if (trace.channel) {
     const recipientCommand = recipient?.command;
     if (recipientCommand && trace.recipientAbilityId?.includes(recipientCommand.id)) {

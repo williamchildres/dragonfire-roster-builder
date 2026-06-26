@@ -167,4 +167,50 @@ describe('Feskar, Rhysarion, and Shadowsong Epic profiles', () => {
       expect.objectContaining({ dragonId: 'shadowsong', statusId: 'vulnerable' }),
     ]));
   });
+
+  it('presents Ebbing Fury Round 4 self-Recovery and Round 1 friendly impairment details', () => {
+    const formation: FormationAnalysisInput = { 'left-flank': 'feskar', vanguard: 'rhysarion', 'right-flank': 'shadowsong' };
+    const roster = ownedRoster(['feskar', 'rhysarion', 'shadowsong'], 2, null);
+    const traces = analyzeCapabilityAmplifications(formation, dragons, { roster });
+    const cards = buildFormationCardPresentation(formation, dragons, traces, { previewEnabled: false });
+    const recoveryTraces = traces.filter((trace) => trace.sourceAbilityId === 'rhysarion-ebbing-fury' && trace.channel === 'recovery');
+    const impairmentTraces = traces.filter((trace) => trace.sourceAbilityId === 'rhysarion-ebbing-fury' && trace.matchKind === 'friendly-impairment');
+    const enemyReduction = traces.find((trace) => trace.sourceAbilityId === 'rhysarion-ebbing-fury' && trace.matchKind === 'enemy-damage-dealt-reduction');
+
+    expect(habit('rhysarion', 'rhysarion-ebbing-fury').schedules.map((schedule) => schedule.id)).toEqual([
+      'ebbing-fury-round-one-debuffs',
+      'ebbing-fury-round-four-recovery',
+    ]);
+    expect(recoveryTraces.map((trace) => trace.recipientDragonId).sort()).toEqual(['feskar', 'rhysarion', 'shadowsong']);
+    for (const trace of recoveryTraces) {
+      const text = [...trace.effects, ...trace.matchedFacts, trace.explanation].join(' ');
+      expect(text).toContain('Timing: Start of Round 4.');
+      expect(text).toContain('Recovery Rate: 25% at effective Habit Level 1.');
+      expect(text).toContain('Ranked progression: L1 25%, L2 30%, L3 35%, L4 42.5%, L5 50%.');
+      expect(text).toContain('Enhanced by Rhysarion Strength.');
+      expect(text).toContain('Targets exactly 3 Allies; caster is eligible.');
+      expect(text).toContain('Final Recovery amount remains unknown.');
+    }
+
+    const rhysarionCard = cards.cards.find((card) => card.dragonId === 'rhysarion');
+    const selfRecovery = rhysarionCard?.provides.find((item) =>
+      item.sourceDragonId === 'rhysarion' &&
+      item.recipientDragonId === 'rhysarion' &&
+      item.abilityName === 'Ebbing Fury' &&
+      /Recovery Rate: 25%/.test([...item.summaryLines, ...item.details, ...item.effects].join(' ')),
+    );
+    expect(selfRecovery).toBeDefined();
+    expect(rhysarionCard?.receives.some((item) => item.sourceDragonId === 'rhysarion' && item.recipientDragonId === 'rhysarion' && item.abilityName === 'Ebbing Fury')).toBe(false);
+
+    expect(impairmentTraces.map((trace) => trace.recipientDragonId).sort()).toEqual(['feskar', 'rhysarion', 'shadowsong']);
+    for (const trace of impairmentTraces) {
+      const text = [...trace.effects, ...trace.matchedFacts, trace.explanation].join(' ');
+      expect(text).toContain('Timing: Start of Round 1.');
+      expect(text).toContain('Duration: 3 rounds.');
+      expect(text).toContain('Damage Dealt reduction at current effective level: 27.5%.');
+      expect(text).toContain('harm');
+      expect(text).not.toMatch(/\bbenefit\b|amplification/i);
+    }
+    expect(enemyReduction).toMatchObject({ recipientDragonId: null, interactionScope: 'enemy-side' });
+  });
 });

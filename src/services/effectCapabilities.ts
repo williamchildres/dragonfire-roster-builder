@@ -131,6 +131,7 @@ export function deriveOutputCapabilities(dragons: Dragon[]): OutputCapability[] 
           combatLogConfirmed: ability.evidenceIds.some((id) => id.includes('combat-log')),
           confidence: confidenceForAbility(ability),
           evidenceIds: ability.evidenceIds,
+          sourceEffectId: effect.id,
         });
       }
       }
@@ -465,6 +466,8 @@ function analyzeAllyOutputSupport(
       }
       const targeting = outputTargetsRecipient(output, providerPosition, recipientPosition);
       const sourceAbility = allAbilities(provider).find((ability) => ability.id === output.abilityId);
+      const context = sourceEffectContext(provider, output.abilityId, output.sourceEffectId);
+      const outputDetails = outputDetailLines(output, context, options);
       const requirements = dedupeRequirements([
         targeting,
         ...(sourceAbility
@@ -474,7 +477,7 @@ function analyzeAllyOutputSupport(
           : []),
         ...outputRequirementTraces(output, options),
       ]);
-      traces.push(makeDependencyTrace({
+      const trace = makeDependencyTrace({
         id: `ally-output-support-${output.id}-${recipientId}`,
         matchKind: 'outgoing-effect-amplification',
         ruleId: 'ally-output-support',
@@ -484,19 +487,167 @@ function analyzeAllyOutputSupport(
         recipientAbilityId: output.id,
         channel: output.channel,
         title: `${output.abilityName} ${channelLabel(output.channel)} support`,
-        explanation: `${provider.name}'s ${output.abilityName} can provide ${channelLabel(output.channel)} to ${recipient.name}.`,
+        explanation: `${provider.name}'s ${output.abilityName} can provide ${channelLabel(output.channel)} to ${recipient.name}.${outputDetails.length > 0 ? ` ${outputDetails.join(' ')}` : ''}`,
         requirements,
-        matchedFacts: [`${output.abilityName} targets ${output.targetCount ?? 'unknown'} ally target(s).`],
-        effects: [`${channelLabel(output.channel)} support`],
+        matchedFacts: [
+          `${output.abilityName} targets ${output.targetCount ?? 'unknown'} ally target(s).`,
+          ...outputDetails,
+        ],
+        effects: [`${channelLabel(output.channel)} support`, ...outputDetails],
         sourceEvidenceIds: output.evidenceIds,
         recipientEvidenceIds: [],
         assumptions: [],
         unresolvedQuestions: output.channel === 'recovery' ? ['Exact final Recovery amount is unknown because the full Level and Instinct Recovery formula is not known.'] : [],
         futureOrConditional: output.futureAvailable || output.conditional,
-      }));
+      });
+      traces.push(shouldExposeSelfOutputTrace(output, recipient.id === provider.id) ? { ...trace, interactionScope: 'cross-dragon' } : trace);
     }
   }
   return traces;
+}
+
+function shouldExposeSelfOutputTrace(output: OutputCapability, isSelfRecipient: boolean): boolean {
+  return isSelfRecipient &&
+    output.channel === 'recovery' &&
+    output.targetSide === 'ally' &&
+    output.targetCount !== 1;
+}
+
+function sourceEffectContext(
+  dragon: Dragon,
+  abilityId: string | null | undefined,
+  sourceEffectId: string | null | undefined,
+): { ability: AbilityDefinition; schedule: AbilitySchedule; effect: AbilityEffect } | null {
+  if (!abilityId || !sourceEffectId) {
+    return null;
+  }
+  const ability = allAbilities(dragon).find((item) => item.id === abilityId);
+  if (!ability) {
+    return null;
+  }
+  for (const schedule of ability.schedules) {
+    const effect = schedule.effects.flatMap(derivableEffects).find((item) => item.id === sourceEffectId);
+    if (effect) {
+      return { ability, schedule, effect };
+    }
+  }
+  return null;
+}
+
+function outputDetailLines(
+  output: OutputCapability,
+  context: { schedule: AbilitySchedule; effect: AbilityEffect } | null,
+  options: CapabilityOptions,
+): string[] {
+  if (!context) {
+    return [];
+  }
+  const details = [
+    scheduleTimingDetail(context.schedule),
+    outputValueDetail(output, context.effect, options),
+    rankedProgressionDetail(context.effect),
+    enhancementDetail(context.effect),
+    outputTargetingDetail(output, context.effect),
+    output.channel === 'recovery' ? 'Final Recovery amount remains unknown.' : null,
+  ];
+  return details.filter((detail): detail is string => Boolean(detail));
+}
+
+function modifierDetailLines(
+  modifier: ModifierCapability,
+  context: { schedule: AbilitySchedule; effect: AbilityEffect } | null,
+  options: CapabilityOptions,
+): string[] {
+  if (!context) {
+    return [];
+  }
+  return [
+    scheduleTimingDetail(context.schedule),
+    modifier.durationRounds ? `Duration: ${modifier.durationRounds} rounds.` : null,
+    rankedProgressionDetail(context.effect),
+    `${channelLabel(modifier.channel)} reduction at current effective level: ${modifierDisplayValue(modifier, options)}.`,
+  ].filter((detail): detail is string => Boolean(detail));
+}
+
+function scheduleTimingDetail(schedule: AbilitySchedule): string | null {
+  if (schedule.roundSelector?.kind === 'start-of-round') {
+    return `Timing: Start of Round ${schedule.roundSelector.round}.`;
+  }
+  if (schedule.roundSelector?.kind === 'start-of-combat') {
+    return 'Timing: Start of combat.';
+  }
+  if (schedule.roundSelector?.kind === 'each-round') {
+    return 'Timing: Each round.';
+  }
+  if (schedule.roundSelector?.kind === 'explicit' && schedule.rounds.length > 0) {
+    return `Timing: Rounds ${schedule.rounds.join(', ')}.`;
+  }
+  return null;
+}
+
+function outputValueDetail(output: OutputCapability, effect: AbilityEffect, options: CapabilityOptions): string | null {
+  const resolved = outputResolvedRankedValue(output, effect, options);
+  const value = resolved?.rankedValue?.value ?? effect.magnitude;
+  if (value === null || value === undefined) {
+    return null;
+  }
+  const level = resolved?.level;
+  const unit = resolved?.rankedValue?.unit ?? effect.unit;
+  const label = output.channel === 'recovery' ? 'Recovery Rate' : channelLabel(output.channel);
+  return `${label}: ${formatValue(value, unit)}${level ? ` at effective Habit Level ${level}` : ''}.`;
+}
+
+function outputResolvedRankedValue(
+  output: OutputCapability,
+  effect: AbilityEffect,
+  options: CapabilityOptions,
+): { rankedValue: RankedValue | undefined; level: number | null } | null {
+  if (effect.rankedValues.length === 0) {
+    return null;
+  }
+  if (options.previewMaxRankInteractions) {
+    return { rankedValue: effect.rankedValues.find((value) => value.level === 5), level: 5 };
+  }
+  const level = effectiveHabitLevelForCapability(output, options);
+  return { rankedValue: rankedValueForHabitLevel(effect.rankedValues, level), level };
+}
+
+function rankedProgressionDetail(effect: AbilityEffect): string | null {
+  if (effect.rankedValues.length === 0) {
+    return null;
+  }
+  return `Ranked progression: ${effect.rankedValues.map((value) => `L${value.level} ${formatValue(value.value, value.unit)}`).join(', ')}.`;
+}
+
+function enhancementDetail(effect: AbilityEffect): string | null {
+  const enhancement = effect.scaling.find((item) => /enhanced by/i.test(item));
+  return enhancement ? `Enhanced by ${enhancement.replace(/^enhanced by\s+/i, '')}.` : null;
+}
+
+function outputTargetingDetail(output: OutputCapability, effect: AbilityEffect): string | null {
+  if (output.targetSide !== 'ally') {
+    return null;
+  }
+  const target = targetForEffect(effect);
+  const caster = target.includesCaster === true
+    ? 'caster is eligible'
+    : target.includesCaster === false
+      ? 'caster is excluded'
+      : 'caster eligibility unknown';
+  if (output.targetCount === 3) {
+    return `Targets exactly 3 Allies; ${caster}.`;
+  }
+  return output.targetCount ? `Targets ${output.targetCount} Allies; ${caster}.` : null;
+}
+
+function formatValue(value: number, unit: RankedValue['unit'] | OutputCapability['channel'] | AbilityEffect['unit']): string {
+  if (unit === 'percent' || unit === 'rate') {
+    return `${value}%`;
+  }
+  if (unit === 'flat') {
+    return `${value} flat`;
+  }
+  return String(value);
 }
 
 function analyzeExtraActionTriggerChains(
@@ -966,6 +1117,8 @@ function analyzeFriendlyImpairments(
         ...providerRequirementTraces(modifier, formation, dragons, options),
       ]);
       const value = modifierDisplayValue(modifier, options);
+      const context = sourceEffectContext(provider, modifier.abilityId, modifier.sourceEffectId);
+      const impairmentDetails = modifierDetailLines(modifier, context, options);
       traces.push(makeDependencyTrace({
         id: `friendly-impairment-${modifier.id}-${recipientId}`,
         matchKind: 'friendly-impairment',
@@ -976,13 +1129,14 @@ function analyzeFriendlyImpairments(
         recipientAbilityId: null,
         channel: modifier.channel,
         title: `${channelLabel(modifier.channel)} Friendly Impairment`,
-        explanation: `${provider.name}'s ${modifier.abilityName} can harm ${recipient.name} by reducing ${channelLabel(modifier.channel)} by ${value}. This is an allied impairment, not support.`,
+        explanation: `${provider.name}'s ${modifier.abilityName} can harm ${recipient.name} by reducing ${channelLabel(modifier.channel)} by ${value}. This is an allied impairment, not support.${impairmentDetails.length > 0 ? ` ${impairmentDetails.join(' ')}` : ''}`,
         requirements,
         matchedFacts: [
           `${modifier.abilityName} targets ${targetSelectorSummary(modifier.targetSelector)}.`,
           ...modifier.conditions.map((condition) => condition.description),
+          ...impairmentDetails,
         ],
-        effects: [`Friendly ${channelLabel(modifier.channel)} decrease ${value}`],
+        effects: [`Friendly ${channelLabel(modifier.channel)} decrease ${value}`, ...impairmentDetails],
         sourceEvidenceIds: modifier.evidenceIds,
         recipientEvidenceIds: [],
         assumptions: [
@@ -3932,10 +4086,13 @@ function modifierResolvedValue(modifier: ModifierCapability, options: Capability
 }
 
 function effectiveHabitLevelForCapability(
-  capability: Pick<ModifierCapability, 'dragonId' | 'abilityId' | 'unlockStarRank' | 'requiredHabitLevel'>,
+  capability: Pick<ModifierCapability, 'dragonId' | 'unlockStarRank' | 'requiredHabitLevel'> & { abilityId: string | null },
   options: CapabilityOptions,
 ) {
   if (capability.requiredHabitLevel === null) {
+    return null;
+  }
+  if (!capability.abilityId) {
     return null;
   }
   const observation = dragonObservationSnapshots.find((snapshot) => snapshot.dragonId === capability.dragonId);
