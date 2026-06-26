@@ -428,5 +428,55 @@
     "reviewer": "repository-owner",
     "scope": "habits",
     "status": "confirmed"
+  },
+  {
+    "dragonId": "daemoros",
+    "evidenceIds": [
+      "daemoros-main-screen-2026-06-26",
+      "daemoros-shadowflame-2026-06-26",
+      "daemoros-warriors-zeal-2026-06-26",
+      "daemoros-instill-fear-2026-06-26",
+      "daemoros-powerful-reflexes-2026-06-26",
+      "daemoros-shroud-of-shadows-2026-06-26",
+      "daemoros-darkening-fear-2026-06-26",
+      "daemoros-phantoms-veil-2026-06-26"
+    ],
+    "id": "daemoros-combat-data-review-2026-06-26",
+    "notes": [
+      "Daemoros command, trait, affinity, observation state, and five Habits were normalized from supplied screenshot evidence.",
+      "Phantom's Veil uses typed one-of effect options so Physical, Tactical, and Fire defenses are not derived as three simultaneous active modifiers.",
+      "Warrior's Zeal uses the established all-qualifying Physical source-scope semantic inherited from Vermax.",
+      "Observation values are account-specific and are not canonical base stats."
+    ],
+    "reviewedAgainstGameBuild": "26.6.53509",
+    "reviewedAt": "2026-06-26",
+    "reviewer": "repository-owner",
+    "scope": "habits",
+    "status": "confirmed"
+  },
+  {
+    "dragonId": "vaeldra",
+    "evidenceIds": [
+      "vaeldra-main-screen-2026-06-26",
+      "vaeldra-lure-2026-06-26",
+      "vaeldra-warriors-resilience-2026-06-26",
+      "vaeldra-dragons-valor-2026-06-26",
+      "vaeldra-ensnare-2026-06-26",
+      "vaeldra-tempting-distraction-2026-06-26",
+      "vaeldra-infernal-force-2026-06-26",
+      "vaeldra-sirens-call-2026-06-26"
+    ],
+    "id": "vaeldra-combat-data-review-2026-06-26",
+    "notes": [
+      "Vaeldra command, trait, affinity, observation state, and five Habits were normalized from supplied screenshot evidence.",
+      "Siren's Call uses conditional effect options so a target receives either Taunt or Stagger, never both from one activation.",
+      "Tempting Distraction is modeled as a successful-Taunt same-target trigger and preserves non-Basic Physical source scope.",
+      "Observation values are account-specific and are not canonical base stats."
+    ],
+    "reviewedAgainstGameBuild": "26.6.53509",
+    "reviewedAt": "2026-06-26",
+    "reviewer": "repository-owner",
+    "scope": "habits",
+    "status": "confirmed"
   }
 ]

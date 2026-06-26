@@ -160,6 +160,10 @@ Source scope prevents support from matching the wrong output source.
 
 Unqualified Damage Dealt wording defaults to all qualifying sources. Explicit wording overrides that default. For example, Vermax Warrior's Zeal applies to Basic Attack Physical Damage because it is unqualified and combat-log confirmed. Malachite Forest's Instinct does not apply to Basic Attacks because the text explicitly excludes them.
 
+## Effect Alternatives
+
+Schema 11 `effectOptions` preserves mechanics that are not simultaneous. Conditional branches such as "Taunt if not already Taunted, otherwise Stagger" may expand into branch-specific status capabilities with conditions retained. One-of choices with an unknown selector, such as selecting exactly one defensive damage scope each round, stay visible in the technical profile but are not derived as multiple concurrent active modifiers.
+
 ## Position Matching
 
 Position and target compatibility are checked before a trace can be active.

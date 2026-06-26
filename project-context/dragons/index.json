@@ -94,11 +94,11 @@
     },
     {
       "breed": "Warrior",
-      "dataStatus": "official-metadata-only",
+      "dataStatus": "community-verified",
       "file": "dragons/daemoros.json",
       "id": "daemoros",
       "name": "Daemoros",
-      "profileCompleteness": "metadata-only",
+      "profileCompleteness": "detailed-combat-data",
       "rarity": "Epic",
       "slug": "daemoros"
     },
@@ -144,11 +144,11 @@
     },
     {
       "breed": "Warrior",
-      "dataStatus": "official-metadata-only",
+      "dataStatus": "community-verified",
       "file": "dragons/vaeldra.json",
       "id": "vaeldra",
       "name": "Vaeldra",
-      "profileCompleteness": "metadata-only",
+      "profileCompleteness": "detailed-combat-data",
       "rarity": "Epic",
       "slug": "vaeldra"
     },

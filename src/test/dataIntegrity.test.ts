@@ -4,7 +4,7 @@ import { BREEDS, RARITIES, TROOP_TYPES } from '../models/dragon';
 
 describe('seeded dragon data integrity', () => {
   it('contains exactly 30 seeded dragons and keeps unsupported combat data unknown', () => {
-    const combatDragonIds = new Set(['syrax', 'vhagar', 'caraxes', 'seasmoke', 'crimson', 'kalspire', 'malachite', 'venator', 'sheepstealer', 'vermax']);
+    const combatDragonIds = new Set(['syrax', 'vhagar', 'caraxes', 'seasmoke', 'crimson', 'kalspire', 'malachite', 'venator', 'daemoros', 'vaeldra', 'sheepstealer', 'vermax']);
 
     expect(dragons).toHaveLength(30);
     expect(new Set(dragons.map((dragon) => dragon.id))).toHaveLength(30);
@@ -40,7 +40,7 @@ describe('seeded dragon data integrity', () => {
     const newNames = dragons.filter((dragon) => dragon.isNew).map((dragon) => dragon.name);
 
     expect(newNames.sort()).toEqual(
-      ['Arrax', 'Arulix', 'Dawnseeker', 'Nyrena', 'Sheepstealer', 'Vermax'].sort(),
+      ['Arrax', 'Arulix', 'Daemoros', 'Dawnseeker', 'Nyrena', 'Sheepstealer', 'Vaeldra', 'Vermax'].sort(),
     );
   });
 
@@ -57,9 +57,11 @@ describe('seeded dragon data integrity', () => {
     expect(Object.values(malachite!.stats).every((value) => value === null)).toBe(true);
   });
 
-  it('stores Sheepstealer and Vermax as pending official-site in-game dragons', () => {
+  it('stores pending official-site in-game dragons', () => {
     const sheepstealer = dragons.find((dragon) => dragon.id === 'sheepstealer');
     const vermax = dragons.find((dragon) => dragon.id === 'vermax');
+    const daemoros = dragons.find((dragon) => dragon.id === 'daemoros');
+    const vaeldra = dragons.find((dragon) => dragon.id === 'vaeldra');
 
     expect(sheepstealer).toMatchObject({
       name: 'Sheepstealer',
@@ -70,6 +72,20 @@ describe('seeded dragon data integrity', () => {
     });
     expect(vermax).toMatchObject({
       name: 'Vermax',
+      rarity: 'Epic',
+      breed: 'Warrior',
+      officialProfileUrl: null,
+      rosterSourceStatus: 'in-game-verified-pending-official-site',
+    });
+    expect(daemoros).toMatchObject({
+      name: 'Daemoros',
+      rarity: 'Epic',
+      breed: 'Warrior',
+      officialProfileUrl: null,
+      rosterSourceStatus: 'in-game-verified-pending-official-site',
+    });
+    expect(vaeldra).toMatchObject({
+      name: 'Vaeldra',
       rarity: 'Epic',
       breed: 'Warrior',
       officialProfileUrl: null,

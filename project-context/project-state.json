@@ -21,27 +21,26 @@
     "Formation normalization preserves defensive scope, target-selection groups, visible-card requirement ownership, source ability identity, interaction scope, pure normal unmet summaries, and debug/export trace retention.",
     "Formation card presentation maps existing normal traces into per-dragon Receives, Provides, Trait status, affinity, candidate, and preview summaries without changing mechanics; layout polish keeps desktop cards equal-height with bounded interaction regions, inline badges, readable summaries, per-item Details, and presentation-only aggregation."
   ],
-  "currentReviewPhase": "Legendary/full-profile schema-hardening and formation-output validation complete.",
+  "currentReviewPhase": "Legendary/full-profile formation validation complete; Epic ingestion active with Daemoros and Vaeldra as the first detailed Epic batch after Vermax.",
   "format": "dragonfire-project-state",
-  "generatedAt": "2026-06-26T04:45:15.744Z",
+  "generatedAt": "2026-06-26T05:42:30.492Z",
   "plannedNextPhase": [
-    "Epic dragon ingestion in batches of two",
+    "continue Epic dragon ingestion in batches of two after the latest merged context is available",
+    "fetch latest merged main and create a new feature branch before each future Epic implementation batch",
     "inspect supplied screenshots and extract Commands, Traits, Habits, targeting, timing, progression, glossary entries, and evidence",
     "compare each mechanic against the current schema and capability framework",
-    "identify unsupported, ambiguous, provisional, or unresolved behavior",
-    "wait for William's confirmation before generating an implementation request",
-    "use a fresh Codex context for Epic implementation because it is a materially different workstream"
+    "identify unsupported, ambiguous, provisional, or unresolved behavior"
   ],
   "rosterCounts": {
-    "detailedDataDragonCount": 10,
+    "detailedDataDragonCount": 12,
     "knownRosterCount": 30,
-    "metadataOnlyDragonCount": 20
+    "metadataOnlyDragonCount": 18
   },
   "source": {
-    "branch": "chore/close-legendary-validation-phase",
-    "commit": "897e64f040899f685964fd5ca24ae8674794aa52",
-    "databaseVersion": "0.6.0",
-    "dataSchemaVersion": 10,
+    "branch": "feature/epic-daemoros-vaeldra",
+    "commit": "fc4c158d6d26318bd6c77764e91030835e317112",
+    "databaseVersion": "0.6.1",
+    "dataSchemaVersion": 11,
     "gameBuild": "26.6.53509",
     "localRosterSchemaVersion": 3,
     "repository": "https://github.com/williamchildres/dragonfire-roster-builder"
@@ -50,14 +49,14 @@
     "countingMethod": "static working-tree test declaration scan; runtime pass/fail is reported by npm run test",
     "lastRunStatus": "not-run-by-exporter",
     "runner": "vitest",
-    "testCaseCount": 201,
-    "testFileCount": 23
+    "testCaseCount": 207,
+    "testFileCount": 24
   },
-  "unresolvedMechanicsCount": 99,
+  "unresolvedMechanicsCount": 132,
   "versions": {
     "contextVersion": 1,
-    "databaseVersion": "0.6.0",
-    "dataSchemaVersion": 10,
+    "databaseVersion": "0.6.1",
+    "dataSchemaVersion": 11,
     "gameBuild": "26.6.53509",
     "localRosterSchemaVersion": 3
   }

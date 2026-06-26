@@ -15,8 +15,8 @@ Dragonfire Roster Lab records verified dragon roster data, combat mechanics, syn
 
 ## Versions
 
-- Database: 0.6.0
-- Data schema: 10
+- Database: 0.6.1
+- Data schema: 11
 - Local roster schema: 3
 - Game build: 26.6.53509
 - Context export: 1
@@ -39,6 +39,8 @@ Formation Builder cards are the primary normal UI for dragon-specific benefits. 
 - Kalspire
 - Malachite
 - Venator
+- Daemoros
+- Vaeldra
 - Sheepstealer
 - Vermax
 
@@ -81,24 +83,23 @@ The framework derives output capabilities, modifier capabilities, status outputs
 - crimson-unlikely-hero-exact-25-and-75-threshold-equality-behavior: Exact 25% and 75% threshold equality behavior.
 - crimson-unlikely-hero-unlikely-hero-table-says-damage-dealt-while-full-text-says-damage-received: Unlikely Hero table says Damage Dealt while full text says Damage Received.
 - crimson-vermins-bane-exact-intelligence-enhancement-for-vermin-s-bane: Exact Intelligence enhancement for Vermin's Bane.
-- global-dynamic-selector-tie-breaking: Tie-breaking for dynamic stat and troop selectors remains unresolved.
-- global-enemy-formation-adjacency: Enemy-formation adjacency is not confirmed.
-- global-enhanced-by-stat-formulas: Exact enhanced-by-stat formulas remain unresolved.
-- global-exact-damage-recovery-formulas: Exact damage, Recovery, and stacking formulas remain unknown.
-- global-extra-basic-attack-trigger-chaining: Extra-Basic-Attack trigger-chain timing, target selection, uptime, and final damage remain unresolved.
-- global-numerical-score-policy: No numerical synergy score is generated until formulas are verified.
+- daemoros-darkening-fear-exact-strength-enhancement-formula: Exact Strength enhancement formula.
+- daemoros-darkening-fear-mutual-stacking-and-refresh-behavior-with-instill-fear: Mutual stacking and refresh behavior with Instill Fear.
+- daemoros-darkening-fear-preferred-flank-fallback-and-tie-details: Preferred-flank fallback and tie details.
+- daemoros-enemy-adjacency: Enemy adjacency.
+- daemoros-instill-fear-exact-strength-enhancement-formula: Exact Strength enhancement formula.
+- daemoros-instill-fear-panic-first-tick-and-refresh-behavior: Panic first-tick and refresh behavior.
 
 ## Review Plan
 
-Current review phase: Legendary/full-profile schema-hardening and formation-output validation complete.
+Current review phase: Legendary/full-profile formation validation complete; Epic ingestion active with Daemoros and Vaeldra as the first detailed Epic batch after Vermax.
 
 Planned next phase:
 
-- Epic dragon ingestion in batches of two
+- continue Epic dragon ingestion in batches of two after the latest merged context is available
+- fetch latest merged main and create a new feature branch before each future Epic implementation batch
 - inspect supplied screenshots and extract Commands, Traits, Habits, targeting, timing, progression, glossary entries, and evidence
 - compare each mechanic against the current schema and capability framework
 - identify unsupported, ambiguous, provisional, or unresolved behavior
-- wait for William's confirmation before generating an implementation request
-- use a fresh Codex context for Epic implementation because it is a materially different workstream
 
 Additional dragon-data work should happen after the formation-output review and UI/tag redesign.

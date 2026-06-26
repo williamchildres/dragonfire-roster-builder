@@ -448,6 +448,78 @@
         "outputCapabilityId": "venator-desperate-ambush-desperate-ambush-physical-output"
       },
       {
+        "abilityId": "daemoros-shadowflame",
+        "dependency": {
+          "notes": [
+            "Effect wording indicates scaling with Strength."
+          ],
+          "statId": "strength",
+          "type": "scales-with-stat"
+        },
+        "dragonId": "daemoros",
+        "outputCapabilityId": "daemoros-shadowflame-shadowflame-physical-output"
+      },
+      {
+        "abilityId": "daemoros-shadowflame",
+        "dependency": {
+          "notes": [
+            "Physical Damage is reduced by target Instinct."
+          ],
+          "statId": "instinct",
+          "type": "mitigated-by-target-stat"
+        },
+        "dragonId": "daemoros",
+        "outputCapabilityId": "daemoros-shadowflame-shadowflame-physical-output"
+      },
+      {
+        "abilityId": "daemoros-shadowflame",
+        "dependency": {
+          "notes": [
+            "Fire Damage is increased by Intelligence."
+          ],
+          "statId": "intelligence",
+          "type": "scales-with-stat"
+        },
+        "dragonId": "daemoros",
+        "outputCapabilityId": "daemoros-shadowflame-shadowflame-burn-output"
+      },
+      {
+        "abilityId": "daemoros-shadowflame",
+        "dependency": {
+          "notes": [
+            "Fire Damage is reduced by target Initiative."
+          ],
+          "statId": "initiative",
+          "type": "mitigated-by-target-stat"
+        },
+        "dragonId": "daemoros",
+        "outputCapabilityId": "daemoros-shadowflame-shadowflame-burn-output"
+      },
+      {
+        "abilityId": "vaeldra-lure",
+        "dependency": {
+          "notes": [
+            "Effect wording indicates scaling with Strength."
+          ],
+          "statId": "strength",
+          "type": "scales-with-stat"
+        },
+        "dragonId": "vaeldra",
+        "outputCapabilityId": "vaeldra-lure-lure-physical-output"
+      },
+      {
+        "abilityId": "vaeldra-lure",
+        "dependency": {
+          "notes": [
+            "Physical Damage is reduced by target Instinct."
+          ],
+          "statId": "instinct",
+          "type": "mitigated-by-target-stat"
+        },
+        "dragonId": "vaeldra",
+        "outputCapabilityId": "vaeldra-lure-lure-physical-output"
+      },
+      {
         "abilityId": "sheepstealer-wild-hunt",
         "dependency": {
           "notes": [
@@ -3130,6 +3202,403 @@
         "unit": "flat",
         "unlockStarRank": 1,
         "value": 20,
+        "valuePerStack": null
+      },
+      {
+        "abilityId": "daemoros-warriors-zeal",
+        "abilityName": "Warrior's Zeal",
+        "activationChanceByHabitLevel": [],
+        "activationChanceFixed": null,
+        "activationGroupId": null,
+        "availability": {
+          "canonical": "canonical-base",
+          "notes": [
+            "Requires Dragon Level 16+.",
+            "Unlocked in observed account collection state, subject to level and star requirements."
+          ],
+          "observedAccount": "observed-available",
+          "reportLabel": "Base kit; Level 16+; observed account hatched",
+          "userRoster": "unknown"
+        },
+        "channel": "stat",
+        "combatLogConfirmed": false,
+        "conditional": false,
+        "conditions": [],
+        "confidence": "confirmed",
+        "currentlyAvailable": true,
+        "damageScope": null,
+        "direction": "dealt",
+        "directlyVerified": true,
+        "dragonId": "daemoros",
+        "durationRounds": null,
+        "evidenceIds": [
+          "daemoros-warriors-zeal-2026-06-26"
+        ],
+        "futureAvailable": false,
+        "id": "daemoros-warriors-zeal-warriors-zeal-left-instinct-stat-dealt-modifier",
+        "label": "Warrior's Zeal: Instinct Up",
+        "minimumDragonLevel": 16,
+        "operation": "increase",
+        "providerRequirements": [
+          {
+            "evidenceIds": [
+              "daemoros-warriors-zeal-2026-06-26"
+            ],
+            "expected": "vanguard",
+            "id": "daemoros-warriors-zeal-provider-position-vanguard",
+            "kind": "provider-position",
+            "label": "Provider position requirement"
+          }
+        ],
+        "rankedValues": [],
+        "recipientRequirements": [],
+        "requiredHabitLevel": null,
+        "role": "ally-support",
+        "sourceEffectId": "warriors-zeal-left-instinct",
+        "sourceScope": "unknown",
+        "stackMaximum": null,
+        "statusId": null,
+        "targetSelector": {
+          "comparisonDirection": null,
+          "comparisonPool": null,
+          "count": null,
+          "includesCaster": null,
+          "position": "left-flank",
+          "scope": "left-flank",
+          "selection": "specific-position",
+          "selectionResource": null,
+          "selectionStat": null,
+          "sharedSelectionGroupId": null,
+          "side": "ally",
+          "tieBehavior": null
+        },
+        "unit": "flat",
+        "unlockStarRank": 1,
+        "value": 20,
+        "valuePerStack": null
+      },
+      {
+        "abilityId": "daemoros-warriors-zeal",
+        "abilityName": "Warrior's Zeal",
+        "activationChanceByHabitLevel": [],
+        "activationChanceFixed": null,
+        "activationGroupId": null,
+        "availability": {
+          "canonical": "canonical-base",
+          "notes": [
+            "Requires Dragon Level 16+.",
+            "Unlocked in observed account collection state, subject to level and star requirements."
+          ],
+          "observedAccount": "observed-available",
+          "reportLabel": "Base kit; Level 16+; observed account hatched",
+          "userRoster": "unknown"
+        },
+        "channel": "stat",
+        "combatLogConfirmed": false,
+        "conditional": false,
+        "conditions": [],
+        "confidence": "confirmed",
+        "currentlyAvailable": true,
+        "damageScope": null,
+        "direction": "dealt",
+        "directlyVerified": true,
+        "dragonId": "daemoros",
+        "durationRounds": null,
+        "evidenceIds": [
+          "daemoros-warriors-zeal-2026-06-26"
+        ],
+        "futureAvailable": false,
+        "id": "daemoros-warriors-zeal-warriors-zeal-left-initiative-stat-dealt-modifier",
+        "label": "Warrior's Zeal: Initiative Up",
+        "minimumDragonLevel": 16,
+        "operation": "increase",
+        "providerRequirements": [
+          {
+            "evidenceIds": [
+              "daemoros-warriors-zeal-2026-06-26"
+            ],
+            "expected": "vanguard",
+            "id": "daemoros-warriors-zeal-provider-position-vanguard",
+            "kind": "provider-position",
+            "label": "Provider position requirement"
+          }
+        ],
+        "rankedValues": [],
+        "recipientRequirements": [],
+        "requiredHabitLevel": null,
+        "role": "ally-support",
+        "sourceEffectId": "warriors-zeal-left-initiative",
+        "sourceScope": "unknown",
+        "stackMaximum": null,
+        "statusId": null,
+        "targetSelector": {
+          "comparisonDirection": null,
+          "comparisonPool": null,
+          "count": null,
+          "includesCaster": null,
+          "position": "left-flank",
+          "scope": "left-flank",
+          "selection": "specific-position",
+          "selectionResource": null,
+          "selectionStat": null,
+          "sharedSelectionGroupId": null,
+          "side": "ally",
+          "tieBehavior": null
+        },
+        "unit": "flat",
+        "unlockStarRank": 1,
+        "value": 20,
+        "valuePerStack": null
+      },
+      {
+        "abilityId": "vaeldra-warriors-resilience",
+        "abilityName": "Warrior's Resilience",
+        "activationChanceByHabitLevel": [],
+        "activationChanceFixed": null,
+        "activationGroupId": null,
+        "availability": {
+          "canonical": "canonical-base",
+          "notes": [
+            "Requires Dragon Level 16+.",
+            "Unlocked in observed account collection state, subject to level and star requirements."
+          ],
+          "observedAccount": "observed-available",
+          "reportLabel": "Base kit; Level 16+; observed account hatched",
+          "userRoster": "unknown"
+        },
+        "channel": "tactical-damage",
+        "combatLogConfirmed": false,
+        "conditional": false,
+        "conditions": [],
+        "confidence": "confirmed",
+        "currentlyAvailable": true,
+        "damageScope": null,
+        "direction": "dealt",
+        "directlyVerified": true,
+        "dragonId": "vaeldra",
+        "durationRounds": null,
+        "evidenceIds": [
+          "vaeldra-warriors-resilience-2026-06-26"
+        ],
+        "futureAvailable": false,
+        "id": "vaeldra-warriors-resilience-warriors-resilience-left-tactical-tactical-damage-dealt-modifier",
+        "label": "Warrior's Resilience: Tactical Damage Dealt Up",
+        "minimumDragonLevel": 16,
+        "operation": "increase",
+        "providerRequirements": [
+          {
+            "evidenceIds": [
+              "vaeldra-warriors-resilience-2026-06-26"
+            ],
+            "expected": "vanguard",
+            "id": "vaeldra-warriors-resilience-provider-position-vanguard",
+            "kind": "provider-position",
+            "label": "Provider position requirement"
+          }
+        ],
+        "rankedValues": [],
+        "recipientRequirements": [],
+        "requiredHabitLevel": null,
+        "role": "ally-support",
+        "sourceEffectId": "warriors-resilience-left-tactical",
+        "sourceScope": "all-qualifying-sources",
+        "stackMaximum": null,
+        "statusId": null,
+        "targetSelector": {
+          "comparisonDirection": null,
+          "comparisonPool": null,
+          "count": null,
+          "includesCaster": null,
+          "position": "left-flank",
+          "scope": "left-flank",
+          "selection": "specific-position",
+          "selectionResource": null,
+          "selectionStat": null,
+          "sharedSelectionGroupId": null,
+          "side": "ally",
+          "tieBehavior": null
+        },
+        "unit": "percent",
+        "unlockStarRank": 1,
+        "value": 16,
+        "valuePerStack": null
+      },
+      {
+        "abilityId": "vaeldra-infernal-force",
+        "abilityName": "Infernal Force",
+        "activationChanceByHabitLevel": [],
+        "activationChanceFixed": null,
+        "activationGroupId": "infernal-force-fire",
+        "availability": {
+          "canonical": "canonical-locked",
+          "notes": [
+            "Future at Star Rank 8.",
+            "Unlocked in observed account collection state, subject to level and star requirements."
+          ],
+          "observedAccount": "observed-available",
+          "reportLabel": "Future at Star Rank 8; observed account hatched",
+          "userRoster": "unknown"
+        },
+        "channel": "fire-damage",
+        "combatLogConfirmed": false,
+        "conditional": true,
+        "conditions": [],
+        "confidence": "confirmed",
+        "currentlyAvailable": false,
+        "damageScope": null,
+        "direction": "dealt",
+        "directlyVerified": true,
+        "dragonId": "vaeldra",
+        "durationRounds": 3,
+        "evidenceIds": [
+          "vaeldra-infernal-force-2026-06-26"
+        ],
+        "futureAvailable": true,
+        "id": "vaeldra-infernal-force-infernal-force-fire-fire-damage-dealt-modifier",
+        "label": "Infernal Force: Fire Damage Dealt Up",
+        "minimumDragonLevel": null,
+        "operation": "increase",
+        "providerRequirements": [],
+        "rankedValues": [
+          {
+            "level": 1,
+            "unit": "percent",
+            "value": 12
+          },
+          {
+            "level": 2,
+            "unit": "percent",
+            "value": 14.4
+          },
+          {
+            "level": 3,
+            "unit": "percent",
+            "value": 16.8
+          },
+          {
+            "level": 4,
+            "unit": "percent",
+            "value": 20.4
+          },
+          {
+            "level": 5,
+            "unit": "percent",
+            "value": 24
+          }
+        ],
+        "recipientRequirements": [],
+        "requiredHabitLevel": 1,
+        "role": "ally-support",
+        "sourceEffectId": "infernal-force-fire",
+        "sourceScope": "all-qualifying-sources",
+        "stackMaximum": null,
+        "statusId": null,
+        "targetSelector": {
+          "comparisonDirection": null,
+          "comparisonPool": null,
+          "count": 1,
+          "includesCaster": true,
+          "position": null,
+          "scope": "any-lane",
+          "selection": "any",
+          "selectionResource": null,
+          "selectionStat": null,
+          "sharedSelectionGroupId": "infernal-force-fire",
+          "side": "ally",
+          "tieBehavior": null
+        },
+        "unit": "percent",
+        "unlockStarRank": 8,
+        "value": null,
+        "valuePerStack": null
+      },
+      {
+        "abilityId": "vaeldra-infernal-force",
+        "abilityName": "Infernal Force",
+        "activationChanceByHabitLevel": [],
+        "activationChanceFixed": null,
+        "activationGroupId": "infernal-force-physical",
+        "availability": {
+          "canonical": "canonical-locked",
+          "notes": [
+            "Future at Star Rank 8.",
+            "Unlocked in observed account collection state, subject to level and star requirements."
+          ],
+          "observedAccount": "observed-available",
+          "reportLabel": "Future at Star Rank 8; observed account hatched",
+          "userRoster": "unknown"
+        },
+        "channel": "physical-damage",
+        "combatLogConfirmed": false,
+        "conditional": true,
+        "conditions": [],
+        "confidence": "confirmed",
+        "currentlyAvailable": false,
+        "damageScope": null,
+        "direction": "dealt",
+        "directlyVerified": true,
+        "dragonId": "vaeldra",
+        "durationRounds": 3,
+        "evidenceIds": [
+          "vaeldra-infernal-force-2026-06-26"
+        ],
+        "futureAvailable": true,
+        "id": "vaeldra-infernal-force-infernal-force-physical-physical-damage-dealt-modifier",
+        "label": "Infernal Force: Physical Damage Dealt Up",
+        "minimumDragonLevel": null,
+        "operation": "increase",
+        "providerRequirements": [],
+        "rankedValues": [
+          {
+            "level": 1,
+            "unit": "percent",
+            "value": 12
+          },
+          {
+            "level": 2,
+            "unit": "percent",
+            "value": 14.4
+          },
+          {
+            "level": 3,
+            "unit": "percent",
+            "value": 16.8
+          },
+          {
+            "level": 4,
+            "unit": "percent",
+            "value": 20.4
+          },
+          {
+            "level": 5,
+            "unit": "percent",
+            "value": 24
+          }
+        ],
+        "recipientRequirements": [],
+        "requiredHabitLevel": 1,
+        "role": "ally-support",
+        "sourceEffectId": "infernal-force-physical",
+        "sourceScope": "non-basic-attacks",
+        "stackMaximum": null,
+        "statusId": null,
+        "targetSelector": {
+          "comparisonDirection": null,
+          "comparisonPool": null,
+          "count": 1,
+          "includesCaster": true,
+          "position": null,
+          "scope": "any-lane",
+          "selection": "any",
+          "selectionResource": null,
+          "selectionStat": null,
+          "sharedSelectionGroupId": "infernal-force-physical",
+          "side": "ally",
+          "tieBehavior": null
+        },
+        "unit": "percent",
+        "unlockStarRank": 8,
+        "value": null,
         "valuePerStack": null
       },
       {
@@ -5926,6 +6395,774 @@
         "valuePerStack": null
       },
       {
+        "abilityId": "daemoros-instill-fear",
+        "abilityName": "Instill Fear",
+        "activationChanceByHabitLevel": [
+          {
+            "level": 1,
+            "unit": "percent",
+            "value": 25
+          },
+          {
+            "level": 2,
+            "unit": "percent",
+            "value": 30
+          },
+          {
+            "level": 3,
+            "unit": "percent",
+            "value": 35
+          },
+          {
+            "level": 4,
+            "unit": "percent",
+            "value": 42.5
+          },
+          {
+            "level": 5,
+            "unit": "percent",
+            "value": 50
+          }
+        ],
+        "activationChanceFixed": null,
+        "activationGroupId": "instill-fear-target",
+        "availability": {
+          "canonical": "canonical-locked",
+          "notes": [
+            "Future at Star Rank 2.",
+            "Unlocked in observed account collection state, subject to level and star requirements."
+          ],
+          "observedAccount": "observed-available",
+          "reportLabel": "Future at Star Rank 2; observed account hatched",
+          "userRoster": "unknown"
+        },
+        "channel": "stat",
+        "combatLogConfirmed": false,
+        "conditional": true,
+        "conditions": [
+          {
+            "description": "One successful activation applies all Instill Fear effects to one selected enemy.",
+            "evidenceIds": [],
+            "id": "instill-fear-each-round-activation-chance",
+            "label": "One successful activation applies all Instill Fear effects to one selected enemy.",
+            "unresolved": false
+          }
+        ],
+        "confidence": "confirmed",
+        "currentlyAvailable": false,
+        "damageScope": null,
+        "direction": "dealt",
+        "directlyVerified": true,
+        "dragonId": "daemoros",
+        "durationRounds": 2,
+        "evidenceIds": [
+          "daemoros-instill-fear-2026-06-26"
+        ],
+        "futureAvailable": true,
+        "id": "daemoros-instill-fear-instill-fear-intelligence-stat-dealt-modifier",
+        "label": "Instill Fear: Intelligence Down",
+        "minimumDragonLevel": null,
+        "operation": "decrease",
+        "providerRequirements": [],
+        "rankedValues": [],
+        "recipientRequirements": [],
+        "requiredHabitLevel": 1,
+        "role": "enemy-debuff",
+        "sourceEffectId": "instill-fear-intelligence",
+        "sourceScope": "unknown",
+        "stackMaximum": null,
+        "statusId": null,
+        "targetSelector": {
+          "comparisonDirection": null,
+          "comparisonPool": null,
+          "count": 1,
+          "includesCaster": null,
+          "position": null,
+          "scope": "any-lane",
+          "selection": "any",
+          "selectionResource": null,
+          "selectionStat": null,
+          "sharedSelectionGroupId": "instill-fear-target",
+          "side": "enemy",
+          "tieBehavior": null
+        },
+        "unit": "percent",
+        "unlockStarRank": 2,
+        "value": 25,
+        "valuePerStack": null
+      },
+      {
+        "abilityId": "daemoros-instill-fear",
+        "abilityName": "Instill Fear",
+        "activationChanceByHabitLevel": [
+          {
+            "level": 1,
+            "unit": "percent",
+            "value": 25
+          },
+          {
+            "level": 2,
+            "unit": "percent",
+            "value": 30
+          },
+          {
+            "level": 3,
+            "unit": "percent",
+            "value": 35
+          },
+          {
+            "level": 4,
+            "unit": "percent",
+            "value": 42.5
+          },
+          {
+            "level": 5,
+            "unit": "percent",
+            "value": 50
+          }
+        ],
+        "activationChanceFixed": null,
+        "activationGroupId": "instill-fear-target",
+        "availability": {
+          "canonical": "canonical-locked",
+          "notes": [
+            "Future at Star Rank 2.",
+            "Unlocked in observed account collection state, subject to level and star requirements."
+          ],
+          "observedAccount": "observed-available",
+          "reportLabel": "Future at Star Rank 2; observed account hatched",
+          "userRoster": "unknown"
+        },
+        "channel": "stat",
+        "combatLogConfirmed": false,
+        "conditional": true,
+        "conditions": [
+          {
+            "description": "One successful activation applies all Instill Fear effects to one selected enemy.",
+            "evidenceIds": [],
+            "id": "instill-fear-each-round-activation-chance",
+            "label": "One successful activation applies all Instill Fear effects to one selected enemy.",
+            "unresolved": false
+          }
+        ],
+        "confidence": "confirmed",
+        "currentlyAvailable": false,
+        "damageScope": null,
+        "direction": "dealt",
+        "directlyVerified": true,
+        "dragonId": "daemoros",
+        "durationRounds": 2,
+        "evidenceIds": [
+          "daemoros-instill-fear-2026-06-26"
+        ],
+        "futureAvailable": true,
+        "id": "daemoros-instill-fear-instill-fear-instinct-stat-dealt-modifier",
+        "label": "Instill Fear: Instinct Down",
+        "minimumDragonLevel": null,
+        "operation": "decrease",
+        "providerRequirements": [],
+        "rankedValues": [],
+        "recipientRequirements": [],
+        "requiredHabitLevel": 1,
+        "role": "enemy-debuff",
+        "sourceEffectId": "instill-fear-instinct",
+        "sourceScope": "unknown",
+        "stackMaximum": null,
+        "statusId": null,
+        "targetSelector": {
+          "comparisonDirection": null,
+          "comparisonPool": null,
+          "count": null,
+          "includesCaster": null,
+          "position": null,
+          "scope": "any-lane",
+          "selection": "any",
+          "selectionResource": null,
+          "selectionStat": null,
+          "sharedSelectionGroupId": "instill-fear-target",
+          "side": "enemy",
+          "tieBehavior": null
+        },
+        "unit": "percent",
+        "unlockStarRank": 2,
+        "value": 25,
+        "valuePerStack": null
+      },
+      {
+        "abilityId": "daemoros-darkening-fear",
+        "abilityName": "Darkening Fear",
+        "activationChanceByHabitLevel": [
+          {
+            "level": 1,
+            "unit": "percent",
+            "value": 25
+          },
+          {
+            "level": 2,
+            "unit": "percent",
+            "value": 30
+          },
+          {
+            "level": 3,
+            "unit": "percent",
+            "value": 35
+          },
+          {
+            "level": 4,
+            "unit": "percent",
+            "value": 42.5
+          },
+          {
+            "level": 5,
+            "unit": "percent",
+            "value": 50
+          }
+        ],
+        "activationChanceFixed": null,
+        "activationGroupId": "darkening-fear-target",
+        "availability": {
+          "canonical": "canonical-locked",
+          "notes": [
+            "Future at Star Rank 8.",
+            "Unlocked in observed account collection state, subject to level and star requirements."
+          ],
+          "observedAccount": "observed-available",
+          "reportLabel": "Future at Star Rank 8; observed account hatched",
+          "userRoster": "unknown"
+        },
+        "channel": "stat",
+        "combatLogConfirmed": false,
+        "conditional": true,
+        "conditions": [
+          {
+            "description": "Darkening Fear has its own activation roll and target selection.",
+            "evidenceIds": [],
+            "id": "darkening-fear-each-round-activation-chance",
+            "label": "Darkening Fear has its own activation roll and target selection.",
+            "unresolved": false
+          }
+        ],
+        "confidence": "confirmed",
+        "currentlyAvailable": false,
+        "damageScope": null,
+        "direction": "dealt",
+        "directlyVerified": true,
+        "dragonId": "daemoros",
+        "durationRounds": 2,
+        "evidenceIds": [
+          "daemoros-darkening-fear-2026-06-26"
+        ],
+        "futureAvailable": true,
+        "id": "daemoros-darkening-fear-darkening-fear-intelligence-stat-dealt-modifier",
+        "label": "Darkening Fear: Intelligence Down",
+        "minimumDragonLevel": null,
+        "operation": "decrease",
+        "providerRequirements": [],
+        "rankedValues": [],
+        "recipientRequirements": [],
+        "requiredHabitLevel": 1,
+        "role": "enemy-debuff",
+        "sourceEffectId": "darkening-fear-intelligence",
+        "sourceScope": "unknown",
+        "stackMaximum": null,
+        "statusId": null,
+        "targetSelector": {
+          "comparisonDirection": null,
+          "comparisonPool": null,
+          "count": 1,
+          "includesCaster": null,
+          "position": null,
+          "scope": "any-lane",
+          "selection": "any",
+          "selectionResource": null,
+          "selectionStat": null,
+          "sharedSelectionGroupId": "darkening-fear-target",
+          "side": "enemy",
+          "tieBehavior": null
+        },
+        "unit": "percent",
+        "unlockStarRank": 8,
+        "value": 25,
+        "valuePerStack": null
+      },
+      {
+        "abilityId": "daemoros-darkening-fear",
+        "abilityName": "Darkening Fear",
+        "activationChanceByHabitLevel": [
+          {
+            "level": 1,
+            "unit": "percent",
+            "value": 25
+          },
+          {
+            "level": 2,
+            "unit": "percent",
+            "value": 30
+          },
+          {
+            "level": 3,
+            "unit": "percent",
+            "value": 35
+          },
+          {
+            "level": 4,
+            "unit": "percent",
+            "value": 42.5
+          },
+          {
+            "level": 5,
+            "unit": "percent",
+            "value": 50
+          }
+        ],
+        "activationChanceFixed": null,
+        "activationGroupId": "darkening-fear-target",
+        "availability": {
+          "canonical": "canonical-locked",
+          "notes": [
+            "Future at Star Rank 8.",
+            "Unlocked in observed account collection state, subject to level and star requirements."
+          ],
+          "observedAccount": "observed-available",
+          "reportLabel": "Future at Star Rank 8; observed account hatched",
+          "userRoster": "unknown"
+        },
+        "channel": "stat",
+        "combatLogConfirmed": false,
+        "conditional": true,
+        "conditions": [
+          {
+            "description": "Darkening Fear has its own activation roll and target selection.",
+            "evidenceIds": [],
+            "id": "darkening-fear-each-round-activation-chance",
+            "label": "Darkening Fear has its own activation roll and target selection.",
+            "unresolved": false
+          }
+        ],
+        "confidence": "confirmed",
+        "currentlyAvailable": false,
+        "damageScope": null,
+        "direction": "dealt",
+        "directlyVerified": true,
+        "dragonId": "daemoros",
+        "durationRounds": 2,
+        "evidenceIds": [
+          "daemoros-darkening-fear-2026-06-26"
+        ],
+        "futureAvailable": true,
+        "id": "daemoros-darkening-fear-darkening-fear-instinct-stat-dealt-modifier",
+        "label": "Darkening Fear: Instinct Down",
+        "minimumDragonLevel": null,
+        "operation": "decrease",
+        "providerRequirements": [],
+        "rankedValues": [],
+        "recipientRequirements": [],
+        "requiredHabitLevel": 1,
+        "role": "enemy-debuff",
+        "sourceEffectId": "darkening-fear-instinct",
+        "sourceScope": "unknown",
+        "stackMaximum": null,
+        "statusId": null,
+        "targetSelector": {
+          "comparisonDirection": null,
+          "comparisonPool": null,
+          "count": null,
+          "includesCaster": null,
+          "position": null,
+          "scope": "any-lane",
+          "selection": "any",
+          "selectionResource": null,
+          "selectionStat": null,
+          "sharedSelectionGroupId": "darkening-fear-target",
+          "side": "enemy",
+          "tieBehavior": null
+        },
+        "unit": "percent",
+        "unlockStarRank": 8,
+        "value": 25,
+        "valuePerStack": null
+      },
+      {
+        "abilityId": "vaeldra-ensnare",
+        "abilityName": "Ensnare",
+        "activationChanceByHabitLevel": [],
+        "activationChanceFixed": null,
+        "activationGroupId": "ensnare-targets",
+        "availability": {
+          "canonical": "canonical-locked",
+          "notes": [
+            "Future at Star Rank 4.",
+            "Unlocked in observed account collection state, subject to level and star requirements."
+          ],
+          "observedAccount": "observed-available",
+          "reportLabel": "Future at Star Rank 4; observed account hatched",
+          "userRoster": "unknown"
+        },
+        "channel": "stat",
+        "combatLogConfirmed": false,
+        "conditional": true,
+        "conditions": [],
+        "confidence": "confirmed",
+        "currentlyAvailable": false,
+        "damageScope": null,
+        "direction": "dealt",
+        "directlyVerified": true,
+        "dragonId": "vaeldra",
+        "durationRounds": 3,
+        "evidenceIds": [
+          "vaeldra-ensnare-2026-06-26"
+        ],
+        "futureAvailable": true,
+        "id": "vaeldra-ensnare-ensnare-instinct-stat-dealt-modifier",
+        "label": "Ensnare: Instinct Down",
+        "minimumDragonLevel": null,
+        "operation": "decrease",
+        "providerRequirements": [],
+        "rankedValues": [
+          {
+            "level": 1,
+            "unit": "percent",
+            "value": 18
+          },
+          {
+            "level": 2,
+            "unit": "percent",
+            "value": 21.6
+          },
+          {
+            "level": 3,
+            "unit": "percent",
+            "value": 25.2
+          },
+          {
+            "level": 4,
+            "unit": "percent",
+            "value": 30.6
+          },
+          {
+            "level": 5,
+            "unit": "percent",
+            "value": 36
+          }
+        ],
+        "recipientRequirements": [],
+        "requiredHabitLevel": 1,
+        "role": "enemy-debuff",
+        "sourceEffectId": "ensnare-instinct",
+        "sourceScope": "unknown",
+        "stackMaximum": null,
+        "statusId": null,
+        "targetSelector": {
+          "comparisonDirection": null,
+          "comparisonPool": null,
+          "count": 1,
+          "includesCaster": null,
+          "position": null,
+          "scope": "within-adjacency",
+          "selection": "one-eligible-adjacent",
+          "selectionResource": null,
+          "selectionStat": null,
+          "sharedSelectionGroupId": "ensnare-targets",
+          "side": "enemy",
+          "tieBehavior": null
+        },
+        "unit": "percent",
+        "unlockStarRank": 4,
+        "value": null,
+        "valuePerStack": null
+      },
+      {
+        "abilityId": "vaeldra-ensnare",
+        "abilityName": "Ensnare",
+        "activationChanceByHabitLevel": [],
+        "activationChanceFixed": null,
+        "activationGroupId": "ensnare-targets",
+        "availability": {
+          "canonical": "canonical-locked",
+          "notes": [
+            "Future at Star Rank 4.",
+            "Unlocked in observed account collection state, subject to level and star requirements."
+          ],
+          "observedAccount": "observed-available",
+          "reportLabel": "Future at Star Rank 4; observed account hatched",
+          "userRoster": "unknown"
+        },
+        "channel": "stat",
+        "combatLogConfirmed": false,
+        "conditional": true,
+        "conditions": [],
+        "confidence": "confirmed",
+        "currentlyAvailable": false,
+        "damageScope": null,
+        "direction": "dealt",
+        "directlyVerified": true,
+        "dragonId": "vaeldra",
+        "durationRounds": 3,
+        "evidenceIds": [
+          "vaeldra-ensnare-2026-06-26"
+        ],
+        "futureAvailable": true,
+        "id": "vaeldra-ensnare-ensnare-initiative-stat-dealt-modifier",
+        "label": "Ensnare: Initiative Down",
+        "minimumDragonLevel": null,
+        "operation": "decrease",
+        "providerRequirements": [],
+        "rankedValues": [
+          {
+            "level": 1,
+            "unit": "percent",
+            "value": 18
+          },
+          {
+            "level": 2,
+            "unit": "percent",
+            "value": 21.6
+          },
+          {
+            "level": 3,
+            "unit": "percent",
+            "value": 25.2
+          },
+          {
+            "level": 4,
+            "unit": "percent",
+            "value": 30.6
+          },
+          {
+            "level": 5,
+            "unit": "percent",
+            "value": 36
+          }
+        ],
+        "recipientRequirements": [],
+        "requiredHabitLevel": 1,
+        "role": "enemy-debuff",
+        "sourceEffectId": "ensnare-initiative",
+        "sourceScope": "unknown",
+        "stackMaximum": null,
+        "statusId": null,
+        "targetSelector": {
+          "comparisonDirection": null,
+          "comparisonPool": null,
+          "count": 1,
+          "includesCaster": null,
+          "position": null,
+          "scope": "within-adjacency",
+          "selection": "one-eligible-adjacent",
+          "selectionResource": null,
+          "selectionStat": null,
+          "sharedSelectionGroupId": "ensnare-targets",
+          "side": "enemy",
+          "tieBehavior": null
+        },
+        "unit": "percent",
+        "unlockStarRank": 4,
+        "value": null,
+        "valuePerStack": null
+      },
+      {
+        "abilityId": "vaeldra-tempting-distraction",
+        "abilityName": "Tempting Distraction",
+        "activationChanceByHabitLevel": [],
+        "activationChanceFixed": null,
+        "activationGroupId": null,
+        "availability": {
+          "canonical": "canonical-locked",
+          "notes": [
+            "Future at Star Rank 6.",
+            "Unlocked in observed account collection state, subject to level and star requirements."
+          ],
+          "observedAccount": "observed-available",
+          "reportLabel": "Future at Star Rank 6; observed account hatched",
+          "userRoster": "unknown"
+        },
+        "channel": "physical-damage",
+        "combatLogConfirmed": false,
+        "conditional": true,
+        "conditions": [
+          {
+            "comparison": null,
+            "description": "A Taunt was successfully applied to this target.",
+            "evidenceIds": [],
+            "id": "successful-taunt-application",
+            "kind": "successful-status-application",
+            "label": "A Taunt was successfully applied to this target.",
+            "subject": "target",
+            "thresholdPercent": null,
+            "unresolved": false
+          }
+        ],
+        "confidence": "confirmed",
+        "currentlyAvailable": false,
+        "damageScope": "physical",
+        "direction": "received",
+        "directlyVerified": true,
+        "dragonId": "vaeldra",
+        "durationRounds": 2,
+        "evidenceIds": [
+          "vaeldra-tempting-distraction-2026-06-26"
+        ],
+        "futureAvailable": true,
+        "id": "vaeldra-tempting-distraction-tempting-distraction-physical-physical-damage-received-modifier",
+        "label": "Tempting Distraction: Physical Damage Received Up",
+        "minimumDragonLevel": null,
+        "operation": "increase",
+        "providerRequirements": [],
+        "rankedValues": [
+          {
+            "level": 1,
+            "unit": "percent",
+            "value": 6
+          },
+          {
+            "level": 2,
+            "unit": "percent",
+            "value": 7.2
+          },
+          {
+            "level": 3,
+            "unit": "percent",
+            "value": 8.4
+          },
+          {
+            "level": 4,
+            "unit": "percent",
+            "value": 10.2
+          },
+          {
+            "level": 5,
+            "unit": "percent",
+            "value": 12
+          }
+        ],
+        "recipientRequirements": [],
+        "requiredHabitLevel": 1,
+        "role": "enemy-debuff",
+        "sourceEffectId": "tempting-distraction-physical",
+        "sourceScope": "non-basic-attacks",
+        "stackMaximum": null,
+        "statusId": null,
+        "targetSelector": {
+          "comparisonDirection": null,
+          "comparisonPool": null,
+          "count": null,
+          "includesCaster": null,
+          "position": null,
+          "scope": "any-lane",
+          "selection": "any",
+          "selectionResource": null,
+          "selectionStat": null,
+          "sharedSelectionGroupId": null,
+          "side": "enemy",
+          "tieBehavior": null
+        },
+        "unit": "percent",
+        "unlockStarRank": 6,
+        "value": null,
+        "valuePerStack": null
+      },
+      {
+        "abilityId": "vaeldra-tempting-distraction",
+        "abilityName": "Tempting Distraction",
+        "activationChanceByHabitLevel": [],
+        "activationChanceFixed": null,
+        "activationGroupId": null,
+        "availability": {
+          "canonical": "canonical-locked",
+          "notes": [
+            "Future at Star Rank 6.",
+            "Unlocked in observed account collection state, subject to level and star requirements."
+          ],
+          "observedAccount": "observed-available",
+          "reportLabel": "Future at Star Rank 6; observed account hatched",
+          "userRoster": "unknown"
+        },
+        "channel": "fire-damage",
+        "combatLogConfirmed": false,
+        "conditional": true,
+        "conditions": [
+          {
+            "comparison": null,
+            "description": "A Taunt was successfully applied to this target.",
+            "evidenceIds": [],
+            "id": "successful-taunt-application",
+            "kind": "successful-status-application",
+            "label": "A Taunt was successfully applied to this target.",
+            "subject": "target",
+            "thresholdPercent": null,
+            "unresolved": false
+          }
+        ],
+        "confidence": "confirmed",
+        "currentlyAvailable": false,
+        "damageScope": "fire",
+        "direction": "received",
+        "directlyVerified": true,
+        "dragonId": "vaeldra",
+        "durationRounds": 2,
+        "evidenceIds": [
+          "vaeldra-tempting-distraction-2026-06-26"
+        ],
+        "futureAvailable": true,
+        "id": "vaeldra-tempting-distraction-tempting-distraction-fire-fire-damage-received-modifier",
+        "label": "Tempting Distraction: Fire Damage Received Up",
+        "minimumDragonLevel": null,
+        "operation": "increase",
+        "providerRequirements": [],
+        "rankedValues": [
+          {
+            "level": 1,
+            "unit": "percent",
+            "value": 6
+          },
+          {
+            "level": 2,
+            "unit": "percent",
+            "value": 7.2
+          },
+          {
+            "level": 3,
+            "unit": "percent",
+            "value": 8.4
+          },
+          {
+            "level": 4,
+            "unit": "percent",
+            "value": 10.2
+          },
+          {
+            "level": 5,
+            "unit": "percent",
+            "value": 12
+          }
+        ],
+        "recipientRequirements": [],
+        "requiredHabitLevel": 1,
+        "role": "enemy-debuff",
+        "sourceEffectId": "tempting-distraction-fire",
+        "sourceScope": "all-qualifying-sources",
+        "stackMaximum": null,
+        "statusId": null,
+        "targetSelector": {
+          "comparisonDirection": null,
+          "comparisonPool": null,
+          "count": null,
+          "includesCaster": null,
+          "position": null,
+          "scope": "any-lane",
+          "selection": "any",
+          "selectionResource": null,
+          "selectionStat": null,
+          "sharedSelectionGroupId": null,
+          "side": "enemy",
+          "tieBehavior": null
+        },
+        "unit": "percent",
+        "unlockStarRank": 6,
+        "value": null,
+        "valuePerStack": null
+      },
+      {
         "abilityId": "sheepstealer-dragons-cunning",
         "abilityName": "Dragon's Cunning",
         "activationChanceByHabitLevel": [],
@@ -7229,6 +8466,159 @@
         "unlockStarRank": 10
       },
       {
+        "abilityId": "daemoros-shadowflame",
+        "abilityName": "Shadowflame",
+        "availability": {
+          "canonical": "canonical-base",
+          "notes": [
+            "Unlocked in observed account collection state, subject to level and star requirements."
+          ],
+          "observedAccount": "observed-available",
+          "reportLabel": "Base kit; observed account hatched",
+          "userRoster": "unknown"
+        },
+        "channel": "physical-damage",
+        "combatLogConfirmed": false,
+        "conditional": false,
+        "conditions": [],
+        "confidence": "confirmed",
+        "currentlyAvailable": true,
+        "dependencies": [
+          {
+            "notes": [
+              "Effect wording indicates scaling with Strength."
+            ],
+            "statId": "strength",
+            "type": "scales-with-stat"
+          },
+          {
+            "notes": [
+              "Physical Damage is reduced by target Instinct."
+            ],
+            "statId": "instinct",
+            "type": "mitigated-by-target-stat"
+          }
+        ],
+        "directlyVerified": true,
+        "dragonId": "daemoros",
+        "evidenceIds": [
+          "daemoros-shadowflame-2026-06-26"
+        ],
+        "futureAvailable": false,
+        "id": "daemoros-shadowflame-shadowflame-physical-output",
+        "label": "Shadowflame: Physical Damage",
+        "minimumDragonLevel": null,
+        "requiredHabitLevel": null,
+        "sourceKind": "command",
+        "sourceScope": "commands",
+        "targetCount": 1,
+        "targetScope": "within-adjacency",
+        "targetSide": "enemy",
+        "unlockStarRank": null
+      },
+      {
+        "abilityId": "daemoros-shadowflame",
+        "abilityName": "Shadowflame",
+        "availability": {
+          "canonical": "canonical-base",
+          "notes": [
+            "Unlocked in observed account collection state, subject to level and star requirements."
+          ],
+          "observedAccount": "observed-available",
+          "reportLabel": "Base kit; observed account hatched",
+          "userRoster": "unknown"
+        },
+        "channel": "fire-damage",
+        "combatLogConfirmed": false,
+        "conditional": true,
+        "conditions": [],
+        "confidence": "confirmed",
+        "currentlyAvailable": true,
+        "dependencies": [
+          {
+            "notes": [
+              "Fire Damage is increased by Intelligence."
+            ],
+            "statId": "intelligence",
+            "type": "scales-with-stat"
+          },
+          {
+            "notes": [
+              "Fire Damage is reduced by target Initiative."
+            ],
+            "statId": "initiative",
+            "type": "mitigated-by-target-stat"
+          }
+        ],
+        "directlyVerified": true,
+        "dragonId": "daemoros",
+        "evidenceIds": [
+          "daemoros-shadowflame-2026-06-26"
+        ],
+        "futureAvailable": false,
+        "id": "daemoros-shadowflame-shadowflame-burn-output",
+        "label": "Shadowflame: Burn",
+        "minimumDragonLevel": null,
+        "requiredHabitLevel": null,
+        "sourceKind": "command",
+        "sourceScope": "commands",
+        "targetCount": null,
+        "targetScope": "within-adjacency",
+        "targetSide": "enemy",
+        "unlockStarRank": null
+      },
+      {
+        "abilityId": "vaeldra-lure",
+        "abilityName": "Lure",
+        "availability": {
+          "canonical": "canonical-base",
+          "notes": [
+            "Unlocked in observed account collection state, subject to level and star requirements."
+          ],
+          "observedAccount": "observed-available",
+          "reportLabel": "Base kit; observed account hatched",
+          "userRoster": "unknown"
+        },
+        "channel": "physical-damage",
+        "combatLogConfirmed": false,
+        "conditional": false,
+        "conditions": [],
+        "confidence": "confirmed",
+        "currentlyAvailable": true,
+        "dependencies": [
+          {
+            "notes": [
+              "Effect wording indicates scaling with Strength."
+            ],
+            "statId": "strength",
+            "type": "scales-with-stat"
+          },
+          {
+            "notes": [
+              "Physical Damage is reduced by target Instinct."
+            ],
+            "statId": "instinct",
+            "type": "mitigated-by-target-stat"
+          }
+        ],
+        "directlyVerified": true,
+        "dragonId": "vaeldra",
+        "evidenceIds": [
+          "vaeldra-lure-2026-06-26"
+        ],
+        "futureAvailable": false,
+        "id": "vaeldra-lure-lure-physical-output",
+        "label": "Lure: Physical Damage",
+        "minimumDragonLevel": null,
+        "requiredHabitLevel": null,
+        "sourceKind": "command",
+        "sourceScope": "commands",
+        "targetCount": 2,
+        "targetScope": "within-adjacency",
+        "targetSide": "enemy",
+        "unlockStarRank": null
+      },
+      {
         "abilityId": "sheepstealer-wild-hunt",
         "abilityName": "Wild Hunt",
         "availability": {
@@ -7580,6 +8970,51 @@
         "durationRounds": 2,
         "evidenceIds": [
           "kalspire-tactical-assault-2026-06-25"
+        ],
+        "mitigationStat": "intelligence",
+        "scalingStat": "instinct",
+        "statusId": "panic",
+        "ticksEachRound": true
+      },
+      {
+        "abilityId": "daemoros-shadowflame",
+        "channel": "fire-damage",
+        "damageRateByHabitLevel": [],
+        "damageRateFixed": 20,
+        "dragonId": "daemoros",
+        "durationRounds": 2,
+        "evidenceIds": [
+          "daemoros-shadowflame-2026-06-26"
+        ],
+        "mitigationStat": "initiative",
+        "scalingStat": "intelligence",
+        "statusId": "burn",
+        "ticksEachRound": true
+      },
+      {
+        "abilityId": "daemoros-instill-fear",
+        "channel": "tactical-damage",
+        "damageRateByHabitLevel": [],
+        "damageRateFixed": 20,
+        "dragonId": "daemoros",
+        "durationRounds": 2,
+        "evidenceIds": [
+          "daemoros-instill-fear-2026-06-26"
+        ],
+        "mitigationStat": "intelligence",
+        "scalingStat": "instinct",
+        "statusId": "panic",
+        "ticksEachRound": true
+      },
+      {
+        "abilityId": "daemoros-darkening-fear",
+        "channel": "tactical-damage",
+        "damageRateByHabitLevel": [],
+        "damageRateFixed": 20,
+        "dragonId": "daemoros",
+        "durationRounds": 2,
+        "evidenceIds": [
+          "daemoros-darkening-fear-2026-06-26"
         ],
         "mitigationStat": "intelligence",
         "scalingStat": "instinct",
@@ -10003,6 +11438,597 @@
         },
         "unit": "percent",
         "unlockStarRank": 4,
+        "value": null,
+        "valuePerStack": null
+      },
+      {
+        "abilityId": "daemoros-warriors-zeal",
+        "abilityName": "Warrior's Zeal",
+        "activationChanceByHabitLevel": [],
+        "activationChanceFixed": null,
+        "activationGroupId": null,
+        "availability": {
+          "canonical": "canonical-base",
+          "notes": [
+            "Requires Dragon Level 16+.",
+            "Unlocked in observed account collection state, subject to level and star requirements."
+          ],
+          "observedAccount": "observed-available",
+          "reportLabel": "Base kit; Level 16+; observed account hatched",
+          "userRoster": "unknown"
+        },
+        "channel": "physical-damage",
+        "combatLogConfirmed": false,
+        "conditional": false,
+        "conditions": [],
+        "confidence": "confirmed",
+        "currentlyAvailable": true,
+        "damageScope": null,
+        "direction": "dealt",
+        "directlyVerified": true,
+        "dragonId": "daemoros",
+        "durationRounds": null,
+        "evidenceIds": [
+          "daemoros-warriors-zeal-2026-06-26"
+        ],
+        "futureAvailable": false,
+        "id": "daemoros-warriors-zeal-warriors-zeal-physical-physical-damage-dealt-modifier",
+        "label": "Warrior's Zeal: Physical Damage Dealt Up",
+        "minimumDragonLevel": 16,
+        "operation": "increase",
+        "providerRequirements": [
+          {
+            "evidenceIds": [
+              "daemoros-warriors-zeal-2026-06-26"
+            ],
+            "expected": "vanguard",
+            "id": "daemoros-warriors-zeal-provider-position-vanguard",
+            "kind": "provider-position",
+            "label": "Provider position requirement"
+          }
+        ],
+        "rankedValues": [],
+        "recipientRequirements": [],
+        "requiredHabitLevel": null,
+        "role": "self-amplification",
+        "sourceEffectId": "warriors-zeal-physical",
+        "sourceScope": "all-qualifying-sources",
+        "stackMaximum": null,
+        "statusId": null,
+        "targetSelector": {
+          "comparisonDirection": null,
+          "comparisonPool": null,
+          "count": null,
+          "includesCaster": null,
+          "position": null,
+          "scope": "self",
+          "selection": "self",
+          "selectionResource": null,
+          "selectionStat": null,
+          "sharedSelectionGroupId": null,
+          "side": "self",
+          "tieBehavior": null
+        },
+        "unit": "percent",
+        "unlockStarRank": 1,
+        "value": 16,
+        "valuePerStack": null
+      },
+      {
+        "abilityId": "daemoros-powerful-reflexes",
+        "abilityName": "Powerful Reflexes",
+        "activationChanceByHabitLevel": [],
+        "activationChanceFixed": null,
+        "activationGroupId": null,
+        "availability": {
+          "canonical": "canonical-locked",
+          "notes": [
+            "Future at Star Rank 4.",
+            "Unlocked in observed account collection state, subject to level and star requirements."
+          ],
+          "observedAccount": "observed-available",
+          "reportLabel": "Future at Star Rank 4; observed account hatched",
+          "userRoster": "unknown"
+        },
+        "channel": "stat",
+        "combatLogConfirmed": false,
+        "conditional": true,
+        "conditions": [],
+        "confidence": "confirmed",
+        "currentlyAvailable": false,
+        "damageScope": null,
+        "direction": "dealt",
+        "directlyVerified": true,
+        "dragonId": "daemoros",
+        "durationRounds": null,
+        "evidenceIds": [
+          "daemoros-powerful-reflexes-2026-06-26"
+        ],
+        "futureAvailable": true,
+        "id": "daemoros-powerful-reflexes-powerful-reflexes-strength-stat-dealt-modifier",
+        "label": "Powerful Reflexes: Strength Up",
+        "minimumDragonLevel": null,
+        "operation": "increase",
+        "providerRequirements": [],
+        "rankedValues": [
+          {
+            "level": 1,
+            "unit": "percent",
+            "value": 16
+          },
+          {
+            "level": 2,
+            "unit": "percent",
+            "value": 19.2
+          },
+          {
+            "level": 3,
+            "unit": "percent",
+            "value": 22.4
+          },
+          {
+            "level": 4,
+            "unit": "percent",
+            "value": 27.2
+          },
+          {
+            "level": 5,
+            "unit": "percent",
+            "value": 32
+          }
+        ],
+        "recipientRequirements": [],
+        "requiredHabitLevel": 1,
+        "role": "self-amplification",
+        "sourceEffectId": "powerful-reflexes-strength",
+        "sourceScope": "unknown",
+        "stackMaximum": null,
+        "statusId": null,
+        "targetSelector": {
+          "comparisonDirection": null,
+          "comparisonPool": null,
+          "count": null,
+          "includesCaster": null,
+          "position": null,
+          "scope": "self",
+          "selection": "self",
+          "selectionResource": null,
+          "selectionStat": null,
+          "sharedSelectionGroupId": null,
+          "side": "self",
+          "tieBehavior": null
+        },
+        "unit": "percent",
+        "unlockStarRank": 4,
+        "value": null,
+        "valuePerStack": null
+      },
+      {
+        "abilityId": "daemoros-powerful-reflexes",
+        "abilityName": "Powerful Reflexes",
+        "activationChanceByHabitLevel": [],
+        "activationChanceFixed": null,
+        "activationGroupId": null,
+        "availability": {
+          "canonical": "canonical-locked",
+          "notes": [
+            "Future at Star Rank 4.",
+            "Unlocked in observed account collection state, subject to level and star requirements."
+          ],
+          "observedAccount": "observed-available",
+          "reportLabel": "Future at Star Rank 4; observed account hatched",
+          "userRoster": "unknown"
+        },
+        "channel": "stat",
+        "combatLogConfirmed": false,
+        "conditional": true,
+        "conditions": [],
+        "confidence": "confirmed",
+        "currentlyAvailable": false,
+        "damageScope": null,
+        "direction": "dealt",
+        "directlyVerified": true,
+        "dragonId": "daemoros",
+        "durationRounds": null,
+        "evidenceIds": [
+          "daemoros-powerful-reflexes-2026-06-26"
+        ],
+        "futureAvailable": true,
+        "id": "daemoros-powerful-reflexes-powerful-reflexes-initiative-stat-dealt-modifier",
+        "label": "Powerful Reflexes: Initiative Up",
+        "minimumDragonLevel": null,
+        "operation": "increase",
+        "providerRequirements": [],
+        "rankedValues": [
+          {
+            "level": 1,
+            "unit": "percent",
+            "value": 16
+          },
+          {
+            "level": 2,
+            "unit": "percent",
+            "value": 19.2
+          },
+          {
+            "level": 3,
+            "unit": "percent",
+            "value": 22.4
+          },
+          {
+            "level": 4,
+            "unit": "percent",
+            "value": 27.2
+          },
+          {
+            "level": 5,
+            "unit": "percent",
+            "value": 32
+          }
+        ],
+        "recipientRequirements": [],
+        "requiredHabitLevel": 1,
+        "role": "self-amplification",
+        "sourceEffectId": "powerful-reflexes-initiative",
+        "sourceScope": "unknown",
+        "stackMaximum": null,
+        "statusId": null,
+        "targetSelector": {
+          "comparisonDirection": null,
+          "comparisonPool": null,
+          "count": null,
+          "includesCaster": null,
+          "position": null,
+          "scope": "self",
+          "selection": "self",
+          "selectionResource": null,
+          "selectionStat": null,
+          "sharedSelectionGroupId": null,
+          "side": "self",
+          "tieBehavior": null
+        },
+        "unit": "percent",
+        "unlockStarRank": 4,
+        "value": null,
+        "valuePerStack": null
+      },
+      {
+        "abilityId": "vaeldra-warriors-resilience",
+        "abilityName": "Warrior's Resilience",
+        "activationChanceByHabitLevel": [],
+        "activationChanceFixed": null,
+        "activationGroupId": null,
+        "availability": {
+          "canonical": "canonical-base",
+          "notes": [
+            "Requires Dragon Level 16+.",
+            "Unlocked in observed account collection state, subject to level and star requirements."
+          ],
+          "observedAccount": "observed-available",
+          "reportLabel": "Base kit; Level 16+; observed account hatched",
+          "userRoster": "unknown"
+        },
+        "channel": "damage-received",
+        "combatLogConfirmed": false,
+        "conditional": false,
+        "conditions": [],
+        "confidence": "confirmed",
+        "currentlyAvailable": true,
+        "damageScope": "all",
+        "direction": "received",
+        "directlyVerified": true,
+        "dragonId": "vaeldra",
+        "durationRounds": null,
+        "evidenceIds": [
+          "vaeldra-warriors-resilience-2026-06-26"
+        ],
+        "futureAvailable": false,
+        "id": "vaeldra-warriors-resilience-warriors-resilience-damage-received-damage-received-received-modifier",
+        "label": "Warrior's Resilience: Damage Received Down",
+        "minimumDragonLevel": 16,
+        "operation": "decrease",
+        "providerRequirements": [
+          {
+            "evidenceIds": [
+              "vaeldra-warriors-resilience-2026-06-26"
+            ],
+            "expected": "vanguard",
+            "id": "vaeldra-warriors-resilience-provider-position-vanguard",
+            "kind": "provider-position",
+            "label": "Provider position requirement"
+          }
+        ],
+        "rankedValues": [],
+        "recipientRequirements": [],
+        "requiredHabitLevel": null,
+        "role": "self-amplification",
+        "sourceEffectId": "warriors-resilience-damage-received",
+        "sourceScope": "all-qualifying-sources",
+        "stackMaximum": null,
+        "statusId": null,
+        "targetSelector": {
+          "comparisonDirection": null,
+          "comparisonPool": null,
+          "count": null,
+          "includesCaster": null,
+          "position": null,
+          "scope": "self",
+          "selection": "self",
+          "selectionResource": null,
+          "selectionStat": null,
+          "sharedSelectionGroupId": null,
+          "side": "self",
+          "tieBehavior": null
+        },
+        "unit": "percent",
+        "unlockStarRank": 1,
+        "value": 8,
+        "valuePerStack": null
+      },
+      {
+        "abilityId": "vaeldra-dragons-valor",
+        "abilityName": "Dragon's Valor",
+        "activationChanceByHabitLevel": [],
+        "activationChanceFixed": null,
+        "activationGroupId": null,
+        "availability": {
+          "canonical": "canonical-locked",
+          "notes": [
+            "Future at Star Rank 2.",
+            "Unlocked in observed account collection state, subject to level and star requirements."
+          ],
+          "observedAccount": "observed-available",
+          "reportLabel": "Future at Star Rank 2; observed account hatched",
+          "userRoster": "unknown"
+        },
+        "channel": "damage-received",
+        "combatLogConfirmed": false,
+        "conditional": true,
+        "conditions": [],
+        "confidence": "confirmed",
+        "currentlyAvailable": false,
+        "damageScope": "all",
+        "direction": "received",
+        "directlyVerified": true,
+        "dragonId": "vaeldra",
+        "durationRounds": null,
+        "evidenceIds": [
+          "vaeldra-dragons-valor-2026-06-26"
+        ],
+        "futureAvailable": true,
+        "id": "vaeldra-dragons-valor-dragons-valor-damage-received-damage-received-received-modifier",
+        "label": "Dragon's Valor: Damage Received Down",
+        "minimumDragonLevel": null,
+        "operation": "decrease",
+        "providerRequirements": [],
+        "rankedValues": [
+          {
+            "level": 1,
+            "unit": "percent",
+            "value": 5
+          },
+          {
+            "level": 2,
+            "unit": "percent",
+            "value": 6
+          },
+          {
+            "level": 3,
+            "unit": "percent",
+            "value": 7
+          },
+          {
+            "level": 4,
+            "unit": "percent",
+            "value": 8.5
+          },
+          {
+            "level": 5,
+            "unit": "percent",
+            "value": 10
+          }
+        ],
+        "recipientRequirements": [],
+        "requiredHabitLevel": 1,
+        "role": "self-amplification",
+        "sourceEffectId": "dragons-valor-damage-received",
+        "sourceScope": "all-qualifying-sources",
+        "stackMaximum": null,
+        "statusId": null,
+        "targetSelector": {
+          "comparisonDirection": null,
+          "comparisonPool": null,
+          "count": null,
+          "includesCaster": null,
+          "position": null,
+          "scope": "self",
+          "selection": "self",
+          "selectionResource": null,
+          "selectionStat": null,
+          "sharedSelectionGroupId": null,
+          "side": "self",
+          "tieBehavior": null
+        },
+        "unit": "percent",
+        "unlockStarRank": 2,
+        "value": null,
+        "valuePerStack": null
+      },
+      {
+        "abilityId": "vaeldra-dragons-valor",
+        "abilityName": "Dragon's Valor",
+        "activationChanceByHabitLevel": [],
+        "activationChanceFixed": null,
+        "activationGroupId": null,
+        "availability": {
+          "canonical": "canonical-locked",
+          "notes": [
+            "Future at Star Rank 2.",
+            "Unlocked in observed account collection state, subject to level and star requirements."
+          ],
+          "observedAccount": "observed-available",
+          "reportLabel": "Future at Star Rank 2; observed account hatched",
+          "userRoster": "unknown"
+        },
+        "channel": "stat",
+        "combatLogConfirmed": false,
+        "conditional": true,
+        "conditions": [],
+        "confidence": "confirmed",
+        "currentlyAvailable": false,
+        "damageScope": null,
+        "direction": "dealt",
+        "directlyVerified": true,
+        "dragonId": "vaeldra",
+        "durationRounds": null,
+        "evidenceIds": [
+          "vaeldra-dragons-valor-2026-06-26"
+        ],
+        "futureAvailable": true,
+        "id": "vaeldra-dragons-valor-dragons-valor-strength-stat-dealt-modifier",
+        "label": "Dragon's Valor: Strength Up",
+        "minimumDragonLevel": null,
+        "operation": "increase",
+        "providerRequirements": [],
+        "rankedValues": [
+          {
+            "level": 1,
+            "unit": "percent",
+            "value": 8.5
+          },
+          {
+            "level": 2,
+            "unit": "percent",
+            "value": 10.2
+          },
+          {
+            "level": 3,
+            "unit": "percent",
+            "value": 11.9
+          },
+          {
+            "level": 4,
+            "unit": "percent",
+            "value": 14.45
+          },
+          {
+            "level": 5,
+            "unit": "percent",
+            "value": 17
+          }
+        ],
+        "recipientRequirements": [],
+        "requiredHabitLevel": 1,
+        "role": "self-amplification",
+        "sourceEffectId": "dragons-valor-strength",
+        "sourceScope": "unknown",
+        "stackMaximum": null,
+        "statusId": null,
+        "targetSelector": {
+          "comparisonDirection": null,
+          "comparisonPool": null,
+          "count": null,
+          "includesCaster": null,
+          "position": null,
+          "scope": "self",
+          "selection": "self",
+          "selectionResource": null,
+          "selectionStat": null,
+          "sharedSelectionGroupId": null,
+          "side": "self",
+          "tieBehavior": null
+        },
+        "unit": "percent",
+        "unlockStarRank": 2,
+        "value": null,
+        "valuePerStack": null
+      },
+      {
+        "abilityId": "vaeldra-sirens-call",
+        "abilityName": "Siren's Call",
+        "activationChanceByHabitLevel": [],
+        "activationChanceFixed": null,
+        "activationGroupId": null,
+        "availability": {
+          "canonical": "canonical-locked",
+          "notes": [
+            "Future at Star Rank 10.",
+            "Unlocked in observed account collection state, subject to level and star requirements."
+          ],
+          "observedAccount": "observed-available",
+          "reportLabel": "Future at Star Rank 10; observed account hatched",
+          "userRoster": "unknown"
+        },
+        "channel": "damage-received",
+        "combatLogConfirmed": false,
+        "conditional": true,
+        "conditions": [],
+        "confidence": "confirmed",
+        "currentlyAvailable": false,
+        "damageScope": "physical",
+        "direction": "received",
+        "directlyVerified": true,
+        "dragonId": "vaeldra",
+        "durationRounds": 3,
+        "evidenceIds": [
+          "vaeldra-sirens-call-2026-06-26"
+        ],
+        "futureAvailable": true,
+        "id": "vaeldra-sirens-call-sirens-call-physical-defense-damage-received-received-modifier",
+        "label": "Siren's Call: Physical Damage Received Down",
+        "minimumDragonLevel": null,
+        "operation": "decrease",
+        "providerRequirements": [],
+        "rankedValues": [
+          {
+            "level": 1,
+            "unit": "percent",
+            "value": 10
+          },
+          {
+            "level": 2,
+            "unit": "percent",
+            "value": 13
+          },
+          {
+            "level": 3,
+            "unit": "percent",
+            "value": 16
+          },
+          {
+            "level": 4,
+            "unit": "percent",
+            "value": 20
+          },
+          {
+            "level": 5,
+            "unit": "percent",
+            "value": 25
+          }
+        ],
+        "recipientRequirements": [],
+        "requiredHabitLevel": 1,
+        "role": "self-amplification",
+        "sourceEffectId": "sirens-call-physical-defense",
+        "sourceScope": "all-qualifying-sources",
+        "stackMaximum": null,
+        "statusId": null,
+        "targetSelector": {
+          "comparisonDirection": null,
+          "comparisonPool": null,
+          "count": null,
+          "includesCaster": null,
+          "position": null,
+          "scope": "self",
+          "selection": "self",
+          "selectionResource": null,
+          "selectionStat": null,
+          "sharedSelectionGroupId": null,
+          "side": "self",
+          "tieBehavior": null
+        },
+        "unit": "percent",
+        "unlockStarRank": 10,
         "value": null,
         "valuePerStack": null
       },
@@ -12725,6 +14751,691 @@
         "untilEndOfRound": false
       },
       {
+        "abilityId": "daemoros-shadowflame",
+        "abilityName": "Shadowflame",
+        "activationChanceByHabitLevel": [],
+        "activationChanceFixed": 20,
+        "activationGroupId": null,
+        "availability": {
+          "canonical": "canonical-base",
+          "notes": [
+            "Unlocked in observed account collection state, subject to level and star requirements."
+          ],
+          "observedAccount": "observed-available",
+          "reportLabel": "Base kit; observed account hatched",
+          "userRoster": "unknown"
+        },
+        "chanceByHabitLevel": [],
+        "chanceFixed": 20,
+        "conditions": [],
+        "currentlyAvailable": true,
+        "directlyVerified": true,
+        "dragonId": "daemoros",
+        "durationRounds": 2,
+        "evidenceIds": [
+          "daemoros-shadowflame-2026-06-26"
+        ],
+        "futureAvailable": false,
+        "id": "daemoros-shadowflame-shadowflame-burn-burn-status-output",
+        "minimumDragonLevel": null,
+        "requiredHabitLevel": null,
+        "sourceEffectId": "shadowflame-burn",
+        "statusId": "burn",
+        "targetSelector": {
+          "comparisonDirection": null,
+          "comparisonPool": null,
+          "count": 1,
+          "includesCaster": null,
+          "position": null,
+          "scope": "within-adjacency",
+          "selection": "one-eligible-adjacent",
+          "selectionResource": null,
+          "selectionStat": null,
+          "sharedSelectionGroupId": null,
+          "side": "enemy",
+          "tieBehavior": null
+        },
+        "targetSide": "enemy",
+        "unlockStarRank": null,
+        "untilEndOfCombat": false,
+        "untilEndOfRound": false
+      },
+      {
+        "abilityId": "daemoros-instill-fear",
+        "abilityName": "Instill Fear",
+        "activationChanceByHabitLevel": [
+          {
+            "level": 1,
+            "unit": "percent",
+            "value": 25
+          },
+          {
+            "level": 2,
+            "unit": "percent",
+            "value": 30
+          },
+          {
+            "level": 3,
+            "unit": "percent",
+            "value": 35
+          },
+          {
+            "level": 4,
+            "unit": "percent",
+            "value": 42.5
+          },
+          {
+            "level": 5,
+            "unit": "percent",
+            "value": 50
+          }
+        ],
+        "activationChanceFixed": null,
+        "activationGroupId": "instill-fear-target",
+        "availability": {
+          "canonical": "canonical-locked",
+          "notes": [
+            "Future at Star Rank 2.",
+            "Unlocked in observed account collection state, subject to level and star requirements."
+          ],
+          "observedAccount": "observed-available",
+          "reportLabel": "Future at Star Rank 2; observed account hatched",
+          "userRoster": "unknown"
+        },
+        "chanceByHabitLevel": [
+          {
+            "level": 1,
+            "unit": "percent",
+            "value": 25
+          },
+          {
+            "level": 2,
+            "unit": "percent",
+            "value": 30
+          },
+          {
+            "level": 3,
+            "unit": "percent",
+            "value": 35
+          },
+          {
+            "level": 4,
+            "unit": "percent",
+            "value": 42.5
+          },
+          {
+            "level": 5,
+            "unit": "percent",
+            "value": 50
+          }
+        ],
+        "chanceFixed": null,
+        "conditions": [
+          {
+            "description": "One successful activation applies all Instill Fear effects to one selected enemy.",
+            "evidenceIds": [],
+            "id": "instill-fear-each-round-activation-chance",
+            "label": "One successful activation applies all Instill Fear effects to one selected enemy.",
+            "unresolved": false
+          }
+        ],
+        "currentlyAvailable": false,
+        "directlyVerified": true,
+        "dragonId": "daemoros",
+        "durationRounds": 2,
+        "evidenceIds": [
+          "daemoros-instill-fear-2026-06-26"
+        ],
+        "futureAvailable": true,
+        "id": "daemoros-instill-fear-instill-fear-panic-panic-status-output",
+        "minimumDragonLevel": null,
+        "requiredHabitLevel": 1,
+        "sourceEffectId": "instill-fear-panic",
+        "statusId": "panic",
+        "targetSelector": {
+          "comparisonDirection": null,
+          "comparisonPool": null,
+          "count": null,
+          "includesCaster": null,
+          "position": null,
+          "scope": "any-lane",
+          "selection": "any",
+          "selectionResource": null,
+          "selectionStat": null,
+          "sharedSelectionGroupId": "instill-fear-target",
+          "side": "enemy",
+          "tieBehavior": null
+        },
+        "targetSide": "enemy",
+        "unlockStarRank": 2,
+        "untilEndOfCombat": false,
+        "untilEndOfRound": false
+      },
+      {
+        "abilityId": "daemoros-shroud-of-shadows",
+        "abilityName": "Shroud of Shadows",
+        "activationChanceByHabitLevel": [
+          {
+            "level": 1,
+            "unit": "percent",
+            "value": 15
+          },
+          {
+            "level": 2,
+            "unit": "percent",
+            "value": 18
+          },
+          {
+            "level": 3,
+            "unit": "percent",
+            "value": 21
+          },
+          {
+            "level": 4,
+            "unit": "percent",
+            "value": 25.5
+          },
+          {
+            "level": 5,
+            "unit": "percent",
+            "value": 30
+          }
+        ],
+        "activationChanceFixed": null,
+        "activationGroupId": null,
+        "availability": {
+          "canonical": "canonical-locked",
+          "notes": [
+            "Future at Star Rank 6.",
+            "Unlocked in observed account collection state, subject to level and star requirements."
+          ],
+          "observedAccount": "observed-available",
+          "reportLabel": "Future at Star Rank 6; observed account hatched",
+          "userRoster": "unknown"
+        },
+        "chanceByHabitLevel": [
+          {
+            "level": 1,
+            "unit": "percent",
+            "value": 15
+          },
+          {
+            "level": 2,
+            "unit": "percent",
+            "value": 18
+          },
+          {
+            "level": 3,
+            "unit": "percent",
+            "value": 21
+          },
+          {
+            "level": 4,
+            "unit": "percent",
+            "value": 25.5
+          },
+          {
+            "level": 5,
+            "unit": "percent",
+            "value": 30
+          }
+        ],
+        "chanceFixed": null,
+        "conditions": [
+          {
+            "description": "Confusion application chance.",
+            "evidenceIds": [],
+            "id": "shroud-of-shadows-odd-rounds-activation-chance",
+            "label": "Confusion application chance.",
+            "unresolved": false
+          }
+        ],
+        "currentlyAvailable": false,
+        "directlyVerified": true,
+        "dragonId": "daemoros",
+        "durationRounds": 2,
+        "evidenceIds": [
+          "daemoros-shroud-of-shadows-2026-06-26"
+        ],
+        "futureAvailable": true,
+        "id": "daemoros-shroud-of-shadows-shroud-of-shadows-confusion-confusion-status-output",
+        "minimumDragonLevel": null,
+        "requiredHabitLevel": 1,
+        "sourceEffectId": "shroud-of-shadows-confusion",
+        "statusId": "confusion",
+        "targetSelector": {
+          "comparisonDirection": null,
+          "comparisonPool": null,
+          "count": 1,
+          "includesCaster": null,
+          "position": null,
+          "scope": "within-adjacency",
+          "selection": "one-eligible-adjacent",
+          "selectionResource": null,
+          "selectionStat": null,
+          "sharedSelectionGroupId": null,
+          "side": "enemy",
+          "tieBehavior": null
+        },
+        "targetSide": "enemy",
+        "unlockStarRank": 6,
+        "untilEndOfCombat": false,
+        "untilEndOfRound": false
+      },
+      {
+        "abilityId": "daemoros-darkening-fear",
+        "abilityName": "Darkening Fear",
+        "activationChanceByHabitLevel": [
+          {
+            "level": 1,
+            "unit": "percent",
+            "value": 25
+          },
+          {
+            "level": 2,
+            "unit": "percent",
+            "value": 30
+          },
+          {
+            "level": 3,
+            "unit": "percent",
+            "value": 35
+          },
+          {
+            "level": 4,
+            "unit": "percent",
+            "value": 42.5
+          },
+          {
+            "level": 5,
+            "unit": "percent",
+            "value": 50
+          }
+        ],
+        "activationChanceFixed": null,
+        "activationGroupId": "darkening-fear-target",
+        "availability": {
+          "canonical": "canonical-locked",
+          "notes": [
+            "Future at Star Rank 8.",
+            "Unlocked in observed account collection state, subject to level and star requirements."
+          ],
+          "observedAccount": "observed-available",
+          "reportLabel": "Future at Star Rank 8; observed account hatched",
+          "userRoster": "unknown"
+        },
+        "chanceByHabitLevel": [
+          {
+            "level": 1,
+            "unit": "percent",
+            "value": 25
+          },
+          {
+            "level": 2,
+            "unit": "percent",
+            "value": 30
+          },
+          {
+            "level": 3,
+            "unit": "percent",
+            "value": 35
+          },
+          {
+            "level": 4,
+            "unit": "percent",
+            "value": 42.5
+          },
+          {
+            "level": 5,
+            "unit": "percent",
+            "value": 50
+          }
+        ],
+        "chanceFixed": null,
+        "conditions": [
+          {
+            "description": "Darkening Fear has its own activation roll and target selection.",
+            "evidenceIds": [],
+            "id": "darkening-fear-each-round-activation-chance",
+            "label": "Darkening Fear has its own activation roll and target selection.",
+            "unresolved": false
+          }
+        ],
+        "currentlyAvailable": false,
+        "directlyVerified": true,
+        "dragonId": "daemoros",
+        "durationRounds": 2,
+        "evidenceIds": [
+          "daemoros-darkening-fear-2026-06-26"
+        ],
+        "futureAvailable": true,
+        "id": "daemoros-darkening-fear-darkening-fear-panic-panic-status-output",
+        "minimumDragonLevel": null,
+        "requiredHabitLevel": 1,
+        "sourceEffectId": "darkening-fear-panic",
+        "statusId": "panic",
+        "targetSelector": {
+          "comparisonDirection": null,
+          "comparisonPool": null,
+          "count": null,
+          "includesCaster": null,
+          "position": null,
+          "scope": "any-lane",
+          "selection": "any",
+          "selectionResource": null,
+          "selectionStat": null,
+          "sharedSelectionGroupId": "darkening-fear-target",
+          "side": "enemy",
+          "tieBehavior": null
+        },
+        "targetSide": "enemy",
+        "unlockStarRank": 8,
+        "untilEndOfCombat": false,
+        "untilEndOfRound": false
+      },
+      {
+        "abilityId": "vaeldra-lure",
+        "abilityName": "Lure",
+        "activationChanceByHabitLevel": [],
+        "activationChanceFixed": 25,
+        "activationGroupId": null,
+        "availability": {
+          "canonical": "canonical-base",
+          "notes": [
+            "Unlocked in observed account collection state, subject to level and star requirements."
+          ],
+          "observedAccount": "observed-available",
+          "reportLabel": "Base kit; observed account hatched",
+          "userRoster": "unknown"
+        },
+        "chanceByHabitLevel": [],
+        "chanceFixed": 25,
+        "conditions": [
+          {
+            "description": "Taunt chance applies to three targets, but shared versus per-target roll scope is not stated.",
+            "evidenceIds": [],
+            "id": "lure-taunt-each-round-activation-chance",
+            "label": "Taunt chance applies to three targets, but shared versus per-target roll scope is not stated.",
+            "unresolved": false
+          }
+        ],
+        "currentlyAvailable": true,
+        "directlyVerified": true,
+        "dragonId": "vaeldra",
+        "durationRounds": 2,
+        "evidenceIds": [
+          "vaeldra-lure-2026-06-26"
+        ],
+        "futureAvailable": false,
+        "id": "vaeldra-lure-lure-taunt-taunt-status-output",
+        "minimumDragonLevel": null,
+        "requiredHabitLevel": null,
+        "sourceEffectId": "lure-taunt",
+        "statusId": "taunt",
+        "targetSelector": {
+          "comparisonDirection": null,
+          "comparisonPool": null,
+          "count": 3,
+          "includesCaster": null,
+          "position": null,
+          "scope": "any-lane",
+          "selection": "any",
+          "selectionResource": null,
+          "selectionStat": null,
+          "sharedSelectionGroupId": null,
+          "side": "enemy",
+          "tieBehavior": null
+        },
+        "targetSide": "enemy",
+        "unlockStarRank": null,
+        "untilEndOfCombat": false,
+        "untilEndOfRound": false
+      },
+      {
+        "abilityId": "vaeldra-sirens-call",
+        "abilityName": "Siren's Call",
+        "activationChanceByHabitLevel": [
+          {
+            "level": 1,
+            "unit": "percent",
+            "value": 40
+          },
+          {
+            "level": 2,
+            "unit": "percent",
+            "value": 52
+          },
+          {
+            "level": 3,
+            "unit": "percent",
+            "value": 64
+          },
+          {
+            "level": 4,
+            "unit": "percent",
+            "value": 80
+          },
+          {
+            "level": 5,
+            "unit": "percent",
+            "value": 100
+          }
+        ],
+        "activationChanceFixed": null,
+        "activationGroupId": null,
+        "availability": {
+          "canonical": "canonical-locked",
+          "notes": [
+            "Future at Star Rank 10.",
+            "Unlocked in observed account collection state, subject to level and star requirements."
+          ],
+          "observedAccount": "observed-available",
+          "reportLabel": "Future at Star Rank 10; observed account hatched",
+          "userRoster": "unknown"
+        },
+        "chanceByHabitLevel": [
+          {
+            "level": 1,
+            "unit": "percent",
+            "value": 40
+          },
+          {
+            "level": 2,
+            "unit": "percent",
+            "value": 52
+          },
+          {
+            "level": 3,
+            "unit": "percent",
+            "value": 64
+          },
+          {
+            "level": 4,
+            "unit": "percent",
+            "value": 80
+          },
+          {
+            "level": 5,
+            "unit": "percent",
+            "value": 100
+          }
+        ],
+        "chanceFixed": null,
+        "conditions": [
+          {
+            "description": "Shared schedule versus independent per-target activation roll is not stated.",
+            "evidenceIds": [],
+            "id": "sirens-call-status-branch-activation-chance",
+            "label": "Shared schedule versus independent per-target activation roll is not stated.",
+            "unresolved": false
+          },
+          {
+            "comparison": null,
+            "description": "Target is already Taunted.",
+            "evidenceIds": [],
+            "id": "sirens-call-target-has-taunt",
+            "kind": "target-has-status",
+            "label": "Target is already Taunted.",
+            "subject": "target",
+            "thresholdPercent": null,
+            "unresolved": false
+          }
+        ],
+        "currentlyAvailable": false,
+        "directlyVerified": true,
+        "dragonId": "vaeldra",
+        "durationRounds": null,
+        "evidenceIds": [
+          "vaeldra-sirens-call-2026-06-26"
+        ],
+        "futureAvailable": true,
+        "id": "vaeldra-sirens-call-sirens-call-stagger-stagger-status-output",
+        "minimumDragonLevel": null,
+        "requiredHabitLevel": 1,
+        "sourceEffectId": "sirens-call-stagger",
+        "statusId": "stagger",
+        "targetSelector": {
+          "comparisonDirection": null,
+          "comparisonPool": null,
+          "count": 3,
+          "includesCaster": null,
+          "position": null,
+          "scope": "any-lane",
+          "selection": "any",
+          "selectionResource": null,
+          "selectionStat": null,
+          "sharedSelectionGroupId": null,
+          "side": "enemy",
+          "tieBehavior": null
+        },
+        "targetSide": "enemy",
+        "unlockStarRank": 10,
+        "untilEndOfCombat": false,
+        "untilEndOfRound": true
+      },
+      {
+        "abilityId": "vaeldra-sirens-call",
+        "abilityName": "Siren's Call",
+        "activationChanceByHabitLevel": [
+          {
+            "level": 1,
+            "unit": "percent",
+            "value": 40
+          },
+          {
+            "level": 2,
+            "unit": "percent",
+            "value": 52
+          },
+          {
+            "level": 3,
+            "unit": "percent",
+            "value": 64
+          },
+          {
+            "level": 4,
+            "unit": "percent",
+            "value": 80
+          },
+          {
+            "level": 5,
+            "unit": "percent",
+            "value": 100
+          }
+        ],
+        "activationChanceFixed": null,
+        "activationGroupId": null,
+        "availability": {
+          "canonical": "canonical-locked",
+          "notes": [
+            "Future at Star Rank 10.",
+            "Unlocked in observed account collection state, subject to level and star requirements."
+          ],
+          "observedAccount": "observed-available",
+          "reportLabel": "Future at Star Rank 10; observed account hatched",
+          "userRoster": "unknown"
+        },
+        "chanceByHabitLevel": [
+          {
+            "level": 1,
+            "unit": "percent",
+            "value": 40
+          },
+          {
+            "level": 2,
+            "unit": "percent",
+            "value": 52
+          },
+          {
+            "level": 3,
+            "unit": "percent",
+            "value": 64
+          },
+          {
+            "level": 4,
+            "unit": "percent",
+            "value": 80
+          },
+          {
+            "level": 5,
+            "unit": "percent",
+            "value": 100
+          }
+        ],
+        "chanceFixed": null,
+        "conditions": [
+          {
+            "description": "Shared schedule versus independent per-target activation roll is not stated.",
+            "evidenceIds": [],
+            "id": "sirens-call-status-branch-activation-chance",
+            "label": "Shared schedule versus independent per-target activation roll is not stated.",
+            "unresolved": false
+          },
+          {
+            "comparison": null,
+            "description": "Target is not already Taunted.",
+            "evidenceIds": [],
+            "id": "sirens-call-target-lacks-taunt",
+            "kind": "target-lacks-status",
+            "label": "Target is not already Taunted.",
+            "subject": "target",
+            "thresholdPercent": null,
+            "unresolved": false
+          }
+        ],
+        "currentlyAvailable": false,
+        "directlyVerified": true,
+        "dragonId": "vaeldra",
+        "durationRounds": null,
+        "evidenceIds": [
+          "vaeldra-sirens-call-2026-06-26"
+        ],
+        "futureAvailable": true,
+        "id": "vaeldra-sirens-call-sirens-call-taunt-taunt-status-output",
+        "minimumDragonLevel": null,
+        "requiredHabitLevel": 1,
+        "sourceEffectId": "sirens-call-taunt",
+        "statusId": "taunt",
+        "targetSelector": {
+          "comparisonDirection": null,
+          "comparisonPool": null,
+          "count": 3,
+          "includesCaster": null,
+          "position": null,
+          "scope": "any-lane",
+          "selection": "any",
+          "selectionResource": null,
+          "selectionStat": null,
+          "sharedSelectionGroupId": null,
+          "side": "enemy",
+          "tieBehavior": null
+        },
+        "targetSide": "enemy",
+        "unlockStarRank": 10,
+        "untilEndOfCombat": false,
+        "untilEndOfRound": true
+      },
+      {
         "abilityId": "sheepstealer-wild-hunt",
         "abilityName": "Wild Hunt",
         "activationChanceByHabitLevel": [],
@@ -13764,6 +16475,78 @@
           "confidence": "confirmed",
           "currentlyAvailable": true,
           "futureAvailable": true
+        }
+      ]
+    },
+    {
+      "dragonId": "daemoros",
+      "incomingAmplifierChannels": [],
+      "outgoingBuffChannels": [
+        {
+          "channel": "stat",
+          "modifierCapabilityIds": [
+            "daemoros-warriors-zeal-warriors-zeal-left-instinct-stat-dealt-modifier",
+            "daemoros-warriors-zeal-warriors-zeal-left-initiative-stat-dealt-modifier"
+          ]
+        }
+      ],
+      "primaryDamageChannel": null,
+      "primaryDamageChannelBasis": "unknown",
+      "producedChannels": [
+        {
+          "capabilityIds": [
+            "daemoros-shadowflame-shadowflame-physical-output"
+          ],
+          "channel": "physical-damage",
+          "confidence": "confirmed",
+          "currentlyAvailable": true,
+          "futureAvailable": false
+        },
+        {
+          "capabilityIds": [
+            "daemoros-shadowflame-shadowflame-burn-output"
+          ],
+          "channel": "fire-damage",
+          "confidence": "confirmed",
+          "currentlyAvailable": true,
+          "futureAvailable": false
+        }
+      ]
+    },
+    {
+      "dragonId": "vaeldra",
+      "incomingAmplifierChannels": [],
+      "outgoingBuffChannels": [
+        {
+          "channel": "tactical-damage",
+          "modifierCapabilityIds": [
+            "vaeldra-warriors-resilience-warriors-resilience-left-tactical-tactical-damage-dealt-modifier"
+          ]
+        },
+        {
+          "channel": "fire-damage",
+          "modifierCapabilityIds": [
+            "vaeldra-infernal-force-infernal-force-fire-fire-damage-dealt-modifier"
+          ]
+        },
+        {
+          "channel": "physical-damage",
+          "modifierCapabilityIds": [
+            "vaeldra-infernal-force-infernal-force-physical-physical-damage-dealt-modifier"
+          ]
+        }
+      ],
+      "primaryDamageChannel": null,
+      "primaryDamageChannelBasis": "unknown",
+      "producedChannels": [
+        {
+          "capabilityIds": [
+            "vaeldra-lure-lure-physical-output"
+          ],
+          "channel": "physical-damage",
+          "confidence": "confirmed",
+          "currentlyAvailable": true,
+          "futureAvailable": false
         }
       ]
     },

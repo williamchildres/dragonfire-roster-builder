@@ -27,6 +27,7 @@ Commands, Traits, and Habits share `AbilityDefinition`.
 - `augmentations` stores Habit-granted Command additions such as Infectious Wrath and Savage Claim.
 - `conditions`, `targetPriority`, `stack`, `conditionalMultipliers`, and `sourceScope` preserve screenshot mechanics without collapsing them into prose.
 - `casterEligibility` normalizes whether wording includes, excludes, or conditionally allows the caster.
+- `effectOptions` stores schema 11 effect alternatives. Use `mode: one-of` for mutually exclusive choices with an unknown selector, and `mode: conditional-branch` when each target follows exactly one condition-driven branch. Capability derivation may expand conditional branches, but must not flatten one-of options into simultaneous modifiers.
 - `verification` is field-level.
 - `unresolvedQuestions` records mechanics that must not be guessed.
 

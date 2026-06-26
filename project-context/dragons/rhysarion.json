@@ -21,7 +21,7 @@
   "firstObservedInGame": null,
   "format": "dragonfire-dragon-profile",
   "gameVersion": null,
-  "generatedAt": "2026-06-26T04:45:15.744Z",
+  "generatedAt": "2026-06-26T05:42:30.492Z",
   "habits": [],
   "id": "rhysarion",
   "isNew": false,
@@ -43,10 +43,10 @@
   "rosterSourceStatus": "official-website",
   "slug": "rhysarion",
   "source": {
-    "branch": "chore/close-legendary-validation-phase",
-    "commit": "897e64f040899f685964fd5ca24ae8674794aa52",
-    "databaseVersion": "0.6.0",
-    "dataSchemaVersion": 10,
+    "branch": "feature/epic-daemoros-vaeldra",
+    "commit": "fc4c158d6d26318bd6c77764e91030835e317112",
+    "databaseVersion": "0.6.1",
+    "dataSchemaVersion": 11,
     "gameBuild": "26.6.53509",
     "localRosterSchemaVersion": 3,
     "repository": "https://github.com/williamchildres/dragonfire-roster-builder"
