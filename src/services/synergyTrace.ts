@@ -761,7 +761,7 @@ function semanticTraceKey(trace: SynergyTrace): string {
     trace.sourceAbilityId ?? '',
     trace.recipientDragonId ?? '',
     trace.recipientAbilityId ?? '',
-    trace.matchKind === 'defensive-ally-support' ? '' : (trace.modifierCapabilityId ?? ''),
+    trace.modifierCapabilityId ?? '',
     trace.channel ?? '',
     trace.targetSelectionGroup
       ? `selection:${trace.targetSelectionGroup.targetCount}:${trace.targetSelectionGroup.eligibleRecipientDragonIds.join(',')}`

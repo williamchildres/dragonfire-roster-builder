@@ -13,6 +13,7 @@ import {
 } from '../services/effectCapabilities';
 import { resolveEffectiveHabitLevel } from '../services/habitLevels';
 import { createEmptyRoster } from '../services/rosterStorage';
+import { analyzeFormationTraces } from '../services/synergyTrace';
 
 function dragon(id: string) {
   const found = dragons.find((item) => item.id === id);
@@ -293,23 +294,69 @@ describe('Feskar, Rhysarion, and Shadowsong Epic profiles', () => {
   it('surfaces Resilient Bond initial self and adjacent stacks while keeping the retreat trigger conditional', () => {
     const formation: FormationAnalysisInput = { 'left-flank': 'feskar', vanguard: 'rhysarion', 'right-flank': 'shadowsong' };
     const roster = ownedRoster(['feskar', 'rhysarion', 'shadowsong'], 2, null);
-    const traces = analyzeCapabilityAmplifications(formation, dragons, { roster });
+    const rawTraces = analyzeCapabilityAmplifications(formation, dragons, { roster });
+    const traces = analyzeFormationTraces(formation, dragons, { roster });
     const cards = buildFormationCardPresentation(formation, dragons, traces, { previewEnabled: false });
     const resilient = traces.filter((trace) => trace.sourceAbilityId === 'feskar-resilient-bond');
+    const resilientModifiers = deriveModifierCapabilities(dragons)
+      .filter((modifier) => modifier.abilityId === 'feskar-resilient-bond')
+      .map((modifier) => [modifier.sourceEffectId, modifier.id, modifier.targetSelector.selection, modifier.targetSelector.sharedSelectionGroupId]);
     const initialSelf = resilient.find((trace) => trace.recipientDragonId === 'feskar' && trace.id.includes('resilient-bond-self-stack'));
     const initialAdjacent = resilient.find((trace) => trace.recipientDragonId === 'rhysarion' && trace.id.includes('resilient-bond-adjacent-stack'));
     const retreat = resilient.find((trace) => trace.recipientDragonId === 'feskar' && trace.id.includes('resilient-bond-self-retreat-stack'));
+    const active = resilient.filter((trace) => trace.status === 'active');
 
-    expect(initialSelf).toMatchObject({ status: 'active', interactionScope: 'cross-dragon' });
+    expect(resilientModifiers).toEqual(expect.arrayContaining([
+      ['resilient-bond-self-stack', 'feskar-resilient-bond-resilient-bond-self-stack-damage-received-received-modifier', 'self', null],
+      ['resilient-bond-adjacent-stack', 'feskar-resilient-bond-resilient-bond-adjacent-stack-damage-received-received-modifier', 'one-eligible-adjacent', 'resilient-bond-tracked-ally'],
+      ['resilient-bond-self-retreat-stack', 'feskar-resilient-bond-resilient-bond-self-retreat-stack-damage-received-received-modifier', 'self', null],
+    ]));
+    expect(new Set(resilientModifiers.map(([, id]) => id))).toHaveProperty('size', 3);
+    expect(rawTraces.filter((trace) => trace.sourceAbilityId === 'feskar-resilient-bond')
+      .map((trace) => trace.modifierCapabilityId)).toEqual(expect.arrayContaining([
+        'feskar-resilient-bond-resilient-bond-self-stack-damage-received-received-modifier',
+        'feskar-resilient-bond-resilient-bond-adjacent-stack-damage-received-received-modifier',
+        'feskar-resilient-bond-resilient-bond-self-retreat-stack-damage-received-received-modifier',
+      ]));
+    expect(resilient.some((trace) => trace.assumptions.includes('Structurally duplicate raw traces were collapsed.'))).toBe(false);
+
+    expect(active.map((trace) => trace.modifierCapabilityId).sort()).toEqual([
+      'feskar-resilient-bond-resilient-bond-adjacent-stack-damage-received-received-modifier',
+      'feskar-resilient-bond-resilient-bond-self-stack-damage-received-received-modifier',
+    ]);
+    expect(initialSelf).toMatchObject({
+      status: 'active',
+      interactionScope: 'internal',
+      modifierCapabilityId: 'feskar-resilient-bond-resilient-bond-self-stack-damage-received-received-modifier',
+    });
     expect(initialAdjacent).toMatchObject({ status: 'active', interactionScope: 'cross-dragon' });
+    expect(initialAdjacent?.modifierCapabilityId).toBe('feskar-resilient-bond-resilient-bond-adjacent-stack-damage-received-received-modifier');
     expect(resilient.some((trace) => trace.recipientDragonId === 'shadowsong' && trace.status !== 'inactive')).toBe(false);
-    expect(retreat?.status).not.toBe('active');
-    expect([...(retreat?.matchedFacts ?? []), retreat?.explanation ?? ''].join(' ')).toMatch(/originally selected adjacent ally|retreated in the previous round/i);
-    expect([...(retreat?.matchedFacts ?? []), ...(retreat?.unresolvedQuestions ?? []), retreat?.explanation ?? ''].join(' ')).not.toMatch(/maximum \d+|retreat occurred/i);
+    expect(retreat).toMatchObject({
+      status: 'potential',
+      interactionScope: 'internal',
+      modifierCapabilityId: 'feskar-resilient-bond-resilient-bond-self-retreat-stack-damage-received-received-modifier',
+    });
+
+    const selfText = [...(initialSelf?.matchedFacts ?? []), ...(initialSelf?.effects ?? []), initialSelf?.explanation ?? ''].join(' ');
+    const adjacentText = [...(initialAdjacent?.matchedFacts ?? []), ...(initialAdjacent?.effects ?? []), initialAdjacent?.explanation ?? ''].join(' ');
+    const retreatText = [...(retreat?.matchedFacts ?? []), ...(retreat?.effects ?? []), ...(retreat?.unresolvedQuestions ?? []), retreat?.explanation ?? ''].join(' ');
+    expect(selfText).toContain('Source effect ID: resilient-bond-self-stack.');
+    expect(selfText).not.toMatch(/resilient-bond-adjacent-stack|retreated in the previous round|Timing: Each round/i);
+    expect(adjacentText).toContain('Source effect ID: resilient-bond-adjacent-stack.');
+    expect(adjacentText).toContain('Caster excluded from this target selection.');
+    expect(adjacentText).toContain('Shared selected-target group: resilient-bond-tracked-ally.');
+    expect(adjacentText).toContain('Resolved selected target in this formation: Rhysarion.');
+    expect(adjacentText).not.toMatch(/expected self|retreated in the previous round|Timing: Each round/i);
+    expect(retreatText).toContain('Source effect ID: resilient-bond-self-retreat-stack.');
+    expect(retreatText).toMatch(/originally selected adjacent ally|retreated in the previous round/i);
+    expect(retreatText).toContain('Tracked selected ally in this formation: Rhysarion.');
+    expect(retreatText).not.toMatch(/retreat occurred|maximum \d+/i);
 
     const feskarCard = cards.cards.find((card) => card.dragonId === 'feskar');
     const resilientProvides = feskarCard?.provides.filter((item) => item.abilityName === 'Resilient Bond') ?? [];
     const groupedInitial = resilientProvides.find((item) => item.targetLabel === 'Feskar and Rhysarion');
+    const retreatCard = resilientProvides.find((item) => item.traceIds.some((traceId) => traceId.includes('resilient-bond-self-retreat-stack')));
     const groupedText = groupedInitial ? [...groupedInitial.summaryLines, ...groupedInitial.details, ...groupedInitial.effects].join(' ') : '';
 
     expect(groupedInitial).toMatchObject({
@@ -322,13 +369,16 @@ describe('Feskar, Rhysarion, and Shadowsong Epic profiles', () => {
     expect(groupedText).toContain('Feskar and Rhysarion each gain 1 Resilient Bond stack.');
     expect(groupedText).toContain('Each stack reduces Physical Damage Received from non-Basic Attacks by 6.5% at effective Habit Level 1.');
     expect(groupedText).toContain('Duration: until end of combat.');
+    expect(groupedText).toContain('Maximum stack count is unknown.');
     expect(groupedText).not.toContain('Ranked progression');
-    expect(groupedText).not.toMatch(/\bL[1-5]\b|maximum \d+/i);
+    expect(groupedText).not.toMatch(/\bL[1-5]\b|retreated in the previous round/i);
+    expect(retreatCard).toBeDefined();
 
     const rhysarionReceives = cards.cards.find((card) => card.dragonId === 'rhysarion')?.receives.filter((item) => item.abilityName === 'Resilient Bond') ?? [];
     expect(rhysarionReceives).toHaveLength(1);
     expect(rhysarionReceives[0]?.summary).toContain('Rhysarion');
     expect(feskarCard?.receives.some((item) => item.sourceDragonId === 'feskar' && item.abilityName === 'Resilient Bond')).toBe(false);
+    expect(cards.cards.find((card) => card.dragonId === 'shadowsong')?.receives.some((item) => item.abilityName === 'Resilient Bond')).toBe(false);
 
     const technicalText = resilient.flatMap((trace) => [...trace.effects, ...trace.matchedFacts, trace.explanation]).join(' ');
     expect(technicalText).toContain('Ranked progression: L1 6.5%, L2 7.8%, L3 9.1%, L4 11.05%, L5 13%.');
