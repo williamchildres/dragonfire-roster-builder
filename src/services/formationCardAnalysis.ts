@@ -796,6 +796,8 @@ function mergeInteractions(
     : targetNames.join(' or ');
   const uniqueTitles = unique(items.map((item) => item.title));
   const summaryLines = mergedSummaryLines(items, direction, targetNames, options);
+  const details = options.exactRecipientSet ? [] : unique(items.flatMap((item) => item.details));
+  const effects = options.exactRecipientSet ? [] : unique(items.flatMap((item) => item.effects));
   const mergedCandidateTotal =
     Math.max(...items.map((item) => item.candidateTotal ?? 0)) ||
     (!options.exactRecipientSet && direction === 'provides' && targetNames.length > 1 ? targetNames.length : first.candidateTotal);
@@ -824,9 +826,9 @@ function mergeInteractions(
     title: options.exactRecipientSet && uniqueTitles.length > 1 ? first.abilityName : uniqueTitles.join(' + '),
     summaryLines,
     summary: compactSummaryText(summaryLines, mergedCandidateTotal),
-    detail: items.map((item) => item.detail).join('\n\n'),
-    details: unique(items.flatMap((item) => item.details)),
-    effects: unique(items.flatMap((item) => item.effects)),
+    detail: options.exactRecipientSet ? '' : items.map((item) => item.detail).join('\n\n'),
+    details,
+    effects,
     requirements,
     confidence: confidences.length === 1 ? confidences[0]! : 'mixed',
     modifierLines: unique(items.flatMap((item) => item.modifierLines)),
@@ -850,7 +852,7 @@ function mergedSummaryLines(
   if (options.exactRecipientSet && direction === 'provides') {
     return [
       `Applies to ${joinEnglishList(targetNames)}.`,
-      ...unique(lines.map((line) => normalizeGroupedRecipientLine(line, targetNames))),
+      ...synthesizedExactRecipientEffectLines(items, targetNames),
     ];
   }
   if (direction === 'provides' && targetNames.length > 0) {
@@ -869,6 +871,62 @@ function mergedSummaryLines(
     ];
   }
   return lines;
+}
+
+function synthesizedExactRecipientEffectLines(
+  items: FormationCardInteraction[],
+  targetNames: string[],
+): string[] {
+  const grouped = new Map<string, FormationCardInteraction[]>();
+  for (const item of items) {
+    const key = exactRecipientEffectKey(item);
+    grouped.set(key, [...(grouped.get(key) ?? []), item]);
+  }
+  return unique([...grouped.values()].flatMap((group) => {
+    const first = group[0]!;
+    const text = group.map(interactionText).join(' ');
+    const impairment = synthesizeFriendlyImpairmentLine(first, text, targetNames);
+    if (impairment) {
+      return [impairment];
+    }
+    const summaryLines = unique(group.flatMap((item) => item.summaryLines));
+    return summaryLines.map((line) => normalizeGroupedRecipientLine(line, targetNames));
+  }));
+}
+
+function synthesizeFriendlyImpairmentLine(
+  item: FormationCardInteraction,
+  text: string,
+  targetNames: string[],
+): string | null {
+  if (!/allied impairment|friendly impairment|can harm/i.test(text)) {
+    return null;
+  }
+  const value =
+    text.match(/reducing Damage Dealt by ([-+]?\d+(?:\.\d+)?%?)\./i)?.[1] ??
+    text.match(/Damage Dealt reduction at current effective level: ([-+]?\d+(?:\.\d+)?%?)\./i)?.[1];
+  if (!value) {
+    return null;
+  }
+  const timing = text.match(/Timing: Start of Round \d+\./i)?.[0] ?? null;
+  const duration = text.match(/Duration: \d+ rounds\./i)?.[0] ?? null;
+  return [
+    `${item.abilityName} can harm ${joinEnglishList(targetNames)} by reducing Damage Dealt by ${value}.`,
+    'This is an allied impairment, not support.',
+    timing,
+    duration,
+  ].filter(Boolean).join(' ');
+}
+
+function interactionText(item: FormationCardInteraction): string {
+  return [
+    item.title,
+    item.summary,
+    ...item.summaryLines,
+    item.detail,
+    ...item.details,
+    ...item.effects,
+  ].join(' ');
 }
 
 function providesAggregationMode(interaction: FormationCardInteraction): string {
