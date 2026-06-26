@@ -211,6 +211,8 @@ describe('Feskar, Rhysarion, and Shadowsong Epic profiles', () => {
     expect(groupedText).toContain('Recovery Rate: 25% at effective Habit Level 1.');
     expect(groupedText).toContain('Enhanced by Rhysarion Strength.');
     expect(groupedText).toContain('Final Recovery amount remains unknown.');
+    expect(groupedText).not.toContain('Ranked progression');
+    expect(groupedText).not.toMatch(/\bL[1-5]\b/);
     expect(rhysarionCard?.receives.some((item) => item.sourceDragonId === 'rhysarion' && item.recipientDragonId === 'rhysarion' && item.abilityName === 'Ebbing Fury')).toBe(false);
     for (const recipientId of ['feskar', 'shadowsong']) {
       const receives = cards.cards.find((card) => card.dragonId === recipientId)?.receives.filter((item) => item.abilityName === 'Ebbing Fury' && item.sourceDragonId === 'rhysarion') ?? [];
@@ -218,6 +220,8 @@ describe('Feskar, Rhysarion, and Shadowsong Epic profiles', () => {
       expect(receives).toHaveLength(1);
       expect(text).toContain('Recovery Rate: 25% at effective Habit Level 1.');
       expect(text).toContain('Damage Dealt reduction at current effective level: 27.5%.');
+      expect(text).not.toContain('Ranked progression');
+      expect(text).not.toMatch(/\bL[1-5]\b/);
     }
 
     expect(impairmentTraces.map((trace) => trace.recipientDragonId).sort()).toEqual(['feskar', 'rhysarion', 'shadowsong']);
@@ -234,5 +238,51 @@ describe('Feskar, Rhysarion, and Shadowsong Epic profiles', () => {
     expect(groupedText).toContain('Damage Dealt reduction at current effective level: 27.5%.');
     expect(groupedText).toContain('harm');
     expect(enemyReduction).toMatchObject({ recipientDragonId: null, interactionScope: 'enemy-side' });
+  });
+
+  it('keeps normal Ebbing Fury cards to the current ranked value for upgraded and preview states', () => {
+    const formation: FormationAnalysisInput = { 'left-flank': 'feskar', vanguard: 'rhysarion', 'right-flank': 'shadowsong' };
+    const upgradedRoster = ownedRoster(['feskar', 'rhysarion', 'shadowsong'], 2, 3);
+    const upgradedTraces = analyzeCapabilityAmplifications(formation, dragons, { roster: upgradedRoster });
+    const upgradedCards = buildFormationCardPresentation(formation, dragons, upgradedTraces, { previewEnabled: false });
+    const upgradedText = upgradedCards.cards
+      .flatMap((card) => [...card.provides, ...card.receives])
+      .filter((item) => item.abilityName === 'Ebbing Fury')
+      .flatMap((item) => [...item.summaryLines, ...item.details, ...item.effects])
+      .join(' ');
+
+    expect(upgradedText).toContain('Recovery Rate: 35% at effective Habit Level 3.');
+    expect(upgradedText).toContain('Damage Dealt reduction at current effective level: 38.5%.');
+    expect(upgradedText).not.toContain('Recovery Rate: 25%');
+    expect(upgradedText).not.toContain('Damage Dealt reduction at current effective level: 27.5%.');
+    expect(upgradedText).not.toContain('Ranked progression');
+    expect(upgradedText).not.toMatch(/\bL[1-5]\b/);
+
+    const previewRoster = ownedRoster(['feskar', 'rhysarion', 'shadowsong'], 1, 0);
+    const savedPreviewHabitLevel = previewRoster.rhysarion?.habitLevels['rhysarion-ebbing-fury'];
+    const previewTraces = analyzeCapabilityAmplifications(formation, dragons, {
+      roster: previewRoster,
+      previewMaxRankInteractions: true,
+    });
+    const previewCards = buildFormationCardPresentation(formation, dragons, previewTraces, { previewEnabled: true });
+    const previewText = previewCards.cards
+      .flatMap((card) => [...card.provides, ...card.receives])
+      .filter((item) => item.abilityName === 'Ebbing Fury')
+      .flatMap((item) => [...item.summaryLines, ...item.details, ...item.effects])
+      .join(' ');
+
+    expect(previewText).toContain('Recovery Rate: 50% at effective Habit Level 5.');
+    expect(previewText).toContain('Damage Dealt reduction at current effective level: 55%.');
+    expect(previewText).not.toContain('Ranked progression');
+    expect(previewText).not.toMatch(/\bL[1-5]\b/);
+    expect(previewRoster.rhysarion?.habitLevels['rhysarion-ebbing-fury']).toBe(savedPreviewHabitLevel);
+
+    const technicalText = previewTraces
+      .filter((trace) => trace.sourceAbilityId === 'rhysarion-ebbing-fury')
+      .flatMap((trace) => [...trace.effects, trace.explanation])
+      .join(' ');
+    expect(technicalText).toContain('Ranked progression: L1 25%, L2 30%, L3 35%, L4 42.5%, L5 50%.');
+    expect(technicalText).toContain('Ranked progression: L1 27.5%, L2 33%, L3 38.5%, L4 46.75%, L5 55%.');
+    expect(habit('rhysarion', 'rhysarion-ebbing-fury').schedules[1]?.effects[0]?.rankedValues).toHaveLength(5);
   });
 });
