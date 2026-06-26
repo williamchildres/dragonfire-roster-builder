@@ -1567,6 +1567,10 @@ function analyzeStatusConditionEnablement(
         if (!provider || !recipient) {
           continue;
         }
+        const context = sourceEffectContext(recipient, output.abilityId, output.sourceEffectId);
+        const conditionalFacts = statusOutput.statusId === 'burn' && context
+          ? conditionalMultiplierValueFacts(output, context.effect, statusOutput.statusId, options)
+          : { facts: [], effects: [], summary: null };
         const requirements = [
           statusProviderRequirement(statusOutput, dependency.type, providerPosition, recipientPosition),
           ...availabilityRequirements({
@@ -1583,7 +1587,7 @@ function analyzeStatusConditionEnablement(
           ...outputRequirementTraces(output, options),
         ];
         const dependencyLabel = statusDependencyLabel(dependency);
-        const explanation = statusConditionExplanation(provider, statusOutput, recipient, output, dependencyLabel);
+        const explanation = statusConditionExplanation(provider, statusOutput, recipient, output, dependencyLabel, conditionalFacts);
         traces.push(makeDependencyTrace({
           id: `status-condition-${statusOutput.id}-${output.id}`,
           matchKind: 'status-condition-enablement',
@@ -1596,13 +1600,18 @@ function analyzeStatusConditionEnablement(
           title: `${statusLabel(statusOutput.statusId)} enables ${output.abilityName}`,
           explanation,
           requirements,
-          matchedFacts: dependency.notes,
-          effects: [`Status condition: ${dependencyLabel}`],
+          matchedFacts: [
+            ...(output.sourceEffectId ? [`Receiving source effect ID: ${output.sourceEffectId}.`] : []),
+            ...dependency.notes,
+            ...conditionalFacts.facts,
+          ],
+          effects: [`Status condition: ${dependencyLabel}`, ...conditionalFacts.effects],
           sourceEvidenceIds: statusOutput.evidenceIds,
           recipientEvidenceIds: output.evidenceIds,
           assumptions: [
             ...statusOutput.conditions.map((condition) => condition.description),
             ...statusConditionAssumptions(statusOutput, output),
+            ...(conditionalFacts.summary ? ['Burn application success, enemy identity, target overlap, and conditional uptime are unresolved.'] : []),
           ],
           unresolvedQuestions: ['Trigger timing, target selection, and exact uptime are not simulated.'],
           futureOrConditional: true,
@@ -2728,6 +2737,7 @@ function statusConditionExplanation(
   recipient: Dragon,
   output: OutputCapability,
   dependencyLabel = statusLabel(statusOutput.statusId),
+  conditionalFacts: { summary: string | null } = { summary: null },
 ): string {
   if (statusOutput.statusId === 'first-strike' && output.abilityId === 'caraxes-infernal-burst') {
     return `${provider.name} can grant ${recipient.name} First-Strike. While First-Strike is active, Infernal Burst deals 1.5x damage. Activation and timing are conditional.`;
@@ -2735,7 +2745,59 @@ function statusConditionExplanation(
   if (statusOutput.statusId === 'slow' && output.abilityId === 'syrax-strategic-revival') {
     return `${provider.name} can apply Slow. ${recipient.name}'s Strategic Revival multiplies Recovery by 1.5x if any enemy has Slow. Activation, unlock state, and timing are conditional.`;
   }
+  if (conditionalFacts.summary) {
+    return `${provider.name} can apply ${statusLabel(statusOutput.statusId)}. ${conditionalFacts.summary} Burn application and target overlap are not guaranteed.`;
+  }
   return `${provider.name} can apply ${statusLabel(statusOutput.statusId)}. ${recipient.name}'s ${output.abilityName} has a verified condition depending on ${dependencyLabel}.`;
+}
+
+function conditionalMultiplierValueFacts(
+  output: OutputCapability,
+  effect: AbilityEffect,
+  statusId: string,
+  options: CapabilityOptions,
+): { facts: string[]; effects: string[]; summary: string | null } {
+  const multiplier = (effect.conditionalMultipliers ?? []).find((item) =>
+    item.condition.statusId === statusId ||
+    (item.condition.statusCategoryId ? statusMatchesCategory(statusId, item.condition.statusCategoryId) : false),
+  );
+  if (!multiplier) {
+    return { facts: [], effects: [], summary: null };
+  }
+  const level = options.previewMaxRankInteractions ? 5 : effectiveHabitLevelForCapability(output, options);
+  const base = rankedValueForHabitLevel(effect.rankedValues, level);
+  const enhanced = multiplier.directlyVerifiedValues.find((value) => value.level === level);
+  if (!base || !enhanced || level === null) {
+    return {
+      facts: [`Conditional multiplier: ${multiplier.multiplier}x.`],
+      effects: [`Conditional multiplier: ${multiplier.multiplier}x`],
+      summary: null,
+    };
+  }
+  const baseValue = formatValue(base.value, base.unit);
+  const enhancedValue = formatValue(enhanced.value, enhanced.unit);
+  const channel = channelLabel(output.channel);
+  const eligibility = effect.conditions?.find((condition) => condition.kind === 'target-has-output-capability');
+  const facts = [
+    `Current effective Habit Level: ${level}.`,
+    `Base current ${channel} Rate: ${baseValue}.`,
+    `Enhanced current ${channel} Rate: ${enhancedValue}.`,
+    `Conditional multiplier: ${multiplier.multiplier}x.`,
+    `${statusLabel(statusId)} must be on the same eligible target.`,
+    ...(eligibility?.qualifyingOutput ? [
+      `Qualifying enemy capability: ${eligibility.qualifyingOutput.description}.`,
+    ] : []),
+    'Target eligibility remains independently required; the status condition does not make an ineligible enemy eligible.',
+  ];
+  return {
+    facts,
+    effects: [
+      `Base current ${channel} Rate: ${baseValue}`,
+      `Enhanced current ${channel} Rate: ${enhancedValue}`,
+      `Conditional multiplier: ${multiplier.multiplier}x`,
+    ],
+    summary: `On the same eligible target, ${statusLabel(statusId)} increases ${output.abilityName}'s current ${channel} Rate from ${baseValue} to ${enhancedValue} (${multiplier.multiplier}x).`,
+  };
 }
 
 function statusConditionAssumptions(statusOutput: StatusOutputCapability, output: OutputCapability): string[] {

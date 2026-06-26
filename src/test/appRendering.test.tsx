@@ -1,11 +1,30 @@
 import { render, screen, within } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { describe, expect, it } from 'vitest';
+import { afterEach, describe, expect, it, vi } from 'vitest';
 import { App } from '../app/App';
 import { STORAGE_KEY } from '../services/rosterStorage';
 import globalCss from '../styles/global.css?raw';
 
+const originalClientHeight = Object.getOwnPropertyDescriptor(HTMLElement.prototype, 'clientHeight');
+const originalScrollHeight = Object.getOwnPropertyDescriptor(HTMLElement.prototype, 'scrollHeight');
+const originalResizeObserver = window.ResizeObserver;
+
 describe('Dragonfire Roster Lab app', () => {
+  afterEach(() => {
+    vi.restoreAllMocks();
+    if (originalClientHeight) {
+      Object.defineProperty(HTMLElement.prototype, 'clientHeight', originalClientHeight);
+    } else {
+      Reflect.deleteProperty(HTMLElement.prototype, 'clientHeight');
+    }
+    if (originalScrollHeight) {
+      Object.defineProperty(HTMLElement.prototype, 'scrollHeight', originalScrollHeight);
+    } else {
+      Reflect.deleteProperty(HTMLElement.prototype, 'scrollHeight');
+    }
+    window.ResizeObserver = originalResizeObserver;
+  });
+
   it('renders all dragons through the database and supports search', async () => {
     const user = userEvent.setup();
     render(<App />);
@@ -172,7 +191,7 @@ describe('Dragonfire Roster Lab app', () => {
     const provides = within(syrax).getByRole('region', { name: 'Provides' });
     const collapsedCount = provides.querySelectorAll('.card-interaction-item').length;
     expect(provides.querySelectorAll('.card-interaction-item').length).toBeLessThanOrEqual(3);
-    const expand = within(provides).getByRole('button', { name: /view \d+ more/i });
+    const expand = within(provides).getByRole('button', { name: /show all/i });
     expect(expand).toHaveAttribute('aria-expanded', 'false');
 
     await user.click(expand);
@@ -185,11 +204,59 @@ describe('Dragonfire Roster Lab app', () => {
     const detailsToggle = within(provides).getAllByRole('button', { name: /details/i })[0]!;
     await user.click(detailsToggle);
     expect(within(provides).getByText('Full explanation')).toBeInTheDocument();
+    await user.click(within(provides).getByRole('button', { name: /hide details/i }));
 
     await user.click(within(provides).getByRole('button', { name: /show fewer/i }));
 
-    expect(within(provides).getByRole('button', { name: /view \d+ more/i })).toHaveAttribute('aria-expanded', 'false');
+    expect(within(provides).getByRole('button', { name: /show all/i })).toHaveAttribute('aria-expanded', 'false');
     expect(provides.querySelectorAll('.card-interaction-item')).toHaveLength(collapsedCount);
+  });
+
+  it('shows an expansion control when compact sections overflow by rendered height', async () => {
+    const user = userEvent.setup();
+    Object.defineProperty(HTMLElement.prototype, 'clientHeight', {
+      configurable: true,
+      get() {
+        const element = this as HTMLElement;
+        return element.classList.contains('interaction-section-body') ? 120 : 0;
+      },
+    });
+    Object.defineProperty(HTMLElement.prototype, 'scrollHeight', {
+      configurable: true,
+      get() {
+        const element = this as HTMLElement;
+        return element.classList.contains('interaction-section-body') ? 240 : 0;
+      },
+    });
+    class MockResizeObserver implements ResizeObserver {
+      constructor(private readonly callback: ResizeObserverCallback) {}
+      observe(target: Element) {
+        this.callback([{ target } as ResizeObserverEntry], this);
+      }
+      disconnect() {}
+      unobserve() {}
+    }
+    window.ResizeObserver = MockResizeObserver;
+    render(<App />);
+
+    await user.click(screen.getAllByRole('button', { name: /formation builder/i })[0]!);
+    await user.click(screen.getByLabelText(/include unowned dragons/i));
+    const selectors = screen.getAllByLabelText('Dragon');
+    await user.selectOptions(selectors[0]!, 'feskar');
+    await user.selectOptions(selectors[1]!, 'rhysarion');
+    await user.selectOptions(selectors[2]!, 'shadowsong');
+    const vanguard = screen.getByRole('article', { name: 'Vanguard' });
+    const receives = within(vanguard).getByRole('region', { name: 'Receives' });
+    const compactCount = receives.querySelectorAll('.card-interaction-item').length;
+    expect(compactCount).toBeLessThanOrEqual(3);
+
+    const expand = await within(receives).findByRole('button', { name: /show all/i });
+    expect(expand).toHaveAttribute('aria-expanded', 'false');
+
+    await user.click(expand);
+
+    expect(receives).toHaveClass('is-expanded');
+    expect(within(receives).getByRole('button', { name: /show fewer/i })).toHaveAttribute('aria-expanded', 'true');
   });
 
   it('allows expanded interaction sections to grow without an internal vertical scroll constraint', () => {
