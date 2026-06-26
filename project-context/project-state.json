@@ -37,8 +37,8 @@
     "metadataOnlyDragonCount": 18
   },
   "source": {
-    "branch": "fix/unlocked-habit-default-level",
-    "commit": "1a1f7c9f3da7bff295e3a30cb1f3c8fafdd4ea3e",
+    "branch": "fix/effect-options-ability-card",
+    "commit": "646074b21b872bcedd898ade6af07c8368e9c7e3",
     "databaseVersion": "0.6.1",
     "dataSchemaVersion": 11,
     "gameBuild": "26.6.53509",
@@ -49,7 +49,7 @@
     "countingMethod": "static working-tree test declaration scan; runtime pass/fail is reported by npm run test",
     "lastRunStatus": "not-run-by-exporter",
     "runner": "vitest",
-    "testCaseCount": 215,
+    "testCaseCount": 217,
     "testFileCount": 25
   },
   "unresolvedMechanicsCount": 132,
