@@ -29,8 +29,8 @@ describe('Phase 3.5 evidence and review metadata', () => {
   it('uses game build 26.6.53509 for current screenshot evidence and observations', () => {
     const screenshotEvidence = evidenceSources.filter((source) => source.type === 'in-game-screenshot');
 
-    expect(databaseMetadata.databaseVersion).toBe('0.6.1');
-    expect(databaseMetadata.schemaVersion).toBe(11);
+    expect(databaseMetadata.databaseVersion).toBe('0.6.2');
+    expect(databaseMetadata.schemaVersion).toBe(12);
     expect(databaseMetadata.currentDocumentedGameBuild).toBe(build);
     expect(screenshotEvidence.length).toBeGreaterThan(0);
     expect(screenshotEvidence.every((source) => source.gameVersion === build)).toBe(true);
@@ -167,7 +167,7 @@ describe('synergy trace and audit behavior', () => {
     expect(exportPayload).toMatchObject({
       format: 'dragonfire-synergy-audit',
       schemaVersion: 1,
-      databaseVersion: '0.6.1',
+      databaseVersion: '0.6.2',
       gameBuild: build,
     });
   });

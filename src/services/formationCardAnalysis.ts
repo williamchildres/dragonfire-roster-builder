@@ -411,6 +411,9 @@ function summarizeTrace(
   if (trace.matchKind === 'status-removal') {
     return ['Potential Control cleanse; timing, selection, and activation are uncertain.'];
   }
+  if (trace.matchKind === 'friendly-impairment') {
+    return [trace.explanation.replace(`${source.name}'s `, '').replace(recipient ? `${recipient.name}` : 'the ally', recipient?.name ?? 'the ally')];
+  }
   if (trace.modifierRole === 'enemy-debuff' || trace.matchKind === 'enemy-mitigation-reduction' || trace.matchKind === 'enemy-damage-dealt-reduction') {
     return [enemyFacingSummary(trace)];
   }
@@ -849,6 +852,9 @@ function interactionPurpose(trace: SynergyTrace): string | null {
   }
   if (trace.matchKind === 'status-removal') {
     return 'Control cleanse';
+  }
+  if (trace.matchKind === 'friendly-impairment') {
+    return `${formatToken(trace.channel ?? 'damage-dealt')} friendly impairment`;
   }
   if (trace.matchKind === 'incoming-effect-amplification' && trace.recipientModifierType) {
     return `${formatToken(trace.channel ?? 'recovery')} amplification`;

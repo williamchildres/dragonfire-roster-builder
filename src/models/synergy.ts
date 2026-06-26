@@ -163,7 +163,8 @@ export type SynergyTraceMatchKind =
   | 'periodic-status-damage'
   | 'periodic-damage-amplification'
   | 'status-removal'
-  | 'defensive-ally-support';
+  | 'defensive-ally-support'
+  | 'friendly-impairment';
 
 export type CapabilitySourceKind = 'basic-attack' | 'command' | 'trait' | 'habit';
 
@@ -182,6 +183,7 @@ export type ModifierRole =
   | 'self-amplification'
   | 'ally-support'
   | 'recipient-side-amplification'
+  | 'ally-impairment'
   | 'enemy-debuff';
 
 export type CapabilityAvailability =
@@ -353,6 +355,8 @@ export type CapabilityDependencyType =
   | 'requires-self-status'
   | 'requires-any-enemy-status'
   | 'requires-target-status'
+  | 'requires-target-status-category'
+  | 'requires-target-output-capability'
   | 'scales-with-stat'
   | 'mitigated-by-target-stat'
   | 'target-prioritizes-channel'
@@ -364,8 +368,10 @@ export type CapabilityDependencyType =
 export interface CapabilityDependency {
   type: CapabilityDependencyType;
   statusId?: string;
+  statusCategoryId?: string;
   statId?: DragonStatId;
   channel?: EffectChannel;
+  sourceScope?: CapabilitySourceScope;
   eventId?: string;
   multiplier?: number;
   notes: string[];

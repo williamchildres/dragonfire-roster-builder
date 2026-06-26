@@ -496,6 +496,299 @@
         "outputCapabilityId": "daemoros-shadowflame-shadowflame-burn-output"
       },
       {
+        "abilityId": "feskar-calculated-assault",
+        "dependency": {
+          "notes": [
+            "Effect wording indicates scaling with Instinct."
+          ],
+          "statId": "instinct",
+          "type": "scales-with-stat"
+        },
+        "dragonId": "feskar",
+        "outputCapabilityId": "feskar-calculated-assault-calculated-assault-tactical-output"
+      },
+      {
+        "abilityId": "feskar-calculated-assault",
+        "dependency": {
+          "notes": [
+            "Tactical Damage is reduced by target Intelligence."
+          ],
+          "statId": "intelligence",
+          "type": "mitigated-by-target-stat"
+        },
+        "dragonId": "feskar",
+        "outputCapabilityId": "feskar-calculated-assault-calculated-assault-tactical-output"
+      },
+      {
+        "abilityId": "feskar-emerald-inferno",
+        "dependency": {
+          "notes": [
+            "Effect wording indicates scaling with Intelligence."
+          ],
+          "statId": "intelligence",
+          "type": "scales-with-stat"
+        },
+        "dragonId": "feskar",
+        "outputCapabilityId": "feskar-emerald-inferno-emerald-inferno-fire-output"
+      },
+      {
+        "abilityId": "feskar-emerald-inferno",
+        "dependency": {
+          "notes": [
+            "Fire Damage is reduced by target Initiative."
+          ],
+          "statId": "initiative",
+          "type": "mitigated-by-target-stat"
+        },
+        "dragonId": "feskar",
+        "outputCapabilityId": "feskar-emerald-inferno-emerald-inferno-fire-output"
+      },
+      {
+        "abilityId": "feskar-emerald-inferno",
+        "dependency": {
+          "multiplier": 1.5,
+          "notes": [
+            "Per target, the target is afflicted with Burn."
+          ],
+          "statusId": "burn",
+          "type": "requires-target-status"
+        },
+        "dragonId": "feskar",
+        "outputCapabilityId": "feskar-emerald-inferno-emerald-inferno-fire-output"
+      },
+      {
+        "abilityId": "feskar-emerald-inferno",
+        "dependency": {
+          "channel": "physical-damage",
+          "notes": [
+            "Target eligibility requires the enemy to possess a non-Basic Physical Damage output capability.",
+            "Enemy deals Physical Damage excluding Basic Attacks."
+          ],
+          "sourceScope": "non-basic-attacks",
+          "type": "requires-target-output-capability"
+        },
+        "dragonId": "feskar",
+        "outputCapabilityId": "feskar-emerald-inferno-emerald-inferno-fire-output"
+      },
+      {
+        "abilityId": "rhysarion-dawnsong",
+        "dependency": {
+          "notes": [
+            "Effect wording indicates scaling with Strength."
+          ],
+          "statId": "strength",
+          "type": "scales-with-stat"
+        },
+        "dragonId": "rhysarion",
+        "outputCapabilityId": "rhysarion-dawnsong-dawnsong-physical-output"
+      },
+      {
+        "abilityId": "rhysarion-dawnsong",
+        "dependency": {
+          "notes": [
+            "Physical Damage is reduced by target Instinct."
+          ],
+          "statId": "instinct",
+          "type": "mitigated-by-target-stat"
+        },
+        "dragonId": "rhysarion",
+        "outputCapabilityId": "rhysarion-dawnsong-dawnsong-physical-output"
+      },
+      {
+        "abilityId": "rhysarion-dawnsong",
+        "dependency": {
+          "notes": [
+            "Effect wording indicates scaling with Intelligence."
+          ],
+          "statId": "intelligence",
+          "type": "scales-with-stat"
+        },
+        "dragonId": "rhysarion",
+        "outputCapabilityId": "rhysarion-dawnsong-dawnsong-fire-output"
+      },
+      {
+        "abilityId": "rhysarion-dawnsong",
+        "dependency": {
+          "notes": [
+            "Fire Damage is reduced by target Initiative."
+          ],
+          "statId": "initiative",
+          "type": "mitigated-by-target-stat"
+        },
+        "dragonId": "rhysarion",
+        "outputCapabilityId": "rhysarion-dawnsong-dawnsong-fire-output"
+      },
+      {
+        "abilityId": "rhysarion-dawnsong",
+        "dependency": {
+          "multiplier": 1.5,
+          "notes": [
+            "Per target, the target is afflicted with a verified Control status."
+          ],
+          "statusCategoryId": "control",
+          "type": "requires-target-status-category"
+        },
+        "dragonId": "rhysarion",
+        "outputCapabilityId": "rhysarion-dawnsong-dawnsong-fire-output"
+      },
+      {
+        "abilityId": "rhysarion-ebbing-fury",
+        "dependency": {
+          "notes": [
+            "Effect wording indicates scaling with Strength."
+          ],
+          "statId": "strength",
+          "type": "scales-with-stat"
+        },
+        "dragonId": "rhysarion",
+        "outputCapabilityId": "rhysarion-ebbing-fury-ebbing-fury-recovery-output"
+      },
+      {
+        "abilityId": "rhysarion-echoing-melody",
+        "dependency": {
+          "notes": [
+            "Effect wording indicates scaling with Intelligence."
+          ],
+          "statId": "intelligence",
+          "type": "scales-with-stat"
+        },
+        "dragonId": "rhysarion",
+        "outputCapabilityId": "rhysarion-echoing-melody-echoing-melody-recovery-output"
+      },
+      {
+        "abilityId": "shadowsong-breath-of-fire",
+        "dependency": {
+          "notes": [
+            "Effect wording indicates scaling with Intelligence."
+          ],
+          "statId": "intelligence",
+          "type": "scales-with-stat"
+        },
+        "dragonId": "shadowsong",
+        "outputCapabilityId": "shadowsong-breath-of-fire-breath-of-fire-base-fire-output"
+      },
+      {
+        "abilityId": "shadowsong-breath-of-fire",
+        "dependency": {
+          "notes": [
+            "Fire Damage is reduced by target Initiative."
+          ],
+          "statId": "initiative",
+          "type": "mitigated-by-target-stat"
+        },
+        "dragonId": "shadowsong",
+        "outputCapabilityId": "shadowsong-breath-of-fire-breath-of-fire-base-fire-output"
+      },
+      {
+        "abilityId": "shadowsong-breath-of-fire",
+        "dependency": {
+          "multiplier": 1.5,
+          "notes": [
+            "Per target, the target is afflicted with Panic."
+          ],
+          "statusId": "panic",
+          "type": "requires-target-status"
+        },
+        "dragonId": "shadowsong",
+        "outputCapabilityId": "shadowsong-breath-of-fire-breath-of-fire-base-fire-output"
+      },
+      {
+        "abilityId": "shadowsong-blazing-conductor",
+        "dependency": {
+          "notes": [
+            "Effect wording indicates scaling with Intelligence."
+          ],
+          "statId": "intelligence",
+          "type": "scales-with-stat"
+        },
+        "dragonId": "shadowsong",
+        "outputCapabilityId": "shadowsong-blazing-conductor-blazing-conductor-first-fire-output"
+      },
+      {
+        "abilityId": "shadowsong-blazing-conductor",
+        "dependency": {
+          "notes": [
+            "Fire Damage is reduced by target Initiative."
+          ],
+          "statId": "initiative",
+          "type": "mitigated-by-target-stat"
+        },
+        "dragonId": "shadowsong",
+        "outputCapabilityId": "shadowsong-blazing-conductor-blazing-conductor-first-fire-output"
+      },
+      {
+        "abilityId": "shadowsong-blazing-conductor",
+        "dependency": {
+          "notes": [
+            "Fire Damage is increased by Intelligence."
+          ],
+          "statId": "intelligence",
+          "type": "scales-with-stat"
+        },
+        "dragonId": "shadowsong",
+        "outputCapabilityId": "shadowsong-blazing-conductor-blazing-conductor-first-burn-output"
+      },
+      {
+        "abilityId": "shadowsong-blazing-conductor",
+        "dependency": {
+          "notes": [
+            "Fire Damage is reduced by target Initiative."
+          ],
+          "statId": "initiative",
+          "type": "mitigated-by-target-stat"
+        },
+        "dragonId": "shadowsong",
+        "outputCapabilityId": "shadowsong-blazing-conductor-blazing-conductor-first-burn-output"
+      },
+      {
+        "abilityId": "shadowsong-blazing-conductor",
+        "dependency": {
+          "notes": [
+            "Effect wording indicates scaling with Intelligence."
+          ],
+          "statId": "intelligence",
+          "type": "scales-with-stat"
+        },
+        "dragonId": "shadowsong",
+        "outputCapabilityId": "shadowsong-blazing-conductor-blazing-conductor-second-fire-output"
+      },
+      {
+        "abilityId": "shadowsong-blazing-conductor",
+        "dependency": {
+          "notes": [
+            "Fire Damage is reduced by target Initiative."
+          ],
+          "statId": "initiative",
+          "type": "mitigated-by-target-stat"
+        },
+        "dragonId": "shadowsong",
+        "outputCapabilityId": "shadowsong-blazing-conductor-blazing-conductor-second-fire-output"
+      },
+      {
+        "abilityId": "shadowsong-blazing-conductor",
+        "dependency": {
+          "notes": [
+            "Fire Damage is increased by Intelligence."
+          ],
+          "statId": "intelligence",
+          "type": "scales-with-stat"
+        },
+        "dragonId": "shadowsong",
+        "outputCapabilityId": "shadowsong-blazing-conductor-blazing-conductor-second-burn-output"
+      },
+      {
+        "abilityId": "shadowsong-blazing-conductor",
+        "dependency": {
+          "notes": [
+            "Fire Damage is reduced by target Initiative."
+          ],
+          "statId": "initiative",
+          "type": "mitigated-by-target-stat"
+        },
+        "dragonId": "shadowsong",
+        "outputCapabilityId": "shadowsong-blazing-conductor-blazing-conductor-second-burn-output"
+      },
+      {
         "abilityId": "vaeldra-lure",
         "dependency": {
           "notes": [
@@ -3338,6 +3631,662 @@
           "includesCaster": null,
           "position": "left-flank",
           "scope": "left-flank",
+          "selection": "specific-position",
+          "selectionResource": null,
+          "selectionStat": null,
+          "sharedSelectionGroupId": null,
+          "side": "ally",
+          "tieBehavior": null
+        },
+        "unit": "flat",
+        "unlockStarRank": 1,
+        "value": 20,
+        "valuePerStack": null
+      },
+      {
+        "abilityId": "feskar-champions-brilliance",
+        "abilityName": "Champion's Brilliance",
+        "activationChanceByHabitLevel": [],
+        "activationChanceFixed": null,
+        "activationGroupId": null,
+        "availability": {
+          "canonical": "canonical-base",
+          "notes": [
+            "Requires Dragon Level 16+.",
+            "Unlocked in observed account collection state, subject to level and star requirements."
+          ],
+          "observedAccount": "observed-available",
+          "reportLabel": "Base kit; Level 16+; observed account hatched",
+          "userRoster": "unknown"
+        },
+        "channel": "damage-received",
+        "combatLogConfirmed": false,
+        "conditional": false,
+        "conditions": [],
+        "confidence": "confirmed",
+        "currentlyAvailable": true,
+        "damageScope": "all",
+        "direction": "received",
+        "directlyVerified": true,
+        "dragonId": "feskar",
+        "durationRounds": null,
+        "evidenceIds": [
+          "feskar-champions-brilliance-2026-06-26"
+        ],
+        "futureAvailable": false,
+        "id": "feskar-champions-brilliance-champions-brilliance-right-damage-received-damage-received-received-modifier",
+        "label": "Champion's Brilliance: Damage Received Down",
+        "minimumDragonLevel": 16,
+        "operation": "decrease",
+        "providerRequirements": [
+          {
+            "evidenceIds": [
+              "feskar-champions-brilliance-2026-06-26"
+            ],
+            "expected": "vanguard",
+            "id": "feskar-champions-brilliance-provider-position-vanguard",
+            "kind": "provider-position",
+            "label": "Provider position requirement"
+          }
+        ],
+        "rankedValues": [],
+        "recipientRequirements": [],
+        "requiredHabitLevel": null,
+        "role": "ally-support",
+        "sourceEffectId": "champions-brilliance-right-damage-received",
+        "sourceScope": "all-qualifying-sources",
+        "stackMaximum": null,
+        "statusId": null,
+        "targetSelector": {
+          "comparisonDirection": null,
+          "comparisonPool": null,
+          "count": null,
+          "includesCaster": null,
+          "position": "right-flank",
+          "scope": "right-flank",
+          "selection": "specific-position",
+          "selectionResource": null,
+          "selectionStat": null,
+          "sharedSelectionGroupId": null,
+          "side": "ally",
+          "tieBehavior": null
+        },
+        "unit": "percent",
+        "unlockStarRank": 1,
+        "value": 8,
+        "valuePerStack": null
+      },
+      {
+        "abilityId": "feskar-resilient-bond",
+        "abilityName": "Resilient Bond",
+        "activationChanceByHabitLevel": [],
+        "activationChanceFixed": null,
+        "activationGroupId": "resilient-bond-tracked-ally",
+        "availability": {
+          "canonical": "canonical-locked",
+          "notes": [
+            "Future at Star Rank 2.",
+            "Unlocked in observed account collection state, subject to level and star requirements."
+          ],
+          "observedAccount": "observed-available",
+          "reportLabel": "Future at Star Rank 2; observed account hatched",
+          "userRoster": "unknown"
+        },
+        "channel": "damage-received",
+        "combatLogConfirmed": false,
+        "conditional": true,
+        "conditions": [],
+        "confidence": "confirmed",
+        "currentlyAvailable": false,
+        "damageScope": "physical",
+        "direction": "received",
+        "directlyVerified": true,
+        "dragonId": "feskar",
+        "durationRounds": null,
+        "evidenceIds": [
+          "feskar-resilient-bond-2026-06-26"
+        ],
+        "futureAvailable": true,
+        "id": "feskar-resilient-bond-resilient-bond-adjacent-stack-damage-received-received-modifier",
+        "label": "Resilient Bond: Physical Damage Received Down",
+        "minimumDragonLevel": null,
+        "operation": "decrease",
+        "providerRequirements": [],
+        "rankedValues": [
+          {
+            "level": 1,
+            "unit": "percent",
+            "value": 6.5
+          },
+          {
+            "level": 2,
+            "unit": "percent",
+            "value": 7.8
+          },
+          {
+            "level": 3,
+            "unit": "percent",
+            "value": 9.1
+          },
+          {
+            "level": 4,
+            "unit": "percent",
+            "value": 11.05
+          },
+          {
+            "level": 5,
+            "unit": "percent",
+            "value": 13
+          }
+        ],
+        "recipientRequirements": [],
+        "requiredHabitLevel": 1,
+        "role": "ally-support",
+        "sourceEffectId": "resilient-bond-adjacent-stack",
+        "sourceScope": "non-basic-attacks",
+        "stackMaximum": null,
+        "statusId": "resilient-bond",
+        "targetSelector": {
+          "comparisonDirection": null,
+          "comparisonPool": null,
+          "count": 1,
+          "includesCaster": false,
+          "position": null,
+          "scope": "within-adjacency",
+          "selection": "one-eligible-adjacent",
+          "selectionResource": null,
+          "selectionStat": null,
+          "sharedSelectionGroupId": "resilient-bond-tracked-ally",
+          "side": "ally",
+          "tieBehavior": null
+        },
+        "unit": "percent",
+        "unlockStarRank": 2,
+        "value": null,
+        "valuePerStack": null
+      },
+      {
+        "abilityId": "feskar-insightful-allies",
+        "abilityName": "Insightful Allies",
+        "activationChanceByHabitLevel": [],
+        "activationChanceFixed": null,
+        "activationGroupId": null,
+        "availability": {
+          "canonical": "canonical-locked",
+          "notes": [
+            "Future at Star Rank 4.",
+            "Unlocked in observed account collection state, subject to level and star requirements."
+          ],
+          "observedAccount": "observed-available",
+          "reportLabel": "Future at Star Rank 4; observed account hatched",
+          "userRoster": "unknown"
+        },
+        "channel": "stat",
+        "combatLogConfirmed": false,
+        "conditional": true,
+        "conditions": [],
+        "confidence": "confirmed",
+        "currentlyAvailable": false,
+        "damageScope": null,
+        "direction": "dealt",
+        "directlyVerified": true,
+        "dragonId": "feskar",
+        "durationRounds": null,
+        "evidenceIds": [
+          "feskar-insightful-allies-2026-06-26"
+        ],
+        "futureAvailable": true,
+        "id": "feskar-insightful-allies-insightful-allies-instinct-stat-dealt-modifier",
+        "label": "Insightful Allies: Instinct Up",
+        "minimumDragonLevel": null,
+        "operation": "increase",
+        "providerRequirements": [],
+        "rankedValues": [
+          {
+            "level": 1,
+            "unit": "percent",
+            "value": 10
+          },
+          {
+            "level": 2,
+            "unit": "percent",
+            "value": 12
+          },
+          {
+            "level": 3,
+            "unit": "percent",
+            "value": 14
+          },
+          {
+            "level": 4,
+            "unit": "percent",
+            "value": 17
+          },
+          {
+            "level": 5,
+            "unit": "percent",
+            "value": 20
+          }
+        ],
+        "recipientRequirements": [],
+        "requiredHabitLevel": 1,
+        "role": "ally-support",
+        "sourceEffectId": "insightful-allies-instinct",
+        "sourceScope": "unknown",
+        "stackMaximum": null,
+        "statusId": null,
+        "targetSelector": {
+          "comparisonDirection": null,
+          "comparisonPool": null,
+          "count": 3,
+          "includesCaster": true,
+          "position": null,
+          "scope": "any-lane",
+          "selection": "any",
+          "selectionResource": null,
+          "selectionStat": null,
+          "sharedSelectionGroupId": null,
+          "side": "ally",
+          "tieBehavior": null
+        },
+        "unit": "percent",
+        "unlockStarRank": 4,
+        "value": null,
+        "valuePerStack": null
+      },
+      {
+        "abilityId": "rhysarion-champions-vigor",
+        "abilityName": "Champion's Vigor",
+        "activationChanceByHabitLevel": [],
+        "activationChanceFixed": null,
+        "activationGroupId": null,
+        "availability": {
+          "canonical": "canonical-base",
+          "notes": [
+            "Requires Dragon Level 16+.",
+            "Unlocked in observed account collection state, subject to level and star requirements."
+          ],
+          "observedAccount": "observed-available",
+          "reportLabel": "Base kit; Level 16+; observed account hatched",
+          "userRoster": "unknown"
+        },
+        "channel": "damage-dealt",
+        "combatLogConfirmed": false,
+        "conditional": false,
+        "conditions": [],
+        "confidence": "confirmed",
+        "currentlyAvailable": true,
+        "damageScope": null,
+        "direction": "dealt",
+        "directlyVerified": true,
+        "dragonId": "rhysarion",
+        "durationRounds": null,
+        "evidenceIds": [
+          "rhysarion-champions-vigor-2026-06-26"
+        ],
+        "futureAvailable": false,
+        "id": "rhysarion-champions-vigor-champions-vigor-right-damage-dealt-damage-dealt-dealt-modifier",
+        "label": "Champion's Vigor: Damage Dealt Up",
+        "minimumDragonLevel": 16,
+        "operation": "increase",
+        "providerRequirements": [
+          {
+            "evidenceIds": [
+              "rhysarion-champions-vigor-2026-06-26"
+            ],
+            "expected": "vanguard",
+            "id": "rhysarion-champions-vigor-provider-position-vanguard",
+            "kind": "provider-position",
+            "label": "Provider position requirement"
+          }
+        ],
+        "rankedValues": [],
+        "recipientRequirements": [],
+        "requiredHabitLevel": null,
+        "role": "ally-support",
+        "sourceEffectId": "champions-vigor-right-damage-dealt",
+        "sourceScope": "all-qualifying-sources",
+        "stackMaximum": null,
+        "statusId": null,
+        "targetSelector": {
+          "comparisonDirection": null,
+          "comparisonPool": null,
+          "count": null,
+          "includesCaster": null,
+          "position": "right-flank",
+          "scope": "right-flank",
+          "selection": "specific-position",
+          "selectionResource": null,
+          "selectionStat": null,
+          "sharedSelectionGroupId": null,
+          "side": "ally",
+          "tieBehavior": null
+        },
+        "unit": "percent",
+        "unlockStarRank": 1,
+        "value": 8,
+        "valuePerStack": null
+      },
+      {
+        "abilityId": "rhysarion-unbroken-devotion",
+        "abilityName": "Unbroken Devotion",
+        "activationChanceByHabitLevel": [],
+        "activationChanceFixed": null,
+        "activationGroupId": null,
+        "availability": {
+          "canonical": "canonical-locked",
+          "notes": [
+            "Future at Star Rank 8.",
+            "Unlocked in observed account collection state, subject to level and star requirements."
+          ],
+          "observedAccount": "observed-available",
+          "reportLabel": "Future at Star Rank 8; observed account hatched",
+          "userRoster": "unknown"
+        },
+        "channel": "recovery",
+        "combatLogConfirmed": false,
+        "conditional": true,
+        "conditions": [],
+        "confidence": "confirmed",
+        "currentlyAvailable": false,
+        "damageScope": null,
+        "direction": "received",
+        "directlyVerified": true,
+        "dragonId": "rhysarion",
+        "durationRounds": null,
+        "evidenceIds": [
+          "rhysarion-unbroken-devotion-2026-06-26"
+        ],
+        "futureAvailable": true,
+        "id": "rhysarion-unbroken-devotion-unbroken-devotion-recovery-received-recovery-received-modifier",
+        "label": "Unbroken Devotion: Recovery Received Up",
+        "minimumDragonLevel": null,
+        "operation": "increase",
+        "providerRequirements": [],
+        "rankedValues": [
+          {
+            "level": 1,
+            "unit": "percent",
+            "value": 20
+          },
+          {
+            "level": 2,
+            "unit": "percent",
+            "value": 24
+          },
+          {
+            "level": 3,
+            "unit": "percent",
+            "value": 28
+          },
+          {
+            "level": 4,
+            "unit": "percent",
+            "value": 34
+          },
+          {
+            "level": 5,
+            "unit": "percent",
+            "value": 40
+          }
+        ],
+        "recipientRequirements": [],
+        "requiredHabitLevel": 1,
+        "role": "ally-support",
+        "sourceEffectId": "unbroken-devotion-recovery-received",
+        "sourceScope": "unknown",
+        "stackMaximum": null,
+        "statusId": null,
+        "targetSelector": {
+          "comparisonDirection": null,
+          "comparisonPool": null,
+          "count": 2,
+          "includesCaster": false,
+          "position": null,
+          "scope": "any-lane",
+          "selection": "any",
+          "selectionResource": null,
+          "selectionStat": null,
+          "sharedSelectionGroupId": null,
+          "side": "ally",
+          "tieBehavior": null
+        },
+        "unit": "percent",
+        "unlockStarRank": 8,
+        "value": null,
+        "valuePerStack": null
+      },
+      {
+        "abilityId": "rhysarion-inspiring-melody",
+        "abilityName": "Inspiring Melody",
+        "activationChanceByHabitLevel": [
+          {
+            "level": 1,
+            "unit": "percent",
+            "value": 20
+          },
+          {
+            "level": 2,
+            "unit": "percent",
+            "value": 26
+          },
+          {
+            "level": 3,
+            "unit": "percent",
+            "value": 32
+          },
+          {
+            "level": 4,
+            "unit": "percent",
+            "value": 40
+          },
+          {
+            "level": 5,
+            "unit": "percent",
+            "value": 50
+          }
+        ],
+        "activationChanceFixed": null,
+        "activationGroupId": "inspiring-melody-selected-ally",
+        "availability": {
+          "canonical": "canonical-locked",
+          "notes": [
+            "Future at Star Rank 10.",
+            "Unlocked in observed account collection state, subject to level and star requirements."
+          ],
+          "observedAccount": "observed-available",
+          "reportLabel": "Future at Star Rank 10; observed account hatched",
+          "userRoster": "unknown"
+        },
+        "channel": "stat",
+        "combatLogConfirmed": false,
+        "conditional": true,
+        "conditions": [
+          {
+            "description": "One shared activation and one shared selected adjacent ally receive both effects.",
+            "evidenceIds": [],
+            "id": "inspiring-melody-each-round-activation-chance",
+            "label": "One shared activation and one shared selected adjacent ally receive both effects.",
+            "unresolved": false
+          }
+        ],
+        "confidence": "confirmed",
+        "currentlyAvailable": false,
+        "damageScope": null,
+        "direction": "dealt",
+        "directlyVerified": true,
+        "dragonId": "rhysarion",
+        "durationRounds": 3,
+        "evidenceIds": [
+          "rhysarion-inspiring-melody-2026-06-26"
+        ],
+        "futureAvailable": true,
+        "id": "rhysarion-inspiring-melody-inspiring-melody-initiative-stat-dealt-modifier",
+        "label": "Inspiring Melody: Initiative Up",
+        "minimumDragonLevel": null,
+        "operation": "increase",
+        "providerRequirements": [],
+        "rankedValues": [],
+        "recipientRequirements": [],
+        "requiredHabitLevel": 1,
+        "role": "ally-support",
+        "sourceEffectId": "inspiring-melody-initiative",
+        "sourceScope": "unknown",
+        "stackMaximum": null,
+        "statusId": null,
+        "targetSelector": {
+          "comparisonDirection": null,
+          "comparisonPool": null,
+          "count": 1,
+          "includesCaster": false,
+          "position": null,
+          "scope": "within-adjacency",
+          "selection": "one-eligible-adjacent",
+          "selectionResource": null,
+          "selectionStat": null,
+          "sharedSelectionGroupId": "inspiring-melody-selected-ally",
+          "side": "ally",
+          "tieBehavior": null
+        },
+        "unit": "percent",
+        "unlockStarRank": 10,
+        "value": 20,
+        "valuePerStack": null
+      },
+      {
+        "abilityId": "shadowsong-hunters-wrath",
+        "abilityName": "Hunter's Wrath",
+        "activationChanceByHabitLevel": [],
+        "activationChanceFixed": null,
+        "activationGroupId": null,
+        "availability": {
+          "canonical": "canonical-base",
+          "notes": [
+            "Requires Dragon Level 16+.",
+            "Unlocked in observed account collection state, subject to level and star requirements."
+          ],
+          "observedAccount": "observed-available",
+          "reportLabel": "Base kit; Level 16+; observed account hatched",
+          "userRoster": "unknown"
+        },
+        "channel": "stat",
+        "combatLogConfirmed": false,
+        "conditional": false,
+        "conditions": [],
+        "confidence": "confirmed",
+        "currentlyAvailable": true,
+        "damageScope": null,
+        "direction": "dealt",
+        "directlyVerified": true,
+        "dragonId": "shadowsong",
+        "durationRounds": null,
+        "evidenceIds": [
+          "shadowsong-hunters-wrath-2026-06-26"
+        ],
+        "futureAvailable": false,
+        "id": "shadowsong-hunters-wrath-hunters-wrath-right-strength-stat-dealt-modifier",
+        "label": "Hunter's Wrath: Strength Up",
+        "minimumDragonLevel": 16,
+        "operation": "increase",
+        "providerRequirements": [
+          {
+            "evidenceIds": [
+              "shadowsong-hunters-wrath-2026-06-26"
+            ],
+            "expected": "vanguard",
+            "id": "shadowsong-hunters-wrath-provider-position-vanguard",
+            "kind": "provider-position",
+            "label": "Provider position requirement"
+          }
+        ],
+        "rankedValues": [],
+        "recipientRequirements": [],
+        "requiredHabitLevel": null,
+        "role": "ally-support",
+        "sourceEffectId": "hunters-wrath-right-strength",
+        "sourceScope": "unknown",
+        "stackMaximum": null,
+        "statusId": null,
+        "targetSelector": {
+          "comparisonDirection": null,
+          "comparisonPool": null,
+          "count": null,
+          "includesCaster": null,
+          "position": "right-flank",
+          "scope": "right-flank",
+          "selection": "specific-position",
+          "selectionResource": null,
+          "selectionStat": null,
+          "sharedSelectionGroupId": null,
+          "side": "ally",
+          "tieBehavior": null
+        },
+        "unit": "flat",
+        "unlockStarRank": 1,
+        "value": 20,
+        "valuePerStack": null
+      },
+      {
+        "abilityId": "shadowsong-hunters-wrath",
+        "abilityName": "Hunter's Wrath",
+        "activationChanceByHabitLevel": [],
+        "activationChanceFixed": null,
+        "activationGroupId": null,
+        "availability": {
+          "canonical": "canonical-base",
+          "notes": [
+            "Requires Dragon Level 16+.",
+            "Unlocked in observed account collection state, subject to level and star requirements."
+          ],
+          "observedAccount": "observed-available",
+          "reportLabel": "Base kit; Level 16+; observed account hatched",
+          "userRoster": "unknown"
+        },
+        "channel": "stat",
+        "combatLogConfirmed": false,
+        "conditional": false,
+        "conditions": [],
+        "confidence": "confirmed",
+        "currentlyAvailable": true,
+        "damageScope": null,
+        "direction": "dealt",
+        "directlyVerified": true,
+        "dragonId": "shadowsong",
+        "durationRounds": null,
+        "evidenceIds": [
+          "shadowsong-hunters-wrath-2026-06-26"
+        ],
+        "futureAvailable": false,
+        "id": "shadowsong-hunters-wrath-hunters-wrath-right-initiative-stat-dealt-modifier",
+        "label": "Hunter's Wrath: Initiative Up",
+        "minimumDragonLevel": 16,
+        "operation": "increase",
+        "providerRequirements": [
+          {
+            "evidenceIds": [
+              "shadowsong-hunters-wrath-2026-06-26"
+            ],
+            "expected": "vanguard",
+            "id": "shadowsong-hunters-wrath-provider-position-vanguard",
+            "kind": "provider-position",
+            "label": "Provider position requirement"
+          }
+        ],
+        "rankedValues": [],
+        "recipientRequirements": [],
+        "requiredHabitLevel": null,
+        "role": "ally-support",
+        "sourceEffectId": "hunters-wrath-right-initiative",
+        "sourceScope": "unknown",
+        "stackMaximum": null,
+        "statusId": null,
+        "targetSelector": {
+          "comparisonDirection": null,
+          "comparisonPool": null,
+          "count": null,
+          "includesCaster": null,
+          "position": "right-flank",
+          "scope": "right-flank",
           "selection": "specific-position",
           "selectionResource": null,
           "selectionStat": null,
@@ -6783,6 +7732,521 @@
         "valuePerStack": null
       },
       {
+        "abilityId": "feskar-calculated-assault",
+        "abilityName": "Calculated Assault",
+        "activationChanceByHabitLevel": [],
+        "activationChanceFixed": 20,
+        "activationGroupId": null,
+        "availability": {
+          "canonical": "canonical-base",
+          "notes": [
+            "Unlocked in observed account collection state, subject to level and star requirements."
+          ],
+          "observedAccount": "observed-available",
+          "reportLabel": "Base kit; observed account hatched",
+          "userRoster": "unknown"
+        },
+        "channel": "physical-damage",
+        "combatLogConfirmed": false,
+        "conditional": true,
+        "conditions": [
+          {
+            "description": "One chance each round to reduce the highest-Strength enemy non-Basic Physical Damage Dealt.",
+            "evidenceIds": [],
+            "id": "calculated-assault-physical-reduction-activation-chance",
+            "label": "One chance each round to reduce the highest-Strength enemy non-Basic Physical Damage Dealt.",
+            "unresolved": false
+          }
+        ],
+        "confidence": "confirmed",
+        "currentlyAvailable": true,
+        "damageScope": null,
+        "direction": "dealt",
+        "directlyVerified": true,
+        "dragonId": "feskar",
+        "durationRounds": 2,
+        "evidenceIds": [
+          "feskar-calculated-assault-2026-06-26"
+        ],
+        "futureAvailable": false,
+        "id": "feskar-calculated-assault-calculated-assault-physical-dealt-down-physical-damage-dealt-modifier",
+        "label": "Calculated Assault: Physical Damage Dealt Down",
+        "minimumDragonLevel": null,
+        "operation": "decrease",
+        "providerRequirements": [],
+        "rankedValues": [],
+        "recipientRequirements": [],
+        "requiredHabitLevel": null,
+        "role": "enemy-debuff",
+        "sourceEffectId": "calculated-assault-physical-dealt-down",
+        "sourceScope": "non-basic-attacks",
+        "stackMaximum": null,
+        "statusId": null,
+        "targetSelector": {
+          "comparisonDirection": "highest",
+          "comparisonPool": "enemy-side",
+          "count": 1,
+          "includesCaster": null,
+          "position": null,
+          "scope": "any-lane",
+          "selection": "highest-stat",
+          "selectionResource": "strength",
+          "selectionStat": "strength",
+          "sharedSelectionGroupId": null,
+          "side": "enemy",
+          "tieBehavior": "candidate-group"
+        },
+        "unit": "percent",
+        "unlockStarRank": null,
+        "value": 12,
+        "valuePerStack": null
+      },
+      {
+        "abilityId": "rhysarion-ebbing-fury",
+        "abilityName": "Ebbing Fury",
+        "activationChanceByHabitLevel": [],
+        "activationChanceFixed": null,
+        "activationGroupId": null,
+        "availability": {
+          "canonical": "canonical-locked",
+          "notes": [
+            "Future at Star Rank 2.",
+            "Unlocked in observed account collection state, subject to level and star requirements."
+          ],
+          "observedAccount": "observed-available",
+          "reportLabel": "Future at Star Rank 2; observed account hatched",
+          "userRoster": "unknown"
+        },
+        "channel": "damage-dealt",
+        "combatLogConfirmed": false,
+        "conditional": true,
+        "conditions": [],
+        "confidence": "confirmed",
+        "currentlyAvailable": false,
+        "damageScope": null,
+        "direction": "dealt",
+        "directlyVerified": true,
+        "dragonId": "rhysarion",
+        "durationRounds": 3,
+        "evidenceIds": [
+          "rhysarion-ebbing-fury-2026-06-26"
+        ],
+        "futureAvailable": true,
+        "id": "rhysarion-ebbing-fury-ebbing-fury-enemy-damage-dealt-down-damage-dealt-dealt-modifier",
+        "label": "Ebbing Fury: Damage Dealt Down",
+        "minimumDragonLevel": null,
+        "operation": "decrease",
+        "providerRequirements": [],
+        "rankedValues": [
+          {
+            "level": 1,
+            "unit": "percent",
+            "value": 27.5
+          },
+          {
+            "level": 2,
+            "unit": "percent",
+            "value": 33
+          },
+          {
+            "level": 3,
+            "unit": "percent",
+            "value": 38.5
+          },
+          {
+            "level": 4,
+            "unit": "percent",
+            "value": 46.75
+          },
+          {
+            "level": 5,
+            "unit": "percent",
+            "value": 55
+          }
+        ],
+        "recipientRequirements": [],
+        "requiredHabitLevel": 1,
+        "role": "enemy-debuff",
+        "sourceEffectId": "ebbing-fury-enemy-damage-dealt-down",
+        "sourceScope": "all-qualifying-sources",
+        "stackMaximum": null,
+        "statusId": null,
+        "targetSelector": {
+          "comparisonDirection": null,
+          "comparisonPool": null,
+          "count": 3,
+          "includesCaster": null,
+          "position": null,
+          "scope": "any-lane",
+          "selection": "any",
+          "selectionResource": null,
+          "selectionStat": null,
+          "sharedSelectionGroupId": null,
+          "side": "enemy",
+          "tieBehavior": null
+        },
+        "unit": "percent",
+        "unlockStarRank": 2,
+        "value": null,
+        "valuePerStack": null
+      },
+      {
+        "abilityId": "shadowsong-ensnare",
+        "abilityName": "Ensnare",
+        "activationChanceByHabitLevel": [],
+        "activationChanceFixed": null,
+        "activationGroupId": "shadowsong-ensnare-targets",
+        "availability": {
+          "canonical": "canonical-locked",
+          "notes": [
+            "Future at Star Rank 2.",
+            "Unlocked in observed account collection state, subject to level and star requirements."
+          ],
+          "observedAccount": "observed-available",
+          "reportLabel": "Future at Star Rank 2; observed account hatched",
+          "userRoster": "unknown"
+        },
+        "channel": "stat",
+        "combatLogConfirmed": false,
+        "conditional": true,
+        "conditions": [],
+        "confidence": "confirmed",
+        "currentlyAvailable": false,
+        "damageScope": null,
+        "direction": "dealt",
+        "directlyVerified": true,
+        "dragonId": "shadowsong",
+        "durationRounds": 3,
+        "evidenceIds": [
+          "shadowsong-ensnare-2026-06-26"
+        ],
+        "futureAvailable": true,
+        "id": "shadowsong-ensnare-ensnare-instinct-stat-dealt-modifier",
+        "label": "Ensnare: Instinct Down",
+        "minimumDragonLevel": null,
+        "operation": "decrease",
+        "providerRequirements": [],
+        "rankedValues": [
+          {
+            "level": 1,
+            "unit": "percent",
+            "value": -18
+          },
+          {
+            "level": 2,
+            "unit": "percent",
+            "value": -21.6
+          },
+          {
+            "level": 3,
+            "unit": "percent",
+            "value": -25.2
+          },
+          {
+            "level": 4,
+            "unit": "percent",
+            "value": -30.6
+          },
+          {
+            "level": 5,
+            "unit": "percent",
+            "value": -36
+          }
+        ],
+        "recipientRequirements": [],
+        "requiredHabitLevel": 1,
+        "role": "enemy-debuff",
+        "sourceEffectId": "ensnare-instinct",
+        "sourceScope": "unknown",
+        "stackMaximum": null,
+        "statusId": null,
+        "targetSelector": {
+          "comparisonDirection": null,
+          "comparisonPool": null,
+          "count": 1,
+          "includesCaster": null,
+          "position": null,
+          "scope": "within-adjacency",
+          "selection": "one-eligible-adjacent",
+          "selectionResource": null,
+          "selectionStat": null,
+          "sharedSelectionGroupId": "shadowsong-ensnare-targets",
+          "side": "enemy",
+          "tieBehavior": null
+        },
+        "unit": "percent",
+        "unlockStarRank": 2,
+        "value": null,
+        "valuePerStack": null
+      },
+      {
+        "abilityId": "shadowsong-ensnare",
+        "abilityName": "Ensnare",
+        "activationChanceByHabitLevel": [],
+        "activationChanceFixed": null,
+        "activationGroupId": "shadowsong-ensnare-targets",
+        "availability": {
+          "canonical": "canonical-locked",
+          "notes": [
+            "Future at Star Rank 2.",
+            "Unlocked in observed account collection state, subject to level and star requirements."
+          ],
+          "observedAccount": "observed-available",
+          "reportLabel": "Future at Star Rank 2; observed account hatched",
+          "userRoster": "unknown"
+        },
+        "channel": "stat",
+        "combatLogConfirmed": false,
+        "conditional": true,
+        "conditions": [],
+        "confidence": "confirmed",
+        "currentlyAvailable": false,
+        "damageScope": null,
+        "direction": "dealt",
+        "directlyVerified": true,
+        "dragonId": "shadowsong",
+        "durationRounds": 3,
+        "evidenceIds": [
+          "shadowsong-ensnare-2026-06-26"
+        ],
+        "futureAvailable": true,
+        "id": "shadowsong-ensnare-ensnare-initiative-stat-dealt-modifier",
+        "label": "Ensnare: Initiative Down",
+        "minimumDragonLevel": null,
+        "operation": "decrease",
+        "providerRequirements": [],
+        "rankedValues": [
+          {
+            "level": 1,
+            "unit": "percent",
+            "value": -18
+          },
+          {
+            "level": 2,
+            "unit": "percent",
+            "value": -21.6
+          },
+          {
+            "level": 3,
+            "unit": "percent",
+            "value": -25.2
+          },
+          {
+            "level": 4,
+            "unit": "percent",
+            "value": -30.6
+          },
+          {
+            "level": 5,
+            "unit": "percent",
+            "value": -36
+          }
+        ],
+        "recipientRequirements": [],
+        "requiredHabitLevel": 1,
+        "role": "enemy-debuff",
+        "sourceEffectId": "ensnare-initiative",
+        "sourceScope": "unknown",
+        "stackMaximum": null,
+        "statusId": null,
+        "targetSelector": {
+          "comparisonDirection": null,
+          "comparisonPool": null,
+          "count": 1,
+          "includesCaster": null,
+          "position": null,
+          "scope": "within-adjacency",
+          "selection": "one-eligible-adjacent",
+          "selectionResource": null,
+          "selectionStat": null,
+          "sharedSelectionGroupId": "shadowsong-ensnare-targets",
+          "side": "enemy",
+          "tieBehavior": null
+        },
+        "unit": "percent",
+        "unlockStarRank": 2,
+        "value": null,
+        "valuePerStack": null
+      },
+      {
+        "abilityId": "shadowsong-blazing-onslaught",
+        "abilityName": "Blazing Onslaught",
+        "activationChanceByHabitLevel": [],
+        "activationChanceFixed": null,
+        "activationGroupId": "blazing-onslaught-fire-target",
+        "availability": {
+          "canonical": "canonical-locked",
+          "notes": [
+            "Future at Star Rank 4.",
+            "Unlocked in observed account collection state, subject to level and star requirements."
+          ],
+          "observedAccount": "observed-available",
+          "reportLabel": "Future at Star Rank 4; observed account hatched",
+          "userRoster": "unknown"
+        },
+        "channel": "fire-damage",
+        "combatLogConfirmed": false,
+        "conditional": true,
+        "conditions": [],
+        "confidence": "confirmed",
+        "currentlyAvailable": false,
+        "damageScope": "fire",
+        "direction": "received",
+        "directlyVerified": true,
+        "dragonId": "shadowsong",
+        "durationRounds": 3,
+        "evidenceIds": [
+          "shadowsong-blazing-onslaught-2026-06-26"
+        ],
+        "futureAvailable": true,
+        "id": "shadowsong-blazing-onslaught-blazing-onslaught-fire-fire-damage-received-modifier",
+        "label": "Blazing Onslaught: Fire Damage Received Up",
+        "minimumDragonLevel": null,
+        "operation": "increase",
+        "providerRequirements": [],
+        "rankedValues": [
+          {
+            "level": 1,
+            "unit": "percent",
+            "value": 15
+          },
+          {
+            "level": 2,
+            "unit": "percent",
+            "value": 18
+          },
+          {
+            "level": 3,
+            "unit": "percent",
+            "value": 21
+          },
+          {
+            "level": 4,
+            "unit": "percent",
+            "value": 25.5
+          },
+          {
+            "level": 5,
+            "unit": "percent",
+            "value": 30
+          }
+        ],
+        "recipientRequirements": [],
+        "requiredHabitLevel": 1,
+        "role": "enemy-debuff",
+        "sourceEffectId": "blazing-onslaught-fire",
+        "sourceScope": "all-qualifying-sources",
+        "stackMaximum": null,
+        "statusId": null,
+        "targetSelector": {
+          "comparisonDirection": null,
+          "comparisonPool": null,
+          "count": 1,
+          "includesCaster": null,
+          "position": null,
+          "scope": "any-lane",
+          "selection": "any",
+          "selectionResource": null,
+          "selectionStat": null,
+          "sharedSelectionGroupId": "blazing-onslaught-fire-target",
+          "side": "enemy",
+          "tieBehavior": null
+        },
+        "unit": "percent",
+        "unlockStarRank": 4,
+        "value": null,
+        "valuePerStack": null
+      },
+      {
+        "abilityId": "shadowsong-blazing-onslaught",
+        "abilityName": "Blazing Onslaught",
+        "activationChanceByHabitLevel": [],
+        "activationChanceFixed": null,
+        "activationGroupId": "blazing-onslaught-physical-target",
+        "availability": {
+          "canonical": "canonical-locked",
+          "notes": [
+            "Future at Star Rank 4.",
+            "Unlocked in observed account collection state, subject to level and star requirements."
+          ],
+          "observedAccount": "observed-available",
+          "reportLabel": "Future at Star Rank 4; observed account hatched",
+          "userRoster": "unknown"
+        },
+        "channel": "physical-damage",
+        "combatLogConfirmed": false,
+        "conditional": true,
+        "conditions": [],
+        "confidence": "confirmed",
+        "currentlyAvailable": false,
+        "damageScope": "physical",
+        "direction": "received",
+        "directlyVerified": true,
+        "dragonId": "shadowsong",
+        "durationRounds": 3,
+        "evidenceIds": [
+          "shadowsong-blazing-onslaught-2026-06-26"
+        ],
+        "futureAvailable": true,
+        "id": "shadowsong-blazing-onslaught-blazing-onslaught-physical-physical-damage-received-modifier",
+        "label": "Blazing Onslaught: Physical Damage Received Up",
+        "minimumDragonLevel": null,
+        "operation": "increase",
+        "providerRequirements": [],
+        "rankedValues": [
+          {
+            "level": 1,
+            "unit": "percent",
+            "value": 15
+          },
+          {
+            "level": 2,
+            "unit": "percent",
+            "value": 18
+          },
+          {
+            "level": 3,
+            "unit": "percent",
+            "value": 21
+          },
+          {
+            "level": 4,
+            "unit": "percent",
+            "value": 25.5
+          },
+          {
+            "level": 5,
+            "unit": "percent",
+            "value": 30
+          }
+        ],
+        "recipientRequirements": [],
+        "requiredHabitLevel": 1,
+        "role": "enemy-debuff",
+        "sourceEffectId": "blazing-onslaught-physical",
+        "sourceScope": "non-basic-attacks",
+        "stackMaximum": null,
+        "statusId": null,
+        "targetSelector": {
+          "comparisonDirection": null,
+          "comparisonPool": null,
+          "count": 1,
+          "includesCaster": null,
+          "position": null,
+          "scope": "any-lane",
+          "selection": "any",
+          "selectionResource": null,
+          "selectionStat": null,
+          "sharedSelectionGroupId": "blazing-onslaught-physical-target",
+          "side": "enemy",
+          "tieBehavior": null
+        },
+        "unit": "percent",
+        "unlockStarRank": 4,
+        "value": null,
+        "valuePerStack": null
+      },
+      {
         "abilityId": "vaeldra-ensnare",
         "abilityName": "Ensnare",
         "activationChanceByHabitLevel": [],
@@ -8568,6 +10032,628 @@
         "unlockStarRank": null
       },
       {
+        "abilityId": "feskar-calculated-assault",
+        "abilityName": "Calculated Assault",
+        "availability": {
+          "canonical": "canonical-base",
+          "notes": [
+            "Unlocked in observed account collection state, subject to level and star requirements."
+          ],
+          "observedAccount": "observed-available",
+          "reportLabel": "Base kit; observed account hatched",
+          "userRoster": "unknown"
+        },
+        "channel": "tactical-damage",
+        "combatLogConfirmed": false,
+        "conditional": false,
+        "conditions": [],
+        "confidence": "confirmed",
+        "currentlyAvailable": true,
+        "dependencies": [
+          {
+            "notes": [
+              "Effect wording indicates scaling with Instinct."
+            ],
+            "statId": "instinct",
+            "type": "scales-with-stat"
+          },
+          {
+            "notes": [
+              "Tactical Damage is reduced by target Intelligence."
+            ],
+            "statId": "intelligence",
+            "type": "mitigated-by-target-stat"
+          }
+        ],
+        "directlyVerified": true,
+        "dragonId": "feskar",
+        "evidenceIds": [
+          "feskar-calculated-assault-2026-06-26"
+        ],
+        "futureAvailable": false,
+        "id": "feskar-calculated-assault-calculated-assault-tactical-output",
+        "label": "Calculated Assault: Tactical Damage",
+        "minimumDragonLevel": null,
+        "requiredHabitLevel": null,
+        "sourceKind": "command",
+        "sourceScope": "commands",
+        "targetCount": null,
+        "targetScope": "any-lane",
+        "targetSide": "enemy",
+        "unlockStarRank": null
+      },
+      {
+        "abilityId": "feskar-emerald-inferno",
+        "abilityName": "Emerald Inferno",
+        "availability": {
+          "canonical": "canonical-locked",
+          "notes": [
+            "Future at Star Rank 6.",
+            "Unlocked in observed account collection state, subject to level and star requirements."
+          ],
+          "observedAccount": "observed-available",
+          "reportLabel": "Future at Star Rank 6; observed account hatched",
+          "userRoster": "unknown"
+        },
+        "channel": "fire-damage",
+        "combatLogConfirmed": false,
+        "conditional": true,
+        "conditions": [
+          {
+            "comparison": null,
+            "description": "Target eligibility requires the enemy to possess a non-Basic Physical Damage output capability.",
+            "evidenceIds": [],
+            "id": "enemy-has-non-basic-physical-output",
+            "kind": "target-has-output-capability",
+            "label": "Target eligibility requires the enemy to possess a non-Basic Physical Damage output capability.",
+            "subject": "enemy",
+            "thresholdPercent": null,
+            "unresolved": true
+          },
+          {
+            "description": "Per target, Burn increases Emerald Inferno damage by 1.5x.",
+            "evidenceIds": [],
+            "id": "burned-target-1-5x",
+            "label": "Per target, Burn increases Emerald Inferno damage by 1.5x.",
+            "unresolved": false
+          }
+        ],
+        "confidence": "confirmed",
+        "currentlyAvailable": false,
+        "dependencies": [
+          {
+            "notes": [
+              "Effect wording indicates scaling with Intelligence."
+            ],
+            "statId": "intelligence",
+            "type": "scales-with-stat"
+          },
+          {
+            "notes": [
+              "Fire Damage is reduced by target Initiative."
+            ],
+            "statId": "initiative",
+            "type": "mitigated-by-target-stat"
+          },
+          {
+            "multiplier": 1.5,
+            "notes": [
+              "Per target, the target is afflicted with Burn."
+            ],
+            "statusId": "burn",
+            "type": "requires-target-status"
+          },
+          {
+            "channel": "physical-damage",
+            "notes": [
+              "Target eligibility requires the enemy to possess a non-Basic Physical Damage output capability.",
+              "Enemy deals Physical Damage excluding Basic Attacks."
+            ],
+            "sourceScope": "non-basic-attacks",
+            "type": "requires-target-output-capability"
+          }
+        ],
+        "directlyVerified": true,
+        "dragonId": "feskar",
+        "evidenceIds": [
+          "feskar-emerald-inferno-2026-06-26"
+        ],
+        "futureAvailable": true,
+        "id": "feskar-emerald-inferno-emerald-inferno-fire-output",
+        "label": "Emerald Inferno: Fire Damage",
+        "minimumDragonLevel": null,
+        "requiredHabitLevel": 1,
+        "sourceKind": "habit",
+        "sourceScope": "habits",
+        "targetCount": 3,
+        "targetScope": "any-lane",
+        "targetSide": "enemy",
+        "unlockStarRank": 6
+      },
+      {
+        "abilityId": "rhysarion-dawnsong",
+        "abilityName": "Dawnsong",
+        "availability": {
+          "canonical": "canonical-base",
+          "notes": [
+            "Unlocked in observed account collection state, subject to level and star requirements."
+          ],
+          "observedAccount": "observed-available",
+          "reportLabel": "Base kit; observed account hatched",
+          "userRoster": "unknown"
+        },
+        "channel": "physical-damage",
+        "combatLogConfirmed": false,
+        "conditional": false,
+        "conditions": [],
+        "confidence": "confirmed",
+        "currentlyAvailable": true,
+        "dependencies": [
+          {
+            "notes": [
+              "Effect wording indicates scaling with Strength."
+            ],
+            "statId": "strength",
+            "type": "scales-with-stat"
+          },
+          {
+            "notes": [
+              "Physical Damage is reduced by target Instinct."
+            ],
+            "statId": "instinct",
+            "type": "mitigated-by-target-stat"
+          }
+        ],
+        "directlyVerified": true,
+        "dragonId": "rhysarion",
+        "evidenceIds": [
+          "rhysarion-dawnsong-2026-06-26"
+        ],
+        "futureAvailable": false,
+        "id": "rhysarion-dawnsong-dawnsong-physical-output",
+        "label": "Dawnsong: Physical Damage",
+        "minimumDragonLevel": null,
+        "requiredHabitLevel": null,
+        "sourceKind": "command",
+        "sourceScope": "commands",
+        "targetCount": 2,
+        "targetScope": "within-adjacency",
+        "targetSide": "enemy",
+        "unlockStarRank": null
+      },
+      {
+        "abilityId": "rhysarion-dawnsong",
+        "abilityName": "Dawnsong",
+        "availability": {
+          "canonical": "canonical-base",
+          "notes": [
+            "Unlocked in observed account collection state, subject to level and star requirements."
+          ],
+          "observedAccount": "observed-available",
+          "reportLabel": "Base kit; observed account hatched",
+          "userRoster": "unknown"
+        },
+        "channel": "fire-damage",
+        "combatLogConfirmed": false,
+        "conditional": true,
+        "conditions": [
+          {
+            "description": "Per target, Control affliction increases Dawnsong Fire Damage by 1.5x.",
+            "evidenceIds": [],
+            "id": "control-target-1-5x",
+            "label": "Per target, Control affliction increases Dawnsong Fire Damage by 1.5x.",
+            "unresolved": false
+          }
+        ],
+        "confidence": "confirmed",
+        "currentlyAvailable": true,
+        "dependencies": [
+          {
+            "notes": [
+              "Effect wording indicates scaling with Intelligence."
+            ],
+            "statId": "intelligence",
+            "type": "scales-with-stat"
+          },
+          {
+            "notes": [
+              "Fire Damage is reduced by target Initiative."
+            ],
+            "statId": "initiative",
+            "type": "mitigated-by-target-stat"
+          },
+          {
+            "multiplier": 1.5,
+            "notes": [
+              "Per target, the target is afflicted with a verified Control status."
+            ],
+            "statusCategoryId": "control",
+            "type": "requires-target-status-category"
+          }
+        ],
+        "directlyVerified": true,
+        "dragonId": "rhysarion",
+        "evidenceIds": [
+          "rhysarion-dawnsong-2026-06-26"
+        ],
+        "futureAvailable": false,
+        "id": "rhysarion-dawnsong-dawnsong-fire-output",
+        "label": "Dawnsong: Fire Damage",
+        "minimumDragonLevel": null,
+        "requiredHabitLevel": null,
+        "sourceKind": "command",
+        "sourceScope": "commands",
+        "targetCount": 3,
+        "targetScope": "any-lane",
+        "targetSide": "enemy",
+        "unlockStarRank": null
+      },
+      {
+        "abilityId": "rhysarion-ebbing-fury",
+        "abilityName": "Ebbing Fury",
+        "availability": {
+          "canonical": "canonical-locked",
+          "notes": [
+            "Future at Star Rank 2.",
+            "Unlocked in observed account collection state, subject to level and star requirements."
+          ],
+          "observedAccount": "observed-available",
+          "reportLabel": "Future at Star Rank 2; observed account hatched",
+          "userRoster": "unknown"
+        },
+        "channel": "recovery",
+        "combatLogConfirmed": false,
+        "conditional": true,
+        "conditions": [],
+        "confidence": "confirmed",
+        "currentlyAvailable": false,
+        "dependencies": [
+          {
+            "notes": [
+              "Effect wording indicates scaling with Strength."
+            ],
+            "statId": "strength",
+            "type": "scales-with-stat"
+          }
+        ],
+        "directlyVerified": true,
+        "dragonId": "rhysarion",
+        "evidenceIds": [
+          "rhysarion-ebbing-fury-2026-06-26"
+        ],
+        "futureAvailable": true,
+        "id": "rhysarion-ebbing-fury-ebbing-fury-recovery-output",
+        "label": "Ebbing Fury: Recovery",
+        "minimumDragonLevel": null,
+        "requiredHabitLevel": 1,
+        "sourceKind": "habit",
+        "sourceScope": "habits",
+        "targetCount": 3,
+        "targetScope": "any-lane",
+        "targetSide": "ally",
+        "unlockStarRank": 2
+      },
+      {
+        "abilityId": "rhysarion-echoing-melody",
+        "abilityName": "Echoing Melody",
+        "availability": {
+          "canonical": "canonical-locked",
+          "notes": [
+            "Future at Star Rank 6.",
+            "Unlocked in observed account collection state, subject to level and star requirements."
+          ],
+          "observedAccount": "observed-available",
+          "reportLabel": "Future at Star Rank 6; observed account hatched",
+          "userRoster": "unknown"
+        },
+        "channel": "recovery",
+        "combatLogConfirmed": false,
+        "conditional": true,
+        "conditions": [],
+        "confidence": "confirmed",
+        "currentlyAvailable": false,
+        "dependencies": [
+          {
+            "notes": [
+              "Effect wording indicates scaling with Intelligence."
+            ],
+            "statId": "intelligence",
+            "type": "scales-with-stat"
+          }
+        ],
+        "directlyVerified": true,
+        "dragonId": "rhysarion",
+        "evidenceIds": [
+          "rhysarion-echoing-melody-2026-06-26"
+        ],
+        "futureAvailable": true,
+        "id": "rhysarion-echoing-melody-echoing-melody-recovery-output",
+        "label": "Echoing Melody: Recovery",
+        "minimumDragonLevel": null,
+        "requiredHabitLevel": 1,
+        "sourceKind": "habit",
+        "sourceScope": "habits",
+        "targetCount": 2,
+        "targetScope": "any-lane",
+        "targetSide": "ally",
+        "unlockStarRank": 6
+      },
+      {
+        "abilityId": "shadowsong-breath-of-fire",
+        "abilityName": "Breath of Fire",
+        "availability": {
+          "canonical": "canonical-base",
+          "notes": [
+            "Unlocked in observed account collection state, subject to level and star requirements."
+          ],
+          "observedAccount": "observed-available",
+          "reportLabel": "Base kit; observed account hatched",
+          "userRoster": "unknown"
+        },
+        "channel": "fire-damage",
+        "combatLogConfirmed": false,
+        "conditional": true,
+        "conditions": [
+          {
+            "description": "Per target, Panic increases Breath of Fire damage by 1.5x.",
+            "evidenceIds": [],
+            "id": "panic-target-1-5x",
+            "label": "Per target, Panic increases Breath of Fire damage by 1.5x.",
+            "unresolved": false
+          }
+        ],
+        "confidence": "confirmed",
+        "currentlyAvailable": true,
+        "dependencies": [
+          {
+            "notes": [
+              "Effect wording indicates scaling with Intelligence."
+            ],
+            "statId": "intelligence",
+            "type": "scales-with-stat"
+          },
+          {
+            "notes": [
+              "Fire Damage is reduced by target Initiative."
+            ],
+            "statId": "initiative",
+            "type": "mitigated-by-target-stat"
+          },
+          {
+            "multiplier": 1.5,
+            "notes": [
+              "Per target, the target is afflicted with Panic."
+            ],
+            "statusId": "panic",
+            "type": "requires-target-status"
+          }
+        ],
+        "directlyVerified": true,
+        "dragonId": "shadowsong",
+        "evidenceIds": [
+          "shadowsong-breath-of-fire-2026-06-26"
+        ],
+        "futureAvailable": false,
+        "id": "shadowsong-breath-of-fire-breath-of-fire-base-fire-output",
+        "label": "Breath of Fire: Fire Damage",
+        "minimumDragonLevel": null,
+        "requiredHabitLevel": null,
+        "sourceKind": "command",
+        "sourceScope": "commands",
+        "targetCount": 2,
+        "targetScope": "within-adjacency",
+        "targetSide": "enemy",
+        "unlockStarRank": null
+      },
+      {
+        "abilityId": "shadowsong-blazing-conductor",
+        "abilityName": "Blazing Conductor",
+        "availability": {
+          "canonical": "canonical-locked",
+          "notes": [
+            "Future at Star Rank 10.",
+            "Unlocked in observed account collection state, subject to level and star requirements."
+          ],
+          "observedAccount": "observed-available",
+          "reportLabel": "Future at Star Rank 10; observed account hatched",
+          "userRoster": "unknown"
+        },
+        "channel": "fire-damage",
+        "combatLogConfirmed": false,
+        "conditional": true,
+        "conditions": [],
+        "confidence": "confirmed",
+        "currentlyAvailable": false,
+        "dependencies": [
+          {
+            "notes": [
+              "Effect wording indicates scaling with Intelligence."
+            ],
+            "statId": "intelligence",
+            "type": "scales-with-stat"
+          },
+          {
+            "notes": [
+              "Fire Damage is reduced by target Initiative."
+            ],
+            "statId": "initiative",
+            "type": "mitigated-by-target-stat"
+          }
+        ],
+        "directlyVerified": true,
+        "dragonId": "shadowsong",
+        "evidenceIds": [
+          "shadowsong-blazing-conductor-2026-06-26"
+        ],
+        "futureAvailable": true,
+        "id": "shadowsong-blazing-conductor-blazing-conductor-first-fire-output",
+        "label": "Blazing Conductor: Fire Damage",
+        "minimumDragonLevel": null,
+        "requiredHabitLevel": 1,
+        "sourceKind": "habit",
+        "sourceScope": "habits",
+        "targetCount": null,
+        "targetScope": "any-lane",
+        "targetSide": "enemy",
+        "unlockStarRank": 10
+      },
+      {
+        "abilityId": "shadowsong-blazing-conductor",
+        "abilityName": "Blazing Conductor",
+        "availability": {
+          "canonical": "canonical-locked",
+          "notes": [
+            "Future at Star Rank 10.",
+            "Unlocked in observed account collection state, subject to level and star requirements."
+          ],
+          "observedAccount": "observed-available",
+          "reportLabel": "Future at Star Rank 10; observed account hatched",
+          "userRoster": "unknown"
+        },
+        "channel": "fire-damage",
+        "combatLogConfirmed": false,
+        "conditional": true,
+        "conditions": [],
+        "confidence": "confirmed",
+        "currentlyAvailable": false,
+        "dependencies": [
+          {
+            "notes": [
+              "Fire Damage is increased by Intelligence."
+            ],
+            "statId": "intelligence",
+            "type": "scales-with-stat"
+          },
+          {
+            "notes": [
+              "Fire Damage is reduced by target Initiative."
+            ],
+            "statId": "initiative",
+            "type": "mitigated-by-target-stat"
+          }
+        ],
+        "directlyVerified": true,
+        "dragonId": "shadowsong",
+        "evidenceIds": [
+          "shadowsong-blazing-conductor-2026-06-26"
+        ],
+        "futureAvailable": true,
+        "id": "shadowsong-blazing-conductor-blazing-conductor-first-burn-output",
+        "label": "Blazing Conductor: Burn",
+        "minimumDragonLevel": null,
+        "requiredHabitLevel": 1,
+        "sourceKind": "habit",
+        "sourceScope": "habits",
+        "targetCount": null,
+        "targetScope": "any-lane",
+        "targetSide": "enemy",
+        "unlockStarRank": 10
+      },
+      {
+        "abilityId": "shadowsong-blazing-conductor",
+        "abilityName": "Blazing Conductor",
+        "availability": {
+          "canonical": "canonical-locked",
+          "notes": [
+            "Future at Star Rank 10.",
+            "Unlocked in observed account collection state, subject to level and star requirements."
+          ],
+          "observedAccount": "observed-available",
+          "reportLabel": "Future at Star Rank 10; observed account hatched",
+          "userRoster": "unknown"
+        },
+        "channel": "fire-damage",
+        "combatLogConfirmed": false,
+        "conditional": true,
+        "conditions": [],
+        "confidence": "confirmed",
+        "currentlyAvailable": false,
+        "dependencies": [
+          {
+            "notes": [
+              "Effect wording indicates scaling with Intelligence."
+            ],
+            "statId": "intelligence",
+            "type": "scales-with-stat"
+          },
+          {
+            "notes": [
+              "Fire Damage is reduced by target Initiative."
+            ],
+            "statId": "initiative",
+            "type": "mitigated-by-target-stat"
+          }
+        ],
+        "directlyVerified": true,
+        "dragonId": "shadowsong",
+        "evidenceIds": [
+          "shadowsong-blazing-conductor-2026-06-26"
+        ],
+        "futureAvailable": true,
+        "id": "shadowsong-blazing-conductor-blazing-conductor-second-fire-output",
+        "label": "Blazing Conductor: Fire Damage",
+        "minimumDragonLevel": null,
+        "requiredHabitLevel": 1,
+        "sourceKind": "habit",
+        "sourceScope": "habits",
+        "targetCount": null,
+        "targetScope": "any-lane",
+        "targetSide": "enemy",
+        "unlockStarRank": 10
+      },
+      {
+        "abilityId": "shadowsong-blazing-conductor",
+        "abilityName": "Blazing Conductor",
+        "availability": {
+          "canonical": "canonical-locked",
+          "notes": [
+            "Future at Star Rank 10.",
+            "Unlocked in observed account collection state, subject to level and star requirements."
+          ],
+          "observedAccount": "observed-available",
+          "reportLabel": "Future at Star Rank 10; observed account hatched",
+          "userRoster": "unknown"
+        },
+        "channel": "fire-damage",
+        "combatLogConfirmed": false,
+        "conditional": true,
+        "conditions": [],
+        "confidence": "confirmed",
+        "currentlyAvailable": false,
+        "dependencies": [
+          {
+            "notes": [
+              "Fire Damage is increased by Intelligence."
+            ],
+            "statId": "intelligence",
+            "type": "scales-with-stat"
+          },
+          {
+            "notes": [
+              "Fire Damage is reduced by target Initiative."
+            ],
+            "statId": "initiative",
+            "type": "mitigated-by-target-stat"
+          }
+        ],
+        "directlyVerified": true,
+        "dragonId": "shadowsong",
+        "evidenceIds": [
+          "shadowsong-blazing-conductor-2026-06-26"
+        ],
+        "futureAvailable": true,
+        "id": "shadowsong-blazing-conductor-blazing-conductor-second-burn-output",
+        "label": "Blazing Conductor: Burn",
+        "minimumDragonLevel": null,
+        "requiredHabitLevel": 1,
+        "sourceKind": "habit",
+        "sourceScope": "habits",
+        "targetCount": null,
+        "targetScope": "any-lane",
+        "targetSide": "enemy",
+        "unlockStarRank": 10
+      },
+      {
         "abilityId": "vaeldra-lure",
         "abilityName": "Lure",
         "availability": {
@@ -9019,6 +11105,36 @@
         "mitigationStat": "intelligence",
         "scalingStat": "instinct",
         "statusId": "panic",
+        "ticksEachRound": true
+      },
+      {
+        "abilityId": "shadowsong-blazing-conductor",
+        "channel": "fire-damage",
+        "damageRateByHabitLevel": [],
+        "damageRateFixed": 20,
+        "dragonId": "shadowsong",
+        "durationRounds": 2,
+        "evidenceIds": [
+          "shadowsong-blazing-conductor-2026-06-26"
+        ],
+        "mitigationStat": "initiative",
+        "scalingStat": "intelligence",
+        "statusId": "burn",
+        "ticksEachRound": true
+      },
+      {
+        "abilityId": "shadowsong-blazing-conductor",
+        "channel": "fire-damage",
+        "damageRateByHabitLevel": [],
+        "damageRateFixed": 20,
+        "dragonId": "shadowsong",
+        "durationRounds": 2,
+        "evidenceIds": [
+          "shadowsong-blazing-conductor-2026-06-26"
+        ],
+        "mitigationStat": "initiative",
+        "scalingStat": "intelligence",
+        "statusId": "burn",
         "ticksEachRound": true
       }
     ],
@@ -11778,6 +13894,1168 @@
         },
         "unit": "percent",
         "unlockStarRank": 10,
+        "value": null,
+        "valuePerStack": null
+      },
+      {
+        "abilityId": "feskar-champions-brilliance",
+        "abilityName": "Champion's Brilliance",
+        "activationChanceByHabitLevel": [],
+        "activationChanceFixed": null,
+        "activationGroupId": null,
+        "availability": {
+          "canonical": "canonical-base",
+          "notes": [
+            "Requires Dragon Level 16+.",
+            "Unlocked in observed account collection state, subject to level and star requirements."
+          ],
+          "observedAccount": "observed-available",
+          "reportLabel": "Base kit; Level 16+; observed account hatched",
+          "userRoster": "unknown"
+        },
+        "channel": "stat",
+        "combatLogConfirmed": false,
+        "conditional": false,
+        "conditions": [],
+        "confidence": "confirmed",
+        "currentlyAvailable": true,
+        "damageScope": null,
+        "direction": "dealt",
+        "directlyVerified": true,
+        "dragonId": "feskar",
+        "durationRounds": null,
+        "evidenceIds": [
+          "feskar-champions-brilliance-2026-06-26"
+        ],
+        "futureAvailable": false,
+        "id": "feskar-champions-brilliance-champions-brilliance-strength-stat-dealt-modifier",
+        "label": "Champion's Brilliance: Strength Up",
+        "minimumDragonLevel": 16,
+        "operation": "increase",
+        "providerRequirements": [
+          {
+            "evidenceIds": [
+              "feskar-champions-brilliance-2026-06-26"
+            ],
+            "expected": "vanguard",
+            "id": "feskar-champions-brilliance-provider-position-vanguard",
+            "kind": "provider-position",
+            "label": "Provider position requirement"
+          }
+        ],
+        "rankedValues": [],
+        "recipientRequirements": [],
+        "requiredHabitLevel": null,
+        "role": "self-amplification",
+        "sourceEffectId": "champions-brilliance-strength",
+        "sourceScope": "unknown",
+        "stackMaximum": null,
+        "statusId": null,
+        "targetSelector": {
+          "comparisonDirection": null,
+          "comparisonPool": null,
+          "count": null,
+          "includesCaster": null,
+          "position": null,
+          "scope": "self",
+          "selection": "self",
+          "selectionResource": null,
+          "selectionStat": null,
+          "sharedSelectionGroupId": null,
+          "side": "self",
+          "tieBehavior": null
+        },
+        "unit": "flat",
+        "unlockStarRank": 1,
+        "value": 15,
+        "valuePerStack": null
+      },
+      {
+        "abilityId": "feskar-champions-brilliance",
+        "abilityName": "Champion's Brilliance",
+        "activationChanceByHabitLevel": [],
+        "activationChanceFixed": null,
+        "activationGroupId": null,
+        "availability": {
+          "canonical": "canonical-base",
+          "notes": [
+            "Requires Dragon Level 16+.",
+            "Unlocked in observed account collection state, subject to level and star requirements."
+          ],
+          "observedAccount": "observed-available",
+          "reportLabel": "Base kit; Level 16+; observed account hatched",
+          "userRoster": "unknown"
+        },
+        "channel": "stat",
+        "combatLogConfirmed": false,
+        "conditional": false,
+        "conditions": [],
+        "confidence": "confirmed",
+        "currentlyAvailable": true,
+        "damageScope": null,
+        "direction": "dealt",
+        "directlyVerified": true,
+        "dragonId": "feskar",
+        "durationRounds": null,
+        "evidenceIds": [
+          "feskar-champions-brilliance-2026-06-26"
+        ],
+        "futureAvailable": false,
+        "id": "feskar-champions-brilliance-champions-brilliance-intelligence-stat-dealt-modifier",
+        "label": "Champion's Brilliance: Intelligence Up",
+        "minimumDragonLevel": 16,
+        "operation": "increase",
+        "providerRequirements": [
+          {
+            "evidenceIds": [
+              "feskar-champions-brilliance-2026-06-26"
+            ],
+            "expected": "vanguard",
+            "id": "feskar-champions-brilliance-provider-position-vanguard",
+            "kind": "provider-position",
+            "label": "Provider position requirement"
+          }
+        ],
+        "rankedValues": [],
+        "recipientRequirements": [],
+        "requiredHabitLevel": null,
+        "role": "self-amplification",
+        "sourceEffectId": "champions-brilliance-intelligence",
+        "sourceScope": "unknown",
+        "stackMaximum": null,
+        "statusId": null,
+        "targetSelector": {
+          "comparisonDirection": null,
+          "comparisonPool": null,
+          "count": null,
+          "includesCaster": null,
+          "position": null,
+          "scope": "self",
+          "selection": "self",
+          "selectionResource": null,
+          "selectionStat": null,
+          "sharedSelectionGroupId": null,
+          "side": "self",
+          "tieBehavior": null
+        },
+        "unit": "flat",
+        "unlockStarRank": 1,
+        "value": 15,
+        "valuePerStack": null
+      },
+      {
+        "abilityId": "feskar-champions-brilliance",
+        "abilityName": "Champion's Brilliance",
+        "activationChanceByHabitLevel": [],
+        "activationChanceFixed": null,
+        "activationGroupId": null,
+        "availability": {
+          "canonical": "canonical-base",
+          "notes": [
+            "Requires Dragon Level 16+.",
+            "Unlocked in observed account collection state, subject to level and star requirements."
+          ],
+          "observedAccount": "observed-available",
+          "reportLabel": "Base kit; Level 16+; observed account hatched",
+          "userRoster": "unknown"
+        },
+        "channel": "stat",
+        "combatLogConfirmed": false,
+        "conditional": false,
+        "conditions": [],
+        "confidence": "confirmed",
+        "currentlyAvailable": true,
+        "damageScope": null,
+        "direction": "dealt",
+        "directlyVerified": true,
+        "dragonId": "feskar",
+        "durationRounds": null,
+        "evidenceIds": [
+          "feskar-champions-brilliance-2026-06-26"
+        ],
+        "futureAvailable": false,
+        "id": "feskar-champions-brilliance-champions-brilliance-instinct-stat-dealt-modifier",
+        "label": "Champion's Brilliance: Instinct Up",
+        "minimumDragonLevel": 16,
+        "operation": "increase",
+        "providerRequirements": [
+          {
+            "evidenceIds": [
+              "feskar-champions-brilliance-2026-06-26"
+            ],
+            "expected": "vanguard",
+            "id": "feskar-champions-brilliance-provider-position-vanguard",
+            "kind": "provider-position",
+            "label": "Provider position requirement"
+          }
+        ],
+        "rankedValues": [],
+        "recipientRequirements": [],
+        "requiredHabitLevel": null,
+        "role": "self-amplification",
+        "sourceEffectId": "champions-brilliance-instinct",
+        "sourceScope": "unknown",
+        "stackMaximum": null,
+        "statusId": null,
+        "targetSelector": {
+          "comparisonDirection": null,
+          "comparisonPool": null,
+          "count": null,
+          "includesCaster": null,
+          "position": null,
+          "scope": "self",
+          "selection": "self",
+          "selectionResource": null,
+          "selectionStat": null,
+          "sharedSelectionGroupId": null,
+          "side": "self",
+          "tieBehavior": null
+        },
+        "unit": "flat",
+        "unlockStarRank": 1,
+        "value": 15,
+        "valuePerStack": null
+      },
+      {
+        "abilityId": "feskar-resilient-bond",
+        "abilityName": "Resilient Bond",
+        "activationChanceByHabitLevel": [],
+        "activationChanceFixed": null,
+        "activationGroupId": null,
+        "availability": {
+          "canonical": "canonical-locked",
+          "notes": [
+            "Future at Star Rank 2.",
+            "Unlocked in observed account collection state, subject to level and star requirements."
+          ],
+          "observedAccount": "observed-available",
+          "reportLabel": "Future at Star Rank 2; observed account hatched",
+          "userRoster": "unknown"
+        },
+        "channel": "damage-received",
+        "combatLogConfirmed": false,
+        "conditional": true,
+        "conditions": [],
+        "confidence": "confirmed",
+        "currentlyAvailable": false,
+        "damageScope": "physical",
+        "direction": "received",
+        "directlyVerified": true,
+        "dragonId": "feskar",
+        "durationRounds": null,
+        "evidenceIds": [
+          "feskar-resilient-bond-2026-06-26"
+        ],
+        "futureAvailable": true,
+        "id": "feskar-resilient-bond-resilient-bond-self-stack-damage-received-received-modifier",
+        "label": "Resilient Bond: Physical Damage Received Down",
+        "minimumDragonLevel": null,
+        "operation": "decrease",
+        "providerRequirements": [],
+        "rankedValues": [
+          {
+            "level": 1,
+            "unit": "percent",
+            "value": 6.5
+          },
+          {
+            "level": 2,
+            "unit": "percent",
+            "value": 7.8
+          },
+          {
+            "level": 3,
+            "unit": "percent",
+            "value": 9.1
+          },
+          {
+            "level": 4,
+            "unit": "percent",
+            "value": 11.05
+          },
+          {
+            "level": 5,
+            "unit": "percent",
+            "value": 13
+          }
+        ],
+        "recipientRequirements": [],
+        "requiredHabitLevel": 1,
+        "role": "self-amplification",
+        "sourceEffectId": "resilient-bond-self-stack",
+        "sourceScope": "non-basic-attacks",
+        "stackMaximum": null,
+        "statusId": "resilient-bond",
+        "targetSelector": {
+          "comparisonDirection": null,
+          "comparisonPool": null,
+          "count": null,
+          "includesCaster": null,
+          "position": null,
+          "scope": "self",
+          "selection": "self",
+          "selectionResource": null,
+          "selectionStat": null,
+          "sharedSelectionGroupId": null,
+          "side": "self",
+          "tieBehavior": null
+        },
+        "unit": "percent",
+        "unlockStarRank": 2,
+        "value": null,
+        "valuePerStack": null
+      },
+      {
+        "abilityId": "feskar-resilient-bond",
+        "abilityName": "Resilient Bond",
+        "activationChanceByHabitLevel": [],
+        "activationChanceFixed": null,
+        "activationGroupId": null,
+        "availability": {
+          "canonical": "canonical-locked",
+          "notes": [
+            "Future at Star Rank 2.",
+            "Unlocked in observed account collection state, subject to level and star requirements."
+          ],
+          "observedAccount": "observed-available",
+          "reportLabel": "Future at Star Rank 2; observed account hatched",
+          "userRoster": "unknown"
+        },
+        "channel": "damage-received",
+        "combatLogConfirmed": false,
+        "conditional": true,
+        "conditions": [
+          {
+            "comparison": null,
+            "description": "The same adjacent ally selected at start of combat retreated in the previous round.",
+            "evidenceIds": [],
+            "id": "tracked-adjacent-ally-retreated-previous-round",
+            "kind": "previous-round-event",
+            "label": "The same adjacent ally selected at start of combat retreated in the previous round.",
+            "subject": "ally",
+            "thresholdPercent": null,
+            "unresolved": true
+          }
+        ],
+        "confidence": "confirmed",
+        "currentlyAvailable": false,
+        "damageScope": "physical",
+        "direction": "received",
+        "directlyVerified": true,
+        "dragonId": "feskar",
+        "durationRounds": null,
+        "evidenceIds": [
+          "feskar-resilient-bond-2026-06-26"
+        ],
+        "futureAvailable": true,
+        "id": "feskar-resilient-bond-resilient-bond-self-retreat-stack-damage-received-received-modifier",
+        "label": "Resilient Bond: Physical Damage Received Down",
+        "minimumDragonLevel": null,
+        "operation": "decrease",
+        "providerRequirements": [],
+        "rankedValues": [
+          {
+            "level": 1,
+            "unit": "percent",
+            "value": 6.5
+          },
+          {
+            "level": 2,
+            "unit": "percent",
+            "value": 7.8
+          },
+          {
+            "level": 3,
+            "unit": "percent",
+            "value": 9.1
+          },
+          {
+            "level": 4,
+            "unit": "percent",
+            "value": 11.05
+          },
+          {
+            "level": 5,
+            "unit": "percent",
+            "value": 13
+          }
+        ],
+        "recipientRequirements": [],
+        "requiredHabitLevel": 1,
+        "role": "self-amplification",
+        "sourceEffectId": "resilient-bond-self-retreat-stack",
+        "sourceScope": "non-basic-attacks",
+        "stackMaximum": null,
+        "statusId": "resilient-bond",
+        "targetSelector": {
+          "comparisonDirection": null,
+          "comparisonPool": null,
+          "count": null,
+          "includesCaster": null,
+          "position": null,
+          "scope": "self",
+          "selection": "self",
+          "selectionResource": null,
+          "selectionStat": null,
+          "sharedSelectionGroupId": null,
+          "side": "self",
+          "tieBehavior": null
+        },
+        "unit": "percent",
+        "unlockStarRank": 2,
+        "value": null,
+        "valuePerStack": null
+      },
+      {
+        "abilityId": "feskar-quick-witted",
+        "abilityName": "Quick-Witted",
+        "activationChanceByHabitLevel": [],
+        "activationChanceFixed": null,
+        "activationGroupId": null,
+        "availability": {
+          "canonical": "canonical-locked",
+          "notes": [
+            "Future at Star Rank 8.",
+            "Unlocked in observed account collection state, subject to level and star requirements."
+          ],
+          "observedAccount": "observed-available",
+          "reportLabel": "Future at Star Rank 8; observed account hatched",
+          "userRoster": "unknown"
+        },
+        "channel": "stat",
+        "combatLogConfirmed": false,
+        "conditional": true,
+        "conditions": [],
+        "confidence": "confirmed",
+        "currentlyAvailable": false,
+        "damageScope": null,
+        "direction": "dealt",
+        "directlyVerified": true,
+        "dragonId": "feskar",
+        "durationRounds": null,
+        "evidenceIds": [
+          "feskar-quick-witted-2026-06-26"
+        ],
+        "futureAvailable": true,
+        "id": "feskar-quick-witted-quick-witted-intelligence-stat-dealt-modifier",
+        "label": "Quick-Witted: Intelligence Up",
+        "minimumDragonLevel": null,
+        "operation": "increase",
+        "providerRequirements": [],
+        "rankedValues": [
+          {
+            "level": 1,
+            "unit": "percent",
+            "value": 16
+          },
+          {
+            "level": 2,
+            "unit": "percent",
+            "value": 19.2
+          },
+          {
+            "level": 3,
+            "unit": "percent",
+            "value": 22.4
+          },
+          {
+            "level": 4,
+            "unit": "percent",
+            "value": 27.2
+          },
+          {
+            "level": 5,
+            "unit": "percent",
+            "value": 32
+          }
+        ],
+        "recipientRequirements": [],
+        "requiredHabitLevel": 1,
+        "role": "self-amplification",
+        "sourceEffectId": "quick-witted-intelligence",
+        "sourceScope": "unknown",
+        "stackMaximum": null,
+        "statusId": null,
+        "targetSelector": {
+          "comparisonDirection": null,
+          "comparisonPool": null,
+          "count": null,
+          "includesCaster": null,
+          "position": null,
+          "scope": "self",
+          "selection": "self",
+          "selectionResource": null,
+          "selectionStat": null,
+          "sharedSelectionGroupId": null,
+          "side": "self",
+          "tieBehavior": null
+        },
+        "unit": "percent",
+        "unlockStarRank": 8,
+        "value": null,
+        "valuePerStack": null
+      },
+      {
+        "abilityId": "feskar-quick-witted",
+        "abilityName": "Quick-Witted",
+        "activationChanceByHabitLevel": [],
+        "activationChanceFixed": null,
+        "activationGroupId": null,
+        "availability": {
+          "canonical": "canonical-locked",
+          "notes": [
+            "Future at Star Rank 8.",
+            "Unlocked in observed account collection state, subject to level and star requirements."
+          ],
+          "observedAccount": "observed-available",
+          "reportLabel": "Future at Star Rank 8; observed account hatched",
+          "userRoster": "unknown"
+        },
+        "channel": "stat",
+        "combatLogConfirmed": false,
+        "conditional": true,
+        "conditions": [],
+        "confidence": "confirmed",
+        "currentlyAvailable": false,
+        "damageScope": null,
+        "direction": "dealt",
+        "directlyVerified": true,
+        "dragonId": "feskar",
+        "durationRounds": null,
+        "evidenceIds": [
+          "feskar-quick-witted-2026-06-26"
+        ],
+        "futureAvailable": true,
+        "id": "feskar-quick-witted-quick-witted-initiative-stat-dealt-modifier",
+        "label": "Quick-Witted: Initiative Up",
+        "minimumDragonLevel": null,
+        "operation": "increase",
+        "providerRequirements": [],
+        "rankedValues": [
+          {
+            "level": 1,
+            "unit": "percent",
+            "value": 16
+          },
+          {
+            "level": 2,
+            "unit": "percent",
+            "value": 19.2
+          },
+          {
+            "level": 3,
+            "unit": "percent",
+            "value": 22.4
+          },
+          {
+            "level": 4,
+            "unit": "percent",
+            "value": 27.2
+          },
+          {
+            "level": 5,
+            "unit": "percent",
+            "value": 32
+          }
+        ],
+        "recipientRequirements": [],
+        "requiredHabitLevel": 1,
+        "role": "self-amplification",
+        "sourceEffectId": "quick-witted-initiative",
+        "sourceScope": "unknown",
+        "stackMaximum": null,
+        "statusId": null,
+        "targetSelector": {
+          "comparisonDirection": null,
+          "comparisonPool": null,
+          "count": null,
+          "includesCaster": null,
+          "position": null,
+          "scope": "self",
+          "selection": "self",
+          "selectionResource": null,
+          "selectionStat": null,
+          "sharedSelectionGroupId": null,
+          "side": "self",
+          "tieBehavior": null
+        },
+        "unit": "percent",
+        "unlockStarRank": 8,
+        "value": null,
+        "valuePerStack": null
+      },
+      {
+        "abilityId": "rhysarion-champions-vigor",
+        "abilityName": "Champion's Vigor",
+        "activationChanceByHabitLevel": [],
+        "activationChanceFixed": null,
+        "activationGroupId": null,
+        "availability": {
+          "canonical": "canonical-base",
+          "notes": [
+            "Requires Dragon Level 16+.",
+            "Unlocked in observed account collection state, subject to level and star requirements."
+          ],
+          "observedAccount": "observed-available",
+          "reportLabel": "Base kit; Level 16+; observed account hatched",
+          "userRoster": "unknown"
+        },
+        "channel": "recovery",
+        "combatLogConfirmed": false,
+        "conditional": false,
+        "conditions": [],
+        "confidence": "confirmed",
+        "currentlyAvailable": true,
+        "damageScope": null,
+        "direction": "dealt",
+        "directlyVerified": true,
+        "dragonId": "rhysarion",
+        "durationRounds": null,
+        "evidenceIds": [
+          "rhysarion-champions-vigor-2026-06-26"
+        ],
+        "futureAvailable": false,
+        "id": "rhysarion-champions-vigor-champions-vigor-recovery-dealt-recovery-dealt-modifier",
+        "label": "Champion's Vigor: Recovery Dealt Up",
+        "minimumDragonLevel": 16,
+        "operation": "increase",
+        "providerRequirements": [
+          {
+            "evidenceIds": [
+              "rhysarion-champions-vigor-2026-06-26"
+            ],
+            "expected": "vanguard",
+            "id": "rhysarion-champions-vigor-provider-position-vanguard",
+            "kind": "provider-position",
+            "label": "Provider position requirement"
+          }
+        ],
+        "rankedValues": [],
+        "recipientRequirements": [],
+        "requiredHabitLevel": null,
+        "role": "self-amplification",
+        "sourceEffectId": "champions-vigor-recovery-dealt",
+        "sourceScope": "unknown",
+        "stackMaximum": null,
+        "statusId": null,
+        "targetSelector": {
+          "comparisonDirection": null,
+          "comparisonPool": null,
+          "count": null,
+          "includesCaster": null,
+          "position": null,
+          "scope": "self",
+          "selection": "self",
+          "selectionResource": null,
+          "selectionStat": null,
+          "sharedSelectionGroupId": null,
+          "side": "self",
+          "tieBehavior": null
+        },
+        "unit": "percent",
+        "unlockStarRank": 1,
+        "value": 15,
+        "valuePerStack": null
+      },
+      {
+        "abilityId": "rhysarion-champions-vigor",
+        "abilityName": "Champion's Vigor",
+        "activationChanceByHabitLevel": [],
+        "activationChanceFixed": null,
+        "activationGroupId": null,
+        "availability": {
+          "canonical": "canonical-base",
+          "notes": [
+            "Requires Dragon Level 16+.",
+            "Unlocked in observed account collection state, subject to level and star requirements."
+          ],
+          "observedAccount": "observed-available",
+          "reportLabel": "Base kit; Level 16+; observed account hatched",
+          "userRoster": "unknown"
+        },
+        "channel": "stat",
+        "combatLogConfirmed": false,
+        "conditional": false,
+        "conditions": [],
+        "confidence": "confirmed",
+        "currentlyAvailable": true,
+        "damageScope": null,
+        "direction": "dealt",
+        "directlyVerified": true,
+        "dragonId": "rhysarion",
+        "durationRounds": null,
+        "evidenceIds": [
+          "rhysarion-champions-vigor-2026-06-26"
+        ],
+        "futureAvailable": false,
+        "id": "rhysarion-champions-vigor-champions-vigor-initiative-stat-dealt-modifier",
+        "label": "Champion's Vigor: Initiative Up",
+        "minimumDragonLevel": 16,
+        "operation": "increase",
+        "providerRequirements": [
+          {
+            "evidenceIds": [
+              "rhysarion-champions-vigor-2026-06-26"
+            ],
+            "expected": "vanguard",
+            "id": "rhysarion-champions-vigor-provider-position-vanguard",
+            "kind": "provider-position",
+            "label": "Provider position requirement"
+          }
+        ],
+        "rankedValues": [],
+        "recipientRequirements": [],
+        "requiredHabitLevel": null,
+        "role": "self-amplification",
+        "sourceEffectId": "champions-vigor-initiative",
+        "sourceScope": "unknown",
+        "stackMaximum": null,
+        "statusId": null,
+        "targetSelector": {
+          "comparisonDirection": null,
+          "comparisonPool": null,
+          "count": null,
+          "includesCaster": null,
+          "position": null,
+          "scope": "self",
+          "selection": "self",
+          "selectionResource": null,
+          "selectionStat": null,
+          "sharedSelectionGroupId": null,
+          "side": "self",
+          "tieBehavior": null
+        },
+        "unit": "flat",
+        "unlockStarRank": 1,
+        "value": 25,
+        "valuePerStack": null
+      },
+      {
+        "abilityId": "rhysarion-sharp-resolve",
+        "abilityName": "Sharp Resolve",
+        "activationChanceByHabitLevel": [],
+        "activationChanceFixed": null,
+        "activationGroupId": null,
+        "availability": {
+          "canonical": "canonical-locked",
+          "notes": [
+            "Future at Star Rank 4.",
+            "Unlocked in observed account collection state, subject to level and star requirements."
+          ],
+          "observedAccount": "observed-available",
+          "reportLabel": "Future at Star Rank 4; observed account hatched",
+          "userRoster": "unknown"
+        },
+        "channel": "stat",
+        "combatLogConfirmed": false,
+        "conditional": true,
+        "conditions": [],
+        "confidence": "confirmed",
+        "currentlyAvailable": false,
+        "damageScope": null,
+        "direction": "dealt",
+        "directlyVerified": true,
+        "dragonId": "rhysarion",
+        "durationRounds": null,
+        "evidenceIds": [
+          "rhysarion-sharp-resolve-2026-06-26"
+        ],
+        "futureAvailable": true,
+        "id": "rhysarion-sharp-resolve-sharp-resolve-strength-stat-dealt-modifier",
+        "label": "Sharp Resolve: Strength Up",
+        "minimumDragonLevel": null,
+        "operation": "increase",
+        "providerRequirements": [],
+        "rankedValues": [
+          {
+            "level": 1,
+            "unit": "percent",
+            "value": 16
+          },
+          {
+            "level": 2,
+            "unit": "percent",
+            "value": 19.2
+          },
+          {
+            "level": 3,
+            "unit": "percent",
+            "value": 22.4
+          },
+          {
+            "level": 4,
+            "unit": "percent",
+            "value": 27.2
+          },
+          {
+            "level": 5,
+            "unit": "percent",
+            "value": 32
+          }
+        ],
+        "recipientRequirements": [],
+        "requiredHabitLevel": 1,
+        "role": "self-amplification",
+        "sourceEffectId": "sharp-resolve-strength",
+        "sourceScope": "unknown",
+        "stackMaximum": null,
+        "statusId": null,
+        "targetSelector": {
+          "comparisonDirection": null,
+          "comparisonPool": null,
+          "count": null,
+          "includesCaster": null,
+          "position": null,
+          "scope": "self",
+          "selection": "self",
+          "selectionResource": null,
+          "selectionStat": null,
+          "sharedSelectionGroupId": null,
+          "side": "self",
+          "tieBehavior": null
+        },
+        "unit": "percent",
+        "unlockStarRank": 4,
+        "value": null,
+        "valuePerStack": null
+      },
+      {
+        "abilityId": "rhysarion-sharp-resolve",
+        "abilityName": "Sharp Resolve",
+        "activationChanceByHabitLevel": [],
+        "activationChanceFixed": null,
+        "activationGroupId": null,
+        "availability": {
+          "canonical": "canonical-locked",
+          "notes": [
+            "Future at Star Rank 4.",
+            "Unlocked in observed account collection state, subject to level and star requirements."
+          ],
+          "observedAccount": "observed-available",
+          "reportLabel": "Future at Star Rank 4; observed account hatched",
+          "userRoster": "unknown"
+        },
+        "channel": "stat",
+        "combatLogConfirmed": false,
+        "conditional": true,
+        "conditions": [],
+        "confidence": "confirmed",
+        "currentlyAvailable": false,
+        "damageScope": null,
+        "direction": "dealt",
+        "directlyVerified": true,
+        "dragonId": "rhysarion",
+        "durationRounds": null,
+        "evidenceIds": [
+          "rhysarion-sharp-resolve-2026-06-26"
+        ],
+        "futureAvailable": true,
+        "id": "rhysarion-sharp-resolve-sharp-resolve-intelligence-stat-dealt-modifier",
+        "label": "Sharp Resolve: Intelligence Up",
+        "minimumDragonLevel": null,
+        "operation": "increase",
+        "providerRequirements": [],
+        "rankedValues": [
+          {
+            "level": 1,
+            "unit": "percent",
+            "value": 16
+          },
+          {
+            "level": 2,
+            "unit": "percent",
+            "value": 19.2
+          },
+          {
+            "level": 3,
+            "unit": "percent",
+            "value": 22.4
+          },
+          {
+            "level": 4,
+            "unit": "percent",
+            "value": 27.2
+          },
+          {
+            "level": 5,
+            "unit": "percent",
+            "value": 32
+          }
+        ],
+        "recipientRequirements": [],
+        "requiredHabitLevel": 1,
+        "role": "self-amplification",
+        "sourceEffectId": "sharp-resolve-intelligence",
+        "sourceScope": "unknown",
+        "stackMaximum": null,
+        "statusId": null,
+        "targetSelector": {
+          "comparisonDirection": null,
+          "comparisonPool": null,
+          "count": null,
+          "includesCaster": null,
+          "position": null,
+          "scope": "self",
+          "selection": "self",
+          "selectionResource": null,
+          "selectionStat": null,
+          "sharedSelectionGroupId": null,
+          "side": "self",
+          "tieBehavior": null
+        },
+        "unit": "percent",
+        "unlockStarRank": 4,
+        "value": null,
+        "valuePerStack": null
+      },
+      {
+        "abilityId": "shadowsong-hunters-wrath",
+        "abilityName": "Hunter's Wrath",
+        "activationChanceByHabitLevel": [],
+        "activationChanceFixed": null,
+        "activationGroupId": null,
+        "availability": {
+          "canonical": "canonical-base",
+          "notes": [
+            "Requires Dragon Level 16+.",
+            "Unlocked in observed account collection state, subject to level and star requirements."
+          ],
+          "observedAccount": "observed-available",
+          "reportLabel": "Base kit; Level 16+; observed account hatched",
+          "userRoster": "unknown"
+        },
+        "channel": "fire-damage",
+        "combatLogConfirmed": false,
+        "conditional": false,
+        "conditions": [],
+        "confidence": "confirmed",
+        "currentlyAvailable": true,
+        "damageScope": null,
+        "direction": "dealt",
+        "directlyVerified": true,
+        "dragonId": "shadowsong",
+        "durationRounds": null,
+        "evidenceIds": [
+          "shadowsong-hunters-wrath-2026-06-26"
+        ],
+        "futureAvailable": false,
+        "id": "shadowsong-hunters-wrath-hunters-wrath-fire-fire-damage-dealt-modifier",
+        "label": "Hunter's Wrath: Fire Damage Dealt Up",
+        "minimumDragonLevel": 16,
+        "operation": "increase",
+        "providerRequirements": [
+          {
+            "evidenceIds": [
+              "shadowsong-hunters-wrath-2026-06-26"
+            ],
+            "expected": "vanguard",
+            "id": "shadowsong-hunters-wrath-provider-position-vanguard",
+            "kind": "provider-position",
+            "label": "Provider position requirement"
+          }
+        ],
+        "rankedValues": [],
+        "recipientRequirements": [],
+        "requiredHabitLevel": null,
+        "role": "self-amplification",
+        "sourceEffectId": "hunters-wrath-fire",
+        "sourceScope": "all-qualifying-sources",
+        "stackMaximum": null,
+        "statusId": null,
+        "targetSelector": {
+          "comparisonDirection": null,
+          "comparisonPool": null,
+          "count": null,
+          "includesCaster": null,
+          "position": null,
+          "scope": "self",
+          "selection": "self",
+          "selectionResource": null,
+          "selectionStat": null,
+          "sharedSelectionGroupId": null,
+          "side": "self",
+          "tieBehavior": null
+        },
+        "unit": "percent",
+        "unlockStarRank": 1,
+        "value": 16,
+        "valuePerStack": null
+      },
+      {
+        "abilityId": "shadowsong-dragons-intellect",
+        "abilityName": "Dragon's Intellect",
+        "activationChanceByHabitLevel": [],
+        "activationChanceFixed": null,
+        "activationGroupId": null,
+        "availability": {
+          "canonical": "canonical-locked",
+          "notes": [
+            "Future at Star Rank 8.",
+            "Unlocked in observed account collection state, subject to level and star requirements."
+          ],
+          "observedAccount": "observed-available",
+          "reportLabel": "Future at Star Rank 8; observed account hatched",
+          "userRoster": "unknown"
+        },
+        "channel": "damage-received",
+        "combatLogConfirmed": false,
+        "conditional": true,
+        "conditions": [],
+        "confidence": "confirmed",
+        "currentlyAvailable": false,
+        "damageScope": "all",
+        "direction": "received",
+        "directlyVerified": true,
+        "dragonId": "shadowsong",
+        "durationRounds": null,
+        "evidenceIds": [
+          "shadowsong-dragons-intellect-2026-06-26"
+        ],
+        "futureAvailable": true,
+        "id": "shadowsong-dragons-intellect-dragons-intellect-damage-received-damage-received-received-modifier",
+        "label": "Dragon's Intellect: Damage Received Down",
+        "minimumDragonLevel": null,
+        "operation": "decrease",
+        "providerRequirements": [],
+        "rankedValues": [
+          {
+            "level": 1,
+            "unit": "percent",
+            "value": 5
+          },
+          {
+            "level": 2,
+            "unit": "percent",
+            "value": 6
+          },
+          {
+            "level": 3,
+            "unit": "percent",
+            "value": 7
+          },
+          {
+            "level": 4,
+            "unit": "percent",
+            "value": 8.5
+          },
+          {
+            "level": 5,
+            "unit": "percent",
+            "value": 10
+          }
+        ],
+        "recipientRequirements": [],
+        "requiredHabitLevel": 1,
+        "role": "self-amplification",
+        "sourceEffectId": "dragons-intellect-damage-received",
+        "sourceScope": "all-qualifying-sources",
+        "stackMaximum": null,
+        "statusId": null,
+        "targetSelector": {
+          "comparisonDirection": null,
+          "comparisonPool": null,
+          "count": null,
+          "includesCaster": null,
+          "position": null,
+          "scope": "self",
+          "selection": "self",
+          "selectionResource": null,
+          "selectionStat": null,
+          "sharedSelectionGroupId": null,
+          "side": "self",
+          "tieBehavior": null
+        },
+        "unit": "percent",
+        "unlockStarRank": 8,
+        "value": null,
+        "valuePerStack": null
+      },
+      {
+        "abilityId": "shadowsong-dragons-intellect",
+        "abilityName": "Dragon's Intellect",
+        "activationChanceByHabitLevel": [],
+        "activationChanceFixed": null,
+        "activationGroupId": null,
+        "availability": {
+          "canonical": "canonical-locked",
+          "notes": [
+            "Future at Star Rank 8.",
+            "Unlocked in observed account collection state, subject to level and star requirements."
+          ],
+          "observedAccount": "observed-available",
+          "reportLabel": "Future at Star Rank 8; observed account hatched",
+          "userRoster": "unknown"
+        },
+        "channel": "stat",
+        "combatLogConfirmed": false,
+        "conditional": true,
+        "conditions": [],
+        "confidence": "confirmed",
+        "currentlyAvailable": false,
+        "damageScope": null,
+        "direction": "dealt",
+        "directlyVerified": true,
+        "dragonId": "shadowsong",
+        "durationRounds": null,
+        "evidenceIds": [
+          "shadowsong-dragons-intellect-2026-06-26"
+        ],
+        "futureAvailable": true,
+        "id": "shadowsong-dragons-intellect-dragons-intellect-intelligence-stat-dealt-modifier",
+        "label": "Dragon's Intellect: Intelligence Up",
+        "minimumDragonLevel": null,
+        "operation": "increase",
+        "providerRequirements": [],
+        "rankedValues": [
+          {
+            "level": 1,
+            "unit": "percent",
+            "value": 8.5
+          },
+          {
+            "level": 2,
+            "unit": "percent",
+            "value": 10.2
+          },
+          {
+            "level": 3,
+            "unit": "percent",
+            "value": 11.9
+          },
+          {
+            "level": 4,
+            "unit": "percent",
+            "value": 14.45
+          },
+          {
+            "level": 5,
+            "unit": "percent",
+            "value": 17
+          }
+        ],
+        "recipientRequirements": [],
+        "requiredHabitLevel": 1,
+        "role": "self-amplification",
+        "sourceEffectId": "dragons-intellect-intelligence",
+        "sourceScope": "unknown",
+        "stackMaximum": null,
+        "statusId": null,
+        "targetSelector": {
+          "comparisonDirection": null,
+          "comparisonPool": null,
+          "count": null,
+          "includesCaster": null,
+          "position": null,
+          "scope": "self",
+          "selection": "self",
+          "selectionResource": null,
+          "selectionStat": null,
+          "sharedSelectionGroupId": null,
+          "side": "self",
+          "tieBehavior": null
+        },
+        "unit": "percent",
+        "unlockStarRank": 8,
         "value": null,
         "valuePerStack": null
       },
@@ -15223,6 +18501,710 @@
         "untilEndOfRound": false
       },
       {
+        "abilityId": "feskar-resilient-bond",
+        "abilityName": "Resilient Bond",
+        "activationChanceByHabitLevel": [],
+        "activationChanceFixed": null,
+        "activationGroupId": null,
+        "availability": {
+          "canonical": "canonical-locked",
+          "notes": [
+            "Future at Star Rank 2.",
+            "Unlocked in observed account collection state, subject to level and star requirements."
+          ],
+          "observedAccount": "observed-available",
+          "reportLabel": "Future at Star Rank 2; observed account hatched",
+          "userRoster": "unknown"
+        },
+        "chanceByHabitLevel": [],
+        "chanceFixed": null,
+        "conditions": [],
+        "currentlyAvailable": false,
+        "directlyVerified": true,
+        "dragonId": "feskar",
+        "durationRounds": null,
+        "evidenceIds": [
+          "feskar-resilient-bond-2026-06-26"
+        ],
+        "futureAvailable": true,
+        "id": "feskar-resilient-bond-resilient-bond-self-stack-resilient-bond-status-output",
+        "minimumDragonLevel": null,
+        "requiredHabitLevel": 1,
+        "sourceEffectId": "resilient-bond-self-stack",
+        "statusId": "resilient-bond",
+        "targetSelector": {
+          "comparisonDirection": null,
+          "comparisonPool": null,
+          "count": null,
+          "includesCaster": null,
+          "position": null,
+          "scope": "self",
+          "selection": "self",
+          "selectionResource": null,
+          "selectionStat": null,
+          "sharedSelectionGroupId": null,
+          "side": "self",
+          "tieBehavior": null
+        },
+        "targetSide": "self",
+        "unlockStarRank": 2,
+        "untilEndOfCombat": true,
+        "untilEndOfRound": false
+      },
+      {
+        "abilityId": "feskar-resilient-bond",
+        "abilityName": "Resilient Bond",
+        "activationChanceByHabitLevel": [],
+        "activationChanceFixed": null,
+        "activationGroupId": "resilient-bond-tracked-ally",
+        "availability": {
+          "canonical": "canonical-locked",
+          "notes": [
+            "Future at Star Rank 2.",
+            "Unlocked in observed account collection state, subject to level and star requirements."
+          ],
+          "observedAccount": "observed-available",
+          "reportLabel": "Future at Star Rank 2; observed account hatched",
+          "userRoster": "unknown"
+        },
+        "chanceByHabitLevel": [],
+        "chanceFixed": null,
+        "conditions": [],
+        "currentlyAvailable": false,
+        "directlyVerified": true,
+        "dragonId": "feskar",
+        "durationRounds": null,
+        "evidenceIds": [
+          "feskar-resilient-bond-2026-06-26"
+        ],
+        "futureAvailable": true,
+        "id": "feskar-resilient-bond-resilient-bond-adjacent-stack-resilient-bond-status-output",
+        "minimumDragonLevel": null,
+        "requiredHabitLevel": 1,
+        "sourceEffectId": "resilient-bond-adjacent-stack",
+        "statusId": "resilient-bond",
+        "targetSelector": {
+          "comparisonDirection": null,
+          "comparisonPool": null,
+          "count": 1,
+          "includesCaster": false,
+          "position": null,
+          "scope": "within-adjacency",
+          "selection": "one-eligible-adjacent",
+          "selectionResource": null,
+          "selectionStat": null,
+          "sharedSelectionGroupId": "resilient-bond-tracked-ally",
+          "side": "ally",
+          "tieBehavior": null
+        },
+        "targetSide": "ally",
+        "unlockStarRank": 2,
+        "untilEndOfCombat": true,
+        "untilEndOfRound": false
+      },
+      {
+        "abilityId": "feskar-resilient-bond",
+        "abilityName": "Resilient Bond",
+        "activationChanceByHabitLevel": [],
+        "activationChanceFixed": null,
+        "activationGroupId": null,
+        "availability": {
+          "canonical": "canonical-locked",
+          "notes": [
+            "Future at Star Rank 2.",
+            "Unlocked in observed account collection state, subject to level and star requirements."
+          ],
+          "observedAccount": "observed-available",
+          "reportLabel": "Future at Star Rank 2; observed account hatched",
+          "userRoster": "unknown"
+        },
+        "chanceByHabitLevel": [],
+        "chanceFixed": null,
+        "conditions": [
+          {
+            "comparison": null,
+            "description": "The same adjacent ally selected at start of combat retreated in the previous round.",
+            "evidenceIds": [],
+            "id": "tracked-adjacent-ally-retreated-previous-round",
+            "kind": "previous-round-event",
+            "label": "The same adjacent ally selected at start of combat retreated in the previous round.",
+            "subject": "ally",
+            "thresholdPercent": null,
+            "unresolved": true
+          }
+        ],
+        "currentlyAvailable": false,
+        "directlyVerified": true,
+        "dragonId": "feskar",
+        "durationRounds": null,
+        "evidenceIds": [
+          "feskar-resilient-bond-2026-06-26"
+        ],
+        "futureAvailable": true,
+        "id": "feskar-resilient-bond-resilient-bond-self-retreat-stack-resilient-bond-status-output",
+        "minimumDragonLevel": null,
+        "requiredHabitLevel": 1,
+        "sourceEffectId": "resilient-bond-self-retreat-stack",
+        "statusId": "resilient-bond",
+        "targetSelector": {
+          "comparisonDirection": null,
+          "comparisonPool": null,
+          "count": null,
+          "includesCaster": null,
+          "position": null,
+          "scope": "self",
+          "selection": "self",
+          "selectionResource": null,
+          "selectionStat": null,
+          "sharedSelectionGroupId": null,
+          "side": "self",
+          "tieBehavior": null
+        },
+        "targetSide": "self",
+        "unlockStarRank": 2,
+        "untilEndOfCombat": true,
+        "untilEndOfRound": false
+      },
+      {
+        "abilityId": "feskar-unyielding-grasp",
+        "abilityName": "Unyielding Grasp",
+        "activationChanceByHabitLevel": [
+          {
+            "level": 1,
+            "unit": "percent",
+            "value": 10
+          },
+          {
+            "level": 2,
+            "unit": "percent",
+            "value": 13
+          },
+          {
+            "level": 3,
+            "unit": "percent",
+            "value": 16
+          },
+          {
+            "level": 4,
+            "unit": "percent",
+            "value": 20
+          },
+          {
+            "level": 5,
+            "unit": "percent",
+            "value": 25
+          }
+        ],
+        "activationChanceFixed": null,
+        "activationGroupId": null,
+        "availability": {
+          "canonical": "canonical-locked",
+          "notes": [
+            "Future at Star Rank 10.",
+            "Unlocked in observed account collection state, subject to level and star requirements."
+          ],
+          "observedAccount": "observed-available",
+          "reportLabel": "Future at Star Rank 10; observed account hatched",
+          "userRoster": "unknown"
+        },
+        "chanceByHabitLevel": [
+          {
+            "level": 1,
+            "unit": "percent",
+            "value": 10
+          },
+          {
+            "level": 2,
+            "unit": "percent",
+            "value": 13
+          },
+          {
+            "level": 3,
+            "unit": "percent",
+            "value": 16
+          },
+          {
+            "level": 4,
+            "unit": "percent",
+            "value": 20
+          },
+          {
+            "level": 5,
+            "unit": "percent",
+            "value": 25
+          }
+        ],
+        "chanceFixed": null,
+        "conditions": [
+          {
+            "description": "One chance each round to Stagger one selected enemy.",
+            "evidenceIds": [],
+            "id": "unyielding-grasp-each-round-activation-chance",
+            "label": "One chance each round to Stagger one selected enemy.",
+            "unresolved": false
+          }
+        ],
+        "currentlyAvailable": false,
+        "directlyVerified": true,
+        "dragonId": "feskar",
+        "durationRounds": 3,
+        "evidenceIds": [
+          "feskar-unyielding-grasp-2026-06-26"
+        ],
+        "futureAvailable": true,
+        "id": "feskar-unyielding-grasp-unyielding-grasp-stagger-stagger-status-output",
+        "minimumDragonLevel": null,
+        "requiredHabitLevel": 1,
+        "sourceEffectId": "unyielding-grasp-stagger",
+        "statusId": "stagger",
+        "targetSelector": {
+          "comparisonDirection": null,
+          "comparisonPool": null,
+          "count": 1,
+          "includesCaster": null,
+          "position": null,
+          "scope": "any-lane",
+          "selection": "any",
+          "selectionResource": null,
+          "selectionStat": null,
+          "sharedSelectionGroupId": null,
+          "side": "enemy",
+          "tieBehavior": "unknown"
+        },
+        "targetSide": "enemy",
+        "unlockStarRank": 10,
+        "untilEndOfCombat": false,
+        "untilEndOfRound": false
+      },
+      {
+        "abilityId": "rhysarion-inspiring-melody",
+        "abilityName": "Inspiring Melody",
+        "activationChanceByHabitLevel": [
+          {
+            "level": 1,
+            "unit": "percent",
+            "value": 20
+          },
+          {
+            "level": 2,
+            "unit": "percent",
+            "value": 26
+          },
+          {
+            "level": 3,
+            "unit": "percent",
+            "value": 32
+          },
+          {
+            "level": 4,
+            "unit": "percent",
+            "value": 40
+          },
+          {
+            "level": 5,
+            "unit": "percent",
+            "value": 50
+          }
+        ],
+        "activationChanceFixed": null,
+        "activationGroupId": "inspiring-melody-selected-ally",
+        "availability": {
+          "canonical": "canonical-locked",
+          "notes": [
+            "Future at Star Rank 10.",
+            "Unlocked in observed account collection state, subject to level and star requirements."
+          ],
+          "observedAccount": "observed-available",
+          "reportLabel": "Future at Star Rank 10; observed account hatched",
+          "userRoster": "unknown"
+        },
+        "chanceByHabitLevel": [
+          {
+            "level": 1,
+            "unit": "percent",
+            "value": 20
+          },
+          {
+            "level": 2,
+            "unit": "percent",
+            "value": 26
+          },
+          {
+            "level": 3,
+            "unit": "percent",
+            "value": 32
+          },
+          {
+            "level": 4,
+            "unit": "percent",
+            "value": 40
+          },
+          {
+            "level": 5,
+            "unit": "percent",
+            "value": 50
+          }
+        ],
+        "chanceFixed": null,
+        "conditions": [
+          {
+            "description": "One shared activation and one shared selected adjacent ally receive both effects.",
+            "evidenceIds": [],
+            "id": "inspiring-melody-each-round-activation-chance",
+            "label": "One shared activation and one shared selected adjacent ally receive both effects.",
+            "unresolved": false
+          }
+        ],
+        "currentlyAvailable": false,
+        "directlyVerified": true,
+        "dragonId": "rhysarion",
+        "durationRounds": 3,
+        "evidenceIds": [
+          "rhysarion-inspiring-melody-2026-06-26"
+        ],
+        "futureAvailable": true,
+        "id": "rhysarion-inspiring-melody-inspiring-melody-resistance-resistance-status-output",
+        "minimumDragonLevel": null,
+        "requiredHabitLevel": 1,
+        "sourceEffectId": "inspiring-melody-resistance",
+        "statusId": "resistance",
+        "targetSelector": {
+          "comparisonDirection": null,
+          "comparisonPool": null,
+          "count": 1,
+          "includesCaster": false,
+          "position": null,
+          "scope": "within-adjacency",
+          "selection": "one-eligible-adjacent",
+          "selectionResource": null,
+          "selectionStat": null,
+          "sharedSelectionGroupId": "inspiring-melody-selected-ally",
+          "side": "ally",
+          "tieBehavior": null
+        },
+        "targetSide": "ally",
+        "unlockStarRank": 10,
+        "untilEndOfCombat": false,
+        "untilEndOfRound": false
+      },
+      {
+        "abilityId": "shadowsong-scorched-earth",
+        "abilityName": "Scorched Earth",
+        "activationChanceByHabitLevel": [
+          {
+            "level": 1,
+            "unit": "percent",
+            "value": 10
+          },
+          {
+            "level": 2,
+            "unit": "percent",
+            "value": 12
+          },
+          {
+            "level": 3,
+            "unit": "percent",
+            "value": 14
+          },
+          {
+            "level": 4,
+            "unit": "percent",
+            "value": 17
+          },
+          {
+            "level": 5,
+            "unit": "percent",
+            "value": 20
+          }
+        ],
+        "activationChanceFixed": null,
+        "activationGroupId": null,
+        "availability": {
+          "canonical": "canonical-locked",
+          "notes": [
+            "Future at Star Rank 6.",
+            "Unlocked in observed account collection state, subject to level and star requirements."
+          ],
+          "observedAccount": "observed-available",
+          "reportLabel": "Future at Star Rank 6; observed account hatched",
+          "userRoster": "unknown"
+        },
+        "chanceByHabitLevel": [
+          {
+            "level": 1,
+            "unit": "percent",
+            "value": 10
+          },
+          {
+            "level": 2,
+            "unit": "percent",
+            "value": 12
+          },
+          {
+            "level": 3,
+            "unit": "percent",
+            "value": 14
+          },
+          {
+            "level": 4,
+            "unit": "percent",
+            "value": 17
+          },
+          {
+            "level": 5,
+            "unit": "percent",
+            "value": 20
+          }
+        ],
+        "chanceFixed": null,
+        "conditions": [
+          {
+            "description": "Roll scope across the two checked targets is unresolved.",
+            "evidenceIds": [],
+            "id": "scorched-earth-each-round-activation-chance",
+            "label": "Roll scope across the two checked targets is unresolved.",
+            "unresolved": false
+          }
+        ],
+        "currentlyAvailable": false,
+        "directlyVerified": true,
+        "dragonId": "shadowsong",
+        "durationRounds": 2,
+        "evidenceIds": [
+          "shadowsong-scorched-earth-2026-06-26"
+        ],
+        "futureAvailable": true,
+        "id": "shadowsong-scorched-earth-scorched-earth-vulnerable-vulnerable-status-output",
+        "minimumDragonLevel": null,
+        "requiredHabitLevel": 1,
+        "sourceEffectId": "scorched-earth-vulnerable",
+        "statusId": "vulnerable",
+        "targetSelector": {
+          "comparisonDirection": null,
+          "comparisonPool": null,
+          "count": 1,
+          "includesCaster": null,
+          "position": null,
+          "scope": "within-adjacency",
+          "selection": "one-eligible-adjacent",
+          "selectionResource": null,
+          "selectionStat": null,
+          "sharedSelectionGroupId": null,
+          "side": "enemy",
+          "tieBehavior": null
+        },
+        "targetSide": "enemy",
+        "unlockStarRank": 6,
+        "untilEndOfCombat": false,
+        "untilEndOfRound": false
+      },
+      {
+        "abilityId": "shadowsong-blazing-conductor",
+        "abilityName": "Blazing Conductor",
+        "activationChanceByHabitLevel": [
+          {
+            "level": 1,
+            "unit": "percent",
+            "value": 40
+          },
+          {
+            "level": 2,
+            "unit": "percent",
+            "value": 52
+          },
+          {
+            "level": 3,
+            "unit": "percent",
+            "value": 64
+          },
+          {
+            "level": 4,
+            "unit": "percent",
+            "value": 80
+          },
+          {
+            "level": 5,
+            "unit": "percent",
+            "value": 100
+          }
+        ],
+        "activationChanceFixed": null,
+        "activationGroupId": null,
+        "availability": {
+          "canonical": "canonical-locked",
+          "notes": [
+            "Future at Star Rank 10.",
+            "Unlocked in observed account collection state, subject to level and star requirements."
+          ],
+          "observedAccount": "observed-available",
+          "reportLabel": "Future at Star Rank 10; observed account hatched",
+          "userRoster": "unknown"
+        },
+        "chanceByHabitLevel": [
+          {
+            "level": 1,
+            "unit": "percent",
+            "value": 40
+          },
+          {
+            "level": 2,
+            "unit": "percent",
+            "value": 52
+          },
+          {
+            "level": 3,
+            "unit": "percent",
+            "value": 64
+          },
+          {
+            "level": 4,
+            "unit": "percent",
+            "value": 80
+          },
+          {
+            "level": 5,
+            "unit": "percent",
+            "value": 100
+          }
+        ],
+        "chanceFixed": null,
+        "conditions": [],
+        "currentlyAvailable": false,
+        "directlyVerified": true,
+        "dragonId": "shadowsong",
+        "durationRounds": 2,
+        "evidenceIds": [
+          "shadowsong-blazing-conductor-2026-06-26"
+        ],
+        "futureAvailable": true,
+        "id": "shadowsong-blazing-conductor-blazing-conductor-first-burn-burn-status-output",
+        "minimumDragonLevel": null,
+        "requiredHabitLevel": 1,
+        "sourceEffectId": "blazing-conductor-first-burn",
+        "statusId": "burn",
+        "targetSelector": {
+          "comparisonDirection": null,
+          "comparisonPool": null,
+          "count": null,
+          "includesCaster": null,
+          "position": null,
+          "scope": "any-lane",
+          "selection": "any",
+          "selectionResource": null,
+          "selectionStat": null,
+          "sharedSelectionGroupId": null,
+          "side": "enemy",
+          "tieBehavior": null
+        },
+        "targetSide": "enemy",
+        "unlockStarRank": 10,
+        "untilEndOfCombat": false,
+        "untilEndOfRound": false
+      },
+      {
+        "abilityId": "shadowsong-blazing-conductor",
+        "abilityName": "Blazing Conductor",
+        "activationChanceByHabitLevel": [
+          {
+            "level": 1,
+            "unit": "percent",
+            "value": 20
+          },
+          {
+            "level": 2,
+            "unit": "percent",
+            "value": 26
+          },
+          {
+            "level": 3,
+            "unit": "percent",
+            "value": 32
+          },
+          {
+            "level": 4,
+            "unit": "percent",
+            "value": 40
+          },
+          {
+            "level": 5,
+            "unit": "percent",
+            "value": 50
+          }
+        ],
+        "activationChanceFixed": null,
+        "activationGroupId": null,
+        "availability": {
+          "canonical": "canonical-locked",
+          "notes": [
+            "Future at Star Rank 10.",
+            "Unlocked in observed account collection state, subject to level and star requirements."
+          ],
+          "observedAccount": "observed-available",
+          "reportLabel": "Future at Star Rank 10; observed account hatched",
+          "userRoster": "unknown"
+        },
+        "chanceByHabitLevel": [
+          {
+            "level": 1,
+            "unit": "percent",
+            "value": 20
+          },
+          {
+            "level": 2,
+            "unit": "percent",
+            "value": 26
+          },
+          {
+            "level": 3,
+            "unit": "percent",
+            "value": 32
+          },
+          {
+            "level": 4,
+            "unit": "percent",
+            "value": 40
+          },
+          {
+            "level": 5,
+            "unit": "percent",
+            "value": 50
+          }
+        ],
+        "chanceFixed": null,
+        "conditions": [],
+        "currentlyAvailable": false,
+        "directlyVerified": true,
+        "dragonId": "shadowsong",
+        "durationRounds": 2,
+        "evidenceIds": [
+          "shadowsong-blazing-conductor-2026-06-26"
+        ],
+        "futureAvailable": true,
+        "id": "shadowsong-blazing-conductor-blazing-conductor-second-burn-burn-status-output",
+        "minimumDragonLevel": null,
+        "requiredHabitLevel": 1,
+        "sourceEffectId": "blazing-conductor-second-burn",
+        "statusId": "burn",
+        "targetSelector": {
+          "comparisonDirection": null,
+          "comparisonPool": null,
+          "count": null,
+          "includesCaster": null,
+          "position": null,
+          "scope": "any-lane",
+          "selection": "any",
+          "selectionResource": null,
+          "selectionStat": null,
+          "sharedSelectionGroupId": null,
+          "side": "enemy",
+          "tieBehavior": null
+        },
+        "targetSide": "enemy",
+        "unlockStarRank": 10,
+        "untilEndOfCombat": false,
+        "untilEndOfRound": false
+      },
+      {
         "abilityId": "vaeldra-lure",
         "abilityName": "Lure",
         "activationChanceByHabitLevel": [],
@@ -15692,6 +19674,124 @@
         "targetSide": "self",
         "unlockStarRank": 2,
         "untilEndOfCombat": true,
+        "untilEndOfRound": false
+      },
+      {
+        "abilityId": "sheepstealer-baited-kill",
+        "abilityName": "Baited Kill",
+        "activationChanceByHabitLevel": [
+          {
+            "level": 1,
+            "unit": "percent",
+            "value": 25
+          },
+          {
+            "level": 2,
+            "unit": "percent",
+            "value": 30
+          },
+          {
+            "level": 3,
+            "unit": "percent",
+            "value": 35
+          },
+          {
+            "level": 4,
+            "unit": "percent",
+            "value": 42.5
+          },
+          {
+            "level": 5,
+            "unit": "percent",
+            "value": 50
+          }
+        ],
+        "activationChanceFixed": null,
+        "activationGroupId": null,
+        "availability": {
+          "canonical": "canonical-locked",
+          "notes": [
+            "Future at Star Rank 6.",
+            "Unlocked in observed account collection state, subject to level and star requirements."
+          ],
+          "observedAccount": "observed-available",
+          "reportLabel": "Future at Star Rank 6; observed account hatched",
+          "userRoster": "unknown"
+        },
+        "chanceByHabitLevel": [
+          {
+            "level": 1,
+            "unit": "percent",
+            "value": 25
+          },
+          {
+            "level": 2,
+            "unit": "percent",
+            "value": 30
+          },
+          {
+            "level": 3,
+            "unit": "percent",
+            "value": 35
+          },
+          {
+            "level": 4,
+            "unit": "percent",
+            "value": 42.5
+          },
+          {
+            "level": 5,
+            "unit": "percent",
+            "value": 50
+          }
+        ],
+        "chanceFixed": null,
+        "conditions": [
+          {
+            "description": "Activation chance depends on Habit Level for each round.",
+            "evidenceIds": [],
+            "id": "baited-kill-vulnerable-activation-chance",
+            "label": "Activation chance depends on Habit Level for each round.",
+            "unresolved": false
+          },
+          {
+            "description": "Chance is doubled if Prey received Recovery previous round.",
+            "evidenceIds": [],
+            "id": "baited-kill-recovery-double",
+            "label": "Chance is doubled if Prey received Recovery previous round.",
+            "unresolved": false
+          }
+        ],
+        "currentlyAvailable": false,
+        "directlyVerified": true,
+        "dragonId": "sheepstealer",
+        "durationRounds": null,
+        "evidenceIds": [
+          "sheepstealer-baited-kill-2026-06-23"
+        ],
+        "futureAvailable": true,
+        "id": "sheepstealer-baited-kill-baited-kill-vulnerable-effect-vulnerable-status-output",
+        "minimumDragonLevel": null,
+        "requiredHabitLevel": 1,
+        "sourceEffectId": "baited-kill-vulnerable-effect",
+        "statusId": "vulnerable",
+        "targetSelector": {
+          "comparisonDirection": null,
+          "comparisonPool": null,
+          "count": null,
+          "includesCaster": null,
+          "position": null,
+          "scope": "any-lane",
+          "selection": "any",
+          "selectionResource": null,
+          "selectionStat": null,
+          "sharedSelectionGroupId": null,
+          "side": "enemy",
+          "tieBehavior": null
+        },
+        "targetSide": "enemy",
+        "unlockStarRank": 6,
+        "untilEndOfCombat": false,
         "untilEndOfRound": false
       },
       {
@@ -16599,6 +20699,120 @@
           "confidence": "confirmed",
           "currentlyAvailable": true,
           "futureAvailable": false
+        }
+      ]
+    },
+    {
+      "dragonId": "feskar",
+      "incomingAmplifierChannels": [],
+      "outgoingBuffChannels": [
+        {
+          "channel": "stat",
+          "modifierCapabilityIds": [
+            "feskar-insightful-allies-insightful-allies-instinct-stat-dealt-modifier"
+          ]
+        }
+      ],
+      "primaryDamageChannel": null,
+      "primaryDamageChannelBasis": "unknown",
+      "producedChannels": [
+        {
+          "capabilityIds": [
+            "feskar-calculated-assault-calculated-assault-tactical-output"
+          ],
+          "channel": "tactical-damage",
+          "confidence": "confirmed",
+          "currentlyAvailable": true,
+          "futureAvailable": false
+        },
+        {
+          "capabilityIds": [
+            "feskar-emerald-inferno-emerald-inferno-fire-output"
+          ],
+          "channel": "fire-damage",
+          "confidence": "confirmed",
+          "currentlyAvailable": false,
+          "futureAvailable": true
+        }
+      ]
+    },
+    {
+      "dragonId": "rhysarion",
+      "incomingAmplifierChannels": [],
+      "outgoingBuffChannels": [
+        {
+          "channel": "damage-dealt",
+          "modifierCapabilityIds": [
+            "rhysarion-champions-vigor-champions-vigor-right-damage-dealt-damage-dealt-dealt-modifier"
+          ]
+        },
+        {
+          "channel": "stat",
+          "modifierCapabilityIds": [
+            "rhysarion-inspiring-melody-inspiring-melody-initiative-stat-dealt-modifier"
+          ]
+        }
+      ],
+      "primaryDamageChannel": null,
+      "primaryDamageChannelBasis": "unknown",
+      "producedChannels": [
+        {
+          "capabilityIds": [
+            "rhysarion-dawnsong-dawnsong-physical-output"
+          ],
+          "channel": "physical-damage",
+          "confidence": "confirmed",
+          "currentlyAvailable": true,
+          "futureAvailable": false
+        },
+        {
+          "capabilityIds": [
+            "rhysarion-dawnsong-dawnsong-fire-output"
+          ],
+          "channel": "fire-damage",
+          "confidence": "confirmed",
+          "currentlyAvailable": true,
+          "futureAvailable": false
+        },
+        {
+          "capabilityIds": [
+            "rhysarion-ebbing-fury-ebbing-fury-recovery-output",
+            "rhysarion-echoing-melody-echoing-melody-recovery-output"
+          ],
+          "channel": "recovery",
+          "confidence": "confirmed",
+          "currentlyAvailable": false,
+          "futureAvailable": true
+        }
+      ]
+    },
+    {
+      "dragonId": "shadowsong",
+      "incomingAmplifierChannels": [],
+      "outgoingBuffChannels": [
+        {
+          "channel": "stat",
+          "modifierCapabilityIds": [
+            "shadowsong-hunters-wrath-hunters-wrath-right-strength-stat-dealt-modifier",
+            "shadowsong-hunters-wrath-hunters-wrath-right-initiative-stat-dealt-modifier"
+          ]
+        }
+      ],
+      "primaryDamageChannel": null,
+      "primaryDamageChannelBasis": "unknown",
+      "producedChannels": [
+        {
+          "capabilityIds": [
+            "shadowsong-breath-of-fire-breath-of-fire-base-fire-output",
+            "shadowsong-blazing-conductor-blazing-conductor-first-fire-output",
+            "shadowsong-blazing-conductor-blazing-conductor-first-burn-output",
+            "shadowsong-blazing-conductor-blazing-conductor-second-fire-output",
+            "shadowsong-blazing-conductor-blazing-conductor-second-burn-output"
+          ],
+          "channel": "fire-damage",
+          "confidence": "confirmed",
+          "currentlyAvailable": true,
+          "futureAvailable": true
         }
       ]
     },

@@ -15,8 +15,8 @@ Dragonfire Roster Lab records verified dragon roster data, combat mechanics, syn
 
 ## Versions
 
-- Database: 0.6.1
-- Data schema: 11
+- Database: 0.6.2
+- Data schema: 12
 - Local roster schema: 3
 - Game build: 26.6.53509
 - Context export: 1
@@ -43,6 +43,9 @@ Formation Builder cards are the primary normal UI for dragon-specific benefits. 
 - Vaeldra
 - Sheepstealer
 - Vermax
+- Feskar
+- Rhysarion
+- Shadowsong
 
 All other known dragons remain metadata-only unless their typed source records contain verified combat data.
 
