@@ -289,4 +289,49 @@ describe('Feskar, Rhysarion, and Shadowsong Epic profiles', () => {
     expect(technicalText).toContain('Ranked progression: L1 27.5%, L2 33%, L3 38.5%, L4 46.75%, L5 55%.');
     expect(habit('rhysarion', 'rhysarion-ebbing-fury').schedules[1]?.effects[0]?.rankedValues).toHaveLength(5);
   });
+
+  it('surfaces Resilient Bond initial self and adjacent stacks while keeping the retreat trigger conditional', () => {
+    const formation: FormationAnalysisInput = { 'left-flank': 'feskar', vanguard: 'rhysarion', 'right-flank': 'shadowsong' };
+    const roster = ownedRoster(['feskar', 'rhysarion', 'shadowsong'], 2, null);
+    const traces = analyzeCapabilityAmplifications(formation, dragons, { roster });
+    const cards = buildFormationCardPresentation(formation, dragons, traces, { previewEnabled: false });
+    const resilient = traces.filter((trace) => trace.sourceAbilityId === 'feskar-resilient-bond');
+    const initialSelf = resilient.find((trace) => trace.recipientDragonId === 'feskar' && trace.id.includes('resilient-bond-self-stack'));
+    const initialAdjacent = resilient.find((trace) => trace.recipientDragonId === 'rhysarion' && trace.id.includes('resilient-bond-adjacent-stack'));
+    const retreat = resilient.find((trace) => trace.recipientDragonId === 'feskar' && trace.id.includes('resilient-bond-self-retreat-stack'));
+
+    expect(initialSelf).toMatchObject({ status: 'active', interactionScope: 'cross-dragon' });
+    expect(initialAdjacent).toMatchObject({ status: 'active', interactionScope: 'cross-dragon' });
+    expect(resilient.some((trace) => trace.recipientDragonId === 'shadowsong' && trace.status !== 'inactive')).toBe(false);
+    expect(retreat?.status).not.toBe('active');
+    expect([...(retreat?.matchedFacts ?? []), retreat?.explanation ?? ''].join(' ')).toMatch(/originally selected adjacent ally|retreated in the previous round/i);
+    expect([...(retreat?.matchedFacts ?? []), ...(retreat?.unresolvedQuestions ?? []), retreat?.explanation ?? ''].join(' ')).not.toMatch(/maximum \d+|retreat occurred/i);
+
+    const feskarCard = cards.cards.find((card) => card.dragonId === 'feskar');
+    const resilientProvides = feskarCard?.provides.filter((item) => item.abilityName === 'Resilient Bond') ?? [];
+    const groupedInitial = resilientProvides.find((item) => item.targetLabel === 'Feskar and Rhysarion');
+    const groupedText = groupedInitial ? [...groupedInitial.summaryLines, ...groupedInitial.details, ...groupedInitial.effects].join(' ') : '';
+
+    expect(groupedInitial).toMatchObject({
+      sourceDragonId: 'feskar',
+      recipientDragonId: null,
+      recipientName: 'Feskar and Rhysarion',
+      effectTitle: 'Resilient Bond',
+    });
+    expect(groupedText).toContain('Timing: Start of combat.');
+    expect(groupedText).toContain('Feskar and Rhysarion each gain 1 Resilient Bond stack.');
+    expect(groupedText).toContain('Each stack reduces Physical Damage Received from non-Basic Attacks by 6.5% at effective Habit Level 1.');
+    expect(groupedText).toContain('Duration: until end of combat.');
+    expect(groupedText).not.toContain('Ranked progression');
+    expect(groupedText).not.toMatch(/\bL[1-5]\b|maximum \d+/i);
+
+    const rhysarionReceives = cards.cards.find((card) => card.dragonId === 'rhysarion')?.receives.filter((item) => item.abilityName === 'Resilient Bond') ?? [];
+    expect(rhysarionReceives).toHaveLength(1);
+    expect(rhysarionReceives[0]?.summary).toContain('Rhysarion');
+    expect(feskarCard?.receives.some((item) => item.sourceDragonId === 'feskar' && item.abilityName === 'Resilient Bond')).toBe(false);
+
+    const technicalText = resilient.flatMap((trace) => [...trace.effects, ...trace.matchedFacts, trace.explanation]).join(' ');
+    expect(technicalText).toContain('Ranked progression: L1 6.5%, L2 7.8%, L3 9.1%, L4 11.05%, L5 13%.');
+    expect(technicalText).toContain('Physical Damage Received reduction applies to non-Basic Attacks only.');
+  });
 });

@@ -751,8 +751,8 @@ dd {
 }
 
 .interaction-section.is-expanded .interaction-section-body {
-  max-height: 42rem;
-  overflow-y: auto;
+  max-height: none;
+  overflow-y: visible;
   padding-right: 0.2rem;
   scrollbar-color: rgba(255, 211, 107, 0.55) rgba(0, 0, 0, 0.2);
 }
@@ -1156,10 +1156,6 @@ th {
 
   .interaction-section-body {
     min-height: 0;
-  }
-
-  .interaction-section.is-expanded .interaction-section-body {
-    max-height: 22rem;
   }
 
   .team-affinity-strip {
