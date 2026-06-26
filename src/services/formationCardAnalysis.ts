@@ -283,8 +283,10 @@ function toCardInteraction({
     isCandidate,
     candidateTotal,
     targetLabel,
-  });
+  }).map(sanitizeNormalCardText).filter((line): line is string => Boolean(line));
   const summary = compactSummaryText(summaryLines, candidateTotal);
+  const detailText = omitNormalCardSummarySentences(sanitizeNormalCardText(detail), summaryLines);
+  const effects = sanitizeNormalCardEffects(trace.effects, summaryLines);
   const relationshipId = [
     trace.sourceDragonId,
     trace.sourceAbilityId ?? trace.ruleId,
@@ -305,9 +307,9 @@ function toCardInteraction({
     title: trace.title,
     summary,
     summaryLines,
-    detail,
-    details: [detail],
-    effects: trace.effects,
+    detail: detailText,
+    details: detailText ? [detailText] : [],
+    effects,
     requirements: trace.requirements,
     confidence: trace.confidence,
     modifierLines: modifierLinesForTrace(trace, recipient),
@@ -341,6 +343,41 @@ function modifierLinesForTrace(trace: SynergyTrace, recipient: Dragon | null): s
     ? 'unknown'
     : `+${trace.recipientModifierValue}%`;
   return [`Amplified by ${recipient.name}'s ${abilityName}: ${trace.recipientModifierType.replace(/ Up$/i, '')} ${value}.`];
+}
+
+function sanitizeNormalCardEffects(effects: string[], summaryLines: string[]): string[] {
+  const summaryText = normalizeText(summaryLines.join(' '));
+  return unique(
+    effects
+      .map(sanitizeNormalCardText)
+      .filter((effect): effect is string => Boolean(effect))
+      .filter((effect) => !summaryText.includes(normalizeText(effect))),
+  );
+}
+
+function sanitizeNormalCardText(value: string): string {
+  return value
+    .replace(/\s*Ranked progression:\s.*?L5\s[-+]?\d+(?:\.\d+)?%?\./g, '')
+    .replace(/\s{2,}/g, ' ')
+    .trim();
+}
+
+function omitNormalCardSummarySentences(value: string, summaryLines: string[]): string {
+  if (!value) {
+    return '';
+  }
+  const summarySentences = new Set(summaryLines.flatMap(splitSentences).map(normalizeText));
+  return splitSentences(value)
+    .filter((sentence) => !summarySentences.has(normalizeText(sentence)))
+    .join(' ');
+}
+
+function splitSentences(value: string): string[] {
+  return value.split(/(?<=\.)\s+/).map((sentence) => sentence.trim()).filter(Boolean);
+}
+
+function normalizeText(value: string): string {
+  return value.replace(/\s+/g, ' ').trim().toLowerCase();
 }
 
 function isAllMatchingTargetSelection(trace: SynergyTrace): boolean {
@@ -916,8 +953,7 @@ function normalizeGroupedRecipientLine(line: string, targetNames: string[]): str
   let normalized = line;
   for (const name of targetNames) {
     normalized = normalized
-      .replace(new RegExp(`\\s+for ${escapeRegExp(name)}\\.`, 'g'), '.')
-      .replace(new RegExp(`\\b${escapeRegExp(name)}\\b`, 'g'), 'the recipient');
+      .replace(new RegExp(`\\s+for ${escapeRegExp(name)}\\.`, 'g'), '.');
   }
   return normalized;
 }
