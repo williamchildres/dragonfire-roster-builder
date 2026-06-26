@@ -9,7 +9,8 @@
     "Version 0.5.4 normal unmet requirement summary repair",
     "Version 0.5.5 formation card analysis presentation redesign",
     "Version 0.5.6 formation card layout polish",
-    "Version 0.6.0 legendary dragon schema hardening"
+    "Version 0.6.0 legendary dragon schema hardening",
+    "Legendary/full-profile formation-output validation exit suite"
   ],
   "contextVersion": 1,
   "currentArchitectureSummary": [
@@ -20,13 +21,16 @@
     "Formation normalization preserves defensive scope, target-selection groups, visible-card requirement ownership, source ability identity, interaction scope, pure normal unmet summaries, and debug/export trace retention.",
     "Formation card presentation maps existing normal traces into per-dragon Receives, Provides, Trait status, affinity, candidate, and preview summaries without changing mechanics; layout polish keeps desktop cards equal-height with bounded interaction regions, inline badges, readable summaries, per-item Details, and presentation-only aggregation."
   ],
-  "currentReviewPhase": "Legendary dragon schema hardening validation and project-context regeneration.",
+  "currentReviewPhase": "Legendary/full-profile schema-hardening and formation-output validation complete.",
   "format": "dragonfire-project-state",
-  "generatedAt": "2026-06-26T01:47:55.456Z",
+  "generatedAt": "2026-06-26T04:45:15.744Z",
   "plannedNextPhase": [
-    "full formation-output review",
-    "additional visual QA",
-    "then non-Legendary dragon batches"
+    "Epic dragon ingestion in batches of two",
+    "inspect supplied screenshots and extract Commands, Traits, Habits, targeting, timing, progression, glossary entries, and evidence",
+    "compare each mechanic against the current schema and capability framework",
+    "identify unsupported, ambiguous, provisional, or unresolved behavior",
+    "wait for William's confirmation before generating an implementation request",
+    "use a fresh Codex context for Epic implementation because it is a materially different workstream"
   ],
   "rosterCounts": {
     "detailedDataDragonCount": 10,
@@ -34,8 +38,8 @@
     "metadataOnlyDragonCount": 20
   },
   "source": {
-    "branch": "fix/armor-break-enemy-vulnerability",
-    "commit": "120e6a82f01c645ccbfcd418b54bd925a01ad545",
+    "branch": "chore/close-legendary-validation-phase",
+    "commit": "897e64f040899f685964fd5ca24ae8674794aa52",
     "databaseVersion": "0.6.0",
     "dataSchemaVersion": 10,
     "gameBuild": "26.6.53509",
@@ -46,7 +50,7 @@
     "countingMethod": "static working-tree test declaration scan; runtime pass/fail is reported by npm run test",
     "lastRunStatus": "not-run-by-exporter",
     "runner": "vitest",
-    "testCaseCount": 198,
+    "testCaseCount": 201,
     "testFileCount": 23
   },
   "unresolvedMechanicsCount": 99,

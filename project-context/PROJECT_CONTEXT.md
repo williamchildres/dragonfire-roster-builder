@@ -90,12 +90,15 @@ The framework derives output capabilities, modifier capabilities, status outputs
 
 ## Review Plan
 
-Current review phase: Legendary dragon schema hardening validation and project-context regeneration.
+Current review phase: Legendary/full-profile schema-hardening and formation-output validation complete.
 
 Planned next phase:
 
-- full formation-output review
-- additional visual QA
-- then non-Legendary dragon batches
+- Epic dragon ingestion in batches of two
+- inspect supplied screenshots and extract Commands, Traits, Habits, targeting, timing, progression, glossary entries, and evidence
+- compare each mechanic against the current schema and capability framework
+- identify unsupported, ambiguous, provisional, or unresolved behavior
+- wait for William's confirmation before generating an implementation request
+- use a fresh Codex context for Epic implementation because it is a materially different workstream
 
 Additional dragon-data work should happen after the formation-output review and UI/tag redesign.
