@@ -19,7 +19,7 @@ import {
   Users,
   X,
 } from 'lucide-react';
-import { useEffect, useMemo, useRef, useState, type ChangeEvent, type KeyboardEvent } from 'react';
+import { useCallback, useEffect, useLayoutEffect, useMemo, useRef, useState, type ChangeEvent, type KeyboardEvent } from 'react';
 import { databaseMetadata, repository } from '../data/databaseMetadata';
 import { dragons } from '../data/dragons';
 import { evidenceSources } from '../data/evidence';
@@ -596,7 +596,7 @@ function FormationBuilderSection({
   const traceOptions = { roster, previewMaxRankInteractions: previewMaxRank };
   const synergy = analyzeFormation(formation, dragons, defaultSynergyRules, traceOptions);
   const traces = analyzeFormationTraces(formation, dragons, traceOptions);
-  const cardPresentation = buildFormationCardPresentation(formation, dragons, traces, { previewEnabled: previewMaxRank });
+  const cardPresentation = buildFormationCardPresentation(formation, dragons, traces, { previewEnabled: previewMaxRank, roster });
   const providerEffects = [...new Set(traces.map((trace) => trace.providedEffectType).filter((value): value is string => Boolean(value)))];
   const recipientAmplifiers = [...new Set(traces.map((trace) => trace.recipientModifierType).filter((value): value is string => Boolean(value)))];
   const filteredTraces = traces.filter(
@@ -1166,12 +1166,56 @@ function CardInteractionSection({
   onRelationshipActive: (relationshipId: string | null) => void;
 }) {
   const expanded = expandedSections[cardKey] === true;
-  const visible = getCompactInteractions(interactions, expanded);
-  const overflow = Math.max(0, interactions.length - visible.length);
+  const [compactOverflows, setCompactOverflows] = useState(false);
+  const [openDetailIds, setOpenDetailIds] = useState<Set<string>>(() => new Set());
+  const bodyRef = useRef<HTMLDivElement | null>(null);
+  const detailsOpen = openDetailIds.size > 0;
+  const sectionExpanded = expanded || detailsOpen;
+  const visible = getCompactInteractions(interactions, sectionExpanded);
+  const compactVisible = getCompactInteractions(interactions, false);
+  const countOverflow = interactions.length > compactVisible.length;
+  const canExpand = countOverflow || compactOverflows || expanded;
   const listId = `${cardKey}-list`;
+  const updateCompactOverflow = useCallback(() => {
+    const body = bodyRef.current;
+    if (!body || sectionExpanded) {
+      setCompactOverflows(false);
+      return;
+    }
+    setCompactOverflows(body.scrollHeight > body.clientHeight + 1);
+  }, [sectionExpanded]);
+  useLayoutEffect(() => {
+    updateCompactOverflow();
+    const body = bodyRef.current;
+    if (!body) {
+      return undefined;
+    }
+    const ResizeObserverCtor = window.ResizeObserver;
+    if (ResizeObserverCtor) {
+      const observer = new ResizeObserverCtor(() => updateCompactOverflow());
+      observer.observe(body);
+      return () => observer.disconnect();
+    }
+    window.addEventListener('resize', updateCompactOverflow);
+    return () => window.removeEventListener('resize', updateCompactOverflow);
+  }, [interactions, visible.length, updateCompactOverflow]);
+  const handleDetailsOpenChange = useCallback((interactionId: string, open: boolean) => {
+    setOpenDetailIds((current) => {
+      const next = new Set(current);
+      if (open) {
+        next.add(interactionId);
+      } else {
+        next.delete(interactionId);
+      }
+      return next;
+    });
+  }, []);
+  const handleExpandedToggle = () => {
+    onExpandedSectionsChange({ ...expandedSections, [cardKey]: !expanded });
+  };
   return (
     <section
-      className={`card-mini-section interaction-section${expanded ? ' is-expanded' : ''}${interactions.length === 0 ? ' is-empty' : ''}`}
+      className={`card-mini-section interaction-section${sectionExpanded ? ' is-expanded' : ''}${interactions.length === 0 ? ' is-empty' : ''}`}
       aria-labelledby={`${cardKey}-title`}
     >
       <div className="interaction-section-heading">
@@ -1179,10 +1223,11 @@ function CardInteractionSection({
         <span className="count-pill">{interactions.length}</span>
       </div>
       <div
+        ref={bodyRef}
         id={listId}
         className="interaction-section-body"
         aria-label={`${title} interactions`}
-        tabIndex={expanded && interactions.length > 3 ? 0 : undefined}
+        tabIndex={sectionExpanded && countOverflow ? 0 : undefined}
       >
         {visible.length > 0 ? (
           <ul className="card-interaction-list">
@@ -1192,6 +1237,7 @@ function CardInteractionSection({
                   interaction={interaction}
                   active={activeRelationship === interaction.relationshipId}
                   onRelationshipActive={onRelationshipActive}
+                  onDetailsOpenChange={handleDetailsOpenChange}
                 />
               </li>
             ))}
@@ -1200,15 +1246,15 @@ function CardInteractionSection({
           <p className="interaction-empty-state">{emptyText}</p>
         )}
       </div>
-      {interactions.length > 3 ? (
+      {canExpand ? (
         <button
           type="button"
           className="text-button compact-action"
           aria-expanded={expanded}
           aria-controls={listId}
-          onClick={() => onExpandedSectionsChange({ ...expandedSections, [cardKey]: !expanded })}
+          onClick={handleExpandedToggle}
         >
-          {expanded ? 'Show fewer' : `View ${overflow} more`}
+          {expanded ? 'Show fewer' : 'Show all'}
         </button>
       ) : null}
     </section>
@@ -1219,14 +1265,17 @@ function CardInteractionItem({
   interaction,
   active,
   onRelationshipActive,
+  onDetailsOpenChange,
 }: {
   interaction: FormationCardInteraction;
   active: boolean;
   onRelationshipActive: (relationshipId: string | null) => void;
+  onDetailsOpenChange?: (interactionId: string, open: boolean) => void;
 }) {
   const [detailsOpen, setDetailsOpen] = useState(false);
   const detailsId = `interaction-details-${interaction.id.replace(/[^a-zA-Z0-9_-]/g, '-')}`;
   const hasTargetUncertainty = interaction.isCandidate || (interaction.candidateTotal ?? 0) > 1;
+  useEffect(() => () => onDetailsOpenChange?.(interaction.id, false), [interaction.id, onDetailsOpenChange]);
   return (
     <article
       className={`card-interaction-item state-${interaction.state}${active ? ' is-linked' : ''}`}
@@ -1256,7 +1305,11 @@ function CardInteractionItem({
         className="text-button compact-action interaction-details-toggle"
         aria-expanded={detailsOpen}
         aria-controls={detailsId}
-        onClick={() => setDetailsOpen((current) => !current)}
+        onClick={() => setDetailsOpen((current) => {
+          const next = !current;
+          onDetailsOpenChange?.(interaction.id, next);
+          return next;
+        })}
       >
         {detailsOpen ? 'Hide details' : 'Details'}
       </button>

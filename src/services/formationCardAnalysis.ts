@@ -1,5 +1,6 @@
-import { FORMATION_POSITIONS, TROOP_TYPES, type AbilityDefinition, type Dragon, type FormationPosition, type TroopType } from '../models/dragon';
+import { FORMATION_POSITIONS, TROOP_TYPES, type AbilityDefinition, type AbilityEffect, type AbilitySchedule, type Dragon, type FormationPosition, type OwnedDragon, type RankedValue, type TroopType } from '../models/dragon';
 import type { FormationAnalysisInput, RequirementTrace, SynergyTrace, TraceConfidence, TraceStatus } from '../models/synergy';
+import { rankedValueForHabitLevel, resolveEffectiveHabitLevelForAbility } from './habitLevels';
 import { isNormalSynergyTrace } from './synergyTrace';
 
 export type FormationCardInteractionState = 'active' | 'conditional' | 'preview' | 'unknown' | 'blocked';
@@ -94,7 +95,7 @@ export function buildFormationCardPresentation(
   formation: FormationAnalysisInput,
   allDragons: Dragon[],
   traces: SynergyTrace[],
-  options: { previewEnabled?: boolean } = {},
+  options: { previewEnabled?: boolean; roster?: Record<string, OwnedDragon> } = {},
 ): FormationCardPresentation {
   const selectedIds = new Set(Object.values(formation).filter((dragonId): dragonId is string => Boolean(dragonId)));
   const dragonById = new Map(allDragons.map((dragon) => [dragon.id, dragon]));
@@ -197,7 +198,7 @@ export function buildFormationCardPresentation(
       dragonId: dragon?.id ?? null,
       receives,
       provides,
-      command: dragon ? deriveCommandSummary(dragon) : null,
+      command: dragon ? deriveCommandSummary(dragon, options) : null,
       traitStatus: dragon ? deriveTraitStatus(dragon, position, traces) : null,
       affinities: dragon ? deriveCardAffinities(dragon) : emptyAffinities(),
       overflow: {
@@ -362,6 +363,7 @@ function sanitizeNormalCardEffects(effects: string[], summaryLines: string[]): s
     effects
       .map(sanitizeNormalCardText)
       .filter((effect): effect is string => Boolean(effect))
+      .filter((effect) => !isRedundantCurrentValueLine(effect, summaryText))
       .filter((effect) => !summaryText.includes(normalizeText(effect))),
   );
 }
@@ -369,8 +371,14 @@ function sanitizeNormalCardEffects(effects: string[], summaryLines: string[]): s
 function sanitizeNormalCardText(value: string): string {
   return value
     .replace(/\s*Ranked progression:\s.*?L5\s[-+]?\d+(?:\.\d+)?%?\./g, '')
+    .replace(/\s*(Damage Dealt|Damage Received|Physical Damage Received|Tactical Damage Received|Fire Damage Received|Recovery Rate) reduction at current effective level:\s[-+]?\d+(?:\.\d+)?%?\./gi, '')
     .replace(/\s{2,}/g, ' ')
     .trim();
+}
+
+function isRedundantCurrentValueLine(value: string, normalizedSummaryText: string): boolean {
+  const match = value.match(/current effective level:\s([-+]?\d+(?:\.\d+)?%?)/i);
+  return Boolean(match?.[1] && normalizedSummaryText.includes(match[1].toLowerCase()));
 }
 
 function omitNormalCardSummarySentences(value: string, summaryLines: string[]): string {
@@ -492,25 +500,45 @@ function summarizeTrace(
   return [detail.replaceAll('1.5x', '1.5×')];
 }
 
-function deriveCommandSummary(dragon: Dragon): FormationCommandSummary | null {
+function deriveCommandSummary(
+  dragon: Dragon,
+  options: { previewEnabled?: boolean; roster?: Record<string, OwnedDragon> } = {},
+): FormationCommandSummary | null {
   if (!dragon.command) {
     return null;
   }
+  const summaryLines = commandSummaryLines(dragon, options);
   return {
     dragonId: dragon.id,
     abilityName: dragon.command.name,
     label: 'Command',
-    summary: commandSummaryLines(dragon.command).join(' '),
-    summaryLines: commandSummaryLines(dragon.command),
-    detail: dragon.command.rawDescription ?? commandSummary(dragon.command),
+    summary: summaryLines.join(' '),
+    summaryLines,
+    detail: commandDetail(dragon, options, summaryLines),
   };
 }
 
-function commandSummary(command: AbilityDefinition): string {
-  return commandSummaryLines(command).join(' ');
+function commandDetail(
+  dragon: Dragon,
+  options: { previewEnabled?: boolean; roster?: Record<string, OwnedDragon> },
+  summaryLines: string[],
+): string {
+  const raw = dragon.command?.rawDescription ?? summaryLines.join(' ');
+  const augmentationLines = commandAugmentationSummaryLines(dragon, options);
+  if (augmentationLines.length === 0) {
+    return raw;
+  }
+  return summaryLines.join('\n\n');
 }
 
-function commandSummaryLines(command: AbilityDefinition): string[] {
+function commandSummaryLines(
+  dragon: Dragon | AbilityDefinition,
+  options: { previewEnabled?: boolean; roster?: Record<string, OwnedDragon> } = {},
+): string[] {
+  const command = 'command' in dragon ? dragon.command : dragon;
+  if (!command) {
+    return ['Command data not yet verified.'];
+  }
   if (command.id === 'malachite-wardens-rally') {
     return [
       'Rounds 2, 4, 7, and 9: Tactical Damage to one same-lane enemy.',
@@ -538,7 +566,67 @@ function commandSummaryLines(command: AbilityDefinition): string[] {
   const timing = firstSchedule ? scheduleTiming(firstSchedule.timing, firstSchedule.rounds) : 'Command';
   const effectNames = unique(effects.map((effect) => effect.type));
   const target = primary.target ? ` to ${primary.target}` : '';
-  return [`${timing}: ${joinEnglishList(effectNames)}${target}.`];
+  return [
+    `${timing}: ${joinEnglishList(effectNames)}${target}.`,
+    ...('command' in dragon ? commandAugmentationSummaryLines(dragon, options) : []),
+  ];
+}
+
+function commandAugmentationSummaryLines(
+  dragon: Dragon,
+  options: { previewEnabled?: boolean; roster?: Record<string, OwnedDragon> } = {},
+): string[] {
+  const command = dragon.command;
+  if (!command) {
+    return [];
+  }
+  const starRank = options.previewEnabled ? 10 : options.roster?.[dragon.id]?.starRank ?? null;
+  return command.augmentations
+    .filter((augmentation) => starRank !== null && starRank >= augmentation.minimumDragonStarRank)
+    .flatMap((augmentation) => {
+      const sourceAbility = dragon.habits.find((habit) => habit.id === augmentation.sourceAbilityId);
+      const level = options.previewEnabled
+        ? 5
+        : resolveEffectiveHabitLevelForAbility(sourceAbility ?? command, options.roster?.[dragon.id]);
+      return augmentation.schedulesAdded.flatMap((schedule) =>
+        schedule.effects.flatMap((effect) => commandEffectSummaryLine(schedule, effect, level)),
+      );
+    });
+}
+
+function commandEffectSummaryLine(
+  schedule: AbilitySchedule,
+  effect: AbilityEffect,
+  level: 1 | 2 | 3 | 4 | 5 | null,
+): string[] {
+  const base = rankedValueForHabitLevel(effect.rankedValues, level);
+  const multiplier = effect.conditionalMultipliers?.[0] ?? null;
+  const enhanced = multiplier?.directlyVerifiedValues.find((value) => value.level === level);
+  if (!base) {
+    return [];
+  }
+  const target = effect.conditions?.some((condition) => condition.kind === 'target-has-output-capability')
+    ? 'all enemies capable of dealing non-Basic Physical Damage'
+    : effect.target;
+  if (!multiplier || !enhanced) {
+    return [
+      `${scheduleTiming(schedule.timing, schedule.rounds)}: ${effectActionVerb(effect.type)} ${formatToken(effect.type)} at a ${formatRankedValue(base, effect.unit)} rate to ${target}.`,
+    ];
+  }
+  const status = multiplier.condition.statusId ? formatToken(multiplier.condition.statusId) : 'the condition';
+  return [
+    `${scheduleTiming(schedule.timing, schedule.rounds)}: deal ${formatToken(effect.type)} at a ${formatRankedValue(base, effect.unit)} rate to ${target}. Against an eligible target afflicted with ${status}, the rate is increased ${multiplier.multiplier}x to ${formatRankedValue(enhanced, effect.unit)}.`,
+  ];
+}
+
+function effectActionVerb(effectType: string): string {
+  if (/recovery/i.test(effectType)) {
+    return 'apply';
+  }
+  if (/damage/i.test(effectType)) {
+    return 'deal';
+  }
+  return 'apply';
 }
 
 function scheduleTiming(timing: string, rounds: number[]): string {
@@ -1281,4 +1369,15 @@ function formatToken(value: string) {
     .split('-')
     .map((part) => part.charAt(0).toUpperCase() + part.slice(1))
     .join(' ');
+}
+
+function formatRankedValue(value: RankedValue, fallbackUnit: AbilityEffect['unit']): string {
+  const unit = value.unit === 'percent' ? 'percent' : fallbackUnit;
+  if (unit === 'percent' || unit === 'rate') {
+    return `${value.value}%`;
+  }
+  if (unit === 'flat') {
+    return `${value.value} flat`;
+  }
+  return String(value.value);
 }

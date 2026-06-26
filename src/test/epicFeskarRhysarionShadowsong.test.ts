@@ -82,6 +82,70 @@ describe('Feskar, Rhysarion, and Shadowsong Epic profiles', () => {
     expect(adjacentStack.sourceScope).toBe('non-basic-attacks');
   });
 
+  it('shows Emerald Inferno current base and Burn-enhanced values without normal-card progression', () => {
+    const formation: FormationAnalysisInput = { 'left-flank': 'feskar', vanguard: 'rhysarion', 'right-flank': 'shadowsong' };
+    const roster = ownedRoster(['feskar', 'rhysarion', 'shadowsong'], 1, 0);
+    roster.feskar!.starRank = 6;
+    roster.shadowsong!.starRank = 10;
+    const traces = analyzeFormationTraces(formation, dragons, { roster });
+    const cards = buildFormationCardPresentation(formation, dragons, traces, { previewEnabled: false, roster });
+    const feskarCommand = cards.cards.find((card) => card.dragonId === 'feskar')?.command;
+    const commandText = [...(feskarCommand?.summaryLines ?? []), feskarCommand?.detail ?? ''].join(' ');
+    const burnTrace = traces.find((trace) =>
+      trace.sourceDragonId === 'shadowsong' &&
+      trace.recipientDragonId === 'feskar' &&
+      trace.matchKind === 'status-condition-enablement' &&
+      [...trace.effects, ...trace.matchedFacts, trace.explanation].join(' ').includes('Emerald Inferno')
+    );
+    const burnTraceText = burnTrace ? [
+      burnTrace.explanation,
+      ...burnTrace.effects,
+      ...burnTrace.matchedFacts,
+      ...burnTrace.assumptions,
+    ].join(' ') : '';
+
+    expect(commandText).toContain('Rounds 3, 5, 8, and 10');
+    expect(commandText).toContain('Fire Damage at a 40% rate');
+    expect(commandText).toContain('rate is increased 1.5x to 60%');
+    expect(commandText).toContain('non-Basic Physical Damage');
+    expect(commandText).not.toContain('L1 40%');
+    expect(commandText).not.toMatch(/\bL[1-5]\b/);
+
+    expect(burnTrace).toBeDefined();
+    expect(burnTraceText).toContain('Base current Fire Damage Rate: 40%.');
+    expect(burnTraceText).toContain('Enhanced current Fire Damage Rate: 60%.');
+    expect(burnTraceText).toContain('Conditional multiplier: 1.5x');
+    expect(burnTraceText).toContain('Burn must be on the same eligible target.');
+    expect(burnTraceText).toContain('non-Basic Physical Damage output capability');
+    expect(burnTraceText).toContain('Target eligibility remains independently required');
+    expect(burnTraceText).toContain('Burn application success, enemy identity, target overlap, and conditional uptime are unresolved.');
+
+    const upgradedRoster = ownedRoster(['feskar', 'rhysarion', 'shadowsong'], 1, 0);
+    upgradedRoster.feskar!.starRank = 6;
+    upgradedRoster.feskar!.habitLevels['feskar-emerald-inferno'] = 3;
+    const upgradedTraces = analyzeFormationTraces(formation, dragons, { roster: upgradedRoster });
+    const upgradedCards = buildFormationCardPresentation(formation, dragons, upgradedTraces, {
+      previewEnabled: false,
+      roster: upgradedRoster,
+    });
+    const upgradedCommand = upgradedCards.cards.find((card) => card.dragonId === 'feskar')?.command;
+    const upgradedCommandText = [...(upgradedCommand?.summaryLines ?? []), upgradedCommand?.detail ?? ''].join(' ');
+    expect(upgradedCommandText).toContain('Fire Damage at a 56% rate');
+    expect(upgradedCommandText).toContain('rate is increased 1.5x to 84%');
+
+    const savedPreviewHabitLevel = roster.feskar?.habitLevels['feskar-emerald-inferno'];
+    const previewTraces = analyzeFormationTraces(formation, dragons, { roster, previewMaxRankInteractions: true });
+    const previewCards = buildFormationCardPresentation(formation, dragons, previewTraces, {
+      previewEnabled: true,
+      roster,
+    });
+    const previewCommand = previewCards.cards.find((card) => card.dragonId === 'feskar')?.command;
+    const previewCommandText = [...(previewCommand?.summaryLines ?? []), previewCommand?.detail ?? ''].join(' ');
+    expect(previewCommandText).toContain('Fire Damage at a 80% rate');
+    expect(previewCommandText).toContain('rate is increased 1.5x to 120%');
+    expect(roster.feskar?.habitLevels['feskar-emerald-inferno']).toBe(savedPreviewHabitLevel);
+  });
+
   it('models Rhysarion Control category, other-ally exclusion, harmful friendly impairment, and shared Inspiring Melody target', () => {
     const fire = dragon('rhysarion').command!.schedules[1]!.effects[0]!;
     const echoing = habit('rhysarion', 'rhysarion-echoing-melody').schedules[0]!.effects[0]!;
@@ -128,7 +192,11 @@ describe('Feskar, Rhysarion, and Shadowsong Epic profiles', () => {
       expect.objectContaining({ sourceDragonId: 'shadowsong', matchKind: 'enemy-damage-received-increase', sourceAbilityId: 'shadowsong-blazing-onslaught', recipientDragonId: null }),
       expect.objectContaining({ sourceDragonId: 'shadowsong', matchKind: 'periodic-status-damage', sourceAbilityId: 'shadowsong-blazing-conductor', recipientDragonId: null }),
     ]));
-    expect(cards.cards.find((card) => card.dragonId === 'rhysarion')?.provides.some((item) => /Damage Dealt reduction at current effective level: 27\.5%|harm/i.test([...item.summaryLines, ...item.details, ...item.effects].join(' ')))).toBe(true);
+    expect(cards.cards.find((card) => card.dragonId === 'rhysarion')?.provides.some((item) => /harm/i.test([...item.summaryLines, ...item.details, ...item.effects].join(' ')))).toBe(true);
+    expect(cards.cards.flatMap((card) => [...card.provides, ...card.receives])
+      .filter((item) => item.abilityName === 'Ebbing Fury')
+      .flatMap((item) => [...item.summaryLines, ...item.details, ...item.effects])
+      .join(' ')).not.toContain('Damage Dealt reduction at current effective level');
     expect(cards.cards.some((card) => card.receives.some((item) => /Vulnerable|Burn periodic|enemy.*vulnerability/i.test(item.title)))).toBe(false);
   });
 
@@ -225,7 +293,8 @@ describe('Feskar, Rhysarion, and Shadowsong Epic profiles', () => {
       const text = receives.map((item) => [...item.summaryLines, ...item.details, ...item.effects].join(' ')).join(' ');
       expect(receives).toHaveLength(1);
       expect(text).toContain('Recovery Rate: 25% at effective Habit Level 1.');
-      expect(text).toContain('Damage Dealt reduction at current effective level: 27.5%.');
+      expect(text).toContain(`${recipientId === 'feskar' ? 'Feskar' : 'Shadowsong'} by reducing Damage Dealt by 27.5%.`);
+      expect(text).not.toContain('Damage Dealt reduction at current effective level');
       expect(text).not.toContain('Ranked progression');
       expect(text).not.toMatch(/\bL[1-5]\b/);
     }
@@ -257,9 +326,10 @@ describe('Feskar, Rhysarion, and Shadowsong Epic profiles', () => {
       .join(' ');
 
     expect(upgradedText).toContain('Recovery Rate: 35% at effective Habit Level 3.');
-    expect(upgradedText).toContain('Damage Dealt reduction at current effective level: 38.5%.');
+    expect(upgradedText).toContain('reducing Damage Dealt by 38.5%.');
+    expect(upgradedText).not.toContain('Damage Dealt reduction at current effective level');
     expect(upgradedText).not.toContain('Recovery Rate: 25%');
-    expect(upgradedText).not.toContain('Damage Dealt reduction at current effective level: 27.5%.');
+    expect(upgradedText).not.toContain('reducing Damage Dealt by 27.5%.');
     expect(upgradedText).not.toContain('Ranked progression');
     expect(upgradedText).not.toMatch(/\bL[1-5]\b/);
 
@@ -277,7 +347,8 @@ describe('Feskar, Rhysarion, and Shadowsong Epic profiles', () => {
       .join(' ');
 
     expect(previewText).toContain('Recovery Rate: 50% at effective Habit Level 5.');
-    expect(previewText).toContain('Damage Dealt reduction at current effective level: 55%.');
+    expect(previewText).toContain('reducing Damage Dealt by 55%.');
+    expect(previewText).not.toContain('Damage Dealt reduction at current effective level');
     expect(previewText).not.toContain('Ranked progression');
     expect(previewText).not.toMatch(/\bL[1-5]\b/);
     expect(previewRoster.rhysarion?.habitLevels['rhysarion-ebbing-fury']).toBe(savedPreviewHabitLevel);
