@@ -777,11 +777,14 @@
     ],
     "damageScope": null,
     "effects": [
-      "Recovery support"
+      "Recovery support",
+      "Recovery Rate: 100% at effective Habit Level 5.",
+      "Ranked progression: L1 50%, L2 60%, L3 70%, L4 85%, L5 100%.",
+      "Final Recovery amount remains unknown."
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final value cannot be calculated because final combat formulas and stacking order are not fully verified.",
-    "explanation": "Syrax's Strategic Revival can provide Recovery to Malachite.",
+    "explanation": "Syrax's Strategic Revival can provide Recovery to Malachite. Recovery Rate: 100% at effective Habit Level 5. Ranked progression: L1 50%, L2 60%, L3 70%, L4 85%, L5 100%. Final Recovery amount remains unknown.",
     "id": "ally-output-support-syrax-strategic-revival-strategic-revival-recovery-output-malachite",
     "interactionScope": "cross-dragon",
     "matchedOutputCapabilityIds": [],
@@ -851,11 +854,14 @@
     ],
     "damageScope": null,
     "effects": [
-      "Recovery support"
+      "Recovery support",
+      "Recovery Rate: 100% at effective Habit Level 5.",
+      "Ranked progression: L1 50%, L2 60%, L3 70%, L4 85%, L5 100%.",
+      "Final Recovery amount remains unknown."
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final value cannot be calculated because final combat formulas and stacking order are not fully verified.",
-    "explanation": "Syrax's Strategic Revival can provide Recovery to Caraxes.",
+    "explanation": "Syrax's Strategic Revival can provide Recovery to Caraxes. Recovery Rate: 100% at effective Habit Level 5. Ranked progression: L1 50%, L2 60%, L3 70%, L4 85%, L5 100%. Final Recovery amount remains unknown.",
     "id": "ally-output-support-syrax-strategic-revival-strategic-revival-recovery-output-caraxes",
     "interactionScope": "cross-dragon",
     "matchedOutputCapabilityIds": [],
@@ -925,13 +931,16 @@
     ],
     "damageScope": null,
     "effects": [
-      "Recovery support"
+      "Recovery support",
+      "Recovery Rate: 100% at effective Habit Level 5.",
+      "Ranked progression: L1 50%, L2 60%, L3 70%, L4 85%, L5 100%.",
+      "Final Recovery amount remains unknown."
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final value cannot be calculated because final combat formulas and stacking order are not fully verified.",
-    "explanation": "Syrax's Strategic Revival can provide Recovery to Syrax.",
+    "explanation": "Syrax's Strategic Revival can provide Recovery to Syrax. Recovery Rate: 100% at effective Habit Level 5. Ranked progression: L1 50%, L2 60%, L3 70%, L4 85%, L5 100%. Final Recovery amount remains unknown.",
     "id": "ally-output-support-syrax-strategic-revival-strategic-revival-recovery-output-syrax",
-    "interactionScope": "internal",
+    "interactionScope": "cross-dragon",
     "matchedOutputCapabilityIds": [],
     "matchKind": "outgoing-effect-amplification",
     "modifierCapabilityId": null,
@@ -996,13 +1005,16 @@
     "conflicts": [],
     "damageScope": null,
     "effects": [
-      "Recovery support"
+      "Recovery support",
+      "Recovery Rate: 70%.",
+      "Targets exactly 3 Allies; caster is eligible.",
+      "Final Recovery amount remains unknown."
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final value cannot be calculated because final combat formulas and stacking order are not fully verified.",
-    "explanation": "Malachite's Warden's Rally can provide Recovery to Malachite.",
+    "explanation": "Malachite's Warden's Rally can provide Recovery to Malachite. Recovery Rate: 70%. Targets exactly 3 Allies; caster is eligible. Final Recovery amount remains unknown.",
     "id": "ally-output-support-malachite-wardens-rally-wardens-rally-recovery-rate-output-malachite",
-    "interactionScope": "internal",
+    "interactionScope": "cross-dragon",
     "matchedOutputCapabilityIds": [],
     "matchKind": "outgoing-effect-amplification",
     "modifierCapabilityId": null,
@@ -1047,11 +1059,14 @@
     "conflicts": [],
     "damageScope": null,
     "effects": [
-      "Recovery support"
+      "Recovery support",
+      "Recovery Rate: 70%.",
+      "Targets exactly 3 Allies; caster is eligible.",
+      "Final Recovery amount remains unknown."
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final value cannot be calculated because final combat formulas and stacking order are not fully verified.",
-    "explanation": "Malachite's Warden's Rally can provide Recovery to Caraxes.",
+    "explanation": "Malachite's Warden's Rally can provide Recovery to Caraxes. Recovery Rate: 70%. Targets exactly 3 Allies; caster is eligible. Final Recovery amount remains unknown.",
     "id": "ally-output-support-malachite-wardens-rally-wardens-rally-recovery-rate-output-caraxes",
     "interactionScope": "cross-dragon",
     "matchedOutputCapabilityIds": [],
@@ -1098,11 +1113,14 @@
     "conflicts": [],
     "damageScope": null,
     "effects": [
-      "Recovery support"
+      "Recovery support",
+      "Recovery Rate: 70%.",
+      "Targets exactly 3 Allies; caster is eligible.",
+      "Final Recovery amount remains unknown."
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final value cannot be calculated because final combat formulas and stacking order are not fully verified.",
-    "explanation": "Malachite's Warden's Rally can provide Recovery to Syrax.",
+    "explanation": "Malachite's Warden's Rally can provide Recovery to Syrax. Recovery Rate: 70%. Targets exactly 3 Allies; caster is eligible. Final Recovery amount remains unknown.",
     "id": "ally-output-support-malachite-wardens-rally-wardens-rally-recovery-rate-output-syrax",
     "interactionScope": "cross-dragon",
     "matchedOutputCapabilityIds": [],
@@ -4203,11 +4221,14 @@
     ],
     "damageScope": null,
     "effects": [
-      "Recovery support"
+      "Recovery support",
+      "Recovery Rate: 100% at effective Habit Level 5.",
+      "Ranked progression: L1 50%, L2 60%, L3 70%, L4 85%, L5 100%.",
+      "Final Recovery amount remains unknown."
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final value cannot be calculated because final combat formulas and stacking order are not fully verified.",
-    "explanation": "Syrax's Strategic Revival can provide Recovery to Caraxes.",
+    "explanation": "Syrax's Strategic Revival can provide Recovery to Caraxes. Recovery Rate: 100% at effective Habit Level 5. Ranked progression: L1 50%, L2 60%, L3 70%, L4 85%, L5 100%. Final Recovery amount remains unknown.",
     "id": "ally-output-support-syrax-strategic-revival-strategic-revival-recovery-output-caraxes",
     "interactionScope": "cross-dragon",
     "matchedOutputCapabilityIds": [],
@@ -4277,13 +4298,16 @@
     ],
     "damageScope": null,
     "effects": [
-      "Recovery support"
+      "Recovery support",
+      "Recovery Rate: 100% at effective Habit Level 5.",
+      "Ranked progression: L1 50%, L2 60%, L3 70%, L4 85%, L5 100%.",
+      "Final Recovery amount remains unknown."
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final value cannot be calculated because final combat formulas and stacking order are not fully verified.",
-    "explanation": "Syrax's Strategic Revival can provide Recovery to Syrax.",
+    "explanation": "Syrax's Strategic Revival can provide Recovery to Syrax. Recovery Rate: 100% at effective Habit Level 5. Ranked progression: L1 50%, L2 60%, L3 70%, L4 85%, L5 100%. Final Recovery amount remains unknown.",
     "id": "ally-output-support-syrax-strategic-revival-strategic-revival-recovery-output-syrax",
-    "interactionScope": "internal",
+    "interactionScope": "cross-dragon",
     "matchedOutputCapabilityIds": [],
     "matchKind": "outgoing-effect-amplification",
     "modifierCapabilityId": null,
@@ -4351,11 +4375,14 @@
     ],
     "damageScope": null,
     "effects": [
-      "Recovery support"
+      "Recovery support",
+      "Recovery Rate: 100% at effective Habit Level 5.",
+      "Ranked progression: L1 50%, L2 60%, L3 70%, L4 85%, L5 100%.",
+      "Final Recovery amount remains unknown."
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final value cannot be calculated because final combat formulas and stacking order are not fully verified.",
-    "explanation": "Syrax's Strategic Revival can provide Recovery to Malachite.",
+    "explanation": "Syrax's Strategic Revival can provide Recovery to Malachite. Recovery Rate: 100% at effective Habit Level 5. Ranked progression: L1 50%, L2 60%, L3 70%, L4 85%, L5 100%. Final Recovery amount remains unknown.",
     "id": "ally-output-support-syrax-strategic-revival-strategic-revival-recovery-output-malachite",
     "interactionScope": "cross-dragon",
     "matchedOutputCapabilityIds": [],
@@ -4422,11 +4449,14 @@
     "conflicts": [],
     "damageScope": null,
     "effects": [
-      "Recovery support"
+      "Recovery support",
+      "Recovery Rate: 70%.",
+      "Targets exactly 3 Allies; caster is eligible.",
+      "Final Recovery amount remains unknown."
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final value cannot be calculated because final combat formulas and stacking order are not fully verified.",
-    "explanation": "Malachite's Warden's Rally can provide Recovery to Caraxes.",
+    "explanation": "Malachite's Warden's Rally can provide Recovery to Caraxes. Recovery Rate: 70%. Targets exactly 3 Allies; caster is eligible. Final Recovery amount remains unknown.",
     "id": "ally-output-support-malachite-wardens-rally-wardens-rally-recovery-rate-output-caraxes",
     "interactionScope": "cross-dragon",
     "matchedOutputCapabilityIds": [],
@@ -4473,11 +4503,14 @@
     "conflicts": [],
     "damageScope": null,
     "effects": [
-      "Recovery support"
+      "Recovery support",
+      "Recovery Rate: 70%.",
+      "Targets exactly 3 Allies; caster is eligible.",
+      "Final Recovery amount remains unknown."
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final value cannot be calculated because final combat formulas and stacking order are not fully verified.",
-    "explanation": "Malachite's Warden's Rally can provide Recovery to Syrax.",
+    "explanation": "Malachite's Warden's Rally can provide Recovery to Syrax. Recovery Rate: 70%. Targets exactly 3 Allies; caster is eligible. Final Recovery amount remains unknown.",
     "id": "ally-output-support-malachite-wardens-rally-wardens-rally-recovery-rate-output-syrax",
     "interactionScope": "cross-dragon",
     "matchedOutputCapabilityIds": [],
@@ -4524,13 +4557,16 @@
     "conflicts": [],
     "damageScope": null,
     "effects": [
-      "Recovery support"
+      "Recovery support",
+      "Recovery Rate: 70%.",
+      "Targets exactly 3 Allies; caster is eligible.",
+      "Final Recovery amount remains unknown."
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final value cannot be calculated because final combat formulas and stacking order are not fully verified.",
-    "explanation": "Malachite's Warden's Rally can provide Recovery to Malachite.",
+    "explanation": "Malachite's Warden's Rally can provide Recovery to Malachite. Recovery Rate: 70%. Targets exactly 3 Allies; caster is eligible. Final Recovery amount remains unknown.",
     "id": "ally-output-support-malachite-wardens-rally-wardens-rally-recovery-rate-output-malachite",
-    "interactionScope": "internal",
+    "interactionScope": "cross-dragon",
     "matchedOutputCapabilityIds": [],
     "matchKind": "outgoing-effect-amplification",
     "modifierCapabilityId": null,
@@ -7540,11 +7576,14 @@
     ],
     "damageScope": null,
     "effects": [
-      "Recovery support"
+      "Recovery support",
+      "Recovery Rate: 100% at effective Habit Level 5.",
+      "Ranked progression: L1 50%, L2 60%, L3 70%, L4 85%, L5 100%.",
+      "Final Recovery amount remains unknown."
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final value cannot be calculated because final combat formulas and stacking order are not fully verified.",
-    "explanation": "Syrax's Strategic Revival can provide Recovery to Malachite.",
+    "explanation": "Syrax's Strategic Revival can provide Recovery to Malachite. Recovery Rate: 100% at effective Habit Level 5. Ranked progression: L1 50%, L2 60%, L3 70%, L4 85%, L5 100%. Final Recovery amount remains unknown.",
     "id": "ally-output-support-syrax-strategic-revival-strategic-revival-recovery-output-malachite",
     "interactionScope": "cross-dragon",
     "matchedOutputCapabilityIds": [],
@@ -7614,13 +7653,16 @@
     ],
     "damageScope": null,
     "effects": [
-      "Recovery support"
+      "Recovery support",
+      "Recovery Rate: 100% at effective Habit Level 5.",
+      "Ranked progression: L1 50%, L2 60%, L3 70%, L4 85%, L5 100%.",
+      "Final Recovery amount remains unknown."
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final value cannot be calculated because final combat formulas and stacking order are not fully verified.",
-    "explanation": "Syrax's Strategic Revival can provide Recovery to Syrax.",
+    "explanation": "Syrax's Strategic Revival can provide Recovery to Syrax. Recovery Rate: 100% at effective Habit Level 5. Ranked progression: L1 50%, L2 60%, L3 70%, L4 85%, L5 100%. Final Recovery amount remains unknown.",
     "id": "ally-output-support-syrax-strategic-revival-strategic-revival-recovery-output-syrax",
-    "interactionScope": "internal",
+    "interactionScope": "cross-dragon",
     "matchedOutputCapabilityIds": [],
     "matchKind": "outgoing-effect-amplification",
     "modifierCapabilityId": null,
@@ -7688,11 +7730,14 @@
     ],
     "damageScope": null,
     "effects": [
-      "Recovery support"
+      "Recovery support",
+      "Recovery Rate: 100% at effective Habit Level 5.",
+      "Ranked progression: L1 50%, L2 60%, L3 70%, L4 85%, L5 100%.",
+      "Final Recovery amount remains unknown."
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final value cannot be calculated because final combat formulas and stacking order are not fully verified.",
-    "explanation": "Syrax's Strategic Revival can provide Recovery to Caraxes.",
+    "explanation": "Syrax's Strategic Revival can provide Recovery to Caraxes. Recovery Rate: 100% at effective Habit Level 5. Ranked progression: L1 50%, L2 60%, L3 70%, L4 85%, L5 100%. Final Recovery amount remains unknown.",
     "id": "ally-output-support-syrax-strategic-revival-strategic-revival-recovery-output-caraxes",
     "interactionScope": "cross-dragon",
     "matchedOutputCapabilityIds": [],
@@ -7759,13 +7804,16 @@
     "conflicts": [],
     "damageScope": null,
     "effects": [
-      "Recovery support"
+      "Recovery support",
+      "Recovery Rate: 70%.",
+      "Targets exactly 3 Allies; caster is eligible.",
+      "Final Recovery amount remains unknown."
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final value cannot be calculated because final combat formulas and stacking order are not fully verified.",
-    "explanation": "Malachite's Warden's Rally can provide Recovery to Malachite.",
+    "explanation": "Malachite's Warden's Rally can provide Recovery to Malachite. Recovery Rate: 70%. Targets exactly 3 Allies; caster is eligible. Final Recovery amount remains unknown.",
     "id": "ally-output-support-malachite-wardens-rally-wardens-rally-recovery-rate-output-malachite",
-    "interactionScope": "internal",
+    "interactionScope": "cross-dragon",
     "matchedOutputCapabilityIds": [],
     "matchKind": "outgoing-effect-amplification",
     "modifierCapabilityId": null,
@@ -7810,11 +7858,14 @@
     "conflicts": [],
     "damageScope": null,
     "effects": [
-      "Recovery support"
+      "Recovery support",
+      "Recovery Rate: 70%.",
+      "Targets exactly 3 Allies; caster is eligible.",
+      "Final Recovery amount remains unknown."
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final value cannot be calculated because final combat formulas and stacking order are not fully verified.",
-    "explanation": "Malachite's Warden's Rally can provide Recovery to Syrax.",
+    "explanation": "Malachite's Warden's Rally can provide Recovery to Syrax. Recovery Rate: 70%. Targets exactly 3 Allies; caster is eligible. Final Recovery amount remains unknown.",
     "id": "ally-output-support-malachite-wardens-rally-wardens-rally-recovery-rate-output-syrax",
     "interactionScope": "cross-dragon",
     "matchedOutputCapabilityIds": [],
@@ -7861,11 +7912,14 @@
     "conflicts": [],
     "damageScope": null,
     "effects": [
-      "Recovery support"
+      "Recovery support",
+      "Recovery Rate: 70%.",
+      "Targets exactly 3 Allies; caster is eligible.",
+      "Final Recovery amount remains unknown."
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final value cannot be calculated because final combat formulas and stacking order are not fully verified.",
-    "explanation": "Malachite's Warden's Rally can provide Recovery to Caraxes.",
+    "explanation": "Malachite's Warden's Rally can provide Recovery to Caraxes. Recovery Rate: 70%. Targets exactly 3 Allies; caster is eligible. Final Recovery amount remains unknown.",
     "id": "ally-output-support-malachite-wardens-rally-wardens-rally-recovery-rate-output-caraxes",
     "interactionScope": "cross-dragon",
     "matchedOutputCapabilityIds": [],
@@ -10759,13 +10813,16 @@
     ],
     "damageScope": null,
     "effects": [
-      "Recovery support"
+      "Recovery support",
+      "Recovery Rate: 100% at effective Habit Level 5.",
+      "Ranked progression: L1 50%, L2 60%, L3 70%, L4 85%, L5 100%.",
+      "Final Recovery amount remains unknown."
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final value cannot be calculated because final combat formulas and stacking order are not fully verified.",
-    "explanation": "Syrax's Strategic Revival can provide Recovery to Syrax.",
+    "explanation": "Syrax's Strategic Revival can provide Recovery to Syrax. Recovery Rate: 100% at effective Habit Level 5. Ranked progression: L1 50%, L2 60%, L3 70%, L4 85%, L5 100%. Final Recovery amount remains unknown.",
     "id": "ally-output-support-syrax-strategic-revival-strategic-revival-recovery-output-syrax",
-    "interactionScope": "internal",
+    "interactionScope": "cross-dragon",
     "matchedOutputCapabilityIds": [],
     "matchKind": "outgoing-effect-amplification",
     "modifierCapabilityId": null,
@@ -10833,11 +10890,14 @@
     ],
     "damageScope": null,
     "effects": [
-      "Recovery support"
+      "Recovery support",
+      "Recovery Rate: 100% at effective Habit Level 5.",
+      "Ranked progression: L1 50%, L2 60%, L3 70%, L4 85%, L5 100%.",
+      "Final Recovery amount remains unknown."
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final value cannot be calculated because final combat formulas and stacking order are not fully verified.",
-    "explanation": "Syrax's Strategic Revival can provide Recovery to Caraxes.",
+    "explanation": "Syrax's Strategic Revival can provide Recovery to Caraxes. Recovery Rate: 100% at effective Habit Level 5. Ranked progression: L1 50%, L2 60%, L3 70%, L4 85%, L5 100%. Final Recovery amount remains unknown.",
     "id": "ally-output-support-syrax-strategic-revival-strategic-revival-recovery-output-caraxes",
     "interactionScope": "cross-dragon",
     "matchedOutputCapabilityIds": [],
@@ -10907,11 +10967,14 @@
     ],
     "damageScope": null,
     "effects": [
-      "Recovery support"
+      "Recovery support",
+      "Recovery Rate: 100% at effective Habit Level 5.",
+      "Ranked progression: L1 50%, L2 60%, L3 70%, L4 85%, L5 100%.",
+      "Final Recovery amount remains unknown."
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final value cannot be calculated because final combat formulas and stacking order are not fully verified.",
-    "explanation": "Syrax's Strategic Revival can provide Recovery to Malachite.",
+    "explanation": "Syrax's Strategic Revival can provide Recovery to Malachite. Recovery Rate: 100% at effective Habit Level 5. Ranked progression: L1 50%, L2 60%, L3 70%, L4 85%, L5 100%. Final Recovery amount remains unknown.",
     "id": "ally-output-support-syrax-strategic-revival-strategic-revival-recovery-output-malachite",
     "interactionScope": "cross-dragon",
     "matchedOutputCapabilityIds": [],
@@ -10978,11 +11041,14 @@
     "conflicts": [],
     "damageScope": null,
     "effects": [
-      "Recovery support"
+      "Recovery support",
+      "Recovery Rate: 70%.",
+      "Targets exactly 3 Allies; caster is eligible.",
+      "Final Recovery amount remains unknown."
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final value cannot be calculated because final combat formulas and stacking order are not fully verified.",
-    "explanation": "Malachite's Warden's Rally can provide Recovery to Syrax.",
+    "explanation": "Malachite's Warden's Rally can provide Recovery to Syrax. Recovery Rate: 70%. Targets exactly 3 Allies; caster is eligible. Final Recovery amount remains unknown.",
     "id": "ally-output-support-malachite-wardens-rally-wardens-rally-recovery-rate-output-syrax",
     "interactionScope": "cross-dragon",
     "matchedOutputCapabilityIds": [],
@@ -11029,11 +11095,14 @@
     "conflicts": [],
     "damageScope": null,
     "effects": [
-      "Recovery support"
+      "Recovery support",
+      "Recovery Rate: 70%.",
+      "Targets exactly 3 Allies; caster is eligible.",
+      "Final Recovery amount remains unknown."
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final value cannot be calculated because final combat formulas and stacking order are not fully verified.",
-    "explanation": "Malachite's Warden's Rally can provide Recovery to Caraxes.",
+    "explanation": "Malachite's Warden's Rally can provide Recovery to Caraxes. Recovery Rate: 70%. Targets exactly 3 Allies; caster is eligible. Final Recovery amount remains unknown.",
     "id": "ally-output-support-malachite-wardens-rally-wardens-rally-recovery-rate-output-caraxes",
     "interactionScope": "cross-dragon",
     "matchedOutputCapabilityIds": [],
@@ -11080,13 +11149,16 @@
     "conflicts": [],
     "damageScope": null,
     "effects": [
-      "Recovery support"
+      "Recovery support",
+      "Recovery Rate: 70%.",
+      "Targets exactly 3 Allies; caster is eligible.",
+      "Final Recovery amount remains unknown."
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final value cannot be calculated because final combat formulas and stacking order are not fully verified.",
-    "explanation": "Malachite's Warden's Rally can provide Recovery to Malachite.",
+    "explanation": "Malachite's Warden's Rally can provide Recovery to Malachite. Recovery Rate: 70%. Targets exactly 3 Allies; caster is eligible. Final Recovery amount remains unknown.",
     "id": "ally-output-support-malachite-wardens-rally-wardens-rally-recovery-rate-output-malachite",
-    "interactionScope": "internal",
+    "interactionScope": "cross-dragon",
     "matchedOutputCapabilityIds": [],
     "matchKind": "outgoing-effect-amplification",
     "modifierCapabilityId": null,
@@ -14159,13 +14231,16 @@
     "conflicts": [],
     "damageScope": null,
     "effects": [
-      "Recovery support"
+      "Recovery support",
+      "Recovery Rate: 70%.",
+      "Targets exactly 3 Allies; caster is eligible.",
+      "Final Recovery amount remains unknown."
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final value cannot be calculated because final combat formulas and stacking order are not fully verified.",
-    "explanation": "Malachite's Warden's Rally can provide Recovery to Malachite.",
+    "explanation": "Malachite's Warden's Rally can provide Recovery to Malachite. Recovery Rate: 70%. Targets exactly 3 Allies; caster is eligible. Final Recovery amount remains unknown.",
     "id": "ally-output-support-malachite-wardens-rally-wardens-rally-recovery-rate-output-malachite",
-    "interactionScope": "internal",
+    "interactionScope": "cross-dragon",
     "matchedOutputCapabilityIds": [],
     "matchKind": "outgoing-effect-amplification",
     "modifierCapabilityId": null,
@@ -14210,11 +14285,14 @@
     "conflicts": [],
     "damageScope": null,
     "effects": [
-      "Recovery support"
+      "Recovery support",
+      "Recovery Rate: 70%.",
+      "Targets exactly 3 Allies; caster is eligible.",
+      "Final Recovery amount remains unknown."
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final value cannot be calculated because final combat formulas and stacking order are not fully verified.",
-    "explanation": "Malachite's Warden's Rally can provide Recovery to Sheepstealer.",
+    "explanation": "Malachite's Warden's Rally can provide Recovery to Sheepstealer. Recovery Rate: 70%. Targets exactly 3 Allies; caster is eligible. Final Recovery amount remains unknown.",
     "id": "ally-output-support-malachite-wardens-rally-wardens-rally-recovery-rate-output-sheepstealer",
     "interactionScope": "cross-dragon",
     "matchedOutputCapabilityIds": [],
@@ -14261,11 +14339,14 @@
     "conflicts": [],
     "damageScope": null,
     "effects": [
-      "Recovery support"
+      "Recovery support",
+      "Recovery Rate: 70%.",
+      "Targets exactly 3 Allies; caster is eligible.",
+      "Final Recovery amount remains unknown."
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final value cannot be calculated because final combat formulas and stacking order are not fully verified.",
-    "explanation": "Malachite's Warden's Rally can provide Recovery to Vermax.",
+    "explanation": "Malachite's Warden's Rally can provide Recovery to Vermax. Recovery Rate: 70%. Targets exactly 3 Allies; caster is eligible. Final Recovery amount remains unknown.",
     "id": "ally-output-support-malachite-wardens-rally-wardens-rally-recovery-rate-output-vermax",
     "interactionScope": "cross-dragon",
     "matchedOutputCapabilityIds": [],
@@ -16948,11 +17029,14 @@
     "conflicts": [],
     "damageScope": null,
     "effects": [
-      "Recovery support"
+      "Recovery support",
+      "Recovery Rate: 70%.",
+      "Targets exactly 3 Allies; caster is eligible.",
+      "Final Recovery amount remains unknown."
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final value cannot be calculated because final combat formulas and stacking order are not fully verified.",
-    "explanation": "Malachite's Warden's Rally can provide Recovery to Seasmoke.",
+    "explanation": "Malachite's Warden's Rally can provide Recovery to Seasmoke. Recovery Rate: 70%. Targets exactly 3 Allies; caster is eligible. Final Recovery amount remains unknown.",
     "id": "ally-output-support-malachite-wardens-rally-wardens-rally-recovery-rate-output-seasmoke",
     "interactionScope": "cross-dragon",
     "matchedOutputCapabilityIds": [],
@@ -16999,13 +17083,16 @@
     "conflicts": [],
     "damageScope": null,
     "effects": [
-      "Recovery support"
+      "Recovery support",
+      "Recovery Rate: 70%.",
+      "Targets exactly 3 Allies; caster is eligible.",
+      "Final Recovery amount remains unknown."
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final value cannot be calculated because final combat formulas and stacking order are not fully verified.",
-    "explanation": "Malachite's Warden's Rally can provide Recovery to Malachite.",
+    "explanation": "Malachite's Warden's Rally can provide Recovery to Malachite. Recovery Rate: 70%. Targets exactly 3 Allies; caster is eligible. Final Recovery amount remains unknown.",
     "id": "ally-output-support-malachite-wardens-rally-wardens-rally-recovery-rate-output-malachite",
-    "interactionScope": "internal",
+    "interactionScope": "cross-dragon",
     "matchedOutputCapabilityIds": [],
     "matchKind": "outgoing-effect-amplification",
     "modifierCapabilityId": null,
@@ -17050,11 +17137,14 @@
     "conflicts": [],
     "damageScope": null,
     "effects": [
-      "Recovery support"
+      "Recovery support",
+      "Recovery Rate: 70%.",
+      "Targets exactly 3 Allies; caster is eligible.",
+      "Final Recovery amount remains unknown."
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final value cannot be calculated because final combat formulas and stacking order are not fully verified.",
-    "explanation": "Malachite's Warden's Rally can provide Recovery to Sheepstealer.",
+    "explanation": "Malachite's Warden's Rally can provide Recovery to Sheepstealer. Recovery Rate: 70%. Targets exactly 3 Allies; caster is eligible. Final Recovery amount remains unknown.",
     "id": "ally-output-support-malachite-wardens-rally-wardens-rally-recovery-rate-output-sheepstealer",
     "interactionScope": "cross-dragon",
     "matchedOutputCapabilityIds": [],
@@ -19553,13 +19643,16 @@
     "conflicts": [],
     "damageScope": null,
     "effects": [
-      "Recovery support"
+      "Recovery support",
+      "Recovery Rate: 70%.",
+      "Targets exactly 3 Allies; caster is eligible.",
+      "Final Recovery amount remains unknown."
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final value cannot be calculated because final combat formulas and stacking order are not fully verified.",
-    "explanation": "Malachite's Warden's Rally can provide Recovery to Malachite.",
+    "explanation": "Malachite's Warden's Rally can provide Recovery to Malachite. Recovery Rate: 70%. Targets exactly 3 Allies; caster is eligible. Final Recovery amount remains unknown.",
     "id": "ally-output-support-malachite-wardens-rally-wardens-rally-recovery-rate-output-malachite",
-    "interactionScope": "internal",
+    "interactionScope": "cross-dragon",
     "matchedOutputCapabilityIds": [],
     "matchKind": "outgoing-effect-amplification",
     "modifierCapabilityId": null,
@@ -19604,11 +19697,14 @@
     "conflicts": [],
     "damageScope": null,
     "effects": [
-      "Recovery support"
+      "Recovery support",
+      "Recovery Rate: 70%.",
+      "Targets exactly 3 Allies; caster is eligible.",
+      "Final Recovery amount remains unknown."
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final value cannot be calculated because final combat formulas and stacking order are not fully verified.",
-    "explanation": "Malachite's Warden's Rally can provide Recovery to Vermax.",
+    "explanation": "Malachite's Warden's Rally can provide Recovery to Vermax. Recovery Rate: 70%. Targets exactly 3 Allies; caster is eligible. Final Recovery amount remains unknown.",
     "id": "ally-output-support-malachite-wardens-rally-wardens-rally-recovery-rate-output-vermax",
     "interactionScope": "cross-dragon",
     "matchedOutputCapabilityIds": [],
@@ -19655,11 +19751,14 @@
     "conflicts": [],
     "damageScope": null,
     "effects": [
-      "Recovery support"
+      "Recovery support",
+      "Recovery Rate: 70%.",
+      "Targets exactly 3 Allies; caster is eligible.",
+      "Final Recovery amount remains unknown."
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final value cannot be calculated because final combat formulas and stacking order are not fully verified.",
-    "explanation": "Malachite's Warden's Rally can provide Recovery to Seasmoke.",
+    "explanation": "Malachite's Warden's Rally can provide Recovery to Seasmoke. Recovery Rate: 70%. Targets exactly 3 Allies; caster is eligible. Final Recovery amount remains unknown.",
     "id": "ally-output-support-malachite-wardens-rally-wardens-rally-recovery-rate-output-seasmoke",
     "interactionScope": "cross-dragon",
     "matchedOutputCapabilityIds": [],
@@ -22956,13 +23055,16 @@
     "conflicts": [],
     "damageScope": null,
     "effects": [
-      "Recovery support"
+      "Recovery support",
+      "Recovery Rate: 70%.",
+      "Targets exactly 3 Allies; caster is eligible.",
+      "Final Recovery amount remains unknown."
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final value cannot be calculated because final combat formulas and stacking order are not fully verified.",
-    "explanation": "Malachite's Warden's Rally can provide Recovery to Malachite.",
+    "explanation": "Malachite's Warden's Rally can provide Recovery to Malachite. Recovery Rate: 70%. Targets exactly 3 Allies; caster is eligible. Final Recovery amount remains unknown.",
     "id": "ally-output-support-malachite-wardens-rally-wardens-rally-recovery-rate-output-malachite",
-    "interactionScope": "internal",
+    "interactionScope": "cross-dragon",
     "matchedOutputCapabilityIds": [],
     "matchKind": "outgoing-effect-amplification",
     "modifierCapabilityId": null,
@@ -23007,11 +23109,14 @@
     "conflicts": [],
     "damageScope": null,
     "effects": [
-      "Recovery support"
+      "Recovery support",
+      "Recovery Rate: 70%.",
+      "Targets exactly 3 Allies; caster is eligible.",
+      "Final Recovery amount remains unknown."
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final value cannot be calculated because final combat formulas and stacking order are not fully verified.",
-    "explanation": "Malachite's Warden's Rally can provide Recovery to Seasmoke.",
+    "explanation": "Malachite's Warden's Rally can provide Recovery to Seasmoke. Recovery Rate: 70%. Targets exactly 3 Allies; caster is eligible. Final Recovery amount remains unknown.",
     "id": "ally-output-support-malachite-wardens-rally-wardens-rally-recovery-rate-output-seasmoke",
     "interactionScope": "cross-dragon",
     "matchedOutputCapabilityIds": [],
@@ -23058,11 +23163,14 @@
     "conflicts": [],
     "damageScope": null,
     "effects": [
-      "Recovery support"
+      "Recovery support",
+      "Recovery Rate: 70%.",
+      "Targets exactly 3 Allies; caster is eligible.",
+      "Final Recovery amount remains unknown."
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final value cannot be calculated because final combat formulas and stacking order are not fully verified.",
-    "explanation": "Malachite's Warden's Rally can provide Recovery to Sheepstealer.",
+    "explanation": "Malachite's Warden's Rally can provide Recovery to Sheepstealer. Recovery Rate: 70%. Targets exactly 3 Allies; caster is eligible. Final Recovery amount remains unknown.",
     "id": "ally-output-support-malachite-wardens-rally-wardens-rally-recovery-rate-output-sheepstealer",
     "interactionScope": "cross-dragon",
     "matchedOutputCapabilityIds": [],
@@ -28347,11 +28455,14 @@
     ],
     "damageScope": null,
     "effects": [
-      "Recovery support"
+      "Recovery support",
+      "Recovery Rate: 100% at effective Habit Level 5.",
+      "Ranked progression: L1 50%, L2 60%, L3 70%, L4 85%, L5 100%.",
+      "Final Recovery amount remains unknown."
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final value cannot be calculated because final combat formulas and stacking order are not fully verified.",
-    "explanation": "Syrax's Strategic Revival can provide Recovery to Malachite.",
+    "explanation": "Syrax's Strategic Revival can provide Recovery to Malachite. Recovery Rate: 100% at effective Habit Level 5. Ranked progression: L1 50%, L2 60%, L3 70%, L4 85%, L5 100%. Final Recovery amount remains unknown.",
     "id": "ally-output-support-syrax-strategic-revival-strategic-revival-recovery-output-malachite",
     "interactionScope": "cross-dragon",
     "matchedOutputCapabilityIds": [],
@@ -28421,13 +28532,16 @@
     ],
     "damageScope": null,
     "effects": [
-      "Recovery support"
+      "Recovery support",
+      "Recovery Rate: 100% at effective Habit Level 5.",
+      "Ranked progression: L1 50%, L2 60%, L3 70%, L4 85%, L5 100%.",
+      "Final Recovery amount remains unknown."
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final value cannot be calculated because final combat formulas and stacking order are not fully verified.",
-    "explanation": "Syrax's Strategic Revival can provide Recovery to Syrax.",
+    "explanation": "Syrax's Strategic Revival can provide Recovery to Syrax. Recovery Rate: 100% at effective Habit Level 5. Ranked progression: L1 50%, L2 60%, L3 70%, L4 85%, L5 100%. Final Recovery amount remains unknown.",
     "id": "ally-output-support-syrax-strategic-revival-strategic-revival-recovery-output-syrax",
-    "interactionScope": "internal",
+    "interactionScope": "cross-dragon",
     "matchedOutputCapabilityIds": [],
     "matchKind": "outgoing-effect-amplification",
     "modifierCapabilityId": null,
@@ -28495,11 +28609,14 @@
     ],
     "damageScope": null,
     "effects": [
-      "Recovery support"
+      "Recovery support",
+      "Recovery Rate: 100% at effective Habit Level 5.",
+      "Ranked progression: L1 50%, L2 60%, L3 70%, L4 85%, L5 100%.",
+      "Final Recovery amount remains unknown."
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final value cannot be calculated because final combat formulas and stacking order are not fully verified.",
-    "explanation": "Syrax's Strategic Revival can provide Recovery to Sheepstealer.",
+    "explanation": "Syrax's Strategic Revival can provide Recovery to Sheepstealer. Recovery Rate: 100% at effective Habit Level 5. Ranked progression: L1 50%, L2 60%, L3 70%, L4 85%, L5 100%. Final Recovery amount remains unknown.",
     "id": "ally-output-support-syrax-strategic-revival-strategic-revival-recovery-output-sheepstealer",
     "interactionScope": "cross-dragon",
     "matchedOutputCapabilityIds": [],
@@ -28566,13 +28683,16 @@
     "conflicts": [],
     "damageScope": null,
     "effects": [
-      "Recovery support"
+      "Recovery support",
+      "Recovery Rate: 70%.",
+      "Targets exactly 3 Allies; caster is eligible.",
+      "Final Recovery amount remains unknown."
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final value cannot be calculated because final combat formulas and stacking order are not fully verified.",
-    "explanation": "Malachite's Warden's Rally can provide Recovery to Malachite.",
+    "explanation": "Malachite's Warden's Rally can provide Recovery to Malachite. Recovery Rate: 70%. Targets exactly 3 Allies; caster is eligible. Final Recovery amount remains unknown.",
     "id": "ally-output-support-malachite-wardens-rally-wardens-rally-recovery-rate-output-malachite",
-    "interactionScope": "internal",
+    "interactionScope": "cross-dragon",
     "matchedOutputCapabilityIds": [],
     "matchKind": "outgoing-effect-amplification",
     "modifierCapabilityId": null,
@@ -28617,11 +28737,14 @@
     "conflicts": [],
     "damageScope": null,
     "effects": [
-      "Recovery support"
+      "Recovery support",
+      "Recovery Rate: 70%.",
+      "Targets exactly 3 Allies; caster is eligible.",
+      "Final Recovery amount remains unknown."
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final value cannot be calculated because final combat formulas and stacking order are not fully verified.",
-    "explanation": "Malachite's Warden's Rally can provide Recovery to Syrax.",
+    "explanation": "Malachite's Warden's Rally can provide Recovery to Syrax. Recovery Rate: 70%. Targets exactly 3 Allies; caster is eligible. Final Recovery amount remains unknown.",
     "id": "ally-output-support-malachite-wardens-rally-wardens-rally-recovery-rate-output-syrax",
     "interactionScope": "cross-dragon",
     "matchedOutputCapabilityIds": [],
@@ -28668,11 +28791,14 @@
     "conflicts": [],
     "damageScope": null,
     "effects": [
-      "Recovery support"
+      "Recovery support",
+      "Recovery Rate: 70%.",
+      "Targets exactly 3 Allies; caster is eligible.",
+      "Final Recovery amount remains unknown."
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final value cannot be calculated because final combat formulas and stacking order are not fully verified.",
-    "explanation": "Malachite's Warden's Rally can provide Recovery to Sheepstealer.",
+    "explanation": "Malachite's Warden's Rally can provide Recovery to Sheepstealer. Recovery Rate: 70%. Targets exactly 3 Allies; caster is eligible. Final Recovery amount remains unknown.",
     "id": "ally-output-support-malachite-wardens-rally-wardens-rally-recovery-rate-output-sheepstealer",
     "interactionScope": "cross-dragon",
     "matchedOutputCapabilityIds": [],
@@ -30467,13 +30593,16 @@
     ],
     "damageScope": null,
     "effects": [
-      "Recovery support"
+      "Recovery support",
+      "Recovery Rate: 100% at effective Habit Level 5.",
+      "Ranked progression: L1 50%, L2 60%, L3 70%, L4 85%, L5 100%.",
+      "Final Recovery amount remains unknown."
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final value cannot be calculated because final combat formulas and stacking order are not fully verified.",
-    "explanation": "Syrax's Strategic Revival can provide Recovery to Syrax.",
+    "explanation": "Syrax's Strategic Revival can provide Recovery to Syrax. Recovery Rate: 100% at effective Habit Level 5. Ranked progression: L1 50%, L2 60%, L3 70%, L4 85%, L5 100%. Final Recovery amount remains unknown.",
     "id": "ally-output-support-syrax-strategic-revival-strategic-revival-recovery-output-syrax",
-    "interactionScope": "internal",
+    "interactionScope": "cross-dragon",
     "matchedOutputCapabilityIds": [],
     "matchKind": "outgoing-effect-amplification",
     "modifierCapabilityId": null,
@@ -30541,11 +30670,14 @@
     ],
     "damageScope": null,
     "effects": [
-      "Recovery support"
+      "Recovery support",
+      "Recovery Rate: 100% at effective Habit Level 5.",
+      "Ranked progression: L1 50%, L2 60%, L3 70%, L4 85%, L5 100%.",
+      "Final Recovery amount remains unknown."
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final value cannot be calculated because final combat formulas and stacking order are not fully verified.",
-    "explanation": "Syrax's Strategic Revival can provide Recovery to Vermax.",
+    "explanation": "Syrax's Strategic Revival can provide Recovery to Vermax. Recovery Rate: 100% at effective Habit Level 5. Ranked progression: L1 50%, L2 60%, L3 70%, L4 85%, L5 100%. Final Recovery amount remains unknown.",
     "id": "ally-output-support-syrax-strategic-revival-strategic-revival-recovery-output-vermax",
     "interactionScope": "cross-dragon",
     "matchedOutputCapabilityIds": [],
@@ -30615,11 +30747,14 @@
     ],
     "damageScope": null,
     "effects": [
-      "Recovery support"
+      "Recovery support",
+      "Recovery Rate: 100% at effective Habit Level 5.",
+      "Ranked progression: L1 50%, L2 60%, L3 70%, L4 85%, L5 100%.",
+      "Final Recovery amount remains unknown."
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final value cannot be calculated because final combat formulas and stacking order are not fully verified.",
-    "explanation": "Syrax's Strategic Revival can provide Recovery to Caraxes.",
+    "explanation": "Syrax's Strategic Revival can provide Recovery to Caraxes. Recovery Rate: 100% at effective Habit Level 5. Ranked progression: L1 50%, L2 60%, L3 70%, L4 85%, L5 100%. Final Recovery amount remains unknown.",
     "id": "ally-output-support-syrax-strategic-revival-strategic-revival-recovery-output-caraxes",
     "interactionScope": "cross-dragon",
     "matchedOutputCapabilityIds": [],
@@ -33324,11 +33459,14 @@
     ],
     "damageScope": null,
     "effects": [
-      "Recovery support"
+      "Recovery support",
+      "Recovery Rate: 100% at effective Habit Level 5.",
+      "Ranked progression: L1 50%, L2 60%, L3 70%, L4 85%, L5 100%.",
+      "Final Recovery amount remains unknown."
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final value cannot be calculated because final combat formulas and stacking order are not fully verified.",
-    "explanation": "Syrax's Strategic Revival can provide Recovery to Sheepstealer.",
+    "explanation": "Syrax's Strategic Revival can provide Recovery to Sheepstealer. Recovery Rate: 100% at effective Habit Level 5. Ranked progression: L1 50%, L2 60%, L3 70%, L4 85%, L5 100%. Final Recovery amount remains unknown.",
     "id": "ally-output-support-syrax-strategic-revival-strategic-revival-recovery-output-sheepstealer",
     "interactionScope": "cross-dragon",
     "matchedOutputCapabilityIds": [],
@@ -33398,11 +33536,14 @@
     ],
     "damageScope": null,
     "effects": [
-      "Recovery support"
+      "Recovery support",
+      "Recovery Rate: 100% at effective Habit Level 5.",
+      "Ranked progression: L1 50%, L2 60%, L3 70%, L4 85%, L5 100%.",
+      "Final Recovery amount remains unknown."
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final value cannot be calculated because final combat formulas and stacking order are not fully verified.",
-    "explanation": "Syrax's Strategic Revival can provide Recovery to Caraxes.",
+    "explanation": "Syrax's Strategic Revival can provide Recovery to Caraxes. Recovery Rate: 100% at effective Habit Level 5. Ranked progression: L1 50%, L2 60%, L3 70%, L4 85%, L5 100%. Final Recovery amount remains unknown.",
     "id": "ally-output-support-syrax-strategic-revival-strategic-revival-recovery-output-caraxes",
     "interactionScope": "cross-dragon",
     "matchedOutputCapabilityIds": [],
@@ -33472,13 +33613,16 @@
     ],
     "damageScope": null,
     "effects": [
-      "Recovery support"
+      "Recovery support",
+      "Recovery Rate: 100% at effective Habit Level 5.",
+      "Ranked progression: L1 50%, L2 60%, L3 70%, L4 85%, L5 100%.",
+      "Final Recovery amount remains unknown."
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final value cannot be calculated because final combat formulas and stacking order are not fully verified.",
-    "explanation": "Syrax's Strategic Revival can provide Recovery to Syrax.",
+    "explanation": "Syrax's Strategic Revival can provide Recovery to Syrax. Recovery Rate: 100% at effective Habit Level 5. Ranked progression: L1 50%, L2 60%, L3 70%, L4 85%, L5 100%. Final Recovery amount remains unknown.",
     "id": "ally-output-support-syrax-strategic-revival-strategic-revival-recovery-output-syrax",
-    "interactionScope": "internal",
+    "interactionScope": "cross-dragon",
     "matchedOutputCapabilityIds": [],
     "matchKind": "outgoing-effect-amplification",
     "modifierCapabilityId": null,
@@ -40030,11 +40174,14 @@
     ],
     "damageScope": null,
     "effects": [
-      "Recovery support"
+      "Recovery support",
+      "Recovery Rate: 100% at effective Habit Level 5.",
+      "Ranked progression: L1 50%, L2 60%, L3 70%, L4 85%, L5 100%.",
+      "Final Recovery amount remains unknown."
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final value cannot be calculated because final combat formulas and stacking order are not fully verified.",
-    "explanation": "Syrax's Strategic Revival can provide Recovery to Kalspire.",
+    "explanation": "Syrax's Strategic Revival can provide Recovery to Kalspire. Recovery Rate: 100% at effective Habit Level 5. Ranked progression: L1 50%, L2 60%, L3 70%, L4 85%, L5 100%. Final Recovery amount remains unknown.",
     "id": "ally-output-support-syrax-strategic-revival-strategic-revival-recovery-output-kalspire",
     "interactionScope": "cross-dragon",
     "matchedOutputCapabilityIds": [],
@@ -40104,13 +40251,16 @@
     ],
     "damageScope": null,
     "effects": [
-      "Recovery support"
+      "Recovery support",
+      "Recovery Rate: 100% at effective Habit Level 5.",
+      "Ranked progression: L1 50%, L2 60%, L3 70%, L4 85%, L5 100%.",
+      "Final Recovery amount remains unknown."
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final value cannot be calculated because final combat formulas and stacking order are not fully verified.",
-    "explanation": "Syrax's Strategic Revival can provide Recovery to Syrax.",
+    "explanation": "Syrax's Strategic Revival can provide Recovery to Syrax. Recovery Rate: 100% at effective Habit Level 5. Ranked progression: L1 50%, L2 60%, L3 70%, L4 85%, L5 100%. Final Recovery amount remains unknown.",
     "id": "ally-output-support-syrax-strategic-revival-strategic-revival-recovery-output-syrax",
-    "interactionScope": "internal",
+    "interactionScope": "cross-dragon",
     "matchedOutputCapabilityIds": [],
     "matchKind": "outgoing-effect-amplification",
     "modifierCapabilityId": null,
@@ -40178,11 +40328,14 @@
     ],
     "damageScope": null,
     "effects": [
-      "Recovery support"
+      "Recovery support",
+      "Recovery Rate: 100% at effective Habit Level 5.",
+      "Ranked progression: L1 50%, L2 60%, L3 70%, L4 85%, L5 100%.",
+      "Final Recovery amount remains unknown."
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final value cannot be calculated because final combat formulas and stacking order are not fully verified.",
-    "explanation": "Syrax's Strategic Revival can provide Recovery to Vhagar.",
+    "explanation": "Syrax's Strategic Revival can provide Recovery to Vhagar. Recovery Rate: 100% at effective Habit Level 5. Ranked progression: L1 50%, L2 60%, L3 70%, L4 85%, L5 100%. Final Recovery amount remains unknown.",
     "id": "ally-output-support-syrax-strategic-revival-strategic-revival-recovery-output-vhagar",
     "interactionScope": "cross-dragon",
     "matchedOutputCapabilityIds": [],

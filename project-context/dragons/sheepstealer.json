@@ -4939,7 +4939,7 @@
   "firstObservedInGame": "2026-06-22",
   "format": "dragonfire-dragon-profile",
   "gameVersion": null,
-  "generatedAt": "2026-06-26T17:32:16.549Z",
+  "generatedAt": "2026-06-26T18:07:07.549Z",
   "habits": [
     {
       "abilityClass": "passive",
@@ -7096,6 +7096,7 @@
       "label": "Wild Hunt: Fire Damage",
       "minimumDragonLevel": null,
       "requiredHabitLevel": null,
+      "sourceEffectId": "wild-hunt-fire-damage-rate",
       "sourceKind": "command",
       "sourceScope": "commands",
       "targetCount": 1,
@@ -7156,6 +7157,7 @@
       "label": "Savage Claim: Fire Damage",
       "minimumDragonLevel": null,
       "requiredHabitLevel": 1,
+      "sourceEffectId": "savage-claim-fire-damage",
       "sourceKind": "habit",
       "sourceScope": "habits",
       "targetCount": null,
@@ -7209,6 +7211,7 @@
       "label": "Savage Claim: Recovery",
       "minimumDragonLevel": null,
       "requiredHabitLevel": 1,
+      "sourceEffectId": "savage-claim-recovery",
       "sourceKind": "habit",
       "sourceScope": "habits",
       "targetCount": null,
@@ -7904,8 +7907,8 @@
   "rosterSourceStatus": "in-game-verified-pending-official-site",
   "slug": "sheepstealer",
   "source": {
-    "branch": "feature/epic-feskar-rhysarion-shadowsong",
-    "commit": "c862dfc491fd4f8ed1f2189211b8b6699061ee99",
+    "branch": "fix/ebbing-fury-trace-presentation",
+    "commit": "06be66d968aa6bfa1eee66ca17450bf32ffa24a7",
     "databaseVersion": "0.6.2",
     "dataSchemaVersion": 12,
     "gameBuild": "26.6.53509",

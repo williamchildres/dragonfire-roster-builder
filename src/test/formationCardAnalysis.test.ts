@@ -62,7 +62,8 @@ describe('formation card analysis presentation', () => {
 
     expect(vermax.provides.some((item) => item.abilityName === 'Spreading Blaze')).toBe(true);
     expect(malachite.receives.some((item) => item.sourceDragonId === 'vermax' && item.abilityName === 'Spreading Blaze')).toBe(true);
-    expect(result.cards.flatMap((item) => [...item.receives, ...item.provides]).some((item) => item.sourceDragonId === item.recipientDragonId)).toBe(false);
+    const selfCards = result.cards.flatMap((item) => [...item.receives, ...item.provides]).filter((item) => item.sourceDragonId === item.recipientDragonId);
+    expect(selfCards.every((item) => item.summary.includes('Recovery support'))).toBe(true);
   });
 
   it('keeps target-selection candidates distinct from guaranteed recipients', () => {

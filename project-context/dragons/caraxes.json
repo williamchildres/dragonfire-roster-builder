@@ -3263,7 +3263,7 @@
   "firstObservedInGame": null,
   "format": "dragonfire-dragon-profile",
   "gameVersion": null,
-  "generatedAt": "2026-06-26T17:32:16.549Z",
+  "generatedAt": "2026-06-26T18:07:07.549Z",
   "habits": [
     {
       "abilityClass": "passive",
@@ -5084,6 +5084,7 @@
       "label": "Infernal Burst: Fire Damage",
       "minimumDragonLevel": null,
       "requiredHabitLevel": null,
+      "sourceEffectId": "infernal-burst-fire-rate",
       "sourceKind": "command",
       "sourceScope": "commands",
       "targetCount": 3,
@@ -5144,6 +5145,7 @@
       "label": "Crippling Inferno: Burn",
       "minimumDragonLevel": null,
       "requiredHabitLevel": 1,
+      "sourceEffectId": "crippling-inferno-burn",
       "sourceKind": "habit",
       "sourceScope": "habits",
       "targetCount": 3,
@@ -5208,6 +5210,7 @@
       "label": "Blood Wyrm: Recovery",
       "minimumDragonLevel": null,
       "requiredHabitLevel": 1,
+      "sourceEffectId": "blood-wyrm-recovery",
       "sourceKind": "habit",
       "sourceScope": "habits",
       "targetCount": null,
@@ -5897,8 +5900,8 @@
   "rosterSourceStatus": "official-website",
   "slug": "caraxes",
   "source": {
-    "branch": "feature/epic-feskar-rhysarion-shadowsong",
-    "commit": "c862dfc491fd4f8ed1f2189211b8b6699061ee99",
+    "branch": "fix/ebbing-fury-trace-presentation",
+    "commit": "06be66d968aa6bfa1eee66ca17450bf32ffa24a7",
     "databaseVersion": "0.6.2",
     "dataSchemaVersion": 12,
     "gameBuild": "26.6.53509",
