@@ -217,6 +217,7 @@ export interface EffectCondition {
   statusCategoryId?: string | null;
   comparison?: string | null;
   thresholdPercent?: number | null;
+  battleContext?: BattleContext | null;
 }
 
 export interface AbilityTarget {

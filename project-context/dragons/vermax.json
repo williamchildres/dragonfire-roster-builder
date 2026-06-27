@@ -3754,7 +3754,7 @@
   "firstObservedInGame": "2026-06-22",
   "format": "dragonfire-dragon-profile",
   "gameVersion": null,
-  "generatedAt": "2026-06-27T21:44:55.689Z",
+  "generatedAt": "2026-06-27T22:12:53.099Z",
   "habits": [
     {
       "abilityClass": "passive",
@@ -4932,6 +4932,7 @@
       "conditional": true,
       "conditions": [
         {
+          "battleContext": null,
           "comparison": null,
           "description": "Ally deals Tactical Damage.",
           "evidenceIds": [],
@@ -5245,6 +5246,7 @@
       "conditional": true,
       "conditions": [
         {
+          "battleContext": null,
           "comparison": "below",
           "description": "Below 75% Troop Capacity.",
           "evidenceIds": [],
@@ -5348,6 +5350,7 @@
       "conditional": true,
       "conditions": [
         {
+          "battleContext": null,
           "comparison": "below",
           "description": "Below 50% Troop Capacity.",
           "evidenceIds": [],
@@ -5451,6 +5454,7 @@
       "conditional": true,
       "conditions": [
         {
+          "battleContext": null,
           "comparison": "below",
           "description": "Below 25% Troop Capacity.",
           "evidenceIds": [],
@@ -5862,6 +5866,7 @@
           "unresolved": false
         },
         {
+          "battleContext": null,
           "comparison": null,
           "description": "Ally deals Tactical Damage.",
           "evidenceIds": [],
@@ -7041,8 +7046,8 @@
   "rosterSourceStatus": "in-game-verified-pending-official-site",
   "slug": "vermax",
   "source": {
-    "branch": "fix/mechanic-reference-analysis-integrity",
-    "commit": "d15aad00735449f126b843811a1d0a1981989c0f",
+    "branch": "fix/mechanic-reference-analysis-follow-up",
+    "commit": "17da1db6189bafba9c0471b7e19d9c21fa6d8ba4",
     "databaseVersion": "0.6.2",
     "dataSchemaVersion": 12,
     "gameBuild": "26.6.53509",
@@ -7075,6 +7080,7 @@
       "chanceFixed": null,
       "conditions": [
         {
+          "battleContext": null,
           "comparison": null,
           "description": "Ally deals Tactical Damage.",
           "evidenceIds": [],
@@ -7311,6 +7317,7 @@
           "unresolved": false
         },
         {
+          "battleContext": null,
           "comparison": null,
           "description": "Ally deals Tactical Damage.",
           "evidenceIds": [],

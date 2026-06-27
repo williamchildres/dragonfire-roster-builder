@@ -346,6 +346,45 @@ describe('formation card analysis presentation', () => {
     expect(kalspireRank10?.detail).toContain('independently attempt Panic at a 15% chance');
   });
 
+  it('uses all-matching enemy wording for Unlikely Hero source cards', () => {
+    const roster = selectedRoster(['sheepstealer', 'crimson', 'kalspire'], 26, 10);
+    const formation = formations.commandAugments!;
+    const traces = analyzeFormationTraces(formation, dragons, {
+      roster,
+      dragonLevels: { sheepstealer: 26, crimson: 26, kalspire: 26 },
+    });
+    const result = buildFormationCardPresentation(formation, dragons, traces, { previewEnabled: false, roster });
+    const crimson = card(result, 'crimson');
+    const unlikelyHero = crimson.provides.filter((item) => item.abilityName === 'Unlikely Hero');
+    const textByCard = unlikelyHero.map((item) => [
+      item.effectTitle,
+      item.title,
+      item.summary,
+      ...item.summaryLines,
+      item.detail,
+      ...item.effects,
+    ].join(' '));
+    const joined = textByCard.join(' ');
+
+    const physical = textByCard.find((text) => /Enemy Physical Damage vulnerability/i.test(text));
+    const fire = textByCard.find((text) => /Enemy Fire Damage vulnerability/i.test(text));
+    const recovery = textByCard.find((text) => /Enemy Recovery Received reduction/i.test(text));
+
+    expect(physical).toContain('all enemies currently above 75% maximum Troop Capacity');
+    expect(physical).toContain('Applies to non-Basic Physical Damage only.');
+    expect(fire).toContain('all enemies currently above 75% maximum Troop Capacity');
+    expect(fire).toContain('Applies to all qualifying Fire Damage sources.');
+    expect(recovery).toContain('all enemies currently below 25% maximum Troop Capacity');
+    expect(recovery).toContain('Duration: until end of the current round.');
+    expect(unlikelyHero.every((item) => item.state === 'conditional')).toBe(true);
+
+    expect(joined).not.toMatch(/one enemy target|enemy candidate|one candidate is selected|selected enemy/i);
+    expect(joined).not.toContain('Target not guaranteed');
+    expect(card(result, 'kalspire').receives.some((item) => item.sourceDragonId === 'crimson' && /Physical Damage/i.test(item.summary))).toBe(true);
+    expect(card(result, 'sheepstealer').receives.some((item) => item.sourceDragonId === 'crimson' && /Fire Damage/i.test(item.summary))).toBe(true);
+    expect(fire).toContain('Crimson and Sheepstealer');
+  });
+
   it('adds command summaries without counting them as cross-dragon synergies', () => {
     const result = presentation('8', false);
 

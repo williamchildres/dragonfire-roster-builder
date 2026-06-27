@@ -19987,12 +19987,13 @@
     "damageScope": null,
     "effects": [
       "Fire Damage Dealt increase 20% at effective Habit Level 5.",
+      "PvE-only bonus is contextual and is not treated as active.",
       "Duration: until end of combat.",
       "Ranked progression: L1 10%, L2 12%, L3 14%, L4 17%, L5 20%."
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final value cannot be calculated because final combat formulas and stacking order are not fully verified.",
-    "explanation": "Sheepstealer's Stolen Flock affects Sheepstealer. Fire Damage Dealt increase 20% at effective Habit Level 5. Duration: until end of combat. Ranked progression: L1 10%, L2 12%, L3 14%, L4 17%, L5 20%.",
+    "explanation": "Sheepstealer's Stolen Flock affects Sheepstealer. Fire Damage Dealt increase 20% at effective Habit Level 5. PvE-only bonus is contextual and is not treated as active. Duration: until end of combat. Ranked progression: L1 10%, L2 12%, L3 14%, L4 17%, L5 20%.",
     "id": "internal-self-modifier-sheepstealer-stolen-flock-stolen-flock-pve-fire-fire-damage-dealt-modifier",
     "interactionScope": "internal",
     "matchedOutputCapabilityIds": [],
@@ -20015,6 +20016,17 @@
         "label": "Position compatibility",
         "notes": [],
         "satisfied": true
+      },
+      {
+        "actual": "unspecified",
+        "evidenceIds": [],
+        "expected": "non-player Food Tile or Beast encounter",
+        "id": "pve-food-or-beast",
+        "label": "Battle context requirement",
+        "notes": [
+          "Battle is a non-player Food Tile or Beast encounter."
+        ],
+        "satisfied": null
       },
       {
         "actual": "Star Rank 1",
@@ -20047,7 +20059,7 @@
     "sourceEvidenceIds": [
       "sheepstealer-stolen-flock-2026-06-23"
     ],
-    "status": "potential",
+    "status": "unknown",
     "targetSelectionGroup": null,
     "title": "Internal Fire Damage Dealt modifier",
     "unresolvedQuestions": []
@@ -20707,7 +20719,7 @@
     "effects": [
       "Below 25% Troop Capacity.",
       "Below 75% Troop Capacity.",
-      "Duration: until end of current round.",
+      "Duration: until end of the current round.",
       "Each recipient below 50% Troop Capacity may receive Resistance, reducing Damage Received by 20%.",
       "Fire Damage Received decrease 10% at effective Habit Level 5.",
       "Fire Damage Received decrease 20% at effective Habit Level 5.",
@@ -24470,12 +24482,13 @@
     "damageScope": null,
     "effects": [
       "Fire Damage Dealt increase 20% at effective Habit Level 5.",
+      "PvE-only bonus is contextual and is not treated as active.",
       "Duration: until end of combat.",
       "Ranked progression: L1 10%, L2 12%, L3 14%, L4 17%, L5 20%."
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final value cannot be calculated because final combat formulas and stacking order are not fully verified.",
-    "explanation": "Sheepstealer's Stolen Flock affects Sheepstealer. Fire Damage Dealt increase 20% at effective Habit Level 5. Duration: until end of combat. Ranked progression: L1 10%, L2 12%, L3 14%, L4 17%, L5 20%.",
+    "explanation": "Sheepstealer's Stolen Flock affects Sheepstealer. Fire Damage Dealt increase 20% at effective Habit Level 5. PvE-only bonus is contextual and is not treated as active. Duration: until end of combat. Ranked progression: L1 10%, L2 12%, L3 14%, L4 17%, L5 20%.",
     "id": "internal-self-modifier-sheepstealer-stolen-flock-stolen-flock-pve-fire-fire-damage-dealt-modifier",
     "interactionScope": "internal",
     "matchedOutputCapabilityIds": [],
@@ -24498,6 +24511,17 @@
         "label": "Position compatibility",
         "notes": [],
         "satisfied": true
+      },
+      {
+        "actual": "unspecified",
+        "evidenceIds": [],
+        "expected": "non-player Food Tile or Beast encounter",
+        "id": "pve-food-or-beast",
+        "label": "Battle context requirement",
+        "notes": [
+          "Battle is a non-player Food Tile or Beast encounter."
+        ],
+        "satisfied": null
       },
       {
         "actual": "Star Rank 1",
@@ -24530,7 +24554,7 @@
     "sourceEvidenceIds": [
       "sheepstealer-stolen-flock-2026-06-23"
     ],
-    "status": "potential",
+    "status": "unknown",
     "targetSelectionGroup": null,
     "title": "Internal Fire Damage Dealt modifier",
     "unresolvedQuestions": []
@@ -28829,7 +28853,7 @@
     "effects": [
       "Below 25% Troop Capacity.",
       "Below 75% Troop Capacity.",
-      "Duration: until end of current round.",
+      "Duration: until end of the current round.",
       "Each recipient below 50% Troop Capacity may receive Resistance, reducing Damage Received by 20%.",
       "Fire Damage Received decrease 10% at effective Habit Level 5.",
       "Fire Damage Received decrease 20% at effective Habit Level 5.",
@@ -33225,12 +33249,13 @@
     "damageScope": null,
     "effects": [
       "Fire Damage Dealt increase 20% at effective Habit Level 5.",
+      "PvE-only bonus is contextual and is not treated as active.",
       "Duration: until end of combat.",
       "Ranked progression: L1 10%, L2 12%, L3 14%, L4 17%, L5 20%."
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final value cannot be calculated because final combat formulas and stacking order are not fully verified.",
-    "explanation": "Sheepstealer's Stolen Flock affects Sheepstealer. Fire Damage Dealt increase 20% at effective Habit Level 5. Duration: until end of combat. Ranked progression: L1 10%, L2 12%, L3 14%, L4 17%, L5 20%.",
+    "explanation": "Sheepstealer's Stolen Flock affects Sheepstealer. Fire Damage Dealt increase 20% at effective Habit Level 5. PvE-only bonus is contextual and is not treated as active. Duration: until end of combat. Ranked progression: L1 10%, L2 12%, L3 14%, L4 17%, L5 20%.",
     "id": "internal-self-modifier-sheepstealer-stolen-flock-stolen-flock-pve-fire-fire-damage-dealt-modifier",
     "interactionScope": "internal",
     "matchedOutputCapabilityIds": [],
@@ -33253,6 +33278,17 @@
         "label": "Position compatibility",
         "notes": [],
         "satisfied": true
+      },
+      {
+        "actual": "unspecified",
+        "evidenceIds": [],
+        "expected": "non-player Food Tile or Beast encounter",
+        "id": "pve-food-or-beast",
+        "label": "Battle context requirement",
+        "notes": [
+          "Battle is a non-player Food Tile or Beast encounter."
+        ],
+        "satisfied": null
       },
       {
         "actual": "Star Rank 1",
@@ -33285,7 +33321,7 @@
     "sourceEvidenceIds": [
       "sheepstealer-stolen-flock-2026-06-23"
     ],
-    "status": "potential",
+    "status": "unknown",
     "targetSelectionGroup": null,
     "title": "Internal Fire Damage Dealt modifier",
     "unresolvedQuestions": []
@@ -36989,12 +37025,13 @@
     "damageScope": null,
     "effects": [
       "Fire Damage Dealt increase 20% at effective Habit Level 5.",
+      "PvE-only bonus is contextual and is not treated as active.",
       "Duration: until end of combat.",
       "Ranked progression: L1 10%, L2 12%, L3 14%, L4 17%, L5 20%."
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final value cannot be calculated because final combat formulas and stacking order are not fully verified.",
-    "explanation": "Sheepstealer's Stolen Flock affects Sheepstealer. Fire Damage Dealt increase 20% at effective Habit Level 5. Duration: until end of combat. Ranked progression: L1 10%, L2 12%, L3 14%, L4 17%, L5 20%.",
+    "explanation": "Sheepstealer's Stolen Flock affects Sheepstealer. Fire Damage Dealt increase 20% at effective Habit Level 5. PvE-only bonus is contextual and is not treated as active. Duration: until end of combat. Ranked progression: L1 10%, L2 12%, L3 14%, L4 17%, L5 20%.",
     "id": "internal-self-modifier-sheepstealer-stolen-flock-stolen-flock-pve-fire-fire-damage-dealt-modifier",
     "interactionScope": "internal",
     "matchedOutputCapabilityIds": [],
@@ -37017,6 +37054,17 @@
         "label": "Position compatibility",
         "notes": [],
         "satisfied": true
+      },
+      {
+        "actual": "unspecified",
+        "evidenceIds": [],
+        "expected": "non-player Food Tile or Beast encounter",
+        "id": "pve-food-or-beast",
+        "label": "Battle context requirement",
+        "notes": [
+          "Battle is a non-player Food Tile or Beast encounter."
+        ],
+        "satisfied": null
       },
       {
         "actual": "Star Rank 1",
@@ -37049,7 +37097,7 @@
     "sourceEvidenceIds": [
       "sheepstealer-stolen-flock-2026-06-23"
     ],
-    "status": "potential",
+    "status": "unknown",
     "targetSelectionGroup": null,
     "title": "Internal Fire Damage Dealt modifier",
     "unresolvedQuestions": []
@@ -41305,12 +41353,13 @@
     "damageScope": null,
     "effects": [
       "Fire Damage Dealt increase 20% at effective Habit Level 5.",
+      "PvE-only bonus is contextual and is not treated as active.",
       "Duration: until end of combat.",
       "Ranked progression: L1 10%, L2 12%, L3 14%, L4 17%, L5 20%."
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final value cannot be calculated because final combat formulas and stacking order are not fully verified.",
-    "explanation": "Sheepstealer's Stolen Flock affects Sheepstealer. Fire Damage Dealt increase 20% at effective Habit Level 5. Duration: until end of combat. Ranked progression: L1 10%, L2 12%, L3 14%, L4 17%, L5 20%.",
+    "explanation": "Sheepstealer's Stolen Flock affects Sheepstealer. Fire Damage Dealt increase 20% at effective Habit Level 5. PvE-only bonus is contextual and is not treated as active. Duration: until end of combat. Ranked progression: L1 10%, L2 12%, L3 14%, L4 17%, L5 20%.",
     "id": "internal-self-modifier-sheepstealer-stolen-flock-stolen-flock-pve-fire-fire-damage-dealt-modifier",
     "interactionScope": "internal",
     "matchedOutputCapabilityIds": [],
@@ -41333,6 +41382,17 @@
         "label": "Position compatibility",
         "notes": [],
         "satisfied": true
+      },
+      {
+        "actual": "unspecified",
+        "evidenceIds": [],
+        "expected": "non-player Food Tile or Beast encounter",
+        "id": "pve-food-or-beast",
+        "label": "Battle context requirement",
+        "notes": [
+          "Battle is a non-player Food Tile or Beast encounter."
+        ],
+        "satisfied": null
       },
       {
         "actual": "Star Rank 1",
@@ -41365,7 +41425,7 @@
     "sourceEvidenceIds": [
       "sheepstealer-stolen-flock-2026-06-23"
     ],
-    "status": "potential",
+    "status": "unknown",
     "targetSelectionGroup": null,
     "title": "Internal Fire Damage Dealt modifier",
     "unresolvedQuestions": []
@@ -45114,7 +45174,7 @@
     "effects": [
       "Below 25% Troop Capacity.",
       "Below 75% Troop Capacity.",
-      "Duration: until end of current round.",
+      "Duration: until end of the current round.",
       "Each recipient below 50% Troop Capacity may receive Resistance, reducing Damage Received by 20%.",
       "Fire Damage Received decrease 10% at effective Habit Level 5.",
       "Fire Damage Received decrease 20% at effective Habit Level 5.",
@@ -49292,12 +49352,13 @@
     "damageScope": null,
     "effects": [
       "Fire Damage Dealt increase 20% at effective Habit Level 5.",
+      "PvE-only bonus is contextual and is not treated as active.",
       "Duration: until end of combat.",
       "Ranked progression: L1 10%, L2 12%, L3 14%, L4 17%, L5 20%."
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final value cannot be calculated because final combat formulas and stacking order are not fully verified.",
-    "explanation": "Sheepstealer's Stolen Flock affects Sheepstealer. Fire Damage Dealt increase 20% at effective Habit Level 5. Duration: until end of combat. Ranked progression: L1 10%, L2 12%, L3 14%, L4 17%, L5 20%.",
+    "explanation": "Sheepstealer's Stolen Flock affects Sheepstealer. Fire Damage Dealt increase 20% at effective Habit Level 5. PvE-only bonus is contextual and is not treated as active. Duration: until end of combat. Ranked progression: L1 10%, L2 12%, L3 14%, L4 17%, L5 20%.",
     "id": "internal-self-modifier-sheepstealer-stolen-flock-stolen-flock-pve-fire-fire-damage-dealt-modifier",
     "interactionScope": "internal",
     "matchedOutputCapabilityIds": [],
@@ -49320,6 +49381,17 @@
         "label": "Position compatibility",
         "notes": [],
         "satisfied": true
+      },
+      {
+        "actual": "unspecified",
+        "evidenceIds": [],
+        "expected": "non-player Food Tile or Beast encounter",
+        "id": "pve-food-or-beast",
+        "label": "Battle context requirement",
+        "notes": [
+          "Battle is a non-player Food Tile or Beast encounter."
+        ],
+        "satisfied": null
       },
       {
         "actual": "Star Rank 1",
@@ -49352,7 +49424,7 @@
     "sourceEvidenceIds": [
       "sheepstealer-stolen-flock-2026-06-23"
     ],
-    "status": "potential",
+    "status": "unknown",
     "targetSelectionGroup": null,
     "title": "Internal Fire Damage Dealt modifier",
     "unresolvedQuestions": []
@@ -54822,7 +54894,6 @@
       "Independent per-target checks: 2.",
       "Per-target check chance: 30%.",
       "Checks are independent; chances are not combined into one roll.",
-      "Tactical Strike effect tactical-strike-bleed must target a different enemy than tactical-strike-tactical-damage.",
       "Activation, target selection, target overlap, and uptime remain conditional.",
       "Final damage is not calculated."
     ],
@@ -54882,7 +54953,6 @@
       "Independent per-target checks: 2.",
       "Per-target check chance: 30% at effective Habit Level 5.",
       "Checks are independent; chances are not combined into one roll.",
-      "Tactical Assault effect tactical-assault-panic uses the same selected target as tactical-assault-physical-damage.",
       "Activation, target selection, target overlap, and uptime remain conditional.",
       "Final damage is not calculated."
     ],
@@ -57720,7 +57790,7 @@
     "effects": [
       "Recovery Received decrease 40%.",
       "Timing: Each round.",
-      "Duration: until end of current round.",
+      "Duration: until end of the current round.",
       "Applies to all enemies currently below 25% maximum Troop Capacity.",
       "All matching enemies are affected; no one enemy is selected from the qualifying set.",
       "Zero, one, two, or three enemies may qualify; enemy identities remain unknown.",
@@ -57728,7 +57798,7 @@
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final received-effect reduction cannot be calculated because target state, uptime, stacking, and final formulas are unresolved.",
-    "explanation": "Crimson's Unlikely Hero can reduce enemy Recovery Received by 40%. Timing: Each round. Duration: until end of current round. Applies to all enemies currently below 25% maximum Troop Capacity. All matching enemies are affected; no one enemy is selected from the qualifying set. Zero, one, two, or three enemies may qualify; enemy identities remain unknown. Enemy is strictly below 25% maximum Troop Capacity.",
+    "explanation": "Crimson's Unlikely Hero can reduce enemy Recovery Received by 40%. Timing: Each round. Duration: until end of the current round. Applies to all enemies currently below 25% maximum Troop Capacity. All matching enemies are affected; no one enemy is selected from the qualifying set. Zero, one, two, or three enemies may qualify; enemy identities remain unknown. Enemy is strictly below 25% maximum Troop Capacity.",
     "id": "enemy-received-reduction-crimson-unlikely-hero-unlikely-hero-recovery-received-down-recovery-received-modifier",
     "interactionScope": "enemy-side",
     "matchedOutputCapabilityIds": [],
@@ -62076,7 +62146,6 @@
       "Independent per-target checks: 2.",
       "Per-target check chance: 30%.",
       "Checks are independent; chances are not combined into one roll.",
-      "Tactical Strike effect tactical-strike-bleed must target a different enemy than tactical-strike-tactical-damage.",
       "Activation, target selection, target overlap, and uptime remain conditional.",
       "Final damage is not calculated."
     ],
@@ -62136,7 +62205,6 @@
       "Independent per-target checks: 2.",
       "Per-target check chance: 30% at effective Habit Level 5.",
       "Checks are independent; chances are not combined into one roll.",
-      "Tactical Assault effect tactical-assault-panic uses the same selected target as tactical-assault-physical-damage.",
       "Activation, target selection, target overlap, and uptime remain conditional.",
       "Final damage is not calculated."
     ],
@@ -65052,7 +65120,7 @@
     "effects": [
       "Recovery Received decrease 40%.",
       "Timing: Each round.",
-      "Duration: until end of current round.",
+      "Duration: until end of the current round.",
       "Applies to all enemies currently below 25% maximum Troop Capacity.",
       "All matching enemies are affected; no one enemy is selected from the qualifying set.",
       "Zero, one, two, or three enemies may qualify; enemy identities remain unknown.",
@@ -65060,7 +65128,7 @@
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final received-effect reduction cannot be calculated because target state, uptime, stacking, and final formulas are unresolved.",
-    "explanation": "Crimson's Unlikely Hero can reduce enemy Recovery Received by 40%. Timing: Each round. Duration: until end of current round. Applies to all enemies currently below 25% maximum Troop Capacity. All matching enemies are affected; no one enemy is selected from the qualifying set. Zero, one, two, or three enemies may qualify; enemy identities remain unknown. Enemy is strictly below 25% maximum Troop Capacity.",
+    "explanation": "Crimson's Unlikely Hero can reduce enemy Recovery Received by 40%. Timing: Each round. Duration: until end of the current round. Applies to all enemies currently below 25% maximum Troop Capacity. All matching enemies are affected; no one enemy is selected from the qualifying set. Zero, one, two, or three enemies may qualify; enemy identities remain unknown. Enemy is strictly below 25% maximum Troop Capacity.",
     "id": "enemy-received-reduction-crimson-unlikely-hero-unlikely-hero-recovery-received-down-recovery-received-modifier",
     "interactionScope": "enemy-side",
     "matchedOutputCapabilityIds": [],

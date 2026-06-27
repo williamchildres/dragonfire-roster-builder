@@ -2,7 +2,7 @@ import { databaseMetadata } from '../data/databaseMetadata';
 import { dragons as defaultDragons } from '../data/dragons';
 import { manualReviewRecords } from '../data/manualReviews';
 import { dragonObservationSnapshots } from '../data/observations';
-import { FORMATION_POSITIONS, type AbilityDefinition, type Dragon, type FormationPosition, type OwnedDragon } from '../models/dragon';
+import { FORMATION_POSITIONS, type AbilityDefinition, type BattleContext, type Dragon, type FormationPosition, type OwnedDragon } from '../models/dragon';
 import type {
   FormationAnalysisInput,
   FormationAuditEntry,
@@ -22,6 +22,7 @@ export interface TraceOptions {
   roster?: Record<string, OwnedDragon>;
   previewMaxRankInteractions?: boolean;
   dragonLevels?: Record<string, number | null>;
+  battleContext?: BattleContext;
 }
 
 const auditDragonIds = ['malachite', 'seasmoke', 'sheepstealer', 'vermax'] as const;
