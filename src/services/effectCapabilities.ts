@@ -1204,7 +1204,7 @@ function analyzeDefensiveAllySupport(
         effects: [...modifierDetails, ...activationChanceFacts(modifier, options)],
         sourceEvidenceIds: modifier.evidenceIds,
         recipientEvidenceIds: [],
-        assumptions: [],
+        assumptions: defensiveModifierAssumptions(modifier, context),
         unresolvedQuestions: [],
         futureOrConditional: defensiveModifierTraceIsConditional(modifier) || (modifier.futureAvailable && options.previewMaxRankInteractions === true),
         modifier,
@@ -1425,10 +1425,28 @@ function defensiveModifierDetailLines(
   const effectiveLevel = modifier.rankedValues.length > 0
     ? (options.previewMaxRankInteractions ? 5 : effectiveHabitLevelForCapability(modifier, options))
     : null;
+  const thresholdConditions = [
+    ...modifier.conditions,
+    ...(context?.effect.conditions ?? []),
+    ...(context?.schedule.conditions ?? []),
+  ];
+  const thresholdDetails = thresholdConditions.flatMap((condition) => {
+    if (!/Troop Capacity/i.test(condition.description)) {
+      return [];
+    }
+    if (/above 50% Troop Capacity/i.test(condition.description) && modifier.channel === 'damage-dealt') {
+      return [`Each recipient above 50% Troop Capacity may receive Advantage, increasing Damage Dealt by ${displayValue}.`];
+    }
+    if (/below 50% Troop Capacity/i.test(condition.description) && modifier.channel === 'damage-received') {
+      return [`Each recipient below 50% Troop Capacity may receive Resistance, reducing Damage Received by ${displayValue}.`];
+    }
+    return [condition.description];
+  });
   if (!context) {
     return [
       `${damageReceivedLabel(modifier.damageScope)} decrease ${displayValue}${effectiveLevel ? ` at effective Habit Level ${effectiveLevel}` : ''}.`,
       modifier.sourceScope === 'non-basic-attacks' ? `${damageReceivedLabel(modifier.damageScope)} reduction applies to non-Basic Attacks only.` : null,
+      ...thresholdDetails,
       modifier.durationRounds ? `Duration: ${modifier.durationRounds} rounds.` : null,
     ].filter((detail): detail is string => Boolean(detail));
   }
@@ -1437,10 +1455,33 @@ function defensiveModifierDetailLines(
     modifier.statusId && context?.effect.stack ? `Grants 1 ${formatCapabilityToken(modifier.statusId)} stack.` : null,
     `${damageReceivedLabel(modifier.damageScope)} decrease ${displayValue}${effectiveLevel ? ` at effective Habit Level ${effectiveLevel}` : ''}.`,
     modifier.sourceScope === 'non-basic-attacks' ? `${damageReceivedLabel(modifier.damageScope)} reduction applies to non-Basic Attacks only.` : null,
+    ...thresholdDetails,
+    ...activationChanceFacts(modifier, options),
     context ? durationDetail(context.effect) : modifier.durationRounds ? `Duration: ${modifier.durationRounds} rounds.` : null,
     context ? rankedProgressionDetail(context.effect) : null,
     modifier.statusId && context?.effect.stack && modifier.stackMaximum === null ? 'Maximum stack count is not verified.' : null,
   ].filter((detail): detail is string => Boolean(detail));
+}
+
+function defensiveModifierAssumptions(
+  modifier: ModifierCapability,
+  context: { ability: AbilityDefinition; schedule: AbilitySchedule; effect: AbilityEffect } | null,
+): string[] {
+  const thresholdCondition =
+    modifier.conditions.some((condition) => /Troop Capacity|threshold/i.test(condition.description)) ||
+    Boolean(context?.effect.conditions?.some((condition) => /Troop Capacity|threshold/i.test(condition.description))) ||
+    Boolean(context?.schedule.conditions?.some((condition) => /Troop Capacity|threshold/i.test(condition.description)));
+  const chanceBased = Boolean(context && isChanceBasedSchedule(context.schedule));
+  if (!chanceBased && !thresholdCondition) {
+    return [];
+  }
+  if (chanceBased && thresholdCondition) {
+    return ['Trigger chance and threshold eligibility may make this conditional rather than guaranteed.'];
+  }
+  if (chanceBased) {
+    return ['Trigger chance may make this conditional rather than guaranteed.'];
+  }
+  return ['Threshold eligibility may make this conditional rather than guaranteed.'];
 }
 
 function defensiveModifierTargetFacts(
@@ -3880,11 +3921,15 @@ function makeAmplificationTrace({
       ...(modifier.statusId ? [`Status semantic: ${statusLabel(modifier.statusId)}.`] : []),
       ...(modifier.sourceEffectId ? [`Source effect ID: ${modifier.sourceEffectId}.`] : []),
       ...(modifier.activationGroupId ? [`Shared activation group: ${modifier.activationGroupId}.`] : []),
+      ...modifier.conditions.map((condition) => condition.description),
       ...activationChanceFacts(modifier, options),
       ...matches.map((match) => `Matched ${match.outputCapabilityId}.`),
     ],
     effects: [
       `${directedChannelLabel(modifier.channel, modifier.direction)} ${modifier.operation} ${modifierDisplayValue(modifier, options)}`,
+      ...modifier.conditions.map((condition) => condition.description),
+      ...activationChanceFacts(modifier, options),
+      ...(modifier.durationRounds ? [`Duration: ${modifier.durationRounds} rounds.`] : []),
     ],
     conflicts: dedupedRequirements
       .filter((requirement) => requirement.satisfied === false)
@@ -5466,8 +5511,29 @@ function outgoingExplanation(
 
 function outgoingAssumptions(modifier: ModifierCapability, matches: CapabilityMatch[]): string[] {
   const assumptions: string[] = [];
-  if (modifier.stackMaximum !== null || modifier.conditional) {
-    assumptions.push('Trigger chance and target selection may make this conditional rather than guaranteed.');
+  const hasTriggerChance =
+    modifier.stackMaximum !== null ||
+    modifier.conditional ||
+    modifier.activationChanceFixed !== null ||
+    (modifier.activationChanceByHabitLevel?.length ?? 0) > 0;
+  const hasThresholdEligibility = modifier.conditions.some((condition) => /Troop Capacity|threshold/i.test(condition.description));
+  const hasSelectionUncertainty =
+    modifier.targetSelector.count === 1 &&
+    (
+      modifier.targetSelector.sharedSelectionGroupId !== undefined ||
+      modifier.targetSelector.selectionResource === 'current-troops' ||
+      modifier.targetSelector.selectionStat !== null ||
+      modifier.targetSelector.selection === 'one-eligible-adjacent' ||
+      modifier.targetSelector.selection === 'adjacent'
+    );
+  if (hasTriggerChance) {
+    if (hasSelectionUncertainty) {
+      assumptions.push('Trigger chance and target selection may make this conditional rather than guaranteed.');
+    } else if (hasThresholdEligibility) {
+      assumptions.push('Trigger chance and threshold eligibility may make this conditional rather than guaranteed.');
+    } else {
+      assumptions.push('Trigger chance may make this conditional rather than guaranteed.');
+    }
   }
   if (matches.length > 1) {
     assumptions.push('Multiple qualifying outputs are aggregated into one normal synergy trace.');
@@ -5475,7 +5541,7 @@ function outgoingAssumptions(modifier: ModifierCapability, matches: CapabilityMa
   if (modifier.activationGroupId) {
     assumptions.push(`Effects with shared activation group ${modifier.activationGroupId} use one activation roll; uptime is not calculated.`);
   }
-  if (modifier.targetSelector.selectionResource === 'current-troops') {
+  if (modifier.targetSelector.selectionResource === 'current-troops' && modifier.targetSelector.count === 1) {
     assumptions.push('Current troop values and tie-breaking are not resolved; eligible recipients remain candidates.');
   }
   return assumptions;

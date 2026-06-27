@@ -878,7 +878,7 @@ describe('Feskar, Rhysarion, and Shadowsong Epic profiles', () => {
       sourceDragonId: 'feskar',
       recipientDragonId: null,
       recipientName: 'Feskar and Rhysarion',
-      effectTitle: 'Resilient Bond - Damage Received support',
+      effectTitle: 'Resilient Bond - Physical Damage Received support',
     });
     expect(groupedText).toContain('Timing: Start of combat.');
     expect(groupedText).toContain('Feskar and Rhysarion each gain 1 Resilient Bond stack.');

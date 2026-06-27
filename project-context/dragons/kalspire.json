@@ -3987,7 +3987,7 @@
   "firstObservedInGame": null,
   "format": "dragonfire-dragon-profile",
   "gameVersion": null,
-  "generatedAt": "2026-06-27T09:49:26.287Z",
+  "generatedAt": "2026-06-27T10:32:51.701Z",
   "habits": [
     {
       "abilityClass": "passive",
@@ -7246,8 +7246,8 @@
   "rosterSourceStatus": "official-website",
   "slug": "kalspire",
   "source": {
-    "branch": "fix/multi-target-ally-cardinality",
-    "commit": "0d35a42bf2539c1fdc8591bc908185620f487e15",
+    "branch": "fix/multi-target-condition-presentation",
+    "commit": "0ee5f2984411b72286fbcaa444355b84f2c21887",
     "databaseVersion": "0.6.2",
     "dataSchemaVersion": 12,
     "gameBuild": "26.6.53509",

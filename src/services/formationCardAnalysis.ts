@@ -33,6 +33,7 @@ export interface FormationCardInteraction {
   targetSelectionMode: NonNullable<SynergyTrace['targetSelectionGroup']>['selection'] | null;
   isPreview: boolean;
   isEnemyFacing: boolean;
+  damageScope: string | null;
   traceId: string;
   traceIds: string[];
   isRecipientModifier: boolean;
@@ -120,23 +121,28 @@ export function buildFormationCardPresentation(
 
     if (trace.targetSelectionGroup) {
       const eligible = trace.targetSelectionGroup.eligibleRecipientDragonIds.filter((dragonId) => selectedIds.has(dragonId));
+      const targetCount = trace.targetSelectionGroup.targetCount;
       const allMatching = isAllMatchingTargetSelection(trace);
+      const exactMultiTarget = targetCount > 1;
       if (eligible.length === 0) {
         continue;
       }
       if (!trace.targetSelectionGroup.selectionUncertain && !allMatching) {
         continue;
       }
+      const targetLabel = exactMultiTarget
+        ? joinEnglishList(eligible.map((dragonId) => dragonById.get(dragonId)?.name ?? dragonId))
+        : joinTargetNames(eligible.map((dragonId) => dragonById.get(dragonId)?.name ?? dragonId), allMatching);
       const providerItem = toCardInteraction({
         trace,
         source,
         recipient: null,
         allDragons,
         previewEnabled: options.previewEnabled === true,
-        targetLabel: joinTargetNames(eligible.map((dragonId) => dragonById.get(dragonId)?.name ?? dragonId), allMatching),
+        targetLabel,
         isCandidate: false,
         candidateIndex: null,
-        candidateTotal: allMatching ? null : eligible.length,
+        candidateTotal: exactMultiTarget || allMatching ? null : eligible.length,
       });
       byDragon.get(source.id)?.provides.push(providerItem);
 
@@ -152,10 +158,10 @@ export function buildFormationCardPresentation(
             recipient,
             allDragons,
             previewEnabled: options.previewEnabled === true,
-            targetLabel: allMatching ? null : `Candidate ${index + 1} of ${eligible.length}`,
-            isCandidate: !allMatching,
+            targetLabel: exactMultiTarget || allMatching ? null : `Candidate ${index + 1} of ${eligible.length}`,
+            isCandidate: !exactMultiTarget && !allMatching,
             candidateIndex: index + 1,
-            candidateTotal: allMatching ? null : eligible.length,
+            candidateTotal: exactMultiTarget || allMatching ? null : eligible.length,
           }),
         );
       });
@@ -346,6 +352,7 @@ function toCardInteraction({
     targetSelectionMode: trace.targetSelectionGroup?.selection ?? null,
     isPreview: state === 'preview',
     isEnemyFacing: isEnemyFacingTrace(trace),
+    damageScope: trace.damageScope ?? null,
     traceId: trace.id,
     traceIds: [trace.id],
     isRecipientModifier: trace.matchKind === 'incoming-effect-amplification' && Boolean(trace.recipientModifierType),
@@ -1442,6 +1449,9 @@ function synthesizeDamageReceivedSupportLine(
   if (!/Damage Received support|Damage Received reduction/i.test(text) || /Grants 1 .+ stack/i.test(text)) {
     return null;
   }
+  const damageLabel = item.damageScope && item.damageScope !== 'all'
+    ? `${formatToken(item.damageScope)} Damage Received`
+    : 'Damage Received';
   const value = text.match(/Damage Received decrease ([-+]?\d+(?:\.\d+)?%?)/i)?.[1] ??
     text.match(/Damage Received reduction: ([-+]?\d+(?:\.\d+)?%?)/i)?.[1] ??
     text.match(/reduce(?:s|d)? .*?Damage Received by ([-+]?\d+(?:\.\d+)?%?)/i)?.[1] ??
@@ -1454,12 +1464,14 @@ function synthesizeDamageReceivedSupportLine(
   const activationChance = evidence.match(/\b(?:status application chance|activation chance)\s*:?\s*([-+]?\d+(?:\.\d+)?%?)/i)?.[1]
     ?? evidence.match(/\b([-+]?\d+(?:\.\d+)?%?) chance\b/i)?.[1]
     ?? null;
-  const threshold = evidence.match(/\b(above|below) 50% Troop Capacity\b/i)?.[0] ?? null;
+  const threshold = evidence.match(/\b(above|below) 50% Troop Capacity\b/i)?.[1]?.toLowerCase() ?? null;
+  const branchLine = threshold
+    ? `Each recipient ${threshold} 50% Troop Capacity may receive Resistance, reducing ${damageLabel} by ${value}.`
+    : `${item.abilityName} reduces ${damageLabel} for ${joinEnglishList(targetNames)} by ${value}.`;
   const duration = text.match(/Duration: [^.]+\./i)?.[0] ?? null;
   return [
-    `${item.abilityName} reduces Damage Received for ${joinEnglishList(targetNames)} by ${value}.`,
+    branchLine,
     activationChance ? `Activation chance: ${activationChance}.` : null,
-    threshold ? `Each recipient must be ${threshold}.` : null,
     timing,
     duration,
   ].filter(Boolean).join(' ');
@@ -1484,12 +1496,14 @@ function synthesizeDamageDealtSupportLine(
   const activationChance = evidence.match(/\b(?:status application chance|activation chance)\s*:?\s*([-+]?\d+(?:\.\d+)?%?)/i)?.[1]
     ?? evidence.match(/\b([-+]?\d+(?:\.\d+)?%?) chance\b/i)?.[1]
     ?? null;
-  const threshold = evidence.match(/\b(above|below) 50% Troop Capacity\b/i)?.[0] ?? null;
+  const threshold = evidence.match(/\b(above|below) 50% Troop Capacity\b/i)?.[1]?.toLowerCase() ?? null;
+  const branchLine = threshold
+    ? `Each recipient ${threshold} 50% Troop Capacity may receive Advantage, increasing Damage Dealt by ${value}.`
+    : `${item.abilityName} increases Damage Dealt for ${joinEnglishList(targetNames)} by ${value}.`;
   const duration = text.match(/Duration: [^.]+\./i)?.[0] ?? null;
   return [
-    `${item.abilityName} increases Damage Dealt for ${joinEnglishList(targetNames)} by ${value}.`,
+    branchLine,
     activationChance ? `Activation chance: ${activationChance}.` : null,
-    threshold ? `Each recipient must be ${threshold}.` : null,
     timing,
     duration,
   ].filter(Boolean).join(' ');
@@ -1812,7 +1826,7 @@ function interactionPurpose(trace: SynergyTrace): string | null {
     return `${supportChannelLabel(trace)} support`;
   }
   if (trace.targetSelectionGroup && trace.channel) {
-    return `${formatToken(trace.channel)} support`;
+    return `${supportChannelLabel(trace)} support`;
   }
   if (/First-Strike enables Infernal Burst/i.test(trace.title)) {
     return 'First-Strike support';
@@ -1859,6 +1873,9 @@ function interactionPurpose(trace: SynergyTrace): string | null {
   }
   if (trace.channel === 'stat') {
     return 'Stat support';
+  }
+  if (trace.channel === 'damage-received') {
+    return `${supportChannelLabel(trace)} support`;
   }
   if (trace.channel) {
     return `${formatToken(trace.channel)} support`;
