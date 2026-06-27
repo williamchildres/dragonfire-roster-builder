@@ -297,7 +297,7 @@ function toCardInteraction({
   candidateTotal: number | null;
 }): FormationCardInteraction {
   const abilityName = getAbilityName(source, trace.sourceAbilityId);
-  const state = traceState(trace, previewEnabled);
+  const state = projectedInteractionState(trace, previewEnabled);
   const detail = canonicalCardText(trace.explanation, allDragons);
   const summaryLines = summarizeTrace(trace, source, recipient, detail, {
     isCandidate,
@@ -898,6 +898,24 @@ function traceState(trace: SynergyTrace, previewEnabled = false): FormationCardI
     return previewEnabled && hasFailedProgression(trace.requirements) ? 'preview' : 'conditional';
   }
   return 'blocked';
+}
+
+function projectedInteractionState(trace: SynergyTrace, previewEnabled = false): FormationCardInteractionState {
+  const state = traceState(trace, previewEnabled);
+  if (state !== 'active') {
+    return state;
+  }
+  if (trace.targetSelectionGroup?.selectionUncertain) {
+    return 'conditional';
+  }
+  if (
+    trace.matchKind === 'enemy-damage-received-increase' ||
+    trace.matchKind === 'enemy-damage-dealt-reduction' ||
+    trace.matchKind === 'enemy-mitigation-reduction'
+  ) {
+    return 'conditional';
+  }
+  return state;
 }
 
 function hasFailedProgression(requirements: RequirementTrace[]): boolean {

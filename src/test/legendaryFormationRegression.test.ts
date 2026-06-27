@@ -68,6 +68,11 @@ function legacyTraces(): SynergyTrace[] {
   });
 }
 
+function legacyPresentation() {
+  const previewTraces = legacyTraces().filter(isNormalSynergyTrace);
+  return buildFormationCardPresentation(legacyFormation, dragons, previewTraces, { previewEnabled: false });
+}
+
 function lockedHabitIds(): Set<string> {
   return new Set(
     dragons.flatMap((dragon) =>
@@ -488,6 +493,35 @@ describe('legendary formation analysis regression fixes', () => {
     expect(battleLeader?.targetSelectionGroup?.selectionUncertain).toBe(true);
     expect(battleLeader?.matchedOutputCapabilityIds?.some((id) => id.startsWith('vhagar-'))).toBe(true);
     expect(battleLeader?.targetSelectionGroup?.eligibleRecipientDragonIds).not.toContain('syrax');
+  });
+
+  it('keeps unresolved projected benefits conditional while source traces remain active', () => {
+    const presentation = legacyPresentation();
+    const vhagar = presentation.cards.find((card) => card.dragonId === 'vhagar');
+    const venator = presentation.cards.find((card) => card.dragonId === 'venator');
+    const syrax = presentation.cards.find((card) => card.dragonId === 'syrax');
+
+    const battleLeader = vhagar?.provides.find((item) => item.abilityName === 'Battle Leader');
+    const strategic = syrax?.provides.filter((item) => item.abilityName === 'Strategic Revival') ?? [];
+    const armorBreak = venator?.provides.find((item) => item.abilityName === 'Armor Break');
+    const huntersBane = venator?.provides.find((item) => item.abilityName === "Hunter's Bane");
+    const flightMasteryEnemy = syrax?.provides.find((item) => item.abilityName === 'Flight Mastery' && item.isEnemyFacing);
+    const eclipseCover = vhagar?.provides.find((item) => item.abilityName === 'Eclipse Cover');
+
+    expect(battleLeader?.state).toBe('conditional');
+    expect(battleLeader?.summary).toContain('Target not guaranteed');
+    expect(strategic.every((item) => item.state === 'conditional')).toBe(true);
+    expect(strategic.every((item) => item.summary.includes('Target not guaranteed'))).toBe(true);
+    expect(armorBreak?.state).toBe('conditional');
+    expect(huntersBane?.state).toBe('conditional');
+    expect(flightMasteryEnemy?.state).toBe('conditional');
+    expect(eclipseCover?.state).toBe('conditional');
+
+    const battleLeaderTrace = legacyTraces().find((trace) =>
+      trace.sourceAbilityId === 'vhagar-battle-leader' &&
+      trace.targetSelectionGroup?.targetCount === 1
+    );
+    expect(battleLeaderTrace?.status).toBe('active');
   });
 
   it('does not report Recovery Received source-scope as incompatible for Strategic Revival and Ancestral Shield', () => {
