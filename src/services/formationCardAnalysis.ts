@@ -1016,6 +1016,10 @@ function synthesizedExactRecipientEffectLines(
     if (defensiveStack) {
       return [defensiveStack];
     }
+    const enemyVulnerability = synthesizeEnemyVulnerabilityBenefitLine(first, text, targetNames);
+    if (enemyVulnerability) {
+      return [enemyVulnerability];
+    }
     const summaryLines = unique(group.flatMap((item) => item.summaryLines));
     return summaryLines.map((line) => normalizeGroupedRecipientLine(line, targetNames));
   }));
@@ -1074,6 +1078,35 @@ function synthesizeFriendlyImpairmentLine(
   ].filter(Boolean).join(' ');
 }
 
+function synthesizeEnemyVulnerabilityBenefitLine(
+  item: FormationCardInteraction,
+  text: string,
+  targetNames: string[],
+): string | null {
+  if (!/Enemy .* vulnerability/i.test(item.effectTitle) || !/can benefit/i.test(text)) {
+    return null;
+  }
+  const value = text.match(/\b(Physical|Tactical|Fire) Damage Received \+([-+]?\d+(?:\.\d+)?%?)/i);
+  if (!value) {
+    return null;
+  }
+  const channel = value[1]!;
+  const amount = value[2]!;
+  const scope = /non-Basic/i.test(text)
+    ? `qualifying non-Basic ${channel} Damage outputs`
+    : `the formation's qualifying ${channel} Damage outputs`;
+  const duration = text.match(/Duration: \d+ rounds\./i)?.[0] ?? null;
+  const basicExclusion = /non-Basic/i.test(text) ? 'Basic Attacks do not qualify.' : null;
+  const recipientPrefix = targetNames.length > 0 ? `${joinEnglishList(targetNames)}: ` : '';
+  return [
+    `${recipientPrefix}${scope} can benefit from +${amount} ${channel} Damage Received on the selected enemy.`,
+    basicExclusion,
+    'The allied attack must hit that same vulnerable enemy.',
+    'Enemy target selection and target overlap are not guaranteed.',
+    duration,
+  ].filter(Boolean).join(' ');
+}
+
 function interactionText(item: FormationCardInteraction): string {
   return [
     item.title,
@@ -1091,7 +1124,11 @@ function interactionMechanicKey(interaction: FormationCardInteraction): string {
     return [
       interaction.effectTitle,
       interaction.title,
-      interaction.effects.filter((effect) => /source scope|non-basic|all qualifying|Damage Received|\+|Duration/i.test(effect)).join('|'),
+      interaction.effects
+        .filter((effect) => !/^\w+'s qualifying/i.test(effect))
+        .filter((effect) => /source scope|non-basic|all qualifying|Damage Received|\+|Duration/i.test(effect))
+        .map(semanticEffectDetailKey)
+        .join('|'),
     ].join('::');
   }
   const hasDistinctStatusMechanic = /Base .* Rate|Enhanced .* Rate|application chance|target-specific conditional chance|same target/i.test(text);
@@ -1180,6 +1217,18 @@ function exactRecipientEffectKey(item: FormationCardInteraction): string {
       item.title,
       item.summaryLines.join('|'),
       item.status,
+    ].join('::');
+  }
+  if (/Enemy .* vulnerability/i.test(item.effectTitle)) {
+    return [
+      item.effectTitle,
+      item.title,
+      item.effects
+        .filter((effect) => !/^\w+'s qualifying/i.test(effect))
+        .map(semanticEffectDetailKey)
+        .join('|'),
+      item.status,
+      item.isPreview ? 'preview' : 'current',
     ].join('::');
   }
   return [
