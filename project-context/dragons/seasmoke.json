@@ -3772,7 +3772,7 @@
   "firstObservedInGame": null,
   "format": "dragonfire-dragon-profile",
   "gameVersion": null,
-  "generatedAt": "2026-06-27T00:29:53.835Z",
+  "generatedAt": "2026-06-27T01:02:52.147Z",
   "habits": [
     {
       "abilityClass": "passive",
@@ -6418,8 +6418,8 @@
   "rosterSourceStatus": "official-website",
   "slug": "seasmoke",
   "source": {
-    "branch": "fix/panic-scorched-earth-trace-details",
-    "commit": "e4602f51f03b78c708b23f411f8c5acf0b48dc9b",
+    "branch": "fix/enemy-benefit-aggregation-and-projections",
+    "commit": "b0a1b4e136544c2964e6ca2d67522591aa88b049",
     "databaseVersion": "0.6.2",
     "dataSchemaVersion": 12,
     "gameBuild": "26.6.53509",

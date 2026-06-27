@@ -362,12 +362,13 @@ function modifierLinesForTrace(trace: SynergyTrace, recipient: Dragon | null): s
 
 function sanitizeNormalCardEffects(effects: string[], summaryLines: string[]): string[] {
   const summaryText = normalizeText(summaryLines.join(' '));
-  return unique(
+  return uniqueBy(
     effects
       .map(sanitizeNormalCardText)
       .filter((effect): effect is string => Boolean(effect))
       .filter((effect) => !isRedundantCurrentValueLine(effect, summaryText))
       .filter((effect) => !summaryText.includes(normalizeText(effect))),
+    semanticEffectDetailKey,
   );
 }
 
@@ -377,6 +378,21 @@ function sanitizeNormalCardText(value: string): string {
     .replace(/\s*(Damage Dealt|Damage Received|Physical Damage Received|Tactical Damage Received|Fire Damage Received|Recovery Rate) reduction at current effective level:\s[-+]?\d+(?:\.\d+)?%?\./gi, '')
     .replace(/\s{2,}/g, ' ')
     .trim();
+}
+
+function semanticEffectDetailKey(value: string): string {
+  const normalized = normalizeText(value).replace(/\.$/, '');
+  const damageReceived = normalized.match(/\b(physical|tactical|fire)?\s*damage received\s+(?:increase|\+)\s*([-+]?\d+(?:\.\d+)?%?)/i);
+  if (damageReceived) {
+    const channel = damageReceived[1] ?? 'all';
+    const scope = /non-basic/i.test(normalized)
+      ? 'non-basic'
+      : /all qualifying/i.test(normalized)
+        ? 'all-qualifying'
+        : 'unspecified';
+    return `damage-received|increase|${channel}|${damageReceived[2]}|${scope}`;
+  }
+  return normalized;
 }
 
 function isRedundantCurrentValueLine(value: string, normalizedSummaryText: string): boolean {
@@ -469,6 +485,9 @@ function summarizeTrace(
   }
   if (trace.matchKind === 'status-removal') {
     return ['Potential Control cleanse; timing, selection, and activation are uncertain.'];
+  }
+  if (trace.matchKind === 'enemy-damage-received-increase' && recipient) {
+    return [enemyVulnerabilityBenefitSummary(trace, recipient)];
   }
   if (trace.matchKind === 'friendly-impairment') {
     return [trace.explanation.replace(`${source.name}'s `, '').replace(recipient ? `${recipient.name}` : 'the ally', recipient?.name ?? 'the ally')];
@@ -898,6 +917,7 @@ function mergeInteractions(
     ? groupedRecipientLabel(targetNames, targetIds, selectedIds)
     : targetNames.join(' or ');
   const uniqueTitles = unique(items.map((item) => item.title));
+  const uniqueEffectTitles = unique(items.map((item) => item.effectTitle));
   const summaryLines = mergedSummaryLines(items, direction, targetNames, options);
   const details = options.exactRecipientSet ? [] : unique(items.flatMap((item) => item.details));
   const effects = options.exactRecipientSet ? [] : unique(items.flatMap((item) => item.effects));
@@ -925,7 +945,7 @@ function mergeInteractions(
     recipientDragonId: options.exactRecipientSet ? null : first.recipientDragonId,
     recipientName: options.exactRecipientSet ? targetLabel : first.recipientName,
     targetLabel: direction === 'provides' && targetNames.length > 0 ? targetLabel : first.targetLabel,
-    effectTitle: first.abilityName,
+    effectTitle: options.exactRecipientSet && uniqueEffectTitles.length === 1 ? uniqueEffectTitles[0]! : first.abilityName,
     title: options.exactRecipientSet && uniqueTitles.length > 1 ? first.abilityName : uniqueTitles.join(' + '),
     summaryLines,
     summary: compactSummaryText(summaryLines, mergedCandidateTotal),
@@ -1067,6 +1087,13 @@ function interactionText(item: FormationCardInteraction): string {
 
 function interactionMechanicKey(interaction: FormationCardInteraction): string {
   const text = interactionText(interaction);
+  if (/Enemy .* vulnerability/i.test(interaction.effectTitle) || /vulnerability/i.test(interaction.title)) {
+    return [
+      interaction.effectTitle,
+      interaction.title,
+      interaction.effects.filter((effect) => /source scope|non-basic|all qualifying|Damage Received|\+|Duration/i.test(effect)).join('|'),
+    ].join('::');
+  }
   const hasDistinctStatusMechanic = /Base .* Rate|Enhanced .* Rate|application chance|target-specific conditional chance|same target/i.test(text);
   if (
     hasDistinctStatusMechanic &&
@@ -1106,7 +1133,7 @@ function canAggregateExactRecipientSet(items: FormationCardInteraction[]): boole
     return false;
   }
   const titles = unique(items.map((item) => item.title));
-  if (titles.length > 1 && !isCompatibleFriendlyImpairmentRecoveryGroup(items)) {
+  if (titles.length > 1 && !isCompatibleFriendlyImpairmentRecoveryGroup(items) && !isCompatibleEnemyMitigationReductionGroup(items)) {
     return false;
   }
 
@@ -1125,6 +1152,13 @@ function canAggregateExactRecipientSet(items: FormationCardInteraction[]): boole
   return recipientSets.length > 0 && recipientSets.every((set) => set === recipientSets[0]);
 }
 
+function isCompatibleEnemyMitigationReductionGroup(items: FormationCardInteraction[]): boolean {
+  return items.every((item) =>
+    /Enemy mitigation reduction/i.test(item.effectTitle) &&
+    /Lowers enemy (Instinct|Initiative|Intelligence|Strength), supporting allied/i.test(interactionText(item)),
+  );
+}
+
 function isCompatibleFriendlyImpairmentRecoveryGroup(items: FormationCardInteraction[]): boolean {
   const textByItem = items.map((item) => [
     item.title,
@@ -1140,6 +1174,14 @@ function isCompatibleFriendlyImpairmentRecoveryGroup(items: FormationCardInterac
 }
 
 function exactRecipientEffectKey(item: FormationCardInteraction): string {
+  if (/Enemy mitigation reduction/i.test(item.effectTitle)) {
+    return [
+      item.effectTitle,
+      item.title,
+      item.summaryLines.join('|'),
+      item.status,
+    ].join('::');
+  }
   return [
     item.effectTitle,
     item.title,
@@ -1328,6 +1370,22 @@ function enemyFacingSummary(trace: SynergyTrace): string {
   return lowered ? `Lowers enemy ${lowered}, supporting allied ${channel}.` : 'Lowers enemy mitigation for the team.';
 }
 
+function enemyVulnerabilityBenefitSummary(trace: SynergyTrace, recipient: Dragon): string {
+  const text = interactionText({
+    title: trace.title,
+    summary: trace.explanation,
+    summaryLines: trace.matchedFacts,
+    detail: trace.explanation,
+    details: trace.matchedFacts,
+    effects: trace.effects,
+  } as FormationCardInteraction);
+  const value = text.match(/\b(Physical|Tactical|Fire) Damage Received \+([-+]?\d+(?:\.\d+)?%?)/i);
+  const channel = formatToken(trace.channel ?? 'damage-dealt');
+  const scope = /non-Basic/i.test(text) ? 'non-Basic ' : '';
+  const amount = value ? `+${value[2]} ${value[1]} Damage Received` : `${channel} Damage Received vulnerability`;
+  return `${recipient.name}'s qualifying ${scope}${channel} can benefit from ${amount} on the selected enemy; target overlap is not guaranteed.`;
+}
+
 function unique<T>(items: T[]): T[] {
   return [...new Set(items)];
 }
@@ -1375,6 +1433,12 @@ function getAbilityName(source: Dragon, abilityId: string | null): string {
 }
 
 function isEnemyFacingTrace(trace: SynergyTrace): boolean {
+  if (trace.matchKind === 'enemy-damage-received-increase' && trace.recipientDragonId) {
+    return false;
+  }
+  if (trace.matchKind === 'enemy-mitigation-reduction' && trace.recipientDragonId && /ensnare/i.test(trace.sourceAbilityId ?? '')) {
+    return false;
+  }
   return trace.modifierRole === 'enemy-debuff' || trace.matchKind === 'enemy-mitigation-reduction' || trace.interactionScope === 'enemy-side';
 }
 
