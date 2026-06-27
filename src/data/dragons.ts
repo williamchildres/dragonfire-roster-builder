@@ -2028,7 +2028,13 @@ const createFeskar = (): Dragon => {
     name: 'Calculated Assault',
     abilityClass: 'active',
     unlockStarRank: null,
-    rawDescription: 'Each round: 20% chance to reduce non-Basic Physical Damage Dealt of the enemy with highest Strength for two rounds. Rounds 2, 4, 7, and 9: deal Tactical Damage to the enemy with least troops. At 6+ Stars, Rounds 3, 5, 8, and 10 add Fire Damage to enemies that deal non-Basic Physical Damage, with a Burn-target 1.5x multiplier.',
+    rawDescription: `Each Round: 20% chance to reduce Physical Damage Dealt, excluding Basic Attacks, by 12% for the enemy with the highest Strength for 2 rounds.
+
+Rounds 2, 4, 7, and 9: Deal Tactical Damage to the enemy with the least troops at a 100% Damage Rate.
+
+At 6+ Stars:
+
+Rounds 3, 5, 8, and 10: Deal Fire Damage to all enemies that deal Physical Damage, excluding Basic Attacks, at a 40% Damage Rate. This damage is increased by 1.5x against targets afflicted with Burn, increasing the Damage Rate to 60%.`,
     schedules: [
       schedule({ id: 'calculated-assault-physical-reduction', timing: 'each-round', roundSelector: { kind: 'each-round' }, triggerChanceFixed: 20, activationRoll: roll({ scope: 'effect', chanceFixed: 20, description: 'One chance each round to reduce the highest-Strength enemy non-Basic Physical Damage Dealt.' }), effects: [fixedEffect({ id: 'calculated-assault-physical-dealt-down', type: 'Physical Damage Dealt Down', target: '1 enemy in any lane with the highest Strength', targetScope: 'any-lane', magnitude: 12, unit: 'percent', durationRounds: 2, sourceScope: 'non-basic-attacks', excludes: ['Physical Basic Attacks'], targetPriority: 'highest-stat-enemy', targetSelection: targetSelection({ comparisonStat: 'strength', comparisonDirection: 'highest', comparisonPool: 'enemy-side', tieBehavior: 'candidate-group' }) })] }),
       schedule({ id: 'calculated-assault-tactical-rounds', timing: 'specific-rounds', rounds: [2, 4, 7, 9], roundSelector: { kind: 'explicit', rounds: [2, 4, 7, 9] }, effects: [fixedEffect({ id: 'calculated-assault-tactical', type: 'Tactical Damage', target: 'Enemy with least troops', targetScope: 'any-lane', magnitude: 100, unit: 'rate', scaling: ['attacker Instinct'], targetPriority: 'least-current-troops-enemy', targetSelection: targetSelection({ comparisonStat: 'current-troops', comparisonDirection: 'lowest', comparisonPool: 'enemy-side', tieBehavior: 'candidate-group' }), notes: ['Mitigated by target Intelligence.', 'Exact resource-state timing is unresolved.'] })] }),
@@ -2064,7 +2070,13 @@ const createRhysarion = (): Dragon => {
     name: 'Dawnsong',
     abilityClass: 'active',
     unlockStarRank: null,
-    rawDescription: 'Rounds 1, 4, and 7: Physical Damage to 2 adjacent enemies. Rounds 2, 5, and 8: Fire Damage to 3 enemies; per target, Control affliction increases damage by 1.5x. At 6+ Stars, also apply Recovery to 2 other Allies.',
+    rawDescription: `Rounds 1, 4, and 7: Deal Physical Damage to 2 enemies within adjacency at a 70% Damage Rate.
+
+Rounds 2, 5, and 8: Deal Fire Damage to 3 enemies in any lane at a 20% Damage Rate. This damage is increased by 1.5x if the target is afflicted with a Control effect, increasing the Damage Rate to 30%. Control effects include Stun, Stagger, Overwhelm, and Confusion.
+
+At 6+ Stars:
+
+Rounds 2, 5, and 8: Apply Recovery to 2 other Allies in any lane at a 60% Recovery Rate, enhanced by Intelligence.`,
     schedules: [
       schedule({ id: 'dawnsong-physical-rounds', timing: 'specific-rounds', rounds: [1, 4, 7], roundSelector: { kind: 'explicit', rounds: [1, 4, 7] }, effects: [fixedEffect({ id: 'dawnsong-physical', type: 'Physical Damage', target: '2 enemies within adjacency', targetScope: 'within-adjacency', magnitude: 70, unit: 'rate', scaling: ['attacker Strength'], targetCount: 2, targetSelection: targetSelection({ repeatedInstances: { count: 2, eachInstanceSelectsSeparately: true, sameTargetAllowed: false }, distinctness: 'must-be-distinct' }), notes: ['Mitigated by target Instinct.', 'Enemy adjacency remains unresolved.'] })] }),
       schedule({ id: 'dawnsong-fire-rounds', timing: 'specific-rounds', rounds: [2, 5, 8], roundSelector: { kind: 'explicit', rounds: [2, 5, 8] }, effects: [fixedEffect({ id: 'dawnsong-fire', type: 'Fire Damage', target: '3 enemies in any lane', targetScope: 'any-lane', magnitude: 20, unit: 'rate', scaling: ['attacker Intelligence'], targetCount: 3, conditionalMultipliers: [multiplier('control-target-1-5x', 1.5, controlCondition, 'Per target, Control affliction increases Dawnsong Fire Damage by 1.5x.', [{ level: 1, value: 30, unit: 'percent' }])], notes: ['Mitigated by target Initiative.', 'Control category includes Stun, Stagger, Overwhelm, and Confusion only.'] })] }),
@@ -2118,7 +2130,15 @@ const createShadowsong = (): Dragon => {
     name: 'Breath of Fire',
     abilityClass: 'active',
     unlockStarRank: null,
-    rawDescription: 'Rounds 2, 5, and 8: Fire Damage to 2 adjacent enemies; per target, Panic increases damage by 1.5x. At 10 Stars, add two ordered any-lane Fire attacks with separate direct-damage values and separate Burn chances.',
+    rawDescription: `Rounds 2, 5, and 8: Deal Fire Damage to 2 enemies within adjacency at a 100% Damage Rate. This damage is increased by 1.5x if the target is afflicted with Panic, increasing the Damage Rate to 150%.
+
+At 10 Stars:
+
+Rounds 2, 5, and 8: Deal Fire Damage to 1 enemy in any lane at a 60% Damage Rate, with a 40% chance to afflict that target with Burn for 2 rounds.
+
+Then deal Fire Damage to a different enemy in any lane at a 30% Damage Rate, with a 20% chance to afflict that target with Burn for 2 rounds.
+
+Burn deals Fire Damage to the target each round.`,
     schedules: [schedule({ id: 'breath-of-fire-base-rounds', timing: 'specific-rounds', rounds: [2, 5, 8], roundSelector: { kind: 'explicit', rounds: [2, 5, 8] }, effects: [fixedEffect({ id: 'breath-of-fire-base-fire', type: 'Fire Damage', target: '2 enemies within adjacency', targetScope: 'within-adjacency', magnitude: 100, unit: 'rate', scaling: ['attacker Intelligence'], targetCount: 2, conditionalMultipliers: [multiplier('panic-target-1-5x', 1.5, panicCondition, 'Per target, Panic increases Breath of Fire damage by 1.5x.', [{ level: 1, value: 150, unit: 'percent' }])], targetSelection: targetSelection({ repeatedInstances: { count: 2, eachInstanceSelectsSeparately: true, sameTargetAllowed: false }, distinctness: 'must-be-distinct' }), notes: ['Mitigated by target Initiative.', 'Panic condition is evaluated independently for each target.'] })] })],
     augmentations: [{ id: 'shadowsong-blazing-conductor-augmentation', sourceAbilityId: 'shadowsong-blazing-conductor', modifiesAbilityId: 'shadowsong-breath-of-fire', minimumDragonStarRank: 10, schedulesAdded: [schedule({ id: 'blazing-conductor-added-rounds', timing: 'specific-rounds', rounds: [2, 5, 8], roundSelector: { kind: 'explicit', rounds: [2, 5, 8] }, effects: blazingConductorEffects })], effectsAdded: [], scheduleOverrides: [], rawDescription: 'Blazing Conductor adds two ordered Fire attacks and Burn attempts to Breath of Fire on Rounds 2, 5, and 8.', evidenceIds: ['shadowsong-blazing-conductor-2026-06-26'] }],
     tags: ['FIRE_DAMAGE', 'BURN', 'PANIC', 'ADJACENT_TARGET'],

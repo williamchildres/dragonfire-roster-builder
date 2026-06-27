@@ -369,7 +369,7 @@
       "name": "Breath of Fire",
       "positionRequirement": null,
       "powerByHabitLevel": [],
-      "rawDescription": "Rounds 2, 5, and 8: Fire Damage to 2 adjacent enemies; per target, Panic increases damage by 1.5x. At 10 Stars, add two ordered any-lane Fire attacks with separate direct-damage values and separate Burn chances.",
+      "rawDescription": "Rounds 2, 5, and 8: Deal Fire Damage to 2 enemies within adjacency at a 100% Damage Rate. This damage is increased by 1.5x if the target is afflicted with Panic, increasing the Damage Rate to 150%.\n\nAt 10 Stars:\n\nRounds 2, 5, and 8: Deal Fire Damage to 1 enemy in any lane at a 60% Damage Rate, with a 40% chance to afflict that target with Burn for 2 rounds.\n\nThen deal Fire Damage to a different enemy in any lane at a 30% Damage Rate, with a 20% chance to afflict that target with Burn for 2 rounds.\n\nBurn deals Fire Damage to the target each round.",
       "schedules": [
         {
           "activationRoll": null,
@@ -3611,7 +3611,7 @@
     "name": "Breath of Fire",
     "positionRequirement": null,
     "powerByHabitLevel": [],
-    "rawDescription": "Rounds 2, 5, and 8: Fire Damage to 2 adjacent enemies; per target, Panic increases damage by 1.5x. At 10 Stars, add two ordered any-lane Fire attacks with separate direct-damage values and separate Burn chances.",
+    "rawDescription": "Rounds 2, 5, and 8: Deal Fire Damage to 2 enemies within adjacency at a 100% Damage Rate. This damage is increased by 1.5x if the target is afflicted with Panic, increasing the Damage Rate to 150%.\n\nAt 10 Stars:\n\nRounds 2, 5, and 8: Deal Fire Damage to 1 enemy in any lane at a 60% Damage Rate, with a 40% chance to afflict that target with Burn for 2 rounds.\n\nThen deal Fire Damage to a different enemy in any lane at a 30% Damage Rate, with a 20% chance to afflict that target with Burn for 2 rounds.\n\nBurn deals Fire Damage to the target each round.",
     "schedules": [
       {
         "activationRoll": null,
@@ -4989,7 +4989,7 @@
   "firstObservedInGame": "2026-06-22",
   "format": "dragonfire-dragon-profile",
   "gameVersion": null,
-  "generatedAt": "2026-06-27T05:47:26.820Z",
+  "generatedAt": "2026-06-27T06:37:07.376Z",
   "habits": [
     {
       "abilityClass": "passive",
@@ -8126,7 +8126,7 @@
       "abilityId": "shadowsong-breath-of-fire",
       "abilityName": "Breath of Fire",
       "kind": "command",
-      "rawDescription": "Rounds 2, 5, and 8: Fire Damage to 2 adjacent enemies; per target, Panic increases damage by 1.5x. At 10 Stars, add two ordered any-lane Fire attacks with separate direct-damage values and separate Burn chances."
+      "rawDescription": "Rounds 2, 5, and 8: Deal Fire Damage to 2 enemies within adjacency at a 100% Damage Rate. This damage is increased by 1.5x if the target is afflicted with Panic, increasing the Damage Rate to 150%.\n\nAt 10 Stars:\n\nRounds 2, 5, and 8: Deal Fire Damage to 1 enemy in any lane at a 60% Damage Rate, with a 40% chance to afflict that target with Burn for 2 rounds.\n\nThen deal Fire Damage to a different enemy in any lane at a 30% Damage Rate, with a 20% chance to afflict that target with Burn for 2 rounds.\n\nBurn deals Fire Damage to the target each round."
     },
     {
       "abilityId": "shadowsong-hunters-wrath",
@@ -8169,8 +8169,8 @@
   "rosterSourceStatus": "in-game-verified-pending-official-site",
   "slug": "shadowsong",
   "source": {
-    "branch": "fix/deduplicate-analysis-summary-sentences",
-    "commit": "45b1108af78dffd8f3e1efd44dc49ef5d843c23a",
+    "branch": "fix/command-source-text-and-summaries",
+    "commit": "95b04abf8425dec17be170f4b6b3aba1bd124985",
     "databaseVersion": "0.6.2",
     "dataSchemaVersion": 12,
     "gameBuild": "26.6.53509",

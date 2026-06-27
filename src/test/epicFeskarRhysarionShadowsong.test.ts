@@ -91,7 +91,8 @@ describe('Feskar, Rhysarion, and Shadowsong Epic profiles', () => {
     const traces = analyzeFormationTraces(formation, dragons, { roster });
     const cards = buildFormationCardPresentation(formation, dragons, traces, { previewEnabled: false, roster });
     const feskarCommand = cards.cards.find((card) => card.dragonId === 'feskar')?.command;
-    const commandText = [...(feskarCommand?.summaryLines ?? []), feskarCommand?.detail ?? ''].join(' ');
+    const commandSummaryText = feskarCommand?.summaryLines.join(' ') ?? '';
+    const commandDetailText = feskarCommand?.detail ?? '';
     const burnTrace = traces.find((trace) =>
       trace.sourceDragonId === 'shadowsong' &&
       trace.recipientDragonId === 'feskar' &&
@@ -105,12 +106,17 @@ describe('Feskar, Rhysarion, and Shadowsong Epic profiles', () => {
       ...burnTrace.assumptions,
     ].join(' ') : '';
 
-    expect(commandText).toContain('Rounds 3, 5, 8, and 10');
-    expect(commandText).toContain('Fire Damage at a 40% rate');
-    expect(commandText).toContain('rate is increased 1.5x to 60%');
-    expect(commandText).toContain('non-Basic Physical Damage');
-    expect(commandText).not.toContain('L1 40%');
-    expect(commandText).not.toMatch(/\bL[1-5]\b/);
+    expect(feskarCommand?.summaryLines).toEqual([
+      "Each Round: 20% chance to reduce the highest-Strength enemy's non-Basic Physical Damage Dealt by 12% for 2 rounds.",
+      'Rounds 2, 4, 7, and 9: deal Tactical Damage at a 100% rate to the enemy with the least troops.',
+      'At 6+ Stars, Rounds 3, 5, 8, and 10: deal Fire Damage at a 40% rate to all enemies capable of non-Basic Physical Damage. Against the same eligible target while it has Burn, the rate increases 1.5x to 60%.',
+    ]);
+    expect(commandSummaryText).toContain('non-Basic Physical Damage');
+    expect(commandSummaryText).not.toContain('L1 40%');
+    expect(commandSummaryText).not.toMatch(/\bL[1-5]\b/);
+    expect(commandDetailText).toContain('Each Round: 20% chance to reduce Physical Damage Dealt, excluding Basic Attacks, by 12% for the enemy with the highest Strength for 2 rounds.');
+    expect(commandDetailText).toContain('At 6+ Stars:');
+    expect(commandDetailText).toContain('This damage is increased by 1.5x against targets afflicted with Burn, increasing the Damage Rate to 60%.');
 
     expect(burnTrace).toBeDefined();
     expect(burnTraceText).toContain('Base current Fire Damage Rate: 40%.');
@@ -132,7 +138,7 @@ describe('Feskar, Rhysarion, and Shadowsong Epic profiles', () => {
     const upgradedCommand = upgradedCards.cards.find((card) => card.dragonId === 'feskar')?.command;
     const upgradedCommandText = [...(upgradedCommand?.summaryLines ?? []), upgradedCommand?.detail ?? ''].join(' ');
     expect(upgradedCommandText).toContain('Fire Damage at a 56% rate');
-    expect(upgradedCommandText).toContain('rate is increased 1.5x to 84%');
+    expect(upgradedCommandText).toContain('rate increases 1.5x to 84%');
 
     const savedPreviewHabitLevel = roster.feskar?.habitLevels['feskar-emerald-inferno'];
     const previewTraces = analyzeFormationTraces(formation, dragons, { roster, previewMaxRankInteractions: true });
@@ -143,8 +149,42 @@ describe('Feskar, Rhysarion, and Shadowsong Epic profiles', () => {
     const previewCommand = previewCards.cards.find((card) => card.dragonId === 'feskar')?.command;
     const previewCommandText = [...(previewCommand?.summaryLines ?? []), previewCommand?.detail ?? ''].join(' ');
     expect(previewCommandText).toContain('Fire Damage at a 80% rate');
-    expect(previewCommandText).toContain('rate is increased 1.5x to 120%');
+    expect(previewCommandText).toContain('rate increases 1.5x to 120%');
     expect(roster.feskar?.habitLevels['feskar-emerald-inferno']).toBe(savedPreviewHabitLevel);
+  });
+
+  it('renders concise command bullets and full command text for Feskar, Rhysarion, and Shadowsong', () => {
+    const formation: FormationAnalysisInput = { 'left-flank': 'feskar', vanguard: 'rhysarion', 'right-flank': 'shadowsong' };
+    const roster = ownedRoster(['feskar', 'rhysarion', 'shadowsong'], 10, 0);
+    const traces = analyzeFormationTraces(formation, dragons, { roster });
+    const cards = buildFormationCardPresentation(formation, dragons, traces, { previewEnabled: false, roster });
+    const feskarCommand = cards.cards.find((card) => card.dragonId === 'feskar')?.command;
+    const rhysarionCommand = cards.cards.find((card) => card.dragonId === 'rhysarion')?.command;
+    const shadowsongCommand = cards.cards.find((card) => card.dragonId === 'shadowsong')?.command;
+
+    expect(feskarCommand?.summaryLines).toEqual([
+      "Each Round: 20% chance to reduce the highest-Strength enemy's non-Basic Physical Damage Dealt by 12% for 2 rounds.",
+      'Rounds 2, 4, 7, and 9: deal Tactical Damage at a 100% rate to the enemy with the least troops.',
+      'At 6+ Stars, Rounds 3, 5, 8, and 10: deal Fire Damage at a 40% rate to all enemies capable of non-Basic Physical Damage. Against the same eligible target while it has Burn, the rate increases 1.5x to 60%.',
+    ]);
+    expect(feskarCommand?.detail).toContain('At 6+ Stars:');
+    expect(feskarCommand?.detail).toContain('This damage is increased by 1.5x against targets afflicted with Burn, increasing the Damage Rate to 60%.');
+
+    expect(rhysarionCommand?.summaryLines).toEqual([
+      'Rounds 1, 4, and 7: deal Physical Damage at a 70% rate to 2 enemies within adjacency.',
+      'Rounds 2, 5, and 8: deal Fire Damage at a 20% rate to 3 enemies in any lane. Against the same target while it has Control, the rate increases 1.5x to 30%.',
+      'At 6+ Stars, Rounds 2, 5, and 8: apply Recovery at a 60% rate to 2 other Allies in any lane, enhanced by Intelligence.',
+    ]);
+    expect(rhysarionCommand?.detail).toContain('Control effects include Stun, Stagger, Overwhelm, and Confusion.');
+    expect(rhysarionCommand?.detail).toContain('At 6+ Stars:');
+
+    expect(shadowsongCommand?.summaryLines).toEqual([
+      'Rounds 2, 5, and 8: deal Fire Damage at a 100% rate to 2 enemies within adjacency. Against the same target while it has Panic, the rate increases 1.5x to 150%.',
+      'At 10 Stars, Rounds 2, 5, and 8: deal Fire Damage at a 60% rate to a first enemy in any lane, with a 40% chance to apply Burn for 2 rounds.',
+      'Then deal Fire Damage at a 30% rate to a different enemy in any lane, with a 20% chance to apply Burn for 2 rounds.',
+    ]);
+    expect(shadowsongCommand?.detail).toContain('Burn deals Fire Damage to the target each round.');
+    expect(shadowsongCommand?.detail).toContain('At 10 Stars:');
   });
 
   it('shows Dawnsong Control-category values and Unyielding Grasp supplier facts', () => {

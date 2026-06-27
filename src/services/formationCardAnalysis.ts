@@ -1,4 +1,4 @@
-import { FORMATION_POSITIONS, TROOP_TYPES, type AbilityDefinition, type AbilityEffect, type AbilitySchedule, type Dragon, type FormationPosition, type OwnedDragon, type RankedValue, type TroopType } from '../models/dragon';
+import { FORMATION_POSITIONS, TROOP_TYPES, type AbilityDefinition, type AbilityEffect, type AbilitySchedule, type ActivationRoll, type Dragon, type FormationPosition, type OwnedDragon, type RankedValue, type TroopType } from '../models/dragon';
 import type { FormationAnalysisInput, RequirementTrace, SynergyTrace, TraceConfidence, TraceStatus } from '../models/synergy';
 import { rankedValueForHabitLevel, resolveEffectiveHabitLevelForAbility } from './habitLevels';
 import { isNormalSynergyTrace } from './synergyTrace';
@@ -622,12 +622,7 @@ function commandDetail(
   options: { previewEnabled?: boolean; roster?: Record<string, OwnedDragon> },
   summaryLines: string[],
 ): string {
-  const raw = dragon.command?.rawDescription ?? summaryLines.join(' ');
-  const augmentationLines = commandAugmentationSummaryLines(dragon, options);
-  if (augmentationLines.length === 0) {
-    return raw;
-  }
-  return summaryLines.join('\n\n');
+  return dragon.command?.rawDescription ?? summaryLines.join('\n\n');
 }
 
 function commandSummaryLines(
@@ -656,19 +651,13 @@ function commandSummaryLines(
       'Rounds 1, 4, 7, and 10: Fire Damage to one enemy.',
     ];
   }
-  const firstSchedule = command.schedules[0];
-  const effects = command.schedules.flatMap((schedule) => schedule.effects);
-  const primary = effects[0];
-  if (!primary) {
+  const summaryLines = command.schedules.flatMap((schedule) => commandScheduleSummaryLines(schedule));
+  const augmentationLines = 'command' in dragon ? commandAugmentationSummaryLines(dragon, options) : [];
+  const mergedLines = [...summaryLines, ...augmentationLines];
+  if (mergedLines.length === 0) {
     return [command.rawDescription?.split(/\n\n|(?<=\.)\s+/)[0] ?? `${command.name} command details are not yet verified.`];
   }
-  const timing = firstSchedule ? scheduleTiming(firstSchedule.timing, firstSchedule.rounds) : 'Command';
-  const effectNames = unique(effects.map((effect) => effect.type));
-  const target = primary.target ? ` to ${primary.target}` : '';
-  return [
-    `${timing}: ${joinEnglishList(effectNames)}${target}.`,
-    ...('command' in dragon ? commandAugmentationSummaryLines(dragon, options) : []),
-  ];
+  return mergedLines;
 }
 
 function commandAugmentationSummaryLines(
@@ -687,10 +676,173 @@ function commandAugmentationSummaryLines(
       const level = options.previewEnabled
         ? 5
         : resolveEffectiveHabitLevelForAbility(sourceAbility ?? command, options.roster?.[dragon.id]);
-      return augmentation.schedulesAdded.flatMap((schedule) =>
-        schedule.effects.flatMap((effect) => commandEffectSummaryLine(schedule, effect, level)),
-      );
+      const prefix = augmentation.minimumDragonStarRank === 10
+        ? 'At 10 Stars, '
+        : augmentation.minimumDragonStarRank === 6
+          ? 'At 6+ Stars, '
+          : `At ${augmentation.minimumDragonStarRank} Stars, `;
+      return augmentation.schedulesAdded.flatMap((schedule) => commandScheduleSummaryLines(schedule, level, prefix));
     });
+}
+
+function commandScheduleSummaryLines(
+  schedule: AbilitySchedule,
+  level: 1 | 2 | 3 | 4 | 5 | null = null,
+  prefix = '',
+): string[] {
+  const lines = commandScheduleEffectSummaries(schedule, level);
+  if (lines.length === 0) {
+    return [];
+  }
+  const timing = scheduleTiming(schedule.timing, schedule.rounds);
+  return lines.map((line, index) => `${index === 0 ? `${prefix}${timing}: ` : 'Then '}${line}`);
+}
+
+function commandScheduleEffectSummaries(
+  schedule: AbilitySchedule,
+  level: 1 | 2 | 3 | 4 | 5 | null,
+): string[] {
+  const lines: string[] = [];
+  const used = new Set<string>();
+  for (const effect of schedule.effects) {
+    if (used.has(effect.id) || effect.type === 'Burn') {
+      continue;
+    }
+    const linkedBurn = schedule.effects.find((candidate) =>
+      candidate.type === 'Burn' &&
+      candidate.targetSelection?.references?.some((reference) => reference.referencedEffectId === effect.id),
+    );
+    if (linkedBurn) {
+      lines.push(commandOrderedAttackSummary(effect, linkedBurn, level));
+      used.add(effect.id);
+      used.add(linkedBurn.id);
+      continue;
+    }
+    lines.push(commandSingleEffectSummary(effect, schedule, level));
+    used.add(effect.id);
+  }
+  return lines;
+}
+
+function commandOrderedAttackSummary(
+  attack: AbilityEffect,
+  burn: AbilityEffect,
+  level: 1 | 2 | 3 | 4 | 5 | null,
+): string {
+  const attackRate = commandRateValue(attack, level);
+  const burnChance = commandChanceValue(burn.activationRoll, level);
+  const target = commandOrderedTargetPhrase(attack);
+  const burnDuration = burn.durationRounds ?? 2;
+  return `deal Fire Damage at a ${attackRate} rate to ${target}, with a ${burnChance} chance to apply Burn for ${burnDuration} rounds.`;
+}
+
+function commandSingleEffectSummary(
+  effect: AbilityEffect,
+  schedule: AbilitySchedule,
+  level: 1 | 2 | 3 | 4 | 5 | null,
+): string {
+  const conditionalMultipliers = effect.conditionalMultipliers ?? [];
+  if (effect.type === 'Physical Damage Dealt Down' && (schedule.activationRoll?.chanceFixed ?? effect.activationRoll?.chanceFixed ?? null) !== null) {
+    const target = 'the highest-Strength enemy';
+    const reduction = formatRankedValue({ level: 1, value: effect.magnitude ?? 12, unit: 'percent' }, 'percent');
+    return `${commandChanceValue(schedule.activationRoll ?? effect.activationRoll, level)} chance to reduce ${target}'s non-Basic Physical Damage Dealt by ${reduction} for ${effect.durationRounds ?? 2} rounds.`;
+  }
+  if (effect.type === 'Tactical Damage') {
+    return `deal Tactical Damage at a ${commandRateValue(effect, level)} rate to ${commandTargetPhrase(effect)}.`;
+  }
+  if (effect.type === 'Physical Damage') {
+    return `deal Physical Damage at a ${commandRateValue(effect, level)} rate to ${commandTargetPhrase(effect)}.`;
+  }
+  if (effect.type === 'Recovery') {
+    const target = commandTargetPhrase(effect);
+    const rate = commandRateValue(effect, level);
+    return `apply Recovery at a ${rate} rate to ${target}, enhanced by Intelligence.`;
+  }
+  if (effect.type === 'Fire Damage' && conditionalMultipliers.length > 0) {
+    const multiplier = conditionalMultipliers[0]!;
+    const target = commandTargetPhrase(effect);
+    const base = commandRateValue(effect, level);
+    const enhanced = commandEnhancedRateValue(effect, level);
+    const required = multiplier.condition.statusCategoryId
+      ? formatToken(multiplier.condition.statusCategoryId)
+      : formatToken(multiplier.condition.statusId ?? 'status');
+    const targetLabel = /Burn/i.test(required) ? 'same eligible target' : 'same target';
+    return `deal Fire Damage at a ${base} rate to ${target}. Against the ${targetLabel} while it has ${required}, the rate increases ${multiplier.multiplier}x to ${enhanced}.`;
+  }
+  if (effect.type === 'Fire Damage') {
+    return `deal Fire Damage at a ${commandRateValue(effect, level)} rate to ${commandTargetPhrase(effect)}.`;
+  }
+  return commandEffectSummaryLine(schedule, effect, level)[0] ?? `${effect.type}.`;
+}
+
+function commandTargetPhrase(effect: AbilityEffect): string {
+  const outputCondition = effect.conditions?.find((condition) => condition.kind === 'target-has-output-capability');
+  const qualifyingOutput = outputCondition?.qualifyingOutput;
+  if (qualifyingOutput?.channel === 'physical-damage' && qualifyingOutput.sourceScope === 'non-basic-attacks') {
+    return 'all enemies capable of non-Basic Physical Damage';
+  }
+  if (effect.targetPriority === 'highest-stat-enemy' && effect.targetSelection?.comparisonStat === 'strength') {
+    return 'the highest-Strength enemy';
+  }
+  if (effect.targetPriority === 'least-current-troops-enemy' || effect.targetSelection?.comparisonStat === 'current-troops') {
+    return 'the enemy with the least troops';
+  }
+  if (/First added enemy/i.test(effect.target)) {
+    return 'a first enemy in any lane';
+  }
+  if (/Second added enemy/i.test(effect.target)) {
+    return 'a different enemy in any lane';
+  }
+  if (effect.targetCount === 2 && effect.targetScope === 'within-adjacency') {
+    return '2 enemies within adjacency';
+  }
+  if (effect.targetCount === 3 && effect.targetScope === 'any-lane') {
+    return '3 enemies in any lane';
+  }
+  if (effect.targetCount === 2 && effect.targetScope === 'any-lane' && /other Allies/i.test(effect.target)) {
+    return '2 other Allies in any lane';
+  }
+  if (effect.targetScope === 'any-lane' && effect.targetCount === 1) {
+    return 'one enemy in any lane';
+  }
+  return effect.target;
+}
+
+function commandOrderedTargetPhrase(effect: AbilityEffect): string {
+  if (/First added enemy/i.test(effect.target)) {
+    return 'a first enemy in any lane';
+  }
+  if (/Second added enemy/i.test(effect.target)) {
+    return 'a different enemy in any lane';
+  }
+  return commandTargetPhrase(effect);
+}
+
+function commandRateValue(effect: AbilityEffect, level: 1 | 2 | 3 | 4 | 5 | null): string {
+  const ranked = effect.rankedValues.length > 0 ? rankedValueForHabitLevel(effect.rankedValues, level) : null;
+  const magnitude = effect.magnitude !== null && effect.magnitude !== undefined
+    ? { level: 1 as const, value: effect.magnitude, unit: effect.unit === 'flat' ? 'flat' as const : 'percent' as const }
+    : null;
+  const value = ranked ?? magnitude;
+  return value ? formatRankedValue(value, effect.unit) : 'unknown';
+}
+
+function commandEnhancedRateValue(effect: AbilityEffect, level: 1 | 2 | 3 | 4 | 5 | null): string {
+  const multiplier = effect.conditionalMultipliers?.[0];
+  if (!multiplier) {
+    return commandRateValue(effect, level);
+  }
+  const enhanced = multiplier.directlyVerifiedValues.find((value) => value.level === (level ?? 1));
+  return enhanced ? formatRankedValue(enhanced, effect.unit) : commandRateValue(effect, level);
+}
+
+function commandChanceValue(activationRoll: ActivationRoll | null | undefined, level: 1 | 2 | 3 | 4 | 5 | null): string {
+  const chance = activationRoll?.chanceFixed !== null && activationRoll?.chanceFixed !== undefined
+    ? { level: 1 as const, value: activationRoll.chanceFixed, unit: 'percent' as const }
+    : activationRoll?.chanceByHabitLevel?.length
+      ? rankedValueForHabitLevel(activationRoll.chanceByHabitLevel, level)
+      : null;
+  return chance ? formatRankedValue(chance, 'percent') : 'unknown';
 }
 
 function commandEffectSummaryLine(
