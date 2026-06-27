@@ -462,7 +462,7 @@ function splitSentences(value: string): string[] {
 }
 
 function normalizeText(value: string): string {
-  return value.replace(/\s+/g, ' ').trim().toLowerCase();
+  return value.replace(/\s+/g, ' ').replace(/\.(?:\s*\.)+$/g, '.').trim().toLowerCase();
 }
 
 function isAllMatchingTargetSelection(trace: SynergyTrace): boolean {

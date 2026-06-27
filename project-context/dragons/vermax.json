@@ -454,10 +454,12 @@
               "durationRounds": null,
               "effectOptions": null,
               "excludes": [],
-              "id": "trial-below-50-fire-reduction",
+              "id": "trial-below-50-resistance",
               "includesCaster": false,
               "magnitude": null,
-              "notes": [],
+              "notes": [
+                "Resistance reduces Damage Received."
+              ],
               "perTargetEffectCheck": null,
               "rankedValues": [
                 {
@@ -495,7 +497,7 @@
               "targetPriority": "all-allies-matching-threshold",
               "targetScope": "any-lane",
               "targetSelection": null,
-              "type": "Fire Damage Received Down",
+              "type": "Resistance",
               "unit": "percent"
             }
           ],
@@ -613,7 +615,9 @@
         }
       ],
       "tags": [
-        "FIRE_DAMAGE_RECEIVED_DOWN"
+        "FIRE_DAMAGE_RECEIVED_DOWN",
+        "RESISTANCE",
+        "DAMAGE_RECEIVED_DOWN"
       ],
       "unlockStarRank": 2,
       "unresolvedQuestions": [
@@ -679,6 +683,7 @@
             {
               "activationRoll": null,
               "calculated": false,
+              "casterEligibility": "eligible-if-targeting-allows",
               "conditionalMultipliers": [],
               "conditions": [],
               "directlyVerified": true,
@@ -725,16 +730,28 @@
               "stack": null,
               "stackTransitionTrigger": null,
               "target": "Ally with highest Instinct",
-              "targetCount": null,
+              "targetCount": 1,
               "targetPriority": "highest-stat-ally",
               "targetScope": "any-lane",
-              "targetSelection": null,
+              "targetSelection": {
+                "comparisonDirection": "highest",
+                "comparisonPool": "ally-side",
+                "comparisonStat": "instinct",
+                "distinctness": "unknown",
+                "fallback": null,
+                "preference": null,
+                "references": [],
+                "repeatedInstances": null,
+                "sharedSelectionGroupId": "reactive-instincts-highest-instinct-ally",
+                "tieBehavior": "candidate-group"
+              },
               "type": "Instinct Up",
               "unit": "percent"
             },
             {
               "activationRoll": null,
               "calculated": false,
+              "casterEligibility": "eligible-if-targeting-allows",
               "conditionalMultipliers": [],
               "conditions": [],
               "directlyVerified": true,
@@ -780,11 +797,29 @@
               "sourceScope": "unknown",
               "stack": null,
               "stackTransitionTrigger": null,
-              "target": "Ally with highest Instinct",
-              "targetCount": null,
+              "target": "Same ally with highest Instinct",
+              "targetCount": 1,
               "targetPriority": "highest-stat-ally",
               "targetScope": "any-lane",
-              "targetSelection": null,
+              "targetSelection": {
+                "comparisonDirection": "highest",
+                "comparisonPool": "ally-side",
+                "comparisonStat": "instinct",
+                "distinctness": "same-target-required",
+                "fallback": null,
+                "preference": null,
+                "references": [
+                  {
+                    "description": "Initiative applies to the same highest-Instinct ally selected for Instinct.",
+                    "id": "reactive-instincts-same-ally",
+                    "kind": "same-target-as-effect",
+                    "referencedEffectId": "reactive-instincts-instinct"
+                  }
+                ],
+                "repeatedInstances": null,
+                "sharedSelectionGroupId": "reactive-instincts-highest-instinct-ally",
+                "tieBehavior": "candidate-group"
+              },
               "type": "Initiative Up",
               "unit": "percent"
             }
@@ -1793,10 +1828,12 @@
             "durationRounds": null,
             "effectOptions": null,
             "excludes": [],
-            "id": "trial-below-50-fire-reduction",
+            "id": "trial-below-50-resistance",
             "includesCaster": false,
             "magnitude": null,
-            "notes": [],
+            "notes": [
+              "Resistance reduces Damage Received."
+            ],
             "perTargetEffectCheck": null,
             "rankedValues": [
               {
@@ -1834,7 +1871,7 @@
             "targetPriority": "all-allies-matching-threshold",
             "targetScope": "any-lane",
             "targetSelection": null,
-            "type": "Fire Damage Received Down",
+            "type": "Resistance",
             "unit": "percent"
           }
         ],
@@ -1967,6 +2004,7 @@
           {
             "activationRoll": null,
             "calculated": false,
+            "casterEligibility": "eligible-if-targeting-allows",
             "conditionalMultipliers": [],
             "conditions": [],
             "directlyVerified": true,
@@ -2013,16 +2051,28 @@
             "stack": null,
             "stackTransitionTrigger": null,
             "target": "Ally with highest Instinct",
-            "targetCount": null,
+            "targetCount": 1,
             "targetPriority": "highest-stat-ally",
             "targetScope": "any-lane",
-            "targetSelection": null,
+            "targetSelection": {
+              "comparisonDirection": "highest",
+              "comparisonPool": "ally-side",
+              "comparisonStat": "instinct",
+              "distinctness": "unknown",
+              "fallback": null,
+              "preference": null,
+              "references": [],
+              "repeatedInstances": null,
+              "sharedSelectionGroupId": "reactive-instincts-highest-instinct-ally",
+              "tieBehavior": "candidate-group"
+            },
             "type": "Instinct Up",
             "unit": "percent"
           },
           {
             "activationRoll": null,
             "calculated": false,
+            "casterEligibility": "eligible-if-targeting-allows",
             "conditionalMultipliers": [],
             "conditions": [],
             "directlyVerified": true,
@@ -2068,11 +2118,29 @@
             "sourceScope": "unknown",
             "stack": null,
             "stackTransitionTrigger": null,
-            "target": "Ally with highest Instinct",
-            "targetCount": null,
+            "target": "Same ally with highest Instinct",
+            "targetCount": 1,
             "targetPriority": "highest-stat-ally",
             "targetScope": "any-lane",
-            "targetSelection": null,
+            "targetSelection": {
+              "comparisonDirection": "highest",
+              "comparisonPool": "ally-side",
+              "comparisonStat": "instinct",
+              "distinctness": "same-target-required",
+              "fallback": null,
+              "preference": null,
+              "references": [
+                {
+                  "description": "Initiative applies to the same highest-Instinct ally selected for Instinct.",
+                  "id": "reactive-instincts-same-ally",
+                  "kind": "same-target-as-effect",
+                  "referencedEffectId": "reactive-instincts-instinct"
+                }
+              ],
+              "repeatedInstances": null,
+              "sharedSelectionGroupId": "reactive-instincts-highest-instinct-ally",
+              "tieBehavior": "candidate-group"
+            },
             "type": "Initiative Up",
             "unit": "percent"
           }
@@ -3057,10 +3125,12 @@
         "durationRounds": null,
         "effectOptions": null,
         "excludes": [],
-        "id": "trial-below-50-fire-reduction",
+        "id": "trial-below-50-resistance",
         "includesCaster": false,
         "magnitude": null,
-        "notes": [],
+        "notes": [
+          "Resistance reduces Damage Received."
+        ],
         "perTargetEffectCheck": null,
         "rankedValues": [
           {
@@ -3098,7 +3168,7 @@
         "targetPriority": "all-allies-matching-threshold",
         "targetScope": "any-lane",
         "targetSelection": null,
-        "type": "Fire Damage Received Down",
+        "type": "Resistance",
         "unit": "percent"
       },
       "scheduleId": "trial-by-flame-below-50"
@@ -3182,6 +3252,7 @@
       "effect": {
         "activationRoll": null,
         "calculated": false,
+        "casterEligibility": "eligible-if-targeting-allows",
         "conditionalMultipliers": [],
         "conditions": [],
         "directlyVerified": true,
@@ -3228,10 +3299,21 @@
         "stack": null,
         "stackTransitionTrigger": null,
         "target": "Ally with highest Instinct",
-        "targetCount": null,
+        "targetCount": 1,
         "targetPriority": "highest-stat-ally",
         "targetScope": "any-lane",
-        "targetSelection": null,
+        "targetSelection": {
+          "comparisonDirection": "highest",
+          "comparisonPool": "ally-side",
+          "comparisonStat": "instinct",
+          "distinctness": "unknown",
+          "fallback": null,
+          "preference": null,
+          "references": [],
+          "repeatedInstances": null,
+          "sharedSelectionGroupId": "reactive-instincts-highest-instinct-ally",
+          "tieBehavior": "candidate-group"
+        },
         "type": "Instinct Up",
         "unit": "percent"
       },
@@ -3242,6 +3324,7 @@
       "effect": {
         "activationRoll": null,
         "calculated": false,
+        "casterEligibility": "eligible-if-targeting-allows",
         "conditionalMultipliers": [],
         "conditions": [],
         "directlyVerified": true,
@@ -3287,11 +3370,29 @@
         "sourceScope": "unknown",
         "stack": null,
         "stackTransitionTrigger": null,
-        "target": "Ally with highest Instinct",
-        "targetCount": null,
+        "target": "Same ally with highest Instinct",
+        "targetCount": 1,
         "targetPriority": "highest-stat-ally",
         "targetScope": "any-lane",
-        "targetSelection": null,
+        "targetSelection": {
+          "comparisonDirection": "highest",
+          "comparisonPool": "ally-side",
+          "comparisonStat": "instinct",
+          "distinctness": "same-target-required",
+          "fallback": null,
+          "preference": null,
+          "references": [
+            {
+              "description": "Initiative applies to the same highest-Instinct ally selected for Instinct.",
+              "id": "reactive-instincts-same-ally",
+              "kind": "same-target-as-effect",
+              "referencedEffectId": "reactive-instincts-instinct"
+            }
+          ],
+          "repeatedInstances": null,
+          "sharedSelectionGroupId": "reactive-instincts-highest-instinct-ally",
+          "tieBehavior": "candidate-group"
+        },
         "type": "Initiative Up",
         "unit": "percent"
       },
@@ -3754,7 +3855,7 @@
   "firstObservedInGame": "2026-06-22",
   "format": "dragonfire-dragon-profile",
   "gameVersion": null,
-  "generatedAt": "2026-06-27T22:12:53.099Z",
+  "generatedAt": "2026-06-27T23:23:11.996Z",
   "habits": [
     {
       "abilityClass": "passive",
@@ -3921,10 +4022,12 @@
               "durationRounds": null,
               "effectOptions": null,
               "excludes": [],
-              "id": "trial-below-50-fire-reduction",
+              "id": "trial-below-50-resistance",
               "includesCaster": false,
               "magnitude": null,
-              "notes": [],
+              "notes": [
+                "Resistance reduces Damage Received."
+              ],
               "perTargetEffectCheck": null,
               "rankedValues": [
                 {
@@ -3962,7 +4065,7 @@
               "targetPriority": "all-allies-matching-threshold",
               "targetScope": "any-lane",
               "targetSelection": null,
-              "type": "Fire Damage Received Down",
+              "type": "Resistance",
               "unit": "percent"
             }
           ],
@@ -4080,7 +4183,9 @@
         }
       ],
       "tags": [
-        "FIRE_DAMAGE_RECEIVED_DOWN"
+        "FIRE_DAMAGE_RECEIVED_DOWN",
+        "RESISTANCE",
+        "DAMAGE_RECEIVED_DOWN"
       ],
       "unlockStarRank": 2,
       "unresolvedQuestions": [
@@ -4146,6 +4251,7 @@
             {
               "activationRoll": null,
               "calculated": false,
+              "casterEligibility": "eligible-if-targeting-allows",
               "conditionalMultipliers": [],
               "conditions": [],
               "directlyVerified": true,
@@ -4192,16 +4298,28 @@
               "stack": null,
               "stackTransitionTrigger": null,
               "target": "Ally with highest Instinct",
-              "targetCount": null,
+              "targetCount": 1,
               "targetPriority": "highest-stat-ally",
               "targetScope": "any-lane",
-              "targetSelection": null,
+              "targetSelection": {
+                "comparisonDirection": "highest",
+                "comparisonPool": "ally-side",
+                "comparisonStat": "instinct",
+                "distinctness": "unknown",
+                "fallback": null,
+                "preference": null,
+                "references": [],
+                "repeatedInstances": null,
+                "sharedSelectionGroupId": "reactive-instincts-highest-instinct-ally",
+                "tieBehavior": "candidate-group"
+              },
               "type": "Instinct Up",
               "unit": "percent"
             },
             {
               "activationRoll": null,
               "calculated": false,
+              "casterEligibility": "eligible-if-targeting-allows",
               "conditionalMultipliers": [],
               "conditions": [],
               "directlyVerified": true,
@@ -4247,11 +4365,29 @@
               "sourceScope": "unknown",
               "stack": null,
               "stackTransitionTrigger": null,
-              "target": "Ally with highest Instinct",
-              "targetCount": null,
+              "target": "Same ally with highest Instinct",
+              "targetCount": 1,
               "targetPriority": "highest-stat-ally",
               "targetScope": "any-lane",
-              "targetSelection": null,
+              "targetSelection": {
+                "comparisonDirection": "highest",
+                "comparisonPool": "ally-side",
+                "comparisonStat": "instinct",
+                "distinctness": "same-target-required",
+                "fallback": null,
+                "preference": null,
+                "references": [
+                  {
+                    "description": "Initiative applies to the same highest-Instinct ally selected for Instinct.",
+                    "id": "reactive-instincts-same-ally",
+                    "kind": "same-target-as-effect",
+                    "referencedEffectId": "reactive-instincts-instinct"
+                  }
+                ],
+                "repeatedInstances": null,
+                "sharedSelectionGroupId": "reactive-instincts-highest-instinct-ally",
+                "tieBehavior": "candidate-group"
+              },
               "type": "Initiative Up",
               "unit": "percent"
             }
@@ -5366,7 +5502,7 @@
       ],
       "confidence": "confirmed",
       "currentlyAvailable": false,
-      "damageScope": "fire",
+      "damageScope": "all",
       "direction": "received",
       "directlyVerified": true,
       "dragonId": "vermax",
@@ -5375,8 +5511,8 @@
         "vermax-trial-by-flame-2026-06-23"
       ],
       "futureAvailable": true,
-      "id": "vermax-trial-by-flame-trial-below-50-fire-reduction-damage-received-received-modifier",
-      "label": "Trial by Flame: Fire Damage Received Down",
+      "id": "vermax-trial-by-flame-trial-below-50-resistance-damage-received-received-modifier",
+      "label": "Trial by Flame: Resistance",
       "minimumDragonLevel": null,
       "operation": "decrease",
       "providerRequirements": [],
@@ -5410,10 +5546,10 @@
       "recipientRequirements": [],
       "requiredHabitLevel": 1,
       "role": "ally-support",
-      "sourceEffectId": "trial-below-50-fire-reduction",
-      "sourceScope": "all-qualifying-sources",
+      "sourceEffectId": "trial-below-50-resistance",
+      "sourceScope": "unknown",
       "stackMaximum": null,
-      "statusId": null,
+      "statusId": "resistance",
       "targetSelector": {
         "comparisonDirection": null,
         "comparisonPool": null,
@@ -5542,7 +5678,7 @@
       "abilityName": "Reactive Instincts",
       "activationChanceByHabitLevel": [],
       "activationChanceFixed": null,
-      "activationGroupId": null,
+      "activationGroupId": "reactive-instincts-highest-instinct-ally",
       "availability": {
         "canonical": "canonical-locked",
         "notes": [
@@ -5608,8 +5744,8 @@
       "stackMaximum": null,
       "statusId": null,
       "targetSelector": {
-        "comparisonDirection": null,
-        "comparisonPool": null,
+        "comparisonDirection": "highest",
+        "comparisonPool": "ally-side",
         "count": 1,
         "includesCaster": true,
         "position": null,
@@ -5617,9 +5753,9 @@
         "selection": "highest-stat",
         "selectionResource": "instinct",
         "selectionStat": "instinct",
-        "sharedSelectionGroupId": null,
+        "sharedSelectionGroupId": "reactive-instincts-highest-instinct-ally",
         "side": "ally",
-        "tieBehavior": null
+        "tieBehavior": "candidate-group"
       },
       "unit": "percent",
       "unlockStarRank": 4,
@@ -5631,7 +5767,7 @@
       "abilityName": "Reactive Instincts",
       "activationChanceByHabitLevel": [],
       "activationChanceFixed": null,
-      "activationGroupId": null,
+      "activationGroupId": "reactive-instincts-highest-instinct-ally",
       "availability": {
         "canonical": "canonical-locked",
         "notes": [
@@ -5697,8 +5833,8 @@
       "stackMaximum": null,
       "statusId": null,
       "targetSelector": {
-        "comparisonDirection": null,
-        "comparisonPool": null,
+        "comparisonDirection": "highest",
+        "comparisonPool": "ally-side",
         "count": 1,
         "includesCaster": true,
         "position": null,
@@ -5706,9 +5842,9 @@
         "selection": "highest-stat",
         "selectionResource": "instinct",
         "selectionStat": "instinct",
-        "sharedSelectionGroupId": null,
+        "sharedSelectionGroupId": "reactive-instincts-highest-instinct-ally",
         "side": "ally",
-        "tieBehavior": null
+        "tieBehavior": "candidate-group"
       },
       "unit": "percent",
       "unlockStarRank": 4,
@@ -6431,7 +6567,7 @@
     },
     {
       "abilityId": "vermax-trial-by-flame",
-      "effectId": "trial-below-50-fire-reduction",
+      "effectId": "trial-below-50-resistance",
       "rankedValue": {
         "level": 1,
         "unit": "percent",
@@ -6442,7 +6578,7 @@
     },
     {
       "abilityId": "vermax-trial-by-flame",
-      "effectId": "trial-below-50-fire-reduction",
+      "effectId": "trial-below-50-resistance",
       "rankedValue": {
         "level": 2,
         "unit": "percent",
@@ -6453,7 +6589,7 @@
     },
     {
       "abilityId": "vermax-trial-by-flame",
-      "effectId": "trial-below-50-fire-reduction",
+      "effectId": "trial-below-50-resistance",
       "rankedValue": {
         "level": 3,
         "unit": "percent",
@@ -6464,7 +6600,7 @@
     },
     {
       "abilityId": "vermax-trial-by-flame",
-      "effectId": "trial-below-50-fire-reduction",
+      "effectId": "trial-below-50-resistance",
       "rankedValue": {
         "level": 4,
         "unit": "percent",
@@ -6475,7 +6611,7 @@
     },
     {
       "abilityId": "vermax-trial-by-flame",
-      "effectId": "trial-below-50-fire-reduction",
+      "effectId": "trial-below-50-resistance",
       "rankedValue": {
         "level": 5,
         "unit": "percent",
@@ -7046,8 +7182,8 @@
   "rosterSourceStatus": "in-game-verified-pending-official-site",
   "slug": "vermax",
   "source": {
-    "branch": "fix/mechanic-reference-analysis-follow-up",
-    "commit": "17da1db6189bafba9c0471b7e19d9c21fa6d8ba4",
+    "branch": "fix/legacy-targeting-selection-integrity",
+    "commit": "3c23262cab0dcdcf3bad088fca017d74a94e5d09",
     "databaseVersion": "0.6.2",
     "dataSchemaVersion": 12,
     "gameBuild": "26.6.53509",
@@ -7126,6 +7262,72 @@
       "unlockStarRank": null,
       "untilEndOfCombat": true,
       "untilEndOfRound": false
+    },
+    {
+      "abilityId": "vermax-trial-by-flame",
+      "abilityName": "Trial by Flame",
+      "activationChanceByHabitLevel": [],
+      "activationChanceFixed": null,
+      "activationGroupId": null,
+      "availability": {
+        "canonical": "canonical-locked",
+        "notes": [
+          "Future at Star Rank 2.",
+          "Unlocked in observed account collection state, subject to level and star requirements."
+        ],
+        "observedAccount": "observed-available",
+        "reportLabel": "Future at Star Rank 2; observed account hatched",
+        "userRoster": "unknown"
+      },
+      "chanceByHabitLevel": [],
+      "chanceFixed": null,
+      "conditions": [
+        {
+          "battleContext": null,
+          "comparison": "below",
+          "description": "Below 50% Troop Capacity.",
+          "evidenceIds": [],
+          "id": "below-50-troop-capacity",
+          "kind": "target-below-troop-capacity-threshold",
+          "label": "Below 50% Troop Capacity.",
+          "statusCategoryId": null,
+          "statusId": null,
+          "subject": "target",
+          "thresholdPercent": 50,
+          "unresolved": false
+        }
+      ],
+      "currentlyAvailable": false,
+      "directlyVerified": true,
+      "dragonId": "vermax",
+      "durationRounds": null,
+      "evidenceIds": [
+        "vermax-trial-by-flame-2026-06-23"
+      ],
+      "futureAvailable": true,
+      "id": "vermax-trial-by-flame-trial-below-50-resistance-resistance-status-output",
+      "minimumDragonLevel": null,
+      "requiredHabitLevel": 1,
+      "sourceEffectId": "trial-below-50-resistance",
+      "statusId": "resistance",
+      "targetSelector": {
+        "comparisonDirection": null,
+        "comparisonPool": null,
+        "count": null,
+        "includesCaster": false,
+        "position": null,
+        "scope": "any-lane",
+        "selection": "all-matching-condition",
+        "selectionResource": null,
+        "selectionStat": null,
+        "sharedSelectionGroupId": null,
+        "side": "ally",
+        "tieBehavior": null
+      },
+      "targetSide": "ally",
+      "unlockStarRank": 2,
+      "untilEndOfCombat": false,
+      "untilEndOfRound": true
     },
     {
       "abilityId": "vermax-rallying-flame",
@@ -7491,8 +7693,9 @@
     "INSTINCT_UP",
     "BUFF_INITIATIVE",
     "FIRE_DAMAGE_RECEIVED_DOWN",
-    "RALLYING_FLAME",
+    "RESISTANCE",
     "DAMAGE_RECEIVED_DOWN",
+    "RALLYING_FLAME",
     "STRENGTH_UP",
     "ADVANTAGE",
     "WEAKENED"

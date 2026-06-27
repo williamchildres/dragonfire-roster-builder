@@ -12,7 +12,8 @@
     ],
     "damageScope": null,
     "effects": [
-      "Fire Damage Dealt increase 10%",
+      "Fire Damage Dealt increase 10%.",
+      "Applies to all qualifying Fire Damage sources.",
       "Activation chance 20% per each round.",
       "Activation chance: 20%.",
       "Duration: 2 rounds."
@@ -127,39 +128,42 @@
   },
   {
     "assumptions": [
-      "Target count is one, so eligible recipients compete for the same activation.",
       "Trigger chance and target selection may make this conditional rather than guaranteed."
     ],
     "channel": "tactical-damage",
     "confidence": "confirmed",
-    "conflicts": [],
+    "conflicts": [
+      "Syrax - Tactical Inferno Habit unlock requirement: expected Star Rank 8+, actual preview enabled",
+      "Syrax - Tactical Inferno Selected Habit Level: expected Habit Level 1+ or preview, actual preview enabled"
+    ],
     "damageScope": null,
     "effects": [
-      "Duration: 3 rounds.",
-      "Tactical Damage Dealt increase 36%"
+      "Tactical Damage Dealt increase 36% at effective Habit Level 5.",
+      "Applies to all qualifying Tactical Damage sources.",
+      "Duration: 3 rounds."
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final amplified damage cannot be calculated because stacking and final combat formulas are not fully verified.",
-    "explanation": "Syrax's Tactical Inferno can target one Tactical Damage ally. Eligible recipients are Malachite and Syrax. The selected recipient is not guaranteed. Qualifying outputs: Warden's Rally: Tactical Damage, Blazing Fury: Tactical Damage.",
-    "id": "target-selection-syrax-tactical-inferno-tactical-inferno-tactical-tactical-damage-dealt-modifier-tactical-damage",
-    "interactionScope": "targeting-fact",
+    "explanation": "Malachite is eligible for Syrax's Tactical Inferno Tactical Damage support. Qualifying outputs: Warden's Rally: Tactical Damage. Target selection follows the verified flank preference and remains selection-dependent.",
+    "id": "outgoing-effect-amplification-syrax-tactical-inferno-tactical-inferno-tactical-tactical-damage-dealt-modifier-malachite",
+    "interactionScope": "cross-dragon",
     "matchedOutputCapabilityIds": [
-      "malachite-wardens-rally-wardens-rally-tactical-damage-rate-output",
-      "syrax-blazing-fury-blazing-fury-tactical-rate-output"
+      "malachite-wardens-rally-wardens-rally-tactical-damage-rate-output"
     ],
     "matchKind": "outgoing-effect-amplification",
     "modifierCapabilityId": "syrax-tactical-inferno-tactical-inferno-tactical-tactical-damage-dealt-modifier",
     "modifierCapabilityIds": [
       "syrax-tactical-inferno-tactical-inferno-tactical-tactical-damage-dealt-modifier"
     ],
-    "recipientAbilityId": null,
-    "recipientDragonId": null,
+    "recipientAbilityId": "malachite-wardens-rally-wardens-rally-tactical-damage-rate-output",
+    "recipientDragonId": "malachite",
     "recipientEvidenceIds": [
-      "malachite-wardens-rally-glossary-2026-06-23",
+      "syrax-tactical-inferno-2026-06-24",
+      "syrax-tactical-inferno-2026-06-24",
+      "syrax-tactical-inferno-2026-06-24",
+      "syrax-tactical-inferno-2026-06-24",
       "malachite-wardens-rally-summary-2026-06-23",
-      "syrax-blazing-fury-details-2026-06-24",
-      "syrax-blazing-fury-summary-2026-06-24",
-      "syrax-tactical-inferno-2026-06-24"
+      "malachite-wardens-rally-glossary-2026-06-23"
     ],
     "requirements": [
       {
@@ -209,30 +213,6 @@
         "label": "Source-scope compatibility",
         "notes": [],
         "satisfied": true
-      },
-      {
-        "actual": "provider right-flank, recipient right-flank",
-        "evidenceIds": [
-          "syrax-tactical-inferno-2026-06-24"
-        ],
-        "expected": "any-lane",
-        "id": "syrax-tactical-inferno-tactical-inferno-tactical-tactical-damage-dealt-modifier-targeting-right-flank",
-        "label": "Position compatibility",
-        "notes": [],
-        "satisfied": true
-      },
-      {
-        "actual": "commands",
-        "evidenceIds": [
-          "syrax-tactical-inferno-2026-06-24",
-          "syrax-blazing-fury-summary-2026-06-24",
-          "syrax-blazing-fury-details-2026-06-24"
-        ],
-        "expected": "all-qualifying-sources",
-        "id": "syrax-tactical-inferno-tactical-inferno-tactical-tactical-damage-dealt-modifier-syrax-blazing-fury-blazing-fury-tactical-rate-output-source-scope",
-        "label": "Source-scope compatibility",
-        "notes": [],
-        "satisfied": true
       }
     ],
     "ruleId": "outgoing-effect-amplification",
@@ -242,20 +222,8 @@
       "syrax-tactical-inferno-2026-06-24"
     ],
     "status": "potential",
-    "targetSelectionGroup": {
-      "comparisonDirection": null,
-      "comparisonPool": null,
-      "eligibleRecipientDragonIds": [
-        "malachite",
-        "syrax"
-      ],
-      "selection": "any",
-      "selectionResource": null,
-      "selectionStat": null,
-      "selectionUncertain": true,
-      "targetCount": 1
-    },
-    "title": "Tactical Damage Target Selection",
+    "targetSelectionGroup": null,
+    "title": "Tactical Damage Support",
     "unresolvedQuestions": [
       "Exact final modified amount is unknown."
     ]
@@ -275,7 +243,8 @@
     ],
     "damageScope": null,
     "effects": [
-      "Fire Damage Dealt increase 36%",
+      "Fire Damage Dealt increase 36% at effective Habit Level 5.",
+      "Applies to all qualifying Fire Damage sources.",
       "Duration: 3 rounds."
     ],
     "exactResultKnown": false,
@@ -420,7 +389,8 @@
     ],
     "damageScope": null,
     "effects": [
-      "Fire Damage Dealt increase 16%"
+      "Fire Damage Dealt increase 16%.",
+      "Applies to all qualifying Fire Damage sources."
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final amplified damage cannot be calculated because stacking and final combat formulas are not fully verified.",
@@ -576,7 +546,8 @@
     ],
     "damageScope": null,
     "effects": [
-      "Damage Dealt increase 20%",
+      "Damage Dealt increase 20%.",
+      "Applies to all qualifying Damage Dealt sources.",
       "Activation chance depends on Habit Level for each round.",
       "Advantage increases Damage Dealt according to the verified status glossary.",
       "Activation chance: 20% at effective Habit Level 5.",
@@ -723,7 +694,8 @@
     ],
     "damageScope": null,
     "effects": [
-      "Damage Dealt increase 20%",
+      "Damage Dealt increase 20%.",
+      "Applies to all qualifying Damage Dealt sources.",
       "Activation chance depends on Habit Level for each round.",
       "Advantage increases Damage Dealt according to the verified status glossary.",
       "Activation chance: 20% at effective Habit Level 5.",
@@ -1975,7 +1947,7 @@
     "channel": "damage-received",
     "confidence": "confirmed",
     "conflicts": [],
-    "damageScope": null,
+    "damageScope": "all",
     "effects": [
       "Activation chance by Habit Level: 40%, 52%, 64%, 80%, 100%.",
       "Activation chance: 100% at effective Habit Level 5.",
@@ -4024,7 +3996,7 @@
     ],
     "damageScope": null,
     "effects": [
-      "Enemy Initiative decrease 12%"
+      "Enemy Initiative decrease 12% at effective Habit Level 5."
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final reduced enemy damage cannot be calculated because target selection, uptime, stacking, and final formulas are unresolved.",
@@ -4092,7 +4064,7 @@
     ],
     "damageScope": null,
     "effects": [
-      "Enemy Strength decrease 13%"
+      "Enemy Strength decrease 13% at effective Habit Level 5."
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final reduced enemy damage cannot be calculated because target selection, uptime, stacking, and final formulas are unresolved.",
@@ -4160,7 +4132,7 @@
     ],
     "damageScope": null,
     "effects": [
-      "Enemy Initiative decrease 13%"
+      "Enemy Initiative decrease 13% at effective Habit Level 5."
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final reduced enemy damage cannot be calculated because target selection, uptime, stacking, and final formulas are unresolved.",
@@ -4228,7 +4200,7 @@
     ],
     "damageScope": null,
     "effects": [
-      "Enemy Physical Damage decrease 11%",
+      "Physical Damage Dealt decrease 11% at effective Habit Level 5.",
       "Physical Damage reduction applies to non-Basic Attacks only."
     ],
     "exactResultKnown": false,
@@ -4594,7 +4566,8 @@
     ],
     "damageScope": null,
     "effects": [
-      "Fire Damage Dealt increase 10%",
+      "Fire Damage Dealt increase 10%.",
+      "Applies to all qualifying Fire Damage sources.",
       "Activation chance 20% per each round.",
       "Activation chance: 20%.",
       "Duration: 2 rounds."
@@ -4717,8 +4690,9 @@
     "conflicts": [],
     "damageScope": null,
     "effects": [
+      "Applies to all qualifying Tactical Damage sources.",
       "Duration: 3 rounds.",
-      "Tactical Damage Dealt increase 36%"
+      "Tactical Damage Dealt increase 36% at effective Habit Level 5."
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final amplified damage cannot be calculated because stacking and final combat formulas are not fully verified.",
@@ -4857,7 +4831,8 @@
     ],
     "damageScope": null,
     "effects": [
-      "Fire Damage Dealt increase 36%",
+      "Fire Damage Dealt increase 36% at effective Habit Level 5.",
+      "Applies to all qualifying Fire Damage sources.",
       "Duration: 3 rounds."
     ],
     "exactResultKnown": false,
@@ -5001,7 +4976,8 @@
     ],
     "damageScope": null,
     "effects": [
-      "Fire Damage Dealt increase 16%"
+      "Fire Damage Dealt increase 16%.",
+      "Applies to all qualifying Fire Damage sources."
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final amplified damage cannot be calculated because stacking and final combat formulas are not fully verified.",
@@ -5157,7 +5133,8 @@
     ],
     "damageScope": null,
     "effects": [
-      "Damage Dealt increase 20%",
+      "Damage Dealt increase 20%.",
+      "Applies to all qualifying Damage Dealt sources.",
       "Activation chance depends on Habit Level for each round.",
       "Advantage increases Damage Dealt according to the verified status glossary.",
       "Activation chance: 20% at effective Habit Level 5.",
@@ -5304,7 +5281,8 @@
     ],
     "damageScope": null,
     "effects": [
-      "Damage Dealt increase 20%",
+      "Damage Dealt increase 20%.",
+      "Applies to all qualifying Damage Dealt sources.",
       "Activation chance depends on Habit Level for each round.",
       "Advantage increases Damage Dealt according to the verified status glossary.",
       "Activation chance: 20% at effective Habit Level 5.",
@@ -6557,7 +6535,7 @@
     "channel": "damage-received",
     "confidence": "confirmed",
     "conflicts": [],
-    "damageScope": null,
+    "damageScope": "all",
     "effects": [
       "Activation chance by Habit Level: 40%, 52%, 64%, 80%, 100%.",
       "Activation chance: 100% at effective Habit Level 5.",
@@ -8516,7 +8494,7 @@
     ],
     "damageScope": null,
     "effects": [
-      "Enemy Initiative decrease 12%"
+      "Enemy Initiative decrease 12% at effective Habit Level 5."
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final reduced enemy damage cannot be calculated because target selection, uptime, stacking, and final formulas are unresolved.",
@@ -8584,7 +8562,7 @@
     ],
     "damageScope": null,
     "effects": [
-      "Enemy Strength decrease 13%"
+      "Enemy Strength decrease 13% at effective Habit Level 5."
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final reduced enemy damage cannot be calculated because target selection, uptime, stacking, and final formulas are unresolved.",
@@ -8652,7 +8630,7 @@
     ],
     "damageScope": null,
     "effects": [
-      "Enemy Initiative decrease 13%"
+      "Enemy Initiative decrease 13% at effective Habit Level 5."
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final reduced enemy damage cannot be calculated because target selection, uptime, stacking, and final formulas are unresolved.",
@@ -8720,7 +8698,7 @@
     ],
     "damageScope": null,
     "effects": [
-      "Enemy Physical Damage decrease 11%",
+      "Physical Damage Dealt decrease 11% at effective Habit Level 5.",
       "Physical Damage reduction applies to non-Basic Attacks only."
     ],
     "exactResultKnown": false,
@@ -9085,7 +9063,8 @@
     ],
     "damageScope": null,
     "effects": [
-      "Fire Damage Dealt increase 10%",
+      "Fire Damage Dealt increase 10%.",
+      "Applies to all qualifying Fire Damage sources.",
       "Activation chance 20% per each round.",
       "Activation chance: 20%.",
       "Duration: 2 rounds."
@@ -9200,39 +9179,42 @@
   },
   {
     "assumptions": [
-      "Target count is one, so eligible recipients compete for the same activation.",
       "Trigger chance and target selection may make this conditional rather than guaranteed."
     ],
     "channel": "tactical-damage",
     "confidence": "confirmed",
-    "conflicts": [],
+    "conflicts": [
+      "Syrax - Tactical Inferno Habit unlock requirement: expected Star Rank 8+, actual preview enabled",
+      "Syrax - Tactical Inferno Selected Habit Level: expected Habit Level 1+ or preview, actual preview enabled"
+    ],
     "damageScope": null,
     "effects": [
-      "Duration: 3 rounds.",
-      "Tactical Damage Dealt increase 36%"
+      "Tactical Damage Dealt increase 36% at effective Habit Level 5.",
+      "Applies to all qualifying Tactical Damage sources.",
+      "Duration: 3 rounds."
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final amplified damage cannot be calculated because stacking and final combat formulas are not fully verified.",
-    "explanation": "Syrax's Tactical Inferno can target one Tactical Damage ally. Eligible recipients are Malachite and Syrax. The selected recipient is not guaranteed. Qualifying outputs: Warden's Rally: Tactical Damage, Blazing Fury: Tactical Damage.",
-    "id": "target-selection-syrax-tactical-inferno-tactical-inferno-tactical-tactical-damage-dealt-modifier-tactical-damage",
-    "interactionScope": "targeting-fact",
+    "explanation": "Malachite is eligible for Syrax's Tactical Inferno Tactical Damage support. Qualifying outputs: Warden's Rally: Tactical Damage. Target selection follows the verified flank preference and remains selection-dependent.",
+    "id": "outgoing-effect-amplification-syrax-tactical-inferno-tactical-inferno-tactical-tactical-damage-dealt-modifier-malachite",
+    "interactionScope": "cross-dragon",
     "matchedOutputCapabilityIds": [
-      "malachite-wardens-rally-wardens-rally-tactical-damage-rate-output",
-      "syrax-blazing-fury-blazing-fury-tactical-rate-output"
+      "malachite-wardens-rally-wardens-rally-tactical-damage-rate-output"
     ],
     "matchKind": "outgoing-effect-amplification",
     "modifierCapabilityId": "syrax-tactical-inferno-tactical-inferno-tactical-tactical-damage-dealt-modifier",
     "modifierCapabilityIds": [
       "syrax-tactical-inferno-tactical-inferno-tactical-tactical-damage-dealt-modifier"
     ],
-    "recipientAbilityId": null,
-    "recipientDragonId": null,
+    "recipientAbilityId": "malachite-wardens-rally-wardens-rally-tactical-damage-rate-output",
+    "recipientDragonId": "malachite",
     "recipientEvidenceIds": [
-      "malachite-wardens-rally-glossary-2026-06-23",
+      "syrax-tactical-inferno-2026-06-24",
+      "syrax-tactical-inferno-2026-06-24",
+      "syrax-tactical-inferno-2026-06-24",
+      "syrax-tactical-inferno-2026-06-24",
       "malachite-wardens-rally-summary-2026-06-23",
-      "syrax-blazing-fury-details-2026-06-24",
-      "syrax-blazing-fury-summary-2026-06-24",
-      "syrax-tactical-inferno-2026-06-24"
+      "malachite-wardens-rally-glossary-2026-06-23"
     ],
     "requirements": [
       {
@@ -9282,30 +9264,6 @@
         "label": "Source-scope compatibility",
         "notes": [],
         "satisfied": true
-      },
-      {
-        "actual": "provider vanguard, recipient vanguard",
-        "evidenceIds": [
-          "syrax-tactical-inferno-2026-06-24"
-        ],
-        "expected": "any-lane",
-        "id": "syrax-tactical-inferno-tactical-inferno-tactical-tactical-damage-dealt-modifier-targeting-vanguard",
-        "label": "Position compatibility",
-        "notes": [],
-        "satisfied": true
-      },
-      {
-        "actual": "commands",
-        "evidenceIds": [
-          "syrax-tactical-inferno-2026-06-24",
-          "syrax-blazing-fury-summary-2026-06-24",
-          "syrax-blazing-fury-details-2026-06-24"
-        ],
-        "expected": "all-qualifying-sources",
-        "id": "syrax-tactical-inferno-tactical-inferno-tactical-tactical-damage-dealt-modifier-syrax-blazing-fury-blazing-fury-tactical-rate-output-source-scope",
-        "label": "Source-scope compatibility",
-        "notes": [],
-        "satisfied": true
       }
     ],
     "ruleId": "outgoing-effect-amplification",
@@ -9315,20 +9273,8 @@
       "syrax-tactical-inferno-2026-06-24"
     ],
     "status": "potential",
-    "targetSelectionGroup": {
-      "comparisonDirection": null,
-      "comparisonPool": null,
-      "eligibleRecipientDragonIds": [
-        "malachite",
-        "syrax"
-      ],
-      "selection": "any",
-      "selectionResource": null,
-      "selectionStat": null,
-      "selectionUncertain": true,
-      "targetCount": 1
-    },
-    "title": "Tactical Damage Target Selection",
+    "targetSelectionGroup": null,
+    "title": "Tactical Damage Support",
     "unresolvedQuestions": [
       "Exact final modified amount is unknown."
     ]
@@ -9348,7 +9294,8 @@
     ],
     "damageScope": null,
     "effects": [
-      "Fire Damage Dealt increase 36%",
+      "Fire Damage Dealt increase 36% at effective Habit Level 5.",
+      "Applies to all qualifying Fire Damage sources.",
       "Duration: 3 rounds."
     ],
     "exactResultKnown": false,
@@ -9493,7 +9440,8 @@
     ],
     "damageScope": null,
     "effects": [
-      "Fire Damage Dealt increase 16%"
+      "Fire Damage Dealt increase 16%.",
+      "Applies to all qualifying Fire Damage sources."
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final amplified damage cannot be calculated because stacking and final combat formulas are not fully verified.",
@@ -9646,7 +9594,8 @@
     ],
     "damageScope": null,
     "effects": [
-      "Damage Dealt increase 20%",
+      "Damage Dealt increase 20%.",
+      "Applies to all qualifying Damage Dealt sources.",
       "Activation chance depends on Habit Level for each round.",
       "Advantage increases Damage Dealt according to the verified status glossary.",
       "Activation chance: 20% at effective Habit Level 5.",
@@ -9754,7 +9703,8 @@
     ],
     "damageScope": null,
     "effects": [
-      "Damage Dealt increase 20%",
+      "Damage Dealt increase 20%.",
+      "Applies to all qualifying Damage Dealt sources.",
       "Activation chance depends on Habit Level for each round.",
       "Advantage increases Damage Dealt according to the verified status glossary.",
       "Activation chance: 20% at effective Habit Level 5.",
@@ -11049,7 +10999,7 @@
     "channel": "damage-received",
     "confidence": "confirmed",
     "conflicts": [],
-    "damageScope": null,
+    "damageScope": "all",
     "effects": [
       "Activation chance by Habit Level: 40%, 52%, 64%, 80%, 100%.",
       "Activation chance: 100% at effective Habit Level 5.",
@@ -13098,7 +13048,7 @@
     ],
     "damageScope": null,
     "effects": [
-      "Enemy Initiative decrease 12%"
+      "Enemy Initiative decrease 12% at effective Habit Level 5."
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final reduced enemy damage cannot be calculated because target selection, uptime, stacking, and final formulas are unresolved.",
@@ -13166,7 +13116,7 @@
     ],
     "damageScope": null,
     "effects": [
-      "Enemy Strength decrease 13%"
+      "Enemy Strength decrease 13% at effective Habit Level 5."
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final reduced enemy damage cannot be calculated because target selection, uptime, stacking, and final formulas are unresolved.",
@@ -13234,7 +13184,7 @@
     ],
     "damageScope": null,
     "effects": [
-      "Enemy Initiative decrease 13%"
+      "Enemy Initiative decrease 13% at effective Habit Level 5."
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final reduced enemy damage cannot be calculated because target selection, uptime, stacking, and final formulas are unresolved.",
@@ -13302,7 +13252,7 @@
     ],
     "damageScope": null,
     "effects": [
-      "Enemy Physical Damage decrease 11%",
+      "Physical Damage Dealt decrease 11% at effective Habit Level 5.",
       "Physical Damage reduction applies to non-Basic Attacks only."
     ],
     "exactResultKnown": false,
@@ -13668,7 +13618,8 @@
     ],
     "damageScope": null,
     "effects": [
-      "Fire Damage Dealt increase 10%",
+      "Fire Damage Dealt increase 10%.",
+      "Applies to all qualifying Fire Damage sources.",
       "Activation chance 20% per each round.",
       "Activation chance: 20%.",
       "Duration: 2 rounds."
@@ -13783,24 +13734,26 @@
   },
   {
     "assumptions": [
-      "Target count is one, so eligible recipients compete for the same activation.",
       "Trigger chance and target selection may make this conditional rather than guaranteed."
     ],
     "channel": "tactical-damage",
     "confidence": "confirmed",
-    "conflicts": [],
+    "conflicts": [
+      "Syrax - Tactical Inferno Habit unlock requirement: expected Star Rank 8+, actual preview enabled",
+      "Syrax - Tactical Inferno Selected Habit Level: expected Habit Level 1+ or preview, actual preview enabled"
+    ],
     "damageScope": null,
     "effects": [
-      "Duration: 3 rounds.",
-      "Tactical Damage Dealt increase 36%"
+      "Tactical Damage Dealt increase 36% at effective Habit Level 5.",
+      "Applies to all qualifying Tactical Damage sources.",
+      "Duration: 3 rounds."
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final amplified damage cannot be calculated because stacking and final combat formulas are not fully verified.",
-    "explanation": "Syrax's Tactical Inferno can target one Tactical Damage ally. Eligible recipients are Malachite and Syrax. The selected recipient is not guaranteed. Qualifying outputs: Warden's Rally: Tactical Damage, Blazing Fury: Tactical Damage.",
-    "id": "target-selection-syrax-tactical-inferno-tactical-inferno-tactical-tactical-damage-dealt-modifier-tactical-damage",
-    "interactionScope": "targeting-fact",
+    "explanation": "Syrax is eligible for Syrax's Tactical Inferno Tactical Damage support. Qualifying outputs: Blazing Fury: Tactical Damage. Target selection follows the verified flank preference and remains selection-dependent.",
+    "id": "outgoing-effect-amplification-syrax-tactical-inferno-tactical-inferno-tactical-tactical-damage-dealt-modifier-syrax",
+    "interactionScope": "internal",
     "matchedOutputCapabilityIds": [
-      "malachite-wardens-rally-wardens-rally-tactical-damage-rate-output",
       "syrax-blazing-fury-blazing-fury-tactical-rate-output"
     ],
     "matchKind": "outgoing-effect-amplification",
@@ -13808,14 +13761,15 @@
     "modifierCapabilityIds": [
       "syrax-tactical-inferno-tactical-inferno-tactical-tactical-damage-dealt-modifier"
     ],
-    "recipientAbilityId": null,
-    "recipientDragonId": null,
+    "recipientAbilityId": "syrax-blazing-fury-blazing-fury-tactical-rate-output",
+    "recipientDragonId": "syrax",
     "recipientEvidenceIds": [
-      "malachite-wardens-rally-glossary-2026-06-23",
-      "malachite-wardens-rally-summary-2026-06-23",
-      "syrax-blazing-fury-details-2026-06-24",
+      "syrax-tactical-inferno-2026-06-24",
+      "syrax-tactical-inferno-2026-06-24",
+      "syrax-tactical-inferno-2026-06-24",
+      "syrax-tactical-inferno-2026-06-24",
       "syrax-blazing-fury-summary-2026-06-24",
-      "syrax-tactical-inferno-2026-06-24"
+      "syrax-blazing-fury-details-2026-06-24"
     ],
     "requirements": [
       {
@@ -13865,30 +13819,6 @@
         "label": "Source-scope compatibility",
         "notes": [],
         "satisfied": true
-      },
-      {
-        "actual": "provider left-flank, recipient right-flank",
-        "evidenceIds": [
-          "syrax-tactical-inferno-2026-06-24"
-        ],
-        "expected": "any-lane",
-        "id": "syrax-tactical-inferno-tactical-inferno-tactical-tactical-damage-dealt-modifier-targeting-right-flank",
-        "label": "Position compatibility",
-        "notes": [],
-        "satisfied": true
-      },
-      {
-        "actual": "commands",
-        "evidenceIds": [
-          "syrax-tactical-inferno-2026-06-24",
-          "malachite-wardens-rally-summary-2026-06-23",
-          "malachite-wardens-rally-glossary-2026-06-23"
-        ],
-        "expected": "all-qualifying-sources",
-        "id": "syrax-tactical-inferno-tactical-inferno-tactical-tactical-damage-dealt-modifier-malachite-wardens-rally-wardens-rally-tactical-damage-rate-output-source-scope",
-        "label": "Source-scope compatibility",
-        "notes": [],
-        "satisfied": true
       }
     ],
     "ruleId": "outgoing-effect-amplification",
@@ -13898,20 +13828,8 @@
       "syrax-tactical-inferno-2026-06-24"
     ],
     "status": "potential",
-    "targetSelectionGroup": {
-      "comparisonDirection": null,
-      "comparisonPool": null,
-      "eligibleRecipientDragonIds": [
-        "malachite",
-        "syrax"
-      ],
-      "selection": "any",
-      "selectionResource": null,
-      "selectionStat": null,
-      "selectionUncertain": true,
-      "targetCount": 1
-    },
-    "title": "Tactical Damage Target Selection",
+    "targetSelectionGroup": null,
+    "title": "Tactical Damage Support",
     "unresolvedQuestions": [
       "Exact final modified amount is unknown."
     ]
@@ -13931,7 +13849,8 @@
     ],
     "damageScope": null,
     "effects": [
-      "Fire Damage Dealt increase 36%",
+      "Fire Damage Dealt increase 36% at effective Habit Level 5.",
+      "Applies to all qualifying Fire Damage sources.",
       "Duration: 3 rounds."
     ],
     "exactResultKnown": false,
@@ -14076,7 +13995,8 @@
     ],
     "damageScope": null,
     "effects": [
-      "Fire Damage Dealt increase 16%"
+      "Fire Damage Dealt increase 16%.",
+      "Applies to all qualifying Fire Damage sources."
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final amplified damage cannot be calculated because stacking and final combat formulas are not fully verified.",
@@ -14229,7 +14149,8 @@
     ],
     "damageScope": null,
     "effects": [
-      "Damage Dealt increase 20%",
+      "Damage Dealt increase 20%.",
+      "Applies to all qualifying Damage Dealt sources.",
       "Activation chance depends on Habit Level for each round.",
       "Advantage increases Damage Dealt according to the verified status glossary.",
       "Activation chance: 20% at effective Habit Level 5.",
@@ -14337,7 +14258,8 @@
     ],
     "damageScope": null,
     "effects": [
-      "Damage Dealt increase 20%",
+      "Damage Dealt increase 20%.",
+      "Applies to all qualifying Damage Dealt sources.",
       "Activation chance depends on Habit Level for each round.",
       "Advantage increases Damage Dealt according to the verified status glossary.",
       "Activation chance: 20% at effective Habit Level 5.",
@@ -15631,7 +15553,7 @@
     "channel": "damage-received",
     "confidence": "confirmed",
     "conflicts": [],
-    "damageScope": null,
+    "damageScope": "all",
     "effects": [
       "Activation chance by Habit Level: 40%, 52%, 64%, 80%, 100%.",
       "Activation chance: 100% at effective Habit Level 5.",
@@ -17679,7 +17601,7 @@
     ],
     "damageScope": null,
     "effects": [
-      "Enemy Initiative decrease 12%"
+      "Enemy Initiative decrease 12% at effective Habit Level 5."
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final reduced enemy damage cannot be calculated because target selection, uptime, stacking, and final formulas are unresolved.",
@@ -17747,7 +17669,7 @@
     ],
     "damageScope": null,
     "effects": [
-      "Enemy Strength decrease 13%"
+      "Enemy Strength decrease 13% at effective Habit Level 5."
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final reduced enemy damage cannot be calculated because target selection, uptime, stacking, and final formulas are unresolved.",
@@ -17815,7 +17737,7 @@
     ],
     "damageScope": null,
     "effects": [
-      "Enemy Initiative decrease 13%"
+      "Enemy Initiative decrease 13% at effective Habit Level 5."
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final reduced enemy damage cannot be calculated because target selection, uptime, stacking, and final formulas are unresolved.",
@@ -17883,7 +17805,7 @@
     ],
     "damageScope": null,
     "effects": [
-      "Enemy Physical Damage decrease 11%",
+      "Physical Damage Dealt decrease 11% at effective Habit Level 5.",
       "Physical Damage reduction applies to non-Basic Attacks only."
     ],
     "exactResultKnown": false,
@@ -18250,7 +18172,8 @@
     ],
     "damageScope": null,
     "effects": [
-      "Fire Damage Dealt increase 16%"
+      "Fire Damage Dealt increase 16%.",
+      "Applies to all qualifying Fire Damage sources."
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final amplified damage cannot be calculated because stacking and final combat formulas are not fully verified.",
@@ -18407,7 +18330,8 @@
     ],
     "damageScope": null,
     "effects": [
-      "Physical Damage Dealt increase 16%",
+      "Physical Damage Dealt increase 16% at effective Habit Level 5.",
+      "Applies to non-Basic Physical Damage only.",
       "Activation chance 35% per each round.",
       "Activation chance: 35%.",
       "Duration: 2 rounds."
@@ -18513,7 +18437,8 @@
     ],
     "damageScope": null,
     "effects": [
-      "Damage Dealt increase 20%",
+      "Damage Dealt increase 20%.",
+      "Applies to all qualifying Damage Dealt sources.",
       "Activation chance depends on Habit Level for each round.",
       "Advantage increases Damage Dealt according to the verified status glossary.",
       "Activation chance: 20% at effective Habit Level 5.",
@@ -18665,7 +18590,8 @@
     ],
     "damageScope": null,
     "effects": [
-      "Damage Dealt increase 20%",
+      "Damage Dealt increase 20%.",
+      "Applies to all qualifying Damage Dealt sources.",
       "Activation chance depends on Habit Level for each round.",
       "Advantage increases Damage Dealt according to the verified status glossary.",
       "Activation chance: 20% at effective Habit Level 5.",
@@ -18785,7 +18711,8 @@
     "conflicts": [],
     "damageScope": null,
     "effects": [
-      "Physical Damage Dealt increase 10%"
+      "Physical Damage Dealt increase 10%.",
+      "Applies to all qualifying Physical Damage sources."
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final amplified damage cannot be calculated because stacking and final combat formulas are not fully verified.",
@@ -18911,7 +18838,8 @@
     "conflicts": [],
     "damageScope": null,
     "effects": [
-      "Tactical Damage Dealt increase 2.5",
+      "Tactical Damage Dealt increase 2.5.",
+      "Applies to all qualifying Tactical Damage sources.",
       "Ally deals Tactical Damage.",
       "Spreading Blaze stacks require the trigger chance and target selection to select this ally."
     ],
@@ -18993,7 +18921,8 @@
     ],
     "damageScope": null,
     "effects": [
-      "Tactical Damage Dealt increase 2.5",
+      "Tactical Damage Dealt increase 2.5.",
+      "Applies to all qualifying Tactical Damage sources.",
       "Activation chance depends on Habit Level for start of combat.",
       "Ally deals Tactical Damage.",
       "Spreading Blaze stacks require the trigger chance and target selection to select this ally.",
@@ -19094,7 +19023,7 @@
     "conflicts": [],
     "damageScope": null,
     "effects": [
-      "Recovery Received increase 20%"
+      "Recovery Received increase 20%."
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final Recovery cannot be calculated because the game's Level and Instinct Recovery formula is unknown.",
@@ -19190,7 +19119,7 @@
     ],
     "damageScope": null,
     "effects": [
-      "Recovery Received increase 20%"
+      "Recovery Received increase 20%."
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final Recovery cannot be calculated because the game's Level and Instinct Recovery formula is unknown.",
@@ -20717,29 +20646,21 @@
     ],
     "damageScope": "fire",
     "effects": [
-      "Below 25% Troop Capacity.",
       "Below 75% Troop Capacity.",
       "Duration: until end of the current round.",
-      "Each recipient below 50% Troop Capacity may receive Resistance, reducing Damage Received by 20%.",
       "Fire Damage Received decrease 10% at effective Habit Level 5.",
-      "Fire Damage Received decrease 20% at effective Habit Level 5.",
-      "Fire Damage Received decrease 30% at effective Habit Level 5.",
-      "Ranked progression: L1 10%, L2 12%, L3 14%, L4 17%, L5 20%.",
-      "Ranked progression: L1 15%, L2 18%, L3 21%, L4 25.5%, L5 30%.",
       "Ranked progression: L1 5%, L2 6%, L3 7%, L4 8.5%, L5 10%.",
       "Timing: Start of each round."
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final value cannot be calculated because final combat formulas and stacking order are not fully verified.",
-    "explanation": "Trial by Flame can reduce Fire Damage Received for Malachite and Sheepstealer when each satisfies a Troop Capacity threshold. . Threshold applicability depends on each recipient's current Troop Capacity; exact interaction between overlapping threshold tiers is unresolved.",
-    "id": "defensive-ally-support-vermax-trial-by-flame-grouped",
+    "explanation": "Trial by Flame can affect Malachite and Sheepstealer when each recipient satisfies the matching condition. Threshold applicability depends on each recipient's current Troop Capacity; exact interaction between overlapping threshold tiers is unresolved.",
+    "id": "defensive-all-matching-vermax-trial-by-flame-trial-below-75-fire-reduction-damage-received-received-modifier",
     "interactionScope": "targeting-fact",
     "matchedOutputCapabilityIds": [],
     "matchKind": "defensive-ally-support",
     "modifierCapabilityId": null,
     "modifierCapabilityIds": [
-      "vermax-trial-by-flame-trial-below-25-fire-reduction-damage-received-received-modifier",
-      "vermax-trial-by-flame-trial-below-50-fire-reduction-damage-received-received-modifier",
       "vermax-trial-by-flame-trial-below-75-fire-reduction-damage-received-received-modifier"
     ],
     "recipientAbilityId": null,
@@ -20791,17 +20712,99 @@
         "label": "Position compatibility",
         "notes": [],
         "satisfied": true
-      },
+      }
+    ],
+    "ruleId": "defensive-ally-support",
+    "sourceAbilityId": "vermax-trial-by-flame",
+    "sourceDragonId": "vermax",
+    "sourceEvidenceIds": [
+      "vermax-trial-by-flame-2026-06-23"
+    ],
+    "status": "potential",
+    "targetSelectionGroup": {
+      "eligibleRecipientDragonIds": [
+        "malachite",
+        "sheepstealer"
+      ],
+      "selection": "all-matching-condition",
+      "selectionUncertain": false,
+      "targetCount": 2
+    },
+    "title": "Fire Damage Received Support",
+    "unresolvedQuestions": [
+      "Exact interaction between overlapping Trial by Flame threshold tiers is unresolved."
+    ]
+  },
+  {
+    "assumptions": [
+      "Cumulative stacking is not assumed.",
+      "Exact interaction between overlapping threshold tiers is unresolved.",
+      "Threshold applicability depends on each recipient current Troop Capacity.",
+      "Threshold eligibility may make this conditional rather than guaranteed."
+    ],
+    "channel": "damage-received",
+    "confidence": "confirmed",
+    "conflicts": [
+      "Vermax - Trial by Flame Habit unlock requirement: expected Star Rank 2+, actual Star Rank 1",
+      "Vermax - Trial by Flame Selected Habit Level: expected Habit Level 1+ or preview, actual preview enabled"
+    ],
+    "damageScope": "all",
+    "effects": [
+      "Damage Received decrease 20% at effective Habit Level 5.",
+      "Duration: until end of the current round.",
+      "Each recipient below 50% Troop Capacity may receive Resistance, reducing Damage Received by 20%.",
+      "Ranked progression: L1 10%, L2 12%, L3 14%, L4 17%, L5 20%.",
+      "Timing: Start of each round."
+    ],
+    "exactResultKnown": false,
+    "exactResultUnknownReason": "Exact final value cannot be calculated because final combat formulas and stacking order are not fully verified.",
+    "explanation": "Trial by Flame can affect Malachite and Sheepstealer when each recipient satisfies the matching condition. Threshold applicability depends on each recipient's current Troop Capacity; exact interaction between overlapping threshold tiers is unresolved.",
+    "id": "defensive-all-matching-vermax-trial-by-flame-trial-below-50-resistance-damage-received-received-modifier",
+    "interactionScope": "targeting-fact",
+    "matchedOutputCapabilityIds": [],
+    "matchKind": "defensive-ally-support",
+    "modifierCapabilityId": null,
+    "modifierCapabilityIds": [
+      "vermax-trial-by-flame-trial-below-50-resistance-damage-received-received-modifier"
+    ],
+    "recipientAbilityId": null,
+    "recipientDragonId": null,
+    "recipientEvidenceIds": [],
+    "requirements": [
       {
         "actual": "provider right-flank, recipient left-flank",
         "evidenceIds": [
           "vermax-trial-by-flame-2026-06-23"
         ],
         "expected": "all allies matching threshold condition",
-        "id": "vermax-trial-by-flame-trial-below-50-fire-reduction-damage-received-received-modifier-targeting-left-flank",
+        "id": "vermax-trial-by-flame-trial-below-50-resistance-damage-received-received-modifier-targeting-left-flank",
         "label": "Position compatibility",
         "notes": [],
         "satisfied": true
+      },
+      {
+        "actual": "Star Rank 1",
+        "evidenceIds": [
+          "vermax-trial-by-flame-2026-06-23"
+        ],
+        "expected": "Star Rank 2+",
+        "id": "vermax-vermax-trial-by-flame-star-rank",
+        "label": "Vermax - Trial by Flame Habit unlock requirement",
+        "notes": [],
+        "satisfied": false
+      },
+      {
+        "actual": "preview enabled",
+        "evidenceIds": [
+          "vermax-trial-by-flame-2026-06-23"
+        ],
+        "expected": "Habit Level 1+ or preview",
+        "id": "vermax-vermax-trial-by-flame-habit-level",
+        "label": "Vermax - Trial by Flame Selected Habit Level",
+        "notes": [
+          "Unlocked Habits without an explicit saved Habit Level default to effective Habit Level 1. Locked Habit capabilities are potential in preview mode, not active for current roster."
+        ],
+        "satisfied": false
       },
       {
         "actual": "provider right-flank, recipient vanguard",
@@ -20809,11 +20812,69 @@
           "vermax-trial-by-flame-2026-06-23"
         ],
         "expected": "all allies matching threshold condition",
-        "id": "vermax-trial-by-flame-trial-below-50-fire-reduction-damage-received-received-modifier-targeting-vanguard",
+        "id": "vermax-trial-by-flame-trial-below-50-resistance-damage-received-received-modifier-targeting-vanguard",
         "label": "Position compatibility",
         "notes": [],
         "satisfied": true
-      },
+      }
+    ],
+    "ruleId": "defensive-ally-support",
+    "sourceAbilityId": "vermax-trial-by-flame",
+    "sourceDragonId": "vermax",
+    "sourceEvidenceIds": [
+      "vermax-trial-by-flame-2026-06-23"
+    ],
+    "status": "potential",
+    "targetSelectionGroup": {
+      "eligibleRecipientDragonIds": [
+        "malachite",
+        "sheepstealer"
+      ],
+      "selection": "all-matching-condition",
+      "selectionUncertain": false,
+      "targetCount": 2
+    },
+    "title": "Damage Received Support",
+    "unresolvedQuestions": [
+      "Exact interaction between overlapping Trial by Flame threshold tiers is unresolved."
+    ]
+  },
+  {
+    "assumptions": [
+      "Cumulative stacking is not assumed.",
+      "Exact interaction between overlapping threshold tiers is unresolved.",
+      "Threshold applicability depends on each recipient current Troop Capacity.",
+      "Threshold eligibility may make this conditional rather than guaranteed."
+    ],
+    "channel": "damage-received",
+    "confidence": "confirmed",
+    "conflicts": [
+      "Vermax - Trial by Flame Habit unlock requirement: expected Star Rank 2+, actual Star Rank 1",
+      "Vermax - Trial by Flame Selected Habit Level: expected Habit Level 1+ or preview, actual preview enabled"
+    ],
+    "damageScope": "fire",
+    "effects": [
+      "Below 25% Troop Capacity.",
+      "Duration: until end of the current round.",
+      "Fire Damage Received decrease 30% at effective Habit Level 5.",
+      "Ranked progression: L1 15%, L2 18%, L3 21%, L4 25.5%, L5 30%.",
+      "Timing: Start of each round."
+    ],
+    "exactResultKnown": false,
+    "exactResultUnknownReason": "Exact final value cannot be calculated because final combat formulas and stacking order are not fully verified.",
+    "explanation": "Trial by Flame can affect Malachite and Sheepstealer when each recipient satisfies the matching condition. Threshold applicability depends on each recipient's current Troop Capacity; exact interaction between overlapping threshold tiers is unresolved.",
+    "id": "defensive-all-matching-vermax-trial-by-flame-trial-below-25-fire-reduction-damage-received-received-modifier",
+    "interactionScope": "targeting-fact",
+    "matchedOutputCapabilityIds": [],
+    "matchKind": "defensive-ally-support",
+    "modifierCapabilityId": null,
+    "modifierCapabilityIds": [
+      "vermax-trial-by-flame-trial-below-25-fire-reduction-damage-received-received-modifier"
+    ],
+    "recipientAbilityId": null,
+    "recipientDragonId": null,
+    "recipientEvidenceIds": [],
+    "requirements": [
       {
         "actual": "provider right-flank, recipient left-flank",
         "evidenceIds": [
@@ -20824,6 +20885,30 @@
         "label": "Position compatibility",
         "notes": [],
         "satisfied": true
+      },
+      {
+        "actual": "Star Rank 1",
+        "evidenceIds": [
+          "vermax-trial-by-flame-2026-06-23"
+        ],
+        "expected": "Star Rank 2+",
+        "id": "vermax-vermax-trial-by-flame-star-rank",
+        "label": "Vermax - Trial by Flame Habit unlock requirement",
+        "notes": [],
+        "satisfied": false
+      },
+      {
+        "actual": "preview enabled",
+        "evidenceIds": [
+          "vermax-trial-by-flame-2026-06-23"
+        ],
+        "expected": "Habit Level 1+ or preview",
+        "id": "vermax-vermax-trial-by-flame-habit-level",
+        "label": "Vermax - Trial by Flame Selected Habit Level",
+        "notes": [
+          "Unlocked Habits without an explicit saved Habit Level default to effective Habit Level 1. Locked Habit capabilities are potential in preview mode, not active for current roster."
+        ],
+        "satisfied": false
       },
       {
         "actual": "provider right-flank, recipient vanguard",
@@ -21858,7 +21943,7 @@
     ],
     "damageScope": null,
     "effects": [
-      "Enemy Instinct decrease 24%"
+      "Enemy Instinct decrease 24% at effective Habit Level 5."
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final reduced enemy damage cannot be calculated because target selection, uptime, stacking, and final formulas are unresolved.",
@@ -21993,7 +22078,8 @@
     ],
     "damageScope": null,
     "effects": [
-      "Fire Damage Dealt increase 10%"
+      "Fire Damage Dealt increase 10% at effective Habit Level 5.",
+      "Applies to all qualifying Fire Damage sources."
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final amplified damage cannot be calculated because stacking and final combat formulas are not fully verified.",
@@ -22098,7 +22184,8 @@
     ],
     "damageScope": null,
     "effects": [
-      "Fire Damage Dealt increase 10%"
+      "Fire Damage Dealt increase 10% at effective Habit Level 5.",
+      "Applies to all qualifying Fire Damage sources."
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final amplified damage cannot be calculated because stacking and final combat formulas are not fully verified.",
@@ -22246,7 +22333,8 @@
     ],
     "damageScope": null,
     "effects": [
-      "Damage Dealt increase 20%",
+      "Damage Dealt increase 20%.",
+      "Applies to all qualifying Damage Dealt sources.",
       "Activation chance depends on Habit Level for each round.",
       "Target is above 50% Troop Capacity.",
       "Advantage increases Damage Dealt according to the verified status glossary.",
@@ -22355,7 +22443,8 @@
     ],
     "damageScope": null,
     "effects": [
-      "Damage Dealt increase 20%",
+      "Damage Dealt increase 20%.",
+      "Applies to all qualifying Damage Dealt sources.",
       "Activation chance depends on Habit Level for each round.",
       "Target is above 50% Troop Capacity.",
       "Advantage increases Damage Dealt according to the verified status glossary.",
@@ -22502,7 +22591,8 @@
     "conflicts": [],
     "damageScope": null,
     "effects": [
-      "Fire Damage Dealt increase 16%"
+      "Fire Damage Dealt increase 16%.",
+      "Applies to all qualifying Fire Damage sources."
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final amplified damage cannot be calculated because stacking and final combat formulas are not fully verified.",
@@ -22613,7 +22703,8 @@
     ],
     "damageScope": null,
     "effects": [
-      "Fire Damage Dealt increase 16%"
+      "Fire Damage Dealt increase 16%.",
+      "Applies to all qualifying Fire Damage sources."
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final amplified damage cannot be calculated because stacking and final combat formulas are not fully verified.",
@@ -22772,7 +22863,8 @@
     ],
     "damageScope": null,
     "effects": [
-      "Physical Damage Dealt increase 16%",
+      "Physical Damage Dealt increase 16% at effective Habit Level 5.",
+      "Applies to non-Basic Physical Damage only.",
       "Activation chance 35% per each round.",
       "Activation chance: 35%.",
       "Duration: 2 rounds."
@@ -22902,7 +22994,8 @@
     ],
     "damageScope": null,
     "effects": [
-      "Damage Dealt increase 20%",
+      "Damage Dealt increase 20%.",
+      "Applies to all qualifying Damage Dealt sources.",
       "Activation chance depends on Habit Level for each round.",
       "Advantage increases Damage Dealt according to the verified status glossary.",
       "Activation chance: 20% at effective Habit Level 5.",
@@ -23054,7 +23147,8 @@
     ],
     "damageScope": null,
     "effects": [
-      "Damage Dealt increase 20%",
+      "Damage Dealt increase 20%.",
+      "Applies to all qualifying Damage Dealt sources.",
       "Activation chance depends on Habit Level for each round.",
       "Advantage increases Damage Dealt according to the verified status glossary.",
       "Activation chance: 20% at effective Habit Level 5.",
@@ -23205,7 +23299,8 @@
     ],
     "damageScope": null,
     "effects": [
-      "Physical Damage Dealt increase 10%"
+      "Physical Damage Dealt increase 10%.",
+      "Applies to all qualifying Physical Damage sources."
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final amplified damage cannot be calculated because stacking and final combat formulas are not fully verified.",
@@ -23336,7 +23431,7 @@
     ],
     "damageScope": null,
     "effects": [
-      "Recovery Received increase 20%"
+      "Recovery Received increase 20%."
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final Recovery cannot be calculated because the game's Level and Instinct Recovery formula is unknown.",
@@ -23433,7 +23528,7 @@
     ],
     "damageScope": null,
     "effects": [
-      "Recovery Received increase 20%"
+      "Recovery Received increase 20%."
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final Recovery cannot be calculated because the game's Level and Instinct Recovery formula is unknown.",
@@ -24895,7 +24990,7 @@
       "Seasmoke - Loyal Bond Habit unlock requirement: expected Star Rank 10+, actual preview enabled",
       "Seasmoke - Loyal Bond Selected Habit Level: expected Habit Level 1+ or preview, actual preview enabled"
     ],
-    "damageScope": null,
+    "damageScope": "all",
     "effects": [
       "Damage Received decrease 20%.",
       "Each recipient below 50% Troop Capacity may receive Resistance, reducing Damage Received by 20%.",
@@ -24979,7 +25074,7 @@
       "Seasmoke - Loyal Bond Habit unlock requirement: expected Star Rank 10+, actual preview enabled",
       "Seasmoke - Loyal Bond Selected Habit Level: expected Habit Level 1+ or preview, actual preview enabled"
     ],
-    "damageScope": null,
+    "damageScope": "all",
     "effects": [
       "Damage Received decrease 20%.",
       "Each recipient below 50% Troop Capacity may receive Resistance, reducing Damage Received by 20%.",
@@ -26370,7 +26465,7 @@
     ],
     "damageScope": null,
     "effects": [
-      "Enemy Instinct decrease 24%"
+      "Enemy Instinct decrease 24% at effective Habit Level 5."
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final reduced enemy damage cannot be calculated because target selection, uptime, stacking, and final formulas are unresolved.",
@@ -26505,7 +26600,8 @@
     ],
     "damageScope": null,
     "effects": [
-      "Fire Damage Dealt increase 10%"
+      "Fire Damage Dealt increase 10% at effective Habit Level 5.",
+      "Applies to all qualifying Fire Damage sources."
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final amplified damage cannot be calculated because stacking and final combat formulas are not fully verified.",
@@ -26607,7 +26703,8 @@
     ],
     "damageScope": null,
     "effects": [
-      "Damage Dealt increase 20%",
+      "Damage Dealt increase 20%.",
+      "Applies to all qualifying Damage Dealt sources.",
       "Activation chance depends on Habit Level for each round.",
       "Target is above 50% Troop Capacity.",
       "Advantage increases Damage Dealt according to the verified status glossary.",
@@ -26714,7 +26811,8 @@
     ],
     "damageScope": null,
     "effects": [
-      "Damage Dealt increase 20%",
+      "Damage Dealt increase 20%.",
+      "Applies to all qualifying Damage Dealt sources.",
       "Activation chance depends on Habit Level for each round.",
       "Target is above 50% Troop Capacity.",
       "Advantage increases Damage Dealt according to the verified status glossary.",
@@ -26836,7 +26934,8 @@
     ],
     "damageScope": null,
     "effects": [
-      "Fire Damage Dealt increase 16%"
+      "Fire Damage Dealt increase 16%.",
+      "Applies to all qualifying Fire Damage sources."
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final amplified damage cannot be calculated because stacking and final combat formulas are not fully verified.",
@@ -26946,7 +27045,8 @@
     ],
     "damageScope": null,
     "effects": [
-      "Physical Damage Dealt increase 16%",
+      "Physical Damage Dealt increase 16% at effective Habit Level 5.",
+      "Applies to non-Basic Physical Damage only.",
       "Activation chance 35% per each round.",
       "Activation chance: 35%.",
       "Duration: 2 rounds."
@@ -27051,7 +27151,8 @@
     ],
     "damageScope": null,
     "effects": [
-      "Physical Damage Dealt increase 16%",
+      "Physical Damage Dealt increase 16% at effective Habit Level 5.",
+      "Applies to non-Basic Physical Damage only.",
       "Activation chance 35% per each round.",
       "Activation chance: 35%.",
       "Duration: 2 rounds."
@@ -27179,7 +27280,8 @@
     ],
     "damageScope": null,
     "effects": [
-      "Damage Dealt increase 20%",
+      "Damage Dealt increase 20%.",
+      "Applies to all qualifying Damage Dealt sources.",
       "Activation chance depends on Habit Level for each round.",
       "Advantage increases Damage Dealt according to the verified status glossary.",
       "Activation chance: 20% at effective Habit Level 5.",
@@ -27305,7 +27407,8 @@
     ],
     "damageScope": null,
     "effects": [
-      "Damage Dealt increase 20%",
+      "Damage Dealt increase 20%.",
+      "Applies to all qualifying Damage Dealt sources.",
       "Activation chance depends on Habit Level for each round.",
       "Advantage increases Damage Dealt according to the verified status glossary.",
       "Activation chance: 20% at effective Habit Level 5.",
@@ -27451,7 +27554,8 @@
     "conflicts": [],
     "damageScope": null,
     "effects": [
-      "Tactical Damage Dealt increase 2.5",
+      "Tactical Damage Dealt increase 2.5.",
+      "Applies to all qualifying Tactical Damage sources.",
       "Ally deals Tactical Damage.",
       "Spreading Blaze stacks require the trigger chance and target selection to select this ally."
     ],
@@ -27533,7 +27637,8 @@
     ],
     "damageScope": null,
     "effects": [
-      "Tactical Damage Dealt increase 2.5",
+      "Tactical Damage Dealt increase 2.5.",
+      "Applies to all qualifying Tactical Damage sources.",
       "Activation chance depends on Habit Level for start of combat.",
       "Ally deals Tactical Damage.",
       "Spreading Blaze stacks require the trigger chance and target selection to select this ally.",
@@ -28851,29 +28956,21 @@
     ],
     "damageScope": "fire",
     "effects": [
-      "Below 25% Troop Capacity.",
       "Below 75% Troop Capacity.",
       "Duration: until end of the current round.",
-      "Each recipient below 50% Troop Capacity may receive Resistance, reducing Damage Received by 20%.",
       "Fire Damage Received decrease 10% at effective Habit Level 5.",
-      "Fire Damage Received decrease 20% at effective Habit Level 5.",
-      "Fire Damage Received decrease 30% at effective Habit Level 5.",
-      "Ranked progression: L1 10%, L2 12%, L3 14%, L4 17%, L5 20%.",
-      "Ranked progression: L1 15%, L2 18%, L3 21%, L4 25.5%, L5 30%.",
       "Ranked progression: L1 5%, L2 6%, L3 7%, L4 8.5%, L5 10%.",
       "Timing: Start of each round."
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final value cannot be calculated because final combat formulas and stacking order are not fully verified.",
-    "explanation": "Trial by Flame can reduce Fire Damage Received for Malachite and Seasmoke when each satisfies a Troop Capacity threshold. . Threshold applicability depends on each recipient's current Troop Capacity; exact interaction between overlapping threshold tiers is unresolved.",
-    "id": "defensive-ally-support-vermax-trial-by-flame-grouped",
+    "explanation": "Trial by Flame can affect Malachite and Seasmoke when each recipient satisfies the matching condition. Threshold applicability depends on each recipient's current Troop Capacity; exact interaction between overlapping threshold tiers is unresolved.",
+    "id": "defensive-all-matching-vermax-trial-by-flame-trial-below-75-fire-reduction-damage-received-received-modifier",
     "interactionScope": "targeting-fact",
     "matchedOutputCapabilityIds": [],
     "matchKind": "defensive-ally-support",
     "modifierCapabilityId": null,
     "modifierCapabilityIds": [
-      "vermax-trial-by-flame-trial-below-25-fire-reduction-damage-received-received-modifier",
-      "vermax-trial-by-flame-trial-below-50-fire-reduction-damage-received-received-modifier",
       "vermax-trial-by-flame-trial-below-75-fire-reduction-damage-received-received-modifier"
     ],
     "recipientAbilityId": null,
@@ -28925,17 +29022,99 @@
         "label": "Position compatibility",
         "notes": [],
         "satisfied": true
-      },
+      }
+    ],
+    "ruleId": "defensive-ally-support",
+    "sourceAbilityId": "vermax-trial-by-flame",
+    "sourceDragonId": "vermax",
+    "sourceEvidenceIds": [
+      "vermax-trial-by-flame-2026-06-23"
+    ],
+    "status": "potential",
+    "targetSelectionGroup": {
+      "eligibleRecipientDragonIds": [
+        "malachite",
+        "seasmoke"
+      ],
+      "selection": "all-matching-condition",
+      "selectionUncertain": false,
+      "targetCount": 2
+    },
+    "title": "Fire Damage Received Support",
+    "unresolvedQuestions": [
+      "Exact interaction between overlapping Trial by Flame threshold tiers is unresolved."
+    ]
+  },
+  {
+    "assumptions": [
+      "Cumulative stacking is not assumed.",
+      "Exact interaction between overlapping threshold tiers is unresolved.",
+      "Threshold applicability depends on each recipient current Troop Capacity.",
+      "Threshold eligibility may make this conditional rather than guaranteed."
+    ],
+    "channel": "damage-received",
+    "confidence": "confirmed",
+    "conflicts": [
+      "Vermax - Trial by Flame Habit unlock requirement: expected Star Rank 2+, actual Star Rank 1",
+      "Vermax - Trial by Flame Selected Habit Level: expected Habit Level 1+ or preview, actual preview enabled"
+    ],
+    "damageScope": "all",
+    "effects": [
+      "Damage Received decrease 20% at effective Habit Level 5.",
+      "Duration: until end of the current round.",
+      "Each recipient below 50% Troop Capacity may receive Resistance, reducing Damage Received by 20%.",
+      "Ranked progression: L1 10%, L2 12%, L3 14%, L4 17%, L5 20%.",
+      "Timing: Start of each round."
+    ],
+    "exactResultKnown": false,
+    "exactResultUnknownReason": "Exact final value cannot be calculated because final combat formulas and stacking order are not fully verified.",
+    "explanation": "Trial by Flame can affect Malachite and Seasmoke when each recipient satisfies the matching condition. Threshold applicability depends on each recipient's current Troop Capacity; exact interaction between overlapping threshold tiers is unresolved.",
+    "id": "defensive-all-matching-vermax-trial-by-flame-trial-below-50-resistance-damage-received-received-modifier",
+    "interactionScope": "targeting-fact",
+    "matchedOutputCapabilityIds": [],
+    "matchKind": "defensive-ally-support",
+    "modifierCapabilityId": null,
+    "modifierCapabilityIds": [
+      "vermax-trial-by-flame-trial-below-50-resistance-damage-received-received-modifier"
+    ],
+    "recipientAbilityId": null,
+    "recipientDragonId": null,
+    "recipientEvidenceIds": [],
+    "requirements": [
       {
         "actual": "provider vanguard, recipient left-flank",
         "evidenceIds": [
           "vermax-trial-by-flame-2026-06-23"
         ],
         "expected": "all allies matching threshold condition",
-        "id": "vermax-trial-by-flame-trial-below-50-fire-reduction-damage-received-received-modifier-targeting-left-flank",
+        "id": "vermax-trial-by-flame-trial-below-50-resistance-damage-received-received-modifier-targeting-left-flank",
         "label": "Position compatibility",
         "notes": [],
         "satisfied": true
+      },
+      {
+        "actual": "Star Rank 1",
+        "evidenceIds": [
+          "vermax-trial-by-flame-2026-06-23"
+        ],
+        "expected": "Star Rank 2+",
+        "id": "vermax-vermax-trial-by-flame-star-rank",
+        "label": "Vermax - Trial by Flame Habit unlock requirement",
+        "notes": [],
+        "satisfied": false
+      },
+      {
+        "actual": "preview enabled",
+        "evidenceIds": [
+          "vermax-trial-by-flame-2026-06-23"
+        ],
+        "expected": "Habit Level 1+ or preview",
+        "id": "vermax-vermax-trial-by-flame-habit-level",
+        "label": "Vermax - Trial by Flame Selected Habit Level",
+        "notes": [
+          "Unlocked Habits without an explicit saved Habit Level default to effective Habit Level 1. Locked Habit capabilities are potential in preview mode, not active for current roster."
+        ],
+        "satisfied": false
       },
       {
         "actual": "provider vanguard, recipient right-flank",
@@ -28943,11 +29122,69 @@
           "vermax-trial-by-flame-2026-06-23"
         ],
         "expected": "all allies matching threshold condition",
-        "id": "vermax-trial-by-flame-trial-below-50-fire-reduction-damage-received-received-modifier-targeting-right-flank",
+        "id": "vermax-trial-by-flame-trial-below-50-resistance-damage-received-received-modifier-targeting-right-flank",
         "label": "Position compatibility",
         "notes": [],
         "satisfied": true
-      },
+      }
+    ],
+    "ruleId": "defensive-ally-support",
+    "sourceAbilityId": "vermax-trial-by-flame",
+    "sourceDragonId": "vermax",
+    "sourceEvidenceIds": [
+      "vermax-trial-by-flame-2026-06-23"
+    ],
+    "status": "potential",
+    "targetSelectionGroup": {
+      "eligibleRecipientDragonIds": [
+        "malachite",
+        "seasmoke"
+      ],
+      "selection": "all-matching-condition",
+      "selectionUncertain": false,
+      "targetCount": 2
+    },
+    "title": "Damage Received Support",
+    "unresolvedQuestions": [
+      "Exact interaction between overlapping Trial by Flame threshold tiers is unresolved."
+    ]
+  },
+  {
+    "assumptions": [
+      "Cumulative stacking is not assumed.",
+      "Exact interaction between overlapping threshold tiers is unresolved.",
+      "Threshold applicability depends on each recipient current Troop Capacity.",
+      "Threshold eligibility may make this conditional rather than guaranteed."
+    ],
+    "channel": "damage-received",
+    "confidence": "confirmed",
+    "conflicts": [
+      "Vermax - Trial by Flame Habit unlock requirement: expected Star Rank 2+, actual Star Rank 1",
+      "Vermax - Trial by Flame Selected Habit Level: expected Habit Level 1+ or preview, actual preview enabled"
+    ],
+    "damageScope": "fire",
+    "effects": [
+      "Below 25% Troop Capacity.",
+      "Duration: until end of the current round.",
+      "Fire Damage Received decrease 30% at effective Habit Level 5.",
+      "Ranked progression: L1 15%, L2 18%, L3 21%, L4 25.5%, L5 30%.",
+      "Timing: Start of each round."
+    ],
+    "exactResultKnown": false,
+    "exactResultUnknownReason": "Exact final value cannot be calculated because final combat formulas and stacking order are not fully verified.",
+    "explanation": "Trial by Flame can affect Malachite and Seasmoke when each recipient satisfies the matching condition. Threshold applicability depends on each recipient's current Troop Capacity; exact interaction between overlapping threshold tiers is unresolved.",
+    "id": "defensive-all-matching-vermax-trial-by-flame-trial-below-25-fire-reduction-damage-received-received-modifier",
+    "interactionScope": "targeting-fact",
+    "matchedOutputCapabilityIds": [],
+    "matchKind": "defensive-ally-support",
+    "modifierCapabilityId": null,
+    "modifierCapabilityIds": [
+      "vermax-trial-by-flame-trial-below-25-fire-reduction-damage-received-received-modifier"
+    ],
+    "recipientAbilityId": null,
+    "recipientDragonId": null,
+    "recipientEvidenceIds": [],
+    "requirements": [
       {
         "actual": "provider vanguard, recipient left-flank",
         "evidenceIds": [
@@ -28958,6 +29195,30 @@
         "label": "Position compatibility",
         "notes": [],
         "satisfied": true
+      },
+      {
+        "actual": "Star Rank 1",
+        "evidenceIds": [
+          "vermax-trial-by-flame-2026-06-23"
+        ],
+        "expected": "Star Rank 2+",
+        "id": "vermax-vermax-trial-by-flame-star-rank",
+        "label": "Vermax - Trial by Flame Habit unlock requirement",
+        "notes": [],
+        "satisfied": false
+      },
+      {
+        "actual": "preview enabled",
+        "evidenceIds": [
+          "vermax-trial-by-flame-2026-06-23"
+        ],
+        "expected": "Habit Level 1+ or preview",
+        "id": "vermax-vermax-trial-by-flame-habit-level",
+        "label": "Vermax - Trial by Flame Selected Habit Level",
+        "notes": [
+          "Unlocked Habits without an explicit saved Habit Level default to effective Habit Level 1. Locked Habit capabilities are potential in preview mode, not active for current roster."
+        ],
+        "satisfied": false
       },
       {
         "actual": "provider vanguard, recipient right-flank",
@@ -29086,7 +29347,7 @@
       "Seasmoke - Loyal Bond Habit unlock requirement: expected Star Rank 10+, actual preview enabled",
       "Seasmoke - Loyal Bond Selected Habit Level: expected Habit Level 1+ or preview, actual preview enabled"
     ],
-    "damageScope": null,
+    "damageScope": "all",
     "effects": [
       "Damage Received decrease 20%.",
       "Each recipient below 50% Troop Capacity may receive Resistance, reducing Damage Received by 20%.",
@@ -29170,7 +29431,7 @@
       "Seasmoke - Loyal Bond Habit unlock requirement: expected Star Rank 10+, actual preview enabled",
       "Seasmoke - Loyal Bond Selected Habit Level: expected Habit Level 1+ or preview, actual preview enabled"
     ],
-    "damageScope": null,
+    "damageScope": "all",
     "effects": [
       "Damage Received decrease 20%.",
       "Each recipient below 50% Troop Capacity may receive Resistance, reducing Damage Received by 20%.",
@@ -30756,7 +31017,8 @@
     ],
     "damageScope": null,
     "effects": [
-      "Fire Damage Dealt increase 10%"
+      "Fire Damage Dealt increase 10% at effective Habit Level 5.",
+      "Applies to all qualifying Fire Damage sources."
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final amplified damage cannot be calculated because stacking and final combat formulas are not fully verified.",
@@ -30860,7 +31122,8 @@
     ],
     "damageScope": null,
     "effects": [
-      "Fire Damage Dealt increase 10%"
+      "Fire Damage Dealt increase 10% at effective Habit Level 5.",
+      "Applies to all qualifying Fire Damage sources."
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final amplified damage cannot be calculated because stacking and final combat formulas are not fully verified.",
@@ -31008,7 +31271,8 @@
     ],
     "damageScope": null,
     "effects": [
-      "Damage Dealt increase 20%",
+      "Damage Dealt increase 20%.",
+      "Applies to all qualifying Damage Dealt sources.",
       "Activation chance depends on Habit Level for each round.",
       "Target is above 50% Troop Capacity.",
       "Advantage increases Damage Dealt according to the verified status glossary.",
@@ -31117,7 +31381,8 @@
     ],
     "damageScope": null,
     "effects": [
-      "Damage Dealt increase 20%",
+      "Damage Dealt increase 20%.",
+      "Applies to all qualifying Damage Dealt sources.",
       "Activation chance depends on Habit Level for each round.",
       "Target is above 50% Troop Capacity.",
       "Advantage increases Damage Dealt according to the verified status glossary.",
@@ -31267,7 +31532,8 @@
     ],
     "damageScope": null,
     "effects": [
-      "Fire Damage Dealt increase 16%"
+      "Fire Damage Dealt increase 16%.",
+      "Applies to all qualifying Fire Damage sources."
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final amplified damage cannot be calculated because stacking and final combat formulas are not fully verified.",
@@ -31379,7 +31645,8 @@
     ],
     "damageScope": null,
     "effects": [
-      "Fire Damage Dealt increase 16%"
+      "Fire Damage Dealt increase 16%.",
+      "Applies to all qualifying Fire Damage sources."
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final amplified damage cannot be calculated because stacking and final combat formulas are not fully verified.",
@@ -31538,7 +31805,8 @@
     ],
     "damageScope": null,
     "effects": [
-      "Physical Damage Dealt increase 16%",
+      "Physical Damage Dealt increase 16% at effective Habit Level 5.",
+      "Applies to non-Basic Physical Damage only.",
       "Activation chance 35% per each round.",
       "Activation chance: 35%.",
       "Duration: 2 rounds."
@@ -31668,7 +31936,8 @@
     ],
     "damageScope": null,
     "effects": [
-      "Damage Dealt increase 20%",
+      "Damage Dealt increase 20%.",
+      "Applies to all qualifying Damage Dealt sources.",
       "Activation chance depends on Habit Level for each round.",
       "Advantage increases Damage Dealt according to the verified status glossary.",
       "Activation chance: 20% at effective Habit Level 5.",
@@ -31820,7 +32089,8 @@
     ],
     "damageScope": null,
     "effects": [
-      "Damage Dealt increase 20%",
+      "Damage Dealt increase 20%.",
+      "Applies to all qualifying Damage Dealt sources.",
       "Activation chance depends on Habit Level for each round.",
       "Advantage increases Damage Dealt according to the verified status glossary.",
       "Activation chance: 20% at effective Habit Level 5.",
@@ -31971,7 +32241,8 @@
     ],
     "damageScope": null,
     "effects": [
-      "Physical Damage Dealt increase 10%"
+      "Physical Damage Dealt increase 10%.",
+      "Applies to all qualifying Physical Damage sources."
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final amplified damage cannot be calculated because stacking and final combat formulas are not fully verified.",
@@ -32102,7 +32373,7 @@
     ],
     "damageScope": null,
     "effects": [
-      "Recovery Received increase 20%"
+      "Recovery Received increase 20%."
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final Recovery cannot be calculated because the game's Level and Instinct Recovery formula is unknown.",
@@ -32199,7 +32470,7 @@
     ],
     "damageScope": null,
     "effects": [
-      "Recovery Received increase 20%"
+      "Recovery Received increase 20%."
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final Recovery cannot be calculated because the game's Level and Instinct Recovery formula is unknown.",
@@ -33661,7 +33932,7 @@
       "Seasmoke - Loyal Bond Habit unlock requirement: expected Star Rank 10+, actual preview enabled",
       "Seasmoke - Loyal Bond Selected Habit Level: expected Habit Level 1+ or preview, actual preview enabled"
     ],
-    "damageScope": null,
+    "damageScope": "all",
     "effects": [
       "Damage Received decrease 20%.",
       "Each recipient below 50% Troop Capacity may receive Resistance, reducing Damage Received by 20%.",
@@ -33745,7 +34016,7 @@
       "Seasmoke - Loyal Bond Habit unlock requirement: expected Star Rank 10+, actual preview enabled",
       "Seasmoke - Loyal Bond Selected Habit Level: expected Habit Level 1+ or preview, actual preview enabled"
     ],
-    "damageScope": null,
+    "damageScope": "all",
     "effects": [
       "Damage Received decrease 20%.",
       "Each recipient below 50% Troop Capacity may receive Resistance, reducing Damage Received by 20%.",
@@ -35246,7 +35517,7 @@
     ],
     "damageScope": null,
     "effects": [
-      "Enemy Instinct decrease 24%"
+      "Enemy Instinct decrease 24% at effective Habit Level 5."
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final reduced enemy damage cannot be calculated because target selection, uptime, stacking, and final formulas are unresolved.",
@@ -35384,7 +35655,8 @@
     ],
     "damageScope": null,
     "effects": [
-      "Fire Damage Dealt increase 10%"
+      "Fire Damage Dealt increase 10% at effective Habit Level 5.",
+      "Applies to all qualifying Fire Damage sources."
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final amplified damage cannot be calculated because stacking and final combat formulas are not fully verified.",
@@ -35527,7 +35799,8 @@
     ],
     "damageScope": null,
     "effects": [
-      "Fire Damage Dealt increase 10%"
+      "Fire Damage Dealt increase 10% at effective Habit Level 5.",
+      "Applies to all qualifying Fire Damage sources."
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final amplified damage cannot be calculated because stacking and final combat formulas are not fully verified.",
@@ -35631,7 +35904,8 @@
     ],
     "damageScope": null,
     "effects": [
-      "Fire Damage Dealt increase 10%"
+      "Fire Damage Dealt increase 10% at effective Habit Level 5.",
+      "Applies to all qualifying Fire Damage sources."
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final amplified damage cannot be calculated because stacking and final combat formulas are not fully verified.",
@@ -35782,7 +36056,8 @@
     ],
     "damageScope": null,
     "effects": [
-      "Damage Dealt increase 20%",
+      "Damage Dealt increase 20%.",
+      "Applies to all qualifying Damage Dealt sources.",
       "Activation chance depends on Habit Level for each round.",
       "Target is above 50% Troop Capacity.",
       "Advantage increases Damage Dealt according to the verified status glossary.",
@@ -35933,7 +36208,8 @@
     ],
     "damageScope": null,
     "effects": [
-      "Damage Dealt increase 20%",
+      "Damage Dealt increase 20%.",
+      "Applies to all qualifying Damage Dealt sources.",
       "Activation chance depends on Habit Level for each round.",
       "Target is above 50% Troop Capacity.",
       "Advantage increases Damage Dealt according to the verified status glossary.",
@@ -36085,7 +36361,8 @@
     ],
     "damageScope": null,
     "effects": [
-      "Physical Damage Dealt increase 10%"
+      "Physical Damage Dealt increase 10%.",
+      "Applies to all qualifying Physical Damage sources."
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final amplified damage cannot be calculated because stacking and final combat formulas are not fully verified.",
@@ -36218,7 +36495,7 @@
     ],
     "damageScope": null,
     "effects": [
-      "Recovery Received increase 20%"
+      "Recovery Received increase 20%."
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final Recovery cannot be calculated because the game's Level and Instinct Recovery formula is unknown.",
@@ -37437,7 +37714,7 @@
       "Seasmoke - Loyal Bond Habit unlock requirement: expected Star Rank 10+, actual preview enabled",
       "Seasmoke - Loyal Bond Selected Habit Level: expected Habit Level 1+ or preview, actual preview enabled"
     ],
-    "damageScope": null,
+    "damageScope": "all",
     "effects": [
       "Damage Received decrease 20%.",
       "Each recipient below 50% Troop Capacity may receive Resistance, reducing Damage Received by 20%.",
@@ -37521,7 +37798,7 @@
       "Seasmoke - Loyal Bond Habit unlock requirement: expected Star Rank 10+, actual preview enabled",
       "Seasmoke - Loyal Bond Selected Habit Level: expected Habit Level 1+ or preview, actual preview enabled"
     ],
-    "damageScope": null,
+    "damageScope": "all",
     "effects": [
       "Damage Received decrease 20%.",
       "Each recipient below 50% Troop Capacity may receive Resistance, reducing Damage Received by 20%.",
@@ -38812,7 +39089,7 @@
     ],
     "damageScope": null,
     "effects": [
-      "Enemy Strength decrease 13%"
+      "Enemy Strength decrease 13% at effective Habit Level 5."
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final reduced enemy damage cannot be calculated because target selection, uptime, stacking, and final formulas are unresolved.",
@@ -38880,7 +39157,7 @@
     ],
     "damageScope": null,
     "effects": [
-      "Enemy Initiative decrease 13%"
+      "Enemy Initiative decrease 13% at effective Habit Level 5."
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final reduced enemy damage cannot be calculated because target selection, uptime, stacking, and final formulas are unresolved.",
@@ -38948,7 +39225,7 @@
     ],
     "damageScope": null,
     "effects": [
-      "Enemy Physical Damage decrease 11%",
+      "Physical Damage Dealt decrease 11% at effective Habit Level 5.",
       "Physical Damage reduction applies to non-Basic Attacks only."
     ],
     "exactResultKnown": false,
@@ -39017,7 +39294,7 @@
     ],
     "damageScope": null,
     "effects": [
-      "Enemy Instinct decrease 24%"
+      "Enemy Instinct decrease 24% at effective Habit Level 5."
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final reduced enemy damage cannot be calculated because target selection, uptime, stacking, and final formulas are unresolved.",
@@ -39313,7 +39590,8 @@
     ],
     "damageScope": null,
     "effects": [
-      "Fire Damage Dealt increase 10%",
+      "Fire Damage Dealt increase 10%.",
+      "Applies to all qualifying Fire Damage sources.",
       "Activation chance 20% per each round.",
       "Activation chance: 20%.",
       "Duration: 2 rounds."
@@ -39432,39 +39710,42 @@
   },
   {
     "assumptions": [
-      "Target count is one, so eligible recipients compete for the same activation.",
       "Trigger chance and target selection may make this conditional rather than guaranteed."
     ],
     "channel": "tactical-damage",
     "confidence": "confirmed",
-    "conflicts": [],
+    "conflicts": [
+      "Syrax - Tactical Inferno Habit unlock requirement: expected Star Rank 8+, actual preview enabled",
+      "Syrax - Tactical Inferno Selected Habit Level: expected Habit Level 1+ or preview, actual preview enabled"
+    ],
     "damageScope": null,
     "effects": [
-      "Duration: 3 rounds.",
-      "Tactical Damage Dealt increase 36%"
+      "Tactical Damage Dealt increase 36% at effective Habit Level 5.",
+      "Applies to all qualifying Tactical Damage sources.",
+      "Duration: 3 rounds."
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final amplified damage cannot be calculated because stacking and final combat formulas are not fully verified.",
-    "explanation": "Syrax's Tactical Inferno can target one Tactical Damage ally. Eligible recipients are Malachite and Syrax. The selected recipient is not guaranteed. Qualifying outputs: Warden's Rally: Tactical Damage, Blazing Fury: Tactical Damage.",
-    "id": "target-selection-syrax-tactical-inferno-tactical-inferno-tactical-tactical-damage-dealt-modifier-tactical-damage",
-    "interactionScope": "targeting-fact",
+    "explanation": "Malachite is eligible for Syrax's Tactical Inferno Tactical Damage support. Qualifying outputs: Warden's Rally: Tactical Damage. Target selection follows the verified flank preference and remains selection-dependent.",
+    "id": "outgoing-effect-amplification-syrax-tactical-inferno-tactical-inferno-tactical-tactical-damage-dealt-modifier-malachite",
+    "interactionScope": "cross-dragon",
     "matchedOutputCapabilityIds": [
-      "malachite-wardens-rally-wardens-rally-tactical-damage-rate-output",
-      "syrax-blazing-fury-blazing-fury-tactical-rate-output"
+      "malachite-wardens-rally-wardens-rally-tactical-damage-rate-output"
     ],
     "matchKind": "outgoing-effect-amplification",
     "modifierCapabilityId": "syrax-tactical-inferno-tactical-inferno-tactical-tactical-damage-dealt-modifier",
     "modifierCapabilityIds": [
       "syrax-tactical-inferno-tactical-inferno-tactical-tactical-damage-dealt-modifier"
     ],
-    "recipientAbilityId": null,
-    "recipientDragonId": null,
+    "recipientAbilityId": "malachite-wardens-rally-wardens-rally-tactical-damage-rate-output",
+    "recipientDragonId": "malachite",
     "recipientEvidenceIds": [
-      "malachite-wardens-rally-glossary-2026-06-23",
+      "syrax-tactical-inferno-2026-06-24",
+      "syrax-tactical-inferno-2026-06-24",
+      "syrax-tactical-inferno-2026-06-24",
+      "syrax-tactical-inferno-2026-06-24",
       "malachite-wardens-rally-summary-2026-06-23",
-      "syrax-blazing-fury-details-2026-06-24",
-      "syrax-blazing-fury-summary-2026-06-24",
-      "syrax-tactical-inferno-2026-06-24"
+      "malachite-wardens-rally-glossary-2026-06-23"
     ],
     "requirements": [
       {
@@ -39514,30 +39795,6 @@
         "label": "Source-scope compatibility",
         "notes": [],
         "satisfied": true
-      },
-      {
-        "actual": "provider vanguard, recipient vanguard",
-        "evidenceIds": [
-          "syrax-tactical-inferno-2026-06-24"
-        ],
-        "expected": "any-lane",
-        "id": "syrax-tactical-inferno-tactical-inferno-tactical-tactical-damage-dealt-modifier-targeting-vanguard",
-        "label": "Position compatibility",
-        "notes": [],
-        "satisfied": true
-      },
-      {
-        "actual": "commands",
-        "evidenceIds": [
-          "syrax-tactical-inferno-2026-06-24",
-          "syrax-blazing-fury-summary-2026-06-24",
-          "syrax-blazing-fury-details-2026-06-24"
-        ],
-        "expected": "all-qualifying-sources",
-        "id": "syrax-tactical-inferno-tactical-inferno-tactical-tactical-damage-dealt-modifier-syrax-blazing-fury-blazing-fury-tactical-rate-output-source-scope",
-        "label": "Source-scope compatibility",
-        "notes": [],
-        "satisfied": true
       }
     ],
     "ruleId": "outgoing-effect-amplification",
@@ -39547,20 +39804,8 @@
       "syrax-tactical-inferno-2026-06-24"
     ],
     "status": "potential",
-    "targetSelectionGroup": {
-      "comparisonDirection": null,
-      "comparisonPool": null,
-      "eligibleRecipientDragonIds": [
-        "malachite",
-        "syrax"
-      ],
-      "selection": "any",
-      "selectionResource": null,
-      "selectionStat": null,
-      "selectionUncertain": true,
-      "targetCount": 1
-    },
-    "title": "Tactical Damage Target Selection",
+    "targetSelectionGroup": null,
+    "title": "Tactical Damage Support",
     "unresolvedQuestions": [
       "Exact final modified amount is unknown."
     ]
@@ -39580,7 +39825,8 @@
     ],
     "damageScope": null,
     "effects": [
-      "Fire Damage Dealt increase 36%",
+      "Fire Damage Dealt increase 36% at effective Habit Level 5.",
+      "Applies to all qualifying Fire Damage sources.",
       "Duration: 3 rounds."
     ],
     "exactResultKnown": false,
@@ -39729,7 +39975,8 @@
     ],
     "damageScope": null,
     "effects": [
-      "Fire Damage Dealt increase 16%"
+      "Fire Damage Dealt increase 16%.",
+      "Applies to all qualifying Fire Damage sources."
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final amplified damage cannot be calculated because stacking and final combat formulas are not fully verified.",
@@ -39886,7 +40133,8 @@
     ],
     "damageScope": null,
     "effects": [
-      "Damage Dealt increase 20%",
+      "Damage Dealt increase 20%.",
+      "Applies to all qualifying Damage Dealt sources.",
       "Activation chance depends on Habit Level for each round.",
       "Advantage increases Damage Dealt according to the verified status glossary.",
       "Activation chance: 20% at effective Habit Level 5.",
@@ -39994,7 +40242,8 @@
     ],
     "damageScope": null,
     "effects": [
-      "Damage Dealt increase 20%",
+      "Damage Dealt increase 20%.",
+      "Applies to all qualifying Damage Dealt sources.",
       "Activation chance depends on Habit Level for each round.",
       "Advantage increases Damage Dealt according to the verified status glossary.",
       "Activation chance: 20% at effective Habit Level 5.",
@@ -40144,7 +40393,7 @@
     ],
     "damageScope": null,
     "effects": [
-      "Recovery Received increase 20%"
+      "Recovery Received increase 20%."
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final Recovery cannot be calculated because the game's Level and Instinct Recovery formula is unknown.",
@@ -40261,7 +40510,7 @@
     ],
     "damageScope": null,
     "effects": [
-      "Recovery Received increase 20%"
+      "Recovery Received increase 20%."
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final Recovery cannot be calculated because the game's Level and Instinct Recovery formula is unknown.",
@@ -40358,7 +40607,7 @@
     ],
     "damageScope": null,
     "effects": [
-      "Recovery Received increase 20%"
+      "Recovery Received increase 20%."
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final Recovery cannot be calculated because the game's Level and Instinct Recovery formula is unknown.",
@@ -41679,7 +41928,7 @@
     "channel": "damage-received",
     "confidence": "confirmed",
     "conflicts": [],
-    "damageScope": null,
+    "damageScope": "all",
     "effects": [
       "Activation chance by Habit Level: 40%, 52%, 64%, 80%, 100%.",
       "Activation chance: 100% at effective Habit Level 5.",
@@ -43420,7 +43669,7 @@
     ],
     "damageScope": null,
     "effects": [
-      "Enemy Initiative decrease 12%"
+      "Enemy Initiative decrease 12% at effective Habit Level 5."
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final reduced enemy damage cannot be calculated because target selection, uptime, stacking, and final formulas are unresolved.",
@@ -43488,7 +43737,7 @@
     ],
     "damageScope": null,
     "effects": [
-      "Enemy Instinct decrease 24%"
+      "Enemy Instinct decrease 24% at effective Habit Level 5."
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final reduced enemy damage cannot be calculated because target selection, uptime, stacking, and final formulas are unresolved.",
@@ -43625,7 +43874,8 @@
     ],
     "damageScope": null,
     "effects": [
-      "Fire Damage Dealt increase 10%",
+      "Fire Damage Dealt increase 10%.",
+      "Applies to all qualifying Fire Damage sources.",
       "Activation chance 20% per each round.",
       "Activation chance: 20%.",
       "Duration: 2 rounds."
@@ -43750,7 +44000,8 @@
     ],
     "damageScope": null,
     "effects": [
-      "Tactical Damage Dealt increase 36%",
+      "Tactical Damage Dealt increase 36% at effective Habit Level 5.",
+      "Applies to all qualifying Tactical Damage sources.",
       "Duration: 3 rounds."
     ],
     "exactResultKnown": false,
@@ -43854,7 +44105,8 @@
     ],
     "damageScope": null,
     "effects": [
-      "Fire Damage Dealt increase 36%",
+      "Fire Damage Dealt increase 36% at effective Habit Level 5.",
+      "Applies to all qualifying Fire Damage sources.",
       "Duration: 3 rounds."
     ],
     "exactResultKnown": false,
@@ -43994,7 +44246,8 @@
     "conflicts": [],
     "damageScope": null,
     "effects": [
-      "Tactical Damage Dealt increase 2.5",
+      "Tactical Damage Dealt increase 2.5.",
+      "Applies to all qualifying Tactical Damage sources.",
       "Ally deals Tactical Damage.",
       "Spreading Blaze stacks require the trigger chance and target selection to select this ally."
     ],
@@ -44076,7 +44329,8 @@
     ],
     "damageScope": null,
     "effects": [
-      "Tactical Damage Dealt increase 2.5",
+      "Tactical Damage Dealt increase 2.5.",
+      "Applies to all qualifying Tactical Damage sources.",
       "Activation chance depends on Habit Level for start of combat.",
       "Ally deals Tactical Damage.",
       "Spreading Blaze stacks require the trigger chance and target selection to select this ally.",
@@ -45172,29 +45426,21 @@
     ],
     "damageScope": "fire",
     "effects": [
-      "Below 25% Troop Capacity.",
       "Below 75% Troop Capacity.",
       "Duration: until end of the current round.",
-      "Each recipient below 50% Troop Capacity may receive Resistance, reducing Damage Received by 20%.",
       "Fire Damage Received decrease 10% at effective Habit Level 5.",
-      "Fire Damage Received decrease 20% at effective Habit Level 5.",
-      "Fire Damage Received decrease 30% at effective Habit Level 5.",
-      "Ranked progression: L1 10%, L2 12%, L3 14%, L4 17%, L5 20%.",
-      "Ranked progression: L1 15%, L2 18%, L3 21%, L4 25.5%, L5 30%.",
       "Ranked progression: L1 5%, L2 6%, L3 7%, L4 8.5%, L5 10%.",
       "Timing: Start of each round."
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final value cannot be calculated because final combat formulas and stacking order are not fully verified.",
-    "explanation": "Trial by Flame can reduce Fire Damage Received for Caraxes and Syrax when each satisfies a Troop Capacity threshold. . Threshold applicability depends on each recipient's current Troop Capacity; exact interaction between overlapping threshold tiers is unresolved.",
-    "id": "defensive-ally-support-vermax-trial-by-flame-grouped",
+    "explanation": "Trial by Flame can affect Caraxes and Syrax when each recipient satisfies the matching condition. Threshold applicability depends on each recipient's current Troop Capacity; exact interaction between overlapping threshold tiers is unresolved.",
+    "id": "defensive-all-matching-vermax-trial-by-flame-trial-below-75-fire-reduction-damage-received-received-modifier",
     "interactionScope": "targeting-fact",
     "matchedOutputCapabilityIds": [],
     "matchKind": "defensive-ally-support",
     "modifierCapabilityId": null,
     "modifierCapabilityIds": [
-      "vermax-trial-by-flame-trial-below-25-fire-reduction-damage-received-received-modifier",
-      "vermax-trial-by-flame-trial-below-50-fire-reduction-damage-received-received-modifier",
       "vermax-trial-by-flame-trial-below-75-fire-reduction-damage-received-received-modifier"
     ],
     "recipientAbilityId": null,
@@ -45246,17 +45492,99 @@
         "label": "Position compatibility",
         "notes": [],
         "satisfied": true
-      },
+      }
+    ],
+    "ruleId": "defensive-ally-support",
+    "sourceAbilityId": "vermax-trial-by-flame",
+    "sourceDragonId": "vermax",
+    "sourceEvidenceIds": [
+      "vermax-trial-by-flame-2026-06-23"
+    ],
+    "status": "potential",
+    "targetSelectionGroup": {
+      "eligibleRecipientDragonIds": [
+        "caraxes",
+        "syrax"
+      ],
+      "selection": "all-matching-condition",
+      "selectionUncertain": false,
+      "targetCount": 2
+    },
+    "title": "Fire Damage Received Support",
+    "unresolvedQuestions": [
+      "Exact interaction between overlapping Trial by Flame threshold tiers is unresolved."
+    ]
+  },
+  {
+    "assumptions": [
+      "Cumulative stacking is not assumed.",
+      "Exact interaction between overlapping threshold tiers is unresolved.",
+      "Threshold applicability depends on each recipient current Troop Capacity.",
+      "Threshold eligibility may make this conditional rather than guaranteed."
+    ],
+    "channel": "damage-received",
+    "confidence": "confirmed",
+    "conflicts": [
+      "Vermax - Trial by Flame Habit unlock requirement: expected Star Rank 2+, actual Star Rank 1",
+      "Vermax - Trial by Flame Selected Habit Level: expected Habit Level 1+ or preview, actual preview enabled"
+    ],
+    "damageScope": "all",
+    "effects": [
+      "Damage Received decrease 20% at effective Habit Level 5.",
+      "Duration: until end of the current round.",
+      "Each recipient below 50% Troop Capacity may receive Resistance, reducing Damage Received by 20%.",
+      "Ranked progression: L1 10%, L2 12%, L3 14%, L4 17%, L5 20%.",
+      "Timing: Start of each round."
+    ],
+    "exactResultKnown": false,
+    "exactResultUnknownReason": "Exact final value cannot be calculated because final combat formulas and stacking order are not fully verified.",
+    "explanation": "Trial by Flame can affect Caraxes and Syrax when each recipient satisfies the matching condition. Threshold applicability depends on each recipient's current Troop Capacity; exact interaction between overlapping threshold tiers is unresolved.",
+    "id": "defensive-all-matching-vermax-trial-by-flame-trial-below-50-resistance-damage-received-received-modifier",
+    "interactionScope": "targeting-fact",
+    "matchedOutputCapabilityIds": [],
+    "matchKind": "defensive-ally-support",
+    "modifierCapabilityId": null,
+    "modifierCapabilityIds": [
+      "vermax-trial-by-flame-trial-below-50-resistance-damage-received-received-modifier"
+    ],
+    "recipientAbilityId": null,
+    "recipientDragonId": null,
+    "recipientEvidenceIds": [],
+    "requirements": [
       {
         "actual": "provider vanguard, recipient left-flank",
         "evidenceIds": [
           "vermax-trial-by-flame-2026-06-23"
         ],
         "expected": "all allies matching threshold condition",
-        "id": "vermax-trial-by-flame-trial-below-50-fire-reduction-damage-received-received-modifier-targeting-left-flank",
+        "id": "vermax-trial-by-flame-trial-below-50-resistance-damage-received-received-modifier-targeting-left-flank",
         "label": "Position compatibility",
         "notes": [],
         "satisfied": true
+      },
+      {
+        "actual": "Star Rank 1",
+        "evidenceIds": [
+          "vermax-trial-by-flame-2026-06-23"
+        ],
+        "expected": "Star Rank 2+",
+        "id": "vermax-vermax-trial-by-flame-star-rank",
+        "label": "Vermax - Trial by Flame Habit unlock requirement",
+        "notes": [],
+        "satisfied": false
+      },
+      {
+        "actual": "preview enabled",
+        "evidenceIds": [
+          "vermax-trial-by-flame-2026-06-23"
+        ],
+        "expected": "Habit Level 1+ or preview",
+        "id": "vermax-vermax-trial-by-flame-habit-level",
+        "label": "Vermax - Trial by Flame Selected Habit Level",
+        "notes": [
+          "Unlocked Habits without an explicit saved Habit Level default to effective Habit Level 1. Locked Habit capabilities are potential in preview mode, not active for current roster."
+        ],
+        "satisfied": false
       },
       {
         "actual": "provider vanguard, recipient right-flank",
@@ -45264,11 +45592,69 @@
           "vermax-trial-by-flame-2026-06-23"
         ],
         "expected": "all allies matching threshold condition",
-        "id": "vermax-trial-by-flame-trial-below-50-fire-reduction-damage-received-received-modifier-targeting-right-flank",
+        "id": "vermax-trial-by-flame-trial-below-50-resistance-damage-received-received-modifier-targeting-right-flank",
         "label": "Position compatibility",
         "notes": [],
         "satisfied": true
-      },
+      }
+    ],
+    "ruleId": "defensive-ally-support",
+    "sourceAbilityId": "vermax-trial-by-flame",
+    "sourceDragonId": "vermax",
+    "sourceEvidenceIds": [
+      "vermax-trial-by-flame-2026-06-23"
+    ],
+    "status": "potential",
+    "targetSelectionGroup": {
+      "eligibleRecipientDragonIds": [
+        "caraxes",
+        "syrax"
+      ],
+      "selection": "all-matching-condition",
+      "selectionUncertain": false,
+      "targetCount": 2
+    },
+    "title": "Damage Received Support",
+    "unresolvedQuestions": [
+      "Exact interaction between overlapping Trial by Flame threshold tiers is unresolved."
+    ]
+  },
+  {
+    "assumptions": [
+      "Cumulative stacking is not assumed.",
+      "Exact interaction between overlapping threshold tiers is unresolved.",
+      "Threshold applicability depends on each recipient current Troop Capacity.",
+      "Threshold eligibility may make this conditional rather than guaranteed."
+    ],
+    "channel": "damage-received",
+    "confidence": "confirmed",
+    "conflicts": [
+      "Vermax - Trial by Flame Habit unlock requirement: expected Star Rank 2+, actual Star Rank 1",
+      "Vermax - Trial by Flame Selected Habit Level: expected Habit Level 1+ or preview, actual preview enabled"
+    ],
+    "damageScope": "fire",
+    "effects": [
+      "Below 25% Troop Capacity.",
+      "Duration: until end of the current round.",
+      "Fire Damage Received decrease 30% at effective Habit Level 5.",
+      "Ranked progression: L1 15%, L2 18%, L3 21%, L4 25.5%, L5 30%.",
+      "Timing: Start of each round."
+    ],
+    "exactResultKnown": false,
+    "exactResultUnknownReason": "Exact final value cannot be calculated because final combat formulas and stacking order are not fully verified.",
+    "explanation": "Trial by Flame can affect Caraxes and Syrax when each recipient satisfies the matching condition. Threshold applicability depends on each recipient's current Troop Capacity; exact interaction between overlapping threshold tiers is unresolved.",
+    "id": "defensive-all-matching-vermax-trial-by-flame-trial-below-25-fire-reduction-damage-received-received-modifier",
+    "interactionScope": "targeting-fact",
+    "matchedOutputCapabilityIds": [],
+    "matchKind": "defensive-ally-support",
+    "modifierCapabilityId": null,
+    "modifierCapabilityIds": [
+      "vermax-trial-by-flame-trial-below-25-fire-reduction-damage-received-received-modifier"
+    ],
+    "recipientAbilityId": null,
+    "recipientDragonId": null,
+    "recipientEvidenceIds": [],
+    "requirements": [
       {
         "actual": "provider vanguard, recipient left-flank",
         "evidenceIds": [
@@ -45279,6 +45665,30 @@
         "label": "Position compatibility",
         "notes": [],
         "satisfied": true
+      },
+      {
+        "actual": "Star Rank 1",
+        "evidenceIds": [
+          "vermax-trial-by-flame-2026-06-23"
+        ],
+        "expected": "Star Rank 2+",
+        "id": "vermax-vermax-trial-by-flame-star-rank",
+        "label": "Vermax - Trial by Flame Habit unlock requirement",
+        "notes": [],
+        "satisfied": false
+      },
+      {
+        "actual": "preview enabled",
+        "evidenceIds": [
+          "vermax-trial-by-flame-2026-06-23"
+        ],
+        "expected": "Habit Level 1+ or preview",
+        "id": "vermax-vermax-trial-by-flame-habit-level",
+        "label": "Vermax - Trial by Flame Selected Habit Level",
+        "notes": [
+          "Unlocked Habits without an explicit saved Habit Level default to effective Habit Level 1. Locked Habit capabilities are potential in preview mode, not active for current roster."
+        ],
+        "satisfied": false
       },
       {
         "actual": "provider vanguard, recipient right-flank",
@@ -45320,7 +45730,7 @@
     "channel": "damage-received",
     "confidence": "confirmed",
     "conflicts": [],
-    "damageScope": null,
+    "damageScope": "all",
     "effects": [
       "Activation chance by Habit Level: 40%, 52%, 64%, 80%, 100%.",
       "Activation chance: 100% at effective Habit Level 5.",
@@ -47326,7 +47736,7 @@
     ],
     "damageScope": null,
     "effects": [
-      "Enemy Initiative decrease 12%"
+      "Enemy Initiative decrease 12% at effective Habit Level 5."
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final reduced enemy damage cannot be calculated because target selection, uptime, stacking, and final formulas are unresolved.",
@@ -47394,7 +47804,7 @@
     ],
     "damageScope": null,
     "effects": [
-      "Enemy Strength decrease 13%"
+      "Enemy Strength decrease 13% at effective Habit Level 5."
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final reduced enemy damage cannot be calculated because target selection, uptime, stacking, and final formulas are unresolved.",
@@ -47462,7 +47872,7 @@
     ],
     "damageScope": null,
     "effects": [
-      "Enemy Initiative decrease 13%"
+      "Enemy Initiative decrease 13% at effective Habit Level 5."
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final reduced enemy damage cannot be calculated because target selection, uptime, stacking, and final formulas are unresolved.",
@@ -47530,7 +47940,7 @@
     ],
     "damageScope": null,
     "effects": [
-      "Enemy Physical Damage decrease 11%",
+      "Physical Damage Dealt decrease 11% at effective Habit Level 5.",
       "Physical Damage reduction applies to non-Basic Attacks only."
     ],
     "exactResultKnown": false,
@@ -47809,8 +48219,9 @@
     "effects": [
       "Activation chance 20% per each round.",
       "Activation chance: 20%.",
+      "Applies to all qualifying Fire Damage sources.",
       "Duration: 2 rounds.",
-      "Fire Damage Dealt increase 10%"
+      "Fire Damage Dealt increase 10%."
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final amplified damage cannot be calculated because stacking and final combat formulas are not fully verified.",
@@ -48006,7 +48417,8 @@
     ],
     "damageScope": null,
     "effects": [
-      "Tactical Damage Dealt increase 36%",
+      "Tactical Damage Dealt increase 36% at effective Habit Level 5.",
+      "Applies to all qualifying Tactical Damage sources.",
       "Duration: 3 rounds."
     ],
     "exactResultKnown": false,
@@ -48106,8 +48518,9 @@
     "conflicts": [],
     "damageScope": null,
     "effects": [
+      "Applies to all qualifying Fire Damage sources.",
       "Duration: 3 rounds.",
-      "Fire Damage Dealt increase 36%"
+      "Fire Damage Dealt increase 36% at effective Habit Level 5."
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final amplified damage cannot be calculated because stacking and final combat formulas are not fully verified.",
@@ -48318,7 +48731,7 @@
     ],
     "damageScope": null,
     "effects": [
-      "Recovery Received increase 20%"
+      "Recovery Received increase 20%."
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final Recovery cannot be calculated because the game's Level and Instinct Recovery formula is unknown.",
@@ -48437,7 +48850,7 @@
     ],
     "damageScope": null,
     "effects": [
-      "Recovery Received increase 20%"
+      "Recovery Received increase 20%."
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final Recovery cannot be calculated because the game's Level and Instinct Recovery formula is unknown.",
@@ -49678,7 +50091,7 @@
     "channel": "damage-received",
     "confidence": "confirmed",
     "conflicts": [],
-    "damageScope": null,
+    "damageScope": "all",
     "effects": [
       "Activation chance by Habit Level: 40%, 52%, 64%, 80%, 100%.",
       "Activation chance: 100% at effective Habit Level 5.",
@@ -51385,7 +51798,7 @@
     ],
     "damageScope": null,
     "effects": [
-      "Enemy Initiative decrease 12%"
+      "Enemy Initiative decrease 12% at effective Habit Level 5."
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final reduced enemy damage cannot be calculated because target selection, uptime, stacking, and final formulas are unresolved.",
@@ -51453,7 +51866,7 @@
     ],
     "damageScope": null,
     "effects": [
-      "Enemy Strength decrease 13%"
+      "Enemy Strength decrease 13% at effective Habit Level 5."
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final reduced enemy damage cannot be calculated because target selection, uptime, stacking, and final formulas are unresolved.",
@@ -51521,7 +51934,7 @@
     ],
     "damageScope": null,
     "effects": [
-      "Enemy Initiative decrease 13%"
+      "Enemy Initiative decrease 13% at effective Habit Level 5."
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final reduced enemy damage cannot be calculated because target selection, uptime, stacking, and final formulas are unresolved.",
@@ -51589,7 +52002,7 @@
     ],
     "damageScope": null,
     "effects": [
-      "Enemy Physical Damage decrease 11%",
+      "Physical Damage Dealt decrease 11% at effective Habit Level 5.",
       "Physical Damage reduction applies to non-Basic Attacks only."
     ],
     "exactResultKnown": false,
@@ -51658,7 +52071,7 @@
     ],
     "damageScope": null,
     "effects": [
-      "Enemy Instinct decrease 24%"
+      "Enemy Instinct decrease 24% at effective Habit Level 5."
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final reduced enemy damage cannot be calculated because target selection, uptime, stacking, and final formulas are unresolved.",
@@ -52001,7 +52414,8 @@
     ],
     "damageScope": null,
     "effects": [
-      "Tactical Damage Dealt increase 16%"
+      "Tactical Damage Dealt increase 16%.",
+      "Applies to all qualifying Tactical Damage sources."
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final amplified damage cannot be calculated because stacking and final combat formulas are not fully verified.",
@@ -52099,53 +52513,69 @@
   },
   {
     "assumptions": [
-      "Multiple qualifying outputs are aggregated into one normal synergy trace.",
-      "Target count is one, so eligible recipients compete for the same activation."
+      "Multiple qualifying outputs are aggregated into one normal synergy trace."
     ],
     "channel": "physical-damage",
     "confidence": "confirmed",
-    "conflicts": [],
+    "conflicts": [
+      "Vhagar - Battle Leader Habit unlock requirement: expected Star Rank 4+, actual preview enabled",
+      "Vhagar - Battle Leader Selected Habit Level: expected Habit Level 1+ or preview, actual preview enabled",
+      "venator - Feral Precision Habit unlock requirement: expected Star Rank 6+, actual preview enabled",
+      "venator - Feral Precision Selected Habit Level: expected Habit Level 1+ or preview, actual preview enabled",
+      "venator - Desperate Ambush Habit unlock requirement: expected Star Rank 10+, actual preview enabled",
+      "venator - Desperate Ambush Selected Habit Level: expected Habit Level 1+ or preview, actual preview enabled"
+    ],
     "damageScope": null,
     "effects": [
-      "Physical Damage Dealt increase 25%"
+      "Physical Damage Dealt increase 25% at effective Habit Level 5.",
+      "Applies to non-Basic Physical Damage only."
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final amplified damage cannot be calculated because stacking and final combat formulas are not fully verified.",
-    "explanation": "Vhagar's Battle Leader can target one Physical Damage ally. Eligible recipients are Kalspire and Venator and Vhagar. The selected recipient is not guaranteed. Qualifying outputs: Tactical Assault: Physical Damage, Desperate Ambush: Physical Damage, Feral Precision: Physical Damage, Feral Strike: Physical Damage, Fiery Bonds: Physical Damage, Skyward Titan: Physical Damage.",
-    "id": "target-selection-vhagar-battle-leader-battle-leader-physical-physical-damage-dealt-modifier-physical-damage",
-    "interactionScope": "targeting-fact",
+    "explanation": "Vhagar's Battle Leader increases Venator's Physical Damage Dealt. Qualifying outputs: Feral Strike: Physical Damage, Feral Precision: Physical Damage, Desperate Ambush: Physical Damage.",
+    "id": "outgoing-effect-amplification-vhagar-battle-leader-battle-leader-physical-physical-damage-dealt-modifier-venator",
+    "interactionScope": "cross-dragon",
     "matchedOutputCapabilityIds": [
-      "kalspire-tactical-assault-tactical-assault-physical-damage-output",
-      "venator-desperate-ambush-desperate-ambush-physical-output",
-      "venator-feral-precision-feral-precision-additional-physical-output",
       "venator-feral-strike-feral-strike-physical-instances-output",
-      "vhagar-fiery-bonds-fiery-bonds-physical-damage-output",
-      "vhagar-skyward-titan-skyward-titan-third-stack-damage-output"
+      "venator-feral-precision-feral-precision-additional-physical-output",
+      "venator-desperate-ambush-desperate-ambush-physical-output"
     ],
     "matchKind": "outgoing-effect-amplification",
     "modifierCapabilityId": "vhagar-battle-leader-battle-leader-physical-physical-damage-dealt-modifier",
     "modifierCapabilityIds": [
       "vhagar-battle-leader-battle-leader-physical-physical-damage-dealt-modifier"
     ],
-    "recipientAbilityId": null,
-    "recipientDragonId": null,
+    "recipientAbilityId": "venator-feral-strike-feral-strike-physical-instances-output",
+    "recipientDragonId": "venator",
     "recipientEvidenceIds": [
-      "kalspire-tactical-assault-2026-06-25",
-      "venator-desperate-ambush-2026-06-25",
-      "venator-feral-precision-2026-06-25",
+      "vhagar-battle-leader-2026-06-25",
+      "vhagar-battle-leader-2026-06-25",
+      "vhagar-battle-leader-2026-06-25",
+      "vhagar-battle-leader-2026-06-25",
       "venator-feral-strike-summary-2026-06-25",
       "vhagar-battle-leader-2026-06-25",
-      "vhagar-fiery-bonds-summary-2026-06-25",
-      "vhagar-skyward-titan-2026-06-25"
+      "vhagar-battle-leader-2026-06-25",
+      "vhagar-battle-leader-2026-06-25",
+      "venator-feral-precision-2026-06-25",
+      "venator-feral-precision-2026-06-25",
+      "vhagar-battle-leader-2026-06-25",
+      "venator-feral-precision-2026-06-25",
+      "vhagar-battle-leader-2026-06-25",
+      "vhagar-battle-leader-2026-06-25",
+      "vhagar-battle-leader-2026-06-25",
+      "venator-desperate-ambush-2026-06-25",
+      "venator-desperate-ambush-2026-06-25",
+      "vhagar-battle-leader-2026-06-25",
+      "venator-desperate-ambush-2026-06-25"
     ],
     "requirements": [
       {
-        "actual": "provider vanguard, recipient left-flank",
+        "actual": "provider vanguard, recipient right-flank",
         "evidenceIds": [
           "vhagar-battle-leader-2026-06-25"
         ],
         "expected": "any-lane",
-        "id": "vhagar-battle-leader-battle-leader-physical-physical-damage-dealt-modifier-targeting-left-flank",
+        "id": "vhagar-battle-leader-battle-leader-physical-physical-damage-dealt-modifier-targeting-right-flank",
         "label": "Position compatibility",
         "notes": [],
         "satisfied": true
@@ -52173,112 +52603,6 @@
           "Unlocked Habits without an explicit saved Habit Level default to effective Habit Level 1. Locked Habit capabilities are potential in preview mode, not active for current roster."
         ],
         "satisfied": false
-      },
-      {
-        "actual": "preview enabled",
-        "evidenceIds": [
-          "kalspire-tactical-assault-2026-06-25"
-        ],
-        "expected": "Star Rank 6+",
-        "id": "kalspire-kalspire-tactical-assault-star-rank",
-        "label": "kalspire - Tactical Assault Habit unlock requirement",
-        "notes": [],
-        "satisfied": false
-      },
-      {
-        "actual": "preview enabled",
-        "evidenceIds": [
-          "kalspire-tactical-assault-2026-06-25"
-        ],
-        "expected": "Habit Level 1+ or preview",
-        "id": "kalspire-kalspire-tactical-assault-habit-level",
-        "label": "kalspire - Tactical Assault Selected Habit Level",
-        "notes": [
-          "Unlocked Habits without an explicit saved Habit Level default to effective Habit Level 1. Locked Habit capabilities are potential in preview mode, not active for current roster."
-        ],
-        "satisfied": false
-      },
-      {
-        "actual": "habits",
-        "evidenceIds": [
-          "vhagar-battle-leader-2026-06-25",
-          "kalspire-tactical-assault-2026-06-25"
-        ],
-        "expected": "non-basic-attacks",
-        "id": "vhagar-battle-leader-battle-leader-physical-physical-damage-dealt-modifier-kalspire-tactical-assault-tactical-assault-physical-damage-output-source-scope",
-        "label": "Source-scope compatibility",
-        "notes": [],
-        "satisfied": true
-      },
-      {
-        "actual": "provider vanguard, recipient vanguard",
-        "evidenceIds": [
-          "vhagar-battle-leader-2026-06-25"
-        ],
-        "expected": "any-lane",
-        "id": "vhagar-battle-leader-battle-leader-physical-physical-damage-dealt-modifier-targeting-vanguard",
-        "label": "Position compatibility",
-        "notes": [],
-        "satisfied": true
-      },
-      {
-        "actual": "commands",
-        "evidenceIds": [
-          "vhagar-battle-leader-2026-06-25",
-          "vhagar-fiery-bonds-summary-2026-06-25"
-        ],
-        "expected": "non-basic-attacks",
-        "id": "vhagar-battle-leader-battle-leader-physical-physical-damage-dealt-modifier-vhagar-fiery-bonds-fiery-bonds-physical-damage-output-source-scope",
-        "label": "Source-scope compatibility",
-        "notes": [],
-        "satisfied": true
-      },
-      {
-        "actual": "preview enabled",
-        "evidenceIds": [
-          "vhagar-skyward-titan-2026-06-25"
-        ],
-        "expected": "Star Rank 10+",
-        "id": "vhagar-vhagar-skyward-titan-star-rank",
-        "label": "vhagar - Skyward Titan Habit unlock requirement",
-        "notes": [],
-        "satisfied": false
-      },
-      {
-        "actual": "preview enabled",
-        "evidenceIds": [
-          "vhagar-skyward-titan-2026-06-25"
-        ],
-        "expected": "Habit Level 1+ or preview",
-        "id": "vhagar-vhagar-skyward-titan-habit-level",
-        "label": "vhagar - Skyward Titan Selected Habit Level",
-        "notes": [
-          "Unlocked Habits without an explicit saved Habit Level default to effective Habit Level 1. Locked Habit capabilities are potential in preview mode, not active for current roster."
-        ],
-        "satisfied": false
-      },
-      {
-        "actual": "habits",
-        "evidenceIds": [
-          "vhagar-battle-leader-2026-06-25",
-          "vhagar-skyward-titan-2026-06-25"
-        ],
-        "expected": "non-basic-attacks",
-        "id": "vhagar-battle-leader-battle-leader-physical-physical-damage-dealt-modifier-vhagar-skyward-titan-skyward-titan-third-stack-damage-output-source-scope",
-        "label": "Source-scope compatibility",
-        "notes": [],
-        "satisfied": true
-      },
-      {
-        "actual": "provider vanguard, recipient right-flank",
-        "evidenceIds": [
-          "vhagar-battle-leader-2026-06-25"
-        ],
-        "expected": "any-lane",
-        "id": "vhagar-battle-leader-battle-leader-physical-physical-damage-dealt-modifier-targeting-right-flank",
-        "label": "Position compatibility",
-        "notes": [],
-        "satisfied": true
       },
       {
         "actual": "commands",
@@ -52372,21 +52696,8 @@
       "vhagar-battle-leader-2026-06-25"
     ],
     "status": "potential",
-    "targetSelectionGroup": {
-      "comparisonDirection": null,
-      "comparisonPool": null,
-      "eligibleRecipientDragonIds": [
-        "kalspire",
-        "venator",
-        "vhagar"
-      ],
-      "selection": "any",
-      "selectionResource": null,
-      "selectionStat": null,
-      "selectionUncertain": true,
-      "targetCount": 1
-    },
-    "title": "Physical Damage Target Selection",
+    "targetSelectionGroup": null,
+    "title": "Physical Damage Support",
     "unresolvedQuestions": [
       "Exact final modified amount is unknown."
     ]
@@ -52407,7 +52718,8 @@
       "Activation chance by Habit Level: 17.5%, 21%, 24.5%, 29.8%, 35%.",
       "Activation chance: 35% at effective Habit Level 5.",
       "Advantage increases Damage Dealt according to the verified status glossary.",
-      "Damage Dealt increase 20%",
+      "Applies to all qualifying Damage Dealt sources.",
+      "Damage Dealt increase 20%.",
       "Duration: 2 rounds.",
       "One shared activation roll applies both effects."
     ],
@@ -52705,6 +53017,141 @@
     "title": "Damage Dealt Target Selection",
     "unresolvedQuestions": [
       "Exact final modified amount is unknown."
+    ]
+  },
+  {
+    "assumptions": [
+      "Provider activation is not guaranteed.",
+      "Target selection may choose another eligible recipient.",
+      "Exact uptime, total attacks, final damage, and successful attack effects are not calculated.",
+      "Only the verified after-each-Basic-Attack dependency is represented; broader trigger ordering is unresolved."
+    ],
+    "channel": "status",
+    "confidence": "confirmed",
+    "conflicts": [],
+    "damageScope": null,
+    "effects": [
+      "Potential extra Basic Attack can trigger Feral Strike again."
+    ],
+    "exactResultKnown": false,
+    "exactResultUnknownReason": "Exact final value cannot be calculated because final combat formulas and stacking order are not fully verified.",
+    "explanation": "Double-Strike may grant Venator a second Basic Attack, which can trigger Feral Strike again.",
+    "id": "extra-basic-attack-trigger-venator-feral-strike-feral-strike-double-strike-double-strike-status-output-basic-attack-extra-action-venator-feral-strike-after-basic-attack-trigger-venator",
+    "interactionScope": "internal",
+    "matchedOutputCapabilityIds": [],
+    "matchKind": "extra-basic-attack-trigger",
+    "modifierCapabilityId": null,
+    "modifierCapabilityIds": [],
+    "recipientAbilityId": "venator-feral-strike",
+    "recipientDragonId": "venator",
+    "recipientEvidenceIds": [
+      "venator-feral-strike-summary-2026-06-25"
+    ],
+    "requirements": [
+      {
+        "actual": "provider right-flank, recipient right-flank",
+        "evidenceIds": [
+          "venator-feral-strike-summary-2026-06-25"
+        ],
+        "expected": "self",
+        "id": "venator-feral-strike-feral-strike-double-strike-double-strike-status-output-basic-attack-extra-action-targeting-right-flank",
+        "label": "Extra action recipient compatibility",
+        "notes": [],
+        "satisfied": true
+      }
+    ],
+    "ruleId": "extra-basic-attack-trigger",
+    "sourceAbilityId": "venator-feral-strike",
+    "sourceDragonId": "venator",
+    "sourceEvidenceIds": [
+      "venator-feral-strike-summary-2026-06-25"
+    ],
+    "status": "potential",
+    "targetSelectionGroup": null,
+    "title": "Feral Strike - Extra Basic Attack trigger",
+    "unresolvedQuestions": [
+      "Exact timing and final combat result from the extra Basic Attack are unresolved."
+    ]
+  },
+  {
+    "assumptions": [
+      "Provider activation is not guaranteed.",
+      "Target selection may choose another eligible recipient.",
+      "Exact uptime, total attacks, final damage, and successful attack effects are not calculated.",
+      "Only the verified after-each-Basic-Attack dependency is represented; broader trigger ordering is unresolved."
+    ],
+    "channel": "status",
+    "confidence": "confirmed",
+    "conflicts": [
+      "Venator - Feral Precision Habit unlock requirement: expected Star Rank 6+, actual preview enabled",
+      "Venator - Feral Precision Selected Habit Level: expected Habit Level 1+ or preview, actual preview enabled"
+    ],
+    "damageScope": null,
+    "effects": [
+      "Potential extra Basic Attack can trigger Feral Precision again."
+    ],
+    "exactResultKnown": false,
+    "exactResultUnknownReason": "Exact final value cannot be calculated because final combat formulas and stacking order are not fully verified.",
+    "explanation": "Double-Strike may grant Venator a second Basic Attack, which can trigger Feral Precision again.",
+    "id": "extra-basic-attack-trigger-venator-feral-strike-feral-strike-double-strike-double-strike-status-output-basic-attack-extra-action-venator-feral-precision-after-basic-attack-trigger-venator",
+    "interactionScope": "internal",
+    "matchedOutputCapabilityIds": [],
+    "matchKind": "extra-basic-attack-trigger",
+    "modifierCapabilityId": null,
+    "modifierCapabilityIds": [],
+    "recipientAbilityId": "venator-feral-precision",
+    "recipientDragonId": "venator",
+    "recipientEvidenceIds": [
+      "venator-feral-precision-2026-06-25"
+    ],
+    "requirements": [
+      {
+        "actual": "provider right-flank, recipient right-flank",
+        "evidenceIds": [
+          "venator-feral-strike-summary-2026-06-25"
+        ],
+        "expected": "self",
+        "id": "venator-feral-strike-feral-strike-double-strike-double-strike-status-output-basic-attack-extra-action-targeting-right-flank",
+        "label": "Extra action recipient compatibility",
+        "notes": [],
+        "satisfied": true
+      },
+      {
+        "actual": "preview enabled",
+        "evidenceIds": [
+          "venator-feral-precision-2026-06-25"
+        ],
+        "expected": "Star Rank 6+",
+        "id": "venator-venator-feral-precision-star-rank",
+        "label": "Venator - Feral Precision Habit unlock requirement",
+        "notes": [],
+        "satisfied": false
+      },
+      {
+        "actual": "preview enabled",
+        "evidenceIds": [
+          "venator-feral-precision-2026-06-25"
+        ],
+        "expected": "Habit Level 1+ or preview",
+        "id": "venator-venator-feral-precision-habit-level",
+        "label": "Venator - Feral Precision Selected Habit Level",
+        "notes": [
+          "Unlocked Habits without an explicit saved Habit Level default to effective Habit Level 1. Locked Habit capabilities are potential in preview mode, not active for current roster."
+        ],
+        "satisfied": false
+      }
+    ],
+    "ruleId": "extra-basic-attack-trigger",
+    "sourceAbilityId": "venator-feral-strike",
+    "sourceDragonId": "venator",
+    "sourceEvidenceIds": [
+      "venator-feral-strike-summary-2026-06-25"
+    ],
+    "status": "potential",
+    "targetSelectionGroup": null,
+    "title": "Feral Strike - Extra Basic Attack trigger",
+    "unresolvedQuestions": [
+      "Exact timing and final combat result from the extra Basic Attack are unresolved."
     ]
   },
   {
@@ -54228,7 +54675,8 @@
     ],
     "damageScope": null,
     "effects": [
-      "Enemy Damage Dealt decrease 20%"
+      "Damage Dealt decrease 20%.",
+      "Duration: 2 rounds."
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final reduced enemy damage cannot be calculated because target selection, uptime, stacking, and final formulas are unresolved.",
@@ -54296,7 +54744,7 @@
     ],
     "damageScope": null,
     "effects": [
-      "Enemy Strength decrease 13%"
+      "Enemy Strength decrease 13% at effective Habit Level 5."
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final reduced enemy damage cannot be calculated because target selection, uptime, stacking, and final formulas are unresolved.",
@@ -54364,7 +54812,7 @@
     ],
     "damageScope": null,
     "effects": [
-      "Enemy Intelligence decrease 13%"
+      "Enemy Intelligence decrease 13% at effective Habit Level 5."
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final reduced enemy damage cannot be calculated because target selection, uptime, stacking, and final formulas are unresolved.",
@@ -54432,8 +54880,9 @@
     ],
     "damageScope": null,
     "effects": [
-      "Enemy Physical Damage decrease 25%",
-      "Physical Damage reduction applies to non-Basic Attacks only."
+      "Physical Damage Dealt decrease 25% at effective Habit Level 5.",
+      "Physical Damage reduction applies to non-Basic Attacks only.",
+      "Duration: 5 rounds."
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final reduced enemy damage cannot be calculated because target selection, uptime, stacking, and final formulas are unresolved.",
@@ -54501,7 +54950,8 @@
     ],
     "damageScope": null,
     "effects": [
-      "Enemy Fire Damage decrease 25%"
+      "Fire Damage Dealt decrease 25% at effective Habit Level 5.",
+      "Duration: 5 rounds."
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final reduced enemy damage cannot be calculated because target selection, uptime, stacking, and final formulas are unresolved.",
@@ -54569,7 +55019,7 @@
     ],
     "damageScope": null,
     "effects": [
-      "Enemy Intelligence decrease 60%"
+      "Enemy Intelligence decrease 60% at effective Habit Level 5."
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final reduced enemy damage cannot be calculated because target selection, uptime, stacking, and final formulas are unresolved.",
@@ -55188,7 +55638,8 @@
     ],
     "damageScope": null,
     "effects": [
-      "Physical Damage Dealt increase 25%"
+      "Physical Damage Dealt increase 25% at effective Habit Level 5.",
+      "Applies to non-Basic Physical Damage only."
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final amplified damage cannot be calculated because stacking and final combat formulas are not fully verified.",
@@ -55334,7 +55785,8 @@
       "Activation chance by Habit Level: 17.5%, 21%, 24.5%, 29.8%, 35%.",
       "Activation chance: 35% at effective Habit Level 5.",
       "Advantage increases Damage Dealt according to the verified status glossary.",
-      "Damage Dealt increase 20%",
+      "Applies to all qualifying Damage Dealt sources.",
+      "Damage Dealt increase 20%.",
       "Duration: 2 rounds.",
       "One shared activation roll applies both effects."
     ],
@@ -55573,7 +56025,8 @@
     ],
     "damageScope": null,
     "effects": [
-      "Physical Damage Dealt increase 10%"
+      "Physical Damage Dealt increase 10%.",
+      "Applies to all qualifying Physical Damage sources."
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final amplified damage cannot be calculated because stacking and final combat formulas are not fully verified.",
@@ -57243,7 +57696,8 @@
     ],
     "damageScope": null,
     "effects": [
-      "Enemy Damage Dealt decrease 20%"
+      "Damage Dealt decrease 20%.",
+      "Duration: 2 rounds."
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final reduced enemy damage cannot be calculated because target selection, uptime, stacking, and final formulas are unresolved.",
@@ -57311,7 +57765,7 @@
     ],
     "damageScope": null,
     "effects": [
-      "Enemy Strength decrease 13%"
+      "Enemy Strength decrease 13% at effective Habit Level 5."
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final reduced enemy damage cannot be calculated because target selection, uptime, stacking, and final formulas are unresolved.",
@@ -57379,7 +57833,7 @@
     ],
     "damageScope": null,
     "effects": [
-      "Enemy Initiative decrease 13%"
+      "Enemy Initiative decrease 13% at effective Habit Level 5."
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final reduced enemy damage cannot be calculated because target selection, uptime, stacking, and final formulas are unresolved.",
@@ -57447,7 +57901,7 @@
     ],
     "damageScope": null,
     "effects": [
-      "Enemy Physical Damage decrease 11%",
+      "Physical Damage Dealt decrease 11% at effective Habit Level 5.",
       "Physical Damage reduction applies to non-Basic Attacks only."
     ],
     "exactResultKnown": false,
@@ -57516,7 +57970,7 @@
     ],
     "damageScope": null,
     "effects": [
-      "Enemy Tactical Damage decrease 27%"
+      "Tactical Damage Dealt decrease 27% at effective Habit Level 5."
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final reduced enemy damage cannot be calculated because target selection, uptime, stacking, and final formulas are unresolved.",
@@ -57584,7 +58038,8 @@
     ],
     "damageScope": null,
     "effects": [
-      "Enemy Damage Dealt decrease 20%"
+      "Damage Dealt decrease 20%.",
+      "Duration: 2 rounds."
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final reduced enemy damage cannot be calculated because target selection, uptime, stacking, and final formulas are unresolved.",
@@ -57652,7 +58107,8 @@
     ],
     "damageScope": null,
     "effects": [
-      "Enemy Instinct decrease 30%"
+      "Enemy Instinct decrease 30% at effective Habit Level 5.",
+      "Duration: 2 rounds."
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final reduced enemy damage cannot be calculated because target selection, uptime, stacking, and final formulas are unresolved.",
@@ -57720,7 +58176,8 @@
     ],
     "damageScope": null,
     "effects": [
-      "Enemy Initiative decrease 30%"
+      "Enemy Initiative decrease 30% at effective Habit Level 5.",
+      "Duration: 2 rounds."
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final reduced enemy damage cannot be calculated because target selection, uptime, stacking, and final formulas are unresolved.",
@@ -58254,38 +58711,41 @@
   },
   {
     "assumptions": [
-      "Target count is one, so eligible recipients compete for the same activation.",
       "Trigger chance and target selection may make this conditional rather than guaranteed."
     ],
     "channel": "tactical-damage",
     "confidence": "confirmed",
-    "conflicts": [],
+    "conflicts": [
+      "Syrax - Tactical Inferno Habit unlock requirement: expected Star Rank 8+, actual preview enabled",
+      "Syrax - Tactical Inferno Selected Habit Level: expected Habit Level 1+ or preview, actual preview enabled"
+    ],
     "damageScope": null,
     "effects": [
-      "Duration: 3 rounds.",
-      "Tactical Damage Dealt increase 36%"
+      "Tactical Damage Dealt increase 36% at effective Habit Level 5.",
+      "Applies to all qualifying Tactical Damage sources.",
+      "Duration: 3 rounds."
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final amplified damage cannot be calculated because stacking and final combat formulas are not fully verified.",
-    "explanation": "Syrax's Tactical Inferno can target one Tactical Damage ally. Eligible recipients are Kalspire and Syrax. The selected recipient is not guaranteed. Qualifying outputs: Tactical Strike: Tactical Damage, Blazing Fury: Tactical Damage.",
-    "id": "target-selection-syrax-tactical-inferno-tactical-inferno-tactical-tactical-damage-dealt-modifier-tactical-damage",
-    "interactionScope": "targeting-fact",
+    "explanation": "Kalspire is eligible for Syrax's Tactical Inferno Tactical Damage support. Qualifying outputs: Tactical Strike: Tactical Damage. Target selection follows the verified flank preference and remains selection-dependent.",
+    "id": "outgoing-effect-amplification-syrax-tactical-inferno-tactical-inferno-tactical-tactical-damage-dealt-modifier-kalspire",
+    "interactionScope": "cross-dragon",
     "matchedOutputCapabilityIds": [
-      "kalspire-tactical-strike-tactical-strike-tactical-damage-output",
-      "syrax-blazing-fury-blazing-fury-tactical-rate-output"
+      "kalspire-tactical-strike-tactical-strike-tactical-damage-output"
     ],
     "matchKind": "outgoing-effect-amplification",
     "modifierCapabilityId": "syrax-tactical-inferno-tactical-inferno-tactical-tactical-damage-dealt-modifier",
     "modifierCapabilityIds": [
       "syrax-tactical-inferno-tactical-inferno-tactical-tactical-damage-dealt-modifier"
     ],
-    "recipientAbilityId": null,
-    "recipientDragonId": null,
+    "recipientAbilityId": "kalspire-tactical-strike-tactical-strike-tactical-damage-output",
+    "recipientDragonId": "kalspire",
     "recipientEvidenceIds": [
-      "kalspire-tactical-strike-summary-2026-06-25",
-      "syrax-blazing-fury-details-2026-06-24",
-      "syrax-blazing-fury-summary-2026-06-24",
-      "syrax-tactical-inferno-2026-06-24"
+      "syrax-tactical-inferno-2026-06-24",
+      "syrax-tactical-inferno-2026-06-24",
+      "syrax-tactical-inferno-2026-06-24",
+      "syrax-tactical-inferno-2026-06-24",
+      "kalspire-tactical-strike-summary-2026-06-25"
     ],
     "requirements": [
       {
@@ -58334,30 +58794,6 @@
         "label": "Source-scope compatibility",
         "notes": [],
         "satisfied": true
-      },
-      {
-        "actual": "provider vanguard, recipient vanguard",
-        "evidenceIds": [
-          "syrax-tactical-inferno-2026-06-24"
-        ],
-        "expected": "any-lane",
-        "id": "syrax-tactical-inferno-tactical-inferno-tactical-tactical-damage-dealt-modifier-targeting-vanguard",
-        "label": "Position compatibility",
-        "notes": [],
-        "satisfied": true
-      },
-      {
-        "actual": "commands",
-        "evidenceIds": [
-          "syrax-tactical-inferno-2026-06-24",
-          "syrax-blazing-fury-summary-2026-06-24",
-          "syrax-blazing-fury-details-2026-06-24"
-        ],
-        "expected": "all-qualifying-sources",
-        "id": "syrax-tactical-inferno-tactical-inferno-tactical-tactical-damage-dealt-modifier-syrax-blazing-fury-blazing-fury-tactical-rate-output-source-scope",
-        "label": "Source-scope compatibility",
-        "notes": [],
-        "satisfied": true
       }
     ],
     "ruleId": "outgoing-effect-amplification",
@@ -58367,20 +58803,8 @@
       "syrax-tactical-inferno-2026-06-24"
     ],
     "status": "potential",
-    "targetSelectionGroup": {
-      "comparisonDirection": null,
-      "comparisonPool": null,
-      "eligibleRecipientDragonIds": [
-        "kalspire",
-        "syrax"
-      ],
-      "selection": "any",
-      "selectionResource": null,
-      "selectionStat": null,
-      "selectionUncertain": true,
-      "targetCount": 1
-    },
-    "title": "Tactical Damage Target Selection",
+    "targetSelectionGroup": null,
+    "title": "Tactical Damage Support",
     "unresolvedQuestions": [
       "Exact final modified amount is unknown."
     ]
@@ -58395,7 +58819,8 @@
     ],
     "damageScope": null,
     "effects": [
-      "Tactical Damage Dealt increase 16%"
+      "Tactical Damage Dealt increase 16%.",
+      "Applies to all qualifying Tactical Damage sources."
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final amplified damage cannot be calculated because stacking and final combat formulas are not fully verified.",
@@ -58502,7 +58927,8 @@
     ],
     "damageScope": null,
     "effects": [
-      "Tactical Damage Dealt increase 16%"
+      "Tactical Damage Dealt increase 16%.",
+      "Applies to all qualifying Tactical Damage sources."
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final amplified damage cannot be calculated because stacking and final combat formulas are not fully verified.",
@@ -58602,23 +59028,27 @@
   },
   {
     "assumptions": [
-      "Multiple qualifying outputs are aggregated into one normal synergy trace.",
-      "Target count is one, so eligible recipients compete for the same activation."
+      "Multiple qualifying outputs are aggregated into one normal synergy trace."
     ],
     "channel": "physical-damage",
     "confidence": "confirmed",
-    "conflicts": [],
+    "conflicts": [
+      "Vhagar - Battle Leader Habit unlock requirement: expected Star Rank 4+, actual preview enabled",
+      "Vhagar - Battle Leader Selected Habit Level: expected Habit Level 1+ or preview, actual preview enabled",
+      "vhagar - Skyward Titan Habit unlock requirement: expected Star Rank 10+, actual preview enabled",
+      "vhagar - Skyward Titan Selected Habit Level: expected Habit Level 1+ or preview, actual preview enabled"
+    ],
     "damageScope": null,
     "effects": [
-      "Physical Damage Dealt increase 25%"
+      "Physical Damage Dealt increase 25% at effective Habit Level 5.",
+      "Applies to non-Basic Physical Damage only."
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final amplified damage cannot be calculated because stacking and final combat formulas are not fully verified.",
-    "explanation": "Vhagar's Battle Leader can target one Physical Damage ally. Eligible recipients are Kalspire and Vhagar. The selected recipient is not guaranteed. Qualifying outputs: Tactical Assault: Physical Damage, Fiery Bonds: Physical Damage, Skyward Titan: Physical Damage.",
-    "id": "target-selection-vhagar-battle-leader-battle-leader-physical-physical-damage-dealt-modifier-physical-damage",
-    "interactionScope": "targeting-fact",
+    "explanation": "Vhagar's Battle Leader increases Vhagar's Physical Damage Dealt. Qualifying outputs: Fiery Bonds: Physical Damage, Skyward Titan: Physical Damage.",
+    "id": "outgoing-effect-amplification-vhagar-battle-leader-battle-leader-physical-physical-damage-dealt-modifier-vhagar",
+    "interactionScope": "internal",
     "matchedOutputCapabilityIds": [
-      "kalspire-tactical-assault-tactical-assault-physical-damage-output",
       "vhagar-fiery-bonds-fiery-bonds-physical-damage-output",
       "vhagar-skyward-titan-skyward-titan-third-stack-damage-output"
     ],
@@ -58627,22 +59057,30 @@
     "modifierCapabilityIds": [
       "vhagar-battle-leader-battle-leader-physical-physical-damage-dealt-modifier"
     ],
-    "recipientAbilityId": null,
-    "recipientDragonId": null,
+    "recipientAbilityId": "vhagar-fiery-bonds-fiery-bonds-physical-damage-output",
+    "recipientDragonId": "vhagar",
     "recipientEvidenceIds": [
-      "kalspire-tactical-assault-2026-06-25",
+      "vhagar-battle-leader-2026-06-25",
+      "vhagar-battle-leader-2026-06-25",
+      "vhagar-battle-leader-2026-06-25",
       "vhagar-battle-leader-2026-06-25",
       "vhagar-fiery-bonds-summary-2026-06-25",
+      "vhagar-battle-leader-2026-06-25",
+      "vhagar-battle-leader-2026-06-25",
+      "vhagar-battle-leader-2026-06-25",
+      "vhagar-skyward-titan-2026-06-25",
+      "vhagar-skyward-titan-2026-06-25",
+      "vhagar-battle-leader-2026-06-25",
       "vhagar-skyward-titan-2026-06-25"
     ],
     "requirements": [
       {
-        "actual": "provider right-flank, recipient left-flank",
+        "actual": "provider right-flank, recipient right-flank",
         "evidenceIds": [
           "vhagar-battle-leader-2026-06-25"
         ],
         "expected": "any-lane",
-        "id": "vhagar-battle-leader-battle-leader-physical-physical-damage-dealt-modifier-targeting-left-flank",
+        "id": "vhagar-battle-leader-battle-leader-physical-physical-damage-dealt-modifier-targeting-right-flank",
         "label": "Position compatibility",
         "notes": [],
         "satisfied": true
@@ -58670,53 +59108,6 @@
           "Unlocked Habits without an explicit saved Habit Level default to effective Habit Level 1. Locked Habit capabilities are potential in preview mode, not active for current roster."
         ],
         "satisfied": false
-      },
-      {
-        "actual": "preview enabled",
-        "evidenceIds": [
-          "kalspire-tactical-assault-2026-06-25"
-        ],
-        "expected": "Star Rank 6+",
-        "id": "kalspire-kalspire-tactical-assault-star-rank",
-        "label": "kalspire - Tactical Assault Habit unlock requirement",
-        "notes": [],
-        "satisfied": false
-      },
-      {
-        "actual": "preview enabled",
-        "evidenceIds": [
-          "kalspire-tactical-assault-2026-06-25"
-        ],
-        "expected": "Habit Level 1+ or preview",
-        "id": "kalspire-kalspire-tactical-assault-habit-level",
-        "label": "kalspire - Tactical Assault Selected Habit Level",
-        "notes": [
-          "Unlocked Habits without an explicit saved Habit Level default to effective Habit Level 1. Locked Habit capabilities are potential in preview mode, not active for current roster."
-        ],
-        "satisfied": false
-      },
-      {
-        "actual": "habits",
-        "evidenceIds": [
-          "vhagar-battle-leader-2026-06-25",
-          "kalspire-tactical-assault-2026-06-25"
-        ],
-        "expected": "non-basic-attacks",
-        "id": "vhagar-battle-leader-battle-leader-physical-physical-damage-dealt-modifier-kalspire-tactical-assault-tactical-assault-physical-damage-output-source-scope",
-        "label": "Source-scope compatibility",
-        "notes": [],
-        "satisfied": true
-      },
-      {
-        "actual": "provider right-flank, recipient right-flank",
-        "evidenceIds": [
-          "vhagar-battle-leader-2026-06-25"
-        ],
-        "expected": "any-lane",
-        "id": "vhagar-battle-leader-battle-leader-physical-physical-damage-dealt-modifier-targeting-right-flank",
-        "label": "Position compatibility",
-        "notes": [],
-        "satisfied": true
       },
       {
         "actual": "commands",
@@ -58774,20 +59165,8 @@
       "vhagar-battle-leader-2026-06-25"
     ],
     "status": "potential",
-    "targetSelectionGroup": {
-      "comparisonDirection": null,
-      "comparisonPool": null,
-      "eligibleRecipientDragonIds": [
-        "kalspire",
-        "vhagar"
-      ],
-      "selection": "any",
-      "selectionResource": null,
-      "selectionStat": null,
-      "selectionUncertain": true,
-      "targetCount": 1
-    },
-    "title": "Physical Damage Target Selection",
+    "targetSelectionGroup": null,
+    "title": "Physical Damage Support",
     "unresolvedQuestions": [
       "Exact final modified amount is unknown."
     ]
@@ -58808,7 +59187,8 @@
       "Activation chance by Habit Level: 17.5%, 21%, 24.5%, 29.8%, 35%.",
       "Activation chance: 35% at effective Habit Level 5.",
       "Advantage increases Damage Dealt according to the verified status glossary.",
-      "Damage Dealt increase 20%",
+      "Applies to all qualifying Damage Dealt sources.",
+      "Damage Dealt increase 20%.",
       "Duration: 2 rounds.",
       "One shared activation roll applies both effects."
     ],
@@ -59046,7 +59426,7 @@
     ],
     "damageScope": null,
     "effects": [
-      "Recovery Received increase 30%"
+      "Recovery Received increase 30% at effective Habit Level 5."
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final Recovery cannot be calculated because the game's Level and Instinct Recovery formula is unknown.",
@@ -60361,7 +60741,7 @@
     "channel": "damage-received",
     "confidence": "confirmed",
     "conflicts": [],
-    "damageScope": null,
+    "damageScope": "all",
     "effects": [
       "Activation chance by Habit Level: 40%, 52%, 64%, 80%, 100%.",
       "Activation chance: 100% at effective Habit Level 5.",
@@ -61572,7 +61952,7 @@
     ],
     "damageScope": null,
     "effects": [
-      "Enemy Initiative decrease 12%"
+      "Enemy Initiative decrease 12% at effective Habit Level 5."
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final reduced enemy damage cannot be calculated because target selection, uptime, stacking, and final formulas are unresolved.",
@@ -61640,7 +62020,8 @@
     ],
     "damageScope": null,
     "effects": [
-      "Enemy Damage Dealt decrease 20%"
+      "Damage Dealt decrease 20%.",
+      "Duration: 2 rounds."
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final reduced enemy damage cannot be calculated because target selection, uptime, stacking, and final formulas are unresolved.",
@@ -61708,7 +62089,7 @@
     ],
     "damageScope": null,
     "effects": [
-      "Enemy Strength decrease 13%"
+      "Enemy Strength decrease 13% at effective Habit Level 5."
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final reduced enemy damage cannot be calculated because target selection, uptime, stacking, and final formulas are unresolved.",
@@ -61776,7 +62157,7 @@
     ],
     "damageScope": null,
     "effects": [
-      "Enemy Intelligence decrease 13%"
+      "Enemy Intelligence decrease 13% at effective Habit Level 5."
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final reduced enemy damage cannot be calculated because target selection, uptime, stacking, and final formulas are unresolved.",
@@ -61844,8 +62225,9 @@
     ],
     "damageScope": null,
     "effects": [
-      "Enemy Physical Damage decrease 25%",
-      "Physical Damage reduction applies to non-Basic Attacks only."
+      "Physical Damage Dealt decrease 25% at effective Habit Level 5.",
+      "Physical Damage reduction applies to non-Basic Attacks only.",
+      "Duration: 5 rounds."
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final reduced enemy damage cannot be calculated because target selection, uptime, stacking, and final formulas are unresolved.",
@@ -61913,7 +62295,8 @@
     ],
     "damageScope": null,
     "effects": [
-      "Enemy Fire Damage decrease 25%"
+      "Fire Damage Dealt decrease 25% at effective Habit Level 5.",
+      "Duration: 5 rounds."
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final reduced enemy damage cannot be calculated because target selection, uptime, stacking, and final formulas are unresolved.",
@@ -62627,25 +63010,27 @@
   },
   {
     "assumptions": [
-      "Multiple qualifying outputs are aggregated into one normal synergy trace.",
-      "Target count is one, so eligible recipients compete for the same activation."
+      "Multiple qualifying outputs are aggregated into one normal synergy trace."
     ],
     "channel": "physical-damage",
     "confidence": "confirmed",
-    "conflicts": [],
+    "conflicts": [
+      "Vhagar - Battle Leader Habit unlock requirement: expected Star Rank 4+, actual preview enabled",
+      "Vhagar - Battle Leader Selected Habit Level: expected Habit Level 1+ or preview, actual preview enabled",
+      "vhagar - Skyward Titan Habit unlock requirement: expected Star Rank 10+, actual preview enabled",
+      "vhagar - Skyward Titan Selected Habit Level: expected Habit Level 1+ or preview, actual preview enabled"
+    ],
     "damageScope": null,
     "effects": [
-      "Physical Damage Dealt increase 25%"
+      "Physical Damage Dealt increase 25% at effective Habit Level 5.",
+      "Applies to non-Basic Physical Damage only."
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final amplified damage cannot be calculated because stacking and final combat formulas are not fully verified.",
-    "explanation": "Vhagar's Battle Leader can target one Physical Damage ally. Eligible recipients are Venator and Vhagar. The selected recipient is not guaranteed. Qualifying outputs: Desperate Ambush: Physical Damage, Feral Precision: Physical Damage, Feral Strike: Physical Damage, Fiery Bonds: Physical Damage, Skyward Titan: Physical Damage.",
-    "id": "target-selection-vhagar-battle-leader-battle-leader-physical-physical-damage-dealt-modifier-physical-damage",
-    "interactionScope": "targeting-fact",
+    "explanation": "Vhagar's Battle Leader increases Vhagar's Physical Damage Dealt. Qualifying outputs: Fiery Bonds: Physical Damage, Skyward Titan: Physical Damage.",
+    "id": "outgoing-effect-amplification-vhagar-battle-leader-battle-leader-physical-physical-damage-dealt-modifier-vhagar",
+    "interactionScope": "internal",
     "matchedOutputCapabilityIds": [
-      "venator-desperate-ambush-desperate-ambush-physical-output",
-      "venator-feral-precision-feral-precision-additional-physical-output",
-      "venator-feral-strike-feral-strike-physical-instances-output",
       "vhagar-fiery-bonds-fiery-bonds-physical-damage-output",
       "vhagar-skyward-titan-skyward-titan-third-stack-damage-output"
     ],
@@ -62654,24 +63039,30 @@
     "modifierCapabilityIds": [
       "vhagar-battle-leader-battle-leader-physical-physical-damage-dealt-modifier"
     ],
-    "recipientAbilityId": null,
-    "recipientDragonId": null,
+    "recipientAbilityId": "vhagar-fiery-bonds-fiery-bonds-physical-damage-output",
+    "recipientDragonId": "vhagar",
     "recipientEvidenceIds": [
-      "venator-desperate-ambush-2026-06-25",
-      "venator-feral-precision-2026-06-25",
-      "venator-feral-strike-summary-2026-06-25",
+      "vhagar-battle-leader-2026-06-25",
+      "vhagar-battle-leader-2026-06-25",
+      "vhagar-battle-leader-2026-06-25",
       "vhagar-battle-leader-2026-06-25",
       "vhagar-fiery-bonds-summary-2026-06-25",
+      "vhagar-battle-leader-2026-06-25",
+      "vhagar-battle-leader-2026-06-25",
+      "vhagar-battle-leader-2026-06-25",
+      "vhagar-skyward-titan-2026-06-25",
+      "vhagar-skyward-titan-2026-06-25",
+      "vhagar-battle-leader-2026-06-25",
       "vhagar-skyward-titan-2026-06-25"
     ],
     "requirements": [
       {
-        "actual": "provider right-flank, recipient left-flank",
+        "actual": "provider right-flank, recipient right-flank",
         "evidenceIds": [
           "vhagar-battle-leader-2026-06-25"
         ],
         "expected": "any-lane",
-        "id": "vhagar-battle-leader-battle-leader-physical-physical-damage-dealt-modifier-targeting-left-flank",
+        "id": "vhagar-battle-leader-battle-leader-physical-physical-damage-dealt-modifier-targeting-right-flank",
         "label": "Position compatibility",
         "notes": [],
         "satisfied": true
@@ -62699,101 +63090,6 @@
           "Unlocked Habits without an explicit saved Habit Level default to effective Habit Level 1. Locked Habit capabilities are potential in preview mode, not active for current roster."
         ],
         "satisfied": false
-      },
-      {
-        "actual": "commands",
-        "evidenceIds": [
-          "vhagar-battle-leader-2026-06-25",
-          "venator-feral-strike-summary-2026-06-25"
-        ],
-        "expected": "non-basic-attacks",
-        "id": "vhagar-battle-leader-battle-leader-physical-physical-damage-dealt-modifier-venator-feral-strike-feral-strike-physical-instances-output-source-scope",
-        "label": "Source-scope compatibility",
-        "notes": [],
-        "satisfied": true
-      },
-      {
-        "actual": "preview enabled",
-        "evidenceIds": [
-          "venator-feral-precision-2026-06-25"
-        ],
-        "expected": "Star Rank 6+",
-        "id": "venator-venator-feral-precision-star-rank",
-        "label": "venator - Feral Precision Habit unlock requirement",
-        "notes": [],
-        "satisfied": false
-      },
-      {
-        "actual": "preview enabled",
-        "evidenceIds": [
-          "venator-feral-precision-2026-06-25"
-        ],
-        "expected": "Habit Level 1+ or preview",
-        "id": "venator-venator-feral-precision-habit-level",
-        "label": "venator - Feral Precision Selected Habit Level",
-        "notes": [
-          "Unlocked Habits without an explicit saved Habit Level default to effective Habit Level 1. Locked Habit capabilities are potential in preview mode, not active for current roster."
-        ],
-        "satisfied": false
-      },
-      {
-        "actual": "habits",
-        "evidenceIds": [
-          "vhagar-battle-leader-2026-06-25",
-          "venator-feral-precision-2026-06-25"
-        ],
-        "expected": "non-basic-attacks",
-        "id": "vhagar-battle-leader-battle-leader-physical-physical-damage-dealt-modifier-venator-feral-precision-feral-precision-additional-physical-output-source-scope",
-        "label": "Source-scope compatibility",
-        "notes": [],
-        "satisfied": true
-      },
-      {
-        "actual": "preview enabled",
-        "evidenceIds": [
-          "venator-desperate-ambush-2026-06-25"
-        ],
-        "expected": "Star Rank 10+",
-        "id": "venator-venator-desperate-ambush-star-rank",
-        "label": "venator - Desperate Ambush Habit unlock requirement",
-        "notes": [],
-        "satisfied": false
-      },
-      {
-        "actual": "preview enabled",
-        "evidenceIds": [
-          "venator-desperate-ambush-2026-06-25"
-        ],
-        "expected": "Habit Level 1+ or preview",
-        "id": "venator-venator-desperate-ambush-habit-level",
-        "label": "venator - Desperate Ambush Selected Habit Level",
-        "notes": [
-          "Unlocked Habits without an explicit saved Habit Level default to effective Habit Level 1. Locked Habit capabilities are potential in preview mode, not active for current roster."
-        ],
-        "satisfied": false
-      },
-      {
-        "actual": "habits",
-        "evidenceIds": [
-          "vhagar-battle-leader-2026-06-25",
-          "venator-desperate-ambush-2026-06-25"
-        ],
-        "expected": "non-basic-attacks",
-        "id": "vhagar-battle-leader-battle-leader-physical-physical-damage-dealt-modifier-venator-desperate-ambush-desperate-ambush-physical-output-source-scope",
-        "label": "Source-scope compatibility",
-        "notes": [],
-        "satisfied": true
-      },
-      {
-        "actual": "provider right-flank, recipient right-flank",
-        "evidenceIds": [
-          "vhagar-battle-leader-2026-06-25"
-        ],
-        "expected": "any-lane",
-        "id": "vhagar-battle-leader-battle-leader-physical-physical-damage-dealt-modifier-targeting-right-flank",
-        "label": "Position compatibility",
-        "notes": [],
-        "satisfied": true
       },
       {
         "actual": "commands",
@@ -62851,20 +63147,8 @@
       "vhagar-battle-leader-2026-06-25"
     ],
     "status": "potential",
-    "targetSelectionGroup": {
-      "comparisonDirection": null,
-      "comparisonPool": null,
-      "eligibleRecipientDragonIds": [
-        "venator",
-        "vhagar"
-      ],
-      "selection": "any",
-      "selectionResource": null,
-      "selectionStat": null,
-      "selectionUncertain": true,
-      "targetCount": 1
-    },
-    "title": "Physical Damage Target Selection",
+    "targetSelectionGroup": null,
+    "title": "Physical Damage Support",
     "unresolvedQuestions": [
       "Exact final modified amount is unknown."
     ]
@@ -62885,7 +63169,8 @@
       "Activation chance by Habit Level: 17.5%, 21%, 24.5%, 29.8%, 35%.",
       "Activation chance: 35% at effective Habit Level 5.",
       "Advantage increases Damage Dealt according to the verified status glossary.",
-      "Damage Dealt increase 20%",
+      "Applies to all qualifying Damage Dealt sources.",
+      "Damage Dealt increase 20%.",
       "Duration: 2 rounds.",
       "One shared activation roll applies both effects."
     ],
@@ -63163,7 +63448,8 @@
     ],
     "damageScope": null,
     "effects": [
-      "Physical Damage Dealt increase 10%"
+      "Physical Damage Dealt increase 10%.",
+      "Applies to all qualifying Physical Damage sources."
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final amplified damage cannot be calculated because stacking and final combat formulas are not fully verified.",
@@ -63362,7 +63648,8 @@
     ],
     "damageScope": null,
     "effects": [
-      "Physical Damage Dealt increase 10%"
+      "Physical Damage Dealt increase 10%.",
+      "Applies to all qualifying Physical Damage sources."
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final amplified damage cannot be calculated because stacking and final combat formulas are not fully verified.",
@@ -63501,6 +63788,141 @@
     "title": "Physical Damage Support",
     "unresolvedQuestions": [
       "Exact final modified amount is unknown."
+    ]
+  },
+  {
+    "assumptions": [
+      "Provider activation is not guaranteed.",
+      "Target selection may choose another eligible recipient.",
+      "Exact uptime, total attacks, final damage, and successful attack effects are not calculated.",
+      "Only the verified after-each-Basic-Attack dependency is represented; broader trigger ordering is unresolved."
+    ],
+    "channel": "status",
+    "confidence": "confirmed",
+    "conflicts": [],
+    "damageScope": null,
+    "effects": [
+      "Potential extra Basic Attack can trigger Feral Strike again."
+    ],
+    "exactResultKnown": false,
+    "exactResultUnknownReason": "Exact final value cannot be calculated because final combat formulas and stacking order are not fully verified.",
+    "explanation": "Double-Strike may grant Venator a second Basic Attack, which can trigger Feral Strike again.",
+    "id": "extra-basic-attack-trigger-venator-feral-strike-feral-strike-double-strike-double-strike-status-output-basic-attack-extra-action-venator-feral-strike-after-basic-attack-trigger-venator",
+    "interactionScope": "internal",
+    "matchedOutputCapabilityIds": [],
+    "matchKind": "extra-basic-attack-trigger",
+    "modifierCapabilityId": null,
+    "modifierCapabilityIds": [],
+    "recipientAbilityId": "venator-feral-strike",
+    "recipientDragonId": "venator",
+    "recipientEvidenceIds": [
+      "venator-feral-strike-summary-2026-06-25"
+    ],
+    "requirements": [
+      {
+        "actual": "provider left-flank, recipient left-flank",
+        "evidenceIds": [
+          "venator-feral-strike-summary-2026-06-25"
+        ],
+        "expected": "self",
+        "id": "venator-feral-strike-feral-strike-double-strike-double-strike-status-output-basic-attack-extra-action-targeting-left-flank",
+        "label": "Extra action recipient compatibility",
+        "notes": [],
+        "satisfied": true
+      }
+    ],
+    "ruleId": "extra-basic-attack-trigger",
+    "sourceAbilityId": "venator-feral-strike",
+    "sourceDragonId": "venator",
+    "sourceEvidenceIds": [
+      "venator-feral-strike-summary-2026-06-25"
+    ],
+    "status": "potential",
+    "targetSelectionGroup": null,
+    "title": "Feral Strike - Extra Basic Attack trigger",
+    "unresolvedQuestions": [
+      "Exact timing and final combat result from the extra Basic Attack are unresolved."
+    ]
+  },
+  {
+    "assumptions": [
+      "Provider activation is not guaranteed.",
+      "Target selection may choose another eligible recipient.",
+      "Exact uptime, total attacks, final damage, and successful attack effects are not calculated.",
+      "Only the verified after-each-Basic-Attack dependency is represented; broader trigger ordering is unresolved."
+    ],
+    "channel": "status",
+    "confidence": "confirmed",
+    "conflicts": [
+      "Venator - Feral Precision Habit unlock requirement: expected Star Rank 6+, actual preview enabled",
+      "Venator - Feral Precision Selected Habit Level: expected Habit Level 1+ or preview, actual preview enabled"
+    ],
+    "damageScope": null,
+    "effects": [
+      "Potential extra Basic Attack can trigger Feral Precision again."
+    ],
+    "exactResultKnown": false,
+    "exactResultUnknownReason": "Exact final value cannot be calculated because final combat formulas and stacking order are not fully verified.",
+    "explanation": "Double-Strike may grant Venator a second Basic Attack, which can trigger Feral Precision again.",
+    "id": "extra-basic-attack-trigger-venator-feral-strike-feral-strike-double-strike-double-strike-status-output-basic-attack-extra-action-venator-feral-precision-after-basic-attack-trigger-venator",
+    "interactionScope": "internal",
+    "matchedOutputCapabilityIds": [],
+    "matchKind": "extra-basic-attack-trigger",
+    "modifierCapabilityId": null,
+    "modifierCapabilityIds": [],
+    "recipientAbilityId": "venator-feral-precision",
+    "recipientDragonId": "venator",
+    "recipientEvidenceIds": [
+      "venator-feral-precision-2026-06-25"
+    ],
+    "requirements": [
+      {
+        "actual": "provider left-flank, recipient left-flank",
+        "evidenceIds": [
+          "venator-feral-strike-summary-2026-06-25"
+        ],
+        "expected": "self",
+        "id": "venator-feral-strike-feral-strike-double-strike-double-strike-status-output-basic-attack-extra-action-targeting-left-flank",
+        "label": "Extra action recipient compatibility",
+        "notes": [],
+        "satisfied": true
+      },
+      {
+        "actual": "preview enabled",
+        "evidenceIds": [
+          "venator-feral-precision-2026-06-25"
+        ],
+        "expected": "Star Rank 6+",
+        "id": "venator-venator-feral-precision-star-rank",
+        "label": "Venator - Feral Precision Habit unlock requirement",
+        "notes": [],
+        "satisfied": false
+      },
+      {
+        "actual": "preview enabled",
+        "evidenceIds": [
+          "venator-feral-precision-2026-06-25"
+        ],
+        "expected": "Habit Level 1+ or preview",
+        "id": "venator-venator-feral-precision-habit-level",
+        "label": "Venator - Feral Precision Selected Habit Level",
+        "notes": [
+          "Unlocked Habits without an explicit saved Habit Level default to effective Habit Level 1. Locked Habit capabilities are potential in preview mode, not active for current roster."
+        ],
+        "satisfied": false
+      }
+    ],
+    "ruleId": "extra-basic-attack-trigger",
+    "sourceAbilityId": "venator-feral-strike",
+    "sourceDragonId": "venator",
+    "sourceEvidenceIds": [
+      "venator-feral-strike-summary-2026-06-25"
+    ],
+    "status": "potential",
+    "targetSelectionGroup": null,
+    "title": "Feral Strike - Extra Basic Attack trigger",
+    "unresolvedQuestions": [
+      "Exact timing and final combat result from the extra Basic Attack are unresolved."
     ]
   },
   {
@@ -64710,7 +65132,8 @@
     ],
     "damageScope": null,
     "effects": [
-      "Enemy Damage Dealt decrease 20%"
+      "Damage Dealt decrease 20%.",
+      "Duration: 2 rounds."
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final reduced enemy damage cannot be calculated because target selection, uptime, stacking, and final formulas are unresolved.",
@@ -64778,7 +65201,7 @@
     ],
     "damageScope": null,
     "effects": [
-      "Enemy Tactical Damage decrease 27%"
+      "Tactical Damage Dealt decrease 27% at effective Habit Level 5."
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final reduced enemy damage cannot be calculated because target selection, uptime, stacking, and final formulas are unresolved.",
@@ -64846,7 +65269,8 @@
     ],
     "damageScope": null,
     "effects": [
-      "Enemy Damage Dealt decrease 20%"
+      "Damage Dealt decrease 20%.",
+      "Duration: 2 rounds."
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final reduced enemy damage cannot be calculated because target selection, uptime, stacking, and final formulas are unresolved.",
@@ -64914,7 +65338,8 @@
     ],
     "damageScope": null,
     "effects": [
-      "Enemy Instinct decrease 30%"
+      "Enemy Instinct decrease 30% at effective Habit Level 5.",
+      "Duration: 2 rounds."
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final reduced enemy damage cannot be calculated because target selection, uptime, stacking, and final formulas are unresolved.",
@@ -64982,7 +65407,8 @@
     ],
     "damageScope": null,
     "effects": [
-      "Enemy Initiative decrease 30%"
+      "Enemy Initiative decrease 30% at effective Habit Level 5.",
+      "Duration: 2 rounds."
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final reduced enemy damage cannot be calculated because target selection, uptime, stacking, and final formulas are unresolved.",
@@ -65050,7 +65476,7 @@
     ],
     "damageScope": null,
     "effects": [
-      "Enemy Intelligence decrease 60%"
+      "Enemy Intelligence decrease 60% at effective Habit Level 5."
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final reduced enemy damage cannot be calculated because target selection, uptime, stacking, and final formulas are unresolved.",

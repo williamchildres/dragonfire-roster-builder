@@ -41,6 +41,9 @@ function traceKey(trace: SynergyTrace): string {
     trace.recipientAbilityId ?? '',
     trace.modifierCapabilityId ?? '',
     trace.channel ?? '',
+    trace.targetSelectionGroup
+      ? `selection:${trace.targetSelectionGroup.targetCount}:${trace.targetSelectionGroup.eligibleRecipientDragonIds.join(',')}:${[...(trace.modifierCapabilityIds ?? [])].sort().join(',')}`
+      : '',
     [...(trace.matchedOutputCapabilityIds ?? [])].sort().join(','),
   ].join('|');
 }

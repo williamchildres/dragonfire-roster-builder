@@ -801,7 +801,7 @@ function analyzeExtraActionTriggerChains(
     }
     for (const recipientPosition of FORMATION_POSITIONS) {
       const recipientId = formation[recipientPosition];
-      if (!recipientId || (recipientId === extraAction.dragonId && extraAction.targetSelector.includesCaster !== true)) {
+      if (!recipientId || (recipientId === extraAction.dragonId && extraAction.targetSelector.includesCaster === false)) {
         continue;
       }
       const targeting = extraActionTargetRequirement(extraAction, providerPosition, recipientPosition);
@@ -1009,7 +1009,7 @@ function analyzeOutgoingAmplifications(
     const modifierTraces: AmplificationSynergyTrace[] = [];
     for (const recipientPosition of FORMATION_POSITIONS) {
       const recipientId = formation[recipientPosition];
-      if (!recipientId || (recipientId === modifier.dragonId && modifier.targetSelector.includesCaster !== true)) {
+      if (!recipientId || (recipientId === modifier.dragonId && modifier.targetSelector.includesCaster === false)) {
         continue;
       }
       const targeting = targetRequirement(modifier, providerPosition, recipientPosition);
@@ -1060,12 +1060,18 @@ function analyzeOutgoingAmplifications(
 }
 
 function groupDefensiveAllySupportTraces(traces: SynergyTrace[], dragons: Dragon[]): SynergyTrace[] {
-  const trialByFlame = traces.filter((trace) => trace.sourceAbilityId === 'vermax-trial-by-flame');
-  const otherTraces = traces.filter((trace) => trace.sourceAbilityId !== 'vermax-trial-by-flame');
-  const grouped: SynergyTrace[] = [];
-  if (trialByFlame.length > 0) {
-    grouped.push(groupTrialByFlameTrace(trialByFlame, dragons));
+  const allMatchingGroups = new Map<string, SynergyTrace[]>();
+  const otherTraces: SynergyTrace[] = [];
+  for (const trace of traces) {
+    if (trace.targetSelectorSummary?.includes('; all-matching-condition;') && trace.modifierCapabilityIds?.length === 1) {
+      const modifierId = trace.modifierCapabilityIds[0]!;
+      allMatchingGroups.set(modifierId, [...(allMatchingGroups.get(modifierId) ?? []), trace]);
+    } else {
+      otherTraces.push(trace);
+    }
   }
+  const grouped: SynergyTrace[] = [];
+  grouped.push(...[...allMatchingGroups.values()].map((items) => groupAllMatchingDefensiveTrace(items, dragons)));
 
   const byAbilityRecipient = new Map<string, SynergyTrace[]>();
   for (const trace of otherTraces) {
@@ -1102,24 +1108,15 @@ function groupDefensiveAllySupportTraces(traces: SynergyTrace[], dragons: Dragon
   return grouped;
 }
 
-function groupTrialByFlameTrace(items: SynergyTrace[], dragons: Dragon[]): SynergyTrace {
+function groupAllMatchingDefensiveTrace(items: SynergyTrace[], dragons: Dragon[]): SynergyTrace {
   const first = items[0]!;
   const recipientIds = uniqueSorted(
     items.map((trace) => trace.recipientDragonId).filter((dragonId): dragonId is string => Boolean(dragonId)),
   );
   const recipientNames = recipientIds.map((dragonId) => dragonById(dragons, dragonId)?.name ?? dragonId);
-  const thresholdRows = uniqueOrdered(
-    items.flatMap((trace) => {
-      const threshold = trace.matchedFacts
-        .join(' ')
-        .match(/below (\d+)%/i)?.[1];
-      const effect = trace.effects[0]?.match(/Fire Damage Received decrease (.+)$/)?.[1];
-      return threshold && effect ? [`Below ${threshold}% Troop Capacity: Fire Damage Received -${effect.replace(/^-/, '')}`] : [];
-    }),
-  );
   return {
     ...first,
-    id: 'defensive-ally-support-vermax-trial-by-flame-grouped',
+    id: `defensive-all-matching-${first.modifierCapabilityIds?.[0] ?? first.id}`,
     recipientDragonId: null,
     recipientAbilityId: null,
     status: aggregateStatus(items.map((trace) => trace.status)),
@@ -1140,7 +1137,7 @@ function groupTrialByFlameTrace(items: SynergyTrace[], dragons: Dragon[]): Syner
     recipientEvidenceIds: uniqueSorted(items.flatMap((trace) => trace.recipientEvidenceIds)),
     modifierCapabilityId: null,
     modifierCapabilityIds: uniqueSorted(items.flatMap((trace) => trace.modifierCapabilityIds ?? [])),
-    explanation: `Trial by Flame can reduce Fire Damage Received for ${joinEnglishList(recipientNames)} when each satisfies a Troop Capacity threshold. ${thresholdRows.join('; ')}. Threshold applicability depends on each recipient's current Troop Capacity; exact interaction between overlapping threshold tiers is unresolved.`,
+    explanation: `${abilityNameForTrace(dragons, first) ?? 'Ability'} can affect ${joinEnglishList(recipientNames)} when each recipient satisfies the matching condition. Threshold applicability depends on each recipient's current Troop Capacity; exact interaction between overlapping threshold tiers is unresolved.`,
     interactionScope: 'targeting-fact',
     targetSelectionGroup: {
       targetCount: recipientIds.length,
@@ -1177,7 +1174,7 @@ function analyzeDefensiveAllySupport(
         !recipientId ||
         (
           recipientId === modifier.dragonId &&
-          modifier.targetSelector.includesCaster !== true &&
+          modifier.targetSelector.includesCaster === false &&
           !isVisibleSelfDefensiveModifier(modifier)
         )
       ) {
@@ -1574,6 +1571,7 @@ function defensiveModifierTargetFacts(
     .filter((dragonId): dragonId is string => Boolean(dragonId))
     .map((dragonId) => dragonById(dragons, dragonId)?.name ?? dragonId);
   const targetCount = effect.targetCount ?? modifier.targetSelector.count ?? null;
+  const allMatching = modifier.targetSelector.selection === 'all-matching-condition';
   return [
     effect.casterEligibility === 'excluded' || effect.includesCaster === false
       ? 'Caster excluded from this target selection.'
@@ -1581,12 +1579,16 @@ function defensiveModifierTargetFacts(
     effect.targetSelection?.sharedSelectionGroupId
       ? `Shared selected-target group: ${effect.targetSelection.sharedSelectionGroupId}.`
       : null,
-    targetCount !== null && targetCount > 1
+    allMatching
+      ? `All matching allies: ${joinEnglishList(eligibleNames)}.`
+      : targetCount !== null && targetCount > 1
       ? `Eligible recipients: ${joinEnglishList(eligibleNames)}.`
       : eligiblePositions.length > 1
         ? `Eligible selected-target candidates: ${joinEnglishList(eligibleNames)}.`
         : null,
-    targetCount !== null && targetCount > 1
+    allMatching
+      ? 'Each eligible recipient evaluates its own condition; no one ally is selected from the qualifying set.'
+      : targetCount !== null && targetCount > 1
       ? `Target count is ${targetCount}, so these allies occupy separate target slots.`
       : eligiblePositions.length > 1
         ? 'One candidate is selected when the activation succeeds; the selected target is unresolved.'
@@ -1727,6 +1729,7 @@ function groupSingleTargetOutgoingTraces(
   dragons: Dragon[],
 ): AmplificationSynergyTrace[] {
   const eligible = traces.filter((trace) => !['inactive', 'blocked', 'not-applicable'].includes(trace.status));
+  const preferredPosition = preferredPositionForModifier(modifier, dragons);
   if (
     modifier.targetSelector.count !== 1 ||
     eligible.length <= 1 ||
@@ -1734,7 +1737,28 @@ function groupSingleTargetOutgoingTraces(
     modifier.targetSelector.selection === 'one-eligible-adjacent' ||
     modifier.targetSelector.selection === 'adjacent'
   ) {
-    return traces;
+    return preferredPosition
+      ? traces.map((trace) =>
+          eligible.includes(trace)
+            ? withPreferredPositionFacts(
+                trace,
+                modifier,
+                preferredPosition,
+                trace.recipientDragonId !== null && formationPositionForDragonId(trace.recipientDragonId, traces) === preferredPosition,
+              )
+            : trace,
+        )
+      : traces;
+  }
+
+  if (preferredPosition) {
+    const preferredTrace = eligible.find((trace) => trace.recipientDragonId && formationPositionForDragonId(trace.recipientDragonId, traces) === preferredPosition);
+    if (preferredTrace) {
+      return [
+        withPreferredPositionFacts(preferredTrace, modifier, preferredPosition, true),
+        ...traces.filter((trace) => !eligible.includes(trace)),
+      ];
+    }
   }
 
   const first = eligible[0]!;
@@ -1765,6 +1789,7 @@ function groupSingleTargetOutgoingTraces(
       requirements: dedupeRequirements(eligible.flatMap((trace) => trace.requirements)),
       matchedFacts: uniqueSorted([
         ...eligible.flatMap((trace) => trace.matchedFacts),
+        ...(preferredPosition ? preferredSelectionFacts(modifier, preferredPosition, false) : []),
         ...eligibleRecipientDragonIds.map((dragonId) => `Eligible recipient: ${dragonId}.`),
       ]),
       effects: uniqueSorted(eligible.flatMap((trace) => trace.effects)),
@@ -1791,6 +1816,60 @@ function groupSingleTargetOutgoingTraces(
     },
     ...traces.filter((trace) => !eligible.includes(trace)),
   ];
+}
+
+function formationPositionForDragonId(dragonId: string, traces: SynergyTrace[]): FormationPosition | null {
+  for (const trace of traces) {
+    const requirement = trace.requirements.find((item) => item.label === 'Position compatibility' && item.actual?.includes(`recipient `));
+    const position = requirement?.actual?.match(/recipient ([a-z-]+)/i)?.[1] as FormationPosition | undefined;
+    if (trace.recipientDragonId === dragonId && position && FORMATION_POSITIONS.includes(position)) {
+      return position;
+    }
+  }
+  return null;
+}
+
+function preferredPositionForModifier(modifier: ModifierCapability, dragons: Dragon[]): FormationPosition | null {
+  const provider = dragonById(dragons, modifier.dragonId);
+  const context = provider ? sourceEffectContext(provider, modifier.abilityId, modifier.sourceEffectId) : null;
+  const preference = context?.effect.targetSelection?.preference ?? null;
+  const priority = context?.effect.targetPriority ?? null;
+  if (priority === 'prefer-left-flank' || /left flank/i.test(preference ?? '')) {
+    return 'left-flank';
+  }
+  if (priority === 'prefer-right-flank' || /right flank/i.test(preference ?? '')) {
+    return 'right-flank';
+  }
+  return null;
+}
+
+function preferredSelectionFacts(
+  modifier: ModifierCapability,
+  preferredPosition: FormationPosition,
+  resolved: boolean,
+): string[] {
+  const label = preferredPosition === 'left-flank' ? 'Left Flank' : preferredPosition === 'right-flank' ? 'Right Flank' : 'Vanguard';
+  const provider = resolved
+    ? `Preferred position resolved: ${label}.`
+    : `Preferred position ${label} has no eligible qualifying recipient in this formation; fallback candidates remain eligible.`;
+  return [
+    `Preferred position: ${label}.`,
+    provider,
+    modifier.targetSelector.sharedSelectionGroupId ? `Shared selected-target group: ${modifier.targetSelector.sharedSelectionGroupId}.` : null,
+  ].filter((fact): fact is string => Boolean(fact));
+}
+
+function withPreferredPositionFacts<T extends SynergyTrace>(
+  trace: T,
+  modifier: ModifierCapability,
+  preferredPosition: FormationPosition,
+  resolved: boolean,
+): T {
+  const facts = preferredSelectionFacts(modifier, preferredPosition, resolved);
+  return {
+    ...trace,
+    matchedFacts: uniqueSorted([...trace.matchedFacts, ...facts]),
+  };
 }
 
 function groupSingleTargetDefensiveTraces(
@@ -2339,7 +2418,7 @@ function targetCandidatePositions(
   }
   const eligible = FORMATION_POSITIONS.filter((position) => {
     const dragonId = formation[position];
-    if (!dragonId || (dragonId === modifier.dragonId && modifier.targetSelector.includesCaster !== true)) {
+    if (!dragonId || (dragonId === modifier.dragonId && modifier.targetSelector.includesCaster === false)) {
       return false;
     }
     return targetRequirement(modifier, providerPosition, position).satisfied !== false;
@@ -2361,6 +2440,23 @@ function targetCandidatePositions(
   }
   const max = Math.max(...candidateValues.map((candidate) => candidate.value ?? Number.NEGATIVE_INFINITY));
   return candidateValues.filter((candidate) => candidate.value === max).map((candidate) => candidate.position);
+}
+
+function allEligibleTargetCandidatePositions(
+  formation: FormationAnalysisInput,
+  modifier: ModifierCapability,
+  providerPosition: FormationPosition | null,
+): FormationPosition[] {
+  if (modifier.targetSelector.selection === 'self') {
+    return providerPosition ? [providerPosition] : [];
+  }
+  return FORMATION_POSITIONS.filter((position) => {
+    const dragonId = formation[position];
+    if (!dragonId || (dragonId === modifier.dragonId && modifier.targetSelector.includesCaster === false)) {
+      return false;
+    }
+    return targetRequirement(modifier, providerPosition, position).satisfied !== false;
+  });
 }
 
 function recipientPositionsForModifier(
@@ -2590,10 +2686,17 @@ function targetSelectionFacts(
     return [];
   }
   const statId = modifier.targetSelector.selectionStat;
-  return FORMATION_POSITIONS
+  const providerPosition = positionOf(formation, modifier.dragonId);
+  const eligiblePositions = allEligibleTargetCandidatePositions(formation, modifier, providerPosition);
+  const facts = eligiblePositions
     .map((position) => formation[position])
     .filter((dragonId): dragonId is string => Boolean(dragonId && dragonId !== modifier.dragonId))
     .map((dragonId) => `${dragonById(dragons, dragonId)?.name ?? dragonId} ${statLabel(statId)}: ${observedStatValue(dragons, dragonId, statId) ?? 'unknown'}.`);
+  const casterId = providerPosition ? formation[providerPosition] : null;
+  if (casterId && eligiblePositions.includes(providerPosition!)) {
+    facts.push(`${dragonById(dragons, casterId)?.name ?? casterId} ${statLabel(statId)}: ${observedStatValue(dragons, casterId, statId) ?? 'unknown'}.`);
+  }
+  return uniqueOrdered(facts);
 }
 
 function analyzeEnemyMitigationReduction(
@@ -2722,16 +2825,19 @@ function analyzeEnemyDamageDealtReductions(
       matchedFacts: [
         `${modifier.abilityName} targets ${targetSelectorSummary(modifier.targetSelector)}.`,
         ...(modifier.targetSelector.sharedSelectionGroupId ? [`Shared selected-target group: ${modifier.targetSelector.sharedSelectionGroupId}.`] : []),
+        ...enemySelectorFacts(provider, modifier),
         ...independentHighestStatSelectorFacts(provider, modifier),
         ...enemyDamageDealtReductionDetailFacts(modifier),
+        durationLine(modifier),
         ...modifier.conditions.map((condition) => condition.description),
         ...(modifier.activationGroupId ? [`Shared activation group: ${modifier.activationGroupId}.`] : []),
         ...activationChanceFacts(modifier, options),
-      ],
+      ].filter((fact): fact is string => Boolean(fact)),
       effects: [
-        statId ? `Enemy ${statLabel(statId)} ${modifier.operation} ${modifierDisplayValue(modifier, options)}` : `Enemy ${channelLabel(modifier.channel)} ${modifier.operation} ${modifierDisplayValue(modifier, options)}`,
+        statId ? `Enemy ${statLabel(statId)} ${modifier.operation} ${modifierDisplayValue(modifier, options)}${modifier.rankedValues.length > 0 ? ` at effective Habit Level ${options.previewMaxRankInteractions ? 5 : effectiveHabitLevelForCapability(modifier, options)}` : ''}.` : modifierEffectValueLine(modifier, options),
         ...enemyDamageDealtReductionDetailFacts(modifier),
-      ],
+        durationLine(modifier),
+      ].filter((effect): effect is string => Boolean(effect)),
       conflicts: requirements
         .filter((requirement) => requirement.satisfied === false)
         .map((requirement) => `${requirement.label}: expected ${requirement.expected}, actual ${requirement.actual ?? 'unknown'}`),
@@ -3325,6 +3431,7 @@ function analyzePeriodicStatusDamage(
       requirements,
       matchedFacts: [
         ...matchingStatusOutputs.map((output) => `${abilityName} ${output.sourceEffectId ?? output.id} targets ${targetSelectorSummary(output.targetSelector)}.`),
+        ...matchingStatusOutputs.flatMap((output) => enemySelectorFacts(provider, output)),
         `Status identity: ${periodic.statusId}.`,
         `Periodic damage channel: ${periodic.channel}.`,
         ...detailLines,
@@ -3486,6 +3593,30 @@ function enemyAllMatchingSelectorFacts(modifier: ModifierCapability): string[] {
   ];
 }
 
+function enemySelectorFacts(
+  provider: Dragon,
+  capability: Pick<ModifierCapability | StatusOutputCapability, 'abilityId' | 'sourceEffectId' | 'targetSelector'>,
+): string[] {
+  if (capability.targetSelector.side !== 'enemy') {
+    return [];
+  }
+  const context = sourceEffectContext(provider, capability.abilityId, capability.sourceEffectId);
+  const effect = context?.effect;
+  const count = capability.targetSelector.count;
+  const scope = capability.targetSelector.scope;
+  const priority = effect ? targetPriorityFact(effect) : null;
+  const fallback = effect ? targetFallbackFact(effect) : null;
+  const references = effect ? targetReferenceFacts(effect) : [];
+  return [
+    count !== null ? `Enemy target count: ${count}.` : 'Enemy target count: unknown.',
+    scope === 'within-adjacency' ? 'Target scope: enemies within adjacency.' : null,
+    priority,
+    fallback,
+    ...references,
+    count !== null ? 'Enemy identities remain unresolved because the enemy formation is unavailable.' : null,
+  ].filter((fact): fact is string => Boolean(fact));
+}
+
 function successfulStatusTriggerLine(modifier: ModifierCapability, providerName: string): string | null {
   const condition = modifier.conditions.find((item) =>
     item.kind === 'successful-status-application' || /successfully applied/i.test(item.description),
@@ -3530,6 +3661,20 @@ function sourceScopeLine(modifier: ModifierCapability, channel: string): string 
     return `Applies to Basic Attack ${channel} only.`;
   }
   return 'Applicable source scope is not yet verified.';
+}
+
+function modifierSourceScopeFact(modifier: ModifierCapability): string | null {
+  if (modifier.sourceScope === 'unknown') {
+    return null;
+  }
+  return sourceScopeLine(modifier, channelLabel(modifier.channel));
+}
+
+function modifierEffectValueLine(modifier: ModifierCapability, options: CapabilityOptions): string {
+  const level = modifier.rankedValues.length > 0
+    ? (options.previewMaxRankInteractions ? 5 : effectiveHabitLevelForCapability(modifier, options))
+    : null;
+  return `${directedChannelLabel(modifier.channel, modifier.direction)} ${modifier.operation} ${modifierDisplayValue(modifier, options)}${level ? ` at effective Habit Level ${level}` : ''}.`;
 }
 
 function sourceScopeQualifiedChannel(modifier: ModifierCapability, channel: string): string {
@@ -3873,7 +4018,7 @@ function composeSummarySentences(...segments: Array<string | null | undefined>):
       if (previous && normalizeSummarySentence(previous) === normalized) {
         continue;
       }
-      sentences.push(sentence.trim());
+      sentences.push(cleanSummarySentence(sentence));
     }
   }
   return sentences.join(' ');
@@ -3884,7 +4029,11 @@ function splitSummarySentences(value: string): string[] {
 }
 
 function normalizeSummarySentence(value: string): string {
-  return value.replace(/\s+/g, ' ').trim().toLowerCase();
+  return cleanSummarySentence(value).toLowerCase();
+}
+
+function cleanSummarySentence(value: string): string {
+  return value.replace(/\s+/g, ' ').replace(/\.(?:\s*\.)+$/g, '.').trim();
 }
 
 function conditionalMultiplierValueFacts(
@@ -4413,12 +4562,14 @@ function makeAmplificationTrace({
       ...(modifier.statusId ? [`Status semantic: ${statusLabel(modifier.statusId)}.`] : []),
       ...(modifier.sourceEffectId ? [`Source effect ID: ${modifier.sourceEffectId}.`] : []),
       ...(modifier.activationGroupId ? [`Shared activation group: ${modifier.activationGroupId}.`] : []),
+      ...(modifierSourceScopeFact(modifier) ? [modifierSourceScopeFact(modifier)!] : []),
       ...modifier.conditions.map((condition) => condition.description),
       ...activationChanceFacts(modifier, options),
       ...matches.map((match) => `Matched ${match.outputCapabilityId}.`),
     ],
     effects: [
-      `${directedChannelLabel(modifier.channel, modifier.direction)} ${modifier.operation} ${modifierDisplayValue(modifier, options)}`,
+      modifierEffectValueLine(modifier, options),
+      ...(modifierSourceScopeFact(modifier) ? [modifierSourceScopeFact(modifier)!] : []),
       ...modifier.conditions.map((condition) => condition.description),
       ...activationChanceFacts(modifier, options),
       ...(modifier.durationRounds ? [`Duration: ${modifier.durationRounds} rounds.`] : []),
@@ -5064,7 +5215,9 @@ function targetForEffect(effect: AbilityEffect): AbilityTarget {
           : effect.targetScope === 'opposing-position' || effect.targetPriority === 'opposing-position'
             ? 'specific-position'
           : effect.targetScope === 'within-adjacency'
-            ? 'one-eligible-adjacent'
+            ? effect.targetCount !== null && effect.targetCount !== undefined && effect.targetCount > 1
+              ? 'adjacent'
+              : 'one-eligible-adjacent'
             : effect.target.includes('deals')
               ? 'eligible'
               : effect.targetScope === 'any-lane'
@@ -5075,9 +5228,9 @@ function targetForEffect(effect: AbilityEffect): AbilityTarget {
     (effect.activationRoll?.scope === 'independent-per-target' && referenceCount > 1 ? referenceCount : null) ??
     (selection === 'all-matching-condition'
     ? null
-    : selection === 'highest-stat' || selection === 'highest-resource' || selection === 'lowest-resource' || selection === 'one-eligible-adjacent'
+    : effect.targetCount ?? (selection === 'highest-stat' || selection === 'highest-resource' || selection === 'lowest-resource' || selection === 'one-eligible-adjacent'
       ? 1
-      : effect.targetCount ?? inferTargetCount(effect.target));
+      : inferTargetCount(effect.target)));
   return {
     side: targetSideForEffect(effect),
     scope: effect.targetScope === 'opposing-position' ? 'same-lane' : effect.targetScope,
@@ -5914,6 +6067,9 @@ function targetSelectorSummary(target: AbilityTarget): string {
 }
 
 function defensiveDamageScopeForEffect(effect: AbilityEffect): DefensiveDamageScope | null {
+  if (effect.type === 'Resistance') {
+    return 'all';
+  }
   if (!/Damage Received/i.test(effect.type)) {
     return null;
   }
