@@ -42,6 +42,7 @@ import type {
 } from '../models/synergy';
 import {
   arePositionsAdjacent,
+  inferCasterEligibility,
   normalizeDamageSourceScope,
 } from './formationRules';
 import { rankedValueForHabitLevel, resolveEffectiveHabitLevel } from './habitLevels';
@@ -421,6 +422,7 @@ export function analyzeCapabilityAmplifications(
     ...analyzeStatusConditionEnablement(formation, dragons, outputs, statusOutputs, options),
     ...analyzeStatusEffectConditionEnablement(formation, dragons, statusOutputs, options),
     ...analyzeDefensiveAllySupport(formation, dragons, modifiers, options),
+    ...analyzeRecipientSideAllySupport(formation, dragons, modifiers, options),
     ...analyzeFriendlyImpairments(formation, dragons, modifiers, options),
     ...analyzeDirectStatSupport(formation, dragons, modifiers, options),
     ...analyzeStatScalingSupport(formation, dragons, outputs, modifiers, options),
@@ -464,9 +466,17 @@ function analyzeAllyOutputSupport(
       if (!recipient) {
         continue;
       }
-      const targeting = outputTargetsRecipient(output, providerPosition, recipientPosition);
-      const sourceAbility = allAbilities(provider).find((ability) => ability.id === output.abilityId);
       const context = sourceEffectContext(provider, output.abilityId, output.sourceEffectId);
+      const targeting = outputTargetsRecipient(
+        output,
+        providerPosition,
+        recipientPosition,
+        context ? targetForEffect(context.effect) : null,
+      );
+      if (targeting.satisfied === false) {
+        continue;
+      }
+      const sourceAbility = allAbilities(provider).find((ability) => ability.id === output.abilityId);
       const outputDetails = outputDetailLines(output, context, options);
       const requirements = dedupeRequirements([
         targeting,
@@ -525,13 +535,25 @@ function sourceEffectContext(
   if (!ability) {
     return null;
   }
-  for (const schedule of ability.schedules) {
+  for (const schedule of abilitySchedulesForDerivation(ability, dragon)) {
     const effect = schedule.effects.flatMap(derivableEffects).find((item) => item.id === sourceEffectId);
     if (effect) {
       return { ability, schedule, effect };
     }
   }
   return null;
+}
+
+function abilitySchedulesForDerivation(ability: AbilityDefinition, dragon: Dragon): AbilitySchedule[] {
+  if (ability.kind !== 'command' || ability.augmentations.length === 0) {
+    return ability.schedules;
+  }
+  const maximumKnownStarRank = Math.max(
+    1,
+    ...ability.augmentations.map((augmentation) => augmentation.minimumDragonStarRank),
+    ...dragon.habits.map((habit) => habit.unlockStarRank ?? 1),
+  );
+  return effectiveAbilitySchedules(ability, maximumKnownStarRank);
 }
 
 function outputDetailLines(
@@ -1104,6 +1126,99 @@ function analyzeDefensiveAllySupport(
   return groupDefensiveAllySupportTraces(traces, dragons);
 }
 
+function analyzeRecipientSideAllySupport(
+  formation: FormationAnalysisInput,
+  dragons: Dragon[],
+  modifiers: ModifierCapability[],
+  options: CapabilityOptions,
+): SynergyTrace[] {
+  const traces: SynergyTrace[] = [];
+  for (const modifier of modifiers.filter(
+    (capability) =>
+      capability.role === 'ally-support' &&
+      capability.direction === 'received' &&
+      capability.channel === 'recovery' &&
+      capability.operation === 'increase' &&
+      modifierCapabilityVisible(capability, options),
+  )) {
+    const providerPosition = positionOf(formation, modifier.dragonId);
+    const provider = dragonById(dragons, modifier.dragonId);
+    if (!providerPosition || !provider) {
+      continue;
+    }
+    for (const recipientPosition of targetCandidatePositions(formation, dragons, modifier, providerPosition)) {
+      const recipientId = formation[recipientPosition];
+      if (!recipientId || (recipientId === modifier.dragonId && modifier.targetSelector.includesCaster === false)) {
+        continue;
+      }
+      const recipient = dragonById(dragons, recipientId);
+      if (!recipient) {
+        continue;
+      }
+      const targeting = targetRequirement(modifier, providerPosition, recipientPosition);
+      if (targeting.satisfied === false) {
+        continue;
+      }
+      const context = sourceEffectContext(provider, modifier.abilityId, modifier.sourceEffectId);
+      const value = modifierDisplayValue(modifier, options);
+      const details = recipientSideModifierDetailLines(modifier, context, value, options);
+      traces.push(makeDependencyTrace({
+        id: `recipient-side-ally-support-${modifier.id}-${recipientId}`,
+        matchKind: 'outgoing-effect-amplification',
+        ruleId: 'recipient-side-ally-support',
+        source: provider,
+        sourceAbilityId: modifier.abilityId,
+        recipient,
+        recipientAbilityId: null,
+        channel: modifier.channel,
+        title: `${channelLabel(modifier.channel)} Received Support`,
+        explanation: `${provider.name}'s ${modifier.abilityName} can increase ${recipient.name}'s ${channelLabel(modifier.channel)} Received by ${value}.${details.length > 0 ? ` ${details.join(' ')}` : ''}`,
+        requirements: dedupeRequirements([
+          targeting,
+          ...providerRequirementTraces(modifier, formation, dragons, options),
+        ]),
+        matchedFacts: [
+          `${modifier.abilityName} targets ${targetSelectorSummary(modifier.targetSelector)}.`,
+          ...details,
+        ],
+        effects: [`${channelLabel(modifier.channel)} Received increase ${value}`, ...details],
+        sourceEvidenceIds: modifier.evidenceIds,
+        recipientEvidenceIds: [],
+        assumptions: ['Final Recovery amount remains unknown.'],
+        unresolvedQuestions: ['Exact final Recovery amount and stacking order are not calculated.'],
+        futureOrConditional: modifier.futureAvailable || modifier.conditional,
+        modifier,
+      }));
+    }
+  }
+  return traces;
+}
+
+function recipientSideModifierDetailLines(
+  modifier: ModifierCapability,
+  context: { schedule: AbilitySchedule; effect: AbilityEffect } | null,
+  displayValue: string,
+  options: CapabilityOptions,
+): string[] {
+  if (!context) {
+    return [];
+  }
+  const effectiveLevel = modifier.rankedValues.length > 0
+    ? (options.previewMaxRankInteractions ? 5 : effectiveHabitLevelForCapability(modifier, options))
+    : null;
+  return [
+    scheduleTimingDetail(context.schedule),
+    `${channelLabel(modifier.channel)} Received +${displayValue}${effectiveLevel ? ` at effective Habit Level ${effectiveLevel}` : ''}.`,
+    durationDetail(context.effect),
+    rankedProgressionDetail(context.effect),
+    outputTargetingDetail({
+      channel: modifier.channel,
+      targetSide: modifier.targetSelector.side,
+      targetCount: modifier.targetSelector.count,
+    } as OutputCapability, context.effect),
+  ].filter((detail): detail is string => Boolean(detail));
+}
+
 function isVisibleSelfDefensiveModifier(modifier: ModifierCapability): boolean {
   return (modifier.role === 'ally-support' || modifier.role === 'self-amplification') &&
     modifier.direction === 'received' &&
@@ -1373,6 +1488,9 @@ function analyzeIncomingAmplifications(
     if (!providerPosition) {
       continue;
     }
+    const provider = dragonById(dragons, output.dragonId);
+    const outputContext = provider ? sourceEffectContext(provider, output.abilityId, output.sourceEffectId) : null;
+    const outputSelector = outputContext ? targetForEffect(outputContext.effect) : null;
     for (const recipientPosition of FORMATION_POSITIONS) {
       const recipientId = formation[recipientPosition];
       if (!recipientId) {
@@ -1388,7 +1506,7 @@ function analyzeIncomingAmplifications(
           modifierCapabilityVisible(modifier, options),
       );
       for (const modifier of recipientModifiers) {
-        const targeting = outputTargetsRecipient(output, providerPosition, recipientPosition);
+        const targeting = outputTargetsRecipient(output, providerPosition, recipientPosition, outputSelector);
         if (targeting.satisfied === false) {
           continue;
         }
@@ -1397,7 +1515,6 @@ function analyzeIncomingAmplifications(
           ...outputRequirementTraces(output, options),
           ...providerRequirementTraces(modifier, formation, dragons, options),
         ]);
-        const provider = dragonById(dragons, output.dragonId);
         const recipient = dragonById(dragons, recipientId);
         if (!provider || !recipient) {
           continue;
@@ -1670,7 +1787,7 @@ function analyzeDirectStatSupport(
     const providerPosition = positionOf(formation, modifier.dragonId);
     for (const recipientPosition of targetCandidatePositions(formation, dragons, modifier, providerPosition)) {
       const recipientId = formation[recipientPosition];
-      if (!recipientId || recipientId === modifier.dragonId) {
+      if (!recipientId || (recipientId === modifier.dragonId && modifier.targetSelector.includesCaster === false)) {
         continue;
       }
       const provider = dragonById(dragons, modifier.dragonId);
@@ -1682,6 +1799,8 @@ function analyzeDirectStatSupport(
         targetRequirement(modifier, providerPosition, recipientPosition),
         ...providerRequirementTraces(modifier, formation, dragons, options),
       ];
+      const context = sourceEffectContext(provider, modifier.abilityId, modifier.sourceEffectId);
+      const details = statModifierDetailLines(modifier, context, options);
       traces.push(makeDependencyTrace({
         id: `direct-stat-support-${modifier.id}-${recipientId}-${statId}`,
         matchKind: 'stat-scaling-support',
@@ -1692,13 +1811,14 @@ function analyzeDirectStatSupport(
         recipientAbilityId: null,
         channel: 'stat',
         title: `${statLabel(statId)} Stat Support`,
-        explanation: `${provider.name}'s ${modifier.abilityName} can increase ${recipient.name}'s ${statLabel(statId)}.`,
+        explanation: `${provider.name}'s ${modifier.abilityName} can increase ${recipient.name}'s ${statLabel(statId)}.${details.length > 0 ? ` ${details.join(' ')}` : ''}`,
         requirements,
         matchedFacts: [
           `${modifier.abilityName} targets ${targetSelectorSummary(modifier.targetSelector)}.`,
           ...targetSelectionFacts(formation, dragons, modifier),
+          ...details,
         ],
-        effects: [`${statLabel(statId)} ${modifierDisplayValue(modifier, options)}`],
+        effects: [`${statLabel(statId)} ${modifierDisplayValue(modifier, options)}`, ...details],
         sourceEvidenceIds: modifier.evidenceIds,
         recipientEvidenceIds: [],
         assumptions: [],
@@ -1733,7 +1853,7 @@ function analyzeStatScalingSupport(
     const providerPosition = positionOf(formation, modifier.dragonId);
     for (const recipientPosition of targetCandidatePositions(formation, dragons, modifier, providerPosition)) {
       const recipientId = formation[recipientPosition];
-      if (!recipientId || recipientId === modifier.dragonId) {
+      if (!recipientId || (recipientId === modifier.dragonId && modifier.targetSelector.includesCaster === false)) {
         continue;
       }
       const matchedOutputs = outputs.filter(
@@ -1810,6 +1930,32 @@ function targetCandidatePositions(
   }
   const max = Math.max(...candidateValues.map((candidate) => candidate.value ?? Number.NEGATIVE_INFINITY));
   return candidateValues.filter((candidate) => candidate.value === max).map((candidate) => candidate.position);
+}
+
+function statModifierDetailLines(
+  modifier: ModifierCapability,
+  context: { schedule: AbilitySchedule; effect: AbilityEffect } | null,
+  options: CapabilityOptions,
+): string[] {
+  if (!context) {
+    return [];
+  }
+  const effectiveLevel = modifier.rankedValues.length > 0
+    ? (options.previewMaxRankInteractions ? 5 : effectiveHabitLevelForCapability(modifier, options))
+    : null;
+  const stat = statIdFromText(modifier.label);
+  return [
+    scheduleTimingDetail(context.schedule),
+    stat ? `${statLabel(stat)} +${modifierDisplayValue(modifier, options)}${effectiveLevel ? ` at effective Habit Level ${effectiveLevel}` : ''}.` : null,
+    enhancementDetail(context.effect),
+    durationDetail(context.effect),
+    rankedProgressionDetail(context.effect),
+    outputTargetingDetail({
+      channel: modifier.channel,
+      targetSide: modifier.targetSelector.side,
+      targetCount: modifier.targetSelector.count,
+    } as OutputCapability, context.effect),
+  ].filter((detail): detail is string => Boolean(detail));
 }
 
 function groupDirectStatSupportTraces(traces: SynergyTrace[], dragons: Dragon[]): SynergyTrace[] {
@@ -1928,15 +2074,15 @@ function groupDirectStatRecipientTraces(traces: SynergyTrace[], dragons: Dragon[
 
 function groupedStatNames(traces: SynergyTrace[]): string[] {
   return uniqueOrdered(
-    traces.flatMap((trace) => trace.effects.map((effect) => effect.match(/^(Strength|Instinct|Intelligence|Initiative)\b/)?.[1] ?? '').filter(Boolean)),
+    traces.flatMap((trace) => trace.effects.map((effect) => rawStatEffectEntry(effect)?.stat ?? '').filter(Boolean)),
   );
 }
 
 function groupedStatValueText(traces: SynergyTrace[]): { stats: string[]; text: string } {
   const entries = traces.flatMap((trace) =>
     trace.effects.flatMap((effect) => {
-      const match = effect.match(/^(Strength|Instinct|Intelligence|Initiative)\s+(.+)$/);
-      return match?.[1] && match[2] ? [{ stat: match[1], value: match[2] }] : [];
+      const entry = rawStatEffectEntry(effect);
+      return entry ? [entry] : [];
     }),
   );
   const stats = uniqueOrdered(entries.map((entry) => entry.stat));
@@ -3919,6 +4065,13 @@ function modifierRoleForEffect(effect: AbilityEffect, direction: 'dealt' | 'rece
 }
 
 function targetForEffect(effect: AbilityEffect): AbilityTarget {
+  const inferredCasterEligibility =
+    effect.targetPriority === 'highest-stat-ally' ||
+    effect.targetPriority === 'highest-current-troops-ally' ||
+    effect.targetPriority === 'least-current-troops-ally'
+      ? 'unknown'
+      : inferCasterEligibility(effect.target);
+  const casterEligibility = effect.casterEligibility ?? inferredCasterEligibility;
   const position = effect.targetScope === 'left-flank' || effect.targetScope === 'right-flank'
     ? effect.targetScope
     : null;
@@ -3958,7 +4111,12 @@ function targetForEffect(effect: AbilityEffect): AbilityTarget {
     scope: effect.targetScope === 'opposing-position' ? 'same-lane' : effect.targetScope,
     position,
     count,
-    includesCaster: effect.includesCaster ?? (effect.casterEligibility === 'excluded' ? false : effect.casterEligibility === 'eligible-if-targeting-allows' ? true : null),
+    includesCaster: effect.includesCaster ??
+      (casterEligibility === 'excluded'
+        ? false
+        : casterEligibility === 'included' || casterEligibility === 'eligible-if-targeting-allows'
+          ? true
+          : null),
     selection,
     selectionStat,
     selectionResource,
@@ -4031,6 +4189,9 @@ function targetRequirement(
   let expected: string = selector.scope;
   if (!providerPosition) {
     satisfied = false;
+  } else if (selector.includesCaster === false && providerPosition === recipientPosition) {
+    satisfied = false;
+    expected = 'other ally';
   } else if (selector.selection === 'self') {
     satisfied = providerPosition === recipientPosition;
     expected = 'self';
@@ -4112,9 +4273,12 @@ function outputTargetsRecipient(
   output: OutputCapability,
   providerPosition: FormationPosition,
   recipientPosition: FormationPosition,
+  selector: AbilityTarget | null = null,
 ): RequirementTrace {
   let satisfied: boolean | null = null;
-  if (output.targetSide === 'self') {
+  if (selector?.includesCaster === false && providerPosition === recipientPosition) {
+    satisfied = false;
+  } else if (output.targetSide === 'self') {
     satisfied = providerPosition === recipientPosition;
   } else if (output.targetScope === 'within-adjacency') {
     satisfied = arePositionsAdjacent(providerPosition, recipientPosition);
@@ -4124,12 +4288,24 @@ function outputTargetsRecipient(
   return {
     id: `${output.id}-targets-${recipientPosition}`,
     label: 'Provider targeting includes recipient',
-    expected: output.targetScope ?? 'ally target',
+    expected: selector?.includesCaster === false && providerPosition === recipientPosition
+      ? 'other ally'
+      : (output.targetScope ?? 'ally target'),
     actual: `provider ${providerPosition}, recipient ${recipientPosition}`,
     satisfied,
     evidenceIds: output.evidenceIds,
-    notes: output.targetCount === 3 ? ['Exact 3 Allies includes all friendly dragons, including caster.'] : [],
+    notes: [
+      output.targetCount === 3 && selector?.includesCaster !== false
+        ? 'Exact 3 Allies includes all friendly dragons, including caster.'
+        : null,
+      selector?.includesCaster === false ? 'The source explicitly targets other Allies, excluding the caster.' : null,
+    ].filter((note): note is string => Boolean(note)),
   };
+}
+
+function rawStatEffectEntry(effect: string): { stat: string; value: string } | null {
+  const match = effect.match(/^(Strength|Instinct|Intelligence|Initiative)\s+(-?\d+(?:\.\d+)?%?|\d+(?:\.\d+)?\s+flat)$/);
+  return match?.[1] && match[2] ? { stat: match[1], value: match[2] } : null;
 }
 
 function statusProviderRequirement(

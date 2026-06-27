@@ -221,10 +221,18 @@ export function buildFormationCardPresentation(
 }
 
 function isVisibleInternalProvidesTrace(trace: SynergyTrace): boolean {
-  return trace.matchKind === 'defensive-ally-support' &&
-    trace.modifierSelfOnly === true &&
-    trace.status !== 'inactive' &&
-    [...trace.effects, ...trace.matchedFacts, trace.explanation].some((line) => /Grants 1 .+ stack/i.test(line));
+  if (trace.matchKind === 'defensive-ally-support') {
+    return trace.modifierSelfOnly === true &&
+      trace.status !== 'inactive' &&
+      [...trace.effects, ...trace.matchedFacts, trace.explanation].some((line) => /Grants 1 .+ stack/i.test(line));
+  }
+  if (trace.matchKind === 'stat-scaling-support' && trace.sourceDragonId === trace.recipientDragonId) {
+    const text = [trace.targetSelectorSummary ?? '', trace.explanation, ...trace.matchedFacts].join(' ');
+    return trace.status !== 'inactive' &&
+      /caster eligible/i.test(text) &&
+      !/;\s*self\s*;/.test(trace.targetSelectorSummary ?? '');
+  }
+  return false;
 }
 
 export function getCompactInteractions(
@@ -367,6 +375,7 @@ function sanitizeNormalCardEffects(effects: string[], summaryLines: string[]): s
       .map(sanitizeNormalCardText)
       .filter((effect): effect is string => Boolean(effect))
       .filter((effect) => !isRedundantCurrentValueLine(effect, summaryText))
+      .filter((effect) => !isValueAlreadyExplained(effect, summaryText))
       .filter((effect) => !summaryText.includes(normalizeText(effect))),
     semanticEffectDetailKey,
   );
@@ -398,6 +407,23 @@ function semanticEffectDetailKey(value: string): string {
 function isRedundantCurrentValueLine(value: string, normalizedSummaryText: string): boolean {
   const match = value.match(/current effective level:\s([-+]?\d+(?:\.\d+)?%?)/i);
   return Boolean(match?.[1] && normalizedSummaryText.includes(match[1].toLowerCase()));
+}
+
+function isValueAlreadyExplained(value: string, normalizedSummaryText: string): boolean {
+  const damageReceived = value.match(/\b(Physical|Tactical|Fire) Damage Received \+([-+]?\d+(?:\.\d+)?%?)/i);
+  if (damageReceived) {
+    const channel = damageReceived[1]!.toLowerCase();
+    const amount = damageReceived[2]!.toLowerCase();
+    return normalizedSummaryText.includes(`+${amount} ${channel} damage received`) ||
+      normalizedSummaryText.includes(`${channel} damage received +${amount}`);
+  }
+  const recoveryReceived = value.match(/\bRecovery Received \+([-+]?\d+(?:\.\d+)?%?)/i);
+  if (recoveryReceived) {
+    const amount = recoveryReceived[1]!.toLowerCase();
+    return normalizedSummaryText.includes(`recovery received by ${amount}`) ||
+      normalizedSummaryText.includes(`recovery received +${amount}`);
+  }
+  return false;
 }
 
 function omitNormalCardSummarySentences(value: string, summaryLines: string[]): string {
@@ -496,18 +522,28 @@ function summarizeTrace(
     return [enemyFacingSummary(trace)];
   }
   if (trace.channel === 'stat') {
-    return [formatStatEffects(trace.effects) ?? formatStatDetail(detail) ?? detail];
+    return [[
+      formatStatEffects(trace.effects) ?? formatStatDetail(detail) ?? detail,
+      trace.effects.find((effect) => /Timing:/i.test(effect)),
+      trace.effects.find((effect) => /Enhanced by/i.test(effect)),
+      trace.effects.find((effect) => /Duration:/i.test(effect)),
+    ].filter(Boolean).join(' ')];
   }
   if (trace.channel === 'recovery') {
     const recoveryRate = trace.effects.find((effect) => /Recovery Rate:/i.test(effect));
+    const recoveryReceived = trace.effects.find((effect) => /Recovery Received \+/i.test(effect));
     const timing = trace.effects.find((effect) => /Timing:/i.test(effect));
     const enhancement = trace.effects.find((effect) => /Enhanced by/i.test(effect));
+    const targeting = trace.effects.find((effect) => /^Targets /i.test(effect));
+    const duration = trace.effects.find((effect) => /Duration:/i.test(effect));
     return [
       [
-        `Recovery support${recipient ? ` for ${recipient.name}` : ''}.`,
+        recoveryReceived ? `Recovery Received support${recipient ? ` for ${recipient.name}` : ''}.` : `Recovery support${recipient ? ` for ${recipient.name}` : ''}.`,
         timing,
-        recoveryRate,
+        recoveryReceived ?? recoveryRate,
         enhancement,
+        duration,
+        targeting,
       ].filter(Boolean).join(' '),
     ];
   }
@@ -1086,12 +1122,13 @@ function synthesizeEnemyVulnerabilityBenefitLine(
   if (!/Enemy .* vulnerability/i.test(item.effectTitle) || !/can benefit/i.test(text)) {
     return null;
   }
-  const value = text.match(/\b(Physical|Tactical|Fire) Damage Received \+([-+]?\d+(?:\.\d+)?%?)/i);
+  const value = text.match(/\b(Physical|Tactical|Fire) Damage Received \+([-+]?\d+(?:\.\d+)?%?)/i) ??
+    text.match(/\+([-+]?\d+(?:\.\d+)?%?)\s+(Physical|Tactical|Fire) Damage Received/i);
   if (!value) {
     return null;
   }
-  const channel = value[1]!;
-  const amount = value[2]!;
+  const channel = /^[A-Za-z]+$/.test(value[1]!) ? value[1]! : value[2]!;
+  const amount = /^[A-Za-z]+$/.test(value[1]!) ? value[2]! : value[1]!;
   const scope = /non-Basic/i.test(text)
     ? `qualifying non-Basic ${channel} Damage outputs`
     : `the formation's qualifying ${channel} Damage outputs`;
@@ -1141,6 +1178,14 @@ function interactionMechanicKey(interaction: FormationCardInteraction): string {
       interaction.effectTitle,
       interaction.summary,
       interaction.effects.join('|'),
+    ].join('::');
+  }
+  if (interaction.effectTitle.includes('Stat support')) {
+    return [
+      interaction.effectTitle,
+      interaction.title,
+      interaction.effects.join('|'),
+      interaction.state,
     ].join('::');
   }
   return 'default';
@@ -1352,6 +1397,9 @@ function interactionPurpose(trace: SynergyTrace): string | null {
   if (trace.matchKind === 'friendly-impairment') {
     return `${formatToken(trace.channel ?? 'damage-dealt')} friendly impairment`;
   }
+  if (/Recovery Received Support/i.test(trace.title)) {
+    return 'Recovery Received support';
+  }
   if (trace.matchKind === 'incoming-effect-amplification' && trace.recipientModifierType) {
     return `${formatToken(trace.channel ?? 'recovery')} amplification`;
   }
@@ -1366,13 +1414,13 @@ function interactionPurpose(trace: SynergyTrace): string | null {
 
 function formatStatEffects(effects: string[]): string | null {
   const parsed = effects.flatMap((effect) => {
-    const match = effect.match(/^(.+?)\s+(\d+)\s+(flat|percent)$/i);
+    const match = effect.match(/^(.+?)\s+(\d+(?:\.\d+)?)(?:\s+(flat|percent)|%)$/i);
     if (!match) {
       return [];
     }
     return [{
       stat: match[1]!,
-      value: `${match[3]!.toLowerCase() === 'flat' ? '+' : '+'}${match[2]}${match[3]!.toLowerCase() === 'percent' ? '%' : ''}`,
+      value: `${match[3]?.toLowerCase() === 'flat' ? '+' : '+'}${match[2]}${match[3]?.toLowerCase() === 'flat' ? '' : '%'}`,
     }];
   });
   if (parsed.length === 0) {

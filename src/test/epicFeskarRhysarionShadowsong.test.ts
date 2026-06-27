@@ -11,6 +11,7 @@ import {
   deriveStatusOutputCapabilities,
   sourceScopesCompatible,
 } from '../services/effectCapabilities';
+import { resolveAllyTargets } from '../services/formationRules';
 import { resolveEffectiveHabitLevel } from '../services/habitLevels';
 import { createEmptyRoster } from '../services/rosterStorage';
 import { analyzeFormationTraces } from '../services/synergyTrace';
@@ -458,15 +459,144 @@ describe('Feskar, Rhysarion, and Shadowsong Epic profiles', () => {
     expect(fireText).toContain('Applies to all qualifying Fire Damage sources.');
     expect(physicalText).toContain('Applies to non-Basic Physical Damage only.');
     expect(`${fireText} ${physicalText}`).toMatch(/target overlap|not guaranteed/i);
-    expect((fireText.match(/Fire Damage Received \+15%/g) ?? [])).toHaveLength(1);
+    expect((fireText.match(/(?:Fire Damage Received \+15%|\+15% Fire Damage Received)/g) ?? [])).toHaveLength(1);
     expect(fireText).not.toMatch(/Fire Damage Received increase 15%.*Fire Damage Received \+15%/);
-    expect((physicalText.match(/Physical Damage Received \+15%/g) ?? [])).toHaveLength(1);
+    expect((physicalText.match(/(?:Physical Damage Received \+15%|\+15% Physical Damage Received)/g) ?? [])).toHaveLength(1);
 
     const panicCards = daemoros.provides.filter((item) => /Panic enhances/i.test(item.effectTitle));
     expect(panicCards.map((item) => item.effectTitle).sort()).toEqual([
       'Instill Fear - Panic enhances Breath of Fire',
       'Instill Fear - Panic enhances Scorched Earth chance',
     ]);
+  });
+
+  it('applies Ally versus other Ally targeting at full rank and preserves Recovery Received support', () => {
+    const formation: FormationAnalysisInput = { 'left-flank': 'feskar', vanguard: 'rhysarion', 'right-flank': 'shadowsong' };
+    const roster = ownedRoster(['feskar', 'rhysarion', 'shadowsong'], 10, 0);
+    const traces = analyzeCapabilityAmplifications(formation, dragons, { roster });
+    const cards = buildFormationCardPresentation(formation, dragons, traces, { previewEnabled: false, roster });
+    const feskarCard = cards.cards.find((card) => card.dragonId === 'feskar')!;
+    const rhysarionCard = cards.cards.find((card) => card.dragonId === 'rhysarion')!;
+    const shadowsongCard = cards.cards.find((card) => card.dragonId === 'shadowsong')!;
+    const insightfulEffect = habit('feskar', 'feskar-insightful-allies').schedules[0]!.effects[0]!;
+    const echoingEffect = habit('rhysarion', 'rhysarion-echoing-melody').schedules[0]!.effects[0]!;
+    const inspiringEffect = habit('rhysarion', 'rhysarion-inspiring-melody').schedules[0]!.effects[0]!;
+
+    expect(resolveAllyTargets(formation, 'left-flank', insightfulEffect).map((target) => target.dragonId)).toEqual([
+      'feskar',
+      'rhysarion',
+      'shadowsong',
+    ]);
+    expect(resolveAllyTargets(formation, 'vanguard', echoingEffect).map((target) => target.dragonId)).toEqual([
+      'feskar',
+      'shadowsong',
+    ]);
+    expect(resolveAllyTargets(formation, 'vanguard', inspiringEffect).map((target) => target.dragonId)).toEqual([
+      'feskar',
+      'shadowsong',
+    ]);
+
+    const insightfulTraces = traces.filter((trace) =>
+      trace.sourceAbilityId === 'feskar-insightful-allies' &&
+      trace.matchKind === 'stat-scaling-support' &&
+      trace.title === 'Instinct Stat Support'
+    );
+    expect(insightfulTraces.map((trace) => trace.recipientDragonId).sort()).toEqual(['feskar', 'rhysarion', 'shadowsong']);
+    expect(insightfulTraces.find((trace) => trace.recipientDragonId === 'feskar')).toMatchObject({ status: 'potential' });
+    const insightfulProvides = feskarCard.provides.find((item) => item.abilityName === 'Insightful Allies' && item.targetLabel === 'Team');
+    expect(insightfulProvides).toBeDefined();
+    const insightfulText = insightfulProvides ? [...insightfulProvides.summaryLines, ...insightfulProvides.details, ...insightfulProvides.effects].join(' ') : '';
+    expect(insightfulText).toContain('Applies to Feskar, Rhysarion, and Shadowsong.');
+    expect(insightfulText).toContain('Instinct +10%.');
+    expect(insightfulText).toContain('Enhanced by Feskar Instinct');
+    expect(insightfulText).toContain('Duration: until end of combat.');
+    expect(feskarCard.receives.some((item) => item.abilityName === 'Insightful Allies')).toBe(false);
+    expect(rhysarionCard.receives.some((item) => item.abilityName === 'Insightful Allies')).toBe(true);
+    expect(shadowsongCard.receives.some((item) => item.abilityName === 'Insightful Allies')).toBe(true);
+
+    const echoingTraces = traces.filter((trace) => trace.sourceAbilityId === 'rhysarion-echoing-melody' && trace.matchKind === 'outgoing-effect-amplification');
+    expect(echoingTraces.map((trace) => trace.recipientDragonId).sort()).toEqual(['feskar', 'shadowsong']);
+    const echoingProvides = rhysarionCard.provides.find((item) => item.abilityName === 'Echoing Melody');
+    expect(echoingProvides).toMatchObject({ targetLabel: 'Feskar and Shadowsong' });
+    const echoingText = echoingProvides ? [...echoingProvides.summaryLines, ...echoingProvides.details, ...echoingProvides.effects].join(' ') : '';
+    expect(echoingText).toContain('Recovery Rate: 60% at effective Habit Level 1.');
+    expect(echoingText).toContain('Timing: Rounds 2, 5, 8.');
+    expect(echoingText).toContain('Enhanced by Rhysarion Intelligence.');
+    expect(echoingText).toContain('caster is excluded');
+    expect(rhysarionCard.receives.some((item) => item.abilityName === 'Echoing Melody')).toBe(false);
+
+    const devotionTraces = traces.filter((trace) => trace.sourceAbilityId === 'rhysarion-unbroken-devotion');
+    expect(devotionTraces.map((trace) => trace.recipientDragonId).sort()).toEqual(['feskar', 'shadowsong']);
+    expect(devotionTraces.every((trace) => trace.effects.some((effect) => /Recovery Received increase 20%/.test(effect)))).toBe(true);
+    const devotionProvides = rhysarionCard.provides.find((item) => item.abilityName === 'Unbroken Devotion');
+    expect(devotionProvides).toMatchObject({
+      targetLabel: 'Feskar and Shadowsong',
+      effectTitle: 'Unbroken Devotion - Recovery Received support',
+    });
+    const devotionText = devotionProvides ? [...devotionProvides.summaryLines, ...devotionProvides.details, ...devotionProvides.effects].join(' ') : '';
+    expect(devotionText).toContain('Recovery Received +20% at effective Habit Level 1.');
+    expect(devotionText).toContain('Duration: until end of combat.');
+    expect(devotionText).toContain('caster is excluded');
+    expect(rhysarionCard.receives.some((item) => item.abilityName === 'Unbroken Devotion')).toBe(false);
+    expect(feskarCard.receives.some((item) => item.abilityName === 'Unbroken Devotion')).toBe(true);
+    expect(shadowsongCard.receives.some((item) => item.abilityName === 'Unbroken Devotion')).toBe(true);
+    expect(rhysarionCard.provides.filter((item) => item.abilityName === 'Echoing Melody' || item.abilityName === 'Unbroken Devotion')).toHaveLength(2);
+  });
+
+  it('includes Emerald Inferno as full-rank Fire output for Blazing Onslaught projection', () => {
+    const formation: FormationAnalysisInput = { 'left-flank': 'feskar', vanguard: 'rhysarion', 'right-flank': 'shadowsong' };
+    const roster = ownedRoster(['feskar', 'rhysarion', 'shadowsong'], 10, 0);
+    const outputs = deriveOutputCapabilities(dragons);
+    const emeraldOutput = outputs.find((output) =>
+      output.dragonId === 'feskar' &&
+      output.abilityId === 'feskar-emerald-inferno' &&
+      output.sourceEffectId === 'emerald-inferno-fire' &&
+      output.channel === 'fire-damage'
+    );
+    expect(emeraldOutput).toBeDefined();
+    expect(emeraldOutput).toMatchObject({
+      sourceScope: 'habits',
+      requiredHabitLevel: 1,
+      unlockStarRank: 6,
+    });
+
+    const traces = analyzeCapabilityAmplifications(formation, dragons, { roster });
+    const cards = buildFormationCardPresentation(formation, dragons, traces, { previewEnabled: false, roster });
+    const shadowsong = cards.cards.find((card) => card.dragonId === 'shadowsong')!;
+    const feskar = cards.cards.find((card) => card.dragonId === 'feskar')!;
+    const rhysarion = cards.cards.find((card) => card.dragonId === 'rhysarion')!;
+    const fireProjection = traces.filter((trace) =>
+      trace.sourceAbilityId === 'shadowsong-blazing-onslaught' &&
+      trace.matchKind === 'enemy-damage-received-increase' &&
+      trace.channel === 'fire-damage' &&
+      trace.recipientDragonId
+    );
+    expect(fireProjection.map((trace) => trace.recipientDragonId).sort()).toEqual(['feskar', 'rhysarion', 'shadowsong']);
+    expect(fireProjection.find((trace) => trace.recipientDragonId === 'feskar')?.matchedOutputCapabilityIds).toEqual(
+      expect.arrayContaining([expect.stringContaining('emerald-inferno-fire-output')]),
+    );
+    expect(fireProjection.every((trace) => trace.sourceScopeResults?.every((result) => result.sourceScopeCompatible))).toBe(true);
+    expect(fireProjection.every((trace) => trace.status === 'potential')).toBe(true);
+
+    const fireProvides = shadowsong.provides.filter((item) => /Blazing Onslaught - Enemy Fire Damage vulnerability/i.test(item.effectTitle));
+    const fireProjectionCard = fireProvides.find((item) => item.targetLabel === 'Team' && !item.isEnemyFacing);
+    expect(fireProjectionCard).toBeDefined();
+    expect(fireProjectionCard?.state).toBe('conditional');
+    const fireProjectionText = fireProjectionCard ? [...fireProjectionCard.summaryLines, ...fireProjectionCard.details, ...fireProjectionCard.effects].join(' ') : '';
+    expect(fireProjectionText).toContain("the formation's qualifying Fire Damage outputs can benefit from +15% Fire Damage Received on the selected enemy.");
+    expect(fireProjectionText).toContain('The allied attack must hit that same vulnerable enemy.');
+    expect(fireProjectionText).toContain('Duration: 3 rounds.');
+    expect((fireProjectionText.match(/(?:Fire Damage Received \+15%|\+15% Fire Damage Received)/g) ?? [])).toHaveLength(1);
+    expect(feskar.receives.some((item) => /Blazing Onslaught - Enemy Fire Damage vulnerability/i.test(item.effectTitle))).toBe(true);
+    expect(rhysarion.receives.some((item) => /Blazing Onslaught - Enemy Fire Damage vulnerability/i.test(item.effectTitle))).toBe(true);
+    expect(shadowsong.receives.some((item) => /Blazing Onslaught - Enemy Fire Damage vulnerability/i.test(item.effectTitle))).toBe(false);
+
+    const physicalProjectionCard = shadowsong.provides.find((item) =>
+      /Blazing Onslaught - Enemy Physical Damage vulnerability/i.test(item.effectTitle) &&
+      !item.isEnemyFacing
+    );
+    expect(physicalProjectionCard?.recipientDragonId).toBe('rhysarion');
+    expect(physicalProjectionCard?.targetLabel).not.toBe('Team');
   });
 
   it('derives Panic to Scorched Earth and preserves source-scope regressions', () => {
