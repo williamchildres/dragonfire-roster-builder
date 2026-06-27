@@ -71,7 +71,7 @@ describe('formation analysis normalization', () => {
     expect(modifiers.find((item) => item.abilityId === 'seasmoke-champions-brilliance' && item.channel === 'damage-received')?.damageScope).toBe('all');
     expect(modifiers.find((item) => item.abilityId === 'malachite-forests-instinct' && item.channel === 'damage-received')?.damageScope).toBe('tactical');
     const trial = modifiers.filter((item) => item.abilityId === 'vermax-trial-by-flame');
-    expect(trial.map((item) => item.damageScope)).toEqual(['fire', 'fire', 'fire']);
+    expect(trial.map((item) => item.damageScope)).toEqual(['fire', 'all', 'fire']);
     expect(trial.map((item) => item.targetSelector.count)).toEqual([null, null, null]);
     expect(trial.map((item) => item.targetSelector.selection)).toEqual(['all-matching-condition', 'all-matching-condition', 'all-matching-condition']);
     expect(trial.flatMap((item) => item.conditions.map((condition) => condition.thresholdPercent))).toEqual([75, 50, 25]);

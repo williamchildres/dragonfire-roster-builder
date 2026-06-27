@@ -129,7 +129,7 @@ describe('formation card analysis presentation', () => {
 
     const provider = providerCards[0]!;
     expect(provider.state).toBe('preview');
-    expect(provider.effectTitle).toBe('Trial by Flame - Fire Damage Received support');
+    expect(provider.effectTitle).toBe('Trial by Flame');
     expect(provider.summary).toContain('Malachite and Seasmoke can each receive Fire Damage Received support');
     expect(provider.summary).not.toMatch(/one .*recipient is selected/i);
     expect(provider.summary).not.toContain('Target not guaranteed');
@@ -138,6 +138,10 @@ describe('formation card analysis presentation', () => {
     expect(provider.targetSummary).toContain('Each eligible recipient evaluates its own condition.');
     expect([provider.summary, provider.detail, ...provider.summaryLines, ...provider.details, ...provider.effects].join(' '))
       .toContain('Fire Damage Received support');
+    expect([provider.summary, provider.detail, ...provider.summaryLines, ...provider.details, ...provider.effects].join(' '))
+      .toContain('Damage Received support');
+    expect([provider.summary, provider.detail, ...provider.summaryLines, ...provider.details, ...provider.effects].join(' '))
+      .toMatch(/below 50% Troop Capacity/i);
     expect(provider.detail).toContain('Threshold applicability depends on each recipient\'s current Troop Capacity');
     expect(provider.detail).toContain('exact interaction between overlapping threshold tiers is unresolved');
     expect(provider.requirements).toEqual(expect.arrayContaining([

@@ -154,12 +154,17 @@ describe('normal unmet requirement summaries', () => {
   it('groups Trial by Flame normal presentation without indistinguishable recipient cards', () => {
     const trial = normalTraces('3', preview).filter((trace) => trace.sourceAbilityId === 'vermax-trial-by-flame');
 
-    expect(trial).toHaveLength(1);
-    expect(trial[0]?.recipientDragonId).toBeNull();
-    expect(trial[0]?.targetSelectionGroup?.eligibleRecipientDragonIds).toEqual(['malachite', 'seasmoke']);
-    expect(trial[0]?.explanation).toContain('Malachite and Seasmoke');
-    expect(trial[0]?.explanation).toContain('Threshold applicability depends on each recipient\'s current Troop Capacity');
-    expect(trial[0]?.explanation).not.toMatch(/stack/i);
+    expect(trial).toHaveLength(3);
+    expect(trial.every((trace) => trace.recipientDragonId === null)).toBe(true);
+    expect(trial.every((trace) => trace.targetSelectionGroup?.eligibleRecipientDragonIds.join(',') === 'malachite,seasmoke')).toBe(true);
+    expect(trial.map((trace) => trace.modifierCapabilityIds?.[0]).sort()).toEqual([
+      'vermax-trial-by-flame-trial-below-25-fire-reduction-damage-received-received-modifier',
+      'vermax-trial-by-flame-trial-below-50-resistance-damage-received-received-modifier',
+      'vermax-trial-by-flame-trial-below-75-fire-reduction-damage-received-received-modifier',
+    ]);
+    expect(trial.every((trace) => trace.explanation.includes('Malachite and Seasmoke'))).toBe(true);
+    expect(trial.every((trace) => trace.explanation.includes('Threshold applicability depends on each recipient\'s current Troop Capacity'))).toBe(true);
+    expect(trial.map((trace) => trace.explanation).join(' ')).not.toMatch(/stack/i);
   });
 
   it('formats grouped sibling stat values without collapsing known values to unknown', () => {

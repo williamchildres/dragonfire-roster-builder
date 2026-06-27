@@ -395,7 +395,7 @@
               "stack": null,
               "stackTransitionTrigger": null,
               "target": "1 Enemy, prioritizing Right Flank",
-              "targetCount": null,
+              "targetCount": 1,
               "targetPriority": "prefer-right-flank",
               "targetScope": "any-lane",
               "targetSelection": {
@@ -436,16 +436,16 @@
               "stack": null,
               "stackTransitionTrigger": null,
               "target": "Same selected enemy",
-              "targetCount": null,
-              "targetPriority": "any-eligible",
+              "targetCount": 1,
+              "targetPriority": "prefer-right-flank",
               "targetScope": "any-lane",
               "targetSelection": {
                 "comparisonDirection": null,
                 "comparisonPool": null,
                 "comparisonStat": null,
                 "distinctness": "same-target-required",
-                "fallback": null,
-                "preference": null,
+                "fallback": "another eligible enemy",
+                "preference": "Right Flank",
                 "references": [
                   {
                     "description": "Uses the enemy selected for the Intelligence reduction.",
@@ -484,16 +484,16 @@
               "stack": null,
               "stackTransitionTrigger": null,
               "target": "Same selected enemy",
-              "targetCount": null,
-              "targetPriority": "any-eligible",
+              "targetCount": 1,
+              "targetPriority": "prefer-right-flank",
               "targetScope": "any-lane",
               "targetSelection": {
                 "comparisonDirection": null,
                 "comparisonPool": null,
                 "comparisonStat": null,
                 "distinctness": "same-target-required",
-                "fallback": null,
-                "preference": null,
+                "fallback": "another eligible enemy",
+                "preference": "Right Flank",
                 "references": [
                   {
                     "description": "Uses the enemy selected for the stat reductions.",
@@ -1031,7 +1031,7 @@
               "stack": null,
               "stackTransitionTrigger": null,
               "target": "1 Enemy, prioritizing Left Flank",
-              "targetCount": null,
+              "targetCount": 1,
               "targetPriority": "prefer-left-flank",
               "targetScope": "any-lane",
               "targetSelection": {
@@ -1072,16 +1072,16 @@
               "stack": null,
               "stackTransitionTrigger": null,
               "target": "Same selected enemy",
-              "targetCount": null,
-              "targetPriority": "any-eligible",
+              "targetCount": 1,
+              "targetPriority": "prefer-left-flank",
               "targetScope": "any-lane",
               "targetSelection": {
                 "comparisonDirection": null,
                 "comparisonPool": null,
                 "comparisonStat": null,
                 "distinctness": "same-target-required",
-                "fallback": null,
-                "preference": null,
+                "fallback": "another eligible enemy",
+                "preference": "Left Flank",
                 "references": [
                   {
                     "description": "Uses the enemy selected for the Intelligence reduction.",
@@ -1120,16 +1120,16 @@
               "stack": null,
               "stackTransitionTrigger": null,
               "target": "Same selected enemy",
-              "targetCount": null,
-              "targetPriority": "any-eligible",
+              "targetCount": 1,
+              "targetPriority": "prefer-left-flank",
               "targetScope": "any-lane",
               "targetSelection": {
                 "comparisonDirection": null,
                 "comparisonPool": null,
                 "comparisonStat": null,
                 "distinctness": "same-target-required",
-                "fallback": null,
-                "preference": null,
+                "fallback": "another eligible enemy",
+                "preference": "Left Flank",
                 "references": [
                   {
                     "description": "Uses the enemy selected for the stat reductions.",
@@ -1780,7 +1780,7 @@
             "stack": null,
             "stackTransitionTrigger": null,
             "target": "1 Enemy, prioritizing Right Flank",
-            "targetCount": null,
+            "targetCount": 1,
             "targetPriority": "prefer-right-flank",
             "targetScope": "any-lane",
             "targetSelection": {
@@ -1821,16 +1821,16 @@
             "stack": null,
             "stackTransitionTrigger": null,
             "target": "Same selected enemy",
-            "targetCount": null,
-            "targetPriority": "any-eligible",
+            "targetCount": 1,
+            "targetPriority": "prefer-right-flank",
             "targetScope": "any-lane",
             "targetSelection": {
               "comparisonDirection": null,
               "comparisonPool": null,
               "comparisonStat": null,
               "distinctness": "same-target-required",
-              "fallback": null,
-              "preference": null,
+              "fallback": "another eligible enemy",
+              "preference": "Right Flank",
               "references": [
                 {
                   "description": "Uses the enemy selected for the Intelligence reduction.",
@@ -1869,16 +1869,16 @@
             "stack": null,
             "stackTransitionTrigger": null,
             "target": "Same selected enemy",
-            "targetCount": null,
-            "targetPriority": "any-eligible",
+            "targetCount": 1,
+            "targetPriority": "prefer-right-flank",
             "targetScope": "any-lane",
             "targetSelection": {
               "comparisonDirection": null,
               "comparisonPool": null,
               "comparisonStat": null,
               "distinctness": "same-target-required",
-              "fallback": null,
-              "preference": null,
+              "fallback": "another eligible enemy",
+              "preference": "Right Flank",
               "references": [
                 {
                   "description": "Uses the enemy selected for the stat reductions.",
@@ -2242,7 +2242,7 @@
             "stack": null,
             "stackTransitionTrigger": null,
             "target": "1 Enemy, prioritizing Left Flank",
-            "targetCount": null,
+            "targetCount": 1,
             "targetPriority": "prefer-left-flank",
             "targetScope": "any-lane",
             "targetSelection": {
@@ -2283,16 +2283,16 @@
             "stack": null,
             "stackTransitionTrigger": null,
             "target": "Same selected enemy",
-            "targetCount": null,
-            "targetPriority": "any-eligible",
+            "targetCount": 1,
+            "targetPriority": "prefer-left-flank",
             "targetScope": "any-lane",
             "targetSelection": {
               "comparisonDirection": null,
               "comparisonPool": null,
               "comparisonStat": null,
               "distinctness": "same-target-required",
-              "fallback": null,
-              "preference": null,
+              "fallback": "another eligible enemy",
+              "preference": "Left Flank",
               "references": [
                 {
                   "description": "Uses the enemy selected for the Intelligence reduction.",
@@ -2331,16 +2331,16 @@
             "stack": null,
             "stackTransitionTrigger": null,
             "target": "Same selected enemy",
-            "targetCount": null,
-            "targetPriority": "any-eligible",
+            "targetCount": 1,
+            "targetPriority": "prefer-left-flank",
             "targetScope": "any-lane",
             "targetSelection": {
               "comparisonDirection": null,
               "comparisonPool": null,
               "comparisonStat": null,
               "distinctness": "same-target-required",
-              "fallback": null,
-              "preference": null,
+              "fallback": "another eligible enemy",
+              "preference": "Left Flank",
               "references": [
                 {
                   "description": "Uses the enemy selected for the stat reductions.",
@@ -3093,7 +3093,7 @@
         "stack": null,
         "stackTransitionTrigger": null,
         "target": "1 Enemy, prioritizing Right Flank",
-        "targetCount": null,
+        "targetCount": 1,
         "targetPriority": "prefer-right-flank",
         "targetScope": "any-lane",
         "targetSelection": {
@@ -3138,16 +3138,16 @@
         "stack": null,
         "stackTransitionTrigger": null,
         "target": "Same selected enemy",
-        "targetCount": null,
-        "targetPriority": "any-eligible",
+        "targetCount": 1,
+        "targetPriority": "prefer-right-flank",
         "targetScope": "any-lane",
         "targetSelection": {
           "comparisonDirection": null,
           "comparisonPool": null,
           "comparisonStat": null,
           "distinctness": "same-target-required",
-          "fallback": null,
-          "preference": null,
+          "fallback": "another eligible enemy",
+          "preference": "Right Flank",
           "references": [
             {
               "description": "Uses the enemy selected for the Intelligence reduction.",
@@ -3190,16 +3190,16 @@
         "stack": null,
         "stackTransitionTrigger": null,
         "target": "Same selected enemy",
-        "targetCount": null,
-        "targetPriority": "any-eligible",
+        "targetCount": 1,
+        "targetPriority": "prefer-right-flank",
         "targetScope": "any-lane",
         "targetSelection": {
           "comparisonDirection": null,
           "comparisonPool": null,
           "comparisonStat": null,
           "distinctness": "same-target-required",
-          "fallback": null,
-          "preference": null,
+          "fallback": "another eligible enemy",
+          "preference": "Right Flank",
           "references": [
             {
               "description": "Uses the enemy selected for the stat reductions.",
@@ -3392,7 +3392,7 @@
         "stack": null,
         "stackTransitionTrigger": null,
         "target": "1 Enemy, prioritizing Left Flank",
-        "targetCount": null,
+        "targetCount": 1,
         "targetPriority": "prefer-left-flank",
         "targetScope": "any-lane",
         "targetSelection": {
@@ -3437,16 +3437,16 @@
         "stack": null,
         "stackTransitionTrigger": null,
         "target": "Same selected enemy",
-        "targetCount": null,
-        "targetPriority": "any-eligible",
+        "targetCount": 1,
+        "targetPriority": "prefer-left-flank",
         "targetScope": "any-lane",
         "targetSelection": {
           "comparisonDirection": null,
           "comparisonPool": null,
           "comparisonStat": null,
           "distinctness": "same-target-required",
-          "fallback": null,
-          "preference": null,
+          "fallback": "another eligible enemy",
+          "preference": "Left Flank",
           "references": [
             {
               "description": "Uses the enemy selected for the Intelligence reduction.",
@@ -3489,16 +3489,16 @@
         "stack": null,
         "stackTransitionTrigger": null,
         "target": "Same selected enemy",
-        "targetCount": null,
-        "targetPriority": "any-eligible",
+        "targetCount": 1,
+        "targetPriority": "prefer-left-flank",
         "targetScope": "any-lane",
         "targetSelection": {
           "comparisonDirection": null,
           "comparisonPool": null,
           "comparisonStat": null,
           "distinctness": "same-target-required",
-          "fallback": null,
-          "preference": null,
+          "fallback": "another eligible enemy",
+          "preference": "Left Flank",
           "references": [
             {
               "description": "Uses the enemy selected for the stat reductions.",
@@ -3843,7 +3843,7 @@
   "firstObservedInGame": "2026-06-22",
   "format": "dragonfire-dragon-profile",
   "gameVersion": null,
-  "generatedAt": "2026-06-27T22:12:53.099Z",
+  "generatedAt": "2026-06-27T23:23:11.996Z",
   "habits": [
     {
       "abilityClass": "passive",
@@ -3954,7 +3954,7 @@
               "stack": null,
               "stackTransitionTrigger": null,
               "target": "1 Enemy, prioritizing Right Flank",
-              "targetCount": null,
+              "targetCount": 1,
               "targetPriority": "prefer-right-flank",
               "targetScope": "any-lane",
               "targetSelection": {
@@ -3995,16 +3995,16 @@
               "stack": null,
               "stackTransitionTrigger": null,
               "target": "Same selected enemy",
-              "targetCount": null,
-              "targetPriority": "any-eligible",
+              "targetCount": 1,
+              "targetPriority": "prefer-right-flank",
               "targetScope": "any-lane",
               "targetSelection": {
                 "comparisonDirection": null,
                 "comparisonPool": null,
                 "comparisonStat": null,
                 "distinctness": "same-target-required",
-                "fallback": null,
-                "preference": null,
+                "fallback": "another eligible enemy",
+                "preference": "Right Flank",
                 "references": [
                   {
                     "description": "Uses the enemy selected for the Intelligence reduction.",
@@ -4043,16 +4043,16 @@
               "stack": null,
               "stackTransitionTrigger": null,
               "target": "Same selected enemy",
-              "targetCount": null,
-              "targetPriority": "any-eligible",
+              "targetCount": 1,
+              "targetPriority": "prefer-right-flank",
               "targetScope": "any-lane",
               "targetSelection": {
                 "comparisonDirection": null,
                 "comparisonPool": null,
                 "comparisonStat": null,
                 "distinctness": "same-target-required",
-                "fallback": null,
-                "preference": null,
+                "fallback": "another eligible enemy",
+                "preference": "Right Flank",
                 "references": [
                   {
                     "description": "Uses the enemy selected for the stat reductions.",
@@ -4590,7 +4590,7 @@
               "stack": null,
               "stackTransitionTrigger": null,
               "target": "1 Enemy, prioritizing Left Flank",
-              "targetCount": null,
+              "targetCount": 1,
               "targetPriority": "prefer-left-flank",
               "targetScope": "any-lane",
               "targetSelection": {
@@ -4631,16 +4631,16 @@
               "stack": null,
               "stackTransitionTrigger": null,
               "target": "Same selected enemy",
-              "targetCount": null,
-              "targetPriority": "any-eligible",
+              "targetCount": 1,
+              "targetPriority": "prefer-left-flank",
               "targetScope": "any-lane",
               "targetSelection": {
                 "comparisonDirection": null,
                 "comparisonPool": null,
                 "comparisonStat": null,
                 "distinctness": "same-target-required",
-                "fallback": null,
-                "preference": null,
+                "fallback": "another eligible enemy",
+                "preference": "Left Flank",
                 "references": [
                   {
                     "description": "Uses the enemy selected for the Intelligence reduction.",
@@ -4679,16 +4679,16 @@
               "stack": null,
               "stackTransitionTrigger": null,
               "target": "Same selected enemy",
-              "targetCount": null,
-              "targetPriority": "any-eligible",
+              "targetCount": 1,
+              "targetPriority": "prefer-left-flank",
               "targetScope": "any-lane",
               "targetSelection": {
                 "comparisonDirection": null,
                 "comparisonPool": null,
                 "comparisonStat": null,
                 "distinctness": "same-target-required",
-                "fallback": null,
-                "preference": null,
+                "fallback": "another eligible enemy",
+                "preference": "Left Flank",
                 "references": [
                   {
                     "description": "Uses the enemy selected for the stat reductions.",
@@ -5482,7 +5482,7 @@
       "targetSelector": {
         "comparisonDirection": null,
         "comparisonPool": null,
-        "count": null,
+        "count": 1,
         "includesCaster": null,
         "position": null,
         "scope": "any-lane",
@@ -5854,7 +5854,7 @@
       "targetSelector": {
         "comparisonDirection": null,
         "comparisonPool": null,
-        "count": null,
+        "count": 1,
         "includesCaster": null,
         "position": null,
         "scope": "any-lane",
@@ -6541,8 +6541,8 @@
   "rosterSourceStatus": "in-game-verified-pending-official-site",
   "slug": "daemoros",
   "source": {
-    "branch": "fix/mechanic-reference-analysis-follow-up",
-    "commit": "17da1db6189bafba9c0471b7e19d9c21fa6d8ba4",
+    "branch": "fix/legacy-targeting-selection-integrity",
+    "commit": "3c23262cab0dcdcf3bad088fca017d74a94e5d09",
     "databaseVersion": "0.6.2",
     "dataSchemaVersion": 12,
     "gameBuild": "26.6.53509",
@@ -6701,7 +6701,7 @@
       "targetSelector": {
         "comparisonDirection": null,
         "comparisonPool": null,
-        "count": null,
+        "count": 1,
         "includesCaster": null,
         "position": null,
         "scope": "any-lane",
@@ -6923,7 +6923,7 @@
       "targetSelector": {
         "comparisonDirection": null,
         "comparisonPool": null,
-        "count": null,
+        "count": 1,
         "includesCaster": null,
         "position": null,
         "scope": "any-lane",
