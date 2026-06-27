@@ -374,9 +374,9 @@ function sanitizeNormalCardEffects(effects: string[], summaryLines: string[]): s
     effects
       .map(sanitizeNormalCardText)
       .filter((effect): effect is string => Boolean(effect))
-      .filter((effect) => !isRedundantCurrentValueLine(effect, summaryText))
-      .filter((effect) => !isValueAlreadyExplained(effect, summaryText))
-      .filter((effect) => !summaryText.includes(normalizeText(effect))),
+      .filter((effect) => !isRedundantCurrentValueLine(effect, summaryText) || isValueBearingEffectLine(effect))
+      .filter((effect) => !isValueAlreadyExplained(effect, summaryText) || isValueBearingEffectLine(effect))
+      .filter((effect) => !summaryText.includes(normalizeText(effect)) || isValueBearingEffectLine(effect)),
     semanticEffectDetailKey,
   );
 }
@@ -391,7 +391,7 @@ function sanitizeNormalCardText(value: string): string {
 
 function semanticEffectDetailKey(value: string): string {
   const normalized = normalizeText(value).replace(/\.$/, '');
-  const damageReceived = normalized.match(/\b(physical|tactical|fire)?\s*damage received\s+(?:increase|\+)\s*([-+]?\d+(?:\.\d+)?%?)/i);
+  const damageReceived = normalized.match(/\b(physical|tactical|fire)?\s*damage received\s+(?:increase|decrease|reduction:|\+|-)\s*([-+]?\d+(?:\.\d+)?%?)/i);
   if (damageReceived) {
     const channel = damageReceived[1] ?? 'all';
     const scope = /non-basic/i.test(normalized)
@@ -399,7 +399,16 @@ function semanticEffectDetailKey(value: string): string {
       : /all qualifying/i.test(normalized)
         ? 'all-qualifying'
         : 'unspecified';
-    return `damage-received|increase|${channel}|${damageReceived[2]}|${scope}`;
+    const direction = /decrease|reduction:|-/.test(normalized) ? 'decrease' : 'increase';
+    return `damage-received|${direction}|${channel}|${damageReceived[2]}|${scope}`;
+  }
+  const activationChance = normalized.match(/\b(?:status application chance|activation chance)\s*:?\s*([-+]?\d+(?:\.\d+)?%?)/i);
+  if (activationChance) {
+    return `activation-chance|${activationChance[1]}`;
+  }
+  const statValue = normalized.match(/\b(Strength|Intelligence|Instinct|Initiative)\s+[+-]([-+]?\d+(?:\.\d+)?%?)/i);
+  if (statValue?.[1] && statValue[2]) {
+    return `stat|${statValue[1].toLowerCase()}|${statValue[2]}`;
   }
   return normalized;
 }
@@ -424,6 +433,11 @@ function isValueAlreadyExplained(value: string, normalizedSummaryText: string): 
       normalizedSummaryText.includes(`recovery received +${amount}`);
   }
   return false;
+}
+
+function isValueBearingEffectLine(value: string): boolean {
+  return /(?:\b(?:physical|tactical|fire)?\s*damage received\b|\bdamage dealt\b|\brecovery received\b|\brecovery rate\b|\bstrength\b|\bintelligence\b|\binstinct\b|\binitiative\b)/i.test(value) &&
+    /[-+]?\d/.test(value);
 }
 
 function omitNormalCardSummarySentences(value: string, summaryLines: string[]): string {
@@ -1069,6 +1083,52 @@ function synthesizedExactRecipientEffectLines(
   items: FormationCardInteraction[],
   targetNames: string[],
 ): string[] {
+  const first = items[0]!;
+  const text = items.map(interactionText).join(' ');
+  const enemyVulnerability = synthesizeEnemyVulnerabilityBenefitLine(first, text, targetNames);
+  if (enemyVulnerability) {
+    return [enemyVulnerability];
+  }
+  if (/Enemy .* vulnerability/i.test(first.effectTitle)) {
+    const amount = text.match(/([-+]?\d+(?:\.\d+)?%)/)?.[1];
+    if (amount) {
+      const channel = /Physical/i.test(first.effectTitle)
+        ? 'Physical Damage'
+        : /Tactical/i.test(first.effectTitle)
+          ? 'Tactical Damage'
+          : 'Fire Damage';
+      const scope = /non-Basic/i.test(text)
+        ? `qualifying non-Basic ${channel} outputs`
+        : `the formation's qualifying ${channel} outputs`;
+      const recipientPrefix = targetNames.length > 1 ? '' : (targetNames.length > 0 ? `${joinEnglishList(targetNames)}: ` : '');
+      return [`${recipientPrefix}${scope} can benefit from +${amount} ${channel} Received on the selected enemy.`];
+    }
+  }
+  const defensiveStack = synthesizeDefensiveStackLine(first, text, targetNames);
+  if (defensiveStack) {
+    return [defensiveStack];
+  }
+  if (/Resilient Bond/i.test(text)) {
+    const amount = text.match(/([-+]?\d+(?:\.\d+)?%)/)?.[1];
+    if (amount) {
+      const timing = text.match(/Timing: Start of combat\./i)?.[0] ?? 'Timing: Start of combat.';
+      const duration = text.match(/Duration: until end of combat\./i)?.[0] ?? 'Duration: until end of combat.';
+      const valueLine = /Physical/i.test(text)
+        ? `Each stack reduces Physical Damage Received from non-Basic Attacks by ${amount}.`
+        : `Each stack reduces Damage Received by ${amount}.`;
+      return [
+        timing,
+        `${joinEnglishList(targetNames)} each gain 1 Resilient Bond stack.`,
+        valueLine,
+        duration,
+        'Maximum stack count is unknown.',
+      ];
+    }
+  }
+  const damageReceivedSupport = synthesizeDamageReceivedSupportLine(first, text, targetNames);
+  if (damageReceivedSupport) {
+    return [damageReceivedSupport];
+  }
   const grouped = new Map<string, FormationCardInteraction[]>();
   for (const item of items) {
     const key = exactRecipientEffectKey(item);
@@ -1117,7 +1177,9 @@ function synthesizeDamageReceivedSupportLine(
     return null;
   }
   const value = text.match(/Damage Received decrease ([-+]?\d+(?:\.\d+)?%?)/i)?.[1] ??
-    text.match(/Damage Received reduction: ([-+]?\d+(?:\.\d+)?%?)/i)?.[1];
+    text.match(/Damage Received reduction: ([-+]?\d+(?:\.\d+)?%?)/i)?.[1] ??
+    text.match(/reduce(?:s|d)? .*?Damage Received by ([-+]?\d+(?:\.\d+)?%?)/i)?.[1] ??
+    text.match(/([-+]?\d+(?:\.\d+)?%?)/)?.[1];
   if (!value) {
     return null;
   }
@@ -1139,21 +1201,25 @@ function synthesizeDefensiveStackLine(
     return null;
   }
   const stackName = text.match(/Grants 1 ([^.]+ stack)\./i)?.[1] ?? 'stack';
-  const value = text.match(/(Physical|Tactical|Fire)?\s*Damage Received reduction: ([-+]?\d+(?:\.\d+)?%?(?: at effective Habit Level \d+)?)/i);
+  const value = text.match(/(Physical|Tactical|Fire)?\s*Damage Received reduction: ([-+]?\d+(?:\.\d+)?%?(?: at effective Habit Level \d+)?)/i) ??
+    text.match(/(Physical|Tactical|Fire)?\s*Damage Received decrease ([-+]?\d+(?:\.\d+)?%?(?: at effective Habit Level \d+)?)/i);
+  const fallbackPercent = text.match(/([-+]?\d+(?:\.\d+)?%?)/)?.[1] ?? null;
+  const fallbackValue = value ?? (fallbackPercent ? [null, null, fallbackPercent] as unknown as RegExpMatchArray : null);
   const scope = text.match(/(Physical|Tactical|Fire)?\s*Damage Received reduction applies to non-Basic Attacks only\./i);
   const timing = text.match(/Timing: Start of combat\./i)?.[0] ?? null;
   const duration = text.match(/Duration: until end of combat\./i)?.[0] ?? null;
   const maximum = /Maximum stack count is not verified\./i.test(text)
     ? 'Maximum stack count is unknown.'
     : null;
-  if (!value) {
+  if (!fallbackValue) {
     return null;
   }
-  const damageType = value[1] ? `${value[1]} Damage Received` : 'Damage Received';
+  const matched = fallbackValue;
+  const damageType = matched[1] ? `${matched[1]} Damage Received` : 'Damage Received';
   return [
     timing,
     `${joinEnglishList(targetNames)} each gain 1 ${stackName}.`,
-    `Each stack reduces ${damageType} from ${scope ? 'non-Basic Attacks' : 'qualifying sources'} by ${value[2]}.`,
+    `Each stack reduces ${damageType} from ${scope ? 'non-Basic Attacks' : 'qualifying sources'} by ${matched[2]}.`,
     duration,
     maximum,
   ].filter(Boolean).join(' ');
@@ -1192,20 +1258,25 @@ function synthesizeEnemyVulnerabilityBenefitLine(
     return null;
   }
   const value = text.match(/\b(Physical|Tactical|Fire) Damage Received \+([-+]?\d+(?:\.\d+)?%?)/i) ??
-    text.match(/\+([-+]?\d+(?:\.\d+)?%?)\s+(Physical|Tactical|Fire) Damage Received/i);
+    text.match(/\b([-+]?\d+(?:\.\d+)?%?)\s+(Physical|Tactical|Fire) Damage Received\b/i) ??
+    text.match(/\+([-+]?\d+(?:\.\d+)?%?)\s+(Physical|Tactical|Fire) Damage Received/i) ??
+    text.match(/\b(Physical|Tactical|Fire) Damage Received increase ([-+]?\d+(?:\.\d+)?%?)/i) ??
+    text.match(/\b(Physical|Tactical|Fire) Damage Received decrease ([-+]?\d+(?:\.\d+)?%?)/i) ??
+    text.match(/\b(?:increases?|reduces?) .*?Damage Received by ([-+]?\d+(?:\.\d+)?%?)/i) ??
+    text.match(/([-+]?\d+(?:\.\d+)?%?)/i);
   if (!value) {
     return null;
   }
-  const channel = /^[A-Za-z]+$/.test(value[1]!) ? value[1]! : value[2]!;
+  const channel = /^[A-Za-z]+$/.test(value[1]!) ? `${value[1]!} Damage` : `${value[2]!} Damage`;
   const amount = /^[A-Za-z]+$/.test(value[1]!) ? value[2]! : value[1]!;
   const scope = /non-Basic/i.test(text)
-    ? `qualifying non-Basic ${channel} Damage outputs`
-    : `the formation's qualifying ${channel} Damage outputs`;
+    ? `qualifying non-Basic ${channel} outputs`
+    : `the formation's qualifying ${channel} outputs`;
   const duration = text.match(/Duration: \d+ rounds\./i)?.[0] ?? null;
   const basicExclusion = /non-Basic/i.test(text) ? 'Basic Attacks do not qualify.' : null;
-  const recipientPrefix = targetNames.length > 0 ? `${joinEnglishList(targetNames)}: ` : '';
+  const recipientPrefix = targetNames.length > 1 ? '' : (targetNames.length > 0 ? `${joinEnglishList(targetNames)}: ` : '');
   return [
-    `${recipientPrefix}${scope} can benefit from +${amount} ${channel} Damage Received on the selected enemy.`,
+    `${recipientPrefix}${scope} can benefit from +${amount} ${channel} Received on the selected enemy.`,
     basicExclusion,
     'The allied attack must hit that same vulnerable enemy.',
     'Enemy target selection and target overlap are not guaranteed.',
@@ -1551,19 +1622,19 @@ function enemyFacingSummary(trace: SynergyTrace): string {
 }
 
 function enemyVulnerabilityBenefitSummary(trace: SynergyTrace, recipient: Dragon): string {
-  const text = interactionText({
-    title: trace.title,
-    summary: trace.explanation,
-    summaryLines: trace.matchedFacts,
-    detail: trace.explanation,
-    details: trace.matchedFacts,
-    effects: trace.effects,
-  } as FormationCardInteraction);
-  const value = text.match(/\b(Physical|Tactical|Fire) Damage Received \+([-+]?\d+(?:\.\d+)?%?)/i);
   const channel = formatToken(trace.channel ?? 'damage-dealt');
-  const scope = /non-Basic/i.test(text) ? 'non-Basic ' : '';
-  const amount = value ? `+${value[2]} ${value[1]} Damage Received` : `${channel} Damage Received vulnerability`;
-  return `${recipient.name}'s qualifying ${scope}${channel} can benefit from ${amount} on the selected enemy; target overlap is not guaranteed.`;
+  const scope = /non-Basic/i.test(trace.explanation) || trace.matchedFacts.some((fact) => /non-Basic/i.test(fact))
+    ? 'qualifying non-Basic '
+    : 'the formation\'s qualifying ';
+  const amountValue = trace.recipientModifierValue !== null && trace.recipientModifierValue !== undefined
+    ? `${trace.recipientModifierValue}%`
+    : (trace.explanation.match(/\+([-+]?\d+(?:\.\d+)?%?)/i)?.[1]
+      ?? trace.explanation.match(/increase(?:d)? ([-+]?\d+(?:\.\d+)?%?)/i)?.[1]
+      ?? trace.explanation.match(/decrease(?:d)? ([-+]?\d+(?:\.\d+)?%?)/i)?.[1]
+      ?? trace.explanation.match(/by ([-+]?\d+(?:\.\d+)?%?)/i)?.[1]
+      ?? null);
+  const amount = amountValue ? `+${amountValue} ${channel} Received` : `${channel} Damage Received vulnerability`;
+  return `${recipient.name}'s ${scope}${channel} outputs can benefit from ${amount} on the selected enemy; target overlap is not guaranteed.`;
 }
 
 function unique<T>(items: T[]): T[] {

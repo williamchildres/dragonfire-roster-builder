@@ -200,7 +200,7 @@ describe('Feskar, Rhysarion, and Shadowsong Epic profiles', () => {
     expect(traceText).toContain('Control does not alter normal Dawnsong target eligibility.');
     expect(traceText).toContain('Supplier effective Habit Level: 1.');
     expect(traceText).toContain('Activation timing: Each round.');
-    expect(traceText).toContain('Activation chance: 10%.');
+    expect(traceText).toContain('Status application chance: 10% at effective Habit Level 1.');
     expect(traceText).toContain('Target: one enemy.');
     expect(traceText).toContain('Lane scope: any lane.');
     expect(traceText).toContain('Priority: Warriors are prioritized, not guaranteed.');
@@ -264,7 +264,7 @@ describe('Feskar, Rhysarion, and Shadowsong Epic profiles', () => {
     expect(breathText).toContain('Panic on one enemy does not amplify Breath of Fire against a different enemy.');
     expect(breathText).toContain('Panic does not alter normal Breath of Fire target eligibility.');
     expect(breathText).toContain('Current effective Instill Fear Habit Level: 1.');
-    expect(breathText).toContain('Activation chance: 25%.');
+    expect(breathText).toContain('Status application chance: 25% at effective Habit Level 1.');
     expect(breathText).toContain('Priority: enemy Right Flank is preferred, not guaranteed.');
     expect(breathText).toContain('Fallback target: another eligible enemy; fallback selection is not guaranteed.');
     expect(breathText).toContain('Duration: 2 rounds.');
@@ -455,8 +455,8 @@ describe('Feskar, Rhysarion, and Shadowsong Epic profiles', () => {
     expect(fireProjectionText.match(/can benefit from \+15% Fire Damage Received/g)).toHaveLength(1);
     expect(physicalProjectionText).toContain('qualifying non-Basic Physical Damage outputs can benefit from +15% Physical Damage Received on the selected enemy.');
     expect(physicalProjectionText.match(/can benefit from \+15% Physical Damage Received/g)).toHaveLength(1);
-    expect(fireText).toMatch(/Rhysarion's qualifying Fire Damage can benefit from \+15% Fire Damage Received/);
-    expect(physicalText).toMatch(/Daemoros's qualifying non-Basic Physical Damage can benefit from \+15% Physical Damage Received/);
+    expect(fireText).toContain("Rhysarion's qualifying Fire Damage can benefit from 15% Fire Damage Received on the selected enemy from Shadowsong's Blazing Onslaught.");
+    expect(physicalText).toContain("Daemoros's qualifying non-Basic Physical Damage can benefit from 15% Physical Damage Received on the selected enemy from Shadowsong's Blazing Onslaught.");
     expect(fireText).toContain('Duration: 3 rounds.');
     expect(fireText).toContain('Applies to all qualifying Fire Damage sources.');
     expect(physicalText).toContain('Applies to non-Basic Physical Damage only.');
@@ -467,7 +467,7 @@ describe('Feskar, Rhysarion, and Shadowsong Epic profiles', () => {
 
     const panicCards = daemoros.provides.filter((item) => /Panic enhances/i.test(item.effectTitle));
     expect(panicCards.map((item) => item.effectTitle).sort()).toEqual([
-      'Instill Fear - Panic enhances Breath of Fire',
+      'Instill Fear - Panic enhances Breath of Fire chance',
       'Instill Fear - Panic enhances Scorched Earth chance',
     ]);
   });
@@ -705,7 +705,9 @@ describe('Feskar, Rhysarion, and Shadowsong Epic profiles', () => {
       const text = [...trace.effects, ...trace.matchedFacts, trace.explanation].join(' ');
       expect(text).toContain('Timing: Start of Round 1.');
       expect(text).toContain('Duration: 3 rounds.');
-      expect(text).toContain('Damage Dealt reduction at current effective level: 27.5%.');
+      expect(text).toContain('Friendly Damage Dealt decrease 27.5%');
+      expect((text.match(/Friendly Damage Dealt decrease 27.5%/g) ?? [])).toHaveLength(1);
+      expect(text).not.toContain('Damage Dealt reduction at current effective level');
       expect(text).toContain('harm');
       expect(text).not.toMatch(/\bbenefit\b|amplification/i);
     }
@@ -874,7 +876,7 @@ describe('Feskar, Rhysarion, and Shadowsong Epic profiles', () => {
     const inspiringText = inspiring.flatMap((trace) => [trace.explanation, ...trace.matchedFacts, ...trace.effects]).join(' ');
     expect(inspiringText).toContain('Activation chance: 20% at effective Habit Level 1.');
     expect(inspiringText).toContain('Initiative +20%');
-    expect(inspiringText).toMatch(/Damage Received (?:reduction: 15%|\+?15%)/);
+    expect(inspiringText).toContain('Damage Received decrease 15%');
     expect(inspiringText).toContain('Shared activation group: inspiring-melody-each-round-shared-activation.');
     expect(inspiringText).toContain('shared group inspiring-melody-selected-ally');
     expect(inspiringText).toContain('caster excluded');
@@ -887,7 +889,7 @@ describe('Feskar, Rhysarion, and Shadowsong Epic profiles', () => {
     expect(inspiringCard).toMatchObject({ targetLabel: 'Feskar or Shadowsong', state: 'conditional' });
     const inspiringCardText = inspiringCard ? [...inspiringCard.summaryLines, ...inspiringCard.details, ...inspiringCard.effects].join(' ') : '';
     expect(inspiringCardText).toContain('Initiative +20%');
-    expect(inspiringCardText).toMatch(/Damage Received (?:reduction: 15%|\+?15%)/);
+    expect(inspiringCardText).toContain('Damage Received decrease 15%');
     expect(inspiringCardText).toContain('Activation chance: 20% at effective Habit Level 1.');
 
     const statusOutputs = deriveStatusOutputCapabilities(dragons).filter((output) => output.abilityId === 'shadowsong-blazing-conductor');
@@ -900,21 +902,22 @@ describe('Feskar, Rhysarion, and Shadowsong Epic profiles', () => {
       .flatMap((trace) => [trace.explanation, ...trace.matchedFacts, ...trace.effects])
       .join(' ');
     expect(conductorText).toContain('Status supplier effect: blazing-conductor-first-burn.');
-    expect(conductorText).toContain('Status application chance: 40% at effective Habit Level 1.');
     expect(conductorText).toContain('Selected-target group: blazing-conductor-first-target.');
     expect(conductorText).toContain('Status supplier effect: blazing-conductor-second-burn.');
-    expect(conductorText).toContain('Status application chance: 20% at effective Habit Level 1.');
     expect(conductorText).toContain('Selected-target group: blazing-conductor-second-target.');
     expect(conductorText).toContain('Second added target must differ from the first added target.');
     expect(conductorText).not.toContain('All Blazing Conductor effects share the same selected target');
     expect(conductorText).not.toContain('in any lane in any lane');
+    expect(conductorText).not.toContain('Status application chance: 40% at effective Habit Level 1.');
+    expect(conductorText).not.toContain('Status application chance: 20% at effective Habit Level 1.');
+    expect(conductorText).not.toContain('Activation chance: 40% at effective Habit Level 1.');
+    expect(conductorText).not.toContain('Activation chance: 20% at effective Habit Level 1.');
     expect(conductorText).toContain('Damage Rate 20%.');
     expect(conductorText).toContain('Duration: 2 rounds.');
 
     const burnSummary = traces.find((trace) => trace.title === 'Burn enables Emerald Inferno' && trace.recipientAbilityId === 'feskar-emerald-inferno')?.explanation ?? '';
-    expect(burnSummary).toContain('40% chance on the first added target');
-    expect(burnSummary).toContain('20% chance on the second added target');
-    expect(burnSummary).toContain('must differ from the first');
+    expect(burnSummary).toContain('40% chance on the first added target and 20% chance on the second added target, which must differ from the first.');
+    expect(burnSummary).toContain('Burn lasts 2 rounds.');
 
     const resilient = traces.filter((trace) => trace.sourceAbilityId === 'feskar-resilient-bond');
     const selfStackRecipients = resilient
@@ -986,8 +989,8 @@ describe('Feskar, Rhysarion, and Shadowsong Epic profiles', () => {
       .filter((item) => item.abilityName === 'Inspiring Melody') ?? [];
     expect(cardsForAbility.some((item) => item.targetLabel === 'Feskar')).toBe(true);
     const text = cardsForAbility.flatMap((item) => [...item.summaryLines, ...item.details, ...item.effects]).join(' ');
-    expect(text).toContain('reduces Damage Received for Feskar by 15%');
-    expect((text.match(/reduces Damage Received for Feskar by 15%/g) ?? [])).toHaveLength(1);
+    expect(text).toContain('Inspiring Melody reduces Damage Received for Feskar by 15%.');
+    expect((text.match(/Inspiring Melody reduces Damage Received for Feskar by 15%/g) ?? [])).toHaveLength(1);
     expect(text).not.toContain('Target not guaranteed.');
   });
 });

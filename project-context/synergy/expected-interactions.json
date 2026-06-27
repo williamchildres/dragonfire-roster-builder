@@ -2048,14 +2048,14 @@
     ],
     "damageScope": null,
     "effects": [
-      "Damage Received reduction: 20%.",
+      "Damage Received decrease 20%.",
       "Duration: 2 rounds.",
       "Activation chance: 100% at effective Habit Level 5.",
       "Activation chance by Habit Level: 40%, 52%, 64%, 80%, 100%."
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final value cannot be calculated because final combat formulas and stacking order are not fully verified.",
-    "explanation": "Syrax's Strategic Revival can reduce Malachite's Damage Received by 20%. Damage Received reduction: 20%. Duration: 2 rounds.",
+    "explanation": "Syrax's Strategic Revival can reduce Malachite's Damage Received by 20%. Damage Received decrease 20%. Duration: 2 rounds.",
     "id": "defensive-ally-support-syrax-strategic-revival-strategic-revival-resistance-damage-received-received-modifier-malachite",
     "interactionScope": "cross-dragon",
     "matchedOutputCapabilityIds": [],
@@ -2125,14 +2125,14 @@
     ],
     "damageScope": null,
     "effects": [
-      "Damage Received reduction: 20%.",
+      "Damage Received decrease 20%.",
       "Duration: 2 rounds.",
       "Activation chance: 100% at effective Habit Level 5.",
       "Activation chance by Habit Level: 40%, 52%, 64%, 80%, 100%."
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final value cannot be calculated because final combat formulas and stacking order are not fully verified.",
-    "explanation": "Syrax's Strategic Revival can reduce Caraxes's Damage Received by 20%. Damage Received reduction: 20%. Duration: 2 rounds.",
+    "explanation": "Syrax's Strategic Revival can reduce Caraxes's Damage Received by 20%. Damage Received decrease 20%. Duration: 2 rounds.",
     "id": "defensive-ally-support-syrax-strategic-revival-strategic-revival-resistance-damage-received-received-modifier-caraxes",
     "interactionScope": "cross-dragon",
     "matchedOutputCapabilityIds": [],
@@ -2202,11 +2202,14 @@
     ],
     "damageScope": "tactical",
     "effects": [
+      "Tactical Damage Received decrease 16% at effective Habit Level 5.",
+      "Duration: 2 rounds.",
+      "Ranked progression: L1 8%, L2 9.6%, L3 11.2%, L4 13.6%, L5 16%.",
       "Activation chance: 35%."
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final value cannot be calculated because final combat formulas and stacking order are not fully verified.",
-    "explanation": "Malachite's Forest's Instinct can reduce Caraxes's Tactical Damage Received by 16%.",
+    "explanation": "Malachite's Forest's Instinct can reduce Caraxes's Tactical Damage Received by 16%. Tactical Damage Received decrease 16% at effective Habit Level 5. Duration: 2 rounds. Ranked progression: L1 8%, L2 9.6%, L3 11.2%, L4 13.6%, L5 16%.",
     "id": "defensive-ally-support-malachite-forests-instinct-forests-instinct-tactical-reduction-damage-received-received-modifier-caraxes",
     "interactionScope": "cross-dragon",
     "matchedOutputCapabilityIds": [],
@@ -2276,11 +2279,14 @@
     ],
     "damageScope": "tactical",
     "effects": [
+      "Tactical Damage Received decrease 16% at effective Habit Level 5.",
+      "Duration: 2 rounds.",
+      "Ranked progression: L1 8%, L2 9.6%, L3 11.2%, L4 13.6%, L5 16%.",
       "Activation chance: 35%."
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final value cannot be calculated because final combat formulas and stacking order are not fully verified.",
-    "explanation": "Malachite's Forest's Instinct can reduce Syrax's Tactical Damage Received by 16%.",
+    "explanation": "Malachite's Forest's Instinct can reduce Syrax's Tactical Damage Received by 16%. Tactical Damage Received decrease 16% at effective Habit Level 5. Duration: 2 rounds. Ranked progression: L1 8%, L2 9.6%, L3 11.2%, L4 13.6%, L5 16%.",
     "id": "defensive-ally-support-malachite-forests-instinct-forests-instinct-tactical-reduction-damage-received-received-modifier-syrax",
     "interactionScope": "cross-dragon",
     "matchedOutputCapabilityIds": [],
@@ -4405,8 +4411,6 @@
       "Scales with Intelligence.",
       "Mitigated by target Initiative.",
       "Status supplier effect: crippling-inferno-burn.",
-      "Status application chance depends on Habit Level.",
-      "Activation chance depends on Habit Level.",
       "Activation, target selection, target overlap, and uptime remain conditional.",
       "Final damage is not calculated."
     ],
@@ -6731,14 +6735,14 @@
     ],
     "damageScope": null,
     "effects": [
-      "Damage Received reduction: 20%.",
+      "Damage Received decrease 20%.",
       "Duration: 2 rounds.",
       "Activation chance: 100% at effective Habit Level 5.",
       "Activation chance by Habit Level: 40%, 52%, 64%, 80%, 100%."
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final value cannot be calculated because final combat formulas and stacking order are not fully verified.",
-    "explanation": "Syrax's Strategic Revival can reduce Caraxes's Damage Received by 20%. Damage Received reduction: 20%. Duration: 2 rounds.",
+    "explanation": "Syrax's Strategic Revival can reduce Caraxes's Damage Received by 20%. Damage Received decrease 20%. Duration: 2 rounds.",
     "id": "defensive-ally-support-syrax-strategic-revival-strategic-revival-resistance-damage-received-received-modifier-caraxes",
     "interactionScope": "cross-dragon",
     "matchedOutputCapabilityIds": [],
@@ -6808,14 +6812,14 @@
     ],
     "damageScope": null,
     "effects": [
-      "Damage Received reduction: 20%.",
+      "Damage Received decrease 20%.",
       "Duration: 2 rounds.",
       "Activation chance: 100% at effective Habit Level 5.",
       "Activation chance by Habit Level: 40%, 52%, 64%, 80%, 100%."
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final value cannot be calculated because final combat formulas and stacking order are not fully verified.",
-    "explanation": "Syrax's Strategic Revival can reduce Malachite's Damage Received by 20%. Damage Received reduction: 20%. Duration: 2 rounds.",
+    "explanation": "Syrax's Strategic Revival can reduce Malachite's Damage Received by 20%. Damage Received decrease 20%. Duration: 2 rounds.",
     "id": "defensive-ally-support-syrax-strategic-revival-strategic-revival-resistance-damage-received-received-modifier-malachite",
     "interactionScope": "cross-dragon",
     "matchedOutputCapabilityIds": [],
@@ -6885,11 +6889,14 @@
     ],
     "damageScope": "tactical",
     "effects": [
+      "Tactical Damage Received decrease 16% at effective Habit Level 5.",
+      "Duration: 2 rounds.",
+      "Ranked progression: L1 8%, L2 9.6%, L3 11.2%, L4 13.6%, L5 16%.",
       "Activation chance: 35%."
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final value cannot be calculated because final combat formulas and stacking order are not fully verified.",
-    "explanation": "Malachite's Forest's Instinct can reduce Caraxes's Tactical Damage Received by 16%.",
+    "explanation": "Malachite's Forest's Instinct can reduce Caraxes's Tactical Damage Received by 16%. Tactical Damage Received decrease 16% at effective Habit Level 5. Duration: 2 rounds. Ranked progression: L1 8%, L2 9.6%, L3 11.2%, L4 13.6%, L5 16%.",
     "id": "defensive-ally-support-malachite-forests-instinct-forests-instinct-tactical-reduction-damage-received-received-modifier-caraxes",
     "interactionScope": "cross-dragon",
     "matchedOutputCapabilityIds": [],
@@ -6959,11 +6966,14 @@
     ],
     "damageScope": "tactical",
     "effects": [
+      "Tactical Damage Received decrease 16% at effective Habit Level 5.",
+      "Duration: 2 rounds.",
+      "Ranked progression: L1 8%, L2 9.6%, L3 11.2%, L4 13.6%, L5 16%.",
       "Activation chance: 35%."
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final value cannot be calculated because final combat formulas and stacking order are not fully verified.",
-    "explanation": "Malachite's Forest's Instinct can reduce Syrax's Tactical Damage Received by 16%.",
+    "explanation": "Malachite's Forest's Instinct can reduce Syrax's Tactical Damage Received by 16%. Tactical Damage Received decrease 16% at effective Habit Level 5. Duration: 2 rounds. Ranked progression: L1 8%, L2 9.6%, L3 11.2%, L4 13.6%, L5 16%.",
     "id": "defensive-ally-support-malachite-forests-instinct-forests-instinct-tactical-reduction-damage-received-received-modifier-syrax",
     "interactionScope": "cross-dragon",
     "matchedOutputCapabilityIds": [],
@@ -8998,8 +9008,6 @@
       "Scales with Intelligence.",
       "Mitigated by target Initiative.",
       "Status supplier effect: crippling-inferno-burn.",
-      "Status application chance depends on Habit Level.",
-      "Activation chance depends on Habit Level.",
       "Activation, target selection, target overlap, and uptime remain conditional.",
       "Final damage is not calculated."
     ],
@@ -11324,14 +11332,14 @@
     ],
     "damageScope": null,
     "effects": [
-      "Damage Received reduction: 20%.",
+      "Damage Received decrease 20%.",
       "Duration: 2 rounds.",
       "Activation chance: 100% at effective Habit Level 5.",
       "Activation chance by Habit Level: 40%, 52%, 64%, 80%, 100%."
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final value cannot be calculated because final combat formulas and stacking order are not fully verified.",
-    "explanation": "Syrax's Strategic Revival can reduce Malachite's Damage Received by 20%. Damage Received reduction: 20%. Duration: 2 rounds.",
+    "explanation": "Syrax's Strategic Revival can reduce Malachite's Damage Received by 20%. Damage Received decrease 20%. Duration: 2 rounds.",
     "id": "defensive-ally-support-syrax-strategic-revival-strategic-revival-resistance-damage-received-received-modifier-malachite",
     "interactionScope": "cross-dragon",
     "matchedOutputCapabilityIds": [],
@@ -11401,14 +11409,14 @@
     ],
     "damageScope": null,
     "effects": [
-      "Damage Received reduction: 20%.",
+      "Damage Received decrease 20%.",
       "Duration: 2 rounds.",
       "Activation chance: 100% at effective Habit Level 5.",
       "Activation chance by Habit Level: 40%, 52%, 64%, 80%, 100%."
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final value cannot be calculated because final combat formulas and stacking order are not fully verified.",
-    "explanation": "Syrax's Strategic Revival can reduce Caraxes's Damage Received by 20%. Damage Received reduction: 20%. Duration: 2 rounds.",
+    "explanation": "Syrax's Strategic Revival can reduce Caraxes's Damage Received by 20%. Damage Received decrease 20%. Duration: 2 rounds.",
     "id": "defensive-ally-support-syrax-strategic-revival-strategic-revival-resistance-damage-received-received-modifier-caraxes",
     "interactionScope": "cross-dragon",
     "matchedOutputCapabilityIds": [],
@@ -11478,11 +11486,14 @@
     ],
     "damageScope": "tactical",
     "effects": [
+      "Tactical Damage Received decrease 16% at effective Habit Level 5.",
+      "Duration: 2 rounds.",
+      "Ranked progression: L1 8%, L2 9.6%, L3 11.2%, L4 13.6%, L5 16%.",
       "Activation chance: 35%."
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final value cannot be calculated because final combat formulas and stacking order are not fully verified.",
-    "explanation": "Malachite's Forest's Instinct can reduce Syrax's Tactical Damage Received by 16%.",
+    "explanation": "Malachite's Forest's Instinct can reduce Syrax's Tactical Damage Received by 16%. Tactical Damage Received decrease 16% at effective Habit Level 5. Duration: 2 rounds. Ranked progression: L1 8%, L2 9.6%, L3 11.2%, L4 13.6%, L5 16%.",
     "id": "defensive-ally-support-malachite-forests-instinct-forests-instinct-tactical-reduction-damage-received-received-modifier-syrax",
     "interactionScope": "cross-dragon",
     "matchedOutputCapabilityIds": [],
@@ -11552,11 +11563,14 @@
     ],
     "damageScope": "tactical",
     "effects": [
+      "Tactical Damage Received decrease 16% at effective Habit Level 5.",
+      "Duration: 2 rounds.",
+      "Ranked progression: L1 8%, L2 9.6%, L3 11.2%, L4 13.6%, L5 16%.",
       "Activation chance: 35%."
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final value cannot be calculated because final combat formulas and stacking order are not fully verified.",
-    "explanation": "Malachite's Forest's Instinct can reduce Caraxes's Tactical Damage Received by 16%.",
+    "explanation": "Malachite's Forest's Instinct can reduce Caraxes's Tactical Damage Received by 16%. Tactical Damage Received decrease 16% at effective Habit Level 5. Duration: 2 rounds. Ranked progression: L1 8%, L2 9.6%, L3 11.2%, L4 13.6%, L5 16%.",
     "id": "defensive-ally-support-malachite-forests-instinct-forests-instinct-tactical-reduction-damage-received-received-modifier-caraxes",
     "interactionScope": "cross-dragon",
     "matchedOutputCapabilityIds": [],
@@ -13472,8 +13486,6 @@
       "Scales with Intelligence.",
       "Mitigated by target Initiative.",
       "Status supplier effect: crippling-inferno-burn.",
-      "Status application chance depends on Habit Level.",
-      "Activation chance depends on Habit Level.",
       "Activation, target selection, target overlap, and uptime remain conditional.",
       "Final damage is not calculated."
     ],
@@ -15798,14 +15810,14 @@
     ],
     "damageScope": null,
     "effects": [
-      "Damage Received reduction: 20%.",
+      "Damage Received decrease 20%.",
       "Duration: 2 rounds.",
       "Activation chance: 100% at effective Habit Level 5.",
       "Activation chance by Habit Level: 40%, 52%, 64%, 80%, 100%."
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final value cannot be calculated because final combat formulas and stacking order are not fully verified.",
-    "explanation": "Syrax's Strategic Revival can reduce Caraxes's Damage Received by 20%. Damage Received reduction: 20%. Duration: 2 rounds.",
+    "explanation": "Syrax's Strategic Revival can reduce Caraxes's Damage Received by 20%. Damage Received decrease 20%. Duration: 2 rounds.",
     "id": "defensive-ally-support-syrax-strategic-revival-strategic-revival-resistance-damage-received-received-modifier-caraxes",
     "interactionScope": "cross-dragon",
     "matchedOutputCapabilityIds": [],
@@ -15875,14 +15887,14 @@
     ],
     "damageScope": null,
     "effects": [
-      "Damage Received reduction: 20%.",
+      "Damage Received decrease 20%.",
       "Duration: 2 rounds.",
       "Activation chance: 100% at effective Habit Level 5.",
       "Activation chance by Habit Level: 40%, 52%, 64%, 80%, 100%."
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final value cannot be calculated because final combat formulas and stacking order are not fully verified.",
-    "explanation": "Syrax's Strategic Revival can reduce Malachite's Damage Received by 20%. Damage Received reduction: 20%. Duration: 2 rounds.",
+    "explanation": "Syrax's Strategic Revival can reduce Malachite's Damage Received by 20%. Damage Received decrease 20%. Duration: 2 rounds.",
     "id": "defensive-ally-support-syrax-strategic-revival-strategic-revival-resistance-damage-received-received-modifier-malachite",
     "interactionScope": "cross-dragon",
     "matchedOutputCapabilityIds": [],
@@ -15952,11 +15964,14 @@
     ],
     "damageScope": "tactical",
     "effects": [
+      "Tactical Damage Received decrease 16% at effective Habit Level 5.",
+      "Duration: 2 rounds.",
+      "Ranked progression: L1 8%, L2 9.6%, L3 11.2%, L4 13.6%, L5 16%.",
       "Activation chance: 35%."
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final value cannot be calculated because final combat formulas and stacking order are not fully verified.",
-    "explanation": "Malachite's Forest's Instinct can reduce Syrax's Tactical Damage Received by 16%.",
+    "explanation": "Malachite's Forest's Instinct can reduce Syrax's Tactical Damage Received by 16%. Tactical Damage Received decrease 16% at effective Habit Level 5. Duration: 2 rounds. Ranked progression: L1 8%, L2 9.6%, L3 11.2%, L4 13.6%, L5 16%.",
     "id": "defensive-ally-support-malachite-forests-instinct-forests-instinct-tactical-reduction-damage-received-received-modifier-syrax",
     "interactionScope": "cross-dragon",
     "matchedOutputCapabilityIds": [],
@@ -16026,11 +16041,14 @@
     ],
     "damageScope": "tactical",
     "effects": [
+      "Tactical Damage Received decrease 16% at effective Habit Level 5.",
+      "Duration: 2 rounds.",
+      "Ranked progression: L1 8%, L2 9.6%, L3 11.2%, L4 13.6%, L5 16%.",
       "Activation chance: 35%."
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final value cannot be calculated because final combat formulas and stacking order are not fully verified.",
-    "explanation": "Malachite's Forest's Instinct can reduce Caraxes's Tactical Damage Received by 16%.",
+    "explanation": "Malachite's Forest's Instinct can reduce Caraxes's Tactical Damage Received by 16%. Tactical Damage Received decrease 16% at effective Habit Level 5. Duration: 2 rounds. Ranked progression: L1 8%, L2 9.6%, L3 11.2%, L4 13.6%, L5 16%.",
     "id": "defensive-ally-support-malachite-forests-instinct-forests-instinct-tactical-reduction-damage-received-received-modifier-caraxes",
     "interactionScope": "cross-dragon",
     "matchedOutputCapabilityIds": [],
@@ -17857,8 +17875,6 @@
       "Scales with Intelligence.",
       "Mitigated by target Initiative.",
       "Status supplier effect: crippling-inferno-burn.",
-      "Status application chance depends on Habit Level.",
-      "Activation chance depends on Habit Level.",
       "Activation, target selection, target overlap, and uptime remain conditional.",
       "Final damage is not calculated."
     ],
@@ -20518,10 +20534,18 @@
       "Vermax - Trial by Flame Selected Habit Level: expected Habit Level 1+ or preview, actual preview enabled"
     ],
     "damageScope": "fire",
-    "effects": [],
+    "effects": [
+      "Duration: until end of current round.",
+      "Fire Damage Received decrease 10% at effective Habit Level 5.",
+      "Fire Damage Received decrease 20% at effective Habit Level 5.",
+      "Fire Damage Received decrease 30% at effective Habit Level 5.",
+      "Ranked progression: L1 10%, L2 12%, L3 14%, L4 17%, L5 20%.",
+      "Ranked progression: L1 15%, L2 18%, L3 21%, L4 25.5%, L5 30%.",
+      "Ranked progression: L1 5%, L2 6%, L3 7%, L4 8.5%, L5 10%."
+    ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final value cannot be calculated because final combat formulas and stacking order are not fully verified.",
-    "explanation": "Trial by Flame can reduce Fire Damage Received for Malachite and Sheepstealer when each satisfies a Troop Capacity threshold. . Threshold applicability depends on each recipient's current Troop Capacity; exact interaction between overlapping threshold tiers is unresolved.",
+    "explanation": "Trial by Flame can reduce Fire Damage Received for Malachite and Sheepstealer when each satisfies a Troop Capacity threshold. Below 75% Troop Capacity: Fire Damage Received -10% at effective Habit Level 5.; Below 50% Troop Capacity: Fire Damage Received -20% at effective Habit Level 5.; Below 25% Troop Capacity: Fire Damage Received -30% at effective Habit Level 5.. Threshold applicability depends on each recipient's current Troop Capacity; exact interaction between overlapping threshold tiers is unresolved.",
     "id": "defensive-ally-support-vermax-trial-by-flame-grouped",
     "interactionScope": "targeting-fact",
     "matchedOutputCapabilityIds": [],
@@ -20658,11 +20682,14 @@
     ],
     "damageScope": "tactical",
     "effects": [
+      "Tactical Damage Received decrease 16% at effective Habit Level 5.",
+      "Duration: 2 rounds.",
+      "Ranked progression: L1 8%, L2 9.6%, L3 11.2%, L4 13.6%, L5 16%.",
       "Activation chance: 35%."
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final value cannot be calculated because final combat formulas and stacking order are not fully verified.",
-    "explanation": "Malachite's Forest's Instinct can reduce Sheepstealer's Tactical Damage Received by 16%.",
+    "explanation": "Malachite's Forest's Instinct can reduce Sheepstealer's Tactical Damage Received by 16%. Tactical Damage Received decrease 16% at effective Habit Level 5. Duration: 2 rounds. Ranked progression: L1 8%, L2 9.6%, L3 11.2%, L4 13.6%, L5 16%.",
     "id": "defensive-ally-support-malachite-forests-instinct-forests-instinct-tactical-reduction-damage-received-received-modifier-sheepstealer",
     "interactionScope": "cross-dragon",
     "matchedOutputCapabilityIds": [],
@@ -20732,11 +20759,14 @@
     ],
     "damageScope": "tactical",
     "effects": [
+      "Tactical Damage Received decrease 16% at effective Habit Level 5.",
+      "Duration: 2 rounds.",
+      "Ranked progression: L1 8%, L2 9.6%, L3 11.2%, L4 13.6%, L5 16%.",
       "Activation chance: 35%."
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final value cannot be calculated because final combat formulas and stacking order are not fully verified.",
-    "explanation": "Malachite's Forest's Instinct can reduce Vermax's Tactical Damage Received by 16%.",
+    "explanation": "Malachite's Forest's Instinct can reduce Vermax's Tactical Damage Received by 16%. Tactical Damage Received decrease 16% at effective Habit Level 5. Duration: 2 rounds. Ranked progression: L1 8%, L2 9.6%, L3 11.2%, L4 13.6%, L5 16%.",
     "id": "defensive-ally-support-malachite-forests-instinct-forests-instinct-tactical-reduction-damage-received-received-modifier-vermax",
     "interactionScope": "cross-dragon",
     "matchedOutputCapabilityIds": [],
@@ -24430,10 +24460,12 @@
       "Seasmoke - Champion's Brilliance Star Rank requirement: expected Star Rank 1+, actual preview enabled"
     ],
     "damageScope": "all",
-    "effects": [],
+    "effects": [
+      "Damage Received decrease 8%."
+    ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final value cannot be calculated because final combat formulas and stacking order are not fully verified.",
-    "explanation": "Seasmoke's Champion's Brilliance can reduce Sheepstealer's Damage Received by 8%.",
+    "explanation": "Seasmoke's Champion's Brilliance can reduce Sheepstealer's Damage Received by 8%. Damage Received decrease 8%.",
     "id": "defensive-ally-support-seasmoke-champions-brilliance-seasmoke-right-flank-dr-down-damage-received-received-modifier-sheepstealer",
     "interactionScope": "cross-dragon",
     "matchedOutputCapabilityIds": [],
@@ -24512,14 +24544,14 @@
     ],
     "damageScope": null,
     "effects": [
-      "Damage Received reduction: 20%.",
+      "Damage Received decrease 20%.",
       "Duration: 2 rounds.",
       "Activation chance: 25% at effective Habit Level 5.",
       "Activation chance by Habit Level: 10%, 13%, 16%, 20%, 25%."
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final value cannot be calculated because final combat formulas and stacking order are not fully verified.",
-    "explanation": "Seasmoke's Loyal Bond can reduce Malachite's Damage Received by 20%. Damage Received reduction: 20%. Duration: 2 rounds.",
+    "explanation": "Seasmoke's Loyal Bond can reduce Malachite's Damage Received by 20%. Damage Received decrease 20%. Duration: 2 rounds.",
     "id": "defensive-ally-support-seasmoke-loyal-bond-loyal-bond-resistance-effect-damage-received-received-modifier-malachite",
     "interactionScope": "cross-dragon",
     "matchedOutputCapabilityIds": [],
@@ -24589,14 +24621,14 @@
     ],
     "damageScope": null,
     "effects": [
-      "Damage Received reduction: 20%.",
+      "Damage Received decrease 20%.",
       "Duration: 2 rounds.",
       "Activation chance: 25% at effective Habit Level 5.",
       "Activation chance by Habit Level: 10%, 13%, 16%, 20%, 25%."
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final value cannot be calculated because final combat formulas and stacking order are not fully verified.",
-    "explanation": "Seasmoke's Loyal Bond can reduce Sheepstealer's Damage Received by 20%. Damage Received reduction: 20%. Duration: 2 rounds.",
+    "explanation": "Seasmoke's Loyal Bond can reduce Sheepstealer's Damage Received by 20%. Damage Received decrease 20%. Duration: 2 rounds.",
     "id": "defensive-ally-support-seasmoke-loyal-bond-loyal-bond-resistance-effect-damage-received-received-modifier-sheepstealer",
     "interactionScope": "cross-dragon",
     "matchedOutputCapabilityIds": [],
@@ -24666,11 +24698,14 @@
     ],
     "damageScope": "tactical",
     "effects": [
+      "Tactical Damage Received decrease 16% at effective Habit Level 5.",
+      "Duration: 2 rounds.",
+      "Ranked progression: L1 8%, L2 9.6%, L3 11.2%, L4 13.6%, L5 16%.",
       "Activation chance: 35%."
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final value cannot be calculated because final combat formulas and stacking order are not fully verified.",
-    "explanation": "Malachite's Forest's Instinct can reduce Seasmoke's Tactical Damage Received by 16%.",
+    "explanation": "Malachite's Forest's Instinct can reduce Seasmoke's Tactical Damage Received by 16%. Tactical Damage Received decrease 16% at effective Habit Level 5. Duration: 2 rounds. Ranked progression: L1 8%, L2 9.6%, L3 11.2%, L4 13.6%, L5 16%.",
     "id": "defensive-ally-support-malachite-forests-instinct-forests-instinct-tactical-reduction-damage-received-received-modifier-seasmoke",
     "interactionScope": "cross-dragon",
     "matchedOutputCapabilityIds": [],
@@ -24740,11 +24775,14 @@
     ],
     "damageScope": "tactical",
     "effects": [
+      "Tactical Damage Received decrease 16% at effective Habit Level 5.",
+      "Duration: 2 rounds.",
+      "Ranked progression: L1 8%, L2 9.6%, L3 11.2%, L4 13.6%, L5 16%.",
       "Activation chance: 35%."
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final value cannot be calculated because final combat formulas and stacking order are not fully verified.",
-    "explanation": "Malachite's Forest's Instinct can reduce Sheepstealer's Tactical Damage Received by 16%.",
+    "explanation": "Malachite's Forest's Instinct can reduce Sheepstealer's Tactical Damage Received by 16%. Tactical Damage Received decrease 16% at effective Habit Level 5. Duration: 2 rounds. Ranked progression: L1 8%, L2 9.6%, L3 11.2%, L4 13.6%, L5 16%.",
     "id": "defensive-ally-support-malachite-forests-instinct-forests-instinct-tactical-reduction-damage-received-received-modifier-sheepstealer",
     "interactionScope": "cross-dragon",
     "matchedOutputCapabilityIds": [],
@@ -28331,10 +28369,18 @@
       "Vermax - Trial by Flame Selected Habit Level: expected Habit Level 1+ or preview, actual preview enabled"
     ],
     "damageScope": "fire",
-    "effects": [],
+    "effects": [
+      "Duration: until end of current round.",
+      "Fire Damage Received decrease 10% at effective Habit Level 5.",
+      "Fire Damage Received decrease 20% at effective Habit Level 5.",
+      "Fire Damage Received decrease 30% at effective Habit Level 5.",
+      "Ranked progression: L1 10%, L2 12%, L3 14%, L4 17%, L5 20%.",
+      "Ranked progression: L1 15%, L2 18%, L3 21%, L4 25.5%, L5 30%.",
+      "Ranked progression: L1 5%, L2 6%, L3 7%, L4 8.5%, L5 10%."
+    ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final value cannot be calculated because final combat formulas and stacking order are not fully verified.",
-    "explanation": "Trial by Flame can reduce Fire Damage Received for Malachite and Seasmoke when each satisfies a Troop Capacity threshold. . Threshold applicability depends on each recipient's current Troop Capacity; exact interaction between overlapping threshold tiers is unresolved.",
+    "explanation": "Trial by Flame can reduce Fire Damage Received for Malachite and Seasmoke when each satisfies a Troop Capacity threshold. Below 75% Troop Capacity: Fire Damage Received -10% at effective Habit Level 5.; Below 50% Troop Capacity: Fire Damage Received -20% at effective Habit Level 5.; Below 25% Troop Capacity: Fire Damage Received -30% at effective Habit Level 5.. Threshold applicability depends on each recipient's current Troop Capacity; exact interaction between overlapping threshold tiers is unresolved.",
     "id": "defensive-ally-support-vermax-trial-by-flame-grouped",
     "interactionScope": "targeting-fact",
     "matchedOutputCapabilityIds": [],
@@ -28471,14 +28517,14 @@
     ],
     "damageScope": null,
     "effects": [
-      "Damage Received reduction: 20%.",
+      "Damage Received decrease 20%.",
       "Duration: 2 rounds.",
       "Activation chance: 25% at effective Habit Level 5.",
       "Activation chance by Habit Level: 10%, 13%, 16%, 20%, 25%."
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final value cannot be calculated because final combat formulas and stacking order are not fully verified.",
-    "explanation": "Seasmoke's Loyal Bond can reduce Malachite's Damage Received by 20%. Damage Received reduction: 20%. Duration: 2 rounds.",
+    "explanation": "Seasmoke's Loyal Bond can reduce Malachite's Damage Received by 20%. Damage Received decrease 20%. Duration: 2 rounds.",
     "id": "defensive-ally-support-seasmoke-loyal-bond-loyal-bond-resistance-effect-damage-received-received-modifier-malachite",
     "interactionScope": "cross-dragon",
     "matchedOutputCapabilityIds": [],
@@ -28548,14 +28594,14 @@
     ],
     "damageScope": null,
     "effects": [
-      "Damage Received reduction: 20%.",
+      "Damage Received decrease 20%.",
       "Duration: 2 rounds.",
       "Activation chance: 25% at effective Habit Level 5.",
       "Activation chance by Habit Level: 10%, 13%, 16%, 20%, 25%."
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final value cannot be calculated because final combat formulas and stacking order are not fully verified.",
-    "explanation": "Seasmoke's Loyal Bond can reduce Vermax's Damage Received by 20%. Damage Received reduction: 20%. Duration: 2 rounds.",
+    "explanation": "Seasmoke's Loyal Bond can reduce Vermax's Damage Received by 20%. Damage Received decrease 20%. Duration: 2 rounds.",
     "id": "defensive-ally-support-seasmoke-loyal-bond-loyal-bond-resistance-effect-damage-received-received-modifier-vermax",
     "interactionScope": "cross-dragon",
     "matchedOutputCapabilityIds": [],
@@ -28625,11 +28671,14 @@
     ],
     "damageScope": "tactical",
     "effects": [
+      "Tactical Damage Received decrease 16% at effective Habit Level 5.",
+      "Duration: 2 rounds.",
+      "Ranked progression: L1 8%, L2 9.6%, L3 11.2%, L4 13.6%, L5 16%.",
       "Activation chance: 35%."
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final value cannot be calculated because final combat formulas and stacking order are not fully verified.",
-    "explanation": "Malachite's Forest's Instinct can reduce Vermax's Tactical Damage Received by 16%.",
+    "explanation": "Malachite's Forest's Instinct can reduce Vermax's Tactical Damage Received by 16%. Tactical Damage Received decrease 16% at effective Habit Level 5. Duration: 2 rounds. Ranked progression: L1 8%, L2 9.6%, L3 11.2%, L4 13.6%, L5 16%.",
     "id": "defensive-ally-support-malachite-forests-instinct-forests-instinct-tactical-reduction-damage-received-received-modifier-vermax",
     "interactionScope": "cross-dragon",
     "matchedOutputCapabilityIds": [],
@@ -28699,11 +28748,14 @@
     ],
     "damageScope": "tactical",
     "effects": [
+      "Tactical Damage Received decrease 16% at effective Habit Level 5.",
+      "Duration: 2 rounds.",
+      "Ranked progression: L1 8%, L2 9.6%, L3 11.2%, L4 13.6%, L5 16%.",
       "Activation chance: 35%."
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final value cannot be calculated because final combat formulas and stacking order are not fully verified.",
-    "explanation": "Malachite's Forest's Instinct can reduce Seasmoke's Tactical Damage Received by 16%.",
+    "explanation": "Malachite's Forest's Instinct can reduce Seasmoke's Tactical Damage Received by 16%. Tactical Damage Received decrease 16% at effective Habit Level 5. Duration: 2 rounds. Ranked progression: L1 8%, L2 9.6%, L3 11.2%, L4 13.6%, L5 16%.",
     "id": "defensive-ally-support-malachite-forests-instinct-forests-instinct-tactical-reduction-damage-received-received-modifier-seasmoke",
     "interactionScope": "cross-dragon",
     "matchedOutputCapabilityIds": [],
@@ -32846,10 +32898,12 @@
       "Seasmoke - Champion's Brilliance Star Rank requirement: expected Star Rank 1+, actual preview enabled"
     ],
     "damageScope": "all",
-    "effects": [],
+    "effects": [
+      "Damage Received decrease 8%."
+    ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final value cannot be calculated because final combat formulas and stacking order are not fully verified.",
-    "explanation": "Seasmoke's Champion's Brilliance can reduce Sheepstealer's Damage Received by 8%.",
+    "explanation": "Seasmoke's Champion's Brilliance can reduce Sheepstealer's Damage Received by 8%. Damage Received decrease 8%.",
     "id": "defensive-ally-support-seasmoke-champions-brilliance-seasmoke-right-flank-dr-down-damage-received-received-modifier-sheepstealer",
     "interactionScope": "cross-dragon",
     "matchedOutputCapabilityIds": [],
@@ -32928,14 +32982,14 @@
     ],
     "damageScope": null,
     "effects": [
-      "Damage Received reduction: 20%.",
+      "Damage Received decrease 20%.",
       "Duration: 2 rounds.",
       "Activation chance: 25% at effective Habit Level 5.",
       "Activation chance by Habit Level: 10%, 13%, 16%, 20%, 25%."
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final value cannot be calculated because final combat formulas and stacking order are not fully verified.",
-    "explanation": "Seasmoke's Loyal Bond can reduce Malachite's Damage Received by 20%. Damage Received reduction: 20%. Duration: 2 rounds.",
+    "explanation": "Seasmoke's Loyal Bond can reduce Malachite's Damage Received by 20%. Damage Received decrease 20%. Duration: 2 rounds.",
     "id": "defensive-ally-support-seasmoke-loyal-bond-loyal-bond-resistance-effect-damage-received-received-modifier-malachite",
     "interactionScope": "cross-dragon",
     "matchedOutputCapabilityIds": [],
@@ -33005,14 +33059,14 @@
     ],
     "damageScope": null,
     "effects": [
-      "Damage Received reduction: 20%.",
+      "Damage Received decrease 20%.",
       "Duration: 2 rounds.",
       "Activation chance: 25% at effective Habit Level 5.",
       "Activation chance by Habit Level: 10%, 13%, 16%, 20%, 25%."
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final value cannot be calculated because final combat formulas and stacking order are not fully verified.",
-    "explanation": "Seasmoke's Loyal Bond can reduce Sheepstealer's Damage Received by 20%. Damage Received reduction: 20%. Duration: 2 rounds.",
+    "explanation": "Seasmoke's Loyal Bond can reduce Sheepstealer's Damage Received by 20%. Damage Received decrease 20%. Duration: 2 rounds.",
     "id": "defensive-ally-support-seasmoke-loyal-bond-loyal-bond-resistance-effect-damage-received-received-modifier-sheepstealer",
     "interactionScope": "cross-dragon",
     "matchedOutputCapabilityIds": [],
@@ -33082,11 +33136,14 @@
     ],
     "damageScope": "tactical",
     "effects": [
+      "Tactical Damage Received decrease 16% at effective Habit Level 5.",
+      "Duration: 2 rounds.",
+      "Ranked progression: L1 8%, L2 9.6%, L3 11.2%, L4 13.6%, L5 16%.",
       "Activation chance: 35%."
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final value cannot be calculated because final combat formulas and stacking order are not fully verified.",
-    "explanation": "Malachite's Forest's Instinct can reduce Seasmoke's Tactical Damage Received by 16%.",
+    "explanation": "Malachite's Forest's Instinct can reduce Seasmoke's Tactical Damage Received by 16%. Tactical Damage Received decrease 16% at effective Habit Level 5. Duration: 2 rounds. Ranked progression: L1 8%, L2 9.6%, L3 11.2%, L4 13.6%, L5 16%.",
     "id": "defensive-ally-support-malachite-forests-instinct-forests-instinct-tactical-reduction-damage-received-received-modifier-seasmoke",
     "interactionScope": "cross-dragon",
     "matchedOutputCapabilityIds": [],
@@ -33156,11 +33213,14 @@
     ],
     "damageScope": "tactical",
     "effects": [
+      "Tactical Damage Received decrease 16% at effective Habit Level 5.",
+      "Duration: 2 rounds.",
+      "Ranked progression: L1 8%, L2 9.6%, L3 11.2%, L4 13.6%, L5 16%.",
       "Activation chance: 35%."
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final value cannot be calculated because final combat formulas and stacking order are not fully verified.",
-    "explanation": "Malachite's Forest's Instinct can reduce Sheepstealer's Tactical Damage Received by 16%.",
+    "explanation": "Malachite's Forest's Instinct can reduce Sheepstealer's Tactical Damage Received by 16%. Tactical Damage Received decrease 16% at effective Habit Level 5. Duration: 2 rounds. Ranked progression: L1 8%, L2 9.6%, L3 11.2%, L4 13.6%, L5 16%.",
     "id": "defensive-ally-support-malachite-forests-instinct-forests-instinct-tactical-reduction-damage-received-received-modifier-sheepstealer",
     "interactionScope": "cross-dragon",
     "matchedOutputCapabilityIds": [],
@@ -36448,10 +36508,12 @@
       "Seasmoke - Champion's Brilliance Star Rank requirement: expected Star Rank 1+, actual preview enabled"
     ],
     "damageScope": "all",
-    "effects": [],
+    "effects": [
+      "Damage Received decrease 8%."
+    ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final value cannot be calculated because final combat formulas and stacking order are not fully verified.",
-    "explanation": "Seasmoke's Champion's Brilliance can reduce Sheepstealer's Damage Received by 8%.",
+    "explanation": "Seasmoke's Champion's Brilliance can reduce Sheepstealer's Damage Received by 8%. Damage Received decrease 8%.",
     "id": "defensive-ally-support-seasmoke-champions-brilliance-seasmoke-right-flank-dr-down-damage-received-received-modifier-sheepstealer",
     "interactionScope": "cross-dragon",
     "matchedOutputCapabilityIds": [],
@@ -36530,14 +36592,14 @@
     ],
     "damageScope": null,
     "effects": [
-      "Damage Received reduction: 20%.",
+      "Damage Received decrease 20%.",
       "Duration: 2 rounds.",
       "Activation chance: 25% at effective Habit Level 5.",
       "Activation chance by Habit Level: 10%, 13%, 16%, 20%, 25%."
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final value cannot be calculated because final combat formulas and stacking order are not fully verified.",
-    "explanation": "Seasmoke's Loyal Bond can reduce Caraxes's Damage Received by 20%. Damage Received reduction: 20%. Duration: 2 rounds.",
+    "explanation": "Seasmoke's Loyal Bond can reduce Caraxes's Damage Received by 20%. Damage Received decrease 20%. Duration: 2 rounds.",
     "id": "defensive-ally-support-seasmoke-loyal-bond-loyal-bond-resistance-effect-damage-received-received-modifier-caraxes",
     "interactionScope": "cross-dragon",
     "matchedOutputCapabilityIds": [],
@@ -36607,14 +36669,14 @@
     ],
     "damageScope": null,
     "effects": [
-      "Damage Received reduction: 20%.",
+      "Damage Received decrease 20%.",
       "Duration: 2 rounds.",
       "Activation chance: 25% at effective Habit Level 5.",
       "Activation chance by Habit Level: 10%, 13%, 16%, 20%, 25%."
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final value cannot be calculated because final combat formulas and stacking order are not fully verified.",
-    "explanation": "Seasmoke's Loyal Bond can reduce Sheepstealer's Damage Received by 20%. Damage Received reduction: 20%. Duration: 2 rounds.",
+    "explanation": "Seasmoke's Loyal Bond can reduce Sheepstealer's Damage Received by 20%. Damage Received decrease 20%. Duration: 2 rounds.",
     "id": "defensive-ally-support-seasmoke-loyal-bond-loyal-bond-resistance-effect-damage-received-received-modifier-sheepstealer",
     "interactionScope": "cross-dragon",
     "matchedOutputCapabilityIds": [],
@@ -38171,8 +38233,6 @@
       "Scales with Intelligence.",
       "Mitigated by target Initiative.",
       "Status supplier effect: crippling-inferno-burn.",
-      "Status application chance depends on Habit Level.",
-      "Activation chance depends on Habit Level.",
       "Activation, target selection, target overlap, and uptime remain conditional.",
       "Final damage is not calculated."
     ],
@@ -40694,14 +40754,14 @@
     ],
     "damageScope": null,
     "effects": [
-      "Damage Received reduction: 20%.",
+      "Damage Received decrease 20%.",
       "Duration: 2 rounds.",
       "Activation chance: 100% at effective Habit Level 5.",
       "Activation chance by Habit Level: 40%, 52%, 64%, 80%, 100%."
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final value cannot be calculated because final combat formulas and stacking order are not fully verified.",
-    "explanation": "Syrax's Strategic Revival can reduce Malachite's Damage Received by 20%. Damage Received reduction: 20%. Duration: 2 rounds.",
+    "explanation": "Syrax's Strategic Revival can reduce Malachite's Damage Received by 20%. Damage Received decrease 20%. Duration: 2 rounds.",
     "id": "defensive-ally-support-syrax-strategic-revival-strategic-revival-resistance-damage-received-received-modifier-malachite",
     "interactionScope": "cross-dragon",
     "matchedOutputCapabilityIds": [],
@@ -40771,14 +40831,14 @@
     ],
     "damageScope": null,
     "effects": [
-      "Damage Received reduction: 20%.",
+      "Damage Received decrease 20%.",
       "Duration: 2 rounds.",
       "Activation chance: 100% at effective Habit Level 5.",
       "Activation chance by Habit Level: 40%, 52%, 64%, 80%, 100%."
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final value cannot be calculated because final combat formulas and stacking order are not fully verified.",
-    "explanation": "Syrax's Strategic Revival can reduce Sheepstealer's Damage Received by 20%. Damage Received reduction: 20%. Duration: 2 rounds.",
+    "explanation": "Syrax's Strategic Revival can reduce Sheepstealer's Damage Received by 20%. Damage Received decrease 20%. Duration: 2 rounds.",
     "id": "defensive-ally-support-syrax-strategic-revival-strategic-revival-resistance-damage-received-received-modifier-sheepstealer",
     "interactionScope": "cross-dragon",
     "matchedOutputCapabilityIds": [],
@@ -40848,11 +40908,14 @@
     ],
     "damageScope": "tactical",
     "effects": [
+      "Tactical Damage Received decrease 16% at effective Habit Level 5.",
+      "Duration: 2 rounds.",
+      "Ranked progression: L1 8%, L2 9.6%, L3 11.2%, L4 13.6%, L5 16%.",
       "Activation chance: 35%."
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final value cannot be calculated because final combat formulas and stacking order are not fully verified.",
-    "explanation": "Malachite's Forest's Instinct can reduce Syrax's Tactical Damage Received by 16%.",
+    "explanation": "Malachite's Forest's Instinct can reduce Syrax's Tactical Damage Received by 16%. Tactical Damage Received decrease 16% at effective Habit Level 5. Duration: 2 rounds. Ranked progression: L1 8%, L2 9.6%, L3 11.2%, L4 13.6%, L5 16%.",
     "id": "defensive-ally-support-malachite-forests-instinct-forests-instinct-tactical-reduction-damage-received-received-modifier-syrax",
     "interactionScope": "cross-dragon",
     "matchedOutputCapabilityIds": [],
@@ -40922,11 +40985,14 @@
     ],
     "damageScope": "tactical",
     "effects": [
+      "Tactical Damage Received decrease 16% at effective Habit Level 5.",
+      "Duration: 2 rounds.",
+      "Ranked progression: L1 8%, L2 9.6%, L3 11.2%, L4 13.6%, L5 16%.",
       "Activation chance: 35%."
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final value cannot be calculated because final combat formulas and stacking order are not fully verified.",
-    "explanation": "Malachite's Forest's Instinct can reduce Sheepstealer's Tactical Damage Received by 16%.",
+    "explanation": "Malachite's Forest's Instinct can reduce Sheepstealer's Tactical Damage Received by 16%. Tactical Damage Received decrease 16% at effective Habit Level 5. Duration: 2 rounds. Ranked progression: L1 8%, L2 9.6%, L3 11.2%, L4 13.6%, L5 16%.",
     "id": "defensive-ally-support-malachite-forests-instinct-forests-instinct-tactical-reduction-damage-received-received-modifier-sheepstealer",
     "interactionScope": "cross-dragon",
     "matchedOutputCapabilityIds": [],
@@ -44144,10 +44210,18 @@
       "Vermax - Trial by Flame Selected Habit Level: expected Habit Level 1+ or preview, actual preview enabled"
     ],
     "damageScope": "fire",
-    "effects": [],
+    "effects": [
+      "Duration: until end of current round.",
+      "Fire Damage Received decrease 10% at effective Habit Level 5.",
+      "Fire Damage Received decrease 20% at effective Habit Level 5.",
+      "Fire Damage Received decrease 30% at effective Habit Level 5.",
+      "Ranked progression: L1 10%, L2 12%, L3 14%, L4 17%, L5 20%.",
+      "Ranked progression: L1 15%, L2 18%, L3 21%, L4 25.5%, L5 30%.",
+      "Ranked progression: L1 5%, L2 6%, L3 7%, L4 8.5%, L5 10%."
+    ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final value cannot be calculated because final combat formulas and stacking order are not fully verified.",
-    "explanation": "Trial by Flame can reduce Fire Damage Received for Caraxes and Syrax when each satisfies a Troop Capacity threshold. . Threshold applicability depends on each recipient's current Troop Capacity; exact interaction between overlapping threshold tiers is unresolved.",
+    "explanation": "Trial by Flame can reduce Fire Damage Received for Caraxes and Syrax when each satisfies a Troop Capacity threshold. Below 75% Troop Capacity: Fire Damage Received -10% at effective Habit Level 5.; Below 50% Troop Capacity: Fire Damage Received -20% at effective Habit Level 5.; Below 25% Troop Capacity: Fire Damage Received -30% at effective Habit Level 5.. Threshold applicability depends on each recipient's current Troop Capacity; exact interaction between overlapping threshold tiers is unresolved.",
     "id": "defensive-ally-support-vermax-trial-by-flame-grouped",
     "interactionScope": "targeting-fact",
     "matchedOutputCapabilityIds": [],
@@ -44284,14 +44358,14 @@
     ],
     "damageScope": null,
     "effects": [
-      "Damage Received reduction: 20%.",
+      "Damage Received decrease 20%.",
       "Duration: 2 rounds.",
       "Activation chance: 100% at effective Habit Level 5.",
       "Activation chance by Habit Level: 40%, 52%, 64%, 80%, 100%."
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final value cannot be calculated because final combat formulas and stacking order are not fully verified.",
-    "explanation": "Syrax's Strategic Revival can reduce Vermax's Damage Received by 20%. Damage Received reduction: 20%. Duration: 2 rounds.",
+    "explanation": "Syrax's Strategic Revival can reduce Vermax's Damage Received by 20%. Damage Received decrease 20%. Duration: 2 rounds.",
     "id": "defensive-ally-support-syrax-strategic-revival-strategic-revival-resistance-damage-received-received-modifier-vermax",
     "interactionScope": "cross-dragon",
     "matchedOutputCapabilityIds": [],
@@ -44361,14 +44435,14 @@
     ],
     "damageScope": null,
     "effects": [
-      "Damage Received reduction: 20%.",
+      "Damage Received decrease 20%.",
       "Duration: 2 rounds.",
       "Activation chance: 100% at effective Habit Level 5.",
       "Activation chance by Habit Level: 40%, 52%, 64%, 80%, 100%."
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final value cannot be calculated because final combat formulas and stacking order are not fully verified.",
-    "explanation": "Syrax's Strategic Revival can reduce Caraxes's Damage Received by 20%. Damage Received reduction: 20%. Duration: 2 rounds.",
+    "explanation": "Syrax's Strategic Revival can reduce Caraxes's Damage Received by 20%. Damage Received decrease 20%. Duration: 2 rounds.",
     "id": "defensive-ally-support-syrax-strategic-revival-strategic-revival-resistance-damage-received-received-modifier-caraxes",
     "interactionScope": "cross-dragon",
     "matchedOutputCapabilityIds": [],
@@ -46287,8 +46361,6 @@
       "Scales with Intelligence.",
       "Mitigated by target Initiative.",
       "Status supplier effect: crippling-inferno-burn.",
-      "Status application chance depends on Habit Level.",
-      "Activation chance depends on Habit Level.",
       "Activation, target selection, target overlap, and uptime remain conditional.",
       "Final damage is not calculated."
     ],
@@ -48308,14 +48380,14 @@
     ],
     "damageScope": null,
     "effects": [
-      "Damage Received reduction: 20%.",
+      "Damage Received decrease 20%.",
       "Duration: 2 rounds.",
       "Activation chance: 100% at effective Habit Level 5.",
       "Activation chance by Habit Level: 40%, 52%, 64%, 80%, 100%."
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final value cannot be calculated because final combat formulas and stacking order are not fully verified.",
-    "explanation": "Syrax's Strategic Revival can reduce Sheepstealer's Damage Received by 20%. Damage Received reduction: 20%. Duration: 2 rounds.",
+    "explanation": "Syrax's Strategic Revival can reduce Sheepstealer's Damage Received by 20%. Damage Received decrease 20%. Duration: 2 rounds.",
     "id": "defensive-ally-support-syrax-strategic-revival-strategic-revival-resistance-damage-received-received-modifier-sheepstealer",
     "interactionScope": "cross-dragon",
     "matchedOutputCapabilityIds": [],
@@ -48385,14 +48457,14 @@
     ],
     "damageScope": null,
     "effects": [
-      "Damage Received reduction: 20%.",
+      "Damage Received decrease 20%.",
       "Duration: 2 rounds.",
       "Activation chance: 100% at effective Habit Level 5.",
       "Activation chance by Habit Level: 40%, 52%, 64%, 80%, 100%."
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final value cannot be calculated because final combat formulas and stacking order are not fully verified.",
-    "explanation": "Syrax's Strategic Revival can reduce Caraxes's Damage Received by 20%. Damage Received reduction: 20%. Duration: 2 rounds.",
+    "explanation": "Syrax's Strategic Revival can reduce Caraxes's Damage Received by 20%. Damage Received decrease 20%. Duration: 2 rounds.",
     "id": "defensive-ally-support-syrax-strategic-revival-strategic-revival-resistance-damage-received-received-modifier-caraxes",
     "interactionScope": "cross-dragon",
     "matchedOutputCapabilityIds": [],
@@ -50403,8 +50475,6 @@
       "Scales with Intelligence.",
       "Mitigated by target Initiative.",
       "Status supplier effect: crippling-inferno-burn.",
-      "Status application chance depends on Habit Level.",
-      "Activation chance depends on Habit Level.",
       "Activation, target selection, target overlap, and uptime remain conditional.",
       "Final damage is not calculated."
     ],
@@ -52354,10 +52424,12 @@
       "Kalspire - Champion's Brilliance Star Rank requirement: expected Star Rank 1+, actual preview enabled"
     ],
     "damageScope": "all",
-    "effects": [],
+    "effects": [
+      "Damage Received decrease 8%."
+    ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final value cannot be calculated because final combat formulas and stacking order are not fully verified.",
-    "explanation": "Kalspire's Champion's Brilliance can reduce Venator's Damage Received by 8%.",
+    "explanation": "Kalspire's Champion's Brilliance can reduce Venator's Damage Received by 8%. Damage Received decrease 8%.",
     "id": "defensive-ally-support-kalspire-champions-brilliance-champions-brilliance-right-damage-received-damage-received-received-modifier-venator",
     "interactionScope": "cross-dragon",
     "matchedOutputCapabilityIds": [],
@@ -53098,7 +53170,6 @@
     ],
     "damageScope": "fire",
     "effects": [
-      "Fire Damage Received increase 36%",
       "Fire Damage Received +36%.",
       "Applies to all qualifying Fire Damage sources.",
       "Duration: 3 rounds.",
@@ -53172,7 +53243,6 @@
     ],
     "damageScope": "physical",
     "effects": [
-      "Physical Damage Received increase 36%",
       "Physical Damage Received +36%.",
       "Applies to non-Basic Physical Damage only.",
       "Duration: 3 rounds.",
@@ -53260,7 +53330,6 @@
     ],
     "damageScope": "physical",
     "effects": [
-      "Physical Damage Received increase 16%",
       "Physical Damage Received +16%.",
       "Applies to all qualifying Physical Damage sources.",
       "Enemy target overlap remains conditional and is not guaranteed."
@@ -53351,8 +53420,6 @@
       "Scales with Strength.",
       "Mitigated by target Instinct.",
       "Status supplier effect: tactical-strike-bleed.",
-      "Status application chance: 30%.",
-      "Activation chance: 30%.",
       "Activation, target selection, target overlap, and uptime remain conditional.",
       "Final damage is not calculated."
     ],
@@ -53406,8 +53473,6 @@
       "Scales with Instinct.",
       "Mitigated by target Intelligence.",
       "Status supplier effect: tactical-assault-panic.",
-      "Status application chance depends on Habit Level.",
-      "Activation chance depends on Habit Level.",
       "Activation, target selection, target overlap, and uptime remain conditional.",
       "Final damage is not calculated."
     ],
@@ -54043,7 +54108,7 @@
       "Duration: 2 rounds.",
       "Target-specific conditional chance",
       "Supplier effective Habit Level: 5",
-      "Activation chance: 20%",
+      "Status application chance: 20% at effective Habit Level 5.",
       "Duration: 2 rounds."
     ],
     "exactResultKnown": false,
@@ -54135,7 +54200,7 @@
       "Applied effect: Weakened",
       "Duration: 2 rounds.",
       "Target-specific conditional chance",
-      "Activation chance: 25%",
+      "Status application chance: 25%.",
       "Duration: 2 rounds."
     ],
     "exactResultKnown": false,
@@ -55884,7 +55949,6 @@
     ],
     "damageScope": "fire",
     "effects": [
-      "Fire Damage Received increase 36%",
       "Fire Damage Received +36%.",
       "Applies to all qualifying Fire Damage sources.",
       "Duration: 3 rounds.",
@@ -55966,7 +56030,6 @@
     ],
     "damageScope": "physical",
     "effects": [
-      "Physical Damage Received increase 36%",
       "Physical Damage Received +36%.",
       "Applies to non-Basic Physical Damage only.",
       "Duration: 3 rounds.",
@@ -56046,7 +56109,6 @@
     ],
     "damageScope": "physical",
     "effects": [
-      "Physical Damage Received increase 20%",
       "Physical Damage Received +20%.",
       "Applies to non-Basic Physical Damage only.",
       "Enemy target overlap remains conditional and is not guaranteed."
@@ -56125,7 +56187,6 @@
     ],
     "damageScope": "fire",
     "effects": [
-      "Fire Damage Received increase 20%",
       "Fire Damage Received +20%.",
       "Applies to all qualifying Fire Damage sources.",
       "Enemy target overlap remains conditional and is not guaranteed."
@@ -56213,8 +56274,6 @@
       "Scales with Intelligence.",
       "Mitigated by target Initiative.",
       "Status supplier effect: crippling-inferno-burn.",
-      "Status application chance depends on Habit Level.",
-      "Activation chance depends on Habit Level.",
       "Activation, target selection, target overlap, and uptime remain conditional.",
       "Final damage is not calculated."
     ],
@@ -58326,14 +58385,14 @@
     ],
     "damageScope": null,
     "effects": [
-      "Damage Received reduction: 20%.",
+      "Damage Received decrease 20%.",
       "Duration: 2 rounds.",
       "Activation chance: 100% at effective Habit Level 5.",
       "Activation chance by Habit Level: 40%, 52%, 64%, 80%, 100%."
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final value cannot be calculated because final combat formulas and stacking order are not fully verified.",
-    "explanation": "Syrax's Strategic Revival can reduce Kalspire's Damage Received by 20%. Damage Received reduction: 20%. Duration: 2 rounds.",
+    "explanation": "Syrax's Strategic Revival can reduce Kalspire's Damage Received by 20%. Damage Received decrease 20%. Duration: 2 rounds.",
     "id": "defensive-ally-support-syrax-strategic-revival-strategic-revival-resistance-damage-received-received-modifier-kalspire",
     "interactionScope": "cross-dragon",
     "matchedOutputCapabilityIds": [],
@@ -58403,14 +58462,14 @@
     ],
     "damageScope": null,
     "effects": [
-      "Damage Received reduction: 20%.",
+      "Damage Received decrease 20%.",
       "Duration: 2 rounds.",
       "Activation chance: 100% at effective Habit Level 5.",
       "Activation chance by Habit Level: 40%, 52%, 64%, 80%, 100%."
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final value cannot be calculated because final combat formulas and stacking order are not fully verified.",
-    "explanation": "Syrax's Strategic Revival can reduce Vhagar's Damage Received by 20%. Damage Received reduction: 20%. Duration: 2 rounds.",
+    "explanation": "Syrax's Strategic Revival can reduce Vhagar's Damage Received by 20%. Damage Received decrease 20%. Duration: 2 rounds.",
     "id": "defensive-ally-support-syrax-strategic-revival-strategic-revival-resistance-damage-received-received-modifier-vhagar",
     "interactionScope": "cross-dragon",
     "matchedOutputCapabilityIds": [],
@@ -58479,10 +58538,12 @@
       "Kalspire - Champion's Brilliance Star Rank requirement: expected Star Rank 1+, actual preview enabled"
     ],
     "damageScope": "all",
-    "effects": [],
+    "effects": [
+      "Damage Received decrease 8%."
+    ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final value cannot be calculated because final combat formulas and stacking order are not fully verified.",
-    "explanation": "Kalspire's Champion's Brilliance can reduce Vhagar's Damage Received by 8%.",
+    "explanation": "Kalspire's Champion's Brilliance can reduce Vhagar's Damage Received by 8%. Damage Received decrease 8%.",
     "id": "defensive-ally-support-kalspire-champions-brilliance-champions-brilliance-right-damage-received-damage-received-received-modifier-vhagar",
     "interactionScope": "cross-dragon",
     "matchedOutputCapabilityIds": [],
@@ -59984,7 +60045,6 @@
     ],
     "damageScope": "fire",
     "effects": [
-      "Fire Damage Received increase 36%",
       "Fire Damage Received +36%.",
       "Applies to all qualifying Fire Damage sources.",
       "Duration: 3 rounds.",
@@ -60058,7 +60118,6 @@
     ],
     "damageScope": "physical",
     "effects": [
-      "Physical Damage Received increase 36%",
       "Physical Damage Received +36%.",
       "Applies to non-Basic Physical Damage only.",
       "Duration: 3 rounds.",
@@ -60144,8 +60203,6 @@
       "Scales with Strength.",
       "Mitigated by target Instinct.",
       "Status supplier effect: tactical-strike-bleed.",
-      "Status application chance: 30%.",
-      "Activation chance: 30%.",
       "Activation, target selection, target overlap, and uptime remain conditional.",
       "Final damage is not calculated."
     ],
@@ -60199,8 +60256,6 @@
       "Scales with Instinct.",
       "Mitigated by target Intelligence.",
       "Status supplier effect: tactical-assault-panic.",
-      "Status application chance depends on Habit Level.",
-      "Activation chance depends on Habit Level.",
       "Activation, target selection, target overlap, and uptime remain conditional.",
       "Final damage is not calculated."
     ],
@@ -61462,7 +61517,7 @@
       "Applied effect: Weakened",
       "Duration: 2 rounds.",
       "Target-specific conditional chance",
-      "Activation chance: 25%",
+      "Status application chance: 25%.",
       "Duration: 2 rounds."
     ],
     "exactResultKnown": false,
@@ -62960,7 +63015,6 @@
     ],
     "damageScope": "fire",
     "effects": [
-      "Fire Damage Received increase 36%",
       "Fire Damage Received +36%.",
       "Applies to all qualifying Fire Damage sources.",
       "Duration: 3 rounds.",
@@ -63038,7 +63092,6 @@
     ],
     "damageScope": "physical",
     "effects": [
-      "Physical Damage Received increase 36%",
       "Physical Damage Received +36%.",
       "Applies to non-Basic Physical Damage only.",
       "Duration: 3 rounds.",
@@ -63124,7 +63177,6 @@
     ],
     "damageScope": "physical",
     "effects": [
-      "Physical Damage Received increase 20%",
       "Physical Damage Received +20%.",
       "Applies to non-Basic Physical Damage only.",
       "Enemy target overlap remains conditional and is not guaranteed."
@@ -63209,7 +63261,6 @@
     ],
     "damageScope": "fire",
     "effects": [
-      "Fire Damage Received increase 20%",
       "Fire Damage Received +20%.",
       "Applies to all qualifying Fire Damage sources.",
       "Enemy target overlap remains conditional and is not guaranteed."
@@ -63286,7 +63337,6 @@
     ],
     "damageScope": "physical",
     "effects": [
-      "Physical Damage Received increase 16%",
       "Physical Damage Received +16%.",
       "Applies to all qualifying Physical Damage sources.",
       "Enemy target overlap remains conditional and is not guaranteed."

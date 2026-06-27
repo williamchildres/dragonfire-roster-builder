@@ -138,6 +138,10 @@ describe("Champion's Brilliance defensive support", () => {
         trace.status !== 'inactive' &&
         trace.recipientDragonId === formations[formationId]!['left-flank'],
       )).toBe(false);
+
+      const structured = rightFlankSupport ? [...rightFlankSupport.effects, ...rightFlankSupport.matchedFacts, rightFlankSupport.explanation].join(' ') : '';
+      expect(structured).toContain('Damage Received decrease 8%');
+      expect(structured).not.toContain('Not yet verified');
     }
   });
 });
