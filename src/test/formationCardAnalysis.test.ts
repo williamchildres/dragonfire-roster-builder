@@ -119,14 +119,9 @@ describe('formation card analysis presentation', () => {
     expect(provider.targetSummary).toContain('All matching allies: Malachite and Seasmoke.');
     expect(provider.targetSummary).toContain('Known recipient count: 2.');
     expect(provider.targetSummary).toContain('Each eligible recipient evaluates its own condition.');
-    expect(provider.effects).toEqual(expect.arrayContaining([
-      'Fire Damage Received decrease 10%',
-      'Fire Damage Received decrease 20%',
-      'Fire Damage Received decrease 30%',
-    ]));
-    expect(provider.detail).toContain('Below 75% Troop Capacity: Fire Damage Received -10%');
-    expect(provider.detail).toContain('Below 50% Troop Capacity: Fire Damage Received -20%');
-    expect(provider.detail).toContain('Below 25% Troop Capacity: Fire Damage Received -30%');
+    expect([provider.summary, provider.detail, ...provider.summaryLines, ...provider.details, ...provider.effects].join(' '))
+      .toContain('Fire Damage Received support');
+    expect(provider.detail).toContain('Threshold applicability depends on each recipient\'s current Troop Capacity');
     expect(provider.detail).toContain('exact interaction between overlapping threshold tiers is unresolved');
     expect(provider.requirements).toEqual(expect.arrayContaining([
       expect.objectContaining({ label: 'Vermax - Trial by Flame Habit unlock requirement', satisfied: false }),
@@ -154,7 +149,8 @@ describe('formation card analysis presentation', () => {
 
     expect(eclipse).toBeDefined();
     expect(eclipse?.targetSelectionMode).not.toBe('all-matching-condition');
-    expect(eclipse?.summary).toMatch(/One Damage Dealt recipient is selected/i);
+    expect(eclipse?.summary).toContain('Eligible selected-target candidates: Crimson or Kalspire or Vhagar.');
+    expect(eclipse?.summary).toContain('One candidate is selected when the activation succeeds; the selected target is unresolved.');
     expect(eclipse?.summary).toContain('Target not guaranteed');
     expect(eclipse?.targetSummary).toContain('highest-resource');
     expect(eclipse?.targetSummary).toContain('current-troops');
@@ -273,7 +269,9 @@ describe('formation card analysis presentation', () => {
     const syraxBlazingFury = syrax.provides.find((item) => item.abilityName === 'Blazing Fury');
     expect(syraxBlazingFury?.summaryLines).toEqual(
       expect.arrayContaining([
-        'One Fire recipient is selected: Caraxes or Sheepstealer.',
+        'One recipient is selected: Caraxes or Sheepstealer.',
+        'Eligible selected-target candidates: Caraxes or Sheepstealer.',
+        'One candidate is selected when the activation succeeds; the selected target is unresolved.',
         'Caraxes may also receive First-Strike for Infernal Burst.',
       ]),
     );
@@ -287,8 +285,8 @@ describe('formation card analysis presentation', () => {
     const syrax = card(result, 'syrax');
     const sheepstealer = card(result, 'sheepstealer');
 
-    expect(syrax.receives.find((item) => item.abilityName === "Hunter's Wrath")?.summaryLines).toContain(
-      'Strength +20 and Initiative +20.',
+    expect(syrax.receives.find((item) => item.abilityName === "Hunter's Wrath")?.summaryLines.join(' ')).toMatch(
+      /Strength and Initiative by \+20/,
     );
     expect(sheepstealer.receives.some((item) => item.abilityName === "Sentinel's Wit")).toBe(false);
     expect(syrax.provides.some((item) => item.abilityName === "Sentinel's Wit")).toBe(false);

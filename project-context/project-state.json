@@ -23,7 +23,7 @@
   ],
   "currentReviewPhase": "Legendary/full-profile formation validation complete; Epic ingestion active with Daemoros and Vaeldra as the first detailed Epic batch after Vermax.",
   "format": "dragonfire-project-state",
-  "generatedAt": "2026-06-27T03:02:39.428Z",
+  "generatedAt": "2026-06-27T04:15:45.188Z",
   "plannedNextPhase": [
     "continue Epic dragon ingestion in batches of two after the latest merged context is available",
     "fetch latest merged main and create a new feature branch before each future Epic implementation batch",
@@ -38,7 +38,7 @@
   },
   "source": {
     "branch": "fix/ordered-targets-and-analysis-integrity",
-    "commit": "dacc02aebc8abb0a7bcd28502b3e4677ef83e578",
+    "commit": "337b216717654cd2e255a7ba219be419bb5a26ad",
     "databaseVersion": "0.6.2",
     "dataSchemaVersion": 12,
     "gameBuild": "26.6.53509",

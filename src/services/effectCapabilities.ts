@@ -1114,12 +1114,12 @@ function analyzeDefensiveAllySupport(
         matchedFacts: [
           ...(modifier.sourceEffectId ? [`Source effect ID: ${modifier.sourceEffectId}.`] : []),
           `${modifier.abilityName} targets ${targetSelectorSummary(modifier.targetSelector)}.`,
-          ...defensiveModifierTargetFacts(modifier, context, formation, providerPosition, dragons, recipient.name),
+          ...defensiveModifierTargetFacts(modifier, context, formation, providerPosition, recipientPosition, dragons, recipient.name),
           ...modifierDetails,
           ...modifier.conditions.map((condition) => condition.description),
           ...activationChanceFacts(modifier, options),
         ],
-        effects: [`${damageLabel} ${modifier.operation} ${displayValue}`, ...modifierDetails, ...activationChanceFacts(modifier, options)],
+        effects: [...modifierDetails, ...activationChanceFacts(modifier, options)],
         sourceEvidenceIds: modifier.evidenceIds,
         recipientEvidenceIds: [],
         assumptions: [],
@@ -1274,7 +1274,7 @@ function analyzeRecipientSideAllySupport(
           `${modifier.abilityName} targets ${targetSelectorSummary(modifier.targetSelector)}.`,
           ...details,
         ],
-        effects: [`${channelLabel(modifier.channel)} Received increase ${value}`, ...details],
+        effects: [...details],
         sourceEvidenceIds: modifier.evidenceIds,
         recipientEvidenceIds: [],
         assumptions: ['Final Recovery amount remains unknown.'],
@@ -1351,6 +1351,7 @@ function defensiveModifierTargetFacts(
   context: { ability: AbilityDefinition; schedule: AbilitySchedule; effect: AbilityEffect } | null,
   formation: FormationAnalysisInput,
   providerPosition: FormationPosition,
+  recipientPosition: FormationPosition,
   dragons: Dragon[],
   recipientName: string,
 ): string[] {
@@ -1358,6 +1359,11 @@ function defensiveModifierTargetFacts(
   if (!effect) {
     return [];
   }
+  const eligiblePositions = targetCandidatePositions(formation, dragons, modifier, providerPosition);
+  const eligibleNames = eligiblePositions
+    .map((position) => formation[position])
+    .filter((dragonId): dragonId is string => Boolean(dragonId))
+    .map((dragonId) => dragonById(dragons, dragonId)?.name ?? dragonId);
   return [
     effect.casterEligibility === 'excluded' || effect.includesCaster === false
       ? 'Caster excluded from this target selection.'
@@ -1365,11 +1371,20 @@ function defensiveModifierTargetFacts(
     effect.targetSelection?.sharedSelectionGroupId
       ? `Shared selected-target group: ${effect.targetSelection.sharedSelectionGroupId}.`
       : null,
+    eligiblePositions.length > 1
+      ? `Eligible selected-target candidates: ${joinEnglishList(eligibleNames)}.`
+      : null,
+    eligiblePositions.length > 1
+      ? 'One candidate is selected when the activation succeeds; the selected target is unresolved.'
+      : null,
     ...((effect.targetSelection?.references ?? []).map((reference) =>
       `Target reference ${reference.id}: ${reference.description}${reference.referencedEffectId ? ` References source effect ${reference.referencedEffectId}.` : ''}`,
     )),
     ...trackedTargetFacts(context, formation, providerPosition, dragons),
-    modifier.targetSelector.sharedSelectionGroupId && modifier.targetSelector.selection === 'one-eligible-adjacent'
+    modifier.targetSelector.sharedSelectionGroupId &&
+    modifier.targetSelector.selection === 'one-eligible-adjacent' &&
+    eligiblePositions.length === 1 &&
+    eligiblePositions[0] === recipientPosition
       ? `Resolved selected target in this formation: ${recipientName}.`
       : null,
   ].filter((fact): fact is string => Boolean(fact));
@@ -1773,7 +1788,13 @@ function analyzeStatusEffectConditionEnablement(
               const supplierContext = sourceEffectContext(provider, statusOutput.abilityId, statusOutput.sourceEffectId);
               const conditionalFacts = conditionalChanceValueFacts(ability, schedule, effect, statusOutput.statusId, dependency, options, dependentDragon.id);
               const categoryFacts = statusCategoryFacts(statusOutput.statusId, dependency);
-              const supplierFacts = statusSupplierFacts(statusOutput, supplierContext, options);
+              const siblingStatusOutputs = statusOutputs.filter((candidate) =>
+                candidate.dragonId === statusOutput.dragonId &&
+                candidate.abilityId === statusOutput.abilityId &&
+                candidate.statusId === statusOutput.statusId &&
+                statusCapabilityVisible(candidate, options),
+              );
+              const supplierFacts = statusSupplierFacts(statusOutput, supplierContext, options, siblingStatusOutputs);
               traces.push(makeDependencyTrace({
                 id: `status-effect-condition-${statusOutput.id}-${ability.id}-${effect.id}-${dependency.type}-${dependency.statusId ?? dependency.statusCategoryId}`,
                 matchKind: 'status-condition-enablement',
@@ -1864,8 +1885,16 @@ function analyzeStatusConditionEnablement(
         const categoryFacts = enrichStatusTrace
           ? statusCategoryFacts(statusOutput.statusId, dependency)
           : { facts: [], effects: [], summary: null };
+        const siblingStatusOutputs = enrichStatusTrace
+          ? statusOutputs.filter((candidate) =>
+              candidate.dragonId === statusOutput.dragonId &&
+              candidate.abilityId === statusOutput.abilityId &&
+              candidate.statusId === statusOutput.statusId &&
+              statusCapabilityVisible(candidate, options),
+            )
+          : [];
         const supplierFacts = enrichStatusTrace
-          ? statusSupplierFacts(statusOutput, supplierContext, options)
+          ? statusSupplierFacts(statusOutput, supplierContext, options, siblingStatusOutputs)
           : { facts: [], effects: [], summary: null };
         const requirements = [
           statusProviderRequirement(statusOutput, dependency.type, providerPosition, recipientPosition),
@@ -1973,7 +2002,7 @@ function analyzeDirectStatSupport(
           ...details,
           ...activationChanceFacts(modifier, options),
         ],
-        effects: [`${statLabel(statId)} ${modifierDisplayValue(modifier, options)}`, ...details, ...activationChanceFacts(modifier, options)],
+        effects: [...details, ...activationChanceFacts(modifier, options)],
         sourceEvidenceIds: modifier.evidenceIds,
         recipientEvidenceIds: [],
         assumptions: [],
@@ -2240,18 +2269,29 @@ function groupDirectStatRecipientTraces(traces: SynergyTrace[], dragons: Dragon[
 }
 
 function groupedStatNames(traces: SynergyTrace[]): string[] {
-  return uniqueOrdered(
-    traces.flatMap((trace) => trace.effects.map((effect) => rawStatEffectEntry(effect)?.stat ?? '').filter(Boolean)),
-  );
+  const stats = new Set<string>();
+  for (const trace of traces) {
+    for (const effect of [...trace.effects, ...trace.matchedFacts, trace.explanation]) {
+      const entry = rawStatEffectEntry(effect);
+      if (entry) {
+        stats.add(entry.stat);
+      }
+    }
+  }
+  return uniqueOrdered([...stats]);
 }
 
 function groupedStatValueText(traces: SynergyTrace[]): { stats: string[]; text: string } {
-  const entries = traces.flatMap((trace) =>
-    trace.effects.flatMap((effect) => {
+  const entriesByKey = new Map<string, { stat: string; value: string }>();
+  for (const trace of traces) {
+    for (const effect of [...trace.effects, ...trace.matchedFacts, trace.explanation]) {
       const entry = rawStatEffectEntry(effect);
-      return entry ? [entry] : [];
-    }),
-  );
+      if (entry) {
+        entriesByKey.set(`${entry.stat}|${entry.value}`, entry);
+      }
+    }
+  }
+  const entries = [...entriesByKey.values()];
   const stats = uniqueOrdered(entries.map((entry) => entry.stat));
   const values = uniqueOrdered(entries.map((entry) => entry.value));
   if (entries.length === 0) {
@@ -2414,6 +2454,7 @@ function analyzeEnemyDamageDealtReductions(
       capability.operation === 'decrease' &&
       modifierCapabilityVisible(capability, options),
   )) {
+    const statId = statIdFromText(modifier.label);
     const providerPosition = positionOf(formation, modifier.dragonId);
     const provider = dragonById(dragons, modifier.dragonId);
     if (!providerPosition || !provider) {
@@ -2429,8 +2470,10 @@ function analyzeEnemyDamageDealtReductions(
       sourceAbilityId: modifier.abilityId,
       recipientDragonId: null,
       recipientAbilityId: null,
-      title: `${channelLabel(modifier.channel)} Enemy Reduction`,
-      explanation: `${provider.name}'s ${modifier.abilityName} can reduce enemy ${channelLabel(modifier.channel)}. Enemy target selection is tracked as an enemy-side candidate group, not a named friendly recipient.`,
+      title: statId ? `Enemy ${statLabel(statId)} reduction` : `${channelLabel(modifier.channel)} Enemy Reduction`,
+      explanation: statId
+        ? `${provider.name}'s ${modifier.abilityName} can reduce enemy ${statLabel(statId)}. Enemy target selection is tracked as an enemy-side candidate group, not a named friendly recipient.`
+        : `${provider.name}'s ${modifier.abilityName} can reduce enemy ${channelLabel(modifier.channel)}. Enemy target selection is tracked as an enemy-side candidate group, not a named friendly recipient.`,
       requirements,
       matchedFacts: [
         `${modifier.abilityName} targets ${targetSelectorSummary(modifier.targetSelector)}.`,
@@ -2438,7 +2481,7 @@ function analyzeEnemyDamageDealtReductions(
         ...(modifier.activationGroupId ? [`Shared activation group: ${modifier.activationGroupId}.`] : []),
         ...activationChanceFacts(modifier, options),
       ],
-      effects: [`Enemy ${channelLabel(modifier.channel)} ${modifier.operation} ${modifierDisplayValue(modifier, options)}`],
+      effects: [statId ? `Enemy ${statLabel(statId)} ${modifier.operation} ${modifierDisplayValue(modifier, options)}` : `Enemy ${channelLabel(modifier.channel)} ${modifier.operation} ${modifierDisplayValue(modifier, options)}`],
       conflicts: requirements
         .filter((requirement) => requirement.satisfied === false)
         .map((requirement) => `${requirement.label}: expected ${requirement.expected}, actual ${requirement.actual ?? 'unknown'}`),
@@ -3416,6 +3459,7 @@ function statusSupplierFacts(
   statusOutput: StatusOutputCapability,
   context: { ability: AbilityDefinition; schedule: AbilitySchedule; effect: AbilityEffect } | null,
   options: CapabilityOptions,
+  relatedStatusOutputs: StatusOutputCapability[] = [statusOutput],
 ): { facts: string[]; effects: string[]; summary: string | null } {
   if (!context) {
     return { facts: [], effects: [], summary: null };
@@ -3456,8 +3500,31 @@ function statusSupplierFacts(
   const targetWithLane = lanePhrase && !targetText.toLowerCase().includes(lanePhrase.toLowerCase())
     ? `${targetText} in ${lanePhrase}`
     : targetText;
+  const sortedRelatedStatusOutputs = relatedStatusOutputs
+    .filter((candidate) =>
+      candidate.dragonId === statusOutput.dragonId &&
+      candidate.abilityId === statusOutput.abilityId &&
+      candidate.statusId === statusOutput.statusId,
+    )
+    .slice()
+    .sort((left, right) => (left.sourceEffectId ?? left.id).localeCompare(right.sourceEffectId ?? right.id));
+  const relatedSummaries = sortedRelatedStatusOutputs.length > 1
+    ? sortedRelatedStatusOutputs.map((output, index) => {
+      const relatedLevel = output.requiredHabitLevel !== null
+        ? (options.previewMaxRankInteractions ? 5 : effectiveHabitLevelForCapability(output, options))
+        : null;
+      const relatedChance = output.chanceFixed !== null && output.chanceFixed !== undefined
+        ? { value: output.chanceFixed, unit: 'percent' as const }
+        : rankedValueForHabitLevel(output.chanceByHabitLevel, relatedLevel);
+      const relatedChanceText = relatedChance ? formatValue(relatedChance.value, relatedChance.unit) : chanceText ?? 'unknown';
+      const ordinal = index === 0 ? 'first' : index === 1 ? 'second' : `${index + 1}th`;
+      return `${relatedChanceText} chance on the ${ordinal} added target${index === 1 ? ', which must differ from the first' : ''}`;
+    })
+    : [];
   const summary = chanceText
-    ? `At effective Habit Level ${level ?? 'unknown'}, ${ability.name} has a ${chanceText} chance ${scheduleTimingAdverb(schedule)} to ${statusLabel(statusOutput.statusId)} ${targetWithLane}${targetEffect.targetPriority === 'prefer-warrior' ? ', prioritizing Warriors' : ''}${effect.durationRounds ? `, for ${effect.durationRounds} rounds` : ''}.`
+    ? (relatedSummaries.length > 1
+      ? `At effective Habit Level ${level ?? 'unknown'}, ${ability.name} can apply ${statusLabel(statusOutput.statusId)} ${scheduleTimingAdverb(schedule)}: ${joinEnglishList(relatedSummaries)}${effect.durationRounds ? ` for ${effect.durationRounds} rounds` : ''}.`
+      : `At effective Habit Level ${level ?? 'unknown'}, ${ability.name} has a ${chanceText} chance ${scheduleTimingAdverb(schedule)} to ${statusLabel(statusOutput.statusId)} ${targetWithLane}${targetEffect.targetPriority === 'prefer-warrior' ? ', prioritizing Warriors' : ''}${effect.durationRounds ? `, for ${effect.durationRounds} rounds` : ''}.`)
     : null;
   return {
     facts,
@@ -4527,8 +4594,21 @@ function outputTargetsRecipient(
 }
 
 function rawStatEffectEntry(effect: string): { stat: string; value: string } | null {
-  const match = effect.match(/^(Strength|Instinct|Intelligence|Initiative)\s+(-?\d+(?:\.\d+)?%?|\d+(?:\.\d+)?\s+flat)$/);
-  return match?.[1] && match[2] ? { stat: match[1], value: match[2] } : null;
+  const normalized = effect.trim();
+  const match = normalized.match(/^(Strength|Instinct|Intelligence|Initiative)\s+([+-]?\d+(?:\.\d+)?%?|[+-]?\d+(?:\.\d+)?\s+flat)(?:\s+at effective Habit Level \d+)?\.?$/i);
+  if (!match?.[1] || !match[2]) {
+    return null;
+  }
+  const rawValue = match[2];
+  const value = /flat$/i.test(rawValue)
+    ? (() => {
+        const flatValue = rawValue.replace(/\s+flat$/i, '');
+        return flatValue.startsWith('-') || flatValue.startsWith('+') ? flatValue : `+${flatValue}`;
+      })()
+    : rawValue.startsWith('-') || rawValue.startsWith('+')
+      ? rawValue
+      : `+${rawValue}`;
+  return { stat: match[1], value };
 }
 
 function statusProviderRequirement(

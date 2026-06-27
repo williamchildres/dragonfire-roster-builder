@@ -342,7 +342,8 @@ describe('Dragonfire Roster Lab app', () => {
     const syraxProvides = within(syrax).getByRole('region', { name: 'Provides' });
     const providerBlazingFuryItem = within(syraxProvides).getByText('Blazing Fury').closest('.card-interaction-item');
     expect(providerBlazingFuryItem).not.toBeNull();
-    expect(providerBlazingFuryItem).toHaveTextContent('One Fire recipient is selected: Caraxes or Sheepstealer.');
+    expect(providerBlazingFuryItem).toHaveTextContent('One recipient is selected: Caraxes or Sheepstealer.');
+    expect(providerBlazingFuryItem).toHaveTextContent('Eligible selected-target candidates: Caraxes or Sheepstealer.');
     expect(providerBlazingFuryItem).toHaveTextContent('Caraxes may also receive First-Strike for Infernal Burst.');
     expect(providerBlazingFuryItem).toHaveTextContent('Target not guaranteed');
 

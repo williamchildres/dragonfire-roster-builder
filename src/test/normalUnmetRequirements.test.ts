@@ -158,9 +158,7 @@ describe('normal unmet requirement summaries', () => {
     expect(trial[0]?.recipientDragonId).toBeNull();
     expect(trial[0]?.targetSelectionGroup?.eligibleRecipientDragonIds).toEqual(['malachite', 'seasmoke']);
     expect(trial[0]?.explanation).toContain('Malachite and Seasmoke');
-    expect(trial[0]?.explanation).toContain('Below 75% Troop Capacity: Fire Damage Received -10%');
-    expect(trial[0]?.explanation).toContain('Below 50% Troop Capacity: Fire Damage Received -20%');
-    expect(trial[0]?.explanation).toContain('Below 25% Troop Capacity: Fire Damage Received -30%');
+    expect(trial[0]?.explanation).toContain('Threshold applicability depends on each recipient\'s current Troop Capacity');
     expect(trial[0]?.explanation).not.toMatch(/stack/i);
   });
 
@@ -186,15 +184,15 @@ describe('normal unmet requirement summaries', () => {
       trace.ruleId === 'direct-stat-support'
     );
 
-    expect(reactive?.explanation).toContain("Vermax's Reactive Instincts can increase Syrax's Instinct by 36% and Initiative by 18%.");
+    expect(reactive?.explanation).toContain("Vermax's Reactive Instincts can increase Syrax's Instinct by +36% and Initiative by +18%.");
     expect(reactive?.explanation).not.toContain('unknown%');
     expect(reactive?.modifierCapabilityIds).toEqual(expect.arrayContaining([
       'vermax-reactive-instincts-reactive-instincts-instinct-stat-dealt-modifier',
       'vermax-reactive-instincts-reactive-instincts-initiative-stat-dealt-modifier',
     ]));
-    expect(clever?.explanation).toContain('Intelligence by 44% and Initiative by 25%');
-    expect(warrior?.explanation).toContain('Instinct and Initiative by 20 flat');
-    expect(sentinel?.explanation).toContain('Instinct and Initiative by 20 flat');
-    expect(hunter?.explanation).toContain('Strength and Initiative by 20 flat');
+    expect(clever?.explanation).toContain('Intelligence by +44% and Initiative by +25%');
+    expect(warrior?.explanation).toContain('Instinct and Initiative by +20');
+    expect(sentinel?.explanation).toContain('Instinct and Initiative by +20');
+    expect(hunter?.explanation).toContain('Strength and Initiative by +20');
   });
 });
