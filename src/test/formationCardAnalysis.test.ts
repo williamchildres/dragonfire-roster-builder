@@ -178,12 +178,13 @@ describe('formation card analysis presentation', () => {
 
     expect(forestTactical?.state).toBe('conditional');
     expect(forestTactical?.title).toContain('Tactical Damage Received');
+    expect(forestTactical?.effectTitle).toBe("Forest's Instinct - Tactical Damage Received support");
     expect(forestTactical?.summary).toContain('Caraxes and Seasmoke');
+    expect(forestTactical?.summary).toContain("Forest's Instinct reduces Tactical Damage Received for Caraxes and Seasmoke by 8%.");
+    expect(forestTactical?.summary).toContain('Activation chance: 35%.');
+    expect(forestTactical?.summary).toContain('Duration: 2 rounds.');
     expect(forestTactical?.summary).not.toContain('Target not guaranteed');
     expect(forestTactical?.summary).not.toContain('one candidate is selected');
-    expect(forestTactical?.summary).toContain('35%');
-    expect(forestTactical?.summary).toContain('8%');
-    expect(forestTactical?.summary).toContain('2 rounds');
 
     expect(forestPhysical?.state).toBe('conditional');
     expect(interactionHeading(forestPhysical!)).toBe('Malachite → Seasmoke');
@@ -194,12 +195,18 @@ describe('formation card analysis presentation', () => {
     expect(loyalDamage?.state).toBe('conditional');
     expect(interactionHeading(loyalDamage!)).toBe('Seasmoke → Caraxes and Malachite');
     expect(loyalDamage?.summary).toContain('Caraxes and Malachite');
+    expect(loyalDamage?.summary).toContain('Each recipient above 50% Troop Capacity may receive Advantage, increasing Damage Dealt by 20%.');
+    expect(loyalDamage?.summary).toContain('Activation chance: 10%.');
+    expect(loyalDamage?.summary).toContain('Duration: 2 rounds.');
     expect(loyalDamage?.summary).not.toContain('Target not guaranteed');
     expect(loyalDamage?.summary).not.toContain('one candidate is selected');
 
     expect(loyalResistance?.state).toBe('conditional');
     expect(interactionHeading(loyalResistance!)).toBe('Seasmoke → Caraxes and Malachite');
     expect(loyalResistance?.summary).toContain('Caraxes and Malachite');
+    expect(loyalResistance?.summary).toContain('Each recipient below 50% Troop Capacity may receive Resistance, reducing Damage Received by 20%.');
+    expect(loyalResistance?.summary).toContain('Activation chance: 10%.');
+    expect(loyalResistance?.summary).toContain('Duration: 2 rounds.');
     expect(loyalResistance?.summary).not.toContain('Target not guaranteed');
     expect(loyalResistance?.summary).not.toContain('one candidate is selected');
 

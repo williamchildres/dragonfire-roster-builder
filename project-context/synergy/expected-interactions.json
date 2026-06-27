@@ -12,7 +12,10 @@
     ],
     "damageScope": null,
     "effects": [
-      "Fire Damage Dealt increase 10%"
+      "Fire Damage Dealt increase 10%",
+      "Activation chance 20% per each round.",
+      "Activation chance: 20%.",
+      "Duration: 2 rounds."
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final amplified damage cannot be calculated because stacking and final combat formulas are not fully verified.",
@@ -132,6 +135,7 @@
     "conflicts": [],
     "damageScope": null,
     "effects": [
+      "Duration: 3 rounds.",
       "Tactical Damage Dealt increase 36%"
     ],
     "exactResultKnown": false,
@@ -271,7 +275,8 @@
     ],
     "damageScope": null,
     "effects": [
-      "Fire Damage Dealt increase 36%"
+      "Fire Damage Dealt increase 36%",
+      "Duration: 3 rounds."
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final amplified damage cannot be calculated because stacking and final combat formulas are not fully verified.",
@@ -558,7 +563,7 @@
   },
   {
     "assumptions": [
-      "Trigger chance and target selection may make this conditional rather than guaranteed.",
+      "Trigger chance may make this conditional rather than guaranteed.",
       "Multiple qualifying outputs are aggregated into one normal synergy trace."
     ],
     "channel": "damage-dealt",
@@ -571,7 +576,12 @@
     ],
     "damageScope": null,
     "effects": [
-      "Damage Dealt increase 20%"
+      "Damage Dealt increase 20%",
+      "Activation chance depends on Habit Level for each round.",
+      "Advantage increases Damage Dealt according to the verified status glossary.",
+      "Activation chance: 20% at effective Habit Level 5.",
+      "Activation chance by Habit Level: 10%, 12%, 14%, 17%, 20%.",
+      "Duration: 2 rounds."
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final amplified damage cannot be calculated because stacking and final combat formulas are not fully verified.",
@@ -703,7 +713,7 @@
   },
   {
     "assumptions": [
-      "Trigger chance and target selection may make this conditional rather than guaranteed."
+      "Trigger chance may make this conditional rather than guaranteed."
     ],
     "channel": "damage-dealt",
     "confidence": "confirmed",
@@ -713,7 +723,12 @@
     ],
     "damageScope": null,
     "effects": [
-      "Damage Dealt increase 20%"
+      "Damage Dealt increase 20%",
+      "Activation chance depends on Habit Level for each round.",
+      "Advantage increases Damage Dealt according to the verified status glossary.",
+      "Activation chance: 20% at effective Habit Level 5.",
+      "Activation chance by Habit Level: 10%, 12%, 14%, 17%, 20%.",
+      "Duration: 2 rounds."
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final amplified damage cannot be calculated because stacking and final combat formulas are not fully verified.",
@@ -2064,7 +2079,9 @@
     "unresolvedQuestions": []
   },
   {
-    "assumptions": [],
+    "assumptions": [
+      "Trigger chance may make this conditional rather than guaranteed."
+    ],
     "channel": "damage-received",
     "confidence": "confirmed",
     "conflicts": [
@@ -2074,13 +2091,14 @@
     "damageScope": "tactical",
     "effects": [
       "Tactical Damage Received decrease 16% at effective Habit Level 5.",
+      "Activation chance: 35%.",
       "Duration: 2 rounds.",
       "Ranked progression: L1 8%, L2 9.6%, L3 11.2%, L4 13.6%, L5 16%.",
       "Activation chance: 35%."
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final value cannot be calculated because final combat formulas and stacking order are not fully verified.",
-    "explanation": "Malachite's Forest's Instinct can reduce Caraxes's Tactical Damage Received by 16%. Tactical Damage Received decrease 16% at effective Habit Level 5. Duration: 2 rounds. Ranked progression: L1 8%, L2 9.6%, L3 11.2%, L4 13.6%, L5 16%.",
+    "explanation": "Malachite's Forest's Instinct can reduce Caraxes's Tactical Damage Received by 16%. Tactical Damage Received decrease 16% at effective Habit Level 5. Activation chance: 35%. Duration: 2 rounds. Ranked progression: L1 8%, L2 9.6%, L3 11.2%, L4 13.6%, L5 16%.",
     "id": "defensive-ally-support-malachite-forests-instinct-forests-instinct-tactical-reduction-damage-received-received-modifier-caraxes",
     "interactionScope": "cross-dragon",
     "matchedOutputCapabilityIds": [],
@@ -2141,7 +2159,9 @@
     "unresolvedQuestions": []
   },
   {
-    "assumptions": [],
+    "assumptions": [
+      "Trigger chance may make this conditional rather than guaranteed."
+    ],
     "channel": "damage-received",
     "confidence": "confirmed",
     "conflicts": [
@@ -2151,13 +2171,14 @@
     "damageScope": "tactical",
     "effects": [
       "Tactical Damage Received decrease 16% at effective Habit Level 5.",
+      "Activation chance: 35%.",
       "Duration: 2 rounds.",
       "Ranked progression: L1 8%, L2 9.6%, L3 11.2%, L4 13.6%, L5 16%.",
       "Activation chance: 35%."
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final value cannot be calculated because final combat formulas and stacking order are not fully verified.",
-    "explanation": "Malachite's Forest's Instinct can reduce Syrax's Tactical Damage Received by 16%. Tactical Damage Received decrease 16% at effective Habit Level 5. Duration: 2 rounds. Ranked progression: L1 8%, L2 9.6%, L3 11.2%, L4 13.6%, L5 16%.",
+    "explanation": "Malachite's Forest's Instinct can reduce Syrax's Tactical Damage Received by 16%. Tactical Damage Received decrease 16% at effective Habit Level 5. Activation chance: 35%. Duration: 2 rounds. Ranked progression: L1 8%, L2 9.6%, L3 11.2%, L4 13.6%, L5 16%.",
     "id": "defensive-ally-support-malachite-forests-instinct-forests-instinct-tactical-reduction-damage-received-received-modifier-syrax",
     "interactionScope": "cross-dragon",
     "matchedOutputCapabilityIds": [],
@@ -4570,7 +4591,10 @@
     ],
     "damageScope": null,
     "effects": [
-      "Fire Damage Dealt increase 10%"
+      "Fire Damage Dealt increase 10%",
+      "Activation chance 20% per each round.",
+      "Activation chance: 20%.",
+      "Duration: 2 rounds."
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final amplified damage cannot be calculated because stacking and final combat formulas are not fully verified.",
@@ -4690,6 +4714,7 @@
     "conflicts": [],
     "damageScope": null,
     "effects": [
+      "Duration: 3 rounds.",
       "Tactical Damage Dealt increase 36%"
     ],
     "exactResultKnown": false,
@@ -4829,7 +4854,8 @@
     ],
     "damageScope": null,
     "effects": [
-      "Fire Damage Dealt increase 36%"
+      "Fire Damage Dealt increase 36%",
+      "Duration: 3 rounds."
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final amplified damage cannot be calculated because stacking and final combat formulas are not fully verified.",
@@ -5115,7 +5141,7 @@
   },
   {
     "assumptions": [
-      "Trigger chance and target selection may make this conditional rather than guaranteed.",
+      "Trigger chance may make this conditional rather than guaranteed.",
       "Multiple qualifying outputs are aggregated into one normal synergy trace."
     ],
     "channel": "damage-dealt",
@@ -5128,7 +5154,12 @@
     ],
     "damageScope": null,
     "effects": [
-      "Damage Dealt increase 20%"
+      "Damage Dealt increase 20%",
+      "Activation chance depends on Habit Level for each round.",
+      "Advantage increases Damage Dealt according to the verified status glossary.",
+      "Activation chance: 20% at effective Habit Level 5.",
+      "Activation chance by Habit Level: 10%, 12%, 14%, 17%, 20%.",
+      "Duration: 2 rounds."
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final amplified damage cannot be calculated because stacking and final combat formulas are not fully verified.",
@@ -5260,7 +5291,7 @@
   },
   {
     "assumptions": [
-      "Trigger chance and target selection may make this conditional rather than guaranteed."
+      "Trigger chance may make this conditional rather than guaranteed."
     ],
     "channel": "damage-dealt",
     "confidence": "confirmed",
@@ -5270,7 +5301,12 @@
     ],
     "damageScope": null,
     "effects": [
-      "Damage Dealt increase 20%"
+      "Damage Dealt increase 20%",
+      "Activation chance depends on Habit Level for each round.",
+      "Advantage increases Damage Dealt according to the verified status glossary.",
+      "Activation chance: 20% at effective Habit Level 5.",
+      "Activation chance by Habit Level: 10%, 12%, 14%, 17%, 20%.",
+      "Duration: 2 rounds."
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final amplified damage cannot be calculated because stacking and final combat formulas are not fully verified.",
@@ -6622,7 +6658,9 @@
     "unresolvedQuestions": []
   },
   {
-    "assumptions": [],
+    "assumptions": [
+      "Trigger chance may make this conditional rather than guaranteed."
+    ],
     "channel": "damage-received",
     "confidence": "confirmed",
     "conflicts": [
@@ -6632,13 +6670,14 @@
     "damageScope": "tactical",
     "effects": [
       "Tactical Damage Received decrease 16% at effective Habit Level 5.",
+      "Activation chance: 35%.",
       "Duration: 2 rounds.",
       "Ranked progression: L1 8%, L2 9.6%, L3 11.2%, L4 13.6%, L5 16%.",
       "Activation chance: 35%."
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final value cannot be calculated because final combat formulas and stacking order are not fully verified.",
-    "explanation": "Malachite's Forest's Instinct can reduce Caraxes's Tactical Damage Received by 16%. Tactical Damage Received decrease 16% at effective Habit Level 5. Duration: 2 rounds. Ranked progression: L1 8%, L2 9.6%, L3 11.2%, L4 13.6%, L5 16%.",
+    "explanation": "Malachite's Forest's Instinct can reduce Caraxes's Tactical Damage Received by 16%. Tactical Damage Received decrease 16% at effective Habit Level 5. Activation chance: 35%. Duration: 2 rounds. Ranked progression: L1 8%, L2 9.6%, L3 11.2%, L4 13.6%, L5 16%.",
     "id": "defensive-ally-support-malachite-forests-instinct-forests-instinct-tactical-reduction-damage-received-received-modifier-caraxes",
     "interactionScope": "cross-dragon",
     "matchedOutputCapabilityIds": [],
@@ -6699,7 +6738,9 @@
     "unresolvedQuestions": []
   },
   {
-    "assumptions": [],
+    "assumptions": [
+      "Trigger chance may make this conditional rather than guaranteed."
+    ],
     "channel": "damage-received",
     "confidence": "confirmed",
     "conflicts": [
@@ -6709,13 +6750,14 @@
     "damageScope": "tactical",
     "effects": [
       "Tactical Damage Received decrease 16% at effective Habit Level 5.",
+      "Activation chance: 35%.",
       "Duration: 2 rounds.",
       "Ranked progression: L1 8%, L2 9.6%, L3 11.2%, L4 13.6%, L5 16%.",
       "Activation chance: 35%."
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final value cannot be calculated because final combat formulas and stacking order are not fully verified.",
-    "explanation": "Malachite's Forest's Instinct can reduce Syrax's Tactical Damage Received by 16%. Tactical Damage Received decrease 16% at effective Habit Level 5. Duration: 2 rounds. Ranked progression: L1 8%, L2 9.6%, L3 11.2%, L4 13.6%, L5 16%.",
+    "explanation": "Malachite's Forest's Instinct can reduce Syrax's Tactical Damage Received by 16%. Tactical Damage Received decrease 16% at effective Habit Level 5. Activation chance: 35%. Duration: 2 rounds. Ranked progression: L1 8%, L2 9.6%, L3 11.2%, L4 13.6%, L5 16%.",
     "id": "defensive-ally-support-malachite-forests-instinct-forests-instinct-tactical-reduction-damage-received-received-modifier-syrax",
     "interactionScope": "cross-dragon",
     "matchedOutputCapabilityIds": [],
@@ -9037,7 +9079,10 @@
     ],
     "damageScope": null,
     "effects": [
-      "Fire Damage Dealt increase 10%"
+      "Fire Damage Dealt increase 10%",
+      "Activation chance 20% per each round.",
+      "Activation chance: 20%.",
+      "Duration: 2 rounds."
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final amplified damage cannot be calculated because stacking and final combat formulas are not fully verified.",
@@ -9157,6 +9202,7 @@
     "conflicts": [],
     "damageScope": null,
     "effects": [
+      "Duration: 3 rounds.",
       "Tactical Damage Dealt increase 36%"
     ],
     "exactResultKnown": false,
@@ -9296,7 +9342,8 @@
     ],
     "damageScope": null,
     "effects": [
-      "Fire Damage Dealt increase 36%"
+      "Fire Damage Dealt increase 36%",
+      "Duration: 3 rounds."
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final amplified damage cannot be calculated because stacking and final combat formulas are not fully verified.",
@@ -9583,7 +9630,7 @@
   },
   {
     "assumptions": [
-      "Trigger chance and target selection may make this conditional rather than guaranteed."
+      "Trigger chance may make this conditional rather than guaranteed."
     ],
     "channel": "damage-dealt",
     "confidence": "confirmed",
@@ -9593,7 +9640,12 @@
     ],
     "damageScope": null,
     "effects": [
-      "Damage Dealt increase 20%"
+      "Damage Dealt increase 20%",
+      "Activation chance depends on Habit Level for each round.",
+      "Advantage increases Damage Dealt according to the verified status glossary.",
+      "Activation chance: 20% at effective Habit Level 5.",
+      "Activation chance by Habit Level: 10%, 12%, 14%, 17%, 20%.",
+      "Duration: 2 rounds."
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final amplified damage cannot be calculated because stacking and final combat formulas are not fully verified.",
@@ -9683,7 +9735,7 @@
   },
   {
     "assumptions": [
-      "Trigger chance and target selection may make this conditional rather than guaranteed.",
+      "Trigger chance may make this conditional rather than guaranteed.",
       "Multiple qualifying outputs are aggregated into one normal synergy trace."
     ],
     "channel": "damage-dealt",
@@ -9696,7 +9748,12 @@
     ],
     "damageScope": null,
     "effects": [
-      "Damage Dealt increase 20%"
+      "Damage Dealt increase 20%",
+      "Activation chance depends on Habit Level for each round.",
+      "Advantage increases Damage Dealt according to the verified status glossary.",
+      "Activation chance: 20% at effective Habit Level 5.",
+      "Activation chance by Habit Level: 10%, 12%, 14%, 17%, 20%.",
+      "Duration: 2 rounds."
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final amplified damage cannot be calculated because stacking and final combat formulas are not fully verified.",
@@ -11090,7 +11147,9 @@
     "unresolvedQuestions": []
   },
   {
-    "assumptions": [],
+    "assumptions": [
+      "Trigger chance may make this conditional rather than guaranteed."
+    ],
     "channel": "damage-received",
     "confidence": "confirmed",
     "conflicts": [
@@ -11100,13 +11159,14 @@
     "damageScope": "tactical",
     "effects": [
       "Tactical Damage Received decrease 16% at effective Habit Level 5.",
+      "Activation chance: 35%.",
       "Duration: 2 rounds.",
       "Ranked progression: L1 8%, L2 9.6%, L3 11.2%, L4 13.6%, L5 16%.",
       "Activation chance: 35%."
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final value cannot be calculated because final combat formulas and stacking order are not fully verified.",
-    "explanation": "Malachite's Forest's Instinct can reduce Syrax's Tactical Damage Received by 16%. Tactical Damage Received decrease 16% at effective Habit Level 5. Duration: 2 rounds. Ranked progression: L1 8%, L2 9.6%, L3 11.2%, L4 13.6%, L5 16%.",
+    "explanation": "Malachite's Forest's Instinct can reduce Syrax's Tactical Damage Received by 16%. Tactical Damage Received decrease 16% at effective Habit Level 5. Activation chance: 35%. Duration: 2 rounds. Ranked progression: L1 8%, L2 9.6%, L3 11.2%, L4 13.6%, L5 16%.",
     "id": "defensive-ally-support-malachite-forests-instinct-forests-instinct-tactical-reduction-damage-received-received-modifier-syrax",
     "interactionScope": "cross-dragon",
     "matchedOutputCapabilityIds": [],
@@ -11167,7 +11227,9 @@
     "unresolvedQuestions": []
   },
   {
-    "assumptions": [],
+    "assumptions": [
+      "Trigger chance may make this conditional rather than guaranteed."
+    ],
     "channel": "damage-received",
     "confidence": "confirmed",
     "conflicts": [
@@ -11177,13 +11239,14 @@
     "damageScope": "tactical",
     "effects": [
       "Tactical Damage Received decrease 16% at effective Habit Level 5.",
+      "Activation chance: 35%.",
       "Duration: 2 rounds.",
       "Ranked progression: L1 8%, L2 9.6%, L3 11.2%, L4 13.6%, L5 16%.",
       "Activation chance: 35%."
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final value cannot be calculated because final combat formulas and stacking order are not fully verified.",
-    "explanation": "Malachite's Forest's Instinct can reduce Caraxes's Tactical Damage Received by 16%. Tactical Damage Received decrease 16% at effective Habit Level 5. Duration: 2 rounds. Ranked progression: L1 8%, L2 9.6%, L3 11.2%, L4 13.6%, L5 16%.",
+    "explanation": "Malachite's Forest's Instinct can reduce Caraxes's Tactical Damage Received by 16%. Tactical Damage Received decrease 16% at effective Habit Level 5. Activation chance: 35%. Duration: 2 rounds. Ranked progression: L1 8%, L2 9.6%, L3 11.2%, L4 13.6%, L5 16%.",
     "id": "defensive-ally-support-malachite-forests-instinct-forests-instinct-tactical-reduction-damage-received-received-modifier-caraxes",
     "interactionScope": "cross-dragon",
     "matchedOutputCapabilityIds": [],
@@ -13596,7 +13659,10 @@
     ],
     "damageScope": null,
     "effects": [
-      "Fire Damage Dealt increase 10%"
+      "Fire Damage Dealt increase 10%",
+      "Activation chance 20% per each round.",
+      "Activation chance: 20%.",
+      "Duration: 2 rounds."
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final amplified damage cannot be calculated because stacking and final combat formulas are not fully verified.",
@@ -13716,6 +13782,7 @@
     "conflicts": [],
     "damageScope": null,
     "effects": [
+      "Duration: 3 rounds.",
       "Tactical Damage Dealt increase 36%"
     ],
     "exactResultKnown": false,
@@ -13855,7 +13922,8 @@
     ],
     "damageScope": null,
     "effects": [
-      "Fire Damage Dealt increase 36%"
+      "Fire Damage Dealt increase 36%",
+      "Duration: 3 rounds."
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final amplified damage cannot be calculated because stacking and final combat formulas are not fully verified.",
@@ -14142,7 +14210,7 @@
   },
   {
     "assumptions": [
-      "Trigger chance and target selection may make this conditional rather than guaranteed."
+      "Trigger chance may make this conditional rather than guaranteed."
     ],
     "channel": "damage-dealt",
     "confidence": "confirmed",
@@ -14152,7 +14220,12 @@
     ],
     "damageScope": null,
     "effects": [
-      "Damage Dealt increase 20%"
+      "Damage Dealt increase 20%",
+      "Activation chance depends on Habit Level for each round.",
+      "Advantage increases Damage Dealt according to the verified status glossary.",
+      "Activation chance: 20% at effective Habit Level 5.",
+      "Activation chance by Habit Level: 10%, 12%, 14%, 17%, 20%.",
+      "Duration: 2 rounds."
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final amplified damage cannot be calculated because stacking and final combat formulas are not fully verified.",
@@ -14242,7 +14315,7 @@
   },
   {
     "assumptions": [
-      "Trigger chance and target selection may make this conditional rather than guaranteed.",
+      "Trigger chance may make this conditional rather than guaranteed.",
       "Multiple qualifying outputs are aggregated into one normal synergy trace."
     ],
     "channel": "damage-dealt",
@@ -14255,7 +14328,12 @@
     ],
     "damageScope": null,
     "effects": [
-      "Damage Dealt increase 20%"
+      "Damage Dealt increase 20%",
+      "Activation chance depends on Habit Level for each round.",
+      "Advantage increases Damage Dealt according to the verified status glossary.",
+      "Activation chance: 20% at effective Habit Level 5.",
+      "Activation chance by Habit Level: 10%, 12%, 14%, 17%, 20%.",
+      "Duration: 2 rounds."
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final amplified damage cannot be calculated because stacking and final combat formulas are not fully verified.",
@@ -15648,7 +15726,9 @@
     "unresolvedQuestions": []
   },
   {
-    "assumptions": [],
+    "assumptions": [
+      "Trigger chance may make this conditional rather than guaranteed."
+    ],
     "channel": "damage-received",
     "confidence": "confirmed",
     "conflicts": [
@@ -15658,13 +15738,14 @@
     "damageScope": "tactical",
     "effects": [
       "Tactical Damage Received decrease 16% at effective Habit Level 5.",
+      "Activation chance: 35%.",
       "Duration: 2 rounds.",
       "Ranked progression: L1 8%, L2 9.6%, L3 11.2%, L4 13.6%, L5 16%.",
       "Activation chance: 35%."
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final value cannot be calculated because final combat formulas and stacking order are not fully verified.",
-    "explanation": "Malachite's Forest's Instinct can reduce Syrax's Tactical Damage Received by 16%. Tactical Damage Received decrease 16% at effective Habit Level 5. Duration: 2 rounds. Ranked progression: L1 8%, L2 9.6%, L3 11.2%, L4 13.6%, L5 16%.",
+    "explanation": "Malachite's Forest's Instinct can reduce Syrax's Tactical Damage Received by 16%. Tactical Damage Received decrease 16% at effective Habit Level 5. Activation chance: 35%. Duration: 2 rounds. Ranked progression: L1 8%, L2 9.6%, L3 11.2%, L4 13.6%, L5 16%.",
     "id": "defensive-ally-support-malachite-forests-instinct-forests-instinct-tactical-reduction-damage-received-received-modifier-syrax",
     "interactionScope": "cross-dragon",
     "matchedOutputCapabilityIds": [],
@@ -15725,7 +15806,9 @@
     "unresolvedQuestions": []
   },
   {
-    "assumptions": [],
+    "assumptions": [
+      "Trigger chance may make this conditional rather than guaranteed."
+    ],
     "channel": "damage-received",
     "confidence": "confirmed",
     "conflicts": [
@@ -15735,13 +15818,14 @@
     "damageScope": "tactical",
     "effects": [
       "Tactical Damage Received decrease 16% at effective Habit Level 5.",
+      "Activation chance: 35%.",
       "Duration: 2 rounds.",
       "Ranked progression: L1 8%, L2 9.6%, L3 11.2%, L4 13.6%, L5 16%.",
       "Activation chance: 35%."
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final value cannot be calculated because final combat formulas and stacking order are not fully verified.",
-    "explanation": "Malachite's Forest's Instinct can reduce Caraxes's Tactical Damage Received by 16%. Tactical Damage Received decrease 16% at effective Habit Level 5. Duration: 2 rounds. Ranked progression: L1 8%, L2 9.6%, L3 11.2%, L4 13.6%, L5 16%.",
+    "explanation": "Malachite's Forest's Instinct can reduce Caraxes's Tactical Damage Received by 16%. Tactical Damage Received decrease 16% at effective Habit Level 5. Activation chance: 35%. Duration: 2 rounds. Ranked progression: L1 8%, L2 9.6%, L3 11.2%, L4 13.6%, L5 16%.",
     "id": "defensive-ally-support-malachite-forests-instinct-forests-instinct-tactical-reduction-damage-received-received-modifier-caraxes",
     "interactionScope": "cross-dragon",
     "matchedOutputCapabilityIds": [],
@@ -18301,7 +18385,7 @@
   },
   {
     "assumptions": [
-      "Trigger chance and target selection may make this conditional rather than guaranteed."
+      "Trigger chance may make this conditional rather than guaranteed."
     ],
     "channel": "physical-damage",
     "confidence": "confirmed",
@@ -18311,7 +18395,10 @@
     ],
     "damageScope": null,
     "effects": [
-      "Physical Damage Dealt increase 16%"
+      "Physical Damage Dealt increase 16%",
+      "Activation chance 35% per each round.",
+      "Activation chance: 35%.",
+      "Duration: 2 rounds."
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final amplified damage cannot be calculated because stacking and final combat formulas are not fully verified.",
@@ -18401,7 +18488,7 @@
   },
   {
     "assumptions": [
-      "Trigger chance and target selection may make this conditional rather than guaranteed.",
+      "Trigger chance may make this conditional rather than guaranteed.",
       "Multiple qualifying outputs are aggregated into one normal synergy trace."
     ],
     "channel": "damage-dealt",
@@ -18414,7 +18501,12 @@
     ],
     "damageScope": null,
     "effects": [
-      "Damage Dealt increase 20%"
+      "Damage Dealt increase 20%",
+      "Activation chance depends on Habit Level for each round.",
+      "Advantage increases Damage Dealt according to the verified status glossary.",
+      "Activation chance: 20% at effective Habit Level 5.",
+      "Activation chance by Habit Level: 10%, 12%, 14%, 17%, 20%.",
+      "Duration: 2 rounds."
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final amplified damage cannot be calculated because stacking and final combat formulas are not fully verified.",
@@ -18550,7 +18642,7 @@
   },
   {
     "assumptions": [
-      "Trigger chance and target selection may make this conditional rather than guaranteed.",
+      "Trigger chance may make this conditional rather than guaranteed.",
       "Multiple qualifying outputs are aggregated into one normal synergy trace."
     ],
     "channel": "damage-dealt",
@@ -18561,7 +18653,12 @@
     ],
     "damageScope": null,
     "effects": [
-      "Damage Dealt increase 20%"
+      "Damage Dealt increase 20%",
+      "Activation chance depends on Habit Level for each round.",
+      "Advantage increases Damage Dealt according to the verified status glossary.",
+      "Activation chance: 20% at effective Habit Level 5.",
+      "Activation chance by Habit Level: 10%, 12%, 14%, 17%, 20%.",
+      "Duration: 2 rounds."
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final amplified damage cannot be calculated because stacking and final combat formulas are not fully verified.",
@@ -18802,7 +18899,9 @@
     "conflicts": [],
     "damageScope": null,
     "effects": [
-      "Tactical Damage Dealt increase 2.5"
+      "Tactical Damage Dealt increase 2.5",
+      "Ally deals Tactical Damage.",
+      "Spreading Blaze stacks require the trigger chance and target selection to select this ally."
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final amplified damage cannot be calculated because stacking and final combat formulas are not fully verified.",
@@ -18882,7 +18981,12 @@
     ],
     "damageScope": null,
     "effects": [
-      "Tactical Damage Dealt increase 2.5"
+      "Tactical Damage Dealt increase 2.5",
+      "Activation chance depends on Habit Level for start of combat.",
+      "Ally deals Tactical Damage.",
+      "Spreading Blaze stacks require the trigger chance and target selection to select this ally.",
+      "Activation chance: 100% at effective Habit Level 5.",
+      "Activation chance by Habit Level: 50%, 60%, 70%, 85%, 100%."
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final amplified damage cannot be calculated because stacking and final combat formulas are not fully verified.",
@@ -20515,7 +20619,8 @@
     "assumptions": [
       "Cumulative stacking is not assumed.",
       "Exact interaction between overlapping threshold tiers is unresolved.",
-      "Threshold applicability depends on each recipient current Troop Capacity."
+      "Threshold applicability depends on each recipient current Troop Capacity.",
+      "Threshold eligibility may make this conditional rather than guaranteed."
     ],
     "channel": "damage-received",
     "confidence": "confirmed",
@@ -20525,7 +20630,10 @@
     ],
     "damageScope": "fire",
     "effects": [
+      "Below 25% Troop Capacity.",
+      "Below 75% Troop Capacity.",
       "Duration: until end of current round.",
+      "Each recipient below 50% Troop Capacity may receive Resistance, reducing Damage Received by 20%.",
       "Fire Damage Received decrease 10% at effective Habit Level 5.",
       "Fire Damage Received decrease 20% at effective Habit Level 5.",
       "Fire Damage Received decrease 30% at effective Habit Level 5.",
@@ -20663,7 +20771,9 @@
     ]
   },
   {
-    "assumptions": [],
+    "assumptions": [
+      "Trigger chance may make this conditional rather than guaranteed."
+    ],
     "channel": "damage-received",
     "confidence": "confirmed",
     "conflicts": [
@@ -20673,13 +20783,14 @@
     "damageScope": "tactical",
     "effects": [
       "Tactical Damage Received decrease 16% at effective Habit Level 5.",
+      "Activation chance: 35%.",
       "Duration: 2 rounds.",
       "Ranked progression: L1 8%, L2 9.6%, L3 11.2%, L4 13.6%, L5 16%.",
       "Activation chance: 35%."
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final value cannot be calculated because final combat formulas and stacking order are not fully verified.",
-    "explanation": "Malachite's Forest's Instinct can reduce Sheepstealer's Tactical Damage Received by 16%. Tactical Damage Received decrease 16% at effective Habit Level 5. Duration: 2 rounds. Ranked progression: L1 8%, L2 9.6%, L3 11.2%, L4 13.6%, L5 16%.",
+    "explanation": "Malachite's Forest's Instinct can reduce Sheepstealer's Tactical Damage Received by 16%. Tactical Damage Received decrease 16% at effective Habit Level 5. Activation chance: 35%. Duration: 2 rounds. Ranked progression: L1 8%, L2 9.6%, L3 11.2%, L4 13.6%, L5 16%.",
     "id": "defensive-ally-support-malachite-forests-instinct-forests-instinct-tactical-reduction-damage-received-received-modifier-sheepstealer",
     "interactionScope": "cross-dragon",
     "matchedOutputCapabilityIds": [],
@@ -20740,7 +20851,9 @@
     "unresolvedQuestions": []
   },
   {
-    "assumptions": [],
+    "assumptions": [
+      "Trigger chance may make this conditional rather than guaranteed."
+    ],
     "channel": "damage-received",
     "confidence": "confirmed",
     "conflicts": [
@@ -20750,13 +20863,14 @@
     "damageScope": "tactical",
     "effects": [
       "Tactical Damage Received decrease 16% at effective Habit Level 5.",
+      "Activation chance: 35%.",
       "Duration: 2 rounds.",
       "Ranked progression: L1 8%, L2 9.6%, L3 11.2%, L4 13.6%, L5 16%.",
       "Activation chance: 35%."
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final value cannot be calculated because final combat formulas and stacking order are not fully verified.",
-    "explanation": "Malachite's Forest's Instinct can reduce Vermax's Tactical Damage Received by 16%. Tactical Damage Received decrease 16% at effective Habit Level 5. Duration: 2 rounds. Ranked progression: L1 8%, L2 9.6%, L3 11.2%, L4 13.6%, L5 16%.",
+    "explanation": "Malachite's Forest's Instinct can reduce Vermax's Tactical Damage Received by 16%. Tactical Damage Received decrease 16% at effective Habit Level 5. Activation chance: 35%. Duration: 2 rounds. Ranked progression: L1 8%, L2 9.6%, L3 11.2%, L4 13.6%, L5 16%.",
     "id": "defensive-ally-support-malachite-forests-instinct-forests-instinct-tactical-reduction-damage-received-received-modifier-vermax",
     "interactionScope": "cross-dragon",
     "matchedOutputCapabilityIds": [],
@@ -21965,7 +22079,7 @@
   },
   {
     "assumptions": [
-      "Trigger chance and target selection may make this conditional rather than guaranteed."
+      "Trigger chance and threshold eligibility may make this conditional rather than guaranteed."
     ],
     "channel": "damage-dealt",
     "confidence": "confirmed",
@@ -21975,7 +22089,13 @@
     ],
     "damageScope": null,
     "effects": [
-      "Damage Dealt increase 20%"
+      "Damage Dealt increase 20%",
+      "Activation chance depends on Habit Level for each round.",
+      "Target is above 50% Troop Capacity.",
+      "Advantage increases Damage Dealt according to the verified status glossary.",
+      "Activation chance: 25% at effective Habit Level 5.",
+      "Activation chance by Habit Level: 10%, 13%, 16%, 20%, 25%.",
+      "Duration: 2 rounds."
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final amplified damage cannot be calculated because stacking and final combat formulas are not fully verified.",
@@ -22065,7 +22185,7 @@
   },
   {
     "assumptions": [
-      "Trigger chance and target selection may make this conditional rather than guaranteed.",
+      "Trigger chance and threshold eligibility may make this conditional rather than guaranteed.",
       "Multiple qualifying outputs are aggregated into one normal synergy trace."
     ],
     "channel": "damage-dealt",
@@ -22078,7 +22198,13 @@
     ],
     "damageScope": null,
     "effects": [
-      "Damage Dealt increase 20%"
+      "Damage Dealt increase 20%",
+      "Activation chance depends on Habit Level for each round.",
+      "Target is above 50% Troop Capacity.",
+      "Advantage increases Damage Dealt according to the verified status glossary.",
+      "Activation chance: 25% at effective Habit Level 5.",
+      "Activation chance by Habit Level: 10%, 13%, 16%, 20%, 25%.",
+      "Duration: 2 rounds."
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final amplified damage cannot be calculated because stacking and final combat formulas are not fully verified.",
@@ -22477,7 +22603,7 @@
   },
   {
     "assumptions": [
-      "Trigger chance and target selection may make this conditional rather than guaranteed."
+      "Trigger chance may make this conditional rather than guaranteed."
     ],
     "channel": "physical-damage",
     "confidence": "confirmed",
@@ -22489,7 +22615,10 @@
     ],
     "damageScope": null,
     "effects": [
-      "Physical Damage Dealt increase 16%"
+      "Physical Damage Dealt increase 16%",
+      "Activation chance 35% per each round.",
+      "Activation chance: 35%.",
+      "Duration: 2 rounds."
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final amplified damage cannot be calculated because stacking and final combat formulas are not fully verified.",
@@ -22603,7 +22732,7 @@
   },
   {
     "assumptions": [
-      "Trigger chance and target selection may make this conditional rather than guaranteed.",
+      "Trigger chance may make this conditional rather than guaranteed.",
       "Multiple qualifying outputs are aggregated into one normal synergy trace."
     ],
     "channel": "damage-dealt",
@@ -22616,7 +22745,12 @@
     ],
     "damageScope": null,
     "effects": [
-      "Damage Dealt increase 20%"
+      "Damage Dealt increase 20%",
+      "Activation chance depends on Habit Level for each round.",
+      "Advantage increases Damage Dealt according to the verified status glossary.",
+      "Activation chance: 20% at effective Habit Level 5.",
+      "Activation chance by Habit Level: 10%, 12%, 14%, 17%, 20%.",
+      "Duration: 2 rounds."
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final amplified damage cannot be calculated because stacking and final combat formulas are not fully verified.",
@@ -22750,7 +22884,7 @@
   },
   {
     "assumptions": [
-      "Trigger chance and target selection may make this conditional rather than guaranteed.",
+      "Trigger chance may make this conditional rather than guaranteed.",
       "Multiple qualifying outputs are aggregated into one normal synergy trace."
     ],
     "channel": "damage-dealt",
@@ -22763,7 +22897,12 @@
     ],
     "damageScope": null,
     "effects": [
-      "Damage Dealt increase 20%"
+      "Damage Dealt increase 20%",
+      "Activation chance depends on Habit Level for each round.",
+      "Advantage increases Damage Dealt according to the verified status glossary.",
+      "Activation chance: 20% at effective Habit Level 5.",
+      "Activation chance by Habit Level: 10%, 12%, 14%, 17%, 20%.",
+      "Duration: 2 rounds."
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final amplified damage cannot be calculated because stacking and final combat formulas are not fully verified.",
@@ -24522,7 +24661,9 @@
     "unresolvedQuestions": []
   },
   {
-    "assumptions": [],
+    "assumptions": [
+      "Trigger chance and threshold eligibility may make this conditional rather than guaranteed."
+    ],
     "channel": "damage-received",
     "confidence": "confirmed",
     "conflicts": [
@@ -24532,13 +24673,18 @@
     "damageScope": null,
     "effects": [
       "Damage Received decrease 20%.",
+      "Each recipient below 50% Troop Capacity may receive Resistance, reducing Damage Received by 20%.",
+      "Each recipient below 50% Troop Capacity may receive Resistance, reducing Damage Received by 20%.",
+      "Each recipient below 50% Troop Capacity may receive Resistance, reducing Damage Received by 20%.",
+      "Activation chance: 25% at effective Habit Level 5.",
+      "Activation chance by Habit Level: 10%, 13%, 16%, 20%, 25%.",
       "Duration: 2 rounds.",
       "Activation chance: 25% at effective Habit Level 5.",
       "Activation chance by Habit Level: 10%, 13%, 16%, 20%, 25%."
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final value cannot be calculated because final combat formulas and stacking order are not fully verified.",
-    "explanation": "Seasmoke's Loyal Bond can reduce Malachite's Damage Received by 20%. Damage Received decrease 20%. Duration: 2 rounds.",
+    "explanation": "Seasmoke's Loyal Bond can reduce Malachite's Damage Received by 20%. Damage Received decrease 20%. Each recipient below 50% Troop Capacity may receive Resistance, reducing Damage Received by 20%. Each recipient below 50% Troop Capacity may receive Resistance, reducing Damage Received by 20%. Each recipient below 50% Troop Capacity may receive Resistance, reducing Damage Received by 20%. Activation chance: 25% at effective Habit Level 5. Activation chance by Habit Level: 10%, 13%, 16%, 20%, 25%. Duration: 2 rounds.",
     "id": "defensive-ally-support-seasmoke-loyal-bond-loyal-bond-resistance-effect-damage-received-received-modifier-malachite",
     "interactionScope": "cross-dragon",
     "matchedOutputCapabilityIds": [],
@@ -24599,7 +24745,9 @@
     "unresolvedQuestions": []
   },
   {
-    "assumptions": [],
+    "assumptions": [
+      "Trigger chance and threshold eligibility may make this conditional rather than guaranteed."
+    ],
     "channel": "damage-received",
     "confidence": "confirmed",
     "conflicts": [
@@ -24609,13 +24757,18 @@
     "damageScope": null,
     "effects": [
       "Damage Received decrease 20%.",
+      "Each recipient below 50% Troop Capacity may receive Resistance, reducing Damage Received by 20%.",
+      "Each recipient below 50% Troop Capacity may receive Resistance, reducing Damage Received by 20%.",
+      "Each recipient below 50% Troop Capacity may receive Resistance, reducing Damage Received by 20%.",
+      "Activation chance: 25% at effective Habit Level 5.",
+      "Activation chance by Habit Level: 10%, 13%, 16%, 20%, 25%.",
       "Duration: 2 rounds.",
       "Activation chance: 25% at effective Habit Level 5.",
       "Activation chance by Habit Level: 10%, 13%, 16%, 20%, 25%."
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final value cannot be calculated because final combat formulas and stacking order are not fully verified.",
-    "explanation": "Seasmoke's Loyal Bond can reduce Sheepstealer's Damage Received by 20%. Damage Received decrease 20%. Duration: 2 rounds.",
+    "explanation": "Seasmoke's Loyal Bond can reduce Sheepstealer's Damage Received by 20%. Damage Received decrease 20%. Each recipient below 50% Troop Capacity may receive Resistance, reducing Damage Received by 20%. Each recipient below 50% Troop Capacity may receive Resistance, reducing Damage Received by 20%. Each recipient below 50% Troop Capacity may receive Resistance, reducing Damage Received by 20%. Activation chance: 25% at effective Habit Level 5. Activation chance by Habit Level: 10%, 13%, 16%, 20%, 25%. Duration: 2 rounds.",
     "id": "defensive-ally-support-seasmoke-loyal-bond-loyal-bond-resistance-effect-damage-received-received-modifier-sheepstealer",
     "interactionScope": "cross-dragon",
     "matchedOutputCapabilityIds": [],
@@ -24676,7 +24829,9 @@
     "unresolvedQuestions": []
   },
   {
-    "assumptions": [],
+    "assumptions": [
+      "Trigger chance may make this conditional rather than guaranteed."
+    ],
     "channel": "damage-received",
     "confidence": "confirmed",
     "conflicts": [
@@ -24686,13 +24841,14 @@
     "damageScope": "tactical",
     "effects": [
       "Tactical Damage Received decrease 16% at effective Habit Level 5.",
+      "Activation chance: 35%.",
       "Duration: 2 rounds.",
       "Ranked progression: L1 8%, L2 9.6%, L3 11.2%, L4 13.6%, L5 16%.",
       "Activation chance: 35%."
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final value cannot be calculated because final combat formulas and stacking order are not fully verified.",
-    "explanation": "Malachite's Forest's Instinct can reduce Seasmoke's Tactical Damage Received by 16%. Tactical Damage Received decrease 16% at effective Habit Level 5. Duration: 2 rounds. Ranked progression: L1 8%, L2 9.6%, L3 11.2%, L4 13.6%, L5 16%.",
+    "explanation": "Malachite's Forest's Instinct can reduce Seasmoke's Tactical Damage Received by 16%. Tactical Damage Received decrease 16% at effective Habit Level 5. Activation chance: 35%. Duration: 2 rounds. Ranked progression: L1 8%, L2 9.6%, L3 11.2%, L4 13.6%, L5 16%.",
     "id": "defensive-ally-support-malachite-forests-instinct-forests-instinct-tactical-reduction-damage-received-received-modifier-seasmoke",
     "interactionScope": "cross-dragon",
     "matchedOutputCapabilityIds": [],
@@ -24753,7 +24909,9 @@
     "unresolvedQuestions": []
   },
   {
-    "assumptions": [],
+    "assumptions": [
+      "Trigger chance may make this conditional rather than guaranteed."
+    ],
     "channel": "damage-received",
     "confidence": "confirmed",
     "conflicts": [
@@ -24763,13 +24921,14 @@
     "damageScope": "tactical",
     "effects": [
       "Tactical Damage Received decrease 16% at effective Habit Level 5.",
+      "Activation chance: 35%.",
       "Duration: 2 rounds.",
       "Ranked progression: L1 8%, L2 9.6%, L3 11.2%, L4 13.6%, L5 16%.",
       "Activation chance: 35%."
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final value cannot be calculated because final combat formulas and stacking order are not fully verified.",
-    "explanation": "Malachite's Forest's Instinct can reduce Sheepstealer's Tactical Damage Received by 16%. Tactical Damage Received decrease 16% at effective Habit Level 5. Duration: 2 rounds. Ranked progression: L1 8%, L2 9.6%, L3 11.2%, L4 13.6%, L5 16%.",
+    "explanation": "Malachite's Forest's Instinct can reduce Sheepstealer's Tactical Damage Received by 16%. Tactical Damage Received decrease 16% at effective Habit Level 5. Activation chance: 35%. Duration: 2 rounds. Ranked progression: L1 8%, L2 9.6%, L3 11.2%, L4 13.6%, L5 16%.",
     "id": "defensive-ally-support-malachite-forests-instinct-forests-instinct-tactical-reduction-damage-received-received-modifier-sheepstealer",
     "interactionScope": "cross-dragon",
     "matchedOutputCapabilityIds": [],
@@ -26144,7 +26303,7 @@
   },
   {
     "assumptions": [
-      "Trigger chance and target selection may make this conditional rather than guaranteed."
+      "Trigger chance and threshold eligibility may make this conditional rather than guaranteed."
     ],
     "channel": "damage-dealt",
     "confidence": "confirmed",
@@ -26154,7 +26313,13 @@
     ],
     "damageScope": null,
     "effects": [
-      "Damage Dealt increase 20%"
+      "Damage Dealt increase 20%",
+      "Activation chance depends on Habit Level for each round.",
+      "Target is above 50% Troop Capacity.",
+      "Advantage increases Damage Dealt according to the verified status glossary.",
+      "Activation chance: 25% at effective Habit Level 5.",
+      "Activation chance by Habit Level: 10%, 13%, 16%, 20%, 25%.",
+      "Duration: 2 rounds."
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final amplified damage cannot be calculated because stacking and final combat formulas are not fully verified.",
@@ -26244,7 +26409,7 @@
   },
   {
     "assumptions": [
-      "Trigger chance and target selection may make this conditional rather than guaranteed.",
+      "Trigger chance and threshold eligibility may make this conditional rather than guaranteed.",
       "Multiple qualifying outputs are aggregated into one normal synergy trace."
     ],
     "channel": "damage-dealt",
@@ -26255,7 +26420,13 @@
     ],
     "damageScope": null,
     "effects": [
-      "Damage Dealt increase 20%"
+      "Damage Dealt increase 20%",
+      "Activation chance depends on Habit Level for each round.",
+      "Target is above 50% Troop Capacity.",
+      "Advantage increases Damage Dealt according to the verified status glossary.",
+      "Activation chance: 25% at effective Habit Level 5.",
+      "Activation chance by Habit Level: 10%, 13%, 16%, 20%, 25%.",
+      "Duration: 2 rounds."
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final amplified damage cannot be calculated because stacking and final combat formulas are not fully verified.",
@@ -26471,7 +26642,7 @@
   },
   {
     "assumptions": [
-      "Trigger chance and target selection may make this conditional rather than guaranteed."
+      "Trigger chance may make this conditional rather than guaranteed."
     ],
     "channel": "physical-damage",
     "confidence": "confirmed",
@@ -26481,7 +26652,10 @@
     ],
     "damageScope": null,
     "effects": [
-      "Physical Damage Dealt increase 16%"
+      "Physical Damage Dealt increase 16%",
+      "Activation chance 35% per each round.",
+      "Activation chance: 35%.",
+      "Duration: 2 rounds."
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final amplified damage cannot be calculated because stacking and final combat formulas are not fully verified.",
@@ -26571,7 +26745,7 @@
   },
   {
     "assumptions": [
-      "Trigger chance and target selection may make this conditional rather than guaranteed."
+      "Trigger chance may make this conditional rather than guaranteed."
     ],
     "channel": "physical-damage",
     "confidence": "confirmed",
@@ -26583,7 +26757,10 @@
     ],
     "damageScope": null,
     "effects": [
-      "Physical Damage Dealt increase 16%"
+      "Physical Damage Dealt increase 16%",
+      "Activation chance 35% per each round.",
+      "Activation chance: 35%.",
+      "Duration: 2 rounds."
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final amplified damage cannot be calculated because stacking and final combat formulas are not fully verified.",
@@ -26697,7 +26874,7 @@
   },
   {
     "assumptions": [
-      "Trigger chance and target selection may make this conditional rather than guaranteed.",
+      "Trigger chance may make this conditional rather than guaranteed.",
       "Multiple qualifying outputs are aggregated into one normal synergy trace."
     ],
     "channel": "damage-dealt",
@@ -26708,7 +26885,12 @@
     ],
     "damageScope": null,
     "effects": [
-      "Damage Dealt increase 20%"
+      "Damage Dealt increase 20%",
+      "Activation chance depends on Habit Level for each round.",
+      "Advantage increases Damage Dealt according to the verified status glossary.",
+      "Activation chance: 20% at effective Habit Level 5.",
+      "Activation chance by Habit Level: 10%, 12%, 14%, 17%, 20%.",
+      "Duration: 2 rounds."
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final amplified damage cannot be calculated because stacking and final combat formulas are not fully verified.",
@@ -26816,7 +26998,7 @@
   },
   {
     "assumptions": [
-      "Trigger chance and target selection may make this conditional rather than guaranteed.",
+      "Trigger chance may make this conditional rather than guaranteed.",
       "Multiple qualifying outputs are aggregated into one normal synergy trace."
     ],
     "channel": "damage-dealt",
@@ -26829,7 +27011,12 @@
     ],
     "damageScope": null,
     "effects": [
-      "Damage Dealt increase 20%"
+      "Damage Dealt increase 20%",
+      "Activation chance depends on Habit Level for each round.",
+      "Advantage increases Damage Dealt according to the verified status glossary.",
+      "Activation chance: 20% at effective Habit Level 5.",
+      "Activation chance by Habit Level: 10%, 12%, 14%, 17%, 20%.",
+      "Duration: 2 rounds."
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final amplified damage cannot be calculated because stacking and final combat formulas are not fully verified.",
@@ -26970,7 +27157,9 @@
     "conflicts": [],
     "damageScope": null,
     "effects": [
-      "Tactical Damage Dealt increase 2.5"
+      "Tactical Damage Dealt increase 2.5",
+      "Ally deals Tactical Damage.",
+      "Spreading Blaze stacks require the trigger chance and target selection to select this ally."
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final amplified damage cannot be calculated because stacking and final combat formulas are not fully verified.",
@@ -27050,7 +27239,12 @@
     ],
     "damageScope": null,
     "effects": [
-      "Tactical Damage Dealt increase 2.5"
+      "Tactical Damage Dealt increase 2.5",
+      "Activation chance depends on Habit Level for start of combat.",
+      "Ally deals Tactical Damage.",
+      "Spreading Blaze stacks require the trigger chance and target selection to select this ally.",
+      "Activation chance: 100% at effective Habit Level 5.",
+      "Activation chance by Habit Level: 50%, 60%, 70%, 85%, 100%."
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final amplified damage cannot be calculated because stacking and final combat formulas are not fully verified.",
@@ -28345,7 +28539,8 @@
     "assumptions": [
       "Cumulative stacking is not assumed.",
       "Exact interaction between overlapping threshold tiers is unresolved.",
-      "Threshold applicability depends on each recipient current Troop Capacity."
+      "Threshold applicability depends on each recipient current Troop Capacity.",
+      "Threshold eligibility may make this conditional rather than guaranteed."
     ],
     "channel": "damage-received",
     "confidence": "confirmed",
@@ -28355,7 +28550,10 @@
     ],
     "damageScope": "fire",
     "effects": [
+      "Below 25% Troop Capacity.",
+      "Below 75% Troop Capacity.",
       "Duration: until end of current round.",
+      "Each recipient below 50% Troop Capacity may receive Resistance, reducing Damage Received by 20%.",
       "Fire Damage Received decrease 10% at effective Habit Level 5.",
       "Fire Damage Received decrease 20% at effective Habit Level 5.",
       "Fire Damage Received decrease 30% at effective Habit Level 5.",
@@ -28577,7 +28775,9 @@
     "unresolvedQuestions": []
   },
   {
-    "assumptions": [],
+    "assumptions": [
+      "Trigger chance and threshold eligibility may make this conditional rather than guaranteed."
+    ],
     "channel": "damage-received",
     "confidence": "confirmed",
     "conflicts": [
@@ -28587,13 +28787,18 @@
     "damageScope": null,
     "effects": [
       "Damage Received decrease 20%.",
+      "Each recipient below 50% Troop Capacity may receive Resistance, reducing Damage Received by 20%.",
+      "Each recipient below 50% Troop Capacity may receive Resistance, reducing Damage Received by 20%.",
+      "Each recipient below 50% Troop Capacity may receive Resistance, reducing Damage Received by 20%.",
+      "Activation chance: 25% at effective Habit Level 5.",
+      "Activation chance by Habit Level: 10%, 13%, 16%, 20%, 25%.",
       "Duration: 2 rounds.",
       "Activation chance: 25% at effective Habit Level 5.",
       "Activation chance by Habit Level: 10%, 13%, 16%, 20%, 25%."
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final value cannot be calculated because final combat formulas and stacking order are not fully verified.",
-    "explanation": "Seasmoke's Loyal Bond can reduce Malachite's Damage Received by 20%. Damage Received decrease 20%. Duration: 2 rounds.",
+    "explanation": "Seasmoke's Loyal Bond can reduce Malachite's Damage Received by 20%. Damage Received decrease 20%. Each recipient below 50% Troop Capacity may receive Resistance, reducing Damage Received by 20%. Each recipient below 50% Troop Capacity may receive Resistance, reducing Damage Received by 20%. Each recipient below 50% Troop Capacity may receive Resistance, reducing Damage Received by 20%. Activation chance: 25% at effective Habit Level 5. Activation chance by Habit Level: 10%, 13%, 16%, 20%, 25%. Duration: 2 rounds.",
     "id": "defensive-ally-support-seasmoke-loyal-bond-loyal-bond-resistance-effect-damage-received-received-modifier-malachite",
     "interactionScope": "cross-dragon",
     "matchedOutputCapabilityIds": [],
@@ -28654,7 +28859,9 @@
     "unresolvedQuestions": []
   },
   {
-    "assumptions": [],
+    "assumptions": [
+      "Trigger chance and threshold eligibility may make this conditional rather than guaranteed."
+    ],
     "channel": "damage-received",
     "confidence": "confirmed",
     "conflicts": [
@@ -28664,13 +28871,18 @@
     "damageScope": null,
     "effects": [
       "Damage Received decrease 20%.",
+      "Each recipient below 50% Troop Capacity may receive Resistance, reducing Damage Received by 20%.",
+      "Each recipient below 50% Troop Capacity may receive Resistance, reducing Damage Received by 20%.",
+      "Each recipient below 50% Troop Capacity may receive Resistance, reducing Damage Received by 20%.",
+      "Activation chance: 25% at effective Habit Level 5.",
+      "Activation chance by Habit Level: 10%, 13%, 16%, 20%, 25%.",
       "Duration: 2 rounds.",
       "Activation chance: 25% at effective Habit Level 5.",
       "Activation chance by Habit Level: 10%, 13%, 16%, 20%, 25%."
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final value cannot be calculated because final combat formulas and stacking order are not fully verified.",
-    "explanation": "Seasmoke's Loyal Bond can reduce Vermax's Damage Received by 20%. Damage Received decrease 20%. Duration: 2 rounds.",
+    "explanation": "Seasmoke's Loyal Bond can reduce Vermax's Damage Received by 20%. Damage Received decrease 20%. Each recipient below 50% Troop Capacity may receive Resistance, reducing Damage Received by 20%. Each recipient below 50% Troop Capacity may receive Resistance, reducing Damage Received by 20%. Each recipient below 50% Troop Capacity may receive Resistance, reducing Damage Received by 20%. Activation chance: 25% at effective Habit Level 5. Activation chance by Habit Level: 10%, 13%, 16%, 20%, 25%. Duration: 2 rounds.",
     "id": "defensive-ally-support-seasmoke-loyal-bond-loyal-bond-resistance-effect-damage-received-received-modifier-vermax",
     "interactionScope": "cross-dragon",
     "matchedOutputCapabilityIds": [],
@@ -28731,7 +28943,9 @@
     "unresolvedQuestions": []
   },
   {
-    "assumptions": [],
+    "assumptions": [
+      "Trigger chance may make this conditional rather than guaranteed."
+    ],
     "channel": "damage-received",
     "confidence": "confirmed",
     "conflicts": [
@@ -28741,13 +28955,14 @@
     "damageScope": "tactical",
     "effects": [
       "Tactical Damage Received decrease 16% at effective Habit Level 5.",
+      "Activation chance: 35%.",
       "Duration: 2 rounds.",
       "Ranked progression: L1 8%, L2 9.6%, L3 11.2%, L4 13.6%, L5 16%.",
       "Activation chance: 35%."
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final value cannot be calculated because final combat formulas and stacking order are not fully verified.",
-    "explanation": "Malachite's Forest's Instinct can reduce Vermax's Tactical Damage Received by 16%. Tactical Damage Received decrease 16% at effective Habit Level 5. Duration: 2 rounds. Ranked progression: L1 8%, L2 9.6%, L3 11.2%, L4 13.6%, L5 16%.",
+    "explanation": "Malachite's Forest's Instinct can reduce Vermax's Tactical Damage Received by 16%. Tactical Damage Received decrease 16% at effective Habit Level 5. Activation chance: 35%. Duration: 2 rounds. Ranked progression: L1 8%, L2 9.6%, L3 11.2%, L4 13.6%, L5 16%.",
     "id": "defensive-ally-support-malachite-forests-instinct-forests-instinct-tactical-reduction-damage-received-received-modifier-vermax",
     "interactionScope": "cross-dragon",
     "matchedOutputCapabilityIds": [],
@@ -28808,7 +29023,9 @@
     "unresolvedQuestions": []
   },
   {
-    "assumptions": [],
+    "assumptions": [
+      "Trigger chance may make this conditional rather than guaranteed."
+    ],
     "channel": "damage-received",
     "confidence": "confirmed",
     "conflicts": [
@@ -28818,13 +29035,14 @@
     "damageScope": "tactical",
     "effects": [
       "Tactical Damage Received decrease 16% at effective Habit Level 5.",
+      "Activation chance: 35%.",
       "Duration: 2 rounds.",
       "Ranked progression: L1 8%, L2 9.6%, L3 11.2%, L4 13.6%, L5 16%.",
       "Activation chance: 35%."
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final value cannot be calculated because final combat formulas and stacking order are not fully verified.",
-    "explanation": "Malachite's Forest's Instinct can reduce Seasmoke's Tactical Damage Received by 16%. Tactical Damage Received decrease 16% at effective Habit Level 5. Duration: 2 rounds. Ranked progression: L1 8%, L2 9.6%, L3 11.2%, L4 13.6%, L5 16%.",
+    "explanation": "Malachite's Forest's Instinct can reduce Seasmoke's Tactical Damage Received by 16%. Tactical Damage Received decrease 16% at effective Habit Level 5. Activation chance: 35%. Duration: 2 rounds. Ranked progression: L1 8%, L2 9.6%, L3 11.2%, L4 13.6%, L5 16%.",
     "id": "defensive-ally-support-malachite-forests-instinct-forests-instinct-tactical-reduction-damage-received-received-modifier-seasmoke",
     "interactionScope": "cross-dragon",
     "matchedOutputCapabilityIds": [],
@@ -30478,7 +30696,7 @@
   },
   {
     "assumptions": [
-      "Trigger chance and target selection may make this conditional rather than guaranteed."
+      "Trigger chance and threshold eligibility may make this conditional rather than guaranteed."
     ],
     "channel": "damage-dealt",
     "confidence": "confirmed",
@@ -30488,7 +30706,13 @@
     ],
     "damageScope": null,
     "effects": [
-      "Damage Dealt increase 20%"
+      "Damage Dealt increase 20%",
+      "Activation chance depends on Habit Level for each round.",
+      "Target is above 50% Troop Capacity.",
+      "Advantage increases Damage Dealt according to the verified status glossary.",
+      "Activation chance: 25% at effective Habit Level 5.",
+      "Activation chance by Habit Level: 10%, 13%, 16%, 20%, 25%.",
+      "Duration: 2 rounds."
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final amplified damage cannot be calculated because stacking and final combat formulas are not fully verified.",
@@ -30578,7 +30802,7 @@
   },
   {
     "assumptions": [
-      "Trigger chance and target selection may make this conditional rather than guaranteed.",
+      "Trigger chance and threshold eligibility may make this conditional rather than guaranteed.",
       "Multiple qualifying outputs are aggregated into one normal synergy trace."
     ],
     "channel": "damage-dealt",
@@ -30591,7 +30815,13 @@
     ],
     "damageScope": null,
     "effects": [
-      "Damage Dealt increase 20%"
+      "Damage Dealt increase 20%",
+      "Activation chance depends on Habit Level for each round.",
+      "Target is above 50% Troop Capacity.",
+      "Advantage increases Damage Dealt according to the verified status glossary.",
+      "Activation chance: 25% at effective Habit Level 5.",
+      "Activation chance by Habit Level: 10%, 13%, 16%, 20%, 25%.",
+      "Duration: 2 rounds."
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final amplified damage cannot be calculated because stacking and final combat formulas are not fully verified.",
@@ -30994,7 +31224,7 @@
   },
   {
     "assumptions": [
-      "Trigger chance and target selection may make this conditional rather than guaranteed."
+      "Trigger chance may make this conditional rather than guaranteed."
     ],
     "channel": "physical-damage",
     "confidence": "confirmed",
@@ -31006,7 +31236,10 @@
     ],
     "damageScope": null,
     "effects": [
-      "Physical Damage Dealt increase 16%"
+      "Physical Damage Dealt increase 16%",
+      "Activation chance 35% per each round.",
+      "Activation chance: 35%.",
+      "Duration: 2 rounds."
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final amplified damage cannot be calculated because stacking and final combat formulas are not fully verified.",
@@ -31120,7 +31353,7 @@
   },
   {
     "assumptions": [
-      "Trigger chance and target selection may make this conditional rather than guaranteed.",
+      "Trigger chance may make this conditional rather than guaranteed.",
       "Multiple qualifying outputs are aggregated into one normal synergy trace."
     ],
     "channel": "damage-dealt",
@@ -31133,7 +31366,12 @@
     ],
     "damageScope": null,
     "effects": [
-      "Damage Dealt increase 20%"
+      "Damage Dealt increase 20%",
+      "Activation chance depends on Habit Level for each round.",
+      "Advantage increases Damage Dealt according to the verified status glossary.",
+      "Activation chance: 20% at effective Habit Level 5.",
+      "Activation chance by Habit Level: 10%, 12%, 14%, 17%, 20%.",
+      "Duration: 2 rounds."
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final amplified damage cannot be calculated because stacking and final combat formulas are not fully verified.",
@@ -31267,7 +31505,7 @@
   },
   {
     "assumptions": [
-      "Trigger chance and target selection may make this conditional rather than guaranteed.",
+      "Trigger chance may make this conditional rather than guaranteed.",
       "Multiple qualifying outputs are aggregated into one normal synergy trace."
     ],
     "channel": "damage-dealt",
@@ -31280,7 +31518,12 @@
     ],
     "damageScope": null,
     "effects": [
-      "Damage Dealt increase 20%"
+      "Damage Dealt increase 20%",
+      "Activation chance depends on Habit Level for each round.",
+      "Advantage increases Damage Dealt according to the verified status glossary.",
+      "Activation chance: 20% at effective Habit Level 5.",
+      "Activation chance by Habit Level: 10%, 12%, 14%, 17%, 20%.",
+      "Duration: 2 rounds."
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final amplified damage cannot be calculated because stacking and final combat formulas are not fully verified.",
@@ -33039,7 +33282,9 @@
     "unresolvedQuestions": []
   },
   {
-    "assumptions": [],
+    "assumptions": [
+      "Trigger chance and threshold eligibility may make this conditional rather than guaranteed."
+    ],
     "channel": "damage-received",
     "confidence": "confirmed",
     "conflicts": [
@@ -33049,13 +33294,18 @@
     "damageScope": null,
     "effects": [
       "Damage Received decrease 20%.",
+      "Each recipient below 50% Troop Capacity may receive Resistance, reducing Damage Received by 20%.",
+      "Each recipient below 50% Troop Capacity may receive Resistance, reducing Damage Received by 20%.",
+      "Each recipient below 50% Troop Capacity may receive Resistance, reducing Damage Received by 20%.",
+      "Activation chance: 25% at effective Habit Level 5.",
+      "Activation chance by Habit Level: 10%, 13%, 16%, 20%, 25%.",
       "Duration: 2 rounds.",
       "Activation chance: 25% at effective Habit Level 5.",
       "Activation chance by Habit Level: 10%, 13%, 16%, 20%, 25%."
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final value cannot be calculated because final combat formulas and stacking order are not fully verified.",
-    "explanation": "Seasmoke's Loyal Bond can reduce Malachite's Damage Received by 20%. Damage Received decrease 20%. Duration: 2 rounds.",
+    "explanation": "Seasmoke's Loyal Bond can reduce Malachite's Damage Received by 20%. Damage Received decrease 20%. Each recipient below 50% Troop Capacity may receive Resistance, reducing Damage Received by 20%. Each recipient below 50% Troop Capacity may receive Resistance, reducing Damage Received by 20%. Each recipient below 50% Troop Capacity may receive Resistance, reducing Damage Received by 20%. Activation chance: 25% at effective Habit Level 5. Activation chance by Habit Level: 10%, 13%, 16%, 20%, 25%. Duration: 2 rounds.",
     "id": "defensive-ally-support-seasmoke-loyal-bond-loyal-bond-resistance-effect-damage-received-received-modifier-malachite",
     "interactionScope": "cross-dragon",
     "matchedOutputCapabilityIds": [],
@@ -33116,7 +33366,9 @@
     "unresolvedQuestions": []
   },
   {
-    "assumptions": [],
+    "assumptions": [
+      "Trigger chance and threshold eligibility may make this conditional rather than guaranteed."
+    ],
     "channel": "damage-received",
     "confidence": "confirmed",
     "conflicts": [
@@ -33126,13 +33378,18 @@
     "damageScope": null,
     "effects": [
       "Damage Received decrease 20%.",
+      "Each recipient below 50% Troop Capacity may receive Resistance, reducing Damage Received by 20%.",
+      "Each recipient below 50% Troop Capacity may receive Resistance, reducing Damage Received by 20%.",
+      "Each recipient below 50% Troop Capacity may receive Resistance, reducing Damage Received by 20%.",
+      "Activation chance: 25% at effective Habit Level 5.",
+      "Activation chance by Habit Level: 10%, 13%, 16%, 20%, 25%.",
       "Duration: 2 rounds.",
       "Activation chance: 25% at effective Habit Level 5.",
       "Activation chance by Habit Level: 10%, 13%, 16%, 20%, 25%."
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final value cannot be calculated because final combat formulas and stacking order are not fully verified.",
-    "explanation": "Seasmoke's Loyal Bond can reduce Sheepstealer's Damage Received by 20%. Damage Received decrease 20%. Duration: 2 rounds.",
+    "explanation": "Seasmoke's Loyal Bond can reduce Sheepstealer's Damage Received by 20%. Damage Received decrease 20%. Each recipient below 50% Troop Capacity may receive Resistance, reducing Damage Received by 20%. Each recipient below 50% Troop Capacity may receive Resistance, reducing Damage Received by 20%. Each recipient below 50% Troop Capacity may receive Resistance, reducing Damage Received by 20%. Activation chance: 25% at effective Habit Level 5. Activation chance by Habit Level: 10%, 13%, 16%, 20%, 25%. Duration: 2 rounds.",
     "id": "defensive-ally-support-seasmoke-loyal-bond-loyal-bond-resistance-effect-damage-received-received-modifier-sheepstealer",
     "interactionScope": "cross-dragon",
     "matchedOutputCapabilityIds": [],
@@ -33193,7 +33450,9 @@
     "unresolvedQuestions": []
   },
   {
-    "assumptions": [],
+    "assumptions": [
+      "Trigger chance may make this conditional rather than guaranteed."
+    ],
     "channel": "damage-received",
     "confidence": "confirmed",
     "conflicts": [
@@ -33203,13 +33462,14 @@
     "damageScope": "tactical",
     "effects": [
       "Tactical Damage Received decrease 16% at effective Habit Level 5.",
+      "Activation chance: 35%.",
       "Duration: 2 rounds.",
       "Ranked progression: L1 8%, L2 9.6%, L3 11.2%, L4 13.6%, L5 16%.",
       "Activation chance: 35%."
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final value cannot be calculated because final combat formulas and stacking order are not fully verified.",
-    "explanation": "Malachite's Forest's Instinct can reduce Seasmoke's Tactical Damage Received by 16%. Tactical Damage Received decrease 16% at effective Habit Level 5. Duration: 2 rounds. Ranked progression: L1 8%, L2 9.6%, L3 11.2%, L4 13.6%, L5 16%.",
+    "explanation": "Malachite's Forest's Instinct can reduce Seasmoke's Tactical Damage Received by 16%. Tactical Damage Received decrease 16% at effective Habit Level 5. Activation chance: 35%. Duration: 2 rounds. Ranked progression: L1 8%, L2 9.6%, L3 11.2%, L4 13.6%, L5 16%.",
     "id": "defensive-ally-support-malachite-forests-instinct-forests-instinct-tactical-reduction-damage-received-received-modifier-seasmoke",
     "interactionScope": "cross-dragon",
     "matchedOutputCapabilityIds": [],
@@ -33270,7 +33530,9 @@
     "unresolvedQuestions": []
   },
   {
-    "assumptions": [],
+    "assumptions": [
+      "Trigger chance may make this conditional rather than guaranteed."
+    ],
     "channel": "damage-received",
     "confidence": "confirmed",
     "conflicts": [
@@ -33280,13 +33542,14 @@
     "damageScope": "tactical",
     "effects": [
       "Tactical Damage Received decrease 16% at effective Habit Level 5.",
+      "Activation chance: 35%.",
       "Duration: 2 rounds.",
       "Ranked progression: L1 8%, L2 9.6%, L3 11.2%, L4 13.6%, L5 16%.",
       "Activation chance: 35%."
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final value cannot be calculated because final combat formulas and stacking order are not fully verified.",
-    "explanation": "Malachite's Forest's Instinct can reduce Sheepstealer's Tactical Damage Received by 16%. Tactical Damage Received decrease 16% at effective Habit Level 5. Duration: 2 rounds. Ranked progression: L1 8%, L2 9.6%, L3 11.2%, L4 13.6%, L5 16%.",
+    "explanation": "Malachite's Forest's Instinct can reduce Sheepstealer's Tactical Damage Received by 16%. Tactical Damage Received decrease 16% at effective Habit Level 5. Activation chance: 35%. Duration: 2 rounds. Ranked progression: L1 8%, L2 9.6%, L3 11.2%, L4 13.6%, L5 16%.",
     "id": "defensive-ally-support-malachite-forests-instinct-forests-instinct-tactical-reduction-damage-received-received-modifier-sheepstealer",
     "interactionScope": "cross-dragon",
     "matchedOutputCapabilityIds": [],
@@ -35067,7 +35330,7 @@
   },
   {
     "assumptions": [
-      "Trigger chance and target selection may make this conditional rather than guaranteed.",
+      "Trigger chance and threshold eligibility may make this conditional rather than guaranteed.",
       "Multiple qualifying outputs are aggregated into one normal synergy trace."
     ],
     "channel": "damage-dealt",
@@ -35080,7 +35343,13 @@
     ],
     "damageScope": null,
     "effects": [
-      "Damage Dealt increase 20%"
+      "Damage Dealt increase 20%",
+      "Activation chance depends on Habit Level for each round.",
+      "Target is above 50% Troop Capacity.",
+      "Advantage increases Damage Dealt according to the verified status glossary.",
+      "Activation chance: 25% at effective Habit Level 5.",
+      "Activation chance by Habit Level: 10%, 13%, 16%, 20%, 25%.",
+      "Duration: 2 rounds."
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final amplified damage cannot be calculated because stacking and final combat formulas are not fully verified.",
@@ -35212,7 +35481,7 @@
   },
   {
     "assumptions": [
-      "Trigger chance and target selection may make this conditional rather than guaranteed.",
+      "Trigger chance and threshold eligibility may make this conditional rather than guaranteed.",
       "Multiple qualifying outputs are aggregated into one normal synergy trace."
     ],
     "channel": "damage-dealt",
@@ -35225,7 +35494,13 @@
     ],
     "damageScope": null,
     "effects": [
-      "Damage Dealt increase 20%"
+      "Damage Dealt increase 20%",
+      "Activation chance depends on Habit Level for each round.",
+      "Target is above 50% Troop Capacity.",
+      "Advantage increases Damage Dealt according to the verified status glossary.",
+      "Activation chance: 25% at effective Habit Level 5.",
+      "Activation chance by Habit Level: 10%, 13%, 16%, 20%, 25%.",
+      "Duration: 2 rounds."
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final amplified damage cannot be calculated because stacking and final combat formulas are not fully verified.",
@@ -36645,7 +36920,9 @@
     "unresolvedQuestions": []
   },
   {
-    "assumptions": [],
+    "assumptions": [
+      "Trigger chance and threshold eligibility may make this conditional rather than guaranteed."
+    ],
     "channel": "damage-received",
     "confidence": "confirmed",
     "conflicts": [
@@ -36655,13 +36932,18 @@
     "damageScope": null,
     "effects": [
       "Damage Received decrease 20%.",
+      "Each recipient below 50% Troop Capacity may receive Resistance, reducing Damage Received by 20%.",
+      "Each recipient below 50% Troop Capacity may receive Resistance, reducing Damage Received by 20%.",
+      "Each recipient below 50% Troop Capacity may receive Resistance, reducing Damage Received by 20%.",
+      "Activation chance: 25% at effective Habit Level 5.",
+      "Activation chance by Habit Level: 10%, 13%, 16%, 20%, 25%.",
       "Duration: 2 rounds.",
       "Activation chance: 25% at effective Habit Level 5.",
       "Activation chance by Habit Level: 10%, 13%, 16%, 20%, 25%."
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final value cannot be calculated because final combat formulas and stacking order are not fully verified.",
-    "explanation": "Seasmoke's Loyal Bond can reduce Caraxes's Damage Received by 20%. Damage Received decrease 20%. Duration: 2 rounds.",
+    "explanation": "Seasmoke's Loyal Bond can reduce Caraxes's Damage Received by 20%. Damage Received decrease 20%. Each recipient below 50% Troop Capacity may receive Resistance, reducing Damage Received by 20%. Each recipient below 50% Troop Capacity may receive Resistance, reducing Damage Received by 20%. Each recipient below 50% Troop Capacity may receive Resistance, reducing Damage Received by 20%. Activation chance: 25% at effective Habit Level 5. Activation chance by Habit Level: 10%, 13%, 16%, 20%, 25%. Duration: 2 rounds.",
     "id": "defensive-ally-support-seasmoke-loyal-bond-loyal-bond-resistance-effect-damage-received-received-modifier-caraxes",
     "interactionScope": "cross-dragon",
     "matchedOutputCapabilityIds": [],
@@ -36722,7 +37004,9 @@
     "unresolvedQuestions": []
   },
   {
-    "assumptions": [],
+    "assumptions": [
+      "Trigger chance and threshold eligibility may make this conditional rather than guaranteed."
+    ],
     "channel": "damage-received",
     "confidence": "confirmed",
     "conflicts": [
@@ -36732,13 +37016,18 @@
     "damageScope": null,
     "effects": [
       "Damage Received decrease 20%.",
+      "Each recipient below 50% Troop Capacity may receive Resistance, reducing Damage Received by 20%.",
+      "Each recipient below 50% Troop Capacity may receive Resistance, reducing Damage Received by 20%.",
+      "Each recipient below 50% Troop Capacity may receive Resistance, reducing Damage Received by 20%.",
+      "Activation chance: 25% at effective Habit Level 5.",
+      "Activation chance by Habit Level: 10%, 13%, 16%, 20%, 25%.",
       "Duration: 2 rounds.",
       "Activation chance: 25% at effective Habit Level 5.",
       "Activation chance by Habit Level: 10%, 13%, 16%, 20%, 25%."
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final value cannot be calculated because final combat formulas and stacking order are not fully verified.",
-    "explanation": "Seasmoke's Loyal Bond can reduce Sheepstealer's Damage Received by 20%. Damage Received decrease 20%. Duration: 2 rounds.",
+    "explanation": "Seasmoke's Loyal Bond can reduce Sheepstealer's Damage Received by 20%. Damage Received decrease 20%. Each recipient below 50% Troop Capacity may receive Resistance, reducing Damage Received by 20%. Each recipient below 50% Troop Capacity may receive Resistance, reducing Damage Received by 20%. Each recipient below 50% Troop Capacity may receive Resistance, reducing Damage Received by 20%. Activation chance: 25% at effective Habit Level 5. Activation chance by Habit Level: 10%, 13%, 16%, 20%, 25%. Duration: 2 rounds.",
     "id": "defensive-ally-support-seasmoke-loyal-bond-loyal-bond-resistance-effect-damage-received-received-modifier-sheepstealer",
     "interactionScope": "cross-dragon",
     "matchedOutputCapabilityIds": [],
@@ -38445,7 +38734,10 @@
     ],
     "damageScope": null,
     "effects": [
-      "Fire Damage Dealt increase 10%"
+      "Fire Damage Dealt increase 10%",
+      "Activation chance 20% per each round.",
+      "Activation chance: 20%.",
+      "Duration: 2 rounds."
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final amplified damage cannot be calculated because stacking and final combat formulas are not fully verified.",
@@ -38569,6 +38861,7 @@
     "conflicts": [],
     "damageScope": null,
     "effects": [
+      "Duration: 3 rounds.",
       "Tactical Damage Dealt increase 36%"
     ],
     "exactResultKnown": false,
@@ -38708,7 +39001,8 @@
     ],
     "damageScope": null,
     "effects": [
-      "Fire Damage Dealt increase 36%"
+      "Fire Damage Dealt increase 36%",
+      "Duration: 3 rounds."
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final amplified damage cannot be calculated because stacking and final combat formulas are not fully verified.",
@@ -39003,7 +39297,7 @@
   },
   {
     "assumptions": [
-      "Trigger chance and target selection may make this conditional rather than guaranteed."
+      "Trigger chance may make this conditional rather than guaranteed."
     ],
     "channel": "damage-dealt",
     "confidence": "confirmed",
@@ -39013,7 +39307,12 @@
     ],
     "damageScope": null,
     "effects": [
-      "Damage Dealt increase 20%"
+      "Damage Dealt increase 20%",
+      "Activation chance depends on Habit Level for each round.",
+      "Advantage increases Damage Dealt according to the verified status glossary.",
+      "Activation chance: 20% at effective Habit Level 5.",
+      "Activation chance by Habit Level: 10%, 12%, 14%, 17%, 20%.",
+      "Duration: 2 rounds."
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final amplified damage cannot be calculated because stacking and final combat formulas are not fully verified.",
@@ -39103,7 +39402,7 @@
   },
   {
     "assumptions": [
-      "Trigger chance and target selection may make this conditional rather than guaranteed.",
+      "Trigger chance may make this conditional rather than guaranteed.",
       "Multiple qualifying outputs are aggregated into one normal synergy trace."
     ],
     "channel": "damage-dealt",
@@ -39116,7 +39415,12 @@
     ],
     "damageScope": null,
     "effects": [
-      "Damage Dealt increase 20%"
+      "Damage Dealt increase 20%",
+      "Activation chance depends on Habit Level for each round.",
+      "Advantage increases Damage Dealt according to the verified status glossary.",
+      "Activation chance: 20% at effective Habit Level 5.",
+      "Activation chance by Habit Level: 10%, 12%, 14%, 17%, 20%.",
+      "Duration: 2 rounds."
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final amplified damage cannot be calculated because stacking and final combat formulas are not fully verified.",
@@ -40833,7 +41137,9 @@
     "unresolvedQuestions": []
   },
   {
-    "assumptions": [],
+    "assumptions": [
+      "Trigger chance may make this conditional rather than guaranteed."
+    ],
     "channel": "damage-received",
     "confidence": "confirmed",
     "conflicts": [
@@ -40843,13 +41149,14 @@
     "damageScope": "tactical",
     "effects": [
       "Tactical Damage Received decrease 16% at effective Habit Level 5.",
+      "Activation chance: 35%.",
       "Duration: 2 rounds.",
       "Ranked progression: L1 8%, L2 9.6%, L3 11.2%, L4 13.6%, L5 16%.",
       "Activation chance: 35%."
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final value cannot be calculated because final combat formulas and stacking order are not fully verified.",
-    "explanation": "Malachite's Forest's Instinct can reduce Syrax's Tactical Damage Received by 16%. Tactical Damage Received decrease 16% at effective Habit Level 5. Duration: 2 rounds. Ranked progression: L1 8%, L2 9.6%, L3 11.2%, L4 13.6%, L5 16%.",
+    "explanation": "Malachite's Forest's Instinct can reduce Syrax's Tactical Damage Received by 16%. Tactical Damage Received decrease 16% at effective Habit Level 5. Activation chance: 35%. Duration: 2 rounds. Ranked progression: L1 8%, L2 9.6%, L3 11.2%, L4 13.6%, L5 16%.",
     "id": "defensive-ally-support-malachite-forests-instinct-forests-instinct-tactical-reduction-damage-received-received-modifier-syrax",
     "interactionScope": "cross-dragon",
     "matchedOutputCapabilityIds": [],
@@ -40910,7 +41217,9 @@
     "unresolvedQuestions": []
   },
   {
-    "assumptions": [],
+    "assumptions": [
+      "Trigger chance may make this conditional rather than guaranteed."
+    ],
     "channel": "damage-received",
     "confidence": "confirmed",
     "conflicts": [
@@ -40920,13 +41229,14 @@
     "damageScope": "tactical",
     "effects": [
       "Tactical Damage Received decrease 16% at effective Habit Level 5.",
+      "Activation chance: 35%.",
       "Duration: 2 rounds.",
       "Ranked progression: L1 8%, L2 9.6%, L3 11.2%, L4 13.6%, L5 16%.",
       "Activation chance: 35%."
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final value cannot be calculated because final combat formulas and stacking order are not fully verified.",
-    "explanation": "Malachite's Forest's Instinct can reduce Sheepstealer's Tactical Damage Received by 16%. Tactical Damage Received decrease 16% at effective Habit Level 5. Duration: 2 rounds. Ranked progression: L1 8%, L2 9.6%, L3 11.2%, L4 13.6%, L5 16%.",
+    "explanation": "Malachite's Forest's Instinct can reduce Sheepstealer's Tactical Damage Received by 16%. Tactical Damage Received decrease 16% at effective Habit Level 5. Activation chance: 35%. Duration: 2 rounds. Ranked progression: L1 8%, L2 9.6%, L3 11.2%, L4 13.6%, L5 16%.",
     "id": "defensive-ally-support-malachite-forests-instinct-forests-instinct-tactical-reduction-damage-received-received-modifier-sheepstealer",
     "interactionScope": "cross-dragon",
     "matchedOutputCapabilityIds": [],
@@ -42599,7 +42909,10 @@
     ],
     "damageScope": null,
     "effects": [
-      "Fire Damage Dealt increase 10%"
+      "Fire Damage Dealt increase 10%",
+      "Activation chance 20% per each round.",
+      "Activation chance: 20%.",
+      "Duration: 2 rounds."
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final amplified damage cannot be calculated because stacking and final combat formulas are not fully verified.",
@@ -42721,7 +43034,8 @@
     ],
     "damageScope": null,
     "effects": [
-      "Tactical Damage Dealt increase 36%"
+      "Tactical Damage Dealt increase 36%",
+      "Duration: 3 rounds."
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final amplified damage cannot be calculated because stacking and final combat formulas are not fully verified.",
@@ -42824,7 +43138,8 @@
     ],
     "damageScope": null,
     "effects": [
-      "Fire Damage Dealt increase 36%"
+      "Fire Damage Dealt increase 36%",
+      "Duration: 3 rounds."
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final amplified damage cannot be calculated because stacking and final combat formulas are not fully verified.",
@@ -42963,7 +43278,9 @@
     "conflicts": [],
     "damageScope": null,
     "effects": [
-      "Tactical Damage Dealt increase 2.5"
+      "Tactical Damage Dealt increase 2.5",
+      "Ally deals Tactical Damage.",
+      "Spreading Blaze stacks require the trigger chance and target selection to select this ally."
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final amplified damage cannot be calculated because stacking and final combat formulas are not fully verified.",
@@ -43043,7 +43360,12 @@
     ],
     "damageScope": null,
     "effects": [
-      "Tactical Damage Dealt increase 2.5"
+      "Tactical Damage Dealt increase 2.5",
+      "Activation chance depends on Habit Level for start of combat.",
+      "Ally deals Tactical Damage.",
+      "Spreading Blaze stacks require the trigger chance and target selection to select this ally.",
+      "Activation chance: 100% at effective Habit Level 5.",
+      "Activation chance by Habit Level: 50%, 60%, 70%, 85%, 100%."
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final amplified damage cannot be calculated because stacking and final combat formulas are not fully verified.",
@@ -44115,7 +44437,8 @@
     "assumptions": [
       "Cumulative stacking is not assumed.",
       "Exact interaction between overlapping threshold tiers is unresolved.",
-      "Threshold applicability depends on each recipient current Troop Capacity."
+      "Threshold applicability depends on each recipient current Troop Capacity.",
+      "Threshold eligibility may make this conditional rather than guaranteed."
     ],
     "channel": "damage-received",
     "confidence": "confirmed",
@@ -44125,7 +44448,10 @@
     ],
     "damageScope": "fire",
     "effects": [
+      "Below 25% Troop Capacity.",
+      "Below 75% Troop Capacity.",
       "Duration: until end of current round.",
+      "Each recipient below 50% Troop Capacity may receive Resistance, reducing Damage Received by 20%.",
       "Fire Damage Received decrease 10% at effective Habit Level 5.",
       "Fire Damage Received decrease 20% at effective Habit Level 5.",
       "Fire Damage Received decrease 30% at effective Habit Level 5.",
@@ -46754,6 +47080,9 @@
     "conflicts": [],
     "damageScope": null,
     "effects": [
+      "Activation chance 20% per each round.",
+      "Activation chance: 20%.",
+      "Duration: 2 rounds.",
       "Fire Damage Dealt increase 10%"
     ],
     "exactResultKnown": false,
@@ -46950,7 +47279,8 @@
     ],
     "damageScope": null,
     "effects": [
-      "Tactical Damage Dealt increase 36%"
+      "Tactical Damage Dealt increase 36%",
+      "Duration: 3 rounds."
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final amplified damage cannot be calculated because stacking and final combat formulas are not fully verified.",
@@ -47049,6 +47379,7 @@
     "conflicts": [],
     "damageScope": null,
     "effects": [
+      "Duration: 3 rounds.",
       "Fire Damage Dealt increase 36%"
     ],
     "exactResultKnown": false,
@@ -51206,7 +51537,12 @@
     "conflicts": [],
     "damageScope": null,
     "effects": [
-      "Damage Dealt increase 20%"
+      "Activation chance by Habit Level: 17.5%, 21%, 24.5%, 29.8%, 35%.",
+      "Activation chance: 35% at effective Habit Level 5.",
+      "Advantage increases Damage Dealt according to the verified status glossary.",
+      "Damage Dealt increase 20%",
+      "Duration: 2 rounds.",
+      "One shared activation roll applies both effects."
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final amplified damage cannot be calculated because stacking and final combat formulas are not fully verified.",
@@ -54046,7 +54382,12 @@
     "conflicts": [],
     "damageScope": null,
     "effects": [
-      "Damage Dealt increase 20%"
+      "Activation chance by Habit Level: 17.5%, 21%, 24.5%, 29.8%, 35%.",
+      "Activation chance: 35% at effective Habit Level 5.",
+      "Advantage increases Damage Dealt according to the verified status glossary.",
+      "Damage Dealt increase 20%",
+      "Duration: 2 rounds.",
+      "One shared activation roll applies both effects."
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final amplified damage cannot be calculated because stacking and final combat formulas are not fully verified.",
@@ -56889,6 +57230,7 @@
     "conflicts": [],
     "damageScope": null,
     "effects": [
+      "Duration: 3 rounds.",
       "Tactical Damage Dealt increase 36%"
     ],
     "exactResultKnown": false,
@@ -57431,7 +57773,12 @@
     "conflicts": [],
     "damageScope": null,
     "effects": [
-      "Damage Dealt increase 20%"
+      "Activation chance by Habit Level: 17.5%, 21%, 24.5%, 29.8%, 35%.",
+      "Activation chance: 35% at effective Habit Level 5.",
+      "Advantage increases Damage Dealt according to the verified status glossary.",
+      "Damage Dealt increase 20%",
+      "Duration: 2 rounds.",
+      "One shared activation roll applies both effects."
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final amplified damage cannot be calculated because stacking and final combat formulas are not fully verified.",
@@ -61421,7 +61768,12 @@
     "conflicts": [],
     "damageScope": null,
     "effects": [
-      "Damage Dealt increase 20%"
+      "Activation chance by Habit Level: 17.5%, 21%, 24.5%, 29.8%, 35%.",
+      "Activation chance: 35% at effective Habit Level 5.",
+      "Advantage increases Damage Dealt according to the verified status glossary.",
+      "Damage Dealt increase 20%",
+      "Duration: 2 rounds.",
+      "One shared activation roll applies both effects."
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final amplified damage cannot be calculated because stacking and final combat formulas are not fully verified.",

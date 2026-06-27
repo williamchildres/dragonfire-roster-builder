@@ -16,6 +16,7 @@ const formations: Record<string, FormationAnalysisInput> = {
   '6': { 'left-flank': 'malachite', vanguard: 'syrax', 'right-flank': 'sheepstealer' },
   '7': { 'left-flank': 'syrax', vanguard: 'vermax', 'right-flank': 'caraxes' },
   '8': { 'left-flank': 'sheepstealer', vanguard: 'caraxes', 'right-flank': 'syrax' },
+  multi: { 'left-flank': 'caraxes', vanguard: 'malachite', 'right-flank': 'seasmoke' },
 };
 
 function normalTraces(formationId: string, options = {}): SynergyTrace[] {
@@ -92,7 +93,6 @@ describe('formation analysis normalization', () => {
     expect(loyalBond.map((item) => item.targetSelector.count)).toEqual([2, 2]);
     expect(loyalBond.every((item) => item.targetSelector.selection !== 'one-eligible-adjacent')).toBe(true);
   });
-
   it('resolves Reactive Instincts to one highest-Instinct recipient and keeps scaling selective', () => {
     const traces = analyzeFormationTraces(formations['7']!, dragons, preview);
     const direct = traces.find((trace) => trace.sourceAbilityId === 'vermax-reactive-instincts' && trace.ruleId === 'direct-stat-support');
