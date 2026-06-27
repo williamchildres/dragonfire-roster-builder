@@ -1,7 +1,7 @@
 import { render, screen, within } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { afterEach, describe, expect, it, vi } from 'vitest';
-import { App } from '../app/App';
+import { App, RawWordingDisclosure } from '../app/App';
 import { STORAGE_KEY } from '../services/rosterStorage';
 import globalCss from '../styles/global.css?raw';
 
@@ -132,6 +132,81 @@ describe('Dragonfire Roster Lab app', () => {
     expect(sirensCallCard).toHaveTextContent('Taunt if not already Taunted');
     expect(sirensCallCard).toHaveTextContent('Target is not already Taunted. apply Taunt');
     expect(sirensCallCard).not.toHaveTextContent('apply Taunt and Stagger');
+  });
+
+  it('shows raw verified command wording with preserved paragraphs and a safe fallback', async () => {
+    const user = userEvent.setup();
+    render(<App />);
+
+    await user.click(screen.getByRole('button', { name: /dragon database/i }));
+    await user.type(screen.getByLabelText(/search by name/i), 'Feskar');
+    const feskarCard = screen.getByRole('heading', { name: 'Feskar' }).closest('article');
+    expect(feskarCard).not.toBeNull();
+    await user.click(within(feskarCard as HTMLElement).getByRole('button', { name: /view details/i }));
+
+    const dialog = screen.getByRole('dialog', { name: /feskar/i });
+    const commandCard = within(dialog).getByRole('heading', { name: 'Calculated Assault' }).closest('article');
+    expect(commandCard).not.toBeNull();
+    const rawSummary = within(commandCard as HTMLElement).getByText('Raw verified wording');
+    expect(rawSummary.closest('details')).not.toHaveAttribute('open');
+    await user.click(rawSummary);
+
+    const rawContent = rawSummary.closest('details');
+    expect(rawContent).not.toBeNull();
+    expect(rawContent?.querySelectorAll('p').length).toBeGreaterThanOrEqual(3);
+    expect(rawContent).toHaveTextContent('Each Round: 20% chance');
+    expect(rawContent).toHaveTextContent('Rounds 2, 4, 7, and 9');
+    expect(rawContent).toHaveTextContent('At 6+ Stars:');
+    expect(rawContent).toHaveTextContent('This damage is increased by 1.5x against targets afflicted with Burn, increasing the Damage Rate to 60%.');
+    expect(rawContent).toHaveTextContent('Deal Fire Damage to all enemies that deal Physical Damage, excluding Basic Attacks, at a 40% Damage Rate.');
+
+    await user.click(within(dialog).getByRole('button', { name: /close details/i }));
+    await user.clear(screen.getByLabelText(/search by name/i));
+    await user.type(screen.getByLabelText(/search by name/i), 'Rhysarion');
+    const rhysarionCard = screen.getByRole('heading', { name: 'Rhysarion' }).closest('article');
+    expect(rhysarionCard).not.toBeNull();
+    await user.click(within(rhysarionCard as HTMLElement).getByRole('button', { name: /view details/i }));
+    let dragonDialog = screen.getByRole('dialog', { name: /rhysarion/i });
+    let commandSection = within(dragonDialog).getByRole('heading', { name: 'Dawnsong' }).closest('article');
+    expect(commandSection).not.toBeNull();
+    const rhysarionSummary = within(commandSection as HTMLElement).getByText('Raw verified wording');
+    await user.click(rhysarionSummary);
+    let commandRaw = rhysarionSummary.closest('details');
+    expect(commandRaw).not.toBeNull();
+    expect(commandRaw?.querySelectorAll('p').length).toBeGreaterThanOrEqual(3);
+    expect(commandRaw).toHaveTextContent('Rounds 1, 4, and 7');
+    expect(commandRaw).toHaveTextContent('Rounds 2, 5, and 8');
+    expect(commandRaw).toHaveTextContent('Stun, Stagger, Overwhelm, and Confusion');
+    expect(commandRaw).toHaveTextContent('At 6+ Stars:');
+    expect(commandRaw).toHaveTextContent('60% Recovery Rate');
+
+    await user.click(within(dragonDialog).getByRole('button', { name: /close details/i }));
+    await user.clear(screen.getByLabelText(/search by name/i));
+    await user.type(screen.getByLabelText(/search by name/i), 'Shadowsong');
+    const shadowsongCard = screen.getByRole('heading', { name: 'Shadowsong' }).closest('article');
+    expect(shadowsongCard).not.toBeNull();
+    await user.click(within(shadowsongCard as HTMLElement).getByRole('button', { name: /view details/i }));
+    dragonDialog = screen.getByRole('dialog', { name: /shadowsong/i });
+    commandSection = within(dragonDialog).getByRole('heading', { name: 'Breath of Fire' }).closest('article');
+    expect(commandSection).not.toBeNull();
+    const shadowsongSummary = within(commandSection as HTMLElement).getByText('Raw verified wording');
+    await user.click(shadowsongSummary);
+    commandRaw = shadowsongSummary.closest('details');
+    expect(commandRaw).not.toBeNull();
+    expect(commandRaw?.querySelectorAll('p').length).toBeGreaterThanOrEqual(3);
+    expect(commandRaw).toHaveTextContent('Rounds 2, 5, and 8');
+    expect(commandRaw).toHaveTextContent('100% Damage Rate');
+    expect(commandRaw).toHaveTextContent('150%');
+    expect(commandRaw).toHaveTextContent('At 10 Stars:');
+    expect(commandRaw).toHaveTextContent('60% Damage Rate');
+    expect(commandRaw).toHaveTextContent('40% chance');
+    expect(commandRaw).toHaveTextContent('different enemy');
+    expect(commandRaw).toHaveTextContent('20% chance');
+    expect(commandRaw).toHaveTextContent('Burn deals Fire Damage to the target each round.');
+    expect(commandRaw).toHaveTextContent('2 rounds');
+
+    const rendered = render(<RawWordingDisclosure rawText={null} />);
+    expect(rendered.container).toBeEmptyDOMElement();
   });
 
   it('persists ownership and star rank after reload', async () => {

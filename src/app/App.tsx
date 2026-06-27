@@ -2499,10 +2499,7 @@ function AbilityCard({
           </ul>
         </div>
       ) : null}
-      <details>
-        <summary>Raw verified wording</summary>
-        <p>{ability.rawDescription ?? unknown}</p>
-      </details>
+      <RawWordingDisclosure rawText={ability.rawDescription} />
       {ability.unresolvedQuestions.length > 0 ? (
         <ul className="plain-list">
           {ability.unresolvedQuestions.map((question) => (
@@ -2533,6 +2530,30 @@ function EffectSummary({
       {effect.rankedValues.length > 0 ? `; progression: ${rankedLabel(effect.rankedValues)}` : ''}
       {effectDetailSuffix(effect)}
     </>
+  );
+}
+
+export function RawWordingDisclosure({ rawText }: { rawText: string | null }) {
+  if (!rawText) {
+    return null;
+  }
+
+  const paragraphs = rawText
+    .split(/\n\s*\n+/)
+    .map((paragraph) => paragraph.trim())
+    .filter(Boolean);
+
+  if (paragraphs.length === 0) {
+    return null;
+  }
+
+  return (
+    <details>
+      <summary>Raw verified wording</summary>
+      {paragraphs.map((paragraph) => (
+        <p key={paragraph}>{paragraph}</p>
+      ))}
+    </details>
   );
 }
 

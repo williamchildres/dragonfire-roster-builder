@@ -21,7 +21,7 @@
   "firstObservedInGame": null,
   "format": "dragonfire-dragon-profile",
   "gameVersion": null,
-  "generatedAt": "2026-06-27T06:37:07.376Z",
+  "generatedAt": "2026-06-27T06:59:05.145Z",
   "habits": [],
   "id": "shimmer",
   "isNew": false,
@@ -44,7 +44,7 @@
   "slug": "shimmer",
   "source": {
     "branch": "fix/command-source-text-and-summaries",
-    "commit": "95b04abf8425dec17be170f4b6b3aba1bd124985",
+    "commit": "c5b684622cc6f516c9f91109d764a6c884e79b5b",
     "databaseVersion": "0.6.2",
     "dataSchemaVersion": 12,
     "gameBuild": "26.6.53509",
