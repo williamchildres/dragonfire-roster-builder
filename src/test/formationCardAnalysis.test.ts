@@ -18,6 +18,7 @@ const formations: Record<string, FormationAnalysisInput> = {
   '4': { 'left-flank': 'malachite', vanguard: 'seasmoke', 'right-flank': 'sheepstealer' },
   '8': { 'left-flank': 'sheepstealer', vanguard: 'caraxes', 'right-flank': 'syrax' },
   multi: { 'left-flank': 'caraxes', vanguard: 'malachite', 'right-flank': 'seasmoke' },
+  epic: { 'left-flank': 'daemoros', vanguard: 'vaeldra', 'right-flank': 'vermax' },
   eclipse: { 'left-flank': 'crimson', vanguard: 'vhagar', 'right-flank': 'kalspire' },
   '13': { 'left-flank': 'seasmoke', vanguard: 'malachite', 'right-flank': 'sheepstealer' },
   '14': { 'left-flank': 'seasmoke', vanguard: 'sheepstealer', 'right-flank': 'malachite' },
@@ -128,20 +129,24 @@ describe('formation card analysis presentation', () => {
     expect(vermax.receives.some((item) => item.abilityName === 'Trial by Flame')).toBe(false);
 
     const provider = providerCards[0]!;
+    const providerText = [provider.summary, provider.detail, ...provider.summaryLines, ...provider.details, ...provider.effects].join(' ');
+    const malachiteText = [malachiteReceives[0]?.summary, malachiteReceives[0]?.detail, ...(malachiteReceives[0]?.summaryLines ?? []), ...(malachiteReceives[0]?.details ?? []), ...(malachiteReceives[0]?.effects ?? [])].join(' ');
+    const seasmokeText = [seasmokeReceives[0]?.summary, seasmokeReceives[0]?.detail, ...(seasmokeReceives[0]?.summaryLines ?? []), ...(seasmokeReceives[0]?.details ?? []), ...(seasmokeReceives[0]?.effects ?? [])].join(' ');
     expect(provider.state).toBe('preview');
     expect(provider.effectTitle).toBe('Trial by Flame');
-    expect(provider.summary).toContain('Malachite and Seasmoke can each receive Fire Damage Received support');
-    expect(provider.summary).not.toMatch(/one .*recipient is selected/i);
-    expect(provider.summary).not.toContain('Target not guaranteed');
     expect(provider.targetSummary).toContain('All matching allies: Malachite and Seasmoke.');
     expect(provider.targetSummary).toContain('Known recipient count: 2.');
     expect(provider.targetSummary).toContain('Each eligible recipient evaluates its own condition.');
-    expect([provider.summary, provider.detail, ...provider.summaryLines, ...provider.details, ...provider.effects].join(' '))
-      .toContain('Fire Damage Received support');
-    expect([provider.summary, provider.detail, ...provider.summaryLines, ...provider.details, ...provider.effects].join(' '))
-      .toContain('Damage Received support');
-    expect([provider.summary, provider.detail, ...provider.summaryLines, ...provider.details, ...provider.effects].join(' '))
-      .toMatch(/below 50% Troop Capacity/i);
+    expect(providerText).toContain('Below 75% Troop Capacity');
+    expect(providerText).toContain('Below 50% Troop Capacity');
+    expect(providerText).toContain('Below 25% Troop Capacity');
+    expect(providerText).toContain('Fire Damage Received -10%');
+    expect(providerText).toContain('Resistance');
+    expect(providerText).toContain('receive Resistance, reducing Damage Received by 20%');
+    expect(providerText).toContain('Fire Damage Received -30%');
+    expect(providerText).toContain('until end of the current round.');
+    expect(providerText).not.toMatch(/one .*recipient is selected/i);
+    expect(providerText).not.toContain('Target not guaranteed');
     expect(provider.detail).toContain('Threshold applicability depends on each recipient\'s current Troop Capacity');
     expect(provider.detail).toContain('exact interaction between overlapping threshold tiers is unresolved');
     expect(provider.requirements).toEqual(expect.arrayContaining([
@@ -149,12 +154,59 @@ describe('formation card analysis presentation', () => {
       expect.objectContaining({ label: 'Vermax - Trial by Flame Selected Habit Level', satisfied: false }),
     ]));
 
-    expect(malachiteReceives[0]?.summary).toContain('Fire Damage Received support when Malachite meets the condition.');
-    expect(seasmokeReceives[0]?.summary).toContain('Fire Damage Received support when Seasmoke meets the condition.');
-    expect(malachiteReceives[0]?.summary).not.toContain('Target not guaranteed');
-    expect(seasmokeReceives[0]?.summary).not.toContain('Target not guaranteed');
+    expect(malachiteText).toContain('Below 75% Troop Capacity');
+    expect(malachiteText).toContain('Below 50% Troop Capacity');
+    expect(malachiteText).toContain('Below 25% Troop Capacity');
+    expect(seasmokeText).toContain('Below 75% Troop Capacity');
+    expect(seasmokeText).toContain('Below 50% Troop Capacity');
+    expect(seasmokeText).toContain('Below 25% Troop Capacity');
+    expect(malachiteText).not.toContain('Target not guaranteed');
+    expect(seasmokeText).not.toContain('Target not guaranteed');
     expect(malachiteReceives[0]?.traceIds).toEqual(provider.traceIds);
     expect(seasmokeReceives[0]?.traceIds).toEqual(provider.traceIds);
+  });
+
+  it('preserves Trial by Flame threshold details in visible card aggregation', () => {
+    const roster = selectedRoster(['daemoros', 'vaeldra', 'vermax'], 26, 10);
+    const result = presentation('epic', false, { roster });
+
+    const vermax = card(result, 'vermax');
+    const daemoros = card(result, 'daemoros');
+    const vaeldra = card(result, 'vaeldra');
+    const providerCards = vermax.provides.filter((item) => item.abilityName === 'Trial by Flame');
+    const daemorosCards = daemoros.receives.filter((item) => item.abilityName === 'Trial by Flame');
+    const vaeldraCards = vaeldra.receives.filter((item) => item.abilityName === 'Trial by Flame');
+
+    expect(providerCards).toHaveLength(1);
+    expect(daemorosCards).toHaveLength(1);
+    expect(vaeldraCards).toHaveLength(1);
+    expect(vermax.receives.some((item) => item.abilityName === 'Trial by Flame')).toBe(false);
+
+    const provider = providerCards[0]!;
+    const daemorosText = [daemorosCards[0]?.summary, daemorosCards[0]?.detail, ...(daemorosCards[0]?.summaryLines ?? []), ...(daemorosCards[0]?.details ?? []), ...(daemorosCards[0]?.effects ?? [])].join(' ');
+    const vaeldraText = [vaeldraCards[0]?.summary, vaeldraCards[0]?.detail, ...(vaeldraCards[0]?.summaryLines ?? []), ...(vaeldraCards[0]?.details ?? []), ...(vaeldraCards[0]?.effects ?? [])].join(' ');
+    const providerText = [provider.summary, provider.detail, ...provider.summaryLines, ...provider.details, ...provider.effects].join(' ');
+
+    expect(provider.state).toBe('conditional');
+    expect(provider.effectTitle).toBe('Trial by Flame');
+    expect(provider.targetSummary).toContain('All matching allies: Daemoros and Vaeldra.');
+    expect(provider.targetSummary).toContain('Known recipient count: 2.');
+    expect(provider.targetSummary).toContain('Each eligible recipient evaluates its own condition.');
+
+    for (const text of [providerText, daemorosText, vaeldraText]) {
+      expect(text).toContain('Below 75% Troop Capacity');
+      expect(text).toContain('Below 50% Troop Capacity');
+      expect(text).toContain('Below 25% Troop Capacity');
+      expect(text).toContain('Fire Damage Received -5%');
+      expect(text).toContain('Resistance');
+      expect(text).toContain('receive Resistance, reducing Damage Received by 10%');
+      expect(text).toContain('Fire Damage Received -15%');
+      expect(text).toContain('until end of the current round.');
+      expect(text).not.toContain('one candidate is selected');
+      expect(text).not.toContain('Target not guaranteed');
+      expect(text).not.toContain('cumulative');
+      expect(text).not.toContain('strongest');
+    }
   });
 
   it('honors two-target ally cardinality without candidate wording', () => {
