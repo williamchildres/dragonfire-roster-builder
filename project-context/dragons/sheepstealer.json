@@ -4939,7 +4939,7 @@
   "firstObservedInGame": "2026-06-22",
   "format": "dragonfire-dragon-profile",
   "gameVersion": null,
-  "generatedAt": "2026-06-27T04:15:45.188Z",
+  "generatedAt": "2026-06-27T05:30:11.291Z",
   "habits": [
     {
       "abilityClass": "passive",
@@ -7907,8 +7907,8 @@
   "rosterSourceStatus": "in-game-verified-pending-official-site",
   "slug": "sheepstealer",
   "source": {
-    "branch": "fix/ordered-targets-and-analysis-integrity",
-    "commit": "337b216717654cd2e255a7ba219be419bb5a26ad",
+    "branch": "fix/final-analysis-presentation-cleanup",
+    "commit": "20962dbcdafe3ced4afa7803bdb4a2ffe0e7f895",
     "databaseVersion": "0.6.2",
     "dataSchemaVersion": 12,
     "gameBuild": "26.6.53509",

@@ -580,7 +580,6 @@ function outputDetailLines(
 function modifierDetailLines(
   modifier: ModifierCapability,
   context: { schedule: AbilitySchedule; effect: AbilityEffect } | null,
-  options: CapabilityOptions,
 ): string[] {
   if (!context) {
     return [];
@@ -589,7 +588,6 @@ function modifierDetailLines(
     scheduleTimingDetail(context.schedule),
     modifier.durationRounds ? `Duration: ${modifier.durationRounds} rounds.` : null,
     rankedProgressionDetail(context.effect),
-    `${channelLabel(modifier.channel)} reduction at current effective level: ${modifierDisplayValue(modifier, options)}.`,
   ].filter((detail): detail is string => Boolean(detail));
 }
 
@@ -1096,9 +1094,7 @@ function analyzeDefensiveAllySupport(
       ]);
       const damageLabel = damageReceivedLabel(modifier.damageScope);
       const displayValue = modifierDisplayValue(modifier, options);
-      const modifierDetails = modifier.statusId
-        ? defensiveModifierDetailLines(modifier, displayValue, options, context)
-        : [];
+      const modifierDetails = defensiveModifierDetailLines(modifier, displayValue, options, context);
       const trace = makeDependencyTrace({
         id: `defensive-ally-support-${modifier.id}-${recipientId}`,
         matchKind: 'defensive-ally-support',
@@ -1294,7 +1290,15 @@ function recipientSideModifierDetailLines(
   options: CapabilityOptions,
 ): string[] {
   if (!context) {
-    return [];
+    const effectiveLevel = modifier.rankedValues.length > 0
+      ? (options.previewMaxRankInteractions ? 5 : effectiveHabitLevelForCapability(modifier, options))
+      : null;
+    return [
+      modifier.channel === 'damage-received'
+        ? `${damageReceivedLabel(modifier.damageScope)} decrease ${displayValue}${effectiveLevel ? ` at effective Habit Level ${effectiveLevel}` : ''}.`
+        : `${channelLabel(modifier.channel)} Received +${displayValue}${effectiveLevel ? ` at effective Habit Level ${effectiveLevel}` : ''}.`,
+      modifier.durationRounds ? `Duration: ${modifier.durationRounds} rounds.` : null,
+    ].filter((detail): detail is string => Boolean(detail));
   }
   const effectiveLevel = modifier.rankedValues.length > 0
     ? (options.previewMaxRankInteractions ? 5 : effectiveHabitLevelForCapability(modifier, options))
@@ -1335,10 +1339,17 @@ function defensiveModifierDetailLines(
   const effectiveLevel = modifier.rankedValues.length > 0
     ? (options.previewMaxRankInteractions ? 5 : effectiveHabitLevelForCapability(modifier, options))
     : null;
+  if (!context) {
+    return [
+      `${damageReceivedLabel(modifier.damageScope)} decrease ${displayValue}${effectiveLevel ? ` at effective Habit Level ${effectiveLevel}` : ''}.`,
+      modifier.sourceScope === 'non-basic-attacks' ? `${damageReceivedLabel(modifier.damageScope)} reduction applies to non-Basic Attacks only.` : null,
+      modifier.durationRounds ? `Duration: ${modifier.durationRounds} rounds.` : null,
+    ].filter((detail): detail is string => Boolean(detail));
+  }
   return [
     context ? scheduleTimingDetail(context.schedule) : null,
     modifier.statusId && context?.effect.stack ? `Grants 1 ${formatCapabilityToken(modifier.statusId)} stack.` : null,
-    `${damageReceivedLabel(modifier.damageScope)} reduction: ${displayValue}${effectiveLevel ? ` at effective Habit Level ${effectiveLevel}` : ''}.`,
+    `${damageReceivedLabel(modifier.damageScope)} decrease ${displayValue}${effectiveLevel ? ` at effective Habit Level ${effectiveLevel}` : ''}.`,
     modifier.sourceScope === 'non-basic-attacks' ? `${damageReceivedLabel(modifier.damageScope)} reduction applies to non-Basic Attacks only.` : null,
     context ? durationDetail(context.effect) : modifier.durationRounds ? `Duration: ${modifier.durationRounds} rounds.` : null,
     context ? rankedProgressionDetail(context.effect) : null,
@@ -1472,7 +1483,7 @@ function analyzeFriendlyImpairments(
       ]);
       const value = modifierDisplayValue(modifier, options);
       const context = sourceEffectContext(provider, modifier.abilityId, modifier.sourceEffectId);
-      const impairmentDetails = modifierDetailLines(modifier, context, options);
+      const impairmentDetails = modifierDetailLines(modifier, context);
       traces.push(makeDependencyTrace({
         id: `friendly-impairment-${modifier.id}-${recipientId}`,
         matchKind: 'friendly-impairment',
@@ -2569,7 +2580,7 @@ function analyzeEnemyDamageReceivedIncreases(
         ...activationChanceFacts(modifier, options),
       ],
       effects: [
-        `${channel} Received increase ${displayValue}`,
+        `${channel} Received +${displayValue}.`,
         ...enemyVulnerabilityDetails,
       ],
       conflicts: requirements
@@ -2729,7 +2740,7 @@ function analyzePeriodicStatusDamage(
       evidenceIds: statusOutput.evidenceIds,
       sourceKind: abilitySourceKind(dragons, statusOutput.dragonId, statusOutput.abilityId),
     }, options);
-    const detailLines = periodicDamageDetailLines(periodic, matchingStatusOutputs, displayValue, options);
+    const detailLines = periodicDamageDetailLines(periodic, matchingStatusOutputs, displayValue);
     traces.push({
       id: `periodic-status-damage-${statusOutput.id}`,
       ruleId: 'periodic-status-damage',
@@ -2748,7 +2759,6 @@ function analyzePeriodicStatusDamage(
         `Periodic damage channel: ${periodic.channel}.`,
         ...detailLines,
         ...statusOutput.conditions.map((condition) => condition.description),
-        ...activationChanceFactsForStatus(statusOutput, options),
       ],
       effects: detailLines,
       conflicts: requirements
@@ -2791,7 +2801,6 @@ function periodicDamageDetailLines(
   periodic: PeriodicDamageDefinition,
   statusOutputs: StatusOutputCapability[],
   displayValue: string,
-  options: CapabilityOptions,
 ): string[] {
   const status = statusLabel(periodic.statusId);
   const channel = channelLabel(periodic.channel);
@@ -2803,7 +2812,6 @@ function periodicDamageDetailLines(
     periodic.mitigationStat ? `Mitigated by target ${formatStatName(periodic.mitigationStat)}.` : null,
     ...statusOutputs.flatMap((output) => [
       output.sourceEffectId ? `Status supplier effect: ${output.sourceEffectId}.` : null,
-      ...activationChanceFactsForStatus(output, options),
       output.activationGroupId ? `Activation group: ${output.activationGroupId}.` : null,
       output.targetSelector.sharedSelectionGroupId ? `Selected-target group: ${output.targetSelector.sharedSelectionGroupId}.` : null,
     ]),
@@ -2839,24 +2847,6 @@ function statusChanceConditional(statusOutput: StatusOutputCapability): boolean 
     (statusOutput.activationChanceByHabitLevel?.length ?? 0) > 0;
 }
 
-function activationChanceFactsForStatus(statusOutput: StatusOutputCapability, options?: CapabilityOptions): string[] {
-  const statusChance = statusOutput.chanceByHabitLevel.length > 0 && options
-    ? rankedValueForHabitLevel(statusOutput.chanceByHabitLevel, effectiveHabitLevelForCapability(statusOutput, options))
-    : null;
-  const activationChance = (statusOutput.activationChanceByHabitLevel?.length ?? 0) > 0 && options
-    ? rankedValueForHabitLevel(statusOutput.activationChanceByHabitLevel ?? [], effectiveHabitLevelForCapability(statusOutput, options))
-    : null;
-  return [
-    ...(statusOutput.chanceFixed !== null ? [`Status application chance: ${statusOutput.chanceFixed}%.`] : []),
-    ...(statusChance ? [`Status application chance: ${formatValue(statusChance.value, statusChance.unit)} at effective Habit Level ${effectiveHabitLevelForCapability(statusOutput, options!)}.`] : []),
-    ...(statusOutput.chanceByHabitLevel.length > 0 && !statusChance ? ['Status application chance depends on Habit Level.'] : []),
-    ...(statusOutput.activationChanceFixed !== null ? [`Activation chance: ${statusOutput.activationChanceFixed}%.`] : []),
-    ...(activationChance ? [`Activation chance: ${formatValue(activationChance.value, activationChance.unit)} at effective Habit Level ${effectiveHabitLevelForCapability(statusOutput, options!)}.`] : []),
-    ...((statusOutput.activationChanceByHabitLevel?.length ?? 0) > 0 && !activationChance ? ['Activation chance depends on Habit Level.'] : []),
-    ...(statusOutput.activationGroupId ? [`Shared activation group: ${statusOutput.activationGroupId}.`] : []),
-  ];
-}
-
 function formatStatName(stat: DragonStatId): string {
   return stat.charAt(0).toUpperCase() + stat.slice(1);
 }
@@ -2880,10 +2870,10 @@ function enemyVulnerabilityExplanation(
 }
 
 function enemyVulnerabilityDetailLines(modifier: ModifierCapability, providerName: string, channel: string, displayValue: string): string[] {
+  void displayValue;
   return [
     successfulStatusTriggerLine(modifier, providerName),
     sameEnemyLine(modifier),
-    `${channel} Received ${modifier.operation === 'increase' ? '+' : '-'}${displayValue}.`,
     sourceScopeLine(modifier, channel),
     durationLine(modifier),
     staggerExclusionLine(modifier),
@@ -3484,7 +3474,6 @@ function statusSupplierFacts(
     timing ? timing.replace(/^Timing:/, 'Activation timing:') : null,
     level ? `Current effective ${ability.name} Habit Level: ${level}.` : null,
     level ? `Supplier effective Habit Level: ${level}.` : null,
-    chanceText ? `Activation chance: ${chanceText}.` : null,
     `Target: ${targetText}.`,
     lane,
     priority ?? targetPriorityFact(targetEffect),
@@ -3521,16 +3510,17 @@ function statusSupplierFacts(
       return `${relatedChanceText} chance on the ${ordinal} added target${index === 1 ? ', which must differ from the first' : ''}`;
     })
     : [];
+  const includeChanceFacts = relatedSummaries.length <= 1;
   const summary = chanceText
     ? (relatedSummaries.length > 1
-      ? `At effective Habit Level ${level ?? 'unknown'}, ${ability.name} can apply ${statusLabel(statusOutput.statusId)} ${scheduleTimingAdverb(schedule)}: ${joinEnglishList(relatedSummaries)}${effect.durationRounds ? ` for ${effect.durationRounds} rounds` : ''}.`
+      ? `At effective Habit Level ${level ?? 'unknown'}, ${ability.name} can apply ${statusLabel(statusOutput.statusId)} ${scheduleTimingAdverb(schedule)}: ${relatedSummaries.join(' and ')}. ${statusLabel(statusOutput.statusId)} lasts ${effect.durationRounds ?? 'unknown'} rounds. ${statusLabel(statusOutput.statusId)} application and target overlap are not guaranteed.`
       : `At effective Habit Level ${level ?? 'unknown'}, ${ability.name} has a ${chanceText} chance ${scheduleTimingAdverb(schedule)} to ${statusLabel(statusOutput.statusId)} ${targetWithLane}${targetEffect.targetPriority === 'prefer-warrior' ? ', prioritizing Warriors' : ''}${effect.durationRounds ? `, for ${effect.durationRounds} rounds` : ''}.`)
     : null;
   return {
     facts,
     effects: [
       ...(level ? [`Supplier effective Habit Level: ${level}`] : []),
-      ...(chanceText ? [`Activation chance: ${chanceText}`] : []),
+      ...(includeChanceFacts && chanceText ? [`Status application chance: ${chanceText}${level ? ` at effective Habit Level ${level}` : ''}.`] : []),
       ...(duration ? [duration] : []),
       ...(priority ? [priority] : []),
       ...(targetPriorityFact(targetEffect) ? [targetPriorityFact(targetEffect)!] : []),
