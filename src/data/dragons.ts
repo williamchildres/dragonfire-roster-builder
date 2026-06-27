@@ -1132,6 +1132,12 @@ const aboveHalfTroopCapacity = condition(
   'Target is above 50% Troop Capacity.',
   { thresholdPercent: 50, comparison: 'above' },
 );
+const currentPreyAboveHalfTroopCapacity = condition(
+  'current-prey-above-50-troop-capacity',
+  'target-above-troop-capacity-threshold',
+  'Current Prey is above 50% Troop Capacity.',
+  { statusId: 'prey', thresholdPercent: 50, comparison: 'above' },
+);
 const belowHalfTroopCapacity = condition(
   'target-below-50-troop-capacity',
   'target-below-troop-capacity-threshold',
@@ -1451,6 +1457,15 @@ const createSheepstealer = (): Dragon => {
             [{ level: 1, value: 72, unit: 'percent' }],
           ),
         ],
+        targetSelection: targetSelection({
+          references: [{
+            id: 'sheepstealer-current-prey',
+            kind: 'persistent-selected-target',
+            referencedEffectId: 'wild-hunt-prey',
+            description: "Savage Claim Fire Damage targets Sheepstealer's current Prey.",
+          }],
+          distinctness: 'same-target-required',
+        }),
       }),
       fixedEffect({
         id: 'savage-claim-recovery',
@@ -1508,6 +1523,16 @@ If the current Prey received Recovery during the previous round, both rates are 
             durationRounds: 3,
             stack: stack({ statusId: 'prey', maximumStacks: 1, durationRounds: 3 }),
             targetPriority: 'prefer-received-recovery-last-round',
+            targetSelection: targetSelection({
+              references: [{
+                id: 'sheepstealer-current-prey',
+                kind: 'persistent-selected-target',
+                referencedEffectId: null,
+                description: "Wild Hunt establishes Sheepstealer's current Prey when none currently exists.",
+              }],
+              sharedSelectionGroupId: 'sheepstealer-current-prey',
+              distinctness: 'same-target-required',
+            }),
             notes: [
               'Combat-log observation confirms that new Prey selection prioritizes an eligible enemy that received Recovery during the previous round.',
               'Priority applies only when no enemy is currently marked as Prey.',
@@ -1531,6 +1556,15 @@ If the current Prey received Recovery during the previous round, both rates are 
             scaling: ['attacker Intelligence'],
             notes: ['Mitigated by target Initiative'],
             conditionalMultipliers: [multiplier('wild-hunt-prey-double', 2, preyCondition, 'Damage is doubled against Prey.')],
+            targetSelection: targetSelection({
+              references: [{
+                id: 'sheepstealer-current-prey',
+                kind: 'persistent-selected-target',
+                referencedEffectId: 'wild-hunt-prey',
+                description: "Wild Hunt priority and doubled damage refer to Sheepstealer's current Prey.",
+              }],
+              sharedSelectionGroupId: 'sheepstealer-current-prey',
+            }),
           }),
         ],
       }),
@@ -1588,8 +1622,8 @@ If the current Prey received Recovery during the previous round, both rates are 
       powerByHabitLevel: standardLegendaryPower, tags: ['STOLEN_FLOCK', 'FIRE_DAMAGE_UP'], verification: screenshotVerification('Sheepstealer Stolen Flock screenshot'), evidenceIds: ['sheepstealer-stolen-flock-2026-06-23'],
     }),
     ability({ dragonId: 'sheepstealer', id: 'sheepstealer-dragons-cunning', kind: 'habit', name: "Dragon's Cunning", abilityClass: 'passive', unlockStarRank: 4, rawDescription: 'Start of Combat: increase self Intelligence and reduce Instinct of two enemies within adjacency, enhanced by Initiative.', schedules: [schedule({ id: 'dragons-cunning-start', timing: 'start-of-combat', effects: [fixedEffect({ id: 'dragons-cunning-intelligence', type: 'Intelligence Up', target: 'Self', targetScope: 'self', magnitude: null, unit: 'percent', rankedValues: rankedPercents([16, 19.2, 22.4, 27.2, 32]), duration: 'Until end of combat' }), fixedEffect({ id: 'dragons-cunning-instinct-down', type: 'Instinct Down', target: '2 Enemies', targetScope: 'within-adjacency', magnitude: null, unit: 'percent', rankedValues: rankedPercents([12, 14.4, 16.8, 20.4, 24]), scaling: ['Initiative'], duration: 'Until end of combat' })] })], powerByHabitLevel: standardLegendaryPower, tags: ['DEBUFF_INSTINCTS', 'ADJACENT_TARGET'], verification: screenshotVerification("Sheepstealer Dragon's Cunning screenshot"), evidenceIds: ['sheepstealer-dragons-cunning-2026-06-23'], unresolvedQuestions: ['Grammar around enhanced by Initiative could apply ambiguously.'] }),
-    ability({ dragonId: 'sheepstealer', id: 'sheepstealer-baited-kill', kind: 'habit', name: 'Baited Kill', abilityClass: 'passive', unlockStarRank: 6, rawDescription: 'Each Round: apply Vulnerable to Prey, doubled chance if Prey received Recovery last round; cleanse Sheepstealer if Prey is above 50% Troop Capacity.', schedules: [schedule({ id: 'baited-kill-vulnerable', timing: 'each-round', triggerChanceByHabitLevel: rankedPercents([25, 30, 35, 42.5, 50]), conditions: [preyCondition], effects: [fixedEffect({ id: 'baited-kill-vulnerable-effect', type: 'Vulnerable', target: 'Prey', targetScope: 'any-lane', magnitude: 20, unit: 'percent', conditionalMultipliers: [multiplier('baited-kill-recovery-double', 2, preyRecoveryPreviousRound, 'Chance is doubled if Prey received Recovery previous round.')] })] }), schedule({ id: 'baited-kill-cleanse', timing: 'each-round', triggerChanceByHabitLevel: rankedPercents([50, 60, 70, 85, 100]), conditions: [aboveHalfTroopCapacity, condition('enemy-negative-damage-dealt', 'negative-effect-reduces-damage-dealt', 'Negative effect was applied by an enemy and reduces Sheepstealer Damage Dealt.', { subject: 'self' })], effects: [fixedEffect({ id: 'baited-kill-cleanse-effect', type: 'Cleanse Negative', target: 'Self', targetScope: 'self', magnitude: 1, unit: 'flat' })] })], powerByHabitLevel: standardLegendaryPower, tags: ['VULNERABLE', 'CLEANSE_POSITIVE'], verification: screenshotVerification('Sheepstealer Baited Kill screenshot'), evidenceIds: ['sheepstealer-baited-kill-2026-06-23'] }),
-    ability({ dragonId: 'sheepstealer', id: 'sheepstealer-wary-beast', kind: 'habit', name: 'Wary Beast', abilityClass: 'passive', unlockStarRank: 8, rawDescription: 'Start of Each Round: if Prey is above 50% Troop Capacity gain Evade. Start of Combat reduce Recovery Received of three enemies.', schedules: [schedule({ id: 'wary-beast-evade', timing: 'start-of-each-round', conditions: [aboveHalfTroopCapacity], effects: [fixedEffect({ id: 'wary-beast-evade-effect', type: 'Evade', target: 'Self', targetScope: 'self', magnitude: null, unit: 'percent', rankedValues: rankedPercents([10, 12, 14, 17, 20]), duration: 'Until end of current round' })] }), schedule({ id: 'wary-beast-recovery-down', timing: 'start-of-combat', effects: [fixedEffect({ id: 'wary-beast-recovery-received-down', type: 'Recovery Received Down', target: '3 Enemies', targetScope: 'any-lane', magnitude: null, unit: 'percent', rankedValues: rankedPercents([10, 12, 14, 17, 20]), duration: 'Until end of combat' })] })], powerByHabitLevel: standardLegendaryPower, tags: ['EVADE', 'RECOVERY_RECEIVED_DOWN'], verification: screenshotVerification('Sheepstealer Wary Beast screenshot'), evidenceIds: ['sheepstealer-wary-beast-2026-06-23'] }),
+    ability({ dragonId: 'sheepstealer', id: 'sheepstealer-baited-kill', kind: 'habit', name: 'Baited Kill', abilityClass: 'passive', unlockStarRank: 6, rawDescription: 'Each Round: apply Vulnerable to Prey, doubled chance if Prey received Recovery last round; cleanse Sheepstealer if Prey is above 50% Troop Capacity.', schedules: [schedule({ id: 'baited-kill-vulnerable', timing: 'each-round', triggerChanceByHabitLevel: rankedPercents([25, 30, 35, 42.5, 50]), conditions: [preyCondition], effects: [fixedEffect({ id: 'baited-kill-vulnerable-effect', type: 'Vulnerable', target: 'Prey', targetScope: 'any-lane', magnitude: 20, unit: 'percent', conditionalMultipliers: [multiplier('baited-kill-recovery-double', 2, preyRecoveryPreviousRound, 'Chance is doubled if Prey received Recovery previous round.')], targetSelection: targetSelection({ references: [{ id: 'sheepstealer-current-prey', kind: 'persistent-selected-target', referencedEffectId: 'wild-hunt-prey', description: "Baited Kill targets Sheepstealer's current Prey." }], sharedSelectionGroupId: 'sheepstealer-current-prey', distinctness: 'same-target-required' }) })] }), schedule({ id: 'baited-kill-cleanse', timing: 'each-round', triggerChanceByHabitLevel: rankedPercents([50, 60, 70, 85, 100]), conditions: [preyCondition, currentPreyAboveHalfTroopCapacity, condition('enemy-negative-damage-dealt', 'negative-effect-reduces-damage-dealt', 'Negative effect was applied by an enemy and reduces Sheepstealer Damage Dealt.', { subject: 'self' })], effects: [fixedEffect({ id: 'baited-kill-cleanse-effect', type: 'Cleanse Negative', target: 'Self', targetScope: 'self', magnitude: 1, unit: 'flat' })] })], powerByHabitLevel: standardLegendaryPower, tags: ['VULNERABLE', 'CLEANSE_POSITIVE'], verification: screenshotVerification('Sheepstealer Baited Kill screenshot'), evidenceIds: ['sheepstealer-baited-kill-2026-06-23'] }),
+    ability({ dragonId: 'sheepstealer', id: 'sheepstealer-wary-beast', kind: 'habit', name: 'Wary Beast', abilityClass: 'passive', unlockStarRank: 8, rawDescription: 'Start of Each Round: if Prey is above 50% Troop Capacity gain Evade. Start of Combat reduce Recovery Received of three enemies.', schedules: [schedule({ id: 'wary-beast-evade', timing: 'start-of-each-round', conditions: [preyCondition, currentPreyAboveHalfTroopCapacity], effects: [fixedEffect({ id: 'wary-beast-evade-effect', type: 'Evade', target: 'Self', targetScope: 'self', magnitude: null, unit: 'percent', rankedValues: rankedPercents([10, 12, 14, 17, 20]), duration: 'Until end of current round' })] }), schedule({ id: 'wary-beast-recovery-down', timing: 'start-of-combat', effects: [fixedEffect({ id: 'wary-beast-recovery-received-down', type: 'Recovery Received Down', target: '3 Enemies', targetScope: 'any-lane', magnitude: null, unit: 'percent', rankedValues: rankedPercents([10, 12, 14, 17, 20]), duration: 'Until end of combat' })] })], powerByHabitLevel: standardLegendaryPower, tags: ['EVADE', 'RECOVERY_RECEIVED_DOWN'], verification: screenshotVerification('Sheepstealer Wary Beast screenshot'), evidenceIds: ['sheepstealer-wary-beast-2026-06-23'] }),
     ability({ dragonId: 'sheepstealer', id: 'sheepstealer-savage-claim', kind: 'habit', name: 'Savage Claim', abilityClass: 'passive', unlockStarRank: 10, rawDescription: 'Augments Wild Hunt: each round while Sheepstealer has Prey, deal Fire Damage to Prey and apply Recovery to Sheepstealer; triple both if Prey received Recovery previous round.', schedules: [savageClaimSchedule], powerByHabitLevel: finalLegendaryPower, tags: ['COMMAND_AUGMENTATION', 'FIRE_DAMAGE', 'RECOVERY'], verification: screenshotVerification('Sheepstealer Savage Claim screenshot'), evidenceIds: ['sheepstealer-savage-claim-2026-06-23'] }),
   ];
 
@@ -1796,7 +1830,7 @@ const createCrimson = (): Dragon => {
     activationRoll: roll({ scope: 'schedule-shared', chanceFixed: 50, description: 'One fixed activation roll for the even-round stat reductions.' }),
     targetPriority: 'highest-stat-enemy',
     effects: [
-      fixedEffect({ id: 'vermins-bane-instinct-down', type: 'Instinct Down', target: 'Enemy with highest Instinct', targetScope: 'any-lane', magnitude: null, unit: 'percent', rankedValues: rankedPercents([12, 15.6, 19.2, 24, 30]), durationRounds: 2, scaling: ['enhanced by Crimson Intelligence'], targetPriority: 'highest-stat-enemy', targetSelection: targetSelection({ comparisonStat: 'instinct', comparisonDirection: 'highest', comparisonPool: 'enemy-side', tieBehavior: 'candidate-group' }) }),
+      fixedEffect({ id: 'vermins-bane-instinct-down', type: 'Instinct Down', target: 'Enemy with highest Instinct', targetScope: 'any-lane', magnitude: null, unit: 'percent', rankedValues: rankedPercents([12, 15.6, 19.2, 24, 30]), durationRounds: 2, scaling: ['enhanced by Crimson Intelligence'], targetPriority: 'highest-stat-enemy', targetSelection: targetSelection({ comparisonStat: 'instinct', comparisonDirection: 'highest', comparisonPool: 'enemy-side', tieBehavior: 'candidate-group', sharedSelectionGroupId: 'vermins-bane-highest-instinct-enemy' }) }),
       fixedEffect({ id: 'vermins-bane-initiative-down', type: 'Initiative Down', target: 'Enemy with highest Instinct', targetScope: 'any-lane', magnitude: null, unit: 'percent', rankedValues: rankedPercents([12, 15.6, 19.2, 24, 30]), durationRounds: 2, scaling: ['enhanced by Crimson Intelligence'], targetPriority: 'highest-stat-enemy', targetSelection: targetSelection({ comparisonStat: 'instinct', comparisonDirection: 'highest', comparisonPool: 'enemy-side', tieBehavior: 'candidate-group', sharedSelectionGroupId: 'vermins-bane-highest-instinct-enemy' }) }),
     ],
   });

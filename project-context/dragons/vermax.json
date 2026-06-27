@@ -3754,7 +3754,7 @@
   "firstObservedInGame": "2026-06-22",
   "format": "dragonfire-dragon-profile",
   "gameVersion": null,
-  "generatedAt": "2026-06-27T21:06:45.880Z",
+  "generatedAt": "2026-06-27T21:44:55.689Z",
   "habits": [
     {
       "abilityClass": "passive",
@@ -4938,6 +4938,8 @@
           "id": "ally-deals-tactical-damage",
           "kind": "ally-deals-tactical-damage",
           "label": "Ally deals Tactical Damage.",
+          "statusCategoryId": null,
+          "statusId": null,
           "subject": "ally",
           "thresholdPercent": null,
           "unresolved": false
@@ -5249,6 +5251,8 @@
           "id": "below-75-troop-capacity",
           "kind": "target-below-troop-capacity-threshold",
           "label": "Below 75% Troop Capacity.",
+          "statusCategoryId": null,
+          "statusId": null,
           "subject": "target",
           "thresholdPercent": 75,
           "unresolved": false
@@ -5350,6 +5354,8 @@
           "id": "below-50-troop-capacity",
           "kind": "target-below-troop-capacity-threshold",
           "label": "Below 50% Troop Capacity.",
+          "statusCategoryId": null,
+          "statusId": null,
           "subject": "target",
           "thresholdPercent": 50,
           "unresolved": false
@@ -5451,6 +5457,8 @@
           "id": "below-25-troop-capacity",
           "kind": "target-below-troop-capacity-threshold",
           "label": "Below 25% Troop Capacity.",
+          "statusCategoryId": null,
+          "statusId": null,
           "subject": "target",
           "thresholdPercent": 25,
           "unresolved": false
@@ -5860,6 +5868,8 @@
           "id": "ally-deals-tactical-damage",
           "kind": "ally-deals-tactical-damage",
           "label": "Ally deals Tactical Damage.",
+          "statusCategoryId": null,
+          "statusId": null,
           "subject": "ally",
           "thresholdPercent": null,
           "unresolved": false
@@ -7031,8 +7041,8 @@
   "rosterSourceStatus": "in-game-verified-pending-official-site",
   "slug": "vermax",
   "source": {
-    "branch": "main",
-    "commit": "86f3ebafd01bf3df79ea9591df57f3974f99d6f7",
+    "branch": "fix/mechanic-reference-analysis-integrity",
+    "commit": "d15aad00735449f126b843811a1d0a1981989c0f",
     "databaseVersion": "0.6.2",
     "dataSchemaVersion": 12,
     "gameBuild": "26.6.53509",
@@ -7071,6 +7081,8 @@
           "id": "ally-deals-tactical-damage",
           "kind": "ally-deals-tactical-damage",
           "label": "Ally deals Tactical Damage.",
+          "statusCategoryId": null,
+          "statusId": null,
           "subject": "ally",
           "thresholdPercent": null,
           "unresolved": false
@@ -7305,6 +7317,8 @@
           "id": "ally-deals-tactical-damage",
           "kind": "ally-deals-tactical-damage",
           "label": "Ally deals Tactical Damage.",
+          "statusCategoryId": null,
+          "statusId": null,
           "subject": "ally",
           "thresholdPercent": null,
           "unresolved": false

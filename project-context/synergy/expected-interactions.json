@@ -1586,12 +1586,13 @@
     ],
     "damageScope": null,
     "effects": [
+      "Timing: Start of each round.",
       "Fire Damage Dealt increase 20% at effective Habit Level 5.",
       "Ranked progression: L1 8%, L2 10.4%, L3 12.8%, L4 16%, L5 20%."
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final value cannot be calculated because final combat formulas and stacking order are not fully verified.",
-    "explanation": "Caraxes's Blood Wyrm affects Caraxes. Fire Damage Dealt increase 20% at effective Habit Level 5. Ranked progression: L1 8%, L2 10.4%, L3 12.8%, L4 16%, L5 20%.",
+    "explanation": "Caraxes's Blood Wyrm affects Caraxes. Timing: Start of each round. Fire Damage Dealt increase 20% at effective Habit Level 5. Ranked progression: L1 8%, L2 10.4%, L3 12.8%, L4 16%, L5 20%.",
     "id": "internal-self-modifier-caraxes-blood-wyrm-blood-wyrm-fire-up-fire-damage-dealt-modifier",
     "interactionScope": "internal",
     "matchedOutputCapabilityIds": [],
@@ -4227,7 +4228,8 @@
     ],
     "damageScope": null,
     "effects": [
-      "Enemy Physical Damage decrease 11%"
+      "Enemy Physical Damage decrease 11%",
+      "Physical Damage reduction applies to non-Basic Attacks only."
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final reduced enemy damage cannot be calculated because target selection, uptime, stacking, and final formulas are unresolved.",
@@ -4303,6 +4305,7 @@
       "Scales with Intelligence.",
       "Mitigated by target Initiative.",
       "Status supplier effect: crippling-inferno-burn.",
+      "Independent per-target checks: 3.",
       "Activation, target selection, target overlap, and uptime remain conditional.",
       "Final damage is not calculated."
     ],
@@ -6165,12 +6168,13 @@
     ],
     "damageScope": null,
     "effects": [
+      "Timing: Start of each round.",
       "Fire Damage Dealt increase 20% at effective Habit Level 5.",
       "Ranked progression: L1 8%, L2 10.4%, L3 12.8%, L4 16%, L5 20%."
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final value cannot be calculated because final combat formulas and stacking order are not fully verified.",
-    "explanation": "Caraxes's Blood Wyrm affects Caraxes. Fire Damage Dealt increase 20% at effective Habit Level 5. Ranked progression: L1 8%, L2 10.4%, L3 12.8%, L4 16%, L5 20%.",
+    "explanation": "Caraxes's Blood Wyrm affects Caraxes. Timing: Start of each round. Fire Damage Dealt increase 20% at effective Habit Level 5. Ranked progression: L1 8%, L2 10.4%, L3 12.8%, L4 16%, L5 20%.",
     "id": "internal-self-modifier-caraxes-blood-wyrm-blood-wyrm-fire-up-fire-damage-dealt-modifier",
     "interactionScope": "internal",
     "matchedOutputCapabilityIds": [],
@@ -8716,7 +8720,8 @@
     ],
     "damageScope": null,
     "effects": [
-      "Enemy Physical Damage decrease 11%"
+      "Enemy Physical Damage decrease 11%",
+      "Physical Damage reduction applies to non-Basic Attacks only."
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final reduced enemy damage cannot be calculated because target selection, uptime, stacking, and final formulas are unresolved.",
@@ -8792,6 +8797,7 @@
       "Scales with Intelligence.",
       "Mitigated by target Initiative.",
       "Status supplier effect: crippling-inferno-burn.",
+      "Independent per-target checks: 3.",
       "Activation, target selection, target overlap, and uptime remain conditional.",
       "Final damage is not calculated."
     ],
@@ -10654,12 +10660,13 @@
     ],
     "damageScope": null,
     "effects": [
+      "Timing: Start of each round.",
       "Fire Damage Dealt increase 20% at effective Habit Level 5.",
       "Ranked progression: L1 8%, L2 10.4%, L3 12.8%, L4 16%, L5 20%."
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final value cannot be calculated because final combat formulas and stacking order are not fully verified.",
-    "explanation": "Caraxes's Blood Wyrm affects Caraxes. Fire Damage Dealt increase 20% at effective Habit Level 5. Ranked progression: L1 8%, L2 10.4%, L3 12.8%, L4 16%, L5 20%.",
+    "explanation": "Caraxes's Blood Wyrm affects Caraxes. Timing: Start of each round. Fire Damage Dealt increase 20% at effective Habit Level 5. Ranked progression: L1 8%, L2 10.4%, L3 12.8%, L4 16%, L5 20%.",
     "id": "internal-self-modifier-caraxes-blood-wyrm-blood-wyrm-fire-up-fire-damage-dealt-modifier",
     "interactionScope": "internal",
     "matchedOutputCapabilityIds": [],
@@ -13295,7 +13302,8 @@
     ],
     "damageScope": null,
     "effects": [
-      "Enemy Physical Damage decrease 11%"
+      "Enemy Physical Damage decrease 11%",
+      "Physical Damage reduction applies to non-Basic Attacks only."
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final reduced enemy damage cannot be calculated because target selection, uptime, stacking, and final formulas are unresolved.",
@@ -13371,6 +13379,7 @@
       "Scales with Intelligence.",
       "Mitigated by target Initiative.",
       "Status supplier effect: crippling-inferno-burn.",
+      "Independent per-target checks: 3.",
       "Activation, target selection, target overlap, and uptime remain conditional.",
       "Final damage is not calculated."
     ],
@@ -15233,12 +15242,13 @@
     ],
     "damageScope": null,
     "effects": [
+      "Timing: Start of each round.",
       "Fire Damage Dealt increase 20% at effective Habit Level 5.",
       "Ranked progression: L1 8%, L2 10.4%, L3 12.8%, L4 16%, L5 20%."
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final value cannot be calculated because final combat formulas and stacking order are not fully verified.",
-    "explanation": "Caraxes's Blood Wyrm affects Caraxes. Fire Damage Dealt increase 20% at effective Habit Level 5. Ranked progression: L1 8%, L2 10.4%, L3 12.8%, L4 16%, L5 20%.",
+    "explanation": "Caraxes's Blood Wyrm affects Caraxes. Timing: Start of each round. Fire Damage Dealt increase 20% at effective Habit Level 5. Ranked progression: L1 8%, L2 10.4%, L3 12.8%, L4 16%, L5 20%.",
     "id": "internal-self-modifier-caraxes-blood-wyrm-blood-wyrm-fire-up-fire-damage-dealt-modifier",
     "interactionScope": "internal",
     "matchedOutputCapabilityIds": [],
@@ -17873,7 +17883,8 @@
     ],
     "damageScope": null,
     "effects": [
-      "Enemy Physical Damage decrease 11%"
+      "Enemy Physical Damage decrease 11%",
+      "Physical Damage reduction applies to non-Basic Attacks only."
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final reduced enemy damage cannot be calculated because target selection, uptime, stacking, and final formulas are unresolved.",
@@ -17949,6 +17960,7 @@
       "Scales with Intelligence.",
       "Mitigated by target Initiative.",
       "Status supplier effect: crippling-inferno-burn.",
+      "Independent per-target checks: 3.",
       "Activation, target selection, target overlap, and uptime remain conditional.",
       "Final damage is not calculated."
     ],
@@ -19449,6 +19461,46 @@
     ]
   },
   {
+    "assumptions": [
+      "Status lifecycle behavior beyond verified conditions is not simulated."
+    ],
+    "channel": "status",
+    "confidence": "confirmed",
+    "conflicts": [],
+    "damageScope": null,
+    "effects": [
+      "Status identity: prey.",
+      "Actual enemy identity: unresolved."
+    ],
+    "exactResultKnown": false,
+    "exactResultUnknownReason": "Exact final value cannot be calculated because final combat formulas and stacking order are not fully verified.",
+    "explanation": "Persistent marked target: Sheepstealer's current Prey. Wild Hunt establishes Prey only when none currently exists. Stolen Flock, Baited Kill, Wary Beast and Savage Claim refer to that same marked enemy. The actual enemy identity and unresolved lifecycle behavior are not simulated.",
+    "id": "persistent-marked-target-sheepstealer-prey",
+    "interactionScope": "internal",
+    "matchedOutputCapabilityIds": [],
+    "matchKind": "status-condition-enablement",
+    "modifierCapabilityId": null,
+    "modifierCapabilityIds": [],
+    "recipientAbilityId": "sheepstealer-wild-hunt",
+    "recipientDragonId": "sheepstealer",
+    "recipientEvidenceIds": [],
+    "requirements": [],
+    "ruleId": "persistent-marked-target-reference",
+    "sourceAbilityId": "sheepstealer-wild-hunt",
+    "sourceDragonId": "sheepstealer",
+    "sourceEvidenceIds": [
+      "sheepstealer-wild-hunt-summary-2026-06-23",
+      "sheepstealer-wild-hunt-glossary-2026-06-23",
+      "sheepstealer-wild-hunt-recovery-priority-combat-log-2026-06-24"
+    ],
+    "status": "potential",
+    "targetSelectionGroup": null,
+    "title": "Prey persistent target reference",
+    "unresolvedQuestions": [
+      "Marked-target duration, removal, transfer, and replacement behavior remain unresolved unless explicitly verified by source data."
+    ]
+  },
+  {
     "assumptions": [],
     "channel": "recovery",
     "confidence": "confirmed",
@@ -20010,12 +20062,20 @@
     ],
     "damageScope": null,
     "effects": [
-      "Fire Damage Dealt increase unknown.",
+      "Fire Damage Dealt increase 6% at effective Habit Level 5.",
+      "Shared stack pool: stolen-flock.",
+      "Maximum stacks: 10.",
+      "Value per stack at effective Habit Level 1: 3% Fire Damage Dealt.",
+      "Value per stack at effective Habit Level 5: 6% Fire Damage Dealt.",
+      "Maximum theoretical modifier at effective Habit Level 1: 30% Fire Damage Dealt.",
+      "Current stack count is unknown.",
+      "Trigger chance: 50%.",
+      "Each-round stack trigger is chance-based and not guaranteed Active.",
       "Duration: until end of combat."
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final value cannot be calculated because final combat formulas and stacking order are not fully verified.",
-    "explanation": "Sheepstealer's Stolen Flock affects Sheepstealer. Fire Damage Dealt increase unknown. Duration: until end of combat.",
+    "explanation": "Sheepstealer's Stolen Flock affects Sheepstealer. Fire Damage Dealt increase 6% at effective Habit Level 5. Shared stack pool: stolen-flock. Maximum stacks: 10. Value per stack at effective Habit Level 1: 3% Fire Damage Dealt. Value per stack at effective Habit Level 5: 6% Fire Damage Dealt. Maximum theoretical modifier at effective Habit Level 1: 30% Fire Damage Dealt. Current stack count is unknown. Trigger chance: 50%. Each-round stack trigger is chance-based and not guaranteed Active. Duration: until end of combat.",
     "id": "internal-self-modifier-sheepstealer-stolen-flock-stolen-flock-stack-round-fire-damage-stack-modifier",
     "interactionScope": "internal",
     "matchedOutputCapabilityIds": [],
@@ -20085,12 +20145,20 @@
     ],
     "damageScope": null,
     "effects": [
-      "Fire Damage Dealt increase unknown.",
+      "Timing: when the marked target receives Recovery.",
+      "Fire Damage Dealt increase 6% at effective Habit Level 5.",
+      "Shared stack pool: stolen-flock.",
+      "Maximum stacks: 10.",
+      "Value per stack at effective Habit Level 1: 3% Fire Damage Dealt.",
+      "Value per stack at effective Habit Level 5: 6% Fire Damage Dealt.",
+      "Maximum theoretical modifier at effective Habit Level 1: 30% Fire Damage Dealt.",
+      "Current stack count is unknown.",
+      "Prey-Recovery trigger is event-dependent and not guaranteed Active while the event is unresolved.",
       "Duration: until end of combat."
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final value cannot be calculated because final combat formulas and stacking order are not fully verified.",
-    "explanation": "Sheepstealer's Stolen Flock affects Sheepstealer. Fire Damage Dealt increase unknown. Duration: until end of combat.",
+    "explanation": "Sheepstealer's Stolen Flock affects Sheepstealer. Timing: when the marked target receives Recovery. Fire Damage Dealt increase 6% at effective Habit Level 5. Shared stack pool: stolen-flock. Maximum stacks: 10. Value per stack at effective Habit Level 1: 3% Fire Damage Dealt. Value per stack at effective Habit Level 5: 6% Fire Damage Dealt. Maximum theoretical modifier at effective Habit Level 1: 30% Fire Damage Dealt. Current stack count is unknown. Prey-Recovery trigger is event-dependent and not guaranteed Active while the event is unresolved. Duration: until end of combat.",
     "id": "internal-self-modifier-sheepstealer-stolen-flock-stolen-flock-stack-recovery-fire-damage-stack-modifier",
     "interactionScope": "internal",
     "matchedOutputCapabilityIds": [],
@@ -20324,11 +20392,17 @@
     "damageScope": null,
     "effects": [
       "Physical Damage Dealt increase 5.",
+      "Shared stack pool: rallying-flame.",
+      "Maximum stacks: 4.",
+      "Value per stack at effective Habit Level 1: 5% Physical Damage Dealt.",
+      "Value per stack at effective Habit Level 5: 5% Physical Damage Dealt.",
+      "Maximum theoretical modifier at effective Habit Level 1: 20% Physical Damage Dealt.",
+      "Current stack count is unknown.",
       "Duration: until end of combat."
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final value cannot be calculated because final combat formulas and stacking order are not fully verified.",
-    "explanation": "Vermax's Rallying Flame affects Vermax. Physical Damage Dealt increase 5. Duration: until end of combat.",
+    "explanation": "Vermax's Rallying Flame affects Vermax. Physical Damage Dealt increase 5. Shared stack pool: rallying-flame. Maximum stacks: 4. Value per stack at effective Habit Level 1: 5% Physical Damage Dealt. Value per stack at effective Habit Level 5: 5% Physical Damage Dealt. Maximum theoretical modifier at effective Habit Level 1: 20% Physical Damage Dealt. Current stack count is unknown. Duration: until end of combat.",
     "id": "internal-self-modifier-vermax-rallying-flame-rallying-flame-stack-physical-damage-stack-modifier",
     "interactionScope": "internal",
     "matchedOutputCapabilityIds": [],
@@ -20550,12 +20624,13 @@
     ],
     "damageScope": null,
     "effects": [
+      "Timing: Start of each round.",
       "Damage Dealt increase 15%.",
       "Duration: 2 rounds."
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final value cannot be calculated because final combat formulas and stacking order are not fully verified.",
-    "explanation": "Vermax's Unyielding Resolve affects Vermax. Damage Dealt increase 15%. Duration: 2 rounds.",
+    "explanation": "Vermax's Unyielding Resolve affects Vermax. Timing: Start of each round. Damage Dealt increase 15%. Duration: 2 rounds.",
     "id": "internal-self-modifier-vermax-unyielding-resolve-unyielding-resolve-advantage-advantage-damage-dealt-status-modifier",
     "interactionScope": "internal",
     "matchedOutputCapabilityIds": [],
@@ -20639,11 +20714,12 @@
       "Fire Damage Received decrease 30% at effective Habit Level 5.",
       "Ranked progression: L1 10%, L2 12%, L3 14%, L4 17%, L5 20%.",
       "Ranked progression: L1 15%, L2 18%, L3 21%, L4 25.5%, L5 30%.",
-      "Ranked progression: L1 5%, L2 6%, L3 7%, L4 8.5%, L5 10%."
+      "Ranked progression: L1 5%, L2 6%, L3 7%, L4 8.5%, L5 10%.",
+      "Timing: Start of each round."
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final value cannot be calculated because final combat formulas and stacking order are not fully verified.",
-    "explanation": "Trial by Flame can reduce Fire Damage Received for Malachite and Sheepstealer when each satisfies a Troop Capacity threshold. Below 75% Troop Capacity: Fire Damage Received -10% at effective Habit Level 5.; Below 50% Troop Capacity: Fire Damage Received -20% at effective Habit Level 5.; Below 25% Troop Capacity: Fire Damage Received -30% at effective Habit Level 5.. Threshold applicability depends on each recipient's current Troop Capacity; exact interaction between overlapping threshold tiers is unresolved.",
+    "explanation": "Trial by Flame can reduce Fire Damage Received for Malachite and Sheepstealer when each satisfies a Troop Capacity threshold. . Threshold applicability depends on each recipient's current Troop Capacity; exact interaction between overlapping threshold tiers is unresolved.",
     "id": "defensive-ally-support-vermax-trial-by-flame-grouped",
     "interactionScope": "targeting-fact",
     "matchedOutputCapabilityIds": [],
@@ -21823,6 +21899,75 @@
     "title": "Enemy Instinct reduction",
     "unresolvedQuestions": [
       "Adjacent enemy identity, enemy-formation overlap, final uptime, and stacking/refresh behavior remain unresolved."
+    ]
+  },
+  {
+    "assumptions": [
+      "Enemy identities and combat availability are unresolved.",
+      "Enemy state and uptime are not treated as guaranteed."
+    ],
+    "channel": "recovery",
+    "confidence": "confirmed",
+    "conflicts": [
+      "Sheepstealer - Wary Beast Habit unlock requirement: expected Star Rank 8+, actual Star Rank 1",
+      "Sheepstealer - Wary Beast Selected Habit Level: expected Habit Level 1+ or preview, actual preview enabled"
+    ],
+    "damageScope": null,
+    "effects": [
+      "Recovery Received decrease 20%.",
+      "Duration: until end of combat."
+    ],
+    "exactResultKnown": false,
+    "exactResultUnknownReason": "Exact final received-effect reduction cannot be calculated because target state, uptime, stacking, and final formulas are unresolved.",
+    "explanation": "Sheepstealer's Wary Beast can reduce enemy Recovery Received by 20%. Duration: until end of combat.",
+    "id": "enemy-received-reduction-sheepstealer-wary-beast-wary-beast-recovery-received-down-recovery-received-modifier",
+    "interactionScope": "enemy-side",
+    "matchedOutputCapabilityIds": [],
+    "matchKind": "enemy-damage-dealt-reduction",
+    "modifierCapabilityId": "sheepstealer-wary-beast-wary-beast-recovery-received-down-recovery-received-modifier",
+    "modifierCapabilityIds": [
+      "sheepstealer-wary-beast-wary-beast-recovery-received-down-recovery-received-modifier"
+    ],
+    "recipientAbilityId": null,
+    "recipientDragonId": null,
+    "recipientEvidenceIds": [],
+    "requirements": [
+      {
+        "actual": "Star Rank 1",
+        "evidenceIds": [
+          "sheepstealer-wary-beast-2026-06-23"
+        ],
+        "expected": "Star Rank 8+",
+        "id": "sheepstealer-sheepstealer-wary-beast-star-rank",
+        "label": "Sheepstealer - Wary Beast Habit unlock requirement",
+        "notes": [],
+        "satisfied": false
+      },
+      {
+        "actual": "preview enabled",
+        "evidenceIds": [
+          "sheepstealer-wary-beast-2026-06-23"
+        ],
+        "expected": "Habit Level 1+ or preview",
+        "id": "sheepstealer-sheepstealer-wary-beast-habit-level",
+        "label": "Sheepstealer - Wary Beast Selected Habit Level",
+        "notes": [
+          "Unlocked Habits without an explicit saved Habit Level default to effective Habit Level 1. Locked Habit capabilities are potential in preview mode, not active for current roster."
+        ],
+        "satisfied": false
+      }
+    ],
+    "ruleId": "enemy-received-reduction",
+    "sourceAbilityId": "sheepstealer-wary-beast",
+    "sourceDragonId": "sheepstealer",
+    "sourceEvidenceIds": [
+      "sheepstealer-wary-beast-2026-06-23"
+    ],
+    "status": "potential",
+    "targetSelectionGroup": null,
+    "title": "Recovery Enemy Reduction",
+    "unresolvedQuestions": [
+      "Enemy identities, combat availability, final uptime, and stacking/refresh behavior remain unresolved."
     ]
   },
   {
@@ -23547,6 +23692,46 @@
     ]
   },
   {
+    "assumptions": [
+      "Status lifecycle behavior beyond verified conditions is not simulated."
+    ],
+    "channel": "status",
+    "confidence": "confirmed",
+    "conflicts": [],
+    "damageScope": null,
+    "effects": [
+      "Status identity: prey.",
+      "Actual enemy identity: unresolved."
+    ],
+    "exactResultKnown": false,
+    "exactResultUnknownReason": "Exact final value cannot be calculated because final combat formulas and stacking order are not fully verified.",
+    "explanation": "Persistent marked target: Sheepstealer's current Prey. Wild Hunt establishes Prey only when none currently exists. Stolen Flock, Baited Kill, Wary Beast and Savage Claim refer to that same marked enemy. The actual enemy identity and unresolved lifecycle behavior are not simulated.",
+    "id": "persistent-marked-target-sheepstealer-prey",
+    "interactionScope": "internal",
+    "matchedOutputCapabilityIds": [],
+    "matchKind": "status-condition-enablement",
+    "modifierCapabilityId": null,
+    "modifierCapabilityIds": [],
+    "recipientAbilityId": "sheepstealer-wild-hunt",
+    "recipientDragonId": "sheepstealer",
+    "recipientEvidenceIds": [],
+    "requirements": [],
+    "ruleId": "persistent-marked-target-reference",
+    "sourceAbilityId": "sheepstealer-wild-hunt",
+    "sourceDragonId": "sheepstealer",
+    "sourceEvidenceIds": [
+      "sheepstealer-wild-hunt-summary-2026-06-23",
+      "sheepstealer-wild-hunt-glossary-2026-06-23",
+      "sheepstealer-wild-hunt-recovery-priority-combat-log-2026-06-24"
+    ],
+    "status": "potential",
+    "targetSelectionGroup": null,
+    "title": "Prey persistent target reference",
+    "unresolvedQuestions": [
+      "Marked-target duration, removal, transfer, and replacement behavior remain unresolved unless explicitly verified by source data."
+    ]
+  },
+  {
     "assumptions": [],
     "channel": "stat",
     "confidence": "confirmed",
@@ -24360,12 +24545,20 @@
     ],
     "damageScope": null,
     "effects": [
-      "Fire Damage Dealt increase unknown.",
+      "Fire Damage Dealt increase 6% at effective Habit Level 5.",
+      "Shared stack pool: stolen-flock.",
+      "Maximum stacks: 10.",
+      "Value per stack at effective Habit Level 1: 3% Fire Damage Dealt.",
+      "Value per stack at effective Habit Level 5: 6% Fire Damage Dealt.",
+      "Maximum theoretical modifier at effective Habit Level 1: 30% Fire Damage Dealt.",
+      "Current stack count is unknown.",
+      "Trigger chance: 50%.",
+      "Each-round stack trigger is chance-based and not guaranteed Active.",
       "Duration: until end of combat."
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final value cannot be calculated because final combat formulas and stacking order are not fully verified.",
-    "explanation": "Sheepstealer's Stolen Flock affects Sheepstealer. Fire Damage Dealt increase unknown. Duration: until end of combat.",
+    "explanation": "Sheepstealer's Stolen Flock affects Sheepstealer. Fire Damage Dealt increase 6% at effective Habit Level 5. Shared stack pool: stolen-flock. Maximum stacks: 10. Value per stack at effective Habit Level 1: 3% Fire Damage Dealt. Value per stack at effective Habit Level 5: 6% Fire Damage Dealt. Maximum theoretical modifier at effective Habit Level 1: 30% Fire Damage Dealt. Current stack count is unknown. Trigger chance: 50%. Each-round stack trigger is chance-based and not guaranteed Active. Duration: until end of combat.",
     "id": "internal-self-modifier-sheepstealer-stolen-flock-stolen-flock-stack-round-fire-damage-stack-modifier",
     "interactionScope": "internal",
     "matchedOutputCapabilityIds": [],
@@ -24435,12 +24628,20 @@
     ],
     "damageScope": null,
     "effects": [
-      "Fire Damage Dealt increase unknown.",
+      "Timing: when the marked target receives Recovery.",
+      "Fire Damage Dealt increase 6% at effective Habit Level 5.",
+      "Shared stack pool: stolen-flock.",
+      "Maximum stacks: 10.",
+      "Value per stack at effective Habit Level 1: 3% Fire Damage Dealt.",
+      "Value per stack at effective Habit Level 5: 6% Fire Damage Dealt.",
+      "Maximum theoretical modifier at effective Habit Level 1: 30% Fire Damage Dealt.",
+      "Current stack count is unknown.",
+      "Prey-Recovery trigger is event-dependent and not guaranteed Active while the event is unresolved.",
       "Duration: until end of combat."
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final value cannot be calculated because final combat formulas and stacking order are not fully verified.",
-    "explanation": "Sheepstealer's Stolen Flock affects Sheepstealer. Fire Damage Dealt increase unknown. Duration: until end of combat.",
+    "explanation": "Sheepstealer's Stolen Flock affects Sheepstealer. Timing: when the marked target receives Recovery. Fire Damage Dealt increase 6% at effective Habit Level 5. Shared stack pool: stolen-flock. Maximum stacks: 10. Value per stack at effective Habit Level 1: 3% Fire Damage Dealt. Value per stack at effective Habit Level 5: 6% Fire Damage Dealt. Maximum theoretical modifier at effective Habit Level 1: 30% Fire Damage Dealt. Current stack count is unknown. Prey-Recovery trigger is event-dependent and not guaranteed Active while the event is unresolved. Duration: until end of combat.",
     "id": "internal-self-modifier-sheepstealer-stolen-flock-stolen-flock-stack-recovery-fire-damage-stack-modifier",
     "interactionScope": "internal",
     "matchedOutputCapabilityIds": [],
@@ -26198,6 +26399,75 @@
     "title": "Enemy Instinct reduction",
     "unresolvedQuestions": [
       "Adjacent enemy identity, enemy-formation overlap, final uptime, and stacking/refresh behavior remain unresolved."
+    ]
+  },
+  {
+    "assumptions": [
+      "Enemy identities and combat availability are unresolved.",
+      "Enemy state and uptime are not treated as guaranteed."
+    ],
+    "channel": "recovery",
+    "confidence": "confirmed",
+    "conflicts": [
+      "Sheepstealer - Wary Beast Habit unlock requirement: expected Star Rank 8+, actual Star Rank 1",
+      "Sheepstealer - Wary Beast Selected Habit Level: expected Habit Level 1+ or preview, actual preview enabled"
+    ],
+    "damageScope": null,
+    "effects": [
+      "Recovery Received decrease 20%.",
+      "Duration: until end of combat."
+    ],
+    "exactResultKnown": false,
+    "exactResultUnknownReason": "Exact final received-effect reduction cannot be calculated because target state, uptime, stacking, and final formulas are unresolved.",
+    "explanation": "Sheepstealer's Wary Beast can reduce enemy Recovery Received by 20%. Duration: until end of combat.",
+    "id": "enemy-received-reduction-sheepstealer-wary-beast-wary-beast-recovery-received-down-recovery-received-modifier",
+    "interactionScope": "enemy-side",
+    "matchedOutputCapabilityIds": [],
+    "matchKind": "enemy-damage-dealt-reduction",
+    "modifierCapabilityId": "sheepstealer-wary-beast-wary-beast-recovery-received-down-recovery-received-modifier",
+    "modifierCapabilityIds": [
+      "sheepstealer-wary-beast-wary-beast-recovery-received-down-recovery-received-modifier"
+    ],
+    "recipientAbilityId": null,
+    "recipientDragonId": null,
+    "recipientEvidenceIds": [],
+    "requirements": [
+      {
+        "actual": "Star Rank 1",
+        "evidenceIds": [
+          "sheepstealer-wary-beast-2026-06-23"
+        ],
+        "expected": "Star Rank 8+",
+        "id": "sheepstealer-sheepstealer-wary-beast-star-rank",
+        "label": "Sheepstealer - Wary Beast Habit unlock requirement",
+        "notes": [],
+        "satisfied": false
+      },
+      {
+        "actual": "preview enabled",
+        "evidenceIds": [
+          "sheepstealer-wary-beast-2026-06-23"
+        ],
+        "expected": "Habit Level 1+ or preview",
+        "id": "sheepstealer-sheepstealer-wary-beast-habit-level",
+        "label": "Sheepstealer - Wary Beast Selected Habit Level",
+        "notes": [
+          "Unlocked Habits without an explicit saved Habit Level default to effective Habit Level 1. Locked Habit capabilities are potential in preview mode, not active for current roster."
+        ],
+        "satisfied": false
+      }
+    ],
+    "ruleId": "enemy-received-reduction",
+    "sourceAbilityId": "sheepstealer-wary-beast",
+    "sourceDragonId": "sheepstealer",
+    "sourceEvidenceIds": [
+      "sheepstealer-wary-beast-2026-06-23"
+    ],
+    "status": "potential",
+    "targetSelectionGroup": null,
+    "title": "Recovery Enemy Reduction",
+    "unresolvedQuestions": [
+      "Enemy identities, combat availability, final uptime, and stacking/refresh behavior remain unresolved."
     ]
   },
   {
@@ -28244,11 +28514,17 @@
     "damageScope": null,
     "effects": [
       "Physical Damage Dealt increase 5.",
+      "Shared stack pool: rallying-flame.",
+      "Maximum stacks: 4.",
+      "Value per stack at effective Habit Level 1: 5% Physical Damage Dealt.",
+      "Value per stack at effective Habit Level 5: 5% Physical Damage Dealt.",
+      "Maximum theoretical modifier at effective Habit Level 1: 20% Physical Damage Dealt.",
+      "Current stack count is unknown.",
       "Duration: until end of combat."
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final value cannot be calculated because final combat formulas and stacking order are not fully verified.",
-    "explanation": "Vermax's Rallying Flame affects Vermax. Physical Damage Dealt increase 5. Duration: until end of combat.",
+    "explanation": "Vermax's Rallying Flame affects Vermax. Physical Damage Dealt increase 5. Shared stack pool: rallying-flame. Maximum stacks: 4. Value per stack at effective Habit Level 1: 5% Physical Damage Dealt. Value per stack at effective Habit Level 5: 5% Physical Damage Dealt. Maximum theoretical modifier at effective Habit Level 1: 20% Physical Damage Dealt. Current stack count is unknown. Duration: until end of combat.",
     "id": "internal-self-modifier-vermax-rallying-flame-rallying-flame-stack-physical-damage-stack-modifier",
     "interactionScope": "internal",
     "matchedOutputCapabilityIds": [],
@@ -28470,12 +28746,13 @@
     ],
     "damageScope": null,
     "effects": [
+      "Timing: Start of each round.",
       "Damage Dealt increase 15%.",
       "Duration: 2 rounds."
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final value cannot be calculated because final combat formulas and stacking order are not fully verified.",
-    "explanation": "Vermax's Unyielding Resolve affects Vermax. Damage Dealt increase 15%. Duration: 2 rounds.",
+    "explanation": "Vermax's Unyielding Resolve affects Vermax. Timing: Start of each round. Damage Dealt increase 15%. Duration: 2 rounds.",
     "id": "internal-self-modifier-vermax-unyielding-resolve-unyielding-resolve-advantage-advantage-damage-dealt-status-modifier",
     "interactionScope": "internal",
     "matchedOutputCapabilityIds": [],
@@ -28559,11 +28836,12 @@
       "Fire Damage Received decrease 30% at effective Habit Level 5.",
       "Ranked progression: L1 10%, L2 12%, L3 14%, L4 17%, L5 20%.",
       "Ranked progression: L1 15%, L2 18%, L3 21%, L4 25.5%, L5 30%.",
-      "Ranked progression: L1 5%, L2 6%, L3 7%, L4 8.5%, L5 10%."
+      "Ranked progression: L1 5%, L2 6%, L3 7%, L4 8.5%, L5 10%.",
+      "Timing: Start of each round."
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final value cannot be calculated because final combat formulas and stacking order are not fully verified.",
-    "explanation": "Trial by Flame can reduce Fire Damage Received for Malachite and Seasmoke when each satisfies a Troop Capacity threshold. Below 75% Troop Capacity: Fire Damage Received -10% at effective Habit Level 5.; Below 50% Troop Capacity: Fire Damage Received -20% at effective Habit Level 5.; Below 25% Troop Capacity: Fire Damage Received -30% at effective Habit Level 5.. Threshold applicability depends on each recipient's current Troop Capacity; exact interaction between overlapping threshold tiers is unresolved.",
+    "explanation": "Trial by Flame can reduce Fire Damage Received for Malachite and Seasmoke when each satisfies a Troop Capacity threshold. . Threshold applicability depends on each recipient's current Troop Capacity; exact interaction between overlapping threshold tiers is unresolved.",
     "id": "defensive-ally-support-vermax-trial-by-flame-grouped",
     "interactionScope": "targeting-fact",
     "matchedOutputCapabilityIds": [],
@@ -32168,6 +32446,46 @@
     ]
   },
   {
+    "assumptions": [
+      "Status lifecycle behavior beyond verified conditions is not simulated."
+    ],
+    "channel": "status",
+    "confidence": "confirmed",
+    "conflicts": [],
+    "damageScope": null,
+    "effects": [
+      "Status identity: prey.",
+      "Actual enemy identity: unresolved."
+    ],
+    "exactResultKnown": false,
+    "exactResultUnknownReason": "Exact final value cannot be calculated because final combat formulas and stacking order are not fully verified.",
+    "explanation": "Persistent marked target: Sheepstealer's current Prey. Wild Hunt establishes Prey only when none currently exists. Stolen Flock, Baited Kill, Wary Beast and Savage Claim refer to that same marked enemy. The actual enemy identity and unresolved lifecycle behavior are not simulated.",
+    "id": "persistent-marked-target-sheepstealer-prey",
+    "interactionScope": "internal",
+    "matchedOutputCapabilityIds": [],
+    "matchKind": "status-condition-enablement",
+    "modifierCapabilityId": null,
+    "modifierCapabilityIds": [],
+    "recipientAbilityId": "sheepstealer-wild-hunt",
+    "recipientDragonId": "sheepstealer",
+    "recipientEvidenceIds": [],
+    "requirements": [],
+    "ruleId": "persistent-marked-target-reference",
+    "sourceAbilityId": "sheepstealer-wild-hunt",
+    "sourceDragonId": "sheepstealer",
+    "sourceEvidenceIds": [
+      "sheepstealer-wild-hunt-summary-2026-06-23",
+      "sheepstealer-wild-hunt-glossary-2026-06-23",
+      "sheepstealer-wild-hunt-recovery-priority-combat-log-2026-06-24"
+    ],
+    "status": "potential",
+    "targetSelectionGroup": null,
+    "title": "Prey persistent target reference",
+    "unresolvedQuestions": [
+      "Marked-target duration, removal, transfer, and replacement behavior remain unresolved unless explicitly verified by source data."
+    ]
+  },
+  {
     "assumptions": [],
     "channel": "stat",
     "confidence": "confirmed",
@@ -32982,12 +33300,20 @@
     ],
     "damageScope": null,
     "effects": [
-      "Fire Damage Dealt increase unknown.",
+      "Fire Damage Dealt increase 6% at effective Habit Level 5.",
+      "Shared stack pool: stolen-flock.",
+      "Maximum stacks: 10.",
+      "Value per stack at effective Habit Level 1: 3% Fire Damage Dealt.",
+      "Value per stack at effective Habit Level 5: 6% Fire Damage Dealt.",
+      "Maximum theoretical modifier at effective Habit Level 1: 30% Fire Damage Dealt.",
+      "Current stack count is unknown.",
+      "Trigger chance: 50%.",
+      "Each-round stack trigger is chance-based and not guaranteed Active.",
       "Duration: until end of combat."
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final value cannot be calculated because final combat formulas and stacking order are not fully verified.",
-    "explanation": "Sheepstealer's Stolen Flock affects Sheepstealer. Fire Damage Dealt increase unknown. Duration: until end of combat.",
+    "explanation": "Sheepstealer's Stolen Flock affects Sheepstealer. Fire Damage Dealt increase 6% at effective Habit Level 5. Shared stack pool: stolen-flock. Maximum stacks: 10. Value per stack at effective Habit Level 1: 3% Fire Damage Dealt. Value per stack at effective Habit Level 5: 6% Fire Damage Dealt. Maximum theoretical modifier at effective Habit Level 1: 30% Fire Damage Dealt. Current stack count is unknown. Trigger chance: 50%. Each-round stack trigger is chance-based and not guaranteed Active. Duration: until end of combat.",
     "id": "internal-self-modifier-sheepstealer-stolen-flock-stolen-flock-stack-round-fire-damage-stack-modifier",
     "interactionScope": "internal",
     "matchedOutputCapabilityIds": [],
@@ -33057,12 +33383,20 @@
     ],
     "damageScope": null,
     "effects": [
-      "Fire Damage Dealt increase unknown.",
+      "Timing: when the marked target receives Recovery.",
+      "Fire Damage Dealt increase 6% at effective Habit Level 5.",
+      "Shared stack pool: stolen-flock.",
+      "Maximum stacks: 10.",
+      "Value per stack at effective Habit Level 1: 3% Fire Damage Dealt.",
+      "Value per stack at effective Habit Level 5: 6% Fire Damage Dealt.",
+      "Maximum theoretical modifier at effective Habit Level 1: 30% Fire Damage Dealt.",
+      "Current stack count is unknown.",
+      "Prey-Recovery trigger is event-dependent and not guaranteed Active while the event is unresolved.",
       "Duration: until end of combat."
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final value cannot be calculated because final combat formulas and stacking order are not fully verified.",
-    "explanation": "Sheepstealer's Stolen Flock affects Sheepstealer. Fire Damage Dealt increase unknown. Duration: until end of combat.",
+    "explanation": "Sheepstealer's Stolen Flock affects Sheepstealer. Timing: when the marked target receives Recovery. Fire Damage Dealt increase 6% at effective Habit Level 5. Shared stack pool: stolen-flock. Maximum stacks: 10. Value per stack at effective Habit Level 1: 3% Fire Damage Dealt. Value per stack at effective Habit Level 5: 6% Fire Damage Dealt. Maximum theoretical modifier at effective Habit Level 1: 30% Fire Damage Dealt. Current stack count is unknown. Prey-Recovery trigger is event-dependent and not guaranteed Active while the event is unresolved. Duration: until end of combat.",
     "id": "internal-self-modifier-sheepstealer-stolen-flock-stolen-flock-stack-recovery-fire-damage-stack-modifier",
     "interactionScope": "internal",
     "matchedOutputCapabilityIds": [],
@@ -34933,6 +35267,75 @@
   },
   {
     "assumptions": [
+      "Enemy identities and combat availability are unresolved.",
+      "Enemy state and uptime are not treated as guaranteed."
+    ],
+    "channel": "recovery",
+    "confidence": "confirmed",
+    "conflicts": [
+      "Sheepstealer - Wary Beast Habit unlock requirement: expected Star Rank 8+, actual Star Rank 1",
+      "Sheepstealer - Wary Beast Selected Habit Level: expected Habit Level 1+ or preview, actual preview enabled"
+    ],
+    "damageScope": null,
+    "effects": [
+      "Recovery Received decrease 20%.",
+      "Duration: until end of combat."
+    ],
+    "exactResultKnown": false,
+    "exactResultUnknownReason": "Exact final received-effect reduction cannot be calculated because target state, uptime, stacking, and final formulas are unresolved.",
+    "explanation": "Sheepstealer's Wary Beast can reduce enemy Recovery Received by 20%. Duration: until end of combat.",
+    "id": "enemy-received-reduction-sheepstealer-wary-beast-wary-beast-recovery-received-down-recovery-received-modifier",
+    "interactionScope": "enemy-side",
+    "matchedOutputCapabilityIds": [],
+    "matchKind": "enemy-damage-dealt-reduction",
+    "modifierCapabilityId": "sheepstealer-wary-beast-wary-beast-recovery-received-down-recovery-received-modifier",
+    "modifierCapabilityIds": [
+      "sheepstealer-wary-beast-wary-beast-recovery-received-down-recovery-received-modifier"
+    ],
+    "recipientAbilityId": null,
+    "recipientDragonId": null,
+    "recipientEvidenceIds": [],
+    "requirements": [
+      {
+        "actual": "Star Rank 1",
+        "evidenceIds": [
+          "sheepstealer-wary-beast-2026-06-23"
+        ],
+        "expected": "Star Rank 8+",
+        "id": "sheepstealer-sheepstealer-wary-beast-star-rank",
+        "label": "Sheepstealer - Wary Beast Habit unlock requirement",
+        "notes": [],
+        "satisfied": false
+      },
+      {
+        "actual": "preview enabled",
+        "evidenceIds": [
+          "sheepstealer-wary-beast-2026-06-23"
+        ],
+        "expected": "Habit Level 1+ or preview",
+        "id": "sheepstealer-sheepstealer-wary-beast-habit-level",
+        "label": "Sheepstealer - Wary Beast Selected Habit Level",
+        "notes": [
+          "Unlocked Habits without an explicit saved Habit Level default to effective Habit Level 1. Locked Habit capabilities are potential in preview mode, not active for current roster."
+        ],
+        "satisfied": false
+      }
+    ],
+    "ruleId": "enemy-received-reduction",
+    "sourceAbilityId": "sheepstealer-wary-beast",
+    "sourceDragonId": "sheepstealer",
+    "sourceEvidenceIds": [
+      "sheepstealer-wary-beast-2026-06-23"
+    ],
+    "status": "potential",
+    "targetSelectionGroup": null,
+    "title": "Recovery Enemy Reduction",
+    "unresolvedQuestions": [
+      "Enemy identities, combat availability, final uptime, and stacking/refresh behavior remain unresolved."
+    ]
+  },
+  {
+    "assumptions": [
       "Multiple qualifying outputs are aggregated into one normal synergy trace."
     ],
     "channel": "fire-damage",
@@ -35888,6 +36291,46 @@
     ]
   },
   {
+    "assumptions": [
+      "Status lifecycle behavior beyond verified conditions is not simulated."
+    ],
+    "channel": "status",
+    "confidence": "confirmed",
+    "conflicts": [],
+    "damageScope": null,
+    "effects": [
+      "Status identity: prey.",
+      "Actual enemy identity: unresolved."
+    ],
+    "exactResultKnown": false,
+    "exactResultUnknownReason": "Exact final value cannot be calculated because final combat formulas and stacking order are not fully verified.",
+    "explanation": "Persistent marked target: Sheepstealer's current Prey. Wild Hunt establishes Prey only when none currently exists. Stolen Flock, Baited Kill, Wary Beast and Savage Claim refer to that same marked enemy. The actual enemy identity and unresolved lifecycle behavior are not simulated.",
+    "id": "persistent-marked-target-sheepstealer-prey",
+    "interactionScope": "internal",
+    "matchedOutputCapabilityIds": [],
+    "matchKind": "status-condition-enablement",
+    "modifierCapabilityId": null,
+    "modifierCapabilityIds": [],
+    "recipientAbilityId": "sheepstealer-wild-hunt",
+    "recipientDragonId": "sheepstealer",
+    "recipientEvidenceIds": [],
+    "requirements": [],
+    "ruleId": "persistent-marked-target-reference",
+    "sourceAbilityId": "sheepstealer-wild-hunt",
+    "sourceDragonId": "sheepstealer",
+    "sourceEvidenceIds": [
+      "sheepstealer-wild-hunt-summary-2026-06-23",
+      "sheepstealer-wild-hunt-glossary-2026-06-23",
+      "sheepstealer-wild-hunt-recovery-priority-combat-log-2026-06-24"
+    ],
+    "status": "potential",
+    "targetSelectionGroup": null,
+    "title": "Prey persistent target reference",
+    "unresolvedQuestions": [
+      "Marked-target duration, removal, transfer, and replacement behavior remain unresolved unless explicitly verified by source data."
+    ]
+  },
+  {
     "assumptions": [],
     "channel": "fire-damage",
     "confidence": "confirmed",
@@ -36056,12 +36499,13 @@
     ],
     "damageScope": null,
     "effects": [
+      "Timing: Start of each round.",
       "Fire Damage Dealt increase 20% at effective Habit Level 5.",
       "Ranked progression: L1 8%, L2 10.4%, L3 12.8%, L4 16%, L5 20%."
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final value cannot be calculated because final combat formulas and stacking order are not fully verified.",
-    "explanation": "Caraxes's Blood Wyrm affects Caraxes. Fire Damage Dealt increase 20% at effective Habit Level 5. Ranked progression: L1 8%, L2 10.4%, L3 12.8%, L4 16%, L5 20%.",
+    "explanation": "Caraxes's Blood Wyrm affects Caraxes. Timing: Start of each round. Fire Damage Dealt increase 20% at effective Habit Level 5. Ranked progression: L1 8%, L2 10.4%, L3 12.8%, L4 16%, L5 20%.",
     "id": "internal-self-modifier-caraxes-blood-wyrm-blood-wyrm-fire-up-fire-damage-dealt-modifier",
     "interactionScope": "internal",
     "matchedOutputCapabilityIds": [],
@@ -36620,12 +37064,20 @@
     ],
     "damageScope": null,
     "effects": [
-      "Fire Damage Dealt increase unknown.",
+      "Fire Damage Dealt increase 6% at effective Habit Level 5.",
+      "Shared stack pool: stolen-flock.",
+      "Maximum stacks: 10.",
+      "Value per stack at effective Habit Level 1: 3% Fire Damage Dealt.",
+      "Value per stack at effective Habit Level 5: 6% Fire Damage Dealt.",
+      "Maximum theoretical modifier at effective Habit Level 1: 30% Fire Damage Dealt.",
+      "Current stack count is unknown.",
+      "Trigger chance: 50%.",
+      "Each-round stack trigger is chance-based and not guaranteed Active.",
       "Duration: until end of combat."
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final value cannot be calculated because final combat formulas and stacking order are not fully verified.",
-    "explanation": "Sheepstealer's Stolen Flock affects Sheepstealer. Fire Damage Dealt increase unknown. Duration: until end of combat.",
+    "explanation": "Sheepstealer's Stolen Flock affects Sheepstealer. Fire Damage Dealt increase 6% at effective Habit Level 5. Shared stack pool: stolen-flock. Maximum stacks: 10. Value per stack at effective Habit Level 1: 3% Fire Damage Dealt. Value per stack at effective Habit Level 5: 6% Fire Damage Dealt. Maximum theoretical modifier at effective Habit Level 1: 30% Fire Damage Dealt. Current stack count is unknown. Trigger chance: 50%. Each-round stack trigger is chance-based and not guaranteed Active. Duration: until end of combat.",
     "id": "internal-self-modifier-sheepstealer-stolen-flock-stolen-flock-stack-round-fire-damage-stack-modifier",
     "interactionScope": "internal",
     "matchedOutputCapabilityIds": [],
@@ -36695,12 +37147,20 @@
     ],
     "damageScope": null,
     "effects": [
-      "Fire Damage Dealt increase unknown.",
+      "Timing: when the marked target receives Recovery.",
+      "Fire Damage Dealt increase 6% at effective Habit Level 5.",
+      "Shared stack pool: stolen-flock.",
+      "Maximum stacks: 10.",
+      "Value per stack at effective Habit Level 1: 3% Fire Damage Dealt.",
+      "Value per stack at effective Habit Level 5: 6% Fire Damage Dealt.",
+      "Maximum theoretical modifier at effective Habit Level 1: 30% Fire Damage Dealt.",
+      "Current stack count is unknown.",
+      "Prey-Recovery trigger is event-dependent and not guaranteed Active while the event is unresolved.",
       "Duration: until end of combat."
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final value cannot be calculated because final combat formulas and stacking order are not fully verified.",
-    "explanation": "Sheepstealer's Stolen Flock affects Sheepstealer. Fire Damage Dealt increase unknown. Duration: until end of combat.",
+    "explanation": "Sheepstealer's Stolen Flock affects Sheepstealer. Timing: when the marked target receives Recovery. Fire Damage Dealt increase 6% at effective Habit Level 5. Shared stack pool: stolen-flock. Maximum stacks: 10. Value per stack at effective Habit Level 1: 3% Fire Damage Dealt. Value per stack at effective Habit Level 5: 6% Fire Damage Dealt. Maximum theoretical modifier at effective Habit Level 1: 30% Fire Damage Dealt. Current stack count is unknown. Prey-Recovery trigger is event-dependent and not guaranteed Active while the event is unresolved. Duration: until end of combat.",
     "id": "internal-self-modifier-sheepstealer-stolen-flock-stolen-flock-stack-recovery-fire-damage-stack-modifier",
     "interactionScope": "internal",
     "matchedOutputCapabilityIds": [],
@@ -38440,7 +38900,8 @@
     ],
     "damageScope": null,
     "effects": [
-      "Enemy Physical Damage decrease 11%"
+      "Enemy Physical Damage decrease 11%",
+      "Physical Damage reduction applies to non-Basic Attacks only."
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final reduced enemy damage cannot be calculated because target selection, uptime, stacking, and final formulas are unresolved.",
@@ -38565,6 +39026,75 @@
   },
   {
     "assumptions": [
+      "Enemy identities and combat availability are unresolved.",
+      "Enemy state and uptime are not treated as guaranteed."
+    ],
+    "channel": "recovery",
+    "confidence": "confirmed",
+    "conflicts": [
+      "Sheepstealer - Wary Beast Habit unlock requirement: expected Star Rank 8+, actual Star Rank 1",
+      "Sheepstealer - Wary Beast Selected Habit Level: expected Habit Level 1+ or preview, actual preview enabled"
+    ],
+    "damageScope": null,
+    "effects": [
+      "Recovery Received decrease 20%.",
+      "Duration: until end of combat."
+    ],
+    "exactResultKnown": false,
+    "exactResultUnknownReason": "Exact final received-effect reduction cannot be calculated because target state, uptime, stacking, and final formulas are unresolved.",
+    "explanation": "Sheepstealer's Wary Beast can reduce enemy Recovery Received by 20%. Duration: until end of combat.",
+    "id": "enemy-received-reduction-sheepstealer-wary-beast-wary-beast-recovery-received-down-recovery-received-modifier",
+    "interactionScope": "enemy-side",
+    "matchedOutputCapabilityIds": [],
+    "matchKind": "enemy-damage-dealt-reduction",
+    "modifierCapabilityId": "sheepstealer-wary-beast-wary-beast-recovery-received-down-recovery-received-modifier",
+    "modifierCapabilityIds": [
+      "sheepstealer-wary-beast-wary-beast-recovery-received-down-recovery-received-modifier"
+    ],
+    "recipientAbilityId": null,
+    "recipientDragonId": null,
+    "recipientEvidenceIds": [],
+    "requirements": [
+      {
+        "actual": "Star Rank 1",
+        "evidenceIds": [
+          "sheepstealer-wary-beast-2026-06-23"
+        ],
+        "expected": "Star Rank 8+",
+        "id": "sheepstealer-sheepstealer-wary-beast-star-rank",
+        "label": "Sheepstealer - Wary Beast Habit unlock requirement",
+        "notes": [],
+        "satisfied": false
+      },
+      {
+        "actual": "preview enabled",
+        "evidenceIds": [
+          "sheepstealer-wary-beast-2026-06-23"
+        ],
+        "expected": "Habit Level 1+ or preview",
+        "id": "sheepstealer-sheepstealer-wary-beast-habit-level",
+        "label": "Sheepstealer - Wary Beast Selected Habit Level",
+        "notes": [
+          "Unlocked Habits without an explicit saved Habit Level default to effective Habit Level 1. Locked Habit capabilities are potential in preview mode, not active for current roster."
+        ],
+        "satisfied": false
+      }
+    ],
+    "ruleId": "enemy-received-reduction",
+    "sourceAbilityId": "sheepstealer-wary-beast",
+    "sourceDragonId": "sheepstealer",
+    "sourceEvidenceIds": [
+      "sheepstealer-wary-beast-2026-06-23"
+    ],
+    "status": "potential",
+    "targetSelectionGroup": null,
+    "title": "Recovery Enemy Reduction",
+    "unresolvedQuestions": [
+      "Enemy identities, combat availability, final uptime, and stacking/refresh behavior remain unresolved."
+    ]
+  },
+  {
+    "assumptions": [
       "Periodic status application is conditional on activation and target selection.",
       "Enemy target overlap is not simulated or guaranteed.",
       "Uptime is not treated as guaranteed.",
@@ -38584,6 +39114,7 @@
       "Scales with Intelligence.",
       "Mitigated by target Initiative.",
       "Status supplier effect: crippling-inferno-burn.",
+      "Independent per-target checks: 3.",
       "Activation, target selection, target overlap, and uptime remain conditional.",
       "Final damage is not calculated."
     ],
@@ -40162,6 +40693,46 @@
     ]
   },
   {
+    "assumptions": [
+      "Status lifecycle behavior beyond verified conditions is not simulated."
+    ],
+    "channel": "status",
+    "confidence": "confirmed",
+    "conflicts": [],
+    "damageScope": null,
+    "effects": [
+      "Status identity: prey.",
+      "Actual enemy identity: unresolved."
+    ],
+    "exactResultKnown": false,
+    "exactResultUnknownReason": "Exact final value cannot be calculated because final combat formulas and stacking order are not fully verified.",
+    "explanation": "Persistent marked target: Sheepstealer's current Prey. Wild Hunt establishes Prey only when none currently exists. Stolen Flock, Baited Kill, Wary Beast and Savage Claim refer to that same marked enemy. The actual enemy identity and unresolved lifecycle behavior are not simulated.",
+    "id": "persistent-marked-target-sheepstealer-prey",
+    "interactionScope": "internal",
+    "matchedOutputCapabilityIds": [],
+    "matchKind": "status-condition-enablement",
+    "modifierCapabilityId": null,
+    "modifierCapabilityIds": [],
+    "recipientAbilityId": "sheepstealer-wild-hunt",
+    "recipientDragonId": "sheepstealer",
+    "recipientEvidenceIds": [],
+    "requirements": [],
+    "ruleId": "persistent-marked-target-reference",
+    "sourceAbilityId": "sheepstealer-wild-hunt",
+    "sourceDragonId": "sheepstealer",
+    "sourceEvidenceIds": [
+      "sheepstealer-wild-hunt-summary-2026-06-23",
+      "sheepstealer-wild-hunt-glossary-2026-06-23",
+      "sheepstealer-wild-hunt-recovery-priority-combat-log-2026-06-24"
+    ],
+    "status": "potential",
+    "targetSelectionGroup": null,
+    "title": "Prey persistent target reference",
+    "unresolvedQuestions": [
+      "Marked-target duration, removal, transfer, and replacement behavior remain unresolved unless explicitly verified by source data."
+    ]
+  },
+  {
     "assumptions": [],
     "channel": "tactical-damage",
     "confidence": "confirmed",
@@ -40809,12 +41380,20 @@
     ],
     "damageScope": null,
     "effects": [
-      "Fire Damage Dealt increase unknown.",
+      "Fire Damage Dealt increase 6% at effective Habit Level 5.",
+      "Shared stack pool: stolen-flock.",
+      "Maximum stacks: 10.",
+      "Value per stack at effective Habit Level 1: 3% Fire Damage Dealt.",
+      "Value per stack at effective Habit Level 5: 6% Fire Damage Dealt.",
+      "Maximum theoretical modifier at effective Habit Level 1: 30% Fire Damage Dealt.",
+      "Current stack count is unknown.",
+      "Trigger chance: 50%.",
+      "Each-round stack trigger is chance-based and not guaranteed Active.",
       "Duration: until end of combat."
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final value cannot be calculated because final combat formulas and stacking order are not fully verified.",
-    "explanation": "Sheepstealer's Stolen Flock affects Sheepstealer. Fire Damage Dealt increase unknown. Duration: until end of combat.",
+    "explanation": "Sheepstealer's Stolen Flock affects Sheepstealer. Fire Damage Dealt increase 6% at effective Habit Level 5. Shared stack pool: stolen-flock. Maximum stacks: 10. Value per stack at effective Habit Level 1: 3% Fire Damage Dealt. Value per stack at effective Habit Level 5: 6% Fire Damage Dealt. Maximum theoretical modifier at effective Habit Level 1: 30% Fire Damage Dealt. Current stack count is unknown. Trigger chance: 50%. Each-round stack trigger is chance-based and not guaranteed Active. Duration: until end of combat.",
     "id": "internal-self-modifier-sheepstealer-stolen-flock-stolen-flock-stack-round-fire-damage-stack-modifier",
     "interactionScope": "internal",
     "matchedOutputCapabilityIds": [],
@@ -40884,12 +41463,20 @@
     ],
     "damageScope": null,
     "effects": [
-      "Fire Damage Dealt increase unknown.",
+      "Timing: when the marked target receives Recovery.",
+      "Fire Damage Dealt increase 6% at effective Habit Level 5.",
+      "Shared stack pool: stolen-flock.",
+      "Maximum stacks: 10.",
+      "Value per stack at effective Habit Level 1: 3% Fire Damage Dealt.",
+      "Value per stack at effective Habit Level 5: 6% Fire Damage Dealt.",
+      "Maximum theoretical modifier at effective Habit Level 1: 30% Fire Damage Dealt.",
+      "Current stack count is unknown.",
+      "Prey-Recovery trigger is event-dependent and not guaranteed Active while the event is unresolved.",
       "Duration: until end of combat."
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final value cannot be calculated because final combat formulas and stacking order are not fully verified.",
-    "explanation": "Sheepstealer's Stolen Flock affects Sheepstealer. Fire Damage Dealt increase unknown. Duration: until end of combat.",
+    "explanation": "Sheepstealer's Stolen Flock affects Sheepstealer. Timing: when the marked target receives Recovery. Fire Damage Dealt increase 6% at effective Habit Level 5. Shared stack pool: stolen-flock. Maximum stacks: 10. Value per stack at effective Habit Level 1: 3% Fire Damage Dealt. Value per stack at effective Habit Level 5: 6% Fire Damage Dealt. Maximum theoretical modifier at effective Habit Level 1: 30% Fire Damage Dealt. Current stack count is unknown. Prey-Recovery trigger is event-dependent and not guaranteed Active while the event is unresolved. Duration: until end of combat.",
     "id": "internal-self-modifier-sheepstealer-stolen-flock-stolen-flock-stack-recovery-fire-damage-stack-modifier",
     "interactionScope": "internal",
     "matchedOutputCapabilityIds": [],
@@ -42898,6 +43485,75 @@
   },
   {
     "assumptions": [
+      "Enemy identities and combat availability are unresolved.",
+      "Enemy state and uptime are not treated as guaranteed."
+    ],
+    "channel": "recovery",
+    "confidence": "confirmed",
+    "conflicts": [
+      "Sheepstealer - Wary Beast Habit unlock requirement: expected Star Rank 8+, actual Star Rank 1",
+      "Sheepstealer - Wary Beast Selected Habit Level: expected Habit Level 1+ or preview, actual preview enabled"
+    ],
+    "damageScope": null,
+    "effects": [
+      "Recovery Received decrease 20%.",
+      "Duration: until end of combat."
+    ],
+    "exactResultKnown": false,
+    "exactResultUnknownReason": "Exact final received-effect reduction cannot be calculated because target state, uptime, stacking, and final formulas are unresolved.",
+    "explanation": "Sheepstealer's Wary Beast can reduce enemy Recovery Received by 20%. Duration: until end of combat.",
+    "id": "enemy-received-reduction-sheepstealer-wary-beast-wary-beast-recovery-received-down-recovery-received-modifier",
+    "interactionScope": "enemy-side",
+    "matchedOutputCapabilityIds": [],
+    "matchKind": "enemy-damage-dealt-reduction",
+    "modifierCapabilityId": "sheepstealer-wary-beast-wary-beast-recovery-received-down-recovery-received-modifier",
+    "modifierCapabilityIds": [
+      "sheepstealer-wary-beast-wary-beast-recovery-received-down-recovery-received-modifier"
+    ],
+    "recipientAbilityId": null,
+    "recipientDragonId": null,
+    "recipientEvidenceIds": [],
+    "requirements": [
+      {
+        "actual": "Star Rank 1",
+        "evidenceIds": [
+          "sheepstealer-wary-beast-2026-06-23"
+        ],
+        "expected": "Star Rank 8+",
+        "id": "sheepstealer-sheepstealer-wary-beast-star-rank",
+        "label": "Sheepstealer - Wary Beast Habit unlock requirement",
+        "notes": [],
+        "satisfied": false
+      },
+      {
+        "actual": "preview enabled",
+        "evidenceIds": [
+          "sheepstealer-wary-beast-2026-06-23"
+        ],
+        "expected": "Habit Level 1+ or preview",
+        "id": "sheepstealer-sheepstealer-wary-beast-habit-level",
+        "label": "Sheepstealer - Wary Beast Selected Habit Level",
+        "notes": [
+          "Unlocked Habits without an explicit saved Habit Level default to effective Habit Level 1. Locked Habit capabilities are potential in preview mode, not active for current roster."
+        ],
+        "satisfied": false
+      }
+    ],
+    "ruleId": "enemy-received-reduction",
+    "sourceAbilityId": "sheepstealer-wary-beast",
+    "sourceDragonId": "sheepstealer",
+    "sourceEvidenceIds": [
+      "sheepstealer-wary-beast-2026-06-23"
+    ],
+    "status": "potential",
+    "targetSelectionGroup": null,
+    "title": "Recovery Enemy Reduction",
+    "unresolvedQuestions": [
+      "Enemy identities, combat availability, final uptime, and stacking/refresh behavior remain unresolved."
+    ]
+  },
+  {
+    "assumptions": [
       "Trigger chance and target selection may make this conditional rather than guaranteed.",
       "Multiple qualifying outputs are aggregated into one normal synergy trace."
     ],
@@ -43981,12 +44637,13 @@
     ],
     "damageScope": null,
     "effects": [
+      "Timing: Start of each round.",
       "Fire Damage Dealt increase 20% at effective Habit Level 5.",
       "Ranked progression: L1 8%, L2 10.4%, L3 12.8%, L4 16%, L5 20%."
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final value cannot be calculated because final combat formulas and stacking order are not fully verified.",
-    "explanation": "Caraxes's Blood Wyrm affects Caraxes. Fire Damage Dealt increase 20% at effective Habit Level 5. Ranked progression: L1 8%, L2 10.4%, L3 12.8%, L4 16%, L5 20%.",
+    "explanation": "Caraxes's Blood Wyrm affects Caraxes. Timing: Start of each round. Fire Damage Dealt increase 20% at effective Habit Level 5. Ranked progression: L1 8%, L2 10.4%, L3 12.8%, L4 16%, L5 20%.",
     "id": "internal-self-modifier-caraxes-blood-wyrm-blood-wyrm-fire-up-fire-damage-dealt-modifier",
     "interactionScope": "internal",
     "matchedOutputCapabilityIds": [],
@@ -44142,11 +44799,17 @@
     "damageScope": null,
     "effects": [
       "Physical Damage Dealt increase 5.",
+      "Shared stack pool: rallying-flame.",
+      "Maximum stacks: 4.",
+      "Value per stack at effective Habit Level 1: 5% Physical Damage Dealt.",
+      "Value per stack at effective Habit Level 5: 5% Physical Damage Dealt.",
+      "Maximum theoretical modifier at effective Habit Level 1: 20% Physical Damage Dealt.",
+      "Current stack count is unknown.",
       "Duration: until end of combat."
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final value cannot be calculated because final combat formulas and stacking order are not fully verified.",
-    "explanation": "Vermax's Rallying Flame affects Vermax. Physical Damage Dealt increase 5. Duration: until end of combat.",
+    "explanation": "Vermax's Rallying Flame affects Vermax. Physical Damage Dealt increase 5. Shared stack pool: rallying-flame. Maximum stacks: 4. Value per stack at effective Habit Level 1: 5% Physical Damage Dealt. Value per stack at effective Habit Level 5: 5% Physical Damage Dealt. Maximum theoretical modifier at effective Habit Level 1: 20% Physical Damage Dealt. Current stack count is unknown. Duration: until end of combat.",
     "id": "internal-self-modifier-vermax-rallying-flame-rallying-flame-stack-physical-damage-stack-modifier",
     "interactionScope": "internal",
     "matchedOutputCapabilityIds": [],
@@ -44368,12 +45031,13 @@
     ],
     "damageScope": null,
     "effects": [
+      "Timing: Start of each round.",
       "Damage Dealt increase 15%.",
       "Duration: 2 rounds."
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final value cannot be calculated because final combat formulas and stacking order are not fully verified.",
-    "explanation": "Vermax's Unyielding Resolve affects Vermax. Damage Dealt increase 15%. Duration: 2 rounds.",
+    "explanation": "Vermax's Unyielding Resolve affects Vermax. Timing: Start of each round. Damage Dealt increase 15%. Duration: 2 rounds.",
     "id": "internal-self-modifier-vermax-unyielding-resolve-unyielding-resolve-advantage-advantage-damage-dealt-status-modifier",
     "interactionScope": "internal",
     "matchedOutputCapabilityIds": [],
@@ -44457,11 +45121,12 @@
       "Fire Damage Received decrease 30% at effective Habit Level 5.",
       "Ranked progression: L1 10%, L2 12%, L3 14%, L4 17%, L5 20%.",
       "Ranked progression: L1 15%, L2 18%, L3 21%, L4 25.5%, L5 30%.",
-      "Ranked progression: L1 5%, L2 6%, L3 7%, L4 8.5%, L5 10%."
+      "Ranked progression: L1 5%, L2 6%, L3 7%, L4 8.5%, L5 10%.",
+      "Timing: Start of each round."
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final value cannot be calculated because final combat formulas and stacking order are not fully verified.",
-    "explanation": "Trial by Flame can reduce Fire Damage Received for Caraxes and Syrax when each satisfies a Troop Capacity threshold. Below 75% Troop Capacity: Fire Damage Received -10% at effective Habit Level 5.; Below 50% Troop Capacity: Fire Damage Received -20% at effective Habit Level 5.; Below 25% Troop Capacity: Fire Damage Received -30% at effective Habit Level 5.. Threshold applicability depends on each recipient's current Troop Capacity; exact interaction between overlapping threshold tiers is unresolved.",
+    "explanation": "Trial by Flame can reduce Fire Damage Received for Caraxes and Syrax when each satisfies a Troop Capacity threshold. . Threshold applicability depends on each recipient's current Troop Capacity; exact interaction between overlapping threshold tiers is unresolved.",
     "id": "defensive-ally-support-vermax-trial-by-flame-grouped",
     "interactionScope": "targeting-fact",
     "matchedOutputCapabilityIds": [],
@@ -46805,7 +47470,8 @@
     ],
     "damageScope": null,
     "effects": [
-      "Enemy Physical Damage decrease 11%"
+      "Enemy Physical Damage decrease 11%",
+      "Physical Damage reduction applies to non-Basic Attacks only."
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final reduced enemy damage cannot be calculated because target selection, uptime, stacking, and final formulas are unresolved.",
@@ -46881,6 +47547,7 @@
       "Scales with Intelligence.",
       "Mitigated by target Initiative.",
       "Status supplier effect: crippling-inferno-burn.",
+      "Independent per-target checks: 3.",
       "Activation, target selection, target overlap, and uptime remain conditional.",
       "Final damage is not calculated."
     ],
@@ -48094,6 +48761,46 @@
     ]
   },
   {
+    "assumptions": [
+      "Status lifecycle behavior beyond verified conditions is not simulated."
+    ],
+    "channel": "status",
+    "confidence": "confirmed",
+    "conflicts": [],
+    "damageScope": null,
+    "effects": [
+      "Status identity: prey.",
+      "Actual enemy identity: unresolved."
+    ],
+    "exactResultKnown": false,
+    "exactResultUnknownReason": "Exact final value cannot be calculated because final combat formulas and stacking order are not fully verified.",
+    "explanation": "Persistent marked target: Sheepstealer's current Prey. Wild Hunt establishes Prey only when none currently exists. Stolen Flock, Baited Kill, Wary Beast and Savage Claim refer to that same marked enemy. The actual enemy identity and unresolved lifecycle behavior are not simulated.",
+    "id": "persistent-marked-target-sheepstealer-prey",
+    "interactionScope": "internal",
+    "matchedOutputCapabilityIds": [],
+    "matchKind": "status-condition-enablement",
+    "modifierCapabilityId": null,
+    "modifierCapabilityIds": [],
+    "recipientAbilityId": "sheepstealer-wild-hunt",
+    "recipientDragonId": "sheepstealer",
+    "recipientEvidenceIds": [],
+    "requirements": [],
+    "ruleId": "persistent-marked-target-reference",
+    "sourceAbilityId": "sheepstealer-wild-hunt",
+    "sourceDragonId": "sheepstealer",
+    "sourceEvidenceIds": [
+      "sheepstealer-wild-hunt-summary-2026-06-23",
+      "sheepstealer-wild-hunt-glossary-2026-06-23",
+      "sheepstealer-wild-hunt-recovery-priority-combat-log-2026-06-24"
+    ],
+    "status": "potential",
+    "targetSelectionGroup": null,
+    "title": "Prey persistent target reference",
+    "unresolvedQuestions": [
+      "Marked-target duration, removal, transfer, and replacement behavior remain unresolved unless explicitly verified by source data."
+    ]
+  },
+  {
     "assumptions": [],
     "channel": "tactical-damage",
     "confidence": "confirmed",
@@ -48344,12 +49051,13 @@
     ],
     "damageScope": null,
     "effects": [
+      "Timing: Start of each round.",
       "Fire Damage Dealt increase 20% at effective Habit Level 5.",
       "Ranked progression: L1 8%, L2 10.4%, L3 12.8%, L4 16%, L5 20%."
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final value cannot be calculated because final combat formulas and stacking order are not fully verified.",
-    "explanation": "Caraxes's Blood Wyrm affects Caraxes. Fire Damage Dealt increase 20% at effective Habit Level 5. Ranked progression: L1 8%, L2 10.4%, L3 12.8%, L4 16%, L5 20%.",
+    "explanation": "Caraxes's Blood Wyrm affects Caraxes. Timing: Start of each round. Fire Damage Dealt increase 20% at effective Habit Level 5. Ranked progression: L1 8%, L2 10.4%, L3 12.8%, L4 16%, L5 20%.",
     "id": "internal-self-modifier-caraxes-blood-wyrm-blood-wyrm-fire-up-fire-damage-dealt-modifier",
     "interactionScope": "internal",
     "matchedOutputCapabilityIds": [],
@@ -48659,12 +49367,20 @@
     ],
     "damageScope": null,
     "effects": [
-      "Fire Damage Dealt increase unknown.",
+      "Fire Damage Dealt increase 6% at effective Habit Level 5.",
+      "Shared stack pool: stolen-flock.",
+      "Maximum stacks: 10.",
+      "Value per stack at effective Habit Level 1: 3% Fire Damage Dealt.",
+      "Value per stack at effective Habit Level 5: 6% Fire Damage Dealt.",
+      "Maximum theoretical modifier at effective Habit Level 1: 30% Fire Damage Dealt.",
+      "Current stack count is unknown.",
+      "Trigger chance: 50%.",
+      "Each-round stack trigger is chance-based and not guaranteed Active.",
       "Duration: until end of combat."
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final value cannot be calculated because final combat formulas and stacking order are not fully verified.",
-    "explanation": "Sheepstealer's Stolen Flock affects Sheepstealer. Fire Damage Dealt increase unknown. Duration: until end of combat.",
+    "explanation": "Sheepstealer's Stolen Flock affects Sheepstealer. Fire Damage Dealt increase 6% at effective Habit Level 5. Shared stack pool: stolen-flock. Maximum stacks: 10. Value per stack at effective Habit Level 1: 3% Fire Damage Dealt. Value per stack at effective Habit Level 5: 6% Fire Damage Dealt. Maximum theoretical modifier at effective Habit Level 1: 30% Fire Damage Dealt. Current stack count is unknown. Trigger chance: 50%. Each-round stack trigger is chance-based and not guaranteed Active. Duration: until end of combat.",
     "id": "internal-self-modifier-sheepstealer-stolen-flock-stolen-flock-stack-round-fire-damage-stack-modifier",
     "interactionScope": "internal",
     "matchedOutputCapabilityIds": [],
@@ -48734,12 +49450,20 @@
     ],
     "damageScope": null,
     "effects": [
-      "Fire Damage Dealt increase unknown.",
+      "Timing: when the marked target receives Recovery.",
+      "Fire Damage Dealt increase 6% at effective Habit Level 5.",
+      "Shared stack pool: stolen-flock.",
+      "Maximum stacks: 10.",
+      "Value per stack at effective Habit Level 1: 3% Fire Damage Dealt.",
+      "Value per stack at effective Habit Level 5: 6% Fire Damage Dealt.",
+      "Maximum theoretical modifier at effective Habit Level 1: 30% Fire Damage Dealt.",
+      "Current stack count is unknown.",
+      "Prey-Recovery trigger is event-dependent and not guaranteed Active while the event is unresolved.",
       "Duration: until end of combat."
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final value cannot be calculated because final combat formulas and stacking order are not fully verified.",
-    "explanation": "Sheepstealer's Stolen Flock affects Sheepstealer. Fire Damage Dealt increase unknown. Duration: until end of combat.",
+    "explanation": "Sheepstealer's Stolen Flock affects Sheepstealer. Timing: when the marked target receives Recovery. Fire Damage Dealt increase 6% at effective Habit Level 5. Shared stack pool: stolen-flock. Maximum stacks: 10. Value per stack at effective Habit Level 1: 3% Fire Damage Dealt. Value per stack at effective Habit Level 5: 6% Fire Damage Dealt. Maximum theoretical modifier at effective Habit Level 1: 30% Fire Damage Dealt. Current stack count is unknown. Prey-Recovery trigger is event-dependent and not guaranteed Active while the event is unresolved. Duration: until end of combat.",
     "id": "internal-self-modifier-sheepstealer-stolen-flock-stolen-flock-stack-recovery-fire-damage-stack-modifier",
     "interactionScope": "internal",
     "matchedOutputCapabilityIds": [],
@@ -50793,7 +51517,8 @@
     ],
     "damageScope": null,
     "effects": [
-      "Enemy Physical Damage decrease 11%"
+      "Enemy Physical Damage decrease 11%",
+      "Physical Damage reduction applies to non-Basic Attacks only."
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final reduced enemy damage cannot be calculated because target selection, uptime, stacking, and final formulas are unresolved.",
@@ -50918,6 +51643,75 @@
   },
   {
     "assumptions": [
+      "Enemy identities and combat availability are unresolved.",
+      "Enemy state and uptime are not treated as guaranteed."
+    ],
+    "channel": "recovery",
+    "confidence": "confirmed",
+    "conflicts": [
+      "Sheepstealer - Wary Beast Habit unlock requirement: expected Star Rank 8+, actual Star Rank 1",
+      "Sheepstealer - Wary Beast Selected Habit Level: expected Habit Level 1+ or preview, actual preview enabled"
+    ],
+    "damageScope": null,
+    "effects": [
+      "Recovery Received decrease 20%.",
+      "Duration: until end of combat."
+    ],
+    "exactResultKnown": false,
+    "exactResultUnknownReason": "Exact final received-effect reduction cannot be calculated because target state, uptime, stacking, and final formulas are unresolved.",
+    "explanation": "Sheepstealer's Wary Beast can reduce enemy Recovery Received by 20%. Duration: until end of combat.",
+    "id": "enemy-received-reduction-sheepstealer-wary-beast-wary-beast-recovery-received-down-recovery-received-modifier",
+    "interactionScope": "enemy-side",
+    "matchedOutputCapabilityIds": [],
+    "matchKind": "enemy-damage-dealt-reduction",
+    "modifierCapabilityId": "sheepstealer-wary-beast-wary-beast-recovery-received-down-recovery-received-modifier",
+    "modifierCapabilityIds": [
+      "sheepstealer-wary-beast-wary-beast-recovery-received-down-recovery-received-modifier"
+    ],
+    "recipientAbilityId": null,
+    "recipientDragonId": null,
+    "recipientEvidenceIds": [],
+    "requirements": [
+      {
+        "actual": "Star Rank 1",
+        "evidenceIds": [
+          "sheepstealer-wary-beast-2026-06-23"
+        ],
+        "expected": "Star Rank 8+",
+        "id": "sheepstealer-sheepstealer-wary-beast-star-rank",
+        "label": "Sheepstealer - Wary Beast Habit unlock requirement",
+        "notes": [],
+        "satisfied": false
+      },
+      {
+        "actual": "preview enabled",
+        "evidenceIds": [
+          "sheepstealer-wary-beast-2026-06-23"
+        ],
+        "expected": "Habit Level 1+ or preview",
+        "id": "sheepstealer-sheepstealer-wary-beast-habit-level",
+        "label": "Sheepstealer - Wary Beast Selected Habit Level",
+        "notes": [
+          "Unlocked Habits without an explicit saved Habit Level default to effective Habit Level 1. Locked Habit capabilities are potential in preview mode, not active for current roster."
+        ],
+        "satisfied": false
+      }
+    ],
+    "ruleId": "enemy-received-reduction",
+    "sourceAbilityId": "sheepstealer-wary-beast",
+    "sourceDragonId": "sheepstealer",
+    "sourceEvidenceIds": [
+      "sheepstealer-wary-beast-2026-06-23"
+    ],
+    "status": "potential",
+    "targetSelectionGroup": null,
+    "title": "Recovery Enemy Reduction",
+    "unresolvedQuestions": [
+      "Enemy identities, combat availability, final uptime, and stacking/refresh behavior remain unresolved."
+    ]
+  },
+  {
+    "assumptions": [
       "Periodic status application is conditional on activation and target selection.",
       "Enemy target overlap is not simulated or guaranteed.",
       "Uptime is not treated as guaranteed.",
@@ -50937,6 +51731,7 @@
       "Scales with Intelligence.",
       "Mitigated by target Initiative.",
       "Status supplier effect: crippling-inferno-burn.",
+      "Independent per-target checks: 3.",
       "Activation, target selection, target overlap, and uptime remain conditional.",
       "Final damage is not calculated."
     ],
@@ -51841,6 +52636,75 @@
     ]
   },
   {
+    "assumptions": [
+      "Verified negative self-effects are represented even when they are not beneficial."
+    ],
+    "channel": "control",
+    "confidence": "confirmed",
+    "conflicts": [
+      "Kalspire - Radiant Conqueror Habit unlock requirement: expected Star Rank 10+, actual preview enabled",
+      "Kalspire - Radiant Conqueror Selected Habit Level: expected Habit Level 1+ or preview, actual preview enabled"
+    ],
+    "damageScope": null,
+    "effects": [
+      "Target: Kalspire.",
+      "Timing: Start of Round 1.",
+      "Duration: 1 round.",
+      "Real Control status: Stun.",
+      "Real self-inflicted Control status."
+    ],
+    "exactResultKnown": false,
+    "exactResultUnknownReason": "Exact final value cannot be calculated because final combat formulas and stacking order are not fully verified.",
+    "explanation": "Kalspire's Radiant Conqueror applies Stun to Kalspire. Target: Kalspire. Timing: Start of Round 1. Duration: 1 round. Real Control status: Stun. Real self-inflicted Control status.",
+    "id": "self-status-output-kalspire-radiant-conqueror-radiant-conqueror-self-stun-stun-status-output",
+    "interactionScope": "internal",
+    "matchedOutputCapabilityIds": [],
+    "matchKind": "status-condition-enablement",
+    "modifierCapabilityId": null,
+    "modifierCapabilityIds": [],
+    "recipientAbilityId": "kalspire-radiant-conqueror",
+    "recipientDragonId": "kalspire",
+    "recipientEvidenceIds": [],
+    "requirements": [
+      {
+        "actual": "preview enabled",
+        "evidenceIds": [
+          "kalspire-radiant-conqueror-2026-06-25"
+        ],
+        "expected": "Star Rank 10+",
+        "id": "kalspire-kalspire-radiant-conqueror-star-rank",
+        "label": "Kalspire - Radiant Conqueror Habit unlock requirement",
+        "notes": [],
+        "satisfied": false
+      },
+      {
+        "actual": "preview enabled",
+        "evidenceIds": [
+          "kalspire-radiant-conqueror-2026-06-25"
+        ],
+        "expected": "Habit Level 1+ or preview",
+        "id": "kalspire-kalspire-radiant-conqueror-habit-level",
+        "label": "Kalspire - Radiant Conqueror Selected Habit Level",
+        "notes": [
+          "Unlocked Habits without an explicit saved Habit Level default to effective Habit Level 1. Locked Habit capabilities are potential in preview mode, not active for current roster."
+        ],
+        "satisfied": false
+      }
+    ],
+    "ruleId": "self-status-output",
+    "sourceAbilityId": "kalspire-radiant-conqueror",
+    "sourceDragonId": "kalspire",
+    "sourceEvidenceIds": [
+      "kalspire-radiant-conqueror-2026-06-25"
+    ],
+    "status": "potential",
+    "targetSelectionGroup": null,
+    "title": "Radiant Conqueror - Self Stun",
+    "unresolvedQuestions": [
+      "Cleanse timing and outcome are not invented."
+    ]
+  },
+  {
     "assumptions": [],
     "channel": "damage-received",
     "confidence": "confirmed",
@@ -52722,11 +53586,11 @@
     "effects": [
       "Timing: Start of Round 1.",
       "Damage Received decrease 50%.",
-      "Duration: 1 rounds."
+      "Duration: 1 round."
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final value cannot be calculated because final combat formulas and stacking order are not fully verified.",
-    "explanation": "Kalspire's Radiant Conqueror affects Kalspire. Timing: Start of Round 1. Damage Received decrease 50%. Duration: 1 rounds.",
+    "explanation": "Kalspire's Radiant Conqueror affects Kalspire. Timing: Start of Round 1. Damage Received decrease 50%. Duration: 1 round.",
     "id": "internal-self-modifier-kalspire-radiant-conqueror-radiant-conqueror-damage-received-damage-received-received-modifier",
     "interactionScope": "internal",
     "matchedOutputCapabilityIds": [],
@@ -53496,7 +54360,8 @@
     ],
     "damageScope": null,
     "effects": [
-      "Enemy Physical Damage decrease 25%"
+      "Enemy Physical Damage decrease 25%",
+      "Physical Damage reduction applies to non-Basic Attacks only."
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final reduced enemy damage cannot be calculated because target selection, uptime, stacking, and final formulas are unresolved.",
@@ -53951,6 +54816,13 @@
       "Scales with Strength.",
       "Mitigated by target Instinct.",
       "Status supplier effect: tactical-strike-bleed.",
+      "Target reference original-basic-attack-target: First checked target is the original Basic Attack target.",
+      "Target reference other-adjacent-enemy: Second checked target is another enemy within adjacency. References source effect tactical-strike-tactical-damage.",
+      "Target reference original-basic-attack-target: Use the target of the Basic Attack that triggered Tactical Strike.",
+      "Independent per-target checks: 2.",
+      "Per-target check chance: 30%.",
+      "Checks are independent; chances are not combined into one roll.",
+      "Tactical Strike effect tactical-strike-bleed must target a different enemy than tactical-strike-tactical-damage.",
       "Activation, target selection, target overlap, and uptime remain conditional.",
       "Final damage is not calculated."
     ],
@@ -54004,6 +54876,13 @@
       "Scales with Instinct.",
       "Mitigated by target Intelligence.",
       "Status supplier effect: tactical-assault-panic.",
+      "Target reference panic-first-target: First Panic check uses the Physical Damage target. References source effect tactical-assault-physical-damage.",
+      "Target reference panic-second-target: Second Panic check uses another distinct adjacent enemy. References source effect tactical-assault-physical-damage.",
+      "Target reference not-original-basic-attack-target: Physical Damage target is distinct from the original Basic Attack target. References source effect tactical-strike-tactical-damage.",
+      "Independent per-target checks: 2.",
+      "Per-target check chance: 30% at effective Habit Level 5.",
+      "Checks are independent; chances are not combined into one roll.",
+      "Tactical Assault effect tactical-assault-panic uses the same selected target as tactical-assault-physical-damage.",
       "Activation, target selection, target overlap, and uptime remain conditional.",
       "Final damage is not calculated."
     ],
@@ -55431,12 +56310,13 @@
     ],
     "damageScope": null,
     "effects": [
+      "Timing: Start of each round.",
       "Fire Damage Dealt increase 20% at effective Habit Level 5.",
       "Ranked progression: L1 8%, L2 10.4%, L3 12.8%, L4 16%, L5 20%."
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final value cannot be calculated because final combat formulas and stacking order are not fully verified.",
-    "explanation": "Caraxes's Blood Wyrm affects Caraxes. Fire Damage Dealt increase 20% at effective Habit Level 5. Ranked progression: L1 8%, L2 10.4%, L3 12.8%, L4 16%, L5 20%.",
+    "explanation": "Caraxes's Blood Wyrm affects Caraxes. Timing: Start of each round. Fire Damage Dealt increase 20% at effective Habit Level 5. Ranked progression: L1 8%, L2 10.4%, L3 12.8%, L4 16%, L5 20%.",
     "id": "internal-self-modifier-caraxes-blood-wyrm-blood-wyrm-fire-up-fire-damage-dealt-modifier",
     "interactionScope": "internal",
     "matchedOutputCapabilityIds": [],
@@ -56497,7 +57377,8 @@
     ],
     "damageScope": null,
     "effects": [
-      "Enemy Physical Damage decrease 11%"
+      "Enemy Physical Damage decrease 11%",
+      "Physical Damage reduction applies to non-Basic Attacks only."
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final reduced enemy damage cannot be calculated because target selection, uptime, stacking, and final formulas are unresolved.",
@@ -56826,6 +57707,80 @@
   },
   {
     "assumptions": [
+      "Enemy identities and combat availability are unresolved.",
+      "Enemy state and uptime are not treated as guaranteed."
+    ],
+    "channel": "recovery",
+    "confidence": "confirmed",
+    "conflicts": [
+      "Crimson - Unlikely Hero Habit unlock requirement: expected Star Rank 8+, actual preview enabled",
+      "Crimson - Unlikely Hero Selected Habit Level: expected Habit Level 1+ or preview, actual preview enabled"
+    ],
+    "damageScope": null,
+    "effects": [
+      "Recovery Received decrease 40%.",
+      "Timing: Each round.",
+      "Duration: until end of current round.",
+      "Applies to all enemies currently below 25% maximum Troop Capacity.",
+      "All matching enemies are affected; no one enemy is selected from the qualifying set.",
+      "Zero, one, two, or three enemies may qualify; enemy identities remain unknown.",
+      "Enemy is strictly below 25% maximum Troop Capacity."
+    ],
+    "exactResultKnown": false,
+    "exactResultUnknownReason": "Exact final received-effect reduction cannot be calculated because target state, uptime, stacking, and final formulas are unresolved.",
+    "explanation": "Crimson's Unlikely Hero can reduce enemy Recovery Received by 40%. Timing: Each round. Duration: until end of current round. Applies to all enemies currently below 25% maximum Troop Capacity. All matching enemies are affected; no one enemy is selected from the qualifying set. Zero, one, two, or three enemies may qualify; enemy identities remain unknown. Enemy is strictly below 25% maximum Troop Capacity.",
+    "id": "enemy-received-reduction-crimson-unlikely-hero-unlikely-hero-recovery-received-down-recovery-received-modifier",
+    "interactionScope": "enemy-side",
+    "matchedOutputCapabilityIds": [],
+    "matchKind": "enemy-damage-dealt-reduction",
+    "modifierCapabilityId": "crimson-unlikely-hero-unlikely-hero-recovery-received-down-recovery-received-modifier",
+    "modifierCapabilityIds": [
+      "crimson-unlikely-hero-unlikely-hero-recovery-received-down-recovery-received-modifier"
+    ],
+    "recipientAbilityId": null,
+    "recipientDragonId": null,
+    "recipientEvidenceIds": [],
+    "requirements": [
+      {
+        "actual": "preview enabled",
+        "evidenceIds": [
+          "crimson-unlikely-hero-2026-06-25"
+        ],
+        "expected": "Star Rank 8+",
+        "id": "crimson-crimson-unlikely-hero-star-rank",
+        "label": "Crimson - Unlikely Hero Habit unlock requirement",
+        "notes": [],
+        "satisfied": false
+      },
+      {
+        "actual": "preview enabled",
+        "evidenceIds": [
+          "crimson-unlikely-hero-2026-06-25"
+        ],
+        "expected": "Habit Level 1+ or preview",
+        "id": "crimson-crimson-unlikely-hero-habit-level",
+        "label": "Crimson - Unlikely Hero Selected Habit Level",
+        "notes": [
+          "Unlocked Habits without an explicit saved Habit Level default to effective Habit Level 1. Locked Habit capabilities are potential in preview mode, not active for current roster."
+        ],
+        "satisfied": false
+      }
+    ],
+    "ruleId": "enemy-received-reduction",
+    "sourceAbilityId": "crimson-unlikely-hero",
+    "sourceDragonId": "crimson",
+    "sourceEvidenceIds": [
+      "crimson-unlikely-hero-2026-06-25"
+    ],
+    "status": "potential",
+    "targetSelectionGroup": null,
+    "title": "Recovery Enemy Reduction",
+    "unresolvedQuestions": [
+      "Enemy identities, combat availability, final uptime, and stacking/refresh behavior remain unresolved."
+    ]
+  },
+  {
+    "assumptions": [
       "Enemy target overlap is not simulated or guaranteed.",
       "Enemy formation members and lane occupants are not invented.",
       "The target selector is preserved as enemy-side metadata rather than assigning a friendly recipient."
@@ -57000,11 +57955,14 @@
     "effects": [
       "Physical Damage Received +20%.",
       "Applies to non-Basic Physical Damage only.",
+      "Applies to all enemies currently above 75% maximum Troop Capacity.",
+      "All matching enemies are affected; no one enemy is selected from the qualifying set.",
+      "Zero, one, two, or three enemies may qualify; enemy identities remain unknown.",
       "Enemy target overlap remains conditional and is not guaranteed."
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final damage gain cannot be calculated because target overlap, uptime, stacking, and final formulas are unresolved.",
-    "explanation": "Crimson's Unlikely Hero increases Physical Damage Received by 20% for one enemy target. Applies to non-Basic Physical Damage only. Allied Physical Damage can benefit only when its target overlaps with that enemy; enemy target overlap remains conditional and is not guaranteed.",
+    "explanation": "Crimson's Unlikely Hero increases Physical Damage Received by 20%. Applies to all enemies currently above 75% maximum Troop Capacity. All matching enemies are affected; no one enemy is selected from the qualifying set. Zero, one, two, or three enemies may qualify; enemy identities remain unknown. Applies to non-Basic Physical Damage only. Allied Physical Damage can benefit only when its target overlaps with an affected enemy; enemy target overlap remains conditional and is not guaranteed.",
     "id": "enemy-damage-received-increase-crimson-unlikely-hero-unlikely-hero-physical-received-physical-damage-received-modifier",
     "interactionScope": "enemy-side",
     "matchedOutputCapabilityIds": [
@@ -57078,11 +58036,14 @@
     "effects": [
       "Fire Damage Received +20%.",
       "Applies to all qualifying Fire Damage sources.",
+      "Applies to all enemies currently above 75% maximum Troop Capacity.",
+      "All matching enemies are affected; no one enemy is selected from the qualifying set.",
+      "Zero, one, two, or three enemies may qualify; enemy identities remain unknown.",
       "Enemy target overlap remains conditional and is not guaranteed."
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final damage gain cannot be calculated because target overlap, uptime, stacking, and final formulas are unresolved.",
-    "explanation": "Crimson's Unlikely Hero increases Fire Damage Received by 20% for one enemy target. Applies to all qualifying Fire Damage sources. Allied Fire Damage can benefit only when its target overlaps with that enemy; enemy target overlap remains conditional and is not guaranteed.",
+    "explanation": "Crimson's Unlikely Hero increases Fire Damage Received by 20%. Applies to all enemies currently above 75% maximum Troop Capacity. All matching enemies are affected; no one enemy is selected from the qualifying set. Zero, one, two, or three enemies may qualify; enemy identities remain unknown. Applies to all qualifying Fire Damage sources. Allied Fire Damage can benefit only when its target overlaps with an affected enemy; enemy target overlap remains conditional and is not guaranteed.",
     "id": "enemy-damage-received-increase-crimson-unlikely-hero-unlikely-hero-fire-received-fire-damage-received-modifier",
     "interactionScope": "enemy-side",
     "matchedOutputCapabilityIds": [
@@ -57163,6 +58124,7 @@
       "Scales with Intelligence.",
       "Mitigated by target Initiative.",
       "Status supplier effect: crippling-inferno-burn.",
+      "Independent per-target checks: 3.",
       "Activation, target selection, target overlap, and uptime remain conditional.",
       "Final damage is not calculated."
     ],
@@ -58225,6 +59187,75 @@
     ]
   },
   {
+    "assumptions": [
+      "Verified negative self-effects are represented even when they are not beneficial."
+    ],
+    "channel": "control",
+    "confidence": "confirmed",
+    "conflicts": [
+      "Kalspire - Radiant Conqueror Habit unlock requirement: expected Star Rank 10+, actual preview enabled",
+      "Kalspire - Radiant Conqueror Selected Habit Level: expected Habit Level 1+ or preview, actual preview enabled"
+    ],
+    "damageScope": null,
+    "effects": [
+      "Target: Kalspire.",
+      "Timing: Start of Round 1.",
+      "Duration: 1 round.",
+      "Real Control status: Stun.",
+      "Real self-inflicted Control status."
+    ],
+    "exactResultKnown": false,
+    "exactResultUnknownReason": "Exact final value cannot be calculated because final combat formulas and stacking order are not fully verified.",
+    "explanation": "Kalspire's Radiant Conqueror applies Stun to Kalspire. Target: Kalspire. Timing: Start of Round 1. Duration: 1 round. Real Control status: Stun. Real self-inflicted Control status.",
+    "id": "self-status-output-kalspire-radiant-conqueror-radiant-conqueror-self-stun-stun-status-output",
+    "interactionScope": "internal",
+    "matchedOutputCapabilityIds": [],
+    "matchKind": "status-condition-enablement",
+    "modifierCapabilityId": null,
+    "modifierCapabilityIds": [],
+    "recipientAbilityId": "kalspire-radiant-conqueror",
+    "recipientDragonId": "kalspire",
+    "recipientEvidenceIds": [],
+    "requirements": [
+      {
+        "actual": "preview enabled",
+        "evidenceIds": [
+          "kalspire-radiant-conqueror-2026-06-25"
+        ],
+        "expected": "Star Rank 10+",
+        "id": "kalspire-kalspire-radiant-conqueror-star-rank",
+        "label": "Kalspire - Radiant Conqueror Habit unlock requirement",
+        "notes": [],
+        "satisfied": false
+      },
+      {
+        "actual": "preview enabled",
+        "evidenceIds": [
+          "kalspire-radiant-conqueror-2026-06-25"
+        ],
+        "expected": "Habit Level 1+ or preview",
+        "id": "kalspire-kalspire-radiant-conqueror-habit-level",
+        "label": "Kalspire - Radiant Conqueror Selected Habit Level",
+        "notes": [
+          "Unlocked Habits without an explicit saved Habit Level default to effective Habit Level 1. Locked Habit capabilities are potential in preview mode, not active for current roster."
+        ],
+        "satisfied": false
+      }
+    ],
+    "ruleId": "self-status-output",
+    "sourceAbilityId": "kalspire-radiant-conqueror",
+    "sourceDragonId": "kalspire",
+    "sourceEvidenceIds": [
+      "kalspire-radiant-conqueror-2026-06-25"
+    ],
+    "status": "potential",
+    "targetSelectionGroup": null,
+    "title": "Radiant Conqueror - Self Stun",
+    "unresolvedQuestions": [
+      "Cleanse timing and outcome are not invented."
+    ]
+  },
+  {
     "assumptions": [],
     "channel": "tactical-damage",
     "confidence": "confirmed",
@@ -59189,11 +60220,11 @@
     "effects": [
       "Timing: Start of Round 1.",
       "Damage Received decrease 50%.",
-      "Duration: 1 rounds."
+      "Duration: 1 round."
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final value cannot be calculated because final combat formulas and stacking order are not fully verified.",
-    "explanation": "Kalspire's Radiant Conqueror affects Kalspire. Timing: Start of Round 1. Damage Received decrease 50%. Duration: 1 rounds.",
+    "explanation": "Kalspire's Radiant Conqueror affects Kalspire. Timing: Start of Round 1. Damage Received decrease 50%. Duration: 1 round.",
     "id": "internal-self-modifier-kalspire-radiant-conqueror-radiant-conqueror-damage-received-damage-received-received-modifier",
     "interactionScope": "internal",
     "matchedOutputCapabilityIds": [],
@@ -60743,7 +61774,8 @@
     ],
     "damageScope": null,
     "effects": [
-      "Enemy Physical Damage decrease 25%"
+      "Enemy Physical Damage decrease 25%",
+      "Physical Damage reduction applies to non-Basic Attacks only."
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final reduced enemy damage cannot be calculated because target selection, uptime, stacking, and final formulas are unresolved.",
@@ -61038,6 +62070,13 @@
       "Scales with Strength.",
       "Mitigated by target Instinct.",
       "Status supplier effect: tactical-strike-bleed.",
+      "Target reference original-basic-attack-target: First checked target is the original Basic Attack target.",
+      "Target reference other-adjacent-enemy: Second checked target is another enemy within adjacency. References source effect tactical-strike-tactical-damage.",
+      "Target reference original-basic-attack-target: Use the target of the Basic Attack that triggered Tactical Strike.",
+      "Independent per-target checks: 2.",
+      "Per-target check chance: 30%.",
+      "Checks are independent; chances are not combined into one roll.",
+      "Tactical Strike effect tactical-strike-bleed must target a different enemy than tactical-strike-tactical-damage.",
       "Activation, target selection, target overlap, and uptime remain conditional.",
       "Final damage is not calculated."
     ],
@@ -61091,6 +62130,13 @@
       "Scales with Instinct.",
       "Mitigated by target Intelligence.",
       "Status supplier effect: tactical-assault-panic.",
+      "Target reference panic-first-target: First Panic check uses the Physical Damage target. References source effect tactical-assault-physical-damage.",
+      "Target reference panic-second-target: Second Panic check uses another distinct adjacent enemy. References source effect tactical-assault-physical-damage.",
+      "Target reference not-original-basic-attack-target: Physical Damage target is distinct from the original Basic Attack target. References source effect tactical-strike-tactical-damage.",
+      "Independent per-target checks: 2.",
+      "Per-target check chance: 30% at effective Habit Level 5.",
+      "Checks are independent; chances are not combined into one roll.",
+      "Tactical Assault effect tactical-assault-panic uses the same selected target as tactical-assault-physical-damage.",
       "Activation, target selection, target overlap, and uptime remain conditional.",
       "Final damage is not calculated."
     ],
@@ -63993,6 +65039,80 @@
   },
   {
     "assumptions": [
+      "Enemy identities and combat availability are unresolved.",
+      "Enemy state and uptime are not treated as guaranteed."
+    ],
+    "channel": "recovery",
+    "confidence": "confirmed",
+    "conflicts": [
+      "Crimson - Unlikely Hero Habit unlock requirement: expected Star Rank 8+, actual preview enabled",
+      "Crimson - Unlikely Hero Selected Habit Level: expected Habit Level 1+ or preview, actual preview enabled"
+    ],
+    "damageScope": null,
+    "effects": [
+      "Recovery Received decrease 40%.",
+      "Timing: Each round.",
+      "Duration: until end of current round.",
+      "Applies to all enemies currently below 25% maximum Troop Capacity.",
+      "All matching enemies are affected; no one enemy is selected from the qualifying set.",
+      "Zero, one, two, or three enemies may qualify; enemy identities remain unknown.",
+      "Enemy is strictly below 25% maximum Troop Capacity."
+    ],
+    "exactResultKnown": false,
+    "exactResultUnknownReason": "Exact final received-effect reduction cannot be calculated because target state, uptime, stacking, and final formulas are unresolved.",
+    "explanation": "Crimson's Unlikely Hero can reduce enemy Recovery Received by 40%. Timing: Each round. Duration: until end of current round. Applies to all enemies currently below 25% maximum Troop Capacity. All matching enemies are affected; no one enemy is selected from the qualifying set. Zero, one, two, or three enemies may qualify; enemy identities remain unknown. Enemy is strictly below 25% maximum Troop Capacity.",
+    "id": "enemy-received-reduction-crimson-unlikely-hero-unlikely-hero-recovery-received-down-recovery-received-modifier",
+    "interactionScope": "enemy-side",
+    "matchedOutputCapabilityIds": [],
+    "matchKind": "enemy-damage-dealt-reduction",
+    "modifierCapabilityId": "crimson-unlikely-hero-unlikely-hero-recovery-received-down-recovery-received-modifier",
+    "modifierCapabilityIds": [
+      "crimson-unlikely-hero-unlikely-hero-recovery-received-down-recovery-received-modifier"
+    ],
+    "recipientAbilityId": null,
+    "recipientDragonId": null,
+    "recipientEvidenceIds": [],
+    "requirements": [
+      {
+        "actual": "preview enabled",
+        "evidenceIds": [
+          "crimson-unlikely-hero-2026-06-25"
+        ],
+        "expected": "Star Rank 8+",
+        "id": "crimson-crimson-unlikely-hero-star-rank",
+        "label": "Crimson - Unlikely Hero Habit unlock requirement",
+        "notes": [],
+        "satisfied": false
+      },
+      {
+        "actual": "preview enabled",
+        "evidenceIds": [
+          "crimson-unlikely-hero-2026-06-25"
+        ],
+        "expected": "Habit Level 1+ or preview",
+        "id": "crimson-crimson-unlikely-hero-habit-level",
+        "label": "Crimson - Unlikely Hero Selected Habit Level",
+        "notes": [
+          "Unlocked Habits without an explicit saved Habit Level default to effective Habit Level 1. Locked Habit capabilities are potential in preview mode, not active for current roster."
+        ],
+        "satisfied": false
+      }
+    ],
+    "ruleId": "enemy-received-reduction",
+    "sourceAbilityId": "crimson-unlikely-hero",
+    "sourceDragonId": "crimson",
+    "sourceEvidenceIds": [
+      "crimson-unlikely-hero-2026-06-25"
+    ],
+    "status": "potential",
+    "targetSelectionGroup": null,
+    "title": "Recovery Enemy Reduction",
+    "unresolvedQuestions": [
+      "Enemy identities, combat availability, final uptime, and stacking/refresh behavior remain unresolved."
+    ]
+  },
+  {
+    "assumptions": [
       "Enemy target overlap is not simulated or guaranteed.",
       "Enemy formation members and lane occupants are not invented.",
       "The target selector is preserved as enemy-side metadata rather than assigning a friendly recipient."
@@ -64169,11 +65289,14 @@
     "effects": [
       "Physical Damage Received +20%.",
       "Applies to non-Basic Physical Damage only.",
+      "Applies to all enemies currently above 75% maximum Troop Capacity.",
+      "All matching enemies are affected; no one enemy is selected from the qualifying set.",
+      "Zero, one, two, or three enemies may qualify; enemy identities remain unknown.",
       "Enemy target overlap remains conditional and is not guaranteed."
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final damage gain cannot be calculated because target overlap, uptime, stacking, and final formulas are unresolved.",
-    "explanation": "Crimson's Unlikely Hero increases Physical Damage Received by 20% for one enemy target. Applies to non-Basic Physical Damage only. Allied Physical Damage can benefit only when its target overlaps with that enemy; enemy target overlap remains conditional and is not guaranteed.",
+    "explanation": "Crimson's Unlikely Hero increases Physical Damage Received by 20%. Applies to all enemies currently above 75% maximum Troop Capacity. All matching enemies are affected; no one enemy is selected from the qualifying set. Zero, one, two, or three enemies may qualify; enemy identities remain unknown. Applies to non-Basic Physical Damage only. Allied Physical Damage can benefit only when its target overlaps with an affected enemy; enemy target overlap remains conditional and is not guaranteed.",
     "id": "enemy-damage-received-increase-crimson-unlikely-hero-unlikely-hero-physical-received-physical-damage-received-modifier",
     "interactionScope": "enemy-side",
     "matchedOutputCapabilityIds": [
@@ -64253,11 +65376,14 @@
     "effects": [
       "Fire Damage Received +20%.",
       "Applies to all qualifying Fire Damage sources.",
+      "Applies to all enemies currently above 75% maximum Troop Capacity.",
+      "All matching enemies are affected; no one enemy is selected from the qualifying set.",
+      "Zero, one, two, or three enemies may qualify; enemy identities remain unknown.",
       "Enemy target overlap remains conditional and is not guaranteed."
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final damage gain cannot be calculated because target overlap, uptime, stacking, and final formulas are unresolved.",
-    "explanation": "Crimson's Unlikely Hero increases Fire Damage Received by 20% for one enemy target. Applies to all qualifying Fire Damage sources. Allied Fire Damage can benefit only when its target overlaps with that enemy; enemy target overlap remains conditional and is not guaranteed.",
+    "explanation": "Crimson's Unlikely Hero increases Fire Damage Received by 20%. Applies to all enemies currently above 75% maximum Troop Capacity. All matching enemies are affected; no one enemy is selected from the qualifying set. Zero, one, two, or three enemies may qualify; enemy identities remain unknown. Applies to all qualifying Fire Damage sources. Allied Fire Damage can benefit only when its target overlaps with an affected enemy; enemy target overlap remains conditional and is not guaranteed.",
     "id": "enemy-damage-received-increase-crimson-unlikely-hero-unlikely-hero-fire-received-fire-damage-received-modifier",
     "interactionScope": "enemy-side",
     "matchedOutputCapabilityIds": [
