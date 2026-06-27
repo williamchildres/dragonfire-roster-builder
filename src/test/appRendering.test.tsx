@@ -205,6 +205,27 @@ describe('Dragonfire Roster Lab app', () => {
     expect(commandRaw).toHaveTextContent('Burn deals Fire Damage to the target each round.');
     expect(commandRaw).toHaveTextContent('2 rounds');
 
+    await user.click(within(dragonDialog).getByRole('button', { name: /close details/i }));
+    await user.clear(screen.getByLabelText(/search by name/i));
+    await user.type(screen.getByLabelText(/search by name/i), 'Syrax');
+    const syraxCard = screen.getByRole('heading', { name: 'Syrax' }).closest('article');
+    expect(syraxCard).not.toBeNull();
+    await user.click(within(syraxCard as HTMLElement).getByRole('button', { name: /view details/i }));
+    dragonDialog = screen.getByRole('dialog', { name: /syrax/i });
+    commandSection = within(dragonDialog).getByRole('heading', { name: 'Blazing Fury' }).closest('article');
+    expect(commandSection).not.toBeNull();
+    const syraxSummary = within(commandSection as HTMLElement).getByText('Raw verified wording');
+    await user.click(syraxSummary);
+    commandRaw = syraxSummary.closest('details');
+    expect(commandRaw).not.toBeNull();
+    expect(commandRaw?.querySelectorAll('p').length).toBeGreaterThanOrEqual(4);
+    expect(commandRaw).toHaveTextContent('Each Round: 20% chance to increase Fire Damage Dealt by 10% and grant First-Strike to one Ally in any lane for 2 rounds, prioritizing Allies that deal Fire Damage.');
+    expect(commandRaw).toHaveTextContent('Rounds 1, 4, 6, and 9: deal Tactical Damage to one enemy within adjacency at a 110% Damage Rate.');
+    expect(commandRaw).toHaveTextContent('At 6+ Stars:');
+    expect(commandRaw).toHaveTextContent('Rounds 2, 5, and 8: apply Recovery to the Ally with the least current troops at a 50% Recovery Rate, enhanced by Intelligence.');
+    expect(commandRaw).toHaveTextContent('Resistance applies to the same selected Ally.');
+    expect(commandRaw).toHaveTextContent('Resistance has a 40% activation chance at effective Habit Level 1 and lasts 2 rounds.');
+
     const rendered = render(<RawWordingDisclosure rawText={null} />);
     expect(rendered.container).toBeEmptyDOMElement();
   });

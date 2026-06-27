@@ -718,10 +718,38 @@ function commandScheduleEffectSummaries(
       used.add(linkedBurn.id);
       continue;
     }
+    const linkedFirstStrike = schedule.effects.find((candidate) =>
+      candidate.id !== effect.id &&
+      candidate.type === 'First-Strike' &&
+      (candidate.durationRounds ?? null) === (effect.durationRounds ?? null) &&
+      candidate.targetSelection?.sharedSelectionGroupId === effect.targetSelection?.sharedSelectionGroupId,
+    );
+    if (effect.type === 'Fire Damage Dealt Up' && linkedFirstStrike) {
+      lines.push(commandChanceTriggeredSupportSummary(schedule, effect, linkedFirstStrike, level));
+      used.add(effect.id);
+      used.add(linkedFirstStrike.id);
+      continue;
+    }
     lines.push(commandSingleEffectSummary(effect, schedule, level));
     used.add(effect.id);
   }
   return lines;
+}
+
+function commandChanceTriggeredSupportSummary(
+  schedule: AbilitySchedule,
+  effect: AbilityEffect,
+  bonusEffect: AbilityEffect,
+  level: 1 | 2 | 3 | 4 | 5 | null,
+): string {
+  const chance = commandScheduleChanceValue(schedule, level);
+  const rate = commandRateValue(effect, level);
+  const target = commandTargetPhrase(effect);
+  const duration = effect.durationRounds ?? bonusEffect.durationRounds ?? 0;
+  const priority = effect.targetPriority === 'prefer-fire-damage-ally'
+    ? ', prioritizing Allies that deal Fire Damage'
+    : '';
+  return `${chance} chance to increase Fire Damage Dealt by ${rate} and grant First-Strike to ${target} for ${duration} rounds${priority}.`;
 }
 
 function commandOrderedAttackSummary(
@@ -734,6 +762,18 @@ function commandOrderedAttackSummary(
   const target = commandOrderedTargetPhrase(attack);
   const burnDuration = burn.durationRounds ?? 2;
   return `deal Fire Damage at a ${attackRate} rate to ${target}, with a ${burnChance} chance to apply Burn for ${burnDuration} rounds.`;
+}
+
+function commandScheduleChanceValue(
+  schedule: AbilitySchedule,
+  level: 1 | 2 | 3 | 4 | 5 | null,
+): string {
+  const chance = schedule.triggerChanceFixed !== null && schedule.triggerChanceFixed !== undefined
+    ? { level: 1 as const, value: schedule.triggerChanceFixed, unit: 'percent' as const }
+    : schedule.triggerChanceByHabitLevel?.length
+      ? rankedValueForHabitLevel(schedule.triggerChanceByHabitLevel, level)
+      : null;
+  return chance ? formatRankedValue(chance, 'percent') : 'unknown';
 }
 
 function commandSingleEffectSummary(
@@ -781,11 +821,31 @@ function commandTargetPhrase(effect: AbilityEffect): string {
   if (qualifyingOutput?.channel === 'physical-damage' && qualifyingOutput.sourceScope === 'non-basic-attacks') {
     return 'all enemies capable of non-Basic Physical Damage';
   }
+  if (
+    effect.targetPriority === 'least-current-troops-ally' ||
+    (
+      effect.targetSelection?.comparisonStat === 'current-troops' &&
+      effect.targetSelection?.comparisonDirection === 'lowest' &&
+      effect.targetSelection?.comparisonPool === 'ally-side'
+    )
+  ) {
+    return 'the Ally with the least current troops';
+  }
   if (effect.targetPriority === 'highest-stat-enemy' && effect.targetSelection?.comparisonStat === 'strength') {
     return 'the highest-Strength enemy';
   }
-  if (effect.targetPriority === 'least-current-troops-enemy' || effect.targetSelection?.comparisonStat === 'current-troops') {
+  if (
+    effect.targetPriority === 'least-current-troops-enemy' ||
+    (
+      effect.targetSelection?.comparisonStat === 'current-troops' &&
+      effect.targetSelection?.comparisonDirection === 'lowest' &&
+      effect.targetSelection?.comparisonPool === 'enemy-side'
+    )
+  ) {
     return 'the enemy with the least troops';
+  }
+  if (effect.targetCount === 1 && /Ally/i.test(effect.target) && !/least current troops/i.test(effect.target)) {
+    return 'one Ally in any lane';
   }
   if (/First added enemy/i.test(effect.target)) {
     return 'a first enemy in any lane';
@@ -801,6 +861,12 @@ function commandTargetPhrase(effect: AbilityEffect): string {
   }
   if (effect.targetCount === 2 && effect.targetScope === 'any-lane' && /other Allies/i.test(effect.target)) {
     return '2 other Allies in any lane';
+  }
+  if (/1 Ally/i.test(effect.target)) {
+    return effect.targetScope === 'within-adjacency' ? 'one Ally within adjacency' : 'one Ally in any lane';
+  }
+  if (/1 Enemy/i.test(effect.target)) {
+    return effect.targetScope === 'within-adjacency' ? 'one enemy within adjacency' : 'one enemy in any lane';
   }
   if (effect.targetScope === 'any-lane' && effect.targetCount === 1) {
     return 'one enemy in any lane';
@@ -850,6 +916,15 @@ function commandEffectSummaryLine(
   effect: AbilityEffect,
   level: 1 | 2 | 3 | 4 | 5 | null,
 ): string[] {
+  if (effect.type === 'Resistance') {
+    const activationChance = commandChanceValue(effect.activationRoll, level);
+    if (activationChance !== 'unknown') {
+      const duration = effect.durationRounds ? ` for ${effect.durationRounds} rounds` : '';
+      return [
+        `apply Resistance at a ${activationChance} chance to ${commandTargetPhrase(effect)}${duration}.`,
+      ];
+    }
+  }
   const base = rankedValueForHabitLevel(effect.rankedValues, level);
   const multiplier = effect.conditionalMultipliers?.[0] ?? null;
   const enhanced = multiplier?.directlyVerifiedValues.find((value) => value.level === level);
@@ -1712,7 +1787,7 @@ function interactionPurpose(trace: SynergyTrace): string | null {
     return 'Enemy mitigation reduction';
   }
   if (trace.matchKind === 'enemy-damage-dealt-reduction') {
-    return 'Enemy Damage Dealt reduction';
+    return enemyReductionPurpose(trace);
   }
   if (trace.matchKind === 'enemy-damage-received-increase') {
     return `Enemy ${formatToken(trace.channel ?? 'damage-dealt')} vulnerability`;
@@ -1776,7 +1851,7 @@ function formatStatDetail(detail: string): string | null {
 
 function enemyFacingSummary(trace: SynergyTrace): string {
   if (trace.matchKind === 'enemy-damage-dealt-reduction') {
-    const stat = trace.effects.join(' ').match(/Enemy (Strength|Intelligence|Instinct|Initiative) decrease/i)?.[1];
+    const stat = enemyReductionStat(trace);
     return `${stat ? `${stat} reduction` : `${formatToken(trace.channel ?? 'damage-dealt')} reduction`} on an enemy candidate; target selection and uptime are uncertain.`;
   }
   if (trace.matchKind === 'enemy-damage-received-increase') {
@@ -1789,6 +1864,16 @@ function enemyFacingSummary(trace: SynergyTrace): string {
   const lowered = trace.effects.join(' ').match(/(Strength|Intelligence|Instinct|Initiative)/i)?.[1];
   const channel = trace.sourceAbilityId?.includes('battle-dread') ? 'Fire Damage' : trace.channel ? formatToken(trace.channel) : 'team damage';
   return lowered ? `Lowers enemy ${lowered}, supporting allied ${channel}.` : 'Lowers enemy mitigation for the team.';
+}
+
+function enemyReductionPurpose(trace: SynergyTrace): string {
+  const stat = enemyReductionStat(trace);
+  return stat ? `Enemy ${stat} reduction` : 'Enemy Damage Dealt reduction';
+}
+
+function enemyReductionStat(trace: SynergyTrace): string | null {
+  const text = [trace.title, trace.explanation, ...trace.effects, ...trace.matchedFacts].join(' ');
+  return text.match(/\bEnemy (Strength|Intelligence|Instinct|Initiative)\s+(?:decrease|reduction)\b/i)?.[1] ?? null;
 }
 
 function enemyVulnerabilityBenefitSummary(trace: SynergyTrace, recipient: Dragon): string {

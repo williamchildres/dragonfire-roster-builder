@@ -195,6 +195,24 @@ describe('formation card analysis presentation', () => {
     expect(battleLeader?.summary).not.toContain('Syrax');
   });
 
+  it('renders Syrax Strategic Revival command text with ally target wording and resistance details', () => {
+    const formation = formations.legacy!;
+    const roster = selectedRoster(['venator', 'vhagar', 'syrax'], 26, 10);
+    const traces = analyzeFormationTraces(formation, dragons, { roster });
+    const result = buildFormationCardPresentation(formation, dragons, traces, { previewEnabled: false, roster });
+    const syrax = card(result, 'syrax');
+
+    expect(syrax.command?.summaryLines).toEqual([
+      'Each Round: 20% chance to increase Fire Damage Dealt by 10% and grant First-Strike to one Ally in any lane for 2 rounds, prioritizing Allies that deal Fire Damage.',
+      'Rounds 1, 4, 6, and 9: deal Tactical Damage at a 110% rate to one enemy within adjacency.',
+      'At 6+ Stars, Rounds 2, 5, and 8: apply Recovery at a 50% rate to the Ally with the least current troops, enhanced by Intelligence.',
+      'Then apply Resistance at a 40% chance to the Ally with the least current troops for 2 rounds.',
+    ]);
+    expect(syrax.command?.detail).toContain('Rounds 2, 5, and 8: apply Recovery to the Ally with the least current troops at a 50% Recovery Rate, enhanced by Intelligence.');
+    expect(syrax.command?.detail).toContain('Resistance applies to the same selected Ally.');
+    expect(syrax.command?.detail).toContain('Resistance has a 40% activation chance at effective Habit Level 1 and lasts 2 rounds.');
+  });
+
   it('adds command summaries without counting them as cross-dragon synergies', () => {
     const result = presentation('8', false);
 

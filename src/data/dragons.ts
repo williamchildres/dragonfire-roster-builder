@@ -455,8 +455,13 @@ const createSyrax = (): Dragon => {
     name: 'Blazing Fury',
     abilityClass: 'active',
     unlockStarRank: null,
-    rawDescription:
-      'Each Round: 20% chance to increase Fire Damage Dealt by 10% and grant First-Strike to one Ally in any lane for 2 rounds, prioritizing allies that deal Fire Damage. Rounds 1, 4, 6, 9: deal Tactical Damage to one enemy within adjacency.',
+    rawDescription: `Each Round: 20% chance to increase Fire Damage Dealt by 10% and grant First-Strike to one Ally in any lane for 2 rounds, prioritizing Allies that deal Fire Damage.
+
+Rounds 1, 4, 6, and 9: deal Tactical Damage to one enemy within adjacency at a 110% Damage Rate.
+
+At 6+ Stars:
+
+Rounds 2, 5, and 8: apply Recovery to the Ally with the least current troops at a 50% Recovery Rate, enhanced by Intelligence. Resistance applies to the same selected Ally. Resistance has a 40% activation chance at effective Habit Level 1 and lasts 2 rounds.`,
     schedules: [
       schedule({
         id: 'blazing-fury-fire-support',

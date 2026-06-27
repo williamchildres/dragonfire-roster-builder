@@ -185,6 +185,7 @@ describe('Feskar, Rhysarion, and Shadowsong Epic profiles', () => {
     ]);
     expect(shadowsongCommand?.detail).toContain('Burn deals Fire Damage to the target each round.');
     expect(shadowsongCommand?.detail).toContain('At 10 Stars:');
+
   });
 
   it('shows Dawnsong Control-category values and Unyielding Grasp supplier facts', () => {
