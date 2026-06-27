@@ -8,7 +8,7 @@
             {
               "activationRoll": null,
               "calculated": false,
-              "casterEligibility": "unknown",
+              "casterEligibility": "eligible-if-targeting-allows",
               "conditionalMultipliers": [
                 {
                   "calculatedFromVerifiedMultiplier": true,
@@ -45,7 +45,7 @@
               "effectOptions": null,
               "excludes": [],
               "id": "strategic-revival-recovery",
-              "includesCaster": null,
+              "includesCaster": true,
               "magnitude": null,
               "notes": [
                 "Higher conditional Recovery values are calculated from the verified 1.5x multiplier."
@@ -86,17 +86,61 @@
               "stack": null,
               "stackTransitionTrigger": null,
               "target": "Ally with least current troops",
-              "targetCount": null,
+              "targetCount": 1,
               "targetPriority": "least-current-troops-ally",
               "targetScope": "any-lane",
-              "targetSelection": null,
+              "targetSelection": {
+                "comparisonDirection": "lowest",
+                "comparisonPool": "ally-side",
+                "comparisonStat": "current-troops",
+                "distinctness": "unknown",
+                "fallback": null,
+                "preference": null,
+                "references": [],
+                "repeatedInstances": null,
+                "sharedSelectionGroupId": "strategic-revival-least-troops-ally",
+                "tieBehavior": "candidate-group"
+              },
               "type": "Recovery",
               "unit": "rate"
             },
             {
-              "activationRoll": null,
+              "activationRoll": {
+                "chanceByHabitLevel": [
+                  {
+                    "level": 1,
+                    "unit": "percent",
+                    "value": 40
+                  },
+                  {
+                    "level": 2,
+                    "unit": "percent",
+                    "value": 52
+                  },
+                  {
+                    "level": 3,
+                    "unit": "percent",
+                    "value": 64
+                  },
+                  {
+                    "level": 4,
+                    "unit": "percent",
+                    "value": 80
+                  },
+                  {
+                    "level": 5,
+                    "unit": "percent",
+                    "value": 100
+                  }
+                ],
+                "chanceFixed": null,
+                "description": "Resistance chance applies to the same least-current-troops Ally selected for Recovery.",
+                "scope": "effect",
+                "targetStatusConditionalChances": [],
+                "unresolved": false
+              },
               "calculated": false,
-              "casterEligibility": "unknown",
+              "casterEligibility": "eligible-if-targeting-allows",
               "conditionalMultipliers": [],
               "conditions": [],
               "directlyVerified": true,
@@ -105,7 +149,7 @@
               "effectOptions": null,
               "excludes": [],
               "id": "strategic-revival-resistance",
-              "includesCaster": null,
+              "includesCaster": true,
               "magnitude": 20,
               "notes": [
                 "Resistance reduces Damage Received."
@@ -117,10 +161,21 @@
               "stack": null,
               "stackTransitionTrigger": null,
               "target": "Ally with least current troops",
-              "targetCount": null,
+              "targetCount": 1,
               "targetPriority": "least-current-troops-ally",
               "targetScope": "any-lane",
-              "targetSelection": null,
+              "targetSelection": {
+                "comparisonDirection": "lowest",
+                "comparisonPool": "ally-side",
+                "comparisonStat": "current-troops",
+                "distinctness": "unknown",
+                "fallback": null,
+                "preference": null,
+                "references": [],
+                "repeatedInstances": null,
+                "sharedSelectionGroupId": "strategic-revival-least-troops-ally",
+                "tieBehavior": "candidate-group"
+              },
               "type": "Resistance",
               "unit": "percent"
             }
@@ -142,7 +197,7 @@
                 {
                   "activationRoll": null,
                   "calculated": false,
-                  "casterEligibility": "unknown",
+                  "casterEligibility": "eligible-if-targeting-allows",
                   "conditionalMultipliers": [
                     {
                       "calculatedFromVerifiedMultiplier": true,
@@ -179,7 +234,7 @@
                   "effectOptions": null,
                   "excludes": [],
                   "id": "strategic-revival-recovery",
-                  "includesCaster": null,
+                  "includesCaster": true,
                   "magnitude": null,
                   "notes": [
                     "Higher conditional Recovery values are calculated from the verified 1.5x multiplier."
@@ -220,17 +275,61 @@
                   "stack": null,
                   "stackTransitionTrigger": null,
                   "target": "Ally with least current troops",
-                  "targetCount": null,
+                  "targetCount": 1,
                   "targetPriority": "least-current-troops-ally",
                   "targetScope": "any-lane",
-                  "targetSelection": null,
+                  "targetSelection": {
+                    "comparisonDirection": "lowest",
+                    "comparisonPool": "ally-side",
+                    "comparisonStat": "current-troops",
+                    "distinctness": "unknown",
+                    "fallback": null,
+                    "preference": null,
+                    "references": [],
+                    "repeatedInstances": null,
+                    "sharedSelectionGroupId": "strategic-revival-least-troops-ally",
+                    "tieBehavior": "candidate-group"
+                  },
                   "type": "Recovery",
                   "unit": "rate"
                 },
                 {
-                  "activationRoll": null,
+                  "activationRoll": {
+                    "chanceByHabitLevel": [
+                      {
+                        "level": 1,
+                        "unit": "percent",
+                        "value": 40
+                      },
+                      {
+                        "level": 2,
+                        "unit": "percent",
+                        "value": 52
+                      },
+                      {
+                        "level": 3,
+                        "unit": "percent",
+                        "value": 64
+                      },
+                      {
+                        "level": 4,
+                        "unit": "percent",
+                        "value": 80
+                      },
+                      {
+                        "level": 5,
+                        "unit": "percent",
+                        "value": 100
+                      }
+                    ],
+                    "chanceFixed": null,
+                    "description": "Resistance chance applies to the same least-current-troops Ally selected for Recovery.",
+                    "scope": "effect",
+                    "targetStatusConditionalChances": [],
+                    "unresolved": false
+                  },
                   "calculated": false,
-                  "casterEligibility": "unknown",
+                  "casterEligibility": "eligible-if-targeting-allows",
                   "conditionalMultipliers": [],
                   "conditions": [],
                   "directlyVerified": true,
@@ -239,7 +338,7 @@
                   "effectOptions": null,
                   "excludes": [],
                   "id": "strategic-revival-resistance",
-                  "includesCaster": null,
+                  "includesCaster": true,
                   "magnitude": 20,
                   "notes": [
                     "Resistance reduces Damage Received."
@@ -251,10 +350,21 @@
                   "stack": null,
                   "stackTransitionTrigger": null,
                   "target": "Ally with least current troops",
-                  "targetCount": null,
+                  "targetCount": 1,
                   "targetPriority": "least-current-troops-ally",
                   "targetScope": "any-lane",
-                  "targetSelection": null,
+                  "targetSelection": {
+                    "comparisonDirection": "lowest",
+                    "comparisonPool": "ally-side",
+                    "comparisonStat": "current-troops",
+                    "distinctness": "unknown",
+                    "fallback": null,
+                    "preference": null,
+                    "references": [],
+                    "repeatedInstances": null,
+                    "sharedSelectionGroupId": "strategic-revival-least-troops-ally",
+                    "tieBehavior": "candidate-group"
+                  },
                   "type": "Resistance",
                   "unit": "percent"
                 }
@@ -269,33 +379,7 @@
               "roundSelector": null,
               "targetPriority": "least-current-troops-ally",
               "timing": "specific-rounds",
-              "triggerChanceByHabitLevel": [
-                {
-                  "level": 1,
-                  "unit": "percent",
-                  "value": 40
-                },
-                {
-                  "level": 2,
-                  "unit": "percent",
-                  "value": 52
-                },
-                {
-                  "level": 3,
-                  "unit": "percent",
-                  "value": 64
-                },
-                {
-                  "level": 4,
-                  "unit": "percent",
-                  "value": 80
-                },
-                {
-                  "level": 5,
-                  "unit": "percent",
-                  "value": 100
-                }
-              ],
+              "triggerChanceByHabitLevel": [],
               "triggerChanceFixed": null,
               "triggerEvent": "specific-rounds"
             }
@@ -403,7 +487,6 @@
             {
               "activationRoll": null,
               "calculated": false,
-              "casterEligibility": "unknown",
               "conditionalMultipliers": [],
               "conditions": [],
               "directlyVerified": true,
@@ -494,7 +577,6 @@
             {
               "activationRoll": null,
               "calculated": false,
-              "casterEligibility": "unknown",
               "conditionalMultipliers": [],
               "conditions": [],
               "directlyVerified": true,
@@ -523,7 +605,6 @@
             {
               "activationRoll": null,
               "calculated": false,
-              "casterEligibility": "unknown",
               "conditionalMultipliers": [],
               "conditions": [],
               "directlyVerified": true,
@@ -552,7 +633,6 @@
             {
               "activationRoll": null,
               "calculated": false,
-              "casterEligibility": "unknown",
               "conditionalMultipliers": [],
               "conditions": [],
               "directlyVerified": true,
@@ -906,7 +986,6 @@
             {
               "activationRoll": null,
               "calculated": false,
-              "casterEligibility": "unknown",
               "conditionalMultipliers": [],
               "conditions": [],
               "directlyVerified": true,
@@ -1039,7 +1118,7 @@
             {
               "activationRoll": null,
               "calculated": false,
-              "casterEligibility": "unknown",
+              "casterEligibility": "eligible-if-targeting-allows",
               "conditionalMultipliers": [
                 {
                   "calculatedFromVerifiedMultiplier": true,
@@ -1076,7 +1155,7 @@
               "effectOptions": null,
               "excludes": [],
               "id": "strategic-revival-recovery",
-              "includesCaster": null,
+              "includesCaster": true,
               "magnitude": null,
               "notes": [
                 "Higher conditional Recovery values are calculated from the verified 1.5x multiplier."
@@ -1117,17 +1196,61 @@
               "stack": null,
               "stackTransitionTrigger": null,
               "target": "Ally with least current troops",
-              "targetCount": null,
+              "targetCount": 1,
               "targetPriority": "least-current-troops-ally",
               "targetScope": "any-lane",
-              "targetSelection": null,
+              "targetSelection": {
+                "comparisonDirection": "lowest",
+                "comparisonPool": "ally-side",
+                "comparisonStat": "current-troops",
+                "distinctness": "unknown",
+                "fallback": null,
+                "preference": null,
+                "references": [],
+                "repeatedInstances": null,
+                "sharedSelectionGroupId": "strategic-revival-least-troops-ally",
+                "tieBehavior": "candidate-group"
+              },
               "type": "Recovery",
               "unit": "rate"
             },
             {
-              "activationRoll": null,
+              "activationRoll": {
+                "chanceByHabitLevel": [
+                  {
+                    "level": 1,
+                    "unit": "percent",
+                    "value": 40
+                  },
+                  {
+                    "level": 2,
+                    "unit": "percent",
+                    "value": 52
+                  },
+                  {
+                    "level": 3,
+                    "unit": "percent",
+                    "value": 64
+                  },
+                  {
+                    "level": 4,
+                    "unit": "percent",
+                    "value": 80
+                  },
+                  {
+                    "level": 5,
+                    "unit": "percent",
+                    "value": 100
+                  }
+                ],
+                "chanceFixed": null,
+                "description": "Resistance chance applies to the same least-current-troops Ally selected for Recovery.",
+                "scope": "effect",
+                "targetStatusConditionalChances": [],
+                "unresolved": false
+              },
               "calculated": false,
-              "casterEligibility": "unknown",
+              "casterEligibility": "eligible-if-targeting-allows",
               "conditionalMultipliers": [],
               "conditions": [],
               "directlyVerified": true,
@@ -1136,7 +1259,7 @@
               "effectOptions": null,
               "excludes": [],
               "id": "strategic-revival-resistance",
-              "includesCaster": null,
+              "includesCaster": true,
               "magnitude": 20,
               "notes": [
                 "Resistance reduces Damage Received."
@@ -1148,10 +1271,21 @@
               "stack": null,
               "stackTransitionTrigger": null,
               "target": "Ally with least current troops",
-              "targetCount": null,
+              "targetCount": 1,
               "targetPriority": "least-current-troops-ally",
               "targetScope": "any-lane",
-              "targetSelection": null,
+              "targetSelection": {
+                "comparisonDirection": "lowest",
+                "comparisonPool": "ally-side",
+                "comparisonStat": "current-troops",
+                "distinctness": "unknown",
+                "fallback": null,
+                "preference": null,
+                "references": [],
+                "repeatedInstances": null,
+                "sharedSelectionGroupId": "strategic-revival-least-troops-ally",
+                "tieBehavior": "candidate-group"
+              },
               "type": "Resistance",
               "unit": "percent"
             }
@@ -1166,33 +1300,7 @@
           "roundSelector": null,
           "targetPriority": "least-current-troops-ally",
           "timing": "specific-rounds",
-          "triggerChanceByHabitLevel": [
-            {
-              "level": 1,
-              "unit": "percent",
-              "value": 40
-            },
-            {
-              "level": 2,
-              "unit": "percent",
-              "value": 52
-            },
-            {
-              "level": 3,
-              "unit": "percent",
-              "value": 64
-            },
-            {
-              "level": 4,
-              "unit": "percent",
-              "value": 80
-            },
-            {
-              "level": 5,
-              "unit": "percent",
-              "value": 100
-            }
-          ],
+          "triggerChanceByHabitLevel": [],
           "triggerChanceFixed": null,
           "triggerEvent": "specific-rounds"
         }
@@ -1266,7 +1374,6 @@
             {
               "activationRoll": null,
               "calculated": false,
-              "casterEligibility": "unknown",
               "conditionalMultipliers": [],
               "conditions": [],
               "directlyVerified": true,
@@ -1323,7 +1430,6 @@
             {
               "activationRoll": null,
               "calculated": false,
-              "casterEligibility": "unknown",
               "conditionalMultipliers": [],
               "conditions": [],
               "directlyVerified": true,
@@ -1460,7 +1566,6 @@
             {
               "activationRoll": null,
               "calculated": false,
-              "casterEligibility": "unknown",
               "conditionalMultipliers": [],
               "conditions": [],
               "directlyVerified": true,
@@ -1489,7 +1594,6 @@
             {
               "activationRoll": null,
               "calculated": false,
-              "casterEligibility": "unknown",
               "conditionalMultipliers": [],
               "conditions": [],
               "directlyVerified": true,
@@ -1667,7 +1771,6 @@
           {
             "activationRoll": null,
             "calculated": false,
-            "casterEligibility": "unknown",
             "conditionalMultipliers": [],
             "conditions": [],
             "directlyVerified": true,
@@ -1727,7 +1830,6 @@
           {
             "activationRoll": null,
             "calculated": false,
-            "casterEligibility": "unknown",
             "conditionalMultipliers": [],
             "conditions": [],
             "directlyVerified": true,
@@ -1756,7 +1858,6 @@
           {
             "activationRoll": null,
             "calculated": false,
-            "casterEligibility": "unknown",
             "conditionalMultipliers": [],
             "conditions": [],
             "directlyVerified": true,
@@ -1785,7 +1886,6 @@
           {
             "activationRoll": null,
             "calculated": false,
-            "casterEligibility": "unknown",
             "conditionalMultipliers": [],
             "conditions": [],
             "directlyVerified": true,
@@ -2027,7 +2127,6 @@
           {
             "activationRoll": null,
             "calculated": false,
-            "casterEligibility": "unknown",
             "conditionalMultipliers": [],
             "conditions": [],
             "directlyVerified": true,
@@ -2105,7 +2204,7 @@
           {
             "activationRoll": null,
             "calculated": false,
-            "casterEligibility": "unknown",
+            "casterEligibility": "eligible-if-targeting-allows",
             "conditionalMultipliers": [
               {
                 "calculatedFromVerifiedMultiplier": true,
@@ -2142,7 +2241,7 @@
             "effectOptions": null,
             "excludes": [],
             "id": "strategic-revival-recovery",
-            "includesCaster": null,
+            "includesCaster": true,
             "magnitude": null,
             "notes": [
               "Higher conditional Recovery values are calculated from the verified 1.5x multiplier."
@@ -2183,17 +2282,61 @@
             "stack": null,
             "stackTransitionTrigger": null,
             "target": "Ally with least current troops",
-            "targetCount": null,
+            "targetCount": 1,
             "targetPriority": "least-current-troops-ally",
             "targetScope": "any-lane",
-            "targetSelection": null,
+            "targetSelection": {
+              "comparisonDirection": "lowest",
+              "comparisonPool": "ally-side",
+              "comparisonStat": "current-troops",
+              "distinctness": "unknown",
+              "fallback": null,
+              "preference": null,
+              "references": [],
+              "repeatedInstances": null,
+              "sharedSelectionGroupId": "strategic-revival-least-troops-ally",
+              "tieBehavior": "candidate-group"
+            },
             "type": "Recovery",
             "unit": "rate"
           },
           {
-            "activationRoll": null,
+            "activationRoll": {
+              "chanceByHabitLevel": [
+                {
+                  "level": 1,
+                  "unit": "percent",
+                  "value": 40
+                },
+                {
+                  "level": 2,
+                  "unit": "percent",
+                  "value": 52
+                },
+                {
+                  "level": 3,
+                  "unit": "percent",
+                  "value": 64
+                },
+                {
+                  "level": 4,
+                  "unit": "percent",
+                  "value": 80
+                },
+                {
+                  "level": 5,
+                  "unit": "percent",
+                  "value": 100
+                }
+              ],
+              "chanceFixed": null,
+              "description": "Resistance chance applies to the same least-current-troops Ally selected for Recovery.",
+              "scope": "effect",
+              "targetStatusConditionalChances": [],
+              "unresolved": false
+            },
             "calculated": false,
-            "casterEligibility": "unknown",
+            "casterEligibility": "eligible-if-targeting-allows",
             "conditionalMultipliers": [],
             "conditions": [],
             "directlyVerified": true,
@@ -2202,7 +2345,7 @@
             "effectOptions": null,
             "excludes": [],
             "id": "strategic-revival-resistance",
-            "includesCaster": null,
+            "includesCaster": true,
             "magnitude": 20,
             "notes": [
               "Resistance reduces Damage Received."
@@ -2214,10 +2357,21 @@
             "stack": null,
             "stackTransitionTrigger": null,
             "target": "Ally with least current troops",
-            "targetCount": null,
+            "targetCount": 1,
             "targetPriority": "least-current-troops-ally",
             "targetScope": "any-lane",
-            "targetSelection": null,
+            "targetSelection": {
+              "comparisonDirection": "lowest",
+              "comparisonPool": "ally-side",
+              "comparisonStat": "current-troops",
+              "distinctness": "unknown",
+              "fallback": null,
+              "preference": null,
+              "references": [],
+              "repeatedInstances": null,
+              "sharedSelectionGroupId": "strategic-revival-least-troops-ally",
+              "tieBehavior": "candidate-group"
+            },
             "type": "Resistance",
             "unit": "percent"
           }
@@ -2232,33 +2386,7 @@
         "roundSelector": null,
         "targetPriority": "least-current-troops-ally",
         "timing": "specific-rounds",
-        "triggerChanceByHabitLevel": [
-          {
-            "level": 1,
-            "unit": "percent",
-            "value": 40
-          },
-          {
-            "level": 2,
-            "unit": "percent",
-            "value": 52
-          },
-          {
-            "level": 3,
-            "unit": "percent",
-            "value": 64
-          },
-          {
-            "level": 4,
-            "unit": "percent",
-            "value": 80
-          },
-          {
-            "level": 5,
-            "unit": "percent",
-            "value": 100
-          }
-        ],
+        "triggerChanceByHabitLevel": [],
         "triggerChanceFixed": null,
         "triggerEvent": "specific-rounds"
       }
@@ -2275,7 +2403,6 @@
           {
             "activationRoll": null,
             "calculated": false,
-            "casterEligibility": "unknown",
             "conditionalMultipliers": [],
             "conditions": [],
             "directlyVerified": true,
@@ -2332,7 +2459,6 @@
           {
             "activationRoll": null,
             "calculated": false,
-            "casterEligibility": "unknown",
             "conditionalMultipliers": [],
             "conditions": [],
             "directlyVerified": true,
@@ -2412,7 +2538,6 @@
           {
             "activationRoll": null,
             "calculated": false,
-            "casterEligibility": "unknown",
             "conditionalMultipliers": [],
             "conditions": [],
             "directlyVerified": true,
@@ -2441,7 +2566,6 @@
           {
             "activationRoll": null,
             "calculated": false,
-            "casterEligibility": "unknown",
             "conditionalMultipliers": [],
             "conditions": [],
             "directlyVerified": true,
@@ -2567,7 +2691,7 @@
           {
             "activationRoll": null,
             "calculated": false,
-            "casterEligibility": "unknown",
+            "casterEligibility": "eligible-if-targeting-allows",
             "conditionalMultipliers": [
               {
                 "calculatedFromVerifiedMultiplier": true,
@@ -2604,7 +2728,7 @@
             "effectOptions": null,
             "excludes": [],
             "id": "strategic-revival-recovery",
-            "includesCaster": null,
+            "includesCaster": true,
             "magnitude": null,
             "notes": [
               "Higher conditional Recovery values are calculated from the verified 1.5x multiplier."
@@ -2645,17 +2769,61 @@
             "stack": null,
             "stackTransitionTrigger": null,
             "target": "Ally with least current troops",
-            "targetCount": null,
+            "targetCount": 1,
             "targetPriority": "least-current-troops-ally",
             "targetScope": "any-lane",
-            "targetSelection": null,
+            "targetSelection": {
+              "comparisonDirection": "lowest",
+              "comparisonPool": "ally-side",
+              "comparisonStat": "current-troops",
+              "distinctness": "unknown",
+              "fallback": null,
+              "preference": null,
+              "references": [],
+              "repeatedInstances": null,
+              "sharedSelectionGroupId": "strategic-revival-least-troops-ally",
+              "tieBehavior": "candidate-group"
+            },
             "type": "Recovery",
             "unit": "rate"
           },
           {
-            "activationRoll": null,
+            "activationRoll": {
+              "chanceByHabitLevel": [
+                {
+                  "level": 1,
+                  "unit": "percent",
+                  "value": 40
+                },
+                {
+                  "level": 2,
+                  "unit": "percent",
+                  "value": 52
+                },
+                {
+                  "level": 3,
+                  "unit": "percent",
+                  "value": 64
+                },
+                {
+                  "level": 4,
+                  "unit": "percent",
+                  "value": 80
+                },
+                {
+                  "level": 5,
+                  "unit": "percent",
+                  "value": 100
+                }
+              ],
+              "chanceFixed": null,
+              "description": "Resistance chance applies to the same least-current-troops Ally selected for Recovery.",
+              "scope": "effect",
+              "targetStatusConditionalChances": [],
+              "unresolved": false
+            },
             "calculated": false,
-            "casterEligibility": "unknown",
+            "casterEligibility": "eligible-if-targeting-allows",
             "conditionalMultipliers": [],
             "conditions": [],
             "directlyVerified": true,
@@ -2664,7 +2832,7 @@
             "effectOptions": null,
             "excludes": [],
             "id": "strategic-revival-resistance",
-            "includesCaster": null,
+            "includesCaster": true,
             "magnitude": 20,
             "notes": [
               "Resistance reduces Damage Received."
@@ -2676,10 +2844,21 @@
             "stack": null,
             "stackTransitionTrigger": null,
             "target": "Ally with least current troops",
-            "targetCount": null,
+            "targetCount": 1,
             "targetPriority": "least-current-troops-ally",
             "targetScope": "any-lane",
-            "targetSelection": null,
+            "targetSelection": {
+              "comparisonDirection": "lowest",
+              "comparisonPool": "ally-side",
+              "comparisonStat": "current-troops",
+              "distinctness": "unknown",
+              "fallback": null,
+              "preference": null,
+              "references": [],
+              "repeatedInstances": null,
+              "sharedSelectionGroupId": "strategic-revival-least-troops-ally",
+              "tieBehavior": "candidate-group"
+            },
             "type": "Resistance",
             "unit": "percent"
           }
@@ -2701,7 +2880,7 @@
               {
                 "activationRoll": null,
                 "calculated": false,
-                "casterEligibility": "unknown",
+                "casterEligibility": "eligible-if-targeting-allows",
                 "conditionalMultipliers": [
                   {
                     "calculatedFromVerifiedMultiplier": true,
@@ -2738,7 +2917,7 @@
                 "effectOptions": null,
                 "excludes": [],
                 "id": "strategic-revival-recovery",
-                "includesCaster": null,
+                "includesCaster": true,
                 "magnitude": null,
                 "notes": [
                   "Higher conditional Recovery values are calculated from the verified 1.5x multiplier."
@@ -2779,17 +2958,61 @@
                 "stack": null,
                 "stackTransitionTrigger": null,
                 "target": "Ally with least current troops",
-                "targetCount": null,
+                "targetCount": 1,
                 "targetPriority": "least-current-troops-ally",
                 "targetScope": "any-lane",
-                "targetSelection": null,
+                "targetSelection": {
+                  "comparisonDirection": "lowest",
+                  "comparisonPool": "ally-side",
+                  "comparisonStat": "current-troops",
+                  "distinctness": "unknown",
+                  "fallback": null,
+                  "preference": null,
+                  "references": [],
+                  "repeatedInstances": null,
+                  "sharedSelectionGroupId": "strategic-revival-least-troops-ally",
+                  "tieBehavior": "candidate-group"
+                },
                 "type": "Recovery",
                 "unit": "rate"
               },
               {
-                "activationRoll": null,
+                "activationRoll": {
+                  "chanceByHabitLevel": [
+                    {
+                      "level": 1,
+                      "unit": "percent",
+                      "value": 40
+                    },
+                    {
+                      "level": 2,
+                      "unit": "percent",
+                      "value": 52
+                    },
+                    {
+                      "level": 3,
+                      "unit": "percent",
+                      "value": 64
+                    },
+                    {
+                      "level": 4,
+                      "unit": "percent",
+                      "value": 80
+                    },
+                    {
+                      "level": 5,
+                      "unit": "percent",
+                      "value": 100
+                    }
+                  ],
+                  "chanceFixed": null,
+                  "description": "Resistance chance applies to the same least-current-troops Ally selected for Recovery.",
+                  "scope": "effect",
+                  "targetStatusConditionalChances": [],
+                  "unresolved": false
+                },
                 "calculated": false,
-                "casterEligibility": "unknown",
+                "casterEligibility": "eligible-if-targeting-allows",
                 "conditionalMultipliers": [],
                 "conditions": [],
                 "directlyVerified": true,
@@ -2798,7 +3021,7 @@
                 "effectOptions": null,
                 "excludes": [],
                 "id": "strategic-revival-resistance",
-                "includesCaster": null,
+                "includesCaster": true,
                 "magnitude": 20,
                 "notes": [
                   "Resistance reduces Damage Received."
@@ -2810,10 +3033,21 @@
                 "stack": null,
                 "stackTransitionTrigger": null,
                 "target": "Ally with least current troops",
-                "targetCount": null,
+                "targetCount": 1,
                 "targetPriority": "least-current-troops-ally",
                 "targetScope": "any-lane",
-                "targetSelection": null,
+                "targetSelection": {
+                  "comparisonDirection": "lowest",
+                  "comparisonPool": "ally-side",
+                  "comparisonStat": "current-troops",
+                  "distinctness": "unknown",
+                  "fallback": null,
+                  "preference": null,
+                  "references": [],
+                  "repeatedInstances": null,
+                  "sharedSelectionGroupId": "strategic-revival-least-troops-ally",
+                  "tieBehavior": "candidate-group"
+                },
                 "type": "Resistance",
                 "unit": "percent"
               }
@@ -2828,33 +3062,7 @@
             "roundSelector": null,
             "targetPriority": "least-current-troops-ally",
             "timing": "specific-rounds",
-            "triggerChanceByHabitLevel": [
-              {
-                "level": 1,
-                "unit": "percent",
-                "value": 40
-              },
-              {
-                "level": 2,
-                "unit": "percent",
-                "value": 52
-              },
-              {
-                "level": 3,
-                "unit": "percent",
-                "value": 64
-              },
-              {
-                "level": 4,
-                "unit": "percent",
-                "value": 80
-              },
-              {
-                "level": 5,
-                "unit": "percent",
-                "value": 100
-              }
-            ],
+            "triggerChanceByHabitLevel": [],
             "triggerChanceFixed": null,
             "triggerEvent": "specific-rounds"
           }
@@ -2962,7 +3170,6 @@
           {
             "activationRoll": null,
             "calculated": false,
-            "casterEligibility": "unknown",
             "conditionalMultipliers": [],
             "conditions": [],
             "directlyVerified": true,
@@ -3147,7 +3354,6 @@
       "effect": {
         "activationRoll": null,
         "calculated": false,
-        "casterEligibility": "unknown",
         "conditionalMultipliers": [],
         "conditions": [],
         "directlyVerified": true,
@@ -3185,7 +3391,6 @@
       "effect": {
         "activationRoll": null,
         "calculated": false,
-        "casterEligibility": "unknown",
         "conditionalMultipliers": [],
         "conditions": [],
         "directlyVerified": true,
@@ -3218,7 +3423,6 @@
       "effect": {
         "activationRoll": null,
         "calculated": false,
-        "casterEligibility": "unknown",
         "conditionalMultipliers": [],
         "conditions": [],
         "directlyVerified": true,
@@ -3251,7 +3455,6 @@
       "effect": {
         "activationRoll": null,
         "calculated": false,
-        "casterEligibility": "unknown",
         "conditionalMultipliers": [],
         "conditions": [],
         "directlyVerified": true,
@@ -3467,7 +3670,6 @@
       "effect": {
         "activationRoll": null,
         "calculated": false,
-        "casterEligibility": "unknown",
         "conditionalMultipliers": [],
         "conditions": [],
         "directlyVerified": true,
@@ -3528,7 +3730,7 @@
       "effect": {
         "activationRoll": null,
         "calculated": false,
-        "casterEligibility": "unknown",
+        "casterEligibility": "eligible-if-targeting-allows",
         "conditionalMultipliers": [
           {
             "calculatedFromVerifiedMultiplier": true,
@@ -3565,7 +3767,7 @@
         "effectOptions": null,
         "excludes": [],
         "id": "strategic-revival-recovery",
-        "includesCaster": null,
+        "includesCaster": true,
         "magnitude": null,
         "notes": [
           "Higher conditional Recovery values are calculated from the verified 1.5x multiplier."
@@ -3606,10 +3808,21 @@
         "stack": null,
         "stackTransitionTrigger": null,
         "target": "Ally with least current troops",
-        "targetCount": null,
+        "targetCount": 1,
         "targetPriority": "least-current-troops-ally",
         "targetScope": "any-lane",
-        "targetSelection": null,
+        "targetSelection": {
+          "comparisonDirection": "lowest",
+          "comparisonPool": "ally-side",
+          "comparisonStat": "current-troops",
+          "distinctness": "unknown",
+          "fallback": null,
+          "preference": null,
+          "references": [],
+          "repeatedInstances": null,
+          "sharedSelectionGroupId": "strategic-revival-least-troops-ally",
+          "tieBehavior": "candidate-group"
+        },
         "type": "Recovery",
         "unit": "rate"
       },
@@ -3618,9 +3831,42 @@
     {
       "abilityId": "syrax-strategic-revival",
       "effect": {
-        "activationRoll": null,
+        "activationRoll": {
+          "chanceByHabitLevel": [
+            {
+              "level": 1,
+              "unit": "percent",
+              "value": 40
+            },
+            {
+              "level": 2,
+              "unit": "percent",
+              "value": 52
+            },
+            {
+              "level": 3,
+              "unit": "percent",
+              "value": 64
+            },
+            {
+              "level": 4,
+              "unit": "percent",
+              "value": 80
+            },
+            {
+              "level": 5,
+              "unit": "percent",
+              "value": 100
+            }
+          ],
+          "chanceFixed": null,
+          "description": "Resistance chance applies to the same least-current-troops Ally selected for Recovery.",
+          "scope": "effect",
+          "targetStatusConditionalChances": [],
+          "unresolved": false
+        },
         "calculated": false,
-        "casterEligibility": "unknown",
+        "casterEligibility": "eligible-if-targeting-allows",
         "conditionalMultipliers": [],
         "conditions": [],
         "directlyVerified": true,
@@ -3629,7 +3875,7 @@
         "effectOptions": null,
         "excludes": [],
         "id": "strategic-revival-resistance",
-        "includesCaster": null,
+        "includesCaster": true,
         "magnitude": 20,
         "notes": [
           "Resistance reduces Damage Received."
@@ -3641,10 +3887,21 @@
         "stack": null,
         "stackTransitionTrigger": null,
         "target": "Ally with least current troops",
-        "targetCount": null,
+        "targetCount": 1,
         "targetPriority": "least-current-troops-ally",
         "targetScope": "any-lane",
-        "targetSelection": null,
+        "targetSelection": {
+          "comparisonDirection": "lowest",
+          "comparisonPool": "ally-side",
+          "comparisonStat": "current-troops",
+          "distinctness": "unknown",
+          "fallback": null,
+          "preference": null,
+          "references": [],
+          "repeatedInstances": null,
+          "sharedSelectionGroupId": "strategic-revival-least-troops-ally",
+          "tieBehavior": "candidate-group"
+        },
         "type": "Resistance",
         "unit": "percent"
       },
@@ -3655,7 +3912,6 @@
       "effect": {
         "activationRoll": null,
         "calculated": false,
-        "casterEligibility": "unknown",
         "conditionalMultipliers": [],
         "conditions": [],
         "directlyVerified": true,
@@ -3716,7 +3972,6 @@
       "effect": {
         "activationRoll": null,
         "calculated": false,
-        "casterEligibility": "unknown",
         "conditionalMultipliers": [],
         "conditions": [],
         "directlyVerified": true,
@@ -3777,7 +4032,6 @@
       "effect": {
         "activationRoll": null,
         "calculated": false,
-        "casterEligibility": "unknown",
         "conditionalMultipliers": [],
         "conditions": [],
         "directlyVerified": true,
@@ -3810,7 +4064,6 @@
       "effect": {
         "activationRoll": null,
         "calculated": false,
-        "casterEligibility": "unknown",
         "conditionalMultipliers": [],
         "conditions": [],
         "directlyVerified": true,
@@ -3964,7 +4217,7 @@
   "firstObservedInGame": null,
   "format": "dragonfire-dragon-profile",
   "gameVersion": null,
-  "generatedAt": "2026-06-27T06:59:05.145Z",
+  "generatedAt": "2026-06-27T07:48:59.989Z",
   "habits": [
     {
       "abilityClass": "passive",
@@ -4265,7 +4518,6 @@
             {
               "activationRoll": null,
               "calculated": false,
-              "casterEligibility": "unknown",
               "conditionalMultipliers": [],
               "conditions": [],
               "directlyVerified": true,
@@ -4398,7 +4650,7 @@
             {
               "activationRoll": null,
               "calculated": false,
-              "casterEligibility": "unknown",
+              "casterEligibility": "eligible-if-targeting-allows",
               "conditionalMultipliers": [
                 {
                   "calculatedFromVerifiedMultiplier": true,
@@ -4435,7 +4687,7 @@
               "effectOptions": null,
               "excludes": [],
               "id": "strategic-revival-recovery",
-              "includesCaster": null,
+              "includesCaster": true,
               "magnitude": null,
               "notes": [
                 "Higher conditional Recovery values are calculated from the verified 1.5x multiplier."
@@ -4476,17 +4728,61 @@
               "stack": null,
               "stackTransitionTrigger": null,
               "target": "Ally with least current troops",
-              "targetCount": null,
+              "targetCount": 1,
               "targetPriority": "least-current-troops-ally",
               "targetScope": "any-lane",
-              "targetSelection": null,
+              "targetSelection": {
+                "comparisonDirection": "lowest",
+                "comparisonPool": "ally-side",
+                "comparisonStat": "current-troops",
+                "distinctness": "unknown",
+                "fallback": null,
+                "preference": null,
+                "references": [],
+                "repeatedInstances": null,
+                "sharedSelectionGroupId": "strategic-revival-least-troops-ally",
+                "tieBehavior": "candidate-group"
+              },
               "type": "Recovery",
               "unit": "rate"
             },
             {
-              "activationRoll": null,
+              "activationRoll": {
+                "chanceByHabitLevel": [
+                  {
+                    "level": 1,
+                    "unit": "percent",
+                    "value": 40
+                  },
+                  {
+                    "level": 2,
+                    "unit": "percent",
+                    "value": 52
+                  },
+                  {
+                    "level": 3,
+                    "unit": "percent",
+                    "value": 64
+                  },
+                  {
+                    "level": 4,
+                    "unit": "percent",
+                    "value": 80
+                  },
+                  {
+                    "level": 5,
+                    "unit": "percent",
+                    "value": 100
+                  }
+                ],
+                "chanceFixed": null,
+                "description": "Resistance chance applies to the same least-current-troops Ally selected for Recovery.",
+                "scope": "effect",
+                "targetStatusConditionalChances": [],
+                "unresolved": false
+              },
               "calculated": false,
-              "casterEligibility": "unknown",
+              "casterEligibility": "eligible-if-targeting-allows",
               "conditionalMultipliers": [],
               "conditions": [],
               "directlyVerified": true,
@@ -4495,7 +4791,7 @@
               "effectOptions": null,
               "excludes": [],
               "id": "strategic-revival-resistance",
-              "includesCaster": null,
+              "includesCaster": true,
               "magnitude": 20,
               "notes": [
                 "Resistance reduces Damage Received."
@@ -4507,10 +4803,21 @@
               "stack": null,
               "stackTransitionTrigger": null,
               "target": "Ally with least current troops",
-              "targetCount": null,
+              "targetCount": 1,
               "targetPriority": "least-current-troops-ally",
               "targetScope": "any-lane",
-              "targetSelection": null,
+              "targetSelection": {
+                "comparisonDirection": "lowest",
+                "comparisonPool": "ally-side",
+                "comparisonStat": "current-troops",
+                "distinctness": "unknown",
+                "fallback": null,
+                "preference": null,
+                "references": [],
+                "repeatedInstances": null,
+                "sharedSelectionGroupId": "strategic-revival-least-troops-ally",
+                "tieBehavior": "candidate-group"
+              },
               "type": "Resistance",
               "unit": "percent"
             }
@@ -4525,33 +4832,7 @@
           "roundSelector": null,
           "targetPriority": "least-current-troops-ally",
           "timing": "specific-rounds",
-          "triggerChanceByHabitLevel": [
-            {
-              "level": 1,
-              "unit": "percent",
-              "value": 40
-            },
-            {
-              "level": 2,
-              "unit": "percent",
-              "value": 52
-            },
-            {
-              "level": 3,
-              "unit": "percent",
-              "value": 64
-            },
-            {
-              "level": 4,
-              "unit": "percent",
-              "value": 80
-            },
-            {
-              "level": 5,
-              "unit": "percent",
-              "value": 100
-            }
-          ],
+          "triggerChanceByHabitLevel": [],
           "triggerChanceFixed": null,
           "triggerEvent": "specific-rounds"
         }
@@ -4625,7 +4906,6 @@
             {
               "activationRoll": null,
               "calculated": false,
-              "casterEligibility": "unknown",
               "conditionalMultipliers": [],
               "conditions": [],
               "directlyVerified": true,
@@ -4682,7 +4962,6 @@
             {
               "activationRoll": null,
               "calculated": false,
-              "casterEligibility": "unknown",
               "conditionalMultipliers": [],
               "conditions": [],
               "directlyVerified": true,
@@ -4819,7 +5098,6 @@
             {
               "activationRoll": null,
               "calculated": false,
-              "casterEligibility": "unknown",
               "conditionalMultipliers": [],
               "conditions": [],
               "directlyVerified": true,
@@ -4848,7 +5126,6 @@
             {
               "activationRoll": null,
               "calculated": false,
-              "casterEligibility": "unknown",
               "conditionalMultipliers": [],
               "conditions": [],
               "directlyVerified": true,
@@ -5165,7 +5442,7 @@
         "comparisonDirection": null,
         "comparisonPool": null,
         "count": null,
-        "includesCaster": null,
+        "includesCaster": true,
         "position": "left-flank",
         "scope": "left-flank",
         "selection": "specific-position",
@@ -5238,7 +5515,7 @@
         "comparisonDirection": null,
         "comparisonPool": null,
         "count": null,
-        "includesCaster": null,
+        "includesCaster": true,
         "position": "left-flank",
         "scope": "left-flank",
         "selection": "specific-position",
@@ -5271,7 +5548,7 @@
       },
       "channel": "stat",
       "combatLogConfirmed": false,
-      "conditional": true,
+      "conditional": false,
       "conditions": [],
       "confidence": "confirmed",
       "currentlyAvailable": false,
@@ -5360,7 +5637,7 @@
       },
       "channel": "stat",
       "combatLogConfirmed": false,
-      "conditional": true,
+      "conditional": false,
       "conditions": [],
       "confidence": "confirmed",
       "currentlyAvailable": false,
@@ -5449,7 +5726,7 @@
       },
       "channel": "stat",
       "combatLogConfirmed": false,
-      "conditional": true,
+      "conditional": false,
       "conditions": [],
       "confidence": "confirmed",
       "currentlyAvailable": false,
@@ -5538,7 +5815,7 @@
       },
       "channel": "stat",
       "combatLogConfirmed": false,
-      "conditional": true,
+      "conditional": false,
       "conditions": [],
       "confidence": "confirmed",
       "currentlyAvailable": false,
@@ -5640,7 +5917,7 @@
         }
       ],
       "activationChanceFixed": null,
-      "activationGroupId": null,
+      "activationGroupId": "strategic-revival-least-troops-ally",
       "availability": {
         "canonical": "canonical-locked",
         "notes": [
@@ -5654,15 +5931,7 @@
       "channel": "damage-received",
       "combatLogConfirmed": false,
       "conditional": true,
-      "conditions": [
-        {
-          "description": "Activation chance depends on Habit Level for specific rounds.",
-          "evidenceIds": [],
-          "id": "strategic-revival-recovery-rounds-activation-chance",
-          "label": "Activation chance depends on Habit Level for specific rounds.",
-          "unresolved": false
-        }
-      ],
+      "conditions": [],
       "confidence": "confirmed",
       "currentlyAvailable": false,
       "damageScope": null,
@@ -5689,17 +5958,17 @@
       "statusId": "resistance",
       "targetSelector": {
         "comparisonDirection": "lowest",
-        "comparisonPool": null,
+        "comparisonPool": "ally-side",
         "count": 1,
-        "includesCaster": null,
+        "includesCaster": true,
         "position": null,
         "scope": "any-lane",
         "selection": "lowest-resource",
         "selectionResource": "current-troops",
         "selectionStat": null,
-        "sharedSelectionGroupId": null,
+        "sharedSelectionGroupId": "strategic-revival-least-troops-ally",
         "side": "ally",
-        "tieBehavior": null
+        "tieBehavior": "candidate-group"
       },
       "unit": "percent",
       "unlockStarRank": 6,
@@ -5780,7 +6049,7 @@
         "comparisonDirection": null,
         "comparisonPool": null,
         "count": 1,
-        "includesCaster": null,
+        "includesCaster": true,
         "position": null,
         "scope": "any-lane",
         "selection": "any",
@@ -5869,7 +6138,7 @@
         "comparisonDirection": null,
         "comparisonPool": null,
         "count": 1,
-        "includesCaster": null,
+        "includesCaster": true,
         "position": null,
         "scope": "any-lane",
         "selection": "any",
@@ -5998,13 +6267,6 @@
       "conditional": true,
       "conditions": [
         {
-          "description": "Activation chance depends on Habit Level for specific rounds.",
-          "evidenceIds": [],
-          "id": "strategic-revival-recovery-rounds-activation-chance",
-          "label": "Activation chance depends on Habit Level for specific rounds.",
-          "unresolved": false
-        },
-        {
           "description": "Recovery is multiplied by 1.5 if any enemy has Slow.",
           "evidenceIds": [],
           "id": "strategic-revival-slow-1-5x",
@@ -6044,7 +6306,7 @@
       "sourceEffectId": "strategic-revival-recovery",
       "sourceKind": "habit",
       "sourceScope": "habits",
-      "targetCount": null,
+      "targetCount": 1,
       "targetScope": "any-lane",
       "targetSide": "ally",
       "unlockStarRank": 6
@@ -6725,8 +6987,8 @@
   "rosterSourceStatus": "official-website",
   "slug": "syrax",
   "source": {
-    "branch": "fix/command-source-text-and-summaries",
-    "commit": "c5b684622cc6f516c9f91109d764a6c884e79b5b",
+    "branch": "fix/legacy-targeting-and-state-resolution",
+    "commit": "50a3ed17c6866878fb4a06ad7d3c2b74d3e88982",
     "databaseVersion": "0.6.2",
     "dataSchemaVersion": 12,
     "gameBuild": "26.6.53509",
@@ -6830,7 +7092,7 @@
         }
       ],
       "activationChanceFixed": null,
-      "activationGroupId": null,
+      "activationGroupId": "strategic-revival-least-troops-ally",
       "availability": {
         "canonical": "canonical-locked",
         "notes": [
@@ -6869,15 +7131,7 @@
         }
       ],
       "chanceFixed": null,
-      "conditions": [
-        {
-          "description": "Activation chance depends on Habit Level for specific rounds.",
-          "evidenceIds": [],
-          "id": "strategic-revival-recovery-rounds-activation-chance",
-          "label": "Activation chance depends on Habit Level for specific rounds.",
-          "unresolved": false
-        }
-      ],
+      "conditions": [],
       "currentlyAvailable": false,
       "directlyVerified": true,
       "dragonId": "syrax",
@@ -6893,17 +7147,17 @@
       "statusId": "resistance",
       "targetSelector": {
         "comparisonDirection": "lowest",
-        "comparisonPool": null,
+        "comparisonPool": "ally-side",
         "count": 1,
-        "includesCaster": null,
+        "includesCaster": true,
         "position": null,
         "scope": "any-lane",
         "selection": "lowest-resource",
         "selectionResource": "current-troops",
         "selectionStat": null,
-        "sharedSelectionGroupId": null,
+        "sharedSelectionGroupId": "strategic-revival-least-troops-ally",
         "side": "ally",
-        "tieBehavior": null
+        "tieBehavior": "candidate-group"
       },
       "targetSide": "ally",
       "unlockStarRank": 6,
@@ -6955,7 +7209,6 @@
           {
             "activationRoll": null,
             "calculated": false,
-            "casterEligibility": "unknown",
             "conditionalMultipliers": [],
             "conditions": [],
             "directlyVerified": true,
@@ -6984,7 +7237,6 @@
           {
             "activationRoll": null,
             "calculated": false,
-            "casterEligibility": "unknown",
             "conditionalMultipliers": [],
             "conditions": [],
             "directlyVerified": true,
@@ -7013,7 +7265,6 @@
           {
             "activationRoll": null,
             "calculated": false,
-            "casterEligibility": "unknown",
             "conditionalMultipliers": [],
             "conditions": [],
             "directlyVerified": true,
