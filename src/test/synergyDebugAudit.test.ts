@@ -11,6 +11,7 @@ import {
   isAboveThreshold,
   isBelowThreshold,
   resolveOtherAllyTargets,
+  resolveAllyTargets,
   resolveThreeAllyTargets,
   validateFormationAdjacencySymmetry,
 } from '../services/formationRules';
@@ -73,6 +74,9 @@ describe('confirmed formation rules and target normalization', () => {
     const formation = { 'left-flank': 'seasmoke', vanguard: 'malachite', 'right-flank': 'vermax' };
     const malachite = dragons.find((dragon) => dragon.id === 'malachite')!;
     const recovery = malachite.command!.schedules[1]!.effects[0]!;
+    const vhagar = dragons.find((dragon) => dragon.id === 'vhagar')!;
+    const oneAlly = vhagar.habits.find((habit) => habit.id === 'vhagar-battle-leader')!.schedules[0]!.effects[0]!;
+    const oneOtherAlly = malachite.habits.find((habit) => habit.id === 'malachite-lightning-strike')!.schedules[0]!.effects[0]!;
 
     expect(recovery.target).toBe('3 Allies');
     expect(recovery.targetCount).toBe(3);
@@ -83,6 +87,15 @@ describe('confirmed formation rules and target normalization', () => {
       'vermax',
     ]);
     expect(resolveOtherAllyTargets(formation, 'vanguard').map((target) => target.dragonId).sort()).toEqual([
+      'seasmoke',
+      'vermax',
+    ]);
+    expect(resolveAllyTargets({ 'left-flank': 'malachite', vanguard: 'vhagar', 'right-flank': 'vermax' }, 'vanguard', oneAlly).map((target) => target.dragonId)).toEqual([
+      'malachite',
+      'vhagar',
+      'vermax',
+    ]);
+    expect(resolveAllyTargets({ 'left-flank': 'seasmoke', vanguard: 'malachite', 'right-flank': 'vermax' }, 'vanguard', oneOtherAlly).map((target) => target.dragonId)).toEqual([
       'seasmoke',
       'vermax',
     ]);
