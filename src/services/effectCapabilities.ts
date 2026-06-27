@@ -1499,6 +1499,10 @@ function analyzeStatusEffectConditionEnablement(
                 }, options),
               ];
               const dependencyLabel = statusDependencyLabel(dependency);
+              const supplierContext = sourceEffectContext(provider, statusOutput.abilityId, statusOutput.sourceEffectId);
+              const conditionalFacts = conditionalChanceValueFacts(ability, schedule, effect, statusOutput.statusId, dependency, options, dependentDragon.id);
+              const categoryFacts = statusCategoryFacts(statusOutput.statusId, dependency);
+              const supplierFacts = statusSupplierFacts(statusOutput, supplierContext, options);
               traces.push(makeDependencyTrace({
                 id: `status-effect-condition-${statusOutput.id}-${ability.id}-${effect.id}-${dependency.type}-${dependency.statusId ?? dependency.statusCategoryId}`,
                 matchKind: 'status-condition-enablement',
@@ -1509,20 +1513,33 @@ function analyzeStatusEffectConditionEnablement(
                 recipientAbilityId: ability.id,
                 channel: 'status',
                 title: `${statusLabel(statusOutput.statusId)} enables ${ability.name}`,
-                explanation: `${provider.name}'s ${statusOutput.abilityName} can apply ${statusLabel(statusOutput.statusId)}. ${dependentDragon.name}'s ${ability.name} has a verified ${effect.type} condition that depends on the target having ${dependencyLabel}. Target overlap and uptime are not guaranteed.`,
+                explanation: statusConditionExplanation(provider, statusOutput, dependentDragon, {
+                  abilityId: ability.id,
+                  abilityName: ability.name,
+                  channel: 'status',
+                }, dependencyLabel, conditionalFacts, categoryFacts, supplierFacts),
                 requirements,
                 matchedFacts: [
+                  `Receiving source effect ID: ${effect.id}.`,
                   ...dependency.notes,
-                  ...conditionalChanceFacts(effect, statusOutput.statusId, schedule),
+                  ...categoryFacts.facts,
+                  ...conditionalFacts.facts,
+                  ...supplierFacts.facts,
                 ],
-                effects: [`Conditional ${effect.type}: ${dependencyLabel}`],
+                effects: [`Conditional ${effect.type}: ${dependencyLabel}`, ...categoryFacts.effects, ...conditionalFacts.effects, ...supplierFacts.effects],
                 sourceEvidenceIds: statusOutput.evidenceIds,
                 recipientEvidenceIds: ability.evidenceIds,
                 assumptions: [
                   'The status provider and dependent effect must select the same enemy target.',
                   'Target overlap, trigger timing, and exact uptime are not simulated.',
+                  `${statusLabel(statusOutput.statusId)} application success, enemy identity, target overlap, and conditional uptime are unresolved.`,
                 ],
-                unresolvedQuestions: ['Exact target overlap and final conditional uptime are unresolved.'],
+                unresolvedQuestions: uniqueSorted([
+                  'Exact target overlap and final conditional uptime are unresolved.',
+                  ...(effect.activationRoll?.description ? [effect.activationRoll.description] : []),
+                  ...(schedule.activationRoll?.description ? [schedule.activationRoll.description] : []),
+                  'Exact roll sharing, target evaluation order, status check timing, refresh, and stacking remain unresolved.',
+                ]),
                 futureOrConditional: true,
               }));
             }
@@ -1569,7 +1586,7 @@ function analyzeStatusConditionEnablement(
         }
         const context = sourceEffectContext(recipient, output.abilityId, output.sourceEffectId);
         const supplierContext = sourceEffectContext(provider, statusOutput.abilityId, statusOutput.sourceEffectId);
-        const enrichStatusTrace = statusOutput.statusId === 'burn' || Boolean(dependency.statusCategoryId);
+        const enrichStatusTrace = statusOutput.statusId === 'burn' || statusOutput.statusId === 'panic' || Boolean(dependency.statusCategoryId);
         const conditionalFacts = enrichStatusTrace && context
           ? conditionalMultiplierValueFacts(output, context, statusOutput.statusId, dependency, options)
           : { facts: [], effects: [], summary: null };
@@ -2745,7 +2762,7 @@ function statusConditionExplanation(
   provider: Dragon,
   statusOutput: StatusOutputCapability,
   recipient: Dragon,
-  output: OutputCapability,
+  output: Pick<OutputCapability, 'abilityId' | 'abilityName' | 'channel'>,
   dependencyLabel = statusLabel(statusOutput.statusId),
   conditionalFacts: { summary: string | null } = { summary: null },
   categoryFacts: { summary: string | null } = { summary: null },
@@ -2808,6 +2825,8 @@ function conditionalMultiplierValueFacts(
   const enhancedValue = formatValue(enhanced.value, enhanced.unit);
   const channel = channelLabel(output.channel);
   const eligibility = effect.conditions?.find((condition) => condition.kind === 'target-has-output-capability');
+  const targetFact = receivingTargetFact(effect);
+  const targetPhrase = receivingTargetPhrase(effect);
   const requiredLabel = dependency.statusCategoryId ? statusLabel(dependency.statusCategoryId) : statusLabel(statusId);
   const basePrefix = isHabitRankedOutput ? 'Base current' : 'Base';
   const enhancedPrefix = isHabitRankedOutput ? 'Enhanced current' : 'Enhanced';
@@ -2817,6 +2836,7 @@ function conditionalMultiplierValueFacts(
     `${basePrefix} ${channel} Rate: ${baseValue}.`,
     `${enhancedPrefix} ${channel} Rate: ${enhancedValue}.`,
     `Conditional multiplier: ${multiplier.multiplier}x.`,
+    targetFact,
     `Required status ${dependency.statusCategoryId ? 'category' : 'condition'}: ${requiredLabel}.`,
     `${requiredLabel} must be on the same eligible target.`,
     `${requiredLabel} on one enemy does not amplify ${output.abilityName} against a different enemy.`,
@@ -2833,8 +2853,100 @@ function conditionalMultiplierValueFacts(
       `${enhancedPrefix} ${channel} Rate: ${enhancedValue}`,
       `Conditional multiplier: ${multiplier.multiplier}x`,
     ],
-    summary: `On ${scheduleTimingPhrase(schedule)}, ${output.abilityName} deals ${channel} at a ${baseValue} rate. Against the same target while it has ${requiredLabel}, the rate increases ${multiplier.multiplier}x to ${enhancedValue}.`,
+    summary: `On ${scheduleTimingPhrase(schedule)}, ${output.abilityName} deals ${channel} at a ${baseValue} rate${targetPhrase ? ` to ${targetPhrase}` : ''}. Against the same target while it has ${requiredLabel}, the rate increases ${multiplier.multiplier}x to ${enhancedValue}.`,
   };
+}
+
+function conditionalChanceValueFacts(
+  ability: AbilityDefinition,
+  schedule: AbilitySchedule,
+  effect: AbilityEffect,
+  statusId: string,
+  dependency: CapabilityDependency & { type: 'requires-self-status' | 'requires-any-enemy-status' | 'requires-target-status' | 'requires-target-status-category' },
+  options: CapabilityOptions,
+  dragonId: string,
+): { facts: string[]; effects: string[]; summary: string | null } {
+  const condition = [
+    ...(effect.activationRoll?.targetStatusConditionalChances ?? []),
+    ...(schedule.activationRoll?.targetStatusConditionalChances ?? []),
+  ].find((item) =>
+    item.statusId === statusId ||
+    (item.statusCategoryId ? statusMatchesCategory(statusId, item.statusCategoryId) : false),
+  );
+  if (!condition) {
+    return { facts: [], effects: [], summary: null };
+  }
+  const level = ability.kind === 'habit'
+    ? (options.previewMaxRankInteractions ? 5 : effectiveHabitLevelForAbility(dragonId, ability, options))
+    : null;
+  const base = fixedOrRankedChance(
+    effect.activationRoll?.chanceFixed ?? schedule.activationRoll?.chanceFixed ?? schedule.triggerChanceFixed,
+    effect.activationRoll?.chanceByHabitLevel.length
+      ? effect.activationRoll.chanceByHabitLevel
+      : schedule.activationRoll?.chanceByHabitLevel.length
+        ? schedule.activationRoll.chanceByHabitLevel
+        : schedule.triggerChanceByHabitLevel,
+    level,
+  );
+  const enhanced = fixedOrRankedChance(condition.chanceFixed, condition.chanceByHabitLevel, level);
+  if (!base || !enhanced) {
+    return {
+      facts: [`Conditional multiplier: ${condition.multiplier ?? dependency.multiplier ?? 'unknown'}x.`],
+      effects: [`Conditional multiplier: ${condition.multiplier ?? dependency.multiplier ?? 'unknown'}x`],
+      summary: null,
+    };
+  }
+  const requiredLabel = dependency.statusCategoryId ? statusLabel(dependency.statusCategoryId) : statusLabel(statusId);
+  const baseText = formatValue(base.value, base.unit);
+  const enhancedText = formatValue(enhanced.value, enhanced.unit);
+  const multiplier = condition.multiplier ?? dependency.multiplier ?? null;
+  const targetFact = receivingTargetFact(effect);
+  const targetPhrase = receivingTargetPhrase(effect);
+  const vulnerableValue = effect.type === 'Vulnerable' && effect.magnitude !== null
+    ? `Vulnerable value: generic Damage Received +${formatValue(effect.magnitude, effect.unit)}.`
+    : null;
+  const duration = durationDetail(effect);
+  const facts = [
+    ...(level ? [`Current effective ${ability.name} Habit Level: ${level}.`] : []),
+    scheduleTimingDetail(schedule),
+    targetFact,
+    `Base current application chance: ${baseText}.`,
+    `${statusLabel(statusId)}-target application chance: ${enhancedText}.`,
+    `Current application chance: ${baseText} -> ${enhancedText}.`,
+    multiplier ? `Conditional multiplier: ${multiplier}x.` : null,
+    `${requiredLabel} must be on the same eligible target.`,
+    'The conditional chance modifier is target-specific.',
+    `${requiredLabel} on one enemy does not change the chance for another enemy.`,
+    `${requiredLabel} does not alter normal ${ability.name} target eligibility.`,
+    `Applied effect: ${effect.type}.`,
+    vulnerableValue,
+    duration,
+  ].filter((fact): fact is string => Boolean(fact));
+  return {
+    facts,
+    effects: [
+      `Base current application chance: ${baseText}`,
+      `${statusLabel(statusId)}-target application chance: ${enhancedText}`,
+      ...(multiplier ? [`Conditional multiplier: ${multiplier}x`] : []),
+      `Applied effect: ${effect.type}`,
+      ...(vulnerableValue ? [vulnerableValue] : []),
+      ...(duration ? [duration] : []),
+      'Target-specific conditional chance',
+    ],
+    summary: `Each round, ${ability.name} checks ${targetPhrase || effect.target}. At effective Habit Level ${level ?? 'unknown'}, the ${effect.type} application chance is ${baseText} for a normal target and ${enhancedText} for that same target while it has ${requiredLabel}${multiplier ? `, a target-specific ${multiplier}x increase` : ''}. ${effect.type}${effect.type === 'Vulnerable' && effect.magnitude !== null ? ` increases generic Damage Received by ${formatValue(effect.magnitude, effect.unit)}` : ''}${effect.durationRounds ? ` for ${effect.durationRounds} rounds` : ''}.`,
+  };
+}
+
+function fixedOrRankedChance(
+  fixed: number | null | undefined,
+  ranked: RankedValue[],
+  level: 1 | 2 | 3 | 4 | 5 | null,
+): { value: number; unit: RankedValue['unit'] } | null {
+  if (fixed !== null && fixed !== undefined) {
+    return { value: fixed, unit: 'percent' };
+  }
+  const rankedValue = rankedValueForHabitLevel(ranked, level);
+  return rankedValue ? { value: rankedValue.value, unit: rankedValue.unit } : null;
 }
 
 function statusCategoryFacts(
@@ -2874,6 +2986,7 @@ function statusSupplierFacts(
     return { facts: [], effects: [], summary: null };
   }
   const { ability, schedule, effect } = context;
+  const targetEffect = primarySupplierTargetEffect(schedule, effect);
   const level = statusOutput.requiredHabitLevel !== null
     ? (options.previewMaxRankInteractions ? 5 : effectiveHabitLevelForCapability(statusOutput, options))
     : null;
@@ -2882,25 +2995,28 @@ function statusSupplierFacts(
     : rankedValueForHabitLevel(statusOutput.chanceByHabitLevel, level);
   const chanceText = chance ? formatValue(chance.value, chance.unit) : null;
   const timing = scheduleTimingDetail(schedule);
-  const targetCount = effect.targetCount ?? statusOutput.targetSelector.count;
-  const targetText = targetCount === 1 ? 'one enemy' : targetCount ? `${targetCount} enemies` : effect.target;
-  const lane = effect.targetScope ? `Lane scope: ${formatTargetScope(effect.targetScope)}.` : null;
-  const priority = effect.targetPriority === 'prefer-warrior' ? 'Priority: Warriors are prioritized, not guaranteed.' : null;
+  const targetCount = targetEffect.targetCount ?? statusOutput.targetSelector.count;
+  const targetText = targetCount === 1 ? 'one enemy' : targetCount ? `${targetCount} enemies` : targetEffect.target;
+  const lane = targetEffect.targetScope ? `Lane scope: ${formatTargetScope(targetEffect.targetScope)}.` : null;
+  const priority = targetEffect.targetPriority === 'prefer-warrior' ? 'Priority: Warriors are prioritized, not guaranteed.' : null;
   const duration = durationDetail(effect);
   const facts = [
     `Supplied status: ${statusLabel(statusOutput.statusId)}.`,
     timing ? timing.replace(/^Timing:/, 'Activation timing:') : null,
+    level ? `Current effective ${ability.name} Habit Level: ${level}.` : null,
     level ? `Supplier effective Habit Level: ${level}.` : null,
     chanceText ? `Activation chance: ${chanceText}.` : null,
     `Target: ${targetText}.`,
     lane,
-    priority,
+    priority ?? targetPriorityFact(targetEffect),
+    targetFallbackFact(targetEffect),
     duration,
+    sharedTargetFact(ability, effect),
     `${statusLabel(statusOutput.statusId)} application success is unresolved.`,
     'Selected enemy identity is unresolved.',
   ].filter((fact): fact is string => Boolean(fact));
   const summary = chanceText
-    ? `At effective Habit Level ${level ?? 'unknown'}, ${ability.name} has a ${chanceText} chance ${scheduleTimingAdverb(schedule)} to ${statusLabel(statusOutput.statusId)} ${targetText}${effect.targetScope ? ` in ${formatTargetScope(effect.targetScope)}` : ''}${effect.targetPriority === 'prefer-warrior' ? ', prioritizing Warriors' : ''}${effect.durationRounds ? `, for ${effect.durationRounds} rounds` : ''}.`
+    ? `At effective Habit Level ${level ?? 'unknown'}, ${ability.name} has a ${chanceText} chance ${scheduleTimingAdverb(schedule)} to ${statusLabel(statusOutput.statusId)} ${targetText}${targetEffect.targetScope ? ` in ${formatTargetScope(targetEffect.targetScope)}` : ''}${targetEffect.targetPriority === 'prefer-warrior' ? ', prioritizing Warriors' : ''}${effect.durationRounds ? `, for ${effect.durationRounds} rounds` : ''}.`
     : null;
   return {
     facts,
@@ -2909,9 +3025,92 @@ function statusSupplierFacts(
       ...(chanceText ? [`Activation chance: ${chanceText}`] : []),
       ...(duration ? [duration] : []),
       ...(priority ? [priority] : []),
+      ...(targetPriorityFact(targetEffect) ? [targetPriorityFact(targetEffect)!] : []),
+      ...(targetFallbackFact(targetEffect) ? [targetFallbackFact(targetEffect)!] : []),
+      ...(sharedTargetFact(ability, effect) ? [sharedTargetFact(ability, effect)!] : []),
     ],
     summary,
   };
+}
+
+function primarySupplierTargetEffect(schedule: AbilitySchedule, effect: AbilityEffect): AbilityEffect {
+  const sharedGroup = effect.targetSelection?.sharedSelectionGroupId;
+  if (sharedGroup) {
+    const grouped = schedule.effects.find((candidate) =>
+      candidate !== effect &&
+      candidate.targetSelection?.sharedSelectionGroupId === sharedGroup &&
+      (candidate.targetPriority || candidate.targetCount || candidate.targetScope)
+    );
+    if (grouped) {
+      return grouped;
+    }
+  }
+  const referenced = effect.targetSelection?.references?.[0]?.referencedEffectId;
+  if (referenced) {
+    return schedule.effects.find((candidate) => candidate.id === referenced) ?? effect;
+  }
+  return effect;
+}
+
+function effectiveHabitLevelForAbility(
+  dragonId: string,
+  ability: AbilityDefinition,
+  options: CapabilityOptions,
+) {
+  if (ability.kind !== 'habit') {
+    return null;
+  }
+  const observation = dragonObservationSnapshots.find((snapshot) => snapshot.dragonId === dragonId);
+  const rosterEntry = options.roster?.[dragonId];
+  return resolveEffectiveHabitLevel({
+    unlockStarRank: ability.unlockStarRank,
+    starRank: rosterEntry?.starRank ?? observation?.starRank ?? null,
+    savedLevel: rosterEntry?.habitLevels[ability.id],
+  });
+}
+
+function receivingTargetFact(effect: AbilityEffect): string | null {
+  const phrase = receivingTargetPhrase(effect);
+  return phrase ? `Target scope: ${phrase}.` : null;
+}
+
+function receivingTargetPhrase(effect: AbilityEffect): string | null {
+  const count = effect.targetCount ?? null;
+  if (effect.targetScope === 'within-adjacency' && count === 2) {
+    return effect.type === 'Vulnerable' ? 'up to 2 adjacent enemies' : '2 adjacent enemies';
+  }
+  if (effect.targetScope === 'any-lane' && count === 3) {
+    return '3 enemies in any lane';
+  }
+  if (effect.targetScope === 'any-lane' && count === 1) {
+    return 'one enemy in any lane';
+  }
+  return effect.target || null;
+}
+
+function targetPriorityFact(effect: AbilityEffect): string | null {
+  if (effect.targetPriority === 'prefer-right-flank') {
+    return 'Priority: enemy Right Flank is preferred, not guaranteed.';
+  }
+  if (effect.targetPriority === 'prefer-left-flank') {
+    return 'Priority: enemy Left Flank is preferred, not guaranteed.';
+  }
+  if (effect.targetPriority === 'prefer-warrior') {
+    return 'Priority: Warriors are prioritized, not guaranteed.';
+  }
+  return null;
+}
+
+function targetFallbackFact(effect: AbilityEffect): string | null {
+  const fallback = effect.targetSelection?.fallback;
+  return fallback ? `Fallback target: ${fallback}; fallback selection is not guaranteed.` : null;
+}
+
+function sharedTargetFact(ability: AbilityDefinition, effect: AbilityEffect): string | null {
+  if (effect.targetSelection?.sharedSelectionGroupId || effect.targetSelection?.references.length) {
+    return `All ${ability.name} effects share the same selected target when the activation succeeds.`;
+  }
+  return null;
 }
 
 function scheduleTimingPhrase(schedule: AbilitySchedule): string {
@@ -3345,32 +3544,6 @@ function statusDependenciesForEffect(effect: AbilityEffect, schedule: AbilitySch
       notes: [condition.description],
     })),
   ]).filter(isStatusConditionDependency);
-}
-
-function conditionalChanceFacts(effect: AbilityEffect, statusId: string, schedule: AbilitySchedule): string[] {
-  const rollFacts = [
-    ...(effect.activationRoll?.targetStatusConditionalChances ?? []).map((condition) => ({ condition, baseChance: effect.activationRoll?.chanceFixed ?? null })),
-    ...(schedule.activationRoll?.targetStatusConditionalChances ?? []).map((condition) => ({ condition, baseChance: schedule.activationRoll?.chanceFixed ?? null })),
-  ];
-  return [
-    ...rollFacts
-      .filter(({ condition }) => condition.statusId === statusId || (condition.statusCategoryId && statusMatchesCategory(statusId, condition.statusCategoryId)))
-      .map(({ condition, baseChance }) => {
-        const base = baseChance !== null && baseChance !== undefined
-          ? `${baseChance}%`
-          : 'base chance';
-        const enhanced = condition.chanceFixed !== null && condition.chanceFixed !== undefined
-          ? `${condition.chanceFixed}%`
-          : 'conditional chance';
-        const multiplier = condition.multiplier !== null && condition.multiplier !== undefined
-          ? ` (${condition.multiplier}x)`
-          : '';
-        return `Conditional activation chance: ${base} -> ${enhanced}${multiplier}.`;
-      }),
-    ...(effect.conditionalMultipliers ?? [])
-      .filter((multiplier) => multiplier.condition.statusId === statusId)
-      .map((multiplier) => `Conditional multiplier: ${multiplier.multiplier}x.`),
-  ];
 }
 
 function defaultDamageDependencies(effect: AbilityEffect): CapabilityDependency[] {
