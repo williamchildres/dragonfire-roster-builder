@@ -181,6 +181,7 @@ describe('Dragonfire Roster Lab app', () => {
       const positionCard = screen.getByRole('article', { name });
       expect(within(positionCard).getByLabelText(/movement controls/i)).toBeInTheDocument();
       expect(within(positionCard).getByRole('region', { name: 'Command' })).toBeInTheDocument();
+      expect(within(positionCard).getAllByText('Command').length).toBeGreaterThanOrEqual(2);
       expect(within(positionCard).getByRole('region', { name: /trait status/i })).toBeInTheDocument();
       expect(within(positionCard).getByRole('region', { name: /affinities/i })).toBeInTheDocument();
       expect(within(positionCard).getByRole('region', { name: 'Receives' })).toBeInTheDocument();

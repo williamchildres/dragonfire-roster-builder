@@ -197,7 +197,7 @@
       "name": "Calculated Assault",
       "positionRequirement": null,
       "powerByHabitLevel": [],
-      "rawDescription": "Each round: 20% chance to reduce non-Basic Physical Damage Dealt of the enemy with highest Strength for two rounds. Rounds 2, 4, 7, and 9: deal Tactical Damage to the enemy with least troops. At 6+ Stars, Rounds 3, 5, 8, and 10 add Fire Damage to enemies that deal non-Basic Physical Damage, with a Burn-target 1.5x multiplier.",
+      "rawDescription": "Each Round: 20% chance to reduce Physical Damage Dealt, excluding Basic Attacks, by 12% for the enemy with the highest Strength for 2 rounds.\n\nRounds 2, 4, 7, and 9: Deal Tactical Damage to the enemy with the least troops at a 100% Damage Rate.\n\nAt 6+ Stars:\n\nRounds 3, 5, 8, and 10: Deal Fire Damage to all enemies that deal Physical Damage, excluding Basic Attacks, at a 40% Damage Rate. This damage is increased by 1.5x against targets afflicted with Burn, increasing the Damage Rate to 60%.",
       "schedules": [
         {
           "activationRoll": {
@@ -3124,7 +3124,7 @@
     "name": "Calculated Assault",
     "positionRequirement": null,
     "powerByHabitLevel": [],
-    "rawDescription": "Each round: 20% chance to reduce non-Basic Physical Damage Dealt of the enemy with highest Strength for two rounds. Rounds 2, 4, 7, and 9: deal Tactical Damage to the enemy with least troops. At 6+ Stars, Rounds 3, 5, 8, and 10 add Fire Damage to enemies that deal non-Basic Physical Damage, with a Burn-target 1.5x multiplier.",
+    "rawDescription": "Each Round: 20% chance to reduce Physical Damage Dealt, excluding Basic Attacks, by 12% for the enemy with the highest Strength for 2 rounds.\n\nRounds 2, 4, 7, and 9: Deal Tactical Damage to the enemy with the least troops at a 100% Damage Rate.\n\nAt 6+ Stars:\n\nRounds 3, 5, 8, and 10: Deal Fire Damage to all enemies that deal Physical Damage, excluding Basic Attacks, at a 40% Damage Rate. This damage is increased by 1.5x against targets afflicted with Burn, increasing the Damage Rate to 60%.",
     "schedules": [
       {
         "activationRoll": {
@@ -4392,7 +4392,7 @@
   "firstObservedInGame": "2026-06-22",
   "format": "dragonfire-dragon-profile",
   "gameVersion": null,
-  "generatedAt": "2026-06-27T05:47:26.820Z",
+  "generatedAt": "2026-06-27T06:37:07.376Z",
   "habits": [
     {
       "abilityClass": "passive",
@@ -7361,7 +7361,7 @@
       "abilityId": "feskar-calculated-assault",
       "abilityName": "Calculated Assault",
       "kind": "command",
-      "rawDescription": "Each round: 20% chance to reduce non-Basic Physical Damage Dealt of the enemy with highest Strength for two rounds. Rounds 2, 4, 7, and 9: deal Tactical Damage to the enemy with least troops. At 6+ Stars, Rounds 3, 5, 8, and 10 add Fire Damage to enemies that deal non-Basic Physical Damage, with a Burn-target 1.5x multiplier."
+      "rawDescription": "Each Round: 20% chance to reduce Physical Damage Dealt, excluding Basic Attacks, by 12% for the enemy with the highest Strength for 2 rounds.\n\nRounds 2, 4, 7, and 9: Deal Tactical Damage to the enemy with the least troops at a 100% Damage Rate.\n\nAt 6+ Stars:\n\nRounds 3, 5, 8, and 10: Deal Fire Damage to all enemies that deal Physical Damage, excluding Basic Attacks, at a 40% Damage Rate. This damage is increased by 1.5x against targets afflicted with Burn, increasing the Damage Rate to 60%."
     },
     {
       "abilityId": "feskar-champions-brilliance",
@@ -7404,8 +7404,8 @@
   "rosterSourceStatus": "in-game-verified-pending-official-site",
   "slug": "feskar",
   "source": {
-    "branch": "fix/deduplicate-analysis-summary-sentences",
-    "commit": "45b1108af78dffd8f3e1efd44dc49ef5d843c23a",
+    "branch": "fix/command-source-text-and-summaries",
+    "commit": "95b04abf8425dec17be170f4b6b3aba1bd124985",
     "databaseVersion": "0.6.2",
     "dataSchemaVersion": 12,
     "gameBuild": "26.6.53509",

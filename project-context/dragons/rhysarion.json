@@ -115,7 +115,7 @@
       "name": "Dawnsong",
       "positionRequirement": null,
       "powerByHabitLevel": [],
-      "rawDescription": "Rounds 1, 4, and 7: Physical Damage to 2 adjacent enemies. Rounds 2, 5, and 8: Fire Damage to 3 enemies; per target, Control affliction increases damage by 1.5x. At 6+ Stars, also apply Recovery to 2 other Allies.",
+      "rawDescription": "Rounds 1, 4, and 7: Deal Physical Damage to 2 enemies within adjacency at a 70% Damage Rate.\n\nRounds 2, 5, and 8: Deal Fire Damage to 3 enemies in any lane at a 20% Damage Rate. This damage is increased by 1.5x if the target is afflicted with a Control effect, increasing the Damage Rate to 30%. Control effects include Stun, Stagger, Overwhelm, and Confusion.\n\nAt 6+ Stars:\n\nRounds 2, 5, and 8: Apply Recovery to 2 other Allies in any lane at a 60% Recovery Rate, enhanced by Intelligence.",
       "schedules": [
         {
           "activationRoll": null,
@@ -2565,7 +2565,7 @@
     "name": "Dawnsong",
     "positionRequirement": null,
     "powerByHabitLevel": [],
-    "rawDescription": "Rounds 1, 4, and 7: Physical Damage to 2 adjacent enemies. Rounds 2, 5, and 8: Fire Damage to 3 enemies; per target, Control affliction increases damage by 1.5x. At 6+ Stars, also apply Recovery to 2 other Allies.",
+    "rawDescription": "Rounds 1, 4, and 7: Deal Physical Damage to 2 enemies within adjacency at a 70% Damage Rate.\n\nRounds 2, 5, and 8: Deal Fire Damage to 3 enemies in any lane at a 20% Damage Rate. This damage is increased by 1.5x if the target is afflicted with a Control effect, increasing the Damage Rate to 30%. Control effects include Stun, Stagger, Overwhelm, and Confusion.\n\nAt 6+ Stars:\n\nRounds 2, 5, and 8: Apply Recovery to 2 other Allies in any lane at a 60% Recovery Rate, enhanced by Intelligence.",
     "schedules": [
       {
         "activationRoll": null,
@@ -3678,7 +3678,7 @@
   "firstObservedInGame": "2026-06-22",
   "format": "dragonfire-dragon-profile",
   "gameVersion": null,
-  "generatedAt": "2026-06-27T05:47:26.820Z",
+  "generatedAt": "2026-06-27T06:37:07.376Z",
   "habits": [
     {
       "abilityClass": "passive",
@@ -6430,7 +6430,7 @@
       "abilityId": "rhysarion-dawnsong",
       "abilityName": "Dawnsong",
       "kind": "command",
-      "rawDescription": "Rounds 1, 4, and 7: Physical Damage to 2 adjacent enemies. Rounds 2, 5, and 8: Fire Damage to 3 enemies; per target, Control affliction increases damage by 1.5x. At 6+ Stars, also apply Recovery to 2 other Allies."
+      "rawDescription": "Rounds 1, 4, and 7: Deal Physical Damage to 2 enemies within adjacency at a 70% Damage Rate.\n\nRounds 2, 5, and 8: Deal Fire Damage to 3 enemies in any lane at a 20% Damage Rate. This damage is increased by 1.5x if the target is afflicted with a Control effect, increasing the Damage Rate to 30%. Control effects include Stun, Stagger, Overwhelm, and Confusion.\n\nAt 6+ Stars:\n\nRounds 2, 5, and 8: Apply Recovery to 2 other Allies in any lane at a 60% Recovery Rate, enhanced by Intelligence."
     },
     {
       "abilityId": "rhysarion-champions-vigor",
@@ -6473,8 +6473,8 @@
   "rosterSourceStatus": "in-game-verified-pending-official-site",
   "slug": "rhysarion",
   "source": {
-    "branch": "fix/deduplicate-analysis-summary-sentences",
-    "commit": "45b1108af78dffd8f3e1efd44dc49ef5d843c23a",
+    "branch": "fix/command-source-text-and-summaries",
+    "commit": "95b04abf8425dec17be170f4b6b3aba1bd124985",
     "databaseVersion": "0.6.2",
     "dataSchemaVersion": 12,
     "gameBuild": "26.6.53509",
