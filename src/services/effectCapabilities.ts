@@ -3243,14 +3243,43 @@ function statusConditionExplanation(
     return `${provider.name} can apply Slow. ${recipient.name}'s Strategic Revival multiplies Recovery by 1.5x if any enemy has Slow. Activation, unlock state, and timing are conditional.`;
   }
   if (conditionalFacts.summary) {
-    return [
+    return composeSummarySentences(
       `${provider.name} can apply ${statusLabel(statusOutput.statusId)}${categoryFacts.summary ? `, ${categoryFacts.summary}` : ''}.`,
       conditionalFacts.summary,
       supplierFacts.summary,
       `${statusLabel(statusOutput.statusId)} application and target overlap are not guaranteed.`,
-    ].filter(Boolean).join(' ');
+    );
   }
   return `${provider.name} can apply ${statusLabel(statusOutput.statusId)}. ${recipient.name}'s ${output.abilityName} has a verified condition depending on ${dependencyLabel}.`;
+}
+
+function composeSummarySentences(...segments: Array<string | null | undefined>): string {
+  const sentences: string[] = [];
+  for (const segment of segments) {
+    if (!segment) {
+      continue;
+    }
+    for (const sentence of splitSummarySentences(segment)) {
+      const normalized = normalizeSummarySentence(sentence);
+      if (!normalized) {
+        continue;
+      }
+      const previous = sentences[sentences.length - 1];
+      if (previous && normalizeSummarySentence(previous) === normalized) {
+        continue;
+      }
+      sentences.push(sentence.trim());
+    }
+  }
+  return sentences.join(' ');
+}
+
+function splitSummarySentences(value: string): string[] {
+  return value.split(/(?<=\.)\s+/).map((sentence) => sentence.trim()).filter(Boolean);
+}
+
+function normalizeSummarySentence(value: string): string {
+  return value.replace(/\s+/g, ' ').trim().toLowerCase();
 }
 
 function conditionalMultiplierValueFacts(
