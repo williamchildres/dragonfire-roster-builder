@@ -83,7 +83,25 @@
               "targetCount": null,
               "targetPriority": "any-eligible",
               "targetScope": "any-lane",
-              "targetSelection": null,
+              "targetSelection": {
+                "comparisonDirection": null,
+                "comparisonPool": null,
+                "comparisonStat": null,
+                "distinctness": "same-target-required",
+                "fallback": null,
+                "preference": null,
+                "references": [
+                  {
+                    "description": "Savage Claim Fire Damage targets Sheepstealer's current Prey.",
+                    "id": "sheepstealer-current-prey",
+                    "kind": "persistent-selected-target",
+                    "referencedEffectId": "wild-hunt-prey"
+                  }
+                ],
+                "repeatedInstances": null,
+                "sharedSelectionGroupId": null,
+                "tieBehavior": null
+              },
               "type": "Fire Damage",
               "unit": "rate"
             },
@@ -280,7 +298,25 @@
                   "targetCount": null,
                   "targetPriority": "any-eligible",
                   "targetScope": "any-lane",
-                  "targetSelection": null,
+                  "targetSelection": {
+                    "comparisonDirection": null,
+                    "comparisonPool": null,
+                    "comparisonStat": null,
+                    "distinctness": "same-target-required",
+                    "fallback": null,
+                    "preference": null,
+                    "references": [
+                      {
+                        "description": "Savage Claim Fire Damage targets Sheepstealer's current Prey.",
+                        "id": "sheepstealer-current-prey",
+                        "kind": "persistent-selected-target",
+                        "referencedEffectId": "wild-hunt-prey"
+                      }
+                    ],
+                    "repeatedInstances": null,
+                    "sharedSelectionGroupId": null,
+                    "tieBehavior": null
+                  },
                   "type": "Fire Damage",
                   "unit": "rate"
                 },
@@ -455,7 +491,25 @@
               "targetCount": null,
               "targetPriority": "prefer-received-recovery-last-round",
               "targetScope": "any-lane",
-              "targetSelection": null,
+              "targetSelection": {
+                "comparisonDirection": null,
+                "comparisonPool": null,
+                "comparisonStat": null,
+                "distinctness": "same-target-required",
+                "fallback": null,
+                "preference": null,
+                "references": [
+                  {
+                    "description": "Wild Hunt establishes Sheepstealer's current Prey when none currently exists.",
+                    "id": "sheepstealer-current-prey",
+                    "kind": "persistent-selected-target",
+                    "referencedEffectId": null
+                  }
+                ],
+                "repeatedInstances": null,
+                "sharedSelectionGroupId": "sheepstealer-current-prey",
+                "tieBehavior": null
+              },
               "type": "Prey",
               "unit": "percent"
             }
@@ -526,7 +580,25 @@
               "targetCount": null,
               "targetPriority": "any-eligible",
               "targetScope": "any-lane",
-              "targetSelection": null,
+              "targetSelection": {
+                "comparisonDirection": null,
+                "comparisonPool": null,
+                "comparisonStat": null,
+                "distinctness": "unknown",
+                "fallback": null,
+                "preference": null,
+                "references": [
+                  {
+                    "description": "Wild Hunt priority and doubled damage refer to Sheepstealer's current Prey.",
+                    "id": "sheepstealer-current-prey",
+                    "kind": "persistent-selected-target",
+                    "referencedEffectId": "wild-hunt-prey"
+                  }
+                ],
+                "repeatedInstances": null,
+                "sharedSelectionGroupId": "sheepstealer-current-prey",
+                "tieBehavior": null
+              },
               "type": "Fire Damage",
               "unit": "rate"
             }
@@ -1307,7 +1379,25 @@
               "targetCount": null,
               "targetPriority": "any-eligible",
               "targetScope": "any-lane",
-              "targetSelection": null,
+              "targetSelection": {
+                "comparisonDirection": null,
+                "comparisonPool": null,
+                "comparisonStat": null,
+                "distinctness": "same-target-required",
+                "fallback": null,
+                "preference": null,
+                "references": [
+                  {
+                    "description": "Baited Kill targets Sheepstealer's current Prey.",
+                    "id": "sheepstealer-current-prey",
+                    "kind": "persistent-selected-target",
+                    "referencedEffectId": "wild-hunt-prey"
+                  }
+                ],
+                "repeatedInstances": null,
+                "sharedSelectionGroupId": "sheepstealer-current-prey",
+                "tieBehavior": null
+              },
               "type": "Vulnerable",
               "unit": "percent"
             }
@@ -1355,14 +1445,28 @@
           "conditions": [
             {
               "battleContext": null,
+              "comparison": null,
+              "description": "Target is Sheepstealer Prey.",
+              "id": "target-is-prey",
+              "kind": "target-has-status",
+              "qualifyingOutput": null,
+              "sourceEffectId": null,
+              "statusCategoryId": null,
+              "statusId": "prey",
+              "subject": "target",
+              "thresholdPercent": null,
+              "unresolved": false
+            },
+            {
+              "battleContext": null,
               "comparison": "above",
-              "description": "Target is above 50% Troop Capacity.",
-              "id": "target-above-50-troop-capacity",
+              "description": "Current Prey is above 50% Troop Capacity.",
+              "id": "current-prey-above-50-troop-capacity",
               "kind": "target-above-troop-capacity-threshold",
               "qualifyingOutput": null,
               "sourceEffectId": null,
               "statusCategoryId": null,
-              "statusId": null,
+              "statusId": "prey",
               "subject": "target",
               "thresholdPercent": 50,
               "unresolved": false
@@ -1512,14 +1616,28 @@
           "conditions": [
             {
               "battleContext": null,
+              "comparison": null,
+              "description": "Target is Sheepstealer Prey.",
+              "id": "target-is-prey",
+              "kind": "target-has-status",
+              "qualifyingOutput": null,
+              "sourceEffectId": null,
+              "statusCategoryId": null,
+              "statusId": "prey",
+              "subject": "target",
+              "thresholdPercent": null,
+              "unresolved": false
+            },
+            {
+              "battleContext": null,
               "comparison": "above",
-              "description": "Target is above 50% Troop Capacity.",
-              "id": "target-above-50-troop-capacity",
+              "description": "Current Prey is above 50% Troop Capacity.",
+              "id": "current-prey-above-50-troop-capacity",
               "kind": "target-above-troop-capacity-threshold",
               "qualifyingOutput": null,
               "sourceEffectId": null,
               "statusCategoryId": null,
-              "statusId": null,
+              "statusId": "prey",
               "subject": "target",
               "thresholdPercent": 50,
               "unresolved": false
@@ -1818,7 +1936,25 @@
               "targetCount": null,
               "targetPriority": "any-eligible",
               "targetScope": "any-lane",
-              "targetSelection": null,
+              "targetSelection": {
+                "comparisonDirection": null,
+                "comparisonPool": null,
+                "comparisonStat": null,
+                "distinctness": "same-target-required",
+                "fallback": null,
+                "preference": null,
+                "references": [
+                  {
+                    "description": "Savage Claim Fire Damage targets Sheepstealer's current Prey.",
+                    "id": "sheepstealer-current-prey",
+                    "kind": "persistent-selected-target",
+                    "referencedEffectId": "wild-hunt-prey"
+                  }
+                ],
+                "repeatedInstances": null,
+                "sharedSelectionGroupId": null,
+                "tieBehavior": null
+              },
               "type": "Fire Damage",
               "unit": "rate"
             },
@@ -1995,7 +2131,25 @@
             "targetCount": null,
             "targetPriority": "prefer-received-recovery-last-round",
             "targetScope": "any-lane",
-            "targetSelection": null,
+            "targetSelection": {
+              "comparisonDirection": null,
+              "comparisonPool": null,
+              "comparisonStat": null,
+              "distinctness": "same-target-required",
+              "fallback": null,
+              "preference": null,
+              "references": [
+                {
+                  "description": "Wild Hunt establishes Sheepstealer's current Prey when none currently exists.",
+                  "id": "sheepstealer-current-prey",
+                  "kind": "persistent-selected-target",
+                  "referencedEffectId": null
+                }
+              ],
+              "repeatedInstances": null,
+              "sharedSelectionGroupId": "sheepstealer-current-prey",
+              "tieBehavior": null
+            },
             "type": "Prey",
             "unit": "percent"
           }
@@ -2070,7 +2224,25 @@
             "targetCount": null,
             "targetPriority": "any-eligible",
             "targetScope": "any-lane",
-            "targetSelection": null,
+            "targetSelection": {
+              "comparisonDirection": null,
+              "comparisonPool": null,
+              "comparisonStat": null,
+              "distinctness": "unknown",
+              "fallback": null,
+              "preference": null,
+              "references": [
+                {
+                  "description": "Wild Hunt priority and doubled damage refer to Sheepstealer's current Prey.",
+                  "id": "sheepstealer-current-prey",
+                  "kind": "persistent-selected-target",
+                  "referencedEffectId": "wild-hunt-prey"
+                }
+              ],
+              "repeatedInstances": null,
+              "sharedSelectionGroupId": "sheepstealer-current-prey",
+              "tieBehavior": null
+            },
             "type": "Fire Damage",
             "unit": "rate"
           }
@@ -2668,7 +2840,25 @@
             "targetCount": null,
             "targetPriority": "any-eligible",
             "targetScope": "any-lane",
-            "targetSelection": null,
+            "targetSelection": {
+              "comparisonDirection": null,
+              "comparisonPool": null,
+              "comparisonStat": null,
+              "distinctness": "same-target-required",
+              "fallback": null,
+              "preference": null,
+              "references": [
+                {
+                  "description": "Baited Kill targets Sheepstealer's current Prey.",
+                  "id": "sheepstealer-current-prey",
+                  "kind": "persistent-selected-target",
+                  "referencedEffectId": "wild-hunt-prey"
+                }
+              ],
+              "repeatedInstances": null,
+              "sharedSelectionGroupId": "sheepstealer-current-prey",
+              "tieBehavior": null
+            },
             "type": "Vulnerable",
             "unit": "percent"
           }
@@ -2720,14 +2910,28 @@
         "conditions": [
           {
             "battleContext": null,
+            "comparison": null,
+            "description": "Target is Sheepstealer Prey.",
+            "id": "target-is-prey",
+            "kind": "target-has-status",
+            "qualifyingOutput": null,
+            "sourceEffectId": null,
+            "statusCategoryId": null,
+            "statusId": "prey",
+            "subject": "target",
+            "thresholdPercent": null,
+            "unresolved": false
+          },
+          {
+            "battleContext": null,
             "comparison": "above",
-            "description": "Target is above 50% Troop Capacity.",
-            "id": "target-above-50-troop-capacity",
+            "description": "Current Prey is above 50% Troop Capacity.",
+            "id": "current-prey-above-50-troop-capacity",
             "kind": "target-above-troop-capacity-threshold",
             "qualifyingOutput": null,
             "sourceEffectId": null,
             "statusCategoryId": null,
-            "statusId": null,
+            "statusId": "prey",
             "subject": "target",
             "thresholdPercent": 50,
             "unresolved": false
@@ -2824,14 +3028,28 @@
         "conditions": [
           {
             "battleContext": null,
+            "comparison": null,
+            "description": "Target is Sheepstealer Prey.",
+            "id": "target-is-prey",
+            "kind": "target-has-status",
+            "qualifyingOutput": null,
+            "sourceEffectId": null,
+            "statusCategoryId": null,
+            "statusId": "prey",
+            "subject": "target",
+            "thresholdPercent": null,
+            "unresolved": false
+          },
+          {
+            "battleContext": null,
             "comparison": "above",
-            "description": "Target is above 50% Troop Capacity.",
-            "id": "target-above-50-troop-capacity",
+            "description": "Current Prey is above 50% Troop Capacity.",
+            "id": "current-prey-above-50-troop-capacity",
             "kind": "target-above-troop-capacity-threshold",
             "qualifyingOutput": null,
             "sourceEffectId": null,
             "statusCategoryId": null,
-            "statusId": null,
+            "statusId": "prey",
             "subject": "target",
             "thresholdPercent": 50,
             "unresolved": false
@@ -3081,7 +3299,25 @@
             "targetCount": null,
             "targetPriority": "any-eligible",
             "targetScope": "any-lane",
-            "targetSelection": null,
+            "targetSelection": {
+              "comparisonDirection": null,
+              "comparisonPool": null,
+              "comparisonStat": null,
+              "distinctness": "same-target-required",
+              "fallback": null,
+              "preference": null,
+              "references": [
+                {
+                  "description": "Savage Claim Fire Damage targets Sheepstealer's current Prey.",
+                  "id": "sheepstealer-current-prey",
+                  "kind": "persistent-selected-target",
+                  "referencedEffectId": "wild-hunt-prey"
+                }
+              ],
+              "repeatedInstances": null,
+              "sharedSelectionGroupId": null,
+              "tieBehavior": null
+            },
             "type": "Fire Damage",
             "unit": "rate"
           },
@@ -3317,7 +3553,25 @@
             "targetCount": null,
             "targetPriority": "any-eligible",
             "targetScope": "any-lane",
-            "targetSelection": null,
+            "targetSelection": {
+              "comparisonDirection": null,
+              "comparisonPool": null,
+              "comparisonStat": null,
+              "distinctness": "same-target-required",
+              "fallback": null,
+              "preference": null,
+              "references": [
+                {
+                  "description": "Savage Claim Fire Damage targets Sheepstealer's current Prey.",
+                  "id": "sheepstealer-current-prey",
+                  "kind": "persistent-selected-target",
+                  "referencedEffectId": "wild-hunt-prey"
+                }
+              ],
+              "repeatedInstances": null,
+              "sharedSelectionGroupId": null,
+              "tieBehavior": null
+            },
             "type": "Fire Damage",
             "unit": "rate"
           },
@@ -3514,7 +3768,25 @@
                 "targetCount": null,
                 "targetPriority": "any-eligible",
                 "targetScope": "any-lane",
-                "targetSelection": null,
+                "targetSelection": {
+                  "comparisonDirection": null,
+                  "comparisonPool": null,
+                  "comparisonStat": null,
+                  "distinctness": "same-target-required",
+                  "fallback": null,
+                  "preference": null,
+                  "references": [
+                    {
+                      "description": "Savage Claim Fire Damage targets Sheepstealer's current Prey.",
+                      "id": "sheepstealer-current-prey",
+                      "kind": "persistent-selected-target",
+                      "referencedEffectId": "wild-hunt-prey"
+                    }
+                  ],
+                  "repeatedInstances": null,
+                  "sharedSelectionGroupId": null,
+                  "tieBehavior": null
+                },
                 "type": "Fire Damage",
                 "unit": "rate"
               },
@@ -3689,7 +3961,25 @@
             "targetCount": null,
             "targetPriority": "prefer-received-recovery-last-round",
             "targetScope": "any-lane",
-            "targetSelection": null,
+            "targetSelection": {
+              "comparisonDirection": null,
+              "comparisonPool": null,
+              "comparisonStat": null,
+              "distinctness": "same-target-required",
+              "fallback": null,
+              "preference": null,
+              "references": [
+                {
+                  "description": "Wild Hunt establishes Sheepstealer's current Prey when none currently exists.",
+                  "id": "sheepstealer-current-prey",
+                  "kind": "persistent-selected-target",
+                  "referencedEffectId": null
+                }
+              ],
+              "repeatedInstances": null,
+              "sharedSelectionGroupId": "sheepstealer-current-prey",
+              "tieBehavior": null
+            },
             "type": "Prey",
             "unit": "percent"
           }
@@ -3760,7 +4050,25 @@
             "targetCount": null,
             "targetPriority": "any-eligible",
             "targetScope": "any-lane",
-            "targetSelection": null,
+            "targetSelection": {
+              "comparisonDirection": null,
+              "comparisonPool": null,
+              "comparisonStat": null,
+              "distinctness": "unknown",
+              "fallback": null,
+              "preference": null,
+              "references": [
+                {
+                  "description": "Wild Hunt priority and doubled damage refer to Sheepstealer's current Prey.",
+                  "id": "sheepstealer-current-prey",
+                  "kind": "persistent-selected-target",
+                  "referencedEffectId": "wild-hunt-prey"
+                }
+              ],
+              "repeatedInstances": null,
+              "sharedSelectionGroupId": "sheepstealer-current-prey",
+              "tieBehavior": null
+            },
             "type": "Fire Damage",
             "unit": "rate"
           }
@@ -3899,7 +4207,25 @@
         "targetCount": null,
         "targetPriority": "prefer-received-recovery-last-round",
         "targetScope": "any-lane",
-        "targetSelection": null,
+        "targetSelection": {
+          "comparisonDirection": null,
+          "comparisonPool": null,
+          "comparisonStat": null,
+          "distinctness": "same-target-required",
+          "fallback": null,
+          "preference": null,
+          "references": [
+            {
+              "description": "Wild Hunt establishes Sheepstealer's current Prey when none currently exists.",
+              "id": "sheepstealer-current-prey",
+              "kind": "persistent-selected-target",
+              "referencedEffectId": null
+            }
+          ],
+          "repeatedInstances": null,
+          "sharedSelectionGroupId": "sheepstealer-current-prey",
+          "tieBehavior": null
+        },
         "type": "Prey",
         "unit": "percent"
       },
@@ -3957,7 +4283,25 @@
         "targetCount": null,
         "targetPriority": "any-eligible",
         "targetScope": "any-lane",
-        "targetSelection": null,
+        "targetSelection": {
+          "comparisonDirection": null,
+          "comparisonPool": null,
+          "comparisonStat": null,
+          "distinctness": "unknown",
+          "fallback": null,
+          "preference": null,
+          "references": [
+            {
+              "description": "Wild Hunt priority and doubled damage refer to Sheepstealer's current Prey.",
+              "id": "sheepstealer-current-prey",
+              "kind": "persistent-selected-target",
+              "referencedEffectId": "wild-hunt-prey"
+            }
+          ],
+          "repeatedInstances": null,
+          "sharedSelectionGroupId": "sheepstealer-current-prey",
+          "tieBehavior": null
+        },
         "type": "Fire Damage",
         "unit": "rate"
       },
@@ -4415,7 +4759,25 @@
         "targetCount": null,
         "targetPriority": "any-eligible",
         "targetScope": "any-lane",
-        "targetSelection": null,
+        "targetSelection": {
+          "comparisonDirection": null,
+          "comparisonPool": null,
+          "comparisonStat": null,
+          "distinctness": "same-target-required",
+          "fallback": null,
+          "preference": null,
+          "references": [
+            {
+              "description": "Baited Kill targets Sheepstealer's current Prey.",
+              "id": "sheepstealer-current-prey",
+              "kind": "persistent-selected-target",
+              "referencedEffectId": "wild-hunt-prey"
+            }
+          ],
+          "repeatedInstances": null,
+          "sharedSelectionGroupId": "sheepstealer-current-prey",
+          "tieBehavior": null
+        },
         "type": "Vulnerable",
         "unit": "percent"
       },
@@ -4649,7 +5011,25 @@
         "targetCount": null,
         "targetPriority": "any-eligible",
         "targetScope": "any-lane",
-        "targetSelection": null,
+        "targetSelection": {
+          "comparisonDirection": null,
+          "comparisonPool": null,
+          "comparisonStat": null,
+          "distinctness": "same-target-required",
+          "fallback": null,
+          "preference": null,
+          "references": [
+            {
+              "description": "Savage Claim Fire Damage targets Sheepstealer's current Prey.",
+              "id": "sheepstealer-current-prey",
+              "kind": "persistent-selected-target",
+              "referencedEffectId": "wild-hunt-prey"
+            }
+          ],
+          "repeatedInstances": null,
+          "sharedSelectionGroupId": null,
+          "tieBehavior": null
+        },
         "type": "Fire Damage",
         "unit": "rate"
       },
@@ -4881,7 +5261,7 @@
   "firstObservedInGame": "2026-06-22",
   "format": "dragonfire-dragon-profile",
   "gameVersion": null,
-  "generatedAt": "2026-06-27T21:06:45.880Z",
+  "generatedAt": "2026-06-27T21:44:55.689Z",
   "habits": [
     {
       "abilityClass": "passive",
@@ -5494,7 +5874,25 @@
               "targetCount": null,
               "targetPriority": "any-eligible",
               "targetScope": "any-lane",
-              "targetSelection": null,
+              "targetSelection": {
+                "comparisonDirection": null,
+                "comparisonPool": null,
+                "comparisonStat": null,
+                "distinctness": "same-target-required",
+                "fallback": null,
+                "preference": null,
+                "references": [
+                  {
+                    "description": "Baited Kill targets Sheepstealer's current Prey.",
+                    "id": "sheepstealer-current-prey",
+                    "kind": "persistent-selected-target",
+                    "referencedEffectId": "wild-hunt-prey"
+                  }
+                ],
+                "repeatedInstances": null,
+                "sharedSelectionGroupId": "sheepstealer-current-prey",
+                "tieBehavior": null
+              },
               "type": "Vulnerable",
               "unit": "percent"
             }
@@ -5542,14 +5940,28 @@
           "conditions": [
             {
               "battleContext": null,
+              "comparison": null,
+              "description": "Target is Sheepstealer Prey.",
+              "id": "target-is-prey",
+              "kind": "target-has-status",
+              "qualifyingOutput": null,
+              "sourceEffectId": null,
+              "statusCategoryId": null,
+              "statusId": "prey",
+              "subject": "target",
+              "thresholdPercent": null,
+              "unresolved": false
+            },
+            {
+              "battleContext": null,
               "comparison": "above",
-              "description": "Target is above 50% Troop Capacity.",
-              "id": "target-above-50-troop-capacity",
+              "description": "Current Prey is above 50% Troop Capacity.",
+              "id": "current-prey-above-50-troop-capacity",
               "kind": "target-above-troop-capacity-threshold",
               "qualifyingOutput": null,
               "sourceEffectId": null,
               "statusCategoryId": null,
-              "statusId": null,
+              "statusId": "prey",
               "subject": "target",
               "thresholdPercent": 50,
               "unresolved": false
@@ -5699,14 +6111,28 @@
           "conditions": [
             {
               "battleContext": null,
+              "comparison": null,
+              "description": "Target is Sheepstealer Prey.",
+              "id": "target-is-prey",
+              "kind": "target-has-status",
+              "qualifyingOutput": null,
+              "sourceEffectId": null,
+              "statusCategoryId": null,
+              "statusId": "prey",
+              "subject": "target",
+              "thresholdPercent": null,
+              "unresolved": false
+            },
+            {
+              "battleContext": null,
               "comparison": "above",
-              "description": "Target is above 50% Troop Capacity.",
-              "id": "target-above-50-troop-capacity",
+              "description": "Current Prey is above 50% Troop Capacity.",
+              "id": "current-prey-above-50-troop-capacity",
               "kind": "target-above-troop-capacity-threshold",
               "qualifyingOutput": null,
               "sourceEffectId": null,
               "statusCategoryId": null,
-              "statusId": null,
+              "statusId": "prey",
               "subject": "target",
               "thresholdPercent": 50,
               "unresolved": false
@@ -6005,7 +6431,25 @@
               "targetCount": null,
               "targetPriority": "any-eligible",
               "targetScope": "any-lane",
-              "targetSelection": null,
+              "targetSelection": {
+                "comparisonDirection": null,
+                "comparisonPool": null,
+                "comparisonStat": null,
+                "distinctness": "same-target-required",
+                "fallback": null,
+                "preference": null,
+                "references": [
+                  {
+                    "description": "Savage Claim Fire Damage targets Sheepstealer's current Prey.",
+                    "id": "sheepstealer-current-prey",
+                    "kind": "persistent-selected-target",
+                    "referencedEffectId": "wild-hunt-prey"
+                  }
+                ],
+                "repeatedInstances": null,
+                "sharedSelectionGroupId": null,
+                "tieBehavior": null
+              },
               "type": "Fire Damage",
               "unit": "rate"
             },
@@ -6563,7 +7007,33 @@
       "minimumDragonLevel": null,
       "operation": "increase",
       "providerRequirements": [],
-      "rankedValues": [],
+      "rankedValues": [
+        {
+          "level": 1,
+          "unit": "percent",
+          "value": 3
+        },
+        {
+          "level": 2,
+          "unit": "percent",
+          "value": 3.6
+        },
+        {
+          "level": 3,
+          "unit": "percent",
+          "value": 4.2
+        },
+        {
+          "level": 4,
+          "unit": "percent",
+          "value": 5.1
+        },
+        {
+          "level": 5,
+          "unit": "percent",
+          "value": 6
+        }
+      ],
       "recipientRequirements": [],
       "requiredHabitLevel": 1,
       "role": "self-amplification",
@@ -6587,8 +7057,8 @@
       },
       "unit": "stack",
       "unlockStarRank": 2,
-      "value": null,
-      "valuePerStack": null
+      "value": 3,
+      "valuePerStack": 3
     },
     {
       "abilityId": "sheepstealer-stolen-flock",
@@ -6626,7 +7096,33 @@
       "minimumDragonLevel": null,
       "operation": "increase",
       "providerRequirements": [],
-      "rankedValues": [],
+      "rankedValues": [
+        {
+          "level": 1,
+          "unit": "percent",
+          "value": 3
+        },
+        {
+          "level": 2,
+          "unit": "percent",
+          "value": 3.6
+        },
+        {
+          "level": 3,
+          "unit": "percent",
+          "value": 4.2
+        },
+        {
+          "level": 4,
+          "unit": "percent",
+          "value": 5.1
+        },
+        {
+          "level": 5,
+          "unit": "percent",
+          "value": 6
+        }
+      ],
       "recipientRequirements": [],
       "requiredHabitLevel": 1,
       "role": "self-amplification",
@@ -6650,8 +7146,8 @@
       },
       "unit": "stack",
       "unlockStarRank": 2,
-      "value": null,
-      "valuePerStack": null
+      "value": 3,
+      "valuePerStack": 3
     },
     {
       "abilityId": "sheepstealer-dragons-cunning",
@@ -7838,8 +8334,8 @@
   "rosterSourceStatus": "in-game-verified-pending-official-site",
   "slug": "sheepstealer",
   "source": {
-    "branch": "main",
-    "commit": "86f3ebafd01bf3df79ea9591df57f3974f99d6f7",
+    "branch": "fix/mechanic-reference-analysis-integrity",
+    "commit": "d15aad00735449f126b843811a1d0a1981989c0f",
     "databaseVersion": "0.6.2",
     "dataSchemaVersion": 12,
     "gameBuild": "26.6.53509",
@@ -7858,7 +8354,7 @@
       "abilityName": "Wild Hunt",
       "activationChanceByHabitLevel": [],
       "activationChanceFixed": 40,
-      "activationGroupId": null,
+      "activationGroupId": "sheepstealer-current-prey",
       "availability": {
         "canonical": "canonical-base",
         "notes": [
@@ -7904,7 +8400,7 @@
         "selection": "any",
         "selectionResource": null,
         "selectionStat": null,
-        "sharedSelectionGroupId": null,
+        "sharedSelectionGroupId": "sheepstealer-current-prey",
         "side": "enemy",
         "tieBehavior": null
       },
@@ -8054,7 +8550,7 @@
         }
       ],
       "activationChanceFixed": null,
-      "activationGroupId": null,
+      "activationGroupId": "sheepstealer-current-prey",
       "availability": {
         "canonical": "canonical-locked",
         "notes": [
@@ -8132,7 +8628,7 @@
         "selection": "any",
         "selectionResource": null,
         "selectionStat": null,
-        "sharedSelectionGroupId": null,
+        "sharedSelectionGroupId": "sheepstealer-current-prey",
         "side": "enemy",
         "tieBehavior": null
       },

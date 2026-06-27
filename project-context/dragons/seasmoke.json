@@ -3743,7 +3743,7 @@
   "firstObservedInGame": null,
   "format": "dragonfire-dragon-profile",
   "gameVersion": null,
-  "generatedAt": "2026-06-27T21:06:45.880Z",
+  "generatedAt": "2026-06-27T21:44:55.689Z",
   "habits": [
     {
       "abilityClass": "passive",
@@ -5559,6 +5559,8 @@
           "id": "target-above-50-troop-capacity",
           "kind": "target-above-troop-capacity-threshold",
           "label": "Target is above 50% Troop Capacity.",
+          "statusCategoryId": null,
+          "statusId": null,
           "subject": "target",
           "thresholdPercent": 50,
           "unresolved": false
@@ -5676,6 +5678,8 @@
           "id": "target-below-50-troop-capacity",
           "kind": "target-below-troop-capacity-threshold",
           "label": "Target is below 50% Troop Capacity.",
+          "statusCategoryId": null,
+          "statusId": null,
           "subject": "target",
           "thresholdPercent": 50,
           "unresolved": false
@@ -6496,8 +6500,8 @@
   "rosterSourceStatus": "official-website",
   "slug": "seasmoke",
   "source": {
-    "branch": "main",
-    "commit": "86f3ebafd01bf3df79ea9591df57f3974f99d6f7",
+    "branch": "fix/mechanic-reference-analysis-integrity",
+    "commit": "d15aad00735449f126b843811a1d0a1981989c0f",
     "databaseVersion": "0.6.2",
     "dataSchemaVersion": 12,
     "gameBuild": "26.6.53509",
@@ -6596,6 +6600,8 @@
           "id": "target-above-50-troop-capacity",
           "kind": "target-above-troop-capacity-threshold",
           "label": "Target is above 50% Troop Capacity.",
+          "statusCategoryId": null,
+          "statusId": null,
           "subject": "target",
           "thresholdPercent": 50,
           "unresolved": false
@@ -6718,6 +6724,8 @@
           "id": "target-below-50-troop-capacity",
           "kind": "target-below-troop-capacity-threshold",
           "label": "Target is below 50% Troop Capacity.",
+          "statusCategoryId": null,
+          "statusId": null,
           "subject": "target",
           "thresholdPercent": 50,
           "unresolved": false

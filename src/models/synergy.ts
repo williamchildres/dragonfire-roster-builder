@@ -213,6 +213,8 @@ export interface EffectCondition {
   unresolved: boolean;
   kind?: string;
   subject?: string | null;
+  statusId?: string | null;
+  statusCategoryId?: string | null;
   comparison?: string | null;
   thresholdPercent?: number | null;
 }

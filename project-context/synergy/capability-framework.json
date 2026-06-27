@@ -2678,6 +2678,8 @@
             "id": "target-above-50-troop-capacity",
             "kind": "target-above-troop-capacity-threshold",
             "label": "Target is above 50% Troop Capacity.",
+            "statusCategoryId": null,
+            "statusId": null,
             "subject": "target",
             "thresholdPercent": 50,
             "unresolved": false
@@ -2795,6 +2797,8 @@
             "id": "target-below-50-troop-capacity",
             "kind": "target-below-troop-capacity-threshold",
             "label": "Target is below 50% Troop Capacity.",
+            "statusCategoryId": null,
+            "statusId": null,
             "subject": "target",
             "thresholdPercent": 50,
             "unresolved": false
@@ -4943,6 +4947,8 @@
             "id": "ally-deals-tactical-damage",
             "kind": "ally-deals-tactical-damage",
             "label": "Ally deals Tactical Damage.",
+            "statusCategoryId": null,
+            "statusId": null,
             "subject": "ally",
             "thresholdPercent": null,
             "unresolved": false
@@ -5179,6 +5185,8 @@
             "id": "below-75-troop-capacity",
             "kind": "target-below-troop-capacity-threshold",
             "label": "Below 75% Troop Capacity.",
+            "statusCategoryId": null,
+            "statusId": null,
             "subject": "target",
             "thresholdPercent": 75,
             "unresolved": false
@@ -5280,6 +5288,8 @@
             "id": "below-50-troop-capacity",
             "kind": "target-below-troop-capacity-threshold",
             "label": "Below 50% Troop Capacity.",
+            "statusCategoryId": null,
+            "statusId": null,
             "subject": "target",
             "thresholdPercent": 50,
             "unresolved": false
@@ -5381,6 +5391,8 @@
             "id": "below-25-troop-capacity",
             "kind": "target-below-troop-capacity-threshold",
             "label": "Below 25% Troop Capacity.",
+            "statusCategoryId": null,
+            "statusId": null,
             "subject": "target",
             "thresholdPercent": 25,
             "unresolved": false
@@ -5693,6 +5705,8 @@
             "id": "ally-deals-tactical-damage",
             "kind": "ally-deals-tactical-damage",
             "label": "Ally deals Tactical Damage.",
+            "statusCategoryId": null,
+            "statusId": null,
             "subject": "ally",
             "thresholdPercent": null,
             "unresolved": false
@@ -6419,6 +6433,8 @@
             "id": "enemy-deals-tactical-damage",
             "kind": "ally-deals-tactical-damage",
             "label": "Enemy deals Tactical Damage.",
+            "statusCategoryId": null,
+            "statusId": null,
             "subject": "enemy",
             "thresholdPercent": null,
             "unresolved": false
@@ -6633,6 +6649,8 @@
             "id": "enemy-strictly-above-75-troops",
             "kind": "target-above-troop-capacity-threshold",
             "label": "Enemy is strictly above 75% maximum Troop Capacity.",
+            "statusCategoryId": null,
+            "statusId": null,
             "subject": "enemy",
             "thresholdPercent": 75,
             "unresolved": false
@@ -6734,6 +6752,8 @@
             "id": "enemy-strictly-above-75-troops",
             "kind": "target-above-troop-capacity-threshold",
             "label": "Enemy is strictly above 75% maximum Troop Capacity.",
+            "statusCategoryId": null,
+            "statusId": null,
             "subject": "enemy",
             "thresholdPercent": 75,
             "unresolved": false
@@ -6835,6 +6855,8 @@
             "id": "enemy-strictly-below-25-troops",
             "kind": "target-below-troop-capacity-threshold",
             "label": "Enemy is strictly below 25% maximum Troop Capacity.",
+            "statusCategoryId": null,
+            "statusId": null,
             "subject": "enemy",
             "thresholdPercent": 25,
             "unresolved": false
@@ -6997,7 +7019,7 @@
           "selection": "highest-stat",
           "selectionResource": "instinct",
           "selectionStat": "instinct",
-          "sharedSelectionGroupId": null,
+          "sharedSelectionGroupId": "vermins-bane-highest-instinct-enemy",
           "side": "enemy",
           "tieBehavior": "candidate-group"
         },
@@ -8745,6 +8767,8 @@
             "id": "successful-taunt-application",
             "kind": "successful-status-application",
             "label": "A Taunt was successfully applied to this target.",
+            "statusCategoryId": null,
+            "statusId": "taunt",
             "subject": "target",
             "thresholdPercent": null,
             "unresolved": false
@@ -8846,6 +8870,8 @@
             "id": "successful-taunt-application",
             "kind": "successful-status-application",
             "label": "A Taunt was successfully applied to this target.",
+            "statusCategoryId": null,
+            "statusId": "taunt",
             "subject": "target",
             "thresholdPercent": null,
             "unresolved": false
@@ -9644,6 +9670,8 @@
             "id": "enemy-retreated-previous-round",
             "kind": "previous-round-event",
             "label": "Enemy retreated during the previous round.",
+            "statusCategoryId": null,
+            "statusId": null,
             "subject": "enemy",
             "thresholdPercent": null,
             "unresolved": false
@@ -10192,6 +10220,8 @@
             "id": "self-strictly-below-50-troops",
             "kind": "target-below-troop-capacity-threshold",
             "label": "Venator is strictly below 50% Troop Capacity.",
+            "statusCategoryId": null,
+            "statusId": null,
             "subject": "self",
             "thresholdPercent": 50,
             "unresolved": false
@@ -10413,6 +10443,8 @@
             "id": "enemy-has-non-basic-physical-output",
             "kind": "target-has-output-capability",
             "label": "Target eligibility requires the enemy to possess a non-Basic Physical Damage output capability.",
+            "statusCategoryId": null,
+            "statusId": null,
             "subject": "enemy",
             "thresholdPercent": null,
             "unresolved": true
@@ -12211,6 +12243,8 @@
             "id": "enemy-below-50-maximum-troops",
             "kind": "target-below-troop-capacity-threshold",
             "label": "Enemy is below 50% maximum Troop Capacity.",
+            "statusCategoryId": null,
+            "statusId": null,
             "subject": "enemy",
             "thresholdPercent": 50,
             "unresolved": false
@@ -14554,6 +14588,8 @@
             "id": "tracked-adjacent-ally-retreated-previous-round",
             "kind": "previous-round-event",
             "label": "The same adjacent ally selected at start of combat retreated in the previous round.",
+            "statusCategoryId": null,
+            "statusId": null,
             "subject": "ally",
             "thresholdPercent": null,
             "unresolved": true
@@ -15927,7 +15963,33 @@
         "minimumDragonLevel": null,
         "operation": "increase",
         "providerRequirements": [],
-        "rankedValues": [],
+        "rankedValues": [
+          {
+            "level": 1,
+            "unit": "percent",
+            "value": 3
+          },
+          {
+            "level": 2,
+            "unit": "percent",
+            "value": 3.6
+          },
+          {
+            "level": 3,
+            "unit": "percent",
+            "value": 4.2
+          },
+          {
+            "level": 4,
+            "unit": "percent",
+            "value": 5.1
+          },
+          {
+            "level": 5,
+            "unit": "percent",
+            "value": 6
+          }
+        ],
         "recipientRequirements": [],
         "requiredHabitLevel": 1,
         "role": "self-amplification",
@@ -15951,8 +16013,8 @@
         },
         "unit": "stack",
         "unlockStarRank": 2,
-        "value": null,
-        "valuePerStack": null
+        "value": 3,
+        "valuePerStack": 3
       },
       {
         "abilityId": "sheepstealer-stolen-flock",
@@ -15990,7 +16052,33 @@
         "minimumDragonLevel": null,
         "operation": "increase",
         "providerRequirements": [],
-        "rankedValues": [],
+        "rankedValues": [
+          {
+            "level": 1,
+            "unit": "percent",
+            "value": 3
+          },
+          {
+            "level": 2,
+            "unit": "percent",
+            "value": 3.6
+          },
+          {
+            "level": 3,
+            "unit": "percent",
+            "value": 4.2
+          },
+          {
+            "level": 4,
+            "unit": "percent",
+            "value": 5.1
+          },
+          {
+            "level": 5,
+            "unit": "percent",
+            "value": 6
+          }
+        ],
         "recipientRequirements": [],
         "requiredHabitLevel": 1,
         "role": "self-amplification",
@@ -16014,8 +16102,8 @@
         },
         "unit": "stack",
         "unlockStarRank": 2,
-        "value": null,
-        "valuePerStack": null
+        "value": 3,
+        "valuePerStack": 3
       },
       {
         "abilityId": "sheepstealer-dragons-cunning",
@@ -17386,6 +17474,8 @@
             "id": "target-above-50-troop-capacity",
             "kind": "target-above-troop-capacity-threshold",
             "label": "Target is above 50% Troop Capacity.",
+            "statusCategoryId": null,
+            "statusId": null,
             "subject": "target",
             "thresholdPercent": 50,
             "unresolved": false
@@ -17508,6 +17598,8 @@
             "id": "target-below-50-troop-capacity",
             "kind": "target-below-troop-capacity-threshold",
             "label": "Target is below 50% Troop Capacity.",
+            "statusCategoryId": null,
+            "statusId": null,
             "subject": "target",
             "thresholdPercent": 50,
             "unresolved": false
@@ -17755,7 +17847,7 @@
         "targetSelector": {
           "comparisonDirection": null,
           "comparisonPool": null,
-          "count": 1,
+          "count": 2,
           "includesCaster": null,
           "position": null,
           "scope": "within-adjacency",
@@ -18394,6 +18486,8 @@
             "id": "self-strictly-below-50-troops",
             "kind": "target-below-troop-capacity-threshold",
             "label": "Venator is strictly below 50% Troop Capacity.",
+            "statusCategoryId": null,
+            "statusId": null,
             "subject": "self",
             "thresholdPercent": 50,
             "unresolved": false
@@ -18942,6 +19036,8 @@
             "id": "tracked-adjacent-ally-retreated-previous-round",
             "kind": "previous-round-event",
             "label": "The same adjacent ally selected at start of combat retreated in the previous round.",
+            "statusCategoryId": null,
+            "statusId": null,
             "subject": "ally",
             "thresholdPercent": null,
             "unresolved": true
@@ -19661,6 +19757,8 @@
             "id": "sirens-call-target-has-taunt",
             "kind": "target-has-status",
             "label": "Target is already Taunted.",
+            "statusCategoryId": null,
+            "statusId": "taunt",
             "subject": "target",
             "thresholdPercent": null,
             "unresolved": false
@@ -19783,6 +19881,8 @@
             "id": "sirens-call-target-lacks-taunt",
             "kind": "target-lacks-status",
             "label": "Target is not already Taunted.",
+            "statusCategoryId": null,
+            "statusId": "taunt",
             "subject": "target",
             "thresholdPercent": null,
             "unresolved": false
@@ -19825,7 +19925,7 @@
         "abilityName": "Wild Hunt",
         "activationChanceByHabitLevel": [],
         "activationChanceFixed": 40,
-        "activationGroupId": null,
+        "activationGroupId": "sheepstealer-current-prey",
         "availability": {
           "canonical": "canonical-base",
           "notes": [
@@ -19871,7 +19971,7 @@
           "selection": "any",
           "selectionResource": null,
           "selectionStat": null,
-          "sharedSelectionGroupId": null,
+          "sharedSelectionGroupId": "sheepstealer-current-prey",
           "side": "enemy",
           "tieBehavior": null
         },
@@ -20021,7 +20121,7 @@
           }
         ],
         "activationChanceFixed": null,
-        "activationGroupId": null,
+        "activationGroupId": "sheepstealer-current-prey",
         "availability": {
           "canonical": "canonical-locked",
           "notes": [
@@ -20099,7 +20199,7 @@
           "selection": "any",
           "selectionResource": null,
           "selectionStat": null,
-          "sharedSelectionGroupId": null,
+          "sharedSelectionGroupId": "sheepstealer-current-prey",
           "side": "enemy",
           "tieBehavior": null
         },
@@ -20133,6 +20233,8 @@
             "id": "ally-deals-tactical-damage",
             "kind": "ally-deals-tactical-damage",
             "label": "Ally deals Tactical Damage.",
+            "statusCategoryId": null,
+            "statusId": null,
             "subject": "ally",
             "thresholdPercent": null,
             "unresolved": false
@@ -20367,6 +20469,8 @@
             "id": "ally-deals-tactical-damage",
             "kind": "ally-deals-tactical-damage",
             "label": "Ally deals Tactical Damage.",
+            "statusCategoryId": null,
+            "statusId": null,
             "subject": "ally",
             "thresholdPercent": null,
             "unresolved": false

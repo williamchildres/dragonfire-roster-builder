@@ -12,6 +12,7 @@ import {
   type FormationPosition,
   type OwnedDragon,
   type RankedValue,
+  type StackConfiguration,
 } from '../models/dragon';
 import type {
   AbilityTarget,
@@ -422,6 +423,9 @@ export function analyzeCapabilityAmplifications(
     ...analyzeExtraActionTriggerChains(formation, dragons, extraActions, triggeredAbilities, options),
     ...analyzeStatusConditionEnablement(formation, dragons, outputs, statusOutputs, options),
     ...analyzeStatusEffectConditionEnablement(formation, dragons, statusOutputs, options),
+    ...analyzePersistentMarkedTargets(formation, dragons, statusOutputs, options),
+    ...analyzeScheduleOverrideTraces(formation, dragons, options),
+    ...analyzeSelfStatusOutputs(formation, dragons, statusOutputs, options),
     ...analyzeInternalSelfModifiers(formation, dragons, modifiers, options),
     ...analyzeDefensiveAllySupport(formation, dragons, modifiers, options),
     ...analyzeRecipientSideAllySupport(formation, dragons, modifiers, options),
@@ -430,6 +434,7 @@ export function analyzeCapabilityAmplifications(
     ...analyzeStatScalingSupport(formation, dragons, outputs, modifiers, options),
     ...analyzeEnemyMitigationReduction(formation, dragons, outputs, modifiers, options),
     ...analyzeEnemyDamageDealtReductions(formation, dragons, modifiers, options),
+    ...analyzeEnemyReceivedReductions(formation, dragons, modifiers, options),
     ...analyzeEnemyDamageReceivedIncreases(formation, dragons, outputs, modifiers, options),
     ...analyzePeriodicStatusDamage(formation, dragons, periodicDamage, statusOutputs, options),
     ...analyzePeriodicDamageAmplification(formation, dragons, periodicDamage, modifiers, options),
@@ -680,8 +685,17 @@ function scheduleTimingDetail(schedule: AbilitySchedule): string | null {
   if (schedule.roundSelector?.kind === 'each-round') {
     return 'Timing: Each round.';
   }
+  if (schedule.roundSelector?.kind === 'after-basic-attack') {
+    return 'Timing: After each Basic Attack.';
+  }
   if (schedule.roundSelector?.kind === 'explicit' && schedule.rounds.length > 0) {
     return `Timing: Rounds ${schedule.rounds.join(', ')}.`;
+  }
+  if (schedule.timing === 'start-of-each-round') {
+    return 'Timing: Start of each round.';
+  }
+  if (schedule.timing === 'when-marked-target-receives-recovery') {
+    return 'Timing: when the marked target receives Recovery.';
   }
   return null;
 }
@@ -700,7 +714,7 @@ function outputValueDetail(output: OutputCapability, effect: AbilityEffect, opti
 
 function durationDetail(effect: AbilityEffect): string | null {
   if (effect.durationRounds) {
-    return `Duration: ${effect.durationRounds} rounds.`;
+    return `Duration: ${effect.durationRounds} ${effect.durationRounds === 1 ? 'round' : 'rounds'}.`;
   }
   if (effect.duration === 'Until end of combat' || effect.stack?.untilEndOfCombat) {
     return 'Duration: until end of combat.';
@@ -1263,12 +1277,18 @@ function analyzeInternalSelfModifiers(
       recipientEvidenceIds: [],
       assumptions: [],
       unresolvedQuestions: [],
-      futureOrConditional: capabilityFutureOrConditional(modifier, options) || defensiveModifierTraceIsConditional(modifier),
+      futureOrConditional: capabilityFutureOrConditional(modifier, options) || defensiveModifierTraceIsConditional(modifier) || stackModifierTraceIsConditional(context),
       modifier,
       damageScope: modifier.damageScope,
     }));
   }
   return traces;
+}
+
+function stackModifierTraceIsConditional(context: { schedule: AbilitySchedule; effect: AbilityEffect } | null): boolean {
+  return Boolean(context?.effect.stack) &&
+    context?.schedule.timing !== 'start-of-combat' &&
+    context?.schedule.timing !== 'passive';
 }
 
 function internalModifierTitle(modifier: ModifierCapability): string {
@@ -1290,15 +1310,47 @@ function internalModifierDetailLines(
     : null;
   const stat = modifier.channel === 'stat' ? statIdFromText(modifier.label) : null;
   const value = stat ? rawValue.replace(/\s+flat$/i, '') : rawValue;
+  const stackDetails = context?.effect.stack
+    ? stackModifierDetailLines(modifier, context.schedule, context.effect, options)
+    : [];
   return [
     context ? scheduleTimingDetail(context.schedule) : null,
     stat
       ? `${statLabel(stat)} ${modifier.operation === 'decrease' ? '-' : '+'}${value}${effectiveLevel ? ` at effective Habit Level ${effectiveLevel}` : ''}.`
       : `${directedChannelLabel(modifier.channel, modifier.direction)} ${modifier.operation} ${value}${effectiveLevel ? ` at effective Habit Level ${effectiveLevel}` : ''}.`,
+    ...stackDetails,
     context ? enhancementDetail(context.effect) : null,
     context ? durationDetail(context.effect) : modifier.durationRounds ? `Duration: ${modifier.durationRounds} rounds.` : null,
     context ? rankedProgressionDetail(context.effect) : null,
   ].filter((detail): detail is string => Boolean(detail));
+}
+
+function stackModifierDetailLines(
+  modifier: ModifierCapability,
+  schedule: AbilitySchedule,
+  effect: AbilityEffect,
+  options: CapabilityOptions,
+): string[] {
+  if (!effect.stack) {
+    return [];
+  }
+  const level = options.previewMaxRankInteractions ? 5 : effectiveHabitLevelForCapability(modifier, options);
+  const levelOneValue = rankedValueForHabitLevel(effect.stack.valuePerStackByHabitLevel, 1)?.value ?? effect.stack.valuePerStackFixed;
+  const currentLevelValue = rankedValueForHabitLevel(effect.stack.valuePerStackByHabitLevel, level)?.value ?? effect.stack.valuePerStackFixed;
+  const levelOneMaximum = levelOneValue !== null && effect.stack.maximumStacks !== null
+    ? levelOneValue * effect.stack.maximumStacks
+    : null;
+  return [
+    `Shared stack pool: ${effect.stack.statusId}.`,
+    effect.stack.maximumStacks !== null ? `Maximum stacks: ${effect.stack.maximumStacks}.` : 'Maximum stacks: unknown.',
+    levelOneValue !== null ? `Value per stack at effective Habit Level 1: ${formatValue(levelOneValue, 'percent')} ${directedChannelLabel(modifier.channel, modifier.direction)}.` : null,
+    currentLevelValue !== null && level && level !== 1 ? `Value per stack at effective Habit Level ${level}: ${formatValue(currentLevelValue, 'percent')} ${directedChannelLabel(modifier.channel, modifier.direction)}.` : null,
+    levelOneMaximum !== null ? `Maximum theoretical modifier at effective Habit Level 1: ${formatValue(levelOneMaximum, 'percent')} ${directedChannelLabel(modifier.channel, modifier.direction)}.` : null,
+    'Current stack count is unknown.',
+    schedule.triggerChanceFixed !== null ? `Trigger chance: ${schedule.triggerChanceFixed}%.` : null,
+    schedule.timing === 'when-marked-target-receives-recovery' ? 'Prey-Recovery trigger is event-dependent and not guaranteed Active while the event is unresolved.' : null,
+    schedule.timing === 'each-round' && schedule.triggerChanceFixed !== null ? 'Each-round stack trigger is chance-based and not guaranteed Active.' : null,
+  ].filter((line): line is string => Boolean(line));
 }
 
 function analyzeRecipientSideAllySupport(
@@ -2650,11 +2702,17 @@ function analyzeEnemyDamageDealtReductions(
       requirements,
       matchedFacts: [
         `${modifier.abilityName} targets ${targetSelectorSummary(modifier.targetSelector)}.`,
+        ...(modifier.targetSelector.sharedSelectionGroupId ? [`Shared selected-target group: ${modifier.targetSelector.sharedSelectionGroupId}.`] : []),
+        ...independentHighestStatSelectorFacts(provider, modifier),
+        ...enemyDamageDealtReductionDetailFacts(modifier),
         ...modifier.conditions.map((condition) => condition.description),
         ...(modifier.activationGroupId ? [`Shared activation group: ${modifier.activationGroupId}.`] : []),
         ...activationChanceFacts(modifier, options),
       ],
-      effects: [statId ? `Enemy ${statLabel(statId)} ${modifier.operation} ${modifierDisplayValue(modifier, options)}` : `Enemy ${channelLabel(modifier.channel)} ${modifier.operation} ${modifierDisplayValue(modifier, options)}`],
+      effects: [
+        statId ? `Enemy ${statLabel(statId)} ${modifier.operation} ${modifierDisplayValue(modifier, options)}` : `Enemy ${channelLabel(modifier.channel)} ${modifier.operation} ${modifierDisplayValue(modifier, options)}`,
+        ...enemyDamageDealtReductionDetailFacts(modifier),
+      ],
       conflicts: requirements
         .filter((requirement) => requirement.satisfied === false)
         .map((requirement) => `${requirement.label}: expected ${requirement.expected}, actual ${requirement.actual ?? 'unknown'}`),
@@ -2680,6 +2738,329 @@ function analyzeEnemyDamageDealtReductions(
     });
   }
   return traces;
+}
+
+function analyzePersistentMarkedTargets(
+  formation: FormationAnalysisInput,
+  dragons: Dragon[],
+  statusOutputs: StatusOutputCapability[],
+  options: CapabilityOptions,
+): SynergyTrace[] {
+  const traces: SynergyTrace[] = [];
+  const selectedIds = selectedFormationDragonIds(formation);
+  for (const marker of statusOutputs.filter((capability) =>
+    capability.targetSide === 'enemy' &&
+    statusCapabilityVisible(capability, options),
+  )) {
+    const provider = dragonById(dragons, marker.dragonId);
+    const providerPosition = positionOf(formation, marker.dragonId);
+    if (!provider || !providerPosition || !selectedIds.has(marker.dragonId)) {
+      continue;
+    }
+    const context = sourceEffectContext(provider, marker.abilityId, marker.sourceEffectId);
+    if (
+      !context?.effect.targetSelection?.references.some((reference) => reference.kind === 'persistent-selected-target') ||
+      context.effect.stack?.maximumStacks !== 1
+    ) {
+      continue;
+    }
+    const relatedAbilityNames = persistentStatusReferencingAbilityNames(provider, marker.statusId, marker.abilityName);
+    if (relatedAbilityNames.length === 0) {
+      continue;
+    }
+    const requirements = statusOutputRequirementTraces(marker, provider, dragons, options);
+    const statusName = statusLabel(marker.statusId);
+    const relatedList = joinEnglishList(relatedAbilityNames);
+    traces.push(makeDependencyTrace({
+      id: `persistent-marked-target-${marker.dragonId}-${marker.statusId}`,
+      matchKind: 'status-condition-enablement',
+      ruleId: 'persistent-marked-target-reference',
+      source: provider,
+      sourceAbilityId: marker.abilityId,
+      recipient: provider,
+      recipientAbilityId: marker.abilityId,
+      channel: 'status',
+      title: `${statusName} persistent target reference`,
+      explanation: `Persistent marked target: ${provider.name}'s current ${statusName}. ${marker.abilityName} establishes ${statusName} only when none currently exists. ${relatedList} refer to that same marked enemy. The actual enemy identity and unresolved lifecycle behavior are not simulated.`,
+      requirements,
+      matchedFacts: [
+        `Persistent marked target: ${provider.name}'s current ${statusName}.`,
+        `${marker.abilityName} establishes ${statusName} only when none currently exists.`,
+        `${relatedList} refer to that same marked enemy.`,
+        'The actual enemy identity and unresolved lifecycle behavior are not simulated.',
+        ...targetReferenceFacts(context.effect),
+        ...persistentStatusConditionFacts(provider, marker.statusId),
+      ],
+      effects: [
+        `Status identity: ${marker.statusId}.`,
+        'Actual enemy identity: unresolved.',
+      ],
+      sourceEvidenceIds: marker.evidenceIds,
+      recipientEvidenceIds: [],
+      assumptions: ['Status lifecycle behavior beyond verified conditions is not simulated.'],
+      unresolvedQuestions: ['Marked-target duration, removal, transfer, and replacement behavior remain unresolved unless explicitly verified by source data.'],
+      futureOrConditional: true,
+    }));
+  }
+  return traces;
+}
+
+function analyzeScheduleOverrideTraces(
+  formation: FormationAnalysisInput,
+  dragons: Dragon[],
+  options: CapabilityOptions,
+): SynergyTrace[] {
+  const traces: SynergyTrace[] = [];
+  for (const dragon of dragons.filter((candidate) => candidate.command && positionOf(formation, candidate.id))) {
+    const command = dragon.command!;
+    for (const augmentation of command.augmentations) {
+      const sourceAbility = dragon.habits.find((habit) => habit.id === augmentation.sourceAbilityId);
+      const starRank = options.roster?.[dragon.id]?.starRank ?? null;
+      if (starRank === null || starRank < augmentation.minimumDragonStarRank || !sourceAbility) {
+        continue;
+      }
+      for (const override of augmentation.scheduleOverrides ?? []) {
+        const targetSchedule = command.schedules.find((schedule) => schedule.id === override.targetScheduleId);
+        const baseChance = targetSchedule?.activationRoll?.chanceFixed ?? targetSchedule?.triggerChanceFixed ?? null;
+        const replacementChance =
+          override.replacementSchedule?.activationRoll?.chanceFixed ??
+          rankedValueForHabitLevel(override.replacementSchedule?.activationRoll?.chanceByHabitLevel ?? [], 1)?.value ??
+          override.replacementSchedule?.triggerChanceFixed ??
+          rankedValueForHabitLevel(override.replacementSchedule?.triggerChanceByHabitLevel ?? [], 1)?.value ??
+          null;
+        const requirements = availabilityRequirements({
+          dragonId: dragon.id,
+          abilityId: sourceAbility.id,
+          dragonName: dragon.name,
+          abilityName: sourceAbility.name,
+          unlockStarRank: sourceAbility.unlockStarRank,
+          minimumDragonLevel: sourceAbility.minimumDragonLevel,
+          requiredHabitLevel: 1,
+          evidenceIds: sourceAbility.evidenceIds,
+          sourceKind: abilitySourceKind(dragons, dragon.id, sourceAbility.id),
+        }, options);
+        traces.push(makeDependencyTrace({
+          id: `schedule-override-${dragon.id}-${override.id}`,
+          matchKind: 'status-condition-enablement',
+          ruleId: 'schedule-override',
+          source: dragon,
+          sourceAbilityId: command.id,
+          recipient: dragon,
+          recipientAbilityId: command.id,
+          channel: 'status',
+          title: `${sourceAbility.name} schedule override`,
+          explanation: `${sourceAbility.name} replaces ${command.name}'s Round 1 Stun roll. Effective Round 1 chance at Habit Level 1: ${replacementChance ?? 'unknown'}%. The base ${baseChance ?? 'unknown'}% Round 1 roll does not also occur. Other odd-numbered rounds retain the base ${baseChance ?? 'unknown'}% chance.`,
+          requirements,
+          matchedFacts: [
+            `${sourceAbility.name} replaces ${command.name}'s Round 1 Stun roll.`,
+            `Effective Round 1 chance at Habit Level 1: ${replacementChance ?? 'unknown'}%.`,
+            `The base ${baseChance ?? 'unknown'}% Round 1 roll does not also occur.`,
+            `Other odd-numbered rounds retain the base ${baseChance ?? 'unknown'}% chance.`,
+            `Schedule override ID: ${override.id}.`,
+            `Override operation: ${override.operation}.`,
+          ],
+          effects: [
+            `Replacement chance: ${replacementChance ?? 'unknown'}%.`,
+            'The replaced base roll is not emitted as an additional attempt.',
+          ],
+          sourceEvidenceIds: override.evidenceIds,
+          recipientEvidenceIds: [],
+          assumptions: ['The override relationship is deterministic once the augmentation is active; the resulting Stun attempt remains chance-based.'],
+          unresolvedQuestions: [],
+          futureOrConditional: false,
+        }));
+      }
+    }
+  }
+  return traces;
+}
+
+function persistentStatusReferencingAbilityNames(
+  dragon: Dragon,
+  statusId: string,
+  establishingAbilityName: string,
+): string[] {
+  return uniqueOrdered(allAbilities(dragon)
+    .filter((ability) => ability.name !== establishingAbilityName)
+    .filter((ability) =>
+      ability.schedules.some((schedule) =>
+        schedule.conditions?.some((condition) => condition.statusId === statusId) ||
+        schedule.effects.flatMap(derivableEffects).some((effect) =>
+          effect.conditions?.some((condition) => condition.statusId === statusId) ||
+          effect.conditionalMultipliers?.some((multiplier) => multiplier.condition.statusId === statusId) ||
+          effect.targetSelection?.references.some((reference) => reference.kind === 'persistent-selected-target'),
+        ),
+      ),
+    )
+    .map((ability) => ability.name));
+}
+
+function persistentStatusConditionFacts(dragon: Dragon, statusId: string): string[] {
+  return uniqueOrdered(allAbilities(dragon)
+    .flatMap((ability) => ability.schedules)
+    .flatMap((schedule) => [
+      ...(schedule.conditions ?? []),
+      ...schedule.effects.flatMap(derivableEffects).flatMap((effect) => [
+        ...(effect.conditions ?? []),
+        ...(effect.conditionalMultipliers ?? []).map((multiplier) => multiplier.condition),
+      ]),
+    ])
+    .filter((condition) => condition.statusId === statusId)
+    .map((condition) => condition.description));
+}
+
+function analyzeSelfStatusOutputs(
+  formation: FormationAnalysisInput,
+  dragons: Dragon[],
+  statusOutputs: StatusOutputCapability[],
+  options: CapabilityOptions,
+): SynergyTrace[] {
+  const traces: SynergyTrace[] = [];
+  for (const output of statusOutputs.filter((capability) =>
+    capability.targetSide === 'self' &&
+    statusMatchesCategory(capability.statusId, 'control') &&
+    statusCapabilityVisible(capability, options),
+  )) {
+    const provider = dragonById(dragons, output.dragonId);
+    const providerPosition = positionOf(formation, output.dragonId);
+    if (!provider || !providerPosition) {
+      continue;
+    }
+    const requirements = statusOutputRequirementTraces(output, provider, dragons, options);
+    const context = sourceEffectContext(provider, output.abilityId, output.sourceEffectId);
+    const statusName = statusLabel(output.statusId);
+    const details = [
+      `Target: ${provider.name}.`,
+      context ? scheduleTimingDetail(context.schedule) : null,
+      context ? durationDetail(context.effect) : output.durationRounds ? `Duration: ${output.durationRounds} rounds.` : null,
+      `Real Control status: ${statusName}.`,
+      context?.effect.notes.find((note) => /Control status/i.test(note)) ?? null,
+    ].filter((line): line is string => Boolean(line));
+    traces.push(makeDependencyTrace({
+      id: `self-status-output-${output.id}`,
+      matchKind: 'status-condition-enablement',
+      ruleId: 'self-status-output',
+      source: provider,
+      sourceAbilityId: output.abilityId,
+      recipient: provider,
+      recipientAbilityId: output.abilityId,
+      channel: 'control',
+      title: `${output.abilityName} - Self ${statusName}`,
+      explanation: `${provider.name}'s ${output.abilityName} applies ${statusName} to ${provider.name}. ${details.join(' ')}`,
+      requirements,
+      matchedFacts: [
+        `Status identity: ${output.statusId}.`,
+        ...details,
+      ],
+      effects: details,
+      sourceEvidenceIds: output.evidenceIds,
+      recipientEvidenceIds: [],
+      assumptions: ['Verified negative self-effects are represented even when they are not beneficial.'],
+      unresolvedQuestions: ['Cleanse timing and outcome are not invented.'],
+      futureOrConditional: capabilityFutureOrConditional(output, options) || output.conditions.length > 0 || statusChanceConditional(output),
+    }));
+  }
+  return traces;
+}
+
+function analyzeEnemyReceivedReductions(
+  formation: FormationAnalysisInput,
+  dragons: Dragon[],
+  modifiers: ModifierCapability[],
+  options: CapabilityOptions,
+): SynergyTrace[] {
+  const traces: SynergyTrace[] = [];
+  for (const modifier of modifiers.filter(
+    (capability) =>
+      capability.role === 'enemy-debuff' &&
+      capability.direction === 'received' &&
+      capability.operation === 'decrease' &&
+      modifierCapabilityVisible(capability, options),
+  )) {
+    const providerPosition = positionOf(formation, modifier.dragonId);
+    const provider = dragonById(dragons, modifier.dragonId);
+    if (!providerPosition || !provider) {
+      continue;
+    }
+    const requirements = providerRequirementTraces(modifier, formation, dragons, options);
+    const context = sourceEffectContext(provider, modifier.abilityId, modifier.sourceEffectId);
+    const value = modifierDisplayValue(modifier, options);
+    const details = [
+      ...(context ? [scheduleTimingDetail(context.schedule), durationDetail(context.effect)] : []),
+      ...enemyAllMatchingSelectorFacts(modifier),
+      ...modifier.conditions.map((condition) => condition.description),
+    ].filter((line): line is string => Boolean(line));
+    traces.push({
+      id: `enemy-received-reduction-${modifier.id}`,
+      ruleId: 'enemy-received-reduction',
+      status: statusFromRequirements(requirements, capabilityFutureOrConditional(modifier, options) || modifier.conditional),
+      confidence: modifier.confidence,
+      sourceDragonId: provider.id,
+      sourceAbilityId: modifier.abilityId,
+      recipientDragonId: null,
+      recipientAbilityId: null,
+      title: `${channelLabel(modifier.channel)} Enemy Reduction`,
+      explanation: `${provider.name}'s ${modifier.abilityName} can reduce enemy ${directedChannelLabel(modifier.channel, 'received')} by ${value}. ${details.join(' ')}`,
+      requirements,
+      matchedFacts: [
+        `${modifier.abilityName} targets ${targetSelectorSummary(modifier.targetSelector)}.`,
+        ...(modifier.sourceEffectId ? [`Source effect ID: ${modifier.sourceEffectId}.`] : []),
+        ...details,
+      ],
+      effects: [
+        `${directedChannelLabel(modifier.channel, 'received')} decrease ${value}${effectiveHabitLevelForCapability(modifier, options) ? ` at effective Habit Level ${effectiveHabitLevelForCapability(modifier, options)}` : ''}.`,
+        ...details,
+      ],
+      conflicts: requirements
+        .filter((requirement) => requirement.satisfied === false)
+        .map((requirement) => `${requirement.label}: expected ${requirement.expected}, actual ${requirement.actual ?? 'unknown'}`),
+      assumptions: [
+        enemySelectorAssumption(modifier),
+        'Enemy state and uptime are not treated as guaranteed.',
+      ],
+      unresolvedQuestions: enemySelectorUnresolvedQuestions(modifier),
+      sourceEvidenceIds: modifier.evidenceIds,
+      recipientEvidenceIds: [],
+      combatLogConfirmed: modifier.combatLogConfirmed,
+      exactResultKnown: false,
+      exactResultUnknownReason: 'Exact final received-effect reduction cannot be calculated because target state, uptime, stacking, and final formulas are unresolved.',
+      matchKind: 'enemy-damage-dealt-reduction',
+      channel: modifier.channel,
+      modifierRole: modifier.role,
+      targetSelectorSummary: targetSelectorSummary(modifier.targetSelector),
+      modifierSelfOnly: false,
+      availabilityContext: modifier.availability.reportLabel,
+      modifierCapabilityId: modifier.id,
+      modifierCapabilityIds: [modifier.id],
+      interactionScope: 'enemy-side',
+    });
+  }
+  return traces;
+}
+
+function independentHighestStatSelectorFacts(provider: Dragon, modifier: ModifierCapability): string[] {
+  const context = sourceEffectContext(provider, modifier.abilityId, modifier.sourceEffectId);
+  if (!context || modifier.targetSelector.selection !== 'highest-stat') {
+    return [];
+  }
+  const comparisonStats = context.schedule.effects
+    .map((effect) => effect.targetSelection?.comparisonStat)
+    .filter((stat): stat is DragonStatId => stat === 'strength' || stat === 'instinct' || stat === 'intelligence' || stat === 'initiative');
+  const stats = [...new Set(comparisonStats)];
+  const hasSharedGroup = context.schedule.effects.some((effect) => Boolean(effect.targetSelection?.sharedSelectionGroupId));
+  if (stats.length < 2 || hasSharedGroup) {
+    return [];
+  }
+  return [
+    `The ${stats.map((stat) => `highest-${statLabel(stat)}`).join(' and ')} selectors are resolved independently. They may select the same enemy or different enemies.`,
+  ];
+}
+
+function enemyDamageDealtReductionDetailFacts(modifier: ModifierCapability): string[] {
+  if (modifier.sourceScope !== 'non-basic-attacks') {
+    return [];
+  }
+  return [`${channelLabel(modifier.channel)} reduction applies to non-Basic Attacks only.`];
 }
 
 function analyzeEnemyDamageReceivedIncreases(
@@ -2801,6 +3182,7 @@ function analyzeEnemyDamageReceivedIncreases(
       );
       const projectionStatus = statusFromRequirements(projectionRequirements, true);
       const outputNames = outputChannelNames(outputs, recipientOutputs.map((output) => output.id));
+      const allMatching = modifier.targetSelector.selection === 'all-matching-condition';
       traces.push({
         id: `enemy-damage-received-benefit-${modifier.id}-${recipientId}`,
         ruleId: 'enemy-damage-received-benefit',
@@ -2811,7 +3193,9 @@ function analyzeEnemyDamageReceivedIncreases(
         recipientDragonId: recipient.id,
         recipientAbilityId: recipientOutputs[0]?.abilityId ?? null,
         title: `Enemy ${channel} vulnerability`,
-        explanation: `${recipient.name}'s qualifying ${sourceScopeQualifiedChannel(modifier, channel)} can benefit from ${displayValue} ${channel} Received on the selected enemy from ${provider.name}'s ${modifier.abilityName}. The vulnerable enemy and allied attack target must overlap; enemy target selection and overlap are not guaranteed.`,
+        explanation: allMatching
+          ? `${recipient.name}'s qualifying ${sourceScopeQualifiedChannel(modifier, channel)} can benefit from ${displayValue} ${channel} Received on enemies affected by ${provider.name}'s ${modifier.abilityName}. The allied attack must hit one of those affected enemies; threshold membership and target overlap are not guaranteed.`
+          : `${recipient.name}'s qualifying ${sourceScopeQualifiedChannel(modifier, channel)} can benefit from ${displayValue} ${channel} Received on the selected enemy from ${provider.name}'s ${modifier.abilityName}. The vulnerable enemy and allied attack target must overlap; enemy target selection and overlap are not guaranteed.`,
         requirements: projectionRequirements,
         matchedFacts: [
           `${modifier.abilityName} targets ${targetSelectorSummary(modifier.targetSelector)}.`,
@@ -2824,15 +3208,17 @@ function analyzeEnemyDamageReceivedIncreases(
           ...projectionScopeResults.map((match) => `Source-scope compatibility: ${match.sourceScopeCompatible ? 'compatible' : 'not compatible'} for ${match.outputCapabilityId}.`),
         ],
         effects: [
-          `${recipient.name}'s qualifying ${sourceScopeQualifiedChannel(modifier, channel)} can benefit from ${displayValue} ${channel} Received on the selected enemy.`,
+          allMatching
+            ? `${recipient.name}'s qualifying ${sourceScopeQualifiedChannel(modifier, channel)} can benefit from ${displayValue} ${channel} Received on an affected enemy.`
+            : `${recipient.name}'s qualifying ${sourceScopeQualifiedChannel(modifier, channel)} can benefit from ${displayValue} ${channel} Received on the selected enemy.`,
           ...enemyVulnerabilityDetails,
-          'The vulnerable enemy and allied attack target must overlap.',
+          allMatching ? 'The allied attack must hit one of the affected enemies.' : 'The vulnerable enemy and allied attack target must overlap.',
         ],
         conflicts: projectionRequirements
           .filter((requirement) => requirement.satisfied === false)
           .map((requirement) => `${requirement.label}: expected ${requirement.expected}, actual ${requirement.actual ?? 'unknown'}`),
         assumptions: [
-          'Enemy target selection and allied target overlap are not guaranteed.',
+          allMatching ? 'Threshold membership and allied target overlap are not guaranteed.' : 'Enemy target selection and allied target overlap are not guaranteed.',
           'The vulnerability is applied to an enemy, not to the friendly recipient.',
           'Final damage is not calculated.',
         ],
@@ -2902,7 +3288,10 @@ function analyzePeriodicStatusDamage(
       evidenceIds: statusOutput.evidenceIds,
       sourceKind: abilitySourceKind(dragons, statusOutput.dragonId, statusOutput.abilityId),
     }, options);
-    const detailLines = periodicDamageDetailLines(periodic, matchingStatusOutputs, displayValue);
+    const statusOutputContexts = matchingStatusOutputs
+      .map((output) => sourceEffectContext(provider, output.abilityId, output.sourceEffectId))
+      .filter((context): context is { ability: AbilityDefinition; schedule: AbilitySchedule; effect: AbilityEffect } => Boolean(context));
+    const detailLines = periodicDamageDetailLines(periodic, matchingStatusOutputs, displayValue, statusOutputContexts, options);
     traces.push({
       id: `periodic-status-damage-${statusOutput.id}`,
       ruleId: 'periodic-status-damage',
@@ -2963,6 +3352,8 @@ function periodicDamageDetailLines(
   periodic: PeriodicDamageDefinition,
   statusOutputs: StatusOutputCapability[],
   displayValue: string,
+  contexts: Array<{ ability: AbilityDefinition; schedule: AbilitySchedule; effect: AbilityEffect }>,
+  options: CapabilityOptions,
 ): string[] {
   const status = statusLabel(periodic.statusId);
   const channel = channelLabel(periodic.channel);
@@ -2976,6 +3367,12 @@ function periodicDamageDetailLines(
       output.sourceEffectId ? `Status supplier effect: ${output.sourceEffectId}.` : null,
       output.activationGroupId ? `Activation group: ${output.activationGroupId}.` : null,
       output.targetSelector.sharedSelectionGroupId ? `Selected-target group: ${output.targetSelector.sharedSelectionGroupId}.` : null,
+    ]),
+    ...contexts.flatMap((context) => [
+      ...targetReferenceFacts(context.effect),
+      ...referencedEffectTargetReferenceFacts(context.schedule, context.effect),
+      ...perTargetCheckFacts(context.effect, context.schedule, options),
+      sharedTargetFact(context.ability, context.effect),
     ]),
     'Activation, target selection, target overlap, and uptime remain conditional.',
     'Final damage is not calculated.',
@@ -3020,14 +3417,20 @@ function enemyVulnerabilityExplanation(
   displayValue: string,
 ): string {
   const trigger = successfulStatusTriggerLine(modifier, providerName);
+  const allMatchingFacts = enemyAllMatchingSelectorFacts(modifier);
+  const targetLine = allMatchingFacts.length > 0
+    ? allMatchingFacts.join(' ')
+    : `${providerName}'s ${modifier.abilityName} increases ${channel} Received by ${displayValue} for one enemy target.`;
   return [
-    `${providerName}'s ${modifier.abilityName} increases ${channel} Received by ${displayValue} for one enemy target.`,
+    allMatchingFacts.length > 0 ? `${providerName}'s ${modifier.abilityName} increases ${channel} Received by ${displayValue}. ${targetLine}` : targetLine,
     trigger,
     sameEnemyLine(modifier),
     sourceScopeLine(modifier, channel),
     durationLine(modifier),
     staggerExclusionLine(modifier),
-    `Allied ${channel} can benefit only when its target overlaps with that enemy; enemy target overlap remains conditional and is not guaranteed.`,
+    allMatchingFacts.length > 0
+      ? `Allied ${channel} can benefit only when its target overlaps with an affected enemy; enemy target overlap remains conditional and is not guaranteed.`
+      : `Allied ${channel} can benefit only when its target overlaps with that enemy; enemy target overlap remains conditional and is not guaranteed.`,
   ].filter(Boolean).join(' ');
 }
 
@@ -3039,8 +3442,29 @@ function enemyVulnerabilityDetailLines(modifier: ModifierCapability, providerNam
     sourceScopeLine(modifier, channel),
     durationLine(modifier),
     staggerExclusionLine(modifier),
+    ...enemyAllMatchingSelectorFacts(modifier),
     'Enemy target overlap remains conditional and is not guaranteed.',
   ].filter((line): line is string => Boolean(line));
+}
+
+function enemyAllMatchingSelectorFacts(modifier: ModifierCapability): string[] {
+  if (modifier.targetSelector.selection !== 'all-matching-condition' || modifier.targetSelector.side !== 'enemy') {
+    return [];
+  }
+  const threshold = modifier.conditions.find((condition) => condition.thresholdPercent !== null && condition.thresholdPercent !== undefined);
+  const comparison = threshold?.comparison === 'above'
+    ? 'above'
+    : threshold?.comparison === 'below'
+      ? 'below'
+      : null;
+  const thresholdLine = comparison && threshold?.thresholdPercent !== null && threshold?.thresholdPercent !== undefined
+    ? `Applies to all enemies currently ${comparison} ${threshold.thresholdPercent}% maximum Troop Capacity.`
+    : 'Applies to all enemies matching the source condition.';
+  return [
+    thresholdLine,
+    'All matching enemies are affected; no one enemy is selected from the qualifying set.',
+    'Zero, one, two, or three enemies may qualify; enemy identities remain unknown.',
+  ];
 }
 
 function successfulStatusTriggerLine(modifier: ModifierCapability, providerName: string): string | null {
@@ -3803,6 +4227,42 @@ function targetReferenceFacts(effect: AbilityEffect): string[] {
   );
 }
 
+function referencedEffectTargetReferenceFacts(schedule: AbilitySchedule, effect: AbilityEffect): string[] {
+  const referencedIds = uniqueOrdered((effect.targetSelection?.references ?? [])
+    .map((reference) => reference.referencedEffectId)
+    .filter((id): id is string => Boolean(id)));
+  return referencedIds.flatMap((referencedId) => {
+    const referencedEffect = schedule.effects.flatMap(derivableEffects).find((candidate) => candidate.id === referencedId);
+    return referencedEffect ? targetReferenceFacts(referencedEffect) : [];
+  });
+}
+
+function perTargetCheckFacts(
+  effect: AbilityEffect,
+  schedule: AbilitySchedule,
+  options: CapabilityOptions,
+): string[] {
+  if (!effect.perTargetEffectCheck && effect.activationRoll?.scope !== 'independent-per-target') {
+    return [];
+  }
+  const referenceCount = effect.targetSelection?.references.length ?? 0;
+  const targetCount = effect.perTargetEffectCheck?.targetCount ??
+    (effect.activationRoll?.scope === 'independent-per-target' && referenceCount > 1 ? referenceCount : targetForEffect(effect).count);
+  const level = options.previewMaxRankInteractions ? 5 : null;
+  const chance = effect.activationRoll?.chanceFixed ??
+    rankedValueForHabitLevel(effect.activationRoll?.chanceByHabitLevel ?? [], level ?? 1)?.value ??
+    schedule.activationRoll?.chanceFixed ??
+    rankedValueForHabitLevel(schedule.activationRoll?.chanceByHabitLevel ?? [], level ?? 1)?.value ??
+    schedule.triggerChanceFixed ??
+    null;
+  const chanceLevel = effect.activationRoll?.chanceByHabitLevel.length ? (level ?? 1) : null;
+  return [
+    targetCount !== null ? `Independent per-target checks: ${targetCount}.` : 'Independent per-target checks: target count unresolved.',
+    chance !== null ? `Per-target check chance: ${chance}%${chanceLevel ? ` at effective Habit Level ${chanceLevel}` : ''}.` : null,
+    effect.activationRoll?.scope === 'independent-per-target' ? 'Checks are independent; chances are not combined into one roll.' : null,
+  ].filter((fact): fact is string => Boolean(fact));
+}
+
 function sharedTargetFact(ability: AbilityDefinition, effect: AbilityEffect): string | null {
   const sameTargetReference = effect.targetSelection?.references.find((reference) => reference.kind === 'same-target-as-effect');
   if (sameTargetReference?.referencedEffectId) {
@@ -3987,11 +4447,12 @@ function modifierCapabilitiesForEffect(
       id: `${ability.id}-${effect.id}-fire-damage-stack-modifier`,
       label: `${ability.name}: Fire Damage Dealt per Stolen Flock stack`,
       role: 'self-amplification',
-      value: effect.stack.valuePerStackFixed,
+      value: stackValuePerStack(effect.stack),
+      rankedValues: effect.stack.valuePerStackByHabitLevel,
       unit: 'stack',
       sourceScope: 'all-qualifying-sources',
       stackMaximum: effect.stack.maximumStacks,
-      valuePerStack: effect.stack.valuePerStackFixed,
+      valuePerStack: stackValuePerStack(effect.stack),
       conditional: true,
     });
   }
@@ -4001,11 +4462,12 @@ function modifierCapabilitiesForEffect(
       id: `${ability.id}-${effect.id}-physical-damage-stack-modifier`,
       label: `${ability.name}: Physical Damage Dealt per Rallying Flame stack`,
       role: 'self-amplification',
-      value: effect.stack.valuePerStackFixed,
+      value: stackValuePerStack(effect.stack),
+      rankedValues: effect.stack.valuePerStackByHabitLevel,
       unit: 'stack',
       sourceScope: 'all-qualifying-sources',
       stackMaximum: effect.stack.maximumStacks,
-      valuePerStack: effect.stack.valuePerStackFixed,
+      valuePerStack: stackValuePerStack(effect.stack),
       conditional: true,
     });
   }
@@ -4015,11 +4477,12 @@ function modifierCapabilitiesForEffect(
       id: `${ability.id}-${effect.id}-tactical-damage-stack-modifier`,
       label: `${ability.name}: Tactical Damage Dealt per Spreading Blaze stack`,
       value: effect.stack.valuePerStackFixed,
+      rankedValues: effect.stack.valuePerStackByHabitLevel,
       unit: 'stack',
       sourceScope: 'all-qualifying-sources',
       targetSelector: targetForEffect(effect),
       stackMaximum: effect.stack.maximumStacks,
-      valuePerStack: effect.stack.valuePerStackFixed,
+      valuePerStack: stackValuePerStack(effect.stack),
       conditional: true,
       conditions: [
         ...conditionsForEffect(effect, schedule),
@@ -4153,6 +4616,10 @@ function baseModifier(
     activationChanceByHabitLevel: activationChanceByHabitLevel(schedule, effect),
     durationRounds: effect.durationRounds,
   };
+}
+
+function stackValuePerStack(stack: StackConfiguration): number | null {
+  return stack.valuePerStackFixed ?? rankedValueForHabitLevel(stack.valuePerStackByHabitLevel, 1)?.value ?? null;
 }
 
 function activationGroupId(schedule: AbilitySchedule, effect: AbilityEffect): string | null {
@@ -4571,11 +5038,12 @@ function targetForEffect(effect: AbilityEffect): AbilityTarget {
               : effect.targetScope === 'any-lane'
                 ? 'any'
                 : 'unknown';
-  const count = selection === 'all-matching-condition'
+  const count = effect.perTargetEffectCheck?.targetCount ??
+    (selection === 'all-matching-condition'
     ? null
     : selection === 'highest-stat' || selection === 'highest-resource' || selection === 'lowest-resource' || selection === 'one-eligible-adjacent'
       ? 1
-      : effect.targetCount ?? inferTargetCount(effect.target);
+      : effect.targetCount ?? inferTargetCount(effect.target));
   return {
     side: targetSideForEffect(effect),
     scope: effect.targetScope === 'opposing-position' ? 'same-lane' : effect.targetScope,
@@ -4893,6 +5361,25 @@ function providerRequirementTraces(
       sourceKind: abilitySourceKind(dragons, modifier.dragonId, modifier.abilityId),
     }, options),
   ];
+}
+
+function statusOutputRequirementTraces(
+  output: StatusOutputCapability,
+  dragon: Dragon,
+  dragons: Dragon[],
+  options: CapabilityOptions,
+): RequirementTrace[] {
+  return availabilityRequirements({
+    dragonId: output.dragonId,
+    abilityId: output.abilityId,
+    dragonName: dragon.name,
+    abilityName: output.abilityName,
+    unlockStarRank: output.unlockStarRank,
+    minimumDragonLevel: output.minimumDragonLevel,
+    requiredHabitLevel: output.requiredHabitLevel,
+    evidenceIds: output.evidenceIds,
+    sourceKind: abilitySourceKind(dragons, output.dragonId, output.abilityId),
+  }, options);
 }
 
 function outputRequirementTraces(output: OutputCapability, options: CapabilityOptions): RequirementTrace[] {
@@ -5742,6 +6229,8 @@ function conditionsForEffect(effect: AbilityEffect, schedule?: AbilitySchedule):
       unresolved: condition.unresolved,
       kind: condition.kind,
       subject: condition.subject,
+      statusId: condition.statusId,
+      statusCategoryId: condition.statusCategoryId,
       comparison: condition.comparison,
       thresholdPercent: condition.thresholdPercent,
     })),
