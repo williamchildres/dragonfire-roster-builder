@@ -3964,7 +3964,7 @@
   "firstObservedInGame": null,
   "format": "dragonfire-dragon-profile",
   "gameVersion": null,
-  "generatedAt": "2026-06-27T02:03:56.033Z",
+  "generatedAt": "2026-06-27T03:02:39.428Z",
   "habits": [
     {
       "abilityClass": "passive",
@@ -5610,6 +5610,103 @@
       "valuePerStack": null
     },
     {
+      "abilityId": "syrax-strategic-revival",
+      "abilityName": "Strategic Revival",
+      "activationChanceByHabitLevel": [
+        {
+          "level": 1,
+          "unit": "percent",
+          "value": 40
+        },
+        {
+          "level": 2,
+          "unit": "percent",
+          "value": 52
+        },
+        {
+          "level": 3,
+          "unit": "percent",
+          "value": 64
+        },
+        {
+          "level": 4,
+          "unit": "percent",
+          "value": 80
+        },
+        {
+          "level": 5,
+          "unit": "percent",
+          "value": 100
+        }
+      ],
+      "activationChanceFixed": null,
+      "activationGroupId": null,
+      "availability": {
+        "canonical": "canonical-locked",
+        "notes": [
+          "Future at Star Rank 6.",
+          "Not collected in observed account."
+        ],
+        "observedAccount": "observed-unavailable",
+        "reportLabel": "Future at Star Rank 6; not collected in observed account",
+        "userRoster": "unknown"
+      },
+      "channel": "damage-received",
+      "combatLogConfirmed": false,
+      "conditional": true,
+      "conditions": [
+        {
+          "description": "Activation chance depends on Habit Level for specific rounds.",
+          "evidenceIds": [],
+          "id": "strategic-revival-recovery-rounds-activation-chance",
+          "label": "Activation chance depends on Habit Level for specific rounds.",
+          "unresolved": false
+        }
+      ],
+      "confidence": "confirmed",
+      "currentlyAvailable": false,
+      "damageScope": null,
+      "direction": "received",
+      "directlyVerified": true,
+      "dragonId": "syrax",
+      "durationRounds": 2,
+      "evidenceIds": [
+        "syrax-strategic-revival-2026-06-24"
+      ],
+      "futureAvailable": true,
+      "id": "syrax-strategic-revival-strategic-revival-resistance-damage-received-received-modifier",
+      "label": "Strategic Revival: Resistance",
+      "minimumDragonLevel": null,
+      "operation": "decrease",
+      "providerRequirements": [],
+      "rankedValues": [],
+      "recipientRequirements": [],
+      "requiredHabitLevel": 1,
+      "role": "ally-support",
+      "sourceEffectId": "strategic-revival-resistance",
+      "sourceScope": "unknown",
+      "stackMaximum": null,
+      "statusId": "resistance",
+      "targetSelector": {
+        "comparisonDirection": "lowest",
+        "comparisonPool": null,
+        "count": 1,
+        "includesCaster": null,
+        "position": null,
+        "scope": "any-lane",
+        "selection": "lowest-resource",
+        "selectionResource": "current-troops",
+        "selectionStat": null,
+        "sharedSelectionGroupId": null,
+        "side": "ally",
+        "tieBehavior": null
+      },
+      "unit": "percent",
+      "unlockStarRank": 6,
+      "value": 20,
+      "valuePerStack": null
+    },
+    {
       "abilityId": "syrax-tactical-inferno",
       "abilityName": "Tactical Inferno",
       "activationChanceByHabitLevel": [],
@@ -6628,8 +6725,8 @@
   "rosterSourceStatus": "official-website",
   "slug": "syrax",
   "source": {
-    "branch": "fix/ally-targeting-and-output-coverage",
-    "commit": "834b89f4cb65edf81419b7e8ff7300482fbbe278",
+    "branch": "fix/ordered-targets-and-analysis-integrity",
+    "commit": "dacc02aebc8abb0a7bcd28502b3e4677ef83e578",
     "databaseVersion": "0.6.2",
     "dataSchemaVersion": 12,
     "gameBuild": "26.6.53509",

@@ -3899,7 +3899,7 @@
   "firstObservedInGame": "2026-06-22",
   "format": "dragonfire-dragon-profile",
   "gameVersion": null,
-  "generatedAt": "2026-06-27T02:03:56.033Z",
+  "generatedAt": "2026-06-27T03:02:39.428Z",
   "habits": [
     {
       "abilityClass": "passive",
@@ -5404,7 +5404,7 @@
         }
       ],
       "activationChanceFixed": null,
-      "activationGroupId": "instill-fear-target",
+      "activationGroupId": "instill-fear-each-round-shared-activation",
       "availability": {
         "canonical": "canonical-locked",
         "notes": [
@@ -5501,7 +5501,7 @@
         }
       ],
       "activationChanceFixed": null,
-      "activationGroupId": "instill-fear-target",
+      "activationGroupId": "instill-fear-each-round-shared-activation",
       "availability": {
         "canonical": "canonical-locked",
         "notes": [
@@ -5585,7 +5585,7 @@
       },
       "channel": "stat",
       "combatLogConfirmed": false,
-      "conditional": true,
+      "conditional": false,
       "conditions": [],
       "confidence": "confirmed",
       "currentlyAvailable": false,
@@ -5674,7 +5674,7 @@
       },
       "channel": "stat",
       "combatLogConfirmed": false,
-      "conditional": true,
+      "conditional": false,
       "conditions": [],
       "confidence": "confirmed",
       "currentlyAvailable": false,
@@ -5776,7 +5776,7 @@
         }
       ],
       "activationChanceFixed": null,
-      "activationGroupId": "darkening-fear-target",
+      "activationGroupId": "darkening-fear-each-round-shared-activation",
       "availability": {
         "canonical": "canonical-locked",
         "notes": [
@@ -5873,7 +5873,7 @@
         }
       ],
       "activationChanceFixed": null,
-      "activationGroupId": "darkening-fear-target",
+      "activationGroupId": "darkening-fear-each-round-shared-activation",
       "availability": {
         "canonical": "canonical-locked",
         "notes": [
@@ -6610,8 +6610,8 @@
   "rosterSourceStatus": "in-game-verified-pending-official-site",
   "slug": "daemoros",
   "source": {
-    "branch": "fix/ally-targeting-and-output-coverage",
-    "commit": "834b89f4cb65edf81419b7e8ff7300482fbbe278",
+    "branch": "fix/ordered-targets-and-analysis-integrity",
+    "commit": "dacc02aebc8abb0a7bcd28502b3e4677ef83e578",
     "databaseVersion": "0.6.2",
     "dataSchemaVersion": 12,
     "gameBuild": "26.6.53509",
@@ -6706,7 +6706,7 @@
         }
       ],
       "activationChanceFixed": null,
-      "activationGroupId": "instill-fear-target",
+      "activationGroupId": "instill-fear-each-round-shared-activation",
       "availability": {
         "canonical": "canonical-locked",
         "notes": [
@@ -6928,7 +6928,7 @@
         }
       ],
       "activationChanceFixed": null,
-      "activationGroupId": "darkening-fear-target",
+      "activationGroupId": "darkening-fear-each-round-shared-activation",
       "availability": {
         "canonical": "canonical-locked",
         "notes": [

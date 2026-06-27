@@ -3772,7 +3772,7 @@
   "firstObservedInGame": null,
   "format": "dragonfire-dragon-profile",
   "gameVersion": null,
-  "generatedAt": "2026-06-27T02:03:56.033Z",
+  "generatedAt": "2026-06-27T03:02:39.428Z",
   "habits": [
     {
       "abilityClass": "passive",
@@ -5645,6 +5645,114 @@
       "unlockStarRank": 10,
       "value": 20,
       "valuePerStack": null
+    },
+    {
+      "abilityId": "seasmoke-loyal-bond",
+      "abilityName": "Loyal Bond",
+      "activationChanceByHabitLevel": [
+        {
+          "level": 1,
+          "unit": "percent",
+          "value": 10
+        },
+        {
+          "level": 2,
+          "unit": "percent",
+          "value": 13
+        },
+        {
+          "level": 3,
+          "unit": "percent",
+          "value": 16
+        },
+        {
+          "level": 4,
+          "unit": "percent",
+          "value": 20
+        },
+        {
+          "level": 5,
+          "unit": "percent",
+          "value": 25
+        }
+      ],
+      "activationChanceFixed": null,
+      "activationGroupId": null,
+      "availability": {
+        "canonical": "canonical-locked",
+        "notes": [
+          "Future at Star Rank 10.",
+          "Not hatched in observed account."
+        ],
+        "observedAccount": "observed-unavailable",
+        "reportLabel": "Future at Star Rank 10; not hatched in observed account",
+        "userRoster": "unknown"
+      },
+      "channel": "damage-received",
+      "combatLogConfirmed": false,
+      "conditional": true,
+      "conditions": [
+        {
+          "description": "Activation chance depends on Habit Level for each round.",
+          "evidenceIds": [],
+          "id": "loyal-bond-resistance-activation-chance",
+          "label": "Activation chance depends on Habit Level for each round.",
+          "unresolved": false
+        },
+        {
+          "comparison": "below",
+          "description": "Target is below 50% Troop Capacity.",
+          "evidenceIds": [],
+          "id": "target-below-50-troop-capacity",
+          "kind": "target-below-troop-capacity-threshold",
+          "label": "Target is below 50% Troop Capacity.",
+          "subject": "target",
+          "thresholdPercent": 50,
+          "unresolved": false
+        }
+      ],
+      "confidence": "confirmed",
+      "currentlyAvailable": false,
+      "damageScope": null,
+      "direction": "received",
+      "directlyVerified": true,
+      "dragonId": "seasmoke",
+      "durationRounds": 2,
+      "evidenceIds": [
+        "seasmoke-loyal-bond-2026-06-23"
+      ],
+      "futureAvailable": true,
+      "id": "seasmoke-loyal-bond-loyal-bond-resistance-effect-damage-received-received-modifier",
+      "label": "Loyal Bond: Resistance",
+      "minimumDragonLevel": null,
+      "operation": "decrease",
+      "providerRequirements": [],
+      "rankedValues": [],
+      "recipientRequirements": [],
+      "requiredHabitLevel": 1,
+      "role": "ally-support",
+      "sourceEffectId": "loyal-bond-resistance-effect",
+      "sourceScope": "unknown",
+      "stackMaximum": null,
+      "statusId": "resistance",
+      "targetSelector": {
+        "comparisonDirection": null,
+        "comparisonPool": null,
+        "count": 2,
+        "includesCaster": false,
+        "position": null,
+        "scope": "any-lane",
+        "selection": "any",
+        "selectionResource": null,
+        "selectionStat": null,
+        "sharedSelectionGroupId": null,
+        "side": "ally",
+        "tieBehavior": null
+      },
+      "unit": "percent",
+      "unlockStarRank": 10,
+      "value": 20,
+      "valuePerStack": null
     }
   ],
   "modifierRoles": [
@@ -6418,8 +6526,8 @@
   "rosterSourceStatus": "official-website",
   "slug": "seasmoke",
   "source": {
-    "branch": "fix/ally-targeting-and-output-coverage",
-    "commit": "834b89f4cb65edf81419b7e8ff7300482fbbe278",
+    "branch": "fix/ordered-targets-and-analysis-integrity",
+    "commit": "dacc02aebc8abb0a7bcd28502b3e4677ef83e578",
     "databaseVersion": "0.6.2",
     "dataSchemaVersion": 12,
     "gameBuild": "26.6.53509",

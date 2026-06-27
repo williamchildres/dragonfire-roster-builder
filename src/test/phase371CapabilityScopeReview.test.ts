@@ -65,9 +65,20 @@ describe('Phase 3.7.1 cross-dragon protection', () => {
 
     expect(traces.some((trace) => trace.modifierRole === 'self-amplification' && trace.recipientDragonId !== trace.sourceDragonId)).toBe(false);
     expect(traces.some((trace) => trace.modifierRole === 'enemy-debuff' && trace.recipientDragonId !== null)).toBe(false);
-    expect(traces.some((trace) => trace.sourceAbilityId === 'sheepstealer-stolen-flock')).toBe(false);
-    expect(traces.some((trace) => trace.sourceAbilityId === 'vermax-warriors-zeal' && trace.matchKind === 'outgoing-effect-amplification')).toBe(false);
-    expect(traces.some((trace) => trace.sourceAbilityId === 'vermax-rallying-flame' && trace.channel === 'physical-damage')).toBe(false);
+    expect(traces.some((trace) =>
+      trace.sourceAbilityId === 'sheepstealer-stolen-flock' &&
+      trace.recipientDragonId !== trace.sourceDragonId
+    )).toBe(false);
+    expect(traces.some((trace) =>
+      trace.sourceAbilityId === 'vermax-warriors-zeal' &&
+      trace.matchKind === 'outgoing-effect-amplification' &&
+      trace.recipientDragonId !== trace.sourceDragonId
+    )).toBe(false);
+    expect(traces.some((trace) =>
+      trace.sourceAbilityId === 'vermax-rallying-flame' &&
+      trace.channel === 'physical-damage' &&
+      trace.recipientDragonId !== trace.sourceDragonId
+    )).toBe(false);
   });
 });
 

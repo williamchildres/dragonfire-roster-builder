@@ -483,6 +483,7 @@ function summarizeTrace(
   if (target.isCandidate && trace.channel) {
     return [
       `${formatToken(trace.channel)} support; one of ${numberWord(target.candidateTotal ?? 0)} eligible recipients.`,
+      ...targetSelectionEffectLines(trace),
     ];
   }
   if (isAllMatchingTargetSelection(trace) && trace.channel) {
@@ -495,7 +496,10 @@ function summarizeTrace(
   }
   if (trace.targetSelectionGroup && trace.channel) {
     const targetNames = target.targetLabel ? `: ${target.targetLabel}` : '';
-    return [`One ${formatToken(trace.channel).replace(' Damage', '')} recipient is selected${targetNames}.`];
+    return [
+      `One ${targetSelectionRecipientNoun(trace)} recipient is selected${targetNames}.`,
+      ...targetSelectionEffectLines(trace),
+    ];
   }
   if (/First-Strike enables Infernal Burst/i.test(trace.title) || /First-Strike.*Infernal Burst/i.test(detail)) {
     return ['May receive First-Strike; Infernal Burst deals 1.5× while active.'];
@@ -556,6 +560,33 @@ function summarizeTrace(
     return [`${channel} support${recipient ? ` for ${recipient.name}` : ''}.`];
   }
   return [detail.replaceAll('1.5x', '1.5×')];
+}
+
+function targetSelectionRecipientNoun(trace: SynergyTrace): string {
+  if (trace.channel === 'damage-dealt') {
+    return 'Damage Dealt';
+  }
+  if (trace.channel === 'fire-damage' || trace.channel === 'physical-damage' || trace.channel === 'tactical-damage') {
+    return formatToken(trace.channel).replace(/\s+Damage$/i, '');
+  }
+  if (trace.channel === 'recovery') {
+    return 'Recovery';
+  }
+  if (trace.targetSelectorSummary?.includes('caster excluded')) {
+    return 'other ally';
+  }
+  return 'ally';
+}
+
+function targetSelectionEffectLines(trace: SynergyTrace): string[] {
+  return unique([
+    trace.channel === 'stat' ? formatStatEffects(trace.effects) : null,
+    trace.effects.find((effect) => /Damage Received (?:decrease|reduction)|Damage Received -/i.test(effect)),
+    trace.effects.find((effect) => /Activation chance:/i.test(effect)),
+    trace.effects.find((effect) => /Timing:/i.test(effect)),
+    trace.effects.find((effect) => /Enhanced by/i.test(effect)),
+    trace.effects.find((effect) => /Duration:/i.test(effect)),
+  ].filter((line): line is string => Boolean(line)));
 }
 
 function deriveCommandSummary(
@@ -890,7 +921,7 @@ function aggregateInteractions(
             interaction.sourceDragonId,
             interaction.abilityName,
             interaction.recipientDragonId ?? interaction.targetLabel ?? 'team',
-            interactionMechanicKey(interaction),
+            receivesInteractionMechanicKey(interaction),
             interaction.state,
           ].join('|')
         : [interaction.sourceDragonId, interaction.abilityName, interactionMechanicKey(interaction), interaction.state].join('|');
@@ -955,8 +986,14 @@ function mergeInteractions(
   const uniqueTitles = unique(items.map((item) => item.title));
   const uniqueEffectTitles = unique(items.map((item) => item.effectTitle));
   const summaryLines = mergedSummaryLines(items, direction, targetNames, options);
-  const details = options.exactRecipientSet ? [] : unique(items.flatMap((item) => item.details));
-  const effects = options.exactRecipientSet ? [] : unique(items.flatMap((item) => item.effects));
+  const details = options.exactRecipientSet
+    ? []
+    : unique(items.flatMap((item) => item.details)
+      .map((detail) => omitNormalCardSummarySentences(detail, summaryLines))
+      .filter((detail): detail is string => Boolean(detail)));
+  const effects = options.exactRecipientSet
+    ? []
+    : sanitizeNormalCardEffects(items.flatMap((item) => item.effects), summaryLines);
   const mergedCandidateTotal =
     Math.max(...items.map((item) => item.candidateTotal ?? 0)) ||
     (!options.exactRecipientSet && direction === 'provides' && targetNames.length > 1 ? targetNames.length : first.candidateTotal);
@@ -1052,6 +1089,10 @@ function synthesizedExactRecipientEffectLines(
     if (defensiveStack) {
       return [defensiveStack];
     }
+    const damageReceivedSupport = synthesizeDamageReceivedSupportLine(first, text, targetNames);
+    if (damageReceivedSupport) {
+      return [damageReceivedSupport];
+    }
     const enemyVulnerability = synthesizeEnemyVulnerabilityBenefitLine(first, text, targetNames);
     if (enemyVulnerability) {
       return [enemyVulnerability];
@@ -1059,6 +1100,38 @@ function synthesizedExactRecipientEffectLines(
     const summaryLines = unique(group.flatMap((item) => item.summaryLines));
     return summaryLines.map((line) => normalizeGroupedRecipientLine(line, targetNames));
   }));
+}
+
+function receivesInteractionMechanicKey(interaction: FormationCardInteraction): string {
+  if (
+    interaction.abilityName === 'Blazing Fury' &&
+    (interaction.targetSelectionMode !== null || /First-Strike enables Infernal Burst/i.test(interaction.title))
+  ) {
+    return 'blazing-fury-recipient-combo';
+  }
+  return interactionMechanicKey(interaction);
+}
+
+function synthesizeDamageReceivedSupportLine(
+  item: FormationCardInteraction,
+  text: string,
+  targetNames: string[],
+): string | null {
+  if (!/Damage Received support|Damage Received reduction/i.test(text) || /Grants 1 .+ stack/i.test(text)) {
+    return null;
+  }
+  const value = text.match(/Damage Received decrease ([-+]?\d+(?:\.\d+)?%?)/i)?.[1] ??
+    text.match(/Damage Received reduction: ([-+]?\d+(?:\.\d+)?%?)/i)?.[1];
+  if (!value) {
+    return null;
+  }
+  const timing = text.match(/Timing: [^.]+\./i)?.[0] ?? null;
+  const duration = text.match(/Duration: [^.]+\./i)?.[0] ?? null;
+  return [
+    `${item.abilityName} reduces Damage Received for ${joinEnglishList(targetNames)} by ${value}.`,
+    timing,
+    duration,
+  ].filter(Boolean).join(' ');
 }
 
 function synthesizeDefensiveStackLine(
@@ -1157,6 +1230,28 @@ function interactionText(item: FormationCardInteraction): string {
 
 function interactionMechanicKey(interaction: FormationCardInteraction): string {
   const text = interactionText(interaction);
+  if (
+    interaction.abilityName === 'Blazing Fury' &&
+    (interaction.targetSelectionMode !== null || /First-Strike enables Infernal Burst/i.test(interaction.title))
+  ) {
+    return 'blazing-fury-recipient-combo';
+  }
+  if (interaction.targetSelectionMode && (interaction.targetLabel || interaction.candidateTotal !== null || interaction.isCandidate)) {
+    return [
+      'target-selection',
+      interaction.targetSelectionMode,
+      interaction.targetLabel ?? '',
+      interaction.targetSummary ?? '',
+      interaction.state,
+    ].join('::');
+  }
+  if (interaction.targetSummary?.includes('shared group ') && !/Grants 1 .+ stack/i.test(text)) {
+    return [
+      'shared-target',
+      interaction.targetSummary,
+      interaction.state,
+    ].join('::');
+  }
   if (/Enemy .* vulnerability/i.test(interaction.effectTitle) || /vulnerability/i.test(interaction.title)) {
     return [
       interaction.effectTitle,
@@ -1215,7 +1310,12 @@ function canAggregateExactRecipientSet(items: FormationCardInteraction[]): boole
     return false;
   }
   const titles = unique(items.map((item) => item.title));
-  if (titles.length > 1 && !isCompatibleFriendlyImpairmentRecoveryGroup(items) && !isCompatibleEnemyMitigationReductionGroup(items)) {
+  if (
+    titles.length > 1 &&
+    !isCompatibleFriendlyImpairmentRecoveryGroup(items) &&
+    !isCompatibleEnemyMitigationReductionGroup(items) &&
+    !isCompatibleSharedSelectedTargetGroup(items)
+  ) {
     return false;
   }
 
@@ -1253,6 +1353,11 @@ function isCompatibleFriendlyImpairmentRecoveryGroup(items: FormationCardInterac
     textByItem.some((text) => /Recovery Rate|Recovery support/i.test(text)) &&
     textByItem.some((text) => /friendly impairment|Damage Dealt reduction|harm/i.test(text))
   );
+}
+
+function isCompatibleSharedSelectedTargetGroup(items: FormationCardInteraction[]): boolean {
+  const summaries = unique(items.map((item) => item.targetSummary).filter((value): value is string => Boolean(value)));
+  return summaries.length === 1 && /shared group /i.test(summaries[0] ?? '');
 }
 
 function exactRecipientEffectKey(item: FormationCardInteraction): string {
