@@ -203,7 +203,7 @@ const fixedEffect = ({
   calculated = false,
   targetCount = null,
   includesCaster = null,
-  casterEligibility = 'unknown',
+  casterEligibility = undefined,
   perTargetEffectCheck = null,
   activationRoll = null,
   targetSelection = null,
@@ -413,6 +413,10 @@ const createSyrax = (): Dragon => {
     rankedValues: rankedPercents([50, 60, 70, 85, 100]),
     scaling: ['Initiative', 'dragon Level'],
     targetPriority: 'least-current-troops-ally',
+    targetCount: 1,
+    includesCaster: true,
+    casterEligibility: 'eligible-if-targeting-allows',
+    targetSelection: targetSelection({ comparisonStat: 'current-troops', comparisonDirection: 'lowest', comparisonPool: 'ally-side', tieBehavior: 'candidate-group', sharedSelectionGroupId: 'strategic-revival-least-troops-ally' }),
     conditionalMultipliers: [
       multiplier('strategic-revival-slow-1-5x', 1.5, anyEnemySlowCondition, 'Recovery is multiplied by 1.5 if any enemy has Slow.', [
         { level: 1, value: 75, unit: 'percent' },
@@ -429,13 +433,17 @@ const createSyrax = (): Dragon => {
     unit: 'percent',
     durationRounds: 2,
     targetPriority: 'least-current-troops-ally',
+    targetCount: 1,
+    includesCaster: true,
+    casterEligibility: 'eligible-if-targeting-allows',
+    activationRoll: roll({ scope: 'effect', chanceByHabitLevel: rankedPercents([40, 52, 64, 80, 100]), description: 'Resistance chance applies to the same least-current-troops Ally selected for Recovery.' }),
+    targetSelection: targetSelection({ comparisonStat: 'current-troops', comparisonDirection: 'lowest', comparisonPool: 'ally-side', tieBehavior: 'candidate-group', sharedSelectionGroupId: 'strategic-revival-least-troops-ally' }),
     notes: ['Resistance reduces Damage Received.'],
   });
   const strategicRevivalSchedule = schedule({
     id: 'strategic-revival-recovery-rounds',
     timing: 'specific-rounds',
     rounds: [2, 5, 8],
-    triggerChanceByHabitLevel: rankedPercents([40, 52, 64, 80, 100]),
     targetPriority: 'least-current-troops-ally',
     effects: [strategicRevivalRecovery, strategicRevivalResistance],
   });
@@ -1690,9 +1698,9 @@ const createVermax = (): Dragon => {
       dragonId: 'vermax', id: 'vermax-trial-by-flame', kind: 'habit', name: 'Trial by Flame', abilityClass: 'passive', unlockStarRank: 2,
       rawDescription: 'Start of Each Round: reduce Fire Damage Received for allies below strict Troop Capacity thresholds until end of current round.',
       schedules: [
-        schedule({ id: 'trial-by-flame-below-75', timing: 'start-of-each-round', conditions: [below75], effects: [fixedEffect({ id: 'trial-below-75-fire-reduction', type: 'Fire Damage Received Down', target: 'All allies below 75% Troop Capacity', targetScope: 'any-lane', magnitude: null, unit: 'percent', rankedValues: rankedPercents([5, 6, 7, 8.5, 10]), duration: 'Until end of current round', conditions: [below75], targetPriority: 'all-allies-matching-threshold' })] }),
-        schedule({ id: 'trial-by-flame-below-50', timing: 'start-of-each-round', conditions: [below50], effects: [fixedEffect({ id: 'trial-below-50-fire-reduction', type: 'Fire Damage Received Down', target: 'All allies below 50% Troop Capacity', targetScope: 'any-lane', magnitude: null, unit: 'percent', rankedValues: rankedPercents([10, 12, 14, 17, 20]), duration: 'Until end of current round', conditions: [below50], targetPriority: 'all-allies-matching-threshold' })] }),
-        schedule({ id: 'trial-by-flame-below-25', timing: 'start-of-each-round', conditions: [below25], effects: [fixedEffect({ id: 'trial-below-25-fire-reduction', type: 'Fire Damage Received Down', target: 'All allies below 25% Troop Capacity', targetScope: 'any-lane', magnitude: null, unit: 'percent', rankedValues: rankedPercents([15, 18, 21, 25.5, 30]), duration: 'Until end of current round', conditions: [below25], targetPriority: 'all-allies-matching-threshold' })] }),
+        schedule({ id: 'trial-by-flame-below-75', timing: 'start-of-each-round', conditions: [below75], effects: [fixedEffect({ id: 'trial-below-75-fire-reduction', type: 'Fire Damage Received Down', target: 'All allies below 75% Troop Capacity', targetScope: 'any-lane', magnitude: null, unit: 'percent', rankedValues: rankedPercents([5, 6, 7, 8.5, 10]), duration: 'Until end of current round', conditions: [below75], targetPriority: 'all-allies-matching-threshold', casterEligibility: 'excluded', includesCaster: false })] }),
+        schedule({ id: 'trial-by-flame-below-50', timing: 'start-of-each-round', conditions: [below50], effects: [fixedEffect({ id: 'trial-below-50-fire-reduction', type: 'Fire Damage Received Down', target: 'All allies below 50% Troop Capacity', targetScope: 'any-lane', magnitude: null, unit: 'percent', rankedValues: rankedPercents([10, 12, 14, 17, 20]), duration: 'Until end of current round', conditions: [below50], targetPriority: 'all-allies-matching-threshold', casterEligibility: 'excluded', includesCaster: false })] }),
+        schedule({ id: 'trial-by-flame-below-25', timing: 'start-of-each-round', conditions: [below25], effects: [fixedEffect({ id: 'trial-below-25-fire-reduction', type: 'Fire Damage Received Down', target: 'All allies below 25% Troop Capacity', targetScope: 'any-lane', magnitude: null, unit: 'percent', rankedValues: rankedPercents([15, 18, 21, 25.5, 30]), duration: 'Until end of current round', conditions: [below25], targetPriority: 'all-allies-matching-threshold', casterEligibility: 'excluded', includesCaster: false })] }),
       ],
       powerByHabitLevel: [],
       tags: ['FIRE_DAMAGE_RECEIVED_DOWN'],

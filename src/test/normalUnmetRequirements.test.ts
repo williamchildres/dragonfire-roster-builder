@@ -163,7 +163,7 @@ describe('normal unmet requirement summaries', () => {
   });
 
   it('formats grouped sibling stat values without collapsing known values to unknown', () => {
-    const reactive = normalTraces('7', preview).find((trace) =>
+    const reactive = analyzeFormationTraces(formations['7']!, dragons, preview).find((trace) =>
       trace.sourceAbilityId === 'vermax-reactive-instincts' &&
       trace.ruleId === 'direct-stat-support'
     );
@@ -184,7 +184,7 @@ describe('normal unmet requirement summaries', () => {
       trace.ruleId === 'direct-stat-support'
     );
 
-    expect(reactive?.explanation).toContain("Vermax's Reactive Instincts can increase Syrax's Instinct by +36% and Initiative by +18%.");
+    expect(reactive?.explanation).toContain("Vermax's Reactive Instincts can increase Vermax's Instinct by +36% and Initiative by +18%.");
     expect(reactive?.explanation).not.toContain('unknown%');
     expect(reactive?.modifierCapabilityIds).toEqual(expect.arrayContaining([
       'vermax-reactive-instincts-reactive-instincts-instinct-stat-dealt-modifier',

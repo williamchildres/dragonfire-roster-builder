@@ -4,6 +4,7 @@ import type { AbilityDefinition } from '../models/dragon';
 import type { FormationAnalysisInput, SynergyTrace } from '../models/synergy';
 import { buildFormationCardPresentation } from '../services/formationCardAnalysis';
 import {
+  deriveOutputCapabilities,
   deriveModifierCapabilities,
   deriveStatusOutputCapabilities,
 } from '../services/effectCapabilities';
@@ -41,6 +42,30 @@ function currentRoster() {
 
 function traces(formation: FormationAnalysisInput, usePreview = false): SynergyTrace[] {
   return analyzeFormationTraces(formation, dragons, usePreview ? { ...preview, roster: currentRoster() } : { dragonLevels: currentLevels, roster: currentRoster() });
+}
+
+const legacyFormation: FormationAnalysisInput = { 'left-flank': 'venator', vanguard: 'vhagar', 'right-flank': 'syrax' };
+
+function legacyRoster() {
+  const roster = createEmptyRoster(dragons);
+  for (const dragonId of ['venator', 'vhagar', 'syrax']) {
+    const entry = roster[dragonId];
+    if (!entry) {
+      continue;
+    }
+    entry.owned = true;
+    entry.collection.state = 'hatched';
+    entry.starRank = 10;
+    entry.reignLevel = 26;
+  }
+  return roster;
+}
+
+function legacyTraces(): SynergyTrace[] {
+  return analyzeFormationTraces(legacyFormation, dragons, {
+    dragonLevels: { venator: 26, vhagar: 26, syrax: 26 },
+    roster: legacyRoster(),
+  });
 }
 
 function lockedHabitIds(): Set<string> {
@@ -386,5 +411,95 @@ describe('legendary formation analysis regression fixes', () => {
       comparisonPool: 'enemy-side',
     });
     expect(vhagar.statusOutputs.filter((status) => status.abilityId === 'vhagar-eclipse-cover').map((status) => status.statusId)).toEqual(expect.arrayContaining(['advantage', 'weakened']));
+  });
+
+  it('keeps Strategic Revival as shared least-troops candidate Recovery and Resistance', () => {
+    const allTraces = legacyTraces();
+    const strategic = allTraces.filter((trace) => trace.sourceAbilityId === 'syrax-strategic-revival');
+    const candidateGroups = strategic.filter((trace) => trace.targetSelectionGroup?.targetCount === 1);
+    const recoveryGroup = candidateGroups.find((trace) => trace.channel === 'recovery');
+    const resistanceGroup = candidateGroups.find((trace) => trace.channel === 'damage-received');
+
+    expect(recoveryGroup?.recipientDragonId).toBeNull();
+    expect(recoveryGroup?.status).toBe('potential');
+    expect(recoveryGroup?.targetSelectionGroup?.targetCount).toBe(1);
+    expect(recoveryGroup?.targetSelectionGroup?.selectionUncertain).toBe(true);
+    expect(recoveryGroup?.targetSelectionGroup?.selectionResource).toBe('current-troops');
+    expect(recoveryGroup?.targetSelectionGroup?.eligibleRecipientDragonIds).toEqual(['venator', 'vhagar', 'syrax']);
+    expect(resistanceGroup?.recipientDragonId).toBeNull();
+    expect(resistanceGroup?.status).toBe('potential');
+    expect(resistanceGroup?.targetSelectionGroup?.targetCount).toBe(1);
+    expect(resistanceGroup?.targetSelectionGroup?.selectionUncertain).toBe(true);
+    expect(resistanceGroup?.targetSelectionGroup?.selectionResource).toBe('current-troops');
+    expect(resistanceGroup?.targetSelectionGroup?.eligibleRecipientDragonIds).toEqual(['venator', 'vhagar', 'syrax']);
+    const directStrategic = strategic.filter((trace) => trace.ruleId === 'ally-output-support' || trace.ruleId === 'defensive-ally-support');
+    expect(directStrategic.some((trace) => trace.recipientDragonId === 'venator' && trace.targetSelectionGroup === undefined)).toBe(false);
+    expect(directStrategic.some((trace) => trace.recipientDragonId === 'vhagar' && trace.targetSelectionGroup === undefined)).toBe(false);
+    expect(directStrategic.some((trace) => trace.recipientDragonId === 'syrax' && trace.targetSelectionGroup === undefined)).toBe(false);
+  });
+
+  it('keeps Strategic Revival Resistance chance effect-specific', () => {
+    const outputs = deriveOutputCapabilities(dragons).filter((item) => item.abilityId === 'syrax-strategic-revival');
+    const modifiers = deriveModifierCapabilities(dragons).filter((item) => item.abilityId === 'syrax-strategic-revival');
+    const recovery = outputs.find((item) => item.sourceEffectId === 'strategic-revival-recovery');
+    const resistance = modifiers.find((item) => item.sourceEffectId === 'strategic-revival-resistance');
+
+    expect(recovery).toMatchObject({ targetCount: 1 });
+    expect(recovery?.conditions.map((condition) => condition.description).join(' ')).not.toContain('40%');
+    expect(resistance?.durationRounds).toBe(2);
+    expect(resistance?.targetSelector.includesCaster).toBe(true);
+    expect(resistance?.targetSelector.sharedSelectionGroupId).toBe('strategic-revival-least-troops-ally');
+    expect(resistance?.activationChanceByHabitLevel?.map((value) => value.value)).toEqual([40, 52, 64, 80, 100]);
+  });
+
+  it('keeps deterministic current Syrax and Vhagar self/team effects active', () => {
+    const allTraces = legacyTraces();
+    const mindful = allTraces.filter((trace) =>
+      trace.sourceAbilityId === 'syrax-mindful-synergy' &&
+      trace.ruleId === 'direct-stat-support'
+    );
+    const flight = allTraces.filter((trace) =>
+      trace.sourceAbilityId === 'syrax-flight-mastery' &&
+      trace.ruleId === 'direct-stat-support' &&
+      trace.channel === 'stat'
+    );
+    const ancestralPhysical = allTraces.find((trace) => trace.sourceAbilityId === 'vhagar-ancestral-shield' && trace.ruleId === 'internal-self-modifier' && trace.modifierCapabilityId?.includes('ancestral-shield-physical-received'));
+    const ancestralTactical = allTraces.find((trace) => trace.sourceAbilityId === 'vhagar-ancestral-shield' && trace.ruleId === 'internal-self-modifier' && trace.modifierCapabilityId?.includes('ancestral-shield-tactical-received'));
+    const ancestralRecovery = allTraces.find((trace) => trace.sourceAbilityId === 'vhagar-ancestral-shield' && trace.ruleId === 'internal-self-modifier' && trace.modifierCapabilityId?.includes('ancestral-shield-recovery-received'));
+
+    expect(mindful.length).toBeGreaterThan(0);
+    expect(flight.length).toBeGreaterThan(0);
+    expect(mindful.every((trace) => trace.status === 'active')).toBe(true);
+    expect(flight.every((trace) => trace.status === 'active')).toBe(true);
+    expect(ancestralPhysical?.status).toBe('active');
+    expect(ancestralTactical?.status).toBe('active');
+    expect(ancestralRecovery?.status).toBe('active');
+  });
+
+  it('keeps Battle Leader as a Venator or Vhagar candidate group', () => {
+    const allTraces = legacyTraces();
+    const battleLeader = allTraces.find((trace) =>
+      trace.sourceAbilityId === 'vhagar-battle-leader' &&
+      trace.targetSelectionGroup?.targetCount === 1
+    );
+
+    expect(battleLeader?.recipientDragonId).toBeNull();
+    expect(battleLeader?.targetSelectionGroup?.eligibleRecipientDragonIds).toEqual(['venator', 'vhagar']);
+    expect(battleLeader?.targetSelectionGroup?.selectionUncertain).toBe(true);
+    expect(battleLeader?.matchedOutputCapabilityIds?.some((id) => id.startsWith('vhagar-'))).toBe(true);
+    expect(battleLeader?.targetSelectionGroup?.eligibleRecipientDragonIds).not.toContain('syrax');
+  });
+
+  it('does not report Recovery Received source-scope as incompatible for Strategic Revival and Ancestral Shield', () => {
+    const allTraces = legacyTraces();
+    const amplification = allTraces.find((trace) =>
+      trace.matchKind === 'incoming-effect-amplification' &&
+      trace.sourceAbilityId === 'syrax-strategic-revival' &&
+      trace.recipientAbilityId === 'vhagar-ancestral-shield'
+    );
+
+    expect(amplification).toBeDefined();
+    expect(amplification?.status).toBe('potential');
+    expect(amplification?.sourceScopeResults?.every((match) => match.sourceScopeCompatible)).toBe(true);
   });
 });

@@ -22,6 +22,7 @@ const formations: Record<string, FormationAnalysisInput> = {
   '14': { 'left-flank': 'seasmoke', vanguard: 'sheepstealer', 'right-flank': 'malachite' },
   '15': { 'left-flank': 'malachite', vanguard: 'sheepstealer', 'right-flank': 'caraxes' },
   '16': { 'left-flank': 'malachite', vanguard: 'caraxes', 'right-flank': 'sheepstealer' },
+  legacy: { 'left-flank': 'venator', vanguard: 'vhagar', 'right-flank': 'syrax' },
 };
 
 function presentation(
@@ -52,6 +53,20 @@ function selectedRoster(dragonIds: string[], level = 26, starRank = 1) {
     entry!.reignLevel = level;
   }
   return roster;
+}
+
+function interactionHeading(item: { sourceName: string; recipientName: string | null; targetLabel: string | null }) {
+  return `${item.sourceName} → ${item.targetLabel ?? item.recipientName ?? 'Team'}`;
+}
+
+function legacyPresentation() {
+  const formation = formations.legacy!;
+  const roster = selectedRoster(['venator', 'vhagar', 'syrax'], 26, 10);
+  const traces = analyzeFormationTraces(formation, dragons, {
+    roster,
+    dragonLevels: { venator: 26, vhagar: 26, syrax: 26 },
+  });
+  return buildFormationCardPresentation(formation, dragons, traces, { previewEnabled: false });
 }
 
 describe('formation card analysis presentation', () => {
@@ -154,6 +169,30 @@ describe('formation card analysis presentation', () => {
     expect(eclipse?.summary).toContain('Target not guaranteed');
     expect(eclipse?.targetSummary).toContain('highest-resource');
     expect(eclipse?.targetSummary).toContain('current-troops');
+  });
+
+  it('renders Strategic Revival least-troops effects as candidate groups, not exact Team cards', () => {
+    const result = legacyPresentation();
+    const syrax = card(result, 'syrax');
+    const strategic = syrax.provides.filter((item) => item.abilityName === 'Strategic Revival');
+
+    expect(strategic.length).toBeGreaterThanOrEqual(2);
+    expect(strategic.some((item) => interactionHeading(item) === 'Syrax → Venator or Vhagar or Syrax')).toBe(true);
+    expect(strategic.some((item) => interactionHeading(item) === 'Syrax → Team')).toBe(false);
+    expect(strategic.every((item) => item.summary.includes('Target not guaranteed') || item.detail.includes('Target not guaranteed'))).toBe(true);
+    expect(strategic.some((item) => interactionHeading(item) === 'Syrax → Vhagar' && !item.summary.includes('Target not guaranteed'))).toBe(false);
+  });
+
+  it('renders Battle Leader as a Venator or Vhagar candidate group', () => {
+    const result = legacyPresentation();
+    const vhagar = card(result, 'vhagar');
+    const battleLeader = vhagar.provides.find((item) => item.abilityName === 'Battle Leader');
+
+    expect(battleLeader).toBeDefined();
+    expect(interactionHeading(battleLeader!)).toBe('Vhagar → Venator or Vhagar');
+    expect(interactionHeading(battleLeader!)).not.toBe('Vhagar → Team');
+    expect(battleLeader?.summary).toContain('Target not guaranteed');
+    expect(battleLeader?.summary).not.toContain('Syrax');
   });
 
   it('adds command summaries without counting them as cross-dragon synergies', () => {

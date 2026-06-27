@@ -30,7 +30,6 @@
             {
               "activationRoll": null,
               "calculated": false,
-              "casterEligibility": "unknown",
               "conditionalMultipliers": [],
               "conditions": [],
               "directlyVerified": true,
@@ -70,7 +69,6 @@
                 "unresolved": false
               },
               "calculated": false,
-              "casterEligibility": "unknown",
               "conditionalMultipliers": [],
               "conditions": [],
               "directlyVerified": true,
@@ -174,7 +172,6 @@
             {
               "activationRoll": null,
               "calculated": false,
-              "casterEligibility": "unknown",
               "conditionalMultipliers": [],
               "conditions": [],
               "directlyVerified": true,
@@ -205,7 +202,6 @@
             {
               "activationRoll": null,
               "calculated": false,
-              "casterEligibility": "unknown",
               "conditionalMultipliers": [],
               "conditions": [],
               "directlyVerified": true,
@@ -234,7 +230,6 @@
             {
               "activationRoll": null,
               "calculated": false,
-              "casterEligibility": "unknown",
               "conditionalMultipliers": [],
               "conditions": [],
               "directlyVerified": true,
@@ -380,7 +375,6 @@
             {
               "activationRoll": null,
               "calculated": false,
-              "casterEligibility": "unknown",
               "conditionalMultipliers": [],
               "conditions": [],
               "directlyVerified": true,
@@ -422,7 +416,6 @@
             {
               "activationRoll": null,
               "calculated": false,
-              "casterEligibility": "unknown",
               "conditionalMultipliers": [],
               "conditions": [],
               "directlyVerified": true,
@@ -471,7 +464,6 @@
             {
               "activationRoll": null,
               "calculated": false,
-              "casterEligibility": "unknown",
               "conditionalMultipliers": [],
               "conditions": [],
               "directlyVerified": true,
@@ -627,7 +619,6 @@
             {
               "activationRoll": null,
               "calculated": false,
-              "casterEligibility": "unknown",
               "conditionalMultipliers": [],
               "conditions": [],
               "directlyVerified": true,
@@ -682,7 +673,6 @@
             {
               "activationRoll": null,
               "calculated": false,
-              "casterEligibility": "unknown",
               "conditionalMultipliers": [],
               "conditions": [],
               "directlyVerified": true,
@@ -851,7 +841,6 @@
             {
               "activationRoll": null,
               "calculated": false,
-              "casterEligibility": "unknown",
               "conditionalMultipliers": [],
               "conditions": [],
               "directlyVerified": true,
@@ -1022,7 +1011,6 @@
             {
               "activationRoll": null,
               "calculated": false,
-              "casterEligibility": "unknown",
               "conditionalMultipliers": [],
               "conditions": [],
               "directlyVerified": true,
@@ -1064,7 +1052,6 @@
             {
               "activationRoll": null,
               "calculated": false,
-              "casterEligibility": "unknown",
               "conditionalMultipliers": [],
               "conditions": [],
               "directlyVerified": true,
@@ -1113,7 +1100,6 @@
             {
               "activationRoll": null,
               "calculated": false,
-              "casterEligibility": "unknown",
               "conditionalMultipliers": [],
               "conditions": [],
               "directlyVerified": true,
@@ -1269,7 +1255,6 @@
             {
               "activationRoll": null,
               "calculated": false,
-              "casterEligibility": "unknown",
               "conditionalMultipliers": [],
               "conditions": [],
               "directlyVerified": true,
@@ -1284,7 +1269,6 @@
                     "effect": {
                       "activationRoll": null,
                       "calculated": false,
-                      "casterEligibility": "unknown",
                       "conditionalMultipliers": [],
                       "conditions": [],
                       "directlyVerified": true,
@@ -1344,7 +1328,6 @@
                     "effect": {
                       "activationRoll": null,
                       "calculated": false,
-                      "casterEligibility": "unknown",
                       "conditionalMultipliers": [],
                       "conditions": [],
                       "directlyVerified": true,
@@ -1404,7 +1387,6 @@
                     "effect": {
                       "activationRoll": null,
                       "calculated": false,
-                      "casterEligibility": "unknown",
                       "conditionalMultipliers": [],
                       "conditions": [],
                       "directlyVerified": true,
@@ -1526,7 +1508,6 @@
           {
             "activationRoll": null,
             "calculated": false,
-            "casterEligibility": "unknown",
             "conditionalMultipliers": [],
             "conditions": [],
             "directlyVerified": true,
@@ -1566,7 +1547,6 @@
               "unresolved": false
             },
             "calculated": false,
-            "casterEligibility": "unknown",
             "conditionalMultipliers": [],
             "conditions": [],
             "directlyVerified": true,
@@ -1638,7 +1618,6 @@
           {
             "activationRoll": null,
             "calculated": false,
-            "casterEligibility": "unknown",
             "conditionalMultipliers": [],
             "conditions": [],
             "directlyVerified": true,
@@ -1669,7 +1648,6 @@
           {
             "activationRoll": null,
             "calculated": false,
-            "casterEligibility": "unknown",
             "conditionalMultipliers": [],
             "conditions": [],
             "directlyVerified": true,
@@ -1698,7 +1676,6 @@
           {
             "activationRoll": null,
             "calculated": false,
-            "casterEligibility": "unknown",
             "conditionalMultipliers": [],
             "conditions": [],
             "directlyVerified": true,
@@ -1783,7 +1760,6 @@
           {
             "activationRoll": null,
             "calculated": false,
-            "casterEligibility": "unknown",
             "conditionalMultipliers": [],
             "conditions": [],
             "directlyVerified": true,
@@ -1825,7 +1801,6 @@
           {
             "activationRoll": null,
             "calculated": false,
-            "casterEligibility": "unknown",
             "conditionalMultipliers": [],
             "conditions": [],
             "directlyVerified": true,
@@ -1874,7 +1849,6 @@
           {
             "activationRoll": null,
             "calculated": false,
-            "casterEligibility": "unknown",
             "conditionalMultipliers": [],
             "conditions": [],
             "directlyVerified": true,
@@ -1972,7 +1946,6 @@
           {
             "activationRoll": null,
             "calculated": false,
-            "casterEligibility": "unknown",
             "conditionalMultipliers": [],
             "conditions": [],
             "directlyVerified": true,
@@ -2027,7 +2000,6 @@
           {
             "activationRoll": null,
             "calculated": false,
-            "casterEligibility": "unknown",
             "conditionalMultipliers": [],
             "conditions": [],
             "directlyVerified": true,
@@ -2138,7 +2110,6 @@
           {
             "activationRoll": null,
             "calculated": false,
-            "casterEligibility": "unknown",
             "conditionalMultipliers": [],
             "conditions": [],
             "directlyVerified": true,
@@ -2251,7 +2222,6 @@
           {
             "activationRoll": null,
             "calculated": false,
-            "casterEligibility": "unknown",
             "conditionalMultipliers": [],
             "conditions": [],
             "directlyVerified": true,
@@ -2293,7 +2263,6 @@
           {
             "activationRoll": null,
             "calculated": false,
-            "casterEligibility": "unknown",
             "conditionalMultipliers": [],
             "conditions": [],
             "directlyVerified": true,
@@ -2342,7 +2311,6 @@
           {
             "activationRoll": null,
             "calculated": false,
-            "casterEligibility": "unknown",
             "conditionalMultipliers": [],
             "conditions": [],
             "directlyVerified": true,
@@ -2440,7 +2408,6 @@
           {
             "activationRoll": null,
             "calculated": false,
-            "casterEligibility": "unknown",
             "conditionalMultipliers": [],
             "conditions": [],
             "directlyVerified": true,
@@ -2455,7 +2422,6 @@
                   "effect": {
                     "activationRoll": null,
                     "calculated": false,
-                    "casterEligibility": "unknown",
                     "conditionalMultipliers": [],
                     "conditions": [],
                     "directlyVerified": true,
@@ -2515,7 +2481,6 @@
                   "effect": {
                     "activationRoll": null,
                     "calculated": false,
-                    "casterEligibility": "unknown",
                     "conditionalMultipliers": [],
                     "conditions": [],
                     "directlyVerified": true,
@@ -2575,7 +2540,6 @@
                   "effect": {
                     "activationRoll": null,
                     "calculated": false,
-                    "casterEligibility": "unknown",
                     "conditionalMultipliers": [],
                     "conditions": [],
                     "directlyVerified": true,
@@ -2749,7 +2713,6 @@
           {
             "activationRoll": null,
             "calculated": false,
-            "casterEligibility": "unknown",
             "conditionalMultipliers": [],
             "conditions": [],
             "directlyVerified": true,
@@ -2789,7 +2752,6 @@
               "unresolved": false
             },
             "calculated": false,
-            "casterEligibility": "unknown",
             "conditionalMultipliers": [],
             "conditions": [],
             "directlyVerified": true,
@@ -2918,7 +2880,6 @@
       "effect": {
         "activationRoll": null,
         "calculated": false,
-        "casterEligibility": "unknown",
         "conditionalMultipliers": [],
         "conditions": [],
         "directlyVerified": true,
@@ -2962,7 +2923,6 @@
           "unresolved": false
         },
         "calculated": false,
-        "casterEligibility": "unknown",
         "conditionalMultipliers": [],
         "conditions": [],
         "directlyVerified": true,
@@ -3015,7 +2975,6 @@
       "effect": {
         "activationRoll": null,
         "calculated": false,
-        "casterEligibility": "unknown",
         "conditionalMultipliers": [],
         "conditions": [],
         "directlyVerified": true,
@@ -3050,7 +3009,6 @@
       "effect": {
         "activationRoll": null,
         "calculated": false,
-        "casterEligibility": "unknown",
         "conditionalMultipliers": [],
         "conditions": [],
         "directlyVerified": true,
@@ -3083,7 +3041,6 @@
       "effect": {
         "activationRoll": null,
         "calculated": false,
-        "casterEligibility": "unknown",
         "conditionalMultipliers": [],
         "conditions": [],
         "directlyVerified": true,
@@ -3116,7 +3073,6 @@
       "effect": {
         "activationRoll": null,
         "calculated": false,
-        "casterEligibility": "unknown",
         "conditionalMultipliers": [],
         "conditions": [],
         "directlyVerified": true,
@@ -3162,7 +3118,6 @@
       "effect": {
         "activationRoll": null,
         "calculated": false,
-        "casterEligibility": "unknown",
         "conditionalMultipliers": [],
         "conditions": [],
         "directlyVerified": true,
@@ -3215,7 +3170,6 @@
       "effect": {
         "activationRoll": null,
         "calculated": false,
-        "casterEligibility": "unknown",
         "conditionalMultipliers": [],
         "conditions": [],
         "directlyVerified": true,
@@ -3268,7 +3222,6 @@
       "effect": {
         "activationRoll": null,
         "calculated": false,
-        "casterEligibility": "unknown",
         "conditionalMultipliers": [],
         "conditions": [],
         "directlyVerified": true,
@@ -3327,7 +3280,6 @@
       "effect": {
         "activationRoll": null,
         "calculated": false,
-        "casterEligibility": "unknown",
         "conditionalMultipliers": [],
         "conditions": [],
         "directlyVerified": true,
@@ -3386,7 +3338,6 @@
       "effect": {
         "activationRoll": null,
         "calculated": false,
-        "casterEligibility": "unknown",
         "conditionalMultipliers": [],
         "conditions": [],
         "directlyVerified": true,
@@ -3421,7 +3372,6 @@
       "effect": {
         "activationRoll": null,
         "calculated": false,
-        "casterEligibility": "unknown",
         "conditionalMultipliers": [],
         "conditions": [],
         "directlyVerified": true,
@@ -3467,7 +3417,6 @@
       "effect": {
         "activationRoll": null,
         "calculated": false,
-        "casterEligibility": "unknown",
         "conditionalMultipliers": [],
         "conditions": [],
         "directlyVerified": true,
@@ -3520,7 +3469,6 @@
       "effect": {
         "activationRoll": null,
         "calculated": false,
-        "casterEligibility": "unknown",
         "conditionalMultipliers": [],
         "conditions": [],
         "directlyVerified": true,
@@ -3573,7 +3521,6 @@
       "effect": {
         "activationRoll": null,
         "calculated": false,
-        "casterEligibility": "unknown",
         "conditionalMultipliers": [],
         "conditions": [],
         "directlyVerified": true,
@@ -3588,7 +3535,6 @@
               "effect": {
                 "activationRoll": null,
                 "calculated": false,
-                "casterEligibility": "unknown",
                 "conditionalMultipliers": [],
                 "conditions": [],
                 "directlyVerified": true,
@@ -3648,7 +3594,6 @@
               "effect": {
                 "activationRoll": null,
                 "calculated": false,
-                "casterEligibility": "unknown",
                 "conditionalMultipliers": [],
                 "conditions": [],
                 "directlyVerified": true,
@@ -3708,7 +3653,6 @@
               "effect": {
                 "activationRoll": null,
                 "calculated": false,
-                "casterEligibility": "unknown",
                 "conditionalMultipliers": [],
                 "conditions": [],
                 "directlyVerified": true,
@@ -3899,7 +3843,7 @@
   "firstObservedInGame": "2026-06-22",
   "format": "dragonfire-dragon-profile",
   "gameVersion": null,
-  "generatedAt": "2026-06-27T06:59:05.145Z",
+  "generatedAt": "2026-06-27T07:48:59.989Z",
   "habits": [
     {
       "abilityClass": "passive",
@@ -3990,7 +3934,6 @@
             {
               "activationRoll": null,
               "calculated": false,
-              "casterEligibility": "unknown",
               "conditionalMultipliers": [],
               "conditions": [],
               "directlyVerified": true,
@@ -4032,7 +3975,6 @@
             {
               "activationRoll": null,
               "calculated": false,
-              "casterEligibility": "unknown",
               "conditionalMultipliers": [],
               "conditions": [],
               "directlyVerified": true,
@@ -4081,7 +4023,6 @@
             {
               "activationRoll": null,
               "calculated": false,
-              "casterEligibility": "unknown",
               "conditionalMultipliers": [],
               "conditions": [],
               "directlyVerified": true,
@@ -4237,7 +4178,6 @@
             {
               "activationRoll": null,
               "calculated": false,
-              "casterEligibility": "unknown",
               "conditionalMultipliers": [],
               "conditions": [],
               "directlyVerified": true,
@@ -4292,7 +4232,6 @@
             {
               "activationRoll": null,
               "calculated": false,
-              "casterEligibility": "unknown",
               "conditionalMultipliers": [],
               "conditions": [],
               "directlyVerified": true,
@@ -4461,7 +4400,6 @@
             {
               "activationRoll": null,
               "calculated": false,
-              "casterEligibility": "unknown",
               "conditionalMultipliers": [],
               "conditions": [],
               "directlyVerified": true,
@@ -4632,7 +4570,6 @@
             {
               "activationRoll": null,
               "calculated": false,
-              "casterEligibility": "unknown",
               "conditionalMultipliers": [],
               "conditions": [],
               "directlyVerified": true,
@@ -4674,7 +4611,6 @@
             {
               "activationRoll": null,
               "calculated": false,
-              "casterEligibility": "unknown",
               "conditionalMultipliers": [],
               "conditions": [],
               "directlyVerified": true,
@@ -4723,7 +4659,6 @@
             {
               "activationRoll": null,
               "calculated": false,
-              "casterEligibility": "unknown",
               "conditionalMultipliers": [],
               "conditions": [],
               "directlyVerified": true,
@@ -4879,7 +4814,6 @@
             {
               "activationRoll": null,
               "calculated": false,
-              "casterEligibility": "unknown",
               "conditionalMultipliers": [],
               "conditions": [],
               "directlyVerified": true,
@@ -4894,7 +4828,6 @@
                     "effect": {
                       "activationRoll": null,
                       "calculated": false,
-                      "casterEligibility": "unknown",
                       "conditionalMultipliers": [],
                       "conditions": [],
                       "directlyVerified": true,
@@ -4954,7 +4887,6 @@
                     "effect": {
                       "activationRoll": null,
                       "calculated": false,
-                      "casterEligibility": "unknown",
                       "conditionalMultipliers": [],
                       "conditions": [],
                       "directlyVerified": true,
@@ -5014,7 +4946,6 @@
                     "effect": {
                       "activationRoll": null,
                       "calculated": false,
-                      "casterEligibility": "unknown",
                       "conditionalMultipliers": [],
                       "conditions": [],
                       "directlyVerified": true,
@@ -5285,7 +5216,7 @@
         "comparisonDirection": null,
         "comparisonPool": null,
         "count": null,
-        "includesCaster": null,
+        "includesCaster": true,
         "position": "left-flank",
         "scope": "left-flank",
         "selection": "specific-position",
@@ -5358,7 +5289,7 @@
         "comparisonDirection": null,
         "comparisonPool": null,
         "count": null,
-        "includesCaster": null,
+        "includesCaster": true,
         "position": "left-flank",
         "scope": "left-flank",
         "selection": "specific-position",
@@ -6610,8 +6541,8 @@
   "rosterSourceStatus": "in-game-verified-pending-official-site",
   "slug": "daemoros",
   "source": {
-    "branch": "fix/command-source-text-and-summaries",
-    "commit": "c5b684622cc6f516c9f91109d764a6c884e79b5b",
+    "branch": "fix/legacy-targeting-and-state-resolution",
+    "commit": "50a3ed17c6866878fb4a06ad7d3c2b74d3e88982",
     "databaseVersion": "0.6.2",
     "dataSchemaVersion": 12,
     "gameBuild": "26.6.53509",
@@ -7051,7 +6982,6 @@
           {
             "activationRoll": null,
             "calculated": false,
-            "casterEligibility": "unknown",
             "conditionalMultipliers": [],
             "conditions": [],
             "directlyVerified": true,
@@ -7082,7 +7012,6 @@
           {
             "activationRoll": null,
             "calculated": false,
-            "casterEligibility": "unknown",
             "conditionalMultipliers": [],
             "conditions": [],
             "directlyVerified": true,
@@ -7111,7 +7040,6 @@
           {
             "activationRoll": null,
             "calculated": false,
-            "casterEligibility": "unknown",
             "conditionalMultipliers": [],
             "conditions": [],
             "directlyVerified": true,

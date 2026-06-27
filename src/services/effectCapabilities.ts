@@ -447,7 +447,6 @@ function analyzeAllyOutputSupport(
   for (const output of outputs.filter(
     (capability) =>
       capability.targetSide === 'ally' &&
-      capability.targetCount !== 1 &&
       !isDamageChannel(capability.channel) &&
       outputCapabilityVisible(capability, options),
   )) {
@@ -459,6 +458,9 @@ function analyzeAllyOutputSupport(
     if (!provider) {
       continue;
     }
+    const outputTraces: SynergyTrace[] = [];
+    const context = sourceEffectContext(provider, output.abilityId, output.sourceEffectId);
+    const outputTargetSelector = context ? targetForEffect(context.effect) : null;
     for (const recipientPosition of FORMATION_POSITIONS) {
       const recipientId = formation[recipientPosition];
       if (!recipientId) {
@@ -468,12 +470,11 @@ function analyzeAllyOutputSupport(
       if (!recipient) {
         continue;
       }
-      const context = sourceEffectContext(provider, output.abilityId, output.sourceEffectId);
       const targeting = outputTargetsRecipient(
         output,
         providerPosition,
         recipientPosition,
-        context ? targetForEffect(context.effect) : null,
+        outputTargetSelector,
       );
       if (targeting.satisfied === false) {
         continue;
@@ -510,12 +511,90 @@ function analyzeAllyOutputSupport(
         recipientEvidenceIds: [],
         assumptions: [],
         unresolvedQuestions: output.channel === 'recovery' ? ['Exact final Recovery amount is unknown because the full Level and Instinct Recovery formula is not known.'] : [],
-        futureOrConditional: output.futureAvailable || output.conditional,
+        futureOrConditional: capabilityFutureOrConditional(output, options) || output.conditional,
       });
-      traces.push(shouldExposeSelfOutputTrace(output, recipient.id === provider.id) ? { ...trace, interactionScope: 'cross-dragon' } : trace);
+      outputTraces.push(shouldExposeSelfOutputTrace(output, recipient.id === provider.id) ? { ...trace, interactionScope: 'cross-dragon' } : trace);
     }
+    traces.push(...groupSingleTargetAllyOutputTraces(formation, output, outputTargetSelector, outputTraces, dragons));
   }
   return traces;
+}
+
+function groupSingleTargetAllyOutputTraces(
+  formation: FormationAnalysisInput,
+  output: OutputCapability,
+  targetSelector: AbilityTarget | null,
+  traces: SynergyTrace[],
+  dragons: Dragon[],
+): SynergyTrace[] {
+  const eligible = traces.filter((trace) => !['inactive', 'blocked', 'not-applicable'].includes(trace.status));
+  const selector = targetSelector ?? null;
+  if (
+    output.targetCount !== 1 ||
+    !selector ||
+    eligible.length <= 1 ||
+    selector.selection === 'specific-position' ||
+    selector.selection === 'one-eligible-adjacent' ||
+    selector.selection === 'adjacent'
+  ) {
+    return traces.filter((trace) =>
+      trace.recipientDragonId !== output.dragonId ||
+      shouldExposeSelfOutputTrace(output, true),
+    );
+  }
+
+  const first = eligible[0]!;
+  const eligibleRecipientDragonIds = FORMATION_POSITIONS
+    .map((position) => formation[position])
+    .filter((dragonId): dragonId is string => Boolean(dragonId))
+    .filter((dragonId) => eligible.some((trace) => trace.recipientDragonId === dragonId));
+  const fallbackRecipientDragonIds = eligible
+    .map((trace) => trace.recipientDragonId)
+    .filter((dragonId): dragonId is string => Boolean(dragonId));
+  const orderedRecipientDragonIds = eligibleRecipientDragonIds.length === fallbackRecipientDragonIds.length
+    ? eligibleRecipientDragonIds
+    : fallbackRecipientDragonIds;
+  const recipientNames = orderedRecipientDragonIds
+    .map((dragonId) => dragonById(dragons, dragonId)?.name ?? dragonId)
+    .join(' or ');
+  const providerName = dragonById(dragons, first.sourceDragonId)?.name ?? first.sourceDragonId;
+
+  return [
+    {
+      ...first,
+      id: `target-selection-${output.id}-${output.channel}`,
+      recipientDragonId: null,
+      recipientAbilityId: output.id,
+      status: aggregateStatus(eligible.map((trace) => trace.status)),
+      title: `${output.abilityName} ${channelLabel(output.channel)} target selection`,
+      explanation:
+        `${providerName}'s ${output.abilityName} can target one ${channelLabel(output.channel)} ally. Eligible recipients are ${recipientNames}. The selected recipient is not guaranteed.`,
+      requirements: dedupeRequirements(eligible.flatMap((trace) => trace.requirements)),
+      matchedFacts: uniqueSorted([
+        ...eligible.flatMap((trace) => trace.matchedFacts),
+        ...orderedRecipientDragonIds.map((dragonId) => `Eligible recipient: ${dragonId}.`),
+      ]),
+      effects: uniqueSorted(eligible.flatMap((trace) => trace.effects)),
+      conflicts: [],
+      assumptions: uniqueSorted([
+        ...eligible.flatMap((trace) => trace.assumptions),
+        'Target count is one, so eligible recipients compete for the same activation.',
+      ]),
+      recipientEvidenceIds: uniqueSorted(eligible.flatMap((trace) => trace.recipientEvidenceIds)),
+      interactionScope: 'targeting-fact',
+      targetSelectionGroup: {
+        targetCount: 1,
+        eligibleRecipientDragonIds: orderedRecipientDragonIds,
+        selectionUncertain: true,
+        selection: selector.selection,
+        selectionStat: selector.selectionStat ?? null,
+        selectionResource: selector.selectionResource ?? selector.selectionStat ?? null,
+        comparisonDirection: selector.comparisonDirection ?? null,
+        comparisonPool: selector.comparisonPool ?? null,
+      },
+    },
+    ...traces.filter((trace) => !eligible.includes(trace)),
+  ];
 }
 
 function shouldExposeSelfOutputTrace(output: OutputCapability, isSelfRecipient: boolean): boolean {
@@ -930,7 +1009,7 @@ function analyzeOutgoingAmplifications(
           ...providerRequirementTraces(modifier, formation, dragons, options),
           ...outputRequirementTraces(output, options),
           sourceScopeRequirement(modifier, output),
-        ]),
+        ], options),
       );
       const compatible = matches.filter((match) => match.sourceScopeCompatible);
       if (compatible.length === 0) {
@@ -1078,7 +1157,14 @@ function analyzeDefensiveAllySupport(
     }
     for (const recipientPosition of recipientPositionsForModifier(formation, dragons, modifier, providerPosition)) {
       const recipientId = formation[recipientPosition];
-      if (!recipientId || (recipientId === modifier.dragonId && !isVisibleSelfDefensiveModifier(modifier))) {
+      if (
+        !recipientId ||
+        (
+          recipientId === modifier.dragonId &&
+          modifier.targetSelector.includesCaster !== true &&
+          !isVisibleSelfDefensiveModifier(modifier)
+        )
+      ) {
         continue;
       }
       const provider = dragonById(dragons, modifier.dragonId);
@@ -1177,7 +1263,7 @@ function analyzeInternalSelfModifiers(
       recipientEvidenceIds: [],
       assumptions: [],
       unresolvedQuestions: [],
-      futureOrConditional: (modifier.futureAvailable && options.previewMaxRankInteractions === true) || modifier.conditional,
+      futureOrConditional: capabilityFutureOrConditional(modifier, options) || defensiveModifierTraceIsConditional(modifier),
       modifier,
       damageScope: modifier.damageScope,
     }));
@@ -1612,10 +1698,18 @@ function groupSingleTargetDefensiveTraces(
     }
     peers.forEach((peer) => consumed.add(peer));
     const first = peers[0]!;
-    const recipientIds = uniqueSorted(
+    const recipientIds = uniqueOrdered(
       peers.map((peer) => peer.recipientDragonId).filter((dragonId): dragonId is string => Boolean(dragonId)),
     );
     const recipientNames = recipientIds.map((dragonId) => dragonById(dragons, dragonId)?.name ?? dragonId);
+    const selectorSummary = first.targetSelectorSummary ?? '';
+    const selection = selectorSummary.includes('; lowest-resource;')
+      ? 'lowest-resource'
+      : selectorSummary.includes('; highest-resource;')
+        ? 'highest-resource'
+        : selectorSummary.includes('; highest-stat;')
+          ? 'highest-stat'
+          : 'one-eligible-adjacent';
     grouped.push({
       ...first,
       id: `defensive-target-selection-${modifierId}`,
@@ -1641,7 +1735,27 @@ function groupSingleTargetDefensiveTraces(
         targetCount: 1,
         eligibleRecipientDragonIds: recipientIds,
         selectionUncertain: true,
-        selection: 'one-eligible-adjacent',
+        selection,
+        selectionResource: selectorSummary.includes('selection resource current-troops') ? 'current-troops' : null,
+        selectionStat: selectorSummary.includes('selection stat strength')
+          ? 'strength'
+          : selectorSummary.includes('selection stat intelligence')
+            ? 'intelligence'
+            : selectorSummary.includes('selection stat instinct')
+              ? 'instinct'
+              : selectorSummary.includes('selection stat initiative')
+                ? 'initiative'
+                : null,
+        comparisonDirection: selectorSummary.includes('comparison lowest')
+          ? 'lowest'
+          : selectorSummary.includes('comparison highest')
+            ? 'highest'
+            : null,
+        comparisonPool: selectorSummary.includes('comparison pool ally-side')
+          ? 'ally-side'
+          : selectorSummary.includes('comparison pool enemy-side')
+            ? 'enemy-side'
+            : null,
       },
     });
   }
@@ -1694,7 +1808,7 @@ function analyzeIncomingAmplifications(
           targeting,
           ...outputRequirementTraces(output, options),
           ...providerRequirementTraces(modifier, formation, dragons, options),
-        ]);
+        ], options, { applySourceScope: false });
         const recipient = dragonById(dragons, recipientId);
         if (!provider || !recipient) {
           continue;
@@ -2088,7 +2202,9 @@ function analyzeStatScalingSupport(
         recipientEvidenceIds: matchedOutputs.flatMap((output) => output.evidenceIds),
         assumptions: ['Exact stat-to-effect conversion formula is unknown.'],
         unresolvedQuestions: ['Final value and stacking order are not calculated.'],
-        futureOrConditional: modifier.futureAvailable || modifier.conditional || matchedOutputs.some((output) => output.futureAvailable || output.conditional),
+        futureOrConditional: capabilityFutureOrConditional(modifier, options) ||
+          modifier.conditional ||
+          matchedOutputs.some((output) => capabilityFutureOrConditional(output, options) || output.conditional),
       }));
     }
   }
@@ -2475,7 +2591,7 @@ function analyzeEnemyDamageDealtReductions(
     traces.push({
       id: `enemy-damage-dealt-reduction-${modifier.id}`,
       ruleId: 'enemy-damage-dealt-reduction',
-      status: statusFromRequirements(requirements, modifier.futureAvailable || modifier.conditional),
+      status: statusFromRequirements(requirements, capabilityFutureOrConditional(modifier, options) || modifier.conditional),
       confidence: modifier.confidence,
       sourceDragonId: provider.id,
       sourceAbilityId: modifier.abilityId,
@@ -2549,14 +2665,14 @@ function analyzeEnemyDamageReceivedIncreases(
         sourceScopesCompatible(modifier.sourceScope, output.sourceScope),
     );
     const sourceScopeResults = matchedOutputs.map((output) =>
-      capabilityMatch(modifier, output, [sourceScopeRequirement(modifier, output)]),
+      capabilityMatch(modifier, output, [sourceScopeRequirement(modifier, output)], options),
     );
     const requirements = providerRequirementTraces(modifier, formation, dragons, options);
     const outputLabels = outputChannelNames(outputs, matchedOutputs.map((output) => output.id));
     const channel = channelLabel(modifier.channel);
     const displayValue = modifierDisplayValue(modifier, options);
     const enemyVulnerabilityDetails = enemyVulnerabilityDetailLines(modifier, provider.name, channel, displayValue);
-    const modifierStatus = statusFromRequirements(requirements, modifier.futureAvailable || modifier.conditional);
+    const modifierStatus = statusFromRequirements(requirements, capabilityFutureOrConditional(modifier, options) || modifier.conditional);
     traces.push({
       id: `enemy-damage-received-increase-${modifier.id}`,
       ruleId: 'enemy-damage-received-increase',
@@ -2635,7 +2751,7 @@ function analyzeEnemyDamageReceivedIncreases(
       const outputRequirements = recipientOutputs.flatMap((output) => outputRequirementTraces(output, options));
       const projectionRequirements = [...requirements, ...outputRequirements];
       const projectionScopeResults = recipientOutputs.map((output) =>
-        capabilityMatch(modifier, output, [sourceScopeRequirement(modifier, output)]),
+        capabilityMatch(modifier, output, [sourceScopeRequirement(modifier, output)], options),
       );
       const projectionStatus = statusFromRequirements(projectionRequirements, true);
       const outputNames = outputChannelNames(outputs, recipientOutputs.map((output) => output.id));
@@ -4374,12 +4490,7 @@ function modifierRoleForEffect(effect: AbilityEffect, direction: 'dealt' | 'rece
 }
 
 function targetForEffect(effect: AbilityEffect): AbilityTarget {
-  const inferredCasterEligibility =
-    effect.targetPriority === 'highest-stat-ally' ||
-    effect.targetPriority === 'highest-current-troops-ally' ||
-    effect.targetPriority === 'least-current-troops-ally'
-      ? 'unknown'
-      : inferCasterEligibility(effect.target);
+  const inferredCasterEligibility = inferCasterEligibility(effect.target);
   const casterEligibility = effect.casterEligibility ?? inferredCasterEligibility;
   const position = effect.targetScope === 'left-flank' || effect.targetScope === 'right-flank'
     ? effect.targetScope
@@ -4688,15 +4799,25 @@ function capabilityMatch(
   modifier: ModifierCapability,
   output: OutputCapability,
   requirements: RequirementTrace[],
+  options?: CapabilityOptions,
+  matchOptions: { applySourceScope?: boolean } = {},
 ): CapabilityMatch {
-  const sourceScopeCompatible = sourceScopesCompatible(modifier.sourceScope, output.sourceScope);
+  const applySourceScope = matchOptions.applySourceScope ?? true;
+  const sourceScopeCompatible = applySourceScope
+    ? sourceScopesCompatible(modifier.sourceScope, output.sourceScope)
+    : true;
   return {
     modifierCapabilityId: modifier.id,
     outputCapabilityId: output.id,
     channel: modifier.channel,
     sourceScopeCompatible,
     requirements,
-    status: statusFromRequirements(requirements, output.futureAvailable || modifier.futureAvailable || modifier.conditional),
+    status: statusFromRequirements(
+      requirements,
+      capabilityFutureOrConditional(output, options) ||
+        capabilityFutureOrConditional(modifier, options) ||
+        modifier.conditional,
+    ),
     confidence: mergeConfidence([modifier.confidence, output.confidence]),
   };
 }
@@ -5020,6 +5141,13 @@ function statusFromRequirements(requirements: RequirementTrace[], futureOrCondit
     return 'potential';
   }
   return 'inactive';
+}
+
+function capabilityFutureOrConditional(
+  capability: Pick<OutputCapability | ModifierCapability | StatusOutputCapability, 'futureAvailable'>,
+  options: CapabilityOptions | undefined,
+): boolean {
+  return capability.futureAvailable && options?.previewMaxRankInteractions === true;
 }
 
 function isHardRequirement(requirement: RequirementTrace): boolean {
@@ -5519,7 +5647,9 @@ function effectIsConditional(schedule: AbilitySchedule, effect: AbilityEffect, a
     return false;
   }
   return schedule.roundSelector?.kind !== 'start-of-combat' &&
-    schedule.roundSelector?.kind !== 'passive';
+    schedule.roundSelector?.kind !== 'passive' &&
+    schedule.timing !== 'start-of-combat' &&
+    schedule.timing !== 'passive';
 }
 
 function conditionsForEffect(effect: AbilityEffect, schedule?: AbilitySchedule): EffectCondition[] {

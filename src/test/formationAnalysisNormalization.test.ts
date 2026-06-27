@@ -28,13 +28,13 @@ describe('formation analysis normalization', () => {
     const sentinel = normalTraces('6').find((trace) => trace.sourceAbilityId === 'syrax-sentinels-wit' && trace.ruleId === 'direct-stat-support');
     const hunter = normalTraces('8').find((trace) => trace.sourceAbilityId === 'caraxes-hunters-wrath' && trace.ruleId === 'direct-stat-support');
     const clever = normalTraces('5', preview).find((trace) => trace.sourceAbilityId === 'seasmoke-clever-maneuver' && trace.ruleId === 'direct-stat-support');
-    const reactive = normalTraces('7', preview).find((trace) => trace.sourceAbilityId === 'vermax-reactive-instincts' && trace.ruleId === 'direct-stat-support');
+    const reactive = analyzeFormationTraces(formations['7']!, dragons, preview).find((trace) => trace.sourceAbilityId === 'vermax-reactive-instincts' && trace.ruleId === 'direct-stat-support');
 
     expect(warrior?.explanation).toContain('Instinct and Initiative');
     expect(sentinel?.explanation).toContain('Instinct and Initiative');
     expect(hunter?.explanation).toContain('Strength and Initiative');
     expect(clever?.explanation).toContain('Intelligence by +44% and Initiative by +25%');
-    expect(reactive?.explanation).toContain('Instinct by +36% and Initiative by +18%');
+    expect(reactive?.explanation).toContain("Vermax's Reactive Instincts can increase Vermax's Instinct by +36% and Initiative by +18%.");
     expect(reactive?.modifierCapabilityIds).toEqual(expect.arrayContaining([
       'vermax-reactive-instincts-reactive-instincts-instinct-stat-dealt-modifier',
       'vermax-reactive-instincts-reactive-instincts-initiative-stat-dealt-modifier',
@@ -83,13 +83,15 @@ describe('formation analysis normalization', () => {
   });
 
   it('resolves Reactive Instincts to one highest-Instinct recipient and keeps scaling selective', () => {
-    const traces = normalTraces('7', preview);
+    const traces = analyzeFormationTraces(formations['7']!, dragons, preview);
     const direct = traces.find((trace) => trace.sourceAbilityId === 'vermax-reactive-instincts' && trace.ruleId === 'direct-stat-support');
     const scaling = traces.filter((trace) => trace.sourceAbilityId === 'vermax-reactive-instincts' && trace.ruleId === 'stat-scaling-support');
 
-    expect(direct?.recipientDragonId).toBe('syrax');
+    expect(direct?.recipientDragonId).toBe('vermax');
+    expect(direct?.interactionScope).toBe('internal');
     expect(traces.filter((trace) => trace.sourceAbilityId === 'vermax-reactive-instincts' && trace.ruleId === 'direct-stat-support')).toHaveLength(1);
-    expect(scaling.every((trace) => trace.recipientDragonId === 'syrax')).toBe(true);
+    expect(scaling.every((trace) => trace.recipientDragonId === 'vermax')).toBe(true);
+    expect(normalTraces('7', preview).some((trace) => trace.sourceAbilityId === 'vermax-reactive-instincts')).toBe(false);
   });
 
   it('groups Lightning Strike as one adjacent target selection when Malachite is Vanguard', () => {
