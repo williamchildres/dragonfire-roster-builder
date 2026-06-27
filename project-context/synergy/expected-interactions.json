@@ -38025,7 +38025,8 @@
   {
     "assumptions": [
       "The status provider and dependent effect must select the same enemy target.",
-      "Target overlap, trigger timing, and exact uptime are not simulated."
+      "Target overlap, trigger timing, and exact uptime are not simulated.",
+      "Burn application success, enemy identity, target overlap, and conditional uptime are unresolved."
     ],
     "channel": "status",
     "confidence": "confirmed",
@@ -38035,11 +38036,21 @@
     ],
     "damageScope": null,
     "effects": [
-      "Conditional Taunt: Burn"
+      "Conditional Taunt: Burn",
+      "Supplied status: Burn",
+      "Base current application chance: 25%",
+      "Burn-target application chance: 50%",
+      "Conditional multiplier: 2x",
+      "Applied effect: Taunt",
+      "Duration: 2 rounds.",
+      "Target-specific conditional chance",
+      "Supplier effective Habit Level: 5",
+      "Activation chance: 20%",
+      "Duration: 2 rounds."
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final value cannot be calculated because final combat formulas and stacking order are not fully verified.",
-    "explanation": "Caraxes's Crippling Inferno can apply Burn. Vhagar's Fiery Bonds has a verified Taunt condition that depends on the target having Burn. Target overlap and uptime are not guaranteed.",
+    "explanation": "Caraxes can apply Burn. Each round, Fiery Bonds checks 3 enemies in any lane. At effective Habit Level unknown, the Taunt application chance is 25% for a normal target and 50% for that same target while it has Burn, a target-specific 2x increase. Taunt for 2 rounds. At effective Habit Level 5, Crippling Inferno has a 20% chance each round to Burn 3 enemies in any lane, for 2 rounds. Burn application and target overlap are not guaranteed.",
     "id": "status-effect-condition-caraxes-crippling-inferno-crippling-inferno-burn-burn-status-output-vhagar-fiery-bonds-fiery-bonds-taunt-requires-target-status-burn",
     "interactionScope": "cross-dragon",
     "matchedOutputCapabilityIds": [],
@@ -38098,13 +38109,17 @@
     "targetSelectionGroup": null,
     "title": "Burn enables Fiery Bonds",
     "unresolvedQuestions": [
-      "Exact target overlap and final conditional uptime are unresolved."
+      "Exact roll sharing, target evaluation order, status check timing, refresh, and stacking remain unresolved.",
+      "Exact target overlap and final conditional uptime are unresolved.",
+      "Shared versus per-target Taunt roll is unresolved.",
+      "Taunt chance applies to three targets, but shared versus per-target roll scope is not stated."
     ]
   },
   {
     "assumptions": [
       "The status provider and dependent effect must select the same enemy target.",
-      "Target overlap, trigger timing, and exact uptime are not simulated."
+      "Target overlap, trigger timing, and exact uptime are not simulated.",
+      "Taunt application success, enemy identity, target overlap, and conditional uptime are unresolved."
     ],
     "channel": "status",
     "confidence": "confirmed",
@@ -38114,11 +38129,20 @@
     ],
     "damageScope": null,
     "effects": [
-      "Conditional Weakened: Taunt"
+      "Conditional Weakened: Taunt",
+      "Supplied status: Taunt",
+      "Base current application chance: 35%",
+      "Taunt-target application chance: 70%",
+      "Conditional multiplier: 2x",
+      "Applied effect: Weakened",
+      "Duration: 2 rounds.",
+      "Target-specific conditional chance",
+      "Activation chance: 25%",
+      "Duration: 2 rounds."
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final value cannot be calculated because final combat formulas and stacking order are not fully verified.",
-    "explanation": "Vhagar's Fiery Bonds can apply Taunt. Crimson's Bloodscale Fury has a verified Weakened condition that depends on the target having Taunt. Target overlap and uptime are not guaranteed.",
+    "explanation": "Vhagar can apply Taunt. Each round, Bloodscale Fury checks 1 Enemy, preferring a target not already Stunned. At effective Habit Level 5, the Weakened application chance is 35% for a normal target and 70% for that same target while it has Taunt, a target-specific 2x increase. Weakened for 2 rounds. At effective Habit Level unknown, Fiery Bonds has a 25% chance each round to Taunt 3 enemies in any lane, for 2 rounds. Taunt application and target overlap are not guaranteed.",
     "id": "status-effect-condition-vhagar-fiery-bonds-fiery-bonds-taunt-taunt-status-output-crimson-bloodscale-fury-bloodscale-fury-weakened-requires-target-status-taunt",
     "interactionScope": "cross-dragon",
     "matchedOutputCapabilityIds": [],
@@ -38177,6 +38201,8 @@
     "targetSelectionGroup": null,
     "title": "Taunt enables Bloodscale Fury",
     "unresolvedQuestions": [
+      "Effect-level Weakened chance.",
+      "Exact roll sharing, target evaluation order, status check timing, refresh, and stacking remain unresolved.",
       "Exact target overlap and final conditional uptime are unresolved."
     ]
   },
@@ -43087,7 +43113,8 @@
   {
     "assumptions": [
       "The status provider and dependent effect must select the same enemy target.",
-      "Target overlap, trigger timing, and exact uptime are not simulated."
+      "Target overlap, trigger timing, and exact uptime are not simulated.",
+      "Taunt application success, enemy identity, target overlap, and conditional uptime are unresolved."
     ],
     "channel": "status",
     "confidence": "confirmed",
@@ -43097,11 +43124,20 @@
     ],
     "damageScope": null,
     "effects": [
-      "Conditional Weakened: Taunt"
+      "Conditional Weakened: Taunt",
+      "Supplied status: Taunt",
+      "Base current application chance: 35%",
+      "Taunt-target application chance: 70%",
+      "Conditional multiplier: 2x",
+      "Applied effect: Weakened",
+      "Duration: 2 rounds.",
+      "Target-specific conditional chance",
+      "Activation chance: 25%",
+      "Duration: 2 rounds."
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final value cannot be calculated because final combat formulas and stacking order are not fully verified.",
-    "explanation": "Vhagar's Fiery Bonds can apply Taunt. Crimson's Bloodscale Fury has a verified Weakened condition that depends on the target having Taunt. Target overlap and uptime are not guaranteed.",
+    "explanation": "Vhagar can apply Taunt. Each round, Bloodscale Fury checks 1 Enemy, preferring a target not already Stunned. At effective Habit Level 5, the Weakened application chance is 35% for a normal target and 70% for that same target while it has Taunt, a target-specific 2x increase. Weakened for 2 rounds. At effective Habit Level unknown, Fiery Bonds has a 25% chance each round to Taunt 3 enemies in any lane, for 2 rounds. Taunt application and target overlap are not guaranteed.",
     "id": "status-effect-condition-vhagar-fiery-bonds-fiery-bonds-taunt-taunt-status-output-crimson-bloodscale-fury-bloodscale-fury-weakened-requires-target-status-taunt",
     "interactionScope": "cross-dragon",
     "matchedOutputCapabilityIds": [],
@@ -43160,6 +43196,8 @@
     "targetSelectionGroup": null,
     "title": "Taunt enables Bloodscale Fury",
     "unresolvedQuestions": [
+      "Effect-level Weakened chance.",
+      "Exact roll sharing, target evaluation order, status check timing, refresh, and stacking remain unresolved.",
       "Exact target overlap and final conditional uptime are unresolved."
     ]
   },

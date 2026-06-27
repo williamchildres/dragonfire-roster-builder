@@ -23,7 +23,7 @@
   ],
   "currentReviewPhase": "Legendary/full-profile formation validation complete; Epic ingestion active with Daemoros and Vaeldra as the first detailed Epic batch after Vermax.",
   "format": "dragonfire-project-state",
-  "generatedAt": "2026-06-26T18:07:07.549Z",
+  "generatedAt": "2026-06-27T00:29:53.835Z",
   "plannedNextPhase": [
     "continue Epic dragon ingestion in batches of two after the latest merged context is available",
     "fetch latest merged main and create a new feature branch before each future Epic implementation batch",
@@ -37,8 +37,8 @@
     "metadataOnlyDragonCount": 15
   },
   "source": {
-    "branch": "fix/ebbing-fury-trace-presentation",
-    "commit": "06be66d968aa6bfa1eee66ca17450bf32ffa24a7",
+    "branch": "fix/panic-scorched-earth-trace-details",
+    "commit": "e4602f51f03b78c708b23f411f8c5acf0b48dc9b",
     "databaseVersion": "0.6.2",
     "dataSchemaVersion": 12,
     "gameBuild": "26.6.53509",
@@ -49,7 +49,7 @@
     "countingMethod": "static working-tree test declaration scan; runtime pass/fail is reported by npm run test",
     "lastRunStatus": "not-run-by-exporter",
     "runner": "vitest",
-    "testCaseCount": 235,
+    "testCaseCount": 246,
     "testFileCount": 26
   },
   "unresolvedMechanicsCount": 169,

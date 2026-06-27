@@ -302,10 +302,13 @@ function toCardInteraction({
   const relationshipId = [
     trace.sourceDragonId,
     trace.sourceAbilityId ?? trace.ruleId,
+    trace.matchKind === 'status-condition-enablement'
+      ? `${trace.recipientAbilityId ?? ''}:${trace.channel ?? ''}:${trace.title}:${trace.id}`
+      : null,
     trace.targetSelectionGroup
       ? `target-selection-${trace.id}`
       : recipient?.id ?? 'team',
-  ].join('__');
+  ].filter(Boolean).join('__');
 
   return {
     id: `${trace.id}__${recipient?.id ?? 'provider'}__${isCandidate ? 'candidate' : 'direct'}`,
@@ -832,9 +835,10 @@ function aggregateInteractions(
             interaction.sourceDragonId,
             interaction.abilityName,
             interaction.recipientDragonId ?? interaction.targetLabel ?? 'team',
+            interactionMechanicKey(interaction),
             interaction.state,
           ].join('|')
-        : [interaction.sourceDragonId, interaction.abilityName, interaction.state].join('|');
+        : [interaction.sourceDragonId, interaction.abilityName, interactionMechanicKey(interaction), interaction.state].join('|');
     grouped.set(key, [...(grouped.get(key) ?? []), interaction]);
   }
 
@@ -1061,6 +1065,23 @@ function interactionText(item: FormationCardInteraction): string {
   ].join(' ');
 }
 
+function interactionMechanicKey(interaction: FormationCardInteraction): string {
+  const text = interactionText(interaction);
+  const hasDistinctStatusMechanic = /Base .* Rate|Enhanced .* Rate|application chance|target-specific conditional chance|same target/i.test(text);
+  if (
+    hasDistinctStatusMechanic &&
+    (/enables/i.test(interaction.title) || /conditional status enablement/i.test(interaction.effectTitle))
+  ) {
+    return [
+      interaction.title,
+      interaction.effectTitle,
+      interaction.summary,
+      interaction.effects.join('|'),
+    ].join('::');
+  }
+  return 'default';
+}
+
 function providesAggregationMode(interaction: FormationCardInteraction): string {
   if (interaction.targetLabel || interaction.candidateTotal !== null || interaction.isCandidate) {
     return 'target-selection';
@@ -1225,6 +1246,13 @@ function interactionPurpose(trace: SynergyTrace): string | null {
     return 'Extra Basic Attack trigger';
   }
   if (trace.matchKind === 'status-condition-enablement') {
+    const match = trace.title.match(/^(.+?) enables (.+)$/i);
+    if (match) {
+      const status = match[1]!;
+      const ability = match[2]!;
+      const isChance = trace.effects.some((effect) => /application chance|target-specific conditional chance/i.test(effect)) || trace.channel === 'status';
+      return `${status} enhances ${ability}${isChance ? ' chance' : ''}`;
+    }
     return 'Conditional status enablement';
   }
   if (trace.matchKind === 'status-removal') {

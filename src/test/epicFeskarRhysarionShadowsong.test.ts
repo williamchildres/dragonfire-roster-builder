@@ -209,11 +209,112 @@ describe('Feskar, Rhysarion, and Shadowsong Epic profiles', () => {
 
     expect(normalText).toContain('conditional');
     expect(normalText).toContain('Feskar can apply Stagger, which belongs to the Control category.');
-    expect(normalText).toContain('On Rounds 2, 5 and 8, Dawnsong deals Fire Damage at a 20% rate.');
-    expect(normalText).toContain('Against the same target while it has Control, the rate increases 1.5x to 30%.');
+    expect(normalText).toContain('On Rounds 2, 5 and 8, Dawnsong deals Fire Damage at a 20% rate to 3 enemies in any lane.');
+    expect(normalText).toMatch(/Against the same target while it has Control, the rate increases 1\.5[x×] to 30%\./);
     expect(normalText).toContain('Unyielding Grasp has a 10% chance each round to Stagger one enemy in any lane, prioritizing Warriors, for 3 rounds.');
     expect(normalText).toContain('Stagger application and target overlap are not guaranteed.');
     expect(normalText).not.toMatch(/\bL[1-5]\b|Ranked progression/i);
+  });
+
+  it('shows distinct Panic interactions for Breath of Fire and Scorched Earth', () => {
+    const formation: FormationAnalysisInput = { 'left-flank': 'daemoros', vanguard: 'rhysarion', 'right-flank': 'shadowsong' };
+    const roster = ownedRoster(['daemoros', 'rhysarion', 'shadowsong'], 1, 0);
+    roster.daemoros!.starRank = 2;
+    roster.shadowsong!.starRank = 6;
+    const traces = analyzeFormationTraces(formation, dragons, { roster });
+    const cards = buildFormationCardPresentation(formation, dragons, traces, { previewEnabled: false, roster });
+    const panicTraces = traces.filter((trace) =>
+      trace.sourceDragonId === 'daemoros' &&
+      trace.sourceAbilityId === 'daemoros-instill-fear' &&
+      trace.recipientDragonId === 'shadowsong' &&
+      trace.matchKind === 'status-condition-enablement'
+    );
+    const breath = panicTraces.find((trace) => trace.recipientAbilityId === 'shadowsong-breath-of-fire');
+    const scorched = panicTraces.find((trace) => trace.recipientAbilityId === 'shadowsong-scorched-earth');
+    const breathText = breath ? [
+      breath.explanation,
+      ...breath.matchedFacts,
+      ...breath.effects,
+      ...breath.assumptions,
+    ].join(' ') : '';
+    const scorchedText = scorched ? [
+      scorched.explanation,
+      ...scorched.matchedFacts,
+      ...scorched.effects,
+      ...scorched.assumptions,
+      ...scorched.unresolvedQuestions,
+    ].join(' ') : '';
+    const daemorosProvides = cards.cards.find((card) => card.dragonId === 'daemoros')?.provides
+      .filter((item) => item.abilityName === 'Instill Fear' && item.recipientDragonId === 'shadowsong') ?? [];
+    const breathCard = daemorosProvides.find((item) => /Breath of Fire/i.test(item.effectTitle));
+    const scorchedCard = daemorosProvides.find((item) => /Scorched Earth chance/i.test(item.effectTitle));
+    const breathCardText = breathCard ? [breathCard.effectTitle, breathCard.summary, ...breathCard.summaryLines, ...breathCard.details, ...breathCard.effects].join(' ') : '';
+    const scorchedCardText = scorchedCard ? [scorchedCard.effectTitle, scorchedCard.summary, ...scorchedCard.summaryLines, ...scorchedCard.details, ...scorchedCard.effects].join(' ') : '';
+
+    expect(breath).toMatchObject({ status: 'potential', channel: 'fire-damage' });
+    expect(breathText).toContain('Receiving source effect ID: breath-of-fire-base-fire.');
+    expect(breathText).toContain('Supplied status: Panic.');
+    expect(breathText).toContain('Timing: Rounds 2, 5, 8.');
+    expect(breathText).toContain('Target scope: 2 adjacent enemies.');
+    expect(breathText).toContain('Base Fire Damage Rate: 100%.');
+    expect(breathText).toContain('Enhanced Fire Damage Rate: 150%.');
+    expect(breathText).toContain('Conditional multiplier: 1.5x');
+    expect(breathText).toContain('Panic must be on the same eligible target.');
+    expect(breathText).toContain('Panic on one enemy does not amplify Breath of Fire against a different enemy.');
+    expect(breathText).toContain('Panic does not alter normal Breath of Fire target eligibility.');
+    expect(breathText).toContain('Current effective Instill Fear Habit Level: 1.');
+    expect(breathText).toContain('Activation chance: 25%.');
+    expect(breathText).toContain('Priority: enemy Right Flank is preferred, not guaranteed.');
+    expect(breathText).toContain('Fallback target: another eligible enemy; fallback selection is not guaranteed.');
+    expect(breathText).toContain('Duration: 2 rounds.');
+    expect(breathText).toContain('All Instill Fear effects share the same selected target when the activation succeeds.');
+
+    expect(scorched).toMatchObject({ status: 'potential', channel: 'status' });
+    expect(scorchedText).toContain('Receiving source effect ID: scorched-earth-vulnerable.');
+    expect(scorchedText).toContain('Timing: Each round.');
+    expect(scorchedText).toContain('Target scope: up to 2 adjacent enemies.');
+    expect(scorchedText).toContain('Current effective Scorched Earth Habit Level: 1.');
+    expect(scorchedText).toContain('Base current application chance: 10%.');
+    expect(scorchedText).toContain('Panic-target application chance: 20%.');
+    expect(scorchedText).toContain('Conditional multiplier: 2x');
+    expect(scorchedText).toContain('The conditional chance modifier is target-specific.');
+    expect(scorchedText).toContain('Panic on one enemy does not change the chance for another enemy.');
+    expect(scorchedText).toContain('Panic does not alter normal Scorched Earth target eligibility.');
+    expect(scorchedText).toContain('Applied effect: Vulnerable.');
+    expect(scorchedText).toContain('Vulnerable value: generic Damage Received +15%.');
+    expect(scorchedText).toContain('Duration: 2 rounds.');
+    expect(scorchedText).toContain('Exact roll sharing, target evaluation order, status check timing, refresh, and stacking remain unresolved.');
+
+    expect(daemorosProvides.filter((item) => /Panic enhances/i.test(item.effectTitle))).toHaveLength(2);
+    expect(breathCardText).toContain('Panic enhances Breath of Fire');
+    expect(breathCardText).toContain('100%');
+    expect(breathCardText).toContain('150%');
+    expect(breathCardText).not.toContain('10%');
+    expect(breathCardText).not.toContain('20%');
+    expect(scorchedCardText).toContain('Panic enhances Scorched Earth chance');
+    expect(scorchedCardText).toContain('10%');
+    expect(scorchedCardText).toContain('20%');
+    expect(scorchedCardText).not.toContain('100%');
+    expect(scorchedCardText).not.toContain('150%');
+    expect(`${breathCardText} ${scorchedCardText}`).not.toMatch(/\bL[1-5]\b|Ranked progression/i);
+
+    const upgradedRoster = ownedRoster(['daemoros', 'rhysarion', 'shadowsong'], 1, 0);
+    upgradedRoster.daemoros!.starRank = 2;
+    upgradedRoster.shadowsong!.starRank = 6;
+    upgradedRoster.shadowsong!.habitLevels['shadowsong-scorched-earth'] = 3;
+    const upgradedScorched = analyzeFormationTraces(formation, dragons, { roster: upgradedRoster })
+      .find((trace) => trace.sourceAbilityId === 'daemoros-instill-fear' && trace.recipientAbilityId === 'shadowsong-scorched-earth');
+    const upgradedText = upgradedScorched ? [...upgradedScorched.matchedFacts, ...upgradedScorched.effects, upgradedScorched.explanation].join(' ') : '';
+    expect(upgradedText).toContain('Base current application chance: 14%.');
+    expect(upgradedText).toContain('Panic-target application chance: 28%.');
+
+    const savedPreviewHabitLevel = roster.shadowsong?.habitLevels['shadowsong-scorched-earth'];
+    const previewScorched = analyzeFormationTraces(formation, dragons, { roster, previewMaxRankInteractions: true })
+      .find((trace) => trace.sourceAbilityId === 'daemoros-instill-fear' && trace.recipientAbilityId === 'shadowsong-scorched-earth');
+    const previewText = previewScorched ? [...previewScorched.matchedFacts, ...previewScorched.effects, previewScorched.explanation].join(' ') : '';
+    expect(previewText).toContain('Base current application chance: 20%.');
+    expect(previewText).toContain('Panic-target application chance: 40%.');
+    expect(roster.shadowsong?.habitLevels['shadowsong-scorched-earth']).toBe(savedPreviewHabitLevel);
   });
 
   it('models Rhysarion Control category, other-ally exclusion, harmful friendly impairment, and shared Inspiring Melody target', () => {
