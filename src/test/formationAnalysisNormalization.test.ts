@@ -33,8 +33,8 @@ describe('formation analysis normalization', () => {
     expect(warrior?.explanation).toContain('Instinct and Initiative');
     expect(sentinel?.explanation).toContain('Instinct and Initiative');
     expect(hunter?.explanation).toContain('Strength and Initiative');
-    expect(clever?.explanation).toContain('Intelligence by 44% and Initiative by 25%');
-    expect(reactive?.explanation).toContain('Instinct by 36% and Initiative by 18%');
+    expect(clever?.explanation).toContain('Intelligence by +44% and Initiative by +25%');
+    expect(reactive?.explanation).toContain('Instinct by +36% and Initiative by +18%');
     expect(reactive?.modifierCapabilityIds).toEqual(expect.arrayContaining([
       'vermax-reactive-instincts-reactive-instincts-instinct-stat-dealt-modifier',
       'vermax-reactive-instincts-reactive-instincts-initiative-stat-dealt-modifier',
@@ -78,7 +78,7 @@ describe('formation analysis normalization', () => {
 
     const previewTrace = normalTraces('7', preview).find((trace) => trace.sourceAbilityId === 'vermax-trial-by-flame');
     expect(previewTrace?.title).toBe('Fire Damage Received Support');
-    expect(previewTrace?.explanation).toContain('Below 75% Troop Capacity: Fire Damage Received -10%');
+    expect(previewTrace?.explanation).toContain('Threshold applicability depends on each recipient\'s current Troop Capacity');
     expect(previewTrace?.title).not.toBe('Damage Received Support');
   });
 

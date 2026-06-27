@@ -2048,7 +2048,6 @@
     ],
     "damageScope": null,
     "effects": [
-      "Damage Received decrease 20%",
       "Damage Received reduction: 20%.",
       "Duration: 2 rounds.",
       "Activation chance: 100% at effective Habit Level 5.",
@@ -2126,7 +2125,6 @@
     ],
     "damageScope": null,
     "effects": [
-      "Damage Received decrease 20%",
       "Damage Received reduction: 20%.",
       "Duration: 2 rounds.",
       "Activation chance: 100% at effective Habit Level 5.",
@@ -2204,7 +2202,6 @@
     ],
     "damageScope": "tactical",
     "effects": [
-      "Tactical Damage Received decrease 16%",
       "Activation chance: 35%."
     ],
     "exactResultKnown": false,
@@ -2279,7 +2276,6 @@
     ],
     "damageScope": "tactical",
     "effects": [
-      "Tactical Damage Received decrease 16%",
       "Activation chance: 35%."
     ],
     "exactResultKnown": false,
@@ -2355,13 +2351,11 @@
     "damageScope": null,
     "effects": [
       "Initiative +20 flat.",
-      "Initiative 20 flat",
-      "Instinct +20 flat.",
-      "Instinct 20 flat"
+      "Instinct +20 flat."
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final value cannot be calculated because final combat formulas and stacking order are not fully verified.",
-    "explanation": "Syrax's Sentinel's Wit can increase Malachite's Instinct and Initiative by 20 flat.",
+    "explanation": "Syrax's Sentinel's Wit can increase Malachite's Instinct and Initiative by +20.",
     "id": "direct-stat-support-syrax-sentinels-wit-malachite-instinct-initiative",
     "interactionScope": "cross-dragon",
     "matchedOutputCapabilityIds": [],
@@ -2454,15 +2448,13 @@
     "effects": [
       "Duration: until end of combat.",
       "Instinct +13% at effective Habit Level 5.",
-      "Instinct 13%",
       "Intelligence +13% at effective Habit Level 5.",
-      "Intelligence 13%",
       "Ranked progression: L1 6.5%, L2 7.8%, L3 9.1%, L4 11.05%, L5 13%.",
       "Targets exactly 3 Allies; caster is eligible."
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final value cannot be calculated because final combat formulas and stacking order are not fully verified.",
-    "explanation": "Syrax's Mindful Synergy can increase Malachite's Intelligence and Instinct by 13%.",
+    "explanation": "Syrax's Mindful Synergy can increase Malachite's Intelligence and Instinct by +13%.",
     "id": "direct-stat-support-syrax-mindful-synergy-malachite-intelligence-instinct",
     "interactionScope": "cross-dragon",
     "matchedOutputCapabilityIds": [],
@@ -2546,15 +2538,13 @@
     "effects": [
       "Duration: until end of combat.",
       "Instinct +13% at effective Habit Level 5.",
-      "Instinct 13%",
       "Intelligence +13% at effective Habit Level 5.",
-      "Intelligence 13%",
       "Ranked progression: L1 6.5%, L2 7.8%, L3 9.1%, L4 11.05%, L5 13%.",
       "Targets exactly 3 Allies; caster is eligible."
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final value cannot be calculated because final combat formulas and stacking order are not fully verified.",
-    "explanation": "Syrax's Mindful Synergy can increase Caraxes's Intelligence and Instinct by 13%.",
+    "explanation": "Syrax's Mindful Synergy can increase Caraxes's Intelligence and Instinct by +13%.",
     "id": "direct-stat-support-syrax-mindful-synergy-caraxes-intelligence-instinct",
     "interactionScope": "cross-dragon",
     "matchedOutputCapabilityIds": [],
@@ -2638,15 +2628,13 @@
     "effects": [
       "Duration: until end of combat.",
       "Instinct +13% at effective Habit Level 5.",
-      "Instinct 13%",
       "Intelligence +13% at effective Habit Level 5.",
-      "Intelligence 13%",
       "Ranked progression: L1 6.5%, L2 7.8%, L3 9.1%, L4 11.05%, L5 13%.",
       "Targets exactly 3 Allies; caster is eligible."
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final value cannot be calculated because final combat formulas and stacking order are not fully verified.",
-    "explanation": "Syrax's Mindful Synergy can increase Syrax's Intelligence and Instinct by 13%.",
+    "explanation": "Syrax's Mindful Synergy can increase Syrax's Intelligence and Instinct by +13%.",
     "id": "direct-stat-support-syrax-mindful-synergy-syrax-intelligence-instinct",
     "interactionScope": "internal",
     "matchedOutputCapabilityIds": [],
@@ -2728,7 +2716,6 @@
     ],
     "damageScope": null,
     "effects": [
-      "Initiative 12%",
       "Initiative +12% at effective Habit Level 5.",
       "Duration: until end of combat.",
       "Ranked progression: L1 6%, L2 7.2%, L3 8.4%, L4 10.2%, L5 12%.",
@@ -2806,7 +2793,6 @@
     ],
     "damageScope": null,
     "effects": [
-      "Initiative 12%",
       "Initiative +12% at effective Habit Level 5.",
       "Duration: until end of combat.",
       "Ranked progression: L1 6%, L2 7.2%, L3 8.4%, L4 10.2%, L5 12%.",
@@ -2884,7 +2870,6 @@
     ],
     "damageScope": null,
     "effects": [
-      "Initiative 12%",
       "Initiative +12% at effective Habit Level 5.",
       "Duration: until end of combat.",
       "Ranked progression: L1 6%, L2 7.2%, L3 8.4%, L4 10.2%, L5 12%.",
@@ -2962,13 +2947,11 @@
     "damageScope": null,
     "effects": [
       "Initiative +20 flat.",
-      "Initiative 20 flat",
-      "Strength +20 flat.",
-      "Strength 20 flat"
+      "Strength +20 flat."
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final value cannot be calculated because final combat formulas and stacking order are not fully verified.",
-    "explanation": "Caraxes's Hunter's Wrath can increase Syrax's Strength and Initiative by 20 flat.",
+    "explanation": "Caraxes's Hunter's Wrath can increase Syrax's Strength and Initiative by +20.",
     "id": "direct-stat-support-caraxes-hunters-wrath-syrax-strength-initiative",
     "interactionScope": "cross-dragon",
     "matchedOutputCapabilityIds": [],
@@ -3059,7 +3042,6 @@
     ],
     "damageScope": null,
     "effects": [
-      "Strength 25%",
       "Strength +25% at effective Habit Level 5.",
       "Duration: until end of combat.",
       "Ranked progression: L1 12.5%, L2 15%, L3 17.5%, L4 21.25%, L5 25%.",
@@ -3137,7 +3119,6 @@
     ],
     "damageScope": null,
     "effects": [
-      "Strength 25%",
       "Strength +25% at effective Habit Level 5.",
       "Duration: until end of combat.",
       "Ranked progression: L1 12.5%, L2 15%, L3 17.5%, L4 21.25%, L5 25%.",
@@ -3215,7 +3196,6 @@
     ],
     "damageScope": null,
     "effects": [
-      "Strength 25%",
       "Strength +25% at effective Habit Level 5.",
       "Duration: until end of combat.",
       "Ranked progression: L1 12.5%, L2 15%, L3 17.5%, L4 21.25%, L5 25%.",
@@ -3293,7 +3273,6 @@
     ],
     "damageScope": null,
     "effects": [
-      "Strength 25%",
       "Strength +25%.",
       "Duration: 3 rounds.",
       "Targets 1 other Ally; caster is excluded.",
@@ -4146,11 +4125,11 @@
     ],
     "damageScope": null,
     "effects": [
-      "Enemy Stat decrease 12%"
+      "Enemy Initiative decrease 12%"
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final reduced enemy damage cannot be calculated because target selection, uptime, stacking, and final formulas are unresolved.",
-    "explanation": "Syrax's Flight Mastery can reduce enemy Stat. Enemy target selection is tracked as an enemy-side candidate group, not a named friendly recipient.",
+    "explanation": "Syrax's Flight Mastery can reduce enemy Initiative. Enemy target selection is tracked as an enemy-side candidate group, not a named friendly recipient.",
     "id": "enemy-damage-dealt-reduction-syrax-flight-mastery-flight-mastery-initiative-down-stat-dealt-modifier",
     "interactionScope": "enemy-side",
     "matchedOutputCapabilityIds": [],
@@ -4196,7 +4175,7 @@
     ],
     "status": "potential",
     "targetSelectionGroup": null,
-    "title": "Stat Enemy Reduction",
+    "title": "Enemy Initiative reduction",
     "unresolvedQuestions": [
       "Enemy identities, combat availability, final uptime, and stacking/refresh behavior remain unresolved."
     ]
@@ -4214,11 +4193,11 @@
     ],
     "damageScope": null,
     "effects": [
-      "Enemy Stat decrease 13%"
+      "Enemy Strength decrease 13%"
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final reduced enemy damage cannot be calculated because target selection, uptime, stacking, and final formulas are unresolved.",
-    "explanation": "Caraxes's Battle Dread can reduce enemy Stat. Enemy target selection is tracked as an enemy-side candidate group, not a named friendly recipient.",
+    "explanation": "Caraxes's Battle Dread can reduce enemy Strength. Enemy target selection is tracked as an enemy-side candidate group, not a named friendly recipient.",
     "id": "enemy-damage-dealt-reduction-caraxes-battle-dread-battle-dread-strength-down-stat-dealt-modifier",
     "interactionScope": "enemy-side",
     "matchedOutputCapabilityIds": [],
@@ -4264,7 +4243,7 @@
     ],
     "status": "potential",
     "targetSelectionGroup": null,
-    "title": "Stat Enemy Reduction",
+    "title": "Enemy Strength reduction",
     "unresolvedQuestions": [
       "Enemy identities, combat availability, final uptime, and stacking/refresh behavior remain unresolved."
     ]
@@ -4282,11 +4261,11 @@
     ],
     "damageScope": null,
     "effects": [
-      "Enemy Stat decrease 13%"
+      "Enemy Initiative decrease 13%"
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final reduced enemy damage cannot be calculated because target selection, uptime, stacking, and final formulas are unresolved.",
-    "explanation": "Caraxes's Battle Dread can reduce enemy Stat. Enemy target selection is tracked as an enemy-side candidate group, not a named friendly recipient.",
+    "explanation": "Caraxes's Battle Dread can reduce enemy Initiative. Enemy target selection is tracked as an enemy-side candidate group, not a named friendly recipient.",
     "id": "enemy-damage-dealt-reduction-caraxes-battle-dread-battle-dread-initiative-down-stat-dealt-modifier",
     "interactionScope": "enemy-side",
     "matchedOutputCapabilityIds": [],
@@ -4332,7 +4311,7 @@
     ],
     "status": "potential",
     "targetSelectionGroup": null,
-    "title": "Stat Enemy Reduction",
+    "title": "Enemy Initiative reduction",
     "unresolvedQuestions": [
       "Enemy identities, combat availability, final uptime, and stacking/refresh behavior remain unresolved."
     ]
@@ -6752,7 +6731,6 @@
     ],
     "damageScope": null,
     "effects": [
-      "Damage Received decrease 20%",
       "Damage Received reduction: 20%.",
       "Duration: 2 rounds.",
       "Activation chance: 100% at effective Habit Level 5.",
@@ -6830,7 +6808,6 @@
     ],
     "damageScope": null,
     "effects": [
-      "Damage Received decrease 20%",
       "Damage Received reduction: 20%.",
       "Duration: 2 rounds.",
       "Activation chance: 100% at effective Habit Level 5.",
@@ -6908,7 +6885,6 @@
     ],
     "damageScope": "tactical",
     "effects": [
-      "Tactical Damage Received decrease 16%",
       "Activation chance: 35%."
     ],
     "exactResultKnown": false,
@@ -6983,7 +6959,6 @@
     ],
     "damageScope": "tactical",
     "effects": [
-      "Tactical Damage Received decrease 16%",
       "Activation chance: 35%."
     ],
     "exactResultKnown": false,
@@ -7058,13 +7033,11 @@
     "damageScope": null,
     "effects": [
       "Initiative +20 flat.",
-      "Initiative 20 flat",
-      "Instinct +20 flat.",
-      "Instinct 20 flat"
+      "Instinct +20 flat."
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final value cannot be calculated because final combat formulas and stacking order are not fully verified.",
-    "explanation": "Syrax's Sentinel's Wit can increase Caraxes's Instinct and Initiative by 20 flat.",
+    "explanation": "Syrax's Sentinel's Wit can increase Caraxes's Instinct and Initiative by +20.",
     "id": "direct-stat-support-syrax-sentinels-wit-caraxes-instinct-initiative",
     "interactionScope": "cross-dragon",
     "matchedOutputCapabilityIds": [],
@@ -7157,15 +7130,13 @@
     "effects": [
       "Duration: until end of combat.",
       "Instinct +13% at effective Habit Level 5.",
-      "Instinct 13%",
       "Intelligence +13% at effective Habit Level 5.",
-      "Intelligence 13%",
       "Ranked progression: L1 6.5%, L2 7.8%, L3 9.1%, L4 11.05%, L5 13%.",
       "Targets exactly 3 Allies; caster is eligible."
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final value cannot be calculated because final combat formulas and stacking order are not fully verified.",
-    "explanation": "Syrax's Mindful Synergy can increase Caraxes's Intelligence and Instinct by 13%.",
+    "explanation": "Syrax's Mindful Synergy can increase Caraxes's Intelligence and Instinct by +13%.",
     "id": "direct-stat-support-syrax-mindful-synergy-caraxes-intelligence-instinct",
     "interactionScope": "cross-dragon",
     "matchedOutputCapabilityIds": [],
@@ -7249,15 +7220,13 @@
     "effects": [
       "Duration: until end of combat.",
       "Instinct +13% at effective Habit Level 5.",
-      "Instinct 13%",
       "Intelligence +13% at effective Habit Level 5.",
-      "Intelligence 13%",
       "Ranked progression: L1 6.5%, L2 7.8%, L3 9.1%, L4 11.05%, L5 13%.",
       "Targets exactly 3 Allies; caster is eligible."
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final value cannot be calculated because final combat formulas and stacking order are not fully verified.",
-    "explanation": "Syrax's Mindful Synergy can increase Syrax's Intelligence and Instinct by 13%.",
+    "explanation": "Syrax's Mindful Synergy can increase Syrax's Intelligence and Instinct by +13%.",
     "id": "direct-stat-support-syrax-mindful-synergy-syrax-intelligence-instinct",
     "interactionScope": "internal",
     "matchedOutputCapabilityIds": [],
@@ -7341,15 +7310,13 @@
     "effects": [
       "Duration: until end of combat.",
       "Instinct +13% at effective Habit Level 5.",
-      "Instinct 13%",
       "Intelligence +13% at effective Habit Level 5.",
-      "Intelligence 13%",
       "Ranked progression: L1 6.5%, L2 7.8%, L3 9.1%, L4 11.05%, L5 13%.",
       "Targets exactly 3 Allies; caster is eligible."
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final value cannot be calculated because final combat formulas and stacking order are not fully verified.",
-    "explanation": "Syrax's Mindful Synergy can increase Malachite's Intelligence and Instinct by 13%.",
+    "explanation": "Syrax's Mindful Synergy can increase Malachite's Intelligence and Instinct by +13%.",
     "id": "direct-stat-support-syrax-mindful-synergy-malachite-intelligence-instinct",
     "interactionScope": "cross-dragon",
     "matchedOutputCapabilityIds": [],
@@ -7431,7 +7398,6 @@
     ],
     "damageScope": null,
     "effects": [
-      "Initiative 12%",
       "Initiative +12% at effective Habit Level 5.",
       "Duration: until end of combat.",
       "Ranked progression: L1 6%, L2 7.2%, L3 8.4%, L4 10.2%, L5 12%.",
@@ -7509,7 +7475,6 @@
     ],
     "damageScope": null,
     "effects": [
-      "Initiative 12%",
       "Initiative +12% at effective Habit Level 5.",
       "Duration: until end of combat.",
       "Ranked progression: L1 6%, L2 7.2%, L3 8.4%, L4 10.2%, L5 12%.",
@@ -7587,7 +7552,6 @@
     ],
     "damageScope": null,
     "effects": [
-      "Initiative 12%",
       "Initiative +12% at effective Habit Level 5.",
       "Duration: until end of combat.",
       "Ranked progression: L1 6%, L2 7.2%, L3 8.4%, L4 10.2%, L5 12%.",
@@ -7666,13 +7630,11 @@
     "damageScope": null,
     "effects": [
       "Initiative +20 flat.",
-      "Initiative 20 flat",
-      "Strength +20 flat.",
-      "Strength 20 flat"
+      "Strength +20 flat."
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final value cannot be calculated because final combat formulas and stacking order are not fully verified.",
-    "explanation": "Caraxes's Hunter's Wrath can increase Malachite's Strength and Initiative by 20 flat.",
+    "explanation": "Caraxes's Hunter's Wrath can increase Malachite's Strength and Initiative by +20.",
     "id": "direct-stat-support-caraxes-hunters-wrath-malachite-strength-initiative",
     "interactionScope": "cross-dragon",
     "matchedOutputCapabilityIds": [],
@@ -7763,7 +7725,6 @@
     ],
     "damageScope": null,
     "effects": [
-      "Strength 25%",
       "Strength +25% at effective Habit Level 5.",
       "Duration: until end of combat.",
       "Ranked progression: L1 12.5%, L2 15%, L3 17.5%, L4 21.25%, L5 25%.",
@@ -7841,7 +7802,6 @@
     ],
     "damageScope": null,
     "effects": [
-      "Strength 25%",
       "Strength +25% at effective Habit Level 5.",
       "Duration: until end of combat.",
       "Ranked progression: L1 12.5%, L2 15%, L3 17.5%, L4 21.25%, L5 25%.",
@@ -7919,7 +7879,6 @@
     ],
     "damageScope": null,
     "effects": [
-      "Strength 25%",
       "Strength +25% at effective Habit Level 5.",
       "Duration: until end of combat.",
       "Ranked progression: L1 12.5%, L2 15%, L3 17.5%, L4 21.25%, L5 25%.",
@@ -7997,7 +7956,6 @@
     ],
     "damageScope": null,
     "effects": [
-      "Strength 25%",
       "Strength +25%.",
       "Duration: 3 rounds.",
       "Targets 1 other Ally; caster is excluded.",
@@ -8760,11 +8718,11 @@
     ],
     "damageScope": null,
     "effects": [
-      "Enemy Stat decrease 12%"
+      "Enemy Initiative decrease 12%"
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final reduced enemy damage cannot be calculated because target selection, uptime, stacking, and final formulas are unresolved.",
-    "explanation": "Syrax's Flight Mastery can reduce enemy Stat. Enemy target selection is tracked as an enemy-side candidate group, not a named friendly recipient.",
+    "explanation": "Syrax's Flight Mastery can reduce enemy Initiative. Enemy target selection is tracked as an enemy-side candidate group, not a named friendly recipient.",
     "id": "enemy-damage-dealt-reduction-syrax-flight-mastery-flight-mastery-initiative-down-stat-dealt-modifier",
     "interactionScope": "enemy-side",
     "matchedOutputCapabilityIds": [],
@@ -8810,7 +8768,7 @@
     ],
     "status": "potential",
     "targetSelectionGroup": null,
-    "title": "Stat Enemy Reduction",
+    "title": "Enemy Initiative reduction",
     "unresolvedQuestions": [
       "Enemy identities, combat availability, final uptime, and stacking/refresh behavior remain unresolved."
     ]
@@ -8828,11 +8786,11 @@
     ],
     "damageScope": null,
     "effects": [
-      "Enemy Stat decrease 13%"
+      "Enemy Strength decrease 13%"
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final reduced enemy damage cannot be calculated because target selection, uptime, stacking, and final formulas are unresolved.",
-    "explanation": "Caraxes's Battle Dread can reduce enemy Stat. Enemy target selection is tracked as an enemy-side candidate group, not a named friendly recipient.",
+    "explanation": "Caraxes's Battle Dread can reduce enemy Strength. Enemy target selection is tracked as an enemy-side candidate group, not a named friendly recipient.",
     "id": "enemy-damage-dealt-reduction-caraxes-battle-dread-battle-dread-strength-down-stat-dealt-modifier",
     "interactionScope": "enemy-side",
     "matchedOutputCapabilityIds": [],
@@ -8878,7 +8836,7 @@
     ],
     "status": "potential",
     "targetSelectionGroup": null,
-    "title": "Stat Enemy Reduction",
+    "title": "Enemy Strength reduction",
     "unresolvedQuestions": [
       "Enemy identities, combat availability, final uptime, and stacking/refresh behavior remain unresolved."
     ]
@@ -8896,11 +8854,11 @@
     ],
     "damageScope": null,
     "effects": [
-      "Enemy Stat decrease 13%"
+      "Enemy Initiative decrease 13%"
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final reduced enemy damage cannot be calculated because target selection, uptime, stacking, and final formulas are unresolved.",
-    "explanation": "Caraxes's Battle Dread can reduce enemy Stat. Enemy target selection is tracked as an enemy-side candidate group, not a named friendly recipient.",
+    "explanation": "Caraxes's Battle Dread can reduce enemy Initiative. Enemy target selection is tracked as an enemy-side candidate group, not a named friendly recipient.",
     "id": "enemy-damage-dealt-reduction-caraxes-battle-dread-battle-dread-initiative-down-stat-dealt-modifier",
     "interactionScope": "enemy-side",
     "matchedOutputCapabilityIds": [],
@@ -8946,7 +8904,7 @@
     ],
     "status": "potential",
     "targetSelectionGroup": null,
-    "title": "Stat Enemy Reduction",
+    "title": "Enemy Initiative reduction",
     "unresolvedQuestions": [
       "Enemy identities, combat availability, final uptime, and stacking/refresh behavior remain unresolved."
     ]
@@ -11366,7 +11324,6 @@
     ],
     "damageScope": null,
     "effects": [
-      "Damage Received decrease 20%",
       "Damage Received reduction: 20%.",
       "Duration: 2 rounds.",
       "Activation chance: 100% at effective Habit Level 5.",
@@ -11444,7 +11401,6 @@
     ],
     "damageScope": null,
     "effects": [
-      "Damage Received decrease 20%",
       "Damage Received reduction: 20%.",
       "Duration: 2 rounds.",
       "Activation chance: 100% at effective Habit Level 5.",
@@ -11522,7 +11478,6 @@
     ],
     "damageScope": "tactical",
     "effects": [
-      "Tactical Damage Received decrease 16%",
       "Activation chance: 35%."
     ],
     "exactResultKnown": false,
@@ -11597,7 +11552,6 @@
     ],
     "damageScope": "tactical",
     "effects": [
-      "Tactical Damage Received decrease 16%",
       "Activation chance: 35%."
     ],
     "exactResultKnown": false,
@@ -11672,13 +11626,11 @@
     "damageScope": null,
     "effects": [
       "Initiative +20 flat.",
-      "Initiative 20 flat",
-      "Instinct +20 flat.",
-      "Instinct 20 flat"
+      "Instinct +20 flat."
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final value cannot be calculated because final combat formulas and stacking order are not fully verified.",
-    "explanation": "Syrax's Sentinel's Wit can increase Malachite's Instinct and Initiative by 20 flat.",
+    "explanation": "Syrax's Sentinel's Wit can increase Malachite's Instinct and Initiative by +20.",
     "id": "direct-stat-support-syrax-sentinels-wit-malachite-instinct-initiative",
     "interactionScope": "cross-dragon",
     "matchedOutputCapabilityIds": [],
@@ -11771,15 +11723,13 @@
     "effects": [
       "Duration: until end of combat.",
       "Instinct +13% at effective Habit Level 5.",
-      "Instinct 13%",
       "Intelligence +13% at effective Habit Level 5.",
-      "Intelligence 13%",
       "Ranked progression: L1 6.5%, L2 7.8%, L3 9.1%, L4 11.05%, L5 13%.",
       "Targets exactly 3 Allies; caster is eligible."
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final value cannot be calculated because final combat formulas and stacking order are not fully verified.",
-    "explanation": "Syrax's Mindful Synergy can increase Malachite's Intelligence and Instinct by 13%.",
+    "explanation": "Syrax's Mindful Synergy can increase Malachite's Intelligence and Instinct by +13%.",
     "id": "direct-stat-support-syrax-mindful-synergy-malachite-intelligence-instinct",
     "interactionScope": "cross-dragon",
     "matchedOutputCapabilityIds": [],
@@ -11863,15 +11813,13 @@
     "effects": [
       "Duration: until end of combat.",
       "Instinct +13% at effective Habit Level 5.",
-      "Instinct 13%",
       "Intelligence +13% at effective Habit Level 5.",
-      "Intelligence 13%",
       "Ranked progression: L1 6.5%, L2 7.8%, L3 9.1%, L4 11.05%, L5 13%.",
       "Targets exactly 3 Allies; caster is eligible."
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final value cannot be calculated because final combat formulas and stacking order are not fully verified.",
-    "explanation": "Syrax's Mindful Synergy can increase Syrax's Intelligence and Instinct by 13%.",
+    "explanation": "Syrax's Mindful Synergy can increase Syrax's Intelligence and Instinct by +13%.",
     "id": "direct-stat-support-syrax-mindful-synergy-syrax-intelligence-instinct",
     "interactionScope": "internal",
     "matchedOutputCapabilityIds": [],
@@ -11955,15 +11903,13 @@
     "effects": [
       "Duration: until end of combat.",
       "Instinct +13% at effective Habit Level 5.",
-      "Instinct 13%",
       "Intelligence +13% at effective Habit Level 5.",
-      "Intelligence 13%",
       "Ranked progression: L1 6.5%, L2 7.8%, L3 9.1%, L4 11.05%, L5 13%.",
       "Targets exactly 3 Allies; caster is eligible."
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final value cannot be calculated because final combat formulas and stacking order are not fully verified.",
-    "explanation": "Syrax's Mindful Synergy can increase Caraxes's Intelligence and Instinct by 13%.",
+    "explanation": "Syrax's Mindful Synergy can increase Caraxes's Intelligence and Instinct by +13%.",
     "id": "direct-stat-support-syrax-mindful-synergy-caraxes-intelligence-instinct",
     "interactionScope": "cross-dragon",
     "matchedOutputCapabilityIds": [],
@@ -12045,7 +11991,6 @@
     ],
     "damageScope": null,
     "effects": [
-      "Initiative 12%",
       "Initiative +12% at effective Habit Level 5.",
       "Duration: until end of combat.",
       "Ranked progression: L1 6%, L2 7.2%, L3 8.4%, L4 10.2%, L5 12%.",
@@ -12123,7 +12068,6 @@
     ],
     "damageScope": null,
     "effects": [
-      "Initiative 12%",
       "Initiative +12% at effective Habit Level 5.",
       "Duration: until end of combat.",
       "Ranked progression: L1 6%, L2 7.2%, L3 8.4%, L4 10.2%, L5 12%.",
@@ -12201,7 +12145,6 @@
     ],
     "damageScope": null,
     "effects": [
-      "Initiative 12%",
       "Initiative +12% at effective Habit Level 5.",
       "Duration: until end of combat.",
       "Ranked progression: L1 6%, L2 7.2%, L3 8.4%, L4 10.2%, L5 12%.",
@@ -12279,7 +12222,6 @@
     ],
     "damageScope": null,
     "effects": [
-      "Strength 25%",
       "Strength +25% at effective Habit Level 5.",
       "Duration: until end of combat.",
       "Ranked progression: L1 12.5%, L2 15%, L3 17.5%, L4 21.25%, L5 25%.",
@@ -12357,7 +12299,6 @@
     ],
     "damageScope": null,
     "effects": [
-      "Strength 25%",
       "Strength +25% at effective Habit Level 5.",
       "Duration: until end of combat.",
       "Ranked progression: L1 12.5%, L2 15%, L3 17.5%, L4 21.25%, L5 25%.",
@@ -12435,7 +12376,6 @@
     ],
     "damageScope": null,
     "effects": [
-      "Strength 25%",
       "Strength +25% at effective Habit Level 5.",
       "Duration: until end of combat.",
       "Ranked progression: L1 12.5%, L2 15%, L3 17.5%, L4 21.25%, L5 25%.",
@@ -12513,7 +12453,6 @@
     ],
     "damageScope": null,
     "effects": [
-      "Strength 25%",
       "Strength +25%.",
       "Duration: 3 rounds.",
       "Targets 1 other Ally; caster is excluded.",
@@ -13253,11 +13192,11 @@
     ],
     "damageScope": null,
     "effects": [
-      "Enemy Stat decrease 12%"
+      "Enemy Initiative decrease 12%"
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final reduced enemy damage cannot be calculated because target selection, uptime, stacking, and final formulas are unresolved.",
-    "explanation": "Syrax's Flight Mastery can reduce enemy Stat. Enemy target selection is tracked as an enemy-side candidate group, not a named friendly recipient.",
+    "explanation": "Syrax's Flight Mastery can reduce enemy Initiative. Enemy target selection is tracked as an enemy-side candidate group, not a named friendly recipient.",
     "id": "enemy-damage-dealt-reduction-syrax-flight-mastery-flight-mastery-initiative-down-stat-dealt-modifier",
     "interactionScope": "enemy-side",
     "matchedOutputCapabilityIds": [],
@@ -13303,7 +13242,7 @@
     ],
     "status": "potential",
     "targetSelectionGroup": null,
-    "title": "Stat Enemy Reduction",
+    "title": "Enemy Initiative reduction",
     "unresolvedQuestions": [
       "Enemy identities, combat availability, final uptime, and stacking/refresh behavior remain unresolved."
     ]
@@ -13321,11 +13260,11 @@
     ],
     "damageScope": null,
     "effects": [
-      "Enemy Stat decrease 13%"
+      "Enemy Strength decrease 13%"
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final reduced enemy damage cannot be calculated because target selection, uptime, stacking, and final formulas are unresolved.",
-    "explanation": "Caraxes's Battle Dread can reduce enemy Stat. Enemy target selection is tracked as an enemy-side candidate group, not a named friendly recipient.",
+    "explanation": "Caraxes's Battle Dread can reduce enemy Strength. Enemy target selection is tracked as an enemy-side candidate group, not a named friendly recipient.",
     "id": "enemy-damage-dealt-reduction-caraxes-battle-dread-battle-dread-strength-down-stat-dealt-modifier",
     "interactionScope": "enemy-side",
     "matchedOutputCapabilityIds": [],
@@ -13371,7 +13310,7 @@
     ],
     "status": "potential",
     "targetSelectionGroup": null,
-    "title": "Stat Enemy Reduction",
+    "title": "Enemy Strength reduction",
     "unresolvedQuestions": [
       "Enemy identities, combat availability, final uptime, and stacking/refresh behavior remain unresolved."
     ]
@@ -13389,11 +13328,11 @@
     ],
     "damageScope": null,
     "effects": [
-      "Enemy Stat decrease 13%"
+      "Enemy Initiative decrease 13%"
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final reduced enemy damage cannot be calculated because target selection, uptime, stacking, and final formulas are unresolved.",
-    "explanation": "Caraxes's Battle Dread can reduce enemy Stat. Enemy target selection is tracked as an enemy-side candidate group, not a named friendly recipient.",
+    "explanation": "Caraxes's Battle Dread can reduce enemy Initiative. Enemy target selection is tracked as an enemy-side candidate group, not a named friendly recipient.",
     "id": "enemy-damage-dealt-reduction-caraxes-battle-dread-battle-dread-initiative-down-stat-dealt-modifier",
     "interactionScope": "enemy-side",
     "matchedOutputCapabilityIds": [],
@@ -13439,7 +13378,7 @@
     ],
     "status": "potential",
     "targetSelectionGroup": null,
-    "title": "Stat Enemy Reduction",
+    "title": "Enemy Initiative reduction",
     "unresolvedQuestions": [
       "Enemy identities, combat availability, final uptime, and stacking/refresh behavior remain unresolved."
     ]
@@ -15859,7 +15798,6 @@
     ],
     "damageScope": null,
     "effects": [
-      "Damage Received decrease 20%",
       "Damage Received reduction: 20%.",
       "Duration: 2 rounds.",
       "Activation chance: 100% at effective Habit Level 5.",
@@ -15937,7 +15875,6 @@
     ],
     "damageScope": null,
     "effects": [
-      "Damage Received decrease 20%",
       "Damage Received reduction: 20%.",
       "Duration: 2 rounds.",
       "Activation chance: 100% at effective Habit Level 5.",
@@ -16015,7 +15952,6 @@
     ],
     "damageScope": "tactical",
     "effects": [
-      "Tactical Damage Received decrease 16%",
       "Activation chance: 35%."
     ],
     "exactResultKnown": false,
@@ -16090,7 +16026,6 @@
     ],
     "damageScope": "tactical",
     "effects": [
-      "Tactical Damage Received decrease 16%",
       "Activation chance: 35%."
     ],
     "exactResultKnown": false,
@@ -16167,15 +16102,13 @@
     "effects": [
       "Duration: until end of combat.",
       "Instinct +13% at effective Habit Level 5.",
-      "Instinct 13%",
       "Intelligence +13% at effective Habit Level 5.",
-      "Intelligence 13%",
       "Ranked progression: L1 6.5%, L2 7.8%, L3 9.1%, L4 11.05%, L5 13%.",
       "Targets exactly 3 Allies; caster is eligible."
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final value cannot be calculated because final combat formulas and stacking order are not fully verified.",
-    "explanation": "Syrax's Mindful Synergy can increase Syrax's Intelligence and Instinct by 13%.",
+    "explanation": "Syrax's Mindful Synergy can increase Syrax's Intelligence and Instinct by +13%.",
     "id": "direct-stat-support-syrax-mindful-synergy-syrax-intelligence-instinct",
     "interactionScope": "internal",
     "matchedOutputCapabilityIds": [],
@@ -16259,15 +16192,13 @@
     "effects": [
       "Duration: until end of combat.",
       "Instinct +13% at effective Habit Level 5.",
-      "Instinct 13%",
       "Intelligence +13% at effective Habit Level 5.",
-      "Intelligence 13%",
       "Ranked progression: L1 6.5%, L2 7.8%, L3 9.1%, L4 11.05%, L5 13%.",
       "Targets exactly 3 Allies; caster is eligible."
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final value cannot be calculated because final combat formulas and stacking order are not fully verified.",
-    "explanation": "Syrax's Mindful Synergy can increase Caraxes's Intelligence and Instinct by 13%.",
+    "explanation": "Syrax's Mindful Synergy can increase Caraxes's Intelligence and Instinct by +13%.",
     "id": "direct-stat-support-syrax-mindful-synergy-caraxes-intelligence-instinct",
     "interactionScope": "cross-dragon",
     "matchedOutputCapabilityIds": [],
@@ -16351,15 +16282,13 @@
     "effects": [
       "Duration: until end of combat.",
       "Instinct +13% at effective Habit Level 5.",
-      "Instinct 13%",
       "Intelligence +13% at effective Habit Level 5.",
-      "Intelligence 13%",
       "Ranked progression: L1 6.5%, L2 7.8%, L3 9.1%, L4 11.05%, L5 13%.",
       "Targets exactly 3 Allies; caster is eligible."
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final value cannot be calculated because final combat formulas and stacking order are not fully verified.",
-    "explanation": "Syrax's Mindful Synergy can increase Malachite's Intelligence and Instinct by 13%.",
+    "explanation": "Syrax's Mindful Synergy can increase Malachite's Intelligence and Instinct by +13%.",
     "id": "direct-stat-support-syrax-mindful-synergy-malachite-intelligence-instinct",
     "interactionScope": "cross-dragon",
     "matchedOutputCapabilityIds": [],
@@ -16441,7 +16370,6 @@
     ],
     "damageScope": null,
     "effects": [
-      "Initiative 12%",
       "Initiative +12% at effective Habit Level 5.",
       "Duration: until end of combat.",
       "Ranked progression: L1 6%, L2 7.2%, L3 8.4%, L4 10.2%, L5 12%.",
@@ -16519,7 +16447,6 @@
     ],
     "damageScope": null,
     "effects": [
-      "Initiative 12%",
       "Initiative +12% at effective Habit Level 5.",
       "Duration: until end of combat.",
       "Ranked progression: L1 6%, L2 7.2%, L3 8.4%, L4 10.2%, L5 12%.",
@@ -16597,7 +16524,6 @@
     ],
     "damageScope": null,
     "effects": [
-      "Initiative 12%",
       "Initiative +12% at effective Habit Level 5.",
       "Duration: until end of combat.",
       "Ranked progression: L1 6%, L2 7.2%, L3 8.4%, L4 10.2%, L5 12%.",
@@ -16675,13 +16601,11 @@
     "damageScope": null,
     "effects": [
       "Initiative +20 flat.",
-      "Initiative 20 flat",
-      "Strength +20 flat.",
-      "Strength 20 flat"
+      "Strength +20 flat."
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final value cannot be calculated because final combat formulas and stacking order are not fully verified.",
-    "explanation": "Caraxes's Hunter's Wrath can increase Malachite's Strength and Initiative by 20 flat.",
+    "explanation": "Caraxes's Hunter's Wrath can increase Malachite's Strength and Initiative by +20.",
     "id": "direct-stat-support-caraxes-hunters-wrath-malachite-strength-initiative",
     "interactionScope": "cross-dragon",
     "matchedOutputCapabilityIds": [],
@@ -16772,7 +16696,6 @@
     ],
     "damageScope": null,
     "effects": [
-      "Strength 25%",
       "Strength +25% at effective Habit Level 5.",
       "Duration: until end of combat.",
       "Ranked progression: L1 12.5%, L2 15%, L3 17.5%, L4 21.25%, L5 25%.",
@@ -16850,7 +16773,6 @@
     ],
     "damageScope": null,
     "effects": [
-      "Strength 25%",
       "Strength +25% at effective Habit Level 5.",
       "Duration: until end of combat.",
       "Ranked progression: L1 12.5%, L2 15%, L3 17.5%, L4 21.25%, L5 25%.",
@@ -16928,7 +16850,6 @@
     ],
     "damageScope": null,
     "effects": [
-      "Strength 25%",
       "Strength +25% at effective Habit Level 5.",
       "Duration: until end of combat.",
       "Ranked progression: L1 12.5%, L2 15%, L3 17.5%, L4 21.25%, L5 25%.",
@@ -17006,7 +16927,6 @@
     ],
     "damageScope": null,
     "effects": [
-      "Strength 25%",
       "Strength +25%.",
       "Duration: 3 rounds.",
       "Targets 1 other Ally; caster is excluded.",
@@ -17657,11 +17577,11 @@
     ],
     "damageScope": null,
     "effects": [
-      "Enemy Stat decrease 12%"
+      "Enemy Initiative decrease 12%"
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final reduced enemy damage cannot be calculated because target selection, uptime, stacking, and final formulas are unresolved.",
-    "explanation": "Syrax's Flight Mastery can reduce enemy Stat. Enemy target selection is tracked as an enemy-side candidate group, not a named friendly recipient.",
+    "explanation": "Syrax's Flight Mastery can reduce enemy Initiative. Enemy target selection is tracked as an enemy-side candidate group, not a named friendly recipient.",
     "id": "enemy-damage-dealt-reduction-syrax-flight-mastery-flight-mastery-initiative-down-stat-dealt-modifier",
     "interactionScope": "enemy-side",
     "matchedOutputCapabilityIds": [],
@@ -17707,7 +17627,7 @@
     ],
     "status": "potential",
     "targetSelectionGroup": null,
-    "title": "Stat Enemy Reduction",
+    "title": "Enemy Initiative reduction",
     "unresolvedQuestions": [
       "Enemy identities, combat availability, final uptime, and stacking/refresh behavior remain unresolved."
     ]
@@ -17725,11 +17645,11 @@
     ],
     "damageScope": null,
     "effects": [
-      "Enemy Stat decrease 13%"
+      "Enemy Strength decrease 13%"
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final reduced enemy damage cannot be calculated because target selection, uptime, stacking, and final formulas are unresolved.",
-    "explanation": "Caraxes's Battle Dread can reduce enemy Stat. Enemy target selection is tracked as an enemy-side candidate group, not a named friendly recipient.",
+    "explanation": "Caraxes's Battle Dread can reduce enemy Strength. Enemy target selection is tracked as an enemy-side candidate group, not a named friendly recipient.",
     "id": "enemy-damage-dealt-reduction-caraxes-battle-dread-battle-dread-strength-down-stat-dealt-modifier",
     "interactionScope": "enemy-side",
     "matchedOutputCapabilityIds": [],
@@ -17775,7 +17695,7 @@
     ],
     "status": "potential",
     "targetSelectionGroup": null,
-    "title": "Stat Enemy Reduction",
+    "title": "Enemy Strength reduction",
     "unresolvedQuestions": [
       "Enemy identities, combat availability, final uptime, and stacking/refresh behavior remain unresolved."
     ]
@@ -17793,11 +17713,11 @@
     ],
     "damageScope": null,
     "effects": [
-      "Enemy Stat decrease 13%"
+      "Enemy Initiative decrease 13%"
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final reduced enemy damage cannot be calculated because target selection, uptime, stacking, and final formulas are unresolved.",
-    "explanation": "Caraxes's Battle Dread can reduce enemy Stat. Enemy target selection is tracked as an enemy-side candidate group, not a named friendly recipient.",
+    "explanation": "Caraxes's Battle Dread can reduce enemy Initiative. Enemy target selection is tracked as an enemy-side candidate group, not a named friendly recipient.",
     "id": "enemy-damage-dealt-reduction-caraxes-battle-dread-battle-dread-initiative-down-stat-dealt-modifier",
     "interactionScope": "enemy-side",
     "matchedOutputCapabilityIds": [],
@@ -17843,7 +17763,7 @@
     ],
     "status": "potential",
     "targetSelectionGroup": null,
-    "title": "Stat Enemy Reduction",
+    "title": "Enemy Initiative reduction",
     "unresolvedQuestions": [
       "Enemy identities, combat availability, final uptime, and stacking/refresh behavior remain unresolved."
     ]
@@ -20598,14 +20518,10 @@
       "Vermax - Trial by Flame Selected Habit Level: expected Habit Level 1+ or preview, actual preview enabled"
     ],
     "damageScope": "fire",
-    "effects": [
-      "Fire Damage Received decrease 10%",
-      "Fire Damage Received decrease 20%",
-      "Fire Damage Received decrease 30%"
-    ],
+    "effects": [],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final value cannot be calculated because final combat formulas and stacking order are not fully verified.",
-    "explanation": "Trial by Flame can reduce Fire Damage Received for Malachite and Sheepstealer when each satisfies a Troop Capacity threshold. Below 75% Troop Capacity: Fire Damage Received -10%; Below 50% Troop Capacity: Fire Damage Received -20%; Below 25% Troop Capacity: Fire Damage Received -30%. Threshold applicability depends on each recipient's current Troop Capacity; exact interaction between overlapping threshold tiers is unresolved.",
+    "explanation": "Trial by Flame can reduce Fire Damage Received for Malachite and Sheepstealer when each satisfies a Troop Capacity threshold. . Threshold applicability depends on each recipient's current Troop Capacity; exact interaction between overlapping threshold tiers is unresolved.",
     "id": "defensive-ally-support-vermax-trial-by-flame-grouped",
     "interactionScope": "targeting-fact",
     "matchedOutputCapabilityIds": [],
@@ -20742,7 +20658,6 @@
     ],
     "damageScope": "tactical",
     "effects": [
-      "Tactical Damage Received decrease 16%",
       "Activation chance: 35%."
     ],
     "exactResultKnown": false,
@@ -20817,7 +20732,6 @@
     ],
     "damageScope": "tactical",
     "effects": [
-      "Tactical Damage Received decrease 16%",
       "Activation chance: 35%."
     ],
     "exactResultKnown": false,
@@ -20892,7 +20806,6 @@
     ],
     "damageScope": null,
     "effects": [
-      "Strength 25%",
       "Strength +25% at effective Habit Level 5.",
       "Duration: until end of combat.",
       "Ranked progression: L1 12.5%, L2 15%, L3 17.5%, L4 21.25%, L5 25%.",
@@ -20970,7 +20883,6 @@
     ],
     "damageScope": null,
     "effects": [
-      "Strength 25%",
       "Strength +25% at effective Habit Level 5.",
       "Duration: until end of combat.",
       "Ranked progression: L1 12.5%, L2 15%, L3 17.5%, L4 21.25%, L5 25%.",
@@ -21048,7 +20960,6 @@
     ],
     "damageScope": null,
     "effects": [
-      "Strength 25%",
       "Strength +25% at effective Habit Level 5.",
       "Duration: until end of combat.",
       "Ranked progression: L1 12.5%, L2 15%, L3 17.5%, L4 21.25%, L5 25%.",
@@ -21126,7 +21037,6 @@
     ],
     "damageScope": null,
     "effects": [
-      "Strength 25%",
       "Strength +25%.",
       "Duration: 3 rounds.",
       "Targets 1 other Ally; caster is excluded.",
@@ -21207,13 +21117,11 @@
     "damageScope": null,
     "effects": [
       "Initiative +20 flat.",
-      "Initiative 20 flat",
-      "Instinct +20 flat.",
-      "Instinct 20 flat"
+      "Instinct +20 flat."
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final value cannot be calculated because final combat formulas and stacking order are not fully verified.",
-    "explanation": "Vermax's Warrior's Zeal can increase Malachite's Instinct and Initiative by 20 flat.",
+    "explanation": "Vermax's Warrior's Zeal can increase Malachite's Instinct and Initiative by +20.",
     "id": "direct-stat-support-vermax-warriors-zeal-malachite-instinct-initiative",
     "interactionScope": "cross-dragon",
     "matchedOutputCapabilityIds": [],
@@ -21312,16 +21220,14 @@
     "effects": [
       "Duration: until end of combat.",
       "Initiative +18% at effective Habit Level 5.",
-      "Initiative 18%",
       "Instinct +36% at effective Habit Level 5.",
-      "Instinct 36%",
       "Ranked progression: L1 18%, L2 21.6%, L3 25.2%, L4 30.6%, L5 36%.",
       "Ranked progression: L1 9%, L2 10.8%, L3 12.6%, L4 15.3%, L5 18%.",
       "Targets 1 Ally; caster eligibility unknown."
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final value cannot be calculated because final combat formulas and stacking order are not fully verified.",
-    "explanation": "Vermax's Reactive Instincts can increase Malachite's Instinct by 36% and Initiative by 18%.",
+    "explanation": "Vermax's Reactive Instincts can increase Malachite's Instinct by +36% and Initiative by +18%.",
     "id": "direct-stat-support-vermax-reactive-instincts-malachite-instinct-initiative",
     "interactionScope": "cross-dragon",
     "matchedOutputCapabilityIds": [],
@@ -21730,11 +21636,11 @@
     ],
     "damageScope": null,
     "effects": [
-      "Enemy Stat decrease 24%"
+      "Enemy Instinct decrease 24%"
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final reduced enemy damage cannot be calculated because target selection, uptime, stacking, and final formulas are unresolved.",
-    "explanation": "Sheepstealer's Dragon's Cunning can reduce enemy Stat. Enemy target selection is tracked as an enemy-side candidate group, not a named friendly recipient.",
+    "explanation": "Sheepstealer's Dragon's Cunning can reduce enemy Instinct. Enemy target selection is tracked as an enemy-side candidate group, not a named friendly recipient.",
     "id": "enemy-damage-dealt-reduction-sheepstealer-dragons-cunning-dragons-cunning-instinct-down-stat-dealt-modifier",
     "interactionScope": "enemy-side",
     "matchedOutputCapabilityIds": [],
@@ -21780,7 +21686,7 @@
     ],
     "status": "potential",
     "targetSelectionGroup": null,
-    "title": "Stat Enemy Reduction",
+    "title": "Enemy Instinct reduction",
     "unresolvedQuestions": [
       "Adjacent enemy identity, enemy-formation overlap, final uptime, and stacking/refresh behavior remain unresolved."
     ]
@@ -24524,9 +24430,7 @@
       "Seasmoke - Champion's Brilliance Star Rank requirement: expected Star Rank 1+, actual preview enabled"
     ],
     "damageScope": "all",
-    "effects": [
-      "Damage Received decrease 8%"
-    ],
+    "effects": [],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final value cannot be calculated because final combat formulas and stacking order are not fully verified.",
     "explanation": "Seasmoke's Champion's Brilliance can reduce Sheepstealer's Damage Received by 8%.",
@@ -24608,7 +24512,6 @@
     ],
     "damageScope": null,
     "effects": [
-      "Damage Received decrease 20%",
       "Damage Received reduction: 20%.",
       "Duration: 2 rounds.",
       "Activation chance: 25% at effective Habit Level 5.",
@@ -24686,7 +24589,6 @@
     ],
     "damageScope": null,
     "effects": [
-      "Damage Received decrease 20%",
       "Damage Received reduction: 20%.",
       "Duration: 2 rounds.",
       "Activation chance: 25% at effective Habit Level 5.",
@@ -24764,7 +24666,6 @@
     ],
     "damageScope": "tactical",
     "effects": [
-      "Tactical Damage Received decrease 16%",
       "Activation chance: 35%."
     ],
     "exactResultKnown": false,
@@ -24839,7 +24740,6 @@
     ],
     "damageScope": "tactical",
     "effects": [
-      "Tactical Damage Received decrease 16%",
       "Activation chance: 35%."
     ],
     "exactResultKnown": false,
@@ -24916,16 +24816,14 @@
     "effects": [
       "Duration: until end of combat.",
       "Initiative +25% at effective Habit Level 5.",
-      "Initiative 25%",
       "Intelligence +44% at effective Habit Level 5.",
-      "Intelligence 44%",
       "Ranked progression: L1 12.5%, L2 15%, L3 17.5%, L4 21.25%, L5 25%.",
       "Ranked progression: L1 22%, L2 26.4%, L3 30.8%, L4 37.4%, L5 44%.",
       "Targets 1 Ally; caster is eligible."
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final value cannot be calculated because final combat formulas and stacking order are not fully verified.",
-    "explanation": "Seasmoke's Clever Maneuver can increase Sheepstealer's Intelligence by 44% and Initiative by 25%.",
+    "explanation": "Seasmoke's Clever Maneuver can increase Sheepstealer's Intelligence by +44% and Initiative by +25%.",
     "id": "direct-stat-support-seasmoke-clever-maneuver-sheepstealer-intelligence-initiative",
     "interactionScope": "cross-dragon",
     "matchedOutputCapabilityIds": [],
@@ -25007,7 +24905,6 @@
     ],
     "damageScope": null,
     "effects": [
-      "Initiative 25%",
       "Initiative +25% at effective Habit Level 5.",
       "Duration: until end of combat.",
       "Ranked progression: L1 12.5%, L2 15%, L3 17.5%, L4 21.25%, L5 25%.",
@@ -25085,7 +24982,6 @@
     ],
     "damageScope": null,
     "effects": [
-      "Initiative 25%",
       "Initiative +25% at effective Habit Level 5.",
       "Duration: until end of combat.",
       "Ranked progression: L1 12.5%, L2 15%, L3 17.5%, L4 21.25%, L5 25%.",
@@ -25163,7 +25059,6 @@
     ],
     "damageScope": null,
     "effects": [
-      "Initiative 25%",
       "Initiative +25% at effective Habit Level 5.",
       "Duration: until end of combat.",
       "Ranked progression: L1 12.5%, L2 15%, L3 17.5%, L4 21.25%, L5 25%.",
@@ -25241,7 +25136,6 @@
     ],
     "damageScope": null,
     "effects": [
-      "Intelligence 15%",
       "Intelligence +15% at effective Habit Level 5.",
       "Duration: until end of combat.",
       "Ranked progression: L1 7.5%, L2 9%, L3 10.5%, L4 12.75%, L5 15%.",
@@ -25321,7 +25215,6 @@
     ],
     "damageScope": null,
     "effects": [
-      "Strength 25%",
       "Strength +25% at effective Habit Level 5.",
       "Duration: until end of combat.",
       "Ranked progression: L1 12.5%, L2 15%, L3 17.5%, L4 21.25%, L5 25%.",
@@ -25399,7 +25292,6 @@
     ],
     "damageScope": null,
     "effects": [
-      "Strength 25%",
       "Strength +25% at effective Habit Level 5.",
       "Duration: until end of combat.",
       "Ranked progression: L1 12.5%, L2 15%, L3 17.5%, L4 21.25%, L5 25%.",
@@ -25477,7 +25369,6 @@
     ],
     "damageScope": null,
     "effects": [
-      "Strength 25%",
       "Strength +25% at effective Habit Level 5.",
       "Duration: until end of combat.",
       "Ranked progression: L1 12.5%, L2 15%, L3 17.5%, L4 21.25%, L5 25%.",
@@ -25558,7 +25449,6 @@
       "Activation chance: 100% at effective Habit Level 5.",
       "Duration: 3 rounds.",
       "Strength +25%.",
-      "Strength 25%",
       "Targets 1 other Ally; caster is excluded."
     ],
     "exactResultKnown": false,
@@ -26071,11 +25961,11 @@
     ],
     "damageScope": null,
     "effects": [
-      "Enemy Stat decrease 24%"
+      "Enemy Instinct decrease 24%"
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final reduced enemy damage cannot be calculated because target selection, uptime, stacking, and final formulas are unresolved.",
-    "explanation": "Sheepstealer's Dragon's Cunning can reduce enemy Stat. Enemy target selection is tracked as an enemy-side candidate group, not a named friendly recipient.",
+    "explanation": "Sheepstealer's Dragon's Cunning can reduce enemy Instinct. Enemy target selection is tracked as an enemy-side candidate group, not a named friendly recipient.",
     "id": "enemy-damage-dealt-reduction-sheepstealer-dragons-cunning-dragons-cunning-instinct-down-stat-dealt-modifier",
     "interactionScope": "enemy-side",
     "matchedOutputCapabilityIds": [],
@@ -26121,7 +26011,7 @@
     ],
     "status": "potential",
     "targetSelectionGroup": null,
-    "title": "Stat Enemy Reduction",
+    "title": "Enemy Instinct reduction",
     "unresolvedQuestions": [
       "Adjacent enemy identity, enemy-formation overlap, final uptime, and stacking/refresh behavior remain unresolved."
     ]
@@ -28441,14 +28331,10 @@
       "Vermax - Trial by Flame Selected Habit Level: expected Habit Level 1+ or preview, actual preview enabled"
     ],
     "damageScope": "fire",
-    "effects": [
-      "Fire Damage Received decrease 10%",
-      "Fire Damage Received decrease 20%",
-      "Fire Damage Received decrease 30%"
-    ],
+    "effects": [],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final value cannot be calculated because final combat formulas and stacking order are not fully verified.",
-    "explanation": "Trial by Flame can reduce Fire Damage Received for Malachite and Seasmoke when each satisfies a Troop Capacity threshold. Below 75% Troop Capacity: Fire Damage Received -10%; Below 50% Troop Capacity: Fire Damage Received -20%; Below 25% Troop Capacity: Fire Damage Received -30%. Threshold applicability depends on each recipient's current Troop Capacity; exact interaction between overlapping threshold tiers is unresolved.",
+    "explanation": "Trial by Flame can reduce Fire Damage Received for Malachite and Seasmoke when each satisfies a Troop Capacity threshold. . Threshold applicability depends on each recipient's current Troop Capacity; exact interaction between overlapping threshold tiers is unresolved.",
     "id": "defensive-ally-support-vermax-trial-by-flame-grouped",
     "interactionScope": "targeting-fact",
     "matchedOutputCapabilityIds": [],
@@ -28585,7 +28471,6 @@
     ],
     "damageScope": null,
     "effects": [
-      "Damage Received decrease 20%",
       "Damage Received reduction: 20%.",
       "Duration: 2 rounds.",
       "Activation chance: 25% at effective Habit Level 5.",
@@ -28663,7 +28548,6 @@
     ],
     "damageScope": null,
     "effects": [
-      "Damage Received decrease 20%",
       "Damage Received reduction: 20%.",
       "Duration: 2 rounds.",
       "Activation chance: 25% at effective Habit Level 5.",
@@ -28741,7 +28625,6 @@
     ],
     "damageScope": "tactical",
     "effects": [
-      "Tactical Damage Received decrease 16%",
       "Activation chance: 35%."
     ],
     "exactResultKnown": false,
@@ -28816,7 +28699,6 @@
     ],
     "damageScope": "tactical",
     "effects": [
-      "Tactical Damage Received decrease 16%",
       "Activation chance: 35%."
     ],
     "exactResultKnown": false,
@@ -28893,16 +28775,14 @@
     "effects": [
       "Duration: until end of combat.",
       "Initiative +25% at effective Habit Level 5.",
-      "Initiative 25%",
       "Intelligence +44% at effective Habit Level 5.",
-      "Intelligence 44%",
       "Ranked progression: L1 12.5%, L2 15%, L3 17.5%, L4 21.25%, L5 25%.",
       "Ranked progression: L1 22%, L2 26.4%, L3 30.8%, L4 37.4%, L5 44%.",
       "Targets 1 Ally; caster is eligible."
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final value cannot be calculated because final combat formulas and stacking order are not fully verified.",
-    "explanation": "Seasmoke's Clever Maneuver can increase Malachite's Intelligence by 44% and Initiative by 25%.",
+    "explanation": "Seasmoke's Clever Maneuver can increase Malachite's Intelligence by +44% and Initiative by +25%.",
     "id": "direct-stat-support-seasmoke-clever-maneuver-malachite-intelligence-initiative",
     "interactionScope": "cross-dragon",
     "matchedOutputCapabilityIds": [],
@@ -28984,7 +28864,6 @@
     ],
     "damageScope": null,
     "effects": [
-      "Initiative 25%",
       "Initiative +25% at effective Habit Level 5.",
       "Duration: until end of combat.",
       "Ranked progression: L1 12.5%, L2 15%, L3 17.5%, L4 21.25%, L5 25%.",
@@ -29062,7 +28941,6 @@
     ],
     "damageScope": null,
     "effects": [
-      "Initiative 25%",
       "Initiative +25% at effective Habit Level 5.",
       "Duration: until end of combat.",
       "Ranked progression: L1 12.5%, L2 15%, L3 17.5%, L4 21.25%, L5 25%.",
@@ -29140,7 +29018,6 @@
     ],
     "damageScope": null,
     "effects": [
-      "Initiative 25%",
       "Initiative +25% at effective Habit Level 5.",
       "Duration: until end of combat.",
       "Ranked progression: L1 12.5%, L2 15%, L3 17.5%, L4 21.25%, L5 25%.",
@@ -29218,7 +29095,6 @@
     ],
     "damageScope": null,
     "effects": [
-      "Intelligence 15%",
       "Intelligence +15% at effective Habit Level 5.",
       "Duration: until end of combat.",
       "Ranked progression: L1 7.5%, L2 9%, L3 10.5%, L4 12.75%, L5 15%.",
@@ -29298,7 +29174,6 @@
     ],
     "damageScope": null,
     "effects": [
-      "Strength 25%",
       "Strength +25% at effective Habit Level 5.",
       "Duration: until end of combat.",
       "Ranked progression: L1 12.5%, L2 15%, L3 17.5%, L4 21.25%, L5 25%.",
@@ -29376,7 +29251,6 @@
     ],
     "damageScope": null,
     "effects": [
-      "Strength 25%",
       "Strength +25% at effective Habit Level 5.",
       "Duration: until end of combat.",
       "Ranked progression: L1 12.5%, L2 15%, L3 17.5%, L4 21.25%, L5 25%.",
@@ -29454,7 +29328,6 @@
     ],
     "damageScope": null,
     "effects": [
-      "Strength 25%",
       "Strength +25% at effective Habit Level 5.",
       "Duration: until end of combat.",
       "Ranked progression: L1 12.5%, L2 15%, L3 17.5%, L4 21.25%, L5 25%.",
@@ -29532,7 +29405,6 @@
     ],
     "damageScope": null,
     "effects": [
-      "Strength 25%",
       "Strength +25%.",
       "Duration: 3 rounds.",
       "Targets 1 other Ally; caster is excluded.",
@@ -29611,13 +29483,11 @@
     "damageScope": null,
     "effects": [
       "Initiative +20 flat.",
-      "Initiative 20 flat",
-      "Instinct +20 flat.",
-      "Instinct 20 flat"
+      "Instinct +20 flat."
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final value cannot be calculated because final combat formulas and stacking order are not fully verified.",
-    "explanation": "Vermax's Warrior's Zeal increases Malachite's Instinct and Initiative by 20 flat.",
+    "explanation": "Vermax's Warrior's Zeal increases Malachite's Instinct and Initiative by +20.",
     "id": "direct-stat-support-vermax-warriors-zeal-malachite-instinct-initiative",
     "interactionScope": "cross-dragon",
     "matchedOutputCapabilityIds": [],
@@ -29716,16 +29586,14 @@
     "effects": [
       "Duration: until end of combat.",
       "Initiative +18% at effective Habit Level 5.",
-      "Initiative 18%",
       "Instinct +36% at effective Habit Level 5.",
-      "Instinct 36%",
       "Ranked progression: L1 18%, L2 21.6%, L3 25.2%, L4 30.6%, L5 36%.",
       "Ranked progression: L1 9%, L2 10.8%, L3 12.6%, L4 15.3%, L5 18%.",
       "Targets 1 Ally; caster eligibility unknown."
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final value cannot be calculated because final combat formulas and stacking order are not fully verified.",
-    "explanation": "Vermax's Reactive Instincts can increase Malachite's Instinct by 36% and Initiative by 18%.",
+    "explanation": "Vermax's Reactive Instincts can increase Malachite's Instinct by +36% and Initiative by +18%.",
     "id": "direct-stat-support-vermax-reactive-instincts-malachite-instinct-initiative",
     "interactionScope": "cross-dragon",
     "matchedOutputCapabilityIds": [],
@@ -32978,9 +32846,7 @@
       "Seasmoke - Champion's Brilliance Star Rank requirement: expected Star Rank 1+, actual preview enabled"
     ],
     "damageScope": "all",
-    "effects": [
-      "Damage Received decrease 8%"
-    ],
+    "effects": [],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final value cannot be calculated because final combat formulas and stacking order are not fully verified.",
     "explanation": "Seasmoke's Champion's Brilliance can reduce Sheepstealer's Damage Received by 8%.",
@@ -33062,7 +32928,6 @@
     ],
     "damageScope": null,
     "effects": [
-      "Damage Received decrease 20%",
       "Damage Received reduction: 20%.",
       "Duration: 2 rounds.",
       "Activation chance: 25% at effective Habit Level 5.",
@@ -33140,7 +33005,6 @@
     ],
     "damageScope": null,
     "effects": [
-      "Damage Received decrease 20%",
       "Damage Received reduction: 20%.",
       "Duration: 2 rounds.",
       "Activation chance: 25% at effective Habit Level 5.",
@@ -33218,7 +33082,6 @@
     ],
     "damageScope": "tactical",
     "effects": [
-      "Tactical Damage Received decrease 16%",
       "Activation chance: 35%."
     ],
     "exactResultKnown": false,
@@ -33293,7 +33156,6 @@
     ],
     "damageScope": "tactical",
     "effects": [
-      "Tactical Damage Received decrease 16%",
       "Activation chance: 35%."
     ],
     "exactResultKnown": false,
@@ -33370,16 +33232,14 @@
     "effects": [
       "Duration: until end of combat.",
       "Initiative +25% at effective Habit Level 5.",
-      "Initiative 25%",
       "Intelligence +44% at effective Habit Level 5.",
-      "Intelligence 44%",
       "Ranked progression: L1 12.5%, L2 15%, L3 17.5%, L4 21.25%, L5 25%.",
       "Ranked progression: L1 22%, L2 26.4%, L3 30.8%, L4 37.4%, L5 44%.",
       "Targets 1 Ally; caster is eligible."
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final value cannot be calculated because final combat formulas and stacking order are not fully verified.",
-    "explanation": "Seasmoke's Clever Maneuver can increase Sheepstealer's Intelligence by 44% and Initiative by 25%.",
+    "explanation": "Seasmoke's Clever Maneuver can increase Sheepstealer's Intelligence by +44% and Initiative by +25%.",
     "id": "direct-stat-support-seasmoke-clever-maneuver-sheepstealer-intelligence-initiative",
     "interactionScope": "cross-dragon",
     "matchedOutputCapabilityIds": [],
@@ -33461,7 +33321,6 @@
     ],
     "damageScope": null,
     "effects": [
-      "Initiative 25%",
       "Initiative +25% at effective Habit Level 5.",
       "Duration: until end of combat.",
       "Ranked progression: L1 12.5%, L2 15%, L3 17.5%, L4 21.25%, L5 25%.",
@@ -33539,7 +33398,6 @@
     ],
     "damageScope": null,
     "effects": [
-      "Initiative 25%",
       "Initiative +25% at effective Habit Level 5.",
       "Duration: until end of combat.",
       "Ranked progression: L1 12.5%, L2 15%, L3 17.5%, L4 21.25%, L5 25%.",
@@ -33617,7 +33475,6 @@
     ],
     "damageScope": null,
     "effects": [
-      "Initiative 25%",
       "Initiative +25% at effective Habit Level 5.",
       "Duration: until end of combat.",
       "Ranked progression: L1 12.5%, L2 15%, L3 17.5%, L4 21.25%, L5 25%.",
@@ -33696,7 +33553,6 @@
     "effects": [
       "Duration: until end of combat.",
       "Intelligence +15% at effective Habit Level 5.",
-      "Intelligence 15%",
       "Ranked progression: L1 7.5%, L2 9%, L3 10.5%, L4 12.75%, L5 15%.",
       "Targets 1 Ally; caster is eligible."
     ],
@@ -33796,7 +33652,6 @@
     ],
     "damageScope": null,
     "effects": [
-      "Strength 25%",
       "Strength +25% at effective Habit Level 5.",
       "Duration: until end of combat.",
       "Ranked progression: L1 12.5%, L2 15%, L3 17.5%, L4 21.25%, L5 25%.",
@@ -33874,7 +33729,6 @@
     ],
     "damageScope": null,
     "effects": [
-      "Strength 25%",
       "Strength +25% at effective Habit Level 5.",
       "Duration: until end of combat.",
       "Ranked progression: L1 12.5%, L2 15%, L3 17.5%, L4 21.25%, L5 25%.",
@@ -33952,7 +33806,6 @@
     ],
     "damageScope": null,
     "effects": [
-      "Strength 25%",
       "Strength +25% at effective Habit Level 5.",
       "Duration: until end of combat.",
       "Ranked progression: L1 12.5%, L2 15%, L3 17.5%, L4 21.25%, L5 25%.",
@@ -34030,7 +33883,6 @@
     ],
     "damageScope": null,
     "effects": [
-      "Strength 25%",
       "Strength +25%.",
       "Duration: 3 rounds.",
       "Targets 1 other Ally; caster is excluded.",
@@ -34635,11 +34487,11 @@
     ],
     "damageScope": null,
     "effects": [
-      "Enemy Stat decrease 24%"
+      "Enemy Instinct decrease 24%"
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final reduced enemy damage cannot be calculated because target selection, uptime, stacking, and final formulas are unresolved.",
-    "explanation": "Sheepstealer's Dragon's Cunning can reduce enemy Stat. Enemy target selection is tracked as an enemy-side candidate group, not a named friendly recipient.",
+    "explanation": "Sheepstealer's Dragon's Cunning can reduce enemy Instinct. Enemy target selection is tracked as an enemy-side candidate group, not a named friendly recipient.",
     "id": "enemy-damage-dealt-reduction-sheepstealer-dragons-cunning-dragons-cunning-instinct-down-stat-dealt-modifier",
     "interactionScope": "enemy-side",
     "matchedOutputCapabilityIds": [],
@@ -34685,7 +34537,7 @@
     ],
     "status": "potential",
     "targetSelectionGroup": null,
-    "title": "Stat Enemy Reduction",
+    "title": "Enemy Instinct reduction",
     "unresolvedQuestions": [
       "Adjacent enemy identity, enemy-formation overlap, final uptime, and stacking/refresh behavior remain unresolved."
     ]
@@ -36596,9 +36448,7 @@
       "Seasmoke - Champion's Brilliance Star Rank requirement: expected Star Rank 1+, actual preview enabled"
     ],
     "damageScope": "all",
-    "effects": [
-      "Damage Received decrease 8%"
-    ],
+    "effects": [],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final value cannot be calculated because final combat formulas and stacking order are not fully verified.",
     "explanation": "Seasmoke's Champion's Brilliance can reduce Sheepstealer's Damage Received by 8%.",
@@ -36680,7 +36530,6 @@
     ],
     "damageScope": null,
     "effects": [
-      "Damage Received decrease 20%",
       "Damage Received reduction: 20%.",
       "Duration: 2 rounds.",
       "Activation chance: 25% at effective Habit Level 5.",
@@ -36758,7 +36607,6 @@
     ],
     "damageScope": null,
     "effects": [
-      "Damage Received decrease 20%",
       "Damage Received reduction: 20%.",
       "Duration: 2 rounds.",
       "Activation chance: 25% at effective Habit Level 5.",
@@ -36837,13 +36685,11 @@
     "damageScope": null,
     "effects": [
       "Initiative +20 flat.",
-      "Initiative 20 flat",
-      "Strength +20 flat.",
-      "Strength 20 flat"
+      "Strength +20 flat."
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final value cannot be calculated because final combat formulas and stacking order are not fully verified.",
-    "explanation": "Caraxes's Hunter's Wrath can increase Sheepstealer's Strength and Initiative by 20 flat.",
+    "explanation": "Caraxes's Hunter's Wrath can increase Sheepstealer's Strength and Initiative by +20.",
     "id": "direct-stat-support-caraxes-hunters-wrath-sheepstealer-strength-initiative",
     "interactionScope": "cross-dragon",
     "matchedOutputCapabilityIds": [],
@@ -36936,16 +36782,14 @@
     "effects": [
       "Duration: until end of combat.",
       "Initiative +25% at effective Habit Level 5.",
-      "Initiative 25%",
       "Intelligence +44% at effective Habit Level 5.",
-      "Intelligence 44%",
       "Ranked progression: L1 12.5%, L2 15%, L3 17.5%, L4 21.25%, L5 25%.",
       "Ranked progression: L1 22%, L2 26.4%, L3 30.8%, L4 37.4%, L5 44%.",
       "Targets 1 Ally; caster is eligible."
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final value cannot be calculated because final combat formulas and stacking order are not fully verified.",
-    "explanation": "Seasmoke's Clever Maneuver can increase Sheepstealer's Intelligence by 44% and Initiative by 25%.",
+    "explanation": "Seasmoke's Clever Maneuver can increase Sheepstealer's Intelligence by +44% and Initiative by +25%.",
     "id": "direct-stat-support-seasmoke-clever-maneuver-sheepstealer-intelligence-initiative",
     "interactionScope": "cross-dragon",
     "matchedOutputCapabilityIds": [],
@@ -37027,7 +36871,6 @@
     ],
     "damageScope": null,
     "effects": [
-      "Initiative 25%",
       "Initiative +25% at effective Habit Level 5.",
       "Duration: until end of combat.",
       "Ranked progression: L1 12.5%, L2 15%, L3 17.5%, L4 21.25%, L5 25%.",
@@ -37105,7 +36948,6 @@
     ],
     "damageScope": null,
     "effects": [
-      "Initiative 25%",
       "Initiative +25% at effective Habit Level 5.",
       "Duration: until end of combat.",
       "Ranked progression: L1 12.5%, L2 15%, L3 17.5%, L4 21.25%, L5 25%.",
@@ -37183,7 +37025,6 @@
     ],
     "damageScope": null,
     "effects": [
-      "Initiative 25%",
       "Initiative +25% at effective Habit Level 5.",
       "Duration: until end of combat.",
       "Ranked progression: L1 12.5%, L2 15%, L3 17.5%, L4 21.25%, L5 25%.",
@@ -37262,7 +37103,6 @@
     "effects": [
       "Duration: until end of combat.",
       "Intelligence +15% at effective Habit Level 5.",
-      "Intelligence 15%",
       "Ranked progression: L1 7.5%, L2 9%, L3 10.5%, L4 12.75%, L5 15%.",
       "Targets 1 Ally; caster is eligible."
     ],
@@ -38051,11 +37891,11 @@
     ],
     "damageScope": null,
     "effects": [
-      "Enemy Stat decrease 13%"
+      "Enemy Strength decrease 13%"
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final reduced enemy damage cannot be calculated because target selection, uptime, stacking, and final formulas are unresolved.",
-    "explanation": "Caraxes's Battle Dread can reduce enemy Stat. Enemy target selection is tracked as an enemy-side candidate group, not a named friendly recipient.",
+    "explanation": "Caraxes's Battle Dread can reduce enemy Strength. Enemy target selection is tracked as an enemy-side candidate group, not a named friendly recipient.",
     "id": "enemy-damage-dealt-reduction-caraxes-battle-dread-battle-dread-strength-down-stat-dealt-modifier",
     "interactionScope": "enemy-side",
     "matchedOutputCapabilityIds": [],
@@ -38101,7 +37941,7 @@
     ],
     "status": "potential",
     "targetSelectionGroup": null,
-    "title": "Stat Enemy Reduction",
+    "title": "Enemy Strength reduction",
     "unresolvedQuestions": [
       "Enemy identities, combat availability, final uptime, and stacking/refresh behavior remain unresolved."
     ]
@@ -38119,11 +37959,11 @@
     ],
     "damageScope": null,
     "effects": [
-      "Enemy Stat decrease 13%"
+      "Enemy Initiative decrease 13%"
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final reduced enemy damage cannot be calculated because target selection, uptime, stacking, and final formulas are unresolved.",
-    "explanation": "Caraxes's Battle Dread can reduce enemy Stat. Enemy target selection is tracked as an enemy-side candidate group, not a named friendly recipient.",
+    "explanation": "Caraxes's Battle Dread can reduce enemy Initiative. Enemy target selection is tracked as an enemy-side candidate group, not a named friendly recipient.",
     "id": "enemy-damage-dealt-reduction-caraxes-battle-dread-battle-dread-initiative-down-stat-dealt-modifier",
     "interactionScope": "enemy-side",
     "matchedOutputCapabilityIds": [],
@@ -38169,7 +38009,7 @@
     ],
     "status": "potential",
     "targetSelectionGroup": null,
-    "title": "Stat Enemy Reduction",
+    "title": "Enemy Initiative reduction",
     "unresolvedQuestions": [
       "Enemy identities, combat availability, final uptime, and stacking/refresh behavior remain unresolved."
     ]
@@ -38255,11 +38095,11 @@
     ],
     "damageScope": null,
     "effects": [
-      "Enemy Stat decrease 24%"
+      "Enemy Instinct decrease 24%"
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final reduced enemy damage cannot be calculated because target selection, uptime, stacking, and final formulas are unresolved.",
-    "explanation": "Sheepstealer's Dragon's Cunning can reduce enemy Stat. Enemy target selection is tracked as an enemy-side candidate group, not a named friendly recipient.",
+    "explanation": "Sheepstealer's Dragon's Cunning can reduce enemy Instinct. Enemy target selection is tracked as an enemy-side candidate group, not a named friendly recipient.",
     "id": "enemy-damage-dealt-reduction-sheepstealer-dragons-cunning-dragons-cunning-instinct-down-stat-dealt-modifier",
     "interactionScope": "enemy-side",
     "matchedOutputCapabilityIds": [],
@@ -38305,7 +38145,7 @@
     ],
     "status": "potential",
     "targetSelectionGroup": null,
-    "title": "Stat Enemy Reduction",
+    "title": "Enemy Instinct reduction",
     "unresolvedQuestions": [
       "Adjacent enemy identity, enemy-formation overlap, final uptime, and stacking/refresh behavior remain unresolved."
     ]
@@ -40854,7 +40694,6 @@
     ],
     "damageScope": null,
     "effects": [
-      "Damage Received decrease 20%",
       "Damage Received reduction: 20%.",
       "Duration: 2 rounds.",
       "Activation chance: 100% at effective Habit Level 5.",
@@ -40932,7 +40771,6 @@
     ],
     "damageScope": null,
     "effects": [
-      "Damage Received decrease 20%",
       "Damage Received reduction: 20%.",
       "Duration: 2 rounds.",
       "Activation chance: 100% at effective Habit Level 5.",
@@ -41010,7 +40848,6 @@
     ],
     "damageScope": "tactical",
     "effects": [
-      "Tactical Damage Received decrease 16%",
       "Activation chance: 35%."
     ],
     "exactResultKnown": false,
@@ -41085,7 +40922,6 @@
     ],
     "damageScope": "tactical",
     "effects": [
-      "Tactical Damage Received decrease 16%",
       "Activation chance: 35%."
     ],
     "exactResultKnown": false,
@@ -41160,13 +40996,11 @@
     "damageScope": null,
     "effects": [
       "Initiative +20 flat.",
-      "Initiative 20 flat",
-      "Instinct +20 flat.",
-      "Instinct 20 flat"
+      "Instinct +20 flat."
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final value cannot be calculated because final combat formulas and stacking order are not fully verified.",
-    "explanation": "Syrax's Sentinel's Wit can increase Malachite's Instinct and Initiative by 20 flat.",
+    "explanation": "Syrax's Sentinel's Wit can increase Malachite's Instinct and Initiative by +20.",
     "id": "direct-stat-support-syrax-sentinels-wit-malachite-instinct-initiative",
     "interactionScope": "cross-dragon",
     "matchedOutputCapabilityIds": [],
@@ -41259,15 +41093,13 @@
     "effects": [
       "Duration: until end of combat.",
       "Instinct +13% at effective Habit Level 5.",
-      "Instinct 13%",
       "Intelligence +13% at effective Habit Level 5.",
-      "Intelligence 13%",
       "Ranked progression: L1 6.5%, L2 7.8%, L3 9.1%, L4 11.05%, L5 13%.",
       "Targets exactly 3 Allies; caster is eligible."
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final value cannot be calculated because final combat formulas and stacking order are not fully verified.",
-    "explanation": "Syrax's Mindful Synergy can increase Malachite's Intelligence and Instinct by 13%.",
+    "explanation": "Syrax's Mindful Synergy can increase Malachite's Intelligence and Instinct by +13%.",
     "id": "direct-stat-support-syrax-mindful-synergy-malachite-intelligence-instinct",
     "interactionScope": "cross-dragon",
     "matchedOutputCapabilityIds": [],
@@ -41351,15 +41183,13 @@
     "effects": [
       "Duration: until end of combat.",
       "Instinct +13% at effective Habit Level 5.",
-      "Instinct 13%",
       "Intelligence +13% at effective Habit Level 5.",
-      "Intelligence 13%",
       "Ranked progression: L1 6.5%, L2 7.8%, L3 9.1%, L4 11.05%, L5 13%.",
       "Targets exactly 3 Allies; caster is eligible."
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final value cannot be calculated because final combat formulas and stacking order are not fully verified.",
-    "explanation": "Syrax's Mindful Synergy can increase Syrax's Intelligence and Instinct by 13%.",
+    "explanation": "Syrax's Mindful Synergy can increase Syrax's Intelligence and Instinct by +13%.",
     "id": "direct-stat-support-syrax-mindful-synergy-syrax-intelligence-instinct",
     "interactionScope": "internal",
     "matchedOutputCapabilityIds": [],
@@ -41443,15 +41273,13 @@
     "effects": [
       "Duration: until end of combat.",
       "Instinct +13% at effective Habit Level 5.",
-      "Instinct 13%",
       "Intelligence +13% at effective Habit Level 5.",
-      "Intelligence 13%",
       "Ranked progression: L1 6.5%, L2 7.8%, L3 9.1%, L4 11.05%, L5 13%.",
       "Targets exactly 3 Allies; caster is eligible."
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final value cannot be calculated because final combat formulas and stacking order are not fully verified.",
-    "explanation": "Syrax's Mindful Synergy can increase Sheepstealer's Intelligence and Instinct by 13%.",
+    "explanation": "Syrax's Mindful Synergy can increase Sheepstealer's Intelligence and Instinct by +13%.",
     "id": "direct-stat-support-syrax-mindful-synergy-sheepstealer-intelligence-instinct",
     "interactionScope": "cross-dragon",
     "matchedOutputCapabilityIds": [],
@@ -41533,7 +41361,6 @@
     ],
     "damageScope": null,
     "effects": [
-      "Initiative 12%",
       "Initiative +12% at effective Habit Level 5.",
       "Duration: until end of combat.",
       "Ranked progression: L1 6%, L2 7.2%, L3 8.4%, L4 10.2%, L5 12%.",
@@ -41611,7 +41438,6 @@
     ],
     "damageScope": null,
     "effects": [
-      "Initiative 12%",
       "Initiative +12% at effective Habit Level 5.",
       "Duration: until end of combat.",
       "Ranked progression: L1 6%, L2 7.2%, L3 8.4%, L4 10.2%, L5 12%.",
@@ -41689,7 +41515,6 @@
     ],
     "damageScope": null,
     "effects": [
-      "Initiative 12%",
       "Initiative +12% at effective Habit Level 5.",
       "Duration: until end of combat.",
       "Ranked progression: L1 6%, L2 7.2%, L3 8.4%, L4 10.2%, L5 12%.",
@@ -41767,7 +41592,6 @@
     ],
     "damageScope": null,
     "effects": [
-      "Strength 25%",
       "Strength +25% at effective Habit Level 5.",
       "Duration: until end of combat.",
       "Ranked progression: L1 12.5%, L2 15%, L3 17.5%, L4 21.25%, L5 25%.",
@@ -41845,7 +41669,6 @@
     ],
     "damageScope": null,
     "effects": [
-      "Strength 25%",
       "Strength +25% at effective Habit Level 5.",
       "Duration: until end of combat.",
       "Ranked progression: L1 12.5%, L2 15%, L3 17.5%, L4 21.25%, L5 25%.",
@@ -41923,7 +41746,6 @@
     ],
     "damageScope": null,
     "effects": [
-      "Strength 25%",
       "Strength +25% at effective Habit Level 5.",
       "Duration: until end of combat.",
       "Ranked progression: L1 12.5%, L2 15%, L3 17.5%, L4 21.25%, L5 25%.",
@@ -42001,7 +41823,6 @@
     ],
     "damageScope": null,
     "effects": [
-      "Strength 25%",
       "Strength +25%.",
       "Duration: 3 rounds.",
       "Targets 1 other Ally; caster is excluded.",
@@ -42642,11 +42463,11 @@
     ],
     "damageScope": null,
     "effects": [
-      "Enemy Stat decrease 12%"
+      "Enemy Initiative decrease 12%"
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final reduced enemy damage cannot be calculated because target selection, uptime, stacking, and final formulas are unresolved.",
-    "explanation": "Syrax's Flight Mastery can reduce enemy Stat. Enemy target selection is tracked as an enemy-side candidate group, not a named friendly recipient.",
+    "explanation": "Syrax's Flight Mastery can reduce enemy Initiative. Enemy target selection is tracked as an enemy-side candidate group, not a named friendly recipient.",
     "id": "enemy-damage-dealt-reduction-syrax-flight-mastery-flight-mastery-initiative-down-stat-dealt-modifier",
     "interactionScope": "enemy-side",
     "matchedOutputCapabilityIds": [],
@@ -42692,7 +42513,7 @@
     ],
     "status": "potential",
     "targetSelectionGroup": null,
-    "title": "Stat Enemy Reduction",
+    "title": "Enemy Initiative reduction",
     "unresolvedQuestions": [
       "Enemy identities, combat availability, final uptime, and stacking/refresh behavior remain unresolved."
     ]
@@ -42710,11 +42531,11 @@
     ],
     "damageScope": null,
     "effects": [
-      "Enemy Stat decrease 24%"
+      "Enemy Instinct decrease 24%"
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final reduced enemy damage cannot be calculated because target selection, uptime, stacking, and final formulas are unresolved.",
-    "explanation": "Sheepstealer's Dragon's Cunning can reduce enemy Stat. Enemy target selection is tracked as an enemy-side candidate group, not a named friendly recipient.",
+    "explanation": "Sheepstealer's Dragon's Cunning can reduce enemy Instinct. Enemy target selection is tracked as an enemy-side candidate group, not a named friendly recipient.",
     "id": "enemy-damage-dealt-reduction-sheepstealer-dragons-cunning-dragons-cunning-instinct-down-stat-dealt-modifier",
     "interactionScope": "enemy-side",
     "matchedOutputCapabilityIds": [],
@@ -42760,7 +42581,7 @@
     ],
     "status": "potential",
     "targetSelectionGroup": null,
-    "title": "Stat Enemy Reduction",
+    "title": "Enemy Instinct reduction",
     "unresolvedQuestions": [
       "Adjacent enemy identity, enemy-formation overlap, final uptime, and stacking/refresh behavior remain unresolved."
     ]
@@ -44323,14 +44144,10 @@
       "Vermax - Trial by Flame Selected Habit Level: expected Habit Level 1+ or preview, actual preview enabled"
     ],
     "damageScope": "fire",
-    "effects": [
-      "Fire Damage Received decrease 10%",
-      "Fire Damage Received decrease 20%",
-      "Fire Damage Received decrease 30%"
-    ],
+    "effects": [],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final value cannot be calculated because final combat formulas and stacking order are not fully verified.",
-    "explanation": "Trial by Flame can reduce Fire Damage Received for Caraxes and Syrax when each satisfies a Troop Capacity threshold. Below 75% Troop Capacity: Fire Damage Received -10%; Below 50% Troop Capacity: Fire Damage Received -20%; Below 25% Troop Capacity: Fire Damage Received -30%. Threshold applicability depends on each recipient's current Troop Capacity; exact interaction between overlapping threshold tiers is unresolved.",
+    "explanation": "Trial by Flame can reduce Fire Damage Received for Caraxes and Syrax when each satisfies a Troop Capacity threshold. . Threshold applicability depends on each recipient's current Troop Capacity; exact interaction between overlapping threshold tiers is unresolved.",
     "id": "defensive-ally-support-vermax-trial-by-flame-grouped",
     "interactionScope": "targeting-fact",
     "matchedOutputCapabilityIds": [],
@@ -44467,7 +44284,6 @@
     ],
     "damageScope": null,
     "effects": [
-      "Damage Received decrease 20%",
       "Damage Received reduction: 20%.",
       "Duration: 2 rounds.",
       "Activation chance: 100% at effective Habit Level 5.",
@@ -44545,7 +44361,6 @@
     ],
     "damageScope": null,
     "effects": [
-      "Damage Received decrease 20%",
       "Damage Received reduction: 20%.",
       "Duration: 2 rounds.",
       "Activation chance: 100% at effective Habit Level 5.",
@@ -44625,15 +44440,13 @@
     "effects": [
       "Duration: until end of combat.",
       "Instinct +13% at effective Habit Level 5.",
-      "Instinct 13%",
       "Intelligence +13% at effective Habit Level 5.",
-      "Intelligence 13%",
       "Ranked progression: L1 6.5%, L2 7.8%, L3 9.1%, L4 11.05%, L5 13%.",
       "Targets exactly 3 Allies; caster is eligible."
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final value cannot be calculated because final combat formulas and stacking order are not fully verified.",
-    "explanation": "Syrax's Mindful Synergy can increase Syrax's Intelligence and Instinct by 13%.",
+    "explanation": "Syrax's Mindful Synergy can increase Syrax's Intelligence and Instinct by +13%.",
     "id": "direct-stat-support-syrax-mindful-synergy-syrax-intelligence-instinct",
     "interactionScope": "internal",
     "matchedOutputCapabilityIds": [],
@@ -44717,15 +44530,13 @@
     "effects": [
       "Duration: until end of combat.",
       "Instinct +13% at effective Habit Level 5.",
-      "Instinct 13%",
       "Intelligence +13% at effective Habit Level 5.",
-      "Intelligence 13%",
       "Ranked progression: L1 6.5%, L2 7.8%, L3 9.1%, L4 11.05%, L5 13%.",
       "Targets exactly 3 Allies; caster is eligible."
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final value cannot be calculated because final combat formulas and stacking order are not fully verified.",
-    "explanation": "Syrax's Mindful Synergy can increase Vermax's Intelligence and Instinct by 13%.",
+    "explanation": "Syrax's Mindful Synergy can increase Vermax's Intelligence and Instinct by +13%.",
     "id": "direct-stat-support-syrax-mindful-synergy-vermax-intelligence-instinct",
     "interactionScope": "cross-dragon",
     "matchedOutputCapabilityIds": [],
@@ -44809,15 +44620,13 @@
     "effects": [
       "Duration: until end of combat.",
       "Instinct +13% at effective Habit Level 5.",
-      "Instinct 13%",
       "Intelligence +13% at effective Habit Level 5.",
-      "Intelligence 13%",
       "Ranked progression: L1 6.5%, L2 7.8%, L3 9.1%, L4 11.05%, L5 13%.",
       "Targets exactly 3 Allies; caster is eligible."
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final value cannot be calculated because final combat formulas and stacking order are not fully verified.",
-    "explanation": "Syrax's Mindful Synergy can increase Caraxes's Intelligence and Instinct by 13%.",
+    "explanation": "Syrax's Mindful Synergy can increase Caraxes's Intelligence and Instinct by +13%.",
     "id": "direct-stat-support-syrax-mindful-synergy-caraxes-intelligence-instinct",
     "interactionScope": "cross-dragon",
     "matchedOutputCapabilityIds": [],
@@ -44899,7 +44708,6 @@
     ],
     "damageScope": null,
     "effects": [
-      "Initiative 12%",
       "Initiative +12% at effective Habit Level 5.",
       "Duration: until end of combat.",
       "Ranked progression: L1 6%, L2 7.2%, L3 8.4%, L4 10.2%, L5 12%.",
@@ -44977,7 +44785,6 @@
     ],
     "damageScope": null,
     "effects": [
-      "Initiative 12%",
       "Initiative +12% at effective Habit Level 5.",
       "Duration: until end of combat.",
       "Ranked progression: L1 6%, L2 7.2%, L3 8.4%, L4 10.2%, L5 12%.",
@@ -45055,7 +44862,6 @@
     ],
     "damageScope": null,
     "effects": [
-      "Initiative 12%",
       "Initiative +12% at effective Habit Level 5.",
       "Duration: until end of combat.",
       "Ranked progression: L1 6%, L2 7.2%, L3 8.4%, L4 10.2%, L5 12%.",
@@ -45131,13 +44937,11 @@
     "damageScope": null,
     "effects": [
       "Initiative +20 flat.",
-      "Initiative 20 flat",
-      "Instinct +20 flat.",
-      "Instinct 20 flat"
+      "Instinct +20 flat."
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final value cannot be calculated because final combat formulas and stacking order are not fully verified.",
-    "explanation": "Vermax's Warrior's Zeal increases Syrax's Instinct and Initiative by 20 flat.",
+    "explanation": "Vermax's Warrior's Zeal increases Syrax's Instinct and Initiative by +20.",
     "id": "direct-stat-support-vermax-warriors-zeal-syrax-instinct-initiative",
     "interactionScope": "cross-dragon",
     "matchedOutputCapabilityIds": [],
@@ -45236,16 +45040,14 @@
     "effects": [
       "Duration: until end of combat.",
       "Initiative +18% at effective Habit Level 5.",
-      "Initiative 18%",
       "Instinct +36% at effective Habit Level 5.",
-      "Instinct 36%",
       "Ranked progression: L1 18%, L2 21.6%, L3 25.2%, L4 30.6%, L5 36%.",
       "Ranked progression: L1 9%, L2 10.8%, L3 12.6%, L4 15.3%, L5 18%.",
       "Targets 1 Ally; caster eligibility unknown."
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final value cannot be calculated because final combat formulas and stacking order are not fully verified.",
-    "explanation": "Vermax's Reactive Instincts can increase Syrax's Instinct by 36% and Initiative by 18%.",
+    "explanation": "Vermax's Reactive Instincts can increase Syrax's Instinct by +36% and Initiative by +18%.",
     "id": "direct-stat-support-vermax-reactive-instincts-syrax-instinct-initiative",
     "interactionScope": "cross-dragon",
     "matchedOutputCapabilityIds": [],
@@ -46205,11 +46007,11 @@
     ],
     "damageScope": null,
     "effects": [
-      "Enemy Stat decrease 12%"
+      "Enemy Initiative decrease 12%"
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final reduced enemy damage cannot be calculated because target selection, uptime, stacking, and final formulas are unresolved.",
-    "explanation": "Syrax's Flight Mastery can reduce enemy Stat. Enemy target selection is tracked as an enemy-side candidate group, not a named friendly recipient.",
+    "explanation": "Syrax's Flight Mastery can reduce enemy Initiative. Enemy target selection is tracked as an enemy-side candidate group, not a named friendly recipient.",
     "id": "enemy-damage-dealt-reduction-syrax-flight-mastery-flight-mastery-initiative-down-stat-dealt-modifier",
     "interactionScope": "enemy-side",
     "matchedOutputCapabilityIds": [],
@@ -46255,7 +46057,7 @@
     ],
     "status": "potential",
     "targetSelectionGroup": null,
-    "title": "Stat Enemy Reduction",
+    "title": "Enemy Initiative reduction",
     "unresolvedQuestions": [
       "Enemy identities, combat availability, final uptime, and stacking/refresh behavior remain unresolved."
     ]
@@ -46273,11 +46075,11 @@
     ],
     "damageScope": null,
     "effects": [
-      "Enemy Stat decrease 13%"
+      "Enemy Strength decrease 13%"
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final reduced enemy damage cannot be calculated because target selection, uptime, stacking, and final formulas are unresolved.",
-    "explanation": "Caraxes's Battle Dread can reduce enemy Stat. Enemy target selection is tracked as an enemy-side candidate group, not a named friendly recipient.",
+    "explanation": "Caraxes's Battle Dread can reduce enemy Strength. Enemy target selection is tracked as an enemy-side candidate group, not a named friendly recipient.",
     "id": "enemy-damage-dealt-reduction-caraxes-battle-dread-battle-dread-strength-down-stat-dealt-modifier",
     "interactionScope": "enemy-side",
     "matchedOutputCapabilityIds": [],
@@ -46323,7 +46125,7 @@
     ],
     "status": "potential",
     "targetSelectionGroup": null,
-    "title": "Stat Enemy Reduction",
+    "title": "Enemy Strength reduction",
     "unresolvedQuestions": [
       "Enemy identities, combat availability, final uptime, and stacking/refresh behavior remain unresolved."
     ]
@@ -46341,11 +46143,11 @@
     ],
     "damageScope": null,
     "effects": [
-      "Enemy Stat decrease 13%"
+      "Enemy Initiative decrease 13%"
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final reduced enemy damage cannot be calculated because target selection, uptime, stacking, and final formulas are unresolved.",
-    "explanation": "Caraxes's Battle Dread can reduce enemy Stat. Enemy target selection is tracked as an enemy-side candidate group, not a named friendly recipient.",
+    "explanation": "Caraxes's Battle Dread can reduce enemy Initiative. Enemy target selection is tracked as an enemy-side candidate group, not a named friendly recipient.",
     "id": "enemy-damage-dealt-reduction-caraxes-battle-dread-battle-dread-initiative-down-stat-dealt-modifier",
     "interactionScope": "enemy-side",
     "matchedOutputCapabilityIds": [],
@@ -46391,7 +46193,7 @@
     ],
     "status": "potential",
     "targetSelectionGroup": null,
-    "title": "Stat Enemy Reduction",
+    "title": "Enemy Initiative reduction",
     "unresolvedQuestions": [
       "Enemy identities, combat availability, final uptime, and stacking/refresh behavior remain unresolved."
     ]
@@ -48506,7 +48308,6 @@
     ],
     "damageScope": null,
     "effects": [
-      "Damage Received decrease 20%",
       "Damage Received reduction: 20%.",
       "Duration: 2 rounds.",
       "Activation chance: 100% at effective Habit Level 5.",
@@ -48584,7 +48385,6 @@
     ],
     "damageScope": null,
     "effects": [
-      "Damage Received decrease 20%",
       "Damage Received reduction: 20%.",
       "Duration: 2 rounds.",
       "Activation chance: 100% at effective Habit Level 5.",
@@ -48663,13 +48463,11 @@
     "damageScope": null,
     "effects": [
       "Initiative +20 flat.",
-      "Initiative 20 flat",
-      "Instinct +20 flat.",
-      "Instinct 20 flat"
+      "Instinct +20 flat."
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final value cannot be calculated because final combat formulas and stacking order are not fully verified.",
-    "explanation": "Syrax's Sentinel's Wit can increase Sheepstealer's Instinct and Initiative by 20 flat.",
+    "explanation": "Syrax's Sentinel's Wit can increase Sheepstealer's Instinct and Initiative by +20.",
     "id": "direct-stat-support-syrax-sentinels-wit-sheepstealer-instinct-initiative",
     "interactionScope": "cross-dragon",
     "matchedOutputCapabilityIds": [],
@@ -48762,15 +48560,13 @@
     "effects": [
       "Duration: until end of combat.",
       "Instinct +13% at effective Habit Level 5.",
-      "Instinct 13%",
       "Intelligence +13% at effective Habit Level 5.",
-      "Intelligence 13%",
       "Ranked progression: L1 6.5%, L2 7.8%, L3 9.1%, L4 11.05%, L5 13%.",
       "Targets exactly 3 Allies; caster is eligible."
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final value cannot be calculated because final combat formulas and stacking order are not fully verified.",
-    "explanation": "Syrax's Mindful Synergy can increase Sheepstealer's Intelligence and Instinct by 13%.",
+    "explanation": "Syrax's Mindful Synergy can increase Sheepstealer's Intelligence and Instinct by +13%.",
     "id": "direct-stat-support-syrax-mindful-synergy-sheepstealer-intelligence-instinct",
     "interactionScope": "cross-dragon",
     "matchedOutputCapabilityIds": [],
@@ -48854,15 +48650,13 @@
     "effects": [
       "Duration: until end of combat.",
       "Instinct +13% at effective Habit Level 5.",
-      "Instinct 13%",
       "Intelligence +13% at effective Habit Level 5.",
-      "Intelligence 13%",
       "Ranked progression: L1 6.5%, L2 7.8%, L3 9.1%, L4 11.05%, L5 13%.",
       "Targets exactly 3 Allies; caster is eligible."
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final value cannot be calculated because final combat formulas and stacking order are not fully verified.",
-    "explanation": "Syrax's Mindful Synergy can increase Caraxes's Intelligence and Instinct by 13%.",
+    "explanation": "Syrax's Mindful Synergy can increase Caraxes's Intelligence and Instinct by +13%.",
     "id": "direct-stat-support-syrax-mindful-synergy-caraxes-intelligence-instinct",
     "interactionScope": "cross-dragon",
     "matchedOutputCapabilityIds": [],
@@ -48946,15 +48740,13 @@
     "effects": [
       "Duration: until end of combat.",
       "Instinct +13% at effective Habit Level 5.",
-      "Instinct 13%",
       "Intelligence +13% at effective Habit Level 5.",
-      "Intelligence 13%",
       "Ranked progression: L1 6.5%, L2 7.8%, L3 9.1%, L4 11.05%, L5 13%.",
       "Targets exactly 3 Allies; caster is eligible."
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final value cannot be calculated because final combat formulas and stacking order are not fully verified.",
-    "explanation": "Syrax's Mindful Synergy can increase Syrax's Intelligence and Instinct by 13%.",
+    "explanation": "Syrax's Mindful Synergy can increase Syrax's Intelligence and Instinct by +13%.",
     "id": "direct-stat-support-syrax-mindful-synergy-syrax-intelligence-instinct",
     "interactionScope": "internal",
     "matchedOutputCapabilityIds": [],
@@ -49036,7 +48828,6 @@
     ],
     "damageScope": null,
     "effects": [
-      "Initiative 12%",
       "Initiative +12% at effective Habit Level 5.",
       "Duration: until end of combat.",
       "Ranked progression: L1 6%, L2 7.2%, L3 8.4%, L4 10.2%, L5 12%.",
@@ -49114,7 +48905,6 @@
     ],
     "damageScope": null,
     "effects": [
-      "Initiative 12%",
       "Initiative +12% at effective Habit Level 5.",
       "Duration: until end of combat.",
       "Ranked progression: L1 6%, L2 7.2%, L3 8.4%, L4 10.2%, L5 12%.",
@@ -49192,7 +48982,6 @@
     ],
     "damageScope": null,
     "effects": [
-      "Initiative 12%",
       "Initiative +12% at effective Habit Level 5.",
       "Duration: until end of combat.",
       "Ranked progression: L1 6%, L2 7.2%, L3 8.4%, L4 10.2%, L5 12%.",
@@ -49270,13 +49059,11 @@
     "damageScope": null,
     "effects": [
       "Initiative +20 flat.",
-      "Initiative 20 flat",
-      "Strength +20 flat.",
-      "Strength 20 flat"
+      "Strength +20 flat."
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final value cannot be calculated because final combat formulas and stacking order are not fully verified.",
-    "explanation": "Caraxes's Hunter's Wrath can increase Syrax's Strength and Initiative by 20 flat.",
+    "explanation": "Caraxes's Hunter's Wrath can increase Syrax's Strength and Initiative by +20.",
     "id": "direct-stat-support-caraxes-hunters-wrath-syrax-strength-initiative",
     "interactionScope": "cross-dragon",
     "matchedOutputCapabilityIds": [],
@@ -50268,11 +50055,11 @@
     ],
     "damageScope": null,
     "effects": [
-      "Enemy Stat decrease 12%"
+      "Enemy Initiative decrease 12%"
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final reduced enemy damage cannot be calculated because target selection, uptime, stacking, and final formulas are unresolved.",
-    "explanation": "Syrax's Flight Mastery can reduce enemy Stat. Enemy target selection is tracked as an enemy-side candidate group, not a named friendly recipient.",
+    "explanation": "Syrax's Flight Mastery can reduce enemy Initiative. Enemy target selection is tracked as an enemy-side candidate group, not a named friendly recipient.",
     "id": "enemy-damage-dealt-reduction-syrax-flight-mastery-flight-mastery-initiative-down-stat-dealt-modifier",
     "interactionScope": "enemy-side",
     "matchedOutputCapabilityIds": [],
@@ -50318,7 +50105,7 @@
     ],
     "status": "potential",
     "targetSelectionGroup": null,
-    "title": "Stat Enemy Reduction",
+    "title": "Enemy Initiative reduction",
     "unresolvedQuestions": [
       "Enemy identities, combat availability, final uptime, and stacking/refresh behavior remain unresolved."
     ]
@@ -50336,11 +50123,11 @@
     ],
     "damageScope": null,
     "effects": [
-      "Enemy Stat decrease 13%"
+      "Enemy Strength decrease 13%"
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final reduced enemy damage cannot be calculated because target selection, uptime, stacking, and final formulas are unresolved.",
-    "explanation": "Caraxes's Battle Dread can reduce enemy Stat. Enemy target selection is tracked as an enemy-side candidate group, not a named friendly recipient.",
+    "explanation": "Caraxes's Battle Dread can reduce enemy Strength. Enemy target selection is tracked as an enemy-side candidate group, not a named friendly recipient.",
     "id": "enemy-damage-dealt-reduction-caraxes-battle-dread-battle-dread-strength-down-stat-dealt-modifier",
     "interactionScope": "enemy-side",
     "matchedOutputCapabilityIds": [],
@@ -50386,7 +50173,7 @@
     ],
     "status": "potential",
     "targetSelectionGroup": null,
-    "title": "Stat Enemy Reduction",
+    "title": "Enemy Strength reduction",
     "unresolvedQuestions": [
       "Enemy identities, combat availability, final uptime, and stacking/refresh behavior remain unresolved."
     ]
@@ -50404,11 +50191,11 @@
     ],
     "damageScope": null,
     "effects": [
-      "Enemy Stat decrease 13%"
+      "Enemy Initiative decrease 13%"
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final reduced enemy damage cannot be calculated because target selection, uptime, stacking, and final formulas are unresolved.",
-    "explanation": "Caraxes's Battle Dread can reduce enemy Stat. Enemy target selection is tracked as an enemy-side candidate group, not a named friendly recipient.",
+    "explanation": "Caraxes's Battle Dread can reduce enemy Initiative. Enemy target selection is tracked as an enemy-side candidate group, not a named friendly recipient.",
     "id": "enemy-damage-dealt-reduction-caraxes-battle-dread-battle-dread-initiative-down-stat-dealt-modifier",
     "interactionScope": "enemy-side",
     "matchedOutputCapabilityIds": [],
@@ -50454,7 +50241,7 @@
     ],
     "status": "potential",
     "targetSelectionGroup": null,
-    "title": "Stat Enemy Reduction",
+    "title": "Enemy Initiative reduction",
     "unresolvedQuestions": [
       "Enemy identities, combat availability, final uptime, and stacking/refresh behavior remain unresolved."
     ]
@@ -50540,11 +50327,11 @@
     ],
     "damageScope": null,
     "effects": [
-      "Enemy Stat decrease 24%"
+      "Enemy Instinct decrease 24%"
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final reduced enemy damage cannot be calculated because target selection, uptime, stacking, and final formulas are unresolved.",
-    "explanation": "Sheepstealer's Dragon's Cunning can reduce enemy Stat. Enemy target selection is tracked as an enemy-side candidate group, not a named friendly recipient.",
+    "explanation": "Sheepstealer's Dragon's Cunning can reduce enemy Instinct. Enemy target selection is tracked as an enemy-side candidate group, not a named friendly recipient.",
     "id": "enemy-damage-dealt-reduction-sheepstealer-dragons-cunning-dragons-cunning-instinct-down-stat-dealt-modifier",
     "interactionScope": "enemy-side",
     "matchedOutputCapabilityIds": [],
@@ -50590,7 +50377,7 @@
     ],
     "status": "potential",
     "targetSelectionGroup": null,
-    "title": "Stat Enemy Reduction",
+    "title": "Enemy Instinct reduction",
     "unresolvedQuestions": [
       "Adjacent enemy identity, enemy-formation overlap, final uptime, and stacking/refresh behavior remain unresolved."
     ]
@@ -52567,9 +52354,7 @@
       "Kalspire - Champion's Brilliance Star Rank requirement: expected Star Rank 1+, actual preview enabled"
     ],
     "damageScope": "all",
-    "effects": [
-      "Damage Received decrease 8%"
-    ],
+    "effects": [],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final value cannot be calculated because final combat formulas and stacking order are not fully verified.",
     "explanation": "Kalspire's Champion's Brilliance can reduce Venator's Damage Received by 8%.",
@@ -52652,13 +52437,11 @@
     "damageScope": null,
     "effects": [
       "Initiative +20 flat.",
-      "Initiative 20 flat",
-      "Instinct +20 flat.",
-      "Instinct 20 flat"
+      "Instinct +20 flat."
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final value cannot be calculated because final combat formulas and stacking order are not fully verified.",
-    "explanation": "Venator's Warrior's Zeal can increase Kalspire's Instinct and Initiative by 20 flat.",
+    "explanation": "Venator's Warrior's Zeal can increase Kalspire's Instinct and Initiative by +20.",
     "id": "direct-stat-support-venator-warriors-zeal-kalspire-instinct-initiative",
     "interactionScope": "cross-dragon",
     "matchedOutputCapabilityIds": [],
@@ -52974,11 +52757,11 @@
     ],
     "damageScope": null,
     "effects": [
-      "Enemy Stat decrease 13%"
+      "Enemy Strength decrease 13%"
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final reduced enemy damage cannot be calculated because target selection, uptime, stacking, and final formulas are unresolved.",
-    "explanation": "Kalspire's Battle Cunning can reduce enemy Stat. Enemy target selection is tracked as an enemy-side candidate group, not a named friendly recipient.",
+    "explanation": "Kalspire's Battle Cunning can reduce enemy Strength. Enemy target selection is tracked as an enemy-side candidate group, not a named friendly recipient.",
     "id": "enemy-damage-dealt-reduction-kalspire-battle-cunning-battle-cunning-strength-down-stat-dealt-modifier",
     "interactionScope": "enemy-side",
     "matchedOutputCapabilityIds": [],
@@ -53024,7 +52807,7 @@
     ],
     "status": "potential",
     "targetSelectionGroup": null,
-    "title": "Stat Enemy Reduction",
+    "title": "Enemy Strength reduction",
     "unresolvedQuestions": [
       "Enemy identities, combat availability, final uptime, and stacking/refresh behavior remain unresolved."
     ]
@@ -53042,11 +52825,11 @@
     ],
     "damageScope": null,
     "effects": [
-      "Enemy Stat decrease 13%"
+      "Enemy Intelligence decrease 13%"
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final reduced enemy damage cannot be calculated because target selection, uptime, stacking, and final formulas are unresolved.",
-    "explanation": "Kalspire's Battle Cunning can reduce enemy Stat. Enemy target selection is tracked as an enemy-side candidate group, not a named friendly recipient.",
+    "explanation": "Kalspire's Battle Cunning can reduce enemy Intelligence. Enemy target selection is tracked as an enemy-side candidate group, not a named friendly recipient.",
     "id": "enemy-damage-dealt-reduction-kalspire-battle-cunning-battle-cunning-intelligence-down-stat-dealt-modifier",
     "interactionScope": "enemy-side",
     "matchedOutputCapabilityIds": [],
@@ -53092,7 +52875,7 @@
     ],
     "status": "potential",
     "targetSelectionGroup": null,
-    "title": "Stat Enemy Reduction",
+    "title": "Enemy Intelligence reduction",
     "unresolvedQuestions": [
       "Enemy identities, combat availability, final uptime, and stacking/refresh behavior remain unresolved."
     ]
@@ -53246,11 +53029,11 @@
     ],
     "damageScope": null,
     "effects": [
-      "Enemy Stat decrease 60%"
+      "Enemy Intelligence decrease 60%"
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final reduced enemy damage cannot be calculated because target selection, uptime, stacking, and final formulas are unresolved.",
-    "explanation": "Venator's Hunter's Bane can reduce enemy Stat. Enemy target selection is tracked as an enemy-side candidate group, not a named friendly recipient.",
+    "explanation": "Venator's Hunter's Bane can reduce enemy Intelligence. Enemy target selection is tracked as an enemy-side candidate group, not a named friendly recipient.",
     "id": "enemy-damage-dealt-reduction-venator-hunters-bane-hunters-bane-intelligence-down-stat-dealt-modifier",
     "interactionScope": "enemy-side",
     "matchedOutputCapabilityIds": [],
@@ -53296,7 +53079,7 @@
     ],
     "status": "potential",
     "targetSelectionGroup": null,
-    "title": "Stat Enemy Reduction",
+    "title": "Enemy Intelligence reduction",
     "unresolvedQuestions": [
       "Enemy identities, combat availability, final uptime, and stacking/refresh behavior remain unresolved."
     ]
@@ -55624,11 +55407,11 @@
     ],
     "damageScope": null,
     "effects": [
-      "Enemy Stat decrease 13%"
+      "Enemy Strength decrease 13%"
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final reduced enemy damage cannot be calculated because target selection, uptime, stacking, and final formulas are unresolved.",
-    "explanation": "Caraxes's Battle Dread can reduce enemy Stat. Enemy target selection is tracked as an enemy-side candidate group, not a named friendly recipient.",
+    "explanation": "Caraxes's Battle Dread can reduce enemy Strength. Enemy target selection is tracked as an enemy-side candidate group, not a named friendly recipient.",
     "id": "enemy-damage-dealt-reduction-caraxes-battle-dread-battle-dread-strength-down-stat-dealt-modifier",
     "interactionScope": "enemy-side",
     "matchedOutputCapabilityIds": [],
@@ -55674,7 +55457,7 @@
     ],
     "status": "potential",
     "targetSelectionGroup": null,
-    "title": "Stat Enemy Reduction",
+    "title": "Enemy Strength reduction",
     "unresolvedQuestions": [
       "Enemy identities, combat availability, final uptime, and stacking/refresh behavior remain unresolved."
     ]
@@ -55692,11 +55475,11 @@
     ],
     "damageScope": null,
     "effects": [
-      "Enemy Stat decrease 13%"
+      "Enemy Initiative decrease 13%"
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final reduced enemy damage cannot be calculated because target selection, uptime, stacking, and final formulas are unresolved.",
-    "explanation": "Caraxes's Battle Dread can reduce enemy Stat. Enemy target selection is tracked as an enemy-side candidate group, not a named friendly recipient.",
+    "explanation": "Caraxes's Battle Dread can reduce enemy Initiative. Enemy target selection is tracked as an enemy-side candidate group, not a named friendly recipient.",
     "id": "enemy-damage-dealt-reduction-caraxes-battle-dread-battle-dread-initiative-down-stat-dealt-modifier",
     "interactionScope": "enemy-side",
     "matchedOutputCapabilityIds": [],
@@ -55742,7 +55525,7 @@
     ],
     "status": "potential",
     "targetSelectionGroup": null,
-    "title": "Stat Enemy Reduction",
+    "title": "Enemy Initiative reduction",
     "unresolvedQuestions": [
       "Enemy identities, combat availability, final uptime, and stacking/refresh behavior remain unresolved."
     ]
@@ -55964,11 +55747,11 @@
     ],
     "damageScope": null,
     "effects": [
-      "Enemy Stat decrease 30%"
+      "Enemy Instinct decrease 30%"
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final reduced enemy damage cannot be calculated because target selection, uptime, stacking, and final formulas are unresolved.",
-    "explanation": "Crimson's Vermin's Bane can reduce enemy Stat. Enemy target selection is tracked as an enemy-side candidate group, not a named friendly recipient.",
+    "explanation": "Crimson's Vermin's Bane can reduce enemy Instinct. Enemy target selection is tracked as an enemy-side candidate group, not a named friendly recipient.",
     "id": "enemy-damage-dealt-reduction-crimson-vermins-bane-vermins-bane-instinct-down-stat-dealt-modifier",
     "interactionScope": "enemy-side",
     "matchedOutputCapabilityIds": [],
@@ -56014,7 +55797,7 @@
     ],
     "status": "potential",
     "targetSelectionGroup": null,
-    "title": "Stat Enemy Reduction",
+    "title": "Enemy Instinct reduction",
     "unresolvedQuestions": [
       "Highest-Instinct enemy identity, tie resolution, final uptime, and stacking/refresh behavior remain unresolved."
     ]
@@ -56032,11 +55815,11 @@
     ],
     "damageScope": null,
     "effects": [
-      "Enemy Stat decrease 30%"
+      "Enemy Initiative decrease 30%"
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final reduced enemy damage cannot be calculated because target selection, uptime, stacking, and final formulas are unresolved.",
-    "explanation": "Crimson's Vermin's Bane can reduce enemy Stat. Enemy target selection is tracked as an enemy-side candidate group, not a named friendly recipient.",
+    "explanation": "Crimson's Vermin's Bane can reduce enemy Initiative. Enemy target selection is tracked as an enemy-side candidate group, not a named friendly recipient.",
     "id": "enemy-damage-dealt-reduction-crimson-vermins-bane-vermins-bane-initiative-down-stat-dealt-modifier",
     "interactionScope": "enemy-side",
     "matchedOutputCapabilityIds": [],
@@ -56082,7 +55865,7 @@
     ],
     "status": "potential",
     "targetSelectionGroup": null,
-    "title": "Stat Enemy Reduction",
+    "title": "Enemy Initiative reduction",
     "unresolvedQuestions": [
       "Highest-Instinct enemy identity, tie resolution, final uptime, and stacking/refresh behavior remain unresolved."
     ]
@@ -58543,7 +58326,6 @@
     ],
     "damageScope": null,
     "effects": [
-      "Damage Received decrease 20%",
       "Damage Received reduction: 20%.",
       "Duration: 2 rounds.",
       "Activation chance: 100% at effective Habit Level 5.",
@@ -58621,7 +58403,6 @@
     ],
     "damageScope": null,
     "effects": [
-      "Damage Received decrease 20%",
       "Damage Received reduction: 20%.",
       "Duration: 2 rounds.",
       "Activation chance: 100% at effective Habit Level 5.",
@@ -58698,9 +58479,7 @@
       "Kalspire - Champion's Brilliance Star Rank requirement: expected Star Rank 1+, actual preview enabled"
     ],
     "damageScope": "all",
-    "effects": [
-      "Damage Received decrease 8%"
-    ],
+    "effects": [],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final value cannot be calculated because final combat formulas and stacking order are not fully verified.",
     "explanation": "Kalspire's Champion's Brilliance can reduce Vhagar's Damage Received by 8%.",
@@ -58782,13 +58561,11 @@
     "damageScope": null,
     "effects": [
       "Initiative +20 flat.",
-      "Initiative 20 flat",
-      "Instinct +20 flat.",
-      "Instinct 20 flat"
+      "Instinct +20 flat."
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final value cannot be calculated because final combat formulas and stacking order are not fully verified.",
-    "explanation": "Syrax's Sentinel's Wit can increase Kalspire's Instinct and Initiative by 20 flat.",
+    "explanation": "Syrax's Sentinel's Wit can increase Kalspire's Instinct and Initiative by +20.",
     "id": "direct-stat-support-syrax-sentinels-wit-kalspire-instinct-initiative",
     "interactionScope": "cross-dragon",
     "matchedOutputCapabilityIds": [],
@@ -58881,15 +58658,13 @@
     "effects": [
       "Duration: until end of combat.",
       "Instinct +13% at effective Habit Level 5.",
-      "Instinct 13%",
       "Intelligence +13% at effective Habit Level 5.",
-      "Intelligence 13%",
       "Ranked progression: L1 6.5%, L2 7.8%, L3 9.1%, L4 11.05%, L5 13%.",
       "Targets exactly 3 Allies; caster is eligible."
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final value cannot be calculated because final combat formulas and stacking order are not fully verified.",
-    "explanation": "Syrax's Mindful Synergy can increase Kalspire's Intelligence and Instinct by 13%.",
+    "explanation": "Syrax's Mindful Synergy can increase Kalspire's Intelligence and Instinct by +13%.",
     "id": "direct-stat-support-syrax-mindful-synergy-kalspire-intelligence-instinct",
     "interactionScope": "cross-dragon",
     "matchedOutputCapabilityIds": [],
@@ -58973,15 +58748,13 @@
     "effects": [
       "Duration: until end of combat.",
       "Instinct +13% at effective Habit Level 5.",
-      "Instinct 13%",
       "Intelligence +13% at effective Habit Level 5.",
-      "Intelligence 13%",
       "Ranked progression: L1 6.5%, L2 7.8%, L3 9.1%, L4 11.05%, L5 13%.",
       "Targets exactly 3 Allies; caster is eligible."
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final value cannot be calculated because final combat formulas and stacking order are not fully verified.",
-    "explanation": "Syrax's Mindful Synergy can increase Syrax's Intelligence and Instinct by 13%.",
+    "explanation": "Syrax's Mindful Synergy can increase Syrax's Intelligence and Instinct by +13%.",
     "id": "direct-stat-support-syrax-mindful-synergy-syrax-intelligence-instinct",
     "interactionScope": "internal",
     "matchedOutputCapabilityIds": [],
@@ -59065,15 +58838,13 @@
     "effects": [
       "Duration: until end of combat.",
       "Instinct +13% at effective Habit Level 5.",
-      "Instinct 13%",
       "Intelligence +13% at effective Habit Level 5.",
-      "Intelligence 13%",
       "Ranked progression: L1 6.5%, L2 7.8%, L3 9.1%, L4 11.05%, L5 13%.",
       "Targets exactly 3 Allies; caster is eligible."
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final value cannot be calculated because final combat formulas and stacking order are not fully verified.",
-    "explanation": "Syrax's Mindful Synergy can increase Vhagar's Intelligence and Instinct by 13%.",
+    "explanation": "Syrax's Mindful Synergy can increase Vhagar's Intelligence and Instinct by +13%.",
     "id": "direct-stat-support-syrax-mindful-synergy-vhagar-intelligence-instinct",
     "interactionScope": "cross-dragon",
     "matchedOutputCapabilityIds": [],
@@ -59155,7 +58926,6 @@
     ],
     "damageScope": null,
     "effects": [
-      "Initiative 12%",
       "Initiative +12% at effective Habit Level 5.",
       "Duration: until end of combat.",
       "Ranked progression: L1 6%, L2 7.2%, L3 8.4%, L4 10.2%, L5 12%.",
@@ -59233,7 +59003,6 @@
     ],
     "damageScope": null,
     "effects": [
-      "Initiative 12%",
       "Initiative +12% at effective Habit Level 5.",
       "Duration: until end of combat.",
       "Ranked progression: L1 6%, L2 7.2%, L3 8.4%, L4 10.2%, L5 12%.",
@@ -59311,7 +59080,6 @@
     ],
     "damageScope": null,
     "effects": [
-      "Initiative 12%",
       "Initiative +12% at effective Habit Level 5.",
       "Duration: until end of combat.",
       "Ranked progression: L1 6%, L2 7.2%, L3 8.4%, L4 10.2%, L5 12%.",
@@ -59807,11 +59575,11 @@
     ],
     "damageScope": null,
     "effects": [
-      "Enemy Stat decrease 12%"
+      "Enemy Initiative decrease 12%"
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final reduced enemy damage cannot be calculated because target selection, uptime, stacking, and final formulas are unresolved.",
-    "explanation": "Syrax's Flight Mastery can reduce enemy Stat. Enemy target selection is tracked as an enemy-side candidate group, not a named friendly recipient.",
+    "explanation": "Syrax's Flight Mastery can reduce enemy Initiative. Enemy target selection is tracked as an enemy-side candidate group, not a named friendly recipient.",
     "id": "enemy-damage-dealt-reduction-syrax-flight-mastery-flight-mastery-initiative-down-stat-dealt-modifier",
     "interactionScope": "enemy-side",
     "matchedOutputCapabilityIds": [],
@@ -59857,7 +59625,7 @@
     ],
     "status": "potential",
     "targetSelectionGroup": null,
-    "title": "Stat Enemy Reduction",
+    "title": "Enemy Initiative reduction",
     "unresolvedQuestions": [
       "Enemy identities, combat availability, final uptime, and stacking/refresh behavior remain unresolved."
     ]
@@ -59943,11 +59711,11 @@
     ],
     "damageScope": null,
     "effects": [
-      "Enemy Stat decrease 13%"
+      "Enemy Strength decrease 13%"
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final reduced enemy damage cannot be calculated because target selection, uptime, stacking, and final formulas are unresolved.",
-    "explanation": "Kalspire's Battle Cunning can reduce enemy Stat. Enemy target selection is tracked as an enemy-side candidate group, not a named friendly recipient.",
+    "explanation": "Kalspire's Battle Cunning can reduce enemy Strength. Enemy target selection is tracked as an enemy-side candidate group, not a named friendly recipient.",
     "id": "enemy-damage-dealt-reduction-kalspire-battle-cunning-battle-cunning-strength-down-stat-dealt-modifier",
     "interactionScope": "enemy-side",
     "matchedOutputCapabilityIds": [],
@@ -59993,7 +59761,7 @@
     ],
     "status": "potential",
     "targetSelectionGroup": null,
-    "title": "Stat Enemy Reduction",
+    "title": "Enemy Strength reduction",
     "unresolvedQuestions": [
       "Enemy identities, combat availability, final uptime, and stacking/refresh behavior remain unresolved."
     ]
@@ -60011,11 +59779,11 @@
     ],
     "damageScope": null,
     "effects": [
-      "Enemy Stat decrease 13%"
+      "Enemy Intelligence decrease 13%"
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final reduced enemy damage cannot be calculated because target selection, uptime, stacking, and final formulas are unresolved.",
-    "explanation": "Kalspire's Battle Cunning can reduce enemy Stat. Enemy target selection is tracked as an enemy-side candidate group, not a named friendly recipient.",
+    "explanation": "Kalspire's Battle Cunning can reduce enemy Intelligence. Enemy target selection is tracked as an enemy-side candidate group, not a named friendly recipient.",
     "id": "enemy-damage-dealt-reduction-kalspire-battle-cunning-battle-cunning-intelligence-down-stat-dealt-modifier",
     "interactionScope": "enemy-side",
     "matchedOutputCapabilityIds": [],
@@ -60061,7 +59829,7 @@
     ],
     "status": "potential",
     "targetSelectionGroup": null,
-    "title": "Stat Enemy Reduction",
+    "title": "Enemy Intelligence reduction",
     "unresolvedQuestions": [
       "Enemy identities, combat availability, final uptime, and stacking/refresh behavior remain unresolved."
     ]
@@ -62987,11 +62755,11 @@
     ],
     "damageScope": null,
     "effects": [
-      "Enemy Stat decrease 30%"
+      "Enemy Instinct decrease 30%"
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final reduced enemy damage cannot be calculated because target selection, uptime, stacking, and final formulas are unresolved.",
-    "explanation": "Crimson's Vermin's Bane can reduce enemy Stat. Enemy target selection is tracked as an enemy-side candidate group, not a named friendly recipient.",
+    "explanation": "Crimson's Vermin's Bane can reduce enemy Instinct. Enemy target selection is tracked as an enemy-side candidate group, not a named friendly recipient.",
     "id": "enemy-damage-dealt-reduction-crimson-vermins-bane-vermins-bane-instinct-down-stat-dealt-modifier",
     "interactionScope": "enemy-side",
     "matchedOutputCapabilityIds": [],
@@ -63037,7 +62805,7 @@
     ],
     "status": "potential",
     "targetSelectionGroup": null,
-    "title": "Stat Enemy Reduction",
+    "title": "Enemy Instinct reduction",
     "unresolvedQuestions": [
       "Highest-Instinct enemy identity, tie resolution, final uptime, and stacking/refresh behavior remain unresolved."
     ]
@@ -63055,11 +62823,11 @@
     ],
     "damageScope": null,
     "effects": [
-      "Enemy Stat decrease 30%"
+      "Enemy Initiative decrease 30%"
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final reduced enemy damage cannot be calculated because target selection, uptime, stacking, and final formulas are unresolved.",
-    "explanation": "Crimson's Vermin's Bane can reduce enemy Stat. Enemy target selection is tracked as an enemy-side candidate group, not a named friendly recipient.",
+    "explanation": "Crimson's Vermin's Bane can reduce enemy Initiative. Enemy target selection is tracked as an enemy-side candidate group, not a named friendly recipient.",
     "id": "enemy-damage-dealt-reduction-crimson-vermins-bane-vermins-bane-initiative-down-stat-dealt-modifier",
     "interactionScope": "enemy-side",
     "matchedOutputCapabilityIds": [],
@@ -63105,7 +62873,7 @@
     ],
     "status": "potential",
     "targetSelectionGroup": null,
-    "title": "Stat Enemy Reduction",
+    "title": "Enemy Initiative reduction",
     "unresolvedQuestions": [
       "Highest-Instinct enemy identity, tie resolution, final uptime, and stacking/refresh behavior remain unresolved."
     ]
@@ -63123,11 +62891,11 @@
     ],
     "damageScope": null,
     "effects": [
-      "Enemy Stat decrease 60%"
+      "Enemy Intelligence decrease 60%"
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final reduced enemy damage cannot be calculated because target selection, uptime, stacking, and final formulas are unresolved.",
-    "explanation": "Venator's Hunter's Bane can reduce enemy Stat. Enemy target selection is tracked as an enemy-side candidate group, not a named friendly recipient.",
+    "explanation": "Venator's Hunter's Bane can reduce enemy Intelligence. Enemy target selection is tracked as an enemy-side candidate group, not a named friendly recipient.",
     "id": "enemy-damage-dealt-reduction-venator-hunters-bane-hunters-bane-intelligence-down-stat-dealt-modifier",
     "interactionScope": "enemy-side",
     "matchedOutputCapabilityIds": [],
@@ -63173,7 +62941,7 @@
     ],
     "status": "potential",
     "targetSelectionGroup": null,
-    "title": "Stat Enemy Reduction",
+    "title": "Enemy Intelligence reduction",
     "unresolvedQuestions": [
       "Enemy identities, combat availability, final uptime, and stacking/refresh behavior remain unresolved."
     ]

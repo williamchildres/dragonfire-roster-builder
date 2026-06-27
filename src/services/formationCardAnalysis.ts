@@ -495,9 +495,23 @@ function summarizeTrace(
     return [`${targetNames}${channel} support when their condition is met.`];
   }
   if (trace.targetSelectionGroup && trace.channel) {
+    const eligibleNames = target.targetLabel ?? 'the eligible candidates';
+    if (trace.targetSelectionGroup.eligibleRecipientDragonIds.length > 1) {
+      return [
+        `Eligible selected-target candidates: ${eligibleNames}.`,
+        'One candidate is selected when the activation succeeds; the selected target is unresolved.',
+        ...targetSelectionEffectLines(trace),
+      ];
+    }
+    if (trace.targetSelectionGroup.selectionUncertain && trace.targetSelectionGroup.eligibleRecipientDragonIds.length === 1) {
+      return [
+        `Resolved selected target in this formation: ${eligibleNames}.`,
+        ...targetSelectionEffectLines(trace),
+      ];
+    }
     const targetNames = target.targetLabel ? `: ${target.targetLabel}` : '';
     return [
-      `One ${targetSelectionRecipientNoun(trace)} recipient is selected${targetNames}.`,
+      `Resolved selected target in this formation${targetNames}.`,
       ...targetSelectionEffectLines(trace),
     ];
   }
@@ -527,7 +541,7 @@ function summarizeTrace(
   }
   if (trace.channel === 'stat') {
     return [[
-      formatStatEffects(trace.effects) ?? formatStatDetail(detail) ?? detail,
+      formatStatDetail(detail) ?? detail,
       trace.effects.find((effect) => /Timing:/i.test(effect)),
       trace.effects.find((effect) => /Enhanced by/i.test(effect)),
       trace.effects.find((effect) => /Duration:/i.test(effect)),
@@ -562,26 +576,8 @@ function summarizeTrace(
   return [detail.replaceAll('1.5x', '1.5×')];
 }
 
-function targetSelectionRecipientNoun(trace: SynergyTrace): string {
-  if (trace.channel === 'damage-dealt') {
-    return 'Damage Dealt';
-  }
-  if (trace.channel === 'fire-damage' || trace.channel === 'physical-damage' || trace.channel === 'tactical-damage') {
-    return formatToken(trace.channel).replace(/\s+Damage$/i, '');
-  }
-  if (trace.channel === 'recovery') {
-    return 'Recovery';
-  }
-  if (trace.targetSelectorSummary?.includes('caster excluded')) {
-    return 'other ally';
-  }
-  return 'ally';
-}
-
 function targetSelectionEffectLines(trace: SynergyTrace): string[] {
   return unique([
-    trace.channel === 'stat' ? formatStatEffects(trace.effects) : null,
-    trace.effects.find((effect) => /Damage Received (?:decrease|reduction)|Damage Received -/i.test(effect)),
     trace.effects.find((effect) => /Activation chance:/i.test(effect)),
     trace.effects.find((effect) => /Timing:/i.test(effect)),
     trace.effects.find((effect) => /Enhanced by/i.test(effect)),
@@ -1517,25 +1513,6 @@ function interactionPurpose(trace: SynergyTrace): string | null {
   return trace.title === 'Stat Support' ? 'Stat support' : trace.title || null;
 }
 
-function formatStatEffects(effects: string[]): string | null {
-  const parsed = effects.flatMap((effect) => {
-    const match = effect.match(/^(.+?)\s+(\d+(?:\.\d+)?)(?:\s+(flat|percent)|%)$/i);
-    if (!match) {
-      return [];
-    }
-    return [{
-      stat: match[1]!,
-      value: `${match[3]?.toLowerCase() === 'flat' ? '+' : '+'}${match[2]}${match[3]?.toLowerCase() === 'flat' ? '' : '%'}`,
-    }];
-  });
-  if (parsed.length === 0) {
-    return null;
-  }
-  const order = ['Strength', 'Intelligence', 'Instinct', 'Initiative'];
-  const sorted = parsed.sort((left, right) => order.indexOf(left.stat) - order.indexOf(right.stat));
-  return `${joinEnglishList(sorted.map((item) => `${item.stat} ${item.value}`))}.`;
-}
-
 function formatStatDetail(detail: string): string | null {
   const valueMatch = detail.match(/increase .*?'s (.+?) by (\d+)(%| flat)/i);
   if (valueMatch) {
@@ -1558,7 +1535,8 @@ function formatStatDetail(detail: string): string | null {
 
 function enemyFacingSummary(trace: SynergyTrace): string {
   if (trace.matchKind === 'enemy-damage-dealt-reduction') {
-    return `${formatToken(trace.channel ?? 'damage-dealt')} reduction on an enemy candidate; target selection and uptime are uncertain.`;
+    const stat = trace.effects.join(' ').match(/Enemy (Strength|Intelligence|Instinct|Initiative) decrease/i)?.[1];
+    return `${stat ? `${stat} reduction` : `${formatToken(trace.channel ?? 'damage-dealt')} reduction`} on an enemy candidate; target selection and uptime are uncertain.`;
   }
   if (trace.matchKind === 'enemy-damage-received-increase') {
     return `Increases ${formatToken(trace.channel ?? 'damage-dealt')} Received for one enemy target.`;

@@ -4392,7 +4392,7 @@
   "firstObservedInGame": "2026-06-22",
   "format": "dragonfire-dragon-profile",
   "gameVersion": null,
-  "generatedAt": "2026-06-27T03:02:39.428Z",
+  "generatedAt": "2026-06-27T04:15:45.188Z",
   "habits": [
     {
       "abilityClass": "passive",
@@ -7405,7 +7405,7 @@
   "slug": "feskar",
   "source": {
     "branch": "fix/ordered-targets-and-analysis-integrity",
-    "commit": "dacc02aebc8abb0a7bcd28502b3e4677ef83e578",
+    "commit": "337b216717654cd2e255a7ba219be419bb5a26ad",
     "databaseVersion": "0.6.2",
     "dataSchemaVersion": 12,
     "gameBuild": "26.6.53509",

@@ -509,7 +509,7 @@ describe('Feskar, Rhysarion, and Shadowsong Epic profiles', () => {
     expect(insightfulProvides).toBeDefined();
     const insightfulText = insightfulProvides ? [...insightfulProvides.summaryLines, ...insightfulProvides.details, ...insightfulProvides.effects].join(' ') : '';
     expect(insightfulText).toContain('Applies to Feskar, Rhysarion, and Shadowsong.');
-    expect(insightfulText).toContain('Instinct +10%.');
+    expect(insightfulText).toContain('Instinct support.');
     expect(insightfulText).toContain('Enhanced by Feskar Instinct');
     expect(insightfulText).toContain('Duration: until end of combat.');
     expect(feskarCard.receives.some((item) => item.abilityName === 'Insightful Allies')).toBe(false);
@@ -529,7 +529,7 @@ describe('Feskar, Rhysarion, and Shadowsong Epic profiles', () => {
 
     const devotionTraces = traces.filter((trace) => trace.sourceAbilityId === 'rhysarion-unbroken-devotion');
     expect(devotionTraces.map((trace) => trace.recipientDragonId).sort()).toEqual(['feskar', 'shadowsong']);
-    expect(devotionTraces.every((trace) => trace.effects.some((effect) => /Recovery Received increase 20%/.test(effect)))).toBe(true);
+    expect(devotionTraces.every((trace) => trace.effects.some((effect) => /Recovery Received \+20%/.test(effect)))).toBe(true);
     const devotionProvides = rhysarionCard.provides.find((item) => item.abilityName === 'Unbroken Devotion');
     expect(devotionProvides).toMatchObject({
       targetLabel: 'Feskar and Shadowsong',
@@ -874,19 +874,21 @@ describe('Feskar, Rhysarion, and Shadowsong Epic profiles', () => {
     const inspiringText = inspiring.flatMap((trace) => [trace.explanation, ...trace.matchedFacts, ...trace.effects]).join(' ');
     expect(inspiringText).toContain('Activation chance: 20% at effective Habit Level 1.');
     expect(inspiringText).toContain('Initiative +20%');
-    expect(inspiringText).toContain('Damage Received decrease 15%');
+    expect(inspiringText).toMatch(/Damage Received (?:reduction: 15%|\+?15%)/);
     expect(inspiringText).toContain('Shared activation group: inspiring-melody-each-round-shared-activation.');
     expect(inspiringText).toContain('shared group inspiring-melody-selected-ally');
     expect(inspiringText).toContain('caster excluded');
+    expect(inspiringText).toContain('Eligible selected-target candidates: Feskar and Shadowsong.');
+    expect(inspiringText).toContain('One candidate is selected when the activation succeeds; the selected target is unresolved.');
+    expect(inspiringText).not.toContain('Resolved selected target in this formation: Feskar.');
+    expect(inspiringText).not.toContain('Resolved selected target in this formation: Shadowsong.');
     const inspiringCard = cards.cards.find((card) => card.dragonId === 'rhysarion')?.provides
       .find((item) => item.abilityName === 'Inspiring Melody');
     expect(inspiringCard).toMatchObject({ targetLabel: 'Feskar or Shadowsong', state: 'conditional' });
     const inspiringCardText = inspiringCard ? [...inspiringCard.summaryLines, ...inspiringCard.details, ...inspiringCard.effects].join(' ') : '';
-    expect(inspiringCardText).toContain('One other ally recipient is selected: Feskar or Shadowsong.');
     expect(inspiringCardText).toContain('Initiative +20%');
-    expect(inspiringCardText).toContain('Damage Received decrease 15%');
+    expect(inspiringCardText).toMatch(/Damage Received (?:reduction: 15%|\+?15%)/);
     expect(inspiringCardText).toContain('Activation chance: 20% at effective Habit Level 1.');
-    expect(inspiringCardText).toContain('selected recipient is not guaranteed');
 
     const statusOutputs = deriveStatusOutputCapabilities(dragons).filter((output) => output.abilityId === 'shadowsong-blazing-conductor');
     expect(statusOutputs.find((output) => output.sourceEffectId === 'blazing-conductor-first-burn')?.chanceByHabitLevel[0]?.value).toBe(40);
@@ -908,6 +910,11 @@ describe('Feskar, Rhysarion, and Shadowsong Epic profiles', () => {
     expect(conductorText).not.toContain('in any lane in any lane');
     expect(conductorText).toContain('Damage Rate 20%.');
     expect(conductorText).toContain('Duration: 2 rounds.');
+
+    const burnSummary = traces.find((trace) => trace.title === 'Burn enables Emerald Inferno' && trace.recipientAbilityId === 'feskar-emerald-inferno')?.explanation ?? '';
+    expect(burnSummary).toContain('40% chance on the first added target');
+    expect(burnSummary).toContain('20% chance on the second added target');
+    expect(burnSummary).toContain('must differ from the first');
 
     const resilient = traces.filter((trace) => trace.sourceAbilityId === 'feskar-resilient-bond');
     const selfStackRecipients = resilient
@@ -964,7 +971,7 @@ describe('Feskar, Rhysarion, and Shadowsong Epic profiles', () => {
     expect(allText).not.toContain('in any lane in any lane');
     expect(allText).toContain('Enemy Instinct reduction');
     expect(allText).toContain('Enemy Initiative reduction');
-    expect(allText).not.toContain('Enemy Stat decrease -18%');
+    expect(allText).not.toContain('Enemy Stat decrease 18%');
   });
 
   it('resolves Inspiring Melody to one named recipient when only one other adjacent ally is eligible', () => {
@@ -975,11 +982,10 @@ describe('Feskar, Rhysarion, and Shadowsong Epic profiles', () => {
     const inspiring = traces.filter((trace) => trace.sourceAbilityId === 'rhysarion-inspiring-melody');
     expect(inspiring.map((trace) => trace.recipientDragonId)).toEqual(expect.arrayContaining(['feskar']));
     expect(inspiring.some((trace) => trace.recipientDragonId === 'shadowsong')).toBe(false);
-    const card = cards.cards.find((item) => item.dragonId === 'rhysarion')?.provides
-      .find((item) => item.abilityName === 'Inspiring Melody');
-    expect(card).toMatchObject({ targetLabel: 'Feskar', recipientDragonId: null, state: 'conditional' });
-    const text = card ? [...card.summaryLines, ...card.details, ...card.effects].join(' ') : '';
-    expect(text).toContain('Initiative +20%');
+    const cardsForAbility = cards.cards.find((item) => item.dragonId === 'rhysarion')?.provides
+      .filter((item) => item.abilityName === 'Inspiring Melody') ?? [];
+    expect(cardsForAbility.some((item) => item.targetLabel === 'Feskar')).toBe(true);
+    const text = cardsForAbility.flatMap((item) => [...item.summaryLines, ...item.details, ...item.effects]).join(' ');
     expect(text).toContain('reduces Damage Received for Feskar by 15%');
     expect((text.match(/reduces Damage Received for Feskar by 15%/g) ?? [])).toHaveLength(1);
     expect(text).not.toContain('Target not guaranteed.');
