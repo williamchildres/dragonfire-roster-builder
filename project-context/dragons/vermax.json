@@ -3754,7 +3754,7 @@
   "firstObservedInGame": "2026-06-22",
   "format": "dragonfire-dragon-profile",
   "gameVersion": null,
-  "generatedAt": "2026-06-27T08:13:55.917Z",
+  "generatedAt": "2026-06-27T08:49:00.315Z",
   "habits": [
     {
       "abilityClass": "passive",
@@ -7031,8 +7031,8 @@
   "rosterSourceStatus": "in-game-verified-pending-official-site",
   "slug": "vermax",
   "source": {
-    "branch": "fix/projected-benefit-state-classification",
-    "commit": "1bc46a15d33d9cc19cca84f6ca8284275c1e6711",
+    "branch": "fix/syrax-command-and-initiative-classification",
+    "commit": "2897259269fa44c1ff843ac8d65e731f276e3c5f",
     "databaseVersion": "0.6.2",
     "dataSchemaVersion": 12,
     "gameBuild": "26.6.53509",
