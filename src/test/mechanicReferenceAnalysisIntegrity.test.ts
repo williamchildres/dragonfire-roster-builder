@@ -30,6 +30,14 @@ function currentTraces() {
   });
 }
 
+function supportedPveTraces() {
+  return analyzeFormationTraces(primaryFormation, dragons, {
+    roster: rosterAtRank10(),
+    dragonLevels: { sheepstealer: 26, crimson: 26, kalspire: 26 },
+    battleContext: 'non-player-food-tile',
+  });
+}
+
 function traceText(...sourceAbilityIds: string[]) {
   return currentTraces()
     .filter((trace) => sourceAbilityIds.includes(trace.sourceAbilityId ?? ''))
@@ -91,6 +99,35 @@ describe('mechanic reference analysis integrity', () => {
     expect(stackTraces).toHaveLength(2);
     expect(stackTraces.some((trace) => trace.status === 'active')).toBe(false);
     expect(text).toContain('PvE Fire Damage bonus is contextual.');
+
+    const pveFire = traces.find((trace) => trace.modifierCapabilityId?.includes('stolen-flock-pve-fire'));
+    expect(pveFire).toBeDefined();
+    expect(pveFire?.status).toBe('unknown');
+    expect(pveFire?.requirements).toEqual(
+      expect.arrayContaining([
+        expect.objectContaining({
+          expected: 'non-player Food Tile or Beast encounter',
+          actual: 'unspecified',
+          satisfied: null,
+        }),
+      ]),
+    );
+    expect([pveFire?.explanation, ...(pveFire?.effects ?? [])].join(' ')).toContain('PvE-only bonus is contextual and is not treated as active.');
+
+    const supportedPveFire = supportedPveTraces()
+      .filter((trace) => trace.sourceAbilityId === 'sheepstealer-stolen-flock')
+      .find((trace) => trace.modifierCapabilityId?.includes('stolen-flock-pve-fire'));
+    expect(supportedPveFire).toBeDefined();
+    expect(supportedPveFire?.status).toBe('active');
+    expect(supportedPveFire?.requirements).toEqual(
+      expect.arrayContaining([
+        expect.objectContaining({
+          expected: 'non-player Food Tile or Beast encounter',
+          actual: 'non-player food tile',
+          satisfied: true,
+        }),
+      ]),
+    );
   });
 
   it('uses all-matching enemy semantics for Unlikely Hero and surfaces below-threshold Recovery reduction', () => {
@@ -129,6 +166,14 @@ describe('mechanic reference analysis integrity', () => {
     expect(text).toContain('Target reference panic-first-target: First Panic check uses the Physical Damage target.');
     expect(text).toContain('Target reference panic-second-target: Second Panic check uses another distinct adjacent enemy.');
     expect(text).toContain('Per-target check chance: 15% at effective Habit Level 1.');
+    expect(text).toContain('Independent per-target checks: 2.');
+    expect(text).toContain('Bleed deals periodic Physical Damage each round.');
+    expect(text).toContain('Panic deals periodic Tactical Damage each round.');
+    expect(text).toContain('Damage Rate 20%.');
+    expect(text).toContain('Duration: 2 rounds.');
+    expect(text).not.toContain('Tactical Strike effect tactical-strike-bleed must target a different enemy than tactical-strike-tactical-damage.');
+    expect(text).not.toContain('Tactical Assault effect tactical-assault-panic uses the same selected target as tactical-assault-physical-damage.');
+    expect(text).not.toContain('Targets one enemy.');
     expect(text).not.toContain('60% chance');
     expect(text).not.toContain('30% chance on Panic');
   });

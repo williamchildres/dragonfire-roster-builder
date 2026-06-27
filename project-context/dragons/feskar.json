@@ -4352,7 +4352,7 @@
   "firstObservedInGame": "2026-06-22",
   "format": "dragonfire-dragon-profile",
   "gameVersion": null,
-  "generatedAt": "2026-06-27T21:44:55.689Z",
+  "generatedAt": "2026-06-27T22:12:53.099Z",
   "habits": [
     {
       "abilityClass": "passive",
@@ -6103,6 +6103,7 @@
       "conditional": true,
       "conditions": [
         {
+          "battleContext": null,
           "comparison": null,
           "description": "The same adjacent ally selected at start of combat retreated in the previous round.",
           "evidenceIds": [],
@@ -6565,6 +6566,7 @@
       "conditional": true,
       "conditions": [
         {
+          "battleContext": null,
           "comparison": null,
           "description": "Target eligibility requires the enemy to possess a non-Basic Physical Damage output capability.",
           "evidenceIds": [],
@@ -7362,8 +7364,8 @@
   "rosterSourceStatus": "in-game-verified-pending-official-site",
   "slug": "feskar",
   "source": {
-    "branch": "fix/mechanic-reference-analysis-integrity",
-    "commit": "d15aad00735449f126b843811a1d0a1981989c0f",
+    "branch": "fix/mechanic-reference-analysis-follow-up",
+    "commit": "17da1db6189bafba9c0471b7e19d9c21fa6d8ba4",
     "databaseVersion": "0.6.2",
     "dataSchemaVersion": 12,
     "gameBuild": "26.6.53509",
@@ -7499,6 +7501,7 @@
       "chanceFixed": null,
       "conditions": [
         {
+          "battleContext": null,
           "comparison": null,
           "description": "The same adjacent ally selected at start of combat retreated in the previous round.",
           "evidenceIds": [],

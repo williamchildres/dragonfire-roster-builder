@@ -5261,7 +5261,7 @@
   "firstObservedInGame": "2026-06-22",
   "format": "dragonfire-dragon-profile",
   "gameVersion": null,
-  "generatedAt": "2026-06-27T21:44:55.689Z",
+  "generatedAt": "2026-06-27T22:12:53.099Z",
   "habits": [
     {
       "abilityClass": "passive",
@@ -6893,7 +6893,22 @@
       "channel": "fire-damage",
       "combatLogConfirmed": false,
       "conditional": false,
-      "conditions": [],
+      "conditions": [
+        {
+          "battleContext": "non-player-food-tile",
+          "comparison": null,
+          "description": "Battle is a non-player Food Tile or Beast encounter.",
+          "evidenceIds": [],
+          "id": "pve-food-or-beast",
+          "kind": "battle-context",
+          "label": "Battle is a non-player Food Tile or Beast encounter.",
+          "statusCategoryId": null,
+          "statusId": null,
+          "subject": "battle",
+          "thresholdPercent": null,
+          "unresolved": false
+        }
+      ],
       "confidence": "confirmed",
       "currentlyAvailable": false,
       "damageScope": null,
@@ -7079,7 +7094,22 @@
       "channel": "fire-damage",
       "combatLogConfirmed": false,
       "conditional": true,
-      "conditions": [],
+      "conditions": [
+        {
+          "battleContext": null,
+          "comparison": null,
+          "description": "Prey received Recovery during the previous round.",
+          "evidenceIds": [],
+          "id": "prey-received-recovery-previous-round",
+          "kind": "target-received-recovery-previous-round",
+          "label": "Prey received Recovery during the previous round.",
+          "statusCategoryId": null,
+          "statusId": "prey",
+          "subject": "target",
+          "thresholdPercent": null,
+          "unresolved": false
+        }
+      ],
       "confidence": "confirmed",
       "currentlyAvailable": false,
       "damageScope": null,
@@ -7549,6 +7579,20 @@
       "conditional": true,
       "conditions": [
         {
+          "battleContext": null,
+          "comparison": null,
+          "description": "Target is Sheepstealer Prey.",
+          "evidenceIds": [],
+          "id": "target-is-prey",
+          "kind": "target-has-status",
+          "label": "Target is Sheepstealer Prey.",
+          "statusCategoryId": null,
+          "statusId": "prey",
+          "subject": "target",
+          "thresholdPercent": null,
+          "unresolved": false
+        },
+        {
           "description": "Triple Fire Damage if Prey received Recovery during the previous round.",
           "evidenceIds": [],
           "id": "savage-claim-recovery-triple-fire",
@@ -7609,6 +7653,20 @@
       "combatLogConfirmed": false,
       "conditional": true,
       "conditions": [
+        {
+          "battleContext": null,
+          "comparison": null,
+          "description": "Target is Sheepstealer Prey.",
+          "evidenceIds": [],
+          "id": "target-is-prey",
+          "kind": "target-has-status",
+          "label": "Target is Sheepstealer Prey.",
+          "statusCategoryId": null,
+          "statusId": "prey",
+          "subject": "target",
+          "thresholdPercent": null,
+          "unresolved": false
+        },
         {
           "description": "Triple Recovery if Prey received Recovery during the previous round.",
           "evidenceIds": [],
@@ -8334,8 +8392,8 @@
   "rosterSourceStatus": "in-game-verified-pending-official-site",
   "slug": "sheepstealer",
   "source": {
-    "branch": "fix/mechanic-reference-analysis-integrity",
-    "commit": "d15aad00735449f126b843811a1d0a1981989c0f",
+    "branch": "fix/mechanic-reference-analysis-follow-up",
+    "commit": "17da1db6189bafba9c0471b7e19d9c21fa6d8ba4",
     "databaseVersion": "0.6.2",
     "dataSchemaVersion": 12,
     "gameBuild": "26.6.53509",
@@ -8372,6 +8430,20 @@
           "evidenceIds": [],
           "id": "wild-hunt-apply-prey-activation-chance",
           "label": "Activation chance 40% per each round.",
+          "unresolved": false
+        },
+        {
+          "battleContext": null,
+          "comparison": null,
+          "description": "No enemy is currently marked as Sheepstealer Prey.",
+          "evidenceIds": [],
+          "id": "no-enemy-currently-prey",
+          "kind": "no-enemy-has-mark",
+          "label": "No enemy is currently marked as Sheepstealer Prey.",
+          "statusCategoryId": null,
+          "statusId": null,
+          "subject": "enemy",
+          "thresholdPercent": null,
           "unresolved": false
         }
       ],
@@ -8486,7 +8558,22 @@
       },
       "chanceByHabitLevel": [],
       "chanceFixed": null,
-      "conditions": [],
+      "conditions": [
+        {
+          "battleContext": null,
+          "comparison": null,
+          "description": "Prey received Recovery during the previous round.",
+          "evidenceIds": [],
+          "id": "prey-received-recovery-previous-round",
+          "kind": "target-received-recovery-previous-round",
+          "label": "Prey received Recovery during the previous round.",
+          "statusCategoryId": null,
+          "statusId": "prey",
+          "subject": "target",
+          "thresholdPercent": null,
+          "unresolved": false
+        }
+      ],
       "currentlyAvailable": false,
       "directlyVerified": true,
       "dragonId": "sheepstealer",
@@ -8595,6 +8682,20 @@
           "evidenceIds": [],
           "id": "baited-kill-vulnerable-activation-chance",
           "label": "Activation chance depends on Habit Level for each round.",
+          "unresolved": false
+        },
+        {
+          "battleContext": null,
+          "comparison": null,
+          "description": "Target is Sheepstealer Prey.",
+          "evidenceIds": [],
+          "id": "target-is-prey",
+          "kind": "target-has-status",
+          "label": "Target is Sheepstealer Prey.",
+          "statusCategoryId": null,
+          "statusId": "prey",
+          "subject": "target",
+          "thresholdPercent": null,
           "unresolved": false
         },
         {

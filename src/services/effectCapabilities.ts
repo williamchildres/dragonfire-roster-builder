@@ -7,6 +7,7 @@ import {
   type AbilityDefinition,
   type AbilityEffect,
   type AbilitySchedule,
+  type BattleContext,
   type Dragon,
   type EffectSourceScope,
   type FormationPosition,
@@ -53,6 +54,7 @@ export interface CapabilityOptions {
   roster?: Record<string, OwnedDragon>;
   previewMaxRankInteractions?: boolean;
   dragonLevels?: Record<string, number | null>;
+  battleContext?: BattleContext;
 }
 
 const reviewedDragonIds = ['syrax', 'vhagar', 'caraxes', 'seasmoke', 'crimson', 'kalspire', 'malachite', 'venator', 'daemoros', 'vaeldra', 'sheepstealer', 'vermax', 'feskar', 'rhysarion', 'shadowsong'];
@@ -720,7 +722,7 @@ function durationDetail(effect: AbilityEffect): string | null {
     return 'Duration: until end of combat.';
   }
   if (effect.duration === 'Until end of current round') {
-    return 'Duration: until end of current round.';
+    return 'Duration: until end of the current round.';
   }
   return null;
 }
@@ -1313,16 +1315,33 @@ function internalModifierDetailLines(
   const stackDetails = context?.effect.stack
     ? stackModifierDetailLines(modifier, context.schedule, context.effect, options)
     : [];
+  const contextDetails = contextualModifierDetailLines(modifier, options);
   return [
     context ? scheduleTimingDetail(context.schedule) : null,
     stat
       ? `${statLabel(stat)} ${modifier.operation === 'decrease' ? '-' : '+'}${value}${effectiveLevel ? ` at effective Habit Level ${effectiveLevel}` : ''}.`
       : `${directedChannelLabel(modifier.channel, modifier.direction)} ${modifier.operation} ${value}${effectiveLevel ? ` at effective Habit Level ${effectiveLevel}` : ''}.`,
+    ...contextDetails,
     ...stackDetails,
     context ? enhancementDetail(context.effect) : null,
     context ? durationDetail(context.effect) : modifier.durationRounds ? `Duration: ${modifier.durationRounds} rounds.` : null,
     context ? rankedProgressionDetail(context.effect) : null,
   ].filter((detail): detail is string => Boolean(detail));
+}
+
+function contextualModifierDetailLines(
+  modifier: ModifierCapability,
+  options: CapabilityOptions,
+): string[] {
+  return modifier.conditions.flatMap((condition) => {
+    if (condition.kind !== 'battle-context') {
+      return [];
+    }
+    if ((options.battleContext ?? 'unspecified') === 'unspecified') {
+      return ['PvE-only bonus is contextual and is not treated as active.'];
+    }
+    return [];
+  });
 }
 
 function stackModifierDetailLines(
@@ -1463,7 +1482,7 @@ function isVisibleSelfDefensiveModifier(modifier: ModifierCapability): boolean {
 }
 
 function defensiveModifierTraceIsConditional(modifier: ModifierCapability): boolean {
-  return modifier.conditions.length > 0 ||
+  return modifier.conditions.some((condition) => condition.kind !== 'battle-context') ||
     modifier.activationChanceFixed !== null ||
     (modifier.activationChanceByHabitLevel?.length ?? 0) > 0;
 }
@@ -4264,13 +4283,26 @@ function perTargetCheckFacts(
 }
 
 function sharedTargetFact(ability: AbilityDefinition, effect: AbilityEffect): string | null {
-  const sameTargetReference = effect.targetSelection?.references.find((reference) => reference.kind === 'same-target-as-effect');
-  if (sameTargetReference?.referencedEffectId) {
-    return `${ability.name} effect ${effect.id} uses the same selected target as ${sameTargetReference.referencedEffectId}.`;
+  const references = effect.targetSelection?.references ?? [];
+  const targetCount = effect.perTargetEffectCheck?.targetCount ?? targetForEffect(effect).count;
+  const occupiedReferenceCount = targetCount ?? references.length;
+  const sameTargetReferences = references.filter((reference) => reference.kind === 'same-target-as-effect' && reference.referencedEffectId);
+  if (
+    references.length > 0 &&
+    sameTargetReferences.length === references.length &&
+    sameTargetReferences.length === occupiedReferenceCount &&
+    uniqueOrdered(sameTargetReferences.map((reference) => reference.referencedEffectId).filter((id): id is string => Boolean(id))).length === 1
+  ) {
+    return `${ability.name} effect ${effect.id} uses the same selected target as ${sameTargetReferences[0]!.referencedEffectId}.`;
   }
-  const distinctReference = effect.targetSelection?.references.find((reference) => reference.kind === 'distinct-from-effect-target');
-  if (distinctReference?.referencedEffectId) {
-    return `${ability.name} effect ${effect.id} must target a different enemy than ${distinctReference.referencedEffectId}.`;
+  const distinctReferences = references.filter((reference) => reference.kind === 'distinct-from-effect-target' && reference.referencedEffectId);
+  if (
+    references.length > 0 &&
+    distinctReferences.length === references.length &&
+    distinctReferences.length === occupiedReferenceCount &&
+    uniqueOrdered(distinctReferences.map((reference) => reference.referencedEffectId).filter((id): id is string => Boolean(id))).length === 1
+  ) {
+    return `${ability.name} effect ${effect.id} must target a different enemy than ${distinctReferences[0]!.referencedEffectId}.`;
   }
   if (effect.targetSelection?.sharedSelectionGroupId) {
     return `${ability.name} effect ${effect.id} uses selected-target group ${effect.targetSelection.sharedSelectionGroupId}.`;
@@ -5038,7 +5070,9 @@ function targetForEffect(effect: AbilityEffect): AbilityTarget {
               : effect.targetScope === 'any-lane'
                 ? 'any'
                 : 'unknown';
+  const referenceCount = effect.targetSelection?.references.length ?? 0;
   const count = effect.perTargetEffectCheck?.targetCount ??
+    (effect.activationRoll?.scope === 'independent-per-target' && referenceCount > 1 ? referenceCount : null) ??
     (selection === 'all-matching-condition'
     ? null
     : selection === 'highest-stat' || selection === 'highest-resource' || selection === 'lowest-resource' || selection === 'one-eligible-adjacent'
@@ -5349,6 +5383,7 @@ function providerRequirementTraces(
   const dragon = dragonById(dragons, modifier.dragonId);
   return [
     ...modifier.providerRequirements.map((requirement) => resolveRequirement(requirement, modifier.dragonId, formation, options)),
+    ...conditionRequirementTraces(modifier.conditions, options),
     ...availabilityRequirements({
       dragonId: modifier.dragonId,
       abilityId: modifier.abilityId,
@@ -5361,6 +5396,65 @@ function providerRequirementTraces(
       sourceKind: abilitySourceKind(dragons, modifier.dragonId, modifier.abilityId),
     }, options),
   ];
+}
+
+function conditionRequirementTraces(
+  conditions: EffectCondition[],
+  options: CapabilityOptions,
+): RequirementTrace[] {
+  return conditions.flatMap((condition) => {
+    if (condition.kind !== 'battle-context') {
+      return [];
+    }
+    const actual = options.battleContext ?? 'unspecified';
+    const supported = supportedBattleContexts(condition);
+    const satisfied = actual === 'unspecified'
+      ? null
+      : supported.includes(actual);
+    return [{
+      id: condition.id,
+      label: 'Battle context requirement',
+      expected: battleContextExpectedLabel(condition, supported),
+      actual: battleContextActualLabel(actual),
+      satisfied,
+      evidenceIds: condition.evidenceIds,
+      notes: [condition.description],
+    }];
+  });
+}
+
+function supportedBattleContexts(condition: EffectCondition): BattleContext[] {
+  const contexts = new Set<BattleContext>();
+  if (condition.battleContext && condition.battleContext !== 'unspecified') {
+    contexts.add(condition.battleContext);
+  }
+  if (/beast/i.test(condition.description)) {
+    contexts.add('beast-encounter');
+  }
+  return [...contexts];
+}
+
+function battleContextExpectedLabel(condition: EffectCondition, supported: BattleContext[]): string {
+  if (supported.includes('non-player-food-tile') && supported.includes('beast-encounter')) {
+    return 'non-player Food Tile or Beast encounter';
+  }
+  if (supported.length > 0) {
+    return supported.map(battleContextActualLabel).join(' or ');
+  }
+  return condition.description;
+}
+
+function battleContextActualLabel(context: BattleContext): string {
+  switch (context) {
+    case 'non-player-food-tile':
+      return 'non-player food tile';
+    case 'beast-encounter':
+      return 'Beast encounter';
+    case 'pvp':
+      return 'PvP';
+    case 'unspecified':
+      return 'unspecified';
+  }
 }
 
 function statusOutputRequirementTraces(
@@ -6211,7 +6305,7 @@ function effectIsConditional(schedule: AbilitySchedule, effect: AbilityEffect, a
 }
 
 function conditionsForEffect(effect: AbilityEffect, schedule?: AbilitySchedule): EffectCondition[] {
-  return [
+  return uniqueConditions([
     ...(schedule && isChanceBasedSchedule(schedule)
       ? [{
           id: `${schedule.id}-activation-chance`,
@@ -6221,6 +6315,20 @@ function conditionsForEffect(effect: AbilityEffect, schedule?: AbilitySchedule):
           unresolved: false,
         }]
       : []),
+    ...(schedule?.conditions ?? []).map((condition) => ({
+      id: condition.id,
+      label: condition.description,
+      description: condition.description,
+      evidenceIds: [],
+      unresolved: condition.unresolved,
+      kind: condition.kind,
+      subject: condition.subject,
+      statusId: condition.statusId,
+      statusCategoryId: condition.statusCategoryId,
+      comparison: condition.comparison,
+      thresholdPercent: condition.thresholdPercent,
+      battleContext: condition.battleContext,
+    })),
     ...(effect.conditions ?? []).map((condition) => ({
       id: condition.id,
       label: condition.description,
@@ -6233,6 +6341,7 @@ function conditionsForEffect(effect: AbilityEffect, schedule?: AbilitySchedule):
       statusCategoryId: condition.statusCategoryId,
       comparison: condition.comparison,
       thresholdPercent: condition.thresholdPercent,
+      battleContext: condition.battleContext,
     })),
     ...(effect.conditionalMultipliers ?? []).map((condition) => ({
       id: condition.id,
@@ -6241,7 +6350,17 @@ function conditionsForEffect(effect: AbilityEffect, schedule?: AbilitySchedule):
       evidenceIds: [],
       unresolved: false,
     })),
-  ];
+  ]);
+}
+
+function uniqueConditions(conditions: EffectCondition[]): EffectCondition[] {
+  const byId = new Map<string, EffectCondition>();
+  for (const condition of conditions) {
+    if (!byId.has(condition.id)) {
+      byId.set(condition.id, condition);
+    }
+  }
+  return [...byId.values()];
 }
 
 function isChanceBasedSchedule(schedule: AbilitySchedule): boolean {

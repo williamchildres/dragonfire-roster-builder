@@ -1767,6 +1767,21 @@ function synthesizeEnemyVulnerabilityBenefitLine(
   const duration = text.match(/Duration: \d+ rounds\./i)?.[0] ?? null;
   const basicExclusion = /non-Basic/i.test(text) ? 'Basic Attacks do not qualify.' : null;
   const recipientPrefix = targetNames.length > 1 ? '' : (targetNames.length > 0 ? `${joinEnglishList(targetNames)}: ` : '');
+  const allMatchingThreshold = text.match(/Applies to all enemies currently (?:above|below) \d+(?:\.\d+)?% maximum Troop Capacity\./i)?.[0] ?? null;
+  const sourceScope = /non-Basic/i.test(text)
+    ? `Applies to non-Basic ${channel} only.`
+    : `Applies to all qualifying ${channel} sources.`;
+  if (/all-matching-condition|all matching enemies|all enemies currently/i.test(text)) {
+    return [
+      `${recipientPrefix}${scope} can benefit from +${amount} ${channel} Received on an affected enemy.`,
+      basicExclusion,
+      sourceScope,
+      allMatchingThreshold,
+      'The allied attack must hit one of the affected enemies.',
+      'Enemy threshold membership and allied target overlap are not guaranteed.',
+      duration,
+    ].filter(Boolean).join(' ');
+  }
   return [
     `${recipientPrefix}${scope} can benefit from +${amount} ${channel} Received on the selected enemy.`,
     basicExclusion,
@@ -2080,10 +2095,40 @@ function formatStatDetail(detail: string): string | null {
 
 function enemyFacingSummary(trace: SynergyTrace): string {
   if (trace.matchKind === 'enemy-damage-dealt-reduction') {
+    if (isAllMatchingEnemyCondition(trace)) {
+      const amount = modifierAmountFromTrace(trace) ?? 'an unresolved amount';
+      const threshold = allMatchingThresholdFact(trace) ?? 'all enemies matching the source condition';
+      const duration = trace.effects.find((effect) => /Duration:/i.test(effect)) ?? null;
+      if (trace.channel === 'recovery') {
+        return [
+          `Reduces Recovery Received by ${amount} for ${threshold.replace(/^Applies to /i, '').replace(/\.$/, '')}.`,
+          duration,
+          'Enemy threshold membership is unresolved.',
+        ].filter(Boolean).join(' ');
+      }
+      return [
+        `Reduces ${formatToken(trace.channel ?? 'damage-dealt')} by ${amount} for ${threshold.replace(/^Applies to /i, '').replace(/\.$/, '')}.`,
+        duration,
+        'Enemy threshold membership is unresolved.',
+      ].filter(Boolean).join(' ');
+    }
     const stat = enemyReductionStat(trace);
     return `${stat ? `${stat} reduction` : `${formatToken(trace.channel ?? 'damage-dealt')} reduction`} on an enemy candidate; target selection and uptime are uncertain.`;
   }
   if (trace.matchKind === 'enemy-damage-received-increase') {
+    if (isAllMatchingEnemyCondition(trace)) {
+      const channel = formatToken(trace.channel ?? 'damage-dealt');
+      const amount = modifierAmountFromTrace(trace) ?? 'an unresolved amount';
+      const threshold = allMatchingThresholdFact(trace) ?? 'all enemies matching the source condition';
+      const scope = trace.effects.find((effect) => /Applies to .*qualifying|Applies to non-Basic/i.test(effect)) ??
+        trace.matchedFacts.find((fact) => /Applies to .*qualifying|Applies to non-Basic/i.test(fact)) ??
+        null;
+      return [
+        `Increases ${channel} Received by ${amount} for ${threshold.replace(/^Applies to /i, '').replace(/\.$/, '')}.`,
+        scope,
+        'Enemy threshold membership and allied target overlap are not guaranteed.',
+      ].filter(Boolean).join(' ');
+    }
     return `Increases ${formatToken(trace.channel ?? 'damage-dealt')} Received for one enemy target.`;
   }
   if (trace.matchKind === 'periodic-status-damage') {
@@ -2096,6 +2141,9 @@ function enemyFacingSummary(trace: SynergyTrace): string {
 }
 
 function enemyReductionPurpose(trace: SynergyTrace): string {
+  if (trace.channel === 'recovery') {
+    return 'Enemy Recovery Received reduction';
+  }
   const stat = enemyReductionStat(trace);
   return stat ? `Enemy ${stat} reduction` : 'Enemy Damage Dealt reduction';
 }
@@ -2118,7 +2166,28 @@ function enemyVulnerabilityBenefitSummary(trace: SynergyTrace, recipient: Dragon
       ?? trace.explanation.match(/by ([-+]?\d+(?:\.\d+)?%?)/i)?.[1]
       ?? null);
   const amount = amountValue ? `+${amountValue} ${channel} Received` : `${channel} Damage Received vulnerability`;
+  if (isAllMatchingEnemyCondition(trace)) {
+    return `${recipient.name}'s ${scope}${channel} outputs can benefit from ${amount} on an affected enemy; threshold membership and target overlap are not guaranteed.`;
+  }
   return `${recipient.name}'s ${scope}${channel} outputs can benefit from ${amount} on the selected enemy; target overlap is not guaranteed.`;
+}
+
+function isAllMatchingEnemyCondition(trace: SynergyTrace): boolean {
+  const text = [trace.targetSelectorSummary ?? '', trace.explanation, ...trace.matchedFacts, ...trace.effects].join(' ');
+  return trace.targetSelectionGroup?.selection === 'all-matching-condition' ||
+    /all-matching-condition|all matching enemies|all enemies currently/i.test(text);
+}
+
+function allMatchingThresholdFact(trace: SynergyTrace): string | null {
+  const text = [trace.explanation, ...trace.matchedFacts, ...trace.effects].join(' ');
+  return text.match(/Applies to all enemies currently (?:above|below) \d+(?:\.\d+)?% maximum Troop Capacity\./i)?.[0] ?? null;
+}
+
+function modifierAmountFromTrace(trace: SynergyTrace): string | null {
+  const text = [trace.explanation, ...trace.effects, ...trace.matchedFacts].join(' ');
+  return text.match(/\b(?:Received|increase|decrease|by)\s+\+?([-+]?\d+(?:\.\d+)?%)/i)?.[1] ??
+    text.match(/\+([-+]?\d+(?:\.\d+)?%)\b/)?.[1] ??
+    null;
 }
 
 function unique<T>(items: T[]): T[] {
