@@ -1461,6 +1461,7 @@ function defensiveModifierTargetFacts(
     .map((position) => formation[position])
     .filter((dragonId): dragonId is string => Boolean(dragonId))
     .map((dragonId) => dragonById(dragons, dragonId)?.name ?? dragonId);
+  const targetCount = effect.targetCount ?? modifier.targetSelector.count ?? null;
   return [
     effect.casterEligibility === 'excluded' || effect.includesCaster === false
       ? 'Caster excluded from this target selection.'
@@ -1468,12 +1469,16 @@ function defensiveModifierTargetFacts(
     effect.targetSelection?.sharedSelectionGroupId
       ? `Shared selected-target group: ${effect.targetSelection.sharedSelectionGroupId}.`
       : null,
-    eligiblePositions.length > 1
-      ? `Eligible selected-target candidates: ${joinEnglishList(eligibleNames)}.`
-      : null,
-    eligiblePositions.length > 1
-      ? 'One candidate is selected when the activation succeeds; the selected target is unresolved.'
-      : null,
+    targetCount !== null && targetCount > 1
+      ? `Eligible recipients: ${joinEnglishList(eligibleNames)}.`
+      : eligiblePositions.length > 1
+        ? `Eligible selected-target candidates: ${joinEnglishList(eligibleNames)}.`
+        : null,
+    targetCount !== null && targetCount > 1
+      ? `Target count is ${targetCount}, so these allies occupy separate target slots.`
+      : eligiblePositions.length > 1
+        ? 'One candidate is selected when the activation succeeds; the selected target is unresolved.'
+        : null,
     ...((effect.targetSelection?.references ?? []).map((reference) =>
       `Target reference ${reference.id}: ${reference.description}${reference.referencedEffectId ? ` References source effect ${reference.referencedEffectId}.` : ''}`,
     )),

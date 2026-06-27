@@ -82,6 +82,17 @@ describe('formation analysis normalization', () => {
     expect(previewTrace?.title).not.toBe('Damage Received Support');
   });
 
+  it('preserves two-target ally cardinality on Forest\'s Instinct and Loyal Bond modifiers', () => {
+    const modifiers = deriveModifierCapabilities(dragons);
+    const forests = modifiers.filter((item) => item.abilityId === 'malachite-forests-instinct');
+    const loyalBond = modifiers.filter((item) => item.abilityId === 'seasmoke-loyal-bond');
+
+    expect(forests.map((item) => item.targetSelector.count)).toEqual([2, 2]);
+    expect(forests.every((item) => item.targetSelector.selection !== 'one-eligible-adjacent')).toBe(true);
+    expect(loyalBond.map((item) => item.targetSelector.count)).toEqual([2, 2]);
+    expect(loyalBond.every((item) => item.targetSelector.selection !== 'one-eligible-adjacent')).toBe(true);
+  });
+
   it('resolves Reactive Instincts to one highest-Instinct recipient and keeps scaling selective', () => {
     const traces = analyzeFormationTraces(formations['7']!, dragons, preview);
     const direct = traces.find((trace) => trace.sourceAbilityId === 'vermax-reactive-instincts' && trace.ruleId === 'direct-stat-support');

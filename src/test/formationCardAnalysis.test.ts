@@ -17,6 +17,7 @@ const formations: Record<string, FormationAnalysisInput> = {
   '3': { 'left-flank': 'malachite', vanguard: 'vermax', 'right-flank': 'seasmoke' },
   '4': { 'left-flank': 'malachite', vanguard: 'seasmoke', 'right-flank': 'sheepstealer' },
   '8': { 'left-flank': 'sheepstealer', vanguard: 'caraxes', 'right-flank': 'syrax' },
+  multi: { 'left-flank': 'caraxes', vanguard: 'malachite', 'right-flank': 'seasmoke' },
   eclipse: { 'left-flank': 'crimson', vanguard: 'vhagar', 'right-flank': 'kalspire' },
   '13': { 'left-flank': 'seasmoke', vanguard: 'malachite', 'right-flank': 'sheepstealer' },
   '14': { 'left-flank': 'seasmoke', vanguard: 'sheepstealer', 'right-flank': 'malachite' },
@@ -149,6 +150,62 @@ describe('formation card analysis presentation', () => {
     expect(seasmokeReceives[0]?.summary).not.toContain('Target not guaranteed');
     expect(malachiteReceives[0]?.traceIds).toEqual(provider.traceIds);
     expect(seasmokeReceives[0]?.traceIds).toEqual(provider.traceIds);
+  });
+
+  it('honors two-target ally cardinality without candidate wording', () => {
+    const roster = selectedRoster(['caraxes', 'malachite', 'seasmoke'], 26, 10);
+    const result = presentation('multi', false, { roster });
+    const malachite = card(result, 'malachite');
+    const caraxes = card(result, 'caraxes');
+    const seasmoke = card(result, 'seasmoke');
+
+    const forestTactical = malachite.provides.find((item) =>
+      item.abilityName === "Forest's Instinct" &&
+      /Tactical Damage Received support/i.test([item.effectTitle, item.title, item.summary].join(' ')),
+    );
+    const forestPhysical = malachite.provides.find((item) =>
+      item.abilityName === "Forest's Instinct" &&
+      /Physical Damage support/i.test([item.effectTitle, item.title, item.summary].join(' ')),
+    );
+    const loyalDamage = seasmoke.provides.find((item) =>
+      item.abilityName === 'Loyal Bond' &&
+      /Damage Dealt support/i.test([item.effectTitle, item.title, item.summary].join(' ')),
+    );
+    const loyalResistance = seasmoke.provides.find((item) =>
+      item.abilityName === 'Loyal Bond' &&
+      /Damage Received support/i.test([item.effectTitle, item.title, item.summary].join(' ')),
+    );
+
+    expect(forestTactical?.state).toBe('conditional');
+    expect(forestTactical?.title).toContain('Tactical Damage Received');
+    expect(forestTactical?.summary).toContain('Caraxes and Seasmoke');
+    expect(forestTactical?.summary).not.toContain('Target not guaranteed');
+    expect(forestTactical?.summary).not.toContain('one candidate is selected');
+    expect(forestTactical?.summary).toContain('35%');
+    expect(forestTactical?.summary).toContain('8%');
+    expect(forestTactical?.summary).toContain('2 rounds');
+
+    expect(forestPhysical?.state).toBe('conditional');
+    expect(interactionHeading(forestPhysical!)).toBe('Malachite → Seasmoke');
+    expect(forestPhysical?.summary).toContain('Seasmoke');
+    expect(forestPhysical?.summary).not.toContain('Caraxes');
+    expect(forestPhysical?.summary).not.toContain('Target not guaranteed');
+
+    expect(loyalDamage?.state).toBe('conditional');
+    expect(interactionHeading(loyalDamage!)).toBe('Seasmoke → Caraxes and Malachite');
+    expect(loyalDamage?.summary).toContain('Caraxes and Malachite');
+    expect(loyalDamage?.summary).not.toContain('Target not guaranteed');
+    expect(loyalDamage?.summary).not.toContain('one candidate is selected');
+
+    expect(loyalResistance?.state).toBe('conditional');
+    expect(interactionHeading(loyalResistance!)).toBe('Seasmoke → Caraxes and Malachite');
+    expect(loyalResistance?.summary).toContain('Caraxes and Malachite');
+    expect(loyalResistance?.summary).not.toContain('Target not guaranteed');
+    expect(loyalResistance?.summary).not.toContain('one candidate is selected');
+
+    expect(seasmoke.provides.filter((item) => item.abilityName === 'Loyal Bond')).toHaveLength(2);
+    expect(caraxes.receives.some((item) => item.abilityName === "Forest's Instinct" && /one candidate is selected|Target not guaranteed/i.test(item.summary))).toBe(false);
+    expect(seasmoke.receives.some((item) => item.abilityName === "Forest's Instinct" && /one candidate is selected|Target not guaranteed/i.test(item.summary))).toBe(false);
   });
 
   it('keeps candidate-selection support wording for Eclipse Cover', () => {

@@ -510,6 +510,12 @@ function summarizeTrace(
   }
   if (trace.targetSelectionGroup && trace.channel) {
     const eligibleNames = target.targetLabel ?? 'the eligible candidates';
+    if (trace.targetSelectionGroup.targetCount > 1) {
+      return [
+        `Eligible recipients: ${eligibleNames}.`,
+        ...targetSelectionEffectLines(trace),
+      ];
+    }
     if (trace.targetSelectionGroup.eligibleRecipientDragonIds.length > 1) {
       return [
         `Eligible selected-target candidates: ${eligibleNames}.`,
@@ -1208,10 +1214,20 @@ function aggregateExactProvidesSubgroups(
       item.isPreview ? 'preview' : 'current',
       item.isEnemyFacing ? 'enemy' : 'friendly',
       providesAggregationMode(item),
+      exactRecipientEffectKey(item),
     ].join('|');
     grouped.set(key, [...(grouped.get(key) ?? []), item]);
   }
-  return [...grouped.values()].flatMap((group) =>
+  const mergedGroups: FormationCardInteraction[][] = [];
+  for (const group of grouped.values()) {
+    const existing = mergedGroups.find((candidate) => canAggregateExactRecipientSet([...candidate, ...group]));
+    if (existing) {
+      existing.push(...group);
+      continue;
+    }
+    mergedGroups.push([...group]);
+  }
+  return mergedGroups.flatMap((group) =>
     group.length > 1 && canAggregateExactRecipientSet(group)
       ? [mergeInteractions(group, 'provides', selectedIds, { exactRecipientSet: true })]
       : group,
@@ -1250,8 +1266,9 @@ function mergeInteractions(
     ? []
     : sanitizeNormalCardEffects(items.flatMap((item) => item.effects), summaryLines);
   const mergedCandidateTotal =
-    Math.max(...items.map((item) => item.candidateTotal ?? 0)) ||
-    (!options.exactRecipientSet && direction === 'provides' && targetNames.length > 1 ? targetNames.length : first.candidateTotal);
+    items.some((item) => item.isCandidate || item.candidateTotal !== null)
+      ? (Math.max(...items.map((item) => item.candidateTotal ?? 0)) || first.candidateTotal)
+      : null;
   const requirements = uniqueBy(
     items.flatMap((item) => item.requirements),
     (requirement) => [
@@ -1394,6 +1411,10 @@ function synthesizedExactRecipientEffectLines(
     if (damageReceivedSupport) {
       return [damageReceivedSupport];
     }
+    const damageDealtSupport = synthesizeDamageDealtSupportLine(first, text, targetNames);
+    if (damageDealtSupport) {
+      return [damageDealtSupport];
+    }
     const enemyVulnerability = synthesizeEnemyVulnerabilityBenefitLine(first, text, targetNames);
     if (enemyVulnerability) {
       return [enemyVulnerability];
@@ -1428,10 +1449,47 @@ function synthesizeDamageReceivedSupportLine(
   if (!value) {
     return null;
   }
+  const evidence = [text, ...item.details, ...item.effects].join(' ');
   const timing = text.match(/Timing: [^.]+\./i)?.[0] ?? null;
+  const activationChance = evidence.match(/\b(?:status application chance|activation chance)\s*:?\s*([-+]?\d+(?:\.\d+)?%?)/i)?.[1]
+    ?? evidence.match(/\b([-+]?\d+(?:\.\d+)?%?) chance\b/i)?.[1]
+    ?? null;
+  const threshold = evidence.match(/\b(above|below) 50% Troop Capacity\b/i)?.[0] ?? null;
   const duration = text.match(/Duration: [^.]+\./i)?.[0] ?? null;
   return [
     `${item.abilityName} reduces Damage Received for ${joinEnglishList(targetNames)} by ${value}.`,
+    activationChance ? `Activation chance: ${activationChance}.` : null,
+    threshold ? `Each recipient must be ${threshold}.` : null,
+    timing,
+    duration,
+  ].filter(Boolean).join(' ');
+}
+
+function synthesizeDamageDealtSupportLine(
+  item: FormationCardInteraction,
+  text: string,
+  targetNames: string[],
+): string | null {
+  if (!/Damage Dealt support|Damage Dealt increase/i.test(text) || /Grants 1 .+ stack/i.test(text)) {
+    return null;
+  }
+  const value = text.match(/Damage Dealt increase ([-+]?\d+(?:\.\d+)?%?)/i)?.[1] ??
+    text.match(/increase .*?Damage Dealt by ([-+]?\d+(?:\.\d+)?%?)/i)?.[1] ??
+    text.match(/([-+]?\d+(?:\.\d+)?%?)/)?.[1];
+  if (!value) {
+    return null;
+  }
+  const evidence = [text, ...item.details, ...item.effects].join(' ');
+  const timing = text.match(/Timing: [^.]+\./i)?.[0] ?? null;
+  const activationChance = evidence.match(/\b(?:status application chance|activation chance)\s*:?\s*([-+]?\d+(?:\.\d+)?%?)/i)?.[1]
+    ?? evidence.match(/\b([-+]?\d+(?:\.\d+)?%?) chance\b/i)?.[1]
+    ?? null;
+  const threshold = evidence.match(/\b(above|below) 50% Troop Capacity\b/i)?.[0] ?? null;
+  const duration = text.match(/Duration: [^.]+\./i)?.[0] ?? null;
+  return [
+    `${item.abilityName} increases Damage Dealt for ${joinEnglishList(targetNames)} by ${value}.`,
+    activationChance ? `Activation chance: ${activationChance}.` : null,
+    threshold ? `Each recipient must be ${threshold}.` : null,
     timing,
     duration,
   ].filter(Boolean).join(' ');
@@ -1614,7 +1672,6 @@ function canAggregateExactRecipientSet(items: FormationCardInteraction[]): boole
       item.isCandidate ||
       item.candidateTotal !== null ||
       item.targetLabel !== null ||
-      item.targetSelectionMode !== null ||
       item.isEnemyFacing ||
       !item.recipientDragonId
     )
@@ -1673,32 +1730,12 @@ function isCompatibleSharedSelectedTargetGroup(items: FormationCardInteraction[]
 }
 
 function exactRecipientEffectKey(item: FormationCardInteraction): string {
-  if (/Enemy mitigation reduction/i.test(item.effectTitle)) {
-    return [
-      item.effectTitle,
-      item.title,
-      item.summaryLines.join('|'),
-      item.status,
-    ].join('::');
-  }
-  if (/Enemy .* vulnerability/i.test(item.effectTitle)) {
-    return [
-      item.effectTitle,
-      item.title,
-      item.effects
-        .filter((effect) => !/^\w+'s qualifying/i.test(effect))
-        .map(semanticEffectDetailKey)
-        .join('|'),
-      item.status,
-      item.isPreview ? 'preview' : 'current',
-    ].join('::');
-  }
   return [
     item.effectTitle,
     item.title,
-    item.effects.filter((effect) => !/^Targets /i.test(effect)).join('|'),
-    item.modifierLines.join('|'),
     item.status,
+    item.isPreview ? 'preview' : 'current',
+    item.isEnemyFacing ? 'enemy' : 'friendly',
   ].join('::');
 }
 

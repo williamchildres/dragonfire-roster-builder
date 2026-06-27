@@ -3914,7 +3914,7 @@
   "firstObservedInGame": null,
   "format": "dragonfire-dragon-profile",
   "gameVersion": null,
-  "generatedAt": "2026-06-27T08:49:00.315Z",
+  "generatedAt": "2026-06-27T09:49:26.287Z",
   "habits": [
     {
       "abilityClass": "passive",
@@ -7031,8 +7031,8 @@
   "rosterSourceStatus": "official-website",
   "slug": "crimson",
   "source": {
-    "branch": "fix/syrax-command-and-initiative-classification",
-    "commit": "2897259269fa44c1ff843ac8d65e731f276e3c5f",
+    "branch": "fix/multi-target-ally-cardinality",
+    "commit": "0d35a42bf2539c1fdc8591bc908185620f487e15",
     "databaseVersion": "0.6.2",
     "dataSchemaVersion": 12,
     "gameBuild": "26.6.53509",

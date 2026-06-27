@@ -23,6 +23,10 @@ describe('Phase 3 combat data', () => {
       independentlyRolled: true,
       independentlyTargeted: true,
     });
+    expect(cleanse.attempts?.attemptCount).toBe(3);
+    expect(cleanse.attempts?.chanceFixed).toBe(20);
+    expect(cleanse.attempts?.independentlyRolled).toBe(true);
+    expect(cleanse.attempts?.independentlyTargeted).toBe(true);
     expect(fire.rounds).toEqual([3, 6, 9]);
     expect(fire.effects[0]!.magnitude).toBe(190);
     expect(fire.effects[0]!.scaling).toContain('attacker Intelligence');
