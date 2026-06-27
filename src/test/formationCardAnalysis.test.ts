@@ -312,13 +312,17 @@ describe('formation card analysis presentation', () => {
     expect(crimsonRank10?.detail).toContain('one shared 50% activation roll');
 
     expect(sheepstealerRank9?.summaryLines).toEqual([
-      'When no enemy has Prey: attempts to apply Prey.',
-      'Rounds 1, 4, 7, and 10: Fire Damage to one enemy.',
+      'Each Round: if no enemy is currently marked as Prey, there is a 40% chance to apply Prey.',
+      'Rounds 1, 4, 7, and 10: deal Fire Damage at a 100% rate to one enemy, prioritizing Prey. Damage is doubled against Prey.',
     ]);
     expect(sheepstealerRank9?.summaryLines.join(' ')).not.toContain('Savage Claim');
 
     expect(sheepstealerRank10?.summaryLines).toHaveLength(3);
     expect(sheepstealerRank10?.summaryLines.join(' ')).toContain('At 10 Stars');
+    expect(sheepstealerRank10?.summaryLines.join(' ')).toContain('40% chance to apply Prey');
+    expect(sheepstealerRank10?.summaryLines.join(' ')).toContain('100% rate');
+    expect(sheepstealerRank10?.summaryLines.join(' ')).toContain('prioritizing Prey');
+    expect(sheepstealerRank10?.summaryLines.join(' ')).toContain('Damage is doubled against Prey');
     expect(sheepstealerRank10?.summaryLines.join(' ')).toContain('24% rate');
     expect(sheepstealerRank10?.summaryLines.join(' ')).toContain('10% rate');
     expect(sheepstealerRank10?.summaryLines.join(' ')).toContain('72% Fire Damage');
@@ -353,8 +357,8 @@ describe('formation card analysis presentation', () => {
     expect(card(result, 'caraxes').command?.abilityName).toBe('Infernal Burst');
     expect(card(result, 'syrax').command?.abilityName).toBe('Blazing Fury');
     expect(card(result, 'sheepstealer').command?.summaryLines).toEqual([
-      'When no enemy has Prey: attempts to apply Prey.',
-      'Rounds 1, 4, 7, and 10: Fire Damage to one enemy.',
+      'Each Round: if no enemy is currently marked as Prey, there is a 40% chance to apply Prey.',
+      'Rounds 1, 4, 7, and 10: deal Fire Damage at a 100% rate to one enemy, prioritizing Prey. Damage is doubled against Prey.',
     ]);
     expect(card(result, 'syrax').receives.some((item) => item.abilityName === 'Blazing Fury')).toBe(false);
   });

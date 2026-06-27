@@ -4027,7 +4027,7 @@
   "firstObservedInGame": "2026-06-22",
   "format": "dragonfire-dragon-profile",
   "gameVersion": null,
-  "generatedAt": "2026-06-27T20:41:44.604Z",
+  "generatedAt": "2026-06-27T21:06:45.880Z",
   "habits": [
     {
       "abilityClass": "passive",
@@ -7180,8 +7180,8 @@
   "rosterSourceStatus": "in-game-verified-pending-official-site",
   "slug": "vaeldra",
   "source": {
-    "branch": "fix/legacy-command-augmentation-completion",
-    "commit": "883ed3c7dfae5dd7b4b626753a7d5647b21ac37a",
+    "branch": "main",
+    "commit": "86f3ebafd01bf3df79ea9591df57f3974f99d6f7",
     "databaseVersion": "0.6.2",
     "dataSchemaVersion": 12,
     "gameBuild": "26.6.53509",

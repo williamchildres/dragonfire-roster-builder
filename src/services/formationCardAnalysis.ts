@@ -658,13 +658,6 @@ function commandSummaryLines(
       'Rounds 3, 6, and 9: Fire Damage to one enemy.',
     ];
   }
-  if (command.id === 'sheepstealer-wild-hunt') {
-    return [
-      'When no enemy has Prey: attempts to apply Prey.',
-      'Rounds 1, 4, 7, and 10: Fire Damage to one enemy.',
-      ...commandAugmentationSummaryLines(dragon, options),
-    ];
-  }
   const summaryLines = commandPresentationSchedules(dragon, options).flatMap(({ schedule, prefix, timingOverride, suffix, level }) =>
     commandScheduleSummaryLines(schedule, level ?? undefined, prefix, dragon.name, timingOverride, suffix),
   );
@@ -913,6 +906,10 @@ function commandSingleEffectSummary(
   level: 1 | 2 | 3 | 4 | 5 | null,
 ): string {
   const conditionalMultipliers = effect.conditionalMultipliers ?? [];
+  if (effect.type === 'Prey') {
+    const chance = commandScheduleChanceValue(schedule, level);
+    return `if no enemy is currently marked as Prey, there is a ${chance} chance to apply Prey.`;
+  }
   if (effect.type === 'Bleed') {
     const chance = commandChanceValue(effect.activationRoll, level);
     const target = /original basic attack target and one other enemy within adjacency/i.test(effect.target)
@@ -949,17 +946,25 @@ function commandSingleEffectSummary(
   }
   if (effect.type === 'Fire Damage' && conditionalMultipliers.length > 0) {
     const multiplier = conditionalMultipliers[0]!;
-    const target = commandTargetPhrase(effect);
+    const target = schedule.targetPriority === 'prefer-prey'
+      ? 'one enemy, prioritizing Prey'
+      : commandTargetPhrase(effect);
     const base = commandRateValue(effect, level);
-    const enhanced = commandEnhancedRateValue(effect, level);
     const required = multiplier.condition.statusCategoryId
       ? formatToken(multiplier.condition.statusCategoryId)
       : formatToken(multiplier.condition.statusId ?? 'status');
+    if (multiplier.multiplier === 2 && /prey/i.test(required)) {
+      return `deal Fire Damage at a ${base} rate to ${target}. Damage is doubled against Prey.`;
+    }
+    const enhanced = commandEnhancedRateValue(effect, level);
     const targetLabel = /Burn/i.test(required) ? 'same eligible target' : 'same target';
     return `deal Fire Damage at a ${base} rate to ${target}. Against the ${targetLabel} while it has ${required}, the rate increases ${multiplier.multiplier}x to ${enhanced}.`;
   }
   if (effect.type === 'Fire Damage') {
-    return `deal Fire Damage at a ${commandRateValue(effect, level)} rate to ${commandTargetPhrase(effect)}.`;
+    const target = schedule.targetPriority === 'prefer-prey'
+      ? 'one enemy, prioritizing Prey'
+      : commandTargetPhrase(effect);
+    return `deal Fire Damage at a ${commandRateValue(effect, level)} rate to ${target}.`;
   }
   return commandEffectSummaryLine(schedule, effect, level)[0] ?? `${effect.type}.`;
 }
@@ -979,6 +984,9 @@ function commandTargetPhrase(effect: AbilityEffect): string {
     )
   ) {
     return 'the Ally with the least current troops';
+  }
+  if (effect.targetPriority === 'prefer-prey') {
+    return 'one enemy, prioritizing Prey';
   }
   if (effect.targetPriority === 'highest-stat-enemy' && effect.targetSelection?.comparisonStat === 'strength') {
     return 'the highest-Strength enemy';
