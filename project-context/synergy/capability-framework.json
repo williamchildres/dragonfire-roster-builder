@@ -11350,27 +11350,27 @@
           {
             "level": 1,
             "unit": "percent",
-            "value": 15
+            "value": 20
           },
           {
             "level": 2,
             "unit": "percent",
-            "value": 18
+            "value": 20
           },
           {
             "level": 3,
             "unit": "percent",
-            "value": 21
+            "value": 20
           },
           {
             "level": 4,
             "unit": "percent",
-            "value": 25.5
+            "value": 20
           },
           {
             "level": 5,
             "unit": "percent",
-            "value": 30
+            "value": 20
           }
         ],
         "damageRateFixed": 20,

@@ -11,10 +11,10 @@
           "id": "crimson-vermins-bane-augmentation",
           "minimumDragonStarRank": 10,
           "modifiesAbilityId": "crimson-bloodscale-terror",
-          "rawDescription": "Vermin's Bane augments Bloodscale Terror by replacing the Round 1 Stun chance.",
+          "rawDescription": "Vermin's Bane augments Bloodscale Terror with a Round 1 replacement and even-numbered round Instinct and Initiative reductions.",
           "scheduleOverrides": [
             {
-              "description": "At Star Rank 10, Vermin's Bane replaces the ordinary Round 1 Stun chance; it does not add a second roll.",
+              "description": "At 10 Stars, this replaces the ordinary Round 1 Stun chance.",
               "evidenceIds": [
                 "crimson-vermins-bane-2026-06-25"
               ],
@@ -161,7 +161,168 @@
               "targetScheduleId": "bloodscale-terror-stun-odd"
             }
           ],
-          "schedulesAdded": [],
+          "schedulesAdded": [
+            {
+              "activationRoll": {
+                "chanceByHabitLevel": [],
+                "chanceFixed": 50,
+                "description": "One fixed activation roll for the even-round stat reductions.",
+                "scope": "schedule-shared",
+                "targetStatusConditionalChances": [],
+                "unresolved": false
+              },
+              "attempts": null,
+              "battleContext": "unspecified",
+              "conditions": [],
+              "effects": [
+                {
+                  "activationRoll": null,
+                  "calculated": false,
+                  "conditionalMultipliers": [],
+                  "conditions": [],
+                  "directlyVerified": true,
+                  "duration": null,
+                  "durationRounds": 2,
+                  "effectOptions": null,
+                  "excludes": [],
+                  "id": "vermins-bane-instinct-down",
+                  "includesCaster": null,
+                  "magnitude": null,
+                  "notes": [],
+                  "perTargetEffectCheck": null,
+                  "rankedValues": [
+                    {
+                      "level": 1,
+                      "unit": "percent",
+                      "value": 12
+                    },
+                    {
+                      "level": 2,
+                      "unit": "percent",
+                      "value": 15.6
+                    },
+                    {
+                      "level": 3,
+                      "unit": "percent",
+                      "value": 19.2
+                    },
+                    {
+                      "level": 4,
+                      "unit": "percent",
+                      "value": 24
+                    },
+                    {
+                      "level": 5,
+                      "unit": "percent",
+                      "value": 30
+                    }
+                  ],
+                  "scaling": [
+                    "enhanced by Crimson Intelligence"
+                  ],
+                  "sourceScope": "unknown",
+                  "stack": null,
+                  "stackTransitionTrigger": null,
+                  "target": "Enemy with highest Instinct",
+                  "targetCount": null,
+                  "targetPriority": "highest-stat-enemy",
+                  "targetScope": "any-lane",
+                  "targetSelection": {
+                    "comparisonDirection": "highest",
+                    "comparisonPool": "enemy-side",
+                    "comparisonStat": "instinct",
+                    "distinctness": "unknown",
+                    "fallback": null,
+                    "preference": null,
+                    "references": [],
+                    "repeatedInstances": null,
+                    "sharedSelectionGroupId": null,
+                    "tieBehavior": "candidate-group"
+                  },
+                  "type": "Instinct Down",
+                  "unit": "percent"
+                },
+                {
+                  "activationRoll": null,
+                  "calculated": false,
+                  "conditionalMultipliers": [],
+                  "conditions": [],
+                  "directlyVerified": true,
+                  "duration": null,
+                  "durationRounds": 2,
+                  "effectOptions": null,
+                  "excludes": [],
+                  "id": "vermins-bane-initiative-down",
+                  "includesCaster": null,
+                  "magnitude": null,
+                  "notes": [],
+                  "perTargetEffectCheck": null,
+                  "rankedValues": [
+                    {
+                      "level": 1,
+                      "unit": "percent",
+                      "value": 12
+                    },
+                    {
+                      "level": 2,
+                      "unit": "percent",
+                      "value": 15.6
+                    },
+                    {
+                      "level": 3,
+                      "unit": "percent",
+                      "value": 19.2
+                    },
+                    {
+                      "level": 4,
+                      "unit": "percent",
+                      "value": 24
+                    },
+                    {
+                      "level": 5,
+                      "unit": "percent",
+                      "value": 30
+                    }
+                  ],
+                  "scaling": [
+                    "enhanced by Crimson Intelligence"
+                  ],
+                  "sourceScope": "unknown",
+                  "stack": null,
+                  "stackTransitionTrigger": null,
+                  "target": "Enemy with highest Instinct",
+                  "targetCount": null,
+                  "targetPriority": "highest-stat-enemy",
+                  "targetScope": "any-lane",
+                  "targetSelection": {
+                    "comparisonDirection": "highest",
+                    "comparisonPool": "enemy-side",
+                    "comparisonStat": "instinct",
+                    "distinctness": "unknown",
+                    "fallback": null,
+                    "preference": null,
+                    "references": [],
+                    "repeatedInstances": null,
+                    "sharedSelectionGroupId": "vermins-bane-highest-instinct-enemy",
+                    "tieBehavior": "candidate-group"
+                  },
+                  "type": "Initiative Down",
+                  "unit": "percent"
+                }
+              ],
+              "id": "vermins-bane-even-rounds",
+              "repeat": null,
+              "rounds": [],
+              "roundSelector": {
+                "kind": "even"
+              },
+              "targetPriority": "highest-stat-enemy",
+              "timing": "specific-rounds",
+              "triggerChanceByHabitLevel": [],
+              "triggerChanceFixed": 50,
+              "triggerEvent": "specific-rounds"
+            }
+          ],
           "sourceAbilityId": "crimson-vermins-bane"
         }
       ],
@@ -181,7 +342,7 @@
       "name": "Bloodscale Terror",
       "positionRequirement": null,
       "powerByHabitLevel": [],
-      "rawDescription": "Odd-numbered rounds: 20% chance to afflict Stun on one enemy in any lane for two rounds. Rounds 2, 5, and 8: deal Fire Damage to one enemy in any lane, Damage Rate +140%, scaling with Intelligence and mitigated by target Initiative.",
+      "rawDescription": "Odd-numbered rounds: 20% chance to Stun one enemy in any lane for 2 rounds. Rounds 2, 5, and 8: deal Fire Damage to one enemy in any lane at a 140% Damage Rate, scaling with Crimson's Intelligence and mitigated by target Initiative.\n\nAt 10 Stars:\n\nRound 1: 40% chance to Stun one enemy in any lane for 2 rounds. This replaces the ordinary Round 1 Stun chance.\n\nOther odd-numbered rounds: 20% chance to Stun one enemy in any lane for 2 rounds.\n\nEven-numbered rounds: one shared 50% activation roll to reduce Instinct and Initiative of the highest-Instinct enemy by 12% for 2 rounds, enhanced by Crimson's Intelligence.",
       "schedules": [
         {
           "activationRoll": {
@@ -2668,10 +2829,10 @@
         "id": "crimson-vermins-bane-augmentation",
         "minimumDragonStarRank": 10,
         "modifiesAbilityId": "crimson-bloodscale-terror",
-        "rawDescription": "Vermin's Bane augments Bloodscale Terror by replacing the Round 1 Stun chance.",
+        "rawDescription": "Vermin's Bane augments Bloodscale Terror with a Round 1 replacement and even-numbered round Instinct and Initiative reductions.",
         "scheduleOverrides": [
           {
-            "description": "At Star Rank 10, Vermin's Bane replaces the ordinary Round 1 Stun chance; it does not add a second roll.",
+            "description": "At 10 Stars, this replaces the ordinary Round 1 Stun chance.",
             "evidenceIds": [
               "crimson-vermins-bane-2026-06-25"
             ],
@@ -2818,7 +2979,168 @@
             "targetScheduleId": "bloodscale-terror-stun-odd"
           }
         ],
-        "schedulesAdded": [],
+        "schedulesAdded": [
+          {
+            "activationRoll": {
+              "chanceByHabitLevel": [],
+              "chanceFixed": 50,
+              "description": "One fixed activation roll for the even-round stat reductions.",
+              "scope": "schedule-shared",
+              "targetStatusConditionalChances": [],
+              "unresolved": false
+            },
+            "attempts": null,
+            "battleContext": "unspecified",
+            "conditions": [],
+            "effects": [
+              {
+                "activationRoll": null,
+                "calculated": false,
+                "conditionalMultipliers": [],
+                "conditions": [],
+                "directlyVerified": true,
+                "duration": null,
+                "durationRounds": 2,
+                "effectOptions": null,
+                "excludes": [],
+                "id": "vermins-bane-instinct-down",
+                "includesCaster": null,
+                "magnitude": null,
+                "notes": [],
+                "perTargetEffectCheck": null,
+                "rankedValues": [
+                  {
+                    "level": 1,
+                    "unit": "percent",
+                    "value": 12
+                  },
+                  {
+                    "level": 2,
+                    "unit": "percent",
+                    "value": 15.6
+                  },
+                  {
+                    "level": 3,
+                    "unit": "percent",
+                    "value": 19.2
+                  },
+                  {
+                    "level": 4,
+                    "unit": "percent",
+                    "value": 24
+                  },
+                  {
+                    "level": 5,
+                    "unit": "percent",
+                    "value": 30
+                  }
+                ],
+                "scaling": [
+                  "enhanced by Crimson Intelligence"
+                ],
+                "sourceScope": "unknown",
+                "stack": null,
+                "stackTransitionTrigger": null,
+                "target": "Enemy with highest Instinct",
+                "targetCount": null,
+                "targetPriority": "highest-stat-enemy",
+                "targetScope": "any-lane",
+                "targetSelection": {
+                  "comparisonDirection": "highest",
+                  "comparisonPool": "enemy-side",
+                  "comparisonStat": "instinct",
+                  "distinctness": "unknown",
+                  "fallback": null,
+                  "preference": null,
+                  "references": [],
+                  "repeatedInstances": null,
+                  "sharedSelectionGroupId": null,
+                  "tieBehavior": "candidate-group"
+                },
+                "type": "Instinct Down",
+                "unit": "percent"
+              },
+              {
+                "activationRoll": null,
+                "calculated": false,
+                "conditionalMultipliers": [],
+                "conditions": [],
+                "directlyVerified": true,
+                "duration": null,
+                "durationRounds": 2,
+                "effectOptions": null,
+                "excludes": [],
+                "id": "vermins-bane-initiative-down",
+                "includesCaster": null,
+                "magnitude": null,
+                "notes": [],
+                "perTargetEffectCheck": null,
+                "rankedValues": [
+                  {
+                    "level": 1,
+                    "unit": "percent",
+                    "value": 12
+                  },
+                  {
+                    "level": 2,
+                    "unit": "percent",
+                    "value": 15.6
+                  },
+                  {
+                    "level": 3,
+                    "unit": "percent",
+                    "value": 19.2
+                  },
+                  {
+                    "level": 4,
+                    "unit": "percent",
+                    "value": 24
+                  },
+                  {
+                    "level": 5,
+                    "unit": "percent",
+                    "value": 30
+                  }
+                ],
+                "scaling": [
+                  "enhanced by Crimson Intelligence"
+                ],
+                "sourceScope": "unknown",
+                "stack": null,
+                "stackTransitionTrigger": null,
+                "target": "Enemy with highest Instinct",
+                "targetCount": null,
+                "targetPriority": "highest-stat-enemy",
+                "targetScope": "any-lane",
+                "targetSelection": {
+                  "comparisonDirection": "highest",
+                  "comparisonPool": "enemy-side",
+                  "comparisonStat": "instinct",
+                  "distinctness": "unknown",
+                  "fallback": null,
+                  "preference": null,
+                  "references": [],
+                  "repeatedInstances": null,
+                  "sharedSelectionGroupId": "vermins-bane-highest-instinct-enemy",
+                  "tieBehavior": "candidate-group"
+                },
+                "type": "Initiative Down",
+                "unit": "percent"
+              }
+            ],
+            "id": "vermins-bane-even-rounds",
+            "repeat": null,
+            "rounds": [],
+            "roundSelector": {
+              "kind": "even"
+            },
+            "targetPriority": "highest-stat-enemy",
+            "timing": "specific-rounds",
+            "triggerChanceByHabitLevel": [],
+            "triggerChanceFixed": 50,
+            "triggerEvent": "specific-rounds"
+          }
+        ],
         "sourceAbilityId": "crimson-vermins-bane"
       }
     ],
@@ -2838,7 +3160,7 @@
     "name": "Bloodscale Terror",
     "positionRequirement": null,
     "powerByHabitLevel": [],
-    "rawDescription": "Odd-numbered rounds: 20% chance to afflict Stun on one enemy in any lane for two rounds. Rounds 2, 5, and 8: deal Fire Damage to one enemy in any lane, Damage Rate +140%, scaling with Intelligence and mitigated by target Initiative.",
+    "rawDescription": "Odd-numbered rounds: 20% chance to Stun one enemy in any lane for 2 rounds. Rounds 2, 5, and 8: deal Fire Damage to one enemy in any lane at a 140% Damage Rate, scaling with Crimson's Intelligence and mitigated by target Initiative.\n\nAt 10 Stars:\n\nRound 1: 40% chance to Stun one enemy in any lane for 2 rounds. This replaces the ordinary Round 1 Stun chance.\n\nOther odd-numbered rounds: 20% chance to Stun one enemy in any lane for 2 rounds.\n\nEven-numbered rounds: one shared 50% activation roll to reduce Instinct and Initiative of the highest-Instinct enemy by 12% for 2 rounds, enhanced by Crimson's Intelligence.",
     "schedules": [
       {
         "activationRoll": {
@@ -3914,7 +4236,7 @@
   "firstObservedInGame": null,
   "format": "dragonfire-dragon-profile",
   "gameVersion": null,
-  "generatedAt": "2026-06-27T10:32:51.701Z",
+  "generatedAt": "2026-06-27T20:41:44.604Z",
   "habits": [
     {
       "abilityClass": "passive",
@@ -6988,7 +7310,7 @@
       "abilityId": "crimson-bloodscale-terror",
       "abilityName": "Bloodscale Terror",
       "kind": "command",
-      "rawDescription": "Odd-numbered rounds: 20% chance to afflict Stun on one enemy in any lane for two rounds. Rounds 2, 5, and 8: deal Fire Damage to one enemy in any lane, Damage Rate +140%, scaling with Intelligence and mitigated by target Initiative."
+      "rawDescription": "Odd-numbered rounds: 20% chance to Stun one enemy in any lane for 2 rounds. Rounds 2, 5, and 8: deal Fire Damage to one enemy in any lane at a 140% Damage Rate, scaling with Crimson's Intelligence and mitigated by target Initiative.\n\nAt 10 Stars:\n\nRound 1: 40% chance to Stun one enemy in any lane for 2 rounds. This replaces the ordinary Round 1 Stun chance.\n\nOther odd-numbered rounds: 20% chance to Stun one enemy in any lane for 2 rounds.\n\nEven-numbered rounds: one shared 50% activation roll to reduce Instinct and Initiative of the highest-Instinct enemy by 12% for 2 rounds, enhanced by Crimson's Intelligence."
     },
     {
       "abilityId": "crimson-hunters-cunning",
@@ -7031,8 +7353,8 @@
   "rosterSourceStatus": "official-website",
   "slug": "crimson",
   "source": {
-    "branch": "fix/multi-target-condition-presentation",
-    "commit": "0ee5f2984411b72286fbcaa444355b84f2c21887",
+    "branch": "fix/legacy-command-augmentation-completion",
+    "commit": "883ed3c7dfae5dd7b4b626753a7d5647b21ac37a",
     "databaseVersion": "0.6.2",
     "dataSchemaVersion": 12,
     "gameBuild": "26.6.53509",

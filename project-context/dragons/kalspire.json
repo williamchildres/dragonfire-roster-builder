@@ -2,7 +2,228 @@
   "abilities": [
     {
       "abilityClass": "active",
-      "augmentations": [],
+      "augmentations": [
+        {
+          "effectsAdded": [],
+          "evidenceIds": [
+            "kalspire-tactical-assault-2026-06-25"
+          ],
+          "id": "kalspire-tactical-assault-augmentation",
+          "minimumDragonStarRank": 6,
+          "modifiesAbilityId": "kalspire-tactical-strike",
+          "rawDescription": "At 6+ Stars, Tactical Assault augments Tactical Strike with Physical Damage and independent Panic checks.",
+          "scheduleOverrides": [],
+          "schedulesAdded": [
+            {
+              "activationRoll": null,
+              "attempts": null,
+              "battleContext": "unspecified",
+              "conditions": [],
+              "effects": [
+                {
+                  "activationRoll": null,
+                  "calculated": false,
+                  "conditionalMultipliers": [],
+                  "conditions": [],
+                  "directlyVerified": true,
+                  "duration": null,
+                  "durationRounds": null,
+                  "effectOptions": null,
+                  "excludes": [],
+                  "id": "tactical-assault-physical-damage",
+                  "includesCaster": null,
+                  "magnitude": null,
+                  "notes": [],
+                  "perTargetEffectCheck": null,
+                  "rankedValues": [
+                    {
+                      "level": 1,
+                      "unit": "percent",
+                      "value": 25
+                    },
+                    {
+                      "level": 2,
+                      "unit": "percent",
+                      "value": 30
+                    },
+                    {
+                      "level": 3,
+                      "unit": "percent",
+                      "value": 35
+                    },
+                    {
+                      "level": 4,
+                      "unit": "percent",
+                      "value": 42.5
+                    },
+                    {
+                      "level": 5,
+                      "unit": "percent",
+                      "value": 50
+                    }
+                  ],
+                  "scaling": [
+                    "attacker Strength"
+                  ],
+                  "sourceScope": "unknown",
+                  "stack": null,
+                  "stackTransitionTrigger": null,
+                  "target": "One enemy within adjacency that was not the original Basic Attack target",
+                  "targetCount": null,
+                  "targetPriority": "any-eligible",
+                  "targetScope": "within-adjacency",
+                  "targetSelection": {
+                    "comparisonDirection": null,
+                    "comparisonPool": null,
+                    "comparisonStat": null,
+                    "distinctness": "must-be-distinct",
+                    "fallback": null,
+                    "preference": null,
+                    "references": [
+                      {
+                        "description": "Physical Damage target is distinct from the original Basic Attack target.",
+                        "id": "not-original-basic-attack-target",
+                        "kind": "distinct-from-effect-target",
+                        "referencedEffectId": "tactical-strike-tactical-damage"
+                      }
+                    ],
+                    "repeatedInstances": null,
+                    "sharedSelectionGroupId": null,
+                    "tieBehavior": null
+                  },
+                  "type": "Physical Damage",
+                  "unit": "rate"
+                },
+                {
+                  "activationRoll": {
+                    "chanceByHabitLevel": [
+                      {
+                        "level": 1,
+                        "unit": "percent",
+                        "value": 15
+                      },
+                      {
+                        "level": 2,
+                        "unit": "percent",
+                        "value": 18
+                      },
+                      {
+                        "level": 3,
+                        "unit": "percent",
+                        "value": 21
+                      },
+                      {
+                        "level": 4,
+                        "unit": "percent",
+                        "value": 25.5
+                      },
+                      {
+                        "level": 5,
+                        "unit": "percent",
+                        "value": 30
+                      }
+                    ],
+                    "chanceFixed": null,
+                    "description": "Panic checks are separate for each target.",
+                    "scope": "independent-per-target",
+                    "targetStatusConditionalChances": [],
+                    "unresolved": false
+                  },
+                  "calculated": false,
+                  "conditionalMultipliers": [],
+                  "conditions": [],
+                  "directlyVerified": true,
+                  "duration": null,
+                  "durationRounds": 2,
+                  "effectOptions": null,
+                  "excludes": [],
+                  "id": "tactical-assault-panic",
+                  "includesCaster": null,
+                  "magnitude": 20,
+                  "notes": [
+                    "Panic is periodic Tactical Damage, +20% each round."
+                  ],
+                  "perTargetEffectCheck": null,
+                  "rankedValues": [
+                    {
+                      "level": 1,
+                      "unit": "percent",
+                      "value": 20
+                    },
+                    {
+                      "level": 2,
+                      "unit": "percent",
+                      "value": 20
+                    },
+                    {
+                      "level": 3,
+                      "unit": "percent",
+                      "value": 20
+                    },
+                    {
+                      "level": 4,
+                      "unit": "percent",
+                      "value": 20
+                    },
+                    {
+                      "level": 5,
+                      "unit": "percent",
+                      "value": 20
+                    }
+                  ],
+                  "scaling": [],
+                  "sourceScope": "unknown",
+                  "stack": null,
+                  "stackTransitionTrigger": null,
+                  "target": "Physical Damage target and one other distinct enemy within adjacency",
+                  "targetCount": null,
+                  "targetPriority": "any-eligible",
+                  "targetScope": "within-adjacency",
+                  "targetSelection": {
+                    "comparisonDirection": null,
+                    "comparisonPool": null,
+                    "comparisonStat": null,
+                    "distinctness": "explicitly-another-target",
+                    "fallback": null,
+                    "preference": null,
+                    "references": [
+                      {
+                        "description": "First Panic check uses the Physical Damage target.",
+                        "id": "panic-first-target",
+                        "kind": "same-target-as-effect",
+                        "referencedEffectId": "tactical-assault-physical-damage"
+                      },
+                      {
+                        "description": "Second Panic check uses another distinct adjacent enemy.",
+                        "id": "panic-second-target",
+                        "kind": "distinct-from-effect-target",
+                        "referencedEffectId": "tactical-assault-physical-damage"
+                      }
+                    ],
+                    "repeatedInstances": null,
+                    "sharedSelectionGroupId": null,
+                    "tieBehavior": null
+                  },
+                  "type": "Panic",
+                  "unit": "rate"
+                }
+              ],
+              "id": "tactical-assault-after-basic",
+              "repeat": null,
+              "rounds": [],
+              "roundSelector": {
+                "kind": "after-basic-attack"
+              },
+              "targetPriority": "any-eligible",
+              "timing": "after-basic-attack",
+              "triggerChanceByHabitLevel": [],
+              "triggerChanceFixed": null,
+              "triggerEvent": "after-basic-attack"
+            }
+          ],
+          "sourceAbilityId": "kalspire-tactical-assault"
+        }
+      ],
       "dragonId": "kalspire",
       "evidenceIds": [
         "kalspire-tactical-strike-summary-2026-06-25"
@@ -14,7 +235,7 @@
       "name": "Tactical Strike",
       "positionRequirement": null,
       "powerByHabitLevel": [],
-      "rawDescription": "After each Basic Attack: deal Tactical Damage to the original Basic Attack target. Attempt Bleed on the original Basic Attack target and one other enemy within adjacency; checks are independent per target. Classified as Command while preserving Attack Modifier presentation.",
+      "rawDescription": "After each Basic Attack: deal Tactical Damage to the original Basic Attack target at a 50% Damage Rate, scaling with Kalspire's Instinct and mitigated by target Intelligence.\n\nThen independently attempt Bleed at a 30% chance on the original Basic Attack target and one other enemy within adjacency. Bleed deals periodic Physical Damage at a 20% rate each round for 2 rounds, scaling with Strength and mitigated by target Instinct.\n\nAt 6+ Stars:\n\nAfter each Basic Attack: deal Physical Damage at a 25% rate to one enemy within adjacency that is distinct from the original Basic Attack target, scaling with Strength.\n\nThen independently attempt Panic at a 15% chance on the Physical Damage target and one other distinct enemy within adjacency. Panic deals periodic Tactical Damage at a 20% rate each round for 2 rounds.",
       "schedules": [
         {
           "activationRoll": null,
@@ -756,7 +977,7 @@
           "value": 3100
         }
       ],
-      "rawDescription": "Augments Tactical Strike: after each Basic Attack, select one enemy within adjacency that was not the original Basic Attack target, deal Physical Damage, then attempt Panic on that target and one other distinct adjacent enemy. Panic checks are independent per target.",
+      "rawDescription": "At 6+ Stars, Tactical Assault augments Tactical Strike: after each Basic Attack, deal Physical Damage to one enemy within adjacency that is not the original Basic Attack target. Then independently attempt Panic on that target and one other distinct adjacent enemy.",
       "schedules": [
         {
           "activationRoll": null,
@@ -892,27 +1113,27 @@
                 {
                   "level": 1,
                   "unit": "percent",
-                  "value": 15
+                  "value": 20
                 },
                 {
                   "level": 2,
                   "unit": "percent",
-                  "value": 18
+                  "value": 20
                 },
                 {
                   "level": 3,
                   "unit": "percent",
-                  "value": 21
+                  "value": 20
                 },
                 {
                   "level": 4,
                   "unit": "percent",
-                  "value": 25.5
+                  "value": 20
                 },
                 {
                   "level": 5,
                   "unit": "percent",
-                  "value": 30
+                  "value": 20
                 }
               ],
               "scaling": [],
@@ -2148,27 +2369,27 @@
               {
                 "level": 1,
                 "unit": "percent",
-                "value": 15
+                "value": 20
               },
               {
                 "level": 2,
                 "unit": "percent",
-                "value": 18
+                "value": 20
               },
               {
                 "level": 3,
                 "unit": "percent",
-                "value": 21
+                "value": 20
               },
               {
                 "level": 4,
                 "unit": "percent",
-                "value": 25.5
+                "value": 20
               },
               {
                 "level": 5,
                 "unit": "percent",
-                "value": 30
+                "value": 20
               }
             ],
             "scaling": [],
@@ -2648,7 +2869,228 @@
   "breed": "Champion",
   "command": {
     "abilityClass": "active",
-    "augmentations": [],
+    "augmentations": [
+      {
+        "effectsAdded": [],
+        "evidenceIds": [
+          "kalspire-tactical-assault-2026-06-25"
+        ],
+        "id": "kalspire-tactical-assault-augmentation",
+        "minimumDragonStarRank": 6,
+        "modifiesAbilityId": "kalspire-tactical-strike",
+        "rawDescription": "At 6+ Stars, Tactical Assault augments Tactical Strike with Physical Damage and independent Panic checks.",
+        "scheduleOverrides": [],
+        "schedulesAdded": [
+          {
+            "activationRoll": null,
+            "attempts": null,
+            "battleContext": "unspecified",
+            "conditions": [],
+            "effects": [
+              {
+                "activationRoll": null,
+                "calculated": false,
+                "conditionalMultipliers": [],
+                "conditions": [],
+                "directlyVerified": true,
+                "duration": null,
+                "durationRounds": null,
+                "effectOptions": null,
+                "excludes": [],
+                "id": "tactical-assault-physical-damage",
+                "includesCaster": null,
+                "magnitude": null,
+                "notes": [],
+                "perTargetEffectCheck": null,
+                "rankedValues": [
+                  {
+                    "level": 1,
+                    "unit": "percent",
+                    "value": 25
+                  },
+                  {
+                    "level": 2,
+                    "unit": "percent",
+                    "value": 30
+                  },
+                  {
+                    "level": 3,
+                    "unit": "percent",
+                    "value": 35
+                  },
+                  {
+                    "level": 4,
+                    "unit": "percent",
+                    "value": 42.5
+                  },
+                  {
+                    "level": 5,
+                    "unit": "percent",
+                    "value": 50
+                  }
+                ],
+                "scaling": [
+                  "attacker Strength"
+                ],
+                "sourceScope": "unknown",
+                "stack": null,
+                "stackTransitionTrigger": null,
+                "target": "One enemy within adjacency that was not the original Basic Attack target",
+                "targetCount": null,
+                "targetPriority": "any-eligible",
+                "targetScope": "within-adjacency",
+                "targetSelection": {
+                  "comparisonDirection": null,
+                  "comparisonPool": null,
+                  "comparisonStat": null,
+                  "distinctness": "must-be-distinct",
+                  "fallback": null,
+                  "preference": null,
+                  "references": [
+                    {
+                      "description": "Physical Damage target is distinct from the original Basic Attack target.",
+                      "id": "not-original-basic-attack-target",
+                      "kind": "distinct-from-effect-target",
+                      "referencedEffectId": "tactical-strike-tactical-damage"
+                    }
+                  ],
+                  "repeatedInstances": null,
+                  "sharedSelectionGroupId": null,
+                  "tieBehavior": null
+                },
+                "type": "Physical Damage",
+                "unit": "rate"
+              },
+              {
+                "activationRoll": {
+                  "chanceByHabitLevel": [
+                    {
+                      "level": 1,
+                      "unit": "percent",
+                      "value": 15
+                    },
+                    {
+                      "level": 2,
+                      "unit": "percent",
+                      "value": 18
+                    },
+                    {
+                      "level": 3,
+                      "unit": "percent",
+                      "value": 21
+                    },
+                    {
+                      "level": 4,
+                      "unit": "percent",
+                      "value": 25.5
+                    },
+                    {
+                      "level": 5,
+                      "unit": "percent",
+                      "value": 30
+                    }
+                  ],
+                  "chanceFixed": null,
+                  "description": "Panic checks are separate for each target.",
+                  "scope": "independent-per-target",
+                  "targetStatusConditionalChances": [],
+                  "unresolved": false
+                },
+                "calculated": false,
+                "conditionalMultipliers": [],
+                "conditions": [],
+                "directlyVerified": true,
+                "duration": null,
+                "durationRounds": 2,
+                "effectOptions": null,
+                "excludes": [],
+                "id": "tactical-assault-panic",
+                "includesCaster": null,
+                "magnitude": 20,
+                "notes": [
+                  "Panic is periodic Tactical Damage, +20% each round."
+                ],
+                "perTargetEffectCheck": null,
+                "rankedValues": [
+                  {
+                    "level": 1,
+                    "unit": "percent",
+                    "value": 20
+                  },
+                  {
+                    "level": 2,
+                    "unit": "percent",
+                    "value": 20
+                  },
+                  {
+                    "level": 3,
+                    "unit": "percent",
+                    "value": 20
+                  },
+                  {
+                    "level": 4,
+                    "unit": "percent",
+                    "value": 20
+                  },
+                  {
+                    "level": 5,
+                    "unit": "percent",
+                    "value": 20
+                  }
+                ],
+                "scaling": [],
+                "sourceScope": "unknown",
+                "stack": null,
+                "stackTransitionTrigger": null,
+                "target": "Physical Damage target and one other distinct enemy within adjacency",
+                "targetCount": null,
+                "targetPriority": "any-eligible",
+                "targetScope": "within-adjacency",
+                "targetSelection": {
+                  "comparisonDirection": null,
+                  "comparisonPool": null,
+                  "comparisonStat": null,
+                  "distinctness": "explicitly-another-target",
+                  "fallback": null,
+                  "preference": null,
+                  "references": [
+                    {
+                      "description": "First Panic check uses the Physical Damage target.",
+                      "id": "panic-first-target",
+                      "kind": "same-target-as-effect",
+                      "referencedEffectId": "tactical-assault-physical-damage"
+                    },
+                    {
+                      "description": "Second Panic check uses another distinct adjacent enemy.",
+                      "id": "panic-second-target",
+                      "kind": "distinct-from-effect-target",
+                      "referencedEffectId": "tactical-assault-physical-damage"
+                    }
+                  ],
+                  "repeatedInstances": null,
+                  "sharedSelectionGroupId": null,
+                  "tieBehavior": null
+                },
+                "type": "Panic",
+                "unit": "rate"
+              }
+            ],
+            "id": "tactical-assault-after-basic",
+            "repeat": null,
+            "rounds": [],
+            "roundSelector": {
+              "kind": "after-basic-attack"
+            },
+            "targetPriority": "any-eligible",
+            "timing": "after-basic-attack",
+            "triggerChanceByHabitLevel": [],
+            "triggerChanceFixed": null,
+            "triggerEvent": "after-basic-attack"
+          }
+        ],
+        "sourceAbilityId": "kalspire-tactical-assault"
+      }
+    ],
     "dragonId": "kalspire",
     "evidenceIds": [
       "kalspire-tactical-strike-summary-2026-06-25"
@@ -2660,7 +3102,7 @@
     "name": "Tactical Strike",
     "positionRequirement": null,
     "powerByHabitLevel": [],
-    "rawDescription": "After each Basic Attack: deal Tactical Damage to the original Basic Attack target. Attempt Bleed on the original Basic Attack target and one other enemy within adjacency; checks are independent per target. Classified as Command while preserving Attack Modifier presentation.",
+    "rawDescription": "After each Basic Attack: deal Tactical Damage to the original Basic Attack target at a 50% Damage Rate, scaling with Kalspire's Instinct and mitigated by target Intelligence.\n\nThen independently attempt Bleed at a 30% chance on the original Basic Attack target and one other enemy within adjacency. Bleed deals periodic Physical Damage at a 20% rate each round for 2 rounds, scaling with Strength and mitigated by target Instinct.\n\nAt 6+ Stars:\n\nAfter each Basic Attack: deal Physical Damage at a 25% rate to one enemy within adjacency that is distinct from the original Basic Attack target, scaling with Strength.\n\nThen independently attempt Panic at a 15% chance on the Physical Damage target and one other distinct enemy within adjacency. Panic deals periodic Tactical Damage at a 20% rate each round for 2 rounds.",
     "schedules": [
       {
         "activationRoll": null,
@@ -3493,27 +3935,27 @@
           {
             "level": 1,
             "unit": "percent",
-            "value": 15
+            "value": 20
           },
           {
             "level": 2,
             "unit": "percent",
-            "value": 18
+            "value": 20
           },
           {
             "level": 3,
             "unit": "percent",
-            "value": 21
+            "value": 20
           },
           {
             "level": 4,
             "unit": "percent",
-            "value": 25.5
+            "value": 20
           },
           {
             "level": 5,
             "unit": "percent",
-            "value": 30
+            "value": 20
           }
         ],
         "scaling": [],
@@ -3987,7 +4429,7 @@
   "firstObservedInGame": null,
   "format": "dragonfire-dragon-profile",
   "gameVersion": null,
-  "generatedAt": "2026-06-27T10:32:51.701Z",
+  "generatedAt": "2026-06-27T20:41:44.604Z",
   "habits": [
     {
       "abilityClass": "passive",
@@ -4404,7 +4846,7 @@
           "value": 3100
         }
       ],
-      "rawDescription": "Augments Tactical Strike: after each Basic Attack, select one enemy within adjacency that was not the original Basic Attack target, deal Physical Damage, then attempt Panic on that target and one other distinct adjacent enemy. Panic checks are independent per target.",
+      "rawDescription": "At 6+ Stars, Tactical Assault augments Tactical Strike: after each Basic Attack, deal Physical Damage to one enemy within adjacency that is not the original Basic Attack target. Then independently attempt Panic on that target and one other distinct adjacent enemy.",
       "schedules": [
         {
           "activationRoll": null,
@@ -4540,27 +4982,27 @@
                 {
                   "level": 1,
                   "unit": "percent",
-                  "value": 15
+                  "value": 20
                 },
                 {
                   "level": 2,
                   "unit": "percent",
-                  "value": 18
+                  "value": 20
                 },
                 {
                   "level": 3,
                   "unit": "percent",
-                  "value": 21
+                  "value": 20
                 },
                 {
                   "level": 4,
                   "unit": "percent",
-                  "value": 25.5
+                  "value": 20
                 },
                 {
                   "level": 5,
                   "unit": "percent",
-                  "value": 30
+                  "value": 20
                 }
               ],
               "scaling": [],
@@ -6384,27 +6826,27 @@
         {
           "level": 1,
           "unit": "percent",
-          "value": 15
+          "value": 20
         },
         {
           "level": 2,
           "unit": "percent",
-          "value": 18
+          "value": 20
         },
         {
           "level": 3,
           "unit": "percent",
-          "value": 21
+          "value": 20
         },
         {
           "level": 4,
           "unit": "percent",
-          "value": 25.5
+          "value": 20
         },
         {
           "level": 5,
           "unit": "percent",
-          "value": 30
+          "value": 20
         }
       ],
       "damageRateFixed": 20,
@@ -6837,7 +7279,7 @@
       "rankedValue": {
         "level": 1,
         "unit": "percent",
-        "value": 15
+        "value": 20
       },
       "scheduleId": "tactical-assault-after-basic",
       "source": "effect.rankedValues"
@@ -6848,7 +7290,7 @@
       "rankedValue": {
         "level": 2,
         "unit": "percent",
-        "value": 18
+        "value": 20
       },
       "scheduleId": "tactical-assault-after-basic",
       "source": "effect.rankedValues"
@@ -6859,7 +7301,7 @@
       "rankedValue": {
         "level": 3,
         "unit": "percent",
-        "value": 21
+        "value": 20
       },
       "scheduleId": "tactical-assault-after-basic",
       "source": "effect.rankedValues"
@@ -6870,7 +7312,7 @@
       "rankedValue": {
         "level": 4,
         "unit": "percent",
-        "value": 25.5
+        "value": 20
       },
       "scheduleId": "tactical-assault-after-basic",
       "source": "effect.rankedValues"
@@ -6881,7 +7323,7 @@
       "rankedValue": {
         "level": 5,
         "unit": "percent",
-        "value": 30
+        "value": 20
       },
       "scheduleId": "tactical-assault-after-basic",
       "source": "effect.rankedValues"
@@ -7203,7 +7645,7 @@
       "abilityId": "kalspire-tactical-strike",
       "abilityName": "Tactical Strike",
       "kind": "command",
-      "rawDescription": "After each Basic Attack: deal Tactical Damage to the original Basic Attack target. Attempt Bleed on the original Basic Attack target and one other enemy within adjacency; checks are independent per target. Classified as Command while preserving Attack Modifier presentation."
+      "rawDescription": "After each Basic Attack: deal Tactical Damage to the original Basic Attack target at a 50% Damage Rate, scaling with Kalspire's Instinct and mitigated by target Intelligence.\n\nThen independently attempt Bleed at a 30% chance on the original Basic Attack target and one other enemy within adjacency. Bleed deals periodic Physical Damage at a 20% rate each round for 2 rounds, scaling with Strength and mitigated by target Instinct.\n\nAt 6+ Stars:\n\nAfter each Basic Attack: deal Physical Damage at a 25% rate to one enemy within adjacency that is distinct from the original Basic Attack target, scaling with Strength.\n\nThen independently attempt Panic at a 15% chance on the Physical Damage target and one other distinct enemy within adjacency. Panic deals periodic Tactical Damage at a 20% rate each round for 2 rounds."
     },
     {
       "abilityId": "kalspire-champions-brilliance",
@@ -7227,7 +7669,7 @@
       "abilityId": "kalspire-tactical-assault",
       "abilityName": "Tactical Assault",
       "kind": "habit",
-      "rawDescription": "Augments Tactical Strike: after each Basic Attack, select one enemy within adjacency that was not the original Basic Attack target, deal Physical Damage, then attempt Panic on that target and one other distinct adjacent enemy. Panic checks are independent per target."
+      "rawDescription": "At 6+ Stars, Tactical Assault augments Tactical Strike: after each Basic Attack, deal Physical Damage to one enemy within adjacency that is not the original Basic Attack target. Then independently attempt Panic on that target and one other distinct adjacent enemy."
     },
     {
       "abilityId": "kalspire-dragons-insight",
@@ -7246,8 +7688,8 @@
   "rosterSourceStatus": "official-website",
   "slug": "kalspire",
   "source": {
-    "branch": "fix/multi-target-condition-presentation",
-    "commit": "0ee5f2984411b72286fbcaa444355b84f2c21887",
+    "branch": "fix/legacy-command-augmentation-completion",
+    "commit": "883ed3c7dfae5dd7b4b626753a7d5647b21ac37a",
     "databaseVersion": "0.6.2",
     "dataSchemaVersion": 12,
     "gameBuild": "26.6.53509",
