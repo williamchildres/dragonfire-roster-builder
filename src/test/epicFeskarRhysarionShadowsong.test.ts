@@ -411,8 +411,10 @@ describe('Feskar, Rhysarion, and Shadowsong Epic profiles', () => {
     );
     const fireProjection = vulnerabilityTraces.filter((trace) => trace.channel === 'fire-damage' && trace.recipientDragonId);
     const physicalProjection = vulnerabilityTraces.filter((trace) => trace.channel === 'physical-damage' && trace.recipientDragonId);
-    expect(fireProjection.map((trace) => trace.recipientDragonId).sort()).toEqual(expect.arrayContaining(['rhysarion', 'shadowsong']));
+    expect(fireProjection.map((trace) => trace.recipientDragonId).sort()).toEqual(['daemoros', 'rhysarion', 'shadowsong']);
     expect(physicalProjection.map((trace) => trace.recipientDragonId).sort()).toEqual(expect.arrayContaining(['daemoros', 'rhysarion']));
+    expect(fireProjection.every((trace) => trace.status === 'potential')).toBe(true);
+    expect(physicalProjection.every((trace) => trace.status === 'potential')).toBe(true);
     expect(physicalProjection.some((trace) => trace.matchedOutputCapabilityIds?.some((id) => /basic/i.test(id)))).toBe(false);
     for (const trace of [...fireProjection, ...physicalProjection]) {
       expect(trace.sourceScopeResults?.every((result) => result.sourceScopeCompatible)).toBe(true);
@@ -422,8 +424,18 @@ describe('Feskar, Rhysarion, and Shadowsong Epic profiles', () => {
 
     const fireProvides = shadowsong.provides.filter((item) => /Blazing Onslaught - Enemy Fire Damage vulnerability/i.test(item.effectTitle));
     const physicalProvides = shadowsong.provides.filter((item) => /Blazing Onslaught - Enemy Physical Damage vulnerability/i.test(item.effectTitle));
-    expect(fireProvides.length).toBeGreaterThanOrEqual(1);
-    expect(physicalProvides.length).toBeGreaterThanOrEqual(1);
+    const fireProjectionCard = fireProvides.find((item) => item.targetLabel === 'Team' && !item.isEnemyFacing);
+    const fireEnemyCard = fireProvides.find((item) => item.isEnemyFacing);
+    const physicalProjectionCard = physicalProvides.find((item) => item.targetLabel === 'Daemoros and Rhysarion' && !item.isEnemyFacing);
+    const physicalEnemyCard = physicalProvides.find((item) => item.isEnemyFacing);
+    expect(fireProvides).toHaveLength(2);
+    expect(physicalProvides).toHaveLength(2);
+    expect(fireProjectionCard).toBeDefined();
+    expect(fireProjectionCard?.state).toBe('conditional');
+    expect(fireEnemyCard).toBeDefined();
+    expect(physicalProjectionCard).toBeDefined();
+    expect(physicalProjectionCard?.state).toBe('conditional');
+    expect(physicalEnemyCard).toBeDefined();
     expect(shadowsong.receives.some((item) => item.abilityName === 'Blazing Onslaught')).toBe(false);
 
     const fireReceives = rhysarion.receives.find((item) => /Blazing Onslaught - Enemy Fire Damage vulnerability/i.test(item.effectTitle));
@@ -434,6 +446,12 @@ describe('Feskar, Rhysarion, and Shadowsong Epic profiles', () => {
     expect(physicalRhysarion).toBeDefined();
     const fireText = fireReceives ? [...fireReceives.summaryLines, ...fireReceives.details, ...fireReceives.effects].join(' ') : '';
     const physicalText = physicalDaemoros ? [...physicalDaemoros.summaryLines, ...physicalDaemoros.details, ...physicalDaemoros.effects].join(' ') : '';
+    const fireProjectionText = fireProjectionCard ? [...fireProjectionCard.summaryLines, ...fireProjectionCard.details, ...fireProjectionCard.effects].join(' ') : '';
+    const physicalProjectionText = physicalProjectionCard ? [...physicalProjectionCard.summaryLines, ...physicalProjectionCard.details, ...physicalProjectionCard.effects].join(' ') : '';
+    expect(fireProjectionText).toContain("the formation's qualifying Fire Damage outputs can benefit from +15% Fire Damage Received on the selected enemy.");
+    expect(fireProjectionText.match(/can benefit from \+15% Fire Damage Received/g)).toHaveLength(1);
+    expect(physicalProjectionText).toContain('qualifying non-Basic Physical Damage outputs can benefit from +15% Physical Damage Received on the selected enemy.');
+    expect(physicalProjectionText.match(/can benefit from \+15% Physical Damage Received/g)).toHaveLength(1);
     expect(fireText).toMatch(/Rhysarion's qualifying Fire Damage can benefit from \+15% Fire Damage Received/);
     expect(physicalText).toMatch(/Daemoros's qualifying non-Basic Physical Damage can benefit from \+15% Physical Damage Received/);
     expect(fireText).toContain('Duration: 3 rounds.');

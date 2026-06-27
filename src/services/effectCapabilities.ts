@@ -2270,7 +2270,7 @@ function analyzeEnemyDamageReceivedIncreases(
       const projectionScopeResults = recipientOutputs.map((output) =>
         capabilityMatch(modifier, output, [sourceScopeRequirement(modifier, output)]),
       );
-      const projectionStatus = statusFromRequirements(projectionRequirements, recipientOutputs.some((output) => output.futureAvailable));
+      const projectionStatus = statusFromRequirements(projectionRequirements, true);
       const outputNames = outputChannelNames(outputs, recipientOutputs.map((output) => output.id));
       traces.push({
         id: `enemy-damage-received-benefit-${modifier.id}-${recipientId}`,
