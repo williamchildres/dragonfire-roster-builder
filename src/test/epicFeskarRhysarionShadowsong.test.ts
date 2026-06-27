@@ -918,6 +918,7 @@ describe('Feskar, Rhysarion, and Shadowsong Epic profiles', () => {
     const burnSummary = traces.find((trace) => trace.title === 'Burn enables Emerald Inferno' && trace.recipientAbilityId === 'feskar-emerald-inferno')?.explanation ?? '';
     expect(burnSummary).toContain('40% chance on the first added target and 20% chance on the second added target, which must differ from the first.');
     expect(burnSummary).toContain('Burn lasts 2 rounds.');
+    expect((burnSummary.match(/Burn application and target overlap are not guaranteed\./g) ?? []).length).toBe(1);
 
     const resilient = traces.filter((trace) => trace.sourceAbilityId === 'feskar-resilient-bond');
     const selfStackRecipients = resilient

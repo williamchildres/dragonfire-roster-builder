@@ -3678,7 +3678,7 @@
   "firstObservedInGame": "2026-06-22",
   "format": "dragonfire-dragon-profile",
   "gameVersion": null,
-  "generatedAt": "2026-06-27T05:30:11.291Z",
+  "generatedAt": "2026-06-27T05:47:26.820Z",
   "habits": [
     {
       "abilityClass": "passive",
@@ -6473,8 +6473,8 @@
   "rosterSourceStatus": "in-game-verified-pending-official-site",
   "slug": "rhysarion",
   "source": {
-    "branch": "fix/final-analysis-presentation-cleanup",
-    "commit": "20962dbcdafe3ced4afa7803bdb4a2ffe0e7f895",
+    "branch": "fix/deduplicate-analysis-summary-sentences",
+    "commit": "45b1108af78dffd8f3e1efd44dc49ef5d843c23a",
     "databaseVersion": "0.6.2",
     "dataSchemaVersion": 12,
     "gameBuild": "26.6.53509",
