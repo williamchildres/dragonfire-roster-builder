@@ -268,7 +268,9 @@ describe('Feskar, Rhysarion, and Shadowsong Epic profiles', () => {
     expect(breathText).toContain('Priority: enemy Right Flank is preferred, not guaranteed.');
     expect(breathText).toContain('Fallback target: another eligible enemy; fallback selection is not guaranteed.');
     expect(breathText).toContain('Duration: 2 rounds.');
-    expect(breathText).toContain('All Instill Fear effects share the same selected target when the activation succeeds.');
+    expect(breathText).toContain('Selected-target group: instill-fear-target.');
+    expect(breathText).toContain('Instill Fear effect instill-fear-panic uses the same selected target as instill-fear-intelligence.');
+    expect(breathText).toContain('One successful activation applies all Instill Fear effects to one selected enemy.');
 
     expect(scorched).toMatchObject({ status: 'potential', channel: 'status' });
     expect(scorchedText).toContain('Receiving source effect ID: scorched-earth-vulnerable.');
@@ -502,7 +504,7 @@ describe('Feskar, Rhysarion, and Shadowsong Epic profiles', () => {
       trace.title === 'Instinct Stat Support'
     );
     expect(insightfulTraces.map((trace) => trace.recipientDragonId).sort()).toEqual(['feskar', 'rhysarion', 'shadowsong']);
-    expect(insightfulTraces.find((trace) => trace.recipientDragonId === 'feskar')).toMatchObject({ status: 'potential' });
+    expect(insightfulTraces.find((trace) => trace.recipientDragonId === 'feskar')).toMatchObject({ status: 'active' });
     const insightfulProvides = feskarCard.provides.find((item) => item.abilityName === 'Insightful Allies' && item.targetLabel === 'Team');
     expect(insightfulProvides).toBeDefined();
     const insightfulText = insightfulProvides ? [...insightfulProvides.summaryLines, ...insightfulProvides.details, ...insightfulProvides.effects].join(' ') : '';
@@ -853,5 +855,133 @@ describe('Feskar, Rhysarion, and Shadowsong Epic profiles', () => {
     const technicalText = resilient.flatMap((trace) => [...trace.effects, ...trace.matchedFacts, trace.explanation]).join(' ');
     expect(technicalText).toContain('Ranked progression: L1 6.5%, L2 7.8%, L3 9.1%, L4 11.05%, L5 13%.');
     expect(technicalText).toContain('Physical Damage Received reduction applies to non-Basic Attacks only.');
+  });
+
+  it('preserves ordered targets, internal effects, and technical formatting at full rank', () => {
+    const formation: FormationAnalysisInput = { 'left-flank': 'feskar', vanguard: 'rhysarion', 'right-flank': 'shadowsong' };
+    const roster = ownedRoster(['feskar', 'rhysarion', 'shadowsong'], 10, 0);
+    const traces = analyzeFormationTraces(formation, dragons, { roster });
+    const cards = buildFormationCardPresentation(formation, dragons, traces, { previewEnabled: false, roster });
+    const allText = traces.flatMap((trace) => [
+      trace.explanation,
+      ...trace.matchedFacts,
+      ...trace.effects,
+      ...trace.assumptions,
+      ...trace.unresolvedQuestions,
+    ]).join(' ');
+
+    const inspiring = traces.filter((trace) => trace.sourceAbilityId === 'rhysarion-inspiring-melody');
+    const inspiringText = inspiring.flatMap((trace) => [trace.explanation, ...trace.matchedFacts, ...trace.effects]).join(' ');
+    expect(inspiringText).toContain('Activation chance: 20% at effective Habit Level 1.');
+    expect(inspiringText).toContain('Initiative +20%');
+    expect(inspiringText).toContain('Damage Received decrease 15%');
+    expect(inspiringText).toContain('Shared activation group: inspiring-melody-each-round-shared-activation.');
+    expect(inspiringText).toContain('shared group inspiring-melody-selected-ally');
+    expect(inspiringText).toContain('caster excluded');
+    const inspiringCard = cards.cards.find((card) => card.dragonId === 'rhysarion')?.provides
+      .find((item) => item.abilityName === 'Inspiring Melody');
+    expect(inspiringCard).toMatchObject({ targetLabel: 'Feskar or Shadowsong', state: 'conditional' });
+    const inspiringCardText = inspiringCard ? [...inspiringCard.summaryLines, ...inspiringCard.details, ...inspiringCard.effects].join(' ') : '';
+    expect(inspiringCardText).toContain('One other ally recipient is selected: Feskar or Shadowsong.');
+    expect(inspiringCardText).toContain('Initiative +20%');
+    expect(inspiringCardText).toContain('Damage Received decrease 15%');
+    expect(inspiringCardText).toContain('Activation chance: 20% at effective Habit Level 1.');
+    expect(inspiringCardText).toContain('selected recipient is not guaranteed');
+
+    const statusOutputs = deriveStatusOutputCapabilities(dragons).filter((output) => output.abilityId === 'shadowsong-blazing-conductor');
+    expect(statusOutputs.find((output) => output.sourceEffectId === 'blazing-conductor-first-burn')?.chanceByHabitLevel[0]?.value).toBe(40);
+    expect(statusOutputs.find((output) => output.sourceEffectId === 'blazing-conductor-second-burn')?.chanceByHabitLevel[0]?.value).toBe(20);
+    const conductorOutputs = deriveOutputCapabilities(dragons).filter((output) => output.abilityId === 'shadowsong-blazing-conductor');
+    expect(conductorOutputs.find((output) => output.sourceEffectId === 'blazing-conductor-first-fire')?.id).toContain('first-fire-output');
+    expect(conductorOutputs.find((output) => output.sourceEffectId === 'blazing-conductor-second-fire')?.id).toContain('second-fire-output');
+    const conductorText = traces.filter((trace) => trace.sourceAbilityId === 'shadowsong-blazing-conductor')
+      .flatMap((trace) => [trace.explanation, ...trace.matchedFacts, ...trace.effects])
+      .join(' ');
+    expect(conductorText).toContain('Status supplier effect: blazing-conductor-first-burn.');
+    expect(conductorText).toContain('Status application chance: 40% at effective Habit Level 1.');
+    expect(conductorText).toContain('Selected-target group: blazing-conductor-first-target.');
+    expect(conductorText).toContain('Status supplier effect: blazing-conductor-second-burn.');
+    expect(conductorText).toContain('Status application chance: 20% at effective Habit Level 1.');
+    expect(conductorText).toContain('Selected-target group: blazing-conductor-second-target.');
+    expect(conductorText).toContain('Second added target must differ from the first added target.');
+    expect(conductorText).not.toContain('All Blazing Conductor effects share the same selected target');
+    expect(conductorText).not.toContain('in any lane in any lane');
+    expect(conductorText).toContain('Damage Rate 20%.');
+    expect(conductorText).toContain('Duration: 2 rounds.');
+
+    const resilient = traces.filter((trace) => trace.sourceAbilityId === 'feskar-resilient-bond');
+    const selfStackRecipients = resilient
+      .filter((trace) => trace.modifierCapabilityId?.includes('resilient-bond-self-stack'))
+      .map((trace) => trace.recipientDragonId);
+    const retreatRecipients = resilient
+      .filter((trace) => trace.modifierCapabilityId?.includes('resilient-bond-self-retreat-stack'))
+      .map((trace) => trace.recipientDragonId);
+    expect(selfStackRecipients).toEqual(['feskar']);
+    expect(retreatRecipients).toEqual(['feskar']);
+    expect(resilient.some((trace) =>
+      trace.recipientDragonId === 'shadowsong' &&
+      [...trace.matchedFacts, trace.explanation].join(' ').includes('Resolved selected target in this formation: Shadowsong.')
+    )).toBe(false);
+    expect(resilient.flatMap((trace) => trace.matchedFacts).join(' ')).toContain('Tracked selected ally in this formation: Rhysarion.');
+    expect(cards.cards.find((card) => card.dragonId === 'feskar')?.provides
+      .some((item) => item.abilityName === 'Resilient Bond' && item.targetLabel === 'Feskar and Rhysarion')).toBe(true);
+
+    expect(traces.filter((trace) =>
+      trace.sourceAbilityId === 'feskar-champions-brilliance' &&
+      trace.recipientDragonId === 'feskar' &&
+      trace.ruleId === 'internal-self-modifier'
+    )).toHaveLength(3);
+    expect(traces.filter((trace) => trace.sourceAbilityId === 'rhysarion-champions-vigor' && trace.recipientDragonId === 'rhysarion')).toEqual(expect.arrayContaining([
+      expect.objectContaining({ status: 'active' }),
+      expect.objectContaining({ status: 'active' }),
+    ]));
+    expect(allText).toContain('Recovery Dealt increase 15%.');
+    expect(allText).toContain('Initiative +25.');
+    expect(allText).toContain('Fire Damage Dealt increase 16%.');
+    expect(allText).toContain('quick-witted-intelligence');
+    expect(allText).toContain('sharp-resolve-strength');
+    expect(allText).toContain('dragons-intellect-damage-received');
+    expect(traces.some((trace) => trace.sourceAbilityId === 'feskar-quick-witted' && trace.recipientDragonId !== 'feskar')).toBe(false);
+    expect(traces.some((trace) => trace.sourceAbilityId === 'rhysarion-sharp-resolve' && trace.recipientDragonId !== 'rhysarion')).toBe(false);
+    expect(traces.some((trace) => trace.sourceAbilityId === 'shadowsong-dragons-intellect' && trace.recipientDragonId !== 'shadowsong')).toBe(false);
+
+    expect(traces.filter((trace) =>
+      trace.sourceAbilityId === 'feskar-insightful-allies' &&
+      trace.ruleId === 'direct-stat-support'
+    ).every((trace) => trace.status === 'active')).toBe(true);
+    expect(traces.filter((trace) =>
+      trace.sourceAbilityId === 'rhysarion-unbroken-devotion' &&
+      trace.ruleId === 'recipient-side-ally-support'
+    ).every((trace) => trace.status === 'active')).toBe(true);
+    expect(inspiring.every((trace) => trace.status === 'potential')).toBe(true);
+    expect(traces.filter((trace) => trace.sourceAbilityId === 'rhysarion-echoing-melody').every((trace) => trace.status === 'potential')).toBe(true);
+
+    expect(allText).toContain('Highest-Strength enemy identity');
+    expect(allText).toContain('Enemy identities and combat availability are unresolved.');
+    expect(allText).toContain('Adjacent enemy identity');
+    expect(allText).not.toContain('Damage Dealt Dealt');
+    expect(allText).not.toContain('Targets 1 Allies');
+    expect(allText).not.toContain('in any lane in any lane');
+    expect(allText).toContain('Enemy Instinct reduction');
+    expect(allText).toContain('Enemy Initiative reduction');
+    expect(allText).not.toContain('Enemy Stat decrease -18%');
+  });
+
+  it('resolves Inspiring Melody to one named recipient when only one other adjacent ally is eligible', () => {
+    const formation: FormationAnalysisInput = { 'left-flank': 'rhysarion', vanguard: 'feskar', 'right-flank': 'shadowsong' };
+    const roster = ownedRoster(['feskar', 'rhysarion', 'shadowsong'], 10, 0);
+    const traces = analyzeFormationTraces(formation, dragons, { roster });
+    const cards = buildFormationCardPresentation(formation, dragons, traces, { previewEnabled: false, roster });
+    const inspiring = traces.filter((trace) => trace.sourceAbilityId === 'rhysarion-inspiring-melody');
+    expect(inspiring.map((trace) => trace.recipientDragonId)).toEqual(expect.arrayContaining(['feskar']));
+    expect(inspiring.some((trace) => trace.recipientDragonId === 'shadowsong')).toBe(false);
+    const card = cards.cards.find((item) => item.dragonId === 'rhysarion')?.provides
+      .find((item) => item.abilityName === 'Inspiring Melody');
+    expect(card).toMatchObject({ targetLabel: 'Feskar', recipientDragonId: null, state: 'conditional' });
+    const text = card ? [...card.summaryLines, ...card.details, ...card.effects].join(' ') : '';
+    expect(text).toContain('Initiative +20%');
+    expect(text).toContain('reduces Damage Received for Feskar by 15%');
+    expect((text.match(/reduces Damage Received for Feskar by 15%/g) ?? [])).toHaveLength(1);
+    expect(text).not.toContain('Target not guaranteed.');
   });
 });

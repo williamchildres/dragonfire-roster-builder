@@ -1420,6 +1420,103 @@
         "valuePerStack": null
       },
       {
+        "abilityId": "syrax-strategic-revival",
+        "abilityName": "Strategic Revival",
+        "activationChanceByHabitLevel": [
+          {
+            "level": 1,
+            "unit": "percent",
+            "value": 40
+          },
+          {
+            "level": 2,
+            "unit": "percent",
+            "value": 52
+          },
+          {
+            "level": 3,
+            "unit": "percent",
+            "value": 64
+          },
+          {
+            "level": 4,
+            "unit": "percent",
+            "value": 80
+          },
+          {
+            "level": 5,
+            "unit": "percent",
+            "value": 100
+          }
+        ],
+        "activationChanceFixed": null,
+        "activationGroupId": null,
+        "availability": {
+          "canonical": "canonical-locked",
+          "notes": [
+            "Future at Star Rank 6.",
+            "Not collected in observed account."
+          ],
+          "observedAccount": "observed-unavailable",
+          "reportLabel": "Future at Star Rank 6; not collected in observed account",
+          "userRoster": "unknown"
+        },
+        "channel": "damage-received",
+        "combatLogConfirmed": false,
+        "conditional": true,
+        "conditions": [
+          {
+            "description": "Activation chance depends on Habit Level for specific rounds.",
+            "evidenceIds": [],
+            "id": "strategic-revival-recovery-rounds-activation-chance",
+            "label": "Activation chance depends on Habit Level for specific rounds.",
+            "unresolved": false
+          }
+        ],
+        "confidence": "confirmed",
+        "currentlyAvailable": false,
+        "damageScope": null,
+        "direction": "received",
+        "directlyVerified": true,
+        "dragonId": "syrax",
+        "durationRounds": 2,
+        "evidenceIds": [
+          "syrax-strategic-revival-2026-06-24"
+        ],
+        "futureAvailable": true,
+        "id": "syrax-strategic-revival-strategic-revival-resistance-damage-received-received-modifier",
+        "label": "Strategic Revival: Resistance",
+        "minimumDragonLevel": null,
+        "operation": "decrease",
+        "providerRequirements": [],
+        "rankedValues": [],
+        "recipientRequirements": [],
+        "requiredHabitLevel": 1,
+        "role": "ally-support",
+        "sourceEffectId": "strategic-revival-resistance",
+        "sourceScope": "unknown",
+        "stackMaximum": null,
+        "statusId": "resistance",
+        "targetSelector": {
+          "comparisonDirection": "lowest",
+          "comparisonPool": null,
+          "count": 1,
+          "includesCaster": null,
+          "position": null,
+          "scope": "any-lane",
+          "selection": "lowest-resource",
+          "selectionResource": "current-troops",
+          "selectionStat": null,
+          "sharedSelectionGroupId": null,
+          "side": "ally",
+          "tieBehavior": null
+        },
+        "unit": "percent",
+        "unlockStarRank": 6,
+        "value": 20,
+        "valuePerStack": null
+      },
+      {
         "abilityId": "syrax-tactical-inferno",
         "abilityName": "Tactical Inferno",
         "activationChanceByHabitLevel": [],
@@ -1688,7 +1785,7 @@
         },
         "channel": "physical-damage",
         "combatLogConfirmed": false,
-        "conditional": true,
+        "conditional": false,
         "conditions": [],
         "confidence": "confirmed",
         "currentlyAvailable": false,
@@ -2627,6 +2724,114 @@
         "sourceScope": "all-qualifying-sources",
         "stackMaximum": null,
         "statusId": "advantage",
+        "targetSelector": {
+          "comparisonDirection": null,
+          "comparisonPool": null,
+          "count": 2,
+          "includesCaster": false,
+          "position": null,
+          "scope": "any-lane",
+          "selection": "any",
+          "selectionResource": null,
+          "selectionStat": null,
+          "sharedSelectionGroupId": null,
+          "side": "ally",
+          "tieBehavior": null
+        },
+        "unit": "percent",
+        "unlockStarRank": 10,
+        "value": 20,
+        "valuePerStack": null
+      },
+      {
+        "abilityId": "seasmoke-loyal-bond",
+        "abilityName": "Loyal Bond",
+        "activationChanceByHabitLevel": [
+          {
+            "level": 1,
+            "unit": "percent",
+            "value": 10
+          },
+          {
+            "level": 2,
+            "unit": "percent",
+            "value": 13
+          },
+          {
+            "level": 3,
+            "unit": "percent",
+            "value": 16
+          },
+          {
+            "level": 4,
+            "unit": "percent",
+            "value": 20
+          },
+          {
+            "level": 5,
+            "unit": "percent",
+            "value": 25
+          }
+        ],
+        "activationChanceFixed": null,
+        "activationGroupId": null,
+        "availability": {
+          "canonical": "canonical-locked",
+          "notes": [
+            "Future at Star Rank 10.",
+            "Not hatched in observed account."
+          ],
+          "observedAccount": "observed-unavailable",
+          "reportLabel": "Future at Star Rank 10; not hatched in observed account",
+          "userRoster": "unknown"
+        },
+        "channel": "damage-received",
+        "combatLogConfirmed": false,
+        "conditional": true,
+        "conditions": [
+          {
+            "description": "Activation chance depends on Habit Level for each round.",
+            "evidenceIds": [],
+            "id": "loyal-bond-resistance-activation-chance",
+            "label": "Activation chance depends on Habit Level for each round.",
+            "unresolved": false
+          },
+          {
+            "comparison": "below",
+            "description": "Target is below 50% Troop Capacity.",
+            "evidenceIds": [],
+            "id": "target-below-50-troop-capacity",
+            "kind": "target-below-troop-capacity-threshold",
+            "label": "Target is below 50% Troop Capacity.",
+            "subject": "target",
+            "thresholdPercent": 50,
+            "unresolved": false
+          }
+        ],
+        "confidence": "confirmed",
+        "currentlyAvailable": false,
+        "damageScope": null,
+        "direction": "received",
+        "directlyVerified": true,
+        "dragonId": "seasmoke",
+        "durationRounds": 2,
+        "evidenceIds": [
+          "seasmoke-loyal-bond-2026-06-23"
+        ],
+        "futureAvailable": true,
+        "id": "seasmoke-loyal-bond-loyal-bond-resistance-effect-damage-received-received-modifier",
+        "label": "Loyal Bond: Resistance",
+        "minimumDragonLevel": null,
+        "operation": "decrease",
+        "providerRequirements": [],
+        "rankedValues": [],
+        "recipientRequirements": [],
+        "requiredHabitLevel": 1,
+        "role": "ally-support",
+        "sourceEffectId": "loyal-bond-resistance-effect",
+        "sourceScope": "unknown",
+        "stackMaximum": null,
+        "statusId": "resistance",
         "targetSelector": {
           "comparisonDirection": null,
           "comparisonPool": null,
@@ -3734,7 +3939,7 @@
         },
         "channel": "damage-received",
         "combatLogConfirmed": false,
-        "conditional": true,
+        "conditional": false,
         "conditions": [],
         "confidence": "confirmed",
         "currentlyAvailable": false,
@@ -3823,7 +4028,7 @@
         },
         "channel": "stat",
         "combatLogConfirmed": false,
-        "conditional": true,
+        "conditional": false,
         "conditions": [],
         "confidence": "confirmed",
         "currentlyAvailable": false,
@@ -3985,7 +4190,7 @@
         },
         "channel": "recovery",
         "combatLogConfirmed": false,
-        "conditional": true,
+        "conditional": false,
         "conditions": [],
         "confidence": "confirmed",
         "currentlyAvailable": false,
@@ -4087,7 +4292,7 @@
           }
         ],
         "activationChanceFixed": null,
-        "activationGroupId": "inspiring-melody-selected-ally",
+        "activationGroupId": "inspiring-melody-each-round-shared-activation",
         "availability": {
           "canonical": "canonical-locked",
           "notes": [
@@ -4151,6 +4356,103 @@
         "unit": "percent",
         "unlockStarRank": 10,
         "value": 20,
+        "valuePerStack": null
+      },
+      {
+        "abilityId": "rhysarion-inspiring-melody",
+        "abilityName": "Inspiring Melody",
+        "activationChanceByHabitLevel": [
+          {
+            "level": 1,
+            "unit": "percent",
+            "value": 20
+          },
+          {
+            "level": 2,
+            "unit": "percent",
+            "value": 26
+          },
+          {
+            "level": 3,
+            "unit": "percent",
+            "value": 32
+          },
+          {
+            "level": 4,
+            "unit": "percent",
+            "value": 40
+          },
+          {
+            "level": 5,
+            "unit": "percent",
+            "value": 50
+          }
+        ],
+        "activationChanceFixed": null,
+        "activationGroupId": "inspiring-melody-each-round-shared-activation",
+        "availability": {
+          "canonical": "canonical-locked",
+          "notes": [
+            "Future at Star Rank 10.",
+            "Unlocked in observed account collection state, subject to level and star requirements."
+          ],
+          "observedAccount": "observed-available",
+          "reportLabel": "Future at Star Rank 10; observed account hatched",
+          "userRoster": "unknown"
+        },
+        "channel": "damage-received",
+        "combatLogConfirmed": false,
+        "conditional": true,
+        "conditions": [
+          {
+            "description": "One shared activation and one shared selected adjacent ally receive both effects.",
+            "evidenceIds": [],
+            "id": "inspiring-melody-each-round-activation-chance",
+            "label": "One shared activation and one shared selected adjacent ally receive both effects.",
+            "unresolved": false
+          }
+        ],
+        "confidence": "confirmed",
+        "currentlyAvailable": false,
+        "damageScope": null,
+        "direction": "received",
+        "directlyVerified": true,
+        "dragonId": "rhysarion",
+        "durationRounds": 3,
+        "evidenceIds": [
+          "rhysarion-inspiring-melody-2026-06-26"
+        ],
+        "futureAvailable": true,
+        "id": "rhysarion-inspiring-melody-inspiring-melody-resistance-damage-received-received-modifier",
+        "label": "Inspiring Melody: Resistance",
+        "minimumDragonLevel": null,
+        "operation": "decrease",
+        "providerRequirements": [],
+        "rankedValues": [],
+        "recipientRequirements": [],
+        "requiredHabitLevel": 1,
+        "role": "ally-support",
+        "sourceEffectId": "inspiring-melody-resistance",
+        "sourceScope": "unknown",
+        "stackMaximum": null,
+        "statusId": "resistance",
+        "targetSelector": {
+          "comparisonDirection": null,
+          "comparisonPool": null,
+          "count": 1,
+          "includesCaster": false,
+          "position": null,
+          "scope": "within-adjacency",
+          "selection": "one-eligible-adjacent",
+          "selectionResource": null,
+          "selectionStat": null,
+          "sharedSelectionGroupId": "inspiring-melody-selected-ally",
+          "side": "ally",
+          "tieBehavior": null
+        },
+        "unit": "percent",
+        "unlockStarRank": 10,
+        "value": 15,
         "valuePerStack": null
       },
       {
@@ -6717,7 +7019,7 @@
         "abilityName": "Vermin's Bane",
         "activationChanceByHabitLevel": [],
         "activationChanceFixed": 50,
-        "activationGroupId": "vermins-bane-highest-instinct-enemy",
+        "activationGroupId": "vermins-bane-even-rounds-shared-activation",
         "availability": {
           "canonical": "canonical-locked",
           "notes": [
@@ -6827,7 +7129,7 @@
         },
         "channel": "stat",
         "combatLogConfirmed": false,
-        "conditional": true,
+        "conditional": false,
         "conditions": [],
         "confidence": "confirmed",
         "currentlyAvailable": false,
@@ -6916,7 +7218,7 @@
         },
         "channel": "stat",
         "combatLogConfirmed": false,
-        "conditional": true,
+        "conditional": false,
         "conditions": [],
         "confidence": "confirmed",
         "currentlyAvailable": false,
@@ -7183,7 +7485,7 @@
         },
         "channel": "stat",
         "combatLogConfirmed": false,
-        "conditional": true,
+        "conditional": false,
         "conditions": [],
         "confidence": "confirmed",
         "currentlyAvailable": false,
@@ -7272,7 +7574,7 @@
         },
         "channel": "physical-damage",
         "combatLogConfirmed": false,
-        "conditional": true,
+        "conditional": false,
         "conditions": [],
         "confidence": "confirmed",
         "currentlyAvailable": false,
@@ -7374,7 +7676,7 @@
           }
         ],
         "activationChanceFixed": null,
-        "activationGroupId": "instill-fear-target",
+        "activationGroupId": "instill-fear-each-round-shared-activation",
         "availability": {
           "canonical": "canonical-locked",
           "notes": [
@@ -7471,7 +7773,7 @@
           }
         ],
         "activationChanceFixed": null,
-        "activationGroupId": "instill-fear-target",
+        "activationGroupId": "instill-fear-each-round-shared-activation",
         "availability": {
           "canonical": "canonical-locked",
           "notes": [
@@ -7568,7 +7870,7 @@
           }
         ],
         "activationChanceFixed": null,
-        "activationGroupId": "darkening-fear-target",
+        "activationGroupId": "darkening-fear-each-round-shared-activation",
         "availability": {
           "canonical": "canonical-locked",
           "notes": [
@@ -7665,7 +7967,7 @@
           }
         ],
         "activationChanceFixed": null,
-        "activationGroupId": "darkening-fear-target",
+        "activationGroupId": "darkening-fear-each-round-shared-activation",
         "availability": {
           "canonical": "canonical-locked",
           "notes": [
@@ -12308,7 +12610,7 @@
         },
         "channel": "damage-received",
         "combatLogConfirmed": false,
-        "conditional": true,
+        "conditional": false,
         "conditions": [],
         "confidence": "confirmed",
         "currentlyAvailable": false,
@@ -12397,7 +12699,7 @@
         },
         "channel": "stat",
         "combatLogConfirmed": false,
-        "conditional": true,
+        "conditional": false,
         "conditions": [],
         "confidence": "confirmed",
         "currentlyAvailable": false,
@@ -12705,7 +13007,7 @@
         },
         "channel": "stat",
         "combatLogConfirmed": false,
-        "conditional": true,
+        "conditional": false,
         "conditions": [],
         "confidence": "confirmed",
         "currentlyAvailable": false,
@@ -12794,7 +13096,7 @@
         },
         "channel": "stat",
         "combatLogConfirmed": false,
-        "conditional": true,
+        "conditional": false,
         "conditions": [],
         "confidence": "confirmed",
         "currentlyAvailable": false,
@@ -12883,7 +13185,7 @@
         },
         "channel": "damage-received",
         "combatLogConfirmed": false,
-        "conditional": true,
+        "conditional": false,
         "conditions": [],
         "confidence": "confirmed",
         "currentlyAvailable": false,
@@ -12972,7 +13274,7 @@
         },
         "channel": "stat",
         "combatLogConfirmed": false,
-        "conditional": true,
+        "conditional": false,
         "conditions": [],
         "confidence": "confirmed",
         "currentlyAvailable": false,
@@ -13521,7 +13823,7 @@
         },
         "channel": "physical-damage",
         "combatLogConfirmed": false,
-        "conditional": true,
+        "conditional": false,
         "conditions": [],
         "confidence": "confirmed",
         "currentlyAvailable": false,
@@ -13683,7 +13985,7 @@
         },
         "channel": "stat",
         "combatLogConfirmed": false,
-        "conditional": true,
+        "conditional": false,
         "conditions": [],
         "confidence": "confirmed",
         "currentlyAvailable": false,
@@ -13772,7 +14074,7 @@
         },
         "channel": "stat",
         "combatLogConfirmed": false,
-        "conditional": true,
+        "conditional": false,
         "conditions": [],
         "confidence": "confirmed",
         "currentlyAvailable": false,
@@ -14169,7 +14471,7 @@
         },
         "channel": "damage-received",
         "combatLogConfirmed": false,
-        "conditional": true,
+        "conditional": false,
         "conditions": [],
         "confidence": "confirmed",
         "currentlyAvailable": false,
@@ -14359,7 +14661,7 @@
         },
         "channel": "stat",
         "combatLogConfirmed": false,
-        "conditional": true,
+        "conditional": false,
         "conditions": [],
         "confidence": "confirmed",
         "currentlyAvailable": false,
@@ -14448,7 +14750,7 @@
         },
         "channel": "stat",
         "combatLogConfirmed": false,
-        "conditional": true,
+        "conditional": false,
         "conditions": [],
         "confidence": "confirmed",
         "currentlyAvailable": false,
@@ -14683,7 +14985,7 @@
         },
         "channel": "stat",
         "combatLogConfirmed": false,
-        "conditional": true,
+        "conditional": false,
         "conditions": [],
         "confidence": "confirmed",
         "currentlyAvailable": false,
@@ -14772,7 +15074,7 @@
         },
         "channel": "stat",
         "combatLogConfirmed": false,
-        "conditional": true,
+        "conditional": false,
         "conditions": [],
         "confidence": "confirmed",
         "currentlyAvailable": false,
@@ -14934,7 +15236,7 @@
         },
         "channel": "damage-received",
         "combatLogConfirmed": false,
-        "conditional": true,
+        "conditional": false,
         "conditions": [],
         "confidence": "confirmed",
         "currentlyAvailable": false,
@@ -15023,7 +15325,7 @@
         },
         "channel": "stat",
         "combatLogConfirmed": false,
-        "conditional": true,
+        "conditional": false,
         "conditions": [],
         "confidence": "confirmed",
         "currentlyAvailable": false,
@@ -15185,7 +15487,7 @@
         },
         "channel": "damage-received",
         "combatLogConfirmed": false,
-        "conditional": true,
+        "conditional": false,
         "conditions": [],
         "confidence": "confirmed",
         "currentlyAvailable": false,
@@ -15274,7 +15576,7 @@
         },
         "channel": "stat",
         "combatLogConfirmed": false,
-        "conditional": true,
+        "conditional": false,
         "conditions": [],
         "confidence": "confirmed",
         "currentlyAvailable": false,
@@ -18233,7 +18535,7 @@
           }
         ],
         "activationChanceFixed": null,
-        "activationGroupId": "instill-fear-target",
+        "activationGroupId": "instill-fear-each-round-shared-activation",
         "availability": {
           "canonical": "canonical-locked",
           "notes": [
@@ -18455,7 +18757,7 @@
           }
         ],
         "activationChanceFixed": null,
-        "activationGroupId": "darkening-fear-target",
+        "activationGroupId": "darkening-fear-each-round-shared-activation",
         "availability": {
           "canonical": "canonical-locked",
           "notes": [
@@ -18842,7 +19144,7 @@
           }
         ],
         "activationChanceFixed": null,
-        "activationGroupId": "inspiring-melody-selected-ally",
+        "activationGroupId": "inspiring-melody-each-round-shared-activation",
         "availability": {
           "canonical": "canonical-locked",
           "notes": [

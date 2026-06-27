@@ -246,8 +246,16 @@ describe('Phase 3.8 generic trace behavior', () => {
       { previewMaxRankInteractions: true },
     );
 
-    expect(traces.some((trace) => trace.sourceAbilityId === 'caraxes-hunters-wrath' && trace.channel === 'fire-damage')).toBe(false);
-    expect(traces.some((trace) => trace.sourceAbilityId === 'syrax-sentinels-wit' && trace.channel === 'tactical-damage')).toBe(false);
+    expect(traces.some((trace) =>
+      trace.sourceAbilityId === 'caraxes-hunters-wrath' &&
+      trace.channel === 'fire-damage' &&
+      trace.recipientDragonId !== trace.sourceDragonId
+    )).toBe(false);
+    expect(traces.some((trace) =>
+      trace.sourceAbilityId === 'syrax-sentinels-wit' &&
+      trace.channel === 'tactical-damage' &&
+      trace.recipientDragonId !== trace.sourceDragonId
+    )).toBe(false);
     expect(traces.every((trace) => !trace.effects.some((effect) => /score/i.test(effect)))).toBe(true);
   });
 });

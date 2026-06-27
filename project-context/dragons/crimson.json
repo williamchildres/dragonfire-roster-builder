@@ -3962,7 +3962,7 @@
   "firstObservedInGame": null,
   "format": "dragonfire-dragon-profile",
   "gameVersion": null,
-  "generatedAt": "2026-06-27T02:03:56.033Z",
+  "generatedAt": "2026-06-27T03:02:39.428Z",
   "habits": [
     {
       "abilityClass": "passive",
@@ -5443,7 +5443,7 @@
       },
       "channel": "damage-received",
       "combatLogConfirmed": false,
-      "conditional": true,
+      "conditional": false,
       "conditions": [],
       "confidence": "confirmed",
       "currentlyAvailable": false,
@@ -5532,7 +5532,7 @@
       },
       "channel": "stat",
       "combatLogConfirmed": false,
-      "conditional": true,
+      "conditional": false,
       "conditions": [],
       "confidence": "confirmed",
       "currentlyAvailable": false,
@@ -6121,7 +6121,7 @@
       "abilityName": "Vermin's Bane",
       "activationChanceByHabitLevel": [],
       "activationChanceFixed": 50,
-      "activationGroupId": "vermins-bane-highest-instinct-enemy",
+      "activationGroupId": "vermins-bane-even-rounds-shared-activation",
       "availability": {
         "canonical": "canonical-locked",
         "notes": [
@@ -7088,8 +7088,8 @@
   "rosterSourceStatus": "official-website",
   "slug": "crimson",
   "source": {
-    "branch": "fix/ally-targeting-and-output-coverage",
-    "commit": "834b89f4cb65edf81419b7e8ff7300482fbbe278",
+    "branch": "fix/ordered-targets-and-analysis-integrity",
+    "commit": "dacc02aebc8abb0a7bcd28502b3e4677ef83e578",
     "databaseVersion": "0.6.2",
     "dataSchemaVersion": 12,
     "gameBuild": "26.6.53509",
