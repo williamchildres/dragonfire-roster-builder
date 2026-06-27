@@ -2189,10 +2189,11 @@ function analyzeEnemyDamageReceivedIncreases(
     const channel = channelLabel(modifier.channel);
     const displayValue = modifierDisplayValue(modifier, options);
     const enemyVulnerabilityDetails = enemyVulnerabilityDetailLines(modifier, provider.name, channel, displayValue);
+    const modifierStatus = statusFromRequirements(requirements, modifier.futureAvailable || modifier.conditional);
     traces.push({
       id: `enemy-damage-received-increase-${modifier.id}`,
       ruleId: 'enemy-damage-received-increase',
-      status: statusFromRequirements(requirements, modifier.futureAvailable || modifier.conditional),
+      status: modifierStatus,
       confidence: modifier.confidence,
       sourceDragonId: provider.id,
       sourceAbilityId: modifier.abilityId,
@@ -2249,6 +2250,89 @@ function analyzeEnemyDamageReceivedIncreases(
       interactionScope: 'enemy-side',
       damageScope: modifier.damageScope,
     });
+    if (
+      requirements.some((requirement) => requirement.satisfied === false) ||
+      modifier.conditions.some((condition) => condition.kind === 'successful-status-application')
+    ) {
+      continue;
+    }
+    const matchedOutputsByDragon = new Map<string, OutputCapability[]>();
+    for (const output of matchedOutputs) {
+      matchedOutputsByDragon.set(output.dragonId, [...(matchedOutputsByDragon.get(output.dragonId) ?? []), output]);
+    }
+    for (const [recipientId, recipientOutputs] of matchedOutputsByDragon) {
+      const recipient = dragonById(dragons, recipientId);
+      if (!recipient) {
+        continue;
+      }
+      const outputRequirements = recipientOutputs.flatMap((output) => outputRequirementTraces(output, options));
+      const projectionRequirements = [...requirements, ...outputRequirements];
+      const projectionScopeResults = recipientOutputs.map((output) =>
+        capabilityMatch(modifier, output, [sourceScopeRequirement(modifier, output)]),
+      );
+      const projectionStatus = statusFromRequirements(projectionRequirements, recipientOutputs.some((output) => output.futureAvailable));
+      const outputNames = outputChannelNames(outputs, recipientOutputs.map((output) => output.id));
+      traces.push({
+        id: `enemy-damage-received-benefit-${modifier.id}-${recipientId}`,
+        ruleId: 'enemy-damage-received-benefit',
+        status: projectionStatus,
+        confidence: mergeConfidence([modifier.confidence, ...recipientOutputs.map((output) => output.confidence)]),
+        sourceDragonId: provider.id,
+        sourceAbilityId: modifier.abilityId,
+        recipientDragonId: recipient.id,
+        recipientAbilityId: recipientOutputs[0]?.abilityId ?? null,
+        title: `Enemy ${channel} vulnerability`,
+        explanation: `${recipient.name}'s qualifying ${sourceScopeQualifiedChannel(modifier, channel)} can benefit from ${displayValue} ${channel} Received on the selected enemy from ${provider.name}'s ${modifier.abilityName}. The vulnerable enemy and allied attack target must overlap; enemy target selection and overlap are not guaranteed.`,
+        requirements: projectionRequirements,
+        matchedFacts: [
+          `${modifier.abilityName} targets ${targetSelectorSummary(modifier.targetSelector)}.`,
+          `Modifier capability ID: ${modifier.id}.`,
+          `Source effect ID: ${modifier.sourceEffectId ?? 'unknown'}.`,
+          `Source scope: ${modifier.sourceScope}.`,
+          `Matched output capability IDs: ${recipientOutputs.map((output) => output.id).join(', ')}.`,
+          ...(outputNames.length > 0 ? [`Matched qualifying outputs: ${outputNames.join(', ')}.`] : []),
+          ...enemyVulnerabilityDetails,
+          ...projectionScopeResults.map((match) => `Source-scope compatibility: ${match.sourceScopeCompatible ? 'compatible' : 'not compatible'} for ${match.outputCapabilityId}.`),
+        ],
+        effects: [
+          `${recipient.name}'s qualifying ${sourceScopeQualifiedChannel(modifier, channel)} can benefit from ${displayValue} ${channel} Received on the selected enemy.`,
+          ...enemyVulnerabilityDetails,
+          'The vulnerable enemy and allied attack target must overlap.',
+        ],
+        conflicts: projectionRequirements
+          .filter((requirement) => requirement.satisfied === false)
+          .map((requirement) => `${requirement.label}: expected ${requirement.expected}, actual ${requirement.actual ?? 'unknown'}`),
+        assumptions: [
+          'Enemy target selection and allied target overlap are not guaranteed.',
+          'The vulnerability is applied to an enemy, not to the friendly recipient.',
+          'Final damage is not calculated.',
+        ],
+        unresolvedQuestions: [
+          'Enemy identity, target overlap, uptime, refresh, stacking, and final formulas remain unresolved.',
+        ],
+        sourceEvidenceIds: modifier.evidenceIds,
+        recipientEvidenceIds: recipientOutputs.flatMap((output) => output.evidenceIds),
+        providedEffectType: `${channel} Received vulnerability benefit`,
+        recipientModifierType: null,
+        recipientModifierAbilityId: null,
+        recipientModifierValue: modifierResolvedValue(modifier, options),
+        combatLogConfirmed: modifier.combatLogConfirmed,
+        exactResultKnown: false,
+        exactResultUnknownReason: 'Exact final damage gain cannot be calculated because target overlap, uptime, stacking, and final formulas are unresolved.',
+        matchKind: 'enemy-damage-received-increase',
+        channel: modifier.channel,
+        modifierRole: null,
+        targetSelectorSummary: targetSelectorSummary(modifier.targetSelector),
+        modifierSelfOnly: false,
+        availabilityContext: modifier.availability.reportLabel,
+        modifierCapabilityId: modifier.id,
+        modifierCapabilityIds: [modifier.id],
+        matchedOutputCapabilityIds: recipientOutputs.map((output) => output.id),
+        sourceScopeResults: projectionScopeResults,
+        interactionScope: 'cross-dragon',
+        damageScope: modifier.damageScope,
+      });
+    }
   }
   return traces;
 }
@@ -2479,6 +2563,25 @@ function sourceScopeLine(modifier: ModifierCapability, channel: string): string 
     return `Applies to Basic Attack ${channel} only.`;
   }
   return 'Applicable source scope is not yet verified.';
+}
+
+function sourceScopeQualifiedChannel(modifier: ModifierCapability, channel: string): string {
+  if (modifier.sourceScope === 'non-basic-attacks') {
+    return `non-Basic ${channel}`;
+  }
+  if (modifier.sourceScope === 'commands-and-habits') {
+    return `Command or Habit ${channel}`;
+  }
+  if (modifier.sourceScope === 'commands') {
+    return `Command ${channel}`;
+  }
+  if (modifier.sourceScope === 'habits') {
+    return `Habit ${channel}`;
+  }
+  if (modifier.sourceScope === 'basic-attacks') {
+    return `Basic Attack ${channel}`;
+  }
+  return channel;
 }
 
 function durationLine(modifier: ModifierCapability): string | null {

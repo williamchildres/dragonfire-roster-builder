@@ -368,7 +368,87 @@ describe('Feskar, Rhysarion, and Shadowsong Epic profiles', () => {
       .filter((item) => item.abilityName === 'Ebbing Fury')
       .flatMap((item) => [...item.summaryLines, ...item.details, ...item.effects])
       .join(' ')).not.toContain('Damage Dealt reduction at current effective level');
-    expect(cards.cards.some((card) => card.receives.some((item) => /Vulnerable|Burn periodic|enemy.*vulnerability/i.test(item.title)))).toBe(false);
+    expect(cards.cards.some((card) => card.receives.some((item) => /Vulnerable|Burn periodic/i.test(item.title)))).toBe(false);
+    expect(cards.cards.flatMap((card) => card.receives)
+      .filter((item) => /enemy.*vulnerability/i.test(item.title))
+      .every((item) => /can benefit|target overlap/i.test([...item.summaryLines, ...item.details, ...item.effects].join(' ')))).toBe(true);
+  });
+
+  it('aggregates Ensnare benefits and projects Blazing Onslaught vulnerabilities to matching outputs', () => {
+    const formation: FormationAnalysisInput = { 'left-flank': 'daemoros', vanguard: 'rhysarion', 'right-flank': 'shadowsong' };
+    const roster = ownedRoster(['daemoros', 'rhysarion', 'shadowsong'], 1, 0);
+    roster.daemoros!.starRank = 2;
+    roster.shadowsong!.starRank = 6;
+    const traces = analyzeCapabilityAmplifications(formation, dragons, { roster });
+    const cards = buildFormationCardPresentation(formation, dragons, traces, { previewEnabled: false, roster });
+    const shadowsong = cards.cards.find((card) => card.dragonId === 'shadowsong')!;
+    const daemoros = cards.cards.find((card) => card.dragonId === 'daemoros')!;
+    const rhysarion = cards.cards.find((card) => card.dragonId === 'rhysarion')!;
+    const ensnareProvides = shadowsong.provides.filter((item) => item.abilityName === 'Ensnare' && /Enemy mitigation reduction/i.test(item.effectTitle));
+    const ensnareText = ensnareProvides.map((item) => [item.targetLabel, item.effectTitle, ...item.summaryLines, ...item.details, ...item.effects].join(' ')).join(' ');
+
+    expect(ensnareProvides).toHaveLength(1);
+    expect(ensnareProvides[0]).toMatchObject({
+      targetLabel: 'Daemoros and Rhysarion',
+      effectTitle: 'Ensnare - Enemy mitigation reduction',
+    });
+    expect(ensnareText).toContain('Applies to Daemoros and Rhysarion.');
+    expect(ensnareText.match(/Lowers enemy Initiative, supporting allied Fire Damage\./g)).toHaveLength(1);
+    expect(ensnareText.match(/Lowers enemy Instinct, supporting allied Physical Damage\./g)).toHaveLength(1);
+    expect(ensnareText.match(/Daemoros/g)?.length ?? 0).toBeLessThanOrEqual(2);
+    expect(ensnareText.match(/Rhysarion/g)?.length ?? 0).toBeLessThanOrEqual(2);
+
+    const daemorosEnsnare = daemoros.receives.filter((item) => item.abilityName === 'Ensnare');
+    const rhysarionEnsnare = rhysarion.receives.filter((item) => item.abilityName === 'Ensnare');
+    expect(daemorosEnsnare).toHaveLength(1);
+    expect(rhysarionEnsnare).toHaveLength(1);
+    expect(daemorosEnsnare[0]?.summaryLines.join(' ')).toMatch(/enemy (Initiative|Instinct)/);
+    expect(rhysarionEnsnare[0]?.summaryLines.join(' ')).toMatch(/enemy (Initiative|Instinct)/);
+
+    const vulnerabilityTraces = traces.filter((trace) =>
+      trace.sourceAbilityId === 'shadowsong-blazing-onslaught' &&
+      trace.matchKind === 'enemy-damage-received-increase'
+    );
+    const fireProjection = vulnerabilityTraces.filter((trace) => trace.channel === 'fire-damage' && trace.recipientDragonId);
+    const physicalProjection = vulnerabilityTraces.filter((trace) => trace.channel === 'physical-damage' && trace.recipientDragonId);
+    expect(fireProjection.map((trace) => trace.recipientDragonId).sort()).toEqual(expect.arrayContaining(['rhysarion', 'shadowsong']));
+    expect(physicalProjection.map((trace) => trace.recipientDragonId).sort()).toEqual(expect.arrayContaining(['daemoros', 'rhysarion']));
+    expect(physicalProjection.some((trace) => trace.matchedOutputCapabilityIds?.some((id) => /basic/i.test(id)))).toBe(false);
+    for (const trace of [...fireProjection, ...physicalProjection]) {
+      expect(trace.sourceScopeResults?.every((result) => result.sourceScopeCompatible)).toBe(true);
+      expect(trace.matchedOutputCapabilityIds?.length).toBeGreaterThan(0);
+      expect([...trace.effects, ...trace.assumptions].join(' ')).toMatch(/benefit|target overlap|not guaranteed/i);
+    }
+
+    const fireProvides = shadowsong.provides.filter((item) => /Blazing Onslaught - Enemy Fire Damage vulnerability/i.test(item.effectTitle));
+    const physicalProvides = shadowsong.provides.filter((item) => /Blazing Onslaught - Enemy Physical Damage vulnerability/i.test(item.effectTitle));
+    expect(fireProvides.length).toBeGreaterThanOrEqual(1);
+    expect(physicalProvides.length).toBeGreaterThanOrEqual(1);
+    expect(shadowsong.receives.some((item) => item.abilityName === 'Blazing Onslaught')).toBe(false);
+
+    const fireReceives = rhysarion.receives.find((item) => /Blazing Onslaught - Enemy Fire Damage vulnerability/i.test(item.effectTitle));
+    const physicalDaemoros = daemoros.receives.find((item) => /Blazing Onslaught - Enemy Physical Damage vulnerability/i.test(item.effectTitle));
+    const physicalRhysarion = rhysarion.receives.find((item) => /Blazing Onslaught - Enemy Physical Damage vulnerability/i.test(item.effectTitle));
+    expect(fireReceives).toBeDefined();
+    expect(physicalDaemoros).toBeDefined();
+    expect(physicalRhysarion).toBeDefined();
+    const fireText = fireReceives ? [...fireReceives.summaryLines, ...fireReceives.details, ...fireReceives.effects].join(' ') : '';
+    const physicalText = physicalDaemoros ? [...physicalDaemoros.summaryLines, ...physicalDaemoros.details, ...physicalDaemoros.effects].join(' ') : '';
+    expect(fireText).toMatch(/Rhysarion's qualifying Fire Damage can benefit from \+15% Fire Damage Received/);
+    expect(physicalText).toMatch(/Daemoros's qualifying non-Basic Physical Damage can benefit from \+15% Physical Damage Received/);
+    expect(fireText).toContain('Duration: 3 rounds.');
+    expect(fireText).toContain('Applies to all qualifying Fire Damage sources.');
+    expect(physicalText).toContain('Applies to non-Basic Physical Damage only.');
+    expect(`${fireText} ${physicalText}`).toMatch(/target overlap|not guaranteed/i);
+    expect((fireText.match(/Fire Damage Received \+15%/g) ?? [])).toHaveLength(1);
+    expect(fireText).not.toMatch(/Fire Damage Received increase 15%.*Fire Damage Received \+15%/);
+    expect((physicalText.match(/Physical Damage Received \+15%/g) ?? [])).toHaveLength(1);
+
+    const panicCards = daemoros.provides.filter((item) => /Panic enhances/i.test(item.effectTitle));
+    expect(panicCards.map((item) => item.effectTitle).sort()).toEqual([
+      'Instill Fear - Panic enhances Breath of Fire',
+      'Instill Fear - Panic enhances Scorched Earth chance',
+    ]);
   });
 
   it('derives Panic to Scorched Earth and preserves source-scope regressions', () => {
@@ -605,7 +685,7 @@ describe('Feskar, Rhysarion, and Shadowsong Epic profiles', () => {
       sourceDragonId: 'feskar',
       recipientDragonId: null,
       recipientName: 'Feskar and Rhysarion',
-      effectTitle: 'Resilient Bond',
+      effectTitle: 'Resilient Bond - Damage Received support',
     });
     expect(groupedText).toContain('Timing: Start of combat.');
     expect(groupedText).toContain('Feskar and Rhysarion each gain 1 Resilient Bond stack.');
