@@ -1,4 +1,4 @@
-import { FORMATION_POSITIONS, TROOP_TYPES, type AbilityDefinition, type AbilityEffect, type AbilitySchedule, type ActivationRoll, type Dragon, type FormationPosition, type OwnedDragon, type RankedValue, type TroopType } from '../models/dragon';
+import { FORMATION_POSITIONS, TROOP_TYPES, type AbilityEffect, type AbilitySchedule, type AbilityScheduleOverride, type ActivationRoll, type Dragon, type FormationPosition, type OwnedDragon, type RankedValue, type TroopType } from '../models/dragon';
 import type { FormationAnalysisInput, RequirementTrace, SynergyTrace, TraceConfidence, TraceStatus } from '../models/synergy';
 import { rankedValueForHabitLevel, resolveEffectiveHabitLevelForAbility } from './habitLevels';
 import { isNormalSynergyTrace } from './synergyTrace';
@@ -639,10 +639,10 @@ function commandDetail(
 }
 
 function commandSummaryLines(
-  dragon: Dragon | AbilityDefinition,
+  dragon: Dragon,
   options: { previewEnabled?: boolean; roster?: Record<string, OwnedDragon> } = {},
 ): string[] {
-  const command = 'command' in dragon ? dragon.command : dragon;
+  const command = dragon.command;
   if (!command) {
     return ['Command data not yet verified.'];
   }
@@ -662,15 +662,85 @@ function commandSummaryLines(
     return [
       'When no enemy has Prey: attempts to apply Prey.',
       'Rounds 1, 4, 7, and 10: Fire Damage to one enemy.',
+      ...commandAugmentationSummaryLines(dragon, options),
     ];
   }
-  const summaryLines = command.schedules.flatMap((schedule) => commandScheduleSummaryLines(schedule));
-  const augmentationLines = 'command' in dragon ? commandAugmentationSummaryLines(dragon, options) : [];
+  const summaryLines = commandPresentationSchedules(dragon, options).flatMap(({ schedule, prefix, timingOverride, suffix, level }) =>
+    commandScheduleSummaryLines(schedule, level ?? undefined, prefix, dragon.name, timingOverride, suffix),
+  );
+  const augmentationLines = commandAugmentationSummaryLines(dragon, options);
   const mergedLines = [...summaryLines, ...augmentationLines];
   if (mergedLines.length === 0) {
     return [command.rawDescription?.split(/\n\n|(?<=\.)\s+/)[0] ?? `${command.name} command details are not yet verified.`];
   }
   return mergedLines;
+}
+
+interface CommandPresentationSchedule {
+  schedule: AbilitySchedule;
+  prefix?: string;
+  timingOverride?: string;
+  suffix?: string;
+  level?: 1 | 2 | 3 | 4 | 5 | null;
+}
+
+function commandPresentationSchedules(
+  dragon: Dragon,
+  options: { previewEnabled?: boolean; roster?: Record<string, OwnedDragon> } = {},
+): CommandPresentationSchedule[] {
+  const command = dragon.command;
+  if (!command) {
+    return [];
+  }
+  const starRank = options.previewEnabled ? 10 : options.roster?.[dragon.id]?.starRank ?? null;
+  const activeAugmentations = command.augmentations.filter((augmentation) => starRank !== null && starRank >= augmentation.minimumDragonStarRank);
+  const overridesByScheduleId = new Map<string, Array<{ override: AbilityScheduleOverride; level: 1 | 2 | 3 | 4 | 5 | null }>>();
+  for (const augmentation of activeAugmentations) {
+    const sourceAbility = dragon.habits.find((habit) => habit.id === augmentation.sourceAbilityId);
+    const level = options.previewEnabled
+      ? 5
+      : resolveEffectiveHabitLevelForAbility(sourceAbility ?? command, options.roster?.[dragon.id]);
+    for (const override of augmentation.scheduleOverrides ?? []) {
+      const overrides = overridesByScheduleId.get(override.targetScheduleId) ?? [];
+      overrides.push({ override, level });
+      overridesByScheduleId.set(override.targetScheduleId, overrides);
+    }
+  }
+
+  const presentedSchedules: CommandPresentationSchedule[] = [];
+  for (const schedule of command.schedules) {
+    const overrides = overridesByScheduleId.get(schedule.id) ?? [];
+    const replacement = overrides.find((entry) => entry.override.operation === 'replace-effect-roll' && entry.override.replacementSchedule);
+    if (replacement?.override.replacementSchedule) {
+      if (schedule.roundSelector?.kind === 'odd') {
+        presentedSchedules.push({
+          schedule: replacement.override.replacementSchedule,
+          timingOverride: 'Round 1',
+          suffix: replacement.override.description,
+          level: replacement.level,
+        });
+        presentedSchedules.push({ schedule });
+        continue;
+      }
+      if (schedule.roundSelector?.kind === 'even') {
+        presentedSchedules.push({
+          schedule: replacement.override.replacementSchedule,
+          timingOverride: 'Even-numbered rounds',
+          suffix: replacement.override.description,
+          level: replacement.level,
+        });
+        continue;
+      }
+      presentedSchedules.push({
+        schedule: replacement.override.replacementSchedule,
+        suffix: replacement.override.description,
+        level: replacement.level,
+      });
+      continue;
+    }
+    presentedSchedules.push({ schedule });
+  }
+  return presentedSchedules;
 }
 
 function commandAugmentationSummaryLines(
@@ -694,7 +764,7 @@ function commandAugmentationSummaryLines(
         : augmentation.minimumDragonStarRank === 6
           ? 'At 6+ Stars, '
           : `At ${augmentation.minimumDragonStarRank} Stars, `;
-      return augmentation.schedulesAdded.flatMap((schedule) => commandScheduleSummaryLines(schedule, level, prefix));
+      return augmentation.schedulesAdded.flatMap((schedule) => commandScheduleSummaryLines(schedule, level, prefix, dragon.name));
     });
 }
 
@@ -702,19 +772,31 @@ function commandScheduleSummaryLines(
   schedule: AbilitySchedule,
   level: 1 | 2 | 3 | 4 | 5 | null = null,
   prefix = '',
+  sourceName = '',
+  timingOverride?: string,
+  suffix?: string,
 ): string[] {
-  const lines = commandScheduleEffectSummaries(schedule, level);
+  const lines = commandScheduleEffectSummaries(schedule, level, sourceName);
   if (lines.length === 0) {
     return [];
   }
-  const timing = scheduleTiming(schedule.timing, schedule.rounds);
-  return lines.map((line, index) => `${index === 0 ? `${prefix}${timing}: ` : 'Then '}${line}`);
+  const timing = timingOverride ?? scheduleTiming(schedule);
+  return lines.map((line, index) => `${index === 0 ? `${prefix}${timing}: ` : 'Then '}${line}${index === 0 && suffix ? ` ${suffix}` : ''}`);
 }
 
 function commandScheduleEffectSummaries(
   schedule: AbilitySchedule,
   level: 1 | 2 | 3 | 4 | 5 | null,
+  sourceName = '',
 ): string[] {
+  const savageClaimSummary = commandSavageClaimSummary(schedule, level, sourceName);
+  if (savageClaimSummary) {
+    return [savageClaimSummary];
+  }
+  const pairedStatReductionSummary = commandPairedStatReductionSummary(schedule, level, sourceName);
+  if (pairedStatReductionSummary) {
+    return [pairedStatReductionSummary];
+  }
   const lines: string[] = [];
   const used = new Set<string>();
   for (const effect of schedule.effects) {
@@ -747,6 +829,42 @@ function commandScheduleEffectSummaries(
     used.add(effect.id);
   }
   return lines;
+}
+
+function commandSavageClaimSummary(
+  schedule: AbilitySchedule,
+  level: 1 | 2 | 3 | 4 | 5 | null,
+  sourceName = '',
+): string | null {
+  const fireDamage = schedule.effects.find((effect) => effect.type === 'Fire Damage');
+  const recovery = schedule.effects.find((effect) => effect.type === 'Recovery');
+  if (!fireDamage || !recovery || !/Prey/i.test(fireDamage.target) || !/Self/i.test(recovery.target)) {
+    return null;
+  }
+  const fireRate = commandRateValue(fireDamage, level);
+  const recoveryRate = commandRateValue(recovery, level);
+  const enhancedFire = commandEnhancedRateValue(fireDamage, level);
+  const enhancedRecovery = commandEnhancedRateValue(recovery, level);
+  return [
+    `while ${sourceName || 'Sheepstealer'} has a current Prey: deal Fire Damage to Prey at a ${fireRate} rate and apply Recovery to ${sourceName || 'Sheepstealer'} at a ${recoveryRate} rate, enhanced by Dragon Level and Intelligence.`,
+    `If the current Prey received Recovery during the previous round, both rates are tripled to ${enhancedFire} Fire Damage and ${enhancedRecovery} Recovery.`,
+  ].join(' ');
+}
+
+function commandPairedStatReductionSummary(
+  schedule: AbilitySchedule,
+  level: 1 | 2 | 3 | 4 | 5 | null,
+  sourceName = '',
+): string | null {
+  const instinctDown = schedule.effects.find((effect) => effect.type === 'Instinct Down');
+  const initiativeDown = schedule.effects.find((effect) => effect.type === 'Initiative Down');
+  if (!instinctDown || !initiativeDown) {
+    return null;
+  }
+  const reduction = commandRateValue(instinctDown, level);
+  const chance = commandChanceValue(schedule.activationRoll ?? instinctDown.activationRoll ?? initiativeDown.activationRoll, level);
+  const target = commandTargetPhrase(instinctDown);
+  return `${chance} chance to reduce the Instinct and Initiative of ${target} by ${reduction} for ${instinctDown.durationRounds ?? initiativeDown.durationRounds ?? 0} rounds, enhanced by ${sourceName || 'Crimson'}'s Intelligence.`;
 }
 
 function commandChanceTriggeredSupportSummary(
@@ -795,6 +913,17 @@ function commandSingleEffectSummary(
   level: 1 | 2 | 3 | 4 | 5 | null,
 ): string {
   const conditionalMultipliers = effect.conditionalMultipliers ?? [];
+  if (effect.type === 'Bleed') {
+    const chance = commandChanceValue(effect.activationRoll, level);
+    const target = /original basic attack target and one other enemy within adjacency/i.test(effect.target)
+      ? 'the original Basic Attack target and one other enemy within adjacency'
+      : commandTargetPhrase(effect);
+    return `independently attempt Bleed at a ${chance} chance on ${target}. Bleed deals periodic Physical Damage at a ${commandRateValue(effect, level)} rate each round for ${effect.durationRounds ?? 2} rounds.`;
+  }
+  if (effect.type === 'Stun') {
+    const chance = commandChanceValue(schedule.activationRoll ?? effect.activationRoll, level);
+    return `${chance} chance to Stun ${commandTargetPhrase(effect)} for ${effect.durationRounds ?? 0} rounds.`;
+  }
   if (effect.type === 'Physical Damage Dealt Down' && (schedule.activationRoll?.chanceFixed ?? effect.activationRoll?.chanceFixed ?? null) !== null) {
     const target = 'the highest-Strength enemy';
     const reduction = formatRankedValue({ level: 1, value: effect.magnitude ?? 12, unit: 'percent' }, 'percent');
@@ -810,6 +939,13 @@ function commandSingleEffectSummary(
     const target = commandTargetPhrase(effect);
     const rate = commandRateValue(effect, level);
     return `apply Recovery at a ${rate} rate to ${target}, enhanced by Intelligence.`;
+  }
+  if (effect.type === 'Panic') {
+    const chance = commandChanceValue(effect.activationRoll, level);
+    const target = /physical damage target and one other distinct enemy within adjacency/i.test(effect.target)
+      ? 'the Physical Damage target and one other distinct enemy within adjacency'
+      : commandTargetPhrase(effect);
+    return `independently attempt Panic at a ${chance} chance on ${target}. Panic deals periodic Tactical Damage at a ${commandRateValue(effect, level)} rate each round for ${effect.durationRounds ?? 2} rounds.`;
   }
   if (effect.type === 'Fire Damage' && conditionalMultipliers.length > 0) {
     const multiplier = conditionalMultipliers[0]!;
@@ -846,6 +982,21 @@ function commandTargetPhrase(effect: AbilityEffect): string {
   }
   if (effect.targetPriority === 'highest-stat-enemy' && effect.targetSelection?.comparisonStat === 'strength') {
     return 'the highest-Strength enemy';
+  }
+  if (effect.targetPriority === 'highest-stat-enemy' && effect.targetSelection?.comparisonStat === 'instinct') {
+    return 'the highest-Instinct enemy';
+  }
+  if (effect.targetPriority === 'highest-stat-enemy' && effect.targetSelection?.comparisonStat === 'intelligence') {
+    return 'the highest-Intelligence enemy';
+  }
+  if (/was not the original Basic Attack target/i.test(effect.target)) {
+    return 'one enemy within adjacency that is distinct from the original Basic Attack target';
+  }
+  if (
+    effect.targetPriority === 'original-basic-attack-target' ||
+    effect.targetSelection?.references?.some((reference) => reference.kind === 'original-basic-attack-target')
+  ) {
+    return 'the original Basic Attack target';
   }
   if (
     effect.targetPriority === 'least-current-troops-enemy' ||
@@ -949,12 +1100,12 @@ function commandEffectSummaryLine(
     : effect.target;
   if (!multiplier || !enhanced) {
     return [
-      `${scheduleTiming(schedule.timing, schedule.rounds)}: ${effectActionVerb(effect.type)} ${formatToken(effect.type)} at a ${formatRankedValue(base, effect.unit)} rate to ${target}.`,
+      `${scheduleTiming(schedule)}: ${effectActionVerb(effect.type)} ${formatToken(effect.type)} at a ${formatRankedValue(base, effect.unit)} rate to ${target}.`,
     ];
   }
   const status = multiplier.condition.statusId ? formatToken(multiplier.condition.statusId) : 'the condition';
   return [
-    `${scheduleTiming(schedule.timing, schedule.rounds)}: deal ${formatToken(effect.type)} at a ${formatRankedValue(base, effect.unit)} rate to ${target}. Against an eligible target afflicted with ${status}, the rate is increased ${multiplier.multiplier}x to ${formatRankedValue(enhanced, effect.unit)}.`,
+    `${scheduleTiming(schedule)}: deal ${formatToken(effect.type)} at a ${formatRankedValue(base, effect.unit)} rate to ${target}. Against an eligible target afflicted with ${status}, the rate is increased ${multiplier.multiplier}x to ${formatRankedValue(enhanced, effect.unit)}.`,
   ];
 }
 
@@ -968,11 +1119,27 @@ function effectActionVerb(effectType: string): string {
   return 'apply';
 }
 
-function scheduleTiming(timing: string, rounds: number[]): string {
+function scheduleTiming(schedule: AbilitySchedule): string {
+  const rounds = schedule.rounds;
+  if (schedule.timing === 'after-basic-attack') {
+    return 'After each Basic Attack';
+  }
+  if (schedule.roundSelector?.kind === 'start-of-round' && rounds.length === 1) {
+    return `Round ${rounds[0]}`;
+  }
+  if (schedule.roundSelector?.kind === 'even') {
+    return 'Even-numbered rounds';
+  }
+  if (schedule.roundSelector?.kind === 'odd') {
+    return rounds.includes(1) ? 'Odd-numbered rounds' : 'Other odd-numbered rounds';
+  }
+  if (rounds.length === 1) {
+    return `Round ${rounds[0]}`;
+  }
   if (rounds.length > 0) {
     return `Rounds ${joinEnglishList(rounds.map(String))}`;
   }
-  return formatToken(timing);
+  return formatToken(schedule.timing);
 }
 
 function traceState(trace: SynergyTrace, previewEnabled = false): FormationCardInteractionState {

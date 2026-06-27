@@ -24,6 +24,7 @@ const formations: Record<string, FormationAnalysisInput> = {
   '15': { 'left-flank': 'malachite', vanguard: 'sheepstealer', 'right-flank': 'caraxes' },
   '16': { 'left-flank': 'malachite', vanguard: 'caraxes', 'right-flank': 'sheepstealer' },
   legacy: { 'left-flank': 'venator', vanguard: 'vhagar', 'right-flank': 'syrax' },
+  commandAugments: { 'left-flank': 'sheepstealer', vanguard: 'crimson', 'right-flank': 'kalspire' },
 };
 
 function presentation(
@@ -275,6 +276,70 @@ describe('formation card analysis presentation', () => {
     expect(syrax.command?.detail).toContain('Rounds 2, 5, and 8: apply Recovery to the Ally with the least current troops at a 50% Recovery Rate, enhanced by Intelligence.');
     expect(syrax.command?.detail).toContain('Resistance applies to the same selected Ally.');
     expect(syrax.command?.detail).toContain('Resistance has a 40% activation chance at effective Habit Level 1 and lasts 2 rounds.');
+  });
+
+  it('renders the legacy command augmentations and rank-gates them', () => {
+    const rank9Roster = selectedRoster(['crimson', 'sheepstealer', 'kalspire'], 26, 9);
+    rank9Roster.kalspire!.starRank = 5;
+    const rank10Roster = selectedRoster(['crimson', 'sheepstealer', 'kalspire'], 26, 10);
+    rank10Roster.kalspire!.starRank = 6;
+    const commandFormation = formations.commandAugments!;
+    const rank9Traces = analyzeFormationTraces(commandFormation, dragons, { roster: rank9Roster });
+    const rank10Traces = analyzeFormationTraces(commandFormation, dragons, { roster: rank10Roster });
+    const rank9Result = buildFormationCardPresentation(commandFormation, dragons, rank9Traces, { previewEnabled: false, roster: rank9Roster });
+    const rank10Result = buildFormationCardPresentation(commandFormation, dragons, rank10Traces, { previewEnabled: false, roster: rank10Roster });
+
+    const crimsonRank9 = card(rank9Result, 'crimson').command;
+    const crimsonRank10 = card(rank10Result, 'crimson').command;
+    const sheepstealerRank9 = card(rank9Result, 'sheepstealer').command;
+    const sheepstealerRank10 = card(rank10Result, 'sheepstealer').command;
+    const kalspireRank9 = card(rank9Result, 'kalspire').command;
+    const kalspireRank10 = card(rank10Result, 'kalspire').command;
+
+    expect(crimsonRank9?.summaryLines).toEqual([
+      'Other odd-numbered rounds: 20% chance to Stun one enemy in any lane for 2 rounds.',
+      'Rounds 2, 5, and 8: deal Fire Damage at a 140% rate to one enemy in any lane.',
+    ]);
+    expect(crimsonRank9?.summaryLines.join(' ')).not.toContain('At 10 Stars');
+
+    expect(crimsonRank10?.summaryLines).toEqual([
+      'Round 1: 40% chance to Stun one enemy in any lane for 2 rounds. At 10 Stars, this replaces the ordinary Round 1 Stun chance.',
+      'Other odd-numbered rounds: 20% chance to Stun one enemy in any lane for 2 rounds.',
+      'Rounds 2, 5, and 8: deal Fire Damage at a 140% rate to one enemy in any lane.',
+      "At 10 Stars, Even-numbered rounds: 50% chance to reduce the Instinct and Initiative of the highest-Instinct enemy by 12% for 2 rounds, enhanced by Crimson's Intelligence.",
+    ]);
+    expect(crimsonRank10?.detail).toContain('At 10 Stars');
+    expect(crimsonRank10?.detail).toContain('one shared 50% activation roll');
+
+    expect(sheepstealerRank9?.summaryLines).toEqual([
+      'When no enemy has Prey: attempts to apply Prey.',
+      'Rounds 1, 4, 7, and 10: Fire Damage to one enemy.',
+    ]);
+    expect(sheepstealerRank9?.summaryLines.join(' ')).not.toContain('Savage Claim');
+
+    expect(sheepstealerRank10?.summaryLines).toHaveLength(3);
+    expect(sheepstealerRank10?.summaryLines.join(' ')).toContain('At 10 Stars');
+    expect(sheepstealerRank10?.summaryLines.join(' ')).toContain('24% rate');
+    expect(sheepstealerRank10?.summaryLines.join(' ')).toContain('10% rate');
+    expect(sheepstealerRank10?.summaryLines.join(' ')).toContain('72% Fire Damage');
+    expect(sheepstealerRank10?.summaryLines.join(' ')).toContain('30% Recovery');
+    expect(sheepstealerRank10?.detail).toContain('At 10 Stars');
+    expect(sheepstealerRank10?.detail).toContain('current Prey');
+
+    expect(kalspireRank9?.summaryLines).toEqual([
+      'After each Basic Attack: deal Tactical Damage at a 50% rate to the original Basic Attack target.',
+      'Then independently attempt Bleed at a 30% chance on the original Basic Attack target and one other enemy within adjacency. Bleed deals periodic Physical Damage at a 20% rate each round for 2 rounds.',
+    ]);
+    expect(kalspireRank9?.summaryLines.join(' ')).not.toContain('At 6+ Stars');
+
+    expect(kalspireRank10?.summaryLines).toEqual([
+      'After each Basic Attack: deal Tactical Damage at a 50% rate to the original Basic Attack target.',
+      'Then independently attempt Bleed at a 30% chance on the original Basic Attack target and one other enemy within adjacency. Bleed deals periodic Physical Damage at a 20% rate each round for 2 rounds.',
+      'At 6+ Stars, After each Basic Attack: deal Physical Damage at a 25% rate to one enemy within adjacency that is distinct from the original Basic Attack target.',
+      'Then independently attempt Panic at a 15% chance on the Physical Damage target and one other distinct enemy within adjacency. Panic deals periodic Tactical Damage at a 20% rate each round for 2 rounds.',
+    ]);
+    expect(kalspireRank10?.detail).toContain('At 6+ Stars');
+    expect(kalspireRank10?.detail).toContain('independently attempt Panic at a 15% chance');
   });
 
   it('adds command summaries without counting them as cross-dragon synergies', () => {

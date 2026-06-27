@@ -230,6 +230,74 @@ describe('Dragonfire Roster Lab app', () => {
     expect(rendered.container).toBeEmptyDOMElement();
   });
 
+  it('renders the complete legacy command wording for Crimson, Sheepstealer, and Kalspire', async () => {
+    const user = userEvent.setup();
+    render(<App />);
+
+    await user.click(screen.getByRole('button', { name: /dragon database/i }));
+
+    await user.clear(screen.getByLabelText(/search by name/i));
+    await user.type(screen.getByLabelText(/search by name/i), 'Crimson');
+    let dragonCard = screen.getByRole('heading', { name: 'Crimson' }).closest('article');
+    expect(dragonCard).not.toBeNull();
+    await user.click(within(dragonCard as HTMLElement).getByRole('button', { name: /view details/i }));
+    let dialog = screen.getByRole('dialog', { name: /crimson/i });
+    let commandCard = within(dialog).getByRole('heading', { name: 'Bloodscale Terror' }).closest('article');
+    expect(commandCard).not.toBeNull();
+    let rawToggle = within(commandCard as HTMLElement).getByText('Raw verified wording');
+    await user.click(rawToggle);
+    let raw = rawToggle.closest('details');
+    expect(raw).not.toBeNull();
+    expect(raw?.querySelectorAll('p').length).toBeGreaterThanOrEqual(3);
+    expect(raw).toHaveTextContent('Round 1: 40% chance to Stun one enemy in any lane for 2 rounds.');
+    expect(raw).toHaveTextContent('Other odd-numbered rounds: 20% chance to Stun one enemy in any lane for 2 rounds.');
+    expect(raw).toHaveTextContent('one shared 50% activation roll');
+    expect(raw).toHaveTextContent('highest-Instinct enemy');
+    expect(raw).toHaveTextContent('12% for 2 rounds');
+
+    await user.click(within(dialog).getByRole('button', { name: /close details/i }));
+    await user.clear(screen.getByLabelText(/search by name/i));
+    await user.type(screen.getByLabelText(/search by name/i), 'Sheepstealer');
+    dragonCard = screen.getByRole('heading', { name: 'Sheepstealer' }).closest('article');
+    expect(dragonCard).not.toBeNull();
+    await user.click(within(dragonCard as HTMLElement).getByRole('button', { name: /view details/i }));
+    dialog = screen.getByRole('dialog', { name: /sheepstealer/i });
+    commandCard = within(dialog).getByRole('heading', { name: 'Wild Hunt' }).closest('article');
+    expect(commandCard).not.toBeNull();
+    rawToggle = within(commandCard as HTMLElement).getByText('Raw verified wording');
+    await user.click(rawToggle);
+    raw = rawToggle.closest('details');
+    expect(raw).not.toBeNull();
+    expect(raw?.querySelectorAll('p').length).toBeGreaterThanOrEqual(3);
+    expect(raw).toHaveTextContent('Each Round: if no enemy is currently marked as Prey, 40% chance to apply Prey.');
+    expect(raw).toHaveTextContent('At 10 Stars:');
+    expect(raw).toHaveTextContent('current Prey');
+    expect(raw).toHaveTextContent('24% rate');
+    expect(raw).toHaveTextContent('10% rate');
+    expect(raw).toHaveTextContent('72% Fire Damage');
+    expect(raw).toHaveTextContent('30% Recovery');
+
+    await user.click(within(dialog).getByRole('button', { name: /close details/i }));
+    await user.clear(screen.getByLabelText(/search by name/i));
+    await user.type(screen.getByLabelText(/search by name/i), 'Kalspire');
+    dragonCard = screen.getByRole('heading', { name: 'Kalspire' }).closest('article');
+    expect(dragonCard).not.toBeNull();
+    await user.click(within(dragonCard as HTMLElement).getByRole('button', { name: /view details/i }));
+    dialog = screen.getByRole('dialog', { name: /kalspire/i });
+    commandCard = within(dialog).getByRole('heading', { name: 'Tactical Strike' }).closest('article');
+    expect(commandCard).not.toBeNull();
+    rawToggle = within(commandCard as HTMLElement).getByText('Raw verified wording');
+    await user.click(rawToggle);
+    raw = rawToggle.closest('details');
+    expect(raw).not.toBeNull();
+    expect(raw?.querySelectorAll('p').length).toBeGreaterThanOrEqual(3);
+    expect(raw).toHaveTextContent('After each Basic Attack: deal Tactical Damage to the original Basic Attack target at a 50% Damage Rate');
+    expect(raw).toHaveTextContent('Then independently attempt Bleed at a 30% chance');
+    expect(raw).toHaveTextContent('At 6+ Stars:');
+    expect(raw).toHaveTextContent('deal Physical Damage at a 25% rate');
+    expect(raw).toHaveTextContent('Then independently attempt Panic at a 15% chance');
+  });
+
   it('persists ownership and star rank after reload', async () => {
     const user = userEvent.setup();
     const firstRender = render(<App />);

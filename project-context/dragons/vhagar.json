@@ -3583,7 +3583,7 @@
   "firstObservedInGame": null,
   "format": "dragonfire-dragon-profile",
   "gameVersion": null,
-  "generatedAt": "2026-06-27T10:32:51.701Z",
+  "generatedAt": "2026-06-27T20:41:44.604Z",
   "habits": [
     {
       "abilityClass": "passive",
@@ -6405,8 +6405,8 @@
   "rosterSourceStatus": "official-website",
   "slug": "vhagar",
   "source": {
-    "branch": "fix/multi-target-condition-presentation",
-    "commit": "0ee5f2984411b72286fbcaa444355b84f2c21887",
+    "branch": "fix/legacy-command-augmentation-completion",
+    "commit": "883ed3c7dfae5dd7b4b626753a7d5647b21ac37a",
     "databaseVersion": "0.6.2",
     "dataSchemaVersion": 12,
     "gameBuild": "26.6.53509",

@@ -397,7 +397,7 @@
       "name": "Wild Hunt",
       "positionRequirement": null,
       "powerByHabitLevel": [],
-      "rawDescription": "Each Round: if no enemy is currently marked as Prey, 40% chance to apply Prey. Rounds 1, 4, 7, 10: Fire Damage to one enemy, prioritizing Prey. Damage is doubled against Prey.",
+      "rawDescription": "Each Round: if no enemy is currently marked as Prey, 40% chance to apply Prey. Rounds 1, 4, 7, and 10: deal Fire Damage to one enemy, prioritizing Prey. Damage is doubled against Prey.\n\nAt 10 Stars:\n\nEach round while Sheepstealer has a current Prey: deal Fire Damage to Prey at a 24% rate and apply Recovery to Sheepstealer at a 10% rate, enhanced by Dragon Level and Intelligence.\n\nIf the current Prey received Recovery during the previous round, both rates are tripled to 72% Fire Damage and 30% Recovery.",
       "schedules": [
         {
           "activationRoll": null,
@@ -3631,7 +3631,7 @@
     "name": "Wild Hunt",
     "positionRequirement": null,
     "powerByHabitLevel": [],
-    "rawDescription": "Each Round: if no enemy is currently marked as Prey, 40% chance to apply Prey. Rounds 1, 4, 7, 10: Fire Damage to one enemy, prioritizing Prey. Damage is doubled against Prey.",
+    "rawDescription": "Each Round: if no enemy is currently marked as Prey, 40% chance to apply Prey. Rounds 1, 4, 7, and 10: deal Fire Damage to one enemy, prioritizing Prey. Damage is doubled against Prey.\n\nAt 10 Stars:\n\nEach round while Sheepstealer has a current Prey: deal Fire Damage to Prey at a 24% rate and apply Recovery to Sheepstealer at a 10% rate, enhanced by Dragon Level and Intelligence.\n\nIf the current Prey received Recovery during the previous round, both rates are tripled to 72% Fire Damage and 30% Recovery.",
     "schedules": [
       {
         "activationRoll": null,
@@ -4881,7 +4881,7 @@
   "firstObservedInGame": "2026-06-22",
   "format": "dragonfire-dragon-profile",
   "gameVersion": null,
-  "generatedAt": "2026-06-27T10:32:51.701Z",
+  "generatedAt": "2026-06-27T20:41:44.604Z",
   "habits": [
     {
       "abilityClass": "passive",
@@ -7795,7 +7795,7 @@
       "abilityId": "sheepstealer-wild-hunt",
       "abilityName": "Wild Hunt",
       "kind": "command",
-      "rawDescription": "Each Round: if no enemy is currently marked as Prey, 40% chance to apply Prey. Rounds 1, 4, 7, 10: Fire Damage to one enemy, prioritizing Prey. Damage is doubled against Prey."
+      "rawDescription": "Each Round: if no enemy is currently marked as Prey, 40% chance to apply Prey. Rounds 1, 4, 7, and 10: deal Fire Damage to one enemy, prioritizing Prey. Damage is doubled against Prey.\n\nAt 10 Stars:\n\nEach round while Sheepstealer has a current Prey: deal Fire Damage to Prey at a 24% rate and apply Recovery to Sheepstealer at a 10% rate, enhanced by Dragon Level and Intelligence.\n\nIf the current Prey received Recovery during the previous round, both rates are tripled to 72% Fire Damage and 30% Recovery."
     },
     {
       "abilityId": "sheepstealer-hunters-cunning",
@@ -7838,8 +7838,8 @@
   "rosterSourceStatus": "in-game-verified-pending-official-site",
   "slug": "sheepstealer",
   "source": {
-    "branch": "fix/multi-target-condition-presentation",
-    "commit": "0ee5f2984411b72286fbcaa444355b84f2c21887",
+    "branch": "fix/legacy-command-augmentation-completion",
+    "commit": "883ed3c7dfae5dd7b4b626753a7d5647b21ac37a",
     "databaseVersion": "0.6.2",
     "dataSchemaVersion": 12,
     "gameBuild": "26.6.53509",
