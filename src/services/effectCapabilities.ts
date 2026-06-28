@@ -2072,27 +2072,39 @@ function analyzeIncomingAmplifications(
       if (!recipientId) {
         continue;
       }
-      const recipientModifiers = modifiers.filter(
-        (modifier) =>
-          modifier.dragonId === recipientId &&
-          modifier.channel === output.channel &&
-          modifier.direction === 'received' &&
-          modifier.role === 'recipient-side-amplification' &&
-          modifier.operation === 'increase' &&
-          modifierCapabilityVisible(modifier, options),
-      );
+      const recipientModifiers = modifiers.filter((modifier) => {
+        if (
+          modifier.channel !== output.channel ||
+          modifier.direction !== 'received' ||
+          modifier.operation !== 'increase' ||
+          !modifierCapabilityVisible(modifier, options)
+        ) {
+          return false;
+        }
+        if (modifier.role === 'recipient-side-amplification' && modifier.dragonId === recipientId) {
+          return true;
+        }
+        return modifier.channel === 'recovery' && modifier.role === 'ally-support';
+      });
       for (const modifier of recipientModifiers) {
         const targeting = outputTargetsRecipient(output, providerPosition, recipientPosition, outputSelector);
         if (targeting.satisfied === false) {
           continue;
         }
+        const modifierProviderPosition = positionOf(formation, modifier.dragonId);
+        const modifierTargeting = targetRequirement(modifier, modifierProviderPosition, recipientPosition);
+        if (modifierTargeting.satisfied === false) {
+          continue;
+        }
         const match = capabilityMatch(modifier, output, [
           targeting,
+          modifierTargeting,
           ...outputRequirementTraces(output, options),
           ...providerRequirementTraces(modifier, formation, dragons, options),
         ], options, { applySourceScope: false });
         const recipient = dragonById(dragons, recipientId);
-        if (!provider || !recipient) {
+        const modifierProvider = dragonById(dragons, modifier.dragonId);
+        if (!provider || !recipient || !modifierProvider) {
           continue;
         }
         traces.push(makeAmplificationTrace({
@@ -2106,7 +2118,7 @@ function analyzeIncomingAmplifications(
           requirements: match.requirements,
           title: `${recipient.name} amplifies ${provider.name} ${channelLabel(output.channel)}`,
           explanation:
-            `${provider.name} provides ${channelLabel(output.channel)} through ${output.abilityName}. ${recipient.name}'s ${modifier.abilityName} increases ${channelLabel(output.channel)} Received by ${modifierDisplayValue(modifier, options)}.`,
+            `${provider.name} provides ${channelLabel(output.channel)} through ${output.abilityName}. ${recipient.name} has ${modifierProvider.name}'s ${modifier.abilityName} ${channelLabel(output.channel)} Received modifier, increasing received ${channelLabel(output.channel)} by ${modifierDisplayValue(modifier, options)}.`,
           assumptions: [],
           unresolvedQuestions: ['Exact final Recovery amount is unknown because the full Level and Instinct Recovery formula is not known.'],
           options,
@@ -3489,6 +3501,7 @@ function analyzeEnemyDamageReceivedIncreases(
     const channel = channelLabel(modifier.channel);
     const displayValue = modifierDisplayValue(modifier, options);
     const enemyVulnerabilityDetails = enemyVulnerabilityDetailLines(modifier, provider.name, channel, displayValue);
+    const enemyTargetDetails = enemySelectorFacts(provider, modifier);
     const modifierStatus = statusFromRequirements(requirements, capabilityFutureOrConditional(modifier, options) || modifier.conditional);
     traces.push({
       id: `enemy-damage-received-increase-${modifier.id}`,
@@ -3506,6 +3519,7 @@ function analyzeEnemyDamageReceivedIncreases(
         `${modifier.abilityName} targets ${targetSelectorSummary(modifier.targetSelector)}.`,
         `Modifier capability ID: ${modifier.id}.`,
         `Source scope: ${modifier.sourceScope}.`,
+        ...enemyTargetDetails,
         ...enemyVulnerabilityDetails,
         ...(modifier.sourceEffectId ? [`Source effect ID: ${modifier.sourceEffectId}.`] : []),
         ...(outputLabels.length > 0 ? [`Qualifying allied outputs: ${outputLabels.join(', ')}.`] : []),
@@ -3594,6 +3608,7 @@ function analyzeEnemyDamageReceivedIncreases(
           `Source scope: ${modifier.sourceScope}.`,
           `Matched output capability IDs: ${recipientOutputs.map((output) => output.id).join(', ')}.`,
           ...(outputNames.length > 0 ? [`Matched qualifying outputs: ${outputNames.join(', ')}.`] : []),
+          ...enemyTargetDetails,
           ...enemyVulnerabilityDetails,
           ...projectionScopeResults.map((match) => `Source-scope compatibility: ${match.sourceScopeCompatible ? 'compatible' : 'not compatible'} for ${match.outputCapabilityId}.`),
         ],
@@ -3692,7 +3707,7 @@ function analyzePeriodicStatusDamage(
       recipientDragonId: null,
       recipientAbilityId: null,
       title: `${status} periodic ${channel}`,
-      explanation: `${provider.name}'s ${abilityName} can apply ${status}. ${status} deals periodic ${channel} each round at Damage Rate ${displayValue}${periodic.durationRounds ? ` for ${periodic.durationRounds} rounds` : ''}. Activation, target selection, target overlap, and uptime remain conditional; final damage is not calculated.`,
+      explanation: `${provider.name}'s ${abilityName} can apply ${status}. ${status} deals periodic ${channel} each round${displayValue === null ? ' at an unknown Damage Rate' : ` at Damage Rate ${displayValue}`}${periodic.durationRounds ? ` for ${periodic.durationRounds} rounds` : ''}. Activation, target selection, target overlap, and uptime remain conditional; final damage is not calculated.`,
       requirements,
       matchedFacts: [
         ...matchingStatusOutputs.map((output) => `${abilityName} ${output.sourceEffectId ?? output.id} targets ${targetSelectorSummary(output.targetSelector)}.`),
@@ -3742,7 +3757,7 @@ function analyzePeriodicStatusDamage(
 function periodicDamageDetailLines(
   periodic: PeriodicDamageDefinition,
   statusOutputs: StatusOutputCapability[],
-  displayValue: string,
+  displayValue: string | null,
   contexts: Array<{ ability: AbilityDefinition; schedule: AbilitySchedule; effect: AbilityEffect }>,
   options: CapabilityOptions,
 ): string[] {
@@ -3750,7 +3765,7 @@ function periodicDamageDetailLines(
   const channel = channelLabel(periodic.channel);
   return [
     `${status} deals periodic ${channel} each round.`,
-    `Damage Rate ${displayValue}.`,
+    displayValue === null ? 'Periodic damage rate: unknown/not stated.' : `Damage Rate ${displayValue}.`,
     periodic.durationRounds ? `Duration: ${periodic.durationRounds} rounds.` : null,
     periodic.scalingStat ? `Scales with ${formatStatName(periodic.scalingStat)}.` : null,
     periodic.mitigationStat ? `Mitigated by target ${formatStatName(periodic.mitigationStat)}.` : null,
@@ -3774,9 +3789,9 @@ function periodicDamageDisplayValue(
   periodic: PeriodicDamageDefinition,
   statusOutput: StatusOutputCapability,
   options: CapabilityOptions,
-): string {
+): string | null {
   const value = periodicDamageResolvedValue(periodic, statusOutput, options);
-  return value === null ? 'unknown' : `${value}%`;
+  return value === null ? null : `${value}%`;
 }
 
 function periodicDamageResolvedValue(
@@ -3872,11 +3887,28 @@ function enemySelectorFacts(
   const priority = effect ? targetPriorityFact(effect) : null;
   const fallback = effect ? targetFallbackFact(effect) : null;
   const references = effect ? targetReferenceFacts(effect) : [];
+  const sharedGroup = capability.targetSelector.sharedSelectionGroupId
+    ? `Selected-target group: ${capability.targetSelector.sharedSelectionGroupId}.`
+    : null;
+  if (capability.targetSelector.selection === 'all-matching-condition') {
+    return [
+      'Enemy selector: all enemies.',
+      'All matching enemies are affected; no enemy-side candidate group is created.',
+      'Enemy target count: all matching enemies.',
+      scope === 'within-adjacency' ? 'Target scope: enemies within adjacency.' : null,
+      priority,
+      fallback,
+      sharedGroup,
+      ...references,
+      'Enemy identities remain unresolved because the enemy formation is unavailable.',
+    ].filter((fact): fact is string => Boolean(fact));
+  }
   return [
     count !== null ? `Enemy target count: ${count}.` : 'Enemy target count: unknown.',
     scope === 'within-adjacency' ? 'Target scope: enemies within adjacency.' : null,
     priority,
     fallback,
+    sharedGroup,
     ...references,
     count !== null ? 'Enemy identities remain unresolved because the enemy formation is unavailable.' : null,
   ].filter((fact): fact is string => Boolean(fact));
@@ -4497,6 +4529,9 @@ function conditionalChanceValueFacts(
     ? `Vulnerable value: generic Damage Received +${formatValue(effect.magnitude, effect.unit)}.`
     : null;
   const duration = durationDetail(effect);
+  const unresolvedRollScope = (effect.activationRoll?.unresolved || schedule.activationRoll?.unresolved)
+    ? 'Activation scope is unresolved between one shared roll and independent per-target rolls.'
+    : null;
   const facts = [
     ...(level ? [`Current effective ${ability.name} Habit Level: ${level}.`] : []),
     scheduleTimingDetail(schedule),
@@ -4512,6 +4547,7 @@ function conditionalChanceValueFacts(
     `Applied effect: ${effect.type}.`,
     vulnerableValue,
     duration,
+    unresolvedRollScope,
   ].filter((fact): fact is string => Boolean(fact));
   return {
     facts,
@@ -4522,6 +4558,7 @@ function conditionalChanceValueFacts(
       `Applied effect: ${effect.type}`,
       ...(vulnerableValue ? [vulnerableValue] : []),
       ...(duration ? [duration] : []),
+      ...(unresolvedRollScope ? [unresolvedRollScope] : []),
       'Target-specific conditional chance',
     ],
     summary: `Each round, ${ability.name} checks ${targetPhrase || effect.target}. At effective Habit Level ${level ?? 'unknown'}, the ${effect.type} application chance is ${baseText} for a normal target and ${enhancedText} for that same target while it has ${requiredLabel}${multiplier ? `, a target-specific ${multiplier}x increase` : ''}. ${effect.type}${effect.type === 'Vulnerable' && effect.magnitude !== null ? ` increases generic Damage Received by ${formatValue(effect.magnitude, effect.unit)}` : ''}${effect.durationRounds ? ` for ${effect.durationRounds} rounds` : ''}.`,
@@ -5600,10 +5637,13 @@ function targetForEffect(effect: AbilityEffect): AbilityTarget {
     : null;
   const selectionStat = selectionStatForEffect(effect);
   const selectionResource = selectionResourceForEffect(effect);
+  const targetsAllEnemies = /^all enemies\b/i.test(effect.target.trim());
   const selection = effect.targetScope === 'self'
     ? 'self'
     : position
       ? 'specific-position'
+      : targetsAllEnemies
+        ? 'all-matching-condition'
       : effect.targetPriority === 'highest-stat-ally'
         || effect.targetPriority === 'highest-stat-enemy'
         ? 'highest-stat'
@@ -6454,7 +6494,9 @@ function availabilityReportLabel(
 }
 
 function targetSelectorSummary(target: AbilityTarget): string {
-  const count = target.count === null ? 'unknown count' : `${target.count} target${target.count === 1 ? '' : 's'}`;
+  const count = target.selection === 'all-matching-condition'
+    ? `all matching ${target.side === 'enemy' ? 'enemies' : 'targets'}`
+    : target.count === null ? 'unknown count' : `${target.count} target${target.count === 1 ? '' : 's'}`;
   const caster = target.includesCaster === null
     ? 'caster eligibility unknown'
     : target.includesCaster
