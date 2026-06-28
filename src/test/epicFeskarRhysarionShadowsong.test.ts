@@ -2,7 +2,7 @@ import { describe, expect, it } from 'vitest';
 import { dragons } from '../data/dragons';
 import { dragonObservationSnapshots } from '../data/observations';
 import { defaultSynergyRules } from '../data/synergyRules';
-import type { FormationAnalysisInput } from '../models/synergy';
+import type { FormationAnalysisInput, TraceStatus } from '../models/synergy';
 import { buildFormationCardPresentation } from '../services/formationCardAnalysis';
 import {
   analyzeCapabilityAmplifications,
@@ -16,7 +16,7 @@ import { resolveAllyTargets } from '../services/formationRules';
 import { resolveEffectiveHabitLevel } from '../services/habitLevels';
 import { createEmptyRoster } from '../services/rosterStorage';
 import { analyzeFormation } from '../services/synergyEngine';
-import { analyzeFormationTraces, createSynergyAuditExport } from '../services/synergyTrace';
+import { analyzeFormationTraces, createSynergyAuditExport, isNormalSynergyTrace, technicalAnalysisTraceIdentity } from '../services/synergyTrace';
 
 function dragon(id: string) {
   const found = dragons.find((item) => item.id === id);
@@ -1231,5 +1231,144 @@ describe('Feskar, Rhysarion, and Shadowsong Epic profiles', () => {
     expect(text).toContain("Rhysarion's Inspiring Melody can reduce Feskar's Damage Received by 15%.");
     expect((text.match(/Rhysarion's Inspiring Melody can reduce Feskar's Damage Received by 15%/g) ?? [])).toHaveLength(1);
     expect(text).not.toContain('Target not guaranteed.');
+  });
+
+  it('models Vaeldra Tempting Distraction as a per-successful-Taunt same-target trigger in the reviewed formation', () => {
+    const formation: FormationAnalysisInput = { 'left-flank': 'feskar', vanguard: 'vaeldra', 'right-flank': 'rhysarion' };
+    const roster = ownedRoster(['feskar', 'vaeldra', 'rhysarion'], 10, 0);
+    for (const dragonId of ['feskar', 'vaeldra', 'rhysarion']) {
+      roster[dragonId]!.reignLevel = 26;
+    }
+    const traces = analyzeFormationTraces(formation, dragons, {
+      roster,
+      dragonLevels: { feskar: 26, vaeldra: 26, rhysarion: 26 },
+      previewMaxRankInteractions: false,
+    });
+    const counts = traces.reduce<Record<TraceStatus, number>>((acc, trace) => {
+      acc[trace.status] += 1;
+      return acc;
+    }, { active: 0, potential: 0, inactive: 0, blocked: 0, unknown: 0, 'not-applicable': 0 });
+    const tempting = traces.filter((trace) => trace.sourceAbilityId === 'vaeldra-tempting-distraction');
+    const physical = tempting.find((trace) => trace.channel === 'physical-damage');
+    const fire = tempting.find((trace) => trace.channel === 'fire-damage');
+    const physicalText = physical ? [physical.explanation, physical.targetSelectorSummary ?? '', ...physical.matchedFacts, ...physical.effects, ...physical.assumptions].join(' ') : '';
+    const fireText = fire ? [fire.explanation, fire.targetSelectorSummary ?? '', ...fire.matchedFacts, ...fire.effects, ...fire.assumptions].join(' ') : '';
+    const combinedText = `${physicalText} ${fireText}`;
+
+    expect(traces).toHaveLength(60);
+    expect(counts).toMatchObject({ active: 35, potential: 13, inactive: 11, blocked: 1 });
+    expect(tempting).toHaveLength(2);
+    expect(physical).toMatchObject({
+      status: 'potential',
+      interactionScope: 'enemy-side',
+      modifierRole: 'enemy-debuff',
+      recipientDragonId: null,
+    });
+    expect(fire).toMatchObject({
+      status: 'potential',
+      interactionScope: 'enemy-side',
+      modifierRole: 'enemy-debuff',
+      recipientDragonId: null,
+    });
+    expect(physicalText).toContain('Physical Damage Received +6%.');
+    expect(physicalText).toContain('Applies to non-Basic Physical Damage only.');
+    expect(physicalText).toContain('Duration: 2 rounds.');
+    expect(fireText).toContain('Fire Damage Received +6%.');
+    expect(fireText).toContain('Applies to all qualifying Fire Damage sources.');
+    expect(fireText).toContain('Duration: 2 rounds.');
+    for (const text of [physicalText, fireText]) {
+      expect(text).toContain('Trigger cardinality: once per successful Taunt application.');
+      expect(text).toContain('Affected target count: dynamic; derived from successful Taunt applications.');
+      expect(text).toContain('Result target: same enemy that received the successful Taunt application.');
+      expect(text).toContain('Multiple successful Taunt applications can affect multiple enemies.');
+      expect(text).toContain('same target as triggering Taunt application; dynamic target count');
+      expect(text).toContain('Qualifying Taunt supplier: Lure - lure-taunt.');
+      expect(text).toContain("Qualifying Taunt supplier: Siren's Call - sirens-call-taunt.");
+      expect(text).toContain('Excluded trigger branch: Siren\'s Call - sirens-call-stagger supplies Stagger, not Taunt.');
+      expect(text).toContain('Stagger does not trigger this effect.');
+      expect(text).not.toMatch(/for one enemy target/i);
+      expect(text).not.toMatch(/fixed target count of 1/i);
+      expect(text).not.toContain('Enemy target count: unknown.');
+    }
+    expect(combinedText).not.toContain('fiery-bonds');
+    expect(physical?.matchedFacts.join(' ')).toContain('Qualifying allied outputs: Dawnsong: Physical Damage, Lure: Physical Damage.');
+    expect(fire?.matchedFacts.join(' ')).toContain('Qualifying allied outputs: Emerald Inferno: Fire Damage, Dawnsong: Fire Damage.');
+
+    const cards = buildFormationCardPresentation(formation, dragons, traces.filter(isNormalSynergyTrace), { previewEnabled: false, roster });
+    const vaeldraProvides = cards.cards.find((card) => card.dragonId === 'vaeldra')?.provides ?? [];
+    const temptingCards = vaeldraProvides.filter((item) => item.abilityName === 'Tempting Distraction');
+    expect(temptingCards).toHaveLength(2);
+    expect(temptingCards.map((item) => item.effectTitle).sort()).toEqual([
+      'Tempting Distraction - Enemy Fire Damage vulnerability',
+      'Tempting Distraction - Enemy Physical Damage vulnerability',
+    ]);
+    const cardText = temptingCards.flatMap((item) => [item.summary, ...item.summaryLines, ...item.details, ...item.effects]).join(' ');
+    expect(cardText).toContain('For each enemy Vaeldra successfully Taunts');
+    expect(cardText).toContain('on that same enemy');
+    expect(cardText).not.toMatch(/for one enemy target/i);
+    expect(cards.cards.some((card) => card.receives.some((item) => item.abilityName === 'Tempting Distraction'))).toBe(false);
+  });
+
+  it("preserves Siren's Call branch predicates and Round 2-only Dawnsong overlap", () => {
+    const formation: FormationAnalysisInput = { 'left-flank': 'feskar', vanguard: 'vaeldra', 'right-flank': 'rhysarion' };
+    const roster = ownedRoster(['feskar', 'vaeldra', 'rhysarion'], 10, 0);
+    for (const dragonId of ['feskar', 'vaeldra', 'rhysarion']) {
+      roster[dragonId]!.reignLevel = 26;
+    }
+    const traces = analyzeFormationTraces(formation, dragons, {
+      roster,
+      dragonLevels: { feskar: 26, vaeldra: 26, rhysarion: 26 },
+      previewMaxRankInteractions: false,
+    });
+    const branchTrace = traces.find((trace) =>
+      trace.sourceAbilityId === 'vaeldra-sirens-call' &&
+      trace.ruleId === 'conditional-branch-status-output'
+    );
+    const branchText = branchTrace ? [branchTrace.explanation, ...branchTrace.matchedFacts, ...branchTrace.effects, ...branchTrace.assumptions].join(' ') : '';
+    const sirenDawnsong = traces.find((trace) =>
+      trace.sourceAbilityId === 'vaeldra-sirens-call' &&
+      trace.recipientAbilityId === 'rhysarion-dawnsong' &&
+      trace.matchKind === 'status-condition-enablement' &&
+      trace.id.includes('sirens-call-stagger')
+    );
+    const sirenText = sirenDawnsong ? [sirenDawnsong.status, sirenDawnsong.explanation, ...sirenDawnsong.matchedFacts, ...sirenDawnsong.effects, ...sirenDawnsong.assumptions, ...sirenDawnsong.unresolvedQuestions].join(' ') : '';
+    const feskarDawnsong = traces.find((trace) =>
+      trace.sourceAbilityId === 'feskar-unyielding-grasp' &&
+      trace.recipientAbilityId === 'rhysarion-dawnsong' &&
+      trace.matchKind === 'status-condition-enablement'
+    );
+    expect(branchTrace).toMatchObject({ status: 'potential', interactionScope: 'enemy-side' });
+    expect(branchText).toContain('already-Taunted enemies -> Stagger.');
+    expect(branchText).toContain('non-Taunted enemies -> Taunt.');
+    expect(branchText).toContain('Exactly one branch applies per enemy.');
+    expect(branchText).not.toContain('apply Taunt and Stagger');
+
+    expect(sirenDawnsong).toMatchObject({
+      status: 'potential',
+      sourceAbilityId: 'vaeldra-sirens-call',
+      recipientAbilityId: 'rhysarion-dawnsong',
+    });
+    expect(sirenText).toContain('Branch condition: Target is already Taunted.');
+    expect(sirenText).toContain('Branch target count: dynamic; only enemies already afflicted with Taunt receive Stagger.');
+    expect(sirenText).toContain('Enemies without Taunt take the alternate branch instead.');
+    expect(sirenText).toContain('Exactly one conditional branch applies per enemy.');
+    expect(sirenText).toContain('Supplier schedule: Rounds 1, 2 and 3.');
+    expect(sirenText).toContain('Dependent schedule: Rounds 2, 5 and 8.');
+    expect(sirenText).toContain('Schedule overlap: Round 2 only.');
+    expect(sirenText).toContain('Stagger duration: until end of current round.');
+    expect(sirenText).toContain('Stagger does not carry this interaction to Rounds 5 and 8.');
+    expect(sirenText).toContain('Action order within the overlapping round is unresolved.');
+    expect(sirenText).toContain('The status and dependent damage must affect the same enemy.');
+    expect(sirenText).not.toMatch(/Stagger 3 enemies/i);
+    expect(sirenText).not.toMatch(/all Siren's Call targets/i);
+
+    expect(feskarDawnsong).toBeDefined();
+    expect(feskarDawnsong?.sourceAbilityId).toBe('feskar-unyielding-grasp');
+    expect(feskarDawnsong?.matchedFacts.join(' ')).toContain('Duration: 3 rounds.');
+    expect(feskarDawnsong?.matchedFacts.join(' ')).toContain('Priority: Warriors are prioritized, not guaranteed.');
+    expect(feskarDawnsong?.matchedFacts.join(' ')).not.toContain("Siren's Call");
+
+    const identities = traces.map(technicalAnalysisTraceIdentity);
+    expect(new Set(identities).size).toBe(identities.length);
   });
 });
