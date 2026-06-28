@@ -3039,7 +3039,7 @@
   "firstObservedInGame": null,
   "format": "dragonfire-dragon-profile",
   "gameVersion": null,
-  "generatedAt": "2026-06-28T07:53:29.999Z",
+  "generatedAt": "2026-06-28T08:18:32.338Z",
   "habits": [
     {
       "abilityClass": "passive",
@@ -5559,8 +5559,8 @@
   "rosterSourceStatus": "official-website",
   "slug": "malachite",
   "source": {
-    "branch": "fix/daemoros-rhysarion-shadowsong-framework-pass1",
-    "commit": "7e591c29069b8f9330ef0ec94823c9d37824e3a4",
+    "branch": "fix/interaction-scope-schedule-normalization-pass2",
+    "commit": "109277424c13ad4bfa0d68ff1a0b748a8be75ac6",
     "databaseVersion": "0.6.2",
     "dataSchemaVersion": 12,
     "gameBuild": "26.6.53509",

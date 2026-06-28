@@ -10,6 +10,9 @@ import {
   deriveOutputCapabilities,
   derivePeriodicDamageDefinitions,
   deriveStatusOutputCapabilities,
+  formatScheduleDescription,
+  scheduleDurationOverlapWindows,
+  scheduleRoundsForOverlap,
   sourceScopesCompatible,
 } from '../services/effectCapabilities';
 import { resolveAllyTargets } from '../services/formationRules';
@@ -48,6 +51,78 @@ function ownedRoster(dragonIds: string[], starRank = 10, habitLevel: 0 | 1 | 2 |
 }
 
 describe('Feskar, Rhysarion, and Shadowsong Epic profiles', () => {
+  it('normalizes recipient interaction scope centrally while preserving semantic non-recipient scopes', () => {
+    const formation: FormationAnalysisInput = { 'left-flank': 'daemoros', vanguard: 'rhysarion', 'right-flank': 'shadowsong' };
+    const roster = ownedRoster(['daemoros', 'rhysarion', 'shadowsong'], 10, 0);
+    for (const dragonId of ['daemoros', 'rhysarion', 'shadowsong']) {
+      roster[dragonId]!.reignLevel = 26;
+    }
+    const traces = analyzeFormationTraces(formation, dragons, {
+      roster,
+      dragonLevels: { daemoros: 26, rhysarion: 26, shadowsong: 26 },
+      previewMaxRankInteractions: false,
+    });
+
+    expect(traces).toEqual(expect.arrayContaining([
+      expect.objectContaining({ sourceDragonId: 'rhysarion', sourceAbilityId: 'rhysarion-ebbing-fury', recipientDragonId: 'rhysarion', matchKind: 'outgoing-effect-amplification', channel: 'recovery', interactionScope: 'internal' }),
+      expect.objectContaining({ sourceDragonId: 'rhysarion', sourceAbilityId: 'rhysarion-ebbing-fury', recipientDragonId: 'rhysarion', matchKind: 'friendly-impairment', channel: 'damage-dealt', interactionScope: 'internal' }),
+      expect.objectContaining({ sourceDragonId: 'rhysarion', sourceAbilityId: 'rhysarion-ebbing-fury', recipientDragonId: 'daemoros', matchKind: 'outgoing-effect-amplification', channel: 'recovery', interactionScope: 'cross-dragon' }),
+      expect.objectContaining({ sourceAbilityId: 'shadowsong-blazing-onslaught', recipientDragonId: null, matchKind: 'enemy-damage-received-increase', interactionScope: 'enemy-side' }),
+      expect.objectContaining({ recipientDragonId: null, interactionScope: 'targeting-fact' }),
+    ]));
+  });
+
+  it('derives generic duration overlap windows for carryover and same-round order dependence', () => {
+    const instillSchedule = habit('daemoros', 'daemoros-instill-fear').schedules[0]!;
+    const darkeningSchedule = habit('daemoros', 'daemoros-darkening-fear').schedules[0]!;
+    const shroudSchedule = habit('daemoros', 'daemoros-shroud-of-shadows').schedules[0]!;
+    const breathSchedule = dragon('shadowsong').command!.schedules.find((schedule) => schedule.id === 'breath-of-fire-base-rounds')!;
+    const dependentRounds = scheduleRoundsForOverlap(breathSchedule)!;
+    const maxDependentRound = Math.max(...dependentRounds);
+
+    for (const supplierSchedule of [instillSchedule, darkeningSchedule]) {
+      const supplierRounds = scheduleRoundsForOverlap(supplierSchedule, maxDependentRound)!;
+      const windows = scheduleDurationOverlapWindows(supplierRounds, dependentRounds, 2);
+      expect(windows.filter((window) => window.kind === 'carryover')).toEqual([
+        { dependentRound: 2, supplierRound: 1, sameRound: false, kind: 'carryover' },
+        { dependentRound: 5, supplierRound: 4, sameRound: false, kind: 'carryover' },
+        { dependentRound: 8, supplierRound: 7, sameRound: false, kind: 'carryover' },
+      ]);
+      expect(windows.filter((window) => window.kind === 'same-round-order-dependent')).toEqual([
+        { dependentRound: 2, supplierRound: 2, sameRound: true, kind: 'same-round-order-dependent' },
+        { dependentRound: 5, supplierRound: 5, sameRound: true, kind: 'same-round-order-dependent' },
+        { dependentRound: 8, supplierRound: 8, sameRound: true, kind: 'same-round-order-dependent' },
+      ]);
+    }
+
+    const shroudRounds = scheduleRoundsForOverlap(shroudSchedule, maxDependentRound)!;
+    const shroudWindows = scheduleDurationOverlapWindows(shroudRounds, dependentRounds, 2);
+    expect(shroudWindows).toEqual([
+      { dependentRound: 2, supplierRound: 1, sameRound: false, kind: 'carryover' },
+      { dependentRound: 5, supplierRound: 5, sameRound: true, kind: 'same-round-order-dependent' },
+      { dependentRound: 8, supplierRound: 7, sameRound: false, kind: 'carryover' },
+    ]);
+    expect(shroudWindows.some((window) => window.sameRound && [2, 8].includes(window.dependentRound))).toBe(false);
+    expect(scheduleDurationOverlapWindows([1], [2, 3], 2)).toEqual([
+      { dependentRound: 2, supplierRound: 1, sameRound: false, kind: 'carryover' },
+    ]);
+  });
+
+  it('renders structured schedule descriptions before falling back to unresolved wording', () => {
+    const instillSchedule = habit('daemoros', 'daemoros-instill-fear').schedules[0]!;
+    const shroudSchedule = habit('daemoros', 'daemoros-shroud-of-shadows').schedules[0]!;
+    const breathSchedule = dragon('shadowsong').command!.schedules.find((schedule) => schedule.id === 'breath-of-fire-base-rounds')!;
+    const evenSchedule = dragon('vhagar').command!.schedules.find((schedule) => schedule.id === 'fiery-bonds-even-physical')!;
+    const startRoundSchedule = habit('rhysarion', 'rhysarion-ebbing-fury').schedules.find((schedule) => schedule.id === 'ebbing-fury-round-four-recovery')!;
+
+    expect(formatScheduleDescription(shroudSchedule, { style: 'inline' })).toBe('odd-numbered rounds');
+    expect(formatScheduleDescription(evenSchedule, { style: 'inline' })).toBe('even-numbered rounds');
+    expect(formatScheduleDescription(instillSchedule, { style: 'inline' })).toBe('each round');
+    expect(formatScheduleDescription(breathSchedule, { style: 'sentence' })).toBe('Rounds 2, 5 and 8');
+    expect(formatScheduleDescription(startRoundSchedule, { style: 'sentence' })).toBe('Start of Round 4');
+    expect(formatScheduleDescription({ ...breathSchedule, rounds: [], roundSelector: null }, { fallback: 'unresolved schedule' })).toBe('unresolved schedule');
+  });
+
   it('stores metadata, affinities, observations, commands, traits, habits, and screenshot evidence', () => {
     expect(dragon('feskar')).toMatchObject({ rarity: 'Epic', breed: 'Champion', affinities: { Cavalry: 'positive', Siege: 'negative' } });
     expect(dragon('rhysarion')).toMatchObject({ rarity: 'Epic', breed: 'Champion', affinities: { Spearmen: 'positive', Shieldbearers: 'positive', Siege: 'positive' } });
@@ -543,7 +618,32 @@ describe('Feskar, Rhysarion, and Shadowsong Epic profiles', () => {
       expect.objectContaining({ sourceAbilityId: 'daemoros-darkening-fear', recipientDragonId: 'daemoros', matchKind: 'enemy-mitigation-reduction', channel: 'physical-damage', interactionScope: 'internal' }),
       expect.objectContaining({ sourceAbilityId: 'shadowsong-ensnare', recipientDragonId: 'shadowsong', matchKind: 'enemy-mitigation-reduction', channel: 'fire-damage', interactionScope: 'internal' }),
       expect.objectContaining({ sourceAbilityId: 'shadowsong-blazing-onslaught', recipientDragonId: 'shadowsong', matchKind: 'enemy-damage-received-increase', channel: 'fire-damage', interactionScope: 'internal' }),
+      expect.objectContaining({ sourceAbilityId: 'rhysarion-ebbing-fury', recipientDragonId: 'rhysarion', matchKind: 'outgoing-effect-amplification', channel: 'recovery', interactionScope: 'internal' }),
+      expect.objectContaining({ sourceAbilityId: 'rhysarion-ebbing-fury', recipientDragonId: 'rhysarion', matchKind: 'friendly-impairment', channel: 'damage-dealt', interactionScope: 'internal' }),
     ]));
+
+    const instillBreath = traces.find((trace) =>
+      trace.sourceAbilityId === 'daemoros-instill-fear' &&
+      trace.recipientAbilityId === 'shadowsong-breath-of-fire' &&
+      trace.matchKind === 'status-condition-enablement'
+    );
+    const darkeningBreath = traces.find((trace) =>
+      trace.sourceAbilityId === 'daemoros-darkening-fear' &&
+      trace.recipientAbilityId === 'shadowsong-breath-of-fire' &&
+      trace.matchKind === 'status-condition-enablement'
+    );
+    for (const trace of [instillBreath, darkeningBreath]) {
+      const text = trace ? [trace.explanation, ...trace.matchedFacts, ...trace.effects, ...trace.assumptions].join(' ') : '';
+      expect(text).toContain('Round 2 after a successful Round 1 application');
+      expect(text).toContain(`Round 2 from a successful Round 2 application only if ${trace?.sourceAbilityId === 'daemoros-instill-fear' ? 'Instill Fear' : 'Darkening Fear'} resolves before Breath of Fire that round`);
+      expect(text).toContain('Round 5 after a successful Round 4 application');
+      expect(text).toContain(`Round 5 from a successful Round 5 application only if ${trace?.sourceAbilityId === 'daemoros-instill-fear' ? 'Instill Fear' : 'Darkening Fear'} resolves before Breath of Fire that round`);
+      expect(text).toContain('Round 8 after a successful Round 7 application');
+      expect(text).toContain(`Round 8 from a successful Round 8 application only if ${trace?.sourceAbilityId === 'daemoros-instill-fear' ? 'Instill Fear' : 'Darkening Fear'} resolves before Breath of Fire that round`);
+      expect(text).toContain('Action order within same-round overlap is unresolved.');
+      expect(text).not.toContain('same-round overlap is guaranteed');
+      expect(text).not.toContain('same-round order is guaranteed');
+    }
 
     const shroud = traces.find((trace) =>
       trace.sourceAbilityId === 'daemoros-shroud-of-shadows' &&
@@ -552,9 +652,11 @@ describe('Feskar, Rhysarion, and Shadowsong Epic profiles', () => {
     );
     const shroudText = shroud ? [shroud.explanation, ...shroud.matchedFacts, ...shroud.effects].join(' ') : '';
     expect(shroudText).toContain('Odd-numbered rounds');
+    expect(shroudText).toContain('At effective Habit Level 1, Shroud of Shadows has a 15% chance on odd-numbered rounds');
     expect(shroudText).toContain('Round 2 after a successful Round 1 application');
     expect(shroudText).toContain('Round 5 from a successful Round 5 application only if Shroud of Shadows resolves before Dawnsong that round');
     expect(shroudText).toContain('Round 8 after a successful Round 7 application');
+    expect(shroudText).not.toContain('specific rounds');
     expect(shroudText).toContain('same-target overlap');
 
     const phantomTraces = traces.filter((trace) => trace.sourceAbilityId === 'daemoros-phantoms-veil');
