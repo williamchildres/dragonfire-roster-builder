@@ -4,6 +4,7 @@ import { afterEach, describe, expect, it, vi } from 'vitest';
 import { App, RawWordingDisclosure, TechnicalAnalysisTraceCards } from '../app/App';
 import { dragons } from '../data/dragons';
 import type { FormationAnalysisInput, SynergyTrace } from '../models/synergy';
+import { buildFormationCardPresentation } from '../services/formationCardAnalysis';
 import { analyzeFormationTraces, dedupeFinalTechnicalAnalysisTraces } from '../services/synergyTrace';
 import { createEmptyRoster, STORAGE_KEY } from '../services/rosterStorage';
 import globalCss from '../styles/global.css?raw';
@@ -607,39 +608,89 @@ describe('Dragonfire Roster Lab app', () => {
 
     const caraxes = screen.getByRole('article', { name: 'Vanguard' });
     const receives = within(caraxes).getByRole('region', { name: 'Receives' });
-    const blazingFuryItem = within(receives).getByText('Blazing Fury').closest('.card-interaction-item');
-    expect(blazingFuryItem).not.toBeNull();
-    expect(blazingFuryItem).toHaveTextContent('Conditional');
-    expect(blazingFuryItem).toHaveTextContent('Syrax → Caraxes');
-    expect(blazingFuryItem).toHaveTextContent('Fire Damage support; one of two eligible recipients.');
-    expect(blazingFuryItem).toHaveTextContent('May receive First-Strike; Infernal Burst deals 1.5× while active.');
-    expect(blazingFuryItem).toHaveTextContent('Target not guaranteed');
-    expect(blazingFuryItem?.querySelector('.interaction-status-bubble')).toBeNull();
+    const blazingFuryFireItem = within(receives).getByText(/Blazing Fury - Fire Damage support/i).closest('.card-interaction-item');
+    const blazingFuryFirstStrikeItem = within(receives).getByText(/Blazing Fury - First-Strike support/i).closest('.card-interaction-item');
+    expect(blazingFuryFireItem).not.toBeNull();
+    expect(blazingFuryFirstStrikeItem).not.toBeNull();
+    expect(blazingFuryFireItem).toHaveTextContent('Conditional');
+    expect(blazingFuryFireItem).toHaveTextContent('Syrax → Caraxes');
+    expect(blazingFuryFireItem).toHaveTextContent('Fire Damage support; one of two eligible recipients.');
+    expect(blazingFuryFireItem).toHaveTextContent('Target not guaranteed');
+    expect(blazingFuryFirstStrikeItem).toHaveTextContent('May receive First-Strike; Infernal Burst deals 1.5× while active.');
+    expect(blazingFuryFireItem?.querySelector('.interaction-status-bubble')).toBeNull();
 
     const syrax = screen.getByRole('article', { name: 'Right Flank' });
     const syraxProvides = within(syrax).getByRole('region', { name: 'Provides' });
-    const providerBlazingFuryItem = within(syraxProvides).getByText('Blazing Fury').closest('.card-interaction-item');
+    const providerBlazingFuryItem = within(syraxProvides).getByText(/Blazing Fury - Fire Damage support/i).closest('.card-interaction-item');
     expect(providerBlazingFuryItem).not.toBeNull();
-    expect(providerBlazingFuryItem).toHaveTextContent('One recipient is selected: Caraxes or Sheepstealer.');
     expect(providerBlazingFuryItem).toHaveTextContent('Eligible selected-target candidates: Caraxes or Sheepstealer.');
-    expect(providerBlazingFuryItem).toHaveTextContent('Caraxes may also receive First-Strike for Infernal Burst.');
+    expect(providerBlazingFuryItem).toHaveTextContent('One candidate is selected when the activation succeeds; the selected target is unresolved.');
+    expect(providerBlazingFuryItem).toHaveTextContent('Activation chance: 20%.');
     expect(providerBlazingFuryItem).toHaveTextContent('Target not guaranteed');
 
-    const details = within(blazingFuryItem as HTMLElement).getByRole('button', { name: 'Details' });
+    const details = within(blazingFuryFireItem as HTMLElement).getByRole('button', { name: 'Details' });
     expect(details).toHaveAttribute('aria-expanded', 'false');
     await user.click(details);
-    expect(within(blazingFuryItem as HTMLElement).getByRole('button', { name: 'Hide details' })).toHaveAttribute(
+    expect(within(blazingFuryFireItem as HTMLElement).getByRole('button', { name: 'Hide details' })).toHaveAttribute(
       'aria-expanded',
       'true',
     );
-    expect(blazingFuryItem).toHaveTextContent('Full explanation');
-    expect(blazingFuryItem).toHaveTextContent('Confidence');
+    expect(blazingFuryFireItem).toHaveTextContent('Full explanation');
+    expect(blazingFuryFireItem).toHaveTextContent('Confidence');
 
     await user.keyboard('{Enter}');
-    expect(within(blazingFuryItem as HTMLElement).getByRole('button', { name: 'Details' })).toHaveAttribute(
+    expect(within(blazingFuryFireItem as HTMLElement).getByRole('button', { name: 'Details' })).toHaveAttribute(
       'aria-expanded',
       'false',
     );
+  });
+
+  it('renders split Ebbing Fury support and impairment cards with readable full explanations', async () => {
+    const user = userEvent.setup();
+    const formation: FormationAnalysisInput = { 'left-flank': 'feskar', vanguard: 'rhysarion', 'right-flank': 'shadowsong' };
+    const roster = createEmptyRoster(dragons);
+    for (const dragonId of ['feskar', 'rhysarion', 'shadowsong']) {
+      const entry = roster[dragonId]!;
+      entry.owned = true;
+      entry.collection.state = 'hatched';
+      entry.starRank = 10;
+      entry.reignLevel = 26;
+      for (const habitId of Object.keys(entry.habitLevels)) {
+        entry.habitLevels[habitId] = 0;
+      }
+    }
+    window.localStorage.setItem(
+      STORAGE_KEY,
+      JSON.stringify({
+        format: 'dragonfire-roster-lab-local',
+        schemaVersion: 3,
+        updatedAt: '2026-06-28T00:00:00.000Z',
+        roster: Object.values(roster),
+      }),
+    );
+    render(<App />);
+
+    await user.click(screen.getAllByRole('button', { name: /formation builder/i })[0]!);
+    await user.click(screen.getByLabelText(/include unowned dragons/i));
+    const selectors = screen.getAllByLabelText('Dragon');
+    await user.selectOptions(selectors[0]!, 'feskar');
+    await user.selectOptions(selectors[1]!, 'rhysarion');
+    await user.selectOptions(selectors[2]!, 'shadowsong');
+
+    const traces = analyzeFormationTraces(formation, dragons, { roster });
+    const cards = buildFormationCardPresentation(formation, dragons, traces, { previewEnabled: false, roster });
+    const rhysarion = cards.cards.find((card) => card.dragonId === 'rhysarion');
+    const recoveryItems = rhysarion?.provides.filter((item) => item.abilityName === 'Ebbing Fury' && /Recovery support/i.test(item.effectTitle)) ?? [];
+    const impairmentItems = rhysarion?.provides.filter((item) => item.abilityName === 'Ebbing Fury' && /Allied Damage Dealt reduction/i.test(item.effectTitle)) ?? [];
+    expect(recoveryItems.length).toBeGreaterThanOrEqual(1);
+    expect(impairmentItems.length).toBeGreaterThanOrEqual(1);
+    expect(recoveryItems.some((item) => item.targetLabel === 'Team')).toBe(true);
+    expect(impairmentItems.some((item) => item.targetLabel === 'Team')).toBe(true);
+    expect(recoveryItems.flatMap((item) => [...item.summaryLines, ...item.details, ...item.effects]).join(' ')).toContain('Timing: Start of Round 4.');
+    expect(recoveryItems.flatMap((item) => [...item.summaryLines, ...item.details, ...item.effects]).join(' ')).toContain('Recovery Rate: 25% at effective Habit Level 1.');
+    expect(recoveryItems.flatMap((item) => [...item.summaryLines, ...item.details, ...item.effects]).join(' ')).toContain("Feskar has Rhysarion's Unbroken Devotion Recovery Received modifier, increasing received Recovery by 20%.");
+    expect(recoveryItems.flatMap((item) => [...item.summaryLines, ...item.details, ...item.effects]).join(' ')).toContain('Recovery Received increase 20% at effective Habit Level 1.');
+    expect(impairmentItems.flatMap((item) => [...item.summaryLines, ...item.details, ...item.effects]).join(' ')).toContain('Friendly Damage Dealt decrease 27.5%');
   });
 
   it('renders consistent empty Receives and Provides sections for low-content cards', async () => {

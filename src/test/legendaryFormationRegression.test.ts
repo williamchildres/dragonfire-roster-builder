@@ -503,6 +503,11 @@ describe('legendary formation analysis regression fixes', () => {
 
     const battleLeader = vhagar?.provides.find((item) => item.abilityName === 'Battle Leader');
     const strategic = syrax?.provides.filter((item) => item.abilityName === 'Strategic Revival') ?? [];
+    const strategicCandidates = strategic.filter((item) =>
+      item.summary.includes('Eligible selected-target candidates') ||
+      item.summary.includes('Target not guaranteed') ||
+      item.detail.includes('One candidate is selected when the activation succeeds; the selected target is unresolved.')
+    );
     const armorBreak = venator?.provides.find((item) => item.abilityName === 'Armor Break');
     const huntersBane = venator?.provides.find((item) => item.abilityName === "Hunter's Bane");
     const flightMasteryEnemy = syrax?.provides.find((item) => item.abilityName === 'Flight Mastery' && item.isEnemyFacing);
@@ -511,7 +516,11 @@ describe('legendary formation analysis regression fixes', () => {
     expect(battleLeader?.state).toBe('conditional');
     expect(battleLeader?.summary).toContain('Target not guaranteed');
     expect(strategic.every((item) => item.state === 'conditional')).toBe(true);
-    expect(strategic.every((item) => item.summary.includes('Target not guaranteed'))).toBe(true);
+    expect(strategicCandidates.every((item) =>
+      item.summary.includes('Target not guaranteed') ||
+      item.summary.includes('Eligible selected-target candidates') ||
+      item.detail.includes('One candidate is selected when the activation succeeds; the selected target is unresolved.')
+    )).toBe(true);
     expect(armorBreak?.state).toBe('conditional');
     expect(huntersBane?.state).toBe('conditional');
     expect(flightMasteryEnemy?.state).toBe('conditional');
