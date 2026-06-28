@@ -144,7 +144,7 @@ export function dedupeFinalTechnicalAnalysisTraces(traces: SynergyTrace[]): Syne
   const seen = new Set<string>();
   const deduped: SynergyTrace[] = [];
   for (const trace of traces) {
-    const key = finalTechnicalAnalysisTraceKey(trace);
+    const key = technicalAnalysisTraceIdentity(trace);
     if (seen.has(key)) {
       continue;
     }
@@ -152,6 +152,41 @@ export function dedupeFinalTechnicalAnalysisTraces(traces: SynergyTrace[]): Syne
     deduped.push(trace);
   }
   return deduped;
+}
+
+export function technicalAnalysisTraceIdentity(trace: SynergyTrace): string {
+  return stableStringify({
+    ruleId: trace.ruleId,
+    matchKind: trace.matchKind ?? null,
+    status: trace.status,
+    confidence: trace.confidence,
+    sourceDragonId: trace.sourceDragonId,
+    sourceAbilityId: trace.sourceAbilityId,
+    recipientDragonId: trace.recipientDragonId,
+    recipientAbilityId: trace.recipientAbilityId,
+    channel: trace.channel ?? null,
+    interactionScope: trace.interactionScope ?? null,
+    damageScope: trace.damageScope ?? null,
+    modifierRole: trace.modifierRole ?? null,
+    modifierSelfOnly: trace.modifierSelfOnly ?? null,
+    availabilityContext: trace.availabilityContext ?? null,
+    providedEffectType: trace.providedEffectType ?? null,
+    recipientModifierType: trace.recipientModifierType ?? null,
+    recipientModifierAbilityId: trace.recipientModifierAbilityId ?? null,
+    recipientModifierValue: trace.recipientModifierValue ?? null,
+    exactResultKnown: trace.exactResultKnown ?? null,
+    exactResultUnknownReason: trace.exactResultUnknownReason ?? null,
+    combatLogConfirmed: trace.combatLogConfirmed ?? null,
+    targetSelectorSummary: trace.targetSelectorSummary ?? null,
+    modifierCapabilityId: trace.modifierCapabilityId ?? null,
+    modifierCapabilityIds: sortedStrings(trace.modifierCapabilityIds ?? []),
+    matchedOutputCapabilityIds: sortedStrings(trace.matchedOutputCapabilityIds ?? []),
+    sourceScopeResults: canonicalSourceScopeResults(trace.sourceScopeResults ?? []),
+    targetSelectionGroup: canonicalTargetSelectionGroup(trace.targetSelectionGroup ?? null),
+    requirements: canonicalRequirements(trace.requirements),
+    effects: sortedStrings(trace.effects),
+    structuredFactIdentity: canonicalStructuredFactIdentity(trace),
+  });
 }
 
 export function traceStatusReason(trace: SynergyTrace): string {
@@ -793,41 +828,6 @@ function semanticTraceKey(trace: SynergyTrace): string {
       .join(','),
     [...(trace.matchedOutputCapabilityIds ?? [])].sort().join(','),
   ].join('|');
-}
-
-function finalTechnicalAnalysisTraceKey(trace: SynergyTrace): string {
-  return stableStringify({
-    ruleId: trace.ruleId,
-    matchKind: trace.matchKind ?? null,
-    status: trace.status,
-    confidence: trace.confidence,
-    sourceDragonId: trace.sourceDragonId,
-    sourceAbilityId: trace.sourceAbilityId,
-    recipientDragonId: trace.recipientDragonId,
-    recipientAbilityId: trace.recipientAbilityId,
-    channel: trace.channel ?? null,
-    interactionScope: trace.interactionScope ?? null,
-    damageScope: trace.damageScope ?? null,
-    modifierRole: trace.modifierRole ?? null,
-    modifierSelfOnly: trace.modifierSelfOnly ?? null,
-    availabilityContext: trace.availabilityContext ?? null,
-    providedEffectType: trace.providedEffectType ?? null,
-    recipientModifierType: trace.recipientModifierType ?? null,
-    recipientModifierAbilityId: trace.recipientModifierAbilityId ?? null,
-    recipientModifierValue: trace.recipientModifierValue ?? null,
-    exactResultKnown: trace.exactResultKnown ?? null,
-    exactResultUnknownReason: trace.exactResultUnknownReason ?? null,
-    combatLogConfirmed: trace.combatLogConfirmed ?? null,
-    targetSelectorSummary: trace.targetSelectorSummary ?? null,
-    modifierCapabilityId: trace.modifierCapabilityId ?? null,
-    modifierCapabilityIds: sortedStrings(trace.modifierCapabilityIds ?? []),
-    matchedOutputCapabilityIds: sortedStrings(trace.matchedOutputCapabilityIds ?? []),
-    sourceScopeResults: canonicalSourceScopeResults(trace.sourceScopeResults ?? []),
-    targetSelectionGroup: canonicalTargetSelectionGroup(trace.targetSelectionGroup ?? null),
-    requirements: canonicalRequirements(trace.requirements),
-    effects: sortedStrings(trace.effects),
-    structuredFactIdentity: canonicalStructuredFactIdentity(trace),
-  });
 }
 
 function canonicalSourceScopeResults(results: NonNullable<SynergyTrace['sourceScopeResults']>) {
