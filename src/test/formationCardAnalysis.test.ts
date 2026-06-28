@@ -99,6 +99,19 @@ describe('formation card analysis presentation', () => {
     expect(caraxes.receives.find((item) => item.abilityName === 'Blazing Fury')?.relationshipId).toBe(
       syrax.provides.find((item) => item.abilityName === 'Blazing Fury')?.relationshipId,
     );
+    const blazingProvider = syrax.provides.find((item) => item.abilityName === 'Blazing Fury' && item.candidateTotal === 2);
+    const caraxesBlazing = caraxes.receives.find((item) => item.abilityName === 'Blazing Fury' && item.isCandidate);
+    const sheepstealerBlazing = sheepstealer.receives.find((item) => item.abilityName === 'Blazing Fury' && item.isCandidate);
+    const blazingProviderText = blazingProvider ? [blazingProvider.summary, blazingProvider.detail, ...blazingProvider.summaryLines, ...blazingProvider.details].join(' ') : '';
+    const caraxesBlazingText = caraxesBlazing ? [caraxesBlazing.summary, caraxesBlazing.detail, ...caraxesBlazing.summaryLines, ...caraxesBlazing.details].join(' ') : '';
+    const sheepstealerBlazingText = sheepstealerBlazing ? [sheepstealerBlazing.summary, sheepstealerBlazing.detail, ...sheepstealerBlazing.summaryLines, ...sheepstealerBlazing.details].join(' ') : '';
+    expect(blazingProviderText).toContain('Candidate outputs:');
+    expect(blazingProviderText).toContain('Caraxes:');
+    expect(blazingProviderText).toContain('Sheepstealer:');
+    expect(caraxesBlazingText).toContain('Qualifying outputs for Caraxes:');
+    expect(caraxesBlazingText).not.toContain('Sheepstealer:');
+    expect(sheepstealerBlazingText).toContain('Qualifying outputs for Sheepstealer:');
+    expect(sheepstealerBlazingText).not.toContain('Caraxes:');
   });
 
   it('keeps all-matching defensive support hidden in current mode when locked', () => {
@@ -254,7 +267,7 @@ describe('formation card analysis presentation', () => {
     const lureText = lure ? [lure.summary, lure.detail, ...lure.summaryLines, ...lure.details, ...lure.effects].join(' ') : '';
     expect(lure).toBeDefined();
     expect(lure?.effectTitle).toContain('Taunt application');
-    expect(lureText).toContain('25% chance each round to apply Taunt to 3 enemies in any lane, for 2 rounds.');
+    expect(lureText).toContain('25% chance each round to apply Taunt to 3 enemies in any lane. Taunt lasts 2 rounds.');
     expect(lureText).toContain('Whether this uses one shared roll or separate per-target rolls is unresolved.');
 
     const spreading = daemoros.receives.find((item) => item.sourceDragonId === 'vermax' && item.abilityName === 'Spreading Blaze');

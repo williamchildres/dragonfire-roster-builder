@@ -4231,7 +4231,7 @@
   "firstObservedInGame": null,
   "format": "dragonfire-dragon-profile",
   "gameVersion": null,
-  "generatedAt": "2026-06-28T18:30:31.063Z",
+  "generatedAt": "2026-06-28T19:03:39.770Z",
   "habits": [
     {
       "abilityClass": "passive",
@@ -7003,8 +7003,8 @@
   "rosterSourceStatus": "official-website",
   "slug": "syrax",
   "source": {
-    "branch": "fix/status-semantics-schedule-presentation-pass2",
-    "commit": "bf1bfe570c7536362114b27f8bfe7ddee2377807",
+    "branch": "fix/recipient-projection-dependency-summary-pass3",
+    "commit": "3515cd835c35b7c1bd60a8f67c660f991a6941ce",
     "databaseVersion": "0.6.2",
     "dataSchemaVersion": 12,
     "gameBuild": "26.6.53509",
