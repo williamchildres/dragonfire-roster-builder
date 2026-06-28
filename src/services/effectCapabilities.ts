@@ -8757,25 +8757,6 @@ function effectStatusLabel(effect: AbilityEffect | null | undefined, fallback: s
   return effect ? statusLabel(statusIdForEffect(effect) ?? effect.type) : fallback;
 }
 
-function scheduleRollPrefix(schedule: AbilitySchedule | null | undefined): string {
-  if (!schedule) {
-    return '';
-  }
-  if (schedule.rounds.length === 1) {
-    return `Round ${schedule.rounds[0]}`;
-  }
-  if (schedule.rounds.length > 1) {
-    return `Rounds ${schedule.rounds.slice(0, -1).join(', ')}, and ${schedule.rounds.at(-1)}`;
-  }
-  if (schedule.roundSelector?.kind === 'odd') {
-    return 'odd-round';
-  }
-  if (schedule.roundSelector?.kind === 'even') {
-    return 'even-round';
-  }
-  return '';
-}
-
 function statusMatchesCategory(statusId: string, categoryId: string): boolean {
   return statusCategoryMembers[categoryId]?.includes(statusId) ?? false;
 }
