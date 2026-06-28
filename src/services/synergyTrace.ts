@@ -47,7 +47,9 @@ export function analyzeFormationTraces(
   traces.push(...wardenRecoverySelfInclusionTraces(formation, dragons));
   traces.push(...thresholdBoundaryTraces(formation, dragons));
   traces.push(...contextualPveTraces(formation, dragons));
-  return dedupeFormationTraces(enforceSelectedFormationBoundary(formation, traces));
+  return dedupeFinalTechnicalAnalysisTraces(
+    dedupeFormationTraces(enforceSelectedFormationBoundary(formation, traces)),
+  );
 }
 
 export function isNormalSynergyTrace(trace: SynergyTrace): boolean {
@@ -120,6 +122,7 @@ export function createSynergyAuditExport(
   traces: SynergyTrace[],
   userProgression: Record<string, unknown> = {},
 ): SynergyAuditExport {
+  const finalTraces = dedupeFinalTechnicalAnalysisTraces(traces);
   return {
     format: 'dragonfire-synergy-audit',
     schemaVersion: 1,
@@ -133,8 +136,22 @@ export function createSynergyAuditExport(
     },
     userProgression,
     battleContext: 'unspecified',
-    traces,
+    traces: finalTraces,
   };
+}
+
+export function dedupeFinalTechnicalAnalysisTraces(traces: SynergyTrace[]): SynergyTrace[] {
+  const seen = new Set<string>();
+  const deduped: SynergyTrace[] = [];
+  for (const trace of traces) {
+    const key = finalTechnicalAnalysisTraceKey(trace);
+    if (seen.has(key)) {
+      continue;
+    }
+    seen.add(key);
+    deduped.push(trace);
+  }
+  return deduped;
 }
 
 export function traceStatusReason(trace: SynergyTrace): string {
@@ -776,6 +793,136 @@ function semanticTraceKey(trace: SynergyTrace): string {
       .join(','),
     [...(trace.matchedOutputCapabilityIds ?? [])].sort().join(','),
   ].join('|');
+}
+
+function finalTechnicalAnalysisTraceKey(trace: SynergyTrace): string {
+  return stableStringify({
+    ruleId: trace.ruleId,
+    matchKind: trace.matchKind ?? null,
+    status: trace.status,
+    confidence: trace.confidence,
+    sourceDragonId: trace.sourceDragonId,
+    sourceAbilityId: trace.sourceAbilityId,
+    recipientDragonId: trace.recipientDragonId,
+    recipientAbilityId: trace.recipientAbilityId,
+    channel: trace.channel ?? null,
+    interactionScope: trace.interactionScope ?? null,
+    damageScope: trace.damageScope ?? null,
+    modifierRole: trace.modifierRole ?? null,
+    modifierSelfOnly: trace.modifierSelfOnly ?? null,
+    availabilityContext: trace.availabilityContext ?? null,
+    providedEffectType: trace.providedEffectType ?? null,
+    recipientModifierType: trace.recipientModifierType ?? null,
+    recipientModifierAbilityId: trace.recipientModifierAbilityId ?? null,
+    recipientModifierValue: trace.recipientModifierValue ?? null,
+    exactResultKnown: trace.exactResultKnown ?? null,
+    exactResultUnknownReason: trace.exactResultUnknownReason ?? null,
+    combatLogConfirmed: trace.combatLogConfirmed ?? null,
+    targetSelectorSummary: trace.targetSelectorSummary ?? null,
+    modifierCapabilityId: trace.modifierCapabilityId ?? null,
+    modifierCapabilityIds: sortedStrings(trace.modifierCapabilityIds ?? []),
+    matchedOutputCapabilityIds: sortedStrings(trace.matchedOutputCapabilityIds ?? []),
+    sourceScopeResults: canonicalSourceScopeResults(trace.sourceScopeResults ?? []),
+    targetSelectionGroup: canonicalTargetSelectionGroup(trace.targetSelectionGroup ?? null),
+    requirements: canonicalRequirements(trace.requirements),
+    effects: sortedStrings(trace.effects),
+    structuredFactIdentity: canonicalStructuredFactIdentity(trace),
+  });
+}
+
+function canonicalSourceScopeResults(results: NonNullable<SynergyTrace['sourceScopeResults']>) {
+  return results
+    .map((result) => ({
+      modifierCapabilityId: result.modifierCapabilityId,
+      outputCapabilityId: result.outputCapabilityId,
+      channel: result.channel,
+      sourceScopeCompatible: result.sourceScopeCompatible,
+      status: result.status,
+      confidence: result.confidence,
+      requirements: canonicalRequirements(result.requirements),
+    }))
+    .sort((left, right) => stableStringify(left).localeCompare(stableStringify(right)));
+}
+
+function canonicalTargetSelectionGroup(group: SynergyTrace['targetSelectionGroup'] | null) {
+  if (!group) {
+    return null;
+  }
+  return {
+    targetCount: group.targetCount,
+    eligibleRecipientDragonIds: sortedStrings(group.eligibleRecipientDragonIds),
+    selectionUncertain: group.selectionUncertain,
+    selection: group.selection ?? null,
+    selectionStat: group.selectionStat ?? null,
+    selectionResource: group.selectionResource ?? null,
+    comparisonDirection: group.comparisonDirection ?? null,
+    comparisonPool: group.comparisonPool ?? null,
+    candidateStats: (group.candidateStats ?? [])
+      .map((candidate) => ({
+        dragonId: candidate.dragonId,
+        statId: candidate.statId,
+        value: candidate.value,
+      }))
+      .sort((left, right) =>
+        `${left.dragonId}|${left.statId}|${left.value ?? ''}`.localeCompare(
+          `${right.dragonId}|${right.statId}|${right.value ?? ''}`,
+        ),
+      ),
+  };
+}
+
+function canonicalRequirements(requirements: RequirementTrace[]) {
+  return requirements
+    .map((requirement) => ({
+      id: requirement.id,
+      label: requirement.label,
+      expected: requirement.expected,
+      actual: requirement.actual,
+      satisfied: requirement.satisfied,
+      evidenceIds: sortedStrings(requirement.evidenceIds),
+      notes: sortedStrings(requirement.notes),
+    }))
+    .sort((left, right) => stableStringify(left).localeCompare(stableStringify(right)));
+}
+
+function canonicalStructuredFactIdentity(trace: SynergyTrace): string[] {
+  return sortedStrings(
+    trace.matchedFacts.flatMap((fact) => {
+      const identities = [
+        fact.match(/\bSource effect ID: ([A-Za-z0-9_.-]+)/i)?.[1],
+        fact.match(/\bReceiving source effect ID: ([A-Za-z0-9_.-]+)/i)?.[1],
+        fact.match(/\bStatus supplier effect: ([A-Za-z0-9_.-]+)/i)?.[1],
+        fact.match(/\bSelected-target group: ([A-Za-z0-9_.-]+)/i)?.[1],
+        fact.match(/\bShared selected-target group: ([A-Za-z0-9_.-]+)/i)?.[1],
+        fact.match(/\bStatus semantic: ([A-Za-z0-9_. -]+)/i)?.[1],
+        fact.match(/\bSupplied status: ([A-Za-z0-9_. -]+)/i)?.[1],
+        fact.match(/\bRequired status(?: category)?: ([A-Za-z0-9_. -]+)/i)?.[1],
+      ].filter((value): value is string => Boolean(value));
+      return identities.map((value) => value.trim().replace(/\.$/, ''));
+    }),
+  );
+}
+
+function stableStringify(value: unknown): string {
+  return JSON.stringify(sortForStableStringify(value));
+}
+
+function sortForStableStringify(value: unknown): unknown {
+  if (Array.isArray(value)) {
+    return value.map((item) => sortForStableStringify(item));
+  }
+  if (value && typeof value === 'object') {
+    return Object.fromEntries(
+      Object.entries(value)
+        .sort(([left], [right]) => left.localeCompare(right))
+        .map(([key, child]) => [key, sortForStableStringify(child)]),
+    );
+  }
+  return value;
+}
+
+function sortedStrings(values: string[]): string[] {
+  return [...new Set(values)].sort((left, right) => left.localeCompare(right));
 }
 
 function selectedFormationDragonIds(formation: FormationAnalysisInput): Set<string> {
