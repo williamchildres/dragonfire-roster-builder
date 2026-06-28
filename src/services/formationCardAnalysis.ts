@@ -961,6 +961,10 @@ function summarizeTrace(
     if (exclusiveChoice) {
       return [exclusiveChoice.replace(/^Exclusive one-of choice:\s*/i, '')];
     }
+    const outputSummary = qualifyingOutputSummaryLines(trace, recipient);
+    if (outputSummary.length > 0) {
+      return outputSummary;
+    }
     const recipientCommand = recipient?.command;
     if (recipientCommand && trace.recipientAbilityId?.includes(recipientCommand.id)) {
       return [`Increases ${recipientCommand.name} ${formatToken(trace.channel)}.`];
@@ -973,11 +977,32 @@ function summarizeTrace(
 
 function targetSelectionEffectLines(trace: SynergyTrace): string[] {
   return unique([
+    ...qualifyingOutputSummaryLines(trace),
     trace.effects.find((effect) => /Activation chance:/i.test(effect)),
     trace.effects.find((effect) => /Timing:/i.test(effect)),
     trace.effects.find((effect) => /Enhanced by/i.test(effect)),
     trace.effects.find((effect) => /Duration:/i.test(effect)),
   ].filter((line): line is string => Boolean(line)));
+}
+
+function qualifyingOutputSummaryLines(trace: SynergyTrace, recipient: Dragon | null = null): string[] {
+  const text = [trace.explanation, ...trace.matchedFacts, ...trace.effects].join(' ');
+  const match = text.match(/Qualifying outputs:\s*([^.]+)\./i);
+  if (!match) {
+    return [];
+  }
+  const labels = unique(match[1]!
+    .split(/,\s*/)
+    .map((label) => label.replace(/:\s*/g, ' ').replace(/\s+/g, ' ').trim())
+    .filter(Boolean));
+  if (labels.length === 0) {
+    return [];
+  }
+  const labelText = joinEnglishList(labels);
+  if (recipient && labels.length === 1) {
+    return [`Increases ${labelText}.`, `${formatToken(trace.channel ?? 'damage-dealt')} support for ${recipient.name}.`];
+  }
+  return [recipient ? `Increases ${recipient.name}'s ${labelText}.` : `Increases ${labelText}.`];
 }
 
 function deriveCommandSummary(
@@ -2758,6 +2783,10 @@ function interactionEffectTitle(abilityName: string, trace: SynergyTrace): strin
 }
 
 function interactionPurpose(trace: SynergyTrace): string | null {
+  const statusSourcePurpose = statusSourceInteractionPurpose(trace);
+  if (statusSourcePurpose) {
+    return statusSourcePurpose;
+  }
   if (isStackSupportTrace(trace) && trace.channel) {
     return `${supportChannelLabel(trace)} stack support`;
   }
@@ -2826,6 +2855,29 @@ function interactionPurpose(trace: SynergyTrace): string | null {
     return `${formatToken(trace.channel)} support`;
   }
   return trace.title === 'Stat Support' ? 'Stat support' : trace.title || null;
+}
+
+function statusSourceInteractionPurpose(trace: SynergyTrace): string | null {
+  if (trace.ruleId !== 'status-source-output' && trace.ruleId !== 'self-status-output') {
+    return null;
+  }
+  const titleStatus = trace.title.match(/-\s*(?:Self\s+)?(.+?)\s+(?:attempt|source)?$/i)?.[1]?.trim();
+  const status = titleStatus || trace.matchedFacts.find((fact) => /Status identity:/i.test(fact))?.replace(/Status identity:\s*/i, '').replace(/\.$/, '');
+  if (!status) {
+    return null;
+  }
+  const targetSide = trace.targetSelectorSummary?.split(';')[0]?.trim() ?? (trace.ruleId === 'self-status-output' ? 'self' : '');
+  if (targetSide === 'ally') {
+    return `${formatStatusName(status)} support`;
+  }
+  return `${formatStatusName(status)} application`;
+}
+
+function formatStatusName(value: string): string {
+  return value
+    .split('-')
+    .map((part) => part.charAt(0).toUpperCase() + part.slice(1))
+    .join('-');
 }
 
 function formatStatDetail(detail: string): string | null {

@@ -936,7 +936,7 @@
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact status target outcome cannot be calculated because activation, target identity, and uptime are unresolved.",
-    "explanation": "At effective Habit Level 5, Crippling Inferno has a 20% chance each round to Slow 3 enemies in any lane, for 2 rounds.",
+    "explanation": "At effective Habit Level 5, Crippling Inferno has a 20% chance each round to apply Slow to 3 enemies in any lane, for 2 rounds.",
     "id": "enemy-status-output-caraxes-crippling-inferno-crippling-inferno-slow-slow-status-output",
     "interactionScope": "enemy-side",
     "matchedOutputCapabilityIds": [],
@@ -1004,7 +1004,7 @@
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact status target outcome cannot be calculated because activation, target identity, and uptime are unresolved.",
-    "explanation": "At effective Habit Level 5, Crippling Inferno has a 20% chance each round to Burn 3 enemies in any lane, for 2 rounds.",
+    "explanation": "At effective Habit Level 5, Crippling Inferno has a 20% chance each round to apply Burn to 3 enemies in any lane, for 2 rounds.",
     "id": "enemy-status-output-caraxes-crippling-inferno-crippling-inferno-burn-burn-status-output",
     "interactionScope": "enemy-side",
     "matchedOutputCapabilityIds": [],
@@ -1084,12 +1084,13 @@
       "Known possible overlap windows: Round 2 after a successful Round 1 application; Round 2 from a successful Round 2 application only if Crippling Inferno resolves before Strategic Revival that round; Round 5 after a successful Round 4 application; Round 5 from a successful Round 5 application only if Crippling Inferno resolves before Strategic Revival that round; Round 8 after a successful Round 7 application; Round 8 from a successful Round 8 application only if Crippling Inferno resolves before Strategic Revival that round.",
       "Slow duration: 2 rounds.",
       "At least one enemy must have active Slow.",
+      "Strategic Revival's friendly recipient is selected independently.",
       "Strategic Revival does not require the same enemy to be selected.",
       "Action order within same-round overlap is unresolved."
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final value cannot be calculated because final combat formulas and stacking order are not fully verified.",
-    "explanation": "At effective Habit Level 5, Crippling Inferno has a 20% chance each round to Slow 3 enemies in any lane, for 2 rounds. Crippling Inferno's Slow can overlap Strategic Revival in these windows: Round 2 after a successful Round 1 application; Round 2 from a successful Round 2 application only if Crippling Inferno resolves before Strategic Revival that round; Round 5 after a successful Round 4 application; Round 5 from a successful Round 5 application only if Crippling Inferno resolves before Strategic Revival that round; Round 8 after a successful Round 7 application; Round 8 from a successful Round 8 application only if Crippling Inferno resolves before Strategic Revival that round. At least one enemy must still have active Slow; enemy identity, application success, and battlefield uptime remain unresolved. Same-round action order is unresolved.",
+    "explanation": "At effective Habit Level 5, Crippling Inferno has a 20% chance each round to apply Slow to 3 enemies in any lane, for 2 rounds. Crippling Inferno's Slow can overlap Strategic Revival in these windows: Round 2 after a successful Round 1 application; Round 2 from a successful Round 2 application only if Crippling Inferno resolves before Strategic Revival that round; Round 5 after a successful Round 4 application; Round 5 from a successful Round 5 application only if Crippling Inferno resolves before Strategic Revival that round; Round 8 after a successful Round 7 application; Round 8 from a successful Round 8 application only if Crippling Inferno resolves before Strategic Revival that round. At least one enemy must still have active Slow; application success, whether any enemy remains affected, and battlefield uptime remain unresolved. Same-round action order is unresolved.",
     "id": "status-condition-caraxes-crippling-inferno-crippling-inferno-slow-slow-status-output-syrax-strategic-revival-strategic-revival-recovery-output",
     "interactionScope": "cross-dragon",
     "matchedOutputCapabilityIds": [],
@@ -1172,7 +1173,7 @@
     "targetSelectionGroup": null,
     "title": "Slow enables Strategic Revival",
     "unresolvedQuestions": [
-      "Trigger timing, target selection, and exact uptime are not simulated."
+      "Exact Slow battlefield uptime is unresolved."
     ]
   },
   {
@@ -1183,7 +1184,7 @@
       "If Caraxes has First-Strike, damage is multiplied by 1.5.",
       "Within-round action order is not assumed.",
       "The ally status supplier and dependent output must share the same recipient.",
-      "First-Strike application success, enemy identity, target overlap, and conditional uptime are unresolved."
+      "First-Strike activation, recipient selection, and uptime are unresolved."
     ],
     "channel": "fire-damage",
     "confidence": "confirmed",
@@ -1206,7 +1207,7 @@
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final value cannot be calculated because final combat formulas and stacking order are not fully verified.",
-    "explanation": "Blazing Fury has a 20% chance each round to First-Strike one enemy in any lane, for 2 rounds. On Rounds 3, 6 and 9, Infernal Burst deals Fire Damage at a 100% rate to 3 enemies in any lane. When Caraxes has First-Strike, the rate increases 1.5x to 150%. Blazing Fury's First-Strike can overlap Infernal Burst in these windows: Round 3 after a successful Round 2 application; Round 3 from a successful Round 3 application only if Blazing Fury resolves before Infernal Burst that round; Round 6 after a successful Round 5 application; Round 6 from a successful Round 6 application only if Blazing Fury resolves before Infernal Burst that round; Round 9 after a successful Round 8 application; Round 9 from a successful Round 9 application only if Blazing Fury resolves before Infernal Burst that round. Caraxes must be the ally that received First-Strike; application chance, target selection, and uptime remain unresolved. Same-round action order is unresolved.",
+    "explanation": "Blazing Fury has a 20% chance each round to grant First-Strike to one ally in any lane, for 2 rounds. On Rounds 3, 6 and 9, Infernal Burst deals Fire Damage at a 100% rate to 3 enemies in any lane. When Caraxes has First-Strike, the rate increases 1.5x to 150%. Blazing Fury's First-Strike can overlap Infernal Burst in these windows: Round 3 after a successful Round 2 application; Round 3 from a successful Round 3 application only if Blazing Fury resolves before Infernal Burst that round; Round 6 after a successful Round 5 application; Round 6 from a successful Round 6 application only if Blazing Fury resolves before Infernal Burst that round; Round 9 after a successful Round 8 application; Round 9 from a successful Round 9 application only if Blazing Fury resolves before Infernal Burst that round. Caraxes must be the ally that received First-Strike; activation, recipient selection, and uptime remain unresolved. Same-round action order is unresolved.",
     "id": "status-condition-syrax-blazing-fury-blazing-fury-first-strike-first-strike-status-output-caraxes-infernal-burst-infernal-burst-fire-rate-output",
     "interactionScope": "cross-dragon",
     "matchedOutputCapabilityIds": [],
@@ -1243,7 +1244,7 @@
     "targetSelectionGroup": null,
     "title": "First-Strike enables Infernal Burst",
     "unresolvedQuestions": [
-      "Trigger timing, target selection, and exact uptime are not simulated."
+      "Exact First-Strike recipient and final uptime are unresolved."
     ]
   },
   {
@@ -1252,7 +1253,7 @@
       "Status application chance depends on Habit Level.",
       "If Caraxes has First-Strike, damage is multiplied by 1.5.",
       "The ally status supplier and dependent output must share the same recipient.",
-      "First-Strike application success, enemy identity, target overlap, and conditional uptime are unresolved."
+      "First-Strike activation, recipient selection, and uptime are unresolved."
     ],
     "channel": "fire-damage",
     "confidence": "confirmed",
@@ -1278,7 +1279,7 @@
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final value cannot be calculated because final combat formulas and stacking order are not fully verified.",
-    "explanation": "At effective Habit Level 5, Lightning Strike has a 100% chance on Rounds 1 to First-Strike one enemy in within adjacency, for 3 rounds. On Rounds 3, 6 and 9, Infernal Burst deals Fire Damage at a 100% rate to 3 enemies in any lane. When Caraxes has First-Strike, the rate increases 1.5x to 150%. Lightning Strike's First-Strike can overlap Infernal Burst in these windows: Round 3 after a successful Round 1 application. Caraxes must be the ally that received First-Strike; application chance, target selection, and uptime remain unresolved.",
+    "explanation": "At effective Habit Level 5, Lightning Strike has a 100% chance on Rounds 1 to grant First-Strike to one ally within adjacency, for 3 rounds. On Rounds 3, 6 and 9, Infernal Burst deals Fire Damage at a 100% rate to 3 enemies in any lane. When Caraxes has First-Strike, the rate increases 1.5x to 150%. Lightning Strike's First-Strike can overlap Infernal Burst in these windows: Round 3 after a successful Round 1 application. Caraxes must be the ally that received First-Strike; activation, recipient selection, and uptime remain unresolved.",
     "id": "status-condition-malachite-lightning-strike-lightning-strike-first-strike-first-strike-status-output-caraxes-infernal-burst-infernal-burst-fire-rate-output",
     "interactionScope": "cross-dragon",
     "matchedOutputCapabilityIds": [],
@@ -1339,7 +1340,7 @@
     "targetSelectionGroup": null,
     "title": "First-Strike enables Infernal Burst",
     "unresolvedQuestions": [
-      "Trigger timing, target selection, and exact uptime are not simulated."
+      "Exact First-Strike recipient and final uptime are unresolved."
     ]
   },
   {
@@ -5454,7 +5455,7 @@
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact status target outcome cannot be calculated because activation, target identity, and uptime are unresolved.",
-    "explanation": "At effective Habit Level 5, Crippling Inferno has a 20% chance each round to Slow 3 enemies in any lane, for 2 rounds.",
+    "explanation": "At effective Habit Level 5, Crippling Inferno has a 20% chance each round to apply Slow to 3 enemies in any lane, for 2 rounds.",
     "id": "enemy-status-output-caraxes-crippling-inferno-crippling-inferno-slow-slow-status-output",
     "interactionScope": "enemy-side",
     "matchedOutputCapabilityIds": [],
@@ -5522,7 +5523,7 @@
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact status target outcome cannot be calculated because activation, target identity, and uptime are unresolved.",
-    "explanation": "At effective Habit Level 5, Crippling Inferno has a 20% chance each round to Burn 3 enemies in any lane, for 2 rounds.",
+    "explanation": "At effective Habit Level 5, Crippling Inferno has a 20% chance each round to apply Burn to 3 enemies in any lane, for 2 rounds.",
     "id": "enemy-status-output-caraxes-crippling-inferno-crippling-inferno-burn-burn-status-output",
     "interactionScope": "enemy-side",
     "matchedOutputCapabilityIds": [],
@@ -5602,12 +5603,13 @@
       "Known possible overlap windows: Round 2 after a successful Round 1 application; Round 2 from a successful Round 2 application only if Crippling Inferno resolves before Strategic Revival that round; Round 5 after a successful Round 4 application; Round 5 from a successful Round 5 application only if Crippling Inferno resolves before Strategic Revival that round; Round 8 after a successful Round 7 application; Round 8 from a successful Round 8 application only if Crippling Inferno resolves before Strategic Revival that round.",
       "Slow duration: 2 rounds.",
       "At least one enemy must have active Slow.",
+      "Strategic Revival's friendly recipient is selected independently.",
       "Strategic Revival does not require the same enemy to be selected.",
       "Action order within same-round overlap is unresolved."
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final value cannot be calculated because final combat formulas and stacking order are not fully verified.",
-    "explanation": "At effective Habit Level 5, Crippling Inferno has a 20% chance each round to Slow 3 enemies in any lane, for 2 rounds. Crippling Inferno's Slow can overlap Strategic Revival in these windows: Round 2 after a successful Round 1 application; Round 2 from a successful Round 2 application only if Crippling Inferno resolves before Strategic Revival that round; Round 5 after a successful Round 4 application; Round 5 from a successful Round 5 application only if Crippling Inferno resolves before Strategic Revival that round; Round 8 after a successful Round 7 application; Round 8 from a successful Round 8 application only if Crippling Inferno resolves before Strategic Revival that round. At least one enemy must still have active Slow; enemy identity, application success, and battlefield uptime remain unresolved. Same-round action order is unresolved.",
+    "explanation": "At effective Habit Level 5, Crippling Inferno has a 20% chance each round to apply Slow to 3 enemies in any lane, for 2 rounds. Crippling Inferno's Slow can overlap Strategic Revival in these windows: Round 2 after a successful Round 1 application; Round 2 from a successful Round 2 application only if Crippling Inferno resolves before Strategic Revival that round; Round 5 after a successful Round 4 application; Round 5 from a successful Round 5 application only if Crippling Inferno resolves before Strategic Revival that round; Round 8 after a successful Round 7 application; Round 8 from a successful Round 8 application only if Crippling Inferno resolves before Strategic Revival that round. At least one enemy must still have active Slow; application success, whether any enemy remains affected, and battlefield uptime remain unresolved. Same-round action order is unresolved.",
     "id": "status-condition-caraxes-crippling-inferno-crippling-inferno-slow-slow-status-output-syrax-strategic-revival-strategic-revival-recovery-output",
     "interactionScope": "cross-dragon",
     "matchedOutputCapabilityIds": [],
@@ -5690,7 +5692,7 @@
     "targetSelectionGroup": null,
     "title": "Slow enables Strategic Revival",
     "unresolvedQuestions": [
-      "Trigger timing, target selection, and exact uptime are not simulated."
+      "Exact Slow battlefield uptime is unresolved."
     ]
   },
   {
@@ -5701,7 +5703,7 @@
       "If Caraxes has First-Strike, damage is multiplied by 1.5.",
       "Within-round action order is not assumed.",
       "The ally status supplier and dependent output must share the same recipient.",
-      "First-Strike application success, enemy identity, target overlap, and conditional uptime are unresolved."
+      "First-Strike activation, recipient selection, and uptime are unresolved."
     ],
     "channel": "fire-damage",
     "confidence": "confirmed",
@@ -5724,7 +5726,7 @@
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final value cannot be calculated because final combat formulas and stacking order are not fully verified.",
-    "explanation": "Blazing Fury has a 20% chance each round to First-Strike one enemy in any lane, for 2 rounds. On Rounds 3, 6 and 9, Infernal Burst deals Fire Damage at a 100% rate to 3 enemies in any lane. When Caraxes has First-Strike, the rate increases 1.5x to 150%. Blazing Fury's First-Strike can overlap Infernal Burst in these windows: Round 3 after a successful Round 2 application; Round 3 from a successful Round 3 application only if Blazing Fury resolves before Infernal Burst that round; Round 6 after a successful Round 5 application; Round 6 from a successful Round 6 application only if Blazing Fury resolves before Infernal Burst that round; Round 9 after a successful Round 8 application; Round 9 from a successful Round 9 application only if Blazing Fury resolves before Infernal Burst that round. Caraxes must be the ally that received First-Strike; application chance, target selection, and uptime remain unresolved. Same-round action order is unresolved.",
+    "explanation": "Blazing Fury has a 20% chance each round to grant First-Strike to one ally in any lane, for 2 rounds. On Rounds 3, 6 and 9, Infernal Burst deals Fire Damage at a 100% rate to 3 enemies in any lane. When Caraxes has First-Strike, the rate increases 1.5x to 150%. Blazing Fury's First-Strike can overlap Infernal Burst in these windows: Round 3 after a successful Round 2 application; Round 3 from a successful Round 3 application only if Blazing Fury resolves before Infernal Burst that round; Round 6 after a successful Round 5 application; Round 6 from a successful Round 6 application only if Blazing Fury resolves before Infernal Burst that round; Round 9 after a successful Round 8 application; Round 9 from a successful Round 9 application only if Blazing Fury resolves before Infernal Burst that round. Caraxes must be the ally that received First-Strike; activation, recipient selection, and uptime remain unresolved. Same-round action order is unresolved.",
     "id": "status-condition-syrax-blazing-fury-blazing-fury-first-strike-first-strike-status-output-caraxes-infernal-burst-infernal-burst-fire-rate-output",
     "interactionScope": "cross-dragon",
     "matchedOutputCapabilityIds": [],
@@ -5761,7 +5763,7 @@
     "targetSelectionGroup": null,
     "title": "First-Strike enables Infernal Burst",
     "unresolvedQuestions": [
-      "Trigger timing, target selection, and exact uptime are not simulated."
+      "Exact First-Strike recipient and final uptime are unresolved."
     ]
   },
   {
@@ -5770,7 +5772,7 @@
       "Status application chance depends on Habit Level.",
       "If Caraxes has First-Strike, damage is multiplied by 1.5.",
       "The ally status supplier and dependent output must share the same recipient.",
-      "First-Strike application success, enemy identity, target overlap, and conditional uptime are unresolved."
+      "First-Strike activation, recipient selection, and uptime are unresolved."
     ],
     "channel": "fire-damage",
     "confidence": "confirmed",
@@ -5797,7 +5799,7 @@
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final value cannot be calculated because final combat formulas and stacking order are not fully verified.",
-    "explanation": "At effective Habit Level 5, Lightning Strike has a 100% chance on Rounds 1 to First-Strike one enemy in within adjacency, for 3 rounds. On Rounds 3, 6 and 9, Infernal Burst deals Fire Damage at a 100% rate to 3 enemies in any lane. When Caraxes has First-Strike, the rate increases 1.5x to 150%. Lightning Strike's First-Strike can overlap Infernal Burst in these windows: Round 3 after a successful Round 1 application. Caraxes must be the ally that received First-Strike; application chance, target selection, and uptime remain unresolved.",
+    "explanation": "At effective Habit Level 5, Lightning Strike has a 100% chance on Rounds 1 to grant First-Strike to one ally within adjacency, for 3 rounds. On Rounds 3, 6 and 9, Infernal Burst deals Fire Damage at a 100% rate to 3 enemies in any lane. When Caraxes has First-Strike, the rate increases 1.5x to 150%. Lightning Strike's First-Strike can overlap Infernal Burst in these windows: Round 3 after a successful Round 1 application. Caraxes must be the ally that received First-Strike; activation, recipient selection, and uptime remain unresolved.",
     "id": "status-condition-malachite-lightning-strike-lightning-strike-first-strike-first-strike-status-output-caraxes-infernal-burst-infernal-burst-fire-rate-output",
     "interactionScope": "cross-dragon",
     "matchedOutputCapabilityIds": [],
@@ -5858,7 +5860,7 @@
     "targetSelectionGroup": null,
     "title": "First-Strike enables Infernal Burst",
     "unresolvedQuestions": [
-      "Trigger timing, target selection, and exact uptime are not simulated."
+      "Exact First-Strike recipient and final uptime are unresolved."
     ]
   },
   {
@@ -10129,7 +10131,7 @@
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact status target outcome cannot be calculated because activation, target identity, and uptime are unresolved.",
-    "explanation": "At effective Habit Level 5, Crippling Inferno has a 20% chance each round to Slow 3 enemies in any lane, for 2 rounds.",
+    "explanation": "At effective Habit Level 5, Crippling Inferno has a 20% chance each round to apply Slow to 3 enemies in any lane, for 2 rounds.",
     "id": "enemy-status-output-caraxes-crippling-inferno-crippling-inferno-slow-slow-status-output",
     "interactionScope": "enemy-side",
     "matchedOutputCapabilityIds": [],
@@ -10197,7 +10199,7 @@
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact status target outcome cannot be calculated because activation, target identity, and uptime are unresolved.",
-    "explanation": "At effective Habit Level 5, Crippling Inferno has a 20% chance each round to Burn 3 enemies in any lane, for 2 rounds.",
+    "explanation": "At effective Habit Level 5, Crippling Inferno has a 20% chance each round to apply Burn to 3 enemies in any lane, for 2 rounds.",
     "id": "enemy-status-output-caraxes-crippling-inferno-crippling-inferno-burn-burn-status-output",
     "interactionScope": "enemy-side",
     "matchedOutputCapabilityIds": [],
@@ -10277,12 +10279,13 @@
       "Known possible overlap windows: Round 2 after a successful Round 1 application; Round 2 from a successful Round 2 application only if Crippling Inferno resolves before Strategic Revival that round; Round 5 after a successful Round 4 application; Round 5 from a successful Round 5 application only if Crippling Inferno resolves before Strategic Revival that round; Round 8 after a successful Round 7 application; Round 8 from a successful Round 8 application only if Crippling Inferno resolves before Strategic Revival that round.",
       "Slow duration: 2 rounds.",
       "At least one enemy must have active Slow.",
+      "Strategic Revival's friendly recipient is selected independently.",
       "Strategic Revival does not require the same enemy to be selected.",
       "Action order within same-round overlap is unresolved."
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final value cannot be calculated because final combat formulas and stacking order are not fully verified.",
-    "explanation": "At effective Habit Level 5, Crippling Inferno has a 20% chance each round to Slow 3 enemies in any lane, for 2 rounds. Crippling Inferno's Slow can overlap Strategic Revival in these windows: Round 2 after a successful Round 1 application; Round 2 from a successful Round 2 application only if Crippling Inferno resolves before Strategic Revival that round; Round 5 after a successful Round 4 application; Round 5 from a successful Round 5 application only if Crippling Inferno resolves before Strategic Revival that round; Round 8 after a successful Round 7 application; Round 8 from a successful Round 8 application only if Crippling Inferno resolves before Strategic Revival that round. At least one enemy must still have active Slow; enemy identity, application success, and battlefield uptime remain unresolved. Same-round action order is unresolved.",
+    "explanation": "At effective Habit Level 5, Crippling Inferno has a 20% chance each round to apply Slow to 3 enemies in any lane, for 2 rounds. Crippling Inferno's Slow can overlap Strategic Revival in these windows: Round 2 after a successful Round 1 application; Round 2 from a successful Round 2 application only if Crippling Inferno resolves before Strategic Revival that round; Round 5 after a successful Round 4 application; Round 5 from a successful Round 5 application only if Crippling Inferno resolves before Strategic Revival that round; Round 8 after a successful Round 7 application; Round 8 from a successful Round 8 application only if Crippling Inferno resolves before Strategic Revival that round. At least one enemy must still have active Slow; application success, whether any enemy remains affected, and battlefield uptime remain unresolved. Same-round action order is unresolved.",
     "id": "status-condition-caraxes-crippling-inferno-crippling-inferno-slow-slow-status-output-syrax-strategic-revival-strategic-revival-recovery-output",
     "interactionScope": "cross-dragon",
     "matchedOutputCapabilityIds": [],
@@ -10365,7 +10368,7 @@
     "targetSelectionGroup": null,
     "title": "Slow enables Strategic Revival",
     "unresolvedQuestions": [
-      "Trigger timing, target selection, and exact uptime are not simulated."
+      "Exact Slow battlefield uptime is unresolved."
     ]
   },
   {
@@ -10376,7 +10379,7 @@
       "If Caraxes has First-Strike, damage is multiplied by 1.5.",
       "Within-round action order is not assumed.",
       "The ally status supplier and dependent output must share the same recipient.",
-      "First-Strike application success, enemy identity, target overlap, and conditional uptime are unresolved."
+      "First-Strike activation, recipient selection, and uptime are unresolved."
     ],
     "channel": "fire-damage",
     "confidence": "confirmed",
@@ -10399,7 +10402,7 @@
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final value cannot be calculated because final combat formulas and stacking order are not fully verified.",
-    "explanation": "Blazing Fury has a 20% chance each round to First-Strike one enemy in any lane, for 2 rounds. On Rounds 3, 6 and 9, Infernal Burst deals Fire Damage at a 100% rate to 3 enemies in any lane. When Caraxes has First-Strike, the rate increases 1.5x to 150%. Blazing Fury's First-Strike can overlap Infernal Burst in these windows: Round 3 after a successful Round 2 application; Round 3 from a successful Round 3 application only if Blazing Fury resolves before Infernal Burst that round; Round 6 after a successful Round 5 application; Round 6 from a successful Round 6 application only if Blazing Fury resolves before Infernal Burst that round; Round 9 after a successful Round 8 application; Round 9 from a successful Round 9 application only if Blazing Fury resolves before Infernal Burst that round. Caraxes must be the ally that received First-Strike; application chance, target selection, and uptime remain unresolved. Same-round action order is unresolved.",
+    "explanation": "Blazing Fury has a 20% chance each round to grant First-Strike to one ally in any lane, for 2 rounds. On Rounds 3, 6 and 9, Infernal Burst deals Fire Damage at a 100% rate to 3 enemies in any lane. When Caraxes has First-Strike, the rate increases 1.5x to 150%. Blazing Fury's First-Strike can overlap Infernal Burst in these windows: Round 3 after a successful Round 2 application; Round 3 from a successful Round 3 application only if Blazing Fury resolves before Infernal Burst that round; Round 6 after a successful Round 5 application; Round 6 from a successful Round 6 application only if Blazing Fury resolves before Infernal Burst that round; Round 9 after a successful Round 8 application; Round 9 from a successful Round 9 application only if Blazing Fury resolves before Infernal Burst that round. Caraxes must be the ally that received First-Strike; activation, recipient selection, and uptime remain unresolved. Same-round action order is unresolved.",
     "id": "status-condition-syrax-blazing-fury-blazing-fury-first-strike-first-strike-status-output-caraxes-infernal-burst-infernal-burst-fire-rate-output",
     "interactionScope": "cross-dragon",
     "matchedOutputCapabilityIds": [],
@@ -10436,7 +10439,7 @@
     "targetSelectionGroup": null,
     "title": "First-Strike enables Infernal Burst",
     "unresolvedQuestions": [
-      "Trigger timing, target selection, and exact uptime are not simulated."
+      "Exact First-Strike recipient and final uptime are unresolved."
     ]
   },
   {
@@ -10445,7 +10448,7 @@
       "Status application chance depends on Habit Level.",
       "If Caraxes has First-Strike, damage is multiplied by 1.5.",
       "The ally status supplier and dependent output must share the same recipient.",
-      "First-Strike application success, enemy identity, target overlap, and conditional uptime are unresolved."
+      "First-Strike activation, recipient selection, and uptime are unresolved."
     ],
     "channel": "fire-damage",
     "confidence": "confirmed",
@@ -10472,7 +10475,7 @@
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final value cannot be calculated because final combat formulas and stacking order are not fully verified.",
-    "explanation": "At effective Habit Level 5, Lightning Strike has a 100% chance on Rounds 1 to First-Strike one enemy in within adjacency, for 3 rounds. On Rounds 3, 6 and 9, Infernal Burst deals Fire Damage at a 100% rate to 3 enemies in any lane. When Caraxes has First-Strike, the rate increases 1.5x to 150%. Lightning Strike's First-Strike can overlap Infernal Burst in these windows: Round 3 after a successful Round 1 application. Caraxes must be the ally that received First-Strike; application chance, target selection, and uptime remain unresolved.",
+    "explanation": "At effective Habit Level 5, Lightning Strike has a 100% chance on Rounds 1 to grant First-Strike to one ally within adjacency, for 3 rounds. On Rounds 3, 6 and 9, Infernal Burst deals Fire Damage at a 100% rate to 3 enemies in any lane. When Caraxes has First-Strike, the rate increases 1.5x to 150%. Lightning Strike's First-Strike can overlap Infernal Burst in these windows: Round 3 after a successful Round 1 application. Caraxes must be the ally that received First-Strike; activation, recipient selection, and uptime remain unresolved.",
     "id": "status-condition-malachite-lightning-strike-lightning-strike-first-strike-first-strike-status-output-caraxes-infernal-burst-infernal-burst-fire-rate-output",
     "interactionScope": "cross-dragon",
     "matchedOutputCapabilityIds": [],
@@ -10533,7 +10536,7 @@
     "targetSelectionGroup": null,
     "title": "First-Strike enables Infernal Burst",
     "unresolvedQuestions": [
-      "Trigger timing, target selection, and exact uptime are not simulated."
+      "Exact First-Strike recipient and final uptime are unresolved."
     ]
   },
   {
@@ -14827,7 +14830,7 @@
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact status target outcome cannot be calculated because activation, target identity, and uptime are unresolved.",
-    "explanation": "At effective Habit Level 5, Crippling Inferno has a 20% chance each round to Slow 3 enemies in any lane, for 2 rounds.",
+    "explanation": "At effective Habit Level 5, Crippling Inferno has a 20% chance each round to apply Slow to 3 enemies in any lane, for 2 rounds.",
     "id": "enemy-status-output-caraxes-crippling-inferno-crippling-inferno-slow-slow-status-output",
     "interactionScope": "enemy-side",
     "matchedOutputCapabilityIds": [],
@@ -14895,7 +14898,7 @@
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact status target outcome cannot be calculated because activation, target identity, and uptime are unresolved.",
-    "explanation": "At effective Habit Level 5, Crippling Inferno has a 20% chance each round to Burn 3 enemies in any lane, for 2 rounds.",
+    "explanation": "At effective Habit Level 5, Crippling Inferno has a 20% chance each round to apply Burn to 3 enemies in any lane, for 2 rounds.",
     "id": "enemy-status-output-caraxes-crippling-inferno-crippling-inferno-burn-burn-status-output",
     "interactionScope": "enemy-side",
     "matchedOutputCapabilityIds": [],
@@ -14975,12 +14978,13 @@
       "Known possible overlap windows: Round 2 after a successful Round 1 application; Round 2 from a successful Round 2 application only if Crippling Inferno resolves before Strategic Revival that round; Round 5 after a successful Round 4 application; Round 5 from a successful Round 5 application only if Crippling Inferno resolves before Strategic Revival that round; Round 8 after a successful Round 7 application; Round 8 from a successful Round 8 application only if Crippling Inferno resolves before Strategic Revival that round.",
       "Slow duration: 2 rounds.",
       "At least one enemy must have active Slow.",
+      "Strategic Revival's friendly recipient is selected independently.",
       "Strategic Revival does not require the same enemy to be selected.",
       "Action order within same-round overlap is unresolved."
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final value cannot be calculated because final combat formulas and stacking order are not fully verified.",
-    "explanation": "At effective Habit Level 5, Crippling Inferno has a 20% chance each round to Slow 3 enemies in any lane, for 2 rounds. Crippling Inferno's Slow can overlap Strategic Revival in these windows: Round 2 after a successful Round 1 application; Round 2 from a successful Round 2 application only if Crippling Inferno resolves before Strategic Revival that round; Round 5 after a successful Round 4 application; Round 5 from a successful Round 5 application only if Crippling Inferno resolves before Strategic Revival that round; Round 8 after a successful Round 7 application; Round 8 from a successful Round 8 application only if Crippling Inferno resolves before Strategic Revival that round. At least one enemy must still have active Slow; enemy identity, application success, and battlefield uptime remain unresolved. Same-round action order is unresolved.",
+    "explanation": "At effective Habit Level 5, Crippling Inferno has a 20% chance each round to apply Slow to 3 enemies in any lane, for 2 rounds. Crippling Inferno's Slow can overlap Strategic Revival in these windows: Round 2 after a successful Round 1 application; Round 2 from a successful Round 2 application only if Crippling Inferno resolves before Strategic Revival that round; Round 5 after a successful Round 4 application; Round 5 from a successful Round 5 application only if Crippling Inferno resolves before Strategic Revival that round; Round 8 after a successful Round 7 application; Round 8 from a successful Round 8 application only if Crippling Inferno resolves before Strategic Revival that round. At least one enemy must still have active Slow; application success, whether any enemy remains affected, and battlefield uptime remain unresolved. Same-round action order is unresolved.",
     "id": "status-condition-caraxes-crippling-inferno-crippling-inferno-slow-slow-status-output-syrax-strategic-revival-strategic-revival-recovery-output",
     "interactionScope": "cross-dragon",
     "matchedOutputCapabilityIds": [],
@@ -15063,7 +15067,7 @@
     "targetSelectionGroup": null,
     "title": "Slow enables Strategic Revival",
     "unresolvedQuestions": [
-      "Trigger timing, target selection, and exact uptime are not simulated."
+      "Exact Slow battlefield uptime is unresolved."
     ]
   },
   {
@@ -15074,7 +15078,7 @@
       "If Caraxes has First-Strike, damage is multiplied by 1.5.",
       "Within-round action order is not assumed.",
       "The ally status supplier and dependent output must share the same recipient.",
-      "First-Strike application success, enemy identity, target overlap, and conditional uptime are unresolved."
+      "First-Strike activation, recipient selection, and uptime are unresolved."
     ],
     "channel": "fire-damage",
     "confidence": "confirmed",
@@ -15097,7 +15101,7 @@
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final value cannot be calculated because final combat formulas and stacking order are not fully verified.",
-    "explanation": "Blazing Fury has a 20% chance each round to First-Strike one enemy in any lane, for 2 rounds. On Rounds 3, 6 and 9, Infernal Burst deals Fire Damage at a 100% rate to 3 enemies in any lane. When Caraxes has First-Strike, the rate increases 1.5x to 150%. Blazing Fury's First-Strike can overlap Infernal Burst in these windows: Round 3 after a successful Round 2 application; Round 3 from a successful Round 3 application only if Blazing Fury resolves before Infernal Burst that round; Round 6 after a successful Round 5 application; Round 6 from a successful Round 6 application only if Blazing Fury resolves before Infernal Burst that round; Round 9 after a successful Round 8 application; Round 9 from a successful Round 9 application only if Blazing Fury resolves before Infernal Burst that round. Caraxes must be the ally that received First-Strike; application chance, target selection, and uptime remain unresolved. Same-round action order is unresolved.",
+    "explanation": "Blazing Fury has a 20% chance each round to grant First-Strike to one ally in any lane, for 2 rounds. On Rounds 3, 6 and 9, Infernal Burst deals Fire Damage at a 100% rate to 3 enemies in any lane. When Caraxes has First-Strike, the rate increases 1.5x to 150%. Blazing Fury's First-Strike can overlap Infernal Burst in these windows: Round 3 after a successful Round 2 application; Round 3 from a successful Round 3 application only if Blazing Fury resolves before Infernal Burst that round; Round 6 after a successful Round 5 application; Round 6 from a successful Round 6 application only if Blazing Fury resolves before Infernal Burst that round; Round 9 after a successful Round 8 application; Round 9 from a successful Round 9 application only if Blazing Fury resolves before Infernal Burst that round. Caraxes must be the ally that received First-Strike; activation, recipient selection, and uptime remain unresolved. Same-round action order is unresolved.",
     "id": "status-condition-syrax-blazing-fury-blazing-fury-first-strike-first-strike-status-output-caraxes-infernal-burst-infernal-burst-fire-rate-output",
     "interactionScope": "cross-dragon",
     "matchedOutputCapabilityIds": [],
@@ -15134,7 +15138,7 @@
     "targetSelectionGroup": null,
     "title": "First-Strike enables Infernal Burst",
     "unresolvedQuestions": [
-      "Trigger timing, target selection, and exact uptime are not simulated."
+      "Exact First-Strike recipient and final uptime are unresolved."
     ]
   },
   {
@@ -15143,7 +15147,7 @@
       "Status application chance depends on Habit Level.",
       "If Caraxes has First-Strike, damage is multiplied by 1.5.",
       "The ally status supplier and dependent output must share the same recipient.",
-      "First-Strike application success, enemy identity, target overlap, and conditional uptime are unresolved."
+      "First-Strike activation, recipient selection, and uptime are unresolved."
     ],
     "channel": "fire-damage",
     "confidence": "confirmed",
@@ -15169,7 +15173,7 @@
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final value cannot be calculated because final combat formulas and stacking order are not fully verified.",
-    "explanation": "At effective Habit Level 5, Lightning Strike has a 100% chance on Rounds 1 to First-Strike one enemy in within adjacency, for 3 rounds. On Rounds 3, 6 and 9, Infernal Burst deals Fire Damage at a 100% rate to 3 enemies in any lane. When Caraxes has First-Strike, the rate increases 1.5x to 150%. Lightning Strike's First-Strike can overlap Infernal Burst in these windows: Round 3 after a successful Round 1 application. Caraxes must be the ally that received First-Strike; application chance, target selection, and uptime remain unresolved.",
+    "explanation": "At effective Habit Level 5, Lightning Strike has a 100% chance on Rounds 1 to grant First-Strike to one ally within adjacency, for 3 rounds. On Rounds 3, 6 and 9, Infernal Burst deals Fire Damage at a 100% rate to 3 enemies in any lane. When Caraxes has First-Strike, the rate increases 1.5x to 150%. Lightning Strike's First-Strike can overlap Infernal Burst in these windows: Round 3 after a successful Round 1 application. Caraxes must be the ally that received First-Strike; activation, recipient selection, and uptime remain unresolved.",
     "id": "status-condition-malachite-lightning-strike-lightning-strike-first-strike-first-strike-status-output-caraxes-infernal-burst-infernal-burst-fire-rate-output",
     "interactionScope": "cross-dragon",
     "matchedOutputCapabilityIds": [],
@@ -15230,7 +15234,7 @@
     "targetSelectionGroup": null,
     "title": "First-Strike enables Infernal Burst",
     "unresolvedQuestions": [
-      "Trigger timing, target selection, and exact uptime are not simulated."
+      "Exact First-Strike recipient and final uptime are unresolved."
     ]
   },
   {
@@ -37288,7 +37292,7 @@
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact status target outcome cannot be calculated because activation, target identity, and uptime are unresolved.",
-    "explanation": "At effective Habit Level 5, Crippling Inferno has a 20% chance each round to Slow 3 enemies in any lane, for 2 rounds.",
+    "explanation": "At effective Habit Level 5, Crippling Inferno has a 20% chance each round to apply Slow to 3 enemies in any lane, for 2 rounds.",
     "id": "enemy-status-output-caraxes-crippling-inferno-crippling-inferno-slow-slow-status-output",
     "interactionScope": "enemy-side",
     "matchedOutputCapabilityIds": [],
@@ -37356,7 +37360,7 @@
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact status target outcome cannot be calculated because activation, target identity, and uptime are unresolved.",
-    "explanation": "At effective Habit Level 5, Crippling Inferno has a 20% chance each round to Burn 3 enemies in any lane, for 2 rounds.",
+    "explanation": "At effective Habit Level 5, Crippling Inferno has a 20% chance each round to apply Burn to 3 enemies in any lane, for 2 rounds.",
     "id": "enemy-status-output-caraxes-crippling-inferno-crippling-inferno-burn-burn-status-output",
     "interactionScope": "enemy-side",
     "matchedOutputCapabilityIds": [],
@@ -45540,7 +45544,7 @@
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact status target outcome cannot be calculated because activation, target identity, and uptime are unresolved.",
-    "explanation": "At effective Habit Level 5, Crippling Inferno has a 20% chance each round to Slow 3 enemies in any lane, for 2 rounds.",
+    "explanation": "At effective Habit Level 5, Crippling Inferno has a 20% chance each round to apply Slow to 3 enemies in any lane, for 2 rounds.",
     "id": "enemy-status-output-caraxes-crippling-inferno-crippling-inferno-slow-slow-status-output",
     "interactionScope": "enemy-side",
     "matchedOutputCapabilityIds": [],
@@ -45608,7 +45612,7 @@
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact status target outcome cannot be calculated because activation, target identity, and uptime are unresolved.",
-    "explanation": "At effective Habit Level 5, Crippling Inferno has a 20% chance each round to Burn 3 enemies in any lane, for 2 rounds.",
+    "explanation": "At effective Habit Level 5, Crippling Inferno has a 20% chance each round to apply Burn to 3 enemies in any lane, for 2 rounds.",
     "id": "enemy-status-output-caraxes-crippling-inferno-crippling-inferno-burn-burn-status-output",
     "interactionScope": "enemy-side",
     "matchedOutputCapabilityIds": [],
@@ -45688,12 +45692,13 @@
       "Known possible overlap windows: Round 2 after a successful Round 1 application; Round 2 from a successful Round 2 application only if Crippling Inferno resolves before Strategic Revival that round; Round 5 after a successful Round 4 application; Round 5 from a successful Round 5 application only if Crippling Inferno resolves before Strategic Revival that round; Round 8 after a successful Round 7 application; Round 8 from a successful Round 8 application only if Crippling Inferno resolves before Strategic Revival that round.",
       "Slow duration: 2 rounds.",
       "At least one enemy must have active Slow.",
+      "Strategic Revival's friendly recipient is selected independently.",
       "Strategic Revival does not require the same enemy to be selected.",
       "Action order within same-round overlap is unresolved."
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final value cannot be calculated because final combat formulas and stacking order are not fully verified.",
-    "explanation": "At effective Habit Level 5, Crippling Inferno has a 20% chance each round to Slow 3 enemies in any lane, for 2 rounds. Crippling Inferno's Slow can overlap Strategic Revival in these windows: Round 2 after a successful Round 1 application; Round 2 from a successful Round 2 application only if Crippling Inferno resolves before Strategic Revival that round; Round 5 after a successful Round 4 application; Round 5 from a successful Round 5 application only if Crippling Inferno resolves before Strategic Revival that round; Round 8 after a successful Round 7 application; Round 8 from a successful Round 8 application only if Crippling Inferno resolves before Strategic Revival that round. At least one enemy must still have active Slow; enemy identity, application success, and battlefield uptime remain unresolved. Same-round action order is unresolved.",
+    "explanation": "At effective Habit Level 5, Crippling Inferno has a 20% chance each round to apply Slow to 3 enemies in any lane, for 2 rounds. Crippling Inferno's Slow can overlap Strategic Revival in these windows: Round 2 after a successful Round 1 application; Round 2 from a successful Round 2 application only if Crippling Inferno resolves before Strategic Revival that round; Round 5 after a successful Round 4 application; Round 5 from a successful Round 5 application only if Crippling Inferno resolves before Strategic Revival that round; Round 8 after a successful Round 7 application; Round 8 from a successful Round 8 application only if Crippling Inferno resolves before Strategic Revival that round. At least one enemy must still have active Slow; application success, whether any enemy remains affected, and battlefield uptime remain unresolved. Same-round action order is unresolved.",
     "id": "status-condition-caraxes-crippling-inferno-crippling-inferno-slow-slow-status-output-syrax-strategic-revival-strategic-revival-recovery-output",
     "interactionScope": "cross-dragon",
     "matchedOutputCapabilityIds": [],
@@ -45776,7 +45781,7 @@
     "targetSelectionGroup": null,
     "title": "Slow enables Strategic Revival",
     "unresolvedQuestions": [
-      "Trigger timing, target selection, and exact uptime are not simulated."
+      "Exact Slow battlefield uptime is unresolved."
     ]
   },
   {
@@ -45787,7 +45792,7 @@
       "If Caraxes has First-Strike, damage is multiplied by 1.5.",
       "Within-round action order is not assumed.",
       "The ally status supplier and dependent output must share the same recipient.",
-      "First-Strike application success, enemy identity, target overlap, and conditional uptime are unresolved."
+      "First-Strike activation, recipient selection, and uptime are unresolved."
     ],
     "channel": "fire-damage",
     "confidence": "confirmed",
@@ -45810,7 +45815,7 @@
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final value cannot be calculated because final combat formulas and stacking order are not fully verified.",
-    "explanation": "Blazing Fury has a 20% chance each round to First-Strike one enemy in any lane, for 2 rounds. On Rounds 3, 6 and 9, Infernal Burst deals Fire Damage at a 100% rate to 3 enemies in any lane. When Caraxes has First-Strike, the rate increases 1.5x to 150%. Blazing Fury's First-Strike can overlap Infernal Burst in these windows: Round 3 after a successful Round 2 application; Round 3 from a successful Round 3 application only if Blazing Fury resolves before Infernal Burst that round; Round 6 after a successful Round 5 application; Round 6 from a successful Round 6 application only if Blazing Fury resolves before Infernal Burst that round; Round 9 after a successful Round 8 application; Round 9 from a successful Round 9 application only if Blazing Fury resolves before Infernal Burst that round. Caraxes must be the ally that received First-Strike; application chance, target selection, and uptime remain unresolved. Same-round action order is unresolved.",
+    "explanation": "Blazing Fury has a 20% chance each round to grant First-Strike to one ally in any lane, for 2 rounds. On Rounds 3, 6 and 9, Infernal Burst deals Fire Damage at a 100% rate to 3 enemies in any lane. When Caraxes has First-Strike, the rate increases 1.5x to 150%. Blazing Fury's First-Strike can overlap Infernal Burst in these windows: Round 3 after a successful Round 2 application; Round 3 from a successful Round 3 application only if Blazing Fury resolves before Infernal Burst that round; Round 6 after a successful Round 5 application; Round 6 from a successful Round 6 application only if Blazing Fury resolves before Infernal Burst that round; Round 9 after a successful Round 8 application; Round 9 from a successful Round 9 application only if Blazing Fury resolves before Infernal Burst that round. Caraxes must be the ally that received First-Strike; activation, recipient selection, and uptime remain unresolved. Same-round action order is unresolved.",
     "id": "status-condition-syrax-blazing-fury-blazing-fury-first-strike-first-strike-status-output-caraxes-infernal-burst-infernal-burst-fire-rate-output",
     "interactionScope": "cross-dragon",
     "matchedOutputCapabilityIds": [],
@@ -45847,7 +45852,7 @@
     "targetSelectionGroup": null,
     "title": "First-Strike enables Infernal Burst",
     "unresolvedQuestions": [
-      "Trigger timing, target selection, and exact uptime are not simulated."
+      "Exact First-Strike recipient and final uptime are unresolved."
     ]
   },
   {
@@ -50133,7 +50138,7 @@
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact status target outcome cannot be calculated because activation, target identity, and uptime are unresolved.",
-    "explanation": "At effective Habit Level 5, Crippling Inferno has a 20% chance each round to Slow 3 enemies in any lane, for 2 rounds.",
+    "explanation": "At effective Habit Level 5, Crippling Inferno has a 20% chance each round to apply Slow to 3 enemies in any lane, for 2 rounds.",
     "id": "enemy-status-output-caraxes-crippling-inferno-crippling-inferno-slow-slow-status-output",
     "interactionScope": "enemy-side",
     "matchedOutputCapabilityIds": [],
@@ -50201,7 +50206,7 @@
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact status target outcome cannot be calculated because activation, target identity, and uptime are unresolved.",
-    "explanation": "At effective Habit Level 5, Crippling Inferno has a 20% chance each round to Burn 3 enemies in any lane, for 2 rounds.",
+    "explanation": "At effective Habit Level 5, Crippling Inferno has a 20% chance each round to apply Burn to 3 enemies in any lane, for 2 rounds.",
     "id": "enemy-status-output-caraxes-crippling-inferno-crippling-inferno-burn-burn-status-output",
     "interactionScope": "enemy-side",
     "matchedOutputCapabilityIds": [],
@@ -50281,12 +50286,13 @@
       "Known possible overlap windows: Round 2 after a successful Round 1 application; Round 2 from a successful Round 2 application only if Crippling Inferno resolves before Strategic Revival that round; Round 5 after a successful Round 4 application; Round 5 from a successful Round 5 application only if Crippling Inferno resolves before Strategic Revival that round; Round 8 after a successful Round 7 application; Round 8 from a successful Round 8 application only if Crippling Inferno resolves before Strategic Revival that round.",
       "Slow duration: 2 rounds.",
       "At least one enemy must have active Slow.",
+      "Strategic Revival's friendly recipient is selected independently.",
       "Strategic Revival does not require the same enemy to be selected.",
       "Action order within same-round overlap is unresolved."
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final value cannot be calculated because final combat formulas and stacking order are not fully verified.",
-    "explanation": "At effective Habit Level 5, Crippling Inferno has a 20% chance each round to Slow 3 enemies in any lane, for 2 rounds. Crippling Inferno's Slow can overlap Strategic Revival in these windows: Round 2 after a successful Round 1 application; Round 2 from a successful Round 2 application only if Crippling Inferno resolves before Strategic Revival that round; Round 5 after a successful Round 4 application; Round 5 from a successful Round 5 application only if Crippling Inferno resolves before Strategic Revival that round; Round 8 after a successful Round 7 application; Round 8 from a successful Round 8 application only if Crippling Inferno resolves before Strategic Revival that round. At least one enemy must still have active Slow; enemy identity, application success, and battlefield uptime remain unresolved. Same-round action order is unresolved.",
+    "explanation": "At effective Habit Level 5, Crippling Inferno has a 20% chance each round to apply Slow to 3 enemies in any lane, for 2 rounds. Crippling Inferno's Slow can overlap Strategic Revival in these windows: Round 2 after a successful Round 1 application; Round 2 from a successful Round 2 application only if Crippling Inferno resolves before Strategic Revival that round; Round 5 after a successful Round 4 application; Round 5 from a successful Round 5 application only if Crippling Inferno resolves before Strategic Revival that round; Round 8 after a successful Round 7 application; Round 8 from a successful Round 8 application only if Crippling Inferno resolves before Strategic Revival that round. At least one enemy must still have active Slow; application success, whether any enemy remains affected, and battlefield uptime remain unresolved. Same-round action order is unresolved.",
     "id": "status-condition-caraxes-crippling-inferno-crippling-inferno-slow-slow-status-output-syrax-strategic-revival-strategic-revival-recovery-output",
     "interactionScope": "cross-dragon",
     "matchedOutputCapabilityIds": [],
@@ -50369,7 +50375,7 @@
     "targetSelectionGroup": null,
     "title": "Slow enables Strategic Revival",
     "unresolvedQuestions": [
-      "Trigger timing, target selection, and exact uptime are not simulated."
+      "Exact Slow battlefield uptime is unresolved."
     ]
   },
   {
@@ -50380,7 +50386,7 @@
       "If Caraxes has First-Strike, damage is multiplied by 1.5.",
       "Within-round action order is not assumed.",
       "The ally status supplier and dependent output must share the same recipient.",
-      "First-Strike application success, enemy identity, target overlap, and conditional uptime are unresolved."
+      "First-Strike activation, recipient selection, and uptime are unresolved."
     ],
     "channel": "fire-damage",
     "confidence": "confirmed",
@@ -50403,7 +50409,7 @@
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final value cannot be calculated because final combat formulas and stacking order are not fully verified.",
-    "explanation": "Blazing Fury has a 20% chance each round to First-Strike one enemy in any lane, for 2 rounds. On Rounds 3, 6 and 9, Infernal Burst deals Fire Damage at a 100% rate to 3 enemies in any lane. When Caraxes has First-Strike, the rate increases 1.5x to 150%. Blazing Fury's First-Strike can overlap Infernal Burst in these windows: Round 3 after a successful Round 2 application; Round 3 from a successful Round 3 application only if Blazing Fury resolves before Infernal Burst that round; Round 6 after a successful Round 5 application; Round 6 from a successful Round 6 application only if Blazing Fury resolves before Infernal Burst that round; Round 9 after a successful Round 8 application; Round 9 from a successful Round 9 application only if Blazing Fury resolves before Infernal Burst that round. Caraxes must be the ally that received First-Strike; application chance, target selection, and uptime remain unresolved. Same-round action order is unresolved.",
+    "explanation": "Blazing Fury has a 20% chance each round to grant First-Strike to one ally in any lane, for 2 rounds. On Rounds 3, 6 and 9, Infernal Burst deals Fire Damage at a 100% rate to 3 enemies in any lane. When Caraxes has First-Strike, the rate increases 1.5x to 150%. Blazing Fury's First-Strike can overlap Infernal Burst in these windows: Round 3 after a successful Round 2 application; Round 3 from a successful Round 3 application only if Blazing Fury resolves before Infernal Burst that round; Round 6 after a successful Round 5 application; Round 6 from a successful Round 6 application only if Blazing Fury resolves before Infernal Burst that round; Round 9 after a successful Round 8 application; Round 9 from a successful Round 9 application only if Blazing Fury resolves before Infernal Burst that round. Caraxes must be the ally that received First-Strike; activation, recipient selection, and uptime remain unresolved. Same-round action order is unresolved.",
     "id": "status-condition-syrax-blazing-fury-blazing-fury-first-strike-first-strike-status-output-caraxes-infernal-burst-infernal-burst-fire-rate-output",
     "interactionScope": "cross-dragon",
     "matchedOutputCapabilityIds": [],
@@ -50440,7 +50446,7 @@
     "targetSelectionGroup": null,
     "title": "First-Strike enables Infernal Burst",
     "unresolvedQuestions": [
-      "Trigger timing, target selection, and exact uptime are not simulated."
+      "Exact First-Strike recipient and final uptime are unresolved."
     ]
   },
   {
@@ -54488,7 +54494,7 @@
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact status target outcome cannot be calculated because activation, target identity, and uptime are unresolved.",
-    "explanation": "Each round, Fiery Bonds checks 3 enemies in any lane. the Taunt application chance is 25% for a normal target and 50% for that same target while it has Burn, a target-specific 2x increase. Taunt for 2 rounds.",
+    "explanation": "Each round, Fiery Bonds checks 3 enemies in any lane. The Taunt application chance is 25% for a normal target and 50% for that same target while it has Burn, a target-specific 2x increase. Taunt for 2 rounds.",
     "id": "enemy-status-output-vhagar-fiery-bonds-fiery-bonds-taunt-taunt-status-output",
     "interactionScope": "enemy-side",
     "matchedOutputCapabilityIds": [],
@@ -54535,7 +54541,7 @@
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact status target outcome cannot be calculated because activation, target identity, and uptime are unresolved.",
-    "explanation": "At effective Habit Level 5, Eclipse Cover has a 35% chance on rounds 3 through 7 to Weakened one enemy in any lane, for 2 rounds.",
+    "explanation": "At effective Habit Level 5, Eclipse Cover has a 35% chance on rounds 3 through 7 to apply Weakened to one enemy in any lane, for 2 rounds.",
     "id": "enemy-status-output-vhagar-eclipse-cover-eclipse-cover-weakened-weakened-status-output",
     "interactionScope": "enemy-side",
     "matchedOutputCapabilityIds": [],
@@ -54605,7 +54611,7 @@
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact status target outcome cannot be calculated because activation, target identity, and uptime are unresolved.",
-    "explanation": "Tactical Strike has a 30% chance after each Basic Attack to Bleed 2 enemies in within adjacency, for 2 rounds.",
+    "explanation": "Tactical Strike has a 30% chance after each Basic Attack to apply Bleed to 2 enemies within adjacency, for 2 rounds.",
     "id": "enemy-status-output-kalspire-tactical-strike-tactical-strike-bleed-bleed-status-output",
     "interactionScope": "enemy-side",
     "matchedOutputCapabilityIds": [],
@@ -54650,7 +54656,7 @@
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact status target outcome cannot be calculated because activation, target identity, and uptime are unresolved.",
-    "explanation": "At effective Habit Level 5, Tactical Assault has a 30% chance after each Basic Attack to Panic 2 enemies in within adjacency, for 2 rounds.",
+    "explanation": "At effective Habit Level 5, Tactical Assault has a 30% chance after each Basic Attack to apply Panic to 2 enemies within adjacency, for 2 rounds.",
     "id": "enemy-status-output-kalspire-tactical-assault-tactical-assault-panic-panic-status-output",
     "interactionScope": "enemy-side",
     "matchedOutputCapabilityIds": [],
@@ -54721,7 +54727,7 @@
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final value cannot be calculated because final combat formulas and stacking order are not fully verified.",
-    "explanation": "Kalspire's Radiant Conqueror applies Stun to Kalspire. Target: Kalspire. Timing: Start of Round 1. Duration: 1 round. Real Control status: Stun. Real self-inflicted Control status.",
+    "explanation": "Kalspire's Radiant Conqueror causes Kalspire to gain Stun. Target: Kalspire. Timing: Start of Round 1. Duration: 1 round. Real Control status: Stun. Real self-inflicted Control status.",
     "id": "self-status-output-kalspire-radiant-conqueror-radiant-conqueror-self-stun-stun-status-output",
     "interactionScope": "internal",
     "matchedOutputCapabilityIds": [],
@@ -57589,7 +57595,7 @@
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact status target outcome cannot be calculated because activation, target identity, and uptime are unresolved.",
-    "explanation": "Each round, Fiery Bonds checks 3 enemies in any lane. the Taunt application chance is 25% for a normal target and 50% for that same target while it has Burn, a target-specific 2x increase. Taunt for 2 rounds.",
+    "explanation": "Each round, Fiery Bonds checks 3 enemies in any lane. The Taunt application chance is 25% for a normal target and 50% for that same target while it has Burn, a target-specific 2x increase. Taunt for 2 rounds.",
     "id": "enemy-status-output-vhagar-fiery-bonds-fiery-bonds-taunt-taunt-status-output",
     "interactionScope": "enemy-side",
     "matchedOutputCapabilityIds": [],
@@ -57636,7 +57642,7 @@
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact status target outcome cannot be calculated because activation, target identity, and uptime are unresolved.",
-    "explanation": "At effective Habit Level 5, Eclipse Cover has a 35% chance on rounds 3 through 7 to Weakened one enemy in any lane, for 2 rounds.",
+    "explanation": "At effective Habit Level 5, Eclipse Cover has a 35% chance on rounds 3 through 7 to apply Weakened to one enemy in any lane, for 2 rounds.",
     "id": "enemy-status-output-vhagar-eclipse-cover-eclipse-cover-weakened-weakened-status-output",
     "interactionScope": "enemy-side",
     "matchedOutputCapabilityIds": [],
@@ -57706,7 +57712,7 @@
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact status target outcome cannot be calculated because activation, target identity, and uptime are unresolved.",
-    "explanation": "At effective Habit Level 5, Crippling Inferno has a 20% chance each round to Slow 3 enemies in any lane, for 2 rounds.",
+    "explanation": "At effective Habit Level 5, Crippling Inferno has a 20% chance each round to apply Slow to 3 enemies in any lane, for 2 rounds.",
     "id": "enemy-status-output-caraxes-crippling-inferno-crippling-inferno-slow-slow-status-output",
     "interactionScope": "enemy-side",
     "matchedOutputCapabilityIds": [],
@@ -57774,7 +57780,7 @@
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact status target outcome cannot be calculated because activation, target identity, and uptime are unresolved.",
-    "explanation": "At effective Habit Level 5, Crippling Inferno has a 20% chance each round to Burn 3 enemies in any lane, for 2 rounds.",
+    "explanation": "At effective Habit Level 5, Crippling Inferno has a 20% chance each round to apply Burn to 3 enemies in any lane, for 2 rounds.",
     "id": "enemy-status-output-caraxes-crippling-inferno-crippling-inferno-burn-burn-status-output",
     "interactionScope": "enemy-side",
     "matchedOutputCapabilityIds": [],
@@ -57827,7 +57833,7 @@
     "assumptions": [
       "Within-round action order is not assumed.",
       "The status supplier and dependent output must affect the same enemy.",
-      "Burn application success, enemy identity, target overlap, and conditional uptime are unresolved."
+      "Burn application success, enemy identity, same-target overlap, and conditional uptime are unresolved."
     ],
     "channel": "status",
     "confidence": "confirmed",
@@ -57850,16 +57856,16 @@
       "Status application chance: 20% at effective Habit Level 5.",
       "Duration: 2 rounds.",
       "Independent per-target checks: 3.",
-      "Supplier schedule: Rounds 1, 2, 3, 4, 5, 6, 7, 8, 9 and 10.",
+      "Supplier schedule: Each round.",
       "Dependent schedule: Each round.",
-      "Known possible overlap windows: Round 1 from a successful Round 1 application only if Crippling Inferno resolves before Fiery Bonds that round; Round 2 after a successful Round 1 application; Round 2 from a successful Round 2 application only if Crippling Inferno resolves before Fiery Bonds that round; Round 3 after a successful Round 2 application; Round 3 from a successful Round 3 application only if Crippling Inferno resolves before Fiery Bonds that round; Round 4 after a successful Round 3 application; Round 4 from a successful Round 4 application only if Crippling Inferno resolves before Fiery Bonds that round; Round 5 after a successful Round 4 application; Round 5 from a successful Round 5 application only if Crippling Inferno resolves before Fiery Bonds that round; Round 6 after a successful Round 5 application; Round 6 from a successful Round 6 application only if Crippling Inferno resolves before Fiery Bonds that round; Round 7 after a successful Round 6 application; Round 7 from a successful Round 7 application only if Crippling Inferno resolves before Fiery Bonds that round; Round 8 after a successful Round 7 application; Round 8 from a successful Round 8 application only if Crippling Inferno resolves before Fiery Bonds that round; Round 9 after a successful Round 8 application; Round 9 from a successful Round 9 application only if Crippling Inferno resolves before Fiery Bonds that round; Round 10 after a successful Round 9 application; Round 10 from a successful Round 10 application only if Crippling Inferno resolves before Fiery Bonds that round.",
+      "Crippling Inferno and Fiery Bonds both check each round. Burn from the previous round can still enhance Fiery Bonds from Round 2 onward. A Burn applied during the current round can enhance Fiery Bonds only if Crippling Inferno resolves first.",
       "Burn duration: 2 rounds.",
       "The status and dependent damage must affect the same enemy.",
       "Action order within same-round overlap is unresolved."
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final value cannot be calculated because final combat formulas and stacking order are not fully verified.",
-    "explanation": "At effective Habit Level 5, Crippling Inferno has a 20% chance each round to Burn 3 enemies in any lane, for 2 rounds. Each round, Fiery Bonds checks 3 enemies in any lane. the Taunt application chance is 25% for a normal target and 50% for that same target while it has Burn, a target-specific 2x increase. Taunt for 2 rounds. Crippling Inferno's Burn can overlap Fiery Bonds in these windows: Round 1 from a successful Round 1 application only if Crippling Inferno resolves before Fiery Bonds that round; Round 2 after a successful Round 1 application; Round 2 from a successful Round 2 application only if Crippling Inferno resolves before Fiery Bonds that round; Round 3 after a successful Round 2 application; Round 3 from a successful Round 3 application only if Crippling Inferno resolves before Fiery Bonds that round; Round 4 after a successful Round 3 application; Round 4 from a successful Round 4 application only if Crippling Inferno resolves before Fiery Bonds that round; Round 5 after a successful Round 4 application; Round 5 from a successful Round 5 application only if Crippling Inferno resolves before Fiery Bonds that round; Round 6 after a successful Round 5 application; Round 6 from a successful Round 6 application only if Crippling Inferno resolves before Fiery Bonds that round; Round 7 after a successful Round 6 application; Round 7 from a successful Round 7 application only if Crippling Inferno resolves before Fiery Bonds that round; Round 8 after a successful Round 7 application; Round 8 from a successful Round 8 application only if Crippling Inferno resolves before Fiery Bonds that round; Round 9 after a successful Round 8 application; Round 9 from a successful Round 9 application only if Crippling Inferno resolves before Fiery Bonds that round; Round 10 after a successful Round 9 application; Round 10 from a successful Round 10 application only if Crippling Inferno resolves before Fiery Bonds that round. The same enemy must keep Burn active when Fiery Bonds checks it; same-target overlap, enemy identity, application success, and target overlap remain unresolved. Burn application and target overlap are not guaranteed. Same-round action order is unresolved.",
+    "explanation": "At effective Habit Level 5, Crippling Inferno has a 20% chance each round to apply Burn to 3 enemies in any lane, for 2 rounds. Each round, Fiery Bonds checks 3 enemies in any lane. The Taunt application chance is 25% for a normal target and 50% for that same target while it has Burn, a target-specific 2x increase. Taunt for 2 rounds. Crippling Inferno and Fiery Bonds both check each round. Burn from the previous round can still enhance Fiery Bonds from Round 2 onward. A Burn applied during the current round can enhance Fiery Bonds only if Crippling Inferno resolves first. The same enemy must keep Burn active when Fiery Bonds checks it; same-target overlap, enemy identity, application success, and target overlap remain unresolved. Burn application and target overlap are not guaranteed. Same-round action order is unresolved.",
     "id": "status-effect-condition-caraxes-crippling-inferno-crippling-inferno-burn-burn-status-output-vhagar-fiery-bonds-fiery-bonds-taunt-requires-target-status-burn",
     "interactionScope": "cross-dragon",
     "matchedOutputCapabilityIds": [],
@@ -57919,7 +57925,7 @@
     "title": "Burn enables Fiery Bonds",
     "unresolvedQuestions": [
       "Exact roll sharing, target evaluation order, status check timing, refresh, and stacking remain unresolved.",
-      "Exact target overlap and final conditional uptime are unresolved.",
+      "Exact same-enemy Burn overlap and final conditional uptime are unresolved.",
       "Shared versus per-target Taunt roll is unresolved.",
       "Taunt chance applies to three targets, but shared versus per-target roll scope is not stated."
     ]
@@ -57928,7 +57934,7 @@
     "assumptions": [
       "Within-round action order is not assumed.",
       "The status supplier and dependent output must affect the same enemy.",
-      "Taunt application success, enemy identity, target overlap, and conditional uptime are unresolved."
+      "Taunt application success, enemy identity, same-target overlap, and conditional uptime are unresolved."
     ],
     "channel": "status",
     "confidence": "confirmed",
@@ -57956,14 +57962,14 @@
       "Target-specific conditional chance",
       "Supplier schedule: Each round.",
       "Dependent schedule: Each round.",
-      "Known possible overlap windows: Round 1 from a successful Round 1 application only if Fiery Bonds resolves before Bloodscale Fury that round; Round 2 after a successful Round 1 application; Round 2 from a successful Round 2 application only if Fiery Bonds resolves before Bloodscale Fury that round; Round 3 after a successful Round 2 application; Round 3 from a successful Round 3 application only if Fiery Bonds resolves before Bloodscale Fury that round; Round 4 after a successful Round 3 application; Round 4 from a successful Round 4 application only if Fiery Bonds resolves before Bloodscale Fury that round; Round 5 after a successful Round 4 application; Round 5 from a successful Round 5 application only if Fiery Bonds resolves before Bloodscale Fury that round; Round 6 after a successful Round 5 application; Round 6 from a successful Round 6 application only if Fiery Bonds resolves before Bloodscale Fury that round; Round 7 after a successful Round 6 application; Round 7 from a successful Round 7 application only if Fiery Bonds resolves before Bloodscale Fury that round; Round 8 after a successful Round 7 application; Round 8 from a successful Round 8 application only if Fiery Bonds resolves before Bloodscale Fury that round; Round 9 after a successful Round 8 application; Round 9 from a successful Round 9 application only if Fiery Bonds resolves before Bloodscale Fury that round; Round 10 after a successful Round 9 application; Round 10 from a successful Round 10 application only if Fiery Bonds resolves before Bloodscale Fury that round.",
+      "Fiery Bonds and Bloodscale Fury both check each round. Taunt from the previous round can still enhance Bloodscale Fury from Round 2 onward. A Taunt applied during the current round can enhance Bloodscale Fury only if Fiery Bonds resolves first.",
       "Taunt duration: 2 rounds.",
       "The status and dependent damage must affect the same enemy.",
       "Action order within same-round overlap is unresolved."
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final value cannot be calculated because final combat formulas and stacking order are not fully verified.",
-    "explanation": "Each round, Fiery Bonds checks 3 enemies in any lane. the Taunt application chance is 25% for a normal target and 50% for that same target while it has Burn, a target-specific 2x increase. Taunt for 2 rounds. Each round, Bloodscale Fury checks 1 Enemy, preferring a target not already Stunned. At effective Habit Level 5, the Weakened application chance is 35% for a normal target and 70% for that same target while it has Taunt, a target-specific 2x increase. Weakened for 2 rounds. Fiery Bonds's Taunt can overlap Bloodscale Fury in these windows: Round 1 from a successful Round 1 application only if Fiery Bonds resolves before Bloodscale Fury that round; Round 2 after a successful Round 1 application; Round 2 from a successful Round 2 application only if Fiery Bonds resolves before Bloodscale Fury that round; Round 3 after a successful Round 2 application; Round 3 from a successful Round 3 application only if Fiery Bonds resolves before Bloodscale Fury that round; Round 4 after a successful Round 3 application; Round 4 from a successful Round 4 application only if Fiery Bonds resolves before Bloodscale Fury that round; Round 5 after a successful Round 4 application; Round 5 from a successful Round 5 application only if Fiery Bonds resolves before Bloodscale Fury that round; Round 6 after a successful Round 5 application; Round 6 from a successful Round 6 application only if Fiery Bonds resolves before Bloodscale Fury that round; Round 7 after a successful Round 6 application; Round 7 from a successful Round 7 application only if Fiery Bonds resolves before Bloodscale Fury that round; Round 8 after a successful Round 7 application; Round 8 from a successful Round 8 application only if Fiery Bonds resolves before Bloodscale Fury that round; Round 9 after a successful Round 8 application; Round 9 from a successful Round 9 application only if Fiery Bonds resolves before Bloodscale Fury that round; Round 10 after a successful Round 9 application; Round 10 from a successful Round 10 application only if Fiery Bonds resolves before Bloodscale Fury that round. The same enemy must keep Taunt active when Bloodscale Fury checks it; same-target overlap, enemy identity, application success, and target overlap remain unresolved. Taunt application and target overlap are not guaranteed. Same-round action order is unresolved.",
+    "explanation": "Each round, Fiery Bonds checks 3 enemies in any lane. The Taunt application chance is 25% for a normal target and 50% for that same target while it has Burn, a target-specific 2x increase. Taunt for 2 rounds. Each round, Bloodscale Fury checks 1 Enemy, preferring a target not already Stunned. At effective Habit Level 5, the Weakened application chance is 35% for a normal target and 70% for that same target while it has Taunt, a target-specific 2x increase. Weakened for 2 rounds. Fiery Bonds and Bloodscale Fury both check each round. Taunt from the previous round can still enhance Bloodscale Fury from Round 2 onward. A Taunt applied during the current round can enhance Bloodscale Fury only if Fiery Bonds resolves first. The same enemy must keep Taunt active when Bloodscale Fury checks it; same-target overlap, enemy identity, application success, and target overlap remain unresolved. Taunt application and target overlap are not guaranteed. Same-round action order is unresolved.",
     "id": "status-effect-condition-vhagar-fiery-bonds-fiery-bonds-taunt-taunt-status-output-crimson-bloodscale-fury-bloodscale-fury-weakened-requires-target-status-taunt",
     "interactionScope": "cross-dragon",
     "matchedOutputCapabilityIds": [],
@@ -58024,7 +58030,7 @@
     "unresolvedQuestions": [
       "Effect-level Weakened chance.",
       "Exact roll sharing, target evaluation order, status check timing, refresh, and stacking remain unresolved.",
-      "Exact target overlap and final conditional uptime are unresolved."
+      "Exact same-enemy Taunt overlap and final conditional uptime are unresolved."
     ]
   },
   {
@@ -61646,7 +61652,7 @@
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact status target outcome cannot be calculated because activation, target identity, and uptime are unresolved.",
-    "explanation": "Each round, Fiery Bonds checks 3 enemies in any lane. the Taunt application chance is 25% for a normal target and 50% for that same target while it has Burn, a target-specific 2x increase. Taunt for 2 rounds.",
+    "explanation": "Each round, Fiery Bonds checks 3 enemies in any lane. The Taunt application chance is 25% for a normal target and 50% for that same target while it has Burn, a target-specific 2x increase. Taunt for 2 rounds.",
     "id": "enemy-status-output-vhagar-fiery-bonds-fiery-bonds-taunt-taunt-status-output",
     "interactionScope": "enemy-side",
     "matchedOutputCapabilityIds": [],
@@ -61693,7 +61699,7 @@
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact status target outcome cannot be calculated because activation, target identity, and uptime are unresolved.",
-    "explanation": "At effective Habit Level 5, Eclipse Cover has a 35% chance on rounds 3 through 7 to Weakened one enemy in any lane, for 2 rounds.",
+    "explanation": "At effective Habit Level 5, Eclipse Cover has a 35% chance on rounds 3 through 7 to apply Weakened to one enemy in any lane, for 2 rounds.",
     "id": "enemy-status-output-vhagar-eclipse-cover-eclipse-cover-weakened-weakened-status-output",
     "interactionScope": "enemy-side",
     "matchedOutputCapabilityIds": [],
@@ -61763,7 +61769,7 @@
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact status target outcome cannot be calculated because activation, target identity, and uptime are unresolved.",
-    "explanation": "Tactical Strike has a 30% chance after each Basic Attack to Bleed 2 enemies in within adjacency, for 2 rounds.",
+    "explanation": "Tactical Strike has a 30% chance after each Basic Attack to apply Bleed to 2 enemies within adjacency, for 2 rounds.",
     "id": "enemy-status-output-kalspire-tactical-strike-tactical-strike-bleed-bleed-status-output",
     "interactionScope": "enemy-side",
     "matchedOutputCapabilityIds": [],
@@ -61808,7 +61814,7 @@
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact status target outcome cannot be calculated because activation, target identity, and uptime are unresolved.",
-    "explanation": "At effective Habit Level 5, Tactical Assault has a 30% chance after each Basic Attack to Panic 2 enemies in within adjacency, for 2 rounds.",
+    "explanation": "At effective Habit Level 5, Tactical Assault has a 30% chance after each Basic Attack to apply Panic to 2 enemies within adjacency, for 2 rounds.",
     "id": "enemy-status-output-kalspire-tactical-assault-tactical-assault-panic-panic-status-output",
     "interactionScope": "enemy-side",
     "matchedOutputCapabilityIds": [],
@@ -61879,7 +61885,7 @@
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final value cannot be calculated because final combat formulas and stacking order are not fully verified.",
-    "explanation": "Kalspire's Radiant Conqueror applies Stun to Kalspire. Target: Kalspire. Timing: Start of Round 1. Duration: 1 round. Real Control status: Stun. Real self-inflicted Control status.",
+    "explanation": "Kalspire's Radiant Conqueror causes Kalspire to gain Stun. Target: Kalspire. Timing: Start of Round 1. Duration: 1 round. Real Control status: Stun. Real self-inflicted Control status.",
     "id": "self-status-output-kalspire-radiant-conqueror-radiant-conqueror-self-stun-stun-status-output",
     "interactionScope": "internal",
     "matchedOutputCapabilityIds": [],
@@ -66169,7 +66175,7 @@
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact status target outcome cannot be calculated because activation, target identity, and uptime are unresolved.",
-    "explanation": "Each round, Fiery Bonds checks 3 enemies in any lane. the Taunt application chance is 25% for a normal target and 50% for that same target while it has Burn, a target-specific 2x increase. Taunt for 2 rounds.",
+    "explanation": "Each round, Fiery Bonds checks 3 enemies in any lane. The Taunt application chance is 25% for a normal target and 50% for that same target while it has Burn, a target-specific 2x increase. Taunt for 2 rounds.",
     "id": "enemy-status-output-vhagar-fiery-bonds-fiery-bonds-taunt-taunt-status-output",
     "interactionScope": "enemy-side",
     "matchedOutputCapabilityIds": [],
@@ -66216,7 +66222,7 @@
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact status target outcome cannot be calculated because activation, target identity, and uptime are unresolved.",
-    "explanation": "At effective Habit Level 5, Eclipse Cover has a 35% chance on rounds 3 through 7 to Weakened one enemy in any lane, for 2 rounds.",
+    "explanation": "At effective Habit Level 5, Eclipse Cover has a 35% chance on rounds 3 through 7 to apply Weakened to one enemy in any lane, for 2 rounds.",
     "id": "enemy-status-output-vhagar-eclipse-cover-eclipse-cover-weakened-weakened-status-output",
     "interactionScope": "enemy-side",
     "matchedOutputCapabilityIds": [],
@@ -66271,7 +66277,7 @@
     "assumptions": [
       "Within-round action order is not assumed.",
       "The status supplier and dependent output must affect the same enemy.",
-      "Taunt application success, enemy identity, target overlap, and conditional uptime are unresolved."
+      "Taunt application success, enemy identity, same-target overlap, and conditional uptime are unresolved."
     ],
     "channel": "status",
     "confidence": "confirmed",
@@ -66299,14 +66305,14 @@
       "Target-specific conditional chance",
       "Supplier schedule: Each round.",
       "Dependent schedule: Each round.",
-      "Known possible overlap windows: Round 1 from a successful Round 1 application only if Fiery Bonds resolves before Bloodscale Fury that round; Round 2 after a successful Round 1 application; Round 2 from a successful Round 2 application only if Fiery Bonds resolves before Bloodscale Fury that round; Round 3 after a successful Round 2 application; Round 3 from a successful Round 3 application only if Fiery Bonds resolves before Bloodscale Fury that round; Round 4 after a successful Round 3 application; Round 4 from a successful Round 4 application only if Fiery Bonds resolves before Bloodscale Fury that round; Round 5 after a successful Round 4 application; Round 5 from a successful Round 5 application only if Fiery Bonds resolves before Bloodscale Fury that round; Round 6 after a successful Round 5 application; Round 6 from a successful Round 6 application only if Fiery Bonds resolves before Bloodscale Fury that round; Round 7 after a successful Round 6 application; Round 7 from a successful Round 7 application only if Fiery Bonds resolves before Bloodscale Fury that round; Round 8 after a successful Round 7 application; Round 8 from a successful Round 8 application only if Fiery Bonds resolves before Bloodscale Fury that round; Round 9 after a successful Round 8 application; Round 9 from a successful Round 9 application only if Fiery Bonds resolves before Bloodscale Fury that round; Round 10 after a successful Round 9 application; Round 10 from a successful Round 10 application only if Fiery Bonds resolves before Bloodscale Fury that round.",
+      "Fiery Bonds and Bloodscale Fury both check each round. Taunt from the previous round can still enhance Bloodscale Fury from Round 2 onward. A Taunt applied during the current round can enhance Bloodscale Fury only if Fiery Bonds resolves first.",
       "Taunt duration: 2 rounds.",
       "The status and dependent damage must affect the same enemy.",
       "Action order within same-round overlap is unresolved."
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final value cannot be calculated because final combat formulas and stacking order are not fully verified.",
-    "explanation": "Each round, Fiery Bonds checks 3 enemies in any lane. the Taunt application chance is 25% for a normal target and 50% for that same target while it has Burn, a target-specific 2x increase. Taunt for 2 rounds. Each round, Bloodscale Fury checks 1 Enemy, preferring a target not already Stunned. At effective Habit Level 5, the Weakened application chance is 35% for a normal target and 70% for that same target while it has Taunt, a target-specific 2x increase. Weakened for 2 rounds. Fiery Bonds's Taunt can overlap Bloodscale Fury in these windows: Round 1 from a successful Round 1 application only if Fiery Bonds resolves before Bloodscale Fury that round; Round 2 after a successful Round 1 application; Round 2 from a successful Round 2 application only if Fiery Bonds resolves before Bloodscale Fury that round; Round 3 after a successful Round 2 application; Round 3 from a successful Round 3 application only if Fiery Bonds resolves before Bloodscale Fury that round; Round 4 after a successful Round 3 application; Round 4 from a successful Round 4 application only if Fiery Bonds resolves before Bloodscale Fury that round; Round 5 after a successful Round 4 application; Round 5 from a successful Round 5 application only if Fiery Bonds resolves before Bloodscale Fury that round; Round 6 after a successful Round 5 application; Round 6 from a successful Round 6 application only if Fiery Bonds resolves before Bloodscale Fury that round; Round 7 after a successful Round 6 application; Round 7 from a successful Round 7 application only if Fiery Bonds resolves before Bloodscale Fury that round; Round 8 after a successful Round 7 application; Round 8 from a successful Round 8 application only if Fiery Bonds resolves before Bloodscale Fury that round; Round 9 after a successful Round 8 application; Round 9 from a successful Round 9 application only if Fiery Bonds resolves before Bloodscale Fury that round; Round 10 after a successful Round 9 application; Round 10 from a successful Round 10 application only if Fiery Bonds resolves before Bloodscale Fury that round. The same enemy must keep Taunt active when Bloodscale Fury checks it; same-target overlap, enemy identity, application success, and target overlap remain unresolved. Taunt application and target overlap are not guaranteed. Same-round action order is unresolved.",
+    "explanation": "Each round, Fiery Bonds checks 3 enemies in any lane. The Taunt application chance is 25% for a normal target and 50% for that same target while it has Burn, a target-specific 2x increase. Taunt for 2 rounds. Each round, Bloodscale Fury checks 1 Enemy, preferring a target not already Stunned. At effective Habit Level 5, the Weakened application chance is 35% for a normal target and 70% for that same target while it has Taunt, a target-specific 2x increase. Weakened for 2 rounds. Fiery Bonds and Bloodscale Fury both check each round. Taunt from the previous round can still enhance Bloodscale Fury from Round 2 onward. A Taunt applied during the current round can enhance Bloodscale Fury only if Fiery Bonds resolves first. The same enemy must keep Taunt active when Bloodscale Fury checks it; same-target overlap, enemy identity, application success, and target overlap remain unresolved. Taunt application and target overlap are not guaranteed. Same-round action order is unresolved.",
     "id": "status-effect-condition-vhagar-fiery-bonds-fiery-bonds-taunt-taunt-status-output-crimson-bloodscale-fury-bloodscale-fury-weakened-requires-target-status-taunt",
     "interactionScope": "cross-dragon",
     "matchedOutputCapabilityIds": [],
@@ -66367,7 +66373,7 @@
     "unresolvedQuestions": [
       "Effect-level Weakened chance.",
       "Exact roll sharing, target evaluation order, status check timing, refresh, and stacking remain unresolved.",
-      "Exact target overlap and final conditional uptime are unresolved."
+      "Exact same-enemy Taunt overlap and final conditional uptime are unresolved."
     ]
   },
   {
