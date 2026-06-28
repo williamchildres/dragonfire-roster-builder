@@ -47,9 +47,38 @@ export function analyzeFormationTraces(
   traces.push(...wardenRecoverySelfInclusionTraces(formation, dragons));
   traces.push(...thresholdBoundaryTraces(formation, dragons));
   traces.push(...contextualPveTraces(formation, dragons));
+  const normalized = normalizeTraceInteractionScopes(enforceSelectedFormationBoundary(formation, traces));
   return dedupeFinalTechnicalAnalysisTraces(
-    dedupeFormationTraces(enforceSelectedFormationBoundary(formation, traces)),
+    dedupeFormationTraces(normalized),
   );
+}
+
+export function normalizeTraceInteractionScopes(traces: SynergyTrace[]): SynergyTrace[] {
+  return traces.map(normalizeTraceInteractionScope);
+}
+
+function normalizeTraceInteractionScope(trace: SynergyTrace): SynergyTrace {
+  if (trace.recipientDragonId) {
+    const interactionScope = trace.sourceDragonId === trace.recipientDragonId ? 'internal' : 'cross-dragon';
+    return trace.interactionScope === interactionScope ? trace : { ...trace, interactionScope };
+  }
+
+  if (trace.interactionScope === 'enemy-side' || trace.interactionScope === 'targeting-fact' || trace.interactionScope === 'internal') {
+    return trace;
+  }
+
+  if (isEnemySideSemanticTrace(trace)) {
+    return { ...trace, interactionScope: 'enemy-side' };
+  }
+
+  return trace;
+}
+
+function isEnemySideSemanticTrace(trace: SynergyTrace): boolean {
+  return trace.modifierRole === 'enemy-debuff' ||
+    trace.matchKind === 'enemy-mitigation-reduction' ||
+    trace.matchKind === 'enemy-damage-received-increase' ||
+    trace.matchKind === 'enemy-damage-dealt-reduction';
 }
 
 export function isNormalSynergyTrace(trace: SynergyTrace): boolean {

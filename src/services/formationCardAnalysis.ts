@@ -256,6 +256,17 @@ function isVisibleInternalProvidesTrace(trace: SynergyTrace): boolean {
   if (isFormationRelevantEnemyProviderBenefit(trace)) {
     return true;
   }
+  if (trace.matchKind === 'friendly-impairment' && trace.sourceDragonId === trace.recipientDragonId) {
+    return trace.status !== 'inactive';
+  }
+  if (
+    trace.matchKind === 'outgoing-effect-amplification' &&
+    trace.sourceDragonId === trace.recipientDragonId &&
+    trace.channel === 'recovery' &&
+    [...trace.matchedFacts, ...trace.effects, trace.explanation].some((line) => /targets 3 ally|3 Allies includes all friendly/i.test(line))
+  ) {
+    return trace.status !== 'inactive';
+  }
   if (trace.ruleId === 'internal-self-modifier') {
     const text = [...trace.effects, ...trace.matchedFacts, trace.explanation].join(' ');
     if (/Exclusive one-of choice/i.test(text)) {

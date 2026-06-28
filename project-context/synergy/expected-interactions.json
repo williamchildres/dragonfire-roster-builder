@@ -798,7 +798,8 @@
       "Ranked progression: L1 50%, L2 60%, L3 70%, L4 85%, L5 100%.",
       "Recovery Rate: 100% at effective Habit Level 5.",
       "Recovery support",
-      "Targets 1 Ally; caster is eligible."
+      "Targets 1 Ally; caster is eligible.",
+      "Timing: Rounds 2, 5, 8."
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final value cannot be calculated because final combat formulas and stacking order are not fully verified.",
@@ -905,15 +906,16 @@
     "damageScope": null,
     "effects": [
       "Recovery support",
+      "Timing: Rounds 3, 6, 9.",
       "Recovery Rate: 70%.",
       "Targets exactly 3 Allies; caster is eligible.",
       "Final Recovery amount remains unknown."
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final value cannot be calculated because final combat formulas and stacking order are not fully verified.",
-    "explanation": "Malachite's Warden's Rally can provide Recovery to Malachite. Recovery Rate: 70%. Targets exactly 3 Allies; caster is eligible. Final Recovery amount remains unknown.",
+    "explanation": "Malachite's Warden's Rally can provide Recovery to Malachite. Timing: Rounds 3, 6, 9. Recovery Rate: 70%. Targets exactly 3 Allies; caster is eligible. Final Recovery amount remains unknown.",
     "id": "ally-output-support-malachite-wardens-rally-wardens-rally-recovery-rate-output-malachite",
-    "interactionScope": "cross-dragon",
+    "interactionScope": "internal",
     "matchedOutputCapabilityIds": [],
     "matchKind": "outgoing-effect-amplification",
     "modifierCapabilityId": null,
@@ -959,13 +961,14 @@
     "damageScope": null,
     "effects": [
       "Recovery support",
+      "Timing: Rounds 3, 6, 9.",
       "Recovery Rate: 70%.",
       "Targets exactly 3 Allies; caster is eligible.",
       "Final Recovery amount remains unknown."
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final value cannot be calculated because final combat formulas and stacking order are not fully verified.",
-    "explanation": "Malachite's Warden's Rally can provide Recovery to Caraxes. Recovery Rate: 70%. Targets exactly 3 Allies; caster is eligible. Final Recovery amount remains unknown.",
+    "explanation": "Malachite's Warden's Rally can provide Recovery to Caraxes. Timing: Rounds 3, 6, 9. Recovery Rate: 70%. Targets exactly 3 Allies; caster is eligible. Final Recovery amount remains unknown.",
     "id": "ally-output-support-malachite-wardens-rally-wardens-rally-recovery-rate-output-caraxes",
     "interactionScope": "cross-dragon",
     "matchedOutputCapabilityIds": [],
@@ -1013,13 +1016,14 @@
     "damageScope": null,
     "effects": [
       "Recovery support",
+      "Timing: Rounds 3, 6, 9.",
       "Recovery Rate: 70%.",
       "Targets exactly 3 Allies; caster is eligible.",
       "Final Recovery amount remains unknown."
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final value cannot be calculated because final combat formulas and stacking order are not fully verified.",
-    "explanation": "Malachite's Warden's Rally can provide Recovery to Syrax. Recovery Rate: 70%. Targets exactly 3 Allies; caster is eligible. Final Recovery amount remains unknown.",
+    "explanation": "Malachite's Warden's Rally can provide Recovery to Syrax. Timing: Rounds 3, 6, 9. Recovery Rate: 70%. Targets exactly 3 Allies; caster is eligible. Final Recovery amount remains unknown.",
     "id": "ally-output-support-malachite-wardens-rally-wardens-rally-recovery-rate-output-syrax",
     "interactionScope": "cross-dragon",
     "matchedOutputCapabilityIds": [],
@@ -1949,7 +1953,8 @@
       "Activation chance by Habit Level: 40%, 52%, 64%, 80%, 100%.",
       "Activation chance: 100% at effective Habit Level 5.",
       "Damage Received decrease 20%.",
-      "Duration: 2 rounds."
+      "Duration: 2 rounds.",
+      "Timing: Rounds 2, 5, 8."
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final value cannot be calculated because final combat formulas and stacking order are not fully verified.",
@@ -3141,6 +3146,7 @@
     ],
     "damageScope": null,
     "effects": [
+      "Timing: Rounds 1.",
       "Strength +25%.",
       "Duration: 3 rounds.",
       "Targets 1 other Ally; caster is excluded.",
@@ -3149,7 +3155,7 @@
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final value cannot be calculated because final combat formulas and stacking order are not fully verified.",
-    "explanation": "Malachite's Lightning Strike can increase Caraxes's Strength. Strength +25%. Duration: 3 rounds. Targets 1 other Ally; caster is excluded.",
+    "explanation": "Malachite's Lightning Strike can increase Caraxes's Strength. Timing: Rounds 1. Strength +25%. Duration: 3 rounds. Targets 1 other Ally; caster is excluded.",
     "id": "direct-stat-support-malachite-lightning-strike-lightning-strike-strength-stat-dealt-modifier-caraxes-strength",
     "interactionScope": "cross-dragon",
     "matchedOutputCapabilityIds": [],
@@ -5489,7 +5495,8 @@
       "Ranked progression: L1 50%, L2 60%, L3 70%, L4 85%, L5 100%.",
       "Recovery Rate: 100% at effective Habit Level 5.",
       "Recovery support",
-      "Targets 1 Ally; caster is eligible."
+      "Targets 1 Ally; caster is eligible.",
+      "Timing: Rounds 2, 5, 8."
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final value cannot be calculated because final combat formulas and stacking order are not fully verified.",
@@ -5596,13 +5603,14 @@
     "damageScope": null,
     "effects": [
       "Recovery support",
+      "Timing: Rounds 3, 6, 9.",
       "Recovery Rate: 70%.",
       "Targets exactly 3 Allies; caster is eligible.",
       "Final Recovery amount remains unknown."
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final value cannot be calculated because final combat formulas and stacking order are not fully verified.",
-    "explanation": "Malachite's Warden's Rally can provide Recovery to Caraxes. Recovery Rate: 70%. Targets exactly 3 Allies; caster is eligible. Final Recovery amount remains unknown.",
+    "explanation": "Malachite's Warden's Rally can provide Recovery to Caraxes. Timing: Rounds 3, 6, 9. Recovery Rate: 70%. Targets exactly 3 Allies; caster is eligible. Final Recovery amount remains unknown.",
     "id": "ally-output-support-malachite-wardens-rally-wardens-rally-recovery-rate-output-caraxes",
     "interactionScope": "cross-dragon",
     "matchedOutputCapabilityIds": [],
@@ -5650,13 +5658,14 @@
     "damageScope": null,
     "effects": [
       "Recovery support",
+      "Timing: Rounds 3, 6, 9.",
       "Recovery Rate: 70%.",
       "Targets exactly 3 Allies; caster is eligible.",
       "Final Recovery amount remains unknown."
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final value cannot be calculated because final combat formulas and stacking order are not fully verified.",
-    "explanation": "Malachite's Warden's Rally can provide Recovery to Syrax. Recovery Rate: 70%. Targets exactly 3 Allies; caster is eligible. Final Recovery amount remains unknown.",
+    "explanation": "Malachite's Warden's Rally can provide Recovery to Syrax. Timing: Rounds 3, 6, 9. Recovery Rate: 70%. Targets exactly 3 Allies; caster is eligible. Final Recovery amount remains unknown.",
     "id": "ally-output-support-malachite-wardens-rally-wardens-rally-recovery-rate-output-syrax",
     "interactionScope": "cross-dragon",
     "matchedOutputCapabilityIds": [],
@@ -5704,15 +5713,16 @@
     "damageScope": null,
     "effects": [
       "Recovery support",
+      "Timing: Rounds 3, 6, 9.",
       "Recovery Rate: 70%.",
       "Targets exactly 3 Allies; caster is eligible.",
       "Final Recovery amount remains unknown."
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final value cannot be calculated because final combat formulas and stacking order are not fully verified.",
-    "explanation": "Malachite's Warden's Rally can provide Recovery to Malachite. Recovery Rate: 70%. Targets exactly 3 Allies; caster is eligible. Final Recovery amount remains unknown.",
+    "explanation": "Malachite's Warden's Rally can provide Recovery to Malachite. Timing: Rounds 3, 6, 9. Recovery Rate: 70%. Targets exactly 3 Allies; caster is eligible. Final Recovery amount remains unknown.",
     "id": "ally-output-support-malachite-wardens-rally-wardens-rally-recovery-rate-output-malachite",
-    "interactionScope": "cross-dragon",
+    "interactionScope": "internal",
     "matchedOutputCapabilityIds": [],
     "matchKind": "outgoing-effect-amplification",
     "modifierCapabilityId": null,
@@ -6641,7 +6651,8 @@
       "Activation chance by Habit Level: 40%, 52%, 64%, 80%, 100%.",
       "Activation chance: 100% at effective Habit Level 5.",
       "Damage Received decrease 20%.",
-      "Duration: 2 rounds."
+      "Duration: 2 rounds.",
+      "Timing: Rounds 2, 5, 8."
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final value cannot be calculated because final combat formulas and stacking order are not fully verified.",
@@ -7833,6 +7844,7 @@
     ],
     "damageScope": null,
     "effects": [
+      "Timing: Rounds 1.",
       "Strength +25%.",
       "Duration: 3 rounds.",
       "Targets 1 other Ally; caster is excluded.",
@@ -7841,7 +7853,7 @@
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final value cannot be calculated because final combat formulas and stacking order are not fully verified.",
-    "explanation": "Malachite's Lightning Strike can increase Syrax's Strength. Strength +25%. Duration: 3 rounds. Targets 1 other Ally; caster is excluded.",
+    "explanation": "Malachite's Lightning Strike can increase Syrax's Strength. Timing: Rounds 1. Strength +25%. Duration: 3 rounds. Targets 1 other Ally; caster is excluded.",
     "id": "direct-stat-support-malachite-lightning-strike-lightning-strike-strength-stat-dealt-modifier-syrax-strength",
     "interactionScope": "cross-dragon",
     "matchedOutputCapabilityIds": [],
@@ -10056,7 +10068,8 @@
       "Ranked progression: L1 50%, L2 60%, L3 70%, L4 85%, L5 100%.",
       "Recovery Rate: 100% at effective Habit Level 5.",
       "Recovery support",
-      "Targets 1 Ally; caster is eligible."
+      "Targets 1 Ally; caster is eligible.",
+      "Timing: Rounds 2, 5, 8."
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final value cannot be calculated because final combat formulas and stacking order are not fully verified.",
@@ -10163,15 +10176,16 @@
     "damageScope": null,
     "effects": [
       "Recovery support",
+      "Timing: Rounds 3, 6, 9.",
       "Recovery Rate: 70%.",
       "Targets exactly 3 Allies; caster is eligible.",
       "Final Recovery amount remains unknown."
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final value cannot be calculated because final combat formulas and stacking order are not fully verified.",
-    "explanation": "Malachite's Warden's Rally can provide Recovery to Malachite. Recovery Rate: 70%. Targets exactly 3 Allies; caster is eligible. Final Recovery amount remains unknown.",
+    "explanation": "Malachite's Warden's Rally can provide Recovery to Malachite. Timing: Rounds 3, 6, 9. Recovery Rate: 70%. Targets exactly 3 Allies; caster is eligible. Final Recovery amount remains unknown.",
     "id": "ally-output-support-malachite-wardens-rally-wardens-rally-recovery-rate-output-malachite",
-    "interactionScope": "cross-dragon",
+    "interactionScope": "internal",
     "matchedOutputCapabilityIds": [],
     "matchKind": "outgoing-effect-amplification",
     "modifierCapabilityId": null,
@@ -10217,13 +10231,14 @@
     "damageScope": null,
     "effects": [
       "Recovery support",
+      "Timing: Rounds 3, 6, 9.",
       "Recovery Rate: 70%.",
       "Targets exactly 3 Allies; caster is eligible.",
       "Final Recovery amount remains unknown."
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final value cannot be calculated because final combat formulas and stacking order are not fully verified.",
-    "explanation": "Malachite's Warden's Rally can provide Recovery to Syrax. Recovery Rate: 70%. Targets exactly 3 Allies; caster is eligible. Final Recovery amount remains unknown.",
+    "explanation": "Malachite's Warden's Rally can provide Recovery to Syrax. Timing: Rounds 3, 6, 9. Recovery Rate: 70%. Targets exactly 3 Allies; caster is eligible. Final Recovery amount remains unknown.",
     "id": "ally-output-support-malachite-wardens-rally-wardens-rally-recovery-rate-output-syrax",
     "interactionScope": "cross-dragon",
     "matchedOutputCapabilityIds": [],
@@ -10271,13 +10286,14 @@
     "damageScope": null,
     "effects": [
       "Recovery support",
+      "Timing: Rounds 3, 6, 9.",
       "Recovery Rate: 70%.",
       "Targets exactly 3 Allies; caster is eligible.",
       "Final Recovery amount remains unknown."
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final value cannot be calculated because final combat formulas and stacking order are not fully verified.",
-    "explanation": "Malachite's Warden's Rally can provide Recovery to Caraxes. Recovery Rate: 70%. Targets exactly 3 Allies; caster is eligible. Final Recovery amount remains unknown.",
+    "explanation": "Malachite's Warden's Rally can provide Recovery to Caraxes. Timing: Rounds 3, 6, 9. Recovery Rate: 70%. Targets exactly 3 Allies; caster is eligible. Final Recovery amount remains unknown.",
     "id": "ally-output-support-malachite-wardens-rally-wardens-rally-recovery-rate-output-caraxes",
     "interactionScope": "cross-dragon",
     "matchedOutputCapabilityIds": [],
@@ -11208,7 +11224,8 @@
       "Activation chance by Habit Level: 40%, 52%, 64%, 80%, 100%.",
       "Activation chance: 100% at effective Habit Level 5.",
       "Damage Received decrease 20%.",
-      "Duration: 2 rounds."
+      "Duration: 2 rounds.",
+      "Timing: Rounds 2, 5, 8."
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final value cannot be calculated because final combat formulas and stacking order are not fully verified.",
@@ -12400,6 +12417,7 @@
     ],
     "damageScope": null,
     "effects": [
+      "Timing: Rounds 1.",
       "Strength +25%.",
       "Duration: 3 rounds.",
       "Targets 1 other Ally; caster is excluded.",
@@ -12408,7 +12426,7 @@
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final value cannot be calculated because final combat formulas and stacking order are not fully verified.",
-    "explanation": "Malachite's Lightning Strike can increase Syrax's Strength. Strength +25%. Duration: 3 rounds. Targets 1 other Ally; caster is excluded.",
+    "explanation": "Malachite's Lightning Strike can increase Syrax's Strength. Timing: Rounds 1. Strength +25%. Duration: 3 rounds. Targets 1 other Ally; caster is excluded.",
     "id": "direct-stat-support-malachite-lightning-strike-lightning-strike-strength-stat-dealt-modifier-syrax-strength",
     "interactionScope": "cross-dragon",
     "matchedOutputCapabilityIds": [],
@@ -14714,7 +14732,8 @@
       "Ranked progression: L1 50%, L2 60%, L3 70%, L4 85%, L5 100%.",
       "Recovery Rate: 100% at effective Habit Level 5.",
       "Recovery support",
-      "Targets 1 Ally; caster is eligible."
+      "Targets 1 Ally; caster is eligible.",
+      "Timing: Rounds 2, 5, 8."
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final value cannot be calculated because final combat formulas and stacking order are not fully verified.",
@@ -14821,13 +14840,14 @@
     "damageScope": null,
     "effects": [
       "Recovery support",
+      "Timing: Rounds 3, 6, 9.",
       "Recovery Rate: 70%.",
       "Targets exactly 3 Allies; caster is eligible.",
       "Final Recovery amount remains unknown."
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final value cannot be calculated because final combat formulas and stacking order are not fully verified.",
-    "explanation": "Malachite's Warden's Rally can provide Recovery to Syrax. Recovery Rate: 70%. Targets exactly 3 Allies; caster is eligible. Final Recovery amount remains unknown.",
+    "explanation": "Malachite's Warden's Rally can provide Recovery to Syrax. Timing: Rounds 3, 6, 9. Recovery Rate: 70%. Targets exactly 3 Allies; caster is eligible. Final Recovery amount remains unknown.",
     "id": "ally-output-support-malachite-wardens-rally-wardens-rally-recovery-rate-output-syrax",
     "interactionScope": "cross-dragon",
     "matchedOutputCapabilityIds": [],
@@ -14875,13 +14895,14 @@
     "damageScope": null,
     "effects": [
       "Recovery support",
+      "Timing: Rounds 3, 6, 9.",
       "Recovery Rate: 70%.",
       "Targets exactly 3 Allies; caster is eligible.",
       "Final Recovery amount remains unknown."
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final value cannot be calculated because final combat formulas and stacking order are not fully verified.",
-    "explanation": "Malachite's Warden's Rally can provide Recovery to Caraxes. Recovery Rate: 70%. Targets exactly 3 Allies; caster is eligible. Final Recovery amount remains unknown.",
+    "explanation": "Malachite's Warden's Rally can provide Recovery to Caraxes. Timing: Rounds 3, 6, 9. Recovery Rate: 70%. Targets exactly 3 Allies; caster is eligible. Final Recovery amount remains unknown.",
     "id": "ally-output-support-malachite-wardens-rally-wardens-rally-recovery-rate-output-caraxes",
     "interactionScope": "cross-dragon",
     "matchedOutputCapabilityIds": [],
@@ -14929,15 +14950,16 @@
     "damageScope": null,
     "effects": [
       "Recovery support",
+      "Timing: Rounds 3, 6, 9.",
       "Recovery Rate: 70%.",
       "Targets exactly 3 Allies; caster is eligible.",
       "Final Recovery amount remains unknown."
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final value cannot be calculated because final combat formulas and stacking order are not fully verified.",
-    "explanation": "Malachite's Warden's Rally can provide Recovery to Malachite. Recovery Rate: 70%. Targets exactly 3 Allies; caster is eligible. Final Recovery amount remains unknown.",
+    "explanation": "Malachite's Warden's Rally can provide Recovery to Malachite. Timing: Rounds 3, 6, 9. Recovery Rate: 70%. Targets exactly 3 Allies; caster is eligible. Final Recovery amount remains unknown.",
     "id": "ally-output-support-malachite-wardens-rally-wardens-rally-recovery-rate-output-malachite",
-    "interactionScope": "cross-dragon",
+    "interactionScope": "internal",
     "matchedOutputCapabilityIds": [],
     "matchKind": "outgoing-effect-amplification",
     "modifierCapabilityId": null,
@@ -15865,7 +15887,8 @@
       "Activation chance by Habit Level: 40%, 52%, 64%, 80%, 100%.",
       "Activation chance: 100% at effective Habit Level 5.",
       "Damage Received decrease 20%.",
-      "Duration: 2 rounds."
+      "Duration: 2 rounds.",
+      "Timing: Rounds 2, 5, 8."
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final value cannot be calculated because final combat formulas and stacking order are not fully verified.",
@@ -17057,6 +17080,7 @@
     ],
     "damageScope": null,
     "effects": [
+      "Timing: Rounds 1.",
       "Strength +25%.",
       "Duration: 3 rounds.",
       "Targets 1 other Ally; caster is excluded.",
@@ -17065,7 +17089,7 @@
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final value cannot be calculated because final combat formulas and stacking order are not fully verified.",
-    "explanation": "Malachite's Lightning Strike can increase Caraxes's Strength. Strength +25%. Duration: 3 rounds. Targets 1 other Ally; caster is excluded.",
+    "explanation": "Malachite's Lightning Strike can increase Caraxes's Strength. Timing: Rounds 1. Strength +25%. Duration: 3 rounds. Targets 1 other Ally; caster is excluded.",
     "id": "direct-stat-support-malachite-lightning-strike-lightning-strike-strength-stat-dealt-modifier-caraxes-strength",
     "interactionScope": "cross-dragon",
     "matchedOutputCapabilityIds": [],
@@ -19696,15 +19720,16 @@
     "damageScope": null,
     "effects": [
       "Recovery support",
+      "Timing: Rounds 3, 6, 9.",
       "Recovery Rate: 70%.",
       "Targets exactly 3 Allies; caster is eligible.",
       "Final Recovery amount remains unknown."
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final value cannot be calculated because final combat formulas and stacking order are not fully verified.",
-    "explanation": "Malachite's Warden's Rally can provide Recovery to Malachite. Recovery Rate: 70%. Targets exactly 3 Allies; caster is eligible. Final Recovery amount remains unknown.",
+    "explanation": "Malachite's Warden's Rally can provide Recovery to Malachite. Timing: Rounds 3, 6, 9. Recovery Rate: 70%. Targets exactly 3 Allies; caster is eligible. Final Recovery amount remains unknown.",
     "id": "ally-output-support-malachite-wardens-rally-wardens-rally-recovery-rate-output-malachite",
-    "interactionScope": "cross-dragon",
+    "interactionScope": "internal",
     "matchedOutputCapabilityIds": [],
     "matchKind": "outgoing-effect-amplification",
     "modifierCapabilityId": null,
@@ -19750,13 +19775,14 @@
     "damageScope": null,
     "effects": [
       "Recovery support",
+      "Timing: Rounds 3, 6, 9.",
       "Recovery Rate: 70%.",
       "Targets exactly 3 Allies; caster is eligible.",
       "Final Recovery amount remains unknown."
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final value cannot be calculated because final combat formulas and stacking order are not fully verified.",
-    "explanation": "Malachite's Warden's Rally can provide Recovery to Sheepstealer. Recovery Rate: 70%. Targets exactly 3 Allies; caster is eligible. Final Recovery amount remains unknown.",
+    "explanation": "Malachite's Warden's Rally can provide Recovery to Sheepstealer. Timing: Rounds 3, 6, 9. Recovery Rate: 70%. Targets exactly 3 Allies; caster is eligible. Final Recovery amount remains unknown.",
     "id": "ally-output-support-malachite-wardens-rally-wardens-rally-recovery-rate-output-sheepstealer",
     "interactionScope": "cross-dragon",
     "matchedOutputCapabilityIds": [],
@@ -19804,13 +19830,14 @@
     "damageScope": null,
     "effects": [
       "Recovery support",
+      "Timing: Rounds 3, 6, 9.",
       "Recovery Rate: 70%.",
       "Targets exactly 3 Allies; caster is eligible.",
       "Final Recovery amount remains unknown."
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final value cannot be calculated because final combat formulas and stacking order are not fully verified.",
-    "explanation": "Malachite's Warden's Rally can provide Recovery to Vermax. Recovery Rate: 70%. Targets exactly 3 Allies; caster is eligible. Final Recovery amount remains unknown.",
+    "explanation": "Malachite's Warden's Rally can provide Recovery to Vermax. Timing: Rounds 3, 6, 9. Recovery Rate: 70%. Targets exactly 3 Allies; caster is eligible. Final Recovery amount remains unknown.",
     "id": "ally-output-support-malachite-wardens-rally-wardens-rally-recovery-rate-output-vermax",
     "interactionScope": "cross-dragon",
     "matchedOutputCapabilityIds": [],
@@ -21811,6 +21838,7 @@
     ],
     "damageScope": null,
     "effects": [
+      "Timing: Rounds 1.",
       "Strength +25%.",
       "Duration: 3 rounds.",
       "Targets 1 other Ally; caster is excluded.",
@@ -21819,7 +21847,7 @@
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final value cannot be calculated because final combat formulas and stacking order are not fully verified.",
-    "explanation": "Malachite's Lightning Strike can increase Sheepstealer's Strength. Strength +25%. Duration: 3 rounds. Targets 1 other Ally; caster is excluded.",
+    "explanation": "Malachite's Lightning Strike can increase Sheepstealer's Strength. Timing: Rounds 1. Strength +25%. Duration: 3 rounds. Targets 1 other Ally; caster is excluded.",
     "id": "direct-stat-support-malachite-lightning-strike-lightning-strike-strength-stat-dealt-modifier-sheepstealer-strength",
     "interactionScope": "cross-dragon",
     "matchedOutputCapabilityIds": [],
@@ -24211,13 +24239,14 @@
     "damageScope": null,
     "effects": [
       "Recovery support",
+      "Timing: Rounds 3, 6, 9.",
       "Recovery Rate: 70%.",
       "Targets exactly 3 Allies; caster is eligible.",
       "Final Recovery amount remains unknown."
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final value cannot be calculated because final combat formulas and stacking order are not fully verified.",
-    "explanation": "Malachite's Warden's Rally can provide Recovery to Seasmoke. Recovery Rate: 70%. Targets exactly 3 Allies; caster is eligible. Final Recovery amount remains unknown.",
+    "explanation": "Malachite's Warden's Rally can provide Recovery to Seasmoke. Timing: Rounds 3, 6, 9. Recovery Rate: 70%. Targets exactly 3 Allies; caster is eligible. Final Recovery amount remains unknown.",
     "id": "ally-output-support-malachite-wardens-rally-wardens-rally-recovery-rate-output-seasmoke",
     "interactionScope": "cross-dragon",
     "matchedOutputCapabilityIds": [],
@@ -24265,15 +24294,16 @@
     "damageScope": null,
     "effects": [
       "Recovery support",
+      "Timing: Rounds 3, 6, 9.",
       "Recovery Rate: 70%.",
       "Targets exactly 3 Allies; caster is eligible.",
       "Final Recovery amount remains unknown."
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final value cannot be calculated because final combat formulas and stacking order are not fully verified.",
-    "explanation": "Malachite's Warden's Rally can provide Recovery to Malachite. Recovery Rate: 70%. Targets exactly 3 Allies; caster is eligible. Final Recovery amount remains unknown.",
+    "explanation": "Malachite's Warden's Rally can provide Recovery to Malachite. Timing: Rounds 3, 6, 9. Recovery Rate: 70%. Targets exactly 3 Allies; caster is eligible. Final Recovery amount remains unknown.",
     "id": "ally-output-support-malachite-wardens-rally-wardens-rally-recovery-rate-output-malachite",
-    "interactionScope": "cross-dragon",
+    "interactionScope": "internal",
     "matchedOutputCapabilityIds": [],
     "matchKind": "outgoing-effect-amplification",
     "modifierCapabilityId": null,
@@ -24319,13 +24349,14 @@
     "damageScope": null,
     "effects": [
       "Recovery support",
+      "Timing: Rounds 3, 6, 9.",
       "Recovery Rate: 70%.",
       "Targets exactly 3 Allies; caster is eligible.",
       "Final Recovery amount remains unknown."
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final value cannot be calculated because final combat formulas and stacking order are not fully verified.",
-    "explanation": "Malachite's Warden's Rally can provide Recovery to Sheepstealer. Recovery Rate: 70%. Targets exactly 3 Allies; caster is eligible. Final Recovery amount remains unknown.",
+    "explanation": "Malachite's Warden's Rally can provide Recovery to Sheepstealer. Timing: Rounds 3, 6, 9. Recovery Rate: 70%. Targets exactly 3 Allies; caster is eligible. Final Recovery amount remains unknown.",
     "id": "ally-output-support-malachite-wardens-rally-wardens-rally-recovery-rate-output-sheepstealer",
     "interactionScope": "cross-dragon",
     "matchedOutputCapabilityIds": [],
@@ -26520,7 +26551,8 @@
       "Activation chance: 100% at effective Habit Level 5.",
       "Duration: 3 rounds.",
       "Strength +25%.",
-      "Targets 1 other Ally; caster is excluded."
+      "Targets 1 other Ally; caster is excluded.",
+      "Timing: Rounds 1."
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final value cannot be calculated because final combat formulas and stacking order are not fully verified.",
@@ -28336,15 +28368,16 @@
     "damageScope": null,
     "effects": [
       "Recovery support",
+      "Timing: Rounds 3, 6, 9.",
       "Recovery Rate: 70%.",
       "Targets exactly 3 Allies; caster is eligible.",
       "Final Recovery amount remains unknown."
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final value cannot be calculated because final combat formulas and stacking order are not fully verified.",
-    "explanation": "Malachite's Warden's Rally can provide Recovery to Malachite. Recovery Rate: 70%. Targets exactly 3 Allies; caster is eligible. Final Recovery amount remains unknown.",
+    "explanation": "Malachite's Warden's Rally can provide Recovery to Malachite. Timing: Rounds 3, 6, 9. Recovery Rate: 70%. Targets exactly 3 Allies; caster is eligible. Final Recovery amount remains unknown.",
     "id": "ally-output-support-malachite-wardens-rally-wardens-rally-recovery-rate-output-malachite",
-    "interactionScope": "cross-dragon",
+    "interactionScope": "internal",
     "matchedOutputCapabilityIds": [],
     "matchKind": "outgoing-effect-amplification",
     "modifierCapabilityId": null,
@@ -28390,13 +28423,14 @@
     "damageScope": null,
     "effects": [
       "Recovery support",
+      "Timing: Rounds 3, 6, 9.",
       "Recovery Rate: 70%.",
       "Targets exactly 3 Allies; caster is eligible.",
       "Final Recovery amount remains unknown."
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final value cannot be calculated because final combat formulas and stacking order are not fully verified.",
-    "explanation": "Malachite's Warden's Rally can provide Recovery to Vermax. Recovery Rate: 70%. Targets exactly 3 Allies; caster is eligible. Final Recovery amount remains unknown.",
+    "explanation": "Malachite's Warden's Rally can provide Recovery to Vermax. Timing: Rounds 3, 6, 9. Recovery Rate: 70%. Targets exactly 3 Allies; caster is eligible. Final Recovery amount remains unknown.",
     "id": "ally-output-support-malachite-wardens-rally-wardens-rally-recovery-rate-output-vermax",
     "interactionScope": "cross-dragon",
     "matchedOutputCapabilityIds": [],
@@ -28444,13 +28478,14 @@
     "damageScope": null,
     "effects": [
       "Recovery support",
+      "Timing: Rounds 3, 6, 9.",
       "Recovery Rate: 70%.",
       "Targets exactly 3 Allies; caster is eligible.",
       "Final Recovery amount remains unknown."
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final value cannot be calculated because final combat formulas and stacking order are not fully verified.",
-    "explanation": "Malachite's Warden's Rally can provide Recovery to Seasmoke. Recovery Rate: 70%. Targets exactly 3 Allies; caster is eligible. Final Recovery amount remains unknown.",
+    "explanation": "Malachite's Warden's Rally can provide Recovery to Seasmoke. Timing: Rounds 3, 6, 9. Recovery Rate: 70%. Targets exactly 3 Allies; caster is eligible. Final Recovery amount remains unknown.",
     "id": "ally-output-support-malachite-wardens-rally-wardens-rally-recovery-rate-output-seasmoke",
     "interactionScope": "cross-dragon",
     "matchedOutputCapabilityIds": [],
@@ -30909,6 +30944,7 @@
     ],
     "damageScope": null,
     "effects": [
+      "Timing: Rounds 1.",
       "Strength +25%.",
       "Duration: 3 rounds.",
       "Targets 1 other Ally; caster is excluded.",
@@ -30917,7 +30953,7 @@
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final value cannot be calculated because final combat formulas and stacking order are not fully verified.",
-    "explanation": "Malachite's Lightning Strike can increase Vermax's Strength. Strength +25%. Duration: 3 rounds. Targets 1 other Ally; caster is excluded.",
+    "explanation": "Malachite's Lightning Strike can increase Vermax's Strength. Timing: Rounds 1. Strength +25%. Duration: 3 rounds. Targets 1 other Ally; caster is excluded.",
     "id": "direct-stat-support-malachite-lightning-strike-lightning-strike-strength-stat-dealt-modifier-vermax-strength",
     "interactionScope": "cross-dragon",
     "matchedOutputCapabilityIds": [],
@@ -33282,15 +33318,16 @@
     "damageScope": null,
     "effects": [
       "Recovery support",
+      "Timing: Rounds 3, 6, 9.",
       "Recovery Rate: 70%.",
       "Targets exactly 3 Allies; caster is eligible.",
       "Final Recovery amount remains unknown."
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final value cannot be calculated because final combat formulas and stacking order are not fully verified.",
-    "explanation": "Malachite's Warden's Rally can provide Recovery to Malachite. Recovery Rate: 70%. Targets exactly 3 Allies; caster is eligible. Final Recovery amount remains unknown.",
+    "explanation": "Malachite's Warden's Rally can provide Recovery to Malachite. Timing: Rounds 3, 6, 9. Recovery Rate: 70%. Targets exactly 3 Allies; caster is eligible. Final Recovery amount remains unknown.",
     "id": "ally-output-support-malachite-wardens-rally-wardens-rally-recovery-rate-output-malachite",
-    "interactionScope": "cross-dragon",
+    "interactionScope": "internal",
     "matchedOutputCapabilityIds": [],
     "matchKind": "outgoing-effect-amplification",
     "modifierCapabilityId": null,
@@ -33336,13 +33373,14 @@
     "damageScope": null,
     "effects": [
       "Recovery support",
+      "Timing: Rounds 3, 6, 9.",
       "Recovery Rate: 70%.",
       "Targets exactly 3 Allies; caster is eligible.",
       "Final Recovery amount remains unknown."
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final value cannot be calculated because final combat formulas and stacking order are not fully verified.",
-    "explanation": "Malachite's Warden's Rally can provide Recovery to Seasmoke. Recovery Rate: 70%. Targets exactly 3 Allies; caster is eligible. Final Recovery amount remains unknown.",
+    "explanation": "Malachite's Warden's Rally can provide Recovery to Seasmoke. Timing: Rounds 3, 6, 9. Recovery Rate: 70%. Targets exactly 3 Allies; caster is eligible. Final Recovery amount remains unknown.",
     "id": "ally-output-support-malachite-wardens-rally-wardens-rally-recovery-rate-output-seasmoke",
     "interactionScope": "cross-dragon",
     "matchedOutputCapabilityIds": [],
@@ -33390,13 +33428,14 @@
     "damageScope": null,
     "effects": [
       "Recovery support",
+      "Timing: Rounds 3, 6, 9.",
       "Recovery Rate: 70%.",
       "Targets exactly 3 Allies; caster is eligible.",
       "Final Recovery amount remains unknown."
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final value cannot be calculated because final combat formulas and stacking order are not fully verified.",
-    "explanation": "Malachite's Warden's Rally can provide Recovery to Sheepstealer. Recovery Rate: 70%. Targets exactly 3 Allies; caster is eligible. Final Recovery amount remains unknown.",
+    "explanation": "Malachite's Warden's Rally can provide Recovery to Sheepstealer. Timing: Rounds 3, 6, 9. Recovery Rate: 70%. Targets exactly 3 Allies; caster is eligible. Final Recovery amount remains unknown.",
     "id": "ally-output-support-malachite-wardens-rally-wardens-rally-recovery-rate-output-sheepstealer",
     "interactionScope": "cross-dragon",
     "matchedOutputCapabilityIds": [],
@@ -35609,6 +35648,7 @@
     ],
     "damageScope": null,
     "effects": [
+      "Timing: Rounds 1.",
       "Strength +25%.",
       "Duration: 3 rounds.",
       "Targets 1 other Ally; caster is excluded.",
@@ -35617,7 +35657,7 @@
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final value cannot be calculated because final combat formulas and stacking order are not fully verified.",
-    "explanation": "Malachite's Lightning Strike can increase Seasmoke's Strength. Strength +25%. Duration: 3 rounds. Targets 1 other Ally; caster is excluded.",
+    "explanation": "Malachite's Lightning Strike can increase Seasmoke's Strength. Timing: Rounds 1. Strength +25%. Duration: 3 rounds. Targets 1 other Ally; caster is excluded.",
     "id": "direct-stat-support-malachite-lightning-strike-lightning-strike-strength-stat-dealt-modifier-seasmoke-strength",
     "interactionScope": "cross-dragon",
     "matchedOutputCapabilityIds": [],
@@ -41590,7 +41630,8 @@
       "Ranked progression: L1 50%, L2 60%, L3 70%, L4 85%, L5 100%.",
       "Recovery Rate: 100% at effective Habit Level 5.",
       "Recovery support",
-      "Targets 1 Ally; caster is eligible."
+      "Targets 1 Ally; caster is eligible.",
+      "Timing: Rounds 2, 5, 8."
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final value cannot be calculated because final combat formulas and stacking order are not fully verified.",
@@ -41697,15 +41738,16 @@
     "damageScope": null,
     "effects": [
       "Recovery support",
+      "Timing: Rounds 3, 6, 9.",
       "Recovery Rate: 70%.",
       "Targets exactly 3 Allies; caster is eligible.",
       "Final Recovery amount remains unknown."
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final value cannot be calculated because final combat formulas and stacking order are not fully verified.",
-    "explanation": "Malachite's Warden's Rally can provide Recovery to Malachite. Recovery Rate: 70%. Targets exactly 3 Allies; caster is eligible. Final Recovery amount remains unknown.",
+    "explanation": "Malachite's Warden's Rally can provide Recovery to Malachite. Timing: Rounds 3, 6, 9. Recovery Rate: 70%. Targets exactly 3 Allies; caster is eligible. Final Recovery amount remains unknown.",
     "id": "ally-output-support-malachite-wardens-rally-wardens-rally-recovery-rate-output-malachite",
-    "interactionScope": "cross-dragon",
+    "interactionScope": "internal",
     "matchedOutputCapabilityIds": [],
     "matchKind": "outgoing-effect-amplification",
     "modifierCapabilityId": null,
@@ -41751,13 +41793,14 @@
     "damageScope": null,
     "effects": [
       "Recovery support",
+      "Timing: Rounds 3, 6, 9.",
       "Recovery Rate: 70%.",
       "Targets exactly 3 Allies; caster is eligible.",
       "Final Recovery amount remains unknown."
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final value cannot be calculated because final combat formulas and stacking order are not fully verified.",
-    "explanation": "Malachite's Warden's Rally can provide Recovery to Syrax. Recovery Rate: 70%. Targets exactly 3 Allies; caster is eligible. Final Recovery amount remains unknown.",
+    "explanation": "Malachite's Warden's Rally can provide Recovery to Syrax. Timing: Rounds 3, 6, 9. Recovery Rate: 70%. Targets exactly 3 Allies; caster is eligible. Final Recovery amount remains unknown.",
     "id": "ally-output-support-malachite-wardens-rally-wardens-rally-recovery-rate-output-syrax",
     "interactionScope": "cross-dragon",
     "matchedOutputCapabilityIds": [],
@@ -41805,13 +41848,14 @@
     "damageScope": null,
     "effects": [
       "Recovery support",
+      "Timing: Rounds 3, 6, 9.",
       "Recovery Rate: 70%.",
       "Targets exactly 3 Allies; caster is eligible.",
       "Final Recovery amount remains unknown."
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final value cannot be calculated because final combat formulas and stacking order are not fully verified.",
-    "explanation": "Malachite's Warden's Rally can provide Recovery to Sheepstealer. Recovery Rate: 70%. Targets exactly 3 Allies; caster is eligible. Final Recovery amount remains unknown.",
+    "explanation": "Malachite's Warden's Rally can provide Recovery to Sheepstealer. Timing: Rounds 3, 6, 9. Recovery Rate: 70%. Targets exactly 3 Allies; caster is eligible. Final Recovery amount remains unknown.",
     "id": "ally-output-support-malachite-wardens-rally-wardens-rally-recovery-rate-output-sheepstealer",
     "interactionScope": "cross-dragon",
     "matchedOutputCapabilityIds": [],
@@ -42795,7 +42839,8 @@
       "Activation chance by Habit Level: 40%, 52%, 64%, 80%, 100%.",
       "Activation chance: 100% at effective Habit Level 5.",
       "Damage Received decrease 20%.",
-      "Duration: 2 rounds."
+      "Duration: 2 rounds.",
+      "Timing: Rounds 2, 5, 8."
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final value cannot be calculated because final combat formulas and stacking order are not fully verified.",
@@ -43891,6 +43936,7 @@
     ],
     "damageScope": null,
     "effects": [
+      "Timing: Rounds 1.",
       "Strength +25%.",
       "Duration: 3 rounds.",
       "Targets 1 other Ally; caster is excluded.",
@@ -43899,7 +43945,7 @@
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final value cannot be calculated because final combat formulas and stacking order are not fully verified.",
-    "explanation": "Malachite's Lightning Strike can increase Syrax's Strength. Strength +25%. Duration: 3 rounds. Targets 1 other Ally; caster is excluded.",
+    "explanation": "Malachite's Lightning Strike can increase Syrax's Strength. Timing: Rounds 1. Strength +25%. Duration: 3 rounds. Targets 1 other Ally; caster is excluded.",
     "id": "direct-stat-support-malachite-lightning-strike-lightning-strike-strength-stat-dealt-modifier-syrax-strength",
     "interactionScope": "cross-dragon",
     "matchedOutputCapabilityIds": [],
@@ -45326,7 +45372,8 @@
       "Ranked progression: L1 50%, L2 60%, L3 70%, L4 85%, L5 100%.",
       "Recovery Rate: 100% at effective Habit Level 5.",
       "Recovery support",
-      "Targets 1 Ally; caster is eligible."
+      "Targets 1 Ally; caster is eligible.",
+      "Timing: Rounds 2, 5, 8."
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final value cannot be calculated because final combat formulas and stacking order are not fully verified.",
@@ -46630,7 +46677,8 @@
       "Activation chance by Habit Level: 40%, 52%, 64%, 80%, 100%.",
       "Activation chance: 100% at effective Habit Level 5.",
       "Damage Received decrease 20%.",
-      "Duration: 2 rounds."
+      "Duration: 2 rounds.",
+      "Timing: Rounds 2, 5, 8."
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final value cannot be calculated because final combat formulas and stacking order are not fully verified.",
@@ -50063,7 +50111,8 @@
       "Ranked progression: L1 50%, L2 60%, L3 70%, L4 85%, L5 100%.",
       "Recovery Rate: 100% at effective Habit Level 5.",
       "Recovery support",
-      "Targets 1 Ally; caster is eligible."
+      "Targets 1 Ally; caster is eligible.",
+      "Timing: Rounds 2, 5, 8."
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final value cannot be calculated because final combat formulas and stacking order are not fully verified.",
@@ -51188,7 +51237,8 @@
       "Activation chance by Habit Level: 40%, 52%, 64%, 80%, 100%.",
       "Activation chance: 100% at effective Habit Level 5.",
       "Damage Received decrease 20%.",
-      "Duration: 2 rounds."
+      "Duration: 2 rounds.",
+      "Timing: Rounds 2, 5, 8."
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final value cannot be calculated because final combat formulas and stacking order are not fully verified.",
@@ -61301,7 +61351,8 @@
       "Ranked progression: L1 50%, L2 60%, L3 70%, L4 85%, L5 100%.",
       "Recovery Rate: 100% at effective Habit Level 5.",
       "Recovery support",
-      "Targets 1 Ally; caster is eligible."
+      "Targets 1 Ally; caster is eligible.",
+      "Timing: Rounds 2, 5, 8."
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final value cannot be calculated because final combat formulas and stacking order are not fully verified.",
@@ -62558,7 +62609,8 @@
       "Activation chance by Habit Level: 40%, 52%, 64%, 80%, 100%.",
       "Activation chance: 100% at effective Habit Level 5.",
       "Damage Received decrease 20%.",
-      "Duration: 2 rounds."
+      "Duration: 2 rounds.",
+      "Timing: Rounds 2, 5, 8."
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final value cannot be calculated because final combat formulas and stacking order are not fully verified.",

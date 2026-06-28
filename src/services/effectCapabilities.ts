@@ -689,21 +689,48 @@ function modifierDetailLines(
   ].filter((detail): detail is string => Boolean(detail));
 }
 
+export function formatScheduleDescription(
+  schedule: AbilitySchedule,
+  options: { style?: 'inline' | 'sentence' | 'timing-detail'; fallback?: string | null } = {},
+): string | null {
+  const style = options.style ?? 'sentence';
+  const lower = style === 'inline';
+  const explicitRounds = (rounds: number[]) =>
+    style === 'timing-detail'
+      ? `Rounds ${rounds.join(', ')}`
+      : `Rounds ${joinEnglishList(rounds.map(String))}`;
+
+  switch (schedule.roundSelector?.kind) {
+    case 'each-round':
+      return lower ? 'each round' : 'Each round';
+    case 'explicit':
+      return schedule.rounds.length > 0 ? explicitRounds(schedule.rounds) : (options.fallback ?? null);
+    case 'odd':
+      return lower ? 'odd-numbered rounds' : 'Odd-numbered rounds';
+    case 'even':
+      return lower ? 'even-numbered rounds' : 'Even-numbered rounds';
+    case 'start-of-round':
+      return `${lower ? 'start' : 'Start'} of Round ${schedule.roundSelector.round}`;
+    case 'start-of-combat':
+      return lower ? 'start of combat' : 'Start of combat';
+    case 'after-basic-attack':
+      return lower ? 'after each Basic Attack' : 'After each Basic Attack';
+    case 'range':
+      return `${lower ? 'rounds' : 'Rounds'} ${schedule.roundSelector.startRound} through ${schedule.roundSelector.endRound}`;
+    case undefined:
+      break;
+  }
+
+  if (schedule.rounds.length > 0) {
+    return explicitRounds(schedule.rounds);
+  }
+  return options.fallback ?? null;
+}
+
 function scheduleTimingDetail(schedule: AbilitySchedule): string | null {
-  if (schedule.roundSelector?.kind === 'start-of-round') {
-    return `Timing: Start of Round ${schedule.roundSelector.round}.`;
-  }
-  if (schedule.roundSelector?.kind === 'start-of-combat') {
-    return 'Timing: Start of combat.';
-  }
-  if (schedule.roundSelector?.kind === 'each-round') {
-    return 'Timing: Each round.';
-  }
-  if (schedule.roundSelector?.kind === 'after-basic-attack') {
-    return 'Timing: After each Basic Attack.';
-  }
-  if (schedule.roundSelector?.kind === 'explicit' && schedule.rounds.length > 0) {
-    return `Timing: Rounds ${schedule.rounds.join(', ')}.`;
+  const structured = formatScheduleDescription(schedule, { style: 'timing-detail' });
+  if (structured) {
+    return `Timing: ${structured}.`;
   }
   if (schedule.timing === 'start-of-each-round') {
     return 'Timing: Start of each round.';
@@ -5080,7 +5107,7 @@ function mitigationSourceScopeRequirement(modifier: ModifierCapability, output: 
   return sourceScopeRequirement(modifier, output);
 }
 
-function scheduleRoundsForOverlap(schedule: AbilitySchedule, maxRoundHint: number | null = null): number[] | null {
+export function scheduleRoundsForOverlap(schedule: AbilitySchedule, maxRoundHint: number | null = null): number[] | null {
   if (schedule.roundSelector?.kind === 'explicit' && schedule.rounds.length > 0) {
     return schedule.rounds;
   }
@@ -5107,37 +5134,40 @@ function scheduleRoundsForOverlap(schedule: AbilitySchedule, maxRoundHint: numbe
   return null;
 }
 
-function scheduleRoundDescription(schedule: AbilitySchedule, rounds: number[]): string {
-  if (schedule.roundSelector?.kind === 'odd') {
-    return 'Odd-numbered rounds';
-  }
-  if (schedule.roundSelector?.kind === 'even') {
-    return 'Even-numbered rounds';
-  }
-  if (schedule.roundSelector?.kind === 'each-round') {
-    return 'Each round';
-  }
-  return formatRounds(rounds);
+export function scheduleRoundDescription(schedule: AbilitySchedule, rounds: number[]): string {
+  return formatScheduleDescription(schedule, { style: 'sentence' }) ?? formatRounds(rounds);
 }
 
-function scheduleDurationOverlapWindows(
+export interface ScheduleOverlapWindow {
+  dependentRound: number;
+  supplierRound: number;
+  sameRound: boolean;
+  kind: 'carryover' | 'same-round-order-dependent';
+}
+
+export function scheduleDurationOverlapWindows(
   supplierRounds: number[],
   dependentRounds: number[],
   durationRounds: number,
-): Array<{ dependentRound: number; supplierRound: number; sameRound: boolean }> {
+): ScheduleOverlapWindow[] {
   return dependentRounds.flatMap((dependentRound) => {
-    const suppliers = supplierRounds.filter((supplierRound) =>
-      supplierRound <= dependentRound && dependentRound < supplierRound + durationRounds,
-    );
-    const preferred = suppliers.find((supplierRound) => supplierRound < dependentRound) ?? suppliers.find((supplierRound) => supplierRound === dependentRound);
-    return preferred === undefined
-      ? []
-      : [{ dependentRound, supplierRound: preferred, sameRound: preferred === dependentRound }];
+    const carryover = supplierRounds
+      .filter((supplierRound) => supplierRound < dependentRound && dependentRound < supplierRound + durationRounds)
+      .at(-1);
+    const sameRound = supplierRounds.includes(dependentRound) ? dependentRound : null;
+    return [
+      carryover === undefined
+        ? null
+        : { dependentRound, supplierRound: carryover, sameRound: false, kind: 'carryover' as const },
+      sameRound === null
+        ? null
+        : { dependentRound, supplierRound: sameRound, sameRound: true, kind: 'same-round-order-dependent' as const },
+    ].filter((window): window is ScheduleOverlapWindow => Boolean(window));
   });
 }
 
 function formatOverlapWindows(
-  windows: Array<{ dependentRound: number; supplierRound: number; sameRound: boolean }>,
+  windows: ScheduleOverlapWindow[],
   supplierAbilityName: string,
   dependentAbilityName: string,
 ): string {
@@ -5305,19 +5335,7 @@ function sharedTargetFact(ability: AbilityDefinition, effect: AbilityEffect): st
 }
 
 function scheduleTimingPhrase(schedule: AbilitySchedule): string {
-  if (schedule.roundSelector?.kind === 'explicit' && schedule.rounds.length > 0) {
-    return `Rounds ${joinEnglishList(schedule.rounds.map(String))}`;
-  }
-  if (schedule.roundSelector?.kind === 'each-round') {
-    return 'each round';
-  }
-  if (schedule.roundSelector?.kind === 'start-of-round') {
-    return `Start of Round ${schedule.roundSelector.round}`;
-  }
-  if (schedule.roundSelector?.kind === 'start-of-combat') {
-    return 'start of combat';
-  }
-  return schedule.timing.replaceAll('-', ' ');
+  return formatScheduleDescription(schedule, { style: 'inline' }) ?? schedule.timing.replaceAll('-', ' ');
 }
 
 function scheduleTimingAdverb(schedule: AbilitySchedule): string {
@@ -5325,7 +5343,7 @@ function scheduleTimingAdverb(schedule: AbilitySchedule): string {
     return 'each round';
   }
   const phrase = scheduleTimingPhrase(schedule);
-  return /^rounds|^start/i.test(phrase) ? `on ${phrase}` : phrase;
+  return /^rounds|^start|^odd|^even/i.test(phrase) ? `on ${phrase}` : phrase;
 }
 
 function formatTargetScope(scope: AbilityEffect['targetScope']): string {
@@ -7093,9 +7111,6 @@ function interactionScopeForTrace(
   recipientDragonId: string | null,
   matchKind: SynergyTrace['matchKind'],
 ): SynergyTrace['interactionScope'] {
-  if (matchKind === 'friendly-impairment') {
-    return 'cross-dragon';
-  }
   if (!recipientDragonId) {
     return matchKind === 'enemy-mitigation-reduction' ||
       matchKind === 'enemy-damage-received-increase' ||
