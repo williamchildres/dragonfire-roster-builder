@@ -37,6 +37,7 @@ export interface FormationCardInteraction {
   traceId: string;
   traceIds: string[];
   isRecipientModifier: boolean;
+  presentationFamily: string;
 }
 
 export interface FormationTraitStatus {
@@ -182,6 +183,31 @@ export function buildFormationCardPresentation(
       candidateTotal: null,
     });
     if (trace.matchKind === 'incoming-effect-amplification' && trace.recipientModifierType) {
+      const targetSelectionGroup = trace.targetSelectionGroup
+        ? (trace.targetSelectionGroup as NonNullable<SynergyTrace['targetSelectionGroup']>)
+        : null;
+      const providerTargetLabel = targetSelectionGroup
+        ? groupedRecipientLabel(
+            targetSelectionGroup.eligibleRecipientDragonIds.map((dragonId) => dragonById.get(dragonId)?.name ?? dragonId),
+            targetSelectionGroup.eligibleRecipientDragonIds,
+            selectedIds,
+          )
+        : recipient?.name ?? null;
+      const providerItem = toCardInteraction({
+        trace,
+        source,
+        recipient: null,
+        allDragons,
+        previewEnabled: options.previewEnabled === true,
+        targetLabel: providerTargetLabel,
+        isCandidate: false,
+        candidateIndex: null,
+        candidateTotal: null,
+      });
+      byDragon.get(source.id)?.provides.push({
+        ...providerItem,
+        isRecipientModifier: false,
+      });
       if (recipient && recipient.id !== source.id && selectedIds.has(recipient.id)) {
         byDragon.get(recipient.id)?.receives.push(item);
       }
@@ -327,6 +353,8 @@ function toCardInteraction({
   const summary = compactSummaryText(summaryLines, candidateTotal);
   const detailText = omitNormalCardSummarySentences(sanitizeNormalCardText(detail), summaryLines);
   const effects = sanitizeNormalCardEffects(trace.effects, summaryLines);
+  const presentationFamily = interactionPresentationFamily(trace);
+  const fullExplanation = detailText || sanitizeNormalCardText([trace.explanation, ...trace.matchedFacts, ...trace.effects].join(' ')) || summaryLines.join(' ');
   const relationshipId = [
     trace.sourceDragonId,
     trace.sourceAbilityId ?? trace.ruleId,
@@ -350,8 +378,8 @@ function toCardInteraction({
     title: trace.title,
     summary,
     summaryLines,
-    detail: detailText,
-    details: detailText ? [detailText] : [],
+    detail: fullExplanation,
+    details: [fullExplanation],
     effects,
     requirements: trace.requirements,
     confidence: trace.confidence,
@@ -370,7 +398,45 @@ function toCardInteraction({
     traceId: trace.id,
     traceIds: [trace.id],
     isRecipientModifier: trace.matchKind === 'incoming-effect-amplification' && Boolean(trace.recipientModifierType),
+    presentationFamily,
   };
+}
+
+function interactionPresentationFamily(trace: SynergyTrace): string {
+  if (trace.matchKind === 'friendly-impairment') {
+    return 'friendly-impairment';
+  }
+  if (trace.matchKind === 'incoming-effect-amplification') {
+    return `incoming-${trace.recipientModifierType ?? trace.channel ?? 'modifier'}`;
+  }
+  if (trace.matchKind === 'enemy-damage-received-increase') {
+    return 'enemy-damage-received-increase';
+  }
+  if (trace.matchKind === 'enemy-mitigation-reduction' || trace.matchKind === 'enemy-damage-dealt-reduction') {
+    return trace.matchKind;
+  }
+  if (trace.matchKind === 'status-condition-enablement') {
+    return `status-condition-enablement:${trace.channel ?? 'status'}`;
+  }
+  if (trace.matchKind === 'status-removal') {
+    return 'status-removal';
+  }
+  if (trace.targetSelectionGroup && trace.channel) {
+    return `target-selection:${trace.channel}`;
+  }
+  if (trace.channel === 'recovery') {
+    return 'recovery-support';
+  }
+  if (trace.channel === 'damage-received') {
+    return 'damage-received-support';
+  }
+  if (trace.channel === 'stat') {
+    return 'stat-support';
+  }
+  if (trace.channel) {
+    return `${trace.channel}-support`;
+  }
+  return trace.matchKind ?? trace.title;
 }
 
 function normalizeFormationCardSummaryLines(
@@ -588,14 +654,33 @@ function sanitizeNormalCardEffects(effects: string[], summaryLines: string[]): s
   );
 }
 
-function sanitizeNormalCardText(value: string): string {
+export function formatPresentationText(value: string): string {
   return value
+    .replace(/Target reference [^:]+:\s*/gi, '')
+    .replace(/References source effect [^.]+\./gi, '')
+    .replace(/Source effect ID:\s*[A-Za-z0-9-]+\./gi, '')
+    .replace(/Shared selected-target group:\s*[A-Za-z0-9-]+\./gi, 'These effects share the same selected target.')
+    .replace(/Selected-target group:\s*[A-Za-z0-9-]+\./gi, 'These effects share the same selected target.')
+    .replace(/Shared activation group:\s*[A-Za-z0-9-]+\./gi, '')
+    .replace(/Shared stack pool:\s*[A-Za-z0-9-]+\./gi, '')
+    .replace(/Target selector:\s*[^.]+\./gi, '')
+    .replace(/First Burn attempt uses the first Fire Damage target\./gi, 'The first Burn attempt applies to the same first added target that receives the first added Fire Damage.')
+    .replace(/Second Burn attempt uses the second Fire Damage target\./gi, 'The second Burn attempt applies to the same second added target that receives the second added Fire Damage.')
+    .replace(/Initiative reduction uses the enemies selected for Instinct reduction\./gi, 'The same selected pair of adjacent enemies receives both the Instinct and Initiative reductions.')
+    .replace(/later-round retreat checks/i, 'later retreat checks')
+    .replace(/\bEach Round\b/g, 'Each round')
+    .replace(/\b1 Enemies\b/g, '1 Enemy')
+    .replace(/\b1 Allies\b/g, '1 Ally')
+    .replace(/([.!?]){2,}/g, '$1')
+    .replace(/\s{2,}/g, ' ')
+    .trim();
+}
+
+function sanitizeNormalCardText(value: string): string {
+  return formatPresentationText(value)
     .replace(/\s*Ranked progression:\s.*?L5\s[-+]?\d+(?:\.\d+)?%?\./g, '')
     .replace(/\s*(Damage Dealt|Damage Received|Physical Damage Received|Tactical Damage Received|Fire Damage Received|Recovery Rate) reduction at current effective level:\s[-+]?\d+(?:\.\d+)?%?\./gi, '')
     .replace(/Activation scope is unresolved between one shared roll and independent per-target rolls\./gi, 'Whether this uses one shared roll or separate per-target rolls is unresolved.')
-    .replace(/Shared activation group:\s*[A-Za-z0-9-]+\./gi, '')
-    .replace(/Shared stack pool:\s*[A-Za-z0-9-]+\./gi, '')
-    .replace(/\s{2,}/g, ' ')
     .trim();
 }
 
@@ -795,7 +880,16 @@ function summarizeTrace(
     return [enemyVulnerabilityBenefitSummary(trace, recipient)];
   }
   if (trace.matchKind === 'friendly-impairment') {
-    return [trace.explanation.replace(`${source.name}'s `, '').replace(recipient ? `${recipient.name}` : 'the ally', recipient?.name ?? 'the ally')];
+    const text = [detail, ...trace.matchedFacts, ...trace.effects].join(' ');
+    const amount = text.match(/Damage Received decrease ([-+]?\d+(?:\.\d+)?%?)/i)?.[1]
+      ?? text.match(/Damage Received reduction: ([-+]?\d+(?:\.\d+)?%?)/i)?.[1]
+      ?? text.match(/reduce(?:s|d)? .*?Damage Received by ([-+]?\d+(?:\.\d+)?%?)/i)?.[1]
+      ?? text.match(/([-+]?\d+(?:\.\d+)?%?)/)?.[1]
+      ?? null;
+    if (amount && recipient) {
+      return [`${getAbilityName(source, trace.sourceAbilityId)} reduces Damage Received for ${recipient.name} by ${amount}.`];
+    }
+    return [formatPresentationText(trace.explanation)];
   }
   if (trace.modifierRole === 'enemy-debuff' || trace.matchKind === 'enemy-mitigation-reduction' || trace.matchKind === 'enemy-damage-dealt-reduction') {
     return [enemyFacingSummary(trace)];
@@ -822,9 +916,20 @@ function summarizeTrace(
         recoveryReceived ?? recoveryRate,
         enhancement,
         duration,
-        targeting,
-      ].filter(Boolean).join(' '),
+      targeting,
+    ].filter(Boolean).join(' '),
     ];
+  }
+  if (trace.channel === 'damage-received') {
+    const text = [detail, ...trace.matchedFacts, ...trace.effects].join(' ');
+    const amount = text.match(/Damage Received decrease ([-+]?\d+(?:\.\d+)?%?)/i)?.[1]
+      ?? text.match(/Damage Received reduction: ([-+]?\d+(?:\.\d+)?%?)/i)?.[1]
+      ?? text.match(/reduce(?:s|d)? .*?Damage Received by ([-+]?\d+(?:\.\d+)?%?)/i)?.[1]
+      ?? text.match(/([-+]?\d+(?:\.\d+)?%?)/)?.[1]
+      ?? null;
+    if (amount && recipient) {
+      return [`${getAbilityName(source, trace.sourceAbilityId)} reduces Damage Received for ${recipient.name} by ${amount}.`];
+    }
   }
   if (trace.channel) {
     const exclusiveChoice = trace.effects.find((effect) => /Exclusive one-of choice/i.test(effect));
@@ -1706,10 +1811,11 @@ function aggregateInteractions(
             interaction.sourceDragonId,
             interaction.abilityName,
             interaction.recipientDragonId ?? interaction.targetLabel ?? 'team',
+            interaction.presentationFamily,
             receivesInteractionMechanicKey(interaction),
             interaction.state,
           ].join('|')
-        : [interaction.sourceDragonId, interaction.abilityName, interactionMechanicKey(interaction), interaction.state].join('|');
+        : [interaction.sourceDragonId, interaction.abilityName, interaction.presentationFamily, interactionMechanicKey(interaction), interaction.state].join('|');
     grouped.set(key, [...(grouped.get(key) ?? []), interaction]);
   }
 
@@ -1737,6 +1843,7 @@ function aggregateExactProvidesSubgroups(
       item.status,
       item.isPreview ? 'preview' : 'current',
       item.isEnemyFacing ? 'enemy' : 'friendly',
+      item.presentationFamily,
       providesAggregationMode(item),
       exactRecipientEffectKey(item),
     ].join('|');
@@ -1781,14 +1888,16 @@ function mergeInteractions(
   const uniqueTitles = unique(items.map((item) => item.title));
   const uniqueEffectTitles = unique(items.map((item) => item.effectTitle));
   const summaryLines = mergedSummaryLines(items, direction, targetNames, options);
-  const details = options.exactRecipientSet
-    ? []
-    : unique(items.flatMap((item) => item.details)
-      .map((detail) => omitNormalCardSummarySentences(detail, summaryLines))
-      .filter((detail): detail is string => Boolean(detail)));
-  const effects = options.exactRecipientSet
-    ? []
-    : sanitizeNormalCardEffects(items.flatMap((item) => item.effects), summaryLines);
+  const mergedDetailLines = unique([
+    ...items.flatMap((item) => (item.details.length > 0 ? item.details : [item.detail]))
+      .flatMap(splitSentences),
+    ...summaryLines.flatMap(splitSentences),
+  ]
+    .map((detail) => omitNormalCardSummarySentences(detail, summaryLines))
+    .map(sanitizeNormalCardText)
+    .filter((detail): detail is string => Boolean(detail)));
+  const details = mergedDetailLines;
+  const effects = sanitizeNormalCardEffects(items.flatMap((item) => item.effects), summaryLines);
   const mergedCandidateTotal =
     items.some((item) => item.isCandidate || item.candidateTotal !== null)
       ? (Math.max(...items.map((item) => item.candidateTotal ?? 0)) || first.candidateTotal)
@@ -1818,7 +1927,7 @@ function mergeInteractions(
     title: options.exactRecipientSet && uniqueTitles.length > 1 ? first.abilityName : uniqueTitles.join(' + '),
     summaryLines,
     summary: compactSummaryText(summaryLines, mergedCandidateTotal),
-    detail: options.exactRecipientSet ? '' : items.map((item) => item.detail).join('\n\n'),
+    detail: mergedDetailLines.join('\n\n'),
     details,
     effects,
     requirements,
@@ -1978,6 +2087,7 @@ function synthesizeDamageReceivedSupportLine(
   }
   const evidence = [text, ...item.details, ...item.effects].join(' ');
   const timing = text.match(/Timing: [^.]+\./i)?.[0] ?? null;
+  const statLine = evidence.match(/\b(Strength|Intelligence|Instinct|Initiative)\s+\+([-+]?\d+(?:\.\d+)?%?)/i);
   const activationChance = evidence.match(/\b(?:status application chance|activation chance)\s*:?\s*([-+]?\d+(?:\.\d+)?%?)/i)?.[1]
     ?? evidence.match(/\b([-+]?\d+(?:\.\d+)?%?) chance\b/i)?.[1]
     ?? null;
@@ -1988,6 +2098,7 @@ function synthesizeDamageReceivedSupportLine(
   const duration = text.match(/Duration: [^.]+\./i)?.[0] ?? null;
   return [
     branchLine,
+    statLine ? `${statLine[1]} +${statLine[2]}.` : null,
     activationChance ? `Activation chance: ${activationChance}.` : null,
     timing,
     duration,
@@ -2225,6 +2336,10 @@ function canAggregateExactRecipientSet(items: FormationCardInteraction[]): boole
     return false;
   }
   const titles = unique(items.map((item) => item.title));
+  const families = unique(items.map((item) => item.presentationFamily));
+  if (families.length > 1) {
+    return false;
+  }
   if (
     titles.length > 1 &&
     !isCompatibleFriendlyImpairmentRecoveryGroup(items) &&
@@ -2277,6 +2392,7 @@ function isCompatibleSharedSelectedTargetGroup(items: FormationCardInteraction[]
 
 function exactRecipientEffectKey(item: FormationCardInteraction): string {
   return [
+    item.presentationFamily,
     item.effectTitle,
     item.title,
     item.status,
@@ -2398,13 +2514,19 @@ function interactionPurpose(trace: SynergyTrace): string | null {
     return 'Control cleanse';
   }
   if (trace.matchKind === 'friendly-impairment') {
-    return `${formatToken(trace.channel ?? 'damage-dealt')} friendly impairment`;
+    return `Allied ${formatToken(trace.channel ?? 'damage-dealt')} reduction`;
   }
   if (/Recovery Received Support/i.test(trace.title)) {
     return 'Recovery Received support';
   }
   if (trace.matchKind === 'incoming-effect-amplification' && trace.recipientModifierType) {
-    return `${formatToken(trace.channel ?? 'recovery')} amplification`;
+    if (trace.channel === 'recovery' || /recovery/i.test(trace.recipientModifierType)) {
+      return 'Recovery support';
+    }
+    if (trace.channel === 'damage-dealt' || /damage dealt/i.test(trace.recipientModifierType)) {
+      return 'Allied Damage Dealt reduction';
+    }
+    return `${formatToken(trace.channel ?? 'recovery')} support`;
   }
   if (trace.channel === 'stat') {
     return 'Stat support';

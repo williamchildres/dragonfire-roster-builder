@@ -59,6 +59,7 @@ import { analyzeFormation, findAffinityCoverage, findBreedDistribution } from '.
 import {
   buildFormationCardPresentation,
   getCompactInteractions,
+  formatPresentationText,
   type FormationCardAnalysis,
   type FormationCommandSummary,
   type FormationCardInteraction,
@@ -1608,7 +1609,7 @@ function TraceCard({ trace }: { trace: SynergyTrace }) {
           </dd>
         </div>
       </dl>
-      <p>{trace.explanation}</p>
+      <p>{formatPresentationText(trace.explanation)}</p>
       <p className="notice-text">{traceStatusReason(trace)}</p>
       <h5>Requirements</h5>
       <ul className="plain-list">

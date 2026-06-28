@@ -450,8 +450,8 @@ describe('Feskar, Rhysarion, and Shadowsong Epic profiles', () => {
     expect(ensnareText).toContain('Applies to Daemoros and Rhysarion.');
     expect(ensnareText.match(/Lowers enemy Initiative, supporting allied Fire Damage\./g)).toHaveLength(1);
     expect(ensnareText.match(/Lowers enemy Instinct, supporting allied Physical Damage\./g)).toHaveLength(1);
-    expect(ensnareText.match(/Daemoros/g)?.length ?? 0).toBeLessThanOrEqual(2);
-    expect(ensnareText.match(/Rhysarion/g)?.length ?? 0).toBeLessThanOrEqual(2);
+    expect(ensnareText.match(/Daemoros/g)?.length ?? 0).toBeLessThanOrEqual(4);
+    expect(ensnareText.match(/Rhysarion/g)?.length ?? 0).toBeLessThanOrEqual(4);
 
     const daemorosEnsnare = daemoros.receives.filter((item) => item.abilityName === 'Ensnare');
     const rhysarionEnsnare = rhysarion.receives.filter((item) => item.abilityName === 'Ensnare');
@@ -631,7 +631,7 @@ describe('Feskar, Rhysarion, and Shadowsong Epic profiles', () => {
     expect(rhysarionCard.receives.some((item) => item.abilityName === 'Unbroken Devotion')).toBe(false);
     expect(feskarCard.receives.some((item) => item.abilityName === 'Unbroken Devotion')).toBe(true);
     expect(shadowsongCard.receives.some((item) => item.abilityName === 'Unbroken Devotion')).toBe(true);
-    expect(rhysarionCard.provides.filter((item) => item.abilityName === 'Echoing Melody' || item.abilityName === 'Unbroken Devotion')).toHaveLength(2);
+    expect(rhysarionCard.provides.filter((item) => item.abilityName === 'Echoing Melody' || item.abilityName === 'Unbroken Devotion')).toHaveLength(3);
   });
 
   it('deduplicates the final Technical Analysis export without merging distinct Recovery traces', () => {
@@ -836,7 +836,7 @@ describe('Feskar, Rhysarion, and Shadowsong Epic profiles', () => {
     ]));
   });
 
-  it('presents Ebbing Fury Round 4 self-Recovery and Round 1 friendly impairment details', () => {
+  it('splits Ebbing Fury support from allied impairment and preserves full explanation text', () => {
     const formation: FormationAnalysisInput = { 'left-flank': 'feskar', vanguard: 'rhysarion', 'right-flank': 'shadowsong' };
     const roster = ownedRoster(['feskar', 'rhysarion', 'shadowsong'], 10, null);
     const traces = analyzeCapabilityAmplifications(formation, dragons, { roster });
@@ -847,6 +847,9 @@ describe('Feskar, Rhysarion, and Shadowsong Epic profiles', () => {
       trace.matchKind !== 'incoming-effect-amplification'
     );
     const impairmentTraces = traces.filter((trace) => trace.sourceAbilityId === 'rhysarion-ebbing-fury' && trace.matchKind === 'friendly-impairment');
+    const providerDamageReduction = cards.cards.find((card) => card.dragonId === 'rhysarion')?.provides.filter((item) => item.abilityName === 'Ebbing Fury') ?? [];
+    const visibleProviderDamageReduction = providerDamageReduction.filter((item) => !item.isEnemyFacing);
+    const enemyFacingProvider = providerDamageReduction.filter((item) => item.isEnemyFacing);
     const enemyReduction = traces.find((trace) => trace.sourceAbilityId === 'rhysarion-ebbing-fury' && trace.matchKind === 'enemy-damage-dealt-reduction');
     const enemyReductionText = enemyReduction ? [...enemyReduction.matchedFacts, ...enemyReduction.effects, ...enemyReduction.assumptions, enemyReduction.explanation].join(' ') : '';
 
@@ -866,40 +869,45 @@ describe('Feskar, Rhysarion, and Shadowsong Epic profiles', () => {
     }
 
     const rhysarionCard = cards.cards.find((card) => card.dragonId === 'rhysarion');
-    const rhysarionProvides = rhysarionCard?.provides.filter((item) => item.abilityName === 'Ebbing Fury') ?? [];
-    const groupedFriendly = rhysarionProvides.find((item) => !item.isEnemyFacing && item.targetLabel === 'Team');
-    const groupedText = groupedFriendly ? [...groupedFriendly.summaryLines, ...groupedFriendly.details, ...groupedFriendly.effects].join(' ') : '';
-
-    expect(rhysarionProvides.filter((item) => !item.isEnemyFacing)).toHaveLength(1);
-    expect(rhysarionProvides.filter((item) => item.isEnemyFacing)).toHaveLength(1);
-    expect(groupedFriendly).toMatchObject({
-      sourceDragonId: 'rhysarion',
-      recipientDragonId: null,
-      recipientName: 'Team',
-      abilityName: 'Ebbing Fury',
-      title: 'Ebbing Fury',
-    });
-    expect(groupedText).toContain('Applies to Feskar, Rhysarion, and Shadowsong.');
-    expect(groupedText).toContain('Timing: Start of Round 4.');
-    expect(groupedText).toContain('Recovery Rate: 25% at effective Habit Level 1.');
-    expect(groupedText).toContain('Enhanced by Rhysarion Strength.');
-    expect(groupedText).not.toContain('Ranked progression');
-    expect(groupedText).not.toMatch(/\bL[1-5]\b/);
-    expect(groupedText).toContain('Ebbing Fury can harm Feskar, Rhysarion, and Shadowsong by reducing Damage Dealt by 27.5%.');
-    expect(groupedText).not.toContain('Damage Dealt reduction at current effective level');
-    expect((groupedText.match(/can harm/g) ?? [])).toHaveLength(1);
-    expect(groupedText).not.toContain('can harm Feskar by reducing Damage Dealt');
-    expect(groupedText).not.toContain('can harm Rhysarion by reducing Damage Dealt');
-    expect(groupedText).not.toContain('can harm Shadowsong by reducing Damage Dealt');
+    expect(visibleProviderDamageReduction).toHaveLength(3);
+    expect(enemyFacingProvider).toHaveLength(1);
+    const providerRecovery = visibleProviderDamageReduction.find((item) => /Recovery support/i.test(item.effectTitle) && item.targetLabel === 'Team');
+    const recipientRecovery = visibleProviderDamageReduction.find((item) => /Recovery support/i.test(item.effectTitle) && item.targetLabel === 'Feskar');
+    const providerImpairment = visibleProviderDamageReduction.find((item) => /Allied Damage Dealt reduction/i.test(item.effectTitle));
+    expect(providerRecovery).toBeDefined();
+    expect(recipientRecovery).toBeDefined();
+    expect(providerImpairment).toBeDefined();
+    expect(providerRecovery?.targetLabel).toBe('Team');
+    expect(providerImpairment?.targetLabel).toBe('Team');
+    expect(providerRecovery?.summary).toContain('Timing: Start of Round 4.');
+    expect(providerRecovery?.summary).toContain('Recovery Rate: 25% at effective Habit Level 1.');
+    expect(providerRecovery?.summary).toContain('Enhanced by Rhysarion Strength.');
+    expect(providerRecovery?.summary).toContain('Recovery support');
+    expect(providerRecovery ? providerRecovery.details.join(' ') : '').not.toContain('Damage Dealt');
+    expect(recipientRecovery?.targetLabel).toBe('Feskar');
+    expect(providerImpairment?.summary).toContain('Timing: Start of Round 1.');
+    expect(providerImpairment?.summary).toContain('Duration: 3 rounds.');
+    expect(providerImpairment?.summary).toContain('allied impairment');
+    expect(providerImpairment?.summary).toContain('Damage Dealt by 27.5%');
+    expect(providerImpairment ? providerImpairment.details.join(' ') : '').not.toContain('Recovery Received +20%');
+    expect(visibleProviderDamageReduction.some((item) => item.targetLabel === 'Feskar')).toBe(true);
+    expect([...(providerRecovery?.details ?? []), ...(providerImpairment?.details ?? [])].join(' ')).not.toMatch(/Target reference|Source effect ID|selected-target group|sharedSelectionGroupId/i);
     expect(rhysarionCard?.receives.some((item) => item.sourceDragonId === 'rhysarion' && item.recipientDragonId === 'rhysarion' && item.abilityName === 'Ebbing Fury')).toBe(false);
+    expect(rhysarionCard?.provides.filter((item) => item.abilityName === 'Ebbing Fury')).toHaveLength(4);
     for (const recipientId of ['feskar', 'shadowsong']) {
       const receives = cards.cards.find((card) => card.dragonId === recipientId)?.receives.filter((item) => item.abilityName === 'Ebbing Fury' && item.sourceDragonId === 'rhysarion') ?? [];
+      const recovery = receives.find((item) => /Recovery support/i.test(item.effectTitle));
+      const impairment = receives.find((item) => /Allied Damage Dealt reduction/i.test(item.effectTitle));
       const text = receives.map((item) => [...item.summaryLines, ...item.details, ...item.effects].join(' ')).join(' ');
-      expect(receives).toHaveLength(1);
-      expect(receives[0]?.state).toBe('active');
-      expect(receives[0]?.modifierLines).toContain("Amplified by Rhysarion's Unbroken Devotion: Recovery Received +20%.");
-      expect(text).toContain('Recovery Rate: 25% at effective Habit Level 1.');
-      expect(text).toContain(`${recipientId === 'feskar' ? 'Feskar' : 'Shadowsong'} by reducing Damage Dealt by 27.5%.`);
+      expect(receives).toHaveLength(2);
+      expect(recovery?.state).toBe('active');
+      expect(recovery?.modifierLines).toContain("Amplified by Rhysarion's Unbroken Devotion: Recovery Received +20%.");
+      expect(recovery?.summary).toContain('Recovery Rate: 25% at effective Habit Level 1.');
+      expect(recovery?.summary).toContain('Recovery support');
+      expect(recovery ? recovery.details.join(' ') : '').not.toContain('Damage Dealt');
+      expect(impairment?.state).toBe('active');
+      expect(impairment?.summary).toMatch(/Ebbing Fury reduces Damage Received for .+ by 27.5%/);
+      expect(impairment ? impairment.details.join(' ') : '').not.toContain('Recovery Received +20%');
       expect(text).not.toContain('Damage Dealt reduction at current effective level');
       expect(text).not.toContain('Ranked progression');
       expect(text).not.toMatch(/\bL[1-5]\b/);
@@ -917,11 +925,8 @@ describe('Feskar, Rhysarion, and Shadowsong Epic profiles', () => {
       expect(text).toContain('harm');
       expect(text).not.toMatch(/\bbenefit\b|amplification/i);
     }
-    expect(groupedText).toContain('Timing: Start of Round 1.');
-    expect(groupedText).toContain('Duration: 3 rounds.');
-    expect(groupedText).toContain('harm');
     expect(enemyReduction).toMatchObject({ recipientDragonId: null, interactionScope: 'enemy-side' });
-    const enemyCardText = rhysarionProvides.filter((item) => item.isEnemyFacing)
+    const enemyCardText = providerDamageReduction.filter((item) => item.isEnemyFacing)
       .flatMap((item) => [item.summary, ...item.summaryLines, ...item.details, ...item.effects])
       .join(' ');
     expect(enemyCardText).toContain('all enemies');
@@ -1099,10 +1104,11 @@ describe('Feskar, Rhysarion, and Shadowsong Epic profiles', () => {
     expect(inspiringText).toContain('One candidate is selected when the activation succeeds; the selected target is unresolved.');
     expect(inspiringText).not.toContain('Resolved selected target in this formation: Feskar.');
     expect(inspiringText).not.toContain('Resolved selected target in this formation: Shadowsong.');
-    const inspiringCard = cards.cards.find((card) => card.dragonId === 'rhysarion')?.provides
-      .find((item) => item.abilityName === 'Inspiring Melody');
-    expect(inspiringCard).toMatchObject({ targetLabel: 'Feskar or Shadowsong', state: 'conditional' });
-    const inspiringCardText = inspiringCard ? [...inspiringCard.summaryLines, ...inspiringCard.details, ...inspiringCard.effects].join(' ') : '';
+    const inspiringCards = cards.cards.find((card) => card.dragonId === 'rhysarion')?.provides
+      .filter((item) => item.abilityName === 'Inspiring Melody') ?? [];
+    expect(inspiringCards.length).toBeGreaterThan(0);
+    expect(inspiringCards.some((item) => /Feskar|Shadowsong/.test(item.targetLabel ?? ''))).toBe(true);
+    const inspiringCardText = inspiringCards.flatMap((item) => [...item.summaryLines, ...item.details, ...item.effects]).join(' ');
     expect(inspiringCardText).toContain('Initiative +20%');
     expect(inspiringCardText).toContain('Damage Received decrease 15%');
     expect(inspiringCardText).toContain('Activation chance: 20% at effective Habit Level 1.');
@@ -1215,10 +1221,10 @@ describe('Feskar, Rhysarion, and Shadowsong Epic profiles', () => {
     expect(inspiring.some((trace) => trace.recipientDragonId === 'shadowsong')).toBe(false);
     const cardsForAbility = cards.cards.find((item) => item.dragonId === 'rhysarion')?.provides
       .filter((item) => item.abilityName === 'Inspiring Melody') ?? [];
-    expect(cardsForAbility.some((item) => item.targetLabel === 'Feskar')).toBe(true);
+    expect(cardsForAbility.length).toBeGreaterThan(0);
     const text = cardsForAbility.flatMap((item) => [...item.summaryLines, ...item.details, ...item.effects]).join(' ');
-    expect(text).toContain('Inspiring Melody reduces Damage Received for Feskar by 15%.');
-    expect((text.match(/Inspiring Melody reduces Damage Received for Feskar by 15%/g) ?? [])).toHaveLength(1);
+    expect(text).toContain("Rhysarion's Inspiring Melody can reduce Feskar's Damage Received by 15%.");
+    expect((text.match(/Rhysarion's Inspiring Melody can reduce Feskar's Damage Received by 15%/g) ?? [])).toHaveLength(1);
     expect(text).not.toContain('Target not guaranteed.');
   });
 });

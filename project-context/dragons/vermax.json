@@ -4015,7 +4015,7 @@
   "firstObservedInGame": "2026-06-22",
   "format": "dragonfire-dragon-profile",
   "gameVersion": null,
-  "generatedAt": "2026-06-28T04:00:28.987Z",
+  "generatedAt": "2026-06-28T05:03:35.208Z",
   "habits": [
     {
       "abilityClass": "passive",
@@ -7408,8 +7408,8 @@
   "rosterSourceStatus": "in-game-verified-pending-official-site",
   "slug": "vermax",
   "source": {
-    "branch": "fix/live-analysis-output-dedupe",
-    "commit": "4247ae501f3b0ba39ba31435b0742c9d96b0e88f",
+    "branch": "fix/feskar-rhysarion-shadowsong-pass2-presentation",
+    "commit": "fec85917bbf206aff620ef3466db9155ebe6bde8",
     "databaseVersion": "0.6.2",
     "dataSchemaVersion": 12,
     "gameBuild": "26.6.53509",
