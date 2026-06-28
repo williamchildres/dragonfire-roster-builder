@@ -362,7 +362,13 @@ describe('Daemoros and Vaeldra Epic profiles', () => {
     );
 
     expect(enemySide.length).toBeGreaterThan(0);
-    expect(enemySide.every((trace) => trace.interactionScope === 'enemy-side')).toBe(true);
+    expect(enemySide.every((trace) =>
+      trace.interactionScope === 'enemy-side' ||
+      (
+        trace.matchKind === 'enemy-mitigation-reduction' &&
+        (trace.interactionScope === 'cross-dragon' || trace.interactionScope === 'internal')
+      )
+    )).toBe(true);
     expect(enemySide.every((trace) => trace.recipientDragonId === null || trace.matchKind === 'enemy-mitigation-reduction')).toBe(true);
   });
 

@@ -11521,6 +11521,7 @@
     "periodicDamage": [
       {
         "abilityId": "caraxes-crippling-inferno",
+        "activationGroupId": null,
         "channel": "fire-damage",
         "damageRateByHabitLevel": [],
         "damageRateFixed": 20,
@@ -11531,11 +11532,13 @@
         ],
         "mitigationStat": "initiative",
         "scalingStat": "intelligence",
+        "sourceEffectId": "crippling-inferno-burn",
         "statusId": "burn",
         "ticksEachRound": true
       },
       {
         "abilityId": "kalspire-tactical-strike",
+        "activationGroupId": null,
         "channel": "physical-damage",
         "damageRateByHabitLevel": [],
         "damageRateFixed": 20,
@@ -11546,11 +11549,13 @@
         ],
         "mitigationStat": "instinct",
         "scalingStat": "strength",
+        "sourceEffectId": "tactical-strike-bleed",
         "statusId": "bleed",
         "ticksEachRound": true
       },
       {
         "abilityId": "kalspire-tactical-assault",
+        "activationGroupId": null,
         "channel": "tactical-damage",
         "damageRateByHabitLevel": [
           {
@@ -11587,11 +11592,13 @@
         ],
         "mitigationStat": "intelligence",
         "scalingStat": "instinct",
+        "sourceEffectId": "tactical-assault-panic",
         "statusId": "panic",
         "ticksEachRound": true
       },
       {
         "abilityId": "daemoros-shadowflame",
+        "activationGroupId": null,
         "channel": "fire-damage",
         "damageRateByHabitLevel": [],
         "damageRateFixed": 20,
@@ -11602,11 +11609,13 @@
         ],
         "mitigationStat": "initiative",
         "scalingStat": "intelligence",
+        "sourceEffectId": "shadowflame-burn",
         "statusId": "burn",
         "ticksEachRound": true
       },
       {
         "abilityId": "daemoros-instill-fear",
+        "activationGroupId": "instill-fear-each-round-shared-activation",
         "channel": "tactical-damage",
         "damageRateByHabitLevel": [],
         "damageRateFixed": 20,
@@ -11617,11 +11626,13 @@
         ],
         "mitigationStat": "intelligence",
         "scalingStat": "instinct",
+        "sourceEffectId": "instill-fear-panic",
         "statusId": "panic",
         "ticksEachRound": true
       },
       {
         "abilityId": "daemoros-darkening-fear",
+        "activationGroupId": "darkening-fear-each-round-shared-activation",
         "channel": "tactical-damage",
         "damageRateByHabitLevel": [],
         "damageRateFixed": 20,
@@ -11632,11 +11643,13 @@
         ],
         "mitigationStat": "intelligence",
         "scalingStat": "instinct",
+        "sourceEffectId": "darkening-fear-panic",
         "statusId": "panic",
         "ticksEachRound": true
       },
       {
         "abilityId": "shadowsong-blazing-conductor",
+        "activationGroupId": null,
         "channel": "fire-damage",
         "damageRateByHabitLevel": [],
         "damageRateFixed": null,
@@ -11647,11 +11660,13 @@
         ],
         "mitigationStat": "initiative",
         "scalingStat": "intelligence",
+        "sourceEffectId": "blazing-conductor-first-burn",
         "statusId": "burn",
         "ticksEachRound": true
       },
       {
         "abilityId": "shadowsong-blazing-conductor",
+        "activationGroupId": null,
         "channel": "fire-damage",
         "damageRateByHabitLevel": [],
         "damageRateFixed": null,
@@ -11662,6 +11677,7 @@
         ],
         "mitigationStat": "initiative",
         "scalingStat": "intelligence",
+        "sourceEffectId": "blazing-conductor-second-burn",
         "statusId": "burn",
         "ticksEachRound": true
       }

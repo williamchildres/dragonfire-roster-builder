@@ -253,10 +253,13 @@ export function buildFormationCardPresentation(
 }
 
 function isVisibleInternalProvidesTrace(trace: SynergyTrace): boolean {
+  if (isFormationRelevantEnemyProviderBenefit(trace)) {
+    return true;
+  }
   if (trace.ruleId === 'internal-self-modifier') {
     const text = [...trace.effects, ...trace.matchedFacts, trace.explanation].join(' ');
     if (/Exclusive one-of choice/i.test(text)) {
-      return trace.status !== 'inactive';
+      return false;
     }
     if (/Shared stack pool:/i.test(text) && !trace.requirements.some((requirement) => requirement.actual === 'preview enabled')) {
       return trace.status !== 'inactive';
@@ -278,6 +281,12 @@ function isVisibleInternalProvidesTrace(trace: SynergyTrace): boolean {
       !/;\s*self\s*;/.test(trace.targetSelectorSummary ?? '');
   }
   return false;
+}
+
+function isFormationRelevantEnemyProviderBenefit(trace: SynergyTrace): boolean {
+  return trace.sourceDragonId === trace.recipientDragonId &&
+    trace.recipientDragonId !== null &&
+    (trace.matchKind === 'enemy-mitigation-reduction' || trace.matchKind === 'enemy-damage-received-increase');
 }
 
 export function getCompactInteractions(
@@ -1973,12 +1982,15 @@ function pruneSubsumedProviderInteractions(interactions: FormationCardInteractio
       interaction.effectTitle,
       interaction.state,
       interaction.isPreview ? 'preview' : 'current',
-      interaction.isEnemyFacing ? 'enemy' : 'friendly',
+      interactionMechanicKey(interaction),
     ].join('|');
     buckets.set(key, [...(buckets.get(key) ?? []), interaction]);
   }
 
-  return [...buckets.values()].flatMap((bucket) => {
+  const pruned = [...buckets.values()].flatMap((bucket) => {
+    if (bucket.some((interaction) => /Enemy mitigation reduction/i.test(interaction.effectTitle))) {
+      return bucket;
+    }
     const signatures = bucket.map((interaction) => ({
       interaction,
       signature: providerRecipientSignature(interaction),
@@ -1996,6 +2008,55 @@ function pruneSubsumedProviderInteractions(interactions: FormationCardInteractio
       return keep;
     });
   });
+  return pruneRedundantEnemyProviderCards(pruned);
+}
+
+function pruneRedundantEnemyProviderCards(interactions: FormationCardInteraction[]): FormationCardInteraction[] {
+  return interactions.filter((interaction) => {
+    if (!interaction.isEnemyFacing || interaction.targetLabel || interaction.recipientName) {
+      return true;
+    }
+    return !interactions.some((candidate) =>
+      candidate !== interaction &&
+      candidate.sourceDragonId === interaction.sourceDragonId &&
+      candidate.abilityName === interaction.abilityName &&
+      candidate.state === interaction.state &&
+      !candidate.isEnemyFacing &&
+      recipientAwareCardExplainsEnemyProvider(interaction, candidate)
+    );
+  });
+}
+
+function recipientAwareCardExplainsEnemyProvider(
+  provider: FormationCardInteraction,
+  recipientAware: FormationCardInteraction,
+): boolean {
+  if (provider.effectTitle === recipientAware.effectTitle) {
+    return interactionMechanicKey(provider) === interactionMechanicKey(recipientAware);
+  }
+  const stat = enemyReductionStatFromTitle(provider.effectTitle);
+  if (!stat || !/Enemy mitigation reduction/i.test(recipientAware.effectTitle)) {
+    return false;
+  }
+  const expectedChannel = mitigationChannelLabelForStat(stat);
+  return expectedChannel ? interactionText(recipientAware).includes(`supporting allied ${expectedChannel}`) : false;
+}
+
+function enemyReductionStatFromTitle(title: string): string | null {
+  return title.match(/Enemy (Strength|Intelligence|Instinct|Initiative) reduction/i)?.[1] ?? null;
+}
+
+function mitigationChannelLabelForStat(stat: string): string | null {
+  switch (stat.toLowerCase()) {
+    case 'instinct':
+      return 'Physical Damage';
+    case 'intelligence':
+      return 'Tactical Damage';
+    case 'initiative':
+      return 'Fire Damage';
+    default:
+      return null;
+  }
 }
 
 function providerRecipientSignature(interaction: FormationCardInteraction): string | null {
@@ -2458,6 +2519,15 @@ function interactionMechanicKey(interaction: FormationCardInteraction): string {
         .join('|'),
     ].join('::');
   }
+  if (/Enemy mitigation reduction/i.test(interaction.effectTitle)) {
+    const lowered = text.match(/Lowers enemy (Instinct|Initiative|Intelligence|Strength), supporting allied ([A-Za-z ]+)\./i);
+    return [
+      interaction.effectTitle,
+      lowered?.[1] ?? interaction.title,
+      lowered?.[2] ?? '',
+      interaction.state,
+    ].join('::');
+  }
   const hasDistinctStatusMechanic = /Base .* Rate|Enhanced .* Rate|application chance|target-specific conditional chance|same target/i.test(text);
   if (
     hasDistinctStatusMechanic &&
@@ -2905,7 +2975,7 @@ function isEnemyFacingTrace(trace: SynergyTrace): boolean {
   if (trace.matchKind === 'enemy-damage-received-increase' && trace.recipientDragonId) {
     return false;
   }
-  if (trace.matchKind === 'enemy-mitigation-reduction' && trace.recipientDragonId && /ensnare/i.test(trace.sourceAbilityId ?? '')) {
+  if (trace.matchKind === 'enemy-mitigation-reduction' && trace.recipientDragonId) {
     return false;
   }
   return trace.modifierRole === 'enemy-debuff' || trace.matchKind === 'enemy-mitigation-reduction' || trace.interactionScope === 'enemy-side';

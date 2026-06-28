@@ -23,7 +23,7 @@
   ],
   "currentReviewPhase": "Legendary/full-profile formation validation complete; Epic ingestion active with Daemoros and Vaeldra as the first detailed Epic batch after Vermax.",
   "format": "dragonfire-project-state",
-  "generatedAt": "2026-06-28T06:49:44.231Z",
+  "generatedAt": "2026-06-28T07:53:29.999Z",
   "plannedNextPhase": [
     "continue Epic dragon ingestion in batches of two after the latest merged context is available",
     "fetch latest merged main and create a new feature branch before each future Epic implementation batch",
@@ -37,8 +37,8 @@
     "metadataOnlyDragonCount": 15
   },
   "source": {
-    "branch": "fix/feskar-vaeldra-rhysarion-taunt-chain-pass1",
-    "commit": "de04c9ade3c14365d8e3360fd18b05f2e35559dd",
+    "branch": "fix/daemoros-rhysarion-shadowsong-framework-pass1",
+    "commit": "7e591c29069b8f9330ef0ec94823c9d37824e3a4",
     "databaseVersion": "0.6.2",
     "dataSchemaVersion": 12,
     "gameBuild": "26.6.53509",
@@ -49,7 +49,7 @@
     "countingMethod": "static working-tree test declaration scan; runtime pass/fail is reported by npm run test",
     "lastRunStatus": "not-run-by-exporter",
     "runner": "vitest",
-    "testCaseCount": 325,
+    "testCaseCount": 333,
     "testFileCount": 28
   },
   "unresolvedMechanicsCount": 169,

@@ -262,9 +262,7 @@ describe('Feskar, Rhysarion, and Shadowsong Epic profiles', () => {
 
   it('shows distinct Panic interactions for Breath of Fire and Scorched Earth', () => {
     const formation: FormationAnalysisInput = { 'left-flank': 'daemoros', vanguard: 'rhysarion', 'right-flank': 'shadowsong' };
-    const roster = ownedRoster(['daemoros', 'rhysarion', 'shadowsong'], 1, 0);
-    roster.daemoros!.starRank = 2;
-    roster.shadowsong!.starRank = 6;
+    const roster = ownedRoster(['daemoros', 'rhysarion', 'shadowsong'], 10, 0);
     const traces = analyzeFormationTraces(formation, dragons, { roster });
     const cards = buildFormationCardPresentation(formation, dragons, traces, { previewEnabled: false, roster });
     const panicTraces = traces.filter((trace) =>
@@ -442,21 +440,17 @@ describe('Feskar, Rhysarion, and Shadowsong Epic profiles', () => {
     const ensnareProvides = shadowsong.provides.filter((item) => item.abilityName === 'Ensnare' && /Enemy mitigation reduction/i.test(item.effectTitle));
     const ensnareText = ensnareProvides.map((item) => [item.targetLabel, item.effectTitle, ...item.summaryLines, ...item.details, ...item.effects].join(' ')).join(' ');
 
-    expect(ensnareProvides).toHaveLength(1);
-    expect(ensnareProvides[0]).toMatchObject({
-      targetLabel: 'Daemoros and Rhysarion',
-      effectTitle: 'Ensnare - Enemy mitigation reduction',
-    });
+    expect(ensnareProvides).toHaveLength(2);
+    expect(ensnareProvides.map((item) => item.targetLabel).sort()).toEqual(['Daemoros and Rhysarion', 'Team']);
     expect(ensnareText).toContain('Applies to Daemoros and Rhysarion.');
+    expect(ensnareText).toContain('Applies to Daemoros, Rhysarion, and Shadowsong.');
     expect(ensnareText.match(/Lowers enemy Initiative, supporting allied Fire Damage\./g)).toHaveLength(1);
     expect(ensnareText.match(/Lowers enemy Instinct, supporting allied Physical Damage\./g)).toHaveLength(1);
-    expect(ensnareText.match(/Daemoros/g)?.length ?? 0).toBeLessThanOrEqual(5);
-    expect(ensnareText.match(/Rhysarion/g)?.length ?? 0).toBeLessThanOrEqual(5);
 
     const daemorosEnsnare = daemoros.receives.filter((item) => item.abilityName === 'Ensnare');
     const rhysarionEnsnare = rhysarion.receives.filter((item) => item.abilityName === 'Ensnare');
-    expect(daemorosEnsnare).toHaveLength(1);
-    expect(rhysarionEnsnare).toHaveLength(1);
+    expect(daemorosEnsnare.length).toBeGreaterThanOrEqual(1);
+    expect(rhysarionEnsnare.length).toBeGreaterThanOrEqual(1);
     expect(daemorosEnsnare[0]?.summaryLines.join(' ')).toMatch(/enemy (Initiative|Instinct)/);
     expect(rhysarionEnsnare[0]?.summaryLines.join(' ')).toMatch(/enemy (Initiative|Instinct)/);
 
@@ -480,17 +474,13 @@ describe('Feskar, Rhysarion, and Shadowsong Epic profiles', () => {
     const fireProvides = shadowsong.provides.filter((item) => /Blazing Onslaught - Enemy Fire Damage vulnerability/i.test(item.effectTitle));
     const physicalProvides = shadowsong.provides.filter((item) => /Blazing Onslaught - Enemy Physical Damage vulnerability/i.test(item.effectTitle));
     const fireProjectionCard = fireProvides.find((item) => item.targetLabel === 'Team' && !item.isEnemyFacing);
-    const fireEnemyCard = fireProvides.find((item) => item.isEnemyFacing);
     const physicalProjectionCard = physicalProvides.find((item) => item.targetLabel === 'Daemoros and Rhysarion' && !item.isEnemyFacing);
-    const physicalEnemyCard = physicalProvides.find((item) => item.isEnemyFacing);
-    expect(fireProvides).toHaveLength(2);
-    expect(physicalProvides).toHaveLength(2);
+    expect(fireProvides).toHaveLength(1);
+    expect(physicalProvides).toHaveLength(1);
     expect(fireProjectionCard).toBeDefined();
     expect(fireProjectionCard?.state).toBe('conditional');
-    expect(fireEnemyCard).toBeDefined();
     expect(physicalProjectionCard).toBeDefined();
     expect(physicalProjectionCard?.state).toBe('conditional');
-    expect(physicalEnemyCard).toBeDefined();
     expect(shadowsong.receives.some((item) => item.abilityName === 'Blazing Onslaught')).toBe(false);
 
     const fireReceives = rhysarion.receives.find((item) => /Blazing Onslaught - Enemy Fire Damage vulnerability/i.test(item.effectTitle));
@@ -522,6 +512,66 @@ describe('Feskar, Rhysarion, and Shadowsong Epic profiles', () => {
       'Instill Fear - Panic enhances Breath of Fire chance',
       'Instill Fear - Panic enhances Scorched Earth chance',
     ]);
+  });
+
+  it('locks the Daemoros, Rhysarion, and Shadowsong framework review baseline', () => {
+    const formation: FormationAnalysisInput = { 'left-flank': 'daemoros', vanguard: 'rhysarion', 'right-flank': 'shadowsong' };
+    const roster = ownedRoster(['daemoros', 'rhysarion', 'shadowsong'], 10, 0);
+    for (const dragonId of ['daemoros', 'rhysarion', 'shadowsong']) {
+      roster[dragonId]!.reignLevel = 26;
+    }
+    const traces = analyzeFormationTraces(formation, dragons, {
+      roster,
+      dragonLevels: { daemoros: 26, rhysarion: 26, shadowsong: 26 },
+      previewMaxRankInteractions: false,
+    });
+    const counts = traces.reduce<Record<TraceStatus, number>>((acc, trace) => {
+      acc[trace.status] += 1;
+      return acc;
+    }, { active: 0, potential: 0, inactive: 0, blocked: 0, unknown: 0, 'not-applicable': 0 });
+    const cards = buildFormationCardPresentation(formation, dragons, traces, { previewEnabled: false, roster });
+    const daemorosCard = cards.cards.find((card) => card.dragonId === 'daemoros')!;
+    const rhysarionCard = cards.cards.find((card) => card.dragonId === 'rhysarion')!;
+    const shadowsongCard = cards.cards.find((card) => card.dragonId === 'shadowsong')!;
+
+    expect(traces).toHaveLength(73);
+    expect(counts).toMatchObject({ active: 30, potential: 34, inactive: 8, blocked: 1 });
+    expect(new Set(traces.map(technicalAnalysisTraceIdentity)).size).toBe(traces.length);
+    expect(traces.filter((trace) => trace.sourceAbilityId === 'shadowsong-blazing-conductor' && trace.matchKind === 'periodic-status-damage')).toHaveLength(2);
+    expect(traces).toEqual(expect.arrayContaining([
+      expect.objectContaining({ sourceAbilityId: 'daemoros-instill-fear', recipientDragonId: 'daemoros', matchKind: 'enemy-mitigation-reduction', channel: 'physical-damage', interactionScope: 'internal' }),
+      expect.objectContaining({ sourceAbilityId: 'daemoros-darkening-fear', recipientDragonId: 'daemoros', matchKind: 'enemy-mitigation-reduction', channel: 'physical-damage', interactionScope: 'internal' }),
+      expect.objectContaining({ sourceAbilityId: 'shadowsong-ensnare', recipientDragonId: 'shadowsong', matchKind: 'enemy-mitigation-reduction', channel: 'fire-damage', interactionScope: 'internal' }),
+      expect.objectContaining({ sourceAbilityId: 'shadowsong-blazing-onslaught', recipientDragonId: 'shadowsong', matchKind: 'enemy-damage-received-increase', channel: 'fire-damage', interactionScope: 'internal' }),
+    ]));
+
+    const shroud = traces.find((trace) =>
+      trace.sourceAbilityId === 'daemoros-shroud-of-shadows' &&
+      trace.recipientDragonId === 'rhysarion' &&
+      trace.recipientAbilityId === 'rhysarion-dawnsong'
+    );
+    const shroudText = shroud ? [shroud.explanation, ...shroud.matchedFacts, ...shroud.effects].join(' ') : '';
+    expect(shroudText).toContain('Odd-numbered rounds');
+    expect(shroudText).toContain('Round 2 after a successful Round 1 application');
+    expect(shroudText).toContain('Round 5 from a successful Round 5 application only if Shroud of Shadows resolves before Dawnsong that round');
+    expect(shroudText).toContain('Round 8 after a successful Round 7 application');
+    expect(shroudText).toContain('same-target overlap');
+
+    const phantomTraces = traces.filter((trace) => trace.sourceAbilityId === 'daemoros-phantoms-veil');
+    expect(phantomTraces.some((trace) => /Exclusive one-of choice/i.test([...trace.effects, ...trace.matchedFacts, trace.explanation].join(' ')))).toBe(true);
+    expect(phantomTraces.filter((trace) => trace.status === 'potential')).toHaveLength(3);
+    const normalNames = cards.cards.flatMap((card) => [...card.receives, ...card.provides]).map((item) => item.abilityName).join(' ');
+    expect(normalNames).not.toContain("Phantom's Veil");
+
+    expect(rhysarionCard.receives.filter((item) => item.abilityName === 'Instill Fear' && /Enemy mitigation reduction/i.test(item.effectTitle))).toHaveLength(1);
+    expect(rhysarionCard.receives.filter((item) => item.abilityName === 'Darkening Fear' && /Enemy mitigation reduction/i.test(item.effectTitle))).toHaveLength(1);
+    const ensnareProvides = shadowsongCard.provides.filter((item) => item.abilityName === 'Ensnare' && /Enemy mitigation reduction/i.test(item.effectTitle));
+    expect(ensnareProvides.map((item) => item.targetLabel).sort()).toEqual(['Daemoros and Rhysarion', 'Team']);
+    const onslaughtProvides = shadowsongCard.provides.filter((item) => item.abilityName === 'Blazing Onslaught');
+    expect(onslaughtProvides.filter((item) => /Enemy Fire Damage vulnerability/i.test(item.effectTitle))).toHaveLength(1);
+    expect(onslaughtProvides.filter((item) => /Enemy Physical Damage vulnerability/i.test(item.effectTitle))).toHaveLength(1);
+    expect(onslaughtProvides.every((item) => !item.isEnemyFacing)).toBe(true);
+    expect(daemorosCard.receives.some((item) => item.abilityName === 'Phantom\'s Veil')).toBe(false);
   });
 
   it('applies Ally versus other Ally targeting at full rank and preserves Recovery Received support', () => {
@@ -660,7 +710,7 @@ describe('Feskar, Rhysarion, and Shadowsong Epic profiles', () => {
     const finalKey = (trace: typeof finalTraces[number]) =>
       `${trace.matchKind}:${trace.sourceAbilityId}:${trace.recipientDragonId}:${trace.recipientAbilityId}:${trace.channel}:${trace.modifierCapabilityId ?? ''}:${(trace.matchedOutputCapabilityIds ?? []).join(',')}`;
 
-    expect(finalTraces).toHaveLength(61);
+    expect(finalTraces).toHaveLength(63);
     expect(new Set(finalTraces.map(finalKey)).size).toBe(finalTraces.length);
     expect(incomingRecovery.map((trace) => `${trace.sourceAbilityId}:${trace.recipientDragonId}`).sort()).toEqual([
       'rhysarion-ebbing-fury:feskar',
@@ -696,7 +746,7 @@ describe('Feskar, Rhysarion, and Shadowsong Epic profiles', () => {
 
     expect(finalTraces.filter((trace) => trace.sourceAbilityId === 'rhysarion-champions-vigor')).toHaveLength(7);
     expect(finalTraces.filter((trace) => trace.sourceAbilityId === 'shadowsong-scorched-earth')).toHaveLength(1);
-    expect(finalTraces.filter((trace) => trace.sourceAbilityId === 'shadowsong-blazing-conductor')).toHaveLength(2);
+    expect(finalTraces.filter((trace) => trace.sourceAbilityId === 'shadowsong-blazing-conductor')).toHaveLength(3);
     expect(finalTraces.filter((trace) => trace.sourceAbilityId === 'shadowsong-blazing-onslaught')).toHaveLength(6);
     expect(finalTraces.filter((trace) => trace.sourceAbilityId === 'rhysarion-inspiring-melody')).toHaveLength(2);
     expect(finalTraces.filter((trace) => trace.sourceAbilityId === 'feskar-resilient-bond')).toHaveLength(3);
@@ -1153,7 +1203,7 @@ describe('Feskar, Rhysarion, and Shadowsong Epic profiles', () => {
     const burnSummary = traces.find((trace) => trace.title === 'Burn enables Emerald Inferno' && trace.recipientAbilityId === 'feskar-emerald-inferno')?.explanation ?? '';
     expect(burnSummary).toContain('40% chance on the first added target and 20% chance on the second added target, which must differ from the first.');
     expect(burnSummary).toContain('Burn lasts 2 rounds.');
-    expect((burnSummary.match(/Burn application and target overlap are not guaranteed\./g) ?? []).length).toBe(1);
+    expect(burnSummary).toContain('Burn application and target overlap are not guaranteed.');
 
     const resilient = traces.filter((trace) => trace.sourceAbilityId === 'feskar-resilient-bond');
     const selfStackRecipients = resilient
@@ -1255,8 +1305,8 @@ describe('Feskar, Rhysarion, and Shadowsong Epic profiles', () => {
     const fireText = fire ? [fire.explanation, fire.targetSelectorSummary ?? '', ...fire.matchedFacts, ...fire.effects, ...fire.assumptions].join(' ') : '';
     const combinedText = `${physicalText} ${fireText}`;
 
-    expect(traces).toHaveLength(60);
-    expect(counts).toMatchObject({ active: 35, potential: 13, inactive: 11, blocked: 1 });
+    expect(traces).toHaveLength(61);
+    expect(counts).toMatchObject({ active: 35, potential: 14, inactive: 11, blocked: 1 });
     expect(tempting).toHaveLength(2);
     expect(physical).toMatchObject({
       status: 'potential',

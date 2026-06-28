@@ -5089,17 +5089,23 @@
         ],
         "damageScope": null,
         "effects": [
-          "Enemy Initiative reduction may improve Fire Damage outputs: Infernal Burst: Fire Damage, Crippling Inferno: Burn."
+          "Enemy Initiative reduction may improve Fire Damage outputs: Infernal Burst: Fire Damage, Crippling Inferno: Burn.",
+          "Applies to all qualifying Fire Damage sources."
         ],
         "exactResultKnown": false,
         "exactResultUnknownReason": "Exact final value cannot be calculated because final combat formulas and stacking order are not fully verified.",
         "explanation": "Syrax's Flight Mastery can reduce enemy Initiative. Caraxes's Fire Damage outputs are mitigated by that stat.",
         "id": "enemy-mitigation-syrax-flight-mastery-flight-mastery-initiative-down-stat-dealt-modifier-caraxes-initiative",
-        "interactionScope": "enemy-side",
-        "matchedOutputCapabilityIds": [],
+        "interactionScope": "cross-dragon",
+        "matchedOutputCapabilityIds": [
+          "caraxes-infernal-burst-infernal-burst-fire-rate-output",
+          "caraxes-crippling-inferno-crippling-inferno-burn-output"
+        ],
         "matchKind": "enemy-mitigation-reduction",
-        "modifierCapabilityId": null,
-        "modifierCapabilityIds": [],
+        "modifierCapabilityId": "syrax-flight-mastery-flight-mastery-initiative-down-stat-dealt-modifier",
+        "modifierCapabilityIds": [
+          "syrax-flight-mastery-flight-mastery-initiative-down-stat-dealt-modifier"
+        ],
         "recipientAbilityId": "caraxes-infernal-burst",
         "recipientDragonId": "caraxes",
         "recipientEvidenceIds": [
@@ -5161,6 +5167,106 @@
         "sourceDragonId": "syrax",
         "sourceEvidenceIds": [
           "syrax-flight-mastery-2026-06-24"
+        ],
+        "status": "potential",
+        "targetSelectionGroup": null,
+        "title": "Fire Damage Mitigation Reduction",
+        "unresolvedQuestions": [
+          "Exact enemy-formation targeting and final mitigation formula are unknown."
+        ]
+      },
+      {
+        "assumptions": [
+          "Enemy target overlap is not simulated."
+        ],
+        "channel": "fire-damage",
+        "confidence": "confirmed",
+        "conflicts": [
+          "Caraxes - Battle Dread Habit unlock requirement: expected Star Rank 2+, actual preview enabled",
+          "Caraxes - Battle Dread Selected Habit Level: expected Habit Level 1+ or preview, actual preview enabled",
+          "caraxes - Crippling Inferno Habit unlock requirement: expected Star Rank 6+, actual preview enabled",
+          "caraxes - Crippling Inferno Selected Habit Level: expected Habit Level 1+ or preview, actual preview enabled"
+        ],
+        "damageScope": null,
+        "effects": [
+          "Enemy Initiative reduction may improve Fire Damage outputs: Infernal Burst: Fire Damage, Crippling Inferno: Burn.",
+          "Applies to all qualifying Fire Damage sources."
+        ],
+        "exactResultKnown": false,
+        "exactResultUnknownReason": "Exact final value cannot be calculated because final combat formulas and stacking order are not fully verified.",
+        "explanation": "Caraxes's Battle Dread can reduce enemy Initiative. Caraxes's Fire Damage outputs are mitigated by that stat.",
+        "id": "enemy-mitigation-caraxes-battle-dread-battle-dread-initiative-down-stat-dealt-modifier-caraxes-initiative",
+        "interactionScope": "internal",
+        "matchedOutputCapabilityIds": [
+          "caraxes-infernal-burst-infernal-burst-fire-rate-output",
+          "caraxes-crippling-inferno-crippling-inferno-burn-output"
+        ],
+        "matchKind": "enemy-mitigation-reduction",
+        "modifierCapabilityId": "caraxes-battle-dread-battle-dread-initiative-down-stat-dealt-modifier",
+        "modifierCapabilityIds": [
+          "caraxes-battle-dread-battle-dread-initiative-down-stat-dealt-modifier"
+        ],
+        "recipientAbilityId": "caraxes-infernal-burst",
+        "recipientDragonId": "caraxes",
+        "recipientEvidenceIds": [
+          "caraxes-infernal-burst-2026-06-24",
+          "caraxes-crippling-inferno-2026-06-24"
+        ],
+        "requirements": [
+          {
+            "actual": "preview enabled",
+            "evidenceIds": [
+              "caraxes-battle-dread-2026-06-24"
+            ],
+            "expected": "Star Rank 2+",
+            "id": "caraxes-caraxes-battle-dread-star-rank",
+            "label": "Caraxes - Battle Dread Habit unlock requirement",
+            "notes": [],
+            "satisfied": false
+          },
+          {
+            "actual": "preview enabled",
+            "evidenceIds": [
+              "caraxes-battle-dread-2026-06-24"
+            ],
+            "expected": "Habit Level 1+ or preview",
+            "id": "caraxes-caraxes-battle-dread-habit-level",
+            "label": "Caraxes - Battle Dread Selected Habit Level",
+            "notes": [
+              "Unlocked Habits without an explicit saved Habit Level default to effective Habit Level 1. Locked Habit capabilities are potential in preview mode, not active for current roster."
+            ],
+            "satisfied": false
+          },
+          {
+            "actual": "preview enabled",
+            "evidenceIds": [
+              "caraxes-crippling-inferno-2026-06-24"
+            ],
+            "expected": "Star Rank 6+",
+            "id": "caraxes-caraxes-crippling-inferno-star-rank",
+            "label": "caraxes - Crippling Inferno Habit unlock requirement",
+            "notes": [],
+            "satisfied": false
+          },
+          {
+            "actual": "preview enabled",
+            "evidenceIds": [
+              "caraxes-crippling-inferno-2026-06-24"
+            ],
+            "expected": "Habit Level 1+ or preview",
+            "id": "caraxes-caraxes-crippling-inferno-habit-level",
+            "label": "caraxes - Crippling Inferno Selected Habit Level",
+            "notes": [
+              "Unlocked Habits without an explicit saved Habit Level default to effective Habit Level 1. Locked Habit capabilities are potential in preview mode, not active for current roster."
+            ],
+            "satisfied": false
+          }
+        ],
+        "ruleId": "enemy-mitigation-reduction",
+        "sourceAbilityId": "caraxes-battle-dread",
+        "sourceDragonId": "caraxes",
+        "sourceEvidenceIds": [
+          "caraxes-battle-dread-2026-06-24"
         ],
         "status": "potential",
         "targetSelectionGroup": null,
@@ -10720,17 +10826,23 @@
         ],
         "damageScope": null,
         "effects": [
-          "Enemy Initiative reduction may improve Fire Damage outputs: Infernal Burst: Fire Damage, Crippling Inferno: Burn."
+          "Enemy Initiative reduction may improve Fire Damage outputs: Infernal Burst: Fire Damage, Crippling Inferno: Burn.",
+          "Applies to all qualifying Fire Damage sources."
         ],
         "exactResultKnown": false,
         "exactResultUnknownReason": "Exact final value cannot be calculated because final combat formulas and stacking order are not fully verified.",
         "explanation": "Syrax's Flight Mastery can reduce enemy Initiative. Caraxes's Fire Damage outputs are mitigated by that stat.",
         "id": "enemy-mitigation-syrax-flight-mastery-flight-mastery-initiative-down-stat-dealt-modifier-caraxes-initiative",
-        "interactionScope": "enemy-side",
-        "matchedOutputCapabilityIds": [],
+        "interactionScope": "cross-dragon",
+        "matchedOutputCapabilityIds": [
+          "caraxes-infernal-burst-infernal-burst-fire-rate-output",
+          "caraxes-crippling-inferno-crippling-inferno-burn-output"
+        ],
         "matchKind": "enemy-mitigation-reduction",
-        "modifierCapabilityId": null,
-        "modifierCapabilityIds": [],
+        "modifierCapabilityId": "syrax-flight-mastery-flight-mastery-initiative-down-stat-dealt-modifier",
+        "modifierCapabilityIds": [
+          "syrax-flight-mastery-flight-mastery-initiative-down-stat-dealt-modifier"
+        ],
         "recipientAbilityId": "caraxes-infernal-burst",
         "recipientDragonId": "caraxes",
         "recipientEvidenceIds": [
@@ -10792,6 +10904,106 @@
         "sourceDragonId": "syrax",
         "sourceEvidenceIds": [
           "syrax-flight-mastery-2026-06-24"
+        ],
+        "status": "potential",
+        "targetSelectionGroup": null,
+        "title": "Fire Damage Mitigation Reduction",
+        "unresolvedQuestions": [
+          "Exact enemy-formation targeting and final mitigation formula are unknown."
+        ]
+      },
+      {
+        "assumptions": [
+          "Enemy target overlap is not simulated."
+        ],
+        "channel": "fire-damage",
+        "confidence": "confirmed",
+        "conflicts": [
+          "Caraxes - Battle Dread Habit unlock requirement: expected Star Rank 2+, actual preview enabled",
+          "Caraxes - Battle Dread Selected Habit Level: expected Habit Level 1+ or preview, actual preview enabled",
+          "caraxes - Crippling Inferno Habit unlock requirement: expected Star Rank 6+, actual preview enabled",
+          "caraxes - Crippling Inferno Selected Habit Level: expected Habit Level 1+ or preview, actual preview enabled"
+        ],
+        "damageScope": null,
+        "effects": [
+          "Enemy Initiative reduction may improve Fire Damage outputs: Infernal Burst: Fire Damage, Crippling Inferno: Burn.",
+          "Applies to all qualifying Fire Damage sources."
+        ],
+        "exactResultKnown": false,
+        "exactResultUnknownReason": "Exact final value cannot be calculated because final combat formulas and stacking order are not fully verified.",
+        "explanation": "Caraxes's Battle Dread can reduce enemy Initiative. Caraxes's Fire Damage outputs are mitigated by that stat.",
+        "id": "enemy-mitigation-caraxes-battle-dread-battle-dread-initiative-down-stat-dealt-modifier-caraxes-initiative",
+        "interactionScope": "internal",
+        "matchedOutputCapabilityIds": [
+          "caraxes-infernal-burst-infernal-burst-fire-rate-output",
+          "caraxes-crippling-inferno-crippling-inferno-burn-output"
+        ],
+        "matchKind": "enemy-mitigation-reduction",
+        "modifierCapabilityId": "caraxes-battle-dread-battle-dread-initiative-down-stat-dealt-modifier",
+        "modifierCapabilityIds": [
+          "caraxes-battle-dread-battle-dread-initiative-down-stat-dealt-modifier"
+        ],
+        "recipientAbilityId": "caraxes-infernal-burst",
+        "recipientDragonId": "caraxes",
+        "recipientEvidenceIds": [
+          "caraxes-infernal-burst-2026-06-24",
+          "caraxes-crippling-inferno-2026-06-24"
+        ],
+        "requirements": [
+          {
+            "actual": "preview enabled",
+            "evidenceIds": [
+              "caraxes-battle-dread-2026-06-24"
+            ],
+            "expected": "Star Rank 2+",
+            "id": "caraxes-caraxes-battle-dread-star-rank",
+            "label": "Caraxes - Battle Dread Habit unlock requirement",
+            "notes": [],
+            "satisfied": false
+          },
+          {
+            "actual": "preview enabled",
+            "evidenceIds": [
+              "caraxes-battle-dread-2026-06-24"
+            ],
+            "expected": "Habit Level 1+ or preview",
+            "id": "caraxes-caraxes-battle-dread-habit-level",
+            "label": "Caraxes - Battle Dread Selected Habit Level",
+            "notes": [
+              "Unlocked Habits without an explicit saved Habit Level default to effective Habit Level 1. Locked Habit capabilities are potential in preview mode, not active for current roster."
+            ],
+            "satisfied": false
+          },
+          {
+            "actual": "preview enabled",
+            "evidenceIds": [
+              "caraxes-crippling-inferno-2026-06-24"
+            ],
+            "expected": "Star Rank 6+",
+            "id": "caraxes-caraxes-crippling-inferno-star-rank",
+            "label": "caraxes - Crippling Inferno Habit unlock requirement",
+            "notes": [],
+            "satisfied": false
+          },
+          {
+            "actual": "preview enabled",
+            "evidenceIds": [
+              "caraxes-crippling-inferno-2026-06-24"
+            ],
+            "expected": "Habit Level 1+ or preview",
+            "id": "caraxes-caraxes-crippling-inferno-habit-level",
+            "label": "caraxes - Crippling Inferno Selected Habit Level",
+            "notes": [
+              "Unlocked Habits without an explicit saved Habit Level default to effective Habit Level 1. Locked Habit capabilities are potential in preview mode, not active for current roster."
+            ],
+            "satisfied": false
+          }
+        ],
+        "ruleId": "enemy-mitigation-reduction",
+        "sourceAbilityId": "caraxes-battle-dread",
+        "sourceDragonId": "caraxes",
+        "sourceEvidenceIds": [
+          "caraxes-battle-dread-2026-06-24"
         ],
         "status": "potential",
         "targetSelectionGroup": null,
@@ -16496,17 +16708,23 @@
         ],
         "damageScope": null,
         "effects": [
-          "Enemy Initiative reduction may improve Fire Damage outputs: Infernal Burst: Fire Damage, Crippling Inferno: Burn."
+          "Enemy Initiative reduction may improve Fire Damage outputs: Infernal Burst: Fire Damage, Crippling Inferno: Burn.",
+          "Applies to all qualifying Fire Damage sources."
         ],
         "exactResultKnown": false,
         "exactResultUnknownReason": "Exact final value cannot be calculated because final combat formulas and stacking order are not fully verified.",
         "explanation": "Syrax's Flight Mastery can reduce enemy Initiative. Caraxes's Fire Damage outputs are mitigated by that stat.",
         "id": "enemy-mitigation-syrax-flight-mastery-flight-mastery-initiative-down-stat-dealt-modifier-caraxes-initiative",
-        "interactionScope": "enemy-side",
-        "matchedOutputCapabilityIds": [],
+        "interactionScope": "cross-dragon",
+        "matchedOutputCapabilityIds": [
+          "caraxes-infernal-burst-infernal-burst-fire-rate-output",
+          "caraxes-crippling-inferno-crippling-inferno-burn-output"
+        ],
         "matchKind": "enemy-mitigation-reduction",
-        "modifierCapabilityId": null,
-        "modifierCapabilityIds": [],
+        "modifierCapabilityId": "syrax-flight-mastery-flight-mastery-initiative-down-stat-dealt-modifier",
+        "modifierCapabilityIds": [
+          "syrax-flight-mastery-flight-mastery-initiative-down-stat-dealt-modifier"
+        ],
         "recipientAbilityId": "caraxes-infernal-burst",
         "recipientDragonId": "caraxes",
         "recipientEvidenceIds": [
@@ -16568,6 +16786,106 @@
         "sourceDragonId": "syrax",
         "sourceEvidenceIds": [
           "syrax-flight-mastery-2026-06-24"
+        ],
+        "status": "potential",
+        "targetSelectionGroup": null,
+        "title": "Fire Damage Mitigation Reduction",
+        "unresolvedQuestions": [
+          "Exact enemy-formation targeting and final mitigation formula are unknown."
+        ]
+      },
+      {
+        "assumptions": [
+          "Enemy target overlap is not simulated."
+        ],
+        "channel": "fire-damage",
+        "confidence": "confirmed",
+        "conflicts": [
+          "Caraxes - Battle Dread Habit unlock requirement: expected Star Rank 2+, actual preview enabled",
+          "Caraxes - Battle Dread Selected Habit Level: expected Habit Level 1+ or preview, actual preview enabled",
+          "caraxes - Crippling Inferno Habit unlock requirement: expected Star Rank 6+, actual preview enabled",
+          "caraxes - Crippling Inferno Selected Habit Level: expected Habit Level 1+ or preview, actual preview enabled"
+        ],
+        "damageScope": null,
+        "effects": [
+          "Enemy Initiative reduction may improve Fire Damage outputs: Infernal Burst: Fire Damage, Crippling Inferno: Burn.",
+          "Applies to all qualifying Fire Damage sources."
+        ],
+        "exactResultKnown": false,
+        "exactResultUnknownReason": "Exact final value cannot be calculated because final combat formulas and stacking order are not fully verified.",
+        "explanation": "Caraxes's Battle Dread can reduce enemy Initiative. Caraxes's Fire Damage outputs are mitigated by that stat.",
+        "id": "enemy-mitigation-caraxes-battle-dread-battle-dread-initiative-down-stat-dealt-modifier-caraxes-initiative",
+        "interactionScope": "internal",
+        "matchedOutputCapabilityIds": [
+          "caraxes-infernal-burst-infernal-burst-fire-rate-output",
+          "caraxes-crippling-inferno-crippling-inferno-burn-output"
+        ],
+        "matchKind": "enemy-mitigation-reduction",
+        "modifierCapabilityId": "caraxes-battle-dread-battle-dread-initiative-down-stat-dealt-modifier",
+        "modifierCapabilityIds": [
+          "caraxes-battle-dread-battle-dread-initiative-down-stat-dealt-modifier"
+        ],
+        "recipientAbilityId": "caraxes-infernal-burst",
+        "recipientDragonId": "caraxes",
+        "recipientEvidenceIds": [
+          "caraxes-infernal-burst-2026-06-24",
+          "caraxes-crippling-inferno-2026-06-24"
+        ],
+        "requirements": [
+          {
+            "actual": "preview enabled",
+            "evidenceIds": [
+              "caraxes-battle-dread-2026-06-24"
+            ],
+            "expected": "Star Rank 2+",
+            "id": "caraxes-caraxes-battle-dread-star-rank",
+            "label": "Caraxes - Battle Dread Habit unlock requirement",
+            "notes": [],
+            "satisfied": false
+          },
+          {
+            "actual": "preview enabled",
+            "evidenceIds": [
+              "caraxes-battle-dread-2026-06-24"
+            ],
+            "expected": "Habit Level 1+ or preview",
+            "id": "caraxes-caraxes-battle-dread-habit-level",
+            "label": "Caraxes - Battle Dread Selected Habit Level",
+            "notes": [
+              "Unlocked Habits without an explicit saved Habit Level default to effective Habit Level 1. Locked Habit capabilities are potential in preview mode, not active for current roster."
+            ],
+            "satisfied": false
+          },
+          {
+            "actual": "preview enabled",
+            "evidenceIds": [
+              "caraxes-crippling-inferno-2026-06-24"
+            ],
+            "expected": "Star Rank 6+",
+            "id": "caraxes-caraxes-crippling-inferno-star-rank",
+            "label": "caraxes - Crippling Inferno Habit unlock requirement",
+            "notes": [],
+            "satisfied": false
+          },
+          {
+            "actual": "preview enabled",
+            "evidenceIds": [
+              "caraxes-crippling-inferno-2026-06-24"
+            ],
+            "expected": "Habit Level 1+ or preview",
+            "id": "caraxes-caraxes-crippling-inferno-habit-level",
+            "label": "caraxes - Crippling Inferno Selected Habit Level",
+            "notes": [
+              "Unlocked Habits without an explicit saved Habit Level default to effective Habit Level 1. Locked Habit capabilities are potential in preview mode, not active for current roster."
+            ],
+            "satisfied": false
+          }
+        ],
+        "ruleId": "enemy-mitigation-reduction",
+        "sourceAbilityId": "caraxes-battle-dread",
+        "sourceDragonId": "caraxes",
+        "sourceEvidenceIds": [
+          "caraxes-battle-dread-2026-06-24"
         ],
         "status": "potential",
         "targetSelectionGroup": null,
@@ -22270,17 +22588,23 @@
         ],
         "damageScope": null,
         "effects": [
-          "Enemy Initiative reduction may improve Fire Damage outputs: Infernal Burst: Fire Damage, Crippling Inferno: Burn."
+          "Enemy Initiative reduction may improve Fire Damage outputs: Infernal Burst: Fire Damage, Crippling Inferno: Burn.",
+          "Applies to all qualifying Fire Damage sources."
         ],
         "exactResultKnown": false,
         "exactResultUnknownReason": "Exact final value cannot be calculated because final combat formulas and stacking order are not fully verified.",
         "explanation": "Syrax's Flight Mastery can reduce enemy Initiative. Caraxes's Fire Damage outputs are mitigated by that stat.",
         "id": "enemy-mitigation-syrax-flight-mastery-flight-mastery-initiative-down-stat-dealt-modifier-caraxes-initiative",
-        "interactionScope": "enemy-side",
-        "matchedOutputCapabilityIds": [],
+        "interactionScope": "cross-dragon",
+        "matchedOutputCapabilityIds": [
+          "caraxes-infernal-burst-infernal-burst-fire-rate-output",
+          "caraxes-crippling-inferno-crippling-inferno-burn-output"
+        ],
         "matchKind": "enemy-mitigation-reduction",
-        "modifierCapabilityId": null,
-        "modifierCapabilityIds": [],
+        "modifierCapabilityId": "syrax-flight-mastery-flight-mastery-initiative-down-stat-dealt-modifier",
+        "modifierCapabilityIds": [
+          "syrax-flight-mastery-flight-mastery-initiative-down-stat-dealt-modifier"
+        ],
         "recipientAbilityId": "caraxes-infernal-burst",
         "recipientDragonId": "caraxes",
         "recipientEvidenceIds": [
@@ -22342,6 +22666,106 @@
         "sourceDragonId": "syrax",
         "sourceEvidenceIds": [
           "syrax-flight-mastery-2026-06-24"
+        ],
+        "status": "potential",
+        "targetSelectionGroup": null,
+        "title": "Fire Damage Mitigation Reduction",
+        "unresolvedQuestions": [
+          "Exact enemy-formation targeting and final mitigation formula are unknown."
+        ]
+      },
+      {
+        "assumptions": [
+          "Enemy target overlap is not simulated."
+        ],
+        "channel": "fire-damage",
+        "confidence": "confirmed",
+        "conflicts": [
+          "Caraxes - Battle Dread Habit unlock requirement: expected Star Rank 2+, actual preview enabled",
+          "Caraxes - Battle Dread Selected Habit Level: expected Habit Level 1+ or preview, actual preview enabled",
+          "caraxes - Crippling Inferno Habit unlock requirement: expected Star Rank 6+, actual preview enabled",
+          "caraxes - Crippling Inferno Selected Habit Level: expected Habit Level 1+ or preview, actual preview enabled"
+        ],
+        "damageScope": null,
+        "effects": [
+          "Enemy Initiative reduction may improve Fire Damage outputs: Infernal Burst: Fire Damage, Crippling Inferno: Burn.",
+          "Applies to all qualifying Fire Damage sources."
+        ],
+        "exactResultKnown": false,
+        "exactResultUnknownReason": "Exact final value cannot be calculated because final combat formulas and stacking order are not fully verified.",
+        "explanation": "Caraxes's Battle Dread can reduce enemy Initiative. Caraxes's Fire Damage outputs are mitigated by that stat.",
+        "id": "enemy-mitigation-caraxes-battle-dread-battle-dread-initiative-down-stat-dealt-modifier-caraxes-initiative",
+        "interactionScope": "internal",
+        "matchedOutputCapabilityIds": [
+          "caraxes-infernal-burst-infernal-burst-fire-rate-output",
+          "caraxes-crippling-inferno-crippling-inferno-burn-output"
+        ],
+        "matchKind": "enemy-mitigation-reduction",
+        "modifierCapabilityId": "caraxes-battle-dread-battle-dread-initiative-down-stat-dealt-modifier",
+        "modifierCapabilityIds": [
+          "caraxes-battle-dread-battle-dread-initiative-down-stat-dealt-modifier"
+        ],
+        "recipientAbilityId": "caraxes-infernal-burst",
+        "recipientDragonId": "caraxes",
+        "recipientEvidenceIds": [
+          "caraxes-infernal-burst-2026-06-24",
+          "caraxes-crippling-inferno-2026-06-24"
+        ],
+        "requirements": [
+          {
+            "actual": "preview enabled",
+            "evidenceIds": [
+              "caraxes-battle-dread-2026-06-24"
+            ],
+            "expected": "Star Rank 2+",
+            "id": "caraxes-caraxes-battle-dread-star-rank",
+            "label": "Caraxes - Battle Dread Habit unlock requirement",
+            "notes": [],
+            "satisfied": false
+          },
+          {
+            "actual": "preview enabled",
+            "evidenceIds": [
+              "caraxes-battle-dread-2026-06-24"
+            ],
+            "expected": "Habit Level 1+ or preview",
+            "id": "caraxes-caraxes-battle-dread-habit-level",
+            "label": "Caraxes - Battle Dread Selected Habit Level",
+            "notes": [
+              "Unlocked Habits without an explicit saved Habit Level default to effective Habit Level 1. Locked Habit capabilities are potential in preview mode, not active for current roster."
+            ],
+            "satisfied": false
+          },
+          {
+            "actual": "preview enabled",
+            "evidenceIds": [
+              "caraxes-crippling-inferno-2026-06-24"
+            ],
+            "expected": "Star Rank 6+",
+            "id": "caraxes-caraxes-crippling-inferno-star-rank",
+            "label": "caraxes - Crippling Inferno Habit unlock requirement",
+            "notes": [],
+            "satisfied": false
+          },
+          {
+            "actual": "preview enabled",
+            "evidenceIds": [
+              "caraxes-crippling-inferno-2026-06-24"
+            ],
+            "expected": "Habit Level 1+ or preview",
+            "id": "caraxes-caraxes-crippling-inferno-habit-level",
+            "label": "caraxes - Crippling Inferno Selected Habit Level",
+            "notes": [
+              "Unlocked Habits without an explicit saved Habit Level default to effective Habit Level 1. Locked Habit capabilities are potential in preview mode, not active for current roster."
+            ],
+            "satisfied": false
+          }
+        ],
+        "ruleId": "enemy-mitigation-reduction",
+        "sourceAbilityId": "caraxes-battle-dread",
+        "sourceDragonId": "caraxes",
+        "sourceEvidenceIds": [
+          "caraxes-battle-dread-2026-06-24"
         ],
         "status": "potential",
         "targetSelectionGroup": null,
@@ -28220,17 +28644,23 @@
         ],
         "damageScope": null,
         "effects": [
-          "Enemy Instinct reduction may improve Physical Damage outputs: Physical Basic Attack, Spreading Blaze: Physical Damage."
+          "Enemy Instinct reduction may improve Physical Damage outputs: Physical Basic Attack, Spreading Blaze: Physical Damage.",
+          "Applies to all qualifying Physical Damage sources."
         ],
         "exactResultKnown": false,
         "exactResultUnknownReason": "Exact final value cannot be calculated because final combat formulas and stacking order are not fully verified.",
         "explanation": "Sheepstealer's Dragon's Cunning can reduce enemy Instinct. Vermax's Physical Damage outputs are mitigated by that stat.",
         "id": "enemy-mitigation-sheepstealer-dragons-cunning-dragons-cunning-instinct-down-stat-dealt-modifier-vermax-instinct",
-        "interactionScope": "enemy-side",
-        "matchedOutputCapabilityIds": [],
+        "interactionScope": "cross-dragon",
+        "matchedOutputCapabilityIds": [
+          "vermax-basic-attack-physical",
+          "vermax-spreading-blaze-spreading-blaze-physical-damage-output"
+        ],
         "matchKind": "enemy-mitigation-reduction",
-        "modifierCapabilityId": null,
-        "modifierCapabilityIds": [],
+        "modifierCapabilityId": "sheepstealer-dragons-cunning-dragons-cunning-instinct-down-stat-dealt-modifier",
+        "modifierCapabilityIds": [
+          "sheepstealer-dragons-cunning-dragons-cunning-instinct-down-stat-dealt-modifier"
+        ],
         "recipientAbilityId": null,
         "recipientDragonId": "vermax",
         "recipientEvidenceIds": [
@@ -34221,17 +34651,22 @@
         ],
         "damageScope": null,
         "effects": [
-          "Enemy Instinct reduction may improve Physical Damage outputs: Infectious Wrath: Physical Damage."
+          "Enemy Instinct reduction may improve Physical Damage outputs: Infectious Wrath: Physical Damage.",
+          "Applies to all qualifying Physical Damage sources."
         ],
         "exactResultKnown": false,
         "exactResultUnknownReason": "Exact final value cannot be calculated because final combat formulas and stacking order are not fully verified.",
         "explanation": "Sheepstealer's Dragon's Cunning can reduce enemy Instinct. Seasmoke's Physical Damage outputs are mitigated by that stat.",
         "id": "enemy-mitigation-sheepstealer-dragons-cunning-dragons-cunning-instinct-down-stat-dealt-modifier-seasmoke-instinct",
-        "interactionScope": "enemy-side",
-        "matchedOutputCapabilityIds": [],
+        "interactionScope": "cross-dragon",
+        "matchedOutputCapabilityIds": [
+          "seasmoke-infectious-wrath-infectious-wrath-physical-damage-rate-output"
+        ],
         "matchKind": "enemy-mitigation-reduction",
-        "modifierCapabilityId": null,
-        "modifierCapabilityIds": [],
+        "modifierCapabilityId": "sheepstealer-dragons-cunning-dragons-cunning-instinct-down-stat-dealt-modifier",
+        "modifierCapabilityIds": [
+          "sheepstealer-dragons-cunning-dragons-cunning-instinct-down-stat-dealt-modifier"
+        ],
         "recipientAbilityId": "seasmoke-infectious-wrath",
         "recipientDragonId": "seasmoke",
         "recipientEvidenceIds": [
@@ -46231,17 +46666,22 @@
         ],
         "damageScope": null,
         "effects": [
-          "Enemy Instinct reduction may improve Physical Damage outputs: Infectious Wrath: Physical Damage."
+          "Enemy Instinct reduction may improve Physical Damage outputs: Infectious Wrath: Physical Damage.",
+          "Applies to all qualifying Physical Damage sources."
         ],
         "exactResultKnown": false,
         "exactResultUnknownReason": "Exact final value cannot be calculated because final combat formulas and stacking order are not fully verified.",
         "explanation": "Sheepstealer's Dragon's Cunning can reduce enemy Instinct. Seasmoke's Physical Damage outputs are mitigated by that stat.",
         "id": "enemy-mitigation-sheepstealer-dragons-cunning-dragons-cunning-instinct-down-stat-dealt-modifier-seasmoke-instinct",
-        "interactionScope": "enemy-side",
-        "matchedOutputCapabilityIds": [],
+        "interactionScope": "cross-dragon",
+        "matchedOutputCapabilityIds": [
+          "seasmoke-infectious-wrath-infectious-wrath-physical-damage-rate-output"
+        ],
         "matchKind": "enemy-mitigation-reduction",
-        "modifierCapabilityId": null,
-        "modifierCapabilityIds": [],
+        "modifierCapabilityId": "sheepstealer-dragons-cunning-dragons-cunning-instinct-down-stat-dealt-modifier",
+        "modifierCapabilityIds": [
+          "sheepstealer-dragons-cunning-dragons-cunning-instinct-down-stat-dealt-modifier"
+        ],
         "recipientAbilityId": "seasmoke-infectious-wrath",
         "recipientDragonId": "seasmoke",
         "recipientEvidenceIds": [
@@ -50576,21 +51016,126 @@
         "confidence": "confirmed",
         "conflicts": [
           "Caraxes - Battle Dread Habit unlock requirement: expected Star Rank 2+, actual preview enabled",
+          "Caraxes - Battle Dread Selected Habit Level: expected Habit Level 1+ or preview, actual preview enabled",
+          "caraxes - Crippling Inferno Habit unlock requirement: expected Star Rank 6+, actual preview enabled",
+          "caraxes - Crippling Inferno Selected Habit Level: expected Habit Level 1+ or preview, actual preview enabled"
+        ],
+        "damageScope": null,
+        "effects": [
+          "Enemy Initiative reduction may improve Fire Damage outputs: Infernal Burst: Fire Damage, Crippling Inferno: Burn.",
+          "Applies to all qualifying Fire Damage sources."
+        ],
+        "exactResultKnown": false,
+        "exactResultUnknownReason": "Exact final value cannot be calculated because final combat formulas and stacking order are not fully verified.",
+        "explanation": "Caraxes's Battle Dread can reduce enemy Initiative. Caraxes's Fire Damage outputs are mitigated by that stat.",
+        "id": "enemy-mitigation-caraxes-battle-dread-battle-dread-initiative-down-stat-dealt-modifier-caraxes-initiative",
+        "interactionScope": "internal",
+        "matchedOutputCapabilityIds": [
+          "caraxes-infernal-burst-infernal-burst-fire-rate-output",
+          "caraxes-crippling-inferno-crippling-inferno-burn-output"
+        ],
+        "matchKind": "enemy-mitigation-reduction",
+        "modifierCapabilityId": "caraxes-battle-dread-battle-dread-initiative-down-stat-dealt-modifier",
+        "modifierCapabilityIds": [
+          "caraxes-battle-dread-battle-dread-initiative-down-stat-dealt-modifier"
+        ],
+        "recipientAbilityId": "caraxes-infernal-burst",
+        "recipientDragonId": "caraxes",
+        "recipientEvidenceIds": [
+          "caraxes-infernal-burst-2026-06-24",
+          "caraxes-crippling-inferno-2026-06-24"
+        ],
+        "requirements": [
+          {
+            "actual": "preview enabled",
+            "evidenceIds": [
+              "caraxes-battle-dread-2026-06-24"
+            ],
+            "expected": "Star Rank 2+",
+            "id": "caraxes-caraxes-battle-dread-star-rank",
+            "label": "Caraxes - Battle Dread Habit unlock requirement",
+            "notes": [],
+            "satisfied": false
+          },
+          {
+            "actual": "preview enabled",
+            "evidenceIds": [
+              "caraxes-battle-dread-2026-06-24"
+            ],
+            "expected": "Habit Level 1+ or preview",
+            "id": "caraxes-caraxes-battle-dread-habit-level",
+            "label": "Caraxes - Battle Dread Selected Habit Level",
+            "notes": [
+              "Unlocked Habits without an explicit saved Habit Level default to effective Habit Level 1. Locked Habit capabilities are potential in preview mode, not active for current roster."
+            ],
+            "satisfied": false
+          },
+          {
+            "actual": "preview enabled",
+            "evidenceIds": [
+              "caraxes-crippling-inferno-2026-06-24"
+            ],
+            "expected": "Star Rank 6+",
+            "id": "caraxes-caraxes-crippling-inferno-star-rank",
+            "label": "caraxes - Crippling Inferno Habit unlock requirement",
+            "notes": [],
+            "satisfied": false
+          },
+          {
+            "actual": "preview enabled",
+            "evidenceIds": [
+              "caraxes-crippling-inferno-2026-06-24"
+            ],
+            "expected": "Habit Level 1+ or preview",
+            "id": "caraxes-caraxes-crippling-inferno-habit-level",
+            "label": "caraxes - Crippling Inferno Selected Habit Level",
+            "notes": [
+              "Unlocked Habits without an explicit saved Habit Level default to effective Habit Level 1. Locked Habit capabilities are potential in preview mode, not active for current roster."
+            ],
+            "satisfied": false
+          }
+        ],
+        "ruleId": "enemy-mitigation-reduction",
+        "sourceAbilityId": "caraxes-battle-dread",
+        "sourceDragonId": "caraxes",
+        "sourceEvidenceIds": [
+          "caraxes-battle-dread-2026-06-24"
+        ],
+        "status": "potential",
+        "targetSelectionGroup": null,
+        "title": "Fire Damage Mitigation Reduction",
+        "unresolvedQuestions": [
+          "Exact enemy-formation targeting and final mitigation formula are unknown."
+        ]
+      },
+      {
+        "assumptions": [
+          "Enemy target overlap is not simulated."
+        ],
+        "channel": "fire-damage",
+        "confidence": "confirmed",
+        "conflicts": [
+          "Caraxes - Battle Dread Habit unlock requirement: expected Star Rank 2+, actual preview enabled",
           "Caraxes - Battle Dread Selected Habit Level: expected Habit Level 1+ or preview, actual preview enabled"
         ],
         "damageScope": null,
         "effects": [
-          "Enemy Initiative reduction may improve Fire Damage outputs: Cleansing Wrath: Fire Damage."
+          "Enemy Initiative reduction may improve Fire Damage outputs: Cleansing Wrath: Fire Damage.",
+          "Applies to all qualifying Fire Damage sources."
         ],
         "exactResultKnown": false,
         "exactResultUnknownReason": "Exact final value cannot be calculated because final combat formulas and stacking order are not fully verified.",
         "explanation": "Caraxes's Battle Dread can reduce enemy Initiative. Seasmoke's Fire Damage outputs are mitigated by that stat.",
         "id": "enemy-mitigation-caraxes-battle-dread-battle-dread-initiative-down-stat-dealt-modifier-seasmoke-initiative",
-        "interactionScope": "enemy-side",
-        "matchedOutputCapabilityIds": [],
+        "interactionScope": "cross-dragon",
+        "matchedOutputCapabilityIds": [
+          "seasmoke-cleansing-wrath-cleansing-wrath-fire-damage-rate-output"
+        ],
         "matchKind": "enemy-mitigation-reduction",
-        "modifierCapabilityId": null,
-        "modifierCapabilityIds": [],
+        "modifierCapabilityId": "caraxes-battle-dread-battle-dread-initiative-down-stat-dealt-modifier",
+        "modifierCapabilityIds": [
+          "caraxes-battle-dread-battle-dread-initiative-down-stat-dealt-modifier"
+        ],
         "recipientAbilityId": "seasmoke-cleansing-wrath",
         "recipientDragonId": "seasmoke",
         "recipientEvidenceIds": [
@@ -50650,17 +51195,23 @@
         ],
         "damageScope": null,
         "effects": [
-          "Enemy Initiative reduction may improve Fire Damage outputs: Wild Hunt: Fire Damage, Savage Claim: Fire Damage."
+          "Enemy Initiative reduction may improve Fire Damage outputs: Wild Hunt: Fire Damage, Savage Claim: Fire Damage.",
+          "Applies to all qualifying Fire Damage sources."
         ],
         "exactResultKnown": false,
         "exactResultUnknownReason": "Exact final value cannot be calculated because final combat formulas and stacking order are not fully verified.",
         "explanation": "Caraxes's Battle Dread can reduce enemy Initiative. Sheepstealer's Fire Damage outputs are mitigated by that stat.",
         "id": "enemy-mitigation-caraxes-battle-dread-battle-dread-initiative-down-stat-dealt-modifier-sheepstealer-initiative",
-        "interactionScope": "enemy-side",
-        "matchedOutputCapabilityIds": [],
+        "interactionScope": "cross-dragon",
+        "matchedOutputCapabilityIds": [
+          "sheepstealer-wild-hunt-wild-hunt-fire-damage-rate-output",
+          "sheepstealer-savage-claim-savage-claim-fire-damage-output"
+        ],
         "matchKind": "enemy-mitigation-reduction",
-        "modifierCapabilityId": null,
-        "modifierCapabilityIds": [],
+        "modifierCapabilityId": "caraxes-battle-dread-battle-dread-initiative-down-stat-dealt-modifier",
+        "modifierCapabilityIds": [
+          "caraxes-battle-dread-battle-dread-initiative-down-stat-dealt-modifier"
+        ],
         "recipientAbilityId": "sheepstealer-wild-hunt",
         "recipientDragonId": "sheepstealer",
         "recipientEvidenceIds": [
@@ -50746,17 +51297,22 @@
         ],
         "damageScope": null,
         "effects": [
-          "Enemy Instinct reduction may improve Physical Damage outputs: Infectious Wrath: Physical Damage."
+          "Enemy Instinct reduction may improve Physical Damage outputs: Infectious Wrath: Physical Damage.",
+          "Applies to all qualifying Physical Damage sources."
         ],
         "exactResultKnown": false,
         "exactResultUnknownReason": "Exact final value cannot be calculated because final combat formulas and stacking order are not fully verified.",
         "explanation": "Sheepstealer's Dragon's Cunning can reduce enemy Instinct. Seasmoke's Physical Damage outputs are mitigated by that stat.",
         "id": "enemy-mitigation-sheepstealer-dragons-cunning-dragons-cunning-instinct-down-stat-dealt-modifier-seasmoke-instinct",
-        "interactionScope": "enemy-side",
-        "matchedOutputCapabilityIds": [],
+        "interactionScope": "cross-dragon",
+        "matchedOutputCapabilityIds": [
+          "seasmoke-infectious-wrath-infectious-wrath-physical-damage-rate-output"
+        ],
         "matchKind": "enemy-mitigation-reduction",
-        "modifierCapabilityId": null,
-        "modifierCapabilityIds": [],
+        "modifierCapabilityId": "sheepstealer-dragons-cunning-dragons-cunning-instinct-down-stat-dealt-modifier",
+        "modifierCapabilityIds": [
+          "sheepstealer-dragons-cunning-dragons-cunning-instinct-down-stat-dealt-modifier"
+        ],
         "recipientAbilityId": "seasmoke-infectious-wrath",
         "recipientDragonId": "seasmoke",
         "recipientEvidenceIds": [
@@ -56667,17 +57223,23 @@
         ],
         "damageScope": null,
         "effects": [
-          "Enemy Initiative reduction may improve Fire Damage outputs: Wild Hunt: Fire Damage, Savage Claim: Fire Damage."
+          "Enemy Initiative reduction may improve Fire Damage outputs: Wild Hunt: Fire Damage, Savage Claim: Fire Damage.",
+          "Applies to all qualifying Fire Damage sources."
         ],
         "exactResultKnown": false,
         "exactResultUnknownReason": "Exact final value cannot be calculated because final combat formulas and stacking order are not fully verified.",
         "explanation": "Syrax's Flight Mastery can reduce enemy Initiative. Sheepstealer's Fire Damage outputs are mitigated by that stat.",
         "id": "enemy-mitigation-syrax-flight-mastery-flight-mastery-initiative-down-stat-dealt-modifier-sheepstealer-initiative",
-        "interactionScope": "enemy-side",
-        "matchedOutputCapabilityIds": [],
+        "interactionScope": "cross-dragon",
+        "matchedOutputCapabilityIds": [
+          "sheepstealer-wild-hunt-wild-hunt-fire-damage-rate-output",
+          "sheepstealer-savage-claim-savage-claim-fire-damage-output"
+        ],
         "matchKind": "enemy-mitigation-reduction",
-        "modifierCapabilityId": null,
-        "modifierCapabilityIds": [],
+        "modifierCapabilityId": "syrax-flight-mastery-flight-mastery-initiative-down-stat-dealt-modifier",
+        "modifierCapabilityIds": [
+          "syrax-flight-mastery-flight-mastery-initiative-down-stat-dealt-modifier"
+        ],
         "recipientAbilityId": "sheepstealer-wild-hunt",
         "recipientDragonId": "sheepstealer",
         "recipientEvidenceIds": [
@@ -61987,17 +62549,23 @@
         ],
         "damageScope": null,
         "effects": [
-          "Enemy Initiative reduction may improve Fire Damage outputs: Infernal Burst: Fire Damage, Crippling Inferno: Burn."
+          "Enemy Initiative reduction may improve Fire Damage outputs: Infernal Burst: Fire Damage, Crippling Inferno: Burn.",
+          "Applies to all qualifying Fire Damage sources."
         ],
         "exactResultKnown": false,
         "exactResultUnknownReason": "Exact final value cannot be calculated because final combat formulas and stacking order are not fully verified.",
         "explanation": "Syrax's Flight Mastery can reduce enemy Initiative. Caraxes's Fire Damage outputs are mitigated by that stat.",
         "id": "enemy-mitigation-syrax-flight-mastery-flight-mastery-initiative-down-stat-dealt-modifier-caraxes-initiative",
-        "interactionScope": "enemy-side",
-        "matchedOutputCapabilityIds": [],
+        "interactionScope": "cross-dragon",
+        "matchedOutputCapabilityIds": [
+          "caraxes-infernal-burst-infernal-burst-fire-rate-output",
+          "caraxes-crippling-inferno-crippling-inferno-burn-output"
+        ],
         "matchKind": "enemy-mitigation-reduction",
-        "modifierCapabilityId": null,
-        "modifierCapabilityIds": [],
+        "modifierCapabilityId": "syrax-flight-mastery-flight-mastery-initiative-down-stat-dealt-modifier",
+        "modifierCapabilityIds": [
+          "syrax-flight-mastery-flight-mastery-initiative-down-stat-dealt-modifier"
+        ],
         "recipientAbilityId": "caraxes-infernal-burst",
         "recipientDragonId": "caraxes",
         "recipientEvidenceIds": [
@@ -62059,6 +62627,106 @@
         "sourceDragonId": "syrax",
         "sourceEvidenceIds": [
           "syrax-flight-mastery-2026-06-24"
+        ],
+        "status": "potential",
+        "targetSelectionGroup": null,
+        "title": "Fire Damage Mitigation Reduction",
+        "unresolvedQuestions": [
+          "Exact enemy-formation targeting and final mitigation formula are unknown."
+        ]
+      },
+      {
+        "assumptions": [
+          "Enemy target overlap is not simulated."
+        ],
+        "channel": "fire-damage",
+        "confidence": "confirmed",
+        "conflicts": [
+          "Caraxes - Battle Dread Habit unlock requirement: expected Star Rank 2+, actual preview enabled",
+          "Caraxes - Battle Dread Selected Habit Level: expected Habit Level 1+ or preview, actual preview enabled",
+          "caraxes - Crippling Inferno Habit unlock requirement: expected Star Rank 6+, actual preview enabled",
+          "caraxes - Crippling Inferno Selected Habit Level: expected Habit Level 1+ or preview, actual preview enabled"
+        ],
+        "damageScope": null,
+        "effects": [
+          "Enemy Initiative reduction may improve Fire Damage outputs: Infernal Burst: Fire Damage, Crippling Inferno: Burn.",
+          "Applies to all qualifying Fire Damage sources."
+        ],
+        "exactResultKnown": false,
+        "exactResultUnknownReason": "Exact final value cannot be calculated because final combat formulas and stacking order are not fully verified.",
+        "explanation": "Caraxes's Battle Dread can reduce enemy Initiative. Caraxes's Fire Damage outputs are mitigated by that stat.",
+        "id": "enemy-mitigation-caraxes-battle-dread-battle-dread-initiative-down-stat-dealt-modifier-caraxes-initiative",
+        "interactionScope": "internal",
+        "matchedOutputCapabilityIds": [
+          "caraxes-infernal-burst-infernal-burst-fire-rate-output",
+          "caraxes-crippling-inferno-crippling-inferno-burn-output"
+        ],
+        "matchKind": "enemy-mitigation-reduction",
+        "modifierCapabilityId": "caraxes-battle-dread-battle-dread-initiative-down-stat-dealt-modifier",
+        "modifierCapabilityIds": [
+          "caraxes-battle-dread-battle-dread-initiative-down-stat-dealt-modifier"
+        ],
+        "recipientAbilityId": "caraxes-infernal-burst",
+        "recipientDragonId": "caraxes",
+        "recipientEvidenceIds": [
+          "caraxes-infernal-burst-2026-06-24",
+          "caraxes-crippling-inferno-2026-06-24"
+        ],
+        "requirements": [
+          {
+            "actual": "preview enabled",
+            "evidenceIds": [
+              "caraxes-battle-dread-2026-06-24"
+            ],
+            "expected": "Star Rank 2+",
+            "id": "caraxes-caraxes-battle-dread-star-rank",
+            "label": "Caraxes - Battle Dread Habit unlock requirement",
+            "notes": [],
+            "satisfied": false
+          },
+          {
+            "actual": "preview enabled",
+            "evidenceIds": [
+              "caraxes-battle-dread-2026-06-24"
+            ],
+            "expected": "Habit Level 1+ or preview",
+            "id": "caraxes-caraxes-battle-dread-habit-level",
+            "label": "Caraxes - Battle Dread Selected Habit Level",
+            "notes": [
+              "Unlocked Habits without an explicit saved Habit Level default to effective Habit Level 1. Locked Habit capabilities are potential in preview mode, not active for current roster."
+            ],
+            "satisfied": false
+          },
+          {
+            "actual": "preview enabled",
+            "evidenceIds": [
+              "caraxes-crippling-inferno-2026-06-24"
+            ],
+            "expected": "Star Rank 6+",
+            "id": "caraxes-caraxes-crippling-inferno-star-rank",
+            "label": "caraxes - Crippling Inferno Habit unlock requirement",
+            "notes": [],
+            "satisfied": false
+          },
+          {
+            "actual": "preview enabled",
+            "evidenceIds": [
+              "caraxes-crippling-inferno-2026-06-24"
+            ],
+            "expected": "Habit Level 1+ or preview",
+            "id": "caraxes-caraxes-crippling-inferno-habit-level",
+            "label": "caraxes - Crippling Inferno Selected Habit Level",
+            "notes": [
+              "Unlocked Habits without an explicit saved Habit Level default to effective Habit Level 1. Locked Habit capabilities are potential in preview mode, not active for current roster."
+            ],
+            "satisfied": false
+          }
+        ],
+        "ruleId": "enemy-mitigation-reduction",
+        "sourceAbilityId": "caraxes-battle-dread",
+        "sourceDragonId": "caraxes",
+        "sourceEvidenceIds": [
+          "caraxes-battle-dread-2026-06-24"
         ],
         "status": "potential",
         "targetSelectionGroup": null,
@@ -66895,17 +67563,23 @@
         ],
         "damageScope": null,
         "effects": [
-          "Enemy Initiative reduction may improve Fire Damage outputs: Wild Hunt: Fire Damage, Savage Claim: Fire Damage."
+          "Enemy Initiative reduction may improve Fire Damage outputs: Wild Hunt: Fire Damage, Savage Claim: Fire Damage.",
+          "Applies to all qualifying Fire Damage sources."
         ],
         "exactResultKnown": false,
         "exactResultUnknownReason": "Exact final value cannot be calculated because final combat formulas and stacking order are not fully verified.",
         "explanation": "Syrax's Flight Mastery can reduce enemy Initiative. Sheepstealer's Fire Damage outputs are mitigated by that stat.",
         "id": "enemy-mitigation-syrax-flight-mastery-flight-mastery-initiative-down-stat-dealt-modifier-sheepstealer-initiative",
-        "interactionScope": "enemy-side",
-        "matchedOutputCapabilityIds": [],
+        "interactionScope": "cross-dragon",
+        "matchedOutputCapabilityIds": [
+          "sheepstealer-wild-hunt-wild-hunt-fire-damage-rate-output",
+          "sheepstealer-savage-claim-savage-claim-fire-damage-output"
+        ],
         "matchKind": "enemy-mitigation-reduction",
-        "modifierCapabilityId": null,
-        "modifierCapabilityIds": [],
+        "modifierCapabilityId": "syrax-flight-mastery-flight-mastery-initiative-down-stat-dealt-modifier",
+        "modifierCapabilityIds": [
+          "syrax-flight-mastery-flight-mastery-initiative-down-stat-dealt-modifier"
+        ],
         "recipientAbilityId": "sheepstealer-wild-hunt",
         "recipientDragonId": "sheepstealer",
         "recipientEvidenceIds": [
@@ -66991,17 +67665,23 @@
         ],
         "damageScope": null,
         "effects": [
-          "Enemy Initiative reduction may improve Fire Damage outputs: Infernal Burst: Fire Damage, Crippling Inferno: Burn."
+          "Enemy Initiative reduction may improve Fire Damage outputs: Infernal Burst: Fire Damage, Crippling Inferno: Burn.",
+          "Applies to all qualifying Fire Damage sources."
         ],
         "exactResultKnown": false,
         "exactResultUnknownReason": "Exact final value cannot be calculated because final combat formulas and stacking order are not fully verified.",
         "explanation": "Syrax's Flight Mastery can reduce enemy Initiative. Caraxes's Fire Damage outputs are mitigated by that stat.",
         "id": "enemy-mitigation-syrax-flight-mastery-flight-mastery-initiative-down-stat-dealt-modifier-caraxes-initiative",
-        "interactionScope": "enemy-side",
-        "matchedOutputCapabilityIds": [],
+        "interactionScope": "cross-dragon",
+        "matchedOutputCapabilityIds": [
+          "caraxes-infernal-burst-infernal-burst-fire-rate-output",
+          "caraxes-crippling-inferno-crippling-inferno-burn-output"
+        ],
         "matchKind": "enemy-mitigation-reduction",
-        "modifierCapabilityId": null,
-        "modifierCapabilityIds": [],
+        "modifierCapabilityId": "syrax-flight-mastery-flight-mastery-initiative-down-stat-dealt-modifier",
+        "modifierCapabilityIds": [
+          "syrax-flight-mastery-flight-mastery-initiative-down-stat-dealt-modifier"
+        ],
         "recipientAbilityId": "caraxes-infernal-burst",
         "recipientDragonId": "caraxes",
         "recipientEvidenceIds": [
@@ -67085,17 +67765,23 @@
         ],
         "damageScope": null,
         "effects": [
-          "Enemy Initiative reduction may improve Fire Damage outputs: Wild Hunt: Fire Damage, Savage Claim: Fire Damage."
+          "Enemy Initiative reduction may improve Fire Damage outputs: Wild Hunt: Fire Damage, Savage Claim: Fire Damage.",
+          "Applies to all qualifying Fire Damage sources."
         ],
         "exactResultKnown": false,
         "exactResultUnknownReason": "Exact final value cannot be calculated because final combat formulas and stacking order are not fully verified.",
         "explanation": "Caraxes's Battle Dread can reduce enemy Initiative. Sheepstealer's Fire Damage outputs are mitigated by that stat.",
         "id": "enemy-mitigation-caraxes-battle-dread-battle-dread-initiative-down-stat-dealt-modifier-sheepstealer-initiative",
-        "interactionScope": "enemy-side",
-        "matchedOutputCapabilityIds": [],
+        "interactionScope": "cross-dragon",
+        "matchedOutputCapabilityIds": [
+          "sheepstealer-wild-hunt-wild-hunt-fire-damage-rate-output",
+          "sheepstealer-savage-claim-savage-claim-fire-damage-output"
+        ],
         "matchKind": "enemy-mitigation-reduction",
-        "modifierCapabilityId": null,
-        "modifierCapabilityIds": [],
+        "modifierCapabilityId": "caraxes-battle-dread-battle-dread-initiative-down-stat-dealt-modifier",
+        "modifierCapabilityIds": [
+          "caraxes-battle-dread-battle-dread-initiative-down-stat-dealt-modifier"
+        ],
         "recipientAbilityId": "sheepstealer-wild-hunt",
         "recipientDragonId": "sheepstealer",
         "recipientEvidenceIds": [
@@ -67148,6 +67834,106 @@
             "expected": "Habit Level 1+ or preview",
             "id": "sheepstealer-sheepstealer-savage-claim-habit-level",
             "label": "sheepstealer - Savage Claim Selected Habit Level",
+            "notes": [
+              "Unlocked Habits without an explicit saved Habit Level default to effective Habit Level 1. Locked Habit capabilities are potential in preview mode, not active for current roster."
+            ],
+            "satisfied": false
+          }
+        ],
+        "ruleId": "enemy-mitigation-reduction",
+        "sourceAbilityId": "caraxes-battle-dread",
+        "sourceDragonId": "caraxes",
+        "sourceEvidenceIds": [
+          "caraxes-battle-dread-2026-06-24"
+        ],
+        "status": "potential",
+        "targetSelectionGroup": null,
+        "title": "Fire Damage Mitigation Reduction",
+        "unresolvedQuestions": [
+          "Exact enemy-formation targeting and final mitigation formula are unknown."
+        ]
+      },
+      {
+        "assumptions": [
+          "Enemy target overlap is not simulated."
+        ],
+        "channel": "fire-damage",
+        "confidence": "confirmed",
+        "conflicts": [
+          "Caraxes - Battle Dread Habit unlock requirement: expected Star Rank 2+, actual preview enabled",
+          "Caraxes - Battle Dread Selected Habit Level: expected Habit Level 1+ or preview, actual preview enabled",
+          "caraxes - Crippling Inferno Habit unlock requirement: expected Star Rank 6+, actual preview enabled",
+          "caraxes - Crippling Inferno Selected Habit Level: expected Habit Level 1+ or preview, actual preview enabled"
+        ],
+        "damageScope": null,
+        "effects": [
+          "Enemy Initiative reduction may improve Fire Damage outputs: Infernal Burst: Fire Damage, Crippling Inferno: Burn.",
+          "Applies to all qualifying Fire Damage sources."
+        ],
+        "exactResultKnown": false,
+        "exactResultUnknownReason": "Exact final value cannot be calculated because final combat formulas and stacking order are not fully verified.",
+        "explanation": "Caraxes's Battle Dread can reduce enemy Initiative. Caraxes's Fire Damage outputs are mitigated by that stat.",
+        "id": "enemy-mitigation-caraxes-battle-dread-battle-dread-initiative-down-stat-dealt-modifier-caraxes-initiative",
+        "interactionScope": "internal",
+        "matchedOutputCapabilityIds": [
+          "caraxes-infernal-burst-infernal-burst-fire-rate-output",
+          "caraxes-crippling-inferno-crippling-inferno-burn-output"
+        ],
+        "matchKind": "enemy-mitigation-reduction",
+        "modifierCapabilityId": "caraxes-battle-dread-battle-dread-initiative-down-stat-dealt-modifier",
+        "modifierCapabilityIds": [
+          "caraxes-battle-dread-battle-dread-initiative-down-stat-dealt-modifier"
+        ],
+        "recipientAbilityId": "caraxes-infernal-burst",
+        "recipientDragonId": "caraxes",
+        "recipientEvidenceIds": [
+          "caraxes-infernal-burst-2026-06-24",
+          "caraxes-crippling-inferno-2026-06-24"
+        ],
+        "requirements": [
+          {
+            "actual": "preview enabled",
+            "evidenceIds": [
+              "caraxes-battle-dread-2026-06-24"
+            ],
+            "expected": "Star Rank 2+",
+            "id": "caraxes-caraxes-battle-dread-star-rank",
+            "label": "Caraxes - Battle Dread Habit unlock requirement",
+            "notes": [],
+            "satisfied": false
+          },
+          {
+            "actual": "preview enabled",
+            "evidenceIds": [
+              "caraxes-battle-dread-2026-06-24"
+            ],
+            "expected": "Habit Level 1+ or preview",
+            "id": "caraxes-caraxes-battle-dread-habit-level",
+            "label": "Caraxes - Battle Dread Selected Habit Level",
+            "notes": [
+              "Unlocked Habits without an explicit saved Habit Level default to effective Habit Level 1. Locked Habit capabilities are potential in preview mode, not active for current roster."
+            ],
+            "satisfied": false
+          },
+          {
+            "actual": "preview enabled",
+            "evidenceIds": [
+              "caraxes-crippling-inferno-2026-06-24"
+            ],
+            "expected": "Star Rank 6+",
+            "id": "caraxes-caraxes-crippling-inferno-star-rank",
+            "label": "caraxes - Crippling Inferno Habit unlock requirement",
+            "notes": [],
+            "satisfied": false
+          },
+          {
+            "actual": "preview enabled",
+            "evidenceIds": [
+              "caraxes-crippling-inferno-2026-06-24"
+            ],
+            "expected": "Habit Level 1+ or preview",
+            "id": "caraxes-caraxes-crippling-inferno-habit-level",
+            "label": "caraxes - Crippling Inferno Selected Habit Level",
             "notes": [
               "Unlocked Habits without an explicit saved Habit Level default to effective Habit Level 1. Locked Habit capabilities are potential in preview mode, not active for current roster."
             ],
@@ -71243,22 +72029,99 @@
         "channel": "tactical-damage",
         "confidence": "confirmed",
         "conflicts": [
+          "Kalspire - Battle Cunning Habit unlock requirement: expected Star Rank 4+, actual preview enabled",
+          "Kalspire - Battle Cunning Selected Habit Level: expected Habit Level 1+ or preview, actual preview enabled"
+        ],
+        "damageScope": null,
+        "effects": [
+          "Enemy Intelligence reduction may improve Tactical Damage outputs: Tactical Strike: Tactical Damage.",
+          "Applies to all qualifying Tactical Damage sources."
+        ],
+        "exactResultKnown": false,
+        "exactResultUnknownReason": "Exact final value cannot be calculated because final combat formulas and stacking order are not fully verified.",
+        "explanation": "Kalspire's Battle Cunning can reduce enemy Intelligence. Kalspire's Tactical Damage outputs are mitigated by that stat.",
+        "id": "enemy-mitigation-kalspire-battle-cunning-battle-cunning-intelligence-down-stat-dealt-modifier-kalspire-intelligence",
+        "interactionScope": "internal",
+        "matchedOutputCapabilityIds": [
+          "kalspire-tactical-strike-tactical-strike-tactical-damage-output"
+        ],
+        "matchKind": "enemy-mitigation-reduction",
+        "modifierCapabilityId": "kalspire-battle-cunning-battle-cunning-intelligence-down-stat-dealt-modifier",
+        "modifierCapabilityIds": [
+          "kalspire-battle-cunning-battle-cunning-intelligence-down-stat-dealt-modifier"
+        ],
+        "recipientAbilityId": "kalspire-tactical-strike",
+        "recipientDragonId": "kalspire",
+        "recipientEvidenceIds": [
+          "kalspire-tactical-strike-summary-2026-06-25"
+        ],
+        "requirements": [
+          {
+            "actual": "preview enabled",
+            "evidenceIds": [
+              "kalspire-battle-cunning-2026-06-25"
+            ],
+            "expected": "Star Rank 4+",
+            "id": "kalspire-kalspire-battle-cunning-star-rank",
+            "label": "Kalspire - Battle Cunning Habit unlock requirement",
+            "notes": [],
+            "satisfied": false
+          },
+          {
+            "actual": "preview enabled",
+            "evidenceIds": [
+              "kalspire-battle-cunning-2026-06-25"
+            ],
+            "expected": "Habit Level 1+ or preview",
+            "id": "kalspire-kalspire-battle-cunning-habit-level",
+            "label": "Kalspire - Battle Cunning Selected Habit Level",
+            "notes": [
+              "Unlocked Habits without an explicit saved Habit Level default to effective Habit Level 1. Locked Habit capabilities are potential in preview mode, not active for current roster."
+            ],
+            "satisfied": false
+          }
+        ],
+        "ruleId": "enemy-mitigation-reduction",
+        "sourceAbilityId": "kalspire-battle-cunning",
+        "sourceDragonId": "kalspire",
+        "sourceEvidenceIds": [
+          "kalspire-battle-cunning-2026-06-25"
+        ],
+        "status": "potential",
+        "targetSelectionGroup": null,
+        "title": "Tactical Damage Mitigation Reduction",
+        "unresolvedQuestions": [
+          "Exact enemy-formation targeting and final mitigation formula are unknown."
+        ]
+      },
+      {
+        "assumptions": [
+          "Enemy target overlap is not simulated."
+        ],
+        "channel": "tactical-damage",
+        "confidence": "confirmed",
+        "conflicts": [
           "Venator - Hunter's Bane Habit unlock requirement: expected Star Rank 2+, actual preview enabled",
           "Venator - Hunter's Bane Selected Habit Level: expected Habit Level 1+ or preview, actual preview enabled"
         ],
         "damageScope": null,
         "effects": [
-          "Enemy Intelligence reduction may improve Tactical Damage outputs: Tactical Strike: Tactical Damage."
+          "Enemy Intelligence reduction may improve Tactical Damage outputs: Tactical Strike: Tactical Damage.",
+          "Applies to all qualifying Tactical Damage sources."
         ],
         "exactResultKnown": false,
         "exactResultUnknownReason": "Exact final value cannot be calculated because final combat formulas and stacking order are not fully verified.",
         "explanation": "Venator's Hunter's Bane can reduce enemy Intelligence. Kalspire's Tactical Damage outputs are mitigated by that stat.",
         "id": "enemy-mitigation-venator-hunters-bane-hunters-bane-intelligence-down-stat-dealt-modifier-kalspire-intelligence",
-        "interactionScope": "enemy-side",
-        "matchedOutputCapabilityIds": [],
+        "interactionScope": "cross-dragon",
+        "matchedOutputCapabilityIds": [
+          "kalspire-tactical-strike-tactical-strike-tactical-damage-output"
+        ],
         "matchKind": "enemy-mitigation-reduction",
-        "modifierCapabilityId": null,
-        "modifierCapabilityIds": [],
+        "modifierCapabilityId": "venator-hunters-bane-hunters-bane-intelligence-down-stat-dealt-modifier",
+        "modifierCapabilityIds": [
+          "venator-hunters-bane-hunters-bane-intelligence-down-stat-dealt-modifier"
+        ],
         "recipientAbilityId": "kalspire-tactical-strike",
         "recipientDragonId": "kalspire",
         "recipientEvidenceIds": [
@@ -74926,17 +75789,22 @@
         ],
         "damageScope": null,
         "effects": [
-          "Enemy Initiative reduction may improve Fire Damage outputs: Bloodscale Terror: Fire Damage."
+          "Enemy Initiative reduction may improve Fire Damage outputs: Bloodscale Terror: Fire Damage.",
+          "Applies to all qualifying Fire Damage sources."
         ],
         "exactResultKnown": false,
         "exactResultUnknownReason": "Exact final value cannot be calculated because final combat formulas and stacking order are not fully verified.",
         "explanation": "Caraxes's Battle Dread can reduce enemy Initiative. Crimson's Fire Damage outputs are mitigated by that stat.",
         "id": "enemy-mitigation-caraxes-battle-dread-battle-dread-initiative-down-stat-dealt-modifier-crimson-initiative",
-        "interactionScope": "enemy-side",
-        "matchedOutputCapabilityIds": [],
+        "interactionScope": "cross-dragon",
+        "matchedOutputCapabilityIds": [
+          "crimson-bloodscale-terror-bloodscale-terror-fire-damage-output"
+        ],
         "matchKind": "enemy-mitigation-reduction",
-        "modifierCapabilityId": null,
-        "modifierCapabilityIds": [],
+        "modifierCapabilityId": "caraxes-battle-dread-battle-dread-initiative-down-stat-dealt-modifier",
+        "modifierCapabilityIds": [
+          "caraxes-battle-dread-battle-dread-initiative-down-stat-dealt-modifier"
+        ],
         "recipientAbilityId": "crimson-bloodscale-terror",
         "recipientDragonId": "crimson",
         "recipientEvidenceIds": [
@@ -74985,6 +75853,106 @@
         "assumptions": [
           "Enemy target overlap is not simulated."
         ],
+        "channel": "fire-damage",
+        "confidence": "confirmed",
+        "conflicts": [
+          "Caraxes - Battle Dread Habit unlock requirement: expected Star Rank 2+, actual preview enabled",
+          "Caraxes - Battle Dread Selected Habit Level: expected Habit Level 1+ or preview, actual preview enabled",
+          "caraxes - Crippling Inferno Habit unlock requirement: expected Star Rank 6+, actual preview enabled",
+          "caraxes - Crippling Inferno Selected Habit Level: expected Habit Level 1+ or preview, actual preview enabled"
+        ],
+        "damageScope": null,
+        "effects": [
+          "Enemy Initiative reduction may improve Fire Damage outputs: Infernal Burst: Fire Damage, Crippling Inferno: Burn.",
+          "Applies to all qualifying Fire Damage sources."
+        ],
+        "exactResultKnown": false,
+        "exactResultUnknownReason": "Exact final value cannot be calculated because final combat formulas and stacking order are not fully verified.",
+        "explanation": "Caraxes's Battle Dread can reduce enemy Initiative. Caraxes's Fire Damage outputs are mitigated by that stat.",
+        "id": "enemy-mitigation-caraxes-battle-dread-battle-dread-initiative-down-stat-dealt-modifier-caraxes-initiative",
+        "interactionScope": "internal",
+        "matchedOutputCapabilityIds": [
+          "caraxes-infernal-burst-infernal-burst-fire-rate-output",
+          "caraxes-crippling-inferno-crippling-inferno-burn-output"
+        ],
+        "matchKind": "enemy-mitigation-reduction",
+        "modifierCapabilityId": "caraxes-battle-dread-battle-dread-initiative-down-stat-dealt-modifier",
+        "modifierCapabilityIds": [
+          "caraxes-battle-dread-battle-dread-initiative-down-stat-dealt-modifier"
+        ],
+        "recipientAbilityId": "caraxes-infernal-burst",
+        "recipientDragonId": "caraxes",
+        "recipientEvidenceIds": [
+          "caraxes-infernal-burst-2026-06-24",
+          "caraxes-crippling-inferno-2026-06-24"
+        ],
+        "requirements": [
+          {
+            "actual": "preview enabled",
+            "evidenceIds": [
+              "caraxes-battle-dread-2026-06-24"
+            ],
+            "expected": "Star Rank 2+",
+            "id": "caraxes-caraxes-battle-dread-star-rank",
+            "label": "Caraxes - Battle Dread Habit unlock requirement",
+            "notes": [],
+            "satisfied": false
+          },
+          {
+            "actual": "preview enabled",
+            "evidenceIds": [
+              "caraxes-battle-dread-2026-06-24"
+            ],
+            "expected": "Habit Level 1+ or preview",
+            "id": "caraxes-caraxes-battle-dread-habit-level",
+            "label": "Caraxes - Battle Dread Selected Habit Level",
+            "notes": [
+              "Unlocked Habits without an explicit saved Habit Level default to effective Habit Level 1. Locked Habit capabilities are potential in preview mode, not active for current roster."
+            ],
+            "satisfied": false
+          },
+          {
+            "actual": "preview enabled",
+            "evidenceIds": [
+              "caraxes-crippling-inferno-2026-06-24"
+            ],
+            "expected": "Star Rank 6+",
+            "id": "caraxes-caraxes-crippling-inferno-star-rank",
+            "label": "caraxes - Crippling Inferno Habit unlock requirement",
+            "notes": [],
+            "satisfied": false
+          },
+          {
+            "actual": "preview enabled",
+            "evidenceIds": [
+              "caraxes-crippling-inferno-2026-06-24"
+            ],
+            "expected": "Habit Level 1+ or preview",
+            "id": "caraxes-caraxes-crippling-inferno-habit-level",
+            "label": "caraxes - Crippling Inferno Selected Habit Level",
+            "notes": [
+              "Unlocked Habits without an explicit saved Habit Level default to effective Habit Level 1. Locked Habit capabilities are potential in preview mode, not active for current roster."
+            ],
+            "satisfied": false
+          }
+        ],
+        "ruleId": "enemy-mitigation-reduction",
+        "sourceAbilityId": "caraxes-battle-dread",
+        "sourceDragonId": "caraxes",
+        "sourceEvidenceIds": [
+          "caraxes-battle-dread-2026-06-24"
+        ],
+        "status": "potential",
+        "targetSelectionGroup": null,
+        "title": "Fire Damage Mitigation Reduction",
+        "unresolvedQuestions": [
+          "Exact enemy-formation targeting and final mitigation formula are unknown."
+        ]
+      },
+      {
+        "assumptions": [
+          "Enemy target overlap is not simulated."
+        ],
         "channel": "physical-damage",
         "confidence": "confirmed",
         "conflicts": [
@@ -74995,17 +75963,24 @@
         ],
         "damageScope": null,
         "effects": [
-          "Enemy Instinct reduction may improve Physical Damage outputs: Fiery Bonds: Physical Damage, Skyward Titan: Physical Damage."
+          "Enemy Instinct reduction may improve Physical Damage outputs: Fiery Bonds: Physical Damage, Skyward Titan: Physical Damage.",
+          "Applies to all qualifying Physical Damage sources.",
+          "Duration: 2 rounds."
         ],
         "exactResultKnown": false,
         "exactResultUnknownReason": "Exact final value cannot be calculated because final combat formulas and stacking order are not fully verified.",
         "explanation": "Crimson's Vermin's Bane can reduce enemy Instinct. Vhagar's Physical Damage outputs are mitigated by that stat.",
         "id": "enemy-mitigation-crimson-vermins-bane-vermins-bane-instinct-down-stat-dealt-modifier-vhagar-instinct",
-        "interactionScope": "enemy-side",
-        "matchedOutputCapabilityIds": [],
+        "interactionScope": "cross-dragon",
+        "matchedOutputCapabilityIds": [
+          "vhagar-fiery-bonds-fiery-bonds-physical-damage-output",
+          "vhagar-skyward-titan-skyward-titan-third-stack-damage-output"
+        ],
         "matchKind": "enemy-mitigation-reduction",
-        "modifierCapabilityId": null,
-        "modifierCapabilityIds": [],
+        "modifierCapabilityId": "crimson-vermins-bane-vermins-bane-instinct-down-stat-dealt-modifier",
+        "modifierCapabilityIds": [
+          "crimson-vermins-bane-vermins-bane-instinct-down-stat-dealt-modifier"
+        ],
         "recipientAbilityId": "vhagar-fiery-bonds",
         "recipientDragonId": "vhagar",
         "recipientEvidenceIds": [
@@ -75083,23 +76058,103 @@
         "confidence": "confirmed",
         "conflicts": [
           "Crimson - Vermin's Bane Habit unlock requirement: expected Star Rank 10+, actual preview enabled",
+          "Crimson - Vermin's Bane Selected Habit Level: expected Habit Level 1+ or preview, actual preview enabled"
+        ],
+        "damageScope": null,
+        "effects": [
+          "Enemy Initiative reduction may improve Fire Damage outputs: Bloodscale Terror: Fire Damage.",
+          "Applies to all qualifying Fire Damage sources.",
+          "Duration: 2 rounds."
+        ],
+        "exactResultKnown": false,
+        "exactResultUnknownReason": "Exact final value cannot be calculated because final combat formulas and stacking order are not fully verified.",
+        "explanation": "Crimson's Vermin's Bane can reduce enemy Initiative. Crimson's Fire Damage outputs are mitigated by that stat.",
+        "id": "enemy-mitigation-crimson-vermins-bane-vermins-bane-initiative-down-stat-dealt-modifier-crimson-initiative",
+        "interactionScope": "internal",
+        "matchedOutputCapabilityIds": [
+          "crimson-bloodscale-terror-bloodscale-terror-fire-damage-output"
+        ],
+        "matchKind": "enemy-mitigation-reduction",
+        "modifierCapabilityId": "crimson-vermins-bane-vermins-bane-initiative-down-stat-dealt-modifier",
+        "modifierCapabilityIds": [
+          "crimson-vermins-bane-vermins-bane-initiative-down-stat-dealt-modifier"
+        ],
+        "recipientAbilityId": "crimson-bloodscale-terror",
+        "recipientDragonId": "crimson",
+        "recipientEvidenceIds": [
+          "crimson-bloodscale-terror-summary-2026-06-25"
+        ],
+        "requirements": [
+          {
+            "actual": "preview enabled",
+            "evidenceIds": [
+              "crimson-vermins-bane-2026-06-25"
+            ],
+            "expected": "Star Rank 10+",
+            "id": "crimson-crimson-vermins-bane-star-rank",
+            "label": "Crimson - Vermin's Bane Habit unlock requirement",
+            "notes": [],
+            "satisfied": false
+          },
+          {
+            "actual": "preview enabled",
+            "evidenceIds": [
+              "crimson-vermins-bane-2026-06-25"
+            ],
+            "expected": "Habit Level 1+ or preview",
+            "id": "crimson-crimson-vermins-bane-habit-level",
+            "label": "Crimson - Vermin's Bane Selected Habit Level",
+            "notes": [
+              "Unlocked Habits without an explicit saved Habit Level default to effective Habit Level 1. Locked Habit capabilities are potential in preview mode, not active for current roster."
+            ],
+            "satisfied": false
+          }
+        ],
+        "ruleId": "enemy-mitigation-reduction",
+        "sourceAbilityId": "crimson-vermins-bane",
+        "sourceDragonId": "crimson",
+        "sourceEvidenceIds": [
+          "crimson-vermins-bane-2026-06-25"
+        ],
+        "status": "potential",
+        "targetSelectionGroup": null,
+        "title": "Fire Damage Mitigation Reduction",
+        "unresolvedQuestions": [
+          "Exact enemy-formation targeting and final mitigation formula are unknown."
+        ]
+      },
+      {
+        "assumptions": [
+          "Enemy target overlap is not simulated."
+        ],
+        "channel": "fire-damage",
+        "confidence": "confirmed",
+        "conflicts": [
+          "Crimson - Vermin's Bane Habit unlock requirement: expected Star Rank 10+, actual preview enabled",
           "Crimson - Vermin's Bane Selected Habit Level: expected Habit Level 1+ or preview, actual preview enabled",
           "caraxes - Crippling Inferno Habit unlock requirement: expected Star Rank 6+, actual preview enabled",
           "caraxes - Crippling Inferno Selected Habit Level: expected Habit Level 1+ or preview, actual preview enabled"
         ],
         "damageScope": null,
         "effects": [
-          "Enemy Initiative reduction may improve Fire Damage outputs: Infernal Burst: Fire Damage, Crippling Inferno: Burn."
+          "Enemy Initiative reduction may improve Fire Damage outputs: Infernal Burst: Fire Damage, Crippling Inferno: Burn.",
+          "Applies to all qualifying Fire Damage sources.",
+          "Duration: 2 rounds."
         ],
         "exactResultKnown": false,
         "exactResultUnknownReason": "Exact final value cannot be calculated because final combat formulas and stacking order are not fully verified.",
         "explanation": "Crimson's Vermin's Bane can reduce enemy Initiative. Caraxes's Fire Damage outputs are mitigated by that stat.",
         "id": "enemy-mitigation-crimson-vermins-bane-vermins-bane-initiative-down-stat-dealt-modifier-caraxes-initiative",
-        "interactionScope": "enemy-side",
-        "matchedOutputCapabilityIds": [],
+        "interactionScope": "cross-dragon",
+        "matchedOutputCapabilityIds": [
+          "caraxes-infernal-burst-infernal-burst-fire-rate-output",
+          "caraxes-crippling-inferno-crippling-inferno-burn-output"
+        ],
         "matchKind": "enemy-mitigation-reduction",
-        "modifierCapabilityId": null,
-        "modifierCapabilityIds": [],
+        "modifierCapabilityId": "crimson-vermins-bane-vermins-bane-initiative-down-stat-dealt-modifier",
+        "modifierCapabilityIds": [
+          "crimson-vermins-bane-vermins-bane-initiative-down-stat-dealt-modifier"
+        ],
         "recipientAbilityId": "caraxes-infernal-burst",
         "recipientDragonId": "caraxes",
         "recipientEvidenceIds": [
@@ -80741,17 +81796,94 @@
         ],
         "damageScope": null,
         "effects": [
-          "Enemy Intelligence reduction may improve Tactical Damage outputs: Blazing Fury: Tactical Damage."
+          "Enemy Intelligence reduction may improve Tactical Damage outputs: Tactical Strike: Tactical Damage.",
+          "Applies to all qualifying Tactical Damage sources."
+        ],
+        "exactResultKnown": false,
+        "exactResultUnknownReason": "Exact final value cannot be calculated because final combat formulas and stacking order are not fully verified.",
+        "explanation": "Kalspire's Battle Cunning can reduce enemy Intelligence. Kalspire's Tactical Damage outputs are mitigated by that stat.",
+        "id": "enemy-mitigation-kalspire-battle-cunning-battle-cunning-intelligence-down-stat-dealt-modifier-kalspire-intelligence",
+        "interactionScope": "internal",
+        "matchedOutputCapabilityIds": [
+          "kalspire-tactical-strike-tactical-strike-tactical-damage-output"
+        ],
+        "matchKind": "enemy-mitigation-reduction",
+        "modifierCapabilityId": "kalspire-battle-cunning-battle-cunning-intelligence-down-stat-dealt-modifier",
+        "modifierCapabilityIds": [
+          "kalspire-battle-cunning-battle-cunning-intelligence-down-stat-dealt-modifier"
+        ],
+        "recipientAbilityId": "kalspire-tactical-strike",
+        "recipientDragonId": "kalspire",
+        "recipientEvidenceIds": [
+          "kalspire-tactical-strike-summary-2026-06-25"
+        ],
+        "requirements": [
+          {
+            "actual": "preview enabled",
+            "evidenceIds": [
+              "kalspire-battle-cunning-2026-06-25"
+            ],
+            "expected": "Star Rank 4+",
+            "id": "kalspire-kalspire-battle-cunning-star-rank",
+            "label": "Kalspire - Battle Cunning Habit unlock requirement",
+            "notes": [],
+            "satisfied": false
+          },
+          {
+            "actual": "preview enabled",
+            "evidenceIds": [
+              "kalspire-battle-cunning-2026-06-25"
+            ],
+            "expected": "Habit Level 1+ or preview",
+            "id": "kalspire-kalspire-battle-cunning-habit-level",
+            "label": "Kalspire - Battle Cunning Selected Habit Level",
+            "notes": [
+              "Unlocked Habits without an explicit saved Habit Level default to effective Habit Level 1. Locked Habit capabilities are potential in preview mode, not active for current roster."
+            ],
+            "satisfied": false
+          }
+        ],
+        "ruleId": "enemy-mitigation-reduction",
+        "sourceAbilityId": "kalspire-battle-cunning",
+        "sourceDragonId": "kalspire",
+        "sourceEvidenceIds": [
+          "kalspire-battle-cunning-2026-06-25"
+        ],
+        "status": "potential",
+        "targetSelectionGroup": null,
+        "title": "Tactical Damage Mitigation Reduction",
+        "unresolvedQuestions": [
+          "Exact enemy-formation targeting and final mitigation formula are unknown."
+        ]
+      },
+      {
+        "assumptions": [
+          "Enemy target overlap is not simulated."
+        ],
+        "channel": "tactical-damage",
+        "confidence": "confirmed",
+        "conflicts": [
+          "Kalspire - Battle Cunning Habit unlock requirement: expected Star Rank 4+, actual preview enabled",
+          "Kalspire - Battle Cunning Selected Habit Level: expected Habit Level 1+ or preview, actual preview enabled"
+        ],
+        "damageScope": null,
+        "effects": [
+          "Enemy Intelligence reduction may improve Tactical Damage outputs: Blazing Fury: Tactical Damage.",
+          "Applies to all qualifying Tactical Damage sources."
         ],
         "exactResultKnown": false,
         "exactResultUnknownReason": "Exact final value cannot be calculated because final combat formulas and stacking order are not fully verified.",
         "explanation": "Kalspire's Battle Cunning can reduce enemy Intelligence. Syrax's Tactical Damage outputs are mitigated by that stat.",
         "id": "enemy-mitigation-kalspire-battle-cunning-battle-cunning-intelligence-down-stat-dealt-modifier-syrax-intelligence",
-        "interactionScope": "enemy-side",
-        "matchedOutputCapabilityIds": [],
+        "interactionScope": "cross-dragon",
+        "matchedOutputCapabilityIds": [
+          "syrax-blazing-fury-blazing-fury-tactical-rate-output"
+        ],
         "matchKind": "enemy-mitigation-reduction",
-        "modifierCapabilityId": null,
-        "modifierCapabilityIds": [],
+        "modifierCapabilityId": "kalspire-battle-cunning-battle-cunning-intelligence-down-stat-dealt-modifier",
+        "modifierCapabilityIds": [
+          "kalspire-battle-cunning-battle-cunning-intelligence-down-stat-dealt-modifier"
+        ],
         "recipientAbilityId": "syrax-blazing-fury",
         "recipientDragonId": "syrax",
         "recipientEvidenceIds": [
@@ -84777,17 +85909,25 @@
         ],
         "damageScope": null,
         "effects": [
-          "Enemy Instinct reduction may improve Physical Damage outputs: Feral Strike: Physical Damage, Feral Precision: Physical Damage, Desperate Ambush: Physical Damage."
+          "Enemy Instinct reduction may improve Physical Damage outputs: Feral Strike: Physical Damage, Feral Precision: Physical Damage, Desperate Ambush: Physical Damage.",
+          "Applies to all qualifying Physical Damage sources.",
+          "Duration: 2 rounds."
         ],
         "exactResultKnown": false,
         "exactResultUnknownReason": "Exact final value cannot be calculated because final combat formulas and stacking order are not fully verified.",
         "explanation": "Crimson's Vermin's Bane can reduce enemy Instinct. Venator's Physical Damage outputs are mitigated by that stat.",
         "id": "enemy-mitigation-crimson-vermins-bane-vermins-bane-instinct-down-stat-dealt-modifier-venator-instinct",
-        "interactionScope": "enemy-side",
-        "matchedOutputCapabilityIds": [],
+        "interactionScope": "cross-dragon",
+        "matchedOutputCapabilityIds": [
+          "venator-feral-strike-feral-strike-physical-instances-output",
+          "venator-feral-precision-feral-precision-additional-physical-output",
+          "venator-desperate-ambush-desperate-ambush-physical-output"
+        ],
         "matchKind": "enemy-mitigation-reduction",
-        "modifierCapabilityId": null,
-        "modifierCapabilityIds": [],
+        "modifierCapabilityId": "crimson-vermins-bane-vermins-bane-instinct-down-stat-dealt-modifier",
+        "modifierCapabilityIds": [
+          "crimson-vermins-bane-vermins-bane-instinct-down-stat-dealt-modifier"
+        ],
         "recipientAbilityId": "venator-feral-strike",
         "recipientDragonId": "venator",
         "recipientEvidenceIds": [
@@ -84896,17 +86036,24 @@
         ],
         "damageScope": null,
         "effects": [
-          "Enemy Instinct reduction may improve Physical Damage outputs: Fiery Bonds: Physical Damage, Skyward Titan: Physical Damage."
+          "Enemy Instinct reduction may improve Physical Damage outputs: Fiery Bonds: Physical Damage, Skyward Titan: Physical Damage.",
+          "Applies to all qualifying Physical Damage sources.",
+          "Duration: 2 rounds."
         ],
         "exactResultKnown": false,
         "exactResultUnknownReason": "Exact final value cannot be calculated because final combat formulas and stacking order are not fully verified.",
         "explanation": "Crimson's Vermin's Bane can reduce enemy Instinct. Vhagar's Physical Damage outputs are mitigated by that stat.",
         "id": "enemy-mitigation-crimson-vermins-bane-vermins-bane-instinct-down-stat-dealt-modifier-vhagar-instinct",
-        "interactionScope": "enemy-side",
-        "matchedOutputCapabilityIds": [],
+        "interactionScope": "cross-dragon",
+        "matchedOutputCapabilityIds": [
+          "vhagar-fiery-bonds-fiery-bonds-physical-damage-output",
+          "vhagar-skyward-titan-skyward-titan-third-stack-damage-output"
+        ],
         "matchKind": "enemy-mitigation-reduction",
-        "modifierCapabilityId": null,
-        "modifierCapabilityIds": [],
+        "modifierCapabilityId": "crimson-vermins-bane-vermins-bane-instinct-down-stat-dealt-modifier",
+        "modifierCapabilityIds": [
+          "crimson-vermins-bane-vermins-bane-instinct-down-stat-dealt-modifier"
+        ],
         "recipientAbilityId": "vhagar-fiery-bonds",
         "recipientDragonId": "vhagar",
         "recipientEvidenceIds": [
@@ -84972,6 +86119,79 @@
         "status": "potential",
         "targetSelectionGroup": null,
         "title": "Physical Damage Mitigation Reduction",
+        "unresolvedQuestions": [
+          "Exact enemy-formation targeting and final mitigation formula are unknown."
+        ]
+      },
+      {
+        "assumptions": [
+          "Enemy target overlap is not simulated."
+        ],
+        "channel": "fire-damage",
+        "confidence": "confirmed",
+        "conflicts": [
+          "Crimson - Vermin's Bane Habit unlock requirement: expected Star Rank 10+, actual preview enabled",
+          "Crimson - Vermin's Bane Selected Habit Level: expected Habit Level 1+ or preview, actual preview enabled"
+        ],
+        "damageScope": null,
+        "effects": [
+          "Enemy Initiative reduction may improve Fire Damage outputs: Bloodscale Terror: Fire Damage.",
+          "Applies to all qualifying Fire Damage sources.",
+          "Duration: 2 rounds."
+        ],
+        "exactResultKnown": false,
+        "exactResultUnknownReason": "Exact final value cannot be calculated because final combat formulas and stacking order are not fully verified.",
+        "explanation": "Crimson's Vermin's Bane can reduce enemy Initiative. Crimson's Fire Damage outputs are mitigated by that stat.",
+        "id": "enemy-mitigation-crimson-vermins-bane-vermins-bane-initiative-down-stat-dealt-modifier-crimson-initiative",
+        "interactionScope": "internal",
+        "matchedOutputCapabilityIds": [
+          "crimson-bloodscale-terror-bloodscale-terror-fire-damage-output"
+        ],
+        "matchKind": "enemy-mitigation-reduction",
+        "modifierCapabilityId": "crimson-vermins-bane-vermins-bane-initiative-down-stat-dealt-modifier",
+        "modifierCapabilityIds": [
+          "crimson-vermins-bane-vermins-bane-initiative-down-stat-dealt-modifier"
+        ],
+        "recipientAbilityId": "crimson-bloodscale-terror",
+        "recipientDragonId": "crimson",
+        "recipientEvidenceIds": [
+          "crimson-bloodscale-terror-summary-2026-06-25"
+        ],
+        "requirements": [
+          {
+            "actual": "preview enabled",
+            "evidenceIds": [
+              "crimson-vermins-bane-2026-06-25"
+            ],
+            "expected": "Star Rank 10+",
+            "id": "crimson-crimson-vermins-bane-star-rank",
+            "label": "Crimson - Vermin's Bane Habit unlock requirement",
+            "notes": [],
+            "satisfied": false
+          },
+          {
+            "actual": "preview enabled",
+            "evidenceIds": [
+              "crimson-vermins-bane-2026-06-25"
+            ],
+            "expected": "Habit Level 1+ or preview",
+            "id": "crimson-crimson-vermins-bane-habit-level",
+            "label": "Crimson - Vermin's Bane Selected Habit Level",
+            "notes": [
+              "Unlocked Habits without an explicit saved Habit Level default to effective Habit Level 1. Locked Habit capabilities are potential in preview mode, not active for current roster."
+            ],
+            "satisfied": false
+          }
+        ],
+        "ruleId": "enemy-mitigation-reduction",
+        "sourceAbilityId": "crimson-vermins-bane",
+        "sourceDragonId": "crimson",
+        "sourceEvidenceIds": [
+          "crimson-vermins-bane-2026-06-25"
+        ],
+        "status": "potential",
+        "targetSelectionGroup": null,
+        "title": "Fire Damage Mitigation Reduction",
         "unresolvedQuestions": [
           "Exact enemy-formation targeting and final mitigation formula are unknown."
         ]

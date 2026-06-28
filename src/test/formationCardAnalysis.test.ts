@@ -221,13 +221,12 @@ describe('formation card analysis presentation', () => {
     const vaeldra = card(result, 'vaeldra');
     const vermax = card(result, 'vermax');
 
-    const phantom = daemoros.provides.find((item) => item.abilityName === "Phantom's Veil");
-    const phantomText = phantom ? [phantom.summary, phantom.detail, ...phantom.summaryLines, ...phantom.details, ...phantom.effects].join(' ') : '';
-    expect(phantom).toBeDefined();
-    expect(phantom?.state).toBe('active');
-    expect(phantomText).toContain('exactly one of Physical, Tactical, or Fire Damage Received is reduced by 15%');
-    expect(phantomText).toContain('Selection method is unresolved');
-    expect(phantomText).not.toContain('Damage Received decrease 15%');
+    expect(daemoros.provides.some((item) => item.abilityName === "Phantom's Veil")).toBe(false);
+    expect(daemoros.receives.some((item) => item.abilityName === "Phantom's Veil")).toBe(false);
+    expect(traces.some((trace) =>
+      trace.sourceAbilityId === 'daemoros-phantoms-veil' &&
+      /Exclusive one-of choice/i.test([...trace.effects, ...trace.matchedFacts, trace.explanation].join(' '))
+    )).toBe(true);
 
     expect(vaeldra.command?.summaryLines).toEqual([
       'Each Round: 25% chance to apply Taunt to 3 enemies in any lane for 2 rounds. Shared versus per-target roll scope is unresolved.',
@@ -676,7 +675,7 @@ describe('formation card analysis presentation', () => {
     const sheepstealer = card(result, 'sheepstealer');
 
     expect(caraxes.provides.some((item) => item.abilityName === 'Battle Dread' && item.isEnemyFacing)).toBe(true);
-    expect(sheepstealer.receives.some((item) => item.abilityName === 'Battle Dread')).toBe(false);
+    expect(sheepstealer.receives.some((item) => item.abilityName === 'Battle Dread')).toBe(true);
   });
 
   it('preserves current, preview, and unknown interaction states', () => {

@@ -460,6 +460,8 @@ export interface PeriodicDamageDefinition {
   statusId: string;
   dragonId: string;
   abilityId: string;
+  sourceEffectId?: string | null;
+  activationGroupId?: string | null;
   channel: EffectChannel;
   damageRateFixed: number | null;
   damageRateByHabitLevel: RankedValue[];
