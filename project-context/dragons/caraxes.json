@@ -3226,7 +3226,7 @@
   "firstObservedInGame": null,
   "format": "dragonfire-dragon-profile",
   "gameVersion": null,
-  "generatedAt": "2026-06-28T17:46:20.954Z",
+  "generatedAt": "2026-06-28T18:30:31.063Z",
   "habits": [
     {
       "abilityClass": "passive",
@@ -5863,8 +5863,8 @@
   "rosterSourceStatus": "official-website",
   "slug": "caraxes",
   "source": {
-    "branch": "fix/target-resolution-status-trace-presentation-pass1",
-    "commit": "5a11e8ded78959c842d9fdf819011f2be824404e",
+    "branch": "fix/status-semantics-schedule-presentation-pass2",
+    "commit": "bf1bfe570c7536362114b27f8bfe7ddee2377807",
     "databaseVersion": "0.6.2",
     "dataSchemaVersion": 12,
     "gameBuild": "26.6.53509",

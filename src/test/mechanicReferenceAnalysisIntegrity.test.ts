@@ -182,6 +182,7 @@ describe('mechanic reference analysis integrity', () => {
     const text = traceText('kalspire-radiant-conqueror');
 
     expect(text).toContain('Radiant Conqueror - Self Stun');
+    expect(text).toContain("Kalspire's Radiant Conqueror causes Kalspire to gain Stun.");
     expect(text).toContain('Target: Kalspire.');
     expect(text).toContain('Timing: Start of Round 1.');
     expect(text).toContain('Duration: 1 round.');

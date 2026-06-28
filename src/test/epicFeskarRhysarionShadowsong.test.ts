@@ -202,7 +202,7 @@ describe('Feskar, Rhysarion, and Shadowsong Epic profiles', () => {
     expect(burnTraceText).toContain('Burn must be active on the same enemy that Emerald Inferno affects.');
     expect(burnTraceText).toContain('non-Basic Physical Damage output capability');
     expect(burnTraceText).toContain('Target eligibility remains independently required');
-    expect(burnTraceText).toContain('Burn application success, enemy identity, target overlap, and conditional uptime are unresolved.');
+    expect(burnTraceText).toContain('Burn application success, enemy identity, same-target overlap, and conditional uptime are unresolved.');
 
     const upgradedRoster = ownedRoster(['feskar', 'rhysarion', 'shadowsong'], 1, 0);
     upgradedRoster.feskar!.starRank = 6;
@@ -330,7 +330,7 @@ describe('Feskar, Rhysarion, and Shadowsong Epic profiles', () => {
     expect(normalText).toContain('Feskar can apply Stagger, which belongs to the Control category.');
     expect(normalText).toContain('On Rounds 2, 5 and 8, Dawnsong deals Fire Damage at a 20% rate to 3 enemies in any lane.');
     expect(normalText).toMatch(/Against the same target while it has Control, the rate increases 1\.5[x×] to 30%\./);
-    expect(normalText).toContain('Unyielding Grasp has a 10% chance each round to Stagger one enemy in any lane, prioritizing Warriors, for 3 rounds.');
+    expect(normalText).toContain('Unyielding Grasp has a 10% chance each round to apply Stagger to one enemy in any lane, prioritizing Warriors, for 3 rounds.');
     expect(normalText).toContain('same-target overlap');
     expect(normalText).toContain('The same enemy must keep Stagger active when Dawnsong checks it; same-target overlap');
     expect(normalText).not.toMatch(/\bL[1-5]\b|Ranked progression/i);
@@ -611,7 +611,7 @@ describe('Feskar, Rhysarion, and Shadowsong Epic profiles', () => {
     const shadowsongCard = cards.cards.find((card) => card.dragonId === 'shadowsong')!;
 
     expect(traces).toHaveLength(73);
-    expect(counts).toMatchObject({ active: 30, potential: 34, inactive: 8, blocked: 1 });
+    expect(counts).toMatchObject({ active: 30, potential: 34, inactive: 8, blocked: 1, unknown: 0 });
     expect(new Set(traces.map(technicalAnalysisTraceIdentity)).size).toBe(traces.length);
     expect(traces.filter((trace) => trace.sourceAbilityId === 'shadowsong-blazing-conductor' && trace.matchKind === 'periodic-status-damage')).toHaveLength(2);
     expect(traces).toEqual(expect.arrayContaining([
@@ -800,6 +800,10 @@ describe('Feskar, Rhysarion, and Shadowsong Epic profiles', () => {
     });
     const audit = createSynergyAuditExport(formation, result.traces, roster);
     const finalTraces = audit.traces;
+    const finalCounts = finalTraces.reduce<Record<TraceStatus, number>>((acc, trace) => {
+      acc[trace.status] += 1;
+      return acc;
+    }, { active: 0, potential: 0, inactive: 0, blocked: 0, unknown: 0, 'not-applicable': 0 });
     const incomingRecovery = finalTraces.filter((trace) =>
       trace.matchKind === 'incoming-effect-amplification' &&
       trace.recipientAbilityId === 'rhysarion-unbroken-devotion' &&
@@ -814,6 +818,7 @@ describe('Feskar, Rhysarion, and Shadowsong Epic profiles', () => {
       `${trace.matchKind}:${trace.sourceAbilityId}:${trace.recipientDragonId}:${trace.recipientAbilityId}:${trace.channel}:${trace.modifierCapabilityId ?? ''}:${(trace.matchedOutputCapabilityIds ?? []).join(',')}`;
 
     expect(finalTraces).toHaveLength(63);
+    expect(finalCounts).toMatchObject({ active: 35, potential: 17, inactive: 10, blocked: 1, unknown: 0 });
     expect(new Set(finalTraces.map(finalKey)).size).toBe(finalTraces.length);
     expect(incomingRecovery.map((trace) => `${trace.sourceAbilityId}:${trace.recipientDragonId}`).sort()).toEqual([
       'rhysarion-ebbing-fury:feskar',
@@ -1409,7 +1414,8 @@ describe('Feskar, Rhysarion, and Shadowsong Epic profiles', () => {
     const combinedText = `${physicalText} ${fireText}`;
 
     expect(traces).toHaveLength(61);
-    expect(counts).toMatchObject({ active: 35, potential: 14, inactive: 11, blocked: 1 });
+    expect(counts).toMatchObject({ active: 35, potential: 14, inactive: 11, blocked: 1, unknown: 0 });
+    expect(new Set(traces.map(technicalAnalysisTraceIdentity)).size).toBe(traces.length);
     expect(tempting).toHaveLength(2);
     expect(physical).toMatchObject({
       status: 'potential',

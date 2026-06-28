@@ -42,6 +42,13 @@ function reviewPresentation() {
   return buildFormationCardPresentation(reviewFormation, dragons, traces, { previewEnabled: false, roster });
 }
 
+function traceCounts(traces: SynergyTrace[]) {
+  return traces.reduce<Record<SynergyTrace['status'], number>>((counts, trace) => {
+    counts[trace.status] += 1;
+    return counts;
+  }, { active: 0, potential: 0, inactive: 0, blocked: 0, unknown: 0, 'not-applicable': 0 });
+}
+
 function card(result: ReturnType<typeof reviewPresentation>, dragonId: string) {
   const match = result.cards.find((item) => item.dragonId === dragonId);
   expect(match).toBeDefined();
@@ -65,6 +72,13 @@ function interactionText(item: {
 }
 
 describe('Caraxes, Vhagar, and Syrax review regression', () => {
+  it('preserves the reviewed trace counts and exact trace identities', () => {
+    const traces = reviewTraces();
+    expect(traces).toHaveLength(57);
+    expect(traceCounts(traces)).toMatchObject({ active: 22, potential: 24, inactive: 9, blocked: 1, unknown: 1 });
+    expect(new Set(traces.map(technicalAnalysisTraceIdentity)).size).toBe(traces.length);
+  });
+
   it('resolves preferred positional targets before checking output compatibility', () => {
     const traces = reviewTraces();
 
@@ -158,9 +172,13 @@ describe('Caraxes, Vhagar, and Syrax review regression', () => {
 
     expect(firstStrikeSource).toBeDefined();
     expect(traceText(firstStrikeSource)).toContain('Source effect ID: blazing-fury-first-strike.');
+    expect(traceText(firstStrikeSource)).toContain('Target: one ally.');
+    expect(traceText(firstStrikeSource)).toContain('Selected ally recipient: Caraxes.');
     expect(traceText(firstStrikeSource)).toContain('Dependent recipient candidate: caraxes.');
+    expect(traceText(firstStrikeSource)).toContain('First-Strike and Fire Damage support share the selected ally.');
     expect(traceText(firstStrikeSource)).toContain('Status application chance: 20%.');
     expect(traceText(firstStrikeSource)).toContain('Duration: 2 rounds.');
+    expect(traceText(firstStrikeSource)).not.toMatch(/one enemy|Selected enemy|enemy identity/i);
   });
 
   it('reports carryover, same-round overlap, and fixed conditional chance wording', () => {
@@ -189,6 +207,9 @@ describe('Caraxes, Vhagar, and Syrax review regression', () => {
     expect(strategicText).toContain('Round 8 from a successful Round 8 application only if Crippling Inferno resolves before Strategic Revival that round');
     expect(strategicText).toContain('At least one enemy must have active Slow.');
     expect(strategicText).toContain('Strategic Revival does not require the same enemy to be selected.');
+    expect(strategicText).toContain("Strategic Revival's friendly recipient is selected independently.");
+    expect(strategicText).toContain('Slow application success, whether any enemy remains affected, and conditional uptime are unresolved.');
+    expect(strategicText).not.toContain('Slow application success, enemy identity, target overlap');
 
     const infernalText = traceText(infernalBurst);
     expect(infernalText).toContain('Round 3 after a successful Round 2 application');
@@ -197,13 +218,18 @@ describe('Caraxes, Vhagar, and Syrax review regression', () => {
     expect(infernalText).toContain('Round 9 from a successful Round 9 application only if Blazing Fury resolves before Infernal Burst that round');
     expect(infernalText).toContain('Caraxes must be the ally that received First-Strike.');
     expect(infernalText).toContain('First-Strike and Infernal Burst share the same ally recipient when the interaction occurs.');
+    expect(infernalText).not.toMatch(/ineligible enemy|enemy identity|target overlap remains unresolved/i);
 
     const fieryText = traceText(fieryBonds);
-    expect(fieryText).toContain('Round 2 after a successful Round 1 application');
-    expect(fieryText).toContain('Round 2 from a successful Round 2 application only if Crippling Inferno resolves before Fiery Bonds that round');
+    expect(fieryText).toContain('Crippling Inferno and Fiery Bonds both check each round.');
+    expect(fieryText).toContain('Burn from the previous round can still enhance Fiery Bonds from Round 2 onward.');
+    expect(fieryText).toContain('A Burn applied during the current round can enhance Fiery Bonds only if Crippling Inferno resolves first.');
+    expect(fieryText).toContain('Recurring overlap pattern: previous-round carryover from Round 2 onward; same-round overlap requires Crippling Inferno before Fiery Bonds.');
+    expect(fieryText).not.toContain('Round 10');
+    expect(fieryText).not.toContain('Round 2 after a successful Round 1 application');
     expect(fieryText).toContain('The status and dependent damage must affect the same enemy.');
     expect(fieryText).toContain('same-target overlap');
-    expect(fieryText).toContain('the Taunt application chance is 25% for a normal target and 50% for that same target while it has Burn');
+    expect(fieryText).toContain('The Taunt application chance is 25% for a normal target and 50% for that same target while it has Burn');
     expect(fieryText).not.toContain('effective Habit Level unknown');
   });
 
@@ -220,6 +246,8 @@ describe('Caraxes, Vhagar, and Syrax review regression', () => {
       /Recovery support/i.test(item.effectTitle)
     );
     const blazingFuryFire = syrax.provides.find((item) => /Blazing Fury - Fire Damage support/i.test(item.effectTitle));
+    const slowApplications = caraxes.provides.filter((item) => /Crippling Inferno - Slow application/i.test(item.effectTitle));
+    const burnApplications = caraxes.provides.filter((item) => /Crippling Inferno - Burn application/i.test(item.effectTitle));
 
     expect(fireVulnerability).toHaveLength(1);
     expect([fireVulnerability[0]!.summary, fireVulnerability[0]!.detail, ...fireVulnerability[0]!.summaryLines, ...fireVulnerability[0]!.details].join(' ')).toContain('Caraxes');
@@ -240,7 +268,9 @@ describe('Caraxes, Vhagar, and Syrax review regression', () => {
     expect(blazingFuryFire).toBeDefined();
     const blazingText = interactionText(blazingFuryFire!);
     expect(blazingText).toContain('Infernal Burst');
-    expect(blazingText).toContain('Crippling Inferno: Burn');
+    expect(blazingText).toContain('Crippling Inferno Burn');
     expect(caraxes.receives.some((item) => /Blazing Fury - Fire Damage support/i.test(item.effectTitle))).toBe(true);
+    expect(slowApplications).toHaveLength(1);
+    expect(burnApplications).toHaveLength(1);
   });
 });

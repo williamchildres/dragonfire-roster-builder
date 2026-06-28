@@ -23,6 +23,7 @@ import type {
   CapabilityDependency,
   CapabilitySourceKind,
   CapabilitySourceScope,
+  CapabilityTargetSide,
   DefensiveDamageScope,
   DragonEffectProfile,
   DragonStatId,
@@ -2402,10 +2403,10 @@ function analyzeStatusEffectConditionEnablement(
                 recipientEvidenceIds: ability.evidenceIds,
                 assumptions: [
                   ...scheduleFacts.assumptions,
-                  `${statusLabel(statusOutput.statusId)} application success, enemy identity, target overlap, and conditional uptime are unresolved.`,
+                  statusDependencyUnresolvedAssumption(dependency, statusLabel(statusOutput.statusId)),
                 ],
                 unresolvedQuestions: uniqueSorted([
-                  'Exact target overlap and final conditional uptime are unresolved.',
+                  statusDependencyUnresolvedQuestion(dependency, statusLabel(statusOutput.statusId)),
                   ...(effect.activationRoll?.description ? [effect.activationRoll.description] : []),
                   ...(schedule.activationRoll?.description ? [schedule.activationRoll.description] : []),
                   'Exact roll sharing, target evaluation order, status check timing, refresh, and stacking remain unresolved.',
@@ -2551,6 +2552,7 @@ function analyzeFriendlyStatusSourceOutputs(
       : null;
     const selectionUncertain = eligibleRecipients.length > 1;
     const recipient = eligibleRecipients.length === 1 ? dragonById(dragons, eligibleRecipients[0]!) : null;
+    const sharedAllyFact = sharedAllyStatusSiblingFact(statusOutput, context);
     traces.push({
       id: `friendly-status-output-${statusOutput.id}-${eligibleRecipients.join('-')}`,
       ruleId: 'status-source-output',
@@ -2569,11 +2571,15 @@ function analyzeFriendlyStatusSourceOutputs(
         `Status identity: ${statusOutput.statusId}.`,
         statusOutput.sourceEffectId ? `Source effect ID: ${statusOutput.sourceEffectId}.` : null,
         ...supplier.facts,
+        recipient ? `Selected ally recipient: ${recipient.name}.` : null,
+        selectionUncertain ? `Eligible ally recipients: ${eligibleRecipients.map((recipientId) => dragonById(dragons, recipientId)?.name ?? recipientId).join(', ')}.` : null,
         ...eligibleRecipients.map((recipientId) => `Dependent recipient candidate: ${recipientId}.`),
+        sharedAllyFact,
         rollScope,
       ].filter((fact): fact is string => Boolean(fact)),
       effects: [
         ...supplier.effects,
+        sharedAllyFact,
         rollScope,
       ].filter((effect): effect is string => Boolean(effect)),
       conflicts: requirements
@@ -2839,9 +2845,9 @@ function analyzeStatusConditionEnablement(
             ...statusOutput.conditions.map((condition) => condition.description),
             ...statusConditionAssumptions(statusOutput, output),
             ...scheduleFacts.assumptions,
-            ...(conditionalFacts.summary ? [`${statusLabel(statusOutput.statusId)} application success, enemy identity, target overlap, and conditional uptime are unresolved.`] : []),
+            ...(conditionalFacts.summary ? [statusDependencyUnresolvedAssumption(dependency, statusLabel(statusOutput.statusId))] : []),
           ],
-          unresolvedQuestions: ['Trigger timing, target selection, and exact uptime are not simulated.'],
+          unresolvedQuestions: [statusDependencyUnresolvedQuestion(dependency, statusLabel(statusOutput.statusId))],
           futureOrConditional: true,
         }));
       }
@@ -3680,7 +3686,7 @@ function analyzeSelfStatusOutputs(
       recipientAbilityId: output.abilityId,
       channel: 'control',
       title: `${output.abilityName} - Self ${statusName}`,
-      explanation: `${provider.name}'s ${output.abilityName} applies ${statusName} to ${provider.name}. ${details.join(' ')}`,
+      explanation: `${provider.name}'s ${output.abilityName} causes ${provider.name} to gain ${statusName}. ${details.join(' ')}`,
       requirements,
       matchedFacts: [
         `Status identity: ${output.statusId}.`,
@@ -4913,6 +4919,91 @@ function targetCountPhrase(count: number | null | undefined, fallback: string): 
   return fallback;
 }
 
+function targetSideNoun(side: CapabilityTargetSide, count: number | null | undefined): string {
+  if (side === 'self') {
+    return 'self';
+  }
+  const singular = side === 'ally' ? 'ally' : 'enemy';
+  const plural = side === 'ally' ? 'allies' : 'enemies';
+  if (count === 1) {
+    return `one ${singular}`;
+  }
+  if (count !== null && count !== undefined) {
+    return `${count} ${plural}`;
+  }
+  return `eligible ${plural}`;
+}
+
+function statusApplicationPhrase(status: string, side: CapabilityTargetSide, targetPhrase: string): string {
+  if (side === 'self') {
+    return `gain ${status}`;
+  }
+  const verb = side === 'ally' ? 'grant' : 'apply';
+  return `${verb} ${status} to ${targetPhrase}`;
+}
+
+function selectedTargetUnresolvedFact(statusOutput: StatusOutputCapability): string | null {
+  if (statusOutput.targetSide === 'enemy') {
+    return 'Selected enemy identity is unresolved.';
+  }
+  if (statusOutput.targetSide === 'ally') {
+    return 'Selected ally recipient is unresolved.';
+  }
+  return null;
+}
+
+function sharedAllyStatusSiblingFact(
+  statusOutput: StatusOutputCapability,
+  context: { schedule: AbilitySchedule; effect: AbilityEffect },
+): string | null {
+  if (statusOutput.targetSide !== 'ally') {
+    return null;
+  }
+  const statusTarget = targetForEffect(context.effect);
+  const sibling = context.schedule.effects.find((candidate) =>
+    candidate !== context.effect &&
+    targetSideForEffect(candidate) === 'ally' &&
+    equivalentSelectedTarget(targetForEffect(candidate), statusTarget) &&
+    equivalentSelectionDetails(candidate, context.effect),
+  );
+  if (!sibling) {
+    return null;
+  }
+  return `${statusLabel(statusOutput.statusId)} and ${supportLabelForEffect(sibling)} share the selected ally.`;
+}
+
+function equivalentSelectedTarget(left: AbilityTarget, right: AbilityTarget): boolean {
+  return left.side === right.side &&
+    left.scope === right.scope &&
+    left.selection === right.selection &&
+    left.count === right.count &&
+    left.includesCaster === right.includesCaster;
+}
+
+function equivalentSelectionDetails(left: AbilityEffect, right: AbilityEffect): boolean {
+  return (left.targetPriority ?? null) === (right.targetPriority ?? null) &&
+    (left.targetSelection?.preference ?? null) === (right.targetSelection?.preference ?? null) &&
+    (left.targetSelection?.comparisonStat ?? null) === (right.targetSelection?.comparisonStat ?? null) &&
+    (left.targetSelection?.comparisonDirection ?? null) === (right.targetSelection?.comparisonDirection ?? null) &&
+    (left.targetSelection?.comparisonPool ?? null) === (right.targetSelection?.comparisonPool ?? null);
+}
+
+function supportLabelForEffect(effect: AbilityEffect): string {
+  const damage = effect.type.match(/^(Fire|Physical|Tactical|Damage) Damage Dealt Up$/i)?.[1];
+  if (damage) {
+    return damage.toLowerCase() === 'damage' ? 'Damage support' : `${damage} Damage support`;
+  }
+  return `${formatEffectType(effect.type)} support`;
+}
+
+function formatEffectType(value: string): string {
+  return value
+    .split(/[-\s]+/)
+    .filter(Boolean)
+    .map((part) => part.charAt(0).toUpperCase() + part.slice(1))
+    .join(' ');
+}
+
 function conditionalMultiplierValueFacts(
   output: OutputCapability,
   context: { schedule: AbilitySchedule; effect: AbilityEffect },
@@ -4972,8 +5063,12 @@ function conditionalMultiplierValueFacts(
     ...(eligibility?.qualifyingOutput ? [
       `Qualifying enemy capability: ${eligibility.qualifyingOutput.description}.`,
     ] : []),
-    `${requiredLabel} does not alter normal ${output.abilityName} target eligibility.`,
-    'Target eligibility remains independently required; the status condition does not make an ineligible enemy eligible.',
+    ...(dependency.type === 'requires-target-status' || dependency.type === 'requires-target-status-category'
+      ? [
+          `${requiredLabel} does not alter normal ${output.abilityName} target eligibility.`,
+          'Target eligibility remains independently required; the status condition does not make an ineligible enemy eligible.',
+        ]
+      : []),
   ].filter((fact): fact is string => Boolean(fact));
   const summaryLead = dependency.type === 'requires-any-enemy-status'
     ? `While at least one enemy has ${requiredLabel},`
@@ -5060,9 +5155,9 @@ function conditionalChanceValueFacts(
       ? [
           'The conditional chance modifier is target-specific.',
           `${requiredLabel} on one enemy does not change the chance for another enemy.`,
+          `${requiredLabel} does not alter normal ${ability.name} target eligibility.`,
         ]
       : []),
-    `${requiredLabel} does not alter normal ${ability.name} target eligibility.`,
     `Applied effect: ${effect.type}.`,
     vulnerableValue,
     duration,
@@ -5073,6 +5168,7 @@ function conditionalChanceValueFacts(
     : dependency.type === 'requires-self-status'
       ? `while ${dependentRecipientName} has ${requiredLabel}`
       : `for that same target while it has ${requiredLabel}`;
+  const chanceSubject = chanceLead ? `${chanceLead}the` : 'The';
   return {
     facts,
     effects: [
@@ -5087,7 +5183,7 @@ function conditionalChanceValueFacts(
         ? ['Target-specific conditional chance']
         : []),
     ],
-    summary: `Each round, ${ability.name} checks ${targetPhrase || effect.target}. ${chanceLead}the ${effect.type} application chance is ${baseText} for a normal target and ${enhancedText} ${summaryLead}${multiplier ? `, a ${dependency.type === 'requires-target-status' || dependency.type === 'requires-target-status-category' ? 'target-specific ' : ''}${multiplier}x increase` : ''}. ${effect.type}${effect.type === 'Vulnerable' && effect.magnitude !== null ? ` increases generic Damage Received by ${formatValue(effect.magnitude, effect.unit)}` : ''}${effect.durationRounds ? ` for ${effect.durationRounds} rounds` : ''}.`,
+    summary: `Each round, ${ability.name} checks ${targetPhrase || effect.target}. ${chanceSubject} ${effect.type} application chance is ${baseText} for a normal target and ${enhancedText} ${summaryLead}${multiplier ? `, a ${dependency.type === 'requires-target-status' || dependency.type === 'requires-target-status-category' ? 'target-specific ' : ''}${multiplier}x increase` : ''}. ${effect.type}${effect.type === 'Vulnerable' && effect.magnitude !== null ? ` increases generic Damage Received by ${formatValue(effect.magnitude, effect.unit)}` : ''}${effect.durationRounds ? ` for ${effect.durationRounds} rounds` : ''}.`,
   };
 }
 
@@ -5229,7 +5325,7 @@ function statusSupplierFacts(
   const targetCount = branchCondition ? null : targetEffect.targetCount ?? statusOutput.targetSelector.count;
   const targetText = branchCondition
     ? branchTargetPhrase(statusOutput)
-    : targetCount === 1 ? 'one enemy' : targetCount ? `${targetCount} enemies` : targetEffect.target;
+    : targetSideNoun(statusOutput.targetSide, targetCount);
   const lane = targetEffect.targetScope ? `Lane scope: ${formatTargetScope(targetEffect.targetScope)}.` : null;
   const priority = targetEffect.targetPriority === 'prefer-warrior' ? 'Priority: Warriors are prioritized, not guaranteed.' : null;
   const duration = statusOutput.untilEndOfRound ? 'Duration: until end of current round.' : durationDetail(effect);
@@ -5257,11 +5353,11 @@ function statusSupplierFacts(
     ...targetReferenceFacts(targetEffect),
     sharedTargetFact(ability, effect),
     `${statusLabel(statusOutput.statusId)} application success is unresolved.`,
-    'Selected enemy identity is unresolved.',
+    selectedTargetUnresolvedFact(statusOutput),
   ].filter((fact): fact is string => Boolean(fact));
   const lanePhrase = targetEffect.targetScope ? formatTargetScope(targetEffect.targetScope) : null;
   const targetWithLane = lanePhrase && !targetText.toLowerCase().includes(lanePhrase.toLowerCase())
-    ? `${targetText} in ${lanePhrase}`
+    ? `${targetText}${/^within\b/i.test(lanePhrase) ? ` ${lanePhrase}` : ` in ${lanePhrase}`}`
     : targetText;
   const sortedRelatedStatusOutputs = relatedStatusOutputs
     .filter((candidate) =>
@@ -5292,7 +5388,7 @@ function statusSupplierFacts(
   const summary = chanceText
     ? (relatedSummaries.length > 1
       ? `${levelPrefix}${ability.name} can apply ${statusLabel(statusOutput.statusId)} ${scheduleTimingAdverb(schedule)}: ${relatedSummaries.join(' and ')}. ${statusLabel(statusOutput.statusId)} lasts ${effect.durationRounds ?? 'unknown'} rounds. ${statusLabel(statusOutput.statusId)} application and target overlap are not guaranteed.`
-      : `${levelPrefix}${ability.name} has a ${chanceText} chance ${scheduleTimingAdverb(schedule)} to ${statusLabel(statusOutput.statusId)} ${targetWithLane}${targetEffect.targetPriority === 'prefer-warrior' ? ', prioritizing Warriors' : ''}${effect.durationRounds ? `, for ${effect.durationRounds} rounds` : statusOutput.untilEndOfRound ? ', until end of current round' : ''}.${branchSuffix}`)
+      : `${levelPrefix}${ability.name} has a ${chanceText} chance ${scheduleTimingAdverb(schedule)} to ${statusApplicationPhrase(statusLabel(statusOutput.statusId), statusOutput.targetSide, targetWithLane)}${targetEffect.targetPriority === 'prefer-warrior' ? ', prioritizing Warriors' : ''}${effect.durationRounds ? `, for ${effect.durationRounds} rounds` : statusOutput.untilEndOfRound ? ', until end of current round' : ''}.${branchSuffix}`)
     : null;
   return {
     facts,
@@ -5335,6 +5431,36 @@ function statusConditionScheduleOverlapFacts(
   const status = statusLabel(statusOutput.statusId);
   const durationRounds = statusOutput.untilEndOfRound ? 1 : (statusOutput.durationRounds ?? 0);
   const overlapRequirement = statusOverlapRequirementFacts(dependency, status, dependentOutput.abilityName, dependentRecipientName);
+  if (isRecurringSchedule(supplierContext.schedule) && isRecurringSchedule(dependentContext.schedule)) {
+    const recurringSummary = recurringScheduleOverlapSummary(
+      status,
+      supplierContext.ability.name,
+      dependentOutput.abilityName,
+      durationRounds,
+    );
+    return {
+      facts: [
+        `Supplier schedule: ${scheduleOverlapDescription(supplierContext.schedule, supplierRounds)}.`,
+        `Dependent schedule: ${scheduleOverlapDescription(dependentContext.schedule, dependentRounds)}.`,
+        `Recurring overlap pattern: ${recurringSummary.pattern}.`,
+        `${status} duration: ${durationRounds > 1 ? `${durationRounds} rounds` : 'until end of current round'}.`,
+        ...overlapRequirement.facts,
+      ],
+      effects: [
+        `Supplier schedule: ${scheduleOverlapDescription(supplierContext.schedule, supplierRounds)}.`,
+        `Dependent schedule: ${scheduleOverlapDescription(dependentContext.schedule, dependentRounds)}.`,
+        recurringSummary.effect,
+        `${status} duration: ${durationRounds > 1 ? `${durationRounds} rounds` : 'until end of current round'}.`,
+        ...overlapRequirement.effects,
+        'Action order within same-round overlap is unresolved.',
+      ],
+      summary: `${recurringSummary.summary} ${overlapRequirement.summary} Same-round action order is unresolved.`,
+      assumptions: [
+        'Within-round action order is not assumed.',
+        ...overlapRequirement.assumptions,
+      ],
+    };
+  }
   const overlapWindows = durationRounds > 1
     ? scheduleDurationOverlapWindows(supplierRounds, dependentRounds, durationRounds)
     : [];
@@ -5402,6 +5528,34 @@ function statusConditionScheduleOverlapFacts(
   };
 }
 
+function isRecurringSchedule(schedule: AbilitySchedule): boolean {
+  return schedule.roundSelector?.kind === 'each-round' ||
+    schedule.timing === 'each-round' ||
+    schedule.timing === 'start-of-each-round';
+}
+
+function recurringScheduleOverlapSummary(
+  status: string,
+  supplierAbilityName: string,
+  dependentAbilityName: string,
+  durationRounds: number,
+): { pattern: string; effect: string; summary: string } {
+  if (durationRounds > 1) {
+    const summary = `${supplierAbilityName} and ${dependentAbilityName} both check each round. ${status} from the previous round can still enhance ${dependentAbilityName} from Round 2 onward. A ${status} applied during the current round can enhance ${dependentAbilityName} only if ${supplierAbilityName} resolves first.`;
+    return {
+      pattern: `previous-round carryover from Round 2 onward; same-round overlap requires ${supplierAbilityName} before ${dependentAbilityName}`,
+      effect: summary,
+      summary,
+    };
+  }
+  const summary = `${supplierAbilityName} and ${dependentAbilityName} both check each round. ${status} can enhance ${dependentAbilityName} during the current round only if ${supplierAbilityName} resolves first.`;
+  return {
+    pattern: `same-round overlap requires ${supplierAbilityName} before ${dependentAbilityName}`,
+    effect: summary,
+    summary,
+  };
+}
+
 function statusOverlapRequirementFacts(
   dependency: CapabilityDependency & { type: 'requires-self-status' | 'requires-any-enemy-status' | 'requires-target-status' | 'requires-target-status-category' },
   status: string,
@@ -5412,13 +5566,15 @@ function statusOverlapRequirementFacts(
     return {
       facts: [
         `At least one enemy must have active ${status}.`,
+        `${dependentAbilityName}'s friendly recipient is selected independently.`,
         `${dependentAbilityName} does not need to affect the same enemy that has ${status}.`,
       ],
       effects: [
         `At least one enemy must have active ${status}.`,
+        `${dependentAbilityName}'s friendly recipient is selected independently.`,
         `${dependentAbilityName} does not require the same enemy to be selected.`,
       ],
-      summary: `At least one enemy must still have active ${status}; enemy identity, application success, and battlefield uptime remain unresolved.`,
+      summary: `At least one enemy must still have active ${status}; application success, whether any enemy remains affected, and battlefield uptime remain unresolved.`,
       assumptions: ['Any-enemy battlefield status checks do not require a same-target match.'],
     };
   }
@@ -5431,7 +5587,7 @@ function statusOverlapRequirementFacts(
       effects: [
         `${dependentRecipientName} must be the ally that received ${status}.`,
       ],
-      summary: `${dependentRecipientName} must be the ally that received ${status}; application chance, target selection, and uptime remain unresolved.`,
+      summary: `${dependentRecipientName} must be the ally that received ${status}; activation, recipient selection, and uptime remain unresolved.`,
       assumptions: ['The ally status supplier and dependent output must share the same recipient.'],
     };
   }
@@ -5447,6 +5603,32 @@ function statusOverlapRequirementFacts(
     summary: `The same enemy must keep ${status} active when ${dependentAbilityName} checks it; same-target overlap, enemy identity, application success, and target overlap remain unresolved. ${status} application and target overlap are not guaranteed.`,
     assumptions: ['The status supplier and dependent output must affect the same enemy.'],
   };
+}
+
+function statusDependencyUnresolvedAssumption(
+  dependency: CapabilityDependency & { type: 'requires-self-status' | 'requires-any-enemy-status' | 'requires-target-status' | 'requires-target-status-category' },
+  status: string,
+): string {
+  if (dependency.type === 'requires-any-enemy-status') {
+    return `${status} application success, whether any enemy remains affected, and conditional uptime are unresolved.`;
+  }
+  if (dependency.type === 'requires-self-status') {
+    return `${status} activation, recipient selection, and uptime are unresolved.`;
+  }
+  return `${status} application success, enemy identity, same-target overlap, and conditional uptime are unresolved.`;
+}
+
+function statusDependencyUnresolvedQuestion(
+  dependency: CapabilityDependency & { type: 'requires-self-status' | 'requires-any-enemy-status' | 'requires-target-status' | 'requires-target-status-category' },
+  status: string,
+): string {
+  if (dependency.type === 'requires-any-enemy-status') {
+    return `Exact ${status} battlefield uptime is unresolved.`;
+  }
+  if (dependency.type === 'requires-self-status') {
+    return `Exact ${status} recipient and final uptime are unresolved.`;
+  }
+  return `Exact same-enemy ${status} overlap and final conditional uptime are unresolved.`;
 }
 
 function mitigationSourceScopeCompatible(
@@ -5503,6 +5685,13 @@ export function scheduleRoundsForOverlap(schedule: AbilitySchedule, maxRoundHint
 
 export function scheduleRoundDescription(schedule: AbilitySchedule, rounds: number[]): string {
   return formatScheduleDescription(schedule, { style: 'sentence' }) ?? formatRounds(rounds);
+}
+
+function scheduleOverlapDescription(schedule: AbilitySchedule, rounds: number[]): string {
+  if (isRecurringSchedule(schedule)) {
+    return 'Each round';
+  }
+  return scheduleRoundDescription(schedule, rounds);
 }
 
 export interface ScheduleOverlapWindow {

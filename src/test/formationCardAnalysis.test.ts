@@ -253,8 +253,8 @@ describe('formation card analysis presentation', () => {
     const lure = vaeldra.provides.find((item) => item.abilityName === 'Lure');
     const lureText = lure ? [lure.summary, lure.detail, ...lure.summaryLines, ...lure.details, ...lure.effects].join(' ') : '';
     expect(lure).toBeDefined();
-    expect(lure?.effectTitle).toContain('Conditional status enablement');
-    expect(lureText).toContain('25% chance each round to Taunt 3 enemies in any lane, for 2 rounds.');
+    expect(lure?.effectTitle).toContain('Taunt application');
+    expect(lureText).toContain('25% chance each round to apply Taunt to 3 enemies in any lane, for 2 rounds.');
     expect(lureText).toContain('Whether this uses one shared roll or separate per-target rolls is unresolved.');
 
     const spreading = daemoros.receives.find((item) => item.sourceDragonId === 'vermax' && item.abilityName === 'Spreading Blaze');
