@@ -97,6 +97,7 @@ export function deriveOutputCapabilities(dragons: Dragon[]): OutputCapability[] 
     if (dragon.id === 'vermax') {
       capabilities.push({
         id: 'vermax-basic-attack-physical',
+        outputKind: 'direct-damage',
         dragonId: dragon.id,
         abilityId: null,
         abilityName: 'Basic Attack',
@@ -142,6 +143,7 @@ export function deriveOutputCapabilities(dragons: Dragon[]): OutputCapability[] 
           }
           capabilities.push({
             id: `${ability.id}-${effect.id}-output`,
+            outputKind: outputKindForEffect(effect, channel),
             dragonId: dragon.id,
             abilityId: ability.id,
             abilityName: ability.name,
@@ -166,6 +168,7 @@ export function deriveOutputCapabilities(dragons: Dragon[]): OutputCapability[] 
             confidence: confidenceForAbility(ability),
             evidenceIds: ability.evidenceIds,
             sourceEffectId: effect.id,
+            statusId: statusIdForEffect(effect),
           });
         }
       }
@@ -449,6 +452,7 @@ export function periodicDamageOutputCapabilities(
     }
     return [{
       id: `periodic-${periodic.abilityId}-${periodic.sourceEffectId ?? periodic.statusId}-${periodic.statusId}-output`,
+      outputKind: 'periodic-status-damage',
       dragonId: periodic.dragonId,
       abilityId: periodic.abilityId,
       abilityName: ability.name,
@@ -483,7 +487,12 @@ export function periodicDamageOutputCapabilities(
 }
 
 function isPeriodicOutputCapability(output: OutputCapability): boolean {
-  return output.id.startsWith('periodic-');
+  return output.outputKind === 'periodic-status-damage' || output.id.startsWith('periodic-');
+}
+
+function isDamageOutputCapability(output: OutputCapability): boolean {
+  return isDamageChannel(output.channel) &&
+    (output.outputKind === 'direct-damage' || output.outputKind === 'periodic-status-damage');
 }
 
 export function deriveDragonEffectProfiles(
@@ -1237,7 +1246,7 @@ function analyzeOutgoingAmplifications(
         (output) =>
           output.dragonId === recipientId &&
           modifierMatchesOutputChannel(modifier.channel, output.channel) &&
-          isCanonicalDamageOutputForModifier(output, outputs) &&
+          isDamageOutputCapability(output) &&
           outputCapabilityVisible(output, options),
       );
       const matches = candidateOutputs.map((output) =>
@@ -3222,7 +3231,7 @@ function analyzeStatScalingSupport(
         (output) =>
           output.dragonId === recipientId &&
           outputCapabilityVisible(output, options) &&
-          isCanonicalDamageOutputForModifier(output, outputs) &&
+          output.outputKind !== 'status-application' &&
           output.dependencies.some((dependency) => dependency.type === 'scales-with-stat' && dependency.statId === statId),
       );
       if (matchedOutputs.length === 0) {
@@ -3234,6 +3243,11 @@ function analyzeStatScalingSupport(
         continue;
       }
       const recipientSelectionUnresolved = oneTargetRecipientSelectionUnresolved(formation, dragons, modifier, providerPosition);
+      const selectionCandidateIds = recipientSelectionUnresolved
+        ? uniqueSorted(targetCandidatePositions(formation, dragons, modifier, providerPosition)
+          .map((position) => formation[position])
+          .filter((dragonId): dragonId is string => Boolean(dragonId)))
+        : [];
       const context = sourceEffectContext(provider, modifier.abilityId, modifier.sourceEffectId);
       const modifierDetails = statModifierDetailLines(modifier, context, options);
       const requirements = [
@@ -3272,6 +3286,25 @@ function analyzeStatScalingSupport(
           modifier.conditional ||
           recipientSelectionUnresolved ||
           matchedOutputs.some((output) => capabilityFutureOrConditional(output, options) || output.conditional),
+        targetSelectionGroup: recipientSelectionUnresolved
+          ? {
+              targetCount: modifier.targetSelector.count ?? 1,
+              eligibleRecipientDragonIds: selectionCandidateIds,
+              selectionUncertain: true,
+              selection: modifier.targetSelector.selection,
+              selectionStat: modifier.targetSelector.selectionStat ?? null,
+              selectionResource: modifier.targetSelector.selectionResource ?? modifier.targetSelector.selectionStat ?? null,
+              comparisonDirection: modifier.targetSelector.comparisonDirection ?? null,
+              comparisonPool: modifier.targetSelector.comparisonPool ?? null,
+              candidateStats: modifier.targetSelector.selectionStat
+                ? selectionCandidateIds.map((dragonId) => ({
+                    dragonId,
+                    statId: modifier.targetSelector.selectionStat!,
+                    value: observedStatValue(dragons, dragonId, modifier.targetSelector.selectionStat!),
+                  }))
+                : undefined,
+            }
+          : undefined,
       }));
     }
   }
@@ -3604,7 +3637,7 @@ function analyzeEnemyMitigationReduction(
           !isPeriodicOutputCapability(output) &&
           output.channel === mitigationChannel &&
           outputCapabilityVisible(output, options) &&
-          isCanonicalDamageOutputForModifier(output, outputs) &&
+          isDamageOutputCapability(output) &&
           mitigationSourceScopeCompatible(modifier.sourceScope, output.sourceScope) &&
           output.dependencies.some((dependency) => dependency.type === 'mitigated-by-target-stat' && dependency.statId === statId),
       );
@@ -3875,12 +3908,13 @@ function analyzeScheduleOverrideTraces(
         const replacementScheduleText = schedulePhrase(replacementSchedule) ?? baseScheduleText;
         const baseStatus = effectStatusLabel(targetEffect, 'base effect');
         const replacementStatus = effectStatusLabel(replacementEffect, baseStatus);
-        const replacementRollLabel = `${scheduleRollPrefix(replacementSchedule ?? targetSchedule)} ${replacementStatus}`.trim();
-        const baseRollLabel = `${scheduleRollPrefix(targetSchedule)} ${baseStatus}`.trim();
         const retained = [
           replacementEffect?.durationRounds ? `duration ${replacementEffect.durationRounds} rounds` : null,
           replacementEffect?.target ? `target ${replacementEffect.target}` : null,
         ].filter((value): value is string => Boolean(value));
+        const retainedSummary = replacementEffect?.durationRounds || replacementEffect?.target
+          ? `${replacementStatus} still targets ${replacementEffect?.target ?? 'the original target'}${replacementEffect?.durationRounds ? ` and lasts ${replacementEffect.durationRounds} rounds` : ''}.`
+          : null;
         const requirements = availabilityRequirements({
           dragonId: dragon.id,
           abilityId: sourceAbility.id,
@@ -3902,33 +3936,27 @@ function analyzeScheduleOverrideTraces(
           recipientAbilityId: command.id,
           channel: 'status',
           title: `${sourceAbility.name} schedule override`,
-          explanation: normalizeSentencePunctuation(`${sourceAbility.name} replaces ${command.name}'s ${replacementRollLabel} roll. Effective ${replacementStatus} schedule: ${replacementScheduleText}; chance at Habit Level 1: ${replacementChance ?? 'unknown'}%. The base ${baseChance ?? 'unknown'}% roll is suppressed and is not emitted as a second attempt.`),
+          explanation: normalizeSentencePunctuation(`${sourceAbility.name} replaces ${command.name}'s ${replacementStatus} roll on ${replacementScheduleText}. At effective ${sourceAbility.name} Habit Level 1, the replacement chance is ${replacementChance ?? 'unknown'}%; the original ${baseChance ?? 'unknown'}% roll is suppressed. ${retainedSummary ?? ''}`),
           requirements,
           matchedFacts: [
-            `${sourceAbility.name} replaces ${command.name}'s ${replacementRollLabel} roll.`,
-            `Base effect replaced: ${command.name} ${baseStatus}.`,
-            `Base schedule: ${baseScheduleText}.`,
+            `Base source ability: ${command.name}.`,
+            `Override source ability: ${sourceAbility.name}.`,
+            `Override operation: ${override.operation}.`,
             `Effective status identity: ${replacementStatus}.`,
             `Effective schedule: ${replacementScheduleText}.`,
-            `Effective ${replacementRollLabel} chance at Habit Level 1: ${replacementChance ?? 'unknown'}%.`,
-            `Effective ${scheduleRollPrefix(replacementSchedule ?? targetSchedule)} chance at Habit Level 1: ${replacementChance ?? 'unknown'}%.`.replace(/\s+/g, ' '),
             `Effective chance at Habit Level 1: ${replacementChance ?? 'unknown'}%.`,
             `Base chance: ${baseChance ?? 'unknown'}%.`,
-            `The base ${baseChance ?? 'unknown'}% ${baseRollLabel} roll does not also occur.`,
-            `The base ${baseChance ?? 'unknown'}% ${replacementRollLabel} roll does not also occur.`,
-            `The base ${baseChance ?? 'unknown'}% ${scheduleRollPrefix(replacementSchedule ?? targetSchedule)} roll does not also occur.`.replace(/\s+/g, ' '),
+            `The original ${baseChance ?? 'unknown'}% ${baseStatus} roll is suppressed.`,
             targetSchedule?.roundSelector?.kind === 'odd' && replacementSchedule?.rounds.length === 1
               ? `Other odd-numbered rounds retain the base ${baseChance ?? 'unknown'}% chance.`
               : null,
-            'The replaced base roll is suppressed.',
             retained.length > 0 ? `Retained properties: ${retained.join(', ')}.` : null,
             `Schedule override ID: ${override.id}.`,
-            `Override operation: ${override.operation}.`,
             override.description,
           ].filter((fact): fact is string => Boolean(fact)),
           effects: [
             `Effective capability: ${replacementStatus} on ${replacementScheduleText} at ${replacementChance ?? 'unknown'}% chance.`,
-            'The replaced base roll is not emitted as an additional attempt.',
+            `Original ${baseStatus} roll is not emitted as an additional attempt.`,
           ],
           sourceEvidenceIds: override.evidenceIds,
           recipientEvidenceIds: [],
@@ -3998,14 +4026,21 @@ function analyzeSelfStatusOutputs(
     const statusName = statusLabel(output.statusId);
     const isControlStatus = statusMatchesCategory(output.statusId, 'control');
     const supplier = statusSupplierFacts(output, context, options);
+    const timing = context ? scheduleTimingDetail(context.schedule) : null;
+    const duration = context ? durationDetail(context.effect) : output.durationRounds ? `Duration: ${output.durationRounds} rounds.` : null;
     const details = [
       `Target: ${provider.name}.`,
-      context ? scheduleTimingDetail(context.schedule) : null,
-      context ? durationDetail(context.effect) : output.durationRounds ? `Duration: ${output.durationRounds} rounds.` : null,
+      timing,
+      duration,
       isControlStatus ? `Real Control status: ${statusName}.` : `Status source: ${statusName}.`,
       context?.effect.notes.find((note) => /Control status/i.test(note)) ?? null,
       ...supplier.effects,
     ].filter((line): line is string => Boolean(line));
+    const timingPhrase = timing?.replace(/^Timing:\s*/i, '').replace(/\.$/, '') ?? null;
+    const durationPhrase = duration?.replace(/^Duration:\s*/i, '').replace(/\.$/, '').toLowerCase() ?? null;
+    const deterministicSelfControlSummary = isControlStatus && supplier.effects.some((effect) => /application is deterministic/i.test(effect))
+      ? `${timingPhrase ? `At ${timingPhrase}, ` : ''}${output.abilityName} deterministically applies ${statusName} to ${provider.name}${durationPhrase ? ` for ${durationPhrase}` : ''}.`
+      : null;
     traces.push(makeDependencyTrace({
       id: `self-status-output-${output.id}`,
       matchKind: 'status-condition-enablement',
@@ -4016,7 +4051,7 @@ function analyzeSelfStatusOutputs(
       recipientAbilityId: output.abilityId,
       channel: isControlStatus ? 'control' : 'status',
       title: `${output.abilityName} - Self ${statusName}${isControlStatus ? '' : ' source'}`,
-      explanation: `${provider.name}'s ${output.abilityName} causes ${provider.name} to gain ${statusName}. ${details.join(' ')}`,
+      explanation: deterministicSelfControlSummary ?? `${provider.name}'s ${output.abilityName} causes ${provider.name} to gain ${statusName}. ${details.join(' ')}`,
       requirements,
       matchedFacts: [
         `Status identity: ${output.statusId}.`,
@@ -4163,26 +4198,13 @@ function analyzeEnemyDamageReceivedIncreases(
     if (!providerPosition || !provider) {
       continue;
     }
-    const directMatchedOutputs = outputs.filter(
+    const matchedOutputs = outputs.filter(
       (output) =>
-        !isPeriodicOutputCapability(output) &&
         outputCapabilityVisible(output, options) &&
-        isCanonicalDamageOutputForModifier(output, outputs) &&
+        isDamageOutputCapability(output) &&
         modifierMatchesOutputChannel(modifier.channel, output.channel) &&
         sourceScopesCompatible(modifier.sourceScope, output.sourceScope),
     );
-    const directRecipientIds = new Set(directMatchedOutputs.map((output) => output.dragonId));
-    const matchedOutputs = [
-      ...directMatchedOutputs,
-      ...outputs.filter(
-        (output) =>
-          isPeriodicOutputCapability(output) &&
-          directRecipientIds.has(output.dragonId) &&
-          outputCapabilityVisible(output, options) &&
-          modifierMatchesOutputChannel(modifier.channel, output.channel) &&
-          sourceScopesCompatible(modifier.sourceScope, output.sourceScope),
-      ),
-    ];
     const sourceScopeResults = matchedOutputs.map((output) =>
       capabilityMatch(modifier, output, [sourceScopeRequirement(modifier, output)], options),
     );
@@ -4684,6 +4706,10 @@ function modifierEffectValueLine(modifier: ModifierCapability, options: Capabili
   const level = modifier.rankedValues.length > 0
     ? (options.previewMaxRankInteractions ? 5 : effectiveHabitLevelForCapability(modifier, options))
     : null;
+  if (modifier.valuePerStack !== null) {
+    const sign = modifier.operation === 'increase' ? '+' : '-';
+    return `${directedChannelLabel(modifier.channel, modifier.direction)} ${sign}${modifier.valuePerStack}% per stack${level ? ` at effective Habit Level ${level}` : ''}.`;
+  }
   return `${directedChannelLabel(modifier.channel, modifier.direction)} ${modifier.operation} ${modifierDisplayValue(modifier, options)}${level ? ` at effective Habit Level ${level}` : ''}.`;
 }
 
@@ -4877,20 +4903,6 @@ function canonicalOutgoingPeriodicMatchExists(
     sourceScopeRequirement(modifier, output),
   ], options);
   return match.sourceScopeCompatible && match.status !== 'inactive' && match.status !== 'blocked' && match.status !== 'not-applicable';
-}
-
-function isCanonicalDamageOutputForModifier(output: OutputCapability, outputs: OutputCapability[]): boolean {
-  if (!isDamageChannel(output.channel) || !output.statusId || isPeriodicOutputCapability(output)) {
-    return true;
-  }
-  return !outputs.some((candidate) =>
-    isPeriodicOutputCapability(candidate) &&
-    candidate.dragonId === output.dragonId &&
-    candidate.abilityId === output.abilityId &&
-    candidate.statusId === output.statusId &&
-    candidate.channel === output.channel &&
-    (output.sourceEffectId ? candidate.sourceEffectId === output.sourceEffectId : true)
-  );
 }
 
 function analyzeStatusRemovalSupport(
@@ -5149,7 +5161,7 @@ function makeDependencyTrace({
     title,
     explanation,
     requirements: dedupedRequirements,
-    matchedFacts: uniqueOrdered([
+    matchedFacts: compactSemanticFacts([
       ...matchedFacts,
       ...(modifier?.activationGroupId ? [`Shared activation group: ${modifier.activationGroupId}.`] : []),
     ]),
@@ -5176,6 +5188,52 @@ function makeDependencyTrace({
     damageScope,
     targetSelectionGroup,
   };
+}
+
+function compactSemanticFacts(facts: string[]): string[] {
+  const seen = new Set<string>();
+  const compacted: string[] = [];
+  for (const fact of uniqueOrdered(facts)) {
+    const key = semanticFactKey(fact);
+    if (seen.has(key)) {
+      continue;
+    }
+    seen.add(key);
+    compacted.push(fact);
+  }
+  return compacted;
+}
+
+function semanticFactKey(fact: string): string {
+  const normalized = fact.toLowerCase().replace(/\s+/g, ' ').trim();
+  if (/^effective schedule:/.test(normalized) || /effective .* schedule:/.test(normalized)) {
+    return `effective-schedule:${normalized.match(/rounds? [^.]+|start of [^.]+|each round|after each basic attack/)?.[0] ?? normalized}`;
+  }
+  if (/effective .*chance at habit level/.test(normalized) || /^effective chance at habit level/.test(normalized)) {
+    return `effective-chance:${normalized.match(/\d+(?:\.\d+)?%/)?.[0] ?? normalized}`;
+  }
+  if (/^base chance:/.test(normalized)) {
+    return 'base-chance';
+  }
+  if (/base .* roll .*does not also occur|replaced base roll is suppressed|original .* roll is suppressed/.test(normalized)) {
+    return 'base-roll-suppression';
+  }
+  if (/original .* roll is not emitted|replaced base roll is not emitted|base .* roll is suppressed/.test(normalized)) {
+    return 'base-roll-suppression';
+  }
+  if (/^duration:/.test(normalized) || / lasts \d+ rounds?\./.test(normalized)) {
+    return `duration:${normalized.match(/\d+ rounds?|until end of combat|until end of current round/)?.[0] ?? normalized}`;
+  }
+  if (/^target:/.test(normalized) || /^resolved self recipient:/.test(normalized)) {
+    return 'target';
+  }
+  if (/effective .* habit level:/.test(normalized) || /^current effective .* habit level:/.test(normalized)) {
+    return normalized.replace(/^current /, '');
+  }
+  if (/application is deterministic/.test(normalized)) {
+    return 'deterministic-application';
+  }
+  return normalized;
 }
 
 function statusConditionExplanation(
@@ -6826,7 +6884,7 @@ function makeAmplificationTrace({
     recipientModifierValue: modifierResolvedValue(modifier, options),
     combatLogConfirmed: modifier.combatLogConfirmed || matches.some((match) => match.confidence === 'confirmed'),
     exactResultKnown: false,
-    exactResultUnknownReason: exactUnknownReason(modifier.channel, matchKind),
+    exactResultUnknownReason: exactUnknownReason(modifier, matchKind),
     matchKind,
     channel: modifier.channel,
     modifierRole: modifier.role,
@@ -7145,6 +7203,19 @@ function outputChannelForEffect(effect: AbilityEffect): EffectChannel | null {
     return 'recovery';
   }
   return null;
+}
+
+function outputKindForEffect(effect: AbilityEffect, channel: EffectChannel): OutputCapability['outputKind'] {
+  if (statusIdForEffect(effect)) {
+    return 'status-application';
+  }
+  if (channel === 'recovery') {
+    return 'recovery';
+  }
+  if (isDamageChannel(channel)) {
+    return 'direct-damage';
+  }
+  return 'other';
 }
 
 function isDamageChannel(channel: EffectChannel): boolean {
@@ -8623,8 +8694,11 @@ function enemySelectorUnresolvedQuestions(modifier: ModifierCapability): string[
   return ['Enemy identities, combat availability, final uptime, and stacking/refresh behavior remain unresolved.'];
 }
 
-function exactUnknownReason(channel: EffectChannel, matchKind: string): string {
-  if (channel === 'recovery') {
+function exactUnknownReason(modifier: ModifierCapability, matchKind: string): string {
+  if (modifier.valuePerStack !== null || modifier.stackMaximum !== null || modifier.statusId) {
+    return 'Exact final stack benefit cannot be calculated because activation, repeat count, final stack count, uptime, and final formulas are unresolved.';
+  }
+  if (modifier.channel === 'recovery') {
     return "Exact final Recovery cannot be calculated because the game's Level and Instinct Recovery formula is unknown.";
   }
   if (matchKind === 'outgoing-effect-amplification') {
@@ -8733,6 +8807,7 @@ function statusOutputTargetsFriendlyRecipient(
 ): boolean {
   const syntheticOutput: OutputCapability = {
     id: statusOutput.id,
+    outputKind: 'status-application',
     dragonId: statusOutput.dragonId,
     abilityId: statusOutput.abilityId,
     abilityName: statusOutput.abilityName,

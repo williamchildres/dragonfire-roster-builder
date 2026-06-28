@@ -517,9 +517,9 @@ describe('Feskar, Rhysarion, and Shadowsong Epic profiles', () => {
     const ensnareText = ensnareProvides.map((item) => [item.targetLabel, item.effectTitle, ...item.summaryLines, ...item.details, ...item.effects].join(' ')).join(' ');
 
     expect(ensnareProvides).toHaveLength(2);
-    expect(ensnareProvides.map((item) => item.targetLabel).sort()).toEqual(['Daemoros and Rhysarion', 'Team']);
+    expect(ensnareProvides.map((item) => item.targetLabel).sort()).toEqual(['Daemoros and Rhysarion', 'Rhysarion and Shadowsong']);
     expect(ensnareText).toContain('Applies to Daemoros and Rhysarion.');
-    expect(ensnareText).toContain('Applies to Daemoros, Rhysarion, and Shadowsong.');
+    expect(ensnareText).toContain('Applies to Rhysarion and Shadowsong.');
     expect(ensnareText.match(/Lowers enemy Initiative, supporting allied Fire Damage\./g)).toHaveLength(1);
     expect(ensnareText.match(/Lowers enemy Instinct, supporting allied Physical Damage\./g)).toHaveLength(1);
 
@@ -610,8 +610,8 @@ describe('Feskar, Rhysarion, and Shadowsong Epic profiles', () => {
     const rhysarionCard = cards.cards.find((card) => card.dragonId === 'rhysarion')!;
     const shadowsongCard = cards.cards.find((card) => card.dragonId === 'shadowsong')!;
 
-    expect(traces).toHaveLength(74);
-    expect(counts).toMatchObject({ active: 30, potential: 35, inactive: 8, blocked: 1, unknown: 0 });
+    expect(traces).toHaveLength(73);
+    expect(counts).toMatchObject({ active: 30, potential: 34, inactive: 8, blocked: 1, unknown: 0 });
     expect(new Set(traces.map(technicalAnalysisTraceIdentity)).size).toBe(traces.length);
     expect(traces.filter((trace) => trace.sourceAbilityId === 'shadowsong-blazing-conductor' && trace.matchKind === 'periodic-status-damage')).toHaveLength(2);
     expect(traces).toEqual(expect.arrayContaining([
@@ -669,7 +669,7 @@ describe('Feskar, Rhysarion, and Shadowsong Epic profiles', () => {
     expect(rhysarionCard.receives.filter((item) => item.abilityName === 'Instill Fear' && /Enemy mitigation reduction/i.test(item.effectTitle))).toHaveLength(1);
     expect(rhysarionCard.receives.filter((item) => item.abilityName === 'Darkening Fear' && /Enemy mitigation reduction/i.test(item.effectTitle))).toHaveLength(1);
     const ensnareProvides = shadowsongCard.provides.filter((item) => item.abilityName === 'Ensnare' && /Enemy mitigation reduction/i.test(item.effectTitle));
-    expect(ensnareProvides.map((item) => item.targetLabel).sort()).toEqual(['Daemoros and Rhysarion', 'Team']);
+    expect(ensnareProvides.map((item) => item.targetLabel).sort()).toEqual(['Daemoros and Rhysarion', 'Rhysarion and Shadowsong']);
     const onslaughtProvides = shadowsongCard.provides.filter((item) => item.abilityName === 'Blazing Onslaught');
     expect(onslaughtProvides.filter((item) => /Enemy Fire Damage vulnerability/i.test(item.effectTitle))).toHaveLength(1);
     expect(onslaughtProvides.filter((item) => /Enemy Physical Damage vulnerability/i.test(item.effectTitle))).toHaveLength(1);
@@ -717,7 +717,7 @@ describe('Feskar, Rhysarion, and Shadowsong Epic profiles', () => {
     expect(insightfulText).toContain('Instinct support.');
     expect(insightfulText).toContain('Enhanced by Feskar Instinct');
     expect(insightfulText).toContain('Duration: until end of combat.');
-    expect(feskarCard.receives.some((item) => item.abilityName === 'Insightful Allies')).toBe(false);
+    expect(feskarCard.receives.some((item) => item.abilityName === 'Insightful Allies')).toBe(true);
     expect(rhysarionCard.receives.some((item) => item.abilityName === 'Insightful Allies')).toBe(true);
     expect(shadowsongCard.receives.some((item) => item.abilityName === 'Insightful Allies')).toBe(true);
 

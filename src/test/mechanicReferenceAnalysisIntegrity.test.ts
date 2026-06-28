@@ -146,9 +146,10 @@ describe('mechanic reference analysis integrity', () => {
   it("emits Vermin's Bane schedule replacement and shared even-round selection facts", () => {
     const text = traceText('crimson-bloodscale-terror', 'crimson-vermins-bane');
 
-    expect(text).toContain("Vermin's Bane replaces Bloodscale Terror's Round 1 Stun roll.");
-    expect(text).toContain('Effective Round 1 chance at Habit Level 1: 40%.');
-    expect(text).toContain('The base 20% Round 1 roll does not also occur.');
+    expect(text).toContain("Vermin's Bane replaces Bloodscale Terror's Stun roll on Start of Round 1.");
+    expect(text).toContain("At effective Vermin's Bane Habit Level 1, the replacement chance is 40%; the original 20% roll is suppressed.");
+    expect(text).toContain('Effective chance at Habit Level 1: 40%.');
+    expect(text).toContain('The original 20% Stun roll is suppressed.');
     expect(text).toContain('Other odd-numbered rounds retain the base 20% chance.');
     expect(text).toContain('Shared activation group: vermins-bane-even-rounds-shared-activation.');
     expect(text).toContain('Shared selected-target group: vermins-bane-highest-instinct-enemy.');
@@ -182,7 +183,7 @@ describe('mechanic reference analysis integrity', () => {
     const text = traceText('kalspire-radiant-conqueror');
 
     expect(text).toContain('Radiant Conqueror - Self Stun');
-    expect(text).toContain("Kalspire's Radiant Conqueror causes Kalspire to gain Stun.");
+    expect(text).toContain('At Start of Round 1, Radiant Conqueror deterministically applies Stun to Kalspire for 1 round.');
     expect(text).toContain('Target: Kalspire.');
     expect(text).toContain('Timing: Start of Round 1.');
     expect(text).toContain('Duration: 1 round.');

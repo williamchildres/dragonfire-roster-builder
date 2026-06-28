@@ -162,7 +162,7 @@ export function buildFormationCardPresentation(
 
       eligible.forEach((dragonId, index) => {
         const recipient = dragonById.get(dragonId);
-        if (!recipient || (!allMatching && recipient.id === source.id)) {
+        if (!recipient || (!allMatching && recipient.id === source.id && !(exactMultiTarget && isCasterEligibleTrace(trace)))) {
           return;
         }
         byDragon.get(recipient.id)?.receives.push(
@@ -230,7 +230,7 @@ export function buildFormationCardPresentation(
       continue;
     }
     byDragon.get(source.id)?.provides.push(item);
-    if (recipient && recipient.id !== source.id && selectedIds.has(recipient.id) && !isEnemyFacing) {
+    if (recipient && selectedIds.has(recipient.id) && !isEnemyFacing && (recipient.id !== source.id || isSelfInclusiveAllySupportTrace(trace))) {
       byDragon.get(recipient.id)?.receives.push(item);
     }
   }
@@ -857,6 +857,21 @@ function isAllMatchingTargetSelection(trace: SynergyTrace): boolean {
   return trace.targetSelectionGroup?.selection === 'all-matching-condition';
 }
 
+function isSelfInclusiveAllySupportTrace(trace: SynergyTrace): boolean {
+  return trace.sourceDragonId === trace.recipientDragonId &&
+    trace.matchKind === 'stat-scaling-support' &&
+    isCasterEligibleTrace(trace);
+}
+
+function isCasterEligibleTrace(trace: SynergyTrace): boolean {
+  return [
+    trace.targetSelectorSummary ?? '',
+    ...trace.matchedFacts,
+    ...trace.effects,
+    ...trace.assumptions,
+  ].some((line) => /caster is eligible/i.test(line) && !/caster is not eligible|caster excluded/i.test(line));
+}
+
 function joinTargetNames(names: string[], allMatching: boolean): string {
   return allMatching ? joinEnglishList(names) : names.join(' or ');
 }
@@ -1123,11 +1138,21 @@ function targetSelectionEffectLines(
 ): string[] {
   return unique([
     ...qualifyingOutputSummaryLines(trace, recipient, outputCapabilities, allDragons),
+    ...statValueEffectLines(trace),
     trace.effects.find((effect) => /Activation chance:/i.test(effect)),
     trace.effects.find((effect) => /Timing:/i.test(effect)),
     trace.effects.find((effect) => /Enhanced by/i.test(effect)),
     trace.effects.find((effect) => /Duration:/i.test(effect)),
   ].filter((line): line is string => Boolean(line)));
+}
+
+function statValueEffectLines(trace: SynergyTrace): string[] {
+  if (trace.channel !== 'stat') {
+    return [];
+  }
+  return trace.effects.filter((effect) =>
+    /\b(?:Strength|Instinct|Intelligence|Initiative)\s+[+-]\d+(?:\.\d+)?%?(?:\s+at effective Habit Level \d+)?\./i.test(effect),
+  );
 }
 
 function qualifyingOutputSummaryLines(
@@ -2158,7 +2183,7 @@ function mergeInteractions(
   items: FormationCardInteraction[],
   direction: 'receives' | 'provides',
   selectedIds: ReadonlySet<string>,
-  options: { exactRecipientSet?: boolean } = {},
+  options: { exactRecipientSet?: boolean; preserveProviderExactRecipient?: boolean } = {},
 ): FormationCardInteraction {
   const first = items[0]!;
   const targetNames = unique(
@@ -2221,8 +2246,8 @@ function mergeInteractions(
       : first.relationshipId,
     recipientDragonId: options.exactRecipientSet ? null : first.recipientDragonId,
     recipientName: options.exactRecipientSet ? targetLabel : first.recipientName,
-    targetLabel: direction === 'provides' && targetNames.length > 0 ? targetLabel : first.targetLabel,
-    effectTitle: options.exactRecipientSet && uniqueEffectTitles.length === 1 ? uniqueEffectTitles[0]! : first.abilityName,
+    targetLabel: direction === 'provides' && targetNames.length > 0 && !options.preserveProviderExactRecipient ? targetLabel : first.targetLabel,
+    effectTitle: mergedEffectTitle(first, uniqueEffectTitles, options),
     title: options.exactRecipientSet && uniqueTitles.length > 1 ? first.abilityName : uniqueTitles.join(' + '),
     summaryLines,
     summary: compactSummaryText(summaryLines, mergedCandidateTotal),
@@ -2376,7 +2401,7 @@ function mergedSummaryLines(
   items: FormationCardInteraction[],
   direction: 'receives' | 'provides',
   targetNames: string[],
-  options: { exactRecipientSet?: boolean } = {},
+  options: { exactRecipientSet?: boolean; preserveProviderExactRecipient?: boolean } = {},
 ): string[] {
   const lines = unique(items.flatMap((item) => item.summaryLines));
   if (options.exactRecipientSet && direction === 'provides') {
@@ -2384,6 +2409,9 @@ function mergedSummaryLines(
       `Applies to ${joinEnglishList(targetNames)}.`,
       ...synthesizedExactRecipientEffectLines(items, targetNames),
     ];
+  }
+  if (options.preserveProviderExactRecipient && direction === 'provides') {
+    return lines;
   }
   if (direction === 'provides' && targetNames.length > 0) {
     if (items.some((item) => item.targetSelectionMode === 'all-matching-condition')) {
@@ -2861,7 +2889,6 @@ function mergeExactRecipientStatSupportInteractions(
       interaction.sourceDragonId,
       interaction.abilityName,
       recipientKey,
-      interaction.state,
       interaction.isPreview ? 'preview' : 'current',
       direction,
     ].join('|');
@@ -2870,9 +2897,38 @@ function mergeExactRecipientStatSupportInteractions(
   return [
     ...passthrough,
     ...[...grouped.values()].map((items) =>
-      items.length > 1 ? mergeInteractions(items, direction, selectedIds) : items[0]!,
+      items.length > 1 ? mergeInteractions(items, direction, selectedIds, { preserveProviderExactRecipient: true }) : items[0]!,
     ),
   ];
+}
+
+function mergedEffectTitle(
+  first: FormationCardInteraction,
+  uniqueEffectTitles: string[],
+  options: { exactRecipientSet?: boolean; preserveProviderExactRecipient?: boolean },
+): string {
+  if (uniqueEffectTitles.length === 1) {
+    return uniqueEffectTitles[0]!;
+  }
+  if (uniqueEffectTitles.every((title) => /Stat support/i.test(title))) {
+    return `${first.abilityName} - Stat support`;
+  }
+  if (options.exactRecipientSet || options.preserveProviderExactRecipient) {
+    const sharedPrefix = commonAbilityEffectPrefix(first.abilityName, uniqueEffectTitles);
+    if (sharedPrefix) {
+      return sharedPrefix;
+    }
+  }
+  return first.abilityName;
+}
+
+function commonAbilityEffectPrefix(abilityName: string, titles: string[]): string | null {
+  const matching = titles.filter((title) => title.startsWith(`${abilityName} - `));
+  if (matching.length !== titles.length) {
+    return null;
+  }
+  const suffixes = matching.map((title) => title.slice(abilityName.length + 3));
+  return suffixes.every((suffix) => suffix === suffixes[0]) ? `${abilityName} - ${suffixes[0]}` : null;
 }
 
 function isUnresolvedCandidateSpecificConsequence(trace: SynergyTrace): boolean {
@@ -2945,6 +3001,10 @@ function canAggregateExactRecipientSet(items: FormationCardInteraction[]): boole
   ) {
     return false;
   }
+  if (isCompatibleStatSupportGroup(items)) {
+    return unique(items.map((item) => item.sourceDragonId)).length === 1 &&
+      unique(items.map((item) => item.abilityName)).length === 1;
+  }
 
   const recipientsByEffect = new Map<string, Set<string>>();
   for (const item of items) {
@@ -2992,6 +3052,15 @@ function isCompatibleSharedSelectedTargetGroup(items: FormationCardInteraction[]
 }
 
 function exactRecipientEffectKey(item: FormationCardInteraction): string {
+  if (/Stat support/i.test(item.effectTitle)) {
+    return [
+      item.presentationFamily,
+      item.effectTitle,
+      item.status,
+      item.isPreview ? 'preview' : 'current',
+      item.isEnemyFacing ? 'enemy' : 'friendly',
+    ].join('::');
+  }
   return [
     item.presentationFamily,
     item.effectTitle,
