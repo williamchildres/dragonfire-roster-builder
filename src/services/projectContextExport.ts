@@ -20,7 +20,11 @@ import {
 } from './effectCapabilities';
 import { FORMATION_ADJACENCY, validateFormationAdjacencySymmetry } from './formationRules';
 import { analyzeFormation } from './synergyEngine';
-import { analyzeFormationTraces, phase381ReviewFormations } from './synergyTrace';
+import {
+  analyzeFormationTraces,
+  dedupeFinalTechnicalAnalysisTraces,
+  phase381ReviewFormations,
+} from './synergyTrace';
 
 export const projectContextFormat = 'dragonfire-lab-project-context' as const;
 export const contextVersion = 1;
@@ -642,7 +646,9 @@ function formationCase({
 }): FormationReviewCaseExport {
   const currentTraces = analyzeFormationTraces(formation, dragons, {});
   const previewTraces = analyzeFormationTraces(formation, dragons, { previewMaxRankInteractions: true });
-  const allEvidenceIds = uniqueSorted([...currentTraces, ...previewTraces].flatMap((trace) => [
+  const finalCurrentTraces = dedupeFinalTechnicalAnalysisTraces(currentTraces);
+  const finalPreviewTraces = dedupeFinalTechnicalAnalysisTraces(previewTraces);
+  const allEvidenceIds = uniqueSorted([...finalCurrentTraces, ...finalPreviewTraces].flatMap((trace) => [
     ...trace.sourceEvidenceIds,
     ...trace.recipientEvidenceIds,
     ...trace.requirements.flatMap((requirement) => requirement.evidenceIds),
@@ -652,12 +658,12 @@ function formationCase({
     label,
     formation: formationLabels(formation),
     formationDragonIds: formation,
-    currentModeExpectedInteractions: currentTraces.filter(isExpectedInteractionTrace).map(traceSummary),
-    previewModeExpectedInteractions: previewTraces.filter(isExpectedInteractionTrace).map(traceSummary),
-    expectedInactiveTraits: previewTraces.filter((trace) =>
+    currentModeExpectedInteractions: finalCurrentTraces.filter(isExpectedInteractionTrace).map(traceSummary),
+    previewModeExpectedInteractions: finalPreviewTraces.filter(isExpectedInteractionTrace).map(traceSummary),
+    expectedInactiveTraits: finalPreviewTraces.filter((trace) =>
       trace.ruleId === 'vanguard-trait-requirement' && trace.status === 'inactive',
     ).map(traceSummary),
-    expectedExclusions: expectedExclusionsForFormation(formation, previewTraces),
+    expectedExclusions: expectedExclusionsForFormation(formation, finalPreviewTraces),
     importantFalsePositivesToPrevent: falsePositivesForFormation(formation),
     relevantEvidenceIds: allEvidenceIds,
     reviewStatus,

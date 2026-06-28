@@ -1,6 +1,7 @@
 import { describe, expect, it } from 'vitest';
 import { dragons } from '../data/dragons';
 import { dragonObservationSnapshots } from '../data/observations';
+import { defaultSynergyRules } from '../data/synergyRules';
 import type { FormationAnalysisInput } from '../models/synergy';
 import { buildFormationCardPresentation } from '../services/formationCardAnalysis';
 import {
@@ -14,7 +15,8 @@ import {
 import { resolveAllyTargets } from '../services/formationRules';
 import { resolveEffectiveHabitLevel } from '../services/habitLevels';
 import { createEmptyRoster } from '../services/rosterStorage';
-import { analyzeFormationTraces } from '../services/synergyTrace';
+import { analyzeFormation } from '../services/synergyEngine';
+import { analyzeFormationTraces, createSynergyAuditExport } from '../services/synergyTrace';
 
 function dragon(id: string) {
   const found = dragons.find((item) => item.id === id);
@@ -630,6 +632,74 @@ describe('Feskar, Rhysarion, and Shadowsong Epic profiles', () => {
     expect(feskarCard.receives.some((item) => item.abilityName === 'Unbroken Devotion')).toBe(true);
     expect(shadowsongCard.receives.some((item) => item.abilityName === 'Unbroken Devotion')).toBe(true);
     expect(rhysarionCard.provides.filter((item) => item.abilityName === 'Echoing Melody' || item.abilityName === 'Unbroken Devotion')).toHaveLength(2);
+  });
+
+  it('deduplicates the final Technical Analysis export without merging distinct Recovery traces', () => {
+    const formation: FormationAnalysisInput = { 'left-flank': 'feskar', vanguard: 'rhysarion', 'right-flank': 'shadowsong' };
+    const roster = ownedRoster(['feskar', 'rhysarion', 'shadowsong'], 10, 0);
+    for (const dragonId of ['feskar', 'rhysarion', 'shadowsong']) {
+      roster[dragonId]!.reignLevel = 26;
+    }
+    const result = analyzeFormation(formation, dragons, defaultSynergyRules, {
+      roster,
+      dragonLevels: { feskar: 26, rhysarion: 26, shadowsong: 26 },
+      previewMaxRankInteractions: false,
+    });
+    const audit = createSynergyAuditExport(formation, result.traces, roster);
+    const finalTraces = audit.traces;
+    const incomingRecovery = finalTraces.filter((trace) =>
+      trace.matchKind === 'incoming-effect-amplification' &&
+      trace.recipientAbilityId === 'rhysarion-unbroken-devotion' &&
+      trace.channel === 'recovery'
+    );
+    const outgoingRecovery = finalTraces.filter((trace) =>
+      trace.matchKind === 'outgoing-effect-amplification' &&
+      trace.channel === 'recovery' &&
+      ['rhysarion-ebbing-fury', 'rhysarion-echoing-melody'].includes(trace.sourceAbilityId ?? '')
+    );
+    const finalKey = (trace: typeof finalTraces[number]) =>
+      `${trace.matchKind}:${trace.sourceAbilityId}:${trace.recipientDragonId}:${trace.recipientAbilityId}:${trace.channel}:${trace.modifierCapabilityId ?? ''}:${(trace.matchedOutputCapabilityIds ?? []).join(',')}`;
+
+    expect(finalTraces).toHaveLength(61);
+    expect(new Set(finalTraces.map(finalKey)).size).toBe(finalTraces.length);
+    expect(incomingRecovery.map((trace) => `${trace.sourceAbilityId}:${trace.recipientDragonId}`).sort()).toEqual([
+      'rhysarion-ebbing-fury:feskar',
+      'rhysarion-ebbing-fury:shadowsong',
+      'rhysarion-echoing-melody:feskar',
+      'rhysarion-echoing-melody:shadowsong',
+    ]);
+    expect(incomingRecovery.filter((trace) => trace.sourceAbilityId === 'rhysarion-ebbing-fury' && trace.recipientDragonId === 'feskar')).toHaveLength(1);
+    expect(incomingRecovery.filter((trace) => trace.sourceAbilityId === 'rhysarion-ebbing-fury' && trace.recipientDragonId === 'shadowsong')).toHaveLength(1);
+    expect(incomingRecovery.filter((trace) => trace.sourceAbilityId === 'rhysarion-echoing-melody' && trace.recipientDragonId === 'feskar')).toHaveLength(1);
+    expect(incomingRecovery.filter((trace) => trace.sourceAbilityId === 'rhysarion-echoing-melody' && trace.recipientDragonId === 'shadowsong')).toHaveLength(1);
+    expect(incomingRecovery).toHaveLength(4);
+
+    expect(outgoingRecovery.map((trace) => `${trace.sourceAbilityId}:${trace.recipientDragonId}`).sort()).toEqual([
+      'rhysarion-ebbing-fury:feskar',
+      'rhysarion-ebbing-fury:rhysarion',
+      'rhysarion-ebbing-fury:shadowsong',
+      'rhysarion-echoing-melody:feskar',
+      'rhysarion-echoing-melody:shadowsong',
+    ]);
+    expect(outgoingRecovery.filter((trace) => trace.sourceAbilityId === 'rhysarion-ebbing-fury' && trace.recipientDragonId === 'feskar')).toHaveLength(1);
+    expect(outgoingRecovery.filter((trace) => trace.sourceAbilityId === 'rhysarion-ebbing-fury' && trace.recipientDragonId === 'rhysarion')).toHaveLength(1);
+    expect(outgoingRecovery.filter((trace) => trace.sourceAbilityId === 'rhysarion-ebbing-fury' && trace.recipientDragonId === 'shadowsong')).toHaveLength(1);
+    expect(outgoingRecovery.filter((trace) => trace.sourceAbilityId === 'rhysarion-echoing-melody' && trace.recipientDragonId === 'feskar')).toHaveLength(1);
+    expect(outgoingRecovery.filter((trace) => trace.sourceAbilityId === 'rhysarion-echoing-melody' && trace.recipientDragonId === 'shadowsong')).toHaveLength(1);
+
+    expect(new Set(incomingRecovery.map((trace) => trace.sourceAbilityId))).toEqual(new Set(['rhysarion-ebbing-fury', 'rhysarion-echoing-melody']));
+    expect(new Set(incomingRecovery.map((trace) => trace.recipientDragonId))).toEqual(new Set(['feskar', 'shadowsong']));
+    expect(outgoingRecovery.every((trace) => trace.matchKind !== 'incoming-effect-amplification')).toBe(true);
+    expect(finalTraces.filter((trace) => trace.sourceAbilityId === 'rhysarion-ebbing-fury' && trace.matchKind === 'friendly-impairment')).toHaveLength(3);
+    expect(finalTraces.filter((trace) => trace.sourceAbilityId === 'rhysarion-ebbing-fury' && trace.matchKind === 'friendly-impairment')
+      .every((trace) => trace.channel === 'damage-dealt')).toBe(true);
+
+    expect(finalTraces.filter((trace) => trace.sourceAbilityId === 'rhysarion-champions-vigor')).toHaveLength(7);
+    expect(finalTraces.filter((trace) => trace.sourceAbilityId === 'shadowsong-scorched-earth')).toHaveLength(1);
+    expect(finalTraces.filter((trace) => trace.sourceAbilityId === 'shadowsong-blazing-conductor')).toHaveLength(2);
+    expect(finalTraces.filter((trace) => trace.sourceAbilityId === 'shadowsong-blazing-onslaught')).toHaveLength(6);
+    expect(finalTraces.filter((trace) => trace.sourceAbilityId === 'rhysarion-inspiring-melody')).toHaveLength(2);
+    expect(finalTraces.filter((trace) => trace.sourceAbilityId === 'feskar-resilient-bond')).toHaveLength(3);
   });
 
   it('includes Emerald Inferno as full-rank Fire output for Blazing Onslaught projection', () => {
