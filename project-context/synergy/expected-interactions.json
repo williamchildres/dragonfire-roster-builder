@@ -1180,11 +1180,10 @@
     "assumptions": [
       "Activation chance 20% per each round.",
       "Status application has a 20% trigger chance.",
-      "Target selection may choose another eligible target.",
       "If Caraxes has First-Strike, damage is multiplied by 1.5.",
       "Within-round action order is not assumed.",
-      "The ally status supplier and dependent output must share the same recipient.",
-      "First-Strike activation, recipient selection, and uptime are unresolved."
+      "The ally status supplier and dependent output must share the resolved recipient.",
+      "First-Strike activation and uptime are unresolved."
     ],
     "channel": "fire-damage",
     "confidence": "confirmed",
@@ -1202,12 +1201,13 @@
       "Dependent schedule: Rounds 3, 6 and 9.",
       "Known possible overlap windows: Round 3 after a successful Round 2 application; Round 3 from a successful Round 3 application only if Blazing Fury resolves before Infernal Burst that round; Round 6 after a successful Round 5 application; Round 6 from a successful Round 6 application only if Blazing Fury resolves before Infernal Burst that round; Round 9 after a successful Round 8 application; Round 9 from a successful Round 9 application only if Blazing Fury resolves before Infernal Burst that round.",
       "First-Strike duration: 2 rounds.",
-      "Caraxes must be the ally that received First-Strike.",
+      "Caraxes is the resolved recipient of First-Strike if the supplier activates.",
+      "Infernal Burst benefits while Caraxes has First-Strike.",
       "Action order within same-round overlap is unresolved."
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final value cannot be calculated because final combat formulas and stacking order are not fully verified.",
-    "explanation": "Blazing Fury has a 20% chance each round to grant First-Strike to one ally in any lane. First-Strike lasts 2 rounds. On Rounds 3, 6 and 9, Infernal Burst deals Fire Damage at a 100% rate to 3 enemies in any lane. When Caraxes has First-Strike, the rate increases 1.5x to 150%. Blazing Fury's First-Strike can overlap Infernal Burst in these windows: Round 3 after a successful Round 2 application; Round 3 from a successful Round 3 application only if Blazing Fury resolves before Infernal Burst that round; Round 6 after a successful Round 5 application; Round 6 from a successful Round 6 application only if Blazing Fury resolves before Infernal Burst that round; Round 9 after a successful Round 8 application; Round 9 from a successful Round 9 application only if Blazing Fury resolves before Infernal Burst that round. Caraxes must be the ally that received First-Strike; activation, recipient selection, and uptime remain unresolved. Same-round action order is unresolved.",
+    "explanation": "Blazing Fury has a 20% chance each round to grant First-Strike to one ally in any lane. First-Strike lasts 2 rounds. On Rounds 3, 6 and 9, Infernal Burst deals Fire Damage at a 100% rate to 3 enemies in any lane. When Caraxes has First-Strike, the rate increases 1.5x to 150%. Blazing Fury's First-Strike can overlap Infernal Burst in these windows: Round 3 after a successful Round 2 application; Round 3 from a successful Round 3 application only if Blazing Fury resolves before Infernal Burst that round; Round 6 after a successful Round 5 application; Round 6 from a successful Round 6 application only if Blazing Fury resolves before Infernal Burst that round; Round 9 after a successful Round 8 application; Round 9 from a successful Round 9 application only if Blazing Fury resolves before Infernal Burst that round. Caraxes is the resolved recipient of First-Strike if the supplier activates; Infernal Burst benefits while Caraxes has First-Strike. Activation and uptime remain unresolved. Same-round action order is unresolved.",
     "id": "status-condition-syrax-blazing-fury-blazing-fury-first-strike-first-strike-status-output-caraxes-infernal-burst-infernal-burst-fire-rate-output",
     "interactionScope": "cross-dragon",
     "matchedOutputCapabilityIds": [],
@@ -1244,7 +1244,7 @@
     "targetSelectionGroup": null,
     "title": "First-Strike enables Infernal Burst",
     "unresolvedQuestions": [
-      "Exact First-Strike recipient and final uptime are unresolved."
+      "Exact First-Strike activation and final uptime are unresolved."
     ]
   },
   {
@@ -1252,8 +1252,8 @@
       "Activation chance depends on Habit Level for start of round.",
       "Status application chance depends on Habit Level.",
       "If Caraxes has First-Strike, damage is multiplied by 1.5.",
-      "The ally status supplier and dependent output must share the same recipient.",
-      "First-Strike activation, recipient selection, and uptime are unresolved."
+      "The ally status supplier and dependent output must share the resolved recipient.",
+      "First-Strike activation and uptime are unresolved."
     ],
     "channel": "fire-damage",
     "confidence": "confirmed",
@@ -1275,11 +1275,12 @@
       "Dependent schedule: Rounds 3, 6 and 9.",
       "Known possible overlap windows: Round 3 after a successful Round 1 application.",
       "First-Strike duration: 3 rounds.",
-      "Caraxes must be the ally that received First-Strike."
+      "Caraxes is the resolved recipient of First-Strike if the supplier activates.",
+      "Infernal Burst benefits while Caraxes has First-Strike."
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final value cannot be calculated because final combat formulas and stacking order are not fully verified.",
-    "explanation": "At effective Habit Level 5, Lightning Strike has a 100% chance on Rounds 1 to grant First-Strike to one ally within adjacency. First-Strike lasts 3 rounds. On Rounds 3, 6 and 9, Infernal Burst deals Fire Damage at a 100% rate to 3 enemies in any lane. When Caraxes has First-Strike, the rate increases 1.5x to 150%. Lightning Strike's First-Strike can overlap Infernal Burst in these windows: Round 3 after a successful Round 1 application. Caraxes must be the ally that received First-Strike; activation, recipient selection, and uptime remain unresolved.",
+    "explanation": "At effective Habit Level 5, Lightning Strike has a 100% chance on Rounds 1 to grant First-Strike to one ally within adjacency. First-Strike lasts 3 rounds. On Rounds 3, 6 and 9, Infernal Burst deals Fire Damage at a 100% rate to 3 enemies in any lane. When Caraxes has First-Strike, the rate increases 1.5x to 150%. Lightning Strike's First-Strike can overlap Infernal Burst in these windows: Round 3 after a successful Round 1 application. Caraxes is the resolved recipient of First-Strike if the supplier activates; Infernal Burst benefits while Caraxes has First-Strike. Activation and uptime remain unresolved.",
     "id": "status-condition-malachite-lightning-strike-lightning-strike-first-strike-first-strike-status-output-caraxes-infernal-burst-infernal-burst-fire-rate-output",
     "interactionScope": "cross-dragon",
     "matchedOutputCapabilityIds": [],
@@ -1340,7 +1341,7 @@
     "targetSelectionGroup": null,
     "title": "First-Strike enables Infernal Burst",
     "unresolvedQuestions": [
-      "Exact First-Strike recipient and final uptime are unresolved."
+      "Exact First-Strike activation and final uptime are unresolved."
     ]
   },
   {
@@ -5699,11 +5700,10 @@
     "assumptions": [
       "Activation chance 20% per each round.",
       "Status application has a 20% trigger chance.",
-      "Target selection may choose another eligible target.",
       "If Caraxes has First-Strike, damage is multiplied by 1.5.",
       "Within-round action order is not assumed.",
-      "The ally status supplier and dependent output must share the same recipient.",
-      "First-Strike activation, recipient selection, and uptime are unresolved."
+      "The ally status supplier and dependent output must share the resolved recipient.",
+      "First-Strike activation and uptime are unresolved."
     ],
     "channel": "fire-damage",
     "confidence": "confirmed",
@@ -5721,12 +5721,13 @@
       "Dependent schedule: Rounds 3, 6 and 9.",
       "Known possible overlap windows: Round 3 after a successful Round 2 application; Round 3 from a successful Round 3 application only if Blazing Fury resolves before Infernal Burst that round; Round 6 after a successful Round 5 application; Round 6 from a successful Round 6 application only if Blazing Fury resolves before Infernal Burst that round; Round 9 after a successful Round 8 application; Round 9 from a successful Round 9 application only if Blazing Fury resolves before Infernal Burst that round.",
       "First-Strike duration: 2 rounds.",
-      "Caraxes must be the ally that received First-Strike.",
+      "Caraxes is the resolved recipient of First-Strike if the supplier activates.",
+      "Infernal Burst benefits while Caraxes has First-Strike.",
       "Action order within same-round overlap is unresolved."
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final value cannot be calculated because final combat formulas and stacking order are not fully verified.",
-    "explanation": "Blazing Fury has a 20% chance each round to grant First-Strike to one ally in any lane. First-Strike lasts 2 rounds. On Rounds 3, 6 and 9, Infernal Burst deals Fire Damage at a 100% rate to 3 enemies in any lane. When Caraxes has First-Strike, the rate increases 1.5x to 150%. Blazing Fury's First-Strike can overlap Infernal Burst in these windows: Round 3 after a successful Round 2 application; Round 3 from a successful Round 3 application only if Blazing Fury resolves before Infernal Burst that round; Round 6 after a successful Round 5 application; Round 6 from a successful Round 6 application only if Blazing Fury resolves before Infernal Burst that round; Round 9 after a successful Round 8 application; Round 9 from a successful Round 9 application only if Blazing Fury resolves before Infernal Burst that round. Caraxes must be the ally that received First-Strike; activation, recipient selection, and uptime remain unresolved. Same-round action order is unresolved.",
+    "explanation": "Blazing Fury has a 20% chance each round to grant First-Strike to one ally in any lane. First-Strike lasts 2 rounds. On Rounds 3, 6 and 9, Infernal Burst deals Fire Damage at a 100% rate to 3 enemies in any lane. When Caraxes has First-Strike, the rate increases 1.5x to 150%. Blazing Fury's First-Strike can overlap Infernal Burst in these windows: Round 3 after a successful Round 2 application; Round 3 from a successful Round 3 application only if Blazing Fury resolves before Infernal Burst that round; Round 6 after a successful Round 5 application; Round 6 from a successful Round 6 application only if Blazing Fury resolves before Infernal Burst that round; Round 9 after a successful Round 8 application; Round 9 from a successful Round 9 application only if Blazing Fury resolves before Infernal Burst that round. Caraxes is the resolved recipient of First-Strike if the supplier activates; Infernal Burst benefits while Caraxes has First-Strike. Activation and uptime remain unresolved. Same-round action order is unresolved.",
     "id": "status-condition-syrax-blazing-fury-blazing-fury-first-strike-first-strike-status-output-caraxes-infernal-burst-infernal-burst-fire-rate-output",
     "interactionScope": "cross-dragon",
     "matchedOutputCapabilityIds": [],
@@ -5763,7 +5764,7 @@
     "targetSelectionGroup": null,
     "title": "First-Strike enables Infernal Burst",
     "unresolvedQuestions": [
-      "Exact First-Strike recipient and final uptime are unresolved."
+      "Exact First-Strike activation and final uptime are unresolved."
     ]
   },
   {
@@ -10375,11 +10376,10 @@
     "assumptions": [
       "Activation chance 20% per each round.",
       "Status application has a 20% trigger chance.",
-      "Target selection may choose another eligible target.",
       "If Caraxes has First-Strike, damage is multiplied by 1.5.",
       "Within-round action order is not assumed.",
-      "The ally status supplier and dependent output must share the same recipient.",
-      "First-Strike activation, recipient selection, and uptime are unresolved."
+      "The ally status supplier and dependent output must share the resolved recipient.",
+      "First-Strike activation and uptime are unresolved."
     ],
     "channel": "fire-damage",
     "confidence": "confirmed",
@@ -10397,12 +10397,13 @@
       "Dependent schedule: Rounds 3, 6 and 9.",
       "Known possible overlap windows: Round 3 after a successful Round 2 application; Round 3 from a successful Round 3 application only if Blazing Fury resolves before Infernal Burst that round; Round 6 after a successful Round 5 application; Round 6 from a successful Round 6 application only if Blazing Fury resolves before Infernal Burst that round; Round 9 after a successful Round 8 application; Round 9 from a successful Round 9 application only if Blazing Fury resolves before Infernal Burst that round.",
       "First-Strike duration: 2 rounds.",
-      "Caraxes must be the ally that received First-Strike.",
+      "Caraxes is the resolved recipient of First-Strike if the supplier activates.",
+      "Infernal Burst benefits while Caraxes has First-Strike.",
       "Action order within same-round overlap is unresolved."
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final value cannot be calculated because final combat formulas and stacking order are not fully verified.",
-    "explanation": "Blazing Fury has a 20% chance each round to grant First-Strike to one ally in any lane. First-Strike lasts 2 rounds. On Rounds 3, 6 and 9, Infernal Burst deals Fire Damage at a 100% rate to 3 enemies in any lane. When Caraxes has First-Strike, the rate increases 1.5x to 150%. Blazing Fury's First-Strike can overlap Infernal Burst in these windows: Round 3 after a successful Round 2 application; Round 3 from a successful Round 3 application only if Blazing Fury resolves before Infernal Burst that round; Round 6 after a successful Round 5 application; Round 6 from a successful Round 6 application only if Blazing Fury resolves before Infernal Burst that round; Round 9 after a successful Round 8 application; Round 9 from a successful Round 9 application only if Blazing Fury resolves before Infernal Burst that round. Caraxes must be the ally that received First-Strike; activation, recipient selection, and uptime remain unresolved. Same-round action order is unresolved.",
+    "explanation": "Blazing Fury has a 20% chance each round to grant First-Strike to one ally in any lane. First-Strike lasts 2 rounds. On Rounds 3, 6 and 9, Infernal Burst deals Fire Damage at a 100% rate to 3 enemies in any lane. When Caraxes has First-Strike, the rate increases 1.5x to 150%. Blazing Fury's First-Strike can overlap Infernal Burst in these windows: Round 3 after a successful Round 2 application; Round 3 from a successful Round 3 application only if Blazing Fury resolves before Infernal Burst that round; Round 6 after a successful Round 5 application; Round 6 from a successful Round 6 application only if Blazing Fury resolves before Infernal Burst that round; Round 9 after a successful Round 8 application; Round 9 from a successful Round 9 application only if Blazing Fury resolves before Infernal Burst that round. Caraxes is the resolved recipient of First-Strike if the supplier activates; Infernal Burst benefits while Caraxes has First-Strike. Activation and uptime remain unresolved. Same-round action order is unresolved.",
     "id": "status-condition-syrax-blazing-fury-blazing-fury-first-strike-first-strike-status-output-caraxes-infernal-burst-infernal-burst-fire-rate-output",
     "interactionScope": "cross-dragon",
     "matchedOutputCapabilityIds": [],
@@ -10439,7 +10440,7 @@
     "targetSelectionGroup": null,
     "title": "First-Strike enables Infernal Burst",
     "unresolvedQuestions": [
-      "Exact First-Strike recipient and final uptime are unresolved."
+      "Exact First-Strike activation and final uptime are unresolved."
     ]
   },
   {
@@ -15074,11 +15075,10 @@
     "assumptions": [
       "Activation chance 20% per each round.",
       "Status application has a 20% trigger chance.",
-      "Target selection may choose another eligible target.",
       "If Caraxes has First-Strike, damage is multiplied by 1.5.",
       "Within-round action order is not assumed.",
-      "The ally status supplier and dependent output must share the same recipient.",
-      "First-Strike activation, recipient selection, and uptime are unresolved."
+      "The ally status supplier and dependent output must share the resolved recipient.",
+      "First-Strike activation and uptime are unresolved."
     ],
     "channel": "fire-damage",
     "confidence": "confirmed",
@@ -15096,12 +15096,13 @@
       "Dependent schedule: Rounds 3, 6 and 9.",
       "Known possible overlap windows: Round 3 after a successful Round 2 application; Round 3 from a successful Round 3 application only if Blazing Fury resolves before Infernal Burst that round; Round 6 after a successful Round 5 application; Round 6 from a successful Round 6 application only if Blazing Fury resolves before Infernal Burst that round; Round 9 after a successful Round 8 application; Round 9 from a successful Round 9 application only if Blazing Fury resolves before Infernal Burst that round.",
       "First-Strike duration: 2 rounds.",
-      "Caraxes must be the ally that received First-Strike.",
+      "Caraxes is the resolved recipient of First-Strike if the supplier activates.",
+      "Infernal Burst benefits while Caraxes has First-Strike.",
       "Action order within same-round overlap is unresolved."
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final value cannot be calculated because final combat formulas and stacking order are not fully verified.",
-    "explanation": "Blazing Fury has a 20% chance each round to grant First-Strike to one ally in any lane. First-Strike lasts 2 rounds. On Rounds 3, 6 and 9, Infernal Burst deals Fire Damage at a 100% rate to 3 enemies in any lane. When Caraxes has First-Strike, the rate increases 1.5x to 150%. Blazing Fury's First-Strike can overlap Infernal Burst in these windows: Round 3 after a successful Round 2 application; Round 3 from a successful Round 3 application only if Blazing Fury resolves before Infernal Burst that round; Round 6 after a successful Round 5 application; Round 6 from a successful Round 6 application only if Blazing Fury resolves before Infernal Burst that round; Round 9 after a successful Round 8 application; Round 9 from a successful Round 9 application only if Blazing Fury resolves before Infernal Burst that round. Caraxes must be the ally that received First-Strike; activation, recipient selection, and uptime remain unresolved. Same-round action order is unresolved.",
+    "explanation": "Blazing Fury has a 20% chance each round to grant First-Strike to one ally in any lane. First-Strike lasts 2 rounds. On Rounds 3, 6 and 9, Infernal Burst deals Fire Damage at a 100% rate to 3 enemies in any lane. When Caraxes has First-Strike, the rate increases 1.5x to 150%. Blazing Fury's First-Strike can overlap Infernal Burst in these windows: Round 3 after a successful Round 2 application; Round 3 from a successful Round 3 application only if Blazing Fury resolves before Infernal Burst that round; Round 6 after a successful Round 5 application; Round 6 from a successful Round 6 application only if Blazing Fury resolves before Infernal Burst that round; Round 9 after a successful Round 8 application; Round 9 from a successful Round 9 application only if Blazing Fury resolves before Infernal Burst that round. Caraxes is the resolved recipient of First-Strike if the supplier activates; Infernal Burst benefits while Caraxes has First-Strike. Activation and uptime remain unresolved. Same-round action order is unresolved.",
     "id": "status-condition-syrax-blazing-fury-blazing-fury-first-strike-first-strike-status-output-caraxes-infernal-burst-infernal-burst-fire-rate-output",
     "interactionScope": "cross-dragon",
     "matchedOutputCapabilityIds": [],
@@ -15138,7 +15139,7 @@
     "targetSelectionGroup": null,
     "title": "First-Strike enables Infernal Burst",
     "unresolvedQuestions": [
-      "Exact First-Strike recipient and final uptime are unresolved."
+      "Exact First-Strike activation and final uptime are unresolved."
     ]
   },
   {
@@ -15146,8 +15147,8 @@
       "Activation chance depends on Habit Level for start of round.",
       "Status application chance depends on Habit Level.",
       "If Caraxes has First-Strike, damage is multiplied by 1.5.",
-      "The ally status supplier and dependent output must share the same recipient.",
-      "First-Strike activation, recipient selection, and uptime are unresolved."
+      "The ally status supplier and dependent output must share the resolved recipient.",
+      "First-Strike activation and uptime are unresolved."
     ],
     "channel": "fire-damage",
     "confidence": "confirmed",
@@ -15169,11 +15170,12 @@
       "Dependent schedule: Rounds 3, 6 and 9.",
       "Known possible overlap windows: Round 3 after a successful Round 1 application.",
       "First-Strike duration: 3 rounds.",
-      "Caraxes must be the ally that received First-Strike."
+      "Caraxes is the resolved recipient of First-Strike if the supplier activates.",
+      "Infernal Burst benefits while Caraxes has First-Strike."
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final value cannot be calculated because final combat formulas and stacking order are not fully verified.",
-    "explanation": "At effective Habit Level 5, Lightning Strike has a 100% chance on Rounds 1 to grant First-Strike to one ally within adjacency. First-Strike lasts 3 rounds. On Rounds 3, 6 and 9, Infernal Burst deals Fire Damage at a 100% rate to 3 enemies in any lane. When Caraxes has First-Strike, the rate increases 1.5x to 150%. Lightning Strike's First-Strike can overlap Infernal Burst in these windows: Round 3 after a successful Round 1 application. Caraxes must be the ally that received First-Strike; activation, recipient selection, and uptime remain unresolved.",
+    "explanation": "At effective Habit Level 5, Lightning Strike has a 100% chance on Rounds 1 to grant First-Strike to one ally within adjacency. First-Strike lasts 3 rounds. On Rounds 3, 6 and 9, Infernal Burst deals Fire Damage at a 100% rate to 3 enemies in any lane. When Caraxes has First-Strike, the rate increases 1.5x to 150%. Lightning Strike's First-Strike can overlap Infernal Burst in these windows: Round 3 after a successful Round 1 application. Caraxes is the resolved recipient of First-Strike if the supplier activates; Infernal Burst benefits while Caraxes has First-Strike. Activation and uptime remain unresolved.",
     "id": "status-condition-malachite-lightning-strike-lightning-strike-first-strike-first-strike-status-output-caraxes-infernal-burst-infernal-burst-fire-rate-output",
     "interactionScope": "cross-dragon",
     "matchedOutputCapabilityIds": [],
@@ -15234,7 +15236,7 @@
     "targetSelectionGroup": null,
     "title": "First-Strike enables Infernal Burst",
     "unresolvedQuestions": [
-      "Exact First-Strike recipient and final uptime are unresolved."
+      "Exact First-Strike activation and final uptime are unresolved."
     ]
   },
   {
@@ -45788,11 +45790,10 @@
     "assumptions": [
       "Activation chance 20% per each round.",
       "Status application has a 20% trigger chance.",
-      "Target selection may choose another eligible target.",
       "If Caraxes has First-Strike, damage is multiplied by 1.5.",
       "Within-round action order is not assumed.",
-      "The ally status supplier and dependent output must share the same recipient.",
-      "First-Strike activation, recipient selection, and uptime are unresolved."
+      "The ally status supplier and dependent output must share the resolved recipient.",
+      "First-Strike activation and uptime are unresolved."
     ],
     "channel": "fire-damage",
     "confidence": "confirmed",
@@ -45810,12 +45811,13 @@
       "Dependent schedule: Rounds 3, 6 and 9.",
       "Known possible overlap windows: Round 3 after a successful Round 2 application; Round 3 from a successful Round 3 application only if Blazing Fury resolves before Infernal Burst that round; Round 6 after a successful Round 5 application; Round 6 from a successful Round 6 application only if Blazing Fury resolves before Infernal Burst that round; Round 9 after a successful Round 8 application; Round 9 from a successful Round 9 application only if Blazing Fury resolves before Infernal Burst that round.",
       "First-Strike duration: 2 rounds.",
-      "Caraxes must be the ally that received First-Strike.",
+      "Caraxes is the resolved recipient of First-Strike if the supplier activates.",
+      "Infernal Burst benefits while Caraxes has First-Strike.",
       "Action order within same-round overlap is unresolved."
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final value cannot be calculated because final combat formulas and stacking order are not fully verified.",
-    "explanation": "Blazing Fury has a 20% chance each round to grant First-Strike to one ally in any lane. First-Strike lasts 2 rounds. On Rounds 3, 6 and 9, Infernal Burst deals Fire Damage at a 100% rate to 3 enemies in any lane. When Caraxes has First-Strike, the rate increases 1.5x to 150%. Blazing Fury's First-Strike can overlap Infernal Burst in these windows: Round 3 after a successful Round 2 application; Round 3 from a successful Round 3 application only if Blazing Fury resolves before Infernal Burst that round; Round 6 after a successful Round 5 application; Round 6 from a successful Round 6 application only if Blazing Fury resolves before Infernal Burst that round; Round 9 after a successful Round 8 application; Round 9 from a successful Round 9 application only if Blazing Fury resolves before Infernal Burst that round. Caraxes must be the ally that received First-Strike; activation, recipient selection, and uptime remain unresolved. Same-round action order is unresolved.",
+    "explanation": "Blazing Fury has a 20% chance each round to grant First-Strike to one ally in any lane. First-Strike lasts 2 rounds. On Rounds 3, 6 and 9, Infernal Burst deals Fire Damage at a 100% rate to 3 enemies in any lane. When Caraxes has First-Strike, the rate increases 1.5x to 150%. Blazing Fury's First-Strike can overlap Infernal Burst in these windows: Round 3 after a successful Round 2 application; Round 3 from a successful Round 3 application only if Blazing Fury resolves before Infernal Burst that round; Round 6 after a successful Round 5 application; Round 6 from a successful Round 6 application only if Blazing Fury resolves before Infernal Burst that round; Round 9 after a successful Round 8 application; Round 9 from a successful Round 9 application only if Blazing Fury resolves before Infernal Burst that round. Caraxes is the resolved recipient of First-Strike if the supplier activates; Infernal Burst benefits while Caraxes has First-Strike. Activation and uptime remain unresolved. Same-round action order is unresolved.",
     "id": "status-condition-syrax-blazing-fury-blazing-fury-first-strike-first-strike-status-output-caraxes-infernal-burst-infernal-burst-fire-rate-output",
     "interactionScope": "cross-dragon",
     "matchedOutputCapabilityIds": [],
@@ -45852,7 +45854,7 @@
     "targetSelectionGroup": null,
     "title": "First-Strike enables Infernal Burst",
     "unresolvedQuestions": [
-      "Exact First-Strike recipient and final uptime are unresolved."
+      "Exact First-Strike activation and final uptime are unresolved."
     ]
   },
   {
@@ -50382,11 +50384,10 @@
     "assumptions": [
       "Activation chance 20% per each round.",
       "Status application has a 20% trigger chance.",
-      "Target selection may choose another eligible target.",
       "If Caraxes has First-Strike, damage is multiplied by 1.5.",
       "Within-round action order is not assumed.",
-      "The ally status supplier and dependent output must share the same recipient.",
-      "First-Strike activation, recipient selection, and uptime are unresolved."
+      "The ally status supplier and dependent output must share the resolved recipient.",
+      "First-Strike activation and uptime are unresolved."
     ],
     "channel": "fire-damage",
     "confidence": "confirmed",
@@ -50404,12 +50405,13 @@
       "Dependent schedule: Rounds 3, 6 and 9.",
       "Known possible overlap windows: Round 3 after a successful Round 2 application; Round 3 from a successful Round 3 application only if Blazing Fury resolves before Infernal Burst that round; Round 6 after a successful Round 5 application; Round 6 from a successful Round 6 application only if Blazing Fury resolves before Infernal Burst that round; Round 9 after a successful Round 8 application; Round 9 from a successful Round 9 application only if Blazing Fury resolves before Infernal Burst that round.",
       "First-Strike duration: 2 rounds.",
-      "Caraxes must be the ally that received First-Strike.",
+      "Caraxes is the resolved recipient of First-Strike if the supplier activates.",
+      "Infernal Burst benefits while Caraxes has First-Strike.",
       "Action order within same-round overlap is unresolved."
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final value cannot be calculated because final combat formulas and stacking order are not fully verified.",
-    "explanation": "Blazing Fury has a 20% chance each round to grant First-Strike to one ally in any lane. First-Strike lasts 2 rounds. On Rounds 3, 6 and 9, Infernal Burst deals Fire Damage at a 100% rate to 3 enemies in any lane. When Caraxes has First-Strike, the rate increases 1.5x to 150%. Blazing Fury's First-Strike can overlap Infernal Burst in these windows: Round 3 after a successful Round 2 application; Round 3 from a successful Round 3 application only if Blazing Fury resolves before Infernal Burst that round; Round 6 after a successful Round 5 application; Round 6 from a successful Round 6 application only if Blazing Fury resolves before Infernal Burst that round; Round 9 after a successful Round 8 application; Round 9 from a successful Round 9 application only if Blazing Fury resolves before Infernal Burst that round. Caraxes must be the ally that received First-Strike; activation, recipient selection, and uptime remain unresolved. Same-round action order is unresolved.",
+    "explanation": "Blazing Fury has a 20% chance each round to grant First-Strike to one ally in any lane. First-Strike lasts 2 rounds. On Rounds 3, 6 and 9, Infernal Burst deals Fire Damage at a 100% rate to 3 enemies in any lane. When Caraxes has First-Strike, the rate increases 1.5x to 150%. Blazing Fury's First-Strike can overlap Infernal Burst in these windows: Round 3 after a successful Round 2 application; Round 3 from a successful Round 3 application only if Blazing Fury resolves before Infernal Burst that round; Round 6 after a successful Round 5 application; Round 6 from a successful Round 6 application only if Blazing Fury resolves before Infernal Burst that round; Round 9 after a successful Round 8 application; Round 9 from a successful Round 9 application only if Blazing Fury resolves before Infernal Burst that round. Caraxes is the resolved recipient of First-Strike if the supplier activates; Infernal Burst benefits while Caraxes has First-Strike. Activation and uptime remain unresolved. Same-round action order is unresolved.",
     "id": "status-condition-syrax-blazing-fury-blazing-fury-first-strike-first-strike-status-output-caraxes-infernal-burst-infernal-burst-fire-rate-output",
     "interactionScope": "cross-dragon",
     "matchedOutputCapabilityIds": [],
@@ -50446,7 +50448,7 @@
     "targetSelectionGroup": null,
     "title": "First-Strike enables Infernal Burst",
     "unresolvedQuestions": [
-      "Exact First-Strike recipient and final uptime are unresolved."
+      "Exact First-Strike activation and final uptime are unresolved."
     ]
   },
   {

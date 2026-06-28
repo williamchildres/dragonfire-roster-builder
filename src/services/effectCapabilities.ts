@@ -63,6 +63,34 @@ const statusCategoryMembers: Record<string, string[]> = {
   control: ['stun', 'stagger', 'overwhelm', 'confusion'],
 };
 
+type AllyStatusRecipientResolution =
+  | {
+    state: 'resolved';
+    recipientId: string;
+    recipientName: string;
+    candidateIds: string[];
+    candidateNames: string[];
+    resolutionBasis: string | null;
+    activationUnresolved: boolean;
+    sharedAllyFact: string | null;
+  }
+  | {
+    state: 'candidate-set';
+    candidateIds: string[];
+    candidateNames: string[];
+    resolutionBasis: string | null;
+    activationUnresolved: boolean;
+    sharedAllyFact: string | null;
+  }
+  | {
+    state: 'none';
+    candidateIds: string[];
+    candidateNames: string[];
+    resolutionBasis: string | null;
+    activationUnresolved: boolean;
+    sharedAllyFact: string | null;
+  };
+
 export function deriveOutputCapabilities(dragons: Dragon[]): OutputCapability[] {
   return dragons.flatMap((dragon) => {
     const capabilities: OutputCapability[] = [];
@@ -2353,7 +2381,14 @@ function analyzeStatusEffectConditionEnablement(
               ];
               const dependencyLabel = statusDependencyLabel(dependency);
               const supplierContext = sourceEffectContext(provider, statusOutput.abilityId, statusOutput.sourceEffectId);
-              const conditionalFacts = conditionalChanceValueFacts(ability, schedule, effect, statusOutput.statusId, dependency, options, dependentDragon.id, dependentDragon.name);
+              const recipientResolution = allyStatusRecipientResolution(
+                formation,
+                dragons,
+                statusOutput,
+                supplierContext,
+                statusEffectRecipientCandidatesForStatusDependency(formation, dragons, statusOutput, dependency, options),
+              );
+              const conditionalFacts = conditionalChanceValueFacts(ability, schedule, effect, statusOutput.statusId, dependency, options, dependentDragon.id, dependentDragon.name, recipientResolution);
               const categoryFacts = statusCategoryFacts(statusOutput.statusId, dependency);
               const siblingStatusOutputs = statusOutputs.filter((candidate) =>
                 candidate.dragonId === statusOutput.dragonId &&
@@ -2361,7 +2396,10 @@ function analyzeStatusEffectConditionEnablement(
                 candidate.statusId === statusOutput.statusId &&
                 statusCapabilityVisible(candidate, options),
               );
-              const supplierFacts = statusSupplierFacts(statusOutput, supplierContext, options, siblingStatusOutputs);
+              const supplierFacts = supplierFactsForRecipientResolution(
+                statusSupplierFacts(statusOutput, supplierContext, options, siblingStatusOutputs),
+                recipientResolution,
+              );
               const scheduleFacts = statusConditionScheduleOverlapFacts(
                 statusOutput,
                 supplierContext,
@@ -2373,6 +2411,7 @@ function analyzeStatusEffectConditionEnablement(
                 { ability, schedule, effect },
                 dependency,
                 dependentDragon.name,
+                recipientResolution,
               );
               traces.push(makeDependencyTrace({
                 id: `status-effect-condition-${statusOutput.id}-${ability.id}-${effect.id}-${dependency.type}-${dependency.statusId ?? dependency.statusCategoryId}`,
@@ -2396,6 +2435,7 @@ function analyzeStatusEffectConditionEnablement(
                   ...categoryFacts.facts,
                   ...conditionalFacts.facts,
                   ...supplierFacts.facts,
+                  ...recipientResolutionFacts(recipientResolution),
                   ...scheduleFacts.facts,
                 ],
                 effects: [`Conditional ${effect.type}: ${dependencyLabel}`, ...categoryFacts.effects, ...conditionalFacts.effects, ...supplierFacts.effects, ...scheduleFacts.effects],
@@ -2403,10 +2443,10 @@ function analyzeStatusEffectConditionEnablement(
                 recipientEvidenceIds: ability.evidenceIds,
                 assumptions: [
                   ...scheduleFacts.assumptions,
-                  statusDependencyUnresolvedAssumption(dependency, statusLabel(statusOutput.statusId)),
+                  statusDependencyUnresolvedAssumption(dependency, statusLabel(statusOutput.statusId), recipientResolution),
                 ],
                 unresolvedQuestions: uniqueSorted([
-                  statusDependencyUnresolvedQuestion(dependency, statusLabel(statusOutput.statusId)),
+                  statusDependencyUnresolvedQuestion(dependency, statusLabel(statusOutput.statusId), recipientResolution),
                   ...(effect.activationRoll?.description ? [effect.activationRoll.description] : []),
                   ...(schedule.activationRoll?.description ? [schedule.activationRoll.description] : []),
                   'Exact roll sharing, target evaluation order, status check timing, refresh, and stacking remain unresolved.',
@@ -2602,7 +2642,9 @@ function analyzeFriendlyStatusSourceOutputs(
       recipientEvidenceIds: [],
       combatLogConfirmed: false,
       exactResultKnown: false,
-      exactResultUnknownReason: 'Exact status recipient and uptime are not calculated in formation analysis.',
+      exactResultUnknownReason: recipient
+        ? `${recipient.name} is the resolved recipient if ${statusOutput.abilityName} activates; exact activation and uptime are not calculated.`
+        : 'Exact status recipient and uptime are not calculated in formation analysis.',
       channel: 'status',
       targetSelectorSummary: targetSelectorSummary(statusOutput.targetSelector),
       modifierSelfOnly: false,
@@ -2786,9 +2828,16 @@ function analyzeStatusConditionEnablement(
         }
         const context = sourceEffectContext(recipient, output.abilityId, output.sourceEffectId);
         const supplierContext = sourceEffectContext(provider, statusOutput.abilityId, statusOutput.sourceEffectId);
+        const recipientResolution = allyStatusRecipientResolution(
+          formation,
+          dragons,
+          statusOutput,
+          supplierContext,
+          outputRecipientCandidatesForStatusDependency(formation, outputs, statusOutput, dependency, options),
+        );
         const enrichStatusTrace = true;
         const conditionalFacts = enrichStatusTrace && context
-          ? conditionalMultiplierValueFacts(output, context, statusOutput.statusId, dependency, options, recipient.name)
+          ? conditionalMultiplierValueFacts(output, context, statusOutput.statusId, dependency, options, recipient.name, recipientResolution)
           : { facts: [], effects: [], summary: null };
         const categoryFacts = enrichStatusTrace
           ? statusCategoryFacts(statusOutput.statusId, dependency)
@@ -2802,10 +2851,10 @@ function analyzeStatusConditionEnablement(
             )
           : [];
         const supplierFacts = enrichStatusTrace
-          ? statusSupplierFacts(statusOutput, supplierContext, options, siblingStatusOutputs)
+          ? supplierFactsForRecipientResolution(statusSupplierFacts(statusOutput, supplierContext, options, siblingStatusOutputs), recipientResolution)
           : { facts: [], effects: [], summary: null };
         const scheduleFacts = enrichStatusTrace
-          ? statusConditionScheduleOverlapFacts(statusOutput, supplierContext, output, context, dependency, recipient.name)
+          ? statusConditionScheduleOverlapFacts(statusOutput, supplierContext, output, context, dependency, recipient.name, recipientResolution)
           : { facts: [], effects: [], summary: null, assumptions: [] };
         const requirements = [
           statusProviderRequirement(statusOutput, dependency.type, providerPosition, recipientPosition),
@@ -2842,6 +2891,7 @@ function analyzeStatusConditionEnablement(
             ...categoryFacts.facts,
             ...conditionalFacts.facts,
             ...supplierFacts.facts,
+            ...recipientResolutionFacts(recipientResolution),
             ...scheduleFacts.facts,
           ],
           effects: [`Status condition: ${dependencyLabel}`, ...categoryFacts.effects, ...conditionalFacts.effects, ...supplierFacts.effects, ...scheduleFacts.effects],
@@ -2849,11 +2899,11 @@ function analyzeStatusConditionEnablement(
           recipientEvidenceIds: output.evidenceIds,
           assumptions: [
             ...statusOutput.conditions.map((condition) => condition.description),
-            ...statusConditionAssumptions(statusOutput, output),
+            ...statusConditionAssumptions(statusOutput, output, recipientResolution),
             ...scheduleFacts.assumptions,
-            ...(conditionalFacts.summary ? [statusDependencyUnresolvedAssumption(dependency, statusLabel(statusOutput.statusId))] : []),
+            ...(conditionalFacts.summary ? [statusDependencyUnresolvedAssumption(dependency, statusLabel(statusOutput.statusId), recipientResolution)] : []),
           ],
-          unresolvedQuestions: [statusDependencyUnresolvedQuestion(dependency, statusLabel(statusOutput.statusId))],
+          unresolvedQuestions: [statusDependencyUnresolvedQuestion(dependency, statusLabel(statusOutput.statusId), recipientResolution)],
           futureOrConditional: true,
         }));
       }
@@ -5016,6 +5066,167 @@ function allyRecipientResolutionBasis(effect: AbilityEffect): string | null {
   return null;
 }
 
+function allyStatusRecipientResolution(
+  formation: FormationAnalysisInput,
+  dragons: Dragon[],
+  statusOutput: StatusOutputCapability,
+  context: { schedule: AbilitySchedule; effect: AbilityEffect } | null,
+  candidateRecipientIds: string[],
+): AllyStatusRecipientResolution | null {
+  if (statusOutput.targetSide !== 'ally' || !context) {
+    return null;
+  }
+  const providerPosition = positionOf(formation, statusOutput.dragonId);
+  if (!providerPosition) {
+    return {
+      state: 'none',
+      candidateIds: [],
+      candidateNames: [],
+      resolutionBasis: allyRecipientResolutionBasis(context.effect),
+      activationUnresolved: statusChanceConditional(statusOutput),
+      sharedAllyFact: sharedAllyStatusSiblingFact(statusOutput, context, false),
+    };
+  }
+  const eligibleIds = uniqueOrdered(candidateRecipientIds).filter((recipientId) => {
+    const recipientPosition = positionOf(formation, recipientId);
+    return recipientPosition
+      ? statusOutputTargetsFriendlyRecipient(statusOutput, context.effect, providerPosition, recipientPosition)
+      : false;
+  });
+  const eligibleNames = eligibleIds.map((recipientId) => dragonById(dragons, recipientId)?.name ?? recipientId);
+  const resolved = eligibleIds.length === 1 ? dragonById(dragons, eligibleIds[0]!) : null;
+  const sharedAllyFact = sharedAllyStatusSiblingFact(statusOutput, context, Boolean(resolved));
+  const base = {
+    candidateIds: eligibleIds,
+    candidateNames: eligibleNames,
+    resolutionBasis: allyRecipientResolutionBasis(context.effect),
+    activationUnresolved: statusChanceConditional(statusOutput),
+    sharedAllyFact,
+  };
+  if (resolved) {
+    return {
+      state: 'resolved',
+      recipientId: resolved.id,
+      recipientName: resolved.name,
+      ...base,
+    };
+  }
+  if (eligibleIds.length > 1) {
+    return {
+      state: 'candidate-set',
+      ...base,
+    };
+  }
+  return {
+    state: 'none',
+    ...base,
+  };
+}
+
+function sameDependencyForRecipientResolution(
+  left: CapabilityDependency & { type: 'requires-self-status' | 'requires-any-enemy-status' | 'requires-target-status' | 'requires-target-status-category' },
+  right: CapabilityDependency,
+  statusId: string,
+): boolean {
+  return isStatusConditionDependency(right) &&
+    right.type === left.type &&
+    (right.statusId ?? null) === (left.statusId ?? null) &&
+    (right.statusCategoryId ?? null) === (left.statusCategoryId ?? null) &&
+    statusMatchesDependency(statusId, right);
+}
+
+function outputRecipientCandidatesForStatusDependency(
+  formation: FormationAnalysisInput,
+  outputs: OutputCapability[],
+  statusOutput: StatusOutputCapability,
+  dependency: CapabilityDependency & { type: 'requires-self-status' | 'requires-any-enemy-status' | 'requires-target-status' | 'requires-target-status-category' },
+  options: CapabilityOptions,
+): string[] {
+  const selectedIds = selectedFormationDragonIds(formation);
+  return uniqueOrdered(outputs
+    .filter((candidate) =>
+      selectedIds.has(candidate.dragonId) &&
+      outputCapabilityVisible(candidate, options) &&
+      candidate.dependencies.some((candidateDependency) =>
+        sameDependencyForRecipientResolution(dependency, candidateDependency, statusOutput.statusId),
+      ),
+    )
+    .map((candidate) => candidate.dragonId));
+}
+
+function statusEffectRecipientCandidatesForStatusDependency(
+  formation: FormationAnalysisInput,
+  dragons: Dragon[],
+  statusOutput: StatusOutputCapability,
+  dependency: CapabilityDependency & { type: 'requires-self-status' | 'requires-any-enemy-status' | 'requires-target-status' | 'requires-target-status-category' },
+  options: CapabilityOptions,
+): string[] {
+  const selectedIds = selectedFormationDragonIds(formation);
+  const recipientIds: string[] = [];
+  for (const dragon of dragons.filter((candidate) => selectedIds.has(candidate.id))) {
+    for (const ability of allAbilities(dragon)) {
+      if (!capabilityVisible({
+        dragonId: dragon.id,
+        abilityId: ability.id,
+        unlockStarRank: ability.unlockStarRank,
+        minimumDragonLevel: ability.minimumDragonLevel,
+        requiredHabitLevel: ability.kind === 'habit' ? 1 : null,
+        futureAvailable: ability.unlockStarRank !== null && ability.unlockStarRank > 1,
+      }, options)) {
+        continue;
+      }
+      const hasMatchingDependency = ability.schedules.some((schedule) =>
+        schedule.effects.flatMap(derivableEffects).some((effect) =>
+          !outputChannelForEffect(effect) &&
+          statusDependenciesForEffect(effect, schedule).some((candidateDependency) =>
+            sameDependencyForRecipientResolution(dependency, candidateDependency, statusOutput.statusId),
+          ),
+        ),
+      );
+      if (hasMatchingDependency) {
+        recipientIds.push(dragon.id);
+      }
+    }
+  }
+  return uniqueOrdered(recipientIds);
+}
+
+function recipientResolutionFacts(resolution: AllyStatusRecipientResolution | null): string[] {
+  if (!resolution) {
+    return [];
+  }
+  if (resolution.state === 'resolved') {
+    return [
+      `Resolved ally recipient: ${resolution.recipientName}.`,
+      resolution.resolutionBasis,
+      resolution.activationUnresolved ? 'Activation success is unresolved.' : null,
+      resolution.sharedAllyFact,
+    ].filter((fact): fact is string => Boolean(fact));
+  }
+  if (resolution.state === 'candidate-set') {
+    return [
+      `Eligible ally recipients: ${resolution.candidateNames.join(', ')}.`,
+      resolution.activationUnresolved ? 'Activation success is unresolved.' : null,
+      'Selected ally recipient is unresolved.',
+      resolution.sharedAllyFact,
+    ].filter((fact): fact is string => Boolean(fact));
+  }
+  return ['No eligible ally recipient is resolved for the supplied status.'];
+}
+
+function supplierFactsForRecipientResolution<T extends { facts: string[]; effects: string[]; summary: string | null }>(
+  supplierFacts: T,
+  resolution: AllyStatusRecipientResolution | null,
+): T {
+  if (!resolution || resolution.state !== 'resolved') {
+    return supplierFacts;
+  }
+  return {
+    ...supplierFacts,
+    facts: supplierFacts.facts.filter((fact) => fact !== 'Selected ally recipient is unresolved.'),
+  };
+}
+
 function formatEffectType(value: string): string {
   return value
     .split(/[-\s]+/)
@@ -5031,6 +5242,7 @@ function conditionalMultiplierValueFacts(
   dependency: CapabilityDependency & { type: 'requires-self-status' | 'requires-any-enemy-status' | 'requires-target-status' | 'requires-target-status-category' },
   options: CapabilityOptions,
   dependentRecipientName: string,
+  recipientResolution: AllyStatusRecipientResolution | null = null,
 ): { facts: string[]; effects: string[]; summary: string | null } {
   const { effect, schedule } = context;
   const multiplier = (effect.conditionalMultipliers ?? []).find((item) =>
@@ -5074,6 +5286,7 @@ function conditionalMultiplierValueFacts(
     output.abilityName,
     dependentRecipientName,
     dependentEffectDescription(output.channel, null),
+    recipientResolution,
   );
   const basePrefix = isHabitRankedOutput ? 'Base current' : 'Base';
   const enhancedPrefix = isHabitRankedOutput ? 'Enhanced current' : 'Enhanced';
@@ -5121,6 +5334,7 @@ function conditionalChanceValueFacts(
   options: CapabilityOptions,
   dragonId: string,
   dependentRecipientName: string,
+  recipientResolution: AllyStatusRecipientResolution | null = null,
 ): { facts: string[]; effects: string[]; summary: string | null } {
   const condition = [
     ...(effect.activationRoll?.targetStatusConditionalChances ?? []),
@@ -5174,6 +5388,7 @@ function conditionalChanceValueFacts(
     ability.name,
     dependentRecipientName,
     dependentEffectDescription(null, effect.type),
+    recipientResolution,
   );
   const facts = [
     ...(level ? [`Current effective ${ability.name} Habit Level: ${level}.`] : []),
@@ -5456,6 +5671,7 @@ function statusConditionScheduleOverlapFacts(
   dependentContext: { ability: AbilityDefinition; schedule: AbilitySchedule; effect: AbilityEffect } | null,
   dependency: CapabilityDependency & { type: 'requires-self-status' | 'requires-any-enemy-status' | 'requires-target-status' | 'requires-target-status-category' },
   dependentRecipientName: string,
+  recipientResolution: AllyStatusRecipientResolution | null = null,
 ): { facts: string[]; effects: string[]; summary: string | null; assumptions: string[] } {
   if (!supplierContext || !dependentContext || (!statusOutput.untilEndOfRound && !statusOutput.durationRounds)) {
     return { facts: [], effects: [], summary: null, assumptions: [] };
@@ -5474,6 +5690,7 @@ function statusConditionScheduleOverlapFacts(
     dependentOutput.abilityName,
     dependentRecipientName,
     dependentOutput.statusId ? `${statusLabel(dependentOutput.statusId)} application` : dependentEffectDescription(dependentOutput.channel, null),
+    recipientResolution,
   );
   if (isRecurringSchedule(supplierContext.schedule) && isRecurringSchedule(dependentContext.schedule)) {
     const recurringSummary = recurringScheduleOverlapSummary(
@@ -5606,6 +5823,7 @@ function statusOverlapRequirementFacts(
   dependentAbilityName: string,
   dependentRecipientName: string,
   dependentEffect: string,
+  recipientResolution: AllyStatusRecipientResolution | null = null,
 ): { facts: string[]; effects: string[]; summary: string; assumptions: string[] } {
   if (dependency.type === 'requires-any-enemy-status') {
     return {
@@ -5624,6 +5842,22 @@ function statusOverlapRequirementFacts(
     };
   }
   if (dependency.type === 'requires-self-status') {
+    if (recipientResolution?.state === 'resolved') {
+      return {
+        facts: [
+          `${recipientResolution.recipientName} is the resolved recipient of ${status} if the supplier activates.`,
+          `${recipientResolution.recipientName} must own the dependent ${dependentAbilityName} output.`,
+          `${dependentAbilityName} benefits while ${recipientResolution.recipientName} has ${status}.`,
+          `${status} and ${dependentAbilityName} share the resolved ally recipient when the interaction occurs.`,
+        ],
+        effects: [
+          `${recipientResolution.recipientName} is the resolved recipient of ${status} if the supplier activates.`,
+          `${dependentAbilityName} benefits while ${recipientResolution.recipientName} has ${status}.`,
+        ],
+        summary: `${recipientResolution.recipientName} is the resolved recipient of ${status} if the supplier activates; ${dependentAbilityName} benefits while ${recipientResolution.recipientName} has ${status}. Activation and uptime remain unresolved.`,
+        assumptions: ['The ally status supplier and dependent output must share the resolved recipient.'],
+      };
+    }
     return {
       facts: [
         `${dependentRecipientName} must be the ally that received ${status}.`,
@@ -5681,11 +5915,15 @@ function dependentEffectDescription(channel: EffectChannel | null, effectType: s
 function statusDependencyUnresolvedAssumption(
   dependency: CapabilityDependency & { type: 'requires-self-status' | 'requires-any-enemy-status' | 'requires-target-status' | 'requires-target-status-category' },
   status: string,
+  recipientResolution: AllyStatusRecipientResolution | null = null,
 ): string {
   if (dependency.type === 'requires-any-enemy-status') {
     return `${status} application success, whether any enemy remains affected, and conditional uptime are unresolved.`;
   }
   if (dependency.type === 'requires-self-status') {
+    if (recipientResolution?.state === 'resolved') {
+      return `${status} activation and uptime are unresolved.`;
+    }
     return `${status} activation, recipient selection, and uptime are unresolved.`;
   }
   return `${status} application success, enemy identity, same-target overlap, and conditional uptime are unresolved.`;
@@ -5694,11 +5932,15 @@ function statusDependencyUnresolvedAssumption(
 function statusDependencyUnresolvedQuestion(
   dependency: CapabilityDependency & { type: 'requires-self-status' | 'requires-any-enemy-status' | 'requires-target-status' | 'requires-target-status-category' },
   status: string,
+  recipientResolution: AllyStatusRecipientResolution | null = null,
 ): string {
   if (dependency.type === 'requires-any-enemy-status') {
     return `Exact ${status} battlefield uptime is unresolved.`;
   }
   if (dependency.type === 'requires-self-status') {
+    if (recipientResolution?.state === 'resolved') {
+      return `Exact ${status} activation and final uptime are unresolved.`;
+    }
     return `Exact ${status} recipient and final uptime are unresolved.`;
   }
   return `Exact same-enemy ${status} overlap and final conditional uptime are unresolved.`;
@@ -5999,7 +6241,11 @@ function formatPosition(position: FormationPosition): string {
     .join(' ');
 }
 
-function statusConditionAssumptions(statusOutput: StatusOutputCapability, output: OutputCapability): string[] {
+function statusConditionAssumptions(
+  statusOutput: StatusOutputCapability,
+  output: OutputCapability,
+  recipientResolution: AllyStatusRecipientResolution | null = null,
+): string[] {
   const assumptions: string[] = [];
   if (statusOutput.chanceFixed !== null) {
     assumptions.push(`Status application has a ${statusOutput.chanceFixed}% trigger chance.`);
@@ -6007,7 +6253,10 @@ function statusConditionAssumptions(statusOutput: StatusOutputCapability, output
   if (statusOutput.chanceByHabitLevel.length > 0) {
     assumptions.push('Status application chance depends on Habit Level.');
   }
-  if (statusOutput.targetSelector.selection === 'any' || statusOutput.targetSelector.selection === 'eligible') {
+  if (
+    recipientResolution?.state !== 'resolved' &&
+    (statusOutput.targetSelector.selection === 'any' || statusOutput.targetSelector.selection === 'eligible')
+  ) {
     assumptions.push('Target selection may choose another eligible target.');
   }
   if (output.conditions.length > 0) {

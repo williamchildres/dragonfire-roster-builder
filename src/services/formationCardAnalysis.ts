@@ -515,7 +515,8 @@ function normalizeFormationCardSummaryLines(
   }
   const lines = [...summaryLines];
   if (trace.matchKind === 'status-condition-enablement' &&
-    trace.effects.some((effect) => /Activation scope is unresolved between one shared roll and independent per-target rolls\./i.test(effect))) {
+    trace.effects.some((effect) => /Activation scope is unresolved between one shared roll and independent per-target rolls\./i.test(effect)) &&
+    !lines.some((line) => /roll scope/i.test(line))) {
     lines.push('Whether this uses one shared roll or separate per-target rolls is unresolved.');
   }
   if (trace.matchKind === 'status-removal' && /same successful activation/i.test(detail)) {

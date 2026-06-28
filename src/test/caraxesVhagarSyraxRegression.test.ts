@@ -182,6 +182,7 @@ describe('Caraxes, Vhagar, and Syrax review regression', () => {
     expect(traceText(firstStrikeSource)).toContain('Status application chance: 20%.');
     expect(traceText(firstStrikeSource)).toContain('Duration: 2 rounds.');
     expect(traceText(firstStrikeSource)).not.toMatch(/one enemy|Selected enemy|enemy identity/i);
+    expect(firstStrikeSource!.exactResultUnknownReason).toBe('Caraxes is the resolved recipient if Blazing Fury activates; exact activation and uptime are not calculated.');
   });
 
   it('reports carryover, same-round overlap, and fixed conditional chance wording', () => {
@@ -219,8 +220,15 @@ describe('Caraxes, Vhagar, and Syrax review regression', () => {
     expect(infernalText).toContain('Round 3 from a successful Round 3 application only if Blazing Fury resolves before Infernal Burst that round');
     expect(infernalText).toContain('Round 6 after a successful Round 5 application');
     expect(infernalText).toContain('Round 9 from a successful Round 9 application only if Blazing Fury resolves before Infernal Burst that round');
-    expect(infernalText).toContain('Caraxes must be the ally that received First-Strike.');
-    expect(infernalText).toContain('First-Strike and Infernal Burst share the same ally recipient when the interaction occurs.');
+    expect(infernalText).toContain('Resolved ally recipient: Caraxes.');
+    expect(infernalText).toContain('Recipient resolution basis: explicit Fire-output preference.');
+    expect(infernalText).toContain('Activation success is unresolved.');
+    expect(infernalText).toContain('First-Strike and Fire Damage support share the resolved ally recipient.');
+    expect(infernalText).toContain('Caraxes is the resolved recipient of First-Strike if the supplier activates.');
+    expect(infernalText).toContain('Caraxes must own the dependent Infernal Burst output.');
+    expect(infernalText).toContain('Infernal Burst benefits while Caraxes has First-Strike.');
+    expect(infernalText).toContain('Exact First-Strike activation and final uptime are unresolved.');
+    expect(infernalText).not.toMatch(/Selected ally recipient is unresolved|recipient selection|another eligible target|Exact First-Strike recipient/i);
     expect(infernalText).not.toMatch(/ineligible enemy|enemy identity|target overlap remains unresolved/i);
 
     const fieryText = traceText(fieryBonds);
@@ -317,6 +325,8 @@ describe('Caraxes, Vhagar, and Syrax review regression', () => {
     expect(fieryDependency!.summary).toContain('Both effects check each round.');
     expect(fieryDependency!.summary).toContain('same-round Burn requires Crippling Inferno to resolve first.');
     expect(fieryDependency!.summary).toContain('Application, same-enemy overlap, action order, roll scope remain conditional.');
+    expect((fieryDependency!.summary.match(/roll scope|shared roll|per-target/gi) ?? [])).toHaveLength(1);
+    expect(fieryDependency!.summary).not.toContain('Whether this uses one shared roll or separate per-target rolls is unresolved.');
     expect(fieryDependency!.summary).not.toContain('Crippling Inferno has a 10% chance');
     expect(interactionText(fieryDependency!)).toContain('Crippling Inferno has a 10% chance each round');
     expect(interactionText(fieryDependency!)).toContain('Taunt lasts 2 rounds.');
