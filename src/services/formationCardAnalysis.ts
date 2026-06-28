@@ -355,7 +355,7 @@ function toCardInteraction({
     effects,
     requirements: trace.requirements,
     confidence: trace.confidence,
-    modifierLines: modifierLinesForTrace(trace, recipient),
+    modifierLines: modifierLinesForTrace(trace, recipient, allDragons),
     state,
     status: trace.status,
     isCandidate,
@@ -522,6 +522,16 @@ function getAbilityById(source: Dragon, abilityId: string | null): AbilityDefini
   return [source.command, source.trait, ...source.habits].find((ability): ability is AbilityDefinition => ability?.id === abilityId) ?? null;
 }
 
+function abilityOwnerForId(dragons: Dragon[], abilityId: string): { dragon: Dragon; ability: AbilityDefinition } | null {
+  for (const dragon of dragons) {
+    const ability = getAbilityById(dragon, abilityId);
+    if (ability) {
+      return { dragon, ability };
+    }
+  }
+  return null;
+}
+
 function abilityTimingPhrase(ability: AbilityDefinition | null): string | null {
   const schedule = ability?.schedules[0];
   if (!schedule) {
@@ -542,20 +552,25 @@ function abilityTimingPhrase(ability: AbilityDefinition | null): string | null {
   return null;
 }
 
-function modifierLinesForTrace(trace: SynergyTrace, recipient: Dragon | null): string[] {
+function modifierLinesForTrace(trace: SynergyTrace, recipient: Dragon | null, allDragons: Dragon[]): string[] {
   if (trace.matchKind !== 'incoming-effect-amplification' || !trace.recipientModifierType || !recipient) {
     return [];
   }
-  const abilityName = trace.recipientModifierAbilityId ? getAbilityName(recipient, trace.recipientModifierAbilityId) : 'Recipient modifier';
+  const modifierSource = trace.recipientModifierAbilityId
+    ? abilityOwnerForId(allDragons, trace.recipientModifierAbilityId)
+    : null;
+  const abilityName = modifierSource?.ability.name ??
+    (trace.recipientModifierAbilityId ? getAbilityName(recipient, trace.recipientModifierAbilityId) : 'Recipient modifier');
+  const ownerName = modifierSource?.dragon.name ?? recipient.name;
   const positionBlocked = trace.status === 'inactive' &&
     trace.requirements.some((requirement) => requirement.satisfied === false && /position/i.test(requirement.label));
   if (positionBlocked) {
-    return [`${abilityName} amplification unavailable: ${recipient.name} must be Vanguard.`];
+    return [`${abilityName} amplification unavailable: ${ownerName} must be Vanguard.`];
   }
   const value = trace.recipientModifierValue === null || trace.recipientModifierValue === undefined
     ? 'unknown'
     : `+${trace.recipientModifierValue}%`;
-  return [`Amplified by ${recipient.name}'s ${abilityName}: ${trace.recipientModifierType.replace(/ Up$/i, '')} ${value}.`];
+  return [`Amplified by ${ownerName}'s ${abilityName}: ${trace.recipientModifierType.replace(/ Up$/i, '')} ${value}.`];
 }
 
 function sanitizeNormalCardEffects(effects: string[], summaryLines: string[]): string[] {
@@ -1602,11 +1617,7 @@ function attachRecipientModifiers(
 
   for (const modifier of modifierItems) {
     const target = baseItems.find(
-      (item) =>
-        item.relationshipId === modifier.relationshipId &&
-        item.sourceDragonId === modifier.sourceDragonId &&
-        item.recipientDragonId === modifier.recipientDragonId &&
-        item.abilityName === modifier.abilityName,
+      (item) => recipientModifierMatchesBase(item, modifier),
     );
     if (!target) {
       fallbackModifiers.push(modifier);
@@ -1630,6 +1641,44 @@ function attachRecipientModifiers(
   }
 
   return [...baseItems, ...fallbackModifiers];
+}
+
+function recipientModifierMatchesBase(base: FormationCardInteraction, modifier: FormationCardInteraction): boolean {
+  if (
+    base.sourceDragonId !== modifier.sourceDragonId ||
+    base.recipientDragonId !== modifier.recipientDragonId ||
+    base.abilityName !== modifier.abilityName
+  ) {
+    return false;
+  }
+  if (base.relationshipId === modifier.relationshipId) {
+    return true;
+  }
+  const modifierText = normalizeText([
+    modifier.effectTitle,
+    modifier.summary,
+    ...modifier.summaryLines,
+    ...modifier.details,
+    ...modifier.effects,
+    ...modifier.modifierLines,
+  ].join(' '));
+  const baseText = normalizeText([
+    base.effectTitle,
+    base.summary,
+    ...base.summaryLines,
+    ...base.details,
+    ...base.effects,
+  ].join(' '));
+  if (/recovery received|recovery support|recovery amplification/.test(modifierText)) {
+    return /recovery rate|recovery support|recovery received/.test(baseText);
+  }
+  if (/damage received|damage dealt|physical damage|tactical damage|fire damage/.test(modifierText)) {
+    return /damage received|damage dealt|physical damage|tactical damage|fire damage/.test(baseText);
+  }
+  if (/\bstrength\b|\bintelligence\b|\binstinct\b|\binitiative\b/.test(modifierText)) {
+    return /\bstrength\b|\bintelligence\b|\binstinct\b|\binitiative\b/.test(baseText);
+  }
+  return false;
 }
 
 function prioritizeInteractions(interactions: FormationCardInteraction[]): FormationCardInteraction[] {
@@ -2393,19 +2442,20 @@ function enemyFacingSummary(trace: SynergyTrace): string {
   if (trace.matchKind === 'enemy-damage-dealt-reduction') {
     if (isAllMatchingEnemyCondition(trace)) {
       const amount = modifierAmountFromTrace(trace) ?? 'an unresolved amount';
-      const threshold = allMatchingThresholdFact(trace) ?? 'all enemies matching the source condition';
+      const threshold = allMatchingThresholdFact(trace);
+      const targetPhrase = threshold ? threshold.replace(/^Applies to /i, '').replace(/\.$/, '') : 'all enemies';
       const duration = trace.effects.find((effect) => /Duration:/i.test(effect)) ?? null;
       if (trace.channel === 'recovery') {
         return [
-          `Reduces Recovery Received by ${amount} for ${threshold.replace(/^Applies to /i, '').replace(/\.$/, '')}.`,
+          `Reduces Recovery Received by ${amount} for ${targetPhrase}.`,
           duration,
-          'Enemy threshold membership is unresolved.',
+          threshold ? 'Enemy threshold membership is unresolved.' : null,
         ].filter(Boolean).join(' ');
       }
       return [
-        `Reduces ${formatToken(trace.channel ?? 'damage-dealt')} by ${amount} for ${threshold.replace(/^Applies to /i, '').replace(/\.$/, '')}.`,
+        `Reduces ${formatToken(trace.channel ?? 'damage-dealt')} by ${amount} for ${targetPhrase}.`,
         duration,
-        'Enemy threshold membership is unresolved.',
+        threshold ? 'Enemy threshold membership is unresolved.' : null,
       ].filter(Boolean).join(' ');
     }
     const stat = enemyReductionStat(trace);
@@ -2415,14 +2465,15 @@ function enemyFacingSummary(trace: SynergyTrace): string {
     if (isAllMatchingEnemyCondition(trace)) {
       const channel = formatToken(trace.channel ?? 'damage-dealt');
       const amount = modifierAmountFromTrace(trace) ?? 'an unresolved amount';
-      const threshold = allMatchingThresholdFact(trace) ?? 'all enemies matching the source condition';
+      const threshold = allMatchingThresholdFact(trace);
+      const targetPhrase = threshold ? threshold.replace(/^Applies to /i, '').replace(/\.$/, '') : 'all enemies';
       const scope = trace.effects.find((effect) => /Applies to .*qualifying|Applies to non-Basic/i.test(effect)) ??
         trace.matchedFacts.find((fact) => /Applies to .*qualifying|Applies to non-Basic/i.test(fact)) ??
         null;
       return [
-        `Increases ${channel} Received by ${amount} for ${threshold.replace(/^Applies to /i, '').replace(/\.$/, '')}.`,
+        `Increases ${channel} Received by ${amount} for ${targetPhrase}.`,
         scope,
-        'Enemy threshold membership and allied target overlap are not guaranteed.',
+        threshold ? 'Enemy threshold membership and allied target overlap are not guaranteed.' : 'All affected-enemy overlap with allied outputs is not guaranteed.',
       ].filter(Boolean).join(' ');
     }
     return `Increases ${formatToken(trace.channel ?? 'damage-dealt')} Received for one enemy target.`;

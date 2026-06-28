@@ -763,10 +763,17 @@ function semanticTraceKey(trace: SynergyTrace): string {
     trace.recipientDragonId ?? '',
     trace.recipientAbilityId ?? '',
     trace.modifierCapabilityId ?? '',
+    [...(trace.modifierCapabilityIds ?? [])].sort().join(','),
+    trace.status,
+    trace.interactionScope ?? '',
     trace.channel ?? '',
     trace.targetSelectionGroup
       ? `selection:${trace.targetSelectionGroup.targetCount}:${trace.targetSelectionGroup.eligibleRecipientDragonIds.join(',')}:${[...(trace.modifierCapabilityIds ?? [])].sort().join(',')}`
       : '',
+    [...(trace.sourceScopeResults ?? [])]
+      .map((result) => `${result.modifierCapabilityId}:${result.outputCapabilityId}:${String(result.sourceScopeCompatible)}:${result.status}`)
+      .sort()
+      .join(','),
     [...(trace.matchedOutputCapabilityIds ?? [])].sort().join(','),
   ].join('|');
 }
