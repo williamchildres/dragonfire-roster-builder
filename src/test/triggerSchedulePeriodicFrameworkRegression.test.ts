@@ -223,6 +223,7 @@ describe('trigger, schedule override, periodic damage framework regression', () 
 
     const lightningCardText = cardsFor(presentation, 'Lightning Strike').map((item) => `${item.summary} ${item.detail}`).join(' ');
     expect(lightningCardText).toContain('Strength');
+    expect(lightningCardText).toContain('Strength +25%');
     expect(lightningCardText).toContain('First-Strike');
     expect(lightningCardText).toContain('Double-Strike');
     expect(lightningCardText).toContain('40%');
@@ -275,6 +276,13 @@ describe('trigger, schedule override, periodic damage framework regression', () 
         expect(receiveText).toContain(output);
       }
     }
+
+    const rallyingFlameTrace = traces.find((trace) =>
+      trace.sourceAbilityId === 'vermax-rallying-flame' &&
+      trace.ruleId === 'internal-self-modifier'
+    );
+    expect(traceText(rallyingFlameTrace)).toContain('Physical Damage Dealt +5% per stack');
+    expect(traceText(rallyingFlameTrace)).toContain('Maximum theoretical modifier at effective Habit Level 1: 20% Physical Damage Dealt.');
 
     const warriorsZealCards = cardsFor(presentation, "Warrior's Zeal").filter((item) => item.recipientName === 'Malachite');
     expect(warriorsZealCards.some((item) => item.traceIds.length > 1)).toBe(true);

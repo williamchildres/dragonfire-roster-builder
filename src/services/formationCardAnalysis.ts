@@ -3292,8 +3292,9 @@ function enemyFacingSummary(trace: SynergyTrace): string {
     const targetPhrase = enemyReductionTargetPhrase(trace);
     const duration = trace.effects.find((effect) => /Duration:/i.test(effect)) ?? null;
     if (trace.channel === 'stat' && stat) {
+      const signedAmount = amount ? `-${amount}` : 'reduction';
       return [
-        `${stat} reduction on ${targetPhrase}.`,
+        `Enemy ${stat} ${signedAmount} on ${targetPhrase}.`,
         duration,
         'Target selection and uptime are uncertain.',
       ].filter(Boolean).join(' ');
@@ -3454,8 +3455,8 @@ function allMatchingThresholdFact(trace: SynergyTrace): string | null {
 
 function modifierAmountFromTrace(trace: SynergyTrace): string | null {
   const text = [trace.explanation, ...trace.effects, ...trace.matchedFacts].join(' ');
-  return text.match(/\b(?:Received|increase|decrease|by)\s+\+?([-+]?\d+(?:\.\d+)?%)/i)?.[1] ??
-    text.match(/\+([-+]?\d+(?:\.\d+)?%)\b/)?.[1] ??
+  return text.match(/\b(?:Received|increase|decrease|by)\s+\+?([-+]?\d+(?:\.\d+)?(?:%|(?:\s+flat)|(?:\s*[x×]))?(?:\s+per stack)?)/i)?.[1] ??
+    text.match(/\+([-+]?\d+(?:\.\d+)?(?:%|(?:\s+flat)|(?:\s*[x×]))?(?:\s+per stack)?)\b/i)?.[1] ??
     null;
 }
 

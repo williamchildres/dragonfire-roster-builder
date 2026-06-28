@@ -1546,11 +1546,14 @@ function internalModifierDetailLines(
     ? stackModifierDetailLines(modifier, context.schedule, context.effect, options)
     : [];
   const contextDetails = contextualModifierDetailLines(modifier, options);
+  const mainLine = modifier.valuePerStack !== null
+    ? modifierEffectValueLine(modifier, options)
+    : stat
+      ? `${statLabel(stat)} ${modifier.operation === 'decrease' ? '-' : '+'}${value}${effectiveLevel ? ` at effective Habit Level ${effectiveLevel}` : ''}.`
+      : `${directedChannelLabel(modifier.channel, modifier.direction)} ${modifier.operation} ${value}${effectiveLevel ? ` at effective Habit Level ${effectiveLevel}` : ''}.`;
   return [
     context ? scheduleTimingDetail(context.schedule) : null,
-    stat
-      ? `${statLabel(stat)} ${modifier.operation === 'decrease' ? '-' : '+'}${value}${effectiveLevel ? ` at effective Habit Level ${effectiveLevel}` : ''}.`
-      : `${directedChannelLabel(modifier.channel, modifier.direction)} ${modifier.operation} ${value}${effectiveLevel ? ` at effective Habit Level ${effectiveLevel}` : ''}.`,
+    mainLine,
     ...contextDetails,
     ...stackDetails,
     context ? enhancementDetail(context.effect) : null,
@@ -8527,6 +8530,9 @@ function modifierDisplayValue(modifier: ModifierCapability, options: CapabilityO
   }
   const displayValue = modifier.operation === 'decrease' ? Math.abs(value) : value;
   const unit = rankedValue?.unit ?? modifier.unit;
+  if (unit === 'stack') {
+    return `${displayValue}%`;
+  }
   return `${displayValue}${unit === 'percent' ? '%' : unit === 'flat' ? ' flat' : ''}`;
 }
 

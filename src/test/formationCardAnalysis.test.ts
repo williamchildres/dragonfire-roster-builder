@@ -45,6 +45,16 @@ function card(result: ReturnType<typeof presentation>, dragonId: string) {
   return match!;
 }
 
+function interactionText(item: ReturnType<typeof card>['provides'][number]) {
+  return [
+    item.summary,
+    item.detail,
+    ...item.summaryLines,
+    ...item.details,
+    ...item.effects,
+  ].join(' ');
+}
+
 function selectedRoster(dragonIds: string[], level = 26, starRank = 1) {
   const roster = createEmptyRoster(dragons);
   for (const dragonId of dragonIds) {
@@ -736,5 +746,25 @@ describe('formation card analysis presentation', () => {
     expect(canonicalCardText("Caraxes's Hunter's Wrath can increase Syrax's Strength by 20 flat", dragons)).toContain(
       'Strength +20',
     );
+  });
+
+  it('preserves flat values, chance values, multipliers, and damage rates in shared formatting', () => {
+    expect(canonicalCardText("Syrax's Sentinel's Wit can increase Sheepstealer's Instinct by 20 flat", dragons)).toContain(
+      'Instinct +20',
+    );
+    expect(canonicalCardText("Syrax's Sentinel's Wit can increase Sheepstealer's Initiative by 20 flat", dragons)).toContain(
+      'Initiative +20',
+    );
+
+    const result = presentation('8', true);
+    const syrax = card(result, 'syrax');
+    const caraxes = card(result, 'caraxes');
+
+    const syraxText = [...syrax.provides, ...syrax.receives].map(interactionText).join(' ');
+    expect(syraxText).toContain('20% chance');
+    expect(syraxText).toContain('100% rate');
+
+    const caraxesText = [...caraxes.provides, ...caraxes.receives].map(interactionText).join(' ');
+    expect(caraxesText).toContain('1.5x');
   });
 });
