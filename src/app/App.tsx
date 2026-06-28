@@ -69,9 +69,11 @@ import {
 import {
   analyzeFormationTraces,
   createSynergyAuditExport,
+  dedupeFinalTechnicalAnalysisTraces,
   generateFormationAudit,
   traceStatusReason,
   isNormalSynergyTrace,
+  technicalAnalysisTraceIdentity,
 } from '../services/synergyTrace';
 import { defaultFilters, filterDragons, sortDragons, type DragonFilters, type DragonSort } from '../services/rosterFilters';
 import {
@@ -596,10 +598,11 @@ function FormationBuilderSection({
   const traceOptions = { roster, previewMaxRankInteractions: previewMaxRank };
   const synergy = analyzeFormation(formation, dragons, defaultSynergyRules, traceOptions);
   const traces = analyzeFormationTraces(formation, dragons, traceOptions);
+  const liveTechnicalTraces = prepareLiveTechnicalAnalysisTraces(traces);
   const cardPresentation = buildFormationCardPresentation(formation, dragons, traces, { previewEnabled: previewMaxRank, roster });
-  const providerEffects = [...new Set(traces.map((trace) => trace.providedEffectType).filter((value): value is string => Boolean(value)))];
-  const recipientAmplifiers = [...new Set(traces.map((trace) => trace.recipientModifierType).filter((value): value is string => Boolean(value)))];
-  const filteredTraces = traces.filter(
+  const providerEffects = [...new Set(liveTechnicalTraces.map((trace) => trace.providedEffectType).filter((value): value is string => Boolean(value)))];
+  const recipientAmplifiers = [...new Set(liveTechnicalTraces.map((trace) => trace.recipientModifierType).filter((value): value is string => Boolean(value)))];
+  const filteredTraces = liveTechnicalTraces.filter(
     (trace) =>
       (providerEffectFilter === 'all' || trace.providedEffectType === providerEffectFilter) &&
       (recipientAmplifierFilter === 'all' || trace.recipientModifierType === recipientAmplifierFilter) &&
@@ -889,9 +892,7 @@ function FormationBuilderSection({
               </button>
             </div>
             <div className="trace-grid">
-              {visibleTraces.map((trace) => (
-                <TraceCard trace={trace} key={trace.id} />
-              ))}
+              <TechnicalAnalysisTraceCards traces={visibleTraces} />
             </div>
           </div>
           <AuditMatrixSection
@@ -1482,6 +1483,20 @@ function AnalysisList({
         <p>None identified</p>
       )}
     </div>
+  );
+}
+
+function prepareLiveTechnicalAnalysisTraces(traces: SynergyTrace[]): SynergyTrace[] {
+  return dedupeFinalTechnicalAnalysisTraces(traces);
+}
+
+export function TechnicalAnalysisTraceCards({ traces }: { traces: SynergyTrace[] }) {
+  return (
+    <>
+      {prepareLiveTechnicalAnalysisTraces(traces).map((trace) => (
+        <TraceCard trace={trace} key={technicalAnalysisTraceIdentity(trace)} />
+      ))}
+    </>
   );
 }
 

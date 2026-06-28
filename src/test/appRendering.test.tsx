@@ -1,8 +1,11 @@
 import { render, screen, within } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { afterEach, describe, expect, it, vi } from 'vitest';
-import { App, RawWordingDisclosure } from '../app/App';
-import { STORAGE_KEY } from '../services/rosterStorage';
+import { App, RawWordingDisclosure, TechnicalAnalysisTraceCards } from '../app/App';
+import { dragons } from '../data/dragons';
+import type { FormationAnalysisInput, SynergyTrace } from '../models/synergy';
+import { analyzeFormationTraces, dedupeFinalTechnicalAnalysisTraces } from '../services/synergyTrace';
+import { createEmptyRoster, STORAGE_KEY } from '../services/rosterStorage';
 import globalCss from '../styles/global.css?raw';
 
 const originalClientHeight = Object.getOwnPropertyDescriptor(HTMLElement.prototype, 'clientHeight');
@@ -12,6 +15,7 @@ const originalResizeObserver = window.ResizeObserver;
 describe('Dragonfire Roster Lab app', () => {
   afterEach(() => {
     vi.restoreAllMocks();
+    window.localStorage.clear();
     if (originalClientHeight) {
       Object.defineProperty(HTMLElement.prototype, 'clientHeight', originalClientHeight);
     } else {
@@ -24,6 +28,45 @@ describe('Dragonfire Roster Lab app', () => {
     }
     window.ResizeObserver = originalResizeObserver;
   });
+
+  function fullRankEpicRoster() {
+    const roster = createEmptyRoster(dragons);
+    for (const dragonId of ['feskar', 'rhysarion', 'shadowsong']) {
+      const entry = roster[dragonId]!;
+      entry.owned = true;
+      entry.collection.state = 'hatched';
+      entry.starRank = 10;
+      entry.reignLevel = 26;
+      for (const habitId of Object.keys(entry.habitLevels)) {
+        entry.habitLevels[habitId] = 0;
+      }
+    }
+    return roster;
+  }
+
+  function countText(haystack: string, needle: string): number {
+    return haystack.split(needle).length - 1;
+  }
+
+  function incomingRecoveryAmplification(trace: SynergyTrace): boolean {
+    return trace.matchKind === 'incoming-effect-amplification' &&
+      trace.recipientAbilityId === 'rhysarion-unbroken-devotion' &&
+      trace.channel === 'recovery';
+  }
+
+  function outgoingRecoverySupport(trace: SynergyTrace): boolean {
+    return trace.matchKind === 'outgoing-effect-amplification' &&
+      trace.channel === 'recovery' &&
+      ['rhysarion-ebbing-fury', 'rhysarion-echoing-melody'].includes(trace.sourceAbilityId ?? '');
+  }
+
+  function blockText(block: Element | null): string {
+    return block?.textContent?.replace(/\s+/g, ' ').trim() ?? '';
+  }
+
+  function blockHasSourceAbility(block: Element | null, abilityName: string): boolean {
+    return new RegExp(`Source ability\\s*${abilityName.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}`).test(blockText(block));
+  }
 
   it('renders all dragons through the database and supports search', async () => {
     const user = userEvent.setup();
@@ -327,6 +370,76 @@ describe('Dragonfire Roster Lab app', () => {
     expect(screen.getByText('Left Flank')).toBeInTheDocument();
     expect(screen.getByText('Vanguard')).toBeInTheDocument();
     expect(screen.getByText('Right Flank')).toBeInTheDocument();
+  });
+
+  it('deduplicates the live Show analysis details technical traces', async () => {
+    const user = userEvent.setup();
+    const formation: FormationAnalysisInput = { 'left-flank': 'feskar', vanguard: 'rhysarion', 'right-flank': 'shadowsong' };
+    const roster = fullRankEpicRoster();
+    window.localStorage.setItem(STORAGE_KEY, JSON.stringify({
+      format: 'dragonfire-roster-lab-local',
+      schemaVersion: 3,
+      updatedAt: '2026-06-28T00:00:00.000Z',
+      roster: Object.values(roster),
+    }));
+
+    const liveTraces = dedupeFinalTechnicalAnalysisTraces(analyzeFormationTraces(formation, dragons, { roster }));
+    const incoming = liveTraces.filter(incomingRecoveryAmplification);
+    const outgoing = liveTraces.filter(outgoingRecoverySupport);
+    expect(incoming.map((trace) => `${trace.sourceAbilityId}:${trace.recipientDragonId}`).sort()).toEqual([
+      'rhysarion-ebbing-fury:feskar',
+      'rhysarion-ebbing-fury:shadowsong',
+      'rhysarion-echoing-melody:feskar',
+      'rhysarion-echoing-melody:shadowsong',
+    ]);
+    expect(incoming).toHaveLength(4);
+    expect(outgoing.map((trace) => `${trace.sourceAbilityId}:${trace.recipientDragonId}`).sort()).toEqual([
+      'rhysarion-ebbing-fury:feskar',
+      'rhysarion-ebbing-fury:rhysarion',
+      'rhysarion-ebbing-fury:shadowsong',
+      'rhysarion-echoing-melody:feskar',
+      'rhysarion-echoing-melody:shadowsong',
+    ]);
+    expect(outgoing).toHaveLength(5);
+
+    render(<App />);
+    await user.click(screen.getAllByRole('button', { name: /formation builder/i })[0]!);
+    const selectors = screen.getAllByLabelText('Dragon');
+    await user.selectOptions(selectors[0]!, 'feskar');
+    await user.selectOptions(selectors[1]!, 'rhysarion');
+    await user.selectOptions(selectors[2]!, 'shadowsong');
+    await user.click(screen.getByLabelText(/show analysis details/i));
+
+    const details = screen.getByRole('heading', { name: 'Analysis Details' }).closest('.panel');
+    expect(details).not.toBeNull();
+    const liveText = details?.textContent ?? '';
+    expect(countText(liveText, 'Feskar amplifies Rhysarion Recovery')).toBe(2);
+    expect(countText(liveText, 'Shadowsong amplifies Rhysarion Recovery')).toBe(2);
+
+    const feskarBlocks = within(details as HTMLElement).getAllByRole('heading', { name: 'Feskar amplifies Rhysarion Recovery' })
+      .map((heading) => heading.closest('.trace-card'));
+    const shadowsongBlocks = within(details as HTMLElement).getAllByRole('heading', { name: 'Shadowsong amplifies Rhysarion Recovery' })
+      .map((heading) => heading.closest('.trace-card'));
+    expect(feskarBlocks.filter((block) => blockHasSourceAbility(block, 'Ebbing Fury'))).toHaveLength(1);
+    expect(feskarBlocks.filter((block) => blockHasSourceAbility(block, 'Echoing Melody'))).toHaveLength(1);
+    expect(shadowsongBlocks.filter((block) => blockHasSourceAbility(block, 'Ebbing Fury'))).toHaveLength(1);
+    expect(shadowsongBlocks.filter((block) => blockHasSourceAbility(block, 'Echoing Melody'))).toHaveLength(1);
+
+    const duplicate = incoming.find((trace) =>
+      trace.sourceAbilityId === 'rhysarion-ebbing-fury' &&
+      trace.recipientDragonId === 'feskar'
+    );
+    expect(duplicate).toBeDefined();
+    const duplicateRender = render(
+      <div>
+        <TechnicalAnalysisTraceCards traces={[...liveTraces, duplicate!]} />
+      </div>,
+    );
+    expect(countText(duplicateRender.container.textContent ?? '', 'Feskar amplifies Rhysarion Recovery')).toBe(2);
+    const duplicateFeskarBlocks = within(duplicateRender.container).getAllByRole('heading', { name: 'Feskar amplifies Rhysarion Recovery' })
+      .map((heading) => heading.closest('.trace-card'));
+    expect(duplicateFeskarBlocks.filter((block) => blockHasSourceAbility(block, 'Ebbing Fury'))).toHaveLength(1);
+    expect(duplicateFeskarBlocks.filter((block) => blockHasSourceAbility(block, 'Echoing Melody'))).toHaveLength(1);
   });
 
   it('renders selected formation cards with normalized regions and compact interaction overflow', async () => {
