@@ -1,4 +1,4 @@
-import { FORMATION_POSITIONS, TROOP_TYPES, type AbilityEffect, type AbilitySchedule, type AbilityScheduleOverride, type ActivationRoll, type Dragon, type FormationPosition, type OwnedDragon, type RankedValue, type TroopType } from '../models/dragon';
+import { FORMATION_POSITIONS, TROOP_TYPES, type AbilityDefinition, type AbilityEffect, type AbilitySchedule, type AbilityScheduleOverride, type ActivationRoll, type Dragon, type FormationPosition, type OwnedDragon, type RankedValue, type TroopType } from '../models/dragon';
 import type { FormationAnalysisInput, RequirementTrace, SynergyTrace, TraceConfidence, TraceStatus } from '../models/synergy';
 import { rankedValueForHabitLevel, resolveEffectiveHabitLevelForAbility } from './habitLevels';
 import { isNormalSynergyTrace } from './synergyTrace';
@@ -318,11 +318,12 @@ function toCardInteraction({
   const abilityName = getAbilityName(source, trace.sourceAbilityId);
   const state = projectedInteractionState(trace, previewEnabled);
   const detail = canonicalCardText(trace.explanation, allDragons);
-  const summaryLines = summarizeTrace(trace, source, recipient, detail, {
+  const baseSummaryLines = summarizeTrace(trace, source, recipient, detail, {
     isCandidate,
     candidateTotal,
     targetLabel,
   }).map(sanitizeNormalCardText).filter((line): line is string => Boolean(line));
+  const summaryLines = normalizeFormationCardSummaryLines(trace, source, recipient, detail, baseSummaryLines);
   const summary = compactSummaryText(summaryLines, candidateTotal);
   const detailText = omitNormalCardSummarySentences(sanitizeNormalCardText(detail), summaryLines);
   const effects = sanitizeNormalCardEffects(trace.effects, summaryLines);
@@ -372,6 +373,175 @@ function toCardInteraction({
   };
 }
 
+function normalizeFormationCardSummaryLines(
+  trace: SynergyTrace,
+  source: Dragon,
+  recipient: Dragon | null,
+  detail: string,
+  summaryLines: string[],
+): string[] {
+  if (isStackSupportTrace(trace)) {
+    return stackSupportSummaryLines(trace, source, recipient, detail);
+  }
+  const lines = [...summaryLines];
+  if (trace.matchKind === 'status-condition-enablement' &&
+    trace.effects.some((effect) => /Activation scope is unresolved between one shared roll and independent per-target rolls\./i.test(effect))) {
+    lines.push('Whether this uses one shared roll or separate per-target rolls is unresolved.');
+  }
+  if (trace.matchKind === 'status-removal' && /same successful activation/i.test(detail)) {
+    lines.push('Advantage and removal of Weakened share the same successful activation. The cleanse does not receive an independent roll.');
+  }
+  return lines;
+}
+
+function isStackSupportTrace(trace: SynergyTrace): boolean {
+  return trace.effects.some((effect) => /Shared stack pool:/i.test(effect) || /Value per stack at effective Habit Level/i.test(effect));
+}
+
+function stackSupportSummaryLines(trace: SynergyTrace, source: Dragon, recipient: Dragon | null, detail: string): string[] {
+  const ability = getAbilityById(source, trace.sourceAbilityId);
+  const abilityName = ability?.name ?? getAbilityName(source, trace.sourceAbilityId);
+  const stackName = stackGrantName(trace, source, recipient) ?? abilityName;
+  const lines: string[] = [];
+
+  if (recipient && recipient.id !== source.id) {
+    if (/same successful activation/i.test(detail) || trace.effects.some((effect) => /shared .*activation roll grants both stack effects/i.test(effect))) {
+      lines.push(`On the same successful ${abilityName} activation, ${recipient.name} gains one ${stackName} stack.`);
+    } else {
+      const chanceText = stackChanceText(trace);
+      lines.push(`${chanceText ?? 'Activation'} chance to grant ${recipient.name} one ${stackName} stack.`);
+    }
+  } else {
+    const chanceText = stackChanceText(trace);
+    const timing = abilityTimingPhrase(ability);
+    if (chanceText && timing === 'at the start of combat') {
+      lines.push(`${chanceText} chance at the start of combat to gain one ${stackName} stack.`);
+    } else if (chanceText && (timing === 'each round' || timing === 'at the start of each round')) {
+      lines.push(`Each round, ${chanceText} chance to gain one ${stackName} stack.`);
+    } else if (chanceText && timing === 'after each Basic Attack') {
+      lines.push(`After each Basic Attack, ${chanceText} chance to gain one ${stackName} stack.`);
+    } else if (chanceText) {
+      lines.push(`${chanceText} chance to gain one ${stackName} stack.`);
+    } else {
+      lines.push(`Gain one ${stackName} stack.`);
+    }
+  }
+
+  const valueLine = stackValueSentence(trace);
+  if (valueLine) {
+    lines.push(valueLine);
+  }
+
+  const repeatLine = stackRepeatSentence(trace);
+  if (repeatLine) {
+    lines.push(repeatLine);
+  }
+
+  return lines;
+}
+
+function stackValueSentence(trace: SynergyTrace): string | null {
+  const valueLine = trace.effects.find((effect) => /Value per stack at effective Habit Level 1:/i.test(effect)) ??
+    trace.effects.find((effect) => /Value per stack at effective Habit Level/i.test(effect));
+  const maximumLine = trace.effects.find((effect) => /Maximum stacks:/i.test(effect));
+  if (!valueLine || !maximumLine) {
+    return null;
+  }
+  const valueMatch = valueLine.match(/Value per stack at effective Habit Level \d+:\s*([0-9.]+)%\s+(.+?)\./i);
+  const maximumMatch = maximumLine.match(/Maximum stacks:\s*(\d+)\./i);
+  if (!valueMatch || !maximumMatch) {
+    return null;
+  }
+  const durationLine = trace.effects.find((effect) => /Duration:/i.test(effect));
+  let duration = durationLine ? durationLine.replace(/^Duration:\s*/i, '').replace(/\.$/, '') : null;
+  if (/^until end of combat$/i.test(duration ?? '')) {
+    duration = 'until the end of combat';
+  }
+  if (!duration && isStackSupportTrace(trace)) {
+    duration = 'until the end of combat';
+  }
+  return `Each stack increases ${valueMatch[2]} by ${valueMatch[1]}%, up to ${maximumMatch[1]} stacks${duration ? `, ${duration}` : ''}. Current stack count is unknown.`;
+}
+
+function stackRepeatSentence(trace: SynergyTrace): string | null {
+  if (trace.effects.some((effect) => /Repeat mode: once-if-any-match/i.test(effect))) {
+    return 'If at least one enemy deals Fire Damage, the stack attempt repeats once. The repeated attempt remains chance-based.';
+  }
+  if (trace.effects.some((effect) => /Repeat mode: once-per-match/i.test(effect))) {
+    const chanceText = stackChanceText(trace);
+    return `The activation repeats once for each enemy that deals Fire Damage. The number of matching enemies is unresolved, and every repeated attempt remains ${chanceText ? `a ${chanceText} chance` : 'chance-based'}.`;
+  }
+  return null;
+}
+
+function stackChanceText(trace: SynergyTrace): string | null {
+  const byHabitLevel = trace.effects.find((effect) => /Activation chance by Habit Level:/i.test(effect));
+  if (byHabitLevel) {
+    const match = byHabitLevel.match(/Activation chance by Habit Level:\s*([0-9.]+)%/i);
+    if (match?.[1]) {
+      return `${match[1]}%`;
+    }
+  }
+  const activationChance = trace.effects.find((effect) => /Activation chance:/i.test(effect));
+  if (activationChance) {
+    const match = activationChance.match(/Activation chance:\s*([0-9.]+%)/i);
+    if (match?.[1]) {
+      return match[1];
+    }
+  }
+  const statusChance = trace.effects.find((effect) => /Status application chance:/i.test(effect));
+  if (statusChance) {
+    const match = statusChance.match(/Status application chance:\s*([0-9.]+%)/i);
+    if (match?.[1]) {
+      return match[1];
+    }
+  }
+  return null;
+}
+
+function stackGrantName(trace: SynergyTrace, source: Dragon, recipient: Dragon | null): string | null {
+  const text = [trace.explanation, ...trace.effects].join(' ');
+  const mayGrant = text.match(/may grant additional ([A-Za-z' ]+?) stacks?/i);
+  if (mayGrant?.[1]) {
+    return mayGrant[1].trim();
+  }
+  const eligible = text.match(/eligible to receive ([A-Za-z' ]+?) because/i);
+  if (eligible?.[1]) {
+    return eligible[1].trim();
+  }
+  if (recipient && recipient.id === source.id) {
+    return getAbilityName(source, trace.sourceAbilityId);
+  }
+  return getAbilityName(source, trace.sourceAbilityId);
+}
+
+function getAbilityById(source: Dragon, abilityId: string | null): AbilityDefinition | null {
+  if (!abilityId) {
+    return null;
+  }
+  return [source.command, source.trait, ...source.habits].find((ability): ability is AbilityDefinition => ability?.id === abilityId) ?? null;
+}
+
+function abilityTimingPhrase(ability: AbilityDefinition | null): string | null {
+  const schedule = ability?.schedules[0];
+  if (!schedule) {
+    return null;
+  }
+  if (schedule.roundSelector?.kind === 'start-of-combat' || schedule.timing === 'start-of-combat') {
+    return 'at the start of combat';
+  }
+  if (schedule.roundSelector?.kind === 'each-round' || schedule.timing === 'each-round') {
+    return 'each round';
+  }
+  if (schedule.timing === 'start-of-each-round') {
+    return 'at the start of each round';
+  }
+  if (schedule.roundSelector?.kind === 'after-basic-attack') {
+    return 'after each Basic Attack';
+  }
+  return null;
+}
+
 function modifierLinesForTrace(trace: SynergyTrace, recipient: Dragon | null): string[] {
   if (trace.matchKind !== 'incoming-effect-amplification' || !trace.recipientModifierType || !recipient) {
     return [];
@@ -394,6 +564,8 @@ function sanitizeNormalCardEffects(effects: string[], summaryLines: string[]): s
     effects
       .map(sanitizeNormalCardText)
       .filter((effect): effect is string => Boolean(effect))
+      .filter((effect) => !/Shared activation group:/i.test(effect))
+      .filter((effect) => !/Shared stack pool:/i.test(effect))
       .filter((effect) => !isRedundantCurrentValueLine(effect, summaryText) || isValueBearingEffectLine(effect))
       .filter((effect) => !isValueAlreadyExplained(effect, summaryText) || isValueBearingEffectLine(effect))
       .filter((effect) => !summaryText.includes(normalizeText(effect)) || isValueBearingEffectLine(effect)),
@@ -405,6 +577,9 @@ function sanitizeNormalCardText(value: string): string {
   return value
     .replace(/\s*Ranked progression:\s.*?L5\s[-+]?\d+(?:\.\d+)?%?\./g, '')
     .replace(/\s*(Damage Dealt|Damage Received|Physical Damage Received|Tactical Damage Received|Fire Damage Received|Recovery Rate) reduction at current effective level:\s[-+]?\d+(?:\.\d+)?%?\./gi, '')
+    .replace(/Activation scope is unresolved between one shared roll and independent per-target rolls\./gi, 'Whether this uses one shared roll or separate per-target rolls is unresolved.')
+    .replace(/Shared activation group:\s*[A-Za-z0-9-]+\./gi, '')
+    .replace(/Shared stack pool:\s*[A-Za-z0-9-]+\./gi, '')
     .replace(/\s{2,}/g, ' ')
     .trim();
 }
@@ -2130,6 +2305,9 @@ function interactionEffectTitle(abilityName: string, trace: SynergyTrace): strin
 }
 
 function interactionPurpose(trace: SynergyTrace): string | null {
+  if (isStackSupportTrace(trace) && trace.channel) {
+    return `${supportChannelLabel(trace)} stack support`;
+  }
   if (isAllMatchingTargetSelection(trace) && trace.channel) {
     return `${supportChannelLabel(trace)} support`;
   }

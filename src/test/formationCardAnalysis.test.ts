@@ -249,15 +249,22 @@ describe('formation card analysis presentation', () => {
       'If any enemy deals Fire Damage, repeat the stack chance once.',
     ]);
 
+    const lure = vaeldra.provides.find((item) => item.abilityName === 'Lure');
+    const lureText = lure ? [lure.summary, lure.detail, ...lure.summaryLines, ...lure.details, ...lure.effects].join(' ') : '';
+    expect(lure).toBeDefined();
+    expect(lure?.effectTitle).toContain('Conditional status enablement');
+    expect(lureText).toContain('25% chance each round to Taunt 3 enemies in any lane, for 2 rounds.');
+    expect(lureText).toContain('Whether this uses one shared roll or separate per-target rolls is unresolved.');
+
     const spreading = daemoros.receives.find((item) => item.sourceDragonId === 'vermax' && item.abilityName === 'Spreading Blaze');
     const spreadingText = spreading ? [spreading.summary, spreading.detail, ...spreading.summaryLines, ...spreading.details, ...spreading.effects].join(' ') : '';
     expect(spreading).toBeDefined();
-    expect(spreadingText).toContain('20%');
-    expect(spreadingText).toContain('Shared stack pool: spreading-blaze');
-    expect(spreadingText).toContain('Maximum stacks: 10');
-    expect(spreadingText).toContain('Value per stack at effective Habit Level 1: 2.5% Tactical Damage Dealt');
-    expect(spreadingText).toContain('Repeat mode: once-if-any-match');
-    expect(spreadingText).toContain('at most one additional activation attempt');
+    expect(spreading?.effectTitle).toContain('stack support');
+    expect(spreadingText).toContain('20% chance to grant Daemoros one Spreading Blaze stack.');
+    expect(spreadingText).toContain('Each stack increases Tactical Damage Dealt by 2.5%, up to 10 stacks, until the end of combat. Current stack count is unknown.');
+    expect(spreadingText).toContain('If at least one enemy deals Fire Damage, the stack attempt repeats once. The repeated attempt remains chance-based.');
+    expect(spreadingText).not.toContain('Shared stack pool: spreading-blaze');
+    expect(spreadingText).not.toContain('spreading-blaze');
 
     const rallyingSelf = vermax.provides.find((item) => item.abilityName === 'Rallying Flame' && item.recipientDragonId === 'vermax');
     const rallyingAlly = daemoros.receives.find((item) => item.sourceDragonId === 'vermax' && item.abilityName === 'Rallying Flame');
@@ -267,21 +274,25 @@ describe('formation card analysis presentation', () => {
       .join(' ');
     expect(rallyingSelf).toBeDefined();
     expect(rallyingAlly).toBeDefined();
-    expect(rallyingText).toContain('Activation chance: 50% at effective Habit Level 1');
-    expect(rallyingText).toContain('Shared stack pool: rallying-flame');
-    expect(rallyingText).toContain('Maximum stacks: 4');
-    expect(rallyingText).toContain('Shared stack pool: spreading-blaze');
-    expect(rallyingText).toContain('Maximum stacks: 10');
-    expect(rallyingText).toContain('Repeat mode: once-per-match');
-    expect(rallyingText).toContain('Enemy match count is unresolved');
+    expect(rallyingSelf?.effectTitle).toContain('stack support');
+    expect(rallyingAlly?.effectTitle).toContain('stack support');
+    expect(rallyingText).toContain('50% chance at the start of combat to gain one Rallying Flame stack.');
+    expect(rallyingText).toContain('On the same successful Rallying Flame activation, Daemoros gains one Spreading Blaze stack.');
+    expect(rallyingText).toContain('Each stack increases Physical Damage Dealt by 5%, up to 4 stacks, until the end of combat. Current stack count is unknown.');
+    expect(rallyingText).toContain('The activation repeats once for each enemy that deals Fire Damage. The number of matching enemies is unresolved, and every repeated attempt remains a 50% chance.');
+    expect(rallyingText).toContain('Each stack increases Tactical Damage Dealt by 2.5%, up to 10 stacks, until the end of combat. Current stack count is unknown.');
+    expect(rallyingText).not.toContain('Shared stack pool: rallying-flame');
+    expect(rallyingText).not.toContain('Shared stack pool: spreading-blaze');
 
     const resolve = vermax.provides.find((item) => item.abilityName === 'Unyielding Resolve');
     const resolveText = resolve ? [resolve.summary, resolve.detail, ...resolve.summaryLines, ...resolve.details, ...resolve.effects].join(' ') : '';
     expect(resolve).toBeDefined();
+    expect(resolve?.effectTitle).toContain('Control cleanse');
     expect(resolveText).toContain('20% chance to gain Advantage +15% for 2 rounds');
     expect(resolveText).toContain('While Weakened, the chance increases to 30%');
-    expect(resolveText).toContain('same successful activation');
-    expect(resolveText).toContain('remove Weakened');
+    expect(resolveText).toContain('Advantage and removal of Weakened share the same successful activation.');
+    expect(resolveText).toContain('The cleanse does not receive an independent roll.');
+    expect(resolveText).not.toContain('unyielding-resolve-start-round-shared-activation');
   });
 
   it('honors two-target ally cardinality without candidate wording', () => {
