@@ -230,6 +230,7 @@
                 "distinctness": "no-distinctness-requirement",
                 "fallback": null,
                 "preference": null,
+                "qualifyingOutputAffectsEligibility": false,
                 "references": [],
                 "repeatedInstances": {
                   "count": 2,
@@ -583,6 +584,7 @@
                 "distinctness": "unknown",
                 "fallback": "another eligible enemy",
                 "preference": "Hunter breed",
+                "qualifyingOutputAffectsEligibility": false,
                 "references": [],
                 "repeatedInstances": null,
                 "sharedSelectionGroupId": null,
@@ -859,6 +861,7 @@
                 "distinctness": "unknown",
                 "fallback": null,
                 "preference": null,
+                "qualifyingOutputAffectsEligibility": false,
                 "references": [],
                 "repeatedInstances": null,
                 "sharedSelectionGroupId": null,
@@ -1000,6 +1003,7 @@
                 "distinctness": "no-distinctness-requirement",
                 "fallback": null,
                 "preference": null,
+                "qualifyingOutputAffectsEligibility": false,
                 "references": [
                   {
                     "description": "Enemy occupying Venator's lane, retained as provisional interpretation.",
@@ -1186,6 +1190,7 @@
                 "distinctness": "unknown",
                 "fallback": "another eligible enemy",
                 "preference": "Hunter breed",
+                "qualifyingOutputAffectsEligibility": false,
                 "references": [],
                 "repeatedInstances": null,
                 "sharedSelectionGroupId": "desperate-ambush-target",
@@ -1299,6 +1304,7 @@
                 "distinctness": "same-target-required",
                 "fallback": null,
                 "preference": null,
+                "qualifyingOutputAffectsEligibility": false,
                 "references": [
                   {
                     "description": "Overwhelm uses the damage target.",
@@ -1391,6 +1397,7 @@
               "distinctness": "no-distinctness-requirement",
               "fallback": null,
               "preference": null,
+              "qualifyingOutputAffectsEligibility": false,
               "references": [],
               "repeatedInstances": {
                 "count": 2,
@@ -1661,6 +1668,7 @@
               "distinctness": "unknown",
               "fallback": "another eligible enemy",
               "preference": "Hunter breed",
+              "qualifyingOutputAffectsEligibility": false,
               "references": [],
               "repeatedInstances": null,
               "sharedSelectionGroupId": null,
@@ -1830,6 +1838,7 @@
               "distinctness": "unknown",
               "fallback": null,
               "preference": null,
+              "qualifyingOutputAffectsEligibility": false,
               "references": [],
               "repeatedInstances": null,
               "sharedSelectionGroupId": null,
@@ -1918,6 +1927,7 @@
               "distinctness": "no-distinctness-requirement",
               "fallback": null,
               "preference": null,
+              "qualifyingOutputAffectsEligibility": false,
               "references": [
                 {
                   "description": "Enemy occupying Venator's lane, retained as provisional interpretation.",
@@ -2045,6 +2055,7 @@
               "distinctness": "unknown",
               "fallback": "another eligible enemy",
               "preference": "Hunter breed",
+              "qualifyingOutputAffectsEligibility": false,
               "references": [],
               "repeatedInstances": null,
               "sharedSelectionGroupId": "desperate-ambush-target",
@@ -2158,6 +2169,7 @@
               "distinctness": "same-target-required",
               "fallback": null,
               "preference": null,
+              "qualifyingOutputAffectsEligibility": false,
               "references": [
                 {
                   "description": "Overwhelm uses the damage target.",
@@ -2469,6 +2481,7 @@
               "distinctness": "no-distinctness-requirement",
               "fallback": null,
               "preference": null,
+              "qualifyingOutputAffectsEligibility": false,
               "references": [],
               "repeatedInstances": {
                 "count": 2,
@@ -2678,6 +2691,7 @@
           "distinctness": "no-distinctness-requirement",
           "fallback": null,
           "preference": null,
+          "qualifyingOutputAffectsEligibility": false,
           "references": [],
           "repeatedInstances": {
             "count": 2,
@@ -2883,6 +2897,7 @@
           "distinctness": "unknown",
           "fallback": "another eligible enemy",
           "preference": "Hunter breed",
+          "qualifyingOutputAffectsEligibility": false,
           "references": [],
           "repeatedInstances": null,
           "sharedSelectionGroupId": null,
@@ -3014,6 +3029,7 @@
           "distinctness": "unknown",
           "fallback": null,
           "preference": null,
+          "qualifyingOutputAffectsEligibility": false,
           "references": [],
           "repeatedInstances": null,
           "sharedSelectionGroupId": null,
@@ -3083,6 +3099,7 @@
           "distinctness": "no-distinctness-requirement",
           "fallback": null,
           "preference": null,
+          "qualifyingOutputAffectsEligibility": false,
           "references": [
             {
               "description": "Enemy occupying Venator's lane, retained as provisional interpretation.",
@@ -3176,6 +3193,7 @@
           "distinctness": "unknown",
           "fallback": "another eligible enemy",
           "preference": "Hunter breed",
+          "qualifyingOutputAffectsEligibility": false,
           "references": [],
           "repeatedInstances": null,
           "sharedSelectionGroupId": "desperate-ambush-target",
@@ -3293,6 +3311,7 @@
           "distinctness": "same-target-required",
           "fallback": null,
           "preference": null,
+          "qualifyingOutputAffectsEligibility": false,
           "references": [
             {
               "description": "Overwhelm uses the damage target.",
@@ -3480,7 +3499,7 @@
   "firstObservedInGame": null,
   "format": "dragonfire-dragon-profile",
   "gameVersion": null,
-  "generatedAt": "2026-06-28T08:18:32.338Z",
+  "generatedAt": "2026-06-28T17:46:20.954Z",
   "habits": [
     {
       "abilityClass": "passive",
@@ -3589,6 +3608,7 @@
                 "distinctness": "unknown",
                 "fallback": "another eligible enemy",
                 "preference": "Hunter breed",
+                "qualifyingOutputAffectsEligibility": false,
                 "references": [],
                 "repeatedInstances": null,
                 "sharedSelectionGroupId": null,
@@ -3865,6 +3885,7 @@
                 "distinctness": "unknown",
                 "fallback": null,
                 "preference": null,
+                "qualifyingOutputAffectsEligibility": false,
                 "references": [],
                 "repeatedInstances": null,
                 "sharedSelectionGroupId": null,
@@ -4006,6 +4027,7 @@
                 "distinctness": "no-distinctness-requirement",
                 "fallback": null,
                 "preference": null,
+                "qualifyingOutputAffectsEligibility": false,
                 "references": [
                   {
                     "description": "Enemy occupying Venator's lane, retained as provisional interpretation.",
@@ -4192,6 +4214,7 @@
                 "distinctness": "unknown",
                 "fallback": "another eligible enemy",
                 "preference": "Hunter breed",
+                "qualifyingOutputAffectsEligibility": false,
                 "references": [],
                 "repeatedInstances": null,
                 "sharedSelectionGroupId": "desperate-ambush-target",
@@ -4305,6 +4328,7 @@
                 "distinctness": "same-target-required",
                 "fallback": null,
                 "preference": null,
+                "qualifyingOutputAffectsEligibility": false,
                 "references": [
                   {
                     "description": "Overwhelm uses the damage target.",
@@ -5694,8 +5718,8 @@
   "rosterSourceStatus": "official-website",
   "slug": "venator",
   "source": {
-    "branch": "fix/interaction-scope-schedule-normalization-pass2",
-    "commit": "109277424c13ad4bfa0d68ff1a0b748a8be75ac6",
+    "branch": "fix/target-resolution-status-trace-presentation-pass1",
+    "commit": "5a11e8ded78959c842d9fdf819011f2be824404e",
     "databaseVersion": "0.6.2",
     "dataSchemaVersion": 12,
     "gameBuild": "26.6.53509",

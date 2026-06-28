@@ -485,14 +485,14 @@ describe('legendary formation analysis regression fixes', () => {
     const allTraces = legacyTraces();
     const battleLeader = allTraces.find((trace) =>
       trace.sourceAbilityId === 'vhagar-battle-leader' &&
-      trace.targetSelectionGroup?.targetCount === 1
+      trace.ruleId === 'target-selection-no-qualified-output'
     );
 
     expect(battleLeader?.recipientDragonId).toBeNull();
-    expect(battleLeader?.targetSelectionGroup?.eligibleRecipientDragonIds).toEqual(['venator', 'vhagar']);
-    expect(battleLeader?.targetSelectionGroup?.selectionUncertain).toBe(true);
-    expect(battleLeader?.matchedOutputCapabilityIds?.some((id) => id.startsWith('vhagar-'))).toBe(true);
-    expect(battleLeader?.targetSelectionGroup?.eligibleRecipientDragonIds).not.toContain('syrax');
+    expect(battleLeader?.interactionScope).toBe('targeting-fact');
+    expect(battleLeader?.targetSelectionGroup?.eligibleRecipientDragonIds).toEqual(['syrax']);
+    expect(battleLeader?.targetSelectionGroup?.selectionUncertain).toBe(false);
+    expect(battleLeader?.matchedOutputCapabilityIds?.length ?? 0).toBe(0);
   });
 
   it('keeps unresolved projected benefits conditional while source traces remain active', () => {
@@ -513,8 +513,7 @@ describe('legendary formation analysis regression fixes', () => {
     const flightMasteryEnemy = syrax?.provides.find((item) => item.abilityName === 'Flight Mastery' && item.isEnemyFacing);
     const eclipseCover = vhagar?.provides.find((item) => item.abilityName === 'Eclipse Cover');
 
-    expect(battleLeader?.state).toBe('conditional');
-    expect(battleLeader?.summary).toContain('Target not guaranteed');
+    expect(battleLeader).toBeUndefined();
     expect(strategic.every((item) => item.state === 'conditional')).toBe(true);
     expect(strategicCandidates.every((item) =>
       item.summary.includes('Target not guaranteed') ||
@@ -531,7 +530,7 @@ describe('legendary formation analysis regression fixes', () => {
 
     const battleLeaderTrace = legacyTraces().find((trace) =>
       trace.sourceAbilityId === 'vhagar-battle-leader' &&
-      trace.targetSelectionGroup?.targetCount === 1
+      trace.ruleId === 'target-selection-no-qualified-output'
     );
     expect(battleLeaderTrace?.status).toBe('active');
   });

@@ -552,6 +552,7 @@
                 "distinctness": "same-target-required",
                 "fallback": null,
                 "preference": null,
+                "qualifyingOutputAffectsEligibility": false,
                 "references": [],
                 "repeatedInstances": null,
                 "sharedSelectionGroupId": "ensnare-targets",
@@ -619,6 +620,7 @@
                 "distinctness": "same-target-required",
                 "fallback": null,
                 "preference": null,
+                "qualifyingOutputAffectsEligibility": false,
                 "references": [
                   {
                     "description": "Initiative reduction uses the enemies selected for Instinct reduction.",
@@ -805,6 +807,7 @@
                 "distinctness": "same-target-required",
                 "fallback": null,
                 "preference": null,
+                "qualifyingOutputAffectsEligibility": false,
                 "references": [
                   {
                     "description": "Uses the target of the successful Taunt application.",
@@ -892,6 +895,7 @@
                 "distinctness": "same-target-required",
                 "fallback": null,
                 "preference": null,
+                "qualifyingOutputAffectsEligibility": false,
                 "references": [
                   {
                     "description": "Uses the target of the successful Taunt application.",
@@ -1043,6 +1047,7 @@
                 "distinctness": "no-distinctness-requirement",
                 "fallback": "another eligible ally",
                 "preference": "Left Flank",
+                "qualifyingOutputAffectsEligibility": true,
                 "references": [],
                 "repeatedInstances": null,
                 "sharedSelectionGroupId": "infernal-force-fire",
@@ -1111,6 +1116,7 @@
                 "distinctness": "no-distinctness-requirement",
                 "fallback": "another eligible ally",
                 "preference": "Right Flank",
+                "qualifyingOutputAffectsEligibility": true,
                 "references": [],
                 "repeatedInstances": null,
                 "sharedSelectionGroupId": "infernal-force-physical",
@@ -1941,6 +1947,7 @@
               "distinctness": "same-target-required",
               "fallback": null,
               "preference": null,
+              "qualifyingOutputAffectsEligibility": false,
               "references": [],
               "repeatedInstances": null,
               "sharedSelectionGroupId": "ensnare-targets",
@@ -2008,6 +2015,7 @@
               "distinctness": "same-target-required",
               "fallback": null,
               "preference": null,
+              "qualifyingOutputAffectsEligibility": false,
               "references": [
                 {
                   "description": "Initiative reduction uses the enemies selected for Instinct reduction.",
@@ -2136,6 +2144,7 @@
               "distinctness": "same-target-required",
               "fallback": null,
               "preference": null,
+              "qualifyingOutputAffectsEligibility": false,
               "references": [
                 {
                   "description": "Uses the target of the successful Taunt application.",
@@ -2223,6 +2232,7 @@
               "distinctness": "same-target-required",
               "fallback": null,
               "preference": null,
+              "qualifyingOutputAffectsEligibility": false,
               "references": [
                 {
                   "description": "Uses the target of the successful Taunt application.",
@@ -2317,6 +2327,7 @@
               "distinctness": "no-distinctness-requirement",
               "fallback": "another eligible ally",
               "preference": "Left Flank",
+              "qualifyingOutputAffectsEligibility": true,
               "references": [],
               "repeatedInstances": null,
               "sharedSelectionGroupId": "infernal-force-fire",
@@ -2385,6 +2396,7 @@
               "distinctness": "no-distinctness-requirement",
               "fallback": "another eligible ally",
               "preference": "Right Flank",
+              "qualifyingOutputAffectsEligibility": true,
               "references": [],
               "repeatedInstances": null,
               "sharedSelectionGroupId": "infernal-force-physical",
@@ -3285,6 +3297,7 @@
           "distinctness": "same-target-required",
           "fallback": null,
           "preference": null,
+          "qualifyingOutputAffectsEligibility": false,
           "references": [],
           "repeatedInstances": null,
           "sharedSelectionGroupId": "ensnare-targets",
@@ -3356,6 +3369,7 @@
           "distinctness": "same-target-required",
           "fallback": null,
           "preference": null,
+          "qualifyingOutputAffectsEligibility": false,
           "references": [
             {
               "description": "Initiative reduction uses the enemies selected for Instinct reduction.",
@@ -3447,6 +3461,7 @@
           "distinctness": "same-target-required",
           "fallback": null,
           "preference": null,
+          "qualifyingOutputAffectsEligibility": false,
           "references": [
             {
               "description": "Uses the target of the successful Taunt application.",
@@ -3538,6 +3553,7 @@
           "distinctness": "same-target-required",
           "fallback": null,
           "preference": null,
+          "qualifyingOutputAffectsEligibility": false,
           "references": [
             {
               "description": "Uses the target of the successful Taunt application.",
@@ -3615,6 +3631,7 @@
           "distinctness": "no-distinctness-requirement",
           "fallback": "another eligible ally",
           "preference": "Left Flank",
+          "qualifyingOutputAffectsEligibility": true,
           "references": [],
           "repeatedInstances": null,
           "sharedSelectionGroupId": "infernal-force-fire",
@@ -3687,6 +3704,7 @@
           "distinctness": "no-distinctness-requirement",
           "fallback": "another eligible ally",
           "preference": "Right Flank",
+          "qualifyingOutputAffectsEligibility": true,
           "references": [],
           "repeatedInstances": null,
           "sharedSelectionGroupId": "infernal-force-physical",
@@ -4027,7 +4045,7 @@
   "firstObservedInGame": "2026-06-22",
   "format": "dragonfire-dragon-profile",
   "gameVersion": null,
-  "generatedAt": "2026-06-28T08:18:32.338Z",
+  "generatedAt": "2026-06-28T17:46:20.954Z",
   "habits": [
     {
       "abilityClass": "passive",
@@ -4320,6 +4338,7 @@
                 "distinctness": "same-target-required",
                 "fallback": null,
                 "preference": null,
+                "qualifyingOutputAffectsEligibility": false,
                 "references": [],
                 "repeatedInstances": null,
                 "sharedSelectionGroupId": "ensnare-targets",
@@ -4387,6 +4406,7 @@
                 "distinctness": "same-target-required",
                 "fallback": null,
                 "preference": null,
+                "qualifyingOutputAffectsEligibility": false,
                 "references": [
                   {
                     "description": "Initiative reduction uses the enemies selected for Instinct reduction.",
@@ -4573,6 +4593,7 @@
                 "distinctness": "same-target-required",
                 "fallback": null,
                 "preference": null,
+                "qualifyingOutputAffectsEligibility": false,
                 "references": [
                   {
                     "description": "Uses the target of the successful Taunt application.",
@@ -4660,6 +4681,7 @@
                 "distinctness": "same-target-required",
                 "fallback": null,
                 "preference": null,
+                "qualifyingOutputAffectsEligibility": false,
                 "references": [
                   {
                     "description": "Uses the target of the successful Taunt application.",
@@ -4811,6 +4833,7 @@
                 "distinctness": "no-distinctness-requirement",
                 "fallback": "another eligible ally",
                 "preference": "Left Flank",
+                "qualifyingOutputAffectsEligibility": true,
                 "references": [],
                 "repeatedInstances": null,
                 "sharedSelectionGroupId": "infernal-force-fire",
@@ -4879,6 +4902,7 @@
                 "distinctness": "no-distinctness-requirement",
                 "fallback": "another eligible ally",
                 "preference": "Right Flank",
+                "qualifyingOutputAffectsEligibility": true,
                 "references": [],
                 "repeatedInstances": null,
                 "sharedSelectionGroupId": "infernal-force-physical",
@@ -7186,8 +7210,8 @@
   "rosterSourceStatus": "in-game-verified-pending-official-site",
   "slug": "vaeldra",
   "source": {
-    "branch": "fix/interaction-scope-schedule-normalization-pass2",
-    "commit": "109277424c13ad4bfa0d68ff1a0b748a8be75ac6",
+    "branch": "fix/target-resolution-status-trace-presentation-pass1",
+    "commit": "5a11e8ded78959c842d9fdf819011f2be824404e",
     "databaseVersion": "0.6.2",
     "dataSchemaVersion": 12,
     "gameBuild": "26.6.53509",
