@@ -333,6 +333,8 @@ export function derivePeriodicDamageDefinitions(dragons: Dragon[]): PeriodicDama
             statusId: periodic.statusId,
             dragonId: dragon.id,
             abilityId: ability.id,
+            sourceEffectId: derivedEffect.id,
+            activationGroupId: activationGroupId(schedule, derivedEffect),
             channel: periodic.channel,
             damageRateFixed: derivedEffect.magnitude,
             damageRateByHabitLevel: derivedEffect.rankedValues,
@@ -3009,14 +3011,12 @@ function analyzeEnemyMitigationReduction(
       continue;
     }
     for (const recipientId of Object.values(formation).filter(Boolean) as string[]) {
-      if (recipientId === modifier.dragonId) {
-        continue;
-      }
       const matchedOutputs = outputs.filter(
         (output) =>
           output.dragonId === recipientId &&
           output.channel === mitigationChannel &&
           outputCapabilityVisible(output, options) &&
+          mitigationSourceScopeCompatible(modifier.sourceScope, output.sourceScope) &&
           output.dependencies.some((dependency) => dependency.type === 'mitigated-by-target-stat' && dependency.statId === statId),
       );
       if (matchedOutputs.length === 0) {
@@ -3031,7 +3031,16 @@ function analyzeEnemyMitigationReduction(
         ...providerRequirementTraces(modifier, formation, dragons, options),
         ...matchedOutputs.flatMap((output) => outputRequirementTraces(output, options)),
       ];
-      traces.push(makeDependencyTrace({
+      const sourceScopeResults = matchedOutputs.map((output) =>
+        capabilityMatch(
+          modifier,
+          output,
+          [mitigationSourceScopeRequirement(modifier, output)],
+          options,
+          { applySourceScope: modifier.sourceScope !== 'unknown' },
+        ),
+      );
+      const trace = makeDependencyTrace({
         id: `enemy-mitigation-${modifier.id}-${recipientId}-${statId}`,
         matchKind: 'enemy-mitigation-reduction',
         ruleId: 'enemy-mitigation-reduction',
@@ -3043,14 +3052,30 @@ function analyzeEnemyMitigationReduction(
         title: `${channelLabel(mitigationChannel)} Mitigation Reduction`,
         explanation: `${provider.name}'s ${modifier.abilityName} can reduce enemy ${statLabel(statId)}. ${recipient.name}'s ${channelLabel(mitigationChannel)} outputs are mitigated by that stat.`,
         requirements,
-        matchedFacts: matchedOutputs.map((output) => `${output.abilityName} is mitigated by target ${statLabel(statId)}.`),
-        effects: [`Enemy ${statLabel(statId)} reduction may improve ${channelLabel(mitigationChannel)} outputs: ${matchedOutputs.map((output) => output.label).join(', ')}.`],
+        matchedFacts: [
+          ...(modifier.sourceEffectId ? [`Source effect ID: ${modifier.sourceEffectId}.`] : []),
+          `Source scope: ${modifier.sourceScope}.`,
+          ...matchedOutputs.map((output) => `${output.abilityName} is mitigated by target ${statLabel(statId)}.`),
+          ...sourceScopeResults.map((match) => `Source-scope compatibility: ${match.sourceScopeCompatible ? 'compatible' : 'not compatible'} for ${match.outputCapabilityId}.`),
+        ],
+        effects: [
+          `Enemy ${statLabel(statId)} reduction may improve ${channelLabel(mitigationChannel)} outputs: ${matchedOutputs.map((output) => output.label).join(', ')}.`,
+          modifier.sourceScope === 'non-basic-attacks' ? `Applies to non-Basic ${channelLabel(mitigationChannel)} only.` : `Applies to all qualifying ${channelLabel(mitigationChannel)} sources.`,
+          durationLine(modifier),
+        ].filter((effect): effect is string => Boolean(effect)),
         sourceEvidenceIds: modifier.evidenceIds,
         recipientEvidenceIds: matchedOutputs.flatMap((output) => output.evidenceIds),
         assumptions: ['Enemy target overlap is not simulated.'],
         unresolvedQuestions: ['Exact enemy-formation targeting and final mitigation formula are unknown.'],
         futureOrConditional: true,
-      }));
+        modifier,
+      });
+      traces.push({
+        ...trace,
+        modifierRole: null,
+        matchedOutputCapabilityIds: matchedOutputs.map((output) => output.id),
+        sourceScopeResults,
+      });
     }
   }
   return traces;
@@ -3671,7 +3696,7 @@ function analyzeEnemyDamageReceivedIncreases(
         modifierCapabilityIds: [modifier.id],
         matchedOutputCapabilityIds: recipientOutputs.map((output) => output.id),
         sourceScopeResults: projectionScopeResults,
-        interactionScope: 'cross-dragon',
+        interactionScope: interactionScopeForTrace(provider.id, recipient.id, 'enemy-damage-received-increase'),
         damageScope: modifier.damageScope,
       });
     }
@@ -3694,6 +3719,7 @@ function analyzePeriodicStatusDamage(
       output.dragonId === periodic.dragonId &&
       output.abilityId === periodic.abilityId &&
       output.statusId === periodic.statusId &&
+      (periodic.sourceEffectId ? output.sourceEffectId === periodic.sourceEffectId : true) &&
       statusCapabilityVisible(output, options),
     );
     const statusOutput = matchingStatusOutputs[0] ?? null;
@@ -3735,10 +3761,12 @@ function analyzePeriodicStatusDamage(
         ...matchingStatusOutputs.map((output) => `${abilityName} ${output.sourceEffectId ?? output.id} targets ${targetSelectorSummary(output.targetSelector)}.`),
         ...matchingStatusOutputs.flatMap((output) => enemySelectorFacts(provider, output)),
         `Status identity: ${periodic.statusId}.`,
+        periodic.sourceEffectId ? `Source effect ID: ${periodic.sourceEffectId}.` : null,
+        periodic.activationGroupId ? `Activation group: ${periodic.activationGroupId}.` : null,
         `Periodic damage channel: ${periodic.channel}.`,
         ...detailLines,
         ...statusOutput.conditions.map((condition) => condition.description),
-      ],
+      ].filter((fact): fact is string => Boolean(fact)),
       effects: detailLines,
       conflicts: requirements
         .filter((requirement) => requirement.satisfied === false)
@@ -4954,21 +4982,56 @@ function statusConditionScheduleOverlapFacts(
   dependentOutput: OutputCapability,
   dependentContext: { ability: AbilityDefinition; schedule: AbilitySchedule; effect: AbilityEffect } | null,
 ): { facts: string[]; effects: string[]; summary: string | null; assumptions: string[] } {
-  if (!supplierContext || !dependentContext || !statusOutput.untilEndOfRound) {
+  if (!supplierContext || !dependentContext || (!statusOutput.untilEndOfRound && !statusOutput.durationRounds)) {
     return { facts: [], effects: [], summary: null, assumptions: [] };
   }
-  const supplierRounds = explicitScheduleRounds(supplierContext.schedule);
-  const dependentRounds = explicitScheduleRounds(dependentContext.schedule);
+  const dependentRounds = scheduleRoundsForOverlap(dependentContext.schedule);
+  const maxDependentRound = dependentRounds ? Math.max(...dependentRounds) : null;
+  const supplierRounds = scheduleRoundsForOverlap(supplierContext.schedule, maxDependentRound);
   if (!supplierRounds || !dependentRounds) {
     return { facts: [], effects: [], summary: null, assumptions: [] };
   }
-  const overlap = supplierRounds.filter((round) => dependentRounds.includes(round));
   const status = statusLabel(statusOutput.statusId);
+  const durationRounds = statusOutput.untilEndOfRound ? 1 : (statusOutput.durationRounds ?? 0);
+  const overlapWindows = durationRounds > 1
+    ? scheduleDurationOverlapWindows(supplierRounds, dependentRounds, durationRounds)
+    : [];
+  if (durationRounds > 1) {
+    const windowsText = overlapWindows.length > 0 ? formatOverlapWindows(overlapWindows, supplierContext.ability.name, dependentOutput.abilityName) : 'none';
+    return {
+      facts: [
+        `Supplier schedule: ${scheduleRoundDescription(supplierContext.schedule, supplierRounds)}.`,
+        `Dependent schedule: ${scheduleRoundDescription(dependentContext.schedule, dependentRounds)}.`,
+        `Known possible overlap windows: ${windowsText}.`,
+        `${status} duration: ${durationRounds} rounds.`,
+      ],
+      effects: [
+        `Supplier schedule: ${scheduleRoundDescription(supplierContext.schedule, supplierRounds)}.`,
+        `Dependent schedule: ${scheduleRoundDescription(dependentContext.schedule, dependentRounds)}.`,
+        `Known possible overlap windows: ${windowsText}.`,
+        `${status} duration: ${durationRounds} rounds.`,
+        ...(overlapWindows.some((window) => window.sameRound)
+          ? ['Action order within same-round overlap is unresolved.']
+          : []),
+        'The status and dependent damage must affect the same enemy.',
+      ],
+      summary: overlapWindows.length > 0
+        ? `${supplierContext.ability.name}'s ${status} can overlap ${dependentOutput.abilityName} in these windows: ${windowsText}. Application success, enemy identity, same-target overlap, and same-round order remain unresolved.`
+        : `${supplierContext.ability.name}'s ${status} duration has no known overlap with ${dependentOutput.abilityName}.`,
+      assumptions: overlapWindows.length > 0
+        ? [
+            ...(overlapWindows.some((window) => window.sameRound) ? ['Within-round action order is not assumed.'] : []),
+            'The status supplier and dependent output must affect the same enemy.',
+          ]
+        : [],
+    };
+  }
+  const overlap = supplierRounds.filter((round) => dependentRounds.includes(round));
   const overlapText = overlap.length > 0 ? formatRounds(overlap) : 'none';
   return {
     facts: [
-      `Supplier schedule: ${formatRounds(supplierRounds)}.`,
-      `Dependent schedule: ${formatRounds(dependentRounds)}.`,
+      `Supplier schedule: ${scheduleRoundDescription(supplierContext.schedule, supplierRounds)}.`,
+      `Dependent schedule: ${scheduleRoundDescription(dependentContext.schedule, dependentRounds)}.`,
       `Schedule overlap: ${overlapText}${overlap.length === 1 ? ' only' : ''}.`,
       `${status} duration: until end of current round.`,
       overlap.length > 0
@@ -4976,8 +5039,8 @@ function statusConditionScheduleOverlapFacts(
         : `${status} duration does not overlap ${dependentOutput.abilityName}.`,
     ],
     effects: [
-      `Supplier schedule: ${formatRounds(supplierRounds)}.`,
-      `Dependent schedule: ${formatRounds(dependentRounds)}.`,
+      `Supplier schedule: ${scheduleRoundDescription(supplierContext.schedule, supplierRounds)}.`,
+      `Dependent schedule: ${scheduleRoundDescription(dependentContext.schedule, dependentRounds)}.`,
       `Schedule overlap: ${overlapText}${overlap.length === 1 ? ' only' : ''}.`,
       `${status} duration: until end of current round.`,
       'Action order within the overlapping round is unresolved.',
@@ -4995,14 +5058,100 @@ function statusConditionScheduleOverlapFacts(
   };
 }
 
-function explicitScheduleRounds(schedule: AbilitySchedule): number[] | null {
+function mitigationSourceScopeCompatible(
+  modifierScope: CapabilitySourceScope,
+  outputScope: CapabilitySourceScope,
+): boolean {
+  return modifierScope === 'unknown' || sourceScopesCompatible(modifierScope, outputScope);
+}
+
+function mitigationSourceScopeRequirement(modifier: ModifierCapability, output: OutputCapability): RequirementTrace {
+  if (modifier.sourceScope === 'unknown') {
+    return {
+      id: `${modifier.id}-${output.id}-source-scope`,
+      label: 'Source-scope compatibility',
+      expected: 'No explicit source-scope restriction',
+      actual: output.sourceScope,
+      satisfied: true,
+      evidenceIds: [...modifier.evidenceIds, ...output.evidenceIds],
+      notes: ['Enemy mitigation stat reductions without explicit Basic/non-Basic wording apply to qualifying mitigated outputs.'],
+    };
+  }
+  return sourceScopeRequirement(modifier, output);
+}
+
+function scheduleRoundsForOverlap(schedule: AbilitySchedule, maxRoundHint: number | null = null): number[] | null {
   if (schedule.roundSelector?.kind === 'explicit' && schedule.rounds.length > 0) {
     return schedule.rounds;
   }
   if (schedule.roundSelector?.kind === 'start-of-round') {
     return [schedule.roundSelector.round];
   }
+  if (schedule.roundSelector?.kind === 'range') {
+    return range(schedule.roundSelector.startRound, schedule.roundSelector.endRound);
+  }
+  if (schedule.roundSelector?.kind === 'odd') {
+    const maxRound = maxRoundHint ?? 10;
+    return range(1, maxRound).filter((round) => round % 2 === 1);
+  }
+  if (schedule.roundSelector?.kind === 'even') {
+    const maxRound = maxRoundHint ?? 10;
+    return range(1, maxRound).filter((round) => round % 2 === 0);
+  }
+  if (schedule.roundSelector?.kind === 'each-round') {
+    return range(1, maxRoundHint ?? 10);
+  }
+  if (schedule.rounds.length > 0) {
+    return schedule.rounds;
+  }
   return null;
+}
+
+function scheduleRoundDescription(schedule: AbilitySchedule, rounds: number[]): string {
+  if (schedule.roundSelector?.kind === 'odd') {
+    return 'Odd-numbered rounds';
+  }
+  if (schedule.roundSelector?.kind === 'even') {
+    return 'Even-numbered rounds';
+  }
+  if (schedule.roundSelector?.kind === 'each-round') {
+    return 'Each round';
+  }
+  return formatRounds(rounds);
+}
+
+function scheduleDurationOverlapWindows(
+  supplierRounds: number[],
+  dependentRounds: number[],
+  durationRounds: number,
+): Array<{ dependentRound: number; supplierRound: number; sameRound: boolean }> {
+  return dependentRounds.flatMap((dependentRound) => {
+    const suppliers = supplierRounds.filter((supplierRound) =>
+      supplierRound <= dependentRound && dependentRound < supplierRound + durationRounds,
+    );
+    const preferred = suppliers.find((supplierRound) => supplierRound < dependentRound) ?? suppliers.find((supplierRound) => supplierRound === dependentRound);
+    return preferred === undefined
+      ? []
+      : [{ dependentRound, supplierRound: preferred, sameRound: preferred === dependentRound }];
+  });
+}
+
+function formatOverlapWindows(
+  windows: Array<{ dependentRound: number; supplierRound: number; sameRound: boolean }>,
+  supplierAbilityName: string,
+  dependentAbilityName: string,
+): string {
+  return windows
+    .map((window) =>
+      window.sameRound
+        ? `Round ${window.dependentRound} from a successful Round ${window.supplierRound} application only if ${supplierAbilityName} resolves before ${dependentAbilityName} that round`
+        : `Round ${window.dependentRound} after a successful Round ${window.supplierRound} application`,
+    )
+    .join('; ');
+}
+
+function range(start: number, end: number): number[] {
+  return Array.from({ length: Math.max(0, end - start + 1) }, (_, index) => start + index);
 }
 
 function formatRounds(rounds: number[]): string {
@@ -6944,14 +7093,15 @@ function interactionScopeForTrace(
   recipientDragonId: string | null,
   matchKind: SynergyTrace['matchKind'],
 ): SynergyTrace['interactionScope'] {
-  if (matchKind === 'enemy-mitigation-reduction') {
-    return 'enemy-side';
-  }
   if (matchKind === 'friendly-impairment') {
     return 'cross-dragon';
   }
   if (!recipientDragonId) {
-    return 'targeting-fact';
+    return matchKind === 'enemy-mitigation-reduction' ||
+      matchKind === 'enemy-damage-received-increase' ||
+      matchKind === 'enemy-damage-dealt-reduction'
+      ? 'enemy-side'
+      : 'targeting-fact';
   }
   return sourceDragonId === recipientDragonId ? 'internal' : 'cross-dragon';
 }

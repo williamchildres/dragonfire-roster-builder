@@ -3843,7 +3843,7 @@
   "firstObservedInGame": "2026-06-22",
   "format": "dragonfire-dragon-profile",
   "gameVersion": null,
-  "generatedAt": "2026-06-28T06:49:44.231Z",
+  "generatedAt": "2026-06-28T07:53:29.999Z",
   "habits": [
     {
       "abilityClass": "passive",
@@ -6499,6 +6499,7 @@
   "periodicDamage": [
     {
       "abilityId": "daemoros-shadowflame",
+      "activationGroupId": null,
       "channel": "fire-damage",
       "damageRateByHabitLevel": [],
       "damageRateFixed": 20,
@@ -6509,11 +6510,13 @@
       ],
       "mitigationStat": "initiative",
       "scalingStat": "intelligence",
+      "sourceEffectId": "shadowflame-burn",
       "statusId": "burn",
       "ticksEachRound": true
     },
     {
       "abilityId": "daemoros-instill-fear",
+      "activationGroupId": "instill-fear-each-round-shared-activation",
       "channel": "tactical-damage",
       "damageRateByHabitLevel": [],
       "damageRateFixed": 20,
@@ -6524,11 +6527,13 @@
       ],
       "mitigationStat": "intelligence",
       "scalingStat": "instinct",
+      "sourceEffectId": "instill-fear-panic",
       "statusId": "panic",
       "ticksEachRound": true
     },
     {
       "abilityId": "daemoros-darkening-fear",
+      "activationGroupId": "darkening-fear-each-round-shared-activation",
       "channel": "tactical-damage",
       "damageRateByHabitLevel": [],
       "damageRateFixed": 20,
@@ -6539,6 +6544,7 @@
       ],
       "mitigationStat": "intelligence",
       "scalingStat": "instinct",
+      "sourceEffectId": "darkening-fear-panic",
       "statusId": "panic",
       "ticksEachRound": true
     }
@@ -6930,8 +6936,8 @@
   "rosterSourceStatus": "in-game-verified-pending-official-site",
   "slug": "daemoros",
   "source": {
-    "branch": "fix/feskar-vaeldra-rhysarion-taunt-chain-pass1",
-    "commit": "de04c9ade3c14365d8e3360fd18b05f2e35559dd",
+    "branch": "fix/daemoros-rhysarion-shadowsong-framework-pass1",
+    "commit": "7e591c29069b8f9330ef0ec94823c9d37824e3a4",
     "databaseVersion": "0.6.2",
     "dataSchemaVersion": 12,
     "gameBuild": "26.6.53509",
