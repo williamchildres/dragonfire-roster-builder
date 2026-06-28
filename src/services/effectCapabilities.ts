@@ -7679,18 +7679,6 @@ function statusMatchesCategory(statusId: string, categoryId: string): boolean {
   return statusCategoryMembers[categoryId]?.includes(statusId) ?? false;
 }
 
-function statusOutputSuppliesAnyDependency(
-  statusOutput: StatusOutputCapability,
-  outputs: OutputCapability[],
-): boolean {
-  return outputs.some((output) =>
-    output.dependencies.some((dependency) =>
-      isStatusConditionDependency(dependency) &&
-      statusMatchesDependency(statusOutput.statusId, dependency),
-    ),
-  );
-}
-
 function statusMatchesDependency(
   statusId: string,
   dependency: CapabilityDependency & { type: 'requires-self-status' | 'requires-any-enemy-status' | 'requires-target-status' | 'requires-target-status-category' },
