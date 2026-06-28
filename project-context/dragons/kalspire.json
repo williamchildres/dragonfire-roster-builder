@@ -4429,7 +4429,7 @@
   "firstObservedInGame": null,
   "format": "dragonfire-dragon-profile",
   "gameVersion": null,
-  "generatedAt": "2026-06-27T23:23:11.996Z",
+  "generatedAt": "2026-06-27T23:58:35.361Z",
   "habits": [
     {
       "abilityClass": "passive",
@@ -7688,8 +7688,8 @@
   "rosterSourceStatus": "official-website",
   "slug": "kalspire",
   "source": {
-    "branch": "fix/legacy-targeting-selection-integrity",
-    "commit": "3c23262cab0dcdcf3bad088fca017d74a94e5d09",
+    "branch": "fix/trial-by-flame-card-thresholds",
+    "commit": "6e1d3d8a9a1bb2244def689a47c54a3193aa764b",
     "databaseVersion": "0.6.2",
     "dataSchemaVersion": 12,
     "gameBuild": "26.6.53509",

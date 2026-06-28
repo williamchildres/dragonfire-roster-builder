@@ -480,6 +480,35 @@ function supportChannelLabel(trace: SynergyTrace): string {
   return formatToken(trace.channel ?? 'damage-received');
 }
 
+function allMatchingSupportBranchSummary(trace: SynergyTrace): string[] {
+  const text = [trace.title, trace.explanation, ...trace.matchedFacts, ...trace.effects].join(' ');
+  const supportEffect = trace.effects.find((effect) =>
+    /(?:Fire |Physical |Tactical )?Damage Received decrease/i.test(effect) ||
+    /Damage Dealt increase/i.test(effect) ||
+    /Damage Received reduction:/i.test(effect) ||
+    /reduce(?:s|d)? .*?Damage Received by/i.test(effect),
+  ) ?? null;
+  const thresholdMatch = text.match(/\b(above|below) (\d+(?:\.\d+)?)% Troop Capacity\b/i);
+  const duration = trace.effects.find((effect) => /Duration:/i.test(effect)) ?? null;
+  const amount = supportEffect?.match(/(?:decrease|increase|reduction:)\s+([-+]?\d+(?:\.\d+)?%?)(?:\s+at effective Habit Level \d+)?/i)?.[1]
+    ?? supportEffect?.match(/reduce(?:s|d)? .*?by ([-+]?\d+(?:\.\d+)?%?)(?:\s+at effective Habit Level \d+)?/i)?.[1]
+    ?? text.match(/(?:Damage Received|Damage Dealt|Fire Damage Received|Physical Damage Received|Tactical Damage Received)\s+(?:decrease|increase|reduction:)\s+([-+]?\d+(?:\.\d+)?%?)(?:\s+at effective Habit Level \d+)?/i)?.[1]
+    ?? text.match(/reduce(?:s|d)? .*?by ([-+]?\d+(?:\.\d+)?%?)(?:\s+at effective Habit Level \d+)?/i)?.[1]
+    ?? text.match(/([-+]?\d+(?:\.\d+)?%)/)?.[1]
+    ?? 'an unresolved amount';
+  if (!thresholdMatch) {
+    const channel = supportChannelLabel(trace);
+    return [`${channel} support when the condition is met.`];
+  }
+  const thresholdText = `${thresholdMatch[2]}% Troop Capacity`;
+  const durationText = duration ? ` ${duration.replace(/^Duration:\s*/i, '').replace(/\.$/, '.')}` : '';
+  if (/Resistance/i.test(text)) {
+    return [`Below ${thresholdText}: receive Resistance, reducing ${supportChannelLabel(trace)} by ${amount}${durationText}`];
+  }
+  const signedAmount = amount.startsWith('-') ? amount : `-${amount.replace(/^\+/, '')}`;
+  return [`Below ${thresholdText}: ${supportChannelLabel(trace)} ${signedAmount}${durationText}`];
+}
+
 function targetSummaryForCard(trace: SynergyTrace, allDragons: Dragon[]): string | null {
   if (!isAllMatchingTargetSelection(trace) || !trace.targetSelectionGroup) {
     return trace.targetSelectorSummary ?? null;
@@ -508,12 +537,11 @@ function summarizeTrace(
     ];
   }
   if (isAllMatchingTargetSelection(trace) && trace.channel) {
-    const channel = supportChannelLabel(trace);
+    const branchSummary = allMatchingSupportBranchSummary(trace);
     if (recipient) {
-      return [`${channel} support when ${recipient.name} meets the condition.`];
+      return branchSummary.map((line) => `${recipient.name}: ${line}`);
     }
-    const targetNames = target.targetLabel ? `${target.targetLabel} can each receive ` : '';
-    return [`${targetNames}${channel} support when their condition is met.`];
+    return branchSummary;
   }
   if (trace.targetSelectionGroup && trace.channel) {
     const eligibleNames = target.targetLabel ?? 'the eligible candidates';
