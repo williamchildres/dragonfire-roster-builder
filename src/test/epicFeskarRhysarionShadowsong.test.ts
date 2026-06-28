@@ -389,7 +389,7 @@ describe('Feskar, Rhysarion, and Shadowsong Epic profiles', () => {
     expect(conductorEffects[2]!.targetSelection?.references[0]).toMatchObject({ kind: 'distinct-from-effect-target', referencedEffectId: 'blazing-conductor-first-fire' });
     expect(conductorEffects[1]!.activationRoll?.chanceByHabitLevel.map((value) => value.value)).toEqual([40, 52, 64, 80, 100]);
     expect(conductorEffects[3]!.activationRoll?.chanceByHabitLevel.map((value) => value.value)).toEqual([20, 26, 32, 40, 50]);
-    expect(periodic).toEqual(expect.arrayContaining([expect.objectContaining({ dragonId: 'shadowsong', abilityId: 'shadowsong-blazing-conductor', statusId: 'burn', channel: 'fire-damage', damageRateFixed: 20 })]));
+    expect(periodic).toEqual(expect.arrayContaining([expect.objectContaining({ dragonId: 'shadowsong', abilityId: 'shadowsong-blazing-conductor', statusId: 'burn', channel: 'fire-damage', damageRateFixed: null })]));
     expect(scorched.activationRoll?.targetStatusConditionalChances[0]).toMatchObject({ statusId: 'panic', multiplier: 2 });
     expect(scorched.activationRoll?.targetStatusConditionalChances[0]?.chanceByHabitLevel.map((value) => value.value)).toEqual([20, 24, 28, 34, 40]);
   });
@@ -571,6 +571,20 @@ describe('Feskar, Rhysarion, and Shadowsong Epic profiles', () => {
     const devotionTraces = traces.filter((trace) => trace.sourceAbilityId === 'rhysarion-unbroken-devotion');
     expect(devotionTraces.map((trace) => trace.recipientDragonId).sort()).toEqual(['feskar', 'shadowsong']);
     expect(devotionTraces.every((trace) => trace.effects.some((effect) => /Recovery Received \+20%/.test(effect)))).toBe(true);
+    const incomingDevotion = traces.filter((trace) =>
+      trace.matchKind === 'incoming-effect-amplification' &&
+      trace.recipientAbilityId === 'rhysarion-unbroken-devotion'
+    );
+    expect(incomingDevotion.map((trace) => `${trace.sourceAbilityId}:${trace.recipientDragonId}`).sort()).toEqual([
+      'rhysarion-ebbing-fury:feskar',
+      'rhysarion-ebbing-fury:shadowsong',
+      'rhysarion-echoing-melody:feskar',
+      'rhysarion-echoing-melody:shadowsong',
+    ]);
+    expect(incomingDevotion.every((trace) => trace.channel === 'recovery')).toBe(true);
+    expect(incomingDevotion.every((trace) => trace.sourceScopeResults?.every((match) => match.sourceScopeCompatible) ?? true)).toBe(true);
+    expect(incomingDevotion.some((trace) => trace.recipientDragonId === 'rhysarion')).toBe(false);
+    expect(new Set(incomingDevotion.map((trace) => trace.sourceAbilityId))).toEqual(new Set(['rhysarion-ebbing-fury', 'rhysarion-echoing-melody']));
     const devotionProvides = rhysarionCard.provides.find((item) => item.abilityName === 'Unbroken Devotion');
     expect(devotionProvides).toMatchObject({
       targetLabel: 'Feskar and Shadowsong',
@@ -620,6 +634,9 @@ describe('Feskar, Rhysarion, and Shadowsong Epic profiles', () => {
     );
     expect(fireProjection.every((trace) => trace.sourceScopeResults?.every((result) => result.sourceScopeCompatible))).toBe(true);
     expect(fireProjection.every((trace) => trace.status === 'potential')).toBe(true);
+    expect(fireProjection.every((trace) => [...trace.matchedFacts, ...trace.effects].join(' ').includes('Priority: enemy Left Flank is preferred, not guaranteed.'))).toBe(true);
+    expect(fireProjection.every((trace) => [...trace.matchedFacts, ...trace.effects].join(' ').includes('Fallback target: another eligible enemy; fallback selection is not guaranteed.'))).toBe(true);
+    expect(fireProjection.every((trace) => [...trace.matchedFacts, ...trace.effects].join(' ').includes('Selected-target group: blazing-onslaught-fire-target.'))).toBe(true);
 
     const fireProvides = shadowsong.provides.filter((item) => /Blazing Onslaught - Enemy Fire Damage vulnerability/i.test(item.effectTitle));
     const fireProjectionCard = fireProvides.find((item) => item.targetLabel === 'Team' && !item.isEnemyFacing);
@@ -640,11 +657,27 @@ describe('Feskar, Rhysarion, and Shadowsong Epic profiles', () => {
     );
     expect(physicalProjectionCard?.recipientDragonId).toBe('rhysarion');
     expect(physicalProjectionCard?.targetLabel).not.toBe('Team');
+    const physicalProjection = traces.filter((trace) =>
+      trace.sourceAbilityId === 'shadowsong-blazing-onslaught' &&
+      trace.matchKind === 'enemy-damage-received-increase' &&
+      trace.channel === 'physical-damage' &&
+      trace.recipientDragonId
+    );
+    expect(physicalProjection.every((trace) => [...trace.matchedFacts, ...trace.effects].join(' ').includes('Priority: enemy Right Flank is preferred, not guaranteed.'))).toBe(true);
+    expect(physicalProjection.every((trace) => [...trace.matchedFacts, ...trace.effects].join(' ').includes('Fallback target: another eligible enemy; fallback selection is not guaranteed.'))).toBe(true);
+    expect(physicalProjection.every((trace) => [...trace.matchedFacts, ...trace.effects].join(' ').includes('Selected-target group: blazing-onslaught-physical-target.'))).toBe(true);
+    expect(new Set([
+      ...fireProjection.map((trace) => trace.modifierCapabilityId),
+      ...physicalProjection.map((trace) => trace.modifierCapabilityId),
+    ])).toEqual(new Set([
+      'shadowsong-blazing-onslaught-blazing-onslaught-fire-fire-damage-received-modifier',
+      'shadowsong-blazing-onslaught-blazing-onslaught-physical-physical-damage-received-modifier',
+    ]));
   });
 
   it('derives Panic to Scorched Earth and preserves source-scope regressions', () => {
     const formation: FormationAnalysisInput = { 'left-flank': 'daemoros', vanguard: 'shadowsong', 'right-flank': 'feskar' };
-    const roster = ownedRoster(['daemoros', 'shadowsong', 'feskar']);
+    const roster = ownedRoster(['daemoros', 'shadowsong', 'feskar'], 10, 0);
     const traces = analyzeCapabilityAmplifications(formation, dragons, { roster });
     const outputs = deriveOutputCapabilities(dragons);
     const modifiers = deriveModifierCapabilities(dragons);
@@ -660,6 +693,28 @@ describe('Feskar, Rhysarion, and Shadowsong Epic profiles', () => {
     expect(shadowsongModifiers.map((modifier) => [modifier.channel, modifier.sourceScope, modifier.sourceEffectId])).toContainEqual(['physical-damage', 'non-basic-attacks', 'blazing-onslaught-physical']);
     expect(sourceScopesCompatible(temptingPhysical.sourceScope, physicalOutput.sourceScope)).toBe(true);
     expect(sourceScopesCompatible(temptingPhysical.sourceScope, basicOutput.sourceScope)).toBe(false);
+    const scorchedTrace = traces.find((trace) =>
+      trace.sourceDragonId === 'daemoros' &&
+      trace.recipientDragonId === 'shadowsong' &&
+      trace.matchKind === 'status-condition-enablement' &&
+      trace.recipientAbilityId === 'shadowsong-scorched-earth'
+    );
+    const scorchedText = scorchedTrace ? [
+      scorchedTrace.explanation,
+      ...scorchedTrace.matchedFacts,
+      ...scorchedTrace.effects,
+      ...scorchedTrace.assumptions,
+      ...scorchedTrace.unresolvedQuestions,
+    ].join(' ') : '';
+    expect(scorchedText).toContain('Base current application chance: 10%.');
+    expect(scorchedText).toContain('Panic-target application chance: 20%.');
+    expect(scorchedText).toContain('Current application chance: 10% -> 20%.');
+    expect(scorchedText).toContain('Conditional multiplier: 2x.');
+    expect(scorchedText).toContain('The conditional chance modifier is target-specific.');
+    expect(scorchedText).toContain('Panic on one enemy does not change the chance for another enemy.');
+    expect(scorchedText).toContain('Vulnerable value: generic Damage Received +15%.');
+    expect(scorchedText).toContain('Duration: 2 rounds.');
+    expect(scorchedText).toContain('Activation scope is unresolved between one shared roll and independent per-target rolls.');
   });
 
   it('keeps unlocked Habit default Level 1 behavior available for the new batch', () => {
@@ -687,6 +742,7 @@ describe('Feskar, Rhysarion, and Shadowsong Epic profiles', () => {
     const recoveryTraces = traces.filter((trace) => trace.sourceAbilityId === 'rhysarion-ebbing-fury' && trace.channel === 'recovery');
     const impairmentTraces = traces.filter((trace) => trace.sourceAbilityId === 'rhysarion-ebbing-fury' && trace.matchKind === 'friendly-impairment');
     const enemyReduction = traces.find((trace) => trace.sourceAbilityId === 'rhysarion-ebbing-fury' && trace.matchKind === 'enemy-damage-dealt-reduction');
+    const enemyReductionText = enemyReduction ? [...enemyReduction.matchedFacts, ...enemyReduction.effects, ...enemyReduction.assumptions, enemyReduction.explanation].join(' ') : '';
 
     expect(habit('rhysarion', 'rhysarion-ebbing-fury').schedules.map((schedule) => schedule.id)).toEqual([
       'ebbing-fury-round-one-debuffs',
@@ -756,6 +812,10 @@ describe('Feskar, Rhysarion, and Shadowsong Epic profiles', () => {
     expect(groupedText).toContain('Duration: 3 rounds.');
     expect(groupedText).toContain('harm');
     expect(enemyReduction).toMatchObject({ recipientDragonId: null, interactionScope: 'enemy-side' });
+    expect(enemyReduction?.targetSelectorSummary).toContain('enemy; any-lane; all-matching-condition; all matching enemies');
+    expect(enemyReductionText).toContain('Enemy selector: all enemies.');
+    expect(enemyReductionText).toContain('All matching enemies are affected; no enemy-side candidate group is created.');
+    expect(enemyReductionText).not.toContain('Enemy target count: 3.');
   });
 
   it('keeps normal Ebbing Fury cards to the current ranked value for upgraded and preview states', () => {
@@ -936,9 +996,16 @@ describe('Feskar, Rhysarion, and Shadowsong Epic profiles', () => {
     const statusOutputs = deriveStatusOutputCapabilities(dragons).filter((output) => output.abilityId === 'shadowsong-blazing-conductor');
     expect(statusOutputs.find((output) => output.sourceEffectId === 'blazing-conductor-first-burn')?.chanceByHabitLevel[0]?.value).toBe(40);
     expect(statusOutputs.find((output) => output.sourceEffectId === 'blazing-conductor-second-burn')?.chanceByHabitLevel[0]?.value).toBe(20);
+    expect(statusOutputs.find((output) => output.sourceEffectId === 'blazing-conductor-first-burn')?.targetSelector.count).toBe(1);
+    expect(statusOutputs.find((output) => output.sourceEffectId === 'blazing-conductor-second-burn')?.targetSelector.count).toBe(1);
+    const periodic = derivePeriodicDamageDefinitions(dragons).filter((output) => output.abilityId === 'shadowsong-blazing-conductor');
+    expect(periodic).toHaveLength(2);
+    expect(periodic.every((output) => output.damageRateFixed === null && output.damageRateByHabitLevel.length === 0)).toBe(true);
     const conductorOutputs = deriveOutputCapabilities(dragons).filter((output) => output.abilityId === 'shadowsong-blazing-conductor');
     expect(conductorOutputs.find((output) => output.sourceEffectId === 'blazing-conductor-first-fire')?.id).toContain('first-fire-output');
     expect(conductorOutputs.find((output) => output.sourceEffectId === 'blazing-conductor-second-fire')?.id).toContain('second-fire-output');
+    expect(conductorOutputs.find((output) => output.sourceEffectId === 'blazing-conductor-first-fire')?.targetCount).toBe(1);
+    expect(conductorOutputs.find((output) => output.sourceEffectId === 'blazing-conductor-second-fire')?.targetCount).toBe(1);
     const conductorText = traces.filter((trace) => trace.sourceAbilityId === 'shadowsong-blazing-conductor')
       .flatMap((trace) => [trace.explanation, ...trace.matchedFacts, ...trace.effects])
       .join(' ');
@@ -953,7 +1020,9 @@ describe('Feskar, Rhysarion, and Shadowsong Epic profiles', () => {
     expect(conductorText).not.toContain('Status application chance: 20% at effective Habit Level 1.');
     expect(conductorText).not.toContain('Activation chance: 40% at effective Habit Level 1.');
     expect(conductorText).not.toContain('Activation chance: 20% at effective Habit Level 1.');
-    expect(conductorText).toContain('Damage Rate 20%.');
+    expect(conductorText).toContain('Periodic damage rate: unknown/not stated.');
+    expect(conductorText).not.toContain('Damage Rate 20%.');
+    expect(conductorText).not.toContain('Damage Rate 40%.');
     expect(conductorText).toContain('Duration: 2 rounds.');
 
     const burnSummary = traces.find((trace) => trace.title === 'Burn enables Emerald Inferno' && trace.recipientAbilityId === 'feskar-emerald-inferno')?.explanation ?? '';
@@ -1006,7 +1075,10 @@ describe('Feskar, Rhysarion, and Shadowsong Epic profiles', () => {
       trace.ruleId === 'recipient-side-ally-support'
     ).every((trace) => trace.status === 'active')).toBe(true);
     expect(inspiring.every((trace) => trace.status === 'potential')).toBe(true);
-    expect(traces.filter((trace) => trace.sourceAbilityId === 'rhysarion-echoing-melody').every((trace) => trace.status === 'potential')).toBe(true);
+    expect(traces.filter((trace) =>
+      trace.sourceAbilityId === 'rhysarion-echoing-melody' &&
+      trace.matchKind !== 'incoming-effect-amplification'
+    ).every((trace) => trace.status === 'potential')).toBe(true);
 
     expect(allText).toContain('Highest-Strength enemy identity');
     expect(allText).toContain('Enemy identities and combat availability are unresolved.');

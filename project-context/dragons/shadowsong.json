@@ -71,7 +71,7 @@
                   "stack": null,
                   "stackTransitionTrigger": null,
                   "target": "First added enemy in any lane",
-                  "targetCount": null,
+                  "targetCount": 1,
                   "targetPriority": "any-eligible",
                   "targetScope": "any-lane",
                   "targetSelection": {
@@ -134,7 +134,7 @@
                   "excludes": [],
                   "id": "blazing-conductor-first-burn",
                   "includesCaster": null,
-                  "magnitude": 20,
+                  "magnitude": null,
                   "notes": [
                     "Burn is periodic Fire Damage each round, scales with Intelligence, and is mitigated by target Initiative."
                   ],
@@ -145,7 +145,7 @@
                   "stack": null,
                   "stackTransitionTrigger": null,
                   "target": "First added enemy",
-                  "targetCount": null,
+                  "targetCount": 1,
                   "targetPriority": "any-eligible",
                   "targetScope": "any-lane",
                   "targetSelection": {
@@ -168,7 +168,7 @@
                     "tieBehavior": null
                   },
                   "type": "Burn",
-                  "unit": "rate"
+                  "unit": "unknown"
                 },
                 {
                   "activationRoll": null,
@@ -222,7 +222,7 @@
                   "stack": null,
                   "stackTransitionTrigger": null,
                   "target": "Second added enemy in any lane, different from the first added target",
-                  "targetCount": null,
+                  "targetCount": 1,
                   "targetPriority": "any-eligible",
                   "targetScope": "any-lane",
                   "targetSelection": {
@@ -292,7 +292,7 @@
                   "excludes": [],
                   "id": "blazing-conductor-second-burn",
                   "includesCaster": null,
-                  "magnitude": 20,
+                  "magnitude": null,
                   "notes": [
                     "Burn is periodic Fire Damage each round, scales with Intelligence, and is mitigated by target Initiative."
                   ],
@@ -303,7 +303,7 @@
                   "stack": null,
                   "stackTransitionTrigger": null,
                   "target": "Second added enemy",
-                  "targetCount": null,
+                  "targetCount": 1,
                   "targetPriority": "any-eligible",
                   "targetScope": "any-lane",
                   "targetSelection": {
@@ -326,7 +326,7 @@
                     "tieBehavior": null
                   },
                   "type": "Burn",
-                  "unit": "rate"
+                  "unit": "unknown"
                 }
               ],
               "id": "blazing-conductor-added-rounds",
@@ -1629,7 +1629,7 @@
               "stack": null,
               "stackTransitionTrigger": null,
               "target": "First added enemy in any lane",
-              "targetCount": null,
+              "targetCount": 1,
               "targetPriority": "any-eligible",
               "targetScope": "any-lane",
               "targetSelection": {
@@ -1692,7 +1692,7 @@
               "excludes": [],
               "id": "blazing-conductor-first-burn",
               "includesCaster": null,
-              "magnitude": 20,
+              "magnitude": null,
               "notes": [
                 "Burn is periodic Fire Damage each round, scales with Intelligence, and is mitigated by target Initiative."
               ],
@@ -1703,7 +1703,7 @@
               "stack": null,
               "stackTransitionTrigger": null,
               "target": "First added enemy",
-              "targetCount": null,
+              "targetCount": 1,
               "targetPriority": "any-eligible",
               "targetScope": "any-lane",
               "targetSelection": {
@@ -1726,7 +1726,7 @@
                 "tieBehavior": null
               },
               "type": "Burn",
-              "unit": "rate"
+              "unit": "unknown"
             },
             {
               "activationRoll": null,
@@ -1780,7 +1780,7 @@
               "stack": null,
               "stackTransitionTrigger": null,
               "target": "Second added enemy in any lane, different from the first added target",
-              "targetCount": null,
+              "targetCount": 1,
               "targetPriority": "any-eligible",
               "targetScope": "any-lane",
               "targetSelection": {
@@ -1850,7 +1850,7 @@
               "excludes": [],
               "id": "blazing-conductor-second-burn",
               "includesCaster": null,
-              "magnitude": 20,
+              "magnitude": null,
               "notes": [
                 "Burn is periodic Fire Damage each round, scales with Intelligence, and is mitigated by target Initiative."
               ],
@@ -1861,7 +1861,7 @@
               "stack": null,
               "stackTransitionTrigger": null,
               "target": "Second added enemy",
-              "targetCount": null,
+              "targetCount": 1,
               "targetPriority": "any-eligible",
               "targetScope": "any-lane",
               "targetSelection": {
@@ -1884,7 +1884,7 @@
                 "tieBehavior": null
               },
               "type": "Burn",
-              "unit": "rate"
+              "unit": "unknown"
             }
           ],
           "id": "blazing-conductor-added-rounds",
@@ -2876,7 +2876,7 @@
             "stack": null,
             "stackTransitionTrigger": null,
             "target": "First added enemy in any lane",
-            "targetCount": null,
+            "targetCount": 1,
             "targetPriority": "any-eligible",
             "targetScope": "any-lane",
             "targetSelection": {
@@ -2939,7 +2939,7 @@
             "excludes": [],
             "id": "blazing-conductor-first-burn",
             "includesCaster": null,
-            "magnitude": 20,
+            "magnitude": null,
             "notes": [
               "Burn is periodic Fire Damage each round, scales with Intelligence, and is mitigated by target Initiative."
             ],
@@ -2950,7 +2950,7 @@
             "stack": null,
             "stackTransitionTrigger": null,
             "target": "First added enemy",
-            "targetCount": null,
+            "targetCount": 1,
             "targetPriority": "any-eligible",
             "targetScope": "any-lane",
             "targetSelection": {
@@ -2973,7 +2973,7 @@
               "tieBehavior": null
             },
             "type": "Burn",
-            "unit": "rate"
+            "unit": "unknown"
           },
           {
             "activationRoll": null,
@@ -3027,7 +3027,7 @@
             "stack": null,
             "stackTransitionTrigger": null,
             "target": "Second added enemy in any lane, different from the first added target",
-            "targetCount": null,
+            "targetCount": 1,
             "targetPriority": "any-eligible",
             "targetScope": "any-lane",
             "targetSelection": {
@@ -3097,7 +3097,7 @@
             "excludes": [],
             "id": "blazing-conductor-second-burn",
             "includesCaster": null,
-            "magnitude": 20,
+            "magnitude": null,
             "notes": [
               "Burn is periodic Fire Damage each round, scales with Intelligence, and is mitigated by target Initiative."
             ],
@@ -3108,7 +3108,7 @@
             "stack": null,
             "stackTransitionTrigger": null,
             "target": "Second added enemy",
-            "targetCount": null,
+            "targetCount": 1,
             "targetPriority": "any-eligible",
             "targetScope": "any-lane",
             "targetSelection": {
@@ -3131,7 +3131,7 @@
               "tieBehavior": null
             },
             "type": "Burn",
-            "unit": "rate"
+            "unit": "unknown"
           }
         ],
         "id": "blazing-conductor-added-rounds",
@@ -3279,7 +3279,7 @@
                 "stack": null,
                 "stackTransitionTrigger": null,
                 "target": "First added enemy in any lane",
-                "targetCount": null,
+                "targetCount": 1,
                 "targetPriority": "any-eligible",
                 "targetScope": "any-lane",
                 "targetSelection": {
@@ -3342,7 +3342,7 @@
                 "excludes": [],
                 "id": "blazing-conductor-first-burn",
                 "includesCaster": null,
-                "magnitude": 20,
+                "magnitude": null,
                 "notes": [
                   "Burn is periodic Fire Damage each round, scales with Intelligence, and is mitigated by target Initiative."
                 ],
@@ -3353,7 +3353,7 @@
                 "stack": null,
                 "stackTransitionTrigger": null,
                 "target": "First added enemy",
-                "targetCount": null,
+                "targetCount": 1,
                 "targetPriority": "any-eligible",
                 "targetScope": "any-lane",
                 "targetSelection": {
@@ -3376,7 +3376,7 @@
                   "tieBehavior": null
                 },
                 "type": "Burn",
-                "unit": "rate"
+                "unit": "unknown"
               },
               {
                 "activationRoll": null,
@@ -3430,7 +3430,7 @@
                 "stack": null,
                 "stackTransitionTrigger": null,
                 "target": "Second added enemy in any lane, different from the first added target",
-                "targetCount": null,
+                "targetCount": 1,
                 "targetPriority": "any-eligible",
                 "targetScope": "any-lane",
                 "targetSelection": {
@@ -3500,7 +3500,7 @@
                 "excludes": [],
                 "id": "blazing-conductor-second-burn",
                 "includesCaster": null,
-                "magnitude": 20,
+                "magnitude": null,
                 "notes": [
                   "Burn is periodic Fire Damage each round, scales with Intelligence, and is mitigated by target Initiative."
                 ],
@@ -3511,7 +3511,7 @@
                 "stack": null,
                 "stackTransitionTrigger": null,
                 "target": "Second added enemy",
-                "targetCount": null,
+                "targetCount": 1,
                 "targetPriority": "any-eligible",
                 "targetScope": "any-lane",
                 "targetSelection": {
@@ -3534,7 +3534,7 @@
                   "tieBehavior": null
                 },
                 "type": "Burn",
-                "unit": "rate"
+                "unit": "unknown"
               }
             ],
             "id": "blazing-conductor-added-rounds",
@@ -4553,7 +4553,7 @@
         "stack": null,
         "stackTransitionTrigger": null,
         "target": "First added enemy in any lane",
-        "targetCount": null,
+        "targetCount": 1,
         "targetPriority": "any-eligible",
         "targetScope": "any-lane",
         "targetSelection": {
@@ -4620,7 +4620,7 @@
         "excludes": [],
         "id": "blazing-conductor-first-burn",
         "includesCaster": null,
-        "magnitude": 20,
+        "magnitude": null,
         "notes": [
           "Burn is periodic Fire Damage each round, scales with Intelligence, and is mitigated by target Initiative."
         ],
@@ -4631,7 +4631,7 @@
         "stack": null,
         "stackTransitionTrigger": null,
         "target": "First added enemy",
-        "targetCount": null,
+        "targetCount": 1,
         "targetPriority": "any-eligible",
         "targetScope": "any-lane",
         "targetSelection": {
@@ -4654,7 +4654,7 @@
           "tieBehavior": null
         },
         "type": "Burn",
-        "unit": "rate"
+        "unit": "unknown"
       },
       "scheduleId": "blazing-conductor-added-rounds"
     },
@@ -4712,7 +4712,7 @@
         "stack": null,
         "stackTransitionTrigger": null,
         "target": "Second added enemy in any lane, different from the first added target",
-        "targetCount": null,
+        "targetCount": 1,
         "targetPriority": "any-eligible",
         "targetScope": "any-lane",
         "targetSelection": {
@@ -4786,7 +4786,7 @@
         "excludes": [],
         "id": "blazing-conductor-second-burn",
         "includesCaster": null,
-        "magnitude": 20,
+        "magnitude": null,
         "notes": [
           "Burn is periodic Fire Damage each round, scales with Intelligence, and is mitigated by target Initiative."
         ],
@@ -4797,7 +4797,7 @@
         "stack": null,
         "stackTransitionTrigger": null,
         "target": "Second added enemy",
-        "targetCount": null,
+        "targetCount": 1,
         "targetPriority": "any-eligible",
         "targetScope": "any-lane",
         "targetSelection": {
@@ -4820,7 +4820,7 @@
           "tieBehavior": null
         },
         "type": "Burn",
-        "unit": "rate"
+        "unit": "unknown"
       },
       "scheduleId": "blazing-conductor-added-rounds"
     }
@@ -4935,7 +4935,7 @@
   "firstObservedInGame": "2026-06-22",
   "format": "dragonfire-dragon-profile",
   "gameVersion": null,
-  "generatedAt": "2026-06-28T01:18:15.156Z",
+  "generatedAt": "2026-06-28T02:08:46.182Z",
   "habits": [
     {
       "abilityClass": "passive",
@@ -5937,7 +5937,7 @@
               "stack": null,
               "stackTransitionTrigger": null,
               "target": "First added enemy in any lane",
-              "targetCount": null,
+              "targetCount": 1,
               "targetPriority": "any-eligible",
               "targetScope": "any-lane",
               "targetSelection": {
@@ -6000,7 +6000,7 @@
               "excludes": [],
               "id": "blazing-conductor-first-burn",
               "includesCaster": null,
-              "magnitude": 20,
+              "magnitude": null,
               "notes": [
                 "Burn is periodic Fire Damage each round, scales with Intelligence, and is mitigated by target Initiative."
               ],
@@ -6011,7 +6011,7 @@
               "stack": null,
               "stackTransitionTrigger": null,
               "target": "First added enemy",
-              "targetCount": null,
+              "targetCount": 1,
               "targetPriority": "any-eligible",
               "targetScope": "any-lane",
               "targetSelection": {
@@ -6034,7 +6034,7 @@
                 "tieBehavior": null
               },
               "type": "Burn",
-              "unit": "rate"
+              "unit": "unknown"
             },
             {
               "activationRoll": null,
@@ -6088,7 +6088,7 @@
               "stack": null,
               "stackTransitionTrigger": null,
               "target": "Second added enemy in any lane, different from the first added target",
-              "targetCount": null,
+              "targetCount": 1,
               "targetPriority": "any-eligible",
               "targetScope": "any-lane",
               "targetSelection": {
@@ -6158,7 +6158,7 @@
               "excludes": [],
               "id": "blazing-conductor-second-burn",
               "includesCaster": null,
-              "magnitude": 20,
+              "magnitude": null,
               "notes": [
                 "Burn is periodic Fire Damage each round, scales with Intelligence, and is mitigated by target Initiative."
               ],
@@ -6169,7 +6169,7 @@
               "stack": null,
               "stackTransitionTrigger": null,
               "target": "Second added enemy",
-              "targetCount": null,
+              "targetCount": 1,
               "targetPriority": "any-eligible",
               "targetScope": "any-lane",
               "targetSelection": {
@@ -6192,7 +6192,7 @@
                 "tieBehavior": null
               },
               "type": "Burn",
-              "unit": "rate"
+              "unit": "unknown"
             }
           ],
           "id": "blazing-conductor-added-rounds",
@@ -7178,7 +7178,7 @@
       "sourceEffectId": "blazing-conductor-first-fire",
       "sourceKind": "habit",
       "sourceScope": "habits",
-      "targetCount": null,
+      "targetCount": 1,
       "targetScope": "any-lane",
       "targetSide": "enemy",
       "unlockStarRank": 10
@@ -7231,7 +7231,7 @@
       "sourceEffectId": "blazing-conductor-first-burn",
       "sourceKind": "habit",
       "sourceScope": "habits",
-      "targetCount": null,
+      "targetCount": 1,
       "targetScope": "any-lane",
       "targetSide": "enemy",
       "unlockStarRank": 10
@@ -7284,7 +7284,7 @@
       "sourceEffectId": "blazing-conductor-second-fire",
       "sourceKind": "habit",
       "sourceScope": "habits",
-      "targetCount": null,
+      "targetCount": 1,
       "targetScope": "any-lane",
       "targetSide": "enemy",
       "unlockStarRank": 10
@@ -7337,7 +7337,7 @@
       "sourceEffectId": "blazing-conductor-second-burn",
       "sourceKind": "habit",
       "sourceScope": "habits",
-      "targetCount": null,
+      "targetCount": 1,
       "targetScope": "any-lane",
       "targetSide": "enemy",
       "unlockStarRank": 10
@@ -7348,7 +7348,7 @@
       "abilityId": "shadowsong-blazing-conductor",
       "channel": "fire-damage",
       "damageRateByHabitLevel": [],
-      "damageRateFixed": 20,
+      "damageRateFixed": null,
       "dragonId": "shadowsong",
       "durationRounds": 2,
       "evidenceIds": [
@@ -7363,7 +7363,7 @@
       "abilityId": "shadowsong-blazing-conductor",
       "channel": "fire-damage",
       "damageRateByHabitLevel": [],
-      "damageRateFixed": 20,
+      "damageRateFixed": null,
       "dragonId": "shadowsong",
       "durationRounds": 2,
       "evidenceIds": [
@@ -8104,8 +8104,8 @@
   "rosterSourceStatus": "in-game-verified-pending-official-site",
   "slug": "shadowsong",
   "source": {
-    "branch": "main",
-    "commit": "4ff5381e6964eb9b77151bb07b4436c58820c08b",
+    "branch": "fix/feskar-rhysarion-shadowsong-mechanics-integrity",
+    "commit": "c885dd937697325552e16c115d3459acd513d8f2",
     "databaseVersion": "0.6.2",
     "dataSchemaVersion": 12,
     "gameBuild": "26.6.53509",
@@ -8317,7 +8317,7 @@
       "targetSelector": {
         "comparisonDirection": null,
         "comparisonPool": null,
-        "count": null,
+        "count": 1,
         "includesCaster": null,
         "position": null,
         "scope": "any-lane",
@@ -8420,7 +8420,7 @@
       "targetSelector": {
         "comparisonDirection": null,
         "comparisonPool": null,
-        "count": null,
+        "count": 1,
         "includesCaster": null,
         "position": null,
         "scope": "any-lane",

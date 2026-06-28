@@ -23,7 +23,7 @@
   ],
   "currentReviewPhase": "Legendary/full-profile formation validation complete; Epic ingestion active with Daemoros and Vaeldra as the first detailed Epic batch after Vermax.",
   "format": "dragonfire-project-state",
-  "generatedAt": "2026-06-28T01:18:15.156Z",
+  "generatedAt": "2026-06-28T02:08:46.182Z",
   "plannedNextPhase": [
     "continue Epic dragon ingestion in batches of two after the latest merged context is available",
     "fetch latest merged main and create a new feature branch before each future Epic implementation batch",
@@ -37,8 +37,8 @@
     "metadataOnlyDragonCount": 15
   },
   "source": {
-    "branch": "main",
-    "commit": "4ff5381e6964eb9b77151bb07b4436c58820c08b",
+    "branch": "fix/feskar-rhysarion-shadowsong-mechanics-integrity",
+    "commit": "c885dd937697325552e16c115d3459acd513d8f2",
     "databaseVersion": "0.6.2",
     "dataSchemaVersion": 12,
     "gameBuild": "26.6.53509",

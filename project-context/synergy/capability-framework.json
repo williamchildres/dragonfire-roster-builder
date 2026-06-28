@@ -8201,11 +8201,11 @@
         "targetSelector": {
           "comparisonDirection": null,
           "comparisonPool": null,
-          "count": 3,
+          "count": null,
           "includesCaster": null,
           "position": null,
           "scope": "any-lane",
-          "selection": "any",
+          "selection": "all-matching-condition",
           "selectionResource": null,
           "selectionStat": null,
           "sharedSelectionGroupId": null,
@@ -10984,7 +10984,7 @@
         "sourceEffectId": "blazing-conductor-first-fire",
         "sourceKind": "habit",
         "sourceScope": "habits",
-        "targetCount": null,
+        "targetCount": 1,
         "targetScope": "any-lane",
         "targetSide": "enemy",
         "unlockStarRank": 10
@@ -11037,7 +11037,7 @@
         "sourceEffectId": "blazing-conductor-first-burn",
         "sourceKind": "habit",
         "sourceScope": "habits",
-        "targetCount": null,
+        "targetCount": 1,
         "targetScope": "any-lane",
         "targetSide": "enemy",
         "unlockStarRank": 10
@@ -11090,7 +11090,7 @@
         "sourceEffectId": "blazing-conductor-second-fire",
         "sourceKind": "habit",
         "sourceScope": "habits",
-        "targetCount": null,
+        "targetCount": 1,
         "targetScope": "any-lane",
         "targetSide": "enemy",
         "unlockStarRank": 10
@@ -11143,7 +11143,7 @@
         "sourceEffectId": "blazing-conductor-second-burn",
         "sourceKind": "habit",
         "sourceScope": "habits",
-        "targetCount": null,
+        "targetCount": 1,
         "targetScope": "any-lane",
         "targetSide": "enemy",
         "unlockStarRank": 10
@@ -11639,7 +11639,7 @@
         "abilityId": "shadowsong-blazing-conductor",
         "channel": "fire-damage",
         "damageRateByHabitLevel": [],
-        "damageRateFixed": 20,
+        "damageRateFixed": null,
         "dragonId": "shadowsong",
         "durationRounds": 2,
         "evidenceIds": [
@@ -11654,7 +11654,7 @@
         "abilityId": "shadowsong-blazing-conductor",
         "channel": "fire-damage",
         "damageRateByHabitLevel": [],
-        "damageRateFixed": 20,
+        "damageRateFixed": null,
         "dragonId": "shadowsong",
         "durationRounds": 2,
         "evidenceIds": [
@@ -20002,7 +20002,7 @@
         "targetSelector": {
           "comparisonDirection": null,
           "comparisonPool": null,
-          "count": null,
+          "count": 1,
           "includesCaster": null,
           "position": null,
           "scope": "any-lane",
@@ -20105,7 +20105,7 @@
         "targetSelector": {
           "comparisonDirection": null,
           "comparisonPool": null,
-          "count": null,
+          "count": 1,
           "includesCaster": null,
           "position": null,
           "scope": "any-lane",

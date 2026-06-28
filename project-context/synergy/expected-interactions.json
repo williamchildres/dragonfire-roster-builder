@@ -19051,7 +19051,7 @@
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final Recovery cannot be calculated because the game's Level and Instinct Recovery formula is unknown.",
-    "explanation": "Malachite provides Recovery through Warden's Rally. Sheepstealer's Hunter's Cunning increases Recovery Received by 20%.",
+    "explanation": "Malachite provides Recovery through Warden's Rally. Sheepstealer has Sheepstealer's Hunter's Cunning Recovery Received modifier, increasing received Recovery by 20%.",
     "id": "incoming-effect-amplification-sheepstealer-hunters-cunning-hunters-cunning-recovery-received-recovery-received-modifier-sheepstealer",
     "interactionScope": "cross-dragon",
     "matchedOutputCapabilityIds": [
@@ -19069,6 +19069,7 @@
       "malachite-wardens-rally-glossary-2026-06-23",
       "sheepstealer-hunters-cunning-2026-06-23",
       "sheepstealer-hunters-cunning-2026-06-23",
+      "sheepstealer-hunters-cunning-2026-06-23",
       "sheepstealer-hunters-cunning-2026-06-23"
     ],
     "requirements": [
@@ -19084,6 +19085,17 @@
         "notes": [
           "Exact 3 Allies includes all friendly dragons, including caster."
         ],
+        "satisfied": true
+      },
+      {
+        "actual": "provider vanguard, recipient vanguard",
+        "evidenceIds": [
+          "sheepstealer-hunters-cunning-2026-06-23"
+        ],
+        "expected": "self",
+        "id": "sheepstealer-hunters-cunning-hunters-cunning-recovery-received-recovery-received-modifier-targeting-vanguard",
+        "label": "Position compatibility",
+        "notes": [],
         "satisfied": true
       },
       {
@@ -19147,7 +19159,7 @@
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final Recovery cannot be calculated because the game's Level and Instinct Recovery formula is unknown.",
-    "explanation": "Sheepstealer provides Recovery through Savage Claim. Sheepstealer's Hunter's Cunning increases Recovery Received by 20%.",
+    "explanation": "Sheepstealer provides Recovery through Savage Claim. Sheepstealer has Sheepstealer's Hunter's Cunning Recovery Received modifier, increasing received Recovery by 20%.",
     "id": "incoming-effect-amplification-sheepstealer-hunters-cunning-hunters-cunning-recovery-received-recovery-received-modifier-sheepstealer",
     "interactionScope": "internal",
     "matchedOutputCapabilityIds": [
@@ -19162,6 +19174,7 @@
     "recipientDragonId": "sheepstealer",
     "recipientEvidenceIds": [
       "sheepstealer-savage-claim-2026-06-23",
+      "sheepstealer-hunters-cunning-2026-06-23",
       "sheepstealer-savage-claim-2026-06-23",
       "sheepstealer-savage-claim-2026-06-23",
       "sheepstealer-hunters-cunning-2026-06-23",
@@ -19177,6 +19190,17 @@
         "expected": "self",
         "id": "sheepstealer-savage-claim-savage-claim-recovery-output-targets-vanguard",
         "label": "Provider targeting includes recipient",
+        "notes": [],
+        "satisfied": true
+      },
+      {
+        "actual": "provider vanguard, recipient vanguard",
+        "evidenceIds": [
+          "sheepstealer-hunters-cunning-2026-06-23"
+        ],
+        "expected": "self",
+        "id": "sheepstealer-hunters-cunning-hunters-cunning-recovery-received-recovery-received-modifier-targeting-vanguard",
+        "label": "Position compatibility",
         "notes": [],
         "satisfied": true
       },
@@ -23535,7 +23559,7 @@
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final Recovery cannot be calculated because the game's Level and Instinct Recovery formula is unknown.",
-    "explanation": "Malachite provides Recovery through Warden's Rally. Sheepstealer's Hunter's Cunning increases Recovery Received by 20%.",
+    "explanation": "Malachite provides Recovery through Warden's Rally. Sheepstealer has Sheepstealer's Hunter's Cunning Recovery Received modifier, increasing received Recovery by 20%.",
     "id": "incoming-effect-amplification-sheepstealer-hunters-cunning-hunters-cunning-recovery-received-recovery-received-modifier-sheepstealer",
     "interactionScope": "cross-dragon",
     "matchedOutputCapabilityIds": [
@@ -23553,6 +23577,7 @@
       "malachite-wardens-rally-glossary-2026-06-23",
       "sheepstealer-hunters-cunning-2026-06-23",
       "sheepstealer-hunters-cunning-2026-06-23",
+      "sheepstealer-hunters-cunning-2026-06-23",
       "sheepstealer-hunters-cunning-2026-06-23"
     ],
     "requirements": [
@@ -23568,6 +23593,17 @@
         "notes": [
           "Exact 3 Allies includes all friendly dragons, including caster."
         ],
+        "satisfied": true
+      },
+      {
+        "actual": "provider right-flank, recipient right-flank",
+        "evidenceIds": [
+          "sheepstealer-hunters-cunning-2026-06-23"
+        ],
+        "expected": "self",
+        "id": "sheepstealer-hunters-cunning-hunters-cunning-recovery-received-recovery-received-modifier-targeting-right-flank",
+        "label": "Position compatibility",
+        "notes": [],
         "satisfied": true
       },
       {
@@ -23632,7 +23668,7 @@
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final Recovery cannot be calculated because the game's Level and Instinct Recovery formula is unknown.",
-    "explanation": "Sheepstealer provides Recovery through Savage Claim. Sheepstealer's Hunter's Cunning increases Recovery Received by 20%.",
+    "explanation": "Sheepstealer provides Recovery through Savage Claim. Sheepstealer has Sheepstealer's Hunter's Cunning Recovery Received modifier, increasing received Recovery by 20%.",
     "id": "incoming-effect-amplification-sheepstealer-hunters-cunning-hunters-cunning-recovery-received-recovery-received-modifier-sheepstealer",
     "interactionScope": "internal",
     "matchedOutputCapabilityIds": [
@@ -23647,6 +23683,7 @@
     "recipientDragonId": "sheepstealer",
     "recipientEvidenceIds": [
       "sheepstealer-savage-claim-2026-06-23",
+      "sheepstealer-hunters-cunning-2026-06-23",
       "sheepstealer-savage-claim-2026-06-23",
       "sheepstealer-savage-claim-2026-06-23",
       "sheepstealer-hunters-cunning-2026-06-23",
@@ -23662,6 +23699,17 @@
         "expected": "self",
         "id": "sheepstealer-savage-claim-savage-claim-recovery-output-targets-right-flank",
         "label": "Provider targeting includes recipient",
+        "notes": [],
+        "satisfied": true
+      },
+      {
+        "actual": "provider right-flank, recipient right-flank",
+        "evidenceIds": [
+          "sheepstealer-hunters-cunning-2026-06-23"
+        ],
+        "expected": "self",
+        "id": "sheepstealer-hunters-cunning-hunters-cunning-recovery-received-recovery-received-modifier-targeting-right-flank",
+        "label": "Position compatibility",
         "notes": [],
         "satisfied": true
       },
@@ -32577,7 +32625,7 @@
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final Recovery cannot be calculated because the game's Level and Instinct Recovery formula is unknown.",
-    "explanation": "Malachite provides Recovery through Warden's Rally. Sheepstealer's Hunter's Cunning increases Recovery Received by 20%.",
+    "explanation": "Malachite provides Recovery through Warden's Rally. Sheepstealer has Sheepstealer's Hunter's Cunning Recovery Received modifier, increasing received Recovery by 20%.",
     "id": "incoming-effect-amplification-sheepstealer-hunters-cunning-hunters-cunning-recovery-received-recovery-received-modifier-sheepstealer",
     "interactionScope": "cross-dragon",
     "matchedOutputCapabilityIds": [
@@ -32595,6 +32643,7 @@
       "malachite-wardens-rally-glossary-2026-06-23",
       "sheepstealer-hunters-cunning-2026-06-23",
       "sheepstealer-hunters-cunning-2026-06-23",
+      "sheepstealer-hunters-cunning-2026-06-23",
       "sheepstealer-hunters-cunning-2026-06-23"
     ],
     "requirements": [
@@ -32610,6 +32659,17 @@
         "notes": [
           "Exact 3 Allies includes all friendly dragons, including caster."
         ],
+        "satisfied": true
+      },
+      {
+        "actual": "provider right-flank, recipient right-flank",
+        "evidenceIds": [
+          "sheepstealer-hunters-cunning-2026-06-23"
+        ],
+        "expected": "self",
+        "id": "sheepstealer-hunters-cunning-hunters-cunning-recovery-received-recovery-received-modifier-targeting-right-flank",
+        "label": "Position compatibility",
+        "notes": [],
         "satisfied": true
       },
       {
@@ -32674,7 +32734,7 @@
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final Recovery cannot be calculated because the game's Level and Instinct Recovery formula is unknown.",
-    "explanation": "Sheepstealer provides Recovery through Savage Claim. Sheepstealer's Hunter's Cunning increases Recovery Received by 20%.",
+    "explanation": "Sheepstealer provides Recovery through Savage Claim. Sheepstealer has Sheepstealer's Hunter's Cunning Recovery Received modifier, increasing received Recovery by 20%.",
     "id": "incoming-effect-amplification-sheepstealer-hunters-cunning-hunters-cunning-recovery-received-recovery-received-modifier-sheepstealer",
     "interactionScope": "internal",
     "matchedOutputCapabilityIds": [
@@ -32689,6 +32749,7 @@
     "recipientDragonId": "sheepstealer",
     "recipientEvidenceIds": [
       "sheepstealer-savage-claim-2026-06-23",
+      "sheepstealer-hunters-cunning-2026-06-23",
       "sheepstealer-savage-claim-2026-06-23",
       "sheepstealer-savage-claim-2026-06-23",
       "sheepstealer-hunters-cunning-2026-06-23",
@@ -32704,6 +32765,17 @@
         "expected": "self",
         "id": "sheepstealer-savage-claim-savage-claim-recovery-output-targets-right-flank",
         "label": "Provider targeting includes recipient",
+        "notes": [],
+        "satisfied": true
+      },
+      {
+        "actual": "provider right-flank, recipient right-flank",
+        "evidenceIds": [
+          "sheepstealer-hunters-cunning-2026-06-23"
+        ],
+        "expected": "self",
+        "id": "sheepstealer-hunters-cunning-hunters-cunning-recovery-received-recovery-received-modifier-targeting-right-flank",
+        "label": "Position compatibility",
         "notes": [],
         "satisfied": true
       },
@@ -36699,7 +36771,7 @@
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final Recovery cannot be calculated because the game's Level and Instinct Recovery formula is unknown.",
-    "explanation": "Sheepstealer provides Recovery through Savage Claim. Sheepstealer's Hunter's Cunning increases Recovery Received by 20%.",
+    "explanation": "Sheepstealer provides Recovery through Savage Claim. Sheepstealer has Sheepstealer's Hunter's Cunning Recovery Received modifier, increasing received Recovery by 20%.",
     "id": "incoming-effect-amplification-sheepstealer-hunters-cunning-hunters-cunning-recovery-received-recovery-received-modifier-sheepstealer",
     "interactionScope": "internal",
     "matchedOutputCapabilityIds": [
@@ -36714,6 +36786,7 @@
     "recipientDragonId": "sheepstealer",
     "recipientEvidenceIds": [
       "sheepstealer-savage-claim-2026-06-23",
+      "sheepstealer-hunters-cunning-2026-06-23",
       "sheepstealer-savage-claim-2026-06-23",
       "sheepstealer-savage-claim-2026-06-23",
       "sheepstealer-hunters-cunning-2026-06-23",
@@ -36729,6 +36802,17 @@
         "expected": "self",
         "id": "sheepstealer-savage-claim-savage-claim-recovery-output-targets-right-flank",
         "label": "Provider targeting includes recipient",
+        "notes": [],
+        "satisfied": true
+      },
+      {
+        "actual": "provider right-flank, recipient right-flank",
+        "evidenceIds": [
+          "sheepstealer-hunters-cunning-2026-06-23"
+        ],
+        "expected": "self",
+        "id": "sheepstealer-hunters-cunning-hunters-cunning-recovery-received-recovery-received-modifier-targeting-right-flank",
+        "label": "Position compatibility",
         "notes": [],
         "satisfied": true
       },
@@ -40597,7 +40681,7 @@
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final Recovery cannot be calculated because the game's Level and Instinct Recovery formula is unknown.",
-    "explanation": "Syrax provides Recovery through Strategic Revival. Sheepstealer's Hunter's Cunning increases Recovery Received by 20%.",
+    "explanation": "Syrax provides Recovery through Strategic Revival. Sheepstealer has Sheepstealer's Hunter's Cunning Recovery Received modifier, increasing received Recovery by 20%.",
     "id": "incoming-effect-amplification-sheepstealer-hunters-cunning-hunters-cunning-recovery-received-recovery-received-modifier-sheepstealer",
     "interactionScope": "cross-dragon",
     "matchedOutputCapabilityIds": [
@@ -40612,6 +40696,7 @@
     "recipientDragonId": "sheepstealer",
     "recipientEvidenceIds": [
       "syrax-strategic-revival-2026-06-24",
+      "sheepstealer-hunters-cunning-2026-06-23",
       "syrax-strategic-revival-2026-06-24",
       "syrax-strategic-revival-2026-06-24",
       "sheepstealer-hunters-cunning-2026-06-23",
@@ -40627,6 +40712,17 @@
         "expected": "any-lane",
         "id": "syrax-strategic-revival-strategic-revival-recovery-output-targets-right-flank",
         "label": "Provider targeting includes recipient",
+        "notes": [],
+        "satisfied": true
+      },
+      {
+        "actual": "provider right-flank, recipient right-flank",
+        "evidenceIds": [
+          "sheepstealer-hunters-cunning-2026-06-23"
+        ],
+        "expected": "self",
+        "id": "sheepstealer-hunters-cunning-hunters-cunning-recovery-received-recovery-received-modifier-targeting-right-flank",
+        "label": "Position compatibility",
         "notes": [],
         "satisfied": true
       },
@@ -40714,7 +40810,7 @@
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final Recovery cannot be calculated because the game's Level and Instinct Recovery formula is unknown.",
-    "explanation": "Malachite provides Recovery through Warden's Rally. Sheepstealer's Hunter's Cunning increases Recovery Received by 20%.",
+    "explanation": "Malachite provides Recovery through Warden's Rally. Sheepstealer has Sheepstealer's Hunter's Cunning Recovery Received modifier, increasing received Recovery by 20%.",
     "id": "incoming-effect-amplification-sheepstealer-hunters-cunning-hunters-cunning-recovery-received-recovery-received-modifier-sheepstealer",
     "interactionScope": "cross-dragon",
     "matchedOutputCapabilityIds": [
@@ -40732,6 +40828,7 @@
       "malachite-wardens-rally-glossary-2026-06-23",
       "sheepstealer-hunters-cunning-2026-06-23",
       "sheepstealer-hunters-cunning-2026-06-23",
+      "sheepstealer-hunters-cunning-2026-06-23",
       "sheepstealer-hunters-cunning-2026-06-23"
     ],
     "requirements": [
@@ -40747,6 +40844,17 @@
         "notes": [
           "Exact 3 Allies includes all friendly dragons, including caster."
         ],
+        "satisfied": true
+      },
+      {
+        "actual": "provider right-flank, recipient right-flank",
+        "evidenceIds": [
+          "sheepstealer-hunters-cunning-2026-06-23"
+        ],
+        "expected": "self",
+        "id": "sheepstealer-hunters-cunning-hunters-cunning-recovery-received-recovery-received-modifier-targeting-right-flank",
+        "label": "Position compatibility",
+        "notes": [],
         "satisfied": true
       },
       {
@@ -40811,7 +40919,7 @@
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final Recovery cannot be calculated because the game's Level and Instinct Recovery formula is unknown.",
-    "explanation": "Sheepstealer provides Recovery through Savage Claim. Sheepstealer's Hunter's Cunning increases Recovery Received by 20%.",
+    "explanation": "Sheepstealer provides Recovery through Savage Claim. Sheepstealer has Sheepstealer's Hunter's Cunning Recovery Received modifier, increasing received Recovery by 20%.",
     "id": "incoming-effect-amplification-sheepstealer-hunters-cunning-hunters-cunning-recovery-received-recovery-received-modifier-sheepstealer",
     "interactionScope": "internal",
     "matchedOutputCapabilityIds": [
@@ -40826,6 +40934,7 @@
     "recipientDragonId": "sheepstealer",
     "recipientEvidenceIds": [
       "sheepstealer-savage-claim-2026-06-23",
+      "sheepstealer-hunters-cunning-2026-06-23",
       "sheepstealer-savage-claim-2026-06-23",
       "sheepstealer-savage-claim-2026-06-23",
       "sheepstealer-hunters-cunning-2026-06-23",
@@ -40841,6 +40950,17 @@
         "expected": "self",
         "id": "sheepstealer-savage-claim-savage-claim-recovery-output-targets-right-flank",
         "label": "Provider targeting includes recipient",
+        "notes": [],
+        "satisfied": true
+      },
+      {
+        "actual": "provider right-flank, recipient right-flank",
+        "evidenceIds": [
+          "sheepstealer-hunters-cunning-2026-06-23"
+        ],
+        "expected": "self",
+        "id": "sheepstealer-hunters-cunning-hunters-cunning-recovery-received-recovery-received-modifier-targeting-right-flank",
+        "label": "Position compatibility",
         "notes": [],
         "satisfied": true
       },
@@ -49035,7 +49155,7 @@
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final Recovery cannot be calculated because the game's Level and Instinct Recovery formula is unknown.",
-    "explanation": "Syrax provides Recovery through Strategic Revival. Sheepstealer's Hunter's Cunning increases Recovery Received by 20%.",
+    "explanation": "Syrax provides Recovery through Strategic Revival. Sheepstealer has Sheepstealer's Hunter's Cunning Recovery Received modifier, increasing received Recovery by 20%.",
     "id": "incoming-effect-amplification-sheepstealer-hunters-cunning-hunters-cunning-recovery-received-recovery-received-modifier-sheepstealer",
     "interactionScope": "cross-dragon",
     "matchedOutputCapabilityIds": [
@@ -49050,6 +49170,7 @@
     "recipientDragonId": "sheepstealer",
     "recipientEvidenceIds": [
       "syrax-strategic-revival-2026-06-24",
+      "sheepstealer-hunters-cunning-2026-06-23",
       "syrax-strategic-revival-2026-06-24",
       "syrax-strategic-revival-2026-06-24",
       "sheepstealer-hunters-cunning-2026-06-23",
@@ -49065,6 +49186,17 @@
         "expected": "any-lane",
         "id": "syrax-strategic-revival-strategic-revival-recovery-output-targets-left-flank",
         "label": "Provider targeting includes recipient",
+        "notes": [],
+        "satisfied": true
+      },
+      {
+        "actual": "provider left-flank, recipient left-flank",
+        "evidenceIds": [
+          "sheepstealer-hunters-cunning-2026-06-23"
+        ],
+        "expected": "self",
+        "id": "sheepstealer-hunters-cunning-hunters-cunning-recovery-received-recovery-received-modifier-targeting-left-flank",
+        "label": "Position compatibility",
         "notes": [],
         "satisfied": true
       },
@@ -49154,7 +49286,7 @@
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final Recovery cannot be calculated because the game's Level and Instinct Recovery formula is unknown.",
-    "explanation": "Sheepstealer provides Recovery through Savage Claim. Sheepstealer's Hunter's Cunning increases Recovery Received by 20%.",
+    "explanation": "Sheepstealer provides Recovery through Savage Claim. Sheepstealer has Sheepstealer's Hunter's Cunning Recovery Received modifier, increasing received Recovery by 20%.",
     "id": "incoming-effect-amplification-sheepstealer-hunters-cunning-hunters-cunning-recovery-received-recovery-received-modifier-sheepstealer",
     "interactionScope": "internal",
     "matchedOutputCapabilityIds": [
@@ -49169,6 +49301,7 @@
     "recipientDragonId": "sheepstealer",
     "recipientEvidenceIds": [
       "sheepstealer-savage-claim-2026-06-23",
+      "sheepstealer-hunters-cunning-2026-06-23",
       "sheepstealer-savage-claim-2026-06-23",
       "sheepstealer-savage-claim-2026-06-23",
       "sheepstealer-hunters-cunning-2026-06-23",
@@ -49184,6 +49317,17 @@
         "expected": "self",
         "id": "sheepstealer-savage-claim-savage-claim-recovery-output-targets-left-flank",
         "label": "Provider targeting includes recipient",
+        "notes": [],
+        "satisfied": true
+      },
+      {
+        "actual": "provider left-flank, recipient left-flank",
+        "evidenceIds": [
+          "sheepstealer-hunters-cunning-2026-06-23"
+        ],
+        "expected": "self",
+        "id": "sheepstealer-hunters-cunning-hunters-cunning-recovery-received-recovery-received-modifier-targeting-left-flank",
+        "label": "Position compatibility",
         "notes": [],
         "satisfied": true
       },
@@ -56636,6 +56780,7 @@
       "Conditional multiplier: 2x",
       "Applied effect: Taunt",
       "Duration: 2 rounds.",
+      "Activation scope is unresolved between one shared roll and independent per-target rolls.",
       "Target-specific conditional chance",
       "Supplier effective Habit Level: 5",
       "Status application chance: 20% at effective Habit Level 5.",
@@ -59988,7 +60133,7 @@
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final Recovery cannot be calculated because the game's Level and Instinct Recovery formula is unknown.",
-    "explanation": "Syrax provides Recovery through Strategic Revival. Vhagar's Ancestral Shield increases Recovery Received by 30%.",
+    "explanation": "Syrax provides Recovery through Strategic Revival. Vhagar has Vhagar's Ancestral Shield Recovery Received modifier, increasing received Recovery by 30%.",
     "id": "incoming-effect-amplification-vhagar-ancestral-shield-ancestral-shield-recovery-received-recovery-received-modifier-vhagar",
     "interactionScope": "cross-dragon",
     "matchedOutputCapabilityIds": [
@@ -60003,6 +60148,7 @@
     "recipientDragonId": "vhagar",
     "recipientEvidenceIds": [
       "syrax-strategic-revival-2026-06-24",
+      "vhagar-ancestral-shield-2026-06-25",
       "syrax-strategic-revival-2026-06-24",
       "syrax-strategic-revival-2026-06-24",
       "vhagar-ancestral-shield-2026-06-25",
@@ -60017,6 +60163,17 @@
         "expected": "any-lane",
         "id": "syrax-strategic-revival-strategic-revival-recovery-output-targets-right-flank",
         "label": "Provider targeting includes recipient",
+        "notes": [],
+        "satisfied": true
+      },
+      {
+        "actual": "provider right-flank, recipient right-flank",
+        "evidenceIds": [
+          "vhagar-ancestral-shield-2026-06-25"
+        ],
+        "expected": "self",
+        "id": "vhagar-ancestral-shield-ancestral-shield-recovery-received-recovery-received-modifier-targeting-right-flank",
+        "label": "Position compatibility",
         "notes": [],
         "satisfied": true
       },
