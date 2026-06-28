@@ -126,7 +126,7 @@ export function deriveOutputCapabilities(dragons: Dragon[]): OutputCapability[] 
           unlockStarRank: ability.unlockStarRank,
           minimumDragonLevel: ability.minimumDragonLevel,
           requiredHabitLevel: ability.kind === 'habit' ? 1 : null,
-          conditional: effectIsConditional(schedule, effect, ability.kind),
+          conditional: effectIsConditional(schedule, effect),
           conditions: conditionsForEffect(effect, schedule),
           dependencies: dependenciesForEffect(effect),
           currentlyAvailable: ability.unlockStarRank === null || ability.unlockStarRank <= 1,
@@ -2101,7 +2101,7 @@ function analyzeIncomingAmplifications(
           modifierTargeting,
           ...outputRequirementTraces(output, options),
           ...providerRequirementTraces(modifier, formation, dragons, options),
-        ], options, { applySourceScope: false });
+        ], options, { applySourceScope: false, includeOutputConditional: true });
         const recipient = dragonById(dragons, recipientId);
         const modifierProvider = dragonById(dragons, modifier.dragonId);
         if (!provider || !recipient || !modifierProvider) {
@@ -3095,9 +3095,7 @@ function analyzeEnemyDamageDealtReductions(
       recipientDragonId: null,
       recipientAbilityId: null,
       title: statId ? `Enemy ${statLabel(statId)} reduction` : `${channelLabel(modifier.channel)} Enemy Reduction`,
-      explanation: statId
-        ? `${provider.name}'s ${modifier.abilityName} can reduce enemy ${statLabel(statId)}. Enemy target selection is tracked as an enemy-side candidate group, not a named friendly recipient.`
-        : `${provider.name}'s ${modifier.abilityName} can reduce enemy ${channelLabel(modifier.channel)}. Enemy target selection is tracked as an enemy-side candidate group, not a named friendly recipient.`,
+      explanation: enemyDamageDealtReductionExplanation(provider, modifier, statId),
       requirements,
       matchedFacts: [
         `${modifier.abilityName} targets ${targetSelectorSummary(modifier.targetSelector)}.`,
@@ -3140,6 +3138,14 @@ function analyzeEnemyDamageDealtReductions(
     });
   }
   return traces;
+}
+
+function enemyDamageDealtReductionExplanation(provider: Dragon, modifier: ModifierCapability, statId: DragonStatId | null | undefined): string {
+  const stat = statId ? statLabel(statId) : channelLabel(modifier.channel);
+  const targetSentence = modifier.targetSelector.selection === 'all-matching-condition'
+    ? 'All matching enemies are affected as enemy-side metadata rather than named friendly recipients.'
+    : 'Enemy target selection is tracked as an enemy-side candidate group, not a named friendly recipient.';
+  return `${provider.name}'s ${modifier.abilityName} can reduce enemy ${stat}. ${targetSentence}`;
 }
 
 function analyzePersistentMarkedTargets(
@@ -5218,7 +5224,7 @@ function baseModifier(
     unlockStarRank: ability.unlockStarRank,
     minimumDragonLevel: ability.minimumDragonLevel,
     requiredHabitLevel: ability.kind === 'habit' ? 1 : null,
-    conditional: effectIsConditional(schedule, effect, ability.kind),
+    conditional: effectIsConditional(schedule, effect),
     conditions: conditionsForEffect(effect, schedule),
     stackMaximum: effect.stack?.maximumStacks ?? null,
     valuePerStack: effect.stack?.valuePerStackFixed ?? null,
@@ -5948,9 +5954,10 @@ function capabilityMatch(
   output: OutputCapability,
   requirements: RequirementTrace[],
   options?: CapabilityOptions,
-  matchOptions: { applySourceScope?: boolean } = {},
+  matchOptions: { applySourceScope?: boolean; includeOutputConditional?: boolean } = {},
 ): CapabilityMatch {
   const applySourceScope = matchOptions.applySourceScope ?? true;
+  const includeOutputConditional = matchOptions.includeOutputConditional ?? false;
   const sourceScopeCompatible = applySourceScope
     ? sourceScopesCompatible(modifier.sourceScope, output.sourceScope)
     : true;
@@ -5963,6 +5970,7 @@ function capabilityMatch(
     status: statusFromRequirements(
       requirements,
       capabilityFutureOrConditional(output, options) ||
+        (includeOutputConditional && output.conditional) ||
         capabilityFutureOrConditional(modifier, options) ||
         modifier.conditional,
     ),
@@ -6892,17 +6900,11 @@ function hasConditions(effect: AbilityEffect): boolean {
   return Boolean(effect.conditions?.length || effect.conditionalMultipliers?.length);
 }
 
-function effectIsConditional(schedule: AbilitySchedule, effect: AbilityEffect, abilityKind?: AbilityDefinition['kind']): boolean {
+function effectIsConditional(schedule: AbilitySchedule, effect: AbilityEffect): boolean {
   if (hasConditions(effect) || isChanceBasedSchedule(schedule) || Boolean(effect.activationRoll)) {
     return true;
   }
-  if (abilityKind !== 'habit') {
-    return false;
-  }
-  return schedule.roundSelector?.kind !== 'start-of-combat' &&
-    schedule.roundSelector?.kind !== 'passive' &&
-    schedule.timing !== 'start-of-combat' &&
-    schedule.timing !== 'passive';
+  return false;
 }
 
 function conditionsForEffect(effect: AbilityEffect, schedule?: AbilitySchedule): EffectCondition[] {

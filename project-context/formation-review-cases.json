@@ -1316,9 +1316,7 @@
         ]
       },
       {
-        "assumptions": [
-          "Trigger chance and target selection may make this conditional rather than guaranteed."
-        ],
+        "assumptions": [],
         "channel": "tactical-damage",
         "confidence": "confirmed",
         "conflicts": [
@@ -1419,7 +1417,6 @@
       },
       {
         "assumptions": [
-          "Trigger chance and target selection may make this conditional rather than guaranteed.",
           "Multiple qualifying outputs are aggregated into one normal synergy trace."
         ],
         "channel": "fire-damage",
@@ -7006,8 +7003,7 @@
       },
       {
         "assumptions": [
-          "Target count is one, so eligible recipients compete for the same activation.",
-          "Trigger chance and target selection may make this conditional rather than guaranteed."
+          "Target count is one, so eligible recipients compete for the same activation."
         ],
         "channel": "tactical-damage",
         "confidence": "confirmed",
@@ -7142,7 +7138,6 @@
       },
       {
         "assumptions": [
-          "Trigger chance and target selection may make this conditional rather than guaranteed.",
           "Multiple qualifying outputs are aggregated into one normal synergy trace."
         ],
         "channel": "fire-damage",
@@ -12727,9 +12722,7 @@
         ]
       },
       {
-        "assumptions": [
-          "Trigger chance and target selection may make this conditional rather than guaranteed."
-        ],
+        "assumptions": [],
         "channel": "tactical-damage",
         "confidence": "confirmed",
         "conflicts": [
@@ -12830,7 +12823,6 @@
       },
       {
         "assumptions": [
-          "Trigger chance and target selection may make this conditional rather than guaranteed.",
           "Multiple qualifying outputs are aggregated into one normal synergy trace."
         ],
         "channel": "fire-damage",
@@ -18506,9 +18498,7 @@
         ]
       },
       {
-        "assumptions": [
-          "Trigger chance and target selection may make this conditional rather than guaranteed."
-        ],
+        "assumptions": [],
         "channel": "tactical-damage",
         "confidence": "confirmed",
         "conflicts": [
@@ -18609,7 +18599,6 @@
       },
       {
         "assumptions": [
-          "Trigger chance and target selection may make this conditional rather than guaranteed.",
           "Multiple qualifying outputs are aggregated into one normal synergy trace."
         ],
         "channel": "fire-damage",
@@ -52780,9 +52769,7 @@
         ]
       },
       {
-        "assumptions": [
-          "Trigger chance and target selection may make this conditional rather than guaranteed."
-        ],
+        "assumptions": [],
         "channel": "tactical-damage",
         "confidence": "confirmed",
         "conflicts": [
@@ -52883,7 +52870,6 @@
       },
       {
         "assumptions": [
-          "Trigger chance and target selection may make this conditional rather than guaranteed.",
           "Multiple qualifying outputs are aggregated into one normal synergy trace."
         ],
         "channel": "fire-damage",
@@ -58320,9 +58306,7 @@
         ]
       },
       {
-        "assumptions": [
-          "Trigger chance and target selection may make this conditional rather than guaranteed."
-        ],
+        "assumptions": [],
         "channel": "tactical-damage",
         "confidence": "confirmed",
         "conflicts": [
@@ -58423,7 +58407,6 @@
       },
       {
         "assumptions": [
-          "Trigger chance and target selection may make this conditional rather than guaranteed.",
           "Multiple qualifying outputs are aggregated into one normal synergy trace."
         ],
         "channel": "fire-damage",
@@ -63784,9 +63767,7 @@
         ]
       },
       {
-        "assumptions": [
-          "Trigger chance and target selection may make this conditional rather than guaranteed."
-        ],
+        "assumptions": [],
         "channel": "tactical-damage",
         "confidence": "confirmed",
         "conflicts": [
@@ -63888,8 +63869,7 @@
       {
         "assumptions": [
           "Multiple qualifying outputs are aggregated into one normal synergy trace.",
-          "Target count is one, so eligible recipients compete for the same activation.",
-          "Trigger chance and target selection may make this conditional rather than guaranteed."
+          "Target count is one, so eligible recipients compete for the same activation."
         ],
         "channel": "fire-damage",
         "confidence": "confirmed",
@@ -77391,7 +77371,6 @@
     "previewModeExpectedInteractions": [
       {
         "assumptions": [
-          "Trigger chance and target selection may make this conditional rather than guaranteed.",
           "Multiple qualifying outputs are aggregated into one normal synergy trace."
         ],
         "channel": "tactical-damage",
