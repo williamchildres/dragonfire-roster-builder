@@ -268,6 +268,7 @@ describe('Daemoros and Vaeldra Epic profiles', () => {
     const phantom = habit('daemoros', 'daemoros-phantoms-veil').schedules[0]!.effects[0]!;
     const sirenBranch = habit('vaeldra', 'vaeldra-sirens-call').schedules[1]!.effects[0]!;
     const modifiers = deriveModifierCapabilities(dragons);
+    const statusOutputs = deriveStatusOutputCapabilities(dragons);
 
     expect(phantom.effectOptions).toMatchObject({
       mode: 'one-of',
@@ -275,16 +276,41 @@ describe('Daemoros and Vaeldra Epic profiles', () => {
     });
     expect(phantom.effectOptions?.options.map((option) => option.id)).toEqual(['physical', 'tactical', 'fire']);
     const phantomModifiers = modifiers.filter((modifier) => modifier.abilityId === 'daemoros-phantoms-veil');
-    expect(phantomModifiers).toHaveLength(1);
-    expect(phantomModifiers[0]?.role).toBe('self-amplification');
-    expect(phantomModifiers[0]?.channel).toBe('damage-received');
-    expect(phantomModifiers[0]?.targetSelector.selection).toBe('self');
+    const phantomParent = phantomModifiers.find((modifier) => modifier.sourceEffectId === 'phantoms-veil-exclusive-defense');
+    const phantomOptions = phantomModifiers.filter((modifier) =>
+      ['phantoms-veil-physical', 'phantoms-veil-tactical', 'phantoms-veil-fire'].includes(modifier.sourceEffectId ?? ''),
+    );
+    expect(phantomParent).toMatchObject({
+      role: 'self-amplification',
+      channel: 'damage-received',
+      damageScope: null,
+      conditional: false,
+    });
+    expect(phantomOptions.map((modifier) => modifier.damageScope).sort()).toEqual(['fire', 'physical', 'tactical']);
+    expect(phantomOptions.every((modifier) => modifier.conditional)).toBe(true);
+    expect(phantomOptions.every((modifier) =>
+      modifier.conditions.some((condition) => /exclusive one-of selection/i.test(condition.description)),
+    )).toBe(true);
+    expect(phantomModifiers.some((modifier) => modifier.damageScope === 'all')).toBe(false);
 
     expect(sirenBranch.effectOptions).toMatchObject({
       mode: 'conditional-branch',
       selectorMethod: 'condition-per-target',
     });
     expect(sirenBranch.effectOptions?.options.map((option) => option.effect.type).sort()).toEqual(['Stagger', 'Taunt']);
+    const sirenStatuses = statusOutputs.filter((status) => status.abilityId === 'vaeldra-sirens-call');
+    const sirenTaunt = sirenStatuses.find((status) => status.sourceEffectId === 'sirens-call-taunt');
+    const sirenStagger = sirenStatuses.find((status) => status.sourceEffectId === 'sirens-call-stagger');
+    expect(sirenTaunt).toMatchObject({ statusId: 'taunt' });
+    expect(sirenStagger).toMatchObject({ statusId: 'stagger' });
+    expect(sirenTaunt?.activationChanceByHabitLevel?.find((value) => value.level === 1)?.value).toBe(40);
+    expect(sirenStagger?.activationChanceByHabitLevel?.find((value) => value.level === 1)?.value).toBe(40);
+    expect(sirenTaunt?.conditions).toEqual(expect.arrayContaining([
+      expect.objectContaining({ kind: 'target-lacks-status', statusId: 'taunt' }),
+    ]));
+    expect(sirenStagger?.conditions).toEqual(expect.arrayContaining([
+      expect.objectContaining({ kind: 'target-has-status', statusId: 'taunt' }),
+    ]));
   });
 
   it('derives outputs, periodic damage, status outputs, source scopes, and successful-Taunt trigger metadata', () => {

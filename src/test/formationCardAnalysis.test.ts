@@ -209,6 +209,81 @@ describe('formation card analysis presentation', () => {
     }
   });
 
+  it('preserves exclusive, repeated, branch, stack, and linked-cleanse mechanics in the Epic regression formation', () => {
+    const roster = selectedRoster(['daemoros', 'vaeldra', 'vermax'], 26, 10);
+    const formation = formations.epic!;
+    const traces = analyzeFormationTraces(formation, dragons, {
+      roster,
+      dragonLevels: { daemoros: 26, vaeldra: 26, vermax: 26 },
+    });
+    const result = buildFormationCardPresentation(formation, dragons, traces, { previewEnabled: false, roster });
+    const daemoros = card(result, 'daemoros');
+    const vaeldra = card(result, 'vaeldra');
+    const vermax = card(result, 'vermax');
+
+    const phantom = daemoros.provides.find((item) => item.abilityName === "Phantom's Veil");
+    const phantomText = phantom ? [phantom.summary, phantom.detail, ...phantom.summaryLines, ...phantom.details, ...phantom.effects].join(' ') : '';
+    expect(phantom).toBeDefined();
+    expect(phantom?.state).toBe('active');
+    expect(phantomText).toContain('exactly one of Physical, Tactical, or Fire Damage Received is reduced by 15%');
+    expect(phantomText).toContain('Selection method is unresolved');
+    expect(phantomText).not.toContain('Damage Received decrease 15%');
+
+    expect(vaeldra.command?.summaryLines).toEqual([
+      'Each Round: 25% chance to apply Taunt to 3 enemies in any lane for 2 rounds. Shared versus per-target roll scope is unresolved.',
+      'Other odd-numbered rounds: deal Physical Damage at a 45% rate to 2 enemies within adjacency.',
+    ]);
+
+    const siren = vaeldra.provides.find((item) => item.abilityName === "Siren's Call" && /Enemy status branch/i.test([item.effectTitle, item.title, item.summary].join(' ')));
+    const sirenText = siren ? [siren.summary, siren.detail, ...siren.summaryLines, ...siren.details, ...siren.effects].join(' ') : '';
+    expect(siren).toBeDefined();
+    expect(sirenText).toContain('40%');
+    expect(sirenText).toContain('non-Taunted enemies');
+    expect(sirenText).toContain('already-Taunted enemies');
+    expect(sirenText).toContain('Exactly one branch applies per enemy');
+    expect(sirenText).toContain('Roll scope is unresolved');
+
+    expect(vermax.command?.summaryLines).toEqual([
+      'After each Basic Attack: deal Physical Damage at a 50% rate to one enemy in the same lane.',
+      'Then there is a 20% chance to grant one Spreading Blaze stack to one Ally that deals Tactical Damage. Each stack increases Tactical Damage Dealt by 2.5%, up to 10 stacks.',
+      'If any enemy deals Fire Damage, repeat the stack chance once.',
+    ]);
+
+    const spreading = daemoros.receives.find((item) => item.sourceDragonId === 'vermax' && item.abilityName === 'Spreading Blaze');
+    const spreadingText = spreading ? [spreading.summary, spreading.detail, ...spreading.summaryLines, ...spreading.details, ...spreading.effects].join(' ') : '';
+    expect(spreading).toBeDefined();
+    expect(spreadingText).toContain('20%');
+    expect(spreadingText).toContain('Shared stack pool: spreading-blaze');
+    expect(spreadingText).toContain('Maximum stacks: 10');
+    expect(spreadingText).toContain('Value per stack at effective Habit Level 1: 2.5% Tactical Damage Dealt');
+    expect(spreadingText).toContain('Repeat mode: once-if-any-match');
+    expect(spreadingText).toContain('at most one additional activation attempt');
+
+    const rallyingSelf = vermax.provides.find((item) => item.abilityName === 'Rallying Flame' && item.recipientDragonId === 'vermax');
+    const rallyingAlly = daemoros.receives.find((item) => item.sourceDragonId === 'vermax' && item.abilityName === 'Rallying Flame');
+    const rallyingText = [rallyingSelf, rallyingAlly]
+      .filter((item): item is NonNullable<typeof item> => Boolean(item))
+      .flatMap((item) => [item.summary, item.detail, ...item.summaryLines, ...item.details, ...item.effects])
+      .join(' ');
+    expect(rallyingSelf).toBeDefined();
+    expect(rallyingAlly).toBeDefined();
+    expect(rallyingText).toContain('Activation chance: 50% at effective Habit Level 1');
+    expect(rallyingText).toContain('Shared stack pool: rallying-flame');
+    expect(rallyingText).toContain('Maximum stacks: 4');
+    expect(rallyingText).toContain('Shared stack pool: spreading-blaze');
+    expect(rallyingText).toContain('Maximum stacks: 10');
+    expect(rallyingText).toContain('Repeat mode: once-per-match');
+    expect(rallyingText).toContain('Enemy match count is unresolved');
+
+    const resolve = vermax.provides.find((item) => item.abilityName === 'Unyielding Resolve');
+    const resolveText = resolve ? [resolve.summary, resolve.detail, ...resolve.summaryLines, ...resolve.details, ...resolve.effects].join(' ') : '';
+    expect(resolve).toBeDefined();
+    expect(resolveText).toContain('20% chance to gain Advantage +15% for 2 rounds');
+    expect(resolveText).toContain('While Weakened, the chance increases to 30%');
+    expect(resolveText).toContain('same successful activation');
+    expect(resolveText).toContain('remove Weakened');
+  });
+
   it('honors two-target ally cardinality without candidate wording', () => {
     const roster = selectedRoster(['caraxes', 'malachite', 'seasmoke'], 26, 10);
     const result = presentation('multi', false, { roster });

@@ -23,7 +23,7 @@
   ],
   "currentReviewPhase": "Legendary/full-profile formation validation complete; Epic ingestion active with Daemoros and Vaeldra as the first detailed Epic batch after Vermax.",
   "format": "dragonfire-project-state",
-  "generatedAt": "2026-06-27T23:58:35.361Z",
+  "generatedAt": "2026-06-28T00:36:57.748Z",
   "plannedNextPhase": [
     "continue Epic dragon ingestion in batches of two after the latest merged context is available",
     "fetch latest merged main and create a new feature branch before each future Epic implementation batch",
@@ -37,8 +37,8 @@
     "metadataOnlyDragonCount": 15
   },
   "source": {
-    "branch": "fix/trial-by-flame-card-thresholds",
-    "commit": "6e1d3d8a9a1bb2244def689a47c54a3193aa764b",
+    "branch": "fix/legacy-exclusive-repeat-status-integrity",
+    "commit": "c2471a6ecb1aa619b043d688a2f35c7d5608877d",
     "databaseVersion": "0.6.2",
     "dataSchemaVersion": 12,
     "gameBuild": "26.6.53509",
@@ -49,7 +49,7 @@
     "countingMethod": "static working-tree test declaration scan; runtime pass/fail is reported by npm run test",
     "lastRunStatus": "not-run-by-exporter",
     "runner": "vitest",
-    "testCaseCount": 304,
+    "testCaseCount": 307,
     "testFileCount": 27
   },
   "unresolvedMechanicsCount": 169,

@@ -423,6 +423,8 @@ export function analyzeCapabilityAmplifications(
     ...analyzeIncomingAmplifications(formation, dragons, outputs, modifiers, options),
     ...analyzeAllyOutputSupport(formation, dragons, outputs, options),
     ...analyzeExtraActionTriggerChains(formation, dragons, extraActions, triggeredAbilities, options),
+    ...analyzeEnemyStatusSourceOutputs(formation, dragons, statusOutputs, options),
+    ...analyzeConditionalBranchStatusOutputs(formation, dragons, options),
     ...analyzeStatusConditionEnablement(formation, dragons, outputs, statusOutputs, options),
     ...analyzeStatusEffectConditionEnablement(formation, dragons, statusOutputs, options),
     ...analyzePersistentMarkedTargets(formation, dragons, statusOutputs, options),
@@ -440,6 +442,7 @@ export function analyzeCapabilityAmplifications(
     ...analyzeEnemyDamageReceivedIncreases(formation, dragons, outputs, modifiers, options),
     ...analyzePeriodicStatusDamage(formation, dragons, periodicDamage, statusOutputs, options),
     ...analyzePeriodicDamageAmplification(formation, dragons, periodicDamage, modifiers, options),
+    ...analyzeSelfStatusRemoval(formation, dragons, options),
     ...analyzeStatusRemovalSupport(formation, dragons, statusOutputs, options),
   ];
 }
@@ -624,12 +627,19 @@ function sourceEffectContext(
     return null;
   }
   for (const schedule of abilitySchedulesForDerivation(ability, dragon)) {
-    const effect = schedule.effects.flatMap(derivableEffects).find((item) => item.id === sourceEffectId);
+    const effect = schedule.effects.flatMap(effectsForContextLookup).find((item) => item.id === sourceEffectId);
     if (effect) {
       return { ability, schedule, effect };
     }
   }
   return null;
+}
+
+function effectsForContextLookup(effect: AbilityEffect): AbilityEffect[] {
+  return [
+    ...derivableEffects(effect),
+    ...(effect.effectOptions?.options.map((option) => option.effect) ?? []),
+  ];
 }
 
 function abilitySchedulesForDerivation(ability: AbilityDefinition, dragon: Dragon): AbilitySchedule[] {
@@ -1303,6 +1313,9 @@ function internalModifierDetailLines(
   context: { schedule: AbilitySchedule; effect: AbilityEffect } | null,
   options: CapabilityOptions,
 ): string[] {
+  if (context?.effect.effectOptions?.mode === 'one-of') {
+    return exclusiveChoiceDetailLines(modifier, context.schedule, context.effect, options);
+  }
   const rawValue = modifierDisplayValue(modifier, options).replace(/^-/, '');
   const effectiveLevel = modifier.rankedValues.length > 0
     ? (options.previewMaxRankInteractions ? 5 : effectiveHabitLevelForCapability(modifier, options))
@@ -1324,6 +1337,43 @@ function internalModifierDetailLines(
     context ? durationDetail(context.effect) : modifier.durationRounds ? `Duration: ${modifier.durationRounds} rounds.` : null,
     context ? rankedProgressionDetail(context.effect) : null,
   ].filter((detail): detail is string => Boolean(detail));
+}
+
+function exclusiveChoiceDetailLines(
+  modifier: ModifierCapability,
+  schedule: AbilitySchedule,
+  effect: AbilityEffect,
+  options: CapabilityOptions,
+): string[] {
+  const level = options.previewMaxRankInteractions ? 5 : effectiveHabitLevelForCapability(modifier, options);
+  const value = modifierDisplayValue(modifier, options).replace(/^-/, '');
+  const optionLabels = effect.effectOptions?.options.map((option) => option.label) ?? [];
+  return [
+    scheduleTimingDetail(schedule),
+    `Exclusive one-of choice: exactly one of ${exclusiveChoiceOptionPhrase(optionLabels)} is reduced by ${value}${level ? ` at effective Habit Level ${level}` : ''}.`,
+    durationDetail(effect),
+    effect.effectOptions?.selectorMethod === 'unknown' ? 'Selection method is unresolved.' : null,
+    effect.effectOptions?.description ? `Exclusive-choice rule: ${effect.effectOptions.description}` : null,
+    rankedProgressionDetail(effect),
+  ].filter((detail): detail is string => Boolean(detail));
+}
+
+function exclusiveChoiceOptionPhrase(optionLabels: string[]): string {
+  const suffix = ' Damage Received';
+  if (optionLabels.length > 1 && optionLabels.every((label) => label.endsWith(suffix))) {
+    return `${joinExclusiveList(optionLabels.map((label) => label.slice(0, -suffix.length)))}${suffix}`;
+  }
+  return joinExclusiveList(optionLabels);
+}
+
+function joinExclusiveList(items: string[]): string {
+  if (items.length <= 1) {
+    return items[0] ?? '';
+  }
+  if (items.length === 2) {
+    return `${items[0]} or ${items[1]}`;
+  }
+  return `${items.slice(0, -1).join(', ')}, or ${items.at(-1)}`;
 }
 
 function contextualModifierDetailLines(
@@ -1363,10 +1413,46 @@ function stackModifierDetailLines(
     currentLevelValue !== null && level && level !== 1 ? `Value per stack at effective Habit Level ${level}: ${formatValue(currentLevelValue, 'percent')} ${directedChannelLabel(modifier.channel, modifier.direction)}.` : null,
     levelOneMaximum !== null ? `Maximum theoretical modifier at effective Habit Level 1: ${formatValue(levelOneMaximum, 'percent')} ${directedChannelLabel(modifier.channel, modifier.direction)}.` : null,
     'Current stack count is unknown.',
-    schedule.triggerChanceFixed !== null ? `Trigger chance: ${schedule.triggerChanceFixed}%.` : null,
+    ...stackActivationDetailLines(modifier, schedule, effect, options),
+    ...repeatDetailLines(schedule),
     schedule.timing === 'when-marked-target-receives-recovery' ? 'Prey-Recovery trigger is event-dependent and not guaranteed Active while the event is unresolved.' : null,
     schedule.timing === 'each-round' && schedule.triggerChanceFixed !== null ? 'Each-round stack trigger is chance-based and not guaranteed Active.' : null,
   ].filter((line): line is string => Boolean(line));
+}
+
+function stackActivationDetailLines(
+  modifier: ModifierCapability,
+  schedule: AbilitySchedule,
+  effect: AbilityEffect,
+  options: CapabilityOptions,
+): string[] {
+  if (!effect.activationRoll && !schedule.activationRoll && schedule.triggerChanceFixed !== null) {
+    return [`Trigger chance: ${schedule.triggerChanceFixed}%.`];
+  }
+  return activationChanceFacts(modifier, options);
+}
+
+function repeatDetailLines(schedule: AbilitySchedule): string[] {
+  if (!schedule.repeat) {
+    return [];
+  }
+  const condition = schedule.repeat.condition?.description ?? 'the repeat condition matches';
+  if (schedule.repeat.mode === 'once-if-any-match') {
+    return [
+      'Repeat mode: once-if-any-match.',
+      `If ${condition.charAt(0).toLowerCase()}${condition.slice(1).replace(/\.$/, '')}, create at most one additional activation attempt.`,
+      'The repeat remains chance-based and is not a guaranteed extra stack.',
+    ];
+  }
+  if (schedule.repeat.mode === 'once-per-match') {
+    return [
+      'Repeat mode: once-per-match.',
+      `Additional activation attempts occur once per matching entity: ${condition.replace(/\.$/, '')}.`,
+      'Enemy match count is unresolved.',
+      'Each repeated attempt remains chance-based and is not a guaranteed stack.',
+    ];
+  }
+  return [];
 }
 
 function analyzeRecipientSideAllySupport(
@@ -2162,6 +2248,185 @@ function analyzeStatusEffectConditionEnablement(
     }
   }
   return traces;
+}
+
+function analyzeEnemyStatusSourceOutputs(
+  formation: FormationAnalysisInput,
+  dragons: Dragon[],
+  statusOutputs: StatusOutputCapability[],
+  options: CapabilityOptions,
+): SynergyTrace[] {
+  const traces: SynergyTrace[] = [];
+  for (const output of statusOutputs.filter((capability) =>
+    capability.targetSide === 'enemy' &&
+    statusCapabilityVisible(capability, options) &&
+    !statusOutputComesFromConditionalBranch(dragons, capability),
+  )) {
+    const provider = dragonById(dragons, output.dragonId);
+    const providerPosition = positionOf(formation, output.dragonId);
+    if (!provider || !providerPosition) {
+      continue;
+    }
+    const context = sourceEffectContext(provider, output.abilityId, output.sourceEffectId);
+    if (!context || (!context.effect.activationRoll?.unresolved && !context.schedule.activationRoll?.unresolved)) {
+      continue;
+    }
+    const requirements = statusOutputRequirementTraces(output, provider, dragons, options);
+    const supplier = statusSupplierFacts(output, context, options);
+    const rollScope = context?.effect.activationRoll?.unresolved || context?.schedule.activationRoll?.unresolved
+      ? 'Activation scope is unresolved between one shared roll and independent per-target rolls.'
+      : null;
+    traces.push({
+      id: `enemy-status-output-${output.id}`,
+      ruleId: 'status-source-output',
+      status: statusFromRequirements(requirements, capabilityFutureOrConditional(output, options) || output.conditions.length > 0 || statusChanceConditional(output)),
+      confidence: 'confirmed',
+      sourceDragonId: provider.id,
+      sourceAbilityId: output.abilityId,
+      recipientDragonId: null,
+      recipientAbilityId: null,
+      title: `${output.abilityName} - ${statusLabel(output.statusId)} attempt`,
+      explanation: supplier.summary ?? `${provider.name}'s ${output.abilityName} can apply ${statusLabel(output.statusId)} to enemy targets.`,
+      requirements,
+      matchedFacts: [
+        `Status identity: ${output.statusId}.`,
+        output.sourceEffectId ? `Source effect ID: ${output.sourceEffectId}.` : null,
+        ...supplier.facts,
+        rollScope,
+      ].filter((fact): fact is string => Boolean(fact)),
+      effects: [
+        ...supplier.effects,
+        rollScope,
+      ].filter((effect): effect is string => Boolean(effect)),
+      conflicts: requirements
+        .filter((requirement) => requirement.satisfied === false)
+        .map((requirement) => `${requirement.label}: expected ${requirement.expected}, actual ${requirement.actual ?? 'unknown'}`),
+      assumptions: ['Status application remains chance-based or conditional when the source roll is unresolved.'],
+      unresolvedQuestions: [
+        ...(context?.effect.activationRoll?.description ? [context.effect.activationRoll.description] : []),
+        ...(context?.schedule.activationRoll?.description ? [context.schedule.activationRoll.description] : []),
+      ],
+      sourceEvidenceIds: output.evidenceIds,
+      recipientEvidenceIds: [],
+      combatLogConfirmed: false,
+      exactResultKnown: false,
+      exactResultUnknownReason: 'Exact status target outcome cannot be calculated because activation, target identity, and uptime are unresolved.',
+      matchKind: 'status-condition-enablement',
+      channel: 'status',
+      targetSelectorSummary: targetSelectorSummary(output.targetSelector),
+      modifierSelfOnly: false,
+      availabilityContext: output.availability.reportLabel,
+      modifierCapabilityId: output.id,
+      modifierCapabilityIds: [output.id],
+      interactionScope: 'enemy-side',
+    });
+  }
+  return traces;
+}
+
+function analyzeConditionalBranchStatusOutputs(
+  formation: FormationAnalysisInput,
+  dragons: Dragon[],
+  options: CapabilityOptions,
+): SynergyTrace[] {
+  const traces: SynergyTrace[] = [];
+  for (const provider of dragons.filter((dragon) => positionOf(formation, dragon.id))) {
+    for (const ability of allAbilities(provider)) {
+      for (const schedule of ability.schedules) {
+        for (const effect of schedule.effects.filter((item) => item.effectOptions?.mode === 'conditional-branch')) {
+          const requirements = availabilityRequirements({
+            dragonId: provider.id,
+            abilityId: ability.id,
+            dragonName: provider.name,
+            abilityName: ability.name,
+            unlockStarRank: ability.unlockStarRank,
+            minimumDragonLevel: ability.minimumDragonLevel,
+            requiredHabitLevel: ability.kind === 'habit' ? 1 : null,
+            evidenceIds: ability.evidenceIds,
+            sourceKind: ability.kind,
+          }, options);
+          const level = ability.kind === 'habit'
+            ? (options.previewMaxRankInteractions ? 5 : effectiveHabitLevelForAbility(provider.id, ability, options))
+            : null;
+          const chance = schedule.activationRoll?.chanceFixed !== null && schedule.activationRoll?.chanceFixed !== undefined
+            ? `${schedule.activationRoll.chanceFixed}%`
+            : rankedValueForHabitLevel(schedule.activationRoll?.chanceByHabitLevel ?? schedule.triggerChanceByHabitLevel, level)?.value;
+          const chanceText = typeof chance === 'number' ? `${chance}% at effective Habit Level ${level ?? 'unknown'}` : chance;
+          const optionLines = effect.effectOptions?.options.map((option) =>
+            `${branchConditionLabel(option.condition?.description ?? option.label)} -> ${statusLabel(statusIdForEffect(option.effect) ?? option.effect.type)}.`,
+          ) ?? [];
+          const details = [
+            scheduleTimingDetail(schedule),
+            chanceText ? `Chance: ${chanceText}.` : null,
+            `Targets: ${effect.target}.`,
+            ...optionLines,
+            'Exactly one branch applies per enemy.',
+            schedule.activationRoll?.unresolved ? 'Roll scope is unresolved.' : null,
+            durationDetail(effect),
+          ].filter((line): line is string => Boolean(line));
+          traces.push({
+            id: `conditional-branch-status-output-${ability.id}-${effect.id}`,
+            ruleId: 'conditional-branch-status-output',
+            status: statusFromRequirements(requirements, true),
+            confidence: confidenceForAbility(ability),
+            sourceDragonId: provider.id,
+            sourceAbilityId: ability.id,
+            recipientDragonId: null,
+            recipientAbilityId: null,
+            title: `${ability.name} - Enemy status branch`,
+            explanation: `${provider.name}'s ${ability.name} evaluates mutually exclusive status branches. ${details.join(' ')}`,
+            requirements,
+            matchedFacts: [
+              `Source effect ID: ${effect.id}.`,
+              effect.effectOptions?.description ?? null,
+              ...details,
+            ].filter((fact): fact is string => Boolean(fact)),
+            effects: details,
+            conflicts: requirements
+              .filter((requirement) => requirement.satisfied === false)
+              .map((requirement) => `${requirement.label}: expected ${requirement.expected}, actual ${requirement.actual ?? 'unknown'}`),
+            assumptions: ['Branch choice is evaluated per enemy; branches are not simultaneous on the same target.'],
+            unresolvedQuestions: schedule.activationRoll?.description ? [schedule.activationRoll.description] : [],
+            sourceEvidenceIds: ability.evidenceIds,
+            recipientEvidenceIds: [],
+            combatLogConfirmed: false,
+            exactResultKnown: false,
+            exactResultUnknownReason: 'Exact branch outcomes cannot be calculated because enemy status state and roll scope are unresolved.',
+            matchKind: 'status-condition-enablement',
+            channel: 'status',
+            targetSelectorSummary: targetSelectorSummary(targetForEffect(effect)),
+            modifierSelfOnly: false,
+            availabilityContext: availabilityContext(provider.id, ability.unlockStarRank, ability.minimumDragonLevel).reportLabel,
+            modifierCapabilityId: `${ability.id}-${effect.id}-conditional-branch-status-output`,
+            modifierCapabilityIds: effect.effectOptions?.options.map((option) => `${ability.id}-${option.effect.id}-${statusIdForEffect(option.effect) ?? option.effect.type}-status-output`) ?? [],
+            interactionScope: 'enemy-side',
+          });
+        }
+      }
+    }
+  }
+  return traces;
+}
+
+function statusOutputComesFromConditionalBranch(dragons: Dragon[], output: StatusOutputCapability): boolean {
+  const provider = dragonById(dragons, output.dragonId);
+  const ability = provider ? allAbilities(provider).find((item) => item.id === output.abilityId) : null;
+  return Boolean(ability?.schedules.some((schedule) =>
+    schedule.effects.some((effect) =>
+      effect.effectOptions?.mode === 'conditional-branch' &&
+      effect.effectOptions.options.some((option) => option.effect.id === output.sourceEffectId),
+    ),
+  ));
+}
+
+function branchConditionLabel(description: string): string {
+  if (/not already Taunted/i.test(description)) {
+    return 'non-Taunted enemies';
+  }
+  if (/already Taunted/i.test(description)) {
+    return 'already-Taunted enemies';
+  }
+  return description;
 }
 
 function analyzeStatusConditionEnablement(
@@ -3858,6 +4123,81 @@ function analyzeStatusRemovalSupport(
   return traces;
 }
 
+function analyzeSelfStatusRemoval(
+  formation: FormationAnalysisInput,
+  dragons: Dragon[],
+  options: CapabilityOptions,
+): SynergyTrace[] {
+  const traces: SynergyTrace[] = [];
+  for (const provider of dragons.filter((dragon) => positionOf(formation, dragon.id))) {
+    for (const ability of allAbilities(provider)) {
+      for (const schedule of ability.schedules) {
+        for (const effect of schedule.effects.filter((item) =>
+          (item.type === 'Cleanse Control' || item.type === 'Cleanse Negative') &&
+          targetSideForEffect(item) === 'self',
+        )) {
+          const removedStatus = effect.conditions?.find((condition) => condition.statusId)?.statusId ?? null;
+          if (!removedStatus) {
+            continue;
+          }
+          const pairedStatus = schedule.effects.find((candidate) => candidate.id !== effect.id && statusIdForEffect(candidate));
+          const requirements = availabilityRequirements({
+            dragonId: provider.id,
+            abilityId: ability.id,
+            dragonName: provider.name,
+            abilityName: ability.name,
+            unlockStarRank: ability.unlockStarRank,
+            minimumDragonLevel: ability.minimumDragonLevel,
+            requiredHabitLevel: ability.kind === 'habit' ? 1 : null,
+            evidenceIds: ability.evidenceIds,
+            sourceKind: ability.kind,
+          }, options);
+          const level = ability.kind === 'habit'
+            ? (options.previewMaxRankInteractions ? 5 : effectiveHabitLevelForAbility(provider.id, ability, options))
+            : null;
+          const baseChance = rankedValueForHabitLevel(schedule.activationRoll?.chanceByHabitLevel ?? schedule.triggerChanceByHabitLevel, level);
+          const conditionalChance = pairedStatus?.conditionalMultipliers
+            ?.flatMap((multiplier) => multiplier.directlyVerifiedValues)
+            .find((value) => value.level === 1);
+          const details = [
+            scheduleTimingDetail(schedule),
+            baseChance ? `${formatValue(baseChance.value, baseChance.unit)} chance to gain ${statusLabel(statusIdForEffect(pairedStatus ?? effect) ?? 'advantage')} +${pairedStatus?.magnitude ?? 'unknown'}% for ${pairedStatus?.durationRounds ?? 'unknown'} rounds.` : null,
+            conditionalChance ? `While ${statusLabel(removedStatus)}, the chance increases to ${formatValue(conditionalChance.value, conditionalChance.unit)}.` : null,
+            `On the same successful activation, remove ${statusLabel(removedStatus)}.`,
+            'The cleanse does not receive an independent roll.',
+            schedule.activationRoll?.scope === 'schedule-shared' ? `Shared activation group: ${activationGroupId(schedule, effect)}.` : null,
+          ].filter((line): line is string => Boolean(line));
+          traces.push(makeDependencyTrace({
+            id: `self-status-removal-${ability.id}-${effect.id}`,
+            matchKind: 'status-removal',
+            ruleId: 'self-status-removal',
+            source: provider,
+            sourceAbilityId: ability.id,
+            recipient: provider,
+            recipientAbilityId: ability.id,
+            channel: 'status',
+            title: `${ability.name}`,
+            explanation: `${provider.name}'s ${ability.name}: ${details.join(' ')}`,
+            requirements,
+            matchedFacts: [
+              `${ability.name} includes ${effect.type}.`,
+              `Removed status: ${removedStatus}.`,
+              ...details,
+            ],
+            effects: details,
+            sourceEvidenceIds: ability.evidenceIds,
+            recipientEvidenceIds: [],
+            assumptions: ['Current self status is unresolved; the conditional cleanse is not assumed to occur.'],
+            unresolvedQuestions: ['Current Weakened state and final uptime are unresolved.'],
+            futureOrConditional: true,
+          }));
+        }
+      }
+    }
+  }
+  return traces;
+}
+
 function cleanseTargetRequirement(
   effect: AbilityEffect,
   cleanserPosition: FormationPosition,
@@ -4252,6 +4592,9 @@ function statusSupplierFacts(
   const lane = targetEffect.targetScope ? `Lane scope: ${formatTargetScope(targetEffect.targetScope)}.` : null;
   const priority = targetEffect.targetPriority === 'prefer-warrior' ? 'Priority: Warriors are prioritized, not guaranteed.' : null;
   const duration = durationDetail(effect);
+  const unresolvedRollScope = (effect.activationRoll?.unresolved || schedule.activationRoll?.unresolved)
+    ? 'Activation scope is unresolved between one shared roll and independent per-target rolls.'
+    : null;
   const facts = [
     `Supplied status: ${statusLabel(statusOutput.statusId)}.`,
     timing ? timing.replace(/^Timing:/, 'Activation timing:') : null,
@@ -4262,6 +4605,7 @@ function statusSupplierFacts(
     priority ?? targetPriorityFact(targetEffect),
     targetFallbackFact(targetEffect),
     duration,
+    unresolvedRollScope,
     targetEffect.targetSelection?.sharedSelectionGroupId ? `Selected-target group: ${targetEffect.targetSelection.sharedSelectionGroupId}.` : null,
     ...targetReferenceFacts(targetEffect),
     sharedTargetFact(ability, effect),
@@ -4294,10 +4638,11 @@ function statusSupplierFacts(
     })
     : [];
   const includeChanceFacts = relatedSummaries.length <= 1;
+  const levelPrefix = level ? `At effective Habit Level ${level}, ` : '';
   const summary = chanceText
     ? (relatedSummaries.length > 1
-      ? `At effective Habit Level ${level ?? 'unknown'}, ${ability.name} can apply ${statusLabel(statusOutput.statusId)} ${scheduleTimingAdverb(schedule)}: ${relatedSummaries.join(' and ')}. ${statusLabel(statusOutput.statusId)} lasts ${effect.durationRounds ?? 'unknown'} rounds. ${statusLabel(statusOutput.statusId)} application and target overlap are not guaranteed.`
-      : `At effective Habit Level ${level ?? 'unknown'}, ${ability.name} has a ${chanceText} chance ${scheduleTimingAdverb(schedule)} to ${statusLabel(statusOutput.statusId)} ${targetWithLane}${targetEffect.targetPriority === 'prefer-warrior' ? ', prioritizing Warriors' : ''}${effect.durationRounds ? `, for ${effect.durationRounds} rounds` : ''}.`)
+      ? `${levelPrefix}${ability.name} can apply ${statusLabel(statusOutput.statusId)} ${scheduleTimingAdverb(schedule)}: ${relatedSummaries.join(' and ')}. ${statusLabel(statusOutput.statusId)} lasts ${effect.durationRounds ?? 'unknown'} rounds. ${statusLabel(statusOutput.statusId)} application and target overlap are not guaranteed.`
+      : `${levelPrefix}${ability.name} has a ${chanceText} chance ${scheduleTimingAdverb(schedule)} to ${statusLabel(statusOutput.statusId)} ${targetWithLane}${targetEffect.targetPriority === 'prefer-warrior' ? ', prioritizing Warriors' : ''}${effect.durationRounds ? `, for ${effect.durationRounds} rounds` : ''}.`)
     : null;
   return {
     facts,
@@ -4305,6 +4650,7 @@ function statusSupplierFacts(
       ...(level ? [`Supplier effective Habit Level: ${level}`] : []),
       ...(includeChanceFacts && chanceText ? [`Status application chance: ${chanceText}${level ? ` at effective Habit Level ${level}` : ''}.`] : []),
       ...(duration ? [duration] : []),
+      ...(unresolvedRollScope ? [unresolvedRollScope] : []),
       ...(priority ? [priority] : []),
       ...(targetPriorityFact(targetEffect) ? [targetPriorityFact(targetEffect)!] : []),
       ...(targetFallbackFact(targetEffect) ? [targetFallbackFact(targetEffect)!] : []),
@@ -4545,6 +4891,10 @@ function makeAmplificationTrace({
   const status = aggregateStatus(matches.map((match) => match.status));
   const matchedOutputCapabilityIds = matches.map((match) => match.outputCapabilityId);
   const dedupedRequirements = dedupeRequirements(requirements);
+  const context = sourceEffectContext(provider, modifier.abilityId, modifier.sourceEffectId);
+  const stackDetails = context?.effect.stack
+    ? stackModifierDetailLines(modifier, context.schedule, context.effect, options)
+    : [];
   return {
     id: `${matchKind}-${modifier.id}-${recipient.id}`,
     ruleId: matchKind,
@@ -4565,6 +4915,7 @@ function makeAmplificationTrace({
       ...(modifierSourceScopeFact(modifier) ? [modifierSourceScopeFact(modifier)!] : []),
       ...modifier.conditions.map((condition) => condition.description),
       ...activationChanceFacts(modifier, options),
+      ...stackDetails,
       ...matches.map((match) => `Matched ${match.outputCapabilityId}.`),
     ],
     effects: [
@@ -4572,6 +4923,7 @@ function makeAmplificationTrace({
       ...(modifierSourceScopeFact(modifier) ? [modifierSourceScopeFact(modifier)!] : []),
       ...modifier.conditions.map((condition) => condition.description),
       ...activationChanceFacts(modifier, options),
+      ...stackDetails,
       ...(modifier.durationRounds ? [`Duration: ${modifier.durationRounds} rounds.`] : []),
     ],
     conflicts: dedupedRequirements
@@ -4609,6 +4961,9 @@ function modifierCapabilitiesForEffect(
   schedule: AbilitySchedule,
   effect: AbilityEffect,
 ): ModifierCapability[] {
+  if (effect.effectOptions?.mode === 'one-of') {
+    return exclusiveOptionModifierCapabilities(dragon, ability, schedule, effect);
+  }
   const modifiers: ModifierCapability[] = [];
   const damageChannel = modifierChannelForEffect(effect);
   if (damageChannel) {
@@ -4680,6 +5035,51 @@ function modifierCapabilitiesForEffect(
     });
   }
   return modifiers;
+}
+
+function exclusiveOptionModifierCapabilities(
+  dragon: Dragon,
+  ability: AbilityDefinition,
+  schedule: AbilitySchedule,
+  effect: AbilityEffect,
+): ModifierCapability[] {
+  const effectOptions = effect.effectOptions;
+  if (!effectOptions) {
+    return [];
+  }
+  const channel = modifierChannelForEffect(effect);
+  if (!channel) {
+    return [];
+  }
+  const parent = {
+    ...baseModifier(dragon, ability, schedule, effect, channel, modifierDirectionForEffect(effect)),
+    id: `${ability.id}-${effect.id}-${channel}-${modifierDirectionForEffect(effect)}-exclusive-choice-modifier`,
+    damageScope: null,
+    conditional: false,
+    conditions: conditionsForEffect(effect, schedule).filter((condition) => !/-activation-chance$/.test(condition.id)),
+  };
+  const optionModifiers = effectOptions.options.flatMap((option) => {
+    const optionChannel = modifierChannelForEffect(option.effect);
+    if (!optionChannel) {
+      return [];
+    }
+    return [{
+      ...baseModifier(dragon, ability, schedule, option.effect, optionChannel, modifierDirectionForEffect(option.effect)),
+      id: `${ability.id}-${option.effect.id}-${optionChannel}-${modifierDirectionForEffect(option.effect)}-exclusive-option-modifier`,
+      conditional: true,
+      conditions: uniqueConditions([
+        ...conditionsForEffect(option.effect, schedule),
+        {
+          id: `${effect.id}-${option.id}-exclusive-one-of-selection`,
+          label: 'Exclusive one-of selection',
+          description: `${option.label} depends on the exclusive one-of selection from ${ability.name}.`,
+          evidenceIds: ability.evidenceIds,
+          unresolved: effectOptions.selectorMethod === 'unknown',
+        },
+      ]),
+    }];
+  });
+  return [parent, ...optionModifiers];
 }
 
 function statusSemanticModifiersForEffect(
@@ -4848,6 +5248,9 @@ function outputChannelForEffect(effect: AbilityEffect): EffectChannel | null {
   }
   if (effect.type === 'Burn') {
     return 'fire-damage';
+  }
+  if (effect.type === 'Panic') {
+    return 'tactical-damage';
   }
   return null;
 }

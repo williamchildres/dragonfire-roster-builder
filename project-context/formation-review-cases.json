@@ -23220,7 +23220,17 @@
           "Tactical Damage Dealt increase 2.5.",
           "Applies to all qualifying Tactical Damage sources.",
           "Ally deals Tactical Damage.",
-          "Spreading Blaze stacks require the trigger chance and target selection to select this ally."
+          "Spreading Blaze stacks require the trigger chance and target selection to select this ally.",
+          "Activation chance: 20%.",
+          "Shared stack pool: spreading-blaze.",
+          "Maximum stacks: 10.",
+          "Value per stack at effective Habit Level 1: 2.5% Tactical Damage Dealt.",
+          "Maximum theoretical modifier at effective Habit Level 1: 25% Tactical Damage Dealt.",
+          "Current stack count is unknown.",
+          "Activation chance: 20%.",
+          "Repeat mode: once-if-any-match.",
+          "If at least one enemy deals Fire Damage, create at most one additional activation attempt.",
+          "The repeat remains chance-based and is not a guaranteed extra stack."
         ],
         "exactResultKnown": false,
         "exactResultUnknownReason": "Exact final amplified damage cannot be calculated because stacking and final combat formulas are not fully verified.",
@@ -24188,6 +24198,74 @@
         "unresolvedQuestions": [
           "Final value and stacking order are not calculated."
         ]
+      },
+      {
+        "assumptions": [
+          "Current self status is unresolved; the conditional cleanse is not assumed to occur."
+        ],
+        "channel": "status",
+        "confidence": "confirmed",
+        "conflicts": [
+          "Vermax - Unyielding Resolve Habit unlock requirement: expected Star Rank 10+, actual Star Rank 1"
+        ],
+        "damageScope": null,
+        "effects": [
+          "Timing: Start of each round.",
+          "While Weakened, the chance increases to 30%.",
+          "On the same successful activation, remove Weakened.",
+          "The cleanse does not receive an independent roll.",
+          "Shared activation group: unyielding-resolve-start-round-shared-activation."
+        ],
+        "exactResultKnown": false,
+        "exactResultUnknownReason": "Exact final value cannot be calculated because final combat formulas and stacking order are not fully verified.",
+        "explanation": "Vermax's Unyielding Resolve: Timing: Start of each round. While Weakened, the chance increases to 30%. On the same successful activation, remove Weakened. The cleanse does not receive an independent roll. Shared activation group: unyielding-resolve-start-round-shared-activation.",
+        "id": "self-status-removal-vermax-unyielding-resolve-unyielding-resolve-remove-weakened",
+        "interactionScope": "internal",
+        "matchedOutputCapabilityIds": [],
+        "matchKind": "status-removal",
+        "modifierCapabilityId": null,
+        "modifierCapabilityIds": [],
+        "recipientAbilityId": "vermax-unyielding-resolve",
+        "recipientDragonId": "vermax",
+        "recipientEvidenceIds": [],
+        "requirements": [
+          {
+            "actual": "Star Rank 1",
+            "evidenceIds": [
+              "vermax-unyielding-resolve-2026-06-23"
+            ],
+            "expected": "Star Rank 10+",
+            "id": "vermax-vermax-unyielding-resolve-star-rank",
+            "label": "Vermax - Unyielding Resolve Habit unlock requirement",
+            "notes": [],
+            "satisfied": false
+          },
+          {
+            "actual": null,
+            "evidenceIds": [
+              "vermax-unyielding-resolve-2026-06-23"
+            ],
+            "expected": "Habit Level 1+ or preview",
+            "id": "vermax-vermax-unyielding-resolve-habit-level",
+            "label": "Vermax - Unyielding Resolve Selected Habit Level",
+            "notes": [
+              "Unlocked Habits without an explicit saved Habit Level default to effective Habit Level 1. Locked Habit capabilities are potential in preview mode, not active for current roster."
+            ],
+            "satisfied": null
+          }
+        ],
+        "ruleId": "self-status-removal",
+        "sourceAbilityId": "vermax-unyielding-resolve",
+        "sourceDragonId": "vermax",
+        "sourceEvidenceIds": [
+          "vermax-unyielding-resolve-2026-06-23"
+        ],
+        "status": "unknown",
+        "targetSelectionGroup": null,
+        "title": "Unyielding Resolve",
+        "unresolvedQuestions": [
+          "Current Weakened state and final uptime are unresolved."
+        ]
       }
     ],
     "expectedExclusions": [
@@ -25055,7 +25133,18 @@
           "Tactical Damage Dealt increase 2.5.",
           "Applies to all qualifying Tactical Damage sources.",
           "Ally deals Tactical Damage.",
-          "Spreading Blaze stacks require the trigger chance and target selection to select this ally."
+          "Spreading Blaze stacks require the trigger chance and target selection to select this ally.",
+          "Activation chance: 20%.",
+          "Shared stack pool: spreading-blaze.",
+          "Maximum stacks: 10.",
+          "Value per stack at effective Habit Level 1: 2.5% Tactical Damage Dealt.",
+          "Value per stack at effective Habit Level 5: 2.5% Tactical Damage Dealt.",
+          "Maximum theoretical modifier at effective Habit Level 1: 25% Tactical Damage Dealt.",
+          "Current stack count is unknown.",
+          "Activation chance: 20%.",
+          "Repeat mode: once-if-any-match.",
+          "If at least one enemy deals Fire Damage, create at most one additional activation attempt.",
+          "The repeat remains chance-based and is not a guaranteed extra stack."
         ],
         "exactResultKnown": false,
         "exactResultUnknownReason": "Exact final amplified damage cannot be calculated because stacking and final combat formulas are not fully verified.",
@@ -25125,7 +25214,8 @@
       },
       {
         "assumptions": [
-          "Trigger chance and target selection may make this conditional rather than guaranteed."
+          "Trigger chance and target selection may make this conditional rather than guaranteed.",
+          "Effects with shared activation group rallying-flame-start-shared-activation use one activation roll; uptime is not calculated."
         ],
         "channel": "tactical-damage",
         "confidence": "confirmed",
@@ -25137,11 +25227,23 @@
         "effects": [
           "Tactical Damage Dealt increase 2.5.",
           "Applies to all qualifying Tactical Damage sources.",
-          "Activation chance depends on Habit Level for start of combat.",
+          "One shared Rallying Flame activation roll grants both stack effects on success.",
           "Ally deals Tactical Damage.",
           "Spreading Blaze stacks require the trigger chance and target selection to select this ally.",
           "Activation chance: 100% at effective Habit Level 5.",
-          "Activation chance by Habit Level: 50%, 60%, 70%, 85%, 100%."
+          "Activation chance by Habit Level: 50%, 60%, 70%, 85%, 100%.",
+          "Shared stack pool: spreading-blaze.",
+          "Maximum stacks: 10.",
+          "Value per stack at effective Habit Level 1: 2.5% Tactical Damage Dealt.",
+          "Value per stack at effective Habit Level 5: 2.5% Tactical Damage Dealt.",
+          "Maximum theoretical modifier at effective Habit Level 1: 25% Tactical Damage Dealt.",
+          "Current stack count is unknown.",
+          "Activation chance: 100% at effective Habit Level 5.",
+          "Activation chance by Habit Level: 50%, 60%, 70%, 85%, 100%.",
+          "Repeat mode: once-per-match.",
+          "Additional activation attempts occur once per matching entity: Enemy deals Fire Damage.",
+          "Enemy match count is unresolved.",
+          "Each repeated attempt remains chance-based and is not a guaranteed stack."
         ],
         "exactResultKnown": false,
         "exactResultUnknownReason": "Exact final amplified damage cannot be calculated because stacking and final combat formulas are not fully verified.",
@@ -26553,11 +26655,17 @@
           "Value per stack at effective Habit Level 5: 5% Physical Damage Dealt.",
           "Maximum theoretical modifier at effective Habit Level 1: 20% Physical Damage Dealt.",
           "Current stack count is unknown.",
+          "Activation chance: 100% at effective Habit Level 5.",
+          "Activation chance by Habit Level: 50%, 60%, 70%, 85%, 100%.",
+          "Repeat mode: once-per-match.",
+          "Additional activation attempts occur once per matching entity: Enemy deals Fire Damage.",
+          "Enemy match count is unresolved.",
+          "Each repeated attempt remains chance-based and is not a guaranteed stack.",
           "Duration: until end of combat."
         ],
         "exactResultKnown": false,
         "exactResultUnknownReason": "Exact final value cannot be calculated because final combat formulas and stacking order are not fully verified.",
-        "explanation": "Vermax's Rallying Flame affects Vermax. Physical Damage Dealt increase 5. Shared stack pool: rallying-flame. Maximum stacks: 4. Value per stack at effective Habit Level 1: 5% Physical Damage Dealt. Value per stack at effective Habit Level 5: 5% Physical Damage Dealt. Maximum theoretical modifier at effective Habit Level 1: 20% Physical Damage Dealt. Current stack count is unknown. Duration: until end of combat.",
+        "explanation": "Vermax's Rallying Flame affects Vermax. Physical Damage Dealt increase 5. Shared stack pool: rallying-flame. Maximum stacks: 4. Value per stack at effective Habit Level 1: 5% Physical Damage Dealt. Value per stack at effective Habit Level 5: 5% Physical Damage Dealt. Maximum theoretical modifier at effective Habit Level 1: 20% Physical Damage Dealt. Current stack count is unknown. Activation chance: 100% at effective Habit Level 5. Activation chance by Habit Level: 50%, 60%, 70%, 85%, 100%. Repeat mode: once-per-match. Additional activation attempts occur once per matching entity: Enemy deals Fire Damage. Enemy match count is unresolved. Each repeated attempt remains chance-based and is not a guaranteed stack. Duration: until end of combat.",
         "id": "internal-self-modifier-vermax-rallying-flame-rallying-flame-stack-physical-damage-stack-modifier",
         "interactionScope": "internal",
         "matchedOutputCapabilityIds": [],
@@ -28279,6 +28387,76 @@
         "title": "Recovery Enemy Reduction",
         "unresolvedQuestions": [
           "Enemy identities, combat availability, final uptime, and stacking/refresh behavior remain unresolved."
+        ]
+      },
+      {
+        "assumptions": [
+          "Current self status is unresolved; the conditional cleanse is not assumed to occur."
+        ],
+        "channel": "status",
+        "confidence": "confirmed",
+        "conflicts": [
+          "Vermax - Unyielding Resolve Habit unlock requirement: expected Star Rank 10+, actual Star Rank 1",
+          "Vermax - Unyielding Resolve Selected Habit Level: expected Habit Level 1+ or preview, actual preview enabled"
+        ],
+        "damageScope": null,
+        "effects": [
+          "Timing: Start of each round.",
+          "50% chance to gain Advantage +15% for 2 rounds.",
+          "While Weakened, the chance increases to 30%.",
+          "On the same successful activation, remove Weakened.",
+          "The cleanse does not receive an independent roll.",
+          "Shared activation group: unyielding-resolve-start-round-shared-activation."
+        ],
+        "exactResultKnown": false,
+        "exactResultUnknownReason": "Exact final value cannot be calculated because final combat formulas and stacking order are not fully verified.",
+        "explanation": "Vermax's Unyielding Resolve: Timing: Start of each round. 50% chance to gain Advantage +15% for 2 rounds. While Weakened, the chance increases to 30%. On the same successful activation, remove Weakened. The cleanse does not receive an independent roll. Shared activation group: unyielding-resolve-start-round-shared-activation.",
+        "id": "self-status-removal-vermax-unyielding-resolve-unyielding-resolve-remove-weakened",
+        "interactionScope": "internal",
+        "matchedOutputCapabilityIds": [],
+        "matchKind": "status-removal",
+        "modifierCapabilityId": null,
+        "modifierCapabilityIds": [],
+        "recipientAbilityId": "vermax-unyielding-resolve",
+        "recipientDragonId": "vermax",
+        "recipientEvidenceIds": [],
+        "requirements": [
+          {
+            "actual": "Star Rank 1",
+            "evidenceIds": [
+              "vermax-unyielding-resolve-2026-06-23"
+            ],
+            "expected": "Star Rank 10+",
+            "id": "vermax-vermax-unyielding-resolve-star-rank",
+            "label": "Vermax - Unyielding Resolve Habit unlock requirement",
+            "notes": [],
+            "satisfied": false
+          },
+          {
+            "actual": "preview enabled",
+            "evidenceIds": [
+              "vermax-unyielding-resolve-2026-06-23"
+            ],
+            "expected": "Habit Level 1+ or preview",
+            "id": "vermax-vermax-unyielding-resolve-habit-level",
+            "label": "Vermax - Unyielding Resolve Selected Habit Level",
+            "notes": [
+              "Unlocked Habits without an explicit saved Habit Level default to effective Habit Level 1. Locked Habit capabilities are potential in preview mode, not active for current roster."
+            ],
+            "satisfied": false
+          }
+        ],
+        "ruleId": "self-status-removal",
+        "sourceAbilityId": "vermax-unyielding-resolve",
+        "sourceDragonId": "vermax",
+        "sourceEvidenceIds": [
+          "vermax-unyielding-resolve-2026-06-23"
+        ],
+        "status": "potential",
+        "targetSelectionGroup": null,
+        "title": "Unyielding Resolve",
+        "unresolvedQuestions": [
+          "Current Weakened state and final uptime are unresolved."
         ]
       }
     ],
@@ -34360,7 +34538,17 @@
           "Tactical Damage Dealt increase 2.5.",
           "Applies to all qualifying Tactical Damage sources.",
           "Ally deals Tactical Damage.",
-          "Spreading Blaze stacks require the trigger chance and target selection to select this ally."
+          "Spreading Blaze stacks require the trigger chance and target selection to select this ally.",
+          "Activation chance: 20%.",
+          "Shared stack pool: spreading-blaze.",
+          "Maximum stacks: 10.",
+          "Value per stack at effective Habit Level 1: 2.5% Tactical Damage Dealt.",
+          "Maximum theoretical modifier at effective Habit Level 1: 25% Tactical Damage Dealt.",
+          "Current stack count is unknown.",
+          "Activation chance: 20%.",
+          "Repeat mode: once-if-any-match.",
+          "If at least one enemy deals Fire Damage, create at most one additional activation attempt.",
+          "The repeat remains chance-based and is not a guaranteed extra stack."
         ],
         "exactResultKnown": false,
         "exactResultUnknownReason": "Exact final amplified damage cannot be calculated because stacking and final combat formulas are not fully verified.",
@@ -35360,6 +35548,74 @@
         "title": "Instinct Scaling Support",
         "unresolvedQuestions": [
           "Final value and stacking order are not calculated."
+        ]
+      },
+      {
+        "assumptions": [
+          "Current self status is unresolved; the conditional cleanse is not assumed to occur."
+        ],
+        "channel": "status",
+        "confidence": "confirmed",
+        "conflicts": [
+          "Vermax - Unyielding Resolve Habit unlock requirement: expected Star Rank 10+, actual Star Rank 1"
+        ],
+        "damageScope": null,
+        "effects": [
+          "Timing: Start of each round.",
+          "While Weakened, the chance increases to 30%.",
+          "On the same successful activation, remove Weakened.",
+          "The cleanse does not receive an independent roll.",
+          "Shared activation group: unyielding-resolve-start-round-shared-activation."
+        ],
+        "exactResultKnown": false,
+        "exactResultUnknownReason": "Exact final value cannot be calculated because final combat formulas and stacking order are not fully verified.",
+        "explanation": "Vermax's Unyielding Resolve: Timing: Start of each round. While Weakened, the chance increases to 30%. On the same successful activation, remove Weakened. The cleanse does not receive an independent roll. Shared activation group: unyielding-resolve-start-round-shared-activation.",
+        "id": "self-status-removal-vermax-unyielding-resolve-unyielding-resolve-remove-weakened",
+        "interactionScope": "internal",
+        "matchedOutputCapabilityIds": [],
+        "matchKind": "status-removal",
+        "modifierCapabilityId": null,
+        "modifierCapabilityIds": [],
+        "recipientAbilityId": "vermax-unyielding-resolve",
+        "recipientDragonId": "vermax",
+        "recipientEvidenceIds": [],
+        "requirements": [
+          {
+            "actual": "Star Rank 1",
+            "evidenceIds": [
+              "vermax-unyielding-resolve-2026-06-23"
+            ],
+            "expected": "Star Rank 10+",
+            "id": "vermax-vermax-unyielding-resolve-star-rank",
+            "label": "Vermax - Unyielding Resolve Habit unlock requirement",
+            "notes": [],
+            "satisfied": false
+          },
+          {
+            "actual": null,
+            "evidenceIds": [
+              "vermax-unyielding-resolve-2026-06-23"
+            ],
+            "expected": "Habit Level 1+ or preview",
+            "id": "vermax-vermax-unyielding-resolve-habit-level",
+            "label": "Vermax - Unyielding Resolve Selected Habit Level",
+            "notes": [
+              "Unlocked Habits without an explicit saved Habit Level default to effective Habit Level 1. Locked Habit capabilities are potential in preview mode, not active for current roster."
+            ],
+            "satisfied": null
+          }
+        ],
+        "ruleId": "self-status-removal",
+        "sourceAbilityId": "vermax-unyielding-resolve",
+        "sourceDragonId": "vermax",
+        "sourceEvidenceIds": [
+          "vermax-unyielding-resolve-2026-06-23"
+        ],
+        "status": "unknown",
+        "targetSelectionGroup": null,
+        "title": "Unyielding Resolve",
+        "unresolvedQuestions": [
+          "Current Weakened state and final uptime are unresolved."
         ]
       }
     ],
@@ -36510,7 +36766,18 @@
           "Tactical Damage Dealt increase 2.5.",
           "Applies to all qualifying Tactical Damage sources.",
           "Ally deals Tactical Damage.",
-          "Spreading Blaze stacks require the trigger chance and target selection to select this ally."
+          "Spreading Blaze stacks require the trigger chance and target selection to select this ally.",
+          "Activation chance: 20%.",
+          "Shared stack pool: spreading-blaze.",
+          "Maximum stacks: 10.",
+          "Value per stack at effective Habit Level 1: 2.5% Tactical Damage Dealt.",
+          "Value per stack at effective Habit Level 5: 2.5% Tactical Damage Dealt.",
+          "Maximum theoretical modifier at effective Habit Level 1: 25% Tactical Damage Dealt.",
+          "Current stack count is unknown.",
+          "Activation chance: 20%.",
+          "Repeat mode: once-if-any-match.",
+          "If at least one enemy deals Fire Damage, create at most one additional activation attempt.",
+          "The repeat remains chance-based and is not a guaranteed extra stack."
         ],
         "exactResultKnown": false,
         "exactResultUnknownReason": "Exact final amplified damage cannot be calculated because stacking and final combat formulas are not fully verified.",
@@ -36580,7 +36847,8 @@
       },
       {
         "assumptions": [
-          "Trigger chance and target selection may make this conditional rather than guaranteed."
+          "Trigger chance and target selection may make this conditional rather than guaranteed.",
+          "Effects with shared activation group rallying-flame-start-shared-activation use one activation roll; uptime is not calculated."
         ],
         "channel": "tactical-damage",
         "confidence": "confirmed",
@@ -36592,11 +36860,23 @@
         "effects": [
           "Tactical Damage Dealt increase 2.5.",
           "Applies to all qualifying Tactical Damage sources.",
-          "Activation chance depends on Habit Level for start of combat.",
+          "One shared Rallying Flame activation roll grants both stack effects on success.",
           "Ally deals Tactical Damage.",
           "Spreading Blaze stacks require the trigger chance and target selection to select this ally.",
           "Activation chance: 100% at effective Habit Level 5.",
-          "Activation chance by Habit Level: 50%, 60%, 70%, 85%, 100%."
+          "Activation chance by Habit Level: 50%, 60%, 70%, 85%, 100%.",
+          "Shared stack pool: spreading-blaze.",
+          "Maximum stacks: 10.",
+          "Value per stack at effective Habit Level 1: 2.5% Tactical Damage Dealt.",
+          "Value per stack at effective Habit Level 5: 2.5% Tactical Damage Dealt.",
+          "Maximum theoretical modifier at effective Habit Level 1: 25% Tactical Damage Dealt.",
+          "Current stack count is unknown.",
+          "Activation chance: 100% at effective Habit Level 5.",
+          "Activation chance by Habit Level: 50%, 60%, 70%, 85%, 100%.",
+          "Repeat mode: once-per-match.",
+          "Additional activation attempts occur once per matching entity: Enemy deals Fire Damage.",
+          "Enemy match count is unresolved.",
+          "Each repeated attempt remains chance-based and is not a guaranteed stack."
         ],
         "exactResultKnown": false,
         "exactResultUnknownReason": "Exact final amplified damage cannot be calculated because stacking and final combat formulas are not fully verified.",
@@ -37602,11 +37882,17 @@
           "Value per stack at effective Habit Level 5: 5% Physical Damage Dealt.",
           "Maximum theoretical modifier at effective Habit Level 1: 20% Physical Damage Dealt.",
           "Current stack count is unknown.",
+          "Activation chance: 100% at effective Habit Level 5.",
+          "Activation chance by Habit Level: 50%, 60%, 70%, 85%, 100%.",
+          "Repeat mode: once-per-match.",
+          "Additional activation attempts occur once per matching entity: Enemy deals Fire Damage.",
+          "Enemy match count is unresolved.",
+          "Each repeated attempt remains chance-based and is not a guaranteed stack.",
           "Duration: until end of combat."
         ],
         "exactResultKnown": false,
         "exactResultUnknownReason": "Exact final value cannot be calculated because final combat formulas and stacking order are not fully verified.",
-        "explanation": "Vermax's Rallying Flame affects Vermax. Physical Damage Dealt increase 5. Shared stack pool: rallying-flame. Maximum stacks: 4. Value per stack at effective Habit Level 1: 5% Physical Damage Dealt. Value per stack at effective Habit Level 5: 5% Physical Damage Dealt. Maximum theoretical modifier at effective Habit Level 1: 20% Physical Damage Dealt. Current stack count is unknown. Duration: until end of combat.",
+        "explanation": "Vermax's Rallying Flame affects Vermax. Physical Damage Dealt increase 5. Shared stack pool: rallying-flame. Maximum stacks: 4. Value per stack at effective Habit Level 1: 5% Physical Damage Dealt. Value per stack at effective Habit Level 5: 5% Physical Damage Dealt. Maximum theoretical modifier at effective Habit Level 1: 20% Physical Damage Dealt. Current stack count is unknown. Activation chance: 100% at effective Habit Level 5. Activation chance by Habit Level: 50%, 60%, 70%, 85%, 100%. Repeat mode: once-per-match. Additional activation attempts occur once per matching entity: Enemy deals Fire Damage. Enemy match count is unresolved. Each repeated attempt remains chance-based and is not a guaranteed stack. Duration: until end of combat.",
         "id": "internal-self-modifier-vermax-rallying-flame-rallying-flame-stack-physical-damage-stack-modifier",
         "interactionScope": "internal",
         "matchedOutputCapabilityIds": [],
@@ -39957,6 +40243,76 @@
         "title": "Instinct Scaling Support",
         "unresolvedQuestions": [
           "Final value and stacking order are not calculated."
+        ]
+      },
+      {
+        "assumptions": [
+          "Current self status is unresolved; the conditional cleanse is not assumed to occur."
+        ],
+        "channel": "status",
+        "confidence": "confirmed",
+        "conflicts": [
+          "Vermax - Unyielding Resolve Habit unlock requirement: expected Star Rank 10+, actual Star Rank 1",
+          "Vermax - Unyielding Resolve Selected Habit Level: expected Habit Level 1+ or preview, actual preview enabled"
+        ],
+        "damageScope": null,
+        "effects": [
+          "Timing: Start of each round.",
+          "50% chance to gain Advantage +15% for 2 rounds.",
+          "While Weakened, the chance increases to 30%.",
+          "On the same successful activation, remove Weakened.",
+          "The cleanse does not receive an independent roll.",
+          "Shared activation group: unyielding-resolve-start-round-shared-activation."
+        ],
+        "exactResultKnown": false,
+        "exactResultUnknownReason": "Exact final value cannot be calculated because final combat formulas and stacking order are not fully verified.",
+        "explanation": "Vermax's Unyielding Resolve: Timing: Start of each round. 50% chance to gain Advantage +15% for 2 rounds. While Weakened, the chance increases to 30%. On the same successful activation, remove Weakened. The cleanse does not receive an independent roll. Shared activation group: unyielding-resolve-start-round-shared-activation.",
+        "id": "self-status-removal-vermax-unyielding-resolve-unyielding-resolve-remove-weakened",
+        "interactionScope": "internal",
+        "matchedOutputCapabilityIds": [],
+        "matchKind": "status-removal",
+        "modifierCapabilityId": null,
+        "modifierCapabilityIds": [],
+        "recipientAbilityId": "vermax-unyielding-resolve",
+        "recipientDragonId": "vermax",
+        "recipientEvidenceIds": [],
+        "requirements": [
+          {
+            "actual": "Star Rank 1",
+            "evidenceIds": [
+              "vermax-unyielding-resolve-2026-06-23"
+            ],
+            "expected": "Star Rank 10+",
+            "id": "vermax-vermax-unyielding-resolve-star-rank",
+            "label": "Vermax - Unyielding Resolve Habit unlock requirement",
+            "notes": [],
+            "satisfied": false
+          },
+          {
+            "actual": "preview enabled",
+            "evidenceIds": [
+              "vermax-unyielding-resolve-2026-06-23"
+            ],
+            "expected": "Habit Level 1+ or preview",
+            "id": "vermax-vermax-unyielding-resolve-habit-level",
+            "label": "Vermax - Unyielding Resolve Selected Habit Level",
+            "notes": [
+              "Unlocked Habits without an explicit saved Habit Level default to effective Habit Level 1. Locked Habit capabilities are potential in preview mode, not active for current roster."
+            ],
+            "satisfied": false
+          }
+        ],
+        "ruleId": "self-status-removal",
+        "sourceAbilityId": "vermax-unyielding-resolve",
+        "sourceDragonId": "vermax",
+        "sourceEvidenceIds": [
+          "vermax-unyielding-resolve-2026-06-23"
+        ],
+        "status": "potential",
+        "targetSelectionGroup": null,
+        "title": "Unyielding Resolve",
+        "unresolvedQuestions": [
+          "Current Weakened state and final uptime are unresolved."
         ]
       }
     ],
@@ -56574,7 +56930,17 @@
           "Tactical Damage Dealt increase 2.5.",
           "Applies to all qualifying Tactical Damage sources.",
           "Ally deals Tactical Damage.",
-          "Spreading Blaze stacks require the trigger chance and target selection to select this ally."
+          "Spreading Blaze stacks require the trigger chance and target selection to select this ally.",
+          "Activation chance: 20%.",
+          "Shared stack pool: spreading-blaze.",
+          "Maximum stacks: 10.",
+          "Value per stack at effective Habit Level 1: 2.5% Tactical Damage Dealt.",
+          "Maximum theoretical modifier at effective Habit Level 1: 25% Tactical Damage Dealt.",
+          "Current stack count is unknown.",
+          "Activation chance: 20%.",
+          "Repeat mode: once-if-any-match.",
+          "If at least one enemy deals Fire Damage, create at most one additional activation attempt.",
+          "The repeat remains chance-based and is not a guaranteed extra stack."
         ],
         "exactResultKnown": false,
         "exactResultUnknownReason": "Exact final amplified damage cannot be calculated because stacking and final combat formulas are not fully verified.",
@@ -57412,6 +57778,74 @@
         "unresolvedQuestions": [
           "Final value and stacking order are not calculated."
         ]
+      },
+      {
+        "assumptions": [
+          "Current self status is unresolved; the conditional cleanse is not assumed to occur."
+        ],
+        "channel": "status",
+        "confidence": "confirmed",
+        "conflicts": [
+          "Vermax - Unyielding Resolve Habit unlock requirement: expected Star Rank 10+, actual Star Rank 1"
+        ],
+        "damageScope": null,
+        "effects": [
+          "Timing: Start of each round.",
+          "While Weakened, the chance increases to 30%.",
+          "On the same successful activation, remove Weakened.",
+          "The cleanse does not receive an independent roll.",
+          "Shared activation group: unyielding-resolve-start-round-shared-activation."
+        ],
+        "exactResultKnown": false,
+        "exactResultUnknownReason": "Exact final value cannot be calculated because final combat formulas and stacking order are not fully verified.",
+        "explanation": "Vermax's Unyielding Resolve: Timing: Start of each round. While Weakened, the chance increases to 30%. On the same successful activation, remove Weakened. The cleanse does not receive an independent roll. Shared activation group: unyielding-resolve-start-round-shared-activation.",
+        "id": "self-status-removal-vermax-unyielding-resolve-unyielding-resolve-remove-weakened",
+        "interactionScope": "internal",
+        "matchedOutputCapabilityIds": [],
+        "matchKind": "status-removal",
+        "modifierCapabilityId": null,
+        "modifierCapabilityIds": [],
+        "recipientAbilityId": "vermax-unyielding-resolve",
+        "recipientDragonId": "vermax",
+        "recipientEvidenceIds": [],
+        "requirements": [
+          {
+            "actual": "Star Rank 1",
+            "evidenceIds": [
+              "vermax-unyielding-resolve-2026-06-23"
+            ],
+            "expected": "Star Rank 10+",
+            "id": "vermax-vermax-unyielding-resolve-star-rank",
+            "label": "Vermax - Unyielding Resolve Habit unlock requirement",
+            "notes": [],
+            "satisfied": false
+          },
+          {
+            "actual": null,
+            "evidenceIds": [
+              "vermax-unyielding-resolve-2026-06-23"
+            ],
+            "expected": "Habit Level 1+ or preview",
+            "id": "vermax-vermax-unyielding-resolve-habit-level",
+            "label": "Vermax - Unyielding Resolve Selected Habit Level",
+            "notes": [
+              "Unlocked Habits without an explicit saved Habit Level default to effective Habit Level 1. Locked Habit capabilities are potential in preview mode, not active for current roster."
+            ],
+            "satisfied": null
+          }
+        ],
+        "ruleId": "self-status-removal",
+        "sourceAbilityId": "vermax-unyielding-resolve",
+        "sourceDragonId": "vermax",
+        "sourceEvidenceIds": [
+          "vermax-unyielding-resolve-2026-06-23"
+        ],
+        "status": "unknown",
+        "targetSelectionGroup": null,
+        "title": "Unyielding Resolve",
+        "unresolvedQuestions": [
+          "Current Weakened state and final uptime are unresolved."
+        ]
       }
     ],
     "expectedExclusions": [
@@ -57978,7 +58412,18 @@
           "Tactical Damage Dealt increase 2.5.",
           "Applies to all qualifying Tactical Damage sources.",
           "Ally deals Tactical Damage.",
-          "Spreading Blaze stacks require the trigger chance and target selection to select this ally."
+          "Spreading Blaze stacks require the trigger chance and target selection to select this ally.",
+          "Activation chance: 20%.",
+          "Shared stack pool: spreading-blaze.",
+          "Maximum stacks: 10.",
+          "Value per stack at effective Habit Level 1: 2.5% Tactical Damage Dealt.",
+          "Value per stack at effective Habit Level 5: 2.5% Tactical Damage Dealt.",
+          "Maximum theoretical modifier at effective Habit Level 1: 25% Tactical Damage Dealt.",
+          "Current stack count is unknown.",
+          "Activation chance: 20%.",
+          "Repeat mode: once-if-any-match.",
+          "If at least one enemy deals Fire Damage, create at most one additional activation attempt.",
+          "The repeat remains chance-based and is not a guaranteed extra stack."
         ],
         "exactResultKnown": false,
         "exactResultUnknownReason": "Exact final amplified damage cannot be calculated because stacking and final combat formulas are not fully verified.",
@@ -58048,7 +58493,8 @@
       },
       {
         "assumptions": [
-          "Trigger chance and target selection may make this conditional rather than guaranteed."
+          "Trigger chance and target selection may make this conditional rather than guaranteed.",
+          "Effects with shared activation group rallying-flame-start-shared-activation use one activation roll; uptime is not calculated."
         ],
         "channel": "tactical-damage",
         "confidence": "confirmed",
@@ -58060,11 +58506,23 @@
         "effects": [
           "Tactical Damage Dealt increase 2.5.",
           "Applies to all qualifying Tactical Damage sources.",
-          "Activation chance depends on Habit Level for start of combat.",
+          "One shared Rallying Flame activation roll grants both stack effects on success.",
           "Ally deals Tactical Damage.",
           "Spreading Blaze stacks require the trigger chance and target selection to select this ally.",
           "Activation chance: 100% at effective Habit Level 5.",
-          "Activation chance by Habit Level: 50%, 60%, 70%, 85%, 100%."
+          "Activation chance by Habit Level: 50%, 60%, 70%, 85%, 100%.",
+          "Shared stack pool: spreading-blaze.",
+          "Maximum stacks: 10.",
+          "Value per stack at effective Habit Level 1: 2.5% Tactical Damage Dealt.",
+          "Value per stack at effective Habit Level 5: 2.5% Tactical Damage Dealt.",
+          "Maximum theoretical modifier at effective Habit Level 1: 25% Tactical Damage Dealt.",
+          "Current stack count is unknown.",
+          "Activation chance: 100% at effective Habit Level 5.",
+          "Activation chance by Habit Level: 50%, 60%, 70%, 85%, 100%.",
+          "Repeat mode: once-per-match.",
+          "Additional activation attempts occur once per matching entity: Enemy deals Fire Damage.",
+          "Enemy match count is unresolved.",
+          "Each repeated attempt remains chance-based and is not a guaranteed stack."
         ],
         "exactResultKnown": false,
         "exactResultUnknownReason": "Exact final amplified damage cannot be calculated because stacking and final combat formulas are not fully verified.",
@@ -58848,11 +59306,17 @@
           "Value per stack at effective Habit Level 5: 5% Physical Damage Dealt.",
           "Maximum theoretical modifier at effective Habit Level 1: 20% Physical Damage Dealt.",
           "Current stack count is unknown.",
+          "Activation chance: 100% at effective Habit Level 5.",
+          "Activation chance by Habit Level: 50%, 60%, 70%, 85%, 100%.",
+          "Repeat mode: once-per-match.",
+          "Additional activation attempts occur once per matching entity: Enemy deals Fire Damage.",
+          "Enemy match count is unresolved.",
+          "Each repeated attempt remains chance-based and is not a guaranteed stack.",
           "Duration: until end of combat."
         ],
         "exactResultKnown": false,
         "exactResultUnknownReason": "Exact final value cannot be calculated because final combat formulas and stacking order are not fully verified.",
-        "explanation": "Vermax's Rallying Flame affects Vermax. Physical Damage Dealt increase 5. Shared stack pool: rallying-flame. Maximum stacks: 4. Value per stack at effective Habit Level 1: 5% Physical Damage Dealt. Value per stack at effective Habit Level 5: 5% Physical Damage Dealt. Maximum theoretical modifier at effective Habit Level 1: 20% Physical Damage Dealt. Current stack count is unknown. Duration: until end of combat.",
+        "explanation": "Vermax's Rallying Flame affects Vermax. Physical Damage Dealt increase 5. Shared stack pool: rallying-flame. Maximum stacks: 4. Value per stack at effective Habit Level 1: 5% Physical Damage Dealt. Value per stack at effective Habit Level 5: 5% Physical Damage Dealt. Maximum theoretical modifier at effective Habit Level 1: 20% Physical Damage Dealt. Current stack count is unknown. Activation chance: 100% at effective Habit Level 5. Activation chance by Habit Level: 50%, 60%, 70%, 85%, 100%. Repeat mode: once-per-match. Additional activation attempts occur once per matching entity: Enemy deals Fire Damage. Enemy match count is unresolved. Each repeated attempt remains chance-based and is not a guaranteed stack. Duration: until end of combat.",
         "id": "internal-self-modifier-vermax-rallying-flame-rallying-flame-stack-physical-damage-stack-modifier",
         "interactionScope": "internal",
         "matchedOutputCapabilityIds": [],
@@ -61933,6 +62397,76 @@
         "title": "Fire Damage Periodic Damage Support",
         "unresolvedQuestions": [
           "Burn stacking, refresh, and overlapping source behavior are unknown."
+        ]
+      },
+      {
+        "assumptions": [
+          "Current self status is unresolved; the conditional cleanse is not assumed to occur."
+        ],
+        "channel": "status",
+        "confidence": "confirmed",
+        "conflicts": [
+          "Vermax - Unyielding Resolve Habit unlock requirement: expected Star Rank 10+, actual Star Rank 1",
+          "Vermax - Unyielding Resolve Selected Habit Level: expected Habit Level 1+ or preview, actual preview enabled"
+        ],
+        "damageScope": null,
+        "effects": [
+          "Timing: Start of each round.",
+          "50% chance to gain Advantage +15% for 2 rounds.",
+          "While Weakened, the chance increases to 30%.",
+          "On the same successful activation, remove Weakened.",
+          "The cleanse does not receive an independent roll.",
+          "Shared activation group: unyielding-resolve-start-round-shared-activation."
+        ],
+        "exactResultKnown": false,
+        "exactResultUnknownReason": "Exact final value cannot be calculated because final combat formulas and stacking order are not fully verified.",
+        "explanation": "Vermax's Unyielding Resolve: Timing: Start of each round. 50% chance to gain Advantage +15% for 2 rounds. While Weakened, the chance increases to 30%. On the same successful activation, remove Weakened. The cleanse does not receive an independent roll. Shared activation group: unyielding-resolve-start-round-shared-activation.",
+        "id": "self-status-removal-vermax-unyielding-resolve-unyielding-resolve-remove-weakened",
+        "interactionScope": "internal",
+        "matchedOutputCapabilityIds": [],
+        "matchKind": "status-removal",
+        "modifierCapabilityId": null,
+        "modifierCapabilityIds": [],
+        "recipientAbilityId": "vermax-unyielding-resolve",
+        "recipientDragonId": "vermax",
+        "recipientEvidenceIds": [],
+        "requirements": [
+          {
+            "actual": "Star Rank 1",
+            "evidenceIds": [
+              "vermax-unyielding-resolve-2026-06-23"
+            ],
+            "expected": "Star Rank 10+",
+            "id": "vermax-vermax-unyielding-resolve-star-rank",
+            "label": "Vermax - Unyielding Resolve Habit unlock requirement",
+            "notes": [],
+            "satisfied": false
+          },
+          {
+            "actual": "preview enabled",
+            "evidenceIds": [
+              "vermax-unyielding-resolve-2026-06-23"
+            ],
+            "expected": "Habit Level 1+ or preview",
+            "id": "vermax-vermax-unyielding-resolve-habit-level",
+            "label": "Vermax - Unyielding Resolve Selected Habit Level",
+            "notes": [
+              "Unlocked Habits without an explicit saved Habit Level default to effective Habit Level 1. Locked Habit capabilities are potential in preview mode, not active for current roster."
+            ],
+            "satisfied": false
+          }
+        ],
+        "ruleId": "self-status-removal",
+        "sourceAbilityId": "vermax-unyielding-resolve",
+        "sourceDragonId": "vermax",
+        "sourceEvidenceIds": [
+          "vermax-unyielding-resolve-2026-06-23"
+        ],
+        "status": "potential",
+        "targetSelectionGroup": null,
+        "title": "Unyielding Resolve",
+        "unresolvedQuestions": [
+          "Current Weakened state and final uptime are unresolved."
         ]
       }
     ],
@@ -67278,6 +67812,49 @@
         ]
       },
       {
+        "assumptions": [
+          "Status application remains chance-based or conditional when the source roll is unresolved."
+        ],
+        "channel": "status",
+        "confidence": "confirmed",
+        "conflicts": [],
+        "damageScope": null,
+        "effects": [
+          "Status application chance: 25%.",
+          "Duration: 2 rounds.",
+          "Activation scope is unresolved between one shared roll and independent per-target rolls.",
+          "Activation scope is unresolved between one shared roll and independent per-target rolls."
+        ],
+        "exactResultKnown": false,
+        "exactResultUnknownReason": "Exact status target outcome cannot be calculated because activation, target identity, and uptime are unresolved.",
+        "explanation": "Fiery Bonds has a 25% chance each round to Taunt 3 enemies in any lane, for 2 rounds.",
+        "id": "enemy-status-output-vhagar-fiery-bonds-fiery-bonds-taunt-taunt-status-output",
+        "interactionScope": "enemy-side",
+        "matchedOutputCapabilityIds": [],
+        "matchKind": "status-condition-enablement",
+        "modifierCapabilityId": "vhagar-fiery-bonds-fiery-bonds-taunt-taunt-status-output",
+        "modifierCapabilityIds": [
+          "vhagar-fiery-bonds-fiery-bonds-taunt-taunt-status-output"
+        ],
+        "recipientAbilityId": null,
+        "recipientDragonId": null,
+        "recipientEvidenceIds": [],
+        "requirements": [],
+        "ruleId": "status-source-output",
+        "sourceAbilityId": "vhagar-fiery-bonds",
+        "sourceDragonId": "vhagar",
+        "sourceEvidenceIds": [
+          "vhagar-fiery-bonds-summary-2026-06-25"
+        ],
+        "status": "potential",
+        "targetSelectionGroup": null,
+        "title": "Fiery Bonds - Taunt attempt",
+        "unresolvedQuestions": [
+          "Shared versus per-target Taunt roll is unresolved.",
+          "Taunt chance applies to three targets, but shared versus per-target roll scope is not stated."
+        ]
+      },
+      {
         "assumptions": [],
         "channel": "damage-received",
         "confidence": "confirmed",
@@ -68017,7 +68594,6 @@
       "Left Flank and Right Flank are not adjacent to one another.",
       "Multiple Vanguard Trait requirements: Vanguard exclusivity: expected Only one Vanguard-required Trait can satisfy its placement at a time, actual Kalspire in Left Flank, Vhagar in Vanguard, Venator in Right Flank; Kalspire's Champion's Brilliance is inactive due to placement.; Venator's Warrior's Zeal is inactive due to placement.",
       "Stat Support: Provider position requirement: expected vanguard, actual right-flank; Venator - Warrior's Zeal Star Rank requirement: expected Star Rank 1+, actual preview enabled",
-      "Tactical Damage Support: Vhagar - Warrior's Resilience Star Rank requirement: expected Star Rank 1+, actual preview enabled",
       "Warrior's Zeal Vanguard requirement: Required target position: expected Vanguard, actual Right Flank"
     ],
     "expectedInactiveTraits": [
@@ -68184,11 +68760,15 @@
     "label": "DF-LG-01: Left Kalspire / Vanguard Vhagar / Right Venator",
     "previewModeExpectedInteractions": [
       {
-        "assumptions": [],
+        "assumptions": [
+          "Multiple qualifying outputs are aggregated into one normal synergy trace."
+        ],
         "channel": "tactical-damage",
         "confidence": "confirmed",
         "conflicts": [
-          "Vhagar - Warrior's Resilience Star Rank requirement: expected Star Rank 1+, actual preview enabled"
+          "Vhagar - Warrior's Resilience Star Rank requirement: expected Star Rank 1+, actual preview enabled",
+          "kalspire - Tactical Assault Habit unlock requirement: expected Star Rank 6+, actual preview enabled",
+          "kalspire - Tactical Assault Selected Habit Level: expected Habit Level 1+ or preview, actual preview enabled"
         ],
         "damageScope": null,
         "effects": [
@@ -68197,11 +68777,12 @@
         ],
         "exactResultKnown": false,
         "exactResultUnknownReason": "Exact final amplified damage cannot be calculated because stacking and final combat formulas are not fully verified.",
-        "explanation": "Vhagar's Warrior's Resilience increases Kalspire's Tactical Damage Dealt. Qualifying outputs: Tactical Strike: Tactical Damage.",
+        "explanation": "Vhagar's Warrior's Resilience increases Kalspire's Tactical Damage Dealt. Qualifying outputs: Tactical Strike: Tactical Damage, Tactical Assault: Panic.",
         "id": "outgoing-effect-amplification-vhagar-warriors-resilience-warriors-resilience-left-tactical-tactical-damage-dealt-modifier-kalspire",
         "interactionScope": "cross-dragon",
         "matchedOutputCapabilityIds": [
-          "kalspire-tactical-strike-tactical-strike-tactical-damage-output"
+          "kalspire-tactical-strike-tactical-strike-tactical-damage-output",
+          "kalspire-tactical-assault-tactical-assault-panic-output"
         ],
         "matchKind": "outgoing-effect-amplification",
         "modifierCapabilityId": "vhagar-warriors-resilience-warriors-resilience-left-tactical-tactical-damage-dealt-modifier",
@@ -68216,7 +68797,15 @@
           "vhagar-warriors-resilience-2026-06-25",
           "vhagar-warriors-resilience-2026-06-25",
           "vhagar-warriors-resilience-2026-06-25",
-          "kalspire-tactical-strike-summary-2026-06-25"
+          "kalspire-tactical-strike-summary-2026-06-25",
+          "vhagar-warriors-resilience-2026-06-25",
+          "vhagar-warriors-resilience-2026-06-25",
+          "vhagar-warriors-resilience-2026-06-25",
+          "vhagar-warriors-resilience-2026-06-25",
+          "kalspire-tactical-assault-2026-06-25",
+          "kalspire-tactical-assault-2026-06-25",
+          "vhagar-warriors-resilience-2026-06-25",
+          "kalspire-tactical-assault-2026-06-25"
         ],
         "requirements": [
           {
@@ -68274,6 +68863,42 @@
             "label": "Source-scope compatibility",
             "notes": [],
             "satisfied": true
+          },
+          {
+            "actual": "preview enabled",
+            "evidenceIds": [
+              "kalspire-tactical-assault-2026-06-25"
+            ],
+            "expected": "Star Rank 6+",
+            "id": "kalspire-kalspire-tactical-assault-star-rank",
+            "label": "kalspire - Tactical Assault Habit unlock requirement",
+            "notes": [],
+            "satisfied": false
+          },
+          {
+            "actual": "preview enabled",
+            "evidenceIds": [
+              "kalspire-tactical-assault-2026-06-25"
+            ],
+            "expected": "Habit Level 1+ or preview",
+            "id": "kalspire-kalspire-tactical-assault-habit-level",
+            "label": "kalspire - Tactical Assault Selected Habit Level",
+            "notes": [
+              "Unlocked Habits without an explicit saved Habit Level default to effective Habit Level 1. Locked Habit capabilities are potential in preview mode, not active for current roster."
+            ],
+            "satisfied": false
+          },
+          {
+            "actual": "habits",
+            "evidenceIds": [
+              "vhagar-warriors-resilience-2026-06-25",
+              "kalspire-tactical-assault-2026-06-25"
+            ],
+            "expected": "all-qualifying-sources",
+            "id": "vhagar-warriors-resilience-warriors-resilience-left-tactical-tactical-damage-dealt-modifier-kalspire-tactical-assault-tactical-assault-panic-output-source-scope",
+            "label": "Source-scope compatibility",
+            "notes": [],
+            "satisfied": true
           }
         ],
         "ruleId": "outgoing-effect-amplification",
@@ -68282,7 +68907,7 @@
         "sourceEvidenceIds": [
           "vhagar-warriors-resilience-2026-06-25"
         ],
-        "status": "inactive",
+        "status": "unknown",
         "targetSelectionGroup": null,
         "title": "Tactical Damage Support",
         "unresolvedQuestions": [
@@ -68503,10 +69128,11 @@
         ],
         "exactResultKnown": false,
         "exactResultUnknownReason": "Exact final amplified damage cannot be calculated because stacking and final combat formulas are not fully verified.",
-        "explanation": "Vhagar's Eclipse Cover can target one Damage Dealt ally. Eligible recipients are Kalspire and Venator and Vhagar. The selected recipient is not guaranteed. Qualifying outputs: Tactical Assault: Physical Damage, Tactical Strike: Tactical Damage, Desperate Ambush: Physical Damage, Feral Precision: Physical Damage, Feral Strike: Physical Damage, Fiery Bonds: Physical Damage, Skyward Titan: Physical Damage.",
+        "explanation": "Vhagar's Eclipse Cover can target one Damage Dealt ally. Eligible recipients are Kalspire and Venator and Vhagar. The selected recipient is not guaranteed. Qualifying outputs: Tactical Assault: Panic, Tactical Assault: Physical Damage, Tactical Strike: Tactical Damage, Desperate Ambush: Physical Damage, Feral Precision: Physical Damage, Feral Strike: Physical Damage, Fiery Bonds: Physical Damage, Skyward Titan: Physical Damage.",
         "id": "target-selection-vhagar-eclipse-cover-eclipse-cover-advantage-advantage-damage-dealt-status-modifier-damage-dealt",
         "interactionScope": "targeting-fact",
         "matchedOutputCapabilityIds": [
+          "kalspire-tactical-assault-tactical-assault-panic-output",
           "kalspire-tactical-assault-tactical-assault-physical-damage-output",
           "kalspire-tactical-strike-tactical-strike-tactical-damage-output",
           "venator-desperate-ambush-desperate-ambush-physical-output",
@@ -68612,6 +69238,18 @@
             ],
             "expected": "all-qualifying-sources",
             "id": "vhagar-eclipse-cover-eclipse-cover-advantage-advantage-damage-dealt-status-modifier-kalspire-tactical-assault-tactical-assault-physical-damage-output-source-scope",
+            "label": "Source-scope compatibility",
+            "notes": [],
+            "satisfied": true
+          },
+          {
+            "actual": "habits",
+            "evidenceIds": [
+              "vhagar-eclipse-cover-2026-06-25",
+              "kalspire-tactical-assault-2026-06-25"
+            ],
+            "expected": "all-qualifying-sources",
+            "id": "vhagar-eclipse-cover-eclipse-cover-advantage-advantage-damage-dealt-status-modifier-kalspire-tactical-assault-tactical-assault-panic-output-source-scope",
             "label": "Source-scope compatibility",
             "notes": [],
             "satisfied": true
@@ -68930,6 +69568,49 @@
         "title": "Feral Strike - Extra Basic Attack trigger",
         "unresolvedQuestions": [
           "Exact timing and final combat result from the extra Basic Attack are unresolved."
+        ]
+      },
+      {
+        "assumptions": [
+          "Status application remains chance-based or conditional when the source roll is unresolved."
+        ],
+        "channel": "status",
+        "confidence": "confirmed",
+        "conflicts": [],
+        "damageScope": null,
+        "effects": [
+          "Status application chance: 25%.",
+          "Duration: 2 rounds.",
+          "Activation scope is unresolved between one shared roll and independent per-target rolls.",
+          "Activation scope is unresolved between one shared roll and independent per-target rolls."
+        ],
+        "exactResultKnown": false,
+        "exactResultUnknownReason": "Exact status target outcome cannot be calculated because activation, target identity, and uptime are unresolved.",
+        "explanation": "Fiery Bonds has a 25% chance each round to Taunt 3 enemies in any lane, for 2 rounds.",
+        "id": "enemy-status-output-vhagar-fiery-bonds-fiery-bonds-taunt-taunt-status-output",
+        "interactionScope": "enemy-side",
+        "matchedOutputCapabilityIds": [],
+        "matchKind": "status-condition-enablement",
+        "modifierCapabilityId": "vhagar-fiery-bonds-fiery-bonds-taunt-taunt-status-output",
+        "modifierCapabilityIds": [
+          "vhagar-fiery-bonds-fiery-bonds-taunt-taunt-status-output"
+        ],
+        "recipientAbilityId": null,
+        "recipientDragonId": null,
+        "recipientEvidenceIds": [],
+        "requirements": [],
+        "ruleId": "status-source-output",
+        "sourceAbilityId": "vhagar-fiery-bonds",
+        "sourceDragonId": "vhagar",
+        "sourceEvidenceIds": [
+          "vhagar-fiery-bonds-summary-2026-06-25"
+        ],
+        "status": "potential",
+        "targetSelectionGroup": null,
+        "title": "Fiery Bonds - Taunt attempt",
+        "unresolvedQuestions": [
+          "Shared versus per-target Taunt roll is unresolved.",
+          "Taunt chance applies to three targets, but shared versus per-target roll scope is not stated."
         ]
       },
       {
@@ -71547,6 +72228,49 @@
         ]
       },
       {
+        "assumptions": [
+          "Status application remains chance-based or conditional when the source roll is unresolved."
+        ],
+        "channel": "status",
+        "confidence": "confirmed",
+        "conflicts": [],
+        "damageScope": null,
+        "effects": [
+          "Status application chance: 25%.",
+          "Duration: 2 rounds.",
+          "Activation scope is unresolved between one shared roll and independent per-target rolls.",
+          "Activation scope is unresolved between one shared roll and independent per-target rolls."
+        ],
+        "exactResultKnown": false,
+        "exactResultUnknownReason": "Exact status target outcome cannot be calculated because activation, target identity, and uptime are unresolved.",
+        "explanation": "Fiery Bonds has a 25% chance each round to Taunt 3 enemies in any lane, for 2 rounds.",
+        "id": "enemy-status-output-vhagar-fiery-bonds-fiery-bonds-taunt-taunt-status-output",
+        "interactionScope": "enemy-side",
+        "matchedOutputCapabilityIds": [],
+        "matchKind": "status-condition-enablement",
+        "modifierCapabilityId": "vhagar-fiery-bonds-fiery-bonds-taunt-taunt-status-output",
+        "modifierCapabilityIds": [
+          "vhagar-fiery-bonds-fiery-bonds-taunt-taunt-status-output"
+        ],
+        "recipientAbilityId": null,
+        "recipientDragonId": null,
+        "recipientEvidenceIds": [],
+        "requirements": [],
+        "ruleId": "status-source-output",
+        "sourceAbilityId": "vhagar-fiery-bonds",
+        "sourceDragonId": "vhagar",
+        "sourceEvidenceIds": [
+          "vhagar-fiery-bonds-summary-2026-06-25"
+        ],
+        "status": "potential",
+        "targetSelectionGroup": null,
+        "title": "Fiery Bonds - Taunt attempt",
+        "unresolvedQuestions": [
+          "Shared versus per-target Taunt roll is unresolved.",
+          "Taunt chance applies to three targets, but shared versus per-target roll scope is not stated."
+        ]
+      },
+      {
         "assumptions": [],
         "channel": "damage-received",
         "confidence": "confirmed",
@@ -72689,6 +73413,49 @@
       },
       {
         "assumptions": [
+          "Status application remains chance-based or conditional when the source roll is unresolved."
+        ],
+        "channel": "status",
+        "confidence": "confirmed",
+        "conflicts": [],
+        "damageScope": null,
+        "effects": [
+          "Status application chance: 25%.",
+          "Duration: 2 rounds.",
+          "Activation scope is unresolved between one shared roll and independent per-target rolls.",
+          "Activation scope is unresolved between one shared roll and independent per-target rolls."
+        ],
+        "exactResultKnown": false,
+        "exactResultUnknownReason": "Exact status target outcome cannot be calculated because activation, target identity, and uptime are unresolved.",
+        "explanation": "Fiery Bonds has a 25% chance each round to Taunt 3 enemies in any lane, for 2 rounds.",
+        "id": "enemy-status-output-vhagar-fiery-bonds-fiery-bonds-taunt-taunt-status-output",
+        "interactionScope": "enemy-side",
+        "matchedOutputCapabilityIds": [],
+        "matchKind": "status-condition-enablement",
+        "modifierCapabilityId": "vhagar-fiery-bonds-fiery-bonds-taunt-taunt-status-output",
+        "modifierCapabilityIds": [
+          "vhagar-fiery-bonds-fiery-bonds-taunt-taunt-status-output"
+        ],
+        "recipientAbilityId": null,
+        "recipientDragonId": null,
+        "recipientEvidenceIds": [],
+        "requirements": [],
+        "ruleId": "status-source-output",
+        "sourceAbilityId": "vhagar-fiery-bonds",
+        "sourceDragonId": "vhagar",
+        "sourceEvidenceIds": [
+          "vhagar-fiery-bonds-summary-2026-06-25"
+        ],
+        "status": "potential",
+        "targetSelectionGroup": null,
+        "title": "Fiery Bonds - Taunt attempt",
+        "unresolvedQuestions": [
+          "Shared versus per-target Taunt roll is unresolved.",
+          "Taunt chance applies to three targets, but shared versus per-target roll scope is not stated."
+        ]
+      },
+      {
+        "assumptions": [
           "The status provider and dependent effect must select the same enemy target.",
           "Target overlap, trigger timing, and exact uptime are not simulated.",
           "Burn application success, enemy identity, target overlap, and conditional uptime are unresolved."
@@ -72803,11 +73570,12 @@
           "Duration: 2 rounds.",
           "Target-specific conditional chance",
           "Status application chance: 25%.",
-          "Duration: 2 rounds."
+          "Duration: 2 rounds.",
+          "Activation scope is unresolved between one shared roll and independent per-target rolls."
         ],
         "exactResultKnown": false,
         "exactResultUnknownReason": "Exact final value cannot be calculated because final combat formulas and stacking order are not fully verified.",
-        "explanation": "Vhagar can apply Taunt. Each round, Bloodscale Fury checks 1 Enemy, preferring a target not already Stunned. At effective Habit Level 5, the Weakened application chance is 35% for a normal target and 70% for that same target while it has Taunt, a target-specific 2x increase. Weakened for 2 rounds. At effective Habit Level unknown, Fiery Bonds has a 25% chance each round to Taunt 3 enemies in any lane, for 2 rounds. Taunt application and target overlap are not guaranteed.",
+        "explanation": "Vhagar can apply Taunt. Each round, Bloodscale Fury checks 1 Enemy, preferring a target not already Stunned. At effective Habit Level 5, the Weakened application chance is 35% for a normal target and 70% for that same target while it has Taunt, a target-specific 2x increase. Weakened for 2 rounds. Fiery Bonds has a 25% chance each round to Taunt 3 enemies in any lane, for 2 rounds. Taunt application and target overlap are not guaranteed.",
         "id": "status-effect-condition-vhagar-fiery-bonds-fiery-bonds-taunt-taunt-status-output-crimson-bloodscale-fury-bloodscale-fury-weakened-requires-target-status-taunt",
         "interactionScope": "cross-dragon",
         "matchedOutputCapabilityIds": [],
@@ -75482,6 +76250,49 @@
         ]
       },
       {
+        "assumptions": [
+          "Status application remains chance-based or conditional when the source roll is unresolved."
+        ],
+        "channel": "status",
+        "confidence": "confirmed",
+        "conflicts": [],
+        "damageScope": null,
+        "effects": [
+          "Status application chance: 25%.",
+          "Duration: 2 rounds.",
+          "Activation scope is unresolved between one shared roll and independent per-target rolls.",
+          "Activation scope is unresolved between one shared roll and independent per-target rolls."
+        ],
+        "exactResultKnown": false,
+        "exactResultUnknownReason": "Exact status target outcome cannot be calculated because activation, target identity, and uptime are unresolved.",
+        "explanation": "Fiery Bonds has a 25% chance each round to Taunt 3 enemies in any lane, for 2 rounds.",
+        "id": "enemy-status-output-vhagar-fiery-bonds-fiery-bonds-taunt-taunt-status-output",
+        "interactionScope": "enemy-side",
+        "matchedOutputCapabilityIds": [],
+        "matchKind": "status-condition-enablement",
+        "modifierCapabilityId": "vhagar-fiery-bonds-fiery-bonds-taunt-taunt-status-output",
+        "modifierCapabilityIds": [
+          "vhagar-fiery-bonds-fiery-bonds-taunt-taunt-status-output"
+        ],
+        "recipientAbilityId": null,
+        "recipientDragonId": null,
+        "recipientEvidenceIds": [],
+        "requirements": [],
+        "ruleId": "status-source-output",
+        "sourceAbilityId": "vhagar-fiery-bonds",
+        "sourceDragonId": "vhagar",
+        "sourceEvidenceIds": [
+          "vhagar-fiery-bonds-summary-2026-06-25"
+        ],
+        "status": "potential",
+        "targetSelectionGroup": null,
+        "title": "Fiery Bonds - Taunt attempt",
+        "unresolvedQuestions": [
+          "Shared versus per-target Taunt roll is unresolved.",
+          "Taunt chance applies to three targets, but shared versus per-target roll scope is not stated."
+        ]
+      },
+      {
         "assumptions": [],
         "channel": "tactical-damage",
         "confidence": "confirmed",
@@ -76219,7 +77030,7 @@
       "Stat Support: Syrax - Sentinel's Wit Star Rank requirement: expected Star Rank 1+, actual preview enabled",
       "Tactical Damage Periodic Damage Support: Provider position requirement: expected vanguard, actual right-flank; Vhagar - Warrior's Resilience Star Rank requirement: expected Star Rank 1+, actual preview enabled",
       "Tactical Damage Support: Position compatibility: expected left-flank, actual provider right-flank, recipient vanguard; Provider position requirement: expected vanguard, actual right-flank; Vhagar - Warrior's Resilience Star Rank requirement: expected Star Rank 1+, actual preview enabled",
-      "Tactical Damage Support: Provider position requirement: expected vanguard, actual right-flank; Vhagar - Warrior's Resilience Star Rank requirement: expected Star Rank 1+, actual preview enabled",
+      "Tactical Damage Support: Provider position requirement: expected vanguard, actual right-flank; Vhagar - Warrior's Resilience Star Rank requirement: expected Star Rank 1+, actual preview enabled; kalspire - Tactical Assault Habit unlock requirement: expected Star Rank 6+, actual preview enabled; kalspire - Tactical Assault Selected Habit Level: expected Habit Level 1+ or preview, actual preview enabled",
       "Warrior's Resilience Vanguard requirement: Required target position: expected Vanguard, actual Right Flank"
     ],
     "expectedInactiveTraits": [
@@ -76387,13 +77198,16 @@
     "previewModeExpectedInteractions": [
       {
         "assumptions": [
-          "Trigger chance and target selection may make this conditional rather than guaranteed."
+          "Trigger chance and target selection may make this conditional rather than guaranteed.",
+          "Multiple qualifying outputs are aggregated into one normal synergy trace."
         ],
         "channel": "tactical-damage",
         "confidence": "confirmed",
         "conflicts": [
           "Syrax - Tactical Inferno Habit unlock requirement: expected Star Rank 8+, actual preview enabled",
-          "Syrax - Tactical Inferno Selected Habit Level: expected Habit Level 1+ or preview, actual preview enabled"
+          "Syrax - Tactical Inferno Selected Habit Level: expected Habit Level 1+ or preview, actual preview enabled",
+          "kalspire - Tactical Assault Habit unlock requirement: expected Star Rank 6+, actual preview enabled",
+          "kalspire - Tactical Assault Selected Habit Level: expected Habit Level 1+ or preview, actual preview enabled"
         ],
         "damageScope": null,
         "effects": [
@@ -76403,11 +77217,12 @@
         ],
         "exactResultKnown": false,
         "exactResultUnknownReason": "Exact final amplified damage cannot be calculated because stacking and final combat formulas are not fully verified.",
-        "explanation": "Kalspire is eligible for Syrax's Tactical Inferno Tactical Damage support. Qualifying outputs: Tactical Strike: Tactical Damage. Target selection follows the verified flank preference and remains selection-dependent.",
+        "explanation": "Kalspire is eligible for Syrax's Tactical Inferno Tactical Damage support. Qualifying outputs: Tactical Strike: Tactical Damage, Tactical Assault: Panic. Target selection follows the verified flank preference and remains selection-dependent.",
         "id": "outgoing-effect-amplification-syrax-tactical-inferno-tactical-inferno-tactical-tactical-damage-dealt-modifier-kalspire",
         "interactionScope": "cross-dragon",
         "matchedOutputCapabilityIds": [
-          "kalspire-tactical-strike-tactical-strike-tactical-damage-output"
+          "kalspire-tactical-strike-tactical-strike-tactical-damage-output",
+          "kalspire-tactical-assault-tactical-assault-panic-output"
         ],
         "matchKind": "outgoing-effect-amplification",
         "modifierCapabilityId": "syrax-tactical-inferno-tactical-inferno-tactical-tactical-damage-dealt-modifier",
@@ -76421,7 +77236,14 @@
           "syrax-tactical-inferno-2026-06-24",
           "syrax-tactical-inferno-2026-06-24",
           "syrax-tactical-inferno-2026-06-24",
-          "kalspire-tactical-strike-summary-2026-06-25"
+          "kalspire-tactical-strike-summary-2026-06-25",
+          "syrax-tactical-inferno-2026-06-24",
+          "syrax-tactical-inferno-2026-06-24",
+          "syrax-tactical-inferno-2026-06-24",
+          "kalspire-tactical-assault-2026-06-25",
+          "kalspire-tactical-assault-2026-06-25",
+          "syrax-tactical-inferno-2026-06-24",
+          "kalspire-tactical-assault-2026-06-25"
         ],
         "requirements": [
           {
@@ -76470,6 +77292,42 @@
             "label": "Source-scope compatibility",
             "notes": [],
             "satisfied": true
+          },
+          {
+            "actual": "preview enabled",
+            "evidenceIds": [
+              "kalspire-tactical-assault-2026-06-25"
+            ],
+            "expected": "Star Rank 6+",
+            "id": "kalspire-kalspire-tactical-assault-star-rank",
+            "label": "kalspire - Tactical Assault Habit unlock requirement",
+            "notes": [],
+            "satisfied": false
+          },
+          {
+            "actual": "preview enabled",
+            "evidenceIds": [
+              "kalspire-tactical-assault-2026-06-25"
+            ],
+            "expected": "Habit Level 1+ or preview",
+            "id": "kalspire-kalspire-tactical-assault-habit-level",
+            "label": "kalspire - Tactical Assault Selected Habit Level",
+            "notes": [
+              "Unlocked Habits without an explicit saved Habit Level default to effective Habit Level 1. Locked Habit capabilities are potential in preview mode, not active for current roster."
+            ],
+            "satisfied": false
+          },
+          {
+            "actual": "habits",
+            "evidenceIds": [
+              "syrax-tactical-inferno-2026-06-24",
+              "kalspire-tactical-assault-2026-06-25"
+            ],
+            "expected": "all-qualifying-sources",
+            "id": "syrax-tactical-inferno-tactical-inferno-tactical-tactical-damage-dealt-modifier-kalspire-tactical-assault-tactical-assault-panic-output-source-scope",
+            "label": "Source-scope compatibility",
+            "notes": [],
+            "satisfied": true
           }
         ],
         "ruleId": "outgoing-effect-amplification",
@@ -76486,12 +77344,16 @@
         ]
       },
       {
-        "assumptions": [],
+        "assumptions": [
+          "Multiple qualifying outputs are aggregated into one normal synergy trace."
+        ],
         "channel": "tactical-damage",
         "confidence": "confirmed",
         "conflicts": [
           "Provider position requirement: expected vanguard, actual right-flank",
-          "Vhagar - Warrior's Resilience Star Rank requirement: expected Star Rank 1+, actual preview enabled"
+          "Vhagar - Warrior's Resilience Star Rank requirement: expected Star Rank 1+, actual preview enabled",
+          "kalspire - Tactical Assault Habit unlock requirement: expected Star Rank 6+, actual preview enabled",
+          "kalspire - Tactical Assault Selected Habit Level: expected Habit Level 1+ or preview, actual preview enabled"
         ],
         "damageScope": null,
         "effects": [
@@ -76500,11 +77362,12 @@
         ],
         "exactResultKnown": false,
         "exactResultUnknownReason": "Exact final amplified damage cannot be calculated because stacking and final combat formulas are not fully verified.",
-        "explanation": "Vhagar's Warrior's Resilience increases Kalspire's Tactical Damage Dealt. Qualifying outputs: Tactical Strike: Tactical Damage.",
+        "explanation": "Vhagar's Warrior's Resilience increases Kalspire's Tactical Damage Dealt. Qualifying outputs: Tactical Strike: Tactical Damage, Tactical Assault: Panic.",
         "id": "outgoing-effect-amplification-vhagar-warriors-resilience-warriors-resilience-left-tactical-tactical-damage-dealt-modifier-kalspire",
         "interactionScope": "cross-dragon",
         "matchedOutputCapabilityIds": [
-          "kalspire-tactical-strike-tactical-strike-tactical-damage-output"
+          "kalspire-tactical-strike-tactical-strike-tactical-damage-output",
+          "kalspire-tactical-assault-tactical-assault-panic-output"
         ],
         "matchKind": "outgoing-effect-amplification",
         "modifierCapabilityId": "vhagar-warriors-resilience-warriors-resilience-left-tactical-tactical-damage-dealt-modifier",
@@ -76519,7 +77382,15 @@
           "vhagar-warriors-resilience-2026-06-25",
           "vhagar-warriors-resilience-2026-06-25",
           "vhagar-warriors-resilience-2026-06-25",
-          "kalspire-tactical-strike-summary-2026-06-25"
+          "kalspire-tactical-strike-summary-2026-06-25",
+          "vhagar-warriors-resilience-2026-06-25",
+          "vhagar-warriors-resilience-2026-06-25",
+          "vhagar-warriors-resilience-2026-06-25",
+          "vhagar-warriors-resilience-2026-06-25",
+          "kalspire-tactical-assault-2026-06-25",
+          "kalspire-tactical-assault-2026-06-25",
+          "vhagar-warriors-resilience-2026-06-25",
+          "kalspire-tactical-assault-2026-06-25"
         ],
         "requirements": [
           {
@@ -76574,6 +77445,42 @@
             ],
             "expected": "all-qualifying-sources",
             "id": "vhagar-warriors-resilience-warriors-resilience-left-tactical-tactical-damage-dealt-modifier-kalspire-tactical-strike-tactical-strike-tactical-damage-output-source-scope",
+            "label": "Source-scope compatibility",
+            "notes": [],
+            "satisfied": true
+          },
+          {
+            "actual": "preview enabled",
+            "evidenceIds": [
+              "kalspire-tactical-assault-2026-06-25"
+            ],
+            "expected": "Star Rank 6+",
+            "id": "kalspire-kalspire-tactical-assault-star-rank",
+            "label": "kalspire - Tactical Assault Habit unlock requirement",
+            "notes": [],
+            "satisfied": false
+          },
+          {
+            "actual": "preview enabled",
+            "evidenceIds": [
+              "kalspire-tactical-assault-2026-06-25"
+            ],
+            "expected": "Habit Level 1+ or preview",
+            "id": "kalspire-kalspire-tactical-assault-habit-level",
+            "label": "kalspire - Tactical Assault Selected Habit Level",
+            "notes": [
+              "Unlocked Habits without an explicit saved Habit Level default to effective Habit Level 1. Locked Habit capabilities are potential in preview mode, not active for current roster."
+            ],
+            "satisfied": false
+          },
+          {
+            "actual": "habits",
+            "evidenceIds": [
+              "vhagar-warriors-resilience-2026-06-25",
+              "kalspire-tactical-assault-2026-06-25"
+            ],
+            "expected": "all-qualifying-sources",
+            "id": "vhagar-warriors-resilience-warriors-resilience-left-tactical-tactical-damage-dealt-modifier-kalspire-tactical-assault-tactical-assault-panic-output-source-scope",
             "label": "Source-scope compatibility",
             "notes": [],
             "satisfied": true
@@ -76870,10 +77777,11 @@
         ],
         "exactResultKnown": false,
         "exactResultUnknownReason": "Exact final amplified damage cannot be calculated because stacking and final combat formulas are not fully verified.",
-        "explanation": "Vhagar's Eclipse Cover can target one Damage Dealt ally. Eligible recipients are Kalspire and Syrax and Vhagar. The selected recipient is not guaranteed. Qualifying outputs: Tactical Assault: Physical Damage, Tactical Strike: Tactical Damage, Blazing Fury: Tactical Damage, Fiery Bonds: Physical Damage, Skyward Titan: Physical Damage.",
+        "explanation": "Vhagar's Eclipse Cover can target one Damage Dealt ally. Eligible recipients are Kalspire and Syrax and Vhagar. The selected recipient is not guaranteed. Qualifying outputs: Tactical Assault: Panic, Tactical Assault: Physical Damage, Tactical Strike: Tactical Damage, Blazing Fury: Tactical Damage, Fiery Bonds: Physical Damage, Skyward Titan: Physical Damage.",
         "id": "target-selection-vhagar-eclipse-cover-eclipse-cover-advantage-advantage-damage-dealt-status-modifier-damage-dealt",
         "interactionScope": "targeting-fact",
         "matchedOutputCapabilityIds": [
+          "kalspire-tactical-assault-tactical-assault-panic-output",
           "kalspire-tactical-assault-tactical-assault-physical-damage-output",
           "kalspire-tactical-strike-tactical-strike-tactical-damage-output",
           "syrax-blazing-fury-blazing-fury-tactical-rate-output",
@@ -76976,6 +77884,18 @@
             ],
             "expected": "all-qualifying-sources",
             "id": "vhagar-eclipse-cover-eclipse-cover-advantage-advantage-damage-dealt-status-modifier-kalspire-tactical-assault-tactical-assault-physical-damage-output-source-scope",
+            "label": "Source-scope compatibility",
+            "notes": [],
+            "satisfied": true
+          },
+          {
+            "actual": "habits",
+            "evidenceIds": [
+              "vhagar-eclipse-cover-2026-06-25",
+              "kalspire-tactical-assault-2026-06-25"
+            ],
+            "expected": "all-qualifying-sources",
+            "id": "vhagar-eclipse-cover-eclipse-cover-advantage-advantage-damage-dealt-status-modifier-kalspire-tactical-assault-tactical-assault-panic-output-source-scope",
             "label": "Source-scope compatibility",
             "notes": [],
             "satisfied": true
@@ -77310,6 +78230,49 @@
         "title": "Strategic Revival Recovery target selection",
         "unresolvedQuestions": [
           "Exact final Recovery amount is unknown because the full Level and Instinct Recovery formula is not known."
+        ]
+      },
+      {
+        "assumptions": [
+          "Status application remains chance-based or conditional when the source roll is unresolved."
+        ],
+        "channel": "status",
+        "confidence": "confirmed",
+        "conflicts": [],
+        "damageScope": null,
+        "effects": [
+          "Status application chance: 25%.",
+          "Duration: 2 rounds.",
+          "Activation scope is unresolved between one shared roll and independent per-target rolls.",
+          "Activation scope is unresolved between one shared roll and independent per-target rolls."
+        ],
+        "exactResultKnown": false,
+        "exactResultUnknownReason": "Exact status target outcome cannot be calculated because activation, target identity, and uptime are unresolved.",
+        "explanation": "Fiery Bonds has a 25% chance each round to Taunt 3 enemies in any lane, for 2 rounds.",
+        "id": "enemy-status-output-vhagar-fiery-bonds-fiery-bonds-taunt-taunt-status-output",
+        "interactionScope": "enemy-side",
+        "matchedOutputCapabilityIds": [],
+        "matchKind": "status-condition-enablement",
+        "modifierCapabilityId": "vhagar-fiery-bonds-fiery-bonds-taunt-taunt-status-output",
+        "modifierCapabilityIds": [
+          "vhagar-fiery-bonds-fiery-bonds-taunt-taunt-status-output"
+        ],
+        "recipientAbilityId": null,
+        "recipientDragonId": null,
+        "recipientEvidenceIds": [],
+        "requirements": [],
+        "ruleId": "status-source-output",
+        "sourceAbilityId": "vhagar-fiery-bonds",
+        "sourceDragonId": "vhagar",
+        "sourceEvidenceIds": [
+          "vhagar-fiery-bonds-summary-2026-06-25"
+        ],
+        "status": "potential",
+        "targetSelectionGroup": null,
+        "title": "Fiery Bonds - Taunt attempt",
+        "unresolvedQuestions": [
+          "Shared versus per-target Taunt roll is unresolved.",
+          "Taunt chance applies to three targets, but shared versus per-target roll scope is not stated."
         ]
       },
       {
@@ -80987,6 +81950,49 @@
         ]
       },
       {
+        "assumptions": [
+          "Status application remains chance-based or conditional when the source roll is unresolved."
+        ],
+        "channel": "status",
+        "confidence": "confirmed",
+        "conflicts": [],
+        "damageScope": null,
+        "effects": [
+          "Status application chance: 25%.",
+          "Duration: 2 rounds.",
+          "Activation scope is unresolved between one shared roll and independent per-target rolls.",
+          "Activation scope is unresolved between one shared roll and independent per-target rolls."
+        ],
+        "exactResultKnown": false,
+        "exactResultUnknownReason": "Exact status target outcome cannot be calculated because activation, target identity, and uptime are unresolved.",
+        "explanation": "Fiery Bonds has a 25% chance each round to Taunt 3 enemies in any lane, for 2 rounds.",
+        "id": "enemy-status-output-vhagar-fiery-bonds-fiery-bonds-taunt-taunt-status-output",
+        "interactionScope": "enemy-side",
+        "matchedOutputCapabilityIds": [],
+        "matchKind": "status-condition-enablement",
+        "modifierCapabilityId": "vhagar-fiery-bonds-fiery-bonds-taunt-taunt-status-output",
+        "modifierCapabilityIds": [
+          "vhagar-fiery-bonds-fiery-bonds-taunt-taunt-status-output"
+        ],
+        "recipientAbilityId": null,
+        "recipientDragonId": null,
+        "recipientEvidenceIds": [],
+        "requirements": [],
+        "ruleId": "status-source-output",
+        "sourceAbilityId": "vhagar-fiery-bonds",
+        "sourceDragonId": "vhagar",
+        "sourceEvidenceIds": [
+          "vhagar-fiery-bonds-summary-2026-06-25"
+        ],
+        "status": "potential",
+        "targetSelectionGroup": null,
+        "title": "Fiery Bonds - Taunt attempt",
+        "unresolvedQuestions": [
+          "Shared versus per-target Taunt roll is unresolved.",
+          "Taunt chance applies to three targets, but shared versus per-target roll scope is not stated."
+        ]
+      },
+      {
         "assumptions": [],
         "channel": "damage-received",
         "confidence": "confirmed",
@@ -82500,6 +83506,49 @@
       },
       {
         "assumptions": [
+          "Status application remains chance-based or conditional when the source roll is unresolved."
+        ],
+        "channel": "status",
+        "confidence": "confirmed",
+        "conflicts": [],
+        "damageScope": null,
+        "effects": [
+          "Status application chance: 25%.",
+          "Duration: 2 rounds.",
+          "Activation scope is unresolved between one shared roll and independent per-target rolls.",
+          "Activation scope is unresolved between one shared roll and independent per-target rolls."
+        ],
+        "exactResultKnown": false,
+        "exactResultUnknownReason": "Exact status target outcome cannot be calculated because activation, target identity, and uptime are unresolved.",
+        "explanation": "Fiery Bonds has a 25% chance each round to Taunt 3 enemies in any lane, for 2 rounds.",
+        "id": "enemy-status-output-vhagar-fiery-bonds-fiery-bonds-taunt-taunt-status-output",
+        "interactionScope": "enemy-side",
+        "matchedOutputCapabilityIds": [],
+        "matchKind": "status-condition-enablement",
+        "modifierCapabilityId": "vhagar-fiery-bonds-fiery-bonds-taunt-taunt-status-output",
+        "modifierCapabilityIds": [
+          "vhagar-fiery-bonds-fiery-bonds-taunt-taunt-status-output"
+        ],
+        "recipientAbilityId": null,
+        "recipientDragonId": null,
+        "recipientEvidenceIds": [],
+        "requirements": [],
+        "ruleId": "status-source-output",
+        "sourceAbilityId": "vhagar-fiery-bonds",
+        "sourceDragonId": "vhagar",
+        "sourceEvidenceIds": [
+          "vhagar-fiery-bonds-summary-2026-06-25"
+        ],
+        "status": "potential",
+        "targetSelectionGroup": null,
+        "title": "Fiery Bonds - Taunt attempt",
+        "unresolvedQuestions": [
+          "Shared versus per-target Taunt roll is unresolved.",
+          "Taunt chance applies to three targets, but shared versus per-target roll scope is not stated."
+        ]
+      },
+      {
+        "assumptions": [
           "The status provider and dependent effect must select the same enemy target.",
           "Target overlap, trigger timing, and exact uptime are not simulated.",
           "Taunt application success, enemy identity, target overlap, and conditional uptime are unresolved."
@@ -82521,11 +83570,12 @@
           "Duration: 2 rounds.",
           "Target-specific conditional chance",
           "Status application chance: 25%.",
-          "Duration: 2 rounds."
+          "Duration: 2 rounds.",
+          "Activation scope is unresolved between one shared roll and independent per-target rolls."
         ],
         "exactResultKnown": false,
         "exactResultUnknownReason": "Exact final value cannot be calculated because final combat formulas and stacking order are not fully verified.",
-        "explanation": "Vhagar can apply Taunt. Each round, Bloodscale Fury checks 1 Enemy, preferring a target not already Stunned. At effective Habit Level 5, the Weakened application chance is 35% for a normal target and 70% for that same target while it has Taunt, a target-specific 2x increase. Weakened for 2 rounds. At effective Habit Level unknown, Fiery Bonds has a 25% chance each round to Taunt 3 enemies in any lane, for 2 rounds. Taunt application and target overlap are not guaranteed.",
+        "explanation": "Vhagar can apply Taunt. Each round, Bloodscale Fury checks 1 Enemy, preferring a target not already Stunned. At effective Habit Level 5, the Weakened application chance is 35% for a normal target and 70% for that same target while it has Taunt, a target-specific 2x increase. Weakened for 2 rounds. Fiery Bonds has a 25% chance each round to Taunt 3 enemies in any lane, for 2 rounds. Taunt application and target overlap are not guaranteed.",
         "id": "status-effect-condition-vhagar-fiery-bonds-fiery-bonds-taunt-taunt-status-output-crimson-bloodscale-fury-bloodscale-fury-weakened-requires-target-status-taunt",
         "interactionScope": "cross-dragon",
         "matchedOutputCapabilityIds": [],
