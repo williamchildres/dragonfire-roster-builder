@@ -225,9 +225,10 @@ export function traceStatusReason(trace: SynergyTrace): string {
     return 'All required source, target, placement, and unlock requirements are satisfied.';
   }
   if (trace.status === 'potential') {
-    return failed.length > 0
-      ? `Potential future interaction; currently blocked by ${failed.map((requirement) => requirement.label).join(', ')}.`
-      : 'Potential or conditional interaction; trigger, target choice, or future progression is not guaranteed.';
+    if (failed.length > 0) {
+      return `Potential future interaction; currently blocked by ${failed.map((requirement) => requirement.label).join(', ')}.`;
+    }
+    return potentialTraceStatusReason(trace);
   }
   if (trace.status === 'unknown') {
     return `Requirement state is unknown: ${unknown.map((requirement) => requirement.label).join(', ')}.`;
@@ -236,6 +237,60 @@ export function traceStatusReason(trace: SynergyTrace): string {
     return `Inactive because ${failed.map((requirement) => requirement.label).join(', ')} is not satisfied.`;
   }
   return 'This trace does not apply to the current formation.';
+}
+
+function potentialTraceStatusReason(trace: SynergyTrace): string {
+  if (trace.targetSelectionGroup?.selectionUncertain) {
+    if (trace.targetSelectionGroup.selection === 'highest-stat') {
+      return 'The final selected recipient remains unresolved because one or more comparison values are unavailable.';
+    }
+    return 'The final selected recipient remains unresolved for this candidate set.';
+  }
+  const text = [
+    trace.explanation,
+    ...trace.matchedFacts,
+    ...trace.effects,
+    ...trace.assumptions,
+    ...trace.unresolvedQuestions,
+  ].join(' ');
+  if (/recipient selection is unresolved|final selected recipient remains unresolved/i.test(text)) {
+    if (/highest[- ](?:stat|instinct|strength|intelligence|initiative)|highest-/i.test(trace.targetSelectorSummary ?? text)) {
+      return 'The final selected recipient remains unresolved because one or more comparison values are unavailable.';
+    }
+    return 'The final selected recipient remains unresolved for this candidate set.';
+  }
+  if (trace.matchKind === 'enemy-damage-received-increase') {
+    return 'Enemy identity, allied target overlap, uptime, and final damage remain unresolved.';
+  }
+  if (trace.matchKind === 'status-condition-enablement' || trace.ruleId === 'status-source-output' || trace.ruleId === 'self-status-output') {
+    if (/enemy/i.test(trace.targetSelectorSummary ?? '') || /enemy/i.test(text)) {
+      return 'Application success and final enemy target identity remain unresolved.';
+    }
+    return 'Application success and final uptime remain unresolved.';
+  }
+  if (/stack/i.test(text)) {
+    const pieces = [
+      /chance|activation/i.test(text) ? 'activation' : null,
+      /repeat/i.test(text) ? 'repeated-attempt count' : null,
+      'final stack count',
+      'uptime',
+    ].filter((piece): piece is string => Boolean(piece));
+    return `${capitalizeSentenceList(pieces)} remain conditional.`;
+  }
+  if (/same-round|action order|resolves first/i.test(text)) {
+    return 'Action order, schedule overlap, uptime, and final formula remain unresolved.';
+  }
+  if (/future|preview|unlock|progression/i.test(text)) {
+    return 'Future unlock or progression requirements are not currently satisfied.';
+  }
+  return 'Activation success, uptime, and final formula remain conditional.';
+}
+
+function capitalizeSentenceList(items: string[]): string {
+  const joined = items.length <= 1
+    ? items[0] ?? ''
+    : `${items.slice(0, -1).join(', ')}, and ${items.at(-1)}`;
+  return joined.charAt(0).toUpperCase() + joined.slice(1);
 }
 
 export function targetPositionsForExactThreeAllies(formation: FormationAnalysisInput): FormationPosition[] {

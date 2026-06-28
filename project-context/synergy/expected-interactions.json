@@ -21,12 +21,11 @@
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final amplified damage cannot be calculated because stacking and final combat formulas are not fully verified.",
-    "explanation": "Caraxes is eligible for Syrax's Blazing Fury Fire Damage support. Qualifying outputs: Infernal Burst: Fire Damage, Crippling Inferno: Burn, Crippling Inferno: Burn periodic Fire Damage. Activation is a 20% each-round chance, lasts two rounds, and prioritizes Fire Damage allies.",
+    "explanation": "Caraxes is eligible for Syrax's Blazing Fury Fire Damage support. Qualifying outputs: Infernal Burst: Fire Damage, Crippling Inferno: Burn periodic Fire Damage. Activation is a 20% each-round chance, lasts two rounds, and prioritizes Fire Damage allies.",
     "id": "outgoing-effect-amplification-syrax-blazing-fury-blazing-fury-fire-damage-up-fire-damage-dealt-modifier-caraxes",
     "interactionScope": "cross-dragon",
     "matchedOutputCapabilityIds": [
       "caraxes-infernal-burst-infernal-burst-fire-rate-output",
-      "caraxes-crippling-inferno-crippling-inferno-burn-output",
       "periodic-caraxes-crippling-inferno-crippling-inferno-burn-burn-output"
     ],
     "matchKind": "outgoing-effect-amplification",
@@ -42,13 +41,6 @@
       "syrax-blazing-fury-summary-2026-06-24",
       "syrax-blazing-fury-details-2026-06-24",
       "caraxes-infernal-burst-2026-06-24",
-      "syrax-blazing-fury-summary-2026-06-24",
-      "syrax-blazing-fury-details-2026-06-24",
-      "caraxes-crippling-inferno-2026-06-24",
-      "caraxes-crippling-inferno-2026-06-24",
-      "syrax-blazing-fury-summary-2026-06-24",
-      "syrax-blazing-fury-details-2026-06-24",
-      "caraxes-crippling-inferno-2026-06-24",
       "syrax-blazing-fury-summary-2026-06-24",
       "syrax-blazing-fury-details-2026-06-24",
       "caraxes-crippling-inferno-2026-06-24",
@@ -106,19 +98,6 @@
           "Unlocked Habits without an explicit saved Habit Level default to effective Habit Level 1. Locked Habit capabilities are potential in preview mode, not active for current roster."
         ],
         "satisfied": false
-      },
-      {
-        "actual": "habits",
-        "evidenceIds": [
-          "syrax-blazing-fury-summary-2026-06-24",
-          "syrax-blazing-fury-details-2026-06-24",
-          "caraxes-crippling-inferno-2026-06-24"
-        ],
-        "expected": "all-qualifying-sources",
-        "id": "syrax-blazing-fury-blazing-fury-fire-damage-up-fire-damage-dealt-modifier-caraxes-crippling-inferno-crippling-inferno-burn-output-source-scope",
-        "label": "Source-scope compatibility",
-        "notes": [],
-        "satisfied": true
       },
       {
         "actual": "habits",
@@ -267,12 +246,11 @@
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final amplified damage cannot be calculated because stacking and final combat formulas are not fully verified.",
-    "explanation": "Malachite's Sentinel's Presence increases Caraxes's Fire Damage Dealt. Qualifying outputs: Infernal Burst: Fire Damage, Crippling Inferno: Burn, Crippling Inferno: Burn periodic Fire Damage.",
+    "explanation": "Malachite's Sentinel's Presence increases Caraxes's Fire Damage Dealt. Qualifying outputs: Infernal Burst: Fire Damage, Crippling Inferno: Burn periodic Fire Damage.",
     "id": "outgoing-effect-amplification-malachite-sentinels-presence-sentinels-presence-left-flank-fire-fire-damage-dealt-modifier-caraxes",
     "interactionScope": "cross-dragon",
     "matchedOutputCapabilityIds": [
       "caraxes-infernal-burst-infernal-burst-fire-rate-output",
-      "caraxes-crippling-inferno-crippling-inferno-burn-output",
       "periodic-caraxes-crippling-inferno-crippling-inferno-burn-burn-output"
     ],
     "matchKind": "outgoing-effect-amplification",
@@ -289,14 +267,6 @@
       "malachite-sentinels-presence-2026-06-23",
       "malachite-sentinels-presence-2026-06-23",
       "caraxes-infernal-burst-2026-06-24",
-      "malachite-sentinels-presence-2026-06-23",
-      "malachite-sentinels-presence-2026-06-23",
-      "malachite-sentinels-presence-2026-06-23",
-      "malachite-sentinels-presence-2026-06-23",
-      "caraxes-crippling-inferno-2026-06-24",
-      "caraxes-crippling-inferno-2026-06-24",
-      "malachite-sentinels-presence-2026-06-23",
-      "caraxes-crippling-inferno-2026-06-24",
       "malachite-sentinels-presence-2026-06-23",
       "malachite-sentinels-presence-2026-06-23",
       "malachite-sentinels-presence-2026-06-23",
@@ -394,18 +364,6 @@
           "caraxes-crippling-inferno-2026-06-24"
         ],
         "expected": "all-qualifying-sources",
-        "id": "malachite-sentinels-presence-sentinels-presence-left-flank-fire-fire-damage-dealt-modifier-caraxes-crippling-inferno-crippling-inferno-burn-output-source-scope",
-        "label": "Source-scope compatibility",
-        "notes": [],
-        "satisfied": true
-      },
-      {
-        "actual": "habits",
-        "evidenceIds": [
-          "malachite-sentinels-presence-2026-06-23",
-          "caraxes-crippling-inferno-2026-06-24"
-        ],
-        "expected": "all-qualifying-sources",
         "id": "malachite-sentinels-presence-sentinels-presence-left-flank-fire-fire-damage-dealt-modifier-periodic-caraxes-crippling-inferno-crippling-inferno-burn-burn-output-source-scope",
         "label": "Source-scope compatibility",
         "notes": [],
@@ -450,13 +408,12 @@
       "Duration: 2 rounds."
     ],
     "exactResultKnown": false,
-    "exactResultUnknownReason": "Exact final amplified damage cannot be calculated because stacking and final combat formulas are not fully verified.",
-    "explanation": "Caraxes is eligible to receive Advantage support because it has verified Damage Dealt output. Each granted stack increases Damage Dealt by 20%. Qualifying outputs: Infernal Burst: Fire Damage, Crippling Inferno: Burn, Crippling Inferno: Burn periodic Fire Damage.",
+    "exactResultUnknownReason": "Exact final stack benefit cannot be calculated because activation, repeat count, final stack count, uptime, and final formulas are unresolved.",
+    "explanation": "Caraxes is eligible to receive Advantage support because it has verified Damage Dealt output. Each granted stack increases Damage Dealt by 20%. Qualifying outputs: Infernal Burst: Fire Damage, Crippling Inferno: Burn periodic Fire Damage.",
     "id": "outgoing-effect-amplification-malachite-thunderous-roar-thunderous-roar-advantage-advantage-damage-dealt-status-modifier-caraxes",
     "interactionScope": "cross-dragon",
     "matchedOutputCapabilityIds": [
       "caraxes-infernal-burst-infernal-burst-fire-rate-output",
-      "caraxes-crippling-inferno-crippling-inferno-burn-output",
       "periodic-caraxes-crippling-inferno-crippling-inferno-burn-burn-output"
     ],
     "matchKind": "outgoing-effect-amplification",
@@ -472,13 +429,6 @@
       "malachite-thunderous-roar-2026-06-23",
       "malachite-thunderous-roar-2026-06-23",
       "caraxes-infernal-burst-2026-06-24",
-      "malachite-thunderous-roar-2026-06-23",
-      "malachite-thunderous-roar-2026-06-23",
-      "malachite-thunderous-roar-2026-06-23",
-      "caraxes-crippling-inferno-2026-06-24",
-      "caraxes-crippling-inferno-2026-06-24",
-      "malachite-thunderous-roar-2026-06-23",
-      "caraxes-crippling-inferno-2026-06-24",
       "malachite-thunderous-roar-2026-06-23",
       "malachite-thunderous-roar-2026-06-23",
       "malachite-thunderous-roar-2026-06-23",
@@ -566,18 +516,6 @@
           "caraxes-crippling-inferno-2026-06-24"
         ],
         "expected": "all-qualifying-sources",
-        "id": "malachite-thunderous-roar-thunderous-roar-advantage-advantage-damage-dealt-status-modifier-caraxes-crippling-inferno-crippling-inferno-burn-output-source-scope",
-        "label": "Source-scope compatibility",
-        "notes": [],
-        "satisfied": true
-      },
-      {
-        "actual": "habits",
-        "evidenceIds": [
-          "malachite-thunderous-roar-2026-06-23",
-          "caraxes-crippling-inferno-2026-06-24"
-        ],
-        "expected": "all-qualifying-sources",
         "id": "malachite-thunderous-roar-thunderous-roar-advantage-advantage-damage-dealt-status-modifier-periodic-caraxes-crippling-inferno-crippling-inferno-burn-burn-output-source-scope",
         "label": "Source-scope compatibility",
         "notes": [],
@@ -619,7 +557,7 @@
       "Duration: 2 rounds."
     ],
     "exactResultKnown": false,
-    "exactResultUnknownReason": "Exact final amplified damage cannot be calculated because stacking and final combat formulas are not fully verified.",
+    "exactResultUnknownReason": "Exact final stack benefit cannot be calculated because activation, repeat count, final stack count, uptime, and final formulas are unresolved.",
     "explanation": "Syrax is eligible to receive Advantage support because it has verified Damage Dealt output. Each granted stack increases Damage Dealt by 20%. Qualifying outputs: Blazing Fury: Tactical Damage.",
     "id": "outgoing-effect-amplification-malachite-thunderous-roar-thunderous-roar-advantage-advantage-damage-dealt-status-modifier-syrax",
     "interactionScope": "cross-dragon",
@@ -3601,13 +3539,11 @@
     "confidence": "confirmed",
     "conflicts": [
       "Syrax - Mindful Synergy Habit unlock requirement: expected Star Rank 2+, actual preview enabled",
-      "Syrax - Mindful Synergy Selected Habit Level: expected Habit Level 1+ or preview, actual preview enabled",
-      "caraxes - Crippling Inferno Habit unlock requirement: expected Star Rank 6+, actual preview enabled",
-      "caraxes - Crippling Inferno Selected Habit Level: expected Habit Level 1+ or preview, actual preview enabled"
+      "Syrax - Mindful Synergy Selected Habit Level: expected Habit Level 1+ or preview, actual preview enabled"
     ],
     "damageScope": null,
     "effects": [
-      "Intelligence support for Infernal Burst: Fire Damage; Crippling Inferno: Fire Damage",
+      "Intelligence support for Infernal Burst: Fire Damage",
       "Intelligence +13% at effective Habit Level 5.",
       "Duration: until end of combat.",
       "Ranked progression: L1 6.5%, L2 7.8%, L3 9.1%, L4 11.05%, L5 13%.",
@@ -3615,7 +3551,7 @@
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final value cannot be calculated because final combat formulas and stacking order are not fully verified.",
-    "explanation": "Syrax's Mindful Synergy can increase Caraxes's Intelligence, which supports Infernal Burst: Fire Damage; Crippling Inferno: Fire Damage.",
+    "explanation": "Syrax's Mindful Synergy can increase Caraxes's Intelligence, which supports Infernal Burst: Fire Damage.",
     "id": "stat-scaling-syrax-mindful-synergy-mindful-synergy-intelligence-stat-dealt-modifier-caraxes-intelligence",
     "interactionScope": "cross-dragon",
     "matchedOutputCapabilityIds": [],
@@ -3625,8 +3561,7 @@
     "recipientAbilityId": "caraxes-infernal-burst",
     "recipientDragonId": "caraxes",
     "recipientEvidenceIds": [
-      "caraxes-infernal-burst-2026-06-24",
-      "caraxes-crippling-inferno-2026-06-24"
+      "caraxes-infernal-burst-2026-06-24"
     ],
     "requirements": [
       {
@@ -3659,30 +3594,6 @@
         "expected": "Habit Level 1+ or preview",
         "id": "syrax-syrax-mindful-synergy-habit-level",
         "label": "Syrax - Mindful Synergy Selected Habit Level",
-        "notes": [
-          "Unlocked Habits without an explicit saved Habit Level default to effective Habit Level 1. Locked Habit capabilities are potential in preview mode, not active for current roster."
-        ],
-        "satisfied": false
-      },
-      {
-        "actual": "preview enabled",
-        "evidenceIds": [
-          "caraxes-crippling-inferno-2026-06-24"
-        ],
-        "expected": "Star Rank 6+",
-        "id": "caraxes-caraxes-crippling-inferno-star-rank",
-        "label": "caraxes - Crippling Inferno Habit unlock requirement",
-        "notes": [],
-        "satisfied": false
-      },
-      {
-        "actual": "preview enabled",
-        "evidenceIds": [
-          "caraxes-crippling-inferno-2026-06-24"
-        ],
-        "expected": "Habit Level 1+ or preview",
-        "id": "caraxes-caraxes-crippling-inferno-habit-level",
-        "label": "caraxes - Crippling Inferno Selected Habit Level",
         "notes": [
           "Unlocked Habits without an explicit saved Habit Level default to effective Habit Level 1. Locked Habit capabilities are potential in preview mode, not active for current roster."
         ],
@@ -4213,7 +4124,7 @@
     ],
     "damageScope": null,
     "effects": [
-      "Enemy Initiative reduction may improve Fire Damage outputs: Infernal Burst: Fire Damage, Crippling Inferno: Burn, Crippling Inferno: Burn periodic Fire Damage.",
+      "Enemy Initiative reduction may improve Fire Damage outputs: Infernal Burst: Fire Damage, Crippling Inferno: Burn periodic Fire Damage.",
       "Applies to all qualifying Fire Damage sources."
     ],
     "exactResultKnown": false,
@@ -4223,7 +4134,6 @@
     "interactionScope": "cross-dragon",
     "matchedOutputCapabilityIds": [
       "caraxes-infernal-burst-infernal-burst-fire-rate-output",
-      "caraxes-crippling-inferno-crippling-inferno-burn-output",
       "periodic-caraxes-crippling-inferno-crippling-inferno-burn-burn-output"
     ],
     "matchKind": "enemy-mitigation-reduction",
@@ -4235,7 +4145,6 @@
     "recipientDragonId": "caraxes",
     "recipientEvidenceIds": [
       "caraxes-infernal-burst-2026-06-24",
-      "caraxes-crippling-inferno-2026-06-24",
       "caraxes-crippling-inferno-2026-06-24"
     ],
     "requirements": [
@@ -4315,7 +4224,7 @@
     ],
     "damageScope": null,
     "effects": [
-      "Enemy Initiative reduction may improve Fire Damage outputs: Infernal Burst: Fire Damage, Crippling Inferno: Burn, Crippling Inferno: Burn periodic Fire Damage.",
+      "Enemy Initiative reduction may improve Fire Damage outputs: Infernal Burst: Fire Damage, Crippling Inferno: Burn periodic Fire Damage.",
       "Applies to all qualifying Fire Damage sources."
     ],
     "exactResultKnown": false,
@@ -4325,7 +4234,6 @@
     "interactionScope": "internal",
     "matchedOutputCapabilityIds": [
       "caraxes-infernal-burst-infernal-burst-fire-rate-output",
-      "caraxes-crippling-inferno-crippling-inferno-burn-output",
       "periodic-caraxes-crippling-inferno-crippling-inferno-burn-burn-output"
     ],
     "matchKind": "enemy-mitigation-reduction",
@@ -4337,7 +4245,6 @@
     "recipientDragonId": "caraxes",
     "recipientEvidenceIds": [
       "caraxes-infernal-burst-2026-06-24",
-      "caraxes-crippling-inferno-2026-06-24",
       "caraxes-crippling-inferno-2026-06-24"
     ],
     "requirements": [
@@ -4865,12 +4772,11 @@
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final amplified damage cannot be calculated because stacking and final combat formulas are not fully verified.",
-    "explanation": "Caraxes is eligible for Syrax's Blazing Fury Fire Damage support. Qualifying outputs: Infernal Burst: Fire Damage, Crippling Inferno: Burn, Crippling Inferno: Burn periodic Fire Damage. Activation is a 20% each-round chance, lasts two rounds, and prioritizes Fire Damage allies.",
+    "explanation": "Caraxes is eligible for Syrax's Blazing Fury Fire Damage support. Qualifying outputs: Infernal Burst: Fire Damage, Crippling Inferno: Burn periodic Fire Damage. Activation is a 20% each-round chance, lasts two rounds, and prioritizes Fire Damage allies.",
     "id": "outgoing-effect-amplification-syrax-blazing-fury-blazing-fury-fire-damage-up-fire-damage-dealt-modifier-caraxes",
     "interactionScope": "cross-dragon",
     "matchedOutputCapabilityIds": [
       "caraxes-infernal-burst-infernal-burst-fire-rate-output",
-      "caraxes-crippling-inferno-crippling-inferno-burn-output",
       "periodic-caraxes-crippling-inferno-crippling-inferno-burn-burn-output"
     ],
     "matchKind": "outgoing-effect-amplification",
@@ -4886,13 +4792,6 @@
       "syrax-blazing-fury-summary-2026-06-24",
       "syrax-blazing-fury-details-2026-06-24",
       "caraxes-infernal-burst-2026-06-24",
-      "syrax-blazing-fury-summary-2026-06-24",
-      "syrax-blazing-fury-details-2026-06-24",
-      "caraxes-crippling-inferno-2026-06-24",
-      "caraxes-crippling-inferno-2026-06-24",
-      "syrax-blazing-fury-summary-2026-06-24",
-      "syrax-blazing-fury-details-2026-06-24",
-      "caraxes-crippling-inferno-2026-06-24",
       "syrax-blazing-fury-summary-2026-06-24",
       "syrax-blazing-fury-details-2026-06-24",
       "caraxes-crippling-inferno-2026-06-24",
@@ -4959,19 +4858,6 @@
           "caraxes-crippling-inferno-2026-06-24"
         ],
         "expected": "all-qualifying-sources",
-        "id": "syrax-blazing-fury-blazing-fury-fire-damage-up-fire-damage-dealt-modifier-caraxes-crippling-inferno-crippling-inferno-burn-output-source-scope",
-        "label": "Source-scope compatibility",
-        "notes": [],
-        "satisfied": true
-      },
-      {
-        "actual": "habits",
-        "evidenceIds": [
-          "syrax-blazing-fury-summary-2026-06-24",
-          "syrax-blazing-fury-details-2026-06-24",
-          "caraxes-crippling-inferno-2026-06-24"
-        ],
-        "expected": "all-qualifying-sources",
         "id": "syrax-blazing-fury-blazing-fury-fire-damage-up-fire-damage-dealt-modifier-periodic-caraxes-crippling-inferno-crippling-inferno-burn-burn-output-source-scope",
         "label": "Source-scope compatibility",
         "notes": [],
@@ -5010,12 +4896,11 @@
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final amplified damage cannot be calculated because stacking and final combat formulas are not fully verified.",
-    "explanation": "Malachite's Sentinel's Presence increases Caraxes's Fire Damage Dealt. Qualifying outputs: Infernal Burst: Fire Damage, Crippling Inferno: Burn, Crippling Inferno: Burn periodic Fire Damage.",
+    "explanation": "Malachite's Sentinel's Presence increases Caraxes's Fire Damage Dealt. Qualifying outputs: Infernal Burst: Fire Damage, Crippling Inferno: Burn periodic Fire Damage.",
     "id": "outgoing-effect-amplification-malachite-sentinels-presence-sentinels-presence-left-flank-fire-fire-damage-dealt-modifier-caraxes",
     "interactionScope": "cross-dragon",
     "matchedOutputCapabilityIds": [
       "caraxes-infernal-burst-infernal-burst-fire-rate-output",
-      "caraxes-crippling-inferno-crippling-inferno-burn-output",
       "periodic-caraxes-crippling-inferno-crippling-inferno-burn-burn-output"
     ],
     "matchKind": "outgoing-effect-amplification",
@@ -5032,14 +4917,6 @@
       "malachite-sentinels-presence-2026-06-23",
       "malachite-sentinels-presence-2026-06-23",
       "caraxes-infernal-burst-2026-06-24",
-      "malachite-sentinels-presence-2026-06-23",
-      "malachite-sentinels-presence-2026-06-23",
-      "malachite-sentinels-presence-2026-06-23",
-      "malachite-sentinels-presence-2026-06-23",
-      "caraxes-crippling-inferno-2026-06-24",
-      "caraxes-crippling-inferno-2026-06-24",
-      "malachite-sentinels-presence-2026-06-23",
-      "caraxes-crippling-inferno-2026-06-24",
       "malachite-sentinels-presence-2026-06-23",
       "malachite-sentinels-presence-2026-06-23",
       "malachite-sentinels-presence-2026-06-23",
@@ -5137,18 +5014,6 @@
           "caraxes-crippling-inferno-2026-06-24"
         ],
         "expected": "all-qualifying-sources",
-        "id": "malachite-sentinels-presence-sentinels-presence-left-flank-fire-fire-damage-dealt-modifier-caraxes-crippling-inferno-crippling-inferno-burn-output-source-scope",
-        "label": "Source-scope compatibility",
-        "notes": [],
-        "satisfied": true
-      },
-      {
-        "actual": "habits",
-        "evidenceIds": [
-          "malachite-sentinels-presence-2026-06-23",
-          "caraxes-crippling-inferno-2026-06-24"
-        ],
-        "expected": "all-qualifying-sources",
         "id": "malachite-sentinels-presence-sentinels-presence-left-flank-fire-fire-damage-dealt-modifier-periodic-caraxes-crippling-inferno-crippling-inferno-burn-burn-output-source-scope",
         "label": "Source-scope compatibility",
         "notes": [],
@@ -5193,13 +5058,12 @@
       "Duration: 2 rounds."
     ],
     "exactResultKnown": false,
-    "exactResultUnknownReason": "Exact final amplified damage cannot be calculated because stacking and final combat formulas are not fully verified.",
-    "explanation": "Caraxes is eligible to receive Advantage support because it has verified Damage Dealt output. Each granted stack increases Damage Dealt by 20%. Qualifying outputs: Infernal Burst: Fire Damage, Crippling Inferno: Burn, Crippling Inferno: Burn periodic Fire Damage.",
+    "exactResultUnknownReason": "Exact final stack benefit cannot be calculated because activation, repeat count, final stack count, uptime, and final formulas are unresolved.",
+    "explanation": "Caraxes is eligible to receive Advantage support because it has verified Damage Dealt output. Each granted stack increases Damage Dealt by 20%. Qualifying outputs: Infernal Burst: Fire Damage, Crippling Inferno: Burn periodic Fire Damage.",
     "id": "outgoing-effect-amplification-malachite-thunderous-roar-thunderous-roar-advantage-advantage-damage-dealt-status-modifier-caraxes",
     "interactionScope": "cross-dragon",
     "matchedOutputCapabilityIds": [
       "caraxes-infernal-burst-infernal-burst-fire-rate-output",
-      "caraxes-crippling-inferno-crippling-inferno-burn-output",
       "periodic-caraxes-crippling-inferno-crippling-inferno-burn-burn-output"
     ],
     "matchKind": "outgoing-effect-amplification",
@@ -5215,13 +5079,6 @@
       "malachite-thunderous-roar-2026-06-23",
       "malachite-thunderous-roar-2026-06-23",
       "caraxes-infernal-burst-2026-06-24",
-      "malachite-thunderous-roar-2026-06-23",
-      "malachite-thunderous-roar-2026-06-23",
-      "malachite-thunderous-roar-2026-06-23",
-      "caraxes-crippling-inferno-2026-06-24",
-      "caraxes-crippling-inferno-2026-06-24",
-      "malachite-thunderous-roar-2026-06-23",
-      "caraxes-crippling-inferno-2026-06-24",
       "malachite-thunderous-roar-2026-06-23",
       "malachite-thunderous-roar-2026-06-23",
       "malachite-thunderous-roar-2026-06-23",
@@ -5309,18 +5166,6 @@
           "caraxes-crippling-inferno-2026-06-24"
         ],
         "expected": "all-qualifying-sources",
-        "id": "malachite-thunderous-roar-thunderous-roar-advantage-advantage-damage-dealt-status-modifier-caraxes-crippling-inferno-crippling-inferno-burn-output-source-scope",
-        "label": "Source-scope compatibility",
-        "notes": [],
-        "satisfied": true
-      },
-      {
-        "actual": "habits",
-        "evidenceIds": [
-          "malachite-thunderous-roar-2026-06-23",
-          "caraxes-crippling-inferno-2026-06-24"
-        ],
-        "expected": "all-qualifying-sources",
         "id": "malachite-thunderous-roar-thunderous-roar-advantage-advantage-damage-dealt-status-modifier-periodic-caraxes-crippling-inferno-crippling-inferno-burn-burn-output-source-scope",
         "label": "Source-scope compatibility",
         "notes": [],
@@ -5362,7 +5207,7 @@
       "Duration: 2 rounds."
     ],
     "exactResultKnown": false,
-    "exactResultUnknownReason": "Exact final amplified damage cannot be calculated because stacking and final combat formulas are not fully verified.",
+    "exactResultUnknownReason": "Exact final stack benefit cannot be calculated because activation, repeat count, final stack count, uptime, and final formulas are unresolved.",
     "explanation": "Syrax is eligible to receive Advantage support because it has verified Damage Dealt output. Each granted stack increases Damage Dealt by 20%. Qualifying outputs: Blazing Fury: Tactical Damage.",
     "id": "outgoing-effect-amplification-malachite-thunderous-roar-thunderous-roar-advantage-advantage-damage-dealt-status-modifier-syrax",
     "interactionScope": "cross-dragon",
@@ -8297,13 +8142,11 @@
     "confidence": "confirmed",
     "conflicts": [
       "Syrax - Mindful Synergy Habit unlock requirement: expected Star Rank 2+, actual preview enabled",
-      "Syrax - Mindful Synergy Selected Habit Level: expected Habit Level 1+ or preview, actual preview enabled",
-      "caraxes - Crippling Inferno Habit unlock requirement: expected Star Rank 6+, actual preview enabled",
-      "caraxes - Crippling Inferno Selected Habit Level: expected Habit Level 1+ or preview, actual preview enabled"
+      "Syrax - Mindful Synergy Selected Habit Level: expected Habit Level 1+ or preview, actual preview enabled"
     ],
     "damageScope": null,
     "effects": [
-      "Intelligence support for Infernal Burst: Fire Damage; Crippling Inferno: Fire Damage",
+      "Intelligence support for Infernal Burst: Fire Damage",
       "Intelligence +13% at effective Habit Level 5.",
       "Duration: until end of combat.",
       "Ranked progression: L1 6.5%, L2 7.8%, L3 9.1%, L4 11.05%, L5 13%.",
@@ -8311,7 +8154,7 @@
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final value cannot be calculated because final combat formulas and stacking order are not fully verified.",
-    "explanation": "Syrax's Mindful Synergy can increase Caraxes's Intelligence, which supports Infernal Burst: Fire Damage; Crippling Inferno: Fire Damage.",
+    "explanation": "Syrax's Mindful Synergy can increase Caraxes's Intelligence, which supports Infernal Burst: Fire Damage.",
     "id": "stat-scaling-syrax-mindful-synergy-mindful-synergy-intelligence-stat-dealt-modifier-caraxes-intelligence",
     "interactionScope": "cross-dragon",
     "matchedOutputCapabilityIds": [],
@@ -8321,8 +8164,7 @@
     "recipientAbilityId": "caraxes-infernal-burst",
     "recipientDragonId": "caraxes",
     "recipientEvidenceIds": [
-      "caraxes-infernal-burst-2026-06-24",
-      "caraxes-crippling-inferno-2026-06-24"
+      "caraxes-infernal-burst-2026-06-24"
     ],
     "requirements": [
       {
@@ -8355,30 +8197,6 @@
         "expected": "Habit Level 1+ or preview",
         "id": "syrax-syrax-mindful-synergy-habit-level",
         "label": "Syrax - Mindful Synergy Selected Habit Level",
-        "notes": [
-          "Unlocked Habits without an explicit saved Habit Level default to effective Habit Level 1. Locked Habit capabilities are potential in preview mode, not active for current roster."
-        ],
-        "satisfied": false
-      },
-      {
-        "actual": "preview enabled",
-        "evidenceIds": [
-          "caraxes-crippling-inferno-2026-06-24"
-        ],
-        "expected": "Star Rank 6+",
-        "id": "caraxes-caraxes-crippling-inferno-star-rank",
-        "label": "caraxes - Crippling Inferno Habit unlock requirement",
-        "notes": [],
-        "satisfied": false
-      },
-      {
-        "actual": "preview enabled",
-        "evidenceIds": [
-          "caraxes-crippling-inferno-2026-06-24"
-        ],
-        "expected": "Habit Level 1+ or preview",
-        "id": "caraxes-caraxes-crippling-inferno-habit-level",
-        "label": "caraxes - Crippling Inferno Selected Habit Level",
         "notes": [
           "Unlocked Habits without an explicit saved Habit Level default to effective Habit Level 1. Locked Habit capabilities are potential in preview mode, not active for current roster."
         ],
@@ -8796,7 +8614,7 @@
     ],
     "damageScope": null,
     "effects": [
-      "Enemy Initiative reduction may improve Fire Damage outputs: Infernal Burst: Fire Damage, Crippling Inferno: Burn, Crippling Inferno: Burn periodic Fire Damage.",
+      "Enemy Initiative reduction may improve Fire Damage outputs: Infernal Burst: Fire Damage, Crippling Inferno: Burn periodic Fire Damage.",
       "Applies to all qualifying Fire Damage sources."
     ],
     "exactResultKnown": false,
@@ -8806,7 +8624,6 @@
     "interactionScope": "cross-dragon",
     "matchedOutputCapabilityIds": [
       "caraxes-infernal-burst-infernal-burst-fire-rate-output",
-      "caraxes-crippling-inferno-crippling-inferno-burn-output",
       "periodic-caraxes-crippling-inferno-crippling-inferno-burn-burn-output"
     ],
     "matchKind": "enemy-mitigation-reduction",
@@ -8818,7 +8635,6 @@
     "recipientDragonId": "caraxes",
     "recipientEvidenceIds": [
       "caraxes-infernal-burst-2026-06-24",
-      "caraxes-crippling-inferno-2026-06-24",
       "caraxes-crippling-inferno-2026-06-24"
     ],
     "requirements": [
@@ -8898,7 +8714,7 @@
     ],
     "damageScope": null,
     "effects": [
-      "Enemy Initiative reduction may improve Fire Damage outputs: Infernal Burst: Fire Damage, Crippling Inferno: Burn, Crippling Inferno: Burn periodic Fire Damage.",
+      "Enemy Initiative reduction may improve Fire Damage outputs: Infernal Burst: Fire Damage, Crippling Inferno: Burn periodic Fire Damage.",
       "Applies to all qualifying Fire Damage sources."
     ],
     "exactResultKnown": false,
@@ -8908,7 +8724,6 @@
     "interactionScope": "internal",
     "matchedOutputCapabilityIds": [
       "caraxes-infernal-burst-infernal-burst-fire-rate-output",
-      "caraxes-crippling-inferno-crippling-inferno-burn-output",
       "periodic-caraxes-crippling-inferno-crippling-inferno-burn-burn-output"
     ],
     "matchKind": "enemy-mitigation-reduction",
@@ -8920,7 +8735,6 @@
     "recipientDragonId": "caraxes",
     "recipientEvidenceIds": [
       "caraxes-infernal-burst-2026-06-24",
-      "caraxes-crippling-inferno-2026-06-24",
       "caraxes-crippling-inferno-2026-06-24"
     ],
     "requirements": [
@@ -9447,12 +9261,11 @@
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final amplified damage cannot be calculated because stacking and final combat formulas are not fully verified.",
-    "explanation": "Caraxes is eligible for Syrax's Blazing Fury Fire Damage support. Qualifying outputs: Infernal Burst: Fire Damage, Crippling Inferno: Burn, Crippling Inferno: Burn periodic Fire Damage. Activation is a 20% each-round chance, lasts two rounds, and prioritizes Fire Damage allies.",
+    "explanation": "Caraxes is eligible for Syrax's Blazing Fury Fire Damage support. Qualifying outputs: Infernal Burst: Fire Damage, Crippling Inferno: Burn periodic Fire Damage. Activation is a 20% each-round chance, lasts two rounds, and prioritizes Fire Damage allies.",
     "id": "outgoing-effect-amplification-syrax-blazing-fury-blazing-fury-fire-damage-up-fire-damage-dealt-modifier-caraxes",
     "interactionScope": "cross-dragon",
     "matchedOutputCapabilityIds": [
       "caraxes-infernal-burst-infernal-burst-fire-rate-output",
-      "caraxes-crippling-inferno-crippling-inferno-burn-output",
       "periodic-caraxes-crippling-inferno-crippling-inferno-burn-burn-output"
     ],
     "matchKind": "outgoing-effect-amplification",
@@ -9468,13 +9281,6 @@
       "syrax-blazing-fury-summary-2026-06-24",
       "syrax-blazing-fury-details-2026-06-24",
       "caraxes-infernal-burst-2026-06-24",
-      "syrax-blazing-fury-summary-2026-06-24",
-      "syrax-blazing-fury-details-2026-06-24",
-      "caraxes-crippling-inferno-2026-06-24",
-      "caraxes-crippling-inferno-2026-06-24",
-      "syrax-blazing-fury-summary-2026-06-24",
-      "syrax-blazing-fury-details-2026-06-24",
-      "caraxes-crippling-inferno-2026-06-24",
       "syrax-blazing-fury-summary-2026-06-24",
       "syrax-blazing-fury-details-2026-06-24",
       "caraxes-crippling-inferno-2026-06-24",
@@ -9532,19 +9338,6 @@
           "Unlocked Habits without an explicit saved Habit Level default to effective Habit Level 1. Locked Habit capabilities are potential in preview mode, not active for current roster."
         ],
         "satisfied": false
-      },
-      {
-        "actual": "habits",
-        "evidenceIds": [
-          "syrax-blazing-fury-summary-2026-06-24",
-          "syrax-blazing-fury-details-2026-06-24",
-          "caraxes-crippling-inferno-2026-06-24"
-        ],
-        "expected": "all-qualifying-sources",
-        "id": "syrax-blazing-fury-blazing-fury-fire-damage-up-fire-damage-dealt-modifier-caraxes-crippling-inferno-crippling-inferno-burn-output-source-scope",
-        "label": "Source-scope compatibility",
-        "notes": [],
-        "satisfied": true
       },
       {
         "actual": "habits",
@@ -9694,12 +9487,11 @@
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final amplified damage cannot be calculated because stacking and final combat formulas are not fully verified.",
-    "explanation": "Caraxes is eligible for Syrax's Tactical Inferno Fire Damage support. Qualifying outputs: Infernal Burst: Fire Damage, Crippling Inferno: Burn, Crippling Inferno: Burn periodic Fire Damage. Target selection follows the verified flank preference and remains selection-dependent.",
+    "explanation": "Caraxes is eligible for Syrax's Tactical Inferno Fire Damage support. Qualifying outputs: Infernal Burst: Fire Damage, Crippling Inferno: Burn periodic Fire Damage. Target selection follows the verified flank preference and remains selection-dependent.",
     "id": "outgoing-effect-amplification-syrax-tactical-inferno-tactical-inferno-fire-fire-damage-dealt-modifier-caraxes",
     "interactionScope": "cross-dragon",
     "matchedOutputCapabilityIds": [
       "caraxes-infernal-burst-infernal-burst-fire-rate-output",
-      "caraxes-crippling-inferno-crippling-inferno-burn-output",
       "periodic-caraxes-crippling-inferno-crippling-inferno-burn-burn-output"
     ],
     "matchKind": "outgoing-effect-amplification",
@@ -9715,13 +9507,6 @@
       "syrax-tactical-inferno-2026-06-24",
       "syrax-tactical-inferno-2026-06-24",
       "caraxes-infernal-burst-2026-06-24",
-      "syrax-tactical-inferno-2026-06-24",
-      "syrax-tactical-inferno-2026-06-24",
-      "syrax-tactical-inferno-2026-06-24",
-      "caraxes-crippling-inferno-2026-06-24",
-      "caraxes-crippling-inferno-2026-06-24",
-      "syrax-tactical-inferno-2026-06-24",
-      "caraxes-crippling-inferno-2026-06-24",
       "syrax-tactical-inferno-2026-06-24",
       "syrax-tactical-inferno-2026-06-24",
       "syrax-tactical-inferno-2026-06-24",
@@ -9809,18 +9594,6 @@
           "caraxes-crippling-inferno-2026-06-24"
         ],
         "expected": "all-qualifying-sources",
-        "id": "syrax-tactical-inferno-tactical-inferno-fire-fire-damage-dealt-modifier-caraxes-crippling-inferno-crippling-inferno-burn-output-source-scope",
-        "label": "Source-scope compatibility",
-        "notes": [],
-        "satisfied": true
-      },
-      {
-        "actual": "habits",
-        "evidenceIds": [
-          "syrax-tactical-inferno-2026-06-24",
-          "caraxes-crippling-inferno-2026-06-24"
-        ],
-        "expected": "all-qualifying-sources",
         "id": "syrax-tactical-inferno-tactical-inferno-fire-fire-damage-dealt-modifier-periodic-caraxes-crippling-inferno-crippling-inferno-burn-burn-output-source-scope",
         "label": "Source-scope compatibility",
         "notes": [],
@@ -9859,12 +9632,11 @@
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final amplified damage cannot be calculated because stacking and final combat formulas are not fully verified.",
-    "explanation": "Malachite's Sentinel's Presence increases Caraxes's Fire Damage Dealt. Qualifying outputs: Infernal Burst: Fire Damage, Crippling Inferno: Burn, Crippling Inferno: Burn periodic Fire Damage.",
+    "explanation": "Malachite's Sentinel's Presence increases Caraxes's Fire Damage Dealt. Qualifying outputs: Infernal Burst: Fire Damage, Crippling Inferno: Burn periodic Fire Damage.",
     "id": "outgoing-effect-amplification-malachite-sentinels-presence-sentinels-presence-left-flank-fire-fire-damage-dealt-modifier-caraxes",
     "interactionScope": "cross-dragon",
     "matchedOutputCapabilityIds": [
       "caraxes-infernal-burst-infernal-burst-fire-rate-output",
-      "caraxes-crippling-inferno-crippling-inferno-burn-output",
       "periodic-caraxes-crippling-inferno-crippling-inferno-burn-burn-output"
     ],
     "matchKind": "outgoing-effect-amplification",
@@ -9881,14 +9653,6 @@
       "malachite-sentinels-presence-2026-06-23",
       "malachite-sentinels-presence-2026-06-23",
       "caraxes-infernal-burst-2026-06-24",
-      "malachite-sentinels-presence-2026-06-23",
-      "malachite-sentinels-presence-2026-06-23",
-      "malachite-sentinels-presence-2026-06-23",
-      "malachite-sentinels-presence-2026-06-23",
-      "caraxes-crippling-inferno-2026-06-24",
-      "caraxes-crippling-inferno-2026-06-24",
-      "malachite-sentinels-presence-2026-06-23",
-      "caraxes-crippling-inferno-2026-06-24",
       "malachite-sentinels-presence-2026-06-23",
       "malachite-sentinels-presence-2026-06-23",
       "malachite-sentinels-presence-2026-06-23",
@@ -9986,18 +9750,6 @@
           "caraxes-crippling-inferno-2026-06-24"
         ],
         "expected": "all-qualifying-sources",
-        "id": "malachite-sentinels-presence-sentinels-presence-left-flank-fire-fire-damage-dealt-modifier-caraxes-crippling-inferno-crippling-inferno-burn-output-source-scope",
-        "label": "Source-scope compatibility",
-        "notes": [],
-        "satisfied": true
-      },
-      {
-        "actual": "habits",
-        "evidenceIds": [
-          "malachite-sentinels-presence-2026-06-23",
-          "caraxes-crippling-inferno-2026-06-24"
-        ],
-        "expected": "all-qualifying-sources",
         "id": "malachite-sentinels-presence-sentinels-presence-left-flank-fire-fire-damage-dealt-modifier-periodic-caraxes-crippling-inferno-crippling-inferno-burn-burn-output-source-scope",
         "label": "Source-scope compatibility",
         "notes": [],
@@ -10039,7 +9791,7 @@
       "Duration: 2 rounds."
     ],
     "exactResultKnown": false,
-    "exactResultUnknownReason": "Exact final amplified damage cannot be calculated because stacking and final combat formulas are not fully verified.",
+    "exactResultUnknownReason": "Exact final stack benefit cannot be calculated because activation, repeat count, final stack count, uptime, and final formulas are unresolved.",
     "explanation": "Syrax is eligible to receive Advantage support because it has verified Damage Dealt output. Each granted stack increases Damage Dealt by 20%. Qualifying outputs: Blazing Fury: Tactical Damage.",
     "id": "outgoing-effect-amplification-malachite-thunderous-roar-thunderous-roar-advantage-advantage-damage-dealt-status-modifier-syrax",
     "interactionScope": "cross-dragon",
@@ -10149,13 +9901,12 @@
       "Duration: 2 rounds."
     ],
     "exactResultKnown": false,
-    "exactResultUnknownReason": "Exact final amplified damage cannot be calculated because stacking and final combat formulas are not fully verified.",
-    "explanation": "Caraxes is eligible to receive Advantage support because it has verified Damage Dealt output. Each granted stack increases Damage Dealt by 20%. Qualifying outputs: Infernal Burst: Fire Damage, Crippling Inferno: Burn, Crippling Inferno: Burn periodic Fire Damage.",
+    "exactResultUnknownReason": "Exact final stack benefit cannot be calculated because activation, repeat count, final stack count, uptime, and final formulas are unresolved.",
+    "explanation": "Caraxes is eligible to receive Advantage support because it has verified Damage Dealt output. Each granted stack increases Damage Dealt by 20%. Qualifying outputs: Infernal Burst: Fire Damage, Crippling Inferno: Burn periodic Fire Damage.",
     "id": "outgoing-effect-amplification-malachite-thunderous-roar-thunderous-roar-advantage-advantage-damage-dealt-status-modifier-caraxes",
     "interactionScope": "cross-dragon",
     "matchedOutputCapabilityIds": [
       "caraxes-infernal-burst-infernal-burst-fire-rate-output",
-      "caraxes-crippling-inferno-crippling-inferno-burn-output",
       "periodic-caraxes-crippling-inferno-crippling-inferno-burn-burn-output"
     ],
     "matchKind": "outgoing-effect-amplification",
@@ -10171,13 +9922,6 @@
       "malachite-thunderous-roar-2026-06-23",
       "malachite-thunderous-roar-2026-06-23",
       "caraxes-infernal-burst-2026-06-24",
-      "malachite-thunderous-roar-2026-06-23",
-      "malachite-thunderous-roar-2026-06-23",
-      "malachite-thunderous-roar-2026-06-23",
-      "caraxes-crippling-inferno-2026-06-24",
-      "caraxes-crippling-inferno-2026-06-24",
-      "malachite-thunderous-roar-2026-06-23",
-      "caraxes-crippling-inferno-2026-06-24",
       "malachite-thunderous-roar-2026-06-23",
       "malachite-thunderous-roar-2026-06-23",
       "malachite-thunderous-roar-2026-06-23",
@@ -10257,18 +10001,6 @@
           "Unlocked Habits without an explicit saved Habit Level default to effective Habit Level 1. Locked Habit capabilities are potential in preview mode, not active for current roster."
         ],
         "satisfied": false
-      },
-      {
-        "actual": "habits",
-        "evidenceIds": [
-          "malachite-thunderous-roar-2026-06-23",
-          "caraxes-crippling-inferno-2026-06-24"
-        ],
-        "expected": "all-qualifying-sources",
-        "id": "malachite-thunderous-roar-thunderous-roar-advantage-advantage-damage-dealt-status-modifier-caraxes-crippling-inferno-crippling-inferno-burn-output-source-scope",
-        "label": "Source-scope compatibility",
-        "notes": [],
-        "satisfied": true
       },
       {
         "actual": "habits",
@@ -13123,13 +12855,11 @@
     "confidence": "confirmed",
     "conflicts": [
       "Syrax - Mindful Synergy Habit unlock requirement: expected Star Rank 2+, actual preview enabled",
-      "Syrax - Mindful Synergy Selected Habit Level: expected Habit Level 1+ or preview, actual preview enabled",
-      "caraxes - Crippling Inferno Habit unlock requirement: expected Star Rank 6+, actual preview enabled",
-      "caraxes - Crippling Inferno Selected Habit Level: expected Habit Level 1+ or preview, actual preview enabled"
+      "Syrax - Mindful Synergy Selected Habit Level: expected Habit Level 1+ or preview, actual preview enabled"
     ],
     "damageScope": null,
     "effects": [
-      "Intelligence support for Infernal Burst: Fire Damage; Crippling Inferno: Fire Damage",
+      "Intelligence support for Infernal Burst: Fire Damage",
       "Intelligence +13% at effective Habit Level 5.",
       "Duration: until end of combat.",
       "Ranked progression: L1 6.5%, L2 7.8%, L3 9.1%, L4 11.05%, L5 13%.",
@@ -13137,7 +12867,7 @@
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final value cannot be calculated because final combat formulas and stacking order are not fully verified.",
-    "explanation": "Syrax's Mindful Synergy can increase Caraxes's Intelligence, which supports Infernal Burst: Fire Damage; Crippling Inferno: Fire Damage.",
+    "explanation": "Syrax's Mindful Synergy can increase Caraxes's Intelligence, which supports Infernal Burst: Fire Damage.",
     "id": "stat-scaling-syrax-mindful-synergy-mindful-synergy-intelligence-stat-dealt-modifier-caraxes-intelligence",
     "interactionScope": "cross-dragon",
     "matchedOutputCapabilityIds": [],
@@ -13147,8 +12877,7 @@
     "recipientAbilityId": "caraxes-infernal-burst",
     "recipientDragonId": "caraxes",
     "recipientEvidenceIds": [
-      "caraxes-infernal-burst-2026-06-24",
-      "caraxes-crippling-inferno-2026-06-24"
+      "caraxes-infernal-burst-2026-06-24"
     ],
     "requirements": [
       {
@@ -13181,30 +12910,6 @@
         "expected": "Habit Level 1+ or preview",
         "id": "syrax-syrax-mindful-synergy-habit-level",
         "label": "Syrax - Mindful Synergy Selected Habit Level",
-        "notes": [
-          "Unlocked Habits without an explicit saved Habit Level default to effective Habit Level 1. Locked Habit capabilities are potential in preview mode, not active for current roster."
-        ],
-        "satisfied": false
-      },
-      {
-        "actual": "preview enabled",
-        "evidenceIds": [
-          "caraxes-crippling-inferno-2026-06-24"
-        ],
-        "expected": "Star Rank 6+",
-        "id": "caraxes-caraxes-crippling-inferno-star-rank",
-        "label": "caraxes - Crippling Inferno Habit unlock requirement",
-        "notes": [],
-        "satisfied": false
-      },
-      {
-        "actual": "preview enabled",
-        "evidenceIds": [
-          "caraxes-crippling-inferno-2026-06-24"
-        ],
-        "expected": "Habit Level 1+ or preview",
-        "id": "caraxes-caraxes-crippling-inferno-habit-level",
-        "label": "caraxes - Crippling Inferno Selected Habit Level",
         "notes": [
           "Unlocked Habits without an explicit saved Habit Level default to effective Habit Level 1. Locked Habit capabilities are potential in preview mode, not active for current roster."
         ],
@@ -13736,7 +13441,7 @@
     ],
     "damageScope": null,
     "effects": [
-      "Enemy Initiative reduction may improve Fire Damage outputs: Infernal Burst: Fire Damage, Crippling Inferno: Burn, Crippling Inferno: Burn periodic Fire Damage.",
+      "Enemy Initiative reduction may improve Fire Damage outputs: Infernal Burst: Fire Damage, Crippling Inferno: Burn periodic Fire Damage.",
       "Applies to all qualifying Fire Damage sources."
     ],
     "exactResultKnown": false,
@@ -13746,7 +13451,6 @@
     "interactionScope": "cross-dragon",
     "matchedOutputCapabilityIds": [
       "caraxes-infernal-burst-infernal-burst-fire-rate-output",
-      "caraxes-crippling-inferno-crippling-inferno-burn-output",
       "periodic-caraxes-crippling-inferno-crippling-inferno-burn-burn-output"
     ],
     "matchKind": "enemy-mitigation-reduction",
@@ -13758,7 +13462,6 @@
     "recipientDragonId": "caraxes",
     "recipientEvidenceIds": [
       "caraxes-infernal-burst-2026-06-24",
-      "caraxes-crippling-inferno-2026-06-24",
       "caraxes-crippling-inferno-2026-06-24"
     ],
     "requirements": [
@@ -13838,7 +13541,7 @@
     ],
     "damageScope": null,
     "effects": [
-      "Enemy Initiative reduction may improve Fire Damage outputs: Infernal Burst: Fire Damage, Crippling Inferno: Burn, Crippling Inferno: Burn periodic Fire Damage.",
+      "Enemy Initiative reduction may improve Fire Damage outputs: Infernal Burst: Fire Damage, Crippling Inferno: Burn periodic Fire Damage.",
       "Applies to all qualifying Fire Damage sources."
     ],
     "exactResultKnown": false,
@@ -13848,7 +13551,6 @@
     "interactionScope": "internal",
     "matchedOutputCapabilityIds": [
       "caraxes-infernal-burst-infernal-burst-fire-rate-output",
-      "caraxes-crippling-inferno-crippling-inferno-burn-output",
       "periodic-caraxes-crippling-inferno-crippling-inferno-burn-burn-output"
     ],
     "matchKind": "enemy-mitigation-reduction",
@@ -13860,7 +13562,6 @@
     "recipientDragonId": "caraxes",
     "recipientEvidenceIds": [
       "caraxes-infernal-burst-2026-06-24",
-      "caraxes-crippling-inferno-2026-06-24",
       "caraxes-crippling-inferno-2026-06-24"
     ],
     "requirements": [
@@ -14388,12 +14089,11 @@
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final amplified damage cannot be calculated because stacking and final combat formulas are not fully verified.",
-    "explanation": "Caraxes is eligible for Syrax's Blazing Fury Fire Damage support. Qualifying outputs: Infernal Burst: Fire Damage, Crippling Inferno: Burn, Crippling Inferno: Burn periodic Fire Damage. Activation is a 20% each-round chance, lasts two rounds, and prioritizes Fire Damage allies.",
+    "explanation": "Caraxes is eligible for Syrax's Blazing Fury Fire Damage support. Qualifying outputs: Infernal Burst: Fire Damage, Crippling Inferno: Burn periodic Fire Damage. Activation is a 20% each-round chance, lasts two rounds, and prioritizes Fire Damage allies.",
     "id": "outgoing-effect-amplification-syrax-blazing-fury-blazing-fury-fire-damage-up-fire-damage-dealt-modifier-caraxes",
     "interactionScope": "cross-dragon",
     "matchedOutputCapabilityIds": [
       "caraxes-infernal-burst-infernal-burst-fire-rate-output",
-      "caraxes-crippling-inferno-crippling-inferno-burn-output",
       "periodic-caraxes-crippling-inferno-crippling-inferno-burn-burn-output"
     ],
     "matchKind": "outgoing-effect-amplification",
@@ -14409,13 +14109,6 @@
       "syrax-blazing-fury-summary-2026-06-24",
       "syrax-blazing-fury-details-2026-06-24",
       "caraxes-infernal-burst-2026-06-24",
-      "syrax-blazing-fury-summary-2026-06-24",
-      "syrax-blazing-fury-details-2026-06-24",
-      "caraxes-crippling-inferno-2026-06-24",
-      "caraxes-crippling-inferno-2026-06-24",
-      "syrax-blazing-fury-summary-2026-06-24",
-      "syrax-blazing-fury-details-2026-06-24",
-      "caraxes-crippling-inferno-2026-06-24",
       "syrax-blazing-fury-summary-2026-06-24",
       "syrax-blazing-fury-details-2026-06-24",
       "caraxes-crippling-inferno-2026-06-24",
@@ -14473,19 +14166,6 @@
           "Unlocked Habits without an explicit saved Habit Level default to effective Habit Level 1. Locked Habit capabilities are potential in preview mode, not active for current roster."
         ],
         "satisfied": false
-      },
-      {
-        "actual": "habits",
-        "evidenceIds": [
-          "syrax-blazing-fury-summary-2026-06-24",
-          "syrax-blazing-fury-details-2026-06-24",
-          "caraxes-crippling-inferno-2026-06-24"
-        ],
-        "expected": "all-qualifying-sources",
-        "id": "syrax-blazing-fury-blazing-fury-fire-damage-up-fire-damage-dealt-modifier-caraxes-crippling-inferno-crippling-inferno-burn-output-source-scope",
-        "label": "Source-scope compatibility",
-        "notes": [],
-        "satisfied": true
       },
       {
         "actual": "habits",
@@ -14634,12 +14314,11 @@
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final amplified damage cannot be calculated because stacking and final combat formulas are not fully verified.",
-    "explanation": "Malachite's Sentinel's Presence increases Caraxes's Fire Damage Dealt. Qualifying outputs: Infernal Burst: Fire Damage, Crippling Inferno: Burn, Crippling Inferno: Burn periodic Fire Damage.",
+    "explanation": "Malachite's Sentinel's Presence increases Caraxes's Fire Damage Dealt. Qualifying outputs: Infernal Burst: Fire Damage, Crippling Inferno: Burn periodic Fire Damage.",
     "id": "outgoing-effect-amplification-malachite-sentinels-presence-sentinels-presence-left-flank-fire-fire-damage-dealt-modifier-caraxes",
     "interactionScope": "cross-dragon",
     "matchedOutputCapabilityIds": [
       "caraxes-infernal-burst-infernal-burst-fire-rate-output",
-      "caraxes-crippling-inferno-crippling-inferno-burn-output",
       "periodic-caraxes-crippling-inferno-crippling-inferno-burn-burn-output"
     ],
     "matchKind": "outgoing-effect-amplification",
@@ -14656,14 +14335,6 @@
       "malachite-sentinels-presence-2026-06-23",
       "malachite-sentinels-presence-2026-06-23",
       "caraxes-infernal-burst-2026-06-24",
-      "malachite-sentinels-presence-2026-06-23",
-      "malachite-sentinels-presence-2026-06-23",
-      "malachite-sentinels-presence-2026-06-23",
-      "malachite-sentinels-presence-2026-06-23",
-      "caraxes-crippling-inferno-2026-06-24",
-      "caraxes-crippling-inferno-2026-06-24",
-      "malachite-sentinels-presence-2026-06-23",
-      "caraxes-crippling-inferno-2026-06-24",
       "malachite-sentinels-presence-2026-06-23",
       "malachite-sentinels-presence-2026-06-23",
       "malachite-sentinels-presence-2026-06-23",
@@ -14761,18 +14432,6 @@
           "caraxes-crippling-inferno-2026-06-24"
         ],
         "expected": "all-qualifying-sources",
-        "id": "malachite-sentinels-presence-sentinels-presence-left-flank-fire-fire-damage-dealt-modifier-caraxes-crippling-inferno-crippling-inferno-burn-output-source-scope",
-        "label": "Source-scope compatibility",
-        "notes": [],
-        "satisfied": true
-      },
-      {
-        "actual": "habits",
-        "evidenceIds": [
-          "malachite-sentinels-presence-2026-06-23",
-          "caraxes-crippling-inferno-2026-06-24"
-        ],
-        "expected": "all-qualifying-sources",
         "id": "malachite-sentinels-presence-sentinels-presence-left-flank-fire-fire-damage-dealt-modifier-periodic-caraxes-crippling-inferno-crippling-inferno-burn-burn-output-source-scope",
         "label": "Source-scope compatibility",
         "notes": [],
@@ -14814,7 +14473,7 @@
       "Duration: 2 rounds."
     ],
     "exactResultKnown": false,
-    "exactResultUnknownReason": "Exact final amplified damage cannot be calculated because stacking and final combat formulas are not fully verified.",
+    "exactResultUnknownReason": "Exact final stack benefit cannot be calculated because activation, repeat count, final stack count, uptime, and final formulas are unresolved.",
     "explanation": "Syrax is eligible to receive Advantage support because it has verified Damage Dealt output. Each granted stack increases Damage Dealt by 20%. Qualifying outputs: Blazing Fury: Tactical Damage.",
     "id": "outgoing-effect-amplification-malachite-thunderous-roar-thunderous-roar-advantage-advantage-damage-dealt-status-modifier-syrax",
     "interactionScope": "cross-dragon",
@@ -14924,13 +14583,12 @@
       "Duration: 2 rounds."
     ],
     "exactResultKnown": false,
-    "exactResultUnknownReason": "Exact final amplified damage cannot be calculated because stacking and final combat formulas are not fully verified.",
-    "explanation": "Caraxes is eligible to receive Advantage support because it has verified Damage Dealt output. Each granted stack increases Damage Dealt by 20%. Qualifying outputs: Infernal Burst: Fire Damage, Crippling Inferno: Burn, Crippling Inferno: Burn periodic Fire Damage.",
+    "exactResultUnknownReason": "Exact final stack benefit cannot be calculated because activation, repeat count, final stack count, uptime, and final formulas are unresolved.",
+    "explanation": "Caraxes is eligible to receive Advantage support because it has verified Damage Dealt output. Each granted stack increases Damage Dealt by 20%. Qualifying outputs: Infernal Burst: Fire Damage, Crippling Inferno: Burn periodic Fire Damage.",
     "id": "outgoing-effect-amplification-malachite-thunderous-roar-thunderous-roar-advantage-advantage-damage-dealt-status-modifier-caraxes",
     "interactionScope": "cross-dragon",
     "matchedOutputCapabilityIds": [
       "caraxes-infernal-burst-infernal-burst-fire-rate-output",
-      "caraxes-crippling-inferno-crippling-inferno-burn-output",
       "periodic-caraxes-crippling-inferno-crippling-inferno-burn-burn-output"
     ],
     "matchKind": "outgoing-effect-amplification",
@@ -14946,13 +14604,6 @@
       "malachite-thunderous-roar-2026-06-23",
       "malachite-thunderous-roar-2026-06-23",
       "caraxes-infernal-burst-2026-06-24",
-      "malachite-thunderous-roar-2026-06-23",
-      "malachite-thunderous-roar-2026-06-23",
-      "malachite-thunderous-roar-2026-06-23",
-      "caraxes-crippling-inferno-2026-06-24",
-      "caraxes-crippling-inferno-2026-06-24",
-      "malachite-thunderous-roar-2026-06-23",
-      "caraxes-crippling-inferno-2026-06-24",
       "malachite-thunderous-roar-2026-06-23",
       "malachite-thunderous-roar-2026-06-23",
       "malachite-thunderous-roar-2026-06-23",
@@ -15032,18 +14683,6 @@
           "Unlocked Habits without an explicit saved Habit Level default to effective Habit Level 1. Locked Habit capabilities are potential in preview mode, not active for current roster."
         ],
         "satisfied": false
-      },
-      {
-        "actual": "habits",
-        "evidenceIds": [
-          "malachite-thunderous-roar-2026-06-23",
-          "caraxes-crippling-inferno-2026-06-24"
-        ],
-        "expected": "all-qualifying-sources",
-        "id": "malachite-thunderous-roar-thunderous-roar-advantage-advantage-damage-dealt-status-modifier-caraxes-crippling-inferno-crippling-inferno-burn-output-source-scope",
-        "label": "Source-scope compatibility",
-        "notes": [],
-        "satisfied": true
       },
       {
         "actual": "habits",
@@ -18080,13 +17719,11 @@
     "confidence": "confirmed",
     "conflicts": [
       "Syrax - Mindful Synergy Habit unlock requirement: expected Star Rank 2+, actual preview enabled",
-      "Syrax - Mindful Synergy Selected Habit Level: expected Habit Level 1+ or preview, actual preview enabled",
-      "caraxes - Crippling Inferno Habit unlock requirement: expected Star Rank 6+, actual preview enabled",
-      "caraxes - Crippling Inferno Selected Habit Level: expected Habit Level 1+ or preview, actual preview enabled"
+      "Syrax - Mindful Synergy Selected Habit Level: expected Habit Level 1+ or preview, actual preview enabled"
     ],
     "damageScope": null,
     "effects": [
-      "Intelligence support for Infernal Burst: Fire Damage; Crippling Inferno: Fire Damage",
+      "Intelligence support for Infernal Burst: Fire Damage",
       "Intelligence +13% at effective Habit Level 5.",
       "Duration: until end of combat.",
       "Ranked progression: L1 6.5%, L2 7.8%, L3 9.1%, L4 11.05%, L5 13%.",
@@ -18094,7 +17731,7 @@
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final value cannot be calculated because final combat formulas and stacking order are not fully verified.",
-    "explanation": "Syrax's Mindful Synergy can increase Caraxes's Intelligence, which supports Infernal Burst: Fire Damage; Crippling Inferno: Fire Damage.",
+    "explanation": "Syrax's Mindful Synergy can increase Caraxes's Intelligence, which supports Infernal Burst: Fire Damage.",
     "id": "stat-scaling-syrax-mindful-synergy-mindful-synergy-intelligence-stat-dealt-modifier-caraxes-intelligence",
     "interactionScope": "cross-dragon",
     "matchedOutputCapabilityIds": [],
@@ -18104,8 +17741,7 @@
     "recipientAbilityId": "caraxes-infernal-burst",
     "recipientDragonId": "caraxes",
     "recipientEvidenceIds": [
-      "caraxes-infernal-burst-2026-06-24",
-      "caraxes-crippling-inferno-2026-06-24"
+      "caraxes-infernal-burst-2026-06-24"
     ],
     "requirements": [
       {
@@ -18138,30 +17774,6 @@
         "expected": "Habit Level 1+ or preview",
         "id": "syrax-syrax-mindful-synergy-habit-level",
         "label": "Syrax - Mindful Synergy Selected Habit Level",
-        "notes": [
-          "Unlocked Habits without an explicit saved Habit Level default to effective Habit Level 1. Locked Habit capabilities are potential in preview mode, not active for current roster."
-        ],
-        "satisfied": false
-      },
-      {
-        "actual": "preview enabled",
-        "evidenceIds": [
-          "caraxes-crippling-inferno-2026-06-24"
-        ],
-        "expected": "Star Rank 6+",
-        "id": "caraxes-caraxes-crippling-inferno-star-rank",
-        "label": "caraxes - Crippling Inferno Habit unlock requirement",
-        "notes": [],
-        "satisfied": false
-      },
-      {
-        "actual": "preview enabled",
-        "evidenceIds": [
-          "caraxes-crippling-inferno-2026-06-24"
-        ],
-        "expected": "Habit Level 1+ or preview",
-        "id": "caraxes-caraxes-crippling-inferno-habit-level",
-        "label": "caraxes - Crippling Inferno Selected Habit Level",
         "notes": [
           "Unlocked Habits without an explicit saved Habit Level default to effective Habit Level 1. Locked Habit capabilities are potential in preview mode, not active for current roster."
         ],
@@ -18579,7 +18191,7 @@
     ],
     "damageScope": null,
     "effects": [
-      "Enemy Initiative reduction may improve Fire Damage outputs: Infernal Burst: Fire Damage, Crippling Inferno: Burn, Crippling Inferno: Burn periodic Fire Damage.",
+      "Enemy Initiative reduction may improve Fire Damage outputs: Infernal Burst: Fire Damage, Crippling Inferno: Burn periodic Fire Damage.",
       "Applies to all qualifying Fire Damage sources."
     ],
     "exactResultKnown": false,
@@ -18589,7 +18201,6 @@
     "interactionScope": "cross-dragon",
     "matchedOutputCapabilityIds": [
       "caraxes-infernal-burst-infernal-burst-fire-rate-output",
-      "caraxes-crippling-inferno-crippling-inferno-burn-output",
       "periodic-caraxes-crippling-inferno-crippling-inferno-burn-burn-output"
     ],
     "matchKind": "enemy-mitigation-reduction",
@@ -18601,7 +18212,6 @@
     "recipientDragonId": "caraxes",
     "recipientEvidenceIds": [
       "caraxes-infernal-burst-2026-06-24",
-      "caraxes-crippling-inferno-2026-06-24",
       "caraxes-crippling-inferno-2026-06-24"
     ],
     "requirements": [
@@ -18681,7 +18291,7 @@
     ],
     "damageScope": null,
     "effects": [
-      "Enemy Initiative reduction may improve Fire Damage outputs: Infernal Burst: Fire Damage, Crippling Inferno: Burn, Crippling Inferno: Burn periodic Fire Damage.",
+      "Enemy Initiative reduction may improve Fire Damage outputs: Infernal Burst: Fire Damage, Crippling Inferno: Burn periodic Fire Damage.",
       "Applies to all qualifying Fire Damage sources."
     ],
     "exactResultKnown": false,
@@ -18691,7 +18301,6 @@
     "interactionScope": "internal",
     "matchedOutputCapabilityIds": [
       "caraxes-infernal-burst-infernal-burst-fire-rate-output",
-      "caraxes-crippling-inferno-crippling-inferno-burn-output",
       "periodic-caraxes-crippling-inferno-crippling-inferno-burn-burn-output"
     ],
     "matchKind": "enemy-mitigation-reduction",
@@ -18703,7 +18312,6 @@
     "recipientDragonId": "caraxes",
     "recipientEvidenceIds": [
       "caraxes-infernal-burst-2026-06-24",
-      "caraxes-crippling-inferno-2026-06-24",
       "caraxes-crippling-inferno-2026-06-24"
     ],
     "requirements": [
@@ -19499,7 +19107,7 @@
       "Duration: 2 rounds."
     ],
     "exactResultKnown": false,
-    "exactResultUnknownReason": "Exact final amplified damage cannot be calculated because stacking and final combat formulas are not fully verified.",
+    "exactResultUnknownReason": "Exact final stack benefit cannot be calculated because activation, repeat count, final stack count, uptime, and final formulas are unresolved.",
     "explanation": "Sheepstealer is eligible to receive Advantage support because it has verified Damage Dealt output. Each granted stack increases Damage Dealt by 20%. Qualifying outputs: Wild Hunt: Fire Damage, Savage Claim: Fire Damage.",
     "id": "outgoing-effect-amplification-malachite-thunderous-roar-thunderous-roar-advantage-advantage-damage-dealt-status-modifier-sheepstealer",
     "interactionScope": "cross-dragon",
@@ -19653,7 +19261,7 @@
       "Duration: 2 rounds."
     ],
     "exactResultKnown": false,
-    "exactResultUnknownReason": "Exact final amplified damage cannot be calculated because stacking and final combat formulas are not fully verified.",
+    "exactResultUnknownReason": "Exact final stack benefit cannot be calculated because activation, repeat count, final stack count, uptime, and final formulas are unresolved.",
     "explanation": "Vermax is eligible to receive Advantage support because it has verified Damage Dealt output. Each granted stack increases Damage Dealt by 20%. Qualifying outputs: Physical Basic Attack, Spreading Blaze: Physical Damage.",
     "id": "outgoing-effect-amplification-malachite-thunderous-roar-thunderous-roar-advantage-advantage-damage-dealt-status-modifier-vermax",
     "interactionScope": "cross-dragon",
@@ -19892,7 +19500,7 @@
     "conflicts": [],
     "damageScope": null,
     "effects": [
-      "Tactical Damage Dealt increase 2.5.",
+      "Tactical Damage Dealt +2.5% per stack.",
       "Applies to all qualifying Tactical Damage sources.",
       "Ally deals Tactical Damage.",
       "Spreading Blaze stacks require the trigger chance and target selection to select this ally.",
@@ -19909,7 +19517,7 @@
       "The repeat remains chance-based and is not a guaranteed extra stack."
     ],
     "exactResultKnown": false,
-    "exactResultUnknownReason": "Exact final amplified damage cannot be calculated because stacking and final combat formulas are not fully verified.",
+    "exactResultUnknownReason": "Exact final stack benefit cannot be calculated because activation, repeat count, final stack count, uptime, and final formulas are unresolved.",
     "explanation": "Malachite is eligible to receive Spreading Blaze support because it has verified Tactical Damage output. Each granted stack increases Tactical Damage Dealt by 2.5%, up to 10 stacks. Qualifying outputs: Warden's Rally: Tactical Damage.",
     "id": "outgoing-effect-amplification-vermax-spreading-blaze-spreading-blaze-stack-tactical-damage-stack-modifier-malachite",
     "interactionScope": "cross-dragon",
@@ -19986,7 +19594,7 @@
     ],
     "damageScope": null,
     "effects": [
-      "Tactical Damage Dealt increase 2.5.",
+      "Tactical Damage Dealt +2.5% per stack.",
       "Applies to all qualifying Tactical Damage sources.",
       "One shared Rallying Flame activation roll grants both stack effects on success.",
       "Ally deals Tactical Damage.",
@@ -20007,7 +19615,7 @@
       "Each repeated attempt remains chance-based and is not a guaranteed stack."
     ],
     "exactResultKnown": false,
-    "exactResultUnknownReason": "Exact final amplified damage cannot be calculated because stacking and final combat formulas are not fully verified.",
+    "exactResultUnknownReason": "Exact final stack benefit cannot be calculated because activation, repeat count, final stack count, uptime, and final formulas are unresolved.",
     "explanation": "Malachite is eligible to receive Spreading Blaze support because it has verified Tactical Damage output. Each granted stack increases Tactical Damage Dealt by 2.5%, up to 10 stacks. Qualifying outputs: Warden's Rally: Tactical Damage.",
     "id": "outgoing-effect-amplification-vermax-rallying-flame-rallying-flame-spreading-blaze-stack-tactical-damage-stack-modifier-malachite",
     "interactionScope": "cross-dragon",
@@ -23677,7 +23285,7 @@
       "Duration: 2 rounds."
     ],
     "exactResultKnown": false,
-    "exactResultUnknownReason": "Exact final amplified damage cannot be calculated because stacking and final combat formulas are not fully verified.",
+    "exactResultUnknownReason": "Exact final stack benefit cannot be calculated because activation, repeat count, final stack count, uptime, and final formulas are unresolved.",
     "explanation": "Malachite is eligible to receive Advantage support because it has verified Damage Dealt output. Each granted stack increases Damage Dealt by 20%. Qualifying outputs: Warden's Rally: Tactical Damage.",
     "id": "outgoing-effect-amplification-seasmoke-loyal-bond-loyal-bond-advantage-effect-advantage-damage-dealt-status-modifier-malachite",
     "interactionScope": "cross-dragon",
@@ -23788,7 +23396,7 @@
       "Duration: 2 rounds."
     ],
     "exactResultKnown": false,
-    "exactResultUnknownReason": "Exact final amplified damage cannot be calculated because stacking and final combat formulas are not fully verified.",
+    "exactResultUnknownReason": "Exact final stack benefit cannot be calculated because activation, repeat count, final stack count, uptime, and final formulas are unresolved.",
     "explanation": "Sheepstealer is eligible to receive Advantage support because it has verified Damage Dealt output. Each granted stack increases Damage Dealt by 20%. Qualifying outputs: Wild Hunt: Fire Damage, Savage Claim: Fire Damage.",
     "id": "outgoing-effect-amplification-seasmoke-loyal-bond-loyal-bond-advantage-effect-advantage-damage-dealt-status-modifier-sheepstealer",
     "interactionScope": "cross-dragon",
@@ -24340,7 +23948,7 @@
       "Duration: 2 rounds."
     ],
     "exactResultKnown": false,
-    "exactResultUnknownReason": "Exact final amplified damage cannot be calculated because stacking and final combat formulas are not fully verified.",
+    "exactResultUnknownReason": "Exact final stack benefit cannot be calculated because activation, repeat count, final stack count, uptime, and final formulas are unresolved.",
     "explanation": "Seasmoke is eligible to receive Advantage support because it has verified Damage Dealt output. Each granted stack increases Damage Dealt by 20%. Qualifying outputs: Cleansing Wrath: Fire Damage, Infectious Wrath: Physical Damage.",
     "id": "outgoing-effect-amplification-malachite-thunderous-roar-thunderous-roar-advantage-advantage-damage-dealt-status-modifier-seasmoke",
     "interactionScope": "cross-dragon",
@@ -24494,7 +24102,7 @@
       "Duration: 2 rounds."
     ],
     "exactResultKnown": false,
-    "exactResultUnknownReason": "Exact final amplified damage cannot be calculated because stacking and final combat formulas are not fully verified.",
+    "exactResultUnknownReason": "Exact final stack benefit cannot be calculated because activation, repeat count, final stack count, uptime, and final formulas are unresolved.",
     "explanation": "Sheepstealer is eligible to receive Advantage support because it has verified Damage Dealt output. Each granted stack increases Damage Dealt by 20%. Qualifying outputs: Wild Hunt: Fire Damage, Savage Claim: Fire Damage.",
     "id": "outgoing-effect-amplification-malachite-thunderous-roar-thunderous-roar-advantage-advantage-damage-dealt-status-modifier-sheepstealer",
     "interactionScope": "cross-dragon",
@@ -27894,7 +27502,19 @@
       "malachite-lightning-strike-2026-06-23"
     ],
     "status": "potential",
-    "targetSelectionGroup": null,
+    "targetSelectionGroup": {
+      "comparisonDirection": null,
+      "comparisonPool": null,
+      "eligibleRecipientDragonIds": [
+        "seasmoke",
+        "sheepstealer"
+      ],
+      "selection": "one-eligible-adjacent",
+      "selectionResource": null,
+      "selectionStat": null,
+      "selectionUncertain": true,
+      "targetCount": 1
+    },
     "title": "Strength Scaling Support",
     "unresolvedQuestions": [
       "Final selected recipient for this one-target stat modifier is unresolved.",
@@ -28261,7 +27881,7 @@
       "Duration: 2 rounds."
     ],
     "exactResultKnown": false,
-    "exactResultUnknownReason": "Exact final amplified damage cannot be calculated because stacking and final combat formulas are not fully verified.",
+    "exactResultUnknownReason": "Exact final stack benefit cannot be calculated because activation, repeat count, final stack count, uptime, and final formulas are unresolved.",
     "explanation": "Malachite is eligible to receive Advantage support because it has verified Damage Dealt output. Each granted stack increases Damage Dealt by 20%. Qualifying outputs: Warden's Rally: Tactical Damage.",
     "id": "outgoing-effect-amplification-seasmoke-loyal-bond-loyal-bond-advantage-effect-advantage-damage-dealt-status-modifier-malachite",
     "interactionScope": "cross-dragon",
@@ -28370,7 +27990,7 @@
       "Duration: 2 rounds."
     ],
     "exactResultKnown": false,
-    "exactResultUnknownReason": "Exact final amplified damage cannot be calculated because stacking and final combat formulas are not fully verified.",
+    "exactResultUnknownReason": "Exact final stack benefit cannot be calculated because activation, repeat count, final stack count, uptime, and final formulas are unresolved.",
     "explanation": "Vermax is eligible to receive Advantage support because it has verified Damage Dealt output. Each granted stack increases Damage Dealt by 20%. Qualifying outputs: Physical Basic Attack, Spreading Blaze: Physical Damage.",
     "id": "outgoing-effect-amplification-seasmoke-loyal-bond-loyal-bond-advantage-effect-advantage-damage-dealt-status-modifier-vermax",
     "interactionScope": "cross-dragon",
@@ -28841,7 +28461,7 @@
       "Duration: 2 rounds."
     ],
     "exactResultKnown": false,
-    "exactResultUnknownReason": "Exact final amplified damage cannot be calculated because stacking and final combat formulas are not fully verified.",
+    "exactResultUnknownReason": "Exact final stack benefit cannot be calculated because activation, repeat count, final stack count, uptime, and final formulas are unresolved.",
     "explanation": "Vermax is eligible to receive Advantage support because it has verified Damage Dealt output. Each granted stack increases Damage Dealt by 20%. Qualifying outputs: Physical Basic Attack, Spreading Blaze: Physical Damage.",
     "id": "outgoing-effect-amplification-malachite-thunderous-roar-thunderous-roar-advantage-advantage-damage-dealt-status-modifier-vermax",
     "interactionScope": "cross-dragon",
@@ -28969,7 +28589,7 @@
       "Duration: 2 rounds."
     ],
     "exactResultKnown": false,
-    "exactResultUnknownReason": "Exact final amplified damage cannot be calculated because stacking and final combat formulas are not fully verified.",
+    "exactResultUnknownReason": "Exact final stack benefit cannot be calculated because activation, repeat count, final stack count, uptime, and final formulas are unresolved.",
     "explanation": "Seasmoke is eligible to receive Advantage support because it has verified Damage Dealt output. Each granted stack increases Damage Dealt by 20%. Qualifying outputs: Cleansing Wrath: Fire Damage, Infectious Wrath: Physical Damage.",
     "id": "outgoing-effect-amplification-malachite-thunderous-roar-thunderous-roar-advantage-advantage-damage-dealt-status-modifier-seasmoke",
     "interactionScope": "cross-dragon",
@@ -29107,7 +28727,7 @@
     "conflicts": [],
     "damageScope": null,
     "effects": [
-      "Tactical Damage Dealt increase 2.5.",
+      "Tactical Damage Dealt +2.5% per stack.",
       "Applies to all qualifying Tactical Damage sources.",
       "Ally deals Tactical Damage.",
       "Spreading Blaze stacks require the trigger chance and target selection to select this ally.",
@@ -29124,7 +28744,7 @@
       "The repeat remains chance-based and is not a guaranteed extra stack."
     ],
     "exactResultKnown": false,
-    "exactResultUnknownReason": "Exact final amplified damage cannot be calculated because stacking and final combat formulas are not fully verified.",
+    "exactResultUnknownReason": "Exact final stack benefit cannot be calculated because activation, repeat count, final stack count, uptime, and final formulas are unresolved.",
     "explanation": "Malachite is eligible to receive Spreading Blaze support because it has verified Tactical Damage output. Each granted stack increases Tactical Damage Dealt by 2.5%, up to 10 stacks. Qualifying outputs: Warden's Rally: Tactical Damage.",
     "id": "outgoing-effect-amplification-vermax-spreading-blaze-spreading-blaze-stack-tactical-damage-stack-modifier-malachite",
     "interactionScope": "cross-dragon",
@@ -29201,7 +28821,7 @@
     ],
     "damageScope": null,
     "effects": [
-      "Tactical Damage Dealt increase 2.5.",
+      "Tactical Damage Dealt +2.5% per stack.",
       "Applies to all qualifying Tactical Damage sources.",
       "One shared Rallying Flame activation roll grants both stack effects on success.",
       "Ally deals Tactical Damage.",
@@ -29222,7 +28842,7 @@
       "Each repeated attempt remains chance-based and is not a guaranteed stack."
     ],
     "exactResultKnown": false,
-    "exactResultUnknownReason": "Exact final amplified damage cannot be calculated because stacking and final combat formulas are not fully verified.",
+    "exactResultUnknownReason": "Exact final stack benefit cannot be calculated because activation, repeat count, final stack count, uptime, and final formulas are unresolved.",
     "explanation": "Malachite is eligible to receive Spreading Blaze support because it has verified Tactical Damage output. Each granted stack increases Tactical Damage Dealt by 2.5%, up to 10 stacks. Qualifying outputs: Warden's Rally: Tactical Damage.",
     "id": "outgoing-effect-amplification-vermax-rallying-flame-rallying-flame-spreading-blaze-stack-tactical-damage-stack-modifier-malachite",
     "interactionScope": "cross-dragon",
@@ -33092,7 +32712,7 @@
       "Duration: 2 rounds."
     ],
     "exactResultKnown": false,
-    "exactResultUnknownReason": "Exact final amplified damage cannot be calculated because stacking and final combat formulas are not fully verified.",
+    "exactResultUnknownReason": "Exact final stack benefit cannot be calculated because activation, repeat count, final stack count, uptime, and final formulas are unresolved.",
     "explanation": "Malachite is eligible to receive Advantage support because it has verified Damage Dealt output. Each granted stack increases Damage Dealt by 20%. Qualifying outputs: Warden's Rally: Tactical Damage.",
     "id": "outgoing-effect-amplification-seasmoke-loyal-bond-loyal-bond-advantage-effect-advantage-damage-dealt-status-modifier-malachite",
     "interactionScope": "cross-dragon",
@@ -33203,7 +32823,7 @@
       "Duration: 2 rounds."
     ],
     "exactResultKnown": false,
-    "exactResultUnknownReason": "Exact final amplified damage cannot be calculated because stacking and final combat formulas are not fully verified.",
+    "exactResultUnknownReason": "Exact final stack benefit cannot be calculated because activation, repeat count, final stack count, uptime, and final formulas are unresolved.",
     "explanation": "Sheepstealer is eligible to receive Advantage support because it has verified Damage Dealt output. Each granted stack increases Damage Dealt by 20%. Qualifying outputs: Wild Hunt: Fire Damage, Savage Claim: Fire Damage.",
     "id": "outgoing-effect-amplification-seasmoke-loyal-bond-loyal-bond-advantage-effect-advantage-damage-dealt-status-modifier-sheepstealer",
     "interactionScope": "cross-dragon",
@@ -33759,7 +33379,7 @@
       "Duration: 2 rounds."
     ],
     "exactResultKnown": false,
-    "exactResultUnknownReason": "Exact final amplified damage cannot be calculated because stacking and final combat formulas are not fully verified.",
+    "exactResultUnknownReason": "Exact final stack benefit cannot be calculated because activation, repeat count, final stack count, uptime, and final formulas are unresolved.",
     "explanation": "Seasmoke is eligible to receive Advantage support because it has verified Damage Dealt output. Each granted stack increases Damage Dealt by 20%. Qualifying outputs: Cleansing Wrath: Fire Damage, Infectious Wrath: Physical Damage.",
     "id": "outgoing-effect-amplification-malachite-thunderous-roar-thunderous-roar-advantage-advantage-damage-dealt-status-modifier-seasmoke",
     "interactionScope": "cross-dragon",
@@ -33913,7 +33533,7 @@
       "Duration: 2 rounds."
     ],
     "exactResultKnown": false,
-    "exactResultUnknownReason": "Exact final amplified damage cannot be calculated because stacking and final combat formulas are not fully verified.",
+    "exactResultUnknownReason": "Exact final stack benefit cannot be calculated because activation, repeat count, final stack count, uptime, and final formulas are unresolved.",
     "explanation": "Sheepstealer is eligible to receive Advantage support because it has verified Damage Dealt output. Each granted stack increases Damage Dealt by 20%. Qualifying outputs: Wild Hunt: Fire Damage, Savage Claim: Fire Damage.",
     "id": "outgoing-effect-amplification-malachite-thunderous-roar-thunderous-roar-advantage-advantage-damage-dealt-status-modifier-sheepstealer",
     "interactionScope": "cross-dragon",
@@ -37185,7 +36805,19 @@
       "seasmoke-cunning-ferocity-2026-06-23"
     ],
     "status": "potential",
-    "targetSelectionGroup": null,
+    "targetSelectionGroup": {
+      "comparisonDirection": null,
+      "comparisonPool": null,
+      "eligibleRecipientDragonIds": [
+        "malachite",
+        "sheepstealer"
+      ],
+      "selection": "one-eligible-adjacent",
+      "selectionResource": null,
+      "selectionStat": null,
+      "selectionUncertain": true,
+      "targetCount": 1
+    },
     "title": "Intelligence Scaling Support",
     "unresolvedQuestions": [
       "Final selected recipient for this one-target stat modifier is unresolved.",
@@ -37664,12 +37296,11 @@
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final amplified damage cannot be calculated because stacking and final combat formulas are not fully verified.",
-    "explanation": "Seasmoke's Cunning Ferocity increases Caraxes's Fire Damage Dealt. Qualifying outputs: Infernal Burst: Fire Damage, Crippling Inferno: Burn, Crippling Inferno: Burn periodic Fire Damage.",
+    "explanation": "Seasmoke's Cunning Ferocity increases Caraxes's Fire Damage Dealt. Qualifying outputs: Infernal Burst: Fire Damage, Crippling Inferno: Burn periodic Fire Damage.",
     "id": "outgoing-effect-amplification-seasmoke-cunning-ferocity-cunning-ferocity-fire-fire-damage-dealt-modifier-caraxes",
     "interactionScope": "cross-dragon",
     "matchedOutputCapabilityIds": [
       "caraxes-infernal-burst-infernal-burst-fire-rate-output",
-      "caraxes-crippling-inferno-crippling-inferno-burn-output",
       "periodic-caraxes-crippling-inferno-crippling-inferno-burn-burn-output"
     ],
     "matchKind": "outgoing-effect-amplification",
@@ -37685,13 +37316,6 @@
       "seasmoke-cunning-ferocity-2026-06-23",
       "seasmoke-cunning-ferocity-2026-06-23",
       "caraxes-infernal-burst-2026-06-24",
-      "seasmoke-cunning-ferocity-2026-06-23",
-      "seasmoke-cunning-ferocity-2026-06-23",
-      "seasmoke-cunning-ferocity-2026-06-23",
-      "caraxes-crippling-inferno-2026-06-24",
-      "caraxes-crippling-inferno-2026-06-24",
-      "seasmoke-cunning-ferocity-2026-06-23",
-      "caraxes-crippling-inferno-2026-06-24",
       "seasmoke-cunning-ferocity-2026-06-23",
       "seasmoke-cunning-ferocity-2026-06-23",
       "seasmoke-cunning-ferocity-2026-06-23",
@@ -37773,18 +37397,6 @@
           "Unlocked Habits without an explicit saved Habit Level default to effective Habit Level 1. Locked Habit capabilities are potential in preview mode, not active for current roster."
         ],
         "satisfied": false
-      },
-      {
-        "actual": "habits",
-        "evidenceIds": [
-          "seasmoke-cunning-ferocity-2026-06-23",
-          "caraxes-crippling-inferno-2026-06-24"
-        ],
-        "expected": "all-qualifying-sources",
-        "id": "seasmoke-cunning-ferocity-cunning-ferocity-fire-fire-damage-dealt-modifier-caraxes-crippling-inferno-crippling-inferno-burn-output-source-scope",
-        "label": "Source-scope compatibility",
-        "notes": [],
-        "satisfied": true
       },
       {
         "actual": "habits",
@@ -38091,13 +37703,12 @@
       "Duration: 2 rounds."
     ],
     "exactResultKnown": false,
-    "exactResultUnknownReason": "Exact final amplified damage cannot be calculated because stacking and final combat formulas are not fully verified.",
-    "explanation": "Caraxes is eligible to receive Advantage support because it has verified Damage Dealt output. Each granted stack increases Damage Dealt by 20%. Qualifying outputs: Infernal Burst: Fire Damage, Crippling Inferno: Burn, Crippling Inferno: Burn periodic Fire Damage.",
+    "exactResultUnknownReason": "Exact final stack benefit cannot be calculated because activation, repeat count, final stack count, uptime, and final formulas are unresolved.",
+    "explanation": "Caraxes is eligible to receive Advantage support because it has verified Damage Dealt output. Each granted stack increases Damage Dealt by 20%. Qualifying outputs: Infernal Burst: Fire Damage, Crippling Inferno: Burn periodic Fire Damage.",
     "id": "outgoing-effect-amplification-seasmoke-loyal-bond-loyal-bond-advantage-effect-advantage-damage-dealt-status-modifier-caraxes",
     "interactionScope": "cross-dragon",
     "matchedOutputCapabilityIds": [
       "caraxes-infernal-burst-infernal-burst-fire-rate-output",
-      "caraxes-crippling-inferno-crippling-inferno-burn-output",
       "periodic-caraxes-crippling-inferno-crippling-inferno-burn-burn-output"
     ],
     "matchKind": "outgoing-effect-amplification",
@@ -38113,13 +37724,6 @@
       "seasmoke-loyal-bond-2026-06-23",
       "seasmoke-loyal-bond-2026-06-23",
       "caraxes-infernal-burst-2026-06-24",
-      "seasmoke-loyal-bond-2026-06-23",
-      "seasmoke-loyal-bond-2026-06-23",
-      "seasmoke-loyal-bond-2026-06-23",
-      "caraxes-crippling-inferno-2026-06-24",
-      "caraxes-crippling-inferno-2026-06-24",
-      "seasmoke-loyal-bond-2026-06-23",
-      "caraxes-crippling-inferno-2026-06-24",
       "seasmoke-loyal-bond-2026-06-23",
       "seasmoke-loyal-bond-2026-06-23",
       "seasmoke-loyal-bond-2026-06-23",
@@ -38207,18 +37811,6 @@
           "caraxes-crippling-inferno-2026-06-24"
         ],
         "expected": "all-qualifying-sources",
-        "id": "seasmoke-loyal-bond-loyal-bond-advantage-effect-advantage-damage-dealt-status-modifier-caraxes-crippling-inferno-crippling-inferno-burn-output-source-scope",
-        "label": "Source-scope compatibility",
-        "notes": [],
-        "satisfied": true
-      },
-      {
-        "actual": "habits",
-        "evidenceIds": [
-          "seasmoke-loyal-bond-2026-06-23",
-          "caraxes-crippling-inferno-2026-06-24"
-        ],
-        "expected": "all-qualifying-sources",
         "id": "seasmoke-loyal-bond-loyal-bond-advantage-effect-advantage-damage-dealt-status-modifier-periodic-caraxes-crippling-inferno-crippling-inferno-burn-burn-output-source-scope",
         "label": "Source-scope compatibility",
         "notes": [],
@@ -38264,7 +37856,7 @@
       "Duration: 2 rounds."
     ],
     "exactResultKnown": false,
-    "exactResultUnknownReason": "Exact final amplified damage cannot be calculated because stacking and final combat formulas are not fully verified.",
+    "exactResultUnknownReason": "Exact final stack benefit cannot be calculated because activation, repeat count, final stack count, uptime, and final formulas are unresolved.",
     "explanation": "Sheepstealer is eligible to receive Advantage support because it has verified Damage Dealt output. Each granted stack increases Damage Dealt by 20%. Qualifying outputs: Wild Hunt: Fire Damage, Savage Claim: Fire Damage.",
     "id": "outgoing-effect-amplification-seasmoke-loyal-bond-loyal-bond-advantage-effect-advantage-damage-dealt-status-modifier-sheepstealer",
     "interactionScope": "cross-dragon",
@@ -40815,13 +40407,11 @@
     "confidence": "confirmed",
     "conflicts": [
       "Seasmoke - Cunning Ferocity Habit unlock requirement: expected Star Rank 8+, actual preview enabled",
-      "Seasmoke - Cunning Ferocity Selected Habit Level: expected Habit Level 1+ or preview, actual preview enabled",
-      "caraxes - Crippling Inferno Habit unlock requirement: expected Star Rank 6+, actual preview enabled",
-      "caraxes - Crippling Inferno Selected Habit Level: expected Habit Level 1+ or preview, actual preview enabled"
+      "Seasmoke - Cunning Ferocity Selected Habit Level: expected Habit Level 1+ or preview, actual preview enabled"
     ],
     "damageScope": null,
     "effects": [
-      "Intelligence support for Infernal Burst: Fire Damage; Crippling Inferno: Fire Damage",
+      "Intelligence support for Infernal Burst: Fire Damage",
       "Intelligence +15% at effective Habit Level 5.",
       "Duration: until end of combat.",
       "Ranked progression: L1 7.5%, L2 9%, L3 10.5%, L4 12.75%, L5 15%.",
@@ -40829,7 +40419,7 @@
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final value cannot be calculated because final combat formulas and stacking order are not fully verified.",
-    "explanation": "Seasmoke's Cunning Ferocity can increase Caraxes's Intelligence, which supports Infernal Burst: Fire Damage; Crippling Inferno: Fire Damage.",
+    "explanation": "Seasmoke's Cunning Ferocity can increase Caraxes's Intelligence, which supports Infernal Burst: Fire Damage.",
     "id": "stat-scaling-seasmoke-cunning-ferocity-cunning-ferocity-intelligence-stat-dealt-modifier-caraxes-intelligence",
     "interactionScope": "cross-dragon",
     "matchedOutputCapabilityIds": [],
@@ -40839,8 +40429,7 @@
     "recipientAbilityId": "caraxes-infernal-burst",
     "recipientDragonId": "caraxes",
     "recipientEvidenceIds": [
-      "caraxes-infernal-burst-2026-06-24",
-      "caraxes-crippling-inferno-2026-06-24"
+      "caraxes-infernal-burst-2026-06-24"
     ],
     "requirements": [
       {
@@ -40879,30 +40468,6 @@
           "Unlocked Habits without an explicit saved Habit Level default to effective Habit Level 1. Locked Habit capabilities are potential in preview mode, not active for current roster."
         ],
         "satisfied": false
-      },
-      {
-        "actual": "preview enabled",
-        "evidenceIds": [
-          "caraxes-crippling-inferno-2026-06-24"
-        ],
-        "expected": "Star Rank 6+",
-        "id": "caraxes-caraxes-crippling-inferno-star-rank",
-        "label": "caraxes - Crippling Inferno Habit unlock requirement",
-        "notes": [],
-        "satisfied": false
-      },
-      {
-        "actual": "preview enabled",
-        "evidenceIds": [
-          "caraxes-crippling-inferno-2026-06-24"
-        ],
-        "expected": "Habit Level 1+ or preview",
-        "id": "caraxes-caraxes-crippling-inferno-habit-level",
-        "label": "caraxes - Crippling Inferno Selected Habit Level",
-        "notes": [
-          "Unlocked Habits without an explicit saved Habit Level default to effective Habit Level 1. Locked Habit capabilities are potential in preview mode, not active for current roster."
-        ],
-        "satisfied": false
       }
     ],
     "ruleId": "stat-scaling-support",
@@ -40912,7 +40477,19 @@
       "seasmoke-cunning-ferocity-2026-06-23"
     ],
     "status": "potential",
-    "targetSelectionGroup": null,
+    "targetSelectionGroup": {
+      "comparisonDirection": null,
+      "comparisonPool": null,
+      "eligibleRecipientDragonIds": [
+        "caraxes",
+        "sheepstealer"
+      ],
+      "selection": "one-eligible-adjacent",
+      "selectionResource": null,
+      "selectionStat": null,
+      "selectionUncertain": true,
+      "targetCount": 1
+    },
     "title": "Intelligence Scaling Support",
     "unresolvedQuestions": [
       "Final selected recipient for this one-target stat modifier is unresolved.",
@@ -41028,7 +40605,19 @@
       "seasmoke-cunning-ferocity-2026-06-23"
     ],
     "status": "potential",
-    "targetSelectionGroup": null,
+    "targetSelectionGroup": {
+      "comparisonDirection": null,
+      "comparisonPool": null,
+      "eligibleRecipientDragonIds": [
+        "caraxes",
+        "sheepstealer"
+      ],
+      "selection": "one-eligible-adjacent",
+      "selectionResource": null,
+      "selectionStat": null,
+      "selectionUncertain": true,
+      "targetCount": 1
+    },
     "title": "Intelligence Scaling Support",
     "unresolvedQuestions": [
       "Final selected recipient for this one-target stat modifier is unresolved.",
@@ -41049,7 +40638,7 @@
     ],
     "damageScope": null,
     "effects": [
-      "Enemy Initiative reduction may improve Fire Damage outputs: Infernal Burst: Fire Damage, Crippling Inferno: Burn, Crippling Inferno: Burn periodic Fire Damage.",
+      "Enemy Initiative reduction may improve Fire Damage outputs: Infernal Burst: Fire Damage, Crippling Inferno: Burn periodic Fire Damage.",
       "Applies to all qualifying Fire Damage sources."
     ],
     "exactResultKnown": false,
@@ -41059,7 +40648,6 @@
     "interactionScope": "internal",
     "matchedOutputCapabilityIds": [
       "caraxes-infernal-burst-infernal-burst-fire-rate-output",
-      "caraxes-crippling-inferno-crippling-inferno-burn-output",
       "periodic-caraxes-crippling-inferno-crippling-inferno-burn-burn-output"
     ],
     "matchKind": "enemy-mitigation-reduction",
@@ -41071,7 +40659,6 @@
     "recipientDragonId": "caraxes",
     "recipientEvidenceIds": [
       "caraxes-infernal-burst-2026-06-24",
-      "caraxes-crippling-inferno-2026-06-24",
       "caraxes-crippling-inferno-2026-06-24"
     ],
     "requirements": [
@@ -42396,7 +41983,7 @@
       "Duration: 2 rounds."
     ],
     "exactResultKnown": false,
-    "exactResultUnknownReason": "Exact final amplified damage cannot be calculated because stacking and final combat formulas are not fully verified.",
+    "exactResultUnknownReason": "Exact final stack benefit cannot be calculated because activation, repeat count, final stack count, uptime, and final formulas are unresolved.",
     "explanation": "Syrax is eligible to receive Advantage support because it has verified Damage Dealt output. Each granted stack increases Damage Dealt by 20%. Qualifying outputs: Blazing Fury: Tactical Damage.",
     "id": "outgoing-effect-amplification-malachite-thunderous-roar-thunderous-roar-advantage-advantage-damage-dealt-status-modifier-syrax",
     "interactionScope": "cross-dragon",
@@ -42506,7 +42093,7 @@
       "Duration: 2 rounds."
     ],
     "exactResultKnown": false,
-    "exactResultUnknownReason": "Exact final amplified damage cannot be calculated because stacking and final combat formulas are not fully verified.",
+    "exactResultUnknownReason": "Exact final stack benefit cannot be calculated because activation, repeat count, final stack count, uptime, and final formulas are unresolved.",
     "explanation": "Sheepstealer is eligible to receive Advantage support because it has verified Damage Dealt output. Each granted stack increases Damage Dealt by 20%. Qualifying outputs: Wild Hunt: Fire Damage, Savage Claim: Fire Damage.",
     "id": "outgoing-effect-amplification-malachite-thunderous-roar-thunderous-roar-advantage-advantage-damage-dealt-status-modifier-sheepstealer",
     "interactionScope": "cross-dragon",
@@ -46395,12 +45982,11 @@
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final amplified damage cannot be calculated because stacking and final combat formulas are not fully verified.",
-    "explanation": "Caraxes is eligible for Syrax's Blazing Fury Fire Damage support. Qualifying outputs: Infernal Burst: Fire Damage, Crippling Inferno: Burn, Crippling Inferno: Burn periodic Fire Damage. Activation is a 20% each-round chance, lasts two rounds, and prioritizes Fire Damage allies.",
+    "explanation": "Caraxes is eligible for Syrax's Blazing Fury Fire Damage support. Qualifying outputs: Infernal Burst: Fire Damage, Crippling Inferno: Burn periodic Fire Damage. Activation is a 20% each-round chance, lasts two rounds, and prioritizes Fire Damage allies.",
     "id": "outgoing-effect-amplification-syrax-blazing-fury-blazing-fury-fire-damage-up-fire-damage-dealt-modifier-caraxes",
     "interactionScope": "cross-dragon",
     "matchedOutputCapabilityIds": [
       "caraxes-infernal-burst-infernal-burst-fire-rate-output",
-      "caraxes-crippling-inferno-crippling-inferno-burn-output",
       "periodic-caraxes-crippling-inferno-crippling-inferno-burn-burn-output"
     ],
     "matchKind": "outgoing-effect-amplification",
@@ -46416,13 +46002,6 @@
       "syrax-blazing-fury-summary-2026-06-24",
       "syrax-blazing-fury-details-2026-06-24",
       "caraxes-infernal-burst-2026-06-24",
-      "syrax-blazing-fury-summary-2026-06-24",
-      "syrax-blazing-fury-details-2026-06-24",
-      "caraxes-crippling-inferno-2026-06-24",
-      "caraxes-crippling-inferno-2026-06-24",
-      "syrax-blazing-fury-summary-2026-06-24",
-      "syrax-blazing-fury-details-2026-06-24",
-      "caraxes-crippling-inferno-2026-06-24",
       "syrax-blazing-fury-summary-2026-06-24",
       "syrax-blazing-fury-details-2026-06-24",
       "caraxes-crippling-inferno-2026-06-24",
@@ -46480,19 +46059,6 @@
           "Unlocked Habits without an explicit saved Habit Level default to effective Habit Level 1. Locked Habit capabilities are potential in preview mode, not active for current roster."
         ],
         "satisfied": false
-      },
-      {
-        "actual": "habits",
-        "evidenceIds": [
-          "syrax-blazing-fury-summary-2026-06-24",
-          "syrax-blazing-fury-details-2026-06-24",
-          "caraxes-crippling-inferno-2026-06-24"
-        ],
-        "expected": "all-qualifying-sources",
-        "id": "syrax-blazing-fury-blazing-fury-fire-damage-up-fire-damage-dealt-modifier-caraxes-crippling-inferno-crippling-inferno-burn-output-source-scope",
-        "label": "Source-scope compatibility",
-        "notes": [],
-        "satisfied": true
       },
       {
         "actual": "habits",
@@ -46642,12 +46208,11 @@
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final amplified damage cannot be calculated because stacking and final combat formulas are not fully verified.",
-    "explanation": "Caraxes is eligible for Syrax's Tactical Inferno Fire Damage support. Qualifying outputs: Infernal Burst: Fire Damage, Crippling Inferno: Burn, Crippling Inferno: Burn periodic Fire Damage. Target selection follows the verified flank preference and remains selection-dependent.",
+    "explanation": "Caraxes is eligible for Syrax's Tactical Inferno Fire Damage support. Qualifying outputs: Infernal Burst: Fire Damage, Crippling Inferno: Burn periodic Fire Damage. Target selection follows the verified flank preference and remains selection-dependent.",
     "id": "outgoing-effect-amplification-syrax-tactical-inferno-tactical-inferno-fire-fire-damage-dealt-modifier-caraxes",
     "interactionScope": "cross-dragon",
     "matchedOutputCapabilityIds": [
       "caraxes-infernal-burst-infernal-burst-fire-rate-output",
-      "caraxes-crippling-inferno-crippling-inferno-burn-output",
       "periodic-caraxes-crippling-inferno-crippling-inferno-burn-burn-output"
     ],
     "matchKind": "outgoing-effect-amplification",
@@ -46663,13 +46228,6 @@
       "syrax-tactical-inferno-2026-06-24",
       "syrax-tactical-inferno-2026-06-24",
       "caraxes-infernal-burst-2026-06-24",
-      "syrax-tactical-inferno-2026-06-24",
-      "syrax-tactical-inferno-2026-06-24",
-      "syrax-tactical-inferno-2026-06-24",
-      "caraxes-crippling-inferno-2026-06-24",
-      "caraxes-crippling-inferno-2026-06-24",
-      "syrax-tactical-inferno-2026-06-24",
-      "caraxes-crippling-inferno-2026-06-24",
       "syrax-tactical-inferno-2026-06-24",
       "syrax-tactical-inferno-2026-06-24",
       "syrax-tactical-inferno-2026-06-24",
@@ -46757,18 +46315,6 @@
           "caraxes-crippling-inferno-2026-06-24"
         ],
         "expected": "all-qualifying-sources",
-        "id": "syrax-tactical-inferno-tactical-inferno-fire-fire-damage-dealt-modifier-caraxes-crippling-inferno-crippling-inferno-burn-output-source-scope",
-        "label": "Source-scope compatibility",
-        "notes": [],
-        "satisfied": true
-      },
-      {
-        "actual": "habits",
-        "evidenceIds": [
-          "syrax-tactical-inferno-2026-06-24",
-          "caraxes-crippling-inferno-2026-06-24"
-        ],
-        "expected": "all-qualifying-sources",
         "id": "syrax-tactical-inferno-tactical-inferno-fire-fire-damage-dealt-modifier-periodic-caraxes-crippling-inferno-crippling-inferno-burn-burn-output-source-scope",
         "label": "Source-scope compatibility",
         "notes": [],
@@ -46797,7 +46343,7 @@
     "conflicts": [],
     "damageScope": null,
     "effects": [
-      "Tactical Damage Dealt increase 2.5.",
+      "Tactical Damage Dealt +2.5% per stack.",
       "Applies to all qualifying Tactical Damage sources.",
       "Ally deals Tactical Damage.",
       "Spreading Blaze stacks require the trigger chance and target selection to select this ally.",
@@ -46814,7 +46360,7 @@
       "The repeat remains chance-based and is not a guaranteed extra stack."
     ],
     "exactResultKnown": false,
-    "exactResultUnknownReason": "Exact final amplified damage cannot be calculated because stacking and final combat formulas are not fully verified.",
+    "exactResultUnknownReason": "Exact final stack benefit cannot be calculated because activation, repeat count, final stack count, uptime, and final formulas are unresolved.",
     "explanation": "Syrax is eligible to receive Spreading Blaze support because it has verified Tactical Damage output. Each granted stack increases Tactical Damage Dealt by 2.5%, up to 10 stacks. Qualifying outputs: Blazing Fury: Tactical Damage.",
     "id": "outgoing-effect-amplification-vermax-spreading-blaze-spreading-blaze-stack-tactical-damage-stack-modifier-syrax",
     "interactionScope": "cross-dragon",
@@ -46891,7 +46437,7 @@
     ],
     "damageScope": null,
     "effects": [
-      "Tactical Damage Dealt increase 2.5.",
+      "Tactical Damage Dealt +2.5% per stack.",
       "Applies to all qualifying Tactical Damage sources.",
       "One shared Rallying Flame activation roll grants both stack effects on success.",
       "Ally deals Tactical Damage.",
@@ -46912,7 +46458,7 @@
       "Each repeated attempt remains chance-based and is not a guaranteed stack."
     ],
     "exactResultKnown": false,
-    "exactResultUnknownReason": "Exact final amplified damage cannot be calculated because stacking and final combat formulas are not fully verified.",
+    "exactResultUnknownReason": "Exact final stack benefit cannot be calculated because activation, repeat count, final stack count, uptime, and final formulas are unresolved.",
     "explanation": "Syrax is eligible to receive Spreading Blaze support because it has verified Tactical Damage output. Each granted stack increases Tactical Damage Dealt by 2.5%, up to 10 stacks. Qualifying outputs: Blazing Fury: Tactical Damage.",
     "id": "outgoing-effect-amplification-vermax-rallying-flame-rallying-flame-spreading-blaze-stack-tactical-damage-stack-modifier-syrax",
     "interactionScope": "cross-dragon",
@@ -49721,13 +49267,11 @@
     "confidence": "confirmed",
     "conflicts": [
       "Syrax - Mindful Synergy Habit unlock requirement: expected Star Rank 2+, actual preview enabled",
-      "Syrax - Mindful Synergy Selected Habit Level: expected Habit Level 1+ or preview, actual preview enabled",
-      "caraxes - Crippling Inferno Habit unlock requirement: expected Star Rank 6+, actual preview enabled",
-      "caraxes - Crippling Inferno Selected Habit Level: expected Habit Level 1+ or preview, actual preview enabled"
+      "Syrax - Mindful Synergy Selected Habit Level: expected Habit Level 1+ or preview, actual preview enabled"
     ],
     "damageScope": null,
     "effects": [
-      "Intelligence support for Infernal Burst: Fire Damage; Crippling Inferno: Fire Damage",
+      "Intelligence support for Infernal Burst: Fire Damage",
       "Intelligence +13% at effective Habit Level 5.",
       "Duration: until end of combat.",
       "Ranked progression: L1 6.5%, L2 7.8%, L3 9.1%, L4 11.05%, L5 13%.",
@@ -49735,7 +49279,7 @@
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final value cannot be calculated because final combat formulas and stacking order are not fully verified.",
-    "explanation": "Syrax's Mindful Synergy can increase Caraxes's Intelligence, which supports Infernal Burst: Fire Damage; Crippling Inferno: Fire Damage.",
+    "explanation": "Syrax's Mindful Synergy can increase Caraxes's Intelligence, which supports Infernal Burst: Fire Damage.",
     "id": "stat-scaling-syrax-mindful-synergy-mindful-synergy-intelligence-stat-dealt-modifier-caraxes-intelligence",
     "interactionScope": "cross-dragon",
     "matchedOutputCapabilityIds": [],
@@ -49745,8 +49289,7 @@
     "recipientAbilityId": "caraxes-infernal-burst",
     "recipientDragonId": "caraxes",
     "recipientEvidenceIds": [
-      "caraxes-infernal-burst-2026-06-24",
-      "caraxes-crippling-inferno-2026-06-24"
+      "caraxes-infernal-burst-2026-06-24"
     ],
     "requirements": [
       {
@@ -49779,30 +49322,6 @@
         "expected": "Habit Level 1+ or preview",
         "id": "syrax-syrax-mindful-synergy-habit-level",
         "label": "Syrax - Mindful Synergy Selected Habit Level",
-        "notes": [
-          "Unlocked Habits without an explicit saved Habit Level default to effective Habit Level 1. Locked Habit capabilities are potential in preview mode, not active for current roster."
-        ],
-        "satisfied": false
-      },
-      {
-        "actual": "preview enabled",
-        "evidenceIds": [
-          "caraxes-crippling-inferno-2026-06-24"
-        ],
-        "expected": "Star Rank 6+",
-        "id": "caraxes-caraxes-crippling-inferno-star-rank",
-        "label": "caraxes - Crippling Inferno Habit unlock requirement",
-        "notes": [],
-        "satisfied": false
-      },
-      {
-        "actual": "preview enabled",
-        "evidenceIds": [
-          "caraxes-crippling-inferno-2026-06-24"
-        ],
-        "expected": "Habit Level 1+ or preview",
-        "id": "caraxes-caraxes-crippling-inferno-habit-level",
-        "label": "caraxes - Crippling Inferno Selected Habit Level",
         "notes": [
           "Unlocked Habits without an explicit saved Habit Level default to effective Habit Level 1. Locked Habit capabilities are potential in preview mode, not active for current roster."
         ],
@@ -50457,7 +49976,7 @@
     ],
     "damageScope": null,
     "effects": [
-      "Enemy Initiative reduction may improve Fire Damage outputs: Infernal Burst: Fire Damage, Crippling Inferno: Burn, Crippling Inferno: Burn periodic Fire Damage.",
+      "Enemy Initiative reduction may improve Fire Damage outputs: Infernal Burst: Fire Damage, Crippling Inferno: Burn periodic Fire Damage.",
       "Applies to all qualifying Fire Damage sources."
     ],
     "exactResultKnown": false,
@@ -50467,7 +49986,6 @@
     "interactionScope": "cross-dragon",
     "matchedOutputCapabilityIds": [
       "caraxes-infernal-burst-infernal-burst-fire-rate-output",
-      "caraxes-crippling-inferno-crippling-inferno-burn-output",
       "periodic-caraxes-crippling-inferno-crippling-inferno-burn-burn-output"
     ],
     "matchKind": "enemy-mitigation-reduction",
@@ -50479,7 +49997,6 @@
     "recipientDragonId": "caraxes",
     "recipientEvidenceIds": [
       "caraxes-infernal-burst-2026-06-24",
-      "caraxes-crippling-inferno-2026-06-24",
       "caraxes-crippling-inferno-2026-06-24"
     ],
     "requirements": [
@@ -50559,7 +50076,7 @@
     ],
     "damageScope": null,
     "effects": [
-      "Enemy Initiative reduction may improve Fire Damage outputs: Infernal Burst: Fire Damage, Crippling Inferno: Burn, Crippling Inferno: Burn periodic Fire Damage.",
+      "Enemy Initiative reduction may improve Fire Damage outputs: Infernal Burst: Fire Damage, Crippling Inferno: Burn periodic Fire Damage.",
       "Applies to all qualifying Fire Damage sources."
     ],
     "exactResultKnown": false,
@@ -50569,7 +50086,6 @@
     "interactionScope": "internal",
     "matchedOutputCapabilityIds": [
       "caraxes-infernal-burst-infernal-burst-fire-rate-output",
-      "caraxes-crippling-inferno-crippling-inferno-burn-output",
       "periodic-caraxes-crippling-inferno-crippling-inferno-burn-burn-output"
     ],
     "matchKind": "enemy-mitigation-reduction",
@@ -50581,7 +50097,6 @@
     "recipientDragonId": "caraxes",
     "recipientEvidenceIds": [
       "caraxes-infernal-burst-2026-06-24",
-      "caraxes-crippling-inferno-2026-06-24",
       "caraxes-crippling-inferno-2026-06-24"
     ],
     "requirements": [
@@ -51090,11 +50605,10 @@
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final amplified damage cannot be calculated because stacking and final combat formulas are not fully verified.",
-    "explanation": "Syrax's Blazing Fury can target one Fire Damage ally. Eligible recipients are Caraxes and Sheepstealer. The selected recipient is not guaranteed. Qualifying outputs: Crippling Inferno: Burn, Infernal Burst: Fire Damage, Crippling Inferno: Burn periodic Fire Damage, Savage Claim: Fire Damage, Wild Hunt: Fire Damage.",
+    "explanation": "Syrax's Blazing Fury can target one Fire Damage ally. Eligible recipients are Caraxes and Sheepstealer. The selected recipient is not guaranteed. Qualifying outputs: Infernal Burst: Fire Damage, Crippling Inferno: Burn periodic Fire Damage, Savage Claim: Fire Damage, Wild Hunt: Fire Damage.",
     "id": "target-selection-syrax-blazing-fury-blazing-fury-fire-damage-up-fire-damage-dealt-modifier-fire-damage",
     "interactionScope": "targeting-fact",
     "matchedOutputCapabilityIds": [
-      "caraxes-crippling-inferno-crippling-inferno-burn-output",
       "caraxes-infernal-burst-infernal-burst-fire-rate-output",
       "periodic-caraxes-crippling-inferno-crippling-inferno-burn-burn-output",
       "sheepstealer-savage-claim-savage-claim-fire-damage-output",
@@ -51230,19 +50744,6 @@
           "Unlocked Habits without an explicit saved Habit Level default to effective Habit Level 1. Locked Habit capabilities are potential in preview mode, not active for current roster."
         ],
         "satisfied": false
-      },
-      {
-        "actual": "habits",
-        "evidenceIds": [
-          "syrax-blazing-fury-summary-2026-06-24",
-          "syrax-blazing-fury-details-2026-06-24",
-          "caraxes-crippling-inferno-2026-06-24"
-        ],
-        "expected": "all-qualifying-sources",
-        "id": "syrax-blazing-fury-blazing-fury-fire-damage-up-fire-damage-dealt-modifier-caraxes-crippling-inferno-crippling-inferno-burn-output-source-scope",
-        "label": "Source-scope compatibility",
-        "notes": [],
-        "satisfied": true
       },
       {
         "actual": "habits",
@@ -53809,13 +53310,11 @@
     "confidence": "confirmed",
     "conflicts": [
       "Syrax - Mindful Synergy Habit unlock requirement: expected Star Rank 2+, actual preview enabled",
-      "Syrax - Mindful Synergy Selected Habit Level: expected Habit Level 1+ or preview, actual preview enabled",
-      "caraxes - Crippling Inferno Habit unlock requirement: expected Star Rank 6+, actual preview enabled",
-      "caraxes - Crippling Inferno Selected Habit Level: expected Habit Level 1+ or preview, actual preview enabled"
+      "Syrax - Mindful Synergy Selected Habit Level: expected Habit Level 1+ or preview, actual preview enabled"
     ],
     "damageScope": null,
     "effects": [
-      "Intelligence support for Infernal Burst: Fire Damage; Crippling Inferno: Fire Damage",
+      "Intelligence support for Infernal Burst: Fire Damage",
       "Intelligence +13% at effective Habit Level 5.",
       "Duration: until end of combat.",
       "Ranked progression: L1 6.5%, L2 7.8%, L3 9.1%, L4 11.05%, L5 13%.",
@@ -53823,7 +53322,7 @@
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final value cannot be calculated because final combat formulas and stacking order are not fully verified.",
-    "explanation": "Syrax's Mindful Synergy can increase Caraxes's Intelligence, which supports Infernal Burst: Fire Damage; Crippling Inferno: Fire Damage.",
+    "explanation": "Syrax's Mindful Synergy can increase Caraxes's Intelligence, which supports Infernal Burst: Fire Damage.",
     "id": "stat-scaling-syrax-mindful-synergy-mindful-synergy-intelligence-stat-dealt-modifier-caraxes-intelligence",
     "interactionScope": "cross-dragon",
     "matchedOutputCapabilityIds": [],
@@ -53833,8 +53332,7 @@
     "recipientAbilityId": "caraxes-infernal-burst",
     "recipientDragonId": "caraxes",
     "recipientEvidenceIds": [
-      "caraxes-infernal-burst-2026-06-24",
-      "caraxes-crippling-inferno-2026-06-24"
+      "caraxes-infernal-burst-2026-06-24"
     ],
     "requirements": [
       {
@@ -53867,30 +53365,6 @@
         "expected": "Habit Level 1+ or preview",
         "id": "syrax-syrax-mindful-synergy-habit-level",
         "label": "Syrax - Mindful Synergy Selected Habit Level",
-        "notes": [
-          "Unlocked Habits without an explicit saved Habit Level default to effective Habit Level 1. Locked Habit capabilities are potential in preview mode, not active for current roster."
-        ],
-        "satisfied": false
-      },
-      {
-        "actual": "preview enabled",
-        "evidenceIds": [
-          "caraxes-crippling-inferno-2026-06-24"
-        ],
-        "expected": "Star Rank 6+",
-        "id": "caraxes-caraxes-crippling-inferno-star-rank",
-        "label": "caraxes - Crippling Inferno Habit unlock requirement",
-        "notes": [],
-        "satisfied": false
-      },
-      {
-        "actual": "preview enabled",
-        "evidenceIds": [
-          "caraxes-crippling-inferno-2026-06-24"
-        ],
-        "expected": "Habit Level 1+ or preview",
-        "id": "caraxes-caraxes-crippling-inferno-habit-level",
-        "label": "caraxes - Crippling Inferno Selected Habit Level",
         "notes": [
           "Unlocked Habits without an explicit saved Habit Level default to effective Habit Level 1. Locked Habit capabilities are potential in preview mode, not active for current roster."
         ],
@@ -54438,7 +53912,7 @@
     ],
     "damageScope": null,
     "effects": [
-      "Enemy Initiative reduction may improve Fire Damage outputs: Infernal Burst: Fire Damage, Crippling Inferno: Burn, Crippling Inferno: Burn periodic Fire Damage.",
+      "Enemy Initiative reduction may improve Fire Damage outputs: Infernal Burst: Fire Damage, Crippling Inferno: Burn periodic Fire Damage.",
       "Applies to all qualifying Fire Damage sources."
     ],
     "exactResultKnown": false,
@@ -54448,7 +53922,6 @@
     "interactionScope": "cross-dragon",
     "matchedOutputCapabilityIds": [
       "caraxes-infernal-burst-infernal-burst-fire-rate-output",
-      "caraxes-crippling-inferno-crippling-inferno-burn-output",
       "periodic-caraxes-crippling-inferno-crippling-inferno-burn-burn-output"
     ],
     "matchKind": "enemy-mitigation-reduction",
@@ -54460,7 +53933,6 @@
     "recipientDragonId": "caraxes",
     "recipientEvidenceIds": [
       "caraxes-infernal-burst-2026-06-24",
-      "caraxes-crippling-inferno-2026-06-24",
       "caraxes-crippling-inferno-2026-06-24"
     ],
     "requirements": [
@@ -54642,7 +54114,7 @@
     ],
     "damageScope": null,
     "effects": [
-      "Enemy Initiative reduction may improve Fire Damage outputs: Infernal Burst: Fire Damage, Crippling Inferno: Burn, Crippling Inferno: Burn periodic Fire Damage.",
+      "Enemy Initiative reduction may improve Fire Damage outputs: Infernal Burst: Fire Damage, Crippling Inferno: Burn periodic Fire Damage.",
       "Applies to all qualifying Fire Damage sources."
     ],
     "exactResultKnown": false,
@@ -54652,7 +54124,6 @@
     "interactionScope": "internal",
     "matchedOutputCapabilityIds": [
       "caraxes-infernal-burst-infernal-burst-fire-rate-output",
-      "caraxes-crippling-inferno-crippling-inferno-burn-output",
       "periodic-caraxes-crippling-inferno-crippling-inferno-burn-burn-output"
     ],
     "matchKind": "enemy-mitigation-reduction",
@@ -54664,7 +54135,6 @@
     "recipientDragonId": "caraxes",
     "recipientEvidenceIds": [
       "caraxes-infernal-burst-2026-06-24",
-      "caraxes-crippling-inferno-2026-06-24",
       "caraxes-crippling-inferno-2026-06-24"
     ],
     "requirements": [
@@ -55238,12 +54708,11 @@
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final amplified damage cannot be calculated because stacking and final combat formulas are not fully verified.",
-    "explanation": "Vhagar's Warrior's Resilience increases Kalspire's Tactical Damage Dealt. Qualifying outputs: Tactical Strike: Tactical Damage, Tactical Assault: Panic, Tactical Assault: Panic periodic Tactical Damage.",
+    "explanation": "Vhagar's Warrior's Resilience increases Kalspire's Tactical Damage Dealt. Qualifying outputs: Tactical Strike: Tactical Damage, Tactical Assault: Panic periodic Tactical Damage.",
     "id": "outgoing-effect-amplification-vhagar-warriors-resilience-warriors-resilience-left-tactical-tactical-damage-dealt-modifier-kalspire",
     "interactionScope": "cross-dragon",
     "matchedOutputCapabilityIds": [
       "kalspire-tactical-strike-tactical-strike-tactical-damage-output",
-      "kalspire-tactical-assault-tactical-assault-panic-output",
       "periodic-kalspire-tactical-assault-tactical-assault-panic-panic-output"
     ],
     "matchKind": "outgoing-effect-amplification",
@@ -55260,14 +54729,6 @@
       "vhagar-warriors-resilience-2026-06-25",
       "vhagar-warriors-resilience-2026-06-25",
       "kalspire-tactical-strike-summary-2026-06-25",
-      "vhagar-warriors-resilience-2026-06-25",
-      "vhagar-warriors-resilience-2026-06-25",
-      "vhagar-warriors-resilience-2026-06-25",
-      "vhagar-warriors-resilience-2026-06-25",
-      "kalspire-tactical-assault-2026-06-25",
-      "kalspire-tactical-assault-2026-06-25",
-      "vhagar-warriors-resilience-2026-06-25",
-      "kalspire-tactical-assault-2026-06-25",
       "vhagar-warriors-resilience-2026-06-25",
       "vhagar-warriors-resilience-2026-06-25",
       "vhagar-warriors-resilience-2026-06-25",
@@ -55357,18 +54818,6 @@
           "Unlocked Habits without an explicit saved Habit Level default to effective Habit Level 1. Locked Habit capabilities are potential in preview mode, not active for current roster."
         ],
         "satisfied": false
-      },
-      {
-        "actual": "habits",
-        "evidenceIds": [
-          "vhagar-warriors-resilience-2026-06-25",
-          "kalspire-tactical-assault-2026-06-25"
-        ],
-        "expected": "all-qualifying-sources",
-        "id": "vhagar-warriors-resilience-warriors-resilience-left-tactical-tactical-damage-dealt-modifier-kalspire-tactical-assault-tactical-assault-panic-output-source-scope",
-        "label": "Source-scope compatibility",
-        "notes": [],
-        "satisfied": true
       },
       {
         "actual": "habits",
@@ -55609,12 +55058,11 @@
       "One shared activation roll applies both effects."
     ],
     "exactResultKnown": false,
-    "exactResultUnknownReason": "Exact final amplified damage cannot be calculated because stacking and final combat formulas are not fully verified.",
-    "explanation": "Vhagar's Eclipse Cover can target one Damage Dealt ally. Eligible recipients are Kalspire and Venator and Vhagar. The selected recipient is not guaranteed. Qualifying outputs: Tactical Assault: Panic, Tactical Assault: Physical Damage, Tactical Strike: Tactical Damage, Tactical Assault: Panic periodic Tactical Damage, Tactical Strike: Bleed periodic Physical Damage, Desperate Ambush: Physical Damage, Feral Precision: Physical Damage, Feral Strike: Physical Damage, Fiery Bonds: Physical Damage, Skyward Titan: Physical Damage.",
+    "exactResultUnknownReason": "Exact final stack benefit cannot be calculated because activation, repeat count, final stack count, uptime, and final formulas are unresolved.",
+    "explanation": "Vhagar's Eclipse Cover can target one Damage Dealt ally. Eligible recipients are Kalspire and Venator and Vhagar. The selected recipient is not guaranteed. Qualifying outputs: Tactical Assault: Physical Damage, Tactical Strike: Tactical Damage, Tactical Assault: Panic periodic Tactical Damage, Tactical Strike: Bleed periodic Physical Damage, Desperate Ambush: Physical Damage, Feral Precision: Physical Damage, Feral Strike: Physical Damage, Fiery Bonds: Physical Damage, Skyward Titan: Physical Damage.",
     "id": "target-selection-vhagar-eclipse-cover-eclipse-cover-advantage-advantage-damage-dealt-status-modifier-damage-dealt",
     "interactionScope": "targeting-fact",
     "matchedOutputCapabilityIds": [
-      "kalspire-tactical-assault-tactical-assault-panic-output",
       "kalspire-tactical-assault-tactical-assault-physical-damage-output",
       "kalspire-tactical-strike-tactical-strike-tactical-damage-output",
       "periodic-kalspire-tactical-assault-tactical-assault-panic-panic-output",
@@ -55722,18 +55170,6 @@
         ],
         "expected": "all-qualifying-sources",
         "id": "vhagar-eclipse-cover-eclipse-cover-advantage-advantage-damage-dealt-status-modifier-kalspire-tactical-assault-tactical-assault-physical-damage-output-source-scope",
-        "label": "Source-scope compatibility",
-        "notes": [],
-        "satisfied": true
-      },
-      {
-        "actual": "habits",
-        "evidenceIds": [
-          "vhagar-eclipse-cover-2026-06-25",
-          "kalspire-tactical-assault-2026-06-25"
-        ],
-        "expected": "all-qualifying-sources",
-        "id": "vhagar-eclipse-cover-eclipse-cover-advantage-advantage-damage-dealt-status-modifier-kalspire-tactical-assault-tactical-assault-panic-output-source-scope",
         "label": "Source-scope compatibility",
         "notes": [],
         "satisfied": true
@@ -56339,7 +55775,7 @@
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final value cannot be calculated because final combat formulas and stacking order are not fully verified.",
-    "explanation": "Kalspire's Radiant Conqueror causes Kalspire to gain Stun. Target: Kalspire. Timing: Start of Round 1. Duration: 1 round. Real Control status: Stun. Real self-inflicted Control status. Supplier effective Habit Level: 5 Duration: 1 round. Stun application is deterministic.",
+    "explanation": "At Start of Round 1, Radiant Conqueror deterministically applies Stun to Kalspire for 1 round.",
     "id": "self-status-output-kalspire-radiant-conqueror-radiant-conqueror-self-stun-stun-status-output",
     "interactionScope": "internal",
     "matchedOutputCapabilityIds": [],
@@ -58830,12 +58266,11 @@
       "One shared activation roll applies both effects."
     ],
     "exactResultKnown": false,
-    "exactResultUnknownReason": "Exact final amplified damage cannot be calculated because stacking and final combat formulas are not fully verified.",
-    "explanation": "Vhagar's Eclipse Cover can target one Damage Dealt ally. Eligible recipients are Caraxes and Crimson and Vhagar. The selected recipient is not guaranteed. Qualifying outputs: Crippling Inferno: Burn, Infernal Burst: Fire Damage, Bloodscale Terror: Fire Damage, Crippling Inferno: Burn periodic Fire Damage, Fiery Bonds: Physical Damage, Skyward Titan: Physical Damage.",
+    "exactResultUnknownReason": "Exact final stack benefit cannot be calculated because activation, repeat count, final stack count, uptime, and final formulas are unresolved.",
+    "explanation": "Vhagar's Eclipse Cover can target one Damage Dealt ally. Eligible recipients are Caraxes and Crimson and Vhagar. The selected recipient is not guaranteed. Qualifying outputs: Infernal Burst: Fire Damage, Bloodscale Terror: Fire Damage, Crippling Inferno: Burn periodic Fire Damage, Fiery Bonds: Physical Damage, Skyward Titan: Physical Damage.",
     "id": "target-selection-vhagar-eclipse-cover-eclipse-cover-advantage-advantage-damage-dealt-status-modifier-damage-dealt",
     "interactionScope": "targeting-fact",
     "matchedOutputCapabilityIds": [
-      "caraxes-crippling-inferno-crippling-inferno-burn-output",
       "caraxes-infernal-burst-infernal-burst-fire-rate-output",
       "crimson-bloodscale-terror-bloodscale-terror-fire-damage-output",
       "periodic-caraxes-crippling-inferno-crippling-inferno-burn-burn-output",
@@ -59010,18 +58445,6 @@
           "Unlocked Habits without an explicit saved Habit Level default to effective Habit Level 1. Locked Habit capabilities are potential in preview mode, not active for current roster."
         ],
         "satisfied": false
-      },
-      {
-        "actual": "habits",
-        "evidenceIds": [
-          "vhagar-eclipse-cover-2026-06-25",
-          "caraxes-crippling-inferno-2026-06-24"
-        ],
-        "expected": "all-qualifying-sources",
-        "id": "vhagar-eclipse-cover-eclipse-cover-advantage-advantage-damage-dealt-status-modifier-caraxes-crippling-inferno-crippling-inferno-burn-output-source-scope",
-        "label": "Source-scope compatibility",
-        "notes": [],
-        "satisfied": true
       },
       {
         "actual": "habits",
@@ -60844,7 +60267,7 @@
     ],
     "damageScope": null,
     "effects": [
-      "Enemy Initiative reduction may improve Fire Damage outputs: Infernal Burst: Fire Damage, Crippling Inferno: Burn, Crippling Inferno: Burn periodic Fire Damage.",
+      "Enemy Initiative reduction may improve Fire Damage outputs: Infernal Burst: Fire Damage, Crippling Inferno: Burn periodic Fire Damage.",
       "Applies to all qualifying Fire Damage sources."
     ],
     "exactResultKnown": false,
@@ -60854,7 +60277,6 @@
     "interactionScope": "internal",
     "matchedOutputCapabilityIds": [
       "caraxes-infernal-burst-infernal-burst-fire-rate-output",
-      "caraxes-crippling-inferno-crippling-inferno-burn-output",
       "periodic-caraxes-crippling-inferno-crippling-inferno-burn-burn-output"
     ],
     "matchKind": "enemy-mitigation-reduction",
@@ -60866,7 +60288,6 @@
     "recipientDragonId": "caraxes",
     "recipientEvidenceIds": [
       "caraxes-infernal-burst-2026-06-24",
-      "caraxes-crippling-inferno-2026-06-24",
       "caraxes-crippling-inferno-2026-06-24"
     ],
     "requirements": [
@@ -61120,7 +60541,7 @@
     ],
     "damageScope": null,
     "effects": [
-      "Enemy Initiative reduction may improve Fire Damage outputs: Infernal Burst: Fire Damage, Crippling Inferno: Burn, Crippling Inferno: Burn periodic Fire Damage.",
+      "Enemy Initiative reduction may improve Fire Damage outputs: Infernal Burst: Fire Damage, Crippling Inferno: Burn periodic Fire Damage.",
       "Applies to all qualifying Fire Damage sources.",
       "Duration: 2 rounds."
     ],
@@ -61131,7 +60552,6 @@
     "interactionScope": "cross-dragon",
     "matchedOutputCapabilityIds": [
       "caraxes-infernal-burst-infernal-burst-fire-rate-output",
-      "caraxes-crippling-inferno-crippling-inferno-burn-output",
       "periodic-caraxes-crippling-inferno-crippling-inferno-burn-burn-output"
     ],
     "matchKind": "enemy-mitigation-reduction",
@@ -61143,7 +60563,6 @@
     "recipientDragonId": "caraxes",
     "recipientEvidenceIds": [
       "caraxes-infernal-burst-2026-06-24",
-      "caraxes-crippling-inferno-2026-06-24",
       "caraxes-crippling-inferno-2026-06-24"
     ],
     "requirements": [
@@ -61858,7 +61277,6 @@
     "interactionScope": "enemy-side",
     "matchedOutputCapabilityIds": [
       "caraxes-infernal-burst-infernal-burst-fire-rate-output",
-      "caraxes-crippling-inferno-crippling-inferno-burn-output",
       "crimson-bloodscale-terror-bloodscale-terror-fire-damage-output",
       "periodic-caraxes-crippling-inferno-crippling-inferno-burn-burn-output"
     ],
@@ -61871,7 +61289,6 @@
     "recipientDragonId": null,
     "recipientEvidenceIds": [
       "caraxes-infernal-burst-2026-06-24",
-      "caraxes-crippling-inferno-2026-06-24",
       "crimson-bloodscale-terror-summary-2026-06-25",
       "caraxes-crippling-inferno-2026-06-24"
     ],
@@ -62103,7 +61520,6 @@
     "interactionScope": "enemy-side",
     "matchedOutputCapabilityIds": [
       "caraxes-infernal-burst-infernal-burst-fire-rate-output",
-      "caraxes-crippling-inferno-crippling-inferno-burn-output",
       "crimson-bloodscale-terror-bloodscale-terror-fire-damage-output",
       "periodic-caraxes-crippling-inferno-crippling-inferno-burn-burn-output"
     ],
@@ -62116,7 +61532,6 @@
     "recipientDragonId": null,
     "recipientEvidenceIds": [
       "caraxes-infernal-burst-2026-06-24",
-      "caraxes-crippling-inferno-2026-06-24",
       "crimson-bloodscale-terror-summary-2026-06-25",
       "caraxes-crippling-inferno-2026-06-24"
     ],
@@ -62260,12 +61675,11 @@
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final amplified damage cannot be calculated because stacking and final combat formulas are not fully verified.",
-    "explanation": "Kalspire is eligible for Syrax's Tactical Inferno Tactical Damage support. Qualifying outputs: Tactical Strike: Tactical Damage, Tactical Assault: Panic, Tactical Assault: Panic periodic Tactical Damage. Target selection follows the verified flank preference and remains selection-dependent.",
+    "explanation": "Kalspire is eligible for Syrax's Tactical Inferno Tactical Damage support. Qualifying outputs: Tactical Strike: Tactical Damage, Tactical Assault: Panic periodic Tactical Damage. Target selection follows the verified flank preference and remains selection-dependent.",
     "id": "outgoing-effect-amplification-syrax-tactical-inferno-tactical-inferno-tactical-tactical-damage-dealt-modifier-kalspire",
     "interactionScope": "cross-dragon",
     "matchedOutputCapabilityIds": [
       "kalspire-tactical-strike-tactical-strike-tactical-damage-output",
-      "kalspire-tactical-assault-tactical-assault-panic-output",
       "periodic-kalspire-tactical-assault-tactical-assault-panic-panic-output"
     ],
     "matchKind": "outgoing-effect-amplification",
@@ -62281,13 +61695,6 @@
       "syrax-tactical-inferno-2026-06-24",
       "syrax-tactical-inferno-2026-06-24",
       "kalspire-tactical-strike-summary-2026-06-25",
-      "syrax-tactical-inferno-2026-06-24",
-      "syrax-tactical-inferno-2026-06-24",
-      "syrax-tactical-inferno-2026-06-24",
-      "kalspire-tactical-assault-2026-06-25",
-      "kalspire-tactical-assault-2026-06-25",
-      "syrax-tactical-inferno-2026-06-24",
-      "kalspire-tactical-assault-2026-06-25",
       "syrax-tactical-inferno-2026-06-24",
       "syrax-tactical-inferno-2026-06-24",
       "syrax-tactical-inferno-2026-06-24",
@@ -62375,18 +61782,6 @@
           "kalspire-tactical-assault-2026-06-25"
         ],
         "expected": "all-qualifying-sources",
-        "id": "syrax-tactical-inferno-tactical-inferno-tactical-tactical-damage-dealt-modifier-kalspire-tactical-assault-tactical-assault-panic-output-source-scope",
-        "label": "Source-scope compatibility",
-        "notes": [],
-        "satisfied": true
-      },
-      {
-        "actual": "habits",
-        "evidenceIds": [
-          "syrax-tactical-inferno-2026-06-24",
-          "kalspire-tactical-assault-2026-06-25"
-        ],
-        "expected": "all-qualifying-sources",
         "id": "syrax-tactical-inferno-tactical-inferno-tactical-tactical-damage-dealt-modifier-periodic-kalspire-tactical-assault-tactical-assault-panic-panic-output-source-scope",
         "label": "Source-scope compatibility",
         "notes": [],
@@ -62425,12 +61820,11 @@
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final amplified damage cannot be calculated because stacking and final combat formulas are not fully verified.",
-    "explanation": "Vhagar's Warrior's Resilience increases Kalspire's Tactical Damage Dealt. Qualifying outputs: Tactical Strike: Tactical Damage, Tactical Assault: Panic, Tactical Assault: Panic periodic Tactical Damage.",
+    "explanation": "Vhagar's Warrior's Resilience increases Kalspire's Tactical Damage Dealt. Qualifying outputs: Tactical Strike: Tactical Damage, Tactical Assault: Panic periodic Tactical Damage.",
     "id": "outgoing-effect-amplification-vhagar-warriors-resilience-warriors-resilience-left-tactical-tactical-damage-dealt-modifier-kalspire",
     "interactionScope": "cross-dragon",
     "matchedOutputCapabilityIds": [
       "kalspire-tactical-strike-tactical-strike-tactical-damage-output",
-      "kalspire-tactical-assault-tactical-assault-panic-output",
       "periodic-kalspire-tactical-assault-tactical-assault-panic-panic-output"
     ],
     "matchKind": "outgoing-effect-amplification",
@@ -62447,14 +61841,6 @@
       "vhagar-warriors-resilience-2026-06-25",
       "vhagar-warriors-resilience-2026-06-25",
       "kalspire-tactical-strike-summary-2026-06-25",
-      "vhagar-warriors-resilience-2026-06-25",
-      "vhagar-warriors-resilience-2026-06-25",
-      "vhagar-warriors-resilience-2026-06-25",
-      "vhagar-warriors-resilience-2026-06-25",
-      "kalspire-tactical-assault-2026-06-25",
-      "kalspire-tactical-assault-2026-06-25",
-      "vhagar-warriors-resilience-2026-06-25",
-      "kalspire-tactical-assault-2026-06-25",
       "vhagar-warriors-resilience-2026-06-25",
       "vhagar-warriors-resilience-2026-06-25",
       "vhagar-warriors-resilience-2026-06-25",
@@ -62544,18 +61930,6 @@
           "Unlocked Habits without an explicit saved Habit Level default to effective Habit Level 1. Locked Habit capabilities are potential in preview mode, not active for current roster."
         ],
         "satisfied": false
-      },
-      {
-        "actual": "habits",
-        "evidenceIds": [
-          "vhagar-warriors-resilience-2026-06-25",
-          "kalspire-tactical-assault-2026-06-25"
-        ],
-        "expected": "all-qualifying-sources",
-        "id": "vhagar-warriors-resilience-warriors-resilience-left-tactical-tactical-damage-dealt-modifier-kalspire-tactical-assault-tactical-assault-panic-output-source-scope",
-        "label": "Source-scope compatibility",
-        "notes": [],
-        "satisfied": true
       },
       {
         "actual": "habits",
@@ -62860,12 +62234,11 @@
       "One shared activation roll applies both effects."
     ],
     "exactResultKnown": false,
-    "exactResultUnknownReason": "Exact final amplified damage cannot be calculated because stacking and final combat formulas are not fully verified.",
-    "explanation": "Vhagar's Eclipse Cover can target one Damage Dealt ally. Eligible recipients are Kalspire and Syrax and Vhagar. The selected recipient is not guaranteed. Qualifying outputs: Tactical Assault: Panic, Tactical Assault: Physical Damage, Tactical Strike: Tactical Damage, Tactical Assault: Panic periodic Tactical Damage, Tactical Strike: Bleed periodic Physical Damage, Blazing Fury: Tactical Damage, Fiery Bonds: Physical Damage, Skyward Titan: Physical Damage.",
+    "exactResultUnknownReason": "Exact final stack benefit cannot be calculated because activation, repeat count, final stack count, uptime, and final formulas are unresolved.",
+    "explanation": "Vhagar's Eclipse Cover can target one Damage Dealt ally. Eligible recipients are Kalspire and Syrax and Vhagar. The selected recipient is not guaranteed. Qualifying outputs: Tactical Assault: Physical Damage, Tactical Strike: Tactical Damage, Tactical Assault: Panic periodic Tactical Damage, Tactical Strike: Bleed periodic Physical Damage, Blazing Fury: Tactical Damage, Fiery Bonds: Physical Damage, Skyward Titan: Physical Damage.",
     "id": "target-selection-vhagar-eclipse-cover-eclipse-cover-advantage-advantage-damage-dealt-status-modifier-damage-dealt",
     "interactionScope": "targeting-fact",
     "matchedOutputCapabilityIds": [
-      "kalspire-tactical-assault-tactical-assault-panic-output",
       "kalspire-tactical-assault-tactical-assault-physical-damage-output",
       "kalspire-tactical-strike-tactical-strike-tactical-damage-output",
       "periodic-kalspire-tactical-assault-tactical-assault-panic-panic-output",
@@ -62970,18 +62343,6 @@
         ],
         "expected": "all-qualifying-sources",
         "id": "vhagar-eclipse-cover-eclipse-cover-advantage-advantage-damage-dealt-status-modifier-kalspire-tactical-assault-tactical-assault-physical-damage-output-source-scope",
-        "label": "Source-scope compatibility",
-        "notes": [],
-        "satisfied": true
-      },
-      {
-        "actual": "habits",
-        "evidenceIds": [
-          "vhagar-eclipse-cover-2026-06-25",
-          "kalspire-tactical-assault-2026-06-25"
-        ],
-        "expected": "all-qualifying-sources",
-        "id": "vhagar-eclipse-cover-eclipse-cover-advantage-advantage-damage-dealt-status-modifier-kalspire-tactical-assault-tactical-assault-panic-output-source-scope",
         "label": "Source-scope compatibility",
         "notes": [],
         "satisfied": true
@@ -63670,7 +63031,7 @@
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final value cannot be calculated because final combat formulas and stacking order are not fully verified.",
-    "explanation": "Kalspire's Radiant Conqueror causes Kalspire to gain Stun. Target: Kalspire. Timing: Start of Round 1. Duration: 1 round. Real Control status: Stun. Real self-inflicted Control status. Supplier effective Habit Level: 5 Duration: 1 round. Stun application is deterministic.",
+    "explanation": "At Start of Round 1, Radiant Conqueror deterministically applies Stun to Kalspire for 1 round.",
     "id": "self-status-output-kalspire-radiant-conqueror-radiant-conqueror-self-stun-stun-status-output",
     "interactionScope": "internal",
     "matchedOutputCapabilityIds": [],
@@ -67156,7 +66517,7 @@
       "One shared activation roll applies both effects."
     ],
     "exactResultKnown": false,
-    "exactResultUnknownReason": "Exact final amplified damage cannot be calculated because stacking and final combat formulas are not fully verified.",
+    "exactResultUnknownReason": "Exact final stack benefit cannot be calculated because activation, repeat count, final stack count, uptime, and final formulas are unresolved.",
     "explanation": "Vhagar's Eclipse Cover can target one Damage Dealt ally. Eligible recipients are Crimson and Venator and Vhagar. The selected recipient is not guaranteed. Qualifying outputs: Bloodscale Terror: Fire Damage, Desperate Ambush: Physical Damage, Feral Precision: Physical Damage, Feral Strike: Physical Damage, Fiery Bonds: Physical Damage, Skyward Titan: Physical Damage.",
     "id": "target-selection-vhagar-eclipse-cover-eclipse-cover-advantage-advantage-damage-dealt-status-modifier-damage-dealt",
     "interactionScope": "targeting-fact",

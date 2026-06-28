@@ -298,16 +298,17 @@ describe('Caraxes, Vhagar, and Syrax review regression', () => {
 
     expect(eclipseProvider).toBeDefined();
     const eclipseProviderText = interactionText(eclipseProvider!);
-    expect(eclipseProviderText).toContain('Candidate outputs: Caraxes: Crippling Inferno Burn, Infernal Burst Fire Damage, and Crippling Inferno Burn periodic Fire Damage');
+    expect(eclipseProviderText).toContain('Candidate outputs: Caraxes: Infernal Burst Fire Damage and Crippling Inferno Burn periodic Fire Damage');
     expect(eclipseProviderText).toContain('Syrax: Blazing Fury Tactical Damage');
     expect(eclipseProviderText).toContain('Vhagar: Fiery Bonds Physical Damage and Skyward Titan Physical Damage');
+    expect(eclipseProviderText).not.toContain('Caraxes: Crippling Inferno Burn, Infernal Burst Fire Damage');
     expect(eclipseProviderText).not.toContain('Qualifying outputs: Crippling Inferno');
     expect(vhagar.receives.some((item) => item.abilityName === 'Eclipse Cover' && /Damage Dealt support/i.test(item.effectTitle))).toBe(false);
 
     expect(eclipseCaraxes).toBeDefined();
     const eclipseCaraxesText = interactionText(eclipseCaraxes!);
     expect(eclipseCaraxesText).toContain('Infernal Burst Fire Damage');
-    expect(eclipseCaraxesText).toContain('Crippling Inferno Burn');
+    expect(eclipseCaraxesText).toContain('Crippling Inferno Burn periodic Fire Damage');
     expect(eclipseCaraxesText).not.toContain('Blazing Fury Tactical Damage');
     expect(eclipseCaraxesText).not.toContain('Fiery Bonds Physical Damage');
     expect(eclipseCaraxesText).not.toContain('Skyward Titan Physical Damage');

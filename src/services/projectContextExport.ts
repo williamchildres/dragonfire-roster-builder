@@ -435,6 +435,7 @@ function buildCapabilityFramework(
     outputCapabilityStructure: [
       'dragonId',
       'abilityId',
+      'outputKind',
       'channel',
       'sourceKind',
       'sourceScope',

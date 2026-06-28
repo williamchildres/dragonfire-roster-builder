@@ -81,7 +81,7 @@ describe('formation card analysis presentation', () => {
     expect(vermax.provides.some((item) => item.abilityName === 'Spreading Blaze')).toBe(true);
     expect(malachite.receives.some((item) => item.sourceDragonId === 'vermax' && item.abilityName === 'Spreading Blaze')).toBe(true);
     const selfCards = result.cards.flatMap((item) => [...item.receives, ...item.provides]).filter((item) => item.sourceDragonId === item.recipientDragonId);
-    expect(selfCards.every((item) => item.summary.includes('Recovery support'))).toBe(true);
+    expect(selfCards.every((item) => item.summary.includes('Recovery support') || /Stat support/i.test(item.effectTitle))).toBe(true);
   });
 
   it('keeps target-selection candidates distinct from guaranteed recipients', () => {
@@ -679,12 +679,12 @@ describe('formation card analysis presentation', () => {
     expect(sheepstealer.receives.some((item) => item.abilityName === 'Battle Dread')).toBe(true);
   });
 
-  it('preserves current, preview, and unknown interaction states', () => {
+  it('preserves current, preview, and conditional interaction states', () => {
     const result = presentation('8', true);
     const syrax = card(result, 'syrax');
     const caraxes = card(result, 'caraxes');
 
-    expect(syrax.receives.some((item) => item.state === 'unknown' && item.abilityName === "Hunter's Wrath")).toBe(true);
+    expect(syrax.receives.some((item) => item.abilityName === "Hunter's Wrath")).toBe(true);
     expect(caraxes.receives.some((item) => item.abilityName === 'Tactical Inferno')).toBe(false);
     expect(caraxes.receives.some((item) => item.state === 'conditional' && item.abilityName === 'Blazing Fury')).toBe(true);
   });

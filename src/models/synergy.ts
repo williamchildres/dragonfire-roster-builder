@@ -265,6 +265,7 @@ export interface RequirementDefinition {
 
 export interface OutputCapability {
   id: string;
+  outputKind: 'direct-damage' | 'periodic-status-damage' | 'status-application' | 'recovery' | 'other';
   dragonId: string;
   abilityId: string | null;
   abilityName: string;
