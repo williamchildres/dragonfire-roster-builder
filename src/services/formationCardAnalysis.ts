@@ -881,13 +881,18 @@ function summarizeTrace(
   }
   if (trace.matchKind === 'friendly-impairment') {
     const text = [detail, ...trace.matchedFacts, ...trace.effects].join(' ');
-    const amount = text.match(/Damage Received decrease ([-+]?\d+(?:\.\d+)?%?)/i)?.[1]
-      ?? text.match(/Damage Received reduction: ([-+]?\d+(?:\.\d+)?%?)/i)?.[1]
-      ?? text.match(/reduce(?:s|d)? .*?Damage Received by ([-+]?\d+(?:\.\d+)?%?)/i)?.[1]
+    const channelLabel = trace.channel === 'damage-dealt'
+      ? 'Damage Dealt'
+      : trace.channel === 'damage-received'
+        ? 'Damage Received'
+        : formatToken(trace.channel ?? 'damage-dealt');
+    const amount = text.match(/Damage Dealt decrease ([-+]?\d+(?:\.\d+)?%?)/i)?.[1]
+      ?? text.match(/Damage Dealt reduction: ([-+]?\d+(?:\.\d+)?%?)/i)?.[1]
+      ?? text.match(/reduce(?:s|d)? .*?Damage Dealt by ([-+]?\d+(?:\.\d+)?%?)/i)?.[1]
       ?? text.match(/([-+]?\d+(?:\.\d+)?%?)/)?.[1]
       ?? null;
     if (amount && recipient) {
-      return [`${getAbilityName(source, trace.sourceAbilityId)} reduces Damage Received for ${recipient.name} by ${amount}.`];
+      return [`${getAbilityName(source, trace.sourceAbilityId)} reduces ${channelLabel} for ${recipient.name} by ${amount}.`];
     }
     return [formatPresentationText(trace.explanation)];
   }
@@ -1706,7 +1711,11 @@ function prepareInteractions(
   direction: 'receives' | 'provides',
   selectedIds: ReadonlySet<string>,
 ): FormationCardInteraction[] {
-  return prioritizeInteractions(aggregateInteractions(dedupeInteractions(attachRecipientModifiers(interactions, direction)), direction, selectedIds));
+  const aggregated = aggregateInteractions(dedupeInteractions(attachRecipientModifiers(interactions, direction)), direction, selectedIds);
+  const pruned = direction === 'provides'
+    ? pruneSubsumedProviderInteractions(aggregated)
+    : aggregated;
+  return prioritizeInteractions(pruned);
 }
 
 function attachRecipientModifiers(
@@ -1943,6 +1952,76 @@ function mergeInteractions(
   };
 }
 
+function pruneSubsumedProviderInteractions(interactions: FormationCardInteraction[]): FormationCardInteraction[] {
+  const buckets = new Map<string, FormationCardInteraction[]>();
+  for (const interaction of interactions) {
+    const key = [
+      interaction.sourceDragonId,
+      interaction.abilityName,
+      interaction.effectTitle,
+      interaction.state,
+      interaction.isPreview ? 'preview' : 'current',
+      interaction.isEnemyFacing ? 'enemy' : 'friendly',
+    ].join('|');
+    buckets.set(key, [...(buckets.get(key) ?? []), interaction]);
+  }
+
+  return [...buckets.values()].flatMap((bucket) => {
+    const signatures = bucket.map((interaction) => ({
+      interaction,
+      signature: providerRecipientSignature(interaction),
+    }));
+    return bucket.filter((interaction) => {
+      const current = signatures.find((entry) => entry.interaction === interaction)?.signature;
+      if (!current) {
+        return true;
+      }
+      const keep = !signatures.some((entry) =>
+        entry.interaction !== interaction &&
+        entry.signature !== null &&
+        providerSignatureSubsumes(entry.signature, current)
+      );
+      return keep;
+    });
+  });
+}
+
+function providerRecipientSignature(interaction: FormationCardInteraction): string | null {
+  const label = interaction.targetLabel ?? interaction.recipientName ?? null;
+  if (!label) {
+    return null;
+  }
+  if (/^Team$/i.test(label)) {
+    return 'team';
+  }
+  if (/candidate|unresolved/i.test(label)) {
+    return null;
+  }
+  const names = label
+    .split(/\s*(?:,|\band\b|\bor\b)\s*/i)
+    .map((name) => name.trim())
+    .filter(Boolean);
+  if (names.length === 0) {
+    return null;
+  }
+  return [...new Set(names)].sort().join('|');
+}
+
+function providerSignatureSubsumes(left: string, right: string): boolean {
+  if (left === right) {
+    return false;
+  }
+  if (left === 'team') {
+    return true;
+  }
+  if (right === 'team') {
+    return false;
+  }
+  const leftNames = left.split('|');
+  const rightNames = right.split('|');
+  return leftNames.length > rightNames.length && rightNames.every((name) => leftNames.includes(name));
+}
+
 function mergedSummaryLines(
   items: FormationCardInteraction[],
   direction: 'receives' | 'provides',
@@ -1980,9 +2059,12 @@ function synthesizedExactRecipientEffectLines(
 ): string[] {
   const first = items[0]!;
   const text = items.map(interactionText).join(' ');
+  const partialModifier = synthesizePartialRecipientModifierLine(text, targetNames);
+  const withPartialModifier = (lines: string[]): string[] =>
+    partialModifier ? [...lines, partialModifier] : lines;
   const enemyVulnerability = synthesizeEnemyVulnerabilityBenefitLine(first, text, targetNames);
   if (enemyVulnerability) {
-    return [enemyVulnerability];
+    return withPartialModifier([enemyVulnerability]);
   }
   if (/Enemy .* vulnerability/i.test(first.effectTitle)) {
     const amount = text.match(/([-+]?\d+(?:\.\d+)?%)/)?.[1];
@@ -1996,12 +2078,12 @@ function synthesizedExactRecipientEffectLines(
         ? `qualifying non-Basic ${channel} outputs`
         : `the formation's qualifying ${channel} outputs`;
       const recipientPrefix = targetNames.length > 1 ? '' : (targetNames.length > 0 ? `${joinEnglishList(targetNames)}: ` : '');
-      return [`${recipientPrefix}${scope} can benefit from +${amount} ${channel} Received on the selected enemy.`];
+      return withPartialModifier([`${recipientPrefix}${scope} can benefit from +${amount} ${channel} Received on the selected enemy.`]);
     }
   }
   const defensiveStack = synthesizeDefensiveStackLine(first, text, targetNames);
   if (defensiveStack) {
-    return [defensiveStack];
+    return withPartialModifier([defensiveStack]);
   }
   if (/Resilient Bond/i.test(text)) {
     const amount = text.match(/([-+]?\d+(?:\.\d+)?%)/)?.[1];
@@ -2011,18 +2093,18 @@ function synthesizedExactRecipientEffectLines(
       const valueLine = /Physical/i.test(text)
         ? `Each stack reduces Physical Damage Received from non-Basic Attacks by ${amount}.`
         : `Each stack reduces Damage Received by ${amount}.`;
-      return [
+      return withPartialModifier([
         timing,
         `${joinEnglishList(targetNames)} each gain 1 Resilient Bond stack.`,
         valueLine,
         duration,
         'Maximum stack count is unknown.',
-      ];
+      ]);
     }
   }
   const damageReceivedSupport = synthesizeDamageReceivedSupportLine(first, text, targetNames);
   if (damageReceivedSupport) {
-    return [damageReceivedSupport];
+    return withPartialModifier([damageReceivedSupport]);
   }
   const grouped = new Map<string, FormationCardInteraction[]>();
   for (const item of items) {
@@ -2034,27 +2116,48 @@ function synthesizedExactRecipientEffectLines(
     const text = group.map(interactionText).join(' ');
     const impairment = synthesizeFriendlyImpairmentLine(first, text, targetNames);
     if (impairment) {
-      return [impairment];
+      return withPartialModifier([impairment]);
     }
     const defensiveStack = synthesizeDefensiveStackLine(first, text, targetNames);
     if (defensiveStack) {
-      return [defensiveStack];
+      return withPartialModifier([defensiveStack]);
     }
     const damageReceivedSupport = synthesizeDamageReceivedSupportLine(first, text, targetNames);
     if (damageReceivedSupport) {
-      return [damageReceivedSupport];
+      return withPartialModifier([damageReceivedSupport]);
     }
     const damageDealtSupport = synthesizeDamageDealtSupportLine(first, text, targetNames);
     if (damageDealtSupport) {
-      return [damageDealtSupport];
+      return withPartialModifier([damageDealtSupport]);
     }
     const enemyVulnerability = synthesizeEnemyVulnerabilityBenefitLine(first, text, targetNames);
     if (enemyVulnerability) {
-      return [enemyVulnerability];
+      return withPartialModifier([enemyVulnerability]);
     }
     const summaryLines = unique(group.flatMap((item) => item.summaryLines));
-    return summaryLines.map((line) => normalizeGroupedRecipientLine(line, targetNames));
+    return withPartialModifier(summaryLines.map((line) => normalizeGroupedRecipientLine(line, targetNames)));
   }));
+}
+
+function synthesizePartialRecipientModifierLine(
+  text: string,
+  targetNames: string[],
+): string | null {
+  const modifierMatch = text.match(
+    /Amplified by ([^']+)'s ([^:]+):\s*([A-Za-z ]+?)\s+\+([-+]?\d+(?:\.\d+)?%?)\./i,
+  );
+  if (!modifierMatch) {
+    return null;
+  }
+  const sourceName = modifierMatch[1]!.trim();
+  const abilityName = modifierMatch[2]!.trim();
+  const modifierLabel = modifierMatch[3]!.trim();
+  const amount = modifierMatch[4]!.trim();
+  const affectedTargets = targetNames.filter((name) => name !== sourceName);
+  if (affectedTargets.length === 0 || affectedTargets.length === targetNames.length) {
+    return null;
+  }
+  return `${joinEnglishList(affectedTargets)} receive +${amount} ${modifierLabel} from ${abilityName}; ${sourceName} does not receive this modifier.`;
 }
 
 function receivesInteractionMechanicKey(interaction: FormationCardInteraction): string {

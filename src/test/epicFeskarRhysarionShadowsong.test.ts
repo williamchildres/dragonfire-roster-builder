@@ -631,7 +631,7 @@ describe('Feskar, Rhysarion, and Shadowsong Epic profiles', () => {
     expect(rhysarionCard.receives.some((item) => item.abilityName === 'Unbroken Devotion')).toBe(false);
     expect(feskarCard.receives.some((item) => item.abilityName === 'Unbroken Devotion')).toBe(true);
     expect(shadowsongCard.receives.some((item) => item.abilityName === 'Unbroken Devotion')).toBe(true);
-    expect(rhysarionCard.provides.filter((item) => item.abilityName === 'Echoing Melody' || item.abilityName === 'Unbroken Devotion')).toHaveLength(3);
+    expect(rhysarionCard.provides.filter((item) => item.abilityName === 'Echoing Melody' || item.abilityName === 'Unbroken Devotion')).toHaveLength(2);
   });
 
   it('deduplicates the final Technical Analysis export without merging distinct Recovery traces', () => {
@@ -869,13 +869,12 @@ describe('Feskar, Rhysarion, and Shadowsong Epic profiles', () => {
     }
 
     const rhysarionCard = cards.cards.find((card) => card.dragonId === 'rhysarion');
-    expect(visibleProviderDamageReduction).toHaveLength(3);
+    expect(visibleProviderDamageReduction).toHaveLength(2);
     expect(enemyFacingProvider).toHaveLength(1);
     const providerRecovery = visibleProviderDamageReduction.find((item) => /Recovery support/i.test(item.effectTitle) && item.targetLabel === 'Team');
-    const recipientRecovery = visibleProviderDamageReduction.find((item) => /Recovery support/i.test(item.effectTitle) && item.targetLabel === 'Feskar');
     const providerImpairment = visibleProviderDamageReduction.find((item) => /Allied Damage Dealt reduction/i.test(item.effectTitle));
+    const echoingProvides = rhysarionCard?.provides.filter((item) => item.abilityName === 'Echoing Melody') ?? [];
     expect(providerRecovery).toBeDefined();
-    expect(recipientRecovery).toBeDefined();
     expect(providerImpairment).toBeDefined();
     expect(providerRecovery?.targetLabel).toBe('Team');
     expect(providerImpairment?.targetLabel).toBe('Team');
@@ -883,17 +882,19 @@ describe('Feskar, Rhysarion, and Shadowsong Epic profiles', () => {
     expect(providerRecovery?.summary).toContain('Recovery Rate: 25% at effective Habit Level 1.');
     expect(providerRecovery?.summary).toContain('Enhanced by Rhysarion Strength.');
     expect(providerRecovery?.summary).toContain('Recovery support');
+    expect(providerRecovery?.summary).toContain('Feskar and Shadowsong receive +20% Recovery Received from Unbroken Devotion; Rhysarion does not receive this modifier.');
     expect(providerRecovery ? providerRecovery.details.join(' ') : '').not.toContain('Damage Dealt');
-    expect(recipientRecovery?.targetLabel).toBe('Feskar');
     expect(providerImpairment?.summary).toContain('Timing: Start of Round 1.');
     expect(providerImpairment?.summary).toContain('Duration: 3 rounds.');
     expect(providerImpairment?.summary).toContain('allied impairment');
     expect(providerImpairment?.summary).toContain('Damage Dealt by 27.5%');
     expect(providerImpairment ? providerImpairment.details.join(' ') : '').not.toContain('Recovery Received +20%');
-    expect(visibleProviderDamageReduction.some((item) => item.targetLabel === 'Feskar')).toBe(true);
+    expect(visibleProviderDamageReduction.some((item) => item.targetLabel === 'Feskar')).toBe(false);
+    expect(echoingProvides).toHaveLength(1);
+    expect(echoingProvides[0]?.targetLabel).toBe('Feskar and Shadowsong');
+    expect(rhysarionCard?.provides.filter((item) => item.abilityName === 'Ebbing Fury')).toHaveLength(3);
     expect([...(providerRecovery?.details ?? []), ...(providerImpairment?.details ?? [])].join(' ')).not.toMatch(/Target reference|Source effect ID|selected-target group|sharedSelectionGroupId/i);
     expect(rhysarionCard?.receives.some((item) => item.sourceDragonId === 'rhysarion' && item.recipientDragonId === 'rhysarion' && item.abilityName === 'Ebbing Fury')).toBe(false);
-    expect(rhysarionCard?.provides.filter((item) => item.abilityName === 'Ebbing Fury')).toHaveLength(4);
     for (const recipientId of ['feskar', 'shadowsong']) {
       const receives = cards.cards.find((card) => card.dragonId === recipientId)?.receives.filter((item) => item.abilityName === 'Ebbing Fury' && item.sourceDragonId === 'rhysarion') ?? [];
       const recovery = receives.find((item) => /Recovery support/i.test(item.effectTitle));
@@ -906,7 +907,7 @@ describe('Feskar, Rhysarion, and Shadowsong Epic profiles', () => {
       expect(recovery?.summary).toContain('Recovery support');
       expect(recovery ? recovery.details.join(' ') : '').not.toContain('Damage Dealt');
       expect(impairment?.state).toBe('active');
-      expect(impairment?.summary).toMatch(/Ebbing Fury reduces Damage Received for .+ by 27.5%/);
+      expect(impairment?.summary).toMatch(/Ebbing Fury reduces Damage Dealt for .+ by 27.5%/);
       expect(impairment ? impairment.details.join(' ') : '').not.toContain('Recovery Received +20%');
       expect(text).not.toContain('Damage Dealt reduction at current effective level');
       expect(text).not.toContain('Ranked progression');

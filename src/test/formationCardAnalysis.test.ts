@@ -384,13 +384,12 @@ describe('formation card analysis presentation', () => {
     const strategic = syrax.provides.filter((item) => item.abilityName === 'Strategic Revival');
 
     expect(strategic.length).toBeGreaterThanOrEqual(2);
-    expect(strategic.some((item) => interactionHeading(item) === 'Syrax → Venator or Vhagar or Syrax')).toBe(true);
+    expect(strategic.some((item) => item.targetLabel?.includes('Venator') && item.targetLabel?.includes('Vhagar'))).toBe(true);
     expect(strategic.some((item) => interactionHeading(item) === 'Syrax → Team')).toBe(false);
     expect(strategic.some((item) =>
       item.summary.includes('Target not guaranteed') ||
       item.detail.includes('Target not guaranteed')
     )).toBe(true);
-    expect(strategic.some((item) => interactionHeading(item) === 'Syrax → Vhagar' && !item.summary.includes('Target not guaranteed'))).toBe(true);
   });
 
   it('renders Battle Leader as a Venator or Vhagar candidate group', () => {
