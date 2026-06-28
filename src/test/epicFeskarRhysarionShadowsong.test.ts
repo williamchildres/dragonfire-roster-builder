@@ -199,7 +199,7 @@ describe('Feskar, Rhysarion, and Shadowsong Epic profiles', () => {
     expect(burnTraceText).toContain('Base current Fire Damage Rate: 40%.');
     expect(burnTraceText).toContain('Enhanced current Fire Damage Rate: 60%.');
     expect(burnTraceText).toContain('Conditional multiplier: 1.5x');
-    expect(burnTraceText).toContain('Burn must be active on the same enemy that Emerald Inferno affects.');
+    expect(burnTraceText).toContain('Burn must be active on the same enemy that Emerald Inferno checks for damage output.');
     expect(burnTraceText).toContain('non-Basic Physical Damage output capability');
     expect(burnTraceText).toContain('Target eligibility remains independently required');
     expect(burnTraceText).toContain('Burn application success, enemy identity, same-target overlap, and conditional uptime are unresolved.');
@@ -313,7 +313,7 @@ describe('Feskar, Rhysarion, and Shadowsong Epic profiles', () => {
     expect(traceText).toContain('Enhanced Fire Damage Rate: 30%.');
     expect(traceText).toContain('Conditional multiplier: 1.5x');
     expect(traceText).toContain('Required status category: Control.');
-    expect(traceText).toContain('Control must be active on the same enemy that Dawnsong affects.');
+    expect(traceText).toContain('Control must be active on the same enemy that Dawnsong checks for damage output.');
     expect(traceText).toContain('Control on one enemy does not enable Dawnsong against a different enemy.');
     expect(traceText).toContain('Control does not alter normal Dawnsong target eligibility.');
     expect(traceText).toContain('Supplier effective Habit Level: 1.');
@@ -330,9 +330,9 @@ describe('Feskar, Rhysarion, and Shadowsong Epic profiles', () => {
     expect(normalText).toContain('Feskar can apply Stagger, which belongs to the Control category.');
     expect(normalText).toContain('On Rounds 2, 5 and 8, Dawnsong deals Fire Damage at a 20% rate to 3 enemies in any lane.');
     expect(normalText).toMatch(/Against the same target while it has Control, the rate increases 1\.5[x×] to 30%\./);
-    expect(normalText).toContain('Unyielding Grasp has a 10% chance each round to apply Stagger to one enemy in any lane, prioritizing Warriors, for 3 rounds.');
-    expect(normalText).toContain('same-target overlap');
-    expect(normalText).toContain('The same enemy must keep Stagger active when Dawnsong checks it; same-target overlap');
+    expect(normalText).toContain('Unyielding Grasp has a 10% chance each round to apply Stagger to one enemy in any lane, prioritizing Warriors. Stagger lasts 3 rounds.');
+    expect(normalText).toContain('same-enemy overlap');
+    expect(normalText).toContain('Stagger must remain active on the same enemy that Dawnsong checks for damage output');
     expect(normalText).not.toMatch(/\bL[1-5]\b|Ranked progression/i);
   });
 
@@ -377,7 +377,7 @@ describe('Feskar, Rhysarion, and Shadowsong Epic profiles', () => {
     expect(breathText).toContain('Base Fire Damage Rate: 100%.');
     expect(breathText).toContain('Enhanced Fire Damage Rate: 150%.');
     expect(breathText).toContain('Conditional multiplier: 1.5x');
-    expect(breathText).toContain('Panic must be active on the same enemy that Breath of Fire affects.');
+    expect(breathText).toContain('Panic must be active on the same enemy that Breath of Fire checks for damage output.');
     expect(breathText).toContain('Panic on one enemy does not enable Breath of Fire against a different enemy.');
     expect(breathText).toContain('Panic does not alter normal Breath of Fire target eligibility.');
     expect(breathText).toContain('Current effective Instill Fear Habit Level: 1.');
@@ -658,7 +658,7 @@ describe('Feskar, Rhysarion, and Shadowsong Epic profiles', () => {
     expect(shroudText).toContain('Round 5 from a successful Round 5 application only if Shroud of Shadows resolves before Dawnsong that round');
     expect(shroudText).toContain('Round 8 after a successful Round 7 application');
     expect(shroudText).not.toContain('specific rounds');
-    expect(shroudText).toContain('same-target overlap');
+    expect(shroudText).toContain('same-enemy overlap');
 
     const phantomTraces = traces.filter((trace) => trace.sourceAbilityId === 'daemoros-phantoms-veil');
     expect(phantomTraces.some((trace) => /Exclusive one-of choice/i.test([...trace.effects, ...trace.matchedFacts, trace.explanation].join(' ')))).toBe(true);
@@ -1517,7 +1517,7 @@ describe('Feskar, Rhysarion, and Shadowsong Epic profiles', () => {
     expect(sirenText).toContain('Stagger duration: until end of current round.');
     expect(sirenText).toContain('Stagger does not carry this interaction to Rounds 5 and 8.');
     expect(sirenText).toContain('Action order within the overlapping round is unresolved.');
-    expect(sirenText).toContain('The status and dependent damage must affect the same enemy.');
+    expect(sirenText).toContain('The supplied status and dependent damage output must involve the same enemy.');
     expect(sirenText).not.toMatch(/Stagger 3 enemies/i);
     expect(sirenText).not.toMatch(/all Siren's Call targets/i);
 

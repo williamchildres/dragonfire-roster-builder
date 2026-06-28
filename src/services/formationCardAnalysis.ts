@@ -1,5 +1,7 @@
 import { FORMATION_POSITIONS, TROOP_TYPES, type AbilityDefinition, type AbilityEffect, type AbilitySchedule, type AbilityScheduleOverride, type ActivationRoll, type Dragon, type FormationPosition, type OwnedDragon, type RankedValue, type TroopType } from '../models/dragon';
 import type { FormationAnalysisInput, RequirementTrace, SynergyTrace, TraceConfidence, TraceStatus } from '../models/synergy';
+import type { OutputCapability } from '../models/synergy';
+import { deriveOutputCapabilities } from './effectCapabilities';
 import { rankedValueForHabitLevel, resolveEffectiveHabitLevelForAbility } from './habitLevels';
 import { isNormalSynergyTrace } from './synergyTrace';
 
@@ -101,6 +103,7 @@ export function buildFormationCardPresentation(
 ): FormationCardPresentation {
   const selectedIds = new Set(Object.values(formation).filter((dragonId): dragonId is string => Boolean(dragonId)));
   const dragonById = new Map(allDragons.map((dragon) => [dragon.id, dragon]));
+  const outputCapabilities = deriveOutputCapabilities(allDragons);
   const normalTraces = traces.filter(
     (trace) =>
       (isNormalSynergyTrace(trace) || isVisibleInternalProvidesTrace(trace)) &&
@@ -139,6 +142,7 @@ export function buildFormationCardPresentation(
         source,
         recipient: null,
         allDragons,
+        outputCapabilities,
         previewEnabled: options.previewEnabled === true,
         targetLabel,
         isCandidate: false,
@@ -158,6 +162,7 @@ export function buildFormationCardPresentation(
             source,
             recipient,
             allDragons,
+            outputCapabilities,
             previewEnabled: options.previewEnabled === true,
             targetLabel: exactMultiTarget || allMatching ? null : `Candidate ${index + 1} of ${eligible.length}`,
             isCandidate: !exactMultiTarget && !allMatching,
@@ -176,6 +181,7 @@ export function buildFormationCardPresentation(
       source,
       recipient,
       allDragons,
+      outputCapabilities,
       previewEnabled: options.previewEnabled === true,
       targetLabel: null,
       isCandidate: false,
@@ -198,6 +204,7 @@ export function buildFormationCardPresentation(
         source,
         recipient: null,
         allDragons,
+        outputCapabilities,
         previewEnabled: options.previewEnabled === true,
         targetLabel: providerTargetLabel,
         isCandidate: false,
@@ -345,6 +352,7 @@ function toCardInteraction({
   source,
   recipient,
   allDragons,
+  outputCapabilities,
   previewEnabled,
   targetLabel,
   isCandidate,
@@ -355,6 +363,7 @@ function toCardInteraction({
   source: Dragon;
   recipient: Dragon | null;
   allDragons: Dragon[];
+  outputCapabilities: OutputCapability[];
   previewEnabled: boolean;
   targetLabel: string | null;
   isCandidate: boolean;
@@ -363,18 +372,28 @@ function toCardInteraction({
 }): FormationCardInteraction {
   const abilityName = getAbilityName(source, trace.sourceAbilityId);
   const state = projectedInteractionState(trace, previewEnabled);
-  const detail = canonicalCardText(trace.explanation, allDragons);
+  const baseDetail = canonicalCardText(trace.explanation, allDragons);
+  const detail = projectRecipientOutputDetail(baseDetail, trace, recipient, outputCapabilities, allDragons);
   const baseSummaryLines = summarizeTrace(trace, source, recipient, detail, {
     isCandidate,
     candidateTotal,
     targetLabel,
+    outputCapabilities,
+    allDragons,
   }).map(sanitizeNormalCardText).filter((line): line is string => Boolean(line));
   const summaryLines = normalizeFormationCardSummaryLines(trace, source, recipient, detail, baseSummaryLines);
   const summary = compactSummaryText(summaryLines, candidateTotal);
   const detailText = omitNormalCardSummarySentences(sanitizeNormalCardText(detail), summaryLines);
   const effects = sanitizeNormalCardEffects(trace.effects, summaryLines);
   const presentationFamily = interactionPresentationFamily(trace);
-  const fullExplanation = detailText || sanitizeNormalCardText([trace.explanation, ...trace.matchedFacts, ...trace.effects].join(' ')) || summaryLines.join(' ');
+  const aggregateFallback = projectRecipientOutputDetail(
+    sanitizeNormalCardText([trace.explanation, ...trace.matchedFacts, ...trace.effects].join(' ')),
+    trace,
+    recipient,
+    outputCapabilities,
+    allDragons,
+  );
+  const fullExplanation = detailText || aggregateFallback || summaryLines.join(' ');
   const relationshipId = [
     trace.sourceDragonId,
     trace.sourceAbilityId ?? trace.ruleId,
@@ -457,6 +476,31 @@ function interactionPresentationFamily(trace: SynergyTrace): string {
     return `${trace.channel}-support`;
   }
   return trace.matchKind ?? trace.title;
+}
+
+function projectRecipientOutputDetail(
+  detail: string,
+  trace: SynergyTrace,
+  recipient: Dragon | null,
+  outputCapabilities: OutputCapability[],
+  allDragons: Dragon[],
+): string {
+  if (!trace.targetSelectionGroup || !(trace.matchedOutputCapabilityIds?.length)) {
+    return detail;
+  }
+  const outputs = matchedOutputsForPresentation(trace, recipient, outputCapabilities);
+  if (!recipient) {
+    const grouped = groupedOutputLabelsByDragon(outputs, allDragons);
+    return detail.replace(
+      /Qualifying outputs:\s*[^.]+\./i,
+      grouped.length > 0 ? `Candidate outputs: ${grouped.join('; ')}.` : '',
+    ).replace(/\s+/g, ' ').trim();
+  }
+  const labels = unique(outputs.map((output) => formatOutputCapabilityLabel(output)));
+  return detail.replace(
+    /Qualifying outputs:\s*[^.]+\./i,
+    labels.length > 0 ? `Qualifying outputs for ${recipient.name}: ${joinEnglishList(labels)}.` : '',
+  ).replace(/\s+/g, ' ').trim();
 }
 
 function normalizeFormationCardSummaryLines(
@@ -701,6 +745,7 @@ function sanitizeNormalCardText(value: string): string {
     .replace(/\s*Ranked progression:\s.*?L5\s[-+]?\d+(?:\.\d+)?%?\./g, '')
     .replace(/\s*(Damage Dealt|Damage Received|Physical Damage Received|Tactical Damage Received|Fire Damage Received|Recovery Rate) reduction at current effective level:\s[-+]?\d+(?:\.\d+)?%?\./gi, '')
     .replace(/Activation scope is unresolved between one shared roll and independent per-target rolls\./gi, 'Whether this uses one shared roll or separate per-target rolls is unresolved.')
+    .replace(/\b[A-Z][A-Za-z' -]+ provides Recovery through [A-Z][A-Za-z' -]+\. ([A-Z][A-Za-z' -]+) has \1's ([A-Z][A-Za-z' -]+) Recovery Received modifier, increasing received Recovery by (\d+(?:\.\d+)?)%\./g, 'If $1 is selected, $2 increases Recovery Received by $3%.')
     .trim();
 }
 
@@ -836,12 +881,18 @@ function summarizeTrace(
   source: Dragon,
   recipient: Dragon | null,
   detail: string,
-  target: { isCandidate: boolean; candidateTotal: number | null; targetLabel: string | null },
+  target: {
+    isCandidate: boolean;
+    candidateTotal: number | null;
+    targetLabel: string | null;
+    outputCapabilities: OutputCapability[];
+    allDragons: Dragon[];
+  },
 ): string[] {
   if (target.isCandidate && trace.channel) {
     return [
       `${formatToken(trace.channel)} support; one of ${numberWord(target.candidateTotal ?? 0)} eligible recipients.`,
-      ...targetSelectionEffectLines(trace),
+      ...targetSelectionEffectLines(trace, recipient, target.outputCapabilities, target.allDragons),
     ];
   }
   if (isAllMatchingTargetSelection(trace) && trace.channel) {
@@ -856,27 +907,33 @@ function summarizeTrace(
     if (trace.targetSelectionGroup.targetCount > 1) {
       return [
         `Eligible recipients: ${eligibleNames}.`,
-        ...targetSelectionEffectLines(trace),
+        ...targetSelectionEffectLines(trace, recipient, target.outputCapabilities, target.allDragons),
       ];
     }
     if (trace.targetSelectionGroup.eligibleRecipientDragonIds.length > 1) {
       return [
         `Eligible selected-target candidates: ${eligibleNames}.`,
         'One candidate is selected when the activation succeeds; the selected target is unresolved.',
-        ...targetSelectionEffectLines(trace),
+        ...targetSelectionEffectLines(trace, recipient, target.outputCapabilities, target.allDragons),
       ];
     }
     if (trace.targetSelectionGroup.selectionUncertain && trace.targetSelectionGroup.eligibleRecipientDragonIds.length === 1) {
       return [
         `Resolved selected target in this formation: ${eligibleNames}.`,
-        ...targetSelectionEffectLines(trace),
+        ...targetSelectionEffectLines(trace, recipient, target.outputCapabilities, target.allDragons),
       ];
     }
     const targetNames = target.targetLabel ? `: ${target.targetLabel}` : '';
     return [
       `Resolved selected target in this formation${targetNames}.`,
-      ...targetSelectionEffectLines(trace),
+      ...targetSelectionEffectLines(trace, recipient, target.outputCapabilities, target.allDragons),
     ];
+  }
+  if (trace.matchKind === 'status-condition-enablement') {
+    const compactDependency = compactStatusDependencySummary(trace);
+    if (compactDependency.length > 0) {
+      return compactDependency;
+    }
   }
   if (/First-Strike enables Infernal Burst/i.test(trace.title) || /First-Strike.*Infernal Burst/i.test(detail)) {
     return ['May receive First-Strike; Infernal Burst deals 1.5× while active.'];
@@ -961,7 +1018,7 @@ function summarizeTrace(
     if (exclusiveChoice) {
       return [exclusiveChoice.replace(/^Exclusive one-of choice:\s*/i, '')];
     }
-    const outputSummary = qualifyingOutputSummaryLines(trace, recipient);
+    const outputSummary = qualifyingOutputSummaryLines(trace, recipient, target.outputCapabilities, target.allDragons);
     if (outputSummary.length > 0) {
       return outputSummary;
     }
@@ -975,9 +1032,62 @@ function summarizeTrace(
   return [detail.replaceAll('1.5x', '1.5×')];
 }
 
-function targetSelectionEffectLines(trace: SynergyTrace): string[] {
+function compactStatusDependencySummary(trace: SynergyTrace): string[] {
+  const text = [trace.explanation, ...trace.matchedFacts, ...trace.effects, ...trace.assumptions].join(' ');
+  const titleMatch = trace.title.match(/^(.+?) enables (.+)$/i);
+  const suppliedStatus = titleMatch?.[1]?.trim() ?? text.match(/Required status condition:\s*([^.]+)\./i)?.[1]?.trim();
+  const dependentAbility = titleMatch?.[2]?.trim() ?? trace.recipientAbilityId?.split('-').slice(1).join(' ');
+  if (!suppliedStatus || !dependentAbility) {
+    return [];
+  }
+  const chanceMatch = text.match(/The ([A-Za-z-]+) application chance is ([\d.]+%) for a normal target and ([\d.]+%) for that same target while it has ([A-Za-z-]+)/i);
+  if (!chanceMatch) {
+    return [];
+  }
+  const dependentStatus = chanceMatch[1]!;
+  const baseChance = chanceMatch[2]!;
+  const enhancedChance = chanceMatch[3]!;
+  const benefit = `${suppliedStatus} can increase ${possessive(dependentAbility)} ${dependentStatus} chance from ${baseChance} to ${enhancedChance} against the same enemy.`;
+  const timing = compactDependencyTiming(text, suppliedStatus);
+  const uncertainty = compactDependencyUncertainty(text);
+  return [benefit, timing, uncertainty].filter((line): line is string => Boolean(line));
+}
+
+function compactDependencyTiming(text: string, suppliedStatus: string): string {
+  const recurring = text.match(/([A-Za-z' -]+) and ([A-Za-z' -]+) both check each round\./i);
+  const sameRound = text.match(/A [A-Za-z-]+ applied during the current round can enhance [A-Za-z' -]+ only if ([A-Za-z' -]+) resolves first\./i);
+  if (recurring) {
+    return `Both effects check each round. ${suppliedStatus} from the previous round can carry over${sameRound ? `; a same-round ${suppliedStatus} requires ${sameRound[1]!.trim()} to resolve first.` : '.'}`;
+  }
+  const windows = text.match(/can overlap .*? in these windows: ([^.]+)\./i);
+  if (windows) {
+    return `Overlap windows: ${windows[1]}.`;
+  }
+  return '';
+}
+
+function compactDependencyUncertainty(text: string): string {
+  const pieces = [
+    'Application',
+    /same enemy|same-target|same-enemy/i.test(text) ? 'same-enemy overlap' : 'status uptime',
+    /action order|resolves first/i.test(text) ? 'action order' : null,
+    /shared roll|per-target rolls|roll scope/i.test(text) ? 'roll scope' : null,
+  ].filter((piece): piece is string => Boolean(piece));
+  return `${pieces.join(', ')} remain conditional.`;
+}
+
+function possessive(value: string): string {
+  return value.endsWith('s') ? `${value}'` : `${value}'s`;
+}
+
+function targetSelectionEffectLines(
+  trace: SynergyTrace,
+  recipient: Dragon | null,
+  outputCapabilities: OutputCapability[],
+  allDragons: Dragon[],
+): string[] {
   return unique([
-    ...qualifyingOutputSummaryLines(trace),
+    ...qualifyingOutputSummaryLines(trace, recipient, outputCapabilities, allDragons),
     trace.effects.find((effect) => /Activation chance:/i.test(effect)),
     trace.effects.find((effect) => /Timing:/i.test(effect)),
     trace.effects.find((effect) => /Enhanced by/i.test(effect)),
@@ -985,7 +1095,30 @@ function targetSelectionEffectLines(trace: SynergyTrace): string[] {
   ].filter((line): line is string => Boolean(line)));
 }
 
-function qualifyingOutputSummaryLines(trace: SynergyTrace, recipient: Dragon | null = null): string[] {
+function qualifyingOutputSummaryLines(
+  trace: SynergyTrace,
+  recipient: Dragon | null = null,
+  outputCapabilities: OutputCapability[] = [],
+  allDragons: Dragon[] = [],
+): string[] {
+  const outputs = matchedOutputsForPresentation(trace, recipient, outputCapabilities);
+  if (outputs.length > 0) {
+    if (!recipient && trace.targetSelectionGroup && allDragons.length > 0) {
+      const grouped = groupedOutputLabelsByDragon(outputs, allDragons);
+      return grouped.length > 0
+        ? [
+            `One selected candidate can receive ${formatToken(trace.channel ?? 'damage-dealt')} support.`,
+            `Candidate outputs: ${grouped.join('; ')}.`,
+          ]
+        : [];
+    }
+    const labels = unique(outputs.map((output) => formatOutputCapabilityLabel(output)));
+    const labelText = joinEnglishList(labels);
+    if (recipient && labels.length === 1) {
+      return [`Increases ${labelText}.`, `${formatToken(trace.channel ?? 'damage-dealt')} support for ${recipient.name}.`];
+    }
+    return [recipient ? `Increases ${recipient.name}'s ${labelText}.` : `Increases ${labelText}.`];
+  }
   const text = [trace.explanation, ...trace.matchedFacts, ...trace.effects].join(' ');
   const match = text.match(/Qualifying outputs:\s*([^.]+)\./i);
   if (!match) {
@@ -1003,6 +1136,38 @@ function qualifyingOutputSummaryLines(trace: SynergyTrace, recipient: Dragon | n
     return [`Increases ${labelText}.`, `${formatToken(trace.channel ?? 'damage-dealt')} support for ${recipient.name}.`];
   }
   return [recipient ? `Increases ${recipient.name}'s ${labelText}.` : `Increases ${labelText}.`];
+}
+
+function matchedOutputsForPresentation(
+  trace: SynergyTrace,
+  recipient: Dragon | null,
+  outputCapabilities: OutputCapability[],
+): OutputCapability[] {
+  const ids = trace.matchedOutputCapabilityIds ?? [];
+  if (ids.length === 0 || outputCapabilities.length === 0) {
+    return [];
+  }
+  const outputs = ids
+    .map((id) => outputCapabilities.find((output) => output.id === id))
+    .filter((output): output is OutputCapability => Boolean(output));
+  return recipient
+    ? outputs.filter((output) => output.dragonId === recipient.id)
+    : outputs;
+}
+
+function groupedOutputLabelsByDragon(outputs: OutputCapability[], allDragons: Dragon[]): string[] {
+  const dragonNames = new Map(allDragons.map((dragon) => [dragon.id, dragon.name]));
+  const grouped = new Map<string, string[]>();
+  for (const output of outputs) {
+    grouped.set(output.dragonId, unique([...(grouped.get(output.dragonId) ?? []), formatOutputCapabilityLabel(output)]));
+  }
+  return [...grouped.entries()]
+    .sort(([left], [right]) => left.localeCompare(right))
+    .map(([dragonId, labels]) => `${dragonNames.get(dragonId) ?? dragonId}: ${joinEnglishList(labels)}`);
+}
+
+function formatOutputCapabilityLabel(output: OutputCapability): string {
+  return output.label.replace(/:\s*/g, ' ').replace(/\s+/g, ' ').trim();
 }
 
 function deriveCommandSummary(
@@ -2812,7 +2977,9 @@ function interactionPurpose(trace: SynergyTrace): string | null {
     return `Enemy ${formatToken(trace.channel ?? 'damage-dealt')} vulnerability`;
   }
   if (trace.matchKind === 'periodic-status-damage') {
-    return 'Periodic status damage';
+    const status = trace.title.match(/^(.+?) periodic/i)?.[1]?.trim() ??
+      trace.matchedFacts.find((fact) => /Status identity:/i.test(fact))?.replace(/Status identity:\s*/i, '').replace(/\.$/, '');
+    return `${status ? `${formatStatusName(status)} ` : ''}periodic damage`;
   }
   if (trace.matchKind === 'extra-basic-attack-trigger') {
     return 'Extra Basic Attack trigger';

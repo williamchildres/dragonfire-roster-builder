@@ -484,14 +484,14 @@ describe('Daemoros and Vaeldra Epic profiles', () => {
     const presentation = buildFormationCardPresentation(formation, dragons, traces.filter(isNormalSynergyTrace), { previewEnabled: false });
     const daemoros = presentation.cards.find((card) => card.dragonId === 'daemoros')!;
     const panicCards = daemoros.provides.filter((item) =>
-      item.effectTitle.includes('Periodic status damage') &&
+      item.effectTitle.includes('Panic periodic damage') &&
       ['Instill Fear', 'Darkening Fear'].includes(item.abilityName)
     );
 
     expect(panicCards).toHaveLength(2);
     expect(panicCards.every((item) => item.isEnemyFacing)).toBe(true);
     expect(panicCards.every((item) => item.recipientDragonId === null)).toBe(true);
-    expect(presentation.cards.some((card) => card.receives.some((item) => item.effectTitle.includes('Periodic status damage')))).toBe(false);
+    expect(presentation.cards.some((card) => card.receives.some((item) => item.effectTitle.includes('periodic damage')))).toBe(false);
   });
 
   it('surfaces Burn periodic Fire Damage through the shared status-damage path', () => {

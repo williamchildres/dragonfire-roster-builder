@@ -173,9 +173,12 @@ describe('Caraxes, Vhagar, and Syrax review regression', () => {
     expect(firstStrikeSource).toBeDefined();
     expect(traceText(firstStrikeSource)).toContain('Source effect ID: blazing-fury-first-strike.');
     expect(traceText(firstStrikeSource)).toContain('Target: one ally.');
-    expect(traceText(firstStrikeSource)).toContain('Selected ally recipient: Caraxes.');
+    expect(traceText(firstStrikeSource)).toContain('Resolved ally recipient: Caraxes.');
+    expect(traceText(firstStrikeSource)).toContain('Recipient resolution basis: explicit Fire-output preference.');
+    expect(traceText(firstStrikeSource)).toContain('Activation success is unresolved.');
     expect(traceText(firstStrikeSource)).toContain('Dependent recipient candidate: caraxes.');
-    expect(traceText(firstStrikeSource)).toContain('First-Strike and Fire Damage support share the selected ally.');
+    expect(traceText(firstStrikeSource)).toContain('First-Strike and Fire Damage support share the resolved ally recipient.');
+    expect(traceText(firstStrikeSource)).not.toContain('Selected ally recipient is unresolved.');
     expect(traceText(firstStrikeSource)).toContain('Status application chance: 20%.');
     expect(traceText(firstStrikeSource)).toContain('Duration: 2 rounds.');
     expect(traceText(firstStrikeSource)).not.toMatch(/one enemy|Selected enemy|enemy identity/i);
@@ -227,7 +230,9 @@ describe('Caraxes, Vhagar, and Syrax review regression', () => {
     expect(fieryText).toContain('Recurring overlap pattern: previous-round carryover from Round 2 onward; same-round overlap requires Crippling Inferno before Fiery Bonds.');
     expect(fieryText).not.toContain('Round 10');
     expect(fieryText).not.toContain('Round 2 after a successful Round 1 application');
-    expect(fieryText).toContain('The status and dependent damage must affect the same enemy.');
+    expect(fieryText).toContain('Burn must be active on the same enemy that Fiery Bonds checks for Taunt application.');
+    expect(fieryText).toContain('The supplied status and dependent Taunt application must involve the same enemy.');
+    expect(fieryText).not.toContain('dependent damage');
     expect(fieryText).toContain('same-target overlap');
     expect(fieryText).toContain('The Taunt application chance is 25% for a normal target and 50% for that same target while it has Burn');
     expect(fieryText).not.toContain('effective Habit Level unknown');
@@ -248,6 +253,15 @@ describe('Caraxes, Vhagar, and Syrax review regression', () => {
     const blazingFuryFire = syrax.provides.find((item) => /Blazing Fury - Fire Damage support/i.test(item.effectTitle));
     const slowApplications = caraxes.provides.filter((item) => /Crippling Inferno - Slow application/i.test(item.effectTitle));
     const burnApplications = caraxes.provides.filter((item) => /Crippling Inferno - Burn application/i.test(item.effectTitle));
+    const burnPeriodic = caraxes.provides.find((item) => /Crippling Inferno - Burn periodic damage/i.test(item.effectTitle));
+    const eclipseProvider = vhagar.provides.find((item) =>
+      item.abilityName === 'Eclipse Cover' &&
+      item.targetSelectionMode &&
+      /Damage Dealt support/i.test(item.effectTitle)
+    );
+    const eclipseCaraxes = caraxes.receives.find((item) => item.abilityName === 'Eclipse Cover' && /Damage Dealt support/i.test(item.effectTitle));
+    const eclipseSyrax = syrax.receives.find((item) => item.abilityName === 'Eclipse Cover' && /Damage Dealt support/i.test(item.effectTitle));
+    const fieryDependency = vhagar.receives.find((item) => /Burn enhances Fiery Bonds chance/i.test(item.effectTitle));
 
     expect(fireVulnerability).toHaveLength(1);
     expect([fireVulnerability[0]!.summary, fireVulnerability[0]!.detail, ...fireVulnerability[0]!.summaryLines, ...fireVulnerability[0]!.details].join(' ')).toContain('Caraxes');
@@ -259,7 +273,7 @@ describe('Caraxes, Vhagar, and Syrax review regression', () => {
 
     expect(strategicRecovery).toHaveLength(1);
     expect(strategicRecovery[0]!.targetLabel).toBe('Caraxes or Vhagar or Syrax');
-    expect(interactionText(strategicRecovery[0]!)).toContain('Ancestral Shield');
+    expect(interactionText(strategicRecovery[0]!)).toContain('If Vhagar is selected, Ancestral Shield increases Recovery Received by 15%.');
     expect(vhagar.receives.some((item) =>
       item.abilityName === 'Strategic Revival' &&
       [...item.summaryLines, item.summary, item.detail, ...item.details, ...item.effects].join(' ').includes('Ancestral Shield')
@@ -272,5 +286,39 @@ describe('Caraxes, Vhagar, and Syrax review regression', () => {
     expect(caraxes.receives.some((item) => /Blazing Fury - Fire Damage support/i.test(item.effectTitle))).toBe(true);
     expect(slowApplications).toHaveLength(1);
     expect(burnApplications).toHaveLength(1);
+    expect(burnPeriodic).toBeDefined();
+
+    expect(eclipseProvider).toBeDefined();
+    const eclipseProviderText = interactionText(eclipseProvider!);
+    expect(eclipseProviderText).toContain('Candidate outputs: Caraxes: Crippling Inferno Burn and Infernal Burst Fire Damage');
+    expect(eclipseProviderText).toContain('Syrax: Blazing Fury Tactical Damage');
+    expect(eclipseProviderText).toContain('Vhagar: Fiery Bonds Physical Damage and Skyward Titan Physical Damage');
+    expect(eclipseProviderText).not.toContain('Qualifying outputs: Crippling Inferno');
+    expect(vhagar.receives.some((item) => item.abilityName === 'Eclipse Cover' && /Damage Dealt support/i.test(item.effectTitle))).toBe(false);
+
+    expect(eclipseCaraxes).toBeDefined();
+    const eclipseCaraxesText = interactionText(eclipseCaraxes!);
+    expect(eclipseCaraxesText).toContain('Infernal Burst Fire Damage');
+    expect(eclipseCaraxesText).toContain('Crippling Inferno Burn');
+    expect(eclipseCaraxesText).not.toContain('Blazing Fury Tactical Damage');
+    expect(eclipseCaraxesText).not.toContain('Fiery Bonds Physical Damage');
+    expect(eclipseCaraxesText).not.toContain('Skyward Titan Physical Damage');
+
+    expect(eclipseSyrax).toBeDefined();
+    const eclipseSyraxText = interactionText(eclipseSyrax!);
+    expect(eclipseSyraxText).toContain('Blazing Fury Tactical Damage');
+    expect(eclipseSyraxText).not.toContain('Infernal Burst Fire Damage');
+    expect(eclipseSyraxText).not.toContain('Crippling Inferno Burn');
+    expect(eclipseSyraxText).not.toContain('Fiery Bonds Physical Damage');
+    expect(eclipseSyraxText).not.toContain('Skyward Titan Physical Damage');
+
+    expect(fieryDependency).toBeDefined();
+    expect(fieryDependency!.summary).toContain("Burn can increase Fiery Bonds' Taunt chance from 25% to 50% against the same enemy.");
+    expect(fieryDependency!.summary).toContain('Both effects check each round.');
+    expect(fieryDependency!.summary).toContain('same-round Burn requires Crippling Inferno to resolve first.');
+    expect(fieryDependency!.summary).toContain('Application, same-enemy overlap, action order, roll scope remain conditional.');
+    expect(fieryDependency!.summary).not.toContain('Crippling Inferno has a 10% chance');
+    expect(interactionText(fieryDependency!)).toContain('Crippling Inferno has a 10% chance each round');
+    expect(interactionText(fieryDependency!)).toContain('Taunt lasts 2 rounds.');
   });
 });
