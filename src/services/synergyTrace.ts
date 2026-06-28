@@ -280,6 +280,9 @@ function potentialTraceStatusReason(trace: SynergyTrace): string {
   if (/same-round|action order|resolves first/i.test(text)) {
     return 'Action order, schedule overlap, uptime, and final formula remain unresolved.';
   }
+  if (/chance|activation|uptime/i.test(text)) {
+    return 'Activation success, uptime, and final formula remain conditional.';
+  }
   if (/future|preview|unlock|progression/i.test(text)) {
     return 'Future unlock or progression requirements are not currently satisfied.';
   }
@@ -289,7 +292,9 @@ function potentialTraceStatusReason(trace: SynergyTrace): string {
 function capitalizeSentenceList(items: string[]): string {
   const joined = items.length <= 1
     ? items[0] ?? ''
-    : `${items.slice(0, -1).join(', ')}, and ${items.at(-1)}`;
+    : items.length === 2
+      ? `${items[0]} and ${items[1]}`
+      : `${items.slice(0, -1).join(', ')}, and ${items.at(-1)}`;
   return joined.charAt(0).toUpperCase() + joined.slice(1);
 }
 

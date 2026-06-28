@@ -226,6 +226,11 @@ describe('trigger, schedule override, periodic damage framework regression', () 
     expect(lightningCardText).toContain('First-Strike');
     expect(lightningCardText).toContain('Double-Strike');
     expect(lightningCardText).toContain('40%');
+    expect(lightningCardText).toContain('Round 1');
+    expect(lightningCardText).toContain('Duration: 3 rounds.');
+
+    const forestsInstinctText = cardsFor(presentation, "Forest's Instinct").map(interactionText).join(' ');
+    expect(forestsInstinctText).not.toMatch(/future progression|Future unlock/i);
 
     const collectiveMightTraces = traces.filter((trace) => trace.sourceAbilityId === 'malachite-collective-might');
     expect(collectiveMightTraces.some((trace) => trace.ruleId === 'direct-stat-support')).toBe(true);
@@ -340,6 +345,23 @@ describe('trigger, schedule override, periodic damage framework regression', () 
     expect(battleCunningText).toContain('Panic periodic Tactical Damage');
     expect(huntersBaneText).toContain('Panic periodic Tactical Damage');
 
+    const battleCunningCards = cardsFor(presentation, 'Battle Cunning').map(interactionText).join(' ');
+    expect(battleCunningCards).toContain('Enemy Physical Damage Dealt reduction');
+    expect(battleCunningCards).toContain('Enemy Fire Damage Dealt reduction');
+    expect(battleCunningCards).toContain('Enemy Strength -6.5% on 3 enemy targets.');
+    expect(battleCunningCards).toContain('Enemy Intelligence -6.5% on 3 enemy targets.');
+    const huntersBaneCards = cardsFor(presentation, "Hunter's Bane").map(interactionText).join(' ');
+    expect(huntersBaneCards).toContain('Enemy Fire Damage Dealt reduction');
+    expect(huntersBaneCards).toContain('Enemy Intelligence -30% on 1 enemy target.');
+
+    const statusApplicationCards = [
+      ...cardsFor(presentation, 'Tactical Strike'),
+      ...cardsFor(presentation, 'Tactical Assault'),
+    ].map(interactionText).join(' ');
+    expect(statusApplicationCards).toContain('independently checks 2 eligible enemy targets');
+    expect(statusApplicationCards).toContain('30% each to apply Bleed');
+    expect(statusApplicationCards).toContain('15% each to apply Panic');
+
     const stackSupport = traces.filter((trace) =>
       (trace.sourceAbilityId === 'vermax-spreading-blaze' || trace.sourceAbilityId === 'vermax-rallying-flame') &&
       trace.matchKind === 'outgoing-effect-amplification' &&
@@ -376,6 +398,12 @@ describe('trigger, schedule override, periodic damage framework regression', () 
     const radiantStunText = traceText(traces.find((trace) => trace.ruleId === 'self-status-output' && trace.sourceAbilityId === 'kalspire-radiant-conqueror' && /Stun/.test(trace.title)));
     expect(radiantStunText).toContain('Stun application is deterministic');
     expect(radiantStunText).not.toContain('Stun application success is unresolved');
+
+    const radiantCards = cardsFor(presentation, 'Radiant Conqueror');
+    expect(radiantCards.map((item) => item.effectTitle)).toEqual(expect.arrayContaining([
+      'Radiant Conqueror - Enemy Fire Damage Dealt reduction',
+      'Radiant Conqueror - Enemy non-Basic Physical Damage Dealt reduction',
+    ]));
 
     const warriorsZealCardText = cardsFor(presentation, "Warrior's Zeal")
       .filter((item) => item.recipientName === 'Kalspire')
