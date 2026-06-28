@@ -4249,7 +4249,7 @@
   "firstObservedInGame": null,
   "format": "dragonfire-dragon-profile",
   "gameVersion": null,
-  "generatedAt": "2026-06-28T19:25:57.508Z",
+  "generatedAt": "2026-06-28T20:41:01.367Z",
   "habits": [
     {
       "abilityClass": "passive",
@@ -7381,8 +7381,8 @@
   "rosterSourceStatus": "official-website",
   "slug": "crimson",
   "source": {
-    "branch": "fix/resolved-recipient-dependency-propagation-pass4",
-    "commit": "c8099ccbd2b593a5b8d47f3e5a5e7c57a00cf74c",
+    "branch": "fix/trigger-schedule-periodic-framework-pass1",
+    "commit": "74809cfa3b96657bea80e07ffa769ae970d545e9",
     "databaseVersion": "0.6.2",
     "dataSchemaVersion": 12,
     "gameBuild": "26.6.53509",
@@ -7399,8 +7399,34 @@
     {
       "abilityId": "crimson-bloodscale-terror",
       "abilityName": "Bloodscale Terror",
-      "activationChanceByHabitLevel": [],
-      "activationChanceFixed": 20,
+      "activationChanceByHabitLevel": [
+        {
+          "level": 1,
+          "unit": "percent",
+          "value": 40
+        },
+        {
+          "level": 2,
+          "unit": "percent",
+          "value": 52
+        },
+        {
+          "level": 3,
+          "unit": "percent",
+          "value": 64
+        },
+        {
+          "level": 4,
+          "unit": "percent",
+          "value": 80
+        },
+        {
+          "level": 5,
+          "unit": "percent",
+          "value": 100
+        }
+      ],
+      "activationChanceFixed": null,
       "activationGroupId": "bloodscale-terror-stun-odd-shared-activation",
       "availability": {
         "canonical": "canonical-base",
@@ -7411,14 +7437,40 @@
         "reportLabel": "Base kit; not collected in observed account",
         "userRoster": "unknown"
       },
-      "chanceByHabitLevel": [],
-      "chanceFixed": 20,
+      "chanceByHabitLevel": [
+        {
+          "level": 1,
+          "unit": "percent",
+          "value": 40
+        },
+        {
+          "level": 2,
+          "unit": "percent",
+          "value": 52
+        },
+        {
+          "level": 3,
+          "unit": "percent",
+          "value": 64
+        },
+        {
+          "level": 4,
+          "unit": "percent",
+          "value": 80
+        },
+        {
+          "level": 5,
+          "unit": "percent",
+          "value": 100
+        }
+      ],
+      "chanceFixed": null,
       "conditions": [
         {
-          "description": "One fixed Stun chance on odd-numbered rounds.",
+          "description": "Vermin's Bane replaces Bloodscale Terror's Round 1 Stun chance.",
           "evidenceIds": [],
           "id": "bloodscale-terror-stun-odd-activation-chance",
-          "label": "One fixed Stun chance on odd-numbered rounds.",
+          "label": "Vermin's Bane replaces Bloodscale Terror's Round 1 Stun chance.",
           "unresolved": false
         }
       ],
@@ -7430,10 +7482,10 @@
         "crimson-bloodscale-terror-summary-2026-06-25"
       ],
       "futureAvailable": false,
-      "id": "crimson-bloodscale-terror-bloodscale-terror-stun-stun-status-output",
+      "id": "crimson-bloodscale-terror-bloodscale-terror-stun-round-one-stun-status-output",
       "minimumDragonLevel": null,
       "requiredHabitLevel": null,
-      "sourceEffectId": "bloodscale-terror-stun",
+      "sourceEffectId": "bloodscale-terror-stun-round-one",
       "statusId": "stun",
       "targetSelector": {
         "comparisonDirection": null,

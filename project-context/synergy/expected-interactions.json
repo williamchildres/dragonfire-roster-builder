@@ -2,7 +2,8 @@
   {
     "assumptions": [
       "Trigger chance and target selection may make this conditional rather than guaranteed.",
-      "Multiple qualifying outputs are aggregated into one normal synergy trace."
+      "Multiple qualifying outputs are aggregated into one normal synergy trace.",
+      "Effects with shared activation group blazing-fury-fire-support-shared-activation use one activation roll; uptime is not calculated."
     ],
     "channel": "fire-damage",
     "confidence": "confirmed",
@@ -385,7 +386,8 @@
   {
     "assumptions": [
       "Trigger chance may make this conditional rather than guaranteed.",
-      "Multiple qualifying outputs are aggregated into one normal synergy trace."
+      "Multiple qualifying outputs are aggregated into one normal synergy trace.",
+      "Effects with shared activation group thunderous-roar-each-round-shared-activation use one activation roll; uptime is not calculated."
     ],
     "channel": "damage-dealt",
     "confidence": "confirmed",
@@ -535,7 +537,8 @@
   },
   {
     "assumptions": [
-      "Trigger chance may make this conditional rather than guaranteed."
+      "Trigger chance may make this conditional rather than guaranteed.",
+      "Effects with shared activation group thunderous-roar-each-round-shared-activation use one activation roll; uptime is not calculated."
     ],
     "channel": "damage-dealt",
     "confidence": "confirmed",
@@ -653,7 +656,7 @@
       "Recovery Rate: 100% at effective Habit Level 5.",
       "Recovery support",
       "Targets 1 Ally; caster is eligible.",
-      "Timing: Rounds 2, 5, 8."
+      "Timing: Rounds 2, 5, and 8."
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final value cannot be calculated because final combat formulas and stacking order are not fully verified.",
@@ -760,14 +763,14 @@
     "damageScope": null,
     "effects": [
       "Recovery support",
-      "Timing: Rounds 3, 6, 9.",
+      "Timing: Rounds 3, 6, and 9.",
       "Recovery Rate: 70%.",
       "Targets exactly 3 Allies; caster is eligible.",
       "Final Recovery amount remains unknown."
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final value cannot be calculated because final combat formulas and stacking order are not fully verified.",
-    "explanation": "Malachite's Warden's Rally can provide Recovery to Malachite. Timing: Rounds 3, 6, 9. Recovery Rate: 70%. Targets exactly 3 Allies; caster is eligible. Final Recovery amount remains unknown.",
+    "explanation": "Malachite's Warden's Rally can provide Recovery to Malachite. Timing: Rounds 3, 6, and 9. Recovery Rate: 70%. Targets exactly 3 Allies; caster is eligible. Final Recovery amount remains unknown.",
     "id": "ally-output-support-malachite-wardens-rally-wardens-rally-recovery-rate-output-malachite",
     "interactionScope": "internal",
     "matchedOutputCapabilityIds": [],
@@ -815,14 +818,14 @@
     "damageScope": null,
     "effects": [
       "Recovery support",
-      "Timing: Rounds 3, 6, 9.",
+      "Timing: Rounds 3, 6, and 9.",
       "Recovery Rate: 70%.",
       "Targets exactly 3 Allies; caster is eligible.",
       "Final Recovery amount remains unknown."
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final value cannot be calculated because final combat formulas and stacking order are not fully verified.",
-    "explanation": "Malachite's Warden's Rally can provide Recovery to Caraxes. Timing: Rounds 3, 6, 9. Recovery Rate: 70%. Targets exactly 3 Allies; caster is eligible. Final Recovery amount remains unknown.",
+    "explanation": "Malachite's Warden's Rally can provide Recovery to Caraxes. Timing: Rounds 3, 6, and 9. Recovery Rate: 70%. Targets exactly 3 Allies; caster is eligible. Final Recovery amount remains unknown.",
     "id": "ally-output-support-malachite-wardens-rally-wardens-rally-recovery-rate-output-caraxes",
     "interactionScope": "cross-dragon",
     "matchedOutputCapabilityIds": [],
@@ -870,14 +873,14 @@
     "damageScope": null,
     "effects": [
       "Recovery support",
-      "Timing: Rounds 3, 6, 9.",
+      "Timing: Rounds 3, 6, and 9.",
       "Recovery Rate: 70%.",
       "Targets exactly 3 Allies; caster is eligible.",
       "Final Recovery amount remains unknown."
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final value cannot be calculated because final combat formulas and stacking order are not fully verified.",
-    "explanation": "Malachite's Warden's Rally can provide Recovery to Syrax. Timing: Rounds 3, 6, 9. Recovery Rate: 70%. Targets exactly 3 Allies; caster is eligible. Final Recovery amount remains unknown.",
+    "explanation": "Malachite's Warden's Rally can provide Recovery to Syrax. Timing: Rounds 3, 6, and 9. Recovery Rate: 70%. Targets exactly 3 Allies; caster is eligible. Final Recovery amount remains unknown.",
     "id": "ally-output-support-malachite-wardens-rally-wardens-rally-recovery-rate-output-syrax",
     "interactionScope": "cross-dragon",
     "matchedOutputCapabilityIds": [],
@@ -932,7 +935,8 @@
       "Supplier effective Habit Level: 5",
       "Status application chance: 20% at effective Habit Level 5.",
       "Duration: 2 rounds.",
-      "Independent per-target checks: 3."
+      "Independent per-target checks: 3.",
+      "Shared activation group: crippling-inferno-each-round-shared-activation."
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact status target outcome cannot be calculated because activation, target identity, and uptime are unresolved.",
@@ -1000,7 +1004,8 @@
       "Supplier effective Habit Level: 5",
       "Status application chance: 20% at effective Habit Level 5.",
       "Duration: 2 rounds.",
-      "Independent per-target checks: 3."
+      "Independent per-target checks: 3.",
+      "Shared activation group: crippling-inferno-each-round-shared-activation."
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact status target outcome cannot be calculated because activation, target identity, and uptime are unresolved.",
@@ -1079,8 +1084,9 @@
       "Status application chance: 20% at effective Habit Level 5.",
       "Duration: 2 rounds.",
       "Independent per-target checks: 3.",
+      "Shared activation group: crippling-inferno-each-round-shared-activation.",
       "Supplier schedule: Rounds 1, 2, 3, 4, 5, 6, 7 and 8.",
-      "Dependent schedule: Rounds 2, 5 and 8.",
+      "Dependent schedule: Rounds 2, 5, and 8.",
       "Known possible overlap windows: Round 2 after a successful Round 1 application; Round 2 from a successful Round 2 application only if Crippling Inferno resolves before Strategic Revival that round; Round 5 after a successful Round 4 application; Round 5 from a successful Round 5 application only if Crippling Inferno resolves before Strategic Revival that round; Round 8 after a successful Round 7 application; Round 8 from a successful Round 8 application only if Crippling Inferno resolves before Strategic Revival that round.",
       "Slow duration: 2 rounds.",
       "At least one enemy must have active Slow.",
@@ -1197,8 +1203,9 @@
       "Conditional multiplier: 1.5x",
       "Status application chance: 20%.",
       "Duration: 2 rounds.",
+      "Shared activation group: blazing-fury-fire-support-shared-activation.",
       "Supplier schedule: Rounds 1, 2, 3, 4, 5, 6, 7, 8 and 9.",
-      "Dependent schedule: Rounds 3, 6 and 9.",
+      "Dependent schedule: Rounds 3, 6, and 9.",
       "Known possible overlap windows: Round 3 after a successful Round 2 application; Round 3 from a successful Round 3 application only if Blazing Fury resolves before Infernal Burst that round; Round 6 after a successful Round 5 application; Round 6 from a successful Round 6 application only if Blazing Fury resolves before Infernal Burst that round; Round 9 after a successful Round 8 application; Round 9 from a successful Round 9 application only if Blazing Fury resolves before Infernal Burst that round.",
       "First-Strike duration: 2 rounds.",
       "Caraxes is the resolved recipient of First-Strike if the supplier activates.",
@@ -1207,7 +1214,7 @@
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final value cannot be calculated because final combat formulas and stacking order are not fully verified.",
-    "explanation": "Blazing Fury has a 20% chance each round to grant First-Strike to one ally in any lane. First-Strike lasts 2 rounds. On Rounds 3, 6 and 9, Infernal Burst deals Fire Damage at a 100% rate to 3 enemies in any lane. When Caraxes has First-Strike, the rate increases 1.5x to 150%. Blazing Fury's First-Strike can overlap Infernal Burst in these windows: Round 3 after a successful Round 2 application; Round 3 from a successful Round 3 application only if Blazing Fury resolves before Infernal Burst that round; Round 6 after a successful Round 5 application; Round 6 from a successful Round 6 application only if Blazing Fury resolves before Infernal Burst that round; Round 9 after a successful Round 8 application; Round 9 from a successful Round 9 application only if Blazing Fury resolves before Infernal Burst that round. Caraxes is the resolved recipient of First-Strike if the supplier activates; Infernal Burst benefits while Caraxes has First-Strike. Activation and uptime remain unresolved. Same-round action order is unresolved.",
+    "explanation": "Blazing Fury has a 20% chance each round to grant First-Strike to one ally in any lane. First-Strike lasts 2 rounds. On Rounds 3, 6, and 9, Infernal Burst deals Fire Damage at a 100% rate to 3 enemies in any lane. When Caraxes has First-Strike, the rate increases 1.5x to 150%. Blazing Fury's First-Strike can overlap Infernal Burst in these windows: Round 3 after a successful Round 2 application; Round 3 from a successful Round 3 application only if Blazing Fury resolves before Infernal Burst that round; Round 6 after a successful Round 5 application; Round 6 from a successful Round 6 application only if Blazing Fury resolves before Infernal Burst that round; Round 9 after a successful Round 8 application; Round 9 from a successful Round 9 application only if Blazing Fury resolves before Infernal Burst that round. Caraxes is the resolved recipient of First-Strike if the supplier activates; Infernal Burst benefits while Caraxes has First-Strike. Activation and uptime remain unresolved. Same-round action order is unresolved.",
     "id": "status-condition-syrax-blazing-fury-blazing-fury-first-strike-first-strike-status-output-caraxes-infernal-burst-infernal-burst-fire-rate-output",
     "interactionScope": "cross-dragon",
     "matchedOutputCapabilityIds": [],
@@ -1271,8 +1278,9 @@
       "Supplier effective Habit Level: 5",
       "Status application chance: 100% at effective Habit Level 5.",
       "Duration: 3 rounds.",
+      "Shared activation group: lightning-strike-round-one-shared-activation.",
       "Supplier schedule: Rounds 1.",
-      "Dependent schedule: Rounds 3, 6 and 9.",
+      "Dependent schedule: Rounds 3, 6, and 9.",
       "Known possible overlap windows: Round 3 after a successful Round 1 application.",
       "First-Strike duration: 3 rounds.",
       "Caraxes is the resolved recipient of First-Strike if the supplier activates.",
@@ -1280,7 +1288,7 @@
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final value cannot be calculated because final combat formulas and stacking order are not fully verified.",
-    "explanation": "At effective Habit Level 5, Lightning Strike has a 100% chance on Rounds 1 to grant First-Strike to one ally within adjacency. First-Strike lasts 3 rounds. On Rounds 3, 6 and 9, Infernal Burst deals Fire Damage at a 100% rate to 3 enemies in any lane. When Caraxes has First-Strike, the rate increases 1.5x to 150%. Lightning Strike's First-Strike can overlap Infernal Burst in these windows: Round 3 after a successful Round 1 application. Caraxes is the resolved recipient of First-Strike if the supplier activates; Infernal Burst benefits while Caraxes has First-Strike. Activation and uptime remain unresolved.",
+    "explanation": "At effective Habit Level 5, Lightning Strike has a 100% chance on Rounds 1 to grant First-Strike to one ally within adjacency. First-Strike lasts 3 rounds. On Rounds 3, 6, and 9, Infernal Burst deals Fire Damage at a 100% rate to 3 enemies in any lane. When Caraxes has First-Strike, the rate increases 1.5x to 150%. Lightning Strike's First-Strike can overlap Infernal Burst in these windows: Round 3 after a successful Round 1 application. Caraxes is the resolved recipient of First-Strike if the supplier activates; Infernal Burst benefits while Caraxes has First-Strike. Activation and uptime remain unresolved.",
     "id": "status-condition-malachite-lightning-strike-lightning-strike-first-strike-first-strike-status-output-caraxes-infernal-burst-infernal-burst-fire-rate-output",
     "interactionScope": "cross-dragon",
     "matchedOutputCapabilityIds": [],
@@ -1990,7 +1998,7 @@
       "Activation chance: 100% at effective Habit Level 5.",
       "Damage Received decrease 20%.",
       "Duration: 2 rounds.",
-      "Timing: Rounds 2, 5, 8."
+      "Timing: Rounds 2, 5, and 8."
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final value cannot be calculated because final combat formulas and stacking order are not fully verified.",
@@ -3942,7 +3950,7 @@
     ],
     "damageScope": null,
     "effects": [
-      "Enemy Initiative reduction may improve Fire Damage outputs: Infernal Burst: Fire Damage, Crippling Inferno: Burn.",
+      "Enemy Initiative reduction may improve Fire Damage outputs: Infernal Burst: Fire Damage, Crippling Inferno: Burn, Crippling Inferno: Burn periodic Fire Damage.",
       "Applies to all qualifying Fire Damage sources."
     ],
     "exactResultKnown": false,
@@ -3952,7 +3960,8 @@
     "interactionScope": "cross-dragon",
     "matchedOutputCapabilityIds": [
       "caraxes-infernal-burst-infernal-burst-fire-rate-output",
-      "caraxes-crippling-inferno-crippling-inferno-burn-output"
+      "caraxes-crippling-inferno-crippling-inferno-burn-output",
+      "periodic-caraxes-crippling-inferno-crippling-inferno-burn-burn-output"
     ],
     "matchKind": "enemy-mitigation-reduction",
     "modifierCapabilityId": "syrax-flight-mastery-flight-mastery-initiative-down-stat-dealt-modifier",
@@ -3963,6 +3972,7 @@
     "recipientDragonId": "caraxes",
     "recipientEvidenceIds": [
       "caraxes-infernal-burst-2026-06-24",
+      "caraxes-crippling-inferno-2026-06-24",
       "caraxes-crippling-inferno-2026-06-24"
     ],
     "requirements": [
@@ -4042,7 +4052,7 @@
     ],
     "damageScope": null,
     "effects": [
-      "Enemy Initiative reduction may improve Fire Damage outputs: Infernal Burst: Fire Damage, Crippling Inferno: Burn.",
+      "Enemy Initiative reduction may improve Fire Damage outputs: Infernal Burst: Fire Damage, Crippling Inferno: Burn, Crippling Inferno: Burn periodic Fire Damage.",
       "Applies to all qualifying Fire Damage sources."
     ],
     "exactResultKnown": false,
@@ -4052,7 +4062,8 @@
     "interactionScope": "internal",
     "matchedOutputCapabilityIds": [
       "caraxes-infernal-burst-infernal-burst-fire-rate-output",
-      "caraxes-crippling-inferno-crippling-inferno-burn-output"
+      "caraxes-crippling-inferno-crippling-inferno-burn-output",
+      "periodic-caraxes-crippling-inferno-crippling-inferno-burn-burn-output"
     ],
     "matchKind": "enemy-mitigation-reduction",
     "modifierCapabilityId": "caraxes-battle-dread-battle-dread-initiative-down-stat-dealt-modifier",
@@ -4063,6 +4074,7 @@
     "recipientDragonId": "caraxes",
     "recipientEvidenceIds": [
       "caraxes-infernal-burst-2026-06-24",
+      "caraxes-crippling-inferno-2026-06-24",
       "caraxes-crippling-inferno-2026-06-24"
     ],
     "requirements": [
@@ -4422,6 +4434,7 @@
       "Scales with Intelligence.",
       "Mitigated by target Initiative.",
       "Status supplier effect: crippling-inferno-burn.",
+      "Activation group: crippling-inferno-each-round-shared-activation.",
       "Independent per-target checks: 3.",
       "Activation, target selection, target overlap, and uptime remain conditional.",
       "Final damage is not calculated."
@@ -4530,7 +4543,7 @@
     "targetSelectionGroup": null,
     "title": "Fire Damage Periodic Damage Support",
     "unresolvedQuestions": [
-      "Burn stacking, refresh, and overlapping source behavior are unknown."
+      "Burn stacking, refresh, and overlapping-source behavior remain unresolved."
     ]
   },
   {
@@ -4617,13 +4630,14 @@
     "targetSelectionGroup": null,
     "title": "Fire Damage Periodic Damage Support",
     "unresolvedQuestions": [
-      "Burn stacking, refresh, and overlapping source behavior are unknown."
+      "Burn stacking, refresh, and overlapping-source behavior remain unresolved."
     ]
   },
   {
     "assumptions": [
       "Trigger chance and target selection may make this conditional rather than guaranteed.",
-      "Multiple qualifying outputs are aggregated into one normal synergy trace."
+      "Multiple qualifying outputs are aggregated into one normal synergy trace.",
+      "Effects with shared activation group blazing-fury-fire-support-shared-activation use one activation roll; uptime is not calculated."
     ],
     "channel": "fire-damage",
     "confidence": "confirmed",
@@ -4905,7 +4919,8 @@
   {
     "assumptions": [
       "Trigger chance may make this conditional rather than guaranteed.",
-      "Multiple qualifying outputs are aggregated into one normal synergy trace."
+      "Multiple qualifying outputs are aggregated into one normal synergy trace.",
+      "Effects with shared activation group thunderous-roar-each-round-shared-activation use one activation roll; uptime is not calculated."
     ],
     "channel": "damage-dealt",
     "confidence": "confirmed",
@@ -5055,7 +5070,8 @@
   },
   {
     "assumptions": [
-      "Trigger chance may make this conditional rather than guaranteed."
+      "Trigger chance may make this conditional rather than guaranteed.",
+      "Effects with shared activation group thunderous-roar-each-round-shared-activation use one activation roll; uptime is not calculated."
     ],
     "channel": "damage-dealt",
     "confidence": "confirmed",
@@ -5173,7 +5189,7 @@
       "Recovery Rate: 100% at effective Habit Level 5.",
       "Recovery support",
       "Targets 1 Ally; caster is eligible.",
-      "Timing: Rounds 2, 5, 8."
+      "Timing: Rounds 2, 5, and 8."
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final value cannot be calculated because final combat formulas and stacking order are not fully verified.",
@@ -5280,14 +5296,14 @@
     "damageScope": null,
     "effects": [
       "Recovery support",
-      "Timing: Rounds 3, 6, 9.",
+      "Timing: Rounds 3, 6, and 9.",
       "Recovery Rate: 70%.",
       "Targets exactly 3 Allies; caster is eligible.",
       "Final Recovery amount remains unknown."
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final value cannot be calculated because final combat formulas and stacking order are not fully verified.",
-    "explanation": "Malachite's Warden's Rally can provide Recovery to Caraxes. Timing: Rounds 3, 6, 9. Recovery Rate: 70%. Targets exactly 3 Allies; caster is eligible. Final Recovery amount remains unknown.",
+    "explanation": "Malachite's Warden's Rally can provide Recovery to Caraxes. Timing: Rounds 3, 6, and 9. Recovery Rate: 70%. Targets exactly 3 Allies; caster is eligible. Final Recovery amount remains unknown.",
     "id": "ally-output-support-malachite-wardens-rally-wardens-rally-recovery-rate-output-caraxes",
     "interactionScope": "cross-dragon",
     "matchedOutputCapabilityIds": [],
@@ -5335,14 +5351,14 @@
     "damageScope": null,
     "effects": [
       "Recovery support",
-      "Timing: Rounds 3, 6, 9.",
+      "Timing: Rounds 3, 6, and 9.",
       "Recovery Rate: 70%.",
       "Targets exactly 3 Allies; caster is eligible.",
       "Final Recovery amount remains unknown."
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final value cannot be calculated because final combat formulas and stacking order are not fully verified.",
-    "explanation": "Malachite's Warden's Rally can provide Recovery to Syrax. Timing: Rounds 3, 6, 9. Recovery Rate: 70%. Targets exactly 3 Allies; caster is eligible. Final Recovery amount remains unknown.",
+    "explanation": "Malachite's Warden's Rally can provide Recovery to Syrax. Timing: Rounds 3, 6, and 9. Recovery Rate: 70%. Targets exactly 3 Allies; caster is eligible. Final Recovery amount remains unknown.",
     "id": "ally-output-support-malachite-wardens-rally-wardens-rally-recovery-rate-output-syrax",
     "interactionScope": "cross-dragon",
     "matchedOutputCapabilityIds": [],
@@ -5390,14 +5406,14 @@
     "damageScope": null,
     "effects": [
       "Recovery support",
-      "Timing: Rounds 3, 6, 9.",
+      "Timing: Rounds 3, 6, and 9.",
       "Recovery Rate: 70%.",
       "Targets exactly 3 Allies; caster is eligible.",
       "Final Recovery amount remains unknown."
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final value cannot be calculated because final combat formulas and stacking order are not fully verified.",
-    "explanation": "Malachite's Warden's Rally can provide Recovery to Malachite. Timing: Rounds 3, 6, 9. Recovery Rate: 70%. Targets exactly 3 Allies; caster is eligible. Final Recovery amount remains unknown.",
+    "explanation": "Malachite's Warden's Rally can provide Recovery to Malachite. Timing: Rounds 3, 6, and 9. Recovery Rate: 70%. Targets exactly 3 Allies; caster is eligible. Final Recovery amount remains unknown.",
     "id": "ally-output-support-malachite-wardens-rally-wardens-rally-recovery-rate-output-malachite",
     "interactionScope": "internal",
     "matchedOutputCapabilityIds": [],
@@ -5452,7 +5468,8 @@
       "Supplier effective Habit Level: 5",
       "Status application chance: 20% at effective Habit Level 5.",
       "Duration: 2 rounds.",
-      "Independent per-target checks: 3."
+      "Independent per-target checks: 3.",
+      "Shared activation group: crippling-inferno-each-round-shared-activation."
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact status target outcome cannot be calculated because activation, target identity, and uptime are unresolved.",
@@ -5520,7 +5537,8 @@
       "Supplier effective Habit Level: 5",
       "Status application chance: 20% at effective Habit Level 5.",
       "Duration: 2 rounds.",
-      "Independent per-target checks: 3."
+      "Independent per-target checks: 3.",
+      "Shared activation group: crippling-inferno-each-round-shared-activation."
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact status target outcome cannot be calculated because activation, target identity, and uptime are unresolved.",
@@ -5599,8 +5617,9 @@
       "Status application chance: 20% at effective Habit Level 5.",
       "Duration: 2 rounds.",
       "Independent per-target checks: 3.",
+      "Shared activation group: crippling-inferno-each-round-shared-activation.",
       "Supplier schedule: Rounds 1, 2, 3, 4, 5, 6, 7 and 8.",
-      "Dependent schedule: Rounds 2, 5 and 8.",
+      "Dependent schedule: Rounds 2, 5, and 8.",
       "Known possible overlap windows: Round 2 after a successful Round 1 application; Round 2 from a successful Round 2 application only if Crippling Inferno resolves before Strategic Revival that round; Round 5 after a successful Round 4 application; Round 5 from a successful Round 5 application only if Crippling Inferno resolves before Strategic Revival that round; Round 8 after a successful Round 7 application; Round 8 from a successful Round 8 application only if Crippling Inferno resolves before Strategic Revival that round.",
       "Slow duration: 2 rounds.",
       "At least one enemy must have active Slow.",
@@ -5717,8 +5736,9 @@
       "Conditional multiplier: 1.5x",
       "Status application chance: 20%.",
       "Duration: 2 rounds.",
+      "Shared activation group: blazing-fury-fire-support-shared-activation.",
       "Supplier schedule: Rounds 1, 2, 3, 4, 5, 6, 7, 8 and 9.",
-      "Dependent schedule: Rounds 3, 6 and 9.",
+      "Dependent schedule: Rounds 3, 6, and 9.",
       "Known possible overlap windows: Round 3 after a successful Round 2 application; Round 3 from a successful Round 3 application only if Blazing Fury resolves before Infernal Burst that round; Round 6 after a successful Round 5 application; Round 6 from a successful Round 6 application only if Blazing Fury resolves before Infernal Burst that round; Round 9 after a successful Round 8 application; Round 9 from a successful Round 9 application only if Blazing Fury resolves before Infernal Burst that round.",
       "First-Strike duration: 2 rounds.",
       "Caraxes is the resolved recipient of First-Strike if the supplier activates.",
@@ -5727,7 +5747,7 @@
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final value cannot be calculated because final combat formulas and stacking order are not fully verified.",
-    "explanation": "Blazing Fury has a 20% chance each round to grant First-Strike to one ally in any lane. First-Strike lasts 2 rounds. On Rounds 3, 6 and 9, Infernal Burst deals Fire Damage at a 100% rate to 3 enemies in any lane. When Caraxes has First-Strike, the rate increases 1.5x to 150%. Blazing Fury's First-Strike can overlap Infernal Burst in these windows: Round 3 after a successful Round 2 application; Round 3 from a successful Round 3 application only if Blazing Fury resolves before Infernal Burst that round; Round 6 after a successful Round 5 application; Round 6 from a successful Round 6 application only if Blazing Fury resolves before Infernal Burst that round; Round 9 after a successful Round 8 application; Round 9 from a successful Round 9 application only if Blazing Fury resolves before Infernal Burst that round. Caraxes is the resolved recipient of First-Strike if the supplier activates; Infernal Burst benefits while Caraxes has First-Strike. Activation and uptime remain unresolved. Same-round action order is unresolved.",
+    "explanation": "Blazing Fury has a 20% chance each round to grant First-Strike to one ally in any lane. First-Strike lasts 2 rounds. On Rounds 3, 6, and 9, Infernal Burst deals Fire Damage at a 100% rate to 3 enemies in any lane. When Caraxes has First-Strike, the rate increases 1.5x to 150%. Blazing Fury's First-Strike can overlap Infernal Burst in these windows: Round 3 after a successful Round 2 application; Round 3 from a successful Round 3 application only if Blazing Fury resolves before Infernal Burst that round; Round 6 after a successful Round 5 application; Round 6 from a successful Round 6 application only if Blazing Fury resolves before Infernal Burst that round; Round 9 after a successful Round 8 application; Round 9 from a successful Round 9 application only if Blazing Fury resolves before Infernal Burst that round. Caraxes is the resolved recipient of First-Strike if the supplier activates; Infernal Burst benefits while Caraxes has First-Strike. Activation and uptime remain unresolved. Same-round action order is unresolved.",
     "id": "status-condition-syrax-blazing-fury-blazing-fury-first-strike-first-strike-status-output-caraxes-infernal-burst-infernal-burst-fire-rate-output",
     "interactionScope": "cross-dragon",
     "matchedOutputCapabilityIds": [],
@@ -5792,15 +5812,16 @@
       "Supplier effective Habit Level: 5",
       "Status application chance: 100% at effective Habit Level 5.",
       "Duration: 3 rounds.",
+      "Shared activation group: lightning-strike-round-one-shared-activation.",
       "Supplier schedule: Rounds 1.",
-      "Dependent schedule: Rounds 3, 6 and 9.",
+      "Dependent schedule: Rounds 3, 6, and 9.",
       "Known possible overlap windows: Round 3 after a successful Round 1 application.",
       "First-Strike duration: 3 rounds.",
       "Caraxes must be the ally that received First-Strike."
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final value cannot be calculated because final combat formulas and stacking order are not fully verified.",
-    "explanation": "At effective Habit Level 5, Lightning Strike has a 100% chance on Rounds 1 to grant First-Strike to one ally within adjacency. First-Strike lasts 3 rounds. On Rounds 3, 6 and 9, Infernal Burst deals Fire Damage at a 100% rate to 3 enemies in any lane. When Caraxes has First-Strike, the rate increases 1.5x to 150%. Lightning Strike's First-Strike can overlap Infernal Burst in these windows: Round 3 after a successful Round 1 application. Caraxes must be the ally that received First-Strike; activation, recipient selection, and uptime remain unresolved.",
+    "explanation": "At effective Habit Level 5, Lightning Strike has a 100% chance on Rounds 1 to grant First-Strike to one ally within adjacency. First-Strike lasts 3 rounds. On Rounds 3, 6, and 9, Infernal Burst deals Fire Damage at a 100% rate to 3 enemies in any lane. When Caraxes has First-Strike, the rate increases 1.5x to 150%. Lightning Strike's First-Strike can overlap Infernal Burst in these windows: Round 3 after a successful Round 1 application. Caraxes must be the ally that received First-Strike; activation, recipient selection, and uptime remain unresolved.",
     "id": "status-condition-malachite-lightning-strike-lightning-strike-first-strike-first-strike-status-output-caraxes-infernal-burst-infernal-burst-fire-rate-output",
     "interactionScope": "cross-dragon",
     "matchedOutputCapabilityIds": [],
@@ -6510,7 +6531,7 @@
       "Activation chance: 100% at effective Habit Level 5.",
       "Damage Received decrease 20%.",
       "Duration: 2 rounds.",
-      "Timing: Rounds 2, 5, 8."
+      "Timing: Rounds 2, 5, and 8."
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final value cannot be calculated because final combat formulas and stacking order are not fully verified.",
@@ -8372,7 +8393,7 @@
     ],
     "damageScope": null,
     "effects": [
-      "Enemy Initiative reduction may improve Fire Damage outputs: Infernal Burst: Fire Damage, Crippling Inferno: Burn.",
+      "Enemy Initiative reduction may improve Fire Damage outputs: Infernal Burst: Fire Damage, Crippling Inferno: Burn, Crippling Inferno: Burn periodic Fire Damage.",
       "Applies to all qualifying Fire Damage sources."
     ],
     "exactResultKnown": false,
@@ -8382,7 +8403,8 @@
     "interactionScope": "cross-dragon",
     "matchedOutputCapabilityIds": [
       "caraxes-infernal-burst-infernal-burst-fire-rate-output",
-      "caraxes-crippling-inferno-crippling-inferno-burn-output"
+      "caraxes-crippling-inferno-crippling-inferno-burn-output",
+      "periodic-caraxes-crippling-inferno-crippling-inferno-burn-burn-output"
     ],
     "matchKind": "enemy-mitigation-reduction",
     "modifierCapabilityId": "syrax-flight-mastery-flight-mastery-initiative-down-stat-dealt-modifier",
@@ -8393,6 +8415,7 @@
     "recipientDragonId": "caraxes",
     "recipientEvidenceIds": [
       "caraxes-infernal-burst-2026-06-24",
+      "caraxes-crippling-inferno-2026-06-24",
       "caraxes-crippling-inferno-2026-06-24"
     ],
     "requirements": [
@@ -8472,7 +8495,7 @@
     ],
     "damageScope": null,
     "effects": [
-      "Enemy Initiative reduction may improve Fire Damage outputs: Infernal Burst: Fire Damage, Crippling Inferno: Burn.",
+      "Enemy Initiative reduction may improve Fire Damage outputs: Infernal Burst: Fire Damage, Crippling Inferno: Burn, Crippling Inferno: Burn periodic Fire Damage.",
       "Applies to all qualifying Fire Damage sources."
     ],
     "exactResultKnown": false,
@@ -8482,7 +8505,8 @@
     "interactionScope": "internal",
     "matchedOutputCapabilityIds": [
       "caraxes-infernal-burst-infernal-burst-fire-rate-output",
-      "caraxes-crippling-inferno-crippling-inferno-burn-output"
+      "caraxes-crippling-inferno-crippling-inferno-burn-output",
+      "periodic-caraxes-crippling-inferno-crippling-inferno-burn-burn-output"
     ],
     "matchKind": "enemy-mitigation-reduction",
     "modifierCapabilityId": "caraxes-battle-dread-battle-dread-initiative-down-stat-dealt-modifier",
@@ -8493,6 +8517,7 @@
     "recipientDragonId": "caraxes",
     "recipientEvidenceIds": [
       "caraxes-infernal-burst-2026-06-24",
+      "caraxes-crippling-inferno-2026-06-24",
       "caraxes-crippling-inferno-2026-06-24"
     ],
     "requirements": [
@@ -8852,6 +8877,7 @@
       "Scales with Intelligence.",
       "Mitigated by target Initiative.",
       "Status supplier effect: crippling-inferno-burn.",
+      "Activation group: crippling-inferno-each-round-shared-activation.",
       "Independent per-target checks: 3.",
       "Activation, target selection, target overlap, and uptime remain conditional.",
       "Final damage is not calculated."
@@ -8960,7 +8986,7 @@
     "targetSelectionGroup": null,
     "title": "Fire Damage Periodic Damage Support",
     "unresolvedQuestions": [
-      "Burn stacking, refresh, and overlapping source behavior are unknown."
+      "Burn stacking, refresh, and overlapping-source behavior remain unresolved."
     ]
   },
   {
@@ -9046,13 +9072,14 @@
     "targetSelectionGroup": null,
     "title": "Fire Damage Periodic Damage Support",
     "unresolvedQuestions": [
-      "Burn stacking, refresh, and overlapping source behavior are unknown."
+      "Burn stacking, refresh, and overlapping-source behavior remain unresolved."
     ]
   },
   {
     "assumptions": [
       "Trigger chance and target selection may make this conditional rather than guaranteed.",
-      "Multiple qualifying outputs are aggregated into one normal synergy trace."
+      "Multiple qualifying outputs are aggregated into one normal synergy trace.",
+      "Effects with shared activation group blazing-fury-fire-support-shared-activation use one activation roll; uptime is not calculated."
     ],
     "channel": "fire-damage",
     "confidence": "confirmed",
@@ -9580,7 +9607,8 @@
   },
   {
     "assumptions": [
-      "Trigger chance may make this conditional rather than guaranteed."
+      "Trigger chance may make this conditional rather than guaranteed.",
+      "Effects with shared activation group thunderous-roar-each-round-shared-activation use one activation roll; uptime is not calculated."
     ],
     "channel": "damage-dealt",
     "confidence": "confirmed",
@@ -9687,7 +9715,8 @@
   {
     "assumptions": [
       "Trigger chance may make this conditional rather than guaranteed.",
-      "Multiple qualifying outputs are aggregated into one normal synergy trace."
+      "Multiple qualifying outputs are aggregated into one normal synergy trace.",
+      "Effects with shared activation group thunderous-roar-each-round-shared-activation use one activation roll; uptime is not calculated."
     ],
     "channel": "damage-dealt",
     "confidence": "confirmed",
@@ -9849,7 +9878,7 @@
       "Recovery Rate: 100% at effective Habit Level 5.",
       "Recovery support",
       "Targets 1 Ally; caster is eligible.",
-      "Timing: Rounds 2, 5, 8."
+      "Timing: Rounds 2, 5, and 8."
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final value cannot be calculated because final combat formulas and stacking order are not fully verified.",
@@ -9956,14 +9985,14 @@
     "damageScope": null,
     "effects": [
       "Recovery support",
-      "Timing: Rounds 3, 6, 9.",
+      "Timing: Rounds 3, 6, and 9.",
       "Recovery Rate: 70%.",
       "Targets exactly 3 Allies; caster is eligible.",
       "Final Recovery amount remains unknown."
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final value cannot be calculated because final combat formulas and stacking order are not fully verified.",
-    "explanation": "Malachite's Warden's Rally can provide Recovery to Malachite. Timing: Rounds 3, 6, 9. Recovery Rate: 70%. Targets exactly 3 Allies; caster is eligible. Final Recovery amount remains unknown.",
+    "explanation": "Malachite's Warden's Rally can provide Recovery to Malachite. Timing: Rounds 3, 6, and 9. Recovery Rate: 70%. Targets exactly 3 Allies; caster is eligible. Final Recovery amount remains unknown.",
     "id": "ally-output-support-malachite-wardens-rally-wardens-rally-recovery-rate-output-malachite",
     "interactionScope": "internal",
     "matchedOutputCapabilityIds": [],
@@ -10011,14 +10040,14 @@
     "damageScope": null,
     "effects": [
       "Recovery support",
-      "Timing: Rounds 3, 6, 9.",
+      "Timing: Rounds 3, 6, and 9.",
       "Recovery Rate: 70%.",
       "Targets exactly 3 Allies; caster is eligible.",
       "Final Recovery amount remains unknown."
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final value cannot be calculated because final combat formulas and stacking order are not fully verified.",
-    "explanation": "Malachite's Warden's Rally can provide Recovery to Syrax. Timing: Rounds 3, 6, 9. Recovery Rate: 70%. Targets exactly 3 Allies; caster is eligible. Final Recovery amount remains unknown.",
+    "explanation": "Malachite's Warden's Rally can provide Recovery to Syrax. Timing: Rounds 3, 6, and 9. Recovery Rate: 70%. Targets exactly 3 Allies; caster is eligible. Final Recovery amount remains unknown.",
     "id": "ally-output-support-malachite-wardens-rally-wardens-rally-recovery-rate-output-syrax",
     "interactionScope": "cross-dragon",
     "matchedOutputCapabilityIds": [],
@@ -10066,14 +10095,14 @@
     "damageScope": null,
     "effects": [
       "Recovery support",
-      "Timing: Rounds 3, 6, 9.",
+      "Timing: Rounds 3, 6, and 9.",
       "Recovery Rate: 70%.",
       "Targets exactly 3 Allies; caster is eligible.",
       "Final Recovery amount remains unknown."
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final value cannot be calculated because final combat formulas and stacking order are not fully verified.",
-    "explanation": "Malachite's Warden's Rally can provide Recovery to Caraxes. Timing: Rounds 3, 6, 9. Recovery Rate: 70%. Targets exactly 3 Allies; caster is eligible. Final Recovery amount remains unknown.",
+    "explanation": "Malachite's Warden's Rally can provide Recovery to Caraxes. Timing: Rounds 3, 6, and 9. Recovery Rate: 70%. Targets exactly 3 Allies; caster is eligible. Final Recovery amount remains unknown.",
     "id": "ally-output-support-malachite-wardens-rally-wardens-rally-recovery-rate-output-caraxes",
     "interactionScope": "cross-dragon",
     "matchedOutputCapabilityIds": [],
@@ -10128,7 +10157,8 @@
       "Supplier effective Habit Level: 5",
       "Status application chance: 20% at effective Habit Level 5.",
       "Duration: 2 rounds.",
-      "Independent per-target checks: 3."
+      "Independent per-target checks: 3.",
+      "Shared activation group: crippling-inferno-each-round-shared-activation."
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact status target outcome cannot be calculated because activation, target identity, and uptime are unresolved.",
@@ -10196,7 +10226,8 @@
       "Supplier effective Habit Level: 5",
       "Status application chance: 20% at effective Habit Level 5.",
       "Duration: 2 rounds.",
-      "Independent per-target checks: 3."
+      "Independent per-target checks: 3.",
+      "Shared activation group: crippling-inferno-each-round-shared-activation."
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact status target outcome cannot be calculated because activation, target identity, and uptime are unresolved.",
@@ -10275,8 +10306,9 @@
       "Status application chance: 20% at effective Habit Level 5.",
       "Duration: 2 rounds.",
       "Independent per-target checks: 3.",
+      "Shared activation group: crippling-inferno-each-round-shared-activation.",
       "Supplier schedule: Rounds 1, 2, 3, 4, 5, 6, 7 and 8.",
-      "Dependent schedule: Rounds 2, 5 and 8.",
+      "Dependent schedule: Rounds 2, 5, and 8.",
       "Known possible overlap windows: Round 2 after a successful Round 1 application; Round 2 from a successful Round 2 application only if Crippling Inferno resolves before Strategic Revival that round; Round 5 after a successful Round 4 application; Round 5 from a successful Round 5 application only if Crippling Inferno resolves before Strategic Revival that round; Round 8 after a successful Round 7 application; Round 8 from a successful Round 8 application only if Crippling Inferno resolves before Strategic Revival that round.",
       "Slow duration: 2 rounds.",
       "At least one enemy must have active Slow.",
@@ -10393,8 +10425,9 @@
       "Conditional multiplier: 1.5x",
       "Status application chance: 20%.",
       "Duration: 2 rounds.",
+      "Shared activation group: blazing-fury-fire-support-shared-activation.",
       "Supplier schedule: Rounds 1, 2, 3, 4, 5, 6, 7, 8 and 9.",
-      "Dependent schedule: Rounds 3, 6 and 9.",
+      "Dependent schedule: Rounds 3, 6, and 9.",
       "Known possible overlap windows: Round 3 after a successful Round 2 application; Round 3 from a successful Round 3 application only if Blazing Fury resolves before Infernal Burst that round; Round 6 after a successful Round 5 application; Round 6 from a successful Round 6 application only if Blazing Fury resolves before Infernal Burst that round; Round 9 after a successful Round 8 application; Round 9 from a successful Round 9 application only if Blazing Fury resolves before Infernal Burst that round.",
       "First-Strike duration: 2 rounds.",
       "Caraxes is the resolved recipient of First-Strike if the supplier activates.",
@@ -10403,7 +10436,7 @@
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final value cannot be calculated because final combat formulas and stacking order are not fully verified.",
-    "explanation": "Blazing Fury has a 20% chance each round to grant First-Strike to one ally in any lane. First-Strike lasts 2 rounds. On Rounds 3, 6 and 9, Infernal Burst deals Fire Damage at a 100% rate to 3 enemies in any lane. When Caraxes has First-Strike, the rate increases 1.5x to 150%. Blazing Fury's First-Strike can overlap Infernal Burst in these windows: Round 3 after a successful Round 2 application; Round 3 from a successful Round 3 application only if Blazing Fury resolves before Infernal Burst that round; Round 6 after a successful Round 5 application; Round 6 from a successful Round 6 application only if Blazing Fury resolves before Infernal Burst that round; Round 9 after a successful Round 8 application; Round 9 from a successful Round 9 application only if Blazing Fury resolves before Infernal Burst that round. Caraxes is the resolved recipient of First-Strike if the supplier activates; Infernal Burst benefits while Caraxes has First-Strike. Activation and uptime remain unresolved. Same-round action order is unresolved.",
+    "explanation": "Blazing Fury has a 20% chance each round to grant First-Strike to one ally in any lane. First-Strike lasts 2 rounds. On Rounds 3, 6, and 9, Infernal Burst deals Fire Damage at a 100% rate to 3 enemies in any lane. When Caraxes has First-Strike, the rate increases 1.5x to 150%. Blazing Fury's First-Strike can overlap Infernal Burst in these windows: Round 3 after a successful Round 2 application; Round 3 from a successful Round 3 application only if Blazing Fury resolves before Infernal Burst that round; Round 6 after a successful Round 5 application; Round 6 from a successful Round 6 application only if Blazing Fury resolves before Infernal Burst that round; Round 9 after a successful Round 8 application; Round 9 from a successful Round 9 application only if Blazing Fury resolves before Infernal Burst that round. Caraxes is the resolved recipient of First-Strike if the supplier activates; Infernal Burst benefits while Caraxes has First-Strike. Activation and uptime remain unresolved. Same-round action order is unresolved.",
     "id": "status-condition-syrax-blazing-fury-blazing-fury-first-strike-first-strike-status-output-caraxes-infernal-burst-infernal-burst-fire-rate-output",
     "interactionScope": "cross-dragon",
     "matchedOutputCapabilityIds": [],
@@ -10468,15 +10501,16 @@
       "Supplier effective Habit Level: 5",
       "Status application chance: 100% at effective Habit Level 5.",
       "Duration: 3 rounds.",
+      "Shared activation group: lightning-strike-round-one-shared-activation.",
       "Supplier schedule: Rounds 1.",
-      "Dependent schedule: Rounds 3, 6 and 9.",
+      "Dependent schedule: Rounds 3, 6, and 9.",
       "Known possible overlap windows: Round 3 after a successful Round 1 application.",
       "First-Strike duration: 3 rounds.",
       "Caraxes must be the ally that received First-Strike."
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final value cannot be calculated because final combat formulas and stacking order are not fully verified.",
-    "explanation": "At effective Habit Level 5, Lightning Strike has a 100% chance on Rounds 1 to grant First-Strike to one ally within adjacency. First-Strike lasts 3 rounds. On Rounds 3, 6 and 9, Infernal Burst deals Fire Damage at a 100% rate to 3 enemies in any lane. When Caraxes has First-Strike, the rate increases 1.5x to 150%. Lightning Strike's First-Strike can overlap Infernal Burst in these windows: Round 3 after a successful Round 1 application. Caraxes must be the ally that received First-Strike; activation, recipient selection, and uptime remain unresolved.",
+    "explanation": "At effective Habit Level 5, Lightning Strike has a 100% chance on Rounds 1 to grant First-Strike to one ally within adjacency. First-Strike lasts 3 rounds. On Rounds 3, 6, and 9, Infernal Burst deals Fire Damage at a 100% rate to 3 enemies in any lane. When Caraxes has First-Strike, the rate increases 1.5x to 150%. Lightning Strike's First-Strike can overlap Infernal Burst in these windows: Round 3 after a successful Round 1 application. Caraxes must be the ally that received First-Strike; activation, recipient selection, and uptime remain unresolved.",
     "id": "status-condition-malachite-lightning-strike-lightning-strike-first-strike-first-strike-status-output-caraxes-infernal-burst-infernal-burst-fire-rate-output",
     "interactionScope": "cross-dragon",
     "matchedOutputCapabilityIds": [],
@@ -11186,7 +11220,7 @@
       "Activation chance: 100% at effective Habit Level 5.",
       "Damage Received decrease 20%.",
       "Duration: 2 rounds.",
-      "Timing: Rounds 2, 5, 8."
+      "Timing: Rounds 2, 5, and 8."
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final value cannot be calculated because final combat formulas and stacking order are not fully verified.",
@@ -13138,7 +13172,7 @@
     ],
     "damageScope": null,
     "effects": [
-      "Enemy Initiative reduction may improve Fire Damage outputs: Infernal Burst: Fire Damage, Crippling Inferno: Burn.",
+      "Enemy Initiative reduction may improve Fire Damage outputs: Infernal Burst: Fire Damage, Crippling Inferno: Burn, Crippling Inferno: Burn periodic Fire Damage.",
       "Applies to all qualifying Fire Damage sources."
     ],
     "exactResultKnown": false,
@@ -13148,7 +13182,8 @@
     "interactionScope": "cross-dragon",
     "matchedOutputCapabilityIds": [
       "caraxes-infernal-burst-infernal-burst-fire-rate-output",
-      "caraxes-crippling-inferno-crippling-inferno-burn-output"
+      "caraxes-crippling-inferno-crippling-inferno-burn-output",
+      "periodic-caraxes-crippling-inferno-crippling-inferno-burn-burn-output"
     ],
     "matchKind": "enemy-mitigation-reduction",
     "modifierCapabilityId": "syrax-flight-mastery-flight-mastery-initiative-down-stat-dealt-modifier",
@@ -13159,6 +13194,7 @@
     "recipientDragonId": "caraxes",
     "recipientEvidenceIds": [
       "caraxes-infernal-burst-2026-06-24",
+      "caraxes-crippling-inferno-2026-06-24",
       "caraxes-crippling-inferno-2026-06-24"
     ],
     "requirements": [
@@ -13238,7 +13274,7 @@
     ],
     "damageScope": null,
     "effects": [
-      "Enemy Initiative reduction may improve Fire Damage outputs: Infernal Burst: Fire Damage, Crippling Inferno: Burn.",
+      "Enemy Initiative reduction may improve Fire Damage outputs: Infernal Burst: Fire Damage, Crippling Inferno: Burn, Crippling Inferno: Burn periodic Fire Damage.",
       "Applies to all qualifying Fire Damage sources."
     ],
     "exactResultKnown": false,
@@ -13248,7 +13284,8 @@
     "interactionScope": "internal",
     "matchedOutputCapabilityIds": [
       "caraxes-infernal-burst-infernal-burst-fire-rate-output",
-      "caraxes-crippling-inferno-crippling-inferno-burn-output"
+      "caraxes-crippling-inferno-crippling-inferno-burn-output",
+      "periodic-caraxes-crippling-inferno-crippling-inferno-burn-burn-output"
     ],
     "matchKind": "enemy-mitigation-reduction",
     "modifierCapabilityId": "caraxes-battle-dread-battle-dread-initiative-down-stat-dealt-modifier",
@@ -13259,6 +13296,7 @@
     "recipientDragonId": "caraxes",
     "recipientEvidenceIds": [
       "caraxes-infernal-burst-2026-06-24",
+      "caraxes-crippling-inferno-2026-06-24",
       "caraxes-crippling-inferno-2026-06-24"
     ],
     "requirements": [
@@ -13618,6 +13656,7 @@
       "Scales with Intelligence.",
       "Mitigated by target Initiative.",
       "Status supplier effect: crippling-inferno-burn.",
+      "Activation group: crippling-inferno-each-round-shared-activation.",
       "Independent per-target checks: 3.",
       "Activation, target selection, target overlap, and uptime remain conditional.",
       "Final damage is not calculated."
@@ -13726,7 +13765,7 @@
     "targetSelectionGroup": null,
     "title": "Fire Damage Periodic Damage Support",
     "unresolvedQuestions": [
-      "Burn stacking, refresh, and overlapping source behavior are unknown."
+      "Burn stacking, refresh, and overlapping-source behavior remain unresolved."
     ]
   },
   {
@@ -13804,7 +13843,7 @@
     "targetSelectionGroup": null,
     "title": "Fire Damage Periodic Damage Support",
     "unresolvedQuestions": [
-      "Burn stacking, refresh, and overlapping source behavior are unknown."
+      "Burn stacking, refresh, and overlapping-source behavior remain unresolved."
     ]
   },
   {
@@ -13891,13 +13930,14 @@
     "targetSelectionGroup": null,
     "title": "Fire Damage Periodic Damage Support",
     "unresolvedQuestions": [
-      "Burn stacking, refresh, and overlapping source behavior are unknown."
+      "Burn stacking, refresh, and overlapping-source behavior remain unresolved."
     ]
   },
   {
     "assumptions": [
       "Trigger chance and target selection may make this conditional rather than guaranteed.",
-      "Multiple qualifying outputs are aggregated into one normal synergy trace."
+      "Multiple qualifying outputs are aggregated into one normal synergy trace.",
+      "Effects with shared activation group blazing-fury-fire-support-shared-activation use one activation roll; uptime is not calculated."
     ],
     "channel": "fire-damage",
     "confidence": "confirmed",
@@ -14279,7 +14319,8 @@
   },
   {
     "assumptions": [
-      "Trigger chance may make this conditional rather than guaranteed."
+      "Trigger chance may make this conditional rather than guaranteed.",
+      "Effects with shared activation group thunderous-roar-each-round-shared-activation use one activation roll; uptime is not calculated."
     ],
     "channel": "damage-dealt",
     "confidence": "confirmed",
@@ -14386,7 +14427,8 @@
   {
     "assumptions": [
       "Trigger chance may make this conditional rather than guaranteed.",
-      "Multiple qualifying outputs are aggregated into one normal synergy trace."
+      "Multiple qualifying outputs are aggregated into one normal synergy trace.",
+      "Effects with shared activation group thunderous-roar-each-round-shared-activation use one activation roll; uptime is not calculated."
     ],
     "channel": "damage-dealt",
     "confidence": "confirmed",
@@ -14548,7 +14590,7 @@
       "Recovery Rate: 100% at effective Habit Level 5.",
       "Recovery support",
       "Targets 1 Ally; caster is eligible.",
-      "Timing: Rounds 2, 5, 8."
+      "Timing: Rounds 2, 5, and 8."
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final value cannot be calculated because final combat formulas and stacking order are not fully verified.",
@@ -14655,14 +14697,14 @@
     "damageScope": null,
     "effects": [
       "Recovery support",
-      "Timing: Rounds 3, 6, 9.",
+      "Timing: Rounds 3, 6, and 9.",
       "Recovery Rate: 70%.",
       "Targets exactly 3 Allies; caster is eligible.",
       "Final Recovery amount remains unknown."
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final value cannot be calculated because final combat formulas and stacking order are not fully verified.",
-    "explanation": "Malachite's Warden's Rally can provide Recovery to Syrax. Timing: Rounds 3, 6, 9. Recovery Rate: 70%. Targets exactly 3 Allies; caster is eligible. Final Recovery amount remains unknown.",
+    "explanation": "Malachite's Warden's Rally can provide Recovery to Syrax. Timing: Rounds 3, 6, and 9. Recovery Rate: 70%. Targets exactly 3 Allies; caster is eligible. Final Recovery amount remains unknown.",
     "id": "ally-output-support-malachite-wardens-rally-wardens-rally-recovery-rate-output-syrax",
     "interactionScope": "cross-dragon",
     "matchedOutputCapabilityIds": [],
@@ -14710,14 +14752,14 @@
     "damageScope": null,
     "effects": [
       "Recovery support",
-      "Timing: Rounds 3, 6, 9.",
+      "Timing: Rounds 3, 6, and 9.",
       "Recovery Rate: 70%.",
       "Targets exactly 3 Allies; caster is eligible.",
       "Final Recovery amount remains unknown."
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final value cannot be calculated because final combat formulas and stacking order are not fully verified.",
-    "explanation": "Malachite's Warden's Rally can provide Recovery to Caraxes. Timing: Rounds 3, 6, 9. Recovery Rate: 70%. Targets exactly 3 Allies; caster is eligible. Final Recovery amount remains unknown.",
+    "explanation": "Malachite's Warden's Rally can provide Recovery to Caraxes. Timing: Rounds 3, 6, and 9. Recovery Rate: 70%. Targets exactly 3 Allies; caster is eligible. Final Recovery amount remains unknown.",
     "id": "ally-output-support-malachite-wardens-rally-wardens-rally-recovery-rate-output-caraxes",
     "interactionScope": "cross-dragon",
     "matchedOutputCapabilityIds": [],
@@ -14765,14 +14807,14 @@
     "damageScope": null,
     "effects": [
       "Recovery support",
-      "Timing: Rounds 3, 6, 9.",
+      "Timing: Rounds 3, 6, and 9.",
       "Recovery Rate: 70%.",
       "Targets exactly 3 Allies; caster is eligible.",
       "Final Recovery amount remains unknown."
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final value cannot be calculated because final combat formulas and stacking order are not fully verified.",
-    "explanation": "Malachite's Warden's Rally can provide Recovery to Malachite. Timing: Rounds 3, 6, 9. Recovery Rate: 70%. Targets exactly 3 Allies; caster is eligible. Final Recovery amount remains unknown.",
+    "explanation": "Malachite's Warden's Rally can provide Recovery to Malachite. Timing: Rounds 3, 6, and 9. Recovery Rate: 70%. Targets exactly 3 Allies; caster is eligible. Final Recovery amount remains unknown.",
     "id": "ally-output-support-malachite-wardens-rally-wardens-rally-recovery-rate-output-malachite",
     "interactionScope": "internal",
     "matchedOutputCapabilityIds": [],
@@ -14827,7 +14869,8 @@
       "Supplier effective Habit Level: 5",
       "Status application chance: 20% at effective Habit Level 5.",
       "Duration: 2 rounds.",
-      "Independent per-target checks: 3."
+      "Independent per-target checks: 3.",
+      "Shared activation group: crippling-inferno-each-round-shared-activation."
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact status target outcome cannot be calculated because activation, target identity, and uptime are unresolved.",
@@ -14895,7 +14938,8 @@
       "Supplier effective Habit Level: 5",
       "Status application chance: 20% at effective Habit Level 5.",
       "Duration: 2 rounds.",
-      "Independent per-target checks: 3."
+      "Independent per-target checks: 3.",
+      "Shared activation group: crippling-inferno-each-round-shared-activation."
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact status target outcome cannot be calculated because activation, target identity, and uptime are unresolved.",
@@ -14974,8 +15018,9 @@
       "Status application chance: 20% at effective Habit Level 5.",
       "Duration: 2 rounds.",
       "Independent per-target checks: 3.",
+      "Shared activation group: crippling-inferno-each-round-shared-activation.",
       "Supplier schedule: Rounds 1, 2, 3, 4, 5, 6, 7 and 8.",
-      "Dependent schedule: Rounds 2, 5 and 8.",
+      "Dependent schedule: Rounds 2, 5, and 8.",
       "Known possible overlap windows: Round 2 after a successful Round 1 application; Round 2 from a successful Round 2 application only if Crippling Inferno resolves before Strategic Revival that round; Round 5 after a successful Round 4 application; Round 5 from a successful Round 5 application only if Crippling Inferno resolves before Strategic Revival that round; Round 8 after a successful Round 7 application; Round 8 from a successful Round 8 application only if Crippling Inferno resolves before Strategic Revival that round.",
       "Slow duration: 2 rounds.",
       "At least one enemy must have active Slow.",
@@ -15092,8 +15137,9 @@
       "Conditional multiplier: 1.5x",
       "Status application chance: 20%.",
       "Duration: 2 rounds.",
+      "Shared activation group: blazing-fury-fire-support-shared-activation.",
       "Supplier schedule: Rounds 1, 2, 3, 4, 5, 6, 7, 8 and 9.",
-      "Dependent schedule: Rounds 3, 6 and 9.",
+      "Dependent schedule: Rounds 3, 6, and 9.",
       "Known possible overlap windows: Round 3 after a successful Round 2 application; Round 3 from a successful Round 3 application only if Blazing Fury resolves before Infernal Burst that round; Round 6 after a successful Round 5 application; Round 6 from a successful Round 6 application only if Blazing Fury resolves before Infernal Burst that round; Round 9 after a successful Round 8 application; Round 9 from a successful Round 9 application only if Blazing Fury resolves before Infernal Burst that round.",
       "First-Strike duration: 2 rounds.",
       "Caraxes is the resolved recipient of First-Strike if the supplier activates.",
@@ -15102,7 +15148,7 @@
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final value cannot be calculated because final combat formulas and stacking order are not fully verified.",
-    "explanation": "Blazing Fury has a 20% chance each round to grant First-Strike to one ally in any lane. First-Strike lasts 2 rounds. On Rounds 3, 6 and 9, Infernal Burst deals Fire Damage at a 100% rate to 3 enemies in any lane. When Caraxes has First-Strike, the rate increases 1.5x to 150%. Blazing Fury's First-Strike can overlap Infernal Burst in these windows: Round 3 after a successful Round 2 application; Round 3 from a successful Round 3 application only if Blazing Fury resolves before Infernal Burst that round; Round 6 after a successful Round 5 application; Round 6 from a successful Round 6 application only if Blazing Fury resolves before Infernal Burst that round; Round 9 after a successful Round 8 application; Round 9 from a successful Round 9 application only if Blazing Fury resolves before Infernal Burst that round. Caraxes is the resolved recipient of First-Strike if the supplier activates; Infernal Burst benefits while Caraxes has First-Strike. Activation and uptime remain unresolved. Same-round action order is unresolved.",
+    "explanation": "Blazing Fury has a 20% chance each round to grant First-Strike to one ally in any lane. First-Strike lasts 2 rounds. On Rounds 3, 6, and 9, Infernal Burst deals Fire Damage at a 100% rate to 3 enemies in any lane. When Caraxes has First-Strike, the rate increases 1.5x to 150%. Blazing Fury's First-Strike can overlap Infernal Burst in these windows: Round 3 after a successful Round 2 application; Round 3 from a successful Round 3 application only if Blazing Fury resolves before Infernal Burst that round; Round 6 after a successful Round 5 application; Round 6 from a successful Round 6 application only if Blazing Fury resolves before Infernal Burst that round; Round 9 after a successful Round 8 application; Round 9 from a successful Round 9 application only if Blazing Fury resolves before Infernal Burst that round. Caraxes is the resolved recipient of First-Strike if the supplier activates; Infernal Burst benefits while Caraxes has First-Strike. Activation and uptime remain unresolved. Same-round action order is unresolved.",
     "id": "status-condition-syrax-blazing-fury-blazing-fury-first-strike-first-strike-status-output-caraxes-infernal-burst-infernal-burst-fire-rate-output",
     "interactionScope": "cross-dragon",
     "matchedOutputCapabilityIds": [],
@@ -15166,8 +15212,9 @@
       "Supplier effective Habit Level: 5",
       "Status application chance: 100% at effective Habit Level 5.",
       "Duration: 3 rounds.",
+      "Shared activation group: lightning-strike-round-one-shared-activation.",
       "Supplier schedule: Rounds 1.",
-      "Dependent schedule: Rounds 3, 6 and 9.",
+      "Dependent schedule: Rounds 3, 6, and 9.",
       "Known possible overlap windows: Round 3 after a successful Round 1 application.",
       "First-Strike duration: 3 rounds.",
       "Caraxes is the resolved recipient of First-Strike if the supplier activates.",
@@ -15175,7 +15222,7 @@
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final value cannot be calculated because final combat formulas and stacking order are not fully verified.",
-    "explanation": "At effective Habit Level 5, Lightning Strike has a 100% chance on Rounds 1 to grant First-Strike to one ally within adjacency. First-Strike lasts 3 rounds. On Rounds 3, 6 and 9, Infernal Burst deals Fire Damage at a 100% rate to 3 enemies in any lane. When Caraxes has First-Strike, the rate increases 1.5x to 150%. Lightning Strike's First-Strike can overlap Infernal Burst in these windows: Round 3 after a successful Round 1 application. Caraxes is the resolved recipient of First-Strike if the supplier activates; Infernal Burst benefits while Caraxes has First-Strike. Activation and uptime remain unresolved.",
+    "explanation": "At effective Habit Level 5, Lightning Strike has a 100% chance on Rounds 1 to grant First-Strike to one ally within adjacency. First-Strike lasts 3 rounds. On Rounds 3, 6, and 9, Infernal Burst deals Fire Damage at a 100% rate to 3 enemies in any lane. When Caraxes has First-Strike, the rate increases 1.5x to 150%. Lightning Strike's First-Strike can overlap Infernal Burst in these windows: Round 3 after a successful Round 1 application. Caraxes is the resolved recipient of First-Strike if the supplier activates; Infernal Burst benefits while Caraxes has First-Strike. Activation and uptime remain unresolved.",
     "id": "status-condition-malachite-lightning-strike-lightning-strike-first-strike-first-strike-status-output-caraxes-infernal-burst-infernal-burst-fire-rate-output",
     "interactionScope": "cross-dragon",
     "matchedOutputCapabilityIds": [],
@@ -15885,7 +15932,7 @@
       "Activation chance: 100% at effective Habit Level 5.",
       "Damage Received decrease 20%.",
       "Duration: 2 rounds.",
-      "Timing: Rounds 2, 5, 8."
+      "Timing: Rounds 2, 5, and 8."
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final value cannot be calculated because final combat formulas and stacking order are not fully verified.",
@@ -17836,7 +17883,7 @@
     ],
     "damageScope": null,
     "effects": [
-      "Enemy Initiative reduction may improve Fire Damage outputs: Infernal Burst: Fire Damage, Crippling Inferno: Burn.",
+      "Enemy Initiative reduction may improve Fire Damage outputs: Infernal Burst: Fire Damage, Crippling Inferno: Burn, Crippling Inferno: Burn periodic Fire Damage.",
       "Applies to all qualifying Fire Damage sources."
     ],
     "exactResultKnown": false,
@@ -17846,7 +17893,8 @@
     "interactionScope": "cross-dragon",
     "matchedOutputCapabilityIds": [
       "caraxes-infernal-burst-infernal-burst-fire-rate-output",
-      "caraxes-crippling-inferno-crippling-inferno-burn-output"
+      "caraxes-crippling-inferno-crippling-inferno-burn-output",
+      "periodic-caraxes-crippling-inferno-crippling-inferno-burn-burn-output"
     ],
     "matchKind": "enemy-mitigation-reduction",
     "modifierCapabilityId": "syrax-flight-mastery-flight-mastery-initiative-down-stat-dealt-modifier",
@@ -17857,6 +17905,7 @@
     "recipientDragonId": "caraxes",
     "recipientEvidenceIds": [
       "caraxes-infernal-burst-2026-06-24",
+      "caraxes-crippling-inferno-2026-06-24",
       "caraxes-crippling-inferno-2026-06-24"
     ],
     "requirements": [
@@ -17936,7 +17985,7 @@
     ],
     "damageScope": null,
     "effects": [
-      "Enemy Initiative reduction may improve Fire Damage outputs: Infernal Burst: Fire Damage, Crippling Inferno: Burn.",
+      "Enemy Initiative reduction may improve Fire Damage outputs: Infernal Burst: Fire Damage, Crippling Inferno: Burn, Crippling Inferno: Burn periodic Fire Damage.",
       "Applies to all qualifying Fire Damage sources."
     ],
     "exactResultKnown": false,
@@ -17946,7 +17995,8 @@
     "interactionScope": "internal",
     "matchedOutputCapabilityIds": [
       "caraxes-infernal-burst-infernal-burst-fire-rate-output",
-      "caraxes-crippling-inferno-crippling-inferno-burn-output"
+      "caraxes-crippling-inferno-crippling-inferno-burn-output",
+      "periodic-caraxes-crippling-inferno-crippling-inferno-burn-burn-output"
     ],
     "matchKind": "enemy-mitigation-reduction",
     "modifierCapabilityId": "caraxes-battle-dread-battle-dread-initiative-down-stat-dealt-modifier",
@@ -17957,6 +18007,7 @@
     "recipientDragonId": "caraxes",
     "recipientEvidenceIds": [
       "caraxes-infernal-burst-2026-06-24",
+      "caraxes-crippling-inferno-2026-06-24",
       "caraxes-crippling-inferno-2026-06-24"
     ],
     "requirements": [
@@ -18316,6 +18367,7 @@
       "Scales with Intelligence.",
       "Mitigated by target Initiative.",
       "Status supplier effect: crippling-inferno-burn.",
+      "Activation group: crippling-inferno-each-round-shared-activation.",
       "Independent per-target checks: 3.",
       "Activation, target selection, target overlap, and uptime remain conditional.",
       "Final damage is not calculated."
@@ -18424,7 +18476,7 @@
     "targetSelectionGroup": null,
     "title": "Fire Damage Periodic Damage Support",
     "unresolvedQuestions": [
-      "Burn stacking, refresh, and overlapping source behavior are unknown."
+      "Burn stacking, refresh, and overlapping-source behavior remain unresolved."
     ]
   },
   {
@@ -18511,7 +18563,7 @@
     "targetSelectionGroup": null,
     "title": "Fire Damage Periodic Damage Support",
     "unresolvedQuestions": [
-      "Burn stacking, refresh, and overlapping source behavior are unknown."
+      "Burn stacking, refresh, and overlapping-source behavior remain unresolved."
     ]
   },
   {
@@ -18676,7 +18728,8 @@
   },
   {
     "assumptions": [
-      "Trigger chance may make this conditional rather than guaranteed."
+      "Trigger chance may make this conditional rather than guaranteed.",
+      "Effects with shared activation group forests-instinct-each-round-shared-activation use one activation roll; uptime is not calculated."
     ],
     "channel": "physical-damage",
     "confidence": "confirmed",
@@ -18781,7 +18834,8 @@
   {
     "assumptions": [
       "Trigger chance may make this conditional rather than guaranteed.",
-      "Multiple qualifying outputs are aggregated into one normal synergy trace."
+      "Multiple qualifying outputs are aggregated into one normal synergy trace.",
+      "Effects with shared activation group thunderous-roar-each-round-shared-activation use one activation roll; uptime is not calculated."
     ],
     "channel": "damage-dealt",
     "confidence": "confirmed",
@@ -18936,7 +18990,8 @@
   {
     "assumptions": [
       "Trigger chance may make this conditional rather than guaranteed.",
-      "Multiple qualifying outputs are aggregated into one normal synergy trace."
+      "Multiple qualifying outputs are aggregated into one normal synergy trace.",
+      "Effects with shared activation group thunderous-roar-each-round-shared-activation use one activation roll; uptime is not calculated."
     ],
     "channel": "damage-dealt",
     "confidence": "confirmed",
@@ -19639,14 +19694,14 @@
     "damageScope": null,
     "effects": [
       "Recovery support",
-      "Timing: Rounds 3, 6, 9.",
+      "Timing: Rounds 3, 6, and 9.",
       "Recovery Rate: 70%.",
       "Targets exactly 3 Allies; caster is eligible.",
       "Final Recovery amount remains unknown."
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final value cannot be calculated because final combat formulas and stacking order are not fully verified.",
-    "explanation": "Malachite's Warden's Rally can provide Recovery to Malachite. Timing: Rounds 3, 6, 9. Recovery Rate: 70%. Targets exactly 3 Allies; caster is eligible. Final Recovery amount remains unknown.",
+    "explanation": "Malachite's Warden's Rally can provide Recovery to Malachite. Timing: Rounds 3, 6, and 9. Recovery Rate: 70%. Targets exactly 3 Allies; caster is eligible. Final Recovery amount remains unknown.",
     "id": "ally-output-support-malachite-wardens-rally-wardens-rally-recovery-rate-output-malachite",
     "interactionScope": "internal",
     "matchedOutputCapabilityIds": [],
@@ -19694,14 +19749,14 @@
     "damageScope": null,
     "effects": [
       "Recovery support",
-      "Timing: Rounds 3, 6, 9.",
+      "Timing: Rounds 3, 6, and 9.",
       "Recovery Rate: 70%.",
       "Targets exactly 3 Allies; caster is eligible.",
       "Final Recovery amount remains unknown."
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final value cannot be calculated because final combat formulas and stacking order are not fully verified.",
-    "explanation": "Malachite's Warden's Rally can provide Recovery to Sheepstealer. Timing: Rounds 3, 6, 9. Recovery Rate: 70%. Targets exactly 3 Allies; caster is eligible. Final Recovery amount remains unknown.",
+    "explanation": "Malachite's Warden's Rally can provide Recovery to Sheepstealer. Timing: Rounds 3, 6, and 9. Recovery Rate: 70%. Targets exactly 3 Allies; caster is eligible. Final Recovery amount remains unknown.",
     "id": "ally-output-support-malachite-wardens-rally-wardens-rally-recovery-rate-output-sheepstealer",
     "interactionScope": "cross-dragon",
     "matchedOutputCapabilityIds": [],
@@ -19749,14 +19804,14 @@
     "damageScope": null,
     "effects": [
       "Recovery support",
-      "Timing: Rounds 3, 6, 9.",
+      "Timing: Rounds 3, 6, and 9.",
       "Recovery Rate: 70%.",
       "Targets exactly 3 Allies; caster is eligible.",
       "Final Recovery amount remains unknown."
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final value cannot be calculated because final combat formulas and stacking order are not fully verified.",
-    "explanation": "Malachite's Warden's Rally can provide Recovery to Vermax. Timing: Rounds 3, 6, 9. Recovery Rate: 70%. Targets exactly 3 Allies; caster is eligible. Final Recovery amount remains unknown.",
+    "explanation": "Malachite's Warden's Rally can provide Recovery to Vermax. Timing: Rounds 3, 6, and 9. Recovery Rate: 70%. Targets exactly 3 Allies; caster is eligible. Final Recovery amount remains unknown.",
     "id": "ally-output-support-malachite-wardens-rally-wardens-rally-recovery-rate-output-vermax",
     "interactionScope": "cross-dragon",
     "matchedOutputCapabilityIds": [],
@@ -22813,7 +22868,8 @@
   },
   {
     "assumptions": [
-      "Trigger chance and threshold eligibility may make this conditional rather than guaranteed."
+      "Trigger chance and threshold eligibility may make this conditional rather than guaranteed.",
+      "Effects with shared activation group loyal-bond-advantage-shared-activation use one activation roll; uptime is not calculated."
     ],
     "channel": "damage-dealt",
     "confidence": "confirmed",
@@ -22921,7 +22977,8 @@
   {
     "assumptions": [
       "Trigger chance and threshold eligibility may make this conditional rather than guaranteed.",
-      "Multiple qualifying outputs are aggregated into one normal synergy trace."
+      "Multiple qualifying outputs are aggregated into one normal synergy trace.",
+      "Effects with shared activation group loyal-bond-advantage-shared-activation use one activation roll; uptime is not calculated."
     ],
     "channel": "damage-dealt",
     "confidence": "confirmed",
@@ -23341,7 +23398,8 @@
   },
   {
     "assumptions": [
-      "Trigger chance may make this conditional rather than guaranteed."
+      "Trigger chance may make this conditional rather than guaranteed.",
+      "Effects with shared activation group forests-instinct-each-round-shared-activation use one activation roll; uptime is not calculated."
     ],
     "channel": "physical-damage",
     "confidence": "confirmed",
@@ -23472,7 +23530,8 @@
   {
     "assumptions": [
       "Trigger chance may make this conditional rather than guaranteed.",
-      "Multiple qualifying outputs are aggregated into one normal synergy trace."
+      "Multiple qualifying outputs are aggregated into one normal synergy trace.",
+      "Effects with shared activation group thunderous-roar-each-round-shared-activation use one activation roll; uptime is not calculated."
     ],
     "channel": "damage-dealt",
     "confidence": "confirmed",
@@ -23625,7 +23684,8 @@
   {
     "assumptions": [
       "Trigger chance may make this conditional rather than guaranteed.",
-      "Multiple qualifying outputs are aggregated into one normal synergy trace."
+      "Multiple qualifying outputs are aggregated into one normal synergy trace.",
+      "Effects with shared activation group thunderous-roar-each-round-shared-activation use one activation roll; uptime is not calculated."
     ],
     "channel": "damage-dealt",
     "confidence": "confirmed",
@@ -24158,14 +24218,14 @@
     "damageScope": null,
     "effects": [
       "Recovery support",
-      "Timing: Rounds 3, 6, 9.",
+      "Timing: Rounds 3, 6, and 9.",
       "Recovery Rate: 70%.",
       "Targets exactly 3 Allies; caster is eligible.",
       "Final Recovery amount remains unknown."
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final value cannot be calculated because final combat formulas and stacking order are not fully verified.",
-    "explanation": "Malachite's Warden's Rally can provide Recovery to Seasmoke. Timing: Rounds 3, 6, 9. Recovery Rate: 70%. Targets exactly 3 Allies; caster is eligible. Final Recovery amount remains unknown.",
+    "explanation": "Malachite's Warden's Rally can provide Recovery to Seasmoke. Timing: Rounds 3, 6, and 9. Recovery Rate: 70%. Targets exactly 3 Allies; caster is eligible. Final Recovery amount remains unknown.",
     "id": "ally-output-support-malachite-wardens-rally-wardens-rally-recovery-rate-output-seasmoke",
     "interactionScope": "cross-dragon",
     "matchedOutputCapabilityIds": [],
@@ -24213,14 +24273,14 @@
     "damageScope": null,
     "effects": [
       "Recovery support",
-      "Timing: Rounds 3, 6, 9.",
+      "Timing: Rounds 3, 6, and 9.",
       "Recovery Rate: 70%.",
       "Targets exactly 3 Allies; caster is eligible.",
       "Final Recovery amount remains unknown."
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final value cannot be calculated because final combat formulas and stacking order are not fully verified.",
-    "explanation": "Malachite's Warden's Rally can provide Recovery to Malachite. Timing: Rounds 3, 6, 9. Recovery Rate: 70%. Targets exactly 3 Allies; caster is eligible. Final Recovery amount remains unknown.",
+    "explanation": "Malachite's Warden's Rally can provide Recovery to Malachite. Timing: Rounds 3, 6, and 9. Recovery Rate: 70%. Targets exactly 3 Allies; caster is eligible. Final Recovery amount remains unknown.",
     "id": "ally-output-support-malachite-wardens-rally-wardens-rally-recovery-rate-output-malachite",
     "interactionScope": "internal",
     "matchedOutputCapabilityIds": [],
@@ -24268,14 +24328,14 @@
     "damageScope": null,
     "effects": [
       "Recovery support",
-      "Timing: Rounds 3, 6, 9.",
+      "Timing: Rounds 3, 6, and 9.",
       "Recovery Rate: 70%.",
       "Targets exactly 3 Allies; caster is eligible.",
       "Final Recovery amount remains unknown."
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final value cannot be calculated because final combat formulas and stacking order are not fully verified.",
-    "explanation": "Malachite's Warden's Rally can provide Recovery to Sheepstealer. Timing: Rounds 3, 6, 9. Recovery Rate: 70%. Targets exactly 3 Allies; caster is eligible. Final Recovery amount remains unknown.",
+    "explanation": "Malachite's Warden's Rally can provide Recovery to Sheepstealer. Timing: Rounds 3, 6, and 9. Recovery Rate: 70%. Targets exactly 3 Allies; caster is eligible. Final Recovery amount remains unknown.",
     "id": "ally-output-support-malachite-wardens-rally-wardens-rally-recovery-rate-output-sheepstealer",
     "interactionScope": "cross-dragon",
     "matchedOutputCapabilityIds": [],
@@ -27216,7 +27276,8 @@
   },
   {
     "assumptions": [
-      "Trigger chance and threshold eligibility may make this conditional rather than guaranteed."
+      "Trigger chance and threshold eligibility may make this conditional rather than guaranteed.",
+      "Effects with shared activation group loyal-bond-advantage-shared-activation use one activation roll; uptime is not calculated."
     ],
     "channel": "damage-dealt",
     "confidence": "confirmed",
@@ -27324,7 +27385,8 @@
   {
     "assumptions": [
       "Trigger chance and threshold eligibility may make this conditional rather than guaranteed.",
-      "Multiple qualifying outputs are aggregated into one normal synergy trace."
+      "Multiple qualifying outputs are aggregated into one normal synergy trace.",
+      "Effects with shared activation group loyal-bond-advantage-shared-activation use one activation roll; uptime is not calculated."
     ],
     "channel": "damage-dealt",
     "confidence": "confirmed",
@@ -27558,7 +27620,8 @@
   },
   {
     "assumptions": [
-      "Trigger chance may make this conditional rather than guaranteed."
+      "Trigger chance may make this conditional rather than guaranteed.",
+      "Effects with shared activation group forests-instinct-each-round-shared-activation use one activation roll; uptime is not calculated."
     ],
     "channel": "physical-damage",
     "confidence": "confirmed",
@@ -27662,7 +27725,8 @@
   },
   {
     "assumptions": [
-      "Trigger chance may make this conditional rather than guaranteed."
+      "Trigger chance may make this conditional rather than guaranteed.",
+      "Effects with shared activation group forests-instinct-each-round-shared-activation use one activation roll; uptime is not calculated."
     ],
     "channel": "physical-damage",
     "confidence": "confirmed",
@@ -27793,7 +27857,8 @@
   {
     "assumptions": [
       "Trigger chance may make this conditional rather than guaranteed.",
-      "Multiple qualifying outputs are aggregated into one normal synergy trace."
+      "Multiple qualifying outputs are aggregated into one normal synergy trace.",
+      "Effects with shared activation group thunderous-roar-each-round-shared-activation use one activation roll; uptime is not calculated."
     ],
     "channel": "damage-dealt",
     "confidence": "confirmed",
@@ -27918,7 +27983,8 @@
   {
     "assumptions": [
       "Trigger chance may make this conditional rather than guaranteed.",
-      "Multiple qualifying outputs are aggregated into one normal synergy trace."
+      "Multiple qualifying outputs are aggregated into one normal synergy trace.",
+      "Effects with shared activation group thunderous-roar-each-round-shared-activation use one activation roll; uptime is not calculated."
     ],
     "channel": "damage-dealt",
     "confidence": "confirmed",
@@ -28287,14 +28353,14 @@
     "damageScope": null,
     "effects": [
       "Recovery support",
-      "Timing: Rounds 3, 6, 9.",
+      "Timing: Rounds 3, 6, and 9.",
       "Recovery Rate: 70%.",
       "Targets exactly 3 Allies; caster is eligible.",
       "Final Recovery amount remains unknown."
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final value cannot be calculated because final combat formulas and stacking order are not fully verified.",
-    "explanation": "Malachite's Warden's Rally can provide Recovery to Malachite. Timing: Rounds 3, 6, 9. Recovery Rate: 70%. Targets exactly 3 Allies; caster is eligible. Final Recovery amount remains unknown.",
+    "explanation": "Malachite's Warden's Rally can provide Recovery to Malachite. Timing: Rounds 3, 6, and 9. Recovery Rate: 70%. Targets exactly 3 Allies; caster is eligible. Final Recovery amount remains unknown.",
     "id": "ally-output-support-malachite-wardens-rally-wardens-rally-recovery-rate-output-malachite",
     "interactionScope": "internal",
     "matchedOutputCapabilityIds": [],
@@ -28342,14 +28408,14 @@
     "damageScope": null,
     "effects": [
       "Recovery support",
-      "Timing: Rounds 3, 6, 9.",
+      "Timing: Rounds 3, 6, and 9.",
       "Recovery Rate: 70%.",
       "Targets exactly 3 Allies; caster is eligible.",
       "Final Recovery amount remains unknown."
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final value cannot be calculated because final combat formulas and stacking order are not fully verified.",
-    "explanation": "Malachite's Warden's Rally can provide Recovery to Vermax. Timing: Rounds 3, 6, 9. Recovery Rate: 70%. Targets exactly 3 Allies; caster is eligible. Final Recovery amount remains unknown.",
+    "explanation": "Malachite's Warden's Rally can provide Recovery to Vermax. Timing: Rounds 3, 6, and 9. Recovery Rate: 70%. Targets exactly 3 Allies; caster is eligible. Final Recovery amount remains unknown.",
     "id": "ally-output-support-malachite-wardens-rally-wardens-rally-recovery-rate-output-vermax",
     "interactionScope": "cross-dragon",
     "matchedOutputCapabilityIds": [],
@@ -28397,14 +28463,14 @@
     "damageScope": null,
     "effects": [
       "Recovery support",
-      "Timing: Rounds 3, 6, 9.",
+      "Timing: Rounds 3, 6, and 9.",
       "Recovery Rate: 70%.",
       "Targets exactly 3 Allies; caster is eligible.",
       "Final Recovery amount remains unknown."
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final value cannot be calculated because final combat formulas and stacking order are not fully verified.",
-    "explanation": "Malachite's Warden's Rally can provide Recovery to Seasmoke. Timing: Rounds 3, 6, 9. Recovery Rate: 70%. Targets exactly 3 Allies; caster is eligible. Final Recovery amount remains unknown.",
+    "explanation": "Malachite's Warden's Rally can provide Recovery to Seasmoke. Timing: Rounds 3, 6, and 9. Recovery Rate: 70%. Targets exactly 3 Allies; caster is eligible. Final Recovery amount remains unknown.",
     "id": "ally-output-support-malachite-wardens-rally-wardens-rally-recovery-rate-output-seasmoke",
     "interactionScope": "cross-dragon",
     "matchedOutputCapabilityIds": [],
@@ -28447,7 +28513,6 @@
   {
     "assumptions": [
       "Provider activation is not guaranteed.",
-      "Target selection may choose another eligible recipient.",
       "Exact uptime, total attacks, final damage, and successful attack effects are not calculated.",
       "Only the verified after-each-Basic-Attack dependency is represented; broader trigger ordering is unresolved."
     ],
@@ -28459,11 +28524,12 @@
     ],
     "damageScope": null,
     "effects": [
-      "Potential extra Basic Attack can trigger Spreading Blaze again."
+      "A second Basic Attack can trigger Spreading Blaze's after-Basic-Attack Physical Damage effects again.",
+      "Scheduled grant rolls do not repeat from the extra Basic Attack event."
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final value cannot be calculated because final combat formulas and stacking order are not fully verified.",
-    "explanation": "Double-Strike may grant Vermax a second Basic Attack, which can trigger Spreading Blaze again.",
+    "explanation": "Double-Strike may grant Vermax a second Basic Attack. A second Basic Attack can trigger Spreading Blaze's after-Basic-Attack Physical Damage effects again.",
     "id": "extra-basic-attack-trigger-malachite-lightning-strike-lightning-strike-double-strike-double-strike-status-output-basic-attack-extra-action-vermax-spreading-blaze-after-basic-attack-trigger-vermax",
     "interactionScope": "cross-dragon",
     "matchedOutputCapabilityIds": [],
@@ -31888,7 +31954,8 @@
   },
   {
     "assumptions": [
-      "Trigger chance and threshold eligibility may make this conditional rather than guaranteed."
+      "Trigger chance and threshold eligibility may make this conditional rather than guaranteed.",
+      "Effects with shared activation group loyal-bond-advantage-shared-activation use one activation roll; uptime is not calculated."
     ],
     "channel": "damage-dealt",
     "confidence": "confirmed",
@@ -31996,7 +32063,8 @@
   {
     "assumptions": [
       "Trigger chance and threshold eligibility may make this conditional rather than guaranteed.",
-      "Multiple qualifying outputs are aggregated into one normal synergy trace."
+      "Multiple qualifying outputs are aggregated into one normal synergy trace.",
+      "Effects with shared activation group loyal-bond-advantage-shared-activation use one activation roll; uptime is not calculated."
     ],
     "channel": "damage-dealt",
     "confidence": "confirmed",
@@ -32420,7 +32488,8 @@
   },
   {
     "assumptions": [
-      "Trigger chance may make this conditional rather than guaranteed."
+      "Trigger chance may make this conditional rather than guaranteed.",
+      "Effects with shared activation group forests-instinct-each-round-shared-activation use one activation roll; uptime is not calculated."
     ],
     "channel": "physical-damage",
     "confidence": "confirmed",
@@ -32551,7 +32620,8 @@
   {
     "assumptions": [
       "Trigger chance may make this conditional rather than guaranteed.",
-      "Multiple qualifying outputs are aggregated into one normal synergy trace."
+      "Multiple qualifying outputs are aggregated into one normal synergy trace.",
+      "Effects with shared activation group thunderous-roar-each-round-shared-activation use one activation roll; uptime is not calculated."
     ],
     "channel": "damage-dealt",
     "confidence": "confirmed",
@@ -32704,7 +32774,8 @@
   {
     "assumptions": [
       "Trigger chance may make this conditional rather than guaranteed.",
-      "Multiple qualifying outputs are aggregated into one normal synergy trace."
+      "Multiple qualifying outputs are aggregated into one normal synergy trace.",
+      "Effects with shared activation group thunderous-roar-each-round-shared-activation use one activation roll; uptime is not calculated."
     ],
     "channel": "damage-dealt",
     "confidence": "confirmed",
@@ -33237,14 +33308,14 @@
     "damageScope": null,
     "effects": [
       "Recovery support",
-      "Timing: Rounds 3, 6, 9.",
+      "Timing: Rounds 3, 6, and 9.",
       "Recovery Rate: 70%.",
       "Targets exactly 3 Allies; caster is eligible.",
       "Final Recovery amount remains unknown."
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final value cannot be calculated because final combat formulas and stacking order are not fully verified.",
-    "explanation": "Malachite's Warden's Rally can provide Recovery to Malachite. Timing: Rounds 3, 6, 9. Recovery Rate: 70%. Targets exactly 3 Allies; caster is eligible. Final Recovery amount remains unknown.",
+    "explanation": "Malachite's Warden's Rally can provide Recovery to Malachite. Timing: Rounds 3, 6, and 9. Recovery Rate: 70%. Targets exactly 3 Allies; caster is eligible. Final Recovery amount remains unknown.",
     "id": "ally-output-support-malachite-wardens-rally-wardens-rally-recovery-rate-output-malachite",
     "interactionScope": "internal",
     "matchedOutputCapabilityIds": [],
@@ -33292,14 +33363,14 @@
     "damageScope": null,
     "effects": [
       "Recovery support",
-      "Timing: Rounds 3, 6, 9.",
+      "Timing: Rounds 3, 6, and 9.",
       "Recovery Rate: 70%.",
       "Targets exactly 3 Allies; caster is eligible.",
       "Final Recovery amount remains unknown."
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final value cannot be calculated because final combat formulas and stacking order are not fully verified.",
-    "explanation": "Malachite's Warden's Rally can provide Recovery to Seasmoke. Timing: Rounds 3, 6, 9. Recovery Rate: 70%. Targets exactly 3 Allies; caster is eligible. Final Recovery amount remains unknown.",
+    "explanation": "Malachite's Warden's Rally can provide Recovery to Seasmoke. Timing: Rounds 3, 6, and 9. Recovery Rate: 70%. Targets exactly 3 Allies; caster is eligible. Final Recovery amount remains unknown.",
     "id": "ally-output-support-malachite-wardens-rally-wardens-rally-recovery-rate-output-seasmoke",
     "interactionScope": "cross-dragon",
     "matchedOutputCapabilityIds": [],
@@ -33347,14 +33418,14 @@
     "damageScope": null,
     "effects": [
       "Recovery support",
-      "Timing: Rounds 3, 6, 9.",
+      "Timing: Rounds 3, 6, and 9.",
       "Recovery Rate: 70%.",
       "Targets exactly 3 Allies; caster is eligible.",
       "Final Recovery amount remains unknown."
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final value cannot be calculated because final combat formulas and stacking order are not fully verified.",
-    "explanation": "Malachite's Warden's Rally can provide Recovery to Sheepstealer. Timing: Rounds 3, 6, 9. Recovery Rate: 70%. Targets exactly 3 Allies; caster is eligible. Final Recovery amount remains unknown.",
+    "explanation": "Malachite's Warden's Rally can provide Recovery to Sheepstealer. Timing: Rounds 3, 6, and 9. Recovery Rate: 70%. Targets exactly 3 Allies; caster is eligible. Final Recovery amount remains unknown.",
     "id": "ally-output-support-malachite-wardens-rally-wardens-rally-recovery-rate-output-sheepstealer",
     "interactionScope": "cross-dragon",
     "matchedOutputCapabilityIds": [],
@@ -36704,7 +36775,8 @@
   {
     "assumptions": [
       "Trigger chance and threshold eligibility may make this conditional rather than guaranteed.",
-      "Multiple qualifying outputs are aggregated into one normal synergy trace."
+      "Multiple qualifying outputs are aggregated into one normal synergy trace.",
+      "Effects with shared activation group loyal-bond-advantage-shared-activation use one activation roll; uptime is not calculated."
     ],
     "channel": "damage-dealt",
     "confidence": "confirmed",
@@ -36856,7 +36928,8 @@
   {
     "assumptions": [
       "Trigger chance and threshold eligibility may make this conditional rather than guaranteed.",
-      "Multiple qualifying outputs are aggregated into one normal synergy trace."
+      "Multiple qualifying outputs are aggregated into one normal synergy trace.",
+      "Effects with shared activation group loyal-bond-advantage-shared-activation use one activation roll; uptime is not calculated."
     ],
     "channel": "damage-dealt",
     "confidence": "confirmed",
@@ -37290,7 +37363,8 @@
       "Supplier effective Habit Level: 5",
       "Status application chance: 20% at effective Habit Level 5.",
       "Duration: 2 rounds.",
-      "Independent per-target checks: 3."
+      "Independent per-target checks: 3.",
+      "Shared activation group: crippling-inferno-each-round-shared-activation."
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact status target outcome cannot be calculated because activation, target identity, and uptime are unresolved.",
@@ -37358,7 +37432,8 @@
       "Supplier effective Habit Level: 5",
       "Status application chance: 20% at effective Habit Level 5.",
       "Duration: 2 rounds.",
-      "Independent per-target checks: 3."
+      "Independent per-target checks: 3.",
+      "Shared activation group: crippling-inferno-each-round-shared-activation."
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact status target outcome cannot be calculated because activation, target identity, and uptime are unresolved.",
@@ -39641,7 +39716,7 @@
     ],
     "damageScope": null,
     "effects": [
-      "Enemy Initiative reduction may improve Fire Damage outputs: Infernal Burst: Fire Damage, Crippling Inferno: Burn.",
+      "Enemy Initiative reduction may improve Fire Damage outputs: Infernal Burst: Fire Damage, Crippling Inferno: Burn, Crippling Inferno: Burn periodic Fire Damage.",
       "Applies to all qualifying Fire Damage sources."
     ],
     "exactResultKnown": false,
@@ -39651,7 +39726,8 @@
     "interactionScope": "internal",
     "matchedOutputCapabilityIds": [
       "caraxes-infernal-burst-infernal-burst-fire-rate-output",
-      "caraxes-crippling-inferno-crippling-inferno-burn-output"
+      "caraxes-crippling-inferno-crippling-inferno-burn-output",
+      "periodic-caraxes-crippling-inferno-crippling-inferno-burn-burn-output"
     ],
     "matchKind": "enemy-mitigation-reduction",
     "modifierCapabilityId": "caraxes-battle-dread-battle-dread-initiative-down-stat-dealt-modifier",
@@ -39662,6 +39738,7 @@
     "recipientDragonId": "caraxes",
     "recipientEvidenceIds": [
       "caraxes-infernal-burst-2026-06-24",
+      "caraxes-crippling-inferno-2026-06-24",
       "caraxes-crippling-inferno-2026-06-24"
     ],
     "requirements": [
@@ -40363,6 +40440,7 @@
       "Scales with Intelligence.",
       "Mitigated by target Initiative.",
       "Status supplier effect: crippling-inferno-burn.",
+      "Activation group: crippling-inferno-each-round-shared-activation.",
       "Independent per-target checks: 3.",
       "Activation, target selection, target overlap, and uptime remain conditional.",
       "Final damage is not calculated."
@@ -40498,13 +40576,14 @@
     "targetSelectionGroup": null,
     "title": "Fire Damage Periodic Damage Support",
     "unresolvedQuestions": [
-      "Burn stacking, refresh, and overlapping source behavior are unknown."
+      "Burn stacking, refresh, and overlapping-source behavior remain unresolved."
     ]
   },
   {
     "assumptions": [
       "Trigger chance and target selection may make this conditional rather than guaranteed.",
-      "Multiple qualifying outputs are aggregated into one normal synergy trace."
+      "Multiple qualifying outputs are aggregated into one normal synergy trace.",
+      "Effects with shared activation group blazing-fury-fire-support-shared-activation use one activation roll; uptime is not calculated."
     ],
     "channel": "fire-damage",
     "confidence": "confirmed",
@@ -41044,7 +41123,8 @@
   },
   {
     "assumptions": [
-      "Trigger chance may make this conditional rather than guaranteed."
+      "Trigger chance may make this conditional rather than guaranteed.",
+      "Effects with shared activation group thunderous-roar-each-round-shared-activation use one activation roll; uptime is not calculated."
     ],
     "channel": "damage-dealt",
     "confidence": "confirmed",
@@ -41151,7 +41231,8 @@
   {
     "assumptions": [
       "Trigger chance may make this conditional rather than guaranteed.",
-      "Multiple qualifying outputs are aggregated into one normal synergy trace."
+      "Multiple qualifying outputs are aggregated into one normal synergy trace.",
+      "Effects with shared activation group thunderous-roar-each-round-shared-activation use one activation roll; uptime is not calculated."
     ],
     "channel": "damage-dealt",
     "confidence": "confirmed",
@@ -41686,7 +41767,7 @@
       "Recovery Rate: 100% at effective Habit Level 5.",
       "Recovery support",
       "Targets 1 Ally; caster is eligible.",
-      "Timing: Rounds 2, 5, 8."
+      "Timing: Rounds 2, 5, and 8."
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final value cannot be calculated because final combat formulas and stacking order are not fully verified.",
@@ -41793,14 +41874,14 @@
     "damageScope": null,
     "effects": [
       "Recovery support",
-      "Timing: Rounds 3, 6, 9.",
+      "Timing: Rounds 3, 6, and 9.",
       "Recovery Rate: 70%.",
       "Targets exactly 3 Allies; caster is eligible.",
       "Final Recovery amount remains unknown."
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final value cannot be calculated because final combat formulas and stacking order are not fully verified.",
-    "explanation": "Malachite's Warden's Rally can provide Recovery to Malachite. Timing: Rounds 3, 6, 9. Recovery Rate: 70%. Targets exactly 3 Allies; caster is eligible. Final Recovery amount remains unknown.",
+    "explanation": "Malachite's Warden's Rally can provide Recovery to Malachite. Timing: Rounds 3, 6, and 9. Recovery Rate: 70%. Targets exactly 3 Allies; caster is eligible. Final Recovery amount remains unknown.",
     "id": "ally-output-support-malachite-wardens-rally-wardens-rally-recovery-rate-output-malachite",
     "interactionScope": "internal",
     "matchedOutputCapabilityIds": [],
@@ -41848,14 +41929,14 @@
     "damageScope": null,
     "effects": [
       "Recovery support",
-      "Timing: Rounds 3, 6, 9.",
+      "Timing: Rounds 3, 6, and 9.",
       "Recovery Rate: 70%.",
       "Targets exactly 3 Allies; caster is eligible.",
       "Final Recovery amount remains unknown."
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final value cannot be calculated because final combat formulas and stacking order are not fully verified.",
-    "explanation": "Malachite's Warden's Rally can provide Recovery to Syrax. Timing: Rounds 3, 6, 9. Recovery Rate: 70%. Targets exactly 3 Allies; caster is eligible. Final Recovery amount remains unknown.",
+    "explanation": "Malachite's Warden's Rally can provide Recovery to Syrax. Timing: Rounds 3, 6, and 9. Recovery Rate: 70%. Targets exactly 3 Allies; caster is eligible. Final Recovery amount remains unknown.",
     "id": "ally-output-support-malachite-wardens-rally-wardens-rally-recovery-rate-output-syrax",
     "interactionScope": "cross-dragon",
     "matchedOutputCapabilityIds": [],
@@ -41903,14 +41984,14 @@
     "damageScope": null,
     "effects": [
       "Recovery support",
-      "Timing: Rounds 3, 6, 9.",
+      "Timing: Rounds 3, 6, and 9.",
       "Recovery Rate: 70%.",
       "Targets exactly 3 Allies; caster is eligible.",
       "Final Recovery amount remains unknown."
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final value cannot be calculated because final combat formulas and stacking order are not fully verified.",
-    "explanation": "Malachite's Warden's Rally can provide Recovery to Sheepstealer. Timing: Rounds 3, 6, 9. Recovery Rate: 70%. Targets exactly 3 Allies; caster is eligible. Final Recovery amount remains unknown.",
+    "explanation": "Malachite's Warden's Rally can provide Recovery to Sheepstealer. Timing: Rounds 3, 6, and 9. Recovery Rate: 70%. Targets exactly 3 Allies; caster is eligible. Final Recovery amount remains unknown.",
     "id": "ally-output-support-malachite-wardens-rally-wardens-rally-recovery-rate-output-sheepstealer",
     "interactionScope": "cross-dragon",
     "matchedOutputCapabilityIds": [],
@@ -42895,7 +42976,7 @@
       "Activation chance: 100% at effective Habit Level 5.",
       "Damage Received decrease 20%.",
       "Duration: 2 rounds.",
-      "Timing: Rounds 2, 5, 8."
+      "Timing: Rounds 2, 5, and 8."
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final value cannot be calculated because final combat formulas and stacking order are not fully verified.",
@@ -44833,7 +44914,8 @@
   {
     "assumptions": [
       "Trigger chance and target selection may make this conditional rather than guaranteed.",
-      "Multiple qualifying outputs are aggregated into one normal synergy trace."
+      "Multiple qualifying outputs are aggregated into one normal synergy trace.",
+      "Effects with shared activation group blazing-fury-fire-support-shared-activation use one activation roll; uptime is not calculated."
     ],
     "channel": "fire-damage",
     "confidence": "confirmed",
@@ -45428,7 +45510,7 @@
       "Recovery Rate: 100% at effective Habit Level 5.",
       "Recovery support",
       "Targets 1 Ally; caster is eligible.",
-      "Timing: Rounds 2, 5, 8."
+      "Timing: Rounds 2, 5, and 8."
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final value cannot be calculated because final combat formulas and stacking order are not fully verified.",
@@ -45542,7 +45624,8 @@
       "Supplier effective Habit Level: 5",
       "Status application chance: 20% at effective Habit Level 5.",
       "Duration: 2 rounds.",
-      "Independent per-target checks: 3."
+      "Independent per-target checks: 3.",
+      "Shared activation group: crippling-inferno-each-round-shared-activation."
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact status target outcome cannot be calculated because activation, target identity, and uptime are unresolved.",
@@ -45610,7 +45693,8 @@
       "Supplier effective Habit Level: 5",
       "Status application chance: 20% at effective Habit Level 5.",
       "Duration: 2 rounds.",
-      "Independent per-target checks: 3."
+      "Independent per-target checks: 3.",
+      "Shared activation group: crippling-inferno-each-round-shared-activation."
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact status target outcome cannot be calculated because activation, target identity, and uptime are unresolved.",
@@ -45689,8 +45773,9 @@
       "Status application chance: 20% at effective Habit Level 5.",
       "Duration: 2 rounds.",
       "Independent per-target checks: 3.",
+      "Shared activation group: crippling-inferno-each-round-shared-activation.",
       "Supplier schedule: Rounds 1, 2, 3, 4, 5, 6, 7 and 8.",
-      "Dependent schedule: Rounds 2, 5 and 8.",
+      "Dependent schedule: Rounds 2, 5, and 8.",
       "Known possible overlap windows: Round 2 after a successful Round 1 application; Round 2 from a successful Round 2 application only if Crippling Inferno resolves before Strategic Revival that round; Round 5 after a successful Round 4 application; Round 5 from a successful Round 5 application only if Crippling Inferno resolves before Strategic Revival that round; Round 8 after a successful Round 7 application; Round 8 from a successful Round 8 application only if Crippling Inferno resolves before Strategic Revival that round.",
       "Slow duration: 2 rounds.",
       "At least one enemy must have active Slow.",
@@ -45807,8 +45892,9 @@
       "Conditional multiplier: 1.5x",
       "Status application chance: 20%.",
       "Duration: 2 rounds.",
+      "Shared activation group: blazing-fury-fire-support-shared-activation.",
       "Supplier schedule: Rounds 1, 2, 3, 4, 5, 6, 7, 8 and 9.",
-      "Dependent schedule: Rounds 3, 6 and 9.",
+      "Dependent schedule: Rounds 3, 6, and 9.",
       "Known possible overlap windows: Round 3 after a successful Round 2 application; Round 3 from a successful Round 3 application only if Blazing Fury resolves before Infernal Burst that round; Round 6 after a successful Round 5 application; Round 6 from a successful Round 6 application only if Blazing Fury resolves before Infernal Burst that round; Round 9 after a successful Round 8 application; Round 9 from a successful Round 9 application only if Blazing Fury resolves before Infernal Burst that round.",
       "First-Strike duration: 2 rounds.",
       "Caraxes is the resolved recipient of First-Strike if the supplier activates.",
@@ -45817,7 +45903,7 @@
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final value cannot be calculated because final combat formulas and stacking order are not fully verified.",
-    "explanation": "Blazing Fury has a 20% chance each round to grant First-Strike to one ally in any lane. First-Strike lasts 2 rounds. On Rounds 3, 6 and 9, Infernal Burst deals Fire Damage at a 100% rate to 3 enemies in any lane. When Caraxes has First-Strike, the rate increases 1.5x to 150%. Blazing Fury's First-Strike can overlap Infernal Burst in these windows: Round 3 after a successful Round 2 application; Round 3 from a successful Round 3 application only if Blazing Fury resolves before Infernal Burst that round; Round 6 after a successful Round 5 application; Round 6 from a successful Round 6 application only if Blazing Fury resolves before Infernal Burst that round; Round 9 after a successful Round 8 application; Round 9 from a successful Round 9 application only if Blazing Fury resolves before Infernal Burst that round. Caraxes is the resolved recipient of First-Strike if the supplier activates; Infernal Burst benefits while Caraxes has First-Strike. Activation and uptime remain unresolved. Same-round action order is unresolved.",
+    "explanation": "Blazing Fury has a 20% chance each round to grant First-Strike to one ally in any lane. First-Strike lasts 2 rounds. On Rounds 3, 6, and 9, Infernal Burst deals Fire Damage at a 100% rate to 3 enemies in any lane. When Caraxes has First-Strike, the rate increases 1.5x to 150%. Blazing Fury's First-Strike can overlap Infernal Burst in these windows: Round 3 after a successful Round 2 application; Round 3 from a successful Round 3 application only if Blazing Fury resolves before Infernal Burst that round; Round 6 after a successful Round 5 application; Round 6 from a successful Round 6 application only if Blazing Fury resolves before Infernal Burst that round; Round 9 after a successful Round 8 application; Round 9 from a successful Round 9 application only if Blazing Fury resolves before Infernal Burst that round. Caraxes is the resolved recipient of First-Strike if the supplier activates; Infernal Burst benefits while Caraxes has First-Strike. Activation and uptime remain unresolved. Same-round action order is unresolved.",
     "id": "status-condition-syrax-blazing-fury-blazing-fury-first-strike-first-strike-status-output-caraxes-infernal-burst-infernal-burst-fire-rate-output",
     "interactionScope": "cross-dragon",
     "matchedOutputCapabilityIds": [],
@@ -46900,7 +46986,7 @@
       "Activation chance: 100% at effective Habit Level 5.",
       "Damage Received decrease 20%.",
       "Duration: 2 rounds.",
-      "Timing: Rounds 2, 5, 8."
+      "Timing: Rounds 2, 5, and 8."
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final value cannot be calculated because final combat formulas and stacking order are not fully verified.",
@@ -48808,7 +48894,7 @@
     ],
     "damageScope": null,
     "effects": [
-      "Enemy Initiative reduction may improve Fire Damage outputs: Infernal Burst: Fire Damage, Crippling Inferno: Burn.",
+      "Enemy Initiative reduction may improve Fire Damage outputs: Infernal Burst: Fire Damage, Crippling Inferno: Burn, Crippling Inferno: Burn periodic Fire Damage.",
       "Applies to all qualifying Fire Damage sources."
     ],
     "exactResultKnown": false,
@@ -48818,7 +48904,8 @@
     "interactionScope": "cross-dragon",
     "matchedOutputCapabilityIds": [
       "caraxes-infernal-burst-infernal-burst-fire-rate-output",
-      "caraxes-crippling-inferno-crippling-inferno-burn-output"
+      "caraxes-crippling-inferno-crippling-inferno-burn-output",
+      "periodic-caraxes-crippling-inferno-crippling-inferno-burn-burn-output"
     ],
     "matchKind": "enemy-mitigation-reduction",
     "modifierCapabilityId": "syrax-flight-mastery-flight-mastery-initiative-down-stat-dealt-modifier",
@@ -48829,6 +48916,7 @@
     "recipientDragonId": "caraxes",
     "recipientEvidenceIds": [
       "caraxes-infernal-burst-2026-06-24",
+      "caraxes-crippling-inferno-2026-06-24",
       "caraxes-crippling-inferno-2026-06-24"
     ],
     "requirements": [
@@ -48908,7 +48996,7 @@
     ],
     "damageScope": null,
     "effects": [
-      "Enemy Initiative reduction may improve Fire Damage outputs: Infernal Burst: Fire Damage, Crippling Inferno: Burn.",
+      "Enemy Initiative reduction may improve Fire Damage outputs: Infernal Burst: Fire Damage, Crippling Inferno: Burn, Crippling Inferno: Burn periodic Fire Damage.",
       "Applies to all qualifying Fire Damage sources."
     ],
     "exactResultKnown": false,
@@ -48918,7 +49006,8 @@
     "interactionScope": "internal",
     "matchedOutputCapabilityIds": [
       "caraxes-infernal-burst-infernal-burst-fire-rate-output",
-      "caraxes-crippling-inferno-crippling-inferno-burn-output"
+      "caraxes-crippling-inferno-crippling-inferno-burn-output",
+      "periodic-caraxes-crippling-inferno-crippling-inferno-burn-burn-output"
     ],
     "matchKind": "enemy-mitigation-reduction",
     "modifierCapabilityId": "caraxes-battle-dread-battle-dread-initiative-down-stat-dealt-modifier",
@@ -48929,6 +49018,7 @@
     "recipientDragonId": "caraxes",
     "recipientEvidenceIds": [
       "caraxes-infernal-burst-2026-06-24",
+      "caraxes-crippling-inferno-2026-06-24",
       "caraxes-crippling-inferno-2026-06-24"
     ],
     "requirements": [
@@ -49288,6 +49378,7 @@
       "Scales with Intelligence.",
       "Mitigated by target Initiative.",
       "Status supplier effect: crippling-inferno-burn.",
+      "Activation group: crippling-inferno-each-round-shared-activation.",
       "Independent per-target checks: 3.",
       "Activation, target selection, target overlap, and uptime remain conditional.",
       "Final damage is not calculated."
@@ -49396,7 +49487,7 @@
     "targetSelectionGroup": null,
     "title": "Fire Damage Periodic Damage Support",
     "unresolvedQuestions": [
-      "Burn stacking, refresh, and overlapping source behavior are unknown."
+      "Burn stacking, refresh, and overlapping-source behavior remain unresolved."
     ]
   },
   {
@@ -49474,7 +49565,7 @@
     "targetSelectionGroup": null,
     "title": "Fire Damage Periodic Damage Support",
     "unresolvedQuestions": [
-      "Burn stacking, refresh, and overlapping source behavior are unknown."
+      "Burn stacking, refresh, and overlapping-source behavior remain unresolved."
     ]
   },
   {
@@ -49549,6 +49640,7 @@
   },
   {
     "assumptions": [
+      "Effects with shared activation group blazing-fury-fire-support-shared-activation use one activation roll; uptime is not calculated.",
       "Multiple qualifying outputs are aggregated into one normal synergy trace.",
       "Target count is one, so eligible recipients compete for the same activation.",
       "Trigger chance and target selection may make this conditional rather than guaranteed."
@@ -50022,7 +50114,7 @@
       "Recovery Rate: 100% at effective Habit Level 5.",
       "Recovery support",
       "Targets 1 Ally; caster is eligible.",
-      "Timing: Rounds 2, 5, 8."
+      "Timing: Rounds 2, 5, and 8."
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final value cannot be calculated because final combat formulas and stacking order are not fully verified.",
@@ -50136,7 +50228,8 @@
       "Supplier effective Habit Level: 5",
       "Status application chance: 20% at effective Habit Level 5.",
       "Duration: 2 rounds.",
-      "Independent per-target checks: 3."
+      "Independent per-target checks: 3.",
+      "Shared activation group: crippling-inferno-each-round-shared-activation."
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact status target outcome cannot be calculated because activation, target identity, and uptime are unresolved.",
@@ -50204,7 +50297,8 @@
       "Supplier effective Habit Level: 5",
       "Status application chance: 20% at effective Habit Level 5.",
       "Duration: 2 rounds.",
-      "Independent per-target checks: 3."
+      "Independent per-target checks: 3.",
+      "Shared activation group: crippling-inferno-each-round-shared-activation."
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact status target outcome cannot be calculated because activation, target identity, and uptime are unresolved.",
@@ -50283,8 +50377,9 @@
       "Status application chance: 20% at effective Habit Level 5.",
       "Duration: 2 rounds.",
       "Independent per-target checks: 3.",
+      "Shared activation group: crippling-inferno-each-round-shared-activation.",
       "Supplier schedule: Rounds 1, 2, 3, 4, 5, 6, 7 and 8.",
-      "Dependent schedule: Rounds 2, 5 and 8.",
+      "Dependent schedule: Rounds 2, 5, and 8.",
       "Known possible overlap windows: Round 2 after a successful Round 1 application; Round 2 from a successful Round 2 application only if Crippling Inferno resolves before Strategic Revival that round; Round 5 after a successful Round 4 application; Round 5 from a successful Round 5 application only if Crippling Inferno resolves before Strategic Revival that round; Round 8 after a successful Round 7 application; Round 8 from a successful Round 8 application only if Crippling Inferno resolves before Strategic Revival that round.",
       "Slow duration: 2 rounds.",
       "At least one enemy must have active Slow.",
@@ -50401,8 +50496,9 @@
       "Conditional multiplier: 1.5x",
       "Status application chance: 20%.",
       "Duration: 2 rounds.",
+      "Shared activation group: blazing-fury-fire-support-shared-activation.",
       "Supplier schedule: Rounds 1, 2, 3, 4, 5, 6, 7, 8 and 9.",
-      "Dependent schedule: Rounds 3, 6 and 9.",
+      "Dependent schedule: Rounds 3, 6, and 9.",
       "Known possible overlap windows: Round 3 after a successful Round 2 application; Round 3 from a successful Round 3 application only if Blazing Fury resolves before Infernal Burst that round; Round 6 after a successful Round 5 application; Round 6 from a successful Round 6 application only if Blazing Fury resolves before Infernal Burst that round; Round 9 after a successful Round 8 application; Round 9 from a successful Round 9 application only if Blazing Fury resolves before Infernal Burst that round.",
       "First-Strike duration: 2 rounds.",
       "Caraxes is the resolved recipient of First-Strike if the supplier activates.",
@@ -50411,7 +50507,7 @@
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final value cannot be calculated because final combat formulas and stacking order are not fully verified.",
-    "explanation": "Blazing Fury has a 20% chance each round to grant First-Strike to one ally in any lane. First-Strike lasts 2 rounds. On Rounds 3, 6 and 9, Infernal Burst deals Fire Damage at a 100% rate to 3 enemies in any lane. When Caraxes has First-Strike, the rate increases 1.5x to 150%. Blazing Fury's First-Strike can overlap Infernal Burst in these windows: Round 3 after a successful Round 2 application; Round 3 from a successful Round 3 application only if Blazing Fury resolves before Infernal Burst that round; Round 6 after a successful Round 5 application; Round 6 from a successful Round 6 application only if Blazing Fury resolves before Infernal Burst that round; Round 9 after a successful Round 8 application; Round 9 from a successful Round 9 application only if Blazing Fury resolves before Infernal Burst that round. Caraxes is the resolved recipient of First-Strike if the supplier activates; Infernal Burst benefits while Caraxes has First-Strike. Activation and uptime remain unresolved. Same-round action order is unresolved.",
+    "explanation": "Blazing Fury has a 20% chance each round to grant First-Strike to one ally in any lane. First-Strike lasts 2 rounds. On Rounds 3, 6, and 9, Infernal Burst deals Fire Damage at a 100% rate to 3 enemies in any lane. When Caraxes has First-Strike, the rate increases 1.5x to 150%. Blazing Fury's First-Strike can overlap Infernal Burst in these windows: Round 3 after a successful Round 2 application; Round 3 from a successful Round 3 application only if Blazing Fury resolves before Infernal Burst that round; Round 6 after a successful Round 5 application; Round 6 from a successful Round 6 application only if Blazing Fury resolves before Infernal Burst that round; Round 9 after a successful Round 8 application; Round 9 from a successful Round 9 application only if Blazing Fury resolves before Infernal Burst that round. Caraxes is the resolved recipient of First-Strike if the supplier activates; Infernal Burst benefits while Caraxes has First-Strike. Activation and uptime remain unresolved. Same-round action order is unresolved.",
     "id": "status-condition-syrax-blazing-fury-blazing-fury-first-strike-first-strike-status-output-caraxes-infernal-burst-infernal-burst-fire-rate-output",
     "interactionScope": "cross-dragon",
     "matchedOutputCapabilityIds": [],
@@ -51315,7 +51411,7 @@
       "Activation chance: 100% at effective Habit Level 5.",
       "Damage Received decrease 20%.",
       "Duration: 2 rounds.",
-      "Timing: Rounds 2, 5, 8."
+      "Timing: Rounds 2, 5, and 8."
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final value cannot be calculated because final combat formulas and stacking order are not fully verified.",
@@ -52834,7 +52930,7 @@
     ],
     "damageScope": null,
     "effects": [
-      "Enemy Initiative reduction may improve Fire Damage outputs: Infernal Burst: Fire Damage, Crippling Inferno: Burn.",
+      "Enemy Initiative reduction may improve Fire Damage outputs: Infernal Burst: Fire Damage, Crippling Inferno: Burn, Crippling Inferno: Burn periodic Fire Damage.",
       "Applies to all qualifying Fire Damage sources."
     ],
     "exactResultKnown": false,
@@ -52844,7 +52940,8 @@
     "interactionScope": "cross-dragon",
     "matchedOutputCapabilityIds": [
       "caraxes-infernal-burst-infernal-burst-fire-rate-output",
-      "caraxes-crippling-inferno-crippling-inferno-burn-output"
+      "caraxes-crippling-inferno-crippling-inferno-burn-output",
+      "periodic-caraxes-crippling-inferno-crippling-inferno-burn-burn-output"
     ],
     "matchKind": "enemy-mitigation-reduction",
     "modifierCapabilityId": "syrax-flight-mastery-flight-mastery-initiative-down-stat-dealt-modifier",
@@ -52855,6 +52952,7 @@
     "recipientDragonId": "caraxes",
     "recipientEvidenceIds": [
       "caraxes-infernal-burst-2026-06-24",
+      "caraxes-crippling-inferno-2026-06-24",
       "caraxes-crippling-inferno-2026-06-24"
     ],
     "requirements": [
@@ -53036,7 +53134,7 @@
     ],
     "damageScope": null,
     "effects": [
-      "Enemy Initiative reduction may improve Fire Damage outputs: Infernal Burst: Fire Damage, Crippling Inferno: Burn.",
+      "Enemy Initiative reduction may improve Fire Damage outputs: Infernal Burst: Fire Damage, Crippling Inferno: Burn, Crippling Inferno: Burn periodic Fire Damage.",
       "Applies to all qualifying Fire Damage sources."
     ],
     "exactResultKnown": false,
@@ -53046,7 +53144,8 @@
     "interactionScope": "internal",
     "matchedOutputCapabilityIds": [
       "caraxes-infernal-burst-infernal-burst-fire-rate-output",
-      "caraxes-crippling-inferno-crippling-inferno-burn-output"
+      "caraxes-crippling-inferno-crippling-inferno-burn-output",
+      "periodic-caraxes-crippling-inferno-crippling-inferno-burn-burn-output"
     ],
     "matchKind": "enemy-mitigation-reduction",
     "modifierCapabilityId": "caraxes-battle-dread-battle-dread-initiative-down-stat-dealt-modifier",
@@ -53057,6 +53156,7 @@
     "recipientDragonId": "caraxes",
     "recipientEvidenceIds": [
       "caraxes-infernal-burst-2026-06-24",
+      "caraxes-crippling-inferno-2026-06-24",
       "caraxes-crippling-inferno-2026-06-24"
     ],
     "requirements": [
@@ -53553,6 +53653,7 @@
       "Scales with Intelligence.",
       "Mitigated by target Initiative.",
       "Status supplier effect: crippling-inferno-burn.",
+      "Activation group: crippling-inferno-each-round-shared-activation.",
       "Independent per-target checks: 3.",
       "Activation, target selection, target overlap, and uptime remain conditional.",
       "Final damage is not calculated."
@@ -53661,7 +53762,7 @@
     "targetSelectionGroup": null,
     "title": "Fire Damage Periodic Damage Support",
     "unresolvedQuestions": [
-      "Burn stacking, refresh, and overlapping source behavior are unknown."
+      "Burn stacking, refresh, and overlapping-source behavior remain unresolved."
     ]
   },
   {
@@ -54343,7 +54444,6 @@
   {
     "assumptions": [
       "Provider activation is not guaranteed.",
-      "Target selection may choose another eligible recipient.",
       "Exact uptime, total attacks, final damage, and successful attack effects are not calculated.",
       "Only the verified after-each-Basic-Attack dependency is represented; broader trigger ordering is unresolved."
     ],
@@ -54352,11 +54452,12 @@
     "conflicts": [],
     "damageScope": null,
     "effects": [
-      "Potential extra Basic Attack can trigger Feral Strike again."
+      "A second Basic Attack can trigger Feral Strike's after-Basic-Attack Physical Damage effects again.",
+      "Scheduled grant rolls do not repeat from the extra Basic Attack event."
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final value cannot be calculated because final combat formulas and stacking order are not fully verified.",
-    "explanation": "Double-Strike may grant Venator a second Basic Attack, which can trigger Feral Strike again.",
+    "explanation": "Double-Strike may grant Venator a second Basic Attack. A second Basic Attack can trigger Feral Strike's after-Basic-Attack Physical Damage effects again.",
     "id": "extra-basic-attack-trigger-venator-feral-strike-feral-strike-double-strike-double-strike-status-output-basic-attack-extra-action-venator-feral-strike-after-basic-attack-trigger-venator",
     "interactionScope": "internal",
     "matchedOutputCapabilityIds": [],
@@ -54397,7 +54498,6 @@
   {
     "assumptions": [
       "Provider activation is not guaranteed.",
-      "Target selection may choose another eligible recipient.",
       "Exact uptime, total attacks, final damage, and successful attack effects are not calculated.",
       "Only the verified after-each-Basic-Attack dependency is represented; broader trigger ordering is unresolved."
     ],
@@ -54409,11 +54509,12 @@
     ],
     "damageScope": null,
     "effects": [
-      "Potential extra Basic Attack can trigger Feral Precision again."
+      "A second Basic Attack can trigger Feral Precision's added after-Basic-Attack Physical Damage again.",
+      "Scheduled grant rolls do not repeat from the extra Basic Attack event."
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final value cannot be calculated because final combat formulas and stacking order are not fully verified.",
-    "explanation": "Double-Strike may grant Venator a second Basic Attack, which can trigger Feral Precision again.",
+    "explanation": "Double-Strike may grant Venator a second Basic Attack. A second Basic Attack can trigger Feral Precision's added after-Basic-Attack Physical Damage again.",
     "id": "extra-basic-attack-trigger-venator-feral-strike-feral-strike-double-strike-double-strike-status-output-basic-attack-extra-action-venator-feral-precision-after-basic-attack-trigger-venator",
     "interactionScope": "internal",
     "matchedOutputCapabilityIds": [],
@@ -54538,6 +54639,8 @@
       "Supplier effective Habit Level: 5",
       "Status application chance: 35% at effective Habit Level 5.",
       "Duration: 2 rounds.",
+      "One shared activation roll applies both effects.",
+      "Shared activation group: eclipse-cover-shared-roll.",
       "Selected-target group: eclipse-cover-shared-roll.",
       "Eclipse Cover effect eclipse-cover-weakened uses selected-target group eclipse-cover-shared-roll."
     ],
@@ -54590,9 +54693,7 @@
     "status": "potential",
     "targetSelectionGroup": null,
     "title": "Eclipse Cover - Weakened attempt",
-    "unresolvedQuestions": [
-      "One shared activation roll applies both effects."
-    ]
+    "unresolvedQuestions": []
   },
   {
     "assumptions": [
@@ -54605,11 +54706,13 @@
     "effects": [
       "Status application chance: 30%.",
       "Duration: 2 rounds.",
+      "Bleed checks are separate for each target.",
       "Independent per-target checks: 2.",
       "Per-target check chance: 30%.",
       "Checks are independent; chances are not combined into one roll.",
       "Target reference original-basic-attack-target: First checked target is the original Basic Attack target.",
-      "Target reference other-adjacent-enemy: Second checked target is another enemy within adjacency. References source effect tactical-strike-tactical-damage."
+      "Target reference other-adjacent-enemy: Second checked target is another enemy within adjacency. References source effect tactical-strike-tactical-damage.",
+      "Target reference original-basic-attack-target: Use the target of the Basic Attack that triggered Tactical Strike."
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact status target outcome cannot be calculated because activation, target identity, and uptime are unresolved.",
@@ -54635,9 +54738,7 @@
     "status": "potential",
     "targetSelectionGroup": null,
     "title": "Tactical Strike - Bleed attempt",
-    "unresolvedQuestions": [
-      "Bleed checks are separate for each target."
-    ]
+    "unresolvedQuestions": []
   },
   {
     "assumptions": [
@@ -54654,6 +54755,12 @@
       "Supplier effective Habit Level: 5",
       "Status application chance: 30% at effective Habit Level 5.",
       "Duration: 2 rounds.",
+      "Panic checks are separate for each target.",
+      "Independent per-target checks: 2.",
+      "Per-target check chance: 30% at effective Habit Level 5.",
+      "Checks are independent; chances are not combined into one roll.",
+      "Target reference panic-first-target: First Panic check uses the Physical Damage target. References source effect tactical-assault-physical-damage.",
+      "Target reference panic-second-target: Second Panic check uses another distinct adjacent enemy. References source effect tactical-assault-physical-damage.",
       "Target reference not-original-basic-attack-target: Physical Damage target is distinct from the original Basic Attack target. References source effect tactical-strike-tactical-damage."
     ],
     "exactResultKnown": false,
@@ -54705,9 +54812,7 @@
     "status": "potential",
     "targetSelectionGroup": null,
     "title": "Tactical Assault - Panic attempt",
-    "unresolvedQuestions": [
-      "Panic checks are separate for each target."
-    ]
+    "unresolvedQuestions": []
   },
   {
     "assumptions": [
@@ -54725,11 +54830,13 @@
       "Timing: Start of Round 1.",
       "Duration: 1 round.",
       "Real Control status: Stun.",
-      "Real self-inflicted Control status."
+      "Real self-inflicted Control status.",
+      "Supplier effective Habit Level: 5",
+      "Duration: 1 round."
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final value cannot be calculated because final combat formulas and stacking order are not fully verified.",
-    "explanation": "Kalspire's Radiant Conqueror causes Kalspire to gain Stun. Target: Kalspire. Timing: Start of Round 1. Duration: 1 round. Real Control status: Stun. Real self-inflicted Control status.",
+    "explanation": "Kalspire's Radiant Conqueror causes Kalspire to gain Stun. Target: Kalspire. Timing: Start of Round 1. Duration: 1 round. Real Control status: Stun. Real self-inflicted Control status. Supplier effective Habit Level: 5 Duration: 1 round.",
     "id": "self-status-output-kalspire-radiant-conqueror-radiant-conqueror-self-stun-stun-status-output",
     "interactionScope": "internal",
     "matchedOutputCapabilityIds": [],
@@ -54777,6 +54884,49 @@
     "unresolvedQuestions": [
       "Cleanse timing and outcome are not invented."
     ]
+  },
+  {
+    "assumptions": [
+      "Self-targeting resolves the recipient separately from activation success and uptime."
+    ],
+    "channel": "status",
+    "confidence": "confirmed",
+    "conflicts": [],
+    "damageScope": null,
+    "effects": [
+      "Target: Venator.",
+      "Timing: Rounds 4, 6, and 8.",
+      "Duration: 2 rounds.",
+      "Status source: Double-Strike.",
+      "Supplier effective Habit Level: 5",
+      "Status application chance: 50% at effective Habit Level 5.",
+      "Duration: 2 rounds.",
+      "Feral Precision replaces the base Double-Strike chance on rounds 4, 6, and 8.",
+      "Shared activation group: feral-strike-double-strike-rounds-shared-activation."
+    ],
+    "exactResultKnown": false,
+    "exactResultUnknownReason": "Exact final value cannot be calculated because final combat formulas and stacking order are not fully verified.",
+    "explanation": "Venator's Feral Strike causes Venator to gain Double-Strike. Target: Venator. Timing: Rounds 4, 6, and 8. Duration: 2 rounds. Status source: Double-Strike. Supplier effective Habit Level: 5 Status application chance: 50% at effective Habit Level 5. Duration: 2 rounds. Feral Precision replaces the base Double-Strike chance on rounds 4, 6, and 8. Shared activation group: feral-strike-double-strike-rounds-shared-activation.",
+    "id": "self-status-output-venator-feral-strike-feral-strike-double-strike-double-strike-status-output",
+    "interactionScope": "internal",
+    "matchedOutputCapabilityIds": [],
+    "matchKind": "status-condition-enablement",
+    "modifierCapabilityId": null,
+    "modifierCapabilityIds": [],
+    "recipientAbilityId": "venator-feral-strike",
+    "recipientDragonId": "venator",
+    "recipientEvidenceIds": [],
+    "requirements": [],
+    "ruleId": "self-status-output",
+    "sourceAbilityId": "venator-feral-strike",
+    "sourceDragonId": "venator",
+    "sourceEvidenceIds": [
+      "venator-feral-strike-summary-2026-06-25"
+    ],
+    "status": "potential",
+    "targetSelectionGroup": null,
+    "title": "Feral Strike - Self Double-Strike source",
+    "unresolvedQuestions": []
   },
   {
     "assumptions": [],
@@ -56158,11 +56308,13 @@
     "confidence": "confirmed",
     "conflicts": [
       "Kalspire - Battle Cunning Habit unlock requirement: expected Star Rank 4+, actual preview enabled",
-      "Kalspire - Battle Cunning Selected Habit Level: expected Habit Level 1+ or preview, actual preview enabled"
+      "Kalspire - Battle Cunning Selected Habit Level: expected Habit Level 1+ or preview, actual preview enabled",
+      "kalspire - Tactical Assault Habit unlock requirement: expected Star Rank 6+, actual preview enabled",
+      "kalspire - Tactical Assault Selected Habit Level: expected Habit Level 1+ or preview, actual preview enabled"
     ],
     "damageScope": null,
     "effects": [
-      "Enemy Intelligence reduction may improve Tactical Damage outputs: Tactical Strike: Tactical Damage.",
+      "Enemy Intelligence reduction may improve Tactical Damage outputs: Tactical Strike: Tactical Damage, Tactical Assault: Panic periodic Tactical Damage.",
       "Applies to all qualifying Tactical Damage sources."
     ],
     "exactResultKnown": false,
@@ -56171,7 +56323,8 @@
     "id": "enemy-mitigation-kalspire-battle-cunning-battle-cunning-intelligence-down-stat-dealt-modifier-kalspire-intelligence",
     "interactionScope": "internal",
     "matchedOutputCapabilityIds": [
-      "kalspire-tactical-strike-tactical-strike-tactical-damage-output"
+      "kalspire-tactical-strike-tactical-strike-tactical-damage-output",
+      "periodic-kalspire-tactical-assault-tactical-assault-panic-panic-output"
     ],
     "matchKind": "enemy-mitigation-reduction",
     "modifierCapabilityId": "kalspire-battle-cunning-battle-cunning-intelligence-down-stat-dealt-modifier",
@@ -56181,7 +56334,8 @@
     "recipientAbilityId": "kalspire-tactical-strike",
     "recipientDragonId": "kalspire",
     "recipientEvidenceIds": [
-      "kalspire-tactical-strike-summary-2026-06-25"
+      "kalspire-tactical-strike-summary-2026-06-25",
+      "kalspire-tactical-assault-2026-06-25"
     ],
     "requirements": [
       {
@@ -56203,6 +56357,30 @@
         "expected": "Habit Level 1+ or preview",
         "id": "kalspire-kalspire-battle-cunning-habit-level",
         "label": "Kalspire - Battle Cunning Selected Habit Level",
+        "notes": [
+          "Unlocked Habits without an explicit saved Habit Level default to effective Habit Level 1. Locked Habit capabilities are potential in preview mode, not active for current roster."
+        ],
+        "satisfied": false
+      },
+      {
+        "actual": "preview enabled",
+        "evidenceIds": [
+          "kalspire-tactical-assault-2026-06-25"
+        ],
+        "expected": "Star Rank 6+",
+        "id": "kalspire-kalspire-tactical-assault-star-rank",
+        "label": "kalspire - Tactical Assault Habit unlock requirement",
+        "notes": [],
+        "satisfied": false
+      },
+      {
+        "actual": "preview enabled",
+        "evidenceIds": [
+          "kalspire-tactical-assault-2026-06-25"
+        ],
+        "expected": "Habit Level 1+ or preview",
+        "id": "kalspire-kalspire-tactical-assault-habit-level",
+        "label": "kalspire - Tactical Assault Selected Habit Level",
         "notes": [
           "Unlocked Habits without an explicit saved Habit Level default to effective Habit Level 1. Locked Habit capabilities are potential in preview mode, not active for current roster."
         ],
@@ -56230,11 +56408,13 @@
     "confidence": "confirmed",
     "conflicts": [
       "Venator - Hunter's Bane Habit unlock requirement: expected Star Rank 2+, actual preview enabled",
-      "Venator - Hunter's Bane Selected Habit Level: expected Habit Level 1+ or preview, actual preview enabled"
+      "Venator - Hunter's Bane Selected Habit Level: expected Habit Level 1+ or preview, actual preview enabled",
+      "kalspire - Tactical Assault Habit unlock requirement: expected Star Rank 6+, actual preview enabled",
+      "kalspire - Tactical Assault Selected Habit Level: expected Habit Level 1+ or preview, actual preview enabled"
     ],
     "damageScope": null,
     "effects": [
-      "Enemy Intelligence reduction may improve Tactical Damage outputs: Tactical Strike: Tactical Damage.",
+      "Enemy Intelligence reduction may improve Tactical Damage outputs: Tactical Strike: Tactical Damage, Tactical Assault: Panic periodic Tactical Damage.",
       "Applies to all qualifying Tactical Damage sources."
     ],
     "exactResultKnown": false,
@@ -56243,7 +56423,8 @@
     "id": "enemy-mitigation-venator-hunters-bane-hunters-bane-intelligence-down-stat-dealt-modifier-kalspire-intelligence",
     "interactionScope": "cross-dragon",
     "matchedOutputCapabilityIds": [
-      "kalspire-tactical-strike-tactical-strike-tactical-damage-output"
+      "kalspire-tactical-strike-tactical-strike-tactical-damage-output",
+      "periodic-kalspire-tactical-assault-tactical-assault-panic-panic-output"
     ],
     "matchKind": "enemy-mitigation-reduction",
     "modifierCapabilityId": "venator-hunters-bane-hunters-bane-intelligence-down-stat-dealt-modifier",
@@ -56253,7 +56434,8 @@
     "recipientAbilityId": "kalspire-tactical-strike",
     "recipientDragonId": "kalspire",
     "recipientEvidenceIds": [
-      "kalspire-tactical-strike-summary-2026-06-25"
+      "kalspire-tactical-strike-summary-2026-06-25",
+      "kalspire-tactical-assault-2026-06-25"
     ],
     "requirements": [
       {
@@ -56275,6 +56457,30 @@
         "expected": "Habit Level 1+ or preview",
         "id": "venator-venator-hunters-bane-habit-level",
         "label": "Venator - Hunter's Bane Selected Habit Level",
+        "notes": [
+          "Unlocked Habits without an explicit saved Habit Level default to effective Habit Level 1. Locked Habit capabilities are potential in preview mode, not active for current roster."
+        ],
+        "satisfied": false
+      },
+      {
+        "actual": "preview enabled",
+        "evidenceIds": [
+          "kalspire-tactical-assault-2026-06-25"
+        ],
+        "expected": "Star Rank 6+",
+        "id": "kalspire-kalspire-tactical-assault-star-rank",
+        "label": "kalspire - Tactical Assault Habit unlock requirement",
+        "notes": [],
+        "satisfied": false
+      },
+      {
+        "actual": "preview enabled",
+        "evidenceIds": [
+          "kalspire-tactical-assault-2026-06-25"
+        ],
+        "expected": "Habit Level 1+ or preview",
+        "id": "kalspire-kalspire-tactical-assault-habit-level",
+        "label": "kalspire - Tactical Assault Selected Habit Level",
         "notes": [
           "Unlocked Habits without an explicit saved Habit Level default to effective Habit Level 1. Locked Habit capabilities are potential in preview mode, not active for current roster."
         ],
@@ -56809,7 +57015,8 @@
       "kalspire-tactical-assault-tactical-assault-physical-damage-output",
       "venator-feral-strike-feral-strike-physical-instances-output",
       "venator-feral-precision-feral-precision-additional-physical-output",
-      "venator-desperate-ambush-desperate-ambush-physical-output"
+      "venator-desperate-ambush-desperate-ambush-physical-output",
+      "periodic-kalspire-tactical-strike-tactical-strike-bleed-bleed-output"
     ],
     "matchKind": "enemy-damage-received-increase",
     "modifierCapabilityId": "vhagar-blazing-onslaught-blazing-onslaught-physical-received-physical-damage-received-modifier",
@@ -56824,7 +57031,8 @@
       "kalspire-tactical-assault-2026-06-25",
       "venator-feral-strike-summary-2026-06-25",
       "venator-feral-precision-2026-06-25",
-      "venator-desperate-ambush-2026-06-25"
+      "venator-desperate-ambush-2026-06-25",
+      "kalspire-tactical-strike-summary-2026-06-25"
     ],
     "requirements": [
       {
@@ -56895,7 +57103,8 @@
       "kalspire-tactical-assault-tactical-assault-physical-damage-output",
       "venator-feral-strike-feral-strike-physical-instances-output",
       "venator-feral-precision-feral-precision-additional-physical-output",
-      "venator-desperate-ambush-desperate-ambush-physical-output"
+      "venator-desperate-ambush-desperate-ambush-physical-output",
+      "periodic-kalspire-tactical-strike-tactical-strike-bleed-bleed-output"
     ],
     "matchKind": "enemy-damage-received-increase",
     "modifierCapabilityId": "venator-armor-break-armor-break-physical-received-physical-damage-received-modifier",
@@ -56910,7 +57119,8 @@
       "kalspire-tactical-assault-2026-06-25",
       "venator-feral-strike-summary-2026-06-25",
       "venator-feral-precision-2026-06-25",
-      "venator-desperate-ambush-2026-06-25"
+      "venator-desperate-ambush-2026-06-25",
+      "kalspire-tactical-strike-summary-2026-06-25"
     ],
     "requirements": [
       {
@@ -56976,6 +57186,7 @@
       "Independent per-target checks: 2.",
       "Per-target check chance: 30%.",
       "Checks are independent; chances are not combined into one roll.",
+      "Bleed checks are separate for each target.",
       "Activation, target selection, target overlap, and uptime remain conditional.",
       "Final damage is not calculated."
     ],
@@ -57035,6 +57246,7 @@
       "Independent per-target checks: 2.",
       "Per-target check chance: 30% at effective Habit Level 5.",
       "Checks are independent; chances are not combined into one roll.",
+      "Panic checks are separate for each target.",
       "Activation, target selection, target overlap, and uptime remain conditional.",
       "Final damage is not calculated."
     ],
@@ -57175,7 +57387,7 @@
     "targetSelectionGroup": null,
     "title": "Tactical Damage Periodic Damage Support",
     "unresolvedQuestions": [
-      "Burn stacking, refresh, and overlapping source behavior are unknown."
+      "Panic stacking, refresh, and overlapping-source behavior remain unresolved."
     ]
   },
   {
@@ -57639,6 +57851,8 @@
       "Supplier effective Habit Level: 5",
       "Status application chance: 35% at effective Habit Level 5.",
       "Duration: 2 rounds.",
+      "One shared activation roll applies both effects.",
+      "Shared activation group: eclipse-cover-shared-roll.",
       "Selected-target group: eclipse-cover-shared-roll.",
       "Eclipse Cover effect eclipse-cover-weakened uses selected-target group eclipse-cover-shared-roll."
     ],
@@ -57691,9 +57905,7 @@
     "status": "potential",
     "targetSelectionGroup": null,
     "title": "Eclipse Cover - Weakened attempt",
-    "unresolvedQuestions": [
-      "One shared activation roll applies both effects."
-    ]
+    "unresolvedQuestions": []
   },
   {
     "assumptions": [
@@ -57710,7 +57922,8 @@
       "Supplier effective Habit Level: 5",
       "Status application chance: 20% at effective Habit Level 5.",
       "Duration: 2 rounds.",
-      "Independent per-target checks: 3."
+      "Independent per-target checks: 3.",
+      "Shared activation group: crippling-inferno-each-round-shared-activation."
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact status target outcome cannot be calculated because activation, target identity, and uptime are unresolved.",
@@ -57778,7 +57991,8 @@
       "Supplier effective Habit Level: 5",
       "Status application chance: 20% at effective Habit Level 5.",
       "Duration: 2 rounds.",
-      "Independent per-target checks: 3."
+      "Independent per-target checks: 3.",
+      "Shared activation group: crippling-inferno-each-round-shared-activation."
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact status target outcome cannot be calculated because activation, target identity, and uptime are unresolved.",
@@ -57858,6 +58072,7 @@
       "Status application chance: 20% at effective Habit Level 5.",
       "Duration: 2 rounds.",
       "Independent per-target checks: 3.",
+      "Shared activation group: crippling-inferno-each-round-shared-activation.",
       "Supplier schedule: Each round.",
       "Dependent schedule: Each round.",
       "Crippling Inferno and Fiery Bonds both check each round. Burn from the previous round can still enhance Fiery Bonds from Round 2 onward. A Burn applied during the current round can enhance Fiery Bonds only if Crippling Inferno resolves first.",
@@ -58030,7 +58245,6 @@
     "targetSelectionGroup": null,
     "title": "Taunt enables Bloodscale Fury",
     "unresolvedQuestions": [
-      "Effect-level Weakened chance.",
       "Exact roll sharing, target evaluation order, status check timing, refresh, and stacking remain unresolved.",
       "Exact same-enemy Taunt overlap and final conditional uptime are unresolved."
     ]
@@ -59198,7 +59412,7 @@
     ],
     "damageScope": null,
     "effects": [
-      "Enemy Initiative reduction may improve Fire Damage outputs: Infernal Burst: Fire Damage, Crippling Inferno: Burn.",
+      "Enemy Initiative reduction may improve Fire Damage outputs: Infernal Burst: Fire Damage, Crippling Inferno: Burn, Crippling Inferno: Burn periodic Fire Damage.",
       "Applies to all qualifying Fire Damage sources."
     ],
     "exactResultKnown": false,
@@ -59208,7 +59422,8 @@
     "interactionScope": "internal",
     "matchedOutputCapabilityIds": [
       "caraxes-infernal-burst-infernal-burst-fire-rate-output",
-      "caraxes-crippling-inferno-crippling-inferno-burn-output"
+      "caraxes-crippling-inferno-crippling-inferno-burn-output",
+      "periodic-caraxes-crippling-inferno-crippling-inferno-burn-burn-output"
     ],
     "matchKind": "enemy-mitigation-reduction",
     "modifierCapabilityId": "caraxes-battle-dread-battle-dread-initiative-down-stat-dealt-modifier",
@@ -59219,6 +59434,7 @@
     "recipientDragonId": "caraxes",
     "recipientEvidenceIds": [
       "caraxes-infernal-burst-2026-06-24",
+      "caraxes-crippling-inferno-2026-06-24",
       "caraxes-crippling-inferno-2026-06-24"
     ],
     "requirements": [
@@ -59472,7 +59688,7 @@
     ],
     "damageScope": null,
     "effects": [
-      "Enemy Initiative reduction may improve Fire Damage outputs: Infernal Burst: Fire Damage, Crippling Inferno: Burn.",
+      "Enemy Initiative reduction may improve Fire Damage outputs: Infernal Burst: Fire Damage, Crippling Inferno: Burn, Crippling Inferno: Burn periodic Fire Damage.",
       "Applies to all qualifying Fire Damage sources.",
       "Duration: 2 rounds."
     ],
@@ -59483,7 +59699,8 @@
     "interactionScope": "cross-dragon",
     "matchedOutputCapabilityIds": [
       "caraxes-infernal-burst-infernal-burst-fire-rate-output",
-      "caraxes-crippling-inferno-crippling-inferno-burn-output"
+      "caraxes-crippling-inferno-crippling-inferno-burn-output",
+      "periodic-caraxes-crippling-inferno-crippling-inferno-burn-burn-output"
     ],
     "matchKind": "enemy-mitigation-reduction",
     "modifierCapabilityId": "crimson-vermins-bane-vermins-bane-initiative-down-stat-dealt-modifier",
@@ -59494,6 +59711,7 @@
     "recipientDragonId": "caraxes",
     "recipientEvidenceIds": [
       "caraxes-infernal-burst-2026-06-24",
+      "caraxes-crippling-inferno-2026-06-24",
       "caraxes-crippling-inferno-2026-06-24"
     ],
     "requirements": [
@@ -60209,7 +60427,8 @@
     "matchedOutputCapabilityIds": [
       "caraxes-infernal-burst-infernal-burst-fire-rate-output",
       "caraxes-crippling-inferno-crippling-inferno-burn-output",
-      "crimson-bloodscale-terror-bloodscale-terror-fire-damage-output"
+      "crimson-bloodscale-terror-bloodscale-terror-fire-damage-output",
+      "periodic-caraxes-crippling-inferno-crippling-inferno-burn-burn-output"
     ],
     "matchKind": "enemy-damage-received-increase",
     "modifierCapabilityId": "vhagar-blazing-onslaught-blazing-onslaught-fire-received-fire-damage-received-modifier",
@@ -60221,7 +60440,8 @@
     "recipientEvidenceIds": [
       "caraxes-infernal-burst-2026-06-24",
       "caraxes-crippling-inferno-2026-06-24",
-      "crimson-bloodscale-terror-summary-2026-06-25"
+      "crimson-bloodscale-terror-summary-2026-06-25",
+      "caraxes-crippling-inferno-2026-06-24"
     ],
     "requirements": [
       {
@@ -60452,7 +60672,8 @@
     "matchedOutputCapabilityIds": [
       "caraxes-infernal-burst-infernal-burst-fire-rate-output",
       "caraxes-crippling-inferno-crippling-inferno-burn-output",
-      "crimson-bloodscale-terror-bloodscale-terror-fire-damage-output"
+      "crimson-bloodscale-terror-bloodscale-terror-fire-damage-output",
+      "periodic-caraxes-crippling-inferno-crippling-inferno-burn-burn-output"
     ],
     "matchKind": "enemy-damage-received-increase",
     "modifierCapabilityId": "crimson-unlikely-hero-unlikely-hero-fire-received-fire-damage-received-modifier",
@@ -60464,7 +60685,8 @@
     "recipientEvidenceIds": [
       "caraxes-infernal-burst-2026-06-24",
       "caraxes-crippling-inferno-2026-06-24",
-      "crimson-bloodscale-terror-summary-2026-06-25"
+      "crimson-bloodscale-terror-summary-2026-06-25",
+      "caraxes-crippling-inferno-2026-06-24"
     ],
     "requirements": [
       {
@@ -60527,6 +60749,7 @@
       "Scales with Intelligence.",
       "Mitigated by target Initiative.",
       "Status supplier effect: crippling-inferno-burn.",
+      "Activation group: crippling-inferno-each-round-shared-activation.",
       "Independent per-target checks: 3.",
       "Activation, target selection, target overlap, and uptime remain conditional.",
       "Final damage is not calculated."
@@ -61534,7 +61757,7 @@
       "Recovery Rate: 100% at effective Habit Level 5.",
       "Recovery support",
       "Targets 1 Ally; caster is eligible.",
-      "Timing: Rounds 2, 5, 8."
+      "Timing: Rounds 2, 5, and 8."
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final value cannot be calculated because final combat formulas and stacking order are not fully verified.",
@@ -61696,6 +61919,8 @@
       "Supplier effective Habit Level: 5",
       "Status application chance: 35% at effective Habit Level 5.",
       "Duration: 2 rounds.",
+      "One shared activation roll applies both effects.",
+      "Shared activation group: eclipse-cover-shared-roll.",
       "Selected-target group: eclipse-cover-shared-roll.",
       "Eclipse Cover effect eclipse-cover-weakened uses selected-target group eclipse-cover-shared-roll."
     ],
@@ -61748,9 +61973,7 @@
     "status": "potential",
     "targetSelectionGroup": null,
     "title": "Eclipse Cover - Weakened attempt",
-    "unresolvedQuestions": [
-      "One shared activation roll applies both effects."
-    ]
+    "unresolvedQuestions": []
   },
   {
     "assumptions": [
@@ -61763,11 +61986,13 @@
     "effects": [
       "Status application chance: 30%.",
       "Duration: 2 rounds.",
+      "Bleed checks are separate for each target.",
       "Independent per-target checks: 2.",
       "Per-target check chance: 30%.",
       "Checks are independent; chances are not combined into one roll.",
       "Target reference original-basic-attack-target: First checked target is the original Basic Attack target.",
-      "Target reference other-adjacent-enemy: Second checked target is another enemy within adjacency. References source effect tactical-strike-tactical-damage."
+      "Target reference other-adjacent-enemy: Second checked target is another enemy within adjacency. References source effect tactical-strike-tactical-damage.",
+      "Target reference original-basic-attack-target: Use the target of the Basic Attack that triggered Tactical Strike."
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact status target outcome cannot be calculated because activation, target identity, and uptime are unresolved.",
@@ -61793,9 +62018,7 @@
     "status": "potential",
     "targetSelectionGroup": null,
     "title": "Tactical Strike - Bleed attempt",
-    "unresolvedQuestions": [
-      "Bleed checks are separate for each target."
-    ]
+    "unresolvedQuestions": []
   },
   {
     "assumptions": [
@@ -61812,6 +62035,12 @@
       "Supplier effective Habit Level: 5",
       "Status application chance: 30% at effective Habit Level 5.",
       "Duration: 2 rounds.",
+      "Panic checks are separate for each target.",
+      "Independent per-target checks: 2.",
+      "Per-target check chance: 30% at effective Habit Level 5.",
+      "Checks are independent; chances are not combined into one roll.",
+      "Target reference panic-first-target: First Panic check uses the Physical Damage target. References source effect tactical-assault-physical-damage.",
+      "Target reference panic-second-target: Second Panic check uses another distinct adjacent enemy. References source effect tactical-assault-physical-damage.",
       "Target reference not-original-basic-attack-target: Physical Damage target is distinct from the original Basic Attack target. References source effect tactical-strike-tactical-damage."
     ],
     "exactResultKnown": false,
@@ -61863,9 +62092,7 @@
     "status": "potential",
     "targetSelectionGroup": null,
     "title": "Tactical Assault - Panic attempt",
-    "unresolvedQuestions": [
-      "Panic checks are separate for each target."
-    ]
+    "unresolvedQuestions": []
   },
   {
     "assumptions": [
@@ -61883,11 +62110,13 @@
       "Timing: Start of Round 1.",
       "Duration: 1 round.",
       "Real Control status: Stun.",
-      "Real self-inflicted Control status."
+      "Real self-inflicted Control status.",
+      "Supplier effective Habit Level: 5",
+      "Duration: 1 round."
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final value cannot be calculated because final combat formulas and stacking order are not fully verified.",
-    "explanation": "Kalspire's Radiant Conqueror causes Kalspire to gain Stun. Target: Kalspire. Timing: Start of Round 1. Duration: 1 round. Real Control status: Stun. Real self-inflicted Control status.",
+    "explanation": "Kalspire's Radiant Conqueror causes Kalspire to gain Stun. Target: Kalspire. Timing: Start of Round 1. Duration: 1 round. Real Control status: Stun. Real self-inflicted Control status. Supplier effective Habit Level: 5 Duration: 1 round.",
     "id": "self-status-output-kalspire-radiant-conqueror-radiant-conqueror-self-stun-stun-status-output",
     "interactionScope": "internal",
     "matchedOutputCapabilityIds": [],
@@ -62978,7 +63207,7 @@
       "Activation chance: 100% at effective Habit Level 5.",
       "Damage Received decrease 20%.",
       "Duration: 2 rounds.",
-      "Timing: Rounds 2, 5, 8."
+      "Timing: Rounds 2, 5, and 8."
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final value cannot be calculated because final combat formulas and stacking order are not fully verified.",
@@ -64111,11 +64340,13 @@
     "confidence": "confirmed",
     "conflicts": [
       "Kalspire - Battle Cunning Habit unlock requirement: expected Star Rank 4+, actual preview enabled",
-      "Kalspire - Battle Cunning Selected Habit Level: expected Habit Level 1+ or preview, actual preview enabled"
+      "Kalspire - Battle Cunning Selected Habit Level: expected Habit Level 1+ or preview, actual preview enabled",
+      "kalspire - Tactical Assault Habit unlock requirement: expected Star Rank 6+, actual preview enabled",
+      "kalspire - Tactical Assault Selected Habit Level: expected Habit Level 1+ or preview, actual preview enabled"
     ],
     "damageScope": null,
     "effects": [
-      "Enemy Intelligence reduction may improve Tactical Damage outputs: Tactical Strike: Tactical Damage.",
+      "Enemy Intelligence reduction may improve Tactical Damage outputs: Tactical Strike: Tactical Damage, Tactical Assault: Panic periodic Tactical Damage.",
       "Applies to all qualifying Tactical Damage sources."
     ],
     "exactResultKnown": false,
@@ -64124,7 +64355,8 @@
     "id": "enemy-mitigation-kalspire-battle-cunning-battle-cunning-intelligence-down-stat-dealt-modifier-kalspire-intelligence",
     "interactionScope": "internal",
     "matchedOutputCapabilityIds": [
-      "kalspire-tactical-strike-tactical-strike-tactical-damage-output"
+      "kalspire-tactical-strike-tactical-strike-tactical-damage-output",
+      "periodic-kalspire-tactical-assault-tactical-assault-panic-panic-output"
     ],
     "matchKind": "enemy-mitigation-reduction",
     "modifierCapabilityId": "kalspire-battle-cunning-battle-cunning-intelligence-down-stat-dealt-modifier",
@@ -64134,7 +64366,8 @@
     "recipientAbilityId": "kalspire-tactical-strike",
     "recipientDragonId": "kalspire",
     "recipientEvidenceIds": [
-      "kalspire-tactical-strike-summary-2026-06-25"
+      "kalspire-tactical-strike-summary-2026-06-25",
+      "kalspire-tactical-assault-2026-06-25"
     ],
     "requirements": [
       {
@@ -64156,6 +64389,30 @@
         "expected": "Habit Level 1+ or preview",
         "id": "kalspire-kalspire-battle-cunning-habit-level",
         "label": "Kalspire - Battle Cunning Selected Habit Level",
+        "notes": [
+          "Unlocked Habits without an explicit saved Habit Level default to effective Habit Level 1. Locked Habit capabilities are potential in preview mode, not active for current roster."
+        ],
+        "satisfied": false
+      },
+      {
+        "actual": "preview enabled",
+        "evidenceIds": [
+          "kalspire-tactical-assault-2026-06-25"
+        ],
+        "expected": "Star Rank 6+",
+        "id": "kalspire-kalspire-tactical-assault-star-rank",
+        "label": "kalspire - Tactical Assault Habit unlock requirement",
+        "notes": [],
+        "satisfied": false
+      },
+      {
+        "actual": "preview enabled",
+        "evidenceIds": [
+          "kalspire-tactical-assault-2026-06-25"
+        ],
+        "expected": "Habit Level 1+ or preview",
+        "id": "kalspire-kalspire-tactical-assault-habit-level",
+        "label": "kalspire - Tactical Assault Selected Habit Level",
         "notes": [
           "Unlocked Habits without an explicit saved Habit Level default to effective Habit Level 1. Locked Habit capabilities are potential in preview mode, not active for current roster."
         ],
@@ -64760,7 +65017,8 @@
     "matchedOutputCapabilityIds": [
       "vhagar-fiery-bonds-fiery-bonds-physical-damage-output",
       "vhagar-skyward-titan-skyward-titan-third-stack-damage-output",
-      "kalspire-tactical-assault-tactical-assault-physical-damage-output"
+      "kalspire-tactical-assault-tactical-assault-physical-damage-output",
+      "periodic-kalspire-tactical-strike-tactical-strike-bleed-bleed-output"
     ],
     "matchKind": "enemy-damage-received-increase",
     "modifierCapabilityId": "vhagar-blazing-onslaught-blazing-onslaught-physical-received-physical-damage-received-modifier",
@@ -64772,7 +65030,8 @@
     "recipientEvidenceIds": [
       "vhagar-fiery-bonds-summary-2026-06-25",
       "vhagar-skyward-titan-2026-06-25",
-      "kalspire-tactical-assault-2026-06-25"
+      "kalspire-tactical-assault-2026-06-25",
+      "kalspire-tactical-strike-summary-2026-06-25"
     ],
     "requirements": [
       {
@@ -64838,6 +65097,7 @@
       "Independent per-target checks: 2.",
       "Per-target check chance: 30%.",
       "Checks are independent; chances are not combined into one roll.",
+      "Bleed checks are separate for each target.",
       "Activation, target selection, target overlap, and uptime remain conditional.",
       "Final damage is not calculated."
     ],
@@ -64897,6 +65157,7 @@
       "Independent per-target checks: 2.",
       "Per-target check chance: 30% at effective Habit Level 5.",
       "Checks are independent; chances are not combined into one roll.",
+      "Panic checks are separate for each target.",
       "Activation, target selection, target overlap, and uptime remain conditional.",
       "Final damage is not calculated."
     ],
@@ -65029,7 +65290,7 @@
     "targetSelectionGroup": null,
     "title": "Tactical Damage Periodic Damage Support",
     "unresolvedQuestions": [
-      "Burn stacking, refresh, and overlapping source behavior are unknown."
+      "Panic stacking, refresh, and overlapping-source behavior remain unresolved."
     ]
   },
   {
@@ -65116,7 +65377,7 @@
     "targetSelectionGroup": null,
     "title": "Tactical Damage Periodic Damage Support",
     "unresolvedQuestions": [
-      "Burn stacking, refresh, and overlapping source behavior are unknown."
+      "Panic stacking, refresh, and overlapping-source behavior remain unresolved."
     ]
   },
   {
@@ -66024,7 +66285,6 @@
   {
     "assumptions": [
       "Provider activation is not guaranteed.",
-      "Target selection may choose another eligible recipient.",
       "Exact uptime, total attacks, final damage, and successful attack effects are not calculated.",
       "Only the verified after-each-Basic-Attack dependency is represented; broader trigger ordering is unresolved."
     ],
@@ -66033,11 +66293,12 @@
     "conflicts": [],
     "damageScope": null,
     "effects": [
-      "Potential extra Basic Attack can trigger Feral Strike again."
+      "A second Basic Attack can trigger Feral Strike's after-Basic-Attack Physical Damage effects again.",
+      "Scheduled grant rolls do not repeat from the extra Basic Attack event."
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final value cannot be calculated because final combat formulas and stacking order are not fully verified.",
-    "explanation": "Double-Strike may grant Venator a second Basic Attack, which can trigger Feral Strike again.",
+    "explanation": "Double-Strike may grant Venator a second Basic Attack. A second Basic Attack can trigger Feral Strike's after-Basic-Attack Physical Damage effects again.",
     "id": "extra-basic-attack-trigger-venator-feral-strike-feral-strike-double-strike-double-strike-status-output-basic-attack-extra-action-venator-feral-strike-after-basic-attack-trigger-venator",
     "interactionScope": "internal",
     "matchedOutputCapabilityIds": [],
@@ -66078,7 +66339,6 @@
   {
     "assumptions": [
       "Provider activation is not guaranteed.",
-      "Target selection may choose another eligible recipient.",
       "Exact uptime, total attacks, final damage, and successful attack effects are not calculated.",
       "Only the verified after-each-Basic-Attack dependency is represented; broader trigger ordering is unresolved."
     ],
@@ -66090,11 +66350,12 @@
     ],
     "damageScope": null,
     "effects": [
-      "Potential extra Basic Attack can trigger Feral Precision again."
+      "A second Basic Attack can trigger Feral Precision's added after-Basic-Attack Physical Damage again.",
+      "Scheduled grant rolls do not repeat from the extra Basic Attack event."
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final value cannot be calculated because final combat formulas and stacking order are not fully verified.",
-    "explanation": "Double-Strike may grant Venator a second Basic Attack, which can trigger Feral Precision again.",
+    "explanation": "Double-Strike may grant Venator a second Basic Attack. A second Basic Attack can trigger Feral Precision's added after-Basic-Attack Physical Damage again.",
     "id": "extra-basic-attack-trigger-venator-feral-strike-feral-strike-double-strike-double-strike-status-output-basic-attack-extra-action-venator-feral-precision-after-basic-attack-trigger-venator",
     "interactionScope": "internal",
     "matchedOutputCapabilityIds": [],
@@ -66219,6 +66480,8 @@
       "Supplier effective Habit Level: 5",
       "Status application chance: 35% at effective Habit Level 5.",
       "Duration: 2 rounds.",
+      "One shared activation roll applies both effects.",
+      "Shared activation group: eclipse-cover-shared-roll.",
       "Selected-target group: eclipse-cover-shared-roll.",
       "Eclipse Cover effect eclipse-cover-weakened uses selected-target group eclipse-cover-shared-roll."
     ],
@@ -66271,9 +66534,7 @@
     "status": "potential",
     "targetSelectionGroup": null,
     "title": "Eclipse Cover - Weakened attempt",
-    "unresolvedQuestions": [
-      "One shared activation roll applies both effects."
-    ]
+    "unresolvedQuestions": []
   },
   {
     "assumptions": [
@@ -66373,10 +66634,52 @@
     "targetSelectionGroup": null,
     "title": "Taunt enables Bloodscale Fury",
     "unresolvedQuestions": [
-      "Effect-level Weakened chance.",
       "Exact roll sharing, target evaluation order, status check timing, refresh, and stacking remain unresolved.",
       "Exact same-enemy Taunt overlap and final conditional uptime are unresolved."
     ]
+  },
+  {
+    "assumptions": [
+      "Self-targeting resolves the recipient separately from activation success and uptime."
+    ],
+    "channel": "status",
+    "confidence": "confirmed",
+    "conflicts": [],
+    "damageScope": null,
+    "effects": [
+      "Target: Venator.",
+      "Timing: Rounds 4, 6, and 8.",
+      "Duration: 2 rounds.",
+      "Status source: Double-Strike.",
+      "Supplier effective Habit Level: 5",
+      "Status application chance: 50% at effective Habit Level 5.",
+      "Duration: 2 rounds.",
+      "Feral Precision replaces the base Double-Strike chance on rounds 4, 6, and 8.",
+      "Shared activation group: feral-strike-double-strike-rounds-shared-activation."
+    ],
+    "exactResultKnown": false,
+    "exactResultUnknownReason": "Exact final value cannot be calculated because final combat formulas and stacking order are not fully verified.",
+    "explanation": "Venator's Feral Strike causes Venator to gain Double-Strike. Target: Venator. Timing: Rounds 4, 6, and 8. Duration: 2 rounds. Status source: Double-Strike. Supplier effective Habit Level: 5 Status application chance: 50% at effective Habit Level 5. Duration: 2 rounds. Feral Precision replaces the base Double-Strike chance on rounds 4, 6, and 8. Shared activation group: feral-strike-double-strike-rounds-shared-activation.",
+    "id": "self-status-output-venator-feral-strike-feral-strike-double-strike-double-strike-status-output",
+    "interactionScope": "internal",
+    "matchedOutputCapabilityIds": [],
+    "matchKind": "status-condition-enablement",
+    "modifierCapabilityId": null,
+    "modifierCapabilityIds": [],
+    "recipientAbilityId": "venator-feral-strike",
+    "recipientDragonId": "venator",
+    "recipientEvidenceIds": [],
+    "requirements": [],
+    "ruleId": "self-status-output",
+    "sourceAbilityId": "venator-feral-strike",
+    "sourceDragonId": "venator",
+    "sourceEvidenceIds": [
+      "venator-feral-strike-summary-2026-06-25"
+    ],
+    "status": "potential",
+    "targetSelectionGroup": null,
+    "title": "Feral Strike - Self Double-Strike source",
+    "unresolvedQuestions": []
   },
   {
     "assumptions": [],

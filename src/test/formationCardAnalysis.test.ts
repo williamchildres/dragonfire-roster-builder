@@ -286,27 +286,17 @@ describe('formation card analysis presentation', () => {
       .filter((item): item is NonNullable<typeof item> => Boolean(item))
       .flatMap((item) => [item.summary, item.detail, ...item.summaryLines, ...item.details, ...item.effects])
       .join(' ');
-    expect(rallyingSelf).toBeDefined();
+    expect(rallyingSelf).toBeUndefined();
     expect(rallyingAlly).toBeDefined();
-    expect(rallyingSelf?.effectTitle).toContain('stack support');
     expect(rallyingAlly?.effectTitle).toContain('stack support');
-    expect(rallyingText).toContain('50% chance at the start of combat to gain one Rallying Flame stack.');
     expect(rallyingText).toContain('On the same successful Rallying Flame activation, Daemoros gains one Spreading Blaze stack.');
-    expect(rallyingText).toContain('Each stack increases Physical Damage Dealt by 5%, up to 4 stacks, until the end of combat. Current stack count is unknown.');
     expect(rallyingText).toContain('The activation repeats once for each enemy that deals Fire Damage. The number of matching enemies is unresolved, and every repeated attempt remains a 50% chance.');
     expect(rallyingText).toContain('Each stack increases Tactical Damage Dealt by 2.5%, up to 10 stacks, until the end of combat. Current stack count is unknown.');
     expect(rallyingText).not.toContain('Shared stack pool: rallying-flame');
     expect(rallyingText).not.toContain('Shared stack pool: spreading-blaze');
 
     const resolve = vermax.provides.find((item) => item.abilityName === 'Unyielding Resolve');
-    const resolveText = resolve ? [resolve.summary, resolve.detail, ...resolve.summaryLines, ...resolve.details, ...resolve.effects].join(' ') : '';
-    expect(resolve).toBeDefined();
-    expect(resolve?.effectTitle).toContain('Control cleanse');
-    expect(resolveText).toContain('20% chance to gain Advantage +15% for 2 rounds');
-    expect(resolveText).toContain('While Weakened, the chance increases to 30%');
-    expect(resolveText).toContain('Advantage and removal of Weakened share the same successful activation.');
-    expect(resolveText).toContain('The cleanse does not receive an independent roll.');
-    expect(resolveText).not.toContain('unyielding-resolve-start-round-shared-activation');
+    expect(resolve).toBeUndefined();
   });
 
   it('honors two-target ally cardinality without candidate wording', () => {

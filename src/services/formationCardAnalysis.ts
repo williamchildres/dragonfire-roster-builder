@@ -107,7 +107,8 @@ export function buildFormationCardPresentation(
   const normalTraces = traces.filter(
     (trace) =>
       (isNormalSynergyTrace(trace) || isVisibleInternalProvidesTrace(trace)) &&
-      !(trace.status === 'inactive' && trace.matchKind === 'defensive-ally-support'),
+      !(trace.status === 'inactive' && trace.matchKind === 'defensive-ally-support') &&
+      !isGenericEnemyProviderWithBeneficiaryTrace(trace, traces),
   );
   const byDragon = new Map<string, { receives: FormationCardInteraction[]; provides: FormationCardInteraction[] }>();
   for (const dragonId of selectedIds) {
@@ -259,6 +260,21 @@ export function buildFormationCardPresentation(
   };
 }
 
+function isGenericEnemyProviderWithBeneficiaryTrace(trace: SynergyTrace, traces: SynergyTrace[]): boolean {
+  return (
+    trace.recipientDragonId === null &&
+    (trace.matchKind === 'enemy-damage-received-increase' || trace.matchKind === 'enemy-mitigation-reduction') &&
+    traces.some((candidate) =>
+      candidate !== trace &&
+      candidate.matchKind === trace.matchKind &&
+      candidate.sourceDragonId === trace.sourceDragonId &&
+      candidate.sourceAbilityId === trace.sourceAbilityId &&
+      candidate.modifierCapabilityId === trace.modifierCapabilityId &&
+      candidate.recipientDragonId !== null
+    )
+  );
+}
+
 function isVisibleInternalProvidesTrace(trace: SynergyTrace): boolean {
   if (isFormationRelevantEnemyProviderBenefit(trace)) {
     return true;
@@ -275,6 +291,9 @@ function isVisibleInternalProvidesTrace(trace: SynergyTrace): boolean {
     return trace.status !== 'inactive';
   }
   if (trace.ruleId === 'internal-self-modifier') {
+    if (trace.modifierSelfOnly === true) {
+      return false;
+    }
     const text = [...trace.effects, ...trace.matchedFacts, trace.explanation].join(' ');
     if (/Exclusive one-of choice/i.test(text)) {
       return false;
@@ -284,8 +303,7 @@ function isVisibleInternalProvidesTrace(trace: SynergyTrace): boolean {
     }
   }
   if (trace.ruleId === 'self-status-removal') {
-    return trace.status !== 'inactive' &&
-      !trace.requirements.some((requirement) => requirement.actual === 'preview enabled');
+    return false;
   }
   if (trace.matchKind === 'defensive-ally-support') {
     return trace.modifierSelfOnly === true &&

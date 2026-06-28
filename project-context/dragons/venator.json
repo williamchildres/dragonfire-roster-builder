@@ -3441,8 +3441,34 @@
       "abilityId": "venator-feral-strike",
       "abilityName": "Feral Strike",
       "actionType": "basic-attack",
-      "activationChanceByHabitLevel": [],
-      "activationChanceFixed": 30,
+      "activationChanceByHabitLevel": [
+        {
+          "level": 1,
+          "unit": "percent",
+          "value": 40
+        },
+        {
+          "level": 2,
+          "unit": "percent",
+          "value": 42
+        },
+        {
+          "level": 3,
+          "unit": "percent",
+          "value": 44
+        },
+        {
+          "level": 4,
+          "unit": "percent",
+          "value": 47
+        },
+        {
+          "level": 5,
+          "unit": "percent",
+          "value": 50
+        }
+      ],
+      "activationChanceFixed": null,
       "activationGroupId": "feral-strike-double-strike-rounds-shared-activation",
       "availability": {
         "canonical": "canonical-base",
@@ -3453,14 +3479,40 @@
         "reportLabel": "Base kit; not collected in observed account",
         "userRoster": "unknown"
       },
-      "chanceByHabitLevel": [],
-      "chanceFixed": 30,
+      "chanceByHabitLevel": [
+        {
+          "level": 1,
+          "unit": "percent",
+          "value": 40
+        },
+        {
+          "level": 2,
+          "unit": "percent",
+          "value": 42
+        },
+        {
+          "level": 3,
+          "unit": "percent",
+          "value": 44
+        },
+        {
+          "level": 4,
+          "unit": "percent",
+          "value": 47
+        },
+        {
+          "level": 5,
+          "unit": "percent",
+          "value": 50
+        }
+      ],
+      "chanceFixed": null,
       "conditions": [
         {
-          "description": "One base Double-Strike chance on rounds 4, 6, and 8.",
+          "description": "Feral Precision replaces the base Double-Strike chance on rounds 4, 6, and 8.",
           "evidenceIds": [],
           "id": "feral-strike-double-strike-rounds-activation-chance",
-          "label": "One base Double-Strike chance on rounds 4, 6, and 8.",
+          "label": "Feral Precision replaces the base Double-Strike chance on rounds 4, 6, and 8.",
           "unresolved": false
         }
       ],
@@ -3499,7 +3551,7 @@
   "firstObservedInGame": null,
   "format": "dragonfire-dragon-profile",
   "gameVersion": null,
-  "generatedAt": "2026-06-28T19:25:57.508Z",
+  "generatedAt": "2026-06-28T20:41:01.367Z",
   "habits": [
     {
       "abilityClass": "passive",
@@ -5718,8 +5770,8 @@
   "rosterSourceStatus": "official-website",
   "slug": "venator",
   "source": {
-    "branch": "fix/resolved-recipient-dependency-propagation-pass4",
-    "commit": "c8099ccbd2b593a5b8d47f3e5a5e7c57a00cf74c",
+    "branch": "fix/trigger-schedule-periodic-framework-pass1",
+    "commit": "74809cfa3b96657bea80e07ffa769ae970d545e9",
     "databaseVersion": "0.6.2",
     "dataSchemaVersion": 12,
     "gameBuild": "26.6.53509",
@@ -5736,8 +5788,34 @@
     {
       "abilityId": "venator-feral-strike",
       "abilityName": "Feral Strike",
-      "activationChanceByHabitLevel": [],
-      "activationChanceFixed": 30,
+      "activationChanceByHabitLevel": [
+        {
+          "level": 1,
+          "unit": "percent",
+          "value": 40
+        },
+        {
+          "level": 2,
+          "unit": "percent",
+          "value": 42
+        },
+        {
+          "level": 3,
+          "unit": "percent",
+          "value": 44
+        },
+        {
+          "level": 4,
+          "unit": "percent",
+          "value": 47
+        },
+        {
+          "level": 5,
+          "unit": "percent",
+          "value": 50
+        }
+      ],
+      "activationChanceFixed": null,
       "activationGroupId": "feral-strike-double-strike-rounds-shared-activation",
       "availability": {
         "canonical": "canonical-base",
@@ -5748,14 +5826,40 @@
         "reportLabel": "Base kit; not collected in observed account",
         "userRoster": "unknown"
       },
-      "chanceByHabitLevel": [],
-      "chanceFixed": 30,
+      "chanceByHabitLevel": [
+        {
+          "level": 1,
+          "unit": "percent",
+          "value": 40
+        },
+        {
+          "level": 2,
+          "unit": "percent",
+          "value": 42
+        },
+        {
+          "level": 3,
+          "unit": "percent",
+          "value": 44
+        },
+        {
+          "level": 4,
+          "unit": "percent",
+          "value": 47
+        },
+        {
+          "level": 5,
+          "unit": "percent",
+          "value": 50
+        }
+      ],
+      "chanceFixed": null,
       "conditions": [
         {
-          "description": "One base Double-Strike chance on rounds 4, 6, and 8.",
+          "description": "Feral Precision replaces the base Double-Strike chance on rounds 4, 6, and 8.",
           "evidenceIds": [],
           "id": "feral-strike-double-strike-rounds-activation-chance",
-          "label": "One base Double-Strike chance on rounds 4, 6, and 8.",
+          "label": "Feral Precision replaces the base Double-Strike chance on rounds 4, 6, and 8.",
           "unresolved": false
         }
       ],
@@ -6081,11 +6185,20 @@
       "evidenceIds": [
         "venator-feral-strike-summary-2026-06-25"
       ],
+      "excludedEffectIds": [
+        "feral-strike-double-strike"
+      ],
       "futureAvailable": false,
       "id": "venator-feral-strike-after-basic-attack-trigger",
       "minimumDragonLevel": null,
       "requiredHabitLevel": null,
       "sourceKind": "command",
+      "triggeredEffectIds": [
+        "feral-strike-physical-instances"
+      ],
+      "triggeredEffectLabels": [
+        "Physical Damage"
+      ],
       "triggerEvent": "after-basic-attack",
       "unlockStarRank": null
     },
@@ -6108,11 +6221,18 @@
       "evidenceIds": [
         "venator-feral-precision-2026-06-25"
       ],
+      "excludedEffectIds": [],
       "futureAvailable": true,
       "id": "venator-feral-precision-after-basic-attack-trigger",
       "minimumDragonLevel": null,
       "requiredHabitLevel": 1,
       "sourceKind": "habit",
+      "triggeredEffectIds": [
+        "feral-precision-additional-physical"
+      ],
+      "triggeredEffectLabels": [
+        "Physical Damage"
+      ],
       "triggerEvent": "after-basic-attack",
       "unlockStarRank": 6
     }

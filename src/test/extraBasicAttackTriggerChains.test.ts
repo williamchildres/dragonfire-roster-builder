@@ -79,7 +79,10 @@ describe('extra Basic Attack trigger-chain derivation', () => {
       'Feral Strike triggers after each Basic Attack.',
       'Source effect ID: lightning-strike-double-strike.',
     ]));
-    expect(trace?.effects).toEqual(['Potential extra Basic Attack can trigger Feral Strike again.']);
+    expect(trace?.effects).toEqual([
+      "A second Basic Attack can trigger Feral Strike's after-Basic-Attack Physical Damage effects again.",
+      'Scheduled grant rolls do not repeat from the extra Basic Attack event.',
+    ]);
     expect(trace?.assumptions.join(' ')).toMatch(/uptime, total attacks, final damage/i);
     expect(trace?.explanation).not.toMatch(/deals \d|uptime/i);
 
@@ -127,7 +130,9 @@ describe('extra Basic Attack trigger-chain derivation', () => {
     expect(trace?.matchedFacts).toEqual(expect.arrayContaining([
       'Extra action recipient and triggered ability owner: vermax.',
       'Spreading Blaze triggers after each Basic Attack.',
+      'Resolved extra-action recipient: Vermax.',
     ]));
+    expect(trace?.effects.join(' ')).toContain('A second Basic Attack can trigger Spreading Blaze');
   });
 
   it('derives extra Basic Attack providers from verified status semantics only', () => {

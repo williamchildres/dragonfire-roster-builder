@@ -3226,7 +3226,7 @@
   "firstObservedInGame": null,
   "format": "dragonfire-dragon-profile",
   "gameVersion": null,
-  "generatedAt": "2026-06-28T19:25:57.508Z",
+  "generatedAt": "2026-06-28T20:41:01.367Z",
   "habits": [
     {
       "abilityClass": "passive",
@@ -5183,7 +5183,7 @@
   "periodicDamage": [
     {
       "abilityId": "caraxes-crippling-inferno",
-      "activationGroupId": null,
+      "activationGroupId": "crippling-inferno-each-round-shared-activation",
       "channel": "fire-damage",
       "damageRateByHabitLevel": [],
       "damageRateFixed": 20,
@@ -5863,8 +5863,8 @@
   "rosterSourceStatus": "official-website",
   "slug": "caraxes",
   "source": {
-    "branch": "fix/resolved-recipient-dependency-propagation-pass4",
-    "commit": "c8099ccbd2b593a5b8d47f3e5a5e7c57a00cf74c",
+    "branch": "fix/trigger-schedule-periodic-framework-pass1",
+    "commit": "74809cfa3b96657bea80e07ffa769ae970d545e9",
     "databaseVersion": "0.6.2",
     "dataSchemaVersion": 12,
     "gameBuild": "26.6.53509",
@@ -5909,7 +5909,7 @@
         }
       ],
       "activationChanceFixed": null,
-      "activationGroupId": null,
+      "activationGroupId": "crippling-inferno-each-round-shared-activation",
       "availability": {
         "canonical": "canonical-locked",
         "notes": [
@@ -6020,7 +6020,7 @@
         }
       ],
       "activationChanceFixed": null,
-      "activationGroupId": null,
+      "activationGroupId": "crippling-inferno-each-round-shared-activation",
       "availability": {
         "canonical": "canonical-locked",
         "notes": [

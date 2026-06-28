@@ -793,8 +793,18 @@ function enforceSelectedFormationBoundary(
     (trace) =>
       selectedDragonIds.has(trace.sourceDragonId) &&
       (!trace.recipientDragonId || selectedDragonIds.has(trace.recipientDragonId)) &&
-      (trace.matchedOutputCapabilityIds ?? []).every((capabilityId) => selectedDragonIds.has(capabilityId.split('-')[0] ?? '')),
+      (trace.matchedOutputCapabilityIds ?? []).every((capabilityId) => {
+        const dragonId = outputCapabilityDragonIdFromId(capabilityId);
+        return dragonId === null || selectedDragonIds.has(dragonId);
+      }),
   );
+}
+
+function outputCapabilityDragonIdFromId(capabilityId: string): string | null {
+  if (capabilityId.startsWith('periodic-')) {
+    return capabilityId.split('-')[1] ?? null;
+  }
+  return capabilityId.split('-')[0] ?? null;
 }
 
 function dedupeFormationTraces(traces: SynergyTrace[]): SynergyTrace[] {
