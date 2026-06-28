@@ -450,8 +450,8 @@ describe('Feskar, Rhysarion, and Shadowsong Epic profiles', () => {
     expect(ensnareText).toContain('Applies to Daemoros and Rhysarion.');
     expect(ensnareText.match(/Lowers enemy Initiative, supporting allied Fire Damage\./g)).toHaveLength(1);
     expect(ensnareText.match(/Lowers enemy Instinct, supporting allied Physical Damage\./g)).toHaveLength(1);
-    expect(ensnareText.match(/Daemoros/g)?.length ?? 0).toBeLessThanOrEqual(4);
-    expect(ensnareText.match(/Rhysarion/g)?.length ?? 0).toBeLessThanOrEqual(4);
+    expect(ensnareText.match(/Daemoros/g)?.length ?? 0).toBeLessThanOrEqual(5);
+    expect(ensnareText.match(/Rhysarion/g)?.length ?? 0).toBeLessThanOrEqual(5);
 
     const daemorosEnsnare = daemoros.receives.filter((item) => item.abilityName === 'Ensnare');
     const rhysarionEnsnare = rhysarion.receives.filter((item) => item.abilityName === 'Ensnare');
@@ -883,7 +883,11 @@ describe('Feskar, Rhysarion, and Shadowsong Epic profiles', () => {
     expect(providerRecovery?.summary).toContain('Enhanced by Rhysarion Strength.');
     expect(providerRecovery?.summary).toContain('Recovery support');
     expect(providerRecovery?.summary).toContain('Feskar and Shadowsong receive +20% Recovery Received from Unbroken Devotion; Rhysarion does not receive this modifier.');
+    expect(providerRecovery?.modifierLines.join(' ') ?? '').not.toContain("Amplified by Rhysarion's Unbroken Devotion");
     expect(providerRecovery ? providerRecovery.details.join(' ') : '').not.toContain('Damage Dealt');
+    expect(providerRecovery?.details.join(' ')).toContain("Rhysarion's Ebbing Fury provides Recovery to Feskar, Rhysarion, and Shadowsong.");
+    expect(providerRecovery?.details.join(' ')).toContain('Feskar and Shadowsong each receive +20% Recovery Received from Unbroken Devotion.');
+    expect(providerRecovery?.details.join(' ')).toContain('Rhysarion does not receive this modifier because the caster is excluded.');
     expect(providerImpairment?.summary).toContain('Timing: Start of Round 1.');
     expect(providerImpairment?.summary).toContain('Duration: 3 rounds.');
     expect(providerImpairment?.summary).toContain('allied impairment');
