@@ -4021,7 +4021,7 @@
   "firstObservedInGame": "2026-06-22",
   "format": "dragonfire-dragon-profile",
   "gameVersion": null,
-  "generatedAt": "2026-06-28T23:09:19.724Z",
+  "generatedAt": "2026-06-28T23:55:11.961Z",
   "habits": [
     {
       "abilityClass": "passive",
@@ -7419,8 +7419,8 @@
   "rosterSourceStatus": "in-game-verified-pending-official-site",
   "slug": "vermax",
   "source": {
-    "branch": "fix/final-analysis-consistency-pass4",
-    "commit": "8313ebdc877a4d46ecaddbfd9abf44873949cdd3",
+    "branch": "fix/value-unit-propagation-pass5",
+    "commit": "c49fe0e8e5c25b9363f220de79649cb9da052444",
     "databaseVersion": "0.6.2",
     "dataSchemaVersion": 12,
     "gameBuild": "26.6.53509",
