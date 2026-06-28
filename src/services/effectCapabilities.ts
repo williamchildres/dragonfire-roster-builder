@@ -3744,6 +3744,10 @@ function analyzeEnemyDamageDealtReductions(
       modifierCapabilityVisible(capability, options),
   )) {
     const statId = statIdFromText(modifier.label);
+    const reductionChannel = enemyDamageDealtChannelForModifier(modifier, statId);
+    if (!reductionChannel) {
+      continue;
+    }
     const providerPosition = positionOf(formation, modifier.dragonId);
     const provider = dragonById(dragons, modifier.dragonId);
     if (!providerPosition || !provider) {
@@ -3759,15 +3763,15 @@ function analyzeEnemyDamageDealtReductions(
       sourceAbilityId: modifier.abilityId,
       recipientDragonId: null,
       recipientAbilityId: null,
-      title: statId ? `Enemy ${statLabel(statId)} reduction` : `${channelLabel(modifier.channel)} Enemy Reduction`,
-      explanation: enemyDamageDealtReductionExplanation(provider, modifier, statId),
+      title: enemyDamageDealtReductionTitle(reductionChannel, modifier, statId),
+      explanation: enemyDamageDealtReductionExplanation(provider, modifier, statId, reductionChannel),
       requirements,
       matchedFacts: [
         `${modifier.abilityName} targets ${targetSelectorSummary(modifier.targetSelector)}.`,
         ...(modifier.targetSelector.sharedSelectionGroupId ? [`Shared selected-target group: ${modifier.targetSelector.sharedSelectionGroupId}.`] : []),
         ...enemySelectorFacts(provider, modifier),
         ...independentHighestStatSelectorFacts(provider, modifier),
-        ...enemyDamageDealtReductionDetailFacts(modifier),
+        ...enemyDamageDealtReductionDetailFacts(modifier, reductionChannel),
         durationLine(modifier),
         ...modifier.conditions.map((condition) => condition.description),
         ...(modifier.activationGroupId ? [`Shared activation group: ${modifier.activationGroupId}.`] : []),
@@ -3775,7 +3779,8 @@ function analyzeEnemyDamageDealtReductions(
       ].filter((fact): fact is string => Boolean(fact)),
       effects: [
         statId ? `Enemy ${statLabel(statId)} ${modifier.operation} ${modifierDisplayValue(modifier, options)}${modifier.rankedValues.length > 0 ? ` at effective Habit Level ${options.previewMaxRankInteractions ? 5 : effectiveHabitLevelForCapability(modifier, options)}` : ''}.` : modifierEffectValueLine(modifier, options),
-        ...enemyDamageDealtReductionDetailFacts(modifier),
+        statId && reductionChannel !== 'stat' ? `Enemy ${channelLabel(reductionChannel)} Dealt reduction follows from enemy ${statLabel(statId)} reduction.` : null,
+        ...enemyDamageDealtReductionDetailFacts(modifier, reductionChannel),
         durationLine(modifier),
       ].filter((effect): effect is string => Boolean(effect)),
       conflicts: requirements
@@ -3792,7 +3797,7 @@ function analyzeEnemyDamageDealtReductions(
       exactResultKnown: false,
       exactResultUnknownReason: 'Exact final reduced enemy damage cannot be calculated because target selection, uptime, stacking, and final formulas are unresolved.',
       matchKind: 'enemy-damage-dealt-reduction',
-      channel: modifier.channel,
+      channel: reductionChannel,
       modifierRole: modifier.role,
       targetSelectorSummary: targetSelectorSummary(modifier.targetSelector),
       modifierSelfOnly: false,
@@ -3805,8 +3810,47 @@ function analyzeEnemyDamageDealtReductions(
   return traces;
 }
 
-function enemyDamageDealtReductionExplanation(provider: Dragon, modifier: ModifierCapability, statId: DragonStatId | null | undefined): string {
-  const stat = statId ? statLabel(statId) : channelLabel(modifier.channel);
+function enemyDamageDealtChannelForModifier(modifier: ModifierCapability, statId: DragonStatId | null | undefined): EffectChannel | null {
+  if (modifier.channel !== 'stat') {
+    return modifier.channel;
+  }
+  if (!statId) {
+    return null;
+  }
+  switch (statId) {
+    case 'strength':
+      return 'physical-damage';
+    case 'instinct':
+      return 'tactical-damage';
+    case 'intelligence':
+      return 'fire-damage';
+    case 'initiative':
+      return 'stat';
+  }
+}
+
+function enemyDamageDealtReductionTitle(channel: EffectChannel, modifier: ModifierCapability, statId: DragonStatId | null | undefined): string {
+  if (channel === 'stat' && statId) {
+    return `Enemy ${statLabel(statId)} reduction`;
+  }
+  const scope = modifier.sourceScope === 'non-basic-attacks' ? 'non-Basic ' : '';
+  if (channel === 'recovery') {
+    return 'Enemy Recovery Received reduction';
+  }
+  if (channel === 'damage-dealt') {
+    return `${scope}Damage Dealt Enemy Reduction`;
+  }
+  return `Enemy ${scope}${channelLabel(channel)} Dealt reduction`;
+}
+
+function enemyDamageDealtReductionExplanation(provider: Dragon, modifier: ModifierCapability, statId: DragonStatId | null | undefined, reductionChannel: EffectChannel): string {
+  const stat = statId
+    ? reductionChannel === 'stat'
+      ? statLabel(statId)
+      : `${statLabel(statId)}, which reduces ${channelLabel(reductionChannel)} Dealt`
+    : reductionChannel === 'damage-dealt'
+      ? channelLabel(reductionChannel)
+      : `${channelLabel(reductionChannel)} Dealt`;
   const targetSentence = modifier.targetSelector.selection === 'all-matching-condition'
     ? 'All matching enemies are affected as enemy-side metadata rather than named friendly recipients.'
     : 'Enemy target selection is tracked as an enemy-side candidate group, not a named friendly recipient.';
@@ -4168,11 +4212,12 @@ function independentHighestStatSelectorFacts(provider: Dragon, modifier: Modifie
   ];
 }
 
-function enemyDamageDealtReductionDetailFacts(modifier: ModifierCapability): string[] {
+function enemyDamageDealtReductionDetailFacts(modifier: ModifierCapability, reductionChannel: EffectChannel = modifier.channel): string[] {
   if (modifier.sourceScope !== 'non-basic-attacks') {
     return [];
   }
-  return [`${channelLabel(modifier.channel)} reduction applies to non-Basic Attacks only.`];
+  const dealt = reductionChannel === 'damage-dealt' || reductionChannel === 'physical-damage' ? '' : ' Dealt';
+  return [`${channelLabel(reductionChannel)}${dealt} reduction applies to non-Basic Attacks only.`];
 }
 
 function analyzeEnemyDamageReceivedIncreases(

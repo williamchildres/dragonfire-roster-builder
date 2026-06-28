@@ -621,7 +621,10 @@ function stackValueSentence(trace: SynergyTrace): string | null {
   if (!duration && isStackSupportTrace(trace)) {
     duration = 'until the end of combat';
   }
-  return `Each stack increases ${valueMatch[2]} by ${valueMatch[1]}%, up to ${maximumMatch[1]} stacks${duration ? `, ${duration}` : ''}. Current stack count is unknown.`;
+  const theoretical = Number(valueMatch[1]) * Number(maximumMatch[1]);
+  const theoreticalText = Number.isFinite(theoretical) ? `, theoretical +${theoretical}%` : '';
+  const durationSuffix = duration ? `, ${duration}` : '';
+  return `Each stack increases ${valueMatch[2]} by ${valueMatch[1]}%, up to ${maximumMatch[1]} stacks${durationSuffix}. Current stack count is unknown. ${valueMatch[2]} +${valueMatch[1]}% per stack, up to ${maximumMatch[1]} stacks${theoreticalText}${durationSuffix}.`;
 }
 
 function stackRepeatSentence(trace: SynergyTrace): string | null {
@@ -756,6 +759,7 @@ function sanitizeNormalCardEffects(effects: string[], summaryLines: string[]): s
 export function formatPresentationText(value: string): string {
   return value
     .replace(/Target reference [^:]+:\s*/gi, '')
+    .replace(/\bRounds 1\b/g, 'Round 1')
     .replace(/References source effect [^.]+\./gi, '')
     .replace(/Source effect ID:\s*[A-Za-z0-9-]+\./gi, '')
     .replace(/Shared selected-target group:\s*[A-Za-z0-9-]+\./gi, 'These effects share the same selected target.')
@@ -951,6 +955,10 @@ function summarizeTrace(
       return branchSummary.map((line) => `${recipient.name}: ${line}`);
     }
     return branchSummary;
+  }
+  const perTargetStatusSummary = independentPerTargetStatusSummary(trace);
+  if (perTargetStatusSummary.length > 0) {
+    return perTargetStatusSummary;
   }
   if (trace.targetSelectionGroup && trace.channel) {
     const eligibleNames = target.targetLabel ?? 'the eligible candidates';
@@ -3279,8 +3287,24 @@ function enemyFacingSummary(trace: SynergyTrace): string {
         threshold ? 'Enemy threshold membership is unresolved.' : null,
       ].filter(Boolean).join(' ');
     }
+    const amount = modifierAmountFromTrace(trace);
     const stat = enemyReductionStat(trace);
-    return `${stat ? `${stat} reduction` : `${formatToken(trace.channel ?? 'damage-dealt')} reduction`} on an enemy candidate; target selection and uptime are uncertain.`;
+    const targetPhrase = enemyReductionTargetPhrase(trace);
+    const duration = trace.effects.find((effect) => /Duration:/i.test(effect)) ?? null;
+    if (trace.channel === 'stat' && stat) {
+      return [
+        `${stat} reduction on ${targetPhrase}.`,
+        duration,
+        'Target selection and uptime are uncertain.',
+      ].filter(Boolean).join(' ');
+    }
+    const sourceValue = stat && amount ? `Enemy ${stat} -${amount}` : null;
+    const channelValue = !stat && amount ? `${formatToken(trace.channel ?? 'damage-dealt')} -${amount}` : null;
+    return [
+      `${sourceValue ?? channelValue ?? `${formatToken(trace.channel ?? 'damage-dealt')} reduction`} on ${targetPhrase}.`,
+      duration,
+      'Target selection and uptime are uncertain.',
+    ].filter(Boolean).join(' ');
   }
   if (trace.matchKind === 'enemy-damage-received-increase') {
     if (isAllMatchingEnemyCondition(trace)) {
@@ -3341,12 +3365,61 @@ function enemyReductionPurpose(trace: SynergyTrace): string {
     return 'Enemy Recovery Received reduction';
   }
   const stat = enemyReductionStat(trace);
+  if (trace.matchKind === 'enemy-damage-dealt-reduction') {
+    if (trace.channel === 'stat' && stat) {
+      return `Enemy ${stat} reduction`;
+    }
+    const scope = /non-Basic/i.test([trace.title, trace.explanation, ...trace.matchedFacts, ...trace.effects].join(' ')) ? 'non-Basic ' : '';
+    if (trace.channel === 'damage-dealt') {
+      return `Enemy ${scope}Damage Dealt reduction`;
+    }
+    return `Enemy ${scope}${formatToken(trace.channel ?? 'damage-dealt')} Dealt reduction`;
+  }
   return stat ? `Enemy ${stat} reduction` : 'Enemy Damage Dealt reduction';
 }
 
 function enemyReductionStat(trace: SynergyTrace): string | null {
   const text = [trace.title, trace.explanation, ...trace.effects, ...trace.matchedFacts].join(' ');
   return text.match(/\bEnemy (Strength|Intelligence|Instinct|Initiative)\s+(?:decrease|reduction)\b/i)?.[1] ?? null;
+}
+
+function enemyReductionTargetPhrase(trace: SynergyTrace): string {
+  const summary = trace.targetSelectorSummary ?? trace.matchedFacts.find((fact) => /targets enemy;/i.test(fact)) ?? '';
+  const countMatch = summary.match(/;\s*(\d+)\s+targets?\b/i);
+  if (!countMatch) {
+    return 'an enemy candidate';
+  }
+  const count = Number(countMatch[1]);
+  return `${count} enemy target${count === 1 ? '' : 's'}`;
+}
+
+function independentPerTargetStatusSummary(trace: SynergyTrace): string[] {
+  if (trace.ruleId !== 'status-source-output') {
+    return [];
+  }
+  const text = [trace.explanation, ...trace.matchedFacts, ...trace.effects].join(' ');
+  const checks = text.match(/Independent per-target checks:\s*(\d+)\./i)?.[1];
+  const chance = text.match(/Per-target check chance:\s*([0-9.]+%)(?:\s+at effective Habit Level \d+)?\./i)?.[1];
+  if (!checks || !chance) {
+    return [];
+  }
+  const status = trace.effects.find((effect) => /Status identity:/i.test(effect))?.replace(/Status identity:\s*/i, '').replace(/\.$/, '') ??
+    trace.matchedFacts.find((fact) => /Supplied status:/i.test(fact))?.replace(/Supplied status:\s*/i, '').replace(/\.$/, '') ??
+    trace.title.match(/-\s*(.+?)\s+(?:application|attempt|source)$/i)?.[1] ??
+    'status';
+  const timing = trace.effects.find((effect) => /Timing:/i.test(effect))?.replace(/^(?:Activation\s+)?Timing:\s*/i, '').replace(/\.$/, '') ??
+    trace.matchedFacts.find((fact) => /Activation timing:/i.test(fact))?.replace(/^Activation timing:\s*/i, '').replace(/\.$/, '') ??
+    null;
+  const duration = trace.effects.find((effect) => /Duration:/i.test(effect)) ?? null;
+  const prefix = timing ? `${capitalizeFirst(timing)}, ` : '';
+  return [[
+    `${prefix}independently checks ${checks} eligible enemy target${checks === '1' ? '' : 's'} at ${chance} each to apply ${formatStatusName(status)}.`,
+    duration,
+  ].filter(Boolean).join(' ')];
+}
+
+function capitalizeFirst(value: string): string {
+  return value.charAt(0).toUpperCase() + value.slice(1);
 }
 
 function enemyVulnerabilityBenefitSummary(trace: SynergyTrace, recipient: Dragon): string {
