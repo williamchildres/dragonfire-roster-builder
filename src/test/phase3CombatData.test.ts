@@ -94,6 +94,8 @@ describe('Phase 3 combat data', () => {
     expect(vermax.officialProfileUrl).toBeNull();
     expect(commandSchedule.timing).toBe('after-basic-attack');
     expect(commandSchedule.repeat?.mode).toBe('once-if-any-match');
+    expect(commandSchedule.effects[0]!.activationRoll).toBeNull();
+    expect(commandSchedule.effects[1]!.activationRoll).toMatchObject({ scope: 'effect', chanceFixed: 20 });
     expect(commandSchedule.effects[1]!.stack?.maximumStacks).toBe(10);
     expect(traitPhysical.sourceScope).toBe('all-sources');
     expect(traitPhysical.notes.join(' ')).toContain('Basic Attack');
@@ -105,6 +107,14 @@ describe('Phase 3 combat data', () => {
     expect(trial.schedules.every((schedule) => schedule.conditions?.[0]?.comparison === 'below')).toBe(true);
     expect(trial.powerByHabitLevel).toEqual([]);
     expect(rallyingFlame.schedules[0]!.repeat?.mode).toBe('once-per-match');
+    expect(rallyingFlame.schedules[0]!.activationRoll).toMatchObject({
+      scope: 'schedule-shared',
+    });
+    expect(rallyingFlame.schedules[0]!.activationRoll?.chanceByHabitLevel.find((value) => value.level === 1)?.value).toBe(50);
+    expect(unyielding.schedules[0]!.activationRoll).toMatchObject({
+      scope: 'schedule-shared',
+    });
+    expect(unyielding.schedules[0]!.activationRoll?.chanceByHabitLevel.find((value) => value.level === 1)?.value).toBe(20);
     expect(unyielding.powerByHabitLevel.map((value) => value.value)).toEqual([340, 790, 1400, 2100, 3100]);
     expect(unyielding.schedules[0]!.effects[0]!.conditionalMultipliers![0]).toMatchObject({
       multiplier: 1.5,

@@ -227,6 +227,19 @@ export function buildFormationCardPresentation(
 }
 
 function isVisibleInternalProvidesTrace(trace: SynergyTrace): boolean {
+  if (trace.ruleId === 'internal-self-modifier') {
+    const text = [...trace.effects, ...trace.matchedFacts, trace.explanation].join(' ');
+    if (/Exclusive one-of choice/i.test(text)) {
+      return trace.status !== 'inactive';
+    }
+    if (/Shared stack pool:/i.test(text) && !trace.requirements.some((requirement) => requirement.actual === 'preview enabled')) {
+      return trace.status !== 'inactive';
+    }
+  }
+  if (trace.ruleId === 'self-status-removal') {
+    return trace.status !== 'inactive' &&
+      !trace.requirements.some((requirement) => requirement.actual === 'preview enabled');
+  }
   if (trace.matchKind === 'defensive-ally-support') {
     return trace.modifierSelfOnly === true &&
       trace.status !== 'inactive' &&
@@ -583,6 +596,9 @@ function summarizeTrace(
     return [detail.replace(`${source.name}'s `, '').replace(recipient ? `${recipient.name}'s ` : '', '')];
   }
   if (trace.matchKind === 'status-removal') {
+    if (/Advantage|Weakened|same successful activation/i.test(detail)) {
+      return [detail.replace(`${source.name}'s `, '').replace(recipient ? `${recipient.name}'s ` : '', '').replaceAll('1.5x', '1.5Ã—')];
+    }
     return ['Potential Control cleanse; timing, selection, and activation are uncertain.'];
   }
   if (trace.matchKind === 'enemy-damage-received-increase' && recipient) {
@@ -621,6 +637,10 @@ function summarizeTrace(
     ];
   }
   if (trace.channel) {
+    const exclusiveChoice = trace.effects.find((effect) => /Exclusive one-of choice/i.test(effect));
+    if (exclusiveChoice) {
+      return [exclusiveChoice.replace(/^Exclusive one-of choice:\s*/i, '')];
+    }
     const recipientCommand = recipient?.command;
     if (recipientCommand && trace.recipientAbilityId?.includes(recipientCommand.id)) {
       return [`Increases ${recipientCommand.name} ${formatToken(trace.channel)}.`];
@@ -802,7 +822,14 @@ function commandScheduleSummaryLines(
     return [];
   }
   const timing = timingOverride ?? scheduleTiming(schedule);
-  return lines.map((line, index) => `${index === 0 ? `${prefix}${timing}: ` : 'Then '}${line}${index === 0 && suffix ? ` ${suffix}` : ''}`);
+  return lines.map((line, index) => {
+    const linePrefix = index === 0
+      ? `${prefix}${timing}: `
+      : /^If\b/i.test(line)
+        ? ''
+        : 'Then ';
+    return `${linePrefix}${line}${index === 0 && suffix ? ` ${suffix}` : ''}`;
+  });
 }
 
 function commandScheduleEffectSummaries(
@@ -848,6 +875,10 @@ function commandScheduleEffectSummaries(
     }
     lines.push(commandSingleEffectSummary(effect, schedule, level));
     used.add(effect.id);
+  }
+  const repeat = commandRepeatSummary(schedule);
+  if (repeat) {
+    lines.push(repeat);
   }
   return lines;
 }
@@ -949,6 +980,14 @@ function commandSingleEffectSummary(
     const chance = commandChanceValue(schedule.activationRoll ?? effect.activationRoll, level);
     return `${chance} chance to Stun ${commandTargetPhrase(effect)} for ${effect.durationRounds ?? 0} rounds.`;
   }
+  if (effect.type === 'Taunt') {
+    const chance = commandChanceValue(effect.activationRoll ?? schedule.activationRoll, level);
+    const duration = effect.durationRounds ? ` for ${effect.durationRounds} rounds` : '';
+    const unresolvedScope = (effect.activationRoll ?? schedule.activationRoll)?.unresolved
+      ? ' Shared versus per-target roll scope is unresolved.'
+      : '';
+    return `${chance} chance to apply Taunt to ${commandTargetPhrase(effect)}${duration}.${unresolvedScope}`;
+  }
   if (effect.type === 'Physical Damage Dealt Down' && (schedule.activationRoll?.chanceFixed ?? effect.activationRoll?.chanceFixed ?? null) !== null) {
     const target = 'the highest-Strength enemy';
     const reduction = formatRankedValue({ level: 1, value: effect.magnitude ?? 12, unit: 'percent' }, 'percent');
@@ -964,6 +1003,9 @@ function commandSingleEffectSummary(
     const target = commandTargetPhrase(effect);
     const rate = commandRateValue(effect, level);
     return `apply Recovery at a ${rate} rate to ${target}, enhanced by Intelligence.`;
+  }
+  if (effect.stack) {
+    return commandStackSummary(effect, schedule, level);
   }
   if (effect.type === 'Panic') {
     const chance = commandChanceValue(effect.activationRoll, level);
@@ -995,6 +1037,42 @@ function commandSingleEffectSummary(
     return `deal Fire Damage at a ${commandRateValue(effect, level)} rate to ${target}.`;
   }
   return commandEffectSummaryLine(schedule, effect, level)[0] ?? `${effect.type}.`;
+}
+
+function commandStackSummary(
+  effect: AbilityEffect,
+  schedule: AbilitySchedule,
+  level: 1 | 2 | 3 | 4 | 5 | null,
+): string {
+  const chance = commandChanceValue(effect.activationRoll ?? schedule.activationRoll, level);
+  const target = commandTargetPhrase(effect);
+  const stackName = formatToken(effect.stack?.statusId ?? effect.type);
+  const value = effect.stack?.valuePerStackFixed ?? rankedValueForHabitLevel(effect.stack?.valuePerStackByHabitLevel ?? [], level)?.value ?? null;
+  const maximum = effect.stack?.maximumStacks ?? null;
+  const channel = /spreading-blaze/i.test(effect.stack?.statusId ?? effect.type)
+    ? 'Tactical Damage Dealt'
+    : /rallying-flame/i.test(effect.stack?.statusId ?? effect.type)
+      ? 'Physical Damage Dealt'
+      : 'the linked output';
+  const valueLine = value !== null && maximum !== null
+    ? ` Each stack increases ${channel} by ${formatRankedValue({ level: 1, value, unit: 'percent' }, 'percent')}, up to ${maximum} stacks.`
+    : '';
+  return `there is a ${chance} chance to grant one ${stackName} stack to ${target}.${valueLine}`;
+}
+
+function commandRepeatSummary(schedule: AbilitySchedule): string | null {
+  if (!schedule.repeat?.condition) {
+    return null;
+  }
+  const condition = schedule.repeat.condition.description.replace(/\.$/, '');
+  if (schedule.repeat.mode === 'once-if-any-match') {
+    const normalized = condition.replace(/^At least one/i, 'any');
+    return `If ${normalized.charAt(0).toLowerCase()}${normalized.slice(1)}, repeat the stack chance once.`;
+  }
+  if (schedule.repeat.mode === 'once-per-match') {
+    return `If ${condition.charAt(0).toLowerCase()}${condition.slice(1)}, repeat once per match; the match count is unresolved.`;
+  }
+  return null;
 }
 
 function commandTargetPhrase(effect: AbilityEffect): string {
@@ -1045,6 +1123,9 @@ function commandTargetPhrase(effect: AbilityEffect): string {
     return 'the enemy with the least troops';
   }
   if (effect.targetCount === 1 && /Ally/i.test(effect.target) && !/least current troops/i.test(effect.target)) {
+    if (effect.conditions?.some((condition) => condition.qualifyingOutput?.channel === 'tactical-damage') || /deals Tactical Damage/i.test(effect.target)) {
+      return 'one Ally that deals Tactical Damage';
+    }
     return 'one Ally in any lane';
   }
   if (/First added enemy/i.test(effect.target)) {
@@ -1063,10 +1144,19 @@ function commandTargetPhrase(effect: AbilityEffect): string {
     return '2 other Allies in any lane';
   }
   if (/1 Ally/i.test(effect.target)) {
+    if (effect.conditions?.some((condition) => condition.qualifyingOutput?.channel === 'tactical-damage') || /deals Tactical Damage/i.test(effect.target)) {
+      return 'one Ally that deals Tactical Damage';
+    }
     return effect.targetScope === 'within-adjacency' ? 'one Ally within adjacency' : 'one Ally in any lane';
   }
   if (/1 Enemy/i.test(effect.target)) {
-    return effect.targetScope === 'within-adjacency' ? 'one enemy within adjacency' : 'one enemy in any lane';
+    if (effect.targetScope === 'within-adjacency') {
+      return 'one enemy within adjacency';
+    }
+    if (effect.targetScope === 'same-lane') {
+      return 'one enemy in the same lane';
+    }
+    return 'one enemy in any lane';
   }
   if (effect.targetScope === 'any-lane' && effect.targetCount === 1) {
     return 'one enemy in any lane';

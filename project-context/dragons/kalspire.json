@@ -4429,7 +4429,7 @@
   "firstObservedInGame": null,
   "format": "dragonfire-dragon-profile",
   "gameVersion": null,
-  "generatedAt": "2026-06-27T23:58:35.361Z",
+  "generatedAt": "2026-06-28T00:36:57.748Z",
   "habits": [
     {
       "abilityClass": "passive",
@@ -6801,6 +6801,44 @@
       "targetScope": "within-adjacency",
       "targetSide": "enemy",
       "unlockStarRank": 6
+    },
+    {
+      "abilityId": "kalspire-tactical-assault",
+      "abilityName": "Tactical Assault",
+      "availability": {
+        "canonical": "canonical-locked",
+        "notes": [
+          "Future at Star Rank 6.",
+          "Not hatched in observed account."
+        ],
+        "observedAccount": "observed-unavailable",
+        "reportLabel": "Future at Star Rank 6; not hatched in observed account",
+        "userRoster": "unknown"
+      },
+      "channel": "tactical-damage",
+      "combatLogConfirmed": false,
+      "conditional": true,
+      "conditions": [],
+      "confidence": "confirmed",
+      "currentlyAvailable": false,
+      "dependencies": [],
+      "directlyVerified": true,
+      "dragonId": "kalspire",
+      "evidenceIds": [
+        "kalspire-tactical-assault-2026-06-25"
+      ],
+      "futureAvailable": true,
+      "id": "kalspire-tactical-assault-tactical-assault-panic-output",
+      "label": "Tactical Assault: Panic",
+      "minimumDragonLevel": null,
+      "requiredHabitLevel": 1,
+      "sourceEffectId": "tactical-assault-panic",
+      "sourceKind": "habit",
+      "sourceScope": "habits",
+      "targetCount": null,
+      "targetScope": "within-adjacency",
+      "targetSide": "enemy",
+      "unlockStarRank": 6
     }
   ],
   "periodicDamage": [
@@ -7688,8 +7726,8 @@
   "rosterSourceStatus": "official-website",
   "slug": "kalspire",
   "source": {
-    "branch": "fix/trial-by-flame-card-thresholds",
-    "commit": "6e1d3d8a9a1bb2244def689a47c54a3193aa764b",
+    "branch": "fix/legacy-exclusive-repeat-status-integrity",
+    "commit": "c2471a6ecb1aa619b043d688a2f35c7d5608877d",
     "databaseVersion": "0.6.2",
     "dataSchemaVersion": 12,
     "gameBuild": "26.6.53509",

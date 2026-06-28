@@ -4927,7 +4927,7 @@
         "abilityId": "vermax-spreading-blaze",
         "abilityName": "Spreading Blaze",
         "activationChanceByHabitLevel": [],
-        "activationChanceFixed": null,
+        "activationChanceFixed": 20,
         "activationGroupId": null,
         "availability": {
           "canonical": "canonical-base",
@@ -5682,7 +5682,7 @@
           }
         ],
         "activationChanceFixed": null,
-        "activationGroupId": null,
+        "activationGroupId": "rallying-flame-start-shared-activation",
         "availability": {
           "canonical": "canonical-locked",
           "notes": [
@@ -5698,10 +5698,10 @@
         "conditional": true,
         "conditions": [
           {
-            "description": "Activation chance depends on Habit Level for start of combat.",
+            "description": "One shared Rallying Flame activation roll grants both stack effects on success.",
             "evidenceIds": [],
             "id": "rallying-flame-start-activation-chance",
-            "label": "Activation chance depends on Habit Level for start of combat.",
+            "label": "One shared Rallying Flame activation roll grants both stack effects on success.",
             "unresolved": false
           },
           {
@@ -10007,6 +10007,44 @@
         "unlockStarRank": 6
       },
       {
+        "abilityId": "kalspire-tactical-assault",
+        "abilityName": "Tactical Assault",
+        "availability": {
+          "canonical": "canonical-locked",
+          "notes": [
+            "Future at Star Rank 6.",
+            "Not hatched in observed account."
+          ],
+          "observedAccount": "observed-unavailable",
+          "reportLabel": "Future at Star Rank 6; not hatched in observed account",
+          "userRoster": "unknown"
+        },
+        "channel": "tactical-damage",
+        "combatLogConfirmed": false,
+        "conditional": true,
+        "conditions": [],
+        "confidence": "confirmed",
+        "currentlyAvailable": false,
+        "dependencies": [],
+        "directlyVerified": true,
+        "dragonId": "kalspire",
+        "evidenceIds": [
+          "kalspire-tactical-assault-2026-06-25"
+        ],
+        "futureAvailable": true,
+        "id": "kalspire-tactical-assault-tactical-assault-panic-output",
+        "label": "Tactical Assault: Panic",
+        "minimumDragonLevel": null,
+        "requiredHabitLevel": 1,
+        "sourceEffectId": "tactical-assault-panic",
+        "sourceKind": "habit",
+        "sourceScope": "habits",
+        "targetCount": null,
+        "targetScope": "within-adjacency",
+        "targetSide": "enemy",
+        "unlockStarRank": 6
+      },
+      {
         "abilityId": "malachite-wardens-rally",
         "abilityName": "Warden's Rally",
         "availability": {
@@ -10381,6 +10419,98 @@
         "targetScope": "within-adjacency",
         "targetSide": "enemy",
         "unlockStarRank": null
+      },
+      {
+        "abilityId": "daemoros-instill-fear",
+        "abilityName": "Instill Fear",
+        "availability": {
+          "canonical": "canonical-locked",
+          "notes": [
+            "Future at Star Rank 2.",
+            "Unlocked in observed account collection state, subject to level and star requirements."
+          ],
+          "observedAccount": "observed-available",
+          "reportLabel": "Future at Star Rank 2; observed account hatched",
+          "userRoster": "unknown"
+        },
+        "channel": "tactical-damage",
+        "combatLogConfirmed": false,
+        "conditional": true,
+        "conditions": [
+          {
+            "description": "One successful activation applies all Instill Fear effects to one selected enemy.",
+            "evidenceIds": [],
+            "id": "instill-fear-each-round-activation-chance",
+            "label": "One successful activation applies all Instill Fear effects to one selected enemy.",
+            "unresolved": false
+          }
+        ],
+        "confidence": "confirmed",
+        "currentlyAvailable": false,
+        "dependencies": [],
+        "directlyVerified": true,
+        "dragonId": "daemoros",
+        "evidenceIds": [
+          "daemoros-instill-fear-2026-06-26"
+        ],
+        "futureAvailable": true,
+        "id": "daemoros-instill-fear-instill-fear-panic-output",
+        "label": "Instill Fear: Panic",
+        "minimumDragonLevel": null,
+        "requiredHabitLevel": 1,
+        "sourceEffectId": "instill-fear-panic",
+        "sourceKind": "habit",
+        "sourceScope": "habits",
+        "targetCount": 1,
+        "targetScope": "any-lane",
+        "targetSide": "enemy",
+        "unlockStarRank": 2
+      },
+      {
+        "abilityId": "daemoros-darkening-fear",
+        "abilityName": "Darkening Fear",
+        "availability": {
+          "canonical": "canonical-locked",
+          "notes": [
+            "Future at Star Rank 8.",
+            "Unlocked in observed account collection state, subject to level and star requirements."
+          ],
+          "observedAccount": "observed-available",
+          "reportLabel": "Future at Star Rank 8; observed account hatched",
+          "userRoster": "unknown"
+        },
+        "channel": "tactical-damage",
+        "combatLogConfirmed": false,
+        "conditional": true,
+        "conditions": [
+          {
+            "description": "Darkening Fear has its own activation roll and target selection.",
+            "evidenceIds": [],
+            "id": "darkening-fear-each-round-activation-chance",
+            "label": "Darkening Fear has its own activation roll and target selection.",
+            "unresolved": false
+          }
+        ],
+        "confidence": "confirmed",
+        "currentlyAvailable": false,
+        "dependencies": [],
+        "directlyVerified": true,
+        "dragonId": "daemoros",
+        "evidenceIds": [
+          "daemoros-darkening-fear-2026-06-26"
+        ],
+        "futureAvailable": true,
+        "id": "daemoros-darkening-fear-darkening-fear-panic-output",
+        "label": "Darkening Fear: Panic",
+        "minimumDragonLevel": null,
+        "requiredHabitLevel": 1,
+        "sourceEffectId": "darkening-fear-panic",
+        "sourceKind": "habit",
+        "sourceScope": "habits",
+        "targetCount": 1,
+        "targetScope": "any-lane",
+        "targetSide": "enemy",
+        "unlockStarRank": 8
       },
       {
         "abilityId": "feskar-calculated-assault",
@@ -14227,11 +14357,11 @@
         },
         "channel": "damage-received",
         "combatLogConfirmed": false,
-        "conditional": true,
+        "conditional": false,
         "conditions": [],
         "confidence": "confirmed",
         "currentlyAvailable": false,
-        "damageScope": "all",
+        "damageScope": null,
         "direction": "received",
         "directlyVerified": true,
         "dragonId": "daemoros",
@@ -14240,7 +14370,7 @@
           "daemoros-phantoms-veil-2026-06-26"
         ],
         "futureAvailable": true,
-        "id": "daemoros-phantoms-veil-phantoms-veil-exclusive-defense-damage-received-received-modifier",
+        "id": "daemoros-phantoms-veil-phantoms-veil-exclusive-defense-damage-received-received-exclusive-choice-modifier",
         "label": "Phantom's Veil: Exclusive Damage Received Reduction",
         "minimumDragonLevel": null,
         "operation": "decrease",
@@ -14276,6 +14406,303 @@
         "requiredHabitLevel": 1,
         "role": "self-amplification",
         "sourceEffectId": "phantoms-veil-exclusive-defense",
+        "sourceScope": "all-qualifying-sources",
+        "stackMaximum": null,
+        "statusId": null,
+        "targetSelector": {
+          "comparisonDirection": null,
+          "comparisonPool": null,
+          "count": null,
+          "includesCaster": null,
+          "position": null,
+          "scope": "self",
+          "selection": "self",
+          "selectionResource": null,
+          "selectionStat": null,
+          "sharedSelectionGroupId": null,
+          "side": "self",
+          "tieBehavior": null
+        },
+        "unit": "percent",
+        "unlockStarRank": 10,
+        "value": null,
+        "valuePerStack": null
+      },
+      {
+        "abilityId": "daemoros-phantoms-veil",
+        "abilityName": "Phantom's Veil",
+        "activationChanceByHabitLevel": [],
+        "activationChanceFixed": null,
+        "activationGroupId": null,
+        "availability": {
+          "canonical": "canonical-locked",
+          "notes": [
+            "Future at Star Rank 10.",
+            "Unlocked in observed account collection state, subject to level and star requirements."
+          ],
+          "observedAccount": "observed-available",
+          "reportLabel": "Future at Star Rank 10; observed account hatched",
+          "userRoster": "unknown"
+        },
+        "channel": "damage-received",
+        "combatLogConfirmed": false,
+        "conditional": true,
+        "conditions": [
+          {
+            "description": "Physical Damage Received depends on the exclusive one-of selection from Phantom's Veil.",
+            "evidenceIds": [
+              "daemoros-phantoms-veil-2026-06-26"
+            ],
+            "id": "phantoms-veil-exclusive-defense-physical-exclusive-one-of-selection",
+            "label": "Exclusive one-of selection",
+            "unresolved": true
+          }
+        ],
+        "confidence": "confirmed",
+        "currentlyAvailable": false,
+        "damageScope": "physical",
+        "direction": "received",
+        "directlyVerified": true,
+        "dragonId": "daemoros",
+        "durationRounds": null,
+        "evidenceIds": [
+          "daemoros-phantoms-veil-2026-06-26"
+        ],
+        "futureAvailable": true,
+        "id": "daemoros-phantoms-veil-phantoms-veil-physical-damage-received-received-exclusive-option-modifier",
+        "label": "Phantom's Veil: Physical Damage Received Down",
+        "minimumDragonLevel": null,
+        "operation": "decrease",
+        "providerRequirements": [],
+        "rankedValues": [
+          {
+            "level": 1,
+            "unit": "percent",
+            "value": 15
+          },
+          {
+            "level": 2,
+            "unit": "percent",
+            "value": 19.5
+          },
+          {
+            "level": 3,
+            "unit": "percent",
+            "value": 24
+          },
+          {
+            "level": 4,
+            "unit": "percent",
+            "value": 30
+          },
+          {
+            "level": 5,
+            "unit": "percent",
+            "value": 37.5
+          }
+        ],
+        "recipientRequirements": [],
+        "requiredHabitLevel": 1,
+        "role": "self-amplification",
+        "sourceEffectId": "phantoms-veil-physical",
+        "sourceScope": "all-qualifying-sources",
+        "stackMaximum": null,
+        "statusId": null,
+        "targetSelector": {
+          "comparisonDirection": null,
+          "comparisonPool": null,
+          "count": null,
+          "includesCaster": null,
+          "position": null,
+          "scope": "self",
+          "selection": "self",
+          "selectionResource": null,
+          "selectionStat": null,
+          "sharedSelectionGroupId": null,
+          "side": "self",
+          "tieBehavior": null
+        },
+        "unit": "percent",
+        "unlockStarRank": 10,
+        "value": null,
+        "valuePerStack": null
+      },
+      {
+        "abilityId": "daemoros-phantoms-veil",
+        "abilityName": "Phantom's Veil",
+        "activationChanceByHabitLevel": [],
+        "activationChanceFixed": null,
+        "activationGroupId": null,
+        "availability": {
+          "canonical": "canonical-locked",
+          "notes": [
+            "Future at Star Rank 10.",
+            "Unlocked in observed account collection state, subject to level and star requirements."
+          ],
+          "observedAccount": "observed-available",
+          "reportLabel": "Future at Star Rank 10; observed account hatched",
+          "userRoster": "unknown"
+        },
+        "channel": "damage-received",
+        "combatLogConfirmed": false,
+        "conditional": true,
+        "conditions": [
+          {
+            "description": "Tactical Damage Received depends on the exclusive one-of selection from Phantom's Veil.",
+            "evidenceIds": [
+              "daemoros-phantoms-veil-2026-06-26"
+            ],
+            "id": "phantoms-veil-exclusive-defense-tactical-exclusive-one-of-selection",
+            "label": "Exclusive one-of selection",
+            "unresolved": true
+          }
+        ],
+        "confidence": "confirmed",
+        "currentlyAvailable": false,
+        "damageScope": "tactical",
+        "direction": "received",
+        "directlyVerified": true,
+        "dragonId": "daemoros",
+        "durationRounds": null,
+        "evidenceIds": [
+          "daemoros-phantoms-veil-2026-06-26"
+        ],
+        "futureAvailable": true,
+        "id": "daemoros-phantoms-veil-phantoms-veil-tactical-damage-received-received-exclusive-option-modifier",
+        "label": "Phantom's Veil: Tactical Damage Received Down",
+        "minimumDragonLevel": null,
+        "operation": "decrease",
+        "providerRequirements": [],
+        "rankedValues": [
+          {
+            "level": 1,
+            "unit": "percent",
+            "value": 15
+          },
+          {
+            "level": 2,
+            "unit": "percent",
+            "value": 19.5
+          },
+          {
+            "level": 3,
+            "unit": "percent",
+            "value": 24
+          },
+          {
+            "level": 4,
+            "unit": "percent",
+            "value": 30
+          },
+          {
+            "level": 5,
+            "unit": "percent",
+            "value": 37.5
+          }
+        ],
+        "recipientRequirements": [],
+        "requiredHabitLevel": 1,
+        "role": "self-amplification",
+        "sourceEffectId": "phantoms-veil-tactical",
+        "sourceScope": "all-qualifying-sources",
+        "stackMaximum": null,
+        "statusId": null,
+        "targetSelector": {
+          "comparisonDirection": null,
+          "comparisonPool": null,
+          "count": null,
+          "includesCaster": null,
+          "position": null,
+          "scope": "self",
+          "selection": "self",
+          "selectionResource": null,
+          "selectionStat": null,
+          "sharedSelectionGroupId": null,
+          "side": "self",
+          "tieBehavior": null
+        },
+        "unit": "percent",
+        "unlockStarRank": 10,
+        "value": null,
+        "valuePerStack": null
+      },
+      {
+        "abilityId": "daemoros-phantoms-veil",
+        "abilityName": "Phantom's Veil",
+        "activationChanceByHabitLevel": [],
+        "activationChanceFixed": null,
+        "activationGroupId": null,
+        "availability": {
+          "canonical": "canonical-locked",
+          "notes": [
+            "Future at Star Rank 10.",
+            "Unlocked in observed account collection state, subject to level and star requirements."
+          ],
+          "observedAccount": "observed-available",
+          "reportLabel": "Future at Star Rank 10; observed account hatched",
+          "userRoster": "unknown"
+        },
+        "channel": "damage-received",
+        "combatLogConfirmed": false,
+        "conditional": true,
+        "conditions": [
+          {
+            "description": "Fire Damage Received depends on the exclusive one-of selection from Phantom's Veil.",
+            "evidenceIds": [
+              "daemoros-phantoms-veil-2026-06-26"
+            ],
+            "id": "phantoms-veil-exclusive-defense-fire-exclusive-one-of-selection",
+            "label": "Exclusive one-of selection",
+            "unresolved": true
+          }
+        ],
+        "confidence": "confirmed",
+        "currentlyAvailable": false,
+        "damageScope": "fire",
+        "direction": "received",
+        "directlyVerified": true,
+        "dragonId": "daemoros",
+        "durationRounds": null,
+        "evidenceIds": [
+          "daemoros-phantoms-veil-2026-06-26"
+        ],
+        "futureAvailable": true,
+        "id": "daemoros-phantoms-veil-phantoms-veil-fire-damage-received-received-exclusive-option-modifier",
+        "label": "Phantom's Veil: Fire Damage Received Down",
+        "minimumDragonLevel": null,
+        "operation": "decrease",
+        "providerRequirements": [],
+        "rankedValues": [
+          {
+            "level": 1,
+            "unit": "percent",
+            "value": 15
+          },
+          {
+            "level": 2,
+            "unit": "percent",
+            "value": 19.5
+          },
+          {
+            "level": 3,
+            "unit": "percent",
+            "value": 24
+          },
+          {
+            "level": 4,
+            "unit": "percent",
+            "value": 30
+          },
+          {
+            "level": 5,
+            "unit": "percent",
+            "value": 37.5
+          }
+        ],
+        "recipientRequirements": [],
+        "requiredHabitLevel": 1,
+        "role": "self-amplification",
+        "sourceEffectId": "phantoms-veil-fire",
         "sourceScope": "all-qualifying-sources",
         "stackMaximum": null,
         "statusId": null,
@@ -16376,7 +16803,7 @@
           }
         ],
         "activationChanceFixed": null,
-        "activationGroupId": null,
+        "activationGroupId": "rallying-flame-start-shared-activation",
         "availability": {
           "canonical": "canonical-locked",
           "notes": [
@@ -16392,10 +16819,10 @@
         "conditional": true,
         "conditions": [
           {
-            "description": "Activation chance depends on Habit Level for start of combat.",
+            "description": "One shared Rallying Flame activation roll grants both stack effects on success.",
             "evidenceIds": [],
             "id": "rallying-flame-start-activation-chance",
-            "label": "Activation chance depends on Habit Level for start of combat.",
+            "label": "One shared Rallying Flame activation roll grants both stack effects on success.",
             "unresolved": false
           }
         ],
@@ -16651,7 +17078,7 @@
           }
         ],
         "activationChanceFixed": null,
-        "activationGroupId": null,
+        "activationGroupId": "unyielding-resolve-start-round-shared-activation",
         "availability": {
           "canonical": "canonical-locked",
           "notes": [
@@ -16667,10 +17094,10 @@
         "conditional": true,
         "conditions": [
           {
-            "description": "Activation chance depends on Habit Level for start of each round.",
+            "description": "One shared Unyielding Resolve activation roll grants Advantage and, while Weakened, removes Weakened on success.",
             "evidenceIds": [],
             "id": "unyielding-resolve-start-round-activation-chance",
-            "label": "Activation chance depends on Habit Level for start of each round.",
+            "label": "One shared Unyielding Resolve activation roll grants Advantage and, while Weakened, removes Weakened on success.",
             "unresolved": false
           },
           {
@@ -20337,7 +20764,7 @@
         "abilityId": "vermax-spreading-blaze",
         "abilityName": "Spreading Blaze",
         "activationChanceByHabitLevel": [],
-        "activationChanceFixed": null,
+        "activationChanceFixed": 20,
         "activationGroupId": null,
         "availability": {
           "canonical": "canonical-base",
@@ -20349,7 +20776,7 @@
           "userRoster": "unknown"
         },
         "chanceByHabitLevel": [],
-        "chanceFixed": null,
+        "chanceFixed": 20,
         "conditions": [
           {
             "battleContext": null,
@@ -20496,7 +20923,7 @@
           }
         ],
         "activationChanceFixed": null,
-        "activationGroupId": null,
+        "activationGroupId": "rallying-flame-start-shared-activation",
         "availability": {
           "canonical": "canonical-locked",
           "notes": [
@@ -20537,10 +20964,10 @@
         "chanceFixed": null,
         "conditions": [
           {
-            "description": "Activation chance depends on Habit Level for start of combat.",
+            "description": "One shared Rallying Flame activation roll grants both stack effects on success.",
             "evidenceIds": [],
             "id": "rallying-flame-start-activation-chance",
-            "label": "Activation chance depends on Habit Level for start of combat.",
+            "label": "One shared Rallying Flame activation roll grants both stack effects on success.",
             "unresolved": false
           }
         ],
@@ -20607,7 +21034,7 @@
           }
         ],
         "activationChanceFixed": null,
-        "activationGroupId": null,
+        "activationGroupId": "rallying-flame-start-shared-activation",
         "availability": {
           "canonical": "canonical-locked",
           "notes": [
@@ -20648,10 +21075,10 @@
         "chanceFixed": null,
         "conditions": [
           {
-            "description": "Activation chance depends on Habit Level for start of combat.",
+            "description": "One shared Rallying Flame activation roll grants both stack effects on success.",
             "evidenceIds": [],
             "id": "rallying-flame-start-activation-chance",
-            "label": "Activation chance depends on Habit Level for start of combat.",
+            "label": "One shared Rallying Flame activation roll grants both stack effects on success.",
             "unresolved": false
           },
           {
@@ -20732,7 +21159,7 @@
           }
         ],
         "activationChanceFixed": null,
-        "activationGroupId": null,
+        "activationGroupId": "unyielding-resolve-start-round-shared-activation",
         "availability": {
           "canonical": "canonical-locked",
           "notes": [
@@ -20773,10 +21200,10 @@
         "chanceFixed": null,
         "conditions": [
           {
-            "description": "Activation chance depends on Habit Level for start of each round.",
+            "description": "One shared Unyielding Resolve activation roll grants Advantage and, while Weakened, removes Weakened on success.",
             "evidenceIds": [],
             "id": "unyielding-resolve-start-round-activation-chance",
-            "label": "Activation chance depends on Habit Level for start of each round.",
+            "label": "One shared Unyielding Resolve activation roll grants Advantage and, while Weakened, removes Weakened on success.",
             "unresolved": false
           },
           {
@@ -21179,12 +21606,13 @@
       "producedChannels": [
         {
           "capabilityIds": [
-            "kalspire-tactical-strike-tactical-strike-tactical-damage-output"
+            "kalspire-tactical-strike-tactical-strike-tactical-damage-output",
+            "kalspire-tactical-assault-tactical-assault-panic-output"
           ],
           "channel": "tactical-damage",
           "confidence": "confirmed",
           "currentlyAvailable": true,
-          "futureAvailable": false
+          "futureAvailable": true
         },
         {
           "capabilityIds": [
@@ -21310,6 +21738,16 @@
           "confidence": "confirmed",
           "currentlyAvailable": true,
           "futureAvailable": false
+        },
+        {
+          "capabilityIds": [
+            "daemoros-instill-fear-instill-fear-panic-output",
+            "daemoros-darkening-fear-darkening-fear-panic-output"
+          ],
+          "channel": "tactical-damage",
+          "confidence": "confirmed",
+          "currentlyAvailable": false,
+          "futureAvailable": true
         }
       ]
     },
