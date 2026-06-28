@@ -320,6 +320,7 @@ describe('Feskar, Rhysarion, and Shadowsong Epic profiles', () => {
     expect(scorchedText).toContain('Current effective Scorched Earth Habit Level: 1.');
     expect(scorchedText).toContain('Base current application chance: 10%.');
     expect(scorchedText).toContain('Panic-target application chance: 20%.');
+    expect(scorchedText).toContain('Current application chance: 10% -> 20%.');
     expect(scorchedText).toContain('Conditional multiplier: 2x');
     expect(scorchedText).toContain('The conditional chance modifier is target-specific.');
     expect(scorchedText).toContain('Panic on one enemy does not change the chance for another enemy.');
@@ -343,7 +344,9 @@ describe('Feskar, Rhysarion, and Shadowsong Epic profiles', () => {
     expect(scorchedCardText).toContain('2 adjacent enemies');
     expect(scorchedCardText).toContain('2 rounds');
     expect(scorchedCardText).toContain('Whether this uses one shared roll or separate per-target rolls is unresolved.');
+    expect(scorchedCardText).not.toContain('30%');
     expect(scorchedCardText).not.toMatch(/combined probability|joint probability/i);
+    expect(scorchedCardText).not.toMatch(/two rolls|double roll/i);
     expect(scorchedCardText).not.toContain('100%');
     expect(scorchedCardText).not.toContain('150%');
     expect(`${breathCardText} ${scorchedCardText}`).not.toMatch(/\bL[1-5]\b|Ranked progression/i);
@@ -600,6 +603,10 @@ describe('Feskar, Rhysarion, and Shadowsong Epic profiles', () => {
     expect(incomingDevotion.every((trace) => trace.sourceScopeResults?.every((match) => match.sourceScopeCompatible) ?? true)).toBe(true);
     expect(incomingDevotion.some((trace) => trace.recipientDragonId === 'rhysarion')).toBe(false);
     expect(new Set(incomingDevotion.map((trace) => trace.sourceAbilityId))).toEqual(new Set(['rhysarion-ebbing-fury', 'rhysarion-echoing-melody']));
+    expect(incomingDevotion.filter((trace) => trace.sourceAbilityId === 'rhysarion-ebbing-fury' && trace.recipientDragonId === 'feskar' && trace.recipientAbilityId === 'rhysarion-unbroken-devotion')).toHaveLength(1);
+    expect(incomingDevotion.filter((trace) => trace.sourceAbilityId === 'rhysarion-ebbing-fury' && trace.recipientDragonId === 'shadowsong' && trace.recipientAbilityId === 'rhysarion-unbroken-devotion')).toHaveLength(1);
+    expect(incomingDevotion.filter((trace) => trace.sourceAbilityId === 'rhysarion-echoing-melody' && trace.recipientDragonId === 'feskar' && trace.recipientAbilityId === 'rhysarion-unbroken-devotion')).toHaveLength(1);
+    expect(incomingDevotion.filter((trace) => trace.sourceAbilityId === 'rhysarion-echoing-melody' && trace.recipientDragonId === 'shadowsong' && trace.recipientAbilityId === 'rhysarion-unbroken-devotion')).toHaveLength(1);
     const normalizedIncoming = analyzeFormationTraces(formation, dragons, { roster }).filter((trace) =>
       trace.matchKind === 'incoming-effect-amplification' &&
       trace.recipientAbilityId === 'rhysarion-unbroken-devotion'

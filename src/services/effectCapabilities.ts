@@ -4621,6 +4621,32 @@ function statusSupplierFacts(
     return { facts: [], effects: [], summary: null };
   }
   const { ability, schedule, effect } = context;
+  const conditionalChance = [
+    ...(effect.activationRoll?.targetStatusConditionalChances ?? []),
+    ...(schedule.activationRoll?.targetStatusConditionalChances ?? []),
+  ][0] ?? null;
+  if (conditionalChance) {
+    const conditionalFacts = conditionalChanceValueFacts(
+      ability,
+      schedule,
+      effect,
+      conditionalChance.statusId ?? conditionalChance.statusCategoryId ?? statusOutput.statusId,
+      {
+        type: conditionalChance.statusCategoryId ? 'requires-target-status-category' : 'requires-target-status',
+        statusId: conditionalChance.statusId ?? undefined,
+        statusCategoryId: conditionalChance.statusCategoryId ?? undefined,
+        multiplier: conditionalChance.multiplier ?? undefined,
+        notes: [conditionalChance.description],
+      },
+      options,
+      statusOutput.dragonId,
+    );
+    return {
+      facts: [`Supplied status: ${statusLabel(statusOutput.statusId)}.`, ...conditionalFacts.facts],
+      effects: [`Supplied status: ${statusLabel(statusOutput.statusId)}`, ...conditionalFacts.effects],
+      summary: conditionalFacts.summary,
+    };
+  }
   const targetEffect = primarySupplierTargetEffect(schedule, effect);
   const level = statusOutput.requiredHabitLevel !== null
     ? (options.previewMaxRankInteractions ? 5 : effectiveHabitLevelForCapability(statusOutput, options))

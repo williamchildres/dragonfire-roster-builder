@@ -5261,7 +5261,7 @@
   "firstObservedInGame": "2026-06-22",
   "format": "dragonfire-dragon-profile",
   "gameVersion": null,
-  "generatedAt": "2026-06-28T02:41:25.953Z",
+  "generatedAt": "2026-06-28T03:10:18.451Z",
   "habits": [
     {
       "abilityClass": "passive",
@@ -8392,8 +8392,8 @@
   "rosterSourceStatus": "in-game-verified-pending-official-site",
   "slug": "sheepstealer",
   "source": {
-    "branch": "fix/feskar-rhysarion-shadowsong-pass1-follow-up",
-    "commit": "e476b20fcc32815b76913b8e6dde0ba095e5d924",
+    "branch": "fix/feskar-rhysarion-shadowsong-pass1-final",
+    "commit": "38c34fc71fa93edd67c1270cd139493709643c4c",
     "databaseVersion": "0.6.2",
     "dataSchemaVersion": 12,
     "gameBuild": "26.6.53509",
