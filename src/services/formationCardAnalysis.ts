@@ -1897,7 +1897,17 @@ function mergeInteractions(
   const uniqueTitles = unique(items.map((item) => item.title));
   const uniqueEffectTitles = unique(items.map((item) => item.effectTitle));
   const summaryLines = mergedSummaryLines(items, direction, targetNames, options);
+  const exactRecipientText = options.exactRecipientSet && direction === 'provides'
+    ? items.map(interactionText).join(' ')
+    : null;
+  const partialRecipientModifierLine = exactRecipientText
+    ? synthesizePartialRecipientModifierLine(exactRecipientText, targetNames)
+    : null;
+  const exactRecipientScopeDetails = options.exactRecipientSet && direction === 'provides'
+    ? synthesizedExactRecipientScopeDetailLines(items, targetNames, partialRecipientModifierLine)
+    : [];
   const mergedDetailLines = unique([
+    ...exactRecipientScopeDetails,
     ...items.flatMap((item) => (item.details.length > 0 ? item.details : [item.detail]))
       .flatMap(splitSentences),
     ...summaryLines.flatMap(splitSentences),
@@ -1941,7 +1951,9 @@ function mergeInteractions(
     effects,
     requirements,
     confidence: confidences.length === 1 ? confidences[0]! : 'mixed',
-    modifierLines: unique(items.flatMap((item) => item.modifierLines)),
+    modifierLines: unique(items.flatMap((item) => item.modifierLines)).filter((line) =>
+      !shouldSuppressExactRecipientModifierLine(line, partialRecipientModifierLine),
+    ),
     isCandidate: items.some((item) => item.isCandidate),
     candidateIndex: first.candidateIndex,
     candidateTotal: mergedCandidateTotal,
@@ -2158,6 +2170,59 @@ function synthesizePartialRecipientModifierLine(
     return null;
   }
   return `${joinEnglishList(affectedTargets)} receive +${amount} ${modifierLabel} from ${abilityName}; ${sourceName} does not receive this modifier.`;
+}
+
+function synthesizedExactRecipientScopeDetailLines(
+  items: FormationCardInteraction[],
+  targetNames: string[],
+  partialRecipientModifierLine: string | null,
+): string[] {
+  const first = items[0]!;
+  const lines = [`${first.sourceName}'s ${first.abilityName} provides Recovery to ${joinEnglishList(targetNames)}.`];
+  if (!partialRecipientModifierLine) {
+    return lines;
+  }
+  const match = partialRecipientModifierLine.match(
+    /^(.+?) receive \+([-+]?\d+(?:\.\d+)?%?) ([^;]+?) from ([^;]+); (.+) does not receive this modifier\.$/i,
+  );
+  if (!match) {
+    return lines;
+  }
+  const recipients = match[1]!.trim();
+  const amount = match[2]!.trim();
+  const modifierLabel = match[3]!.trim();
+  const abilityName = match[4]!.trim();
+  const excludedRecipient = match[5]!.trim();
+  lines.push(`${recipients} each receive +${amount} ${modifierLabel} from ${abilityName}.`);
+  lines.push(`${excludedRecipient} does not receive this modifier because the caster is excluded.`);
+  return lines;
+}
+
+function shouldSuppressExactRecipientModifierLine(
+  line: string,
+  partialRecipientModifierLine: string | null,
+): boolean {
+  if (!partialRecipientModifierLine) {
+    return false;
+  }
+  const genericMatch = line.match(
+    /^Amplified by ([^']+)'s ([^:]+):\s*([A-Za-z ]+?)\s+\+([-+]?\d+(?:\.\d+)?%?)\./i,
+  );
+  if (!genericMatch) {
+    return false;
+  }
+  const scopedMatch = partialRecipientModifierLine.match(
+    /^(.+?) receive \+([-+]?\d+(?:\.\d+)?%?) ([^;]+?) from ([^;]+); (.+) does not receive this modifier\.$/i,
+  );
+  if (!scopedMatch) {
+    return false;
+  }
+  const scopedAmount = scopedMatch[2]!.trim();
+  const scopedLabel = scopedMatch[3]!.trim();
+  const scopedAbility = scopedMatch[4]!.trim();
+  return genericMatch[2]!.trim() === scopedAbility &&
+    genericMatch[3]!.trim() === scopedLabel &&
+    genericMatch[4]!.trim() === scopedAmount;
 }
 
 function receivesInteractionMechanicKey(interaction: FormationCardInteraction): string {

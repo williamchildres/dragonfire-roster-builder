@@ -23,7 +23,7 @@
   ],
   "currentReviewPhase": "Legendary/full-profile formation validation complete; Epic ingestion active with Daemoros and Vaeldra as the first detailed Epic batch after Vermax.",
   "format": "dragonfire-project-state",
-  "generatedAt": "2026-06-28T05:43:47.527Z",
+  "generatedAt": "2026-06-28T06:06:22.548Z",
   "plannedNextPhase": [
     "continue Epic dragon ingestion in batches of two after the latest merged context is available",
     "fetch latest merged main and create a new feature branch before each future Epic implementation batch",
@@ -38,7 +38,7 @@
   },
   "source": {
     "branch": "fix/feskar-rhysarion-shadowsong-pass2-repair",
-    "commit": "5a3f9f66410ae956c12f5a135c83ac3dd460995e",
+    "commit": "e5802487e22eefb49cef1234c819fd22c56b5f65",
     "databaseVersion": "0.6.2",
     "dataSchemaVersion": 12,
     "gameBuild": "26.6.53509",

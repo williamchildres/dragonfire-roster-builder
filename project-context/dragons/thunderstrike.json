@@ -21,7 +21,7 @@
   "firstObservedInGame": null,
   "format": "dragonfire-dragon-profile",
   "gameVersion": null,
-  "generatedAt": "2026-06-28T05:43:47.527Z",
+  "generatedAt": "2026-06-28T06:06:22.548Z",
   "habits": [],
   "id": "thunderstrike",
   "isNew": false,
@@ -44,7 +44,7 @@
   "slug": "thunderstrike",
   "source": {
     "branch": "fix/feskar-rhysarion-shadowsong-pass2-repair",
-    "commit": "5a3f9f66410ae956c12f5a135c83ac3dd460995e",
+    "commit": "e5802487e22eefb49cef1234c819fd22c56b5f65",
     "databaseVersion": "0.6.2",
     "dataSchemaVersion": 12,
     "gameBuild": "26.6.53509",
