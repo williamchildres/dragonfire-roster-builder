@@ -118,7 +118,7 @@ describe('Feskar, Rhysarion, and Shadowsong Epic profiles', () => {
     expect(formatScheduleDescription(shroudSchedule, { style: 'inline' })).toBe('odd-numbered rounds');
     expect(formatScheduleDescription(evenSchedule, { style: 'inline' })).toBe('even-numbered rounds');
     expect(formatScheduleDescription(instillSchedule, { style: 'inline' })).toBe('each round');
-    expect(formatScheduleDescription(breathSchedule, { style: 'sentence' })).toBe('Rounds 2, 5 and 8');
+    expect(formatScheduleDescription(breathSchedule, { style: 'sentence' })).toBe('Rounds 2, 5, and 8');
     expect(formatScheduleDescription(startRoundSchedule, { style: 'sentence' })).toBe('Start of Round 4');
     expect(formatScheduleDescription({ ...breathSchedule, rounds: [], roundSelector: null }, { fallback: 'unresolved schedule' })).toBe('unresolved schedule');
   });
@@ -308,7 +308,7 @@ describe('Feskar, Rhysarion, and Shadowsong Epic profiles', () => {
     expect(traceText).toContain('Control category members: Stun, Stagger, Overwhelm and Confusion.');
     expect(traceText).not.toMatch(/Control category members:.*Burn/i);
     expect(traceText).not.toMatch(/Control category members:.*Panic/i);
-    expect(traceText).toContain('Timing: Rounds 2, 5, 8.');
+    expect(traceText).toContain('Timing: Rounds 2, 5, and 8.');
     expect(traceText).toContain('Base Fire Damage Rate: 20%.');
     expect(traceText).toContain('Enhanced Fire Damage Rate: 30%.');
     expect(traceText).toContain('Conditional multiplier: 1.5x');
@@ -328,7 +328,7 @@ describe('Feskar, Rhysarion, and Shadowsong Epic profiles', () => {
 
     expect(normalText).toContain('conditional');
     expect(normalText).toContain('Feskar can apply Stagger, which belongs to the Control category.');
-    expect(normalText).toContain('On Rounds 2, 5 and 8, Dawnsong deals Fire Damage at a 20% rate to 3 enemies in any lane.');
+    expect(normalText).toContain('On Rounds 2, 5, and 8, Dawnsong deals Fire Damage at a 20% rate to 3 enemies in any lane.');
     expect(normalText).toMatch(/Against the same target while it has Control, the rate increases 1\.5[x×] to 30%\./);
     expect(normalText).toContain('Unyielding Grasp has a 10% chance each round to apply Stagger to one enemy in any lane, prioritizing Warriors. Stagger lasts 3 rounds.');
     expect(normalText).toContain('same-enemy overlap');
@@ -372,7 +372,7 @@ describe('Feskar, Rhysarion, and Shadowsong Epic profiles', () => {
     expect(breath).toMatchObject({ status: 'potential', channel: 'fire-damage' });
     expect(breathText).toContain('Receiving source effect ID: breath-of-fire-base-fire.');
     expect(breathText).toContain('Supplied status: Panic.');
-    expect(breathText).toContain('Timing: Rounds 2, 5, 8.');
+    expect(breathText).toContain('Timing: Rounds 2, 5, and 8.');
     expect(breathText).toContain('Target scope: 2 adjacent enemies.');
     expect(breathText).toContain('Base Fire Damage Rate: 100%.');
     expect(breathText).toContain('Enhanced Fire Damage Rate: 150%.');
@@ -610,8 +610,8 @@ describe('Feskar, Rhysarion, and Shadowsong Epic profiles', () => {
     const rhysarionCard = cards.cards.find((card) => card.dragonId === 'rhysarion')!;
     const shadowsongCard = cards.cards.find((card) => card.dragonId === 'shadowsong')!;
 
-    expect(traces).toHaveLength(73);
-    expect(counts).toMatchObject({ active: 30, potential: 34, inactive: 8, blocked: 1, unknown: 0 });
+    expect(traces).toHaveLength(74);
+    expect(counts).toMatchObject({ active: 30, potential: 35, inactive: 8, blocked: 1, unknown: 0 });
     expect(new Set(traces.map(technicalAnalysisTraceIdentity)).size).toBe(traces.length);
     expect(traces.filter((trace) => trace.sourceAbilityId === 'shadowsong-blazing-conductor' && trace.matchKind === 'periodic-status-damage')).toHaveLength(2);
     expect(traces).toEqual(expect.arrayContaining([
@@ -727,7 +727,7 @@ describe('Feskar, Rhysarion, and Shadowsong Epic profiles', () => {
     expect(echoingProvides).toMatchObject({ targetLabel: 'Feskar and Shadowsong' });
     const echoingText = echoingProvides ? [...echoingProvides.summaryLines, ...echoingProvides.details, ...echoingProvides.effects].join(' ') : '';
     expect(echoingText).toContain('Recovery Rate: 60% at effective Habit Level 1.');
-    expect(echoingText).toContain('Timing: Rounds 2, 5, 8.');
+    expect(echoingText).toContain('Timing: Rounds 2, 5, and 8.');
     expect(echoingText).toContain('Enhanced by Rhysarion Intelligence.');
     expect(echoingText).toContain('caster is excluded');
     expect(rhysarionCard.receives.some((item) => item.abilityName === 'Echoing Melody')).toBe(false);
@@ -817,8 +817,8 @@ describe('Feskar, Rhysarion, and Shadowsong Epic profiles', () => {
     const finalKey = (trace: typeof finalTraces[number]) =>
       `${trace.matchKind}:${trace.sourceAbilityId}:${trace.recipientDragonId}:${trace.recipientAbilityId}:${trace.channel}:${trace.modifierCapabilityId ?? ''}:${(trace.matchedOutputCapabilityIds ?? []).join(',')}`;
 
-    expect(finalTraces).toHaveLength(63);
-    expect(finalCounts).toMatchObject({ active: 35, potential: 17, inactive: 10, blocked: 1, unknown: 0 });
+    expect(finalTraces).toHaveLength(64);
+    expect(finalCounts).toMatchObject({ active: 35, potential: 18, inactive: 10, blocked: 1, unknown: 0 });
     expect(new Set(finalTraces.map(finalKey)).size).toBe(finalTraces.length);
     expect(incomingRecovery.map((trace) => `${trace.sourceAbilityId}:${trace.recipientDragonId}`).sort()).toEqual([
       'rhysarion-ebbing-fury:feskar',
@@ -856,7 +856,7 @@ describe('Feskar, Rhysarion, and Shadowsong Epic profiles', () => {
     expect(finalTraces.filter((trace) => trace.sourceAbilityId === 'shadowsong-scorched-earth')).toHaveLength(1);
     expect(finalTraces.filter((trace) => trace.sourceAbilityId === 'shadowsong-blazing-conductor')).toHaveLength(3);
     expect(finalTraces.filter((trace) => trace.sourceAbilityId === 'shadowsong-blazing-onslaught')).toHaveLength(6);
-    expect(finalTraces.filter((trace) => trace.sourceAbilityId === 'rhysarion-inspiring-melody')).toHaveLength(2);
+    expect(finalTraces.filter((trace) => trace.sourceAbilityId === 'rhysarion-inspiring-melody')).toHaveLength(3);
     expect(finalTraces.filter((trace) => trace.sourceAbilityId === 'feskar-resilient-bond')).toHaveLength(3);
   });
 
@@ -1413,8 +1413,8 @@ describe('Feskar, Rhysarion, and Shadowsong Epic profiles', () => {
     const fireText = fire ? [fire.explanation, fire.targetSelectorSummary ?? '', ...fire.matchedFacts, ...fire.effects, ...fire.assumptions].join(' ') : '';
     const combinedText = `${physicalText} ${fireText}`;
 
-    expect(traces).toHaveLength(61);
-    expect(counts).toMatchObject({ active: 35, potential: 14, inactive: 11, blocked: 1, unknown: 0 });
+    expect(traces).toHaveLength(62);
+    expect(counts).toMatchObject({ active: 35, potential: 15, inactive: 11, blocked: 1, unknown: 0 });
     expect(new Set(traces.map(technicalAnalysisTraceIdentity)).size).toBe(traces.length);
     expect(tempting).toHaveLength(2);
     expect(physical).toMatchObject({
@@ -1511,8 +1511,8 @@ describe('Feskar, Rhysarion, and Shadowsong Epic profiles', () => {
     expect(sirenText).toContain('Branch target count: dynamic; only enemies already afflicted with Taunt receive Stagger.');
     expect(sirenText).toContain('Enemies without Taunt take the alternate branch instead.');
     expect(sirenText).toContain('Exactly one conditional branch applies per enemy.');
-    expect(sirenText).toContain('Supplier schedule: Rounds 1, 2 and 3.');
-    expect(sirenText).toContain('Dependent schedule: Rounds 2, 5 and 8.');
+    expect(sirenText).toContain('Supplier schedule: Rounds 1, 2, and 3.');
+    expect(sirenText).toContain('Dependent schedule: Rounds 2, 5, and 8.');
     expect(sirenText).toContain('Schedule overlap: Round 2 only.');
     expect(sirenText).toContain('Stagger duration: until end of current round.');
     expect(sirenText).toContain('Stagger does not carry this interaction to Rounds 5 and 8.');

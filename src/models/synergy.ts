@@ -445,6 +445,9 @@ export interface TriggeredAbilityCapability {
   abilityId: string;
   abilityName: string;
   triggerEvent: TriggerEvent;
+  triggeredEffectIds: string[];
+  triggeredEffectLabels: string[];
+  excludedEffectIds: string[];
   sourceKind: CapabilitySourceKind;
   unlockStarRank: number | null;
   minimumDragonLevel: number | null;
