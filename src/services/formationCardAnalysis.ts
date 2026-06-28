@@ -1,7 +1,7 @@
 import { FORMATION_POSITIONS, TROOP_TYPES, type AbilityDefinition, type AbilityEffect, type AbilitySchedule, type AbilityScheduleOverride, type ActivationRoll, type Dragon, type FormationPosition, type OwnedDragon, type RankedValue, type TroopType } from '../models/dragon';
 import type { FormationAnalysisInput, RequirementTrace, SynergyTrace, TraceConfidence, TraceStatus } from '../models/synergy';
 import type { OutputCapability } from '../models/synergy';
-import { deriveOutputCapabilities } from './effectCapabilities';
+import { deriveOutputCapabilities, derivePeriodicDamageDefinitions, deriveStatusOutputCapabilities, periodicDamageOutputCapabilities } from './effectCapabilities';
 import { rankedValueForHabitLevel, resolveEffectiveHabitLevelForAbility } from './habitLevels';
 import { isNormalSynergyTrace } from './synergyTrace';
 
@@ -103,11 +103,19 @@ export function buildFormationCardPresentation(
 ): FormationCardPresentation {
   const selectedIds = new Set(Object.values(formation).filter((dragonId): dragonId is string => Boolean(dragonId)));
   const dragonById = new Map(allDragons.map((dragon) => [dragon.id, dragon]));
-  const outputCapabilities = deriveOutputCapabilities(allDragons);
+  const statusOutputCapabilities = deriveStatusOutputCapabilities(allDragons);
+  const periodicOutputCapabilities = periodicDamageOutputCapabilities(
+    allDragons,
+    derivePeriodicDamageDefinitions(allDragons),
+    statusOutputCapabilities,
+  );
+  const outputCapabilities = [...deriveOutputCapabilities(allDragons), ...periodicOutputCapabilities];
   const normalTraces = traces.filter(
-    (trace) =>
-      (isNormalSynergyTrace(trace) || isVisibleInternalProvidesTrace(trace)) &&
-      !(trace.status === 'inactive' && trace.matchKind === 'defensive-ally-support') &&
+      (trace) =>
+        (isNormalSynergyTrace(trace) || isVisibleInternalProvidesTrace(trace)) &&
+        !(trace.status === 'inactive' && trace.matchKind === 'defensive-ally-support') &&
+      (trace.ruleId !== 'status-source-output' || !trace.recipientDragonId || isEnemyFacingTrace(trace) || isVisibleSharedActivationStatusSourceTrace(trace, traces)) &&
+      !isUnresolvedCandidateSpecificConsequence(trace) &&
       !isGenericEnemyProviderWithBeneficiaryTrace(trace, traces),
   );
   const byDragon = new Map<string, { receives: FormationCardInteraction[]; provides: FormationCardInteraction[] }>();
@@ -460,6 +468,10 @@ function toCardInteraction({
 }
 
 function interactionPresentationFamily(trace: SynergyTrace): string {
+  const sharedActivationGroup = sharedActivationGroupForTrace(trace);
+  if (sharedActivationGroup && trace.recipientDragonId && !isEnemyFacingTrace(trace) && isSharedActivationPresentationTrace(trace)) {
+    return `shared-activation:${sharedActivationGroup}`;
+  }
   if (trace.matchKind === 'friendly-impairment') {
     return 'friendly-impairment';
   }
@@ -652,16 +664,20 @@ function stackGrantName(trace: SynergyTrace, source: Dragon, recipient: Dragon |
   const text = [trace.explanation, ...trace.effects].join(' ');
   const mayGrant = text.match(/may grant additional ([A-Za-z' ]+?) stacks?/i);
   if (mayGrant?.[1]) {
-    return mayGrant[1].trim();
+    return displayStackName(mayGrant[1]);
   }
   const eligible = text.match(/eligible to receive ([A-Za-z' ]+?) because/i);
   if (eligible?.[1]) {
-    return eligible[1].trim();
+    return displayStackName(eligible[1]);
   }
   if (recipient && recipient.id === source.id) {
     return getAbilityName(source, trace.sourceAbilityId);
   }
   return getAbilityName(source, trace.sourceAbilityId);
+}
+
+function displayStackName(name: string): string {
+  return name.trim().replace(/\s+support$/i, '');
 }
 
 function getAbilityById(source: Dragon, abilityId: string | null): AbilityDefinition | null {
@@ -1940,7 +1956,9 @@ function prepareInteractions(
   direction: 'receives' | 'provides',
   selectedIds: ReadonlySet<string>,
 ): FormationCardInteraction[] {
-  const aggregated = aggregateInteractions(dedupeInteractions(attachRecipientModifiers(interactions, direction)), direction, selectedIds);
+  const attached = attachRecipientModifiers(interactions, direction);
+  const statMerged = mergeExactRecipientStatSupportInteractions(attached, direction, selectedIds);
+  const aggregated = aggregateInteractions(dedupeInteractions(statMerged), direction, selectedIds);
   const pruned = direction === 'provides'
     ? pruneSubsumedProviderInteractions(aggregated)
     : aggregated;
@@ -2745,6 +2763,16 @@ function interactionText(item: FormationCardInteraction): string {
 
 function interactionMechanicKey(interaction: FormationCardInteraction): string {
   const text = interactionText(interaction);
+  const sharedActivationGroup = text.match(/Shared activation group:\s*([A-Za-z0-9-]+)/i)?.[1] ?? null;
+  if (sharedActivationGroup && !interaction.isEnemyFacing && isSharedActivationPresentationInteraction(interaction)) {
+    return [
+      'shared-activation',
+      sharedActivationGroup,
+      interaction.state,
+      text.match(/Timing:\s*[^.]+\./i)?.[0] ?? '',
+      text.match(/Duration:\s*[^.]+\./i)?.[0] ?? '',
+    ].join('::');
+  }
   if (
     interaction.abilityName === 'Blazing Fury' &&
     (interaction.targetSelectionMode !== null || /First-Strike enables Infernal Burst/i.test(interaction.title))
@@ -2801,14 +2829,85 @@ function interactionMechanicKey(interaction: FormationCardInteraction): string {
   }
   if (interaction.effectTitle.includes('Stat support')) {
     return [
-      interaction.effectTitle,
-      interaction.title,
-      interaction.effects.join('|'),
+      'stat-support',
+      text.match(/Timing:\s*[^.]+\./i)?.[0] ?? '',
+      text.match(/Duration:\s*[^.]+\./i)?.[0] ?? '',
       interaction.state,
     ].join('::');
   }
   return 'default';
 }
+
+function mergeExactRecipientStatSupportInteractions(
+  interactions: FormationCardInteraction[],
+  direction: 'receives' | 'provides',
+  selectedIds: ReadonlySet<string>,
+): FormationCardInteraction[] {
+  const grouped = new Map<string, FormationCardInteraction[]>();
+  const passthrough: FormationCardInteraction[] = [];
+  for (const interaction of interactions) {
+    if (
+      !/Stat support/i.test(interaction.effectTitle) ||
+      interaction.isCandidate ||
+      interaction.candidateTotal !== null ||
+      interaction.targetLabel !== null ||
+      (!interaction.recipientDragonId && !interaction.recipientName)
+    ) {
+      passthrough.push(interaction);
+      continue;
+    }
+    const recipientKey = interaction.recipientDragonId ?? interaction.recipientName ?? 'team';
+    const key = [
+      interaction.sourceDragonId,
+      interaction.abilityName,
+      recipientKey,
+      interaction.state,
+      interaction.isPreview ? 'preview' : 'current',
+      direction,
+    ].join('|');
+    grouped.set(key, [...(grouped.get(key) ?? []), interaction]);
+  }
+  return [
+    ...passthrough,
+    ...[...grouped.values()].map((items) =>
+      items.length > 1 ? mergeInteractions(items, direction, selectedIds) : items[0]!,
+    ),
+  ];
+}
+
+function isUnresolvedCandidateSpecificConsequence(trace: SynergyTrace): boolean {
+  return trace.ruleId === 'stat-scaling-support' &&
+    trace.assumptions.some((assumption) => /Recipient selection is unresolved/i.test(assumption));
+}
+
+function isVisibleSharedActivationStatusSourceTrace(trace: SynergyTrace, traces: SynergyTrace[]): boolean {
+  const group = sharedActivationGroupForTrace(trace);
+  return Boolean(group && trace.recipientDragonId && traces.some((candidate) =>
+    candidate !== trace &&
+    candidate.sourceDragonId === trace.sourceDragonId &&
+    candidate.sourceAbilityId === trace.sourceAbilityId &&
+    candidate.recipientDragonId === trace.recipientDragonId &&
+    candidate.ruleId === 'direct-stat-support' &&
+    sharedActivationGroupForTrace(candidate) === group
+  ));
+}
+
+function isSharedActivationPresentationTrace(trace: SynergyTrace): boolean {
+  return trace.ruleId === 'direct-stat-support' ||
+    trace.ruleId === 'status-source-output' ||
+    trace.ruleId === 'status-condition-enablement';
+}
+
+function sharedActivationGroupForTrace(trace: SynergyTrace): string | null {
+  return [trace.explanation, ...trace.matchedFacts, ...trace.effects, ...trace.assumptions]
+    .join(' ')
+    .match(/Shared activation group:\s*([A-Za-z0-9-]+)/i)?.[1] ?? null;
+}
+
+function isSharedActivationPresentationInteraction(interaction: FormationCardInteraction): boolean {
+  return /Stat support|source|enables|condition/i.test(interaction.effectTitle);
+}
+
 
 function providesAggregationMode(interaction: FormationCardInteraction): string {
   if (interaction.targetLabel || interaction.candidateTotal !== null || interaction.isCandidate) {
@@ -2841,6 +2940,7 @@ function canAggregateExactRecipientSet(items: FormationCardInteraction[]): boole
     titles.length > 1 &&
     !isCompatibleFriendlyImpairmentRecoveryGroup(items) &&
     !isCompatibleEnemyMitigationReductionGroup(items) &&
+    !isCompatibleStatSupportGroup(items) &&
     !isCompatibleSharedSelectedTargetGroup(items)
   ) {
     return false;
@@ -2859,6 +2959,10 @@ function canAggregateExactRecipientSet(items: FormationCardInteraction[]): boole
   }
   const recipientSets = [...recipientsByEffect.values()].map((recipients) => [...recipients].sort().join('|'));
   return recipientSets.length > 0 && recipientSets.every((set) => set === recipientSets[0]);
+}
+
+function isCompatibleStatSupportGroup(items: FormationCardInteraction[]): boolean {
+  return items.every((item) => /Stat support/i.test(item.effectTitle));
 }
 
 function isCompatibleEnemyMitigationReductionGroup(items: FormationCardInteraction[]): boolean {

@@ -3598,7 +3598,7 @@
   "firstObservedInGame": null,
   "format": "dragonfire-dragon-profile",
   "gameVersion": null,
-  "generatedAt": "2026-06-28T20:41:01.367Z",
+  "generatedAt": "2026-06-28T21:44:34.087Z",
   "habits": [
     {
       "abilityClass": "passive",
@@ -6425,8 +6425,8 @@
   "rosterSourceStatus": "official-website",
   "slug": "vhagar",
   "source": {
-    "branch": "fix/trigger-schedule-periodic-framework-pass1",
-    "commit": "74809cfa3b96657bea80e07ffa769ae970d545e9",
+    "branch": "fix/candidate-state-output-presentation-pass2",
+    "commit": "a0f759e13980bf6ed3a5a21c0db178becefa1cd8",
     "databaseVersion": "0.6.2",
     "dataSchemaVersion": 12,
     "gameBuild": "26.6.53509",
@@ -6477,6 +6477,9 @@
       "directlyVerified": true,
       "dragonId": "vhagar",
       "durationRounds": 2,
+      "effectiveOverrideDescription": null,
+      "effectiveOverrideSourceAbilityId": null,
+      "effectiveOverrideSourceAbilityName": null,
       "evidenceIds": [
         "vhagar-fiery-bonds-summary-2026-06-25"
       ],
@@ -6588,6 +6591,9 @@
       "directlyVerified": true,
       "dragonId": "vhagar",
       "durationRounds": 2,
+      "effectiveOverrideDescription": null,
+      "effectiveOverrideSourceAbilityId": null,
+      "effectiveOverrideSourceAbilityName": null,
       "evidenceIds": [
         "vhagar-eclipse-cover-2026-06-25"
       ],
@@ -6699,6 +6705,9 @@
       "directlyVerified": true,
       "dragonId": "vhagar",
       "durationRounds": 2,
+      "effectiveOverrideDescription": null,
+      "effectiveOverrideSourceAbilityId": null,
+      "effectiveOverrideSourceAbilityName": null,
       "evidenceIds": [
         "vhagar-eclipse-cover-2026-06-25"
       ],
@@ -6758,6 +6767,9 @@
       "directlyVerified": true,
       "dragonId": "vhagar",
       "durationRounds": null,
+      "effectiveOverrideDescription": null,
+      "effectiveOverrideSourceAbilityId": null,
+      "effectiveOverrideSourceAbilityName": null,
       "evidenceIds": [
         "vhagar-skyward-titan-2026-06-25"
       ],

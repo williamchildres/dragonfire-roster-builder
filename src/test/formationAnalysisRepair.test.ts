@@ -205,7 +205,7 @@ describe('aggregation and target selection presentation', () => {
         trace.recipientDragonId === 'caraxes' &&
         trace.channel === 'fire-damage',
     );
-    const periodic = traces.find(
+    const periodicLegacy = traces.find(
       (trace) =>
         trace.matchKind === 'periodic-damage-amplification' &&
         trace.recipientAbilityId === 'caraxes-crippling-inferno',
@@ -213,8 +213,8 @@ describe('aggregation and target selection presentation', () => {
 
     expect(normalFire).toHaveLength(1);
     expect(normalFire[0]?.matchedOutputCapabilityIds?.join(' ')).toContain('crippling-inferno-burn');
-    expect(periodic).toBeDefined();
-    expect(isNormalSynergyTrace(periodic!)).toBe(false);
+    expect(normalFire[0]?.matchedOutputCapabilityIds?.join(' ')).toContain('periodic-caraxes-crippling-inferno');
+    expect(periodicLegacy).toBeUndefined();
   });
 });
 

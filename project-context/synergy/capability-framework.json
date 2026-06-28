@@ -17260,6 +17260,9 @@
         "directlyVerified": true,
         "dragonId": "syrax",
         "durationRounds": 2,
+        "effectiveOverrideDescription": null,
+        "effectiveOverrideSourceAbilityId": null,
+        "effectiveOverrideSourceAbilityName": null,
         "evidenceIds": [
           "syrax-blazing-fury-summary-2026-06-24",
           "syrax-blazing-fury-details-2026-06-24"
@@ -17364,6 +17367,9 @@
         "directlyVerified": true,
         "dragonId": "syrax",
         "durationRounds": 2,
+        "effectiveOverrideDescription": null,
+        "effectiveOverrideSourceAbilityId": null,
+        "effectiveOverrideSourceAbilityName": null,
         "evidenceIds": [
           "syrax-strategic-revival-2026-06-24"
         ],
@@ -17429,6 +17435,9 @@
         "directlyVerified": true,
         "dragonId": "vhagar",
         "durationRounds": 2,
+        "effectiveOverrideDescription": null,
+        "effectiveOverrideSourceAbilityId": null,
+        "effectiveOverrideSourceAbilityName": null,
         "evidenceIds": [
           "vhagar-fiery-bonds-summary-2026-06-25"
         ],
@@ -17540,6 +17549,9 @@
         "directlyVerified": true,
         "dragonId": "vhagar",
         "durationRounds": 2,
+        "effectiveOverrideDescription": null,
+        "effectiveOverrideSourceAbilityId": null,
+        "effectiveOverrideSourceAbilityName": null,
         "evidenceIds": [
           "vhagar-eclipse-cover-2026-06-25"
         ],
@@ -17651,6 +17663,9 @@
         "directlyVerified": true,
         "dragonId": "vhagar",
         "durationRounds": 2,
+        "effectiveOverrideDescription": null,
+        "effectiveOverrideSourceAbilityId": null,
+        "effectiveOverrideSourceAbilityName": null,
         "evidenceIds": [
           "vhagar-eclipse-cover-2026-06-25"
         ],
@@ -17710,6 +17725,9 @@
         "directlyVerified": true,
         "dragonId": "vhagar",
         "durationRounds": null,
+        "effectiveOverrideDescription": null,
+        "effectiveOverrideSourceAbilityId": null,
+        "effectiveOverrideSourceAbilityName": null,
         "evidenceIds": [
           "vhagar-skyward-titan-2026-06-25"
         ],
@@ -17821,6 +17839,9 @@
         "directlyVerified": true,
         "dragonId": "caraxes",
         "durationRounds": 2,
+        "effectiveOverrideDescription": null,
+        "effectiveOverrideSourceAbilityId": null,
+        "effectiveOverrideSourceAbilityName": null,
         "evidenceIds": [
           "caraxes-crippling-inferno-2026-06-24"
         ],
@@ -17932,6 +17953,9 @@
         "directlyVerified": true,
         "dragonId": "caraxes",
         "durationRounds": 2,
+        "effectiveOverrideDescription": null,
+        "effectiveOverrideSourceAbilityId": null,
+        "effectiveOverrideSourceAbilityName": null,
         "evidenceIds": [
           "caraxes-crippling-inferno-2026-06-24"
         ],
@@ -18057,6 +18081,9 @@
         "directlyVerified": true,
         "dragonId": "seasmoke",
         "durationRounds": 2,
+        "effectiveOverrideDescription": null,
+        "effectiveOverrideSourceAbilityId": null,
+        "effectiveOverrideSourceAbilityName": null,
         "evidenceIds": [
           "seasmoke-loyal-bond-2026-06-23"
         ],
@@ -18182,6 +18209,9 @@
         "directlyVerified": true,
         "dragonId": "seasmoke",
         "durationRounds": 2,
+        "effectiveOverrideDescription": null,
+        "effectiveOverrideSourceAbilityId": null,
+        "effectiveOverrideSourceAbilityName": null,
         "evidenceIds": [
           "seasmoke-loyal-bond-2026-06-23"
         ],
@@ -18292,6 +18322,9 @@
         "directlyVerified": true,
         "dragonId": "crimson",
         "durationRounds": 2,
+        "effectiveOverrideDescription": "At 10 Stars, this replaces the ordinary Round 1 Stun chance.",
+        "effectiveOverrideSourceAbilityId": "crimson-vermins-bane",
+        "effectiveOverrideSourceAbilityName": "Vermin's Bane",
         "evidenceIds": [
           "crimson-bloodscale-terror-summary-2026-06-25"
         ],
@@ -18410,6 +18443,9 @@
         "directlyVerified": true,
         "dragonId": "crimson",
         "durationRounds": 2,
+        "effectiveOverrideDescription": null,
+        "effectiveOverrideSourceAbilityId": null,
+        "effectiveOverrideSourceAbilityName": null,
         "evidenceIds": [
           "crimson-bloodscale-fury-2026-06-25"
         ],
@@ -18460,6 +18496,9 @@
         "directlyVerified": true,
         "dragonId": "kalspire",
         "durationRounds": 2,
+        "effectiveOverrideDescription": null,
+        "effectiveOverrideSourceAbilityId": null,
+        "effectiveOverrideSourceAbilityName": null,
         "evidenceIds": [
           "kalspire-tactical-strike-summary-2026-06-25"
         ],
@@ -18563,6 +18602,9 @@
         "directlyVerified": true,
         "dragonId": "kalspire",
         "durationRounds": 2,
+        "effectiveOverrideDescription": null,
+        "effectiveOverrideSourceAbilityId": null,
+        "effectiveOverrideSourceAbilityName": null,
         "evidenceIds": [
           "kalspire-tactical-assault-2026-06-25"
         ],
@@ -18614,6 +18656,9 @@
         "directlyVerified": true,
         "dragonId": "kalspire",
         "durationRounds": 1,
+        "effectiveOverrideDescription": null,
+        "effectiveOverrideSourceAbilityId": null,
+        "effectiveOverrideSourceAbilityName": null,
         "evidenceIds": [
           "kalspire-radiant-conqueror-2026-06-25"
         ],
@@ -18725,6 +18770,9 @@
         "directlyVerified": true,
         "dragonId": "malachite",
         "durationRounds": 2,
+        "effectiveOverrideDescription": null,
+        "effectiveOverrideSourceAbilityId": null,
+        "effectiveOverrideSourceAbilityName": null,
         "evidenceIds": [
           "malachite-thunderous-roar-2026-06-23"
         ],
@@ -18836,6 +18884,9 @@
         "directlyVerified": true,
         "dragonId": "malachite",
         "durationRounds": 3,
+        "effectiveOverrideDescription": null,
+        "effectiveOverrideSourceAbilityId": null,
+        "effectiveOverrideSourceAbilityName": null,
         "evidenceIds": [
           "malachite-lightning-strike-2026-06-23"
         ],
@@ -18947,6 +18998,9 @@
         "directlyVerified": true,
         "dragonId": "malachite",
         "durationRounds": 3,
+        "effectiveOverrideDescription": null,
+        "effectiveOverrideSourceAbilityId": null,
+        "effectiveOverrideSourceAbilityName": null,
         "evidenceIds": [
           "malachite-lightning-strike-2026-06-23"
         ],
@@ -19057,6 +19111,9 @@
         "directlyVerified": true,
         "dragonId": "venator",
         "durationRounds": 2,
+        "effectiveOverrideDescription": "Feral Precision replaces the base Double-Strike chance; it does not add a second roll.",
+        "effectiveOverrideSourceAbilityId": "venator-feral-precision",
+        "effectiveOverrideSourceAbilityName": "Feral Precision",
         "evidenceIds": [
           "venator-feral-strike-summary-2026-06-25"
         ],
@@ -19175,6 +19232,9 @@
         "directlyVerified": true,
         "dragonId": "venator",
         "durationRounds": 2,
+        "effectiveOverrideDescription": null,
+        "effectiveOverrideSourceAbilityId": null,
+        "effectiveOverrideSourceAbilityName": null,
         "evidenceIds": [
           "venator-desperate-ambush-2026-06-25"
         ],
@@ -19225,6 +19285,9 @@
         "directlyVerified": true,
         "dragonId": "daemoros",
         "durationRounds": 2,
+        "effectiveOverrideDescription": null,
+        "effectiveOverrideSourceAbilityId": null,
+        "effectiveOverrideSourceAbilityName": null,
         "evidenceIds": [
           "daemoros-shadowflame-2026-06-26"
         ],
@@ -19336,6 +19399,9 @@
         "directlyVerified": true,
         "dragonId": "daemoros",
         "durationRounds": 2,
+        "effectiveOverrideDescription": null,
+        "effectiveOverrideSourceAbilityId": null,
+        "effectiveOverrideSourceAbilityName": null,
         "evidenceIds": [
           "daemoros-instill-fear-2026-06-26"
         ],
@@ -19447,6 +19513,9 @@
         "directlyVerified": true,
         "dragonId": "daemoros",
         "durationRounds": 2,
+        "effectiveOverrideDescription": null,
+        "effectiveOverrideSourceAbilityId": null,
+        "effectiveOverrideSourceAbilityName": null,
         "evidenceIds": [
           "daemoros-shroud-of-shadows-2026-06-26"
         ],
@@ -19558,6 +19627,9 @@
         "directlyVerified": true,
         "dragonId": "daemoros",
         "durationRounds": 2,
+        "effectiveOverrideDescription": null,
+        "effectiveOverrideSourceAbilityId": null,
+        "effectiveOverrideSourceAbilityName": null,
         "evidenceIds": [
           "daemoros-darkening-fear-2026-06-26"
         ],
@@ -19609,6 +19681,9 @@
         "directlyVerified": true,
         "dragonId": "feskar",
         "durationRounds": null,
+        "effectiveOverrideDescription": null,
+        "effectiveOverrideSourceAbilityId": null,
+        "effectiveOverrideSourceAbilityName": null,
         "evidenceIds": [
           "feskar-resilient-bond-2026-06-26"
         ],
@@ -19660,6 +19735,9 @@
         "directlyVerified": true,
         "dragonId": "feskar",
         "durationRounds": null,
+        "effectiveOverrideDescription": null,
+        "effectiveOverrideSourceAbilityId": null,
+        "effectiveOverrideSourceAbilityName": null,
         "evidenceIds": [
           "feskar-resilient-bond-2026-06-26"
         ],
@@ -19726,6 +19804,9 @@
         "directlyVerified": true,
         "dragonId": "feskar",
         "durationRounds": null,
+        "effectiveOverrideDescription": null,
+        "effectiveOverrideSourceAbilityId": null,
+        "effectiveOverrideSourceAbilityName": null,
         "evidenceIds": [
           "feskar-resilient-bond-2026-06-26"
         ],
@@ -19837,6 +19918,9 @@
         "directlyVerified": true,
         "dragonId": "feskar",
         "durationRounds": 3,
+        "effectiveOverrideDescription": null,
+        "effectiveOverrideSourceAbilityId": null,
+        "effectiveOverrideSourceAbilityName": null,
         "evidenceIds": [
           "feskar-unyielding-grasp-2026-06-26"
         ],
@@ -19948,6 +20032,9 @@
         "directlyVerified": true,
         "dragonId": "rhysarion",
         "durationRounds": 3,
+        "effectiveOverrideDescription": null,
+        "effectiveOverrideSourceAbilityId": null,
+        "effectiveOverrideSourceAbilityName": null,
         "evidenceIds": [
           "rhysarion-inspiring-melody-2026-06-26"
         ],
@@ -20059,6 +20146,9 @@
         "directlyVerified": true,
         "dragonId": "shadowsong",
         "durationRounds": 2,
+        "effectiveOverrideDescription": null,
+        "effectiveOverrideSourceAbilityId": null,
+        "effectiveOverrideSourceAbilityName": null,
         "evidenceIds": [
           "shadowsong-scorched-earth-2026-06-26"
         ],
@@ -20162,6 +20252,9 @@
         "directlyVerified": true,
         "dragonId": "shadowsong",
         "durationRounds": 2,
+        "effectiveOverrideDescription": null,
+        "effectiveOverrideSourceAbilityId": null,
+        "effectiveOverrideSourceAbilityName": null,
         "evidenceIds": [
           "shadowsong-blazing-conductor-2026-06-26"
         ],
@@ -20265,6 +20358,9 @@
         "directlyVerified": true,
         "dragonId": "shadowsong",
         "durationRounds": 2,
+        "effectiveOverrideDescription": null,
+        "effectiveOverrideSourceAbilityId": null,
+        "effectiveOverrideSourceAbilityName": null,
         "evidenceIds": [
           "shadowsong-blazing-conductor-2026-06-26"
         ],
@@ -20323,6 +20419,9 @@
         "directlyVerified": true,
         "dragonId": "vaeldra",
         "durationRounds": 2,
+        "effectiveOverrideDescription": null,
+        "effectiveOverrideSourceAbilityId": null,
+        "effectiveOverrideSourceAbilityName": null,
         "evidenceIds": [
           "vaeldra-lure-2026-06-26"
         ],
@@ -20448,6 +20547,9 @@
         "directlyVerified": true,
         "dragonId": "vaeldra",
         "durationRounds": null,
+        "effectiveOverrideDescription": null,
+        "effectiveOverrideSourceAbilityId": null,
+        "effectiveOverrideSourceAbilityName": null,
         "evidenceIds": [
           "vaeldra-sirens-call-2026-06-26"
         ],
@@ -20573,6 +20675,9 @@
         "directlyVerified": true,
         "dragonId": "vaeldra",
         "durationRounds": null,
+        "effectiveOverrideDescription": null,
+        "effectiveOverrideSourceAbilityId": null,
+        "effectiveOverrideSourceAbilityName": null,
         "evidenceIds": [
           "vaeldra-sirens-call-2026-06-26"
         ],
@@ -20645,6 +20750,9 @@
         "directlyVerified": true,
         "dragonId": "sheepstealer",
         "durationRounds": 3,
+        "effectiveOverrideDescription": null,
+        "effectiveOverrideSourceAbilityId": null,
+        "effectiveOverrideSourceAbilityName": null,
         "evidenceIds": [
           "sheepstealer-wild-hunt-summary-2026-06-23",
           "sheepstealer-wild-hunt-glossary-2026-06-23",
@@ -20706,6 +20814,9 @@
         "directlyVerified": true,
         "dragonId": "sheepstealer",
         "durationRounds": null,
+        "effectiveOverrideDescription": null,
+        "effectiveOverrideSourceAbilityId": null,
+        "effectiveOverrideSourceAbilityName": null,
         "evidenceIds": [
           "sheepstealer-stolen-flock-2026-06-23"
         ],
@@ -20772,6 +20883,9 @@
         "directlyVerified": true,
         "dragonId": "sheepstealer",
         "durationRounds": null,
+        "effectiveOverrideDescription": null,
+        "effectiveOverrideSourceAbilityId": null,
+        "effectiveOverrideSourceAbilityName": null,
         "evidenceIds": [
           "sheepstealer-stolen-flock-2026-06-23"
         ],
@@ -20904,6 +21018,9 @@
         "directlyVerified": true,
         "dragonId": "sheepstealer",
         "durationRounds": null,
+        "effectiveOverrideDescription": null,
+        "effectiveOverrideSourceAbilityId": null,
+        "effectiveOverrideSourceAbilityName": null,
         "evidenceIds": [
           "sheepstealer-baited-kill-2026-06-23"
         ],
@@ -20969,6 +21086,9 @@
         "directlyVerified": true,
         "dragonId": "vermax",
         "durationRounds": null,
+        "effectiveOverrideDescription": null,
+        "effectiveOverrideSourceAbilityId": null,
+        "effectiveOverrideSourceAbilityName": null,
         "evidenceIds": [
           "vermax-spreading-blaze-summary-2026-06-23",
           "vermax-spreading-blaze-glossary-2026-06-23"
@@ -21036,6 +21156,9 @@
         "directlyVerified": true,
         "dragonId": "vermax",
         "durationRounds": null,
+        "effectiveOverrideDescription": null,
+        "effectiveOverrideSourceAbilityId": null,
+        "effectiveOverrideSourceAbilityName": null,
         "evidenceIds": [
           "vermax-trial-by-flame-2026-06-23"
         ],
@@ -21147,6 +21270,9 @@
         "directlyVerified": true,
         "dragonId": "vermax",
         "durationRounds": null,
+        "effectiveOverrideDescription": null,
+        "effectiveOverrideSourceAbilityId": null,
+        "effectiveOverrideSourceAbilityName": null,
         "evidenceIds": [
           "vermax-rallying-flame-2026-06-23"
         ],
@@ -21272,6 +21398,9 @@
         "directlyVerified": true,
         "dragonId": "vermax",
         "durationRounds": null,
+        "effectiveOverrideDescription": null,
+        "effectiveOverrideSourceAbilityId": null,
+        "effectiveOverrideSourceAbilityName": null,
         "evidenceIds": [
           "vermax-rallying-flame-2026-06-23"
         ],
@@ -21390,6 +21519,9 @@
         "directlyVerified": true,
         "dragonId": "vermax",
         "durationRounds": 2,
+        "effectiveOverrideDescription": null,
+        "effectiveOverrideSourceAbilityId": null,
+        "effectiveOverrideSourceAbilityName": null,
         "evidenceIds": [
           "vermax-unyielding-resolve-2026-06-23"
         ],
