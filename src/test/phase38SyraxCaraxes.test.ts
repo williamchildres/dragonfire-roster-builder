@@ -174,7 +174,12 @@ describe('Phase 3.8 generic trace behavior', () => {
       { 'left-flank': 'caraxes', vanguard: 'syrax', 'right-flank': 'vermax' },
       dragons,
       { previewMaxRankInteractions: true },
-    ).find((item) => item.matchKind === 'status-condition-enablement' && item.sourceDragonId === 'syrax' && item.recipientDragonId === 'caraxes');
+    ).find((item) =>
+      item.ruleId === 'status-condition-enablement' &&
+      item.matchKind === 'status-condition-enablement' &&
+      item.sourceDragonId === 'syrax' &&
+      item.recipientDragonId === 'caraxes'
+    );
 
     expect(trace).toMatchObject({
       ruleId: 'status-condition-enablement',
@@ -224,19 +229,30 @@ describe('Phase 3.8 generic trace behavior', () => {
     expect(mitigationTrace?.matchedFacts.join(' ')).toContain('Infernal Burst');
   });
 
-  it('connects Fire support to Caraxes Burn as periodic damage amplification', () => {
-    const trace = analyzeCapabilityAmplifications(
+  it('connects Fire support to Caraxes Burn through the canonical periodic output', () => {
+    const traces = analyzeCapabilityAmplifications(
       { 'left-flank': 'caraxes', vanguard: 'syrax', 'right-flank': 'vermax' },
       dragons,
       { previewMaxRankInteractions: true },
-    ).find((item) => item.matchKind === 'periodic-damage-amplification' && item.sourceDragonId === 'syrax' && item.recipientDragonId === 'caraxes');
+    );
+    const trace = traces.find((item) =>
+      item.matchKind === 'outgoing-effect-amplification' &&
+      item.sourceDragonId === 'syrax' &&
+      item.recipientDragonId === 'caraxes' &&
+      item.channel === 'fire-damage'
+    );
 
     expect(trace).toMatchObject({
       channel: 'fire-damage',
       sourceAbilityId: 'syrax-blazing-fury',
-      recipientAbilityId: 'caraxes-crippling-inferno',
+      recipientDragonId: 'caraxes',
     });
-    expect(trace?.unresolvedQuestions.join(' ')).toContain('Burn stacking');
+    expect(trace?.matchedOutputCapabilityIds?.join(' ')).toContain('periodic-caraxes-crippling-inferno');
+    expect(traces.some((item) =>
+      item.matchKind === 'periodic-damage-amplification' &&
+      item.sourceDragonId === 'syrax' &&
+      item.recipientDragonId === 'caraxes'
+    )).toBe(false);
   });
 
   it('keeps self amplification out of cross-dragon support and avoids numerical scores', () => {

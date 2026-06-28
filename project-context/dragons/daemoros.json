@@ -3865,7 +3865,7 @@
   "firstObservedInGame": "2026-06-22",
   "format": "dragonfire-dragon-profile",
   "gameVersion": null,
-  "generatedAt": "2026-06-28T20:41:01.367Z",
+  "generatedAt": "2026-06-28T21:44:34.087Z",
   "habits": [
     {
       "abilityClass": "passive",
@@ -6964,8 +6964,8 @@
   "rosterSourceStatus": "in-game-verified-pending-official-site",
   "slug": "daemoros",
   "source": {
-    "branch": "fix/trigger-schedule-periodic-framework-pass1",
-    "commit": "74809cfa3b96657bea80e07ffa769ae970d545e9",
+    "branch": "fix/candidate-state-output-presentation-pass2",
+    "commit": "a0f759e13980bf6ed3a5a21c0db178becefa1cd8",
     "databaseVersion": "0.6.2",
     "dataSchemaVersion": 12,
     "gameBuild": "26.6.53509",
@@ -7001,6 +7001,9 @@
       "directlyVerified": true,
       "dragonId": "daemoros",
       "durationRounds": 2,
+      "effectiveOverrideDescription": null,
+      "effectiveOverrideSourceAbilityId": null,
+      "effectiveOverrideSourceAbilityName": null,
       "evidenceIds": [
         "daemoros-shadowflame-2026-06-26"
       ],
@@ -7112,6 +7115,9 @@
       "directlyVerified": true,
       "dragonId": "daemoros",
       "durationRounds": 2,
+      "effectiveOverrideDescription": null,
+      "effectiveOverrideSourceAbilityId": null,
+      "effectiveOverrideSourceAbilityName": null,
       "evidenceIds": [
         "daemoros-instill-fear-2026-06-26"
       ],
@@ -7223,6 +7229,9 @@
       "directlyVerified": true,
       "dragonId": "daemoros",
       "durationRounds": 2,
+      "effectiveOverrideDescription": null,
+      "effectiveOverrideSourceAbilityId": null,
+      "effectiveOverrideSourceAbilityName": null,
       "evidenceIds": [
         "daemoros-shroud-of-shadows-2026-06-26"
       ],
@@ -7334,6 +7343,9 @@
       "directlyVerified": true,
       "dragonId": "daemoros",
       "durationRounds": 2,
+      "effectiveOverrideDescription": null,
+      "effectiveOverrideSourceAbilityId": null,
+      "effectiveOverrideSourceAbilityName": null,
       "evidenceIds": [
         "daemoros-darkening-fear-2026-06-26"
       ],

@@ -106,7 +106,11 @@ describe('formation analysis normalization', () => {
   });
 
   it('groups Lightning Strike as one adjacent target selection when Malachite is Vanguard', () => {
-    const grouped = normalTraces('2', preview).find((trace) => trace.sourceAbilityId === 'malachite-lightning-strike' && trace.targetSelectionGroup);
+    const grouped = normalTraces('2', preview).find((trace) =>
+      trace.sourceAbilityId === 'malachite-lightning-strike' &&
+      trace.ruleId === 'direct-stat-support' &&
+      trace.targetSelectionGroup
+    );
 
     expect(grouped?.explanation).toBe('Lightning Strike can target one adjacent ally. Eligible recipients: Seasmoke and Sheepstealer. The selected recipient is not guaranteed.');
     expect(grouped?.targetSelectionGroup).toMatchObject({

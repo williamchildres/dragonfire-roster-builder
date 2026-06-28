@@ -287,6 +287,17 @@ export interface AbilityScheduleOverride {
   description: string;
 }
 
+export interface EffectiveScheduleOverrideProvenance {
+  id: string;
+  operation: AbilityScheduleOverride['operation'];
+  sourceAbilityId: string;
+  sourceAbilityName: string;
+  targetScheduleId: string;
+  targetEffectId: string | null;
+  description: string;
+  evidenceIds: string[];
+}
+
 export interface AbilityCondition {
   id: string;
   kind: ConditionKind;
@@ -430,6 +441,7 @@ export interface AbilitySchedule {
   conditions?: AbilityCondition[];
   targetPriority?: TargetPriority;
   battleContext?: BattleContext;
+  effectiveOverride?: EffectiveScheduleOverrideProvenance | null;
 }
 
 export interface AbilityAugmentation {

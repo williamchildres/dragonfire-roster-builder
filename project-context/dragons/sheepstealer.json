@@ -5279,7 +5279,7 @@
   "firstObservedInGame": "2026-06-22",
   "format": "dragonfire-dragon-profile",
   "gameVersion": null,
-  "generatedAt": "2026-06-28T20:41:01.367Z",
+  "generatedAt": "2026-06-28T21:44:34.087Z",
   "habits": [
     {
       "abilityClass": "passive",
@@ -8412,8 +8412,8 @@
   "rosterSourceStatus": "in-game-verified-pending-official-site",
   "slug": "sheepstealer",
   "source": {
-    "branch": "fix/trigger-schedule-periodic-framework-pass1",
-    "commit": "74809cfa3b96657bea80e07ffa769ae970d545e9",
+    "branch": "fix/candidate-state-output-presentation-pass2",
+    "commit": "a0f759e13980bf6ed3a5a21c0db178becefa1cd8",
     "databaseVersion": "0.6.2",
     "dataSchemaVersion": 12,
     "gameBuild": "26.6.53509",
@@ -8471,6 +8471,9 @@
       "directlyVerified": true,
       "dragonId": "sheepstealer",
       "durationRounds": 3,
+      "effectiveOverrideDescription": null,
+      "effectiveOverrideSourceAbilityId": null,
+      "effectiveOverrideSourceAbilityName": null,
       "evidenceIds": [
         "sheepstealer-wild-hunt-summary-2026-06-23",
         "sheepstealer-wild-hunt-glossary-2026-06-23",
@@ -8532,6 +8535,9 @@
       "directlyVerified": true,
       "dragonId": "sheepstealer",
       "durationRounds": null,
+      "effectiveOverrideDescription": null,
+      "effectiveOverrideSourceAbilityId": null,
+      "effectiveOverrideSourceAbilityName": null,
       "evidenceIds": [
         "sheepstealer-stolen-flock-2026-06-23"
       ],
@@ -8598,6 +8604,9 @@
       "directlyVerified": true,
       "dragonId": "sheepstealer",
       "durationRounds": null,
+      "effectiveOverrideDescription": null,
+      "effectiveOverrideSourceAbilityId": null,
+      "effectiveOverrideSourceAbilityName": null,
       "evidenceIds": [
         "sheepstealer-stolen-flock-2026-06-23"
       ],
@@ -8730,6 +8739,9 @@
       "directlyVerified": true,
       "dragonId": "sheepstealer",
       "durationRounds": null,
+      "effectiveOverrideDescription": null,
+      "effectiveOverrideSourceAbilityId": null,
+      "effectiveOverrideSourceAbilityName": null,
       "evidenceIds": [
         "sheepstealer-baited-kill-2026-06-23"
       ],

@@ -406,6 +406,9 @@ export interface StatusOutputCapability {
   activationGroupId?: string | null;
   activationChanceFixed?: number | null;
   activationChanceByHabitLevel?: RankedValue[];
+  effectiveOverrideSourceAbilityId?: string | null;
+  effectiveOverrideSourceAbilityName?: string | null;
+  effectiveOverrideDescription?: string | null;
 }
 
 export type ExtraActionType = 'basic-attack';

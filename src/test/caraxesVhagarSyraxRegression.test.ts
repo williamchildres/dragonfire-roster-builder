@@ -74,8 +74,8 @@ function interactionText(item: {
 describe('Caraxes, Vhagar, and Syrax review regression', () => {
   it('preserves the reviewed trace counts and exact trace identities', () => {
     const traces = reviewTraces();
-    expect(traces).toHaveLength(57);
-    expect(traceCounts(traces)).toMatchObject({ active: 22, potential: 24, inactive: 9, blocked: 1, unknown: 1 });
+    expect(traces).toHaveLength(56);
+    expect(traceCounts(traces)).toMatchObject({ active: 22, potential: 23, inactive: 9, blocked: 1, unknown: 1 });
     expect(new Set(traces.map(technicalAnalysisTraceIdentity)).size).toBe(traces.length);
   });
 
@@ -298,7 +298,7 @@ describe('Caraxes, Vhagar, and Syrax review regression', () => {
 
     expect(eclipseProvider).toBeDefined();
     const eclipseProviderText = interactionText(eclipseProvider!);
-    expect(eclipseProviderText).toContain('Candidate outputs: Caraxes: Crippling Inferno Burn and Infernal Burst Fire Damage');
+    expect(eclipseProviderText).toContain('Candidate outputs: Caraxes: Crippling Inferno Burn, Infernal Burst Fire Damage, and Crippling Inferno Burn periodic Fire Damage');
     expect(eclipseProviderText).toContain('Syrax: Blazing Fury Tactical Damage');
     expect(eclipseProviderText).toContain('Vhagar: Fiery Bonds Physical Damage and Skyward Titan Physical Damage');
     expect(eclipseProviderText).not.toContain('Qualifying outputs: Crippling Inferno');
