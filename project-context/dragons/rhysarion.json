@@ -159,6 +159,7 @@
                 "distinctness": "must-be-distinct",
                 "fallback": null,
                 "preference": null,
+                "qualifyingOutputAffectsEligibility": false,
                 "references": [],
                 "repeatedInstances": {
                   "count": 2,
@@ -1295,6 +1296,7 @@
                 "distinctness": "explicitly-another-target",
                 "fallback": null,
                 "preference": "Other adjacent ally",
+                "qualifyingOutputAffectsEligibility": false,
                 "references": [],
                 "repeatedInstances": null,
                 "sharedSelectionGroupId": "inspiring-melody-selected-ally",
@@ -1335,6 +1337,7 @@
                 "distinctness": "same-target-required",
                 "fallback": null,
                 "preference": null,
+                "qualifyingOutputAffectsEligibility": false,
                 "references": [
                   {
                     "description": "Resistance applies to the same ally selected for Initiative.",
@@ -1457,6 +1460,7 @@
               "distinctness": "must-be-distinct",
               "fallback": null,
               "preference": null,
+              "qualifyingOutputAffectsEligibility": false,
               "references": [],
               "repeatedInstances": {
                 "count": 2,
@@ -2287,6 +2291,7 @@
               "distinctness": "explicitly-another-target",
               "fallback": null,
               "preference": "Other adjacent ally",
+              "qualifyingOutputAffectsEligibility": false,
               "references": [],
               "repeatedInstances": null,
               "sharedSelectionGroupId": "inspiring-melody-selected-ally",
@@ -2327,6 +2332,7 @@
               "distinctness": "same-target-required",
               "fallback": null,
               "preference": null,
+              "qualifyingOutputAffectsEligibility": false,
               "references": [
                 {
                   "description": "Resistance applies to the same ally selected for Initiative.",
@@ -2593,6 +2599,7 @@
               "distinctness": "must-be-distinct",
               "fallback": null,
               "preference": null,
+              "qualifyingOutputAffectsEligibility": false,
               "references": [],
               "repeatedInstances": {
                 "count": 2,
@@ -2852,6 +2859,7 @@
           "distinctness": "must-be-distinct",
           "fallback": null,
           "preference": null,
+          "qualifyingOutputAffectsEligibility": false,
           "references": [],
           "repeatedInstances": {
             "count": 2,
@@ -3480,6 +3488,7 @@
           "distinctness": "explicitly-another-target",
           "fallback": null,
           "preference": "Other adjacent ally",
+          "qualifyingOutputAffectsEligibility": false,
           "references": [],
           "repeatedInstances": null,
           "sharedSelectionGroupId": "inspiring-melody-selected-ally",
@@ -3524,6 +3533,7 @@
           "distinctness": "same-target-required",
           "fallback": null,
           "preference": null,
+          "qualifyingOutputAffectsEligibility": false,
           "references": [
             {
               "description": "Resistance applies to the same ally selected for Initiative.",
@@ -3652,7 +3662,7 @@
   "firstObservedInGame": "2026-06-22",
   "format": "dragonfire-dragon-profile",
   "gameVersion": null,
-  "generatedAt": "2026-06-28T08:18:32.338Z",
+  "generatedAt": "2026-06-28T17:46:20.954Z",
   "habits": [
     {
       "abilityClass": "passive",
@@ -4508,6 +4518,7 @@
                 "distinctness": "explicitly-another-target",
                 "fallback": null,
                 "preference": "Other adjacent ally",
+                "qualifyingOutputAffectsEligibility": false,
                 "references": [],
                 "repeatedInstances": null,
                 "sharedSelectionGroupId": "inspiring-melody-selected-ally",
@@ -4548,6 +4559,7 @@
                 "distinctness": "same-target-required",
                 "fallback": null,
                 "preference": null,
+                "qualifyingOutputAffectsEligibility": false,
                 "references": [
                   {
                     "description": "Resistance applies to the same ally selected for Initiative.",
@@ -6444,8 +6456,8 @@
   "rosterSourceStatus": "in-game-verified-pending-official-site",
   "slug": "rhysarion",
   "source": {
-    "branch": "fix/interaction-scope-schedule-normalization-pass2",
-    "commit": "109277424c13ad4bfa0d68ff1a0b748a8be75ac6",
+    "branch": "fix/target-resolution-status-trace-presentation-pass1",
+    "commit": "5a11e8ded78959c842d9fdf819011f2be824404e",
     "databaseVersion": "0.6.2",
     "dataSchemaVersion": 12,
     "gameBuild": "26.6.53509",

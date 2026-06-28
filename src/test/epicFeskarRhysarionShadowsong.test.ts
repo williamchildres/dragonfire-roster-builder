@@ -199,7 +199,7 @@ describe('Feskar, Rhysarion, and Shadowsong Epic profiles', () => {
     expect(burnTraceText).toContain('Base current Fire Damage Rate: 40%.');
     expect(burnTraceText).toContain('Enhanced current Fire Damage Rate: 60%.');
     expect(burnTraceText).toContain('Conditional multiplier: 1.5x');
-    expect(burnTraceText).toContain('Burn must be on the same eligible target.');
+    expect(burnTraceText).toContain('Burn must be active on the same enemy that Emerald Inferno affects.');
     expect(burnTraceText).toContain('non-Basic Physical Damage output capability');
     expect(burnTraceText).toContain('Target eligibility remains independently required');
     expect(burnTraceText).toContain('Burn application success, enemy identity, target overlap, and conditional uptime are unresolved.');
@@ -313,8 +313,8 @@ describe('Feskar, Rhysarion, and Shadowsong Epic profiles', () => {
     expect(traceText).toContain('Enhanced Fire Damage Rate: 30%.');
     expect(traceText).toContain('Conditional multiplier: 1.5x');
     expect(traceText).toContain('Required status category: Control.');
-    expect(traceText).toContain('Control must be on the same eligible target.');
-    expect(traceText).toContain('Control on one enemy does not amplify Dawnsong against a different enemy.');
+    expect(traceText).toContain('Control must be active on the same enemy that Dawnsong affects.');
+    expect(traceText).toContain('Control on one enemy does not enable Dawnsong against a different enemy.');
     expect(traceText).toContain('Control does not alter normal Dawnsong target eligibility.');
     expect(traceText).toContain('Supplier effective Habit Level: 1.');
     expect(traceText).toContain('Activation timing: Each round.');
@@ -331,7 +331,8 @@ describe('Feskar, Rhysarion, and Shadowsong Epic profiles', () => {
     expect(normalText).toContain('On Rounds 2, 5 and 8, Dawnsong deals Fire Damage at a 20% rate to 3 enemies in any lane.');
     expect(normalText).toMatch(/Against the same target while it has Control, the rate increases 1\.5[x×] to 30%\./);
     expect(normalText).toContain('Unyielding Grasp has a 10% chance each round to Stagger one enemy in any lane, prioritizing Warriors, for 3 rounds.');
-    expect(normalText).toContain('Stagger application and target overlap are not guaranteed.');
+    expect(normalText).toContain('same-target overlap');
+    expect(normalText).toContain('The same enemy must keep Stagger active when Dawnsong checks it; same-target overlap');
     expect(normalText).not.toMatch(/\bL[1-5]\b|Ranked progression/i);
   });
 
@@ -376,8 +377,8 @@ describe('Feskar, Rhysarion, and Shadowsong Epic profiles', () => {
     expect(breathText).toContain('Base Fire Damage Rate: 100%.');
     expect(breathText).toContain('Enhanced Fire Damage Rate: 150%.');
     expect(breathText).toContain('Conditional multiplier: 1.5x');
-    expect(breathText).toContain('Panic must be on the same eligible target.');
-    expect(breathText).toContain('Panic on one enemy does not amplify Breath of Fire against a different enemy.');
+    expect(breathText).toContain('Panic must be active on the same enemy that Breath of Fire affects.');
+    expect(breathText).toContain('Panic on one enemy does not enable Breath of Fire against a different enemy.');
     expect(breathText).toContain('Panic does not alter normal Breath of Fire target eligibility.');
     expect(breathText).toContain('Current effective Instill Fear Habit Level: 1.');
     expect(breathText).toContain('Status application chance: 25% at effective Habit Level 1.');

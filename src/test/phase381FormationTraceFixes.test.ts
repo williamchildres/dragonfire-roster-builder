@@ -70,7 +70,7 @@ describe('Phase 3.8.1 required Syrax and Caraxes formations', () => {
 
       expect(trace).toBeDefined();
       expect(trace?.status).toBe('potential');
-      expect(trace?.explanation).toContain('Infernal Burst deals 1.5x damage');
+      expect(trace?.explanation).toContain('When Caraxes has First-Strike, the rate increases 1.5x to 150%.');
       expect(trace?.assumptions.join(' ')).toMatch(/Activation|target/i);
     }
   });

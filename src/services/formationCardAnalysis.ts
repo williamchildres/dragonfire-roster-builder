@@ -206,7 +206,7 @@ export function buildFormationCardPresentation(
       });
       byDragon.get(source.id)?.provides.push({
         ...providerItem,
-        isRecipientModifier: false,
+        isRecipientModifier: true,
       });
       if (recipient && recipient.id !== source.id && selectedIds.has(recipient.id)) {
         byDragon.get(recipient.id)?.receives.push(item);
@@ -1742,16 +1742,15 @@ function attachRecipientModifiers(
   interactions: FormationCardInteraction[],
   direction: 'receives' | 'provides',
 ): FormationCardInteraction[] {
-  if (direction === 'provides') {
-    return interactions.filter((interaction) => !interaction.isRecipientModifier);
-  }
   const baseItems = interactions.filter((interaction) => !interaction.isRecipientModifier);
   const modifierItems = interactions.filter((interaction) => interaction.isRecipientModifier);
   const fallbackModifiers: FormationCardInteraction[] = [];
 
   for (const modifier of modifierItems) {
     const target = baseItems.find(
-      (item) => recipientModifierMatchesBase(item, modifier),
+      (item) => direction === 'provides'
+        ? providerModifierMatchesBase(item, modifier)
+        : recipientModifierMatchesBase(item, modifier),
     );
     if (!target) {
       fallbackModifiers.push(modifier);
@@ -1775,6 +1774,40 @@ function attachRecipientModifiers(
   }
 
   return [...baseItems, ...fallbackModifiers];
+}
+
+function providerModifierMatchesBase(base: FormationCardInteraction, modifier: FormationCardInteraction): boolean {
+  if (
+    base.sourceDragonId !== modifier.sourceDragonId ||
+    base.abilityName !== modifier.abilityName
+  ) {
+    return false;
+  }
+  const modifierText = normalizeText([
+    modifier.effectTitle,
+    modifier.summary,
+    ...modifier.summaryLines,
+    ...modifier.details,
+    ...modifier.effects,
+    ...modifier.modifierLines,
+  ].join(' '));
+  const baseText = normalizeText([
+    base.effectTitle,
+    base.summary,
+    ...base.summaryLines,
+    ...base.details,
+    ...base.effects,
+  ].join(' '));
+  if (/recovery received|recovery support|recovery amplification/.test(modifierText)) {
+    return /recovery rate|recovery support|recovery received/.test(baseText);
+  }
+  if (/damage received|damage dealt|physical damage|tactical damage|fire damage/.test(modifierText)) {
+    return /damage received|damage dealt|physical damage|tactical damage|fire damage/.test(baseText);
+  }
+  if (/\bstrength\b|\bintelligence\b|\binstinct\b|\binitiative\b/.test(modifierText)) {
+    return /\bstrength\b|\bintelligence\b|\binstinct\b|\binitiative\b/.test(baseText);
+  }
+  return false;
 }
 
 function recipientModifierMatchesBase(base: FormationCardInteraction, modifier: FormationCardInteraction): boolean {
@@ -2043,6 +2076,12 @@ function recipientAwareCardExplainsEnemyProvider(
   recipientAware: FormationCardInteraction,
 ): boolean {
   if (provider.effectTitle === recipientAware.effectTitle) {
+    if (
+      provider.presentationFamily === 'enemy-damage-received-increase' &&
+      recipientAware.recipientDragonId !== null
+    ) {
+      return true;
+    }
     return interactionMechanicKey(provider) === interactionMechanicKey(recipientAware);
   }
   const stat = enemyReductionStatFromTitle(provider.effectTitle);

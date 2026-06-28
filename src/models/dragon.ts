@@ -253,6 +253,7 @@ export interface TargetReference {
 export interface TargetSelectionDetails {
   preference: string | null;
   fallback: string | null;
+  qualifyingOutputAffectsEligibility: boolean;
   comparisonStat: 'strength' | 'instinct' | 'intelligence' | 'initiative' | 'current-troops' | null;
   comparisonDirection: 'highest' | 'lowest' | null;
   comparisonPool: 'ally-side' | 'enemy-side' | null;

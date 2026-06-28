@@ -91,9 +91,11 @@ describe('formation card analysis presentation', () => {
     const sheepstealer = card(result, 'sheepstealer');
 
     const providerGroups = syrax.provides.filter((item) => item.abilityName === 'Blazing Fury' || item.abilityName === 'Tactical Inferno');
-    expect(providerGroups.filter((item) => item.candidateTotal === 2)).toHaveLength(2);
+    expect(providerGroups.filter((item) => item.candidateTotal === 2)).toHaveLength(1);
     expect(caraxes.receives.some((item) => item.isCandidate && item.candidateTotal === 2 && item.summary.includes('Fire Damage support'))).toBe(true);
     expect(sheepstealer.receives.some((item) => item.isCandidate && item.candidateTotal === 2 && item.summary.includes('Fire Damage support'))).toBe(true);
+    expect(caraxes.receives.some((item) => item.abilityName === 'Tactical Inferno')).toBe(false);
+    expect(sheepstealer.receives.some((item) => item.abilityName === 'Tactical Inferno')).toBe(false);
     expect(caraxes.receives.find((item) => item.abilityName === 'Blazing Fury')?.relationshipId).toBe(
       syrax.provides.find((item) => item.abilityName === 'Blazing Fury')?.relationshipId,
     );
@@ -391,16 +393,12 @@ describe('formation card analysis presentation', () => {
     )).toBe(true);
   });
 
-  it('renders Battle Leader as a Venator or Vhagar candidate group', () => {
+  it('omits Battle Leader provider cards when the resolved target has no qualifying output', () => {
     const result = legacyPresentation();
     const vhagar = card(result, 'vhagar');
     const battleLeader = vhagar.provides.find((item) => item.abilityName === 'Battle Leader');
-
-    expect(battleLeader).toBeDefined();
-    expect(interactionHeading(battleLeader!)).toBe('Vhagar → Venator or Vhagar');
-    expect(interactionHeading(battleLeader!)).not.toBe('Vhagar → Team');
-    expect(battleLeader?.summary).toContain('Target not guaranteed');
-    expect(battleLeader?.summary).not.toContain('Syrax');
+    expect(battleLeader).toBeUndefined();
+    expect(vhagar.receives.some((item) => item.abilityName === 'Battle Leader')).toBe(false);
   });
 
   it('renders Syrax Strategic Revival command text with ally target wording and resistance details', () => {
@@ -684,7 +682,7 @@ describe('formation card analysis presentation', () => {
     const caraxes = card(result, 'caraxes');
 
     expect(syrax.receives.some((item) => item.state === 'unknown' && item.abilityName === "Hunter's Wrath")).toBe(true);
-    expect(caraxes.receives.some((item) => item.state === 'preview' && item.abilityName === 'Tactical Inferno')).toBe(true);
+    expect(caraxes.receives.some((item) => item.abilityName === 'Tactical Inferno')).toBe(false);
     expect(caraxes.receives.some((item) => item.state === 'conditional' && item.abilityName === 'Blazing Fury')).toBe(true);
   });
 
