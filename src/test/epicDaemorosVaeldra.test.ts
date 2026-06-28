@@ -420,8 +420,16 @@ describe('Daemoros and Vaeldra Epic profiles', () => {
     expect(temptingCards.every((item) => item.isEnemyFacing)).toBe(true);
     expect(temptingCards.every((item) => item.recipientDragonId === null)).toBe(true);
     expect(presentation.cards.some((card) => card.receives.some((item) => item.abilityName === 'Tempting Distraction'))).toBe(false);
-    expect(temptingCards.find((item) => item.effectTitle.includes('Physical'))?.effects.join(' ')).toMatch(/non-Basic Physical Damage only/);
-    expect(temptingCards.find((item) => item.effectTitle.includes('Fire'))?.effects.join(' ')).toMatch(/all qualifying Fire Damage sources/);
+    const physicalCardText = temptingCards
+      .filter((item) => item.effectTitle.includes('Physical'))
+      .flatMap((item) => [item.summary, ...item.summaryLines, ...item.details, ...item.effects])
+      .join(' ');
+    const fireCardText = temptingCards
+      .filter((item) => item.effectTitle.includes('Fire'))
+      .flatMap((item) => [item.summary, ...item.summaryLines, ...item.details, ...item.effects])
+      .join(' ');
+    expect(physicalCardText).toMatch(/non-Basic Physical Damage only/);
+    expect(fireCardText).toMatch(/all qualifying Fire Damage sources/);
   });
 
   it('surfaces Panic periodic Tactical Damage for Instill Fear and Darkening Fear without replacing Infectious Wrath setup', () => {

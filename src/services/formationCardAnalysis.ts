@@ -2766,6 +2766,10 @@ function enemyFacingSummary(trace: SynergyTrace): string {
         threshold ? 'Enemy threshold membership and allied target overlap are not guaranteed.' : 'All affected-enemy overlap with allied outputs is not guaranteed.',
       ].filter(Boolean).join(' ');
     }
+    const triggerSummary = successfulStatusVulnerabilitySummary(trace);
+    if (triggerSummary) {
+      return triggerSummary;
+    }
     return `Increases ${formatToken(trace.channel ?? 'damage-dealt')} Received for one enemy target.`;
   }
   if (trace.matchKind === 'periodic-status-damage') {
@@ -2775,6 +2779,30 @@ function enemyFacingSummary(trace: SynergyTrace): string {
   const lowered = trace.effects.join(' ').match(/(Strength|Intelligence|Instinct|Initiative)/i)?.[1];
   const channel = trace.sourceAbilityId?.includes('battle-dread') ? 'Fire Damage' : trace.channel ? formatToken(trace.channel) : 'team damage';
   return lowered ? `Lowers enemy ${lowered}, supporting allied ${channel}.` : 'Lowers enemy mitigation for the team.';
+}
+
+function successfulStatusVulnerabilitySummary(trace: SynergyTrace): string | null {
+  const text = [trace.explanation, ...trace.matchedFacts, ...trace.effects].join(' ');
+  if (!/Trigger cardinality: once per successful/i.test(text) && !/For each enemy .*successfully/i.test(text)) {
+    return null;
+  }
+  const channel = formatToken(trace.channel ?? 'damage-dealt');
+  const amount = modifierAmountFromTrace(trace) ?? 'an unresolved amount';
+  const sourceMatch = text.match(/each successful ([A-Za-z-]+) application by ([A-Za-z]+)/i);
+  const status = sourceMatch?.[1] ?? 'status';
+  const source = sourceMatch?.[2] ?? 'the source dragon';
+  const scope = /non-Basic/i.test(text)
+    ? `Applies to non-Basic ${channel} only.`
+    : /all qualifying/i.test(text)
+      ? `Applies to all qualifying ${channel} sources.`
+      : null;
+  const duration = trace.effects.find((effect) => /Duration:/i.test(effect)) ?? null;
+  return [
+    `For each enemy ${source} successfully ${status.toLowerCase() === 'taunt' ? 'Taunts' : `applies ${status} to`}, increases ${channel} Received by ${amount} on that same enemy.`,
+    scope,
+    duration,
+    'Target overlap with allied damage remains unresolved.',
+  ].filter(Boolean).join(' ');
 }
 
 function enemyReductionPurpose(trace: SynergyTrace): string {
