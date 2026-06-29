@@ -3396,8 +3396,18 @@ function enemyFacingSummary(trace: SynergyTrace, source: Dragon | null = null): 
     const amount = trace.modifier.operation === 'decrease' ? `-${formatTypedModifierValue(trace.modifier)}` : formatTypedModifierValue(trace.modifier);
     const stat = enemyReductionStat(trace) ?? 'mitigation';
     const targetPhrase = enemyReductionTargetPhrase(trace);
+    const text = [trace.title, trace.explanation, ...trace.matchedFacts, ...trace.effects].join(' ');
+    const hasTypedBaseScaling = /Base Enemy [A-Za-z]+ reduction/i.test(text) && /Scaling stat: Initiative/i.test(text);
+    const baseValue = `Base Enemy ${stat} ${amount}`;
+    const finalValue = source ? `final reduction scales with ${source.name}'s Initiative and remains unresolved` : 'final reduction remains unresolved';
+    if (!hasTypedBaseScaling) {
+      return [
+        `Lowers enemy ${stat}, supporting allied ${channel}. Enemy ${stat} reduction is ${amount}.`,
+        `Targets ${targetPhrase}.`,
+      ].join(' ');
+    }
     return [
-      `Lowers enemy ${stat}, supporting allied ${channel}. Enemy ${stat} reduction is ${amount}.`,
+      `${baseValue} on ${targetPhrase}; ${finalValue}.`,
       `Targets ${targetPhrase}.`,
     ].join(' ');
   }
