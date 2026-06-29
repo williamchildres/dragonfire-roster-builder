@@ -3311,8 +3311,6 @@ function stateLabel(state: FormationCardInteractionState) {
       return 'Inactive';
     case 'blocked':
       return 'Blocked';
-    case 'inactive':
-      return 'Inactive';
   }
 }
 
