@@ -23,7 +23,7 @@
   ],
   "currentReviewPhase": "Legendary/full-profile formation validation complete; Epic ingestion active with Daemoros and Vaeldra as the first detailed Epic batch after Vermax.",
   "format": "dragonfire-project-state",
-  "generatedAt": "2026-06-29T19:17:11.859Z",
+  "generatedAt": "2026-06-29T20:14:24.831Z",
   "plannedNextPhase": [
     "continue Epic dragon ingestion in batches of two after the latest merged context is available",
     "fetch latest merged main and create a new feature branch before each future Epic implementation batch",
@@ -38,7 +38,7 @@
   },
   "source": {
     "branch": "fix/sheepstealer-prey-framework-pass12",
-    "commit": "917d647a244fee7ae2081ce163e653ba238bb4b8",
+    "commit": "628b567d1d10cc6780da057b13b1594b7a5390b3",
     "databaseVersion": "0.6.2",
     "dataSchemaVersion": 12,
     "gameBuild": "26.6.53509",

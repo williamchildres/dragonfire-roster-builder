@@ -3662,7 +3662,7 @@
   "firstObservedInGame": "2026-06-22",
   "format": "dragonfire-dragon-profile",
   "gameVersion": null,
-  "generatedAt": "2026-06-29T19:17:11.859Z",
+  "generatedAt": "2026-06-29T20:14:24.831Z",
   "habits": [
     {
       "abilityClass": "passive",
@@ -6465,7 +6465,7 @@
   "slug": "rhysarion",
   "source": {
     "branch": "fix/sheepstealer-prey-framework-pass12",
-    "commit": "917d647a244fee7ae2081ce163e653ba238bb4b8",
+    "commit": "628b567d1d10cc6780da057b13b1594b7a5390b3",
     "databaseVersion": "0.6.2",
     "dataSchemaVersion": 12,
     "gameBuild": "26.6.53509",
