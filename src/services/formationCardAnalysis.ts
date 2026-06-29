@@ -3344,18 +3344,19 @@ function enemyFacingSummary(trace: SynergyTrace): string {
     }
     const amount = modifierAmountFromTrace(trace);
     const stat = enemyReductionStat(trace);
+    const baseReduction = stat ? enemyReductionIsBase(trace, stat) : false;
     const targetPhrase = enemyReductionTargetPhrase(trace);
     const duration = trace.effects.find((effect) => /Duration:/i.test(effect)) ?? null;
     const uncertainty = enemyFacingUncertainty(trace);
     if (trace.channel === 'stat' && stat) {
       const signedAmount = amount ? `-${amount}` : 'reduction';
       return [
-        `Enemy ${stat} ${signedAmount} on ${targetPhrase}.`,
+        `${baseReduction ? 'Base ' : ''}Enemy ${stat} ${signedAmount} on ${targetPhrase}.`,
         duration,
         uncertainty,
       ].filter(Boolean).join(' ');
     }
-    const sourceValue = stat && amount ? `Enemy ${stat} -${amount}` : null;
+    const sourceValue = stat && amount ? `${baseReduction ? 'Base ' : ''}Enemy ${stat} -${amount}` : null;
     const channelValue = !stat && amount ? `${formatToken(trace.channel ?? 'damage-dealt')} -${amount}` : null;
     return [
       `${sourceValue ?? channelValue ?? `${formatToken(trace.channel ?? 'damage-dealt')} reduction`} on ${targetPhrase}.`,
@@ -3479,7 +3480,7 @@ function enemyReductionPurpose(trace: SynergyTrace): string {
 
 function enemyReductionStat(trace: SynergyTrace): string | null {
   const text = [trace.title, trace.explanation, ...trace.effects, ...trace.matchedFacts].join(' ');
-  return text.match(/\bEnemy (Strength|Intelligence|Instinct|Initiative)\s+(?:decrease|reduction)\b/i)?.[1] ?? null;
+  return text.match(/\bEnemy (Strength|Intelligence|Instinct|Initiative)\s+(?:decrease|reduction|-)/i)?.[1] ?? null;
 }
 
 function enemyReductionTargetPhrase(trace: SynergyTrace): string {
@@ -3490,6 +3491,11 @@ function enemyReductionTargetPhrase(trace: SynergyTrace): string {
   }
   const count = Number(countMatch[1]);
   return `${count} enemy target${count === 1 ? '' : 's'}`;
+}
+
+function enemyReductionIsBase(trace: SynergyTrace, stat: string): boolean {
+  const text = [trace.explanation, ...trace.effects, ...trace.matchedFacts].join(' ');
+  return new RegExp(`\\bBase Enemy ${stat} reduction\\b`, 'i').test(text);
 }
 
 function independentPerTargetStatusSummary(trace: SynergyTrace): string[] {
@@ -3553,7 +3559,9 @@ function allMatchingThresholdFact(trace: SynergyTrace): string | null {
 
 function modifierAmountFromTrace(trace: SynergyTrace): string | null {
   const text = [trace.explanation, ...trace.effects, ...trace.matchedFacts].join(' ');
-  return text.match(/\b(?:Received|increase|decrease|by)\s+\+?([-+]?\d+(?:\.\d+)?(?:%|(?:\s+flat)|(?:\s*[x×]))?(?:\s+per stack)?)/i)?.[1] ??
+  return text.match(/\bBase Enemy (?:Strength|Intelligence|Instinct|Initiative) reduction\s+-(\d+(?:\.\d+)?%?)/i)?.[1] ??
+    text.match(/\bEnemy (?:Strength|Intelligence|Instinct|Initiative)\s+-(\d+(?:\.\d+)?%?)/i)?.[1] ??
+    text.match(/\b(?:Received|increase|decrease|by)\s+\+?([-+]?\d+(?:\.\d+)?(?:%|(?:\s+flat)|(?:\s*[x×]))?(?:\s+per stack)?)/i)?.[1] ??
     text.match(/\+([-+]?\d+(?:\.\d+)?(?:%|(?:\s+flat)|(?:\s*[x×]))?(?:\s+per stack)?)\b/i)?.[1] ??
     null;
 }

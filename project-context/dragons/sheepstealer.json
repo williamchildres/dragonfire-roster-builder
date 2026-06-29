@@ -5279,7 +5279,7 @@
   "firstObservedInGame": "2026-06-22",
   "format": "dragonfire-dragon-profile",
   "gameVersion": null,
-  "generatedAt": "2026-06-29T04:49:37.931Z",
+  "generatedAt": "2026-06-29T19:17:11.859Z",
   "habits": [
     {
       "abilityClass": "passive",
@@ -7361,11 +7361,11 @@
       "targetSelector": {
         "comparisonDirection": null,
         "comparisonPool": null,
-        "count": 1,
+        "count": 2,
         "includesCaster": null,
         "position": null,
         "scope": "within-adjacency",
-        "selection": "one-eligible-adjacent",
+        "selection": "adjacent",
         "selectionResource": null,
         "selectionStat": null,
         "sharedSelectionGroupId": null,
@@ -8418,8 +8418,8 @@
   "rosterSourceStatus": "in-game-verified-pending-official-site",
   "slug": "sheepstealer",
   "source": {
-    "branch": "fix/resolved-selector-reason-scope-pass11",
-    "commit": "9e5cdea5380efab9776add3732cc9d40b778a263",
+    "branch": "fix/sheepstealer-prey-framework-pass12",
+    "commit": "917d647a244fee7ae2081ce163e653ba238bb4b8",
     "databaseVersion": "0.6.2",
     "dataSchemaVersion": 12,
     "gameBuild": "26.6.53509",
@@ -8775,6 +8775,89 @@
       "unlockStarRank": 6,
       "untilEndOfCombat": false,
       "untilEndOfRound": false
+    },
+    {
+      "abilityId": "sheepstealer-wary-beast",
+      "abilityName": "Wary Beast",
+      "activationChanceByHabitLevel": [],
+      "activationChanceFixed": null,
+      "activationGroupId": null,
+      "availability": {
+        "canonical": "canonical-locked",
+        "notes": [
+          "Future at Star Rank 8.",
+          "Unlocked in observed account collection state, subject to level and star requirements."
+        ],
+        "observedAccount": "observed-available",
+        "reportLabel": "Future at Star Rank 8; observed account hatched",
+        "userRoster": "unknown"
+      },
+      "chanceByHabitLevel": [],
+      "chanceFixed": null,
+      "conditions": [
+        {
+          "battleContext": null,
+          "comparison": null,
+          "description": "Target is Sheepstealer Prey.",
+          "evidenceIds": [],
+          "id": "target-is-prey",
+          "kind": "target-has-status",
+          "label": "Target is Sheepstealer Prey.",
+          "statusCategoryId": null,
+          "statusId": "prey",
+          "subject": "target",
+          "thresholdPercent": null,
+          "unresolved": false
+        },
+        {
+          "battleContext": null,
+          "comparison": "above",
+          "description": "Current Prey is above 50% Troop Capacity.",
+          "evidenceIds": [],
+          "id": "current-prey-above-50-troop-capacity",
+          "kind": "target-above-troop-capacity-threshold",
+          "label": "Current Prey is above 50% Troop Capacity.",
+          "statusCategoryId": null,
+          "statusId": "prey",
+          "subject": "target",
+          "thresholdPercent": 50,
+          "unresolved": false
+        }
+      ],
+      "currentlyAvailable": false,
+      "directlyVerified": true,
+      "dragonId": "sheepstealer",
+      "durationRounds": null,
+      "effectiveOverrideDescription": null,
+      "effectiveOverrideSourceAbilityId": null,
+      "effectiveOverrideSourceAbilityName": null,
+      "evidenceIds": [
+        "sheepstealer-wary-beast-2026-06-23"
+      ],
+      "futureAvailable": true,
+      "id": "sheepstealer-wary-beast-wary-beast-evade-effect-evade-status-output",
+      "minimumDragonLevel": null,
+      "requiredHabitLevel": 1,
+      "sourceEffectId": "wary-beast-evade-effect",
+      "statusId": "evade",
+      "targetSelector": {
+        "comparisonDirection": null,
+        "comparisonPool": null,
+        "count": null,
+        "includesCaster": null,
+        "position": null,
+        "scope": "self",
+        "selection": "self",
+        "selectionResource": null,
+        "selectionStat": null,
+        "sharedSelectionGroupId": null,
+        "side": "self",
+        "tieBehavior": null
+      },
+      "targetSide": "self",
+      "unlockStarRank": 8,
+      "untilEndOfCombat": false,
+      "untilEndOfRound": true
     }
   ],
   "tags": [

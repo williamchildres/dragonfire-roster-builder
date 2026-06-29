@@ -3743,7 +3743,7 @@
   "firstObservedInGame": null,
   "format": "dragonfire-dragon-profile",
   "gameVersion": null,
-  "generatedAt": "2026-06-29T04:49:37.931Z",
+  "generatedAt": "2026-06-29T19:17:11.859Z",
   "habits": [
     {
       "abilityClass": "passive",
@@ -5394,11 +5394,11 @@
       "targetSelector": {
         "comparisonDirection": null,
         "comparisonPool": null,
-        "count": 1,
+        "count": 2,
         "includesCaster": true,
         "position": null,
         "scope": "within-adjacency",
-        "selection": "one-eligible-adjacent",
+        "selection": "adjacent",
         "selectionResource": null,
         "selectionStat": null,
         "sharedSelectionGroupId": null,
@@ -5483,11 +5483,11 @@
       "targetSelector": {
         "comparisonDirection": null,
         "comparisonPool": null,
-        "count": 1,
+        "count": 2,
         "includesCaster": true,
         "position": null,
         "scope": "within-adjacency",
-        "selection": "one-eligible-adjacent",
+        "selection": "adjacent",
         "selectionResource": null,
         "selectionStat": null,
         "sharedSelectionGroupId": null,
@@ -6506,8 +6506,8 @@
   "rosterSourceStatus": "official-website",
   "slug": "seasmoke",
   "source": {
-    "branch": "fix/resolved-selector-reason-scope-pass11",
-    "commit": "9e5cdea5380efab9776add3732cc9d40b778a263",
+    "branch": "fix/sheepstealer-prey-framework-pass12",
+    "commit": "917d647a244fee7ae2081ce163e653ba238bb4b8",
     "databaseVersion": "0.6.2",
     "dataSchemaVersion": 12,
     "gameBuild": "26.6.53509",

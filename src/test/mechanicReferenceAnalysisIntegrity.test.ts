@@ -61,6 +61,17 @@ describe('mechanic reference analysis integrity', () => {
       'sheepstealer-savage-claim',
       'sheepstealer-stolen-flock',
     );
+    const persistentText = currentTraces()
+      .filter((trace) => trace.ruleId === 'persistent-marked-target-reference')
+      .map((trace) => [
+        trace.title,
+        trace.explanation,
+        ...trace.matchedFacts,
+        ...trace.effects,
+        ...trace.assumptions,
+        ...trace.unresolvedQuestions,
+      ].join(' '))
+      .join(' ');
 
     expect(text).toContain("Persistent marked target: Sheepstealer's current Prey.");
     expect(text).toContain('Wild Hunt establishes Prey only when none currently exists.');
@@ -68,8 +79,10 @@ describe('mechanic reference analysis integrity', () => {
       expect(text).toContain(abilityName);
     }
     expect(text).toContain('refer to that same marked enemy.');
-    expect(text).toContain('The actual enemy identity and unresolved lifecycle behavior are not simulated.');
-    expect(text).toContain('Current Prey is above 50% Troop Capacity.');
+    expect(text).toContain('Current referenced enemy identity is unresolved.');
+    expect(text).toContain('Marked-target duration, removal, transfer, and replacement behavior remain unresolved');
+    expect(persistentText).not.toContain('Current Prey is above 50% Troop Capacity.');
+    expect(persistentText).not.toContain('Prey received Recovery during the previous round.');
     expect(text).not.toMatch(/Left Flank enemy|Vanguard enemy|Right Flank enemy/);
   });
 
