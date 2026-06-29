@@ -1444,15 +1444,15 @@ function analyzeDefensiveAllySupport(
         recipientAbilityId: null,
         channel: 'damage-received',
         title: `${damageLabel} Support`,
-        explanation: `${provider.name}'s ${modifier.abilityName} can reduce ${recipient.name}'s ${damageLabel} by ${displayValue}.${modifierDetails.length > 0 ? ` ${modifierDetails.join(' ')}` : ''}`,
+        explanation: /below 50% Troop Capacity/i.test([...modifier.conditions, ...(context?.effect.conditions ?? []), ...(context?.schedule.conditions ?? [])].map((condition) => condition.description).join(' '))
+          ? `${provider.name}'s ${modifier.abilityName} can reduce ${recipient.name}'s ${damageLabel}.`
+          : `${provider.name}'s ${modifier.abilityName} can reduce ${recipient.name}'s ${damageLabel} by ${displayValue}.`,
         requirements,
         matchedFacts: [
           ...(modifier.sourceEffectId ? [`Source effect ID: ${modifier.sourceEffectId}.`] : []),
           `${modifier.abilityName} targets ${targetSelectorSummary(modifier.targetSelector)}.`,
           ...defensiveModifierTargetFacts(modifier, context, formation, providerPosition, recipientPosition, dragons, recipient.name),
-          ...modifierDetails,
           ...modifier.conditions.map((condition) => condition.description),
-          ...activationChanceFacts(modifier, options),
         ],
         effects: effectDetails,
         sourceEvidenceIds: modifier.evidenceIds,
@@ -2672,6 +2672,24 @@ function analyzeEnemyStatusSourceOutputs(
     const rollScope = context?.effect.activationRoll?.unresolved || context?.schedule.activationRoll?.unresolved
       ? 'Activation scope is unresolved between one shared roll and independent per-target rolls.'
       : null;
+    const persistentTargetReference = (context.effect.targetSelection?.references ?? []).some((reference) => reference.kind === 'persistent-selected-target');
+    const baseChance = output.chanceFixed !== null && output.chanceFixed !== undefined
+      ? { value: output.chanceFixed, unit: 'percent' as const }
+      : output.chanceByHabitLevel.length > 0
+        ? rankedValueForHabitLevel(output.chanceByHabitLevel, effectiveHabitLevelForCapability(output, options))
+        : context.effect.activationRoll?.chanceByHabitLevel.length
+          ? rankedValueForHabitLevel(context.effect.activationRoll.chanceByHabitLevel, effectiveHabitLevelForCapability(output, options))
+          : context.schedule.activationRoll?.chanceByHabitLevel.length
+            ? rankedValueForHabitLevel(context.schedule.activationRoll.chanceByHabitLevel, effectiveHabitLevelForCapability(output, options))
+            : null;
+    const conditionalChance = (context.effect.conditionalMultipliers ?? []).find((multiplier) => /chance/i.test(multiplier.description) || /chance/i.test(multiplier.condition.description));
+    const baseChanceText = baseChance ? formatValue(baseChance.value, baseChance.unit) : 'unknown';
+    const conditionalChanceText = baseChance && conditionalChance && Number.isFinite(conditionalChance.multiplier)
+      ? formatValue(baseChance.value * conditionalChance.multiplier, baseChance.unit)
+      : null;
+    const persistentTargetReason = persistentTargetReference
+      ? `${statusLabel(output.statusId)} application remains conditional because current marked-target existence and identity, ${conditionalChance?.condition.description ?? 'the prior-round condition'}, base activation chance ${baseChanceText}${conditionalChanceText ? `, resulting activation chance ${conditionalChanceText}` : ''}, application success, and ${statusLabel(output.statusId)} uptime or refresh behavior remain unresolved.`
+      : null;
     traces.push({
       id: `enemy-status-output-${output.id}`,
       ruleId: 'status-source-output',
@@ -2682,7 +2700,7 @@ function analyzeEnemyStatusSourceOutputs(
       recipientDragonId: null,
       recipientAbilityId: null,
       title: `${output.abilityName} - ${statusLabel(output.statusId)} attempt`,
-      explanation: supplier.summary ?? `${provider.name}'s ${output.abilityName} can apply ${statusLabel(output.statusId)} to enemy targets.`,
+      explanation: persistentTargetReason ?? supplier.summary ?? `${provider.name}'s ${output.abilityName} can apply ${statusLabel(output.statusId)} to enemy targets.`,
       requirements,
       matchedFacts: [
         `Status identity: ${output.statusId}.`,
@@ -2706,7 +2724,7 @@ function analyzeEnemyStatusSourceOutputs(
       recipientEvidenceIds: [],
       combatLogConfirmed: false,
       exactResultKnown: false,
-      exactResultUnknownReason: 'Exact status application cannot be calculated because application success, uptime, and refresh behavior are unresolved.',
+      exactResultUnknownReason: persistentTargetReason ?? 'Exact status application cannot be calculated because application success, uptime, and refresh behavior are unresolved.',
       matchKind: 'status-condition-enablement',
       channel: 'status',
       targetSelectorSummary: targetSelectorSummary(output.targetSelector),
@@ -3789,7 +3807,7 @@ function analyzeEnemyDamageDealtReductions(
       recipientDragonId: null,
       recipientAbilityId: null,
       title: enemyDamageDealtReductionTitle(reductionChannel, modifier, statId),
-      explanation: `${enemyDamageDealtReductionExplanation(provider, modifier, statId, reductionChannel, completeCoverage)}${sourceTimingFacts.length > 0 ? ` ${sourceTimingFacts.join(' ')}` : ''}`,
+      explanation: `${enemyDamageDealtReductionExplanation(provider, modifier, statId, reductionChannel, completeCoverage, options)}${sourceTimingFacts.length > 0 ? ` ${sourceTimingFacts.join(' ')}` : ''}`,
       requirements,
       matchedFacts: [
         ...sourceTimingFacts,
@@ -3883,6 +3901,7 @@ function enemyDamageDealtReductionExplanation(
   statId: DragonStatId | null | undefined,
   reductionChannel: EffectChannel,
   completeCoverage: boolean,
+  options: CapabilityOptions,
 ): string {
   const stat = statId
     ? reductionChannel === 'stat'
@@ -3891,12 +3910,17 @@ function enemyDamageDealtReductionExplanation(
       : reductionChannel === 'damage-dealt'
       ? channelLabel(reductionChannel)
       : `${channelLabel(reductionChannel)} Dealt`;
+  const baseValue = `-${modifierDisplayValue(modifier, options)}`;
+  const unverifiedScaling = hasUnverifiedStructuredStatScaling(modifier.sourceEffectId ? sourceEffectContext(provider, modifier.abilityId, modifier.sourceEffectId)?.effect ?? null : null);
+  const reductionSentence = statId && unverifiedScaling
+    ? `Base Enemy ${statLabel(statId)} reduction ${baseValue}. Final scaled Enemy ${statLabel(statId)} reduction remains unresolved.`
+    : `Enemy ${stat} reduction is ${baseValue}.`;
   const targetSentence = completeCoverage
     ? `All three enemy slots are covered by ${provider.name}'s ${modifier.abilityName}.`
     : modifier.targetSelector.selection === 'all-matching-condition'
       ? 'All matching enemies are affected as enemy-side metadata rather than named friendly recipients.'
       : 'Enemy target selection is tracked as an enemy-side candidate group, not a named friendly recipient.';
-  return `${provider.name}'s ${modifier.abilityName} can reduce enemy ${stat}. ${targetSentence}`;
+  return `${provider.name}'s ${modifier.abilityName} can reduce enemy ${stat}. ${reductionSentence} ${targetSentence}`;
 }
 
 function analyzePersistentMarkedTargets(
@@ -4187,14 +4211,19 @@ function analyzeSelfStatusOutputs(
     const supplier = statusSupplierFacts(output, context, options);
     const timing = context ? scheduleTimingDetail(context.schedule) : null;
     const duration = context ? durationDetail(context.effect) : output.durationRounds ? `Duration: ${output.durationRounds} rounds.` : null;
-    const details = [
+    const runtimeConditionFacts = output.conditions.map((condition) => condition.description);
+    const currentPreyCondition = output.conditions.find((condition) =>
+      condition.kind === 'target-is-prey' ||
+      (condition.statusId === 'prey' && /Troop Capacity/i.test(condition.description)),
+    );
+    const details = compactSemanticFacts([
       `Target: ${provider.name}.`,
       timing,
       duration,
       isControlStatus ? `Real Control status: ${statusName}.` : `Status source: ${statusName}.`,
       context?.effect.notes.find((note) => /Control status/i.test(note)) ?? null,
       ...supplier.effects,
-    ].filter((line): line is string => Boolean(line));
+    ].filter((line): line is string => Boolean(line)));
     const timingPhrase = timing?.replace(/^Timing:\s*/i, '').replace(/\.$/, '') ?? null;
     const durationPhrase = duration?.replace(/^Duration:\s*/i, '').replace(/\.$/, '').toLowerCase() ?? null;
     const deterministicSelfControlSummary = isControlStatus && supplier.effects.some((effect) => /application is deterministic/i.test(effect))
@@ -4210,14 +4239,14 @@ function analyzeSelfStatusOutputs(
       recipientAbilityId: output.abilityId,
       channel: isControlStatus ? 'control' : 'status',
       title: `${output.abilityName} - Self ${statusName}${isControlStatus ? '' : ' source'}`,
-      explanation: deterministicSelfControlSummary ?? `${provider.name}'s ${output.abilityName} causes ${provider.name} to gain ${statusName}. ${details.join(' ')}`,
+      explanation: deterministicSelfControlSummary ?? `${provider.name}'s ${output.abilityName} causes ${provider.name} to gain ${statusName}.`,
       requirements,
       matchedFacts: [
         `Status identity: ${output.statusId}.`,
         output.sourceEffectId ? `Source effect ID: ${output.sourceEffectId}.` : null,
         `Resolved self recipient: ${provider.name}.`,
-        ...supplier.facts,
-        ...details,
+        ...(!currentPreyCondition ? supplier.facts : []),
+        ...runtimeConditionFacts.map((condition) => `Runtime condition: ${condition}`),
       ].filter((fact): fact is string => Boolean(fact)),
       effects: details,
       sourceEvidenceIds: output.evidenceIds,
@@ -4228,7 +4257,9 @@ function analyzeSelfStatusOutputs(
       unresolvedQuestions: isControlStatus
         ? ['Cleanse timing and outcome are not invented.']
         : [],
-      exactResultUnknownReason: `Exact ${statusName} result cannot be calculated because activation success, runtime condition state, and status uptime are unresolved.`,
+      exactResultUnknownReason: currentPreyCondition
+        ? `Exact ${statusName} result cannot be calculated because current marked-target existence, marked enemy identity, threshold applicability, and current-round applicability are unresolved.`
+        : `Exact ${statusName} result cannot be calculated because activation success, runtime condition state, and status uptime are unresolved.`,
       futureOrConditional: capabilityFutureOrConditional(output, options) || output.conditions.length > 0 || statusChanceConditional(output),
     }));
   }
@@ -5189,7 +5220,7 @@ function analyzeSelfStatusRemoval(
             ?.flatMap((multiplier) => multiplier.directlyVerifiedValues)
             .find((value) => value.level === 1);
           const removedStatusLabel = removedStatus ? statusLabel(removedStatus) : 'qualifying enemy-applied negative effect';
-          const details = [
+          const details = compactSemanticFacts([
             scheduleTimingDetail(schedule),
             baseChance ? `Activation chance: ${formatValue(baseChance.value, baseChance.unit)} at effective Habit Level ${level ?? 'unknown'}.` : null,
             conditionalChance && removedStatus ? `While ${statusLabel(removedStatus)}, the chance increases to ${formatValue(conditionalChance.value, conditionalChance.unit)}.` : null,
@@ -5197,7 +5228,7 @@ function analyzeSelfStatusRemoval(
             `On successful activation, remove the applicable ${removedStatusLabel} from ${provider.name}.`,
             removedStatus ? 'The cleanse does not receive an independent roll.' : 'Which qualifying negative effect is removed is unresolved.',
             schedule.activationRoll?.scope === 'schedule-shared' ? `Shared activation group: ${activationGroupId(schedule, effect)}.` : null,
-          ].filter((line): line is string => Boolean(line));
+          ].filter((line): line is string => Boolean(line)));
           traces.push(makeDependencyTrace({
             id: `self-status-removal-${ability.id}-${effect.id}`,
             matchKind: 'status-removal',
@@ -5208,12 +5239,12 @@ function analyzeSelfStatusRemoval(
             recipientAbilityId: ability.id,
             channel: 'status',
             title: `${ability.name} - self status removal`,
-            explanation: `${provider.name}'s ${ability.name}: ${details.join(' ')}`,
+            explanation: `${provider.name}'s ${ability.name} can remove a qualifying negative effect from ${provider.name}.`,
             requirements,
             matchedFacts: [
               `${ability.name} includes ${effect.type}.`,
               removedStatus ? `Removed status: ${removedStatus}.` : 'Removed status: qualifying enemy-applied negative effect.',
-              ...details,
+              ...conditionPool.map((condition) => `Runtime condition: ${condition.description}`),
             ],
             effects: details,
             sourceEvidenceIds: ability.evidenceIds,
@@ -5226,7 +5257,7 @@ function analyzeSelfStatusRemoval(
               'Activation success is unresolved.',
               removedStatus ? null : 'Which qualifying negative effect is removed is unresolved.',
             ].filter((question): question is string => Boolean(question)),
-            exactResultUnknownReason: `Exact self status removal cannot be calculated because current qualifying negative-effect state, activation success, removed-effect identity, and removal timing are unresolved.`,
+            exactResultUnknownReason: `Exact self status removal cannot be calculated because current marked-target existence, marked enemy identity, threshold applicability, qualifying self negative-effect state, and 50% activation chance at effective Habit Level 1 are unresolved; activation success and removed-effect identity remain unresolved.`,
             futureOrConditional: true,
           }));
         }
@@ -5391,11 +5422,22 @@ function semanticFactKey(fact: string): string {
   if (/^duration:/.test(normalized) || / lasts \d+ rounds?\./.test(normalized)) {
     return `duration:${normalized.match(/\d+ rounds?|until end of combat|until end of current round/)?.[0] ?? normalized}`;
   }
+  if (/lasts until end of current round/.test(normalized) || /duration: until end of current round/.test(normalized)) {
+    return 'duration:until end of current round';
+  }
+  if (/lasts until end of combat/.test(normalized) || /duration: until end of combat/.test(normalized)) {
+    return 'duration:until end of combat';
+  }
   if (/^target:/.test(normalized) || /^resolved self recipient:/.test(normalized)) {
     return 'target';
   }
-  if (/effective .* habit level:/.test(normalized) || /^current effective .* habit level:/.test(normalized)) {
-    return normalized.replace(/^current /, '');
+  if (
+    /damage received decrease/.test(normalized) ||
+    /reducing damage received by/.test(normalized) ||
+    /can reduce .* damage received/.test(normalized) ||
+    /resistance.*damage received/.test(normalized)
+  ) {
+    return `damage-received:${normalized.match(/\d+(?:\.\d+)?%/)?.[0] ?? normalized}`;
   }
   if (/application is deterministic/.test(normalized)) {
     return 'deterministic-application';
@@ -6207,9 +6249,14 @@ function statusSupplierFacts(
   const branchCondition = branchConditionFact(statusOutput);
   const branchExclusion = branchExclusionSummary(statusOutput);
   const targetCount = branchCondition ? null : targetEffect.targetCount ?? statusOutput.targetSelector.count;
+  const hasPersistentTargetReference = (effect.targetSelection?.references ?? []).some((reference) => reference.kind === 'persistent-selected-target');
   const targetText = branchCondition
-    ? branchTargetPhrase(statusOutput)
-    : targetSideNoun(statusOutput.targetSide, targetCount);
+    ? hasPersistentTargetReference
+      ? 'the current marked target'
+      : branchTargetPhrase(statusOutput)
+    : hasPersistentTargetReference
+      ? 'the current marked target'
+      : targetSideNoun(statusOutput.targetSide, targetCount);
   const lane = targetEffect.targetScope ? `Lane scope: ${formatTargetScope(targetEffect.targetScope)}.` : null;
   const priority = targetEffect.targetPriority === 'prefer-warrior' ? 'Priority: Warriors are prioritized, not guaranteed.' : null;
   const duration = statusOutput.untilEndOfRound ? 'Duration: until end of current round.' : durationDetail(effect);
@@ -6223,7 +6270,7 @@ function statusSupplierFacts(
       : null;
   const perTargetFacts = perTargetCheckFacts(targetEffect, schedule, options);
   const sharedActivationGroup = activationGroupId(schedule, effect);
-  const applicationFacts = statusApplicationResultFacts(statusOutput, recipientResolved);
+  const applicationFacts = statusApplicationResultFacts(statusOutput, recipientResolved, effect);
   const targetGraphFacts = [
     ...targetReferenceFacts(targetEffect),
     ...referencedEffectTargetReferenceFacts(schedule, targetEffect),
@@ -6382,8 +6429,13 @@ function effectiveLevelFactsForStatusOutput(
   };
 }
 
-function statusApplicationResultFacts(statusOutput: StatusOutputCapability, recipientResolved = false): { facts: string[]; effects: string[] } {
+function statusApplicationResultFacts(
+  statusOutput: StatusOutputCapability,
+  recipientResolved = false,
+  effect: AbilityEffect | null = null,
+): { facts: string[]; effects: string[] } {
   const status = statusLabel(statusOutput.statusId);
+  const persistentTargetReference = (effect?.targetSelection?.references ?? []).some((reference) => reference.kind === 'persistent-selected-target');
   if (statusChanceConditional(statusOutput)) {
     if (statusOutput.targetSide === 'enemy') {
       if ((statusOutput.targetSelector.count ?? 1) > 1) {
@@ -6395,7 +6447,7 @@ function statusApplicationResultFacts(statusOutput: StatusOutputCapability, reci
       return {
         facts: [
           `${status} application success is unresolved.`,
-          selectedTargetUnresolvedFact(statusOutput),
+          persistentTargetReference ? 'Current marked-target identity is unresolved.' : selectedTargetUnresolvedFact(statusOutput),
         ].filter((fact): fact is string => Boolean(fact)),
         effects: [],
       };
@@ -6427,7 +6479,7 @@ function statusApplicationResultFacts(statusOutput: StatusOutputCapability, reci
     };
   }
   return {
-    facts: [selectedTargetUnresolvedFact(statusOutput)].filter((fact): fact is string => Boolean(fact)),
+    facts: [persistentTargetReference ? 'Current marked-target identity is unresolved.' : selectedTargetUnresolvedFact(statusOutput)].filter((fact): fact is string => Boolean(fact)),
     effects: [],
   };
 }

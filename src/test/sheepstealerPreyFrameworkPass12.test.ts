@@ -96,6 +96,8 @@ describe('Sheepstealer Prey framework pass 12', () => {
     expect(directText).toContain('Timing: Start of Combat.');
     expect(directText).toContain('Duration: until end of combat.');
     expect(directText).toContain('Base Enemy Instinct reduction -12% at effective Habit Level 1.');
+    expect(mitigationText).toContain('Base Enemy Instinct reduction -12%.');
+    expect(mitigationText).toContain('Final scaled Enemy Instinct reduction is unresolved.');
     expect(directText).toContain('Scaling stat: Initiative.');
     expect(directText).toContain('Final scaled Enemy Instinct reduction is unresolved.');
     expect(directText).not.toContain('1 target');
@@ -122,6 +124,7 @@ describe('Sheepstealer Prey framework pass 12', () => {
     expect(text).toContain('Stolen Flock, Baited Kill, Wary Beast and Savage Claim refer to that same marked enemy.');
     expect(text).toContain('Whether a current Prey already exists is unresolved.');
     expect(text).toContain('Marked-target duration, removal, transfer, and replacement behavior remain unresolved');
+    expect(traceStatusReason(prey)).toContain('Current marked-target existence, establishment success, marked enemy identity, and lifecycle behavior remain unresolved.');
     expect(text).not.toMatch(/threshold tiers|overlapping tiers|final combat formula|stacking order|Current Prey is above 50%|Prey received Recovery during the previous round/i);
   });
 
@@ -137,18 +140,37 @@ describe('Sheepstealer Prey framework pass 12', () => {
     expect(traceText(wary)).toContain('Target: Sheepstealer.');
     expect(traceText(wary)).toContain('Status source: Evade.');
     expect(traceText(wary)).toContain('Duration: until end of the current round.');
+    expect(traceStatusReason(wary)).toContain('current marked-target existence');
+    expect(traceStatusReason(wary)).toContain('marked enemy identity');
+    expect(traceStatusReason(wary)).toContain('threshold applicability');
+    expect(traceStatusReason(wary)).toContain('current-round applicability');
+    expect(traceStatusReason(wary)).not.toMatch(/activation success|status uptime/i);
+    expect((traceText(wary).match(/Duration: until end of the current round\./g) ?? []).length).toBe(1);
+    expect((traceText(wary).match(/effective Habit Level 1/g) ?? []).length).toBeLessThanOrEqual(1);
     expect(isNormalSynergyTrace(wary)).toBe(false);
     expect(traceText(wary)).not.toMatch(/final formula|stack count/i);
 
     expect(vulnerable.status).toBe('potential');
-    expect(traceText(vulnerable)).toContain("Baited Kill targets Sheepstealer's current Prey.");
+    expect(traceText(vulnerable)).toContain('the current marked target');
+    expect(traceText(vulnerable)).toContain('Current marked-target identity is unresolved.');
     expect(traceText(vulnerable)).toContain('Status application chance: 25% at effective Habit Level 1.');
     expect(traceText(vulnerable)).toContain('Conditional chance multiplier: 2x when prey received Recovery during the previous round.');
     expect(traceText(vulnerable)).toContain('Resulting activation chance under that condition: 50% at effective Habit Level 1.');
+    expect(traceStatusReason(vulnerable)).toContain('current marked-target existence and identity');
+    expect(traceStatusReason(vulnerable)).toContain('Prey received Recovery during the previous round');
+    expect(traceStatusReason(vulnerable)).toContain('base activation chance 25%');
+    expect(traceStatusReason(vulnerable)).toContain('resulting activation chance 50%');
+    expect(traceStatusReason(vulnerable)).toContain('Vulnerable uptime or refresh behavior');
     expect(traceText(vulnerable)).not.toMatch(/unresolved target selection among|final damage formula|stack count/i);
 
     expect(cleanse.status).toBe('potential');
     expect(cleanse.matchKind).toBe('status-removal');
+    expect(traceStatusReason(cleanse)).toContain('current marked-target existence');
+    expect(traceStatusReason(cleanse)).toContain('threshold applicability');
+    expect(traceStatusReason(cleanse)).toContain('qualifying self negative-effect state');
+    expect(traceStatusReason(cleanse)).toContain('50% activation chance');
+    expect(traceStatusReason(cleanse)).toContain('activation success');
+    expect(traceStatusReason(cleanse)).toContain('removed-effect identity');
     expect(traceText(cleanse)).toContain('Runtime condition: Current Prey is above 50% Troop Capacity.');
     expect(traceText(cleanse)).toContain('Runtime condition: Negative effect was applied by an enemy and reduces Sheepstealer Damage Dealt.');
     expect(traceText(cleanse)).toContain('Activation chance: 50% at effective Habit Level 1.');
@@ -187,10 +209,12 @@ describe('Sheepstealer Prey framework pass 12', () => {
     for (const trace of resistance) {
       const semantic = 'Each recipient below 50% Troop Capacity may receive Resistance, reducing Damage Received by 20%.';
       expect(trace.effects.filter((effect) => effect === semantic)).toHaveLength(1);
-      expect(trace.matchedFacts.filter((fact) => fact === semantic)).toHaveLength(1);
+      expect(trace.matchedFacts.filter((fact) => fact === semantic)).toHaveLength(0);
       expect(traceText(trace)).not.toMatch(/unresolved recipient selection|overlapping tiers|status application to an enemy/i);
-      expect(traceStatusReason(trace)).toMatch(/activation success/i);
-      expect(traceStatusReason(trace)).toMatch(/modifier uptime|support uptime/i);
+      expect(traceStatusReason(trace)).toContain('Threshold branch applicability');
+      expect(traceStatusReason(trace)).toContain('exact boundary behavior');
+      expect(traceStatusReason(trace)).toContain('activation success');
+      expect(traceStatusReason(trace)).toContain('modifier uptime');
       expect(traceStatusReason(trace)).toContain('final formula');
     }
 
