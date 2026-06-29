@@ -163,13 +163,13 @@ describe('Caraxes, Vhagar, and Syrax review regression', () => {
     expect(traceText(slowSource)).toContain('Source effect ID: crippling-inferno-slow.');
     expect(traceText(slowSource)).toContain('Independent per-target checks: 3.');
     expect(traceText(slowSource)).toContain('Status application chance: 10% at effective Habit Level 1.');
-    expect(slowSource!.exactResultUnknownReason).toBe('Exact status application cannot be calculated because application success, uptime, refresh behavior, and first-tick timing are unresolved.');
+    expect(slowSource!.exactResultUnknownReason).toBe('Exact status application cannot be calculated because application success, uptime, and refresh behavior are unresolved.');
 
     expect(burnSource).toBeDefined();
     expect(traceText(burnSource)).toContain('Source effect ID: crippling-inferno-burn.');
     expect(traceText(burnSource)).toContain('Independent per-target checks: 3.');
     expect(traceText(burnSource)).not.toMatch(/target selection|target overlap|final formula/i);
-    expect(burnSource!.exactResultUnknownReason).toBe('Exact status application cannot be calculated because application success, uptime, refresh behavior, and first-tick timing are unresolved.');
+    expect(burnSource!.exactResultUnknownReason).toBe('Exact status application cannot be calculated because application success, uptime, and refresh behavior are unresolved.');
     expect(burnPeriodic).toBeDefined();
     expect(traceText(burnPeriodic)).toContain('Burn deals periodic Fire Damage each round.');
     expect(traceText(burnPeriodic)).not.toMatch(/target selection|target overlap/i);

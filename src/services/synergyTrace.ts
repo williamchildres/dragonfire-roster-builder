@@ -304,15 +304,32 @@ function potentialTraceStatusReason(trace: SynergyTrace): string {
       }
       return 'The final selected recipient remains unresolved for this candidate set.';
     }
-    if (trace.recipientDragonId !== null && /ally/i.test(trace.targetSelectorSummary ?? '')) {
+    if (trace.recipientDragonId !== null) {
       return /same-round|action order|overlap/i.test(text)
-        ? 'Activation success, resulting uptime, and same-round ordering remain unresolved.'
+        ? 'Activation success, resulting uptime, same-round ordering, and overlap between supplier status and dependent execution remain unresolved.'
         : 'Activation success and resulting uptime remain unresolved.';
     }
     if (/independently checked enemy|enemy targets|3 enemies/i.test(text) || /enemy/i.test(trace.targetSelectorSummary ?? '')) {
       return 'Application success on each independently checked enemy, resulting status uptime, and refresh behavior remain unresolved.';
     }
     return 'Application success and resulting status uptime remain unresolved.';
+  }
+  if (trace.matchKind === 'outgoing-effect-amplification') {
+    if (trace.modifier?.stackMaximum !== null || /stack pool|current stack count|maximum stacks|per stack/i.test(text)) {
+      const pieces = [
+        /chance|activation/i.test(trace.explanation) ? 'activation' : null,
+        /repeat/i.test(trace.explanation) ? 'repeat count' : null,
+        'final stack count',
+        'uptime',
+      ].filter((piece): piece is string => Boolean(piece));
+      return `${capitalizeSentenceList(pieces)} remain conditional.`;
+    }
+    if (/chance|activation|uptime/i.test(text) || trace.modifier?.conditional) {
+      const uptimeScope = trace.sourceDragonId === trace.recipientDragonId ? 'modifier uptime' : 'support uptime';
+      return /same-round|action order|overlap/i.test(text)
+        ? `Activation success, ${uptimeScope}, same-round ordering, and final amplified damage formula remain unresolved.`
+        : `Activation success, ${uptimeScope}, and final amplified damage formula remain unresolved.`;
+    }
   }
   if (trace.matchKind === 'stat-scaling-support' || trace.matchKind === 'incoming-effect-amplification') {
     return 'Modifier recipient identity and final output formula remain unresolved.';

@@ -3,7 +3,7 @@ import { dragons } from '../data/dragons';
 import type { FormationAnalysisInput, SynergyTrace } from '../models/synergy';
 import { buildFormationCardPresentation } from '../services/formationCardAnalysis';
 import { createEmptyRoster } from '../services/rosterStorage';
-import { analyzeFormationTraces, technicalAnalysisTraceIdentity } from '../services/synergyTrace';
+import { analyzeFormationTraces, technicalAnalysisTraceIdentity, traceStatusReason } from '../services/synergyTrace';
 
 const formation: FormationAnalysisInput = {
   'left-flank': 'syrax',
@@ -155,6 +155,26 @@ describe('Syrax / Vermax / Caraxes coverage and reason repair', () => {
     expect(zealItems.some((item) => item.state === 'active')).toBe(true);
   });
 
+  it('keeps the resolved highest-stat selector active in the renderer model', () => {
+    const traces = reviewTraces();
+    const result = reviewPresentation();
+    const vermax = result.cards.find((card) => card.dragonId === 'vermax');
+    const reactiveTrace = traces.find((trace) =>
+      trace.sourceAbilityId === 'vermax-reactive-instincts' &&
+      trace.matchKind === 'stat-scaling-support' &&
+      trace.recipientDragonId === 'vermax',
+    );
+    const reactiveItem = vermax?.provides.find((item) => item.abilityName === 'Reactive Instincts');
+
+    expect(reactiveTrace?.status).toBe('active');
+    expect(traceStatusReason(reactiveTrace!)).toBe('All required source, target, placement, and unlock requirements are satisfied.');
+    expect(reactiveItem?.state).toBe('active');
+    expect(interactionText(reactiveItem!)).toContain('Instinct +18% at effective Habit Level 1.');
+    expect(interactionText(reactiveItem!)).toContain('Initiative +9% at effective Habit Level 1.');
+    expect(interactionText(reactiveItem!)).toContain('Duration: until end of combat.');
+    expect(interactionText(reactiveItem!)).not.toMatch(/Target not guaranteed|selection-dependent|recipient selection/i);
+  });
+
   it('keeps Slow, Burn, First-Strike source, and Burn periodic wording typed', () => {
     const traces = reviewTraces();
 
@@ -179,8 +199,8 @@ describe('Syrax / Vermax / Caraxes coverage and reason repair', () => {
       trace.title === 'Blazing Fury - First-Strike source',
     );
 
-    expect(slowSource?.exactResultUnknownReason).toBe('Exact status application cannot be calculated because application success, uptime, refresh behavior, and first-tick timing are unresolved.');
-    expect(burnSource?.exactResultUnknownReason).toBe('Exact status application cannot be calculated because application success, uptime, refresh behavior, and first-tick timing are unresolved.');
+    expect(slowSource?.exactResultUnknownReason).toBe('Exact status application cannot be calculated because application success, uptime, and refresh behavior are unresolved.');
+    expect(burnSource?.exactResultUnknownReason).toBe('Exact status application cannot be calculated because application success, uptime, and refresh behavior are unresolved.');
     expect(burnPeriodic?.exactResultUnknownReason).toBe('Exact final periodic damage cannot be calculated because application success on each independently checked enemy, successful-application uptime, first-tick timing, refresh behavior, stacking, mitigation, and final formulas are unresolved.');
     expect(firstStrikeSource?.exactResultUnknownReason).toBe('Caraxes is the resolved recipient if Blazing Fury activates; exact activation and resulting uptime are not calculated.');
 
@@ -199,6 +219,44 @@ describe('Syrax / Vermax / Caraxes coverage and reason repair', () => {
     expect(firstStrikeText).toContain('Activation success is unresolved.');
     expect(firstStrikeText).not.toContain('Selected ally recipient is unresolved.');
     expect(firstStrikeText).not.toMatch(/enemy identity|target overlap/i);
+
+    const firstStrikeDependent = traces.find((trace) =>
+      trace.sourceAbilityId === 'syrax-blazing-fury' &&
+      trace.recipientAbilityId === 'caraxes-infernal-burst' &&
+      trace.matchKind === 'status-condition-enablement',
+    );
+    expect(firstStrikeDependent).toBeDefined();
+    expect(traceStatusReason(firstStrikeDependent!)).toBe('Activation success, resulting uptime, same-round ordering, and overlap between supplier status and dependent execution remain unresolved.');
+    expect(traceText(firstStrikeDependent)).toContain('Resolved ally recipient: Caraxes.');
+    expect(traceText(firstStrikeDependent)).not.toContain('independently checked enemy');
+  });
+
+  it('keeps non-status outgoing modifier reasons scoped to activation and modifier uptime', () => {
+    const traces = reviewTraces();
+
+    const blazingFuryFire = traces.find((trace) =>
+      trace.sourceAbilityId === 'syrax-blazing-fury' &&
+      trace.matchKind === 'outgoing-effect-amplification' &&
+      trace.channel === 'fire-damage' &&
+      trace.recipientDragonId === 'caraxes',
+    );
+    const bloodWyrmFire = traces.find((trace) =>
+      trace.sourceAbilityId === 'caraxes-blood-wyrm' &&
+      trace.matchKind === 'outgoing-effect-amplification' &&
+      trace.channel === 'fire-damage',
+    );
+
+    expect(blazingFuryFire).toBeDefined();
+    expect(traceStatusReason(blazingFuryFire!)).toContain('Activation success');
+    expect(traceStatusReason(blazingFuryFire!)).toContain('support uptime');
+    expect(traceStatusReason(blazingFuryFire!)).toContain('final amplified damage formula');
+    expect(traceStatusReason(blazingFuryFire!)).not.toContain('status uptime');
+
+    expect(bloodWyrmFire).toBeDefined();
+    expect(traceStatusReason(bloodWyrmFire!)).toContain('Activation success');
+    expect(traceStatusReason(bloodWyrmFire!)).toContain('modifier uptime');
+    expect(traceStatusReason(bloodWyrmFire!)).toContain('final amplified damage formula');
+    expect(traceStatusReason(bloodWyrmFire!)).not.toContain('status uptime');
   });
 
   it('keeps Tactical Inferno recipient wording resolved and stack traces uncertain', () => {
