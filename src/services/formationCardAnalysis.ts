@@ -3401,7 +3401,6 @@ function enemyFacingSummary(trace: SynergyTrace, source: Dragon | null = null): 
       const initiativeSource = source?.name ?? 'the source dragon';
       return [
         `${baseReduction ? 'Base ' : ''}Enemy ${stat} ${signedAmount} on ${targetPhrase}; final reduction scales with ${initiativeSource}'s Initiative and remains unresolved.`,
-        duration,
         uncertainty,
       ].filter(Boolean).join(' ');
     }

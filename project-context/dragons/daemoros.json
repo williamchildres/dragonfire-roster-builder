@@ -3865,7 +3865,7 @@
   "firstObservedInGame": "2026-06-22",
   "format": "dragonfire-dragon-profile",
   "gameVersion": null,
-  "generatedAt": "2026-06-29T23:31:35.421Z",
+  "generatedAt": "2026-06-29T23:52:11.510Z",
   "habits": [
     {
       "abilityClass": "passive",
@@ -6972,8 +6972,8 @@
   "rosterSourceStatus": "in-game-verified-pending-official-site",
   "slug": "daemoros",
   "source": {
-    "branch": "fix/dragons-cunning-readable-lead-pass12g",
-    "commit": "5170363e09192bef4e32f1ab424b106d88ae47be",
+    "branch": "fix/dragons-cunning-final-render-pass12h",
+    "commit": "da48f71a2ef870db333541939644fa8d429f224b",
     "databaseVersion": "0.6.2",
     "dataSchemaVersion": 12,
     "gameBuild": "26.6.53509",
