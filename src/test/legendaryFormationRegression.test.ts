@@ -459,6 +459,12 @@ describe('legendary formation analysis regression fixes', () => {
     expect(fire?.detail ?? '').toContain('Duration: 5 rounds.');
     expect(physical?.detail ?? '').toContain('Timing: Start of Round 2.');
     expect(physical?.detail ?? '').toContain('Duration: 5 rounds.');
+    expect(fire?.effects.join(' ') ?? '').toContain('Timing: Start of Round 2.');
+    expect(fire?.effects.join(' ') ?? '').toContain('Duration: 5 rounds.');
+    expect(physical?.effects.join(' ') ?? '').toContain('Timing: Start of Round 2.');
+    expect(physical?.effects.join(' ') ?? '').toContain('Duration: 5 rounds.');
+    expect((fire?.effects.join(' ') ?? '').match(/Duration: 5 rounds\./g)).toHaveLength(1);
+    expect((physical?.effects.join(' ') ?? '').match(/Duration: 5 rounds\./g)).toHaveLength(1);
     expect((fireTrace?.explanation ?? '').match(/Duration: 5 rounds\./g)).toHaveLength(1);
     expect((physicalTrace?.explanation ?? '').match(/Duration: 5 rounds\./g)).toHaveLength(1);
     expect(fireTrace?.matchedFacts.join(' ')).toContain('highest-Intelligence');

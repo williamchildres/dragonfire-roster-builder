@@ -23,7 +23,7 @@
   ],
   "currentReviewPhase": "Legendary/full-profile formation validation complete; Epic ingestion active with Daemoros and Vaeldra as the first detailed Epic batch after Vermax.",
   "format": "dragonfire-project-state",
-  "generatedAt": "2026-06-29T02:43:02.655Z",
+  "generatedAt": "2026-06-29T03:03:20.803Z",
   "plannedNextPhase": [
     "continue Epic dragon ingestion in batches of two after the latest merged context is available",
     "fetch latest merged main and create a new feature branch before each future Epic implementation batch",
@@ -37,8 +37,8 @@
     "metadataOnlyDragonCount": 15
   },
   "source": {
-    "branch": "main",
-    "commit": "c8ce595478cd95b971e0c32d50756d39061ea970",
+    "branch": "fix/radiant-effect-details-duration-pass9b",
+    "commit": "0e98844af12aa96856113693c4d573910ec3271c",
     "databaseVersion": "0.6.2",
     "dataSchemaVersion": 12,
     "gameBuild": "26.6.53509",
