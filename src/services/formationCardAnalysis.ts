@@ -6,7 +6,7 @@ import { formatTypedModifierValue } from './effectCapabilities';
 import { rankedValueForHabitLevel, resolveEffectiveHabitLevelForAbility } from './habitLevels';
 import { isNormalSynergyTrace } from './synergyTrace';
 
-export type FormationCardInteractionState = 'active' | 'conditional' | 'preview' | 'unknown' | 'blocked';
+export type FormationCardInteractionState = 'active' | 'conditional' | 'preview' | 'unknown' | 'blocked' | 'inactive';
 
 export interface FormationCardInteraction {
   id: string;
@@ -353,6 +353,8 @@ export function interactionStatePriority(state: FormationCardInteractionState): 
       return 3;
     case 'blocked':
       return 4;
+    case 'inactive':
+      return 5;
   }
 }
 
@@ -1875,24 +1877,24 @@ function projectedInteractionState(trace: SynergyTrace, previewEnabled = false):
   if (state !== 'active') {
     return state;
   }
+  if (
+    (trace.matchKind === 'enemy-damage-dealt-reduction' || trace.matchKind === 'enemy-mitigation-reduction') &&
+    /all three enemy slots are covered/i.test([trace.explanation, ...trace.matchedFacts, ...trace.effects].join(' '))
+  ) {
+    return state;
+  }
   if (trace.targetSelectionGroup?.selectionUncertain) {
     return 'conditional';
+  }
+  if (trace.matchKind === 'stat-scaling-support') {
+    const text = [trace.explanation, ...trace.matchedFacts, ...trace.effects].join(' ');
+    if (/fallback|preferred|candidate|selected recipient is unresolved|recipient selection/i.test(text)) {
+      return 'conditional';
+    }
   }
   if (trace.matchKind === 'enemy-damage-dealt-reduction' || trace.matchKind === 'enemy-mitigation-reduction') {
     const selector = trace.modifier?.targetSelector;
     const text = [trace.explanation, ...trace.matchedFacts, ...trace.effects].join(' ');
-    if (trace.matchKind === 'enemy-mitigation-reduction' && /Initiative/i.test(text)) {
-      return 'conditional';
-    }
-    if (/enemy initiative reduction|enemy initiative -/i.test(text)) {
-      return 'conditional';
-    }
-    if (/all three enemy slots are covered/i.test(text)) {
-      return state;
-    }
-    if (/enemy identities (?:remain|are) (?:unresolved|unnamed)|selected enemy identity|enemy target selection is not resolved|target selection is unresolved/i.test(text)) {
-      return 'conditional';
-    }
     if (/highest-(?:Strength|Intelligence)|enemy with highest/i.test(text) && /unresolved/i.test(text)) {
       return 'conditional';
     }
@@ -1946,12 +1948,15 @@ function deriveTraitStatus(dragon: Dragon, position: FormationPosition, traces: 
       requirement.satisfied === null && /Dragon Level|Star Rank|Habit unlock|Selected Habit Level/i.test(requirement.label),
   );
   if (placement?.satisfied === false) {
+    const blockedForProgression = Boolean(failedProgression);
     return {
       dragonId: dragon.id,
       abilityName: dragon.trait.name,
-      state: 'blocked',
+      state: blockedForProgression ? 'blocked' : 'inactive',
       label: 'Trait inactive',
-      summary: `${dragon.trait.name} requires Vanguard.`,
+      summary: blockedForProgression
+        ? `${dragon.trait.name} requires Vanguard.`
+        : `${dragon.trait.name} requires Vanguard.`,
       detail: trace.explanation,
     };
   }
@@ -3408,7 +3413,7 @@ function periodicStatusUncertainty(trace: SynergyTrace): string | null {
   if (trace.status === 'active') {
     return null;
   }
-  return 'Application success, selected enemy identity, overlap, successful-application uptime, and final periodic damage are uncertain.';
+  return 'Application success on each independently checked enemy, successful-application uptime, first-tick timing, refresh behavior, stacking, mitigation, and final periodic damage are uncertain.';
 }
 
 function successfulStatusVulnerabilitySummary(trace: SynergyTrace): string | null {

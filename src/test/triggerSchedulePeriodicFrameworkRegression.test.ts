@@ -124,7 +124,7 @@ describe('trigger, schedule override, periodic damage framework regression', () 
     const cardText = allCardText(presentation);
 
     expect(traces).toHaveLength(59);
-    expect(counts).toMatchObject({ active: 20, potential: 28, inactive: 8, blocked: 1, unknown: 1, 'not-applicable': 1 });
+    expect(counts).toMatchObject({ active: 22, potential: 26, inactive: 8, blocked: 1, unknown: 1, 'not-applicable': 1 });
     expect(new Set(traces.map(technicalAnalysisTraceIdentity)).size).toBe(traces.length);
 
     const override = traces.find((trace) => trace.ruleId === 'schedule-override' && trace.sourceAbilityId === 'venator-feral-strike');
@@ -214,7 +214,7 @@ describe('trigger, schedule override, periodic damage framework regression', () 
       trace.ruleId === 'stat-scaling-support' &&
       trace.recipientDragonId === 'malachite'
     );
-    expect(reactiveMalachite?.status).toBe('potential');
+    expect(reactiveMalachite?.status).toBe('active');
 
     const spreadingBlazeText = traceText(traces.find((trace) => trace.sourceAbilityId === 'vermax-spreading-blaze' && trace.recipientDragonId === 'malachite'));
     const rallyingFlameText = traceText(traces.find((trace) => trace.sourceAbilityId === 'vermax-rallying-flame' && trace.recipientDragonId === 'malachite' && trace.channel === 'tactical-damage'));
@@ -305,7 +305,7 @@ describe('trigger, schedule override, periodic damage framework regression', () 
     const cardText = allCardText(presentation);
 
     expect(traces).toHaveLength(54);
-    expect(counts).toMatchObject({ active: 22, potential: 20, inactive: 10, blocked: 1, unknown: 1, 'not-applicable': 0 });
+    expect(counts).toMatchObject({ active: 23, potential: 19, inactive: 10, blocked: 1, unknown: 1, 'not-applicable': 0 });
     expect(new Set(traces.map(technicalAnalysisTraceIdentity)).size).toBe(traces.length);
 
     const overrideText = traceText(traces.find((trace) => trace.ruleId === 'schedule-override' && trace.sourceAbilityId === 'venator-feral-strike'));
@@ -420,9 +420,8 @@ describe('trigger, schedule override, periodic damage framework regression', () 
       trace.ruleId === 'stat-scaling-support' &&
       trace.recipientDragonId === 'kalspire'
     );
-    expect(reactiveKalspire?.status).toBe('potential');
-    expect(traceText(reactiveKalspire)).toContain('Recipient selection is unresolved');
-    expect(traceStatusReason(reactiveKalspire!)).toBe('The final selected recipient remains unresolved because one or more comparison values are unavailable.');
+    expect(reactiveKalspire?.status).toBe('active');
+    expect(traceStatusReason(reactiveKalspire!)).toBe('All required source, target, placement, and unlock requirements are satisfied.');
 
     const radiantStunText = traceText(traces.find((trace) => trace.ruleId === 'self-status-output' && trace.sourceAbilityId === 'kalspire-radiant-conqueror' && /Stun/.test(trace.title)));
     expect(radiantStunText).toContain('Stun application is deterministic');
@@ -450,7 +449,7 @@ describe('trigger, schedule override, periodic damage framework regression', () 
     expect(warriorsZealCardText).toContain('Instinct');
     expect(warriorsZealCardText).toContain('Initiative');
     expect(warriorsZealCardText).toContain('Tactical Strike');
-    expect(cardsFor(presentation, 'Reactive Instincts').some((item) => item.recipientName === 'Kalspire' && item.state === 'active')).toBe(false);
+    expect(cardsFor(presentation, 'Reactive Instincts').some((item) => item.recipientName === 'Kalspire' && item.state === 'active')).toBe(true);
     const reactiveCardText = cardsFor(presentation, 'Reactive Instincts')
       .filter((item) => item.recipientName === 'Kalspire')
       .map(interactionText)

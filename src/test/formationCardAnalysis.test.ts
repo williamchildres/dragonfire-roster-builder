@@ -686,7 +686,7 @@ describe('formation card analysis presentation', () => {
     expect(syrax.provides.some((item) => item.abilityName === "Sentinel's Wit")).toBe(false);
     expect(syrax.traitStatus).toMatchObject({
       abilityName: "Sentinel's Wit",
-      state: 'blocked',
+      state: 'inactive',
     });
   });
 

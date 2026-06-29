@@ -464,8 +464,8 @@ describe('Daemoros and Vaeldra Epic profiles', () => {
     expect(instill?.effects.join(' ')).toMatch(/Duration: 2 rounds/);
     expect(instill?.effects.join(' ')).toMatch(/Scales with Instinct/);
     expect(instill?.effects.join(' ')).toMatch(/Mitigated by target Intelligence/);
-    expect(instill?.effects.join(' ')).toMatch(/Activation, target selection, target overlap, and uptime remain conditional/);
-    expect(instill?.effects.join(' ')).toMatch(/Final damage is not calculated/);
+    expect(instill?.effects.join(' ')).toMatch(/Application success on each independently checked enemy, successful-application uptime, first-tick timing, refresh behavior, stacking, mitigation, and final periodic damage are unresolved/);
+    expect(instill?.effects.join(' ')).toMatch(/Final periodic damage is not calculated/);
     expect(instill?.recipientDragonId).toBeNull();
     expect(darkening?.effects.join(' ')).toMatch(/Panic deals periodic Tactical Damage each round/);
     expect(darkening?.matchedFacts.join(' ')).toMatch(/Darkening Fear has its own activation roll and target selection/);
@@ -575,7 +575,7 @@ describe('Daemoros and Vaeldra Epic profiles', () => {
     const outsidePresentation = buildFormationCardPresentation(outsideFormation, dragons, daemorosOutsideVanguard, { previewEnabled: false });
     expect(outsidePresentation.cards.find((card) => card.dragonId === 'daemoros')?.traitStatus).toMatchObject({
       abilityName: "Warrior's Zeal",
-      state: 'blocked',
+      state: 'inactive',
     });
   });
 

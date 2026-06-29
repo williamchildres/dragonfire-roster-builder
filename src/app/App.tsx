@@ -3307,6 +3307,8 @@ function stateLabel(state: FormationCardInteractionState) {
       return 'Max-rank preview';
     case 'unknown':
       return 'Progression unknown';
+    case 'inactive':
+      return 'Inactive';
     case 'blocked':
       return 'Blocked';
   }

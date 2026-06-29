@@ -143,7 +143,7 @@
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final amplified damage cannot be calculated because stacking and final combat formulas are not fully verified.",
-    "explanation": "Malachite is eligible for Syrax's Tactical Inferno Tactical Damage support. Qualifying outputs: Warden's Rally: Tactical Damage. Target selection follows the verified flank preference and remains selection-dependent.",
+    "explanation": "Malachite is resolved by the verified flank preference for Syrax's Tactical Inferno Tactical Damage support. Qualifying outputs: Warden's Rally: Tactical Damage.",
     "id": "outgoing-effect-amplification-syrax-tactical-inferno-tactical-inferno-tactical-tactical-damage-dealt-modifier-malachite",
     "interactionScope": "cross-dragon",
     "matchedOutputCapabilityIds": [
@@ -922,7 +922,7 @@
   },
   {
     "assumptions": [
-      "Status application remains chance-based or conditional when activation, target choice, or uptime is unresolved."
+      "Status application remains chance-based or conditional when activation or uptime is unresolved."
     ],
     "channel": "status",
     "confidence": "confirmed",
@@ -939,7 +939,7 @@
       "Shared activation group: crippling-inferno-each-round-shared-activation."
     ],
     "exactResultKnown": false,
-    "exactResultUnknownReason": "Exact status target outcome cannot be calculated because activation, target identity, and uptime are unresolved.",
+    "exactResultUnknownReason": "Exact status application cannot be calculated because application success, uptime, refresh behavior, and first-tick timing are unresolved.",
     "explanation": "At effective Habit Level 5, Crippling Inferno has a 20% chance each round to apply Slow to 3 enemies in any lane. Slow lasts 2 rounds.",
     "id": "enemy-status-output-caraxes-crippling-inferno-crippling-inferno-slow-slow-status-output",
     "interactionScope": "enemy-side",
@@ -991,7 +991,7 @@
   },
   {
     "assumptions": [
-      "Status application remains chance-based or conditional when activation, target choice, or uptime is unresolved."
+      "Status application remains chance-based or conditional when activation or uptime is unresolved."
     ],
     "channel": "status",
     "confidence": "confirmed",
@@ -1008,7 +1008,7 @@
       "Shared activation group: crippling-inferno-each-round-shared-activation."
     ],
     "exactResultKnown": false,
-    "exactResultUnknownReason": "Exact status target outcome cannot be calculated because activation, target identity, and uptime are unresolved.",
+    "exactResultUnknownReason": "Exact status application cannot be calculated because application success, uptime, refresh behavior, and first-tick timing are unresolved.",
     "explanation": "At effective Habit Level 5, Crippling Inferno has a 20% chance each round to apply Burn to 3 enemies in any lane. Burn lasts 2 rounds.",
     "id": "enemy-status-output-caraxes-crippling-inferno-crippling-inferno-burn-burn-status-output",
     "interactionScope": "enemy-side",
@@ -1073,7 +1073,7 @@
       "First-Strike and Fire Damage support share the resolved ally recipient."
     ],
     "exactResultKnown": false,
-    "exactResultUnknownReason": "Caraxes is the resolved recipient if Blazing Fury activates; exact activation and uptime are not calculated.",
+    "exactResultUnknownReason": "Caraxes is the resolved recipient if Blazing Fury activates; exact activation and resulting uptime are not calculated.",
     "explanation": "Syrax's Blazing Fury can grant First-Strike to Caraxes. Blazing Fury has a 20% chance each round to grant First-Strike to one ally in any lane. First-Strike lasts 2 rounds.",
     "id": "friendly-status-output-syrax-blazing-fury-blazing-fury-first-strike-first-strike-status-output-caraxes",
     "interactionScope": "cross-dragon",
@@ -1118,7 +1118,7 @@
       "First-Strike and Double Strike support share the resolved ally recipient."
     ],
     "exactResultKnown": false,
-    "exactResultUnknownReason": "Caraxes is the resolved recipient if Lightning Strike activates; exact activation and uptime are not calculated.",
+    "exactResultUnknownReason": "Caraxes is the resolved recipient if Lightning Strike activates; exact activation and resulting uptime are not calculated.",
     "explanation": "Malachite's Lightning Strike can grant First-Strike to Caraxes. At effective Habit Level 5, Lightning Strike has a 100% chance on Rounds 1 to grant First-Strike to one ally within adjacency. First-Strike lasts 3 rounds.",
     "id": "friendly-status-output-malachite-lightning-strike-lightning-strike-first-strike-first-strike-status-output-caraxes",
     "interactionScope": "cross-dragon",
@@ -1187,7 +1187,7 @@
       "Double-Strike and First Strike support share the resolved ally recipient."
     ],
     "exactResultKnown": false,
-    "exactResultUnknownReason": "Caraxes is the resolved recipient if Lightning Strike activates; exact activation and uptime are not calculated.",
+    "exactResultUnknownReason": "Caraxes is the resolved recipient if Lightning Strike activates; exact activation and resulting uptime are not calculated.",
     "explanation": "Malachite's Lightning Strike can grant Double-Strike to Caraxes. At effective Habit Level 5, Lightning Strike has a 100% chance on Rounds 1 to grant Double-Strike to one ally within adjacency. Double-Strike lasts 3 rounds.",
     "id": "friendly-status-output-malachite-lightning-strike-lightning-strike-double-strike-double-strike-status-output-caraxes",
     "interactionScope": "cross-dragon",
@@ -4103,7 +4103,7 @@
     "sourceEvidenceIds": [
       "caraxes-hunters-wrath-2026-06-24"
     ],
-    "status": "unknown",
+    "status": "inactive",
     "targetSelectionGroup": null,
     "title": "Initiative Scaling Support",
     "unresolvedQuestions": [
@@ -4600,8 +4600,8 @@
   },
   {
     "assumptions": [
-      "Periodic status application is conditional on activation and target selection.",
-      "Enemy target overlap is not simulated or guaranteed.",
+      "Periodic status application is conditional on activation and per-enemy application success.",
+      "Enemy identities that successfully receive the status are not individually enumerated.",
       "Uptime is not treated as guaranteed.",
       "The target selector is preserved as enemy-side metadata rather than assigning a friendly recipient."
     ],
@@ -4621,12 +4621,12 @@
       "Status supplier effect: crippling-inferno-burn.",
       "Activation group: crippling-inferno-each-round-shared-activation.",
       "Independent per-target checks: 3.",
-      "Activation, target selection, target overlap, and uptime remain conditional.",
-      "Final damage is not calculated."
+      "Application success on each independently checked enemy, successful-application uptime, first-tick timing, refresh behavior, stacking, mitigation, and final periodic damage are unresolved.",
+      "Final periodic damage is not calculated."
     ],
     "exactResultKnown": false,
-    "exactResultUnknownReason": "Exact final periodic damage cannot be calculated because target overlap, uptime, stacking, mitigation, and final formulas are unresolved.",
-    "explanation": "Caraxes's Crippling Inferno can apply Burn. Burn deals periodic Fire Damage each round at Damage Rate 20% for 2 rounds. Activation, target selection, target overlap, and uptime remain conditional; final damage is not calculated.",
+    "exactResultUnknownReason": "Exact final periodic damage cannot be calculated because application success on each independently checked enemy, successful-application uptime, first-tick timing, refresh behavior, stacking, mitigation, and final formulas are unresolved.",
+    "explanation": "Caraxes's Crippling Inferno can apply Burn. Burn deals periodic Fire Damage each round at Damage Rate 20% for 2 rounds. Application success on each independently checked enemy, successful-application uptime, first-tick timing, refresh behavior, stacking, mitigation, and final damage are not calculated.",
     "id": "periodic-status-damage-caraxes-crippling-inferno-crippling-inferno-burn-burn-status-output",
     "interactionScope": "enemy-side",
     "matchedOutputCapabilityIds": [],
@@ -4675,7 +4675,7 @@
     "title": "Burn periodic Fire Damage",
     "unresolvedQuestions": [
       "Burn first-tick timing, refresh behavior, stacking, and overlapping-source behavior remain unresolved.",
-      "Exact final damage cannot be calculated because target overlap, uptime, stacking, mitigation, and final formulas are unresolved."
+      "Exact final damage cannot be calculated because application success, uptime, stacking, mitigation, and final formulas are unresolved."
     ]
   },
   {
@@ -5587,7 +5587,7 @@
   },
   {
     "assumptions": [
-      "Status application remains chance-based or conditional when activation, target choice, or uptime is unresolved."
+      "Status application remains chance-based or conditional when activation or uptime is unresolved."
     ],
     "channel": "status",
     "confidence": "confirmed",
@@ -5604,7 +5604,7 @@
       "Shared activation group: crippling-inferno-each-round-shared-activation."
     ],
     "exactResultKnown": false,
-    "exactResultUnknownReason": "Exact status target outcome cannot be calculated because activation, target identity, and uptime are unresolved.",
+    "exactResultUnknownReason": "Exact status application cannot be calculated because application success, uptime, refresh behavior, and first-tick timing are unresolved.",
     "explanation": "At effective Habit Level 5, Crippling Inferno has a 20% chance each round to apply Slow to 3 enemies in any lane. Slow lasts 2 rounds.",
     "id": "enemy-status-output-caraxes-crippling-inferno-crippling-inferno-slow-slow-status-output",
     "interactionScope": "enemy-side",
@@ -5656,7 +5656,7 @@
   },
   {
     "assumptions": [
-      "Status application remains chance-based or conditional when activation, target choice, or uptime is unresolved."
+      "Status application remains chance-based or conditional when activation or uptime is unresolved."
     ],
     "channel": "status",
     "confidence": "confirmed",
@@ -5673,7 +5673,7 @@
       "Shared activation group: crippling-inferno-each-round-shared-activation."
     ],
     "exactResultKnown": false,
-    "exactResultUnknownReason": "Exact status target outcome cannot be calculated because activation, target identity, and uptime are unresolved.",
+    "exactResultUnknownReason": "Exact status application cannot be calculated because application success, uptime, refresh behavior, and first-tick timing are unresolved.",
     "explanation": "At effective Habit Level 5, Crippling Inferno has a 20% chance each round to apply Burn to 3 enemies in any lane. Burn lasts 2 rounds.",
     "id": "enemy-status-output-caraxes-crippling-inferno-crippling-inferno-burn-burn-status-output",
     "interactionScope": "enemy-side",
@@ -5738,7 +5738,7 @@
       "First-Strike and Fire Damage support share the resolved ally recipient."
     ],
     "exactResultKnown": false,
-    "exactResultUnknownReason": "Caraxes is the resolved recipient if Blazing Fury activates; exact activation and uptime are not calculated.",
+    "exactResultUnknownReason": "Caraxes is the resolved recipient if Blazing Fury activates; exact activation and resulting uptime are not calculated.",
     "explanation": "Syrax's Blazing Fury can grant First-Strike to Caraxes. Blazing Fury has a 20% chance each round to grant First-Strike to one ally in any lane. First-Strike lasts 2 rounds.",
     "id": "friendly-status-output-syrax-blazing-fury-blazing-fury-first-strike-first-strike-status-output-caraxes",
     "interactionScope": "cross-dragon",
@@ -5783,7 +5783,7 @@
       "Double-Strike and First Strike support share the resolved ally recipient."
     ],
     "exactResultKnown": false,
-    "exactResultUnknownReason": "Syrax is the resolved recipient if Lightning Strike activates; exact activation and uptime are not calculated.",
+    "exactResultUnknownReason": "Syrax is the resolved recipient if Lightning Strike activates; exact activation and resulting uptime are not calculated.",
     "explanation": "Malachite's Lightning Strike can grant Double-Strike to Syrax. At effective Habit Level 5, Lightning Strike has a 100% chance on Rounds 1 to grant Double-Strike to one ally within adjacency. Double-Strike lasts 3 rounds.",
     "id": "friendly-status-output-malachite-lightning-strike-lightning-strike-double-strike-double-strike-status-output-syrax",
     "interactionScope": "cross-dragon",
@@ -8142,7 +8142,7 @@
     "sourceEvidenceIds": [
       "syrax-sentinels-wit-2026-06-24"
     ],
-    "status": "unknown",
+    "status": "inactive",
     "targetSelectionGroup": null,
     "title": "Initiative Scaling Support",
     "unresolvedQuestions": [
@@ -9105,8 +9105,8 @@
   },
   {
     "assumptions": [
-      "Periodic status application is conditional on activation and target selection.",
-      "Enemy target overlap is not simulated or guaranteed.",
+      "Periodic status application is conditional on activation and per-enemy application success.",
+      "Enemy identities that successfully receive the status are not individually enumerated.",
       "Uptime is not treated as guaranteed.",
       "The target selector is preserved as enemy-side metadata rather than assigning a friendly recipient."
     ],
@@ -9126,12 +9126,12 @@
       "Status supplier effect: crippling-inferno-burn.",
       "Activation group: crippling-inferno-each-round-shared-activation.",
       "Independent per-target checks: 3.",
-      "Activation, target selection, target overlap, and uptime remain conditional.",
-      "Final damage is not calculated."
+      "Application success on each independently checked enemy, successful-application uptime, first-tick timing, refresh behavior, stacking, mitigation, and final periodic damage are unresolved.",
+      "Final periodic damage is not calculated."
     ],
     "exactResultKnown": false,
-    "exactResultUnknownReason": "Exact final periodic damage cannot be calculated because target overlap, uptime, stacking, mitigation, and final formulas are unresolved.",
-    "explanation": "Caraxes's Crippling Inferno can apply Burn. Burn deals periodic Fire Damage each round at Damage Rate 20% for 2 rounds. Activation, target selection, target overlap, and uptime remain conditional; final damage is not calculated.",
+    "exactResultUnknownReason": "Exact final periodic damage cannot be calculated because application success on each independently checked enemy, successful-application uptime, first-tick timing, refresh behavior, stacking, mitigation, and final formulas are unresolved.",
+    "explanation": "Caraxes's Crippling Inferno can apply Burn. Burn deals periodic Fire Damage each round at Damage Rate 20% for 2 rounds. Application success on each independently checked enemy, successful-application uptime, first-tick timing, refresh behavior, stacking, mitigation, and final damage are not calculated.",
     "id": "periodic-status-damage-caraxes-crippling-inferno-crippling-inferno-burn-burn-status-output",
     "interactionScope": "enemy-side",
     "matchedOutputCapabilityIds": [],
@@ -9180,7 +9180,7 @@
     "title": "Burn periodic Fire Damage",
     "unresolvedQuestions": [
       "Burn first-tick timing, refresh behavior, stacking, and overlapping-source behavior remain unresolved.",
-      "Exact final damage cannot be calculated because target overlap, uptime, stacking, mitigation, and final formulas are unresolved."
+      "Exact final damage cannot be calculated because application success, uptime, stacking, mitigation, and final formulas are unresolved."
     ]
   },
   {
@@ -9413,7 +9413,7 @@
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final amplified damage cannot be calculated because stacking and final combat formulas are not fully verified.",
-    "explanation": "Malachite is eligible for Syrax's Tactical Inferno Tactical Damage support. Qualifying outputs: Warden's Rally: Tactical Damage. Target selection follows the verified flank preference and remains selection-dependent.",
+    "explanation": "Malachite is resolved by the verified flank preference for Syrax's Tactical Inferno Tactical Damage support. Qualifying outputs: Warden's Rally: Tactical Damage.",
     "id": "outgoing-effect-amplification-syrax-tactical-inferno-tactical-inferno-tactical-tactical-damage-dealt-modifier-malachite",
     "interactionScope": "cross-dragon",
     "matchedOutputCapabilityIds": [
@@ -9517,7 +9517,7 @@
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final amplified damage cannot be calculated because stacking and final combat formulas are not fully verified.",
-    "explanation": "Caraxes is eligible for Syrax's Tactical Inferno Fire Damage support. Qualifying outputs: Infernal Burst: Fire Damage, Crippling Inferno: Burn periodic Fire Damage. Target selection follows the verified flank preference and remains selection-dependent.",
+    "explanation": "Caraxes is resolved by the verified flank preference for Syrax's Tactical Inferno Fire Damage support. Qualifying outputs: Infernal Burst: Fire Damage, Crippling Inferno: Burn periodic Fire Damage.",
     "id": "outgoing-effect-amplification-syrax-tactical-inferno-tactical-inferno-fire-fire-damage-dealt-modifier-caraxes",
     "interactionScope": "cross-dragon",
     "matchedOutputCapabilityIds": [
@@ -10338,7 +10338,7 @@
   },
   {
     "assumptions": [
-      "Status application remains chance-based or conditional when activation, target choice, or uptime is unresolved."
+      "Status application remains chance-based or conditional when activation or uptime is unresolved."
     ],
     "channel": "status",
     "confidence": "confirmed",
@@ -10355,7 +10355,7 @@
       "Shared activation group: crippling-inferno-each-round-shared-activation."
     ],
     "exactResultKnown": false,
-    "exactResultUnknownReason": "Exact status target outcome cannot be calculated because activation, target identity, and uptime are unresolved.",
+    "exactResultUnknownReason": "Exact status application cannot be calculated because application success, uptime, refresh behavior, and first-tick timing are unresolved.",
     "explanation": "At effective Habit Level 5, Crippling Inferno has a 20% chance each round to apply Slow to 3 enemies in any lane. Slow lasts 2 rounds.",
     "id": "enemy-status-output-caraxes-crippling-inferno-crippling-inferno-slow-slow-status-output",
     "interactionScope": "enemy-side",
@@ -10407,7 +10407,7 @@
   },
   {
     "assumptions": [
-      "Status application remains chance-based or conditional when activation, target choice, or uptime is unresolved."
+      "Status application remains chance-based or conditional when activation or uptime is unresolved."
     ],
     "channel": "status",
     "confidence": "confirmed",
@@ -10424,7 +10424,7 @@
       "Shared activation group: crippling-inferno-each-round-shared-activation."
     ],
     "exactResultKnown": false,
-    "exactResultUnknownReason": "Exact status target outcome cannot be calculated because activation, target identity, and uptime are unresolved.",
+    "exactResultUnknownReason": "Exact status application cannot be calculated because application success, uptime, refresh behavior, and first-tick timing are unresolved.",
     "explanation": "At effective Habit Level 5, Crippling Inferno has a 20% chance each round to apply Burn to 3 enemies in any lane. Burn lasts 2 rounds.",
     "id": "enemy-status-output-caraxes-crippling-inferno-crippling-inferno-burn-burn-status-output",
     "interactionScope": "enemy-side",
@@ -10489,7 +10489,7 @@
       "First-Strike and Fire Damage support share the resolved ally recipient."
     ],
     "exactResultKnown": false,
-    "exactResultUnknownReason": "Caraxes is the resolved recipient if Blazing Fury activates; exact activation and uptime are not calculated.",
+    "exactResultUnknownReason": "Caraxes is the resolved recipient if Blazing Fury activates; exact activation and resulting uptime are not calculated.",
     "explanation": "Syrax's Blazing Fury can grant First-Strike to Caraxes. Blazing Fury has a 20% chance each round to grant First-Strike to one ally in any lane. First-Strike lasts 2 rounds.",
     "id": "friendly-status-output-syrax-blazing-fury-blazing-fury-first-strike-first-strike-status-output-caraxes",
     "interactionScope": "cross-dragon",
@@ -10534,7 +10534,7 @@
       "Double-Strike and First Strike support share the resolved ally recipient."
     ],
     "exactResultKnown": false,
-    "exactResultUnknownReason": "Syrax is the resolved recipient if Lightning Strike activates; exact activation and uptime are not calculated.",
+    "exactResultUnknownReason": "Syrax is the resolved recipient if Lightning Strike activates; exact activation and resulting uptime are not calculated.",
     "explanation": "Malachite's Lightning Strike can grant Double-Strike to Syrax. At effective Habit Level 5, Lightning Strike has a 100% chance on Rounds 1 to grant Double-Strike to one ally within adjacency. Double-Strike lasts 3 rounds.",
     "id": "friendly-status-output-malachite-lightning-strike-lightning-strike-double-strike-double-strike-status-output-syrax",
     "interactionScope": "cross-dragon",
@@ -13947,8 +13947,8 @@
   },
   {
     "assumptions": [
-      "Periodic status application is conditional on activation and target selection.",
-      "Enemy target overlap is not simulated or guaranteed.",
+      "Periodic status application is conditional on activation and per-enemy application success.",
+      "Enemy identities that successfully receive the status are not individually enumerated.",
       "Uptime is not treated as guaranteed.",
       "The target selector is preserved as enemy-side metadata rather than assigning a friendly recipient."
     ],
@@ -13968,12 +13968,12 @@
       "Status supplier effect: crippling-inferno-burn.",
       "Activation group: crippling-inferno-each-round-shared-activation.",
       "Independent per-target checks: 3.",
-      "Activation, target selection, target overlap, and uptime remain conditional.",
-      "Final damage is not calculated."
+      "Application success on each independently checked enemy, successful-application uptime, first-tick timing, refresh behavior, stacking, mitigation, and final periodic damage are unresolved.",
+      "Final periodic damage is not calculated."
     ],
     "exactResultKnown": false,
-    "exactResultUnknownReason": "Exact final periodic damage cannot be calculated because target overlap, uptime, stacking, mitigation, and final formulas are unresolved.",
-    "explanation": "Caraxes's Crippling Inferno can apply Burn. Burn deals periodic Fire Damage each round at Damage Rate 20% for 2 rounds. Activation, target selection, target overlap, and uptime remain conditional; final damage is not calculated.",
+    "exactResultUnknownReason": "Exact final periodic damage cannot be calculated because application success on each independently checked enemy, successful-application uptime, first-tick timing, refresh behavior, stacking, mitigation, and final formulas are unresolved.",
+    "explanation": "Caraxes's Crippling Inferno can apply Burn. Burn deals periodic Fire Damage each round at Damage Rate 20% for 2 rounds. Application success on each independently checked enemy, successful-application uptime, first-tick timing, refresh behavior, stacking, mitigation, and final damage are not calculated.",
     "id": "periodic-status-damage-caraxes-crippling-inferno-crippling-inferno-burn-burn-status-output",
     "interactionScope": "enemy-side",
     "matchedOutputCapabilityIds": [],
@@ -14022,7 +14022,7 @@
     "title": "Burn periodic Fire Damage",
     "unresolvedQuestions": [
       "Burn first-tick timing, refresh behavior, stacking, and overlapping-source behavior remain unresolved.",
-      "Exact final damage cannot be calculated because target overlap, uptime, stacking, mitigation, and final formulas are unresolved."
+      "Exact final damage cannot be calculated because application success, uptime, stacking, mitigation, and final formulas are unresolved."
     ]
   },
   {
@@ -14256,7 +14256,7 @@
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final amplified damage cannot be calculated because stacking and final combat formulas are not fully verified.",
-    "explanation": "Syrax is eligible for Syrax's Tactical Inferno Tactical Damage support. Qualifying outputs: Blazing Fury: Tactical Damage. Target selection follows the verified flank preference and remains selection-dependent.",
+    "explanation": "Syrax is resolved by the verified flank preference for Syrax's Tactical Inferno Tactical Damage support. Qualifying outputs: Blazing Fury: Tactical Damage.",
     "id": "outgoing-effect-amplification-syrax-tactical-inferno-tactical-inferno-tactical-tactical-damage-dealt-modifier-syrax",
     "interactionScope": "internal",
     "matchedOutputCapabilityIds": [
@@ -15035,7 +15035,7 @@
   },
   {
     "assumptions": [
-      "Status application remains chance-based or conditional when activation, target choice, or uptime is unresolved."
+      "Status application remains chance-based or conditional when activation or uptime is unresolved."
     ],
     "channel": "status",
     "confidence": "confirmed",
@@ -15052,7 +15052,7 @@
       "Shared activation group: crippling-inferno-each-round-shared-activation."
     ],
     "exactResultKnown": false,
-    "exactResultUnknownReason": "Exact status target outcome cannot be calculated because activation, target identity, and uptime are unresolved.",
+    "exactResultUnknownReason": "Exact status application cannot be calculated because application success, uptime, refresh behavior, and first-tick timing are unresolved.",
     "explanation": "At effective Habit Level 5, Crippling Inferno has a 20% chance each round to apply Slow to 3 enemies in any lane. Slow lasts 2 rounds.",
     "id": "enemy-status-output-caraxes-crippling-inferno-crippling-inferno-slow-slow-status-output",
     "interactionScope": "enemy-side",
@@ -15104,7 +15104,7 @@
   },
   {
     "assumptions": [
-      "Status application remains chance-based or conditional when activation, target choice, or uptime is unresolved."
+      "Status application remains chance-based or conditional when activation or uptime is unresolved."
     ],
     "channel": "status",
     "confidence": "confirmed",
@@ -15121,7 +15121,7 @@
       "Shared activation group: crippling-inferno-each-round-shared-activation."
     ],
     "exactResultKnown": false,
-    "exactResultUnknownReason": "Exact status target outcome cannot be calculated because activation, target identity, and uptime are unresolved.",
+    "exactResultUnknownReason": "Exact status application cannot be calculated because application success, uptime, refresh behavior, and first-tick timing are unresolved.",
     "explanation": "At effective Habit Level 5, Crippling Inferno has a 20% chance each round to apply Burn to 3 enemies in any lane. Burn lasts 2 rounds.",
     "id": "enemy-status-output-caraxes-crippling-inferno-crippling-inferno-burn-burn-status-output",
     "interactionScope": "enemy-side",
@@ -15186,7 +15186,7 @@
       "First-Strike and Fire Damage support share the resolved ally recipient."
     ],
     "exactResultKnown": false,
-    "exactResultUnknownReason": "Caraxes is the resolved recipient if Blazing Fury activates; exact activation and uptime are not calculated.",
+    "exactResultUnknownReason": "Caraxes is the resolved recipient if Blazing Fury activates; exact activation and resulting uptime are not calculated.",
     "explanation": "Syrax's Blazing Fury can grant First-Strike to Caraxes. Blazing Fury has a 20% chance each round to grant First-Strike to one ally in any lane. First-Strike lasts 2 rounds.",
     "id": "friendly-status-output-syrax-blazing-fury-blazing-fury-first-strike-first-strike-status-output-caraxes",
     "interactionScope": "cross-dragon",
@@ -15231,7 +15231,7 @@
       "First-Strike and Double Strike support share the resolved ally recipient."
     ],
     "exactResultKnown": false,
-    "exactResultUnknownReason": "Caraxes is the resolved recipient if Lightning Strike activates; exact activation and uptime are not calculated.",
+    "exactResultUnknownReason": "Caraxes is the resolved recipient if Lightning Strike activates; exact activation and resulting uptime are not calculated.",
     "explanation": "Malachite's Lightning Strike can grant First-Strike to Caraxes. At effective Habit Level 5, Lightning Strike has a 100% chance on Rounds 1 to grant First-Strike to one ally within adjacency. First-Strike lasts 3 rounds.",
     "id": "friendly-status-output-malachite-lightning-strike-lightning-strike-first-strike-first-strike-status-output-caraxes",
     "interactionScope": "cross-dragon",
@@ -15300,7 +15300,7 @@
       "Double-Strike and First Strike support share the resolved ally recipient."
     ],
     "exactResultKnown": false,
-    "exactResultUnknownReason": "Caraxes is the resolved recipient if Lightning Strike activates; exact activation and uptime are not calculated.",
+    "exactResultUnknownReason": "Caraxes is the resolved recipient if Lightning Strike activates; exact activation and resulting uptime are not calculated.",
     "explanation": "Malachite's Lightning Strike can grant Double-Strike to Caraxes. At effective Habit Level 5, Lightning Strike has a 100% chance on Rounds 1 to grant Double-Strike to one ally within adjacency. Double-Strike lasts 3 rounds.",
     "id": "friendly-status-output-malachite-lightning-strike-lightning-strike-double-strike-double-strike-status-output-caraxes",
     "interactionScope": "cross-dragon",
@@ -18712,8 +18712,8 @@
   },
   {
     "assumptions": [
-      "Periodic status application is conditional on activation and target selection.",
-      "Enemy target overlap is not simulated or guaranteed.",
+      "Periodic status application is conditional on activation and per-enemy application success.",
+      "Enemy identities that successfully receive the status are not individually enumerated.",
       "Uptime is not treated as guaranteed.",
       "The target selector is preserved as enemy-side metadata rather than assigning a friendly recipient."
     ],
@@ -18733,12 +18733,12 @@
       "Status supplier effect: crippling-inferno-burn.",
       "Activation group: crippling-inferno-each-round-shared-activation.",
       "Independent per-target checks: 3.",
-      "Activation, target selection, target overlap, and uptime remain conditional.",
-      "Final damage is not calculated."
+      "Application success on each independently checked enemy, successful-application uptime, first-tick timing, refresh behavior, stacking, mitigation, and final periodic damage are unresolved.",
+      "Final periodic damage is not calculated."
     ],
     "exactResultKnown": false,
-    "exactResultUnknownReason": "Exact final periodic damage cannot be calculated because target overlap, uptime, stacking, mitigation, and final formulas are unresolved.",
-    "explanation": "Caraxes's Crippling Inferno can apply Burn. Burn deals periodic Fire Damage each round at Damage Rate 20% for 2 rounds. Activation, target selection, target overlap, and uptime remain conditional; final damage is not calculated.",
+    "exactResultUnknownReason": "Exact final periodic damage cannot be calculated because application success on each independently checked enemy, successful-application uptime, first-tick timing, refresh behavior, stacking, mitigation, and final formulas are unresolved.",
+    "explanation": "Caraxes's Crippling Inferno can apply Burn. Burn deals periodic Fire Damage each round at Damage Rate 20% for 2 rounds. Application success on each independently checked enemy, successful-application uptime, first-tick timing, refresh behavior, stacking, mitigation, and final damage are not calculated.",
     "id": "periodic-status-damage-caraxes-crippling-inferno-crippling-inferno-burn-burn-status-output",
     "interactionScope": "enemy-side",
     "matchedOutputCapabilityIds": [],
@@ -18787,7 +18787,7 @@
     "title": "Burn periodic Fire Damage",
     "unresolvedQuestions": [
       "Burn first-tick timing, refresh behavior, stacking, and overlapping-source behavior remain unresolved.",
-      "Exact final damage cannot be calculated because target overlap, uptime, stacking, mitigation, and final formulas are unresolved."
+      "Exact final damage cannot be calculated because application success, uptime, stacking, mitigation, and final formulas are unresolved."
     ]
   },
   {
@@ -20179,7 +20179,7 @@
       "First-Strike and Double Strike support share the resolved ally recipient."
     ],
     "exactResultKnown": false,
-    "exactResultUnknownReason": "Sheepstealer is the resolved recipient if Lightning Strike activates; exact activation and uptime are not calculated.",
+    "exactResultUnknownReason": "Sheepstealer is the resolved recipient if Lightning Strike activates; exact activation and resulting uptime are not calculated.",
     "explanation": "Malachite's Lightning Strike can grant First-Strike to Sheepstealer. At effective Habit Level 5, Lightning Strike has a 100% chance on Rounds 1 to grant First-Strike to one ally within adjacency. First-Strike lasts 3 rounds.",
     "id": "friendly-status-output-malachite-lightning-strike-lightning-strike-first-strike-first-strike-status-output-sheepstealer",
     "interactionScope": "cross-dragon",
@@ -20248,7 +20248,7 @@
       "Double-Strike and First Strike support share the resolved ally recipient."
     ],
     "exactResultKnown": false,
-    "exactResultUnknownReason": "Sheepstealer is the resolved recipient if Lightning Strike activates; exact activation and uptime are not calculated.",
+    "exactResultUnknownReason": "Sheepstealer is the resolved recipient if Lightning Strike activates; exact activation and resulting uptime are not calculated.",
     "explanation": "Malachite's Lightning Strike can grant Double-Strike to Sheepstealer. At effective Habit Level 5, Lightning Strike has a 100% chance on Rounds 1 to grant Double-Strike to one ally within adjacency. Double-Strike lasts 3 rounds.",
     "id": "friendly-status-output-malachite-lightning-strike-lightning-strike-double-strike-double-strike-status-output-sheepstealer",
     "interactionScope": "cross-dragon",
@@ -24857,7 +24857,7 @@
       "First-Strike and Double Strike support share the selected ally."
     ],
     "exactResultKnown": false,
-    "exactResultUnknownReason": "Exact status recipient and uptime are not calculated in formation analysis.",
+    "exactResultUnknownReason": "Exact status application cannot be calculated because application success and resulting uptime are unresolved.",
     "explanation": "Malachite's Lightning Strike can grant First-Strike to one eligible ally. At effective Habit Level 5, Lightning Strike has a 100% chance on Rounds 1 to grant First-Strike to one ally within adjacency. First-Strike lasts 3 rounds.",
     "id": "friendly-status-output-malachite-lightning-strike-lightning-strike-first-strike-first-strike-status-output-seasmoke-sheepstealer",
     "interactionScope": "targeting-fact",
@@ -24938,7 +24938,7 @@
       "Double-Strike and First Strike support share the selected ally."
     ],
     "exactResultKnown": false,
-    "exactResultUnknownReason": "Exact status recipient and uptime are not calculated in formation analysis.",
+    "exactResultUnknownReason": "Exact status application cannot be calculated because application success and resulting uptime are unresolved.",
     "explanation": "Malachite's Lightning Strike can grant Double-Strike to one eligible ally. At effective Habit Level 5, Lightning Strike has a 100% chance on Rounds 1 to grant Double-Strike to one ally within adjacency. Double-Strike lasts 3 rounds.",
     "id": "friendly-status-output-malachite-lightning-strike-lightning-strike-double-strike-double-strike-status-output-seasmoke-sheepstealer",
     "interactionScope": "targeting-fact",
@@ -27466,7 +27466,6 @@
   },
   {
     "assumptions": [
-      "Recipient selection is unresolved; this candidate-specific scaling consequence is not guaranteed.",
       "Exact stat-to-effect conversion formula is unknown."
     ],
     "channel": "stat",
@@ -27569,22 +27568,9 @@
       "malachite-lightning-strike-2026-06-23"
     ],
     "status": "potential",
-    "targetSelectionGroup": {
-      "comparisonDirection": null,
-      "comparisonPool": null,
-      "eligibleRecipientDragonIds": [
-        "seasmoke",
-        "sheepstealer"
-      ],
-      "selection": "one-eligible-adjacent",
-      "selectionResource": null,
-      "selectionStat": null,
-      "selectionUncertain": true,
-      "targetCount": 1
-    },
+    "targetSelectionGroup": null,
     "title": "Strength Scaling Support",
     "unresolvedQuestions": [
-      "Final selected recipient for this one-target stat modifier is unresolved.",
       "Final value and stacking order are not calculated."
     ]
   },
@@ -29270,7 +29256,7 @@
       "First-Strike and Double Strike support share the resolved ally recipient."
     ],
     "exactResultKnown": false,
-    "exactResultUnknownReason": "Vermax is the resolved recipient if Lightning Strike activates; exact activation and uptime are not calculated.",
+    "exactResultUnknownReason": "Vermax is the resolved recipient if Lightning Strike activates; exact activation and resulting uptime are not calculated.",
     "explanation": "Malachite's Lightning Strike can grant First-Strike to Vermax. At effective Habit Level 5, Lightning Strike has a 100% chance on Rounds 1 to grant First-Strike to one ally within adjacency. First-Strike lasts 3 rounds.",
     "id": "friendly-status-output-malachite-lightning-strike-lightning-strike-first-strike-first-strike-status-output-vermax",
     "interactionScope": "cross-dragon",
@@ -29339,7 +29325,7 @@
       "Double-Strike and First Strike support share the resolved ally recipient."
     ],
     "exactResultKnown": false,
-    "exactResultUnknownReason": "Vermax is the resolved recipient if Lightning Strike activates; exact activation and uptime are not calculated.",
+    "exactResultUnknownReason": "Vermax is the resolved recipient if Lightning Strike activates; exact activation and resulting uptime are not calculated.",
     "explanation": "Malachite's Lightning Strike can grant Double-Strike to Vermax. At effective Habit Level 5, Lightning Strike has a 100% chance on Rounds 1 to grant Double-Strike to one ally within adjacency. Double-Strike lasts 3 rounds.",
     "id": "friendly-status-output-malachite-lightning-strike-lightning-strike-double-strike-double-strike-status-output-vermax",
     "interactionScope": "cross-dragon",
@@ -34295,7 +34281,7 @@
       "First-Strike and Double Strike support share the resolved ally recipient."
     ],
     "exactResultKnown": false,
-    "exactResultUnknownReason": "Seasmoke is the resolved recipient if Lightning Strike activates; exact activation and uptime are not calculated.",
+    "exactResultUnknownReason": "Seasmoke is the resolved recipient if Lightning Strike activates; exact activation and resulting uptime are not calculated.",
     "explanation": "Malachite's Lightning Strike can grant First-Strike to Seasmoke. At effective Habit Level 5, Lightning Strike has a 100% chance on Rounds 1 to grant First-Strike to one ally within adjacency. First-Strike lasts 3 rounds.",
     "id": "friendly-status-output-malachite-lightning-strike-lightning-strike-first-strike-first-strike-status-output-seasmoke",
     "interactionScope": "cross-dragon",
@@ -34364,7 +34350,7 @@
       "Double-Strike and First Strike support share the resolved ally recipient."
     ],
     "exactResultKnown": false,
-    "exactResultUnknownReason": "Seasmoke is the resolved recipient if Lightning Strike activates; exact activation and uptime are not calculated.",
+    "exactResultUnknownReason": "Seasmoke is the resolved recipient if Lightning Strike activates; exact activation and resulting uptime are not calculated.",
     "explanation": "Malachite's Lightning Strike can grant Double-Strike to Seasmoke. At effective Habit Level 5, Lightning Strike has a 100% chance on Rounds 1 to grant Double-Strike to one ally within adjacency. Double-Strike lasts 3 rounds.",
     "id": "friendly-status-output-malachite-lightning-strike-lightning-strike-double-strike-double-strike-status-output-seasmoke",
     "interactionScope": "cross-dragon",
@@ -36772,7 +36758,6 @@
   },
   {
     "assumptions": [
-      "Recipient selection is unresolved; this candidate-specific scaling consequence is not guaranteed.",
       "Exact stat-to-effect conversion formula is unknown."
     ],
     "channel": "stat",
@@ -36879,22 +36864,9 @@
       "seasmoke-cunning-ferocity-2026-06-23"
     ],
     "status": "potential",
-    "targetSelectionGroup": {
-      "comparisonDirection": null,
-      "comparisonPool": null,
-      "eligibleRecipientDragonIds": [
-        "malachite",
-        "sheepstealer"
-      ],
-      "selection": "one-eligible-adjacent",
-      "selectionResource": null,
-      "selectionStat": null,
-      "selectionUncertain": true,
-      "targetCount": 1
-    },
+    "targetSelectionGroup": null,
     "title": "Intelligence Scaling Support",
     "unresolvedQuestions": [
-      "Final selected recipient for this one-target stat modifier is unresolved.",
       "Final value and stacking order are not calculated."
     ]
   },
@@ -38336,7 +38308,7 @@
   },
   {
     "assumptions": [
-      "Status application remains chance-based or conditional when activation, target choice, or uptime is unresolved."
+      "Status application remains chance-based or conditional when activation or uptime is unresolved."
     ],
     "channel": "status",
     "confidence": "confirmed",
@@ -38353,7 +38325,7 @@
       "Shared activation group: crippling-inferno-each-round-shared-activation."
     ],
     "exactResultKnown": false,
-    "exactResultUnknownReason": "Exact status target outcome cannot be calculated because activation, target identity, and uptime are unresolved.",
+    "exactResultUnknownReason": "Exact status application cannot be calculated because application success, uptime, refresh behavior, and first-tick timing are unresolved.",
     "explanation": "At effective Habit Level 5, Crippling Inferno has a 20% chance each round to apply Slow to 3 enemies in any lane. Slow lasts 2 rounds.",
     "id": "enemy-status-output-caraxes-crippling-inferno-crippling-inferno-slow-slow-status-output",
     "interactionScope": "enemy-side",
@@ -38405,7 +38377,7 @@
   },
   {
     "assumptions": [
-      "Status application remains chance-based or conditional when activation, target choice, or uptime is unresolved."
+      "Status application remains chance-based or conditional when activation or uptime is unresolved."
     ],
     "channel": "status",
     "confidence": "confirmed",
@@ -38422,7 +38394,7 @@
       "Shared activation group: crippling-inferno-each-round-shared-activation."
     ],
     "exactResultKnown": false,
-    "exactResultUnknownReason": "Exact status target outcome cannot be calculated because activation, target identity, and uptime are unresolved.",
+    "exactResultUnknownReason": "Exact status application cannot be calculated because application success, uptime, refresh behavior, and first-tick timing are unresolved.",
     "explanation": "At effective Habit Level 5, Crippling Inferno has a 20% chance each round to apply Burn to 3 enemies in any lane. Burn lasts 2 rounds.",
     "id": "enemy-status-output-caraxes-crippling-inferno-crippling-inferno-burn-burn-status-output",
     "interactionScope": "enemy-side",
@@ -40481,7 +40453,6 @@
   },
   {
     "assumptions": [
-      "Recipient selection is unresolved; this candidate-specific scaling consequence is not guaranteed.",
       "Exact stat-to-effect conversion formula is unknown."
     ],
     "channel": "stat",
@@ -40558,28 +40529,14 @@
       "seasmoke-cunning-ferocity-2026-06-23"
     ],
     "status": "potential",
-    "targetSelectionGroup": {
-      "comparisonDirection": null,
-      "comparisonPool": null,
-      "eligibleRecipientDragonIds": [
-        "caraxes",
-        "sheepstealer"
-      ],
-      "selection": "one-eligible-adjacent",
-      "selectionResource": null,
-      "selectionStat": null,
-      "selectionUncertain": true,
-      "targetCount": 1
-    },
+    "targetSelectionGroup": null,
     "title": "Intelligence Scaling Support",
     "unresolvedQuestions": [
-      "Final selected recipient for this one-target stat modifier is unresolved.",
       "Final value and stacking order are not calculated."
     ]
   },
   {
     "assumptions": [
-      "Recipient selection is unresolved; this candidate-specific scaling consequence is not guaranteed.",
       "Exact stat-to-effect conversion formula is unknown."
     ],
     "channel": "stat",
@@ -40686,22 +40643,9 @@
       "seasmoke-cunning-ferocity-2026-06-23"
     ],
     "status": "potential",
-    "targetSelectionGroup": {
-      "comparisonDirection": null,
-      "comparisonPool": null,
-      "eligibleRecipientDragonIds": [
-        "caraxes",
-        "sheepstealer"
-      ],
-      "selection": "one-eligible-adjacent",
-      "selectionResource": null,
-      "selectionStat": null,
-      "selectionUncertain": true,
-      "targetCount": 1
-    },
+    "targetSelectionGroup": null,
     "title": "Intelligence Scaling Support",
     "unresolvedQuestions": [
-      "Final selected recipient for this one-target stat modifier is unresolved.",
       "Final value and stacking order are not calculated."
     ]
   },
@@ -41445,8 +41389,8 @@
   },
   {
     "assumptions": [
-      "Periodic status application is conditional on activation and target selection.",
-      "Enemy target overlap is not simulated or guaranteed.",
+      "Periodic status application is conditional on activation and per-enemy application success.",
+      "Enemy identities that successfully receive the status are not individually enumerated.",
       "Uptime is not treated as guaranteed.",
       "The target selector is preserved as enemy-side metadata rather than assigning a friendly recipient."
     ],
@@ -41466,12 +41410,12 @@
       "Status supplier effect: crippling-inferno-burn.",
       "Activation group: crippling-inferno-each-round-shared-activation.",
       "Independent per-target checks: 3.",
-      "Activation, target selection, target overlap, and uptime remain conditional.",
-      "Final damage is not calculated."
+      "Application success on each independently checked enemy, successful-application uptime, first-tick timing, refresh behavior, stacking, mitigation, and final periodic damage are unresolved.",
+      "Final periodic damage is not calculated."
     ],
     "exactResultKnown": false,
-    "exactResultUnknownReason": "Exact final periodic damage cannot be calculated because target overlap, uptime, stacking, mitigation, and final formulas are unresolved.",
-    "explanation": "Caraxes's Crippling Inferno can apply Burn. Burn deals periodic Fire Damage each round at Damage Rate 20% for 2 rounds. Activation, target selection, target overlap, and uptime remain conditional; final damage is not calculated.",
+    "exactResultUnknownReason": "Exact final periodic damage cannot be calculated because application success on each independently checked enemy, successful-application uptime, first-tick timing, refresh behavior, stacking, mitigation, and final formulas are unresolved.",
+    "explanation": "Caraxes's Crippling Inferno can apply Burn. Burn deals periodic Fire Damage each round at Damage Rate 20% for 2 rounds. Application success on each independently checked enemy, successful-application uptime, first-tick timing, refresh behavior, stacking, mitigation, and final damage are not calculated.",
     "id": "periodic-status-damage-caraxes-crippling-inferno-crippling-inferno-burn-burn-status-output",
     "interactionScope": "enemy-side",
     "matchedOutputCapabilityIds": [],
@@ -41520,7 +41464,7 @@
     "title": "Burn periodic Fire Damage",
     "unresolvedQuestions": [
       "Burn first-tick timing, refresh behavior, stacking, and overlapping-source behavior remain unresolved.",
-      "Exact final damage cannot be calculated because target overlap, uptime, stacking, mitigation, and final formulas are unresolved."
+      "Exact final damage cannot be calculated because application success, uptime, stacking, mitigation, and final formulas are unresolved."
     ]
   },
   {
@@ -41671,7 +41615,7 @@
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final amplified damage cannot be calculated because stacking and final combat formulas are not fully verified.",
-    "explanation": "Malachite is eligible for Syrax's Tactical Inferno Tactical Damage support. Qualifying outputs: Warden's Rally: Tactical Damage. Target selection follows the verified flank preference and remains selection-dependent.",
+    "explanation": "Malachite is resolved by the verified flank preference for Syrax's Tactical Inferno Tactical Damage support. Qualifying outputs: Warden's Rally: Tactical Damage.",
     "id": "outgoing-effect-amplification-syrax-tactical-inferno-tactical-inferno-tactical-tactical-damage-dealt-modifier-malachite",
     "interactionScope": "cross-dragon",
     "matchedOutputCapabilityIds": [
@@ -41775,7 +41719,7 @@
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final amplified damage cannot be calculated because stacking and final combat formulas are not fully verified.",
-    "explanation": "Sheepstealer is eligible for Syrax's Tactical Inferno Fire Damage support. Qualifying outputs: Wild Hunt: Fire Damage, Savage Claim: Fire Damage. Target selection follows the verified flank preference and remains selection-dependent.",
+    "explanation": "Sheepstealer is resolved by the verified flank preference for Syrax's Tactical Inferno Fire Damage support. Qualifying outputs: Wild Hunt: Fire Damage, Savage Claim: Fire Damage.",
     "id": "outgoing-effect-amplification-syrax-tactical-inferno-tactical-inferno-fire-fire-damage-dealt-modifier-sheepstealer",
     "interactionScope": "cross-dragon",
     "matchedOutputCapabilityIds": [
@@ -42990,7 +42934,7 @@
       "First-Strike and Fire Damage support share the selected ally."
     ],
     "exactResultKnown": false,
-    "exactResultUnknownReason": "Exact status recipient and uptime are not calculated in formation analysis.",
+    "exactResultUnknownReason": "Exact status application cannot be calculated because application success and resulting uptime are unresolved.",
     "explanation": "Syrax's Blazing Fury can grant First-Strike to one eligible ally. Blazing Fury has a 20% chance each round to grant First-Strike to one ally in any lane. First-Strike lasts 2 rounds.",
     "id": "friendly-status-output-syrax-blazing-fury-blazing-fury-first-strike-first-strike-status-output-malachite-syrax-sheepstealer",
     "interactionScope": "targeting-fact",
@@ -43048,7 +42992,7 @@
       "First-Strike and Double Strike support share the resolved ally recipient."
     ],
     "exactResultKnown": false,
-    "exactResultUnknownReason": "Syrax is the resolved recipient if Lightning Strike activates; exact activation and uptime are not calculated.",
+    "exactResultUnknownReason": "Syrax is the resolved recipient if Lightning Strike activates; exact activation and resulting uptime are not calculated.",
     "explanation": "Malachite's Lightning Strike can grant First-Strike to Syrax. At effective Habit Level 5, Lightning Strike has a 100% chance on Rounds 1 to grant First-Strike to one ally within adjacency. First-Strike lasts 3 rounds.",
     "id": "friendly-status-output-malachite-lightning-strike-lightning-strike-first-strike-first-strike-status-output-syrax",
     "interactionScope": "cross-dragon",
@@ -43117,7 +43061,7 @@
       "Double-Strike and First Strike support share the resolved ally recipient."
     ],
     "exactResultKnown": false,
-    "exactResultUnknownReason": "Syrax is the resolved recipient if Lightning Strike activates; exact activation and uptime are not calculated.",
+    "exactResultUnknownReason": "Syrax is the resolved recipient if Lightning Strike activates; exact activation and resulting uptime are not calculated.",
     "explanation": "Malachite's Lightning Strike can grant Double-Strike to Syrax. At effective Habit Level 5, Lightning Strike has a 100% chance on Rounds 1 to grant Double-Strike to one ally within adjacency. Double-Strike lasts 3 rounds.",
     "id": "friendly-status-output-malachite-lightning-strike-lightning-strike-double-strike-double-strike-status-output-syrax",
     "interactionScope": "cross-dragon",
@@ -46216,7 +46160,7 @@
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final amplified damage cannot be calculated because stacking and final combat formulas are not fully verified.",
-    "explanation": "Syrax is eligible for Syrax's Tactical Inferno Tactical Damage support. Qualifying outputs: Blazing Fury: Tactical Damage. Target selection follows the verified flank preference and remains selection-dependent.",
+    "explanation": "Syrax is resolved by the verified flank preference for Syrax's Tactical Inferno Tactical Damage support. Qualifying outputs: Blazing Fury: Tactical Damage.",
     "id": "outgoing-effect-amplification-syrax-tactical-inferno-tactical-inferno-tactical-tactical-damage-dealt-modifier-syrax",
     "interactionScope": "internal",
     "matchedOutputCapabilityIds": [
@@ -46320,7 +46264,7 @@
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final amplified damage cannot be calculated because stacking and final combat formulas are not fully verified.",
-    "explanation": "Caraxes is eligible for Syrax's Tactical Inferno Fire Damage support. Qualifying outputs: Infernal Burst: Fire Damage, Crippling Inferno: Burn periodic Fire Damage. Target selection follows the verified flank preference and remains selection-dependent.",
+    "explanation": "Caraxes is resolved by the verified flank preference for Syrax's Tactical Inferno Fire Damage support. Qualifying outputs: Infernal Burst: Fire Damage, Crippling Inferno: Burn periodic Fire Damage.",
     "id": "outgoing-effect-amplification-syrax-tactical-inferno-tactical-inferno-fire-fire-damage-dealt-modifier-caraxes",
     "interactionScope": "cross-dragon",
     "matchedOutputCapabilityIds": [
@@ -46770,7 +46714,7 @@
   },
   {
     "assumptions": [
-      "Status application remains chance-based or conditional when activation, target choice, or uptime is unresolved."
+      "Status application remains chance-based or conditional when activation or uptime is unresolved."
     ],
     "channel": "status",
     "confidence": "confirmed",
@@ -46787,7 +46731,7 @@
       "Shared activation group: crippling-inferno-each-round-shared-activation."
     ],
     "exactResultKnown": false,
-    "exactResultUnknownReason": "Exact status target outcome cannot be calculated because activation, target identity, and uptime are unresolved.",
+    "exactResultUnknownReason": "Exact status application cannot be calculated because application success, uptime, refresh behavior, and first-tick timing are unresolved.",
     "explanation": "At effective Habit Level 5, Crippling Inferno has a 20% chance each round to apply Slow to 3 enemies in any lane. Slow lasts 2 rounds.",
     "id": "enemy-status-output-caraxes-crippling-inferno-crippling-inferno-slow-slow-status-output",
     "interactionScope": "enemy-side",
@@ -46839,7 +46783,7 @@
   },
   {
     "assumptions": [
-      "Status application remains chance-based or conditional when activation, target choice, or uptime is unresolved."
+      "Status application remains chance-based or conditional when activation or uptime is unresolved."
     ],
     "channel": "status",
     "confidence": "confirmed",
@@ -46856,7 +46800,7 @@
       "Shared activation group: crippling-inferno-each-round-shared-activation."
     ],
     "exactResultKnown": false,
-    "exactResultUnknownReason": "Exact status target outcome cannot be calculated because activation, target identity, and uptime are unresolved.",
+    "exactResultUnknownReason": "Exact status application cannot be calculated because application success, uptime, refresh behavior, and first-tick timing are unresolved.",
     "explanation": "At effective Habit Level 5, Crippling Inferno has a 20% chance each round to apply Burn to 3 enemies in any lane. Burn lasts 2 rounds.",
     "id": "enemy-status-output-caraxes-crippling-inferno-crippling-inferno-burn-burn-status-output",
     "interactionScope": "enemy-side",
@@ -46921,7 +46865,7 @@
       "First-Strike and Fire Damage support share the resolved ally recipient."
     ],
     "exactResultKnown": false,
-    "exactResultUnknownReason": "Caraxes is the resolved recipient if Blazing Fury activates; exact activation and uptime are not calculated.",
+    "exactResultUnknownReason": "Caraxes is the resolved recipient if Blazing Fury activates; exact activation and resulting uptime are not calculated.",
     "explanation": "Syrax's Blazing Fury can grant First-Strike to Caraxes. Blazing Fury has a 20% chance each round to grant First-Strike to one ally in any lane. First-Strike lasts 2 rounds.",
     "id": "friendly-status-output-syrax-blazing-fury-blazing-fury-first-strike-first-strike-status-output-caraxes",
     "interactionScope": "cross-dragon",
@@ -50067,7 +50011,7 @@
       "vermax-warriors-zeal-2026-06-23",
       "vermax-warriors-zeal-basic-attack-combat-log-2026-06-24"
     ],
-    "status": "potential",
+    "status": "inactive",
     "targetSelectionGroup": null,
     "title": "Initiative Scaling Support",
     "unresolvedQuestions": [
@@ -50564,8 +50508,8 @@
   },
   {
     "assumptions": [
-      "Periodic status application is conditional on activation and target selection.",
-      "Enemy target overlap is not simulated or guaranteed.",
+      "Periodic status application is conditional on activation and per-enemy application success.",
+      "Enemy identities that successfully receive the status are not individually enumerated.",
       "Uptime is not treated as guaranteed.",
       "The target selector is preserved as enemy-side metadata rather than assigning a friendly recipient."
     ],
@@ -50585,12 +50529,12 @@
       "Status supplier effect: crippling-inferno-burn.",
       "Activation group: crippling-inferno-each-round-shared-activation.",
       "Independent per-target checks: 3.",
-      "Activation, target selection, target overlap, and uptime remain conditional.",
-      "Final damage is not calculated."
+      "Application success on each independently checked enemy, successful-application uptime, first-tick timing, refresh behavior, stacking, mitigation, and final periodic damage are unresolved.",
+      "Final periodic damage is not calculated."
     ],
     "exactResultKnown": false,
-    "exactResultUnknownReason": "Exact final periodic damage cannot be calculated because target overlap, uptime, stacking, mitigation, and final formulas are unresolved.",
-    "explanation": "Caraxes's Crippling Inferno can apply Burn. Burn deals periodic Fire Damage each round at Damage Rate 20% for 2 rounds. Activation, target selection, target overlap, and uptime remain conditional; final damage is not calculated.",
+    "exactResultUnknownReason": "Exact final periodic damage cannot be calculated because application success on each independently checked enemy, successful-application uptime, first-tick timing, refresh behavior, stacking, mitigation, and final formulas are unresolved.",
+    "explanation": "Caraxes's Crippling Inferno can apply Burn. Burn deals periodic Fire Damage each round at Damage Rate 20% for 2 rounds. Application success on each independently checked enemy, successful-application uptime, first-tick timing, refresh behavior, stacking, mitigation, and final damage are not calculated.",
     "id": "periodic-status-damage-caraxes-crippling-inferno-crippling-inferno-burn-burn-status-output",
     "interactionScope": "enemy-side",
     "matchedOutputCapabilityIds": [],
@@ -50639,7 +50583,7 @@
     "title": "Burn periodic Fire Damage",
     "unresolvedQuestions": [
       "Burn first-tick timing, refresh behavior, stacking, and overlapping-source behavior remain unresolved.",
-      "Exact final damage cannot be calculated because target overlap, uptime, stacking, mitigation, and final formulas are unresolved."
+      "Exact final damage cannot be calculated because application success, uptime, stacking, mitigation, and final formulas are unresolved."
     ]
   },
   {
@@ -51289,7 +51233,7 @@
   },
   {
     "assumptions": [
-      "Status application remains chance-based or conditional when activation, target choice, or uptime is unresolved."
+      "Status application remains chance-based or conditional when activation or uptime is unresolved."
     ],
     "channel": "status",
     "confidence": "confirmed",
@@ -51306,7 +51250,7 @@
       "Shared activation group: crippling-inferno-each-round-shared-activation."
     ],
     "exactResultKnown": false,
-    "exactResultUnknownReason": "Exact status target outcome cannot be calculated because activation, target identity, and uptime are unresolved.",
+    "exactResultUnknownReason": "Exact status application cannot be calculated because application success, uptime, refresh behavior, and first-tick timing are unresolved.",
     "explanation": "At effective Habit Level 5, Crippling Inferno has a 20% chance each round to apply Slow to 3 enemies in any lane. Slow lasts 2 rounds.",
     "id": "enemy-status-output-caraxes-crippling-inferno-crippling-inferno-slow-slow-status-output",
     "interactionScope": "enemy-side",
@@ -51358,7 +51302,7 @@
   },
   {
     "assumptions": [
-      "Status application remains chance-based or conditional when activation, target choice, or uptime is unresolved."
+      "Status application remains chance-based or conditional when activation or uptime is unresolved."
     ],
     "channel": "status",
     "confidence": "confirmed",
@@ -51375,7 +51319,7 @@
       "Shared activation group: crippling-inferno-each-round-shared-activation."
     ],
     "exactResultKnown": false,
-    "exactResultUnknownReason": "Exact status target outcome cannot be calculated because activation, target identity, and uptime are unresolved.",
+    "exactResultUnknownReason": "Exact status application cannot be calculated because application success, uptime, refresh behavior, and first-tick timing are unresolved.",
     "explanation": "At effective Habit Level 5, Crippling Inferno has a 20% chance each round to apply Burn to 3 enemies in any lane. Burn lasts 2 rounds.",
     "id": "enemy-status-output-caraxes-crippling-inferno-crippling-inferno-burn-burn-status-output",
     "interactionScope": "enemy-side",
@@ -51440,7 +51384,7 @@
       "First-Strike and Fire Damage support share the resolved ally recipient."
     ],
     "exactResultKnown": false,
-    "exactResultUnknownReason": "Caraxes is the resolved recipient if Blazing Fury activates; exact activation and uptime are not calculated.",
+    "exactResultUnknownReason": "Caraxes is the resolved recipient if Blazing Fury activates; exact activation and resulting uptime are not calculated.",
     "explanation": "Syrax's Blazing Fury can grant First-Strike to Caraxes. Blazing Fury has a 20% chance each round to grant First-Strike to one ally in any lane. First-Strike lasts 2 rounds.",
     "id": "friendly-status-output-syrax-blazing-fury-blazing-fury-first-strike-first-strike-status-output-caraxes",
     "interactionScope": "cross-dragon",
@@ -53916,7 +53860,7 @@
     "sourceEvidenceIds": [
       "caraxes-hunters-wrath-2026-06-24"
     ],
-    "status": "unknown",
+    "status": "inactive",
     "targetSelectionGroup": null,
     "title": "Initiative Scaling Support",
     "unresolvedQuestions": [
@@ -54763,8 +54707,8 @@
   },
   {
     "assumptions": [
-      "Periodic status application is conditional on activation and target selection.",
-      "Enemy target overlap is not simulated or guaranteed.",
+      "Periodic status application is conditional on activation and per-enemy application success.",
+      "Enemy identities that successfully receive the status are not individually enumerated.",
       "Uptime is not treated as guaranteed.",
       "The target selector is preserved as enemy-side metadata rather than assigning a friendly recipient."
     ],
@@ -54784,12 +54728,12 @@
       "Status supplier effect: crippling-inferno-burn.",
       "Activation group: crippling-inferno-each-round-shared-activation.",
       "Independent per-target checks: 3.",
-      "Activation, target selection, target overlap, and uptime remain conditional.",
-      "Final damage is not calculated."
+      "Application success on each independently checked enemy, successful-application uptime, first-tick timing, refresh behavior, stacking, mitigation, and final periodic damage are unresolved.",
+      "Final periodic damage is not calculated."
     ],
     "exactResultKnown": false,
-    "exactResultUnknownReason": "Exact final periodic damage cannot be calculated because target overlap, uptime, stacking, mitigation, and final formulas are unresolved.",
-    "explanation": "Caraxes's Crippling Inferno can apply Burn. Burn deals periodic Fire Damage each round at Damage Rate 20% for 2 rounds. Activation, target selection, target overlap, and uptime remain conditional; final damage is not calculated.",
+    "exactResultUnknownReason": "Exact final periodic damage cannot be calculated because application success on each independently checked enemy, successful-application uptime, first-tick timing, refresh behavior, stacking, mitigation, and final formulas are unresolved.",
+    "explanation": "Caraxes's Crippling Inferno can apply Burn. Burn deals periodic Fire Damage each round at Damage Rate 20% for 2 rounds. Application success on each independently checked enemy, successful-application uptime, first-tick timing, refresh behavior, stacking, mitigation, and final damage are not calculated.",
     "id": "periodic-status-damage-caraxes-crippling-inferno-crippling-inferno-burn-burn-status-output",
     "interactionScope": "enemy-side",
     "matchedOutputCapabilityIds": [],
@@ -54838,7 +54782,7 @@
     "title": "Burn periodic Fire Damage",
     "unresolvedQuestions": [
       "Burn first-tick timing, refresh behavior, stacking, and overlapping-source behavior remain unresolved.",
-      "Exact final damage cannot be calculated because target overlap, uptime, stacking, mitigation, and final formulas are unresolved."
+      "Exact final damage cannot be calculated because application success, uptime, stacking, mitigation, and final formulas are unresolved."
     ]
   },
   {
@@ -55667,7 +55611,7 @@
   },
   {
     "assumptions": [
-      "Status application remains chance-based or conditional when activation, target choice, or uptime is unresolved."
+      "Status application remains chance-based or conditional when activation or uptime is unresolved."
     ],
     "channel": "status",
     "confidence": "confirmed",
@@ -55685,7 +55629,7 @@
       "Activation scope is unresolved between one shared roll and independent per-target rolls."
     ],
     "exactResultKnown": false,
-    "exactResultUnknownReason": "Exact status target outcome cannot be calculated because activation, target identity, and uptime are unresolved.",
+    "exactResultUnknownReason": "Exact status application cannot be calculated because application success, uptime, refresh behavior, and first-tick timing are unresolved.",
     "explanation": "Each round, Fiery Bonds checks 3 enemies in any lane. The Taunt application chance is 25% for a normal target and 50% for that same target while it has Burn, a target-specific 2x increase. Taunt lasts 2 rounds.",
     "id": "enemy-status-output-vhagar-fiery-bonds-fiery-bonds-taunt-taunt-status-output",
     "interactionScope": "enemy-side",
@@ -55715,7 +55659,7 @@
   },
   {
     "assumptions": [
-      "Status application remains chance-based or conditional when activation, target choice, or uptime is unresolved."
+      "Status application remains chance-based or conditional when activation or uptime is unresolved."
     ],
     "channel": "status",
     "confidence": "confirmed",
@@ -55734,7 +55678,7 @@
       "Eclipse Cover effect eclipse-cover-weakened uses selected-target group eclipse-cover-shared-roll."
     ],
     "exactResultKnown": false,
-    "exactResultUnknownReason": "Exact status target outcome cannot be calculated because activation, target identity, and uptime are unresolved.",
+    "exactResultUnknownReason": "Exact status application cannot be calculated because application success, uptime, refresh behavior, and first-tick timing are unresolved.",
     "explanation": "At effective Habit Level 5, Eclipse Cover has a 35% chance on rounds 3 through 7 to apply Weakened to one enemy in any lane. Weakened lasts 2 rounds.",
     "id": "enemy-status-output-vhagar-eclipse-cover-eclipse-cover-weakened-weakened-status-output",
     "interactionScope": "enemy-side",
@@ -55786,7 +55730,7 @@
   },
   {
     "assumptions": [
-      "Status application remains chance-based or conditional when activation, target choice, or uptime is unresolved."
+      "Status application remains chance-based or conditional when activation or uptime is unresolved."
     ],
     "channel": "status",
     "confidence": "confirmed",
@@ -55804,7 +55748,7 @@
       "Target reference original-basic-attack-target: Use the target of the Basic Attack that triggered Tactical Strike."
     ],
     "exactResultKnown": false,
-    "exactResultUnknownReason": "Exact status target outcome cannot be calculated because activation, target identity, and uptime are unresolved.",
+    "exactResultUnknownReason": "Exact status application cannot be calculated because application success, uptime, refresh behavior, and first-tick timing are unresolved.",
     "explanation": "Tactical Strike has a 30% chance after each Basic Attack to apply Bleed to 2 enemies within adjacency. Bleed lasts 2 rounds.",
     "id": "enemy-status-output-kalspire-tactical-strike-tactical-strike-bleed-bleed-status-output",
     "interactionScope": "enemy-side",
@@ -55831,7 +55775,7 @@
   },
   {
     "assumptions": [
-      "Status application remains chance-based or conditional when activation, target choice, or uptime is unresolved."
+      "Status application remains chance-based or conditional when activation or uptime is unresolved."
     ],
     "channel": "status",
     "confidence": "confirmed",
@@ -55853,7 +55797,7 @@
       "Target reference not-original-basic-attack-target: Physical Damage target is distinct from the original Basic Attack target. References source effect tactical-strike-tactical-damage."
     ],
     "exactResultKnown": false,
-    "exactResultUnknownReason": "Exact status target outcome cannot be calculated because activation, target identity, and uptime are unresolved.",
+    "exactResultUnknownReason": "Exact status application cannot be calculated because application success, uptime, refresh behavior, and first-tick timing are unresolved.",
     "explanation": "At effective Habit Level 5, Tactical Assault has a 30% chance after each Basic Attack to apply Panic to 2 enemies within adjacency. Panic lasts 2 rounds.",
     "id": "enemy-status-output-kalspire-tactical-assault-tactical-assault-panic-panic-status-output",
     "interactionScope": "enemy-side",
@@ -58282,8 +58226,8 @@
   },
   {
     "assumptions": [
-      "Periodic status application is conditional on activation and target selection.",
-      "Enemy target overlap is not simulated or guaranteed.",
+      "Periodic status application is conditional on activation and per-enemy application success.",
+      "Enemy identities that successfully receive the status are not individually enumerated.",
       "Uptime is not treated as guaranteed.",
       "The target selector is preserved as enemy-side metadata rather than assigning a friendly recipient."
     ],
@@ -58305,12 +58249,12 @@
       "Per-target check chance: 30%.",
       "Checks are independent; chances are not combined into one roll.",
       "Bleed checks are separate for each target.",
-      "Activation, target selection, target overlap, and uptime remain conditional.",
-      "Final damage is not calculated."
+      "Application success on each independently checked enemy, successful-application uptime, first-tick timing, refresh behavior, stacking, mitigation, and final periodic damage are unresolved.",
+      "Final periodic damage is not calculated."
     ],
     "exactResultKnown": false,
-    "exactResultUnknownReason": "Exact final periodic damage cannot be calculated because target overlap, uptime, stacking, mitigation, and final formulas are unresolved.",
-    "explanation": "Kalspire's Tactical Strike can apply Bleed. Bleed deals periodic Physical Damage each round at Damage Rate 20% for 2 rounds. Activation, target selection, target overlap, and uptime remain conditional; final damage is not calculated.",
+    "exactResultUnknownReason": "Exact final periodic damage cannot be calculated because application success on each independently checked enemy, successful-application uptime, first-tick timing, refresh behavior, stacking, mitigation, and final formulas are unresolved.",
+    "explanation": "Kalspire's Tactical Strike can apply Bleed. Bleed deals periodic Physical Damage each round at Damage Rate 20% for 2 rounds. Application success on each independently checked enemy, successful-application uptime, first-tick timing, refresh behavior, stacking, mitigation, and final damage are not calculated.",
     "id": "periodic-status-damage-kalspire-tactical-strike-tactical-strike-bleed-bleed-status-output",
     "interactionScope": "enemy-side",
     "matchedOutputCapabilityIds": [],
@@ -58334,13 +58278,13 @@
     "title": "Bleed periodic Physical Damage",
     "unresolvedQuestions": [
       "Bleed first-tick timing, refresh behavior, stacking, and overlapping-source behavior remain unresolved.",
-      "Exact final damage cannot be calculated because target overlap, uptime, stacking, mitigation, and final formulas are unresolved."
+      "Exact final damage cannot be calculated because application success, uptime, stacking, mitigation, and final formulas are unresolved."
     ]
   },
   {
     "assumptions": [
-      "Periodic status application is conditional on activation and target selection.",
-      "Enemy target overlap is not simulated or guaranteed.",
+      "Periodic status application is conditional on activation and per-enemy application success.",
+      "Enemy identities that successfully receive the status are not individually enumerated.",
       "Uptime is not treated as guaranteed.",
       "The target selector is preserved as enemy-side metadata rather than assigning a friendly recipient."
     ],
@@ -58365,12 +58309,12 @@
       "Per-target check chance: 30% at effective Habit Level 5.",
       "Checks are independent; chances are not combined into one roll.",
       "Panic checks are separate for each target.",
-      "Activation, target selection, target overlap, and uptime remain conditional.",
-      "Final damage is not calculated."
+      "Application success on each independently checked enemy, successful-application uptime, first-tick timing, refresh behavior, stacking, mitigation, and final periodic damage are unresolved.",
+      "Final periodic damage is not calculated."
     ],
     "exactResultKnown": false,
-    "exactResultUnknownReason": "Exact final periodic damage cannot be calculated because target overlap, uptime, stacking, mitigation, and final formulas are unresolved.",
-    "explanation": "Kalspire's Tactical Assault can apply Panic. Panic deals periodic Tactical Damage each round at Damage Rate 20% for 2 rounds. Activation, target selection, target overlap, and uptime remain conditional; final damage is not calculated.",
+    "exactResultUnknownReason": "Exact final periodic damage cannot be calculated because application success on each independently checked enemy, successful-application uptime, first-tick timing, refresh behavior, stacking, mitigation, and final formulas are unresolved.",
+    "explanation": "Kalspire's Tactical Assault can apply Panic. Panic deals periodic Tactical Damage each round at Damage Rate 20% for 2 rounds. Application success on each independently checked enemy, successful-application uptime, first-tick timing, refresh behavior, stacking, mitigation, and final damage are not calculated.",
     "id": "periodic-status-damage-kalspire-tactical-assault-tactical-assault-panic-panic-status-output",
     "interactionScope": "enemy-side",
     "matchedOutputCapabilityIds": [],
@@ -58419,7 +58363,7 @@
     "title": "Panic periodic Tactical Damage",
     "unresolvedQuestions": [
       "Panic first-tick timing, refresh behavior, stacking, and overlapping-source behavior remain unresolved.",
-      "Exact final damage cannot be calculated because target overlap, uptime, stacking, mitigation, and final formulas are unresolved."
+      "Exact final damage cannot be calculated because application success, uptime, stacking, mitigation, and final formulas are unresolved."
     ]
   },
   {
@@ -58822,7 +58766,7 @@
   },
   {
     "assumptions": [
-      "Status application remains chance-based or conditional when activation, target choice, or uptime is unresolved."
+      "Status application remains chance-based or conditional when activation or uptime is unresolved."
     ],
     "channel": "status",
     "confidence": "confirmed",
@@ -58840,7 +58784,7 @@
       "Activation scope is unresolved between one shared roll and independent per-target rolls."
     ],
     "exactResultKnown": false,
-    "exactResultUnknownReason": "Exact status target outcome cannot be calculated because activation, target identity, and uptime are unresolved.",
+    "exactResultUnknownReason": "Exact status application cannot be calculated because application success, uptime, refresh behavior, and first-tick timing are unresolved.",
     "explanation": "Each round, Fiery Bonds checks 3 enemies in any lane. The Taunt application chance is 25% for a normal target and 50% for that same target while it has Burn, a target-specific 2x increase. Taunt lasts 2 rounds.",
     "id": "enemy-status-output-vhagar-fiery-bonds-fiery-bonds-taunt-taunt-status-output",
     "interactionScope": "enemy-side",
@@ -58870,7 +58814,7 @@
   },
   {
     "assumptions": [
-      "Status application remains chance-based or conditional when activation, target choice, or uptime is unresolved."
+      "Status application remains chance-based or conditional when activation or uptime is unresolved."
     ],
     "channel": "status",
     "confidence": "confirmed",
@@ -58889,7 +58833,7 @@
       "Eclipse Cover effect eclipse-cover-weakened uses selected-target group eclipse-cover-shared-roll."
     ],
     "exactResultKnown": false,
-    "exactResultUnknownReason": "Exact status target outcome cannot be calculated because activation, target identity, and uptime are unresolved.",
+    "exactResultUnknownReason": "Exact status application cannot be calculated because application success, uptime, refresh behavior, and first-tick timing are unresolved.",
     "explanation": "At effective Habit Level 5, Eclipse Cover has a 35% chance on rounds 3 through 7 to apply Weakened to one enemy in any lane. Weakened lasts 2 rounds.",
     "id": "enemy-status-output-vhagar-eclipse-cover-eclipse-cover-weakened-weakened-status-output",
     "interactionScope": "enemy-side",
@@ -58941,7 +58885,7 @@
   },
   {
     "assumptions": [
-      "Status application remains chance-based or conditional when activation, target choice, or uptime is unresolved."
+      "Status application remains chance-based or conditional when activation or uptime is unresolved."
     ],
     "channel": "status",
     "confidence": "confirmed",
@@ -58958,7 +58902,7 @@
       "Shared activation group: crippling-inferno-each-round-shared-activation."
     ],
     "exactResultKnown": false,
-    "exactResultUnknownReason": "Exact status target outcome cannot be calculated because activation, target identity, and uptime are unresolved.",
+    "exactResultUnknownReason": "Exact status application cannot be calculated because application success, uptime, refresh behavior, and first-tick timing are unresolved.",
     "explanation": "At effective Habit Level 5, Crippling Inferno has a 20% chance each round to apply Slow to 3 enemies in any lane. Slow lasts 2 rounds.",
     "id": "enemy-status-output-caraxes-crippling-inferno-crippling-inferno-slow-slow-status-output",
     "interactionScope": "enemy-side",
@@ -59010,7 +58954,7 @@
   },
   {
     "assumptions": [
-      "Status application remains chance-based or conditional when activation, target choice, or uptime is unresolved."
+      "Status application remains chance-based or conditional when activation or uptime is unresolved."
     ],
     "channel": "status",
     "confidence": "confirmed",
@@ -59027,7 +58971,7 @@
       "Shared activation group: crippling-inferno-each-round-shared-activation."
     ],
     "exactResultKnown": false,
-    "exactResultUnknownReason": "Exact status target outcome cannot be calculated because activation, target identity, and uptime are unresolved.",
+    "exactResultUnknownReason": "Exact status application cannot be calculated because application success, uptime, refresh behavior, and first-tick timing are unresolved.",
     "explanation": "At effective Habit Level 5, Crippling Inferno has a 20% chance each round to apply Burn to 3 enemies in any lane. Burn lasts 2 rounds.",
     "id": "enemy-status-output-caraxes-crippling-inferno-crippling-inferno-burn-burn-status-output",
     "interactionScope": "enemy-side",
@@ -61795,8 +61739,8 @@
   },
   {
     "assumptions": [
-      "Periodic status application is conditional on activation and target selection.",
-      "Enemy target overlap is not simulated or guaranteed.",
+      "Periodic status application is conditional on activation and per-enemy application success.",
+      "Enemy identities that successfully receive the status are not individually enumerated.",
       "Uptime is not treated as guaranteed.",
       "The target selector is preserved as enemy-side metadata rather than assigning a friendly recipient."
     ],
@@ -61816,12 +61760,12 @@
       "Status supplier effect: crippling-inferno-burn.",
       "Activation group: crippling-inferno-each-round-shared-activation.",
       "Independent per-target checks: 3.",
-      "Activation, target selection, target overlap, and uptime remain conditional.",
-      "Final damage is not calculated."
+      "Application success on each independently checked enemy, successful-application uptime, first-tick timing, refresh behavior, stacking, mitigation, and final periodic damage are unresolved.",
+      "Final periodic damage is not calculated."
     ],
     "exactResultKnown": false,
-    "exactResultUnknownReason": "Exact final periodic damage cannot be calculated because target overlap, uptime, stacking, mitigation, and final formulas are unresolved.",
-    "explanation": "Caraxes's Crippling Inferno can apply Burn. Burn deals periodic Fire Damage each round at Damage Rate 20% for 2 rounds. Activation, target selection, target overlap, and uptime remain conditional; final damage is not calculated.",
+    "exactResultUnknownReason": "Exact final periodic damage cannot be calculated because application success on each independently checked enemy, successful-application uptime, first-tick timing, refresh behavior, stacking, mitigation, and final formulas are unresolved.",
+    "explanation": "Caraxes's Crippling Inferno can apply Burn. Burn deals periodic Fire Damage each round at Damage Rate 20% for 2 rounds. Application success on each independently checked enemy, successful-application uptime, first-tick timing, refresh behavior, stacking, mitigation, and final damage are not calculated.",
     "id": "periodic-status-damage-caraxes-crippling-inferno-crippling-inferno-burn-burn-status-output",
     "interactionScope": "enemy-side",
     "matchedOutputCapabilityIds": [],
@@ -61870,7 +61814,7 @@
     "title": "Burn periodic Fire Damage",
     "unresolvedQuestions": [
       "Burn first-tick timing, refresh behavior, stacking, and overlapping-source behavior remain unresolved.",
-      "Exact final damage cannot be calculated because target overlap, uptime, stacking, mitigation, and final formulas are unresolved."
+      "Exact final damage cannot be calculated because application success, uptime, stacking, mitigation, and final formulas are unresolved."
     ]
   },
   {
@@ -61893,7 +61837,7 @@
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final amplified damage cannot be calculated because stacking and final combat formulas are not fully verified.",
-    "explanation": "Kalspire is eligible for Syrax's Tactical Inferno Tactical Damage support. Qualifying outputs: Tactical Strike: Tactical Damage, Tactical Assault: Panic periodic Tactical Damage. Target selection follows the verified flank preference and remains selection-dependent.",
+    "explanation": "Kalspire is resolved by the verified flank preference for Syrax's Tactical Inferno Tactical Damage support. Qualifying outputs: Tactical Strike: Tactical Damage, Tactical Assault: Panic periodic Tactical Damage.",
     "id": "outgoing-effect-amplification-syrax-tactical-inferno-tactical-inferno-tactical-tactical-damage-dealt-modifier-kalspire",
     "interactionScope": "cross-dragon",
     "matchedOutputCapabilityIds": [
@@ -62936,7 +62880,7 @@
   },
   {
     "assumptions": [
-      "Status application remains chance-based or conditional when activation, target choice, or uptime is unresolved."
+      "Status application remains chance-based or conditional when activation or uptime is unresolved."
     ],
     "channel": "status",
     "confidence": "confirmed",
@@ -62954,7 +62898,7 @@
       "Activation scope is unresolved between one shared roll and independent per-target rolls."
     ],
     "exactResultKnown": false,
-    "exactResultUnknownReason": "Exact status target outcome cannot be calculated because activation, target identity, and uptime are unresolved.",
+    "exactResultUnknownReason": "Exact status application cannot be calculated because application success, uptime, refresh behavior, and first-tick timing are unresolved.",
     "explanation": "Each round, Fiery Bonds checks 3 enemies in any lane. The Taunt application chance is 25% for a normal target and 50% for that same target while it has Burn, a target-specific 2x increase. Taunt lasts 2 rounds.",
     "id": "enemy-status-output-vhagar-fiery-bonds-fiery-bonds-taunt-taunt-status-output",
     "interactionScope": "enemy-side",
@@ -62984,7 +62928,7 @@
   },
   {
     "assumptions": [
-      "Status application remains chance-based or conditional when activation, target choice, or uptime is unresolved."
+      "Status application remains chance-based or conditional when activation or uptime is unresolved."
     ],
     "channel": "status",
     "confidence": "confirmed",
@@ -63003,7 +62947,7 @@
       "Eclipse Cover effect eclipse-cover-weakened uses selected-target group eclipse-cover-shared-roll."
     ],
     "exactResultKnown": false,
-    "exactResultUnknownReason": "Exact status target outcome cannot be calculated because activation, target identity, and uptime are unresolved.",
+    "exactResultUnknownReason": "Exact status application cannot be calculated because application success, uptime, refresh behavior, and first-tick timing are unresolved.",
     "explanation": "At effective Habit Level 5, Eclipse Cover has a 35% chance on rounds 3 through 7 to apply Weakened to one enemy in any lane. Weakened lasts 2 rounds.",
     "id": "enemy-status-output-vhagar-eclipse-cover-eclipse-cover-weakened-weakened-status-output",
     "interactionScope": "enemy-side",
@@ -63055,7 +62999,7 @@
   },
   {
     "assumptions": [
-      "Status application remains chance-based or conditional when activation, target choice, or uptime is unresolved."
+      "Status application remains chance-based or conditional when activation or uptime is unresolved."
     ],
     "channel": "status",
     "confidence": "confirmed",
@@ -63073,7 +63017,7 @@
       "Target reference original-basic-attack-target: Use the target of the Basic Attack that triggered Tactical Strike."
     ],
     "exactResultKnown": false,
-    "exactResultUnknownReason": "Exact status target outcome cannot be calculated because activation, target identity, and uptime are unresolved.",
+    "exactResultUnknownReason": "Exact status application cannot be calculated because application success, uptime, refresh behavior, and first-tick timing are unresolved.",
     "explanation": "Tactical Strike has a 30% chance after each Basic Attack to apply Bleed to 2 enemies within adjacency. Bleed lasts 2 rounds.",
     "id": "enemy-status-output-kalspire-tactical-strike-tactical-strike-bleed-bleed-status-output",
     "interactionScope": "enemy-side",
@@ -63100,7 +63044,7 @@
   },
   {
     "assumptions": [
-      "Status application remains chance-based or conditional when activation, target choice, or uptime is unresolved."
+      "Status application remains chance-based or conditional when activation or uptime is unresolved."
     ],
     "channel": "status",
     "confidence": "confirmed",
@@ -63122,7 +63066,7 @@
       "Target reference not-original-basic-attack-target: Physical Damage target is distinct from the original Basic Attack target. References source effect tactical-strike-tactical-damage."
     ],
     "exactResultKnown": false,
-    "exactResultUnknownReason": "Exact status target outcome cannot be calculated because activation, target identity, and uptime are unresolved.",
+    "exactResultUnknownReason": "Exact status application cannot be calculated because application success, uptime, refresh behavior, and first-tick timing are unresolved.",
     "explanation": "At effective Habit Level 5, Tactical Assault has a 30% chance after each Basic Attack to apply Panic to 2 enemies within adjacency. Panic lasts 2 rounds.",
     "id": "enemy-status-output-kalspire-tactical-assault-tactical-assault-panic-panic-status-output",
     "interactionScope": "enemy-side",
@@ -63187,7 +63131,7 @@
       "First-Strike and Fire Damage support share the selected ally."
     ],
     "exactResultKnown": false,
-    "exactResultUnknownReason": "Exact status recipient and uptime are not calculated in formation analysis.",
+    "exactResultUnknownReason": "Exact status application cannot be calculated because application success and resulting uptime are unresolved.",
     "explanation": "Syrax's Blazing Fury can grant First-Strike to one eligible ally. Blazing Fury has a 20% chance each round to grant First-Strike to one ally in any lane. First-Strike lasts 2 rounds.",
     "id": "friendly-status-output-syrax-blazing-fury-blazing-fury-first-strike-first-strike-status-output-kalspire-syrax-vhagar",
     "interactionScope": "targeting-fact",
@@ -66246,8 +66190,8 @@
   },
   {
     "assumptions": [
-      "Periodic status application is conditional on activation and target selection.",
-      "Enemy target overlap is not simulated or guaranteed.",
+      "Periodic status application is conditional on activation and per-enemy application success.",
+      "Enemy identities that successfully receive the status are not individually enumerated.",
       "Uptime is not treated as guaranteed.",
       "The target selector is preserved as enemy-side metadata rather than assigning a friendly recipient."
     ],
@@ -66269,12 +66213,12 @@
       "Per-target check chance: 30%.",
       "Checks are independent; chances are not combined into one roll.",
       "Bleed checks are separate for each target.",
-      "Activation, target selection, target overlap, and uptime remain conditional.",
-      "Final damage is not calculated."
+      "Application success on each independently checked enemy, successful-application uptime, first-tick timing, refresh behavior, stacking, mitigation, and final periodic damage are unresolved.",
+      "Final periodic damage is not calculated."
     ],
     "exactResultKnown": false,
-    "exactResultUnknownReason": "Exact final periodic damage cannot be calculated because target overlap, uptime, stacking, mitigation, and final formulas are unresolved.",
-    "explanation": "Kalspire's Tactical Strike can apply Bleed. Bleed deals periodic Physical Damage each round at Damage Rate 20% for 2 rounds. Activation, target selection, target overlap, and uptime remain conditional; final damage is not calculated.",
+    "exactResultUnknownReason": "Exact final periodic damage cannot be calculated because application success on each independently checked enemy, successful-application uptime, first-tick timing, refresh behavior, stacking, mitigation, and final formulas are unresolved.",
+    "explanation": "Kalspire's Tactical Strike can apply Bleed. Bleed deals periodic Physical Damage each round at Damage Rate 20% for 2 rounds. Application success on each independently checked enemy, successful-application uptime, first-tick timing, refresh behavior, stacking, mitigation, and final damage are not calculated.",
     "id": "periodic-status-damage-kalspire-tactical-strike-tactical-strike-bleed-bleed-status-output",
     "interactionScope": "enemy-side",
     "matchedOutputCapabilityIds": [],
@@ -66298,13 +66242,13 @@
     "title": "Bleed periodic Physical Damage",
     "unresolvedQuestions": [
       "Bleed first-tick timing, refresh behavior, stacking, and overlapping-source behavior remain unresolved.",
-      "Exact final damage cannot be calculated because target overlap, uptime, stacking, mitigation, and final formulas are unresolved."
+      "Exact final damage cannot be calculated because application success, uptime, stacking, mitigation, and final formulas are unresolved."
     ]
   },
   {
     "assumptions": [
-      "Periodic status application is conditional on activation and target selection.",
-      "Enemy target overlap is not simulated or guaranteed.",
+      "Periodic status application is conditional on activation and per-enemy application success.",
+      "Enemy identities that successfully receive the status are not individually enumerated.",
       "Uptime is not treated as guaranteed.",
       "The target selector is preserved as enemy-side metadata rather than assigning a friendly recipient."
     ],
@@ -66329,12 +66273,12 @@
       "Per-target check chance: 30% at effective Habit Level 5.",
       "Checks are independent; chances are not combined into one roll.",
       "Panic checks are separate for each target.",
-      "Activation, target selection, target overlap, and uptime remain conditional.",
-      "Final damage is not calculated."
+      "Application success on each independently checked enemy, successful-application uptime, first-tick timing, refresh behavior, stacking, mitigation, and final periodic damage are unresolved.",
+      "Final periodic damage is not calculated."
     ],
     "exactResultKnown": false,
-    "exactResultUnknownReason": "Exact final periodic damage cannot be calculated because target overlap, uptime, stacking, mitigation, and final formulas are unresolved.",
-    "explanation": "Kalspire's Tactical Assault can apply Panic. Panic deals periodic Tactical Damage each round at Damage Rate 20% for 2 rounds. Activation, target selection, target overlap, and uptime remain conditional; final damage is not calculated.",
+    "exactResultUnknownReason": "Exact final periodic damage cannot be calculated because application success on each independently checked enemy, successful-application uptime, first-tick timing, refresh behavior, stacking, mitigation, and final formulas are unresolved.",
+    "explanation": "Kalspire's Tactical Assault can apply Panic. Panic deals periodic Tactical Damage each round at Damage Rate 20% for 2 rounds. Application success on each independently checked enemy, successful-application uptime, first-tick timing, refresh behavior, stacking, mitigation, and final damage are not calculated.",
     "id": "periodic-status-damage-kalspire-tactical-assault-tactical-assault-panic-panic-status-output",
     "interactionScope": "enemy-side",
     "matchedOutputCapabilityIds": [],
@@ -66383,7 +66327,7 @@
     "title": "Panic periodic Tactical Damage",
     "unresolvedQuestions": [
       "Panic first-tick timing, refresh behavior, stacking, and overlapping-source behavior remain unresolved.",
-      "Exact final damage cannot be calculated because target overlap, uptime, stacking, mitigation, and final formulas are unresolved."
+      "Exact final damage cannot be calculated because application success, uptime, stacking, mitigation, and final formulas are unresolved."
     ]
   },
   {
@@ -67512,7 +67456,7 @@
   },
   {
     "assumptions": [
-      "Status application remains chance-based or conditional when activation, target choice, or uptime is unresolved."
+      "Status application remains chance-based or conditional when activation or uptime is unresolved."
     ],
     "channel": "status",
     "confidence": "confirmed",
@@ -67530,7 +67474,7 @@
       "Activation scope is unresolved between one shared roll and independent per-target rolls."
     ],
     "exactResultKnown": false,
-    "exactResultUnknownReason": "Exact status target outcome cannot be calculated because activation, target identity, and uptime are unresolved.",
+    "exactResultUnknownReason": "Exact status application cannot be calculated because application success, uptime, refresh behavior, and first-tick timing are unresolved.",
     "explanation": "Each round, Fiery Bonds checks 3 enemies in any lane. The Taunt application chance is 25% for a normal target and 50% for that same target while it has Burn, a target-specific 2x increase. Taunt lasts 2 rounds.",
     "id": "enemy-status-output-vhagar-fiery-bonds-fiery-bonds-taunt-taunt-status-output",
     "interactionScope": "enemy-side",
@@ -67560,7 +67504,7 @@
   },
   {
     "assumptions": [
-      "Status application remains chance-based or conditional when activation, target choice, or uptime is unresolved."
+      "Status application remains chance-based or conditional when activation or uptime is unresolved."
     ],
     "channel": "status",
     "confidence": "confirmed",
@@ -67579,7 +67523,7 @@
       "Eclipse Cover effect eclipse-cover-weakened uses selected-target group eclipse-cover-shared-roll."
     ],
     "exactResultKnown": false,
-    "exactResultUnknownReason": "Exact status target outcome cannot be calculated because activation, target identity, and uptime are unresolved.",
+    "exactResultUnknownReason": "Exact status application cannot be calculated because application success, uptime, refresh behavior, and first-tick timing are unresolved.",
     "explanation": "At effective Habit Level 5, Eclipse Cover has a 35% chance on rounds 3 through 7 to apply Weakened to one enemy in any lane. Weakened lasts 2 rounds.",
     "id": "enemy-status-output-vhagar-eclipse-cover-eclipse-cover-weakened-weakened-status-output",
     "interactionScope": "enemy-side",
