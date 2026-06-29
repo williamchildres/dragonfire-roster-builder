@@ -20388,7 +20388,7 @@
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Vulnerable application remains conditional because current Prey existence and identity, whether the Prey received Recovery during the previous round, which known activation-chance branch applies, application success, and Vulnerable uptime or refresh behavior remain unresolved.",
-    "explanation": "Vulnerable application remains conditional because current Prey existence and identity, whether the Prey received Recovery during the previous round, which known activation-chance branch applies, application success, and Vulnerable uptime or refresh behavior remain unresolved.",
+    "explanation": "At effective Habit Level 5, Baited Kill has a 50% chance each round to apply Vulnerable to the current marked target in any lane. ",
     "id": "enemy-status-output-sheepstealer-baited-kill-baited-kill-vulnerable-effect-vulnerable-status-output",
     "interactionScope": "enemy-side",
     "matchedOutputCapabilityIds": [],
@@ -20621,7 +20621,7 @@
   },
   {
     "assumptions": [
-      "Self-targeting resolves the recipient separately from activation success and uptime."
+      "The self recipient is resolved separately from the persistent enemy condition reference."
     ],
     "channel": "status",
     "confidence": "confirmed",
@@ -20636,7 +20636,6 @@
       "Duration: until end of the current round.",
       "Status source: Evade.",
       "Supplier effective Habit Level: 5",
-      "Duration: until end of current round.",
       "Persistent condition reference: sheepstealer-current-prey.",
       "Runtime condition: Current Prey is above 50% Troop Capacity.",
       "Evade application is conditional."
@@ -23405,7 +23404,7 @@
       "Which qualifying negative effect is removed is unresolved."
     ],
     "exactResultKnown": false,
-    "exactResultUnknownReason": "Exact self status removal cannot be calculated because current Prey existence and identity, above-50% threshold applicability, qualifying self negative-effect state, and 50% activation chance at effective Habit Level 1 are unresolved; activation success and removed-effect identity remain unresolved.",
+    "exactResultUnknownReason": "Exact self status removal cannot be calculated because current Prey existence and identity, above-50% threshold applicability, qualifying self negative-effect state, and activation success at the known 50% chance are unresolved; removed-effect identity remains unresolved.",
     "explanation": "Sheepstealer's Baited Kill can remove a qualifying negative effect from Sheepstealer.",
     "id": "self-status-removal-sheepstealer-baited-kill-baited-kill-cleanse-effect",
     "interactionScope": "internal",
@@ -23478,7 +23477,7 @@
       "Shared activation group: unyielding-resolve-start-round-shared-activation."
     ],
     "exactResultKnown": false,
-    "exactResultUnknownReason": "Exact self status removal cannot be calculated because current Prey existence and identity, above-50% threshold applicability, qualifying self negative-effect state, and 50% activation chance at effective Habit Level 1 are unresolved; activation success and removed-effect identity remain unresolved.",
+    "exactResultUnknownReason": "Exact self status removal cannot be calculated because current Prey existence and identity, above-50% threshold applicability, qualifying self negative-effect state, and activation success at the known 50% chance are unresolved; removed-effect identity remains unresolved.",
     "explanation": "Vermax's Unyielding Resolve can remove a qualifying negative effect from Vermax.",
     "id": "self-status-removal-vermax-unyielding-resolve-unyielding-resolve-remove-weakened",
     "interactionScope": "internal",
@@ -25320,7 +25319,7 @@
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Vulnerable application remains conditional because current Prey existence and identity, whether the Prey received Recovery during the previous round, which known activation-chance branch applies, application success, and Vulnerable uptime or refresh behavior remain unresolved.",
-    "explanation": "Vulnerable application remains conditional because current Prey existence and identity, whether the Prey received Recovery during the previous round, which known activation-chance branch applies, application success, and Vulnerable uptime or refresh behavior remain unresolved.",
+    "explanation": "At effective Habit Level 5, Baited Kill has a 50% chance each round to apply Vulnerable to the current marked target in any lane. ",
     "id": "enemy-status-output-sheepstealer-baited-kill-baited-kill-vulnerable-effect-vulnerable-status-output",
     "interactionScope": "enemy-side",
     "matchedOutputCapabilityIds": [],
@@ -25577,7 +25576,7 @@
   },
   {
     "assumptions": [
-      "Self-targeting resolves the recipient separately from activation success and uptime."
+      "The self recipient is resolved separately from the persistent enemy condition reference."
     ],
     "channel": "status",
     "confidence": "confirmed",
@@ -25592,7 +25591,6 @@
       "Duration: until end of the current round.",
       "Status source: Evade.",
       "Supplier effective Habit Level: 5",
-      "Duration: until end of current round.",
       "Persistent condition reference: sheepstealer-current-prey.",
       "Runtime condition: Current Prey is above 50% Troop Capacity.",
       "Evade application is conditional."
@@ -28466,7 +28464,7 @@
       "Which qualifying negative effect is removed is unresolved."
     ],
     "exactResultKnown": false,
-    "exactResultUnknownReason": "Exact self status removal cannot be calculated because current Prey existence and identity, above-50% threshold applicability, qualifying self negative-effect state, and 50% activation chance at effective Habit Level 1 are unresolved; activation success and removed-effect identity remain unresolved.",
+    "exactResultUnknownReason": "Exact self status removal cannot be calculated because current Prey existence and identity, above-50% threshold applicability, qualifying self negative-effect state, and activation success at the known 50% chance are unresolved; removed-effect identity remains unresolved.",
     "explanation": "Sheepstealer's Baited Kill can remove a qualifying negative effect from Sheepstealer.",
     "id": "self-status-removal-sheepstealer-baited-kill-baited-kill-cleanse-effect",
     "interactionScope": "internal",
@@ -33172,7 +33170,7 @@
       "Shared activation group: unyielding-resolve-start-round-shared-activation."
     ],
     "exactResultKnown": false,
-    "exactResultUnknownReason": "Exact self status removal cannot be calculated because current Prey existence and identity, above-50% threshold applicability, qualifying self negative-effect state, and 50% activation chance at effective Habit Level 1 are unresolved; activation success and removed-effect identity remain unresolved.",
+    "exactResultUnknownReason": "Exact self status removal cannot be calculated because current Prey existence and identity, above-50% threshold applicability, qualifying self negative-effect state, and activation success at the known 50% chance are unresolved; removed-effect identity remains unresolved.",
     "explanation": "Vermax's Unyielding Resolve can remove a qualifying negative effect from Vermax.",
     "id": "self-status-removal-vermax-unyielding-resolve-unyielding-resolve-remove-weakened",
     "interactionScope": "internal",
@@ -35017,7 +35015,7 @@
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Vulnerable application remains conditional because current Prey existence and identity, whether the Prey received Recovery during the previous round, which known activation-chance branch applies, application success, and Vulnerable uptime or refresh behavior remain unresolved.",
-    "explanation": "Vulnerable application remains conditional because current Prey existence and identity, whether the Prey received Recovery during the previous round, which known activation-chance branch applies, application success, and Vulnerable uptime or refresh behavior remain unresolved.",
+    "explanation": "At effective Habit Level 5, Baited Kill has a 50% chance each round to apply Vulnerable to the current marked target in any lane. ",
     "id": "enemy-status-output-sheepstealer-baited-kill-baited-kill-vulnerable-effect-vulnerable-status-output",
     "interactionScope": "enemy-side",
     "matchedOutputCapabilityIds": [],
@@ -35250,7 +35248,7 @@
   },
   {
     "assumptions": [
-      "Self-targeting resolves the recipient separately from activation success and uptime."
+      "The self recipient is resolved separately from the persistent enemy condition reference."
     ],
     "channel": "status",
     "confidence": "confirmed",
@@ -35265,7 +35263,6 @@
       "Duration: until end of the current round.",
       "Status source: Evade.",
       "Supplier effective Habit Level: 5",
-      "Duration: until end of current round.",
       "Persistent condition reference: sheepstealer-current-prey.",
       "Runtime condition: Current Prey is above 50% Troop Capacity.",
       "Evade application is conditional."
@@ -38315,7 +38312,7 @@
       "Which qualifying negative effect is removed is unresolved."
     ],
     "exactResultKnown": false,
-    "exactResultUnknownReason": "Exact self status removal cannot be calculated because current Prey existence and identity, above-50% threshold applicability, qualifying self negative-effect state, and 50% activation chance at effective Habit Level 1 are unresolved; activation success and removed-effect identity remain unresolved.",
+    "exactResultUnknownReason": "Exact self status removal cannot be calculated because current Prey existence and identity, above-50% threshold applicability, qualifying self negative-effect state, and activation success at the known 50% chance are unresolved; removed-effect identity remains unresolved.",
     "explanation": "Sheepstealer's Baited Kill can remove a qualifying negative effect from Sheepstealer.",
     "id": "self-status-removal-sheepstealer-baited-kill-baited-kill-cleanse-effect",
     "interactionScope": "internal",
@@ -39506,7 +39503,7 @@
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Vulnerable application remains conditional because current Prey existence and identity, whether the Prey received Recovery during the previous round, which known activation-chance branch applies, application success, and Vulnerable uptime or refresh behavior remain unresolved.",
-    "explanation": "Vulnerable application remains conditional because current Prey existence and identity, whether the Prey received Recovery during the previous round, which known activation-chance branch applies, application success, and Vulnerable uptime or refresh behavior remain unresolved.",
+    "explanation": "At effective Habit Level 5, Baited Kill has a 50% chance each round to apply Vulnerable to the current marked target in any lane. ",
     "id": "enemy-status-output-sheepstealer-baited-kill-baited-kill-vulnerable-effect-vulnerable-status-output",
     "interactionScope": "enemy-side",
     "matchedOutputCapabilityIds": [],
@@ -39601,7 +39598,7 @@
   },
   {
     "assumptions": [
-      "Self-targeting resolves the recipient separately from activation success and uptime."
+      "The self recipient is resolved separately from the persistent enemy condition reference."
     ],
     "channel": "status",
     "confidence": "confirmed",
@@ -39616,7 +39613,6 @@
       "Duration: until end of the current round.",
       "Status source: Evade.",
       "Supplier effective Habit Level: 5",
-      "Duration: until end of current round.",
       "Persistent condition reference: sheepstealer-current-prey.",
       "Runtime condition: Current Prey is above 50% Troop Capacity.",
       "Evade application is conditional."
@@ -42770,7 +42766,7 @@
       "Which qualifying negative effect is removed is unresolved."
     ],
     "exactResultKnown": false,
-    "exactResultUnknownReason": "Exact self status removal cannot be calculated because current Prey existence and identity, above-50% threshold applicability, qualifying self negative-effect state, and 50% activation chance at effective Habit Level 1 are unresolved; activation success and removed-effect identity remain unresolved.",
+    "exactResultUnknownReason": "Exact self status removal cannot be calculated because current Prey existence and identity, above-50% threshold applicability, qualifying self negative-effect state, and activation success at the known 50% chance are unresolved; removed-effect identity remains unresolved.",
     "explanation": "Sheepstealer's Baited Kill can remove a qualifying negative effect from Sheepstealer.",
     "id": "self-status-removal-sheepstealer-baited-kill-baited-kill-cleanse-effect",
     "interactionScope": "internal",
@@ -44303,7 +44299,7 @@
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Vulnerable application remains conditional because current Prey existence and identity, whether the Prey received Recovery during the previous round, which known activation-chance branch applies, application success, and Vulnerable uptime or refresh behavior remain unresolved.",
-    "explanation": "Vulnerable application remains conditional because current Prey existence and identity, whether the Prey received Recovery during the previous round, which known activation-chance branch applies, application success, and Vulnerable uptime or refresh behavior remain unresolved.",
+    "explanation": "At effective Habit Level 5, Baited Kill has a 50% chance each round to apply Vulnerable to the current marked target in any lane. ",
     "id": "enemy-status-output-sheepstealer-baited-kill-baited-kill-vulnerable-effect-vulnerable-status-output",
     "interactionScope": "enemy-side",
     "matchedOutputCapabilityIds": [],
@@ -44590,7 +44586,7 @@
   },
   {
     "assumptions": [
-      "Self-targeting resolves the recipient separately from activation success and uptime."
+      "The self recipient is resolved separately from the persistent enemy condition reference."
     ],
     "channel": "status",
     "confidence": "confirmed",
@@ -44605,7 +44601,6 @@
       "Duration: until end of the current round.",
       "Status source: Evade.",
       "Supplier effective Habit Level: 5",
-      "Duration: until end of current round.",
       "Persistent condition reference: sheepstealer-current-prey.",
       "Runtime condition: Current Prey is above 50% Troop Capacity.",
       "Evade application is conditional."
@@ -47586,7 +47581,7 @@
       "Which qualifying negative effect is removed is unresolved."
     ],
     "exactResultKnown": false,
-    "exactResultUnknownReason": "Exact self status removal cannot be calculated because current Prey existence and identity, above-50% threshold applicability, qualifying self negative-effect state, and 50% activation chance at effective Habit Level 1 are unresolved; activation success and removed-effect identity remain unresolved.",
+    "exactResultUnknownReason": "Exact self status removal cannot be calculated because current Prey existence and identity, above-50% threshold applicability, qualifying self negative-effect state, and activation success at the known 50% chance are unresolved; removed-effect identity remains unresolved.",
     "explanation": "Sheepstealer's Baited Kill can remove a qualifying negative effect from Sheepstealer.",
     "id": "self-status-removal-sheepstealer-baited-kill-baited-kill-cleanse-effect",
     "interactionScope": "internal",
@@ -52272,7 +52267,7 @@
       "Shared activation group: unyielding-resolve-start-round-shared-activation."
     ],
     "exactResultKnown": false,
-    "exactResultUnknownReason": "Exact self status removal cannot be calculated because current Prey existence and identity, above-50% threshold applicability, qualifying self negative-effect state, and 50% activation chance at effective Habit Level 1 are unresolved; activation success and removed-effect identity remain unresolved.",
+    "exactResultUnknownReason": "Exact self status removal cannot be calculated because current Prey existence and identity, above-50% threshold applicability, qualifying self negative-effect state, and activation success at the known 50% chance are unresolved; removed-effect identity remains unresolved.",
     "explanation": "Vermax's Unyielding Resolve can remove a qualifying negative effect from Vermax.",
     "id": "self-status-removal-vermax-unyielding-resolve-unyielding-resolve-remove-weakened",
     "interactionScope": "internal",
@@ -53062,7 +53057,7 @@
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Vulnerable application remains conditional because current Prey existence and identity, whether the Prey received Recovery during the previous round, which known activation-chance branch applies, application success, and Vulnerable uptime or refresh behavior remain unresolved.",
-    "explanation": "Vulnerable application remains conditional because current Prey existence and identity, whether the Prey received Recovery during the previous round, which known activation-chance branch applies, application success, and Vulnerable uptime or refresh behavior remain unresolved.",
+    "explanation": "At effective Habit Level 5, Baited Kill has a 50% chance each round to apply Vulnerable to the current marked target in any lane. ",
     "id": "enemy-status-output-sheepstealer-baited-kill-baited-kill-vulnerable-effect-vulnerable-status-output",
     "interactionScope": "enemy-side",
     "matchedOutputCapabilityIds": [],
@@ -53394,7 +53389,7 @@
   },
   {
     "assumptions": [
-      "Self-targeting resolves the recipient separately from activation success and uptime."
+      "The self recipient is resolved separately from the persistent enemy condition reference."
     ],
     "channel": "status",
     "confidence": "confirmed",
@@ -53409,7 +53404,6 @@
       "Duration: until end of the current round.",
       "Status source: Evade.",
       "Supplier effective Habit Level: 5",
-      "Duration: until end of current round.",
       "Persistent condition reference: sheepstealer-current-prey.",
       "Runtime condition: Current Prey is above 50% Troop Capacity.",
       "Evade application is conditional."
@@ -56676,7 +56670,7 @@
       "Which qualifying negative effect is removed is unresolved."
     ],
     "exactResultKnown": false,
-    "exactResultUnknownReason": "Exact self status removal cannot be calculated because current Prey existence and identity, above-50% threshold applicability, qualifying self negative-effect state, and 50% activation chance at effective Habit Level 1 are unresolved; activation success and removed-effect identity remain unresolved.",
+    "exactResultUnknownReason": "Exact self status removal cannot be calculated because current Prey existence and identity, above-50% threshold applicability, qualifying self negative-effect state, and activation success at the known 50% chance are unresolved; removed-effect identity remains unresolved.",
     "explanation": "Sheepstealer's Baited Kill can remove a qualifying negative effect from Sheepstealer.",
     "id": "self-status-removal-sheepstealer-baited-kill-baited-kill-cleanse-effect",
     "interactionScope": "internal",

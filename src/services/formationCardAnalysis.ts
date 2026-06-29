@@ -1045,7 +1045,7 @@ function summarizeTrace(
     return [formatPresentationText(trace.explanation)];
   }
   if (trace.modifierRole === 'enemy-debuff' || trace.matchKind === 'enemy-mitigation-reduction' || trace.matchKind === 'enemy-damage-dealt-reduction') {
-    return [enemyFacingSummary(trace)];
+    return [enemyFacingSummary(trace, source)];
   }
   if (trace.channel === 'stat') {
     return [[
@@ -3322,7 +3322,7 @@ function formatStatDetail(detail: string): string | null {
   return null;
 }
 
-function enemyFacingSummary(trace: SynergyTrace): string {
+function enemyFacingSummary(trace: SynergyTrace, source: Dragon | null = null): string {
   if (trace.matchKind === 'enemy-damage-dealt-reduction') {
     if (isAllMatchingEnemyCondition(trace)) {
       const amount = modifierAmountFromTrace(trace) ?? 'an unresolved amount';
@@ -3350,8 +3350,9 @@ function enemyFacingSummary(trace: SynergyTrace): string {
     const uncertainty = enemyFacingUncertainty(trace);
     if (trace.channel === 'stat' && stat) {
       const signedAmount = amount ? `-${amount}` : 'reduction';
+      const initiativeSource = source?.name ?? 'the source dragon';
       return [
-        `${baseReduction ? 'Base ' : ''}Enemy ${stat} ${signedAmount} on ${targetPhrase}.`,
+        `${baseReduction ? 'Base ' : ''}Enemy ${stat} ${signedAmount} on ${targetPhrase}; final reduction scales with ${initiativeSource}'s Initiative and remains unresolved.`,
         duration,
         uncertainty,
       ].filter(Boolean).join(' ');
@@ -3490,7 +3491,8 @@ function enemyReductionTargetPhrase(trace: SynergyTrace): string {
     return 'an enemy candidate';
   }
   const count = Number(countMatch[1]);
-  return `${count} enemy target${count === 1 ? '' : 's'}`;
+  const adjacency = /adjacent|within-adjacency/i.test(summary) ? 'adjacent ' : '';
+  return `${count} ${adjacency}enemy target${count === 1 ? '' : 's'}`;
 }
 
 function enemyReductionIsBase(trace: SynergyTrace, stat: string): boolean {
