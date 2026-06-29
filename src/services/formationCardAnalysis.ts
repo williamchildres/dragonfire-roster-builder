@@ -1884,11 +1884,14 @@ function projectedInteractionState(trace: SynergyTrace, previewEnabled = false):
     return state;
   }
   if (trace.targetSelectionGroup?.selectionUncertain) {
+    if (trace.targetSelectionGroup.selection === 'highest-stat' && highestStatSelectionResolved(trace.targetSelectionGroup)) {
+      return state;
+    }
     return 'conditional';
   }
   if (trace.matchKind === 'stat-scaling-support') {
     const text = [trace.explanation, ...trace.matchedFacts, ...trace.effects].join(' ');
-    if (/fallback|preferred|candidate|selected recipient is unresolved|recipient selection/i.test(text)) {
+    if (/fallback|preferred|selected recipient is unresolved|recipient selection/i.test(text)) {
       return 'conditional';
     }
   }
@@ -1908,6 +1911,22 @@ function projectedInteractionState(trace: SynergyTrace, previewEnabled = false):
     }
   }
   return state;
+}
+
+function highestStatSelectionResolved(group: NonNullable<SynergyTrace['targetSelectionGroup']>): boolean {
+  if (group.selection !== 'highest-stat' || !group.candidateStats || group.candidateStats.length === 0) {
+    return false;
+  }
+  const values = group.candidateStats.map((candidate) => candidate.value);
+  if (values.some((value) => value === null)) {
+    return false;
+  }
+  const numericValues = values.filter((value): value is number => value !== null);
+  if (numericValues.length === 0) {
+    return false;
+  }
+  const highest = Math.max(...numericValues);
+  return numericValues.filter((value) => value === highest).length === 1;
 }
 
 function hasFailedProgression(requirements: RequirementTrace[]): boolean {

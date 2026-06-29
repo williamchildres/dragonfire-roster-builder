@@ -2193,7 +2193,7 @@
           "Shared activation group: crippling-inferno-each-round-shared-activation."
         ],
         "exactResultKnown": false,
-        "exactResultUnknownReason": "Exact status application cannot be calculated because application success, uptime, refresh behavior, and first-tick timing are unresolved.",
+        "exactResultUnknownReason": "Exact status application cannot be calculated because application success, uptime, and refresh behavior are unresolved.",
         "explanation": "At effective Habit Level 5, Crippling Inferno has a 20% chance each round to apply Slow to 3 enemies in any lane. Slow lasts 2 rounds.",
         "id": "enemy-status-output-caraxes-crippling-inferno-crippling-inferno-slow-slow-status-output",
         "interactionScope": "enemy-side",
@@ -2262,7 +2262,7 @@
           "Shared activation group: crippling-inferno-each-round-shared-activation."
         ],
         "exactResultKnown": false,
-        "exactResultUnknownReason": "Exact status application cannot be calculated because application success, uptime, refresh behavior, and first-tick timing are unresolved.",
+        "exactResultUnknownReason": "Exact status application cannot be calculated because application success, uptime, and refresh behavior are unresolved.",
         "explanation": "At effective Habit Level 5, Crippling Inferno has a 20% chance each round to apply Burn to 3 enemies in any lane. Burn lasts 2 rounds.",
         "id": "enemy-status-output-caraxes-crippling-inferno-crippling-inferno-burn-burn-status-output",
         "interactionScope": "enemy-side",
@@ -8057,7 +8057,7 @@
           "Shared activation group: crippling-inferno-each-round-shared-activation."
         ],
         "exactResultKnown": false,
-        "exactResultUnknownReason": "Exact status application cannot be calculated because application success, uptime, refresh behavior, and first-tick timing are unresolved.",
+        "exactResultUnknownReason": "Exact status application cannot be calculated because application success, uptime, and refresh behavior are unresolved.",
         "explanation": "At effective Habit Level 5, Crippling Inferno has a 20% chance each round to apply Slow to 3 enemies in any lane. Slow lasts 2 rounds.",
         "id": "enemy-status-output-caraxes-crippling-inferno-crippling-inferno-slow-slow-status-output",
         "interactionScope": "enemy-side",
@@ -8126,7 +8126,7 @@
           "Shared activation group: crippling-inferno-each-round-shared-activation."
         ],
         "exactResultKnown": false,
-        "exactResultUnknownReason": "Exact status application cannot be calculated because application success, uptime, refresh behavior, and first-tick timing are unresolved.",
+        "exactResultUnknownReason": "Exact status application cannot be calculated because application success, uptime, and refresh behavior are unresolved.",
         "explanation": "At effective Habit Level 5, Crippling Inferno has a 20% chance each round to apply Burn to 3 enemies in any lane. Burn lasts 2 rounds.",
         "id": "enemy-status-output-caraxes-crippling-inferno-crippling-inferno-burn-burn-status-output",
         "interactionScope": "enemy-side",
@@ -14097,7 +14097,7 @@
           "Shared activation group: crippling-inferno-each-round-shared-activation."
         ],
         "exactResultKnown": false,
-        "exactResultUnknownReason": "Exact status application cannot be calculated because application success, uptime, refresh behavior, and first-tick timing are unresolved.",
+        "exactResultUnknownReason": "Exact status application cannot be calculated because application success, uptime, and refresh behavior are unresolved.",
         "explanation": "At effective Habit Level 5, Crippling Inferno has a 20% chance each round to apply Slow to 3 enemies in any lane. Slow lasts 2 rounds.",
         "id": "enemy-status-output-caraxes-crippling-inferno-crippling-inferno-slow-slow-status-output",
         "interactionScope": "enemy-side",
@@ -14166,7 +14166,7 @@
           "Shared activation group: crippling-inferno-each-round-shared-activation."
         ],
         "exactResultKnown": false,
-        "exactResultUnknownReason": "Exact status application cannot be calculated because application success, uptime, refresh behavior, and first-tick timing are unresolved.",
+        "exactResultUnknownReason": "Exact status application cannot be calculated because application success, uptime, and refresh behavior are unresolved.",
         "explanation": "At effective Habit Level 5, Crippling Inferno has a 20% chance each round to apply Burn to 3 enemies in any lane. Burn lasts 2 rounds.",
         "id": "enemy-status-output-caraxes-crippling-inferno-crippling-inferno-burn-burn-status-output",
         "interactionScope": "enemy-side",
@@ -20082,7 +20082,7 @@
           "Shared activation group: crippling-inferno-each-round-shared-activation."
         ],
         "exactResultKnown": false,
-        "exactResultUnknownReason": "Exact status application cannot be calculated because application success, uptime, refresh behavior, and first-tick timing are unresolved.",
+        "exactResultUnknownReason": "Exact status application cannot be calculated because application success, uptime, and refresh behavior are unresolved.",
         "explanation": "At effective Habit Level 5, Crippling Inferno has a 20% chance each round to apply Slow to 3 enemies in any lane. Slow lasts 2 rounds.",
         "id": "enemy-status-output-caraxes-crippling-inferno-crippling-inferno-slow-slow-status-output",
         "interactionScope": "enemy-side",
@@ -20151,7 +20151,7 @@
           "Shared activation group: crippling-inferno-each-round-shared-activation."
         ],
         "exactResultKnown": false,
-        "exactResultUnknownReason": "Exact status application cannot be calculated because application success, uptime, refresh behavior, and first-tick timing are unresolved.",
+        "exactResultUnknownReason": "Exact status application cannot be calculated because application success, uptime, and refresh behavior are unresolved.",
         "explanation": "At effective Habit Level 5, Crippling Inferno has a 20% chance each round to apply Burn to 3 enemies in any lane. Burn lasts 2 rounds.",
         "id": "enemy-status-output-caraxes-crippling-inferno-crippling-inferno-burn-burn-status-output",
         "interactionScope": "enemy-side",
@@ -50073,7 +50073,7 @@
           "Shared activation group: crippling-inferno-each-round-shared-activation."
         ],
         "exactResultKnown": false,
-        "exactResultUnknownReason": "Exact status application cannot be calculated because application success, uptime, refresh behavior, and first-tick timing are unresolved.",
+        "exactResultUnknownReason": "Exact status application cannot be calculated because application success, uptime, and refresh behavior are unresolved.",
         "explanation": "At effective Habit Level 5, Crippling Inferno has a 20% chance each round to apply Slow to 3 enemies in any lane. Slow lasts 2 rounds.",
         "id": "enemy-status-output-caraxes-crippling-inferno-crippling-inferno-slow-slow-status-output",
         "interactionScope": "enemy-side",
@@ -50142,7 +50142,7 @@
           "Shared activation group: crippling-inferno-each-round-shared-activation."
         ],
         "exactResultKnown": false,
-        "exactResultUnknownReason": "Exact status application cannot be calculated because application success, uptime, refresh behavior, and first-tick timing are unresolved.",
+        "exactResultUnknownReason": "Exact status application cannot be calculated because application success, uptime, and refresh behavior are unresolved.",
         "explanation": "At effective Habit Level 5, Crippling Inferno has a 20% chance each round to apply Burn to 3 enemies in any lane. Burn lasts 2 rounds.",
         "id": "enemy-status-output-caraxes-crippling-inferno-crippling-inferno-burn-burn-status-output",
         "interactionScope": "enemy-side",
@@ -61136,7 +61136,7 @@
           "Shared activation group: crippling-inferno-each-round-shared-activation."
         ],
         "exactResultKnown": false,
-        "exactResultUnknownReason": "Exact status application cannot be calculated because application success, uptime, refresh behavior, and first-tick timing are unresolved.",
+        "exactResultUnknownReason": "Exact status application cannot be calculated because application success, uptime, and refresh behavior are unresolved.",
         "explanation": "At effective Habit Level 5, Crippling Inferno has a 20% chance each round to apply Slow to 3 enemies in any lane. Slow lasts 2 rounds.",
         "id": "enemy-status-output-caraxes-crippling-inferno-crippling-inferno-slow-slow-status-output",
         "interactionScope": "enemy-side",
@@ -61205,7 +61205,7 @@
           "Shared activation group: crippling-inferno-each-round-shared-activation."
         ],
         "exactResultKnown": false,
-        "exactResultUnknownReason": "Exact status application cannot be calculated because application success, uptime, refresh behavior, and first-tick timing are unresolved.",
+        "exactResultUnknownReason": "Exact status application cannot be calculated because application success, uptime, and refresh behavior are unresolved.",
         "explanation": "At effective Habit Level 5, Crippling Inferno has a 20% chance each round to apply Burn to 3 enemies in any lane. Burn lasts 2 rounds.",
         "id": "enemy-status-output-caraxes-crippling-inferno-crippling-inferno-burn-burn-status-output",
         "interactionScope": "enemy-side",
@@ -66665,7 +66665,7 @@
           "Shared activation group: crippling-inferno-each-round-shared-activation."
         ],
         "exactResultKnown": false,
-        "exactResultUnknownReason": "Exact status application cannot be calculated because application success, uptime, refresh behavior, and first-tick timing are unresolved.",
+        "exactResultUnknownReason": "Exact status application cannot be calculated because application success, uptime, and refresh behavior are unresolved.",
         "explanation": "At effective Habit Level 5, Crippling Inferno has a 20% chance each round to apply Slow to 3 enemies in any lane. Slow lasts 2 rounds.",
         "id": "enemy-status-output-caraxes-crippling-inferno-crippling-inferno-slow-slow-status-output",
         "interactionScope": "enemy-side",
@@ -66734,7 +66734,7 @@
           "Shared activation group: crippling-inferno-each-round-shared-activation."
         ],
         "exactResultKnown": false,
-        "exactResultUnknownReason": "Exact status application cannot be calculated because application success, uptime, refresh behavior, and first-tick timing are unresolved.",
+        "exactResultUnknownReason": "Exact status application cannot be calculated because application success, uptime, and refresh behavior are unresolved.",
         "explanation": "At effective Habit Level 5, Crippling Inferno has a 20% chance each round to apply Burn to 3 enemies in any lane. Burn lasts 2 rounds.",
         "id": "enemy-status-output-caraxes-crippling-inferno-crippling-inferno-burn-burn-status-output",
         "interactionScope": "enemy-side",
@@ -70416,7 +70416,7 @@
           "Activation scope is unresolved between one shared roll and independent per-target rolls."
         ],
         "exactResultKnown": false,
-        "exactResultUnknownReason": "Exact status application cannot be calculated because application success, uptime, refresh behavior, and first-tick timing are unresolved.",
+        "exactResultUnknownReason": "Exact status application cannot be calculated because application success, uptime, and refresh behavior are unresolved.",
         "explanation": "Each round, Fiery Bonds checks 3 enemies in any lane. The Taunt application chance is 25% for a normal target and 50% for that same target while it has Burn, a target-specific 2x increase. Taunt lasts 2 rounds.",
         "id": "enemy-status-output-vhagar-fiery-bonds-fiery-bonds-taunt-taunt-status-output",
         "interactionScope": "enemy-side",
@@ -70464,7 +70464,7 @@
           "Target reference original-basic-attack-target: Use the target of the Basic Attack that triggered Tactical Strike."
         ],
         "exactResultKnown": false,
-        "exactResultUnknownReason": "Exact status application cannot be calculated because application success, uptime, refresh behavior, and first-tick timing are unresolved.",
+        "exactResultUnknownReason": "Exact status application cannot be calculated because application success, uptime, and refresh behavior are unresolved.",
         "explanation": "Tactical Strike has a 30% chance after each Basic Attack to apply Bleed to 2 enemies within adjacency. Bleed lasts 2 rounds.",
         "id": "enemy-status-output-kalspire-tactical-strike-tactical-strike-bleed-bleed-status-output",
         "interactionScope": "enemy-side",
@@ -72284,7 +72284,7 @@
           "Activation scope is unresolved between one shared roll and independent per-target rolls."
         ],
         "exactResultKnown": false,
-        "exactResultUnknownReason": "Exact status application cannot be calculated because application success, uptime, refresh behavior, and first-tick timing are unresolved.",
+        "exactResultUnknownReason": "Exact status application cannot be calculated because application success, uptime, and refresh behavior are unresolved.",
         "explanation": "Each round, Fiery Bonds checks 3 enemies in any lane. The Taunt application chance is 25% for a normal target and 50% for that same target while it has Burn, a target-specific 2x increase. Taunt lasts 2 rounds.",
         "id": "enemy-status-output-vhagar-fiery-bonds-fiery-bonds-taunt-taunt-status-output",
         "interactionScope": "enemy-side",
@@ -72333,7 +72333,7 @@
           "Eclipse Cover effect eclipse-cover-weakened uses selected-target group eclipse-cover-shared-roll."
         ],
         "exactResultKnown": false,
-        "exactResultUnknownReason": "Exact status application cannot be calculated because application success, uptime, refresh behavior, and first-tick timing are unresolved.",
+        "exactResultUnknownReason": "Exact status application cannot be calculated because application success, uptime, and refresh behavior are unresolved.",
         "explanation": "At effective Habit Level 5, Eclipse Cover has a 35% chance on rounds 3 through 7 to apply Weakened to one enemy in any lane. Weakened lasts 2 rounds.",
         "id": "enemy-status-output-vhagar-eclipse-cover-eclipse-cover-weakened-weakened-status-output",
         "interactionScope": "enemy-side",
@@ -72403,7 +72403,7 @@
           "Target reference original-basic-attack-target: Use the target of the Basic Attack that triggered Tactical Strike."
         ],
         "exactResultKnown": false,
-        "exactResultUnknownReason": "Exact status application cannot be calculated because application success, uptime, refresh behavior, and first-tick timing are unresolved.",
+        "exactResultUnknownReason": "Exact status application cannot be calculated because application success, uptime, and refresh behavior are unresolved.",
         "explanation": "Tactical Strike has a 30% chance after each Basic Attack to apply Bleed to 2 enemies within adjacency. Bleed lasts 2 rounds.",
         "id": "enemy-status-output-kalspire-tactical-strike-tactical-strike-bleed-bleed-status-output",
         "interactionScope": "enemy-side",
@@ -72452,7 +72452,7 @@
           "Target reference not-original-basic-attack-target: Physical Damage target is distinct from the original Basic Attack target. References source effect tactical-strike-tactical-damage."
         ],
         "exactResultKnown": false,
-        "exactResultUnknownReason": "Exact status application cannot be calculated because application success, uptime, refresh behavior, and first-tick timing are unresolved.",
+        "exactResultUnknownReason": "Exact status application cannot be calculated because application success, uptime, and refresh behavior are unresolved.",
         "explanation": "At effective Habit Level 5, Tactical Assault has a 30% chance after each Basic Attack to apply Panic to 2 enemies within adjacency. Panic lasts 2 rounds.",
         "id": "enemy-status-output-kalspire-tactical-assault-tactical-assault-panic-panic-status-output",
         "interactionScope": "enemy-side",
@@ -75185,7 +75185,7 @@
           "Activation scope is unresolved between one shared roll and independent per-target rolls."
         ],
         "exactResultKnown": false,
-        "exactResultUnknownReason": "Exact status application cannot be calculated because application success, uptime, refresh behavior, and first-tick timing are unresolved.",
+        "exactResultUnknownReason": "Exact status application cannot be calculated because application success, uptime, and refresh behavior are unresolved.",
         "explanation": "Each round, Fiery Bonds checks 3 enemies in any lane. The Taunt application chance is 25% for a normal target and 50% for that same target while it has Burn, a target-specific 2x increase. Taunt lasts 2 rounds.",
         "id": "enemy-status-output-vhagar-fiery-bonds-fiery-bonds-taunt-taunt-status-output",
         "interactionScope": "enemy-side",
@@ -76231,7 +76231,7 @@
           "Activation scope is unresolved between one shared roll and independent per-target rolls."
         ],
         "exactResultKnown": false,
-        "exactResultUnknownReason": "Exact status application cannot be calculated because application success, uptime, refresh behavior, and first-tick timing are unresolved.",
+        "exactResultUnknownReason": "Exact status application cannot be calculated because application success, uptime, and refresh behavior are unresolved.",
         "explanation": "Each round, Fiery Bonds checks 3 enemies in any lane. The Taunt application chance is 25% for a normal target and 50% for that same target while it has Burn, a target-specific 2x increase. Taunt lasts 2 rounds.",
         "id": "enemy-status-output-vhagar-fiery-bonds-fiery-bonds-taunt-taunt-status-output",
         "interactionScope": "enemy-side",
@@ -76280,7 +76280,7 @@
           "Eclipse Cover effect eclipse-cover-weakened uses selected-target group eclipse-cover-shared-roll."
         ],
         "exactResultKnown": false,
-        "exactResultUnknownReason": "Exact status application cannot be calculated because application success, uptime, refresh behavior, and first-tick timing are unresolved.",
+        "exactResultUnknownReason": "Exact status application cannot be calculated because application success, uptime, and refresh behavior are unresolved.",
         "explanation": "At effective Habit Level 5, Eclipse Cover has a 35% chance on rounds 3 through 7 to apply Weakened to one enemy in any lane. Weakened lasts 2 rounds.",
         "id": "enemy-status-output-vhagar-eclipse-cover-eclipse-cover-weakened-weakened-status-output",
         "interactionScope": "enemy-side",
@@ -76349,7 +76349,7 @@
           "Shared activation group: crippling-inferno-each-round-shared-activation."
         ],
         "exactResultKnown": false,
-        "exactResultUnknownReason": "Exact status application cannot be calculated because application success, uptime, refresh behavior, and first-tick timing are unresolved.",
+        "exactResultUnknownReason": "Exact status application cannot be calculated because application success, uptime, and refresh behavior are unresolved.",
         "explanation": "At effective Habit Level 5, Crippling Inferno has a 20% chance each round to apply Slow to 3 enemies in any lane. Slow lasts 2 rounds.",
         "id": "enemy-status-output-caraxes-crippling-inferno-crippling-inferno-slow-slow-status-output",
         "interactionScope": "enemy-side",
@@ -76418,7 +76418,7 @@
           "Shared activation group: crippling-inferno-each-round-shared-activation."
         ],
         "exactResultKnown": false,
-        "exactResultUnknownReason": "Exact status application cannot be calculated because application success, uptime, refresh behavior, and first-tick timing are unresolved.",
+        "exactResultUnknownReason": "Exact status application cannot be calculated because application success, uptime, and refresh behavior are unresolved.",
         "explanation": "At effective Habit Level 5, Crippling Inferno has a 20% chance each round to apply Burn to 3 enemies in any lane. Burn lasts 2 rounds.",
         "id": "enemy-status-output-caraxes-crippling-inferno-crippling-inferno-burn-burn-status-output",
         "interactionScope": "enemy-side",
@@ -79536,7 +79536,7 @@
           "Activation scope is unresolved between one shared roll and independent per-target rolls."
         ],
         "exactResultKnown": false,
-        "exactResultUnknownReason": "Exact status application cannot be calculated because application success, uptime, refresh behavior, and first-tick timing are unresolved.",
+        "exactResultUnknownReason": "Exact status application cannot be calculated because application success, uptime, and refresh behavior are unresolved.",
         "explanation": "Each round, Fiery Bonds checks 3 enemies in any lane. The Taunt application chance is 25% for a normal target and 50% for that same target while it has Burn, a target-specific 2x increase. Taunt lasts 2 rounds.",
         "id": "enemy-status-output-vhagar-fiery-bonds-fiery-bonds-taunt-taunt-status-output",
         "interactionScope": "enemy-side",
@@ -79584,7 +79584,7 @@
           "Target reference original-basic-attack-target: Use the target of the Basic Attack that triggered Tactical Strike."
         ],
         "exactResultKnown": false,
-        "exactResultUnknownReason": "Exact status application cannot be calculated because application success, uptime, refresh behavior, and first-tick timing are unresolved.",
+        "exactResultUnknownReason": "Exact status application cannot be calculated because application success, uptime, and refresh behavior are unresolved.",
         "explanation": "Tactical Strike has a 30% chance after each Basic Attack to apply Bleed to 2 enemies within adjacency. Bleed lasts 2 rounds.",
         "id": "enemy-status-output-kalspire-tactical-strike-tactical-strike-bleed-bleed-status-output",
         "interactionScope": "enemy-side",
@@ -81652,7 +81652,7 @@
           "Activation scope is unresolved between one shared roll and independent per-target rolls."
         ],
         "exactResultKnown": false,
-        "exactResultUnknownReason": "Exact status application cannot be calculated because application success, uptime, refresh behavior, and first-tick timing are unresolved.",
+        "exactResultUnknownReason": "Exact status application cannot be calculated because application success, uptime, and refresh behavior are unresolved.",
         "explanation": "Each round, Fiery Bonds checks 3 enemies in any lane. The Taunt application chance is 25% for a normal target and 50% for that same target while it has Burn, a target-specific 2x increase. Taunt lasts 2 rounds.",
         "id": "enemy-status-output-vhagar-fiery-bonds-fiery-bonds-taunt-taunt-status-output",
         "interactionScope": "enemy-side",
@@ -81701,7 +81701,7 @@
           "Eclipse Cover effect eclipse-cover-weakened uses selected-target group eclipse-cover-shared-roll."
         ],
         "exactResultKnown": false,
-        "exactResultUnknownReason": "Exact status application cannot be calculated because application success, uptime, refresh behavior, and first-tick timing are unresolved.",
+        "exactResultUnknownReason": "Exact status application cannot be calculated because application success, uptime, and refresh behavior are unresolved.",
         "explanation": "At effective Habit Level 5, Eclipse Cover has a 35% chance on rounds 3 through 7 to apply Weakened to one enemy in any lane. Weakened lasts 2 rounds.",
         "id": "enemy-status-output-vhagar-eclipse-cover-eclipse-cover-weakened-weakened-status-output",
         "interactionScope": "enemy-side",
@@ -81771,7 +81771,7 @@
           "Target reference original-basic-attack-target: Use the target of the Basic Attack that triggered Tactical Strike."
         ],
         "exactResultKnown": false,
-        "exactResultUnknownReason": "Exact status application cannot be calculated because application success, uptime, refresh behavior, and first-tick timing are unresolved.",
+        "exactResultUnknownReason": "Exact status application cannot be calculated because application success, uptime, and refresh behavior are unresolved.",
         "explanation": "Tactical Strike has a 30% chance after each Basic Attack to apply Bleed to 2 enemies within adjacency. Bleed lasts 2 rounds.",
         "id": "enemy-status-output-kalspire-tactical-strike-tactical-strike-bleed-bleed-status-output",
         "interactionScope": "enemy-side",
@@ -81820,7 +81820,7 @@
           "Target reference not-original-basic-attack-target: Physical Damage target is distinct from the original Basic Attack target. References source effect tactical-strike-tactical-damage."
         ],
         "exactResultKnown": false,
-        "exactResultUnknownReason": "Exact status application cannot be calculated because application success, uptime, refresh behavior, and first-tick timing are unresolved.",
+        "exactResultUnknownReason": "Exact status application cannot be calculated because application success, uptime, and refresh behavior are unresolved.",
         "explanation": "At effective Habit Level 5, Tactical Assault has a 30% chance after each Basic Attack to apply Panic to 2 enemies within adjacency. Panic lasts 2 rounds.",
         "id": "enemy-status-output-kalspire-tactical-assault-tactical-assault-panic-panic-status-output",
         "interactionScope": "enemy-side",
@@ -85613,7 +85613,7 @@
           "Activation scope is unresolved between one shared roll and independent per-target rolls."
         ],
         "exactResultKnown": false,
-        "exactResultUnknownReason": "Exact status application cannot be calculated because application success, uptime, refresh behavior, and first-tick timing are unresolved.",
+        "exactResultUnknownReason": "Exact status application cannot be calculated because application success, uptime, and refresh behavior are unresolved.",
         "explanation": "Each round, Fiery Bonds checks 3 enemies in any lane. The Taunt application chance is 25% for a normal target and 50% for that same target while it has Burn, a target-specific 2x increase. Taunt lasts 2 rounds.",
         "id": "enemy-status-output-vhagar-fiery-bonds-fiery-bonds-taunt-taunt-status-output",
         "interactionScope": "enemy-side",
@@ -87216,7 +87216,7 @@
           "Activation scope is unresolved between one shared roll and independent per-target rolls."
         ],
         "exactResultKnown": false,
-        "exactResultUnknownReason": "Exact status application cannot be calculated because application success, uptime, refresh behavior, and first-tick timing are unresolved.",
+        "exactResultUnknownReason": "Exact status application cannot be calculated because application success, uptime, and refresh behavior are unresolved.",
         "explanation": "Each round, Fiery Bonds checks 3 enemies in any lane. The Taunt application chance is 25% for a normal target and 50% for that same target while it has Burn, a target-specific 2x increase. Taunt lasts 2 rounds.",
         "id": "enemy-status-output-vhagar-fiery-bonds-fiery-bonds-taunt-taunt-status-output",
         "interactionScope": "enemy-side",
@@ -87265,7 +87265,7 @@
           "Eclipse Cover effect eclipse-cover-weakened uses selected-target group eclipse-cover-shared-roll."
         ],
         "exactResultKnown": false,
-        "exactResultUnknownReason": "Exact status application cannot be calculated because application success, uptime, refresh behavior, and first-tick timing are unresolved.",
+        "exactResultUnknownReason": "Exact status application cannot be calculated because application success, uptime, and refresh behavior are unresolved.",
         "explanation": "At effective Habit Level 5, Eclipse Cover has a 35% chance on rounds 3 through 7 to apply Weakened to one enemy in any lane. Weakened lasts 2 rounds.",
         "id": "enemy-status-output-vhagar-eclipse-cover-eclipse-cover-weakened-weakened-status-output",
         "interactionScope": "enemy-side",

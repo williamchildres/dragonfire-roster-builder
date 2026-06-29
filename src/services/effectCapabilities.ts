@@ -2695,7 +2695,7 @@ function analyzeEnemyStatusSourceOutputs(
       recipientEvidenceIds: [],
       combatLogConfirmed: false,
       exactResultKnown: false,
-      exactResultUnknownReason: 'Exact status application cannot be calculated because application success, uptime, refresh behavior, and first-tick timing are unresolved.',
+      exactResultUnknownReason: 'Exact status application cannot be calculated because application success, uptime, and refresh behavior are unresolved.',
       matchKind: 'status-condition-enablement',
       channel: 'status',
       targetSelectorSummary: targetSelectorSummary(output.targetSelector),
