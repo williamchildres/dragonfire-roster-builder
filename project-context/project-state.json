@@ -23,7 +23,7 @@
   ],
   "currentReviewPhase": "Legendary/full-profile formation validation complete; Epic ingestion active with Daemoros and Vaeldra as the first detailed Epic batch after Vermax.",
   "format": "dragonfire-project-state",
-  "generatedAt": "2026-06-29T22:25:34.830Z",
+  "generatedAt": "2026-06-29T22:45:42.816Z",
   "plannedNextPhase": [
     "continue Epic dragon ingestion in batches of two after the latest merged context is available",
     "fetch latest merged main and create a new feature branch before each future Epic implementation batch",
@@ -37,8 +37,8 @@
     "metadataOnlyDragonCount": 15
   },
   "source": {
-    "branch": "fix/prey-final-projection-pass12d",
-    "commit": "cb7d3280ca066d0f9913b38a081cd608513c2cf2",
+    "branch": "fix/dragons-cunning-derived-summary-pass12e",
+    "commit": "3c51e95b5c1c4a7bb2e77af8e6f4cfde3b8a62d4",
     "databaseVersion": "0.6.2",
     "dataSchemaVersion": 12,
     "gameBuild": "26.6.53509",

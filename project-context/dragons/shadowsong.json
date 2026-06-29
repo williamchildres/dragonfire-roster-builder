@@ -4971,7 +4971,7 @@
   "firstObservedInGame": "2026-06-22",
   "format": "dragonfire-dragon-profile",
   "gameVersion": null,
-  "generatedAt": "2026-06-29T22:25:34.830Z",
+  "generatedAt": "2026-06-29T22:45:42.816Z",
   "habits": [
     {
       "abilityClass": "passive",
@@ -8162,8 +8162,8 @@
   "rosterSourceStatus": "in-game-verified-pending-official-site",
   "slug": "shadowsong",
   "source": {
-    "branch": "fix/prey-final-projection-pass12d",
-    "commit": "cb7d3280ca066d0f9913b38a081cd608513c2cf2",
+    "branch": "fix/dragons-cunning-derived-summary-pass12e",
+    "commit": "3c51e95b5c1c4a7bb2e77af8e6f4cfde3b8a62d4",
     "databaseVersion": "0.6.2",
     "dataSchemaVersion": 12,
     "gameBuild": "26.6.53509",
