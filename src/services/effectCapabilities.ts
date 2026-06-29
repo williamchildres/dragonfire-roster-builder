@@ -2684,20 +2684,7 @@ function analyzeEnemyStatusSourceOutputs(
       ? 'Activation scope is unresolved between one shared roll and independent per-target rolls.'
       : null;
     const persistentTargetReference = (context.effect.targetSelection?.references ?? []).some((reference) => reference.kind === 'persistent-selected-target');
-    const baseChance = output.chanceFixed !== null && output.chanceFixed !== undefined
-      ? { value: output.chanceFixed, unit: 'percent' as const }
-      : output.chanceByHabitLevel.length > 0
-        ? rankedValueForHabitLevel(output.chanceByHabitLevel, effectiveHabitLevelForCapability(output, options))
-        : context.effect.activationRoll?.chanceByHabitLevel.length
-          ? rankedValueForHabitLevel(context.effect.activationRoll.chanceByHabitLevel, effectiveHabitLevelForCapability(output, options))
-          : context.schedule.activationRoll?.chanceByHabitLevel.length
-            ? rankedValueForHabitLevel(context.schedule.activationRoll.chanceByHabitLevel, effectiveHabitLevelForCapability(output, options))
-            : null;
     const conditionalChance = (context.effect.conditionalMultipliers ?? []).find((multiplier) => /chance/i.test(multiplier.description) || /chance/i.test(multiplier.condition.description));
-    const baseChanceText = baseChance ? formatValue(baseChance.value, baseChance.unit) : 'unknown';
-    const conditionalChanceText = baseChance && conditionalChance && Number.isFinite(conditionalChance.multiplier)
-      ? formatValue(baseChance.value * conditionalChance.multiplier, baseChance.unit)
-      : null;
     const preyDependency = persistentTargetReference ||
       output.conditions.some((condition) => /prey/i.test(condition.description) || condition.statusId === 'prey') ||
       /prey/i.test(conditionalChance?.condition.description ?? '');
