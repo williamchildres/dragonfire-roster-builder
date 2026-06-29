@@ -105,6 +105,10 @@ describe('Sheepstealer Prey framework pass 12', () => {
     expect(mitigationText).toContain("Sheepstealer's Dragon's Cunning applies a base Enemy Instinct reduction of 12% to two adjacent enemies.");
     expect(mitigationText).toContain("The final reduction scales with Sheepstealer's Initiative and remains unresolved.");
     expect(mitigationText).toContain("Seasmoke's Infectious Wrath is the qualifying Physical Damage output.");
+    expect(mitigation.explanation).toContain('Timing: Start of Combat.');
+    expect(mitigation.explanation).toContain('Duration: until end of combat.');
+    expect(traceText(mitigation)).toContain('Timing: Start of Combat.');
+    expect(traceText(mitigation)).toContain('Duration: until end of combat.');
     expect(directText).toContain('Scaling stat: Initiative.');
     expect(directText).toContain('Final scaled Enemy Instinct reduction is unresolved.');
     expect(mitigationText).not.toContain('Enemy Instinct reduction is -12%.');
@@ -121,6 +125,7 @@ describe('Sheepstealer Prey framework pass 12', () => {
       .filter((item) => item.abilityName === "Dragon's Cunning");
     expect(dragonCunningCards.some((item) => item.summary === "Base Enemy Instinct -12% on 2 adjacent enemy targets; final reduction scales with Sheepstealer's Initiative and remains unresolved.")).toBe(true);
     expect(dragonCunningCards.every((item) => countOccurrences(item.summary, '2 adjacent enemy targets') === 1)).toBe(true);
+    expect(dragonCunningCards.every((item) => !item.summaryLines.includes('Targets 2 adjacent enemy targets.'))).toBe(true);
     expect(dragonCunningCards.some((item) => /Initiative/i.test([item.summary, item.detail, ...item.effects].join(' ')))).toBe(true);
     expect(dragonCunningCards.some((item) => /unresolved/i.test([item.summary, item.detail, ...item.effects].join(' ')))).toBe(true);
     expect(dragonCunningCards.some((item) => /2 .*enemy targets/i.test([item.summary, ...item.effects].join(' ')))).toBe(true);

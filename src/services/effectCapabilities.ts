@@ -3711,7 +3711,7 @@ function analyzeEnemyMitigationReduction(
         recipientAbilityId: matchedOutputs[0]?.abilityId ?? null,
         channel: mitigationChannel,
         title: `${channelLabel(mitigationChannel)} Mitigation Reduction`,
-        explanation: `${provider.name}'s ${modifier.abilityName} can reduce enemy ${statLabel(statId)}. ${provider.name}'s ${modifier.abilityName} applies a base Enemy ${statLabel(statId)} reduction of ${formatTypedModifierValue(modifier)} to ${readableEnemyTargetPhrase(modifier.targetSelector)}. The final reduction scales with ${provider.name}'s Initiative and remains unresolved. ${matchedOutputs[0] ? `${recipient.name}'s ${matchedOutputs[0].abilityName} is the qualifying ${channelLabel(mitigationChannel)} output.` : `${recipient.name}'s ${channelLabel(mitigationChannel)} output is the qualifying ${channelLabel(mitigationChannel)} output.`}`,
+        explanation: `${provider.name}'s ${modifier.abilityName} can reduce enemy ${statLabel(statId)}. ${provider.name}'s ${modifier.abilityName} applies a base Enemy ${statLabel(statId)} reduction of ${formatTypedModifierValue(modifier)} to ${readableEnemyTargetPhrase(modifier.targetSelector)}. The final reduction scales with ${provider.name}'s Initiative and remains unresolved. ${matchedOutputs[0] ? `${recipient.name}'s ${matchedOutputs[0].abilityName} is the qualifying ${channelLabel(mitigationChannel)} output.` : `${recipient.name}'s ${channelLabel(mitigationChannel)} output is the qualifying ${channelLabel(mitigationChannel)} output.`}${sourceTimingFacts.length > 0 ? ` ${sourceTimingFacts.filter((fact) => /^(Timing|Duration):/i.test(fact)).join(' ')}` : ''}`,
         requirements,
         matchedFacts: [
           ...sourceTimingFacts,
