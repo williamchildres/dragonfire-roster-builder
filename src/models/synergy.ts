@@ -93,6 +93,7 @@ export interface SynergyTrace {
   unresolvedQuestions: string[];
   sourceEvidenceIds: string[];
   recipientEvidenceIds: string[];
+  modifier?: ModifierCapability | null;
   providedEffectType?: string | null;
   recipientModifierType?: string | null;
   recipientModifierAbilityId?: string | null;

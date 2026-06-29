@@ -358,9 +358,11 @@ describe('trigger, schedule override, periodic damage framework regression', () 
     expect(battleCunningCards).toContain('Enemy Fire Damage Dealt reduction');
     expect(battleCunningCards).toContain('Enemy Strength -6.5% on 3 enemy targets.');
     expect(battleCunningCards).toContain('Enemy Intelligence -6.5% on 3 enemy targets.');
+    expect(cardsFor(presentation, 'Battle Cunning').flatMap((item) => [...item.details, ...item.effects]).join(' ')).toContain('Enemy Intelligence -6.5%');
     const huntersBaneCards = cardsFor(presentation, "Hunter's Bane").map(interactionText).join(' ');
     expect(huntersBaneCards).toContain('Enemy Fire Damage Dealt reduction');
     expect(huntersBaneCards).toContain('Enemy Intelligence -30% on 1 enemy target.');
+    expect(cardsFor(presentation, "Hunter's Bane").flatMap((item) => [...item.details, ...item.effects]).join(' ')).toContain('Enemy Intelligence -30%');
 
     const statusApplicationCards = [
       ...cardsFor(presentation, 'Tactical Strike'),
