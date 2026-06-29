@@ -104,6 +104,7 @@ describe('Sheepstealer Prey framework pass 12', () => {
     expect(mitigationText).toContain('Final scaled Enemy Instinct reduction is unresolved.');
     expect(directText).toContain('Scaling stat: Initiative.');
     expect(directText).toContain('Final scaled Enemy Instinct reduction is unresolved.');
+    expect(mitigationText).not.toContain('Enemy Instinct reduction is -12%.');
     expect(directText).not.toContain('1 target');
     expect(mitigationText).toContain('Infectious Wrath is mitigated by target Instinct.');
     expect(mitigationText).toContain('affected-enemy overlap with the Physical Damage target');
@@ -112,11 +113,12 @@ describe('Sheepstealer Prey framework pass 12', () => {
     const cards = buildFormationCardPresentation(formation, dragons, traces);
     const dragonCunningCards = cards.cards.flatMap((card) => [...card.provides, ...card.receives])
       .filter((item) => item.abilityName === "Dragon's Cunning");
-    expect(dragonCunningCards.some((item) => item.summary === "Base Enemy Instinct -12% on 2 adjacent enemy targets; final reduction scales with Sheepstealer's Initiative and remains unresolved. Targets 2 adjacent enemy targets.")).toBe(true);
+    expect(dragonCunningCards.some((item) => item.summary === "Base Enemy Instinct -12% on 2 adjacent enemy targets; final reduction scales with Sheepstealer's Initiative and remains unresolved.")).toBe(true);
     expect(dragonCunningCards.some((item) => /Initiative/i.test([item.summary, item.detail, ...item.effects].join(' ')))).toBe(true);
     expect(dragonCunningCards.some((item) => /unresolved/i.test([item.summary, item.detail, ...item.effects].join(' ')))).toBe(true);
     expect(dragonCunningCards.some((item) => /2 .*enemy targets/i.test([item.summary, ...item.effects].join(' ')))).toBe(true);
     expect(dragonCunningCards.every((item) => !/^Enemy Instinct reduction is -12\.$/i.test(item.summary))).toBe(true);
+    expect(dragonCunningCards.every((item) => !/Targets 2 adjacent enemy targets\.$/i.test(item.summary))).toBe(true);
     expect(dragonCunningCards.every((item) => !/1 enemy target/i.test([item.summary, ...item.effects].join(' ')))).toBe(true);
   });
 

@@ -3711,7 +3711,7 @@ function analyzeEnemyMitigationReduction(
         recipientAbilityId: matchedOutputs[0]?.abilityId ?? null,
         channel: mitigationChannel,
         title: `${channelLabel(mitigationChannel)} Mitigation Reduction`,
-        explanation: `${provider.name}'s ${modifier.abilityName} can reduce enemy ${statLabel(statId)}. Enemy ${statLabel(statId)} reduction is -${formatTypedModifierValue(modifier)}. ${recipient.name}'s ${channelLabel(mitigationChannel)} outputs are mitigated by that stat.${sourceTimingFacts.length > 0 ? ` ${sourceTimingFacts.join(' ')}` : ''}`,
+        explanation: `${provider.name}'s ${modifier.abilityName} can reduce enemy ${statLabel(statId)}. Base Enemy ${statLabel(statId)} reduction -${formatTypedModifierValue(modifier)} on ${targetSelectorSummary(modifier.targetSelector)}. Final reduction scales with ${provider.name}'s Initiative and remains unresolved. ${recipient.name}'s ${channelLabel(mitigationChannel)} outputs are mitigated by that stat.${sourceTimingFacts.length > 0 ? ` ${sourceTimingFacts.join(' ')}` : ''}`,
         requirements,
         matchedFacts: [
           ...sourceTimingFacts,

@@ -4169,7 +4169,7 @@
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final Fire Damage mitigation interaction cannot be calculated because affected-enemy overlap with the Fire Damage target and the final Instinct scaling or mitigation formula are unresolved.",
-    "explanation": "Syrax's Flight Mastery can reduce enemy Initiative. Enemy Initiative reduction is -6%. Caraxes's Fire Damage outputs are mitigated by that stat. Timing: Start of Combat. Scaling stat: Instinct. Duration: until end of combat.",
+    "explanation": "Syrax's Flight Mastery can reduce enemy Initiative. Base Enemy Initiative reduction -6% on enemy; any-lane; any; 3 targets; caster eligibility unknown. Final reduction scales with Syrax's Initiative and remains unresolved. Caraxes's Fire Damage outputs are mitigated by that stat. Timing: Start of Combat. Scaling stat: Instinct. Duration: until end of combat.",
     "id": "enemy-mitigation-syrax-flight-mastery-flight-mastery-initiative-down-stat-dealt-modifier-caraxes-initiative",
     "interactionScope": "cross-dragon",
     "matchedOutputCapabilityIds": [
@@ -4275,7 +4275,7 @@
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final Fire Damage mitigation interaction cannot be calculated because affected-enemy overlap with the Fire Damage target and the final Intelligence scaling or mitigation formula are unresolved.",
-    "explanation": "Caraxes's Battle Dread can reduce enemy Initiative. Enemy Initiative reduction is -6.5%. Caraxes's Fire Damage outputs are mitigated by that stat. Timing: Start of Combat. Scaling stat: Intelligence. Duration: until end of combat.",
+    "explanation": "Caraxes's Battle Dread can reduce enemy Initiative. Base Enemy Initiative reduction -6.5% on enemy; any-lane; any; 3 targets; caster eligibility unknown. Final reduction scales with Caraxes's Initiative and remains unresolved. Caraxes's Fire Damage outputs are mitigated by that stat. Timing: Start of Combat. Scaling stat: Intelligence. Duration: until end of combat.",
     "id": "enemy-mitigation-caraxes-battle-dread-battle-dread-initiative-down-stat-dealt-modifier-caraxes-initiative",
     "interactionScope": "internal",
     "matchedOutputCapabilityIds": [
@@ -8724,7 +8724,7 @@
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final Fire Damage mitigation interaction cannot be calculated because affected-enemy overlap with the Fire Damage target and the final Instinct scaling or mitigation formula are unresolved.",
-    "explanation": "Syrax's Flight Mastery can reduce enemy Initiative. Enemy Initiative reduction is -6%. Caraxes's Fire Damage outputs are mitigated by that stat. Timing: Start of Combat. Scaling stat: Instinct. Duration: until end of combat.",
+    "explanation": "Syrax's Flight Mastery can reduce enemy Initiative. Base Enemy Initiative reduction -6% on enemy; any-lane; any; 3 targets; caster eligibility unknown. Final reduction scales with Syrax's Initiative and remains unresolved. Caraxes's Fire Damage outputs are mitigated by that stat. Timing: Start of Combat. Scaling stat: Instinct. Duration: until end of combat.",
     "id": "enemy-mitigation-syrax-flight-mastery-flight-mastery-initiative-down-stat-dealt-modifier-caraxes-initiative",
     "interactionScope": "cross-dragon",
     "matchedOutputCapabilityIds": [
@@ -8830,7 +8830,7 @@
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final Fire Damage mitigation interaction cannot be calculated because affected-enemy overlap with the Fire Damage target and the final Intelligence scaling or mitigation formula are unresolved.",
-    "explanation": "Caraxes's Battle Dread can reduce enemy Initiative. Enemy Initiative reduction is -6.5%. Caraxes's Fire Damage outputs are mitigated by that stat. Timing: Start of Combat. Scaling stat: Intelligence. Duration: until end of combat.",
+    "explanation": "Caraxes's Battle Dread can reduce enemy Initiative. Base Enemy Initiative reduction -6.5% on enemy; any-lane; any; 3 targets; caster eligibility unknown. Final reduction scales with Caraxes's Initiative and remains unresolved. Caraxes's Fire Damage outputs are mitigated by that stat. Timing: Start of Combat. Scaling stat: Intelligence. Duration: until end of combat.",
     "id": "enemy-mitigation-caraxes-battle-dread-battle-dread-initiative-down-stat-dealt-modifier-caraxes-initiative",
     "interactionScope": "internal",
     "matchedOutputCapabilityIds": [
@@ -13616,7 +13616,7 @@
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final Fire Damage mitigation interaction cannot be calculated because affected-enemy overlap with the Fire Damage target and the final Instinct scaling or mitigation formula are unresolved.",
-    "explanation": "Syrax's Flight Mastery can reduce enemy Initiative. Enemy Initiative reduction is -6%. Caraxes's Fire Damage outputs are mitigated by that stat. Timing: Start of Combat. Scaling stat: Instinct. Duration: until end of combat.",
+    "explanation": "Syrax's Flight Mastery can reduce enemy Initiative. Base Enemy Initiative reduction -6% on enemy; any-lane; any; 3 targets; caster eligibility unknown. Final reduction scales with Syrax's Initiative and remains unresolved. Caraxes's Fire Damage outputs are mitigated by that stat. Timing: Start of Combat. Scaling stat: Instinct. Duration: until end of combat.",
     "id": "enemy-mitigation-syrax-flight-mastery-flight-mastery-initiative-down-stat-dealt-modifier-caraxes-initiative",
     "interactionScope": "cross-dragon",
     "matchedOutputCapabilityIds": [
@@ -13722,7 +13722,7 @@
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final Fire Damage mitigation interaction cannot be calculated because affected-enemy overlap with the Fire Damage target and the final Intelligence scaling or mitigation formula are unresolved.",
-    "explanation": "Caraxes's Battle Dread can reduce enemy Initiative. Enemy Initiative reduction is -6.5%. Caraxes's Fire Damage outputs are mitigated by that stat. Timing: Start of Combat. Scaling stat: Intelligence. Duration: until end of combat.",
+    "explanation": "Caraxes's Battle Dread can reduce enemy Initiative. Base Enemy Initiative reduction -6.5% on enemy; any-lane; any; 3 targets; caster eligibility unknown. Final reduction scales with Caraxes's Initiative and remains unresolved. Caraxes's Fire Damage outputs are mitigated by that stat. Timing: Start of Combat. Scaling stat: Intelligence. Duration: until end of combat.",
     "id": "enemy-mitigation-caraxes-battle-dread-battle-dread-initiative-down-stat-dealt-modifier-caraxes-initiative",
     "interactionScope": "internal",
     "matchedOutputCapabilityIds": [
@@ -18431,7 +18431,7 @@
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final Fire Damage mitigation interaction cannot be calculated because affected-enemy overlap with the Fire Damage target and the final Instinct scaling or mitigation formula are unresolved.",
-    "explanation": "Syrax's Flight Mastery can reduce enemy Initiative. Enemy Initiative reduction is -6%. Caraxes's Fire Damage outputs are mitigated by that stat. Timing: Start of Combat. Scaling stat: Instinct. Duration: until end of combat.",
+    "explanation": "Syrax's Flight Mastery can reduce enemy Initiative. Base Enemy Initiative reduction -6% on enemy; any-lane; any; 3 targets; caster eligibility unknown. Final reduction scales with Syrax's Initiative and remains unresolved. Caraxes's Fire Damage outputs are mitigated by that stat. Timing: Start of Combat. Scaling stat: Instinct. Duration: until end of combat.",
     "id": "enemy-mitigation-syrax-flight-mastery-flight-mastery-initiative-down-stat-dealt-modifier-caraxes-initiative",
     "interactionScope": "cross-dragon",
     "matchedOutputCapabilityIds": [
@@ -18537,7 +18537,7 @@
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final Fire Damage mitigation interaction cannot be calculated because affected-enemy overlap with the Fire Damage target and the final Intelligence scaling or mitigation formula are unresolved.",
-    "explanation": "Caraxes's Battle Dread can reduce enemy Initiative. Enemy Initiative reduction is -6.5%. Caraxes's Fire Damage outputs are mitigated by that stat. Timing: Start of Combat. Scaling stat: Intelligence. Duration: until end of combat.",
+    "explanation": "Caraxes's Battle Dread can reduce enemy Initiative. Base Enemy Initiative reduction -6.5% on enemy; any-lane; any; 3 targets; caster eligibility unknown. Final reduction scales with Caraxes's Initiative and remains unresolved. Caraxes's Fire Damage outputs are mitigated by that stat. Timing: Start of Combat. Scaling stat: Intelligence. Duration: until end of combat.",
     "id": "enemy-mitigation-caraxes-battle-dread-battle-dread-initiative-down-stat-dealt-modifier-caraxes-initiative",
     "interactionScope": "internal",
     "matchedOutputCapabilityIds": [
@@ -23179,7 +23179,7 @@
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final Physical Damage mitigation interaction cannot be calculated because affected-enemy overlap with the Physical Damage target and the final Initiative scaling or mitigation formula are unresolved.",
-    "explanation": "Sheepstealer's Dragon's Cunning can reduce enemy Instinct. Enemy Instinct reduction is -12%. Vermax's Physical Damage outputs are mitigated by that stat. Timing: Start of Combat. Scaling stat: Initiative. Duration: until end of combat.",
+    "explanation": "Sheepstealer's Dragon's Cunning can reduce enemy Instinct. Base Enemy Instinct reduction -12% on enemy; within-adjacency; adjacent; 2 targets; caster eligibility unknown. Final reduction scales with Sheepstealer's Initiative and remains unresolved. Vermax's Physical Damage outputs are mitigated by that stat. Timing: Start of Combat. Scaling stat: Initiative. Duration: until end of combat.",
     "id": "enemy-mitigation-sheepstealer-dragons-cunning-dragons-cunning-instinct-down-stat-dealt-modifier-vermax-instinct",
     "interactionScope": "cross-dragon",
     "matchedOutputCapabilityIds": [
@@ -28218,7 +28218,7 @@
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final Physical Damage mitigation interaction cannot be calculated because affected-enemy overlap with the Physical Damage target and the final Initiative scaling or mitigation formula are unresolved.",
-    "explanation": "Sheepstealer's Dragon's Cunning can reduce enemy Instinct. Enemy Instinct reduction is -12%. Seasmoke's Physical Damage outputs are mitigated by that stat. Timing: Start of Combat. Scaling stat: Initiative. Duration: until end of combat.",
+    "explanation": "Sheepstealer's Dragon's Cunning can reduce enemy Instinct. Base Enemy Instinct reduction -12% on enemy; within-adjacency; adjacent; 2 targets; caster eligibility unknown. Final reduction scales with Sheepstealer's Initiative and remains unresolved. Seasmoke's Physical Damage outputs are mitigated by that stat. Timing: Start of Combat. Scaling stat: Initiative. Duration: until end of combat.",
     "id": "enemy-mitigation-sheepstealer-dragons-cunning-dragons-cunning-instinct-down-stat-dealt-modifier-seasmoke-instinct",
     "interactionScope": "cross-dragon",
     "matchedOutputCapabilityIds": [
@@ -38066,7 +38066,7 @@
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final Physical Damage mitigation interaction cannot be calculated because affected-enemy overlap with the Physical Damage target and the final Initiative scaling or mitigation formula are unresolved.",
-    "explanation": "Sheepstealer's Dragon's Cunning can reduce enemy Instinct. Enemy Instinct reduction is -12%. Seasmoke's Physical Damage outputs are mitigated by that stat. Timing: Start of Combat. Scaling stat: Initiative. Duration: until end of combat.",
+    "explanation": "Sheepstealer's Dragon's Cunning can reduce enemy Instinct. Base Enemy Instinct reduction -12% on enemy; within-adjacency; adjacent; 2 targets; caster eligibility unknown. Final reduction scales with Sheepstealer's Initiative and remains unresolved. Seasmoke's Physical Damage outputs are mitigated by that stat. Timing: Start of Combat. Scaling stat: Initiative. Duration: until end of combat.",
     "id": "enemy-mitigation-sheepstealer-dragons-cunning-dragons-cunning-instinct-down-stat-dealt-modifier-seasmoke-instinct",
     "interactionScope": "cross-dragon",
     "matchedOutputCapabilityIds": [
@@ -41927,7 +41927,7 @@
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final Fire Damage mitigation interaction cannot be calculated because affected-enemy overlap with the Fire Damage target and the final Intelligence scaling or mitigation formula are unresolved.",
-    "explanation": "Caraxes's Battle Dread can reduce enemy Initiative. Enemy Initiative reduction is -6.5%. Caraxes's Fire Damage outputs are mitigated by that stat. Timing: Start of Combat. Scaling stat: Intelligence. Duration: until end of combat.",
+    "explanation": "Caraxes's Battle Dread can reduce enemy Initiative. Base Enemy Initiative reduction -6.5% on enemy; any-lane; any; 3 targets; caster eligibility unknown. Final reduction scales with Caraxes's Initiative and remains unresolved. Caraxes's Fire Damage outputs are mitigated by that stat. Timing: Start of Combat. Scaling stat: Intelligence. Duration: until end of combat.",
     "id": "enemy-mitigation-caraxes-battle-dread-battle-dread-initiative-down-stat-dealt-modifier-caraxes-initiative",
     "interactionScope": "internal",
     "matchedOutputCapabilityIds": [
@@ -42031,7 +42031,7 @@
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final Fire Damage mitigation interaction cannot be calculated because affected-enemy overlap with the Fire Damage target and the final Intelligence scaling or mitigation formula are unresolved.",
-    "explanation": "Caraxes's Battle Dread can reduce enemy Initiative. Enemy Initiative reduction is -6.5%. Seasmoke's Fire Damage outputs are mitigated by that stat. Timing: Start of Combat. Scaling stat: Intelligence. Duration: until end of combat.",
+    "explanation": "Caraxes's Battle Dread can reduce enemy Initiative. Base Enemy Initiative reduction -6.5% on enemy; any-lane; any; 3 targets; caster eligibility unknown. Final reduction scales with Caraxes's Initiative and remains unresolved. Seasmoke's Fire Damage outputs are mitigated by that stat. Timing: Start of Combat. Scaling stat: Intelligence. Duration: until end of combat.",
     "id": "enemy-mitigation-caraxes-battle-dread-battle-dread-initiative-down-stat-dealt-modifier-seasmoke-initiative",
     "interactionScope": "cross-dragon",
     "matchedOutputCapabilityIds": [
@@ -42112,7 +42112,7 @@
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final Fire Damage mitigation interaction cannot be calculated because affected-enemy overlap with the Fire Damage target and the final Intelligence scaling or mitigation formula are unresolved.",
-    "explanation": "Caraxes's Battle Dread can reduce enemy Initiative. Enemy Initiative reduction is -6.5%. Sheepstealer's Fire Damage outputs are mitigated by that stat. Timing: Start of Combat. Scaling stat: Intelligence. Duration: until end of combat.",
+    "explanation": "Caraxes's Battle Dread can reduce enemy Initiative. Base Enemy Initiative reduction -6.5% on enemy; any-lane; any; 3 targets; caster eligibility unknown. Final reduction scales with Caraxes's Initiative and remains unresolved. Sheepstealer's Fire Damage outputs are mitigated by that stat. Timing: Start of Combat. Scaling stat: Intelligence. Duration: until end of combat.",
     "id": "enemy-mitigation-caraxes-battle-dread-battle-dread-initiative-down-stat-dealt-modifier-sheepstealer-initiative",
     "interactionScope": "cross-dragon",
     "matchedOutputCapabilityIds": [
@@ -42221,7 +42221,7 @@
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final Physical Damage mitigation interaction cannot be calculated because affected-enemy overlap with the Physical Damage target and the final Initiative scaling or mitigation formula are unresolved.",
-    "explanation": "Sheepstealer's Dragon's Cunning can reduce enemy Instinct. Enemy Instinct reduction is -12%. Seasmoke's Physical Damage outputs are mitigated by that stat. Timing: Start of Combat. Scaling stat: Initiative. Duration: until end of combat.",
+    "explanation": "Sheepstealer's Dragon's Cunning can reduce enemy Instinct. Base Enemy Instinct reduction -12% on enemy; within-adjacency; adjacent; 2 targets; caster eligibility unknown. Final reduction scales with Sheepstealer's Initiative and remains unresolved. Seasmoke's Physical Damage outputs are mitigated by that stat. Timing: Start of Combat. Scaling stat: Initiative. Duration: until end of combat.",
     "id": "enemy-mitigation-sheepstealer-dragons-cunning-dragons-cunning-instinct-down-stat-dealt-modifier-seasmoke-instinct",
     "interactionScope": "cross-dragon",
     "matchedOutputCapabilityIds": [
@@ -47258,7 +47258,7 @@
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final Fire Damage mitigation interaction cannot be calculated because affected-enemy overlap with the Fire Damage target and the final Instinct scaling or mitigation formula are unresolved.",
-    "explanation": "Syrax's Flight Mastery can reduce enemy Initiative. Enemy Initiative reduction is -6%. Sheepstealer's Fire Damage outputs are mitigated by that stat. Timing: Start of Combat. Scaling stat: Instinct. Duration: until end of combat.",
+    "explanation": "Syrax's Flight Mastery can reduce enemy Initiative. Base Enemy Initiative reduction -6% on enemy; any-lane; any; 3 targets; caster eligibility unknown. Final reduction scales with Syrax's Initiative and remains unresolved. Sheepstealer's Fire Damage outputs are mitigated by that stat. Timing: Start of Combat. Scaling stat: Instinct. Duration: until end of combat.",
     "id": "enemy-mitigation-syrax-flight-mastery-flight-mastery-initiative-down-stat-dealt-modifier-sheepstealer-initiative",
     "interactionScope": "cross-dragon",
     "matchedOutputCapabilityIds": [
@@ -51687,7 +51687,7 @@
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final Fire Damage mitigation interaction cannot be calculated because affected-enemy overlap with the Fire Damage target and the final Instinct scaling or mitigation formula are unresolved.",
-    "explanation": "Syrax's Flight Mastery can reduce enemy Initiative. Enemy Initiative reduction is -6%. Caraxes's Fire Damage outputs are mitigated by that stat. Timing: Start of Combat. Scaling stat: Instinct. Duration: until end of combat.",
+    "explanation": "Syrax's Flight Mastery can reduce enemy Initiative. Base Enemy Initiative reduction -6% on enemy; any-lane; any; 3 targets; caster eligibility unknown. Final reduction scales with Syrax's Initiative and remains unresolved. Caraxes's Fire Damage outputs are mitigated by that stat. Timing: Start of Combat. Scaling stat: Instinct. Duration: until end of combat.",
     "id": "enemy-mitigation-syrax-flight-mastery-flight-mastery-initiative-down-stat-dealt-modifier-caraxes-initiative",
     "interactionScope": "cross-dragon",
     "matchedOutputCapabilityIds": [
@@ -51793,7 +51793,7 @@
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final Fire Damage mitigation interaction cannot be calculated because affected-enemy overlap with the Fire Damage target and the final Intelligence scaling or mitigation formula are unresolved.",
-    "explanation": "Caraxes's Battle Dread can reduce enemy Initiative. Enemy Initiative reduction is -6.5%. Caraxes's Fire Damage outputs are mitigated by that stat. Timing: Start of Combat. Scaling stat: Intelligence. Duration: until end of combat.",
+    "explanation": "Caraxes's Battle Dread can reduce enemy Initiative. Base Enemy Initiative reduction -6.5% on enemy; any-lane; any; 3 targets; caster eligibility unknown. Final reduction scales with Caraxes's Initiative and remains unresolved. Caraxes's Fire Damage outputs are mitigated by that stat. Timing: Start of Combat. Scaling stat: Intelligence. Duration: until end of combat.",
     "id": "enemy-mitigation-caraxes-battle-dread-battle-dread-initiative-down-stat-dealt-modifier-caraxes-initiative",
     "interactionScope": "internal",
     "matchedOutputCapabilityIds": [
@@ -55728,7 +55728,7 @@
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final Fire Damage mitigation interaction cannot be calculated because affected-enemy overlap with the Fire Damage target and the final Instinct scaling or mitigation formula are unresolved.",
-    "explanation": "Syrax's Flight Mastery can reduce enemy Initiative. Enemy Initiative reduction is -6%. Sheepstealer's Fire Damage outputs are mitigated by that stat. Timing: Start of Combat. Scaling stat: Instinct. Duration: until end of combat.",
+    "explanation": "Syrax's Flight Mastery can reduce enemy Initiative. Base Enemy Initiative reduction -6% on enemy; any-lane; any; 3 targets; caster eligibility unknown. Final reduction scales with Syrax's Initiative and remains unresolved. Sheepstealer's Fire Damage outputs are mitigated by that stat. Timing: Start of Combat. Scaling stat: Instinct. Duration: until end of combat.",
     "id": "enemy-mitigation-syrax-flight-mastery-flight-mastery-initiative-down-stat-dealt-modifier-sheepstealer-initiative",
     "interactionScope": "cross-dragon",
     "matchedOutputCapabilityIds": [
@@ -55836,7 +55836,7 @@
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final Fire Damage mitigation interaction cannot be calculated because affected-enemy overlap with the Fire Damage target and the final Instinct scaling or mitigation formula are unresolved.",
-    "explanation": "Syrax's Flight Mastery can reduce enemy Initiative. Enemy Initiative reduction is -6%. Caraxes's Fire Damage outputs are mitigated by that stat. Timing: Start of Combat. Scaling stat: Instinct. Duration: until end of combat.",
+    "explanation": "Syrax's Flight Mastery can reduce enemy Initiative. Base Enemy Initiative reduction -6% on enemy; any-lane; any; 3 targets; caster eligibility unknown. Final reduction scales with Syrax's Initiative and remains unresolved. Caraxes's Fire Damage outputs are mitigated by that stat. Timing: Start of Combat. Scaling stat: Instinct. Duration: until end of combat.",
     "id": "enemy-mitigation-syrax-flight-mastery-flight-mastery-initiative-down-stat-dealt-modifier-caraxes-initiative",
     "interactionScope": "cross-dragon",
     "matchedOutputCapabilityIds": [
@@ -55942,7 +55942,7 @@
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final Fire Damage mitigation interaction cannot be calculated because affected-enemy overlap with the Fire Damage target and the final Intelligence scaling or mitigation formula are unresolved.",
-    "explanation": "Caraxes's Battle Dread can reduce enemy Initiative. Enemy Initiative reduction is -6.5%. Sheepstealer's Fire Damage outputs are mitigated by that stat. Timing: Start of Combat. Scaling stat: Intelligence. Duration: until end of combat.",
+    "explanation": "Caraxes's Battle Dread can reduce enemy Initiative. Base Enemy Initiative reduction -6.5% on enemy; any-lane; any; 3 targets; caster eligibility unknown. Final reduction scales with Caraxes's Initiative and remains unresolved. Sheepstealer's Fire Damage outputs are mitigated by that stat. Timing: Start of Combat. Scaling stat: Intelligence. Duration: until end of combat.",
     "id": "enemy-mitigation-caraxes-battle-dread-battle-dread-initiative-down-stat-dealt-modifier-sheepstealer-initiative",
     "interactionScope": "cross-dragon",
     "matchedOutputCapabilityIds": [
@@ -56050,7 +56050,7 @@
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final Fire Damage mitigation interaction cannot be calculated because affected-enemy overlap with the Fire Damage target and the final Intelligence scaling or mitigation formula are unresolved.",
-    "explanation": "Caraxes's Battle Dread can reduce enemy Initiative. Enemy Initiative reduction is -6.5%. Caraxes's Fire Damage outputs are mitigated by that stat. Timing: Start of Combat. Scaling stat: Intelligence. Duration: until end of combat.",
+    "explanation": "Caraxes's Battle Dread can reduce enemy Initiative. Base Enemy Initiative reduction -6.5% on enemy; any-lane; any; 3 targets; caster eligibility unknown. Final reduction scales with Caraxes's Initiative and remains unresolved. Caraxes's Fire Damage outputs are mitigated by that stat. Timing: Start of Combat. Scaling stat: Intelligence. Duration: until end of combat.",
     "id": "enemy-mitigation-caraxes-battle-dread-battle-dread-initiative-down-stat-dealt-modifier-caraxes-initiative",
     "interactionScope": "internal",
     "matchedOutputCapabilityIds": [
@@ -59296,7 +59296,7 @@
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final Tactical Damage mitigation interaction cannot be calculated because affected-enemy overlap with the Tactical Damage target and the final mitigation formula are unresolved.",
-    "explanation": "Kalspire's Battle Cunning can reduce enemy Intelligence. Enemy Intelligence reduction is -6.5%. Kalspire's Tactical Damage outputs are mitigated by that stat. Timing: Start of combat. Enhanced by Kalspire Instinct. Duration: until end of combat.",
+    "explanation": "Kalspire's Battle Cunning can reduce enemy Intelligence. Base Enemy Intelligence reduction -6.5% on enemy; any-lane; any; 3 targets; caster eligibility unknown. Final reduction scales with Kalspire's Initiative and remains unresolved. Kalspire's Tactical Damage outputs are mitigated by that stat. Timing: Start of combat. Enhanced by Kalspire Instinct. Duration: until end of combat.",
     "id": "enemy-mitigation-kalspire-battle-cunning-battle-cunning-intelligence-down-stat-dealt-modifier-kalspire-intelligence",
     "interactionScope": "internal",
     "matchedOutputCapabilityIds": [
@@ -59402,7 +59402,7 @@
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final Tactical Damage mitigation interaction cannot be calculated because affected-enemy overlap with the Tactical Damage target and the final mitigation formula are unresolved.",
-    "explanation": "Venator's Hunter's Bane can reduce enemy Intelligence. Enemy Intelligence reduction is -30%. Kalspire's Tactical Damage outputs are mitigated by that stat. Timing: Start of combat. Enhanced by Venator Strength.",
+    "explanation": "Venator's Hunter's Bane can reduce enemy Intelligence. Base Enemy Intelligence reduction -30% on enemy; any-lane; any; 1 target; caster eligibility unknown. Final reduction scales with Venator's Initiative and remains unresolved. Kalspire's Tactical Damage outputs are mitigated by that stat. Timing: Start of combat. Enhanced by Venator Strength.",
     "id": "enemy-mitigation-venator-hunters-bane-hunters-bane-intelligence-down-stat-dealt-modifier-kalspire-intelligence",
     "interactionScope": "cross-dragon",
     "matchedOutputCapabilityIds": [
@@ -62273,7 +62273,7 @@
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final Fire Damage mitigation interaction cannot be calculated because affected-enemy overlap with the Fire Damage target and the final Intelligence scaling or mitigation formula are unresolved.",
-    "explanation": "Caraxes's Battle Dread can reduce enemy Initiative. Enemy Initiative reduction is -6.5%. Crimson's Fire Damage outputs are mitigated by that stat. Timing: Start of Combat. Scaling stat: Intelligence. Duration: until end of combat.",
+    "explanation": "Caraxes's Battle Dread can reduce enemy Initiative. Base Enemy Initiative reduction -6.5% on enemy; any-lane; any; 3 targets; caster eligibility unknown. Final reduction scales with Caraxes's Initiative and remains unresolved. Crimson's Fire Damage outputs are mitigated by that stat. Timing: Start of Combat. Scaling stat: Intelligence. Duration: until end of combat.",
     "id": "enemy-mitigation-caraxes-battle-dread-battle-dread-initiative-down-stat-dealt-modifier-crimson-initiative",
     "interactionScope": "cross-dragon",
     "matchedOutputCapabilityIds": [
@@ -62353,7 +62353,7 @@
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final Fire Damage mitigation interaction cannot be calculated because affected-enemy overlap with the Fire Damage target and the final Intelligence scaling or mitigation formula are unresolved.",
-    "explanation": "Caraxes's Battle Dread can reduce enemy Initiative. Enemy Initiative reduction is -6.5%. Caraxes's Fire Damage outputs are mitigated by that stat. Timing: Start of Combat. Scaling stat: Intelligence. Duration: until end of combat.",
+    "explanation": "Caraxes's Battle Dread can reduce enemy Initiative. Base Enemy Initiative reduction -6.5% on enemy; any-lane; any; 3 targets; caster eligibility unknown. Final reduction scales with Caraxes's Initiative and remains unresolved. Caraxes's Fire Damage outputs are mitigated by that stat. Timing: Start of Combat. Scaling stat: Intelligence. Duration: until end of combat.",
     "id": "enemy-mitigation-caraxes-battle-dread-battle-dread-initiative-down-stat-dealt-modifier-caraxes-initiative",
     "interactionScope": "internal",
     "matchedOutputCapabilityIds": [
@@ -62460,7 +62460,7 @@
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final Physical Damage mitigation interaction cannot be calculated because affected-enemy overlap with the Physical Damage target and the final mitigation formula are unresolved.",
-    "explanation": "Crimson's Vermin's Bane can reduce enemy Instinct. Enemy Instinct reduction is -12%. Vhagar's Physical Damage outputs are mitigated by that stat. Timing: Even-numbered rounds. Enhanced by Crimson Intelligence. Duration: 2 rounds.",
+    "explanation": "Crimson's Vermin's Bane can reduce enemy Instinct. Base Enemy Instinct reduction -12% on enemy; any-lane; highest-stat; 1 target; caster eligibility unknown; selection stat instinct; selection resource instinct; comparison highest; comparison pool enemy-side; tie behavior candidate-group; shared group vermins-bane-highest-instinct-enemy. Final reduction scales with Crimson's Initiative and remains unresolved. Vhagar's Physical Damage outputs are mitigated by that stat. Timing: Even-numbered rounds. Enhanced by Crimson Intelligence. Duration: 2 rounds.",
     "id": "enemy-mitigation-crimson-vermins-bane-vermins-bane-instinct-down-stat-dealt-modifier-vhagar-instinct",
     "interactionScope": "cross-dragon",
     "matchedOutputCapabilityIds": [
@@ -62565,7 +62565,7 @@
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final Fire Damage mitigation interaction cannot be calculated because affected-enemy overlap with the Fire Damage target and the final mitigation formula are unresolved.",
-    "explanation": "Crimson's Vermin's Bane can reduce enemy Initiative. Enemy Initiative reduction is -12%. Crimson's Fire Damage outputs are mitigated by that stat. Timing: Even-numbered rounds. Enhanced by Crimson Intelligence. Duration: 2 rounds.",
+    "explanation": "Crimson's Vermin's Bane can reduce enemy Initiative. Base Enemy Initiative reduction -12% on enemy; any-lane; highest-stat; 1 target; caster eligibility unknown; selection stat instinct; selection resource instinct; comparison highest; comparison pool enemy-side; tie behavior candidate-group; shared group vermins-bane-highest-instinct-enemy. Final reduction scales with Crimson's Initiative and remains unresolved. Crimson's Fire Damage outputs are mitigated by that stat. Timing: Even-numbered rounds. Enhanced by Crimson Intelligence. Duration: 2 rounds.",
     "id": "enemy-mitigation-crimson-vermins-bane-vermins-bane-initiative-down-stat-dealt-modifier-crimson-initiative",
     "interactionScope": "internal",
     "matchedOutputCapabilityIds": [
@@ -62646,7 +62646,7 @@
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final Fire Damage mitigation interaction cannot be calculated because affected-enemy overlap with the Fire Damage target and the final mitigation formula are unresolved.",
-    "explanation": "Crimson's Vermin's Bane can reduce enemy Initiative. Enemy Initiative reduction is -12%. Caraxes's Fire Damage outputs are mitigated by that stat. Timing: Even-numbered rounds. Enhanced by Crimson Intelligence. Duration: 2 rounds.",
+    "explanation": "Crimson's Vermin's Bane can reduce enemy Initiative. Base Enemy Initiative reduction -12% on enemy; any-lane; highest-stat; 1 target; caster eligibility unknown; selection stat instinct; selection resource instinct; comparison highest; comparison pool enemy-side; tie behavior candidate-group; shared group vermins-bane-highest-instinct-enemy. Final reduction scales with Crimson's Initiative and remains unresolved. Caraxes's Fire Damage outputs are mitigated by that stat. Timing: Even-numbered rounds. Enhanced by Crimson Intelligence. Duration: 2 rounds.",
     "id": "enemy-mitigation-crimson-vermins-bane-vermins-bane-initiative-down-stat-dealt-modifier-caraxes-initiative",
     "interactionScope": "cross-dragon",
     "matchedOutputCapabilityIds": [
@@ -67439,7 +67439,7 @@
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final Tactical Damage mitigation interaction cannot be calculated because affected-enemy overlap with the Tactical Damage target and the final mitigation formula are unresolved.",
-    "explanation": "Kalspire's Battle Cunning can reduce enemy Intelligence. Enemy Intelligence reduction is -6.5%. Kalspire's Tactical Damage outputs are mitigated by that stat. Timing: Start of combat. Enhanced by Kalspire Instinct. Duration: until end of combat.",
+    "explanation": "Kalspire's Battle Cunning can reduce enemy Intelligence. Base Enemy Intelligence reduction -6.5% on enemy; any-lane; any; 3 targets; caster eligibility unknown. Final reduction scales with Kalspire's Initiative and remains unresolved. Kalspire's Tactical Damage outputs are mitigated by that stat. Timing: Start of combat. Enhanced by Kalspire Instinct. Duration: until end of combat.",
     "id": "enemy-mitigation-kalspire-battle-cunning-battle-cunning-intelligence-down-stat-dealt-modifier-kalspire-intelligence",
     "interactionScope": "internal",
     "matchedOutputCapabilityIds": [
@@ -67543,7 +67543,7 @@
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final Tactical Damage mitigation interaction cannot be calculated because affected-enemy overlap with the Tactical Damage target and the final mitigation formula are unresolved.",
-    "explanation": "Kalspire's Battle Cunning can reduce enemy Intelligence. Enemy Intelligence reduction is -6.5%. Syrax's Tactical Damage outputs are mitigated by that stat. Timing: Start of combat. Enhanced by Kalspire Instinct. Duration: until end of combat.",
+    "explanation": "Kalspire's Battle Cunning can reduce enemy Intelligence. Base Enemy Intelligence reduction -6.5% on enemy; any-lane; any; 3 targets; caster eligibility unknown. Final reduction scales with Kalspire's Initiative and remains unresolved. Syrax's Tactical Damage outputs are mitigated by that stat. Timing: Start of combat. Enhanced by Kalspire Instinct. Duration: until end of combat.",
     "id": "enemy-mitigation-kalspire-battle-cunning-battle-cunning-intelligence-down-stat-dealt-modifier-syrax-intelligence",
     "interactionScope": "cross-dragon",
     "matchedOutputCapabilityIds": [
@@ -70637,7 +70637,7 @@
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final Physical Damage mitigation interaction cannot be calculated because affected-enemy overlap with the Physical Damage target and the final mitigation formula are unresolved.",
-    "explanation": "Crimson's Vermin's Bane can reduce enemy Instinct. Enemy Instinct reduction is -12%. Venator's Physical Damage outputs are mitigated by that stat. Timing: Even-numbered rounds. Enhanced by Crimson Intelligence. Duration: 2 rounds.",
+    "explanation": "Crimson's Vermin's Bane can reduce enemy Instinct. Base Enemy Instinct reduction -12% on enemy; any-lane; highest-stat; 1 target; caster eligibility unknown; selection stat instinct; selection resource instinct; comparison highest; comparison pool enemy-side; tie behavior candidate-group; shared group vermins-bane-highest-instinct-enemy. Final reduction scales with Crimson's Initiative and remains unresolved. Venator's Physical Damage outputs are mitigated by that stat. Timing: Even-numbered rounds. Enhanced by Crimson Intelligence. Duration: 2 rounds.",
     "id": "enemy-mitigation-crimson-vermins-bane-vermins-bane-instinct-down-stat-dealt-modifier-venator-instinct",
     "interactionScope": "cross-dragon",
     "matchedOutputCapabilityIds": [
@@ -70770,7 +70770,7 @@
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final Physical Damage mitigation interaction cannot be calculated because affected-enemy overlap with the Physical Damage target and the final mitigation formula are unresolved.",
-    "explanation": "Crimson's Vermin's Bane can reduce enemy Instinct. Enemy Instinct reduction is -12%. Vhagar's Physical Damage outputs are mitigated by that stat. Timing: Even-numbered rounds. Enhanced by Crimson Intelligence. Duration: 2 rounds.",
+    "explanation": "Crimson's Vermin's Bane can reduce enemy Instinct. Base Enemy Instinct reduction -12% on enemy; any-lane; highest-stat; 1 target; caster eligibility unknown; selection stat instinct; selection resource instinct; comparison highest; comparison pool enemy-side; tie behavior candidate-group; shared group vermins-bane-highest-instinct-enemy. Final reduction scales with Crimson's Initiative and remains unresolved. Vhagar's Physical Damage outputs are mitigated by that stat. Timing: Even-numbered rounds. Enhanced by Crimson Intelligence. Duration: 2 rounds.",
     "id": "enemy-mitigation-crimson-vermins-bane-vermins-bane-instinct-down-stat-dealt-modifier-vhagar-instinct",
     "interactionScope": "cross-dragon",
     "matchedOutputCapabilityIds": [
@@ -70875,7 +70875,7 @@
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final Fire Damage mitigation interaction cannot be calculated because affected-enemy overlap with the Fire Damage target and the final mitigation formula are unresolved.",
-    "explanation": "Crimson's Vermin's Bane can reduce enemy Initiative. Enemy Initiative reduction is -12%. Crimson's Fire Damage outputs are mitigated by that stat. Timing: Even-numbered rounds. Enhanced by Crimson Intelligence. Duration: 2 rounds.",
+    "explanation": "Crimson's Vermin's Bane can reduce enemy Initiative. Base Enemy Initiative reduction -12% on enemy; any-lane; highest-stat; 1 target; caster eligibility unknown; selection stat instinct; selection resource instinct; comparison highest; comparison pool enemy-side; tie behavior candidate-group; shared group vermins-bane-highest-instinct-enemy. Final reduction scales with Crimson's Initiative and remains unresolved. Crimson's Fire Damage outputs are mitigated by that stat. Timing: Even-numbered rounds. Enhanced by Crimson Intelligence. Duration: 2 rounds.",
     "id": "enemy-mitigation-crimson-vermins-bane-vermins-bane-initiative-down-stat-dealt-modifier-crimson-initiative",
     "interactionScope": "internal",
     "matchedOutputCapabilityIds": [
