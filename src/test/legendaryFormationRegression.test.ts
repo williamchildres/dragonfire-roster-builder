@@ -579,7 +579,7 @@ describe('legendary formation analysis regression fixes', () => {
       item.detail.includes('One candidate is selected when the activation succeeds; the selected target is unresolved.')
     )).toBe(true);
     expect(armorBreak?.state).toBe('conditional');
-    expect(huntersBane?.state).toBe('conditional');
+    expect(huntersBane?.state).toBe('active');
     expect(flightMasteryEnemy?.state).toBe('active');
     expect(flightMasteryEnemy?.effectTitle).toBe('Flight Mastery - Enemy Initiative reduction');
     expect(flightMasteryEnemy?.summary).toContain('Enemy Initiative -6%');

@@ -263,7 +263,7 @@ function potentialTraceStatusReason(trace: SynergyTrace): string {
     return 'Enemy identity, allied target overlap, and final damage remain unresolved.';
   }
   if (trace.matchKind === 'periodic-status-damage') {
-    return 'Application success, selected enemy identity, overlap, successful-application uptime, and final periodic damage remain unresolved.';
+    return 'Application success on each independently checked enemy, successful-application uptime, first-tick timing, refresh behavior, stacking, mitigation, and final periodic damage remain unresolved.';
   }
   if (trace.matchKind === 'extra-basic-attack-trigger') {
     return 'Repeat count and final formula remain unresolved.';
@@ -297,24 +297,39 @@ function potentialTraceStatusReason(trace: SynergyTrace): string {
     return `${capitalizeSentenceList(pieces)} remain conditional.`;
   }
   if (trace.matchKind === 'status-condition-enablement') {
-    return 'Activation success and final formula remain unresolved.';
+    const text = [trace.title, trace.explanation, ...trace.matchedFacts, ...trace.effects, ...trace.assumptions, ...trace.unresolvedQuestions].join(' ');
+    if (trace.targetSelectionGroup?.selectionUncertain) {
+      if (trace.targetSelectionGroup.selection === 'highest-stat') {
+        return 'The final selected recipient remains unresolved because one or more comparison values are unavailable.';
+      }
+      return 'The final selected recipient remains unresolved for this candidate set.';
+    }
+    if (trace.recipientDragonId !== null && /ally/i.test(trace.targetSelectorSummary ?? '')) {
+      return /same-round|action order|overlap/i.test(text)
+        ? 'Activation success, resulting uptime, and same-round ordering remain unresolved.'
+        : 'Activation success and resulting uptime remain unresolved.';
+    }
+    if (/independently checked enemy|enemy targets|3 enemies/i.test(text) || /enemy/i.test(trace.targetSelectorSummary ?? '')) {
+      return 'Application success on each independently checked enemy, resulting status uptime, and refresh behavior remain unresolved.';
+    }
+    return 'Application success and resulting status uptime remain unresolved.';
   }
   if (trace.matchKind === 'stat-scaling-support' || trace.matchKind === 'incoming-effect-amplification') {
-    return 'Selected recipient identity and final formula remain unresolved.';
+    return 'Modifier recipient identity and final output formula remain unresolved.';
   }
   if (trace.ruleId === 'status-source-output' || trace.ruleId === 'self-status-output') {
     if (/enemy/i.test(trace.targetSelectorSummary ?? '') || /enemy/i.test(text)) {
-      return 'Application success and final enemy target identity remain unresolved.';
+      return 'Application success on each independently checked enemy and resulting status uptime remain unresolved.';
     }
-    return 'Application success and final uptime remain unresolved.';
+    return 'Application success and resulting status uptime remain unresolved.';
   }
   if (/same-round|action order|resolves first/i.test(text)) {
     return 'Action order, schedule overlap, uptime, and final formula remain unresolved.';
   }
   if (/chance|activation|uptime/i.test(text)) {
-    return 'Activation success and final formula remain unresolved.';
+    return 'Application success and resulting status uptime remain unresolved.';
   }
-  return 'Activation success and final formula remain unresolved.';
+  return 'Application success and resulting status uptime remain unresolved.';
 }
 
 function capitalizeSentenceList(items: string[]): string {

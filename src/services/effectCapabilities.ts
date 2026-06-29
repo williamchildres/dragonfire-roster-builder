@@ -2686,7 +2686,7 @@ function analyzeEnemyStatusSourceOutputs(
       conflicts: requirements
         .filter((requirement) => requirement.satisfied === false)
         .map((requirement) => `${requirement.label}: expected ${requirement.expected}, actual ${requirement.actual ?? 'unknown'}`),
-      assumptions: ['Status application remains chance-based or conditional when activation, target choice, or uptime is unresolved.'],
+      assumptions: ['Status application remains chance-based or conditional when activation or uptime is unresolved.'],
       unresolvedQuestions: [
         ...(context?.effect.activationRoll?.unresolved && context.effect.activationRoll.description ? [context.effect.activationRoll.description] : []),
         ...(context?.schedule.activationRoll?.unresolved && context.schedule.activationRoll.description ? [context.schedule.activationRoll.description] : []),
@@ -2695,7 +2695,7 @@ function analyzeEnemyStatusSourceOutputs(
       recipientEvidenceIds: [],
       combatLogConfirmed: false,
       exactResultKnown: false,
-      exactResultUnknownReason: 'Exact status target outcome cannot be calculated because activation, target identity, and uptime are unresolved.',
+      exactResultUnknownReason: 'Exact status application cannot be calculated because application success, uptime, refresh behavior, and first-tick timing are unresolved.',
       matchKind: 'status-condition-enablement',
       channel: 'status',
       targetSelectorSummary: targetSelectorSummary(output.targetSelector),
@@ -2817,8 +2817,8 @@ function analyzeFriendlyStatusSourceOutputs(
       combatLogConfirmed: false,
       exactResultKnown: false,
       exactResultUnknownReason: recipient
-        ? `${recipient.name} is the resolved recipient if ${statusOutput.abilityName} activates; exact activation and uptime are not calculated.`
-        : 'Exact status recipient and uptime are not calculated in formation analysis.',
+        ? `${recipient.name} is the resolved recipient if ${statusOutput.abilityName} activates; exact activation and resulting uptime are not calculated.`
+        : 'Exact status application cannot be calculated because application success and resulting uptime are unresolved.',
       matchKind: 'status-condition-enablement',
       channel: 'status',
       targetSelectorSummary: targetSelectorSummary(statusOutput.targetSelector),
@@ -3245,12 +3245,6 @@ function analyzeStatScalingSupport(
       if (!provider || !recipient) {
         continue;
       }
-      const recipientSelectionUnresolved = oneTargetRecipientSelectionUnresolved(formation, dragons, modifier, providerPosition);
-      const selectionCandidateIds = recipientSelectionUnresolved
-        ? uniqueSorted(targetCandidatePositions(formation, dragons, modifier, providerPosition)
-          .map((position) => formation[position])
-          .filter((dragonId): dragonId is string => Boolean(dragonId)))
-        : [];
       const context = sourceEffectContext(provider, modifier.abilityId, modifier.sourceEffectId);
       const modifierDetails = statModifierDetailLines(modifier, context, options);
       const requirements = [
@@ -3278,36 +3272,12 @@ function analyzeStatScalingSupport(
         sourceEvidenceIds: modifier.evidenceIds,
         recipientEvidenceIds: matchedOutputs.flatMap((output) => output.evidenceIds),
         assumptions: [
-          ...(recipientSelectionUnresolved ? ['Recipient selection is unresolved; this candidate-specific scaling consequence is not guaranteed.'] : []),
           'Exact stat-to-effect conversion formula is unknown.',
         ],
         unresolvedQuestions: [
-          ...(recipientSelectionUnresolved ? ['Final selected recipient for this one-target stat modifier is unresolved.'] : []),
           'Final value and stacking order are not calculated.',
         ],
-        futureOrConditional: capabilityFutureOrConditional(modifier, options) ||
-          modifier.conditional ||
-          recipientSelectionUnresolved ||
-          matchedOutputs.some((output) => capabilityFutureOrConditional(output, options) || output.conditional),
-        targetSelectionGroup: recipientSelectionUnresolved
-          ? {
-              targetCount: modifier.targetSelector.count ?? 1,
-              eligibleRecipientDragonIds: selectionCandidateIds,
-              selectionUncertain: true,
-              selection: modifier.targetSelector.selection,
-              selectionStat: modifier.targetSelector.selectionStat ?? null,
-              selectionResource: modifier.targetSelector.selectionResource ?? modifier.targetSelector.selectionStat ?? null,
-              comparisonDirection: modifier.targetSelector.comparisonDirection ?? null,
-              comparisonPool: modifier.targetSelector.comparisonPool ?? null,
-              candidateStats: modifier.targetSelector.selectionStat
-                ? selectionCandidateIds.map((dragonId) => ({
-                    dragonId,
-                    statId: modifier.targetSelector.selectionStat!,
-                    value: observedStatValue(dragons, dragonId, modifier.targetSelector.selectionStat!),
-                  }))
-                : undefined,
-            }
-          : undefined,
+        futureOrConditional: capabilityFutureOrConditional(modifier, options) || modifier.conditional,
       }));
     }
   }
@@ -4504,7 +4474,7 @@ function analyzePeriodicStatusDamage(
       recipientDragonId: null,
       recipientAbilityId: null,
       title: `${status} periodic ${channel}`,
-      explanation: `${provider.name}'s ${abilityName} can apply ${status}. ${status} deals periodic ${channel} each round${displayValue === null ? ' at an unknown Damage Rate' : ` at Damage Rate ${displayValue}`}${periodic.durationRounds ? ` for ${periodic.durationRounds} rounds` : ''}. Activation, target selection, target overlap, and uptime remain conditional; final damage is not calculated.`,
+      explanation: `${provider.name}'s ${abilityName} can apply ${status}. ${status} deals periodic ${channel} each round${displayValue === null ? ' at an unknown Damage Rate' : ` at Damage Rate ${displayValue}`}${periodic.durationRounds ? ` for ${periodic.durationRounds} rounds` : ''}. Application success on each independently checked enemy, successful-application uptime, first-tick timing, refresh behavior, stacking, mitigation, and final damage are not calculated.`,
       requirements,
       matchedFacts: [
         ...matchingStatusOutputs.map((output) => `${abilityName} ${output.sourceEffectId ?? output.id} targets ${targetSelectorSummary(output.targetSelector)}.`),
@@ -4521,14 +4491,14 @@ function analyzePeriodicStatusDamage(
         .filter((requirement) => requirement.satisfied === false)
         .map((requirement) => `${requirement.label}: expected ${requirement.expected}, actual ${requirement.actual ?? 'unknown'}`),
       assumptions: [
-        'Periodic status application is conditional on activation and target selection.',
-        'Enemy target overlap is not simulated or guaranteed.',
+        'Periodic status application is conditional on activation and per-enemy application success.',
+        'Enemy identities that successfully receive the status are not individually enumerated.',
         'Uptime is not treated as guaranteed.',
         'The target selector is preserved as enemy-side metadata rather than assigning a friendly recipient.',
       ],
       unresolvedQuestions: [
         `${status} first-tick timing, refresh behavior, stacking, and overlapping-source behavior remain unresolved.`,
-        'Exact final damage cannot be calculated because target overlap, uptime, stacking, mitigation, and final formulas are unresolved.',
+        'Exact final damage cannot be calculated because application success, uptime, stacking, mitigation, and final formulas are unresolved.',
       ],
       sourceEvidenceIds: statusOutput.evidenceIds,
       recipientEvidenceIds: [],
@@ -4538,7 +4508,7 @@ function analyzePeriodicStatusDamage(
       recipientModifierValue: periodicDamageResolvedValue(periodic, statusOutput, options),
       combatLogConfirmed: false,
       exactResultKnown: false,
-      exactResultUnknownReason: 'Exact final periodic damage cannot be calculated because target overlap, uptime, stacking, mitigation, and final formulas are unresolved.',
+      exactResultUnknownReason: 'Exact final periodic damage cannot be calculated because application success on each independently checked enemy, successful-application uptime, first-tick timing, refresh behavior, stacking, mitigation, and final formulas are unresolved.',
       matchKind: 'periodic-status-damage',
       channel: periodic.channel,
       modifierRole: 'enemy-debuff',
@@ -4584,8 +4554,8 @@ function periodicDamageDetailLines(
           : null,
       sharedTargetFact(context.ability, context.effect),
     ].filter((line): line is string => Boolean(line))),
-    'Activation, target selection, target overlap, and uptime remain conditional.',
-    'Final damage is not calculated.',
+    'Application success on each independently checked enemy, successful-application uptime, first-tick timing, refresh behavior, stacking, mitigation, and final periodic damage are unresolved.',
+    'Final periodic damage is not calculated.',
   ].filter((line): line is string => Boolean(line));
 }
 
@@ -4903,31 +4873,6 @@ function analyzePeriodicDamageAmplification(
     }
   }
   return traces;
-}
-
-function oneTargetRecipientSelectionUnresolved(
-  formation: FormationAnalysisInput,
-  dragons: Dragon[],
-  modifier: ModifierCapability,
-  providerPosition: FormationPosition | null,
-): boolean {
-  if (modifier.targetSelector.count !== 1 || modifier.targetSelector.selection === 'self' || modifier.targetSelector.position) {
-    return false;
-  }
-  if (modifier.targetSelector.selection === 'highest-stat' && modifier.targetSelector.selectionStat) {
-    const eligible = allEligibleTargetCandidatePositions(formation, modifier, providerPosition);
-    const values = eligible.map((position) => observedStatValue(dragons, formation[position]!, modifier.targetSelector.selectionStat!));
-    if (values.some((value) => value === null)) {
-      return eligible.length > 1;
-    }
-    const max = Math.max(...values.map((value) => value ?? Number.NEGATIVE_INFINITY));
-    return values.filter((value) => value === max).length !== 1;
-  }
-  if (modifier.targetSelector.selectionResource === 'current-troops') {
-    return allEligibleTargetCandidatePositions(formation, modifier, providerPosition).length > 1;
-  }
-  const candidates = targetCandidatePositions(formation, dragons, modifier, providerPosition);
-  return candidates.length > 1;
 }
 
 function withResolvedSingleQualifiedRecipientFacts(
@@ -6072,6 +6017,7 @@ function statusSupplierFacts(
   context: { ability: AbilityDefinition; schedule: AbilitySchedule; effect: AbilityEffect } | null,
   options: CapabilityOptions,
   relatedStatusOutputs: StatusOutputCapability[] = [statusOutput],
+  recipientResolved = false,
 ): { facts: string[]; effects: string[]; summary: string | null } {
   if (!context) {
     return { facts: [], effects: [], summary: null };
@@ -6134,7 +6080,7 @@ function statusSupplierFacts(
       : null;
   const perTargetFacts = perTargetCheckFacts(targetEffect, schedule, options);
   const sharedActivationGroup = activationGroupId(schedule, effect);
-  const applicationFacts = statusApplicationResultFacts(statusOutput);
+  const applicationFacts = statusApplicationResultFacts(statusOutput, recipientResolved);
   const targetGraphFacts = [
     ...targetReferenceFacts(targetEffect),
     ...referencedEffectTargetReferenceFacts(schedule, targetEffect),
@@ -6256,14 +6202,35 @@ function effectiveLevelFactsForStatusOutput(
   };
 }
 
-function statusApplicationResultFacts(statusOutput: StatusOutputCapability): { facts: string[]; effects: string[] } {
+function statusApplicationResultFacts(statusOutput: StatusOutputCapability, recipientResolved = false): { facts: string[]; effects: string[] } {
   const status = statusLabel(statusOutput.statusId);
   if (statusChanceConditional(statusOutput)) {
+    if (statusOutput.targetSide === 'enemy') {
+      if ((statusOutput.targetSelector.count ?? 1) > 1) {
+        return {
+          facts: [`${status} application success is unresolved.`],
+          effects: [],
+        };
+      }
+      return {
+        facts: [
+          `${status} application success is unresolved.`,
+          selectedTargetUnresolvedFact(statusOutput),
+        ].filter((fact): fact is string => Boolean(fact)),
+        effects: [],
+      };
+    }
+    if (statusOutput.targetSide === 'ally') {
+      return {
+        facts: [
+          `${status} application success is unresolved.`,
+          recipientResolved ? null : selectedTargetUnresolvedFact(statusOutput),
+        ].filter((fact): fact is string => Boolean(fact)),
+        effects: [],
+      };
+    }
     return {
-      facts: [
-        `${status} application success is unresolved.`,
-        selectedTargetUnresolvedFact(statusOutput),
-      ].filter((fact): fact is string => Boolean(fact)),
+      facts: [`${status} application success is unresolved.`],
       effects: [],
     };
   }
@@ -8748,7 +8715,7 @@ function outgoingExplanation(
     return `${recipientName} is eligible for Syrax's Blazing Fury Fire Damage support. Qualifying outputs: ${labels}. Activation is a 20% each-round chance, lasts two rounds, and prioritizes Fire Damage allies.`;
   }
   if (modifier.dragonId === 'syrax' && modifier.abilityId === 'syrax-tactical-inferno') {
-    return `${recipientName} is eligible for Syrax's Tactical Inferno ${channelLabel(modifier.channel)} support. Qualifying outputs: ${labels}. Target selection follows the verified flank preference and remains selection-dependent.`;
+    return `${recipientName} is resolved by the verified flank preference for Syrax's Tactical Inferno ${channelLabel(modifier.channel)} support. Qualifying outputs: ${labels}.`;
   }
   return `${providerName}'s ${modifier.abilityName} increases ${recipientName}'s ${directedChannelLabel(modifier.channel, 'dealt')}. Qualifying outputs: ${labels}.`;
 }
@@ -8901,7 +8868,7 @@ function exactUnknownReason(modifier: ModifierCapability, matchKind: string): st
     return 'Exact final stack benefit cannot be calculated because activation, repeat count, final stack count, uptime, and final formulas are unresolved.';
   }
   if (matchKind === 'periodic-status-damage') {
-    return 'Exact final periodic damage cannot be calculated because application success, selected enemy identity, overlap, successful-application uptime, and final formulas are unresolved.';
+    return 'Exact final periodic damage cannot be calculated because application success on each independently checked enemy, successful-application uptime, first-tick timing, refresh behavior, stacking, mitigation, and final formulas are unresolved.';
   }
   if (matchKind === 'extra-basic-attack-trigger') {
     return 'Exact final repeat-trigger result cannot be calculated because repeat count and final formulas are unresolved.';

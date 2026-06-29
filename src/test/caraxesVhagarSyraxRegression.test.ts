@@ -75,7 +75,7 @@ describe('Caraxes, Vhagar, and Syrax review regression', () => {
   it('preserves the reviewed trace counts and exact trace identities', () => {
     const traces = reviewTraces();
     expect(traces).toHaveLength(56);
-    expect(traceCounts(traces)).toMatchObject({ active: 24, potential: 21, inactive: 9, blocked: 1, unknown: 1 });
+    expect(traceCounts(traces)).toMatchObject({ active: 27, potential: 18, inactive: 9, blocked: 1, unknown: 1 });
     expect(new Set(traces.map(technicalAnalysisTraceIdentity)).size).toBe(traces.length);
   });
 
@@ -163,12 +163,17 @@ describe('Caraxes, Vhagar, and Syrax review regression', () => {
     expect(traceText(slowSource)).toContain('Source effect ID: crippling-inferno-slow.');
     expect(traceText(slowSource)).toContain('Independent per-target checks: 3.');
     expect(traceText(slowSource)).toContain('Status application chance: 10% at effective Habit Level 1.');
+    expect(slowSource!.exactResultUnknownReason).toBe('Exact status application cannot be calculated because application success, uptime, refresh behavior, and first-tick timing are unresolved.');
 
     expect(burnSource).toBeDefined();
     expect(traceText(burnSource)).toContain('Source effect ID: crippling-inferno-burn.');
     expect(traceText(burnSource)).toContain('Independent per-target checks: 3.');
+    expect(traceText(burnSource)).not.toMatch(/target selection|target overlap|final formula/i);
+    expect(burnSource!.exactResultUnknownReason).toBe('Exact status application cannot be calculated because application success, uptime, refresh behavior, and first-tick timing are unresolved.');
     expect(burnPeriodic).toBeDefined();
     expect(traceText(burnPeriodic)).toContain('Burn deals periodic Fire Damage each round.');
+    expect(traceText(burnPeriodic)).not.toMatch(/target selection|target overlap/i);
+    expect(burnPeriodic!.exactResultUnknownReason).toBe('Exact final periodic damage cannot be calculated because application success on each independently checked enemy, successful-application uptime, first-tick timing, refresh behavior, stacking, mitigation, and final formulas are unresolved.');
 
     expect(firstStrikeSource).toBeDefined();
     expect(traceText(firstStrikeSource)).toContain('Source effect ID: blazing-fury-first-strike.');
@@ -182,7 +187,7 @@ describe('Caraxes, Vhagar, and Syrax review regression', () => {
     expect(traceText(firstStrikeSource)).toContain('Status application chance: 20%.');
     expect(traceText(firstStrikeSource)).toContain('Duration: 2 rounds.');
     expect(traceText(firstStrikeSource)).not.toMatch(/one enemy|Selected enemy|enemy identity/i);
-    expect(firstStrikeSource!.exactResultUnknownReason).toBe('Caraxes is the resolved recipient if Blazing Fury activates; exact activation and uptime are not calculated.');
+    expect(firstStrikeSource!.exactResultUnknownReason).toBe('Caraxes is the resolved recipient if Blazing Fury activates; exact activation and resulting uptime are not calculated.');
   });
 
   it('reports carryover, same-round overlap, and fixed conditional chance wording', () => {

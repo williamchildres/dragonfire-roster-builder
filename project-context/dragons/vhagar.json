@@ -3598,7 +3598,7 @@
   "firstObservedInGame": null,
   "format": "dragonfire-dragon-profile",
   "gameVersion": null,
-  "generatedAt": "2026-06-29T03:03:20.803Z",
+  "generatedAt": "2026-06-29T04:12:08.924Z",
   "habits": [
     {
       "abilityClass": "passive",
@@ -6429,8 +6429,8 @@
   "rosterSourceStatus": "official-website",
   "slug": "vhagar",
   "source": {
-    "branch": "fix/radiant-effect-details-duration-pass9b",
-    "commit": "0e98844af12aa96856113693c4d573910ec3271c",
+    "branch": "fix/coverage-scaling-status-reasons-pass10",
+    "commit": "ae12d9f7c9a9df64f976670d56f7dca0d91a96a6",
     "databaseVersion": "0.6.2",
     "dataSchemaVersion": 12,
     "gameBuild": "26.6.53509",
