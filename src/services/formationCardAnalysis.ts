@@ -846,7 +846,12 @@ function omitNormalCardSummarySentences(value: string, summaryLines: string[]): 
   }
   const summarySentences = new Set(summaryLines.flatMap(splitSentences).map(normalizeText));
   return splitSentences(value)
-    .filter((sentence) => !summarySentences.has(normalizeText(sentence)))
+    .filter((sentence) => {
+      if (/^(Timing|Duration):/i.test(sentence)) {
+        return true;
+      }
+      return !summarySentences.has(normalizeText(sentence));
+    })
     .join(' ');
 }
 

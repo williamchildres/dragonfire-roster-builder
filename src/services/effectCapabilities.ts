@@ -3660,15 +3660,19 @@ function analyzeEnemyMitigationReduction(
       if (matchedOutputs.length === 0) {
         continue;
       }
-      const provider = dragonById(dragons, modifier.dragonId);
-      const recipient = dragonById(dragons, recipientId);
-      if (!provider || !recipient) {
-        continue;
-      }
-      const context = sourceEffectContext(provider, modifier.abilityId, modifier.sourceEffectId);
-      const sourceTimingFacts = context
-        ? [scheduleTimingDetail(context.schedule), durationDetail(context.effect), durationLine(modifier)].filter((fact): fact is string => Boolean(fact))
-        : [];
+    const provider = dragonById(dragons, modifier.dragonId);
+    const recipient = dragonById(dragons, recipientId);
+    if (!provider || !recipient) {
+      continue;
+    }
+    const context = sourceEffectContext(provider, modifier.abilityId, modifier.sourceEffectId);
+    const sourceTimingFacts = context
+      ? uniqueOrdered([
+        scheduleTimingDetail(context.schedule),
+        durationDetail(context.effect),
+        durationLine(modifier),
+      ].filter((fact): fact is string => Boolean(fact)))
+      : [];
       const completeCoverage = enemyCoverageIsComplete(modifier);
       const selectionUncertain = enemyTargetSelectionIsUncertain(modifier);
       const requirements = [
@@ -3767,7 +3771,11 @@ function analyzeEnemyDamageDealtReductions(
     }
     const context = sourceEffectContext(provider, modifier.abilityId, modifier.sourceEffectId);
     const sourceTimingFacts = context
-      ? [scheduleTimingDetail(context.schedule), durationDetail(context.effect), durationLine(modifier)].filter((fact): fact is string => Boolean(fact))
+      ? uniqueOrdered([
+        scheduleTimingDetail(context.schedule),
+        durationDetail(context.effect),
+        durationLine(modifier),
+      ].filter((fact): fact is string => Boolean(fact)))
       : [];
     const completeCoverage = enemyCoverageIsComplete(modifier);
     const selectionUncertain = enemyTargetSelectionIsUncertain(modifier);

@@ -4971,7 +4971,7 @@
   "firstObservedInGame": "2026-06-22",
   "format": "dragonfire-dragon-profile",
   "gameVersion": null,
-  "generatedAt": "2026-06-29T02:14:06.160Z",
+  "generatedAt": "2026-06-29T02:43:02.655Z",
   "habits": [
     {
       "abilityClass": "passive",
@@ -8162,8 +8162,8 @@
   "rosterSourceStatus": "in-game-verified-pending-official-site",
   "slug": "shadowsong",
   "source": {
-    "branch": "fix/state-reason-projection-pass8",
-    "commit": "e18b47def4b42b9105d5419446a202209793e9c7",
+    "branch": "main",
+    "commit": "c8ce595478cd95b971e0c32d50756d39061ea970",
     "databaseVersion": "0.6.2",
     "dataSchemaVersion": 12,
     "gameBuild": "26.6.53509",
