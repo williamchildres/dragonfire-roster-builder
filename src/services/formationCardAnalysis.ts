@@ -3159,10 +3159,58 @@ function escapeRegExp(value: string): string {
 }
 
 function compactSummaryText(summaryLines: string[], candidateTotal: number | null): string {
-  return [
-    ...summaryLines,
+  const dedupedLines = dedupeRepeatedTargetFactSummaryLines(summaryLines);
+  const text = [
+    ...dedupedLines,
     candidateTotal && candidateTotal > 1 ? 'Target not guaranteed.' : null,
   ].filter(Boolean).join(' ');
+  return stripRedundantTargetFactSuffix(text);
+}
+
+function dedupeRepeatedTargetFactSummaryLines(summaryLines: string[]): string[] {
+  const lines: string[] = [];
+  const seenTargetFacts = new Set<string>();
+  for (const line of summaryLines) {
+    const targetFact = targetFactSignature(line);
+    if (targetFact) {
+      if (seenTargetFacts.has(targetFact)) {
+        continue;
+      }
+      seenTargetFacts.add(targetFact);
+    }
+    lines.push(line);
+  }
+  return lines;
+}
+
+function targetFactSignature(line: string): string | null {
+  const normalized = normalizeText(line);
+  const countMatch = normalized.match(/(?:target count:\s*|targets?\s+)(\d+)\b/i) ?? normalized.match(/(\d+)\s+(?:adjacent\s+)?enemy targets?\b/i);
+  if (!countMatch) {
+    return null;
+  }
+  const count = countMatch[1];
+  const isEnemy = /enemy/.test(normalized);
+  const isAlly = /ally|allies|team/.test(normalized);
+  const scope = /adjacent|within adjacency/.test(normalized) ? 'adjacent' : 'generic';
+  if (!isEnemy && !isAlly) {
+    return null;
+  }
+  return `${isEnemy ? 'enemy' : 'ally'}:${count}:${scope}`;
+}
+
+function stripRedundantTargetFactSuffix(text: string): string {
+  const match = text.match(/\s+(Targets?\s+\d+(?:\s+(?:adjacent\s+)?)?(?:enemy|ally|allies|team)\s+targets?\.)$/i);
+  if (!match) {
+    return text;
+  }
+  const suffix = match[1]!;
+  const prefix = text.slice(0, -match[0].length);
+  const suffixText = normalizeText(suffix.replace(/^Targets?\s+/i, '').replace(/\.$/, ''));
+  if (normalizeText(prefix).includes(suffixText)) {
+    return prefix;
+  }
+  return text;
 }
 
 function dedupeInteractions(interactions: FormationCardInteraction[]): FormationCardInteraction[] {
@@ -3396,7 +3444,7 @@ function enemyFacingSummary(trace: SynergyTrace, source: Dragon | null = null): 
     const amount = trace.modifier.operation === 'decrease' ? `-${formatTypedModifierValue(trace.modifier)}` : formatTypedModifierValue(trace.modifier);
     const stat = enemyReductionStat(trace) ?? 'mitigation';
     const targetPhrase = enemyReductionTargetPhrase(trace);
-    const text = [trace.title, trace.explanation, ...trace.matchedFacts, ...trace.effects].join(' ');
+    const text = [trace.title, trace.explanation, ...trace.matchedFacts, ...trace.effects, trace.exactResultUnknownReason ?? ''].join(' ');
     const hasTypedBaseScaling = /Base Enemy [A-Za-z]+ reduction/i.test(text) && /Scaling stat: Initiative/i.test(text);
     const baseValue = `Base Enemy ${stat} ${amount}`;
     const finalValue = source ? `final reduction scales with ${source.name}'s Initiative and remains unresolved` : 'final reduction remains unresolved';
