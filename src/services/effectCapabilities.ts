@@ -3688,7 +3688,7 @@ function analyzeEnemyMitigationReduction(
         recipientAbilityId: matchedOutputs[0]?.abilityId ?? null,
         channel: mitigationChannel,
         title: `${channelLabel(mitigationChannel)} Mitigation Reduction`,
-        explanation: `${provider.name}'s ${modifier.abilityName} can reduce enemy ${statLabel(statId)}. ${recipient.name}'s ${channelLabel(mitigationChannel)} outputs are mitigated by that stat.`,
+        explanation: `${provider.name}'s ${modifier.abilityName} can reduce enemy ${statLabel(statId)}. Enemy ${statLabel(statId)} reduction is -${formatTypedModifierValue(modifier)}. ${recipient.name}'s ${channelLabel(mitigationChannel)} outputs are mitigated by that stat.`,
         requirements,
         matchedFacts: [
           ...(modifier.sourceEffectId ? [`Source effect ID: ${modifier.sourceEffectId}.`] : []),
@@ -3697,7 +3697,7 @@ function analyzeEnemyMitigationReduction(
           ...sourceScopeResults.map((match) => `Source-scope compatibility: ${match.sourceScopeCompatible ? 'compatible' : 'not compatible'} for ${match.outputCapabilityId}.`),
         ],
         effects: [
-          `Enemy ${statLabel(statId)} reduction may improve ${channelLabel(mitigationChannel)} outputs: ${matchedOutputs.map((output) => output.label).join(', ')}.`,
+          `Enemy ${statLabel(statId)} reduction may improve ${channelLabel(mitigationChannel)} outputs: ${matchedOutputs.map((output) => output.label).join(', ')}. Enemy ${statLabel(statId)} -${formatTypedModifierValue(modifier)}.`,
           modifier.sourceScope === 'non-basic-attacks' ? `Applies to non-Basic ${channelLabel(mitigationChannel)} only.` : `Applies to all qualifying ${channelLabel(mitigationChannel)} sources.`,
           durationLine(modifier),
         ].filter((effect): effect is string => Boolean(effect)),
@@ -5221,6 +5221,7 @@ function makeDependencyTrace({
     unresolvedQuestions,
     sourceEvidenceIds,
     recipientEvidenceIds,
+    modifier,
     combatLogConfirmed: false,
     exactResultKnown: false,
     exactResultUnknownReason: 'Exact final value cannot be calculated because final combat formulas and stacking order are not fully verified.',
@@ -8534,6 +8535,18 @@ function modifierDisplayValue(modifier: ModifierCapability, options: CapabilityO
     return `${displayValue}%`;
   }
   return `${displayValue}${unit === 'percent' ? '%' : unit === 'flat' ? ' flat' : ''}`;
+}
+
+export function formatTypedModifierValue(modifier: Pick<ModifierCapability, 'value' | 'rankedValues' | 'unit' | 'operation'>): string {
+  const value = modifier.value ?? modifier.rankedValues[0]?.value ?? null;
+  if (value === null) {
+    return 'unknown';
+  }
+  const displayValue = modifier.operation === 'decrease' ? Math.abs(value) : value;
+  if (modifier.unit === 'stack') {
+    return `${displayValue}%`;
+  }
+  return `${displayValue}${modifier.unit === 'percent' ? '%' : modifier.unit === 'flat' ? ' flat' : ''}`;
 }
 
 function modifierResolvedValue(modifier: ModifierCapability, options: CapabilityOptions): number | null {

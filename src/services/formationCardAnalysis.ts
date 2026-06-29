@@ -2,6 +2,7 @@ import { FORMATION_POSITIONS, TROOP_TYPES, type AbilityDefinition, type AbilityE
 import type { FormationAnalysisInput, RequirementTrace, SynergyTrace, TraceConfidence, TraceStatus } from '../models/synergy';
 import type { OutputCapability } from '../models/synergy';
 import { deriveOutputCapabilities, derivePeriodicDamageDefinitions, deriveStatusOutputCapabilities, periodicDamageOutputCapabilities } from './effectCapabilities';
+import { formatTypedModifierValue } from './effectCapabilities';
 import { rankedValueForHabitLevel, resolveEffectiveHabitLevelForAbility } from './habitLevels';
 import { isNormalSynergyTrace } from './synergyTrace';
 
@@ -3332,8 +3333,17 @@ function enemyFacingSummary(trace: SynergyTrace): string {
     const status = trace.title.match(/^(.+?)\s+periodic/i)?.[1] ?? 'Status';
     return `${status} deals periodic ${formatToken(trace.channel ?? 'damage-dealt')} each round; target selection and uptime are uncertain.`;
   }
-  const lowered = trace.effects.join(' ').match(/(Strength|Intelligence|Instinct|Initiative)/i)?.[1];
   const channel = trace.sourceAbilityId?.includes('battle-dread') ? 'Fire Damage' : trace.channel ? formatToken(trace.channel) : 'team damage';
+  if (trace.modifier && trace.matchKind === 'enemy-mitigation-reduction') {
+    const amount = trace.modifier.operation === 'decrease' ? `-${formatTypedModifierValue(trace.modifier)}` : formatTypedModifierValue(trace.modifier);
+    const stat = enemyReductionStat(trace) ?? 'mitigation';
+    const targetPhrase = enemyReductionTargetPhrase(trace);
+    return [
+      `Lowers enemy ${stat}, supporting allied ${channel}. Enemy ${stat} reduction is ${amount}.`,
+      `Targets ${targetPhrase}.`,
+    ].join(' ');
+  }
+  const lowered = trace.effects.join(' ').match(/(Strength|Intelligence|Instinct|Initiative)/i)?.[1];
   return lowered ? `Lowers enemy ${lowered}, supporting allied ${channel}.` : 'Lowers enemy mitigation for the team.';
 }
 
