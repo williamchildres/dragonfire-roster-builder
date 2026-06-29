@@ -140,7 +140,6 @@ describe('formation card analysis presentation', () => {
   it('presents all-matching defensive recipients without candidate-selection wording', () => {
     const roster = selectedRoster(['malachite', 'vermax', 'seasmoke']);
     const result = presentation('3', true, { roster });
-    const traces = analyzeFormationTraces(formations['3']!, dragons, { roster, previewMaxRankInteractions: true });
 
     const vermax = card(result, 'vermax');
     const malachite = card(result, 'malachite');
