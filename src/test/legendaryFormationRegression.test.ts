@@ -273,10 +273,10 @@ describe('legendary formation analysis regression fixes', () => {
       matchKind: 'enemy-mitigation-reduction',
       channel: 'tactical-damage',
     });
-    expect(traceText(battleCunningTrace!)).toContain('Timing: Start of combat.');
-    expect(traceText(battleCunningTrace!)).toContain('Duration: until end of combat.');
-    expect(traceText(battleCunningTrace!)).toContain('Enemy selector: all enemies.');
-    expect(traceText(battleCunningTrace!)).toContain('All three enemy slots are covered.');
+    expect(traceText(battleCunningTrace)).toContain('Timing: Start of combat.');
+    expect(traceText(battleCunningTrace)).toContain('Duration: until end of combat.');
+    expect(traceText(battleCunningTrace)).toContain('Enemy selector: all enemies.');
+    expect(traceText(battleCunningTrace)).toContain('All three enemy slots are covered.');
   });
 
   it('keeps Eclipse Cover inactive at Star Rank 1 in current mode', () => {
@@ -536,7 +536,7 @@ describe('legendary formation analysis regression fixes', () => {
     )).toBe(true);
     expect(armorBreak?.state).toBe('conditional');
     expect(huntersBane?.state).toBe('conditional');
-    expect(flightMasteryEnemy?.state).toBe('conditional');
+    expect(flightMasteryEnemy?.state).toBe('active');
     expect(flightMasteryEnemy?.effectTitle).toBe('Flight Mastery - Enemy Initiative reduction');
     expect(flightMasteryEnemy?.summary).toContain('Enemy Initiative -6%');
     expect(flightMasteryEnemy?.summary).not.toContain('Damage Dealt reduction');

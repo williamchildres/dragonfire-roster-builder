@@ -408,7 +408,7 @@
       "Duration: 2 rounds."
     ],
     "exactResultKnown": false,
-    "exactResultUnknownReason": "Exact final stack benefit cannot be calculated because activation, repeat count, final stack count, uptime, and final formulas are unresolved.",
+    "exactResultUnknownReason": "Exact final amplified damage cannot be calculated because stacking and final combat formulas are not fully verified.",
     "explanation": "Caraxes is eligible to receive Advantage support because it has verified Damage Dealt output. Each granted stack increases Damage Dealt by 20%. Qualifying outputs: Infernal Burst: Fire Damage, Crippling Inferno: Burn periodic Fire Damage.",
     "id": "outgoing-effect-amplification-malachite-thunderous-roar-thunderous-roar-advantage-advantage-damage-dealt-status-modifier-caraxes",
     "interactionScope": "cross-dragon",
@@ -557,7 +557,7 @@
       "Duration: 2 rounds."
     ],
     "exactResultKnown": false,
-    "exactResultUnknownReason": "Exact final stack benefit cannot be calculated because activation, repeat count, final stack count, uptime, and final formulas are unresolved.",
+    "exactResultUnknownReason": "Exact final amplified damage cannot be calculated because stacking and final combat formulas are not fully verified.",
     "explanation": "Syrax is eligible to receive Advantage support because it has verified Damage Dealt output. Each granted stack increases Damage Dealt by 20%. Qualifying outputs: Blazing Fury: Tactical Damage.",
     "id": "outgoing-effect-amplification-malachite-thunderous-roar-thunderous-roar-advantage-advantage-damage-dealt-status-modifier-syrax",
     "interactionScope": "cross-dragon",
@@ -5073,7 +5073,7 @@
       "Duration: 2 rounds."
     ],
     "exactResultKnown": false,
-    "exactResultUnknownReason": "Exact final stack benefit cannot be calculated because activation, repeat count, final stack count, uptime, and final formulas are unresolved.",
+    "exactResultUnknownReason": "Exact final amplified damage cannot be calculated because stacking and final combat formulas are not fully verified.",
     "explanation": "Caraxes is eligible to receive Advantage support because it has verified Damage Dealt output. Each granted stack increases Damage Dealt by 20%. Qualifying outputs: Infernal Burst: Fire Damage, Crippling Inferno: Burn periodic Fire Damage.",
     "id": "outgoing-effect-amplification-malachite-thunderous-roar-thunderous-roar-advantage-advantage-damage-dealt-status-modifier-caraxes",
     "interactionScope": "cross-dragon",
@@ -5222,7 +5222,7 @@
       "Duration: 2 rounds."
     ],
     "exactResultKnown": false,
-    "exactResultUnknownReason": "Exact final stack benefit cannot be calculated because activation, repeat count, final stack count, uptime, and final formulas are unresolved.",
+    "exactResultUnknownReason": "Exact final amplified damage cannot be calculated because stacking and final combat formulas are not fully verified.",
     "explanation": "Syrax is eligible to receive Advantage support because it has verified Damage Dealt output. Each granted stack increases Damage Dealt by 20%. Qualifying outputs: Blazing Fury: Tactical Damage.",
     "id": "outgoing-effect-amplification-malachite-thunderous-roar-thunderous-roar-advantage-advantage-damage-dealt-status-modifier-syrax",
     "interactionScope": "cross-dragon",
@@ -9821,7 +9821,7 @@
       "Duration: 2 rounds."
     ],
     "exactResultKnown": false,
-    "exactResultUnknownReason": "Exact final stack benefit cannot be calculated because activation, repeat count, final stack count, uptime, and final formulas are unresolved.",
+    "exactResultUnknownReason": "Exact final amplified damage cannot be calculated because stacking and final combat formulas are not fully verified.",
     "explanation": "Syrax is eligible to receive Advantage support because it has verified Damage Dealt output. Each granted stack increases Damage Dealt by 20%. Qualifying outputs: Blazing Fury: Tactical Damage.",
     "id": "outgoing-effect-amplification-malachite-thunderous-roar-thunderous-roar-advantage-advantage-damage-dealt-status-modifier-syrax",
     "interactionScope": "cross-dragon",
@@ -9931,7 +9931,7 @@
       "Duration: 2 rounds."
     ],
     "exactResultKnown": false,
-    "exactResultUnknownReason": "Exact final stack benefit cannot be calculated because activation, repeat count, final stack count, uptime, and final formulas are unresolved.",
+    "exactResultUnknownReason": "Exact final amplified damage cannot be calculated because stacking and final combat formulas are not fully verified.",
     "explanation": "Caraxes is eligible to receive Advantage support because it has verified Damage Dealt output. Each granted stack increases Damage Dealt by 20%. Qualifying outputs: Infernal Burst: Fire Damage, Crippling Inferno: Burn periodic Fire Damage.",
     "id": "outgoing-effect-amplification-malachite-thunderous-roar-thunderous-roar-advantage-advantage-damage-dealt-status-modifier-caraxes",
     "interactionScope": "cross-dragon",
@@ -14518,7 +14518,7 @@
       "Duration: 2 rounds."
     ],
     "exactResultKnown": false,
-    "exactResultUnknownReason": "Exact final stack benefit cannot be calculated because activation, repeat count, final stack count, uptime, and final formulas are unresolved.",
+    "exactResultUnknownReason": "Exact final amplified damage cannot be calculated because stacking and final combat formulas are not fully verified.",
     "explanation": "Syrax is eligible to receive Advantage support because it has verified Damage Dealt output. Each granted stack increases Damage Dealt by 20%. Qualifying outputs: Blazing Fury: Tactical Damage.",
     "id": "outgoing-effect-amplification-malachite-thunderous-roar-thunderous-roar-advantage-advantage-damage-dealt-status-modifier-syrax",
     "interactionScope": "cross-dragon",
@@ -14628,7 +14628,7 @@
       "Duration: 2 rounds."
     ],
     "exactResultKnown": false,
-    "exactResultUnknownReason": "Exact final stack benefit cannot be calculated because activation, repeat count, final stack count, uptime, and final formulas are unresolved.",
+    "exactResultUnknownReason": "Exact final amplified damage cannot be calculated because stacking and final combat formulas are not fully verified.",
     "explanation": "Caraxes is eligible to receive Advantage support because it has verified Damage Dealt output. Each granted stack increases Damage Dealt by 20%. Qualifying outputs: Infernal Burst: Fire Damage, Crippling Inferno: Burn periodic Fire Damage.",
     "id": "outgoing-effect-amplification-malachite-thunderous-roar-thunderous-roar-advantage-advantage-damage-dealt-status-modifier-caraxes",
     "interactionScope": "cross-dragon",
@@ -19167,7 +19167,7 @@
       "Duration: 2 rounds."
     ],
     "exactResultKnown": false,
-    "exactResultUnknownReason": "Exact final stack benefit cannot be calculated because activation, repeat count, final stack count, uptime, and final formulas are unresolved.",
+    "exactResultUnknownReason": "Exact final amplified damage cannot be calculated because stacking and final combat formulas are not fully verified.",
     "explanation": "Sheepstealer is eligible to receive Advantage support because it has verified Damage Dealt output. Each granted stack increases Damage Dealt by 20%. Qualifying outputs: Wild Hunt: Fire Damage, Savage Claim: Fire Damage.",
     "id": "outgoing-effect-amplification-malachite-thunderous-roar-thunderous-roar-advantage-advantage-damage-dealt-status-modifier-sheepstealer",
     "interactionScope": "cross-dragon",
@@ -19321,7 +19321,7 @@
       "Duration: 2 rounds."
     ],
     "exactResultKnown": false,
-    "exactResultUnknownReason": "Exact final stack benefit cannot be calculated because activation, repeat count, final stack count, uptime, and final formulas are unresolved.",
+    "exactResultUnknownReason": "Exact final amplified damage cannot be calculated because stacking and final combat formulas are not fully verified.",
     "explanation": "Vermax is eligible to receive Advantage support because it has verified Damage Dealt output. Each granted stack increases Damage Dealt by 20%. Qualifying outputs: Physical Basic Attack, Spreading Blaze: Physical Damage.",
     "id": "outgoing-effect-amplification-malachite-thunderous-roar-thunderous-roar-advantage-advantage-damage-dealt-status-modifier-vermax",
     "interactionScope": "cross-dragon",
@@ -23352,7 +23352,7 @@
       "Duration: 2 rounds."
     ],
     "exactResultKnown": false,
-    "exactResultUnknownReason": "Exact final stack benefit cannot be calculated because activation, repeat count, final stack count, uptime, and final formulas are unresolved.",
+    "exactResultUnknownReason": "Exact final amplified damage cannot be calculated because stacking and final combat formulas are not fully verified.",
     "explanation": "Malachite is eligible to receive Advantage support because it has verified Damage Dealt output. Each granted stack increases Damage Dealt by 20%. Qualifying outputs: Warden's Rally: Tactical Damage.",
     "id": "outgoing-effect-amplification-seasmoke-loyal-bond-loyal-bond-advantage-effect-advantage-damage-dealt-status-modifier-malachite",
     "interactionScope": "cross-dragon",
@@ -23463,7 +23463,7 @@
       "Duration: 2 rounds."
     ],
     "exactResultKnown": false,
-    "exactResultUnknownReason": "Exact final stack benefit cannot be calculated because activation, repeat count, final stack count, uptime, and final formulas are unresolved.",
+    "exactResultUnknownReason": "Exact final amplified damage cannot be calculated because stacking and final combat formulas are not fully verified.",
     "explanation": "Sheepstealer is eligible to receive Advantage support because it has verified Damage Dealt output. Each granted stack increases Damage Dealt by 20%. Qualifying outputs: Wild Hunt: Fire Damage, Savage Claim: Fire Damage.",
     "id": "outgoing-effect-amplification-seasmoke-loyal-bond-loyal-bond-advantage-effect-advantage-damage-dealt-status-modifier-sheepstealer",
     "interactionScope": "cross-dragon",
@@ -24015,7 +24015,7 @@
       "Duration: 2 rounds."
     ],
     "exactResultKnown": false,
-    "exactResultUnknownReason": "Exact final stack benefit cannot be calculated because activation, repeat count, final stack count, uptime, and final formulas are unresolved.",
+    "exactResultUnknownReason": "Exact final amplified damage cannot be calculated because stacking and final combat formulas are not fully verified.",
     "explanation": "Seasmoke is eligible to receive Advantage support because it has verified Damage Dealt output. Each granted stack increases Damage Dealt by 20%. Qualifying outputs: Cleansing Wrath: Fire Damage, Infectious Wrath: Physical Damage.",
     "id": "outgoing-effect-amplification-malachite-thunderous-roar-thunderous-roar-advantage-advantage-damage-dealt-status-modifier-seasmoke",
     "interactionScope": "cross-dragon",
@@ -24169,7 +24169,7 @@
       "Duration: 2 rounds."
     ],
     "exactResultKnown": false,
-    "exactResultUnknownReason": "Exact final stack benefit cannot be calculated because activation, repeat count, final stack count, uptime, and final formulas are unresolved.",
+    "exactResultUnknownReason": "Exact final amplified damage cannot be calculated because stacking and final combat formulas are not fully verified.",
     "explanation": "Sheepstealer is eligible to receive Advantage support because it has verified Damage Dealt output. Each granted stack increases Damage Dealt by 20%. Qualifying outputs: Wild Hunt: Fire Damage, Savage Claim: Fire Damage.",
     "id": "outgoing-effect-amplification-malachite-thunderous-roar-thunderous-roar-advantage-advantage-damage-dealt-status-modifier-sheepstealer",
     "interactionScope": "cross-dragon",
@@ -27955,7 +27955,7 @@
       "Duration: 2 rounds."
     ],
     "exactResultKnown": false,
-    "exactResultUnknownReason": "Exact final stack benefit cannot be calculated because activation, repeat count, final stack count, uptime, and final formulas are unresolved.",
+    "exactResultUnknownReason": "Exact final amplified damage cannot be calculated because stacking and final combat formulas are not fully verified.",
     "explanation": "Malachite is eligible to receive Advantage support because it has verified Damage Dealt output. Each granted stack increases Damage Dealt by 20%. Qualifying outputs: Warden's Rally: Tactical Damage.",
     "id": "outgoing-effect-amplification-seasmoke-loyal-bond-loyal-bond-advantage-effect-advantage-damage-dealt-status-modifier-malachite",
     "interactionScope": "cross-dragon",
@@ -28064,7 +28064,7 @@
       "Duration: 2 rounds."
     ],
     "exactResultKnown": false,
-    "exactResultUnknownReason": "Exact final stack benefit cannot be calculated because activation, repeat count, final stack count, uptime, and final formulas are unresolved.",
+    "exactResultUnknownReason": "Exact final amplified damage cannot be calculated because stacking and final combat formulas are not fully verified.",
     "explanation": "Vermax is eligible to receive Advantage support because it has verified Damage Dealt output. Each granted stack increases Damage Dealt by 20%. Qualifying outputs: Physical Basic Attack, Spreading Blaze: Physical Damage.",
     "id": "outgoing-effect-amplification-seasmoke-loyal-bond-loyal-bond-advantage-effect-advantage-damage-dealt-status-modifier-vermax",
     "interactionScope": "cross-dragon",
@@ -28535,7 +28535,7 @@
       "Duration: 2 rounds."
     ],
     "exactResultKnown": false,
-    "exactResultUnknownReason": "Exact final stack benefit cannot be calculated because activation, repeat count, final stack count, uptime, and final formulas are unresolved.",
+    "exactResultUnknownReason": "Exact final amplified damage cannot be calculated because stacking and final combat formulas are not fully verified.",
     "explanation": "Vermax is eligible to receive Advantage support because it has verified Damage Dealt output. Each granted stack increases Damage Dealt by 20%. Qualifying outputs: Physical Basic Attack, Spreading Blaze: Physical Damage.",
     "id": "outgoing-effect-amplification-malachite-thunderous-roar-thunderous-roar-advantage-advantage-damage-dealt-status-modifier-vermax",
     "interactionScope": "cross-dragon",
@@ -28663,7 +28663,7 @@
       "Duration: 2 rounds."
     ],
     "exactResultKnown": false,
-    "exactResultUnknownReason": "Exact final stack benefit cannot be calculated because activation, repeat count, final stack count, uptime, and final formulas are unresolved.",
+    "exactResultUnknownReason": "Exact final amplified damage cannot be calculated because stacking and final combat formulas are not fully verified.",
     "explanation": "Seasmoke is eligible to receive Advantage support because it has verified Damage Dealt output. Each granted stack increases Damage Dealt by 20%. Qualifying outputs: Cleansing Wrath: Fire Damage, Infectious Wrath: Physical Damage.",
     "id": "outgoing-effect-amplification-malachite-thunderous-roar-thunderous-roar-advantage-advantage-damage-dealt-status-modifier-seasmoke",
     "interactionScope": "cross-dragon",
@@ -32786,7 +32786,7 @@
       "Duration: 2 rounds."
     ],
     "exactResultKnown": false,
-    "exactResultUnknownReason": "Exact final stack benefit cannot be calculated because activation, repeat count, final stack count, uptime, and final formulas are unresolved.",
+    "exactResultUnknownReason": "Exact final amplified damage cannot be calculated because stacking and final combat formulas are not fully verified.",
     "explanation": "Malachite is eligible to receive Advantage support because it has verified Damage Dealt output. Each granted stack increases Damage Dealt by 20%. Qualifying outputs: Warden's Rally: Tactical Damage.",
     "id": "outgoing-effect-amplification-seasmoke-loyal-bond-loyal-bond-advantage-effect-advantage-damage-dealt-status-modifier-malachite",
     "interactionScope": "cross-dragon",
@@ -32897,7 +32897,7 @@
       "Duration: 2 rounds."
     ],
     "exactResultKnown": false,
-    "exactResultUnknownReason": "Exact final stack benefit cannot be calculated because activation, repeat count, final stack count, uptime, and final formulas are unresolved.",
+    "exactResultUnknownReason": "Exact final amplified damage cannot be calculated because stacking and final combat formulas are not fully verified.",
     "explanation": "Sheepstealer is eligible to receive Advantage support because it has verified Damage Dealt output. Each granted stack increases Damage Dealt by 20%. Qualifying outputs: Wild Hunt: Fire Damage, Savage Claim: Fire Damage.",
     "id": "outgoing-effect-amplification-seasmoke-loyal-bond-loyal-bond-advantage-effect-advantage-damage-dealt-status-modifier-sheepstealer",
     "interactionScope": "cross-dragon",
@@ -33453,7 +33453,7 @@
       "Duration: 2 rounds."
     ],
     "exactResultKnown": false,
-    "exactResultUnknownReason": "Exact final stack benefit cannot be calculated because activation, repeat count, final stack count, uptime, and final formulas are unresolved.",
+    "exactResultUnknownReason": "Exact final amplified damage cannot be calculated because stacking and final combat formulas are not fully verified.",
     "explanation": "Seasmoke is eligible to receive Advantage support because it has verified Damage Dealt output. Each granted stack increases Damage Dealt by 20%. Qualifying outputs: Cleansing Wrath: Fire Damage, Infectious Wrath: Physical Damage.",
     "id": "outgoing-effect-amplification-malachite-thunderous-roar-thunderous-roar-advantage-advantage-damage-dealt-status-modifier-seasmoke",
     "interactionScope": "cross-dragon",
@@ -33607,7 +33607,7 @@
       "Duration: 2 rounds."
     ],
     "exactResultKnown": false,
-    "exactResultUnknownReason": "Exact final stack benefit cannot be calculated because activation, repeat count, final stack count, uptime, and final formulas are unresolved.",
+    "exactResultUnknownReason": "Exact final amplified damage cannot be calculated because stacking and final combat formulas are not fully verified.",
     "explanation": "Sheepstealer is eligible to receive Advantage support because it has verified Damage Dealt output. Each granted stack increases Damage Dealt by 20%. Qualifying outputs: Wild Hunt: Fire Damage, Savage Claim: Fire Damage.",
     "id": "outgoing-effect-amplification-malachite-thunderous-roar-thunderous-roar-advantage-advantage-damage-dealt-status-modifier-sheepstealer",
     "interactionScope": "cross-dragon",
@@ -37784,7 +37784,7 @@
       "Duration: 2 rounds."
     ],
     "exactResultKnown": false,
-    "exactResultUnknownReason": "Exact final stack benefit cannot be calculated because activation, repeat count, final stack count, uptime, and final formulas are unresolved.",
+    "exactResultUnknownReason": "Exact final amplified damage cannot be calculated because stacking and final combat formulas are not fully verified.",
     "explanation": "Caraxes is eligible to receive Advantage support because it has verified Damage Dealt output. Each granted stack increases Damage Dealt by 20%. Qualifying outputs: Infernal Burst: Fire Damage, Crippling Inferno: Burn periodic Fire Damage.",
     "id": "outgoing-effect-amplification-seasmoke-loyal-bond-loyal-bond-advantage-effect-advantage-damage-dealt-status-modifier-caraxes",
     "interactionScope": "cross-dragon",
@@ -37937,7 +37937,7 @@
       "Duration: 2 rounds."
     ],
     "exactResultKnown": false,
-    "exactResultUnknownReason": "Exact final stack benefit cannot be calculated because activation, repeat count, final stack count, uptime, and final formulas are unresolved.",
+    "exactResultUnknownReason": "Exact final amplified damage cannot be calculated because stacking and final combat formulas are not fully verified.",
     "explanation": "Sheepstealer is eligible to receive Advantage support because it has verified Damage Dealt output. Each granted stack increases Damage Dealt by 20%. Qualifying outputs: Wild Hunt: Fire Damage, Savage Claim: Fire Damage.",
     "id": "outgoing-effect-amplification-seasmoke-loyal-bond-loyal-bond-advantage-effect-advantage-damage-dealt-status-modifier-sheepstealer",
     "interactionScope": "cross-dragon",
@@ -42087,7 +42087,7 @@
       "Duration: 2 rounds."
     ],
     "exactResultKnown": false,
-    "exactResultUnknownReason": "Exact final stack benefit cannot be calculated because activation, repeat count, final stack count, uptime, and final formulas are unresolved.",
+    "exactResultUnknownReason": "Exact final amplified damage cannot be calculated because stacking and final combat formulas are not fully verified.",
     "explanation": "Syrax is eligible to receive Advantage support because it has verified Damage Dealt output. Each granted stack increases Damage Dealt by 20%. Qualifying outputs: Blazing Fury: Tactical Damage.",
     "id": "outgoing-effect-amplification-malachite-thunderous-roar-thunderous-roar-advantage-advantage-damage-dealt-status-modifier-syrax",
     "interactionScope": "cross-dragon",
@@ -42197,7 +42197,7 @@
       "Duration: 2 rounds."
     ],
     "exactResultKnown": false,
-    "exactResultUnknownReason": "Exact final stack benefit cannot be calculated because activation, repeat count, final stack count, uptime, and final formulas are unresolved.",
+    "exactResultUnknownReason": "Exact final amplified damage cannot be calculated because stacking and final combat formulas are not fully verified.",
     "explanation": "Sheepstealer is eligible to receive Advantage support because it has verified Damage Dealt output. Each granted stack increases Damage Dealt by 20%. Qualifying outputs: Wild Hunt: Fire Damage, Savage Claim: Fire Damage.",
     "id": "outgoing-effect-amplification-malachite-thunderous-roar-thunderous-roar-advantage-advantage-damage-dealt-status-modifier-sheepstealer",
     "interactionScope": "cross-dragon",
@@ -55209,7 +55209,7 @@
       "One shared activation roll applies both effects."
     ],
     "exactResultKnown": false,
-    "exactResultUnknownReason": "Exact final stack benefit cannot be calculated because activation, repeat count, final stack count, uptime, and final formulas are unresolved.",
+    "exactResultUnknownReason": "Exact final amplified damage cannot be calculated because stacking and final combat formulas are not fully verified.",
     "explanation": "Vhagar's Eclipse Cover can target one Damage Dealt ally. Eligible recipients are Kalspire and Venator and Vhagar. The selected recipient is not guaranteed. Qualifying outputs: Tactical Assault: Physical Damage, Tactical Strike: Tactical Damage, Tactical Assault: Panic periodic Tactical Damage, Tactical Strike: Bleed periodic Physical Damage, Desperate Ambush: Physical Damage, Feral Precision: Physical Damage, Feral Strike: Physical Damage, Fiery Bonds: Physical Damage, Skyward Titan: Physical Damage.",
     "id": "target-selection-vhagar-eclipse-cover-eclipse-cover-advantage-advantage-damage-dealt-status-modifier-damage-dealt",
     "interactionScope": "targeting-fact",
@@ -57613,6 +57613,7 @@
     "effects": [
       "Timing: Rounds 3 through 7.",
       "Duration: 2 rounds.",
+      "Duration: 2 rounds.",
       "Enemy target count: 1.",
       "Selected-target group: eclipse-cover-shared-roll.",
       "Enemy identities remain unresolved because the enemy formation is unavailable.",
@@ -57620,7 +57621,7 @@
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final reduced enemy damage cannot be calculated because target identity, overlap, and final combat formulas are unresolved.",
-    "explanation": "Vhagar's Eclipse Cover can reduce enemy Damage Dealt. Enemy target selection is tracked as an enemy-side candidate group, not a named friendly recipient. Timing: Rounds 3 through 7. Duration: 2 rounds.",
+    "explanation": "Vhagar's Eclipse Cover can reduce enemy Damage Dealt. Enemy target selection is tracked as an enemy-side candidate group, not a named friendly recipient. Timing: Rounds 3 through 7. Duration: 2 rounds. Duration: 2 rounds.",
     "id": "enemy-damage-dealt-reduction-vhagar-eclipse-cover-eclipse-cover-weakened-weakened-damage-dealt-status-modifier",
     "interactionScope": "enemy-side",
     "matchedOutputCapabilityIds": [],
@@ -57829,6 +57830,7 @@
     "effects": [
       "Timing: Start of Round 2.",
       "Duration: 5 rounds.",
+      "Duration: 5 rounds.",
       "Enemy target count: 1.",
       "Enemy identities remain unresolved because the enemy formation is unavailable.",
       "Physical Damage Dealt decrease 25% at effective Habit Level 5.",
@@ -57836,7 +57838,7 @@
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final reduced enemy damage cannot be calculated because enemy Strength tie resolution and final combat formula are unresolved.",
-    "explanation": "Kalspire's Radiant Conqueror can reduce enemy Physical Damage Dealt. Enemy target selection is tracked as an enemy-side candidate group, not a named friendly recipient. Timing: Start of Round 2. Duration: 5 rounds.",
+    "explanation": "Kalspire's Radiant Conqueror can reduce enemy Physical Damage Dealt. Enemy target selection is tracked as an enemy-side candidate group, not a named friendly recipient. Timing: Start of Round 2. Duration: 5 rounds. Duration: 5 rounds.",
     "id": "enemy-damage-dealt-reduction-kalspire-radiant-conqueror-radiant-conqueror-physical-down-physical-damage-dealt-modifier",
     "interactionScope": "enemy-side",
     "matchedOutputCapabilityIds": [],
@@ -57901,13 +57903,14 @@
     "effects": [
       "Timing: Start of Round 2.",
       "Duration: 5 rounds.",
+      "Duration: 5 rounds.",
       "Enemy target count: 1.",
       "Enemy identities remain unresolved because the enemy formation is unavailable.",
       "Fire Damage Dealt decrease 25% at effective Habit Level 5."
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final reduced enemy damage cannot be calculated because enemy Intelligence tie resolution and final combat formula are unresolved.",
-    "explanation": "Kalspire's Radiant Conqueror can reduce enemy Fire Damage Dealt. Enemy target selection is tracked as an enemy-side candidate group, not a named friendly recipient. Timing: Start of Round 2. Duration: 5 rounds.",
+    "explanation": "Kalspire's Radiant Conqueror can reduce enemy Fire Damage Dealt. Enemy target selection is tracked as an enemy-side candidate group, not a named friendly recipient. Timing: Start of Round 2. Duration: 5 rounds. Duration: 5 rounds.",
     "id": "enemy-damage-dealt-reduction-kalspire-radiant-conqueror-radiant-conqueror-fire-down-fire-damage-dealt-modifier",
     "interactionScope": "enemy-side",
     "matchedOutputCapabilityIds": [],
@@ -58444,7 +58447,7 @@
       "One shared activation roll applies both effects."
     ],
     "exactResultKnown": false,
-    "exactResultUnknownReason": "Exact final stack benefit cannot be calculated because activation, repeat count, final stack count, uptime, and final formulas are unresolved.",
+    "exactResultUnknownReason": "Exact final amplified damage cannot be calculated because stacking and final combat formulas are not fully verified.",
     "explanation": "Vhagar's Eclipse Cover can target one Damage Dealt ally. Eligible recipients are Caraxes and Crimson and Vhagar. The selected recipient is not guaranteed. Qualifying outputs: Infernal Burst: Fire Damage, Bloodscale Terror: Fire Damage, Crippling Inferno: Burn periodic Fire Damage, Fiery Bonds: Physical Damage, Skyward Titan: Physical Damage.",
     "id": "target-selection-vhagar-eclipse-cover-eclipse-cover-advantage-advantage-damage-dealt-status-modifier-damage-dealt",
     "interactionScope": "targeting-fact",
@@ -60553,6 +60556,7 @@
     "effects": [
       "Timing: Even-numbered rounds.",
       "Duration: 2 rounds.",
+      "Duration: 2 rounds.",
       "Enemy target count: 1.",
       "Selected-target group: vermins-bane-highest-instinct-enemy.",
       "Enemy identities remain unresolved because the enemy formation is unavailable.",
@@ -60561,7 +60565,7 @@
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final value cannot be calculated because final combat formulas and stacking order are not fully verified.",
-    "explanation": "Crimson's Vermin's Bane can reduce enemy Instinct. Enemy Instinct reduction is -12%. Vhagar's Physical Damage outputs are mitigated by that stat. Timing: Even-numbered rounds. Duration: 2 rounds.",
+    "explanation": "Crimson's Vermin's Bane can reduce enemy Instinct. Enemy Instinct reduction is -12%. Vhagar's Physical Damage outputs are mitigated by that stat. Timing: Even-numbered rounds. Duration: 2 rounds. Duration: 2 rounds.",
     "id": "enemy-mitigation-crimson-vermins-bane-vermins-bane-instinct-down-stat-dealt-modifier-vhagar-instinct",
     "interactionScope": "cross-dragon",
     "matchedOutputCapabilityIds": [
@@ -60656,6 +60660,7 @@
     "effects": [
       "Timing: Even-numbered rounds.",
       "Duration: 2 rounds.",
+      "Duration: 2 rounds.",
       "Enemy target count: 1.",
       "Selected-target group: vermins-bane-highest-instinct-enemy.",
       "Enemy identities remain unresolved because the enemy formation is unavailable.",
@@ -60664,7 +60669,7 @@
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final value cannot be calculated because final combat formulas and stacking order are not fully verified.",
-    "explanation": "Crimson's Vermin's Bane can reduce enemy Initiative. Enemy Initiative reduction is -12%. Crimson's Fire Damage outputs are mitigated by that stat. Timing: Even-numbered rounds. Duration: 2 rounds.",
+    "explanation": "Crimson's Vermin's Bane can reduce enemy Initiative. Enemy Initiative reduction is -12%. Crimson's Fire Damage outputs are mitigated by that stat. Timing: Even-numbered rounds. Duration: 2 rounds. Duration: 2 rounds.",
     "id": "enemy-mitigation-crimson-vermins-bane-vermins-bane-initiative-down-stat-dealt-modifier-crimson-initiative",
     "interactionScope": "internal",
     "matchedOutputCapabilityIds": [
@@ -60735,6 +60740,7 @@
     "effects": [
       "Timing: Even-numbered rounds.",
       "Duration: 2 rounds.",
+      "Duration: 2 rounds.",
       "Enemy target count: 1.",
       "Selected-target group: vermins-bane-highest-instinct-enemy.",
       "Enemy identities remain unresolved because the enemy formation is unavailable.",
@@ -60743,7 +60749,7 @@
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final value cannot be calculated because final combat formulas and stacking order are not fully verified.",
-    "explanation": "Crimson's Vermin's Bane can reduce enemy Initiative. Enemy Initiative reduction is -12%. Caraxes's Fire Damage outputs are mitigated by that stat. Timing: Even-numbered rounds. Duration: 2 rounds.",
+    "explanation": "Crimson's Vermin's Bane can reduce enemy Initiative. Enemy Initiative reduction is -12%. Caraxes's Fire Damage outputs are mitigated by that stat. Timing: Even-numbered rounds. Duration: 2 rounds. Duration: 2 rounds.",
     "id": "enemy-mitigation-crimson-vermins-bane-vermins-bane-initiative-down-stat-dealt-modifier-caraxes-initiative",
     "interactionScope": "cross-dragon",
     "matchedOutputCapabilityIds": [
@@ -60838,6 +60844,7 @@
     "effects": [
       "Timing: Rounds 3 through 7.",
       "Duration: 2 rounds.",
+      "Duration: 2 rounds.",
       "Enemy target count: 1.",
       "Selected-target group: eclipse-cover-shared-roll.",
       "Enemy identities remain unresolved because the enemy formation is unavailable.",
@@ -60845,7 +60852,7 @@
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final reduced enemy damage cannot be calculated because target identity, overlap, and final combat formulas are unresolved.",
-    "explanation": "Vhagar's Eclipse Cover can reduce enemy Damage Dealt. Enemy target selection is tracked as an enemy-side candidate group, not a named friendly recipient. Timing: Rounds 3 through 7. Duration: 2 rounds.",
+    "explanation": "Vhagar's Eclipse Cover can reduce enemy Damage Dealt. Enemy target selection is tracked as an enemy-side candidate group, not a named friendly recipient. Timing: Rounds 3 through 7. Duration: 2 rounds. Duration: 2 rounds.",
     "id": "enemy-damage-dealt-reduction-vhagar-eclipse-cover-eclipse-cover-weakened-weakened-damage-dealt-status-modifier",
     "interactionScope": "enemy-side",
     "matchedOutputCapabilityIds": [],
@@ -61193,6 +61200,7 @@
     "effects": [
       "Timing: Each round.",
       "Duration: 2 rounds.",
+      "Duration: 2 rounds.",
       "Enemy target count: 1.",
       "Fallback target: another eligible enemy; fallback selection is not guaranteed.",
       "Enemy identities remain unresolved because the enemy formation is unavailable.",
@@ -61200,7 +61208,7 @@
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final reduced enemy damage cannot be calculated because target identity, overlap, and final combat formulas are unresolved.",
-    "explanation": "Crimson's Bloodscale Fury can reduce enemy Damage Dealt. Enemy target selection is tracked as an enemy-side candidate group, not a named friendly recipient. Timing: Each round. Duration: 2 rounds.",
+    "explanation": "Crimson's Bloodscale Fury can reduce enemy Damage Dealt. Enemy target selection is tracked as an enemy-side candidate group, not a named friendly recipient. Timing: Each round. Duration: 2 rounds. Duration: 2 rounds.",
     "id": "enemy-damage-dealt-reduction-crimson-bloodscale-fury-bloodscale-fury-weakened-weakened-damage-dealt-status-modifier",
     "interactionScope": "enemy-side",
     "matchedOutputCapabilityIds": [],
@@ -61265,6 +61273,7 @@
     "effects": [
       "Timing: Even-numbered rounds.",
       "Duration: 2 rounds.",
+      "Duration: 2 rounds.",
       "Enemy target count: 1.",
       "Selected-target group: vermins-bane-highest-instinct-enemy.",
       "Enemy identities remain unresolved because the enemy formation is unavailable.",
@@ -61273,7 +61282,7 @@
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final reduced enemy damage cannot be calculated because enemy Instinct tie resolution and final combat formula are unresolved.",
-    "explanation": "Crimson's Vermin's Bane can reduce enemy Instinct, which reduces Tactical Damage Dealt. Enemy target selection is tracked as an enemy-side candidate group, not a named friendly recipient. Timing: Even-numbered rounds. Duration: 2 rounds.",
+    "explanation": "Crimson's Vermin's Bane can reduce enemy Instinct, which reduces Tactical Damage Dealt. Enemy target selection is tracked as an enemy-side candidate group, not a named friendly recipient. Timing: Even-numbered rounds. Duration: 2 rounds. Duration: 2 rounds.",
     "id": "enemy-damage-dealt-reduction-crimson-vermins-bane-vermins-bane-instinct-down-stat-dealt-modifier",
     "interactionScope": "enemy-side",
     "matchedOutputCapabilityIds": [],
@@ -61338,6 +61347,7 @@
     "effects": [
       "Timing: Even-numbered rounds.",
       "Duration: 2 rounds.",
+      "Duration: 2 rounds.",
       "Enemy target count: 1.",
       "Selected-target group: vermins-bane-highest-instinct-enemy.",
       "Enemy identities remain unresolved because the enemy formation is unavailable.",
@@ -61345,7 +61355,7 @@
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final reduced enemy damage cannot be calculated because enemy Instinct tie resolution and final combat formula are unresolved.",
-    "explanation": "Crimson's Vermin's Bane can reduce enemy Initiative. Enemy target selection is tracked as an enemy-side candidate group, not a named friendly recipient. Timing: Even-numbered rounds. Duration: 2 rounds.",
+    "explanation": "Crimson's Vermin's Bane can reduce enemy Initiative. Enemy target selection is tracked as an enemy-side candidate group, not a named friendly recipient. Timing: Even-numbered rounds. Duration: 2 rounds. Duration: 2 rounds.",
     "id": "enemy-damage-dealt-reduction-crimson-vermins-bane-vermins-bane-initiative-down-stat-dealt-modifier",
     "interactionScope": "enemy-side",
     "matchedOutputCapabilityIds": [],
@@ -62452,7 +62462,7 @@
       "One shared activation roll applies both effects."
     ],
     "exactResultKnown": false,
-    "exactResultUnknownReason": "Exact final stack benefit cannot be calculated because activation, repeat count, final stack count, uptime, and final formulas are unresolved.",
+    "exactResultUnknownReason": "Exact final amplified damage cannot be calculated because stacking and final combat formulas are not fully verified.",
     "explanation": "Vhagar's Eclipse Cover can target one Damage Dealt ally. Eligible recipients are Kalspire and Syrax and Vhagar. The selected recipient is not guaranteed. Qualifying outputs: Tactical Assault: Physical Damage, Tactical Strike: Tactical Damage, Tactical Assault: Panic periodic Tactical Damage, Tactical Strike: Bleed periodic Physical Damage, Blazing Fury: Tactical Damage, Fiery Bonds: Physical Damage, Skyward Titan: Physical Damage.",
     "id": "target-selection-vhagar-eclipse-cover-eclipse-cover-advantage-advantage-damage-dealt-status-modifier-damage-dealt",
     "interactionScope": "targeting-fact",
@@ -65743,6 +65753,7 @@
     "effects": [
       "Timing: Rounds 3 through 7.",
       "Duration: 2 rounds.",
+      "Duration: 2 rounds.",
       "Enemy target count: 1.",
       "Selected-target group: eclipse-cover-shared-roll.",
       "Enemy identities remain unresolved because the enemy formation is unavailable.",
@@ -65750,7 +65761,7 @@
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final reduced enemy damage cannot be calculated because target identity, overlap, and final combat formulas are unresolved.",
-    "explanation": "Vhagar's Eclipse Cover can reduce enemy Damage Dealt. Enemy target selection is tracked as an enemy-side candidate group, not a named friendly recipient. Timing: Rounds 3 through 7. Duration: 2 rounds.",
+    "explanation": "Vhagar's Eclipse Cover can reduce enemy Damage Dealt. Enemy target selection is tracked as an enemy-side candidate group, not a named friendly recipient. Timing: Rounds 3 through 7. Duration: 2 rounds. Duration: 2 rounds.",
     "id": "enemy-damage-dealt-reduction-vhagar-eclipse-cover-eclipse-cover-weakened-weakened-damage-dealt-status-modifier",
     "interactionScope": "enemy-side",
     "matchedOutputCapabilityIds": [],
@@ -65959,6 +65970,7 @@
     "effects": [
       "Timing: Start of Round 2.",
       "Duration: 5 rounds.",
+      "Duration: 5 rounds.",
       "Enemy target count: 1.",
       "Enemy identities remain unresolved because the enemy formation is unavailable.",
       "Physical Damage Dealt decrease 25% at effective Habit Level 5.",
@@ -65966,7 +65978,7 @@
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final reduced enemy damage cannot be calculated because enemy Strength tie resolution and final combat formula are unresolved.",
-    "explanation": "Kalspire's Radiant Conqueror can reduce enemy Physical Damage Dealt. Enemy target selection is tracked as an enemy-side candidate group, not a named friendly recipient. Timing: Start of Round 2. Duration: 5 rounds.",
+    "explanation": "Kalspire's Radiant Conqueror can reduce enemy Physical Damage Dealt. Enemy target selection is tracked as an enemy-side candidate group, not a named friendly recipient. Timing: Start of Round 2. Duration: 5 rounds. Duration: 5 rounds.",
     "id": "enemy-damage-dealt-reduction-kalspire-radiant-conqueror-radiant-conqueror-physical-down-physical-damage-dealt-modifier",
     "interactionScope": "enemy-side",
     "matchedOutputCapabilityIds": [],
@@ -66031,13 +66043,14 @@
     "effects": [
       "Timing: Start of Round 2.",
       "Duration: 5 rounds.",
+      "Duration: 5 rounds.",
       "Enemy target count: 1.",
       "Enemy identities remain unresolved because the enemy formation is unavailable.",
       "Fire Damage Dealt decrease 25% at effective Habit Level 5."
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final reduced enemy damage cannot be calculated because enemy Intelligence tie resolution and final combat formula are unresolved.",
-    "explanation": "Kalspire's Radiant Conqueror can reduce enemy Fire Damage Dealt. Enemy target selection is tracked as an enemy-side candidate group, not a named friendly recipient. Timing: Start of Round 2. Duration: 5 rounds.",
+    "explanation": "Kalspire's Radiant Conqueror can reduce enemy Fire Damage Dealt. Enemy target selection is tracked as an enemy-side candidate group, not a named friendly recipient. Timing: Start of Round 2. Duration: 5 rounds. Duration: 5 rounds.",
     "id": "enemy-damage-dealt-reduction-kalspire-radiant-conqueror-radiant-conqueror-fire-down-fire-damage-dealt-modifier",
     "interactionScope": "enemy-side",
     "matchedOutputCapabilityIds": [],
@@ -66760,7 +66773,7 @@
       "One shared activation roll applies both effects."
     ],
     "exactResultKnown": false,
-    "exactResultUnknownReason": "Exact final stack benefit cannot be calculated because activation, repeat count, final stack count, uptime, and final formulas are unresolved.",
+    "exactResultUnknownReason": "Exact final amplified damage cannot be calculated because stacking and final combat formulas are not fully verified.",
     "explanation": "Vhagar's Eclipse Cover can target one Damage Dealt ally. Eligible recipients are Crimson and Venator and Vhagar. The selected recipient is not guaranteed. Qualifying outputs: Bloodscale Terror: Fire Damage, Desperate Ambush: Physical Damage, Feral Precision: Physical Damage, Feral Strike: Physical Damage, Fiery Bonds: Physical Damage, Skyward Titan: Physical Damage.",
     "id": "target-selection-vhagar-eclipse-cover-eclipse-cover-advantage-advantage-damage-dealt-status-modifier-damage-dealt",
     "interactionScope": "targeting-fact",
@@ -68680,6 +68693,7 @@
     "effects": [
       "Timing: Even-numbered rounds.",
       "Duration: 2 rounds.",
+      "Duration: 2 rounds.",
       "Enemy target count: 1.",
       "Selected-target group: vermins-bane-highest-instinct-enemy.",
       "Enemy identities remain unresolved because the enemy formation is unavailable.",
@@ -68688,7 +68702,7 @@
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final value cannot be calculated because final combat formulas and stacking order are not fully verified.",
-    "explanation": "Crimson's Vermin's Bane can reduce enemy Instinct. Enemy Instinct reduction is -12%. Venator's Physical Damage outputs are mitigated by that stat. Timing: Even-numbered rounds. Duration: 2 rounds.",
+    "explanation": "Crimson's Vermin's Bane can reduce enemy Instinct. Enemy Instinct reduction is -12%. Venator's Physical Damage outputs are mitigated by that stat. Timing: Even-numbered rounds. Duration: 2 rounds. Duration: 2 rounds.",
     "id": "enemy-mitigation-crimson-vermins-bane-vermins-bane-instinct-down-stat-dealt-modifier-venator-instinct",
     "interactionScope": "cross-dragon",
     "matchedOutputCapabilityIds": [
@@ -68811,6 +68825,7 @@
     "effects": [
       "Timing: Even-numbered rounds.",
       "Duration: 2 rounds.",
+      "Duration: 2 rounds.",
       "Enemy target count: 1.",
       "Selected-target group: vermins-bane-highest-instinct-enemy.",
       "Enemy identities remain unresolved because the enemy formation is unavailable.",
@@ -68819,7 +68834,7 @@
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final value cannot be calculated because final combat formulas and stacking order are not fully verified.",
-    "explanation": "Crimson's Vermin's Bane can reduce enemy Instinct. Enemy Instinct reduction is -12%. Vhagar's Physical Damage outputs are mitigated by that stat. Timing: Even-numbered rounds. Duration: 2 rounds.",
+    "explanation": "Crimson's Vermin's Bane can reduce enemy Instinct. Enemy Instinct reduction is -12%. Vhagar's Physical Damage outputs are mitigated by that stat. Timing: Even-numbered rounds. Duration: 2 rounds. Duration: 2 rounds.",
     "id": "enemy-mitigation-crimson-vermins-bane-vermins-bane-instinct-down-stat-dealt-modifier-vhagar-instinct",
     "interactionScope": "cross-dragon",
     "matchedOutputCapabilityIds": [
@@ -68914,6 +68929,7 @@
     "effects": [
       "Timing: Even-numbered rounds.",
       "Duration: 2 rounds.",
+      "Duration: 2 rounds.",
       "Enemy target count: 1.",
       "Selected-target group: vermins-bane-highest-instinct-enemy.",
       "Enemy identities remain unresolved because the enemy formation is unavailable.",
@@ -68922,7 +68938,7 @@
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final value cannot be calculated because final combat formulas and stacking order are not fully verified.",
-    "explanation": "Crimson's Vermin's Bane can reduce enemy Initiative. Enemy Initiative reduction is -12%. Crimson's Fire Damage outputs are mitigated by that stat. Timing: Even-numbered rounds. Duration: 2 rounds.",
+    "explanation": "Crimson's Vermin's Bane can reduce enemy Initiative. Enemy Initiative reduction is -12%. Crimson's Fire Damage outputs are mitigated by that stat. Timing: Even-numbered rounds. Duration: 2 rounds. Duration: 2 rounds.",
     "id": "enemy-mitigation-crimson-vermins-bane-vermins-bane-initiative-down-stat-dealt-modifier-crimson-initiative",
     "interactionScope": "internal",
     "matchedOutputCapabilityIds": [
@@ -68991,6 +69007,7 @@
     "effects": [
       "Timing: Rounds 3 through 7.",
       "Duration: 2 rounds.",
+      "Duration: 2 rounds.",
       "Enemy target count: 1.",
       "Selected-target group: eclipse-cover-shared-roll.",
       "Enemy identities remain unresolved because the enemy formation is unavailable.",
@@ -68998,7 +69015,7 @@
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final reduced enemy damage cannot be calculated because target identity, overlap, and final combat formulas are unresolved.",
-    "explanation": "Vhagar's Eclipse Cover can reduce enemy Damage Dealt. Enemy target selection is tracked as an enemy-side candidate group, not a named friendly recipient. Timing: Rounds 3 through 7. Duration: 2 rounds.",
+    "explanation": "Vhagar's Eclipse Cover can reduce enemy Damage Dealt. Enemy target selection is tracked as an enemy-side candidate group, not a named friendly recipient. Timing: Rounds 3 through 7. Duration: 2 rounds. Duration: 2 rounds.",
     "id": "enemy-damage-dealt-reduction-vhagar-eclipse-cover-eclipse-cover-weakened-weakened-damage-dealt-status-modifier",
     "interactionScope": "enemy-side",
     "matchedOutputCapabilityIds": [],
@@ -69134,6 +69151,7 @@
     "effects": [
       "Timing: Each round.",
       "Duration: 2 rounds.",
+      "Duration: 2 rounds.",
       "Enemy target count: 1.",
       "Fallback target: another eligible enemy; fallback selection is not guaranteed.",
       "Enemy identities remain unresolved because the enemy formation is unavailable.",
@@ -69141,7 +69159,7 @@
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final reduced enemy damage cannot be calculated because target identity, overlap, and final combat formulas are unresolved.",
-    "explanation": "Crimson's Bloodscale Fury can reduce enemy Damage Dealt. Enemy target selection is tracked as an enemy-side candidate group, not a named friendly recipient. Timing: Each round. Duration: 2 rounds.",
+    "explanation": "Crimson's Bloodscale Fury can reduce enemy Damage Dealt. Enemy target selection is tracked as an enemy-side candidate group, not a named friendly recipient. Timing: Each round. Duration: 2 rounds. Duration: 2 rounds.",
     "id": "enemy-damage-dealt-reduction-crimson-bloodscale-fury-bloodscale-fury-weakened-weakened-damage-dealt-status-modifier",
     "interactionScope": "enemy-side",
     "matchedOutputCapabilityIds": [],
@@ -69206,6 +69224,7 @@
     "effects": [
       "Timing: Even-numbered rounds.",
       "Duration: 2 rounds.",
+      "Duration: 2 rounds.",
       "Enemy target count: 1.",
       "Selected-target group: vermins-bane-highest-instinct-enemy.",
       "Enemy identities remain unresolved because the enemy formation is unavailable.",
@@ -69214,7 +69233,7 @@
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final reduced enemy damage cannot be calculated because enemy Instinct tie resolution and final combat formula are unresolved.",
-    "explanation": "Crimson's Vermin's Bane can reduce enemy Instinct, which reduces Tactical Damage Dealt. Enemy target selection is tracked as an enemy-side candidate group, not a named friendly recipient. Timing: Even-numbered rounds. Duration: 2 rounds.",
+    "explanation": "Crimson's Vermin's Bane can reduce enemy Instinct, which reduces Tactical Damage Dealt. Enemy target selection is tracked as an enemy-side candidate group, not a named friendly recipient. Timing: Even-numbered rounds. Duration: 2 rounds. Duration: 2 rounds.",
     "id": "enemy-damage-dealt-reduction-crimson-vermins-bane-vermins-bane-instinct-down-stat-dealt-modifier",
     "interactionScope": "enemy-side",
     "matchedOutputCapabilityIds": [],
@@ -69279,6 +69298,7 @@
     "effects": [
       "Timing: Even-numbered rounds.",
       "Duration: 2 rounds.",
+      "Duration: 2 rounds.",
       "Enemy target count: 1.",
       "Selected-target group: vermins-bane-highest-instinct-enemy.",
       "Enemy identities remain unresolved because the enemy formation is unavailable.",
@@ -69286,7 +69306,7 @@
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final reduced enemy damage cannot be calculated because enemy Instinct tie resolution and final combat formula are unresolved.",
-    "explanation": "Crimson's Vermin's Bane can reduce enemy Initiative. Enemy target selection is tracked as an enemy-side candidate group, not a named friendly recipient. Timing: Even-numbered rounds. Duration: 2 rounds.",
+    "explanation": "Crimson's Vermin's Bane can reduce enemy Initiative. Enemy target selection is tracked as an enemy-side candidate group, not a named friendly recipient. Timing: Even-numbered rounds. Duration: 2 rounds. Duration: 2 rounds.",
     "id": "enemy-damage-dealt-reduction-crimson-vermins-bane-vermins-bane-initiative-down-stat-dealt-modifier",
     "interactionScope": "enemy-side",
     "matchedOutputCapabilityIds": [],
