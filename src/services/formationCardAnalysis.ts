@@ -752,7 +752,12 @@ function sanitizeNormalCardEffects(effects: string[], summaryLines: string[]): s
       .filter((effect) => !/Shared stack pool:/i.test(effect))
       .filter((effect) => !isRedundantCurrentValueLine(effect, summaryText) || isValueBearingEffectLine(effect))
       .filter((effect) => !isValueAlreadyExplained(effect, summaryText) || isValueBearingEffectLine(effect))
-      .filter((effect) => !summaryText.includes(normalizeText(effect)) || isValueBearingEffectLine(effect)),
+      .filter((effect) => {
+        if (/^(Timing|Duration):/i.test(effect)) {
+          return true;
+        }
+        return !summaryText.includes(normalizeText(effect)) || isValueBearingEffectLine(effect);
+      }),
     semanticEffectDetailKey,
   );
 }
