@@ -3711,7 +3711,7 @@ function analyzeEnemyMitigationReduction(
         recipientAbilityId: matchedOutputs[0]?.abilityId ?? null,
         channel: mitigationChannel,
         title: `${channelLabel(mitigationChannel)} Mitigation Reduction`,
-        explanation: `${provider.name}'s ${modifier.abilityName} can reduce enemy ${statLabel(statId)}. Base Enemy ${statLabel(statId)} reduction -${formatTypedModifierValue(modifier)} on ${targetSelectorSummary(modifier.targetSelector)}. Final reduction scales with ${provider.name}'s Initiative and remains unresolved. ${recipient.name}'s ${channelLabel(mitigationChannel)} outputs are mitigated by that stat.${sourceTimingFacts.length > 0 ? ` ${sourceTimingFacts.join(' ')}` : ''}`,
+        explanation: `${provider.name}'s ${modifier.abilityName} can reduce enemy ${statLabel(statId)}. ${provider.name}'s ${modifier.abilityName} applies a base Enemy ${statLabel(statId)} reduction of ${formatTypedModifierValue(modifier)} to ${readableEnemyTargetPhrase(modifier.targetSelector)}. The final reduction scales with ${provider.name}'s Initiative and remains unresolved. ${matchedOutputs[0] ? `${recipient.name}'s ${matchedOutputs[0].abilityName} is the qualifying ${channelLabel(mitigationChannel)} output.` : `${recipient.name}'s ${channelLabel(mitigationChannel)} output is the qualifying ${channelLabel(mitigationChannel)} output.`}`,
         requirements,
         matchedFacts: [
           ...sourceTimingFacts,
@@ -8798,6 +8798,13 @@ function targetSelectorSummary(target: AbilityTarget): string {
   const tie = target.tieBehavior ? `; tie behavior ${target.tieBehavior}` : '';
   const group = target.sharedSelectionGroupId ? `; shared group ${target.sharedSelectionGroupId}` : '';
   return `${target.side}; ${target.scope}; ${target.selection}; ${count}; ${caster}${stat}${resource}${direction}${pool}${tie}${group}`;
+}
+
+function readableEnemyTargetPhrase(target: AbilityTarget): string {
+  const count = target.count ?? 1;
+  const countText = count === 1 ? 'one' : count === 2 ? 'two' : `${count}`;
+  const adjacent = target.scope === 'within-adjacency' || target.selection === 'adjacent' || target.selection === 'one-eligible-adjacent';
+  return `${countText} ${adjacent ? 'adjacent ' : ''}${count === 1 ? 'enemy' : 'enemies'}`;
 }
 
 function persistentTargetSelectorSummary(target: AbilityTarget, effect: AbilityEffect | null | undefined): string {
