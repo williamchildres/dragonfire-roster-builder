@@ -23,7 +23,7 @@
   ],
   "currentReviewPhase": "Legendary/full-profile formation validation complete; Epic ingestion active with Daemoros and Vaeldra as the first detailed Epic batch after Vermax.",
   "format": "dragonfire-project-state",
-  "generatedAt": "2026-06-29T23:13:50.780Z",
+  "generatedAt": "2026-06-29T23:31:35.421Z",
   "plannedNextPhase": [
     "continue Epic dragon ingestion in batches of two after the latest merged context is available",
     "fetch latest merged main and create a new feature branch before each future Epic implementation batch",
@@ -37,8 +37,8 @@
     "metadataOnlyDragonCount": 15
   },
   "source": {
-    "branch": "fix/dragons-cunning-final-narrative-pass12f",
-    "commit": "18cdb8786fa0c9de95d89195e31caf48496e9602",
+    "branch": "fix/dragons-cunning-readable-lead-pass12g",
+    "commit": "5170363e09192bef4e32f1ab424b106d88ae47be",
     "databaseVersion": "0.6.2",
     "dataSchemaVersion": 12,
     "gameBuild": "26.6.53509",
