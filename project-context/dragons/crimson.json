@@ -4249,7 +4249,7 @@
   "firstObservedInGame": null,
   "format": "dragonfire-dragon-profile",
   "gameVersion": null,
-  "generatedAt": "2026-06-28T23:55:11.961Z",
+  "generatedAt": "2026-06-29T01:21:40.066Z",
   "habits": [
     {
       "abilityClass": "passive",
@@ -7383,8 +7383,8 @@
   "rosterSourceStatus": "official-website",
   "slug": "crimson",
   "source": {
-    "branch": "fix/value-unit-propagation-pass5",
-    "commit": "c49fe0e8e5c25b9363f220de79649cb9da052444",
+    "branch": "fix/enemy-coverage-schedule-uncertainty-pass7",
+    "commit": "c3dc299e578bfaf74237a81e4915865a15d8268a",
     "databaseVersion": "0.6.2",
     "dataSchemaVersion": 12,
     "gameBuild": "26.6.53509",

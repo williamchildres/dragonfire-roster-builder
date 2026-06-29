@@ -40,6 +40,12 @@ function currentRoster() {
   return roster;
 }
 
+function traceText(trace: SynergyTrace | undefined) {
+  return trace
+    ? [trace.explanation, ...trace.matchedFacts, ...trace.effects, ...trace.assumptions, ...trace.unresolvedQuestions].join(' ')
+    : '';
+}
+
 function traces(formation: FormationAnalysisInput, usePreview = false): SynergyTrace[] {
   return analyzeFormationTraces(formation, dragons, usePreview ? { ...preview, roster: currentRoster() } : { dragonLevels: currentLevels, roster: currentRoster() });
 }
@@ -256,13 +262,21 @@ describe('legendary formation analysis regression fixes', () => {
     ]));
 
     const intelligenceFormation: FormationAnalysisInput = { 'left-flank': 'kalspire', vanguard: 'vhagar', 'right-flank': 'syrax' };
-    expect(normalTraces(intelligenceFormation, true)).toEqual(expect.arrayContaining([
-      expect.objectContaining({
-        sourceAbilityId: 'kalspire-battle-cunning',
-        matchKind: 'enemy-mitigation-reduction',
-        channel: 'tactical-damage',
-      }),
-    ]));
+    const battleCunningTrace = normalTraces(intelligenceFormation, true).find((trace) =>
+      trace.sourceAbilityId === 'kalspire-battle-cunning' &&
+      trace.matchKind === 'enemy-mitigation-reduction' &&
+      trace.channel === 'tactical-damage'
+    );
+    expect(battleCunningTrace).toMatchObject({
+      status: 'inactive',
+      sourceAbilityId: 'kalspire-battle-cunning',
+      matchKind: 'enemy-mitigation-reduction',
+      channel: 'tactical-damage',
+    });
+    expect(traceText(battleCunningTrace!)).toContain('Timing: Start of combat.');
+    expect(traceText(battleCunningTrace!)).toContain('Duration: until end of combat.');
+    expect(traceText(battleCunningTrace!)).toContain('Enemy selector: all enemies.');
+    expect(traceText(battleCunningTrace!)).toContain('All three enemy slots are covered.');
   });
 
   it('keeps Eclipse Cover inactive at Star Rank 1 in current mode', () => {
