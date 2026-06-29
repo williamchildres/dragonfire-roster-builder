@@ -2691,6 +2691,7 @@ function analyzeEnemyStatusSourceOutputs(
     const persistentTargetReason = preyDependency
       ? `${statusLabel(output.statusId)} application remains conditional because current Prey existence and identity, whether the Prey received Recovery during the previous round, which known activation-chance branch applies, application success, and ${statusLabel(output.statusId)} uptime or refresh behavior remain unresolved.`
       : null;
+    const selectorSummary = persistentTargetSelectorSummary(output.targetSelector, context.effect);
     traces.push({
       id: `enemy-status-output-${output.id}`,
       ruleId: 'status-source-output',
@@ -2701,7 +2702,7 @@ function analyzeEnemyStatusSourceOutputs(
       recipientDragonId: null,
       recipientAbilityId: null,
       title: `${output.abilityName} - ${statusLabel(output.statusId)} attempt`,
-      explanation: persistentTargetReason ?? supplier.summary ?? `${provider.name}'s ${output.abilityName} can apply ${statusLabel(output.statusId)} to enemy targets.`,
+      explanation: supplier.summary ?? `${provider.name}'s ${output.abilityName} can apply ${statusLabel(output.statusId)} to enemy targets.`,
       requirements,
       matchedFacts: [
         `Status identity: ${output.statusId}.`,
@@ -2728,7 +2729,7 @@ function analyzeEnemyStatusSourceOutputs(
       exactResultUnknownReason: persistentTargetReason ?? 'Exact status application cannot be calculated because application success, uptime, and refresh behavior are unresolved.',
       matchKind: 'status-condition-enablement',
       channel: 'status',
-      targetSelectorSummary: targetSelectorSummary(output.targetSelector),
+      targetSelectorSummary: selectorSummary,
       modifierSelfOnly: false,
       availabilityContext: output.availability.reportLabel,
       modifierCapabilityId: output.id,
@@ -4215,13 +4216,19 @@ function analyzeSelfStatusOutputs(
       condition.kind === 'target-is-prey' ||
       (condition.statusId === 'prey' && /Troop Capacity/i.test(condition.description)),
     );
+    const supplierFacts = output.targetSide === 'self'
+      ? supplier.facts.filter((fact) => !/^Duration:/i.test(fact))
+      : supplier.facts;
+    const supplierEffects = output.targetSide === 'self'
+      ? supplier.effects.filter((effect) => !/^Duration:/i.test(effect))
+      : supplier.effects;
     const details = compactSemanticFacts([
       `Target: ${provider.name}.`,
       timing,
       duration,
       isControlStatus ? `Real Control status: ${statusName}.` : `Status source: ${statusName}.`,
       context?.effect.notes.find((note) => /Control status/i.test(note)) ?? null,
-      ...supplier.effects,
+      ...supplierEffects,
     ].filter((line): line is string => Boolean(line)));
     const timingPhrase = timing?.replace(/^Timing:\s*/i, '').replace(/\.$/, '') ?? null;
     const durationPhrase = duration?.replace(/^Duration:\s*/i, '').replace(/\.$/, '').toLowerCase() ?? null;
@@ -4244,14 +4251,16 @@ function analyzeSelfStatusOutputs(
         `Status identity: ${output.statusId}.`,
         output.sourceEffectId ? `Source effect ID: ${output.sourceEffectId}.` : null,
         `Resolved self recipient: ${provider.name}.`,
-        ...(!currentPreyCondition ? supplier.facts : []),
+        ...supplierFacts,
       ].filter((fact): fact is string => Boolean(fact)),
       effects: details,
       sourceEvidenceIds: output.evidenceIds,
       recipientEvidenceIds: [],
       assumptions: isControlStatus
         ? ['Verified negative self-effects are represented even when they are not beneficial.']
-        : ['Self-targeting resolves the recipient separately from activation success and uptime.'],
+        : currentPreyCondition
+          ? ['The self recipient is resolved separately from the persistent enemy condition reference.']
+          : ['Self-targeting resolves the recipient separately from activation success and uptime.'],
       unresolvedQuestions: isControlStatus
         ? ['Cleanse timing and outcome are not invented.']
         : [],
@@ -5254,7 +5263,7 @@ function analyzeSelfStatusRemoval(
               'Activation success is unresolved.',
               removedStatus ? null : 'Which qualifying negative effect is removed is unresolved.',
             ].filter((question): question is string => Boolean(question)),
-            exactResultUnknownReason: `Exact self status removal cannot be calculated because current Prey existence and identity, above-50% threshold applicability, qualifying self negative-effect state, and 50% activation chance at effective Habit Level 1 are unresolved; activation success and removed-effect identity remain unresolved.`,
+            exactResultUnknownReason: `Exact self status removal cannot be calculated because current Prey existence and identity, above-50% threshold applicability, qualifying self negative-effect state, and activation success at the known 50% chance are unresolved; removed-effect identity remains unresolved.`,
             futureOrConditional: true,
           }));
         }
@@ -8789,6 +8798,16 @@ function targetSelectorSummary(target: AbilityTarget): string {
   const tie = target.tieBehavior ? `; tie behavior ${target.tieBehavior}` : '';
   const group = target.sharedSelectionGroupId ? `; shared group ${target.sharedSelectionGroupId}` : '';
   return `${target.side}; ${target.scope}; ${target.selection}; ${count}; ${caster}${stat}${resource}${direction}${pool}${tie}${group}`;
+}
+
+function persistentTargetSelectorSummary(target: AbilityTarget, effect: AbilityEffect | null | undefined): string {
+  const persistentReferenceId = persistentTargetReferenceId(effect);
+  if (!persistentReferenceId) {
+    return targetSelectorSummary(target);
+  }
+  const count = target.count ?? 1;
+  const countText = `${count} target${count === 1 ? '' : 's'}`;
+  return `${target.side}; persistent-target-reference; current marked target; ${countText}; current marked target identity unresolved; reference ${persistentReferenceId}`;
 }
 
 function defensiveDamageScopeForEffect(effect: AbilityEffect): DefensiveDamageScope | null {

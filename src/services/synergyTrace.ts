@@ -257,7 +257,7 @@ function potentialTraceStatusReason(trace: SynergyTrace): string {
     return 'Current marked-target existence, establishment success, marked enemy identity, and lifecycle behavior remain unresolved.';
   }
   if (trace.ruleId === 'self-status-removal' || (trace.matchKind === 'status-removal' && trace.exactResultUnknownReason && /current marked-target|current prey/i.test(trace.exactResultUnknownReason))) {
-    return trace.exactResultUnknownReason ?? 'Current qualifying negative-effect state, activation success, removed-effect identity, and removal timing remain unresolved.';
+    return 'Current Prey existence, marked enemy identity, above-50% threshold applicability, qualifying self negative-effect state, activation success, and removed-effect identity remain unresolved.';
   }
   if (trace.matchKind === 'enemy-damage-received-increase') {
     const thresholdCondition = trace.modifier?.conditions.some((condition) =>
@@ -291,12 +291,21 @@ function potentialTraceStatusReason(trace: SynergyTrace): string {
   }
   if (trace.ruleId === 'self-status-output') {
     if (trace.exactResultUnknownReason && /current marked-target|current prey/i.test(trace.exactResultUnknownReason)) {
-      return trace.exactResultUnknownReason;
+      return 'Current Prey existence, marked enemy identity, above-50% threshold applicability, and current-round applicability remain unresolved.';
     }
     return 'Activation success and resulting status uptime remain unresolved.';
   }
   if (/Troop Capacity|threshold/i.test(text)) {
     if (trace.exactResultUnknownReason && /current marked-target|current prey/i.test(trace.exactResultUnknownReason)) {
+      if (trace.ruleId === 'status-source-output') {
+        return 'Current Prey existence and identity, previous-round Recovery state, activation-chance branch selection, application success, and status refresh behavior remain unresolved.';
+      }
+      if (trace.ruleId === 'self-status-output') {
+        return 'Current Prey existence, marked enemy identity, above-50% threshold applicability, and current-round applicability remain unresolved.';
+      }
+      if (trace.ruleId === 'self-status-removal' || trace.matchKind === 'status-removal') {
+        return 'Current Prey existence, marked enemy identity, above-50% threshold applicability, qualifying self negative-effect state, activation success, and removed-effect identity remain unresolved.';
+      }
       return trace.exactResultUnknownReason;
     }
     if (/overlapping threshold tiers/i.test(text)) {
@@ -323,6 +332,15 @@ function potentialTraceStatusReason(trace: SynergyTrace): string {
   if (trace.matchKind === 'status-condition-enablement') {
     const text = [trace.title, trace.explanation, ...trace.matchedFacts, ...trace.effects, ...trace.assumptions, ...trace.unresolvedQuestions].join(' ');
     if (trace.exactResultUnknownReason && /current marked-target|current prey/i.test(trace.exactResultUnknownReason)) {
+      if (trace.ruleId === 'status-source-output') {
+        return 'Current Prey existence and identity, previous-round Recovery state, activation-chance branch selection, application success, and status refresh behavior remain unresolved.';
+      }
+      if (trace.ruleId === 'self-status-output') {
+        return 'Current Prey existence, marked enemy identity, above-50% threshold applicability, and current-round applicability remain unresolved.';
+      }
+      if (trace.ruleId === 'self-status-removal') {
+        return 'Current Prey existence, marked enemy identity, above-50% threshold applicability, qualifying self negative-effect state, activation success, and removed-effect identity remain unresolved.';
+      }
       return trace.exactResultUnknownReason;
     }
     if (trace.targetSelectionGroup?.selectionUncertain) {
@@ -365,6 +383,9 @@ function potentialTraceStatusReason(trace: SynergyTrace): string {
     return 'Modifier recipient identity and final output formula remain unresolved.';
   }
   if (trace.ruleId === 'status-source-output') {
+    if (trace.exactResultUnknownReason && /current marked-target|current prey/i.test(trace.exactResultUnknownReason)) {
+      return 'Current Prey existence and identity, previous-round Recovery state, activation-chance branch selection, application success, and status refresh behavior remain unresolved.';
+    }
     if (trace.exactResultUnknownReason) {
       return trace.exactResultUnknownReason;
     }
