@@ -8,7 +8,7 @@ import {
   getCompactInteractions,
 } from '../services/formationCardAnalysis';
 import { createEmptyRoster } from '../services/rosterStorage';
-import { analyzeFormationTraces } from '../services/synergyTrace';
+import { analyzeFormationTraces, traceStatusReason } from '../services/synergyTrace';
 
 const preview = { previewMaxRankInteractions: true };
 
@@ -140,6 +140,7 @@ describe('formation card analysis presentation', () => {
   it('presents all-matching defensive recipients without candidate-selection wording', () => {
     const roster = selectedRoster(['malachite', 'vermax', 'seasmoke']);
     const result = presentation('3', true, { roster });
+    const traces = analyzeFormationTraces(formations['3']!, dragons, { roster, previewMaxRankInteractions: true });
 
     const vermax = card(result, 'vermax');
     const malachite = card(result, 'malachite');
@@ -194,6 +195,10 @@ describe('formation card analysis presentation', () => {
   it('preserves Trial by Flame threshold details in visible card aggregation', () => {
     const roster = selectedRoster(['daemoros', 'vaeldra', 'vermax'], 26, 10);
     const result = presentation('epic', false, { roster });
+    const traces = analyzeFormationTraces(formations.epic!, dragons, {
+      roster,
+      dragonLevels: { daemoros: 26, vaeldra: 26, vermax: 26 },
+    });
 
     const vermax = card(result, 'vermax');
     const daemoros = card(result, 'daemoros');
@@ -217,6 +222,12 @@ describe('formation card analysis presentation', () => {
     expect(provider.targetSummary).toContain('All matching allies: Daemoros and Vaeldra.');
     expect(provider.targetSummary).toContain('Known recipient count: 2.');
     expect(provider.targetSummary).toContain('Each eligible recipient evaluates its own condition.');
+    const trialByFlameTrace = traces.find((trace) => trace.sourceAbilityId === 'vermax-trial-by-flame');
+    expect(trialByFlameTrace).toBeDefined();
+    expect(traceStatusReason(trialByFlameTrace!)).toContain('Threshold eligibility');
+    expect(traceStatusReason(trialByFlameTrace!)).toContain('overlapping tiers');
+    expect(traceStatusReason(trialByFlameTrace!)).toContain('current-round applicability');
+    expect(traceStatusReason(trialByFlameTrace!)).not.toMatch(/future unlock|progression|stack count/i);
 
     for (const text of [providerText, daemorosText, vaeldraText]) {
       expect(text).toContain('Below 75% Troop Capacity');

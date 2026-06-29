@@ -240,12 +240,6 @@ export function traceStatusReason(trace: SynergyTrace): string {
 }
 
 function potentialTraceStatusReason(trace: SynergyTrace): string {
-  if (trace.targetSelectionGroup?.selectionUncertain) {
-    if (trace.targetSelectionGroup.selection === 'highest-stat') {
-      return 'The final selected recipient remains unresolved because one or more comparison values are unavailable.';
-    }
-    return 'The final selected recipient remains unresolved for this candidate set.';
-  }
   const text = [
     trace.explanation,
     ...trace.matchedFacts,
@@ -253,40 +247,74 @@ function potentialTraceStatusReason(trace: SynergyTrace): string {
     ...trace.assumptions,
     ...trace.unresolvedQuestions,
   ].join(' ');
-  if (/recipient selection is unresolved|final selected recipient remains unresolved/i.test(text)) {
-    if (/highest[- ](?:stat|instinct|strength|intelligence|initiative)|highest-/i.test(trace.targetSelectorSummary ?? text)) {
+  if (trace.targetSelectionGroup?.selectionUncertain) {
+    if (trace.targetSelectionGroup.selection === 'highest-stat') {
       return 'The final selected recipient remains unresolved because one or more comparison values are unavailable.';
     }
     return 'The final selected recipient remains unresolved for this candidate set.';
   }
   if (trace.matchKind === 'enemy-damage-received-increase') {
-    return 'Enemy identity, allied target overlap, uptime, and final damage remain unresolved.';
-  }
-  if (trace.matchKind === 'status-condition-enablement' || trace.ruleId === 'status-source-output' || trace.ruleId === 'self-status-output') {
-    if (/enemy/i.test(trace.targetSelectorSummary ?? '') || /enemy/i.test(text)) {
-      return 'Application success and final enemy target identity remain unresolved.';
+    const thresholdCondition = trace.modifier?.conditions.some((condition) =>
+      condition.thresholdPercent !== null && condition.thresholdPercent !== undefined,
+    ) ?? false;
+    if (thresholdCondition) {
+      return 'Threshold eligibility, overlapping tiers, and current-round applicability remain unresolved.';
     }
-    return 'Application success and final uptime remain unresolved.';
+    return 'Enemy identity, allied target overlap, and final damage remain unresolved.';
   }
-  if (trace.modifier?.valuePerStack !== null || trace.modifier?.stackMaximum !== null) {
+  if (trace.matchKind === 'periodic-status-damage') {
+    return 'Application success, selected enemy identity, overlap, successful-application uptime, and final periodic damage remain unresolved.';
+  }
+  if (trace.matchKind === 'extra-basic-attack-trigger') {
+    return 'Repeat count and final formula remain unresolved.';
+  }
+  if (trace.matchKind === 'enemy-mitigation-reduction' || trace.matchKind === 'enemy-damage-dealt-reduction') {
+    const selector = trace.modifier?.targetSelector;
+    if (selector?.selection === 'highest-stat' && selector.selectionStat) {
+      return `Highest-${formatStatName(selector.selectionStat)} enemy identity, tie resolution, and overlap with qualifying outputs remain unresolved.`;
+    }
+    if (selector?.selectionResource === 'current-troops') {
+      return 'Enemy identity, current troop values, and overlap with qualifying outputs remain unresolved.';
+    }
+    if (selector?.scope === 'within-adjacency' || selector?.selection === 'adjacent') {
+      return 'Adjacent enemy identity and overlap with qualifying outputs remain unresolved.';
+    }
+    return 'Enemy identity and overlap with qualifying outputs remain unresolved.';
+  }
+  if (/Troop Capacity|threshold/i.test(text)) {
+    return 'Threshold eligibility, overlapping tiers, and current-round applicability remain unresolved.';
+  }
+  if (
+    trace.matchKind === 'outgoing-effect-amplification' &&
+    (trace.modifier?.stackMaximum !== null || /stack pool|current stack count|maximum stacks|per stack/i.test(text))
+  ) {
     const pieces = [
-      /chance|activation/i.test(text) ? 'activation' : null,
-      /repeat/i.test(text) ? 'repeated-attempt count' : null,
+      /chance|activation/i.test(trace.explanation) ? 'activation' : null,
+      /repeat/i.test(trace.explanation) ? 'repeat count' : null,
       'final stack count',
       'uptime',
     ].filter((piece): piece is string => Boolean(piece));
     return `${capitalizeSentenceList(pieces)} remain conditional.`;
   }
+  if (trace.matchKind === 'status-condition-enablement') {
+    return 'Activation success and final formula remain unresolved.';
+  }
+  if (trace.matchKind === 'stat-scaling-support' || trace.matchKind === 'incoming-effect-amplification') {
+    return 'Selected recipient identity and final formula remain unresolved.';
+  }
+  if (trace.ruleId === 'status-source-output' || trace.ruleId === 'self-status-output') {
+    if (/enemy/i.test(trace.targetSelectorSummary ?? '') || /enemy/i.test(text)) {
+      return 'Application success and final enemy target identity remain unresolved.';
+    }
+    return 'Application success and final uptime remain unresolved.';
+  }
   if (/same-round|action order|resolves first/i.test(text)) {
     return 'Action order, schedule overlap, uptime, and final formula remain unresolved.';
   }
   if (/chance|activation|uptime/i.test(text)) {
-    return 'Activation success, uptime, and final formula remain conditional.';
+    return 'Activation success and final formula remain unresolved.';
   }
-  if (/future|preview|unlock|progression/i.test(text)) {
-    return 'Future unlock or progression requirements are not currently satisfied.';
-  }
-  return 'Activation success, uptime, and final formula remain conditional.';
+  return 'Activation success and final formula remain unresolved.';
 }
 
 function capitalizeSentenceList(items: string[]): string {
@@ -296,6 +324,10 @@ function capitalizeSentenceList(items: string[]): string {
       ? `${items[0]} and ${items[1]}`
       : `${items.slice(0, -1).join(', ')}, and ${items.at(-1)}`;
   return joined.charAt(0).toUpperCase() + joined.slice(1);
+}
+
+function formatStatName(value: string): string {
+  return value.charAt(0).toUpperCase() + value.slice(1);
 }
 
 export function targetPositionsForExactThreeAllies(formation: FormationAnalysisInput): FormationPosition[] {

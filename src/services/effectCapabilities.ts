@@ -3667,7 +3667,7 @@ function analyzeEnemyMitigationReduction(
       }
       const context = sourceEffectContext(provider, modifier.abilityId, modifier.sourceEffectId);
       const sourceTimingFacts = context
-        ? [scheduleTimingDetail(context.schedule), durationDetail(context.effect)].filter((fact): fact is string => Boolean(fact))
+        ? [scheduleTimingDetail(context.schedule), durationDetail(context.effect), durationLine(modifier)].filter((fact): fact is string => Boolean(fact))
         : [];
       const completeCoverage = enemyCoverageIsComplete(modifier);
       const selectionUncertain = enemyTargetSelectionIsUncertain(modifier);
@@ -3767,7 +3767,7 @@ function analyzeEnemyDamageDealtReductions(
     }
     const context = sourceEffectContext(provider, modifier.abilityId, modifier.sourceEffectId);
     const sourceTimingFacts = context
-      ? [scheduleTimingDetail(context.schedule), durationDetail(context.effect)].filter((fact): fact is string => Boolean(fact))
+      ? [scheduleTimingDetail(context.schedule), durationDetail(context.effect), durationLine(modifier)].filter((fact): fact is string => Boolean(fact))
       : [];
     const completeCoverage = enemyCoverageIsComplete(modifier);
     const selectionUncertain = enemyTargetSelectionIsUncertain(modifier);
@@ -8889,8 +8889,14 @@ function enemyDamageDealtExactUnknownReason(modifier: ModifierCapability, comple
 }
 
 function exactUnknownReason(modifier: ModifierCapability, matchKind: string): string {
-  if (modifier.valuePerStack !== null || modifier.stackMaximum !== null || modifier.statusId) {
+  if (modifier.stackMaximum !== null) {
     return 'Exact final stack benefit cannot be calculated because activation, repeat count, final stack count, uptime, and final formulas are unresolved.';
+  }
+  if (matchKind === 'periodic-status-damage') {
+    return 'Exact final periodic damage cannot be calculated because application success, selected enemy identity, overlap, successful-application uptime, and final formulas are unresolved.';
+  }
+  if (matchKind === 'extra-basic-attack-trigger') {
+    return 'Exact final repeat-trigger result cannot be calculated because repeat count and final formulas are unresolved.';
   }
   if (modifier.channel === 'recovery') {
     return "Exact final Recovery cannot be calculated because the game's Level and Instinct Recovery formula is unknown.";

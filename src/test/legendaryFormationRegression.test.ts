@@ -536,7 +536,7 @@ describe('legendary formation analysis regression fixes', () => {
     )).toBe(true);
     expect(armorBreak?.state).toBe('conditional');
     expect(huntersBane?.state).toBe('conditional');
-    expect(flightMasteryEnemy?.state).toBe('conditional');
+    expect(flightMasteryEnemy?.state).toBe('active');
     expect(flightMasteryEnemy?.effectTitle).toBe('Flight Mastery - Enemy Initiative reduction');
     expect(flightMasteryEnemy?.summary).toContain('Enemy Initiative -6%');
     expect(flightMasteryEnemy?.summary).not.toContain('Damage Dealt reduction');

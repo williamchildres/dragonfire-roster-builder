@@ -173,6 +173,7 @@ describe('trigger, schedule override, periodic damage framework regression', () 
     expect(feralTriggerText).toContain('Excluded scheduled or non-event effect IDs: feral-strike-double-strike.');
     expect(feralTriggerText).toContain('Scheduled grant rolls do not repeat');
     expect(feralTriggerText).not.toContain('Target selection may choose another eligible recipient.');
+    expect(traceStatusReason(feralTrigger!)).not.toMatch(/stack count/i);
 
     const precisionTrigger = traces.find((trace) =>
       trace.matchKind === 'extra-basic-attack-trigger' &&
@@ -180,6 +181,7 @@ describe('trigger, schedule override, periodic damage framework regression', () 
       trace.recipientAbilityId === 'venator-feral-precision'
     );
     expect(traceText(precisionTrigger)).toContain("A second Basic Attack can trigger Feral Precision's added after-Basic-Attack Physical Damage again.");
+    expect(traceStatusReason(precisionTrigger!)).not.toMatch(/stack count/i);
 
     const allLightningTitles = traces.filter((trace) => trace.sourceAbilityId === 'malachite-lightning-strike').map((trace) => `${trace.ruleId}:${trace.title}`);
     expect(allLightningTitles.length).toBeGreaterThan(0);
@@ -200,6 +202,7 @@ describe('trigger, schedule override, periodic damage framework regression', () 
     }
     expect(traceText(lightningStrength)).toContain('Venator');
     expect(traceText(lightningStrength)).toContain('Strength');
+    expect(traceStatusReason(lightningStrength!)).not.toMatch(/stack count/i);
 
     const reactiveVenator = traces.filter((trace) =>
       trace.sourceAbilityId === 'vermax-reactive-instincts' &&
@@ -236,6 +239,7 @@ describe('trigger, schedule override, periodic damage framework regression', () 
     const collectiveMightTraces = traces.filter((trace) => trace.sourceAbilityId === 'malachite-collective-might');
     expect(collectiveMightTraces.some((trace) => trace.ruleId === 'direct-stat-support')).toBe(true);
     expect(collectiveMightTraces.some((trace) => trace.ruleId === 'stat-scaling-support')).toBe(true);
+    expect(traceStatusReason(collectiveMightTraces.find((trace) => trace.ruleId === 'stat-scaling-support')!)).not.toMatch(/stack count/i);
 
     const malachiteCard = presentation.cards.find((card) => card.dragonId === 'malachite');
     expect(malachiteCard).toBeDefined();
@@ -354,18 +358,22 @@ describe('trigger, schedule override, periodic damage framework regression', () 
     expect(huntersBaneText).toContain('Panic periodic Tactical Damage');
 
     const battleCunningCards = cardsFor(presentation, 'Battle Cunning').map(interactionText).join(' ');
+    expect(cardsFor(presentation, 'Battle Cunning').every((item) => item.state === 'active')).toBe(true);
     expect(battleCunningCards).toContain('Enemy Physical Damage Dealt reduction');
     expect(battleCunningCards).toContain('Enemy Fire Damage Dealt reduction');
     expect(battleCunningCards).toContain('Enemy Strength -6.5% on 3 enemy targets.');
     expect(battleCunningCards).toContain('Enemy Intelligence -6.5% on 3 enemy targets.');
     expect(battleCunningCards).toContain('Timing: Start of combat.');
     expect(battleCunningCards).toContain('Duration: until end of combat.');
+    expect(battleCunningCards).not.toContain('Target selection and uptime are uncertain.');
     expect(cardsFor(presentation, 'Battle Cunning').flatMap((item) => [...item.details, ...item.effects]).join(' ')).toContain('Enemy Intelligence -6.5%');
     const huntersBaneCards = cardsFor(presentation, "Hunter's Bane").map(interactionText).join(' ');
     expect(huntersBaneCards).toContain('Enemy Fire Damage Dealt reduction');
     expect(huntersBaneCards).toContain('Enemy Intelligence -30% on 1 enemy target.');
     expect(huntersBaneCards).toContain('Timing: Start of combat.');
     expect(cardsFor(presentation, "Hunter's Bane").flatMap((item) => [...item.details, ...item.effects]).join(' ')).toContain('Enemy Intelligence -30%');
+    expect(traceStatusReason(traces.find((trace) => trace.sourceAbilityId === 'venator-hunters-bane' && trace.matchKind === 'enemy-mitigation-reduction')!)).not.toMatch(/activation/i);
+    expect(traceStatusReason(traces.find((trace) => trace.sourceAbilityId === 'venator-hunters-bane' && trace.matchKind === 'enemy-mitigation-reduction')!)).not.toMatch(/stack count/i);
 
     const statusApplicationCards = [
       ...cardsFor(presentation, 'Tactical Strike'),
@@ -394,10 +402,18 @@ describe('trigger, schedule override, periodic damage framework regression', () 
       expect(traceText(trace)).not.toContain('Target choice may not be guaranteed');
       expect(traceText(trace)).toContain('Tactical Damage Dealt +2.5% per stack');
       expect(trace.exactResultUnknownReason).toContain('final stack count');
-      expect(traceStatusReason(trace)).toContain('final stack count');
+      expect(traceStatusReason(trace)).toMatch(/final stack count/i);
       expect(traceStatusReason(trace)).not.toMatch(/target choice|target selection|future progression/i);
     }
     expect(traces.filter((trace) => trace.matchKind === 'periodic-damage-amplification' && trace.recipientDragonId === 'kalspire')).toHaveLength(0);
+
+    const bleedPeriodicTrace = traces.find((trace) => trace.matchKind === 'periodic-status-damage' && trace.sourceAbilityId === 'kalspire-tactical-strike' && trace.channel === 'physical-damage');
+    const panicPeriodicTrace = traces.find((trace) => trace.matchKind === 'periodic-status-damage' && trace.sourceAbilityId === 'kalspire-tactical-assault' && trace.channel === 'tactical-damage');
+    for (const trace of [bleedPeriodicTrace, panicPeriodicTrace]) {
+      expect(trace).toBeDefined();
+      expect(trace?.exactResultUnknownReason).not.toMatch(/stack count/i);
+      expect(traceStatusReason(trace!)).not.toMatch(/stack count/i);
+    }
 
     const reactiveKalspire = traces.find((trace) =>
       trace.sourceAbilityId === 'vermax-reactive-instincts' &&
@@ -417,6 +433,15 @@ describe('trigger, schedule override, periodic damage framework regression', () 
       'Radiant Conqueror - Enemy Fire Damage Dealt reduction',
       'Radiant Conqueror - Enemy non-Basic Physical Damage Dealt reduction',
     ]));
+    const radiantEnemyCards = radiantCards.filter((item) => /Enemy .*Damage Dealt reduction/i.test(item.effectTitle));
+    expect(radiantEnemyCards).toHaveLength(2);
+    for (const item of radiantEnemyCards) {
+      const text = interactionText(item);
+      expect(text).not.toContain('Target selection and uptime are uncertain.');
+      expect(text).toContain('Timing: Start of Round 2.');
+      expect(text).toContain('Duration: 5 rounds.');
+      expect(item.state).toBe('conditional');
+    }
 
     const warriorsZealCardText = cardsFor(presentation, "Warrior's Zeal")
       .filter((item) => item.recipientName === 'Kalspire')

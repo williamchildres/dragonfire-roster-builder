@@ -1868,12 +1868,32 @@ function projectedInteractionState(trace: SynergyTrace, previewEnabled = false):
   if (trace.targetSelectionGroup?.selectionUncertain) {
     return 'conditional';
   }
-  if (
-    trace.matchKind === 'enemy-damage-received-increase' ||
-    trace.matchKind === 'enemy-damage-dealt-reduction' ||
-    trace.matchKind === 'enemy-mitigation-reduction'
-  ) {
-    return 'conditional';
+  if (trace.matchKind === 'enemy-damage-dealt-reduction' || trace.matchKind === 'enemy-mitigation-reduction') {
+    const selector = trace.modifier?.targetSelector;
+    const text = [trace.explanation, ...trace.matchedFacts, ...trace.effects].join(' ');
+    if (trace.matchKind === 'enemy-mitigation-reduction' && /Initiative/i.test(text)) {
+      return 'conditional';
+    }
+    if (/enemy initiative reduction|enemy initiative -/i.test(text)) {
+      return 'conditional';
+    }
+    if (/all three enemy slots are covered/i.test(text)) {
+      return state;
+    }
+    if (/enemy identities (?:remain|are) (?:unresolved|unnamed)|selected enemy identity|enemy target selection is not resolved|target selection is unresolved/i.test(text)) {
+      return 'conditional';
+    }
+    if (/highest-(?:Strength|Intelligence)|enemy with highest/i.test(text) && /unresolved/i.test(text)) {
+      return 'conditional';
+    }
+    if (
+      selector?.selection === 'highest-stat' ||
+      selector?.selectionResource === 'current-troops' ||
+      selector?.scope === 'within-adjacency' ||
+      selector?.selection === 'adjacent'
+    ) {
+      return 'conditional';
+    }
   }
   return state;
 }
@@ -3292,12 +3312,13 @@ function enemyFacingSummary(trace: SynergyTrace): string {
     const stat = enemyReductionStat(trace);
     const targetPhrase = enemyReductionTargetPhrase(trace);
     const duration = trace.effects.find((effect) => /Duration:/i.test(effect)) ?? null;
+    const uncertainty = enemyFacingUncertainty(trace);
     if (trace.channel === 'stat' && stat) {
       const signedAmount = amount ? `-${amount}` : 'reduction';
       return [
         `Enemy ${stat} ${signedAmount} on ${targetPhrase}.`,
         duration,
-        'Target selection and uptime are uncertain.',
+        uncertainty,
       ].filter(Boolean).join(' ');
     }
     const sourceValue = stat && amount ? `Enemy ${stat} -${amount}` : null;
@@ -3305,7 +3326,7 @@ function enemyFacingSummary(trace: SynergyTrace): string {
     return [
       `${sourceValue ?? channelValue ?? `${formatToken(trace.channel ?? 'damage-dealt')} reduction`} on ${targetPhrase}.`,
       duration,
-      'Target selection and uptime are uncertain.',
+      uncertainty,
     ].filter(Boolean).join(' ');
   }
   if (trace.matchKind === 'enemy-damage-received-increase') {
@@ -3331,7 +3352,8 @@ function enemyFacingSummary(trace: SynergyTrace): string {
   }
   if (trace.matchKind === 'periodic-status-damage') {
     const status = trace.title.match(/^(.+?)\s+periodic/i)?.[1] ?? 'Status';
-    return `${status} deals periodic ${formatToken(trace.channel ?? 'damage-dealt')} each round; target selection and uptime are uncertain.`;
+    const uncertainty = periodicStatusUncertainty(trace);
+    return [`${status} deals periodic ${formatToken(trace.channel ?? 'damage-dealt')} each round.`, uncertainty].filter(Boolean).join(' ');
   }
   const channel = trace.sourceAbilityId?.includes('battle-dread') ? 'Fire Damage' : trace.channel ? formatToken(trace.channel) : 'team damage';
   if (trace.modifier && trace.matchKind === 'enemy-mitigation-reduction') {
@@ -3345,6 +3367,38 @@ function enemyFacingSummary(trace: SynergyTrace): string {
   }
   const lowered = trace.effects.join(' ').match(/(Strength|Intelligence|Instinct|Initiative)/i)?.[1];
   return lowered ? `Lowers enemy ${lowered}, supporting allied ${channel}.` : 'Lowers enemy mitigation for the team.';
+}
+
+function enemyFacingUncertainty(trace: SynergyTrace): string | null {
+  if (trace.status === 'active') {
+    return null;
+  }
+  if (trace.targetSelectionGroup?.selectionUncertain) {
+    if (trace.targetSelectionGroup.selection === 'highest-stat') {
+      return 'Selected enemy identity and tie resolution are uncertain.';
+    }
+    if (trace.targetSelectionGroup.selectionResource === 'current-troops') {
+      return 'Selected enemy identity and current troop values are uncertain.';
+    }
+    if (trace.targetSelectionGroup.targetCount > 1) {
+      return 'Selected enemy identities are uncertain.';
+    }
+    return 'Selected enemy identity is uncertain.';
+  }
+  if (trace.matchKind === 'periodic-status-damage') {
+    return periodicStatusUncertainty(trace);
+  }
+  if (trace.matchKind === 'enemy-damage-received-increase') {
+    return 'Threshold eligibility and overlapping tiers are uncertain.';
+  }
+  return null;
+}
+
+function periodicStatusUncertainty(trace: SynergyTrace): string | null {
+  if (trace.status === 'active') {
+    return null;
+  }
+  return 'Application success, selected enemy identity, overlap, successful-application uptime, and final periodic damage are uncertain.';
 }
 
 function successfulStatusVulnerabilitySummary(trace: SynergyTrace): string | null {
