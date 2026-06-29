@@ -1818,6 +1818,12 @@ function defensiveModifierDetailLines(
     ...(context?.effect.conditions ?? []),
     ...(context?.schedule.conditions ?? []),
   ];
+  const resistanceBranch = thresholdConditions.some((condition) =>
+    /below 50% Troop Capacity/i.test(condition.description) &&
+    modifier.channel === 'damage-received' &&
+    modifier.statusId === 'resistance' &&
+    modifier.abilityId === 'seasmoke-loyal-bond',
+  );
   const thresholdDetails = thresholdConditions.flatMap((condition) => {
     if (!/Troop Capacity/i.test(condition.description)) {
       return [];
@@ -1826,13 +1832,18 @@ function defensiveModifierDetailLines(
       return [`Each recipient above 50% Troop Capacity may receive Advantage, increasing Damage Dealt by ${displayValue}.`];
     }
     if (/below 50% Troop Capacity/i.test(condition.description) && modifier.channel === 'damage-received') {
-      return [`Each recipient below 50% Troop Capacity may receive Resistance, reducing Damage Received by ${displayValue}.`];
+      return modifier.abilityId === 'seasmoke-loyal-bond'
+        ? [`Below 50% Troop Capacity branch applies.`]
+        : [`Each recipient below 50% Troop Capacity may receive Resistance, reducing Damage Received by ${displayValue}.`];
     }
     return [condition.description];
   });
+  const reductionLine = resistanceBranch
+    ? `${statusLabel(modifier.statusId ?? 'resistance')} reduces Damage Received by ${displayValue}${effectiveLevel ? ` at effective Habit Level ${effectiveLevel}` : ''}.`
+    : `${damageReceivedLabel(modifier.damageScope)} decrease ${displayValue}${effectiveLevel ? ` at effective Habit Level ${effectiveLevel}` : ''}.`;
   if (!context) {
     return [
-      `${damageReceivedLabel(modifier.damageScope)} decrease ${displayValue}${effectiveLevel ? ` at effective Habit Level ${effectiveLevel}` : ''}.`,
+      reductionLine,
       modifier.sourceScope === 'non-basic-attacks' ? `${damageReceivedLabel(modifier.damageScope)} reduction applies to non-Basic Attacks only.` : null,
       ...thresholdDetails,
       modifier.durationRounds ? `Duration: ${modifier.durationRounds} rounds.` : null,
@@ -1841,7 +1852,7 @@ function defensiveModifierDetailLines(
   return [
     context ? scheduleTimingDetail(context.schedule) : null,
     modifier.statusId && context?.effect.stack ? `Grants 1 ${formatCapabilityToken(modifier.statusId)} stack.` : null,
-    `${damageReceivedLabel(modifier.damageScope)} decrease ${displayValue}${effectiveLevel ? ` at effective Habit Level ${effectiveLevel}` : ''}.`,
+    reductionLine,
     modifier.sourceScope === 'non-basic-attacks' ? `${damageReceivedLabel(modifier.damageScope)} reduction applies to non-Basic Attacks only.` : null,
     ...thresholdDetails,
     ...activationChanceFacts(modifier, options),
@@ -2687,8 +2698,11 @@ function analyzeEnemyStatusSourceOutputs(
     const conditionalChanceText = baseChance && conditionalChance && Number.isFinite(conditionalChance.multiplier)
       ? formatValue(baseChance.value * conditionalChance.multiplier, baseChance.unit)
       : null;
-    const persistentTargetReason = persistentTargetReference
-      ? `${statusLabel(output.statusId)} application remains conditional because current marked-target existence and identity, ${conditionalChance?.condition.description ?? 'the prior-round condition'}, base activation chance ${baseChanceText}${conditionalChanceText ? `, resulting activation chance ${conditionalChanceText}` : ''}, application success, and ${statusLabel(output.statusId)} uptime or refresh behavior remain unresolved.`
+    const preyDependency = persistentTargetReference ||
+      output.conditions.some((condition) => /prey/i.test(condition.description) || condition.statusId === 'prey') ||
+      /prey/i.test(conditionalChance?.condition.description ?? '');
+    const persistentTargetReason = preyDependency
+      ? `${statusLabel(output.statusId)} application remains conditional because current Prey existence and identity, whether the Prey received Recovery during the previous round, which known activation-chance branch applies, application success, and ${statusLabel(output.statusId)} uptime or refresh behavior remain unresolved.`
       : null;
     traces.push({
       id: `enemy-status-output-${output.id}`,
@@ -3911,8 +3925,7 @@ function enemyDamageDealtReductionExplanation(
       ? channelLabel(reductionChannel)
       : `${channelLabel(reductionChannel)} Dealt`;
   const baseValue = `-${modifierDisplayValue(modifier, options)}`;
-  const unverifiedScaling = hasUnverifiedStructuredStatScaling(modifier.sourceEffectId ? sourceEffectContext(provider, modifier.abilityId, modifier.sourceEffectId)?.effect ?? null : null);
-  const reductionSentence = statId && unverifiedScaling
+  const reductionSentence = statId
     ? `Base Enemy ${statLabel(statId)} reduction ${baseValue}. Final scaled Enemy ${statLabel(statId)} reduction remains unresolved.`
     : `Enemy ${stat} reduction is ${baseValue}.`;
   const targetSentence = completeCoverage
@@ -4211,7 +4224,6 @@ function analyzeSelfStatusOutputs(
     const supplier = statusSupplierFacts(output, context, options);
     const timing = context ? scheduleTimingDetail(context.schedule) : null;
     const duration = context ? durationDetail(context.effect) : output.durationRounds ? `Duration: ${output.durationRounds} rounds.` : null;
-    const runtimeConditionFacts = output.conditions.map((condition) => condition.description);
     const currentPreyCondition = output.conditions.find((condition) =>
       condition.kind === 'target-is-prey' ||
       (condition.statusId === 'prey' && /Troop Capacity/i.test(condition.description)),
@@ -4246,7 +4258,6 @@ function analyzeSelfStatusOutputs(
         output.sourceEffectId ? `Source effect ID: ${output.sourceEffectId}.` : null,
         `Resolved self recipient: ${provider.name}.`,
         ...(!currentPreyCondition ? supplier.facts : []),
-        ...runtimeConditionFacts.map((condition) => `Runtime condition: ${condition}`),
       ].filter((fact): fact is string => Boolean(fact)),
       effects: details,
       sourceEvidenceIds: output.evidenceIds,
@@ -4258,7 +4269,7 @@ function analyzeSelfStatusOutputs(
         ? ['Cleanse timing and outcome are not invented.']
         : [],
       exactResultUnknownReason: currentPreyCondition
-        ? `Exact ${statusName} result cannot be calculated because current marked-target existence, marked enemy identity, threshold applicability, and current-round applicability are unresolved.`
+        ? `Exact ${statusName} result cannot be calculated because current Prey existence, marked enemy identity, above-50% threshold applicability, and current-round applicability are unresolved.`
         : `Exact ${statusName} result cannot be calculated because activation success, runtime condition state, and status uptime are unresolved.`,
       futureOrConditional: capabilityFutureOrConditional(output, options) || output.conditions.length > 0 || statusChanceConditional(output),
     }));
@@ -5224,7 +5235,7 @@ function analyzeSelfStatusRemoval(
             scheduleTimingDetail(schedule),
             baseChance ? `Activation chance: ${formatValue(baseChance.value, baseChance.unit)} at effective Habit Level ${level ?? 'unknown'}.` : null,
             conditionalChance && removedStatus ? `While ${statusLabel(removedStatus)}, the chance increases to ${formatValue(conditionalChance.value, conditionalChance.unit)}.` : null,
-            ...conditionPool.map((condition) => `Runtime condition: ${condition.description}`),
+            ...statusRuntimeConditionFacts({ conditions: conditionPool } as unknown as StatusOutputCapability, effect),
             `On successful activation, remove the applicable ${removedStatusLabel} from ${provider.name}.`,
             removedStatus ? 'The cleanse does not receive an independent roll.' : 'Which qualifying negative effect is removed is unresolved.',
             schedule.activationRoll?.scope === 'schedule-shared' ? `Shared activation group: ${activationGroupId(schedule, effect)}.` : null,
@@ -5244,7 +5255,6 @@ function analyzeSelfStatusRemoval(
             matchedFacts: [
               `${ability.name} includes ${effect.type}.`,
               removedStatus ? `Removed status: ${removedStatus}.` : 'Removed status: qualifying enemy-applied negative effect.',
-              ...conditionPool.map((condition) => `Runtime condition: ${condition.description}`),
             ],
             effects: details,
             sourceEvidenceIds: ability.evidenceIds,
@@ -5257,7 +5267,7 @@ function analyzeSelfStatusRemoval(
               'Activation success is unresolved.',
               removedStatus ? null : 'Which qualifying negative effect is removed is unresolved.',
             ].filter((question): question is string => Boolean(question)),
-            exactResultUnknownReason: `Exact self status removal cannot be calculated because current marked-target existence, marked enemy identity, threshold applicability, qualifying self negative-effect state, and 50% activation chance at effective Habit Level 1 are unresolved; activation success and removed-effect identity remain unresolved.`,
+            exactResultUnknownReason: `Exact self status removal cannot be calculated because current Prey existence and identity, above-50% threshold applicability, qualifying self negative-effect state, and 50% activation chance at effective Habit Level 1 are unresolved; activation success and removed-effect identity remain unresolved.`,
             futureOrConditional: true,
           }));
         }
@@ -6197,6 +6207,34 @@ function branchExclusionSummary(statusOutput: StatusOutputCapability): string | 
   return null;
 }
 
+function persistentTargetReferenceId(effect: AbilityEffect | null | undefined): string | null {
+  return effect?.targetSelection?.references.find((reference) => reference.kind === 'persistent-selected-target')?.id ?? null;
+}
+
+function statusRuntimeConditionFacts(statusOutput: StatusOutputCapability, effect: AbilityEffect | null): string[] {
+  const persistentReferenceId = persistentTargetReferenceId(effect);
+  let persistentReferenceEmitted = false;
+  return statusOutput.conditions.flatMap((condition) => {
+    const isCurrentPreyCondition =
+      condition.kind === 'target-is-prey' ||
+      condition.statusId === 'prey' ||
+      /\bprey\b/i.test(condition.description);
+    if (!isCurrentPreyCondition) {
+      return [`Runtime condition: ${condition.description}`];
+    }
+    const facts: string[] = [];
+    const referenceId = persistentReferenceId ?? 'sheepstealer-current-prey';
+    if (!persistentReferenceEmitted) {
+      facts.push(`Persistent condition reference: ${referenceId}.`);
+      persistentReferenceEmitted = true;
+    }
+    if (/above 50% Troop Capacity/i.test(condition.description)) {
+      facts.push('Runtime condition: Current Prey is above 50% Troop Capacity.');
+    }
+    return facts;
+  });
+}
+
 function statusSupplierFacts(
   statusOutput: StatusOutputCapability,
   context: { ability: AbilityDefinition; schedule: AbilitySchedule; effect: AbilityEffect } | null,
@@ -6246,10 +6284,11 @@ function statusSupplierFacts(
     : rankedValueForHabitLevel(statusOutput.chanceByHabitLevel, level);
   const chanceText = chance ? formatValue(chance.value, chance.unit) : null;
   const timing = scheduleTimingDetail(schedule);
-  const branchCondition = branchConditionFact(statusOutput);
-  const branchExclusion = branchExclusionSummary(statusOutput);
-  const targetCount = branchCondition ? null : targetEffect.targetCount ?? statusOutput.targetSelector.count;
-  const hasPersistentTargetReference = (effect.targetSelection?.references ?? []).some((reference) => reference.kind === 'persistent-selected-target');
+  const persistentReferenceId = persistentTargetReferenceId(effect);
+  const hasPersistentTargetReference = persistentReferenceId !== null;
+  const branchCondition = hasPersistentTargetReference ? null : branchConditionFact(statusOutput);
+  const branchExclusion = hasPersistentTargetReference ? null : branchExclusionSummary(statusOutput);
+  const targetCount = hasPersistentTargetReference ? 1 : branchCondition ? null : targetEffect.targetCount ?? statusOutput.targetSelector.count;
   const targetText = branchCondition
     ? hasPersistentTargetReference
       ? 'the current marked target'
@@ -6282,7 +6321,9 @@ function statusSupplierFacts(
     timing ? timing.replace(/^Timing:/, 'Activation timing:') : null,
     ...levelFacts.facts,
     `Target: ${targetText}.`,
-    ...(statusOutput.targetSide === 'self' ? statusOutput.conditions.map((condition) => `Runtime condition: ${condition.description}`) : []),
+    ...(hasPersistentTargetReference && statusOutput.targetSide === 'enemy' ? ['Target count: 1.'] : []),
+    ...(hasPersistentTargetReference && persistentReferenceId ? [`Persistent target reference: ${persistentReferenceId}.`] : []),
+    ...(statusOutput.targetSide === 'self' ? statusRuntimeConditionFacts(statusOutput, effect) : []),
     branchCondition,
     branchCondition ? `Branch target count: dynamic; only ${targetText} receive ${statusLabel(statusOutput.statusId)}.` : null,
     branchCondition ? 'Exactly one conditional branch applies per enemy.' : null,
@@ -6345,10 +6386,12 @@ function statusSupplierFacts(
     facts,
     effects: [
       ...levelFacts.effects,
+      ...(hasPersistentTargetReference && statusOutput.targetSide === 'enemy' ? ['Target count: 1.'] : []),
+      ...(hasPersistentTargetReference && persistentReferenceId ? [`Persistent target reference: ${persistentReferenceId}.`] : []),
       ...(includeChanceFacts && chanceText ? [`Status application chance: ${chanceText}${level ? ` at ${levelFacts.summaryPrefix}` : ''}.`] : []),
       ...conditionalChanceFacts.effects,
       ...(duration ? [duration] : []),
-      ...(statusOutput.targetSide === 'self' ? statusOutput.conditions.map((condition) => `Runtime condition: ${condition.description}`) : []),
+      ...(statusOutput.targetSide === 'self' ? statusRuntimeConditionFacts(statusOutput, effect) : []),
       ...(confirmedRollDescription ? [confirmedRollDescription] : []),
       ...(branchCondition ? [branchCondition, `Branch target count: dynamic; only ${targetText} receive ${statusLabel(statusOutput.statusId)}.`, 'Exactly one conditional branch applies per enemy.'] : []),
       ...(branchExclusion ? [branchExclusion] : []),

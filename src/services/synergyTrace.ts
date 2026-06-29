@@ -256,7 +256,7 @@ function potentialTraceStatusReason(trace: SynergyTrace): string {
   if (trace.ruleId === 'persistent-marked-target-reference') {
     return 'Current marked-target existence, establishment success, marked enemy identity, and lifecycle behavior remain unresolved.';
   }
-  if (trace.ruleId === 'self-status-removal' || (trace.matchKind === 'status-removal' && trace.exactResultUnknownReason?.includes('current marked-target'))) {
+  if (trace.ruleId === 'self-status-removal' || (trace.matchKind === 'status-removal' && trace.exactResultUnknownReason && /current marked-target|current prey/i.test(trace.exactResultUnknownReason))) {
     return trace.exactResultUnknownReason ?? 'Current qualifying negative-effect state, activation success, removed-effect identity, and removal timing remain unresolved.';
   }
   if (trace.matchKind === 'enemy-damage-received-increase') {
@@ -290,13 +290,13 @@ function potentialTraceStatusReason(trace: SynergyTrace): string {
     return 'Enemy identity and overlap with qualifying outputs remain unresolved.';
   }
   if (trace.ruleId === 'self-status-output') {
-    if (trace.exactResultUnknownReason?.includes('current marked-target')) {
+    if (trace.exactResultUnknownReason && /current marked-target|current prey/i.test(trace.exactResultUnknownReason)) {
       return trace.exactResultUnknownReason;
     }
     return 'Activation success and resulting status uptime remain unresolved.';
   }
   if (/Troop Capacity|threshold/i.test(text)) {
-    if (trace.exactResultUnknownReason?.includes('current marked-target')) {
+    if (trace.exactResultUnknownReason && /current marked-target|current prey/i.test(trace.exactResultUnknownReason)) {
       return trace.exactResultUnknownReason;
     }
     if (/overlapping threshold tiers/i.test(text)) {
@@ -322,7 +322,7 @@ function potentialTraceStatusReason(trace: SynergyTrace): string {
   }
   if (trace.matchKind === 'status-condition-enablement') {
     const text = [trace.title, trace.explanation, ...trace.matchedFacts, ...trace.effects, ...trace.assumptions, ...trace.unresolvedQuestions].join(' ');
-    if (trace.exactResultUnknownReason?.includes('current marked-target')) {
+    if (trace.exactResultUnknownReason && /current marked-target|current prey/i.test(trace.exactResultUnknownReason)) {
       return trace.exactResultUnknownReason;
     }
     if (trace.targetSelectionGroup?.selectionUncertain) {
@@ -365,7 +365,7 @@ function potentialTraceStatusReason(trace: SynergyTrace): string {
     return 'Modifier recipient identity and final output formula remain unresolved.';
   }
   if (trace.ruleId === 'status-source-output') {
-    if (trace.exactResultUnknownReason?.includes('current marked-target')) {
+    if (trace.exactResultUnknownReason) {
       return trace.exactResultUnknownReason;
     }
     if (/enemy/i.test(trace.targetSelectorSummary ?? '') || /enemy/i.test(text)) {
