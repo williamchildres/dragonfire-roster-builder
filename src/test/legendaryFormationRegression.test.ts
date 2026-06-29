@@ -432,6 +432,44 @@ describe('legendary formation analysis regression fixes', () => {
     expect(vhagar.statusOutputs.filter((status) => status.abilityId === 'vhagar-eclipse-cover').map((status) => status.statusId)).toEqual(expect.arrayContaining(['advantage', 'weakened']));
   });
 
+  it('keeps Radiant Conqueror duration metadata once in expanded enemy reductions and technical analysis', () => {
+    const formation: FormationAnalysisInput = { 'left-flank': 'crimson', vanguard: 'vhagar', 'right-flank': 'kalspire' };
+    const roster = currentRoster();
+    roster.kalspire!.owned = true;
+    roster.kalspire!.collection.state = 'hatched';
+    roster.kalspire!.starRank = 10;
+    roster.kalspire!.reignLevel = 26;
+    const previewTraces = analyzeFormationTraces(formation, dragons, { roster, dragonLevels: currentLevels });
+    const presentation = buildFormationCardPresentation(formation, dragons, previewTraces, { previewEnabled: false, roster });
+    const kalspire = presentation.cards.find((card) => card.dragonId === 'kalspire');
+    const fireTrace = previewTraces.find((trace) =>
+      trace.sourceAbilityId === 'kalspire-radiant-conqueror' &&
+      trace.title === 'Enemy Fire Damage Dealt reduction'
+    );
+    const physicalTrace = previewTraces.find((trace) =>
+      trace.sourceAbilityId === 'kalspire-radiant-conqueror' &&
+      trace.title === 'Enemy non-Basic Physical Damage Dealt reduction'
+    );
+    const fire = kalspire?.provides.find((item) => item.traceIds.includes(fireTrace?.id ?? ''));
+    const physical = kalspire?.provides.find((item) => item.traceIds.includes(physicalTrace?.id ?? ''));
+
+    expect(fire?.state).toBe('conditional');
+    expect(physical?.state).toBe('conditional');
+    expect(fire?.detail ?? '').toContain('Timing: Start of Round 2.');
+    expect(fire?.detail ?? '').toContain('Duration: 5 rounds.');
+    expect(physical?.detail ?? '').toContain('Timing: Start of Round 2.');
+    expect(physical?.detail ?? '').toContain('Duration: 5 rounds.');
+    expect((fireTrace?.explanation ?? '').match(/Duration: 5 rounds\./g)).toHaveLength(1);
+    expect((physicalTrace?.explanation ?? '').match(/Duration: 5 rounds\./g)).toHaveLength(1);
+    expect(fireTrace?.matchedFacts.join(' ')).toContain('highest-Intelligence');
+    expect(physicalTrace?.matchedFacts.join(' ')).toContain('highest-Strength');
+    expect(physicalTrace?.matchedFacts.join(' ')).toContain('non-Basic Attacks only');
+    expect(fireTrace?.assumptions.join(' ')).not.toMatch(/uptime/i);
+    expect(physicalTrace?.assumptions.join(' ')).not.toMatch(/uptime/i);
+    expect(fireTrace?.unresolvedQuestions.join(' ')).not.toMatch(/uptime/i);
+    expect(physicalTrace?.unresolvedQuestions.join(' ')).not.toMatch(/uptime/i);
+  });
+
   it('keeps Strategic Revival as shared least-troops candidate Recovery and Resistance', () => {
     const allTraces = legacyTraces();
     const strategic = allTraces.filter((trace) => trace.sourceAbilityId === 'syrax-strategic-revival');
