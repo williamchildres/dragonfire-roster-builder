@@ -253,6 +253,12 @@ function potentialTraceStatusReason(trace: SynergyTrace): string {
     }
     return 'The final selected recipient remains unresolved for this candidate set.';
   }
+  if (trace.ruleId === 'persistent-marked-target-reference') {
+    return 'Current marked-target existence, establishment success, marked enemy identity, and lifecycle behavior remain unresolved.';
+  }
+  if (trace.matchKind === 'status-removal' || trace.ruleId === 'self-status-removal') {
+    return 'Current qualifying negative-effect state, activation success, removed-effect identity, and removal timing remain unresolved.';
+  }
   if (trace.matchKind === 'enemy-damage-received-increase') {
     const thresholdCondition = trace.modifier?.conditions.some((condition) =>
       condition.thresholdPercent !== null && condition.thresholdPercent !== undefined,
@@ -277,16 +283,31 @@ function potentialTraceStatusReason(trace: SynergyTrace): string {
       return 'Enemy identity, current troop values, and overlap with qualifying outputs remain unresolved.';
     }
     if (selector?.scope === 'within-adjacency' || selector?.selection === 'adjacent') {
-      return 'Adjacent enemy identity and overlap with qualifying outputs remain unresolved.';
+      return trace.matchKind === 'enemy-mitigation-reduction'
+        ? 'Affected enemy pair overlap with qualifying outputs and final scaling or mitigation formula remain unresolved.'
+        : 'Adjacent enemy identity and overlap with qualifying outputs remain unresolved.';
     }
     return 'Enemy identity and overlap with qualifying outputs remain unresolved.';
   }
+  if (trace.ruleId === 'self-status-output') {
+    if (/current prey|marked enemy|prey/i.test(text)) {
+      return 'Current marked-target existence, marked enemy identity, threshold applicability, activation success, and status uptime remain unresolved.';
+    }
+    return 'Activation success and resulting status uptime remain unresolved.';
+  }
   if (/Troop Capacity|threshold/i.test(text)) {
-    return 'Threshold eligibility, overlapping tiers, and current-round applicability remain unresolved.';
+    if (/overlapping threshold tiers/i.test(text)) {
+      return 'Threshold eligibility, overlapping tiers, and current-round applicability remain unresolved.';
+    }
+    return 'Threshold branch applicability, exact boundary behavior, activation success, modifier uptime, and final formula remain unresolved.';
+  }
+  if (trace.matchKind === 'defensive-ally-support') {
+    const uptimeScope = trace.sourceDragonId === trace.recipientDragonId ? 'modifier uptime' : 'support uptime';
+    return `Activation success, ${uptimeScope}, and final mitigated-damage formula remain unresolved.`;
   }
   if (
     trace.matchKind === 'outgoing-effect-amplification' &&
-    (trace.modifier?.stackMaximum !== null || /stack pool|current stack count|maximum stacks|per stack/i.test(text))
+    (traceHasStackMetadata(trace) || /stack pool|current stack count|maximum stacks|per stack/i.test(text))
   ) {
     const pieces = [
       /chance|activation/i.test(trace.explanation) ? 'activation' : null,
@@ -315,7 +336,7 @@ function potentialTraceStatusReason(trace: SynergyTrace): string {
     return 'Application success and resulting status uptime remain unresolved.';
   }
   if (trace.matchKind === 'outgoing-effect-amplification') {
-    if (trace.modifier?.stackMaximum !== null || /stack pool|current stack count|maximum stacks|per stack/i.test(text)) {
+    if (traceHasStackMetadata(trace) || /stack pool|current stack count|maximum stacks|per stack/i.test(text)) {
       const pieces = [
         /chance|activation/i.test(trace.explanation) ? 'activation' : null,
         /repeat/i.test(trace.explanation) ? 'repeat count' : null,
@@ -326,6 +347,9 @@ function potentialTraceStatusReason(trace: SynergyTrace): string {
     }
     if (/chance|activation|uptime/i.test(text) || trace.modifier?.conditional) {
       const uptimeScope = trace.sourceDragonId === trace.recipientDragonId ? 'modifier uptime' : 'support uptime';
+      if (trace.channel === 'damage-received' || trace.damageScope) {
+        return `Activation success, ${uptimeScope}, and final mitigated-damage formula remain unresolved.`;
+      }
       return /same-round|action order|overlap/i.test(text)
         ? `Activation success, ${uptimeScope}, same-round ordering, and final amplified damage formula remain unresolved.`
         : `Activation success, ${uptimeScope}, and final amplified damage formula remain unresolved.`;
@@ -347,6 +371,12 @@ function potentialTraceStatusReason(trace: SynergyTrace): string {
     return 'Application success and resulting status uptime remain unresolved.';
   }
   return 'Application success and resulting status uptime remain unresolved.';
+}
+
+function traceHasStackMetadata(trace: SynergyTrace): boolean {
+  return trace.modifier?.stackMaximum !== null && trace.modifier?.stackMaximum !== undefined ||
+    trace.modifier?.valuePerStack !== null && trace.modifier?.valuePerStack !== undefined ||
+    trace.modifier?.unit === 'stack';
 }
 
 function capitalizeSentenceList(items: string[]): string {
