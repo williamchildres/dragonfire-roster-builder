@@ -4111,9 +4111,7 @@
     ]
   },
   {
-    "assumptions": [
-      "Enemy target overlap is not simulated."
-    ],
+    "assumptions": [],
     "channel": "fire-damage",
     "confidence": "confirmed",
     "conflicts": [
@@ -4124,12 +4122,17 @@
     ],
     "damageScope": null,
     "effects": [
-      "Enemy Initiative reduction may improve Fire Damage outputs: Infernal Burst: Fire Damage, Crippling Inferno: Burn periodic Fire Damage.",
+      "Duration: until end of combat.",
+      "Enemy selector: all enemies.",
+      "Enemy target count: 3.",
+      "All three enemy slots are covered.",
+      "Enemy identities remain unresolved because the enemy formation is unavailable.",
+      "Enemy Initiative reduction may improve Fire Damage outputs: Infernal Burst: Fire Damage, Crippling Inferno: Burn periodic Fire Damage. Enemy Initiative -6%.",
       "Applies to all qualifying Fire Damage sources."
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final value cannot be calculated because final combat formulas and stacking order are not fully verified.",
-    "explanation": "Syrax's Flight Mastery can reduce enemy Initiative. Caraxes's Fire Damage outputs are mitigated by that stat.",
+    "explanation": "Syrax's Flight Mastery can reduce enemy Initiative. Enemy Initiative reduction is -6%. Caraxes's Fire Damage outputs are mitigated by that stat. Duration: until end of combat.",
     "id": "enemy-mitigation-syrax-flight-mastery-flight-mastery-initiative-down-stat-dealt-modifier-caraxes-initiative",
     "interactionScope": "cross-dragon",
     "matchedOutputCapabilityIds": [
@@ -4203,17 +4206,15 @@
     "sourceEvidenceIds": [
       "syrax-flight-mastery-2026-06-24"
     ],
-    "status": "potential",
+    "status": "inactive",
     "targetSelectionGroup": null,
     "title": "Fire Damage Mitigation Reduction",
     "unresolvedQuestions": [
-      "Exact enemy-formation targeting and final mitigation formula are unknown."
+      "Enemy identities remain unnamed because the enemy formation is unavailable."
     ]
   },
   {
-    "assumptions": [
-      "Enemy target overlap is not simulated."
-    ],
+    "assumptions": [],
     "channel": "fire-damage",
     "confidence": "confirmed",
     "conflicts": [
@@ -4224,12 +4225,17 @@
     ],
     "damageScope": null,
     "effects": [
-      "Enemy Initiative reduction may improve Fire Damage outputs: Infernal Burst: Fire Damage, Crippling Inferno: Burn periodic Fire Damage.",
+      "Duration: until end of combat.",
+      "Enemy selector: all enemies.",
+      "Enemy target count: 3.",
+      "All three enemy slots are covered.",
+      "Enemy identities remain unresolved because the enemy formation is unavailable.",
+      "Enemy Initiative reduction may improve Fire Damage outputs: Infernal Burst: Fire Damage, Crippling Inferno: Burn periodic Fire Damage. Enemy Initiative -6.5%.",
       "Applies to all qualifying Fire Damage sources."
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final value cannot be calculated because final combat formulas and stacking order are not fully verified.",
-    "explanation": "Caraxes's Battle Dread can reduce enemy Initiative. Caraxes's Fire Damage outputs are mitigated by that stat.",
+    "explanation": "Caraxes's Battle Dread can reduce enemy Initiative. Enemy Initiative reduction is -6.5%. Caraxes's Fire Damage outputs are mitigated by that stat. Duration: until end of combat.",
     "id": "enemy-mitigation-caraxes-battle-dread-battle-dread-initiative-down-stat-dealt-modifier-caraxes-initiative",
     "interactionScope": "internal",
     "matchedOutputCapabilityIds": [
@@ -4303,18 +4309,15 @@
     "sourceEvidenceIds": [
       "caraxes-battle-dread-2026-06-24"
     ],
-    "status": "potential",
+    "status": "inactive",
     "targetSelectionGroup": null,
     "title": "Fire Damage Mitigation Reduction",
     "unresolvedQuestions": [
-      "Exact enemy-formation targeting and final mitigation formula are unknown."
+      "Enemy identities remain unnamed because the enemy formation is unavailable."
     ]
   },
   {
-    "assumptions": [
-      "Enemy identities and combat availability are unresolved.",
-      "Activation chance and uptime are not treated as guaranteed."
-    ],
+    "assumptions": [],
     "channel": "stat",
     "confidence": "confirmed",
     "conflicts": [
@@ -4323,11 +4326,16 @@
     ],
     "damageScope": null,
     "effects": [
+      "Duration: until end of combat.",
+      "Enemy selector: all enemies.",
+      "Enemy target count: 3.",
+      "All three enemy slots are covered.",
+      "Enemy identities remain unresolved because the enemy formation is unavailable.",
       "Enemy Initiative decrease 12% at effective Habit Level 5."
     ],
     "exactResultKnown": false,
-    "exactResultUnknownReason": "Exact final reduced enemy damage cannot be calculated because target selection, uptime, stacking, and final formulas are unresolved.",
-    "explanation": "Syrax's Flight Mastery can reduce enemy Initiative. Enemy target selection is tracked as an enemy-side candidate group, not a named friendly recipient.",
+    "exactResultUnknownReason": "Exact final reduced enemy damage cannot be calculated because the final combat formula is not fully verified.",
+    "explanation": "Syrax's Flight Mastery can reduce enemy Initiative. All three enemy slots are covered by Syrax's Flight Mastery. Duration: until end of combat.",
     "id": "enemy-damage-dealt-reduction-syrax-flight-mastery-flight-mastery-initiative-down-stat-dealt-modifier",
     "interactionScope": "enemy-side",
     "matchedOutputCapabilityIds": [],
@@ -4375,14 +4383,11 @@
     "targetSelectionGroup": null,
     "title": "Enemy Initiative reduction",
     "unresolvedQuestions": [
-      "Enemy identities, combat availability, final uptime, and stacking/refresh behavior remain unresolved."
+      "Enemy identities remain unnamed because the enemy formation is unavailable."
     ]
   },
   {
-    "assumptions": [
-      "Enemy identities and combat availability are unresolved.",
-      "Activation chance and uptime are not treated as guaranteed."
-    ],
+    "assumptions": [],
     "channel": "physical-damage",
     "confidence": "confirmed",
     "conflicts": [
@@ -4391,12 +4396,17 @@
     ],
     "damageScope": null,
     "effects": [
+      "Duration: until end of combat.",
+      "Enemy selector: all enemies.",
+      "Enemy target count: 3.",
+      "All three enemy slots are covered.",
+      "Enemy identities remain unresolved because the enemy formation is unavailable.",
       "Enemy Strength decrease 13% at effective Habit Level 5.",
       "Enemy Physical Damage Dealt reduction follows from enemy Strength reduction."
     ],
     "exactResultKnown": false,
-    "exactResultUnknownReason": "Exact final reduced enemy damage cannot be calculated because target selection, uptime, stacking, and final formulas are unresolved.",
-    "explanation": "Caraxes's Battle Dread can reduce enemy Strength, which reduces Physical Damage Dealt. Enemy target selection is tracked as an enemy-side candidate group, not a named friendly recipient.",
+    "exactResultUnknownReason": "Exact final reduced enemy damage cannot be calculated because the final combat formula is not fully verified.",
+    "explanation": "Caraxes's Battle Dread can reduce enemy Strength, which reduces Physical Damage Dealt. All three enemy slots are covered by Caraxes's Battle Dread. Duration: until end of combat.",
     "id": "enemy-damage-dealt-reduction-caraxes-battle-dread-battle-dread-strength-down-stat-dealt-modifier",
     "interactionScope": "enemy-side",
     "matchedOutputCapabilityIds": [],
@@ -4444,14 +4454,11 @@
     "targetSelectionGroup": null,
     "title": "Enemy Physical Damage Dealt reduction",
     "unresolvedQuestions": [
-      "Enemy identities, combat availability, final uptime, and stacking/refresh behavior remain unresolved."
+      "Enemy identities remain unnamed because the enemy formation is unavailable."
     ]
   },
   {
-    "assumptions": [
-      "Enemy identities and combat availability are unresolved.",
-      "Activation chance and uptime are not treated as guaranteed."
-    ],
+    "assumptions": [],
     "channel": "stat",
     "confidence": "confirmed",
     "conflicts": [
@@ -4460,11 +4467,16 @@
     ],
     "damageScope": null,
     "effects": [
+      "Duration: until end of combat.",
+      "Enemy selector: all enemies.",
+      "Enemy target count: 3.",
+      "All three enemy slots are covered.",
+      "Enemy identities remain unresolved because the enemy formation is unavailable.",
       "Enemy Initiative decrease 13% at effective Habit Level 5."
     ],
     "exactResultKnown": false,
-    "exactResultUnknownReason": "Exact final reduced enemy damage cannot be calculated because target selection, uptime, stacking, and final formulas are unresolved.",
-    "explanation": "Caraxes's Battle Dread can reduce enemy Initiative. Enemy target selection is tracked as an enemy-side candidate group, not a named friendly recipient.",
+    "exactResultUnknownReason": "Exact final reduced enemy damage cannot be calculated because the final combat formula is not fully verified.",
+    "explanation": "Caraxes's Battle Dread can reduce enemy Initiative. All three enemy slots are covered by Caraxes's Battle Dread. Duration: until end of combat.",
     "id": "enemy-damage-dealt-reduction-caraxes-battle-dread-battle-dread-initiative-down-stat-dealt-modifier",
     "interactionScope": "enemy-side",
     "matchedOutputCapabilityIds": [],
@@ -4512,14 +4524,11 @@
     "targetSelectionGroup": null,
     "title": "Enemy Initiative reduction",
     "unresolvedQuestions": [
-      "Enemy identities, combat availability, final uptime, and stacking/refresh behavior remain unresolved."
+      "Enemy identities remain unnamed because the enemy formation is unavailable."
     ]
   },
   {
-    "assumptions": [
-      "Enemy identities and combat availability are unresolved.",
-      "Activation chance and uptime are not treated as guaranteed."
-    ],
+    "assumptions": [],
     "channel": "physical-damage",
     "confidence": "confirmed",
     "conflicts": [
@@ -4528,12 +4537,17 @@
     ],
     "damageScope": null,
     "effects": [
+      "Duration: until end of combat.",
+      "Enemy selector: all enemies.",
+      "Enemy target count: 3.",
+      "All three enemy slots are covered.",
+      "Enemy identities remain unresolved because the enemy formation is unavailable.",
       "Physical Damage Dealt decrease 11% at effective Habit Level 5.",
       "Physical Damage reduction applies to non-Basic Attacks only."
     ],
     "exactResultKnown": false,
-    "exactResultUnknownReason": "Exact final reduced enemy damage cannot be calculated because target selection, uptime, stacking, and final formulas are unresolved.",
-    "explanation": "Caraxes's Mass Enfeeble can reduce enemy Physical Damage Dealt. Enemy target selection is tracked as an enemy-side candidate group, not a named friendly recipient.",
+    "exactResultUnknownReason": "Exact final reduced enemy damage cannot be calculated because the final combat formula is not fully verified.",
+    "explanation": "Caraxes's Mass Enfeeble can reduce enemy Physical Damage Dealt. All three enemy slots are covered by Caraxes's Mass Enfeeble. Duration: until end of combat.",
     "id": "enemy-damage-dealt-reduction-caraxes-mass-enfeeble-mass-enfeeble-physical-down-physical-damage-dealt-modifier",
     "interactionScope": "enemy-side",
     "matchedOutputCapabilityIds": [],
@@ -4581,7 +4595,7 @@
     "targetSelectionGroup": null,
     "title": "Enemy non-Basic Physical Damage Dealt reduction",
     "unresolvedQuestions": [
-      "Enemy identities, combat availability, final uptime, and stacking/refresh behavior remain unresolved."
+      "Enemy identities remain unnamed because the enemy formation is unavailable."
     ]
   },
   {
@@ -8602,9 +8616,7 @@
     ]
   },
   {
-    "assumptions": [
-      "Enemy target overlap is not simulated."
-    ],
+    "assumptions": [],
     "channel": "fire-damage",
     "confidence": "confirmed",
     "conflicts": [
@@ -8615,12 +8627,17 @@
     ],
     "damageScope": null,
     "effects": [
-      "Enemy Initiative reduction may improve Fire Damage outputs: Infernal Burst: Fire Damage, Crippling Inferno: Burn periodic Fire Damage.",
+      "Duration: until end of combat.",
+      "Enemy selector: all enemies.",
+      "Enemy target count: 3.",
+      "All three enemy slots are covered.",
+      "Enemy identities remain unresolved because the enemy formation is unavailable.",
+      "Enemy Initiative reduction may improve Fire Damage outputs: Infernal Burst: Fire Damage, Crippling Inferno: Burn periodic Fire Damage. Enemy Initiative -6%.",
       "Applies to all qualifying Fire Damage sources."
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final value cannot be calculated because final combat formulas and stacking order are not fully verified.",
-    "explanation": "Syrax's Flight Mastery can reduce enemy Initiative. Caraxes's Fire Damage outputs are mitigated by that stat.",
+    "explanation": "Syrax's Flight Mastery can reduce enemy Initiative. Enemy Initiative reduction is -6%. Caraxes's Fire Damage outputs are mitigated by that stat. Duration: until end of combat.",
     "id": "enemy-mitigation-syrax-flight-mastery-flight-mastery-initiative-down-stat-dealt-modifier-caraxes-initiative",
     "interactionScope": "cross-dragon",
     "matchedOutputCapabilityIds": [
@@ -8694,17 +8711,15 @@
     "sourceEvidenceIds": [
       "syrax-flight-mastery-2026-06-24"
     ],
-    "status": "potential",
+    "status": "inactive",
     "targetSelectionGroup": null,
     "title": "Fire Damage Mitigation Reduction",
     "unresolvedQuestions": [
-      "Exact enemy-formation targeting and final mitigation formula are unknown."
+      "Enemy identities remain unnamed because the enemy formation is unavailable."
     ]
   },
   {
-    "assumptions": [
-      "Enemy target overlap is not simulated."
-    ],
+    "assumptions": [],
     "channel": "fire-damage",
     "confidence": "confirmed",
     "conflicts": [
@@ -8715,12 +8730,17 @@
     ],
     "damageScope": null,
     "effects": [
-      "Enemy Initiative reduction may improve Fire Damage outputs: Infernal Burst: Fire Damage, Crippling Inferno: Burn periodic Fire Damage.",
+      "Duration: until end of combat.",
+      "Enemy selector: all enemies.",
+      "Enemy target count: 3.",
+      "All three enemy slots are covered.",
+      "Enemy identities remain unresolved because the enemy formation is unavailable.",
+      "Enemy Initiative reduction may improve Fire Damage outputs: Infernal Burst: Fire Damage, Crippling Inferno: Burn periodic Fire Damage. Enemy Initiative -6.5%.",
       "Applies to all qualifying Fire Damage sources."
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final value cannot be calculated because final combat formulas and stacking order are not fully verified.",
-    "explanation": "Caraxes's Battle Dread can reduce enemy Initiative. Caraxes's Fire Damage outputs are mitigated by that stat.",
+    "explanation": "Caraxes's Battle Dread can reduce enemy Initiative. Enemy Initiative reduction is -6.5%. Caraxes's Fire Damage outputs are mitigated by that stat. Duration: until end of combat.",
     "id": "enemy-mitigation-caraxes-battle-dread-battle-dread-initiative-down-stat-dealt-modifier-caraxes-initiative",
     "interactionScope": "internal",
     "matchedOutputCapabilityIds": [
@@ -8794,18 +8814,15 @@
     "sourceEvidenceIds": [
       "caraxes-battle-dread-2026-06-24"
     ],
-    "status": "potential",
+    "status": "inactive",
     "targetSelectionGroup": null,
     "title": "Fire Damage Mitigation Reduction",
     "unresolvedQuestions": [
-      "Exact enemy-formation targeting and final mitigation formula are unknown."
+      "Enemy identities remain unnamed because the enemy formation is unavailable."
     ]
   },
   {
-    "assumptions": [
-      "Enemy identities and combat availability are unresolved.",
-      "Activation chance and uptime are not treated as guaranteed."
-    ],
+    "assumptions": [],
     "channel": "stat",
     "confidence": "confirmed",
     "conflicts": [
@@ -8814,11 +8831,16 @@
     ],
     "damageScope": null,
     "effects": [
+      "Duration: until end of combat.",
+      "Enemy selector: all enemies.",
+      "Enemy target count: 3.",
+      "All three enemy slots are covered.",
+      "Enemy identities remain unresolved because the enemy formation is unavailable.",
       "Enemy Initiative decrease 12% at effective Habit Level 5."
     ],
     "exactResultKnown": false,
-    "exactResultUnknownReason": "Exact final reduced enemy damage cannot be calculated because target selection, uptime, stacking, and final formulas are unresolved.",
-    "explanation": "Syrax's Flight Mastery can reduce enemy Initiative. Enemy target selection is tracked as an enemy-side candidate group, not a named friendly recipient.",
+    "exactResultUnknownReason": "Exact final reduced enemy damage cannot be calculated because the final combat formula is not fully verified.",
+    "explanation": "Syrax's Flight Mastery can reduce enemy Initiative. All three enemy slots are covered by Syrax's Flight Mastery. Duration: until end of combat.",
     "id": "enemy-damage-dealt-reduction-syrax-flight-mastery-flight-mastery-initiative-down-stat-dealt-modifier",
     "interactionScope": "enemy-side",
     "matchedOutputCapabilityIds": [],
@@ -8866,14 +8888,11 @@
     "targetSelectionGroup": null,
     "title": "Enemy Initiative reduction",
     "unresolvedQuestions": [
-      "Enemy identities, combat availability, final uptime, and stacking/refresh behavior remain unresolved."
+      "Enemy identities remain unnamed because the enemy formation is unavailable."
     ]
   },
   {
-    "assumptions": [
-      "Enemy identities and combat availability are unresolved.",
-      "Activation chance and uptime are not treated as guaranteed."
-    ],
+    "assumptions": [],
     "channel": "physical-damage",
     "confidence": "confirmed",
     "conflicts": [
@@ -8882,12 +8901,17 @@
     ],
     "damageScope": null,
     "effects": [
+      "Duration: until end of combat.",
+      "Enemy selector: all enemies.",
+      "Enemy target count: 3.",
+      "All three enemy slots are covered.",
+      "Enemy identities remain unresolved because the enemy formation is unavailable.",
       "Enemy Strength decrease 13% at effective Habit Level 5.",
       "Enemy Physical Damage Dealt reduction follows from enemy Strength reduction."
     ],
     "exactResultKnown": false,
-    "exactResultUnknownReason": "Exact final reduced enemy damage cannot be calculated because target selection, uptime, stacking, and final formulas are unresolved.",
-    "explanation": "Caraxes's Battle Dread can reduce enemy Strength, which reduces Physical Damage Dealt. Enemy target selection is tracked as an enemy-side candidate group, not a named friendly recipient.",
+    "exactResultUnknownReason": "Exact final reduced enemy damage cannot be calculated because the final combat formula is not fully verified.",
+    "explanation": "Caraxes's Battle Dread can reduce enemy Strength, which reduces Physical Damage Dealt. All three enemy slots are covered by Caraxes's Battle Dread. Duration: until end of combat.",
     "id": "enemy-damage-dealt-reduction-caraxes-battle-dread-battle-dread-strength-down-stat-dealt-modifier",
     "interactionScope": "enemy-side",
     "matchedOutputCapabilityIds": [],
@@ -8935,14 +8959,11 @@
     "targetSelectionGroup": null,
     "title": "Enemy Physical Damage Dealt reduction",
     "unresolvedQuestions": [
-      "Enemy identities, combat availability, final uptime, and stacking/refresh behavior remain unresolved."
+      "Enemy identities remain unnamed because the enemy formation is unavailable."
     ]
   },
   {
-    "assumptions": [
-      "Enemy identities and combat availability are unresolved.",
-      "Activation chance and uptime are not treated as guaranteed."
-    ],
+    "assumptions": [],
     "channel": "stat",
     "confidence": "confirmed",
     "conflicts": [
@@ -8951,11 +8972,16 @@
     ],
     "damageScope": null,
     "effects": [
+      "Duration: until end of combat.",
+      "Enemy selector: all enemies.",
+      "Enemy target count: 3.",
+      "All three enemy slots are covered.",
+      "Enemy identities remain unresolved because the enemy formation is unavailable.",
       "Enemy Initiative decrease 13% at effective Habit Level 5."
     ],
     "exactResultKnown": false,
-    "exactResultUnknownReason": "Exact final reduced enemy damage cannot be calculated because target selection, uptime, stacking, and final formulas are unresolved.",
-    "explanation": "Caraxes's Battle Dread can reduce enemy Initiative. Enemy target selection is tracked as an enemy-side candidate group, not a named friendly recipient.",
+    "exactResultUnknownReason": "Exact final reduced enemy damage cannot be calculated because the final combat formula is not fully verified.",
+    "explanation": "Caraxes's Battle Dread can reduce enemy Initiative. All three enemy slots are covered by Caraxes's Battle Dread. Duration: until end of combat.",
     "id": "enemy-damage-dealt-reduction-caraxes-battle-dread-battle-dread-initiative-down-stat-dealt-modifier",
     "interactionScope": "enemy-side",
     "matchedOutputCapabilityIds": [],
@@ -9003,14 +9029,11 @@
     "targetSelectionGroup": null,
     "title": "Enemy Initiative reduction",
     "unresolvedQuestions": [
-      "Enemy identities, combat availability, final uptime, and stacking/refresh behavior remain unresolved."
+      "Enemy identities remain unnamed because the enemy formation is unavailable."
     ]
   },
   {
-    "assumptions": [
-      "Enemy identities and combat availability are unresolved.",
-      "Activation chance and uptime are not treated as guaranteed."
-    ],
+    "assumptions": [],
     "channel": "physical-damage",
     "confidence": "confirmed",
     "conflicts": [
@@ -9019,12 +9042,17 @@
     ],
     "damageScope": null,
     "effects": [
+      "Duration: until end of combat.",
+      "Enemy selector: all enemies.",
+      "Enemy target count: 3.",
+      "All three enemy slots are covered.",
+      "Enemy identities remain unresolved because the enemy formation is unavailable.",
       "Physical Damage Dealt decrease 11% at effective Habit Level 5.",
       "Physical Damage reduction applies to non-Basic Attacks only."
     ],
     "exactResultKnown": false,
-    "exactResultUnknownReason": "Exact final reduced enemy damage cannot be calculated because target selection, uptime, stacking, and final formulas are unresolved.",
-    "explanation": "Caraxes's Mass Enfeeble can reduce enemy Physical Damage Dealt. Enemy target selection is tracked as an enemy-side candidate group, not a named friendly recipient.",
+    "exactResultUnknownReason": "Exact final reduced enemy damage cannot be calculated because the final combat formula is not fully verified.",
+    "explanation": "Caraxes's Mass Enfeeble can reduce enemy Physical Damage Dealt. All three enemy slots are covered by Caraxes's Mass Enfeeble. Duration: until end of combat.",
     "id": "enemy-damage-dealt-reduction-caraxes-mass-enfeeble-mass-enfeeble-physical-down-physical-damage-dealt-modifier",
     "interactionScope": "enemy-side",
     "matchedOutputCapabilityIds": [],
@@ -9072,7 +9100,7 @@
     "targetSelectionGroup": null,
     "title": "Enemy non-Basic Physical Damage Dealt reduction",
     "unresolvedQuestions": [
-      "Enemy identities, combat availability, final uptime, and stacking/refresh behavior remain unresolved."
+      "Enemy identities remain unnamed because the enemy formation is unavailable."
     ]
   },
   {
@@ -13430,9 +13458,7 @@
     ]
   },
   {
-    "assumptions": [
-      "Enemy target overlap is not simulated."
-    ],
+    "assumptions": [],
     "channel": "fire-damage",
     "confidence": "confirmed",
     "conflicts": [
@@ -13443,12 +13469,17 @@
     ],
     "damageScope": null,
     "effects": [
-      "Enemy Initiative reduction may improve Fire Damage outputs: Infernal Burst: Fire Damage, Crippling Inferno: Burn periodic Fire Damage.",
+      "Duration: until end of combat.",
+      "Enemy selector: all enemies.",
+      "Enemy target count: 3.",
+      "All three enemy slots are covered.",
+      "Enemy identities remain unresolved because the enemy formation is unavailable.",
+      "Enemy Initiative reduction may improve Fire Damage outputs: Infernal Burst: Fire Damage, Crippling Inferno: Burn periodic Fire Damage. Enemy Initiative -6%.",
       "Applies to all qualifying Fire Damage sources."
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final value cannot be calculated because final combat formulas and stacking order are not fully verified.",
-    "explanation": "Syrax's Flight Mastery can reduce enemy Initiative. Caraxes's Fire Damage outputs are mitigated by that stat.",
+    "explanation": "Syrax's Flight Mastery can reduce enemy Initiative. Enemy Initiative reduction is -6%. Caraxes's Fire Damage outputs are mitigated by that stat. Duration: until end of combat.",
     "id": "enemy-mitigation-syrax-flight-mastery-flight-mastery-initiative-down-stat-dealt-modifier-caraxes-initiative",
     "interactionScope": "cross-dragon",
     "matchedOutputCapabilityIds": [
@@ -13522,17 +13553,15 @@
     "sourceEvidenceIds": [
       "syrax-flight-mastery-2026-06-24"
     ],
-    "status": "potential",
+    "status": "inactive",
     "targetSelectionGroup": null,
     "title": "Fire Damage Mitigation Reduction",
     "unresolvedQuestions": [
-      "Exact enemy-formation targeting and final mitigation formula are unknown."
+      "Enemy identities remain unnamed because the enemy formation is unavailable."
     ]
   },
   {
-    "assumptions": [
-      "Enemy target overlap is not simulated."
-    ],
+    "assumptions": [],
     "channel": "fire-damage",
     "confidence": "confirmed",
     "conflicts": [
@@ -13543,12 +13572,17 @@
     ],
     "damageScope": null,
     "effects": [
-      "Enemy Initiative reduction may improve Fire Damage outputs: Infernal Burst: Fire Damage, Crippling Inferno: Burn periodic Fire Damage.",
+      "Duration: until end of combat.",
+      "Enemy selector: all enemies.",
+      "Enemy target count: 3.",
+      "All three enemy slots are covered.",
+      "Enemy identities remain unresolved because the enemy formation is unavailable.",
+      "Enemy Initiative reduction may improve Fire Damage outputs: Infernal Burst: Fire Damage, Crippling Inferno: Burn periodic Fire Damage. Enemy Initiative -6.5%.",
       "Applies to all qualifying Fire Damage sources."
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final value cannot be calculated because final combat formulas and stacking order are not fully verified.",
-    "explanation": "Caraxes's Battle Dread can reduce enemy Initiative. Caraxes's Fire Damage outputs are mitigated by that stat.",
+    "explanation": "Caraxes's Battle Dread can reduce enemy Initiative. Enemy Initiative reduction is -6.5%. Caraxes's Fire Damage outputs are mitigated by that stat. Duration: until end of combat.",
     "id": "enemy-mitigation-caraxes-battle-dread-battle-dread-initiative-down-stat-dealt-modifier-caraxes-initiative",
     "interactionScope": "internal",
     "matchedOutputCapabilityIds": [
@@ -13622,18 +13656,15 @@
     "sourceEvidenceIds": [
       "caraxes-battle-dread-2026-06-24"
     ],
-    "status": "potential",
+    "status": "inactive",
     "targetSelectionGroup": null,
     "title": "Fire Damage Mitigation Reduction",
     "unresolvedQuestions": [
-      "Exact enemy-formation targeting and final mitigation formula are unknown."
+      "Enemy identities remain unnamed because the enemy formation is unavailable."
     ]
   },
   {
-    "assumptions": [
-      "Enemy identities and combat availability are unresolved.",
-      "Activation chance and uptime are not treated as guaranteed."
-    ],
+    "assumptions": [],
     "channel": "stat",
     "confidence": "confirmed",
     "conflicts": [
@@ -13642,11 +13673,16 @@
     ],
     "damageScope": null,
     "effects": [
+      "Duration: until end of combat.",
+      "Enemy selector: all enemies.",
+      "Enemy target count: 3.",
+      "All three enemy slots are covered.",
+      "Enemy identities remain unresolved because the enemy formation is unavailable.",
       "Enemy Initiative decrease 12% at effective Habit Level 5."
     ],
     "exactResultKnown": false,
-    "exactResultUnknownReason": "Exact final reduced enemy damage cannot be calculated because target selection, uptime, stacking, and final formulas are unresolved.",
-    "explanation": "Syrax's Flight Mastery can reduce enemy Initiative. Enemy target selection is tracked as an enemy-side candidate group, not a named friendly recipient.",
+    "exactResultUnknownReason": "Exact final reduced enemy damage cannot be calculated because the final combat formula is not fully verified.",
+    "explanation": "Syrax's Flight Mastery can reduce enemy Initiative. All three enemy slots are covered by Syrax's Flight Mastery. Duration: until end of combat.",
     "id": "enemy-damage-dealt-reduction-syrax-flight-mastery-flight-mastery-initiative-down-stat-dealt-modifier",
     "interactionScope": "enemy-side",
     "matchedOutputCapabilityIds": [],
@@ -13694,14 +13730,11 @@
     "targetSelectionGroup": null,
     "title": "Enemy Initiative reduction",
     "unresolvedQuestions": [
-      "Enemy identities, combat availability, final uptime, and stacking/refresh behavior remain unresolved."
+      "Enemy identities remain unnamed because the enemy formation is unavailable."
     ]
   },
   {
-    "assumptions": [
-      "Enemy identities and combat availability are unresolved.",
-      "Activation chance and uptime are not treated as guaranteed."
-    ],
+    "assumptions": [],
     "channel": "physical-damage",
     "confidence": "confirmed",
     "conflicts": [
@@ -13710,12 +13743,17 @@
     ],
     "damageScope": null,
     "effects": [
+      "Duration: until end of combat.",
+      "Enemy selector: all enemies.",
+      "Enemy target count: 3.",
+      "All three enemy slots are covered.",
+      "Enemy identities remain unresolved because the enemy formation is unavailable.",
       "Enemy Strength decrease 13% at effective Habit Level 5.",
       "Enemy Physical Damage Dealt reduction follows from enemy Strength reduction."
     ],
     "exactResultKnown": false,
-    "exactResultUnknownReason": "Exact final reduced enemy damage cannot be calculated because target selection, uptime, stacking, and final formulas are unresolved.",
-    "explanation": "Caraxes's Battle Dread can reduce enemy Strength, which reduces Physical Damage Dealt. Enemy target selection is tracked as an enemy-side candidate group, not a named friendly recipient.",
+    "exactResultUnknownReason": "Exact final reduced enemy damage cannot be calculated because the final combat formula is not fully verified.",
+    "explanation": "Caraxes's Battle Dread can reduce enemy Strength, which reduces Physical Damage Dealt. All three enemy slots are covered by Caraxes's Battle Dread. Duration: until end of combat.",
     "id": "enemy-damage-dealt-reduction-caraxes-battle-dread-battle-dread-strength-down-stat-dealt-modifier",
     "interactionScope": "enemy-side",
     "matchedOutputCapabilityIds": [],
@@ -13763,14 +13801,11 @@
     "targetSelectionGroup": null,
     "title": "Enemy Physical Damage Dealt reduction",
     "unresolvedQuestions": [
-      "Enemy identities, combat availability, final uptime, and stacking/refresh behavior remain unresolved."
+      "Enemy identities remain unnamed because the enemy formation is unavailable."
     ]
   },
   {
-    "assumptions": [
-      "Enemy identities and combat availability are unresolved.",
-      "Activation chance and uptime are not treated as guaranteed."
-    ],
+    "assumptions": [],
     "channel": "stat",
     "confidence": "confirmed",
     "conflicts": [
@@ -13779,11 +13814,16 @@
     ],
     "damageScope": null,
     "effects": [
+      "Duration: until end of combat.",
+      "Enemy selector: all enemies.",
+      "Enemy target count: 3.",
+      "All three enemy slots are covered.",
+      "Enemy identities remain unresolved because the enemy formation is unavailable.",
       "Enemy Initiative decrease 13% at effective Habit Level 5."
     ],
     "exactResultKnown": false,
-    "exactResultUnknownReason": "Exact final reduced enemy damage cannot be calculated because target selection, uptime, stacking, and final formulas are unresolved.",
-    "explanation": "Caraxes's Battle Dread can reduce enemy Initiative. Enemy target selection is tracked as an enemy-side candidate group, not a named friendly recipient.",
+    "exactResultUnknownReason": "Exact final reduced enemy damage cannot be calculated because the final combat formula is not fully verified.",
+    "explanation": "Caraxes's Battle Dread can reduce enemy Initiative. All three enemy slots are covered by Caraxes's Battle Dread. Duration: until end of combat.",
     "id": "enemy-damage-dealt-reduction-caraxes-battle-dread-battle-dread-initiative-down-stat-dealt-modifier",
     "interactionScope": "enemy-side",
     "matchedOutputCapabilityIds": [],
@@ -13831,14 +13871,11 @@
     "targetSelectionGroup": null,
     "title": "Enemy Initiative reduction",
     "unresolvedQuestions": [
-      "Enemy identities, combat availability, final uptime, and stacking/refresh behavior remain unresolved."
+      "Enemy identities remain unnamed because the enemy formation is unavailable."
     ]
   },
   {
-    "assumptions": [
-      "Enemy identities and combat availability are unresolved.",
-      "Activation chance and uptime are not treated as guaranteed."
-    ],
+    "assumptions": [],
     "channel": "physical-damage",
     "confidence": "confirmed",
     "conflicts": [
@@ -13847,12 +13884,17 @@
     ],
     "damageScope": null,
     "effects": [
+      "Duration: until end of combat.",
+      "Enemy selector: all enemies.",
+      "Enemy target count: 3.",
+      "All three enemy slots are covered.",
+      "Enemy identities remain unresolved because the enemy formation is unavailable.",
       "Physical Damage Dealt decrease 11% at effective Habit Level 5.",
       "Physical Damage reduction applies to non-Basic Attacks only."
     ],
     "exactResultKnown": false,
-    "exactResultUnknownReason": "Exact final reduced enemy damage cannot be calculated because target selection, uptime, stacking, and final formulas are unresolved.",
-    "explanation": "Caraxes's Mass Enfeeble can reduce enemy Physical Damage Dealt. Enemy target selection is tracked as an enemy-side candidate group, not a named friendly recipient.",
+    "exactResultUnknownReason": "Exact final reduced enemy damage cannot be calculated because the final combat formula is not fully verified.",
+    "explanation": "Caraxes's Mass Enfeeble can reduce enemy Physical Damage Dealt. All three enemy slots are covered by Caraxes's Mass Enfeeble. Duration: until end of combat.",
     "id": "enemy-damage-dealt-reduction-caraxes-mass-enfeeble-mass-enfeeble-physical-down-physical-damage-dealt-modifier",
     "interactionScope": "enemy-side",
     "matchedOutputCapabilityIds": [],
@@ -13900,7 +13942,7 @@
     "targetSelectionGroup": null,
     "title": "Enemy non-Basic Physical Damage Dealt reduction",
     "unresolvedQuestions": [
-      "Enemy identities, combat availability, final uptime, and stacking/refresh behavior remain unresolved."
+      "Enemy identities remain unnamed because the enemy formation is unavailable."
     ]
   },
   {
@@ -18181,9 +18223,7 @@
     ]
   },
   {
-    "assumptions": [
-      "Enemy target overlap is not simulated."
-    ],
+    "assumptions": [],
     "channel": "fire-damage",
     "confidence": "confirmed",
     "conflicts": [
@@ -18194,12 +18234,17 @@
     ],
     "damageScope": null,
     "effects": [
-      "Enemy Initiative reduction may improve Fire Damage outputs: Infernal Burst: Fire Damage, Crippling Inferno: Burn periodic Fire Damage.",
+      "Duration: until end of combat.",
+      "Enemy selector: all enemies.",
+      "Enemy target count: 3.",
+      "All three enemy slots are covered.",
+      "Enemy identities remain unresolved because the enemy formation is unavailable.",
+      "Enemy Initiative reduction may improve Fire Damage outputs: Infernal Burst: Fire Damage, Crippling Inferno: Burn periodic Fire Damage. Enemy Initiative -6%.",
       "Applies to all qualifying Fire Damage sources."
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final value cannot be calculated because final combat formulas and stacking order are not fully verified.",
-    "explanation": "Syrax's Flight Mastery can reduce enemy Initiative. Caraxes's Fire Damage outputs are mitigated by that stat.",
+    "explanation": "Syrax's Flight Mastery can reduce enemy Initiative. Enemy Initiative reduction is -6%. Caraxes's Fire Damage outputs are mitigated by that stat. Duration: until end of combat.",
     "id": "enemy-mitigation-syrax-flight-mastery-flight-mastery-initiative-down-stat-dealt-modifier-caraxes-initiative",
     "interactionScope": "cross-dragon",
     "matchedOutputCapabilityIds": [
@@ -18273,17 +18318,15 @@
     "sourceEvidenceIds": [
       "syrax-flight-mastery-2026-06-24"
     ],
-    "status": "potential",
+    "status": "inactive",
     "targetSelectionGroup": null,
     "title": "Fire Damage Mitigation Reduction",
     "unresolvedQuestions": [
-      "Exact enemy-formation targeting and final mitigation formula are unknown."
+      "Enemy identities remain unnamed because the enemy formation is unavailable."
     ]
   },
   {
-    "assumptions": [
-      "Enemy target overlap is not simulated."
-    ],
+    "assumptions": [],
     "channel": "fire-damage",
     "confidence": "confirmed",
     "conflicts": [
@@ -18294,12 +18337,17 @@
     ],
     "damageScope": null,
     "effects": [
-      "Enemy Initiative reduction may improve Fire Damage outputs: Infernal Burst: Fire Damage, Crippling Inferno: Burn periodic Fire Damage.",
+      "Duration: until end of combat.",
+      "Enemy selector: all enemies.",
+      "Enemy target count: 3.",
+      "All three enemy slots are covered.",
+      "Enemy identities remain unresolved because the enemy formation is unavailable.",
+      "Enemy Initiative reduction may improve Fire Damage outputs: Infernal Burst: Fire Damage, Crippling Inferno: Burn periodic Fire Damage. Enemy Initiative -6.5%.",
       "Applies to all qualifying Fire Damage sources."
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final value cannot be calculated because final combat formulas and stacking order are not fully verified.",
-    "explanation": "Caraxes's Battle Dread can reduce enemy Initiative. Caraxes's Fire Damage outputs are mitigated by that stat.",
+    "explanation": "Caraxes's Battle Dread can reduce enemy Initiative. Enemy Initiative reduction is -6.5%. Caraxes's Fire Damage outputs are mitigated by that stat. Duration: until end of combat.",
     "id": "enemy-mitigation-caraxes-battle-dread-battle-dread-initiative-down-stat-dealt-modifier-caraxes-initiative",
     "interactionScope": "internal",
     "matchedOutputCapabilityIds": [
@@ -18373,18 +18421,15 @@
     "sourceEvidenceIds": [
       "caraxes-battle-dread-2026-06-24"
     ],
-    "status": "potential",
+    "status": "inactive",
     "targetSelectionGroup": null,
     "title": "Fire Damage Mitigation Reduction",
     "unresolvedQuestions": [
-      "Exact enemy-formation targeting and final mitigation formula are unknown."
+      "Enemy identities remain unnamed because the enemy formation is unavailable."
     ]
   },
   {
-    "assumptions": [
-      "Enemy identities and combat availability are unresolved.",
-      "Activation chance and uptime are not treated as guaranteed."
-    ],
+    "assumptions": [],
     "channel": "stat",
     "confidence": "confirmed",
     "conflicts": [
@@ -18393,11 +18438,16 @@
     ],
     "damageScope": null,
     "effects": [
+      "Duration: until end of combat.",
+      "Enemy selector: all enemies.",
+      "Enemy target count: 3.",
+      "All three enemy slots are covered.",
+      "Enemy identities remain unresolved because the enemy formation is unavailable.",
       "Enemy Initiative decrease 12% at effective Habit Level 5."
     ],
     "exactResultKnown": false,
-    "exactResultUnknownReason": "Exact final reduced enemy damage cannot be calculated because target selection, uptime, stacking, and final formulas are unresolved.",
-    "explanation": "Syrax's Flight Mastery can reduce enemy Initiative. Enemy target selection is tracked as an enemy-side candidate group, not a named friendly recipient.",
+    "exactResultUnknownReason": "Exact final reduced enemy damage cannot be calculated because the final combat formula is not fully verified.",
+    "explanation": "Syrax's Flight Mastery can reduce enemy Initiative. All three enemy slots are covered by Syrax's Flight Mastery. Duration: until end of combat.",
     "id": "enemy-damage-dealt-reduction-syrax-flight-mastery-flight-mastery-initiative-down-stat-dealt-modifier",
     "interactionScope": "enemy-side",
     "matchedOutputCapabilityIds": [],
@@ -18445,14 +18495,11 @@
     "targetSelectionGroup": null,
     "title": "Enemy Initiative reduction",
     "unresolvedQuestions": [
-      "Enemy identities, combat availability, final uptime, and stacking/refresh behavior remain unresolved."
+      "Enemy identities remain unnamed because the enemy formation is unavailable."
     ]
   },
   {
-    "assumptions": [
-      "Enemy identities and combat availability are unresolved.",
-      "Activation chance and uptime are not treated as guaranteed."
-    ],
+    "assumptions": [],
     "channel": "physical-damage",
     "confidence": "confirmed",
     "conflicts": [
@@ -18461,12 +18508,17 @@
     ],
     "damageScope": null,
     "effects": [
+      "Duration: until end of combat.",
+      "Enemy selector: all enemies.",
+      "Enemy target count: 3.",
+      "All three enemy slots are covered.",
+      "Enemy identities remain unresolved because the enemy formation is unavailable.",
       "Enemy Strength decrease 13% at effective Habit Level 5.",
       "Enemy Physical Damage Dealt reduction follows from enemy Strength reduction."
     ],
     "exactResultKnown": false,
-    "exactResultUnknownReason": "Exact final reduced enemy damage cannot be calculated because target selection, uptime, stacking, and final formulas are unresolved.",
-    "explanation": "Caraxes's Battle Dread can reduce enemy Strength, which reduces Physical Damage Dealt. Enemy target selection is tracked as an enemy-side candidate group, not a named friendly recipient.",
+    "exactResultUnknownReason": "Exact final reduced enemy damage cannot be calculated because the final combat formula is not fully verified.",
+    "explanation": "Caraxes's Battle Dread can reduce enemy Strength, which reduces Physical Damage Dealt. All three enemy slots are covered by Caraxes's Battle Dread. Duration: until end of combat.",
     "id": "enemy-damage-dealt-reduction-caraxes-battle-dread-battle-dread-strength-down-stat-dealt-modifier",
     "interactionScope": "enemy-side",
     "matchedOutputCapabilityIds": [],
@@ -18514,14 +18566,11 @@
     "targetSelectionGroup": null,
     "title": "Enemy Physical Damage Dealt reduction",
     "unresolvedQuestions": [
-      "Enemy identities, combat availability, final uptime, and stacking/refresh behavior remain unresolved."
+      "Enemy identities remain unnamed because the enemy formation is unavailable."
     ]
   },
   {
-    "assumptions": [
-      "Enemy identities and combat availability are unresolved.",
-      "Activation chance and uptime are not treated as guaranteed."
-    ],
+    "assumptions": [],
     "channel": "stat",
     "confidence": "confirmed",
     "conflicts": [
@@ -18530,11 +18579,16 @@
     ],
     "damageScope": null,
     "effects": [
+      "Duration: until end of combat.",
+      "Enemy selector: all enemies.",
+      "Enemy target count: 3.",
+      "All three enemy slots are covered.",
+      "Enemy identities remain unresolved because the enemy formation is unavailable.",
       "Enemy Initiative decrease 13% at effective Habit Level 5."
     ],
     "exactResultKnown": false,
-    "exactResultUnknownReason": "Exact final reduced enemy damage cannot be calculated because target selection, uptime, stacking, and final formulas are unresolved.",
-    "explanation": "Caraxes's Battle Dread can reduce enemy Initiative. Enemy target selection is tracked as an enemy-side candidate group, not a named friendly recipient.",
+    "exactResultUnknownReason": "Exact final reduced enemy damage cannot be calculated because the final combat formula is not fully verified.",
+    "explanation": "Caraxes's Battle Dread can reduce enemy Initiative. All three enemy slots are covered by Caraxes's Battle Dread. Duration: until end of combat.",
     "id": "enemy-damage-dealt-reduction-caraxes-battle-dread-battle-dread-initiative-down-stat-dealt-modifier",
     "interactionScope": "enemy-side",
     "matchedOutputCapabilityIds": [],
@@ -18582,14 +18636,11 @@
     "targetSelectionGroup": null,
     "title": "Enemy Initiative reduction",
     "unresolvedQuestions": [
-      "Enemy identities, combat availability, final uptime, and stacking/refresh behavior remain unresolved."
+      "Enemy identities remain unnamed because the enemy formation is unavailable."
     ]
   },
   {
-    "assumptions": [
-      "Enemy identities and combat availability are unresolved.",
-      "Activation chance and uptime are not treated as guaranteed."
-    ],
+    "assumptions": [],
     "channel": "physical-damage",
     "confidence": "confirmed",
     "conflicts": [
@@ -18598,12 +18649,17 @@
     ],
     "damageScope": null,
     "effects": [
+      "Duration: until end of combat.",
+      "Enemy selector: all enemies.",
+      "Enemy target count: 3.",
+      "All three enemy slots are covered.",
+      "Enemy identities remain unresolved because the enemy formation is unavailable.",
       "Physical Damage Dealt decrease 11% at effective Habit Level 5.",
       "Physical Damage reduction applies to non-Basic Attacks only."
     ],
     "exactResultKnown": false,
-    "exactResultUnknownReason": "Exact final reduced enemy damage cannot be calculated because target selection, uptime, stacking, and final formulas are unresolved.",
-    "explanation": "Caraxes's Mass Enfeeble can reduce enemy Physical Damage Dealt. Enemy target selection is tracked as an enemy-side candidate group, not a named friendly recipient.",
+    "exactResultUnknownReason": "Exact final reduced enemy damage cannot be calculated because the final combat formula is not fully verified.",
+    "explanation": "Caraxes's Mass Enfeeble can reduce enemy Physical Damage Dealt. All three enemy slots are covered by Caraxes's Mass Enfeeble. Duration: until end of combat.",
     "id": "enemy-damage-dealt-reduction-caraxes-mass-enfeeble-mass-enfeeble-physical-down-physical-damage-dealt-modifier",
     "interactionScope": "enemy-side",
     "matchedOutputCapabilityIds": [],
@@ -18651,7 +18707,7 @@
     "targetSelectionGroup": null,
     "title": "Enemy non-Basic Physical Damage Dealt reduction",
     "unresolvedQuestions": [
-      "Enemy identities, combat availability, final uptime, and stacking/refresh behavior remain unresolved."
+      "Enemy identities remain unnamed because the enemy formation is unavailable."
     ]
   },
   {
@@ -22732,7 +22788,7 @@
   },
   {
     "assumptions": [
-      "Enemy target overlap is not simulated."
+      "Adjacent enemy identities and enemy-formation overlap are unresolved."
     ],
     "channel": "physical-damage",
     "confidence": "confirmed",
@@ -22742,12 +22798,16 @@
     ],
     "damageScope": null,
     "effects": [
-      "Enemy Instinct reduction may improve Physical Damage outputs: Physical Basic Attack, Spreading Blaze: Physical Damage.",
+      "Duration: until end of combat.",
+      "Enemy target count: 1.",
+      "Target scope: enemies within adjacency.",
+      "Enemy identities remain unresolved because the enemy formation is unavailable.",
+      "Enemy Instinct reduction may improve Physical Damage outputs: Physical Basic Attack, Spreading Blaze: Physical Damage. Enemy Instinct -12%.",
       "Applies to all qualifying Physical Damage sources."
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final value cannot be calculated because final combat formulas and stacking order are not fully verified.",
-    "explanation": "Sheepstealer's Dragon's Cunning can reduce enemy Instinct. Vermax's Physical Damage outputs are mitigated by that stat.",
+    "explanation": "Sheepstealer's Dragon's Cunning can reduce enemy Instinct. Enemy Instinct reduction is -12%. Vermax's Physical Damage outputs are mitigated by that stat. Duration: until end of combat.",
     "id": "enemy-mitigation-sheepstealer-dragons-cunning-dragons-cunning-instinct-down-stat-dealt-modifier-vermax-instinct",
     "interactionScope": "cross-dragon",
     "matchedOutputCapabilityIds": [
@@ -22802,13 +22862,12 @@
     "targetSelectionGroup": null,
     "title": "Physical Damage Mitigation Reduction",
     "unresolvedQuestions": [
-      "Exact enemy-formation targeting and final mitigation formula are unknown."
+      "Adjacent enemy identity, enemy-formation overlap, and final mitigation formula remain unresolved."
     ]
   },
   {
     "assumptions": [
-      "Adjacent enemy identities and enemy-formation overlap are unresolved.",
-      "Activation chance and uptime are not treated as guaranteed."
+      "Adjacent enemy identities and enemy-formation overlap are unresolved."
     ],
     "channel": "tactical-damage",
     "confidence": "confirmed",
@@ -22818,12 +22877,16 @@
     ],
     "damageScope": null,
     "effects": [
+      "Duration: until end of combat.",
+      "Enemy target count: 1.",
+      "Target scope: enemies within adjacency.",
+      "Enemy identities remain unresolved because the enemy formation is unavailable.",
       "Enemy Instinct decrease 24% at effective Habit Level 5.",
       "Enemy Tactical Damage Dealt reduction follows from enemy Instinct reduction."
     ],
     "exactResultKnown": false,
-    "exactResultUnknownReason": "Exact final reduced enemy damage cannot be calculated because target selection, uptime, stacking, and final formulas are unresolved.",
-    "explanation": "Sheepstealer's Dragon's Cunning can reduce enemy Instinct, which reduces Tactical Damage Dealt. Enemy target selection is tracked as an enemy-side candidate group, not a named friendly recipient.",
+    "exactResultUnknownReason": "Exact final reduced enemy damage cannot be calculated because target identity, overlap, and final combat formulas are unresolved.",
+    "explanation": "Sheepstealer's Dragon's Cunning can reduce enemy Instinct, which reduces Tactical Damage Dealt. Enemy target selection is tracked as an enemy-side candidate group, not a named friendly recipient. Duration: until end of combat.",
     "id": "enemy-damage-dealt-reduction-sheepstealer-dragons-cunning-dragons-cunning-instinct-down-stat-dealt-modifier",
     "interactionScope": "enemy-side",
     "matchedOutputCapabilityIds": [],
@@ -22871,13 +22934,12 @@
     "targetSelectionGroup": null,
     "title": "Enemy Tactical Damage Dealt reduction",
     "unresolvedQuestions": [
-      "Adjacent enemy identity, enemy-formation overlap, final uptime, and stacking/refresh behavior remain unresolved."
+      "Adjacent enemy identity and enemy-formation overlap remain unresolved."
     ]
   },
   {
     "assumptions": [
-      "Enemy identities and combat availability are unresolved.",
-      "Enemy state and uptime are not treated as guaranteed."
+      "Enemy identities and combat availability are unresolved."
     ],
     "channel": "recovery",
     "confidence": "confirmed",
@@ -22940,7 +23002,7 @@
     "targetSelectionGroup": null,
     "title": "Recovery Enemy Reduction",
     "unresolvedQuestions": [
-      "Enemy identities, combat availability, final uptime, and stacking/refresh behavior remain unresolved."
+      "Enemy identities and final combat formula remain unresolved."
     ]
   },
   {
@@ -27528,7 +27590,7 @@
   },
   {
     "assumptions": [
-      "Enemy target overlap is not simulated."
+      "Adjacent enemy identities and enemy-formation overlap are unresolved."
     ],
     "channel": "physical-damage",
     "confidence": "confirmed",
@@ -27540,12 +27602,16 @@
     ],
     "damageScope": null,
     "effects": [
-      "Enemy Instinct reduction may improve Physical Damage outputs: Infectious Wrath: Physical Damage.",
+      "Duration: until end of combat.",
+      "Enemy target count: 1.",
+      "Target scope: enemies within adjacency.",
+      "Enemy identities remain unresolved because the enemy formation is unavailable.",
+      "Enemy Instinct reduction may improve Physical Damage outputs: Infectious Wrath: Physical Damage. Enemy Instinct -12%.",
       "Applies to all qualifying Physical Damage sources."
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final value cannot be calculated because final combat formulas and stacking order are not fully verified.",
-    "explanation": "Sheepstealer's Dragon's Cunning can reduce enemy Instinct. Seasmoke's Physical Damage outputs are mitigated by that stat.",
+    "explanation": "Sheepstealer's Dragon's Cunning can reduce enemy Instinct. Enemy Instinct reduction is -12%. Seasmoke's Physical Damage outputs are mitigated by that stat. Duration: until end of combat.",
     "id": "enemy-mitigation-sheepstealer-dragons-cunning-dragons-cunning-instinct-down-stat-dealt-modifier-seasmoke-instinct",
     "interactionScope": "cross-dragon",
     "matchedOutputCapabilityIds": [
@@ -27621,13 +27687,12 @@
     "targetSelectionGroup": null,
     "title": "Physical Damage Mitigation Reduction",
     "unresolvedQuestions": [
-      "Exact enemy-formation targeting and final mitigation formula are unknown."
+      "Adjacent enemy identity, enemy-formation overlap, and final mitigation formula remain unresolved."
     ]
   },
   {
     "assumptions": [
-      "Adjacent enemy identities and enemy-formation overlap are unresolved.",
-      "Activation chance and uptime are not treated as guaranteed."
+      "Adjacent enemy identities and enemy-formation overlap are unresolved."
     ],
     "channel": "tactical-damage",
     "confidence": "confirmed",
@@ -27637,12 +27702,16 @@
     ],
     "damageScope": null,
     "effects": [
+      "Duration: until end of combat.",
+      "Enemy target count: 1.",
+      "Target scope: enemies within adjacency.",
+      "Enemy identities remain unresolved because the enemy formation is unavailable.",
       "Enemy Instinct decrease 24% at effective Habit Level 5.",
       "Enemy Tactical Damage Dealt reduction follows from enemy Instinct reduction."
     ],
     "exactResultKnown": false,
-    "exactResultUnknownReason": "Exact final reduced enemy damage cannot be calculated because target selection, uptime, stacking, and final formulas are unresolved.",
-    "explanation": "Sheepstealer's Dragon's Cunning can reduce enemy Instinct, which reduces Tactical Damage Dealt. Enemy target selection is tracked as an enemy-side candidate group, not a named friendly recipient.",
+    "exactResultUnknownReason": "Exact final reduced enemy damage cannot be calculated because target identity, overlap, and final combat formulas are unresolved.",
+    "explanation": "Sheepstealer's Dragon's Cunning can reduce enemy Instinct, which reduces Tactical Damage Dealt. Enemy target selection is tracked as an enemy-side candidate group, not a named friendly recipient. Duration: until end of combat.",
     "id": "enemy-damage-dealt-reduction-sheepstealer-dragons-cunning-dragons-cunning-instinct-down-stat-dealt-modifier",
     "interactionScope": "enemy-side",
     "matchedOutputCapabilityIds": [],
@@ -27690,13 +27759,12 @@
     "targetSelectionGroup": null,
     "title": "Enemy Tactical Damage Dealt reduction",
     "unresolvedQuestions": [
-      "Adjacent enemy identity, enemy-formation overlap, final uptime, and stacking/refresh behavior remain unresolved."
+      "Adjacent enemy identity and enemy-formation overlap remain unresolved."
     ]
   },
   {
     "assumptions": [
-      "Enemy identities and combat availability are unresolved.",
-      "Enemy state and uptime are not treated as guaranteed."
+      "Enemy identities and combat availability are unresolved."
     ],
     "channel": "recovery",
     "confidence": "confirmed",
@@ -27759,7 +27827,7 @@
     "targetSelectionGroup": null,
     "title": "Recovery Enemy Reduction",
     "unresolvedQuestions": [
-      "Enemy identities, combat availability, final uptime, and stacking/refresh behavior remain unresolved."
+      "Enemy identities and final combat formula remain unresolved."
     ]
   },
   {
@@ -37050,7 +37118,7 @@
   },
   {
     "assumptions": [
-      "Enemy target overlap is not simulated."
+      "Adjacent enemy identities and enemy-formation overlap are unresolved."
     ],
     "channel": "physical-damage",
     "confidence": "confirmed",
@@ -37062,12 +37130,16 @@
     ],
     "damageScope": null,
     "effects": [
-      "Enemy Instinct reduction may improve Physical Damage outputs: Infectious Wrath: Physical Damage.",
+      "Duration: until end of combat.",
+      "Enemy target count: 1.",
+      "Target scope: enemies within adjacency.",
+      "Enemy identities remain unresolved because the enemy formation is unavailable.",
+      "Enemy Instinct reduction may improve Physical Damage outputs: Infectious Wrath: Physical Damage. Enemy Instinct -12%.",
       "Applies to all qualifying Physical Damage sources."
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final value cannot be calculated because final combat formulas and stacking order are not fully verified.",
-    "explanation": "Sheepstealer's Dragon's Cunning can reduce enemy Instinct. Seasmoke's Physical Damage outputs are mitigated by that stat.",
+    "explanation": "Sheepstealer's Dragon's Cunning can reduce enemy Instinct. Enemy Instinct reduction is -12%. Seasmoke's Physical Damage outputs are mitigated by that stat. Duration: until end of combat.",
     "id": "enemy-mitigation-sheepstealer-dragons-cunning-dragons-cunning-instinct-down-stat-dealt-modifier-seasmoke-instinct",
     "interactionScope": "cross-dragon",
     "matchedOutputCapabilityIds": [
@@ -37143,13 +37215,12 @@
     "targetSelectionGroup": null,
     "title": "Physical Damage Mitigation Reduction",
     "unresolvedQuestions": [
-      "Exact enemy-formation targeting and final mitigation formula are unknown."
+      "Adjacent enemy identity, enemy-formation overlap, and final mitigation formula remain unresolved."
     ]
   },
   {
     "assumptions": [
-      "Adjacent enemy identities and enemy-formation overlap are unresolved.",
-      "Activation chance and uptime are not treated as guaranteed."
+      "Adjacent enemy identities and enemy-formation overlap are unresolved."
     ],
     "channel": "tactical-damage",
     "confidence": "confirmed",
@@ -37159,12 +37230,16 @@
     ],
     "damageScope": null,
     "effects": [
+      "Duration: until end of combat.",
+      "Enemy target count: 1.",
+      "Target scope: enemies within adjacency.",
+      "Enemy identities remain unresolved because the enemy formation is unavailable.",
       "Enemy Instinct decrease 24% at effective Habit Level 5.",
       "Enemy Tactical Damage Dealt reduction follows from enemy Instinct reduction."
     ],
     "exactResultKnown": false,
-    "exactResultUnknownReason": "Exact final reduced enemy damage cannot be calculated because target selection, uptime, stacking, and final formulas are unresolved.",
-    "explanation": "Sheepstealer's Dragon's Cunning can reduce enemy Instinct, which reduces Tactical Damage Dealt. Enemy target selection is tracked as an enemy-side candidate group, not a named friendly recipient.",
+    "exactResultUnknownReason": "Exact final reduced enemy damage cannot be calculated because target identity, overlap, and final combat formulas are unresolved.",
+    "explanation": "Sheepstealer's Dragon's Cunning can reduce enemy Instinct, which reduces Tactical Damage Dealt. Enemy target selection is tracked as an enemy-side candidate group, not a named friendly recipient. Duration: until end of combat.",
     "id": "enemy-damage-dealt-reduction-sheepstealer-dragons-cunning-dragons-cunning-instinct-down-stat-dealt-modifier",
     "interactionScope": "enemy-side",
     "matchedOutputCapabilityIds": [],
@@ -37212,13 +37287,12 @@
     "targetSelectionGroup": null,
     "title": "Enemy Tactical Damage Dealt reduction",
     "unresolvedQuestions": [
-      "Adjacent enemy identity, enemy-formation overlap, final uptime, and stacking/refresh behavior remain unresolved."
+      "Adjacent enemy identity and enemy-formation overlap remain unresolved."
     ]
   },
   {
     "assumptions": [
-      "Enemy identities and combat availability are unresolved.",
-      "Enemy state and uptime are not treated as guaranteed."
+      "Enemy identities and combat availability are unresolved."
     ],
     "channel": "recovery",
     "confidence": "confirmed",
@@ -37281,7 +37355,7 @@
     "targetSelectionGroup": null,
     "title": "Recovery Enemy Reduction",
     "unresolvedQuestions": [
-      "Enemy identities, combat availability, final uptime, and stacking/refresh behavior remain unresolved."
+      "Enemy identities and final combat formula remain unresolved."
     ]
   },
   {
@@ -40632,9 +40706,7 @@
     ]
   },
   {
-    "assumptions": [
-      "Enemy target overlap is not simulated."
-    ],
+    "assumptions": [],
     "channel": "fire-damage",
     "confidence": "confirmed",
     "conflicts": [
@@ -40645,12 +40717,17 @@
     ],
     "damageScope": null,
     "effects": [
-      "Enemy Initiative reduction may improve Fire Damage outputs: Infernal Burst: Fire Damage, Crippling Inferno: Burn periodic Fire Damage.",
+      "Duration: until end of combat.",
+      "Enemy selector: all enemies.",
+      "Enemy target count: 3.",
+      "All three enemy slots are covered.",
+      "Enemy identities remain unresolved because the enemy formation is unavailable.",
+      "Enemy Initiative reduction may improve Fire Damage outputs: Infernal Burst: Fire Damage, Crippling Inferno: Burn periodic Fire Damage. Enemy Initiative -6.5%.",
       "Applies to all qualifying Fire Damage sources."
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final value cannot be calculated because final combat formulas and stacking order are not fully verified.",
-    "explanation": "Caraxes's Battle Dread can reduce enemy Initiative. Caraxes's Fire Damage outputs are mitigated by that stat.",
+    "explanation": "Caraxes's Battle Dread can reduce enemy Initiative. Enemy Initiative reduction is -6.5%. Caraxes's Fire Damage outputs are mitigated by that stat. Duration: until end of combat.",
     "id": "enemy-mitigation-caraxes-battle-dread-battle-dread-initiative-down-stat-dealt-modifier-caraxes-initiative",
     "interactionScope": "internal",
     "matchedOutputCapabilityIds": [
@@ -40724,17 +40801,15 @@
     "sourceEvidenceIds": [
       "caraxes-battle-dread-2026-06-24"
     ],
-    "status": "potential",
+    "status": "inactive",
     "targetSelectionGroup": null,
     "title": "Fire Damage Mitigation Reduction",
     "unresolvedQuestions": [
-      "Exact enemy-formation targeting and final mitigation formula are unknown."
+      "Enemy identities remain unnamed because the enemy formation is unavailable."
     ]
   },
   {
-    "assumptions": [
-      "Enemy target overlap is not simulated."
-    ],
+    "assumptions": [],
     "channel": "fire-damage",
     "confidence": "confirmed",
     "conflicts": [
@@ -40743,12 +40818,17 @@
     ],
     "damageScope": null,
     "effects": [
-      "Enemy Initiative reduction may improve Fire Damage outputs: Cleansing Wrath: Fire Damage.",
+      "Duration: until end of combat.",
+      "Enemy selector: all enemies.",
+      "Enemy target count: 3.",
+      "All three enemy slots are covered.",
+      "Enemy identities remain unresolved because the enemy formation is unavailable.",
+      "Enemy Initiative reduction may improve Fire Damage outputs: Cleansing Wrath: Fire Damage. Enemy Initiative -6.5%.",
       "Applies to all qualifying Fire Damage sources."
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final value cannot be calculated because final combat formulas and stacking order are not fully verified.",
-    "explanation": "Caraxes's Battle Dread can reduce enemy Initiative. Seasmoke's Fire Damage outputs are mitigated by that stat.",
+    "explanation": "Caraxes's Battle Dread can reduce enemy Initiative. Enemy Initiative reduction is -6.5%. Seasmoke's Fire Damage outputs are mitigated by that stat. Duration: until end of combat.",
     "id": "enemy-mitigation-caraxes-battle-dread-battle-dread-initiative-down-stat-dealt-modifier-seasmoke-initiative",
     "interactionScope": "cross-dragon",
     "matchedOutputCapabilityIds": [
@@ -40797,17 +40877,15 @@
     "sourceEvidenceIds": [
       "caraxes-battle-dread-2026-06-24"
     ],
-    "status": "potential",
+    "status": "inactive",
     "targetSelectionGroup": null,
     "title": "Fire Damage Mitigation Reduction",
     "unresolvedQuestions": [
-      "Exact enemy-formation targeting and final mitigation formula are unknown."
+      "Enemy identities remain unnamed because the enemy formation is unavailable."
     ]
   },
   {
-    "assumptions": [
-      "Enemy target overlap is not simulated."
-    ],
+    "assumptions": [],
     "channel": "fire-damage",
     "confidence": "confirmed",
     "conflicts": [
@@ -40818,12 +40896,17 @@
     ],
     "damageScope": null,
     "effects": [
-      "Enemy Initiative reduction may improve Fire Damage outputs: Wild Hunt: Fire Damage, Savage Claim: Fire Damage.",
+      "Duration: until end of combat.",
+      "Enemy selector: all enemies.",
+      "Enemy target count: 3.",
+      "All three enemy slots are covered.",
+      "Enemy identities remain unresolved because the enemy formation is unavailable.",
+      "Enemy Initiative reduction may improve Fire Damage outputs: Wild Hunt: Fire Damage, Savage Claim: Fire Damage. Enemy Initiative -6.5%.",
       "Applies to all qualifying Fire Damage sources."
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final value cannot be calculated because final combat formulas and stacking order are not fully verified.",
-    "explanation": "Caraxes's Battle Dread can reduce enemy Initiative. Sheepstealer's Fire Damage outputs are mitigated by that stat.",
+    "explanation": "Caraxes's Battle Dread can reduce enemy Initiative. Enemy Initiative reduction is -6.5%. Sheepstealer's Fire Damage outputs are mitigated by that stat. Duration: until end of combat.",
     "id": "enemy-mitigation-caraxes-battle-dread-battle-dread-initiative-down-stat-dealt-modifier-sheepstealer-initiative",
     "interactionScope": "cross-dragon",
     "matchedOutputCapabilityIds": [
@@ -40899,16 +40982,16 @@
     "sourceEvidenceIds": [
       "caraxes-battle-dread-2026-06-24"
     ],
-    "status": "potential",
+    "status": "inactive",
     "targetSelectionGroup": null,
     "title": "Fire Damage Mitigation Reduction",
     "unresolvedQuestions": [
-      "Exact enemy-formation targeting and final mitigation formula are unknown."
+      "Enemy identities remain unnamed because the enemy formation is unavailable."
     ]
   },
   {
     "assumptions": [
-      "Enemy target overlap is not simulated."
+      "Adjacent enemy identities and enemy-formation overlap are unresolved."
     ],
     "channel": "physical-damage",
     "confidence": "confirmed",
@@ -40920,12 +41003,16 @@
     ],
     "damageScope": null,
     "effects": [
-      "Enemy Instinct reduction may improve Physical Damage outputs: Infectious Wrath: Physical Damage.",
+      "Duration: until end of combat.",
+      "Enemy target count: 1.",
+      "Target scope: enemies within adjacency.",
+      "Enemy identities remain unresolved because the enemy formation is unavailable.",
+      "Enemy Instinct reduction may improve Physical Damage outputs: Infectious Wrath: Physical Damage. Enemy Instinct -12%.",
       "Applies to all qualifying Physical Damage sources."
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final value cannot be calculated because final combat formulas and stacking order are not fully verified.",
-    "explanation": "Sheepstealer's Dragon's Cunning can reduce enemy Instinct. Seasmoke's Physical Damage outputs are mitigated by that stat.",
+    "explanation": "Sheepstealer's Dragon's Cunning can reduce enemy Instinct. Enemy Instinct reduction is -12%. Seasmoke's Physical Damage outputs are mitigated by that stat. Duration: until end of combat.",
     "id": "enemy-mitigation-sheepstealer-dragons-cunning-dragons-cunning-instinct-down-stat-dealt-modifier-seasmoke-instinct",
     "interactionScope": "cross-dragon",
     "matchedOutputCapabilityIds": [
@@ -41001,14 +41088,11 @@
     "targetSelectionGroup": null,
     "title": "Physical Damage Mitigation Reduction",
     "unresolvedQuestions": [
-      "Exact enemy-formation targeting and final mitigation formula are unknown."
+      "Adjacent enemy identity, enemy-formation overlap, and final mitigation formula remain unresolved."
     ]
   },
   {
-    "assumptions": [
-      "Enemy identities and combat availability are unresolved.",
-      "Activation chance and uptime are not treated as guaranteed."
-    ],
+    "assumptions": [],
     "channel": "physical-damage",
     "confidence": "confirmed",
     "conflicts": [
@@ -41017,12 +41101,17 @@
     ],
     "damageScope": null,
     "effects": [
+      "Duration: until end of combat.",
+      "Enemy selector: all enemies.",
+      "Enemy target count: 3.",
+      "All three enemy slots are covered.",
+      "Enemy identities remain unresolved because the enemy formation is unavailable.",
       "Enemy Strength decrease 13% at effective Habit Level 5.",
       "Enemy Physical Damage Dealt reduction follows from enemy Strength reduction."
     ],
     "exactResultKnown": false,
-    "exactResultUnknownReason": "Exact final reduced enemy damage cannot be calculated because target selection, uptime, stacking, and final formulas are unresolved.",
-    "explanation": "Caraxes's Battle Dread can reduce enemy Strength, which reduces Physical Damage Dealt. Enemy target selection is tracked as an enemy-side candidate group, not a named friendly recipient.",
+    "exactResultUnknownReason": "Exact final reduced enemy damage cannot be calculated because the final combat formula is not fully verified.",
+    "explanation": "Caraxes's Battle Dread can reduce enemy Strength, which reduces Physical Damage Dealt. All three enemy slots are covered by Caraxes's Battle Dread. Duration: until end of combat.",
     "id": "enemy-damage-dealt-reduction-caraxes-battle-dread-battle-dread-strength-down-stat-dealt-modifier",
     "interactionScope": "enemy-side",
     "matchedOutputCapabilityIds": [],
@@ -41070,14 +41159,11 @@
     "targetSelectionGroup": null,
     "title": "Enemy Physical Damage Dealt reduction",
     "unresolvedQuestions": [
-      "Enemy identities, combat availability, final uptime, and stacking/refresh behavior remain unresolved."
+      "Enemy identities remain unnamed because the enemy formation is unavailable."
     ]
   },
   {
-    "assumptions": [
-      "Enemy identities and combat availability are unresolved.",
-      "Activation chance and uptime are not treated as guaranteed."
-    ],
+    "assumptions": [],
     "channel": "stat",
     "confidence": "confirmed",
     "conflicts": [
@@ -41086,11 +41172,16 @@
     ],
     "damageScope": null,
     "effects": [
+      "Duration: until end of combat.",
+      "Enemy selector: all enemies.",
+      "Enemy target count: 3.",
+      "All three enemy slots are covered.",
+      "Enemy identities remain unresolved because the enemy formation is unavailable.",
       "Enemy Initiative decrease 13% at effective Habit Level 5."
     ],
     "exactResultKnown": false,
-    "exactResultUnknownReason": "Exact final reduced enemy damage cannot be calculated because target selection, uptime, stacking, and final formulas are unresolved.",
-    "explanation": "Caraxes's Battle Dread can reduce enemy Initiative. Enemy target selection is tracked as an enemy-side candidate group, not a named friendly recipient.",
+    "exactResultUnknownReason": "Exact final reduced enemy damage cannot be calculated because the final combat formula is not fully verified.",
+    "explanation": "Caraxes's Battle Dread can reduce enemy Initiative. All three enemy slots are covered by Caraxes's Battle Dread. Duration: until end of combat.",
     "id": "enemy-damage-dealt-reduction-caraxes-battle-dread-battle-dread-initiative-down-stat-dealt-modifier",
     "interactionScope": "enemy-side",
     "matchedOutputCapabilityIds": [],
@@ -41138,14 +41229,11 @@
     "targetSelectionGroup": null,
     "title": "Enemy Initiative reduction",
     "unresolvedQuestions": [
-      "Enemy identities, combat availability, final uptime, and stacking/refresh behavior remain unresolved."
+      "Enemy identities remain unnamed because the enemy formation is unavailable."
     ]
   },
   {
-    "assumptions": [
-      "Enemy identities and combat availability are unresolved.",
-      "Activation chance and uptime are not treated as guaranteed."
-    ],
+    "assumptions": [],
     "channel": "physical-damage",
     "confidence": "confirmed",
     "conflicts": [
@@ -41154,12 +41242,17 @@
     ],
     "damageScope": null,
     "effects": [
+      "Duration: until end of combat.",
+      "Enemy selector: all enemies.",
+      "Enemy target count: 3.",
+      "All three enemy slots are covered.",
+      "Enemy identities remain unresolved because the enemy formation is unavailable.",
       "Physical Damage Dealt decrease 11% at effective Habit Level 5.",
       "Physical Damage reduction applies to non-Basic Attacks only."
     ],
     "exactResultKnown": false,
-    "exactResultUnknownReason": "Exact final reduced enemy damage cannot be calculated because target selection, uptime, stacking, and final formulas are unresolved.",
-    "explanation": "Caraxes's Mass Enfeeble can reduce enemy Physical Damage Dealt. Enemy target selection is tracked as an enemy-side candidate group, not a named friendly recipient.",
+    "exactResultUnknownReason": "Exact final reduced enemy damage cannot be calculated because the final combat formula is not fully verified.",
+    "explanation": "Caraxes's Mass Enfeeble can reduce enemy Physical Damage Dealt. All three enemy slots are covered by Caraxes's Mass Enfeeble. Duration: until end of combat.",
     "id": "enemy-damage-dealt-reduction-caraxes-mass-enfeeble-mass-enfeeble-physical-down-physical-damage-dealt-modifier",
     "interactionScope": "enemy-side",
     "matchedOutputCapabilityIds": [],
@@ -41207,13 +41300,12 @@
     "targetSelectionGroup": null,
     "title": "Enemy non-Basic Physical Damage Dealt reduction",
     "unresolvedQuestions": [
-      "Enemy identities, combat availability, final uptime, and stacking/refresh behavior remain unresolved."
+      "Enemy identities remain unnamed because the enemy formation is unavailable."
     ]
   },
   {
     "assumptions": [
-      "Adjacent enemy identities and enemy-formation overlap are unresolved.",
-      "Activation chance and uptime are not treated as guaranteed."
+      "Adjacent enemy identities and enemy-formation overlap are unresolved."
     ],
     "channel": "tactical-damage",
     "confidence": "confirmed",
@@ -41223,12 +41315,16 @@
     ],
     "damageScope": null,
     "effects": [
+      "Duration: until end of combat.",
+      "Enemy target count: 1.",
+      "Target scope: enemies within adjacency.",
+      "Enemy identities remain unresolved because the enemy formation is unavailable.",
       "Enemy Instinct decrease 24% at effective Habit Level 5.",
       "Enemy Tactical Damage Dealt reduction follows from enemy Instinct reduction."
     ],
     "exactResultKnown": false,
-    "exactResultUnknownReason": "Exact final reduced enemy damage cannot be calculated because target selection, uptime, stacking, and final formulas are unresolved.",
-    "explanation": "Sheepstealer's Dragon's Cunning can reduce enemy Instinct, which reduces Tactical Damage Dealt. Enemy target selection is tracked as an enemy-side candidate group, not a named friendly recipient.",
+    "exactResultUnknownReason": "Exact final reduced enemy damage cannot be calculated because target identity, overlap, and final combat formulas are unresolved.",
+    "explanation": "Sheepstealer's Dragon's Cunning can reduce enemy Instinct, which reduces Tactical Damage Dealt. Enemy target selection is tracked as an enemy-side candidate group, not a named friendly recipient. Duration: until end of combat.",
     "id": "enemy-damage-dealt-reduction-sheepstealer-dragons-cunning-dragons-cunning-instinct-down-stat-dealt-modifier",
     "interactionScope": "enemy-side",
     "matchedOutputCapabilityIds": [],
@@ -41276,13 +41372,12 @@
     "targetSelectionGroup": null,
     "title": "Enemy Tactical Damage Dealt reduction",
     "unresolvedQuestions": [
-      "Adjacent enemy identity, enemy-formation overlap, final uptime, and stacking/refresh behavior remain unresolved."
+      "Adjacent enemy identity and enemy-formation overlap remain unresolved."
     ]
   },
   {
     "assumptions": [
-      "Enemy identities and combat availability are unresolved.",
-      "Enemy state and uptime are not treated as guaranteed."
+      "Enemy identities and combat availability are unresolved."
     ],
     "channel": "recovery",
     "confidence": "confirmed",
@@ -41345,7 +41440,7 @@
     "targetSelectionGroup": null,
     "title": "Recovery Enemy Reduction",
     "unresolvedQuestions": [
-      "Enemy identities, combat availability, final uptime, and stacking/refresh behavior remain unresolved."
+      "Enemy identities and final combat formula remain unresolved."
     ]
   },
   {
@@ -45663,9 +45758,7 @@
     ]
   },
   {
-    "assumptions": [
-      "Enemy target overlap is not simulated."
-    ],
+    "assumptions": [],
     "channel": "fire-damage",
     "confidence": "confirmed",
     "conflicts": [
@@ -45676,12 +45769,17 @@
     ],
     "damageScope": null,
     "effects": [
-      "Enemy Initiative reduction may improve Fire Damage outputs: Wild Hunt: Fire Damage, Savage Claim: Fire Damage.",
+      "Duration: until end of combat.",
+      "Enemy selector: all enemies.",
+      "Enemy target count: 3.",
+      "All three enemy slots are covered.",
+      "Enemy identities remain unresolved because the enemy formation is unavailable.",
+      "Enemy Initiative reduction may improve Fire Damage outputs: Wild Hunt: Fire Damage, Savage Claim: Fire Damage. Enemy Initiative -6%.",
       "Applies to all qualifying Fire Damage sources."
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final value cannot be calculated because final combat formulas and stacking order are not fully verified.",
-    "explanation": "Syrax's Flight Mastery can reduce enemy Initiative. Sheepstealer's Fire Damage outputs are mitigated by that stat.",
+    "explanation": "Syrax's Flight Mastery can reduce enemy Initiative. Enemy Initiative reduction is -6%. Sheepstealer's Fire Damage outputs are mitigated by that stat. Duration: until end of combat.",
     "id": "enemy-mitigation-syrax-flight-mastery-flight-mastery-initiative-down-stat-dealt-modifier-sheepstealer-initiative",
     "interactionScope": "cross-dragon",
     "matchedOutputCapabilityIds": [
@@ -45757,18 +45855,15 @@
     "sourceEvidenceIds": [
       "syrax-flight-mastery-2026-06-24"
     ],
-    "status": "potential",
+    "status": "inactive",
     "targetSelectionGroup": null,
     "title": "Fire Damage Mitigation Reduction",
     "unresolvedQuestions": [
-      "Exact enemy-formation targeting and final mitigation formula are unknown."
+      "Enemy identities remain unnamed because the enemy formation is unavailable."
     ]
   },
   {
-    "assumptions": [
-      "Enemy identities and combat availability are unresolved.",
-      "Activation chance and uptime are not treated as guaranteed."
-    ],
+    "assumptions": [],
     "channel": "stat",
     "confidence": "confirmed",
     "conflicts": [
@@ -45777,11 +45872,16 @@
     ],
     "damageScope": null,
     "effects": [
+      "Duration: until end of combat.",
+      "Enemy selector: all enemies.",
+      "Enemy target count: 3.",
+      "All three enemy slots are covered.",
+      "Enemy identities remain unresolved because the enemy formation is unavailable.",
       "Enemy Initiative decrease 12% at effective Habit Level 5."
     ],
     "exactResultKnown": false,
-    "exactResultUnknownReason": "Exact final reduced enemy damage cannot be calculated because target selection, uptime, stacking, and final formulas are unresolved.",
-    "explanation": "Syrax's Flight Mastery can reduce enemy Initiative. Enemy target selection is tracked as an enemy-side candidate group, not a named friendly recipient.",
+    "exactResultUnknownReason": "Exact final reduced enemy damage cannot be calculated because the final combat formula is not fully verified.",
+    "explanation": "Syrax's Flight Mastery can reduce enemy Initiative. All three enemy slots are covered by Syrax's Flight Mastery. Duration: until end of combat.",
     "id": "enemy-damage-dealt-reduction-syrax-flight-mastery-flight-mastery-initiative-down-stat-dealt-modifier",
     "interactionScope": "enemy-side",
     "matchedOutputCapabilityIds": [],
@@ -45829,13 +45929,12 @@
     "targetSelectionGroup": null,
     "title": "Enemy Initiative reduction",
     "unresolvedQuestions": [
-      "Enemy identities, combat availability, final uptime, and stacking/refresh behavior remain unresolved."
+      "Enemy identities remain unnamed because the enemy formation is unavailable."
     ]
   },
   {
     "assumptions": [
-      "Adjacent enemy identities and enemy-formation overlap are unresolved.",
-      "Activation chance and uptime are not treated as guaranteed."
+      "Adjacent enemy identities and enemy-formation overlap are unresolved."
     ],
     "channel": "tactical-damage",
     "confidence": "confirmed",
@@ -45845,12 +45944,16 @@
     ],
     "damageScope": null,
     "effects": [
+      "Duration: until end of combat.",
+      "Enemy target count: 1.",
+      "Target scope: enemies within adjacency.",
+      "Enemy identities remain unresolved because the enemy formation is unavailable.",
       "Enemy Instinct decrease 24% at effective Habit Level 5.",
       "Enemy Tactical Damage Dealt reduction follows from enemy Instinct reduction."
     ],
     "exactResultKnown": false,
-    "exactResultUnknownReason": "Exact final reduced enemy damage cannot be calculated because target selection, uptime, stacking, and final formulas are unresolved.",
-    "explanation": "Sheepstealer's Dragon's Cunning can reduce enemy Instinct, which reduces Tactical Damage Dealt. Enemy target selection is tracked as an enemy-side candidate group, not a named friendly recipient.",
+    "exactResultUnknownReason": "Exact final reduced enemy damage cannot be calculated because target identity, overlap, and final combat formulas are unresolved.",
+    "explanation": "Sheepstealer's Dragon's Cunning can reduce enemy Instinct, which reduces Tactical Damage Dealt. Enemy target selection is tracked as an enemy-side candidate group, not a named friendly recipient. Duration: until end of combat.",
     "id": "enemy-damage-dealt-reduction-sheepstealer-dragons-cunning-dragons-cunning-instinct-down-stat-dealt-modifier",
     "interactionScope": "enemy-side",
     "matchedOutputCapabilityIds": [],
@@ -45898,13 +46001,12 @@
     "targetSelectionGroup": null,
     "title": "Enemy Tactical Damage Dealt reduction",
     "unresolvedQuestions": [
-      "Adjacent enemy identity, enemy-formation overlap, final uptime, and stacking/refresh behavior remain unresolved."
+      "Adjacent enemy identity and enemy-formation overlap remain unresolved."
     ]
   },
   {
     "assumptions": [
-      "Enemy identities and combat availability are unresolved.",
-      "Enemy state and uptime are not treated as guaranteed."
+      "Enemy identities and combat availability are unresolved."
     ],
     "channel": "recovery",
     "confidence": "confirmed",
@@ -45967,7 +46069,7 @@
     "targetSelectionGroup": null,
     "title": "Recovery Enemy Reduction",
     "unresolvedQuestions": [
-      "Enemy identities, combat availability, final uptime, and stacking/refresh behavior remain unresolved."
+      "Enemy identities and final combat formula remain unresolved."
     ]
   },
   {
@@ -49973,9 +50075,7 @@
     ]
   },
   {
-    "assumptions": [
-      "Enemy target overlap is not simulated."
-    ],
+    "assumptions": [],
     "channel": "fire-damage",
     "confidence": "confirmed",
     "conflicts": [
@@ -49986,12 +50086,17 @@
     ],
     "damageScope": null,
     "effects": [
-      "Enemy Initiative reduction may improve Fire Damage outputs: Infernal Burst: Fire Damage, Crippling Inferno: Burn periodic Fire Damage.",
+      "Duration: until end of combat.",
+      "Enemy selector: all enemies.",
+      "Enemy target count: 3.",
+      "All three enemy slots are covered.",
+      "Enemy identities remain unresolved because the enemy formation is unavailable.",
+      "Enemy Initiative reduction may improve Fire Damage outputs: Infernal Burst: Fire Damage, Crippling Inferno: Burn periodic Fire Damage. Enemy Initiative -6%.",
       "Applies to all qualifying Fire Damage sources."
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final value cannot be calculated because final combat formulas and stacking order are not fully verified.",
-    "explanation": "Syrax's Flight Mastery can reduce enemy Initiative. Caraxes's Fire Damage outputs are mitigated by that stat.",
+    "explanation": "Syrax's Flight Mastery can reduce enemy Initiative. Enemy Initiative reduction is -6%. Caraxes's Fire Damage outputs are mitigated by that stat. Duration: until end of combat.",
     "id": "enemy-mitigation-syrax-flight-mastery-flight-mastery-initiative-down-stat-dealt-modifier-caraxes-initiative",
     "interactionScope": "cross-dragon",
     "matchedOutputCapabilityIds": [
@@ -50065,17 +50170,15 @@
     "sourceEvidenceIds": [
       "syrax-flight-mastery-2026-06-24"
     ],
-    "status": "potential",
+    "status": "inactive",
     "targetSelectionGroup": null,
     "title": "Fire Damage Mitigation Reduction",
     "unresolvedQuestions": [
-      "Exact enemy-formation targeting and final mitigation formula are unknown."
+      "Enemy identities remain unnamed because the enemy formation is unavailable."
     ]
   },
   {
-    "assumptions": [
-      "Enemy target overlap is not simulated."
-    ],
+    "assumptions": [],
     "channel": "fire-damage",
     "confidence": "confirmed",
     "conflicts": [
@@ -50086,12 +50189,17 @@
     ],
     "damageScope": null,
     "effects": [
-      "Enemy Initiative reduction may improve Fire Damage outputs: Infernal Burst: Fire Damage, Crippling Inferno: Burn periodic Fire Damage.",
+      "Duration: until end of combat.",
+      "Enemy selector: all enemies.",
+      "Enemy target count: 3.",
+      "All three enemy slots are covered.",
+      "Enemy identities remain unresolved because the enemy formation is unavailable.",
+      "Enemy Initiative reduction may improve Fire Damage outputs: Infernal Burst: Fire Damage, Crippling Inferno: Burn periodic Fire Damage. Enemy Initiative -6.5%.",
       "Applies to all qualifying Fire Damage sources."
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final value cannot be calculated because final combat formulas and stacking order are not fully verified.",
-    "explanation": "Caraxes's Battle Dread can reduce enemy Initiative. Caraxes's Fire Damage outputs are mitigated by that stat.",
+    "explanation": "Caraxes's Battle Dread can reduce enemy Initiative. Enemy Initiative reduction is -6.5%. Caraxes's Fire Damage outputs are mitigated by that stat. Duration: until end of combat.",
     "id": "enemy-mitigation-caraxes-battle-dread-battle-dread-initiative-down-stat-dealt-modifier-caraxes-initiative",
     "interactionScope": "internal",
     "matchedOutputCapabilityIds": [
@@ -50165,18 +50273,15 @@
     "sourceEvidenceIds": [
       "caraxes-battle-dread-2026-06-24"
     ],
-    "status": "potential",
+    "status": "inactive",
     "targetSelectionGroup": null,
     "title": "Fire Damage Mitigation Reduction",
     "unresolvedQuestions": [
-      "Exact enemy-formation targeting and final mitigation formula are unknown."
+      "Enemy identities remain unnamed because the enemy formation is unavailable."
     ]
   },
   {
-    "assumptions": [
-      "Enemy identities and combat availability are unresolved.",
-      "Activation chance and uptime are not treated as guaranteed."
-    ],
+    "assumptions": [],
     "channel": "stat",
     "confidence": "confirmed",
     "conflicts": [
@@ -50185,11 +50290,16 @@
     ],
     "damageScope": null,
     "effects": [
+      "Duration: until end of combat.",
+      "Enemy selector: all enemies.",
+      "Enemy target count: 3.",
+      "All three enemy slots are covered.",
+      "Enemy identities remain unresolved because the enemy formation is unavailable.",
       "Enemy Initiative decrease 12% at effective Habit Level 5."
     ],
     "exactResultKnown": false,
-    "exactResultUnknownReason": "Exact final reduced enemy damage cannot be calculated because target selection, uptime, stacking, and final formulas are unresolved.",
-    "explanation": "Syrax's Flight Mastery can reduce enemy Initiative. Enemy target selection is tracked as an enemy-side candidate group, not a named friendly recipient.",
+    "exactResultUnknownReason": "Exact final reduced enemy damage cannot be calculated because the final combat formula is not fully verified.",
+    "explanation": "Syrax's Flight Mastery can reduce enemy Initiative. All three enemy slots are covered by Syrax's Flight Mastery. Duration: until end of combat.",
     "id": "enemy-damage-dealt-reduction-syrax-flight-mastery-flight-mastery-initiative-down-stat-dealt-modifier",
     "interactionScope": "enemy-side",
     "matchedOutputCapabilityIds": [],
@@ -50237,14 +50347,11 @@
     "targetSelectionGroup": null,
     "title": "Enemy Initiative reduction",
     "unresolvedQuestions": [
-      "Enemy identities, combat availability, final uptime, and stacking/refresh behavior remain unresolved."
+      "Enemy identities remain unnamed because the enemy formation is unavailable."
     ]
   },
   {
-    "assumptions": [
-      "Enemy identities and combat availability are unresolved.",
-      "Activation chance and uptime are not treated as guaranteed."
-    ],
+    "assumptions": [],
     "channel": "physical-damage",
     "confidence": "confirmed",
     "conflicts": [
@@ -50253,12 +50360,17 @@
     ],
     "damageScope": null,
     "effects": [
+      "Duration: until end of combat.",
+      "Enemy selector: all enemies.",
+      "Enemy target count: 3.",
+      "All three enemy slots are covered.",
+      "Enemy identities remain unresolved because the enemy formation is unavailable.",
       "Enemy Strength decrease 13% at effective Habit Level 5.",
       "Enemy Physical Damage Dealt reduction follows from enemy Strength reduction."
     ],
     "exactResultKnown": false,
-    "exactResultUnknownReason": "Exact final reduced enemy damage cannot be calculated because target selection, uptime, stacking, and final formulas are unresolved.",
-    "explanation": "Caraxes's Battle Dread can reduce enemy Strength, which reduces Physical Damage Dealt. Enemy target selection is tracked as an enemy-side candidate group, not a named friendly recipient.",
+    "exactResultUnknownReason": "Exact final reduced enemy damage cannot be calculated because the final combat formula is not fully verified.",
+    "explanation": "Caraxes's Battle Dread can reduce enemy Strength, which reduces Physical Damage Dealt. All three enemy slots are covered by Caraxes's Battle Dread. Duration: until end of combat.",
     "id": "enemy-damage-dealt-reduction-caraxes-battle-dread-battle-dread-strength-down-stat-dealt-modifier",
     "interactionScope": "enemy-side",
     "matchedOutputCapabilityIds": [],
@@ -50306,14 +50418,11 @@
     "targetSelectionGroup": null,
     "title": "Enemy Physical Damage Dealt reduction",
     "unresolvedQuestions": [
-      "Enemy identities, combat availability, final uptime, and stacking/refresh behavior remain unresolved."
+      "Enemy identities remain unnamed because the enemy formation is unavailable."
     ]
   },
   {
-    "assumptions": [
-      "Enemy identities and combat availability are unresolved.",
-      "Activation chance and uptime are not treated as guaranteed."
-    ],
+    "assumptions": [],
     "channel": "stat",
     "confidence": "confirmed",
     "conflicts": [
@@ -50322,11 +50431,16 @@
     ],
     "damageScope": null,
     "effects": [
+      "Duration: until end of combat.",
+      "Enemy selector: all enemies.",
+      "Enemy target count: 3.",
+      "All three enemy slots are covered.",
+      "Enemy identities remain unresolved because the enemy formation is unavailable.",
       "Enemy Initiative decrease 13% at effective Habit Level 5."
     ],
     "exactResultKnown": false,
-    "exactResultUnknownReason": "Exact final reduced enemy damage cannot be calculated because target selection, uptime, stacking, and final formulas are unresolved.",
-    "explanation": "Caraxes's Battle Dread can reduce enemy Initiative. Enemy target selection is tracked as an enemy-side candidate group, not a named friendly recipient.",
+    "exactResultUnknownReason": "Exact final reduced enemy damage cannot be calculated because the final combat formula is not fully verified.",
+    "explanation": "Caraxes's Battle Dread can reduce enemy Initiative. All three enemy slots are covered by Caraxes's Battle Dread. Duration: until end of combat.",
     "id": "enemy-damage-dealt-reduction-caraxes-battle-dread-battle-dread-initiative-down-stat-dealt-modifier",
     "interactionScope": "enemy-side",
     "matchedOutputCapabilityIds": [],
@@ -50374,14 +50488,11 @@
     "targetSelectionGroup": null,
     "title": "Enemy Initiative reduction",
     "unresolvedQuestions": [
-      "Enemy identities, combat availability, final uptime, and stacking/refresh behavior remain unresolved."
+      "Enemy identities remain unnamed because the enemy formation is unavailable."
     ]
   },
   {
-    "assumptions": [
-      "Enemy identities and combat availability are unresolved.",
-      "Activation chance and uptime are not treated as guaranteed."
-    ],
+    "assumptions": [],
     "channel": "physical-damage",
     "confidence": "confirmed",
     "conflicts": [
@@ -50390,12 +50501,17 @@
     ],
     "damageScope": null,
     "effects": [
+      "Duration: until end of combat.",
+      "Enemy selector: all enemies.",
+      "Enemy target count: 3.",
+      "All three enemy slots are covered.",
+      "Enemy identities remain unresolved because the enemy formation is unavailable.",
       "Physical Damage Dealt decrease 11% at effective Habit Level 5.",
       "Physical Damage reduction applies to non-Basic Attacks only."
     ],
     "exactResultKnown": false,
-    "exactResultUnknownReason": "Exact final reduced enemy damage cannot be calculated because target selection, uptime, stacking, and final formulas are unresolved.",
-    "explanation": "Caraxes's Mass Enfeeble can reduce enemy Physical Damage Dealt. Enemy target selection is tracked as an enemy-side candidate group, not a named friendly recipient.",
+    "exactResultUnknownReason": "Exact final reduced enemy damage cannot be calculated because the final combat formula is not fully verified.",
+    "explanation": "Caraxes's Mass Enfeeble can reduce enemy Physical Damage Dealt. All three enemy slots are covered by Caraxes's Mass Enfeeble. Duration: until end of combat.",
     "id": "enemy-damage-dealt-reduction-caraxes-mass-enfeeble-mass-enfeeble-physical-down-physical-damage-dealt-modifier",
     "interactionScope": "enemy-side",
     "matchedOutputCapabilityIds": [],
@@ -50443,7 +50559,7 @@
     "targetSelectionGroup": null,
     "title": "Enemy non-Basic Physical Damage Dealt reduction",
     "unresolvedQuestions": [
-      "Enemy identities, combat availability, final uptime, and stacking/refresh behavior remain unresolved."
+      "Enemy identities remain unnamed because the enemy formation is unavailable."
     ]
   },
   {
@@ -53808,9 +53924,7 @@
     ]
   },
   {
-    "assumptions": [
-      "Enemy target overlap is not simulated."
-    ],
+    "assumptions": [],
     "channel": "fire-damage",
     "confidence": "confirmed",
     "conflicts": [
@@ -53821,12 +53935,17 @@
     ],
     "damageScope": null,
     "effects": [
-      "Enemy Initiative reduction may improve Fire Damage outputs: Wild Hunt: Fire Damage, Savage Claim: Fire Damage.",
+      "Duration: until end of combat.",
+      "Enemy selector: all enemies.",
+      "Enemy target count: 3.",
+      "All three enemy slots are covered.",
+      "Enemy identities remain unresolved because the enemy formation is unavailable.",
+      "Enemy Initiative reduction may improve Fire Damage outputs: Wild Hunt: Fire Damage, Savage Claim: Fire Damage. Enemy Initiative -6%.",
       "Applies to all qualifying Fire Damage sources."
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final value cannot be calculated because final combat formulas and stacking order are not fully verified.",
-    "explanation": "Syrax's Flight Mastery can reduce enemy Initiative. Sheepstealer's Fire Damage outputs are mitigated by that stat.",
+    "explanation": "Syrax's Flight Mastery can reduce enemy Initiative. Enemy Initiative reduction is -6%. Sheepstealer's Fire Damage outputs are mitigated by that stat. Duration: until end of combat.",
     "id": "enemy-mitigation-syrax-flight-mastery-flight-mastery-initiative-down-stat-dealt-modifier-sheepstealer-initiative",
     "interactionScope": "cross-dragon",
     "matchedOutputCapabilityIds": [
@@ -53902,17 +54021,15 @@
     "sourceEvidenceIds": [
       "syrax-flight-mastery-2026-06-24"
     ],
-    "status": "potential",
+    "status": "inactive",
     "targetSelectionGroup": null,
     "title": "Fire Damage Mitigation Reduction",
     "unresolvedQuestions": [
-      "Exact enemy-formation targeting and final mitigation formula are unknown."
+      "Enemy identities remain unnamed because the enemy formation is unavailable."
     ]
   },
   {
-    "assumptions": [
-      "Enemy target overlap is not simulated."
-    ],
+    "assumptions": [],
     "channel": "fire-damage",
     "confidence": "confirmed",
     "conflicts": [
@@ -53923,12 +54040,17 @@
     ],
     "damageScope": null,
     "effects": [
-      "Enemy Initiative reduction may improve Fire Damage outputs: Infernal Burst: Fire Damage, Crippling Inferno: Burn periodic Fire Damage.",
+      "Duration: until end of combat.",
+      "Enemy selector: all enemies.",
+      "Enemy target count: 3.",
+      "All three enemy slots are covered.",
+      "Enemy identities remain unresolved because the enemy formation is unavailable.",
+      "Enemy Initiative reduction may improve Fire Damage outputs: Infernal Burst: Fire Damage, Crippling Inferno: Burn periodic Fire Damage. Enemy Initiative -6%.",
       "Applies to all qualifying Fire Damage sources."
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final value cannot be calculated because final combat formulas and stacking order are not fully verified.",
-    "explanation": "Syrax's Flight Mastery can reduce enemy Initiative. Caraxes's Fire Damage outputs are mitigated by that stat.",
+    "explanation": "Syrax's Flight Mastery can reduce enemy Initiative. Enemy Initiative reduction is -6%. Caraxes's Fire Damage outputs are mitigated by that stat. Duration: until end of combat.",
     "id": "enemy-mitigation-syrax-flight-mastery-flight-mastery-initiative-down-stat-dealt-modifier-caraxes-initiative",
     "interactionScope": "cross-dragon",
     "matchedOutputCapabilityIds": [
@@ -54002,17 +54124,15 @@
     "sourceEvidenceIds": [
       "syrax-flight-mastery-2026-06-24"
     ],
-    "status": "potential",
+    "status": "inactive",
     "targetSelectionGroup": null,
     "title": "Fire Damage Mitigation Reduction",
     "unresolvedQuestions": [
-      "Exact enemy-formation targeting and final mitigation formula are unknown."
+      "Enemy identities remain unnamed because the enemy formation is unavailable."
     ]
   },
   {
-    "assumptions": [
-      "Enemy target overlap is not simulated."
-    ],
+    "assumptions": [],
     "channel": "fire-damage",
     "confidence": "confirmed",
     "conflicts": [
@@ -54023,12 +54143,17 @@
     ],
     "damageScope": null,
     "effects": [
-      "Enemy Initiative reduction may improve Fire Damage outputs: Wild Hunt: Fire Damage, Savage Claim: Fire Damage.",
+      "Duration: until end of combat.",
+      "Enemy selector: all enemies.",
+      "Enemy target count: 3.",
+      "All three enemy slots are covered.",
+      "Enemy identities remain unresolved because the enemy formation is unavailable.",
+      "Enemy Initiative reduction may improve Fire Damage outputs: Wild Hunt: Fire Damage, Savage Claim: Fire Damage. Enemy Initiative -6.5%.",
       "Applies to all qualifying Fire Damage sources."
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final value cannot be calculated because final combat formulas and stacking order are not fully verified.",
-    "explanation": "Caraxes's Battle Dread can reduce enemy Initiative. Sheepstealer's Fire Damage outputs are mitigated by that stat.",
+    "explanation": "Caraxes's Battle Dread can reduce enemy Initiative. Enemy Initiative reduction is -6.5%. Sheepstealer's Fire Damage outputs are mitigated by that stat. Duration: until end of combat.",
     "id": "enemy-mitigation-caraxes-battle-dread-battle-dread-initiative-down-stat-dealt-modifier-sheepstealer-initiative",
     "interactionScope": "cross-dragon",
     "matchedOutputCapabilityIds": [
@@ -54104,17 +54229,15 @@
     "sourceEvidenceIds": [
       "caraxes-battle-dread-2026-06-24"
     ],
-    "status": "potential",
+    "status": "inactive",
     "targetSelectionGroup": null,
     "title": "Fire Damage Mitigation Reduction",
     "unresolvedQuestions": [
-      "Exact enemy-formation targeting and final mitigation formula are unknown."
+      "Enemy identities remain unnamed because the enemy formation is unavailable."
     ]
   },
   {
-    "assumptions": [
-      "Enemy target overlap is not simulated."
-    ],
+    "assumptions": [],
     "channel": "fire-damage",
     "confidence": "confirmed",
     "conflicts": [
@@ -54125,12 +54248,17 @@
     ],
     "damageScope": null,
     "effects": [
-      "Enemy Initiative reduction may improve Fire Damage outputs: Infernal Burst: Fire Damage, Crippling Inferno: Burn periodic Fire Damage.",
+      "Duration: until end of combat.",
+      "Enemy selector: all enemies.",
+      "Enemy target count: 3.",
+      "All three enemy slots are covered.",
+      "Enemy identities remain unresolved because the enemy formation is unavailable.",
+      "Enemy Initiative reduction may improve Fire Damage outputs: Infernal Burst: Fire Damage, Crippling Inferno: Burn periodic Fire Damage. Enemy Initiative -6.5%.",
       "Applies to all qualifying Fire Damage sources."
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final value cannot be calculated because final combat formulas and stacking order are not fully verified.",
-    "explanation": "Caraxes's Battle Dread can reduce enemy Initiative. Caraxes's Fire Damage outputs are mitigated by that stat.",
+    "explanation": "Caraxes's Battle Dread can reduce enemy Initiative. Enemy Initiative reduction is -6.5%. Caraxes's Fire Damage outputs are mitigated by that stat. Duration: until end of combat.",
     "id": "enemy-mitigation-caraxes-battle-dread-battle-dread-initiative-down-stat-dealt-modifier-caraxes-initiative",
     "interactionScope": "internal",
     "matchedOutputCapabilityIds": [
@@ -54204,18 +54332,15 @@
     "sourceEvidenceIds": [
       "caraxes-battle-dread-2026-06-24"
     ],
-    "status": "potential",
+    "status": "inactive",
     "targetSelectionGroup": null,
     "title": "Fire Damage Mitigation Reduction",
     "unresolvedQuestions": [
-      "Exact enemy-formation targeting and final mitigation formula are unknown."
+      "Enemy identities remain unnamed because the enemy formation is unavailable."
     ]
   },
   {
-    "assumptions": [
-      "Enemy identities and combat availability are unresolved.",
-      "Activation chance and uptime are not treated as guaranteed."
-    ],
+    "assumptions": [],
     "channel": "stat",
     "confidence": "confirmed",
     "conflicts": [
@@ -54224,11 +54349,16 @@
     ],
     "damageScope": null,
     "effects": [
+      "Duration: until end of combat.",
+      "Enemy selector: all enemies.",
+      "Enemy target count: 3.",
+      "All three enemy slots are covered.",
+      "Enemy identities remain unresolved because the enemy formation is unavailable.",
       "Enemy Initiative decrease 12% at effective Habit Level 5."
     ],
     "exactResultKnown": false,
-    "exactResultUnknownReason": "Exact final reduced enemy damage cannot be calculated because target selection, uptime, stacking, and final formulas are unresolved.",
-    "explanation": "Syrax's Flight Mastery can reduce enemy Initiative. Enemy target selection is tracked as an enemy-side candidate group, not a named friendly recipient.",
+    "exactResultUnknownReason": "Exact final reduced enemy damage cannot be calculated because the final combat formula is not fully verified.",
+    "explanation": "Syrax's Flight Mastery can reduce enemy Initiative. All three enemy slots are covered by Syrax's Flight Mastery. Duration: until end of combat.",
     "id": "enemy-damage-dealt-reduction-syrax-flight-mastery-flight-mastery-initiative-down-stat-dealt-modifier",
     "interactionScope": "enemy-side",
     "matchedOutputCapabilityIds": [],
@@ -54276,14 +54406,11 @@
     "targetSelectionGroup": null,
     "title": "Enemy Initiative reduction",
     "unresolvedQuestions": [
-      "Enemy identities, combat availability, final uptime, and stacking/refresh behavior remain unresolved."
+      "Enemy identities remain unnamed because the enemy formation is unavailable."
     ]
   },
   {
-    "assumptions": [
-      "Enemy identities and combat availability are unresolved.",
-      "Activation chance and uptime are not treated as guaranteed."
-    ],
+    "assumptions": [],
     "channel": "physical-damage",
     "confidence": "confirmed",
     "conflicts": [
@@ -54292,12 +54419,17 @@
     ],
     "damageScope": null,
     "effects": [
+      "Duration: until end of combat.",
+      "Enemy selector: all enemies.",
+      "Enemy target count: 3.",
+      "All three enemy slots are covered.",
+      "Enemy identities remain unresolved because the enemy formation is unavailable.",
       "Enemy Strength decrease 13% at effective Habit Level 5.",
       "Enemy Physical Damage Dealt reduction follows from enemy Strength reduction."
     ],
     "exactResultKnown": false,
-    "exactResultUnknownReason": "Exact final reduced enemy damage cannot be calculated because target selection, uptime, stacking, and final formulas are unresolved.",
-    "explanation": "Caraxes's Battle Dread can reduce enemy Strength, which reduces Physical Damage Dealt. Enemy target selection is tracked as an enemy-side candidate group, not a named friendly recipient.",
+    "exactResultUnknownReason": "Exact final reduced enemy damage cannot be calculated because the final combat formula is not fully verified.",
+    "explanation": "Caraxes's Battle Dread can reduce enemy Strength, which reduces Physical Damage Dealt. All three enemy slots are covered by Caraxes's Battle Dread. Duration: until end of combat.",
     "id": "enemy-damage-dealt-reduction-caraxes-battle-dread-battle-dread-strength-down-stat-dealt-modifier",
     "interactionScope": "enemy-side",
     "matchedOutputCapabilityIds": [],
@@ -54345,14 +54477,11 @@
     "targetSelectionGroup": null,
     "title": "Enemy Physical Damage Dealt reduction",
     "unresolvedQuestions": [
-      "Enemy identities, combat availability, final uptime, and stacking/refresh behavior remain unresolved."
+      "Enemy identities remain unnamed because the enemy formation is unavailable."
     ]
   },
   {
-    "assumptions": [
-      "Enemy identities and combat availability are unresolved.",
-      "Activation chance and uptime are not treated as guaranteed."
-    ],
+    "assumptions": [],
     "channel": "stat",
     "confidence": "confirmed",
     "conflicts": [
@@ -54361,11 +54490,16 @@
     ],
     "damageScope": null,
     "effects": [
+      "Duration: until end of combat.",
+      "Enemy selector: all enemies.",
+      "Enemy target count: 3.",
+      "All three enemy slots are covered.",
+      "Enemy identities remain unresolved because the enemy formation is unavailable.",
       "Enemy Initiative decrease 13% at effective Habit Level 5."
     ],
     "exactResultKnown": false,
-    "exactResultUnknownReason": "Exact final reduced enemy damage cannot be calculated because target selection, uptime, stacking, and final formulas are unresolved.",
-    "explanation": "Caraxes's Battle Dread can reduce enemy Initiative. Enemy target selection is tracked as an enemy-side candidate group, not a named friendly recipient.",
+    "exactResultUnknownReason": "Exact final reduced enemy damage cannot be calculated because the final combat formula is not fully verified.",
+    "explanation": "Caraxes's Battle Dread can reduce enemy Initiative. All three enemy slots are covered by Caraxes's Battle Dread. Duration: until end of combat.",
     "id": "enemy-damage-dealt-reduction-caraxes-battle-dread-battle-dread-initiative-down-stat-dealt-modifier",
     "interactionScope": "enemy-side",
     "matchedOutputCapabilityIds": [],
@@ -54413,14 +54547,11 @@
     "targetSelectionGroup": null,
     "title": "Enemy Initiative reduction",
     "unresolvedQuestions": [
-      "Enemy identities, combat availability, final uptime, and stacking/refresh behavior remain unresolved."
+      "Enemy identities remain unnamed because the enemy formation is unavailable."
     ]
   },
   {
-    "assumptions": [
-      "Enemy identities and combat availability are unresolved.",
-      "Activation chance and uptime are not treated as guaranteed."
-    ],
+    "assumptions": [],
     "channel": "physical-damage",
     "confidence": "confirmed",
     "conflicts": [
@@ -54429,12 +54560,17 @@
     ],
     "damageScope": null,
     "effects": [
+      "Duration: until end of combat.",
+      "Enemy selector: all enemies.",
+      "Enemy target count: 3.",
+      "All three enemy slots are covered.",
+      "Enemy identities remain unresolved because the enemy formation is unavailable.",
       "Physical Damage Dealt decrease 11% at effective Habit Level 5.",
       "Physical Damage reduction applies to non-Basic Attacks only."
     ],
     "exactResultKnown": false,
-    "exactResultUnknownReason": "Exact final reduced enemy damage cannot be calculated because target selection, uptime, stacking, and final formulas are unresolved.",
-    "explanation": "Caraxes's Mass Enfeeble can reduce enemy Physical Damage Dealt. Enemy target selection is tracked as an enemy-side candidate group, not a named friendly recipient.",
+    "exactResultUnknownReason": "Exact final reduced enemy damage cannot be calculated because the final combat formula is not fully verified.",
+    "explanation": "Caraxes's Mass Enfeeble can reduce enemy Physical Damage Dealt. All three enemy slots are covered by Caraxes's Mass Enfeeble. Duration: until end of combat.",
     "id": "enemy-damage-dealt-reduction-caraxes-mass-enfeeble-mass-enfeeble-physical-down-physical-damage-dealt-modifier",
     "interactionScope": "enemy-side",
     "matchedOutputCapabilityIds": [],
@@ -54482,13 +54618,12 @@
     "targetSelectionGroup": null,
     "title": "Enemy non-Basic Physical Damage Dealt reduction",
     "unresolvedQuestions": [
-      "Enemy identities, combat availability, final uptime, and stacking/refresh behavior remain unresolved."
+      "Enemy identities remain unnamed because the enemy formation is unavailable."
     ]
   },
   {
     "assumptions": [
-      "Adjacent enemy identities and enemy-formation overlap are unresolved.",
-      "Activation chance and uptime are not treated as guaranteed."
+      "Adjacent enemy identities and enemy-formation overlap are unresolved."
     ],
     "channel": "tactical-damage",
     "confidence": "confirmed",
@@ -54498,12 +54633,16 @@
     ],
     "damageScope": null,
     "effects": [
+      "Duration: until end of combat.",
+      "Enemy target count: 1.",
+      "Target scope: enemies within adjacency.",
+      "Enemy identities remain unresolved because the enemy formation is unavailable.",
       "Enemy Instinct decrease 24% at effective Habit Level 5.",
       "Enemy Tactical Damage Dealt reduction follows from enemy Instinct reduction."
     ],
     "exactResultKnown": false,
-    "exactResultUnknownReason": "Exact final reduced enemy damage cannot be calculated because target selection, uptime, stacking, and final formulas are unresolved.",
-    "explanation": "Sheepstealer's Dragon's Cunning can reduce enemy Instinct, which reduces Tactical Damage Dealt. Enemy target selection is tracked as an enemy-side candidate group, not a named friendly recipient.",
+    "exactResultUnknownReason": "Exact final reduced enemy damage cannot be calculated because target identity, overlap, and final combat formulas are unresolved.",
+    "explanation": "Sheepstealer's Dragon's Cunning can reduce enemy Instinct, which reduces Tactical Damage Dealt. Enemy target selection is tracked as an enemy-side candidate group, not a named friendly recipient. Duration: until end of combat.",
     "id": "enemy-damage-dealt-reduction-sheepstealer-dragons-cunning-dragons-cunning-instinct-down-stat-dealt-modifier",
     "interactionScope": "enemy-side",
     "matchedOutputCapabilityIds": [],
@@ -54551,13 +54690,12 @@
     "targetSelectionGroup": null,
     "title": "Enemy Tactical Damage Dealt reduction",
     "unresolvedQuestions": [
-      "Adjacent enemy identity, enemy-formation overlap, final uptime, and stacking/refresh behavior remain unresolved."
+      "Adjacent enemy identity and enemy-formation overlap remain unresolved."
     ]
   },
   {
     "assumptions": [
-      "Enemy identities and combat availability are unresolved.",
-      "Enemy state and uptime are not treated as guaranteed."
+      "Enemy identities and combat availability are unresolved."
     ],
     "channel": "recovery",
     "confidence": "confirmed",
@@ -54620,7 +54758,7 @@
     "targetSelectionGroup": null,
     "title": "Recovery Enemy Reduction",
     "unresolvedQuestions": [
-      "Enemy identities, combat availability, final uptime, and stacking/refresh behavior remain unresolved."
+      "Enemy identities and final combat formula remain unresolved."
     ]
   },
   {
@@ -57254,9 +57392,7 @@
     ]
   },
   {
-    "assumptions": [
-      "Enemy target overlap is not simulated."
-    ],
+    "assumptions": [],
     "channel": "tactical-damage",
     "confidence": "confirmed",
     "conflicts": [
@@ -57267,12 +57403,18 @@
     ],
     "damageScope": null,
     "effects": [
-      "Enemy Intelligence reduction may improve Tactical Damage outputs: Tactical Strike: Tactical Damage, Tactical Assault: Panic periodic Tactical Damage.",
+      "Timing: Start of combat.",
+      "Duration: until end of combat.",
+      "Enemy selector: all enemies.",
+      "Enemy target count: 3.",
+      "All three enemy slots are covered.",
+      "Enemy identities remain unresolved because the enemy formation is unavailable.",
+      "Enemy Intelligence reduction may improve Tactical Damage outputs: Tactical Strike: Tactical Damage, Tactical Assault: Panic periodic Tactical Damage. Enemy Intelligence -6.5%.",
       "Applies to all qualifying Tactical Damage sources."
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final value cannot be calculated because final combat formulas and stacking order are not fully verified.",
-    "explanation": "Kalspire's Battle Cunning can reduce enemy Intelligence. Kalspire's Tactical Damage outputs are mitigated by that stat.",
+    "explanation": "Kalspire's Battle Cunning can reduce enemy Intelligence. Enemy Intelligence reduction is -6.5%. Kalspire's Tactical Damage outputs are mitigated by that stat. Timing: Start of combat. Duration: until end of combat.",
     "id": "enemy-mitigation-kalspire-battle-cunning-battle-cunning-intelligence-down-stat-dealt-modifier-kalspire-intelligence",
     "interactionScope": "internal",
     "matchedOutputCapabilityIds": [
@@ -57346,16 +57488,16 @@
     "sourceEvidenceIds": [
       "kalspire-battle-cunning-2026-06-25"
     ],
-    "status": "potential",
+    "status": "inactive",
     "targetSelectionGroup": null,
     "title": "Tactical Damage Mitigation Reduction",
     "unresolvedQuestions": [
-      "Exact enemy-formation targeting and final mitigation formula are unknown."
+      "Enemy identities remain unnamed because the enemy formation is unavailable."
     ]
   },
   {
     "assumptions": [
-      "Enemy target overlap is not simulated."
+      "Enemy identity and overlap with qualifying outputs are unresolved."
     ],
     "channel": "tactical-damage",
     "confidence": "confirmed",
@@ -57367,12 +57509,16 @@
     ],
     "damageScope": null,
     "effects": [
-      "Enemy Intelligence reduction may improve Tactical Damage outputs: Tactical Strike: Tactical Damage, Tactical Assault: Panic periodic Tactical Damage.",
+      "Timing: Start of combat.",
+      "Enemy target count: 1.",
+      "Fallback target: another eligible enemy; fallback selection is not guaranteed.",
+      "Enemy identities remain unresolved because the enemy formation is unavailable.",
+      "Enemy Intelligence reduction may improve Tactical Damage outputs: Tactical Strike: Tactical Damage, Tactical Assault: Panic periodic Tactical Damage. Enemy Intelligence -30%.",
       "Applies to all qualifying Tactical Damage sources."
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final value cannot be calculated because final combat formulas and stacking order are not fully verified.",
-    "explanation": "Venator's Hunter's Bane can reduce enemy Intelligence. Kalspire's Tactical Damage outputs are mitigated by that stat.",
+    "explanation": "Venator's Hunter's Bane can reduce enemy Intelligence. Enemy Intelligence reduction is -30%. Kalspire's Tactical Damage outputs are mitigated by that stat. Timing: Start of combat.",
     "id": "enemy-mitigation-venator-hunters-bane-hunters-bane-intelligence-down-stat-dealt-modifier-kalspire-intelligence",
     "interactionScope": "cross-dragon",
     "matchedOutputCapabilityIds": [
@@ -57450,13 +57596,12 @@
     "targetSelectionGroup": null,
     "title": "Tactical Damage Mitigation Reduction",
     "unresolvedQuestions": [
-      "Exact enemy-formation targeting and final mitigation formula are unknown."
+      "Selected enemy identity, overlap with qualifying outputs, and final mitigation formula remain unresolved."
     ]
   },
   {
     "assumptions": [
-      "Enemy target selection is not resolved because enemy formation members and current troop values are unavailable.",
-      "Activation chance and uptime are not treated as guaranteed."
+      "Enemy target selection is not resolved because enemy formation members and current troop values are unavailable."
     ],
     "channel": "damage-dealt",
     "confidence": "confirmed",
@@ -57466,12 +57611,16 @@
     ],
     "damageScope": null,
     "effects": [
-      "Damage Dealt decrease 20%.",
-      "Duration: 2 rounds."
+      "Timing: Rounds 3 through 7.",
+      "Duration: 2 rounds.",
+      "Enemy target count: 1.",
+      "Selected-target group: eclipse-cover-shared-roll.",
+      "Enemy identities remain unresolved because the enemy formation is unavailable.",
+      "Damage Dealt decrease 20%."
     ],
     "exactResultKnown": false,
-    "exactResultUnknownReason": "Exact final reduced enemy damage cannot be calculated because target selection, uptime, stacking, and final formulas are unresolved.",
-    "explanation": "Vhagar's Eclipse Cover can reduce enemy Damage Dealt. Enemy target selection is tracked as an enemy-side candidate group, not a named friendly recipient.",
+    "exactResultUnknownReason": "Exact final reduced enemy damage cannot be calculated because target identity, overlap, and final combat formulas are unresolved.",
+    "explanation": "Vhagar's Eclipse Cover can reduce enemy Damage Dealt. Enemy target selection is tracked as an enemy-side candidate group, not a named friendly recipient. Timing: Rounds 3 through 7. Duration: 2 rounds.",
     "id": "enemy-damage-dealt-reduction-vhagar-eclipse-cover-eclipse-cover-weakened-weakened-damage-dealt-status-modifier",
     "interactionScope": "enemy-side",
     "matchedOutputCapabilityIds": [],
@@ -57519,14 +57668,11 @@
     "targetSelectionGroup": null,
     "title": "Damage Dealt Enemy Reduction",
     "unresolvedQuestions": [
-      "Enemy-side current-troop values, tie resolution, final uptime, and stacking/refresh behavior remain unresolved."
+      "Enemy-side current-troop values and tie resolution remain unresolved."
     ]
   },
   {
-    "assumptions": [
-      "Enemy identities and combat availability are unresolved.",
-      "Activation chance and uptime are not treated as guaranteed."
-    ],
+    "assumptions": [],
     "channel": "physical-damage",
     "confidence": "confirmed",
     "conflicts": [
@@ -57535,12 +57681,18 @@
     ],
     "damageScope": null,
     "effects": [
+      "Timing: Start of combat.",
+      "Duration: until end of combat.",
+      "Enemy selector: all enemies.",
+      "Enemy target count: 3.",
+      "All three enemy slots are covered.",
+      "Enemy identities remain unresolved because the enemy formation is unavailable.",
       "Enemy Strength decrease 13% at effective Habit Level 5.",
       "Enemy Physical Damage Dealt reduction follows from enemy Strength reduction."
     ],
     "exactResultKnown": false,
-    "exactResultUnknownReason": "Exact final reduced enemy damage cannot be calculated because target selection, uptime, stacking, and final formulas are unresolved.",
-    "explanation": "Kalspire's Battle Cunning can reduce enemy Strength, which reduces Physical Damage Dealt. Enemy target selection is tracked as an enemy-side candidate group, not a named friendly recipient.",
+    "exactResultUnknownReason": "Exact final reduced enemy damage cannot be calculated because the final combat formula is not fully verified.",
+    "explanation": "Kalspire's Battle Cunning can reduce enemy Strength, which reduces Physical Damage Dealt. All three enemy slots are covered by Kalspire's Battle Cunning. Timing: Start of combat. Duration: until end of combat.",
     "id": "enemy-damage-dealt-reduction-kalspire-battle-cunning-battle-cunning-strength-down-stat-dealt-modifier",
     "interactionScope": "enemy-side",
     "matchedOutputCapabilityIds": [],
@@ -57588,14 +57740,11 @@
     "targetSelectionGroup": null,
     "title": "Enemy Physical Damage Dealt reduction",
     "unresolvedQuestions": [
-      "Enemy identities, combat availability, final uptime, and stacking/refresh behavior remain unresolved."
+      "Enemy identities remain unnamed because the enemy formation is unavailable."
     ]
   },
   {
-    "assumptions": [
-      "Enemy identities and combat availability are unresolved.",
-      "Activation chance and uptime are not treated as guaranteed."
-    ],
+    "assumptions": [],
     "channel": "fire-damage",
     "confidence": "confirmed",
     "conflicts": [
@@ -57604,12 +57753,18 @@
     ],
     "damageScope": null,
     "effects": [
+      "Timing: Start of combat.",
+      "Duration: until end of combat.",
+      "Enemy selector: all enemies.",
+      "Enemy target count: 3.",
+      "All three enemy slots are covered.",
+      "Enemy identities remain unresolved because the enemy formation is unavailable.",
       "Enemy Intelligence decrease 13% at effective Habit Level 5.",
       "Enemy Fire Damage Dealt reduction follows from enemy Intelligence reduction."
     ],
     "exactResultKnown": false,
-    "exactResultUnknownReason": "Exact final reduced enemy damage cannot be calculated because target selection, uptime, stacking, and final formulas are unresolved.",
-    "explanation": "Kalspire's Battle Cunning can reduce enemy Intelligence, which reduces Fire Damage Dealt. Enemy target selection is tracked as an enemy-side candidate group, not a named friendly recipient.",
+    "exactResultUnknownReason": "Exact final reduced enemy damage cannot be calculated because the final combat formula is not fully verified.",
+    "explanation": "Kalspire's Battle Cunning can reduce enemy Intelligence, which reduces Fire Damage Dealt. All three enemy slots are covered by Kalspire's Battle Cunning. Timing: Start of combat. Duration: until end of combat.",
     "id": "enemy-damage-dealt-reduction-kalspire-battle-cunning-battle-cunning-intelligence-down-stat-dealt-modifier",
     "interactionScope": "enemy-side",
     "matchedOutputCapabilityIds": [],
@@ -57657,13 +57812,12 @@
     "targetSelectionGroup": null,
     "title": "Enemy Fire Damage Dealt reduction",
     "unresolvedQuestions": [
-      "Enemy identities, combat availability, final uptime, and stacking/refresh behavior remain unresolved."
+      "Enemy identities remain unnamed because the enemy formation is unavailable."
     ]
   },
   {
     "assumptions": [
-      "Enemy target selection is not resolved because enemy Strength values and tie resolution are unavailable.",
-      "Activation chance and uptime are not treated as guaranteed."
+      "Enemy target selection is not resolved because enemy Strength values and tie resolution are unavailable."
     ],
     "channel": "physical-damage",
     "confidence": "confirmed",
@@ -57673,13 +57827,16 @@
     ],
     "damageScope": null,
     "effects": [
+      "Timing: Start of Round 2.",
+      "Duration: 5 rounds.",
+      "Enemy target count: 1.",
+      "Enemy identities remain unresolved because the enemy formation is unavailable.",
       "Physical Damage Dealt decrease 25% at effective Habit Level 5.",
-      "Physical Damage reduction applies to non-Basic Attacks only.",
-      "Duration: 5 rounds."
+      "Physical Damage reduction applies to non-Basic Attacks only."
     ],
     "exactResultKnown": false,
-    "exactResultUnknownReason": "Exact final reduced enemy damage cannot be calculated because target selection, uptime, stacking, and final formulas are unresolved.",
-    "explanation": "Kalspire's Radiant Conqueror can reduce enemy Physical Damage Dealt. Enemy target selection is tracked as an enemy-side candidate group, not a named friendly recipient.",
+    "exactResultUnknownReason": "Exact final reduced enemy damage cannot be calculated because enemy Strength tie resolution and final combat formula are unresolved.",
+    "explanation": "Kalspire's Radiant Conqueror can reduce enemy Physical Damage Dealt. Enemy target selection is tracked as an enemy-side candidate group, not a named friendly recipient. Timing: Start of Round 2. Duration: 5 rounds.",
     "id": "enemy-damage-dealt-reduction-kalspire-radiant-conqueror-radiant-conqueror-physical-down-physical-damage-dealt-modifier",
     "interactionScope": "enemy-side",
     "matchedOutputCapabilityIds": [],
@@ -57727,13 +57884,12 @@
     "targetSelectionGroup": null,
     "title": "Enemy non-Basic Physical Damage Dealt reduction",
     "unresolvedQuestions": [
-      "Highest-Strength enemy identity, tie resolution, final uptime, and stacking/refresh behavior remain unresolved."
+      "Highest-Strength enemy identity, tie resolution, and final combat formula remain unresolved."
     ]
   },
   {
     "assumptions": [
-      "Enemy target selection is not resolved because enemy Intelligence values and tie resolution are unavailable.",
-      "Activation chance and uptime are not treated as guaranteed."
+      "Enemy target selection is not resolved because enemy Intelligence values and tie resolution are unavailable."
     ],
     "channel": "fire-damage",
     "confidence": "confirmed",
@@ -57743,12 +57899,15 @@
     ],
     "damageScope": null,
     "effects": [
-      "Fire Damage Dealt decrease 25% at effective Habit Level 5.",
-      "Duration: 5 rounds."
+      "Timing: Start of Round 2.",
+      "Duration: 5 rounds.",
+      "Enemy target count: 1.",
+      "Enemy identities remain unresolved because the enemy formation is unavailable.",
+      "Fire Damage Dealt decrease 25% at effective Habit Level 5."
     ],
     "exactResultKnown": false,
-    "exactResultUnknownReason": "Exact final reduced enemy damage cannot be calculated because target selection, uptime, stacking, and final formulas are unresolved.",
-    "explanation": "Kalspire's Radiant Conqueror can reduce enemy Fire Damage Dealt. Enemy target selection is tracked as an enemy-side candidate group, not a named friendly recipient.",
+    "exactResultUnknownReason": "Exact final reduced enemy damage cannot be calculated because enemy Intelligence tie resolution and final combat formula are unresolved.",
+    "explanation": "Kalspire's Radiant Conqueror can reduce enemy Fire Damage Dealt. Enemy target selection is tracked as an enemy-side candidate group, not a named friendly recipient. Timing: Start of Round 2. Duration: 5 rounds.",
     "id": "enemy-damage-dealt-reduction-kalspire-radiant-conqueror-radiant-conqueror-fire-down-fire-damage-dealt-modifier",
     "interactionScope": "enemy-side",
     "matchedOutputCapabilityIds": [],
@@ -57796,13 +57955,12 @@
     "targetSelectionGroup": null,
     "title": "Enemy Fire Damage Dealt reduction",
     "unresolvedQuestions": [
-      "Highest-Intelligence enemy identity, tie resolution, final uptime, and stacking/refresh behavior remain unresolved."
+      "Highest-Intelligence enemy identity, tie resolution, and final combat formula remain unresolved."
     ]
   },
   {
     "assumptions": [
-      "Enemy identities and combat availability are unresolved.",
-      "Activation chance and uptime are not treated as guaranteed."
+      "Enemy identities are unresolved because the enemy formation is unavailable."
     ],
     "channel": "fire-damage",
     "confidence": "confirmed",
@@ -57812,12 +57970,16 @@
     ],
     "damageScope": null,
     "effects": [
+      "Timing: Start of combat.",
+      "Enemy target count: 1.",
+      "Fallback target: another eligible enemy; fallback selection is not guaranteed.",
+      "Enemy identities remain unresolved because the enemy formation is unavailable.",
       "Enemy Intelligence decrease 60% at effective Habit Level 5.",
       "Enemy Fire Damage Dealt reduction follows from enemy Intelligence reduction."
     ],
     "exactResultKnown": false,
-    "exactResultUnknownReason": "Exact final reduced enemy damage cannot be calculated because target selection, uptime, stacking, and final formulas are unresolved.",
-    "explanation": "Venator's Hunter's Bane can reduce enemy Intelligence, which reduces Fire Damage Dealt. Enemy target selection is tracked as an enemy-side candidate group, not a named friendly recipient.",
+    "exactResultUnknownReason": "Exact final reduced enemy damage cannot be calculated because target identity, overlap, and final combat formulas are unresolved.",
+    "explanation": "Venator's Hunter's Bane can reduce enemy Intelligence, which reduces Fire Damage Dealt. Enemy target selection is tracked as an enemy-side candidate group, not a named friendly recipient. Timing: Start of combat.",
     "id": "enemy-damage-dealt-reduction-venator-hunters-bane-hunters-bane-intelligence-down-stat-dealt-modifier",
     "interactionScope": "enemy-side",
     "matchedOutputCapabilityIds": [],
@@ -57865,7 +58027,7 @@
     "targetSelectionGroup": null,
     "title": "Enemy Fire Damage Dealt reduction",
     "unresolvedQuestions": [
-      "Enemy identities, combat availability, final uptime, and stacking/refresh behavior remain unresolved."
+      "Enemy identities and final combat formula remain unresolved."
     ]
   },
   {
@@ -60198,9 +60360,7 @@
     ]
   },
   {
-    "assumptions": [
-      "Enemy target overlap is not simulated."
-    ],
+    "assumptions": [],
     "channel": "fire-damage",
     "confidence": "confirmed",
     "conflicts": [
@@ -60209,12 +60369,17 @@
     ],
     "damageScope": null,
     "effects": [
-      "Enemy Initiative reduction may improve Fire Damage outputs: Bloodscale Terror: Fire Damage.",
+      "Duration: until end of combat.",
+      "Enemy selector: all enemies.",
+      "Enemy target count: 3.",
+      "All three enemy slots are covered.",
+      "Enemy identities remain unresolved because the enemy formation is unavailable.",
+      "Enemy Initiative reduction may improve Fire Damage outputs: Bloodscale Terror: Fire Damage. Enemy Initiative -6.5%.",
       "Applies to all qualifying Fire Damage sources."
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final value cannot be calculated because final combat formulas and stacking order are not fully verified.",
-    "explanation": "Caraxes's Battle Dread can reduce enemy Initiative. Crimson's Fire Damage outputs are mitigated by that stat.",
+    "explanation": "Caraxes's Battle Dread can reduce enemy Initiative. Enemy Initiative reduction is -6.5%. Crimson's Fire Damage outputs are mitigated by that stat. Duration: until end of combat.",
     "id": "enemy-mitigation-caraxes-battle-dread-battle-dread-initiative-down-stat-dealt-modifier-crimson-initiative",
     "interactionScope": "cross-dragon",
     "matchedOutputCapabilityIds": [
@@ -60262,17 +60427,15 @@
     "sourceEvidenceIds": [
       "caraxes-battle-dread-2026-06-24"
     ],
-    "status": "potential",
+    "status": "inactive",
     "targetSelectionGroup": null,
     "title": "Fire Damage Mitigation Reduction",
     "unresolvedQuestions": [
-      "Exact enemy-formation targeting and final mitigation formula are unknown."
+      "Enemy identities remain unnamed because the enemy formation is unavailable."
     ]
   },
   {
-    "assumptions": [
-      "Enemy target overlap is not simulated."
-    ],
+    "assumptions": [],
     "channel": "fire-damage",
     "confidence": "confirmed",
     "conflicts": [
@@ -60283,12 +60446,17 @@
     ],
     "damageScope": null,
     "effects": [
-      "Enemy Initiative reduction may improve Fire Damage outputs: Infernal Burst: Fire Damage, Crippling Inferno: Burn periodic Fire Damage.",
+      "Duration: until end of combat.",
+      "Enemy selector: all enemies.",
+      "Enemy target count: 3.",
+      "All three enemy slots are covered.",
+      "Enemy identities remain unresolved because the enemy formation is unavailable.",
+      "Enemy Initiative reduction may improve Fire Damage outputs: Infernal Burst: Fire Damage, Crippling Inferno: Burn periodic Fire Damage. Enemy Initiative -6.5%.",
       "Applies to all qualifying Fire Damage sources."
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final value cannot be calculated because final combat formulas and stacking order are not fully verified.",
-    "explanation": "Caraxes's Battle Dread can reduce enemy Initiative. Caraxes's Fire Damage outputs are mitigated by that stat.",
+    "explanation": "Caraxes's Battle Dread can reduce enemy Initiative. Enemy Initiative reduction is -6.5%. Caraxes's Fire Damage outputs are mitigated by that stat. Duration: until end of combat.",
     "id": "enemy-mitigation-caraxes-battle-dread-battle-dread-initiative-down-stat-dealt-modifier-caraxes-initiative",
     "interactionScope": "internal",
     "matchedOutputCapabilityIds": [
@@ -60362,16 +60530,16 @@
     "sourceEvidenceIds": [
       "caraxes-battle-dread-2026-06-24"
     ],
-    "status": "potential",
+    "status": "inactive",
     "targetSelectionGroup": null,
     "title": "Fire Damage Mitigation Reduction",
     "unresolvedQuestions": [
-      "Exact enemy-formation targeting and final mitigation formula are unknown."
+      "Enemy identities remain unnamed because the enemy formation is unavailable."
     ]
   },
   {
     "assumptions": [
-      "Enemy target overlap is not simulated."
+      "Enemy target selection is not resolved because enemy Instinct values and tie resolution are unavailable."
     ],
     "channel": "physical-damage",
     "confidence": "confirmed",
@@ -60383,13 +60551,17 @@
     ],
     "damageScope": null,
     "effects": [
-      "Enemy Instinct reduction may improve Physical Damage outputs: Fiery Bonds: Physical Damage, Skyward Titan: Physical Damage.",
-      "Applies to all qualifying Physical Damage sources.",
-      "Duration: 2 rounds."
+      "Timing: Even-numbered rounds.",
+      "Duration: 2 rounds.",
+      "Enemy target count: 1.",
+      "Selected-target group: vermins-bane-highest-instinct-enemy.",
+      "Enemy identities remain unresolved because the enemy formation is unavailable.",
+      "Enemy Instinct reduction may improve Physical Damage outputs: Fiery Bonds: Physical Damage, Skyward Titan: Physical Damage. Enemy Instinct -12%.",
+      "Applies to all qualifying Physical Damage sources."
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final value cannot be calculated because final combat formulas and stacking order are not fully verified.",
-    "explanation": "Crimson's Vermin's Bane can reduce enemy Instinct. Vhagar's Physical Damage outputs are mitigated by that stat.",
+    "explanation": "Crimson's Vermin's Bane can reduce enemy Instinct. Enemy Instinct reduction is -12%. Vhagar's Physical Damage outputs are mitigated by that stat. Timing: Even-numbered rounds. Duration: 2 rounds.",
     "id": "enemy-mitigation-crimson-vermins-bane-vermins-bane-instinct-down-stat-dealt-modifier-vhagar-instinct",
     "interactionScope": "cross-dragon",
     "matchedOutputCapabilityIds": [
@@ -60467,12 +60639,12 @@
     "targetSelectionGroup": null,
     "title": "Physical Damage Mitigation Reduction",
     "unresolvedQuestions": [
-      "Exact enemy-formation targeting and final mitigation formula are unknown."
+      "Highest-Instinct enemy identity, tie resolution, and final mitigation formula remain unresolved."
     ]
   },
   {
     "assumptions": [
-      "Enemy target overlap is not simulated."
+      "Enemy target selection is not resolved because enemy Instinct values and tie resolution are unavailable."
     ],
     "channel": "fire-damage",
     "confidence": "confirmed",
@@ -60482,13 +60654,17 @@
     ],
     "damageScope": null,
     "effects": [
-      "Enemy Initiative reduction may improve Fire Damage outputs: Bloodscale Terror: Fire Damage.",
-      "Applies to all qualifying Fire Damage sources.",
-      "Duration: 2 rounds."
+      "Timing: Even-numbered rounds.",
+      "Duration: 2 rounds.",
+      "Enemy target count: 1.",
+      "Selected-target group: vermins-bane-highest-instinct-enemy.",
+      "Enemy identities remain unresolved because the enemy formation is unavailable.",
+      "Enemy Initiative reduction may improve Fire Damage outputs: Bloodscale Terror: Fire Damage. Enemy Initiative -12%.",
+      "Applies to all qualifying Fire Damage sources."
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final value cannot be calculated because final combat formulas and stacking order are not fully verified.",
-    "explanation": "Crimson's Vermin's Bane can reduce enemy Initiative. Crimson's Fire Damage outputs are mitigated by that stat.",
+    "explanation": "Crimson's Vermin's Bane can reduce enemy Initiative. Enemy Initiative reduction is -12%. Crimson's Fire Damage outputs are mitigated by that stat. Timing: Even-numbered rounds. Duration: 2 rounds.",
     "id": "enemy-mitigation-crimson-vermins-bane-vermins-bane-initiative-down-stat-dealt-modifier-crimson-initiative",
     "interactionScope": "internal",
     "matchedOutputCapabilityIds": [
@@ -60540,12 +60716,12 @@
     "targetSelectionGroup": null,
     "title": "Fire Damage Mitigation Reduction",
     "unresolvedQuestions": [
-      "Exact enemy-formation targeting and final mitigation formula are unknown."
+      "Highest-Instinct enemy identity, tie resolution, and final mitigation formula remain unresolved."
     ]
   },
   {
     "assumptions": [
-      "Enemy target overlap is not simulated."
+      "Enemy target selection is not resolved because enemy Instinct values and tie resolution are unavailable."
     ],
     "channel": "fire-damage",
     "confidence": "confirmed",
@@ -60557,13 +60733,17 @@
     ],
     "damageScope": null,
     "effects": [
-      "Enemy Initiative reduction may improve Fire Damage outputs: Infernal Burst: Fire Damage, Crippling Inferno: Burn periodic Fire Damage.",
-      "Applies to all qualifying Fire Damage sources.",
-      "Duration: 2 rounds."
+      "Timing: Even-numbered rounds.",
+      "Duration: 2 rounds.",
+      "Enemy target count: 1.",
+      "Selected-target group: vermins-bane-highest-instinct-enemy.",
+      "Enemy identities remain unresolved because the enemy formation is unavailable.",
+      "Enemy Initiative reduction may improve Fire Damage outputs: Infernal Burst: Fire Damage, Crippling Inferno: Burn periodic Fire Damage. Enemy Initiative -12%.",
+      "Applies to all qualifying Fire Damage sources."
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final value cannot be calculated because final combat formulas and stacking order are not fully verified.",
-    "explanation": "Crimson's Vermin's Bane can reduce enemy Initiative. Caraxes's Fire Damage outputs are mitigated by that stat.",
+    "explanation": "Crimson's Vermin's Bane can reduce enemy Initiative. Enemy Initiative reduction is -12%. Caraxes's Fire Damage outputs are mitigated by that stat. Timing: Even-numbered rounds. Duration: 2 rounds.",
     "id": "enemy-mitigation-crimson-vermins-bane-vermins-bane-initiative-down-stat-dealt-modifier-caraxes-initiative",
     "interactionScope": "cross-dragon",
     "matchedOutputCapabilityIds": [
@@ -60641,13 +60821,12 @@
     "targetSelectionGroup": null,
     "title": "Fire Damage Mitigation Reduction",
     "unresolvedQuestions": [
-      "Exact enemy-formation targeting and final mitigation formula are unknown."
+      "Highest-Instinct enemy identity, tie resolution, and final mitigation formula remain unresolved."
     ]
   },
   {
     "assumptions": [
-      "Enemy target selection is not resolved because enemy formation members and current troop values are unavailable.",
-      "Activation chance and uptime are not treated as guaranteed."
+      "Enemy target selection is not resolved because enemy formation members and current troop values are unavailable."
     ],
     "channel": "damage-dealt",
     "confidence": "confirmed",
@@ -60657,12 +60836,16 @@
     ],
     "damageScope": null,
     "effects": [
-      "Damage Dealt decrease 20%.",
-      "Duration: 2 rounds."
+      "Timing: Rounds 3 through 7.",
+      "Duration: 2 rounds.",
+      "Enemy target count: 1.",
+      "Selected-target group: eclipse-cover-shared-roll.",
+      "Enemy identities remain unresolved because the enemy formation is unavailable.",
+      "Damage Dealt decrease 20%."
     ],
     "exactResultKnown": false,
-    "exactResultUnknownReason": "Exact final reduced enemy damage cannot be calculated because target selection, uptime, stacking, and final formulas are unresolved.",
-    "explanation": "Vhagar's Eclipse Cover can reduce enemy Damage Dealt. Enemy target selection is tracked as an enemy-side candidate group, not a named friendly recipient.",
+    "exactResultUnknownReason": "Exact final reduced enemy damage cannot be calculated because target identity, overlap, and final combat formulas are unresolved.",
+    "explanation": "Vhagar's Eclipse Cover can reduce enemy Damage Dealt. Enemy target selection is tracked as an enemy-side candidate group, not a named friendly recipient. Timing: Rounds 3 through 7. Duration: 2 rounds.",
     "id": "enemy-damage-dealt-reduction-vhagar-eclipse-cover-eclipse-cover-weakened-weakened-damage-dealt-status-modifier",
     "interactionScope": "enemy-side",
     "matchedOutputCapabilityIds": [],
@@ -60710,14 +60893,11 @@
     "targetSelectionGroup": null,
     "title": "Damage Dealt Enemy Reduction",
     "unresolvedQuestions": [
-      "Enemy-side current-troop values, tie resolution, final uptime, and stacking/refresh behavior remain unresolved."
+      "Enemy-side current-troop values and tie resolution remain unresolved."
     ]
   },
   {
-    "assumptions": [
-      "Enemy identities and combat availability are unresolved.",
-      "Activation chance and uptime are not treated as guaranteed."
-    ],
+    "assumptions": [],
     "channel": "physical-damage",
     "confidence": "confirmed",
     "conflicts": [
@@ -60726,12 +60906,17 @@
     ],
     "damageScope": null,
     "effects": [
+      "Duration: until end of combat.",
+      "Enemy selector: all enemies.",
+      "Enemy target count: 3.",
+      "All three enemy slots are covered.",
+      "Enemy identities remain unresolved because the enemy formation is unavailable.",
       "Enemy Strength decrease 13% at effective Habit Level 5.",
       "Enemy Physical Damage Dealt reduction follows from enemy Strength reduction."
     ],
     "exactResultKnown": false,
-    "exactResultUnknownReason": "Exact final reduced enemy damage cannot be calculated because target selection, uptime, stacking, and final formulas are unresolved.",
-    "explanation": "Caraxes's Battle Dread can reduce enemy Strength, which reduces Physical Damage Dealt. Enemy target selection is tracked as an enemy-side candidate group, not a named friendly recipient.",
+    "exactResultUnknownReason": "Exact final reduced enemy damage cannot be calculated because the final combat formula is not fully verified.",
+    "explanation": "Caraxes's Battle Dread can reduce enemy Strength, which reduces Physical Damage Dealt. All three enemy slots are covered by Caraxes's Battle Dread. Duration: until end of combat.",
     "id": "enemy-damage-dealt-reduction-caraxes-battle-dread-battle-dread-strength-down-stat-dealt-modifier",
     "interactionScope": "enemy-side",
     "matchedOutputCapabilityIds": [],
@@ -60779,14 +60964,11 @@
     "targetSelectionGroup": null,
     "title": "Enemy Physical Damage Dealt reduction",
     "unresolvedQuestions": [
-      "Enemy identities, combat availability, final uptime, and stacking/refresh behavior remain unresolved."
+      "Enemy identities remain unnamed because the enemy formation is unavailable."
     ]
   },
   {
-    "assumptions": [
-      "Enemy identities and combat availability are unresolved.",
-      "Activation chance and uptime are not treated as guaranteed."
-    ],
+    "assumptions": [],
     "channel": "stat",
     "confidence": "confirmed",
     "conflicts": [
@@ -60795,11 +60977,16 @@
     ],
     "damageScope": null,
     "effects": [
+      "Duration: until end of combat.",
+      "Enemy selector: all enemies.",
+      "Enemy target count: 3.",
+      "All three enemy slots are covered.",
+      "Enemy identities remain unresolved because the enemy formation is unavailable.",
       "Enemy Initiative decrease 13% at effective Habit Level 5."
     ],
     "exactResultKnown": false,
-    "exactResultUnknownReason": "Exact final reduced enemy damage cannot be calculated because target selection, uptime, stacking, and final formulas are unresolved.",
-    "explanation": "Caraxes's Battle Dread can reduce enemy Initiative. Enemy target selection is tracked as an enemy-side candidate group, not a named friendly recipient.",
+    "exactResultUnknownReason": "Exact final reduced enemy damage cannot be calculated because the final combat formula is not fully verified.",
+    "explanation": "Caraxes's Battle Dread can reduce enemy Initiative. All three enemy slots are covered by Caraxes's Battle Dread. Duration: until end of combat.",
     "id": "enemy-damage-dealt-reduction-caraxes-battle-dread-battle-dread-initiative-down-stat-dealt-modifier",
     "interactionScope": "enemy-side",
     "matchedOutputCapabilityIds": [],
@@ -60847,14 +61034,11 @@
     "targetSelectionGroup": null,
     "title": "Enemy Initiative reduction",
     "unresolvedQuestions": [
-      "Enemy identities, combat availability, final uptime, and stacking/refresh behavior remain unresolved."
+      "Enemy identities remain unnamed because the enemy formation is unavailable."
     ]
   },
   {
-    "assumptions": [
-      "Enemy identities and combat availability are unresolved.",
-      "Activation chance and uptime are not treated as guaranteed."
-    ],
+    "assumptions": [],
     "channel": "physical-damage",
     "confidence": "confirmed",
     "conflicts": [
@@ -60863,12 +61047,17 @@
     ],
     "damageScope": null,
     "effects": [
+      "Duration: until end of combat.",
+      "Enemy selector: all enemies.",
+      "Enemy target count: 3.",
+      "All three enemy slots are covered.",
+      "Enemy identities remain unresolved because the enemy formation is unavailable.",
       "Physical Damage Dealt decrease 11% at effective Habit Level 5.",
       "Physical Damage reduction applies to non-Basic Attacks only."
     ],
     "exactResultKnown": false,
-    "exactResultUnknownReason": "Exact final reduced enemy damage cannot be calculated because target selection, uptime, stacking, and final formulas are unresolved.",
-    "explanation": "Caraxes's Mass Enfeeble can reduce enemy Physical Damage Dealt. Enemy target selection is tracked as an enemy-side candidate group, not a named friendly recipient.",
+    "exactResultUnknownReason": "Exact final reduced enemy damage cannot be calculated because the final combat formula is not fully verified.",
+    "explanation": "Caraxes's Mass Enfeeble can reduce enemy Physical Damage Dealt. All three enemy slots are covered by Caraxes's Mass Enfeeble. Duration: until end of combat.",
     "id": "enemy-damage-dealt-reduction-caraxes-mass-enfeeble-mass-enfeeble-physical-down-physical-damage-dealt-modifier",
     "interactionScope": "enemy-side",
     "matchedOutputCapabilityIds": [],
@@ -60916,13 +61105,12 @@
     "targetSelectionGroup": null,
     "title": "Enemy non-Basic Physical Damage Dealt reduction",
     "unresolvedQuestions": [
-      "Enemy identities, combat availability, final uptime, and stacking/refresh behavior remain unresolved."
+      "Enemy identities remain unnamed because the enemy formation is unavailable."
     ]
   },
   {
     "assumptions": [
-      "Enemy identities and combat availability are unresolved.",
-      "Activation chance and uptime are not treated as guaranteed."
+      "Enemy identities are unresolved because the enemy formation is unavailable."
     ],
     "channel": "tactical-damage",
     "confidence": "confirmed",
@@ -60932,11 +61120,15 @@
     ],
     "damageScope": null,
     "effects": [
+      "Timing: Start of combat.",
+      "Duration: until end of combat.",
+      "Enemy target count: 1.",
+      "Enemy identities remain unresolved because the enemy formation is unavailable.",
       "Tactical Damage Dealt decrease 27% at effective Habit Level 5."
     ],
     "exactResultKnown": false,
-    "exactResultUnknownReason": "Exact final reduced enemy damage cannot be calculated because target selection, uptime, stacking, and final formulas are unresolved.",
-    "explanation": "Crimson's Enervate can reduce enemy Tactical Damage Dealt. Enemy target selection is tracked as an enemy-side candidate group, not a named friendly recipient.",
+    "exactResultUnknownReason": "Exact final reduced enemy damage cannot be calculated because target identity, overlap, and final combat formulas are unresolved.",
+    "explanation": "Crimson's Enervate can reduce enemy Tactical Damage Dealt. Enemy target selection is tracked as an enemy-side candidate group, not a named friendly recipient. Timing: Start of combat. Duration: until end of combat.",
     "id": "enemy-damage-dealt-reduction-crimson-enervate-enervate-tactical-down-tactical-damage-dealt-modifier",
     "interactionScope": "enemy-side",
     "matchedOutputCapabilityIds": [],
@@ -60984,13 +61176,12 @@
     "targetSelectionGroup": null,
     "title": "Enemy Tactical Damage Dealt reduction",
     "unresolvedQuestions": [
-      "Enemy identities, combat availability, final uptime, and stacking/refresh behavior remain unresolved."
+      "Enemy identities and final combat formula remain unresolved."
     ]
   },
   {
     "assumptions": [
-      "Enemy identities and combat availability are unresolved.",
-      "Activation chance and uptime are not treated as guaranteed."
+      "Enemy identities are unresolved because the enemy formation is unavailable."
     ],
     "channel": "damage-dealt",
     "confidence": "confirmed",
@@ -61000,12 +61191,16 @@
     ],
     "damageScope": null,
     "effects": [
-      "Damage Dealt decrease 20%.",
-      "Duration: 2 rounds."
+      "Timing: Each round.",
+      "Duration: 2 rounds.",
+      "Enemy target count: 1.",
+      "Fallback target: another eligible enemy; fallback selection is not guaranteed.",
+      "Enemy identities remain unresolved because the enemy formation is unavailable.",
+      "Damage Dealt decrease 20%."
     ],
     "exactResultKnown": false,
-    "exactResultUnknownReason": "Exact final reduced enemy damage cannot be calculated because target selection, uptime, stacking, and final formulas are unresolved.",
-    "explanation": "Crimson's Bloodscale Fury can reduce enemy Damage Dealt. Enemy target selection is tracked as an enemy-side candidate group, not a named friendly recipient.",
+    "exactResultUnknownReason": "Exact final reduced enemy damage cannot be calculated because target identity, overlap, and final combat formulas are unresolved.",
+    "explanation": "Crimson's Bloodscale Fury can reduce enemy Damage Dealt. Enemy target selection is tracked as an enemy-side candidate group, not a named friendly recipient. Timing: Each round. Duration: 2 rounds.",
     "id": "enemy-damage-dealt-reduction-crimson-bloodscale-fury-bloodscale-fury-weakened-weakened-damage-dealt-status-modifier",
     "interactionScope": "enemy-side",
     "matchedOutputCapabilityIds": [],
@@ -61053,13 +61248,12 @@
     "targetSelectionGroup": null,
     "title": "Damage Dealt Enemy Reduction",
     "unresolvedQuestions": [
-      "Enemy identities, combat availability, final uptime, and stacking/refresh behavior remain unresolved."
+      "Enemy identities and final combat formula remain unresolved."
     ]
   },
   {
     "assumptions": [
-      "Enemy target selection is not resolved because enemy Instinct values and tie resolution are unavailable.",
-      "Activation chance and uptime are not treated as guaranteed."
+      "Enemy target selection is not resolved because enemy Instinct values and tie resolution are unavailable."
     ],
     "channel": "tactical-damage",
     "confidence": "confirmed",
@@ -61069,13 +61263,17 @@
     ],
     "damageScope": null,
     "effects": [
+      "Timing: Even-numbered rounds.",
+      "Duration: 2 rounds.",
+      "Enemy target count: 1.",
+      "Selected-target group: vermins-bane-highest-instinct-enemy.",
+      "Enemy identities remain unresolved because the enemy formation is unavailable.",
       "Enemy Instinct decrease 30% at effective Habit Level 5.",
-      "Enemy Tactical Damage Dealt reduction follows from enemy Instinct reduction.",
-      "Duration: 2 rounds."
+      "Enemy Tactical Damage Dealt reduction follows from enemy Instinct reduction."
     ],
     "exactResultKnown": false,
-    "exactResultUnknownReason": "Exact final reduced enemy damage cannot be calculated because target selection, uptime, stacking, and final formulas are unresolved.",
-    "explanation": "Crimson's Vermin's Bane can reduce enemy Instinct, which reduces Tactical Damage Dealt. Enemy target selection is tracked as an enemy-side candidate group, not a named friendly recipient.",
+    "exactResultUnknownReason": "Exact final reduced enemy damage cannot be calculated because enemy Instinct tie resolution and final combat formula are unresolved.",
+    "explanation": "Crimson's Vermin's Bane can reduce enemy Instinct, which reduces Tactical Damage Dealt. Enemy target selection is tracked as an enemy-side candidate group, not a named friendly recipient. Timing: Even-numbered rounds. Duration: 2 rounds.",
     "id": "enemy-damage-dealt-reduction-crimson-vermins-bane-vermins-bane-instinct-down-stat-dealt-modifier",
     "interactionScope": "enemy-side",
     "matchedOutputCapabilityIds": [],
@@ -61123,13 +61321,12 @@
     "targetSelectionGroup": null,
     "title": "Enemy Tactical Damage Dealt reduction",
     "unresolvedQuestions": [
-      "Highest-Instinct enemy identity, tie resolution, final uptime, and stacking/refresh behavior remain unresolved."
+      "Highest-Instinct enemy identity, tie resolution, and final combat formula remain unresolved."
     ]
   },
   {
     "assumptions": [
-      "Enemy target selection is not resolved because enemy Instinct values and tie resolution are unavailable.",
-      "Activation chance and uptime are not treated as guaranteed."
+      "Enemy target selection is not resolved because enemy Instinct values and tie resolution are unavailable."
     ],
     "channel": "stat",
     "confidence": "confirmed",
@@ -61139,12 +61336,16 @@
     ],
     "damageScope": null,
     "effects": [
-      "Enemy Initiative decrease 30% at effective Habit Level 5.",
-      "Duration: 2 rounds."
+      "Timing: Even-numbered rounds.",
+      "Duration: 2 rounds.",
+      "Enemy target count: 1.",
+      "Selected-target group: vermins-bane-highest-instinct-enemy.",
+      "Enemy identities remain unresolved because the enemy formation is unavailable.",
+      "Enemy Initiative decrease 30% at effective Habit Level 5."
     ],
     "exactResultKnown": false,
-    "exactResultUnknownReason": "Exact final reduced enemy damage cannot be calculated because target selection, uptime, stacking, and final formulas are unresolved.",
-    "explanation": "Crimson's Vermin's Bane can reduce enemy Initiative. Enemy target selection is tracked as an enemy-side candidate group, not a named friendly recipient.",
+    "exactResultUnknownReason": "Exact final reduced enemy damage cannot be calculated because enemy Instinct tie resolution and final combat formula are unresolved.",
+    "explanation": "Crimson's Vermin's Bane can reduce enemy Initiative. Enemy target selection is tracked as an enemy-side candidate group, not a named friendly recipient. Timing: Even-numbered rounds. Duration: 2 rounds.",
     "id": "enemy-damage-dealt-reduction-crimson-vermins-bane-vermins-bane-initiative-down-stat-dealt-modifier",
     "interactionScope": "enemy-side",
     "matchedOutputCapabilityIds": [],
@@ -61192,13 +61393,12 @@
     "targetSelectionGroup": null,
     "title": "Enemy Initiative reduction",
     "unresolvedQuestions": [
-      "Highest-Instinct enemy identity, tie resolution, final uptime, and stacking/refresh behavior remain unresolved."
+      "Highest-Instinct enemy identity, tie resolution, and final combat formula remain unresolved."
     ]
   },
   {
     "assumptions": [
-      "Enemy identities and combat availability are unresolved.",
-      "Enemy state and uptime are not treated as guaranteed."
+      "Enemy identities and combat availability are unresolved."
     ],
     "channel": "recovery",
     "confidence": "confirmed",
@@ -61266,7 +61466,7 @@
     "targetSelectionGroup": null,
     "title": "Recovery Enemy Reduction",
     "unresolvedQuestions": [
-      "Enemy identities, combat availability, final uptime, and stacking/refresh behavior remain unresolved."
+      "Enemy identities and final combat formula remain unresolved."
     ]
   },
   {
@@ -65279,9 +65479,7 @@
     ]
   },
   {
-    "assumptions": [
-      "Enemy target overlap is not simulated."
-    ],
+    "assumptions": [],
     "channel": "tactical-damage",
     "confidence": "confirmed",
     "conflicts": [
@@ -65292,12 +65490,18 @@
     ],
     "damageScope": null,
     "effects": [
-      "Enemy Intelligence reduction may improve Tactical Damage outputs: Tactical Strike: Tactical Damage, Tactical Assault: Panic periodic Tactical Damage.",
+      "Timing: Start of combat.",
+      "Duration: until end of combat.",
+      "Enemy selector: all enemies.",
+      "Enemy target count: 3.",
+      "All three enemy slots are covered.",
+      "Enemy identities remain unresolved because the enemy formation is unavailable.",
+      "Enemy Intelligence reduction may improve Tactical Damage outputs: Tactical Strike: Tactical Damage, Tactical Assault: Panic periodic Tactical Damage. Enemy Intelligence -6.5%.",
       "Applies to all qualifying Tactical Damage sources."
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final value cannot be calculated because final combat formulas and stacking order are not fully verified.",
-    "explanation": "Kalspire's Battle Cunning can reduce enemy Intelligence. Kalspire's Tactical Damage outputs are mitigated by that stat.",
+    "explanation": "Kalspire's Battle Cunning can reduce enemy Intelligence. Enemy Intelligence reduction is -6.5%. Kalspire's Tactical Damage outputs are mitigated by that stat. Timing: Start of combat. Duration: until end of combat.",
     "id": "enemy-mitigation-kalspire-battle-cunning-battle-cunning-intelligence-down-stat-dealt-modifier-kalspire-intelligence",
     "interactionScope": "internal",
     "matchedOutputCapabilityIds": [
@@ -65371,17 +65575,15 @@
     "sourceEvidenceIds": [
       "kalspire-battle-cunning-2026-06-25"
     ],
-    "status": "potential",
+    "status": "inactive",
     "targetSelectionGroup": null,
     "title": "Tactical Damage Mitigation Reduction",
     "unresolvedQuestions": [
-      "Exact enemy-formation targeting and final mitigation formula are unknown."
+      "Enemy identities remain unnamed because the enemy formation is unavailable."
     ]
   },
   {
-    "assumptions": [
-      "Enemy target overlap is not simulated."
-    ],
+    "assumptions": [],
     "channel": "tactical-damage",
     "confidence": "confirmed",
     "conflicts": [
@@ -65390,12 +65592,18 @@
     ],
     "damageScope": null,
     "effects": [
-      "Enemy Intelligence reduction may improve Tactical Damage outputs: Blazing Fury: Tactical Damage.",
+      "Timing: Start of combat.",
+      "Duration: until end of combat.",
+      "Enemy selector: all enemies.",
+      "Enemy target count: 3.",
+      "All three enemy slots are covered.",
+      "Enemy identities remain unresolved because the enemy formation is unavailable.",
+      "Enemy Intelligence reduction may improve Tactical Damage outputs: Blazing Fury: Tactical Damage. Enemy Intelligence -6.5%.",
       "Applies to all qualifying Tactical Damage sources."
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final value cannot be calculated because final combat formulas and stacking order are not fully verified.",
-    "explanation": "Kalspire's Battle Cunning can reduce enemy Intelligence. Syrax's Tactical Damage outputs are mitigated by that stat.",
+    "explanation": "Kalspire's Battle Cunning can reduce enemy Intelligence. Enemy Intelligence reduction is -6.5%. Syrax's Tactical Damage outputs are mitigated by that stat. Timing: Start of combat. Duration: until end of combat.",
     "id": "enemy-mitigation-kalspire-battle-cunning-battle-cunning-intelligence-down-stat-dealt-modifier-syrax-intelligence",
     "interactionScope": "cross-dragon",
     "matchedOutputCapabilityIds": [
@@ -65444,18 +65652,15 @@
     "sourceEvidenceIds": [
       "kalspire-battle-cunning-2026-06-25"
     ],
-    "status": "potential",
+    "status": "inactive",
     "targetSelectionGroup": null,
     "title": "Tactical Damage Mitigation Reduction",
     "unresolvedQuestions": [
-      "Exact enemy-formation targeting and final mitigation formula are unknown."
+      "Enemy identities remain unnamed because the enemy formation is unavailable."
     ]
   },
   {
-    "assumptions": [
-      "Enemy identities and combat availability are unresolved.",
-      "Activation chance and uptime are not treated as guaranteed."
-    ],
+    "assumptions": [],
     "channel": "stat",
     "confidence": "confirmed",
     "conflicts": [
@@ -65464,11 +65669,16 @@
     ],
     "damageScope": null,
     "effects": [
+      "Duration: until end of combat.",
+      "Enemy selector: all enemies.",
+      "Enemy target count: 3.",
+      "All three enemy slots are covered.",
+      "Enemy identities remain unresolved because the enemy formation is unavailable.",
       "Enemy Initiative decrease 12% at effective Habit Level 5."
     ],
     "exactResultKnown": false,
-    "exactResultUnknownReason": "Exact final reduced enemy damage cannot be calculated because target selection, uptime, stacking, and final formulas are unresolved.",
-    "explanation": "Syrax's Flight Mastery can reduce enemy Initiative. Enemy target selection is tracked as an enemy-side candidate group, not a named friendly recipient.",
+    "exactResultUnknownReason": "Exact final reduced enemy damage cannot be calculated because the final combat formula is not fully verified.",
+    "explanation": "Syrax's Flight Mastery can reduce enemy Initiative. All three enemy slots are covered by Syrax's Flight Mastery. Duration: until end of combat.",
     "id": "enemy-damage-dealt-reduction-syrax-flight-mastery-flight-mastery-initiative-down-stat-dealt-modifier",
     "interactionScope": "enemy-side",
     "matchedOutputCapabilityIds": [],
@@ -65516,13 +65726,12 @@
     "targetSelectionGroup": null,
     "title": "Enemy Initiative reduction",
     "unresolvedQuestions": [
-      "Enemy identities, combat availability, final uptime, and stacking/refresh behavior remain unresolved."
+      "Enemy identities remain unnamed because the enemy formation is unavailable."
     ]
   },
   {
     "assumptions": [
-      "Enemy target selection is not resolved because enemy formation members and current troop values are unavailable.",
-      "Activation chance and uptime are not treated as guaranteed."
+      "Enemy target selection is not resolved because enemy formation members and current troop values are unavailable."
     ],
     "channel": "damage-dealt",
     "confidence": "confirmed",
@@ -65532,12 +65741,16 @@
     ],
     "damageScope": null,
     "effects": [
-      "Damage Dealt decrease 20%.",
-      "Duration: 2 rounds."
+      "Timing: Rounds 3 through 7.",
+      "Duration: 2 rounds.",
+      "Enemy target count: 1.",
+      "Selected-target group: eclipse-cover-shared-roll.",
+      "Enemy identities remain unresolved because the enemy formation is unavailable.",
+      "Damage Dealt decrease 20%."
     ],
     "exactResultKnown": false,
-    "exactResultUnknownReason": "Exact final reduced enemy damage cannot be calculated because target selection, uptime, stacking, and final formulas are unresolved.",
-    "explanation": "Vhagar's Eclipse Cover can reduce enemy Damage Dealt. Enemy target selection is tracked as an enemy-side candidate group, not a named friendly recipient.",
+    "exactResultUnknownReason": "Exact final reduced enemy damage cannot be calculated because target identity, overlap, and final combat formulas are unresolved.",
+    "explanation": "Vhagar's Eclipse Cover can reduce enemy Damage Dealt. Enemy target selection is tracked as an enemy-side candidate group, not a named friendly recipient. Timing: Rounds 3 through 7. Duration: 2 rounds.",
     "id": "enemy-damage-dealt-reduction-vhagar-eclipse-cover-eclipse-cover-weakened-weakened-damage-dealt-status-modifier",
     "interactionScope": "enemy-side",
     "matchedOutputCapabilityIds": [],
@@ -65585,14 +65798,11 @@
     "targetSelectionGroup": null,
     "title": "Damage Dealt Enemy Reduction",
     "unresolvedQuestions": [
-      "Enemy-side current-troop values, tie resolution, final uptime, and stacking/refresh behavior remain unresolved."
+      "Enemy-side current-troop values and tie resolution remain unresolved."
     ]
   },
   {
-    "assumptions": [
-      "Enemy identities and combat availability are unresolved.",
-      "Activation chance and uptime are not treated as guaranteed."
-    ],
+    "assumptions": [],
     "channel": "physical-damage",
     "confidence": "confirmed",
     "conflicts": [
@@ -65601,12 +65811,18 @@
     ],
     "damageScope": null,
     "effects": [
+      "Timing: Start of combat.",
+      "Duration: until end of combat.",
+      "Enemy selector: all enemies.",
+      "Enemy target count: 3.",
+      "All three enemy slots are covered.",
+      "Enemy identities remain unresolved because the enemy formation is unavailable.",
       "Enemy Strength decrease 13% at effective Habit Level 5.",
       "Enemy Physical Damage Dealt reduction follows from enemy Strength reduction."
     ],
     "exactResultKnown": false,
-    "exactResultUnknownReason": "Exact final reduced enemy damage cannot be calculated because target selection, uptime, stacking, and final formulas are unresolved.",
-    "explanation": "Kalspire's Battle Cunning can reduce enemy Strength, which reduces Physical Damage Dealt. Enemy target selection is tracked as an enemy-side candidate group, not a named friendly recipient.",
+    "exactResultUnknownReason": "Exact final reduced enemy damage cannot be calculated because the final combat formula is not fully verified.",
+    "explanation": "Kalspire's Battle Cunning can reduce enemy Strength, which reduces Physical Damage Dealt. All three enemy slots are covered by Kalspire's Battle Cunning. Timing: Start of combat. Duration: until end of combat.",
     "id": "enemy-damage-dealt-reduction-kalspire-battle-cunning-battle-cunning-strength-down-stat-dealt-modifier",
     "interactionScope": "enemy-side",
     "matchedOutputCapabilityIds": [],
@@ -65654,14 +65870,11 @@
     "targetSelectionGroup": null,
     "title": "Enemy Physical Damage Dealt reduction",
     "unresolvedQuestions": [
-      "Enemy identities, combat availability, final uptime, and stacking/refresh behavior remain unresolved."
+      "Enemy identities remain unnamed because the enemy formation is unavailable."
     ]
   },
   {
-    "assumptions": [
-      "Enemy identities and combat availability are unresolved.",
-      "Activation chance and uptime are not treated as guaranteed."
-    ],
+    "assumptions": [],
     "channel": "fire-damage",
     "confidence": "confirmed",
     "conflicts": [
@@ -65670,12 +65883,18 @@
     ],
     "damageScope": null,
     "effects": [
+      "Timing: Start of combat.",
+      "Duration: until end of combat.",
+      "Enemy selector: all enemies.",
+      "Enemy target count: 3.",
+      "All three enemy slots are covered.",
+      "Enemy identities remain unresolved because the enemy formation is unavailable.",
       "Enemy Intelligence decrease 13% at effective Habit Level 5.",
       "Enemy Fire Damage Dealt reduction follows from enemy Intelligence reduction."
     ],
     "exactResultKnown": false,
-    "exactResultUnknownReason": "Exact final reduced enemy damage cannot be calculated because target selection, uptime, stacking, and final formulas are unresolved.",
-    "explanation": "Kalspire's Battle Cunning can reduce enemy Intelligence, which reduces Fire Damage Dealt. Enemy target selection is tracked as an enemy-side candidate group, not a named friendly recipient.",
+    "exactResultUnknownReason": "Exact final reduced enemy damage cannot be calculated because the final combat formula is not fully verified.",
+    "explanation": "Kalspire's Battle Cunning can reduce enemy Intelligence, which reduces Fire Damage Dealt. All three enemy slots are covered by Kalspire's Battle Cunning. Timing: Start of combat. Duration: until end of combat.",
     "id": "enemy-damage-dealt-reduction-kalspire-battle-cunning-battle-cunning-intelligence-down-stat-dealt-modifier",
     "interactionScope": "enemy-side",
     "matchedOutputCapabilityIds": [],
@@ -65723,13 +65942,12 @@
     "targetSelectionGroup": null,
     "title": "Enemy Fire Damage Dealt reduction",
     "unresolvedQuestions": [
-      "Enemy identities, combat availability, final uptime, and stacking/refresh behavior remain unresolved."
+      "Enemy identities remain unnamed because the enemy formation is unavailable."
     ]
   },
   {
     "assumptions": [
-      "Enemy target selection is not resolved because enemy Strength values and tie resolution are unavailable.",
-      "Activation chance and uptime are not treated as guaranteed."
+      "Enemy target selection is not resolved because enemy Strength values and tie resolution are unavailable."
     ],
     "channel": "physical-damage",
     "confidence": "confirmed",
@@ -65739,13 +65957,16 @@
     ],
     "damageScope": null,
     "effects": [
+      "Timing: Start of Round 2.",
+      "Duration: 5 rounds.",
+      "Enemy target count: 1.",
+      "Enemy identities remain unresolved because the enemy formation is unavailable.",
       "Physical Damage Dealt decrease 25% at effective Habit Level 5.",
-      "Physical Damage reduction applies to non-Basic Attacks only.",
-      "Duration: 5 rounds."
+      "Physical Damage reduction applies to non-Basic Attacks only."
     ],
     "exactResultKnown": false,
-    "exactResultUnknownReason": "Exact final reduced enemy damage cannot be calculated because target selection, uptime, stacking, and final formulas are unresolved.",
-    "explanation": "Kalspire's Radiant Conqueror can reduce enemy Physical Damage Dealt. Enemy target selection is tracked as an enemy-side candidate group, not a named friendly recipient.",
+    "exactResultUnknownReason": "Exact final reduced enemy damage cannot be calculated because enemy Strength tie resolution and final combat formula are unresolved.",
+    "explanation": "Kalspire's Radiant Conqueror can reduce enemy Physical Damage Dealt. Enemy target selection is tracked as an enemy-side candidate group, not a named friendly recipient. Timing: Start of Round 2. Duration: 5 rounds.",
     "id": "enemy-damage-dealt-reduction-kalspire-radiant-conqueror-radiant-conqueror-physical-down-physical-damage-dealt-modifier",
     "interactionScope": "enemy-side",
     "matchedOutputCapabilityIds": [],
@@ -65793,13 +66014,12 @@
     "targetSelectionGroup": null,
     "title": "Enemy non-Basic Physical Damage Dealt reduction",
     "unresolvedQuestions": [
-      "Highest-Strength enemy identity, tie resolution, final uptime, and stacking/refresh behavior remain unresolved."
+      "Highest-Strength enemy identity, tie resolution, and final combat formula remain unresolved."
     ]
   },
   {
     "assumptions": [
-      "Enemy target selection is not resolved because enemy Intelligence values and tie resolution are unavailable.",
-      "Activation chance and uptime are not treated as guaranteed."
+      "Enemy target selection is not resolved because enemy Intelligence values and tie resolution are unavailable."
     ],
     "channel": "fire-damage",
     "confidence": "confirmed",
@@ -65809,12 +66029,15 @@
     ],
     "damageScope": null,
     "effects": [
-      "Fire Damage Dealt decrease 25% at effective Habit Level 5.",
-      "Duration: 5 rounds."
+      "Timing: Start of Round 2.",
+      "Duration: 5 rounds.",
+      "Enemy target count: 1.",
+      "Enemy identities remain unresolved because the enemy formation is unavailable.",
+      "Fire Damage Dealt decrease 25% at effective Habit Level 5."
     ],
     "exactResultKnown": false,
-    "exactResultUnknownReason": "Exact final reduced enemy damage cannot be calculated because target selection, uptime, stacking, and final formulas are unresolved.",
-    "explanation": "Kalspire's Radiant Conqueror can reduce enemy Fire Damage Dealt. Enemy target selection is tracked as an enemy-side candidate group, not a named friendly recipient.",
+    "exactResultUnknownReason": "Exact final reduced enemy damage cannot be calculated because enemy Intelligence tie resolution and final combat formula are unresolved.",
+    "explanation": "Kalspire's Radiant Conqueror can reduce enemy Fire Damage Dealt. Enemy target selection is tracked as an enemy-side candidate group, not a named friendly recipient. Timing: Start of Round 2. Duration: 5 rounds.",
     "id": "enemy-damage-dealt-reduction-kalspire-radiant-conqueror-radiant-conqueror-fire-down-fire-damage-dealt-modifier",
     "interactionScope": "enemy-side",
     "matchedOutputCapabilityIds": [],
@@ -65862,7 +66085,7 @@
     "targetSelectionGroup": null,
     "title": "Enemy Fire Damage Dealt reduction",
     "unresolvedQuestions": [
-      "Highest-Intelligence enemy identity, tie resolution, final uptime, and stacking/refresh behavior remain unresolved."
+      "Highest-Intelligence enemy identity, tie resolution, and final combat formula remain unresolved."
     ]
   },
   {
@@ -68441,7 +68664,7 @@
   },
   {
     "assumptions": [
-      "Enemy target overlap is not simulated."
+      "Enemy target selection is not resolved because enemy Instinct values and tie resolution are unavailable."
     ],
     "channel": "physical-damage",
     "confidence": "confirmed",
@@ -68455,13 +68678,17 @@
     ],
     "damageScope": null,
     "effects": [
-      "Enemy Instinct reduction may improve Physical Damage outputs: Feral Strike: Physical Damage, Feral Precision: Physical Damage, Desperate Ambush: Physical Damage.",
-      "Applies to all qualifying Physical Damage sources.",
-      "Duration: 2 rounds."
+      "Timing: Even-numbered rounds.",
+      "Duration: 2 rounds.",
+      "Enemy target count: 1.",
+      "Selected-target group: vermins-bane-highest-instinct-enemy.",
+      "Enemy identities remain unresolved because the enemy formation is unavailable.",
+      "Enemy Instinct reduction may improve Physical Damage outputs: Feral Strike: Physical Damage, Feral Precision: Physical Damage, Desperate Ambush: Physical Damage. Enemy Instinct -12%.",
+      "Applies to all qualifying Physical Damage sources."
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final value cannot be calculated because final combat formulas and stacking order are not fully verified.",
-    "explanation": "Crimson's Vermin's Bane can reduce enemy Instinct. Venator's Physical Damage outputs are mitigated by that stat.",
+    "explanation": "Crimson's Vermin's Bane can reduce enemy Instinct. Enemy Instinct reduction is -12%. Venator's Physical Damage outputs are mitigated by that stat. Timing: Even-numbered rounds. Duration: 2 rounds.",
     "id": "enemy-mitigation-crimson-vermins-bane-vermins-bane-instinct-down-stat-dealt-modifier-venator-instinct",
     "interactionScope": "cross-dragon",
     "matchedOutputCapabilityIds": [
@@ -68565,12 +68792,12 @@
     "targetSelectionGroup": null,
     "title": "Physical Damage Mitigation Reduction",
     "unresolvedQuestions": [
-      "Exact enemy-formation targeting and final mitigation formula are unknown."
+      "Highest-Instinct enemy identity, tie resolution, and final mitigation formula remain unresolved."
     ]
   },
   {
     "assumptions": [
-      "Enemy target overlap is not simulated."
+      "Enemy target selection is not resolved because enemy Instinct values and tie resolution are unavailable."
     ],
     "channel": "physical-damage",
     "confidence": "confirmed",
@@ -68582,13 +68809,17 @@
     ],
     "damageScope": null,
     "effects": [
-      "Enemy Instinct reduction may improve Physical Damage outputs: Fiery Bonds: Physical Damage, Skyward Titan: Physical Damage.",
-      "Applies to all qualifying Physical Damage sources.",
-      "Duration: 2 rounds."
+      "Timing: Even-numbered rounds.",
+      "Duration: 2 rounds.",
+      "Enemy target count: 1.",
+      "Selected-target group: vermins-bane-highest-instinct-enemy.",
+      "Enemy identities remain unresolved because the enemy formation is unavailable.",
+      "Enemy Instinct reduction may improve Physical Damage outputs: Fiery Bonds: Physical Damage, Skyward Titan: Physical Damage. Enemy Instinct -12%.",
+      "Applies to all qualifying Physical Damage sources."
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final value cannot be calculated because final combat formulas and stacking order are not fully verified.",
-    "explanation": "Crimson's Vermin's Bane can reduce enemy Instinct. Vhagar's Physical Damage outputs are mitigated by that stat.",
+    "explanation": "Crimson's Vermin's Bane can reduce enemy Instinct. Enemy Instinct reduction is -12%. Vhagar's Physical Damage outputs are mitigated by that stat. Timing: Even-numbered rounds. Duration: 2 rounds.",
     "id": "enemy-mitigation-crimson-vermins-bane-vermins-bane-instinct-down-stat-dealt-modifier-vhagar-instinct",
     "interactionScope": "cross-dragon",
     "matchedOutputCapabilityIds": [
@@ -68666,12 +68897,12 @@
     "targetSelectionGroup": null,
     "title": "Physical Damage Mitigation Reduction",
     "unresolvedQuestions": [
-      "Exact enemy-formation targeting and final mitigation formula are unknown."
+      "Highest-Instinct enemy identity, tie resolution, and final mitigation formula remain unresolved."
     ]
   },
   {
     "assumptions": [
-      "Enemy target overlap is not simulated."
+      "Enemy target selection is not resolved because enemy Instinct values and tie resolution are unavailable."
     ],
     "channel": "fire-damage",
     "confidence": "confirmed",
@@ -68681,13 +68912,17 @@
     ],
     "damageScope": null,
     "effects": [
-      "Enemy Initiative reduction may improve Fire Damage outputs: Bloodscale Terror: Fire Damage.",
-      "Applies to all qualifying Fire Damage sources.",
-      "Duration: 2 rounds."
+      "Timing: Even-numbered rounds.",
+      "Duration: 2 rounds.",
+      "Enemy target count: 1.",
+      "Selected-target group: vermins-bane-highest-instinct-enemy.",
+      "Enemy identities remain unresolved because the enemy formation is unavailable.",
+      "Enemy Initiative reduction may improve Fire Damage outputs: Bloodscale Terror: Fire Damage. Enemy Initiative -12%.",
+      "Applies to all qualifying Fire Damage sources."
     ],
     "exactResultKnown": false,
     "exactResultUnknownReason": "Exact final value cannot be calculated because final combat formulas and stacking order are not fully verified.",
-    "explanation": "Crimson's Vermin's Bane can reduce enemy Initiative. Crimson's Fire Damage outputs are mitigated by that stat.",
+    "explanation": "Crimson's Vermin's Bane can reduce enemy Initiative. Enemy Initiative reduction is -12%. Crimson's Fire Damage outputs are mitigated by that stat. Timing: Even-numbered rounds. Duration: 2 rounds.",
     "id": "enemy-mitigation-crimson-vermins-bane-vermins-bane-initiative-down-stat-dealt-modifier-crimson-initiative",
     "interactionScope": "internal",
     "matchedOutputCapabilityIds": [
@@ -68739,13 +68974,12 @@
     "targetSelectionGroup": null,
     "title": "Fire Damage Mitigation Reduction",
     "unresolvedQuestions": [
-      "Exact enemy-formation targeting and final mitigation formula are unknown."
+      "Highest-Instinct enemy identity, tie resolution, and final mitigation formula remain unresolved."
     ]
   },
   {
     "assumptions": [
-      "Enemy target selection is not resolved because enemy formation members and current troop values are unavailable.",
-      "Activation chance and uptime are not treated as guaranteed."
+      "Enemy target selection is not resolved because enemy formation members and current troop values are unavailable."
     ],
     "channel": "damage-dealt",
     "confidence": "confirmed",
@@ -68755,12 +68989,16 @@
     ],
     "damageScope": null,
     "effects": [
-      "Damage Dealt decrease 20%.",
-      "Duration: 2 rounds."
+      "Timing: Rounds 3 through 7.",
+      "Duration: 2 rounds.",
+      "Enemy target count: 1.",
+      "Selected-target group: eclipse-cover-shared-roll.",
+      "Enemy identities remain unresolved because the enemy formation is unavailable.",
+      "Damage Dealt decrease 20%."
     ],
     "exactResultKnown": false,
-    "exactResultUnknownReason": "Exact final reduced enemy damage cannot be calculated because target selection, uptime, stacking, and final formulas are unresolved.",
-    "explanation": "Vhagar's Eclipse Cover can reduce enemy Damage Dealt. Enemy target selection is tracked as an enemy-side candidate group, not a named friendly recipient.",
+    "exactResultUnknownReason": "Exact final reduced enemy damage cannot be calculated because target identity, overlap, and final combat formulas are unresolved.",
+    "explanation": "Vhagar's Eclipse Cover can reduce enemy Damage Dealt. Enemy target selection is tracked as an enemy-side candidate group, not a named friendly recipient. Timing: Rounds 3 through 7. Duration: 2 rounds.",
     "id": "enemy-damage-dealt-reduction-vhagar-eclipse-cover-eclipse-cover-weakened-weakened-damage-dealt-status-modifier",
     "interactionScope": "enemy-side",
     "matchedOutputCapabilityIds": [],
@@ -68808,13 +69046,12 @@
     "targetSelectionGroup": null,
     "title": "Damage Dealt Enemy Reduction",
     "unresolvedQuestions": [
-      "Enemy-side current-troop values, tie resolution, final uptime, and stacking/refresh behavior remain unresolved."
+      "Enemy-side current-troop values and tie resolution remain unresolved."
     ]
   },
   {
     "assumptions": [
-      "Enemy identities and combat availability are unresolved.",
-      "Activation chance and uptime are not treated as guaranteed."
+      "Enemy identities are unresolved because the enemy formation is unavailable."
     ],
     "channel": "tactical-damage",
     "confidence": "confirmed",
@@ -68824,11 +69061,15 @@
     ],
     "damageScope": null,
     "effects": [
+      "Timing: Start of combat.",
+      "Duration: until end of combat.",
+      "Enemy target count: 1.",
+      "Enemy identities remain unresolved because the enemy formation is unavailable.",
       "Tactical Damage Dealt decrease 27% at effective Habit Level 5."
     ],
     "exactResultKnown": false,
-    "exactResultUnknownReason": "Exact final reduced enemy damage cannot be calculated because target selection, uptime, stacking, and final formulas are unresolved.",
-    "explanation": "Crimson's Enervate can reduce enemy Tactical Damage Dealt. Enemy target selection is tracked as an enemy-side candidate group, not a named friendly recipient.",
+    "exactResultUnknownReason": "Exact final reduced enemy damage cannot be calculated because target identity, overlap, and final combat formulas are unresolved.",
+    "explanation": "Crimson's Enervate can reduce enemy Tactical Damage Dealt. Enemy target selection is tracked as an enemy-side candidate group, not a named friendly recipient. Timing: Start of combat. Duration: until end of combat.",
     "id": "enemy-damage-dealt-reduction-crimson-enervate-enervate-tactical-down-tactical-damage-dealt-modifier",
     "interactionScope": "enemy-side",
     "matchedOutputCapabilityIds": [],
@@ -68876,13 +69117,12 @@
     "targetSelectionGroup": null,
     "title": "Enemy Tactical Damage Dealt reduction",
     "unresolvedQuestions": [
-      "Enemy identities, combat availability, final uptime, and stacking/refresh behavior remain unresolved."
+      "Enemy identities and final combat formula remain unresolved."
     ]
   },
   {
     "assumptions": [
-      "Enemy identities and combat availability are unresolved.",
-      "Activation chance and uptime are not treated as guaranteed."
+      "Enemy identities are unresolved because the enemy formation is unavailable."
     ],
     "channel": "damage-dealt",
     "confidence": "confirmed",
@@ -68892,12 +69132,16 @@
     ],
     "damageScope": null,
     "effects": [
-      "Damage Dealt decrease 20%.",
-      "Duration: 2 rounds."
+      "Timing: Each round.",
+      "Duration: 2 rounds.",
+      "Enemy target count: 1.",
+      "Fallback target: another eligible enemy; fallback selection is not guaranteed.",
+      "Enemy identities remain unresolved because the enemy formation is unavailable.",
+      "Damage Dealt decrease 20%."
     ],
     "exactResultKnown": false,
-    "exactResultUnknownReason": "Exact final reduced enemy damage cannot be calculated because target selection, uptime, stacking, and final formulas are unresolved.",
-    "explanation": "Crimson's Bloodscale Fury can reduce enemy Damage Dealt. Enemy target selection is tracked as an enemy-side candidate group, not a named friendly recipient.",
+    "exactResultUnknownReason": "Exact final reduced enemy damage cannot be calculated because target identity, overlap, and final combat formulas are unresolved.",
+    "explanation": "Crimson's Bloodscale Fury can reduce enemy Damage Dealt. Enemy target selection is tracked as an enemy-side candidate group, not a named friendly recipient. Timing: Each round. Duration: 2 rounds.",
     "id": "enemy-damage-dealt-reduction-crimson-bloodscale-fury-bloodscale-fury-weakened-weakened-damage-dealt-status-modifier",
     "interactionScope": "enemy-side",
     "matchedOutputCapabilityIds": [],
@@ -68945,13 +69189,12 @@
     "targetSelectionGroup": null,
     "title": "Damage Dealt Enemy Reduction",
     "unresolvedQuestions": [
-      "Enemy identities, combat availability, final uptime, and stacking/refresh behavior remain unresolved."
+      "Enemy identities and final combat formula remain unresolved."
     ]
   },
   {
     "assumptions": [
-      "Enemy target selection is not resolved because enemy Instinct values and tie resolution are unavailable.",
-      "Activation chance and uptime are not treated as guaranteed."
+      "Enemy target selection is not resolved because enemy Instinct values and tie resolution are unavailable."
     ],
     "channel": "tactical-damage",
     "confidence": "confirmed",
@@ -68961,13 +69204,17 @@
     ],
     "damageScope": null,
     "effects": [
+      "Timing: Even-numbered rounds.",
+      "Duration: 2 rounds.",
+      "Enemy target count: 1.",
+      "Selected-target group: vermins-bane-highest-instinct-enemy.",
+      "Enemy identities remain unresolved because the enemy formation is unavailable.",
       "Enemy Instinct decrease 30% at effective Habit Level 5.",
-      "Enemy Tactical Damage Dealt reduction follows from enemy Instinct reduction.",
-      "Duration: 2 rounds."
+      "Enemy Tactical Damage Dealt reduction follows from enemy Instinct reduction."
     ],
     "exactResultKnown": false,
-    "exactResultUnknownReason": "Exact final reduced enemy damage cannot be calculated because target selection, uptime, stacking, and final formulas are unresolved.",
-    "explanation": "Crimson's Vermin's Bane can reduce enemy Instinct, which reduces Tactical Damage Dealt. Enemy target selection is tracked as an enemy-side candidate group, not a named friendly recipient.",
+    "exactResultUnknownReason": "Exact final reduced enemy damage cannot be calculated because enemy Instinct tie resolution and final combat formula are unresolved.",
+    "explanation": "Crimson's Vermin's Bane can reduce enemy Instinct, which reduces Tactical Damage Dealt. Enemy target selection is tracked as an enemy-side candidate group, not a named friendly recipient. Timing: Even-numbered rounds. Duration: 2 rounds.",
     "id": "enemy-damage-dealt-reduction-crimson-vermins-bane-vermins-bane-instinct-down-stat-dealt-modifier",
     "interactionScope": "enemy-side",
     "matchedOutputCapabilityIds": [],
@@ -69015,13 +69262,12 @@
     "targetSelectionGroup": null,
     "title": "Enemy Tactical Damage Dealt reduction",
     "unresolvedQuestions": [
-      "Highest-Instinct enemy identity, tie resolution, final uptime, and stacking/refresh behavior remain unresolved."
+      "Highest-Instinct enemy identity, tie resolution, and final combat formula remain unresolved."
     ]
   },
   {
     "assumptions": [
-      "Enemy target selection is not resolved because enemy Instinct values and tie resolution are unavailable.",
-      "Activation chance and uptime are not treated as guaranteed."
+      "Enemy target selection is not resolved because enemy Instinct values and tie resolution are unavailable."
     ],
     "channel": "stat",
     "confidence": "confirmed",
@@ -69031,12 +69277,16 @@
     ],
     "damageScope": null,
     "effects": [
-      "Enemy Initiative decrease 30% at effective Habit Level 5.",
-      "Duration: 2 rounds."
+      "Timing: Even-numbered rounds.",
+      "Duration: 2 rounds.",
+      "Enemy target count: 1.",
+      "Selected-target group: vermins-bane-highest-instinct-enemy.",
+      "Enemy identities remain unresolved because the enemy formation is unavailable.",
+      "Enemy Initiative decrease 30% at effective Habit Level 5."
     ],
     "exactResultKnown": false,
-    "exactResultUnknownReason": "Exact final reduced enemy damage cannot be calculated because target selection, uptime, stacking, and final formulas are unresolved.",
-    "explanation": "Crimson's Vermin's Bane can reduce enemy Initiative. Enemy target selection is tracked as an enemy-side candidate group, not a named friendly recipient.",
+    "exactResultUnknownReason": "Exact final reduced enemy damage cannot be calculated because enemy Instinct tie resolution and final combat formula are unresolved.",
+    "explanation": "Crimson's Vermin's Bane can reduce enemy Initiative. Enemy target selection is tracked as an enemy-side candidate group, not a named friendly recipient. Timing: Even-numbered rounds. Duration: 2 rounds.",
     "id": "enemy-damage-dealt-reduction-crimson-vermins-bane-vermins-bane-initiative-down-stat-dealt-modifier",
     "interactionScope": "enemy-side",
     "matchedOutputCapabilityIds": [],
@@ -69084,13 +69334,12 @@
     "targetSelectionGroup": null,
     "title": "Enemy Initiative reduction",
     "unresolvedQuestions": [
-      "Highest-Instinct enemy identity, tie resolution, final uptime, and stacking/refresh behavior remain unresolved."
+      "Highest-Instinct enemy identity, tie resolution, and final combat formula remain unresolved."
     ]
   },
   {
     "assumptions": [
-      "Enemy identities and combat availability are unresolved.",
-      "Activation chance and uptime are not treated as guaranteed."
+      "Enemy identities are unresolved because the enemy formation is unavailable."
     ],
     "channel": "fire-damage",
     "confidence": "confirmed",
@@ -69100,12 +69349,16 @@
     ],
     "damageScope": null,
     "effects": [
+      "Timing: Start of combat.",
+      "Enemy target count: 1.",
+      "Fallback target: another eligible enemy; fallback selection is not guaranteed.",
+      "Enemy identities remain unresolved because the enemy formation is unavailable.",
       "Enemy Intelligence decrease 60% at effective Habit Level 5.",
       "Enemy Fire Damage Dealt reduction follows from enemy Intelligence reduction."
     ],
     "exactResultKnown": false,
-    "exactResultUnknownReason": "Exact final reduced enemy damage cannot be calculated because target selection, uptime, stacking, and final formulas are unresolved.",
-    "explanation": "Venator's Hunter's Bane can reduce enemy Intelligence, which reduces Fire Damage Dealt. Enemy target selection is tracked as an enemy-side candidate group, not a named friendly recipient.",
+    "exactResultUnknownReason": "Exact final reduced enemy damage cannot be calculated because target identity, overlap, and final combat formulas are unresolved.",
+    "explanation": "Venator's Hunter's Bane can reduce enemy Intelligence, which reduces Fire Damage Dealt. Enemy target selection is tracked as an enemy-side candidate group, not a named friendly recipient. Timing: Start of combat.",
     "id": "enemy-damage-dealt-reduction-venator-hunters-bane-hunters-bane-intelligence-down-stat-dealt-modifier",
     "interactionScope": "enemy-side",
     "matchedOutputCapabilityIds": [],
@@ -69153,13 +69406,12 @@
     "targetSelectionGroup": null,
     "title": "Enemy Fire Damage Dealt reduction",
     "unresolvedQuestions": [
-      "Enemy identities, combat availability, final uptime, and stacking/refresh behavior remain unresolved."
+      "Enemy identities and final combat formula remain unresolved."
     ]
   },
   {
     "assumptions": [
-      "Enemy identities and combat availability are unresolved.",
-      "Enemy state and uptime are not treated as guaranteed."
+      "Enemy identities and combat availability are unresolved."
     ],
     "channel": "recovery",
     "confidence": "confirmed",
@@ -69227,7 +69479,7 @@
     "targetSelectionGroup": null,
     "title": "Recovery Enemy Reduction",
     "unresolvedQuestions": [
-      "Enemy identities, combat availability, final uptime, and stacking/refresh behavior remain unresolved."
+      "Enemy identities and final combat formula remain unresolved."
     ]
   },
   {

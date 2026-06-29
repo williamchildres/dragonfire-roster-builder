@@ -3665,6 +3665,12 @@ function analyzeEnemyMitigationReduction(
       if (!provider || !recipient) {
         continue;
       }
+      const context = sourceEffectContext(provider, modifier.abilityId, modifier.sourceEffectId);
+      const sourceTimingFacts = context
+        ? [scheduleTimingDetail(context.schedule), durationDetail(context.effect)].filter((fact): fact is string => Boolean(fact))
+        : [];
+      const completeCoverage = enemyCoverageIsComplete(modifier);
+      const selectionUncertain = enemyTargetSelectionIsUncertain(modifier);
       const requirements = [
         ...providerRequirementTraces(modifier, formation, dragons, options),
         ...matchedOutputs.flatMap((output) => outputRequirementTraces(output, options)),
@@ -3688,24 +3694,27 @@ function analyzeEnemyMitigationReduction(
         recipientAbilityId: matchedOutputs[0]?.abilityId ?? null,
         channel: mitigationChannel,
         title: `${channelLabel(mitigationChannel)} Mitigation Reduction`,
-        explanation: `${provider.name}'s ${modifier.abilityName} can reduce enemy ${statLabel(statId)}. Enemy ${statLabel(statId)} reduction is -${formatTypedModifierValue(modifier)}. ${recipient.name}'s ${channelLabel(mitigationChannel)} outputs are mitigated by that stat.`,
+        explanation: `${provider.name}'s ${modifier.abilityName} can reduce enemy ${statLabel(statId)}. Enemy ${statLabel(statId)} reduction is -${formatTypedModifierValue(modifier)}. ${recipient.name}'s ${channelLabel(mitigationChannel)} outputs are mitigated by that stat.${sourceTimingFacts.length > 0 ? ` ${sourceTimingFacts.join(' ')}` : ''}`,
         requirements,
         matchedFacts: [
+          ...sourceTimingFacts,
+          ...enemySelectorFacts(provider, modifier, completeCoverage),
           ...(modifier.sourceEffectId ? [`Source effect ID: ${modifier.sourceEffectId}.`] : []),
           `Source scope: ${modifier.sourceScope}.`,
           ...matchedOutputs.map((output) => `${output.abilityName} is mitigated by target ${statLabel(statId)}.`),
           ...sourceScopeResults.map((match) => `Source-scope compatibility: ${match.sourceScopeCompatible ? 'compatible' : 'not compatible'} for ${match.outputCapabilityId}.`),
         ],
         effects: [
+          ...sourceTimingFacts,
+          ...enemySelectorFacts(provider, modifier, completeCoverage),
           `Enemy ${statLabel(statId)} reduction may improve ${channelLabel(mitigationChannel)} outputs: ${matchedOutputs.map((output) => output.label).join(', ')}. Enemy ${statLabel(statId)} -${formatTypedModifierValue(modifier)}.`,
           modifier.sourceScope === 'non-basic-attacks' ? `Applies to non-Basic ${channelLabel(mitigationChannel)} only.` : `Applies to all qualifying ${channelLabel(mitigationChannel)} sources.`,
-          durationLine(modifier),
         ].filter((effect): effect is string => Boolean(effect)),
         sourceEvidenceIds: modifier.evidenceIds,
         recipientEvidenceIds: matchedOutputs.flatMap((output) => output.evidenceIds),
-        assumptions: ['Enemy target overlap is not simulated.'],
-        unresolvedQuestions: ['Exact enemy-formation targeting and final mitigation formula are unknown.'],
-        futureOrConditional: true,
+        assumptions: enemyMitigationAssumptions(modifier, completeCoverage, selectionUncertain),
+        unresolvedQuestions: enemyMitigationUnresolvedQuestions(modifier, completeCoverage, selectionUncertain),
+        futureOrConditional: selectionUncertain || !completeCoverage,
         modifier,
       });
       traces.push({
@@ -3756,6 +3765,12 @@ function analyzeEnemyDamageDealtReductions(
     if (!providerPosition || !provider) {
       continue;
     }
+    const context = sourceEffectContext(provider, modifier.abilityId, modifier.sourceEffectId);
+    const sourceTimingFacts = context
+      ? [scheduleTimingDetail(context.schedule), durationDetail(context.effect)].filter((fact): fact is string => Boolean(fact))
+      : [];
+    const completeCoverage = enemyCoverageIsComplete(modifier);
+    const selectionUncertain = enemyTargetSelectionIsUncertain(modifier);
     const requirements = providerRequirementTraces(modifier, formation, dragons, options);
     traces.push({
       id: `enemy-damage-dealt-reduction-${modifier.id}`,
@@ -3767,38 +3782,36 @@ function analyzeEnemyDamageDealtReductions(
       recipientDragonId: null,
       recipientAbilityId: null,
       title: enemyDamageDealtReductionTitle(reductionChannel, modifier, statId),
-      explanation: enemyDamageDealtReductionExplanation(provider, modifier, statId, reductionChannel),
+      explanation: `${enemyDamageDealtReductionExplanation(provider, modifier, statId, reductionChannel, completeCoverage)}${sourceTimingFacts.length > 0 ? ` ${sourceTimingFacts.join(' ')}` : ''}`,
       requirements,
       matchedFacts: [
+        ...sourceTimingFacts,
+        ...enemySelectorFacts(provider, modifier, completeCoverage),
         `${modifier.abilityName} targets ${targetSelectorSummary(modifier.targetSelector)}.`,
         ...(modifier.targetSelector.sharedSelectionGroupId ? [`Shared selected-target group: ${modifier.targetSelector.sharedSelectionGroupId}.`] : []),
-        ...enemySelectorFacts(provider, modifier),
         ...independentHighestStatSelectorFacts(provider, modifier),
         ...enemyDamageDealtReductionDetailFacts(modifier, reductionChannel),
-        durationLine(modifier),
         ...modifier.conditions.map((condition) => condition.description),
         ...(modifier.activationGroupId ? [`Shared activation group: ${modifier.activationGroupId}.`] : []),
         ...activationChanceFacts(modifier, options),
       ].filter((fact): fact is string => Boolean(fact)),
       effects: [
+        ...sourceTimingFacts,
+        ...enemySelectorFacts(provider, modifier, completeCoverage),
         statId ? `Enemy ${statLabel(statId)} ${modifier.operation} ${modifierDisplayValue(modifier, options)}${modifier.rankedValues.length > 0 ? ` at effective Habit Level ${options.previewMaxRankInteractions ? 5 : effectiveHabitLevelForCapability(modifier, options)}` : ''}.` : modifierEffectValueLine(modifier, options),
         statId && reductionChannel !== 'stat' ? `Enemy ${channelLabel(reductionChannel)} Dealt reduction follows from enemy ${statLabel(statId)} reduction.` : null,
         ...enemyDamageDealtReductionDetailFacts(modifier, reductionChannel),
-        durationLine(modifier),
       ].filter((effect): effect is string => Boolean(effect)),
       conflicts: requirements
         .filter((requirement) => requirement.satisfied === false)
         .map((requirement) => `${requirement.label}: expected ${requirement.expected}, actual ${requirement.actual ?? 'unknown'}`),
-      assumptions: [
-        enemySelectorAssumption(modifier),
-        'Activation chance and uptime are not treated as guaranteed.',
-      ],
-      unresolvedQuestions: enemySelectorUnresolvedQuestions(modifier),
+      assumptions: enemyDamageDealtAssumptions(modifier, completeCoverage, selectionUncertain),
+      unresolvedQuestions: enemyDamageDealtUnresolvedQuestions(modifier, completeCoverage, selectionUncertain),
       sourceEvidenceIds: modifier.evidenceIds,
       recipientEvidenceIds: [],
       combatLogConfirmed: modifier.combatLogConfirmed,
       exactResultKnown: false,
-      exactResultUnknownReason: 'Exact final reduced enemy damage cannot be calculated because target selection, uptime, stacking, and final formulas are unresolved.',
+      exactResultUnknownReason: enemyDamageDealtExactUnknownReason(modifier, completeCoverage),
       matchKind: 'enemy-damage-dealt-reduction',
       channel: reductionChannel,
       modifierRole: modifier.role,
@@ -3846,17 +3859,25 @@ function enemyDamageDealtReductionTitle(channel: EffectChannel, modifier: Modifi
   return `Enemy ${scope}${channelLabel(channel)} Dealt reduction`;
 }
 
-function enemyDamageDealtReductionExplanation(provider: Dragon, modifier: ModifierCapability, statId: DragonStatId | null | undefined, reductionChannel: EffectChannel): string {
+function enemyDamageDealtReductionExplanation(
+  provider: Dragon,
+  modifier: ModifierCapability,
+  statId: DragonStatId | null | undefined,
+  reductionChannel: EffectChannel,
+  completeCoverage: boolean,
+): string {
   const stat = statId
     ? reductionChannel === 'stat'
       ? statLabel(statId)
       : `${statLabel(statId)}, which reduces ${channelLabel(reductionChannel)} Dealt`
-    : reductionChannel === 'damage-dealt'
+      : reductionChannel === 'damage-dealt'
       ? channelLabel(reductionChannel)
       : `${channelLabel(reductionChannel)} Dealt`;
-  const targetSentence = modifier.targetSelector.selection === 'all-matching-condition'
-    ? 'All matching enemies are affected as enemy-side metadata rather than named friendly recipients.'
-    : 'Enemy target selection is tracked as an enemy-side candidate group, not a named friendly recipient.';
+  const targetSentence = completeCoverage
+    ? `All three enemy slots are covered by ${provider.name}'s ${modifier.abilityName}.`
+    : modifier.targetSelector.selection === 'all-matching-condition'
+      ? 'All matching enemies are affected as enemy-side metadata rather than named friendly recipients.'
+      : 'Enemy target selection is tracked as an enemy-side candidate group, not a named friendly recipient.';
   return `${provider.name}'s ${modifier.abilityName} can reduce enemy ${stat}. ${targetSentence}`;
 }
 
@@ -4173,10 +4194,7 @@ function analyzeEnemyReceivedReductions(
       conflicts: requirements
         .filter((requirement) => requirement.satisfied === false)
         .map((requirement) => `${requirement.label}: expected ${requirement.expected}, actual ${requirement.actual ?? 'unknown'}`),
-      assumptions: [
-        enemySelectorAssumption(modifier),
-        'Enemy state and uptime are not treated as guaranteed.',
-      ],
+      assumptions: enemySelectorAssumption(modifier),
       unresolvedQuestions: enemySelectorUnresolvedQuestions(modifier),
       sourceEvidenceIds: modifier.evidenceIds,
       recipientEvidenceIds: [],
@@ -4659,6 +4677,7 @@ function enemyAllMatchingSelectorFacts(modifier: ModifierCapability): string[] {
 function enemySelectorFacts(
   provider: Dragon,
   capability: Pick<ModifierCapability | StatusOutputCapability, 'abilityId' | 'sourceEffectId' | 'targetSelector'>,
+  completeCoverage = false,
 ): string[] {
   if (capability.targetSelector.side !== 'enemy') {
     return [];
@@ -4673,10 +4692,19 @@ function enemySelectorFacts(
   const sharedGroup = capability.targetSelector.sharedSelectionGroupId
     ? `Selected-target group: ${capability.targetSelector.sharedSelectionGroupId}.`
     : null;
+  if (completeCoverage) {
+    return [
+      'Enemy selector: all enemies.',
+      count !== null ? `Enemy target count: ${count}.` : 'Enemy target count: all enemy slots.',
+      'All three enemy slots are covered.',
+      ...references,
+      'Enemy identities remain unresolved because the enemy formation is unavailable.',
+    ].filter((fact): fact is string => Boolean(fact));
+  }
   if (capability.targetSelector.selection === 'all-matching-condition') {
     return [
       'Enemy selector: all enemies.',
-      'All matching enemies are affected; no enemy-side candidate group is created.',
+      'All matching enemies are affected as enemy-side metadata rather than named friendly recipients.',
       'Enemy target count: all matching enemies.',
       scope === 'within-adjacency' ? 'Target scope: enemies within adjacency.' : null,
       priority,
@@ -6946,6 +6974,7 @@ function makeAmplificationTrace({
     sourceScopeResults: matches,
     interactionScope: interactionScopeForTrace(provider.id, recipient.id, matchKind),
     damageScope: modifier.damageScope,
+    modifier,
   };
 }
 
@@ -8354,6 +8383,39 @@ function capabilityFutureOrConditional(
   return capability.futureAvailable && options?.previewMaxRankInteractions === true;
 }
 
+function enemyCoverageIsComplete(modifier: Pick<ModifierCapability, 'targetSelector'>): boolean {
+  if (modifier.targetSelector.side !== 'enemy') {
+    return false;
+  }
+  if (modifier.targetSelector.count === null || modifier.targetSelector.count < FORMATION_POSITIONS.length) {
+    return false;
+  }
+  if (
+    modifier.targetSelector.position !== null ||
+    modifier.targetSelector.scope === 'within-adjacency' ||
+    modifier.targetSelector.selectionStat !== null ||
+    modifier.targetSelector.selectionResource !== null ||
+    modifier.targetSelector.comparisonDirection !== null ||
+    modifier.targetSelector.comparisonPool !== null
+  ) {
+    return false;
+  }
+  return modifier.targetSelector.selection === 'any' || modifier.targetSelector.selection === 'eligible';
+}
+
+function enemyTargetSelectionIsUncertain(modifier: ModifierCapability): boolean {
+  if (enemyCoverageIsComplete(modifier)) {
+    return false;
+  }
+  if (modifier.targetSelector.count === 1) {
+    return true;
+  }
+  if (modifier.targetSelector.selection === 'highest-stat' || modifier.targetSelector.selectionResource === 'current-troops') {
+    return true;
+  }
+  return modifier.targetSelector.scope === 'within-adjacency' || modifier.targetSelector.selection === 'adjacent';
+}
+
 function isHardRequirement(requirement: RequirementTrace): boolean {
   return /selected in formation|\b[a-z0-9-]+-selected\b|provider position|required source position|required target position|position compatibility|source-scope compatibility|provider targeting|status targeting|adjacency|explicit caster|battlefield/i.test(
     `${requirement.id} ${requirement.label}`,
@@ -8732,30 +8794,98 @@ function unresolvedForModifier(modifier: ModifierCapability): string[] {
   return ['Exact final modified amount is unknown.'];
 }
 
-function enemySelectorAssumption(modifier: ModifierCapability): string {
-  if (modifier.targetSelector.selectionResource === 'current-troops') {
-    return 'Enemy target selection is not resolved because enemy formation members and current troop values are unavailable.';
+function enemyDamageDealtAssumptions(modifier: ModifierCapability, completeCoverage: boolean, selectionUncertain: boolean): string[] {
+  if (completeCoverage) {
+    return [];
   }
   if (modifier.targetSelector.selection === 'highest-stat' && modifier.targetSelector.selectionStat) {
-    return `Enemy target selection is not resolved because enemy ${statLabel(modifier.targetSelector.selectionStat)} values and tie resolution are unavailable.`;
+    return [`Enemy target selection is not resolved because enemy ${statLabel(modifier.targetSelector.selectionStat)} values and tie resolution are unavailable.`];
+  }
+  if (modifier.targetSelector.selectionResource === 'current-troops') {
+    return ['Enemy target selection is not resolved because enemy formation members and current troop values are unavailable.'];
   }
   if (modifier.targetSelector.scope === 'within-adjacency' || modifier.targetSelector.selection === 'adjacent') {
-    return 'Adjacent enemy identities and enemy-formation overlap are unresolved.';
+    return ['Adjacent enemy identities and enemy-formation overlap are unresolved.'];
   }
-  return 'Enemy identities and combat availability are unresolved.';
+  return selectionUncertain ? ['Enemy identities are unresolved because the enemy formation is unavailable.'] : [];
+}
+
+function enemySelectorAssumption(modifier: ModifierCapability): string[] {
+  if (modifier.targetSelector.selection === 'highest-stat' && modifier.targetSelector.selectionStat) {
+    return [`Enemy target selection is not resolved because enemy ${statLabel(modifier.targetSelector.selectionStat)} values and tie resolution are unavailable.`];
+  }
+  if (modifier.targetSelector.selectionResource === 'current-troops') {
+    return ['Enemy target selection is not resolved because enemy formation members and current troop values are unavailable.'];
+  }
+  if (modifier.targetSelector.scope === 'within-adjacency' || modifier.targetSelector.selection === 'adjacent') {
+    return ['Adjacent enemy identities and enemy-formation overlap are unresolved.'];
+  }
+  return ['Enemy identities and combat availability are unresolved.'];
 }
 
 function enemySelectorUnresolvedQuestions(modifier: ModifierCapability): string[] {
-  if (modifier.targetSelector.selectionResource === 'current-troops') {
-    return ['Enemy-side current-troop values, tie resolution, final uptime, and stacking/refresh behavior remain unresolved.'];
-  }
   if (modifier.targetSelector.selection === 'highest-stat' && modifier.targetSelector.selectionStat) {
-    return [`Highest-${statLabel(modifier.targetSelector.selectionStat)} enemy identity, tie resolution, final uptime, and stacking/refresh behavior remain unresolved.`];
+    return [`Highest-${statLabel(modifier.targetSelector.selectionStat)} enemy identity, tie resolution, and final combat formula remain unresolved.`];
+  }
+  if (modifier.targetSelector.selectionResource === 'current-troops') {
+    return ['Enemy-side current-troop values and tie resolution remain unresolved.'];
   }
   if (modifier.targetSelector.scope === 'within-adjacency' || modifier.targetSelector.selection === 'adjacent') {
-    return ['Adjacent enemy identity, enemy-formation overlap, final uptime, and stacking/refresh behavior remain unresolved.'];
+    return ['Adjacent enemy identity and enemy-formation overlap remain unresolved.'];
   }
-  return ['Enemy identities, combat availability, final uptime, and stacking/refresh behavior remain unresolved.'];
+  return ['Enemy identities and final combat formula remain unresolved.'];
+}
+
+function enemyDamageDealtUnresolvedQuestions(modifier: ModifierCapability, completeCoverage: boolean, selectionUncertain: boolean): string[] {
+  if (completeCoverage) {
+    return ['Enemy identities remain unnamed because the enemy formation is unavailable.'];
+  }
+  if (modifier.targetSelector.selection === 'highest-stat' && modifier.targetSelector.selectionStat) {
+    return [`Highest-${statLabel(modifier.targetSelector.selectionStat)} enemy identity, tie resolution, and final combat formula remain unresolved.`];
+  }
+  if (modifier.targetSelector.selectionResource === 'current-troops') {
+    return ['Enemy-side current-troop values and tie resolution remain unresolved.'];
+  }
+  if (modifier.targetSelector.scope === 'within-adjacency' || modifier.targetSelector.selection === 'adjacent') {
+    return ['Adjacent enemy identity and enemy-formation overlap remain unresolved.'];
+  }
+  return selectionUncertain ? ['Enemy identities and final combat formula remain unresolved.'] : [];
+}
+
+function enemyMitigationAssumptions(modifier: ModifierCapability, completeCoverage: boolean, selectionUncertain: boolean): string[] {
+  if (completeCoverage) {
+    return [];
+  }
+  if (modifier.targetSelector.selection === 'highest-stat' && modifier.targetSelector.selectionStat) {
+    return [`Enemy target selection is not resolved because enemy ${statLabel(modifier.targetSelector.selectionStat)} values and tie resolution are unavailable.`];
+  }
+  if (modifier.targetSelector.scope === 'within-adjacency' || modifier.targetSelector.selection === 'adjacent') {
+    return ['Adjacent enemy identities and enemy-formation overlap are unresolved.'];
+  }
+  return selectionUncertain ? ['Enemy identity and overlap with qualifying outputs are unresolved.'] : [];
+}
+
+function enemyMitigationUnresolvedQuestions(modifier: ModifierCapability, completeCoverage: boolean, selectionUncertain: boolean): string[] {
+  if (completeCoverage) {
+    return ['Enemy identities remain unnamed because the enemy formation is unavailable.'];
+  }
+  if (modifier.targetSelector.selection === 'highest-stat' && modifier.targetSelector.selectionStat) {
+    return [`Highest-${statLabel(modifier.targetSelector.selectionStat)} enemy identity, tie resolution, and final mitigation formula remain unresolved.`];
+  }
+  if (modifier.targetSelector.scope === 'within-adjacency' || modifier.targetSelector.selection === 'adjacent') {
+    return ['Adjacent enemy identity, enemy-formation overlap, and final mitigation formula remain unresolved.'];
+  }
+  return selectionUncertain ? ['Selected enemy identity, overlap with qualifying outputs, and final mitigation formula remain unresolved.'] : [];
+}
+
+function enemyDamageDealtExactUnknownReason(modifier: ModifierCapability, completeCoverage: boolean): string {
+  if (completeCoverage) {
+    return 'Exact final reduced enemy damage cannot be calculated because the final combat formula is not fully verified.';
+  }
+  if (modifier.targetSelector.selection === 'highest-stat' && modifier.targetSelector.selectionStat) {
+    return `Exact final reduced enemy damage cannot be calculated because enemy ${statLabel(modifier.targetSelector.selectionStat)} tie resolution and final combat formula are unresolved.`;
+  }
+  return 'Exact final reduced enemy damage cannot be calculated because target identity, overlap, and final combat formulas are unresolved.';
 }
 
 function exactUnknownReason(modifier: ModifierCapability, matchKind: string): string {

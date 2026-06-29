@@ -1096,7 +1096,7 @@ describe('Feskar, Rhysarion, and Shadowsong Epic profiles', () => {
     expect(enemyCardText).not.toMatch(/matching the source condition|threshold membership|Target not guaranteed|candidate/i);
     expect(enemyReduction?.targetSelectorSummary).toContain('enemy; any-lane; all-matching-condition; all matching enemies');
     expect(enemyReductionText).toContain('Enemy selector: all enemies.');
-    expect(enemyReductionText).toContain('All matching enemies are affected; no enemy-side candidate group is created.');
+    expect(enemyReductionText).toContain('All matching enemies are affected as enemy-side metadata rather than named friendly recipients.');
     expect(enemyReductionText).not.toContain('Enemy target count: 3.');
   });
 
@@ -1364,7 +1364,7 @@ describe('Feskar, Rhysarion, and Shadowsong Epic profiles', () => {
     ).every((trace) => trace.status === 'active')).toBe(true);
 
     expect(allText).toContain('Highest-Strength enemy identity');
-    expect(allText).toContain('Enemy identities and combat availability are unresolved.');
+    expect(allText).toContain('Enemy identities remain unresolved because the enemy formation is unavailable.');
     expect(allText).toContain('Adjacent enemy identity');
     expect(allText).not.toContain('Damage Dealt Dealt');
     expect(allText).not.toContain('Targets 1 Allies');

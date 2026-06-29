@@ -268,7 +268,7 @@ function potentialTraceStatusReason(trace: SynergyTrace): string {
     }
     return 'Application success and final uptime remain unresolved.';
   }
-  if (/stack/i.test(text)) {
+  if (trace.modifier?.valuePerStack !== null || trace.modifier?.stackMaximum !== null) {
     const pieces = [
       /chance|activation/i.test(text) ? 'activation' : null,
       /repeat/i.test(text) ? 'repeated-attempt count' : null,
