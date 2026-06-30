@@ -1610,7 +1610,9 @@ function TraceCard({ trace }: { trace: SynergyTrace }) {
         </div>
       </dl>
       <p>{formatPresentationText(trace.explanation)}</p>
-      <p className="notice-text">{traceStatusReason(trace)}</p>
+      {traceStatusReason(trace) !== trace.exactResultUnknownReason ? (
+        <p className="notice-text">{traceStatusReason(trace)}</p>
+      ) : null}
       <h5>Requirements</h5>
       <ul className="plain-list">
         {trace.requirements.map((requirement) => (
