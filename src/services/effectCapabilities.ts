@@ -1436,6 +1436,10 @@ function analyzeDefensiveAllySupport(
       const displayValue = modifierDisplayValue(modifier, options);
       const modifierDetails = compactSemanticFacts(defensiveModifierDetailLines(modifier, displayValue, options, context));
       const effectDetails = compactSemanticFacts([...modifierDetails, ...activationChanceFacts(modifier, options)]);
+      const singleResolvedAdjacentAlly =
+        modifier.targetSelector.selection === 'one-eligible-adjacent' &&
+        eligiblePositions.length === 1 &&
+        eligiblePositions[0] === recipientPosition;
       const stackReason = modifier.targetSelector.selection === 'self'
         ? stackExactResultUnknownReason(context, 'self', false)
         : stackExactResultUnknownReason(context, 'ally', modifier.targetSelector.selection === 'one-eligible-adjacent' && eligiblePositions.length > 1);
@@ -1444,6 +1448,9 @@ function analyzeDefensiveAllySupport(
         : damageLabel;
       const retreatTriggeredStackNarrative = context && stackReason && isRetreatTriggeredAdditionalStack(context)
         ? `Each round, ${modifier.abilityName} checks whether the ally selected at Start of Combat retreated during the previous round. If so, ${provider.name} gains 1 additional ${formatCapabilityToken(modifier.statusId ?? 'Resilient Bond')} stack. Each verified stack reduces ${damageReceivedPhrase} by ${displayValue}, and the resulting stack lasts until end of combat.`
+        : null;
+      const resolvedAdjacentStackNarrative = context?.effect.stack && singleResolvedAdjacentAlly && context.schedule.timing === 'start-of-combat'
+        ? `At Start of Combat, ${recipient.name} gains 1 ${formatCapabilityToken(modifier.statusId ?? 'Resilient Bond')} stack. Each verified stack reduces ${damageReceivedPhrase} by ${displayValue}, and the stack lasts until end of combat. ${recipient.name} remains the tracked ally for later retreat checks.`
         : null;
       const trace = makeDependencyTrace({
         id: `defensive-ally-support-${modifier.id}-${recipientId}`,
@@ -1455,7 +1462,7 @@ function analyzeDefensiveAllySupport(
         recipientAbilityId: null,
         channel: 'damage-received',
         title: `${damageLabel} Support`,
-        explanation: retreatTriggeredStackNarrative ?? (/below 50% Troop Capacity/i.test([...modifier.conditions, ...(context?.effect.conditions ?? []), ...(context?.schedule.conditions ?? [])].map((condition) => condition.description).join(' '))
+        explanation: retreatTriggeredStackNarrative ?? resolvedAdjacentStackNarrative ?? (/below 50% Troop Capacity/i.test([...modifier.conditions, ...(context?.effect.conditions ?? []), ...(context?.schedule.conditions ?? [])].map((condition) => condition.description).join(' '))
           ? `${provider.name}'s ${modifier.abilityName} can reduce ${recipient.name}'s ${damageLabel}.`
           : `${provider.name}'s ${modifier.abilityName} can reduce ${recipient.name}'s ${damageLabel} by ${displayValue}.`),
         requirements,
@@ -1474,6 +1481,18 @@ function analyzeDefensiveAllySupport(
         modifier,
         damageScope: modifier.damageScope,
         exactResultUnknownReason: stackReason ?? 'Exact final mitigated damage cannot be calculated because activation success, modifier or support uptime, refresh or combination behavior, and final mitigation formula are unresolved.',
+        targetSelectionGroup: singleResolvedAdjacentAlly
+          ? {
+              targetCount: 1,
+              eligibleRecipientDragonIds: [recipientId],
+              selectionUncertain: false,
+              selection: modifier.targetSelector.selection,
+              selectionStat: modifier.targetSelector.selectionStat ?? null,
+              selectionResource: modifier.targetSelector.selectionResource ?? modifier.targetSelector.selectionStat ?? null,
+              comparisonDirection: modifier.targetSelector.comparisonDirection ?? null,
+              comparisonPool: modifier.targetSelector.comparisonPool ?? null,
+            }
+          : undefined,
       });
       traces.push(trace);
     }
@@ -5980,9 +5999,13 @@ function stackExactResultUnknownReason(
   }
   const hasActivationRoll = Boolean(context.effect.activationRoll || context.schedule.activationRoll);
   if (targetSide === 'ally') {
-    return candidateSet && !hasActivationRoll
-      ? 'Exact final mitigated damage cannot be calculated because the selected ally identity, maximum stack count, stack-combination behavior, and the final mitigation formula remain unresolved.'
-      : null;
+    if (candidateSet && !hasActivationRoll) {
+      return 'Exact final mitigated damage cannot be calculated because the selected ally identity, maximum stack count, stack-combination behavior, and the final mitigation formula remain unresolved.';
+    }
+    if (!candidateSet && !hasActivationRoll && context.schedule.timing === 'start-of-combat') {
+      return 'Exact final mitigated damage cannot be calculated because maximum stack count, stack-combination behavior, and the final mitigation formula remain unresolved.';
+    }
+    return null;
   }
   const hasPersistentSelectedTarget = (context.effect.targetSelection?.references ?? []).some((reference) => reference.kind === 'persistent-selected-target');
   const previousRoundCondition = (context.effect.conditions ?? []).some((condition) =>
