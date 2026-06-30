@@ -645,7 +645,7 @@ describe('Dragonfire Roster Lab app', () => {
     );
   });
 
-  it('renders Dragon\'s Cunning with a single collapsed target fact while preserving expanded target details', async () => {
+  it('renders Dragon\'s Cunning with a single collapsed target fact while preserving expanded target details', () => {
     const formation: FormationAnalysisInput = {
       'left-flank': 'seasmoke',
       vanguard: 'malachite',
