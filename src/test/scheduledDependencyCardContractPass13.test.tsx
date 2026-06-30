@@ -22,9 +22,9 @@ const scheduleCases = [
     dependent: 'Dawnsong',
     bullets: [
       '15% chance on odd-numbered rounds to apply Confusion to one enemy within adjacency for 2 rounds.',
-      'Against the same enemy while it has Control, Dawnsong Fire Damage increases from 20% to 30%.',
+      'Against the same eligible enemy with Control, Dawnsong Fire Damage increases from 20% to 30%.',
       'The status can carry into later Dawnsong rounds; the shared Round 5 window requires Shroud of Shadows to resolve first.',
-      'Application success, enemy identity, same-target overlap, action order remain unresolved.',
+      'Application success, eligible enemy identity, same-target overlap, action order remain unresolved.',
     ],
     windows: [
       'Round 2 after a successful Round 1 application',
@@ -39,9 +39,9 @@ const scheduleCases = [
     dependent: 'Breath of Fire',
     bullets: [
       '25% chance each round to apply Panic to one enemy in any lane for 2 rounds.',
-      'Against the same enemy while it has Panic, Breath of Fire Fire Damage increases from 100% to 150%.',
+      'Against the same eligible enemy with Panic, Breath of Fire Fire Damage increases from 100% to 150%.',
       'Prior-round Panic can carry into scheduled Breath of Fire rounds; same-round Panic requires Instill Fear to resolve first.',
-      'Application success, enemy identity, same-target overlap, action order remain unresolved.',
+      'Application success, eligible enemy identity, same-target overlap, action order remain unresolved.',
     ],
     windows: [
       'Round 2 after a successful Round 1 application',
@@ -56,9 +56,9 @@ const scheduleCases = [
     dependent: 'Breath of Fire',
     bullets: [
       '25% chance each round to apply Panic to one enemy in any lane for 2 rounds.',
-      'Against the same enemy while it has Panic, Breath of Fire Fire Damage increases from 100% to 150%.',
+      'Against the same eligible enemy with Panic, Breath of Fire Fire Damage increases from 100% to 150%.',
       'Prior-round Panic can carry into scheduled Breath of Fire rounds; same-round Panic requires Darkening Fear to resolve first.',
-      'Application success, enemy identity, same-target overlap, action order remain unresolved.',
+      'Application success, eligible enemy identity, same-target overlap, action order remain unresolved.',
     ],
     windows: [
       'Round 2 after a successful Round 1 application',
@@ -301,7 +301,7 @@ describe('scheduled dependency card contract pass 13', () => {
     if (expand) {
       await user.click(expand);
     }
-    const item = within(receives).getByText(/Against the same enemy while it has Control, Dawnsong Fire Damage increases from 20% to 30%/i)
+    const item = within(receives).getByText(/Against the same eligible enemy with Control, Dawnsong Fire Damage increases from 20% to 30%/i)
       .closest('.card-interaction-item');
     expect(item).not.toBeNull();
     const collapsedText = item!.textContent ?? '';

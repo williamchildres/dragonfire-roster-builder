@@ -149,7 +149,7 @@ describe('mechanic reference analysis integrity', () => {
 
     expect(text).toContain('Applies to all enemies currently above 75% maximum Troop Capacity.');
     expect(text).toContain('Applies to all enemies currently below 25% maximum Troop Capacity.');
-    expect(text).toContain('All matching enemies are affected as enemy-side metadata rather than named friendly recipients.');
+    expect(text).toContain('All qualifying enemies in any lane are affected as enemy-side metadata rather than named friendly recipients.');
     expect(text).toContain('Recovery Received decrease 20% at effective Habit Level 1.');
     expect(traces.some((trace) => trace.title.includes('Recovery Enemy Reduction'))).toBe(true);
     expect(text).not.toContain('for one enemy target');
