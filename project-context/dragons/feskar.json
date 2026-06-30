@@ -4374,7 +4374,7 @@
   "firstObservedInGame": "2026-06-22",
   "format": "dragonfire-dragon-profile",
   "gameVersion": null,
-  "generatedAt": "2026-06-30T04:47:20.053Z",
+  "generatedAt": "2026-06-30T05:21:15.969Z",
   "habits": [
     {
       "abilityClass": "passive",
@@ -7394,8 +7394,8 @@
   "rosterSourceStatus": "in-game-verified-pending-official-site",
   "slug": "feskar",
   "source": {
-    "branch": "fix/final-card-projection-pass14b",
-    "commit": "7a9c5cf7f3ddbe653a0a4fdf875af75fa4e147c5",
+    "branch": "fix/resilient-bond-retreat-ta-pass14d",
+    "commit": "258c6f8108bf0aa9b4e90193690b9eab10ff4097",
     "databaseVersion": "0.6.2",
     "dataSchemaVersion": 12,
     "gameBuild": "26.6.53509",

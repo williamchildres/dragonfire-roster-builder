@@ -1845,6 +1845,9 @@ function defensiveModifierDetailLines(
   const reductionLine = resistanceBranch
     ? `${statusLabel(modifier.statusId ?? 'resistance')} reduces Damage Received by ${displayValue}${effectiveLevel ? ` at effective Habit Level ${effectiveLevel}` : ''}.`
     : `${damageReceivedLabel(modifier.damageScope)} decrease ${displayValue}${effectiveLevel ? ` at effective Habit Level ${effectiveLevel}` : ''}.`;
+  const additionalStack = context?.effect.stack && isRetreatTriggeredAdditionalStack(context)
+    ? 'additional '
+    : '';
   if (!context) {
     return [
       reductionLine,
@@ -1855,7 +1858,7 @@ function defensiveModifierDetailLines(
   }
   return [
     context ? scheduleTimingDetail(context.schedule) : null,
-    modifier.statusId && context?.effect.stack ? `Grants 1 ${formatCapabilityToken(modifier.statusId)} stack.` : null,
+    modifier.statusId && context?.effect.stack ? `Grants 1 ${additionalStack}${formatCapabilityToken(modifier.statusId)} stack.` : null,
     reductionLine,
     modifier.sourceScope === 'non-basic-attacks' ? `${damageReceivedLabel(modifier.damageScope)} reduction applies to non-Basic Attacks only.` : null,
     ...thresholdDetails,
@@ -1941,6 +1944,21 @@ function defensiveModifierTargetFacts(
       ? `Resolved selected target in this formation: ${recipientName}.`
       : null,
   ].filter((fact): fact is string => Boolean(fact));
+}
+
+function isRetreatTriggeredAdditionalStack(context: { schedule: AbilitySchedule; effect: AbilityEffect } | null): boolean {
+  if (!context?.effect.stack) {
+    return false;
+  }
+  if (context.schedule.timing !== 'start-of-each-round') {
+    return false;
+  }
+  const hasPersistentSelectedTarget = (context.effect.targetSelection?.references ?? []).some((reference) => reference.kind === 'persistent-selected-target');
+  const hasPreviousRoundRetreatCondition = (context.effect.conditions ?? []).some((condition) =>
+    condition.kind === 'previous-round-event' ||
+    /retreated in the previous round|retreated during the previous round/i.test(condition.description),
+  );
+  return hasPersistentSelectedTarget && hasPreviousRoundRetreatCondition;
 }
 
 function trackedTargetFacts(
