@@ -645,6 +645,45 @@ describe('Dragonfire Roster Lab app', () => {
     );
   });
 
+  it('renders Dragon\'s Cunning with a single collapsed target fact while preserving expanded target details', async () => {
+    const formation: FormationAnalysisInput = {
+      'left-flank': 'seasmoke',
+      vanguard: 'malachite',
+      'right-flank': 'sheepstealer',
+    };
+    const roster = createEmptyRoster(dragons);
+    for (const [dragonId, level] of Object.entries({ seasmoke: 27, malachite: 26, sheepstealer: 26 })) {
+      const entry = roster[dragonId];
+      expect(entry).toBeDefined();
+      entry!.owned = true;
+      entry!.collection.state = 'hatched';
+      entry!.starRank = 10;
+      entry!.reignLevel = level;
+    }
+
+    const traces = dedupeFinalTechnicalAnalysisTraces(analyzeFormationTraces(formation, dragons, { roster }));
+    render(<TechnicalAnalysisTraceCards traces={traces} />);
+
+    const dragonCunningCard = screen.getAllByRole('article').find((article) =>
+      article.textContent?.includes("Source abilityDragon's Cunning") &&
+      article.textContent?.includes('Receiving dragonSeasmoke') &&
+      article.textContent?.includes('Infectious Wrath'),
+    );
+    expect(dragonCunningCard).not.toBeNull();
+    const dragonCunningNode = dragonCunningCard as HTMLElement;
+    expect(dragonCunningNode).toHaveTextContent('Timing: Start of Combat.');
+    expect(dragonCunningNode).toHaveTextContent('Duration: until end of combat.');
+    expect(dragonCunningNode).toHaveTextContent("Seasmoke's Infectious Wrath is the qualifying Physical Damage output.");
+    expect(dragonCunningNode).not.toHaveTextContent('Targets 2 adjacent enemy targets.');
+    expect(countText(blockText(dragonCunningNode), '2 adjacent enemy targets')).toBe(0);
+    expect(within(dragonCunningNode).getAllByText('Enemy target count: 2.').length).toBeGreaterThan(0);
+    expect(within(dragonCunningNode).getAllByText('Target scope: enemies within adjacency.').length).toBeGreaterThan(0);
+
+    const targetBullets = screen.getAllByText(/^Targets \d+ .*$/i);
+    expect(targetBullets.length).toBeGreaterThan(0);
+    expect(targetBullets.some((node) => !node.textContent?.includes("Dragon's Cunning"))).toBe(true);
+  });
+
   it('renders split Ebbing Fury support and impairment cards with readable full explanations', async () => {
     const user = userEvent.setup();
     const formation: FormationAnalysisInput = { 'left-flank': 'feskar', vanguard: 'rhysarion', 'right-flank': 'shadowsong' };
