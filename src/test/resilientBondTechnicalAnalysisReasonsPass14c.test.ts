@@ -100,7 +100,7 @@ describe('Resilient Bond technical-analysis reasons pass 14C', () => {
     expect(statusTrace.sourceAbilityId).toBe('feskar-resilient-bond');
     expect(traceText(statusTrace)).toContain('Timing: Each round.');
     expect(traceText(statusTrace)).toContain('The same adjacent ally selected at start of combat retreated in the previous round.');
-    expect(traceText(statusTrace)).toContain('Grants 1 Resilient Bond stack.');
+    expect(traceText(statusTrace)).toContain('Grants 1 additional Resilient Bond stack.');
     expect(traceText(statusTrace)).toContain('Duration: until end of combat.');
     expect(traceText(statusTrace)).toContain('resilient-bond-adjacent-stack');
     expect(statusTrace.exactResultUnknownReason).toBe('Exact final mitigated damage cannot be calculated because the tracked ally identity, whether that ally retreated during the previous round, maximum or final stack count, stack-combination behavior, and the final mitigation formula remain unresolved.');

@@ -614,7 +614,7 @@ function stackSupportSummaryLines(trace: SynergyTrace, source: Dragon, recipient
 
 function compactStackSupportSummaryLines(trace: SynergyTrace, source: Dragon, recipient: Dragon | null, detail: string): string[] {
   const text = [trace.title, trace.explanation, detail, ...trace.matchedFacts, ...trace.effects, ...trace.assumptions, ...trace.unresolvedQuestions].join(' ');
-  const stack = text.match(/Grants 1 ([A-Za-z' -]+?) stack\./i)?.[1]?.trim() ?? getAbilityName(source, trace.sourceAbilityId);
+  const stack = (text.match(/Grants 1 ([A-Za-z' -]+?) stack\./i)?.[1]?.trim() ?? getAbilityName(source, trace.sourceAbilityId)).replace(/^additional\s+/i, '');
   const amount = text.match(/Physical Damage Received decrease ([\d.]+%)/i)?.[1] ?? text.match(/Damage Received decrease ([\d.]+%)/i)?.[1] ?? null;
   if (!amount || !/Grants 1 .+ stack/i.test(text)) {
     return [];
@@ -728,7 +728,7 @@ function stackGrantName(trace: SynergyTrace, source: Dragon, recipient: Dragon |
   const text = [trace.explanation, ...trace.effects].join(' ');
   const mayGrant = text.match(/may grant additional ([A-Za-z' ]+?) stacks?/i);
   if (mayGrant?.[1]) {
-    return displayStackName(mayGrant[1]);
+    return displayStackName(mayGrant[1].replace(/^additional\s+/i, ''));
   }
   const eligible = text.match(/eligible to receive ([A-Za-z' ]+?) because/i);
   if (eligible?.[1]) {

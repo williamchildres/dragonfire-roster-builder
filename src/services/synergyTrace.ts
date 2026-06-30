@@ -314,6 +314,12 @@ function potentialTraceStatusReason(trace: SynergyTrace): string {
     return 'Threshold branch applicability, exact boundary behavior, activation success, modifier uptime, and final formula remain unresolved.';
   }
   if (trace.matchKind === 'defensive-ally-support') {
+    if (
+      trace.exactResultUnknownReason &&
+      /stack-combination behavior|maximum stack count|tracked ally identity|selected ally identity/i.test(trace.exactResultUnknownReason)
+    ) {
+      return trace.exactResultUnknownReason;
+    }
     const uptimeScope = trace.sourceDragonId === trace.recipientDragonId ? 'modifier uptime' : 'support uptime';
     return `Activation success, ${uptimeScope}, and final mitigated-damage formula remain unresolved.`;
   }
