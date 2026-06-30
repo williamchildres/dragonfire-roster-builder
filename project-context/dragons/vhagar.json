@@ -3598,7 +3598,7 @@
   "firstObservedInGame": null,
   "format": "dragonfire-dragon-profile",
   "gameVersion": null,
-  "generatedAt": "2026-06-30T04:10:30.196Z",
+  "generatedAt": "2026-06-30T04:47:20.053Z",
   "habits": [
     {
       "abilityClass": "passive",
@@ -6430,7 +6430,7 @@
   "slug": "vhagar",
   "source": {
     "branch": "fix/final-card-projection-pass14b",
-    "commit": "e222d91527a6792565a443e97d9bf4c705e9df2b",
+    "commit": "7a9c5cf7f3ddbe653a0a4fdf875af75fa4e147c5",
     "databaseVersion": "0.6.2",
     "dataSchemaVersion": 12,
     "gameBuild": "26.6.53509",
