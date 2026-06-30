@@ -3711,7 +3711,7 @@ function analyzeEnemyMitigationReduction(
         recipientAbilityId: matchedOutputs[0]?.abilityId ?? null,
         channel: mitigationChannel,
         title: `${channelLabel(mitigationChannel)} Mitigation Reduction`,
-        explanation: `${provider.name}'s ${modifier.abilityName} can reduce enemy ${statLabel(statId)}. ${provider.name}'s ${modifier.abilityName} applies a base Enemy ${statLabel(statId)} reduction of ${formatTypedModifierValue(modifier)} to ${readableEnemyTargetPhrase(modifier.targetSelector)}. The final reduction scales with ${provider.name}'s Initiative and remains unresolved. ${matchedOutputs[0] ? `${recipient.name}'s ${matchedOutputs[0].abilityName} is the qualifying ${channelLabel(mitigationChannel)} output.` : `${recipient.name}'s ${channelLabel(mitigationChannel)} output is the qualifying ${channelLabel(mitigationChannel)} output.`}${sourceTimingFacts.length > 0 ? ` ${sourceTimingFacts.filter((fact) => /^(Timing|Duration):/i.test(fact)).join(' ')}` : ''}`,
+        explanation: `${provider.name}'s ${modifier.abilityName} can reduce enemy ${statLabel(statId)}. ${provider.name}'s ${modifier.abilityName} applies a base Enemy ${statLabel(statId)} reduction of ${formatTypedModifierValue(modifier)} to ${readableEnemyTargetPhrase(modifier.targetSelector)}. The final reduction scales with ${provider.name}'s ${structuredScalingStatLabel(context?.effect ?? null)} and remains unresolved. ${matchedOutputs[0] ? `${recipient.name}'s ${matchedOutputs[0].abilityName} is the qualifying ${channelLabel(mitigationChannel)} output.` : `${recipient.name}'s ${channelLabel(mitigationChannel)} output is the qualifying ${channelLabel(mitigationChannel)} output.`}${sourceTimingFacts.length > 0 ? ` ${sourceTimingFacts.filter((fact) => /^(Timing|Duration):/i.test(fact)).join(' ')}` : ''}`,
         requirements,
         matchedFacts: [
           ...sourceTimingFacts,
@@ -3913,8 +3913,10 @@ function enemyDamageDealtReductionExplanation(
       ? channelLabel(reductionChannel)
       : `${channelLabel(reductionChannel)} Dealt`;
   const baseValue = `-${modifierDisplayValue(modifier, options)}`;
+  const context = sourceEffectContext(provider, modifier.abilityId, modifier.sourceEffectId);
+  const scalingLabel = structuredScalingStatLabel(context?.effect ?? null);
   const reductionSentence = statId
-    ? `Base Enemy ${statLabel(statId)} reduction ${baseValue}. Final scaled Enemy ${statLabel(statId)} reduction remains unresolved.`
+    ? `Base Enemy ${statLabel(statId)} reduction ${baseValue}. Final scaled Enemy ${statLabel(statId)} reduction scales with ${provider.name}'s ${scalingLabel} and remains unresolved.`
     : `Enemy ${stat} reduction is ${baseValue}.`;
   const targetSentence = completeCoverage
     ? `All three enemy slots are covered by ${provider.name}'s ${modifier.abilityName}.`
@@ -4032,12 +4034,11 @@ function verifiedReductionTargetValueLines(
 }
 
 function hasUnverifiedStructuredStatScaling(effect: AbilityEffect | null): boolean {
-  return effect?.scaling.some((item) => !/enhanced by/i.test(item) && Boolean(statIdFromText(item))) === true;
+  return effect?.scaling.some((item) => Boolean(statIdFromText(item))) === true;
 }
 
 function structuredScalingStatLabel(effect: AbilityEffect | null): string {
   const labels = uniqueOrdered((effect?.scaling ?? [])
-    .filter((item) => !/enhanced by/i.test(item))
     .map((item) => statIdFromText(item))
     .filter((stat): stat is DragonStatId => Boolean(stat))
     .map(statLabel));

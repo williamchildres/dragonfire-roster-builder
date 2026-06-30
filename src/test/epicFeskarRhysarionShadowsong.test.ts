@@ -520,15 +520,15 @@ describe('Feskar, Rhysarion, and Shadowsong Epic profiles', () => {
     expect(ensnareProvides.map((item) => item.targetLabel).sort()).toEqual(['Daemoros and Rhysarion', 'Rhysarion and Shadowsong']);
     expect(ensnareText).toContain('Applies to Daemoros and Rhysarion.');
     expect(ensnareText).toContain('Applies to Rhysarion and Shadowsong.');
-    expect(ensnareText.match(/Lowers enemy Initiative, supporting allied Fire Damage\./g)).toHaveLength(1);
-    expect(ensnareText.match(/Lowers enemy Instinct, supporting allied Physical Damage\./g)).toHaveLength(1);
+    expect(ensnareText.match(/Base Enemy Initiative -18% on 2 adjacent enemy targets; final reduction scales with Shadowsong's Intelligence and remains unresolved\./g)).toHaveLength(1);
+    expect(ensnareText.match(/Base Enemy Instinct -18% on 2 adjacent enemy targets; final reduction scales with Shadowsong's Intelligence and remains unresolved\./g)).toHaveLength(1);
 
     const daemorosEnsnare = daemoros.receives.filter((item) => item.abilityName === 'Ensnare');
     const rhysarionEnsnare = rhysarion.receives.filter((item) => item.abilityName === 'Ensnare');
     expect(daemorosEnsnare.length).toBeGreaterThanOrEqual(1);
     expect(rhysarionEnsnare.length).toBeGreaterThanOrEqual(1);
-    expect(daemorosEnsnare[0]?.summaryLines.join(' ')).toMatch(/enemy (Initiative|Instinct)/);
-    expect(rhysarionEnsnare[0]?.summaryLines.join(' ')).toMatch(/enemy (Initiative|Instinct)/);
+    expect(daemorosEnsnare[0]?.summaryLines.join(' ')).toMatch(/Enemy (Initiative|Instinct)/);
+    expect(rhysarionEnsnare[0]?.summaryLines.join(' ')).toMatch(/Enemy (Initiative|Instinct)/);
 
     const vulnerabilityTraces = traces.filter((trace) =>
       trace.sourceAbilityId === 'shadowsong-blazing-onslaught' &&

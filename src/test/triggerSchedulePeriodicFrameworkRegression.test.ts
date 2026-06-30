@@ -361,17 +361,17 @@ describe('trigger, schedule override, periodic damage framework regression', () 
     expect(cardsFor(presentation, 'Battle Cunning').every((item) => item.state === 'active')).toBe(true);
     expect(battleCunningCards).toContain('Enemy Physical Damage Dealt reduction');
     expect(battleCunningCards).toContain('Enemy Fire Damage Dealt reduction');
-    expect(battleCunningCards).toContain('Enemy Strength -6.5% on 3 enemy targets.');
-    expect(battleCunningCards).toContain('Enemy Intelligence -6.5% on 3 enemy targets.');
+    expect(battleCunningCards).toContain("Base Enemy Strength -6.5% on 3 enemy targets; final reduction scales with Kalspire's Instinct and remains unresolved.");
+    expect(battleCunningCards).toContain("Base Enemy Intelligence -6.5% on 3 enemy targets; final reduction scales with Kalspire's Instinct and remains unresolved.");
     expect(battleCunningCards).toContain('Timing: Start of combat.');
     expect(battleCunningCards).toContain('Duration: until end of combat.');
     expect(battleCunningCards).not.toContain('Target selection and uptime are uncertain.');
-    expect(cardsFor(presentation, 'Battle Cunning').flatMap((item) => [...item.details, ...item.effects]).join(' ')).toContain('Enemy Intelligence -6.5%');
+    expect(cardsFor(presentation, 'Battle Cunning').flatMap((item) => [...item.details, ...item.effects]).join(' ')).toContain('Base Enemy Intelligence reduction -6.5%');
     const huntersBaneCards = cardsFor(presentation, "Hunter's Bane").map(interactionText).join(' ');
     expect(huntersBaneCards).toContain('Enemy Fire Damage Dealt reduction');
-    expect(huntersBaneCards).toContain('Enemy Intelligence -30% on 1 enemy target.');
+    expect(huntersBaneCards).toContain("Base Enemy Intelligence -30% on 1 enemy target; final reduction scales with Venator's Strength and remains unresolved.");
     expect(huntersBaneCards).toContain('Timing: Start of combat.');
-    expect(cardsFor(presentation, "Hunter's Bane").flatMap((item) => [...item.details, ...item.effects]).join(' ')).toContain('Enemy Intelligence -30%');
+    expect(cardsFor(presentation, "Hunter's Bane").flatMap((item) => [...item.details, ...item.effects]).join(' ')).toContain('Base Enemy Intelligence reduction -30%');
     expect(traceStatusReason(traces.find((trace) => trace.sourceAbilityId === 'venator-hunters-bane' && trace.matchKind === 'enemy-mitigation-reduction')!)).not.toMatch(/activation/i);
     expect(traceStatusReason(traces.find((trace) => trace.sourceAbilityId === 'venator-hunters-bane' && trace.matchKind === 'enemy-mitigation-reduction')!)).not.toMatch(/stack count/i);
 
