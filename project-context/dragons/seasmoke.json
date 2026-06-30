@@ -3743,7 +3743,7 @@
   "firstObservedInGame": null,
   "format": "dragonfire-dragon-profile",
   "gameVersion": null,
-  "generatedAt": "2026-06-30T23:22:58.273Z",
+  "generatedAt": "2026-06-30T23:47:11.049Z",
   "habits": [
     {
       "abilityClass": "passive",
@@ -6506,8 +6506,8 @@
   "rosterSourceStatus": "official-website",
   "slug": "seasmoke",
   "source": {
-    "branch": "fix/skyward-titan-reasons-subsumption-pass18",
-    "commit": "e3964a141de6e99eadbd41a62b072aab5d7ec178",
+    "branch": "fix/skyward-titan-transition-projection-pass18b",
+    "commit": "c2b3e8e62e424ef9967a76f05e30c943ba5e5869",
     "databaseVersion": "0.6.2",
     "dataSchemaVersion": 12,
     "gameBuild": "26.6.53509",
