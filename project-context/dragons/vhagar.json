@@ -1210,6 +1210,7 @@
               "includesCaster": null,
               "magnitude": 1,
               "notes": [
+                "Stack modifiers: Strength +5% per stack; Physical Damage Received -2.5% per stack; Tactical Damage Received -2.5% per stack.",
                 "Each stack increases Strength and reduces Physical/Tactical Damage Received; defense L1 table value is -2.5%."
               ],
               "perTargetEffectCheck": null,
@@ -2272,6 +2273,7 @@
             "includesCaster": null,
             "magnitude": 1,
             "notes": [
+              "Stack modifiers: Strength +5% per stack; Physical Damage Received -2.5% per stack; Tactical Damage Received -2.5% per stack.",
               "Each stack increases Strength and reduces Physical/Tactical Damage Received; defense L1 table value is -2.5%."
             ],
             "perTargetEffectCheck": null,
@@ -3369,6 +3371,7 @@
         "includesCaster": null,
         "magnitude": 1,
         "notes": [
+          "Stack modifiers: Strength +5% per stack; Physical Damage Received -2.5% per stack; Tactical Damage Received -2.5% per stack.",
           "Each stack increases Strength and reduces Physical/Tactical Damage Received; defense L1 table value is -2.5%."
         ],
         "perTargetEffectCheck": null,
@@ -3598,7 +3601,7 @@
   "firstObservedInGame": null,
   "format": "dragonfire-dragon-profile",
   "gameVersion": null,
-  "generatedAt": "2026-06-30T22:13:30.760Z",
+  "generatedAt": "2026-06-30T23:22:58.273Z",
   "habits": [
     {
       "abilityClass": "passive",
@@ -4512,6 +4515,7 @@
               "includesCaster": null,
               "magnitude": 1,
               "notes": [
+                "Stack modifiers: Strength +5% per stack; Physical Damage Received -2.5% per stack; Tactical Damage Received -2.5% per stack.",
                 "Each stack increases Strength and reduces Physical/Tactical Damage Received; defense L1 table value is -2.5%."
               ],
               "perTargetEffectCheck": null,
@@ -5598,6 +5602,245 @@
       "unlockStarRank": 8,
       "value": null,
       "valuePerStack": null
+    },
+    {
+      "abilityId": "vhagar-skyward-titan",
+      "abilityName": "Skyward Titan",
+      "activationChanceByHabitLevel": [],
+      "activationChanceFixed": 30,
+      "activationGroupId": "skyward-titan-bulwark-shared-activation",
+      "availability": {
+        "canonical": "canonical-locked",
+        "notes": [
+          "Future at Star Rank 10.",
+          "Not hatched in observed account."
+        ],
+        "observedAccount": "observed-unavailable",
+        "reportLabel": "Future at Star Rank 10; not hatched in observed account",
+        "userRoster": "unknown"
+      },
+      "channel": "stat",
+      "combatLogConfirmed": false,
+      "conditional": true,
+      "conditions": [
+        {
+          "description": "One chance to gain a Bulwark stack each round.",
+          "evidenceIds": [],
+          "id": "skyward-titan-bulwark-activation-chance",
+          "label": "One chance to gain a Bulwark stack each round.",
+          "unresolved": false
+        }
+      ],
+      "confidence": "confirmed",
+      "currentlyAvailable": false,
+      "damageScope": null,
+      "direction": "dealt",
+      "directlyVerified": true,
+      "dragonId": "vhagar",
+      "durationRounds": null,
+      "evidenceIds": [
+        "vhagar-skyward-titan-2026-06-25"
+      ],
+      "futureAvailable": true,
+      "id": "vhagar-skyward-titan-skyward-titan-bulwark-stack-strength-stat-stack-modifier",
+      "label": "Skyward Titan: Strength per Bulwark stack",
+      "minimumDragonLevel": null,
+      "operation": "increase",
+      "providerRequirements": [],
+      "rankedValues": [
+        {
+          "level": 1,
+          "unit": "percent",
+          "value": 5
+        },
+        {
+          "level": 2,
+          "unit": "percent",
+          "value": 6.5
+        },
+        {
+          "level": 3,
+          "unit": "percent",
+          "value": 8
+        },
+        {
+          "level": 4,
+          "unit": "percent",
+          "value": 10
+        },
+        {
+          "level": 5,
+          "unit": "percent",
+          "value": 12.5
+        }
+      ],
+      "recipientRequirements": [],
+      "requiredHabitLevel": 1,
+      "role": "self-amplification",
+      "sourceEffectId": "skyward-titan-bulwark-stack",
+      "sourceScope": "all-qualifying-sources",
+      "stackMaximum": 5,
+      "statusId": "bulwark",
+      "targetSelector": {
+        "comparisonDirection": null,
+        "comparisonPool": null,
+        "count": null,
+        "includesCaster": null,
+        "position": null,
+        "scope": "self",
+        "selection": "self",
+        "selectionResource": null,
+        "selectionStat": null,
+        "sharedSelectionGroupId": null,
+        "side": "self",
+        "tieBehavior": null
+      },
+      "unit": "stack",
+      "unlockStarRank": 10,
+      "value": 5,
+      "valuePerStack": 5
+    },
+    {
+      "abilityId": "vhagar-skyward-titan",
+      "abilityName": "Skyward Titan",
+      "activationChanceByHabitLevel": [],
+      "activationChanceFixed": 30,
+      "activationGroupId": "skyward-titan-bulwark-shared-activation",
+      "availability": {
+        "canonical": "canonical-locked",
+        "notes": [
+          "Future at Star Rank 10.",
+          "Not hatched in observed account."
+        ],
+        "observedAccount": "observed-unavailable",
+        "reportLabel": "Future at Star Rank 10; not hatched in observed account",
+        "userRoster": "unknown"
+      },
+      "channel": "damage-received",
+      "combatLogConfirmed": false,
+      "conditional": true,
+      "conditions": [
+        {
+          "description": "One chance to gain a Bulwark stack each round.",
+          "evidenceIds": [],
+          "id": "skyward-titan-bulwark-activation-chance",
+          "label": "One chance to gain a Bulwark stack each round.",
+          "unresolved": false
+        }
+      ],
+      "confidence": "confirmed",
+      "currentlyAvailable": false,
+      "damageScope": "physical",
+      "direction": "received",
+      "directlyVerified": true,
+      "dragonId": "vhagar",
+      "durationRounds": null,
+      "evidenceIds": [
+        "vhagar-skyward-titan-2026-06-25"
+      ],
+      "futureAvailable": true,
+      "id": "vhagar-skyward-titan-skyward-titan-bulwark-stack-physical-damage-received-stack-modifier",
+      "label": "Skyward Titan: Physical Damage Received per Bulwark stack",
+      "minimumDragonLevel": null,
+      "operation": "decrease",
+      "providerRequirements": [],
+      "rankedValues": [],
+      "recipientRequirements": [],
+      "requiredHabitLevel": 1,
+      "role": "self-amplification",
+      "sourceEffectId": "skyward-titan-bulwark-stack",
+      "sourceScope": "all-qualifying-sources",
+      "stackMaximum": 5,
+      "statusId": "bulwark",
+      "targetSelector": {
+        "comparisonDirection": null,
+        "comparisonPool": null,
+        "count": null,
+        "includesCaster": null,
+        "position": null,
+        "scope": "self",
+        "selection": "self",
+        "selectionResource": null,
+        "selectionStat": null,
+        "sharedSelectionGroupId": null,
+        "side": "self",
+        "tieBehavior": null
+      },
+      "unit": "stack",
+      "unlockStarRank": 10,
+      "value": 2.5,
+      "valuePerStack": 2.5
+    },
+    {
+      "abilityId": "vhagar-skyward-titan",
+      "abilityName": "Skyward Titan",
+      "activationChanceByHabitLevel": [],
+      "activationChanceFixed": 30,
+      "activationGroupId": "skyward-titan-bulwark-shared-activation",
+      "availability": {
+        "canonical": "canonical-locked",
+        "notes": [
+          "Future at Star Rank 10.",
+          "Not hatched in observed account."
+        ],
+        "observedAccount": "observed-unavailable",
+        "reportLabel": "Future at Star Rank 10; not hatched in observed account",
+        "userRoster": "unknown"
+      },
+      "channel": "damage-received",
+      "combatLogConfirmed": false,
+      "conditional": true,
+      "conditions": [
+        {
+          "description": "One chance to gain a Bulwark stack each round.",
+          "evidenceIds": [],
+          "id": "skyward-titan-bulwark-activation-chance",
+          "label": "One chance to gain a Bulwark stack each round.",
+          "unresolved": false
+        }
+      ],
+      "confidence": "confirmed",
+      "currentlyAvailable": false,
+      "damageScope": "tactical",
+      "direction": "received",
+      "directlyVerified": true,
+      "dragonId": "vhagar",
+      "durationRounds": null,
+      "evidenceIds": [
+        "vhagar-skyward-titan-2026-06-25"
+      ],
+      "futureAvailable": true,
+      "id": "vhagar-skyward-titan-skyward-titan-bulwark-stack-tactical-damage-received-stack-modifier",
+      "label": "Skyward Titan: Tactical Damage Received per Bulwark stack",
+      "minimumDragonLevel": null,
+      "operation": "decrease",
+      "providerRequirements": [],
+      "rankedValues": [],
+      "recipientRequirements": [],
+      "requiredHabitLevel": 1,
+      "role": "self-amplification",
+      "sourceEffectId": "skyward-titan-bulwark-stack",
+      "sourceScope": "all-qualifying-sources",
+      "stackMaximum": 5,
+      "statusId": "bulwark",
+      "targetSelector": {
+        "comparisonDirection": null,
+        "comparisonPool": null,
+        "count": null,
+        "includesCaster": null,
+        "position": null,
+        "scope": "self",
+        "selection": "self",
+        "selectionResource": null,
+        "selectionStat": null,
+        "sharedSelectionGroupId": null,
+        "side": "self",
+        "tieBehavior": null
+      },
+      "unit": "stack",
+      "unlockStarRank": 10,
+      "value": 2.5,
+      "valuePerStack": 2.5
     }
   ],
   "modifierRoles": [
@@ -6429,8 +6672,8 @@
   "rosterSourceStatus": "official-website",
   "slug": "vhagar",
   "source": {
-    "branch": "fix/prerequisite-selector-details-pass17b",
-    "commit": "7a7e01f73661563239d540a1b961a09c0be8b7c4",
+    "branch": "fix/skyward-titan-reasons-subsumption-pass18",
+    "commit": "e3964a141de6e99eadbd41a62b072aab5d7ec178",
     "databaseVersion": "0.6.2",
     "dataSchemaVersion": 12,
     "gameBuild": "26.6.53509",

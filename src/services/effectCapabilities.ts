@@ -572,6 +572,7 @@ export function analyzeCapabilityAmplifications(
     ...analyzeOutgoingAmplifications(formation, dragons, outputsWithPeriodic, modifiers, options),
     ...analyzeIncomingAmplifications(formation, dragons, outputs, modifiers, options),
     ...analyzeAllyOutputSupport(formation, dragons, outputs, options),
+    ...analyzeStackTransitionOutputTraces(formation, dragons, outputs, options),
     ...analyzeExtraActionTriggerChains(formation, dragons, extraActions, triggeredAbilities, options),
     ...analyzeEnemyStatusSourceOutputs(formation, dragons, statusOutputs, options),
     ...analyzeFriendlyStatusSourceOutputs(formation, dragons, outputs, statusOutputs, options),
@@ -763,6 +764,97 @@ function shouldExposeSelfOutputTrace(output: OutputCapability, isSelfRecipient: 
     output.channel === 'recovery' &&
     output.targetSide === 'ally' &&
     output.targetCount !== 1;
+}
+
+function analyzeStackTransitionOutputTraces(
+  formation: FormationAnalysisInput,
+  dragons: Dragon[],
+  outputs: OutputCapability[],
+  options: CapabilityOptions,
+): SynergyTrace[] {
+  return outputs.flatMap((output) => {
+    if (output.targetSide !== 'enemy' || !outputCapabilityVisible(output, options)) {
+      return [];
+    }
+    const provider = dragonById(dragons, output.dragonId);
+    const providerPosition = positionOf(formation, output.dragonId);
+    if (!provider || !providerPosition) {
+      return [];
+    }
+    const context = sourceEffectContext(provider, output.abilityId, output.sourceEffectId);
+    const transition = context?.effect.stackTransitionTrigger;
+    if (!context || !transition) {
+      return [];
+    }
+    const sourceAbility = allAbilities(provider).find((ability) => ability.id === output.abilityId);
+    const stackContext = sourceAbility
+      ? sourceAbility.schedules
+          .flatMap((schedule) => schedule.effects.map((effect) => ({ schedule, effect })))
+          .find(({ effect }) => effect.stack?.statusId === transition.statusId)
+      : null;
+    const stackName = formatCapabilityToken(transition.statusId);
+    const stackChance = stackContext?.schedule.activationRoll?.chanceFixed ?? stackContext?.schedule.triggerChanceFixed ?? output.activationChanceFixed ?? null;
+    const stackMaximum = stackContext?.effect.stack?.maximumStacks ?? null;
+    const physicalRate = outputResolvedRankedValue(output, context.effect, options)?.rankedValue?.value ?? context.effect.magnitude;
+    const requirements = outputRequirementTraces(output, options);
+    const transitionPhrase = transition.transition === 'gaining-nth-stack'
+      ? `gaining stack ${transition.stackCount}`
+      : transition.description;
+    const explanation = `${provider.name}'s ${output.abilityName} checks each round${stackChance !== null ? ` at ${stackChance}%` : ''}; successful activations grant one ${stackName} stack. The ${channelLabel(output.channel)} attack occurs when the activation grants the third ${stackName} stack, once on that transition, and does not repeat merely because ${provider.name} remains at 3, 4, or 5 stacks.`;
+    return [{
+      id: `stack-transition-output-${output.id}`,
+      ruleId: 'stack-transition-output',
+      status: statusFromRequirements(requirements, true),
+      confidence: output.confidence,
+      sourceDragonId: provider.id,
+      sourceAbilityId: output.abilityId,
+      recipientDragonId: null,
+      recipientAbilityId: output.id,
+      title: `${output.abilityName} - ${channelLabel(output.channel)} transition attack`,
+      explanation,
+      requirements,
+      matchedFacts: [
+        `Output capability ID: ${output.id}.`,
+        `Source effect ID: ${output.sourceEffectId ?? 'unknown'}.`,
+        stackContext?.effect.id ? `Stack source effect ID: ${stackContext.effect.id}.` : null,
+        `Shared stack pool: ${transition.statusId}.`,
+        `Stack transition trigger: ${transitionPhrase}.`,
+        transition.oncePerTransition ? 'The attack occurs once on that transition.' : null,
+        transition.description,
+      ].filter((fact): fact is string => Boolean(fact)),
+      effects: [
+        stackChance !== null ? `${output.abilityName} checks each round at ${stackChance}%.` : `${output.abilityName} checks each round.`,
+        `Successful activations grant one ${stackName} stack.`,
+        stackMaximum !== null ? `Maximum stacks: ${stackMaximum}.` : null,
+        `The attack occurs when the activation grants the third ${stackName} stack.`,
+        `Physical Damage Rate is ${physicalRate !== null && physicalRate !== undefined ? `${physicalRate}%` : 'unknown'}.`,
+        'Target: one enemy in the same lane.',
+      ].filter((effect): effect is string => Boolean(effect)),
+      conflicts: requirements
+        .filter((requirement) => requirement.satisfied === false)
+        .map((requirement) => `${requirement.label}: expected ${requirement.expected}, actual ${requirement.actual ?? 'unknown'}`),
+      assumptions: [
+        'The trigger is tied to the stack-count transition, not persistent possession of the threshold stack count.',
+        'Enemy formation members and lane occupants are not invented.',
+      ],
+      unresolvedQuestions: [
+        `Reaching stack ${transition.stackCount}, activation sequence, target identity, mitigation, and final damage remain unresolved.`,
+      ],
+      sourceEvidenceIds: output.evidenceIds,
+      recipientEvidenceIds: [],
+      combatLogConfirmed: output.combatLogConfirmed,
+      exactResultKnown: false,
+      exactResultUnknownReason: `Exact final damage cannot be calculated because reaching stack ${transition.stackCount}, activation sequence, target identity, mitigation, and final damage remain unresolved.`,
+      matchKind: 'outgoing-effect-amplification',
+      channel: output.channel,
+      modifierRole: null,
+      targetSelectorSummary: targetSelectorSummary(targetForEffect(context.effect)),
+      modifierSelfOnly: false,
+      availabilityContext: output.availability.reportLabel,
+      matchedOutputCapabilityIds: [output.id],
+      interactionScope: 'enemy-side',
+    }];
+  });
 }
 
 function sourceEffectContext(
@@ -1436,6 +1528,9 @@ function analyzeDefensiveAllySupport(
       const displayValue = modifierDisplayValue(modifier, options);
       const modifierDetails = compactSemanticFacts(defensiveModifierDetailLines(modifier, displayValue, options, context));
       const effectDetails = compactSemanticFacts([...modifierDetails, ...activationChanceFacts(modifier, options)]);
+      const selfStackNarrative = recipient.id === provider.id
+        ? stackSelfModifierNarrative(provider.name, modifier, context, options)
+        : null;
       const singleResolvedAdjacentAlly =
         modifier.targetSelector.selection === 'one-eligible-adjacent' &&
         eligiblePositions.length === 1 &&
@@ -1451,6 +1546,7 @@ function analyzeDefensiveAllySupport(
             modifier.targetSelector.selection === 'one-eligible-adjacent' && eligiblePositions.length > 1,
             resolvedPersistentTargetName,
           );
+      const thresholdNoActivationReason = thresholdNoActivationExactReason(modifier, context);
       const damageReceivedPhrase = modifier.sourceScope === 'non-basic-attacks'
         ? `non-Basic ${damageLabel}`
         : damageLabel;
@@ -1470,7 +1566,7 @@ function analyzeDefensiveAllySupport(
         recipientAbilityId: null,
         channel: 'damage-received',
         title: `${damageLabel} Support`,
-        explanation: retreatTriggeredStackNarrative ?? resolvedAdjacentStackNarrative ?? (/below 50% Troop Capacity/i.test([...modifier.conditions, ...(context?.effect.conditions ?? []), ...(context?.schedule.conditions ?? [])].map((condition) => condition.description).join(' '))
+        explanation: selfStackNarrative ?? retreatTriggeredStackNarrative ?? resolvedAdjacentStackNarrative ?? (/below 50% Troop Capacity/i.test([...modifier.conditions, ...(context?.effect.conditions ?? []), ...(context?.schedule.conditions ?? [])].map((condition) => condition.description).join(' '))
           ? `${provider.name}'s ${modifier.abilityName} can reduce ${recipient.name}'s ${damageLabel}.`
           : `${provider.name}'s ${modifier.abilityName} can reduce ${recipient.name}'s ${damageLabel} by ${displayValue}.`),
         requirements,
@@ -1488,7 +1584,7 @@ function analyzeDefensiveAllySupport(
         futureOrConditional: defensiveModifierTraceIsConditional(modifier) || (modifier.futureAvailable && options.previewMaxRankInteractions === true),
         modifier,
         damageScope: modifier.damageScope,
-        exactResultUnknownReason: stackReason ?? 'Exact final mitigated damage cannot be calculated because activation success, modifier or support uptime, refresh or combination behavior, and final mitigation formula are unresolved.',
+        exactResultUnknownReason: stackReason ?? stackSelfModifierExactReason(modifier, context) ?? thresholdNoActivationReason ?? 'Exact final mitigated damage cannot be calculated because activation success, modifier or support uptime, refresh or combination behavior, and final mitigation formula are unresolved.',
         targetSelectionGroup: singleResolvedAdjacentAlly
           ? {
               targetCount: 1,
@@ -1532,6 +1628,7 @@ function analyzeInternalSelfModifiers(
     ]);
     const context = sourceEffectContext(provider, modifier.abilityId, modifier.sourceEffectId);
     const details = internalModifierDetailLines(modifier, context, options);
+    const stackNarrative = stackSelfModifierNarrative(provider.name, modifier, context, options);
     traces.push(makeDependencyTrace({
       id: `internal-self-modifier-${modifier.id}`,
       matchKind: 'outgoing-effect-amplification',
@@ -1542,7 +1639,7 @@ function analyzeInternalSelfModifiers(
       recipientAbilityId: null,
       channel: modifier.channel,
       title: `Internal ${internalModifierTitle(modifier)}`,
-      explanation: `${provider.name}'s ${modifier.abilityName} affects ${provider.name}. ${details.join(' ')}`,
+      explanation: stackNarrative ?? `${provider.name}'s ${modifier.abilityName} affects ${provider.name}. ${details.join(' ')}`,
       requirements,
       matchedFacts: [
         ...(modifier.sourceEffectId ? [`Source effect ID: ${modifier.sourceEffectId}.`] : []),
@@ -1558,9 +1655,65 @@ function analyzeInternalSelfModifiers(
       futureOrConditional: capabilityFutureOrConditional(modifier, options) || defensiveModifierTraceIsConditional(modifier) || stackModifierTraceIsConditional(context),
       modifier,
       damageScope: modifier.damageScope,
+      exactResultUnknownReason: stackSelfModifierExactReason(modifier, context),
     }));
   }
   return traces;
+}
+
+function thresholdNoActivationExactReason(
+  modifier: ModifierCapability,
+  context: { schedule: AbilitySchedule; effect: AbilityEffect } | null,
+): string | null {
+  const conditions = [...modifier.conditions, ...(context?.effect.conditions ?? []), ...(context?.schedule.conditions ?? [])];
+  const hasTroopThreshold = conditions.some((condition) => condition.kind === 'target-below-troop-capacity-threshold' || /Troop Capacity/i.test(condition.description));
+  const hasActivation = Boolean(context?.effect.activationRoll || context?.schedule.activationRoll || context?.schedule.triggerChanceFixed !== null || (context?.schedule.triggerChanceByHabitLevel.length ?? 0) > 0);
+  if (!hasTroopThreshold || hasActivation) {
+    return null;
+  }
+  return "Exact final mitigation cannot be calculated because each recipient's current Troop Capacity, which strict threshold tiers are satisfied, how simultaneously qualifying tiers combine, and the final mitigation formula remain unresolved.";
+}
+
+function stackSelfModifierNarrative(
+  providerName: string,
+  modifier: ModifierCapability,
+  context: { schedule: AbilitySchedule; effect: AbilityEffect } | null,
+  options: CapabilityOptions,
+): string | null {
+  if (!context?.effect.stack || modifier.valuePerStack === null) {
+    return null;
+  }
+  const stackName = formatCapabilityToken(context.effect.stack.statusId);
+  const chance = modifier.activationChanceFixed ?? context.schedule.activationRoll?.chanceFixed ?? context.schedule.triggerChanceFixed;
+  const max = context.effect.stack.maximumStacks;
+  const maximum = max !== null ? Math.abs(modifier.valuePerStack * max) : null;
+  const subject = stackModifierSubject(modifier);
+  const sign = modifier.operation === 'decrease' ? '-' : '+';
+  const timing = schedulePhrase(context.schedule)?.toLowerCase() ?? 'the scheduled check';
+  const value = `${sign}${modifier.valuePerStack}%`;
+  const perStackClause = modifier.operation === 'decrease'
+    ? `reduces ${subject} by ${modifier.valuePerStack}% (${subject} ${value} per stack)`
+    : `increases ${subject} by ${value} per stack`;
+  const maximumText = maximum !== null
+    ? modifier.operation === 'decrease'
+      ? ` maximum theoretical reduction -${maximum}%`
+      : ` maximum theoretical ${subject} increase +${maximum}%`
+    : ' maximum theoretical modifier unresolved';
+  return `${providerName}'s ${modifier.abilityName} checks ${timing}${chance !== null ? ` with a ${chance}% chance` : ''} to grant one ${stackName} stack. Each stack ${perStackClause} at effective Habit Level ${effectiveHabitLevelForCapability(modifier, options) ?? 1}; maximum ${max ?? 'unknown'} stacks;${maximumText}; duration until end of combat. Current and final stack count remain unresolved.`;
+}
+
+function stackSelfModifierExactReason(
+  modifier: ModifierCapability,
+  context: { schedule: AbilitySchedule; effect: AbilityEffect } | null,
+): string | undefined {
+  if (!context?.effect.stack || modifier.valuePerStack === null) {
+    return undefined;
+  }
+  const subject = stackModifierSubject(modifier).toLowerCase();
+  if (modifier.channel === 'stat') {
+    return `Exact final ${subject} increase cannot be calculated because stack activation success, current/final stack count, and the final stat formula remain unresolved.`;
+  }
+  return `Exact final ${subject} mitigation cannot be calculated because shared stack activation success, current/final stack count, stack-combination behavior, and the final mitigation formula remain unresolved.`;
 }
 
 function stackModifierTraceIsConditional(context: { schedule: AbilitySchedule; effect: AbilityEffect } | null): boolean {
@@ -1573,6 +1726,9 @@ function internalModifierTitle(modifier: ModifierCapability): string {
   if (modifier.channel === 'stat') {
     const stat = statIdFromText(modifier.label);
     return stat ? `${statLabel(stat)} modifier` : 'Stat modifier';
+  }
+  if (modifier.channel === 'damage-received') {
+    return `${damageReceivedLabel(modifier.damageScope)} modifier`;
   }
   return `${directedChannelLabel(modifier.channel, modifier.direction)} modifier`;
 }
@@ -1673,23 +1829,34 @@ function stackModifierDetailLines(
     return [];
   }
   const level = options.previewMaxRankInteractions ? 5 : effectiveHabitLevelForCapability(modifier, options);
-  const levelOneValue = rankedValueForHabitLevel(effect.stack.valuePerStackByHabitLevel, 1)?.value ?? effect.stack.valuePerStackFixed;
-  const currentLevelValue = rankedValueForHabitLevel(effect.stack.valuePerStackByHabitLevel, level)?.value ?? effect.stack.valuePerStackFixed;
+  const levelOneValue = modifier.valuePerStack ?? rankedValueForHabitLevel(effect.stack.valuePerStackByHabitLevel, 1)?.value ?? effect.stack.valuePerStackFixed;
+  const currentLevelValue = modifier.valuePerStack ?? rankedValueForHabitLevel(effect.stack.valuePerStackByHabitLevel, level)?.value ?? effect.stack.valuePerStackFixed;
   const levelOneMaximum = levelOneValue !== null && effect.stack.maximumStacks !== null
     ? levelOneValue * effect.stack.maximumStacks
     : null;
   return [
     `Shared stack pool: ${effect.stack.statusId}.`,
     effect.stack.maximumStacks !== null ? `Maximum stacks: ${effect.stack.maximumStacks}.` : 'Maximum stacks: unknown.',
-    levelOneValue !== null ? `Value per stack at effective Habit Level 1: ${formatValue(levelOneValue, 'percent')} ${directedChannelLabel(modifier.channel, modifier.direction)}.` : null,
-    currentLevelValue !== null && level && level !== 1 ? `Value per stack at effective Habit Level ${level}: ${formatValue(currentLevelValue, 'percent')} ${directedChannelLabel(modifier.channel, modifier.direction)}.` : null,
-    levelOneMaximum !== null ? `Maximum theoretical modifier at effective Habit Level 1: ${formatValue(levelOneMaximum, 'percent')} ${directedChannelLabel(modifier.channel, modifier.direction)}.` : null,
+    levelOneValue !== null ? `Value per stack at effective Habit Level 1: ${formatValue(levelOneValue, 'percent')} ${stackModifierSubject(modifier)}.` : null,
+    currentLevelValue !== null && level && level !== 1 ? `Value per stack at effective Habit Level ${level}: ${formatValue(currentLevelValue, 'percent')} ${stackModifierSubject(modifier)}.` : null,
+    levelOneMaximum !== null ? `Maximum theoretical modifier at effective Habit Level 1: ${formatValue(levelOneMaximum, 'percent')} ${stackModifierSubject(modifier)}.` : null,
     'Current stack count is unknown.',
     ...stackActivationDetailLines(modifier, schedule, effect, options),
     ...repeatDetailLines(schedule),
     schedule.timing === 'when-marked-target-receives-recovery' ? 'Prey-Recovery trigger is event-dependent and not guaranteed Active while the event is unresolved.' : null,
     schedule.timing === 'each-round' && schedule.triggerChanceFixed !== null ? 'Each-round stack trigger is chance-based and not guaranteed Active.' : null,
   ].filter((line): line is string => Boolean(line));
+}
+
+function stackModifierSubject(modifier: ModifierCapability): string {
+  const stat = modifier.channel === 'stat' ? statIdFromText(modifier.label) : null;
+  if (stat) {
+    return statLabel(stat);
+  }
+  if (modifier.channel === 'damage-received') {
+    return damageReceivedLabel(modifier.damageScope);
+  }
+  return directedChannelLabel(modifier.channel, modifier.direction);
 }
 
 function stackActivationDetailLines(
@@ -1897,6 +2064,7 @@ function defensiveModifierDetailLines(
     modifier.sourceScope === 'non-basic-attacks' ? `${damageReceivedLabel(modifier.damageScope)} reduction applies to non-Basic Attacks only.` : null,
     ...thresholdDetails,
     ...activationChanceFacts(modifier, options),
+    ...(modifier.valuePerStack !== null ? stackModifierDetailLines(modifier, context.schedule, context.effect, options) : []),
     context ? durationDetail(context.effect) : modifier.durationRounds ? `Duration: ${modifier.durationRounds} rounds.` : null,
     context ? rankedProgressionDetail(context.effect) : null,
     modifier.statusId && context?.effect.stack && modifier.stackMaximum === null ? 'Maximum stack count is not verified.' : null,
@@ -4588,6 +4756,8 @@ function analyzeSelfStatusOutputs(
       exactResultUnknownReason: stackReason
         ?? (currentPreyCondition
           ? `Exact ${statusName} result cannot be calculated because current Prey existence, marked enemy identity, above-50% threshold applicability, and current-round applicability are unresolved.`
+          : deterministicSelfControlSummary
+            ? `The ${statusName} application is deterministic: ${provider.name} is ${statusName === 'Stun' ? 'Stunned' : `affected by ${statusName}`} for ${durationPhrase ?? 'the stated duration'} beginning at ${timingPhrase ?? 'the stated timing'}. Downstream combat consequences and any independently verified cleanse interaction are not calculated by this trace.`
           : `Exact ${statusName} result cannot be calculated because activation success, runtime condition state, and status uptime are unresolved.`),
       futureOrConditional: capabilityFutureOrConditional(output, options) || output.conditions.length > 0 || statusChanceConditional(output),
     }));
@@ -5259,7 +5429,7 @@ function modifierEffectValueLine(modifier: ModifierCapability, options: Capabili
     : null;
   if (modifier.valuePerStack !== null) {
     const sign = modifier.operation === 'increase' ? '+' : '-';
-    return `${directedChannelLabel(modifier.channel, modifier.direction)} ${sign}${modifier.valuePerStack}% per stack${level ? ` at effective Habit Level ${level}` : ''}.`;
+    return `${stackModifierSubject(modifier)} ${sign}${modifier.valuePerStack}% per stack${level ? ` at effective Habit Level ${level}` : ''}.`;
   }
   return `${directedChannelLabel(modifier.channel, modifier.direction)} ${modifier.operation} ${modifierDisplayValue(modifier, options)}${level ? ` at effective Habit Level ${level}` : ''}.`;
 }
@@ -5566,6 +5736,12 @@ function analyzeSelfStatusRemoval(
             ?.flatMap((multiplier) => multiplier.directlyVerifiedValues)
             .find((value) => value.level === 1);
           const removedStatusLabel = removedStatus ? statusLabel(removedStatus) : 'qualifying enemy-applied negative effect';
+          const sharedActivation = schedule.activationRoll?.scope === 'schedule-shared';
+          const hasPreyThresholdContext = conditionPool.some((condition) =>
+            condition.statusId === 'prey' ||
+            condition.kind === 'target-above-troop-capacity-threshold' ||
+            /Prey|above 50% Troop Capacity/i.test(condition.description),
+          );
           const details = compactSemanticFacts([
             scheduleTimingDetail(schedule),
             baseChance ? `Activation chance: ${formatValue(baseChance.value, baseChance.unit)} at effective Habit Level ${level ?? 'unknown'}.` : null,
@@ -5573,8 +5749,11 @@ function analyzeSelfStatusRemoval(
             ...statusRuntimeConditionFacts({ conditions: conditionPool } as unknown as StatusOutputCapability, effect),
             `On successful activation, remove the applicable ${removedStatusLabel} from ${provider.name}.`,
             removedStatus ? 'The cleanse does not receive an independent roll.' : 'Which qualifying negative effect is removed is unresolved.',
-            schedule.activationRoll?.scope === 'schedule-shared' ? `Shared activation group: ${activationGroupId(schedule, effect)}.` : null,
+            sharedActivation ? `Shared activation group: ${activationGroupId(schedule, effect)}.` : null,
           ].filter((line): line is string => Boolean(line)));
+          const narrative = removedStatus && sharedActivation && baseChance
+            ? `At the start of each round, ${ability.name} has a ${formatValue(baseChance.value, baseChance.unit)} activation chance at effective Habit Level ${level ?? 'unknown'}${conditionalChance ? `, increasing to ${formatValue(conditionalChance.value, conditionalChance.unit)} while ${provider.name} is ${statusLabel(removedStatus)}` : ''}. On a successful shared activation, ${provider.name} gains ${pairedStatus ? statusLabel(statusIdForEffect(pairedStatus) ?? pairedStatus.type) : 'the paired status'} and removes the applicable ${statusLabel(removedStatus)} effect; the cleanse receives no independent roll.`
+            : `${provider.name}'s ${ability.name} can remove a qualifying negative effect from ${provider.name}.`;
           traces.push(makeDependencyTrace({
             id: `self-status-removal-${ability.id}-${effect.id}`,
             matchKind: 'status-removal',
@@ -5585,7 +5764,7 @@ function analyzeSelfStatusRemoval(
             recipientAbilityId: ability.id,
             channel: 'status',
             title: `${ability.name} - self status removal`,
-            explanation: `${provider.name}'s ${ability.name} can remove a qualifying negative effect from ${provider.name}.`,
+            explanation: narrative,
             requirements,
             matchedFacts: [
               `${ability.name} includes ${effect.type}.`,
@@ -5602,7 +5781,11 @@ function analyzeSelfStatusRemoval(
               'Activation success is unresolved.',
               removedStatus ? null : 'Which qualifying negative effect is removed is unresolved.',
             ].filter((question): question is string => Boolean(question)),
-            exactResultUnknownReason: `Exact self status removal cannot be calculated because current Prey existence and identity, above-50% threshold applicability, qualifying self negative-effect state, and activation success at the known 50% chance are unresolved; removed-effect identity remains unresolved.`,
+            exactResultUnknownReason: removedStatus && sharedActivation
+              ? `Exact self-status removal cannot be determined because whether ${provider.name} is ${statusLabel(removedStatus)} and whether the shared ${baseChance ? formatValue(baseChance.value, baseChance.unit) : 'base'}${conditionalChance ? ` or ${formatValue(conditionalChance.value, conditionalChance.unit)}` : ''} activation succeeds remain unresolved; the cleanse has no independent activation roll.`
+              : hasPreyThresholdContext
+                ? `Exact self status removal cannot be calculated because current Prey existence and identity, above-50% threshold applicability, qualifying self negative-effect state, and activation success at the known ${baseChance ? formatValue(baseChance.value, baseChance.unit) : 'activation'} chance are unresolved; removed-effect identity remains unresolved.`
+              : `Exact self status removal cannot be calculated because qualifying self negative-effect state and activation success are unresolved; removed-effect identity remains unresolved.`,
             futureOrConditional: true,
           }));
         }
@@ -7732,7 +7915,111 @@ function modifierCapabilitiesForEffect(
       ],
     });
   }
+  modifiers.push(...stackNoteModifierCapabilities(dragon, ability, schedule, effect));
   return modifiers;
+}
+
+function stackNoteModifierCapabilities(
+  dragon: Dragon,
+  ability: AbilityDefinition,
+  schedule: AbilitySchedule,
+  effect: AbilityEffect,
+): ModifierCapability[] {
+  if (!effect.stack) {
+    return [];
+  }
+  return stackModifierSpecsFromNotes(effect).map((spec) => ({
+    ...baseModifier(dragon, ability, schedule, effect, spec.channel, spec.direction),
+    id: `${ability.id}-${effect.id}-${spec.idSuffix}-stack-modifier`,
+    label: `${ability.name}: ${spec.label} per ${formatCapabilityToken(effect.stack!.statusId)} stack`,
+    role: spec.direction === 'received' ? 'self-amplification' : 'self-amplification',
+    operation: spec.operation,
+    value: spec.value,
+    rankedValues: spec.rankedValues ?? [],
+    unit: 'stack',
+    damageScope: spec.damageScope,
+    sourceScope: 'all-qualifying-sources',
+    stackMaximum: effect.stack!.maximumStacks,
+    valuePerStack: spec.value,
+    conditional: true,
+  }));
+}
+
+type StackNoteModifierSpec = {
+  idSuffix: string;
+  label: string;
+  channel: EffectChannel;
+  direction: ModifierDirection;
+  operation: ModifierCapability['operation'];
+  value: number;
+  rankedValues?: RankedValue[];
+  damageScope: DefensiveDamageScope | null;
+};
+
+function stackModifierSpecsFromNotes(effect: AbilityEffect): StackNoteModifierSpec[] {
+  const note = effect.notes.find((item) => /^Stack modifiers:/i.test(item));
+  if (!note) {
+    return [];
+  }
+  const entries = note.replace(/^Stack modifiers:\s*/i, '').split(';').map((item) => item.trim()).filter(Boolean);
+  return entries.flatMap<StackNoteModifierSpec>((entry) => {
+    const match = entry.match(/^(.+?)\s+([+-])\s*([0-9.]+)%\s+per stack\.?$/i);
+    if (!match) {
+      return [];
+    }
+    const [, rawLabel, sign, rawValue] = match;
+    const label = rawLabel!.trim();
+    const value = Number(rawValue);
+    if (!Number.isFinite(value)) {
+      return [];
+    }
+    const operation: ModifierCapability['operation'] = sign === '-' ? 'decrease' : 'increase';
+    const stat = statIdFromText(label);
+    if (stat) {
+      return [{
+        idSuffix: `${stat}-stat`,
+        label: statLabel(stat),
+        channel: 'stat' as const,
+        direction: 'dealt' as const,
+        operation,
+        value,
+        rankedValues: effect.stack?.valuePerStackByHabitLevel?.length && operation === 'increase'
+          ? effect.stack.valuePerStackByHabitLevel
+          : [],
+        damageScope: null,
+      }];
+    }
+    const damageScope = defensiveDamageScopeFromLabel(label);
+    if (damageScope) {
+      return [{
+        idSuffix: `${damageScope}-damage-received`,
+        label: damageReceivedLabel(damageScope),
+        channel: 'damage-received' as const,
+        direction: 'received' as const,
+        operation,
+        value,
+        rankedValues: [],
+        damageScope,
+      }];
+    }
+    return [];
+  });
+}
+
+function defensiveDamageScopeFromLabel(label: string): DefensiveDamageScope | null {
+  if (/Physical Damage Received/i.test(label)) {
+    return 'physical';
+  }
+  if (/Tactical Damage Received/i.test(label)) {
+    return 'tactical';
+  }
+  if (/Fire Damage Received/i.test(label)) {
+    return 'fire';
+  }
+  if (/Damage Received/i.test(label)) {
+    return 'all';
+  }
+  return null;
 }
 
 function exclusiveOptionModifierCapabilities(

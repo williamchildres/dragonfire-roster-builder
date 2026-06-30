@@ -20935,7 +20935,7 @@
       "Shared stack pool: stolen-flock.",
       "Maximum stacks: 10.",
       "Value per stack at effective Habit Level 1: 3% Fire Damage Dealt.",
-      "Value per stack at effective Habit Level 5: 6% Fire Damage Dealt.",
+      "Value per stack at effective Habit Level 5: 3% Fire Damage Dealt.",
       "Maximum theoretical modifier at effective Habit Level 1: 30% Fire Damage Dealt.",
       "Current stack count is unknown.",
       "Trigger chance: 50%.",
@@ -20943,8 +20943,8 @@
       "Duration: until end of combat."
     ],
     "exactResultKnown": false,
-    "exactResultUnknownReason": "Exact final value cannot be calculated because final combat formulas and stacking order are not fully verified.",
-    "explanation": "Sheepstealer's Stolen Flock affects Sheepstealer. Fire Damage Dealt +3% per stack at effective Habit Level 5. Shared stack pool: stolen-flock. Maximum stacks: 10. Value per stack at effective Habit Level 1: 3% Fire Damage Dealt. Value per stack at effective Habit Level 5: 6% Fire Damage Dealt. Maximum theoretical modifier at effective Habit Level 1: 30% Fire Damage Dealt. Current stack count is unknown. Trigger chance: 50%. Each-round stack trigger is chance-based and not guaranteed Active. Duration: until end of combat.",
+    "exactResultUnknownReason": "Exact final fire damage dealt mitigation cannot be calculated because shared stack activation success, current/final stack count, stack-combination behavior, and the final mitigation formula remain unresolved.",
+    "explanation": "Sheepstealer's Stolen Flock checks the scheduled check with a 50% chance to grant one Stolen Flock stack. Each stack increases Fire Damage Dealt by +3% per stack at effective Habit Level 1; maximum 10 stacks; maximum theoretical Fire Damage Dealt increase +30%; duration until end of combat. Current and final stack count remain unresolved.",
     "id": "internal-self-modifier-sheepstealer-stolen-flock-stolen-flock-stack-round-fire-damage-stack-modifier",
     "interactionScope": "internal",
     "matchedOutputCapabilityIds": [],
@@ -21019,15 +21019,15 @@
       "Shared stack pool: stolen-flock.",
       "Maximum stacks: 10.",
       "Value per stack at effective Habit Level 1: 3% Fire Damage Dealt.",
-      "Value per stack at effective Habit Level 5: 6% Fire Damage Dealt.",
+      "Value per stack at effective Habit Level 5: 3% Fire Damage Dealt.",
       "Maximum theoretical modifier at effective Habit Level 1: 30% Fire Damage Dealt.",
       "Current stack count is unknown.",
       "Prey-Recovery trigger is event-dependent and not guaranteed Active while the event is unresolved.",
       "Duration: until end of combat."
     ],
     "exactResultKnown": false,
-    "exactResultUnknownReason": "Exact final value cannot be calculated because final combat formulas and stacking order are not fully verified.",
-    "explanation": "Sheepstealer's Stolen Flock affects Sheepstealer. Timing: when the marked target receives Recovery. Fire Damage Dealt +3% per stack at effective Habit Level 5. Shared stack pool: stolen-flock. Maximum stacks: 10. Value per stack at effective Habit Level 1: 3% Fire Damage Dealt. Value per stack at effective Habit Level 5: 6% Fire Damage Dealt. Maximum theoretical modifier at effective Habit Level 1: 30% Fire Damage Dealt. Current stack count is unknown. Prey-Recovery trigger is event-dependent and not guaranteed Active while the event is unresolved. Duration: until end of combat.",
+    "exactResultUnknownReason": "Exact final fire damage dealt mitigation cannot be calculated because shared stack activation success, current/final stack count, stack-combination behavior, and the final mitigation formula remain unresolved.",
+    "explanation": "Sheepstealer's Stolen Flock checks the scheduled check to grant one Stolen Flock stack. Each stack increases Fire Damage Dealt by +3% per stack at effective Habit Level 1; maximum 10 stacks; maximum theoretical Fire Damage Dealt increase +30%; duration until end of combat. Current and final stack count remain unresolved.",
     "id": "internal-self-modifier-sheepstealer-stolen-flock-stolen-flock-stack-recovery-fire-damage-stack-modifier",
     "interactionScope": "internal",
     "matchedOutputCapabilityIds": [],
@@ -21278,8 +21278,8 @@
       "Duration: until end of combat."
     ],
     "exactResultKnown": false,
-    "exactResultUnknownReason": "Exact final value cannot be calculated because final combat formulas and stacking order are not fully verified.",
-    "explanation": "Vermax's Rallying Flame affects Vermax. Timing: Start of Combat. Physical Damage Dealt +5% per stack. Shared stack pool: rallying-flame. Maximum stacks: 4. Value per stack at effective Habit Level 1: 5% Physical Damage Dealt. Value per stack at effective Habit Level 5: 5% Physical Damage Dealt. Maximum theoretical modifier at effective Habit Level 1: 20% Physical Damage Dealt. Current stack count is unknown. Activation chance: 100% at effective Habit Level 5. Activation chance by Habit Level: 50%, 60%, 70%, 85%, 100%. Repeat mode: once-per-match. Additional activation attempts occur once per matching entity: Enemy deals Fire Damage. Enemy match count is unresolved. Each repeated attempt remains chance-based and is not a guaranteed stack. Duration: until end of combat.",
+    "exactResultUnknownReason": "Exact final physical damage dealt mitigation cannot be calculated because shared stack activation success, current/final stack count, stack-combination behavior, and the final mitigation formula remain unresolved.",
+    "explanation": "Vermax's Rallying Flame checks the scheduled check to grant one Rallying Flame stack. Each stack increases Physical Damage Dealt by +5% per stack at effective Habit Level 1; maximum 4 stacks; maximum theoretical Physical Damage Dealt increase +20%; duration until end of combat. Current and final stack count remain unresolved.",
     "id": "internal-self-modifier-vermax-rallying-flame-rallying-flame-stack-physical-damage-stack-modifier",
     "interactionScope": "internal",
     "matchedOutputCapabilityIds": [],
@@ -21591,7 +21591,7 @@
       "Timing: Start of each round."
     ],
     "exactResultKnown": false,
-    "exactResultUnknownReason": "Exact final mitigated damage cannot be calculated because activation success, modifier or support uptime, refresh or combination behavior, and final mitigation formula are unresolved.",
+    "exactResultUnknownReason": "Exact final mitigation cannot be calculated because each recipient's current Troop Capacity, which strict threshold tiers are satisfied, how simultaneously qualifying tiers combine, and the final mitigation formula remain unresolved.",
     "explanation": "Trial by Flame can affect Malachite and Sheepstealer when each recipient satisfies the matching condition. Threshold applicability depends on each recipient's current Troop Capacity; exact interaction between overlapping threshold tiers is unresolved.",
     "id": "defensive-all-matching-vermax-trial-by-flame-trial-below-75-fire-reduction-damage-received-received-modifier",
     "interactionScope": "targeting-fact",
@@ -21695,7 +21695,7 @@
       "Timing: Start of each round."
     ],
     "exactResultKnown": false,
-    "exactResultUnknownReason": "Exact final mitigated damage cannot be calculated because activation success, modifier or support uptime, refresh or combination behavior, and final mitigation formula are unresolved.",
+    "exactResultUnknownReason": "Exact final mitigation cannot be calculated because each recipient's current Troop Capacity, which strict threshold tiers are satisfied, how simultaneously qualifying tiers combine, and the final mitigation formula remain unresolved.",
     "explanation": "Trial by Flame can affect Malachite and Sheepstealer when each recipient satisfies the matching condition. Threshold applicability depends on each recipient's current Troop Capacity; exact interaction between overlapping threshold tiers is unresolved.",
     "id": "defensive-all-matching-vermax-trial-by-flame-trial-below-50-resistance-damage-received-received-modifier",
     "interactionScope": "targeting-fact",
@@ -21799,7 +21799,7 @@
       "Timing: Start of each round."
     ],
     "exactResultKnown": false,
-    "exactResultUnknownReason": "Exact final mitigated damage cannot be calculated because activation success, modifier or support uptime, refresh or combination behavior, and final mitigation formula are unresolved.",
+    "exactResultUnknownReason": "Exact final mitigation cannot be calculated because each recipient's current Troop Capacity, which strict threshold tiers are satisfied, how simultaneously qualifying tiers combine, and the final mitigation formula remain unresolved.",
     "explanation": "Trial by Flame can affect Malachite and Sheepstealer when each recipient satisfies the matching condition. Threshold applicability depends on each recipient's current Troop Capacity; exact interaction between overlapping threshold tiers is unresolved.",
     "id": "defensive-all-matching-vermax-trial-by-flame-trial-below-25-fire-reduction-damage-received-received-modifier",
     "interactionScope": "targeting-fact",
@@ -23069,7 +23069,7 @@
       "Which qualifying negative effect is removed is unresolved."
     ],
     "exactResultKnown": false,
-    "exactResultUnknownReason": "Exact self status removal cannot be calculated because current Prey existence and identity, above-50% threshold applicability, qualifying self negative-effect state, and activation success at the known 50% chance are unresolved; removed-effect identity remains unresolved.",
+    "exactResultUnknownReason": "Exact self status removal cannot be calculated because current Prey existence and identity, above-50% threshold applicability, qualifying self negative-effect state, and activation success at the known 100% chance are unresolved; removed-effect identity remains unresolved.",
     "explanation": "Sheepstealer's Baited Kill can remove a qualifying negative effect from Sheepstealer.",
     "id": "self-status-removal-sheepstealer-baited-kill-baited-kill-cleanse-effect",
     "interactionScope": "internal",
@@ -23142,8 +23142,8 @@
       "Shared activation group: unyielding-resolve-start-round-shared-activation."
     ],
     "exactResultKnown": false,
-    "exactResultUnknownReason": "Exact self status removal cannot be calculated because current Prey existence and identity, above-50% threshold applicability, qualifying self negative-effect state, and activation success at the known 50% chance are unresolved; removed-effect identity remains unresolved.",
-    "explanation": "Vermax's Unyielding Resolve can remove a qualifying negative effect from Vermax.",
+    "exactResultUnknownReason": "Exact self-status removal cannot be determined because whether Vermax is Weakened and whether the shared 50% or 30% activation succeeds remain unresolved; the cleanse has no independent activation roll.",
+    "explanation": "At the start of each round, Unyielding Resolve has a 50% activation chance at effective Habit Level 5, increasing to 30% while Vermax is Weakened. On a successful shared activation, Vermax gains Advantage and removes the applicable Weakened effect; the cleanse receives no independent roll.",
     "id": "self-status-removal-vermax-unyielding-resolve-unyielding-resolve-remove-weakened",
     "interactionScope": "internal",
     "matchedOutputCapabilityIds": [],
@@ -26142,7 +26142,7 @@
       "Shared stack pool: stolen-flock.",
       "Maximum stacks: 10.",
       "Value per stack at effective Habit Level 1: 3% Fire Damage Dealt.",
-      "Value per stack at effective Habit Level 5: 6% Fire Damage Dealt.",
+      "Value per stack at effective Habit Level 5: 3% Fire Damage Dealt.",
       "Maximum theoretical modifier at effective Habit Level 1: 30% Fire Damage Dealt.",
       "Current stack count is unknown.",
       "Trigger chance: 50%.",
@@ -26150,8 +26150,8 @@
       "Duration: until end of combat."
     ],
     "exactResultKnown": false,
-    "exactResultUnknownReason": "Exact final value cannot be calculated because final combat formulas and stacking order are not fully verified.",
-    "explanation": "Sheepstealer's Stolen Flock affects Sheepstealer. Fire Damage Dealt +3% per stack at effective Habit Level 5. Shared stack pool: stolen-flock. Maximum stacks: 10. Value per stack at effective Habit Level 1: 3% Fire Damage Dealt. Value per stack at effective Habit Level 5: 6% Fire Damage Dealt. Maximum theoretical modifier at effective Habit Level 1: 30% Fire Damage Dealt. Current stack count is unknown. Trigger chance: 50%. Each-round stack trigger is chance-based and not guaranteed Active. Duration: until end of combat.",
+    "exactResultUnknownReason": "Exact final fire damage dealt mitigation cannot be calculated because shared stack activation success, current/final stack count, stack-combination behavior, and the final mitigation formula remain unresolved.",
+    "explanation": "Sheepstealer's Stolen Flock checks the scheduled check with a 50% chance to grant one Stolen Flock stack. Each stack increases Fire Damage Dealt by +3% per stack at effective Habit Level 1; maximum 10 stacks; maximum theoretical Fire Damage Dealt increase +30%; duration until end of combat. Current and final stack count remain unresolved.",
     "id": "internal-self-modifier-sheepstealer-stolen-flock-stolen-flock-stack-round-fire-damage-stack-modifier",
     "interactionScope": "internal",
     "matchedOutputCapabilityIds": [],
@@ -26226,15 +26226,15 @@
       "Shared stack pool: stolen-flock.",
       "Maximum stacks: 10.",
       "Value per stack at effective Habit Level 1: 3% Fire Damage Dealt.",
-      "Value per stack at effective Habit Level 5: 6% Fire Damage Dealt.",
+      "Value per stack at effective Habit Level 5: 3% Fire Damage Dealt.",
       "Maximum theoretical modifier at effective Habit Level 1: 30% Fire Damage Dealt.",
       "Current stack count is unknown.",
       "Prey-Recovery trigger is event-dependent and not guaranteed Active while the event is unresolved.",
       "Duration: until end of combat."
     ],
     "exactResultKnown": false,
-    "exactResultUnknownReason": "Exact final value cannot be calculated because final combat formulas and stacking order are not fully verified.",
-    "explanation": "Sheepstealer's Stolen Flock affects Sheepstealer. Timing: when the marked target receives Recovery. Fire Damage Dealt +3% per stack at effective Habit Level 5. Shared stack pool: stolen-flock. Maximum stacks: 10. Value per stack at effective Habit Level 1: 3% Fire Damage Dealt. Value per stack at effective Habit Level 5: 6% Fire Damage Dealt. Maximum theoretical modifier at effective Habit Level 1: 30% Fire Damage Dealt. Current stack count is unknown. Prey-Recovery trigger is event-dependent and not guaranteed Active while the event is unresolved. Duration: until end of combat.",
+    "exactResultUnknownReason": "Exact final fire damage dealt mitigation cannot be calculated because shared stack activation success, current/final stack count, stack-combination behavior, and the final mitigation formula remain unresolved.",
+    "explanation": "Sheepstealer's Stolen Flock checks the scheduled check to grant one Stolen Flock stack. Each stack increases Fire Damage Dealt by +3% per stack at effective Habit Level 1; maximum 10 stacks; maximum theoretical Fire Damage Dealt increase +30%; duration until end of combat. Current and final stack count remain unresolved.",
     "id": "internal-self-modifier-sheepstealer-stolen-flock-stolen-flock-stack-recovery-fire-damage-stack-modifier",
     "interactionScope": "internal",
     "matchedOutputCapabilityIds": [],
@@ -28129,7 +28129,7 @@
       "Which qualifying negative effect is removed is unresolved."
     ],
     "exactResultKnown": false,
-    "exactResultUnknownReason": "Exact self status removal cannot be calculated because current Prey existence and identity, above-50% threshold applicability, qualifying self negative-effect state, and activation success at the known 50% chance are unresolved; removed-effect identity remains unresolved.",
+    "exactResultUnknownReason": "Exact self status removal cannot be calculated because current Prey existence and identity, above-50% threshold applicability, qualifying self negative-effect state, and activation success at the known 100% chance are unresolved; removed-effect identity remains unresolved.",
     "explanation": "Sheepstealer's Baited Kill can remove a qualifying negative effect from Sheepstealer.",
     "id": "self-status-removal-sheepstealer-baited-kill-baited-kill-cleanse-effect",
     "interactionScope": "internal",
@@ -30425,8 +30425,8 @@
       "Duration: until end of combat."
     ],
     "exactResultKnown": false,
-    "exactResultUnknownReason": "Exact final value cannot be calculated because final combat formulas and stacking order are not fully verified.",
-    "explanation": "Vermax's Rallying Flame affects Vermax. Timing: Start of Combat. Physical Damage Dealt +5% per stack. Shared stack pool: rallying-flame. Maximum stacks: 4. Value per stack at effective Habit Level 1: 5% Physical Damage Dealt. Value per stack at effective Habit Level 5: 5% Physical Damage Dealt. Maximum theoretical modifier at effective Habit Level 1: 20% Physical Damage Dealt. Current stack count is unknown. Activation chance: 100% at effective Habit Level 5. Activation chance by Habit Level: 50%, 60%, 70%, 85%, 100%. Repeat mode: once-per-match. Additional activation attempts occur once per matching entity: Enemy deals Fire Damage. Enemy match count is unresolved. Each repeated attempt remains chance-based and is not a guaranteed stack. Duration: until end of combat.",
+    "exactResultUnknownReason": "Exact final physical damage dealt mitigation cannot be calculated because shared stack activation success, current/final stack count, stack-combination behavior, and the final mitigation formula remain unresolved.",
+    "explanation": "Vermax's Rallying Flame checks the scheduled check to grant one Rallying Flame stack. Each stack increases Physical Damage Dealt by +5% per stack at effective Habit Level 1; maximum 4 stacks; maximum theoretical Physical Damage Dealt increase +20%; duration until end of combat. Current and final stack count remain unresolved.",
     "id": "internal-self-modifier-vermax-rallying-flame-rallying-flame-stack-physical-damage-stack-modifier",
     "interactionScope": "internal",
     "matchedOutputCapabilityIds": [],
@@ -30738,7 +30738,7 @@
       "Timing: Start of each round."
     ],
     "exactResultKnown": false,
-    "exactResultUnknownReason": "Exact final mitigated damage cannot be calculated because activation success, modifier or support uptime, refresh or combination behavior, and final mitigation formula are unresolved.",
+    "exactResultUnknownReason": "Exact final mitigation cannot be calculated because each recipient's current Troop Capacity, which strict threshold tiers are satisfied, how simultaneously qualifying tiers combine, and the final mitigation formula remain unresolved.",
     "explanation": "Trial by Flame can affect Malachite and Seasmoke when each recipient satisfies the matching condition. Threshold applicability depends on each recipient's current Troop Capacity; exact interaction between overlapping threshold tiers is unresolved.",
     "id": "defensive-all-matching-vermax-trial-by-flame-trial-below-75-fire-reduction-damage-received-received-modifier",
     "interactionScope": "targeting-fact",
@@ -30842,7 +30842,7 @@
       "Timing: Start of each round."
     ],
     "exactResultKnown": false,
-    "exactResultUnknownReason": "Exact final mitigated damage cannot be calculated because activation success, modifier or support uptime, refresh or combination behavior, and final mitigation formula are unresolved.",
+    "exactResultUnknownReason": "Exact final mitigation cannot be calculated because each recipient's current Troop Capacity, which strict threshold tiers are satisfied, how simultaneously qualifying tiers combine, and the final mitigation formula remain unresolved.",
     "explanation": "Trial by Flame can affect Malachite and Seasmoke when each recipient satisfies the matching condition. Threshold applicability depends on each recipient's current Troop Capacity; exact interaction between overlapping threshold tiers is unresolved.",
     "id": "defensive-all-matching-vermax-trial-by-flame-trial-below-50-resistance-damage-received-received-modifier",
     "interactionScope": "targeting-fact",
@@ -30946,7 +30946,7 @@
       "Timing: Start of each round."
     ],
     "exactResultKnown": false,
-    "exactResultUnknownReason": "Exact final mitigated damage cannot be calculated because activation success, modifier or support uptime, refresh or combination behavior, and final mitigation formula are unresolved.",
+    "exactResultUnknownReason": "Exact final mitigation cannot be calculated because each recipient's current Troop Capacity, which strict threshold tiers are satisfied, how simultaneously qualifying tiers combine, and the final mitigation formula remain unresolved.",
     "explanation": "Trial by Flame can affect Malachite and Seasmoke when each recipient satisfies the matching condition. Threshold applicability depends on each recipient's current Troop Capacity; exact interaction between overlapping threshold tiers is unresolved.",
     "id": "defensive-all-matching-vermax-trial-by-flame-trial-below-25-fire-reduction-damage-received-received-modifier",
     "interactionScope": "targeting-fact",
@@ -32835,8 +32835,8 @@
       "Shared activation group: unyielding-resolve-start-round-shared-activation."
     ],
     "exactResultKnown": false,
-    "exactResultUnknownReason": "Exact self status removal cannot be calculated because current Prey existence and identity, above-50% threshold applicability, qualifying self negative-effect state, and activation success at the known 50% chance are unresolved; removed-effect identity remains unresolved.",
-    "explanation": "Vermax's Unyielding Resolve can remove a qualifying negative effect from Vermax.",
+    "exactResultUnknownReason": "Exact self-status removal cannot be determined because whether Vermax is Weakened and whether the shared 50% or 30% activation succeeds remain unresolved; the cleanse has no independent activation roll.",
+    "explanation": "At the start of each round, Unyielding Resolve has a 50% activation chance at effective Habit Level 5, increasing to 30% while Vermax is Weakened. On a successful shared activation, Vermax gains Advantage and removes the applicable Weakened effect; the cleanse receives no independent roll.",
     "id": "self-status-removal-vermax-unyielding-resolve-unyielding-resolve-remove-weakened",
     "interactionScope": "internal",
     "matchedOutputCapabilityIds": [],
@@ -35815,7 +35815,7 @@
       "Shared stack pool: stolen-flock.",
       "Maximum stacks: 10.",
       "Value per stack at effective Habit Level 1: 3% Fire Damage Dealt.",
-      "Value per stack at effective Habit Level 5: 6% Fire Damage Dealt.",
+      "Value per stack at effective Habit Level 5: 3% Fire Damage Dealt.",
       "Maximum theoretical modifier at effective Habit Level 1: 30% Fire Damage Dealt.",
       "Current stack count is unknown.",
       "Trigger chance: 50%.",
@@ -35823,8 +35823,8 @@
       "Duration: until end of combat."
     ],
     "exactResultKnown": false,
-    "exactResultUnknownReason": "Exact final value cannot be calculated because final combat formulas and stacking order are not fully verified.",
-    "explanation": "Sheepstealer's Stolen Flock affects Sheepstealer. Fire Damage Dealt +3% per stack at effective Habit Level 5. Shared stack pool: stolen-flock. Maximum stacks: 10. Value per stack at effective Habit Level 1: 3% Fire Damage Dealt. Value per stack at effective Habit Level 5: 6% Fire Damage Dealt. Maximum theoretical modifier at effective Habit Level 1: 30% Fire Damage Dealt. Current stack count is unknown. Trigger chance: 50%. Each-round stack trigger is chance-based and not guaranteed Active. Duration: until end of combat.",
+    "exactResultUnknownReason": "Exact final fire damage dealt mitigation cannot be calculated because shared stack activation success, current/final stack count, stack-combination behavior, and the final mitigation formula remain unresolved.",
+    "explanation": "Sheepstealer's Stolen Flock checks the scheduled check with a 50% chance to grant one Stolen Flock stack. Each stack increases Fire Damage Dealt by +3% per stack at effective Habit Level 1; maximum 10 stacks; maximum theoretical Fire Damage Dealt increase +30%; duration until end of combat. Current and final stack count remain unresolved.",
     "id": "internal-self-modifier-sheepstealer-stolen-flock-stolen-flock-stack-round-fire-damage-stack-modifier",
     "interactionScope": "internal",
     "matchedOutputCapabilityIds": [],
@@ -35899,15 +35899,15 @@
       "Shared stack pool: stolen-flock.",
       "Maximum stacks: 10.",
       "Value per stack at effective Habit Level 1: 3% Fire Damage Dealt.",
-      "Value per stack at effective Habit Level 5: 6% Fire Damage Dealt.",
+      "Value per stack at effective Habit Level 5: 3% Fire Damage Dealt.",
       "Maximum theoretical modifier at effective Habit Level 1: 30% Fire Damage Dealt.",
       "Current stack count is unknown.",
       "Prey-Recovery trigger is event-dependent and not guaranteed Active while the event is unresolved.",
       "Duration: until end of combat."
     ],
     "exactResultKnown": false,
-    "exactResultUnknownReason": "Exact final value cannot be calculated because final combat formulas and stacking order are not fully verified.",
-    "explanation": "Sheepstealer's Stolen Flock affects Sheepstealer. Timing: when the marked target receives Recovery. Fire Damage Dealt +3% per stack at effective Habit Level 5. Shared stack pool: stolen-flock. Maximum stacks: 10. Value per stack at effective Habit Level 1: 3% Fire Damage Dealt. Value per stack at effective Habit Level 5: 6% Fire Damage Dealt. Maximum theoretical modifier at effective Habit Level 1: 30% Fire Damage Dealt. Current stack count is unknown. Prey-Recovery trigger is event-dependent and not guaranteed Active while the event is unresolved. Duration: until end of combat.",
+    "exactResultUnknownReason": "Exact final fire damage dealt mitigation cannot be calculated because shared stack activation success, current/final stack count, stack-combination behavior, and the final mitigation formula remain unresolved.",
+    "explanation": "Sheepstealer's Stolen Flock checks the scheduled check to grant one Stolen Flock stack. Each stack increases Fire Damage Dealt by +3% per stack at effective Habit Level 1; maximum 10 stacks; maximum theoretical Fire Damage Dealt increase +30%; duration until end of combat. Current and final stack count remain unresolved.",
     "id": "internal-self-modifier-sheepstealer-stolen-flock-stolen-flock-stack-recovery-fire-damage-stack-modifier",
     "interactionScope": "internal",
     "matchedOutputCapabilityIds": [],
@@ -37977,7 +37977,7 @@
       "Which qualifying negative effect is removed is unresolved."
     ],
     "exactResultKnown": false,
-    "exactResultUnknownReason": "Exact self status removal cannot be calculated because current Prey existence and identity, above-50% threshold applicability, qualifying self negative-effect state, and activation success at the known 50% chance are unresolved; removed-effect identity remains unresolved.",
+    "exactResultUnknownReason": "Exact self status removal cannot be calculated because current Prey existence and identity, above-50% threshold applicability, qualifying self negative-effect state, and activation success at the known 100% chance are unresolved; removed-effect identity remains unresolved.",
     "explanation": "Sheepstealer's Baited Kill can remove a qualifying negative effect from Sheepstealer.",
     "id": "self-status-removal-sheepstealer-baited-kill-baited-kill-cleanse-effect",
     "interactionScope": "internal",
@@ -40083,7 +40083,7 @@
       "Shared stack pool: stolen-flock.",
       "Maximum stacks: 10.",
       "Value per stack at effective Habit Level 1: 3% Fire Damage Dealt.",
-      "Value per stack at effective Habit Level 5: 6% Fire Damage Dealt.",
+      "Value per stack at effective Habit Level 5: 3% Fire Damage Dealt.",
       "Maximum theoretical modifier at effective Habit Level 1: 30% Fire Damage Dealt.",
       "Current stack count is unknown.",
       "Trigger chance: 50%.",
@@ -40091,8 +40091,8 @@
       "Duration: until end of combat."
     ],
     "exactResultKnown": false,
-    "exactResultUnknownReason": "Exact final value cannot be calculated because final combat formulas and stacking order are not fully verified.",
-    "explanation": "Sheepstealer's Stolen Flock affects Sheepstealer. Fire Damage Dealt +3% per stack at effective Habit Level 5. Shared stack pool: stolen-flock. Maximum stacks: 10. Value per stack at effective Habit Level 1: 3% Fire Damage Dealt. Value per stack at effective Habit Level 5: 6% Fire Damage Dealt. Maximum theoretical modifier at effective Habit Level 1: 30% Fire Damage Dealt. Current stack count is unknown. Trigger chance: 50%. Each-round stack trigger is chance-based and not guaranteed Active. Duration: until end of combat.",
+    "exactResultUnknownReason": "Exact final fire damage dealt mitigation cannot be calculated because shared stack activation success, current/final stack count, stack-combination behavior, and the final mitigation formula remain unresolved.",
+    "explanation": "Sheepstealer's Stolen Flock checks the scheduled check with a 50% chance to grant one Stolen Flock stack. Each stack increases Fire Damage Dealt by +3% per stack at effective Habit Level 1; maximum 10 stacks; maximum theoretical Fire Damage Dealt increase +30%; duration until end of combat. Current and final stack count remain unresolved.",
     "id": "internal-self-modifier-sheepstealer-stolen-flock-stolen-flock-stack-round-fire-damage-stack-modifier",
     "interactionScope": "internal",
     "matchedOutputCapabilityIds": [],
@@ -40167,15 +40167,15 @@
       "Shared stack pool: stolen-flock.",
       "Maximum stacks: 10.",
       "Value per stack at effective Habit Level 1: 3% Fire Damage Dealt.",
-      "Value per stack at effective Habit Level 5: 6% Fire Damage Dealt.",
+      "Value per stack at effective Habit Level 5: 3% Fire Damage Dealt.",
       "Maximum theoretical modifier at effective Habit Level 1: 30% Fire Damage Dealt.",
       "Current stack count is unknown.",
       "Prey-Recovery trigger is event-dependent and not guaranteed Active while the event is unresolved.",
       "Duration: until end of combat."
     ],
     "exactResultKnown": false,
-    "exactResultUnknownReason": "Exact final value cannot be calculated because final combat formulas and stacking order are not fully verified.",
-    "explanation": "Sheepstealer's Stolen Flock affects Sheepstealer. Timing: when the marked target receives Recovery. Fire Damage Dealt +3% per stack at effective Habit Level 5. Shared stack pool: stolen-flock. Maximum stacks: 10. Value per stack at effective Habit Level 1: 3% Fire Damage Dealt. Value per stack at effective Habit Level 5: 6% Fire Damage Dealt. Maximum theoretical modifier at effective Habit Level 1: 30% Fire Damage Dealt. Current stack count is unknown. Prey-Recovery trigger is event-dependent and not guaranteed Active while the event is unresolved. Duration: until end of combat.",
+    "exactResultUnknownReason": "Exact final fire damage dealt mitigation cannot be calculated because shared stack activation success, current/final stack count, stack-combination behavior, and the final mitigation formula remain unresolved.",
+    "explanation": "Sheepstealer's Stolen Flock checks the scheduled check to grant one Stolen Flock stack. Each stack increases Fire Damage Dealt by +3% per stack at effective Habit Level 1; maximum 10 stacks; maximum theoretical Fire Damage Dealt increase +30%; duration until end of combat. Current and final stack count remain unresolved.",
     "id": "internal-self-modifier-sheepstealer-stolen-flock-stolen-flock-stack-recovery-fire-damage-stack-modifier",
     "interactionScope": "internal",
     "matchedOutputCapabilityIds": [],
@@ -42433,7 +42433,7 @@
       "Which qualifying negative effect is removed is unresolved."
     ],
     "exactResultKnown": false,
-    "exactResultUnknownReason": "Exact self status removal cannot be calculated because current Prey existence and identity, above-50% threshold applicability, qualifying self negative-effect state, and activation success at the known 50% chance are unresolved; removed-effect identity remains unresolved.",
+    "exactResultUnknownReason": "Exact self status removal cannot be calculated because current Prey existence and identity, above-50% threshold applicability, qualifying self negative-effect state, and activation success at the known 100% chance are unresolved; removed-effect identity remains unresolved.",
     "explanation": "Sheepstealer's Baited Kill can remove a qualifying negative effect from Sheepstealer.",
     "id": "self-status-removal-sheepstealer-baited-kill-baited-kill-cleanse-effect",
     "interactionScope": "internal",
@@ -44988,7 +44988,7 @@
       "Shared stack pool: stolen-flock.",
       "Maximum stacks: 10.",
       "Value per stack at effective Habit Level 1: 3% Fire Damage Dealt.",
-      "Value per stack at effective Habit Level 5: 6% Fire Damage Dealt.",
+      "Value per stack at effective Habit Level 5: 3% Fire Damage Dealt.",
       "Maximum theoretical modifier at effective Habit Level 1: 30% Fire Damage Dealt.",
       "Current stack count is unknown.",
       "Trigger chance: 50%.",
@@ -44996,8 +44996,8 @@
       "Duration: until end of combat."
     ],
     "exactResultKnown": false,
-    "exactResultUnknownReason": "Exact final value cannot be calculated because final combat formulas and stacking order are not fully verified.",
-    "explanation": "Sheepstealer's Stolen Flock affects Sheepstealer. Fire Damage Dealt +3% per stack at effective Habit Level 5. Shared stack pool: stolen-flock. Maximum stacks: 10. Value per stack at effective Habit Level 1: 3% Fire Damage Dealt. Value per stack at effective Habit Level 5: 6% Fire Damage Dealt. Maximum theoretical modifier at effective Habit Level 1: 30% Fire Damage Dealt. Current stack count is unknown. Trigger chance: 50%. Each-round stack trigger is chance-based and not guaranteed Active. Duration: until end of combat.",
+    "exactResultUnknownReason": "Exact final fire damage dealt mitigation cannot be calculated because shared stack activation success, current/final stack count, stack-combination behavior, and the final mitigation formula remain unresolved.",
+    "explanation": "Sheepstealer's Stolen Flock checks the scheduled check with a 50% chance to grant one Stolen Flock stack. Each stack increases Fire Damage Dealt by +3% per stack at effective Habit Level 1; maximum 10 stacks; maximum theoretical Fire Damage Dealt increase +30%; duration until end of combat. Current and final stack count remain unresolved.",
     "id": "internal-self-modifier-sheepstealer-stolen-flock-stolen-flock-stack-round-fire-damage-stack-modifier",
     "interactionScope": "internal",
     "matchedOutputCapabilityIds": [],
@@ -45072,15 +45072,15 @@
       "Shared stack pool: stolen-flock.",
       "Maximum stacks: 10.",
       "Value per stack at effective Habit Level 1: 3% Fire Damage Dealt.",
-      "Value per stack at effective Habit Level 5: 6% Fire Damage Dealt.",
+      "Value per stack at effective Habit Level 5: 3% Fire Damage Dealt.",
       "Maximum theoretical modifier at effective Habit Level 1: 30% Fire Damage Dealt.",
       "Current stack count is unknown.",
       "Prey-Recovery trigger is event-dependent and not guaranteed Active while the event is unresolved.",
       "Duration: until end of combat."
     ],
     "exactResultKnown": false,
-    "exactResultUnknownReason": "Exact final value cannot be calculated because final combat formulas and stacking order are not fully verified.",
-    "explanation": "Sheepstealer's Stolen Flock affects Sheepstealer. Timing: when the marked target receives Recovery. Fire Damage Dealt +3% per stack at effective Habit Level 5. Shared stack pool: stolen-flock. Maximum stacks: 10. Value per stack at effective Habit Level 1: 3% Fire Damage Dealt. Value per stack at effective Habit Level 5: 6% Fire Damage Dealt. Maximum theoretical modifier at effective Habit Level 1: 30% Fire Damage Dealt. Current stack count is unknown. Prey-Recovery trigger is event-dependent and not guaranteed Active while the event is unresolved. Duration: until end of combat.",
+    "exactResultUnknownReason": "Exact final fire damage dealt mitigation cannot be calculated because shared stack activation success, current/final stack count, stack-combination behavior, and the final mitigation formula remain unresolved.",
+    "explanation": "Sheepstealer's Stolen Flock checks the scheduled check to grant one Stolen Flock stack. Each stack increases Fire Damage Dealt by +3% per stack at effective Habit Level 1; maximum 10 stacks; maximum theoretical Fire Damage Dealt increase +30%; duration until end of combat. Current and final stack count remain unresolved.",
     "id": "internal-self-modifier-sheepstealer-stolen-flock-stolen-flock-stack-recovery-fire-damage-stack-modifier",
     "interactionScope": "internal",
     "matchedOutputCapabilityIds": [],
@@ -47248,7 +47248,7 @@
       "Which qualifying negative effect is removed is unresolved."
     ],
     "exactResultKnown": false,
-    "exactResultUnknownReason": "Exact self status removal cannot be calculated because current Prey existence and identity, above-50% threshold applicability, qualifying self negative-effect state, and activation success at the known 50% chance are unresolved; removed-effect identity remains unresolved.",
+    "exactResultUnknownReason": "Exact self status removal cannot be calculated because current Prey existence and identity, above-50% threshold applicability, qualifying self negative-effect state, and activation success at the known 100% chance are unresolved; removed-effect identity remains unresolved.",
     "explanation": "Sheepstealer's Baited Kill can remove a qualifying negative effect from Sheepstealer.",
     "id": "self-status-removal-sheepstealer-baited-kill-baited-kill-cleanse-effect",
     "interactionScope": "internal",
@@ -48803,8 +48803,8 @@
       "Duration: until end of combat."
     ],
     "exactResultKnown": false,
-    "exactResultUnknownReason": "Exact final value cannot be calculated because final combat formulas and stacking order are not fully verified.",
-    "explanation": "Vermax's Rallying Flame affects Vermax. Timing: Start of Combat. Physical Damage Dealt +5% per stack. Shared stack pool: rallying-flame. Maximum stacks: 4. Value per stack at effective Habit Level 1: 5% Physical Damage Dealt. Value per stack at effective Habit Level 5: 5% Physical Damage Dealt. Maximum theoretical modifier at effective Habit Level 1: 20% Physical Damage Dealt. Current stack count is unknown. Activation chance: 100% at effective Habit Level 5. Activation chance by Habit Level: 50%, 60%, 70%, 85%, 100%. Repeat mode: once-per-match. Additional activation attempts occur once per matching entity: Enemy deals Fire Damage. Enemy match count is unresolved. Each repeated attempt remains chance-based and is not a guaranteed stack. Duration: until end of combat.",
+    "exactResultUnknownReason": "Exact final physical damage dealt mitigation cannot be calculated because shared stack activation success, current/final stack count, stack-combination behavior, and the final mitigation formula remain unresolved.",
+    "explanation": "Vermax's Rallying Flame checks the scheduled check to grant one Rallying Flame stack. Each stack increases Physical Damage Dealt by +5% per stack at effective Habit Level 1; maximum 4 stacks; maximum theoretical Physical Damage Dealt increase +20%; duration until end of combat. Current and final stack count remain unresolved.",
     "id": "internal-self-modifier-vermax-rallying-flame-rallying-flame-stack-physical-damage-stack-modifier",
     "interactionScope": "internal",
     "matchedOutputCapabilityIds": [],
@@ -49116,7 +49116,7 @@
       "Timing: Start of each round."
     ],
     "exactResultKnown": false,
-    "exactResultUnknownReason": "Exact final mitigated damage cannot be calculated because activation success, modifier or support uptime, refresh or combination behavior, and final mitigation formula are unresolved.",
+    "exactResultUnknownReason": "Exact final mitigation cannot be calculated because each recipient's current Troop Capacity, which strict threshold tiers are satisfied, how simultaneously qualifying tiers combine, and the final mitigation formula remain unresolved.",
     "explanation": "Trial by Flame can affect Caraxes and Syrax when each recipient satisfies the matching condition. Threshold applicability depends on each recipient's current Troop Capacity; exact interaction between overlapping threshold tiers is unresolved.",
     "id": "defensive-all-matching-vermax-trial-by-flame-trial-below-75-fire-reduction-damage-received-received-modifier",
     "interactionScope": "targeting-fact",
@@ -49220,7 +49220,7 @@
       "Timing: Start of each round."
     ],
     "exactResultKnown": false,
-    "exactResultUnknownReason": "Exact final mitigated damage cannot be calculated because activation success, modifier or support uptime, refresh or combination behavior, and final mitigation formula are unresolved.",
+    "exactResultUnknownReason": "Exact final mitigation cannot be calculated because each recipient's current Troop Capacity, which strict threshold tiers are satisfied, how simultaneously qualifying tiers combine, and the final mitigation formula remain unresolved.",
     "explanation": "Trial by Flame can affect Caraxes and Syrax when each recipient satisfies the matching condition. Threshold applicability depends on each recipient's current Troop Capacity; exact interaction between overlapping threshold tiers is unresolved.",
     "id": "defensive-all-matching-vermax-trial-by-flame-trial-below-50-resistance-damage-received-received-modifier",
     "interactionScope": "targeting-fact",
@@ -49324,7 +49324,7 @@
       "Timing: Start of each round."
     ],
     "exactResultKnown": false,
-    "exactResultUnknownReason": "Exact final mitigated damage cannot be calculated because activation success, modifier or support uptime, refresh or combination behavior, and final mitigation formula are unresolved.",
+    "exactResultUnknownReason": "Exact final mitigation cannot be calculated because each recipient's current Troop Capacity, which strict threshold tiers are satisfied, how simultaneously qualifying tiers combine, and the final mitigation formula remain unresolved.",
     "explanation": "Trial by Flame can affect Caraxes and Syrax when each recipient satisfies the matching condition. Threshold applicability depends on each recipient's current Troop Capacity; exact interaction between overlapping threshold tiers is unresolved.",
     "id": "defensive-all-matching-vermax-trial-by-flame-trial-below-25-fire-reduction-damage-received-received-modifier",
     "interactionScope": "targeting-fact",
@@ -51937,8 +51937,8 @@
       "Shared activation group: unyielding-resolve-start-round-shared-activation."
     ],
     "exactResultKnown": false,
-    "exactResultUnknownReason": "Exact self status removal cannot be calculated because current Prey existence and identity, above-50% threshold applicability, qualifying self negative-effect state, and activation success at the known 50% chance are unresolved; removed-effect identity remains unresolved.",
-    "explanation": "Vermax's Unyielding Resolve can remove a qualifying negative effect from Vermax.",
+    "exactResultUnknownReason": "Exact self-status removal cannot be determined because whether Vermax is Weakened and whether the shared 50% or 30% activation succeeds remain unresolved; the cleanse has no independent activation roll.",
+    "explanation": "At the start of each round, Unyielding Resolve has a 50% activation chance at effective Habit Level 5, increasing to 30% while Vermax is Weakened. On a successful shared activation, Vermax gains Advantage and removes the applicable Weakened effect; the cleanse receives no independent roll.",
     "id": "self-status-removal-vermax-unyielding-resolve-unyielding-resolve-remove-weakened",
     "interactionScope": "internal",
     "matchedOutputCapabilityIds": [],
@@ -53712,7 +53712,7 @@
       "Shared stack pool: stolen-flock.",
       "Maximum stacks: 10.",
       "Value per stack at effective Habit Level 1: 3% Fire Damage Dealt.",
-      "Value per stack at effective Habit Level 5: 6% Fire Damage Dealt.",
+      "Value per stack at effective Habit Level 5: 3% Fire Damage Dealt.",
       "Maximum theoretical modifier at effective Habit Level 1: 30% Fire Damage Dealt.",
       "Current stack count is unknown.",
       "Trigger chance: 50%.",
@@ -53720,8 +53720,8 @@
       "Duration: until end of combat."
     ],
     "exactResultKnown": false,
-    "exactResultUnknownReason": "Exact final value cannot be calculated because final combat formulas and stacking order are not fully verified.",
-    "explanation": "Sheepstealer's Stolen Flock affects Sheepstealer. Fire Damage Dealt +3% per stack at effective Habit Level 5. Shared stack pool: stolen-flock. Maximum stacks: 10. Value per stack at effective Habit Level 1: 3% Fire Damage Dealt. Value per stack at effective Habit Level 5: 6% Fire Damage Dealt. Maximum theoretical modifier at effective Habit Level 1: 30% Fire Damage Dealt. Current stack count is unknown. Trigger chance: 50%. Each-round stack trigger is chance-based and not guaranteed Active. Duration: until end of combat.",
+    "exactResultUnknownReason": "Exact final fire damage dealt mitigation cannot be calculated because shared stack activation success, current/final stack count, stack-combination behavior, and the final mitigation formula remain unresolved.",
+    "explanation": "Sheepstealer's Stolen Flock checks the scheduled check with a 50% chance to grant one Stolen Flock stack. Each stack increases Fire Damage Dealt by +3% per stack at effective Habit Level 1; maximum 10 stacks; maximum theoretical Fire Damage Dealt increase +30%; duration until end of combat. Current and final stack count remain unresolved.",
     "id": "internal-self-modifier-sheepstealer-stolen-flock-stolen-flock-stack-round-fire-damage-stack-modifier",
     "interactionScope": "internal",
     "matchedOutputCapabilityIds": [],
@@ -53796,15 +53796,15 @@
       "Shared stack pool: stolen-flock.",
       "Maximum stacks: 10.",
       "Value per stack at effective Habit Level 1: 3% Fire Damage Dealt.",
-      "Value per stack at effective Habit Level 5: 6% Fire Damage Dealt.",
+      "Value per stack at effective Habit Level 5: 3% Fire Damage Dealt.",
       "Maximum theoretical modifier at effective Habit Level 1: 30% Fire Damage Dealt.",
       "Current stack count is unknown.",
       "Prey-Recovery trigger is event-dependent and not guaranteed Active while the event is unresolved.",
       "Duration: until end of combat."
     ],
     "exactResultKnown": false,
-    "exactResultUnknownReason": "Exact final value cannot be calculated because final combat formulas and stacking order are not fully verified.",
-    "explanation": "Sheepstealer's Stolen Flock affects Sheepstealer. Timing: when the marked target receives Recovery. Fire Damage Dealt +3% per stack at effective Habit Level 5. Shared stack pool: stolen-flock. Maximum stacks: 10. Value per stack at effective Habit Level 1: 3% Fire Damage Dealt. Value per stack at effective Habit Level 5: 6% Fire Damage Dealt. Maximum theoretical modifier at effective Habit Level 1: 30% Fire Damage Dealt. Current stack count is unknown. Prey-Recovery trigger is event-dependent and not guaranteed Active while the event is unresolved. Duration: until end of combat.",
+    "exactResultUnknownReason": "Exact final fire damage dealt mitigation cannot be calculated because shared stack activation success, current/final stack count, stack-combination behavior, and the final mitigation formula remain unresolved.",
+    "explanation": "Sheepstealer's Stolen Flock checks the scheduled check to grant one Stolen Flock stack. Each stack increases Fire Damage Dealt by +3% per stack at effective Habit Level 1; maximum 10 stacks; maximum theoretical Fire Damage Dealt increase +30%; duration until end of combat. Current and final stack count remain unresolved.",
     "id": "internal-self-modifier-sheepstealer-stolen-flock-stolen-flock-stack-recovery-fire-damage-stack-modifier",
     "interactionScope": "internal",
     "matchedOutputCapabilityIds": [],
@@ -56343,7 +56343,7 @@
       "Which qualifying negative effect is removed is unresolved."
     ],
     "exactResultKnown": false,
-    "exactResultUnknownReason": "Exact self status removal cannot be calculated because current Prey existence and identity, above-50% threshold applicability, qualifying self negative-effect state, and activation success at the known 50% chance are unresolved; removed-effect identity remains unresolved.",
+    "exactResultUnknownReason": "Exact self status removal cannot be calculated because current Prey existence and identity, above-50% threshold applicability, qualifying self negative-effect state, and activation success at the known 100% chance are unresolved; removed-effect identity remains unresolved.",
     "explanation": "Sheepstealer's Baited Kill can remove a qualifying negative effect from Sheepstealer.",
     "id": "self-status-removal-sheepstealer-baited-kill-baited-kill-cleanse-effect",
     "interactionScope": "internal",
@@ -57086,6 +57086,79 @@
   },
   {
     "assumptions": [
+      "The trigger is tied to the stack-count transition, not persistent possession of the threshold stack count.",
+      "Enemy formation members and lane occupants are not invented."
+    ],
+    "channel": "physical-damage",
+    "confidence": "confirmed",
+    "conflicts": [
+      "vhagar - Skyward Titan Habit unlock requirement: expected Star Rank 10+, actual preview enabled",
+      "vhagar - Skyward Titan Selected Habit Level: expected Habit Level 1+ or preview, actual preview enabled"
+    ],
+    "damageScope": null,
+    "effects": [
+      "Skyward Titan checks each round at 30%.",
+      "Successful activations grant one Bulwark stack.",
+      "Maximum stacks: 5.",
+      "The attack occurs when the activation grants the third Bulwark stack.",
+      "Physical Damage Rate is 250%.",
+      "Target: one enemy in the same lane."
+    ],
+    "exactResultKnown": false,
+    "exactResultUnknownReason": "Exact final damage cannot be calculated because reaching stack 3, activation sequence, target identity, mitigation, and final damage remain unresolved.",
+    "explanation": "Vhagar's Skyward Titan checks each round at 30%; successful activations grant one Bulwark stack. The Physical Damage attack occurs when the activation grants the third Bulwark stack, once on that transition, and does not repeat merely because Vhagar remains at 3, 4, or 5 stacks.",
+    "id": "stack-transition-output-vhagar-skyward-titan-skyward-titan-third-stack-damage-output",
+    "interactionScope": "enemy-side",
+    "matchedOutputCapabilityIds": [
+      "vhagar-skyward-titan-skyward-titan-third-stack-damage-output"
+    ],
+    "matchKind": "outgoing-effect-amplification",
+    "modifierCapabilityId": null,
+    "modifierCapabilityIds": [],
+    "recipientAbilityId": "vhagar-skyward-titan-skyward-titan-third-stack-damage-output",
+    "recipientDragonId": null,
+    "recipientEvidenceIds": [],
+    "requirements": [
+      {
+        "actual": "preview enabled",
+        "evidenceIds": [
+          "vhagar-skyward-titan-2026-06-25"
+        ],
+        "expected": "Star Rank 10+",
+        "id": "vhagar-vhagar-skyward-titan-star-rank",
+        "label": "vhagar - Skyward Titan Habit unlock requirement",
+        "notes": [],
+        "satisfied": false
+      },
+      {
+        "actual": "preview enabled",
+        "evidenceIds": [
+          "vhagar-skyward-titan-2026-06-25"
+        ],
+        "expected": "Habit Level 1+ or preview",
+        "id": "vhagar-vhagar-skyward-titan-habit-level",
+        "label": "vhagar - Skyward Titan Selected Habit Level",
+        "notes": [
+          "Unlocked Habits without an explicit saved Habit Level default to effective Habit Level 1. Locked Habit capabilities are potential in preview mode, not active for current roster."
+        ],
+        "satisfied": false
+      }
+    ],
+    "ruleId": "stack-transition-output",
+    "sourceAbilityId": "vhagar-skyward-titan",
+    "sourceDragonId": "vhagar",
+    "sourceEvidenceIds": [
+      "vhagar-skyward-titan-2026-06-25"
+    ],
+    "status": "potential",
+    "targetSelectionGroup": null,
+    "title": "Skyward Titan - Physical Damage transition attack",
+    "unresolvedQuestions": [
+      "Reaching stack 3, activation sequence, target identity, mitigation, and final damage remain unresolved."
+    ]
+  },
+  {
+    "assumptions": [
       "Provider activation is not guaranteed.",
       "Exact uptime, total attacks, final damage, and successful attack effects are not calculated.",
       "Only the verified after-each-Basic-Attack dependency is represented; broader trigger ordering is unresolved."
@@ -57478,7 +57551,7 @@
       "Stun application is deterministic."
     ],
     "exactResultKnown": false,
-    "exactResultUnknownReason": "Exact Stun result cannot be calculated because activation success, runtime condition state, and status uptime are unresolved.",
+    "exactResultUnknownReason": "The Stun application is deterministic: Kalspire is Stunned for 1 round beginning at Start of Round 1. Downstream combat consequences and any independently verified cleanse interaction are not calculated by this trace.",
     "explanation": "At Start of Round 1, Radiant Conqueror deterministically applies Stun to Kalspire for 1 round.",
     "id": "self-status-output-kalspire-radiant-conqueror-radiant-conqueror-self-stun-stun-status-output",
     "interactionScope": "internal",
@@ -57727,7 +57800,7 @@
     ],
     "status": "potential",
     "targetSelectionGroup": null,
-    "title": "Internal Damage Received modifier",
+    "title": "Internal Physical Damage Received modifier",
     "unresolvedQuestions": []
   },
   {
@@ -57804,7 +57877,7 @@
     ],
     "status": "potential",
     "targetSelectionGroup": null,
-    "title": "Internal Damage Received modifier",
+    "title": "Internal Tactical Damage Received modifier",
     "unresolvedQuestions": []
   },
   {
@@ -57882,6 +57955,90 @@
     "status": "potential",
     "targetSelectionGroup": null,
     "title": "Internal Recovery Received modifier",
+    "unresolvedQuestions": []
+  },
+  {
+    "assumptions": [],
+    "channel": "stat",
+    "confidence": "confirmed",
+    "conflicts": [
+      "Vhagar - Skyward Titan Habit unlock requirement: expected Star Rank 10+, actual preview enabled",
+      "Vhagar - Skyward Titan Selected Habit Level: expected Habit Level 1+ or preview, actual preview enabled"
+    ],
+    "damageScope": null,
+    "effects": [
+      "Timing: Each round.",
+      "Strength +5% per stack at effective Habit Level 5.",
+      "Shared stack pool: bulwark.",
+      "Maximum stacks: 5.",
+      "Value per stack at effective Habit Level 1: 5% Strength.",
+      "Value per stack at effective Habit Level 5: 5% Strength.",
+      "Maximum theoretical modifier at effective Habit Level 1: 25% Strength.",
+      "Current stack count is unknown.",
+      "Activation chance: 30%.",
+      "Each-round stack trigger is chance-based and not guaranteed Active.",
+      "Duration: until end of combat."
+    ],
+    "exactResultKnown": false,
+    "exactResultUnknownReason": "Exact final strength increase cannot be calculated because stack activation success, current/final stack count, and the final stat formula remain unresolved.",
+    "explanation": "Vhagar's Skyward Titan checks each round with a 30% chance to grant one Bulwark stack. Each stack increases Strength by +5% per stack at effective Habit Level 1; maximum 5 stacks; maximum theoretical Strength increase +25%; duration until end of combat. Current and final stack count remain unresolved.",
+    "id": "internal-self-modifier-vhagar-skyward-titan-skyward-titan-bulwark-stack-strength-stat-stack-modifier",
+    "interactionScope": "internal",
+    "matchedOutputCapabilityIds": [],
+    "matchKind": "outgoing-effect-amplification",
+    "modifierCapabilityId": "vhagar-skyward-titan-skyward-titan-bulwark-stack-strength-stat-stack-modifier",
+    "modifierCapabilityIds": [
+      "vhagar-skyward-titan-skyward-titan-bulwark-stack-strength-stat-stack-modifier"
+    ],
+    "recipientAbilityId": null,
+    "recipientDragonId": "vhagar",
+    "recipientEvidenceIds": [],
+    "requirements": [
+      {
+        "actual": "provider vanguard, recipient vanguard",
+        "evidenceIds": [
+          "vhagar-skyward-titan-2026-06-25"
+        ],
+        "expected": "self",
+        "id": "vhagar-skyward-titan-skyward-titan-bulwark-stack-strength-stat-stack-modifier-targeting-vanguard",
+        "label": "Position compatibility",
+        "notes": [],
+        "satisfied": true
+      },
+      {
+        "actual": "preview enabled",
+        "evidenceIds": [
+          "vhagar-skyward-titan-2026-06-25"
+        ],
+        "expected": "Star Rank 10+",
+        "id": "vhagar-vhagar-skyward-titan-star-rank",
+        "label": "Vhagar - Skyward Titan Habit unlock requirement",
+        "notes": [],
+        "satisfied": false
+      },
+      {
+        "actual": "preview enabled",
+        "evidenceIds": [
+          "vhagar-skyward-titan-2026-06-25"
+        ],
+        "expected": "Habit Level 1+ or preview",
+        "id": "vhagar-vhagar-skyward-titan-habit-level",
+        "label": "Vhagar - Skyward Titan Selected Habit Level",
+        "notes": [
+          "Unlocked Habits without an explicit saved Habit Level default to effective Habit Level 1. Locked Habit capabilities are potential in preview mode, not active for current roster."
+        ],
+        "satisfied": false
+      }
+    ],
+    "ruleId": "internal-self-modifier",
+    "sourceAbilityId": "vhagar-skyward-titan",
+    "sourceDragonId": "vhagar",
+    "sourceEvidenceIds": [
+      "vhagar-skyward-titan-2026-06-25"
+    ],
+    "status": "potential",
+    "targetSelectionGroup": null,
+    "title": "Internal Strength modifier",
     "unresolvedQuestions": []
   },
   {
@@ -58675,6 +58832,180 @@
     "status": "potential",
     "targetSelectionGroup": null,
     "title": "Internal Physical Damage Dealt modifier",
+    "unresolvedQuestions": []
+  },
+  {
+    "assumptions": [
+      "Trigger chance may make this conditional rather than guaranteed."
+    ],
+    "channel": "damage-received",
+    "confidence": "confirmed",
+    "conflicts": [
+      "Vhagar - Skyward Titan Habit unlock requirement: expected Star Rank 10+, actual preview enabled",
+      "Vhagar - Skyward Titan Selected Habit Level: expected Habit Level 1+ or preview, actual preview enabled"
+    ],
+    "damageScope": "physical",
+    "effects": [
+      "Timing: Each round.",
+      "Grants 1 Bulwark stack.",
+      "Physical Damage Received decrease 2.5%.",
+      "Activation chance: 30%.",
+      "Shared stack pool: bulwark.",
+      "Maximum stacks: 5.",
+      "Value per stack at effective Habit Level 1: 2.5% Physical Damage Received.",
+      "Value per stack at effective Habit Level 5: 2.5% Physical Damage Received.",
+      "Maximum theoretical modifier at effective Habit Level 1: 12.5% Physical Damage Received.",
+      "Current stack count is unknown.",
+      "Each-round stack trigger is chance-based and not guaranteed Active.",
+      "Duration: until end of combat."
+    ],
+    "exactResultKnown": false,
+    "exactResultUnknownReason": "Exact final physical damage received mitigation cannot be calculated because shared stack activation success, current/final stack count, stack-combination behavior, and the final mitigation formula remain unresolved.",
+    "explanation": "Vhagar's Skyward Titan checks each round with a 30% chance to grant one Bulwark stack. Each stack reduces Physical Damage Received by 2.5% (Physical Damage Received -2.5% per stack) at effective Habit Level 1; maximum 5 stacks; maximum theoretical reduction -12.5%; duration until end of combat. Current and final stack count remain unresolved.",
+    "id": "defensive-ally-support-vhagar-skyward-titan-skyward-titan-bulwark-stack-physical-damage-received-stack-modifier-vhagar",
+    "interactionScope": "internal",
+    "matchedOutputCapabilityIds": [],
+    "matchKind": "defensive-ally-support",
+    "modifierCapabilityId": "vhagar-skyward-titan-skyward-titan-bulwark-stack-physical-damage-received-stack-modifier",
+    "modifierCapabilityIds": [
+      "vhagar-skyward-titan-skyward-titan-bulwark-stack-physical-damage-received-stack-modifier"
+    ],
+    "recipientAbilityId": null,
+    "recipientDragonId": "vhagar",
+    "recipientEvidenceIds": [],
+    "requirements": [
+      {
+        "actual": "provider vanguard, recipient vanguard",
+        "evidenceIds": [
+          "vhagar-skyward-titan-2026-06-25"
+        ],
+        "expected": "self",
+        "id": "vhagar-skyward-titan-skyward-titan-bulwark-stack-physical-damage-received-stack-modifier-targeting-vanguard",
+        "label": "Position compatibility",
+        "notes": [],
+        "satisfied": true
+      },
+      {
+        "actual": "preview enabled",
+        "evidenceIds": [
+          "vhagar-skyward-titan-2026-06-25"
+        ],
+        "expected": "Star Rank 10+",
+        "id": "vhagar-vhagar-skyward-titan-star-rank",
+        "label": "Vhagar - Skyward Titan Habit unlock requirement",
+        "notes": [],
+        "satisfied": false
+      },
+      {
+        "actual": "preview enabled",
+        "evidenceIds": [
+          "vhagar-skyward-titan-2026-06-25"
+        ],
+        "expected": "Habit Level 1+ or preview",
+        "id": "vhagar-vhagar-skyward-titan-habit-level",
+        "label": "Vhagar - Skyward Titan Selected Habit Level",
+        "notes": [
+          "Unlocked Habits without an explicit saved Habit Level default to effective Habit Level 1. Locked Habit capabilities are potential in preview mode, not active for current roster."
+        ],
+        "satisfied": false
+      }
+    ],
+    "ruleId": "defensive-ally-support",
+    "sourceAbilityId": "vhagar-skyward-titan",
+    "sourceDragonId": "vhagar",
+    "sourceEvidenceIds": [
+      "vhagar-skyward-titan-2026-06-25"
+    ],
+    "status": "potential",
+    "targetSelectionGroup": null,
+    "title": "Physical Damage Received Support",
+    "unresolvedQuestions": []
+  },
+  {
+    "assumptions": [
+      "Trigger chance may make this conditional rather than guaranteed."
+    ],
+    "channel": "damage-received",
+    "confidence": "confirmed",
+    "conflicts": [
+      "Vhagar - Skyward Titan Habit unlock requirement: expected Star Rank 10+, actual preview enabled",
+      "Vhagar - Skyward Titan Selected Habit Level: expected Habit Level 1+ or preview, actual preview enabled"
+    ],
+    "damageScope": "tactical",
+    "effects": [
+      "Timing: Each round.",
+      "Grants 1 Bulwark stack.",
+      "Tactical Damage Received decrease 2.5%.",
+      "Activation chance: 30%.",
+      "Shared stack pool: bulwark.",
+      "Maximum stacks: 5.",
+      "Value per stack at effective Habit Level 1: 2.5% Tactical Damage Received.",
+      "Value per stack at effective Habit Level 5: 2.5% Tactical Damage Received.",
+      "Maximum theoretical modifier at effective Habit Level 1: 12.5% Tactical Damage Received.",
+      "Current stack count is unknown.",
+      "Each-round stack trigger is chance-based and not guaranteed Active.",
+      "Duration: until end of combat."
+    ],
+    "exactResultKnown": false,
+    "exactResultUnknownReason": "Exact final tactical damage received mitigation cannot be calculated because shared stack activation success, current/final stack count, stack-combination behavior, and the final mitigation formula remain unresolved.",
+    "explanation": "Vhagar's Skyward Titan checks each round with a 30% chance to grant one Bulwark stack. Each stack reduces Tactical Damage Received by 2.5% (Tactical Damage Received -2.5% per stack) at effective Habit Level 1; maximum 5 stacks; maximum theoretical reduction -12.5%; duration until end of combat. Current and final stack count remain unresolved.",
+    "id": "defensive-ally-support-vhagar-skyward-titan-skyward-titan-bulwark-stack-tactical-damage-received-stack-modifier-vhagar",
+    "interactionScope": "internal",
+    "matchedOutputCapabilityIds": [],
+    "matchKind": "defensive-ally-support",
+    "modifierCapabilityId": "vhagar-skyward-titan-skyward-titan-bulwark-stack-tactical-damage-received-stack-modifier",
+    "modifierCapabilityIds": [
+      "vhagar-skyward-titan-skyward-titan-bulwark-stack-tactical-damage-received-stack-modifier"
+    ],
+    "recipientAbilityId": null,
+    "recipientDragonId": "vhagar",
+    "recipientEvidenceIds": [],
+    "requirements": [
+      {
+        "actual": "provider vanguard, recipient vanguard",
+        "evidenceIds": [
+          "vhagar-skyward-titan-2026-06-25"
+        ],
+        "expected": "self",
+        "id": "vhagar-skyward-titan-skyward-titan-bulwark-stack-tactical-damage-received-stack-modifier-targeting-vanguard",
+        "label": "Position compatibility",
+        "notes": [],
+        "satisfied": true
+      },
+      {
+        "actual": "preview enabled",
+        "evidenceIds": [
+          "vhagar-skyward-titan-2026-06-25"
+        ],
+        "expected": "Star Rank 10+",
+        "id": "vhagar-vhagar-skyward-titan-star-rank",
+        "label": "Vhagar - Skyward Titan Habit unlock requirement",
+        "notes": [],
+        "satisfied": false
+      },
+      {
+        "actual": "preview enabled",
+        "evidenceIds": [
+          "vhagar-skyward-titan-2026-06-25"
+        ],
+        "expected": "Habit Level 1+ or preview",
+        "id": "vhagar-vhagar-skyward-titan-habit-level",
+        "label": "Vhagar - Skyward Titan Selected Habit Level",
+        "notes": [
+          "Unlocked Habits without an explicit saved Habit Level default to effective Habit Level 1. Locked Habit capabilities are potential in preview mode, not active for current roster."
+        ],
+        "satisfied": false
+      }
+    ],
+    "ruleId": "defensive-ally-support",
+    "sourceAbilityId": "vhagar-skyward-titan",
+    "sourceDragonId": "vhagar",
+    "sourceEvidenceIds": [
+      "vhagar-skyward-titan-2026-06-25"
+    ],
+    "status": "potential",
+    "targetSelectionGroup": null,
+    "title": "Tactical Damage Received Support",
     "unresolvedQuestions": []
   },
   {
@@ -60391,6 +60722,79 @@
   },
   {
     "assumptions": [
+      "The trigger is tied to the stack-count transition, not persistent possession of the threshold stack count.",
+      "Enemy formation members and lane occupants are not invented."
+    ],
+    "channel": "physical-damage",
+    "confidence": "confirmed",
+    "conflicts": [
+      "vhagar - Skyward Titan Habit unlock requirement: expected Star Rank 10+, actual preview enabled",
+      "vhagar - Skyward Titan Selected Habit Level: expected Habit Level 1+ or preview, actual preview enabled"
+    ],
+    "damageScope": null,
+    "effects": [
+      "Skyward Titan checks each round at 30%.",
+      "Successful activations grant one Bulwark stack.",
+      "Maximum stacks: 5.",
+      "The attack occurs when the activation grants the third Bulwark stack.",
+      "Physical Damage Rate is 250%.",
+      "Target: one enemy in the same lane."
+    ],
+    "exactResultKnown": false,
+    "exactResultUnknownReason": "Exact final damage cannot be calculated because reaching stack 3, activation sequence, target identity, mitigation, and final damage remain unresolved.",
+    "explanation": "Vhagar's Skyward Titan checks each round at 30%; successful activations grant one Bulwark stack. The Physical Damage attack occurs when the activation grants the third Bulwark stack, once on that transition, and does not repeat merely because Vhagar remains at 3, 4, or 5 stacks.",
+    "id": "stack-transition-output-vhagar-skyward-titan-skyward-titan-third-stack-damage-output",
+    "interactionScope": "enemy-side",
+    "matchedOutputCapabilityIds": [
+      "vhagar-skyward-titan-skyward-titan-third-stack-damage-output"
+    ],
+    "matchKind": "outgoing-effect-amplification",
+    "modifierCapabilityId": null,
+    "modifierCapabilityIds": [],
+    "recipientAbilityId": "vhagar-skyward-titan-skyward-titan-third-stack-damage-output",
+    "recipientDragonId": null,
+    "recipientEvidenceIds": [],
+    "requirements": [
+      {
+        "actual": "preview enabled",
+        "evidenceIds": [
+          "vhagar-skyward-titan-2026-06-25"
+        ],
+        "expected": "Star Rank 10+",
+        "id": "vhagar-vhagar-skyward-titan-star-rank",
+        "label": "vhagar - Skyward Titan Habit unlock requirement",
+        "notes": [],
+        "satisfied": false
+      },
+      {
+        "actual": "preview enabled",
+        "evidenceIds": [
+          "vhagar-skyward-titan-2026-06-25"
+        ],
+        "expected": "Habit Level 1+ or preview",
+        "id": "vhagar-vhagar-skyward-titan-habit-level",
+        "label": "vhagar - Skyward Titan Selected Habit Level",
+        "notes": [
+          "Unlocked Habits without an explicit saved Habit Level default to effective Habit Level 1. Locked Habit capabilities are potential in preview mode, not active for current roster."
+        ],
+        "satisfied": false
+      }
+    ],
+    "ruleId": "stack-transition-output",
+    "sourceAbilityId": "vhagar-skyward-titan",
+    "sourceDragonId": "vhagar",
+    "sourceEvidenceIds": [
+      "vhagar-skyward-titan-2026-06-25"
+    ],
+    "status": "potential",
+    "targetSelectionGroup": null,
+    "title": "Skyward Titan - Physical Damage transition attack",
+    "unresolvedQuestions": [
+      "Reaching stack 3, activation sequence, target identity, mitigation, and final damage remain unresolved."
+    ]
+  },
+  {
+    "assumptions": [
       "Status application remains chance-based or conditional when activation or uptime is unresolved."
     ],
     "channel": "status",
@@ -61018,7 +61422,7 @@
     ],
     "status": "potential",
     "targetSelectionGroup": null,
-    "title": "Internal Damage Received modifier",
+    "title": "Internal Physical Damage Received modifier",
     "unresolvedQuestions": []
   },
   {
@@ -61095,7 +61499,7 @@
     ],
     "status": "potential",
     "targetSelectionGroup": null,
-    "title": "Internal Damage Received modifier",
+    "title": "Internal Tactical Damage Received modifier",
     "unresolvedQuestions": []
   },
   {
@@ -61173,6 +61577,90 @@
     "status": "potential",
     "targetSelectionGroup": null,
     "title": "Internal Recovery Received modifier",
+    "unresolvedQuestions": []
+  },
+  {
+    "assumptions": [],
+    "channel": "stat",
+    "confidence": "confirmed",
+    "conflicts": [
+      "Vhagar - Skyward Titan Habit unlock requirement: expected Star Rank 10+, actual preview enabled",
+      "Vhagar - Skyward Titan Selected Habit Level: expected Habit Level 1+ or preview, actual preview enabled"
+    ],
+    "damageScope": null,
+    "effects": [
+      "Timing: Each round.",
+      "Strength +5% per stack at effective Habit Level 5.",
+      "Shared stack pool: bulwark.",
+      "Maximum stacks: 5.",
+      "Value per stack at effective Habit Level 1: 5% Strength.",
+      "Value per stack at effective Habit Level 5: 5% Strength.",
+      "Maximum theoretical modifier at effective Habit Level 1: 25% Strength.",
+      "Current stack count is unknown.",
+      "Activation chance: 30%.",
+      "Each-round stack trigger is chance-based and not guaranteed Active.",
+      "Duration: until end of combat."
+    ],
+    "exactResultKnown": false,
+    "exactResultUnknownReason": "Exact final strength increase cannot be calculated because stack activation success, current/final stack count, and the final stat formula remain unresolved.",
+    "explanation": "Vhagar's Skyward Titan checks each round with a 30% chance to grant one Bulwark stack. Each stack increases Strength by +5% per stack at effective Habit Level 1; maximum 5 stacks; maximum theoretical Strength increase +25%; duration until end of combat. Current and final stack count remain unresolved.",
+    "id": "internal-self-modifier-vhagar-skyward-titan-skyward-titan-bulwark-stack-strength-stat-stack-modifier",
+    "interactionScope": "internal",
+    "matchedOutputCapabilityIds": [],
+    "matchKind": "outgoing-effect-amplification",
+    "modifierCapabilityId": "vhagar-skyward-titan-skyward-titan-bulwark-stack-strength-stat-stack-modifier",
+    "modifierCapabilityIds": [
+      "vhagar-skyward-titan-skyward-titan-bulwark-stack-strength-stat-stack-modifier"
+    ],
+    "recipientAbilityId": null,
+    "recipientDragonId": "vhagar",
+    "recipientEvidenceIds": [],
+    "requirements": [
+      {
+        "actual": "provider vanguard, recipient vanguard",
+        "evidenceIds": [
+          "vhagar-skyward-titan-2026-06-25"
+        ],
+        "expected": "self",
+        "id": "vhagar-skyward-titan-skyward-titan-bulwark-stack-strength-stat-stack-modifier-targeting-vanguard",
+        "label": "Position compatibility",
+        "notes": [],
+        "satisfied": true
+      },
+      {
+        "actual": "preview enabled",
+        "evidenceIds": [
+          "vhagar-skyward-titan-2026-06-25"
+        ],
+        "expected": "Star Rank 10+",
+        "id": "vhagar-vhagar-skyward-titan-star-rank",
+        "label": "Vhagar - Skyward Titan Habit unlock requirement",
+        "notes": [],
+        "satisfied": false
+      },
+      {
+        "actual": "preview enabled",
+        "evidenceIds": [
+          "vhagar-skyward-titan-2026-06-25"
+        ],
+        "expected": "Habit Level 1+ or preview",
+        "id": "vhagar-vhagar-skyward-titan-habit-level",
+        "label": "Vhagar - Skyward Titan Selected Habit Level",
+        "notes": [
+          "Unlocked Habits without an explicit saved Habit Level default to effective Habit Level 1. Locked Habit capabilities are potential in preview mode, not active for current roster."
+        ],
+        "satisfied": false
+      }
+    ],
+    "ruleId": "internal-self-modifier",
+    "sourceAbilityId": "vhagar-skyward-titan",
+    "sourceDragonId": "vhagar",
+    "sourceEvidenceIds": [
+      "vhagar-skyward-titan-2026-06-25"
+    ],
+    "status": "potential",
+    "targetSelectionGroup": null,
+    "title": "Internal Strength modifier",
     "unresolvedQuestions": []
   },
   {
@@ -61729,6 +62217,180 @@
     "status": "potential",
     "targetSelectionGroup": null,
     "title": "Internal Intelligence modifier",
+    "unresolvedQuestions": []
+  },
+  {
+    "assumptions": [
+      "Trigger chance may make this conditional rather than guaranteed."
+    ],
+    "channel": "damage-received",
+    "confidence": "confirmed",
+    "conflicts": [
+      "Vhagar - Skyward Titan Habit unlock requirement: expected Star Rank 10+, actual preview enabled",
+      "Vhagar - Skyward Titan Selected Habit Level: expected Habit Level 1+ or preview, actual preview enabled"
+    ],
+    "damageScope": "physical",
+    "effects": [
+      "Timing: Each round.",
+      "Grants 1 Bulwark stack.",
+      "Physical Damage Received decrease 2.5%.",
+      "Activation chance: 30%.",
+      "Shared stack pool: bulwark.",
+      "Maximum stacks: 5.",
+      "Value per stack at effective Habit Level 1: 2.5% Physical Damage Received.",
+      "Value per stack at effective Habit Level 5: 2.5% Physical Damage Received.",
+      "Maximum theoretical modifier at effective Habit Level 1: 12.5% Physical Damage Received.",
+      "Current stack count is unknown.",
+      "Each-round stack trigger is chance-based and not guaranteed Active.",
+      "Duration: until end of combat."
+    ],
+    "exactResultKnown": false,
+    "exactResultUnknownReason": "Exact final physical damage received mitigation cannot be calculated because shared stack activation success, current/final stack count, stack-combination behavior, and the final mitigation formula remain unresolved.",
+    "explanation": "Vhagar's Skyward Titan checks each round with a 30% chance to grant one Bulwark stack. Each stack reduces Physical Damage Received by 2.5% (Physical Damage Received -2.5% per stack) at effective Habit Level 1; maximum 5 stacks; maximum theoretical reduction -12.5%; duration until end of combat. Current and final stack count remain unresolved.",
+    "id": "defensive-ally-support-vhagar-skyward-titan-skyward-titan-bulwark-stack-physical-damage-received-stack-modifier-vhagar",
+    "interactionScope": "internal",
+    "matchedOutputCapabilityIds": [],
+    "matchKind": "defensive-ally-support",
+    "modifierCapabilityId": "vhagar-skyward-titan-skyward-titan-bulwark-stack-physical-damage-received-stack-modifier",
+    "modifierCapabilityIds": [
+      "vhagar-skyward-titan-skyward-titan-bulwark-stack-physical-damage-received-stack-modifier"
+    ],
+    "recipientAbilityId": null,
+    "recipientDragonId": "vhagar",
+    "recipientEvidenceIds": [],
+    "requirements": [
+      {
+        "actual": "provider vanguard, recipient vanguard",
+        "evidenceIds": [
+          "vhagar-skyward-titan-2026-06-25"
+        ],
+        "expected": "self",
+        "id": "vhagar-skyward-titan-skyward-titan-bulwark-stack-physical-damage-received-stack-modifier-targeting-vanguard",
+        "label": "Position compatibility",
+        "notes": [],
+        "satisfied": true
+      },
+      {
+        "actual": "preview enabled",
+        "evidenceIds": [
+          "vhagar-skyward-titan-2026-06-25"
+        ],
+        "expected": "Star Rank 10+",
+        "id": "vhagar-vhagar-skyward-titan-star-rank",
+        "label": "Vhagar - Skyward Titan Habit unlock requirement",
+        "notes": [],
+        "satisfied": false
+      },
+      {
+        "actual": "preview enabled",
+        "evidenceIds": [
+          "vhagar-skyward-titan-2026-06-25"
+        ],
+        "expected": "Habit Level 1+ or preview",
+        "id": "vhagar-vhagar-skyward-titan-habit-level",
+        "label": "Vhagar - Skyward Titan Selected Habit Level",
+        "notes": [
+          "Unlocked Habits without an explicit saved Habit Level default to effective Habit Level 1. Locked Habit capabilities are potential in preview mode, not active for current roster."
+        ],
+        "satisfied": false
+      }
+    ],
+    "ruleId": "defensive-ally-support",
+    "sourceAbilityId": "vhagar-skyward-titan",
+    "sourceDragonId": "vhagar",
+    "sourceEvidenceIds": [
+      "vhagar-skyward-titan-2026-06-25"
+    ],
+    "status": "potential",
+    "targetSelectionGroup": null,
+    "title": "Physical Damage Received Support",
+    "unresolvedQuestions": []
+  },
+  {
+    "assumptions": [
+      "Trigger chance may make this conditional rather than guaranteed."
+    ],
+    "channel": "damage-received",
+    "confidence": "confirmed",
+    "conflicts": [
+      "Vhagar - Skyward Titan Habit unlock requirement: expected Star Rank 10+, actual preview enabled",
+      "Vhagar - Skyward Titan Selected Habit Level: expected Habit Level 1+ or preview, actual preview enabled"
+    ],
+    "damageScope": "tactical",
+    "effects": [
+      "Timing: Each round.",
+      "Grants 1 Bulwark stack.",
+      "Tactical Damage Received decrease 2.5%.",
+      "Activation chance: 30%.",
+      "Shared stack pool: bulwark.",
+      "Maximum stacks: 5.",
+      "Value per stack at effective Habit Level 1: 2.5% Tactical Damage Received.",
+      "Value per stack at effective Habit Level 5: 2.5% Tactical Damage Received.",
+      "Maximum theoretical modifier at effective Habit Level 1: 12.5% Tactical Damage Received.",
+      "Current stack count is unknown.",
+      "Each-round stack trigger is chance-based and not guaranteed Active.",
+      "Duration: until end of combat."
+    ],
+    "exactResultKnown": false,
+    "exactResultUnknownReason": "Exact final tactical damage received mitigation cannot be calculated because shared stack activation success, current/final stack count, stack-combination behavior, and the final mitigation formula remain unresolved.",
+    "explanation": "Vhagar's Skyward Titan checks each round with a 30% chance to grant one Bulwark stack. Each stack reduces Tactical Damage Received by 2.5% (Tactical Damage Received -2.5% per stack) at effective Habit Level 1; maximum 5 stacks; maximum theoretical reduction -12.5%; duration until end of combat. Current and final stack count remain unresolved.",
+    "id": "defensive-ally-support-vhagar-skyward-titan-skyward-titan-bulwark-stack-tactical-damage-received-stack-modifier-vhagar",
+    "interactionScope": "internal",
+    "matchedOutputCapabilityIds": [],
+    "matchKind": "defensive-ally-support",
+    "modifierCapabilityId": "vhagar-skyward-titan-skyward-titan-bulwark-stack-tactical-damage-received-stack-modifier",
+    "modifierCapabilityIds": [
+      "vhagar-skyward-titan-skyward-titan-bulwark-stack-tactical-damage-received-stack-modifier"
+    ],
+    "recipientAbilityId": null,
+    "recipientDragonId": "vhagar",
+    "recipientEvidenceIds": [],
+    "requirements": [
+      {
+        "actual": "provider vanguard, recipient vanguard",
+        "evidenceIds": [
+          "vhagar-skyward-titan-2026-06-25"
+        ],
+        "expected": "self",
+        "id": "vhagar-skyward-titan-skyward-titan-bulwark-stack-tactical-damage-received-stack-modifier-targeting-vanguard",
+        "label": "Position compatibility",
+        "notes": [],
+        "satisfied": true
+      },
+      {
+        "actual": "preview enabled",
+        "evidenceIds": [
+          "vhagar-skyward-titan-2026-06-25"
+        ],
+        "expected": "Star Rank 10+",
+        "id": "vhagar-vhagar-skyward-titan-star-rank",
+        "label": "Vhagar - Skyward Titan Habit unlock requirement",
+        "notes": [],
+        "satisfied": false
+      },
+      {
+        "actual": "preview enabled",
+        "evidenceIds": [
+          "vhagar-skyward-titan-2026-06-25"
+        ],
+        "expected": "Habit Level 1+ or preview",
+        "id": "vhagar-vhagar-skyward-titan-habit-level",
+        "label": "Vhagar - Skyward Titan Selected Habit Level",
+        "notes": [
+          "Unlocked Habits without an explicit saved Habit Level default to effective Habit Level 1. Locked Habit capabilities are potential in preview mode, not active for current roster."
+        ],
+        "satisfied": false
+      }
+    ],
+    "ruleId": "defensive-ally-support",
+    "sourceAbilityId": "vhagar-skyward-titan",
+    "sourceDragonId": "vhagar",
+    "sourceEvidenceIds": [
+      "vhagar-skyward-titan-2026-06-25"
+    ],
+    "status": "potential",
+    "targetSelectionGroup": null,
+    "title": "Tactical Damage Received Support",
     "unresolvedQuestions": []
   },
   {
@@ -64549,6 +65211,79 @@
   },
   {
     "assumptions": [
+      "The trigger is tied to the stack-count transition, not persistent possession of the threshold stack count.",
+      "Enemy formation members and lane occupants are not invented."
+    ],
+    "channel": "physical-damage",
+    "confidence": "confirmed",
+    "conflicts": [
+      "vhagar - Skyward Titan Habit unlock requirement: expected Star Rank 10+, actual preview enabled",
+      "vhagar - Skyward Titan Selected Habit Level: expected Habit Level 1+ or preview, actual preview enabled"
+    ],
+    "damageScope": null,
+    "effects": [
+      "Skyward Titan checks each round at 30%.",
+      "Successful activations grant one Bulwark stack.",
+      "Maximum stacks: 5.",
+      "The attack occurs when the activation grants the third Bulwark stack.",
+      "Physical Damage Rate is 250%.",
+      "Target: one enemy in the same lane."
+    ],
+    "exactResultKnown": false,
+    "exactResultUnknownReason": "Exact final damage cannot be calculated because reaching stack 3, activation sequence, target identity, mitigation, and final damage remain unresolved.",
+    "explanation": "Vhagar's Skyward Titan checks each round at 30%; successful activations grant one Bulwark stack. The Physical Damage attack occurs when the activation grants the third Bulwark stack, once on that transition, and does not repeat merely because Vhagar remains at 3, 4, or 5 stacks.",
+    "id": "stack-transition-output-vhagar-skyward-titan-skyward-titan-third-stack-damage-output",
+    "interactionScope": "enemy-side",
+    "matchedOutputCapabilityIds": [
+      "vhagar-skyward-titan-skyward-titan-third-stack-damage-output"
+    ],
+    "matchKind": "outgoing-effect-amplification",
+    "modifierCapabilityId": null,
+    "modifierCapabilityIds": [],
+    "recipientAbilityId": "vhagar-skyward-titan-skyward-titan-third-stack-damage-output",
+    "recipientDragonId": null,
+    "recipientEvidenceIds": [],
+    "requirements": [
+      {
+        "actual": "preview enabled",
+        "evidenceIds": [
+          "vhagar-skyward-titan-2026-06-25"
+        ],
+        "expected": "Star Rank 10+",
+        "id": "vhagar-vhagar-skyward-titan-star-rank",
+        "label": "vhagar - Skyward Titan Habit unlock requirement",
+        "notes": [],
+        "satisfied": false
+      },
+      {
+        "actual": "preview enabled",
+        "evidenceIds": [
+          "vhagar-skyward-titan-2026-06-25"
+        ],
+        "expected": "Habit Level 1+ or preview",
+        "id": "vhagar-vhagar-skyward-titan-habit-level",
+        "label": "vhagar - Skyward Titan Selected Habit Level",
+        "notes": [
+          "Unlocked Habits without an explicit saved Habit Level default to effective Habit Level 1. Locked Habit capabilities are potential in preview mode, not active for current roster."
+        ],
+        "satisfied": false
+      }
+    ],
+    "ruleId": "stack-transition-output",
+    "sourceAbilityId": "vhagar-skyward-titan",
+    "sourceDragonId": "vhagar",
+    "sourceEvidenceIds": [
+      "vhagar-skyward-titan-2026-06-25"
+    ],
+    "status": "potential",
+    "targetSelectionGroup": null,
+    "title": "Skyward Titan - Physical Damage transition attack",
+    "unresolvedQuestions": [
+      "Reaching stack 3, activation sequence, target identity, mitigation, and final damage remain unresolved."
+    ]
+  },
+  {
+    "assumptions": [
       "Status application remains chance-based or conditional when activation or uptime is unresolved."
     ],
     "channel": "status",
@@ -64860,7 +65595,7 @@
       "Stun application is deterministic."
     ],
     "exactResultKnown": false,
-    "exactResultUnknownReason": "Exact Stun result cannot be calculated because activation success, runtime condition state, and status uptime are unresolved.",
+    "exactResultUnknownReason": "The Stun application is deterministic: Kalspire is Stunned for 1 round beginning at Start of Round 1. Downstream combat consequences and any independently verified cleanse interaction are not calculated by this trace.",
     "explanation": "At Start of Round 1, Radiant Conqueror deterministically applies Stun to Kalspire for 1 round.",
     "id": "self-status-output-kalspire-radiant-conqueror-radiant-conqueror-self-stun-stun-status-output",
     "interactionScope": "internal",
@@ -65149,7 +65884,7 @@
     ],
     "status": "potential",
     "targetSelectionGroup": null,
-    "title": "Internal Damage Received modifier",
+    "title": "Internal Physical Damage Received modifier",
     "unresolvedQuestions": []
   },
   {
@@ -65226,7 +65961,7 @@
     ],
     "status": "potential",
     "targetSelectionGroup": null,
-    "title": "Internal Damage Received modifier",
+    "title": "Internal Tactical Damage Received modifier",
     "unresolvedQuestions": []
   },
   {
@@ -65304,6 +66039,90 @@
     "status": "potential",
     "targetSelectionGroup": null,
     "title": "Internal Recovery Received modifier",
+    "unresolvedQuestions": []
+  },
+  {
+    "assumptions": [],
+    "channel": "stat",
+    "confidence": "confirmed",
+    "conflicts": [
+      "Vhagar - Skyward Titan Habit unlock requirement: expected Star Rank 10+, actual preview enabled",
+      "Vhagar - Skyward Titan Selected Habit Level: expected Habit Level 1+ or preview, actual preview enabled"
+    ],
+    "damageScope": null,
+    "effects": [
+      "Timing: Each round.",
+      "Strength +5% per stack at effective Habit Level 5.",
+      "Shared stack pool: bulwark.",
+      "Maximum stacks: 5.",
+      "Value per stack at effective Habit Level 1: 5% Strength.",
+      "Value per stack at effective Habit Level 5: 5% Strength.",
+      "Maximum theoretical modifier at effective Habit Level 1: 25% Strength.",
+      "Current stack count is unknown.",
+      "Activation chance: 30%.",
+      "Each-round stack trigger is chance-based and not guaranteed Active.",
+      "Duration: until end of combat."
+    ],
+    "exactResultKnown": false,
+    "exactResultUnknownReason": "Exact final strength increase cannot be calculated because stack activation success, current/final stack count, and the final stat formula remain unresolved.",
+    "explanation": "Vhagar's Skyward Titan checks each round with a 30% chance to grant one Bulwark stack. Each stack increases Strength by +5% per stack at effective Habit Level 1; maximum 5 stacks; maximum theoretical Strength increase +25%; duration until end of combat. Current and final stack count remain unresolved.",
+    "id": "internal-self-modifier-vhagar-skyward-titan-skyward-titan-bulwark-stack-strength-stat-stack-modifier",
+    "interactionScope": "internal",
+    "matchedOutputCapabilityIds": [],
+    "matchKind": "outgoing-effect-amplification",
+    "modifierCapabilityId": "vhagar-skyward-titan-skyward-titan-bulwark-stack-strength-stat-stack-modifier",
+    "modifierCapabilityIds": [
+      "vhagar-skyward-titan-skyward-titan-bulwark-stack-strength-stat-stack-modifier"
+    ],
+    "recipientAbilityId": null,
+    "recipientDragonId": "vhagar",
+    "recipientEvidenceIds": [],
+    "requirements": [
+      {
+        "actual": "provider right-flank, recipient right-flank",
+        "evidenceIds": [
+          "vhagar-skyward-titan-2026-06-25"
+        ],
+        "expected": "self",
+        "id": "vhagar-skyward-titan-skyward-titan-bulwark-stack-strength-stat-stack-modifier-targeting-right-flank",
+        "label": "Position compatibility",
+        "notes": [],
+        "satisfied": true
+      },
+      {
+        "actual": "preview enabled",
+        "evidenceIds": [
+          "vhagar-skyward-titan-2026-06-25"
+        ],
+        "expected": "Star Rank 10+",
+        "id": "vhagar-vhagar-skyward-titan-star-rank",
+        "label": "Vhagar - Skyward Titan Habit unlock requirement",
+        "notes": [],
+        "satisfied": false
+      },
+      {
+        "actual": "preview enabled",
+        "evidenceIds": [
+          "vhagar-skyward-titan-2026-06-25"
+        ],
+        "expected": "Habit Level 1+ or preview",
+        "id": "vhagar-vhagar-skyward-titan-habit-level",
+        "label": "Vhagar - Skyward Titan Selected Habit Level",
+        "notes": [
+          "Unlocked Habits without an explicit saved Habit Level default to effective Habit Level 1. Locked Habit capabilities are potential in preview mode, not active for current roster."
+        ],
+        "satisfied": false
+      }
+    ],
+    "ruleId": "internal-self-modifier",
+    "sourceAbilityId": "vhagar-skyward-titan",
+    "sourceDragonId": "vhagar",
+    "sourceEvidenceIds": [
+      "vhagar-skyward-titan-2026-06-25"
+    ],
+    "status": "potential",
+    "targetSelectionGroup": null,
+    "title": "Internal Strength modifier",
     "unresolvedQuestions": []
   },
   {
@@ -66049,6 +66868,180 @@
       "targetCount": 1
     },
     "title": "Damage Received Target Selection",
+    "unresolvedQuestions": []
+  },
+  {
+    "assumptions": [
+      "Trigger chance may make this conditional rather than guaranteed."
+    ],
+    "channel": "damage-received",
+    "confidence": "confirmed",
+    "conflicts": [
+      "Vhagar - Skyward Titan Habit unlock requirement: expected Star Rank 10+, actual preview enabled",
+      "Vhagar - Skyward Titan Selected Habit Level: expected Habit Level 1+ or preview, actual preview enabled"
+    ],
+    "damageScope": "physical",
+    "effects": [
+      "Timing: Each round.",
+      "Grants 1 Bulwark stack.",
+      "Physical Damage Received decrease 2.5%.",
+      "Activation chance: 30%.",
+      "Shared stack pool: bulwark.",
+      "Maximum stacks: 5.",
+      "Value per stack at effective Habit Level 1: 2.5% Physical Damage Received.",
+      "Value per stack at effective Habit Level 5: 2.5% Physical Damage Received.",
+      "Maximum theoretical modifier at effective Habit Level 1: 12.5% Physical Damage Received.",
+      "Current stack count is unknown.",
+      "Each-round stack trigger is chance-based and not guaranteed Active.",
+      "Duration: until end of combat."
+    ],
+    "exactResultKnown": false,
+    "exactResultUnknownReason": "Exact final physical damage received mitigation cannot be calculated because shared stack activation success, current/final stack count, stack-combination behavior, and the final mitigation formula remain unresolved.",
+    "explanation": "Vhagar's Skyward Titan checks each round with a 30% chance to grant one Bulwark stack. Each stack reduces Physical Damage Received by 2.5% (Physical Damage Received -2.5% per stack) at effective Habit Level 1; maximum 5 stacks; maximum theoretical reduction -12.5%; duration until end of combat. Current and final stack count remain unresolved.",
+    "id": "defensive-ally-support-vhagar-skyward-titan-skyward-titan-bulwark-stack-physical-damage-received-stack-modifier-vhagar",
+    "interactionScope": "internal",
+    "matchedOutputCapabilityIds": [],
+    "matchKind": "defensive-ally-support",
+    "modifierCapabilityId": "vhagar-skyward-titan-skyward-titan-bulwark-stack-physical-damage-received-stack-modifier",
+    "modifierCapabilityIds": [
+      "vhagar-skyward-titan-skyward-titan-bulwark-stack-physical-damage-received-stack-modifier"
+    ],
+    "recipientAbilityId": null,
+    "recipientDragonId": "vhagar",
+    "recipientEvidenceIds": [],
+    "requirements": [
+      {
+        "actual": "provider right-flank, recipient right-flank",
+        "evidenceIds": [
+          "vhagar-skyward-titan-2026-06-25"
+        ],
+        "expected": "self",
+        "id": "vhagar-skyward-titan-skyward-titan-bulwark-stack-physical-damage-received-stack-modifier-targeting-right-flank",
+        "label": "Position compatibility",
+        "notes": [],
+        "satisfied": true
+      },
+      {
+        "actual": "preview enabled",
+        "evidenceIds": [
+          "vhagar-skyward-titan-2026-06-25"
+        ],
+        "expected": "Star Rank 10+",
+        "id": "vhagar-vhagar-skyward-titan-star-rank",
+        "label": "Vhagar - Skyward Titan Habit unlock requirement",
+        "notes": [],
+        "satisfied": false
+      },
+      {
+        "actual": "preview enabled",
+        "evidenceIds": [
+          "vhagar-skyward-titan-2026-06-25"
+        ],
+        "expected": "Habit Level 1+ or preview",
+        "id": "vhagar-vhagar-skyward-titan-habit-level",
+        "label": "Vhagar - Skyward Titan Selected Habit Level",
+        "notes": [
+          "Unlocked Habits without an explicit saved Habit Level default to effective Habit Level 1. Locked Habit capabilities are potential in preview mode, not active for current roster."
+        ],
+        "satisfied": false
+      }
+    ],
+    "ruleId": "defensive-ally-support",
+    "sourceAbilityId": "vhagar-skyward-titan",
+    "sourceDragonId": "vhagar",
+    "sourceEvidenceIds": [
+      "vhagar-skyward-titan-2026-06-25"
+    ],
+    "status": "potential",
+    "targetSelectionGroup": null,
+    "title": "Physical Damage Received Support",
+    "unresolvedQuestions": []
+  },
+  {
+    "assumptions": [
+      "Trigger chance may make this conditional rather than guaranteed."
+    ],
+    "channel": "damage-received",
+    "confidence": "confirmed",
+    "conflicts": [
+      "Vhagar - Skyward Titan Habit unlock requirement: expected Star Rank 10+, actual preview enabled",
+      "Vhagar - Skyward Titan Selected Habit Level: expected Habit Level 1+ or preview, actual preview enabled"
+    ],
+    "damageScope": "tactical",
+    "effects": [
+      "Timing: Each round.",
+      "Grants 1 Bulwark stack.",
+      "Tactical Damage Received decrease 2.5%.",
+      "Activation chance: 30%.",
+      "Shared stack pool: bulwark.",
+      "Maximum stacks: 5.",
+      "Value per stack at effective Habit Level 1: 2.5% Tactical Damage Received.",
+      "Value per stack at effective Habit Level 5: 2.5% Tactical Damage Received.",
+      "Maximum theoretical modifier at effective Habit Level 1: 12.5% Tactical Damage Received.",
+      "Current stack count is unknown.",
+      "Each-round stack trigger is chance-based and not guaranteed Active.",
+      "Duration: until end of combat."
+    ],
+    "exactResultKnown": false,
+    "exactResultUnknownReason": "Exact final tactical damage received mitigation cannot be calculated because shared stack activation success, current/final stack count, stack-combination behavior, and the final mitigation formula remain unresolved.",
+    "explanation": "Vhagar's Skyward Titan checks each round with a 30% chance to grant one Bulwark stack. Each stack reduces Tactical Damage Received by 2.5% (Tactical Damage Received -2.5% per stack) at effective Habit Level 1; maximum 5 stacks; maximum theoretical reduction -12.5%; duration until end of combat. Current and final stack count remain unresolved.",
+    "id": "defensive-ally-support-vhagar-skyward-titan-skyward-titan-bulwark-stack-tactical-damage-received-stack-modifier-vhagar",
+    "interactionScope": "internal",
+    "matchedOutputCapabilityIds": [],
+    "matchKind": "defensive-ally-support",
+    "modifierCapabilityId": "vhagar-skyward-titan-skyward-titan-bulwark-stack-tactical-damage-received-stack-modifier",
+    "modifierCapabilityIds": [
+      "vhagar-skyward-titan-skyward-titan-bulwark-stack-tactical-damage-received-stack-modifier"
+    ],
+    "recipientAbilityId": null,
+    "recipientDragonId": "vhagar",
+    "recipientEvidenceIds": [],
+    "requirements": [
+      {
+        "actual": "provider right-flank, recipient right-flank",
+        "evidenceIds": [
+          "vhagar-skyward-titan-2026-06-25"
+        ],
+        "expected": "self",
+        "id": "vhagar-skyward-titan-skyward-titan-bulwark-stack-tactical-damage-received-stack-modifier-targeting-right-flank",
+        "label": "Position compatibility",
+        "notes": [],
+        "satisfied": true
+      },
+      {
+        "actual": "preview enabled",
+        "evidenceIds": [
+          "vhagar-skyward-titan-2026-06-25"
+        ],
+        "expected": "Star Rank 10+",
+        "id": "vhagar-vhagar-skyward-titan-star-rank",
+        "label": "Vhagar - Skyward Titan Habit unlock requirement",
+        "notes": [],
+        "satisfied": false
+      },
+      {
+        "actual": "preview enabled",
+        "evidenceIds": [
+          "vhagar-skyward-titan-2026-06-25"
+        ],
+        "expected": "Habit Level 1+ or preview",
+        "id": "vhagar-vhagar-skyward-titan-habit-level",
+        "label": "Vhagar - Skyward Titan Selected Habit Level",
+        "notes": [
+          "Unlocked Habits without an explicit saved Habit Level default to effective Habit Level 1. Locked Habit capabilities are potential in preview mode, not active for current roster."
+        ],
+        "satisfied": false
+      }
+    ],
+    "ruleId": "defensive-ally-support",
+    "sourceAbilityId": "vhagar-skyward-titan",
+    "sourceDragonId": "vhagar",
+    "sourceEvidenceIds": [
+      "vhagar-skyward-titan-2026-06-25"
+    ],
+    "status": "potential",
+    "targetSelectionGroup": null,
+    "title": "Tactical Damage Received Support",
     "unresolvedQuestions": []
   },
   {
@@ -68936,6 +69929,79 @@
   },
   {
     "assumptions": [
+      "The trigger is tied to the stack-count transition, not persistent possession of the threshold stack count.",
+      "Enemy formation members and lane occupants are not invented."
+    ],
+    "channel": "physical-damage",
+    "confidence": "confirmed",
+    "conflicts": [
+      "vhagar - Skyward Titan Habit unlock requirement: expected Star Rank 10+, actual preview enabled",
+      "vhagar - Skyward Titan Selected Habit Level: expected Habit Level 1+ or preview, actual preview enabled"
+    ],
+    "damageScope": null,
+    "effects": [
+      "Skyward Titan checks each round at 30%.",
+      "Successful activations grant one Bulwark stack.",
+      "Maximum stacks: 5.",
+      "The attack occurs when the activation grants the third Bulwark stack.",
+      "Physical Damage Rate is 250%.",
+      "Target: one enemy in the same lane."
+    ],
+    "exactResultKnown": false,
+    "exactResultUnknownReason": "Exact final damage cannot be calculated because reaching stack 3, activation sequence, target identity, mitigation, and final damage remain unresolved.",
+    "explanation": "Vhagar's Skyward Titan checks each round at 30%; successful activations grant one Bulwark stack. The Physical Damage attack occurs when the activation grants the third Bulwark stack, once on that transition, and does not repeat merely because Vhagar remains at 3, 4, or 5 stacks.",
+    "id": "stack-transition-output-vhagar-skyward-titan-skyward-titan-third-stack-damage-output",
+    "interactionScope": "enemy-side",
+    "matchedOutputCapabilityIds": [
+      "vhagar-skyward-titan-skyward-titan-third-stack-damage-output"
+    ],
+    "matchKind": "outgoing-effect-amplification",
+    "modifierCapabilityId": null,
+    "modifierCapabilityIds": [],
+    "recipientAbilityId": "vhagar-skyward-titan-skyward-titan-third-stack-damage-output",
+    "recipientDragonId": null,
+    "recipientEvidenceIds": [],
+    "requirements": [
+      {
+        "actual": "preview enabled",
+        "evidenceIds": [
+          "vhagar-skyward-titan-2026-06-25"
+        ],
+        "expected": "Star Rank 10+",
+        "id": "vhagar-vhagar-skyward-titan-star-rank",
+        "label": "vhagar - Skyward Titan Habit unlock requirement",
+        "notes": [],
+        "satisfied": false
+      },
+      {
+        "actual": "preview enabled",
+        "evidenceIds": [
+          "vhagar-skyward-titan-2026-06-25"
+        ],
+        "expected": "Habit Level 1+ or preview",
+        "id": "vhagar-vhagar-skyward-titan-habit-level",
+        "label": "vhagar - Skyward Titan Selected Habit Level",
+        "notes": [
+          "Unlocked Habits without an explicit saved Habit Level default to effective Habit Level 1. Locked Habit capabilities are potential in preview mode, not active for current roster."
+        ],
+        "satisfied": false
+      }
+    ],
+    "ruleId": "stack-transition-output",
+    "sourceAbilityId": "vhagar-skyward-titan",
+    "sourceDragonId": "vhagar",
+    "sourceEvidenceIds": [
+      "vhagar-skyward-titan-2026-06-25"
+    ],
+    "status": "potential",
+    "targetSelectionGroup": null,
+    "title": "Skyward Titan - Physical Damage transition attack",
+    "unresolvedQuestions": [
+      "Reaching stack 3, activation sequence, target identity, mitigation, and final damage remain unresolved."
+    ]
+  },
+  {
+    "assumptions": [
       "Provider activation is not guaranteed.",
       "Exact uptime, total attacks, final damage, and successful attack effects are not calculated.",
       "Only the verified after-each-Basic-Attack dependency is represented; broader trigger ordering is unresolved."
@@ -69496,7 +70562,7 @@
     ],
     "status": "potential",
     "targetSelectionGroup": null,
-    "title": "Internal Damage Received modifier",
+    "title": "Internal Physical Damage Received modifier",
     "unresolvedQuestions": []
   },
   {
@@ -69573,7 +70639,7 @@
     ],
     "status": "potential",
     "targetSelectionGroup": null,
-    "title": "Internal Damage Received modifier",
+    "title": "Internal Tactical Damage Received modifier",
     "unresolvedQuestions": []
   },
   {
@@ -69651,6 +70717,90 @@
     "status": "potential",
     "targetSelectionGroup": null,
     "title": "Internal Recovery Received modifier",
+    "unresolvedQuestions": []
+  },
+  {
+    "assumptions": [],
+    "channel": "stat",
+    "confidence": "confirmed",
+    "conflicts": [
+      "Vhagar - Skyward Titan Habit unlock requirement: expected Star Rank 10+, actual preview enabled",
+      "Vhagar - Skyward Titan Selected Habit Level: expected Habit Level 1+ or preview, actual preview enabled"
+    ],
+    "damageScope": null,
+    "effects": [
+      "Timing: Each round.",
+      "Strength +5% per stack at effective Habit Level 5.",
+      "Shared stack pool: bulwark.",
+      "Maximum stacks: 5.",
+      "Value per stack at effective Habit Level 1: 5% Strength.",
+      "Value per stack at effective Habit Level 5: 5% Strength.",
+      "Maximum theoretical modifier at effective Habit Level 1: 25% Strength.",
+      "Current stack count is unknown.",
+      "Activation chance: 30%.",
+      "Each-round stack trigger is chance-based and not guaranteed Active.",
+      "Duration: until end of combat."
+    ],
+    "exactResultKnown": false,
+    "exactResultUnknownReason": "Exact final strength increase cannot be calculated because stack activation success, current/final stack count, and the final stat formula remain unresolved.",
+    "explanation": "Vhagar's Skyward Titan checks each round with a 30% chance to grant one Bulwark stack. Each stack increases Strength by +5% per stack at effective Habit Level 1; maximum 5 stacks; maximum theoretical Strength increase +25%; duration until end of combat. Current and final stack count remain unresolved.",
+    "id": "internal-self-modifier-vhagar-skyward-titan-skyward-titan-bulwark-stack-strength-stat-stack-modifier",
+    "interactionScope": "internal",
+    "matchedOutputCapabilityIds": [],
+    "matchKind": "outgoing-effect-amplification",
+    "modifierCapabilityId": "vhagar-skyward-titan-skyward-titan-bulwark-stack-strength-stat-stack-modifier",
+    "modifierCapabilityIds": [
+      "vhagar-skyward-titan-skyward-titan-bulwark-stack-strength-stat-stack-modifier"
+    ],
+    "recipientAbilityId": null,
+    "recipientDragonId": "vhagar",
+    "recipientEvidenceIds": [],
+    "requirements": [
+      {
+        "actual": "provider right-flank, recipient right-flank",
+        "evidenceIds": [
+          "vhagar-skyward-titan-2026-06-25"
+        ],
+        "expected": "self",
+        "id": "vhagar-skyward-titan-skyward-titan-bulwark-stack-strength-stat-stack-modifier-targeting-right-flank",
+        "label": "Position compatibility",
+        "notes": [],
+        "satisfied": true
+      },
+      {
+        "actual": "preview enabled",
+        "evidenceIds": [
+          "vhagar-skyward-titan-2026-06-25"
+        ],
+        "expected": "Star Rank 10+",
+        "id": "vhagar-vhagar-skyward-titan-star-rank",
+        "label": "Vhagar - Skyward Titan Habit unlock requirement",
+        "notes": [],
+        "satisfied": false
+      },
+      {
+        "actual": "preview enabled",
+        "evidenceIds": [
+          "vhagar-skyward-titan-2026-06-25"
+        ],
+        "expected": "Habit Level 1+ or preview",
+        "id": "vhagar-vhagar-skyward-titan-habit-level",
+        "label": "Vhagar - Skyward Titan Selected Habit Level",
+        "notes": [
+          "Unlocked Habits without an explicit saved Habit Level default to effective Habit Level 1. Locked Habit capabilities are potential in preview mode, not active for current roster."
+        ],
+        "satisfied": false
+      }
+    ],
+    "ruleId": "internal-self-modifier",
+    "sourceAbilityId": "vhagar-skyward-titan",
+    "sourceDragonId": "vhagar",
+    "sourceEvidenceIds": [
+      "vhagar-skyward-titan-2026-06-25"
+    ],
+    "status": "potential",
+    "targetSelectionGroup": null,
+    "title": "Internal Strength modifier",
     "unresolvedQuestions": []
   },
   {
@@ -70129,6 +71279,180 @@
     "status": "potential",
     "targetSelectionGroup": null,
     "title": "Internal Physical Damage Dealt modifier",
+    "unresolvedQuestions": []
+  },
+  {
+    "assumptions": [
+      "Trigger chance may make this conditional rather than guaranteed."
+    ],
+    "channel": "damage-received",
+    "confidence": "confirmed",
+    "conflicts": [
+      "Vhagar - Skyward Titan Habit unlock requirement: expected Star Rank 10+, actual preview enabled",
+      "Vhagar - Skyward Titan Selected Habit Level: expected Habit Level 1+ or preview, actual preview enabled"
+    ],
+    "damageScope": "physical",
+    "effects": [
+      "Timing: Each round.",
+      "Grants 1 Bulwark stack.",
+      "Physical Damage Received decrease 2.5%.",
+      "Activation chance: 30%.",
+      "Shared stack pool: bulwark.",
+      "Maximum stacks: 5.",
+      "Value per stack at effective Habit Level 1: 2.5% Physical Damage Received.",
+      "Value per stack at effective Habit Level 5: 2.5% Physical Damage Received.",
+      "Maximum theoretical modifier at effective Habit Level 1: 12.5% Physical Damage Received.",
+      "Current stack count is unknown.",
+      "Each-round stack trigger is chance-based and not guaranteed Active.",
+      "Duration: until end of combat."
+    ],
+    "exactResultKnown": false,
+    "exactResultUnknownReason": "Exact final physical damage received mitigation cannot be calculated because shared stack activation success, current/final stack count, stack-combination behavior, and the final mitigation formula remain unresolved.",
+    "explanation": "Vhagar's Skyward Titan checks each round with a 30% chance to grant one Bulwark stack. Each stack reduces Physical Damage Received by 2.5% (Physical Damage Received -2.5% per stack) at effective Habit Level 1; maximum 5 stacks; maximum theoretical reduction -12.5%; duration until end of combat. Current and final stack count remain unresolved.",
+    "id": "defensive-ally-support-vhagar-skyward-titan-skyward-titan-bulwark-stack-physical-damage-received-stack-modifier-vhagar",
+    "interactionScope": "internal",
+    "matchedOutputCapabilityIds": [],
+    "matchKind": "defensive-ally-support",
+    "modifierCapabilityId": "vhagar-skyward-titan-skyward-titan-bulwark-stack-physical-damage-received-stack-modifier",
+    "modifierCapabilityIds": [
+      "vhagar-skyward-titan-skyward-titan-bulwark-stack-physical-damage-received-stack-modifier"
+    ],
+    "recipientAbilityId": null,
+    "recipientDragonId": "vhagar",
+    "recipientEvidenceIds": [],
+    "requirements": [
+      {
+        "actual": "provider right-flank, recipient right-flank",
+        "evidenceIds": [
+          "vhagar-skyward-titan-2026-06-25"
+        ],
+        "expected": "self",
+        "id": "vhagar-skyward-titan-skyward-titan-bulwark-stack-physical-damage-received-stack-modifier-targeting-right-flank",
+        "label": "Position compatibility",
+        "notes": [],
+        "satisfied": true
+      },
+      {
+        "actual": "preview enabled",
+        "evidenceIds": [
+          "vhagar-skyward-titan-2026-06-25"
+        ],
+        "expected": "Star Rank 10+",
+        "id": "vhagar-vhagar-skyward-titan-star-rank",
+        "label": "Vhagar - Skyward Titan Habit unlock requirement",
+        "notes": [],
+        "satisfied": false
+      },
+      {
+        "actual": "preview enabled",
+        "evidenceIds": [
+          "vhagar-skyward-titan-2026-06-25"
+        ],
+        "expected": "Habit Level 1+ or preview",
+        "id": "vhagar-vhagar-skyward-titan-habit-level",
+        "label": "Vhagar - Skyward Titan Selected Habit Level",
+        "notes": [
+          "Unlocked Habits without an explicit saved Habit Level default to effective Habit Level 1. Locked Habit capabilities are potential in preview mode, not active for current roster."
+        ],
+        "satisfied": false
+      }
+    ],
+    "ruleId": "defensive-ally-support",
+    "sourceAbilityId": "vhagar-skyward-titan",
+    "sourceDragonId": "vhagar",
+    "sourceEvidenceIds": [
+      "vhagar-skyward-titan-2026-06-25"
+    ],
+    "status": "potential",
+    "targetSelectionGroup": null,
+    "title": "Physical Damage Received Support",
+    "unresolvedQuestions": []
+  },
+  {
+    "assumptions": [
+      "Trigger chance may make this conditional rather than guaranteed."
+    ],
+    "channel": "damage-received",
+    "confidence": "confirmed",
+    "conflicts": [
+      "Vhagar - Skyward Titan Habit unlock requirement: expected Star Rank 10+, actual preview enabled",
+      "Vhagar - Skyward Titan Selected Habit Level: expected Habit Level 1+ or preview, actual preview enabled"
+    ],
+    "damageScope": "tactical",
+    "effects": [
+      "Timing: Each round.",
+      "Grants 1 Bulwark stack.",
+      "Tactical Damage Received decrease 2.5%.",
+      "Activation chance: 30%.",
+      "Shared stack pool: bulwark.",
+      "Maximum stacks: 5.",
+      "Value per stack at effective Habit Level 1: 2.5% Tactical Damage Received.",
+      "Value per stack at effective Habit Level 5: 2.5% Tactical Damage Received.",
+      "Maximum theoretical modifier at effective Habit Level 1: 12.5% Tactical Damage Received.",
+      "Current stack count is unknown.",
+      "Each-round stack trigger is chance-based and not guaranteed Active.",
+      "Duration: until end of combat."
+    ],
+    "exactResultKnown": false,
+    "exactResultUnknownReason": "Exact final tactical damage received mitigation cannot be calculated because shared stack activation success, current/final stack count, stack-combination behavior, and the final mitigation formula remain unresolved.",
+    "explanation": "Vhagar's Skyward Titan checks each round with a 30% chance to grant one Bulwark stack. Each stack reduces Tactical Damage Received by 2.5% (Tactical Damage Received -2.5% per stack) at effective Habit Level 1; maximum 5 stacks; maximum theoretical reduction -12.5%; duration until end of combat. Current and final stack count remain unresolved.",
+    "id": "defensive-ally-support-vhagar-skyward-titan-skyward-titan-bulwark-stack-tactical-damage-received-stack-modifier-vhagar",
+    "interactionScope": "internal",
+    "matchedOutputCapabilityIds": [],
+    "matchKind": "defensive-ally-support",
+    "modifierCapabilityId": "vhagar-skyward-titan-skyward-titan-bulwark-stack-tactical-damage-received-stack-modifier",
+    "modifierCapabilityIds": [
+      "vhagar-skyward-titan-skyward-titan-bulwark-stack-tactical-damage-received-stack-modifier"
+    ],
+    "recipientAbilityId": null,
+    "recipientDragonId": "vhagar",
+    "recipientEvidenceIds": [],
+    "requirements": [
+      {
+        "actual": "provider right-flank, recipient right-flank",
+        "evidenceIds": [
+          "vhagar-skyward-titan-2026-06-25"
+        ],
+        "expected": "self",
+        "id": "vhagar-skyward-titan-skyward-titan-bulwark-stack-tactical-damage-received-stack-modifier-targeting-right-flank",
+        "label": "Position compatibility",
+        "notes": [],
+        "satisfied": true
+      },
+      {
+        "actual": "preview enabled",
+        "evidenceIds": [
+          "vhagar-skyward-titan-2026-06-25"
+        ],
+        "expected": "Star Rank 10+",
+        "id": "vhagar-vhagar-skyward-titan-star-rank",
+        "label": "Vhagar - Skyward Titan Habit unlock requirement",
+        "notes": [],
+        "satisfied": false
+      },
+      {
+        "actual": "preview enabled",
+        "evidenceIds": [
+          "vhagar-skyward-titan-2026-06-25"
+        ],
+        "expected": "Habit Level 1+ or preview",
+        "id": "vhagar-vhagar-skyward-titan-habit-level",
+        "label": "Vhagar - Skyward Titan Selected Habit Level",
+        "notes": [
+          "Unlocked Habits without an explicit saved Habit Level default to effective Habit Level 1. Locked Habit capabilities are potential in preview mode, not active for current roster."
+        ],
+        "satisfied": false
+      }
+    ],
+    "ruleId": "defensive-ally-support",
+    "sourceAbilityId": "vhagar-skyward-titan",
+    "sourceDragonId": "vhagar",
+    "sourceEvidenceIds": [
+      "vhagar-skyward-titan-2026-06-25"
+    ],
+    "status": "potential",
+    "targetSelectionGroup": null,
+    "title": "Tactical Damage Received Support",
     "unresolvedQuestions": []
   },
   {

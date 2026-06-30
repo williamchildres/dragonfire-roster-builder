@@ -317,6 +317,9 @@ function isVisibleInternalProvidesTrace(trace: SynergyTrace): boolean {
     return false;
   }
   if (trace.matchKind === 'defensive-ally-support') {
+    if (trace.modifierSelfOnly === true && /Current and final stack count remain unresolved/i.test(trace.explanation)) {
+      return false;
+    }
     return trace.modifierSelfOnly === true &&
       trace.status !== 'inactive' &&
       [...trace.effects, ...trace.matchedFacts, trace.explanation].some((line) => /Grants 1 .+ stack/i.test(line));

@@ -123,8 +123,8 @@ describe('trigger, schedule override, periodic damage framework regression', () 
     const presentation = reviewPresentation(malachiteFormation, traces);
     const cardText = allCardText(presentation);
 
-    expect(traces).toHaveLength(59);
-    expect(counts).toMatchObject({ active: 22, potential: 26, inactive: 8, blocked: 1, unknown: 1, 'not-applicable': 1 });
+    expect(traces).toHaveLength(58);
+    expect(counts).toMatchObject({ active: 22, potential: 26, inactive: 7, blocked: 1, unknown: 1, 'not-applicable': 1 });
     expect(new Set(traces.map(technicalAnalysisTraceIdentity)).size).toBe(traces.length);
 
     const override = traces.find((trace) => trace.ruleId === 'schedule-override' && trace.sourceAbilityId === 'venator-feral-strike');
@@ -304,8 +304,8 @@ describe('trigger, schedule override, periodic damage framework regression', () 
     const presentation = reviewPresentation(kalspireFormation, traces);
     const cardText = allCardText(presentation);
 
-    expect(traces).toHaveLength(54);
-    expect(counts).toMatchObject({ active: 23, potential: 19, inactive: 10, blocked: 1, unknown: 1, 'not-applicable': 0 });
+    expect(traces).toHaveLength(53);
+    expect(counts).toMatchObject({ active: 23, potential: 19, inactive: 9, blocked: 1, unknown: 1, 'not-applicable': 0 });
     expect(new Set(traces.map(technicalAnalysisTraceIdentity)).size).toBe(traces.length);
 
     const overrideText = traceText(traces.find((trace) => trace.ruleId === 'schedule-override' && trace.sourceAbilityId === 'venator-feral-strike'));

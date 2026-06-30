@@ -4453,7 +4453,7 @@
   "firstObservedInGame": null,
   "format": "dragonfire-dragon-profile",
   "gameVersion": null,
-  "generatedAt": "2026-06-30T22:13:30.760Z",
+  "generatedAt": "2026-06-30T23:22:58.273Z",
   "habits": [
     {
       "abilityClass": "passive",
@@ -7764,8 +7764,8 @@
   "rosterSourceStatus": "official-website",
   "slug": "kalspire",
   "source": {
-    "branch": "fix/prerequisite-selector-details-pass17b",
-    "commit": "7a7e01f73661563239d540a1b961a09c0be8b7c4",
+    "branch": "fix/skyward-titan-reasons-subsumption-pass18",
+    "commit": "e3964a141de6e99eadbd41a62b072aab5d7ec178",
     "databaseVersion": "0.6.2",
     "dataSchemaVersion": 12,
     "gameBuild": "26.6.53509",

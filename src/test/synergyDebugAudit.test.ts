@@ -215,7 +215,12 @@ describe('synergy trace and audit behavior', () => {
     ).toBe('active');
     expect(
       analyzeFormationTraces({ 'left-flank': 'malachite', vanguard: 'vermax', 'right-flank': 'sheepstealer' }, dragons).find(
-        (trace) => trace.ruleId === 'vermax-vanguard-left-flank-trait',
+        (trace) =>
+          trace.sourceAbilityId === 'vermax-warriors-zeal' &&
+          trace.recipientDragonId === 'malachite' &&
+          trace.channel === 'stat' &&
+          trace.modifierCapabilityIds?.includes('vermax-warriors-zeal-warriors-zeal-left-instinct-stat-dealt-modifier') &&
+          trace.modifierCapabilityIds?.includes('vermax-warriors-zeal-warriors-zeal-left-initiative-stat-dealt-modifier'),
       )?.recipientDragonId,
     ).toBe('malachite');
     expect(
