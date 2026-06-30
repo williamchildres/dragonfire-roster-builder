@@ -1440,9 +1440,17 @@ function analyzeDefensiveAllySupport(
         modifier.targetSelector.selection === 'one-eligible-adjacent' &&
         eligiblePositions.length === 1 &&
         eligiblePositions[0] === recipientPosition;
+      const resolvedPersistentTargetName = isRetreatTriggeredAdditionalStack(context)
+        ? resolvedPersistentSelectedTargetName(context, formation, dragons, modifiers)
+        : null;
       const stackReason = modifier.targetSelector.selection === 'self'
-        ? stackExactResultUnknownReason(context, 'self', false)
-        : stackExactResultUnknownReason(context, 'ally', modifier.targetSelector.selection === 'one-eligible-adjacent' && eligiblePositions.length > 1);
+        ? stackExactResultUnknownReason(context, 'self', false, resolvedPersistentTargetName)
+        : stackExactResultUnknownReason(
+            context,
+            'ally',
+            modifier.targetSelector.selection === 'one-eligible-adjacent' && eligiblePositions.length > 1,
+            resolvedPersistentTargetName,
+          );
       const damageReceivedPhrase = modifier.sourceScope === 'non-basic-attacks'
         ? `non-Basic ${damageLabel}`
         : damageLabel;
@@ -5993,12 +6001,17 @@ function stackExactResultUnknownReason(
   context: { schedule: AbilitySchedule; effect: AbilityEffect } | null,
   targetSide: 'ally' | 'self',
   candidateSet: boolean,
+  resolvedTargetName: string | null = null,
 ): string | null {
   if (!context?.effect.stack) {
     return null;
   }
   const hasActivationRoll = Boolean(context.effect.activationRoll || context.schedule.activationRoll);
+  const resolvedTargetClause = resolvedTargetName ? `whether ${resolvedTargetName} retreated during the previous round` : null;
   if (targetSide === 'ally') {
+    if (resolvedTargetName && !hasActivationRoll) {
+      return `Exact final mitigated damage cannot be calculated because ${resolvedTargetClause}, maximum or final stack count, stack-combination behavior, and the final mitigation formula remain unresolved.`;
+    }
     if (candidateSet && !hasActivationRoll) {
       return 'Exact final mitigated damage cannot be calculated because the selected ally identity, maximum stack count, stack-combination behavior, and the final mitigation formula remain unresolved.';
     }
@@ -6016,7 +6029,9 @@ function stackExactResultUnknownReason(
     return 'Exact final mitigated damage cannot be calculated because maximum stack count, stack-combination behavior, and the final mitigation formula remain unresolved.';
   }
   if (!hasActivationRoll && context.schedule.timing === 'start-of-each-round' && hasPersistentSelectedTarget && previousRoundCondition) {
-    return 'Exact final mitigated damage cannot be calculated because the tracked ally identity, whether that ally retreated during the previous round, maximum or final stack count, stack-combination behavior, and the final mitigation formula remain unresolved.';
+    return resolvedTargetName
+      ? `Exact final mitigated damage cannot be calculated because ${resolvedTargetClause}, maximum or final stack count, stack-combination behavior, and the final mitigation formula remain unresolved.`
+      : 'Exact final mitigated damage cannot be calculated because the tracked ally identity, whether that ally retreated during the previous round, maximum or final stack count, stack-combination behavior, and the final mitigation formula remain unresolved.';
   }
   return null;
 }
@@ -6337,6 +6352,37 @@ function branchExclusionSummary(statusOutput: StatusOutputCapability): string | 
 
 function persistentTargetReferenceId(effect: AbilityEffect | null | undefined): string | null {
   return effect?.targetSelection?.references.find((reference) => reference.kind === 'persistent-selected-target')?.id ?? null;
+}
+
+function resolvedPersistentSelectedTargetName(
+  context: { schedule: AbilitySchedule; effect: AbilityEffect } | null,
+  formation: FormationAnalysisInput,
+  dragons: Dragon[],
+  modifiers: ModifierCapability[],
+): string | null {
+  if (!context) {
+    return null;
+  }
+  const referencedEffectId = (context.effect.targetSelection?.references ?? [])
+    .find((reference) => reference.kind === 'persistent-selected-target' && reference.referencedEffectId)
+    ?.referencedEffectId ?? null;
+  if (!referencedEffectId) {
+    return null;
+  }
+  const referencedModifier = modifiers.find((modifier) => modifier.id === referencedEffectId || modifier.sourceEffectId === referencedEffectId);
+  if (!referencedModifier) {
+    return null;
+  }
+  const providerPosition = positionOf(formation, referencedModifier.dragonId);
+  if (!providerPosition) {
+    return null;
+  }
+  const recipientPositions = targetCandidatePositions(formation, dragons, referencedModifier, providerPosition);
+  if (recipientPositions.length !== 1) {
+    return null;
+  }
+  const recipientId = formation[recipientPositions[0]!] ?? null;
+  return recipientId ? dragonById(dragons, recipientId)?.name ?? null : null;
 }
 
 function statusRuntimeConditionFacts(statusOutput: StatusOutputCapability, effect: AbilityEffect | null): string[] {
