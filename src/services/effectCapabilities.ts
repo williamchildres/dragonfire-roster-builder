@@ -2664,9 +2664,27 @@ function analyzeStatusEffectConditionEnablement(
                 dependency,
                 dependentDragon.name,
                 recipientResolution,
+                supplierContext?.ability.name,
               );
               const branchParentEffect = conditionalBranchParentEffect(dragons, dependentDragon.id, ability.id, effect.id);
               const dependentStatusId = statusIdForEffect(effect);
+              const sourceCapabilityIds = [statusOutput.id];
+              const dependentCapabilityIds = dependentStatusId ? [`${ability.id}-${effect.id}-${dependentStatusId}-status-output`] : [];
+              const branchExplanation = branchParentEffect && dependentStatusId
+                ? branchStatusConditionExplanation({
+                    supplierStatusOutput: statusOutput,
+                    supplierContext,
+                    dependentDragon,
+                    dependentAbility: ability,
+                    dependentSchedule: schedule,
+                    dependentEffect: effect,
+                    branchParentEffect,
+                    dependentStatusId,
+                    allAbilitiesForDependentDragon: allAbilities(dependentDragon),
+                    options,
+                    scheduleFacts,
+                  })
+                : null;
               traces.push(makeDependencyTrace({
                 id: `status-effect-condition-${statusOutput.id}-${ability.id}-${effect.id}-${dependency.type}-${dependency.statusId ?? dependency.statusCategoryId}`,
                 matchKind: 'status-condition-enablement',
@@ -2677,13 +2695,14 @@ function analyzeStatusEffectConditionEnablement(
                 recipientAbilityId: ability.id,
                 channel: 'status',
                 title: `${statusLabel(statusOutput.statusId)} enables ${ability.name}${branchParentEffect && dependentStatusId ? ` ${statusLabel(dependentStatusId)} branch` : ''}`,
-                explanation: statusConditionExplanation(provider, statusOutput, dependentDragon, {
+                explanation: branchExplanation ?? statusConditionExplanation(provider, statusOutput, dependentDragon, {
                   abilityId: ability.id,
                   abilityName: ability.name,
                   channel: 'status',
                 }, dependencyLabel, conditionalFacts, categoryFacts, supplierFacts, scheduleFacts),
                 requirements,
                 matchedFacts: [
+                  `Source effect ID: ${statusOutput.sourceEffectId ?? statusOutput.id}.`,
                   ...(branchParentEffect ? [`Parent source effect ID: ${branchParentEffect.id}.`] : []),
                   `Receiving source effect ID: ${effect.id}.`,
                   ...dependency.notes,
@@ -2693,7 +2712,15 @@ function analyzeStatusEffectConditionEnablement(
                   ...recipientResolutionFacts(recipientResolution),
                   ...scheduleFacts.facts,
                 ],
-                effects: [`Conditional ${effect.type}: ${dependencyLabel}`, ...categoryFacts.effects, ...conditionalFacts.effects, ...supplierFacts.effects, ...scheduleFacts.effects],
+                effects: [
+                  `Prerequisite status: ${dependencyLabel}.`,
+                  `Dependent branch output: ${dependentStatusId ? statusLabel(dependentStatusId) : effect.type}.`,
+                  durationDetail(effect)?.replace(/^Duration:/, `${effect.type} duration:`) ?? null,
+                  ...categoryFacts.effects,
+                  ...conditionalFacts.effects,
+                  ...supplierFacts.effects,
+                  ...scheduleFacts.effects,
+                ].filter((item): item is string => Boolean(item)),
                 sourceEvidenceIds: statusOutput.evidenceIds,
                 recipientEvidenceIds: ability.evidenceIds,
                 assumptions: [
@@ -2707,8 +2734,10 @@ function analyzeStatusEffectConditionEnablement(
                   'Exact roll sharing, target evaluation order, status check timing, refresh, and stacking remain unresolved.',
                 ]),
                 futureOrConditional: true,
-                targetSelectorSummary: targetSelectorSummary(targetForEffect(effect)),
+                targetSelectorSummary: dependentStatusEffectTargetSelectorSummary(effect),
                 exactResultUnknownReason: `Exact ${statusLabel(statusOutput.statusId)} prerequisite enablement cannot be calculated because supplier application success, dependent activation success, same-target overlap, same-round action order, roll scope, and final branch outcomes are unresolved.`,
+                modifierCapabilityIds: sourceCapabilityIds,
+                matchedOutputCapabilityIds: dependentCapabilityIds,
               }));
             }
           }
@@ -2717,6 +2746,164 @@ function analyzeStatusEffectConditionEnablement(
     }
   }
   return traces;
+}
+
+function branchStatusConditionExplanation({
+  supplierStatusOutput,
+  supplierContext,
+  dependentDragon,
+  dependentAbility,
+  dependentSchedule,
+  dependentEffect,
+  branchParentEffect,
+  dependentStatusId,
+  allAbilitiesForDependentDragon,
+  options,
+  scheduleFacts,
+}: {
+  supplierStatusOutput: StatusOutputCapability;
+  supplierContext: { ability: AbilityDefinition; schedule: AbilitySchedule; effect: AbilityEffect } | null;
+  dependentDragon: Dragon;
+  dependentAbility: AbilityDefinition;
+  dependentSchedule: AbilitySchedule;
+  dependentEffect: AbilityEffect;
+  branchParentEffect: AbilityEffect;
+  dependentStatusId: string;
+  allAbilitiesForDependentDragon: AbilityDefinition[];
+  options: CapabilityOptions;
+  scheduleFacts: { summary: string | null };
+}): string {
+  const supplierAbilityName = supplierContext?.ability.name ?? supplierStatusOutput.abilityName;
+  const supplierStatus = statusLabel(supplierStatusOutput.statusId);
+  const dependentStatus = statusLabel(dependentStatusId);
+  const supplierChance = statusOutputChanceText(supplierStatusOutput, options) ?? 'unknown';
+  const supplierTarget = statusOutputTargetPhrase(supplierStatusOutput, supplierContext);
+  const supplierDuration = supplierStatusOutput.durationRounds
+    ? `${supplierStatusOutput.durationRounds} rounds`
+    : supplierStatusOutput.untilEndOfRound
+      ? 'until end of current round'
+      : 'unknown duration';
+  const dependentChance = scheduleChanceText(dependentSchedule, dependentAbility, dependentDragon.id, options) ?? 'unknown';
+  const branchSummary = conditionalBranchSummary(branchParentEffect, dependentEffect);
+  const dependentDuration = dependentEffect.duration === 'Until end of current round'
+    ? 'until end of the current round'
+    : dependentEffect.durationRounds
+      ? `${dependentEffect.durationRounds} rounds`
+      : 'its verified duration';
+  const controlSentence = statusMatchesCategory(dependentStatusId, 'control')
+    ? `${dependentStatus} is Control; ${supplierStatus} is ${statusMatchesCategory(supplierStatusOutput.statusId, 'control') ? 'also Control' : 'not Control'}`
+    : `${dependentStatus} is the dependent branch output; ${supplierStatus} is ${statusMatchesCategory(supplierStatusOutput.statusId, 'control') ? 'Control' : 'not Control'}`;
+  const excludedTriggers = successfulStatusTriggerAbilityNames(allAbilitiesForDependentDragon, dependentStatusId);
+  const triggerSentence = excludedTriggers.length > 0
+    ? `the ${dependentStatus} branch triggers ${joinEnglishList(excludedTriggers)}`
+    : `the ${dependentStatus} branch does not trigger ${successfulStatusTriggerAbilityNames(allAbilitiesForDependentDragon, supplierStatusOutput.statusId).join(' or ') || 'successful-status follow-up effects'}`;
+  return [
+    `${supplierAbilityName} has a ${supplierChance} chance each round to apply ${supplierStatus} to ${supplierTarget} for ${supplierDuration}.`,
+    `${dependentAbility.name} checks ${scheduleRoundDescription(dependentSchedule, scheduleRoundsForOverlap(dependentSchedule) ?? [])} at ${dependentChance}.`,
+    branchSummary,
+    `${supplierAbilityName}'s ${supplierStatus} can enable the ${dependentStatus} branch only on the same enemy while ${supplierStatus} remains active.`,
+    `Prior-round ${supplierStatus} may carry into a later ${dependentAbility.name} check, while same-round enablement requires ${supplierAbilityName} to resolve first.`,
+    `The dependent branch supplies ${dependentStatus}, which lasts ${dependentDuration}; ${controlSentence}, and ${triggerSentence}.`,
+    scheduleFacts.summary,
+  ].filter(Boolean).join(' ');
+}
+
+function statusOutputChanceText(statusOutput: StatusOutputCapability, options: CapabilityOptions): string | null {
+  if (statusOutput.chanceFixed !== null && statusOutput.chanceFixed !== undefined) {
+    return `${statusOutput.chanceFixed}%`;
+  }
+  const level = statusOutput.requiredHabitLevel !== null
+    ? (options.previewMaxRankInteractions ? 5 : effectiveHabitLevelForCapability(statusOutput, options))
+    : 1;
+  const chance = rankedValueForHabitLevel(statusOutput.chanceByHabitLevel, level);
+  return chance ? formatValue(chance.value, chance.unit) : null;
+}
+
+function scheduleChanceText(
+  schedule: AbilitySchedule,
+  ability: AbilityDefinition,
+  dragonId: string,
+  options: CapabilityOptions,
+): string | null {
+  if (schedule.activationRoll?.chanceFixed !== null && schedule.activationRoll?.chanceFixed !== undefined) {
+    return `${schedule.activationRoll.chanceFixed}%`;
+  }
+  if (schedule.triggerChanceFixed !== null && schedule.triggerChanceFixed !== undefined) {
+    return `${schedule.triggerChanceFixed}%`;
+  }
+  const level = ability.kind === 'habit' ? (options.previewMaxRankInteractions ? 5 : effectiveHabitLevelForAbility(dragonId, ability, options)) : null;
+  const chance = rankedValueForHabitLevel(schedule.activationRoll?.chanceByHabitLevel ?? schedule.triggerChanceByHabitLevel, level ?? 1);
+  return chance ? formatValue(chance.value, chance.unit) : null;
+}
+
+function statusOutputTargetPhrase(
+  statusOutput: StatusOutputCapability,
+  context: { schedule: AbilitySchedule; effect: AbilityEffect } | null,
+): string {
+  const target = context ? targetForEffect(primarySupplierTargetEffect(context.schedule, context.effect)) : statusOutput.targetSelector;
+  const count = target.count ?? statusOutput.targetSelector.count;
+  const countText = count === null ? 'eligible' : `${count}`;
+  const side = target.side === 'enemy' ? 'enemies' : target.side === 'ally' ? 'allies' : 'self';
+  const scope = target.scope === 'any-lane' ? 'in any lane' : target.scope === 'within-adjacency' ? 'within adjacency' : `in ${target.scope}`;
+  return target.side === 'self' ? 'self' : `${countText} ${side} ${scope}`;
+}
+
+function conditionalBranchSummary(parentEffect: AbilityEffect, dependentEffect: AbilityEffect): string {
+  const options = parentEffect.effectOptions?.options ?? [];
+  const dependent = options.find((option) => option.effect.id === dependentEffect.id) ?? null;
+  const sibling = options.find((option) => option.effect.id !== dependentEffect.id) ?? null;
+  const dependentCondition = dependent?.condition ? branchConditionSubject(dependent.condition) : 'a matching target';
+  const siblingCondition = sibling?.condition ? branchConditionSubject(sibling.condition) : 'a non-matching target';
+  const dependentStatus = statusLabel(statusIdForEffect(dependentEffect) ?? dependentEffect.type);
+  const siblingStatus = statusLabel(statusIdForEffect(sibling?.effect ?? ({ type: 'status' } as AbilityEffect)) ?? sibling?.effect.type ?? 'status');
+  return `For each affected enemy, ${dependentCondition} takes the ${dependentStatus} branch, while ${siblingCondition} takes the ${siblingStatus} branch; exactly one branch applies per enemy. The branches are mutually exclusive per enemy.`;
+}
+
+function branchConditionSubject(condition: { kind: string; statusId: string | null; description: string }): string {
+  if (condition.kind === 'target-has-status' && condition.statusId) {
+    return `an already-${statusParticiple(statusLabel(condition.statusId))} target`;
+  }
+  if (condition.kind === 'target-lacks-status' && condition.statusId) {
+    return `a non-${statusParticiple(statusLabel(condition.statusId))} target`;
+  }
+  return condition.description.replace(/\.$/, '').replace(/^Target is /i, 'a target that is ');
+}
+
+function successfulStatusTriggerAbilityNames(abilities: AbilityDefinition[], statusId: string): string[] {
+  return uniqueSorted(abilities.filter((ability) =>
+    ability.schedules.some((schedule) =>
+      [...(schedule.conditions ?? []), ...schedule.effects.flatMap((effect) => effect.conditions ?? [])]
+        .some((condition) => condition.kind === 'successful-status-application' && condition.statusId === statusId),
+    ),
+  ).map((ability) => ability.name));
+}
+
+function dependentStatusEffectTargetSelectorSummary(effect: AbilityEffect): string {
+  const target = targetForEffect(effect);
+  const branchCondition = effect.conditions?.find((condition) =>
+    condition.kind === 'target-has-status' || condition.kind === 'target-lacks-status',
+  );
+  if (target.side === 'enemy' && branchCondition?.statusId) {
+    const scope = target.scope === 'any-lane' ? 'any lane' : formatTargetScope(target.scope as AbilityEffect['targetScope']);
+    const conditionPhrase = branchCondition.kind === 'target-has-status'
+      ? `already-${statusParticiple(statusLabel(branchCondition.statusId))}`
+      : `non-${statusParticiple(statusLabel(branchCondition.statusId))}`;
+    const count = effect.targetCount ?? target.count ?? 3;
+    const caster = target.includesCaster === null
+      ? 'caster eligibility unknown'
+      : target.includesCaster
+        ? 'caster eligible'
+        : 'caster excluded';
+    return `${target.side}; ${target.scope}; all-matching-condition; all qualifying ${conditionPhrase} enemies in ${scope}, up to ${count}; ${caster}`;
+  }
+  return targetSelectorSummary(target);
+}
+
+function statusParticiple(status: string): string {
+  if (/e$/i.test(status)) {
+    return `${status}d`;
+  }
+  return `${status}ed`;
 }
 
 function statusOutputCanEnableStatusEffect(
@@ -5476,6 +5663,8 @@ function makeDependencyTrace({
   unresolvedQuestions,
   futureOrConditional = true,
   modifier = null,
+  modifierCapabilityIds,
+  matchedOutputCapabilityIds,
   targetSelectionGroup,
   damageScope = null,
   exactResultUnknownReason,
@@ -5500,6 +5689,8 @@ function makeDependencyTrace({
   unresolvedQuestions: string[];
   futureOrConditional?: boolean;
   modifier?: ModifierCapability | null;
+  modifierCapabilityIds?: string[];
+  matchedOutputCapabilityIds?: string[];
   targetSelectionGroup?: SynergyTrace['targetSelectionGroup'];
   damageScope?: DefensiveDamageScope | null;
   exactResultUnknownReason?: string;
@@ -5541,7 +5732,8 @@ function makeDependencyTrace({
     modifierSelfOnly: modifier ? modifier.role === 'self-amplification' || modifier.targetSelector.selection === 'self' : undefined,
     availabilityContext: modifier?.availability.reportLabel,
     modifierCapabilityId: modifier?.id ?? undefined,
-    modifierCapabilityIds: modifier ? [modifier.id] : undefined,
+    modifierCapabilityIds: modifierCapabilityIds ?? (modifier ? [modifier.id] : undefined),
+    matchedOutputCapabilityIds,
     interactionScope: interactionScopeForTrace(source.id, recipient.id, matchKind),
     damageScope,
     targetSelectionGroup,
@@ -6755,6 +6947,7 @@ function statusConditionScheduleOverlapFacts(
   dependency: CapabilityDependency & { type: 'requires-self-status' | 'requires-any-enemy-status' | 'requires-target-status' | 'requires-target-status-category' },
   dependentRecipientName: string,
   recipientResolution: AllyStatusRecipientResolution | null = null,
+  overlapApplicationLabel = 'application',
 ): { facts: string[]; effects: string[]; summary: string | null; assumptions: string[] } {
   if (!supplierContext || !dependentContext || (!statusOutput.untilEndOfRound && !statusOutput.durationRounds)) {
     return { facts: [], effects: [], summary: null, assumptions: [] };
@@ -6809,7 +7002,9 @@ function statusConditionScheduleOverlapFacts(
     ? scheduleDurationOverlapWindows(supplierRounds, dependentRounds, durationRounds)
     : [];
   if (durationRounds > 1) {
-    const windowsText = overlapWindows.length > 0 ? formatOverlapWindows(overlapWindows, supplierContext.ability.name, dependentOutput.abilityName) : 'none';
+    const windowsText = overlapWindows.length > 0
+      ? formatOverlapWindows(overlapWindows, supplierContext.ability.name, dependentOutput.abilityName, overlapApplicationLabel)
+      : 'none';
     return {
       facts: [
         `Supplier schedule: ${scheduleRoundDescription(supplierContext.schedule, supplierRounds)}.`,
@@ -7124,12 +7319,13 @@ function formatOverlapWindows(
   windows: ScheduleOverlapWindow[],
   supplierAbilityName: string,
   dependentAbilityName: string,
+  applicationLabel = 'application',
 ): string {
   return windows
     .map((window) =>
       window.sameRound
-        ? `Round ${window.dependentRound} from a successful Round ${window.supplierRound} application only if ${supplierAbilityName} resolves before ${dependentAbilityName} that round`
-        : `Round ${window.dependentRound} after a successful Round ${window.supplierRound} application`,
+        ? `Round ${window.dependentRound} from a successful Round ${window.supplierRound} ${applicationLabel} only if ${supplierAbilityName} resolves before ${dependentAbilityName} that round`
+        : `Round ${window.dependentRound} after a successful Round ${window.supplierRound} ${applicationLabel}`,
     )
     .join('; ');
 }

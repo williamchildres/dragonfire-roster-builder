@@ -60660,7 +60660,9 @@
     ],
     "damageScope": null,
     "effects": [
-      "Conditional Taunt: Burn",
+      "Prerequisite status: Burn.",
+      "Dependent branch output: Taunt.",
+      "Taunt duration: 2 rounds.",
       "Supplied status: Burn",
       "Base current application chance: 25%",
       "Burn-target application chance: 50%",
@@ -60686,10 +60688,14 @@
     "explanation": "At effective Habit Level 5, Crippling Inferno has a 20% chance each round to apply Burn to 3 enemies in any lane. Burn lasts 2 rounds. Each round, Fiery Bonds checks all qualifying enemies in any lane, up to 3. The Taunt application chance is 25% for a normal target and 50% for that same target while it has Burn, a target-specific 2x increase. Taunt lasts 2 rounds. Crippling Inferno and Fiery Bonds both check each round. Burn from the previous round can still enhance Fiery Bonds from Round 2 onward. A Burn applied during the current round can enhance Fiery Bonds only if Crippling Inferno resolves first. Burn must remain active on the same enemy that Fiery Bonds checks for status application; application, enemy identity, same-enemy overlap, and uptime remain unresolved. Same-round action order is unresolved.",
     "id": "status-effect-condition-caraxes-crippling-inferno-crippling-inferno-burn-burn-status-output-vhagar-fiery-bonds-fiery-bonds-taunt-requires-target-status-burn",
     "interactionScope": "cross-dragon",
-    "matchedOutputCapabilityIds": [],
+    "matchedOutputCapabilityIds": [
+      "vhagar-fiery-bonds-fiery-bonds-taunt-taunt-status-output"
+    ],
     "matchKind": "status-condition-enablement",
     "modifierCapabilityId": null,
-    "modifierCapabilityIds": [],
+    "modifierCapabilityIds": [
+      "caraxes-crippling-inferno-crippling-inferno-burn-burn-status-output"
+    ],
     "recipientAbilityId": "vhagar-fiery-bonds",
     "recipientDragonId": "vhagar",
     "recipientEvidenceIds": [
@@ -60762,7 +60768,9 @@
     ],
     "damageScope": null,
     "effects": [
-      "Conditional Weakened: Taunt",
+      "Prerequisite status: Taunt.",
+      "Dependent branch output: Weakened.",
+      "Weakened duration: 2 rounds.",
       "Supplied status: Taunt",
       "Base current application chance: 35%",
       "Taunt-target application chance: 70%",
@@ -60790,10 +60798,14 @@
     "explanation": "Each round, Fiery Bonds checks all qualifying enemies in any lane, up to 3. The Taunt application chance is 25% for a normal target and 50% for that same target while it has Burn, a target-specific 2x increase. Taunt lasts 2 rounds. Each round, Bloodscale Fury checks 1 Enemy, preferring a target not already Stunned. At effective Habit Level 5, the Weakened application chance is 35% for a normal target and 70% for that same target while it has Taunt, a target-specific 2x increase. Weakened lasts 2 rounds. Fiery Bonds and Bloodscale Fury both check each round. Taunt from the previous round can still enhance Bloodscale Fury from Round 2 onward. A Taunt applied during the current round can enhance Bloodscale Fury only if Fiery Bonds resolves first. Taunt must remain active on the same enemy that Bloodscale Fury checks for status application; application, enemy identity, same-enemy overlap, and uptime remain unresolved. Same-round action order is unresolved.",
     "id": "status-effect-condition-vhagar-fiery-bonds-fiery-bonds-taunt-taunt-status-output-crimson-bloodscale-fury-bloodscale-fury-weakened-requires-target-status-taunt",
     "interactionScope": "cross-dragon",
-    "matchedOutputCapabilityIds": [],
+    "matchedOutputCapabilityIds": [
+      "crimson-bloodscale-fury-bloodscale-fury-weakened-weakened-status-output"
+    ],
     "matchKind": "status-condition-enablement",
     "modifierCapabilityId": null,
-    "modifierCapabilityIds": [],
+    "modifierCapabilityIds": [
+      "vhagar-fiery-bonds-fiery-bonds-taunt-taunt-status-output"
+    ],
     "recipientAbilityId": "crimson-bloodscale-fury",
     "recipientDragonId": "crimson",
     "recipientEvidenceIds": [
@@ -69190,7 +69202,9 @@
     ],
     "damageScope": null,
     "effects": [
-      "Conditional Weakened: Taunt",
+      "Prerequisite status: Taunt.",
+      "Dependent branch output: Weakened.",
+      "Weakened duration: 2 rounds.",
       "Supplied status: Taunt",
       "Base current application chance: 35%",
       "Taunt-target application chance: 70%",
@@ -69218,10 +69232,14 @@
     "explanation": "Each round, Fiery Bonds checks all qualifying enemies in any lane, up to 3. The Taunt application chance is 25% for a normal target and 50% for that same target while it has Burn, a target-specific 2x increase. Taunt lasts 2 rounds. Each round, Bloodscale Fury checks 1 Enemy, preferring a target not already Stunned. At effective Habit Level 5, the Weakened application chance is 35% for a normal target and 70% for that same target while it has Taunt, a target-specific 2x increase. Weakened lasts 2 rounds. Fiery Bonds and Bloodscale Fury both check each round. Taunt from the previous round can still enhance Bloodscale Fury from Round 2 onward. A Taunt applied during the current round can enhance Bloodscale Fury only if Fiery Bonds resolves first. Taunt must remain active on the same enemy that Bloodscale Fury checks for status application; application, enemy identity, same-enemy overlap, and uptime remain unresolved. Same-round action order is unresolved.",
     "id": "status-effect-condition-vhagar-fiery-bonds-fiery-bonds-taunt-taunt-status-output-crimson-bloodscale-fury-bloodscale-fury-weakened-requires-target-status-taunt",
     "interactionScope": "cross-dragon",
-    "matchedOutputCapabilityIds": [],
+    "matchedOutputCapabilityIds": [
+      "crimson-bloodscale-fury-bloodscale-fury-weakened-weakened-status-output"
+    ],
     "matchKind": "status-condition-enablement",
     "modifierCapabilityId": null,
-    "modifierCapabilityIds": [],
+    "modifierCapabilityIds": [
+      "vhagar-fiery-bonds-fiery-bonds-taunt-taunt-status-output"
+    ],
     "recipientAbilityId": "crimson-bloodscale-fury",
     "recipientDragonId": "crimson",
     "recipientEvidenceIds": [
