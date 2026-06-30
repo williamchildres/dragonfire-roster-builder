@@ -23,7 +23,7 @@
   ],
   "currentReviewPhase": "Legendary/full-profile formation validation complete; Epic ingestion active with Daemoros and Vaeldra as the first detailed Epic batch after Vermax.",
   "format": "dragonfire-project-state",
-  "generatedAt": "2026-06-30T05:21:15.969Z",
+  "generatedAt": "2026-06-30T05:48:24.984Z",
   "plannedNextPhase": [
     "continue Epic dragon ingestion in batches of two after the latest merged context is available",
     "fetch latest merged main and create a new feature branch before each future Epic implementation batch",
@@ -37,8 +37,8 @@
     "metadataOnlyDragonCount": 15
   },
   "source": {
-    "branch": "fix/resilient-bond-retreat-ta-pass14d",
-    "commit": "258c6f8108bf0aa9b4e90193690b9eab10ff4097",
+    "branch": "fix/resilient-bond-retreat-ta-presentation-pass14e",
+    "commit": "ca04fa481ee305fe65bb15035029bfc88160ad67",
     "databaseVersion": "0.6.2",
     "dataSchemaVersion": 12,
     "gameBuild": "26.6.53509",
@@ -49,8 +49,8 @@
     "countingMethod": "static working-tree test declaration scan; runtime pass/fail is reported by npm run test",
     "lastRunStatus": "not-run-by-exporter",
     "runner": "vitest",
-    "testCaseCount": 414,
-    "testFileCount": 36
+    "testCaseCount": 415,
+    "testFileCount": 37
   },
   "unresolvedMechanicsCount": 169,
   "versions": {

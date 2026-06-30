@@ -1438,6 +1438,12 @@ function analyzeDefensiveAllySupport(
       const stackReason = modifier.targetSelector.selection === 'self'
         ? stackExactResultUnknownReason(context, 'self', false)
         : stackExactResultUnknownReason(context, 'ally', modifier.targetSelector.selection === 'one-eligible-adjacent' && eligiblePositions.length > 1);
+      const damageReceivedPhrase = modifier.sourceScope === 'non-basic-attacks'
+        ? `non-Basic ${damageLabel}`
+        : damageLabel;
+      const retreatTriggeredStackNarrative = context && stackReason && isRetreatTriggeredAdditionalStack(context)
+        ? `Each round, ${modifier.abilityName} checks whether the ally selected at Start of Combat retreated during the previous round. If so, ${provider.name} gains 1 additional ${formatCapabilityToken(modifier.statusId ?? 'Resilient Bond')} stack. Each verified stack reduces ${damageReceivedPhrase} by ${displayValue}, and the resulting stack lasts until end of combat.`
+        : null;
       const trace = makeDependencyTrace({
         id: `defensive-ally-support-${modifier.id}-${recipientId}`,
         matchKind: 'defensive-ally-support',
@@ -1448,9 +1454,9 @@ function analyzeDefensiveAllySupport(
         recipientAbilityId: null,
         channel: 'damage-received',
         title: `${damageLabel} Support`,
-        explanation: /below 50% Troop Capacity/i.test([...modifier.conditions, ...(context?.effect.conditions ?? []), ...(context?.schedule.conditions ?? [])].map((condition) => condition.description).join(' '))
+        explanation: retreatTriggeredStackNarrative ?? (/below 50% Troop Capacity/i.test([...modifier.conditions, ...(context?.effect.conditions ?? []), ...(context?.schedule.conditions ?? [])].map((condition) => condition.description).join(' '))
           ? `${provider.name}'s ${modifier.abilityName} can reduce ${recipient.name}'s ${damageLabel}.`
-          : `${provider.name}'s ${modifier.abilityName} can reduce ${recipient.name}'s ${damageLabel} by ${displayValue}.`,
+          : `${provider.name}'s ${modifier.abilityName} can reduce ${recipient.name}'s ${damageLabel} by ${displayValue}.`),
         requirements,
         matchedFacts: [
           ...(modifier.sourceEffectId ? [`Source effect ID: ${modifier.sourceEffectId}.`] : []),
