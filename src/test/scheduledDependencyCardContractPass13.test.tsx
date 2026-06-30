@@ -163,10 +163,10 @@ describe('scheduled dependency card contract pass 13', () => {
       return acc;
     }, {});
 
-    expect(traces).toHaveLength(73);
+    expect(traces).toHaveLength(76);
     expect(counts).toMatchObject({
       active: 30,
-      potential: 34,
+      potential: 37,
       inactive: 8,
       blocked: 1,
     });
