@@ -2392,13 +2392,13 @@ function sharedStatusRecipientBenefitKey(interaction: FormationCardInteraction):
   if (!/\benhances .+ (?:damage rate|Physical Damage|Tactical Damage|Fire Damage)\b/i.test(interaction.effectTitle)) {
     return null;
   }
-  const text = interactionText(interaction);
+  const text = sharedStatusRecipientBenefitText([interaction]);
   const requiredStatus = interaction.title.match(/^(.+?) enables /i)?.[1]?.trim() ?? interaction.effectTitle.match(/(?:^|-\s*)(.+?) enhances /i)?.[1]?.trim();
   const dependentAbility = interaction.title.match(/ enables (.+)$/i)?.[1]?.trim() ?? interaction.effectTitle.match(/ enhances (.+?)(?: damage rate| chance| Fire Damage| Tactical Damage| Physical Damage)?$/i)?.[1]?.trim();
   const sharedTitle = sharedEnhancementTitleSuffix(interaction.effectTitle);
-  const rateIncrease = text.match(/\bincreases from ([\d.]+%) to ([\d.]+%)/i);
-  const baseRate = text.match(/\bBase(?: current)? [A-Za-z ]+ Damage Rate: ([^.]+)\./i)?.[1]?.trim() ?? rateIncrease?.[1] ?? '';
-  const enhancedRate = text.match(/\bEnhanced(?: current)? [A-Za-z ]+ Damage Rate: ([^.]+)\./i)?.[1]?.trim() ?? rateIncrease?.[2] ?? '';
+  const rateValues = sharedStatusRecipientBenefitRateValues(text);
+  const baseRate = rateValues?.baseRate ?? '';
+  const enhancedRate = rateValues?.enhancedRate ?? '';
   if (!requiredStatus || !dependentAbility || !baseRate || !enhancedRate) {
     return null;
   }
@@ -2416,6 +2416,29 @@ function sharedEnhancementTitleSuffix(title: string): string {
   const parts = title.split(/\s+-\s+/);
   const suffix = parts[parts.length - 1]?.trim() ?? title;
   return /\benhances\b/i.test(suffix) ? suffix : title;
+}
+
+function sharedStatusRecipientBenefitText(items: FormationCardInteraction[]): string {
+  return items
+    .flatMap((item) => [item.summary, ...item.summaryLines])
+    .filter((line): line is string => Boolean(line))
+    .join(' ');
+}
+
+function sharedStatusRecipientBenefitRateValues(text: string): { baseRate: string; enhancedRate: string } | null {
+  const baseRate = text.match(/\bBase(?: current)? [A-Za-z ]+ Damage Rate:\s*([\d.]+%)(?=\s|[.;,]|$)/i)?.[1] ?? null;
+  const enhancedRate = text.match(/\bEnhanced(?: current)? [A-Za-z ]+ Damage Rate:\s*([\d.]+%)(?=\s|[.;,]|$)/i)?.[1] ?? null;
+  if (baseRate && enhancedRate) {
+    return { baseRate, enhancedRate };
+  }
+  const rateIncrease = text.match(/\bincreases from ([\d.]+%) to ([\d.]+%)(?=\s|[.;,]|$)/i);
+  if (!rateIncrease) {
+    return null;
+  }
+  return {
+    baseRate: rateIncrease[1]!,
+    enhancedRate: rateIncrease[2]!,
+  };
 }
 
 function canAggregateReceivesGroup(items: FormationCardInteraction[]): boolean {
@@ -2735,21 +2758,21 @@ function compactSharedStatusRecipientBenefitSummaryLines(items: FormationCardInt
   if (items.length <= 1 || items.some((item) => sharedStatusRecipientBenefitKey(item) === null)) {
     return [];
   }
-  const text = items.map(interactionText).join(' ');
+  const text = sharedStatusRecipientBenefitText(items);
   const status = items[0]!.title.match(/^(.+?) enables /i)?.[1]?.trim() ?? 'Status';
   const dependent = items[0]!.title.match(/ enables (.+)$/i)?.[1]?.trim() ?? 'dependent effect';
   const multiTargetSupplier = items.find((item) => /first added target|different second target/i.test(interactionText(item)));
   const singleTargetSupplier = items.find((item) => /odd-numbered rounds|one enemy within adjacency/i.test(interactionText(item)));
-  const rateIncrease = text.match(/\bincreases from ([\d.]+%) to ([\d.]+%)/i);
-  const base = text.match(/\bBase(?: current)? [A-Za-z ]+ Damage Rate: ([^.]+)\./i)?.[1]?.trim() ?? rateIncrease?.[1] ?? null;
-  const enhanced = text.match(/\bEnhanced(?: current)? [A-Za-z ]+ Damage Rate: ([^.]+)\./i)?.[1]?.trim() ?? rateIncrease?.[2] ?? null;
+  const rateValues = sharedStatusRecipientBenefitRateValues(text);
+  const base = rateValues?.baseRate ?? null;
+  const enhanced = rateValues?.enhancedRate ?? null;
   if (!multiTargetSupplier || !singleTargetSupplier || !base || !enhanced) {
     return [];
   }
   return [
     `${multiTargetSupplier.abilityName} attempts ${status} on Rounds 2, 5, and 8: 40% on the first added target and 20% on a different second target; ${status} lasts 2 rounds.`,
     `${singleTargetSupplier.abilityName} attempts ${status} on odd-numbered rounds: 20% chance on one enemy within adjacency; ${status} lasts 2 rounds.`,
-    `Against the same otherwise-eligible ${status}ed enemy, ${dependent} Damage Rate increases from ${base} to ${enhanced}; prior-round ${status} may carry over, and same-round overlap requires the supplier to resolve before ${dependent}.`,
+    `Against the same otherwise-eligible ${status}ed enemy, ${dependent} Fire Damage Rate increases from ${base} to ${enhanced}; prior-round ${status} may carry over, and same-round overlap requires the relevant supplier to resolve before ${dependent}.`,
     'Supplier application success, eligible enemy identity, same-target overlap, and same-round action order remain unresolved.',
   ];
 }
