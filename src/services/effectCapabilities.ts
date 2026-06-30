@@ -1407,6 +1407,7 @@ function analyzeDefensiveAllySupport(
     if (!providerPosition) {
       continue;
     }
+    const eligiblePositions = targetCandidatePositions(formation, dragons, modifier, providerPosition);
     for (const recipientPosition of recipientPositionsForModifier(formation, dragons, modifier, providerPosition)) {
       const recipientId = formation[recipientPosition];
       if (
@@ -1434,6 +1435,9 @@ function analyzeDefensiveAllySupport(
       const displayValue = modifierDisplayValue(modifier, options);
       const modifierDetails = compactSemanticFacts(defensiveModifierDetailLines(modifier, displayValue, options, context));
       const effectDetails = compactSemanticFacts([...modifierDetails, ...activationChanceFacts(modifier, options)]);
+      const stackReason = modifier.targetSelector.selection === 'self'
+        ? stackExactResultUnknownReason(context, 'self', false)
+        : stackExactResultUnknownReason(context, 'ally', modifier.targetSelector.selection === 'one-eligible-adjacent' && eligiblePositions.length > 1);
       const trace = makeDependencyTrace({
         id: `defensive-ally-support-${modifier.id}-${recipientId}`,
         matchKind: 'defensive-ally-support',
@@ -1462,7 +1466,7 @@ function analyzeDefensiveAllySupport(
         futureOrConditional: defensiveModifierTraceIsConditional(modifier) || (modifier.futureAvailable && options.previewMaxRankInteractions === true),
         modifier,
         damageScope: modifier.damageScope,
-        exactResultUnknownReason: 'Exact final mitigated damage cannot be calculated because activation success, modifier or support uptime, refresh or combination behavior, and final mitigation formula are unresolved.',
+        exactResultUnknownReason: stackReason ?? 'Exact final mitigated damage cannot be calculated because activation success, modifier or support uptime, refresh or combination behavior, and final mitigation formula are unresolved.',
       });
       traces.push(trace);
     }
@@ -1922,7 +1926,9 @@ function defensiveModifierTargetFacts(
       : targetCount !== null && targetCount > 1
       ? `Target count is ${targetCount}, so these allies occupy separate target slots.`
       : eligiblePositions.length > 1
-        ? 'One candidate is selected when the activation succeeds; the selected target is unresolved.'
+        ? (context.effect.activationRoll || context.schedule.activationRoll)
+          ? 'One candidate is selected when the activation succeeds; the selected target is unresolved.'
+          : `At ${scheduleTimingDetail(context.schedule)?.replace(/^Timing:\s*/i, '').replace(/\.$/, '') ?? 'Start of Combat'}, exactly one eligible adjacent ally is selected; the selected ally identity is unresolved.`
         : null,
     ...((effect.targetSelection?.references ?? []).map((reference) =>
       `Target reference ${reference.id}: ${reference.description}${reference.referencedEffectId ? ` References source effect ${reference.referencedEffectId}.` : ''}`,
@@ -2847,9 +2853,10 @@ function analyzeFriendlyStatusSourceOutputs(
       recipientEvidenceIds: [],
       combatLogConfirmed: false,
       exactResultKnown: false,
-      exactResultUnknownReason: recipient
-        ? `${recipient.name} is the resolved recipient if ${statusOutput.abilityName} activates; exact activation and resulting uptime are not calculated.`
-        : 'Exact status application cannot be calculated because application success and resulting uptime are unresolved.',
+      exactResultUnknownReason: stackExactResultUnknownReason(context, 'ally', selectionUncertain)
+        ?? (recipient
+          ? `${recipient.name} is the resolved recipient if ${statusOutput.abilityName} activates; exact activation and resulting uptime are not calculated.`
+          : 'Exact status application cannot be calculated because application success and resulting uptime are unresolved.'),
       matchKind: 'status-condition-enablement',
       channel: 'status',
       targetSelectorSummary: targetSelectorSummary(statusOutput.targetSelector),
@@ -4221,6 +4228,7 @@ function analyzeSelfStatusOutputs(
       condition.kind === 'target-is-prey' ||
       (condition.statusId === 'prey' && /Troop Capacity/i.test(condition.description)),
     );
+    const stackReason = stackExactResultUnknownReason(context, 'self', false);
     const supplierFacts = output.targetSide === 'self'
       ? supplier.facts.filter((fact) => !/^Duration:/i.test(fact))
       : supplier.facts;
@@ -4263,15 +4271,22 @@ function analyzeSelfStatusOutputs(
       recipientEvidenceIds: [],
       assumptions: isControlStatus
         ? ['Verified negative self-effects are represented even when they are not beneficial.']
-        : currentPreyCondition
+        : stackReason
+          ? [
+              context?.schedule.timing === 'start-of-each-round'
+                ? 'Tracked ally identity, retreat occurrence, maximum/final stack count, stack-combination behavior, and the final mitigation formula remain unresolved.'
+                : 'Maximum stack count, stack-combination behavior, and the final mitigation formula remain unresolved.',
+            ]
+          : currentPreyCondition
           ? ['The self recipient is resolved separately from the persistent enemy condition reference.']
           : ['Self-targeting resolves the recipient separately from activation success and uptime.'],
       unresolvedQuestions: isControlStatus
         ? ['Cleanse timing and outcome are not invented.']
         : [],
-      exactResultUnknownReason: currentPreyCondition
-        ? `Exact ${statusName} result cannot be calculated because current Prey existence, marked enemy identity, above-50% threshold applicability, and current-round applicability are unresolved.`
-        : `Exact ${statusName} result cannot be calculated because activation success, runtime condition state, and status uptime are unresolved.`,
+      exactResultUnknownReason: stackReason
+        ?? (currentPreyCondition
+          ? `Exact ${statusName} result cannot be calculated because current Prey existence, marked enemy identity, above-50% threshold applicability, and current-round applicability are unresolved.`
+          : `Exact ${statusName} result cannot be calculated because activation success, runtime condition state, and status uptime are unresolved.`),
       futureOrConditional: capabilityFutureOrConditional(output, options) || output.conditions.length > 0 || statusChanceConditional(output),
     }));
   }
@@ -5913,6 +5928,34 @@ function recipientResolutionFacts(resolution: AllyStatusRecipientResolution | nu
   return ['No eligible ally recipient is resolved for the supplied status.'];
 }
 
+function stackExactResultUnknownReason(
+  context: { schedule: AbilitySchedule; effect: AbilityEffect } | null,
+  targetSide: 'ally' | 'self',
+  candidateSet: boolean,
+): string | null {
+  if (!context?.effect.stack) {
+    return null;
+  }
+  const hasActivationRoll = Boolean(context.effect.activationRoll || context.schedule.activationRoll);
+  if (targetSide === 'ally') {
+    return candidateSet && !hasActivationRoll
+      ? 'Exact final mitigated damage cannot be calculated because the selected ally identity, maximum stack count, stack-combination behavior, and the final mitigation formula remain unresolved.'
+      : null;
+  }
+  const hasPersistentSelectedTarget = (context.effect.targetSelection?.references ?? []).some((reference) => reference.kind === 'persistent-selected-target');
+  const previousRoundCondition = (context.effect.conditions ?? []).some((condition) =>
+    condition.kind === 'previous-round-event' ||
+    /retreated in the previous round|retreated during the previous round/i.test(condition.description),
+  );
+  if (!hasActivationRoll && context.schedule.timing === 'start-of-combat') {
+    return 'Exact final mitigated damage cannot be calculated because maximum stack count, stack-combination behavior, and the final mitigation formula remain unresolved.';
+  }
+  if (!hasActivationRoll && context.schedule.timing === 'start-of-each-round' && hasPersistentSelectedTarget && previousRoundCondition) {
+    return 'Exact final mitigated damage cannot be calculated because the tracked ally identity, whether that ally retreated during the previous round, maximum or final stack count, stack-combination behavior, and the final mitigation formula remain unresolved.';
+  }
+  return null;
+}
+
 function supplierFactsForRecipientResolution<T extends { facts: string[]; effects: string[]; summary: string | null }>(
   supplierFacts: T,
   resolution: AllyStatusRecipientResolution | null,
@@ -7240,7 +7283,7 @@ function makeAmplificationTrace({
     recipientModifierValue: modifierResolvedValue(modifier, options),
     combatLogConfirmed: modifier.combatLogConfirmed || matches.some((match) => match.confidence === 'confirmed'),
     exactResultKnown: false,
-    exactResultUnknownReason: exactUnknownReason(modifier, matchKind),
+    exactResultUnknownReason: exactUnknownReason(modifier, matchKind, context),
     matchKind,
     channel: modifier.channel,
     modifierRole: modifier.role,
@@ -9200,7 +9243,11 @@ function enemyDamageDealtExactUnknownReason(
   return 'Exact final reduced enemy damage cannot be calculated because target identity, overlap, and final combat formulas are unresolved.';
 }
 
-function exactUnknownReason(modifier: ModifierCapability, matchKind: string): string {
+function exactUnknownReason(modifier: ModifierCapability, matchKind: string, context: { schedule: AbilitySchedule; effect: AbilityEffect } | null = null): string {
+  const stackReason = stackExactResultUnknownReason(context, modifier.role === 'ally-support' ? 'ally' : 'self', false);
+  if (stackReason) {
+    return stackReason;
+  }
   if (modifierHasStackMetadata(modifier)) {
     return 'Exact final stack benefit cannot be calculated because activation, repeat count, final stack count, uptime, and final formulas are unresolved.';
   }
