@@ -407,7 +407,7 @@ function toCardInteraction({
   const projectedState = projectedInteractionState(trace, previewEnabled);
   const state = isCandidate && trace.status === 'active' ? 'conditional' : projectedState;
   const baseDetail = canonicalCardText(trace.explanation, allDragons);
-  const prerequisiteContextLines = statusPrerequisiteContextLines(trace, allTraces);
+  const prerequisiteContextLines = statusPrerequisiteContextLines(trace, allTraces, allDragons);
   const detail = projectRecipientOutputDetail(baseDetail, trace, recipient, outputCapabilities, allDragons);
   const baseSummaryLines = summarizeTrace(trace, source, recipient, detail, {
     isCandidate,
@@ -454,7 +454,7 @@ function toCardInteraction({
     summaryLines,
     detail: fullExplanation,
     details: [fullExplanation],
-    effects: [...effects, ...prerequisiteContextLines],
+    effects,
     requirements: trace.requirements,
     confidence: trace.confidence,
     modifierLines: modifierLinesForTrace(trace, recipient, allDragons),
@@ -476,7 +476,7 @@ function toCardInteraction({
   };
 }
 
-function statusPrerequisiteContextLines(trace: SynergyTrace, allTraces: SynergyTrace[]): string[] {
+function statusPrerequisiteContextLines(trace: SynergyTrace, allTraces: SynergyTrace[], allDragons: Dragon[]): string[] {
   if (trace.matchKind !== 'status-condition-enablement' || !trace.sourceDragonId || !trace.sourceAbilityId) {
     return [];
   }
@@ -489,15 +489,92 @@ function statusPrerequisiteContextLines(trace: SynergyTrace, allTraces: SynergyT
       candidate.recipientAbilityId === trace.sourceAbilityId &&
       candidate.channel === 'status',
     )
-    .map((candidate) => [
-      `Prerequisite context: ${candidate.title}.`,
-      candidate.explanation,
-      candidate.targetSelectorSummary ? `Dependent selector: ${candidate.targetSelectorSummary}.` : null,
-      ...candidate.matchedFacts,
-      ...candidate.effects,
-      ...candidate.assumptions,
-      ...candidate.unresolvedQuestions,
-    ].filter(Boolean).join(' '));
+    .flatMap((candidate) => prerequisiteContextDetailLines(candidate, allDragons));
+}
+
+function prerequisiteContextDetailLines(trace: SynergyTrace, allDragons: Dragon[]): string[] {
+  const text = traceTextForPresentation(trace);
+  const sourceAbility = abilityNameForTrace(allDragons, trace.sourceDragonId, trace.sourceAbilityId) ?? 'The prerequisite supplier';
+  const dependentAbility = abilityNameForTrace(allDragons, trace.recipientDragonId, trace.recipientAbilityId) ?? 'the dependent ability';
+  const prerequisiteStatus = trace.title.match(/^(.+?) enables /i)?.[1]?.trim() ??
+    text.match(/\bPrerequisite status:\s*([^.]+)\./i)?.[1]?.trim() ??
+    'the prerequisite status';
+  const sourceCapabilityId = trace.modifierCapabilityIds?.[0] ?? text.match(/\bSource capability ID:\s*([A-Za-z0-9_.-]+)\./i)?.[1] ?? null;
+  const dependentCapabilityId = trace.matchedOutputCapabilityIds?.[0] ?? text.match(/\bDependent capability ID:\s*([A-Za-z0-9_.-]+)\./i)?.[1] ?? null;
+  const sourceEffectId = text.match(/\bSource effect ID:\s*([A-Za-z0-9_.-]+)\./i)?.[1] ?? null;
+  const parentEffectId = text.match(/\bParent source effect ID:\s*([A-Za-z0-9_.-]+)\./i)?.[1] ?? null;
+  const receivingEffectId = text.match(/\bReceiving source effect ID:\s*([A-Za-z0-9_.-]+)\./i)?.[1] ?? null;
+  const branchCondition = text.match(/\bBranch condition:\s*([^.]+)\./i)?.[1] ?? null;
+  const lureChance = text.match(/\bStatus application chance:\s*([\d.]+%)/i)?.[1] ?? text.match(/\bhas a ([\d.]+%) chance each round/i)?.[1] ?? null;
+  const supplierSchedule = text.match(/\bSupplier schedule:\s*([^.]+)\./i)?.[1] ?? null;
+  const dependentSchedule = text.match(/\bDependent schedule:\s*([^.]+)\./i)?.[1] ?? null;
+  const dependentChance = text.match(new RegExp(`${escapeRegExp(dependentAbility)} checks [^.]+ at ([\\d.]+%)`, 'i'))?.[1] ?? null;
+  const target = text.match(/\bTarget:\s*([^.]+)\./i)?.[1] ?? null;
+  const lane = text.match(/\bLane scope:\s*([^.]+)\./i)?.[1] ?? null;
+  const duration = text.match(/\bTaunt duration:\s*([^.]+)\./i)?.[1] ?? text.match(/\bDuration:\s*(2 rounds)\./i)?.[1] ?? null;
+  const dependentOutput = text.match(/\bDependent branch output:\s*([^.]+)\./i)?.[1] ?? null;
+  const dependentDuration = text.match(/\bStagger duration:\s*([^.]+)\./i)?.[1] ?? null;
+  const overlap = text.match(/\bKnown possible overlap windows:\s*([^.]+)\./i)?.[1] ?? null;
+  const paragraph = `Prerequisite context: ${sourceAbility} can establish the ${prerequisiteStatus} required by ${dependentAbility}'s ${dependentOutput ?? 'dependent'} branch. ${sourceAbility} checks each round with a ${lureChance ?? 'known'} chance to ${statusVerbForDetail(prerequisiteStatus)} ${targetWithLane(target, lane)} for ${duration ?? 'its verified duration'}. ${sourceAbility} and ${dependentAbility} must affect the same enemy. Prior-round ${prerequisiteStatus} may carry into a later ${dependentAbility} check, while same-round enablement requires ${sourceAbility} to resolve first.`;
+  return [
+    paragraph,
+    `Prerequisite status: ${prerequisiteStatus}.`,
+    `Prerequisite source ability: ${sourceAbility}.`,
+    sourceEffectId ? `Source-effect ID: ${sourceEffectId}.` : null,
+    sourceCapabilityId ? `Source capability ID: ${sourceCapabilityId}.` : null,
+    `Dependent ability: ${dependentAbility}.`,
+    parentEffectId ? `Parent effect ID: ${parentEffectId}.` : null,
+    receivingEffectId ? `Receiving effect ID: ${receivingEffectId}.` : null,
+    dependentCapabilityId ? `Dependent capability ID: ${dependentCapabilityId}.` : null,
+    branchCondition ? `Branch condition: ${branchCondition}.` : null,
+    lureChance ? `${sourceAbility} application chance: ${lureChance}.` : null,
+    supplierSchedule ? `${sourceAbility} schedule: ${supplierSchedule}.` : null,
+    target || lane ? `${sourceAbility} target: ${targetWithLane(target, lane)}.` : null,
+    duration ? `${prerequisiteStatus} duration: ${duration}.` : null,
+    dependentSchedule ? `${dependentAbility} schedule: ${dependentSchedule}.` : null,
+    dependentChance ? `${dependentAbility} chance: ${dependentChance}.` : null,
+    dependentOutput ? `Dependent branch output: ${dependentOutput}.` : null,
+    dependentDuration ? `${dependentOutput ?? 'Dependent status'} duration: ${dependentDuration}.` : null,
+    overlap ? `Known possible overlap windows: ${overlap}.` : null,
+    `${sourceAbility} and ${dependentAbility} must affect the same enemy.`,
+    'Same-round action order remains unresolved.',
+    'Roll scope remains unresolved.',
+    'Prerequisite uncertainty: supplier application success, dependent activation success, enemy identity, same-target overlap, same-round action order, roll scope, and final branch outcomes remain unresolved.',
+  ].filter((line): line is string => Boolean(line));
+}
+
+function traceTextForPresentation(trace: SynergyTrace): string {
+  return [
+    trace.explanation,
+    trace.targetSelectorSummary ?? '',
+    ...trace.matchedFacts,
+    ...trace.effects,
+    ...trace.assumptions,
+    ...trace.unresolvedQuestions,
+    trace.exactResultUnknownReason ?? '',
+  ].join(' ');
+}
+
+function abilityNameForTrace(allDragons: Dragon[], dragonId: string | null, abilityId: string | null): string | null {
+  if (!dragonId || !abilityId) {
+    return null;
+  }
+  const dragon = allDragons.find((item) => item.id === dragonId);
+  return dragon ? getAbilityName(dragon, abilityId) : null;
+}
+
+function statusVerbForDetail(status: string): string {
+  return status.toLowerCase() === 'taunt' ? 'Taunt' : `apply ${status} to`;
+}
+
+function targetWithLane(target: string | null, lane: string | null): string {
+  if (!target && !lane) {
+    return 'the matching target';
+  }
+  if (!lane || !target || target.toLowerCase().includes(lane.toLowerCase())) {
+    return target ?? `targets in ${lane}`;
+  }
+  return `${target} in ${lane}`;
 }
 
 function interactionPresentationFamily(trace: SynergyTrace): string {
@@ -2908,26 +2985,37 @@ function shortAbilityName(value: string): string {
 function sharedStatusPrerequisiteSupplierSummaryLine(item: FormationCardInteraction): string | null {
   const text = interactionText(item);
   const prerequisite = text.match(/Prerequisite context:\s*([^.]+)\./i)?.[1] ?? '';
-  const prerequisiteStatus = prerequisite.match(/^(.+?) enables /i)?.[1]?.trim() ?? 'required status';
+  const prerequisiteStatus = text.match(/\bPrerequisite status:\s*([^.]+)\./i)?.[1]?.trim() ??
+    prerequisite.match(/^(.+?) enables /i)?.[1]?.trim() ??
+    'required status';
   const dependentStatus = prerequisite.match(/ ([A-Z][A-Za-z-]+) branch$/i)?.[1]?.trim() ??
+    text.match(/\bDependent branch output:\s*([^.]+)\./i)?.[1]?.trim() ??
     text.match(/\bSupplied status:\s*([^.]+)\./i)?.[1]?.trim() ??
     'dependent status';
-  const prerequisiteAbility = text.match(/\b([A-Z][A-Za-z' -]+) has a ([\d.]+%) chance each round to (?:apply|Taunts?) /i)?.[1]?.trim() ??
+  const prerequisiteAbility = text.match(/\bPrerequisite source ability:\s*([^.]+)\./i)?.[1]?.trim() ??
+    text.match(/\b([A-Z][A-Za-z' -]+) has a ([\d.]+%) chance each round to (?:apply|Taunts?) /i)?.[1]?.trim() ??
     text.match(/\b([A-Z][A-Za-z' -]+) can apply [A-Z][A-Za-z-]+ each round/i)?.[1]?.trim() ??
     'Prerequisite supplier';
   const prerequisiteChance = text.match(/\bhas a ([\d.]+%) chance each round/i)?.[1] ??
+    text.match(new RegExp(`${escapeRegExp(prerequisiteAbility)} application chance:\\s*([\\d.]+%)`, 'i'))?.[1] ??
     text.match(/\bStatus application chance:\s*([\d.]+%)/i)?.[1] ??
     null;
-  const prerequisiteTarget = text.match(/\bTarget:\s*([^.]+)\./i)?.[1]?.trim() ?? null;
-  const prerequisiteLane = text.match(/\bLane scope:\s*([^.]+)\./i)?.[1]?.trim() ?? null;
+  const prerequisiteTarget = text.match(new RegExp(`${escapeRegExp(prerequisiteAbility)} target:\\s*([^.]+)\\.`, 'i'))?.[1]?.trim() ??
+    text.match(/\bTarget:\s*([^.]+)\./i)?.[1]?.trim() ??
+    null;
+  const prerequisiteLane = prerequisiteTarget?.match(/\b(any lane|within adjacency|same lane)\b/i)?.[1] ??
+    text.match(/\bLane scope:\s*([^.]+)\./i)?.[1]?.trim() ??
+    null;
   const prerequisiteDuration = text.match(new RegExp(`${escapeRegExp(prerequisiteStatus)} duration: (\\d+ rounds|until end of current round)\\.`, 'i'))?.[1] ??
     text.match(/\bDuration:\s*(\d+ rounds|until end of current round)\./i)?.[1] ??
     null;
   const dependentAbility = item.abilityName;
-  const dependentChance = text.match(new RegExp(`${escapeRegExp(dependentAbility)} has a ([\\d.]+%) chance`, 'i'))?.[1] ??
+  const dependentChance = text.match(new RegExp(`${escapeRegExp(dependentAbility)} chance:\\s*([\\d.]+%)`, 'i'))?.[1] ??
+    text.match(new RegExp(`${escapeRegExp(dependentAbility)} has a ([\\d.]+%) chance`, 'i'))?.[1] ??
     text.match(/\bConditional chance: ([\d.]+%)/i)?.[1] ??
     null;
-  const dependentRounds = text.match(/\bDependent schedule:\s*([^.]+)\./i)?.[1]?.trim() ??
+  const dependentRounds = text.match(new RegExp(`${escapeRegExp(dependentAbility)} schedule:\\s*([^.]+)\\.`, 'i'))?.[1]?.trim() ??
+    text.match(/\bDependent schedule:\s*([^.]+)\./i)?.[1]?.trim() ??
     text.match(/\bActivation timing:\s*(Rounds? [^.]+)\./i)?.[1]?.trim() ??
     'Rounds 1, 2, and 3';
   if (!prerequisiteChance || !prerequisiteTarget || !prerequisiteDuration || !dependentChance) {

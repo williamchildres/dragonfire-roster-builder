@@ -53,20 +53,20 @@ describe('Daemoros/Rhysarion/Vaeldra chained Control pass 17', () => {
       channel: 'status',
       matchKind: 'status-condition-enablement',
       interactionScope: 'internal',
-      targetSelectorSummary: 'enemy; any-lane; any; 3 targets; caster eligibility unknown',
+      targetSelectorSummary: 'enemy; any-lane; all-matching-condition; all qualifying already-Taunted enemies in any lane, up to 3; caster eligibility unknown',
     });
     expect(prerequisite.id).toContain('vaeldra-lure-lure-taunt-taunt-status-output');
     expect(traceText(prerequisite)).toContain('Parent source effect ID: sirens-call-taunt-or-stagger.');
     expect(traceText(prerequisite)).toContain('Receiving source effect ID: sirens-call-stagger.');
-    expect(traceText(prerequisite)).toContain('Lure has a 25% chance each round to apply Taunt to 3 enemies in any lane.');
-    expect(traceText(prerequisite)).toContain('Taunt lasts 2 rounds.');
+    expect(traceText(prerequisite)).toContain('Lure has a 25% chance each round to apply Taunt to 3 enemies in any lane for 2 rounds.');
+    expect(traceText(prerequisite)).toContain('Taunt duration: 2 rounds.');
     expect(traceText(prerequisite)).toContain('Dependent schedule: Rounds 1, 2, and 3.');
     expect(traceText(prerequisite)).toContain('same enemy');
-    expect(traceText(prerequisite)).toContain('Round 2 after a successful Round 1 application');
+    expect(traceText(prerequisite)).toContain('Round 2 after a successful Round 1 Lure');
     expect(traceText(prerequisite)).toContain('only if Lure resolves before Siren');
     expect(traceText(prerequisite)).toContain('Activation scope is unresolved');
     expect(traceText(prerequisite)).toContain('same-target overlap');
-    expect(traceText(prerequisite)).toContain('Conditional Stagger: Taunt');
+    expect(traceText(prerequisite)).toContain('Dependent branch output: Stagger');
     expect(traceText(prerequisite)).not.toMatch(/Taunt is a verified member of Control|Stagger triggers Tempting Distraction/i);
 
     expect(traces.filter((trace) => /Lure enables Dawnsong|Taunt enables Dawnsong/i.test(trace.title))).toHaveLength(0);
@@ -89,7 +89,7 @@ describe('Daemoros/Rhysarion/Vaeldra chained Control pass 17', () => {
     expect(new Set(allOutputIds).has('periodic-daemoros-darkening-fear-darkening-fear-panic-panic-output')).toBe(true);
 
     const { traces } = pass17Analysis();
-    const tempting = traces.filter((trace) => traceText(trace).includes('Tempting Distraction'));
+    const tempting = traces.filter((trace) => trace.sourceAbilityId === 'vaeldra-tempting-distraction');
     expect(tempting).toHaveLength(2);
     expect(tempting.every((trace) => trace.sourceAbilityId === 'vaeldra-tempting-distraction')).toBe(true);
     const temptingText = tempting.map(traceText).join(' ');

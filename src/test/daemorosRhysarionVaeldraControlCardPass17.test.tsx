@@ -45,7 +45,7 @@ describe('Daemoros/Rhysarion/Vaeldra Control card pass 17', () => {
     expect(card.summary).not.toMatch(/Base current|Enhanced current|Conditional multiplier|1\.5x|source effect ID/i);
     expect(card.details.join(' ')).toContain('Round 5 from a successful Round 5 application only if Shroud of Shadows resolves before Dawnsong that round');
     expect(card.details.join(' ')).toContain("Siren's Call's Stagger branch overlaps Dawnsong only on Round 2");
-    expect(card.details.join(' ')).toContain("Prerequisite context: Taunt enables Siren's Call Stagger branch.");
+    expect(card.details.join(' ')).toContain("Prerequisite context: Lure can establish the Taunt required by Siren's Call's Stagger branch.");
     expect(card.details.join(' ')).not.toMatch(/Lure .*direct .*Control supplier|Taunt directly enhances Dawnsong/i);
 
     const user = await renderPass17Formation();
@@ -65,7 +65,7 @@ describe('Daemoros/Rhysarion/Vaeldra Control card pass 17', () => {
     const expanded = domCard.textContent ?? '';
     expect(expanded).toContain('Round 8 after a successful Round 7 application');
     expect(expanded).toContain('Schedule overlap: Round 2 only.');
-    expect(expanded).toContain("Lure's Taunt can overlap Siren's Call");
+    expect(expanded).toContain("Known possible overlap windows: Round 1 from a successful Round 1 Lure only if Lure resolves before Siren's Call that round");
     expect(expanded).not.toMatch(/Taunt directly enhances Dawnsong/i);
   });
 });
