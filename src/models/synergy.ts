@@ -293,6 +293,7 @@ export interface OutputCapability {
   sourceEffectId?: string | null;
   statusId?: string | null;
   activationGroupId?: string | null;
+  targetSelectionGroupId?: string | null;
   activationChanceFixed?: number | null;
   activationChanceByHabitLevel?: RankedValue[];
   durationRounds?: number | null;

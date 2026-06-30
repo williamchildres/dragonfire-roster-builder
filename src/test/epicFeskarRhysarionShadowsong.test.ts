@@ -518,9 +518,9 @@ describe('Feskar, Rhysarion, and Shadowsong Epic profiles', () => {
     const ensnareText = ensnareProvides.map((item) => [item.targetLabel, item.effectTitle, ...item.summaryLines, ...item.details, ...item.effects].join(' ')).join(' ');
 
     expect(ensnareProvides).toHaveLength(2);
-    expect(ensnareProvides.map((item) => item.targetLabel).sort()).toEqual(['Daemoros and Rhysarion', 'Rhysarion and Shadowsong']);
+    expect(ensnareProvides.map((item) => item.targetLabel).sort()).toEqual(['Daemoros and Rhysarion', 'Team']);
     expect(ensnareText).toContain('Applies to Daemoros and Rhysarion.');
-    expect(ensnareText).toContain('Applies to Rhysarion and Shadowsong.');
+    expect(ensnareText).toContain('Applies to Daemoros, Rhysarion, and Shadowsong.');
     expect(ensnareText.match(/Base Enemy Initiative -18% on 2 adjacent enemy targets; final reduction scales with Shadowsong's Intelligence and remains unresolved\./g)).toHaveLength(1);
     expect(ensnareText.match(/Base Enemy Instinct -18% on 2 adjacent enemy targets; final reduction scales with Shadowsong's Intelligence and remains unresolved\./g)).toHaveLength(1);
 
@@ -586,7 +586,7 @@ describe('Feskar, Rhysarion, and Shadowsong Epic profiles', () => {
 
     const panicCards = daemoros.provides.filter((item) => /Panic enhances/i.test(item.effectTitle));
     expect(panicCards.map((item) => item.effectTitle).sort()).toEqual([
-      'Instill Fear - Panic enhances Breath of Fire chance',
+      'Instill Fear - Panic enhances Breath of Fire damage rate',
       'Instill Fear - Panic enhances Scorched Earth chance',
     ]);
   });
@@ -611,8 +611,8 @@ describe('Feskar, Rhysarion, and Shadowsong Epic profiles', () => {
     const rhysarionCard = cards.cards.find((card) => card.dragonId === 'rhysarion')!;
     const shadowsongCard = cards.cards.find((card) => card.dragonId === 'shadowsong')!;
 
-    expect(traces).toHaveLength(73);
-    expect(counts).toMatchObject({ active: 30, potential: 34, inactive: 8, blocked: 1, unknown: 0 });
+    expect(traces).toHaveLength(76);
+    expect(counts).toMatchObject({ active: 30, potential: 37, inactive: 8, blocked: 1, unknown: 0 });
     expect(new Set(traces.map(technicalAnalysisTraceIdentity)).size).toBe(traces.length);
     expect(traces.filter((trace) => trace.sourceAbilityId === 'shadowsong-blazing-conductor' && trace.matchKind === 'periodic-status-damage')).toHaveLength(2);
     expect(traces).toEqual(expect.arrayContaining([
@@ -670,7 +670,7 @@ describe('Feskar, Rhysarion, and Shadowsong Epic profiles', () => {
     expect(rhysarionCard.receives.filter((item) => item.abilityName === 'Instill Fear' && /Enemy mitigation reduction/i.test(item.effectTitle))).toHaveLength(1);
     expect(rhysarionCard.receives.filter((item) => item.abilityName === 'Darkening Fear' && /Enemy mitigation reduction/i.test(item.effectTitle))).toHaveLength(1);
     const ensnareProvides = shadowsongCard.provides.filter((item) => item.abilityName === 'Ensnare' && /Enemy mitigation reduction/i.test(item.effectTitle));
-    expect(ensnareProvides.map((item) => item.targetLabel).sort()).toEqual(['Daemoros and Rhysarion', 'Rhysarion and Shadowsong']);
+    expect(ensnareProvides.map((item) => item.targetLabel).sort()).toEqual(['Daemoros and Rhysarion', 'Team']);
     const onslaughtProvides = shadowsongCard.provides.filter((item) => item.abilityName === 'Blazing Onslaught');
     expect(onslaughtProvides.filter((item) => /Enemy Fire Damage vulnerability/i.test(item.effectTitle))).toHaveLength(1);
     expect(onslaughtProvides.filter((item) => /Enemy Physical Damage vulnerability/i.test(item.effectTitle))).toHaveLength(1);

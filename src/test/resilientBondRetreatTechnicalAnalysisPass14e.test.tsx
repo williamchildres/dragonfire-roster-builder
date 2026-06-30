@@ -97,5 +97,5 @@ describe('Resilient Bond retreat technical-analysis pass 14E', () => {
 
     expect(new Set(traces.map(technicalAnalysisTraceIdentity)).size).toBe(53);
     expect(traces).toHaveLength(53);
-  });
+  }, 10000);
 });

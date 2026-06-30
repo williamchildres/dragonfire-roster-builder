@@ -443,7 +443,7 @@ function toCardInteraction({
     sourceName: source.name,
     recipientName: recipient?.name ?? null,
     abilityName,
-    effectTitle: interactionEffectTitle(abilityName, trace),
+    effectTitle: interactionEffectTitle(abilityName, trace, summaryLines),
     title: trace.title,
     summary,
     summaryLines,
@@ -2343,14 +2343,7 @@ function aggregateInteractions(
   for (const interaction of interactions) {
     const key =
       direction === 'receives'
-        ? [
-            interaction.sourceDragonId,
-            interaction.abilityName,
-            interaction.recipientDragonId ?? interaction.targetLabel ?? 'team',
-            interaction.presentationFamily,
-            receivesInteractionMechanicKey(interaction),
-            interaction.state,
-          ].join('|')
+        ? receivesAggregationKey(interaction)
         : [interaction.sourceDragonId, interaction.abilityName, interaction.presentationFamily, interactionMechanicKey(interaction), interaction.state].join('|');
     grouped.set(key, [...(grouped.get(key) ?? []), interaction]);
   }
@@ -2360,6 +2353,9 @@ function aggregateInteractions(
       return items;
     }
     if (direction === 'receives') {
+      if (!canAggregateReceivesGroup(items)) {
+        return items;
+      }
       return [mergeInteractions(items, direction, selectedIds)];
     }
     if (items.some((item) => item.candidateTotal !== null || item.targetLabel !== null || item.isCandidate)) {
@@ -2370,6 +2366,66 @@ function aggregateInteractions(
     }
     return aggregateExactProvidesSubgroups(items, selectedIds);
   });
+}
+
+function receivesAggregationKey(interaction: FormationCardInteraction): string {
+  const sharedBenefitKey = sharedStatusRecipientBenefitKey(interaction);
+  if (sharedBenefitKey) {
+    return [
+      interaction.recipientDragonId ?? interaction.targetLabel ?? 'team',
+      'shared-status-recipient-benefit',
+      sharedBenefitKey,
+      interaction.state,
+    ].join('|');
+  }
+  return [
+    interaction.sourceDragonId,
+    interaction.abilityName,
+    interaction.recipientDragonId ?? interaction.targetLabel ?? 'team',
+    interaction.presentationFamily,
+    receivesInteractionMechanicKey(interaction),
+    interaction.state,
+  ].join('|');
+}
+
+function sharedStatusRecipientBenefitKey(interaction: FormationCardInteraction): string | null {
+  if (!/\benhances .+ (?:damage rate|Physical Damage|Tactical Damage|Fire Damage)\b/i.test(interaction.effectTitle)) {
+    return null;
+  }
+  const text = interactionText(interaction);
+  const requiredStatus = interaction.title.match(/^(.+?) enables /i)?.[1]?.trim() ?? interaction.effectTitle.match(/(?:^|-\s*)(.+?) enhances /i)?.[1]?.trim();
+  const dependentAbility = interaction.title.match(/ enables (.+)$/i)?.[1]?.trim() ?? interaction.effectTitle.match(/ enhances (.+?)(?: damage rate| chance| Fire Damage| Tactical Damage| Physical Damage)?$/i)?.[1]?.trim();
+  const sharedTitle = sharedEnhancementTitleSuffix(interaction.effectTitle);
+  const rateIncrease = text.match(/\bincreases from ([\d.]+%) to ([\d.]+%)/i);
+  const baseRate = text.match(/\bBase(?: current)? [A-Za-z ]+ Damage Rate: ([^.]+)\./i)?.[1]?.trim() ?? rateIncrease?.[1] ?? '';
+  const enhancedRate = text.match(/\bEnhanced(?: current)? [A-Za-z ]+ Damage Rate: ([^.]+)\./i)?.[1]?.trim() ?? rateIncrease?.[2] ?? '';
+  if (!requiredStatus || !dependentAbility || !baseRate || !enhancedRate) {
+    return null;
+  }
+  return [
+    requiredStatus,
+    dependentAbility,
+    sharedTitle,
+    baseRate,
+    enhancedRate,
+    interaction.presentationFamily,
+  ].join('|');
+}
+
+function sharedEnhancementTitleSuffix(title: string): string {
+  const parts = title.split(/\s+-\s+/);
+  const suffix = parts[parts.length - 1]?.trim() ?? title;
+  return /\benhances\b/i.test(suffix) ? suffix : title;
+}
+
+function canAggregateReceivesGroup(items: FormationCardInteraction[]): boolean {
+  if (items.length <= 1) {
+    return true;
+  }
+  if (items.every((item) => sharedStatusRecipientBenefitKey(item) !== null)) {
+    return unique(items.map((item) => item.sourceDragonId)).length > 1;
+  }
+  return true;
 }
 
 function aggregateExactProvidesSubgroups(
@@ -2424,6 +2480,16 @@ function mergeInteractions(
   const targetLabel = options.exactRecipientSet
     ? groupedRecipientLabel(targetNames, targetIds, selectedIds)
     : targetNames.join(' or ');
+  const selectedOrder = [...selectedIds];
+  const providerNames = uniqueBy(
+    items.map((item) => ({ id: item.sourceDragonId, name: item.sourceName })),
+    (item) => item.id,
+  )
+    .sort((left, right) => selectedOrder.indexOf(left.id) - selectedOrder.indexOf(right.id))
+    .map((item) => item.name);
+  const providerLabel = direction === 'receives' && providerNames.length > 1
+    ? groupedProviderLabel(providerNames)
+    : first.sourceName;
   const uniqueTitles = unique(items.map((item) => item.title));
   const uniqueEffectTitles = unique(items.map((item) => item.effectTitle));
   const summaryLines = mergedSummaryLines(items, direction, targetNames, options);
@@ -2469,6 +2535,7 @@ function mergeInteractions(
     relationshipId: options.exactRecipientSet
       ? `${first.sourceDragonId}__${first.abilityName}__${targetIds.join('_') || 'team'}`
       : first.relationshipId,
+    sourceName: providerLabel,
     recipientDragonId: options.exactRecipientSet ? null : first.recipientDragonId,
     recipientName: options.exactRecipientSet ? targetLabel : first.recipientName,
     targetLabel: direction === 'provides' && targetNames.length > 0 && !options.preserveProviderExactRecipient ? targetLabel : first.targetLabel,
@@ -2632,6 +2699,10 @@ function mergedSummaryLines(
   if (periodicStatusLines.length > 0) {
     return periodicStatusLines;
   }
+  const sharedStatusBenefitLines = compactSharedStatusRecipientBenefitSummaryLines(items);
+  if (sharedStatusBenefitLines.length > 0) {
+    return sharedStatusBenefitLines;
+  }
   const lines = unique(items.flatMap((item) => item.summaryLines));
   if (options.exactRecipientSet && direction === 'provides') {
     return [
@@ -2658,6 +2729,29 @@ function mergedSummaryLines(
     ];
   }
   return lines;
+}
+
+function compactSharedStatusRecipientBenefitSummaryLines(items: FormationCardInteraction[]): string[] {
+  if (items.length <= 1 || items.some((item) => sharedStatusRecipientBenefitKey(item) === null)) {
+    return [];
+  }
+  const text = items.map(interactionText).join(' ');
+  const status = items[0]!.title.match(/^(.+?) enables /i)?.[1]?.trim() ?? 'Status';
+  const dependent = items[0]!.title.match(/ enables (.+)$/i)?.[1]?.trim() ?? 'dependent effect';
+  const multiTargetSupplier = items.find((item) => /first added target|different second target/i.test(interactionText(item)));
+  const singleTargetSupplier = items.find((item) => /odd-numbered rounds|one enemy within adjacency/i.test(interactionText(item)));
+  const rateIncrease = text.match(/\bincreases from ([\d.]+%) to ([\d.]+%)/i);
+  const base = text.match(/\bBase(?: current)? [A-Za-z ]+ Damage Rate: ([^.]+)\./i)?.[1]?.trim() ?? rateIncrease?.[1] ?? null;
+  const enhanced = text.match(/\bEnhanced(?: current)? [A-Za-z ]+ Damage Rate: ([^.]+)\./i)?.[1]?.trim() ?? rateIncrease?.[2] ?? null;
+  if (!multiTargetSupplier || !singleTargetSupplier || !base || !enhanced) {
+    return [];
+  }
+  return [
+    `${multiTargetSupplier.abilityName} attempts ${status} on Rounds 2, 5, and 8: 40% on the first added target and 20% on a different second target; ${status} lasts 2 rounds.`,
+    `${singleTargetSupplier.abilityName} attempts ${status} on odd-numbered rounds: 20% chance on one enemy within adjacency; ${status} lasts 2 rounds.`,
+    `Against the same otherwise-eligible ${status}ed enemy, ${dependent} Damage Rate increases from ${base} to ${enhanced}; prior-round ${status} may carry over, and same-round overlap requires the supplier to resolve before ${dependent}.`,
+    'Supplier application success, eligible enemy identity, same-target overlap, and same-round action order remain unresolved.',
+  ];
 }
 
 function enemyAllMatchingTargetSummary(summary: string, text: string): string {
@@ -3181,6 +3275,14 @@ function mergedEffectTitle(
   if (uniqueEffectTitles.every((title) => /Stat support/i.test(title))) {
     return `${first.abilityName} - Stat support`;
   }
+  if (uniqueEffectTitles.every((title) => /\benhances .+ (?:damage rate|Physical Damage|Tactical Damage|Fire Damage)\b/i.test(title))) {
+    const suffixes = uniqueEffectTitles
+      .map(sharedEnhancementTitleSuffix)
+      .filter((value): value is string => Boolean(value));
+    if (suffixes.length === uniqueEffectTitles.length && suffixes.every((suffix) => suffix === suffixes[0])) {
+      return suffixes[0]!;
+    }
+  }
   if (options.exactRecipientSet || options.preserveProviderExactRecipient) {
     const sharedPrefix = commonAbilityEffectPrefix(first.abilityName, uniqueEffectTitles);
     if (sharedPrefix) {
@@ -3344,10 +3446,25 @@ function groupedRecipientLabel(
   targetIds: string[],
   selectedIds: ReadonlySet<string>,
 ): string {
-  if (targetIds.length > 0 && targetIds.every((id) => selectedIds.has(id)) && targetIds.length === selectedIds.size) {
+  const uniqueTargetIds = unique(targetIds);
+  const uniqueTargetNames = unique(targetNames);
+  if (
+    uniqueTargetIds.length > 0 &&
+    uniqueTargetIds.every((id) => selectedIds.has(id)) &&
+    uniqueTargetIds.length === selectedIds.size &&
+    uniqueTargetNames.length === selectedIds.size
+  ) {
     return 'Team';
   }
-  return joinEnglishList(targetNames);
+  return joinEnglishList(uniqueTargetNames);
+}
+
+function groupedProviderLabel(names: string[]): string {
+  const uniqueNames = unique(names);
+  if (uniqueNames.length >= 3) {
+    return 'Team';
+  }
+  return joinEnglishList(uniqueNames);
 }
 
 function normalizeGroupedRecipientLine(line: string, targetNames: string[]): string {
@@ -3451,12 +3568,12 @@ function isRedundantBlockedTraitTrace(trace: SynergyTrace, source: Dragon, previ
   );
 }
 
-function interactionEffectTitle(abilityName: string, trace: SynergyTrace): string {
-  const purpose = interactionPurpose(trace);
+function interactionEffectTitle(abilityName: string, trace: SynergyTrace, summaryLines: string[] = []): string {
+  const purpose = interactionPurpose(trace, summaryLines);
   return purpose ? `${abilityName} - ${purpose}` : abilityName;
 }
 
-function interactionPurpose(trace: SynergyTrace): string | null {
+function interactionPurpose(trace: SynergyTrace, summaryLines: string[] = []): string | null {
   const statusSourcePurpose = statusSourceInteractionPurpose(trace);
   if (statusSourcePurpose) {
     return statusSourcePurpose;
@@ -3499,8 +3616,8 @@ function interactionPurpose(trace: SynergyTrace): string | null {
     if (match) {
       const status = match[1]!;
       const ability = match[2]!;
-      const isChance = trace.effects.some((effect) => /application chance|target-specific conditional chance/i.test(effect)) || trace.channel === 'status';
-      return `${status} enhances ${ability}${isChance ? ' chance' : ''}`;
+      const metric = dependentMetricTitleNoun(trace, summaryLines);
+      return `${status} enhances ${ability}${metric ? ` ${metric}` : ''}`;
     }
     return 'Conditional status enablement';
   }
@@ -3532,6 +3649,31 @@ function interactionPurpose(trace: SynergyTrace): string | null {
     return `${formatToken(trace.channel)} support`;
   }
   return trace.title === 'Stat Support' ? 'Stat support' : trace.title || null;
+}
+
+function dependentMetricTitleNoun(trace: SynergyTrace, summaryLines: string[] = []): string | null {
+  const dependentText = [
+    trace.explanation,
+    ...trace.matchedFacts,
+    ...trace.effects,
+    ...summaryLines,
+  ].join(' ');
+  if (/\b(?:Base current|Enhanced current|Base|Enhanced)\s+(?:Physical|Tactical|Fire) Damage Rate\b|Damage Rate/i.test(dependentText)) {
+    return 'damage rate';
+  }
+  if (trace.matchKind === 'status-condition-enablement' && trace.channel && trace.channel !== 'status') {
+    return 'damage rate';
+  }
+  if (/application chance|target-specific conditional chance|Current application chance/i.test(dependentText)) {
+    return 'chance';
+  }
+  if (/\b(?:Physical|Tactical|Fire) Damage\b/i.test(dependentText) && trace.channel && trace.channel !== 'status') {
+    return formatToken(trace.channel);
+  }
+  if (/duration/i.test(dependentText)) {
+    return 'duration';
+  }
+  return null;
 }
 
 function statusSourceInteractionPurpose(trace: SynergyTrace): string | null {

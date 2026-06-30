@@ -3662,7 +3662,7 @@
   "firstObservedInGame": "2026-06-22",
   "format": "dragonfire-dragon-profile",
   "gameVersion": null,
-  "generatedAt": "2026-06-30T05:48:24.984Z",
+  "generatedAt": "2026-06-30T16:10:56.601Z",
   "habits": [
     {
       "abilityClass": "passive",
@@ -6464,8 +6464,8 @@
   "rosterSourceStatus": "in-game-verified-pending-official-site",
   "slug": "rhysarion",
   "source": {
-    "branch": "fix/resilient-bond-retreat-ta-presentation-pass14e",
-    "commit": "ca04fa481ee305fe65bb15035029bfc88160ad67",
+    "branch": "fix/periodic-mitigation-provider-projection-pass15",
+    "commit": "94b00cd82dd58134b246ed3780209192a2a3eea5",
     "databaseVersion": "0.6.2",
     "dataSchemaVersion": 12,
     "gameBuild": "26.6.53509",

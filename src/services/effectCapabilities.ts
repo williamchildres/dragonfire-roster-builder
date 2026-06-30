@@ -479,6 +479,7 @@ export function periodicDamageOutputCapabilities(
       sourceEffectId: periodic.sourceEffectId,
       statusId: periodic.statusId,
       activationGroupId: periodic.activationGroupId,
+      targetSelectionGroupId: statusOutput.targetSelector.sharedSelectionGroupId,
       activationChanceFixed: statusOutput.activationChanceFixed,
       activationChanceByHabitLevel: statusOutput.activationChanceByHabitLevel,
       durationRounds: periodic.durationRounds,
@@ -2674,6 +2675,7 @@ function analyzeStatusEffectConditionEnablement(
                   'Exact roll sharing, target evaluation order, status check timing, refresh, and stacking remain unresolved.',
                 ]),
                 futureOrConditional: true,
+                targetSelectorSummary: targetSelectorSummary(targetForEffect(effect)),
               }));
             }
           }
@@ -3680,29 +3682,15 @@ function analyzeEnemyMitigationReduction(
       continue;
     }
     for (const recipientId of Object.values(formation).filter(Boolean) as string[]) {
-      const directlyMatchedOutputs = outputs.filter(
+      const matchedOutputs = outputs.filter(
         (output) =>
           output.dragonId === recipientId &&
-          !isPeriodicOutputCapability(output) &&
           output.channel === mitigationChannel &&
           outputCapabilityVisible(output, options) &&
           isDamageOutputCapability(output) &&
           mitigationSourceScopeCompatible(modifier.sourceScope, output.sourceScope) &&
           output.dependencies.some((dependency) => dependency.type === 'mitigated-by-target-stat' && dependency.statId === statId),
       );
-      const matchedOutputs = [
-        ...directlyMatchedOutputs,
-        ...outputs.filter(
-          (output) =>
-            output.dragonId === recipientId &&
-            isPeriodicOutputCapability(output) &&
-            directlyMatchedOutputs.length > 0 &&
-            output.channel === mitigationChannel &&
-            outputCapabilityVisible(output, options) &&
-            mitigationSourceScopeCompatible(modifier.sourceScope, output.sourceScope) &&
-            output.dependencies.some((dependency) => dependency.type === 'mitigated-by-target-stat' && dependency.statId === statId),
-        ),
-      ];
       if (matchedOutputs.length === 0) {
         continue;
       }
@@ -3754,12 +3742,14 @@ function analyzeEnemyMitigationReduction(
           ...(modifier.sourceEffectId ? [`Source effect ID: ${modifier.sourceEffectId}.`] : []),
           `Source scope: ${modifier.sourceScope}.`,
           ...matchedOutputs.map((output) => `${output.abilityName} is mitigated by target ${statLabel(statId)}.`),
+          ...matchedOutputs.flatMap((output) => enemyMitigationOutputTargetOverlapFacts(modifier, output)),
           ...sourceScopeResults.map((match) => `Source-scope compatibility: ${match.sourceScopeCompatible ? 'compatible' : 'not compatible'} for ${match.outputCapabilityId}.`),
         ],
         effects: [
           ...sourceTimingFacts,
           ...enemySelectorFacts(provider, modifier, completeCoverage),
           `Enemy ${statLabel(statId)} reduction may improve ${channelLabel(mitigationChannel)} outputs: ${matchedOutputs.map((output) => output.label).join(', ')}. ${scaledReductionValueSentence(context, statLabel(statId), `-${formatTypedModifierValue(modifier)}`)}`,
+          ...matchedOutputs.flatMap((output) => enemyMitigationOutputTargetOverlapFacts(modifier, output)),
           ...verifiedReductionTargetValueLines(context, modifier, statLabel(statId), `-${formatTypedModifierValue(modifier)}`),
           ...scaledReductionUnresolvedLines(context, statLabel(statId)),
           modifier.sourceScope === 'non-basic-attacks' ? `Applies to non-Basic ${channelLabel(mitigationChannel)} only.` : `Applies to all qualifying ${channelLabel(mitigationChannel)} sources.`,
@@ -3783,6 +3773,34 @@ function analyzeEnemyMitigationReduction(
     }
   }
   return traces;
+}
+
+function enemyMitigationOutputTargetOverlapFacts(modifier: ModifierCapability, output: OutputCapability): string[] {
+  if (!isPeriodicOutputCapability(output)) {
+    return [];
+  }
+  const outputLabel = output.label;
+  if (
+    modifier.activationGroupId &&
+    output.activationGroupId &&
+    modifier.activationGroupId === output.activationGroupId &&
+    modifier.targetSelector.sharedSelectionGroupId &&
+    output.targetSelectionGroupId &&
+    modifier.targetSelector.sharedSelectionGroupId === output.targetSelectionGroupId
+  ) {
+    return [`${outputLabel} uses the same selected enemy and activation group as this enemy mitigation reduction.`];
+  }
+  if (
+    modifier.targetSelector.sharedSelectionGroupId &&
+    output.targetSelectionGroupId &&
+    modifier.targetSelector.sharedSelectionGroupId === output.targetSelectionGroupId
+  ) {
+    return [`${outputLabel} uses the same selected enemy as this enemy mitigation reduction.`];
+  }
+  if (output.activationGroupId || output.targetSelectionGroupId) {
+    return [`${outputLabel} is independently targeted for this mitigation source; enemy overlap is conditional and not guaranteed.`];
+  }
+  return [`${outputLabel} target overlap with this mitigation source remains unresolved.`];
 }
 
 function mitigationChannelForStat(statId: DragonStatId): EffectChannel | null {
