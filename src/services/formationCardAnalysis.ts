@@ -133,7 +133,7 @@ export function buildFormationCardPresentation(
       continue;
     }
 
-    if (trace.targetSelectionGroup) {
+    if (trace.targetSelectionGroup && (trace.targetSelectionGroup.selectionUncertain || isAllMatchingTargetSelection(trace) || trace.targetSelectionGroup.targetCount > 1)) {
       const eligible = trace.targetSelectionGroup.eligibleRecipientDragonIds.filter((dragonId) => selectedIds.has(dragonId));
       const targetCount = trace.targetSelectionGroup.targetCount;
       const allMatching = isAllMatchingTargetSelection(trace);
@@ -199,9 +199,7 @@ export function buildFormationCardPresentation(
       candidateTotal: null,
     });
     if (trace.matchKind === 'incoming-effect-amplification' && trace.recipientModifierType) {
-      const targetSelectionGroup = trace.targetSelectionGroup
-        ? (trace.targetSelectionGroup as NonNullable<SynergyTrace['targetSelectionGroup']>)
-        : null;
+      const targetSelectionGroup = trace.targetSelectionGroup ?? null;
       const providerTargetLabel = targetSelectionGroup
         ? groupedRecipientLabel(
             targetSelectionGroup.eligibleRecipientDragonIds.map((dragonId) => dragonById.get(dragonId)?.name ?? dragonId),
@@ -430,7 +428,7 @@ function toCardInteraction({
     trace.matchKind === 'status-condition-enablement'
       ? `${trace.recipientAbilityId ?? ''}:${trace.channel ?? ''}:${trace.title}:${trace.id}`
       : null,
-    trace.targetSelectionGroup
+    isPresentationTargetSelectionGroup(trace)
       ? `target-selection-${trace.id}`
       : recipient?.id ?? 'team',
   ].filter(Boolean).join('__');
@@ -497,7 +495,7 @@ function interactionPresentationFamily(trace: SynergyTrace): string {
   if (trace.matchKind === 'status-removal') {
     return 'status-removal';
   }
-  if (trace.targetSelectionGroup && trace.channel) {
+  if (isPresentationTargetSelectionGroup(trace) && trace.channel) {
     return `target-selection:${trace.channel}`;
   }
   if (trace.channel === 'recovery') {
@@ -513,6 +511,13 @@ function interactionPresentationFamily(trace: SynergyTrace): string {
     return `${trace.channel}-support`;
   }
   return trace.matchKind ?? trace.title;
+}
+
+function isPresentationTargetSelectionGroup(trace: SynergyTrace): boolean {
+  return Boolean(
+    trace.targetSelectionGroup &&
+    (trace.targetSelectionGroup.selectionUncertain || isAllMatchingTargetSelection(trace) || trace.targetSelectionGroup.targetCount > 1),
+  );
 }
 
 function projectRecipientOutputDetail(
@@ -641,6 +646,12 @@ function compactStackSupportSummaryLines(trace: SynergyTrace, source: Dragon, re
     ];
   }
   if (isSelectedAdjacent && recipient && recipient.id !== source.id) {
+    if (trace.targetSelectionGroup?.selectionUncertain === false || /Resolved selected target in this formation/i.test(text)) {
+      return [
+        `At Start of Combat, ${recipient.name} gains 1 ${stack} stack.`,
+        `Each verified stack reduces ${damageScope} by ${amount}; the stack lasts ${duration ?? 'until end of combat'}.`,
+      ];
+    }
     const candidates = eligiblePhrase ?? 'the eligible adjacent allies';
     return [
       `At Start of Combat, one of ${candidates} is selected to gain 1 ${stack} stack.`,
@@ -2393,9 +2404,12 @@ function sharedStatusRecipientBenefitKey(interaction: FormationCardInteraction):
     return null;
   }
   const text = sharedStatusRecipientBenefitText([interaction]);
-  const requiredStatus = interaction.title.match(/^(.+?) enables /i)?.[1]?.trim() ?? interaction.effectTitle.match(/(?:^|-\s*)(.+?) enhances /i)?.[1]?.trim();
+  const requiredCategoryStatus = sharedRequiredStatusLabel(interaction);
+  const requiredStatus = requiredCategoryStatus ?? interaction.title.match(/^(.+?) enables /i)?.[1]?.trim() ?? interaction.effectTitle.match(/(?:^|-\s*)(.+?) enhances /i)?.[1]?.trim();
   const dependentAbility = interaction.title.match(/ enables (.+)$/i)?.[1]?.trim() ?? interaction.effectTitle.match(/ enhances (.+?)(?: damage rate| chance| Fire Damage| Tactical Damage| Physical Damage)?$/i)?.[1]?.trim();
-  const sharedTitle = sharedEnhancementTitleSuffix(interaction.effectTitle);
+  const sharedTitle = requiredCategoryStatus
+    ? (dependentMetricFromEffectTitles([interaction.effectTitle]) ?? sharedEnhancementTitleSuffix(interaction.effectTitle))
+    : sharedEnhancementTitleSuffix(interaction.effectTitle);
   const rateValues = sharedStatusRecipientBenefitRateValues(text);
   const baseRate = rateValues?.baseRate ?? '';
   const enhancedRate = rateValues?.enhancedRate ?? '';
@@ -2410,6 +2424,41 @@ function sharedStatusRecipientBenefitKey(interaction: FormationCardInteraction):
     enhancedRate,
     interaction.presentationFamily,
   ].join('|');
+}
+
+function sharedRequiredStatusLabel(interaction: FormationCardInteraction): string | null {
+  const text = interactionText(interaction);
+  const supplied = text.match(/\bSupplied status:\s*([^.]+)\./i)?.[1]?.trim() ?? null;
+  const requiredCategory = text.match(/\bRequired status category:\s*([^.]+)\./i)?.[1]?.trim() ?? null;
+  if (!supplied) {
+    return null;
+  }
+  const dependentRequiredStatus = text.match(/\bwith\s+([A-Z][A-Za-z -]+),\s+[A-Z][A-Za-z' -]+\s+(?:Fire|Physical|Tactical)?\s*Damage/i)?.[1]?.trim() ?? null;
+  if (dependentRequiredStatus && !normalizedStatusLabelsMatch(supplied, dependentRequiredStatus)) {
+    return dependentRequiredStatus;
+  }
+  if (!requiredCategory) {
+    return null;
+  }
+  const verifiedPattern = new RegExp(`${escapeRegExp(supplied)} is a verified member of ${escapeRegExp(requiredCategory)}\\.`, 'i');
+  if (verifiedPattern.test(text)) {
+    return requiredCategory;
+  }
+  const memberText = text.match(new RegExp(`${escapeRegExp(requiredCategory)} (?:category )?members:\\s*([^.]+)\\.`, 'i'))?.[1] ?? null;
+  const members = memberText
+    ? memberText.split(/\s*,\s*|\s+and\s+/i).map((member) => member.trim()).filter(Boolean)
+    : [];
+  if (members.some((member) => member.toLowerCase() === supplied.toLowerCase())) {
+    return requiredCategory;
+  }
+  return null;
+}
+
+function normalizedStatusLabelsMatch(left: string, right: string): boolean {
+  const normalize = (value: string) => value.toLowerCase().replace(/\bed\b/g, '').replace(/[^a-z0-9]+/g, '');
+  const normalizedLeft = normalize(left);
+  const normalizedRight = normalize(right);
+  return normalizedLeft === normalizedRight || normalizedRight.startsWith(normalizedLeft) || normalizedLeft.startsWith(normalizedRight);
 }
 
 function sharedEnhancementTitleSuffix(title: string): string {
@@ -2562,7 +2611,7 @@ function mergeInteractions(
     recipientDragonId: options.exactRecipientSet ? null : first.recipientDragonId,
     recipientName: options.exactRecipientSet ? targetLabel : first.recipientName,
     targetLabel: direction === 'provides' && targetNames.length > 0 && !options.preserveProviderExactRecipient ? targetLabel : first.targetLabel,
-    effectTitle: mergedEffectTitle(first, uniqueEffectTitles, options),
+    effectTitle: mergedEffectTitle(first, items, uniqueEffectTitles, options),
     title: options.exactRecipientSet && uniqueTitles.length > 1 ? first.abilityName : uniqueTitles.join(' + '),
     summaryLines,
     summary: compactSummaryText(summaryLines, mergedCandidateTotal),
@@ -2759,22 +2808,99 @@ function compactSharedStatusRecipientBenefitSummaryLines(items: FormationCardInt
     return [];
   }
   const text = sharedStatusRecipientBenefitText(items);
-  const status = items[0]!.title.match(/^(.+?) enables /i)?.[1]?.trim() ?? 'Status';
+  const status = commonSharedRequiredStatusLabel(items) ?? items[0]!.title.match(/^(.+?) enables /i)?.[1]?.trim() ?? 'Status';
   const dependent = items[0]!.title.match(/ enables (.+)$/i)?.[1]?.trim() ?? 'dependent effect';
   const multiTargetSupplier = items.find((item) => /first added target|different second target/i.test(interactionText(item)));
   const singleTargetSupplier = items.find((item) => /odd-numbered rounds|one enemy within adjacency/i.test(interactionText(item)));
   const rateValues = sharedStatusRecipientBenefitRateValues(text);
   const base = rateValues?.baseRate ?? null;
   const enhanced = rateValues?.enhancedRate ?? null;
-  if (!multiTargetSupplier || !singleTargetSupplier || !base || !enhanced) {
+  if (!base || !enhanced) {
+    return [];
+  }
+  if (multiTargetSupplier && singleTargetSupplier) {
+    return [
+      `${multiTargetSupplier.abilityName} attempts ${status} on Rounds 2, 5, and 8: 40% on the first added target and 20% on a different second target; ${status} lasts 2 rounds.`,
+      `${singleTargetSupplier.abilityName} attempts ${status} on odd-numbered rounds: 20% chance on one enemy within adjacency; ${status} lasts 2 rounds.`,
+      `Against the same otherwise-eligible ${status}ed enemy, ${dependent} Fire Damage Rate increases from ${base} to ${enhanced}; prior-round ${status} may carry over, and same-round overlap requires the relevant supplier to resolve before ${dependent}.`,
+      'Supplier application success, eligible enemy identity, same-target overlap, and same-round action order remain unresolved.',
+    ];
+  }
+  const supplierItems = [...items].sort((left, right) => sharedStatusSupplierOrder(left) - sharedStatusSupplierOrder(right));
+  const supplierLines = supplierItems.map(sharedStatusSupplierSummaryLine);
+  if (supplierLines.some((line) => line === null)) {
     return [];
   }
   return [
-    `${multiTargetSupplier.abilityName} attempts ${status} on Rounds 2, 5, and 8: 40% on the first added target and 20% on a different second target; ${status} lasts 2 rounds.`,
-    `${singleTargetSupplier.abilityName} attempts ${status} on odd-numbered rounds: 20% chance on one enemy within adjacency; ${status} lasts 2 rounds.`,
-    `Against the same otherwise-eligible ${status}ed enemy, ${dependent} Fire Damage Rate increases from ${base} to ${enhanced}; prior-round ${status} may carry over, and same-round overlap requires the relevant supplier to resolve before ${dependent}.`,
+    ...(supplierLines as string[]),
+    `Against the same otherwise-eligible enemy with ${status}, ${dependent} Fire Damage Rate increases from ${base} to ${enhanced}; prior-round ${status} may carry over, and same-round overlap requires the relevant supplier to resolve before ${dependent}.`,
     'Supplier application success, eligible enemy identity, same-target overlap, and same-round action order remain unresolved.',
   ];
+}
+
+function sharedStatusSupplierSummaryLine(item: FormationCardInteraction): string | null {
+  const text = interactionText(item);
+  const supplied = text.match(/\bSupplied status:\s*([^.]+)\./i)?.[1]?.trim() ?? item.title.match(/^(.+?) enables /i)?.[1]?.trim() ?? null;
+  const chance = text.match(/\bStatus application chance:\s*([\d.]+%)/i)?.[1] ?? null;
+  const duration = text.match(/\bDuration:\s*(\d+ rounds|until end of current round)\./i)?.[1] ?? null;
+  if (!supplied) {
+    return null;
+  }
+  const compactLine = text.match(/\b([\d.]+%) chance (each round|on odd-numbered rounds) to apply ([A-Z][A-Za-z-]+) to (.+?) for (\d+ rounds)\./i);
+  if (compactLine) {
+    const timing = /^on /i.test(compactLine[2]!) ? compactLine[2]!.replace(/^on\s+/i, '') : compactLine[2]!;
+    return `${item.abilityName} checks ${timing}: ${compactLine[1]} chance to apply ${compactLine[3]} to ${compactLine[4]}; ${compactLine[3]} lasts ${compactLine[5]}.`;
+  }
+  if (!chance || !duration) {
+    return null;
+  }
+  const timing = sharedStatusTimingPhrase(text);
+  const target = sharedStatusTargetPhrase(text);
+  if (!timing || !target) {
+    return null;
+  }
+  return `${item.abilityName} checks ${timing}: ${chance} chance to apply ${supplied} to ${target}; ${supplied} lasts ${duration}.`;
+}
+
+function sharedStatusSupplierOrder(item: FormationCardInteraction): number {
+  const text = interactionText(item);
+  if (/\bchecks each round\b|\bchance each round\b|\bActivation timing:\s*Each round\b/i.test(text)) {
+    return 0;
+  }
+  if (/\bodd-numbered rounds\b|\bActivation timing:\s*Odd-numbered rounds\b/i.test(text)) {
+    return 1;
+  }
+  return 2;
+}
+
+function sharedStatusTimingPhrase(text: string): string | null {
+  const timing = text.match(/\bActivation timing:\s*([^.]+)\./i)?.[1]?.trim() ?? null;
+  if (!timing) {
+    return null;
+  }
+  if (/^Each round$/i.test(timing)) {
+    return 'each round';
+  }
+  if (/^Odd-numbered rounds$/i.test(timing)) {
+    return 'odd-numbered rounds';
+  }
+  return timing.charAt(0).toLowerCase() + timing.slice(1);
+}
+
+function sharedStatusTargetPhrase(text: string): string | null {
+  const target = text.match(/\bTarget:\s*([^.]+)\./i)?.[1]?.trim() ?? null;
+  if (!target) {
+    return null;
+  }
+  const lane = text.match(/\bLane scope:\s*([^.]+)\./i)?.[1]?.trim() ?? null;
+  const priority = /Priority:\s*Warriors are prioritized/i.test(text) ? ', prioritizing Warriors' : '';
+  if (lane && !target.toLowerCase().includes(lane.toLowerCase())) {
+    if (/^within\b/i.test(lane)) {
+      return `${target} ${lane}${priority}`;
+    }
+    return `${target} in ${lane}${priority}`;
+  }
+  return `${target}${priority}`;
 }
 
 function enemyAllMatchingTargetSummary(summary: string, text: string): string {
@@ -3289,6 +3415,7 @@ function mergeExactRecipientStatSupportInteractions(
 
 function mergedEffectTitle(
   first: FormationCardInteraction,
+  items: FormationCardInteraction[],
   uniqueEffectTitles: string[],
   options: { exactRecipientSet?: boolean; preserveProviderExactRecipient?: boolean },
 ): string {
@@ -3299,6 +3426,13 @@ function mergedEffectTitle(
     return `${first.abilityName} - Stat support`;
   }
   if (uniqueEffectTitles.every((title) => /\benhances .+ (?:damage rate|Physical Damage|Tactical Damage|Fire Damage)\b/i.test(title))) {
+    const requiredStatus = commonSharedRequiredStatusLabel(items);
+    const dependent = first.title.match(/ enables (.+)$/i)?.[1]?.trim() ??
+      first.effectTitle.match(/ enhances (.+?)(?: damage rate| chance| Fire Damage| Tactical Damage| Physical Damage)?$/i)?.[1]?.trim();
+    const metric = dependentMetricFromEffectTitles(uniqueEffectTitles);
+    if (requiredStatus && dependent && metric) {
+      return `${requiredStatus} enhances ${dependent} ${metric}`;
+    }
     const suffixes = uniqueEffectTitles
       .map(sharedEnhancementTitleSuffix)
       .filter((value): value is string => Boolean(value));
@@ -3313,6 +3447,23 @@ function mergedEffectTitle(
     }
   }
   return first.abilityName;
+}
+
+function commonSharedRequiredStatusLabel(items: FormationCardInteraction[]): string | null {
+  const labels = unique(items.map(sharedRequiredStatusLabel).filter((value): value is string => Boolean(value)));
+  return labels.length === 1 && labels[0] ? labels[0] : null;
+}
+
+function dependentMetricFromEffectTitles(titles: string[]): string | null {
+  if (titles.every((title) => /\bdamage rate\b/i.test(title))) {
+    return 'damage rate';
+  }
+  if (titles.every((title) => /\bchance\b/i.test(title))) {
+    return 'chance';
+  }
+  const damageChannel = titles.map((title) => title.match(/\b(Physical Damage|Tactical Damage|Fire Damage)\b/i)?.[1] ?? null);
+  const uniqueChannels = unique(damageChannel.filter((value): value is string => Boolean(value)));
+  return uniqueChannels.length === 1 ? uniqueChannels[0]! : null;
 }
 
 function commonAbilityEffectPrefix(abilityName: string, titles: string[]): string | null {

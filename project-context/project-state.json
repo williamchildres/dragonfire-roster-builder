@@ -23,7 +23,7 @@
   ],
   "currentReviewPhase": "Legendary/full-profile formation validation complete; Epic ingestion active with Daemoros and Vaeldra as the first detailed Epic batch after Vermax.",
   "format": "dragonfire-project-state",
-  "generatedAt": "2026-06-30T16:41:06.491Z",
+  "generatedAt": "2026-06-30T17:46:38.251Z",
   "plannedNextPhase": [
     "continue Epic dragon ingestion in batches of two after the latest merged context is available",
     "fetch latest merged main and create a new feature branch before each future Epic implementation batch",
@@ -37,8 +37,8 @@
     "metadataOnlyDragonCount": 15
   },
   "source": {
-    "branch": "fix/aggregated-burn-summary-pass15b",
-    "commit": "308dcd6637a0e8e693cd98b75ee5896023de805b",
+    "branch": "fix/control-category-aggregation-resilient-bond-pass16",
+    "commit": "9ebba0a4562265071f569b8f698e5cf6d2b73a25",
     "databaseVersion": "0.6.2",
     "dataSchemaVersion": 12,
     "gameBuild": "26.6.53509",
@@ -49,8 +49,8 @@
     "countingMethod": "static working-tree test declaration scan; runtime pass/fail is reported by npm run test",
     "lastRunStatus": "not-run-by-exporter",
     "runner": "vitest",
-    "testCaseCount": 420,
-    "testFileCount": 40
+    "testCaseCount": 423,
+    "testFileCount": 42
   },
   "unresolvedMechanicsCount": 169,
   "versions": {
