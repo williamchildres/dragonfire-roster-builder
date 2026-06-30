@@ -23,7 +23,7 @@
   ],
   "currentReviewPhase": "Legendary/full-profile formation validation complete; Epic ingestion active with Daemoros and Vaeldra as the first detailed Epic batch after Vermax.",
   "format": "dragonfire-project-state",
-  "generatedAt": "2026-06-30T01:36:12.133Z",
+  "generatedAt": "2026-06-30T03:26:35.624Z",
   "plannedNextPhase": [
     "continue Epic dragon ingestion in batches of two after the latest merged context is available",
     "fetch latest merged main and create a new feature branch before each future Epic implementation batch",
@@ -37,8 +37,8 @@
     "metadataOnlyDragonCount": 15
   },
   "source": {
-    "branch": "fix/scheduled-status-card-contract-pass13",
-    "commit": "8f72d3fb8cc21af37a54161768e5787e11f6caee",
+    "branch": "fix/emerald-resilient-calculated-pass14",
+    "commit": "ecc6f4a5a75c3381bf958550552b3ac77181cfdd",
     "databaseVersion": "0.6.2",
     "dataSchemaVersion": 12,
     "gameBuild": "26.6.53509",

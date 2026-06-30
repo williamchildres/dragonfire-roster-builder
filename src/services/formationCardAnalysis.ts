@@ -1133,6 +1133,14 @@ function compactStatusSupplierLine(text: string, suppliedStatus: string, sourceN
     const duration = summaryMatch[5]!.replace(/^until/, 'until').trim();
     return `${summaryMatch[2]} chance ${cadence} to apply ${suppliedStatus} to ${target} for ${duration}.`;
   }
+  const pairedTargetsMatch = text.match(/([\d.]+%) on the first added target and ([\d.]+%) on a different second target/i);
+  const roundsMatch = text.match(/Rounds?\s+([\d, and]+?)(?:[:.]\s|,\s|;\s)/i) ?? text.match(/Rounds?\s+([\d, and]+)\./i);
+  const durationMatch = text.match(/Burn lasts (\d+ rounds|until end of current round)\./i);
+  const sourceMatch = text.match(/\b([A-Z][A-Za-z' -]*Conductor)\b/);
+  if (pairedTargetsMatch && roundsMatch && durationMatch) {
+    const source = sourceMatch?.[1] ?? 'The source ability';
+    return `${source} attempts ${suppliedStatus} on Rounds ${roundsMatch[1]!.trim()}: ${pairedTargetsMatch[1]} on the first added target and ${pairedTargetsMatch[2]} on a different second target; ${suppliedStatus} lasts ${durationMatch[1]}.`;
+  }
   const chance = text.match(/Status application chance:\s*([\d.]+%)/i)?.[1] ?? null;
   const schedule = text.match(/Supplier schedule:\s*([^.]+)\./i)?.[1]?.trim() ?? null;
   const duration = text.match(new RegExp(`${statusPattern} duration:\\s*(\\d+ rounds|until end of current round)\\.`, 'i'))?.[1] ?? null;
@@ -1153,7 +1161,10 @@ function compactStatusDependentLine(text: string, suppliedStatus: string, depend
   if (rateMatch) {
     const channel = rateMatch[1]!.trim();
     const required = text.match(/Required status (?:category|condition):\s*([^.]+)\./i)?.[1]?.trim() ?? suppliedStatus;
-    return `Against the same enemy while it has ${required}, ${dependentAbility} ${channel} increases from ${rateMatch[2]} to ${rateMatch[3]}.`;
+    const qualifyingEnemyPhrase = /burn/i.test(required)
+      ? 'the same eligible Burned enemy'
+      : `the same eligible enemy with ${required}`;
+    return `Against ${qualifyingEnemyPhrase}, ${dependentAbility} ${channel} increases from ${rateMatch[2]} to ${rateMatch[3]}.`;
   }
   const chanceMatch = text.match(/Base current application chance:\s*([\d.]+%)\. ([A-Za-z-]+)-target application chance:\s*([\d.]+%)\./i);
   if (chanceMatch) {
@@ -1166,6 +1177,12 @@ function compactStatusDependentLine(text: string, suppliedStatus: string, depend
 }
 
 function compactDependencyTiming(text: string, suppliedStatus: string, dependentAbility: string): string {
+  const sameRoundSupplier = text.match(/same-round [^,.;]+ requires ([A-Za-z' -]+) to resolve first/i)?.[1]?.trim()
+    ?? text.match(/only if ([A-Za-z' -]+) resolves before/i)?.[1]?.trim()
+    ?? null;
+  if (/(prior|previous)-round|carry into/i.test(text) && sameRoundSupplier) {
+    return `Prior-round ${suppliedStatus} can carry into scheduled ${dependentAbility} rounds; same-round overlap requires ${sameRoundSupplier} to resolve first.`;
+  }
   const recurring = text.match(/([A-Za-z' -]+) and ([A-Za-z' -]+) both check each round\./i);
   const sameRound = text.match(/A [A-Za-z-]+ applied during the current round can enhance [A-Za-z' -]+ only if ([A-Za-z' -]+) resolves first\./i);
   if (recurring) {
@@ -1195,7 +1212,7 @@ function compactDependencyUncertainty(text: string): string {
   const hasRollScope = /shared roll|per-target rolls|roll scope|roll sharing/i.test(text);
   const pieces = [
     'Application success',
-    hasEnemyIdentity && !hasRollScope ? 'enemy identity' : null,
+    hasEnemyIdentity && !hasRollScope ? (/eligible|qualifying/i.test(text) ? 'eligible enemy identity' : 'enemy identity') : null,
     /same enemy|same-target|same-enemy/i.test(text) ? 'same-target overlap' : 'status uptime',
     /action order|resolves first/i.test(text) ? 'action order' : null,
     hasRollScope ? 'roll scope' : null,
@@ -1636,7 +1653,9 @@ function commandSingleEffectSummary(
     return `${chance} chance to apply Taunt to ${commandTargetPhrase(effect)}${duration}.${unresolvedScope}`;
   }
   if (effect.type === 'Physical Damage Dealt Down' && (schedule.activationRoll?.chanceFixed ?? effect.activationRoll?.chanceFixed ?? null) !== null) {
-    const target = 'the highest-Strength enemy';
+    const target = effect.conditions?.some((condition) => condition.kind === 'target-has-output-capability')
+      ? 'all qualifying enemies in any lane, up to 3, that possess non-Basic Physical Damage outputs'
+      : 'the highest-Strength enemy';
     const reduction = formatRankedValue({ level: 1, value: effect.magnitude ?? 12, unit: 'percent' }, 'percent');
     return `${commandChanceValue(schedule.activationRoll ?? effect.activationRoll, level)} chance to reduce ${target}'s non-Basic Physical Damage Dealt by ${reduction} for ${effect.durationRounds ?? 2} rounds.`;
   }
@@ -1665,7 +1684,9 @@ function commandSingleEffectSummary(
     const multiplier = conditionalMultipliers[0]!;
     const target = schedule.targetPriority === 'prefer-prey'
       ? 'one enemy, prioritizing Prey'
-      : commandTargetPhrase(effect);
+      : /all enemies that deal Physical Damage, excluding Basic Attacks/i.test(effect.target)
+        ? 'all qualifying enemies in any lane, up to 3, that possess non-Basic Physical Damage outputs'
+        : commandTargetPhrase(effect);
     const base = commandRateValue(effect, level);
     const required = multiplier.condition.statusCategoryId
       ? formatToken(multiplier.condition.statusCategoryId)
@@ -1726,7 +1747,14 @@ function commandTargetPhrase(effect: AbilityEffect): string {
   const outputCondition = effect.conditions?.find((condition) => condition.kind === 'target-has-output-capability');
   const qualifyingOutput = outputCondition?.qualifyingOutput;
   if (qualifyingOutput?.channel === 'physical-damage' && qualifyingOutput.sourceScope === 'non-basic-attacks') {
-    return 'all enemies capable of non-Basic Physical Damage';
+    return 'all qualifying enemies in any lane, up to 3, that possess non-Basic Physical Damage outputs';
+  }
+  if (
+    effect.targetScope === 'any-lane' &&
+    /Physical Damage/i.test(effect.target) &&
+    /Basic Attacks?/i.test(effect.target)
+  ) {
+    return 'all qualifying enemies in any lane, up to 3, that possess non-Basic Physical Damage outputs';
   }
   if (
     effect.targetPriority === 'least-current-troops-ally' ||
@@ -1785,6 +1813,9 @@ function commandTargetPhrase(effect: AbilityEffect): string {
     return '2 enemies within adjacency';
   }
   if (effect.targetCount === 3 && effect.targetScope === 'any-lane') {
+    if (effect.conditions?.some((condition) => condition.kind === 'target-has-output-capability')) {
+      return 'all qualifying enemies in any lane, up to 3, that possess non-Basic Physical Damage outputs';
+    }
     return '3 enemies in any lane';
   }
   if (effect.targetCount === 2 && effect.targetScope === 'any-lane' && /other Allies/i.test(effect.target)) {
@@ -1869,7 +1900,7 @@ function commandEffectSummaryLine(
     return [];
   }
   const target = effect.conditions?.some((condition) => condition.kind === 'target-has-output-capability')
-    ? 'all enemies capable of dealing non-Basic Physical Damage'
+    ? 'all qualifying enemies in any lane, up to 3, that possess non-Basic Physical Damage outputs'
     : effect.target;
   if (!multiplier || !enhanced) {
     return [

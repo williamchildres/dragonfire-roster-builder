@@ -186,13 +186,14 @@ describe('Feskar, Rhysarion, and Shadowsong Epic profiles', () => {
     expect(feskarCommand?.summaryLines).toEqual([
       "Each Round: 20% chance to reduce the highest-Strength enemy's non-Basic Physical Damage Dealt by 12% for 2 rounds.",
       'Rounds 2, 4, 7, and 9: deal Tactical Damage at a 100% rate to the enemy with the least troops.',
-      'At 6+ Stars, Rounds 3, 5, 8, and 10: deal Fire Damage at a 40% rate to all enemies capable of non-Basic Physical Damage. Against the same eligible target while it has Burn, the rate increases 1.5x to 60%.',
+      'At 6+ Stars, Rounds 3, 5, 8, and 10: deal Fire Damage at a 40% rate to all qualifying enemies in any lane, up to 3, that possess non-Basic Physical Damage outputs. Against the same eligible target while it has Burn, the rate increases 1.5x to 60%.',
     ]);
-    expect(commandSummaryText).toContain('non-Basic Physical Damage');
+    expect(commandSummaryText).toContain('all qualifying enemies in any lane, up to 3, that possess non-Basic Physical Damage outputs');
     expect(commandSummaryText).not.toContain('L1 40%');
     expect(commandSummaryText).not.toMatch(/\bL[1-5]\b/);
     expect(commandDetailText).toContain('Each Round: 20% chance to reduce Physical Damage Dealt, excluding Basic Attacks, by 12% for the enemy with the highest Strength for 2 rounds.');
     expect(commandDetailText).toContain('At 6+ Stars:');
+    expect(commandDetailText).toContain('Deal Fire Damage to all enemies that deal Physical Damage, excluding Basic Attacks, at a 40% Damage Rate.');
     expect(commandDetailText).toContain('This damage is increased by 1.5x against targets afflicted with Burn, increasing the Damage Rate to 60%.');
 
     expect(burnTrace).toBeDefined();
@@ -242,7 +243,7 @@ describe('Feskar, Rhysarion, and Shadowsong Epic profiles', () => {
     expect(feskarCommand?.summaryLines).toEqual([
       "Each Round: 20% chance to reduce the highest-Strength enemy's non-Basic Physical Damage Dealt by 12% for 2 rounds.",
       'Rounds 2, 4, 7, and 9: deal Tactical Damage at a 100% rate to the enemy with the least troops.',
-      'At 6+ Stars, Rounds 3, 5, 8, and 10: deal Fire Damage at a 40% rate to all enemies capable of non-Basic Physical Damage. Against the same eligible target while it has Burn, the rate increases 1.5x to 60%.',
+      'At 6+ Stars, Rounds 3, 5, 8, and 10: deal Fire Damage at a 40% rate to all qualifying enemies in any lane, up to 3, that possess non-Basic Physical Damage outputs. Against the same eligible target while it has Burn, the rate increases 1.5x to 60%.',
     ]);
     expect(feskarCommand?.detail).toContain('At 6+ Stars:');
     expect(feskarCommand?.detail).toContain('This damage is increased by 1.5x against targets afflicted with Burn, increasing the Damage Rate to 60%.');
@@ -328,7 +329,7 @@ describe('Feskar, Rhysarion, and Shadowsong Epic profiles', () => {
 
     expect(normalText).toContain('conditional');
     expect(normalText).toContain('Feskar can apply Stagger, which belongs to the Control category.');
-    expect(normalText).toContain('On Rounds 2, 5, and 8, Dawnsong deals Fire Damage at a 20% rate to 3 enemies in any lane.');
+    expect(normalText).toContain('On Rounds 2, 5, and 8, Dawnsong deals Fire Damage at a 20% rate to all qualifying enemies in any lane, up to 3.');
     expect(normalText).toMatch(/Against the same target while it has Control, the rate increases 1\.5[x×] to 30%\./);
     expect(normalText).toContain('Unyielding Grasp has a 10% chance each round to apply Stagger to one enemy in any lane, prioritizing Warriors. Stagger lasts 3 rounds.');
     expect(normalText).toContain('same-enemy overlap');
@@ -1094,7 +1095,7 @@ describe('Feskar, Rhysarion, and Shadowsong Epic profiles', () => {
       .join(' ');
     expect(enemyCardText).toContain('all enemies');
     expect(enemyCardText).not.toMatch(/matching the source condition|threshold membership|Target not guaranteed|candidate/i);
-    expect(enemyReduction?.targetSelectorSummary).toContain('enemy; any-lane; all-matching-condition; all matching enemies');
+    expect(enemyReduction?.targetSelectorSummary).toContain('enemy; any-lane; all-matching-condition; all qualifying enemies in any lane, up to 3');
     expect(enemyReductionText).toContain('Enemy selector: all enemies.');
     expect(enemyReductionText).toContain('All matching enemies are affected as enemy-side metadata rather than named friendly recipients.');
     expect(enemyReductionText).not.toContain('Enemy target count: 3.');

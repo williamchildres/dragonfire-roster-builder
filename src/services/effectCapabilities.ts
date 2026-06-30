@@ -4807,7 +4807,7 @@ function enemyAllMatchingSelectorFacts(modifier: ModifierCapability): string[] {
   return [
     thresholdLine,
     'All matching enemies are affected; no one enemy is selected from the qualifying set.',
-    'Zero, one, two, or three enemies may qualify; enemy identities remain unknown.',
+    `Up to ${modifier.targetSelector.count ?? 3} enemies may qualify; enemy identities remain unknown.`,
   ];
 }
 
@@ -4841,8 +4841,10 @@ function enemySelectorFacts(
   if (capability.targetSelector.selection === 'all-matching-condition') {
     return [
       'Enemy selector: all enemies.',
-      'All matching enemies are affected as enemy-side metadata rather than named friendly recipients.',
-      'Enemy target count: all matching enemies.',
+      'All qualifying enemies in any lane are affected as enemy-side metadata rather than named friendly recipients.',
+      capability.targetSelector.count !== null
+        ? `Enemy target count: up to ${capability.targetSelector.count} qualifying enemies.`
+        : 'Enemy target count: all matching enemies.',
       scope === 'within-adjacency' ? 'Target scope: enemies within adjacency.' : null,
       priority,
       fallback,
@@ -6972,11 +6974,20 @@ function receivingTargetPhrase(effect: AbilityEffect): string | null {
   if (explicitTarget && /ally|allies|self/i.test(explicitTarget)) {
     return explicitTarget;
   }
+  const qualifyingOutput = effect.conditions?.find((condition) => condition.kind === 'target-has-output-capability' && condition.qualifyingOutput)?.qualifyingOutput ?? null;
+  if (
+    effect.targetScope === 'any-lane' &&
+    count !== null &&
+    qualifyingOutput?.channel === 'physical-damage' &&
+    qualifyingOutput.sourceScope === 'non-basic-attacks'
+  ) {
+    return `all qualifying enemies in any lane, up to ${count}, that possess non-Basic Physical Damage outputs`;
+  }
   if (effect.targetScope === 'within-adjacency' && count === 2) {
     return effect.type === 'Vulnerable' ? 'up to 2 adjacent enemies' : '2 adjacent enemies';
   }
   if (effect.targetScope === 'any-lane' && count === 3) {
-    return '3 enemies in any lane';
+    return 'all qualifying enemies in any lane, up to 3';
   }
   if (effect.targetScope === 'any-lane' && count === 1) {
     return 'one enemy in any lane';
@@ -8784,9 +8795,14 @@ function availabilityReportLabel(
 }
 
 function targetSelectorSummary(target: AbilityTarget): string {
-  const count = target.selection === 'all-matching-condition'
-    ? `all matching ${target.side === 'enemy' ? 'enemies' : 'targets'}`
-    : target.count === null ? 'unknown count' : `${target.count} target${target.count === 1 ? '' : 's'}`;
+  let count: string;
+  if (target.selection === 'all-matching-condition') {
+    count = target.side === 'enemy'
+      ? `all qualifying enemies in any lane, up to ${target.count ?? 3}`
+      : 'all matching targets';
+  } else {
+    count = target.count === null ? 'unknown count' : `${target.count} target${target.count === 1 ? '' : 's'}`;
+  }
   const caster = target.includesCaster === null
     ? 'caster eligibility unknown'
     : target.includesCaster
