@@ -36,7 +36,7 @@ describe('Pass 18 Skyward Titan projection', () => {
     expect(traceText(tactical!)).toContain('maximum theoretical reduction -12.5%');
     expect(traceText(tactical!)).toContain('Shared stack pool: bulwark.');
 
-    const attack = skyward.find((trace) => trace.matchedOutputCapabilityIds?.includes('vhagar-skyward-titan-skyward-titan-third-stack-damage-output'));
+    const attack = skyward.find((trace) => trace.ruleId === 'stack-transition-output');
     expect(attack).toBeDefined();
     const attackText = traceText(attack!);
     expect(attack!.title).toBe('Skyward Titan - Physical Damage transition attack');

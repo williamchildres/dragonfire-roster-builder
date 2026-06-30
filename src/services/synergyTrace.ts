@@ -307,6 +307,9 @@ function potentialTraceStatusReason(trace: SynergyTrace): string {
   if (trace.ruleId === 'persistent-marked-target-reference') {
     return 'Current marked-target existence, establishment success, marked enemy identity, and lifecycle behavior remain unresolved.';
   }
+  if (trace.ruleId === 'stack-transition-output') {
+    return 'The transition attack remains conditional because the stack activation sequence must reach the required transition stack.';
+  }
   if (trace.ruleId === 'self-status-removal' && trace.exactResultUnknownReason && !/current marked-target|current prey/i.test(trace.exactResultUnknownReason)) {
     return trace.exactResultUnknownReason;
   }

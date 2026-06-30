@@ -845,13 +845,12 @@ function analyzeStackTransitionOutputTraces(
       combatLogConfirmed: output.combatLogConfirmed,
       exactResultKnown: false,
       exactResultUnknownReason: `Exact final damage cannot be calculated because reaching stack ${transition.stackCount}, activation sequence, target identity, mitigation, and final damage remain unresolved.`,
-      matchKind: 'outgoing-effect-amplification',
+      matchKind: null,
       channel: output.channel,
       modifierRole: null,
       targetSelectorSummary: targetSelectorSummary(targetForEffect(context.effect)),
       modifierSelfOnly: false,
       availabilityContext: output.availability.reportLabel,
-      matchedOutputCapabilityIds: [output.id],
       interactionScope: 'enemy-side',
     }];
   });
