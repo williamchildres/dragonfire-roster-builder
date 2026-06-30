@@ -400,7 +400,8 @@ function toCardInteraction({
   candidateTotal: number | null;
 }): FormationCardInteraction {
   const abilityName = getAbilityName(source, trace.sourceAbilityId);
-  const state = projectedInteractionState(trace, previewEnabled);
+  const projectedState = projectedInteractionState(trace, previewEnabled);
+  const state = isCandidate && trace.status === 'active' ? 'conditional' : projectedState;
   const baseDetail = canonicalCardText(trace.explanation, allDragons);
   const detail = projectRecipientOutputDetail(baseDetail, trace, recipient, outputCapabilities, allDragons);
   const baseSummaryLines = summarizeTrace(trace, source, recipient, detail, {
@@ -484,6 +485,9 @@ function interactionPresentationFamily(trace: SynergyTrace): string {
   if (trace.matchKind === 'enemy-damage-received-increase') {
     return 'enemy-damage-received-increase';
   }
+  if (trace.matchKind === 'periodic-status-damage') {
+    return `periodic-status-damage:${trace.channel ?? 'status'}`;
+  }
   if (trace.matchKind === 'enemy-mitigation-reduction' || trace.matchKind === 'enemy-damage-dealt-reduction') {
     return trace.matchKind;
   }
@@ -559,10 +563,14 @@ function normalizeFormationCardSummaryLines(
 }
 
 function isStackSupportTrace(trace: SynergyTrace): boolean {
-  return trace.effects.some((effect) => /Shared stack pool:/i.test(effect) || /Value per stack at effective Habit Level/i.test(effect));
+  return trace.effects.some((effect) => /Shared stack pool:/i.test(effect) || /Value per stack at effective Habit Level/i.test(effect) || /Grants 1 .+ stack/i.test(effect));
 }
 
 function stackSupportSummaryLines(trace: SynergyTrace, source: Dragon, recipient: Dragon | null, detail: string): string[] {
+  const compact = compactStackSupportSummaryLines(trace, source, recipient, detail);
+  if (compact.length > 0) {
+    return compact;
+  }
   const ability = getAbilityById(source, trace.sourceAbilityId);
   const abilityName = ability?.name ?? getAbilityName(source, trace.sourceAbilityId);
   const stackName = stackGrantName(trace, source, recipient) ?? abilityName;
@@ -602,6 +610,56 @@ function stackSupportSummaryLines(trace: SynergyTrace, source: Dragon, recipient
   }
 
   return lines;
+}
+
+function compactStackSupportSummaryLines(trace: SynergyTrace, source: Dragon, recipient: Dragon | null, detail: string): string[] {
+  const text = [trace.title, trace.explanation, detail, ...trace.matchedFacts, ...trace.effects, ...trace.assumptions, ...trace.unresolvedQuestions].join(' ');
+  const stack = text.match(/Grants 1 ([A-Za-z' -]+?) stack\./i)?.[1]?.trim() ?? getAbilityName(source, trace.sourceAbilityId);
+  const amount = text.match(/Physical Damage Received decrease ([\d.]+%)/i)?.[1] ?? text.match(/Damage Received decrease ([\d.]+%)/i)?.[1] ?? null;
+  if (!amount || !/Grants 1 .+ stack/i.test(text)) {
+    return [];
+  }
+  const damageScope = /non-Basic/i.test(text) ? 'non-Basic Physical Damage Received' : 'Physical Damage Received';
+  const duration = /Duration:\s*until end of combat/i.test(text) ? 'until end of combat' : null;
+  const unresolved = 'Maximum stack count and final mitigation formula remain unresolved.';
+  const isRetreat = /retreated during the previous round|retreated in the previous round/i.test(text);
+  const isStart = /Timing:\s*Start of combat/i.test(text);
+  const isSelectedAdjacent = trace.targetSelectionGroup?.selection === 'one-eligible-adjacent' || /one selected ally|selected adjacent ally|eligible recipients/i.test(text);
+  const eligiblePhrase = text.match(/Eligible recipients:\s*([^.]+)\./i)?.[1]?.trim() ?? null;
+
+  if (isRetreat) {
+    return [
+      `If the ally selected at Start of Combat retreated during the previous round, ${source.name} gains 1 additional ${stack} stack.`,
+      `The resulting stack lasts ${duration ?? 'until end of combat'}; tracked ally identity, retreat occurrence, maximum stack count, and final mitigation formula remain unresolved.`,
+    ];
+  }
+  if (isSelectedAdjacent && !recipient) {
+    const candidates = eligiblePhrase ?? 'one eligible adjacent ally';
+    return [
+      `At Start of Combat, one of ${candidates} is selected and gains 1 ${stack} stack.`,
+      `The selected ally identity, maximum stack count, and final mitigation formula remain unresolved.`,
+    ];
+  }
+  if (isSelectedAdjacent && recipient && recipient.id !== source.id) {
+    const candidates = eligiblePhrase ?? 'the eligible adjacent allies';
+    return [
+      `At Start of Combat, one of ${candidates} is selected to gain 1 ${stack} stack.`,
+      `${stack} reduces ${damageScope} by ${amount} ${duration ?? 'until end of combat'}; selected identity is unresolved and no activation roll occurs.`,
+    ];
+  }
+  if (recipient?.id === source.id || /Resolved self recipient/i.test(text) || trace.modifierSelfOnly) {
+    return [
+      `At Start of Combat, ${source.name} gains 1 ${stack} stack, reducing ${damageScope} by ${amount} ${duration ?? 'until end of combat'}.`,
+      unresolved,
+    ];
+  }
+  if (isStart) {
+    return [
+      `At Start of Combat, ${recipient?.name ?? source.name} gains 1 ${stack} stack, reducing ${damageScope} by ${amount} ${duration ?? 'until end of combat'}.`,
+      unresolved,
+    ];
+  }
+  return [];
 }
 
 function stackValueSentence(trace: SynergyTrace): string | null {
@@ -931,6 +989,9 @@ function allMatchingSupportBranchSummary(trace: SynergyTrace): string[] {
 
 function targetSummaryForCard(trace: SynergyTrace, allDragons: Dragon[]): string | null {
   if (!isAllMatchingTargetSelection(trace) || !trace.targetSelectionGroup) {
+    if (/enemy;\s*any-lane;\s*all-matching-condition/i.test(trace.targetSelectorSummary ?? '')) {
+      return enemyAllMatchingTargetSummary(trace.targetSelectorSummary ?? '', [trace.explanation, ...trace.matchedFacts, ...trace.effects].join(' '));
+    }
     return trace.targetSelectorSummary ?? null;
   }
   const dragonById = new Map(allDragons.map((dragon) => [dragon.id, dragon.name]));
@@ -1133,8 +1194,8 @@ function compactStatusSupplierLine(text: string, suppliedStatus: string, sourceN
     const duration = summaryMatch[5]!.replace(/^until/, 'until').trim();
     return `${summaryMatch[2]} chance ${cadence} to apply ${suppliedStatus} to ${target} for ${duration}.`;
   }
-  const pairedTargetsMatch = text.match(/([\d.]+%) on the first added target and ([\d.]+%) on a different second target/i);
-  const roundsMatch = text.match(/Rounds?\s+([\d, and]+?)(?:[:.]\s|,\s|;\s)/i) ?? text.match(/Rounds?\s+([\d, and]+)\./i);
+  const pairedTargetsMatch = text.match(/([\d.]+%)(?: chance)? on the first added target and ([\d.]+%)(?: chance)? on (?:a different|the) second added target/i);
+  const roundsMatch = text.match(/Rounds?\s+([\d,\sand]+?)(?=[:.])/i) ?? text.match(/Rounds?\s+([\d,\sand]+)\./i);
   const durationMatch = text.match(/Burn lasts (\d+ rounds|until end of current round)\./i);
   const sourceMatch = text.match(/\b([A-Z][A-Za-z' -]*Conductor)\b/);
   if (pairedTargetsMatch && roundsMatch && durationMatch) {
@@ -1181,7 +1242,7 @@ function compactDependencyTiming(text: string, suppliedStatus: string, dependent
     ?? text.match(/only if ([A-Za-z' -]+) resolves before/i)?.[1]?.trim()
     ?? null;
   if (/(prior|previous)-round|carry into/i.test(text) && sameRoundSupplier) {
-    return `Prior-round ${suppliedStatus} can carry into scheduled ${dependentAbility} rounds; same-round overlap requires ${sameRoundSupplier} to resolve first.`;
+    return `Prior-round ${suppliedStatus} can carry into ${dependentAbility}; same-round overlap requires ${sameRoundSupplier} to resolve first.`;
   }
   const recurring = text.match(/([A-Za-z' -]+) and ([A-Za-z' -]+) both check each round\./i);
   const sameRound = text.match(/A [A-Za-z-]+ applied during the current round can enhance [A-Za-z' -]+ only if ([A-Za-z' -]+) resolves first\./i);
@@ -1200,7 +1261,10 @@ function compactDependencyTiming(text: string, suppliedStatus: string, dependent
     }
     const sameRoundWindow = windows[1]!.match(/Round (\d+) from a successful Round \1 application only if ([A-Za-z' -]+) resolves before/i);
     if (sameRoundWindow) {
-      return `The status can carry into later ${dependentAbility} rounds; the shared Round ${sameRoundWindow[1]} window requires ${sameRoundWindow[2]!.trim()} to resolve first.`;
+      const hasPriorRoundCarry = /after a successful Round \d+ application/i.test(windows[1]!);
+      return hasPriorRoundCarry && /Burn/i.test(suppliedStatus)
+        ? `Prior-round ${suppliedStatus} can carry into ${dependentAbility}; same-round overlap requires ${sameRoundWindow[2]!.trim()} to resolve first.`
+        : `The status can carry into later ${dependentAbility} rounds; the shared Round ${sameRoundWindow[1]} window requires ${sameRoundWindow[2]!.trim()} to resolve first.`;
     }
     return `Previous-round ${suppliedStatus} can carry into scheduled ${dependentAbility} rounds.`;
   }
@@ -1971,6 +2035,14 @@ function projectedInteractionState(trace: SynergyTrace, previewEnabled = false):
     return state;
   }
   if (trace.targetSelectionGroup?.selectionUncertain) {
+    if (
+      trace.targetSelectionGroup.selection === 'one-eligible-adjacent' &&
+      trace.status === 'active' &&
+      [trace.explanation, ...trace.matchedFacts, ...trace.effects].some((line) => /Timing:\s*Start of combat|Start of Combat/i.test(line)) &&
+      ![trace.explanation, ...trace.matchedFacts, ...trace.effects].some((line) => /Activation chance:/i.test(line))
+    ) {
+      return state;
+    }
     if (trace.targetSelectionGroup.selection === 'highest-stat' && highestStatSelectionResolved(trace.targetSelectionGroup)) {
       return state;
     }
@@ -2293,6 +2365,9 @@ function aggregateInteractions(
     if (items.some((item) => item.candidateTotal !== null || item.targetLabel !== null || item.isCandidate)) {
       return [mergeInteractions(items, direction, selectedIds)];
     }
+    if (items.every((item) => item.presentationFamily.startsWith('periodic-status-damage:'))) {
+      return [mergeInteractions(items, direction, selectedIds)];
+    }
     return aggregateExactProvidesSubgroups(items, selectedIds);
   });
 }
@@ -2553,6 +2628,10 @@ function mergedSummaryLines(
   targetNames: string[],
   options: { exactRecipientSet?: boolean; preserveProviderExactRecipient?: boolean } = {},
 ): string[] {
+  const periodicStatusLines = compactPeriodicStatusDamageSummaryLines(items);
+  if (periodicStatusLines.length > 0) {
+    return periodicStatusLines;
+  }
   const lines = unique(items.flatMap((item) => item.summaryLines));
   if (options.exactRecipientSet && direction === 'provides') {
     return [
@@ -2579,6 +2658,45 @@ function mergedSummaryLines(
     ];
   }
   return lines;
+}
+
+function enemyAllMatchingTargetSummary(summary: string, text: string): string {
+  const capability = /non-Basic Physical Damage output/i.test(text)
+    ? ' Requires non-Basic Physical Damage output capability.'
+    : '';
+  const count = summary.match(/up to \d+/i)?.[0] ?? 'up to 3';
+  return `Targets all qualifying enemies in any lane, ${count}.${capability} Actual qualifying count and enemy identities remain unresolved.`;
+}
+
+function compactPeriodicStatusDamageSummaryLines(items: FormationCardInteraction[]): string[] {
+  if (items.length === 0 || items.some((item) => !/periodic damage/i.test(item.effectTitle))) {
+    return [];
+  }
+  const text = items.map(interactionText).join(' ');
+  const status = items[0]!.effectTitle.match(/-\s*(.+?) periodic damage/i)?.[1]?.trim() ??
+    items[0]!.title.match(/^(.+?) periodic/i)?.[1]?.trim() ??
+    'Status';
+  const ability = items[0]!.abilityName;
+  const schedule = text.match(/Activation timing:\s*(Rounds? [^.]+)\./i)?.[1] ??
+    text.match(/Timing:\s*(Rounds? [^.]+)\./i)?.[1] ??
+    null;
+  const duration = text.match(/Duration:\s*(\d+ rounds)\./i)?.[1] ?? null;
+  const channel = text.match(new RegExp(`${escapeRegExp(status)} deals periodic ([A-Za-z ]+?) each round`, 'i'))?.[1]?.trim() ??
+    text.match(/\bdeals periodic ([A-Za-z ]+?) each round/i)?.[1]?.trim() ??
+    'damage';
+  const chances = unique(items.flatMap((item) => interactionText(item).match(/Application chance for this status attempt:\s*[\d.]+%/gi) ?? [])
+    .map((line) => line.match(/([\d.]+%)/)?.[1])
+    .filter((value): value is string => Boolean(value)));
+  const firstChance = chances[0] ?? text.match(/([\d.]+%) on the first added target/i)?.[1] ?? null;
+  const secondChance = chances[1] ?? text.match(/([\d.]+%) on (?:a different|the) second added target/i)?.[1] ?? null;
+  if (!schedule || !duration || !firstChance || !secondChance) {
+    return [];
+  }
+  return [
+    `On ${schedule}, ${ability} can apply ${status} to two added targets: ${firstChance} on the first and ${secondChance} on a different second target.`,
+    `${status} deals periodic ${channel} each round for ${duration}; its Damage Rate is not stated.`,
+    'Application success, first-tick timing, refresh or stack behavior, mitigation, and final damage remain unresolved.',
+  ];
 }
 
 function synthesizedExactRecipientEffectLines(
@@ -3310,6 +3428,7 @@ function dedupeInteractions(interactions: FormationCardInteraction[]): Formation
       interaction.modifierLines.join('|'),
       interaction.state,
       interaction.isCandidate ? 'candidate' : 'direct',
+      interaction.presentationFamily.includes('periodic') ? interaction.traceId : '',
     ].join('|');
     if (!byKey.has(key)) {
       byKey.set(key, interaction);
@@ -3343,7 +3462,8 @@ function interactionPurpose(trace: SynergyTrace): string | null {
     return statusSourcePurpose;
   }
   if (isStackSupportTrace(trace) && trace.channel) {
-    return `${supportChannelLabel(trace)} stack support`;
+    const hasStackScaling = trace.effects.some((effect) => /Shared stack pool:|Value per stack at effective Habit Level/i.test(effect));
+    return `${supportChannelLabel(trace)}${hasStackScaling ? ' stack' : ''} support`;
   }
   if (isAllMatchingTargetSelection(trace) && trace.channel) {
     return `${supportChannelLabel(trace)} support`;
@@ -3483,6 +3603,7 @@ function enemyFacingSummary(trace: SynergyTrace, source: Dragon | null = null): 
     const targetPhrase = enemyReductionTargetPhrase(trace);
     const duration = trace.effects.find((effect) => /Duration:/i.test(effect)) ?? null;
     const uncertainty = enemyFacingUncertainty(trace);
+    const text = [trace.targetSelectorSummary ?? '', trace.explanation, ...trace.matchedFacts, ...trace.effects].join(' ');
     if (trace.channel === 'stat' && stat) {
       const signedAmount = amount ? `-${amount}` : 'reduction';
       const scalingStat = enemyReductionScalingStat(trace);
@@ -3494,6 +3615,20 @@ function enemyFacingSummary(trace: SynergyTrace, source: Dragon | null = null): 
     }
     const sourceValue = stat && amount ? `${baseReduction ? 'Base ' : ''}Enemy ${stat} -${amount}` : null;
     const channelValue = !stat && amount ? `${formatToken(trace.channel ?? 'damage-dealt')} -${amount}` : null;
+    const highestStat = text.match(/selection stat (strength|intelligence|instinct|initiative)/i)?.[1] ??
+      text.match(/highest-(Strength|Intelligence|Instinct|Initiative)/i)?.[1] ??
+      null;
+    const activationChance = text.match(/Activation chance:\s*([\d.]+%)/i)?.[1] ?? null;
+    const timing = text.match(/Timing:\s*Each round\./i) ? 'Each round' : null;
+    if (!stat && amount && highestStat && activationChance && timing) {
+      const statLabelText = `${highestStat.charAt(0).toUpperCase()}${highestStat.slice(1).toLowerCase()}`;
+      const durationText = duration?.match(/Duration:\s*([^.]+)\./i)?.[1] ?? '2 rounds';
+      const scope = /non-Basic/i.test(text) ? 'non-Basic ' : '';
+      return [
+        `${timing}, ${activationChance} chance to reduce the highest-${statLabelText} enemy's ${scope}${formatToken(trace.channel ?? 'damage-dealt')} Dealt by ${amount} for ${durationText}.`,
+        'Enemy identity and highest-Strength tie resolution remain unresolved.',
+      ].join(' ');
+    }
     if (sourceValue && baseReduction) {
       const scalingStat = enemyReductionScalingStat(trace);
       const scalingSource = source?.name ?? 'the source dragon';

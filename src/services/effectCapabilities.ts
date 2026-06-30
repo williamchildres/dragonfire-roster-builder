@@ -3141,6 +3141,9 @@ function analyzeStatusConditionEnablement(
         ];
         const dependencyLabel = statusDependencyLabel(dependency);
         const explanation = statusConditionExplanation(provider, statusOutput, recipient, output, dependencyLabel, conditionalFacts, categoryFacts, supplierFacts, scheduleFacts);
+        const dependentTargetSelectorSummary = context
+          ? targetSelectorSummary(targetForEffect(context.effect))
+          : undefined;
         traces.push(makeDependencyTrace({
           id: `status-condition-${statusOutput.id}-${output.id}`,
           matchKind: 'status-condition-enablement',
@@ -3173,6 +3176,7 @@ function analyzeStatusConditionEnablement(
           ],
           unresolvedQuestions: [statusDependencyUnresolvedQuestion(dependency, statusLabel(statusOutput.statusId), recipientResolution)],
           futureOrConditional: true,
+          targetSelectorSummary: dependentTargetSelectorSummary,
         }));
       }
     }
@@ -4701,8 +4705,10 @@ function periodicDamageDetailLines(
       output.sourceEffectId ? `Status supplier effect: ${output.sourceEffectId}.` : null,
       output.activationGroupId ? `Activation group: ${output.activationGroupId}.` : null,
       output.targetSelector.sharedSelectionGroupId ? `Selected-target group: ${output.targetSelector.sharedSelectionGroupId}.` : null,
+      statusOutputChanceLine(output, options),
     ]),
     ...contexts.flatMap((context) => [
+      scheduleTimingDetail(context.schedule),
       ...targetReferenceFacts(context.effect),
       ...referencedEffectTargetReferenceFacts(context.schedule, context.effect),
       ...perTargetCheckFacts(context.effect, context.schedule, options),
@@ -4716,6 +4722,19 @@ function periodicDamageDetailLines(
     'Application success on each independently checked enemy, successful-application uptime, first-tick timing, refresh behavior, stacking, mitigation, and final periodic damage are unresolved.',
     'Final periodic damage is not calculated.',
   ].filter((line): line is string => Boolean(line));
+}
+
+function statusOutputChanceLine(statusOutput: StatusOutputCapability, options: CapabilityOptions): string | null {
+  const level = statusOutput.requiredHabitLevel !== null
+    ? (options.previewMaxRankInteractions ? 5 : effectiveHabitLevelForCapability(statusOutput, options))
+    : null;
+  const chance = statusOutput.chanceFixed !== null && statusOutput.chanceFixed !== undefined
+    ? { value: statusOutput.chanceFixed, unit: 'percent' as const }
+    : rankedValueForHabitLevel(statusOutput.chanceByHabitLevel, level);
+  if (!chance) {
+    return null;
+  }
+  return `Application chance for this status attempt: ${formatValue(chance.value, chance.unit)}${level ? ` at effective Habit Level ${level}` : ''}.`;
 }
 
 function periodicDamageDisplayValue(
@@ -5330,6 +5349,7 @@ function makeDependencyTrace({
   targetSelectionGroup,
   damageScope = null,
   exactResultUnknownReason,
+  targetSelectorSummary: explicitTargetSelectorSummary,
 }: {
   id: string;
   matchKind: NonNullable<SynergyTrace['matchKind']>;
@@ -5353,6 +5373,7 @@ function makeDependencyTrace({
   targetSelectionGroup?: SynergyTrace['targetSelectionGroup'];
   damageScope?: DefensiveDamageScope | null;
   exactResultUnknownReason?: string;
+  targetSelectorSummary?: string | null;
 }): SynergyTrace {
   const dedupedRequirements = dedupeRequirements(requirements);
   return {
@@ -5386,7 +5407,7 @@ function makeDependencyTrace({
     matchKind,
     channel,
     modifierRole: modifier?.role,
-    targetSelectorSummary: modifier ? targetSelectorSummary(modifier.targetSelector) : undefined,
+    targetSelectorSummary: explicitTargetSelectorSummary ?? (modifier ? targetSelectorSummary(modifier.targetSelector) : undefined),
     modifierSelfOnly: modifier ? modifier.role === 'self-amplification' || modifier.targetSelector.selection === 'self' : undefined,
     availabilityContext: modifier?.availability.reportLabel,
     modifierCapabilityId: modifier?.id ?? undefined,

@@ -23,7 +23,7 @@
   ],
   "currentReviewPhase": "Legendary/full-profile formation validation complete; Epic ingestion active with Daemoros and Vaeldra as the first detailed Epic batch after Vermax.",
   "format": "dragonfire-project-state",
-  "generatedAt": "2026-06-30T03:26:35.624Z",
+  "generatedAt": "2026-06-30T04:10:30.196Z",
   "plannedNextPhase": [
     "continue Epic dragon ingestion in batches of two after the latest merged context is available",
     "fetch latest merged main and create a new feature branch before each future Epic implementation batch",
@@ -37,8 +37,8 @@
     "metadataOnlyDragonCount": 15
   },
   "source": {
-    "branch": "fix/emerald-resilient-calculated-pass14",
-    "commit": "ecc6f4a5a75c3381bf958550552b3ac77181cfdd",
+    "branch": "fix/final-card-projection-pass14b",
+    "commit": "e222d91527a6792565a443e97d9bf4c705e9df2b",
     "databaseVersion": "0.6.2",
     "dataSchemaVersion": 12,
     "gameBuild": "26.6.53509",
@@ -49,8 +49,8 @@
     "countingMethod": "static working-tree test declaration scan; runtime pass/fail is reported by npm run test",
     "lastRunStatus": "not-run-by-exporter",
     "runner": "vitest",
-    "testCaseCount": 401,
-    "testFileCount": 33
+    "testCaseCount": 407,
+    "testFileCount": 34
   },
   "unresolvedMechanicsCount": 169,
   "versions": {

@@ -4670,6 +4670,7 @@
       "Mitigated by target Initiative.",
       "Status supplier effect: crippling-inferno-burn.",
       "Activation group: crippling-inferno-each-round-shared-activation.",
+      "Application chance for this status attempt: 20% at effective Habit Level 5.",
       "Independent per-target checks: 3.",
       "Application success on each independently checked enemy, successful-application uptime, first-tick timing, refresh behavior, stacking, mitigation, and final periodic damage are unresolved.",
       "Final periodic damage is not calculated."
@@ -9225,6 +9226,7 @@
       "Mitigated by target Initiative.",
       "Status supplier effect: crippling-inferno-burn.",
       "Activation group: crippling-inferno-each-round-shared-activation.",
+      "Application chance for this status attempt: 20% at effective Habit Level 5.",
       "Independent per-target checks: 3.",
       "Application success on each independently checked enemy, successful-application uptime, first-tick timing, refresh behavior, stacking, mitigation, and final periodic damage are unresolved.",
       "Final periodic damage is not calculated."
@@ -14117,6 +14119,7 @@
       "Mitigated by target Initiative.",
       "Status supplier effect: crippling-inferno-burn.",
       "Activation group: crippling-inferno-each-round-shared-activation.",
+      "Application chance for this status attempt: 20% at effective Habit Level 5.",
       "Independent per-target checks: 3.",
       "Application success on each independently checked enemy, successful-application uptime, first-tick timing, refresh behavior, stacking, mitigation, and final periodic damage are unresolved.",
       "Final periodic damage is not calculated."
@@ -18932,6 +18935,7 @@
       "Mitigated by target Initiative.",
       "Status supplier effect: crippling-inferno-burn.",
       "Activation group: crippling-inferno-each-round-shared-activation.",
+      "Application chance for this status attempt: 20% at effective Habit Level 5.",
       "Independent per-target checks: 3.",
       "Application success on each independently checked enemy, successful-application uptime, first-tick timing, refresh behavior, stacking, mitigation, and final periodic damage are unresolved.",
       "Final periodic damage is not calculated."
@@ -42688,6 +42692,7 @@
       "Mitigated by target Initiative.",
       "Status supplier effect: crippling-inferno-burn.",
       "Activation group: crippling-inferno-each-round-shared-activation.",
+      "Application chance for this status attempt: 20% at effective Habit Level 5.",
       "Independent per-target checks: 3.",
       "Application success on each independently checked enemy, successful-application uptime, first-tick timing, refresh behavior, stacking, mitigation, and final periodic damage are unresolved.",
       "Final periodic damage is not calculated."
@@ -52188,6 +52193,7 @@
       "Mitigated by target Initiative.",
       "Status supplier effect: crippling-inferno-burn.",
       "Activation group: crippling-inferno-each-round-shared-activation.",
+      "Application chance for this status attempt: 20% at effective Habit Level 5.",
       "Independent per-target checks: 3.",
       "Application success on each independently checked enemy, successful-application uptime, first-tick timing, refresh behavior, stacking, mitigation, and final periodic damage are unresolved.",
       "Final periodic damage is not calculated."
@@ -56592,6 +56598,7 @@
       "Mitigated by target Initiative.",
       "Status supplier effect: crippling-inferno-burn.",
       "Activation group: crippling-inferno-each-round-shared-activation.",
+      "Application chance for this status attempt: 20% at effective Habit Level 5.",
       "Independent per-target checks: 3.",
       "Application success on each independently checked enemy, successful-application uptime, first-tick timing, refresh behavior, stacking, mitigation, and final periodic damage are unresolved.",
       "Final periodic damage is not calculated."
@@ -60188,6 +60195,8 @@
       "Scales with Strength.",
       "Mitigated by target Instinct.",
       "Status supplier effect: tactical-strike-bleed.",
+      "Application chance for this status attempt: 30%.",
+      "Timing: After each Basic Attack.",
       "Target reference original-basic-attack-target: First checked target is the original Basic Attack target.",
       "Target reference other-adjacent-enemy: Second checked target is another enemy within adjacency. References source effect tactical-strike-tactical-damage.",
       "Target reference original-basic-attack-target: Use the target of the Basic Attack that triggered Tactical Strike.",
@@ -60248,6 +60257,8 @@
       "Scales with Instinct.",
       "Mitigated by target Intelligence.",
       "Status supplier effect: tactical-assault-panic.",
+      "Application chance for this status attempt: 30% at effective Habit Level 5.",
+      "Timing: After each Basic Attack.",
       "Target reference panic-first-target: First Panic check uses the Physical Damage target. References source effect tactical-assault-physical-damage.",
       "Target reference panic-second-target: Second Panic check uses another distinct adjacent enemy. References source effect tactical-assault-physical-damage.",
       "Target reference not-original-basic-attack-target: Physical Damage target is distinct from the original Basic Attack target. References source effect tactical-strike-tactical-damage.",
@@ -63733,6 +63744,7 @@
       "Mitigated by target Initiative.",
       "Status supplier effect: crippling-inferno-burn.",
       "Activation group: crippling-inferno-each-round-shared-activation.",
+      "Application chance for this status attempt: 20% at effective Habit Level 5.",
       "Independent per-target checks: 3.",
       "Application success on each independently checked enemy, successful-application uptime, first-tick timing, refresh behavior, stacking, mitigation, and final periodic damage are unresolved.",
       "Final periodic damage is not calculated."
@@ -68209,6 +68221,8 @@
       "Scales with Strength.",
       "Mitigated by target Instinct.",
       "Status supplier effect: tactical-strike-bleed.",
+      "Application chance for this status attempt: 30%.",
+      "Timing: After each Basic Attack.",
       "Target reference original-basic-attack-target: First checked target is the original Basic Attack target.",
       "Target reference other-adjacent-enemy: Second checked target is another enemy within adjacency. References source effect tactical-strike-tactical-damage.",
       "Target reference original-basic-attack-target: Use the target of the Basic Attack that triggered Tactical Strike.",
@@ -68269,6 +68283,8 @@
       "Scales with Instinct.",
       "Mitigated by target Intelligence.",
       "Status supplier effect: tactical-assault-panic.",
+      "Application chance for this status attempt: 30% at effective Habit Level 5.",
+      "Timing: After each Basic Attack.",
       "Target reference panic-first-target: First Panic check uses the Physical Damage target. References source effect tactical-assault-physical-damage.",
       "Target reference panic-second-target: Second Panic check uses another distinct adjacent enemy. References source effect tactical-assault-physical-damage.",
       "Target reference not-original-basic-attack-target: Physical Damage target is distinct from the original Basic Attack target. References source effect tactical-strike-tactical-damage.",

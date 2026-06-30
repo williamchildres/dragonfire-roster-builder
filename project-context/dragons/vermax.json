@@ -4021,7 +4021,7 @@
   "firstObservedInGame": "2026-06-22",
   "format": "dragonfire-dragon-profile",
   "gameVersion": null,
-  "generatedAt": "2026-06-30T03:26:35.624Z",
+  "generatedAt": "2026-06-30T04:10:30.196Z",
   "habits": [
     {
       "abilityClass": "passive",
@@ -7419,8 +7419,8 @@
   "rosterSourceStatus": "in-game-verified-pending-official-site",
   "slug": "vermax",
   "source": {
-    "branch": "fix/emerald-resilient-calculated-pass14",
-    "commit": "ecc6f4a5a75c3381bf958550552b3ac77181cfdd",
+    "branch": "fix/final-card-projection-pass14b",
+    "commit": "e222d91527a6792565a443e97d9bf4c705e9df2b",
     "databaseVersion": "0.6.2",
     "dataSchemaVersion": 12,
     "gameBuild": "26.6.53509",
