@@ -223,9 +223,9 @@ describe('formation card analysis presentation', () => {
     expect(provider.targetSummary).toContain('Each eligible recipient evaluates its own condition.');
     const trialByFlameTrace = traces.find((trace) => trace.sourceAbilityId === 'vermax-trial-by-flame');
     expect(trialByFlameTrace).toBeDefined();
-    expect(traceStatusReason(trialByFlameTrace!)).toContain('Threshold eligibility');
-    expect(traceStatusReason(trialByFlameTrace!)).toContain('overlapping tiers');
-    expect(traceStatusReason(trialByFlameTrace!)).toContain('current-round applicability');
+    expect(traceStatusReason(trialByFlameTrace!)).toContain("each recipient's current Troop Capacity");
+    expect(traceStatusReason(trialByFlameTrace!)).toContain('strict threshold tiers');
+    expect(traceStatusReason(trialByFlameTrace!)).toContain('simultaneously qualifying tiers combine');
     expect(traceStatusReason(trialByFlameTrace!)).not.toMatch(/future unlock|progression|stack count/i);
 
     for (const text of [providerText, daemorosText, vaeldraText]) {

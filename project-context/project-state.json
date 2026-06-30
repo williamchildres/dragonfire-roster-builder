@@ -23,7 +23,7 @@
   ],
   "currentReviewPhase": "Legendary/full-profile formation validation complete; Epic ingestion active with Daemoros and Vaeldra as the first detailed Epic batch after Vermax.",
   "format": "dragonfire-project-state",
-  "generatedAt": "2026-06-30T22:13:30.760Z",
+  "generatedAt": "2026-06-30T23:22:58.273Z",
   "plannedNextPhase": [
     "continue Epic dragon ingestion in batches of two after the latest merged context is available",
     "fetch latest merged main and create a new feature branch before each future Epic implementation batch",
@@ -37,8 +37,8 @@
     "metadataOnlyDragonCount": 15
   },
   "source": {
-    "branch": "fix/prerequisite-selector-details-pass17b",
-    "commit": "7a7e01f73661563239d540a1b961a09c0be8b7c4",
+    "branch": "fix/skyward-titan-reasons-subsumption-pass18",
+    "commit": "e3964a141de6e99eadbd41a62b072aab5d7ec178",
     "databaseVersion": "0.6.2",
     "dataSchemaVersion": 12,
     "gameBuild": "26.6.53509",
@@ -49,8 +49,8 @@
     "countingMethod": "static working-tree test declaration scan; runtime pass/fail is reported by npm run test",
     "lastRunStatus": "not-run-by-exporter",
     "runner": "vitest",
-    "testCaseCount": 432,
-    "testFileCount": 46
+    "testCaseCount": 441,
+    "testFileCount": 49
   },
   "unresolvedMechanicsCount": 169,
   "versions": {

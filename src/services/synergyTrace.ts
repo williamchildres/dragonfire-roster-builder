@@ -48,8 +48,9 @@ export function analyzeFormationTraces(
   traces.push(...thresholdBoundaryTraces(formation, dragons));
   traces.push(...contextualPveTraces(formation, dragons));
   const normalized = normalizeTraceInteractionScopes(enforceSelectedFormationBoundary(formation, traces));
+  const structurallyDeduped = dedupeFormationTraces(normalized);
   return dedupeFinalTechnicalAnalysisTraces(
-    dedupeFormationTraces(normalized),
+    suppressLegacySupportTracesCoveredByTypedTraces(structurallyDeduped),
   );
 }
 
@@ -183,6 +184,56 @@ export function dedupeFinalTechnicalAnalysisTraces(traces: SynergyTrace[]): Syne
   return deduped;
 }
 
+function suppressLegacySupportTracesCoveredByTypedTraces(traces: SynergyTrace[]): SynergyTrace[] {
+  return traces.filter((trace) => !isLegacySupportTraceCoveredByTypedTrace(trace, traces));
+}
+
+function isLegacySupportTraceCoveredByTypedTrace(trace: SynergyTrace, traces: SynergyTrace[]): boolean {
+  if (trace.channel || trace.modifierCapabilityId || (trace.modifierCapabilityIds?.length ?? 0) > 0) {
+    return false;
+  }
+  if (!/support/i.test(trace.title) || !trace.recipientDragonId) {
+    return false;
+  }
+  const legacyEffects = normalizedLegacySupportEffects(trace.effects);
+  if (legacyEffects.length === 0) {
+    return false;
+  }
+  return traces.some((candidate) => {
+    if (candidate === trace) {
+      return false;
+    }
+    if (
+      candidate.sourceDragonId !== trace.sourceDragonId ||
+      candidate.sourceAbilityId !== trace.sourceAbilityId ||
+      candidate.recipientDragonId !== trace.recipientDragonId ||
+      candidate.status !== trace.status ||
+      candidate.interactionScope !== trace.interactionScope
+    ) {
+      return false;
+    }
+    if (candidate.channel !== 'stat' || (candidate.modifierCapabilityIds?.length ?? 0) === 0) {
+      return false;
+    }
+    const candidateText = [
+      candidate.title,
+      candidate.explanation,
+      ...candidate.matchedFacts,
+      ...candidate.effects,
+    ].join(' ');
+    if (!legacyEffects.every((effect) => candidateText.includes(effect))) {
+      return false;
+    }
+    return true;
+  });
+}
+
+function normalizedLegacySupportEffects(effects: string[]): string[] {
+  return effects
+    .map((effect) => effect.replace(/^Left Flank ally\s+/i, '').replace(/\s+/g, ' ').replace(/\.$/, '').trim())
+    .filter((effect) => /(?:Strength|Instinct|Intelligence|Initiative)\s+[+-]?\d+(?:\.\d+)?(?: flat|%)?/i.test(effect));
+}
+
 export function technicalAnalysisTraceIdentity(trace: SynergyTrace): string {
   return stableStringify({
     ruleId: trace.ruleId,
@@ -256,6 +307,9 @@ function potentialTraceStatusReason(trace: SynergyTrace): string {
   if (trace.ruleId === 'persistent-marked-target-reference') {
     return 'Current marked-target existence, establishment success, marked enemy identity, and lifecycle behavior remain unresolved.';
   }
+  if (trace.ruleId === 'self-status-removal' && trace.exactResultUnknownReason && !/current marked-target|current prey/i.test(trace.exactResultUnknownReason)) {
+    return trace.exactResultUnknownReason;
+  }
   if (trace.ruleId === 'self-status-removal' || (trace.matchKind === 'status-removal' && trace.exactResultUnknownReason && /current marked-target|current prey/i.test(trace.exactResultUnknownReason))) {
     return 'Current Prey existence, marked enemy identity, above-50% threshold applicability, qualifying self negative-effect state, activation success, and removed-effect identity remain unresolved.';
   }
@@ -306,6 +360,9 @@ function potentialTraceStatusReason(trace: SynergyTrace): string {
       if (trace.ruleId === 'self-status-removal' || trace.matchKind === 'status-removal') {
         return 'Current Prey existence, marked enemy identity, above-50% threshold applicability, qualifying self negative-effect state, activation success, and removed-effect identity remain unresolved.';
       }
+      return trace.exactResultUnknownReason;
+    }
+    if (trace.exactResultUnknownReason && /strict threshold tiers|current Troop Capacity/i.test(trace.exactResultUnknownReason)) {
       return trace.exactResultUnknownReason;
     }
     if (/overlapping threshold tiers/i.test(text)) {
