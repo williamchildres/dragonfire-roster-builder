@@ -149,6 +149,7 @@ export function buildFormationCardPresentation(
         : joinTargetNames(eligible.map((dragonId) => dragonById.get(dragonId)?.name ?? dragonId), allMatching);
       const providerItem = toCardInteraction({
         trace,
+        allTraces: traces,
         source,
         recipient: null,
         allDragons,
@@ -169,6 +170,7 @@ export function buildFormationCardPresentation(
         byDragon.get(recipient.id)?.receives.push(
           toCardInteraction({
             trace,
+            allTraces: traces,
             source,
             recipient,
             allDragons,
@@ -188,6 +190,7 @@ export function buildFormationCardPresentation(
     const isEnemyFacing = isEnemyFacingTrace(trace);
     const item = toCardInteraction({
       trace,
+      allTraces: traces,
       source,
       recipient,
       allDragons,
@@ -209,6 +212,7 @@ export function buildFormationCardPresentation(
         : recipient?.name ?? null;
       const providerItem = toCardInteraction({
         trace,
+        allTraces: traces,
         source,
         recipient: null,
         allDragons,
@@ -376,6 +380,7 @@ export function canonicalCardText(value: string, allDragons: Dragon[]): string {
 
 function toCardInteraction({
   trace,
+  allTraces,
   source,
   recipient,
   allDragons,
@@ -387,6 +392,7 @@ function toCardInteraction({
   candidateTotal,
 }: {
   trace: SynergyTrace;
+  allTraces: SynergyTrace[];
   source: Dragon;
   recipient: Dragon | null;
   allDragons: Dragon[];
@@ -401,6 +407,7 @@ function toCardInteraction({
   const projectedState = projectedInteractionState(trace, previewEnabled);
   const state = isCandidate && trace.status === 'active' ? 'conditional' : projectedState;
   const baseDetail = canonicalCardText(trace.explanation, allDragons);
+  const prerequisiteContextLines = statusPrerequisiteContextLines(trace, allTraces);
   const detail = projectRecipientOutputDetail(baseDetail, trace, recipient, outputCapabilities, allDragons);
   const baseSummaryLines = summarizeTrace(trace, source, recipient, detail, {
     isCandidate,
@@ -421,7 +428,7 @@ function toCardInteraction({
     outputCapabilities,
     allDragons,
   );
-  const fullExplanation = detailText || aggregateFallback || summaryLines.join(' ');
+  const fullExplanation = [detailText || aggregateFallback || summaryLines.join(' '), ...prerequisiteContextLines].filter(Boolean).join(' ');
   const relationshipId = [
     trace.sourceDragonId,
     trace.sourceAbilityId ?? trace.ruleId,
@@ -447,7 +454,7 @@ function toCardInteraction({
     summaryLines,
     detail: fullExplanation,
     details: [fullExplanation],
-    effects,
+    effects: [...effects, ...prerequisiteContextLines],
     requirements: trace.requirements,
     confidence: trace.confidence,
     modifierLines: modifierLinesForTrace(trace, recipient, allDragons),
@@ -467,6 +474,30 @@ function toCardInteraction({
     isRecipientModifier: trace.matchKind === 'incoming-effect-amplification' && Boolean(trace.recipientModifierType),
     presentationFamily,
   };
+}
+
+function statusPrerequisiteContextLines(trace: SynergyTrace, allTraces: SynergyTrace[]): string[] {
+  if (trace.matchKind !== 'status-condition-enablement' || !trace.sourceDragonId || !trace.sourceAbilityId) {
+    return [];
+  }
+  return allTraces
+    .filter((candidate) =>
+      candidate !== trace &&
+      candidate.matchKind === 'status-condition-enablement' &&
+      candidate.interactionScope === 'internal' &&
+      candidate.recipientDragonId === trace.sourceDragonId &&
+      candidate.recipientAbilityId === trace.sourceAbilityId &&
+      candidate.channel === 'status',
+    )
+    .map((candidate) => [
+      `Prerequisite context: ${candidate.title}.`,
+      candidate.explanation,
+      candidate.targetSelectorSummary ? `Dependent selector: ${candidate.targetSelectorSummary}.` : null,
+      ...candidate.matchedFacts,
+      ...candidate.effects,
+      ...candidate.assumptions,
+      ...candidate.unresolvedQuestions,
+    ].filter(Boolean).join(' '));
 }
 
 function interactionPresentationFamily(trace: SynergyTrace): string {
@@ -2818,6 +2849,26 @@ function compactSharedStatusRecipientBenefitSummaryLines(items: FormationCardInt
   if (!base || !enhanced) {
     return [];
   }
+  const prerequisiteSupplier = items.find((item) => /Prerequisite context:/i.test(interactionText(item)));
+  if (prerequisiteSupplier) {
+    const nonPrerequisiteSupplierLines = items
+      .filter((item) => item !== prerequisiteSupplier)
+      .sort((left, right) => sharedStatusSupplierOrder(left) - sharedStatusSupplierOrder(right))
+      .map(sharedStatusSupplierSummaryLine)
+      .filter((line): line is string => Boolean(line));
+    const prerequisiteLine = sharedStatusPrerequisiteSupplierSummaryLine(prerequisiteSupplier);
+    const dependentStatus = prerequisiteSupplier.title.match(/^(.+?) enables /i)?.[1]?.trim() ??
+      interactionText(prerequisiteSupplier).match(/\bSupplied status:\s*([^.]+)\./i)?.[1]?.trim() ??
+      'that status';
+    if (prerequisiteLine && nonPrerequisiteSupplierLines.length === items.length - 1) {
+      return [
+        ...nonPrerequisiteSupplierLines,
+        prerequisiteLine,
+        `Against the same otherwise-eligible enemy with ${status}, ${dependent} Fire Damage Rate increases from ${base} to ${enhanced}; ${nonPrerequisiteSupplierLines.length > 0 ? `${nonPrerequisiteSupplierStatus(nonPrerequisiteSupplierLines[0]!, status)} may carry into later ${dependent} rounds, while ` : ''}${prerequisiteSupplier.abilityName} ${dependentStatus} can overlap only Round 2 and must resolve before ${dependent}.`,
+        `Supplier application success, ${prerequisiteChainLabel(prerequisiteSupplier)} same-target overlap, eligible enemy identity, roll scope, and same-round action order remain unresolved.`,
+      ];
+    }
+  }
   if (multiTargetSupplier && singleTargetSupplier) {
     return [
       `${multiTargetSupplier.abilityName} attempts ${status} on Rounds 2, 5, and 8: 40% on the first added target and 20% on a different second target; ${status} lasts 2 rounds.`,
@@ -2836,6 +2887,70 @@ function compactSharedStatusRecipientBenefitSummaryLines(items: FormationCardInt
     `Against the same otherwise-eligible enemy with ${status}, ${dependent} Fire Damage Rate increases from ${base} to ${enhanced}; prior-round ${status} may carry over, and same-round overlap requires the relevant supplier to resolve before ${dependent}.`,
     'Supplier application success, eligible enemy identity, same-target overlap, and same-round action order remain unresolved.',
   ];
+}
+
+function nonPrerequisiteSupplierStatus(line: string, fallback: string): string {
+  return line.match(/apply ([A-Z][A-Za-z-]+) to/i)?.[1] ?? fallback;
+}
+
+function prerequisiteChainLabel(item: FormationCardInteraction): string {
+  const text = interactionText(item);
+  const prerequisiteAbility = text.match(/\b([A-Z][A-Za-z' -]+) has a [\d.]+% chance each round/i)?.[1]?.trim() ??
+    text.match(/\b([A-Z][A-Za-z' -]+) checks each round/i)?.[1]?.trim() ??
+    'supplier-to-dependent';
+  return `${shortAbilityName(prerequisiteAbility)}-to-${shortAbilityName(item.abilityName)}`;
+}
+
+function shortAbilityName(value: string): string {
+  return value.replace(/'s\b.*$/i, '').trim();
+}
+
+function sharedStatusPrerequisiteSupplierSummaryLine(item: FormationCardInteraction): string | null {
+  const text = interactionText(item);
+  const prerequisite = text.match(/Prerequisite context:\s*([^.]+)\./i)?.[1] ?? '';
+  const prerequisiteStatus = prerequisite.match(/^(.+?) enables /i)?.[1]?.trim() ?? 'required status';
+  const dependentStatus = prerequisite.match(/ ([A-Z][A-Za-z-]+) branch$/i)?.[1]?.trim() ??
+    text.match(/\bSupplied status:\s*([^.]+)\./i)?.[1]?.trim() ??
+    'dependent status';
+  const prerequisiteAbility = text.match(/\b([A-Z][A-Za-z' -]+) has a ([\d.]+%) chance each round to (?:apply|Taunts?) /i)?.[1]?.trim() ??
+    text.match(/\b([A-Z][A-Za-z' -]+) can apply [A-Z][A-Za-z-]+ each round/i)?.[1]?.trim() ??
+    'Prerequisite supplier';
+  const prerequisiteChance = text.match(/\bhas a ([\d.]+%) chance each round/i)?.[1] ??
+    text.match(/\bStatus application chance:\s*([\d.]+%)/i)?.[1] ??
+    null;
+  const prerequisiteTarget = text.match(/\bTarget:\s*([^.]+)\./i)?.[1]?.trim() ?? null;
+  const prerequisiteLane = text.match(/\bLane scope:\s*([^.]+)\./i)?.[1]?.trim() ?? null;
+  const prerequisiteDuration = text.match(new RegExp(`${escapeRegExp(prerequisiteStatus)} duration: (\\d+ rounds|until end of current round)\\.`, 'i'))?.[1] ??
+    text.match(/\bDuration:\s*(\d+ rounds|until end of current round)\./i)?.[1] ??
+    null;
+  const dependentAbility = item.abilityName;
+  const dependentChance = text.match(new RegExp(`${escapeRegExp(dependentAbility)} has a ([\\d.]+%) chance`, 'i'))?.[1] ??
+    text.match(/\bConditional chance: ([\d.]+%)/i)?.[1] ??
+    null;
+  const dependentRounds = text.match(/\bDependent schedule:\s*([^.]+)\./i)?.[1]?.trim() ??
+    text.match(/\bActivation timing:\s*(Rounds? [^.]+)\./i)?.[1]?.trim() ??
+    'Rounds 1, 2, and 3';
+  if (!prerequisiteChance || !prerequisiteTarget || !prerequisiteDuration || !dependentChance) {
+    return null;
+  }
+  const target = prerequisiteLane && !prerequisiteTarget.toLowerCase().includes(prerequisiteLane.toLowerCase())
+    ? `${prerequisiteTarget} in ${prerequisiteLane}`
+    : prerequisiteTarget;
+  const prerequisiteParticiple = statusParticiple(prerequisiteStatus);
+  return `${prerequisiteAbility} checks each round: ${prerequisiteChance} chance to ${statusApplicationPhraseForSummary(prerequisiteStatus, target)} for ${prerequisiteDuration}. ${dependentAbility} checks ${dependentRounds.replace(/^Rounds 1, 2 and 3$/i, 'Rounds 1, 2, and 3')} at ${dependentChance}: already-${prerequisiteParticiple} enemies receive ${dependentStatus} until end of the current round, while non-${prerequisiteParticiple} enemies take the ${prerequisiteStatus} branch. The branches are mutually exclusive per enemy.`;
+}
+
+function statusApplicationPhraseForSummary(status: string, target: string): string {
+  return status.toLowerCase() === 'taunt'
+    ? `Taunt ${target}`
+    : `apply ${status} to ${target}`;
+}
+
+function statusParticiple(status: string): string {
+  if (/e$/i.test(status)) {
+    return `${status}d`;
+  }
+  return `${status}ed`;
 }
 
 function sharedStatusSupplierSummaryLine(item: FormationCardInteraction): string | null {

@@ -2592,9 +2592,11 @@ function analyzeStatusEffectConditionEnablement(
               for (const statusOutput of statusOutputs.filter(
                 (status) =>
                 statusMatchesDependency(status.statusId, dependency) &&
-                status.dragonId !== dependentDragon.id &&
                 statusCapabilityVisible(status, options),
             )) {
+              if (!statusOutputCanEnableStatusEffect(statusOutput, dependentDragon.id, ability.id, effect.id, dependency)) {
+                continue;
+              }
               const providerPosition = positionOf(formation, statusOutput.dragonId);
               const provider = dragonById(dragons, statusOutput.dragonId);
               if (!providerPosition || !provider) {
@@ -2663,6 +2665,8 @@ function analyzeStatusEffectConditionEnablement(
                 dependentDragon.name,
                 recipientResolution,
               );
+              const branchParentEffect = conditionalBranchParentEffect(dragons, dependentDragon.id, ability.id, effect.id);
+              const dependentStatusId = statusIdForEffect(effect);
               traces.push(makeDependencyTrace({
                 id: `status-effect-condition-${statusOutput.id}-${ability.id}-${effect.id}-${dependency.type}-${dependency.statusId ?? dependency.statusCategoryId}`,
                 matchKind: 'status-condition-enablement',
@@ -2672,7 +2676,7 @@ function analyzeStatusEffectConditionEnablement(
                 recipient: dependentDragon,
                 recipientAbilityId: ability.id,
                 channel: 'status',
-                title: `${statusLabel(statusOutput.statusId)} enables ${ability.name}`,
+                title: `${statusLabel(statusOutput.statusId)} enables ${ability.name}${branchParentEffect && dependentStatusId ? ` ${statusLabel(dependentStatusId)} branch` : ''}`,
                 explanation: statusConditionExplanation(provider, statusOutput, dependentDragon, {
                   abilityId: ability.id,
                   abilityName: ability.name,
@@ -2680,6 +2684,7 @@ function analyzeStatusEffectConditionEnablement(
                 }, dependencyLabel, conditionalFacts, categoryFacts, supplierFacts, scheduleFacts),
                 requirements,
                 matchedFacts: [
+                  ...(branchParentEffect ? [`Parent source effect ID: ${branchParentEffect.id}.`] : []),
                   `Receiving source effect ID: ${effect.id}.`,
                   ...dependency.notes,
                   ...categoryFacts.facts,
@@ -2703,6 +2708,7 @@ function analyzeStatusEffectConditionEnablement(
                 ]),
                 futureOrConditional: true,
                 targetSelectorSummary: targetSelectorSummary(targetForEffect(effect)),
+                exactResultUnknownReason: `Exact ${statusLabel(statusOutput.statusId)} prerequisite enablement cannot be calculated because supplier application success, dependent activation success, same-target overlap, same-round action order, roll scope, and final branch outcomes are unresolved.`,
               }));
             }
           }
@@ -2711,6 +2717,25 @@ function analyzeStatusEffectConditionEnablement(
     }
   }
   return traces;
+}
+
+function statusOutputCanEnableStatusEffect(
+  statusOutput: StatusOutputCapability,
+  dependentDragonId: string,
+  dependentAbilityId: string,
+  dependentEffectId: string,
+  dependency: CapabilityDependency & { type: 'requires-self-status' | 'requires-any-enemy-status' | 'requires-target-status' | 'requires-target-status-category' },
+): boolean {
+  if (statusOutput.dragonId !== dependentDragonId) {
+    return true;
+  }
+  if (dependency.type === 'requires-self-status') {
+    return false;
+  }
+  if (statusOutput.abilityId === dependentAbilityId || statusOutput.sourceEffectId === dependentEffectId) {
+    return false;
+  }
+  return statusOutput.targetSide === 'enemy';
 }
 
 function analyzeEnemyStatusSourceOutputs(
@@ -3109,6 +3134,27 @@ function statusOutputComesFromConditionalBranch(dragons: Dragon[], output: Statu
       effect.effectOptions.options.some((option) => option.effect.id === output.sourceEffectId),
     ),
   ));
+}
+
+function conditionalBranchParentEffect(
+  dragons: Dragon[],
+  dragonId: string,
+  abilityId: string,
+  sourceEffectId: string,
+): AbilityEffect | null {
+  const provider = dragonById(dragons, dragonId);
+  const ability = provider ? allAbilities(provider).find((item) => item.id === abilityId) : null;
+  for (const schedule of ability?.schedules ?? []) {
+    for (const effect of schedule.effects) {
+      if (
+        effect.effectOptions?.mode === 'conditional-branch' &&
+        effect.effectOptions.options.some((option) => option.effect.id === sourceEffectId)
+      ) {
+        return effect;
+      }
+    }
+  }
+  return null;
 }
 
 function branchConditionLabel(description: string): string {
@@ -5195,7 +5241,7 @@ function canonicalOutgoingPeriodicMatchExists(
     ...outputRequirementTraces(output, options),
     sourceScopeRequirement(modifier, output),
   ], options);
-  return match.sourceScopeCompatible && match.status !== 'inactive' && match.status !== 'blocked' && match.status !== 'not-applicable';
+  return match.sourceScopeCompatible && match.status !== 'blocked' && match.status !== 'not-applicable';
 }
 
 function analyzeStatusRemovalSupport(

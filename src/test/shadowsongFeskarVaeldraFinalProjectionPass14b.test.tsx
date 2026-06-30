@@ -103,8 +103,8 @@ describe('Shadowsong/Feskar/Vaeldra final projection pass 14B', () => {
       return acc;
     }, {});
 
-    expect(traces).toHaveLength(53);
-    expect(counts).toMatchObject({ active: 26, potential: 19, inactive: 7, blocked: 1 });
+    expect(traces).toHaveLength(54);
+    expect(counts).toMatchObject({ active: 26, potential: 20, inactive: 7, blocked: 1 });
     expect(counts['not-applicable'] ?? 0).toBe(0);
     expect(counts.unknown ?? 0).toBe(0);
     expect(new Set(traces.map(technicalAnalysisTraceIdentity)).size).toBe(traces.length);
