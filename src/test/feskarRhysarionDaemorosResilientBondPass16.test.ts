@@ -104,7 +104,11 @@ describe('Feskar/Rhysarion/Daemoros Resilient Bond pass 16', () => {
     expect(traceText(retreat)).toContain('Grants 1 additional Resilient Bond stack.');
     expect(traceText(retreat)).toContain('Physical Damage Received decrease 6.5% at effective Habit Level 1.');
     expect(traceText(retreat)).toContain('Duration: until end of combat.');
-    expect(retreat.exactResultUnknownReason).toBe('Exact final mitigated damage cannot be calculated because the tracked ally identity, whether that ally retreated during the previous round, maximum or final stack count, stack-combination behavior, and the final mitigation formula remain unresolved.');
+    expect(retreat.exactResultUnknownReason).toBe('Exact final mitigated damage cannot be calculated because whether Rhysarion retreated during the previous round, maximum or final stack count, stack-combination behavior, and the final mitigation formula remain unresolved.');
+    expect(traceText(retreat)).toContain('Target reference resilient-bond-retreat-reference');
+    expect(traceText(retreat)).toContain('resilient-bond-adjacent-stack');
+    expect(traceText(retreat)).toContain('Each round, Resilient Bond checks whether the ally selected at Start of Combat retreated during the previous round.');
+    expect(traceText(retreat)).not.toMatch(/tracked ally identity|selected ally identity|activation success|modifier uptime|support uptime|duration unresolved/i);
   });
 
   it('exports the deterministic adjacent-stack narrative and keeps formation controls stable', () => {
@@ -117,8 +121,14 @@ describe('Feskar/Rhysarion/Daemoros Resilient Bond pass 16', () => {
     const exportTrace = exportData.traces.find((trace) => traceText(trace).includes('Source effect ID: resilient-bond-adjacent-stack.'));
     expect(exportTrace).toBeDefined();
     expect(traceText(exportTrace!)).toContain('At Start of Combat, Rhysarion gains 1 Resilient Bond stack.');
+    expect(traceText(exportTrace!)).toContain('Rhysarion remains the tracked ally for later retreat checks.');
     expect(exportTrace!.exactResultUnknownReason).toBe('Exact final mitigated damage cannot be calculated because maximum stack count, stack-combination behavior, and the final mitigation formula remain unresolved.');
     expect(JSON.stringify(exportTrace)).not.toMatch(/activation success|modifier uptime|support uptime/i);
+
+    const retreatExportTrace = exportData.traces.find((trace) => traceText(trace).includes('Source effect ID: resilient-bond-self-retreat-stack.'));
+    expect(retreatExportTrace).toBeDefined();
+    expect(retreatExportTrace!.exactResultUnknownReason).toBe('Exact final mitigated damage cannot be calculated because whether Rhysarion retreated during the previous round, maximum or final stack count, stack-combination behavior, and the final mitigation formula remain unresolved.');
+    expect(traceText(retreatExportTrace!)).not.toMatch(/tracked ally identity|selected ally identity|activation success|modifier uptime|support uptime|duration unresolved/i);
 
     expect(traces.filter((trace) => trace.ruleId === 'verified-vanguard-position-conflict')).toHaveLength(1);
     expect(traces.some((trace) => trace.sourceDragonId === 'rhysarion' && trace.sourceAbilityId === 'rhysarion-champions-vigor' && trace.status === 'active')).toBe(true);
