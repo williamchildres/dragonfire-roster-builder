@@ -4,7 +4,7 @@ import { describe, expect, it } from 'vitest';
 import { App } from '../app/App';
 import { dragons } from '../data/dragons';
 import type { FormationAnalysisInput } from '../models/synergy';
-import { buildFormationCardPresentation, type FormationCardInteraction } from '../services/formationCardAnalysis';
+import { buildFormationCardPresentation } from '../services/formationCardAnalysis';
 import { createEmptyRoster, ROSTER_SCHEMA_VERSION, STORAGE_KEY } from '../services/rosterStorage';
 import { analyzeFormationTraces, createSynergyAuditExport, technicalAnalysisTraceIdentity } from '../services/synergyTrace';
 
@@ -39,19 +39,6 @@ function currentPresentation() {
   });
   const presentation = buildFormationCardPresentation(formation, dragons, traces, { roster, previewEnabled: false });
   return { traces, presentation };
-}
-
-function interactionText(item: FormationCardInteraction): string {
-  return [
-    item.effectTitle,
-    item.summary,
-    ...item.summaryLines,
-    item.detail,
-    ...item.details,
-    ...item.effects,
-    ...item.modifierLines,
-    item.targetSummary ?? '',
-  ].join(' ');
 }
 
 async function renderFormation() {
