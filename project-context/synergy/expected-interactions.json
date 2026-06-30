@@ -4733,93 +4733,6 @@
   },
   {
     "assumptions": [
-      "Periodic damage is treated as the same effect channel as its damage type."
-    ],
-    "channel": "fire-damage",
-    "confidence": "confirmed",
-    "conflicts": [
-      "Position compatibility: expected left-flank, actual provider left-flank, recipient vanguard",
-      "Provider position requirement: expected vanguard, actual left-flank"
-    ],
-    "damageScope": null,
-    "effects": [
-      "Periodic Fire Damage amplification"
-    ],
-    "exactResultKnown": false,
-    "exactResultUnknownReason": "Exact final value cannot be calculated because final combat formulas and stacking order are not fully verified.",
-    "explanation": "Malachite's Sentinel's Presence can amplify Caraxes's Burn periodic Fire Damage.",
-    "id": "periodic-damage-malachite-sentinels-presence-sentinels-presence-left-flank-fire-fire-damage-dealt-modifier-caraxes-crippling-inferno-burn",
-    "interactionScope": "cross-dragon",
-    "matchedOutputCapabilityIds": [],
-    "matchKind": "periodic-damage-amplification",
-    "modifierCapabilityId": null,
-    "modifierCapabilityIds": [],
-    "recipientAbilityId": "caraxes-crippling-inferno",
-    "recipientDragonId": "caraxes",
-    "recipientEvidenceIds": [
-      "caraxes-crippling-inferno-2026-06-24"
-    ],
-    "requirements": [
-      {
-        "actual": "provider left-flank, recipient vanguard",
-        "evidenceIds": [
-          "malachite-sentinels-presence-2026-06-23"
-        ],
-        "expected": "left-flank",
-        "id": "malachite-sentinels-presence-sentinels-presence-left-flank-fire-fire-damage-dealt-modifier-targeting-vanguard",
-        "label": "Position compatibility",
-        "notes": [],
-        "satisfied": false
-      },
-      {
-        "actual": "left-flank",
-        "evidenceIds": [
-          "malachite-sentinels-presence-2026-06-23"
-        ],
-        "expected": "vanguard",
-        "id": "malachite-sentinels-presence-provider-position-vanguard",
-        "label": "Provider position requirement",
-        "notes": [],
-        "satisfied": false
-      },
-      {
-        "actual": "Level 26",
-        "evidenceIds": [
-          "malachite-sentinels-presence-2026-06-23"
-        ],
-        "expected": "Level 16+",
-        "id": "malachite-malachite-sentinels-presence-level",
-        "label": "Malachite - Sentinel's Presence Dragon Level requirement",
-        "notes": [],
-        "satisfied": true
-      },
-      {
-        "actual": "Star Rank 1",
-        "evidenceIds": [
-          "malachite-sentinels-presence-2026-06-23"
-        ],
-        "expected": "Star Rank 1+",
-        "id": "malachite-malachite-sentinels-presence-star-rank",
-        "label": "Malachite - Sentinel's Presence Star Rank requirement",
-        "notes": [],
-        "satisfied": true
-      }
-    ],
-    "ruleId": "periodic-damage-amplification",
-    "sourceAbilityId": "malachite-sentinels-presence",
-    "sourceDragonId": "malachite",
-    "sourceEvidenceIds": [
-      "malachite-sentinels-presence-2026-06-23"
-    ],
-    "status": "inactive",
-    "targetSelectionGroup": null,
-    "title": "Fire Damage Periodic Damage Support",
-    "unresolvedQuestions": [
-      "Burn stacking, refresh, and overlapping-source behavior remain unresolved."
-    ]
-  },
-  {
-    "assumptions": [
       "Trigger chance may make this conditional rather than guaranteed.",
       "Multiple qualifying outputs are aggregated into one normal synergy trace.",
       "Effects with shared activation group blazing-fury-fire-support-shared-activation use one activation roll; uptime is not calculated."
@@ -9287,92 +9200,6 @@
     "unresolvedQuestions": [
       "Burn first-tick timing, refresh behavior, stacking, and overlapping-source behavior remain unresolved.",
       "Exact final damage cannot be calculated because application success, uptime, stacking, mitigation, and final formulas are unresolved."
-    ]
-  },
-  {
-    "assumptions": [
-      "Periodic damage is treated as the same effect channel as its damage type."
-    ],
-    "channel": "fire-damage",
-    "confidence": "confirmed",
-    "conflicts": [
-      "Provider position requirement: expected vanguard, actual right-flank"
-    ],
-    "damageScope": null,
-    "effects": [
-      "Periodic Fire Damage amplification"
-    ],
-    "exactResultKnown": false,
-    "exactResultUnknownReason": "Exact final value cannot be calculated because final combat formulas and stacking order are not fully verified.",
-    "explanation": "Malachite's Sentinel's Presence can amplify Caraxes's Burn periodic Fire Damage.",
-    "id": "periodic-damage-malachite-sentinels-presence-sentinels-presence-left-flank-fire-fire-damage-dealt-modifier-caraxes-crippling-inferno-burn",
-    "interactionScope": "cross-dragon",
-    "matchedOutputCapabilityIds": [],
-    "matchKind": "periodic-damage-amplification",
-    "modifierCapabilityId": null,
-    "modifierCapabilityIds": [],
-    "recipientAbilityId": "caraxes-crippling-inferno",
-    "recipientDragonId": "caraxes",
-    "recipientEvidenceIds": [
-      "caraxes-crippling-inferno-2026-06-24"
-    ],
-    "requirements": [
-      {
-        "actual": "provider right-flank, recipient left-flank",
-        "evidenceIds": [
-          "malachite-sentinels-presence-2026-06-23"
-        ],
-        "expected": "left-flank",
-        "id": "malachite-sentinels-presence-sentinels-presence-left-flank-fire-fire-damage-dealt-modifier-targeting-left-flank",
-        "label": "Position compatibility",
-        "notes": [],
-        "satisfied": true
-      },
-      {
-        "actual": "right-flank",
-        "evidenceIds": [
-          "malachite-sentinels-presence-2026-06-23"
-        ],
-        "expected": "vanguard",
-        "id": "malachite-sentinels-presence-provider-position-vanguard",
-        "label": "Provider position requirement",
-        "notes": [],
-        "satisfied": false
-      },
-      {
-        "actual": "Level 26",
-        "evidenceIds": [
-          "malachite-sentinels-presence-2026-06-23"
-        ],
-        "expected": "Level 16+",
-        "id": "malachite-malachite-sentinels-presence-level",
-        "label": "Malachite - Sentinel's Presence Dragon Level requirement",
-        "notes": [],
-        "satisfied": true
-      },
-      {
-        "actual": "Star Rank 1",
-        "evidenceIds": [
-          "malachite-sentinels-presence-2026-06-23"
-        ],
-        "expected": "Star Rank 1+",
-        "id": "malachite-malachite-sentinels-presence-star-rank",
-        "label": "Malachite - Sentinel's Presence Star Rank requirement",
-        "notes": [],
-        "satisfied": true
-      }
-    ],
-    "ruleId": "periodic-damage-amplification",
-    "sourceAbilityId": "malachite-sentinels-presence",
-    "sourceDragonId": "malachite",
-    "sourceEvidenceIds": [
-      "malachite-sentinels-presence-2026-06-23"
-    ],
-    "status": "inactive",
-    "targetSelectionGroup": null,
-    "title": "Fire Damage Periodic Damage Support",
-    "unresolvedQuestions": [
-      "Burn stacking, refresh, and overlapping-source behavior remain unresolved."
     ]
   },
   {
@@ -14186,93 +14013,6 @@
   },
   {
     "assumptions": [
-      "Periodic damage is treated as the same effect channel as its damage type."
-    ],
-    "channel": "fire-damage",
-    "confidence": "confirmed",
-    "conflicts": [
-      "Position compatibility: expected left-flank, actual provider left-flank, recipient right-flank",
-      "Provider position requirement: expected vanguard, actual left-flank"
-    ],
-    "damageScope": null,
-    "effects": [
-      "Periodic Fire Damage amplification"
-    ],
-    "exactResultKnown": false,
-    "exactResultUnknownReason": "Exact final value cannot be calculated because final combat formulas and stacking order are not fully verified.",
-    "explanation": "Malachite's Sentinel's Presence can amplify Caraxes's Burn periodic Fire Damage.",
-    "id": "periodic-damage-malachite-sentinels-presence-sentinels-presence-left-flank-fire-fire-damage-dealt-modifier-caraxes-crippling-inferno-burn",
-    "interactionScope": "cross-dragon",
-    "matchedOutputCapabilityIds": [],
-    "matchKind": "periodic-damage-amplification",
-    "modifierCapabilityId": null,
-    "modifierCapabilityIds": [],
-    "recipientAbilityId": "caraxes-crippling-inferno",
-    "recipientDragonId": "caraxes",
-    "recipientEvidenceIds": [
-      "caraxes-crippling-inferno-2026-06-24"
-    ],
-    "requirements": [
-      {
-        "actual": "provider left-flank, recipient right-flank",
-        "evidenceIds": [
-          "malachite-sentinels-presence-2026-06-23"
-        ],
-        "expected": "left-flank",
-        "id": "malachite-sentinels-presence-sentinels-presence-left-flank-fire-fire-damage-dealt-modifier-targeting-right-flank",
-        "label": "Position compatibility",
-        "notes": [],
-        "satisfied": false
-      },
-      {
-        "actual": "left-flank",
-        "evidenceIds": [
-          "malachite-sentinels-presence-2026-06-23"
-        ],
-        "expected": "vanguard",
-        "id": "malachite-sentinels-presence-provider-position-vanguard",
-        "label": "Provider position requirement",
-        "notes": [],
-        "satisfied": false
-      },
-      {
-        "actual": "Level 26",
-        "evidenceIds": [
-          "malachite-sentinels-presence-2026-06-23"
-        ],
-        "expected": "Level 16+",
-        "id": "malachite-malachite-sentinels-presence-level",
-        "label": "Malachite - Sentinel's Presence Dragon Level requirement",
-        "notes": [],
-        "satisfied": true
-      },
-      {
-        "actual": "Star Rank 1",
-        "evidenceIds": [
-          "malachite-sentinels-presence-2026-06-23"
-        ],
-        "expected": "Star Rank 1+",
-        "id": "malachite-malachite-sentinels-presence-star-rank",
-        "label": "Malachite - Sentinel's Presence Star Rank requirement",
-        "notes": [],
-        "satisfied": true
-      }
-    ],
-    "ruleId": "periodic-damage-amplification",
-    "sourceAbilityId": "malachite-sentinels-presence",
-    "sourceDragonId": "malachite",
-    "sourceEvidenceIds": [
-      "malachite-sentinels-presence-2026-06-23"
-    ],
-    "status": "inactive",
-    "targetSelectionGroup": null,
-    "title": "Fire Damage Periodic Damage Support",
-    "unresolvedQuestions": [
-      "Burn stacking, refresh, and overlapping-source behavior remain unresolved."
-    ]
-  },
-  {
-    "assumptions": [
       "Trigger chance may make this conditional rather than guaranteed.",
       "Multiple qualifying outputs are aggregated into one normal synergy trace.",
       "Effects with shared activation group blazing-fury-fire-support-shared-activation use one activation roll; uptime is not calculated."
@@ -19000,93 +18740,6 @@
     "unresolvedQuestions": [
       "Burn first-tick timing, refresh behavior, stacking, and overlapping-source behavior remain unresolved.",
       "Exact final damage cannot be calculated because application success, uptime, stacking, mitigation, and final formulas are unresolved."
-    ]
-  },
-  {
-    "assumptions": [
-      "Periodic damage is treated as the same effect channel as its damage type."
-    ],
-    "channel": "fire-damage",
-    "confidence": "confirmed",
-    "conflicts": [
-      "Position compatibility: expected left-flank, actual provider right-flank, recipient vanguard",
-      "Provider position requirement: expected vanguard, actual right-flank"
-    ],
-    "damageScope": null,
-    "effects": [
-      "Periodic Fire Damage amplification"
-    ],
-    "exactResultKnown": false,
-    "exactResultUnknownReason": "Exact final value cannot be calculated because final combat formulas and stacking order are not fully verified.",
-    "explanation": "Malachite's Sentinel's Presence can amplify Caraxes's Burn periodic Fire Damage.",
-    "id": "periodic-damage-malachite-sentinels-presence-sentinels-presence-left-flank-fire-fire-damage-dealt-modifier-caraxes-crippling-inferno-burn",
-    "interactionScope": "cross-dragon",
-    "matchedOutputCapabilityIds": [],
-    "matchKind": "periodic-damage-amplification",
-    "modifierCapabilityId": null,
-    "modifierCapabilityIds": [],
-    "recipientAbilityId": "caraxes-crippling-inferno",
-    "recipientDragonId": "caraxes",
-    "recipientEvidenceIds": [
-      "caraxes-crippling-inferno-2026-06-24"
-    ],
-    "requirements": [
-      {
-        "actual": "provider right-flank, recipient vanguard",
-        "evidenceIds": [
-          "malachite-sentinels-presence-2026-06-23"
-        ],
-        "expected": "left-flank",
-        "id": "malachite-sentinels-presence-sentinels-presence-left-flank-fire-fire-damage-dealt-modifier-targeting-vanguard",
-        "label": "Position compatibility",
-        "notes": [],
-        "satisfied": false
-      },
-      {
-        "actual": "right-flank",
-        "evidenceIds": [
-          "malachite-sentinels-presence-2026-06-23"
-        ],
-        "expected": "vanguard",
-        "id": "malachite-sentinels-presence-provider-position-vanguard",
-        "label": "Provider position requirement",
-        "notes": [],
-        "satisfied": false
-      },
-      {
-        "actual": "Level 26",
-        "evidenceIds": [
-          "malachite-sentinels-presence-2026-06-23"
-        ],
-        "expected": "Level 16+",
-        "id": "malachite-malachite-sentinels-presence-level",
-        "label": "Malachite - Sentinel's Presence Dragon Level requirement",
-        "notes": [],
-        "satisfied": true
-      },
-      {
-        "actual": "Star Rank 1",
-        "evidenceIds": [
-          "malachite-sentinels-presence-2026-06-23"
-        ],
-        "expected": "Star Rank 1+",
-        "id": "malachite-malachite-sentinels-presence-star-rank",
-        "label": "Malachite - Sentinel's Presence Star Rank requirement",
-        "notes": [],
-        "satisfied": true
-      }
-    ],
-    "ruleId": "periodic-damage-amplification",
-    "sourceAbilityId": "malachite-sentinels-presence",
-    "sourceDragonId": "malachite",
-    "sourceEvidenceIds": [
-      "malachite-sentinels-presence-2026-06-23"
-    ],
-    "status": "inactive",
-    "targetSelectionGroup": null,
-    "title": "Fire Damage Periodic Damage Support",
-    "unresolvedQuestions": [
-      "Burn stacking, refresh, and overlapping-source behavior remain unresolved."
     ]
   },
   {
@@ -61029,7 +60682,7 @@
       "Action order within same-round overlap is unresolved."
     ],
     "exactResultKnown": false,
-    "exactResultUnknownReason": "Exact final value cannot be calculated because final combat formulas and stacking order are not fully verified.",
+    "exactResultUnknownReason": "Exact Burn prerequisite enablement cannot be calculated because supplier application success, dependent activation success, same-target overlap, same-round action order, roll scope, and final branch outcomes are unresolved.",
     "explanation": "At effective Habit Level 5, Crippling Inferno has a 20% chance each round to apply Burn to 3 enemies in any lane. Burn lasts 2 rounds. Each round, Fiery Bonds checks all qualifying enemies in any lane, up to 3. The Taunt application chance is 25% for a normal target and 50% for that same target while it has Burn, a target-specific 2x increase. Taunt lasts 2 rounds. Crippling Inferno and Fiery Bonds both check each round. Burn from the previous round can still enhance Fiery Bonds from Round 2 onward. A Burn applied during the current round can enhance Fiery Bonds only if Crippling Inferno resolves first. Burn must remain active on the same enemy that Fiery Bonds checks for status application; application, enemy identity, same-enemy overlap, and uptime remain unresolved. Same-round action order is unresolved.",
     "id": "status-effect-condition-caraxes-crippling-inferno-crippling-inferno-burn-burn-status-output-vhagar-fiery-bonds-fiery-bonds-taunt-requires-target-status-burn",
     "interactionScope": "cross-dragon",
@@ -61133,7 +60786,7 @@
       "Action order within same-round overlap is unresolved."
     ],
     "exactResultKnown": false,
-    "exactResultUnknownReason": "Exact final value cannot be calculated because final combat formulas and stacking order are not fully verified.",
+    "exactResultUnknownReason": "Exact Taunt prerequisite enablement cannot be calculated because supplier application success, dependent activation success, same-target overlap, same-round action order, roll scope, and final branch outcomes are unresolved.",
     "explanation": "Each round, Fiery Bonds checks all qualifying enemies in any lane, up to 3. The Taunt application chance is 25% for a normal target and 50% for that same target while it has Burn, a target-specific 2x increase. Taunt lasts 2 rounds. Each round, Bloodscale Fury checks 1 Enemy, preferring a target not already Stunned. At effective Habit Level 5, the Weakened application chance is 35% for a normal target and 70% for that same target while it has Taunt, a target-specific 2x increase. Weakened lasts 2 rounds. Fiery Bonds and Bloodscale Fury both check each round. Taunt from the previous round can still enhance Bloodscale Fury from Round 2 onward. A Taunt applied during the current round can enhance Bloodscale Fury only if Fiery Bonds resolves first. Taunt must remain active on the same enemy that Bloodscale Fury checks for status application; application, enemy identity, same-enemy overlap, and uptime remain unresolved. Same-round action order is unresolved.",
     "id": "status-effect-condition-vhagar-fiery-bonds-fiery-bonds-taunt-taunt-status-output-crimson-bloodscale-fury-bloodscale-fury-weakened-requires-target-status-taunt",
     "interactionScope": "cross-dragon",
@@ -68369,93 +68022,6 @@
   },
   {
     "assumptions": [
-      "Periodic damage is treated as the same effect channel as its damage type."
-    ],
-    "channel": "tactical-damage",
-    "confidence": "confirmed",
-    "conflicts": [
-      "Provider position requirement: expected vanguard, actual right-flank",
-      "Vhagar - Warrior's Resilience Star Rank requirement: expected Star Rank 1+, actual preview enabled"
-    ],
-    "damageScope": null,
-    "effects": [
-      "Periodic Tactical Damage amplification"
-    ],
-    "exactResultKnown": false,
-    "exactResultUnknownReason": "Exact final value cannot be calculated because final combat formulas and stacking order are not fully verified.",
-    "explanation": "Vhagar's Warrior's Resilience can amplify Kalspire's Panic periodic Tactical Damage.",
-    "id": "periodic-damage-vhagar-warriors-resilience-warriors-resilience-left-tactical-tactical-damage-dealt-modifier-kalspire-tactical-assault-panic",
-    "interactionScope": "cross-dragon",
-    "matchedOutputCapabilityIds": [],
-    "matchKind": "periodic-damage-amplification",
-    "modifierCapabilityId": null,
-    "modifierCapabilityIds": [],
-    "recipientAbilityId": "kalspire-tactical-assault",
-    "recipientDragonId": "kalspire",
-    "recipientEvidenceIds": [
-      "kalspire-tactical-assault-2026-06-25"
-    ],
-    "requirements": [
-      {
-        "actual": "provider right-flank, recipient left-flank",
-        "evidenceIds": [
-          "vhagar-warriors-resilience-2026-06-25"
-        ],
-        "expected": "left-flank",
-        "id": "vhagar-warriors-resilience-warriors-resilience-left-tactical-tactical-damage-dealt-modifier-targeting-left-flank",
-        "label": "Position compatibility",
-        "notes": [],
-        "satisfied": true
-      },
-      {
-        "actual": "right-flank",
-        "evidenceIds": [
-          "vhagar-warriors-resilience-2026-06-25"
-        ],
-        "expected": "vanguard",
-        "id": "vhagar-warriors-resilience-provider-position-vanguard",
-        "label": "Provider position requirement",
-        "notes": [],
-        "satisfied": false
-      },
-      {
-        "actual": null,
-        "evidenceIds": [
-          "vhagar-warriors-resilience-2026-06-25"
-        ],
-        "expected": "Level 16+",
-        "id": "vhagar-vhagar-warriors-resilience-level",
-        "label": "Vhagar - Warrior's Resilience Dragon Level requirement",
-        "notes": [],
-        "satisfied": null
-      },
-      {
-        "actual": "preview enabled",
-        "evidenceIds": [
-          "vhagar-warriors-resilience-2026-06-25"
-        ],
-        "expected": "Star Rank 1+",
-        "id": "vhagar-vhagar-warriors-resilience-star-rank",
-        "label": "Vhagar - Warrior's Resilience Star Rank requirement",
-        "notes": [],
-        "satisfied": false
-      }
-    ],
-    "ruleId": "periodic-damage-amplification",
-    "sourceAbilityId": "vhagar-warriors-resilience",
-    "sourceDragonId": "vhagar",
-    "sourceEvidenceIds": [
-      "vhagar-warriors-resilience-2026-06-25"
-    ],
-    "status": "inactive",
-    "targetSelectionGroup": null,
-    "title": "Tactical Damage Periodic Damage Support",
-    "unresolvedQuestions": [
-      "Panic stacking, refresh, and overlapping-source behavior remain unresolved."
-    ]
-  },
-  {
-    "assumptions": [
       "Cleanse timing, target selection, and whether removal occurs before the afflicted dragon acts are not simulated.",
       "Structurally duplicate raw traces were collapsed."
     ],
@@ -69648,7 +69214,7 @@
       "Action order within same-round overlap is unresolved."
     ],
     "exactResultKnown": false,
-    "exactResultUnknownReason": "Exact final value cannot be calculated because final combat formulas and stacking order are not fully verified.",
+    "exactResultUnknownReason": "Exact Taunt prerequisite enablement cannot be calculated because supplier application success, dependent activation success, same-target overlap, same-round action order, roll scope, and final branch outcomes are unresolved.",
     "explanation": "Each round, Fiery Bonds checks all qualifying enemies in any lane, up to 3. The Taunt application chance is 25% for a normal target and 50% for that same target while it has Burn, a target-specific 2x increase. Taunt lasts 2 rounds. Each round, Bloodscale Fury checks 1 Enemy, preferring a target not already Stunned. At effective Habit Level 5, the Weakened application chance is 35% for a normal target and 70% for that same target while it has Taunt, a target-specific 2x increase. Weakened lasts 2 rounds. Fiery Bonds and Bloodscale Fury both check each round. Taunt from the previous round can still enhance Bloodscale Fury from Round 2 onward. A Taunt applied during the current round can enhance Bloodscale Fury only if Fiery Bonds resolves first. Taunt must remain active on the same enemy that Bloodscale Fury checks for status application; application, enemy identity, same-enemy overlap, and uptime remain unresolved. Same-round action order is unresolved.",
     "id": "status-effect-condition-vhagar-fiery-bonds-fiery-bonds-taunt-taunt-status-output-crimson-bloodscale-fury-bloodscale-fury-weakened-requires-target-status-taunt",
     "interactionScope": "cross-dragon",

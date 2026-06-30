@@ -1414,8 +1414,8 @@ describe('Feskar, Rhysarion, and Shadowsong Epic profiles', () => {
     const fireText = fire ? [fire.explanation, fire.targetSelectorSummary ?? '', ...fire.matchedFacts, ...fire.effects, ...fire.assumptions].join(' ') : '';
     const combinedText = `${physicalText} ${fireText}`;
 
-    expect(traces).toHaveLength(62);
-    expect(counts).toMatchObject({ active: 35, potential: 15, inactive: 11, blocked: 1, unknown: 0 });
+    expect(traces).toHaveLength(63);
+    expect(counts).toMatchObject({ active: 35, potential: 16, inactive: 11, blocked: 1, unknown: 0 });
     expect(new Set(traces.map(technicalAnalysisTraceIdentity)).size).toBe(traces.length);
     expect(tempting).toHaveLength(2);
     expect(physical).toMatchObject({

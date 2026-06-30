@@ -95,7 +95,7 @@ describe('Resilient Bond retreat technical-analysis pass 14E', () => {
     expect(initialArticle?.textContent ?? '').not.toContain('Grants 1 additional Resilient Bond stack.');
     expect(selectedArticle?.textContent ?? '').toContain('At Start of combat, exactly one eligible adjacent ally is selected; the selected ally identity is unresolved.');
 
-    expect(new Set(traces.map(technicalAnalysisTraceIdentity)).size).toBe(53);
-    expect(traces).toHaveLength(53);
+    expect(new Set(traces.map(technicalAnalysisTraceIdentity)).size).toBe(54);
+    expect(traces).toHaveLength(54);
   }, 10000);
 });
