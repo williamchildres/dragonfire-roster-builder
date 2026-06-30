@@ -1001,7 +1001,7 @@ function summarizeTrace(
     ];
   }
   if (trace.matchKind === 'status-condition-enablement') {
-    const compactDependency = compactStatusDependencySummary(trace);
+    const compactDependency = compactStatusDependencySummary(trace, source);
     if (compactDependency.length > 0) {
       return compactDependency;
     }
@@ -1103,7 +1103,7 @@ function summarizeTrace(
   return [detail.replaceAll('1.5x', '1.5×')];
 }
 
-function compactStatusDependencySummary(trace: SynergyTrace): string[] {
+function compactStatusDependencySummary(trace: SynergyTrace, source: Dragon): string[] {
   const text = [trace.explanation, ...trace.matchedFacts, ...trace.effects, ...trace.assumptions].join(' ');
   const titleMatch = trace.title.match(/^(.+?) enables (.+)$/i);
   const suppliedStatus = titleMatch?.[1]?.trim() ?? text.match(/Required status condition:\s*([^.]+)\./i)?.[1]?.trim();
@@ -1111,40 +1111,96 @@ function compactStatusDependencySummary(trace: SynergyTrace): string[] {
   if (!suppliedStatus || !dependentAbility) {
     return [];
   }
-  const chanceMatch = text.match(/The ([A-Za-z-]+) application chance is ([\d.]+%) for a normal target and ([\d.]+%) for that same target while it has ([A-Za-z-]+)/i);
-  if (!chanceMatch) {
+  if (/First-Strike/i.test(suppliedStatus) && /Infernal Burst/i.test(dependentAbility)) {
     return [];
   }
-  const dependentStatus = chanceMatch[1]!;
-  const baseChance = chanceMatch[2]!;
-  const enhancedChance = chanceMatch[3]!;
-  const benefit = `${suppliedStatus} can increase ${possessive(dependentAbility)} ${dependentStatus} chance from ${baseChance} to ${enhancedChance} against the same enemy.`;
-  const timing = compactDependencyTiming(text, suppliedStatus);
+  const supplier = compactStatusSupplierLine(text, suppliedStatus, source.name);
+  const dependent = compactStatusDependentLine(text, suppliedStatus, dependentAbility);
+  if (!supplier || !dependent) {
+    return [];
+  }
+  const timing = compactDependencyTiming(text, suppliedStatus, dependentAbility);
   const uncertainty = compactDependencyUncertainty(text);
-  return [benefit, timing, uncertainty].filter((line): line is string => Boolean(line));
+  return [supplier, dependent, timing, uncertainty].filter((line): line is string => Boolean(line));
 }
 
-function compactDependencyTiming(text: string, suppliedStatus: string): string {
+function compactStatusSupplierLine(text: string, suppliedStatus: string, sourceName: string): string | null {
+  const statusPattern = escapeRegExp(suppliedStatus);
+  const summaryMatch = text.match(new RegExp(`(?:At effective [^,]+,\\s*)?(.+?) has a ([\\d.]+%) chance ([^.]+?) to apply ${statusPattern} to (.+?)\\. ${statusPattern} lasts (\\d+ rounds|until end of current round)\\.`, 'i'));
+  if (summaryMatch) {
+    const cadence = summaryMatch[3]!.trim();
+    const target = summaryMatch[4]!.trim();
+    const duration = summaryMatch[5]!.replace(/^until/, 'until').trim();
+    return `${summaryMatch[2]} chance ${cadence} to apply ${suppliedStatus} to ${target} for ${duration}.`;
+  }
+  const chance = text.match(/Status application chance:\s*([\d.]+%)/i)?.[1] ?? null;
+  const schedule = text.match(/Supplier schedule:\s*([^.]+)\./i)?.[1]?.trim() ?? null;
+  const duration = text.match(new RegExp(`${statusPattern} duration:\\s*(\\d+ rounds|until end of current round)\\.`, 'i'))?.[1] ?? null;
+  const target = text.match(/Target:\s*([^.]+)\./i)?.[1]?.trim() ?? 'one enemy';
+  if (!chance || !duration) {
+    return null;
+  }
+  const cadence = schedule?.includes('each round')
+    ? 'each round'
+    : schedule?.includes('odd-numbered')
+      ? 'on odd-numbered rounds'
+      : schedule ? `on ${schedule}` : 'on its schedule';
+  return `${chance} chance ${cadence} to apply ${suppliedStatus} to ${target} for ${duration}.`.replace(sourceName, '').trim();
+}
+
+function compactStatusDependentLine(text: string, suppliedStatus: string, dependentAbility: string): string | null {
+  const rateMatch = text.match(/Base(?: current)? ([A-Za-z ]+) Rate: ([\d.]+%)\. Enhanced(?: current)? \1 Rate: ([\d.]+%)\./i);
+  if (rateMatch) {
+    const channel = rateMatch[1]!.trim();
+    const required = text.match(/Required status (?:category|condition):\s*([^.]+)\./i)?.[1]?.trim() ?? suppliedStatus;
+    return `Against the same enemy while it has ${required}, ${dependentAbility} ${channel} increases from ${rateMatch[2]} to ${rateMatch[3]}.`;
+  }
+  const chanceMatch = text.match(/Base current application chance:\s*([\d.]+%)\. ([A-Za-z-]+)-target application chance:\s*([\d.]+%)\./i);
+  if (chanceMatch) {
+    const applied = text.match(/Applied effect:\s*([A-Za-z-]+)\.?/i)?.[1] ?? 'application';
+    const multiplier = text.match(/Conditional multiplier:\s*([\d.]+)x/i)?.[1] ?? null;
+    const multiplierPhrase = multiplier ? `${multiplier}x ` : '';
+    return `Against that same enemy, ${suppliedStatus} ${multiplierPhrase}increases ${possessive(dependentAbility)} ${applied} chance from ${chanceMatch[1]} to ${chanceMatch[3]}.`;
+  }
+  return null;
+}
+
+function compactDependencyTiming(text: string, suppliedStatus: string, dependentAbility: string): string {
   const recurring = text.match(/([A-Za-z' -]+) and ([A-Za-z' -]+) both check each round\./i);
   const sameRound = text.match(/A [A-Za-z-]+ applied during the current round can enhance [A-Za-z' -]+ only if ([A-Za-z' -]+) resolves first\./i);
   if (recurring) {
-    return `Both effects check each round. ${suppliedStatus} from the previous round can carry over${sameRound ? `; a same-round ${suppliedStatus} requires ${sameRound[1]!.trim()} to resolve first.` : '.'}`;
+    if (/application chance|Vulnerable chance/i.test(text)) {
+      return `Previous-round ${suppliedStatus} can carry into later checks${sameRound ? `; same-round ${suppliedStatus} requires ${sameRound[1]!.trim()} to resolve first.` : '.'}`;
+    }
+    return `Prior-round ${suppliedStatus} can carry into scheduled ${dependentAbility} rounds${sameRound ? `; same-round ${suppliedStatus} requires ${sameRound[1]!.trim()} to resolve first.` : '.'}`;
   }
-  const windows = text.match(/can overlap .*? in these windows: ([^.]+)\./i);
+  const windows = text.match(/can overlap .*? in these windows: ([^.]+)\./i) ?? text.match(/Known possible overlap windows:\s*([^.]+)\./i);
   if (windows) {
-    return `Overlap windows: ${windows[1]}.`;
+    const supplierSchedule = text.match(/Supplier schedule:\s*([^.]+)\./i)?.[1] ?? '';
+    const dependentSchedule = text.match(/Dependent schedule:\s*([^.]+)\./i)?.[1] ?? '';
+    if (/each round/i.test(supplierSchedule) && /Rounds/i.test(dependentSchedule)) {
+      return `Prior-round ${suppliedStatus} can carry into scheduled ${dependentAbility} rounds; same-round ${suppliedStatus} requires ${windows[1]!.match(/only if ([A-Za-z' -]+) resolves before/i)?.[1]?.trim() ?? 'the supplier'} to resolve first.`;
+    }
+    const sameRoundWindow = windows[1]!.match(/Round (\d+) from a successful Round \1 application only if ([A-Za-z' -]+) resolves before/i);
+    if (sameRoundWindow) {
+      return `The status can carry into later ${dependentAbility} rounds; the shared Round ${sameRoundWindow[1]} window requires ${sameRoundWindow[2]!.trim()} to resolve first.`;
+    }
+    return `Previous-round ${suppliedStatus} can carry into scheduled ${dependentAbility} rounds.`;
   }
   return '';
 }
 
 function compactDependencyUncertainty(text: string): string {
+  const hasEnemyIdentity = /enemy identity|selected enemy|Target: one enemy|target selection/i.test(text);
+  const hasRollScope = /shared roll|per-target rolls|roll scope|roll sharing/i.test(text);
   const pieces = [
-    'Application',
-    /same enemy|same-target|same-enemy/i.test(text) ? 'same-enemy overlap' : 'status uptime',
+    'Application success',
+    hasEnemyIdentity && !hasRollScope ? 'enemy identity' : null,
+    /same enemy|same-target|same-enemy/i.test(text) ? 'same-target overlap' : 'status uptime',
     /action order|resolves first/i.test(text) ? 'action order' : null,
-    /shared roll|per-target rolls|roll scope/i.test(text) ? 'roll scope' : null,
+    hasRollScope ? 'roll scope' : null,
   ].filter((piece): piece is string => Boolean(piece));
-  return `${pieces.join(', ')} remain conditional.`;
+  return `${pieces.join(', ')} remain unresolved.`;
 }
 
 function possessive(value: string): string {
@@ -3398,14 +3454,24 @@ function enemyFacingSummary(trace: SynergyTrace, source: Dragon | null = null): 
     const uncertainty = enemyFacingUncertainty(trace);
     if (trace.channel === 'stat' && stat) {
       const signedAmount = amount ? `-${amount}` : 'reduction';
-      const initiativeSource = source?.name ?? 'the source dragon';
+      const scalingStat = enemyReductionScalingStat(trace);
+      const scalingSource = source?.name ?? 'the source dragon';
       return [
-        `${baseReduction ? 'Base ' : ''}Enemy ${stat} ${signedAmount} on ${targetPhrase}; final reduction scales with ${initiativeSource}'s Initiative and remains unresolved.`,
+        `${baseReduction ? 'Base ' : ''}Enemy ${stat} ${signedAmount} on ${targetPhrase}; final reduction scales with ${scalingSource}'s ${scalingStat} and remains unresolved.`,
         uncertainty,
       ].filter(Boolean).join(' ');
     }
     const sourceValue = stat && amount ? `${baseReduction ? 'Base ' : ''}Enemy ${stat} -${amount}` : null;
     const channelValue = !stat && amount ? `${formatToken(trace.channel ?? 'damage-dealt')} -${amount}` : null;
+    if (sourceValue && baseReduction) {
+      const scalingStat = enemyReductionScalingStat(trace);
+      const scalingSource = source?.name ?? 'the source dragon';
+      return [
+        `${sourceValue} on ${targetPhrase}; final reduction scales with ${scalingSource}'s ${scalingStat} and remains unresolved.`,
+        duration,
+        uncertainty,
+      ].filter(Boolean).join(' ');
+    }
     return [
       `${sourceValue ?? channelValue ?? `${formatToken(trace.channel ?? 'damage-dealt')} reduction`} on ${targetPhrase}.`,
       duration,
@@ -3444,9 +3510,10 @@ function enemyFacingSummary(trace: SynergyTrace, source: Dragon | null = null): 
     const stat = enemyReductionStat(trace) ?? 'mitigation';
     const targetPhrase = enemyReductionTargetPhrase(trace);
     const text = [trace.title, trace.explanation, ...trace.matchedFacts, ...trace.effects, trace.exactResultUnknownReason ?? ''].join(' ');
-    const hasTypedBaseScaling = /Base Enemy [A-Za-z]+ reduction/i.test(text) && /Scaling stat: Initiative/i.test(text);
+    const scalingStat = enemyReductionScalingStat(trace);
+    const hasTypedBaseScaling = /Base Enemy [A-Za-z]+ reduction/i.test(text) && /(?:Scaling stat:|Enhanced by)/i.test(text);
     const baseValue = `Base Enemy ${stat} ${amount}`;
-    const finalValue = source ? `final reduction scales with ${source.name}'s Initiative and remains unresolved` : 'final reduction remains unresolved';
+    const finalValue = source ? `final reduction scales with ${source.name}'s ${scalingStat} and remains unresolved` : 'final reduction remains unresolved';
     if (!hasTypedBaseScaling) {
       return `Lowers enemy ${stat}, supporting allied ${channel}. Enemy ${stat} reduction is ${amount}.`;
     }
@@ -3454,6 +3521,13 @@ function enemyFacingSummary(trace: SynergyTrace, source: Dragon | null = null): 
   }
   const lowered = trace.effects.join(' ').match(/(Strength|Intelligence|Instinct|Initiative)/i)?.[1];
   return lowered ? `Lowers enemy ${lowered}, supporting allied ${channel}.` : 'Lowers enemy mitigation for the team.';
+}
+
+function enemyReductionScalingStat(trace: SynergyTrace): string {
+  const text = [trace.explanation, ...trace.matchedFacts, ...trace.effects, trace.exactResultUnknownReason ?? ''].join(' ');
+  return text.match(/Scaling stat:\s*(Strength|Intelligence|Instinct|Initiative)\./i)?.[1]
+    ?? text.match(/Enhanced by\s+(?:[A-Za-z]+(?:'s)?\s+)?(Strength|Intelligence|Instinct|Initiative)\./i)?.[1]
+    ?? 'Initiative';
 }
 
 function enemyFacingUncertainty(trace: SynergyTrace): string | null {

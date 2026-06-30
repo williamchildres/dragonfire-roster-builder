@@ -327,10 +327,11 @@ describe('Caraxes, Vhagar, and Syrax review regression', () => {
     expect(eclipseSyraxText).not.toContain('Skyward Titan Physical Damage');
 
     expect(fieryDependency).toBeDefined();
-    expect(fieryDependency!.summary).toContain("Burn can increase Fiery Bonds' Taunt chance from 25% to 50% against the same enemy.");
-    expect(fieryDependency!.summary).toContain('Both effects check each round.');
+    expect(fieryDependency!.summary).toContain("10% chance each round to apply Burn to 3 enemies in any lane for 2 rounds.");
+    expect(fieryDependency!.summary).toContain("Against that same enemy, Burn 2x increases Fiery Bonds' Taunt chance from 25% to 50%.");
+    expect(fieryDependency!.summary).toContain('Previous-round Burn can carry into later checks;');
     expect(fieryDependency!.summary).toContain('same-round Burn requires Crippling Inferno to resolve first.');
-    expect(fieryDependency!.summary).toContain('Application, same-enemy overlap, action order, roll scope remain conditional.');
+    expect(fieryDependency!.summary).toContain('Application success, same-target overlap, action order, roll scope remain unresolved.');
     expect((fieryDependency!.summary.match(/roll scope|shared roll|per-target/gi) ?? [])).toHaveLength(1);
     expect(fieryDependency!.summary).not.toContain('Whether this uses one shared roll or separate per-target rolls is unresolved.');
     expect(fieryDependency!.summary).not.toContain('Crippling Inferno has a 10% chance');
