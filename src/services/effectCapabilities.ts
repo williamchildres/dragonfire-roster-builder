@@ -2129,11 +2129,14 @@ function deterministicModifierExactReason(
   if (modifier.channel === 'damage-received') {
     return 'Exact final mitigated damage cannot be calculated because incoming damage, modifier-combination behavior, and the final mitigation formula remain unresolved.';
   }
-  if (modifier.direction === 'dealt') {
-    return 'Exact final amplified damage cannot be calculated because modifier-combination behavior and the final damage formula remain unresolved.';
-  }
   if (modifier.channel === 'recovery' && modifier.direction === 'received') {
     return 'Exact final Recovery Received value cannot be calculated because modifier-combination behavior and the final received-effect formula remain unresolved.';
+  }
+  if (modifier.channel === 'recovery' && modifier.direction === 'dealt') {
+    return 'Exact final Recovery Dealt value cannot be calculated because modifier-combination behavior and the final Recovery formula remain unresolved.';
+  }
+  if (modifier.direction === 'dealt') {
+    return 'Exact final amplified damage cannot be calculated because modifier-combination behavior and the final damage formula remain unresolved.';
   }
   if (modifier.direction === 'received') {
     return 'Exact final received-effect value cannot be calculated because modifier-combination behavior and the final received-effect formula remain unresolved.';
@@ -10077,6 +10080,12 @@ function exactUnknownReason(modifier: ModifierCapability, matchKind: string, con
   }
   if (matchKind === 'extra-basic-attack-trigger') {
     return 'Exact final repeat-trigger result cannot be calculated because repeat count and final formulas are unresolved.';
+  }
+  if (modifier.channel === 'recovery' && modifier.direction === 'received') {
+    return 'Exact final Recovery Received value cannot be calculated because modifier-combination behavior and the final received-effect formula remain unresolved.';
+  }
+  if (modifier.channel === 'recovery' && modifier.direction === 'dealt') {
+    return 'Exact final Recovery Dealt value cannot be calculated because modifier-combination behavior and the final Recovery formula remain unresolved.';
   }
   if (modifier.channel === 'recovery') {
     return "Exact final Recovery cannot be calculated because the game's Level and Instinct Recovery formula is unknown.";

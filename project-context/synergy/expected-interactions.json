@@ -1880,7 +1880,7 @@
       "Recovery Dealt increase 15%."
     ],
     "exactResultKnown": false,
-    "exactResultUnknownReason": "Exact final amplified damage cannot be calculated because modifier-combination behavior and the final damage formula remain unresolved.",
+    "exactResultUnknownReason": "Exact final Recovery Dealt value cannot be calculated because modifier-combination behavior and the final Recovery formula remain unresolved.",
     "explanation": "Malachite's Sentinel's Presence affects Malachite. Recovery Dealt increase 15%.",
     "id": "internal-self-modifier-malachite-sentinels-presence-sentinels-presence-recovery-dealt-recovery-dealt-modifier",
     "interactionScope": "internal",
@@ -2125,7 +2125,7 @@
       "Ranked progression: L1 20%, L2 24%, L3 28%, L4 34%, L5 40%."
     ],
     "exactResultKnown": false,
-    "exactResultUnknownReason": "Exact final amplified damage cannot be calculated because modifier-combination behavior and the final damage formula remain unresolved.",
+    "exactResultUnknownReason": "Exact final Recovery Dealt value cannot be calculated because modifier-combination behavior and the final Recovery formula remain unresolved.",
     "explanation": "Malachite's Wise Vigor affects Malachite. Timing: Start of Combat. Recovery Dealt increase 40% at effective Habit Level 5. Duration: until end of combat. Ranked progression: L1 20%, L2 24%, L3 28%, L4 34%, L5 40%.",
     "id": "internal-self-modifier-malachite-wise-vigor-wise-vigor-recovery-recovery-dealt-modifier",
     "interactionScope": "internal",
@@ -6515,7 +6515,7 @@
       "Recovery Dealt increase 15%."
     ],
     "exactResultKnown": false,
-    "exactResultUnknownReason": "Exact final amplified damage cannot be calculated because modifier-combination behavior and the final damage formula remain unresolved.",
+    "exactResultUnknownReason": "Exact final Recovery Dealt value cannot be calculated because modifier-combination behavior and the final Recovery formula remain unresolved.",
     "explanation": "Malachite's Sentinel's Presence affects Malachite. Recovery Dealt increase 15%.",
     "id": "internal-self-modifier-malachite-sentinels-presence-sentinels-presence-recovery-dealt-recovery-dealt-modifier",
     "interactionScope": "internal",
@@ -6760,7 +6760,7 @@
       "Ranked progression: L1 20%, L2 24%, L3 28%, L4 34%, L5 40%."
     ],
     "exactResultKnown": false,
-    "exactResultUnknownReason": "Exact final amplified damage cannot be calculated because modifier-combination behavior and the final damage formula remain unresolved.",
+    "exactResultUnknownReason": "Exact final Recovery Dealt value cannot be calculated because modifier-combination behavior and the final Recovery formula remain unresolved.",
     "explanation": "Malachite's Wise Vigor affects Malachite. Timing: Start of Combat. Recovery Dealt increase 40% at effective Habit Level 5. Duration: until end of combat. Ranked progression: L1 20%, L2 24%, L3 28%, L4 34%, L5 40%.",
     "id": "internal-self-modifier-malachite-wise-vigor-wise-vigor-recovery-recovery-dealt-modifier",
     "interactionScope": "internal",
@@ -11301,7 +11301,7 @@
       "Recovery Dealt increase 15%."
     ],
     "exactResultKnown": false,
-    "exactResultUnknownReason": "Exact final amplified damage cannot be calculated because modifier-combination behavior and the final damage formula remain unresolved.",
+    "exactResultUnknownReason": "Exact final Recovery Dealt value cannot be calculated because modifier-combination behavior and the final Recovery formula remain unresolved.",
     "explanation": "Malachite's Sentinel's Presence affects Malachite. Recovery Dealt increase 15%.",
     "id": "internal-self-modifier-malachite-sentinels-presence-sentinels-presence-recovery-dealt-recovery-dealt-modifier",
     "interactionScope": "internal",
@@ -11546,7 +11546,7 @@
       "Ranked progression: L1 20%, L2 24%, L3 28%, L4 34%, L5 40%."
     ],
     "exactResultKnown": false,
-    "exactResultUnknownReason": "Exact final amplified damage cannot be calculated because modifier-combination behavior and the final damage formula remain unresolved.",
+    "exactResultUnknownReason": "Exact final Recovery Dealt value cannot be calculated because modifier-combination behavior and the final Recovery formula remain unresolved.",
     "explanation": "Malachite's Wise Vigor affects Malachite. Timing: Start of Combat. Recovery Dealt increase 40% at effective Habit Level 5. Duration: until end of combat. Ranked progression: L1 20%, L2 24%, L3 28%, L4 34%, L5 40%.",
     "id": "internal-self-modifier-malachite-wise-vigor-wise-vigor-recovery-recovery-dealt-modifier",
     "interactionScope": "internal",
@@ -16106,7 +16106,7 @@
       "Recovery Dealt increase 15%."
     ],
     "exactResultKnown": false,
-    "exactResultUnknownReason": "Exact final amplified damage cannot be calculated because modifier-combination behavior and the final damage formula remain unresolved.",
+    "exactResultUnknownReason": "Exact final Recovery Dealt value cannot be calculated because modifier-combination behavior and the final Recovery formula remain unresolved.",
     "explanation": "Malachite's Sentinel's Presence affects Malachite. Recovery Dealt increase 15%.",
     "id": "internal-self-modifier-malachite-sentinels-presence-sentinels-presence-recovery-dealt-recovery-dealt-modifier",
     "interactionScope": "internal",
@@ -16351,7 +16351,7 @@
       "Ranked progression: L1 20%, L2 24%, L3 28%, L4 34%, L5 40%."
     ],
     "exactResultKnown": false,
-    "exactResultUnknownReason": "Exact final amplified damage cannot be calculated because modifier-combination behavior and the final damage formula remain unresolved.",
+    "exactResultUnknownReason": "Exact final Recovery Dealt value cannot be calculated because modifier-combination behavior and the final Recovery formula remain unresolved.",
     "explanation": "Malachite's Wise Vigor affects Malachite. Timing: Start of Combat. Recovery Dealt increase 40% at effective Habit Level 5. Duration: until end of combat. Ranked progression: L1 20%, L2 24%, L3 28%, L4 34%, L5 40%.",
     "id": "internal-self-modifier-malachite-wise-vigor-wise-vigor-recovery-recovery-dealt-modifier",
     "interactionScope": "internal",
@@ -19921,7 +19921,7 @@
       "Recovery Received increase 20%."
     ],
     "exactResultKnown": false,
-    "exactResultUnknownReason": "Exact final Recovery cannot be calculated because the game's Level and Instinct Recovery formula is unknown.",
+    "exactResultUnknownReason": "Exact final Recovery Received value cannot be calculated because modifier-combination behavior and the final received-effect formula remain unresolved.",
     "explanation": "Malachite provides Recovery through Warden's Rally. Sheepstealer has Sheepstealer's Hunter's Cunning Recovery Received modifier, increasing received Recovery by 20%.",
     "id": "incoming-effect-amplification-sheepstealer-hunters-cunning-hunters-cunning-recovery-received-recovery-received-modifier-sheepstealer",
     "interactionScope": "cross-dragon",
@@ -20029,7 +20029,7 @@
       "Recovery Received increase 20%."
     ],
     "exactResultKnown": false,
-    "exactResultUnknownReason": "Exact final Recovery cannot be calculated because the game's Level and Instinct Recovery formula is unknown.",
+    "exactResultUnknownReason": "Exact final Recovery Received value cannot be calculated because modifier-combination behavior and the final received-effect formula remain unresolved.",
     "explanation": "Sheepstealer provides Recovery through Savage Claim. Sheepstealer has Sheepstealer's Hunter's Cunning Recovery Received modifier, increasing received Recovery by 20%.",
     "id": "incoming-effect-amplification-sheepstealer-hunters-cunning-hunters-cunning-recovery-received-recovery-received-modifier-sheepstealer",
     "interactionScope": "internal",
@@ -20652,7 +20652,7 @@
       "Recovery Dealt increase 15%."
     ],
     "exactResultKnown": false,
-    "exactResultUnknownReason": "Exact final amplified damage cannot be calculated because modifier-combination behavior and the final damage formula remain unresolved.",
+    "exactResultUnknownReason": "Exact final Recovery Dealt value cannot be calculated because modifier-combination behavior and the final Recovery formula remain unresolved.",
     "explanation": "Malachite's Sentinel's Presence affects Malachite. Recovery Dealt increase 15%.",
     "id": "internal-self-modifier-malachite-sentinels-presence-sentinels-presence-recovery-dealt-recovery-dealt-modifier",
     "interactionScope": "internal",
@@ -20897,7 +20897,7 @@
       "Ranked progression: L1 20%, L2 24%, L3 28%, L4 34%, L5 40%."
     ],
     "exactResultKnown": false,
-    "exactResultUnknownReason": "Exact final amplified damage cannot be calculated because modifier-combination behavior and the final damage formula remain unresolved.",
+    "exactResultUnknownReason": "Exact final Recovery Dealt value cannot be calculated because modifier-combination behavior and the final Recovery formula remain unresolved.",
     "explanation": "Malachite's Wise Vigor affects Malachite. Timing: Start of Combat. Recovery Dealt increase 40% at effective Habit Level 5. Duration: until end of combat. Ranked progression: L1 20%, L2 24%, L3 28%, L4 34%, L5 40%.",
     "id": "internal-self-modifier-malachite-wise-vigor-wise-vigor-recovery-recovery-dealt-modifier",
     "interactionScope": "internal",
@@ -24866,7 +24866,7 @@
       "Recovery Received increase 20%."
     ],
     "exactResultKnown": false,
-    "exactResultUnknownReason": "Exact final Recovery cannot be calculated because the game's Level and Instinct Recovery formula is unknown.",
+    "exactResultUnknownReason": "Exact final Recovery Received value cannot be calculated because modifier-combination behavior and the final received-effect formula remain unresolved.",
     "explanation": "Malachite provides Recovery through Warden's Rally. Sheepstealer has Sheepstealer's Hunter's Cunning Recovery Received modifier, increasing received Recovery by 20%.",
     "id": "incoming-effect-amplification-sheepstealer-hunters-cunning-hunters-cunning-recovery-received-recovery-received-modifier-sheepstealer",
     "interactionScope": "cross-dragon",
@@ -24975,7 +24975,7 @@
       "Recovery Received increase 20%."
     ],
     "exactResultKnown": false,
-    "exactResultUnknownReason": "Exact final Recovery cannot be calculated because the game's Level and Instinct Recovery formula is unknown.",
+    "exactResultUnknownReason": "Exact final Recovery Received value cannot be calculated because modifier-combination behavior and the final received-effect formula remain unresolved.",
     "explanation": "Sheepstealer provides Recovery through Savage Claim. Sheepstealer has Sheepstealer's Hunter's Cunning Recovery Received modifier, increasing received Recovery by 20%.",
     "id": "incoming-effect-amplification-sheepstealer-hunters-cunning-hunters-cunning-recovery-received-recovery-received-modifier-sheepstealer",
     "interactionScope": "internal",
@@ -25872,7 +25872,7 @@
       "Recovery Dealt increase 15%."
     ],
     "exactResultKnown": false,
-    "exactResultUnknownReason": "Exact final amplified damage cannot be calculated because modifier-combination behavior and the final damage formula remain unresolved.",
+    "exactResultUnknownReason": "Exact final Recovery Dealt value cannot be calculated because modifier-combination behavior and the final Recovery formula remain unresolved.",
     "explanation": "Malachite's Sentinel's Presence affects Malachite. Recovery Dealt increase 15%.",
     "id": "internal-self-modifier-malachite-sentinels-presence-sentinels-presence-recovery-dealt-recovery-dealt-modifier",
     "interactionScope": "internal",
@@ -26115,7 +26115,7 @@
       "Ranked progression: L1 20%, L2 24%, L3 28%, L4 34%, L5 40%."
     ],
     "exactResultKnown": false,
-    "exactResultUnknownReason": "Exact final amplified damage cannot be calculated because modifier-combination behavior and the final damage formula remain unresolved.",
+    "exactResultUnknownReason": "Exact final Recovery Dealt value cannot be calculated because modifier-combination behavior and the final Recovery formula remain unresolved.",
     "explanation": "Malachite's Wise Vigor affects Malachite. Timing: Start of Combat. Recovery Dealt increase 40% at effective Habit Level 5. Duration: until end of combat. Ranked progression: L1 20%, L2 24%, L3 28%, L4 34%, L5 40%.",
     "id": "internal-self-modifier-malachite-wise-vigor-wise-vigor-recovery-recovery-dealt-modifier",
     "interactionScope": "internal",
@@ -30366,7 +30366,7 @@
       "Recovery Dealt increase 15%."
     ],
     "exactResultKnown": false,
-    "exactResultUnknownReason": "Exact final amplified damage cannot be calculated because modifier-combination behavior and the final damage formula remain unresolved.",
+    "exactResultUnknownReason": "Exact final Recovery Dealt value cannot be calculated because modifier-combination behavior and the final Recovery formula remain unresolved.",
     "explanation": "Malachite's Sentinel's Presence affects Malachite. Recovery Dealt increase 15%.",
     "id": "internal-self-modifier-malachite-sentinels-presence-sentinels-presence-recovery-dealt-recovery-dealt-modifier",
     "interactionScope": "internal",
@@ -30611,7 +30611,7 @@
       "Ranked progression: L1 20%, L2 24%, L3 28%, L4 34%, L5 40%."
     ],
     "exactResultKnown": false,
-    "exactResultUnknownReason": "Exact final amplified damage cannot be calculated because modifier-combination behavior and the final damage formula remain unresolved.",
+    "exactResultUnknownReason": "Exact final Recovery Dealt value cannot be calculated because modifier-combination behavior and the final Recovery formula remain unresolved.",
     "explanation": "Malachite's Wise Vigor affects Malachite. Timing: Start of Combat. Recovery Dealt increase 40% at effective Habit Level 5. Duration: until end of combat. Ranked progression: L1 20%, L2 24%, L3 28%, L4 34%, L5 40%.",
     "id": "internal-self-modifier-malachite-wise-vigor-wise-vigor-recovery-recovery-dealt-modifier",
     "interactionScope": "internal",
@@ -34688,7 +34688,7 @@
       "Recovery Received increase 20%."
     ],
     "exactResultKnown": false,
-    "exactResultUnknownReason": "Exact final Recovery cannot be calculated because the game's Level and Instinct Recovery formula is unknown.",
+    "exactResultUnknownReason": "Exact final Recovery Received value cannot be calculated because modifier-combination behavior and the final received-effect formula remain unresolved.",
     "explanation": "Malachite provides Recovery through Warden's Rally. Sheepstealer has Sheepstealer's Hunter's Cunning Recovery Received modifier, increasing received Recovery by 20%.",
     "id": "incoming-effect-amplification-sheepstealer-hunters-cunning-hunters-cunning-recovery-received-recovery-received-modifier-sheepstealer",
     "interactionScope": "cross-dragon",
@@ -34797,7 +34797,7 @@
       "Recovery Received increase 20%."
     ],
     "exactResultKnown": false,
-    "exactResultUnknownReason": "Exact final Recovery cannot be calculated because the game's Level and Instinct Recovery formula is unknown.",
+    "exactResultUnknownReason": "Exact final Recovery Received value cannot be calculated because modifier-combination behavior and the final received-effect formula remain unresolved.",
     "explanation": "Sheepstealer provides Recovery through Savage Claim. Sheepstealer has Sheepstealer's Hunter's Cunning Recovery Received modifier, increasing received Recovery by 20%.",
     "id": "incoming-effect-amplification-sheepstealer-hunters-cunning-hunters-cunning-recovery-received-recovery-received-modifier-sheepstealer",
     "interactionScope": "internal",
@@ -35669,7 +35669,7 @@
       "Recovery Dealt increase 15%."
     ],
     "exactResultKnown": false,
-    "exactResultUnknownReason": "Exact final amplified damage cannot be calculated because modifier-combination behavior and the final damage formula remain unresolved.",
+    "exactResultUnknownReason": "Exact final Recovery Dealt value cannot be calculated because modifier-combination behavior and the final Recovery formula remain unresolved.",
     "explanation": "Malachite's Sentinel's Presence affects Malachite. Recovery Dealt increase 15%.",
     "id": "internal-self-modifier-malachite-sentinels-presence-sentinels-presence-recovery-dealt-recovery-dealt-modifier",
     "interactionScope": "internal",
@@ -35914,7 +35914,7 @@
       "Ranked progression: L1 20%, L2 24%, L3 28%, L4 34%, L5 40%."
     ],
     "exactResultKnown": false,
-    "exactResultUnknownReason": "Exact final amplified damage cannot be calculated because modifier-combination behavior and the final damage formula remain unresolved.",
+    "exactResultUnknownReason": "Exact final Recovery Dealt value cannot be calculated because modifier-combination behavior and the final Recovery formula remain unresolved.",
     "explanation": "Malachite's Wise Vigor affects Malachite. Timing: Start of Combat. Recovery Dealt increase 40% at effective Habit Level 5. Duration: until end of combat. Ranked progression: L1 20%, L2 24%, L3 28%, L4 34%, L5 40%.",
     "id": "internal-self-modifier-malachite-wise-vigor-wise-vigor-recovery-recovery-dealt-modifier",
     "interactionScope": "internal",
@@ -39379,7 +39379,7 @@
       "Recovery Received increase 20%."
     ],
     "exactResultKnown": false,
-    "exactResultUnknownReason": "Exact final Recovery cannot be calculated because the game's Level and Instinct Recovery formula is unknown.",
+    "exactResultUnknownReason": "Exact final Recovery Received value cannot be calculated because modifier-combination behavior and the final received-effect formula remain unresolved.",
     "explanation": "Sheepstealer provides Recovery through Savage Claim. Sheepstealer has Sheepstealer's Hunter's Cunning Recovery Received modifier, increasing received Recovery by 20%.",
     "id": "incoming-effect-amplification-sheepstealer-hunters-cunning-hunters-cunning-recovery-received-recovery-received-modifier-sheepstealer",
     "interactionScope": "internal",
@@ -43887,7 +43887,7 @@
       "Recovery Received increase 20%."
     ],
     "exactResultKnown": false,
-    "exactResultUnknownReason": "Exact final Recovery cannot be calculated because the game's Level and Instinct Recovery formula is unknown.",
+    "exactResultUnknownReason": "Exact final Recovery Received value cannot be calculated because modifier-combination behavior and the final received-effect formula remain unresolved.",
     "explanation": "Syrax provides Recovery through Strategic Revival. Sheepstealer has Sheepstealer's Hunter's Cunning Recovery Received modifier, increasing received Recovery by 20%.",
     "id": "incoming-effect-amplification-sheepstealer-hunters-cunning-hunters-cunning-recovery-received-recovery-received-modifier-sheepstealer",
     "interactionScope": "cross-dragon",
@@ -44016,7 +44016,7 @@
       "Recovery Received increase 20%."
     ],
     "exactResultKnown": false,
-    "exactResultUnknownReason": "Exact final Recovery cannot be calculated because the game's Level and Instinct Recovery formula is unknown.",
+    "exactResultUnknownReason": "Exact final Recovery Received value cannot be calculated because modifier-combination behavior and the final received-effect formula remain unresolved.",
     "explanation": "Malachite provides Recovery through Warden's Rally. Sheepstealer has Sheepstealer's Hunter's Cunning Recovery Received modifier, increasing received Recovery by 20%.",
     "id": "incoming-effect-amplification-sheepstealer-hunters-cunning-hunters-cunning-recovery-received-recovery-received-modifier-sheepstealer",
     "interactionScope": "cross-dragon",
@@ -44125,7 +44125,7 @@
       "Recovery Received increase 20%."
     ],
     "exactResultKnown": false,
-    "exactResultUnknownReason": "Exact final Recovery cannot be calculated because the game's Level and Instinct Recovery formula is unknown.",
+    "exactResultUnknownReason": "Exact final Recovery Received value cannot be calculated because modifier-combination behavior and the final received-effect formula remain unresolved.",
     "explanation": "Sheepstealer provides Recovery through Savage Claim. Sheepstealer has Sheepstealer's Hunter's Cunning Recovery Received modifier, increasing received Recovery by 20%.",
     "id": "incoming-effect-amplification-sheepstealer-hunters-cunning-hunters-cunning-recovery-received-recovery-received-modifier-sheepstealer",
     "interactionScope": "internal",
@@ -44998,7 +44998,7 @@
       "Recovery Dealt increase 15%."
     ],
     "exactResultKnown": false,
-    "exactResultUnknownReason": "Exact final amplified damage cannot be calculated because modifier-combination behavior and the final damage formula remain unresolved.",
+    "exactResultUnknownReason": "Exact final Recovery Dealt value cannot be calculated because modifier-combination behavior and the final Recovery formula remain unresolved.",
     "explanation": "Malachite's Sentinel's Presence affects Malachite. Recovery Dealt increase 15%.",
     "id": "internal-self-modifier-malachite-sentinels-presence-sentinels-presence-recovery-dealt-recovery-dealt-modifier",
     "interactionScope": "internal",
@@ -45243,7 +45243,7 @@
       "Ranked progression: L1 20%, L2 24%, L3 28%, L4 34%, L5 40%."
     ],
     "exactResultKnown": false,
-    "exactResultUnknownReason": "Exact final amplified damage cannot be calculated because modifier-combination behavior and the final damage formula remain unresolved.",
+    "exactResultUnknownReason": "Exact final Recovery Dealt value cannot be calculated because modifier-combination behavior and the final Recovery formula remain unresolved.",
     "explanation": "Malachite's Wise Vigor affects Malachite. Timing: Start of Combat. Recovery Dealt increase 40% at effective Habit Level 5. Duration: until end of combat. Ranked progression: L1 20%, L2 24%, L3 28%, L4 34%, L5 40%.",
     "id": "internal-self-modifier-malachite-wise-vigor-wise-vigor-recovery-recovery-dealt-modifier",
     "interactionScope": "internal",
@@ -52884,7 +52884,7 @@
       "Recovery Received increase 20%."
     ],
     "exactResultKnown": false,
-    "exactResultUnknownReason": "Exact final Recovery cannot be calculated because the game's Level and Instinct Recovery formula is unknown.",
+    "exactResultUnknownReason": "Exact final Recovery Received value cannot be calculated because modifier-combination behavior and the final received-effect formula remain unresolved.",
     "explanation": "Syrax provides Recovery through Strategic Revival. Sheepstealer has Sheepstealer's Hunter's Cunning Recovery Received modifier, increasing received Recovery by 20%.",
     "id": "incoming-effect-amplification-sheepstealer-hunters-cunning-hunters-cunning-recovery-received-recovery-received-modifier-sheepstealer",
     "interactionScope": "cross-dragon",
@@ -53015,7 +53015,7 @@
       "Recovery Received increase 20%."
     ],
     "exactResultKnown": false,
-    "exactResultUnknownReason": "Exact final Recovery cannot be calculated because the game's Level and Instinct Recovery formula is unknown.",
+    "exactResultUnknownReason": "Exact final Recovery Received value cannot be calculated because modifier-combination behavior and the final received-effect formula remain unresolved.",
     "explanation": "Sheepstealer provides Recovery through Savage Claim. Sheepstealer has Sheepstealer's Hunter's Cunning Recovery Received modifier, increasing received Recovery by 20%.",
     "id": "incoming-effect-amplification-sheepstealer-hunters-cunning-hunters-cunning-recovery-received-recovery-received-modifier-sheepstealer",
     "interactionScope": "internal",
@@ -65625,7 +65625,7 @@
       "Recovery Received increase 30% at effective Habit Level 5."
     ],
     "exactResultKnown": false,
-    "exactResultUnknownReason": "Exact final Recovery cannot be calculated because the game's Level and Instinct Recovery formula is unknown.",
+    "exactResultUnknownReason": "Exact final Recovery Received value cannot be calculated because modifier-combination behavior and the final received-effect formula remain unresolved.",
     "explanation": "Syrax provides Recovery through Strategic Revival. Vhagar has Vhagar's Ancestral Shield Recovery Received modifier, increasing received Recovery by 30%.",
     "id": "incoming-effect-amplification-vhagar-ancestral-shield-ancestral-shield-recovery-received-recovery-received-modifier-vhagar",
     "interactionScope": "cross-dragon",

@@ -106,7 +106,7 @@ describe('Phase 3.6 combat-log confirmations', () => {
       combatLogConfirmed: true,
       exactResultKnown: false,
     });
-    expect(recoveryTrace.exactResultUnknownReason).toMatch(/Level and Instinct Recovery formula is unknown/);
+    expect(recoveryTrace.exactResultUnknownReason).toBe('Exact final Recovery Received value cannot be calculated because modifier-combination behavior and the final received-effect formula remain unresolved.');
     expect(malachiteTrait.status).toBe('inactive');
   });
 
