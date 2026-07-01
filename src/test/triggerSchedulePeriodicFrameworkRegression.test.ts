@@ -215,7 +215,7 @@ describe('trigger, schedule override, periodic damage framework regression', () 
       trace.recipientDragonId === 'malachite'
     );
     expect(reactiveMalachite?.status).toBe('potential');
-    expect(traceStatusReason(reactiveMalachite!)).toContain('Modifier recipient identity and final output formula remain unresolved.');
+    expect(traceStatusReason(reactiveMalachite!)).toContain('selected recipient identity, candidate comparison values, tie resolution, and final stat formula remain unresolved.');
 
     const spreadingBlazeText = traceText(traces.find((trace) => trace.sourceAbilityId === 'vermax-spreading-blaze' && trace.recipientDragonId === 'malachite'));
     const rallyingFlameText = traceText(traces.find((trace) => trace.sourceAbilityId === 'vermax-rallying-flame' && trace.recipientDragonId === 'malachite' && trace.channel === 'tactical-damage'));
@@ -422,7 +422,7 @@ describe('trigger, schedule override, periodic damage framework regression', () 
       trace.recipientDragonId === 'kalspire'
     );
     expect(reactiveKalspire?.status).toBe('potential');
-    expect(traceStatusReason(reactiveKalspire!)).toContain('Modifier recipient identity and final output formula remain unresolved.');
+    expect(traceStatusReason(reactiveKalspire!)).toContain('selected recipient identity, candidate comparison values, tie resolution, and final stat formula remain unresolved.');
 
     const radiantStunText = traceText(traces.find((trace) => trace.ruleId === 'self-status-output' && trace.sourceAbilityId === 'kalspire-radiant-conqueror' && /Stun/.test(trace.title)));
     expect(radiantStunText).toContain('Stun application is deterministic');

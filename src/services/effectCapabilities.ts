@@ -3759,6 +3759,9 @@ function analyzeDirectStatSupport(
       ];
       const context = sourceEffectContext(provider, modifier.abilityId, modifier.sourceEffectId);
       const details = statModifierDetailLines(modifier, context, options);
+      const activationUncertain = modifier.activationChanceFixed !== null ||
+        (modifier.activationChanceByHabitLevel?.length ?? 0) > 0 ||
+        modifier.conditional;
       traces.push(makeDependencyTrace({
         id: `direct-stat-support-${modifier.id}-${recipientId}-${statId}`,
         matchKind: 'stat-scaling-support',
@@ -3784,6 +3787,9 @@ function analyzeDirectStatSupport(
         unresolvedQuestions: [],
         futureOrConditional: (modifier.futureAvailable && options.previewMaxRankInteractions === true) || modifier.conditional,
         modifier,
+        exactResultUnknownReason: activationUncertain
+          ? `${recipient.name} is the resolved recipient if ${modifier.abilityName} activates; activation success and the final stat formula remain unresolved.`
+          : undefined,
       }));
     }
   }
@@ -3836,6 +3842,9 @@ function analyzeStatScalingSupport(
       const selectionUncertain = modifier.targetSelector.selection === 'highest-stat' && !selectionResolution.resolved;
       const leadingKnownRecipientDragonIds = selectionResolution.leadingKnownRecipientDragonIds;
       const suppressCandidatePreview = selectionUncertain && modifier.targetSelector.selection === 'highest-stat' && !leadingKnownRecipientDragonIds.includes(recipientId);
+      const activationUncertain = modifier.activationChanceFixed !== null ||
+        (modifier.activationChanceByHabitLevel?.length ?? 0) > 0 ||
+        modifier.conditional;
       const requirements = [
         targetRequirement(modifier, providerPosition, recipientPosition),
         ...providerRequirementTraces(modifier, formation, dragons, options),
@@ -3883,6 +3892,8 @@ function analyzeStatScalingSupport(
         matchedOutputCapabilityIds: matchedOutputs.map((output) => output.id),
         exactResultUnknownReason: selectionUncertain
           ? `Exact final ${statLabel(statId)} support cannot be calculated because selected recipient identity, candidate comparison values, tie resolution, and final stat formula remain unresolved.`
+          : activationUncertain
+            ? `${recipient.name} is the resolved recipient if ${modifier.abilityName} activates; activation success and the final output formula remain unresolved.`
           : undefined,
       }));
     }
