@@ -1710,11 +1710,23 @@ function stackSelfModifierExactReason(
   if (!context?.effect.stack || modifier.valuePerStack === null) {
     return undefined;
   }
-  const subject = stackModifierSubject(modifier).toLowerCase();
+  const subject = stackModifierSubject(modifier);
   if (modifier.channel === 'stat') {
     return `Exact final ${subject} increase cannot be calculated because stack activation success, current/final stack count, and the final stat formula remain unresolved.`;
   }
-  return `Exact final ${subject} mitigation cannot be calculated because shared stack activation success, current/final stack count, stack-combination behavior, and the final mitigation formula remain unresolved.`;
+  if (modifier.channel === 'recovery' && modifier.direction === 'dealt') {
+    return 'Exact final Recovery Dealt value cannot be calculated because modifier-combination behavior and the final Recovery formula remain unresolved.';
+  }
+  if (modifier.channel === 'recovery' && modifier.direction === 'received') {
+    return 'Exact final Recovery Received value cannot be calculated because shared stack activation success, current/final stack count, stack-combination behavior, and the final received-effect formula remain unresolved.';
+  }
+  if (modifier.direction === 'received') {
+    return `Exact final ${subject} mitigation cannot be calculated because shared stack activation success, current/final stack count, stack-combination behavior, and the final mitigation formula remain unresolved.`;
+  }
+  const activationClause = context.schedule.repeat
+    ? 'initial and repeated activation success, enemy match count, current/final stack count, stack-combination behavior, and the final damage formula'
+    : 'stack activation success, current/final stack count, stack-combination behavior, and the final damage formula';
+  return `Exact final ${subject} increase cannot be calculated because ${activationClause} remain unresolved.`;
 }
 
 function stackModifierTraceIsConditional(context: { schedule: AbilitySchedule; effect: AbilityEffect } | null): boolean {
@@ -3820,11 +3832,18 @@ function analyzeStatScalingSupport(
       }
       const context = sourceEffectContext(provider, modifier.abilityId, modifier.sourceEffectId);
       const modifierDetails = statModifierDetailLines(modifier, context, options);
+      const selectionResolution = highestStatSelectionResolution(formation, dragons, modifier, recipientId);
+      const selectionUncertain = modifier.targetSelector.selection === 'highest-stat' && !selectionResolution.resolved;
+      const leadingKnownRecipientDragonIds = selectionResolution.leadingKnownRecipientDragonIds;
+      const suppressCandidatePreview = selectionUncertain && modifier.targetSelector.selection === 'highest-stat' && !leadingKnownRecipientDragonIds.includes(recipientId);
       const requirements = [
         targetRequirement(modifier, providerPosition, recipientPosition),
         ...providerRequirementTraces(modifier, formation, dragons, options),
         ...matchedOutputs.flatMap((output) => outputRequirementTraces(output, options)),
       ];
+      const explanation = selectionUncertain
+        ? `${provider.name}'s ${modifier.abilityName} can increase ${recipient.name}'s ${statLabel(statId)}, which supports ${abilityOutputSummary(matchedOutputs)}. This consequence applies only if ${recipient.name} resolves as the selected highest ${statLabel(statId)} ally.`
+        : `${provider.name}'s ${modifier.abilityName} can increase ${recipient.name}'s ${statLabel(statId)}, which supports ${abilityOutputSummary(matchedOutputs)}.`;
       traces.push(makeDependencyTrace({
         id: `stat-scaling-${modifier.id}-${recipientId}-${statId}`,
         matchKind: 'stat-scaling-support',
@@ -3835,7 +3854,7 @@ function analyzeStatScalingSupport(
         recipientAbilityId: matchedOutputs[0]?.abilityId ?? null,
         channel: 'stat',
         title: `${statLabel(statId)} Scaling Support`,
-        explanation: `${provider.name}'s ${modifier.abilityName} can increase ${recipient.name}'s ${statLabel(statId)}, which supports ${abilityOutputSummary(matchedOutputs)}.`,
+        explanation,
         requirements,
         matchedFacts: [
           `${modifier.abilityName} targets ${targetSelectorSummary(modifier.targetSelector)}.`,
@@ -3853,13 +3872,18 @@ function analyzeStatScalingSupport(
         recipientEvidenceIds: matchedOutputs.flatMap((output) => output.evidenceIds),
         assumptions: [
           'Exact stat-to-effect conversion formula is unknown.',
+          ...(suppressCandidatePreview ? ['Recipient selection is unresolved.'] : []),
         ],
         unresolvedQuestions: [
           'Final value and stacking order are not calculated.',
+          ...(selectionUncertain ? ['Selected recipient identity, candidate comparison values, and tie resolution remain unresolved.'] : []),
         ],
-        futureOrConditional: capabilityFutureOrConditional(modifier, options) || modifier.conditional,
+        futureOrConditional: capabilityFutureOrConditional(modifier, options) || modifier.conditional || selectionUncertain,
         modifierCapabilityIds: [modifier.id],
         matchedOutputCapabilityIds: matchedOutputs.map((output) => output.id),
+        exactResultUnknownReason: selectionUncertain
+          ? `Exact final ${statLabel(statId)} support cannot be calculated because selected recipient identity, candidate comparison values, tie resolution, and final stat formula remain unresolved.`
+          : undefined,
       }));
     }
   }
@@ -4172,6 +4196,66 @@ function targetSelectionFacts(
     }
   }
   return uniqueOrdered(facts);
+}
+
+function highestStatSelectionResolution(
+  formation: FormationAnalysisInput,
+  dragons: Dragon[],
+  modifier: ModifierCapability,
+  recipientId: string,
+): {
+  resolved: boolean;
+  group: NonNullable<SynergyTrace['targetSelectionGroup']>;
+  leadingKnownRecipientDragonIds: string[];
+} {
+  const statId = modifier.targetSelector.selectionStat;
+  const providerPosition = positionOf(formation, modifier.dragonId);
+  const eligiblePositions = allEligibleTargetCandidatePositions(formation, modifier, providerPosition);
+  const eligibleRecipientDragonIds = eligiblePositions
+    .map((position) => formation[position])
+    .filter((dragonId): dragonId is string => Boolean(dragonId));
+  const candidateStats = statId
+    ? eligibleRecipientDragonIds.map((dragonId) => ({
+        dragonId,
+        statId,
+        value: observedStatValue(dragons, dragonId, statId),
+      }))
+    : undefined;
+  const group: NonNullable<SynergyTrace['targetSelectionGroup']> = {
+    targetCount: 1,
+    eligibleRecipientDragonIds,
+    selectionUncertain: true,
+    selection: statId ? 'highest-stat' : 'one-eligible-adjacent',
+    selectionStat: statId,
+    selectionResource: modifier.targetSelector.selectionResource ?? statId ?? null,
+    comparisonDirection: modifier.targetSelector.comparisonDirection ?? null,
+    comparisonPool: modifier.targetSelector.comparisonPool ?? null,
+    candidateStats,
+  };
+  if (!statId || !candidateStats || candidateStats.length === 0) {
+    return { resolved: false, group, leadingKnownRecipientDragonIds: [] };
+  }
+  const numericCandidates = candidateStats.filter((candidate): candidate is { dragonId: string; statId: DragonStatId; value: number } => candidate.value !== null);
+  if (numericCandidates.length !== candidateStats.length) {
+    const knownHighest = numericCandidates.length > 0 ? Math.max(...numericCandidates.map((candidate) => candidate.value)) : null;
+    return {
+      resolved: false,
+      group,
+      leadingKnownRecipientDragonIds: knownHighest === null
+        ? []
+        : numericCandidates.filter((candidate) => candidate.value === knownHighest).map((candidate) => candidate.dragonId),
+    };
+  }
+  const highest = Math.max(...numericCandidates.map((candidate) => candidate.value));
+  const winners = numericCandidates.filter((candidate) => candidate.value === highest);
+  return {
+    resolved: winners.length === 1 && winners[0]!.dragonId === recipientId,
+    group: {
+      ...group,
+      selectionUncertain: !(winners.length === 1 && winners[0]!.dragonId === recipientId),
+    },
+    leadingKnownRecipientDragonIds: winners.map((candidate) => candidate.dragonId),
+  };
 }
 
 function analyzeEnemyMitigationReduction(
