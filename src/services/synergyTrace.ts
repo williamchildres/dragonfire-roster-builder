@@ -316,6 +316,9 @@ function potentialTraceStatusReason(trace: SynergyTrace): string {
   if (trace.ruleId === 'self-status-removal' || (trace.matchKind === 'status-removal' && trace.exactResultUnknownReason && /current marked-target|current prey/i.test(trace.exactResultUnknownReason))) {
     return 'Current Prey existence, marked enemy identity, above-50% threshold applicability, qualifying self negative-effect state, activation success, and removed-effect identity remain unresolved.';
   }
+  if (trace.matchKind === 'status-removal' && trace.exactResultUnknownReason) {
+    return trace.exactResultUnknownReason;
+  }
   if (trace.matchKind === 'enemy-damage-received-increase') {
     const thresholdCondition = trace.modifier?.conditions.some((condition) =>
       condition.thresholdPercent !== null && condition.thresholdPercent !== undefined,
@@ -414,6 +417,9 @@ function potentialTraceStatusReason(trace: SynergyTrace): string {
         return 'The final selected recipient remains unresolved because one or more comparison values are unavailable.';
       }
       return 'The final selected recipient remains unresolved for this candidate set.';
+    }
+    if (trace.exactResultUnknownReason && !/dependent activation success|roll scope/i.test(trace.exactResultUnknownReason)) {
+      return trace.exactResultUnknownReason;
     }
     if (trace.recipientDragonId !== null) {
       return /same-round|action order|overlap/i.test(text)
