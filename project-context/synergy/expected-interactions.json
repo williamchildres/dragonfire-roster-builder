@@ -3416,7 +3416,7 @@
       "Activation chance by Habit Level: 40%, 52%, 64%, 80%, 100%."
     ],
     "exactResultKnown": false,
-    "exactResultUnknownReason": "Exact final value cannot be calculated because final combat formulas and stacking order are not fully verified.",
+    "exactResultUnknownReason": "Caraxes is the resolved recipient if Lightning Strike activates; activation success and the final stat formula remain unresolved.",
     "explanation": "Malachite's Lightning Strike can increase Caraxes's Strength. Timing: Rounds 1. Strength +25%. Enhanced by Instinct. Scaling stat: Instinct. Duration: 3 rounds. Targets 1 other Ally; caster is excluded.",
     "id": "direct-stat-support-malachite-lightning-strike-lightning-strike-strength-stat-dealt-modifier-caraxes-strength",
     "interactionScope": "cross-dragon",
@@ -8051,7 +8051,7 @@
       "Activation chance by Habit Level: 40%, 52%, 64%, 80%, 100%."
     ],
     "exactResultKnown": false,
-    "exactResultUnknownReason": "Exact final value cannot be calculated because final combat formulas and stacking order are not fully verified.",
+    "exactResultUnknownReason": "Syrax is the resolved recipient if Lightning Strike activates; activation success and the final stat formula remain unresolved.",
     "explanation": "Malachite's Lightning Strike can increase Syrax's Strength. Timing: Rounds 1. Strength +25%. Enhanced by Instinct. Scaling stat: Instinct. Duration: 3 rounds. Targets 1 other Ally; caster is excluded.",
     "id": "direct-stat-support-malachite-lightning-strike-lightning-strike-strength-stat-dealt-modifier-syrax-strength",
     "interactionScope": "cross-dragon",
@@ -12837,7 +12837,7 @@
       "Activation chance by Habit Level: 40%, 52%, 64%, 80%, 100%."
     ],
     "exactResultKnown": false,
-    "exactResultUnknownReason": "Exact final value cannot be calculated because final combat formulas and stacking order are not fully verified.",
+    "exactResultUnknownReason": "Syrax is the resolved recipient if Lightning Strike activates; activation success and the final stat formula remain unresolved.",
     "explanation": "Malachite's Lightning Strike can increase Syrax's Strength. Timing: Rounds 1. Strength +25%. Enhanced by Instinct. Scaling stat: Instinct. Duration: 3 rounds. Targets 1 other Ally; caster is excluded.",
     "id": "direct-stat-support-malachite-lightning-strike-lightning-strike-strength-stat-dealt-modifier-syrax-strength",
     "interactionScope": "cross-dragon",
@@ -17642,7 +17642,7 @@
       "Activation chance by Habit Level: 40%, 52%, 64%, 80%, 100%."
     ],
     "exactResultKnown": false,
-    "exactResultUnknownReason": "Exact final value cannot be calculated because final combat formulas and stacking order are not fully verified.",
+    "exactResultUnknownReason": "Caraxes is the resolved recipient if Lightning Strike activates; activation success and the final stat formula remain unresolved.",
     "explanation": "Malachite's Lightning Strike can increase Caraxes's Strength. Timing: Rounds 1. Strength +25%. Enhanced by Instinct. Scaling stat: Instinct. Duration: 3 rounds. Targets 1 other Ally; caster is excluded.",
     "id": "direct-stat-support-malachite-lightning-strike-lightning-strike-strength-stat-dealt-modifier-caraxes-strength",
     "interactionScope": "cross-dragon",
@@ -22581,7 +22581,7 @@
       "Activation chance by Habit Level: 40%, 52%, 64%, 80%, 100%."
     ],
     "exactResultKnown": false,
-    "exactResultUnknownReason": "Exact final value cannot be calculated because final combat formulas and stacking order are not fully verified.",
+    "exactResultUnknownReason": "Sheepstealer is the resolved recipient if Lightning Strike activates; activation success and the final stat formula remain unresolved.",
     "explanation": "Malachite's Lightning Strike can increase Sheepstealer's Strength. Timing: Rounds 1. Strength +25%. Enhanced by Instinct. Scaling stat: Instinct. Duration: 3 rounds. Targets 1 other Ally; caster is excluded.",
     "id": "direct-stat-support-malachite-lightning-strike-lightning-strike-strength-stat-dealt-modifier-sheepstealer-strength",
     "interactionScope": "cross-dragon",
@@ -27739,7 +27739,7 @@
       "Timing: Rounds 1."
     ],
     "exactResultKnown": false,
-    "exactResultUnknownReason": "Exact final value cannot be calculated because final combat formulas and stacking order are not fully verified.",
+    "exactResultUnknownReason": "Seasmoke is the resolved recipient if Lightning Strike activates; activation success and the final stat formula remain unresolved.",
     "explanation": "Lightning Strike can target one adjacent ally. Eligible recipients: Seasmoke and Sheepstealer. The selected recipient is not guaranteed.",
     "id": "direct-stat-target-selection-malachite-lightning-strike",
     "interactionScope": "targeting-fact",
@@ -28079,7 +28079,7 @@
       "Targets 1 other Ally; caster is excluded."
     ],
     "exactResultKnown": false,
-    "exactResultUnknownReason": "Exact final value cannot be calculated because final combat formulas and stacking order are not fully verified.",
+    "exactResultUnknownReason": "Seasmoke is the resolved recipient if Lightning Strike activates; activation success and the final output formula remain unresolved.",
     "explanation": "Malachite's Lightning Strike can increase Seasmoke's Strength, which supports Infectious Wrath: Physical Damage.",
     "id": "stat-scaling-malachite-lightning-strike-lightning-strike-strength-stat-dealt-modifier-seasmoke-strength",
     "interactionScope": "cross-dragon",
@@ -32455,7 +32455,7 @@
       "Activation chance by Habit Level: 40%, 52%, 64%, 80%, 100%."
     ],
     "exactResultKnown": false,
-    "exactResultUnknownReason": "Exact final value cannot be calculated because final combat formulas and stacking order are not fully verified.",
+    "exactResultUnknownReason": "Vermax is the resolved recipient if Lightning Strike activates; activation success and the final stat formula remain unresolved.",
     "explanation": "Malachite's Lightning Strike can increase Vermax's Strength. Timing: Rounds 1. Strength +25%. Enhanced by Instinct. Scaling stat: Instinct. Duration: 3 rounds. Targets 1 other Ally; caster is excluded.",
     "id": "direct-stat-support-malachite-lightning-strike-lightning-strike-strength-stat-dealt-modifier-vermax-strength",
     "interactionScope": "cross-dragon",
@@ -32935,7 +32935,7 @@
       "Targets 1 other Ally; caster is excluded."
     ],
     "exactResultKnown": false,
-    "exactResultUnknownReason": "Exact final value cannot be calculated because final combat formulas and stacking order are not fully verified.",
+    "exactResultUnknownReason": "Vermax is the resolved recipient if Lightning Strike activates; activation success and the final output formula remain unresolved.",
     "explanation": "Malachite's Lightning Strike can increase Vermax's Strength, which supports Basic Attack: Physical Damage; Spreading Blaze: Physical Damage.",
     "id": "stat-scaling-malachite-lightning-strike-lightning-strike-strength-stat-dealt-modifier-vermax-strength",
     "interactionScope": "cross-dragon",
@@ -37619,7 +37619,7 @@
       "Activation chance by Habit Level: 40%, 52%, 64%, 80%, 100%."
     ],
     "exactResultKnown": false,
-    "exactResultUnknownReason": "Exact final value cannot be calculated because final combat formulas and stacking order are not fully verified.",
+    "exactResultUnknownReason": "Seasmoke is the resolved recipient if Lightning Strike activates; activation success and the final stat formula remain unresolved.",
     "explanation": "Malachite's Lightning Strike can increase Seasmoke's Strength. Timing: Rounds 1. Strength +25%. Enhanced by Instinct. Scaling stat: Instinct. Duration: 3 rounds. Targets 1 other Ally; caster is excluded.",
     "id": "direct-stat-support-malachite-lightning-strike-lightning-strike-strength-stat-dealt-modifier-seasmoke-strength",
     "interactionScope": "cross-dragon",
@@ -38059,7 +38059,7 @@
       "Targets 1 other Ally; caster is excluded."
     ],
     "exactResultKnown": false,
-    "exactResultUnknownReason": "Exact final value cannot be calculated because final combat formulas and stacking order are not fully verified.",
+    "exactResultUnknownReason": "Seasmoke is the resolved recipient if Lightning Strike activates; activation success and the final output formula remain unresolved.",
     "explanation": "Malachite's Lightning Strike can increase Seasmoke's Strength, which supports Infectious Wrath: Physical Damage.",
     "id": "stat-scaling-malachite-lightning-strike-lightning-strike-strength-stat-dealt-modifier-seasmoke-strength",
     "interactionScope": "cross-dragon",
@@ -46934,7 +46934,7 @@
       "Activation chance by Habit Level: 40%, 52%, 64%, 80%, 100%."
     ],
     "exactResultKnown": false,
-    "exactResultUnknownReason": "Exact final value cannot be calculated because final combat formulas and stacking order are not fully verified.",
+    "exactResultUnknownReason": "Syrax is the resolved recipient if Lightning Strike activates; activation success and the final stat formula remain unresolved.",
     "explanation": "Malachite's Lightning Strike can increase Syrax's Strength. Timing: Rounds 1. Strength +25%. Enhanced by Instinct. Scaling stat: Instinct. Duration: 3 rounds. Targets 1 other Ally; caster is excluded.",
     "id": "direct-stat-support-malachite-lightning-strike-lightning-strike-strength-stat-dealt-modifier-syrax-strength",
     "interactionScope": "cross-dragon",

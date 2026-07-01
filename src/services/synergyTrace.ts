@@ -467,6 +467,9 @@ function potentialTraceStatusReason(trace: SynergyTrace): string {
     if (trace.modifier?.channel === 'recovery' && trace.modifier.direction === 'dealt') {
       return 'Exact final Recovery Dealt value cannot be calculated because modifier-combination behavior and the final Recovery formula remain unresolved.';
     }
+    if (trace.exactResultUnknownReason) {
+      return trace.exactResultUnknownReason;
+    }
     return 'Modifier recipient identity and final output formula remain unresolved.';
   }
   if (trace.ruleId === 'status-source-output') {
