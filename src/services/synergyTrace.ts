@@ -435,6 +435,12 @@ function potentialTraceStatusReason(trace: SynergyTrace): string {
     if (trace.exactResultUnknownReason && /whether that defensive channel is selected for the round/i.test(trace.exactResultUnknownReason)) {
       return trace.exactResultUnknownReason;
     }
+    if (trace.modifier?.channel === 'recovery' && trace.modifier.direction === 'received') {
+      return 'Exact final Recovery Received value cannot be calculated because modifier-combination behavior and the final received-effect formula remain unresolved.';
+    }
+    if (trace.modifier?.channel === 'recovery' && trace.modifier.direction === 'dealt') {
+      return 'Exact final Recovery Dealt value cannot be calculated because modifier-combination behavior and the final Recovery formula remain unresolved.';
+    }
     if (traceHasStackMetadata(trace) || /stack pool|current stack count|maximum stacks|per stack/i.test(text)) {
       const pieces = [
         /chance|activation/i.test(trace.explanation) ? 'activation' : null,
@@ -455,6 +461,12 @@ function potentialTraceStatusReason(trace: SynergyTrace): string {
     }
   }
   if (trace.matchKind === 'stat-scaling-support' || trace.matchKind === 'incoming-effect-amplification') {
+    if (trace.modifier?.channel === 'recovery' && trace.modifier.direction === 'received') {
+      return 'Exact final Recovery Received value cannot be calculated because modifier-combination behavior and the final received-effect formula remain unresolved.';
+    }
+    if (trace.modifier?.channel === 'recovery' && trace.modifier.direction === 'dealt') {
+      return 'Exact final Recovery Dealt value cannot be calculated because modifier-combination behavior and the final Recovery formula remain unresolved.';
+    }
     return 'Modifier recipient identity and final output formula remain unresolved.';
   }
   if (trace.ruleId === 'status-source-output') {

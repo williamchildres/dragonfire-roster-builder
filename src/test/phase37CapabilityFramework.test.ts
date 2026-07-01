@@ -151,7 +151,7 @@ describe('Phase 3.7 generic matching', () => {
       recipientDragonId: 'sheepstealer',
       exactResultKnown: false,
     });
-    expect(trace?.exactResultUnknownReason).toMatch(/Recovery formula is unknown/);
+    expect(trace?.exactResultUnknownReason).toBe('Exact final Recovery Received value cannot be calculated because modifier-combination behavior and the final received-effect formula remain unresolved.');
   });
 
   it('honors source scopes by channel and source kind', () => {
