@@ -19,8 +19,8 @@ describe('Daemoros/Rhysarion/Vaeldra chained Control pass 17', () => {
       return acc;
     }, {});
 
-    expect(traces).toHaveLength(73);
-    expect(counts).toMatchObject({ active: 31, potential: 33, inactive: 8, blocked: 1 });
+    expect(traces).toHaveLength(74);
+    expect(counts).toMatchObject({ active: 31, potential: 33, inactive: 9, blocked: 1 });
     expect(counts['not-applicable'] ?? 0).toBe(0);
     expect(counts.unknown ?? 0).toBe(0);
     expect(new Set(traces.map(technicalAnalysisTraceIdentity)).size).toBe(traces.length);

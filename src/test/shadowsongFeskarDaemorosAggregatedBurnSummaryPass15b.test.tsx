@@ -72,8 +72,8 @@ describe('Shadowsong/Feskar/Daemoros aggregated burn summary pass 15B', () => {
       return acc;
     }, {});
 
-    expect(traces).toHaveLength(65);
-    expect(counts).toMatchObject({ active: 22, potential: 35, inactive: 7, blocked: 1 });
+    expect(traces).toHaveLength(67);
+    expect(counts).toMatchObject({ active: 23, potential: 36, inactive: 7, blocked: 1 });
     expect(counts['not-applicable'] ?? 0).toBe(0);
     expect(counts.unknown ?? 0).toBe(0);
     expect(new Set(traces.map(technicalAnalysisTraceIdentity)).size).toBe(traces.length);
@@ -85,7 +85,7 @@ describe('Shadowsong/Feskar/Daemoros aggregated burn summary pass 15B', () => {
     expect(burnCards).toHaveLength(1);
     const burnCard = burnCards[0]!;
     const burnTraceIds = traces.filter((trace) => trace.title === 'Burn enables Emerald Inferno' && trace.recipientAbilityId === 'feskar-emerald-inferno');
-    expect(burnTraceIds).toHaveLength(2);
+    expect(burnTraceIds).toHaveLength(3);
     const burnBySource = new Map(burnTraceIds.map((trace) => [trace.sourceDragonId, trace] as const));
     expect(burnCard.sourceName).toBe('Shadowsong and Daemoros');
     expect(burnCard.sourceName).not.toBe('Team');

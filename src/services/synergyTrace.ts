@@ -426,6 +426,9 @@ function potentialTraceStatusReason(trace: SynergyTrace): string {
     return 'Application success and resulting status uptime remain unresolved.';
   }
   if (trace.matchKind === 'outgoing-effect-amplification') {
+    if (trace.exactResultUnknownReason && /whether that defensive channel is selected for the round/i.test(trace.exactResultUnknownReason)) {
+      return trace.exactResultUnknownReason;
+    }
     if (traceHasStackMetadata(trace) || /stack pool|current stack count|maximum stacks|per stack/i.test(text)) {
       const pieces = [
         /chance|activation/i.test(trace.explanation) ? 'activation' : null,

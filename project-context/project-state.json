@@ -23,7 +23,7 @@
   ],
   "currentReviewPhase": "Legendary/full-profile formation validation complete; Epic ingestion active with Daemoros and Vaeldra as the first detailed Epic batch after Vermax.",
   "format": "dragonfire-project-state",
-  "generatedAt": "2026-06-30T23:47:11.049Z",
+  "generatedAt": "2026-07-01T03:15:11.272Z",
   "plannedNextPhase": [
     "continue Epic dragon ingestion in batches of two after the latest merged context is available",
     "fetch latest merged main and create a new feature branch before each future Epic implementation batch",
@@ -37,8 +37,8 @@
     "metadataOnlyDragonCount": 15
   },
   "source": {
-    "branch": "fix/skyward-titan-transition-projection-pass18b",
-    "commit": "c2b3e8e62e424ef9967a76f05e30c943ba5e5869",
+    "branch": "fix/cleansing-wrath-periodic-scaling-panic-pass19",
+    "commit": "f681ccdcb6874721fe2277b499298ef263d29792",
     "databaseVersion": "0.6.2",
     "dataSchemaVersion": 12,
     "gameBuild": "26.6.53509",
@@ -49,8 +49,8 @@
     "countingMethod": "static working-tree test declaration scan; runtime pass/fail is reported by npm run test",
     "lastRunStatus": "not-run-by-exporter",
     "runner": "vitest",
-    "testCaseCount": 443,
-    "testFileCount": 50
+    "testCaseCount": 455,
+    "testFileCount": 54
   },
   "unresolvedMechanicsCount": 169,
   "versions": {
