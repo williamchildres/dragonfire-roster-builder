@@ -1585,7 +1585,7 @@ function analyzeDefensiveAllySupport(
         futureOrConditional: defensiveModifierTraceIsConditional(modifier) || (modifier.futureAvailable && options.previewMaxRankInteractions === true),
         modifier,
         damageScope: modifier.damageScope,
-        exactResultUnknownReason: stackReason ?? stackSelfModifierExactReason(modifier, context) ?? thresholdNoActivationReason ?? exclusiveOptionDefensiveReason(modifier) ?? deterministicDefensiveExactReason(modifier, context) ?? 'Exact final mitigated damage cannot be calculated because activation success, modifier or support uptime, refresh or combination behavior, and final mitigation formula are unresolved.',
+        exactResultUnknownReason: stackReason ?? stackSelfModifierExactReason(modifier, context) ?? thresholdNoActivationReason ?? exclusiveOptionDefensiveReason(modifier) ?? deterministicModifierExactReason(modifier, context) ?? 'Exact final mitigated damage cannot be calculated because activation success, modifier or support uptime, refresh or combination behavior, and final mitigation formula are unresolved.',
         targetSelectionGroup: singleResolvedAdjacentAlly
           ? {
               targetCount: 1,
@@ -1656,7 +1656,7 @@ function analyzeInternalSelfModifiers(
       futureOrConditional: capabilityFutureOrConditional(modifier, options) || defensiveModifierTraceIsConditional(modifier) || stackModifierTraceIsConditional(context),
       modifier,
       damageScope: modifier.damageScope,
-      exactResultUnknownReason: stackSelfModifierExactReason(modifier, context) ?? exclusiveOptionDefensiveReason(modifier) ?? deterministicDefensiveExactReason(modifier, context) ?? undefined,
+      exactResultUnknownReason: stackSelfModifierExactReason(modifier, context) ?? exclusiveOptionDefensiveReason(modifier) ?? deterministicModifierExactReason(modifier, context) ?? undefined,
     }));
   }
   return traces;
@@ -2101,7 +2101,7 @@ function exclusiveOptionDefensiveReason(modifier: ModifierCapability): string | 
   return `Exact final ${channel} mitigation cannot be calculated because whether that defensive channel is selected for the round, the unresolved selection method, incoming damage, combination behavior, and the final mitigation formula remain unresolved.`;
 }
 
-function deterministicDefensiveExactReason(
+function deterministicModifierExactReason(
   modifier: ModifierCapability,
   context: { ability: AbilityDefinition; schedule: AbilitySchedule; effect: AbilityEffect } | null,
 ): string | null {
@@ -2122,6 +2122,21 @@ function deterministicDefensiveExactReason(
   ].some((condition) => /Troop Capacity|threshold/i.test(condition.description));
   if (hasChance || hasRuntimeCondition || hasThreshold || modifier.valuePerStack !== null || context?.effect.stack) {
     return null;
+  }
+  if (modifier.channel === 'stat') {
+    return 'Exact final stat value cannot be calculated because modifier-combination behavior, stacking order, and the final stat formula remain unresolved.';
+  }
+  if (modifier.channel === 'damage-received') {
+    return 'Exact final mitigated damage cannot be calculated because incoming damage, modifier-combination behavior, and the final mitigation formula remain unresolved.';
+  }
+  if (modifier.direction === 'dealt') {
+    return 'Exact final amplified damage cannot be calculated because modifier-combination behavior and the final damage formula remain unresolved.';
+  }
+  if (modifier.channel === 'recovery' && modifier.direction === 'received') {
+    return 'Exact final Recovery Received value cannot be calculated because modifier-combination behavior and the final received-effect formula remain unresolved.';
+  }
+  if (modifier.direction === 'received') {
+    return 'Exact final received-effect value cannot be calculated because modifier-combination behavior and the final received-effect formula remain unresolved.';
   }
   return 'Exact final mitigated damage cannot be calculated because incoming damage, modifier-combination behavior, and the final mitigation formula remain unresolved.';
 }
@@ -3676,7 +3691,7 @@ function analyzeStatusConditionEnablement(
           unresolvedQuestions: [statusDependencyUnresolvedQuestion(dependency, statusLabel(statusOutput.statusId), recipientResolution)],
           futureOrConditional: true,
           targetSelectorSummary: dependentTargetSelectorSummary,
-          exactResultUnknownReason: `Exact ${statusLabel(statusOutput.statusId)} prerequisite enablement cannot be calculated because supplier application success, dependent activation success, same-target overlap, same-round action order, roll scope, and final branch outcomes are unresolved.`,
+          exactResultUnknownReason: statusConditionExactReason(statusOutput),
           modifierCapabilityIds: [statusOutput.id],
           matchedOutputCapabilityIds: [output.id],
         }));
@@ -3684,6 +3699,14 @@ function analyzeStatusConditionEnablement(
     }
   }
   return traces;
+}
+
+function statusConditionExactReason(statusOutput: StatusOutputCapability): string {
+  const status = statusLabel(statusOutput.statusId);
+  if (statusOutput.targetSide !== 'enemy') {
+    return `Exact ${status} prerequisite enablement cannot be calculated because supplier application success, dependent activation success, same-target overlap, same-round action order, roll scope, and final branch outcomes are unresolved.`;
+  }
+  return `Exact ${status} prerequisite enablement cannot be calculated because supplier ${status} application success, selected enemy identity, same-target overlap, whether ${status} remains active on the scheduled round, same-round action order, and the final enhanced branch outcome remain unresolved.`;
 }
 
 function analyzeDirectStatSupport(

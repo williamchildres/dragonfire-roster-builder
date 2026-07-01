@@ -1281,7 +1281,7 @@
       "Action order within same-round overlap is unresolved."
     ],
     "exactResultKnown": false,
-    "exactResultUnknownReason": "Exact Slow prerequisite enablement cannot be calculated because supplier application success, dependent activation success, same-target overlap, same-round action order, roll scope, and final branch outcomes are unresolved.",
+    "exactResultUnknownReason": "Exact Slow prerequisite enablement cannot be calculated because supplier Slow application success, selected enemy identity, same-target overlap, whether Slow remains active on the scheduled round, same-round action order, and the final enhanced branch outcome remain unresolved.",
     "explanation": "At effective Habit Level 5, Crippling Inferno has a 20% chance each round to apply Slow to 3 enemies in any lane. Slow lasts 2 rounds. On Rounds 2, 5, and 8, Strategic Revival deals Recovery at a 100% rate to Ally with least current troops. While at least one enemy has Slow, the rate increases 1.5x to 150%. Crippling Inferno's Slow can overlap Strategic Revival in these windows: Round 2 after a successful Round 1 application; Round 2 from a successful Round 2 application only if Crippling Inferno resolves before Strategic Revival that round; Round 5 after a successful Round 4 application; Round 5 from a successful Round 5 application only if Crippling Inferno resolves before Strategic Revival that round; Round 8 after a successful Round 7 application; Round 8 from a successful Round 8 application only if Crippling Inferno resolves before Strategic Revival that round. At least one enemy must still have active Slow; application success, whether any enemy remains affected, and battlefield uptime remain unresolved. Same-round action order is unresolved.",
     "id": "status-condition-caraxes-crippling-inferno-crippling-inferno-slow-slow-status-output-syrax-strategic-revival-strategic-revival-recovery-output",
     "interactionScope": "cross-dragon",
@@ -1563,7 +1563,7 @@
       "Tactical Damage Dealt increase 16%."
     ],
     "exactResultKnown": false,
-    "exactResultUnknownReason": "Exact final mitigated damage cannot be calculated because incoming damage, modifier-combination behavior, and the final mitigation formula remain unresolved.",
+    "exactResultUnknownReason": "Exact final amplified damage cannot be calculated because modifier-combination behavior and the final damage formula remain unresolved.",
     "explanation": "Syrax's Sentinel's Wit affects Syrax. Tactical Damage Dealt increase 16%.",
     "id": "internal-self-modifier-syrax-sentinels-wit-sentinels-wit-tactical-tactical-damage-dealt-modifier",
     "interactionScope": "internal",
@@ -1645,7 +1645,7 @@
       "Fire Damage Dealt increase 16%."
     ],
     "exactResultKnown": false,
-    "exactResultUnknownReason": "Exact final mitigated damage cannot be calculated because incoming damage, modifier-combination behavior, and the final mitigation formula remain unresolved.",
+    "exactResultUnknownReason": "Exact final amplified damage cannot be calculated because modifier-combination behavior and the final damage formula remain unresolved.",
     "explanation": "Caraxes's Hunter's Wrath affects Caraxes. Fire Damage Dealt increase 16%.",
     "id": "internal-self-modifier-caraxes-hunters-wrath-hunters-wrath-fire-fire-damage-dealt-modifier",
     "interactionScope": "internal",
@@ -1731,7 +1731,7 @@
       "Ranked progression: L1 12.5%, L2 15%, L3 17.5%, L4 21.25%, L5 25%."
     ],
     "exactResultKnown": false,
-    "exactResultUnknownReason": "Exact final mitigated damage cannot be calculated because incoming damage, modifier-combination behavior, and the final mitigation formula remain unresolved.",
+    "exactResultUnknownReason": "Exact final amplified damage cannot be calculated because modifier-combination behavior and the final damage formula remain unresolved.",
     "explanation": "Caraxes's Dragon's Flair affects Caraxes. Timing: Start of Combat. Fire Damage Dealt increase 25% at effective Habit Level 5. Duration: until end of combat. Ranked progression: L1 12.5%, L2 15%, L3 17.5%, L4 21.25%, L5 25%.",
     "id": "internal-self-modifier-caraxes-dragons-flair-dragons-flair-fire-fire-damage-dealt-modifier",
     "interactionScope": "internal",
@@ -1880,7 +1880,7 @@
       "Recovery Dealt increase 15%."
     ],
     "exactResultKnown": false,
-    "exactResultUnknownReason": "Exact final mitigated damage cannot be calculated because incoming damage, modifier-combination behavior, and the final mitigation formula remain unresolved.",
+    "exactResultUnknownReason": "Exact final amplified damage cannot be calculated because modifier-combination behavior and the final damage formula remain unresolved.",
     "explanation": "Malachite's Sentinel's Presence affects Malachite. Recovery Dealt increase 15%.",
     "id": "internal-self-modifier-malachite-sentinels-presence-sentinels-presence-recovery-dealt-recovery-dealt-modifier",
     "interactionScope": "internal",
@@ -1962,7 +1962,7 @@
       "Instinct +25."
     ],
     "exactResultKnown": false,
-    "exactResultUnknownReason": "Exact final mitigated damage cannot be calculated because incoming damage, modifier-combination behavior, and the final mitigation formula remain unresolved.",
+    "exactResultUnknownReason": "Exact final stat value cannot be calculated because modifier-combination behavior, stacking order, and the final stat formula remain unresolved.",
     "explanation": "Malachite's Sentinel's Presence affects Malachite. Instinct +25.",
     "id": "internal-self-modifier-malachite-sentinels-presence-sentinels-presence-instinct-stat-dealt-modifier",
     "interactionScope": "internal",
@@ -2048,7 +2048,7 @@
       "Ranked progression: L1 20%, L2 24%, L3 28%, L4 34%, L5 40%."
     ],
     "exactResultKnown": false,
-    "exactResultUnknownReason": "Exact final mitigated damage cannot be calculated because incoming damage, modifier-combination behavior, and the final mitigation formula remain unresolved.",
+    "exactResultUnknownReason": "Exact final stat value cannot be calculated because modifier-combination behavior, stacking order, and the final stat formula remain unresolved.",
     "explanation": "Malachite's Wise Vigor affects Malachite. Timing: Start of Combat. Instinct +40% at effective Habit Level 5. Duration: until end of combat. Ranked progression: L1 20%, L2 24%, L3 28%, L4 34%, L5 40%.",
     "id": "internal-self-modifier-malachite-wise-vigor-wise-vigor-instinct-stat-dealt-modifier",
     "interactionScope": "internal",
@@ -2125,7 +2125,7 @@
       "Ranked progression: L1 20%, L2 24%, L3 28%, L4 34%, L5 40%."
     ],
     "exactResultKnown": false,
-    "exactResultUnknownReason": "Exact final mitigated damage cannot be calculated because incoming damage, modifier-combination behavior, and the final mitigation formula remain unresolved.",
+    "exactResultUnknownReason": "Exact final amplified damage cannot be calculated because modifier-combination behavior and the final damage formula remain unresolved.",
     "explanation": "Malachite's Wise Vigor affects Malachite. Timing: Start of Combat. Recovery Dealt increase 40% at effective Habit Level 5. Duration: until end of combat. Ranked progression: L1 20%, L2 24%, L3 28%, L4 34%, L5 40%.",
     "id": "internal-self-modifier-malachite-wise-vigor-wise-vigor-recovery-recovery-dealt-modifier",
     "interactionScope": "internal",
@@ -5916,7 +5916,7 @@
       "Action order within same-round overlap is unresolved."
     ],
     "exactResultKnown": false,
-    "exactResultUnknownReason": "Exact Slow prerequisite enablement cannot be calculated because supplier application success, dependent activation success, same-target overlap, same-round action order, roll scope, and final branch outcomes are unresolved.",
+    "exactResultUnknownReason": "Exact Slow prerequisite enablement cannot be calculated because supplier Slow application success, selected enemy identity, same-target overlap, whether Slow remains active on the scheduled round, same-round action order, and the final enhanced branch outcome remain unresolved.",
     "explanation": "At effective Habit Level 5, Crippling Inferno has a 20% chance each round to apply Slow to 3 enemies in any lane. Slow lasts 2 rounds. On Rounds 2, 5, and 8, Strategic Revival deals Recovery at a 100% rate to Ally with least current troops. While at least one enemy has Slow, the rate increases 1.5x to 150%. Crippling Inferno's Slow can overlap Strategic Revival in these windows: Round 2 after a successful Round 1 application; Round 2 from a successful Round 2 application only if Crippling Inferno resolves before Strategic Revival that round; Round 5 after a successful Round 4 application; Round 5 from a successful Round 5 application only if Crippling Inferno resolves before Strategic Revival that round; Round 8 after a successful Round 7 application; Round 8 from a successful Round 8 application only if Crippling Inferno resolves before Strategic Revival that round. At least one enemy must still have active Slow; application success, whether any enemy remains affected, and battlefield uptime remain unresolved. Same-round action order is unresolved.",
     "id": "status-condition-caraxes-crippling-inferno-crippling-inferno-slow-slow-status-output-syrax-strategic-revival-strategic-revival-recovery-output",
     "interactionScope": "cross-dragon",
@@ -6197,7 +6197,7 @@
       "Tactical Damage Dealt increase 16%."
     ],
     "exactResultKnown": false,
-    "exactResultUnknownReason": "Exact final mitigated damage cannot be calculated because incoming damage, modifier-combination behavior, and the final mitigation formula remain unresolved.",
+    "exactResultUnknownReason": "Exact final amplified damage cannot be calculated because modifier-combination behavior and the final damage formula remain unresolved.",
     "explanation": "Syrax's Sentinel's Wit affects Syrax. Tactical Damage Dealt increase 16%.",
     "id": "internal-self-modifier-syrax-sentinels-wit-sentinels-wit-tactical-tactical-damage-dealt-modifier",
     "interactionScope": "internal",
@@ -6280,7 +6280,7 @@
       "Fire Damage Dealt increase 16%."
     ],
     "exactResultKnown": false,
-    "exactResultUnknownReason": "Exact final mitigated damage cannot be calculated because incoming damage, modifier-combination behavior, and the final mitigation formula remain unresolved.",
+    "exactResultUnknownReason": "Exact final amplified damage cannot be calculated because modifier-combination behavior and the final damage formula remain unresolved.",
     "explanation": "Caraxes's Hunter's Wrath affects Caraxes. Fire Damage Dealt increase 16%.",
     "id": "internal-self-modifier-caraxes-hunters-wrath-hunters-wrath-fire-fire-damage-dealt-modifier",
     "interactionScope": "internal",
@@ -6366,7 +6366,7 @@
       "Ranked progression: L1 12.5%, L2 15%, L3 17.5%, L4 21.25%, L5 25%."
     ],
     "exactResultKnown": false,
-    "exactResultUnknownReason": "Exact final mitigated damage cannot be calculated because incoming damage, modifier-combination behavior, and the final mitigation formula remain unresolved.",
+    "exactResultUnknownReason": "Exact final amplified damage cannot be calculated because modifier-combination behavior and the final damage formula remain unresolved.",
     "explanation": "Caraxes's Dragon's Flair affects Caraxes. Timing: Start of Combat. Fire Damage Dealt increase 25% at effective Habit Level 5. Duration: until end of combat. Ranked progression: L1 12.5%, L2 15%, L3 17.5%, L4 21.25%, L5 25%.",
     "id": "internal-self-modifier-caraxes-dragons-flair-dragons-flair-fire-fire-damage-dealt-modifier",
     "interactionScope": "internal",
@@ -6515,7 +6515,7 @@
       "Recovery Dealt increase 15%."
     ],
     "exactResultKnown": false,
-    "exactResultUnknownReason": "Exact final mitigated damage cannot be calculated because incoming damage, modifier-combination behavior, and the final mitigation formula remain unresolved.",
+    "exactResultUnknownReason": "Exact final amplified damage cannot be calculated because modifier-combination behavior and the final damage formula remain unresolved.",
     "explanation": "Malachite's Sentinel's Presence affects Malachite. Recovery Dealt increase 15%.",
     "id": "internal-self-modifier-malachite-sentinels-presence-sentinels-presence-recovery-dealt-recovery-dealt-modifier",
     "interactionScope": "internal",
@@ -6597,7 +6597,7 @@
       "Instinct +25."
     ],
     "exactResultKnown": false,
-    "exactResultUnknownReason": "Exact final mitigated damage cannot be calculated because incoming damage, modifier-combination behavior, and the final mitigation formula remain unresolved.",
+    "exactResultUnknownReason": "Exact final stat value cannot be calculated because modifier-combination behavior, stacking order, and the final stat formula remain unresolved.",
     "explanation": "Malachite's Sentinel's Presence affects Malachite. Instinct +25.",
     "id": "internal-self-modifier-malachite-sentinels-presence-sentinels-presence-instinct-stat-dealt-modifier",
     "interactionScope": "internal",
@@ -6683,7 +6683,7 @@
       "Ranked progression: L1 20%, L2 24%, L3 28%, L4 34%, L5 40%."
     ],
     "exactResultKnown": false,
-    "exactResultUnknownReason": "Exact final mitigated damage cannot be calculated because incoming damage, modifier-combination behavior, and the final mitigation formula remain unresolved.",
+    "exactResultUnknownReason": "Exact final stat value cannot be calculated because modifier-combination behavior, stacking order, and the final stat formula remain unresolved.",
     "explanation": "Malachite's Wise Vigor affects Malachite. Timing: Start of Combat. Instinct +40% at effective Habit Level 5. Duration: until end of combat. Ranked progression: L1 20%, L2 24%, L3 28%, L4 34%, L5 40%.",
     "id": "internal-self-modifier-malachite-wise-vigor-wise-vigor-instinct-stat-dealt-modifier",
     "interactionScope": "internal",
@@ -6760,7 +6760,7 @@
       "Ranked progression: L1 20%, L2 24%, L3 28%, L4 34%, L5 40%."
     ],
     "exactResultKnown": false,
-    "exactResultUnknownReason": "Exact final mitigated damage cannot be calculated because incoming damage, modifier-combination behavior, and the final mitigation formula remain unresolved.",
+    "exactResultUnknownReason": "Exact final amplified damage cannot be calculated because modifier-combination behavior and the final damage formula remain unresolved.",
     "explanation": "Malachite's Wise Vigor affects Malachite. Timing: Start of Combat. Recovery Dealt increase 40% at effective Habit Level 5. Duration: until end of combat. Ranked progression: L1 20%, L2 24%, L3 28%, L4 34%, L5 40%.",
     "id": "internal-self-modifier-malachite-wise-vigor-wise-vigor-recovery-recovery-dealt-modifier",
     "interactionScope": "internal",
@@ -10702,7 +10702,7 @@
       "Action order within same-round overlap is unresolved."
     ],
     "exactResultKnown": false,
-    "exactResultUnknownReason": "Exact Slow prerequisite enablement cannot be calculated because supplier application success, dependent activation success, same-target overlap, same-round action order, roll scope, and final branch outcomes are unresolved.",
+    "exactResultUnknownReason": "Exact Slow prerequisite enablement cannot be calculated because supplier Slow application success, selected enemy identity, same-target overlap, whether Slow remains active on the scheduled round, same-round action order, and the final enhanced branch outcome remain unresolved.",
     "explanation": "At effective Habit Level 5, Crippling Inferno has a 20% chance each round to apply Slow to 3 enemies in any lane. Slow lasts 2 rounds. On Rounds 2, 5, and 8, Strategic Revival deals Recovery at a 100% rate to Ally with least current troops. While at least one enemy has Slow, the rate increases 1.5x to 150%. Crippling Inferno's Slow can overlap Strategic Revival in these windows: Round 2 after a successful Round 1 application; Round 2 from a successful Round 2 application only if Crippling Inferno resolves before Strategic Revival that round; Round 5 after a successful Round 4 application; Round 5 from a successful Round 5 application only if Crippling Inferno resolves before Strategic Revival that round; Round 8 after a successful Round 7 application; Round 8 from a successful Round 8 application only if Crippling Inferno resolves before Strategic Revival that round. At least one enemy must still have active Slow; application success, whether any enemy remains affected, and battlefield uptime remain unresolved. Same-round action order is unresolved.",
     "id": "status-condition-caraxes-crippling-inferno-crippling-inferno-slow-slow-status-output-syrax-strategic-revival-strategic-revival-recovery-output",
     "interactionScope": "cross-dragon",
@@ -10983,7 +10983,7 @@
       "Tactical Damage Dealt increase 16%."
     ],
     "exactResultKnown": false,
-    "exactResultUnknownReason": "Exact final mitigated damage cannot be calculated because incoming damage, modifier-combination behavior, and the final mitigation formula remain unresolved.",
+    "exactResultUnknownReason": "Exact final amplified damage cannot be calculated because modifier-combination behavior and the final damage formula remain unresolved.",
     "explanation": "Syrax's Sentinel's Wit affects Syrax. Tactical Damage Dealt increase 16%.",
     "id": "internal-self-modifier-syrax-sentinels-wit-sentinels-wit-tactical-tactical-damage-dealt-modifier",
     "interactionScope": "internal",
@@ -11066,7 +11066,7 @@
       "Fire Damage Dealt increase 16%."
     ],
     "exactResultKnown": false,
-    "exactResultUnknownReason": "Exact final mitigated damage cannot be calculated because incoming damage, modifier-combination behavior, and the final mitigation formula remain unresolved.",
+    "exactResultUnknownReason": "Exact final amplified damage cannot be calculated because modifier-combination behavior and the final damage formula remain unresolved.",
     "explanation": "Caraxes's Hunter's Wrath affects Caraxes. Fire Damage Dealt increase 16%.",
     "id": "internal-self-modifier-caraxes-hunters-wrath-hunters-wrath-fire-fire-damage-dealt-modifier",
     "interactionScope": "internal",
@@ -11152,7 +11152,7 @@
       "Ranked progression: L1 12.5%, L2 15%, L3 17.5%, L4 21.25%, L5 25%."
     ],
     "exactResultKnown": false,
-    "exactResultUnknownReason": "Exact final mitigated damage cannot be calculated because incoming damage, modifier-combination behavior, and the final mitigation formula remain unresolved.",
+    "exactResultUnknownReason": "Exact final amplified damage cannot be calculated because modifier-combination behavior and the final damage formula remain unresolved.",
     "explanation": "Caraxes's Dragon's Flair affects Caraxes. Timing: Start of Combat. Fire Damage Dealt increase 25% at effective Habit Level 5. Duration: until end of combat. Ranked progression: L1 12.5%, L2 15%, L3 17.5%, L4 21.25%, L5 25%.",
     "id": "internal-self-modifier-caraxes-dragons-flair-dragons-flair-fire-fire-damage-dealt-modifier",
     "interactionScope": "internal",
@@ -11301,7 +11301,7 @@
       "Recovery Dealt increase 15%."
     ],
     "exactResultKnown": false,
-    "exactResultUnknownReason": "Exact final mitigated damage cannot be calculated because incoming damage, modifier-combination behavior, and the final mitigation formula remain unresolved.",
+    "exactResultUnknownReason": "Exact final amplified damage cannot be calculated because modifier-combination behavior and the final damage formula remain unresolved.",
     "explanation": "Malachite's Sentinel's Presence affects Malachite. Recovery Dealt increase 15%.",
     "id": "internal-self-modifier-malachite-sentinels-presence-sentinels-presence-recovery-dealt-recovery-dealt-modifier",
     "interactionScope": "internal",
@@ -11383,7 +11383,7 @@
       "Instinct +25."
     ],
     "exactResultKnown": false,
-    "exactResultUnknownReason": "Exact final mitigated damage cannot be calculated because incoming damage, modifier-combination behavior, and the final mitigation formula remain unresolved.",
+    "exactResultUnknownReason": "Exact final stat value cannot be calculated because modifier-combination behavior, stacking order, and the final stat formula remain unresolved.",
     "explanation": "Malachite's Sentinel's Presence affects Malachite. Instinct +25.",
     "id": "internal-self-modifier-malachite-sentinels-presence-sentinels-presence-instinct-stat-dealt-modifier",
     "interactionScope": "internal",
@@ -11469,7 +11469,7 @@
       "Ranked progression: L1 20%, L2 24%, L3 28%, L4 34%, L5 40%."
     ],
     "exactResultKnown": false,
-    "exactResultUnknownReason": "Exact final mitigated damage cannot be calculated because incoming damage, modifier-combination behavior, and the final mitigation formula remain unresolved.",
+    "exactResultUnknownReason": "Exact final stat value cannot be calculated because modifier-combination behavior, stacking order, and the final stat formula remain unresolved.",
     "explanation": "Malachite's Wise Vigor affects Malachite. Timing: Start of Combat. Instinct +40% at effective Habit Level 5. Duration: until end of combat. Ranked progression: L1 20%, L2 24%, L3 28%, L4 34%, L5 40%.",
     "id": "internal-self-modifier-malachite-wise-vigor-wise-vigor-instinct-stat-dealt-modifier",
     "interactionScope": "internal",
@@ -11546,7 +11546,7 @@
       "Ranked progression: L1 20%, L2 24%, L3 28%, L4 34%, L5 40%."
     ],
     "exactResultKnown": false,
-    "exactResultUnknownReason": "Exact final mitigated damage cannot be calculated because incoming damage, modifier-combination behavior, and the final mitigation formula remain unresolved.",
+    "exactResultUnknownReason": "Exact final amplified damage cannot be calculated because modifier-combination behavior and the final damage formula remain unresolved.",
     "explanation": "Malachite's Wise Vigor affects Malachite. Timing: Start of Combat. Recovery Dealt increase 40% at effective Habit Level 5. Duration: until end of combat. Ranked progression: L1 20%, L2 24%, L3 28%, L4 34%, L5 40%.",
     "id": "internal-self-modifier-malachite-wise-vigor-wise-vigor-recovery-recovery-dealt-modifier",
     "interactionScope": "internal",
@@ -15507,7 +15507,7 @@
       "Action order within same-round overlap is unresolved."
     ],
     "exactResultKnown": false,
-    "exactResultUnknownReason": "Exact Slow prerequisite enablement cannot be calculated because supplier application success, dependent activation success, same-target overlap, same-round action order, roll scope, and final branch outcomes are unresolved.",
+    "exactResultUnknownReason": "Exact Slow prerequisite enablement cannot be calculated because supplier Slow application success, selected enemy identity, same-target overlap, whether Slow remains active on the scheduled round, same-round action order, and the final enhanced branch outcome remain unresolved.",
     "explanation": "At effective Habit Level 5, Crippling Inferno has a 20% chance each round to apply Slow to 3 enemies in any lane. Slow lasts 2 rounds. On Rounds 2, 5, and 8, Strategic Revival deals Recovery at a 100% rate to Ally with least current troops. While at least one enemy has Slow, the rate increases 1.5x to 150%. Crippling Inferno's Slow can overlap Strategic Revival in these windows: Round 2 after a successful Round 1 application; Round 2 from a successful Round 2 application only if Crippling Inferno resolves before Strategic Revival that round; Round 5 after a successful Round 4 application; Round 5 from a successful Round 5 application only if Crippling Inferno resolves before Strategic Revival that round; Round 8 after a successful Round 7 application; Round 8 from a successful Round 8 application only if Crippling Inferno resolves before Strategic Revival that round. At least one enemy must still have active Slow; application success, whether any enemy remains affected, and battlefield uptime remain unresolved. Same-round action order is unresolved.",
     "id": "status-condition-caraxes-crippling-inferno-crippling-inferno-slow-slow-status-output-syrax-strategic-revival-strategic-revival-recovery-output",
     "interactionScope": "cross-dragon",
@@ -15789,7 +15789,7 @@
       "Tactical Damage Dealt increase 16%."
     ],
     "exactResultKnown": false,
-    "exactResultUnknownReason": "Exact final mitigated damage cannot be calculated because incoming damage, modifier-combination behavior, and the final mitigation formula remain unresolved.",
+    "exactResultUnknownReason": "Exact final amplified damage cannot be calculated because modifier-combination behavior and the final damage formula remain unresolved.",
     "explanation": "Syrax's Sentinel's Wit affects Syrax. Tactical Damage Dealt increase 16%.",
     "id": "internal-self-modifier-syrax-sentinels-wit-sentinels-wit-tactical-tactical-damage-dealt-modifier",
     "interactionScope": "internal",
@@ -15871,7 +15871,7 @@
       "Fire Damage Dealt increase 16%."
     ],
     "exactResultKnown": false,
-    "exactResultUnknownReason": "Exact final mitigated damage cannot be calculated because incoming damage, modifier-combination behavior, and the final mitigation formula remain unresolved.",
+    "exactResultUnknownReason": "Exact final amplified damage cannot be calculated because modifier-combination behavior and the final damage formula remain unresolved.",
     "explanation": "Caraxes's Hunter's Wrath affects Caraxes. Fire Damage Dealt increase 16%.",
     "id": "internal-self-modifier-caraxes-hunters-wrath-hunters-wrath-fire-fire-damage-dealt-modifier",
     "interactionScope": "internal",
@@ -15957,7 +15957,7 @@
       "Ranked progression: L1 12.5%, L2 15%, L3 17.5%, L4 21.25%, L5 25%."
     ],
     "exactResultKnown": false,
-    "exactResultUnknownReason": "Exact final mitigated damage cannot be calculated because incoming damage, modifier-combination behavior, and the final mitigation formula remain unresolved.",
+    "exactResultUnknownReason": "Exact final amplified damage cannot be calculated because modifier-combination behavior and the final damage formula remain unresolved.",
     "explanation": "Caraxes's Dragon's Flair affects Caraxes. Timing: Start of Combat. Fire Damage Dealt increase 25% at effective Habit Level 5. Duration: until end of combat. Ranked progression: L1 12.5%, L2 15%, L3 17.5%, L4 21.25%, L5 25%.",
     "id": "internal-self-modifier-caraxes-dragons-flair-dragons-flair-fire-fire-damage-dealt-modifier",
     "interactionScope": "internal",
@@ -16106,7 +16106,7 @@
       "Recovery Dealt increase 15%."
     ],
     "exactResultKnown": false,
-    "exactResultUnknownReason": "Exact final mitigated damage cannot be calculated because incoming damage, modifier-combination behavior, and the final mitigation formula remain unresolved.",
+    "exactResultUnknownReason": "Exact final amplified damage cannot be calculated because modifier-combination behavior and the final damage formula remain unresolved.",
     "explanation": "Malachite's Sentinel's Presence affects Malachite. Recovery Dealt increase 15%.",
     "id": "internal-self-modifier-malachite-sentinels-presence-sentinels-presence-recovery-dealt-recovery-dealt-modifier",
     "interactionScope": "internal",
@@ -16188,7 +16188,7 @@
       "Instinct +25."
     ],
     "exactResultKnown": false,
-    "exactResultUnknownReason": "Exact final mitigated damage cannot be calculated because incoming damage, modifier-combination behavior, and the final mitigation formula remain unresolved.",
+    "exactResultUnknownReason": "Exact final stat value cannot be calculated because modifier-combination behavior, stacking order, and the final stat formula remain unresolved.",
     "explanation": "Malachite's Sentinel's Presence affects Malachite. Instinct +25.",
     "id": "internal-self-modifier-malachite-sentinels-presence-sentinels-presence-instinct-stat-dealt-modifier",
     "interactionScope": "internal",
@@ -16274,7 +16274,7 @@
       "Ranked progression: L1 20%, L2 24%, L3 28%, L4 34%, L5 40%."
     ],
     "exactResultKnown": false,
-    "exactResultUnknownReason": "Exact final mitigated damage cannot be calculated because incoming damage, modifier-combination behavior, and the final mitigation formula remain unresolved.",
+    "exactResultUnknownReason": "Exact final stat value cannot be calculated because modifier-combination behavior, stacking order, and the final stat formula remain unresolved.",
     "explanation": "Malachite's Wise Vigor affects Malachite. Timing: Start of Combat. Instinct +40% at effective Habit Level 5. Duration: until end of combat. Ranked progression: L1 20%, L2 24%, L3 28%, L4 34%, L5 40%.",
     "id": "internal-self-modifier-malachite-wise-vigor-wise-vigor-instinct-stat-dealt-modifier",
     "interactionScope": "internal",
@@ -16351,7 +16351,7 @@
       "Ranked progression: L1 20%, L2 24%, L3 28%, L4 34%, L5 40%."
     ],
     "exactResultKnown": false,
-    "exactResultUnknownReason": "Exact final mitigated damage cannot be calculated because incoming damage, modifier-combination behavior, and the final mitigation formula remain unresolved.",
+    "exactResultUnknownReason": "Exact final amplified damage cannot be calculated because modifier-combination behavior and the final damage formula remain unresolved.",
     "explanation": "Malachite's Wise Vigor affects Malachite. Timing: Start of Combat. Recovery Dealt increase 40% at effective Habit Level 5. Duration: until end of combat. Ranked progression: L1 20%, L2 24%, L3 28%, L4 34%, L5 40%.",
     "id": "internal-self-modifier-malachite-wise-vigor-wise-vigor-recovery-recovery-dealt-modifier",
     "interactionScope": "internal",
@@ -20652,7 +20652,7 @@
       "Recovery Dealt increase 15%."
     ],
     "exactResultKnown": false,
-    "exactResultUnknownReason": "Exact final mitigated damage cannot be calculated because incoming damage, modifier-combination behavior, and the final mitigation formula remain unresolved.",
+    "exactResultUnknownReason": "Exact final amplified damage cannot be calculated because modifier-combination behavior and the final damage formula remain unresolved.",
     "explanation": "Malachite's Sentinel's Presence affects Malachite. Recovery Dealt increase 15%.",
     "id": "internal-self-modifier-malachite-sentinels-presence-sentinels-presence-recovery-dealt-recovery-dealt-modifier",
     "interactionScope": "internal",
@@ -20734,7 +20734,7 @@
       "Instinct +25."
     ],
     "exactResultKnown": false,
-    "exactResultUnknownReason": "Exact final mitigated damage cannot be calculated because incoming damage, modifier-combination behavior, and the final mitigation formula remain unresolved.",
+    "exactResultUnknownReason": "Exact final stat value cannot be calculated because modifier-combination behavior, stacking order, and the final stat formula remain unresolved.",
     "explanation": "Malachite's Sentinel's Presence affects Malachite. Instinct +25.",
     "id": "internal-self-modifier-malachite-sentinels-presence-sentinels-presence-instinct-stat-dealt-modifier",
     "interactionScope": "internal",
@@ -20820,7 +20820,7 @@
       "Ranked progression: L1 20%, L2 24%, L3 28%, L4 34%, L5 40%."
     ],
     "exactResultKnown": false,
-    "exactResultUnknownReason": "Exact final mitigated damage cannot be calculated because incoming damage, modifier-combination behavior, and the final mitigation formula remain unresolved.",
+    "exactResultUnknownReason": "Exact final stat value cannot be calculated because modifier-combination behavior, stacking order, and the final stat formula remain unresolved.",
     "explanation": "Malachite's Wise Vigor affects Malachite. Timing: Start of Combat. Instinct +40% at effective Habit Level 5. Duration: until end of combat. Ranked progression: L1 20%, L2 24%, L3 28%, L4 34%, L5 40%.",
     "id": "internal-self-modifier-malachite-wise-vigor-wise-vigor-instinct-stat-dealt-modifier",
     "interactionScope": "internal",
@@ -20897,7 +20897,7 @@
       "Ranked progression: L1 20%, L2 24%, L3 28%, L4 34%, L5 40%."
     ],
     "exactResultKnown": false,
-    "exactResultUnknownReason": "Exact final mitigated damage cannot be calculated because incoming damage, modifier-combination behavior, and the final mitigation formula remain unresolved.",
+    "exactResultUnknownReason": "Exact final amplified damage cannot be calculated because modifier-combination behavior and the final damage formula remain unresolved.",
     "explanation": "Malachite's Wise Vigor affects Malachite. Timing: Start of Combat. Recovery Dealt increase 40% at effective Habit Level 5. Duration: until end of combat. Ranked progression: L1 20%, L2 24%, L3 28%, L4 34%, L5 40%.",
     "id": "internal-self-modifier-malachite-wise-vigor-wise-vigor-recovery-recovery-dealt-modifier",
     "interactionScope": "internal",
@@ -20968,7 +20968,7 @@
       "Recovery Received increase 20%."
     ],
     "exactResultKnown": false,
-    "exactResultUnknownReason": "Exact final mitigated damage cannot be calculated because incoming damage, modifier-combination behavior, and the final mitigation formula remain unresolved.",
+    "exactResultUnknownReason": "Exact final Recovery Received value cannot be calculated because modifier-combination behavior and the final received-effect formula remain unresolved.",
     "explanation": "Sheepstealer's Hunter's Cunning affects Sheepstealer. Recovery Received increase 20%.",
     "id": "internal-self-modifier-sheepstealer-hunters-cunning-hunters-cunning-recovery-received-recovery-received-modifier",
     "interactionScope": "internal",
@@ -21048,7 +21048,7 @@
       "Intelligence +25."
     ],
     "exactResultKnown": false,
-    "exactResultUnknownReason": "Exact final mitigated damage cannot be calculated because incoming damage, modifier-combination behavior, and the final mitigation formula remain unresolved.",
+    "exactResultUnknownReason": "Exact final stat value cannot be calculated because modifier-combination behavior, stacking order, and the final stat formula remain unresolved.",
     "explanation": "Sheepstealer's Hunter's Cunning affects Sheepstealer. Intelligence +25.",
     "id": "internal-self-modifier-sheepstealer-hunters-cunning-hunters-cunning-intelligence-stat-dealt-modifier",
     "interactionScope": "internal",
@@ -21135,7 +21135,7 @@
       "Ranked progression: L1 10%, L2 12%, L3 14%, L4 17%, L5 20%."
     ],
     "exactResultKnown": false,
-    "exactResultUnknownReason": "Exact final mitigated damage cannot be calculated because incoming damage, modifier-combination behavior, and the final mitigation formula remain unresolved.",
+    "exactResultUnknownReason": "Exact final amplified damage cannot be calculated because modifier-combination behavior and the final damage formula remain unresolved.",
     "explanation": "Sheepstealer's Stolen Flock affects Sheepstealer. Timing: Start of Combat. Fire Damage Dealt increase 20% at effective Habit Level 5. PvE-only bonus is contextual and is not treated as active. Duration: until end of combat. Ranked progression: L1 10%, L2 12%, L3 14%, L4 17%, L5 20%.",
     "id": "internal-self-modifier-sheepstealer-stolen-flock-stolen-flock-pve-fire-fire-damage-dealt-modifier",
     "interactionScope": "internal",
@@ -21389,7 +21389,7 @@
       "Ranked progression: L1 16%, L2 19.2%, L3 22.4%, L4 27.2%, L5 32%."
     ],
     "exactResultKnown": false,
-    "exactResultUnknownReason": "Exact final mitigated damage cannot be calculated because incoming damage, modifier-combination behavior, and the final mitigation formula remain unresolved.",
+    "exactResultUnknownReason": "Exact final stat value cannot be calculated because modifier-combination behavior, stacking order, and the final stat formula remain unresolved.",
     "explanation": "Sheepstealer's Dragon's Cunning affects Sheepstealer. Timing: Start of Combat. Intelligence +32% at effective Habit Level 5. Duration: until end of combat. Ranked progression: L1 16%, L2 19.2%, L3 22.4%, L4 27.2%, L5 32%.",
     "id": "internal-self-modifier-sheepstealer-dragons-cunning-dragons-cunning-intelligence-stat-dealt-modifier",
     "interactionScope": "internal",
@@ -21462,7 +21462,7 @@
       "Physical Damage Dealt increase 16%."
     ],
     "exactResultKnown": false,
-    "exactResultUnknownReason": "Exact final mitigated damage cannot be calculated because incoming damage, modifier-combination behavior, and the final mitigation formula remain unresolved.",
+    "exactResultUnknownReason": "Exact final amplified damage cannot be calculated because modifier-combination behavior and the final damage formula remain unresolved.",
     "explanation": "Vermax's Warrior's Zeal affects Vermax. Physical Damage Dealt increase 16%.",
     "id": "internal-self-modifier-vermax-warriors-zeal-warriors-zeal-physical-physical-damage-dealt-modifier",
     "interactionScope": "internal",
@@ -21718,7 +21718,7 @@
       "Ranked progression: L1 8.5%, L2 10.2%, L3 11.9%, L4 14.45%, L5 17%."
     ],
     "exactResultKnown": false,
-    "exactResultUnknownReason": "Exact final mitigated damage cannot be calculated because incoming damage, modifier-combination behavior, and the final mitigation formula remain unresolved.",
+    "exactResultUnknownReason": "Exact final stat value cannot be calculated because modifier-combination behavior, stacking order, and the final stat formula remain unresolved.",
     "explanation": "Vermax's Dragon's Valor affects Vermax. Timing: Start of Combat. Strength +17% at effective Habit Level 5. Duration: until end of combat. Ranked progression: L1 8.5%, L2 10.2%, L3 11.9%, L4 14.45%, L5 17%.",
     "id": "internal-self-modifier-vermax-dragons-valor-dragons-valor-strength-stat-dealt-modifier",
     "interactionScope": "internal",
@@ -25624,7 +25624,7 @@
       "Strength +15."
     ],
     "exactResultKnown": false,
-    "exactResultUnknownReason": "Exact final mitigated damage cannot be calculated because incoming damage, modifier-combination behavior, and the final mitigation formula remain unresolved.",
+    "exactResultUnknownReason": "Exact final stat value cannot be calculated because modifier-combination behavior, stacking order, and the final stat formula remain unresolved.",
     "explanation": "Seasmoke's Champion's Brilliance affects Seasmoke. Strength +15.",
     "id": "internal-self-modifier-seasmoke-champions-brilliance-seasmoke-strength-flat-stat-dealt-modifier",
     "interactionScope": "internal",
@@ -25708,7 +25708,7 @@
       "Intelligence +15."
     ],
     "exactResultKnown": false,
-    "exactResultUnknownReason": "Exact final mitigated damage cannot be calculated because incoming damage, modifier-combination behavior, and the final mitigation formula remain unresolved.",
+    "exactResultUnknownReason": "Exact final stat value cannot be calculated because modifier-combination behavior, stacking order, and the final stat formula remain unresolved.",
     "explanation": "Seasmoke's Champion's Brilliance affects Seasmoke. Intelligence +15.",
     "id": "internal-self-modifier-seasmoke-champions-brilliance-seasmoke-intelligence-flat-stat-dealt-modifier",
     "interactionScope": "internal",
@@ -25792,7 +25792,7 @@
       "Instinct +15."
     ],
     "exactResultKnown": false,
-    "exactResultUnknownReason": "Exact final mitigated damage cannot be calculated because incoming damage, modifier-combination behavior, and the final mitigation formula remain unresolved.",
+    "exactResultUnknownReason": "Exact final stat value cannot be calculated because modifier-combination behavior, stacking order, and the final stat formula remain unresolved.",
     "explanation": "Seasmoke's Champion's Brilliance affects Seasmoke. Instinct +15.",
     "id": "internal-self-modifier-seasmoke-champions-brilliance-seasmoke-instinct-flat-stat-dealt-modifier",
     "interactionScope": "internal",
@@ -25872,7 +25872,7 @@
       "Recovery Dealt increase 15%."
     ],
     "exactResultKnown": false,
-    "exactResultUnknownReason": "Exact final mitigated damage cannot be calculated because incoming damage, modifier-combination behavior, and the final mitigation formula remain unresolved.",
+    "exactResultUnknownReason": "Exact final amplified damage cannot be calculated because modifier-combination behavior and the final damage formula remain unresolved.",
     "explanation": "Malachite's Sentinel's Presence affects Malachite. Recovery Dealt increase 15%.",
     "id": "internal-self-modifier-malachite-sentinels-presence-sentinels-presence-recovery-dealt-recovery-dealt-modifier",
     "interactionScope": "internal",
@@ -25952,7 +25952,7 @@
       "Instinct +25."
     ],
     "exactResultKnown": false,
-    "exactResultUnknownReason": "Exact final mitigated damage cannot be calculated because incoming damage, modifier-combination behavior, and the final mitigation formula remain unresolved.",
+    "exactResultUnknownReason": "Exact final stat value cannot be calculated because modifier-combination behavior, stacking order, and the final stat formula remain unresolved.",
     "explanation": "Malachite's Sentinel's Presence affects Malachite. Instinct +25.",
     "id": "internal-self-modifier-malachite-sentinels-presence-sentinels-presence-instinct-stat-dealt-modifier",
     "interactionScope": "internal",
@@ -26038,7 +26038,7 @@
       "Ranked progression: L1 20%, L2 24%, L3 28%, L4 34%, L5 40%."
     ],
     "exactResultKnown": false,
-    "exactResultUnknownReason": "Exact final mitigated damage cannot be calculated because incoming damage, modifier-combination behavior, and the final mitigation formula remain unresolved.",
+    "exactResultUnknownReason": "Exact final stat value cannot be calculated because modifier-combination behavior, stacking order, and the final stat formula remain unresolved.",
     "explanation": "Malachite's Wise Vigor affects Malachite. Timing: Start of Combat. Instinct +40% at effective Habit Level 5. Duration: until end of combat. Ranked progression: L1 20%, L2 24%, L3 28%, L4 34%, L5 40%.",
     "id": "internal-self-modifier-malachite-wise-vigor-wise-vigor-instinct-stat-dealt-modifier",
     "interactionScope": "internal",
@@ -26115,7 +26115,7 @@
       "Ranked progression: L1 20%, L2 24%, L3 28%, L4 34%, L5 40%."
     ],
     "exactResultKnown": false,
-    "exactResultUnknownReason": "Exact final mitigated damage cannot be calculated because incoming damage, modifier-combination behavior, and the final mitigation formula remain unresolved.",
+    "exactResultUnknownReason": "Exact final amplified damage cannot be calculated because modifier-combination behavior and the final damage formula remain unresolved.",
     "explanation": "Malachite's Wise Vigor affects Malachite. Timing: Start of Combat. Recovery Dealt increase 40% at effective Habit Level 5. Duration: until end of combat. Ranked progression: L1 20%, L2 24%, L3 28%, L4 34%, L5 40%.",
     "id": "internal-self-modifier-malachite-wise-vigor-wise-vigor-recovery-recovery-dealt-modifier",
     "interactionScope": "internal",
@@ -26188,7 +26188,7 @@
       "Recovery Received increase 20%."
     ],
     "exactResultKnown": false,
-    "exactResultUnknownReason": "Exact final mitigated damage cannot be calculated because incoming damage, modifier-combination behavior, and the final mitigation formula remain unresolved.",
+    "exactResultUnknownReason": "Exact final Recovery Received value cannot be calculated because modifier-combination behavior and the final received-effect formula remain unresolved.",
     "explanation": "Sheepstealer's Hunter's Cunning affects Sheepstealer. Recovery Received increase 20%.",
     "id": "internal-self-modifier-sheepstealer-hunters-cunning-hunters-cunning-recovery-received-recovery-received-modifier",
     "interactionScope": "internal",
@@ -26270,7 +26270,7 @@
       "Intelligence +25."
     ],
     "exactResultKnown": false,
-    "exactResultUnknownReason": "Exact final mitigated damage cannot be calculated because incoming damage, modifier-combination behavior, and the final mitigation formula remain unresolved.",
+    "exactResultUnknownReason": "Exact final stat value cannot be calculated because modifier-combination behavior, stacking order, and the final stat formula remain unresolved.",
     "explanation": "Sheepstealer's Hunter's Cunning affects Sheepstealer. Intelligence +25.",
     "id": "internal-self-modifier-sheepstealer-hunters-cunning-hunters-cunning-intelligence-stat-dealt-modifier",
     "interactionScope": "internal",
@@ -26357,7 +26357,7 @@
       "Ranked progression: L1 10%, L2 12%, L3 14%, L4 17%, L5 20%."
     ],
     "exactResultKnown": false,
-    "exactResultUnknownReason": "Exact final mitigated damage cannot be calculated because incoming damage, modifier-combination behavior, and the final mitigation formula remain unresolved.",
+    "exactResultUnknownReason": "Exact final amplified damage cannot be calculated because modifier-combination behavior and the final damage formula remain unresolved.",
     "explanation": "Sheepstealer's Stolen Flock affects Sheepstealer. Timing: Start of Combat. Fire Damage Dealt increase 20% at effective Habit Level 5. PvE-only bonus is contextual and is not treated as active. Duration: until end of combat. Ranked progression: L1 10%, L2 12%, L3 14%, L4 17%, L5 20%.",
     "id": "internal-self-modifier-sheepstealer-stolen-flock-stolen-flock-pve-fire-fire-damage-dealt-modifier",
     "interactionScope": "internal",
@@ -26611,7 +26611,7 @@
       "Ranked progression: L1 16%, L2 19.2%, L3 22.4%, L4 27.2%, L5 32%."
     ],
     "exactResultKnown": false,
-    "exactResultUnknownReason": "Exact final mitigated damage cannot be calculated because incoming damage, modifier-combination behavior, and the final mitigation formula remain unresolved.",
+    "exactResultUnknownReason": "Exact final stat value cannot be calculated because modifier-combination behavior, stacking order, and the final stat formula remain unresolved.",
     "explanation": "Sheepstealer's Dragon's Cunning affects Sheepstealer. Timing: Start of Combat. Intelligence +32% at effective Habit Level 5. Duration: until end of combat. Ranked progression: L1 16%, L2 19.2%, L3 22.4%, L4 27.2%, L5 32%.",
     "id": "internal-self-modifier-sheepstealer-dragons-cunning-dragons-cunning-intelligence-stat-dealt-modifier",
     "interactionScope": "internal",
@@ -30116,7 +30116,7 @@
       "Strength +15."
     ],
     "exactResultKnown": false,
-    "exactResultUnknownReason": "Exact final mitigated damage cannot be calculated because incoming damage, modifier-combination behavior, and the final mitigation formula remain unresolved.",
+    "exactResultUnknownReason": "Exact final stat value cannot be calculated because modifier-combination behavior, stacking order, and the final stat formula remain unresolved.",
     "explanation": "Seasmoke's Champion's Brilliance affects Seasmoke. Strength +15.",
     "id": "internal-self-modifier-seasmoke-champions-brilliance-seasmoke-strength-flat-stat-dealt-modifier",
     "interactionScope": "internal",
@@ -30200,7 +30200,7 @@
       "Intelligence +15."
     ],
     "exactResultKnown": false,
-    "exactResultUnknownReason": "Exact final mitigated damage cannot be calculated because incoming damage, modifier-combination behavior, and the final mitigation formula remain unresolved.",
+    "exactResultUnknownReason": "Exact final stat value cannot be calculated because modifier-combination behavior, stacking order, and the final stat formula remain unresolved.",
     "explanation": "Seasmoke's Champion's Brilliance affects Seasmoke. Intelligence +15.",
     "id": "internal-self-modifier-seasmoke-champions-brilliance-seasmoke-intelligence-flat-stat-dealt-modifier",
     "interactionScope": "internal",
@@ -30284,7 +30284,7 @@
       "Instinct +15."
     ],
     "exactResultKnown": false,
-    "exactResultUnknownReason": "Exact final mitigated damage cannot be calculated because incoming damage, modifier-combination behavior, and the final mitigation formula remain unresolved.",
+    "exactResultUnknownReason": "Exact final stat value cannot be calculated because modifier-combination behavior, stacking order, and the final stat formula remain unresolved.",
     "explanation": "Seasmoke's Champion's Brilliance affects Seasmoke. Instinct +15.",
     "id": "internal-self-modifier-seasmoke-champions-brilliance-seasmoke-instinct-flat-stat-dealt-modifier",
     "interactionScope": "internal",
@@ -30366,7 +30366,7 @@
       "Recovery Dealt increase 15%."
     ],
     "exactResultKnown": false,
-    "exactResultUnknownReason": "Exact final mitigated damage cannot be calculated because incoming damage, modifier-combination behavior, and the final mitigation formula remain unresolved.",
+    "exactResultUnknownReason": "Exact final amplified damage cannot be calculated because modifier-combination behavior and the final damage formula remain unresolved.",
     "explanation": "Malachite's Sentinel's Presence affects Malachite. Recovery Dealt increase 15%.",
     "id": "internal-self-modifier-malachite-sentinels-presence-sentinels-presence-recovery-dealt-recovery-dealt-modifier",
     "interactionScope": "internal",
@@ -30448,7 +30448,7 @@
       "Instinct +25."
     ],
     "exactResultKnown": false,
-    "exactResultUnknownReason": "Exact final mitigated damage cannot be calculated because incoming damage, modifier-combination behavior, and the final mitigation formula remain unresolved.",
+    "exactResultUnknownReason": "Exact final stat value cannot be calculated because modifier-combination behavior, stacking order, and the final stat formula remain unresolved.",
     "explanation": "Malachite's Sentinel's Presence affects Malachite. Instinct +25.",
     "id": "internal-self-modifier-malachite-sentinels-presence-sentinels-presence-instinct-stat-dealt-modifier",
     "interactionScope": "internal",
@@ -30534,7 +30534,7 @@
       "Ranked progression: L1 20%, L2 24%, L3 28%, L4 34%, L5 40%."
     ],
     "exactResultKnown": false,
-    "exactResultUnknownReason": "Exact final mitigated damage cannot be calculated because incoming damage, modifier-combination behavior, and the final mitigation formula remain unresolved.",
+    "exactResultUnknownReason": "Exact final stat value cannot be calculated because modifier-combination behavior, stacking order, and the final stat formula remain unresolved.",
     "explanation": "Malachite's Wise Vigor affects Malachite. Timing: Start of Combat. Instinct +40% at effective Habit Level 5. Duration: until end of combat. Ranked progression: L1 20%, L2 24%, L3 28%, L4 34%, L5 40%.",
     "id": "internal-self-modifier-malachite-wise-vigor-wise-vigor-instinct-stat-dealt-modifier",
     "interactionScope": "internal",
@@ -30611,7 +30611,7 @@
       "Ranked progression: L1 20%, L2 24%, L3 28%, L4 34%, L5 40%."
     ],
     "exactResultKnown": false,
-    "exactResultUnknownReason": "Exact final mitigated damage cannot be calculated because incoming damage, modifier-combination behavior, and the final mitigation formula remain unresolved.",
+    "exactResultUnknownReason": "Exact final amplified damage cannot be calculated because modifier-combination behavior and the final damage formula remain unresolved.",
     "explanation": "Malachite's Wise Vigor affects Malachite. Timing: Start of Combat. Recovery Dealt increase 40% at effective Habit Level 5. Duration: until end of combat. Ranked progression: L1 20%, L2 24%, L3 28%, L4 34%, L5 40%.",
     "id": "internal-self-modifier-malachite-wise-vigor-wise-vigor-recovery-recovery-dealt-modifier",
     "interactionScope": "internal",
@@ -30682,7 +30682,7 @@
       "Physical Damage Dealt increase 16%."
     ],
     "exactResultKnown": false,
-    "exactResultUnknownReason": "Exact final mitigated damage cannot be calculated because incoming damage, modifier-combination behavior, and the final mitigation formula remain unresolved.",
+    "exactResultUnknownReason": "Exact final amplified damage cannot be calculated because modifier-combination behavior and the final damage formula remain unresolved.",
     "explanation": "Vermax's Warrior's Zeal affects Vermax. Physical Damage Dealt increase 16%.",
     "id": "internal-self-modifier-vermax-warriors-zeal-warriors-zeal-physical-physical-damage-dealt-modifier",
     "interactionScope": "internal",
@@ -30938,7 +30938,7 @@
       "Ranked progression: L1 8.5%, L2 10.2%, L3 11.9%, L4 14.45%, L5 17%."
     ],
     "exactResultKnown": false,
-    "exactResultUnknownReason": "Exact final mitigated damage cannot be calculated because incoming damage, modifier-combination behavior, and the final mitigation formula remain unresolved.",
+    "exactResultUnknownReason": "Exact final stat value cannot be calculated because modifier-combination behavior, stacking order, and the final stat formula remain unresolved.",
     "explanation": "Vermax's Dragon's Valor affects Vermax. Timing: Start of Combat. Strength +17% at effective Habit Level 5. Duration: until end of combat. Ranked progression: L1 8.5%, L2 10.2%, L3 11.9%, L4 14.45%, L5 17%.",
     "id": "internal-self-modifier-vermax-dragons-valor-dragons-valor-strength-stat-dealt-modifier",
     "interactionScope": "internal",
@@ -35421,7 +35421,7 @@
       "Strength +15."
     ],
     "exactResultKnown": false,
-    "exactResultUnknownReason": "Exact final mitigated damage cannot be calculated because incoming damage, modifier-combination behavior, and the final mitigation formula remain unresolved.",
+    "exactResultUnknownReason": "Exact final stat value cannot be calculated because modifier-combination behavior, stacking order, and the final stat formula remain unresolved.",
     "explanation": "Seasmoke's Champion's Brilliance affects Seasmoke. Strength +15.",
     "id": "internal-self-modifier-seasmoke-champions-brilliance-seasmoke-strength-flat-stat-dealt-modifier",
     "interactionScope": "internal",
@@ -35504,7 +35504,7 @@
       "Intelligence +15."
     ],
     "exactResultKnown": false,
-    "exactResultUnknownReason": "Exact final mitigated damage cannot be calculated because incoming damage, modifier-combination behavior, and the final mitigation formula remain unresolved.",
+    "exactResultUnknownReason": "Exact final stat value cannot be calculated because modifier-combination behavior, stacking order, and the final stat formula remain unresolved.",
     "explanation": "Seasmoke's Champion's Brilliance affects Seasmoke. Intelligence +15.",
     "id": "internal-self-modifier-seasmoke-champions-brilliance-seasmoke-intelligence-flat-stat-dealt-modifier",
     "interactionScope": "internal",
@@ -35587,7 +35587,7 @@
       "Instinct +15."
     ],
     "exactResultKnown": false,
-    "exactResultUnknownReason": "Exact final mitigated damage cannot be calculated because incoming damage, modifier-combination behavior, and the final mitigation formula remain unresolved.",
+    "exactResultUnknownReason": "Exact final stat value cannot be calculated because modifier-combination behavior, stacking order, and the final stat formula remain unresolved.",
     "explanation": "Seasmoke's Champion's Brilliance affects Seasmoke. Instinct +15.",
     "id": "internal-self-modifier-seasmoke-champions-brilliance-seasmoke-instinct-flat-stat-dealt-modifier",
     "interactionScope": "internal",
@@ -35669,7 +35669,7 @@
       "Recovery Dealt increase 15%."
     ],
     "exactResultKnown": false,
-    "exactResultUnknownReason": "Exact final mitigated damage cannot be calculated because incoming damage, modifier-combination behavior, and the final mitigation formula remain unresolved.",
+    "exactResultUnknownReason": "Exact final amplified damage cannot be calculated because modifier-combination behavior and the final damage formula remain unresolved.",
     "explanation": "Malachite's Sentinel's Presence affects Malachite. Recovery Dealt increase 15%.",
     "id": "internal-self-modifier-malachite-sentinels-presence-sentinels-presence-recovery-dealt-recovery-dealt-modifier",
     "interactionScope": "internal",
@@ -35751,7 +35751,7 @@
       "Instinct +25."
     ],
     "exactResultKnown": false,
-    "exactResultUnknownReason": "Exact final mitigated damage cannot be calculated because incoming damage, modifier-combination behavior, and the final mitigation formula remain unresolved.",
+    "exactResultUnknownReason": "Exact final stat value cannot be calculated because modifier-combination behavior, stacking order, and the final stat formula remain unresolved.",
     "explanation": "Malachite's Sentinel's Presence affects Malachite. Instinct +25.",
     "id": "internal-self-modifier-malachite-sentinels-presence-sentinels-presence-instinct-stat-dealt-modifier",
     "interactionScope": "internal",
@@ -35837,7 +35837,7 @@
       "Ranked progression: L1 20%, L2 24%, L3 28%, L4 34%, L5 40%."
     ],
     "exactResultKnown": false,
-    "exactResultUnknownReason": "Exact final mitigated damage cannot be calculated because incoming damage, modifier-combination behavior, and the final mitigation formula remain unresolved.",
+    "exactResultUnknownReason": "Exact final stat value cannot be calculated because modifier-combination behavior, stacking order, and the final stat formula remain unresolved.",
     "explanation": "Malachite's Wise Vigor affects Malachite. Timing: Start of Combat. Instinct +40% at effective Habit Level 5. Duration: until end of combat. Ranked progression: L1 20%, L2 24%, L3 28%, L4 34%, L5 40%.",
     "id": "internal-self-modifier-malachite-wise-vigor-wise-vigor-instinct-stat-dealt-modifier",
     "interactionScope": "internal",
@@ -35914,7 +35914,7 @@
       "Ranked progression: L1 20%, L2 24%, L3 28%, L4 34%, L5 40%."
     ],
     "exactResultKnown": false,
-    "exactResultUnknownReason": "Exact final mitigated damage cannot be calculated because incoming damage, modifier-combination behavior, and the final mitigation formula remain unresolved.",
+    "exactResultUnknownReason": "Exact final amplified damage cannot be calculated because modifier-combination behavior and the final damage formula remain unresolved.",
     "explanation": "Malachite's Wise Vigor affects Malachite. Timing: Start of Combat. Recovery Dealt increase 40% at effective Habit Level 5. Duration: until end of combat. Ranked progression: L1 20%, L2 24%, L3 28%, L4 34%, L5 40%.",
     "id": "internal-self-modifier-malachite-wise-vigor-wise-vigor-recovery-recovery-dealt-modifier",
     "interactionScope": "internal",
@@ -35987,7 +35987,7 @@
       "Recovery Received increase 20%."
     ],
     "exactResultKnown": false,
-    "exactResultUnknownReason": "Exact final mitigated damage cannot be calculated because incoming damage, modifier-combination behavior, and the final mitigation formula remain unresolved.",
+    "exactResultUnknownReason": "Exact final Recovery Received value cannot be calculated because modifier-combination behavior and the final received-effect formula remain unresolved.",
     "explanation": "Sheepstealer's Hunter's Cunning affects Sheepstealer. Recovery Received increase 20%.",
     "id": "internal-self-modifier-sheepstealer-hunters-cunning-hunters-cunning-recovery-received-recovery-received-modifier",
     "interactionScope": "internal",
@@ -36069,7 +36069,7 @@
       "Intelligence +25."
     ],
     "exactResultKnown": false,
-    "exactResultUnknownReason": "Exact final mitigated damage cannot be calculated because incoming damage, modifier-combination behavior, and the final mitigation formula remain unresolved.",
+    "exactResultUnknownReason": "Exact final stat value cannot be calculated because modifier-combination behavior, stacking order, and the final stat formula remain unresolved.",
     "explanation": "Sheepstealer's Hunter's Cunning affects Sheepstealer. Intelligence +25.",
     "id": "internal-self-modifier-sheepstealer-hunters-cunning-hunters-cunning-intelligence-stat-dealt-modifier",
     "interactionScope": "internal",
@@ -36156,7 +36156,7 @@
       "Ranked progression: L1 10%, L2 12%, L3 14%, L4 17%, L5 20%."
     ],
     "exactResultKnown": false,
-    "exactResultUnknownReason": "Exact final mitigated damage cannot be calculated because incoming damage, modifier-combination behavior, and the final mitigation formula remain unresolved.",
+    "exactResultUnknownReason": "Exact final amplified damage cannot be calculated because modifier-combination behavior and the final damage formula remain unresolved.",
     "explanation": "Sheepstealer's Stolen Flock affects Sheepstealer. Timing: Start of Combat. Fire Damage Dealt increase 20% at effective Habit Level 5. PvE-only bonus is contextual and is not treated as active. Duration: until end of combat. Ranked progression: L1 10%, L2 12%, L3 14%, L4 17%, L5 20%.",
     "id": "internal-self-modifier-sheepstealer-stolen-flock-stolen-flock-pve-fire-fire-damage-dealt-modifier",
     "interactionScope": "internal",
@@ -36410,7 +36410,7 @@
       "Ranked progression: L1 16%, L2 19.2%, L3 22.4%, L4 27.2%, L5 32%."
     ],
     "exactResultKnown": false,
-    "exactResultUnknownReason": "Exact final mitigated damage cannot be calculated because incoming damage, modifier-combination behavior, and the final mitigation formula remain unresolved.",
+    "exactResultUnknownReason": "Exact final stat value cannot be calculated because modifier-combination behavior, stacking order, and the final stat formula remain unresolved.",
     "explanation": "Sheepstealer's Dragon's Cunning affects Sheepstealer. Timing: Start of Combat. Intelligence +32% at effective Habit Level 5. Duration: until end of combat. Ranked progression: L1 16%, L2 19.2%, L3 22.4%, L4 27.2%, L5 32%.",
     "id": "internal-self-modifier-sheepstealer-dragons-cunning-dragons-cunning-intelligence-stat-dealt-modifier",
     "interactionScope": "internal",
@@ -39835,7 +39835,7 @@
       "Fire Damage Dealt increase 16%."
     ],
     "exactResultKnown": false,
-    "exactResultUnknownReason": "Exact final mitigated damage cannot be calculated because incoming damage, modifier-combination behavior, and the final mitigation formula remain unresolved.",
+    "exactResultUnknownReason": "Exact final amplified damage cannot be calculated because modifier-combination behavior and the final damage formula remain unresolved.",
     "explanation": "Caraxes's Hunter's Wrath affects Caraxes. Fire Damage Dealt increase 16%.",
     "id": "internal-self-modifier-caraxes-hunters-wrath-hunters-wrath-fire-fire-damage-dealt-modifier",
     "interactionScope": "internal",
@@ -39921,7 +39921,7 @@
       "Ranked progression: L1 12.5%, L2 15%, L3 17.5%, L4 21.25%, L5 25%."
     ],
     "exactResultKnown": false,
-    "exactResultUnknownReason": "Exact final mitigated damage cannot be calculated because incoming damage, modifier-combination behavior, and the final mitigation formula remain unresolved.",
+    "exactResultUnknownReason": "Exact final amplified damage cannot be calculated because modifier-combination behavior and the final damage formula remain unresolved.",
     "explanation": "Caraxes's Dragon's Flair affects Caraxes. Timing: Start of Combat. Fire Damage Dealt increase 25% at effective Habit Level 5. Duration: until end of combat. Ranked progression: L1 12.5%, L2 15%, L3 17.5%, L4 21.25%, L5 25%.",
     "id": "internal-self-modifier-caraxes-dragons-flair-dragons-flair-fire-fire-damage-dealt-modifier",
     "interactionScope": "internal",
@@ -40071,7 +40071,7 @@
       "Strength +15."
     ],
     "exactResultKnown": false,
-    "exactResultUnknownReason": "Exact final mitigated damage cannot be calculated because incoming damage, modifier-combination behavior, and the final mitigation formula remain unresolved.",
+    "exactResultUnknownReason": "Exact final stat value cannot be calculated because modifier-combination behavior, stacking order, and the final stat formula remain unresolved.",
     "explanation": "Seasmoke's Champion's Brilliance affects Seasmoke. Strength +15.",
     "id": "internal-self-modifier-seasmoke-champions-brilliance-seasmoke-strength-flat-stat-dealt-modifier",
     "interactionScope": "internal",
@@ -40154,7 +40154,7 @@
       "Intelligence +15."
     ],
     "exactResultKnown": false,
-    "exactResultUnknownReason": "Exact final mitigated damage cannot be calculated because incoming damage, modifier-combination behavior, and the final mitigation formula remain unresolved.",
+    "exactResultUnknownReason": "Exact final stat value cannot be calculated because modifier-combination behavior, stacking order, and the final stat formula remain unresolved.",
     "explanation": "Seasmoke's Champion's Brilliance affects Seasmoke. Intelligence +15.",
     "id": "internal-self-modifier-seasmoke-champions-brilliance-seasmoke-intelligence-flat-stat-dealt-modifier",
     "interactionScope": "internal",
@@ -40237,7 +40237,7 @@
       "Instinct +15."
     ],
     "exactResultKnown": false,
-    "exactResultUnknownReason": "Exact final mitigated damage cannot be calculated because incoming damage, modifier-combination behavior, and the final mitigation formula remain unresolved.",
+    "exactResultUnknownReason": "Exact final stat value cannot be calculated because modifier-combination behavior, stacking order, and the final stat formula remain unresolved.",
     "explanation": "Seasmoke's Champion's Brilliance affects Seasmoke. Instinct +15.",
     "id": "internal-self-modifier-seasmoke-champions-brilliance-seasmoke-instinct-flat-stat-dealt-modifier",
     "interactionScope": "internal",
@@ -40319,7 +40319,7 @@
       "Recovery Received increase 20%."
     ],
     "exactResultKnown": false,
-    "exactResultUnknownReason": "Exact final mitigated damage cannot be calculated because incoming damage, modifier-combination behavior, and the final mitigation formula remain unresolved.",
+    "exactResultUnknownReason": "Exact final Recovery Received value cannot be calculated because modifier-combination behavior and the final received-effect formula remain unresolved.",
     "explanation": "Sheepstealer's Hunter's Cunning affects Sheepstealer. Recovery Received increase 20%.",
     "id": "internal-self-modifier-sheepstealer-hunters-cunning-hunters-cunning-recovery-received-recovery-received-modifier",
     "interactionScope": "internal",
@@ -40401,7 +40401,7 @@
       "Intelligence +25."
     ],
     "exactResultKnown": false,
-    "exactResultUnknownReason": "Exact final mitigated damage cannot be calculated because incoming damage, modifier-combination behavior, and the final mitigation formula remain unresolved.",
+    "exactResultUnknownReason": "Exact final stat value cannot be calculated because modifier-combination behavior, stacking order, and the final stat formula remain unresolved.",
     "explanation": "Sheepstealer's Hunter's Cunning affects Sheepstealer. Intelligence +25.",
     "id": "internal-self-modifier-sheepstealer-hunters-cunning-hunters-cunning-intelligence-stat-dealt-modifier",
     "interactionScope": "internal",
@@ -40488,7 +40488,7 @@
       "Ranked progression: L1 10%, L2 12%, L3 14%, L4 17%, L5 20%."
     ],
     "exactResultKnown": false,
-    "exactResultUnknownReason": "Exact final mitigated damage cannot be calculated because incoming damage, modifier-combination behavior, and the final mitigation formula remain unresolved.",
+    "exactResultUnknownReason": "Exact final amplified damage cannot be calculated because modifier-combination behavior and the final damage formula remain unresolved.",
     "explanation": "Sheepstealer's Stolen Flock affects Sheepstealer. Timing: Start of Combat. Fire Damage Dealt increase 20% at effective Habit Level 5. PvE-only bonus is contextual and is not treated as active. Duration: until end of combat. Ranked progression: L1 10%, L2 12%, L3 14%, L4 17%, L5 20%.",
     "id": "internal-self-modifier-sheepstealer-stolen-flock-stolen-flock-pve-fire-fire-damage-dealt-modifier",
     "interactionScope": "internal",
@@ -40742,7 +40742,7 @@
       "Ranked progression: L1 16%, L2 19.2%, L3 22.4%, L4 27.2%, L5 32%."
     ],
     "exactResultKnown": false,
-    "exactResultUnknownReason": "Exact final mitigated damage cannot be calculated because incoming damage, modifier-combination behavior, and the final mitigation formula remain unresolved.",
+    "exactResultUnknownReason": "Exact final stat value cannot be calculated because modifier-combination behavior, stacking order, and the final stat formula remain unresolved.",
     "explanation": "Sheepstealer's Dragon's Cunning affects Sheepstealer. Timing: Start of Combat. Intelligence +32% at effective Habit Level 5. Duration: until end of combat. Ranked progression: L1 16%, L2 19.2%, L3 22.4%, L4 27.2%, L5 32%.",
     "id": "internal-self-modifier-sheepstealer-dragons-cunning-dragons-cunning-intelligence-stat-dealt-modifier",
     "interactionScope": "internal",
@@ -44916,7 +44916,7 @@
       "Tactical Damage Dealt increase 16%."
     ],
     "exactResultKnown": false,
-    "exactResultUnknownReason": "Exact final mitigated damage cannot be calculated because incoming damage, modifier-combination behavior, and the final mitigation formula remain unresolved.",
+    "exactResultUnknownReason": "Exact final amplified damage cannot be calculated because modifier-combination behavior and the final damage formula remain unresolved.",
     "explanation": "Syrax's Sentinel's Wit affects Syrax. Tactical Damage Dealt increase 16%.",
     "id": "internal-self-modifier-syrax-sentinels-wit-sentinels-wit-tactical-tactical-damage-dealt-modifier",
     "interactionScope": "internal",
@@ -44998,7 +44998,7 @@
       "Recovery Dealt increase 15%."
     ],
     "exactResultKnown": false,
-    "exactResultUnknownReason": "Exact final mitigated damage cannot be calculated because incoming damage, modifier-combination behavior, and the final mitigation formula remain unresolved.",
+    "exactResultUnknownReason": "Exact final amplified damage cannot be calculated because modifier-combination behavior and the final damage formula remain unresolved.",
     "explanation": "Malachite's Sentinel's Presence affects Malachite. Recovery Dealt increase 15%.",
     "id": "internal-self-modifier-malachite-sentinels-presence-sentinels-presence-recovery-dealt-recovery-dealt-modifier",
     "interactionScope": "internal",
@@ -45080,7 +45080,7 @@
       "Instinct +25."
     ],
     "exactResultKnown": false,
-    "exactResultUnknownReason": "Exact final mitigated damage cannot be calculated because incoming damage, modifier-combination behavior, and the final mitigation formula remain unresolved.",
+    "exactResultUnknownReason": "Exact final stat value cannot be calculated because modifier-combination behavior, stacking order, and the final stat formula remain unresolved.",
     "explanation": "Malachite's Sentinel's Presence affects Malachite. Instinct +25.",
     "id": "internal-self-modifier-malachite-sentinels-presence-sentinels-presence-instinct-stat-dealt-modifier",
     "interactionScope": "internal",
@@ -45166,7 +45166,7 @@
       "Ranked progression: L1 20%, L2 24%, L3 28%, L4 34%, L5 40%."
     ],
     "exactResultKnown": false,
-    "exactResultUnknownReason": "Exact final mitigated damage cannot be calculated because incoming damage, modifier-combination behavior, and the final mitigation formula remain unresolved.",
+    "exactResultUnknownReason": "Exact final stat value cannot be calculated because modifier-combination behavior, stacking order, and the final stat formula remain unresolved.",
     "explanation": "Malachite's Wise Vigor affects Malachite. Timing: Start of Combat. Instinct +40% at effective Habit Level 5. Duration: until end of combat. Ranked progression: L1 20%, L2 24%, L3 28%, L4 34%, L5 40%.",
     "id": "internal-self-modifier-malachite-wise-vigor-wise-vigor-instinct-stat-dealt-modifier",
     "interactionScope": "internal",
@@ -45243,7 +45243,7 @@
       "Ranked progression: L1 20%, L2 24%, L3 28%, L4 34%, L5 40%."
     ],
     "exactResultKnown": false,
-    "exactResultUnknownReason": "Exact final mitigated damage cannot be calculated because incoming damage, modifier-combination behavior, and the final mitigation formula remain unresolved.",
+    "exactResultUnknownReason": "Exact final amplified damage cannot be calculated because modifier-combination behavior and the final damage formula remain unresolved.",
     "explanation": "Malachite's Wise Vigor affects Malachite. Timing: Start of Combat. Recovery Dealt increase 40% at effective Habit Level 5. Duration: until end of combat. Ranked progression: L1 20%, L2 24%, L3 28%, L4 34%, L5 40%.",
     "id": "internal-self-modifier-malachite-wise-vigor-wise-vigor-recovery-recovery-dealt-modifier",
     "interactionScope": "internal",
@@ -45316,7 +45316,7 @@
       "Recovery Received increase 20%."
     ],
     "exactResultKnown": false,
-    "exactResultUnknownReason": "Exact final mitigated damage cannot be calculated because incoming damage, modifier-combination behavior, and the final mitigation formula remain unresolved.",
+    "exactResultUnknownReason": "Exact final Recovery Received value cannot be calculated because modifier-combination behavior and the final received-effect formula remain unresolved.",
     "explanation": "Sheepstealer's Hunter's Cunning affects Sheepstealer. Recovery Received increase 20%.",
     "id": "internal-self-modifier-sheepstealer-hunters-cunning-hunters-cunning-recovery-received-recovery-received-modifier",
     "interactionScope": "internal",
@@ -45398,7 +45398,7 @@
       "Intelligence +25."
     ],
     "exactResultKnown": false,
-    "exactResultUnknownReason": "Exact final mitigated damage cannot be calculated because incoming damage, modifier-combination behavior, and the final mitigation formula remain unresolved.",
+    "exactResultUnknownReason": "Exact final stat value cannot be calculated because modifier-combination behavior, stacking order, and the final stat formula remain unresolved.",
     "explanation": "Sheepstealer's Hunter's Cunning affects Sheepstealer. Intelligence +25.",
     "id": "internal-self-modifier-sheepstealer-hunters-cunning-hunters-cunning-intelligence-stat-dealt-modifier",
     "interactionScope": "internal",
@@ -45485,7 +45485,7 @@
       "Ranked progression: L1 10%, L2 12%, L3 14%, L4 17%, L5 20%."
     ],
     "exactResultKnown": false,
-    "exactResultUnknownReason": "Exact final mitigated damage cannot be calculated because incoming damage, modifier-combination behavior, and the final mitigation formula remain unresolved.",
+    "exactResultUnknownReason": "Exact final amplified damage cannot be calculated because modifier-combination behavior and the final damage formula remain unresolved.",
     "explanation": "Sheepstealer's Stolen Flock affects Sheepstealer. Timing: Start of Combat. Fire Damage Dealt increase 20% at effective Habit Level 5. PvE-only bonus is contextual and is not treated as active. Duration: until end of combat. Ranked progression: L1 10%, L2 12%, L3 14%, L4 17%, L5 20%.",
     "id": "internal-self-modifier-sheepstealer-stolen-flock-stolen-flock-pve-fire-fire-damage-dealt-modifier",
     "interactionScope": "internal",
@@ -45739,7 +45739,7 @@
       "Ranked progression: L1 16%, L2 19.2%, L3 22.4%, L4 27.2%, L5 32%."
     ],
     "exactResultKnown": false,
-    "exactResultUnknownReason": "Exact final mitigated damage cannot be calculated because incoming damage, modifier-combination behavior, and the final mitigation formula remain unresolved.",
+    "exactResultUnknownReason": "Exact final stat value cannot be calculated because modifier-combination behavior, stacking order, and the final stat formula remain unresolved.",
     "explanation": "Sheepstealer's Dragon's Cunning affects Sheepstealer. Timing: Start of Combat. Intelligence +32% at effective Habit Level 5. Duration: until end of combat. Ranked progression: L1 16%, L2 19.2%, L3 22.4%, L4 27.2%, L5 32%.",
     "id": "internal-self-modifier-sheepstealer-dragons-cunning-dragons-cunning-intelligence-stat-dealt-modifier",
     "interactionScope": "internal",
@@ -48823,7 +48823,7 @@
       "Action order within same-round overlap is unresolved."
     ],
     "exactResultKnown": false,
-    "exactResultUnknownReason": "Exact Slow prerequisite enablement cannot be calculated because supplier application success, dependent activation success, same-target overlap, same-round action order, roll scope, and final branch outcomes are unresolved.",
+    "exactResultUnknownReason": "Exact Slow prerequisite enablement cannot be calculated because supplier Slow application success, selected enemy identity, same-target overlap, whether Slow remains active on the scheduled round, same-round action order, and the final enhanced branch outcome remain unresolved.",
     "explanation": "At effective Habit Level 5, Crippling Inferno has a 20% chance each round to apply Slow to 3 enemies in any lane. Slow lasts 2 rounds. On Rounds 2, 5, and 8, Strategic Revival deals Recovery at a 100% rate to Ally with least current troops. While at least one enemy has Slow, the rate increases 1.5x to 150%. Crippling Inferno's Slow can overlap Strategic Revival in these windows: Round 2 after a successful Round 1 application; Round 2 from a successful Round 2 application only if Crippling Inferno resolves before Strategic Revival that round; Round 5 after a successful Round 4 application; Round 5 from a successful Round 5 application only if Crippling Inferno resolves before Strategic Revival that round; Round 8 after a successful Round 7 application; Round 8 from a successful Round 8 application only if Crippling Inferno resolves before Strategic Revival that round. At least one enemy must still have active Slow; application success, whether any enemy remains affected, and battlefield uptime remain unresolved. Same-round action order is unresolved.",
     "id": "status-condition-caraxes-crippling-inferno-crippling-inferno-slow-slow-status-output-syrax-strategic-revival-strategic-revival-recovery-output",
     "interactionScope": "cross-dragon",
@@ -49003,7 +49003,7 @@
       "Tactical Damage Dealt increase 16%."
     ],
     "exactResultKnown": false,
-    "exactResultUnknownReason": "Exact final mitigated damage cannot be calculated because incoming damage, modifier-combination behavior, and the final mitigation formula remain unresolved.",
+    "exactResultUnknownReason": "Exact final amplified damage cannot be calculated because modifier-combination behavior and the final damage formula remain unresolved.",
     "explanation": "Syrax's Sentinel's Wit affects Syrax. Tactical Damage Dealt increase 16%.",
     "id": "internal-self-modifier-syrax-sentinels-wit-sentinels-wit-tactical-tactical-damage-dealt-modifier",
     "interactionScope": "internal",
@@ -49086,7 +49086,7 @@
       "Fire Damage Dealt increase 16%."
     ],
     "exactResultKnown": false,
-    "exactResultUnknownReason": "Exact final mitigated damage cannot be calculated because incoming damage, modifier-combination behavior, and the final mitigation formula remain unresolved.",
+    "exactResultUnknownReason": "Exact final amplified damage cannot be calculated because modifier-combination behavior and the final damage formula remain unresolved.",
     "explanation": "Caraxes's Hunter's Wrath affects Caraxes. Fire Damage Dealt increase 16%.",
     "id": "internal-self-modifier-caraxes-hunters-wrath-hunters-wrath-fire-fire-damage-dealt-modifier",
     "interactionScope": "internal",
@@ -49172,7 +49172,7 @@
       "Ranked progression: L1 12.5%, L2 15%, L3 17.5%, L4 21.25%, L5 25%."
     ],
     "exactResultKnown": false,
-    "exactResultUnknownReason": "Exact final mitigated damage cannot be calculated because incoming damage, modifier-combination behavior, and the final mitigation formula remain unresolved.",
+    "exactResultUnknownReason": "Exact final amplified damage cannot be calculated because modifier-combination behavior and the final damage formula remain unresolved.",
     "explanation": "Caraxes's Dragon's Flair affects Caraxes. Timing: Start of Combat. Fire Damage Dealt increase 25% at effective Habit Level 5. Duration: until end of combat. Ranked progression: L1 12.5%, L2 15%, L3 17.5%, L4 21.25%, L5 25%.",
     "id": "internal-self-modifier-caraxes-dragons-flair-dragons-flair-fire-fire-damage-dealt-modifier",
     "interactionScope": "internal",
@@ -49319,7 +49319,7 @@
       "Physical Damage Dealt increase 16%."
     ],
     "exactResultKnown": false,
-    "exactResultUnknownReason": "Exact final mitigated damage cannot be calculated because incoming damage, modifier-combination behavior, and the final mitigation formula remain unresolved.",
+    "exactResultUnknownReason": "Exact final amplified damage cannot be calculated because modifier-combination behavior and the final damage formula remain unresolved.",
     "explanation": "Vermax's Warrior's Zeal affects Vermax. Physical Damage Dealt increase 16%.",
     "id": "internal-self-modifier-vermax-warriors-zeal-warriors-zeal-physical-physical-damage-dealt-modifier",
     "interactionScope": "internal",
@@ -49575,7 +49575,7 @@
       "Ranked progression: L1 8.5%, L2 10.2%, L3 11.9%, L4 14.45%, L5 17%."
     ],
     "exactResultKnown": false,
-    "exactResultUnknownReason": "Exact final mitigated damage cannot be calculated because incoming damage, modifier-combination behavior, and the final mitigation formula remain unresolved.",
+    "exactResultUnknownReason": "Exact final stat value cannot be calculated because modifier-combination behavior, stacking order, and the final stat formula remain unresolved.",
     "explanation": "Vermax's Dragon's Valor affects Vermax. Timing: Start of Combat. Strength +17% at effective Habit Level 5. Duration: until end of combat. Ranked progression: L1 8.5%, L2 10.2%, L3 11.9%, L4 14.45%, L5 17%.",
     "id": "internal-self-modifier-vermax-dragons-valor-dragons-valor-strength-stat-dealt-modifier",
     "interactionScope": "internal",
@@ -53539,7 +53539,7 @@
       "Action order within same-round overlap is unresolved."
     ],
     "exactResultKnown": false,
-    "exactResultUnknownReason": "Exact Slow prerequisite enablement cannot be calculated because supplier application success, dependent activation success, same-target overlap, same-round action order, roll scope, and final branch outcomes are unresolved.",
+    "exactResultUnknownReason": "Exact Slow prerequisite enablement cannot be calculated because supplier Slow application success, selected enemy identity, same-target overlap, whether Slow remains active on the scheduled round, same-round action order, and the final enhanced branch outcome remain unresolved.",
     "explanation": "At effective Habit Level 5, Crippling Inferno has a 20% chance each round to apply Slow to 3 enemies in any lane. Slow lasts 2 rounds. On Rounds 2, 5, and 8, Strategic Revival deals Recovery at a 100% rate to Ally with least current troops. While at least one enemy has Slow, the rate increases 1.5x to 150%. Crippling Inferno's Slow can overlap Strategic Revival in these windows: Round 2 after a successful Round 1 application; Round 2 from a successful Round 2 application only if Crippling Inferno resolves before Strategic Revival that round; Round 5 after a successful Round 4 application; Round 5 from a successful Round 5 application only if Crippling Inferno resolves before Strategic Revival that round; Round 8 after a successful Round 7 application; Round 8 from a successful Round 8 application only if Crippling Inferno resolves before Strategic Revival that round. At least one enemy must still have active Slow; application success, whether any enemy remains affected, and battlefield uptime remain unresolved. Same-round action order is unresolved.",
     "id": "status-condition-caraxes-crippling-inferno-crippling-inferno-slow-slow-status-output-syrax-strategic-revival-strategic-revival-recovery-output",
     "interactionScope": "cross-dragon",
@@ -53833,7 +53833,7 @@
       "Tactical Damage Dealt increase 16%."
     ],
     "exactResultKnown": false,
-    "exactResultUnknownReason": "Exact final mitigated damage cannot be calculated because incoming damage, modifier-combination behavior, and the final mitigation formula remain unresolved.",
+    "exactResultUnknownReason": "Exact final amplified damage cannot be calculated because modifier-combination behavior and the final damage formula remain unresolved.",
     "explanation": "Syrax's Sentinel's Wit affects Syrax. Tactical Damage Dealt increase 16%.",
     "id": "internal-self-modifier-syrax-sentinels-wit-sentinels-wit-tactical-tactical-damage-dealt-modifier",
     "interactionScope": "internal",
@@ -53915,7 +53915,7 @@
       "Fire Damage Dealt increase 16%."
     ],
     "exactResultKnown": false,
-    "exactResultUnknownReason": "Exact final mitigated damage cannot be calculated because incoming damage, modifier-combination behavior, and the final mitigation formula remain unresolved.",
+    "exactResultUnknownReason": "Exact final amplified damage cannot be calculated because modifier-combination behavior and the final damage formula remain unresolved.",
     "explanation": "Caraxes's Hunter's Wrath affects Caraxes. Fire Damage Dealt increase 16%.",
     "id": "internal-self-modifier-caraxes-hunters-wrath-hunters-wrath-fire-fire-damage-dealt-modifier",
     "interactionScope": "internal",
@@ -54001,7 +54001,7 @@
       "Ranked progression: L1 12.5%, L2 15%, L3 17.5%, L4 21.25%, L5 25%."
     ],
     "exactResultKnown": false,
-    "exactResultUnknownReason": "Exact final mitigated damage cannot be calculated because incoming damage, modifier-combination behavior, and the final mitigation formula remain unresolved.",
+    "exactResultUnknownReason": "Exact final amplified damage cannot be calculated because modifier-combination behavior and the final damage formula remain unresolved.",
     "explanation": "Caraxes's Dragon's Flair affects Caraxes. Timing: Start of Combat. Fire Damage Dealt increase 25% at effective Habit Level 5. Duration: until end of combat. Ranked progression: L1 12.5%, L2 15%, L3 17.5%, L4 21.25%, L5 25%.",
     "id": "internal-self-modifier-caraxes-dragons-flair-dragons-flair-fire-fire-damage-dealt-modifier",
     "interactionScope": "internal",
@@ -54150,7 +54150,7 @@
       "Recovery Received increase 20%."
     ],
     "exactResultKnown": false,
-    "exactResultUnknownReason": "Exact final mitigated damage cannot be calculated because incoming damage, modifier-combination behavior, and the final mitigation formula remain unresolved.",
+    "exactResultUnknownReason": "Exact final Recovery Received value cannot be calculated because modifier-combination behavior and the final received-effect formula remain unresolved.",
     "explanation": "Sheepstealer's Hunter's Cunning affects Sheepstealer. Recovery Received increase 20%.",
     "id": "internal-self-modifier-sheepstealer-hunters-cunning-hunters-cunning-recovery-received-recovery-received-modifier",
     "interactionScope": "internal",
@@ -54232,7 +54232,7 @@
       "Intelligence +25."
     ],
     "exactResultKnown": false,
-    "exactResultUnknownReason": "Exact final mitigated damage cannot be calculated because incoming damage, modifier-combination behavior, and the final mitigation formula remain unresolved.",
+    "exactResultUnknownReason": "Exact final stat value cannot be calculated because modifier-combination behavior, stacking order, and the final stat formula remain unresolved.",
     "explanation": "Sheepstealer's Hunter's Cunning affects Sheepstealer. Intelligence +25.",
     "id": "internal-self-modifier-sheepstealer-hunters-cunning-hunters-cunning-intelligence-stat-dealt-modifier",
     "interactionScope": "internal",
@@ -54319,7 +54319,7 @@
       "Ranked progression: L1 10%, L2 12%, L3 14%, L4 17%, L5 20%."
     ],
     "exactResultKnown": false,
-    "exactResultUnknownReason": "Exact final mitigated damage cannot be calculated because incoming damage, modifier-combination behavior, and the final mitigation formula remain unresolved.",
+    "exactResultUnknownReason": "Exact final amplified damage cannot be calculated because modifier-combination behavior and the final damage formula remain unresolved.",
     "explanation": "Sheepstealer's Stolen Flock affects Sheepstealer. Timing: Start of Combat. Fire Damage Dealt increase 20% at effective Habit Level 5. PvE-only bonus is contextual and is not treated as active. Duration: until end of combat. Ranked progression: L1 10%, L2 12%, L3 14%, L4 17%, L5 20%.",
     "id": "internal-self-modifier-sheepstealer-stolen-flock-stolen-flock-pve-fire-fire-damage-dealt-modifier",
     "interactionScope": "internal",
@@ -54573,7 +54573,7 @@
       "Ranked progression: L1 16%, L2 19.2%, L3 22.4%, L4 27.2%, L5 32%."
     ],
     "exactResultKnown": false,
-    "exactResultUnknownReason": "Exact final mitigated damage cannot be calculated because incoming damage, modifier-combination behavior, and the final mitigation formula remain unresolved.",
+    "exactResultUnknownReason": "Exact final stat value cannot be calculated because modifier-combination behavior, stacking order, and the final stat formula remain unresolved.",
     "explanation": "Sheepstealer's Dragon's Cunning affects Sheepstealer. Timing: Start of Combat. Intelligence +32% at effective Habit Level 5. Duration: until end of combat. Ranked progression: L1 16%, L2 19.2%, L3 22.4%, L4 27.2%, L5 32%.",
     "id": "internal-self-modifier-sheepstealer-dragons-cunning-dragons-cunning-intelligence-stat-dealt-modifier",
     "interactionScope": "internal",
@@ -58570,7 +58570,7 @@
       "Ranked progression: L1 15%, L2 18%, L3 21%, L4 25.5%, L5 30%."
     ],
     "exactResultKnown": false,
-    "exactResultUnknownReason": "Exact final mitigated damage cannot be calculated because incoming damage, modifier-combination behavior, and the final mitigation formula remain unresolved.",
+    "exactResultUnknownReason": "Exact final Recovery Received value cannot be calculated because modifier-combination behavior and the final received-effect formula remain unresolved.",
     "explanation": "Vhagar's Ancestral Shield affects Vhagar. Timing: Start of Round 4. Recovery Received increase 30% at effective Habit Level 5. Duration: until end of combat. Ranked progression: L1 15%, L2 18%, L3 21%, L4 25.5%, L5 30%.",
     "id": "internal-self-modifier-vhagar-ancestral-shield-ancestral-shield-recovery-received-recovery-received-modifier",
     "interactionScope": "internal",
@@ -58728,7 +58728,7 @@
       "Strength +15."
     ],
     "exactResultKnown": false,
-    "exactResultUnknownReason": "Exact final mitigated damage cannot be calculated because incoming damage, modifier-combination behavior, and the final mitigation formula remain unresolved.",
+    "exactResultUnknownReason": "Exact final stat value cannot be calculated because modifier-combination behavior, stacking order, and the final stat formula remain unresolved.",
     "explanation": "Kalspire's Champion's Brilliance affects Kalspire. Strength +15.",
     "id": "internal-self-modifier-kalspire-champions-brilliance-champions-brilliance-strength-stat-dealt-modifier",
     "interactionScope": "internal",
@@ -58811,7 +58811,7 @@
       "Intelligence +15."
     ],
     "exactResultKnown": false,
-    "exactResultUnknownReason": "Exact final mitigated damage cannot be calculated because incoming damage, modifier-combination behavior, and the final mitigation formula remain unresolved.",
+    "exactResultUnknownReason": "Exact final stat value cannot be calculated because modifier-combination behavior, stacking order, and the final stat formula remain unresolved.",
     "explanation": "Kalspire's Champion's Brilliance affects Kalspire. Intelligence +15.",
     "id": "internal-self-modifier-kalspire-champions-brilliance-champions-brilliance-intelligence-stat-dealt-modifier",
     "interactionScope": "internal",
@@ -58894,7 +58894,7 @@
       "Instinct +15."
     ],
     "exactResultKnown": false,
-    "exactResultUnknownReason": "Exact final mitigated damage cannot be calculated because incoming damage, modifier-combination behavior, and the final mitigation formula remain unresolved.",
+    "exactResultUnknownReason": "Exact final stat value cannot be calculated because modifier-combination behavior, stacking order, and the final stat formula remain unresolved.",
     "explanation": "Kalspire's Champion's Brilliance affects Kalspire. Instinct +15.",
     "id": "internal-self-modifier-kalspire-champions-brilliance-champions-brilliance-instinct-stat-dealt-modifier",
     "interactionScope": "internal",
@@ -58980,7 +58980,7 @@
       "Ranked progression: L1 20%, L2 24%, L3 28%, L4 34%, L5 40%."
     ],
     "exactResultKnown": false,
-    "exactResultUnknownReason": "Exact final mitigated damage cannot be calculated because incoming damage, modifier-combination behavior, and the final mitigation formula remain unresolved.",
+    "exactResultUnknownReason": "Exact final stat value cannot be calculated because modifier-combination behavior, stacking order, and the final stat formula remain unresolved.",
     "explanation": "Kalspire's Robust Insight affects Kalspire. Timing: Start of combat. Strength +40% at effective Habit Level 5. Duration: until end of combat. Ranked progression: L1 20%, L2 24%, L3 28%, L4 34%, L5 40%.",
     "id": "internal-self-modifier-kalspire-robust-insight-robust-insight-strength-stat-dealt-modifier",
     "interactionScope": "internal",
@@ -59057,7 +59057,7 @@
       "Ranked progression: L1 20%, L2 24%, L3 28%, L4 34%, L5 40%."
     ],
     "exactResultKnown": false,
-    "exactResultUnknownReason": "Exact final mitigated damage cannot be calculated because incoming damage, modifier-combination behavior, and the final mitigation formula remain unresolved.",
+    "exactResultUnknownReason": "Exact final stat value cannot be calculated because modifier-combination behavior, stacking order, and the final stat formula remain unresolved.",
     "explanation": "Kalspire's Robust Insight affects Kalspire. Timing: Start of combat. Instinct +40% at effective Habit Level 5. Duration: until end of combat. Ranked progression: L1 20%, L2 24%, L3 28%, L4 34%, L5 40%.",
     "id": "internal-self-modifier-kalspire-robust-insight-robust-insight-instinct-stat-dealt-modifier",
     "interactionScope": "internal",
@@ -59211,7 +59211,7 @@
       "Ranked progression: L1 12%, L2 14.4%, L3 16.8%, L4 20.4%, L5 24%."
     ],
     "exactResultKnown": false,
-    "exactResultUnknownReason": "Exact final mitigated damage cannot be calculated because incoming damage, modifier-combination behavior, and the final mitigation formula remain unresolved.",
+    "exactResultUnknownReason": "Exact final stat value cannot be calculated because modifier-combination behavior, stacking order, and the final stat formula remain unresolved.",
     "explanation": "Kalspire's Dragon's Insight affects Kalspire. Timing: Start of combat. Instinct +24% at effective Habit Level 5. Duration: until end of combat. Ranked progression: L1 12%, L2 14.4%, L3 16.8%, L4 20.4%, L5 24%.",
     "id": "internal-self-modifier-kalspire-dragons-insight-dragons-insight-instinct-stat-dealt-modifier",
     "interactionScope": "internal",
@@ -59361,7 +59361,7 @@
       "Physical Damage Dealt increase 16%."
     ],
     "exactResultKnown": false,
-    "exactResultUnknownReason": "Exact final mitigated damage cannot be calculated because incoming damage, modifier-combination behavior, and the final mitigation formula remain unresolved.",
+    "exactResultUnknownReason": "Exact final amplified damage cannot be calculated because modifier-combination behavior and the final damage formula remain unresolved.",
     "explanation": "Venator's Warrior's Zeal affects Venator. Physical Damage Dealt increase 16%.",
     "id": "internal-self-modifier-venator-warriors-zeal-warriors-zeal-command-habit-physical-physical-damage-dealt-modifier",
     "interactionScope": "internal",
@@ -59447,7 +59447,7 @@
       "Ranked progression: L1 12.5%, L2 15%, L3 17.5%, L4 21.25%, L5 25%."
     ],
     "exactResultKnown": false,
-    "exactResultUnknownReason": "Exact final mitigated damage cannot be calculated because incoming damage, modifier-combination behavior, and the final mitigation formula remain unresolved.",
+    "exactResultUnknownReason": "Exact final amplified damage cannot be calculated because modifier-combination behavior and the final damage formula remain unresolved.",
     "explanation": "Venator's Dragon's Might affects Venator. Timing: Start of combat. Physical Damage Dealt increase 25% at effective Habit Level 5. Duration: until end of combat. Ranked progression: L1 12.5%, L2 15%, L3 17.5%, L4 21.25%, L5 25%.",
     "id": "internal-self-modifier-venator-dragons-might-dragons-might-physical-physical-damage-dealt-modifier",
     "interactionScope": "internal",
@@ -62151,7 +62151,7 @@
       "Ranked progression: L1 15%, L2 18%, L3 21%, L4 25.5%, L5 30%."
     ],
     "exactResultKnown": false,
-    "exactResultUnknownReason": "Exact final mitigated damage cannot be calculated because incoming damage, modifier-combination behavior, and the final mitigation formula remain unresolved.",
+    "exactResultUnknownReason": "Exact final Recovery Received value cannot be calculated because modifier-combination behavior and the final received-effect formula remain unresolved.",
     "explanation": "Vhagar's Ancestral Shield affects Vhagar. Timing: Start of Round 4. Recovery Received increase 30% at effective Habit Level 5. Duration: until end of combat. Ranked progression: L1 15%, L2 18%, L3 21%, L4 25.5%, L5 30%.",
     "id": "internal-self-modifier-vhagar-ancestral-shield-ancestral-shield-recovery-received-recovery-received-modifier",
     "interactionScope": "internal",
@@ -62309,7 +62309,7 @@
       "Fire Damage Dealt increase 16%."
     ],
     "exactResultKnown": false,
-    "exactResultUnknownReason": "Exact final mitigated damage cannot be calculated because incoming damage, modifier-combination behavior, and the final mitigation formula remain unresolved.",
+    "exactResultUnknownReason": "Exact final amplified damage cannot be calculated because modifier-combination behavior and the final damage formula remain unresolved.",
     "explanation": "Caraxes's Hunter's Wrath affects Caraxes. Fire Damage Dealt increase 16%.",
     "id": "internal-self-modifier-caraxes-hunters-wrath-hunters-wrath-fire-fire-damage-dealt-modifier",
     "interactionScope": "internal",
@@ -62395,7 +62395,7 @@
       "Ranked progression: L1 12.5%, L2 15%, L3 17.5%, L4 21.25%, L5 25%."
     ],
     "exactResultKnown": false,
-    "exactResultUnknownReason": "Exact final mitigated damage cannot be calculated because incoming damage, modifier-combination behavior, and the final mitigation formula remain unresolved.",
+    "exactResultUnknownReason": "Exact final amplified damage cannot be calculated because modifier-combination behavior and the final damage formula remain unresolved.",
     "explanation": "Caraxes's Dragon's Flair affects Caraxes. Timing: Start of Combat. Fire Damage Dealt increase 25% at effective Habit Level 5. Duration: until end of combat. Ranked progression: L1 12.5%, L2 15%, L3 17.5%, L4 21.25%, L5 25%.",
     "id": "internal-self-modifier-caraxes-dragons-flair-dragons-flair-fire-fire-damage-dealt-modifier",
     "interactionScope": "internal",
@@ -62545,7 +62545,7 @@
       "Recovery Received increase 20%."
     ],
     "exactResultKnown": false,
-    "exactResultUnknownReason": "Exact final mitigated damage cannot be calculated because incoming damage, modifier-combination behavior, and the final mitigation formula remain unresolved.",
+    "exactResultUnknownReason": "Exact final Recovery Received value cannot be calculated because modifier-combination behavior and the final received-effect formula remain unresolved.",
     "explanation": "Crimson's Hunter's Cunning affects Crimson. Recovery Received increase 20%.",
     "id": "internal-self-modifier-crimson-hunters-cunning-hunters-cunning-recovery-recovery-received-modifier",
     "interactionScope": "internal",
@@ -62628,7 +62628,7 @@
       "Intelligence +25."
     ],
     "exactResultKnown": false,
-    "exactResultUnknownReason": "Exact final mitigated damage cannot be calculated because incoming damage, modifier-combination behavior, and the final mitigation formula remain unresolved.",
+    "exactResultUnknownReason": "Exact final stat value cannot be calculated because modifier-combination behavior, stacking order, and the final stat formula remain unresolved.",
     "explanation": "Crimson's Hunter's Cunning affects Crimson. Intelligence +25.",
     "id": "internal-self-modifier-crimson-hunters-cunning-hunters-cunning-intelligence-stat-dealt-modifier",
     "interactionScope": "internal",
@@ -62791,7 +62791,7 @@
       "Ranked progression: L1 12%, L2 14.4%, L3 16.8%, L4 20.4%, L5 24%."
     ],
     "exactResultKnown": false,
-    "exactResultUnknownReason": "Exact final mitigated damage cannot be calculated because incoming damage, modifier-combination behavior, and the final mitigation formula remain unresolved.",
+    "exactResultUnknownReason": "Exact final stat value cannot be calculated because modifier-combination behavior, stacking order, and the final stat formula remain unresolved.",
     "explanation": "Crimson's Dragon's Intellect affects Crimson. Timing: Start of combat. Intelligence +24% at effective Habit Level 5. Duration: until end of combat. Ranked progression: L1 12%, L2 14.4%, L3 16.8%, L4 20.4%, L5 24%.",
     "id": "internal-self-modifier-crimson-dragons-intellect-dragons-intellect-intelligence-stat-dealt-modifier",
     "interactionScope": "internal",
@@ -66221,7 +66221,7 @@
       "Tactical Damage Dealt increase 16%."
     ],
     "exactResultKnown": false,
-    "exactResultUnknownReason": "Exact final mitigated damage cannot be calculated because incoming damage, modifier-combination behavior, and the final mitigation formula remain unresolved.",
+    "exactResultUnknownReason": "Exact final amplified damage cannot be calculated because modifier-combination behavior and the final damage formula remain unresolved.",
     "explanation": "Syrax's Sentinel's Wit affects Syrax. Tactical Damage Dealt increase 16%.",
     "id": "internal-self-modifier-syrax-sentinels-wit-sentinels-wit-tactical-tactical-damage-dealt-modifier",
     "interactionScope": "internal",
@@ -66544,7 +66544,7 @@
       "Ranked progression: L1 15%, L2 18%, L3 21%, L4 25.5%, L5 30%."
     ],
     "exactResultKnown": false,
-    "exactResultUnknownReason": "Exact final mitigated damage cannot be calculated because incoming damage, modifier-combination behavior, and the final mitigation formula remain unresolved.",
+    "exactResultUnknownReason": "Exact final Recovery Received value cannot be calculated because modifier-combination behavior and the final received-effect formula remain unresolved.",
     "explanation": "Vhagar's Ancestral Shield affects Vhagar. Timing: Start of Round 4. Recovery Received increase 30% at effective Habit Level 5. Duration: until end of combat. Ranked progression: L1 15%, L2 18%, L3 21%, L4 25.5%, L5 30%.",
     "id": "internal-self-modifier-vhagar-ancestral-shield-ancestral-shield-recovery-received-recovery-received-modifier",
     "interactionScope": "internal",
@@ -66702,7 +66702,7 @@
       "Strength +15."
     ],
     "exactResultKnown": false,
-    "exactResultUnknownReason": "Exact final mitigated damage cannot be calculated because incoming damage, modifier-combination behavior, and the final mitigation formula remain unresolved.",
+    "exactResultUnknownReason": "Exact final stat value cannot be calculated because modifier-combination behavior, stacking order, and the final stat formula remain unresolved.",
     "explanation": "Kalspire's Champion's Brilliance affects Kalspire. Strength +15.",
     "id": "internal-self-modifier-kalspire-champions-brilliance-champions-brilliance-strength-stat-dealt-modifier",
     "interactionScope": "internal",
@@ -66785,7 +66785,7 @@
       "Intelligence +15."
     ],
     "exactResultKnown": false,
-    "exactResultUnknownReason": "Exact final mitigated damage cannot be calculated because incoming damage, modifier-combination behavior, and the final mitigation formula remain unresolved.",
+    "exactResultUnknownReason": "Exact final stat value cannot be calculated because modifier-combination behavior, stacking order, and the final stat formula remain unresolved.",
     "explanation": "Kalspire's Champion's Brilliance affects Kalspire. Intelligence +15.",
     "id": "internal-self-modifier-kalspire-champions-brilliance-champions-brilliance-intelligence-stat-dealt-modifier",
     "interactionScope": "internal",
@@ -66868,7 +66868,7 @@
       "Instinct +15."
     ],
     "exactResultKnown": false,
-    "exactResultUnknownReason": "Exact final mitigated damage cannot be calculated because incoming damage, modifier-combination behavior, and the final mitigation formula remain unresolved.",
+    "exactResultUnknownReason": "Exact final stat value cannot be calculated because modifier-combination behavior, stacking order, and the final stat formula remain unresolved.",
     "explanation": "Kalspire's Champion's Brilliance affects Kalspire. Instinct +15.",
     "id": "internal-self-modifier-kalspire-champions-brilliance-champions-brilliance-instinct-stat-dealt-modifier",
     "interactionScope": "internal",
@@ -66954,7 +66954,7 @@
       "Ranked progression: L1 20%, L2 24%, L3 28%, L4 34%, L5 40%."
     ],
     "exactResultKnown": false,
-    "exactResultUnknownReason": "Exact final mitigated damage cannot be calculated because incoming damage, modifier-combination behavior, and the final mitigation formula remain unresolved.",
+    "exactResultUnknownReason": "Exact final stat value cannot be calculated because modifier-combination behavior, stacking order, and the final stat formula remain unresolved.",
     "explanation": "Kalspire's Robust Insight affects Kalspire. Timing: Start of combat. Strength +40% at effective Habit Level 5. Duration: until end of combat. Ranked progression: L1 20%, L2 24%, L3 28%, L4 34%, L5 40%.",
     "id": "internal-self-modifier-kalspire-robust-insight-robust-insight-strength-stat-dealt-modifier",
     "interactionScope": "internal",
@@ -67031,7 +67031,7 @@
       "Ranked progression: L1 20%, L2 24%, L3 28%, L4 34%, L5 40%."
     ],
     "exactResultKnown": false,
-    "exactResultUnknownReason": "Exact final mitigated damage cannot be calculated because incoming damage, modifier-combination behavior, and the final mitigation formula remain unresolved.",
+    "exactResultUnknownReason": "Exact final stat value cannot be calculated because modifier-combination behavior, stacking order, and the final stat formula remain unresolved.",
     "explanation": "Kalspire's Robust Insight affects Kalspire. Timing: Start of combat. Instinct +40% at effective Habit Level 5. Duration: until end of combat. Ranked progression: L1 20%, L2 24%, L3 28%, L4 34%, L5 40%.",
     "id": "internal-self-modifier-kalspire-robust-insight-robust-insight-instinct-stat-dealt-modifier",
     "interactionScope": "internal",
@@ -67185,7 +67185,7 @@
       "Ranked progression: L1 12%, L2 14.4%, L3 16.8%, L4 20.4%, L5 24%."
     ],
     "exactResultKnown": false,
-    "exactResultUnknownReason": "Exact final mitigated damage cannot be calculated because incoming damage, modifier-combination behavior, and the final mitigation formula remain unresolved.",
+    "exactResultUnknownReason": "Exact final stat value cannot be calculated because modifier-combination behavior, stacking order, and the final stat formula remain unresolved.",
     "explanation": "Kalspire's Dragon's Insight affects Kalspire. Timing: Start of combat. Instinct +24% at effective Habit Level 5. Duration: until end of combat. Ranked progression: L1 12%, L2 14.4%, L3 16.8%, L4 20.4%, L5 24%.",
     "id": "internal-self-modifier-kalspire-dragons-insight-dragons-insight-instinct-stat-dealt-modifier",
     "interactionScope": "internal",
@@ -71221,7 +71221,7 @@
       "Ranked progression: L1 15%, L2 18%, L3 21%, L4 25.5%, L5 30%."
     ],
     "exactResultKnown": false,
-    "exactResultUnknownReason": "Exact final mitigated damage cannot be calculated because incoming damage, modifier-combination behavior, and the final mitigation formula remain unresolved.",
+    "exactResultUnknownReason": "Exact final Recovery Received value cannot be calculated because modifier-combination behavior and the final received-effect formula remain unresolved.",
     "explanation": "Vhagar's Ancestral Shield affects Vhagar. Timing: Start of Round 4. Recovery Received increase 30% at effective Habit Level 5. Duration: until end of combat. Ranked progression: L1 15%, L2 18%, L3 21%, L4 25.5%, L5 30%.",
     "id": "internal-self-modifier-vhagar-ancestral-shield-ancestral-shield-recovery-received-recovery-received-modifier",
     "interactionScope": "internal",
@@ -71378,7 +71378,7 @@
       "Recovery Received increase 20%."
     ],
     "exactResultKnown": false,
-    "exactResultUnknownReason": "Exact final mitigated damage cannot be calculated because incoming damage, modifier-combination behavior, and the final mitigation formula remain unresolved.",
+    "exactResultUnknownReason": "Exact final Recovery Received value cannot be calculated because modifier-combination behavior and the final received-effect formula remain unresolved.",
     "explanation": "Crimson's Hunter's Cunning affects Crimson. Recovery Received increase 20%.",
     "id": "internal-self-modifier-crimson-hunters-cunning-hunters-cunning-recovery-recovery-received-modifier",
     "interactionScope": "internal",
@@ -71460,7 +71460,7 @@
       "Intelligence +25."
     ],
     "exactResultKnown": false,
-    "exactResultUnknownReason": "Exact final mitigated damage cannot be calculated because incoming damage, modifier-combination behavior, and the final mitigation formula remain unresolved.",
+    "exactResultUnknownReason": "Exact final stat value cannot be calculated because modifier-combination behavior, stacking order, and the final stat formula remain unresolved.",
     "explanation": "Crimson's Hunter's Cunning affects Crimson. Intelligence +25.",
     "id": "internal-self-modifier-crimson-hunters-cunning-hunters-cunning-intelligence-stat-dealt-modifier",
     "interactionScope": "internal",
@@ -71623,7 +71623,7 @@
       "Ranked progression: L1 12%, L2 14.4%, L3 16.8%, L4 20.4%, L5 24%."
     ],
     "exactResultKnown": false,
-    "exactResultUnknownReason": "Exact final mitigated damage cannot be calculated because incoming damage, modifier-combination behavior, and the final mitigation formula remain unresolved.",
+    "exactResultUnknownReason": "Exact final stat value cannot be calculated because modifier-combination behavior, stacking order, and the final stat formula remain unresolved.",
     "explanation": "Crimson's Dragon's Intellect affects Crimson. Timing: Start of combat. Intelligence +24% at effective Habit Level 5. Duration: until end of combat. Ranked progression: L1 12%, L2 14.4%, L3 16.8%, L4 20.4%, L5 24%.",
     "id": "internal-self-modifier-crimson-dragons-intellect-dragons-intellect-intelligence-stat-dealt-modifier",
     "interactionScope": "internal",
@@ -71697,7 +71697,7 @@
       "Physical Damage Dealt increase 16%."
     ],
     "exactResultKnown": false,
-    "exactResultUnknownReason": "Exact final mitigated damage cannot be calculated because incoming damage, modifier-combination behavior, and the final mitigation formula remain unresolved.",
+    "exactResultUnknownReason": "Exact final amplified damage cannot be calculated because modifier-combination behavior and the final damage formula remain unresolved.",
     "explanation": "Venator's Warrior's Zeal affects Venator. Physical Damage Dealt increase 16%.",
     "id": "internal-self-modifier-venator-warriors-zeal-warriors-zeal-command-habit-physical-physical-damage-dealt-modifier",
     "interactionScope": "internal",
@@ -71783,7 +71783,7 @@
       "Ranked progression: L1 12.5%, L2 15%, L3 17.5%, L4 21.25%, L5 25%."
     ],
     "exactResultKnown": false,
-    "exactResultUnknownReason": "Exact final mitigated damage cannot be calculated because incoming damage, modifier-combination behavior, and the final mitigation formula remain unresolved.",
+    "exactResultUnknownReason": "Exact final amplified damage cannot be calculated because modifier-combination behavior and the final damage formula remain unresolved.",
     "explanation": "Venator's Dragon's Might affects Venator. Timing: Start of combat. Physical Damage Dealt increase 25% at effective Habit Level 5. Duration: until end of combat. Ranked progression: L1 12.5%, L2 15%, L3 17.5%, L4 21.25%, L5 25%.",
     "id": "internal-self-modifier-venator-dragons-might-dragons-might-physical-physical-damage-dealt-modifier",
     "interactionScope": "internal",
