@@ -3551,7 +3551,7 @@
   "firstObservedInGame": null,
   "format": "dragonfire-dragon-profile",
   "gameVersion": null,
-  "generatedAt": "2026-07-01T18:29:41.234Z",
+  "generatedAt": "2026-07-01T19:03:02.859Z",
   "habits": [
     {
       "abilityClass": "passive",
@@ -5776,8 +5776,8 @@
   "rosterSourceStatus": "official-website",
   "slug": "venator",
   "source": {
-    "branch": "fix/pass19e-resolved-recipient-certainty",
-    "commit": "2087234834ae28cca5f2b58b9aa547452bde8b11",
+    "branch": "fix/pass19f-unresolved-selection-reason",
+    "commit": "dcd0fdd71d44f97023bbacb86b8612c7e34e7cfd",
     "databaseVersion": "0.6.2",
     "dataSchemaVersion": 12,
     "gameBuild": "26.6.53509",
