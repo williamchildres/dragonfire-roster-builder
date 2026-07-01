@@ -111,8 +111,8 @@ describe('Shadowsong/Feskar/Daemoros periodic mitigation pass 15', () => {
       return acc;
     }, {});
 
-    expect(traces).toHaveLength(67);
-    expect(counts).toMatchObject({ active: 23, potential: 36, inactive: 7, blocked: 1 });
+    expect(traces).toHaveLength(68);
+    expect(counts).toMatchObject({ active: 23, potential: 36, inactive: 8, blocked: 1 });
     expect(counts['not-applicable'] ?? 0).toBe(0);
     expect(counts.unknown ?? 0).toBe(0);
     expect(new Set(traces.map(technicalAnalysisTraceIdentity)).size).toBe(traces.length);

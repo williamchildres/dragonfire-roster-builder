@@ -65,11 +65,11 @@ describe('Syrax / Vermax / Caraxes coverage and reason repair', () => {
   it('keeps the reviewed counts, status mix, and trace identities stable', () => {
     const traces = reviewTraces();
 
-    expect(traces).toHaveLength(56);
+    expect(traces).toHaveLength(60);
     expect(traceCounts(traces)).toMatchObject({
-      active: 27,
+      active: 30,
       potential: 18,
-      inactive: 9,
+      inactive: 10,
       blocked: 1,
       unknown: 1,
       'not-applicable': 0,

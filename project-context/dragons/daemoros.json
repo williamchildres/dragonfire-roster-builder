@@ -3865,7 +3865,7 @@
   "firstObservedInGame": "2026-06-22",
   "format": "dragonfire-dragon-profile",
   "gameVersion": null,
-  "generatedAt": "2026-07-01T19:03:02.859Z",
+  "generatedAt": "2026-07-01T19:50:17.505Z",
   "habits": [
     {
       "abilityClass": "passive",
@@ -5163,6 +5163,7 @@
       "recipientRequirements": [],
       "requiredHabitLevel": null,
       "role": "self-amplification",
+      "scalingStats": [],
       "sourceEffectId": "warriors-zeal-physical",
       "sourceScope": "all-qualifying-sources",
       "stackMaximum": null,
@@ -5236,6 +5237,7 @@
       "recipientRequirements": [],
       "requiredHabitLevel": null,
       "role": "ally-support",
+      "scalingStats": [],
       "sourceEffectId": "warriors-zeal-left-instinct",
       "sourceScope": "unknown",
       "stackMaximum": null,
@@ -5309,6 +5311,7 @@
       "recipientRequirements": [],
       "requiredHabitLevel": null,
       "role": "ally-support",
+      "scalingStats": [],
       "sourceEffectId": "warriors-zeal-left-initiative",
       "sourceScope": "unknown",
       "stackMaximum": null,
@@ -5406,6 +5409,9 @@
       "recipientRequirements": [],
       "requiredHabitLevel": 1,
       "role": "enemy-debuff",
+      "scalingStats": [
+        "strength"
+      ],
       "sourceEffectId": "instill-fear-intelligence",
       "sourceScope": "unknown",
       "stackMaximum": null,
@@ -5503,6 +5509,9 @@
       "recipientRequirements": [],
       "requiredHabitLevel": 1,
       "role": "enemy-debuff",
+      "scalingStats": [
+        "strength"
+      ],
       "sourceEffectId": "instill-fear-instinct",
       "sourceScope": "unknown",
       "stackMaximum": null,
@@ -5592,6 +5601,7 @@
       "recipientRequirements": [],
       "requiredHabitLevel": 1,
       "role": "self-amplification",
+      "scalingStats": [],
       "sourceEffectId": "powerful-reflexes-strength",
       "sourceScope": "unknown",
       "stackMaximum": null,
@@ -5681,6 +5691,7 @@
       "recipientRequirements": [],
       "requiredHabitLevel": 1,
       "role": "self-amplification",
+      "scalingStats": [],
       "sourceEffectId": "powerful-reflexes-initiative",
       "sourceScope": "unknown",
       "stackMaximum": null,
@@ -5778,6 +5789,9 @@
       "recipientRequirements": [],
       "requiredHabitLevel": 1,
       "role": "enemy-debuff",
+      "scalingStats": [
+        "strength"
+      ],
       "sourceEffectId": "darkening-fear-intelligence",
       "sourceScope": "unknown",
       "stackMaximum": null,
@@ -5875,6 +5889,9 @@
       "recipientRequirements": [],
       "requiredHabitLevel": 1,
       "role": "enemy-debuff",
+      "scalingStats": [
+        "strength"
+      ],
       "sourceEffectId": "darkening-fear-instinct",
       "sourceScope": "unknown",
       "stackMaximum": null,
@@ -5964,6 +5981,7 @@
       "recipientRequirements": [],
       "requiredHabitLevel": 1,
       "role": "self-amplification",
+      "scalingStats": [],
       "sourceEffectId": "phantoms-veil-exclusive-defense",
       "sourceScope": "all-qualifying-sources",
       "stackMaximum": null,
@@ -6063,6 +6081,7 @@
       "recipientRequirements": [],
       "requiredHabitLevel": 1,
       "role": "self-amplification",
+      "scalingStats": [],
       "sourceEffectId": "phantoms-veil-physical",
       "sourceScope": "all-qualifying-sources",
       "stackMaximum": null,
@@ -6162,6 +6181,7 @@
       "recipientRequirements": [],
       "requiredHabitLevel": 1,
       "role": "self-amplification",
+      "scalingStats": [],
       "sourceEffectId": "phantoms-veil-tactical",
       "sourceScope": "all-qualifying-sources",
       "stackMaximum": null,
@@ -6261,6 +6281,7 @@
       "recipientRequirements": [],
       "requiredHabitLevel": 1,
       "role": "self-amplification",
+      "scalingStats": [],
       "sourceEffectId": "phantoms-veil-fire",
       "sourceScope": "all-qualifying-sources",
       "stackMaximum": null,
@@ -6972,8 +6993,8 @@
   "rosterSourceStatus": "in-game-verified-pending-official-site",
   "slug": "daemoros",
   "source": {
-    "branch": "fix/pass19f-unresolved-selection-reason",
-    "commit": "dcd0fdd71d44f97023bbacb86b8612c7e34e7cfd",
+    "branch": "fix/pass20-stat-scaled-modifier-support",
+    "commit": "b797bdd5ce7ebc663dc2f62c17dcb1026997d186",
     "databaseVersion": "0.6.2",
     "dataSchemaVersion": 12,
     "gameBuild": "26.6.53509",

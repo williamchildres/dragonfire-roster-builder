@@ -49,9 +49,9 @@ describe('Pass 19 Cleansing Wrath positive-effect removal', () => {
   it('locks the requested final trace counts without exact duplicates', () => {
     const { traces, presentation } = pass19Analysis();
     const counts = countByStatus(traces);
-    expect(traces).toHaveLength(73);
+    expect(traces).toHaveLength(74);
     expect(counts.active).toBe(22);
-    expect(counts.potential).toBe(40);
+    expect(counts.potential).toBe(41);
     expect(counts.inactive).toBe(9);
     expect(counts.blocked).toBe(1);
     expect(counts['not-applicable'] ?? 0).toBe(0);

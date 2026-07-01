@@ -168,9 +168,9 @@ describe('Pass 19B exact reason routing', () => {
   it('preserves Pass 19 trace and card counts', () => {
     const { traces, presentation } = pass19Analysis();
     const counts = countByStatus(traces);
-    expect(traces).toHaveLength(73);
+    expect(traces).toHaveLength(74);
     expect(counts.active).toBe(22);
-    expect(counts.potential).toBe(40);
+    expect(counts.potential).toBe(41);
     expect(counts.inactive).toBe(9);
     expect(counts.blocked).toBe(1);
     expect(counts['not-applicable'] ?? 0).toBe(0);

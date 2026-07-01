@@ -91,6 +91,7 @@ describe('Pass 19D highest-stat certainty and stack reason routing', () => {
       trace.sourceAbilityId === 'malachite-collective-might' &&
       trace.ruleId === 'stat-scaling-support' &&
       trace.recipientDragonId === 'venator' &&
+      !(trace.matchedModifierCapabilityIds?.length) &&
       trace.status === 'active',
     );
     expect(collectiveMight).toHaveLength(1);
@@ -187,13 +188,13 @@ describe('Pass 19D highest-stat certainty and stack reason routing', () => {
     expect(currentTraces.some((trace) => trace.sourceAbilityId === 'malachite-collective-might' && trace.recipientDragonId === 'venator' && trace.status === 'active')).toBe(true);
 
     expect(statusCounts(currentTraces)).toMatchObject({
-      active: 21,
-      potential: 27,
+      active: 22,
+      potential: 28,
       inactive: 7,
       blocked: 1,
       'not-applicable': 1,
       unknown: 1,
     });
-    expect(currentTraces).toHaveLength(58);
+    expect(currentTraces).toHaveLength(60);
   });
 });

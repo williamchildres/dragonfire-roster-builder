@@ -3337,6 +3337,10 @@ function synthesizedExactRecipientEffectLines(
   if (damageReceivedSupport) {
     return withPartialModifier([damageReceivedSupport]);
   }
+  const statSupport = synthesizeStatSupportLines(first, text);
+  if (statSupport.length > 0) {
+    return withPartialModifier(statSupport);
+  }
   const grouped = new Map<string, FormationCardInteraction[]>();
   for (const item of items) {
     const key = exactRecipientEffectKey(item);
@@ -3368,6 +3372,36 @@ function synthesizedExactRecipientEffectLines(
     const summaryLines = unique(group.flatMap((item) => item.summaryLines));
     return withPartialModifier(summaryLines.map((line) => normalizeGroupedRecipientLine(line, targetNames)));
   }));
+}
+
+function synthesizeStatSupportLines(
+  first: FormationCardInteraction,
+  text: string,
+): string[] {
+  if (!/Stat support/i.test(first.effectTitle)) {
+    return [];
+  }
+  const statValues = unique(
+    [...text.matchAll(/\b(Strength|Intelligence|Instinct|Initiative)\s+\+(\d+(?:\.\d+)?%)(?: at effective Habit Level \d+)?/gi)]
+      .map((match) => `${match[1]![0]!.toUpperCase()}${match[1]!.slice(1).toLowerCase()} +${match[2]}`),
+  );
+  const timing = text.match(/Timing: Start of Combat\./i)?.[0] ?? null;
+  const enhancement = text.match(/Enhanced by [^.]+\. Scaling stat: [^.]+\./i)?.[0] ?? text.match(/Enhanced by [^.]+\./i)?.[0] ?? null;
+  const duration = text.match(/Duration: until end of combat\./i)?.[0] ?? null;
+  if (statValues.length === 0) {
+    return [];
+  }
+  const base = [
+    `${joinEnglishList(statValues)} support.`,
+    timing,
+    enhancement,
+    duration,
+  ].filter(Boolean).join(' ');
+  const dependentSupportLines = unique(
+    [...text.matchAll(/\b(?:Strength|Intelligence|Instinct|Initiative) support for [^.]+\./gi)]
+      .map((match) => match[0].trim()),
+  );
+  return [base, ...dependentSupportLines];
 }
 
 function synthesizePartialRecipientModifierLine(

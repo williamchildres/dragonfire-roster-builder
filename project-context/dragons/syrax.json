@@ -4231,7 +4231,7 @@
   "firstObservedInGame": null,
   "format": "dragonfire-dragon-profile",
   "gameVersion": null,
-  "generatedAt": "2026-07-01T19:03:02.859Z",
+  "generatedAt": "2026-07-01T19:50:17.505Z",
   "habits": [
     {
       "abilityClass": "passive",
@@ -5304,6 +5304,7 @@
       "recipientRequirements": [],
       "requiredHabitLevel": null,
       "role": "ally-support",
+      "scalingStats": [],
       "sourceEffectId": "blazing-fury-fire-damage-up",
       "sourceScope": "all-qualifying-sources",
       "stackMaximum": null,
@@ -5377,6 +5378,7 @@
       "recipientRequirements": [],
       "requiredHabitLevel": null,
       "role": "self-amplification",
+      "scalingStats": [],
       "sourceEffectId": "sentinels-wit-tactical",
       "sourceScope": "all-qualifying-sources",
       "stackMaximum": null,
@@ -5450,6 +5452,7 @@
       "recipientRequirements": [],
       "requiredHabitLevel": null,
       "role": "ally-support",
+      "scalingStats": [],
       "sourceEffectId": "sentinels-wit-left-instinct",
       "sourceScope": "unknown",
       "stackMaximum": null,
@@ -5523,6 +5526,7 @@
       "recipientRequirements": [],
       "requiredHabitLevel": null,
       "role": "ally-support",
+      "scalingStats": [],
       "sourceEffectId": "sentinels-wit-left-initiative",
       "sourceScope": "unknown",
       "stackMaximum": null,
@@ -5612,6 +5616,9 @@
       "recipientRequirements": [],
       "requiredHabitLevel": 1,
       "role": "ally-support",
+      "scalingStats": [
+        "initiative"
+      ],
       "sourceEffectId": "mindful-synergy-intelligence",
       "sourceScope": "unknown",
       "stackMaximum": null,
@@ -5701,6 +5708,9 @@
       "recipientRequirements": [],
       "requiredHabitLevel": 1,
       "role": "ally-support",
+      "scalingStats": [
+        "initiative"
+      ],
       "sourceEffectId": "mindful-synergy-instinct",
       "sourceScope": "unknown",
       "stackMaximum": null,
@@ -5790,6 +5800,9 @@
       "recipientRequirements": [],
       "requiredHabitLevel": 1,
       "role": "ally-support",
+      "scalingStats": [
+        "instinct"
+      ],
       "sourceEffectId": "flight-mastery-initiative-up",
       "sourceScope": "unknown",
       "stackMaximum": null,
@@ -5879,6 +5892,9 @@
       "recipientRequirements": [],
       "requiredHabitLevel": 1,
       "role": "enemy-debuff",
+      "scalingStats": [
+        "instinct"
+      ],
       "sourceEffectId": "flight-mastery-initiative-down",
       "sourceScope": "unknown",
       "stackMaximum": null,
@@ -5968,6 +5984,7 @@
       "recipientRequirements": [],
       "requiredHabitLevel": 1,
       "role": "ally-support",
+      "scalingStats": [],
       "sourceEffectId": "strategic-revival-resistance",
       "sourceScope": "unknown",
       "stackMaximum": null,
@@ -6057,6 +6074,7 @@
       "recipientRequirements": [],
       "requiredHabitLevel": 1,
       "role": "ally-support",
+      "scalingStats": [],
       "sourceEffectId": "tactical-inferno-tactical",
       "sourceScope": "all-qualifying-sources",
       "stackMaximum": null,
@@ -6146,6 +6164,7 @@
       "recipientRequirements": [],
       "requiredHabitLevel": 1,
       "role": "ally-support",
+      "scalingStats": [],
       "sourceEffectId": "tactical-inferno-fire",
       "sourceScope": "all-qualifying-sources",
       "stackMaximum": null,
@@ -7007,8 +7026,8 @@
   "rosterSourceStatus": "official-website",
   "slug": "syrax",
   "source": {
-    "branch": "fix/pass19f-unresolved-selection-reason",
-    "commit": "dcd0fdd71d44f97023bbacb86b8612c7e34e7cfd",
+    "branch": "fix/pass20-stat-scaled-modifier-support",
+    "commit": "b797bdd5ce7ebc663dc2f62c17dcb1026997d186",
     "databaseVersion": "0.6.2",
     "dataSchemaVersion": 12,
     "gameBuild": "26.6.53509",

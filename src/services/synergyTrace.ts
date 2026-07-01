@@ -261,6 +261,7 @@ export function technicalAnalysisTraceIdentity(trace: SynergyTrace): string {
     modifierCapabilityId: trace.modifierCapabilityId ?? null,
     modifierCapabilityIds: sortedStrings(trace.modifierCapabilityIds ?? []),
     matchedOutputCapabilityIds: sortedStrings(trace.matchedOutputCapabilityIds ?? []),
+    matchedModifierCapabilityIds: sortedStrings(trace.matchedModifierCapabilityIds ?? []),
     sourceScopeResults: canonicalSourceScopeResults(trace.sourceScopeResults ?? []),
     targetSelectionGroup: canonicalTargetSelectionGroup(trace.targetSelectionGroup ?? null),
     requirements: canonicalRequirements(trace.requirements),
@@ -1111,6 +1112,10 @@ function dedupeFormationTraces(traces: SynergyTrace[]): SynergyTrace[] {
         ...(existing.matchedOutputCapabilityIds ?? []),
         ...(trace.matchedOutputCapabilityIds ?? []),
       ]),
+      matchedModifierCapabilityIds: unique([
+        ...(existing.matchedModifierCapabilityIds ?? []),
+        ...(trace.matchedModifierCapabilityIds ?? []),
+      ]),
       sourceScopeResults: [
         ...(existing.sourceScopeResults ?? []),
         ...(trace.sourceScopeResults ?? []),
@@ -1140,6 +1145,7 @@ function semanticTraceKey(trace: SynergyTrace): string {
       .sort()
       .join(','),
     [...(trace.matchedOutputCapabilityIds ?? [])].sort().join(','),
+    [...(trace.matchedModifierCapabilityIds ?? [])].sort().join(','),
   ].join('|');
 }
 
