@@ -27739,7 +27739,7 @@
       "Timing: Rounds 1."
     ],
     "exactResultKnown": false,
-    "exactResultUnknownReason": "Seasmoke is the resolved recipient if Lightning Strike activates; activation success and the final stat formula remain unresolved.",
+    "exactResultUnknownReason": "The selected recipient remains unresolved between Seasmoke and Sheepstealer; activation success and the final stat formula remain unresolved.",
     "explanation": "Lightning Strike can target one adjacent ally. Eligible recipients: Seasmoke and Sheepstealer. The selected recipient is not guaranteed.",
     "id": "direct-stat-target-selection-malachite-lightning-strike",
     "interactionScope": "targeting-fact",

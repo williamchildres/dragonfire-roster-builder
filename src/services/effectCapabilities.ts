@@ -3743,6 +3743,7 @@ function analyzeDirectStatSupport(
       continue;
     }
     const providerPosition = positionOf(formation, modifier.dragonId);
+    const eligibleRecipientPositions = allEligibleTargetCandidatePositions(formation, modifier, providerPosition);
     for (const recipientPosition of targetCandidatePositions(formation, dragons, modifier, providerPosition)) {
       const recipientId = formation[recipientPosition];
       if (!recipientId || (recipientId === modifier.dragonId && modifier.targetSelector.includesCaster === false)) {
@@ -3787,7 +3788,7 @@ function analyzeDirectStatSupport(
         unresolvedQuestions: [],
         futureOrConditional: (modifier.futureAvailable && options.previewMaxRankInteractions === true) || modifier.conditional,
         modifier,
-        exactResultUnknownReason: activationUncertain
+        exactResultUnknownReason: activationUncertain && eligibleRecipientPositions.length === 1
           ? `${recipient.name} is the resolved recipient if ${modifier.abilityName} activates; activation success and the final stat formula remain unresolved.`
           : undefined,
       }));
@@ -4039,6 +4040,7 @@ function groupDirectStatTargetSelection(
     : selectionStat
       ? `${sourceName}'s ${abilityName} can increase ${joinEnglishList(statNames)} for one ally selected by highest ${statLabel(selectionStat)}. Eligible recipients: ${joinEnglishList(recipientNames)}. The selected recipient is not guaranteed.`
       : `${sourceName}'s ${abilityName} can increase ${joinEnglishList(statNames)} for one eligible ally. Eligible recipients: ${joinEnglishList(recipientNames)}. The selected recipient is not guaranteed.`;
+  const unresolvedRecipientReason = `The selected recipient remains unresolved between ${joinEnglishList(recipientNames)}; activation success and the final stat formula remain unresolved.`;
   return {
     ...first,
     id: `direct-stat-target-selection-${first.sourceAbilityId ?? first.sourceDragonId}`,
@@ -4060,6 +4062,7 @@ function groupDirectStatTargetSelection(
     modifierCapabilityId: null,
     modifierCapabilityIds: uniqueSorted(traces.flatMap((trace) => trace.modifierCapabilityIds ?? [])),
     interactionScope: 'targeting-fact',
+    exactResultUnknownReason: unresolvedRecipientReason,
     targetSelectionGroup: {
       targetCount: 1,
       eligibleRecipientDragonIds: recipientIds,
