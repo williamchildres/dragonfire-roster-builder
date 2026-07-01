@@ -3601,7 +3601,7 @@
   "firstObservedInGame": null,
   "format": "dragonfire-dragon-profile",
   "gameVersion": null,
-  "generatedAt": "2026-07-01T19:50:17.505Z",
+  "generatedAt": "2026-07-01T20:02:37.382Z",
   "habits": [
     {
       "abilityClass": "passive",
@@ -6686,7 +6686,7 @@
   "slug": "vhagar",
   "source": {
     "branch": "fix/pass20-stat-scaled-modifier-support",
-    "commit": "b797bdd5ce7ebc663dc2f62c17dcb1026997d186",
+    "commit": "aa9386884e3559e05ba3ddba3c69a4d8c9ca6eda",
     "databaseVersion": "0.6.2",
     "dataSchemaVersion": 12,
     "gameBuild": "26.6.53509",

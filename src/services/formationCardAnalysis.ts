@@ -3337,7 +3337,7 @@ function synthesizedExactRecipientEffectLines(
   if (damageReceivedSupport) {
     return withPartialModifier([damageReceivedSupport]);
   }
-  const statSupport = synthesizeStatSupportLines(first, text);
+  const statSupport = synthesizeStatSupportLines(first, text, items.flatMap((item) => item.summaryLines));
   if (statSupport.length > 0) {
     return withPartialModifier(statSupport);
   }
@@ -3377,6 +3377,7 @@ function synthesizedExactRecipientEffectLines(
 function synthesizeStatSupportLines(
   first: FormationCardInteraction,
   text: string,
+  summaryLines: string[],
 ): string[] {
   if (!/Stat support/i.test(first.effectTitle)) {
     return [];
@@ -3398,8 +3399,9 @@ function synthesizeStatSupportLines(
     duration,
   ].filter(Boolean).join(' ');
   const dependentSupportLines = unique(
-    [...text.matchAll(/\b(?:Strength|Intelligence|Instinct|Initiative) support for [^.]+\./gi)]
-      .map((match) => match[0].trim()),
+    summaryLines
+      .filter((line) => /^(?:Strength|Intelligence|Instinct|Initiative) support for /i.test(line))
+      .map((line) => line.trim()),
   );
   return [base, ...dependentSupportLines];
 }
