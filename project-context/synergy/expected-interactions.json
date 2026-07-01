@@ -21229,7 +21229,7 @@
       "Duration: until end of combat."
     ],
     "exactResultKnown": false,
-    "exactResultUnknownReason": "Exact final fire damage dealt mitigation cannot be calculated because shared stack activation success, current/final stack count, stack-combination behavior, and the final mitigation formula remain unresolved.",
+    "exactResultUnknownReason": "Exact final Fire Damage Dealt increase cannot be calculated because stack activation success, current/final stack count, stack-combination behavior, and the final damage formula remain unresolved.",
     "explanation": "Sheepstealer's Stolen Flock checks the scheduled check with a 50% chance to grant one Stolen Flock stack. Each stack increases Fire Damage Dealt by +3% per stack at effective Habit Level 1; maximum 10 stacks; maximum theoretical Fire Damage Dealt increase +30%; duration until end of combat. Current and final stack count remain unresolved.",
     "id": "internal-self-modifier-sheepstealer-stolen-flock-stolen-flock-stack-round-fire-damage-stack-modifier",
     "interactionScope": "internal",
@@ -21312,7 +21312,7 @@
       "Duration: until end of combat."
     ],
     "exactResultKnown": false,
-    "exactResultUnknownReason": "Exact final fire damage dealt mitigation cannot be calculated because shared stack activation success, current/final stack count, stack-combination behavior, and the final mitigation formula remain unresolved.",
+    "exactResultUnknownReason": "Exact final Fire Damage Dealt increase cannot be calculated because stack activation success, current/final stack count, stack-combination behavior, and the final damage formula remain unresolved.",
     "explanation": "Sheepstealer's Stolen Flock checks the scheduled check to grant one Stolen Flock stack. Each stack increases Fire Damage Dealt by +3% per stack at effective Habit Level 1; maximum 10 stacks; maximum theoretical Fire Damage Dealt increase +30%; duration until end of combat. Current and final stack count remain unresolved.",
     "id": "internal-self-modifier-sheepstealer-stolen-flock-stolen-flock-stack-recovery-fire-damage-stack-modifier",
     "interactionScope": "internal",
@@ -21564,7 +21564,7 @@
       "Duration: until end of combat."
     ],
     "exactResultKnown": false,
-    "exactResultUnknownReason": "Exact final physical damage dealt mitigation cannot be calculated because shared stack activation success, current/final stack count, stack-combination behavior, and the final mitigation formula remain unresolved.",
+    "exactResultUnknownReason": "Exact final Physical Damage Dealt increase cannot be calculated because initial and repeated activation success, enemy match count, current/final stack count, stack-combination behavior, and the final damage formula remain unresolved.",
     "explanation": "Vermax's Rallying Flame checks the scheduled check to grant one Rallying Flame stack. Each stack increases Physical Damage Dealt by +5% per stack at effective Habit Level 1; maximum 4 stacks; maximum theoretical Physical Damage Dealt increase +20%; duration until end of combat. Current and final stack count remain unresolved.",
     "id": "internal-self-modifier-vermax-rallying-flame-rallying-flame-stack-physical-damage-stack-modifier",
     "interactionScope": "internal",
@@ -26451,7 +26451,7 @@
       "Duration: until end of combat."
     ],
     "exactResultKnown": false,
-    "exactResultUnknownReason": "Exact final fire damage dealt mitigation cannot be calculated because shared stack activation success, current/final stack count, stack-combination behavior, and the final mitigation formula remain unresolved.",
+    "exactResultUnknownReason": "Exact final Fire Damage Dealt increase cannot be calculated because stack activation success, current/final stack count, stack-combination behavior, and the final damage formula remain unresolved.",
     "explanation": "Sheepstealer's Stolen Flock checks the scheduled check with a 50% chance to grant one Stolen Flock stack. Each stack increases Fire Damage Dealt by +3% per stack at effective Habit Level 1; maximum 10 stacks; maximum theoretical Fire Damage Dealt increase +30%; duration until end of combat. Current and final stack count remain unresolved.",
     "id": "internal-self-modifier-sheepstealer-stolen-flock-stolen-flock-stack-round-fire-damage-stack-modifier",
     "interactionScope": "internal",
@@ -26534,7 +26534,7 @@
       "Duration: until end of combat."
     ],
     "exactResultKnown": false,
-    "exactResultUnknownReason": "Exact final fire damage dealt mitigation cannot be calculated because shared stack activation success, current/final stack count, stack-combination behavior, and the final mitigation formula remain unresolved.",
+    "exactResultUnknownReason": "Exact final Fire Damage Dealt increase cannot be calculated because stack activation success, current/final stack count, stack-combination behavior, and the final damage formula remain unresolved.",
     "explanation": "Sheepstealer's Stolen Flock checks the scheduled check to grant one Stolen Flock stack. Each stack increases Fire Damage Dealt by +3% per stack at effective Habit Level 1; maximum 10 stacks; maximum theoretical Fire Damage Dealt increase +30%; duration until end of combat. Current and final stack count remain unresolved.",
     "id": "internal-self-modifier-sheepstealer-stolen-flock-stolen-flock-stack-recovery-fire-damage-stack-modifier",
     "interactionScope": "internal",
@@ -30784,7 +30784,7 @@
       "Duration: until end of combat."
     ],
     "exactResultKnown": false,
-    "exactResultUnknownReason": "Exact final physical damage dealt mitigation cannot be calculated because shared stack activation success, current/final stack count, stack-combination behavior, and the final mitigation formula remain unresolved.",
+    "exactResultUnknownReason": "Exact final Physical Damage Dealt increase cannot be calculated because initial and repeated activation success, enemy match count, current/final stack count, stack-combination behavior, and the final damage formula remain unresolved.",
     "explanation": "Vermax's Rallying Flame checks the scheduled check to grant one Rallying Flame stack. Each stack increases Physical Damage Dealt by +5% per stack at effective Habit Level 1; maximum 4 stacks; maximum theoretical Physical Damage Dealt increase +20%; duration until end of combat. Current and final stack count remain unresolved.",
     "id": "internal-self-modifier-vermax-rallying-flame-rallying-flame-stack-physical-damage-stack-modifier",
     "interactionScope": "internal",
@@ -36250,7 +36250,7 @@
       "Duration: until end of combat."
     ],
     "exactResultKnown": false,
-    "exactResultUnknownReason": "Exact final fire damage dealt mitigation cannot be calculated because shared stack activation success, current/final stack count, stack-combination behavior, and the final mitigation formula remain unresolved.",
+    "exactResultUnknownReason": "Exact final Fire Damage Dealt increase cannot be calculated because stack activation success, current/final stack count, stack-combination behavior, and the final damage formula remain unresolved.",
     "explanation": "Sheepstealer's Stolen Flock checks the scheduled check with a 50% chance to grant one Stolen Flock stack. Each stack increases Fire Damage Dealt by +3% per stack at effective Habit Level 1; maximum 10 stacks; maximum theoretical Fire Damage Dealt increase +30%; duration until end of combat. Current and final stack count remain unresolved.",
     "id": "internal-self-modifier-sheepstealer-stolen-flock-stolen-flock-stack-round-fire-damage-stack-modifier",
     "interactionScope": "internal",
@@ -36333,7 +36333,7 @@
       "Duration: until end of combat."
     ],
     "exactResultKnown": false,
-    "exactResultUnknownReason": "Exact final fire damage dealt mitigation cannot be calculated because shared stack activation success, current/final stack count, stack-combination behavior, and the final mitigation formula remain unresolved.",
+    "exactResultUnknownReason": "Exact final Fire Damage Dealt increase cannot be calculated because stack activation success, current/final stack count, stack-combination behavior, and the final damage formula remain unresolved.",
     "explanation": "Sheepstealer's Stolen Flock checks the scheduled check to grant one Stolen Flock stack. Each stack increases Fire Damage Dealt by +3% per stack at effective Habit Level 1; maximum 10 stacks; maximum theoretical Fire Damage Dealt increase +30%; duration until end of combat. Current and final stack count remain unresolved.",
     "id": "internal-self-modifier-sheepstealer-stolen-flock-stolen-flock-stack-recovery-fire-damage-stack-modifier",
     "interactionScope": "internal",
@@ -40582,7 +40582,7 @@
       "Duration: until end of combat."
     ],
     "exactResultKnown": false,
-    "exactResultUnknownReason": "Exact final fire damage dealt mitigation cannot be calculated because shared stack activation success, current/final stack count, stack-combination behavior, and the final mitigation formula remain unresolved.",
+    "exactResultUnknownReason": "Exact final Fire Damage Dealt increase cannot be calculated because stack activation success, current/final stack count, stack-combination behavior, and the final damage formula remain unresolved.",
     "explanation": "Sheepstealer's Stolen Flock checks the scheduled check with a 50% chance to grant one Stolen Flock stack. Each stack increases Fire Damage Dealt by +3% per stack at effective Habit Level 1; maximum 10 stacks; maximum theoretical Fire Damage Dealt increase +30%; duration until end of combat. Current and final stack count remain unresolved.",
     "id": "internal-self-modifier-sheepstealer-stolen-flock-stolen-flock-stack-round-fire-damage-stack-modifier",
     "interactionScope": "internal",
@@ -40665,7 +40665,7 @@
       "Duration: until end of combat."
     ],
     "exactResultKnown": false,
-    "exactResultUnknownReason": "Exact final fire damage dealt mitigation cannot be calculated because shared stack activation success, current/final stack count, stack-combination behavior, and the final mitigation formula remain unresolved.",
+    "exactResultUnknownReason": "Exact final Fire Damage Dealt increase cannot be calculated because stack activation success, current/final stack count, stack-combination behavior, and the final damage formula remain unresolved.",
     "explanation": "Sheepstealer's Stolen Flock checks the scheduled check to grant one Stolen Flock stack. Each stack increases Fire Damage Dealt by +3% per stack at effective Habit Level 1; maximum 10 stacks; maximum theoretical Fire Damage Dealt increase +30%; duration until end of combat. Current and final stack count remain unresolved.",
     "id": "internal-self-modifier-sheepstealer-stolen-flock-stolen-flock-stack-recovery-fire-damage-stack-modifier",
     "interactionScope": "internal",
@@ -45579,7 +45579,7 @@
       "Duration: until end of combat."
     ],
     "exactResultKnown": false,
-    "exactResultUnknownReason": "Exact final fire damage dealt mitigation cannot be calculated because shared stack activation success, current/final stack count, stack-combination behavior, and the final mitigation formula remain unresolved.",
+    "exactResultUnknownReason": "Exact final Fire Damage Dealt increase cannot be calculated because stack activation success, current/final stack count, stack-combination behavior, and the final damage formula remain unresolved.",
     "explanation": "Sheepstealer's Stolen Flock checks the scheduled check with a 50% chance to grant one Stolen Flock stack. Each stack increases Fire Damage Dealt by +3% per stack at effective Habit Level 1; maximum 10 stacks; maximum theoretical Fire Damage Dealt increase +30%; duration until end of combat. Current and final stack count remain unresolved.",
     "id": "internal-self-modifier-sheepstealer-stolen-flock-stolen-flock-stack-round-fire-damage-stack-modifier",
     "interactionScope": "internal",
@@ -45662,7 +45662,7 @@
       "Duration: until end of combat."
     ],
     "exactResultKnown": false,
-    "exactResultUnknownReason": "Exact final fire damage dealt mitigation cannot be calculated because shared stack activation success, current/final stack count, stack-combination behavior, and the final mitigation formula remain unresolved.",
+    "exactResultUnknownReason": "Exact final Fire Damage Dealt increase cannot be calculated because stack activation success, current/final stack count, stack-combination behavior, and the final damage formula remain unresolved.",
     "explanation": "Sheepstealer's Stolen Flock checks the scheduled check to grant one Stolen Flock stack. Each stack increases Fire Damage Dealt by +3% per stack at effective Habit Level 1; maximum 10 stacks; maximum theoretical Fire Damage Dealt increase +30%; duration until end of combat. Current and final stack count remain unresolved.",
     "id": "internal-self-modifier-sheepstealer-stolen-flock-stolen-flock-stack-recovery-fire-damage-stack-modifier",
     "interactionScope": "internal",
@@ -49421,7 +49421,7 @@
       "Duration: until end of combat."
     ],
     "exactResultKnown": false,
-    "exactResultUnknownReason": "Exact final physical damage dealt mitigation cannot be calculated because shared stack activation success, current/final stack count, stack-combination behavior, and the final mitigation formula remain unresolved.",
+    "exactResultUnknownReason": "Exact final Physical Damage Dealt increase cannot be calculated because initial and repeated activation success, enemy match count, current/final stack count, stack-combination behavior, and the final damage formula remain unresolved.",
     "explanation": "Vermax's Rallying Flame checks the scheduled check to grant one Rallying Flame stack. Each stack increases Physical Damage Dealt by +5% per stack at effective Habit Level 1; maximum 4 stacks; maximum theoretical Physical Damage Dealt increase +20%; duration until end of combat. Current and final stack count remain unresolved.",
     "id": "internal-self-modifier-vermax-rallying-flame-rallying-flame-stack-physical-damage-stack-modifier",
     "interactionScope": "internal",
@@ -54413,7 +54413,7 @@
       "Duration: until end of combat."
     ],
     "exactResultKnown": false,
-    "exactResultUnknownReason": "Exact final fire damage dealt mitigation cannot be calculated because shared stack activation success, current/final stack count, stack-combination behavior, and the final mitigation formula remain unresolved.",
+    "exactResultUnknownReason": "Exact final Fire Damage Dealt increase cannot be calculated because stack activation success, current/final stack count, stack-combination behavior, and the final damage formula remain unresolved.",
     "explanation": "Sheepstealer's Stolen Flock checks the scheduled check with a 50% chance to grant one Stolen Flock stack. Each stack increases Fire Damage Dealt by +3% per stack at effective Habit Level 1; maximum 10 stacks; maximum theoretical Fire Damage Dealt increase +30%; duration until end of combat. Current and final stack count remain unresolved.",
     "id": "internal-self-modifier-sheepstealer-stolen-flock-stolen-flock-stack-round-fire-damage-stack-modifier",
     "interactionScope": "internal",
@@ -54496,7 +54496,7 @@
       "Duration: until end of combat."
     ],
     "exactResultKnown": false,
-    "exactResultUnknownReason": "Exact final fire damage dealt mitigation cannot be calculated because shared stack activation success, current/final stack count, stack-combination behavior, and the final mitigation formula remain unresolved.",
+    "exactResultUnknownReason": "Exact final Fire Damage Dealt increase cannot be calculated because stack activation success, current/final stack count, stack-combination behavior, and the final damage formula remain unresolved.",
     "explanation": "Sheepstealer's Stolen Flock checks the scheduled check to grant one Stolen Flock stack. Each stack increases Fire Damage Dealt by +3% per stack at effective Habit Level 1; maximum 10 stacks; maximum theoretical Fire Damage Dealt increase +30%; duration until end of combat. Current and final stack count remain unresolved.",
     "id": "internal-self-modifier-sheepstealer-stolen-flock-stolen-flock-stack-recovery-fire-damage-stack-modifier",
     "interactionScope": "internal",
@@ -58654,7 +58654,7 @@
       "Duration: until end of combat."
     ],
     "exactResultKnown": false,
-    "exactResultUnknownReason": "Exact final strength increase cannot be calculated because stack activation success, current/final stack count, and the final stat formula remain unresolved.",
+    "exactResultUnknownReason": "Exact final Strength increase cannot be calculated because stack activation success, current/final stack count, and the final stat formula remain unresolved.",
     "explanation": "Vhagar's Skyward Titan checks each round with a 30% chance to grant one Bulwark stack. Each stack increases Strength by +5% per stack at effective Habit Level 1; maximum 5 stacks; maximum theoretical Strength increase +25%; duration until end of combat. Current and final stack count remain unresolved.",
     "id": "internal-self-modifier-vhagar-skyward-titan-skyward-titan-bulwark-stack-strength-stat-stack-modifier",
     "interactionScope": "internal",
@@ -59534,7 +59534,7 @@
       "Duration: until end of combat."
     ],
     "exactResultKnown": false,
-    "exactResultUnknownReason": "Exact final physical damage received mitigation cannot be calculated because shared stack activation success, current/final stack count, stack-combination behavior, and the final mitigation formula remain unresolved.",
+    "exactResultUnknownReason": "Exact final Physical Damage Received mitigation cannot be calculated because shared stack activation success, current/final stack count, stack-combination behavior, and the final mitigation formula remain unresolved.",
     "explanation": "Vhagar's Skyward Titan checks each round with a 30% chance to grant one Bulwark stack. Each stack reduces Physical Damage Received by 2.5% (Physical Damage Received -2.5% per stack) at effective Habit Level 1; maximum 5 stacks; maximum theoretical reduction -12.5%; duration until end of combat. Current and final stack count remain unresolved.",
     "id": "defensive-ally-support-vhagar-skyward-titan-skyward-titan-bulwark-stack-physical-damage-received-stack-modifier-vhagar",
     "interactionScope": "internal",
@@ -59621,7 +59621,7 @@
       "Duration: until end of combat."
     ],
     "exactResultKnown": false,
-    "exactResultUnknownReason": "Exact final tactical damage received mitigation cannot be calculated because shared stack activation success, current/final stack count, stack-combination behavior, and the final mitigation formula remain unresolved.",
+    "exactResultUnknownReason": "Exact final Tactical Damage Received mitigation cannot be calculated because shared stack activation success, current/final stack count, stack-combination behavior, and the final mitigation formula remain unresolved.",
     "explanation": "Vhagar's Skyward Titan checks each round with a 30% chance to grant one Bulwark stack. Each stack reduces Tactical Damage Received by 2.5% (Tactical Damage Received -2.5% per stack) at effective Habit Level 1; maximum 5 stacks; maximum theoretical reduction -12.5%; duration until end of combat. Current and final stack count remain unresolved.",
     "id": "defensive-ally-support-vhagar-skyward-titan-skyward-titan-bulwark-stack-tactical-damage-received-stack-modifier-vhagar",
     "interactionScope": "internal",
@@ -62235,7 +62235,7 @@
       "Duration: until end of combat."
     ],
     "exactResultKnown": false,
-    "exactResultUnknownReason": "Exact final strength increase cannot be calculated because stack activation success, current/final stack count, and the final stat formula remain unresolved.",
+    "exactResultUnknownReason": "Exact final Strength increase cannot be calculated because stack activation success, current/final stack count, and the final stat formula remain unresolved.",
     "explanation": "Vhagar's Skyward Titan checks each round with a 30% chance to grant one Bulwark stack. Each stack increases Strength by +5% per stack at effective Habit Level 1; maximum 5 stacks; maximum theoretical Strength increase +25%; duration until end of combat. Current and final stack count remain unresolved.",
     "id": "internal-self-modifier-vhagar-skyward-titan-skyward-titan-bulwark-stack-strength-stat-stack-modifier",
     "interactionScope": "internal",
@@ -62878,7 +62878,7 @@
       "Duration: until end of combat."
     ],
     "exactResultKnown": false,
-    "exactResultUnknownReason": "Exact final physical damage received mitigation cannot be calculated because shared stack activation success, current/final stack count, stack-combination behavior, and the final mitigation formula remain unresolved.",
+    "exactResultUnknownReason": "Exact final Physical Damage Received mitigation cannot be calculated because shared stack activation success, current/final stack count, stack-combination behavior, and the final mitigation formula remain unresolved.",
     "explanation": "Vhagar's Skyward Titan checks each round with a 30% chance to grant one Bulwark stack. Each stack reduces Physical Damage Received by 2.5% (Physical Damage Received -2.5% per stack) at effective Habit Level 1; maximum 5 stacks; maximum theoretical reduction -12.5%; duration until end of combat. Current and final stack count remain unresolved.",
     "id": "defensive-ally-support-vhagar-skyward-titan-skyward-titan-bulwark-stack-physical-damage-received-stack-modifier-vhagar",
     "interactionScope": "internal",
@@ -62965,7 +62965,7 @@
       "Duration: until end of combat."
     ],
     "exactResultKnown": false,
-    "exactResultUnknownReason": "Exact final tactical damage received mitigation cannot be calculated because shared stack activation success, current/final stack count, stack-combination behavior, and the final mitigation formula remain unresolved.",
+    "exactResultUnknownReason": "Exact final Tactical Damage Received mitigation cannot be calculated because shared stack activation success, current/final stack count, stack-combination behavior, and the final mitigation formula remain unresolved.",
     "explanation": "Vhagar's Skyward Titan checks each round with a 30% chance to grant one Bulwark stack. Each stack reduces Tactical Damage Received by 2.5% (Tactical Damage Received -2.5% per stack) at effective Habit Level 1; maximum 5 stacks; maximum theoretical reduction -12.5%; duration until end of combat. Current and final stack count remain unresolved.",
     "id": "defensive-ally-support-vhagar-skyward-titan-skyward-titan-bulwark-stack-tactical-damage-received-stack-modifier-vhagar",
     "interactionScope": "internal",
@@ -66628,7 +66628,7 @@
       "Duration: until end of combat."
     ],
     "exactResultKnown": false,
-    "exactResultUnknownReason": "Exact final strength increase cannot be calculated because stack activation success, current/final stack count, and the final stat formula remain unresolved.",
+    "exactResultUnknownReason": "Exact final Strength increase cannot be calculated because stack activation success, current/final stack count, and the final stat formula remain unresolved.",
     "explanation": "Vhagar's Skyward Titan checks each round with a 30% chance to grant one Bulwark stack. Each stack increases Strength by +5% per stack at effective Habit Level 1; maximum 5 stacks; maximum theoretical Strength increase +25%; duration until end of combat. Current and final stack count remain unresolved.",
     "id": "internal-self-modifier-vhagar-skyward-titan-skyward-titan-bulwark-stack-strength-stat-stack-modifier",
     "interactionScope": "internal",
@@ -67460,7 +67460,7 @@
       "Duration: until end of combat."
     ],
     "exactResultKnown": false,
-    "exactResultUnknownReason": "Exact final physical damage received mitigation cannot be calculated because shared stack activation success, current/final stack count, stack-combination behavior, and the final mitigation formula remain unresolved.",
+    "exactResultUnknownReason": "Exact final Physical Damage Received mitigation cannot be calculated because shared stack activation success, current/final stack count, stack-combination behavior, and the final mitigation formula remain unresolved.",
     "explanation": "Vhagar's Skyward Titan checks each round with a 30% chance to grant one Bulwark stack. Each stack reduces Physical Damage Received by 2.5% (Physical Damage Received -2.5% per stack) at effective Habit Level 1; maximum 5 stacks; maximum theoretical reduction -12.5%; duration until end of combat. Current and final stack count remain unresolved.",
     "id": "defensive-ally-support-vhagar-skyward-titan-skyward-titan-bulwark-stack-physical-damage-received-stack-modifier-vhagar",
     "interactionScope": "internal",
@@ -67547,7 +67547,7 @@
       "Duration: until end of combat."
     ],
     "exactResultKnown": false,
-    "exactResultUnknownReason": "Exact final tactical damage received mitigation cannot be calculated because shared stack activation success, current/final stack count, stack-combination behavior, and the final mitigation formula remain unresolved.",
+    "exactResultUnknownReason": "Exact final Tactical Damage Received mitigation cannot be calculated because shared stack activation success, current/final stack count, stack-combination behavior, and the final mitigation formula remain unresolved.",
     "explanation": "Vhagar's Skyward Titan checks each round with a 30% chance to grant one Bulwark stack. Each stack reduces Tactical Damage Received by 2.5% (Tactical Damage Received -2.5% per stack) at effective Habit Level 1; maximum 5 stacks; maximum theoretical reduction -12.5%; duration until end of combat. Current and final stack count remain unresolved.",
     "id": "defensive-ally-support-vhagar-skyward-titan-skyward-titan-bulwark-stack-tactical-damage-received-stack-modifier-vhagar",
     "interactionScope": "internal",
@@ -71305,7 +71305,7 @@
       "Duration: until end of combat."
     ],
     "exactResultKnown": false,
-    "exactResultUnknownReason": "Exact final strength increase cannot be calculated because stack activation success, current/final stack count, and the final stat formula remain unresolved.",
+    "exactResultUnknownReason": "Exact final Strength increase cannot be calculated because stack activation success, current/final stack count, and the final stat formula remain unresolved.",
     "explanation": "Vhagar's Skyward Titan checks each round with a 30% chance to grant one Bulwark stack. Each stack increases Strength by +5% per stack at effective Habit Level 1; maximum 5 stacks; maximum theoretical Strength increase +25%; duration until end of combat. Current and final stack count remain unresolved.",
     "id": "internal-self-modifier-vhagar-skyward-titan-skyward-titan-bulwark-stack-strength-stat-stack-modifier",
     "interactionScope": "internal",
@@ -71870,7 +71870,7 @@
       "Duration: until end of combat."
     ],
     "exactResultKnown": false,
-    "exactResultUnknownReason": "Exact final physical damage received mitigation cannot be calculated because shared stack activation success, current/final stack count, stack-combination behavior, and the final mitigation formula remain unresolved.",
+    "exactResultUnknownReason": "Exact final Physical Damage Received mitigation cannot be calculated because shared stack activation success, current/final stack count, stack-combination behavior, and the final mitigation formula remain unresolved.",
     "explanation": "Vhagar's Skyward Titan checks each round with a 30% chance to grant one Bulwark stack. Each stack reduces Physical Damage Received by 2.5% (Physical Damage Received -2.5% per stack) at effective Habit Level 1; maximum 5 stacks; maximum theoretical reduction -12.5%; duration until end of combat. Current and final stack count remain unresolved.",
     "id": "defensive-ally-support-vhagar-skyward-titan-skyward-titan-bulwark-stack-physical-damage-received-stack-modifier-vhagar",
     "interactionScope": "internal",
@@ -71957,7 +71957,7 @@
       "Duration: until end of combat."
     ],
     "exactResultKnown": false,
-    "exactResultUnknownReason": "Exact final tactical damage received mitigation cannot be calculated because shared stack activation success, current/final stack count, stack-combination behavior, and the final mitigation formula remain unresolved.",
+    "exactResultUnknownReason": "Exact final Tactical Damage Received mitigation cannot be calculated because shared stack activation success, current/final stack count, stack-combination behavior, and the final mitigation formula remain unresolved.",
     "explanation": "Vhagar's Skyward Titan checks each round with a 30% chance to grant one Bulwark stack. Each stack reduces Tactical Damage Received by 2.5% (Tactical Damage Received -2.5% per stack) at effective Habit Level 1; maximum 5 stacks; maximum theoretical reduction -12.5%; duration until end of combat. Current and final stack count remain unresolved.",
     "id": "defensive-ally-support-vhagar-skyward-titan-skyward-titan-bulwark-stack-tactical-damage-received-stack-modifier-vhagar",
     "interactionScope": "internal",
