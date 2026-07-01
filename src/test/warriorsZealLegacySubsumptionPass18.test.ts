@@ -30,10 +30,10 @@ describe("Pass 18 Warrior's Zeal legacy subsumption", () => {
     )).toBe(true);
 
     const counts = countByStatus(traces);
-    expect(traces).toHaveLength(57);
+    expect(traces).toHaveLength(58);
     expect(counts.active).toBe(23);
     expect(counts.potential).toBe(23);
-    expect(counts.inactive).toBe(9);
+    expect(counts.inactive).toBe(10);
     expect(counts.blocked).toBe(1);
     expect(counts['not-applicable'] ?? 0).toBe(0);
     expect(counts.unknown).toBe(1);

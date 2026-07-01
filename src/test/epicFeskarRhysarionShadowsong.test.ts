@@ -715,7 +715,7 @@ describe('Feskar, Rhysarion, and Shadowsong Epic profiles', () => {
     expect(insightfulProvides).toBeDefined();
     const insightfulText = insightfulProvides ? [...insightfulProvides.summaryLines, ...insightfulProvides.details, ...insightfulProvides.effects].join(' ') : '';
     expect(insightfulText).toContain('Applies to Feskar, Rhysarion, and Shadowsong.');
-    expect(insightfulText).toContain('Instinct support.');
+    expect(insightfulText).toContain('Instinct +10% support.');
     expect(insightfulText).toContain('Enhanced by Feskar Instinct');
     expect(insightfulText).toContain('Duration: until end of combat.');
     expect(feskarCard.receives.some((item) => item.abilityName === 'Insightful Allies')).toBe(true);

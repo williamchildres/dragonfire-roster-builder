@@ -3226,7 +3226,7 @@
   "firstObservedInGame": null,
   "format": "dragonfire-dragon-profile",
   "gameVersion": null,
-  "generatedAt": "2026-07-01T19:03:02.859Z",
+  "generatedAt": "2026-07-01T20:02:37.382Z",
   "habits": [
     {
       "abilityClass": "passive",
@@ -4310,6 +4310,7 @@
       "recipientRequirements": [],
       "requiredHabitLevel": null,
       "role": "self-amplification",
+      "scalingStats": [],
       "sourceEffectId": "hunters-wrath-fire",
       "sourceScope": "all-qualifying-sources",
       "stackMaximum": null,
@@ -4383,6 +4384,7 @@
       "recipientRequirements": [],
       "requiredHabitLevel": null,
       "role": "ally-support",
+      "scalingStats": [],
       "sourceEffectId": "hunters-wrath-right-strength",
       "sourceScope": "unknown",
       "stackMaximum": null,
@@ -4456,6 +4458,7 @@
       "recipientRequirements": [],
       "requiredHabitLevel": null,
       "role": "ally-support",
+      "scalingStats": [],
       "sourceEffectId": "hunters-wrath-right-initiative",
       "sourceScope": "unknown",
       "stackMaximum": null,
@@ -4545,6 +4548,9 @@
       "recipientRequirements": [],
       "requiredHabitLevel": 1,
       "role": "enemy-debuff",
+      "scalingStats": [
+        "intelligence"
+      ],
       "sourceEffectId": "battle-dread-strength-down",
       "sourceScope": "unknown",
       "stackMaximum": null,
@@ -4634,6 +4640,9 @@
       "recipientRequirements": [],
       "requiredHabitLevel": 1,
       "role": "enemy-debuff",
+      "scalingStats": [
+        "intelligence"
+      ],
       "sourceEffectId": "battle-dread-initiative-down",
       "sourceScope": "unknown",
       "stackMaximum": null,
@@ -4723,6 +4732,7 @@
       "recipientRequirements": [],
       "requiredHabitLevel": 1,
       "role": "self-amplification",
+      "scalingStats": [],
       "sourceEffectId": "dragons-flair-fire",
       "sourceScope": "all-qualifying-sources",
       "stackMaximum": null,
@@ -4812,6 +4822,7 @@
       "recipientRequirements": [],
       "requiredHabitLevel": 1,
       "role": "enemy-debuff",
+      "scalingStats": [],
       "sourceEffectId": "mass-enfeeble-physical-down",
       "sourceScope": "non-basic-attacks",
       "stackMaximum": null,
@@ -4916,6 +4927,7 @@
       "recipientRequirements": [],
       "requiredHabitLevel": 1,
       "role": "self-amplification",
+      "scalingStats": [],
       "sourceEffectId": "blood-wyrm-fire-up",
       "sourceScope": "all-qualifying-sources",
       "stackMaximum": null,
@@ -5869,8 +5881,8 @@
   "rosterSourceStatus": "official-website",
   "slug": "caraxes",
   "source": {
-    "branch": "fix/pass19f-unresolved-selection-reason",
-    "commit": "dcd0fdd71d44f97023bbacb86b8612c7e34e7cfd",
+    "branch": "fix/pass20-stat-scaled-modifier-support",
+    "commit": "aa9386884e3559e05ba3ddba3c69a4d8c9ca6eda",
     "databaseVersion": "0.6.2",
     "dataSchemaVersion": 12,
     "gameBuild": "26.6.53509",

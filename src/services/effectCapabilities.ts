@@ -3829,7 +3829,15 @@ function analyzeStatScalingSupport(
           output.outputKind !== 'status-application' &&
           output.dependencies.some((dependency) => dependency.type === 'scales-with-stat' && dependency.statId === statId),
       );
-      if (matchedOutputs.length === 0) {
+      const matchedModifiers = modifiers.filter(
+        (dependent) =>
+          dependent.id !== modifier.id &&
+          dependent.dragonId === recipientId &&
+          dependent.role !== 'ally-support' &&
+          modifierCapabilityVisible(dependent, options) &&
+          (dependent.scalingStats ?? []).includes(statId),
+      );
+      if (matchedOutputs.length === 0 && matchedModifiers.length === 0) {
         continue;
       }
       const provider = dragonById(dragons, modifier.dragonId);
@@ -3846,60 +3854,145 @@ function analyzeStatScalingSupport(
       const activationUncertain = modifier.activationChanceFixed !== null ||
         (modifier.activationChanceByHabitLevel?.length ?? 0) > 0 ||
         modifier.conditional;
-      const requirements = [
+      const baseRequirements = [
         targetRequirement(modifier, providerPosition, recipientPosition),
         ...providerRequirementTraces(modifier, formation, dragons, options),
-        ...matchedOutputs.flatMap((output) => outputRequirementTraces(output, options)),
       ];
-      const explanation = selectionUncertain
-        ? `${provider.name}'s ${modifier.abilityName} can increase ${recipient.name}'s ${statLabel(statId)}, which supports ${abilityOutputSummary(matchedOutputs)}. This consequence applies only if ${recipient.name} resolves as the selected highest ${statLabel(statId)} ally.`
-        : `${provider.name}'s ${modifier.abilityName} can increase ${recipient.name}'s ${statLabel(statId)}, which supports ${abilityOutputSummary(matchedOutputs)}.`;
-      traces.push(makeDependencyTrace({
-        id: `stat-scaling-${modifier.id}-${recipientId}-${statId}`,
-        matchKind: 'stat-scaling-support',
-        ruleId: 'stat-scaling-support',
-        source: provider,
-        sourceAbilityId: modifier.abilityId,
-        recipient,
-        recipientAbilityId: matchedOutputs[0]?.abilityId ?? null,
-        channel: 'stat',
-        title: `${statLabel(statId)} Scaling Support`,
-        explanation,
-        requirements,
-        matchedFacts: [
-          `${modifier.abilityName} targets ${targetSelectorSummary(modifier.targetSelector)}.`,
-          ...targetSelectionFacts(formation, dragons, modifier),
-          ...modifierDetails,
-          ...modifierDetails.flatMap((detail) => {
-            const enhancedBy = detail.match(/^Enhanced by ([^.]+)\./i)?.[1]?.trim() ?? null;
-            return enhancedBy ? [`${statLabel(statId)} increase is enhanced by ${provider.name} ${enhancedBy}.`] : [];
-          }),
-          ...matchedOutputs.map((output) => `${output.abilityName} scales with ${statLabel(statId)}.`),
-          ...matchedOutputs.map((output) => `${output.abilityName} ${output.outputKind === 'periodic-status-damage' ? `periodic ${channelLabel(output.channel)}` : channelLabel(output.channel)} scales with ${statLabel(statId)}.`),
-        ],
-        effects: [`${statLabel(statId)} support for ${abilityOutputSummary(matchedOutputs)}`, ...modifierDetails],
-        sourceEvidenceIds: modifier.evidenceIds,
-        recipientEvidenceIds: matchedOutputs.flatMap((output) => output.evidenceIds),
-        assumptions: [
-          'Exact stat-to-effect conversion formula is unknown.',
-          ...(suppressCandidatePreview ? ['Recipient selection is unresolved.'] : []),
-        ],
-        unresolvedQuestions: [
-          'Final value and stacking order are not calculated.',
-          ...(selectionUncertain ? ['Selected recipient identity, candidate comparison values, and tie resolution remain unresolved.'] : []),
-        ],
-        futureOrConditional: capabilityFutureOrConditional(modifier, options) || modifier.conditional || selectionUncertain,
-        modifierCapabilityIds: [modifier.id],
-        matchedOutputCapabilityIds: matchedOutputs.map((output) => output.id),
-        exactResultUnknownReason: selectionUncertain
-          ? `Exact final ${statLabel(statId)} support cannot be calculated because selected recipient identity, candidate comparison values, tie resolution, and final stat formula remain unresolved.`
-          : activationUncertain
-            ? `${recipient.name} is the resolved recipient if ${modifier.abilityName} activates; activation success and the final output formula remain unresolved.`
-          : undefined,
-      }));
+      const commonFacts = [
+        `${modifier.abilityName} targets ${targetSelectorSummary(modifier.targetSelector)}.`,
+        ...targetSelectionFacts(formation, dragons, modifier),
+        ...modifierDetails,
+        ...modifierDetails.flatMap((detail) => {
+          const enhancedBy = detail.match(/^Enhanced by ([^.]+)\./i)?.[1]?.trim() ?? null;
+          return enhancedBy ? [`${statLabel(statId)} increase is enhanced by ${provider.name} ${enhancedBy}.`] : [];
+        }),
+      ];
+      if (matchedOutputs.length > 0) {
+        const outputSummary = abilityOutputSummary(matchedOutputs);
+        const explanation = selectionUncertain
+          ? `${provider.name}'s ${modifier.abilityName} can increase ${recipient.name}'s ${statLabel(statId)}, which supports ${outputSummary}. This consequence applies only if ${recipient.name} resolves as the selected highest ${statLabel(statId)} ally.`
+          : `${provider.name}'s ${modifier.abilityName} can increase ${recipient.name}'s ${statLabel(statId)}, which supports ${outputSummary}.`;
+        traces.push(makeDependencyTrace({
+          id: `stat-scaling-${modifier.id}-${recipientId}-${statId}`,
+          matchKind: 'stat-scaling-support',
+          ruleId: 'stat-scaling-support',
+          source: provider,
+          sourceAbilityId: modifier.abilityId,
+          recipient,
+          recipientAbilityId: matchedOutputs[0]?.abilityId ?? null,
+          channel: 'stat',
+          title: `${statLabel(statId)} Scaling Support`,
+          explanation,
+          requirements: [
+            ...baseRequirements,
+            ...matchedOutputs.flatMap((output) => outputRequirementTraces(output, options)),
+          ],
+          matchedFacts: [
+            ...commonFacts,
+            ...matchedOutputs.map((output) => `${output.abilityName} scales with ${statLabel(statId)}.`),
+            ...matchedOutputs.map((output) => `${output.abilityName} ${output.outputKind === 'periodic-status-damage' ? `periodic ${channelLabel(output.channel)}` : channelLabel(output.channel)} scales with ${statLabel(statId)}.`),
+          ],
+          effects: [`${statLabel(statId)} support for ${outputSummary}`, ...modifierDetails],
+          sourceEvidenceIds: modifier.evidenceIds,
+          recipientEvidenceIds: matchedOutputs.flatMap((output) => output.evidenceIds),
+          assumptions: [
+            'Exact stat-to-effect conversion formula is unknown.',
+            ...(suppressCandidatePreview ? ['Recipient selection is unresolved.'] : []),
+          ],
+          unresolvedQuestions: [
+            'Final value and stacking order are not calculated.',
+            ...(selectionUncertain ? ['Selected recipient identity, candidate comparison values, and tie resolution remain unresolved.'] : []),
+          ],
+          futureOrConditional: capabilityFutureOrConditional(modifier, options) || modifier.conditional || selectionUncertain,
+          modifierCapabilityIds: [modifier.id],
+          matchedOutputCapabilityIds: matchedOutputs.map((output) => output.id),
+          exactResultUnknownReason: selectionUncertain
+            ? `Exact final ${statLabel(statId)} support cannot be calculated because selected recipient identity, candidate comparison values, tie resolution, and final stat formula remain unresolved.`
+            : activationUncertain
+              ? `${recipient.name} is the resolved recipient if ${modifier.abilityName} activates; activation success and the final output formula remain unresolved.`
+              : undefined,
+        }));
+      }
+      if (matchedModifiers.length > 0) {
+        const modifierSummary = statScalingDependentSummary([], matchedModifiers);
+        const explanation = selectionUncertain
+          ? `${provider.name}'s ${modifier.abilityName} can increase ${recipient.name}'s ${statLabel(statId)}, which supports ${modifierSummary}. This consequence applies only if ${recipient.name} resolves as the selected highest ${statLabel(statId)} ally.`
+          : `${provider.name}'s ${modifier.abilityName} can increase ${recipient.name}'s ${statLabel(statId)}, which supports ${modifierSummary}.`;
+        traces.push(makeDependencyTrace({
+          id: `stat-modifier-scaling-${modifier.id}-${recipientId}-${statId}`,
+          matchKind: 'stat-scaling-support',
+          ruleId: 'stat-scaling-support',
+          source: provider,
+          sourceAbilityId: modifier.abilityId,
+          recipient,
+          recipientAbilityId: matchedModifiers[0]?.abilityId ?? null,
+          channel: 'stat',
+          title: `${statLabel(statId)} Scaling Support`,
+          explanation,
+          requirements: [
+            ...baseRequirements,
+            ...matchedModifiers.flatMap((dependent) => providerRequirementTraces(dependent, formation, dragons, options)),
+          ],
+          matchedFacts: [
+            ...commonFacts,
+            ...matchedModifiers.map((dependent) => `${dependentModifierSummary(dependent)} scales with ${recipient.name}'s ${statLabel(statId)}.`),
+          ],
+          effects: [`${statLabel(statId)} support for ${modifierSummary}`, ...modifierDetails],
+          sourceEvidenceIds: modifier.evidenceIds,
+          recipientEvidenceIds: matchedModifiers.flatMap((dependent) => dependent.evidenceIds),
+          assumptions: [
+            'Exact stat-to-effect conversion formula is unknown.',
+            'Modifier-combination behavior is unresolved.',
+            ...(suppressCandidatePreview ? ['Recipient selection is unresolved.'] : []),
+          ],
+          unresolvedQuestions: [
+            `Final ${statLabel(statId)}-scaling formula and modifier-combination behavior are not calculated.`,
+            ...(selectionUncertain ? ['Selected recipient identity, candidate comparison values, and tie resolution remain unresolved.'] : []),
+          ],
+          futureOrConditional: capabilityFutureOrConditional(modifier, options) ||
+            matchedModifiers.some((dependent) => capabilityFutureOrConditional(dependent, options) || dependent.conditional) ||
+            modifier.conditional ||
+            selectionUncertain,
+          modifierCapabilityIds: [modifier.id],
+          matchedModifierCapabilityIds: matchedModifiers.map((dependent) => dependent.id),
+          exactResultUnknownReason: selectionUncertain
+            ? `Exact final ${statLabel(statId)} support cannot be calculated because selected recipient identity, candidate comparison values, tie resolution, and final stat formula remain unresolved.`
+            : activationUncertain
+              ? `${recipient.name} is the resolved recipient if ${modifier.abilityName} activates; activation success and the final modifier-scaling formula remain unresolved.`
+              : `Exact final ${dependentModifierExactResultSubject(matchedModifiers)} cannot be calculated because modifier-combination behavior and the final ${statLabel(statId)}-scaling formula remain unresolved.`,
+        }));
+      }
     }
   }
   return traces;
+}
+
+function statScalingDependentSummary(outputs: OutputCapability[], modifiers: ModifierCapability[]): string {
+  return uniqueOrdered([
+    ...(outputs.length > 0 ? [abilityOutputSummary(outputs)] : []),
+    ...modifiers.map(dependentModifierSummary),
+  ]).join('; ');
+}
+
+function dependentModifierSummary(modifier: ModifierCapability): string {
+  const stat = statIdFromText(modifier.label);
+  if (modifier.role === 'enemy-debuff' && stat) {
+    return `${modifier.abilityName}'s Enemy ${statLabel(stat)} reduction`;
+  }
+  const label = modifier.label.split(':').pop()?.trim() ?? channelLabel(modifier.channel);
+  return `${modifier.abilityName}'s ${label.replace(/\bDown\b/i, 'reduction').replace(/\bUp\b/i, 'increase')}`;
+}
+
+function dependentModifierExactResultSubject(modifiers: ModifierCapability[]): string {
+  if (modifiers.length === 1) {
+    const modifier = modifiers[0]!;
+    const stat = statIdFromText(modifier.label);
+    if (modifier.role === 'enemy-debuff' && stat) {
+      return `Enemy ${statLabel(stat)} reduction`;
+    }
+    return dependentModifierSummary(modifier);
+  }
+  return 'dependent modifier values';
 }
 
 function targetCandidatePositions(
@@ -6126,6 +6219,7 @@ function makeDependencyTrace({
   modifier = null,
   modifierCapabilityIds,
   matchedOutputCapabilityIds,
+  matchedModifierCapabilityIds,
   targetSelectionGroup,
   damageScope = null,
   exactResultUnknownReason,
@@ -6152,6 +6246,7 @@ function makeDependencyTrace({
   modifier?: ModifierCapability | null;
   modifierCapabilityIds?: string[];
   matchedOutputCapabilityIds?: string[];
+  matchedModifierCapabilityIds?: string[];
   targetSelectionGroup?: SynergyTrace['targetSelectionGroup'];
   damageScope?: DefensiveDamageScope | null;
   exactResultUnknownReason?: string;
@@ -6195,6 +6290,7 @@ function makeDependencyTrace({
     modifierCapabilityId: modifier?.id ?? undefined,
     modifierCapabilityIds: modifierCapabilityIds ?? (modifier ? [modifier.id] : undefined),
     matchedOutputCapabilityIds,
+    matchedModifierCapabilityIds,
     interactionScope: interactionScopeForTrace(source.id, recipient.id, matchKind),
     damageScope,
     targetSelectionGroup,
@@ -8465,7 +8561,15 @@ function baseModifier(
     activationChanceFixed: effect.activationRoll?.chanceFixed ?? schedule.activationRoll?.chanceFixed ?? schedule.triggerChanceFixed,
     activationChanceByHabitLevel: activationChanceByHabitLevel(schedule, effect),
     durationRounds: effect.durationRounds,
+    scalingStats: scalingStatsForEffect(effect),
   };
+}
+
+function scalingStatsForEffect(effect: AbilityEffect): DragonStatId[] {
+  const stats = effect.scaling
+    .map((item) => statIdFromText(item))
+    .filter((stat): stat is DragonStatId => Boolean(stat));
+  return [...new Set(stats)];
 }
 
 function stackValuePerStack(stack: StackConfiguration): number | null {

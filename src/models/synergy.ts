@@ -110,6 +110,7 @@ export interface SynergyTrace {
   modifierCapabilityId?: string | null;
   modifierCapabilityIds?: string[];
   matchedOutputCapabilityIds?: string[];
+  matchedModifierCapabilityIds?: string[];
   sourceScopeResults?: CapabilityMatch[];
   interactionScope?: InteractionScope;
   damageScope?: DefensiveDamageScope | null;
@@ -337,6 +338,7 @@ export interface ModifierCapability {
   activationChanceFixed?: number | null;
   activationChanceByHabitLevel?: RankedValue[];
   durationRounds?: number | null;
+  scalingStats?: DragonStatId[];
 }
 
 export interface CapabilityMatch {

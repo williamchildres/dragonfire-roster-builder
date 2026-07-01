@@ -1627,6 +1627,7 @@ function TraceCard({ trace }: { trace: SynergyTrace }) {
       <TraceList title="Matched effect tags and facts" items={trace.matchedFacts} />
       <TraceList title="Modifier capabilities" items={trace.modifierCapabilityIds ?? (trace.modifierCapabilityId ? [trace.modifierCapabilityId] : [])} />
       <TraceList title="Matched output capabilities" items={trace.matchedOutputCapabilityIds ?? []} />
+      <TraceList title="Matched modifier capabilities" items={trace.matchedModifierCapabilityIds ?? []} />
       <TraceList
         title="Source-scope compatibility"
         items={sourceScopeCompatibilityItems(trace)}
