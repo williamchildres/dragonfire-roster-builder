@@ -74,10 +74,10 @@ describe('Sheepstealer Prey framework pass 12', () => {
       return acc;
     }, {});
 
-    expect(traces).toHaveLength(61);
+    expect(traces).toHaveLength(62);
     expect(counts).toMatchObject({
       active: 22,
-      potential: 20,
+      potential: 21,
       inactive: 14,
       blocked: 1,
       'not-applicable': 1,

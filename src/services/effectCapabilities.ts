@@ -587,7 +587,7 @@ export function analyzeCapabilityAmplifications(
     ...analyzeRecipientSideAllySupport(formation, dragons, modifiers, options),
     ...analyzeFriendlyImpairments(formation, dragons, modifiers, options),
     ...analyzeDirectStatSupport(formation, dragons, modifiers, options),
-    ...analyzeStatScalingSupport(formation, dragons, outputs, modifiers, options),
+    ...analyzeStatScalingSupport(formation, dragons, outputsWithPeriodic, modifiers, options),
     ...analyzeEnemyMitigationReduction(formation, dragons, outputsWithPeriodic, modifiers, options),
     ...analyzeEnemyDamageDealtReductions(formation, dragons, modifiers, options),
     ...analyzeEnemyReceivedReductions(formation, dragons, modifiers, options),
@@ -595,6 +595,7 @@ export function analyzeCapabilityAmplifications(
     ...analyzePeriodicStatusDamage(formation, dragons, periodicDamage, statusOutputs, options),
     ...analyzePeriodicDamageAmplification(formation, dragons, periodicDamage, outputsWithPeriodic, modifiers, options),
     ...analyzeSelfStatusRemoval(formation, dragons, options),
+    ...analyzeEnemyPositiveEffectRemoval(formation, dragons, options),
     ...analyzeStatusRemovalSupport(formation, dragons, statusOutputs, options),
   ];
 }
@@ -1054,7 +1055,8 @@ function enhancementDetail(effect: AbilityEffect): string | null {
   const statScaling = effect.scaling
     .map((item) => statIdFromText(item))
     .filter((stat): stat is DragonStatId => Boolean(stat));
-  return statScaling.length > 0 ? `Scaling stat: ${joinEnglishList(uniqueOrdered(statScaling.map(statLabel)))}.` : null;
+  const scalingStats = uniqueOrdered(statScaling.map(statLabel));
+  return scalingStats.length > 0 ? `Enhanced by ${joinEnglishList(scalingStats)}. Scaling stat: ${joinEnglishList(scalingStats)}.` : null;
 }
 
 function outputTargetingDetail(output: OutputCapability, effect: AbilityEffect): string | null {
@@ -1583,7 +1585,7 @@ function analyzeDefensiveAllySupport(
         futureOrConditional: defensiveModifierTraceIsConditional(modifier) || (modifier.futureAvailable && options.previewMaxRankInteractions === true),
         modifier,
         damageScope: modifier.damageScope,
-        exactResultUnknownReason: stackReason ?? stackSelfModifierExactReason(modifier, context) ?? thresholdNoActivationReason ?? 'Exact final mitigated damage cannot be calculated because activation success, modifier or support uptime, refresh or combination behavior, and final mitigation formula are unresolved.',
+        exactResultUnknownReason: stackReason ?? stackSelfModifierExactReason(modifier, context) ?? thresholdNoActivationReason ?? exclusiveOptionDefensiveReason(modifier) ?? deterministicDefensiveExactReason(modifier, context) ?? 'Exact final mitigated damage cannot be calculated because activation success, modifier or support uptime, refresh or combination behavior, and final mitigation formula are unresolved.',
         targetSelectionGroup: singleResolvedAdjacentAlly
           ? {
               targetCount: 1,
@@ -1654,7 +1656,7 @@ function analyzeInternalSelfModifiers(
       futureOrConditional: capabilityFutureOrConditional(modifier, options) || defensiveModifierTraceIsConditional(modifier) || stackModifierTraceIsConditional(context),
       modifier,
       damageScope: modifier.damageScope,
-      exactResultUnknownReason: stackSelfModifierExactReason(modifier, context),
+      exactResultUnknownReason: stackSelfModifierExactReason(modifier, context) ?? exclusiveOptionDefensiveReason(modifier) ?? deterministicDefensiveExactReason(modifier, context) ?? undefined,
     }));
   }
   return traces;
@@ -2089,6 +2091,39 @@ function defensiveModifierAssumptions(
     return ['Trigger chance may make this conditional rather than guaranteed.'];
   }
   return ['Threshold eligibility may make this conditional rather than guaranteed.'];
+}
+
+function exclusiveOptionDefensiveReason(modifier: ModifierCapability): string | null {
+  if (!modifier.conditions.some((condition) => /exclusive one-of selection/i.test(condition.label))) {
+    return null;
+  }
+  const channel = damageReceivedLabel(modifier.damageScope);
+  return `Exact final ${channel} mitigation cannot be calculated because whether that defensive channel is selected for the round, the unresolved selection method, incoming damage, combination behavior, and the final mitigation formula remain unresolved.`;
+}
+
+function deterministicDefensiveExactReason(
+  modifier: ModifierCapability,
+  context: { ability: AbilityDefinition; schedule: AbilitySchedule; effect: AbilityEffect } | null,
+): string | null {
+  const hasChance = modifier.activationChanceFixed !== null ||
+    (modifier.activationChanceByHabitLevel?.length ?? 0) > 0 ||
+    context?.schedule.activationRoll ||
+    context?.schedule.triggerChanceFixed !== null ||
+    (context?.schedule.triggerChanceByHabitLevel.length ?? 0) > 0 ||
+    context?.effect.activationRoll;
+  const hasRuntimeCondition = modifier.conditions.some((condition) =>
+    !/exclusive one-of selection/i.test(condition.label) &&
+    !/battle-context/i.test(condition.kind ?? ''),
+  );
+  const hasThreshold = [
+    ...modifier.conditions,
+    ...(context?.effect.conditions ?? []),
+    ...(context?.schedule.conditions ?? []),
+  ].some((condition) => /Troop Capacity|threshold/i.test(condition.description));
+  if (hasChance || hasRuntimeCondition || hasThreshold || modifier.valuePerStack !== null || context?.effect.stack) {
+    return null;
+  }
+  return 'Exact final mitigated damage cannot be calculated because incoming damage, modifier-combination behavior, and the final mitigation formula remain unresolved.';
 }
 
 function defensiveModifierTargetFacts(
@@ -3617,6 +3652,10 @@ function analyzeStatusConditionEnablement(
           explanation,
           requirements,
           matchedFacts: [
+            `Supplied status ID: ${statusOutput.statusId}.`,
+            ...(dependency.statusId ? [`Required status ID: ${dependency.statusId}.`] : []),
+            ...(dependency.statusCategoryId ? [`Required status category ID: ${dependency.statusCategoryId}.`] : []),
+            `Status dependency type: ${dependency.type}.`,
             ...(output.sourceEffectId ? [`Receiving source effect ID: ${output.sourceEffectId}.`] : []),
             ...dependency.notes,
             ...categoryFacts.facts,
@@ -3637,6 +3676,9 @@ function analyzeStatusConditionEnablement(
           unresolvedQuestions: [statusDependencyUnresolvedQuestion(dependency, statusLabel(statusOutput.statusId), recipientResolution)],
           futureOrConditional: true,
           targetSelectorSummary: dependentTargetSelectorSummary,
+          exactResultUnknownReason: `Exact ${statusLabel(statusOutput.statusId)} prerequisite enablement cannot be calculated because supplier application success, dependent activation success, same-target overlap, same-round action order, roll scope, and final branch outcomes are unresolved.`,
+          modifierCapabilityIds: [statusOutput.id],
+          matchedOutputCapabilityIds: [output.id],
         }));
       }
     }
@@ -3770,8 +3812,15 @@ function analyzeStatScalingSupport(
         explanation: `${provider.name}'s ${modifier.abilityName} can increase ${recipient.name}'s ${statLabel(statId)}, which supports ${abilityOutputSummary(matchedOutputs)}.`,
         requirements,
         matchedFacts: [
+          `${modifier.abilityName} targets ${targetSelectorSummary(modifier.targetSelector)}.`,
+          ...targetSelectionFacts(formation, dragons, modifier),
           ...modifierDetails,
+          ...modifierDetails.flatMap((detail) => {
+            const enhancedBy = detail.match(/^Enhanced by ([^.]+)\./i)?.[1]?.trim() ?? null;
+            return enhancedBy ? [`${statLabel(statId)} increase is enhanced by ${provider.name} ${enhancedBy}.`] : [];
+          }),
           ...matchedOutputs.map((output) => `${output.abilityName} scales with ${statLabel(statId)}.`),
+          ...matchedOutputs.map((output) => `${output.abilityName} ${output.outputKind === 'periodic-status-damage' ? `periodic ${channelLabel(output.channel)}` : channelLabel(output.channel)} scales with ${statLabel(statId)}.`),
         ],
         effects: [`${statLabel(statId)} support for ${abilityOutputSummary(matchedOutputs)}`, ...modifierDetails],
         sourceEvidenceIds: modifier.evidenceIds,
@@ -3783,6 +3832,8 @@ function analyzeStatScalingSupport(
           'Final value and stacking order are not calculated.',
         ],
         futureOrConditional: capabilityFutureOrConditional(modifier, options) || modifier.conditional,
+        modifierCapabilityIds: [modifier.id],
+        matchedOutputCapabilityIds: matchedOutputs.map((output) => output.id),
       }));
     }
   }
@@ -4077,6 +4128,22 @@ function targetSelectionFacts(
   const casterId = providerPosition ? formation[providerPosition] : null;
   if (casterId && eligiblePositions.includes(providerPosition!)) {
     facts.push(`${dragonById(dragons, casterId)?.name ?? casterId} ${statLabel(statId)}: ${observedStatValue(dragons, casterId, statId) ?? 'unknown'}.`);
+  }
+  const candidates = eligiblePositions
+    .map((position) => formation[position])
+    .filter((dragonId): dragonId is string => Boolean(dragonId))
+    .map((dragonId) => ({
+      dragonId,
+      name: dragonById(dragons, dragonId)?.name ?? dragonId,
+      value: observedStatValue(dragons, dragonId, statId),
+    }));
+  const numericCandidates = candidates.filter((candidate): candidate is { dragonId: string; name: string; value: number } => candidate.value !== null);
+  if (numericCandidates.length === candidates.length && numericCandidates.length > 0) {
+    const highest = Math.max(...numericCandidates.map((candidate) => candidate.value));
+    const winners = numericCandidates.filter((candidate) => candidate.value === highest);
+    if (winners.length === 1) {
+      facts.push(`${winners[0]!.name} resolves as the highest ${statLabel(statId)} recipient.`);
+    }
   }
   return uniqueOrdered(facts);
 }
@@ -5692,6 +5759,94 @@ function analyzeStatusRemovalSupport(
   return traces;
 }
 
+function analyzeEnemyPositiveEffectRemoval(
+  formation: FormationAnalysisInput,
+  dragons: Dragon[],
+  options: CapabilityOptions,
+): SynergyTrace[] {
+  const traces: SynergyTrace[] = [];
+  for (const provider of dragons.filter((dragon) => positionOf(formation, dragon.id))) {
+    for (const ability of allAbilities(provider)) {
+      for (const schedule of ability.schedules) {
+        for (const effect of schedule.effects.filter((item) =>
+          item.type === 'Cleanse Positive' &&
+          targetSideForEffect(item) === 'enemy',
+        )) {
+          const requirements = availabilityRequirements({
+            dragonId: provider.id,
+            abilityId: ability.id,
+            dragonName: provider.name,
+            abilityName: ability.name,
+            unlockStarRank: ability.unlockStarRank,
+            minimumDragonLevel: ability.minimumDragonLevel,
+            requiredHabitLevel: ability.kind === 'habit' ? 1 : null,
+            evidenceIds: ability.evidenceIds,
+            sourceKind: ability.kind,
+          }, options);
+          const attemptCount = schedule.attempts?.attemptCount ?? 1;
+          const attemptChance = schedule.attempts?.chanceFixed !== null && schedule.attempts?.chanceFixed !== undefined
+            ? `${schedule.attempts.chanceFixed}%`
+            : 'unknown';
+          const timing = formatScheduleDescription(schedule, { style: 'sentence' }) ?? 'Each round';
+          const trace = makeDependencyTrace({
+            id: `enemy-positive-effect-removal-${ability.id}-${schedule.id}-${effect.id}`,
+            matchKind: 'status-removal',
+            ruleId: 'enemy-positive-effect-removal',
+            source: provider,
+            sourceAbilityId: ability.id,
+            recipient: provider,
+            recipientAbilityId: null,
+            channel: 'status',
+            title: `${ability.name} - Enemy positive-effect removal`,
+            explanation: `${provider.name}'s ${ability.name} can remove positive effects from enemies. ${timing}, it makes up to ${attemptCount} independent ${attemptChance} attempts; each attempt independently targets one enemy in any lane and each success removes one positive effect from that enemy.`,
+            requirements,
+            matchedFacts: [
+              `Source effect ID: ${effect.id}.`,
+              `Schedule ID: ${schedule.id}.`,
+              `${ability.name} includes ${effect.type}.`,
+              `Timing: ${timing}.`,
+              `Attempt count: up to ${attemptCount}.`,
+              `Attempt chance: ${attemptChance}.`,
+              schedule.attempts?.independentlyRolled ? 'Attempts are independently rolled.' : 'Attempt roll sharing is unresolved.',
+              schedule.attempts?.independentlyTargeted ? 'Attempts are independently targeted.' : 'Attempt target sharing is unresolved.',
+              `Target: ${effect.target}.`,
+              `Lane scope: ${effect.targetScope}.`,
+              'Repeated targets are not ruled out by the source data.',
+            ],
+            effects: [
+              'Each successful attempt removes one positive effect from the selected enemy.',
+              'A removable positive effect is not guaranteed to be present.',
+            ],
+            sourceEvidenceIds: ability.evidenceIds,
+            recipientEvidenceIds: [],
+            assumptions: [
+              'No distinct-target guarantee is assumed for repeated attempts.',
+              'No guaranteed removable positive effect is assumed.',
+            ],
+            unresolvedQuestions: [
+              'Attempt success is unresolved.',
+              'Selected enemy identity is unresolved.',
+              'Whether the selected enemy has a removable positive effect is unresolved.',
+              'Which positive effect is removed is unresolved.',
+              'Repeated-target behavior is unresolved.',
+            ],
+            futureOrConditional: true,
+            targetSelectorSummary: targetSelectorSummary(targetForEffect(effect)),
+            exactResultUnknownReason: "Exact positive-effect removal cannot be determined because each attempt's success, selected enemy identity, whether that enemy has a removable positive effect, which positive effect is removed, and repeated-target behavior remain unresolved.",
+          });
+          traces.push({
+            ...trace,
+            recipientDragonId: null,
+            recipientAbilityId: null,
+            interactionScope: 'enemy-side',
+          });
+        }
+      }
+    }
+  }
+  return traces;
+}
+
 function analyzeSelfStatusRemoval(
   formation: FormationAnalysisInput,
   dragons: Dragon[],
@@ -6508,7 +6663,11 @@ function conditionalMultiplierValueFacts(
     : multiplier.directlyVerifiedValues.length === 1
       ? multiplier.directlyVerifiedValues[0]
       : undefined;
-  if (!base || !enhanced || (isHabitRankedOutput && level === null)) {
+  const calculatedEnhanced = base && multiplier.multiplier
+    ? { level: base.level, value: base.value * multiplier.multiplier, unit: base.unit }
+    : undefined;
+  const resolvedEnhanced = enhanced ?? calculatedEnhanced;
+  if (!base || !resolvedEnhanced || (isHabitRankedOutput && level === null)) {
     return {
       facts: [`Conditional multiplier: ${multiplier.multiplier}x.`],
       effects: [`Conditional multiplier: ${multiplier.multiplier}x`],
@@ -6516,7 +6675,7 @@ function conditionalMultiplierValueFacts(
     };
   }
   const baseValue = formatValue(base.value, base.unit);
-  const enhancedValue = formatValue(enhanced.value, enhanced.unit);
+  const enhancedValue = formatValue(resolvedEnhanced.value, resolvedEnhanced.unit);
   const channel = channelLabel(output.channel);
   const eligibility = effect.conditions?.find((condition) => condition.kind === 'target-has-output-capability');
   const targetFact = receivingTargetFact(effect);

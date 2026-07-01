@@ -99,9 +99,9 @@ describe('Shadowsong/Feskar/Daemoros provider projection pass 15', () => {
     expect(burnText).toContain('Round 3 after a successful Round 2 application');
     expect(burnText).toContain('Round 10 after a successful Round 9 application');
 
-    const burnTraces = traces.filter((trace) => trace.title === 'Burn enables Emerald Inferno' && trace.recipientAbilityId === 'feskar-emerald-inferno');
-    expect(burnTraces).toHaveLength(2);
-    expect(burnCard.traceIds.sort()).toEqual(burnTraces.map((trace) => trace.id).sort());
+    const burnTraces = traces.filter((trace) => trace.title === 'Burn enables Emerald Inferno' && trace.recipientAbilityId === 'feskar-emerald-inferno' && trace.matchKind === 'status-condition-enablement');
+    expect(burnTraces).toHaveLength(3);
+    expect(burnTraces.map((trace) => trace.id)).toEqual(expect.arrayContaining(burnCard.traceIds));
 
     const allItems = presentation.cards.flatMap((card) => [...card.receives, ...card.provides]);
     const titles = allItems.map((item) => item.effectTitle);

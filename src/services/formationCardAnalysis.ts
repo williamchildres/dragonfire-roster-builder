@@ -41,6 +41,16 @@ export interface FormationCardInteraction {
   traceIds: string[];
   isRecipientModifier: boolean;
   presentationFamily: string;
+  statusDependency: StatusDependencyCardMetadata | null;
+}
+
+interface StatusDependencyCardMetadata {
+  prerequisiteKey: string;
+  dependencyType: string;
+  dependentAbilityId: string;
+  dependentOutputCapabilityIds: string[];
+  dependentChannel: string;
+  dependentTargetSummary: string;
 }
 
 export interface FormationTraitStatus {
@@ -476,6 +486,45 @@ function toCardInteraction({
     traceIds: [trace.id],
     isRecipientModifier: trace.matchKind === 'incoming-effect-amplification' && Boolean(trace.recipientModifierType),
     presentationFamily,
+    statusDependency: statusDependencyCardMetadata(trace),
+  };
+}
+
+function statusDependencyCardMetadata(trace: SynergyTrace): StatusDependencyCardMetadata | null {
+  if (trace.matchKind !== 'status-condition-enablement' || !trace.recipientAbilityId || !(trace.matchedOutputCapabilityIds?.length)) {
+    return null;
+  }
+  if (!trace.matchedOutputCapabilityIds.some((id) => /\bdamage-rate-output\b/i.test(id))) {
+    return null;
+  }
+  const text = traceTextForPresentation(trace);
+  const suppliedStatusId = text.match(/\bSupplied status ID:\s*([A-Za-z0-9_.-]+)\./i)?.[1] ?? null;
+  const requiredStatusId = text.match(/\bRequired status ID:\s*([A-Za-z0-9_.-]+)\./i)?.[1] ?? null;
+  const requiredStatusCategoryId = text.match(/\bRequired status category ID:\s*([A-Za-z0-9_.-]+)\./i)?.[1] ?? null;
+  const suppliedStatusLabel = text.match(/\bSupplied status:\s*([^.]+)\./i)?.[1]?.trim() ?? null;
+  const requiredStatusLabel = text.match(/\bRequired status category:\s*([^.]+)\./i)?.[1]?.trim() ?? null;
+  const dependencyType = text.match(/\bStatus dependency type:\s*([A-Za-z0-9_.-]+)\./i)?.[1] ?? 'unknown';
+  const prerequisiteKey = requiredStatusCategoryId
+    ? `category:${requiredStatusCategoryId}`
+    : requiredStatusId
+      ? `status:${requiredStatusId}`
+      : suppliedStatusId
+        ? `status:${suppliedStatusId}`
+        : requiredStatusLabel
+          ? `category-label:${normalizeText(requiredStatusLabel)}`
+          : suppliedStatusLabel
+            ? `status-label:${normalizeText(suppliedStatusLabel)}`
+            : '';
+  if (!prerequisiteKey) {
+    return null;
+  }
+  return {
+    prerequisiteKey,
+    dependencyType,
+    dependentAbilityId: trace.recipientAbilityId,
+    dependentOutputCapabilityIds: [...trace.matchedOutputCapabilityIds].sort(),
+    dependentChannel: trace.channel ?? 'status',
+    dependentTargetSummary: normalizeText(trace.targetSelectorSummary ?? ''),
   };
 }
 
@@ -1202,6 +1251,12 @@ function summarizeTrace(
     return [detail.replace(`${source.name}'s `, '').replace(recipient ? `${recipient.name}'s ` : '', '')];
   }
   if (trace.matchKind === 'status-removal') {
+    if (trace.ruleId === 'enemy-positive-effect-removal') {
+      return [
+        'Each round, Cleansing Wrath makes up to three independent 20% attempts; each attempt targets one enemy in any lane and can remove one positive effect.',
+        'Attempt success, enemy identity, removable-effect availability, selected effect, and repeated-target behavior remain unresolved.',
+      ];
+    }
     if (/Advantage|Weakened|same successful activation/i.test(detail)) {
       return [detail.replace(`${source.name}'s `, '').replace(recipient ? `${recipient.name}'s ` : '', '').replaceAll('1.5x', '1.5Ã—')];
     }
@@ -2463,10 +2518,15 @@ function aggregateInteractions(
 ): FormationCardInteraction[] {
   const grouped = new Map<string, FormationCardInteraction[]>();
   for (const interaction of interactions) {
+    const sharedProviderBenefitKey = direction === 'provides'
+      ? (statusDependencyProviderBenefitKey(interaction, direction) ?? sharedStatusRecipientBenefitKey(interaction))
+      : null;
     const key =
       direction === 'receives'
         ? receivesAggregationKey(interaction)
-        : [interaction.sourceDragonId, interaction.abilityName, interaction.presentationFamily, interactionMechanicKey(interaction), interaction.state].join('|');
+        : sharedProviderBenefitKey
+          ? [interaction.sourceDragonId, interaction.recipientDragonId ?? interaction.targetLabel ?? 'team', sharedProviderBenefitKey, interaction.state].join('|')
+          : [interaction.sourceDragonId, interaction.abilityName, interaction.presentationFamily, interactionMechanicKey(interaction), interaction.state].join('|');
     grouped.set(key, [...(grouped.get(key) ?? []), interaction]);
   }
 
@@ -2480,6 +2540,9 @@ function aggregateInteractions(
       }
       return [mergeInteractions(items, direction, selectedIds)];
     }
+    if (items.every((item) => sharedStatusRecipientBenefitKey(item) !== null || statusDependencyProviderBenefitKey(item, direction) !== null)) {
+      return [mergeInteractions(items, direction, selectedIds)];
+    }
     if (items.some((item) => item.candidateTotal !== null || item.targetLabel !== null || item.isCandidate)) {
       return [mergeInteractions(items, direction, selectedIds)];
     }
@@ -2491,7 +2554,7 @@ function aggregateInteractions(
 }
 
 function receivesAggregationKey(interaction: FormationCardInteraction): string {
-  const sharedBenefitKey = sharedStatusRecipientBenefitKey(interaction);
+  const sharedBenefitKey = statusDependencyProviderBenefitKey(interaction, 'receives') ?? sharedStatusRecipientBenefitKey(interaction);
   if (sharedBenefitKey) {
     return [
       interaction.recipientDragonId ?? interaction.targetLabel ?? 'team',
@@ -2580,9 +2643,32 @@ function sharedEnhancementTitleSuffix(title: string): string {
 
 function sharedStatusRecipientBenefitText(items: FormationCardInteraction[]): string {
   return items
-    .flatMap((item) => [item.summary, ...item.summaryLines])
+    .flatMap((item) => [item.summary, ...item.summaryLines, item.detail, ...item.details, ...item.effects])
     .filter((line): line is string => Boolean(line))
     .join(' ');
+}
+
+function statusDependencyProviderBenefitKey(
+  interaction: FormationCardInteraction,
+  direction: 'receives' | 'provides',
+): string | null {
+  const metadata = interaction.statusDependency;
+  if (!metadata || !interaction.recipientDragonId || interaction.isCandidate || interaction.targetLabel) {
+    return null;
+  }
+  return [
+    'status-condition-dependency',
+    direction,
+    interaction.sourceDragonId,
+    interaction.recipientDragonId,
+    metadata.prerequisiteKey,
+    metadata.dependencyType,
+    metadata.dependentAbilityId,
+    metadata.dependentOutputCapabilityIds.join(','),
+    metadata.dependentChannel,
+    metadata.dependentTargetSummary,
+    interaction.state,
+  ].join('|');
 }
 
 function sharedStatusRecipientBenefitRateValues(text: string): { baseRate: string; enhancedRate: string } | null {
@@ -2603,6 +2689,9 @@ function sharedStatusRecipientBenefitRateValues(text: string): { baseRate: strin
 
 function canAggregateReceivesGroup(items: FormationCardInteraction[]): boolean {
   if (items.length <= 1) {
+    return true;
+  }
+  if (items.every((item) => statusDependencyProviderBenefitKey(item, 'receives') !== null)) {
     return true;
   }
   if (items.every((item) => sharedStatusRecipientBenefitKey(item) !== null)) {
@@ -2915,7 +3004,7 @@ function mergedSummaryLines(
 }
 
 function compactSharedStatusRecipientBenefitSummaryLines(items: FormationCardInteraction[]): string[] {
-  if (items.length <= 1 || items.some((item) => sharedStatusRecipientBenefitKey(item) === null)) {
+  if (items.length <= 1) {
     return [];
   }
   const text = sharedStatusRecipientBenefitText(items);
@@ -2929,12 +3018,29 @@ function compactSharedStatusRecipientBenefitSummaryLines(items: FormationCardInt
   if (!base || !enhanced) {
     return [];
   }
+  if (items.every((item) => statusDependencyProviderBenefitKey(item, 'provides') !== null)) {
+    const supplierItems = [...items].sort((left, right) => sharedStatusSupplierOrder(left) - sharedStatusSupplierOrder(right));
+    const supplierLines = supplierItems.map((item, index) => sharedStatusSupplierSummaryLine(item, { independent: index > 0 }));
+    const dependentSchedule = commonDependentSchedule(supplierItems);
+    const metric = sharedStatusDependentMetricLabel(text);
+    if (supplierLines.some((line) => line === null) || !dependentSchedule || !metric) {
+      return [];
+    }
+    return [
+      ...(supplierLines as string[]),
+      `Against the same otherwise-eligible ${statusParticiple(status)} enemy, ${dependent} ${metric} increases from ${base} to ${enhanced} on ${dependentSchedule}; prior-round ${status} may carry over, while same-round overlap requires the relevant supplier to resolve first.`,
+      'Supplier activation success, eligible enemy identity, same-target overlap, and same-round action order remain unresolved.',
+    ];
+  }
+  if (items.some((item) => sharedStatusRecipientBenefitKey(item) === null)) {
+    return [];
+  }
   const prerequisiteSupplier = items.find((item) => /Prerequisite context:/i.test(interactionText(item)));
   if (prerequisiteSupplier) {
     const nonPrerequisiteSupplierLines = items
       .filter((item) => item !== prerequisiteSupplier)
       .sort((left, right) => sharedStatusSupplierOrder(left) - sharedStatusSupplierOrder(right))
-      .map(sharedStatusSupplierSummaryLine)
+      .map((item) => sharedStatusSupplierSummaryLine(item))
       .filter((line): line is string => Boolean(line));
     const prerequisiteLine = sharedStatusPrerequisiteSupplierSummaryLine(prerequisiteSupplier);
     const dependentStatus = prerequisiteSupplier.title.match(/^(.+?) enables /i)?.[1]?.trim() ??
@@ -2958,7 +3064,7 @@ function compactSharedStatusRecipientBenefitSummaryLines(items: FormationCardInt
     ];
   }
   const supplierItems = [...items].sort((left, right) => sharedStatusSupplierOrder(left) - sharedStatusSupplierOrder(right));
-  const supplierLines = supplierItems.map(sharedStatusSupplierSummaryLine);
+  const supplierLines = supplierItems.map((item) => sharedStatusSupplierSummaryLine(item));
   if (supplierLines.some((line) => line === null)) {
     return [];
   }
@@ -3038,13 +3144,29 @@ function statusApplicationPhraseForSummary(status: string, target: string): stri
 }
 
 function statusParticiple(status: string): string {
+  if (/c$/i.test(status)) {
+    return `${status}ked`;
+  }
   if (/e$/i.test(status)) {
     return `${status}d`;
   }
   return `${status}ed`;
 }
 
-function sharedStatusSupplierSummaryLine(item: FormationCardInteraction): string | null {
+function commonDependentSchedule(items: FormationCardInteraction[]): string | null {
+  const schedules = unique(items
+    .map((item) => interactionText(item).match(/\bDependent schedule:\s*([^.]+)\./i)?.[1]?.trim() ?? null)
+    .filter((value): value is string => Boolean(value)));
+  return schedules.length === 1 ? schedules[0]! : null;
+}
+
+function sharedStatusDependentMetricLabel(text: string): string | null {
+  return text.match(/\bBase(?: current)? ([A-Za-z ]+ Damage Rate):\s*[\d.]+%/i)?.[1]?.trim() ??
+    text.match(/\bEnhanced(?: current)? ([A-Za-z ]+ Damage Rate):\s*[\d.]+%/i)?.[1]?.trim() ??
+    null;
+}
+
+function sharedStatusSupplierSummaryLine(item: FormationCardInteraction, options: { independent?: boolean } = {}): string | null {
   const text = interactionText(item);
   const supplied = text.match(/\bSupplied status:\s*([^.]+)\./i)?.[1]?.trim() ?? item.title.match(/^(.+?) enables /i)?.[1]?.trim() ?? null;
   const chance = text.match(/\bStatus application chance:\s*([\d.]+%)/i)?.[1] ?? null;
@@ -3055,7 +3177,9 @@ function sharedStatusSupplierSummaryLine(item: FormationCardInteraction): string
   const compactLine = text.match(/\b([\d.]+%) chance (each round|on odd-numbered rounds) to apply ([A-Z][A-Za-z-]+) to (.+?) for (\d+ rounds)\./i);
   if (compactLine) {
     const timing = /^on /i.test(compactLine[2]!) ? compactLine[2]!.replace(/^on\s+/i, '') : compactLine[2]!;
-    return `${item.abilityName} checks ${timing}: ${compactLine[1]} chance to apply ${compactLine[3]} to ${compactLine[4]}; ${compactLine[3]} lasts ${compactLine[5]}.`;
+    const target = compactLine[4]!;
+    const priority = /priorit|prefer/i.test(target) ? '' : sharedStatusPriorityPhrase(text);
+    return `${item.abilityName} checks ${timing}${options.independent ? ' independently' : ''}: ${compactLine[1]} chance to apply ${compactLine[3]} to ${target}${priority}; ${compactLine[3]} lasts ${compactLine[5]}.`;
   }
   if (!chance || !duration) {
     return null;
@@ -3065,7 +3189,18 @@ function sharedStatusSupplierSummaryLine(item: FormationCardInteraction): string
   if (!timing || !target) {
     return null;
   }
-  return `${item.abilityName} checks ${timing}: ${chance} chance to apply ${supplied} to ${target}; ${supplied} lasts ${duration}.`;
+  return `${item.abilityName} checks ${timing}${options.independent ? ' independently' : ''}: ${chance} chance to apply ${supplied} to ${target}; ${supplied} lasts ${duration}.`;
+}
+
+function sharedStatusPriorityPhrase(text: string): string {
+  const preferred = text.match(/\bPriority:\s*(?:enemy\s+)?(.+?) is preferred, not guaranteed\./i)?.[1]?.trim() ?? null;
+  if (preferred) {
+    return `, preferring ${preferred}`;
+  }
+  if (/Priority:\s*Warriors are prioritized/i.test(text)) {
+    return ', prioritizing Warriors';
+  }
+  return '';
 }
 
 function sharedStatusSupplierOrder(item: FormationCardInteraction): number {
@@ -3099,14 +3234,15 @@ function sharedStatusTargetPhrase(text: string): string | null {
     return null;
   }
   const lane = text.match(/\bLane scope:\s*([^.]+)\./i)?.[1]?.trim() ?? null;
-  const priority = /Priority:\s*Warriors are prioritized/i.test(text) ? ', prioritizing Warriors' : '';
+  const priority = sharedStatusPriorityPhrase(text);
+  const normalizedTarget = /^same selected enemy$/i.test(target) ? '1 Enemy' : target;
   if (lane && !target.toLowerCase().includes(lane.toLowerCase())) {
     if (/^within\b/i.test(lane)) {
-      return `${target} ${lane}${priority}`;
+      return `${normalizedTarget} ${lane}${priority}`;
     }
-    return `${target} in ${lane}${priority}`;
+    return `${normalizedTarget} in ${lane}${priority}`;
   }
-  return `${target}${priority}`;
+  return `${normalizedTarget}${priority}`;
 }
 
 function enemyAllMatchingTargetSummary(summary: string, text: string): string {
@@ -3628,6 +3764,14 @@ function mergedEffectTitle(
   if (uniqueEffectTitles.length === 1) {
     return uniqueEffectTitles[0]!;
   }
+  if (items.every((item) => statusDependencyProviderBenefitKey(item, 'provides') !== null)) {
+    const text = sharedStatusRecipientBenefitText(items);
+    const requiredStatus = commonSharedRequiredStatusLabel(items) ?? items[0]!.title.match(/^(.+?) enables /i)?.[1]?.trim() ?? 'Status';
+    const dependent = items[0]!.title.match(/ enables (.+)$/i)?.[1]?.trim() ?? 'dependent effect';
+    const metric = sharedStatusDependentMetricLabel(text);
+    const titleMetric = metric && /\bDamage Rate\b/i.test(metric) ? 'damage rate' : metric?.toLowerCase() ?? 'dependent output';
+    return `${requiredStatus} enhances ${dependent} ${titleMetric}`;
+  }
   if (uniqueEffectTitles.every((title) => /Stat support/i.test(title))) {
     return `${first.abilityName} - Stat support`;
   }
@@ -4002,6 +4146,9 @@ function interactionPurpose(trace: SynergyTrace, summaryLines: string[] = []): s
     return 'Conditional status enablement';
   }
   if (trace.matchKind === 'status-removal') {
+    if (trace.ruleId === 'enemy-positive-effect-removal') {
+      return 'Enemy positive-effect removal';
+    }
     return 'Control cleanse';
   }
   if (trace.matchKind === 'friendly-impairment') {

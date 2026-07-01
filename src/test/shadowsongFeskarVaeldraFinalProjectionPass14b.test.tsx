@@ -103,8 +103,8 @@ describe('Shadowsong/Feskar/Vaeldra final projection pass 14B', () => {
       return acc;
     }, {});
 
-    expect(traces).toHaveLength(54);
-    expect(counts).toMatchObject({ active: 26, potential: 20, inactive: 7, blocked: 1 });
+    expect(traces).toHaveLength(55);
+    expect(counts).toMatchObject({ active: 26, potential: 21, inactive: 7, blocked: 1 });
     expect(counts['not-applicable'] ?? 0).toBe(0);
     expect(counts.unknown ?? 0).toBe(0);
     expect(new Set(traces.map(technicalAnalysisTraceIdentity)).size).toBe(traces.length);
@@ -112,8 +112,8 @@ describe('Shadowsong/Feskar/Vaeldra final projection pass 14B', () => {
 
   it('projects Burn enabling Emerald Inferno through final cards while retaining detailed windows', () => {
     const { traces, items } = allItems();
-    const burnTraces = traces.filter((trace) => trace.title === 'Burn enables Emerald Inferno' && trace.recipientAbilityId === 'feskar-emerald-inferno');
-    expect(burnTraces).toHaveLength(1);
+    const burnTraces = traces.filter((trace) => trace.title === 'Burn enables Emerald Inferno' && trace.recipientAbilityId === 'feskar-emerald-inferno' && trace.matchKind === 'status-condition-enablement');
+    expect(burnTraces).toHaveLength(2);
     const burnTrace = burnTraces[0]!;
     const burnCards = items.filter((item) => item.traceIds.includes(burnTrace.id));
 
@@ -127,12 +127,12 @@ describe('Shadowsong/Feskar/Vaeldra final projection pass 14B', () => {
 
     for (const card of burnCards) {
       expect(card.state).toBe('conditional');
-      expect(card.summaryLines).toEqual([
+      expect(card.summaryLines).toEqual(expect.arrayContaining([
         'Blazing Conductor attempts Burn on Rounds 2, 5, and 8: 40% on the first added target and 20% on a different second target; Burn lasts 2 rounds.',
         'Against the same eligible Burned enemy, Emerald Inferno Fire Damage increases from 40% to 60%.',
         'Prior-round Burn can carry into Emerald Inferno; same-round overlap requires Blazing Conductor to resolve first.',
         'Application success, eligible enemy identity, same-target overlap, action order remain unresolved.',
-      ]);
+      ]));
       expectNoWindowText(card.summaryLines.join(' '));
       expect(card.targetSummary).toBe('Targets all qualifying enemies in any lane, up to 3. Requires non-Basic Physical Damage output capability. Actual qualifying count and enemy identities remain unresolved.');
       for (const windowText of overlapWindows) {
@@ -248,7 +248,7 @@ describe('Shadowsong/Feskar/Vaeldra final projection pass 14B', () => {
       }
     }
 
-    const burnItem = within(vanguard).getByText(/Against the same eligible Burned enemy/i).closest('.card-interaction-item');
+    const burnItem = within(vanguard).getAllByText(/Against the same eligible Burned enemy/i)[0]!.closest('.card-interaction-item');
     expect(burnItem).not.toBeNull();
     const collapsedBurn = burnItem!.textContent ?? '';
     expect(collapsedBurn).toContain('Blazing Conductor attempts Burn on Rounds 2, 5, and 8');

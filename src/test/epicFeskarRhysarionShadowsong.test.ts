@@ -611,8 +611,8 @@ describe('Feskar, Rhysarion, and Shadowsong Epic profiles', () => {
     const rhysarionCard = cards.cards.find((card) => card.dragonId === 'rhysarion')!;
     const shadowsongCard = cards.cards.find((card) => card.dragonId === 'shadowsong')!;
 
-    expect(traces).toHaveLength(76);
-    expect(counts).toMatchObject({ active: 30, potential: 37, inactive: 8, blocked: 1, unknown: 0 });
+    expect(traces).toHaveLength(77);
+    expect(counts).toMatchObject({ active: 30, potential: 37, inactive: 9, blocked: 1, unknown: 0 });
     expect(new Set(traces.map(technicalAnalysisTraceIdentity)).size).toBe(traces.length);
     expect(traces.filter((trace) => trace.sourceAbilityId === 'shadowsong-blazing-conductor' && trace.matchKind === 'periodic-status-damage')).toHaveLength(2);
     expect(traces).toEqual(expect.arrayContaining([
@@ -816,10 +816,10 @@ describe('Feskar, Rhysarion, and Shadowsong Epic profiles', () => {
       ['rhysarion-ebbing-fury', 'rhysarion-echoing-melody'].includes(trace.sourceAbilityId ?? '')
     );
     const finalKey = (trace: typeof finalTraces[number]) =>
-      `${trace.matchKind}:${trace.sourceAbilityId}:${trace.recipientDragonId}:${trace.recipientAbilityId}:${trace.channel}:${trace.modifierCapabilityId ?? ''}:${(trace.matchedOutputCapabilityIds ?? []).join(',')}`;
+      `${trace.ruleId}:${trace.matchKind}:${trace.sourceAbilityId}:${trace.recipientDragonId}:${trace.recipientAbilityId}:${trace.channel}:${trace.modifierCapabilityId ?? ''}:${(trace.modifierCapabilityIds ?? []).join(',')}:${(trace.matchedOutputCapabilityIds ?? []).join(',')}`;
 
-    expect(finalTraces).toHaveLength(64);
-    expect(finalCounts).toMatchObject({ active: 35, potential: 18, inactive: 10, blocked: 1, unknown: 0 });
+    expect(finalTraces).toHaveLength(65);
+    expect(finalCounts).toMatchObject({ active: 35, potential: 19, inactive: 10, blocked: 1, unknown: 0 });
     expect(new Set(finalTraces.map(finalKey)).size).toBe(finalTraces.length);
     expect(incomingRecovery.map((trace) => `${trace.sourceAbilityId}:${trace.recipientDragonId}`).sort()).toEqual([
       'rhysarion-ebbing-fury:feskar',
@@ -855,7 +855,7 @@ describe('Feskar, Rhysarion, and Shadowsong Epic profiles', () => {
 
     expect(finalTraces.filter((trace) => trace.sourceAbilityId === 'rhysarion-champions-vigor')).toHaveLength(7);
     expect(finalTraces.filter((trace) => trace.sourceAbilityId === 'shadowsong-scorched-earth')).toHaveLength(1);
-    expect(finalTraces.filter((trace) => trace.sourceAbilityId === 'shadowsong-blazing-conductor')).toHaveLength(3);
+    expect(finalTraces.filter((trace) => trace.sourceAbilityId === 'shadowsong-blazing-conductor')).toHaveLength(4);
     expect(finalTraces.filter((trace) => trace.sourceAbilityId === 'shadowsong-blazing-onslaught')).toHaveLength(6);
     expect(finalTraces.filter((trace) => trace.sourceAbilityId === 'rhysarion-inspiring-melody')).toHaveLength(3);
     expect(finalTraces.filter((trace) => trace.sourceAbilityId === 'feskar-resilient-bond')).toHaveLength(3);
