@@ -27640,7 +27640,7 @@
       "firstObservedInGame": null,
       "format": "dragonfire-dragon-profile",
       "gameVersion": null,
-      "generatedAt": "2026-07-02T00:42:06.981Z",
+      "generatedAt": "2026-07-02T01:21:23.552Z",
       "habits": [
         {
           "abilityClass": "passive",
@@ -30435,8 +30435,8 @@
       "rosterSourceStatus": "official-website",
       "slug": "syrax",
       "source": {
-        "branch": "fix/pass20b-positive-scaled-modifier-support",
-        "commit": "e7d12b7b37e050ab543d541edc50d2c275de980d",
+        "branch": "fix/pass20c-semantic-card-bullet-dedup",
+        "commit": "01101cb74619a5ba9fc284712dac2b1f4937d15d",
         "databaseVersion": "0.6.2",
         "dataSchemaVersion": 12,
         "gameBuild": "26.6.53509",
@@ -34428,7 +34428,7 @@
       "firstObservedInGame": null,
       "format": "dragonfire-dragon-profile",
       "gameVersion": null,
-      "generatedAt": "2026-07-02T00:42:06.981Z",
+      "generatedAt": "2026-07-02T01:21:23.552Z",
       "habits": [
         {
           "abilityClass": "passive",
@@ -37512,8 +37512,8 @@
       "rosterSourceStatus": "official-website",
       "slug": "vhagar",
       "source": {
-        "branch": "fix/pass20b-positive-scaled-modifier-support",
-        "commit": "e7d12b7b37e050ab543d541edc50d2c275de980d",
+        "branch": "fix/pass20c-semantic-card-bullet-dedup",
+        "commit": "01101cb74619a5ba9fc284712dac2b1f4937d15d",
         "databaseVersion": "0.6.2",
         "dataSchemaVersion": 12,
         "gameBuild": "26.6.53509",
@@ -41299,7 +41299,7 @@
       "firstObservedInGame": null,
       "format": "dragonfire-dragon-profile",
       "gameVersion": null,
-      "generatedAt": "2026-07-02T00:42:06.981Z",
+      "generatedAt": "2026-07-02T01:21:23.552Z",
       "habits": [
         {
           "abilityClass": "passive",
@@ -43954,8 +43954,8 @@
       "rosterSourceStatus": "official-website",
       "slug": "caraxes",
       "source": {
-        "branch": "fix/pass20b-positive-scaled-modifier-support",
-        "commit": "e7d12b7b37e050ab543d541edc50d2c275de980d",
+        "branch": "fix/pass20c-semantic-card-bullet-dedup",
+        "commit": "01101cb74619a5ba9fc284712dac2b1f4937d15d",
         "databaseVersion": "0.6.2",
         "dataSchemaVersion": 12,
         "gameBuild": "26.6.53509",
@@ -48142,7 +48142,7 @@
       "firstObservedInGame": null,
       "format": "dragonfire-dragon-profile",
       "gameVersion": null,
-      "generatedAt": "2026-07-02T00:42:06.981Z",
+      "generatedAt": "2026-07-02T01:21:23.552Z",
       "habits": [
         {
           "abilityClass": "passive",
@@ -50920,8 +50920,8 @@
       "rosterSourceStatus": "official-website",
       "slug": "seasmoke",
       "source": {
-        "branch": "fix/pass20b-positive-scaled-modifier-support",
-        "commit": "e7d12b7b37e050ab543d541edc50d2c275de980d",
+        "branch": "fix/pass20c-semantic-card-bullet-dedup",
+        "commit": "01101cb74619a5ba9fc284712dac2b1f4937d15d",
         "databaseVersion": "0.6.2",
         "dataSchemaVersion": 12,
         "gameBuild": "26.6.53509",
@@ -51459,7 +51459,7 @@
       "firstObservedInGame": null,
       "format": "dragonfire-dragon-profile",
       "gameVersion": null,
-      "generatedAt": "2026-07-02T00:42:06.981Z",
+      "generatedAt": "2026-07-02T01:21:23.552Z",
       "habits": [],
       "id": "solstryker",
       "isNew": false,
@@ -51481,8 +51481,8 @@
       "rosterSourceStatus": "official-website",
       "slug": "solstryker",
       "source": {
-        "branch": "fix/pass20b-positive-scaled-modifier-support",
-        "commit": "e7d12b7b37e050ab543d541edc50d2c275de980d",
+        "branch": "fix/pass20c-semantic-card-bullet-dedup",
+        "commit": "01101cb74619a5ba9fc284712dac2b1f4937d15d",
         "databaseVersion": "0.6.2",
         "dataSchemaVersion": 12,
         "gameBuild": "26.6.53509",
@@ -55775,7 +55775,7 @@
       "firstObservedInGame": null,
       "format": "dragonfire-dragon-profile",
       "gameVersion": null,
-      "generatedAt": "2026-07-02T00:42:06.981Z",
+      "generatedAt": "2026-07-02T01:21:23.552Z",
       "habits": [
         {
           "abilityClass": "passive",
@@ -58925,8 +58925,8 @@
       "rosterSourceStatus": "official-website",
       "slug": "crimson",
       "source": {
-        "branch": "fix/pass20b-positive-scaled-modifier-support",
-        "commit": "e7d12b7b37e050ab543d541edc50d2c275de980d",
+        "branch": "fix/pass20c-semantic-card-bullet-dedup",
+        "commit": "01101cb74619a5ba9fc284712dac2b1f4937d15d",
         "databaseVersion": "0.6.2",
         "dataSchemaVersion": 12,
         "gameBuild": "26.6.53509",
@@ -63848,7 +63848,7 @@
       "firstObservedInGame": null,
       "format": "dragonfire-dragon-profile",
       "gameVersion": null,
-      "generatedAt": "2026-07-02T00:42:06.981Z",
+      "generatedAt": "2026-07-02T01:21:23.552Z",
       "habits": [
         {
           "abilityClass": "passive",
@@ -67176,8 +67176,8 @@
       "rosterSourceStatus": "official-website",
       "slug": "kalspire",
       "source": {
-        "branch": "fix/pass20b-positive-scaled-modifier-support",
-        "commit": "e7d12b7b37e050ab543d541edc50d2c275de980d",
+        "branch": "fix/pass20c-semantic-card-bullet-dedup",
+        "commit": "01101cb74619a5ba9fc284712dac2b1f4937d15d",
         "databaseVersion": "0.6.2",
         "dataSchemaVersion": 12,
         "gameBuild": "26.6.53509",
@@ -70767,7 +70767,7 @@
       "firstObservedInGame": null,
       "format": "dragonfire-dragon-profile",
       "gameVersion": null,
-      "generatedAt": "2026-07-02T00:42:06.981Z",
+      "generatedAt": "2026-07-02T01:21:23.552Z",
       "habits": [
         {
           "abilityClass": "passive",
@@ -73305,8 +73305,8 @@
       "rosterSourceStatus": "official-website",
       "slug": "malachite",
       "source": {
-        "branch": "fix/pass20b-positive-scaled-modifier-support",
-        "commit": "e7d12b7b37e050ab543d541edc50d2c275de980d",
+        "branch": "fix/pass20c-semantic-card-bullet-dedup",
+        "commit": "01101cb74619a5ba9fc284712dac2b1f4937d15d",
         "databaseVersion": "0.6.2",
         "dataSchemaVersion": 12,
         "gameBuild": "26.6.53509",
@@ -77453,7 +77453,7 @@
       "firstObservedInGame": null,
       "format": "dragonfire-dragon-profile",
       "gameVersion": null,
-      "generatedAt": "2026-07-02T00:42:06.981Z",
+      "generatedAt": "2026-07-02T01:21:23.552Z",
       "habits": [
         {
           "abilityClass": "passive",
@@ -79686,8 +79686,8 @@
       "rosterSourceStatus": "official-website",
       "slug": "venator",
       "source": {
-        "branch": "fix/pass20b-positive-scaled-modifier-support",
-        "commit": "e7d12b7b37e050ab543d541edc50d2c275de980d",
+        "branch": "fix/pass20c-semantic-card-bullet-dedup",
+        "commit": "01101cb74619a5ba9fc284712dac2b1f4937d15d",
         "databaseVersion": "0.6.2",
         "dataSchemaVersion": 12,
         "gameBuild": "26.6.53509",
@@ -84088,7 +84088,7 @@
       "firstObservedInGame": "2026-06-22",
       "format": "dragonfire-dragon-profile",
       "gameVersion": null,
-      "generatedAt": "2026-07-02T00:42:06.981Z",
+      "generatedAt": "2026-07-02T01:21:23.552Z",
       "habits": [
         {
           "abilityClass": "passive",
@@ -87216,8 +87216,8 @@
       "rosterSourceStatus": "in-game-verified-pending-official-site",
       "slug": "daemoros",
       "source": {
-        "branch": "fix/pass20b-positive-scaled-modifier-support",
-        "commit": "e7d12b7b37e050ab543d541edc50d2c275de980d",
+        "branch": "fix/pass20c-semantic-card-bullet-dedup",
+        "commit": "01101cb74619a5ba9fc284712dac2b1f4937d15d",
         "databaseVersion": "0.6.2",
         "dataSchemaVersion": 12,
         "gameBuild": "26.6.53509",
@@ -92212,7 +92212,7 @@
       "firstObservedInGame": "2026-06-22",
       "format": "dragonfire-dragon-profile",
       "gameVersion": null,
-      "generatedAt": "2026-07-02T00:42:06.981Z",
+      "generatedAt": "2026-07-02T01:21:23.552Z",
       "habits": [
         {
           "abilityClass": "passive",
@@ -95245,8 +95245,8 @@
       "rosterSourceStatus": "in-game-verified-pending-official-site",
       "slug": "feskar",
       "source": {
-        "branch": "fix/pass20b-positive-scaled-modifier-support",
-        "commit": "e7d12b7b37e050ab543d541edc50d2c275de980d",
+        "branch": "fix/pass20c-semantic-card-bullet-dedup",
+        "commit": "01101cb74619a5ba9fc284712dac2b1f4937d15d",
         "databaseVersion": "0.6.2",
         "dataSchemaVersion": 12,
         "gameBuild": "26.6.53509",
@@ -99453,7 +99453,7 @@
       "firstObservedInGame": "2026-06-22",
       "format": "dragonfire-dragon-profile",
       "gameVersion": null,
-      "generatedAt": "2026-07-02T00:42:06.981Z",
+      "generatedAt": "2026-07-02T01:21:23.552Z",
       "habits": [
         {
           "abilityClass": "passive",
@@ -102267,8 +102267,8 @@
       "rosterSourceStatus": "in-game-verified-pending-official-site",
       "slug": "rhysarion",
       "source": {
-        "branch": "fix/pass20b-positive-scaled-modifier-support",
-        "commit": "e7d12b7b37e050ab543d541edc50d2c275de980d",
+        "branch": "fix/pass20c-semantic-card-bullet-dedup",
+        "commit": "01101cb74619a5ba9fc284712dac2b1f4937d15d",
         "databaseVersion": "0.6.2",
         "dataSchemaVersion": 12,
         "gameBuild": "26.6.53509",
@@ -107579,7 +107579,7 @@
       "firstObservedInGame": "2026-06-22",
       "format": "dragonfire-dragon-profile",
       "gameVersion": null,
-      "generatedAt": "2026-07-02T00:42:06.981Z",
+      "generatedAt": "2026-07-02T01:21:23.552Z",
       "habits": [
         {
           "abilityClass": "passive",
@@ -110783,8 +110783,8 @@
       "rosterSourceStatus": "in-game-verified-pending-official-site",
       "slug": "shadowsong",
       "source": {
-        "branch": "fix/pass20b-positive-scaled-modifier-support",
-        "commit": "e7d12b7b37e050ab543d541edc50d2c275de980d",
+        "branch": "fix/pass20c-semantic-card-bullet-dedup",
+        "commit": "01101cb74619a5ba9fc284712dac2b1f4937d15d",
         "databaseVersion": "0.6.2",
         "dataSchemaVersion": 12,
         "gameBuild": "26.6.53509",
@@ -111358,7 +111358,7 @@
       "firstObservedInGame": null,
       "format": "dragonfire-dragon-profile",
       "gameVersion": null,
-      "generatedAt": "2026-07-02T00:42:06.981Z",
+      "generatedAt": "2026-07-02T01:21:23.552Z",
       "habits": [],
       "id": "tashix",
       "isNew": false,
@@ -111380,8 +111380,8 @@
       "rosterSourceStatus": "official-website",
       "slug": "tashix",
       "source": {
-        "branch": "fix/pass20b-positive-scaled-modifier-support",
-        "commit": "e7d12b7b37e050ab543d541edc50d2c275de980d",
+        "branch": "fix/pass20c-semantic-card-bullet-dedup",
+        "commit": "01101cb74619a5ba9fc284712dac2b1f4937d15d",
         "databaseVersion": "0.6.2",
         "dataSchemaVersion": 12,
         "gameBuild": "26.6.53509",
@@ -115470,7 +115470,7 @@
       "firstObservedInGame": "2026-06-22",
       "format": "dragonfire-dragon-profile",
       "gameVersion": null,
-      "generatedAt": "2026-07-02T00:42:06.981Z",
+      "generatedAt": "2026-07-02T01:21:23.552Z",
       "habits": [
         {
           "abilityClass": "passive",
@@ -118652,8 +118652,8 @@
       "rosterSourceStatus": "in-game-verified-pending-official-site",
       "slug": "vaeldra",
       "source": {
-        "branch": "fix/pass20b-positive-scaled-modifier-support",
-        "commit": "e7d12b7b37e050ab543d541edc50d2c275de980d",
+        "branch": "fix/pass20c-semantic-card-bullet-dedup",
+        "commit": "01101cb74619a5ba9fc284712dac2b1f4937d15d",
         "databaseVersion": "0.6.2",
         "dataSchemaVersion": 12,
         "gameBuild": "26.6.53509",
@@ -119185,7 +119185,7 @@
       "firstObservedInGame": null,
       "format": "dragonfire-dragon-profile",
       "gameVersion": null,
-      "generatedAt": "2026-07-02T00:42:06.981Z",
+      "generatedAt": "2026-07-02T01:21:23.552Z",
       "habits": [],
       "id": "velar",
       "isNew": false,
@@ -119207,8 +119207,8 @@
       "rosterSourceStatus": "official-website",
       "slug": "velar",
       "source": {
-        "branch": "fix/pass20b-positive-scaled-modifier-support",
-        "commit": "e7d12b7b37e050ab543d541edc50d2c275de980d",
+        "branch": "fix/pass20c-semantic-card-bullet-dedup",
+        "commit": "01101cb74619a5ba9fc284712dac2b1f4937d15d",
         "databaseVersion": "0.6.2",
         "dataSchemaVersion": 12,
         "gameBuild": "26.6.53509",
@@ -119273,7 +119273,7 @@
       "firstObservedInGame": null,
       "format": "dragonfire-dragon-profile",
       "gameVersion": null,
-      "generatedAt": "2026-07-02T00:42:06.981Z",
+      "generatedAt": "2026-07-02T01:21:23.552Z",
       "habits": [],
       "id": "zivern",
       "isNew": false,
@@ -119295,8 +119295,8 @@
       "rosterSourceStatus": "official-website",
       "slug": "zivern",
       "source": {
-        "branch": "fix/pass20b-positive-scaled-modifier-support",
-        "commit": "e7d12b7b37e050ab543d541edc50d2c275de980d",
+        "branch": "fix/pass20c-semantic-card-bullet-dedup",
+        "commit": "01101cb74619a5ba9fc284712dac2b1f4937d15d",
         "databaseVersion": "0.6.2",
         "dataSchemaVersion": 12,
         "gameBuild": "26.6.53509",
@@ -119361,7 +119361,7 @@
       "firstObservedInGame": null,
       "format": "dragonfire-dragon-profile",
       "gameVersion": null,
-      "generatedAt": "2026-07-02T00:42:06.981Z",
+      "generatedAt": "2026-07-02T01:21:23.552Z",
       "habits": [],
       "id": "antares",
       "isNew": false,
@@ -119383,8 +119383,8 @@
       "rosterSourceStatus": "official-website",
       "slug": "antares",
       "source": {
-        "branch": "fix/pass20b-positive-scaled-modifier-support",
-        "commit": "e7d12b7b37e050ab543d541edc50d2c275de980d",
+        "branch": "fix/pass20c-semantic-card-bullet-dedup",
+        "commit": "01101cb74619a5ba9fc284712dac2b1f4937d15d",
         "databaseVersion": "0.6.2",
         "dataSchemaVersion": 12,
         "gameBuild": "26.6.53509",
@@ -119449,7 +119449,7 @@
       "firstObservedInGame": null,
       "format": "dragonfire-dragon-profile",
       "gameVersion": null,
-      "generatedAt": "2026-07-02T00:42:06.981Z",
+      "generatedAt": "2026-07-02T01:21:23.552Z",
       "habits": [],
       "id": "shimmer",
       "isNew": false,
@@ -119471,8 +119471,8 @@
       "rosterSourceStatus": "official-website",
       "slug": "shimmer",
       "source": {
-        "branch": "fix/pass20b-positive-scaled-modifier-support",
-        "commit": "e7d12b7b37e050ab543d541edc50d2c275de980d",
+        "branch": "fix/pass20c-semantic-card-bullet-dedup",
+        "commit": "01101cb74619a5ba9fc284712dac2b1f4937d15d",
         "databaseVersion": "0.6.2",
         "dataSchemaVersion": 12,
         "gameBuild": "26.6.53509",
@@ -119537,7 +119537,7 @@
       "firstObservedInGame": null,
       "format": "dragonfire-dragon-profile",
       "gameVersion": null,
-      "generatedAt": "2026-07-02T00:42:06.981Z",
+      "generatedAt": "2026-07-02T01:21:23.552Z",
       "habits": [],
       "id": "jagadrix",
       "isNew": false,
@@ -119559,8 +119559,8 @@
       "rosterSourceStatus": "official-website",
       "slug": "jagadrix",
       "source": {
-        "branch": "fix/pass20b-positive-scaled-modifier-support",
-        "commit": "e7d12b7b37e050ab543d541edc50d2c275de980d",
+        "branch": "fix/pass20c-semantic-card-bullet-dedup",
+        "commit": "01101cb74619a5ba9fc284712dac2b1f4937d15d",
         "databaseVersion": "0.6.2",
         "dataSchemaVersion": 12,
         "gameBuild": "26.6.53509",
@@ -119625,7 +119625,7 @@
       "firstObservedInGame": null,
       "format": "dragonfire-dragon-profile",
       "gameVersion": null,
-      "generatedAt": "2026-07-02T00:42:06.981Z",
+      "generatedAt": "2026-07-02T01:21:23.552Z",
       "habits": [],
       "id": "bevlorin",
       "isNew": false,
@@ -119647,8 +119647,8 @@
       "rosterSourceStatus": "official-website",
       "slug": "bevlorin",
       "source": {
-        "branch": "fix/pass20b-positive-scaled-modifier-support",
-        "commit": "e7d12b7b37e050ab543d541edc50d2c275de980d",
+        "branch": "fix/pass20c-semantic-card-bullet-dedup",
+        "commit": "01101cb74619a5ba9fc284712dac2b1f4937d15d",
         "databaseVersion": "0.6.2",
         "dataSchemaVersion": 12,
         "gameBuild": "26.6.53509",
@@ -119713,7 +119713,7 @@
       "firstObservedInGame": null,
       "format": "dragonfire-dragon-profile",
       "gameVersion": null,
-      "generatedAt": "2026-07-02T00:42:06.981Z",
+      "generatedAt": "2026-07-02T01:21:23.552Z",
       "habits": [],
       "id": "shadowrend",
       "isNew": false,
@@ -119735,8 +119735,8 @@
       "rosterSourceStatus": "official-website",
       "slug": "shadowrend",
       "source": {
-        "branch": "fix/pass20b-positive-scaled-modifier-support",
-        "commit": "e7d12b7b37e050ab543d541edc50d2c275de980d",
+        "branch": "fix/pass20c-semantic-card-bullet-dedup",
+        "commit": "01101cb74619a5ba9fc284712dac2b1f4937d15d",
         "databaseVersion": "0.6.2",
         "dataSchemaVersion": 12,
         "gameBuild": "26.6.53509",
@@ -119801,7 +119801,7 @@
       "firstObservedInGame": null,
       "format": "dragonfire-dragon-profile",
       "gameVersion": null,
-      "generatedAt": "2026-07-02T00:42:06.981Z",
+      "generatedAt": "2026-07-02T01:21:23.552Z",
       "habits": [],
       "id": "thunderstrike",
       "isNew": false,
@@ -119823,8 +119823,8 @@
       "rosterSourceStatus": "official-website",
       "slug": "thunderstrike",
       "source": {
-        "branch": "fix/pass20b-positive-scaled-modifier-support",
-        "commit": "e7d12b7b37e050ab543d541edc50d2c275de980d",
+        "branch": "fix/pass20c-semantic-card-bullet-dedup",
+        "commit": "01101cb74619a5ba9fc284712dac2b1f4937d15d",
         "databaseVersion": "0.6.2",
         "dataSchemaVersion": 12,
         "gameBuild": "26.6.53509",
@@ -119889,7 +119889,7 @@
       "firstObservedInGame": null,
       "format": "dragonfire-dragon-profile",
       "gameVersion": null,
-      "generatedAt": "2026-07-02T00:42:06.981Z",
+      "generatedAt": "2026-07-02T01:21:23.552Z",
       "habits": [],
       "id": "vesper",
       "isNew": false,
@@ -119911,8 +119911,8 @@
       "rosterSourceStatus": "official-website",
       "slug": "vesper",
       "source": {
-        "branch": "fix/pass20b-positive-scaled-modifier-support",
-        "commit": "e7d12b7b37e050ab543d541edc50d2c275de980d",
+        "branch": "fix/pass20c-semantic-card-bullet-dedup",
+        "commit": "01101cb74619a5ba9fc284712dac2b1f4937d15d",
         "databaseVersion": "0.6.2",
         "dataSchemaVersion": 12,
         "gameBuild": "26.6.53509",
@@ -119977,7 +119977,7 @@
       "firstObservedInGame": null,
       "format": "dragonfire-dragon-profile",
       "gameVersion": null,
-      "generatedAt": "2026-07-02T00:42:06.981Z",
+      "generatedAt": "2026-07-02T01:21:23.552Z",
       "habits": [],
       "id": "arulix",
       "isNew": true,
@@ -119999,8 +119999,8 @@
       "rosterSourceStatus": "official-website",
       "slug": "arulix",
       "source": {
-        "branch": "fix/pass20b-positive-scaled-modifier-support",
-        "commit": "e7d12b7b37e050ab543d541edc50d2c275de980d",
+        "branch": "fix/pass20c-semantic-card-bullet-dedup",
+        "commit": "01101cb74619a5ba9fc284712dac2b1f4937d15d",
         "databaseVersion": "0.6.2",
         "dataSchemaVersion": 12,
         "gameBuild": "26.6.53509",
@@ -120065,7 +120065,7 @@
       "firstObservedInGame": null,
       "format": "dragonfire-dragon-profile",
       "gameVersion": null,
-      "generatedAt": "2026-07-02T00:42:06.981Z",
+      "generatedAt": "2026-07-02T01:21:23.552Z",
       "habits": [],
       "id": "nyrena",
       "isNew": true,
@@ -120087,8 +120087,8 @@
       "rosterSourceStatus": "official-website",
       "slug": "nyrena",
       "source": {
-        "branch": "fix/pass20b-positive-scaled-modifier-support",
-        "commit": "e7d12b7b37e050ab543d541edc50d2c275de980d",
+        "branch": "fix/pass20c-semantic-card-bullet-dedup",
+        "commit": "01101cb74619a5ba9fc284712dac2b1f4937d15d",
         "databaseVersion": "0.6.2",
         "dataSchemaVersion": 12,
         "gameBuild": "26.6.53509",
@@ -120153,7 +120153,7 @@
       "firstObservedInGame": null,
       "format": "dragonfire-dragon-profile",
       "gameVersion": null,
-      "generatedAt": "2026-07-02T00:42:06.981Z",
+      "generatedAt": "2026-07-02T01:21:23.552Z",
       "habits": [],
       "id": "dawnseeker",
       "isNew": true,
@@ -120175,8 +120175,8 @@
       "rosterSourceStatus": "official-website",
       "slug": "dawnseeker",
       "source": {
-        "branch": "fix/pass20b-positive-scaled-modifier-support",
-        "commit": "e7d12b7b37e050ab543d541edc50d2c275de980d",
+        "branch": "fix/pass20c-semantic-card-bullet-dedup",
+        "commit": "01101cb74619a5ba9fc284712dac2b1f4937d15d",
         "databaseVersion": "0.6.2",
         "dataSchemaVersion": 12,
         "gameBuild": "26.6.53509",
@@ -120241,7 +120241,7 @@
       "firstObservedInGame": null,
       "format": "dragonfire-dragon-profile",
       "gameVersion": null,
-      "generatedAt": "2026-07-02T00:42:06.981Z",
+      "generatedAt": "2026-07-02T01:21:23.552Z",
       "habits": [],
       "id": "arrax",
       "isNew": true,
@@ -120263,8 +120263,8 @@
       "rosterSourceStatus": "official-website",
       "slug": "arrax",
       "source": {
-        "branch": "fix/pass20b-positive-scaled-modifier-support",
-        "commit": "e7d12b7b37e050ab543d541edc50d2c275de980d",
+        "branch": "fix/pass20c-semantic-card-bullet-dedup",
+        "commit": "01101cb74619a5ba9fc284712dac2b1f4937d15d",
         "databaseVersion": "0.6.2",
         "dataSchemaVersion": 12,
         "gameBuild": "26.6.53509",
@@ -125587,7 +125587,7 @@
       "firstObservedInGame": "2026-06-22",
       "format": "dragonfire-dragon-profile",
       "gameVersion": null,
-      "generatedAt": "2026-07-02T00:42:06.981Z",
+      "generatedAt": "2026-07-02T01:21:23.552Z",
       "habits": [
         {
           "abilityClass": "passive",
@@ -128737,8 +128737,8 @@
       "rosterSourceStatus": "in-game-verified-pending-official-site",
       "slug": "sheepstealer",
       "source": {
-        "branch": "fix/pass20b-positive-scaled-modifier-support",
-        "commit": "e7d12b7b37e050ab543d541edc50d2c275de980d",
+        "branch": "fix/pass20c-semantic-card-bullet-dedup",
+        "commit": "01101cb74619a5ba9fc284712dac2b1f4937d15d",
         "databaseVersion": "0.6.2",
         "dataSchemaVersion": 12,
         "gameBuild": "26.6.53509",
@@ -133397,7 +133397,7 @@
       "firstObservedInGame": "2026-06-22",
       "format": "dragonfire-dragon-profile",
       "gameVersion": null,
-      "generatedAt": "2026-07-02T00:42:06.981Z",
+      "generatedAt": "2026-07-02T01:21:23.552Z",
       "habits": [
         {
           "abilityClass": "passive",
@@ -136813,8 +136813,8 @@
       "rosterSourceStatus": "in-game-verified-pending-official-site",
       "slug": "vermax",
       "source": {
-        "branch": "fix/pass20b-positive-scaled-modifier-support",
-        "commit": "e7d12b7b37e050ab543d541edc50d2c275de980d",
+        "branch": "fix/pass20c-semantic-card-bullet-dedup",
+        "commit": "01101cb74619a5ba9fc284712dac2b1f4937d15d",
         "databaseVersion": "0.6.2",
         "dataSchemaVersion": 12,
         "gameBuild": "26.6.53509",
@@ -331179,7 +331179,7 @@
       }
     ]
   },
-  "generatedAt": "2026-07-02T00:42:06.981Z",
+  "generatedAt": "2026-07-02T01:21:23.552Z",
   "manualReviews": [
     {
       "dragonId": "feskar",
@@ -331779,8 +331779,8 @@
     }
   },
   "source": {
-    "branch": "fix/pass20b-positive-scaled-modifier-support",
-    "commit": "e7d12b7b37e050ab543d541edc50d2c275de980d",
+    "branch": "fix/pass20c-semantic-card-bullet-dedup",
+    "commit": "01101cb74619a5ba9fc284712dac2b1f4937d15d",
     "databaseVersion": "0.6.2",
     "dataSchemaVersion": 12,
     "gameBuild": "26.6.53509",

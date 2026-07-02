@@ -104,6 +104,12 @@ export interface FormationCardPresentation {
   technicalTraceCount: number;
 }
 
+export interface SemanticCardBulletCandidate {
+  text: string;
+  relationshipIdentity?: string | null;
+  canonical?: boolean;
+}
+
 const compactLimit = 3;
 
 export function buildFormationCardPresentation(
@@ -213,11 +219,12 @@ export function buildFormationCardPresentation(
       candidateTotal: null,
     });
     if (isInternalSelfModifierStatScalingTrace(trace, modifierCapabilitiesById) && recipient && selectedIds.has(recipient.id)) {
-      const statScalingModifierLines = unique([
-        ...item.modifierLines,
-        ...item.summaryLines,
-        internalSelfStatScalingModifierLine(trace, source, recipient, modifierCapabilitiesById),
-      ].filter((line): line is string => Boolean(line)));
+      const canonicalLine = internalSelfStatScalingModifierLine(trace, source, recipient, modifierCapabilitiesById);
+      const statScalingModifierLines = dedupeSemanticCardBulletCandidates([
+        ...item.modifierLines.map((text) => ({ text })),
+        ...item.summaryLines.map((text) => ({ text, relationshipIdentity: trace.id })),
+        ...(canonicalLine ? [{ text: canonicalLine, relationshipIdentity: trace.id, canonical: true }] : []),
+      ]).map((candidate) => candidate.text);
       byDragon.get(recipient.id)?.receives.push({
         ...item,
         isRecipientModifier: true,
@@ -380,7 +387,7 @@ function internalSelfStatScalingModifierLine(
   trace: SynergyTrace,
   source: Dragon,
   recipient: Dragon,
-  modifierCapabilitiesById: Map<string, { channel?: string; label?: string; abilityName?: string }>,
+  modifierCapabilitiesById: Map<string, { channel?: string; label?: string; abilityName?: string; operation?: string }>,
 ): string | null {
   if (!trace.sourceAbilityId || !trace.recipientAbilityId) {
     return null;
@@ -394,7 +401,70 @@ function internalSelfStatScalingModifierLine(
   if (!stat) {
     return null;
   }
-  return `${sourceAbilityName} ${stat} support for ${recipientAbilityName}.`;
+  const dependentPhrases = groupedStatScalingDependentPhrases(trace, modifierCapabilitiesById);
+  if (dependentPhrases.length === 0) {
+    return `${sourceAbilityName} ${stat} support for ${possessive(recipientAbilityName)} dependent modifiers.`;
+  }
+  return `${sourceAbilityName} ${stat} support for ${possessive(recipientAbilityName)} ${joinEnglishList(dependentPhrases)}.`;
+}
+
+export function dedupeSemanticCardBulletCandidates(candidates: SemanticCardBulletCandidate[]): SemanticCardBulletCandidate[] {
+  const result: SemanticCardBulletCandidate[] = [];
+  const indexByRelationship = new Map<string, number>();
+  const exactText = new Set<string>();
+  for (const candidate of candidates) {
+    const text = candidate.text.trim();
+    if (!text) {
+      continue;
+    }
+    const normalizedCandidate = { ...candidate, text };
+    const identity = candidate.relationshipIdentity ?? null;
+    if (!identity) {
+      if (exactText.has(text)) {
+        continue;
+      }
+      exactText.add(text);
+      result.push(normalizedCandidate);
+      continue;
+    }
+    const existingIndex = indexByRelationship.get(identity);
+    if (existingIndex === undefined) {
+      indexByRelationship.set(identity, result.length);
+      exactText.add(text);
+      result.push(normalizedCandidate);
+      continue;
+    }
+    const existing = result[existingIndex]!;
+    if (!existing.canonical && candidate.canonical) {
+      exactText.delete(existing.text);
+      exactText.add(text);
+      result[existingIndex] = normalizedCandidate;
+    }
+  }
+  return result;
+}
+
+function groupedStatScalingDependentPhrases(
+  trace: SynergyTrace,
+  modifierCapabilitiesById: Map<string, { channel?: string; label?: string; abilityName?: string; operation?: string }>,
+): string[] {
+  const statModifiers = (trace.matchedModifierCapabilityIds ?? [])
+    .map((id) => modifierCapabilitiesById.get(id))
+    .filter((capability): capability is { channel?: string; label?: string; abilityName?: string; operation?: string } =>
+      capability?.channel === 'stat',
+    );
+  const increases = unique(statModifiers
+    .filter((capability) => capability.operation === 'increase')
+    .map(statLabelFromModifierCapability)
+    .filter((stat): stat is string => Boolean(stat)));
+  const reductions = unique(statModifiers
+    .filter((capability) => capability.operation === 'decrease')
+    .map(statLabelFromModifierCapability)
+    .filter((stat): stat is string => Boolean(stat)));
+  return [
+    increases.length > 0 ? `${joinEnglishList(increases)} ${increases.length === 1 ? 'increase' : 'increases'}` : null,
+    reductions.length > 0 ? `${joinEnglishList(reductions.map((stat) => `Enemy ${stat}`))} ${reductions.length === 1 ? 'reduction' : 'reductions'}` : null,
+  ].filter((phrase): phrase is string => Boolean(phrase));
 }
 
 function statLabelFromModifierCapability(capability: { label?: string; abilityName?: string }): string | null {
