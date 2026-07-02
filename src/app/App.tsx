@@ -1,25 +1,22 @@
 import {
   BookOpen,
-  CheckCircle2,
-  CircleDashed,
   Database,
   Download,
   ExternalLink,
   Flame,
-  HelpCircle,
   Home,
   Info,
   Link,
-  Lock,
   RotateCcw,
   Shield,
-  Sparkles,
   Swords,
   Upload,
   Users,
   X,
 } from 'lucide-react';
-import { useCallback, useEffect, useLayoutEffect, useMemo, useRef, useState, type ChangeEvent, type KeyboardEvent } from 'react';
+import { useEffect, useMemo, useRef, useState, type ChangeEvent, type KeyboardEvent } from 'react';
+import { SimpleFormationAnalysis } from './SimpleFormationAnalysis';
+import { SimpleFormationCard } from './SimpleFormationCard';
 import { databaseMetadata, repository } from '../data/databaseMetadata';
 import { dragons } from '../data/dragons';
 import { evidenceSources } from '../data/evidence';
@@ -27,7 +24,6 @@ import { manualReviewRecords } from '../data/manualReviews';
 import { dragonObservationSnapshots } from '../data/observations';
 import { dragonStatDefinitions } from '../data/statDefinitions';
 import { statusGlossary } from '../data/statusGlossary';
-import { defaultSynergyRules } from '../data/synergyRules';
 import { troopMatchupRules } from '../data/troopMatchups';
 import {
   BREEDS,
@@ -43,39 +39,15 @@ import {
   type DragonRarity,
   type FormationPosition,
   type OwnedDragon,
-  type TroopType,
   type VerificationStatus,
 } from '../models/dragon';
-import type { SynergyTrace, TraceConfidence, TraceStatus } from '../models/synergy';
 import {
   buildCapabilityMatrix,
   deriveDragonEffectProfiles,
   deriveModifierCapabilities,
   deriveOutputCapabilities,
 } from '../services/effectCapabilities';
-import { THRESHOLD_BOUNDARY_NOTE } from '../services/formationRules';
 import { rankedValueForHabitLevel, resolveEffectiveHabitLevelForAbility, type EffectiveHabitLevel } from '../services/habitLevels';
-import { analyzeFormation, findAffinityCoverage, findBreedDistribution } from '../services/synergyEngine';
-import {
-  buildFormationCardPresentation,
-  getCompactInteractions,
-  formatPresentationText,
-  type FormationCardAnalysis,
-  type FormationCommandSummary,
-  type FormationCardInteraction,
-  type FormationCardInteractionState,
-  type FormationTraitStatus,
-  type FormationAffinityTeamSummary,
-} from '../services/formationCardAnalysis';
-import {
-  analyzeFormationTraces,
-  createSynergyAuditExport,
-  dedupeFinalTechnicalAnalysisTraces,
-  generateFormationAudit,
-  traceStatusReason,
-  isNormalSynergyTrace,
-  technicalAnalysisTraceIdentity,
-} from '../services/synergyTrace';
 import { defaultFilters, filterDragons, sortDragons, type DragonFilters, type DragonSort } from '../services/rosterFilters';
 import {
   createEmptyRoster,
@@ -88,7 +60,6 @@ import {
 } from '../services/rosterStorage';
 import {
   createFormationShareHash,
-  defaultAdjacency,
   emptyFormation,
   moveFormationDragon,
   parseSharedFormation,
@@ -97,6 +68,10 @@ import {
   sanitizeFormation,
   type Formation,
 } from '../services/teamShare';
+import { evaluateFormation } from '../synergy/evaluateFormation';
+import { buildSimpleFormationPresentation } from '../synergy/formationPresentation';
+import { simpleSynergyProfiles } from '../synergy/profiles';
+import type { SimpleProgressionByDragonId } from '../synergy/types';
 
 type Section = 'home' | 'database' | 'roster' | 'team' | 'status' | 'about';
 type StatusMessage = { kind: 'success' | 'error' | 'info'; text: string };
@@ -335,7 +310,7 @@ export function App() {
             onIncludeUnownedChange={setIncludeUnowned}
             onFormationChange={setFormation}
             onShare={() => void shareFormation()}
-            onStatus={setMessage}
+
           />
         ) : null}
 
@@ -569,7 +544,6 @@ function FormationBuilderSection({
   onIncludeUnownedChange,
   onFormationChange,
   onShare,
-  onStatus,
 }: {
   includeUnowned: boolean;
   roster: Record<string, OwnedDragon>;
@@ -577,100 +551,49 @@ function FormationBuilderSection({
   onIncludeUnownedChange: (value: boolean) => void;
   onFormationChange: (formation: Formation) => void;
   onShare: () => void;
-  onStatus: (message: StatusMessage) => void;
 }) {
-  const [showDebug, setShowDebug] = useState(false);
-  const [includeInactiveTraces, setIncludeInactiveTraces] = useState(false);
-  const [previewMaxRank, setPreviewMaxRank] = useState(false);
-  const [auditDragonFilter, setAuditDragonFilter] = useState('all');
-  const [auditAbilityFilter, setAuditAbilityFilter] = useState('all');
-  const [auditStatusFilter, setAuditStatusFilter] = useState<TraceStatus | 'all'>('all');
-  const [auditConfidenceFilter, setAuditConfidenceFilter] = useState<TraceConfidence | 'all'>('all');
-  const [providerEffectFilter, setProviderEffectFilter] = useState('all');
-  const [recipientAmplifierFilter, setRecipientAmplifierFilter] = useState('all');
-  const [combatLogFilter, setCombatLogFilter] = useState<'all' | 'confirmed'>('all');
-  const [auditExpanded, setAuditExpanded] = useState(false);
-  const [expandedCardSections, setExpandedCardSections] = useState<Record<string, boolean>>({});
-  const [activeRelationship, setActiveRelationship] = useState<string | null>(null);
   const selectableDragons = dragons.filter((dragon) => includeUnowned || roster[dragon.id]?.owned);
-  const selectedDragons = FORMATION_POSITIONS.map((position) => formation[position])
-    .map((id) => dragons.find((dragon) => dragon.id === id))
-    .filter((dragon): dragon is Dragon => Boolean(dragon));
-  const traceOptions = { roster, previewMaxRankInteractions: previewMaxRank };
-  const synergy = analyzeFormation(formation, dragons, defaultSynergyRules, traceOptions);
-  const traces = analyzeFormationTraces(formation, dragons, traceOptions);
-  const liveTechnicalTraces = prepareLiveTechnicalAnalysisTraces(traces);
-  const cardPresentation = buildFormationCardPresentation(formation, dragons, traces, { previewEnabled: previewMaxRank, roster });
-  const providerEffects = [...new Set(liveTechnicalTraces.map((trace) => trace.providedEffectType).filter((value): value is string => Boolean(value)))];
-  const recipientAmplifiers = [...new Set(liveTechnicalTraces.map((trace) => trace.recipientModifierType).filter((value): value is string => Boolean(value)))];
-  const filteredTraces = liveTechnicalTraces.filter(
-    (trace) =>
-      (providerEffectFilter === 'all' || trace.providedEffectType === providerEffectFilter) &&
-      (recipientAmplifierFilter === 'all' || trace.recipientModifierType === recipientAmplifierFilter) &&
-      (combatLogFilter === 'all' || trace.combatLogConfirmed === true),
-  );
-  const visibleTraces = includeInactiveTraces
-    ? filteredTraces
-    : filteredTraces.filter((trace) => trace.status === 'active');
-  const auditEntries = showDebug ? generateFormationAudit(dragons, traceOptions) : [];
-  const filteredAuditEntries = auditEntries
-    .map((entry) => ({
-      ...entry,
-      traces: entry.traces.filter(
-        (trace) =>
-          (auditDragonFilter === 'all' ||
-            trace.sourceDragonId === auditDragonFilter ||
-            trace.recipientDragonId === auditDragonFilter) &&
-          (auditAbilityFilter === 'all' ||
-            trace.sourceAbilityId === auditAbilityFilter ||
-            trace.recipientAbilityId === auditAbilityFilter) &&
-          (auditStatusFilter === 'all' || trace.status === auditStatusFilter) &&
-          (auditConfidenceFilter === 'all' || trace.confidence === auditConfidenceFilter),
+  const progression = useMemo<SimpleProgressionByDragonId>(
+    () =>
+      Object.fromEntries(
+        FORMATION_POSITIONS.flatMap((position) => {
+          const dragonId = formation[position];
+          if (!dragonId) {
+            return [];
+          }
+          const entry = roster[dragonId];
+          return [
+            [
+              dragonId,
+              {
+                starRank: entry?.starRank ?? null,
+                dragonLevel: entry?.reignLevel ?? null,
+              },
+            ],
+          ];
+        }),
       ),
-    }))
-    .filter((entry) => entry.traces.length > 0 || auditStatusFilter === 'all');
-  const breedDistribution = findBreedDistribution(selectedDragons);
-  const affinityCoverage = findAffinityCoverage(selectedDragons);
-  const knownTags = [...new Set(selectedDragons.flatMap((dragon) => dragon.tags))];
-  const normalTraces = traces.filter(isNormalSynergyTrace);
-  const interactionCounts = {
-    active: normalTraces.filter((trace) => trace.status === 'active').length,
-    conditional: normalTraces.filter((trace) => trace.status === 'potential' || trace.status === 'unknown').length,
-    preview: cardPresentation.cards.flatMap((card) => [...card.receives, ...card.provides]).filter((item) => item.isPreview).length,
-  };
-  const auditJson = JSON.stringify(
-    {
-      format: 'dragonfire-synergy-audit-matrix',
-      schemaVersion: 1,
-      databaseVersion: databaseMetadata.databaseVersion,
-      gameBuild: databaseMetadata.currentDocumentedGameBuild,
-      generatedAt: new Date().toISOString(),
-      entries: filteredAuditEntries,
-    },
-    null,
-    2,
+    [formation, roster],
   );
+  const selectedCount = FORMATION_POSITIONS.filter((position) => formation[position]).length;
+  const simpleResults =
+    selectedCount >= 2
+      ? evaluateFormation({
+          formation,
+          progression,
+          profiles: simpleSynergyProfiles,
+        }).results
+      : [];
+  const mappedProfileIds = new Set(simpleSynergyProfiles.map((profile) => profile.dragonId));
+  const presentation = buildSimpleFormationPresentation({
+    formation,
+    dragons,
+    mappedProfileIds,
+    results: simpleResults,
+  });
 
   const updatePosition = (position: FormationPosition, nextId: string | null) => {
     onFormationChange(preventDuplicateFormationPlacement(formation, position, nextId));
-  };
-  const copyAuditJson = async () => {
-    try {
-      await navigator.clipboard.writeText(auditJson);
-      onStatus({ kind: 'success', text: 'Synergy audit JSON copied.' });
-    } catch {
-      onStatus({ kind: 'info', text: 'Audit JSON is available in the debug view.' });
-    }
-  };
-  const downloadAuditJson = () => {
-    const blob = new Blob([auditJson], { type: 'application/json' });
-    const url = URL.createObjectURL(blob);
-    const anchor = document.createElement('a');
-    anchor.href = url;
-    anchor.download = `dragonfire-synergy-audit-${new Date().toISOString().slice(0, 10)}.json`;
-    anchor.click();
-    URL.revokeObjectURL(url);
-    onStatus({ kind: 'success', text: 'Synergy audit JSON downloaded.' });
   };
 
   return (
@@ -678,7 +601,7 @@ function FormationBuilderSection({
       <SectionHeading
         eyebrow="Three-position planner"
         title="Formation Builder"
-        description="Assign one unique dragon to Left Flank, Vanguard, and Right Flank, then share the exact formation."
+        description="Assign one unique dragon to each position and review curated high-level formation relationships."
       />
       <div className="toolbar">
         <label className="check-row">
@@ -688,22 +611,6 @@ function FormationBuilderSection({
             onChange={(event) => onIncludeUnownedChange(event.target.checked)}
           />
           Include unowned dragons
-        </label>
-        <label className="check-row">
-          <input
-            type="checkbox"
-            checked={previewMaxRank}
-            onChange={(event) => setPreviewMaxRank(event.target.checked)}
-          />
-          Preview max-rank interactions
-        </label>
-        <label className="check-row">
-          <input
-            type="checkbox"
-            checked={showDebug}
-            onChange={(event) => setShowDebug(event.target.checked)}
-          />
-          Show analysis details
         </label>
         <div className="button-row">
           <button type="button" className="secondary-button" onClick={() => onFormationChange(emptyFormation())}>
@@ -716,1024 +623,25 @@ function FormationBuilderSection({
         </div>
       </div>
       <div className="formation-board" aria-label="Formation positions">
-        {cardPresentation.cards.map((card) => (
-          <FormationPositionCard
-            key={card.position}
-            card={card}
-            formation={formation}
-            selectableDragons={selectableDragons}
-            activeRelationship={activeRelationship}
-            expandedSections={expandedCardSections}
-            onExpandedSectionsChange={setExpandedCardSections}
-            onRelationshipActive={setActiveRelationship}
-            onDragonChange={(nextId) => updatePosition(card.position, nextId)}
-            onMove={(target) => onFormationChange(moveFormationDragon(formation, card.position, target))}
-            onClear={() => updatePosition(card.position, null)}
-          />
-        ))}
-      </div>
-      <FormationAffinitySummaryStrip summary={cardPresentation.teamAffinity} />
-      <div className="summary-layout">
-        <div className="panel">
-          <h3>Formation Summary</h3>
-          {selectedDragons.length > 0 ? (
-            <ul className="plain-list">
-              {FORMATION_POSITIONS.map((position) => {
-                const dragon = dragons.find((candidate) => candidate.id === formation[position]);
-                return (
-                  <li key={position}>
-                    <strong>{positionLabels[position]}:</strong>{' '}
-                    {dragon ? `${dragon.name} - ${dragon.rarity} - ${dragon.breed}` : unknown}
-                  </li>
-                );
-              })}
-            </ul>
-          ) : (
-            <p>{unknown}</p>
-          )}
-          <Distribution
-            title="Rarity distribution"
-            values={countValues(selectedDragons.map((dragon) => dragon.rarity))}
-          />
-          <Distribution
-            title="Breed distribution"
-            values={Object.fromEntries(breedDistribution.map((item) => [item.breed, item.count]))}
-          />
-          <p>
-            <strong>Active interactions:</strong> {interactionCounts.active}
-          </p>
-          <p>
-            <strong>Conditional interactions:</strong> {interactionCounts.conditional}
-          </p>
-          <p>
-            <strong>Max-rank preview interactions:</strong> {previewMaxRank ? interactionCounts.preview : 0}
-          </p>
-          <p>
-            <strong>Data confidence:</strong> {synergy.confidence}
-          </p>
-          <p className="notice-text">{defaultAdjacency.note}</p>
-          <p className="notice-text">{THRESHOLD_BOUNDARY_NOTE}</p>
-        </div>
-        <div className="panel">
-          <h3>Formation Analysis</h3>
-          <p>
-            <strong>Numerical score:</strong> Not generated. Dragonfire Roster Lab does not assign
-            arbitrary synergy scores from incomplete or conditional data.
-          </p>
-          {synergy.warnings.map((warning) => (
-            <p className="notice-text" key={warning}>
-              {warning}
-            </p>
-          ))}
-          <TeamInteractionSummary traces={normalTraces} />
-          <AnalysisList title="Formation blockers" items={synergy.unmetRequirements} />
-          <AnalysisList
-            title="Unresolved conditions"
-            items={synergy.unresolvedAssumptions.map((description, index) => ({
-              dragonIds: [],
-              tags: [],
-              ruleId: `unresolved-${index}`,
-              title: 'Unresolved',
-              description,
-              confidence: 'low',
-            }))}
-          />
-          <details className="technical-toggle" open={showDebug}>
-            <summary>Technical analysis status</summary>
-            <p>
-              Full trace cards, requirements, confidence, evidence IDs, internal interactions, and raw effect
-              tags are available when Show analysis details is enabled.
-            </p>
-          </details>
-        </div>
-      </div>
-      {showDebug ? (
-        <div className="debug-section">
-          <div className="panel">
-            <h3>Analysis Details</h3>
-            <details>
-              <summary>Raw effect tags</summary>
-              <p>{knownTags.length > 0 ? knownTags.join(', ') : unknown}</p>
-            </details>
-            <details>
-              <summary>Raw affinity coverage</summary>
-              <div className="table-wrap">
-                <table>
-                  <thead>
-                    <tr>
-                      <th>Troop</th>
-                      <th>Positive</th>
-                      <th>Neutral</th>
-                      <th>Negative</th>
-                      <th>Unknown</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {affinityCoverage.map((row) => (
-                      <tr key={row.troopType}>
-                        <td>{row.troopType}</td>
-                        <td>{row.positive}</td>
-                        <td>{row.neutral}</td>
-                        <td>{row.negative}</td>
-                        <td>{row.unknown}</td>
-                      </tr>
-                    ))}
-                  </tbody>
-                </table>
-              </div>
-            </details>
-            <div className="toolbar">
-              <label className="check-row">
-                <input
-                  type="checkbox"
-                  checked={includeInactiveTraces}
-                  onChange={(event) => setIncludeInactiveTraces(event.target.checked)}
-                />
-                Include inactive/potential traces
-              </label>
-              <label>
-                Provider effects
-                <select value={providerEffectFilter} onChange={(event) => setProviderEffectFilter(event.target.value)}>
-                  <option value="all">All provider effects</option>
-                  {providerEffects.map((effect) => (
-                    <option key={effect} value={effect}>
-                      {effect}
-                    </option>
-                  ))}
-                </select>
-              </label>
-              <label>
-                Recipient amplifiers
-                <select value={recipientAmplifierFilter} onChange={(event) => setRecipientAmplifierFilter(event.target.value)}>
-                  <option value="all">All recipient amplifiers</option>
-                  {recipientAmplifiers.map((amplifier) => (
-                    <option key={amplifier} value={amplifier}>
-                      {amplifier}
-                    </option>
-                  ))}
-                </select>
-              </label>
-              <label>
-                Combat-log confirmation
-                <select value={combatLogFilter} onChange={(event) => setCombatLogFilter(event.target.value as 'all' | 'confirmed')}>
-                  <option value="all">All traces</option>
-                  <option value="confirmed">Combat-log confirmed</option>
-                </select>
-              </label>
-              <button
-                type="button"
-                className="secondary-button"
-                onClick={() => {
-                  const currentExport = createSynergyAuditExport(formation, traces, roster);
-                  void navigator.clipboard.writeText(JSON.stringify(currentExport, null, 2));
-                  onStatus({ kind: 'success', text: 'Current formation audit JSON copied.' });
-                }}
-              >
-                Copy current formation JSON
-              </button>
-            </div>
-            <div className="trace-grid">
-              <TechnicalAnalysisTraceCards traces={visibleTraces} />
-            </div>
-          </div>
-          <AuditMatrixSection
-            entries={filteredAuditEntries}
-            expanded={auditExpanded}
-            onExpandedChange={setAuditExpanded}
-            dragonFilter={auditDragonFilter}
-            onDragonFilterChange={setAuditDragonFilter}
-            abilityFilter={auditAbilityFilter}
-            onAbilityFilterChange={setAuditAbilityFilter}
-            statusFilter={auditStatusFilter}
-            onStatusFilterChange={setAuditStatusFilter}
-            confidenceFilter={auditConfidenceFilter}
-            onConfidenceFilterChange={setAuditConfidenceFilter}
-            onCopy={() => void copyAuditJson()}
-            onDownload={downloadAuditJson}
-          />
-        </div>
-      ) : null}
-    </section>
-  );
-}
-
-function FormationPositionCard({
-  card,
-  formation,
-  selectableDragons,
-  activeRelationship,
-  expandedSections,
-  onExpandedSectionsChange,
-  onRelationshipActive,
-  onDragonChange,
-  onMove,
-  onClear,
-}: {
-  card: FormationCardAnalysis;
-  formation: Formation;
-  selectableDragons: Dragon[];
-  activeRelationship: string | null;
-  expandedSections: Record<string, boolean>;
-  onExpandedSectionsChange: (value: Record<string, boolean>) => void;
-  onRelationshipActive: (relationshipId: string | null) => void;
-  onDragonChange: (dragonId: string | null) => void;
-  onMove: (position: FormationPosition) => void;
-  onClear: () => void;
-}) {
-  const dragon = card.dragonId ? dragons.find((candidate) => candidate.id === card.dragonId) ?? null : null;
-  const cardRelationships = [...card.receives, ...card.provides].map((item) => item.relationshipId);
-  const isRelationshipActive = activeRelationship !== null && cardRelationships.includes(activeRelationship);
-
-  return (
-    <article
-      className={`team-slot formation-position ${card.position}${isRelationshipActive ? ' relationship-active' : ''}`}
-      aria-labelledby={`formation-card-${card.position}`}
-    >
-      <div className="position-card-top">
-        <div className="position-card-heading">
-          <p className="position-label" id={`formation-card-${card.position}`}>
-            {positionLabels[card.position]}
-          </p>
-          {card.position === 'vanguard' ? <span className="vanguard-badge" aria-label="Vanguard badge">Center</span> : null}
-        </div>
-        <div className="position-controls">
-          <label htmlFor={`formation-${card.position}`}>Dragon</label>
-          <select
-            id={`formation-${card.position}`}
-            value={formation[card.position] ?? ''}
-            onChange={(event) => onDragonChange(event.target.value || null)}
-          >
-            <option value="">Choose a dragon</option>
-            {selectableDragons.map((candidate) => (
-              <option
-                key={candidate.id}
-                value={candidate.id}
-                disabled={FORMATION_POSITIONS.some(
-                  (existingPosition) =>
-                    existingPosition !== card.position && formation[existingPosition] === candidate.id,
-                )}
-              >
-                {candidate.name} ({candidate.rarity}, {candidate.breed})
-              </option>
-            ))}
-          </select>
-          <div className="movement-controls" aria-label={`${positionLabels[card.position]} movement controls`}>
-            {FORMATION_POSITIONS.filter((target) => target !== card.position).map((target) => (
-              <button className="secondary-button compact-action" key={target} type="button" onClick={() => onMove(target)}>
-                Move to {positionLabels[target]}
-              </button>
-            ))}
-            <button type="button" className="secondary-button compact-action clear-position-action" onClick={onClear}>
-              Clear position
-            </button>
-          </div>
-        </div>
-      </div>
-      {dragon ? (
-        <>
-          <CommandPanel command={card.command} />
-          <TraitStatusPanel status={card.traitStatus} />
-          <DragonAffinityStrip dragonName={dragon.name} favorable={card.affinities.favorable} unfavorable={card.affinities.unfavorable} />
-          <div className="interaction-panels">
-            <CardInteractionSection
-              cardKey={`${card.dragonId}-receives`}
-              title="Receives"
-              emptyText="No incoming benefits identified"
-              interactions={card.receives}
-              expandedSections={expandedSections}
-              onExpandedSectionsChange={onExpandedSectionsChange}
-              activeRelationship={activeRelationship}
-              onRelationshipActive={onRelationshipActive}
+        {FORMATION_POSITIONS.map((position) => {
+          const dragon = dragons.find((candidate) => candidate.id === formation[position]) ?? null;
+          return (
+            <SimpleFormationCard
+              key={position}
+              position={position}
+              formation={formation}
+              dragon={dragon}
+              selectableDragons={selectableDragons}
+              rosterEntry={dragon ? roster[dragon.id] : undefined}
+              hasSimpleProfile={dragon ? mappedProfileIds.has(dragon.id) : false}
+              onDragonChange={(nextId) => updatePosition(position, nextId)}
+              onMove={(target) => onFormationChange(moveFormationDragon(formation, position, target))}
+              onClear={() => updatePosition(position, null)}
             />
-            <CardInteractionSection
-              cardKey={`${card.dragonId}-provides`}
-              title="Provides"
-              emptyText="No outgoing benefits identified"
-              interactions={card.provides}
-              expandedSections={expandedSections}
-              onExpandedSectionsChange={onExpandedSectionsChange}
-              activeRelationship={activeRelationship}
-              onRelationshipActive={onRelationshipActive}
-            />
-          </div>
-        </>
-      ) : (
-        <p className="empty-card-note">Choose a dragon to see Trait, affinity, and interaction details.</p>
-      )}
-    </article>
-  );
-}
-
-function CommandPanel({ command }: { command: FormationCommandSummary | null }) {
-  const [detailsOpen, setDetailsOpen] = useState(false);
-  const detailsId = command ? `command-details-${command.dragonId}` : undefined;
-  if (!command) {
-    return (
-      <section className="card-mini-section command-panel" aria-label="Command">
-        <h4>Command</h4>
-        <p>Command data not yet verified.</p>
-      </section>
-    );
-  }
-  return (
-    <section className="card-mini-section command-panel" aria-label="Command">
-      <div className="mini-section-heading">
-        <h4>Command</h4>
-        <span className="count-pill">{command.label}</span>
+          );
+        })}
       </div>
-      <p>
-        <strong>{command.abilityName}</strong>
-      </p>
-      <ul className="interaction-summary-list">
-        {command.summaryLines.map((line) => (
-          <li key={line}>{line}</li>
-        ))}
-      </ul>
-      {command.detail !== command.summary ? (
-        <>
-          <button
-            type="button"
-            className="text-button compact-action interaction-details-toggle"
-            aria-expanded={detailsOpen}
-            aria-controls={detailsId}
-            onClick={() => setDetailsOpen((current) => !current)}
-          >
-            {detailsOpen ? 'Hide details' : 'Details'}
-          </button>
-          {detailsOpen ? (
-            <div className="interaction-details" id={detailsId}>
-              <strong>Full Command text</strong>
-              {command.detail.split(/\n\n+/).map((paragraph) => (
-                <p key={paragraph}>{paragraph}</p>
-              ))}
-            </div>
-          ) : null}
-        </>
-      ) : null}
-    </section>
-  );
-}
-
-function TraitStatusPanel({ status }: { status: FormationTraitStatus | null }) {
-  if (!status) {
-    return (
-      <section className="card-mini-section" aria-label="Trait status">
-        <h4>Trait</h4>
-        <p>Trait data not yet verified.</p>
-      </section>
-    );
-  }
-  return (
-    <section className="card-mini-section" aria-label="Trait status">
-      <h4>Trait</h4>
-      <StateBadge state={status.state} label={status.label} />
-      <p>
-        <strong>{status.abilityName}</strong>
-      </p>
-      <p>{status.summary}</p>
-    </section>
-  );
-}
-
-function DragonAffinityStrip({
-  dragonName,
-  favorable,
-  unfavorable,
-}: {
-  dragonName: string;
-  favorable: TroopType[];
-  unfavorable: TroopType[];
-}) {
-  return (
-    <section className="card-mini-section" aria-label={`${dragonName} affinities`}>
-      <h4>Affinities</h4>
-      <div className="affinity-row">
-        <span className="affinity-label">Favorable</span>
-        <AffinityIconList troopTypes={favorable} polarity="positive" emptyText="None verified" />
-      </div>
-      <div className="affinity-row">
-        <span className="affinity-label">Unfavorable</span>
-        <AffinityIconList troopTypes={unfavorable} polarity="negative" emptyText="None verified" />
-      </div>
-    </section>
-  );
-}
-
-function AffinityIconList({
-  troopTypes,
-  polarity,
-  emptyText,
-}: {
-  troopTypes: TroopType[];
-  polarity: 'positive' | 'negative';
-  emptyText: string;
-}) {
-  if (troopTypes.length === 0) {
-    return <span className="muted-inline">{emptyText}</span>;
-  }
-  return (
-    <span className="affinity-icons">
-      {troopTypes.map((troopType) => (
-        <span
-          className={`affinity-chip ${polarity}`}
-          key={troopType}
-          title={`${polarity === 'positive' ? 'Favorable' : 'Unfavorable'} affinity: ${troopType}`}
-          aria-label={`${polarity === 'positive' ? 'Favorable' : 'Unfavorable'} affinity: ${troopType}`}
-        >
-          <span aria-hidden="true">{polarity === 'positive' ? '+' : '-'}</span>
-          {troopType}
-        </span>
-      ))}
-    </span>
-  );
-}
-
-function CardInteractionSection({
-  cardKey,
-  title,
-  emptyText,
-  interactions,
-  expandedSections,
-  onExpandedSectionsChange,
-  activeRelationship,
-  onRelationshipActive,
-}: {
-  cardKey: string;
-  title: string;
-  emptyText: string;
-  interactions: FormationCardInteraction[];
-  expandedSections: Record<string, boolean>;
-  onExpandedSectionsChange: (value: Record<string, boolean>) => void;
-  activeRelationship: string | null;
-  onRelationshipActive: (relationshipId: string | null) => void;
-}) {
-  const expanded = expandedSections[cardKey] === true;
-  const [compactOverflows, setCompactOverflows] = useState(false);
-  const bodyRef = useRef<HTMLDivElement | null>(null);
-  const sectionExpanded = expanded;
-  const visible = getCompactInteractions(interactions, sectionExpanded);
-  const compactVisible = getCompactInteractions(interactions, false);
-  const countOverflow = interactions.length > compactVisible.length;
-  const canExpand = countOverflow || compactOverflows || expanded;
-  const listId = `${cardKey}-list`;
-  const updateCompactOverflow = useCallback(() => {
-    const body = bodyRef.current;
-    if (!body || sectionExpanded) {
-      setCompactOverflows(false);
-      return;
-    }
-    setCompactOverflows(body.scrollHeight > body.clientHeight + 1);
-  }, [sectionExpanded]);
-  useLayoutEffect(() => {
-    updateCompactOverflow();
-    const body = bodyRef.current;
-    if (!body) {
-      return undefined;
-    }
-    const ResizeObserverCtor = window.ResizeObserver;
-    if (ResizeObserverCtor) {
-      const observer = new ResizeObserverCtor(() => updateCompactOverflow());
-      observer.observe(body);
-      return () => observer.disconnect();
-    }
-    window.addEventListener('resize', updateCompactOverflow);
-    return () => window.removeEventListener('resize', updateCompactOverflow);
-  }, [interactions, visible.length, updateCompactOverflow]);
-  const handleExpandedToggle = () => {
-    onExpandedSectionsChange({ ...expandedSections, [cardKey]: !expanded });
-  };
-  return (
-    <section
-      className={`card-mini-section interaction-section${sectionExpanded ? ' is-expanded' : ''}${interactions.length === 0 ? ' is-empty' : ''}`}
-      aria-labelledby={`${cardKey}-title`}
-    >
-      <div className="interaction-section-heading">
-        <h4 id={`${cardKey}-title`}>{title}</h4>
-        <span className="count-pill">{interactions.length}</span>
-      </div>
-      <div
-        ref={bodyRef}
-        id={listId}
-        className="interaction-section-body"
-        aria-label={`${title} interactions`}
-        tabIndex={sectionExpanded && countOverflow ? 0 : undefined}
-      >
-        {visible.length > 0 ? (
-          <ul className="card-interaction-list">
-            {visible.map((interaction) => (
-              <li key={interaction.id}>
-              <CardInteractionItem
-                interaction={interaction}
-                active={activeRelationship === interaction.relationshipId}
-                onRelationshipActive={onRelationshipActive}
-              />
-            </li>
-          ))}
-          </ul>
-        ) : (
-          <p className="interaction-empty-state">{emptyText}</p>
-        )}
-      </div>
-      {canExpand ? (
-        <button
-          type="button"
-          className="text-button compact-action"
-          aria-expanded={expanded}
-          aria-controls={listId}
-          onClick={handleExpandedToggle}
-        >
-          {expanded ? 'Show fewer' : 'Show all'}
-        </button>
-      ) : null}
-    </section>
-  );
-}
-
-function CardInteractionItem({
-  interaction,
-  active,
-  onRelationshipActive,
-}: {
-  interaction: FormationCardInteraction;
-  active: boolean;
-  onRelationshipActive: (relationshipId: string | null) => void;
-}) {
-  const hasTargetUncertainty = interaction.isCandidate || (interaction.candidateTotal ?? 0) > 1;
-  return (
-    <article
-      className={`card-interaction-item state-${interaction.state}${active ? ' is-linked' : ''}`}
-      onFocusCapture={() => onRelationshipActive(interaction.relationshipId)}
-      onBlur={() => onRelationshipActive(null)}
-      onMouseEnter={() => onRelationshipActive(interaction.relationshipId)}
-      onMouseLeave={() => onRelationshipActive(null)}
-    >
-      <div className="interaction-item-header">
-        <strong className="interaction-relationship" aria-label={relationshipText(interaction)}>
-          {relationshipLabel(interaction)}
-        </strong>
-        <StateBadge state={interaction.state} label={stateLabel(interaction.state)} />
-      </div>
-      <div className="interaction-main">
-        <strong className="interaction-ability">{interaction.effectTitle}</strong>
-        <ul className="interaction-summary-list">
-          {[...interaction.summaryLines, ...interaction.modifierLines].map((line) => (
-            <li key={line}>{line}</li>
-          ))}
-        </ul>
-        {hasTargetUncertainty ? <span className="target-note">Target not guaranteed</span> : null}
-        {interaction.isEnemyFacing ? <span className="target-note">Enemy-facing team benefit</span> : null}
-      </div>
-    </article>
-  );
-}
-
-function StateBadge({ state, label }: { state: FormationCardInteractionState; label: string }) {
-  const Icon =
-    state === 'active'
-      ? CheckCircle2
-      : state === 'conditional'
-        ? CircleDashed
-        : state === 'preview'
-          ? Sparkles
-          : state === 'unknown'
-            ? HelpCircle
-      : Lock;
-  const visibleLabel = state === 'preview' ? 'Preview' : label;
-  return (
-    <span className={`state-badge state-${state}`} title={label} aria-label={label}>
-      <Icon size={14} aria-hidden="true" />
-      <span>{visibleLabel}</span>
-    </span>
-  );
-}
-
-function FormationAffinitySummaryStrip({ summary }: { summary: FormationAffinityTeamSummary }) {
-  return (
-    <section className="panel team-affinity-strip" aria-labelledby="formation-affinity-title">
-      <h3 id="formation-affinity-title">Formation Affinity Coverage</h3>
-      <AffinitySummaryGroup title="Covered" polarity="positive" items={summary.covered} />
-      <AffinitySummaryGroup title="Weak or missing" polarity="unknown" items={summary.weakOrMissing} />
-      <AffinitySummaryGroup title="Conflicts or vulnerabilities" polarity="negative" items={summary.conflicts} />
-    </section>
-  );
-}
-
-function AffinitySummaryGroup({
-  title,
-  polarity,
-  items,
-}: {
-  title: string;
-  polarity: 'positive' | 'negative' | 'unknown';
-  items: Array<{ troopType: TroopType; dragonNames: string[] }>;
-}) {
-  return (
-    <div>
-      <h4>{title}</h4>
-      {items.length > 0 ? (
-        <div className="affinity-icons">
-          {items.map((item) => (
-            <span
-              className={`affinity-chip ${polarity}`}
-              key={item.troopType}
-              title={item.dragonNames.length > 0 ? item.dragonNames.join(', ') : 'No positive coverage'}
-              aria-label={`${title}: ${item.troopType}. ${
-                item.dragonNames.length > 0 ? `Contributed by ${item.dragonNames.join(', ')}` : 'No positive coverage'
-              }`}
-            >
-              <span aria-hidden="true">{polarity === 'positive' ? '+' : polarity === 'negative' ? '-' : '?'}</span>
-              {item.troopType}
-            </span>
-          ))}
-        </div>
-      ) : (
-        <p>None identified</p>
-      )}
-    </div>
-  );
-}
-
-function TeamInteractionSummary({ traces }: { traces: SynergyTrace[] }) {
-  const targetSelection = traces.filter((trace) => trace.targetSelectionGroup);
-  const chains = traces.filter((trace) => trace.matchKind === 'status-condition-enablement');
-  const enemyFacing = traces.filter(
-    (trace) => trace.modifierRole === 'enemy-debuff' || trace.matchKind === 'enemy-mitigation-reduction',
-  );
-  const multiTarget = traces.filter(
-    (trace) => !trace.targetSelectionGroup && trace.recipientDragonId && trace.matchedOutputCapabilityIds && trace.matchedOutputCapabilityIds.length > 1,
-  );
-  return (
-    <div>
-      <h4>Team interactions</h4>
-      <ul className="plain-list">
-        <li>Target-selection competition: {targetSelection.length}</li>
-        <li>Multi-dragon chains: {chains.length}</li>
-        <li>Multi-output support: {multiTarget.length}</li>
-        <li>Enemy mitigation effects: {enemyFacing.length}</li>
-      </ul>
-    </div>
-  );
-}
-
-function AnalysisList({
-  title,
-  items,
-}: {
-  title: string;
-  items: Array<{ ruleId: string; title: string; description: string; confidence: string }>;
-}) {
-  return (
-    <div>
-      <h4>{title}</h4>
-      {items.length > 0 ? (
-        <ul className="plain-list">
-          {items.map((item) => (
-            <li key={item.ruleId}>
-              <strong>{item.title}:</strong> {item.description} Confidence: {item.confidence}
-            </li>
-          ))}
-        </ul>
-      ) : (
-        <p>None identified</p>
-      )}
-    </div>
-  );
-}
-
-function prepareLiveTechnicalAnalysisTraces(traces: SynergyTrace[]): SynergyTrace[] {
-  return dedupeFinalTechnicalAnalysisTraces(traces);
-}
-
-export function TechnicalAnalysisTraceCards({ traces }: { traces: SynergyTrace[] }) {
-  return (
-    <>
-      {prepareLiveTechnicalAnalysisTraces(traces).map((trace) => (
-        <TraceCard trace={trace} key={technicalAnalysisTraceIdentity(trace)} />
-      ))}
-    </>
-  );
-}
-
-function TraceCard({ trace }: { trace: SynergyTrace }) {
-  const sourceDragon = dragons.find((dragon) => dragon.id === trace.sourceDragonId);
-  const recipientDragon = trace.recipientDragonId
-    ? dragons.find((dragon) => dragon.id === trace.recipientDragonId)
-    : null;
-  const sourceAbility = sourceDragon
-    ? [sourceDragon.command, sourceDragon.trait, ...sourceDragon.habits].find(
-        (ability) => ability?.id === trace.sourceAbilityId,
-      )
-    : null;
-  const recipientAbility = recipientDragon
-    ? [recipientDragon.command, recipientDragon.trait, ...recipientDragon.habits].find(
-        (ability) => ability?.id === trace.recipientAbilityId,
-      )
-    : null;
-  const sourceReviews = manualReviewRecords.filter((review) => review.dragonId === trace.sourceDragonId);
-  const recipientReviews = trace.recipientDragonId
-    ? manualReviewRecords.filter((review) => review.dragonId === trace.recipientDragonId)
-    : [];
-
-  return (
-    <article className="trace-card">
-      <div className="card-topline">
-        <div>
-          <h4>{trace.title}</h4>
-          <p>
-            <span className="badge">{formatToken(trace.status)}</span>
-            <span className="badge">{formatToken(trace.confidence)}</span>
-            <span className="badge">Build {databaseMetadata.currentDocumentedGameBuild}</span>
-          </p>
-        </div>
-      </div>
-      <dl className="detail-list">
-        <div>
-          <dt>Source dragon</dt>
-          <dd>{sourceDragon?.name ?? trace.sourceDragonId}</dd>
-        </div>
-        <div>
-          <dt>Source ability</dt>
-          <dd>{sourceAbility?.name ?? unknown}</dd>
-        </div>
-        <div>
-          <dt>Receiving dragon</dt>
-          <dd>{recipientDragon?.name ?? unknown}</dd>
-        </div>
-        <div>
-          <dt>Receiving ability or mechanic</dt>
-          <dd>{recipientAbility?.name ?? trace.matchedFacts[0] ?? unknown}</dd>
-        </div>
-        <div>
-          <dt>Provider effect</dt>
-          <dd>{trace.providedEffectType ?? unknown}</dd>
-        </div>
-        <div>
-          <dt>Channel</dt>
-          <dd>{trace.channel ? formatToken(trace.channel) : unknown}</dd>
-        </div>
-        <div>
-          <dt>Match kind</dt>
-          <dd>{trace.matchKind ? formatToken(trace.matchKind) : unknown}</dd>
-        </div>
-        <div>
-          <dt>Interaction scope</dt>
-          <dd>{trace.interactionScope ? formatToken(trace.interactionScope) : unknown}</dd>
-        </div>
-        <div>
-          <dt>Damage scope</dt>
-          <dd>{trace.damageScope ? formatToken(trace.damageScope) : unknown}</dd>
-        </div>
-        <div>
-          <dt>Modifier role</dt>
-          <dd>{trace.modifierRole ? formatToken(trace.modifierRole) : unknown}</dd>
-        </div>
-        <div>
-          <dt>Target selector</dt>
-          <dd>{trace.targetSelectorSummary ?? unknown}</dd>
-        </div>
-        <div>
-          <dt>Self-only modifier</dt>
-          <dd>{trace.modifierSelfOnly === undefined ? unknown : trace.modifierSelfOnly ? 'Yes' : 'No'}</dd>
-        </div>
-        <div>
-          <dt>Availability context</dt>
-          <dd>{trace.availabilityContext ?? unknown}</dd>
-        </div>
-        <div>
-          <dt>Recipient-side modifier</dt>
-          <dd>
-            {trace.recipientModifierType
-              ? `${trace.recipientModifierType}${trace.recipientModifierValue === null || trace.recipientModifierValue === undefined ? '' : ` +${trace.recipientModifierValue}%`}`
-              : unknown}
-          </dd>
-        </div>
-        <div>
-          <dt>Combat-log confirmation</dt>
-          <dd>{trace.combatLogConfirmed ? `Confirmed in build ${databaseMetadata.currentDocumentedGameBuild}` : unknown}</dd>
-        </div>
-        <div>
-          <dt>Exact result</dt>
-          <dd>
-            {trace.exactResultKnown === true
-              ? 'Known'
-              : trace.exactResultKnown === false
-                ? trace.exactResultUnknownReason ?? 'Unknown'
-                : unknown}
-          </dd>
-        </div>
-      </dl>
-      <p>{formatPresentationText(trace.explanation)}</p>
-      {traceStatusReason(trace) !== trace.exactResultUnknownReason ? (
-        <p className="notice-text">{traceStatusReason(trace)}</p>
-      ) : null}
-      <h5>Requirements</h5>
-      <ul className="plain-list">
-        {trace.requirements.map((requirement) => (
-          <li key={requirement.id}>
-            <strong>{requirement.label}:</strong> expected {requirement.expected}; actual{' '}
-            {requirement.actual ?? unknown}; satisfied{' '}
-            {requirement.satisfied === null ? 'unknown' : requirement.satisfied ? 'yes' : 'no'}
-            {requirement.notes.length > 0 ? `; ${requirement.notes.join(' ')}` : ''}
-          </li>
-        ))}
-      </ul>
-      <TraceList title="Matched effect tags and facts" items={trace.matchedFacts} />
-      <TraceList title="Modifier capabilities" items={trace.modifierCapabilityIds ?? (trace.modifierCapabilityId ? [trace.modifierCapabilityId] : [])} />
-      <TraceList title="Matched output capabilities" items={trace.matchedOutputCapabilityIds ?? []} />
-      <TraceList title="Matched modifier capabilities" items={trace.matchedModifierCapabilityIds ?? []} />
-      <TraceList
-        title="Source-scope compatibility"
-        items={sourceScopeCompatibilityItems(trace)}
-      />
-      <TraceList title="Structured effects" items={trace.effects} />
-      <TraceList title="Conflicts" items={trace.conflicts} />
-      <TraceList title="Assumptions" items={trace.assumptions} />
-      <TraceList title="Unresolved questions" items={trace.unresolvedQuestions} />
-      <TraceList
-        title="Evidence IDs"
-        items={[...trace.sourceEvidenceIds, ...trace.recipientEvidenceIds, ...trace.requirements.flatMap((item) => item.evidenceIds)]}
-      />
-      <TraceList
-        title="Manual-review state"
-        items={[...sourceReviews, ...recipientReviews].map(
-          (review) => `${formatToken(review.scope)}: ${formatToken(review.status)} (${review.reviewedAgainstGameBuild})`,
-        )}
-      />
-      {sourceAbility?.rawDescription ? (
-        <details>
-          <summary>Raw source wording</summary>
-          <p>{sourceAbility.rawDescription}</p>
-        </details>
-      ) : null}
-    </article>
-  );
-}
-
-function TraceList({ title, items }: { title: string; items: string[] }) {
-  return (
-    <div>
-      <h5>{title}</h5>
-      {items.length > 0 ? (
-        <ul className="plain-list">
-          {[...new Set(items)].map((item) => (
-            <li key={item}>{item}</li>
-          ))}
-        </ul>
-      ) : (
-        <p>{unknown}</p>
-      )}
-    </div>
-  );
-}
-
-function sourceScopeCompatibilityItems(trace: SynergyTrace): string[] {
-  const explicit = (trace.sourceScopeResults ?? []).map(
-    (match) =>
-      `${match.outputCapabilityId}: ${match.sourceScopeCompatible ? 'compatible' : 'not compatible'}; ${formatToken(match.status)}`,
-  );
-  if (explicit.length > 0) {
-    return explicit;
-  }
-  const matchedOutputs = trace.matchedOutputCapabilityIds ?? [];
-  return matchedOutputs.length > 0
-    ? matchedOutputs.map((capabilityId) => `${capabilityId}: compatible; matched qualifying output`)
-    : [];
-}
-
-function AuditMatrixSection({
-  entries,
-  expanded,
-  onExpandedChange,
-  dragonFilter,
-  onDragonFilterChange,
-  abilityFilter,
-  onAbilityFilterChange,
-  statusFilter,
-  onStatusFilterChange,
-  confidenceFilter,
-  onConfidenceFilterChange,
-  onCopy,
-  onDownload,
-}: {
-  entries: Array<{ formation: Formation; traces: SynergyTrace[]; countsByStatus: Record<TraceStatus, number> }>;
-  expanded: boolean;
-  onExpandedChange: (expanded: boolean) => void;
-  dragonFilter: string;
-  onDragonFilterChange: (value: string) => void;
-  abilityFilter: string;
-  onAbilityFilterChange: (value: string) => void;
-  statusFilter: TraceStatus | 'all';
-  onStatusFilterChange: (value: TraceStatus | 'all') => void;
-  confidenceFilter: TraceConfidence | 'all';
-  onConfidenceFilterChange: (value: TraceConfidence | 'all') => void;
-  onCopy: () => void;
-  onDownload: () => void;
-}) {
-  const auditDragons = ['malachite', 'seasmoke', 'sheepstealer', 'vermax']
-    .map((id) => dragons.find((dragon) => dragon.id === id))
-    .filter((dragon): dragon is Dragon => Boolean(dragon));
-  const auditAbilities = auditDragons.flatMap((dragon) =>
-    [dragon.command, dragon.trait, ...dragon.habits]
-      .filter((ability): ability is AbilityDefinition => Boolean(ability))
-      .map((ability) => ({ id: ability.id, label: `${dragon.name}: ${ability.name}` })),
-  );
-
-  return (
-    <section className="panel">
-      <h3>Formation Audit Matrix</h3>
-      <p>
-        Generates all 24 ordered formations from Malachite, Seasmoke, Sheepstealer, and Vermax.
-        This audit is not persisted in localStorage.
-      </p>
-      <div className="filter-panel">
-        <label>
-          Filter by dragon
-          <select value={dragonFilter} onChange={(event) => onDragonFilterChange(event.target.value)}>
-            <option value="all">All dragons</option>
-            {auditDragons.map((dragon) => (
-              <option key={dragon.id} value={dragon.id}>
-                {dragon.name}
-              </option>
-            ))}
-          </select>
-        </label>
-        <label>
-          Filter by source ability
-          <select value={abilityFilter} onChange={(event) => onAbilityFilterChange(event.target.value)}>
-            <option value="all">All abilities</option>
-            {auditAbilities.map((ability) => (
-              <option key={ability.id} value={ability.id}>
-                {ability.label}
-              </option>
-            ))}
-          </select>
-        </label>
-        <label>
-          Filter by status
-          <select value={statusFilter} onChange={(event) => onStatusFilterChange(event.target.value as TraceStatus | 'all')}>
-            <option value="all">All statuses</option>
-            {(['active', 'potential', 'inactive', 'blocked', 'unknown', 'not-applicable'] as TraceStatus[]).map((status) => (
-              <option key={status} value={status}>
-                {formatToken(status)}
-              </option>
-            ))}
-          </select>
-        </label>
-        <label>
-          Filter by confidence
-          <select
-            value={confidenceFilter}
-            onChange={(event) => onConfidenceFilterChange(event.target.value as TraceConfidence | 'all')}
-          >
-            <option value="all">All confidence</option>
-            {(['confirmed', 'high', 'medium', 'low', 'unresolved'] as TraceConfidence[]).map((confidence) => (
-              <option key={confidence} value={confidence}>
-                {formatToken(confidence)}
-              </option>
-            ))}
-          </select>
-        </label>
-      </div>
-      <div className="button-row">
-        <button type="button" className="secondary-button" onClick={() => onExpandedChange(!expanded)}>
-          {expanded ? 'Collapse all' : 'Expand all'}
-        </button>
-        <button type="button" className="secondary-button" onClick={onCopy}>
-          Copy audit JSON
-        </button>
-        <button type="button" className="secondary-button" onClick={onDownload}>
-          Download audit JSON
-        </button>
-      </div>
-      <p className="result-count">Showing {entries.length} audit formations.</p>
-      <div className="audit-grid">
-        {entries.map((entry) => (
-          <article className="mini-panel" key={FORMATION_POSITIONS.map((position) => entry.formation[position]).join('-')}>
-            <h4>
-              {FORMATION_POSITIONS.map((position) => `${positionLabels[position]}: ${dragonName(entry.formation[position])}`).join(' | ')}
-            </h4>
-            <p>
-              Active {entry.countsByStatus.active}; Potential {entry.countsByStatus.potential};
-              Inactive {entry.countsByStatus.inactive}; Blocked {entry.countsByStatus.blocked};
-              Unknown {entry.countsByStatus.unknown}
-            </p>
-            <details open={expanded}>
-              <summary>Trace details</summary>
-              {entry.traces.length > 0 ? (
-                <ul className="plain-list">
-                  {entry.traces.map((trace) => (
-                    <li key={trace.id}>
-                      <strong>{formatToken(trace.status)}:</strong> {trace.title} - {traceStatusReason(trace)}
-                    </li>
-                  ))}
-                </ul>
-              ) : (
-                <p>{unknown}</p>
-              )}
-            </details>
-          </article>
-        ))}
-      </div>
+      <SimpleFormationAnalysis presentation={presentation} dragons={dragons} formation={formation} />
     </section>
   );
 }
@@ -3075,25 +1983,6 @@ function StatCard({ label, value }: { label: string; value: number }) {
   );
 }
 
-function Distribution({ title, values }: { title: string; values: Record<string, number> }) {
-  return (
-    <div>
-      <h4>{title}</h4>
-      {Object.keys(values).length > 0 ? (
-        <ul className="plain-list">
-          {Object.entries(values).map(([key, value]) => (
-            <li key={key}>
-              {key}: {value}
-            </li>
-          ))}
-        </ul>
-      ) : (
-        <p>{unknown}</p>
-      )}
-    </div>
-  );
-}
-
 function countValues<T extends string>(values: T[]): Record<T, number> {
   return values.reduce<Record<T, number>>(
     (counts, value) => {
@@ -3211,43 +2100,6 @@ function formatToken(value: string) {
     .split('-')
     .map((part) => titleCase(part))
     .join(' ');
-}
-
-function stateLabel(state: FormationCardInteractionState) {
-  switch (state) {
-    case 'active':
-      return 'Active';
-    case 'conditional':
-      return 'Conditional';
-    case 'preview':
-      return 'Max-rank preview';
-    case 'unknown':
-      return 'Progression unknown';
-    case 'inactive':
-      return 'Inactive';
-    case 'blocked':
-      return 'Blocked';
-  }
-}
-
-function relationshipText(interaction: FormationCardInteraction) {
-  if (interaction.recipientName) {
-    return `${interaction.sourceName} provides an interaction to ${interaction.recipientName}`;
-  }
-  if (interaction.targetLabel) {
-    return `${interaction.sourceName} provides an interaction to ${interaction.targetLabel}`;
-  }
-  return `${interaction.sourceName} team benefit`;
-}
-
-function relationshipLabel(interaction: FormationCardInteraction) {
-  if (interaction.recipientName) {
-    return `${interaction.sourceName} → ${interaction.recipientName}`;
-  }
-  if (interaction.targetLabel) {
-    return `${interaction.sourceName} → ${interaction.targetLabel}`;
-  }
-  return `${interaction.sourceName} → Team`;
 }
 
 function titleCase(value: string) {

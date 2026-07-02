@@ -1,9 +1,5 @@
-import { render, screen, within } from '@testing-library/react';
-import userEvent from '@testing-library/user-event';
 import { describe, expect, it } from 'vitest';
-import { App } from '../app/App';
-import { FORMATION_STORAGE_KEY, ROSTER_SCHEMA_VERSION, STORAGE_KEY } from '../services/rosterStorage';
-import { pass19Analysis, pass19Formation, traceText } from './pass19Helpers';
+import { pass19Analysis, traceText } from './pass19Helpers';
 
 const infectiousOutput = 'seasmoke-infectious-wrath-infectious-wrath-physical-damage-rate-output';
 const instillStatus = 'daemoros-instill-fear-instill-fear-panic-panic-status-output';
@@ -14,21 +10,6 @@ const expectedBullets = [
   'Against the same otherwise-eligible Panicked enemy, Infectious Wrath Physical Damage Rate increases from 30% to 60% on Rounds 3, 6, and 9; prior-round Panic may carry over, while same-round overlap requires the relevant supplier to resolve first.',
   'Supplier activation success, eligible enemy identity, same-target overlap, and same-round action order remain unresolved.',
 ];
-
-async function renderPass19Formation() {
-  const { roster } = pass19Analysis();
-  window.localStorage.setItem(STORAGE_KEY, JSON.stringify({
-    format: 'dragonfire-roster-lab-local',
-    schemaVersion: ROSTER_SCHEMA_VERSION,
-    updatedAt: new Date().toISOString(),
-    roster: Object.values(roster),
-  }));
-  window.localStorage.setItem(FORMATION_STORAGE_KEY, JSON.stringify(pass19Formation));
-  render(<App />);
-  const user = userEvent.setup();
-  await user.click(screen.getAllByRole('button', { name: /formation builder/i })[0]!);
-  return user;
-}
 
 describe('Pass 19 Panic dependency aggregation', () => {
   it('keeps Instill Fear and Darkening Fear dependency traces separate with typed capabilities', () => {
@@ -64,7 +45,7 @@ describe('Pass 19 Panic dependency aggregation', () => {
     }
   });
 
-  it('collapses both Panic dependency cards into one concise provider card while retaining details', async () => {
+  it('collapses both Panic dependency cards into one concise provider card while retaining details', () => {
     const { presentation } = pass19Analysis();
     const daemoros = presentation.cards.find((card) => card.dragonId === 'daemoros')!;
     const cards = daemoros.provides.filter((item) => item.effectTitle === 'Panic enhances Infectious Wrath damage rate');
@@ -80,18 +61,5 @@ describe('Pass 19 Panic dependency aggregation', () => {
     expect(details).toContain('Round 3 after a successful Round 2');
     expect(details).toContain('Round 6 after a successful Round 5');
     expect(details).toContain('Round 9 after a successful Round 8');
-
-    await renderPass19Formation();
-    const rightFlank = screen.getByRole('article', { name: 'Right Flank' });
-    const provides = within(rightFlank).getByRole('region', { name: 'Provides' });
-    const showAll = within(provides).queryByRole('button', { name: /show all/i });
-    if (showAll) {
-      await userEvent.click(showAll);
-    }
-    expect(within(provides).getAllByText('Panic enhances Infectious Wrath damage rate')).toHaveLength(1);
-    for (const bullet of expectedBullets) {
-      expect(provides).toHaveTextContent(bullet);
-    }
-    expect(provides.textContent ?? '').not.toMatch(/Known possible overlap windows:.*Known possible overlap windows:/);
   });
 });

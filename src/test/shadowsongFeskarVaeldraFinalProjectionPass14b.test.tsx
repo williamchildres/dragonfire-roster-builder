@@ -1,12 +1,9 @@
-import { render, screen, within } from '@testing-library/react';
-import userEvent from '@testing-library/user-event';
 import { describe, expect, it } from 'vitest';
-import { App } from '../app/App';
 import { dragons } from '../data/dragons';
 import type { FormationAnalysisInput, SynergyTrace } from '../models/synergy';
 import { buildFormationCardPresentation, type FormationCardInteraction } from '../services/formationCardAnalysis';
 import { analyzeFormationTraces, createSynergyAuditExport, technicalAnalysisTraceIdentity } from '../services/synergyTrace';
-import { createEmptyRoster, ROSTER_SCHEMA_VERSION, STORAGE_KEY } from '../services/rosterStorage';
+import { createEmptyRoster } from '../services/rosterStorage';
 
 const formation = {
   'left-flank': 'shadowsong',
@@ -74,25 +71,6 @@ function expectNoWindowText(text: string) {
   for (const windowText of overlapWindows) {
     expect(text).not.toContain(windowText);
   }
-}
-
-async function renderFormation() {
-  const user = userEvent.setup();
-  const roster = pass14Roster();
-  window.localStorage.setItem(STORAGE_KEY, JSON.stringify({
-    format: 'dragonfire-roster-lab-local',
-    schemaVersion: ROSTER_SCHEMA_VERSION,
-    updatedAt: new Date().toISOString(),
-    roster: Object.values(roster),
-  }));
-  render(<App />);
-  await user.click(screen.getAllByRole('button', { name: /formation builder/i })[0]!);
-  await user.click(screen.getByLabelText(/include unowned dragons/i));
-  const selectors = screen.getAllByLabelText('Dragon');
-  await user.selectOptions(selectors[0]!, 'shadowsong');
-  await user.selectOptions(selectors[1]!, 'feskar');
-  await user.selectOptions(selectors[2]!, 'vaeldra');
-  return user;
 }
 
 describe('Shadowsong/Feskar/Vaeldra final projection pass 14B', () => {
@@ -233,41 +211,4 @@ describe('Shadowsong/Feskar/Vaeldra final projection pass 14B', () => {
     expect(card.summary).not.toContain('Targets 1 enemy target');
   });
 
-  it('renders compact collapsed cards and retained expanded details in React', async () => {
-    const user = await renderFormation();
-    const left = screen.getByRole('article', { name: 'Left Flank' });
-    const vanguard = screen.getByRole('article', { name: 'Vanguard' });
-
-    for (const article of [left, vanguard]) {
-      for (const section of ['Receives', 'Provides']) {
-        const region = within(article).queryByRole('region', { name: section });
-        const button = region ? within(region).queryByRole('button', { name: /show all/i }) : null;
-        if (button) {
-          await user.click(button);
-        }
-      }
-    }
-
-    const burnItem = within(vanguard).getAllByText(/Against the same eligible Burned enemy/i)[0]!.closest('.card-interaction-item');
-    expect(burnItem).not.toBeNull();
-    const collapsedBurn = burnItem!.textContent ?? '';
-    expect(collapsedBurn).toContain('Blazing Conductor attempts Burn on Rounds 2, 5, and 8');
-    expect(collapsedBurn).toContain('Prior-round Burn can carry into Emerald Inferno');
-    expectNoWindowText(collapsedBurn);
-    expect(within(burnItem as HTMLElement).queryByRole('button', { name: /details/i })).toBeNull();
-    expect(burnItem!.textContent ?? '').not.toContain(overlapWindows[0]);
-    for (const windowText of overlapWindows) {
-      expect(burnItem!.textContent ?? '').not.toContain(windowText);
-    }
-    expect(burnItem!.textContent ?? '').not.toContain('Known possible overlap windows');
-
-    const periodicItem = within(left).getByText(/Burn deals periodic Fire Damage each round for 2 rounds/i).closest('.card-interaction-item');
-    expect(periodicItem).not.toBeNull();
-    expect(periodicItem!.textContent).toContain('40% on the first and 20% on a different second target');
-
-    const calculatedItem = within(vanguard)
-      .getByText(/Enemy identity and highest-Strength tie resolution remain unresolved/i)
-      .closest('.card-interaction-item');
-    expect(calculatedItem).not.toBeNull();
-  });
 });

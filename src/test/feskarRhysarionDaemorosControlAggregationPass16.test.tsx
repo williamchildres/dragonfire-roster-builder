@@ -1,11 +1,8 @@
-import { render, screen, within } from '@testing-library/react';
-import userEvent from '@testing-library/user-event';
 import { describe, expect, it } from 'vitest';
-import { App } from '../app/App';
 import { dragons } from '../data/dragons';
 import type { FormationAnalysisInput, SynergyTrace } from '../models/synergy';
 import { buildFormationCardPresentation } from '../services/formationCardAnalysis';
-import { createEmptyRoster, ROSTER_SCHEMA_VERSION, STORAGE_KEY } from '../services/rosterStorage';
+import { createEmptyRoster } from '../services/rosterStorage';
 import { analyzeFormationTraces, createSynergyAuditExport, technicalAnalysisTraceIdentity } from '../services/synergyTrace';
 
 const formation = {
@@ -60,27 +57,8 @@ function matchingTrace(traces: SynergyTrace[], sourceDragonId: string, title: st
   return matches[0]!;
 }
 
-async function renderFormation() {
-  const user = userEvent.setup();
-  const roster = pass16Roster();
-  window.localStorage.setItem(STORAGE_KEY, JSON.stringify({
-    format: 'dragonfire-roster-lab-local',
-    schemaVersion: ROSTER_SCHEMA_VERSION,
-    updatedAt: new Date().toISOString(),
-    roster: Object.values(roster),
-  }));
-  render(<App />);
-  await user.click(screen.getAllByRole('button', { name: /formation builder/i })[0]!);
-  await user.click(screen.getByLabelText(/include unowned dragons/i));
-  const selectors = screen.getAllByLabelText('Dragon');
-  await user.selectOptions(selectors[0]!, 'feskar');
-  await user.selectOptions(selectors[1]!, 'rhysarion');
-  await user.selectOptions(selectors[2]!, 'daemoros');
-  return user;
-}
-
 describe('Feskar/Rhysarion/Daemoros Control aggregation pass 16', () => {
-  it('keeps Control dependency traces separate while collapsing the final normal card', async () => {
+  it('keeps Control dependency traces separate while collapsing the final normal card', () => {
     const { roster, traces, presentation } = currentAnalysis();
     const counts = traces.reduce<Record<string, number>>((acc, trace) => {
       acc[trace.status] = (acc[trace.status] ?? 0) + 1;
@@ -142,25 +120,6 @@ describe('Feskar/Rhysarion/Daemoros Control aggregation pass 16', () => {
     ]);
     expect(card.traceIds.sort()).toEqual([stagger.id, confusion.id].sort());
 
-    const user = await renderFormation();
-    const vanguard = screen.getByRole('article', { name: 'Vanguard' });
-    const receives = within(vanguard).getByRole('region', { name: 'Receives' });
-    expect(receives).toHaveTextContent('5');
-    await user.click(within(receives).getByRole('button', { name: /show all/i }));
-    const title = within(receives).getByText('Control enhances Dawnsong damage rate');
-    const domCard = title.closest('.card-interaction-item') as HTMLElement;
-    expect(domCard).not.toBeNull();
-    expect(within(domCard).getByText('Feskar and Daemoros → Rhysarion')).toBeInTheDocument();
-    expect(domCard).not.toHaveTextContent('Team → Rhysarion');
-    expect(within(receives).queryAllByText('Control enhances Dawnsong damage rate')).toHaveLength(1);
-    expect(within(receives).queryByText(/Stagger enhances Dawnsong damage rate|Confusion enhances Dawnsong damage rate|Control enhances Dawnsong chance/i)).not.toBeInTheDocument();
-
-    const bullets = within(domCard).getAllByRole('listitem').map((item) => item.textContent?.trim() ?? '');
-    expect(bullets).toEqual(card.summaryLines);
-    expect(bullets).toHaveLength(4);
-    expect(domCard.textContent ?? '').not.toMatch(/Base current|Enhanced current|Conditional multiplier|1\.5x/i);
-    expect(within(domCard).queryByRole('button', { name: /details/i })).toBeNull();
-    expect(domCard.textContent ?? '').not.toContain('Round 2 from a successful Round 2 application only if Unyielding Grasp resolves before Dawnsong that round');
     expect(card.details.join(' ')).toContain('Round 2 from a successful Round 2 application only if Unyielding Grasp resolves before Dawnsong that round');
     expect(card.details.join(' ')).toContain('Round 5 from a successful Round 5 application only if Shroud of Shadows resolves before Dawnsong that round');
   });

@@ -1,11 +1,8 @@
-import { render, screen, within } from '@testing-library/react';
-import userEvent from '@testing-library/user-event';
 import { describe, expect, it } from 'vitest';
-import { App } from '../app/App';
 import { dragons } from '../data/dragons';
 import type { FormationAnalysisInput, SynergyTrace } from '../models/synergy';
 import { buildFormationCardPresentation, type FormationCardInteraction } from '../services/formationCardAnalysis';
-import { createEmptyRoster, ROSTER_SCHEMA_VERSION, STORAGE_KEY } from '../services/rosterStorage';
+import { createEmptyRoster } from '../services/rosterStorage';
 import { analyzeFormationTraces, technicalAnalysisTraceIdentity } from '../services/synergyTrace';
 
 const formation = {
@@ -277,38 +274,4 @@ describe('scheduled dependency card contract pass 13', () => {
     expect(dragonCunningCards.every((item) => !/final reduction scales with Sheepstealer's (Strength|Intelligence|Instinct)/.test(item.summary))).toBe(true);
   });
 
-  it('renders the collapsed Formation Builder card without round-by-round schedule enumeration', async () => {
-    const user = userEvent.setup();
-    const roster = pass13Roster();
-    window.localStorage.setItem(STORAGE_KEY, JSON.stringify({
-      format: 'dragonfire-roster-lab-local',
-      schemaVersion: ROSTER_SCHEMA_VERSION,
-      updatedAt: new Date().toISOString(),
-      roster: Object.values(roster),
-    }));
-    render(<App />);
-
-    await user.click(screen.getAllByRole('button', { name: /formation builder/i })[0]!);
-    await user.click(screen.getByLabelText(/include unowned dragons/i));
-    const selectors = screen.getAllByLabelText('Dragon');
-    await user.selectOptions(selectors[0]!, 'daemoros');
-    await user.selectOptions(selectors[1]!, 'rhysarion');
-    await user.selectOptions(selectors[2]!, 'shadowsong');
-
-    const rhysarion = screen.getByRole('article', { name: 'Vanguard' });
-    const receives = within(rhysarion).getByRole('region', { name: 'Receives' });
-    const expand = within(receives).queryByRole('button', { name: /show all/i });
-    if (expand) {
-      await user.click(expand);
-    }
-    const item = within(receives).getByText(/Against the same eligible enemy with Control, Dawnsong Fire Damage increases from 20% to 30%/i)
-      .closest('.card-interaction-item');
-    expect(item).not.toBeNull();
-    const collapsedText = item!.textContent ?? '';
-    expect(collapsedText).toContain('15% chance on odd-numbered rounds to apply Confusion to one enemy within adjacency for 2 rounds.');
-    expect(collapsedText).toContain('shared Round 5 window requires Shroud of Shadows to resolve first.');
-    expect(collapsedText).not.toContain('Known possible overlap windows');
-    expect(collapsedText).not.toContain('Round 2 after a successful Round 1 application');
-    expect(collapsedText).not.toContain('Round 8 after a successful Round 7 application');
-  });
 });

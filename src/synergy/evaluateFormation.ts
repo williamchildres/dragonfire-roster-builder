@@ -75,14 +75,14 @@ function addSetupPayoffResults(
   beneficiary: SelectedProfile,
   benefit: SynergySignal,
 ): void {
-  const selfProvidesTag = beneficiary.profile.outputs.some((output) => output.tag === benefit.tag);
+  const selfOutputsTag = beneficiary.profile.outputs.some((output) => output.tag === benefit.tag);
   const providers = selected.filter(
     (provider) =>
       provider.profile.dragonId !== beneficiary.profile.dragonId &&
       provider.profile.outputs.some((output) => output.tag === benefit.tag && signalCanReachTeammate(output)),
   );
 
-  if (providers.length === 0 && selfProvidesTag) {
+  if (providers.length === 0 && selfOutputsTag) {
     return;
   }
 

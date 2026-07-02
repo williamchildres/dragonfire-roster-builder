@@ -1,11 +1,8 @@
-import { render, screen, within } from '@testing-library/react';
-import userEvent from '@testing-library/user-event';
 import { describe, expect, it } from 'vitest';
-import { App } from '../app/App';
 import { dragons } from '../data/dragons';
 import type { FormationAnalysisInput } from '../models/synergy';
 import { buildFormationCardPresentation } from '../services/formationCardAnalysis';
-import { createEmptyRoster, ROSTER_SCHEMA_VERSION, STORAGE_KEY } from '../services/rosterStorage';
+import { createEmptyRoster } from '../services/rosterStorage';
 import { analyzeFormationTraces, createSynergyAuditExport, technicalAnalysisTraceIdentity } from '../services/synergyTrace';
 
 const formation = {
@@ -41,31 +38,8 @@ function currentPresentation() {
   return { traces, presentation };
 }
 
-async function renderFormation() {
-  const user = userEvent.setup();
-  const roster = pass15Roster();
-  window.localStorage.setItem(STORAGE_KEY, JSON.stringify({
-    format: 'dragonfire-roster-lab-local',
-    schemaVersion: ROSTER_SCHEMA_VERSION,
-    updatedAt: new Date().toISOString(),
-    roster: Object.values(roster),
-  }));
-  render(<App />);
-  await user.click(screen.getAllByRole('button', { name: /formation builder/i })[0]!);
-  await user.click(screen.getByLabelText(/include unowned dragons/i));
-  const selectors = screen.getAllByLabelText('Dragon');
-  await user.selectOptions(selectors[0]!, 'shadowsong');
-  await user.selectOptions(selectors[1]!, 'feskar');
-  await user.selectOptions(selectors[2]!, 'daemoros');
-  return user;
-}
-
-function countOccurrences(text: string, fragment: string): number {
-  return (text.match(new RegExp(fragment.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'), 'g')) ?? []).length;
-}
-
 describe('Shadowsong/Feskar/Daemoros aggregated burn summary pass 15B', () => {
-  it('keeps the collapsed Burn summary clean while preserving detailed windows and trace identity', async () => {
+  it('keeps the collapsed Burn summary clean while preserving detailed windows and trace identity', () => {
     const { traces, presentation } = currentPresentation();
     const counts = traces.reduce<Record<string, number>>((acc, trace) => {
       acc[trace.status] = (acc[trace.status] ?? 0) + 1;
@@ -110,49 +84,8 @@ describe('Shadowsong/Feskar/Daemoros aggregated burn summary pass 15B', () => {
     expect(exportText).toContain('blazing-conductor-first-fire');
     expect(exportText).toContain('blazing-conductor-second-fire');
 
-    const user = await renderFormation();
-    const vanguard = screen.getByRole('article', { name: 'Vanguard' });
-    expect(within(vanguard).getByRole('region', { name: 'Receives' })).toHaveTextContent('6');
-    const receives = within(vanguard).getByRole('region', { name: 'Receives' });
-    await user.click(within(receives).getByRole('button', { name: /show all/i }));
-
-    const burnTitle = within(receives).getByText('Burn enhances Emerald Inferno damage rate');
-    const burnCardDom = burnTitle.closest('.card-interaction-item');
-    expect(burnCardDom).not.toBeNull();
-    const burnCardText = burnCardDom!.textContent ?? '';
-
-    expect(within(receives).queryAllByText('Burn enhances Emerald Inferno damage rate')).toHaveLength(1);
-    expect(within(receives).queryByText('Burn enhances Emerald Inferno chance')).not.toBeInTheDocument();
-    expect(within(burnCardDom as HTMLElement).getByText('Shadowsong and Daemoros → Feskar')).toBeInTheDocument();
-    expect(burnCardDom).not.toHaveTextContent('Team → Feskar');
-
-    const bullets = within(burnCardDom as HTMLElement).getAllByRole('listitem').map((item) => item.textContent?.trim() ?? '');
-    expect(bullets).toHaveLength(4);
-    expect(bullets).toEqual(burnCard.summaryLines);
-    expect(bullets[0]).toContain('Blazing Conductor attempts Burn on Rounds 2, 5, and 8');
-    expect(bullets[0]).toContain('40% on the first added target');
-    expect(bullets[0]).toContain('20% on a different second target');
-    expect(bullets[1]).toContain('Shadowflame attempts Burn on odd-numbered rounds');
-    expect(bullets[1]).toContain('20% chance on one enemy within adjacency');
-    expect(bullets[2]).toContain('same otherwise-eligible Burned enemy');
-    expect(bullets[2]).toContain('40% to 60%');
-    expect(bullets[2]).toContain('prior-round Burn may carry over');
-    expect(bullets[2]).toContain('same-round overlap requires the relevant supplier to resolve before Emerald Inferno');
-    expect(bullets[3]).toContain('Supplier application success');
-    expect(bullets[3]).toContain('eligible enemy identity');
-    expect(bullets[3]).toContain('same-target overlap');
-    expect(bullets[3]).toContain('same-round action order');
-
-    expect(burnCardText).not.toContain('Enhanced current Fire Damage Rate');
-    expect(burnCardText).not.toContain('Base current Fire Damage Rate');
-    expect(burnCardText).not.toContain('Conditional multiplier');
-    expect(burnCardText).not.toContain('Conditional multiplier: 1');
-    expect(burnCardText).not.toMatch(/40%[^<\n]*Enhanced current Fire Damage Rate[^<\n]*60%/i);
-    expect(countOccurrences(burnCardText, '60%')).toBe(1);
-    expect(countOccurrences(burnCardText, '40%')).toBe(2);
-
-    expect(within(burnCardDom as HTMLElement).queryByRole('button', { name: /details/i })).toBeNull();
-    expect(burnCardDom!.textContent ?? '').not.toContain('Known possible overlap windows');
+    const burnCardText = burnCard.summaryLines.join(' ');
+    expect(burnCardText).not.toContain('Known possible overlap windows');
     for (const windowText of overlapWindows) {
       expect(burnCard.details.join(' ')).toContain(windowText);
     }
