@@ -6,6 +6,8 @@ import { dragons } from '../data/dragons';
 import { createEmptyRoster, STORAGE_KEY } from '../services/rosterStorage';
 
 type ProgressionSeed = Record<string, { starRank?: number | null; reignLevel?: number | null; owned?: boolean }>;
+const incompleteMissingEnablerNotice =
+  'Missing-enabler checks are incomplete until all selected dragons have high-level synergy profiles.';
 
 describe('Formation Builder simple synergy cutover', () => {
   afterEach(() => {
@@ -107,6 +109,31 @@ describe('Formation Builder simple synergy cutover', () => {
     expect(missing).toContain('Shadowsong benefits from Panic, but this formation has no Panic provider.');
     expect(missing).toContain('Caraxes benefits from First-Strike, but this formation has no First-Strike provider.');
     expect(missing).not.toContain('benefits from Panic-dependent abilities');
+    expect(analysisText()).not.toContain(incompleteMissingEnablerNotice);
+  });
+
+  it('treats Panic missing-enabler checks as incomplete when a selected dragon is unmapped', async () => {
+    const user = userEvent.setup();
+    seedRoster({ shadowsong: {}, seasmoke: {} });
+
+    await openFormationBuilder(user);
+    await selectFormation(user, { 'left-flank': 'shadowsong', vanguard: 'seasmoke' });
+
+    expect(analysisText()).toContain('Synergy data not yet mapped: Seasmoke.');
+    expect(sectionText('Missing enablers')).toContain(incompleteMissingEnablerNotice);
+    expect(analysisText()).not.toContain('this formation has no Panic provider');
+  });
+
+  it('treats First-Strike missing-enabler checks as incomplete when a selected dragon is unmapped', async () => {
+    const user = userEvent.setup();
+    seedRoster({ caraxes: {}, seasmoke: {} });
+
+    await openFormationBuilder(user);
+    await selectFormation(user, { 'left-flank': 'caraxes', vanguard: 'seasmoke' });
+
+    expect(analysisText()).toContain('Synergy data not yet mapped: Seasmoke.');
+    expect(sectionText('Missing enablers')).toContain(incompleteMissingEnablerNotice);
+    expect(analysisText()).not.toContain('this formation has no First-Strike provider');
   });
 
   it('shows Syrax and Caraxes First-Strike and Fire Damage relationships without target-probability wording', async () => {
@@ -198,6 +225,9 @@ describe('Formation Builder simple synergy cutover', () => {
     }
 
     expect(analysisText()).toContain('Synergy data not yet mapped: Seasmoke.');
+    expect(sectionText('Strong synergies')).toContain("Syrax can grant First-Strike, which improves Caraxes's Infernal Burst.");
+    expect(sectionText('Strong synergies')).toContain('Syrax improves allied Fire Damage, and Caraxes deals Fire Damage.');
+    expect(sectionText('Missing enablers')).toContain(incompleteMissingEnablerNotice);
     const vanguardSyraxOption = within(screen.getAllByLabelText('Dragon')[1]!).getByRole('option', { name: /Syrax/ });
     expect(vanguardSyraxOption).toBeDisabled();
 

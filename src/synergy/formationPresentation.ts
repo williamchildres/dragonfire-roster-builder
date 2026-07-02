@@ -10,6 +10,7 @@ export interface SimpleFormationPresentation {
   mappedDragonIds: string[];
   unmappedDragonIds: string[];
   selectedDragonIds: string[];
+  hasCompleteProfileCoverage: boolean;
 }
 
 export function buildSimpleFormationPresentation({
@@ -27,15 +28,21 @@ export function buildSimpleFormationPresentation({
   const selectedDragonIds = Object.values(formation).filter(
     (dragonId): dragonId is string => typeof dragonId === 'string' && knownDragonIds.has(dragonId),
   );
+  const mappedDragonIds = selectedDragonIds.filter((dragonId) => mappedProfileIds.has(dragonId));
+  const unmappedDragonIds = selectedDragonIds.filter((dragonId) => !mappedProfileIds.has(dragonId));
+  const hasCompleteProfileCoverage = unmappedDragonIds.length === 0;
 
   return {
     activeSynergies: results.filter((result) => result.kind === 'setup-payoff' || result.kind === 'amplifier-output'),
-    missingEnablers: results.filter((result) => result.kind === 'missing-enabler'),
+    missingEnablers: hasCompleteProfileCoverage
+      ? results.filter((result) => result.kind === 'missing-enabler')
+      : [],
     placementIssues: results.filter((result) => result.kind === 'position-blocked'),
     positionConflicts: results.filter((result) => result.kind === 'position-conflict'),
     futureUnlocks: results.filter((result) => result.kind === 'progression-locked'),
-    mappedDragonIds: selectedDragonIds.filter((dragonId) => mappedProfileIds.has(dragonId)),
-    unmappedDragonIds: selectedDragonIds.filter((dragonId) => !mappedProfileIds.has(dragonId)),
+    mappedDragonIds,
+    unmappedDragonIds,
     selectedDragonIds,
+    hasCompleteProfileCoverage,
   };
 }

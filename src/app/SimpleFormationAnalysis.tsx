@@ -28,6 +28,7 @@ export function SimpleFormationAnalysis({
             <p className="empty-card-note">No active high-level relationship is mapped for this formation yet.</p>
           ) : null}
           <ResultSection title="Strong synergies" results={presentation.activeSynergies} />
+          {!presentation.hasCompleteProfileCoverage ? <IncompleteMissingEnablerNotice /> : null}
           <ResultSection title="Missing enablers" results={presentation.missingEnablers} />
           <ResultSection title="Placement issues" results={presentation.placementIssues} />
           <ResultSection title="Position conflicts" results={presentation.positionConflicts} />
@@ -36,6 +37,17 @@ export function SimpleFormationAnalysis({
       )}
       <p className="notice-text">
         Formation adjacency is linear: Left Flank and Right Flank are adjacent only to Vanguard.
+      </p>
+    </section>
+  );
+}
+
+function IncompleteMissingEnablerNotice() {
+  return (
+    <section className="simple-result-section" aria-labelledby="simple-incomplete-missing-enablers">
+      <h4 id="simple-incomplete-missing-enablers">Missing enablers</h4>
+      <p className="notice-text">
+        Missing-enabler checks are incomplete until all selected dragons have high-level synergy profiles.
       </p>
     </section>
   );
