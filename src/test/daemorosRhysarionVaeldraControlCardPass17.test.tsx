@@ -61,11 +61,10 @@ describe('Daemoros/Rhysarion/Vaeldra Control card pass 17', () => {
     expect(bullets).toEqual(card.summaryLines);
     expect(bullets).toHaveLength(4);
     expect(domCard.textContent ?? '').not.toMatch(/Team → Rhysarion|Base current|Enhanced current|Conditional multiplier|1\.5x/i);
-    await user.click(within(domCard).getByRole('button', { name: /details/i }));
-    const expanded = domCard.textContent ?? '';
-    expect(expanded).toContain('Round 8 after a successful Round 7 application');
-    expect(expanded).toContain('Schedule overlap: Round 2 only.');
-    expect(expanded).toContain("Known possible overlap windows: Round 1 from a successful Round 1 Lure only if Lure resolves before Siren's Call that round");
-    expect(expanded).not.toMatch(/Taunt directly enhances Dawnsong/i);
+    expect(within(domCard).queryByRole('button', { name: /details/i })).toBeNull();
+    expect(domCard.textContent ?? '').not.toContain('Round 8 after a successful Round 7 application');
+    expect(card.details.join(' ')).toContain('Round 8 after a successful Round 7 application');
+    expect(card.details.join(' ')).toContain("Known possible overlap windows: Round 1 from a successful Round 1 Lure only if Lure resolves before Siren's Call that round");
+    expect(card.details.join(' ')).not.toMatch(/Taunt directly enhances Dawnsong/i);
   });
 });

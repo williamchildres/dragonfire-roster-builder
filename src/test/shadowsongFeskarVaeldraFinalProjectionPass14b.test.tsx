@@ -254,11 +254,12 @@ describe('Shadowsong/Feskar/Vaeldra final projection pass 14B', () => {
     expect(collapsedBurn).toContain('Blazing Conductor attempts Burn on Rounds 2, 5, and 8');
     expect(collapsedBurn).toContain('Prior-round Burn can carry into Emerald Inferno');
     expectNoWindowText(collapsedBurn);
-    await user.click(within(burnItem as HTMLElement).getByRole('button', { name: /details/i }));
-    const expandedBurn = burnItem!.textContent ?? '';
+    expect(within(burnItem as HTMLElement).queryByRole('button', { name: /details/i })).toBeNull();
+    expect(burnItem!.textContent ?? '').not.toContain(overlapWindows[0]);
     for (const windowText of overlapWindows) {
-      expect(expandedBurn).toContain(windowText);
+      expect(burnItem!.textContent ?? '').not.toContain(windowText);
     }
+    expect(burnItem!.textContent ?? '').not.toContain('Known possible overlap windows');
 
     const periodicItem = within(left).getByText(/Burn deals periodic Fire Damage each round for 2 rounds/i).closest('.card-interaction-item');
     expect(periodicItem).not.toBeNull();
