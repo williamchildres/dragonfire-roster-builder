@@ -72,8 +72,8 @@ describe('Shadowsong/Feskar/Daemoros aggregated burn summary pass 15B', () => {
       return acc;
     }, {});
 
-    expect(traces).toHaveLength(68);
-    expect(counts).toMatchObject({ active: 23, potential: 36, inactive: 8, blocked: 1 });
+    expect(traces).toHaveLength(73);
+    expect(counts).toMatchObject({ active: 25, potential: 38, inactive: 9, blocked: 1 });
     expect(counts['not-applicable'] ?? 0).toBe(0);
     expect(counts.unknown ?? 0).toBe(0);
     expect(new Set(traces.map(technicalAnalysisTraceIdentity)).size).toBe(traces.length);

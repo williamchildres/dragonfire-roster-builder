@@ -122,11 +122,11 @@ describe('stat-scaled modifier support pass 20', () => {
   it('preserves existing Intelligence scaling, downstream Dragon Cunning traces, counts, and card aggregation', () => {
     const { traces, presentation } = buildAnalysis();
 
-    expect(traces).toHaveLength(61);
+    expect(traces).toHaveLength(62);
     expect(countByStatus(traces)).toEqual({
       active: 19,
       potential: 25,
-      inactive: 13,
+      inactive: 14,
       blocked: 1,
       'not-applicable': 0,
       unknown: 3,

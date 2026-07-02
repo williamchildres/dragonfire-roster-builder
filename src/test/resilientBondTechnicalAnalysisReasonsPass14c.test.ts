@@ -110,11 +110,11 @@ describe('Resilient Bond technical-analysis reasons pass 14C', () => {
   it('preserves the final technical-analysis trace counts and identities', () => {
     const traces = currentTraces();
 
-    expect(traces).toHaveLength(55);
+    expect(traces).toHaveLength(57);
     expect(traces.reduce<Record<string, number>>((acc, trace) => {
       acc[trace.status] = (acc[trace.status] ?? 0) + 1;
       return acc;
-    }, {})).toMatchObject({ active: 26, potential: 21, inactive: 7, blocked: 1 });
+    }, {})).toMatchObject({ active: 28, potential: 21, inactive: 7, blocked: 1 });
     expect(new Set(traces.map(technicalAnalysisTraceIdentity)).size).toBe(traces.length);
   });
 });

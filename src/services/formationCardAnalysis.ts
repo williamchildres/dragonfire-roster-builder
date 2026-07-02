@@ -1,7 +1,7 @@
 import { FORMATION_POSITIONS, TROOP_TYPES, type AbilityDefinition, type AbilityEffect, type AbilitySchedule, type AbilityScheduleOverride, type ActivationRoll, type Dragon, type FormationPosition, type OwnedDragon, type RankedValue, type TroopType } from '../models/dragon';
 import type { FormationAnalysisInput, RequirementTrace, SynergyTrace, TraceConfidence, TraceStatus } from '../models/synergy';
 import type { OutputCapability } from '../models/synergy';
-import { deriveOutputCapabilities, derivePeriodicDamageDefinitions, deriveStatusOutputCapabilities, periodicDamageOutputCapabilities } from './effectCapabilities';
+import { deriveModifierCapabilities, deriveOutputCapabilities, derivePeriodicDamageDefinitions, deriveStatusOutputCapabilities, periodicDamageOutputCapabilities } from './effectCapabilities';
 import { formatTypedModifierValue } from './effectCapabilities';
 import { rankedValueForHabitLevel, resolveEffectiveHabitLevelForAbility } from './habitLevels';
 import { isNormalSynergyTrace } from './synergyTrace';
@@ -121,9 +121,10 @@ export function buildFormationCardPresentation(
     statusOutputCapabilities,
   );
   const outputCapabilities = [...deriveOutputCapabilities(allDragons), ...periodicOutputCapabilities];
+  const modifierCapabilitiesById = new Map(deriveModifierCapabilities(allDragons).map((capability) => [capability.id, capability]));
   const normalTraces = traces.filter(
       (trace) =>
-        (isNormalSynergyTrace(trace) || isVisibleInternalProvidesTrace(trace)) &&
+        (isNormalSynergyTrace(trace) || isVisibleInternalProvidesTrace(trace, modifierCapabilitiesById)) &&
         !(trace.status === 'inactive' && trace.matchKind === 'defensive-ally-support') &&
       (trace.ruleId !== 'status-source-output' || !trace.recipientDragonId || isEnemyFacingTrace(trace) || isVisibleSharedActivationStatusSourceTrace(trace, traces)) &&
       !isUnresolvedCandidateSpecificConsequence(trace) &&
@@ -136,7 +137,7 @@ export function buildFormationCardPresentation(
 
   for (const trace of normalTraces) {
     const source = dragonById.get(trace.sourceDragonId);
-    if (!source || !selectedIds.has(trace.sourceDragonId) || (trace.interactionScope === 'internal' && !isVisibleInternalProvidesTrace(trace))) {
+    if (!source || !selectedIds.has(trace.sourceDragonId) || (trace.interactionScope === 'internal' && !isVisibleInternalProvidesTrace(trace, modifierCapabilitiesById))) {
       continue;
     }
     if (isRedundantBlockedTraitTrace(trace, source, options.previewEnabled === true)) {
@@ -211,6 +212,19 @@ export function buildFormationCardPresentation(
       candidateIndex: null,
       candidateTotal: null,
     });
+    if (isInternalSelfModifierStatScalingTrace(trace, modifierCapabilitiesById) && recipient && selectedIds.has(recipient.id)) {
+      const statScalingModifierLines = unique([
+        ...item.modifierLines,
+        ...item.summaryLines,
+        internalSelfStatScalingModifierLine(trace, source, recipient, modifierCapabilitiesById),
+      ].filter((line): line is string => Boolean(line)));
+      byDragon.get(recipient.id)?.receives.push({
+        ...item,
+        isRecipientModifier: true,
+        modifierLines: statScalingModifierLines,
+      });
+      continue;
+    }
     if (trace.matchKind === 'incoming-effect-amplification' && trace.recipientModifierType) {
       const targetSelectionGroup = trace.targetSelectionGroup ?? null;
       const providerTargetLabel = targetSelectionGroup
@@ -296,7 +310,7 @@ function isGenericEnemyProviderWithBeneficiaryTrace(trace: SynergyTrace, traces:
   );
 }
 
-function isVisibleInternalProvidesTrace(trace: SynergyTrace): boolean {
+function isVisibleInternalProvidesTrace(trace: SynergyTrace, modifierCapabilitiesById?: Map<string, { role?: string }>): boolean {
   if (isFormationRelevantEnemyProviderBenefit(trace)) {
     return true;
   }
@@ -335,6 +349,9 @@ function isVisibleInternalProvidesTrace(trace: SynergyTrace): boolean {
       [...trace.effects, ...trace.matchedFacts, trace.explanation].some((line) => /Grants 1 .+ stack/i.test(line));
   }
   if (trace.matchKind === 'stat-scaling-support' && trace.sourceDragonId === trace.recipientDragonId) {
+    if (isInternalSelfModifierStatScalingTrace(trace, modifierCapabilitiesById)) {
+      return trace.status !== 'inactive';
+    }
     const text = [trace.targetSelectorSummary ?? '', trace.explanation, ...trace.matchedFacts].join(' ');
     return trace.status !== 'inactive' &&
       /caster eligible/i.test(text) &&
@@ -347,6 +364,54 @@ function isFormationRelevantEnemyProviderBenefit(trace: SynergyTrace): boolean {
   return trace.sourceDragonId === trace.recipientDragonId &&
     trace.recipientDragonId !== null &&
     (trace.matchKind === 'enemy-mitigation-reduction' || trace.matchKind === 'enemy-damage-received-increase');
+}
+
+function isInternalSelfModifierStatScalingTrace(trace: SynergyTrace, modifierCapabilitiesById?: Map<string, { role?: string }>): boolean {
+  return trace.matchKind === 'stat-scaling-support' &&
+    trace.sourceDragonId === trace.recipientDragonId &&
+    (
+      trace.modifier?.role === 'self-amplification' ||
+      (trace.modifierCapabilityIds ?? []).some((id) => modifierCapabilitiesById?.get(id)?.role === 'self-amplification')
+    ) &&
+    (trace.matchedModifierCapabilityIds?.length ?? 0) > 0;
+}
+
+function internalSelfStatScalingModifierLine(
+  trace: SynergyTrace,
+  source: Dragon,
+  recipient: Dragon,
+  modifierCapabilitiesById: Map<string, { channel?: string; label?: string; abilityName?: string }>,
+): string | null {
+  if (!trace.sourceAbilityId || !trace.recipientAbilityId) {
+    return null;
+  }
+  const sourceAbilityName = getAbilityName(source, trace.sourceAbilityId);
+  const recipientAbilityName = getAbilityName(recipient, trace.recipientAbilityId);
+  const sourceModifier = (trace.modifierCapabilityIds ?? [])
+    .map((id) => modifierCapabilitiesById.get(id))
+    .find((capability) => capability?.channel === 'stat');
+  const stat = sourceModifier ? statLabelFromModifierCapability(sourceModifier) : null;
+  if (!stat) {
+    return null;
+  }
+  return `${sourceAbilityName} ${stat} support for ${recipientAbilityName}.`;
+}
+
+function statLabelFromModifierCapability(capability: { label?: string; abilityName?: string }): string | null {
+  const text = normalizeText([capability.label ?? '', capability.abilityName ?? ''].join(' '));
+  if (/\bstrength\b/.test(text)) {
+    return 'Strength';
+  }
+  if (/\bintelligence\b/.test(text)) {
+    return 'Intelligence';
+  }
+  if (/\binstinct\b/.test(text)) {
+    return 'Instinct';
+  }
+  if (/\binitiative\b/.test(text)) {
+    return 'Initiative';
+  }
+  return null;
 }
 
 export function getCompactInteractions(
@@ -2404,6 +2469,9 @@ function attachRecipientModifiers(
         : recipientModifierMatchesBase(item, modifier),
     );
     if (!target) {
+      if (isInternalStatScalingModifierInteraction(modifier)) {
+        continue;
+      }
       fallbackModifiers.push(modifier);
       continue;
     }
@@ -2425,6 +2493,11 @@ function attachRecipientModifiers(
   }
 
   return [...baseItems, ...fallbackModifiers];
+}
+
+function isInternalStatScalingModifierInteraction(interaction: FormationCardInteraction): boolean {
+  return interaction.isRecipientModifier &&
+    interaction.modifierLines.some((line) => /\b(?:Strength|Intelligence|Instinct|Initiative) support for\b/i.test(line));
 }
 
 function providerModifierMatchesBase(base: FormationCardInteraction, modifier: FormationCardInteraction): boolean {
@@ -2464,10 +2537,22 @@ function providerModifierMatchesBase(base: FormationCardInteraction, modifier: F
 function recipientModifierMatchesBase(base: FormationCardInteraction, modifier: FormationCardInteraction): boolean {
   if (
     base.sourceDragonId !== modifier.sourceDragonId ||
-    base.recipientDragonId !== modifier.recipientDragonId ||
-    base.abilityName !== modifier.abilityName
+    base.recipientDragonId !== modifier.recipientDragonId
   ) {
     return false;
+  }
+  if (base.abilityName !== modifier.abilityName) {
+    const modifierText = normalizeText([
+      modifier.effectTitle,
+      modifier.summary,
+      ...modifier.summaryLines,
+      ...modifier.details,
+      ...modifier.effects,
+      ...modifier.modifierLines,
+    ].join(' '));
+    if (!/\bstat support\b/.test(modifierText) || !modifierText.includes(normalizeText(base.abilityName))) {
+      return false;
+    }
   }
   if (base.relationshipId === modifier.relationshipId) {
     return true;

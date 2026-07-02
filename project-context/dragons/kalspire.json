@@ -4453,7 +4453,7 @@
   "firstObservedInGame": null,
   "format": "dragonfire-dragon-profile",
   "gameVersion": null,
-  "generatedAt": "2026-07-01T20:02:37.382Z",
+  "generatedAt": "2026-07-02T00:42:06.981Z",
   "habits": [
     {
       "abilityClass": "passive",
@@ -7781,8 +7781,8 @@
   "rosterSourceStatus": "official-website",
   "slug": "kalspire",
   "source": {
-    "branch": "fix/pass20-stat-scaled-modifier-support",
-    "commit": "aa9386884e3559e05ba3ddba3c69a4d8c9ca6eda",
+    "branch": "fix/pass20b-positive-scaled-modifier-support",
+    "commit": "e7d12b7b37e050ab543d541edc50d2c275de980d",
     "databaseVersion": "0.6.2",
     "dataSchemaVersion": 12,
     "gameBuild": "26.6.53509",
