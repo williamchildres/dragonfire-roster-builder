@@ -273,6 +273,12 @@ export function technicalAnalysisTraceIdentity(trace: SynergyTrace): string {
 export function traceStatusReason(trace: SynergyTrace): string {
   const failed = trace.requirements.filter((requirement) => requirement.satisfied === false);
   const unknown = trace.requirements.filter((requirement) => requirement.satisfied === null);
+  if (trace.targetSelectionGroup?.selectionUncertain) {
+    if (trace.targetSelectionGroup.selection === 'highest-stat') {
+      return 'The final selected recipient remains unresolved because one or more comparison values are unavailable.';
+    }
+    return 'The final selected recipient remains unresolved for this candidate set.';
+  }
   if (trace.status === 'active') {
     return 'All required source, target, placement, and unlock requirements are satisfied.';
   }

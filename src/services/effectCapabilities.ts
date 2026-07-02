@@ -3254,7 +3254,10 @@ function analyzeEnemyStatusSourceOutputs(
       recipientEvidenceIds: [],
       combatLogConfirmed: false,
       exactResultKnown: false,
-      exactResultUnknownReason: persistentTargetReason ?? 'Exact status application cannot be calculated because application success, uptime, and refresh behavior are unresolved.',
+      exactResultUnknownReason: persistentTargetReason ??
+        (hasSameTargetEffectReference(context.effect) && hasSelfTroopThresholdCondition(output)
+          ? 'Exact status application cannot be calculated because trigger-condition satisfaction, selected enemy identity, application success, uptime, and refresh behavior are unresolved.'
+          : 'Exact status application cannot be calculated because application success, uptime, and refresh behavior are unresolved.'),
       matchKind: 'status-condition-enablement',
       channel: 'status',
       targetSelectorSummary: selectorSummary,
@@ -3467,6 +3470,9 @@ function shouldAuditEnemyStatusSourceOutput(
   if (hasPersistentTargetReference(context.effect)) {
     return true;
   }
+  if (hasSameTargetEffectReference(context.effect) && hasSelfTroopThresholdCondition(statusOutput)) {
+    return true;
+  }
   if (context.effect.activationRoll?.unresolved || context.schedule.activationRoll?.unresolved) {
     return true;
   }
@@ -3483,6 +3489,19 @@ function shouldAuditEnemyStatusSourceOutput(
 
 function hasPersistentTargetReference(effect: AbilityEffect): boolean {
   return effect.targetSelection?.references.some((reference) => reference.kind === 'persistent-selected-target') === true;
+}
+
+function hasSameTargetEffectReference(effect: AbilityEffect): boolean {
+  return effect.targetSelection?.references.some((reference) => reference.kind === 'same-target-as-effect' && Boolean(reference.referencedEffectId)) === true;
+}
+
+function hasSelfTroopThresholdCondition(statusOutput: StatusOutputCapability): boolean {
+  return statusOutput.conditions.some((condition) =>
+    condition.subject === 'self' &&
+    (condition.kind === 'target-below-troop-capacity-threshold' || condition.kind === 'target-above-troop-capacity-threshold') &&
+    condition.thresholdPercent !== null &&
+    condition.thresholdPercent !== undefined,
+  );
 }
 
 function analyzeConditionalBranchStatusOutputs(
@@ -4183,12 +4202,20 @@ function groupDirectStatTargetSelection(
   const statNames = groupedStatNames(traces);
   const isLightning = first.sourceAbilityId === 'malachite-lightning-strike';
   const selectionStat = selectionStatFromTrace(first);
+  const hasActivationChance = traces.some((trace) => trace.modifier ? modifierHasActivationChance(trace.modifier) || trace.modifier.conditional : false);
   const explanation = isLightning
     ? `Lightning Strike can target one adjacent ally. Eligible recipients: ${joinEnglishList(recipientNames)}. The selected recipient is not guaranteed.`
     : selectionStat
       ? `${sourceName}'s ${abilityName} can increase ${joinEnglishList(statNames)} for one ally selected by highest ${statLabel(selectionStat)}. Eligible recipients: ${joinEnglishList(recipientNames)}. The selected recipient is not guaranteed.`
       : `${sourceName}'s ${abilityName} can increase ${joinEnglishList(statNames)} for one eligible ally. Eligible recipients: ${joinEnglishList(recipientNames)}. The selected recipient is not guaranteed.`;
-  const unresolvedRecipientReason = `The selected recipient remains unresolved between ${joinEnglishList(recipientNames)}; activation success and the final stat formula remain unresolved.`;
+  const unresolvedRecipientReason = hasActivationChance
+    ? `The selected recipient remains unresolved between ${joinEnglishList(recipientNames)}; activation success and the final stat formula remain unresolved.`
+    : `The selected recipient remains unresolved between ${joinEnglishList(recipientNames)} because the candidate comparison is unresolved; the final stat formula remains unresolved.`;
+  const targetSelectionAssumption = hasActivationChance
+    ? 'Target count is one, so eligible recipients compete for the same activation.'
+    : selectionStat
+      ? `Target count is one, so exactly one eligible ally is selected by ${statLabel(selectionStat)} comparison; the selected ally identity is unresolved.`
+      : 'Target count is one, so exactly one eligible ally is selected; the selected ally identity is unresolved.';
   return {
     ...first,
     id: `direct-stat-target-selection-${first.sourceAbilityId ?? first.sourceDragonId}`,
@@ -4203,7 +4230,7 @@ function groupDirectStatTargetSelection(
     conflicts: [],
     assumptions: uniqueSorted([
       ...traces.flatMap((trace) => trace.assumptions),
-      'Target count is one, so eligible recipients compete for the same activation.',
+      targetSelectionAssumption,
     ]),
     unresolvedQuestions: uniqueSorted(traces.flatMap((trace) => trace.unresolvedQuestions)),
     recipientEvidenceIds: uniqueSorted(traces.flatMap((trace) => trace.recipientEvidenceIds)),
@@ -7316,7 +7343,8 @@ function statusSupplierFacts(
   const hasPersistentTargetReference = persistentReferenceId !== null;
   const branchCondition = hasPersistentTargetReference ? null : branchConditionFact(statusOutput);
   const branchExclusion = hasPersistentTargetReference ? null : branchExclusionSummary(statusOutput);
-  const targetCount = hasPersistentTargetReference ? 1 : branchCondition ? null : targetEffect.targetCount ?? statusOutput.targetSelector.count;
+  const inheritedTarget = targetForEffect(targetEffect);
+  const targetCount = hasPersistentTargetReference ? 1 : branchCondition ? null : inheritedTarget.count ?? targetEffect.targetCount ?? statusOutput.targetSelector.count;
   const targetText = branchCondition
     ? hasPersistentTargetReference
       ? 'the current marked target'
@@ -7339,6 +7367,7 @@ function statusSupplierFacts(
   const sharedActivationGroup = activationGroupId(schedule, effect);
   const applicationFacts = statusApplicationResultFacts(statusOutput, recipientResolved, effect);
   const targetGraphFacts = [
+    ...(targetEffect === effect ? [] : targetReferenceFacts(effect)),
     ...targetReferenceFacts(targetEffect),
     ...referencedEffectTargetReferenceFacts(schedule, targetEffect),
   ];
@@ -7351,7 +7380,7 @@ function statusSupplierFacts(
     `Target: ${targetText}.`,
     ...(hasPersistentTargetReference && statusOutput.targetSide === 'enemy' ? ['Target count: 1.'] : []),
     ...(hasPersistentTargetReference && persistentReferenceId ? [`Persistent target reference: ${persistentReferenceId}.`] : []),
-    ...(statusOutput.targetSide === 'self' ? statusRuntimeConditionFacts(statusOutput, effect) : []),
+    ...statusRuntimeConditionFacts(statusOutput, effect),
     branchCondition,
     branchCondition ? `Branch target count: dynamic; only ${targetText} receive ${statusLabel(statusOutput.statusId)}.` : null,
     branchCondition ? 'Exactly one conditional branch applies per enemy.' : null,
@@ -7420,7 +7449,7 @@ function statusSupplierFacts(
       ...(includeChanceFacts && chanceText ? [`Status application chance: ${chanceText}${level ? ` at ${levelFacts.summaryPrefix}` : ''}.`] : []),
       ...conditionalChanceFacts.effects,
       ...(duration ? [duration] : []),
-      ...(statusOutput.targetSide === 'self' ? statusRuntimeConditionFacts(statusOutput, effect) : []),
+      ...statusRuntimeConditionFacts(statusOutput, effect),
       ...(confirmedRollDescription ? [confirmedRollDescription] : []),
       ...(branchCondition ? [branchCondition, `Branch target count: dynamic; only ${targetText} receive ${statusLabel(statusOutput.statusId)}.`, 'Exactly one conditional branch applies per enemy.'] : []),
       ...(branchExclusion ? [branchExclusion] : []),
@@ -8035,6 +8064,9 @@ function targetPriorityFact(effect: AbilityEffect): string | null {
   }
   if (effect.targetPriority === 'prefer-left-flank') {
     return 'Priority: enemy Left Flank is preferred, not guaranteed.';
+  }
+  if (effect.targetPriority === 'prefer-hunter') {
+    return 'Priority: Hunter breed is preferred, not guaranteed.';
   }
   if (effect.targetPriority === 'prefer-warrior') {
     return 'Priority: Warriors are prioritized, not guaranteed.';
@@ -10085,6 +10117,11 @@ function activationChanceFacts(modifier: ModifierCapability, options?: Capabilit
     return [`Activation chance by Habit Level: ${modifier.activationChanceByHabitLevel.map((value) => `${value.value}%`).join(', ')}.`];
   }
   return [];
+}
+
+function modifierHasActivationChance(modifier: ModifierCapability): boolean {
+  return modifier.activationChanceFixed !== null ||
+    (modifier.activationChanceByHabitLevel?.length ?? 0) > 0;
 }
 
 function extraActionActivationChanceFacts(extraAction: ExtraActionCapability): string[] {

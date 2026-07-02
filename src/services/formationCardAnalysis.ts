@@ -133,6 +133,7 @@ export function buildFormationCardPresentation(
         (isNormalSynergyTrace(trace) || isVisibleInternalProvidesTrace(trace, modifierCapabilitiesById)) &&
         !(trace.status === 'inactive' && trace.matchKind === 'defensive-ally-support') &&
       (trace.ruleId !== 'status-source-output' || !trace.recipientDragonId || isEnemyFacingTrace(trace) || isVisibleSharedActivationStatusSourceTrace(trace, traces)) &&
+      !isReferenceOnlyEnemyStatusSourceTrace(trace, allDragons) &&
       !isUnresolvedCandidateSpecificConsequence(trace) &&
       !isGenericEnemyProviderWithBeneficiaryTrace(trace, traces),
   );
@@ -1349,10 +1350,13 @@ function summarizeTrace(
       ];
     }
     if (trace.targetSelectionGroup.eligibleRecipientDragonIds.length > 1) {
+      const effectLines = targetSelectionEffectLines(trace, recipient, target.outputCapabilities, target.allDragons);
       return [
-        `Eligible selected-target candidates: ${eligibleNames}.`,
-        'One candidate is selected when the activation succeeds; the selected target is unresolved.',
-        ...targetSelectionEffectLines(trace, recipient, target.outputCapabilities, target.allDragons),
+        ...(effectLines.some((line) => /^Eligible selected-target candidates:/i.test(line))
+          ? []
+          : [`Eligible selected-target candidates: ${eligibleNames}.`]),
+        targetSelectionUncertaintyLine(trace),
+        ...effectLines,
       ];
     }
     if (trace.targetSelectionGroup.selectionUncertain && trace.targetSelectionGroup.eligibleRecipientDragonIds.length === 1) {
@@ -1608,12 +1612,49 @@ function targetSelectionEffectLines(
 ): string[] {
   return unique([
     ...qualifyingOutputSummaryLines(trace, recipient, outputCapabilities, allDragons),
+    ...highestStatTargetSelectionLines(trace, allDragons),
     ...statValueEffectLines(trace),
     trace.effects.find((effect) => /Activation chance:/i.test(effect)),
     trace.effects.find((effect) => /Timing:/i.test(effect)),
     trace.effects.find((effect) => /Enhanced by/i.test(effect)),
     trace.effects.find((effect) => /Duration:/i.test(effect)),
   ].filter((line): line is string => Boolean(line)));
+}
+
+function highestStatTargetSelectionLines(trace: SynergyTrace, allDragons: Dragon[]): string[] {
+  const group = trace.targetSelectionGroup;
+  if (group?.selection !== 'highest-stat' || !group.selectionStat || !group.candidateStats?.length) {
+    return [];
+  }
+  const dragonById = new Map(allDragons.map((dragon) => [dragon.id, dragon.name]));
+  const stat = formatToken(group.selectionStat);
+  const candidateNames = group.eligibleRecipientDragonIds.map((dragonId) => dragonById.get(dragonId) ?? dragonId);
+  const missing = group.candidateStats
+    .filter((candidate) => candidate.value === null)
+    .map((candidate) => dragonById.get(candidate.dragonId) ?? candidate.dragonId);
+  const values = group.candidateStats.map((candidate) =>
+    `${dragonById.get(candidate.dragonId) ?? candidate.dragonId} ${stat}: ${candidate.value ?? 'unknown'}.`,
+  );
+  return [
+    `Eligible selected-target candidates: ${joinTargetNames(candidateNames, false)}.`,
+    missing.length > 0
+      ? `The highest-${stat} ally is unresolved because ${joinEnglishList(missing.map((name) => `${name}'s ${stat}`))} ${missing.length === 1 ? 'is' : 'are'} unavailable.`
+      : `The highest-${stat} ally is unresolved.`,
+    ...values,
+  ];
+}
+
+function targetSelectionUncertaintyLine(trace: SynergyTrace): string {
+  const hasActivationChance = [trace.explanation, ...trace.matchedFacts, ...trace.effects, ...trace.assumptions]
+    .some((line) => /activation chance|trigger chance|activation succeeds|compete for the same activation/i.test(line));
+  const group = trace.targetSelectionGroup;
+  if (hasActivationChance) {
+    return 'One candidate is selected when the activation succeeds; the selected target is unresolved.';
+  }
+  if (group?.selection === 'highest-stat' && group.selectionStat) {
+    return `Exactly one eligible ally is selected by ${formatToken(group.selectionStat)} comparison; the selected ally identity is unresolved.`;
+  }
+  return 'Exactly one eligible target is selected; the selected target identity is unresolved.';
 }
 
 function statValueEffectLines(trace: SynergyTrace): string[] {
@@ -4054,6 +4095,33 @@ function commonAbilityEffectPrefix(abilityName: string, titles: string[]): strin
 function isUnresolvedCandidateSpecificConsequence(trace: SynergyTrace): boolean {
   return trace.ruleId === 'stat-scaling-support' &&
     trace.assumptions.some((assumption) => /Recipient selection is unresolved/i.test(assumption));
+}
+
+function isReferenceOnlyEnemyStatusSourceTrace(trace: SynergyTrace, allDragons: Dragon[]): boolean {
+  if (
+    trace.ruleId !== 'status-source-output' ||
+    trace.interactionScope !== 'enemy-side' ||
+    trace.recipientDragonId !== null
+  ) {
+    return false;
+  }
+  const sourceEffectId = [trace.explanation, ...trace.matchedFacts, ...trace.effects]
+    .join(' ')
+    .match(/Source effect ID:\s*([A-Za-z0-9-]+)/i)?.[1] ?? null;
+  if (!trace.sourceAbilityId || !sourceEffectId) {
+    return false;
+  }
+  const sourceDragon = allDragons.find((dragon) => dragon.id === trace.sourceDragonId);
+  const sourceAbility = sourceDragon
+    ? [sourceDragon.command, sourceDragon.trait, ...sourceDragon.habits]
+      .find((ability): ability is AbilityDefinition => ability !== null && ability.id === trace.sourceAbilityId)
+    : null;
+  const sourceEffect = sourceAbility?.schedules
+    .flatMap((schedule) => schedule.effects)
+    .find((effect) => effect.id === sourceEffectId);
+  const references = sourceEffect?.targetSelection?.references ?? [];
+  return references.length > 0 &&
+    references.every((reference) => reference.kind === 'same-target-as-effect');
 }
 
 function isVisibleSharedActivationStatusSourceTrace(trace: SynergyTrace, traces: SynergyTrace[]): boolean {
