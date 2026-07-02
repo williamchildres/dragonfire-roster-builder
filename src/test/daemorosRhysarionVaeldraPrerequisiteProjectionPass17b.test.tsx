@@ -33,7 +33,6 @@ async function renderExpandedControlCard() {
   const receives = within(vanguard).getByRole('region', { name: 'Receives' });
   await user.click(within(receives).getByRole('button', { name: /show all/i }));
   const card = within(receives).getByText('Control enhances Dawnsong damage rate').closest('.card-interaction-item') as HTMLElement;
-  await user.click(within(card).getByRole('button', { name: /details/i }));
   return card;
 }
 
@@ -116,15 +115,17 @@ describe('Daemoros/Rhysarion/Vaeldra prerequisite projection pass 17B', () => {
     const card = await renderExpandedControlCard();
     const domText = card.textContent ?? '';
     expect(domText).toContain('Daemoros and Vaeldra → Rhysarion');
-    expect(domText).toContain("Siren's Call's Stagger branch overlaps Dawnsong only on Round 2");
-    expect(occurrences(domText, "Prerequisite context: Lure can establish the Taunt required by Siren's Call's Stagger branch.")).toBe(1);
-    expect(occurrences(domText, sourceCapabilityId)).toBe(1);
-    expect(occurrences(domText, dependentCapabilityId)).toBe(1);
-    expect(occurrences(domText, 'Lure schedule: Each round.')).toBe(1);
-    expect(occurrences(domText, "Siren's Call schedule: Round 1, 2, and 3.")).toBe(1);
-    expect(occurrences(domText, 'Taunt duration: 2 rounds.')).toBe(1);
-    expect(occurrences(domText, "Lure and Siren's Call must affect the same enemy.")).toBe(1);
-    expect(occurrences(domText, 'Prerequisite uncertainty:')).toBe(1);
+    expect(domText).not.toContain("Siren's Call's Stagger branch overlaps Dawnsong only on Round 2");
+    expect(within(card).queryByRole('button', { name: /details/i })).toBeNull();
+    expect(controlCard.details.join(' ')).toContain("Siren's Call's Stagger branch overlaps Dawnsong only on Round 2");
+    expect(occurrences(controlCard.details.join(' '), "Prerequisite context: Lure can establish the Taunt required by Siren's Call's Stagger branch.")).toBe(1);
+    expect(occurrences(controlCard.details.join(' '), sourceCapabilityId)).toBe(1);
+    expect(occurrences(controlCard.details.join(' '), dependentCapabilityId)).toBe(1);
+    expect(occurrences(controlCard.details.join(' '), 'Lure schedule: Each round.')).toBe(1);
+    expect(occurrences(controlCard.details.join(' '), "Siren's Call schedule: Round 1, 2, and 3.")).toBe(1);
+    expect(occurrences(controlCard.details.join(' '), 'Taunt duration: 2 rounds.')).toBe(1);
+    expect(occurrences(controlCard.details.join(' '), "Lure and Siren's Call must affect the same enemy.")).toBe(1);
+    expect(occurrences(controlCard.details.join(' '), 'Prerequisite uncertainty:')).toBe(1);
     for (const windowText of [
       "Round 1 from a successful Round 1 Lure only if Lure resolves before Siren's Call that round",
       'Round 2 after a successful Round 1 Lure',
@@ -132,12 +133,11 @@ describe('Daemoros/Rhysarion/Vaeldra prerequisite projection pass 17B', () => {
       'Round 3 after a successful Round 2 Lure',
       "Round 3 from a successful Round 3 Lure only if Lure resolves before Siren's Call that round",
     ]) {
-      expect(occurrences(domText, windowText)).toBe(1);
+      expect(occurrences(controlCard.details.join(' '), windowText)).toBe(1);
     }
     expect(domText).not.toMatch(/Conditional Stagger: Taunt Supplied status|Taunt Supplied status: Taunt Status application chance/i);
-    expect(occurrences(domText, "Known possible overlap windows: Round 1 from a successful Round 1 Lure")).toBe(1);
-    expect(occurrences(domText, 'Supplier schedule: Each round.')).toBe(0);
-    expect(occurrences(domText, 'Dependent schedule: Rounds 1, 2, and 3.')).toBe(0);
+    expect(occurrences(controlCard.details.join(' '), 'Supplier schedule: Each round.')).toBe(0);
+    expect(occurrences(controlCard.details.join(' '), 'Dependent schedule: Rounds 1, 2, and 3.')).toBe(0);
 
     expect(traces.filter((trace) => trace.title === 'Confusion enables Dawnsong')).toHaveLength(1);
     expect(traces.filter((trace) => trace.title === 'Stagger enables Dawnsong')).toHaveLength(1);

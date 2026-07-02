@@ -131,8 +131,8 @@ describe('Shadowsong/Feskar/Daemoros provider projection pass 15', () => {
     expect(burnCard).toHaveTextContent(/Shadowflame/i);
     expect(burnCard).toHaveTextContent(/40%.*60%|60%.*40%/i);
 
-    await user.click(within(burnCard as HTMLElement).getByRole('button', { name: /details/i }));
-    expect(burnCard).toHaveTextContent('Round 3 after a successful Round 2 application');
-    expect(burnCard).toHaveTextContent('Round 10 after a successful Round 9 application');
+    expect(within(burnCard as HTMLElement).queryByRole('button', { name: /details/i })).toBeNull();
+    expect(burnCard).not.toHaveTextContent('Round 3 after a successful Round 2 application');
+    expect(burnCard).not.toHaveTextContent('Round 10 after a successful Round 9 application');
   });
 });

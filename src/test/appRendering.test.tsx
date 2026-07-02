@@ -402,6 +402,11 @@ describe('Dragonfire Roster Lab app', () => {
       'rhysarion-echoing-melody:shadowsong',
     ]);
     expect(outgoing).toHaveLength(5);
+    const writeText = vi.fn().mockResolvedValue(undefined);
+    Object.defineProperty(navigator, 'clipboard', {
+      configurable: true,
+      value: { writeText },
+    });
 
     render(<App />);
     await user.click(screen.getAllByRole('button', { name: /formation builder/i })[0]!);
@@ -425,6 +430,9 @@ describe('Dragonfire Roster Lab app', () => {
     expect(feskarBlocks.filter((block) => blockHasSourceAbility(block, 'Echoing Melody'))).toHaveLength(1);
     expect(shadowsongBlocks.filter((block) => blockHasSourceAbility(block, 'Ebbing Fury'))).toHaveLength(1);
     expect(shadowsongBlocks.filter((block) => blockHasSourceAbility(block, 'Echoing Melody'))).toHaveLength(1);
+    await user.click(within(details as HTMLElement).getByRole('button', { name: /copy current formation json/i }));
+    expect(writeText).toHaveBeenCalledTimes(1);
+    expect(writeText.mock.calls[0]?.[0]).toContain('Feskar amplifies Rhysarion Recovery');
 
     const duplicate = incoming.find((trace) =>
       trace.sourceAbilityId === 'rhysarion-ebbing-fury' &&
@@ -443,7 +451,7 @@ describe('Dragonfire Roster Lab app', () => {
     expect(duplicateFeskarBlocks.filter((block) => blockHasSourceAbility(block, 'Echoing Melody'))).toHaveLength(1);
   });
 
-  it('renders selected formation cards with normalized regions and compact interaction overflow', async () => {
+  it('renders selected formation cards with normalized regions, compact overflow, and no interaction Details controls', async () => {
     const user = userEvent.setup();
     render(<App />);
 
@@ -466,10 +474,17 @@ describe('Dragonfire Roster Lab app', () => {
       expect(within(positionCard).getByRole('region', { name: 'Provides' })).toBeInTheDocument();
     }
 
+    const vanguard = screen.getByRole('article', { name: 'Vanguard' });
+    const receives = within(vanguard).getByRole('region', { name: 'Receives' });
+    expect(within(receives).queryByRole('button', { name: /details/i })).toBeNull();
+    expect(within(receives).queryByText(/full explanation/i)).toBeNull();
+
     const syrax = screen.getByRole('article', { name: 'Right Flank' });
     const provides = within(syrax).getByRole('region', { name: 'Provides' });
     const collapsedCount = provides.querySelectorAll('.card-interaction-item').length;
     expect(provides.querySelectorAll('.card-interaction-item').length).toBeLessThanOrEqual(3);
+    expect(within(provides).queryByRole('button', { name: /details/i })).toBeNull();
+    expect(within(provides).queryByText(/full explanation/i)).toBeNull();
     const expand = within(provides).getByRole('button', { name: /show all/i });
     expect(expand).toHaveAttribute('aria-expanded', 'false');
 
@@ -479,16 +494,17 @@ describe('Dragonfire Roster Lab app', () => {
     expect(provides).toHaveClass('is-expanded');
     expect(provides.querySelectorAll('.card-interaction-item').length).toBeGreaterThan(3);
     expect(provides.querySelectorAll('.card-interaction-item').length).toBeGreaterThan(collapsedCount);
-
-    const detailsToggle = within(provides).getAllByRole('button', { name: /details/i })[0]!;
-    await user.click(detailsToggle);
-    expect(within(provides).getByText('Full explanation')).toBeInTheDocument();
-    await user.click(within(provides).getByRole('button', { name: /hide details/i }));
+    expect(within(provides).queryByRole('button', { name: /details/i })).toBeNull();
+    expect(within(provides).queryByText(/full explanation/i)).toBeNull();
 
     await user.click(within(provides).getByRole('button', { name: /show fewer/i }));
 
     expect(within(provides).getByRole('button', { name: /show all/i })).toHaveAttribute('aria-expanded', 'false');
     expect(provides.querySelectorAll('.card-interaction-item')).toHaveLength(collapsedCount);
+
+    const commandRegion = within(syrax).getByRole('region', { name: 'Command' });
+    const commandDetails = within(commandRegion).getByRole('button', { name: 'Details' });
+    expect(commandDetails).toHaveAttribute('aria-expanded', 'false');
   });
 
   it('shows an expansion control when compact sections overflow by rendered height', async () => {
@@ -595,7 +611,7 @@ describe('Dragonfire Roster Lab app', () => {
     );
   });
 
-  it('keeps compact interaction summaries readable and exposes full details', async () => {
+  it('keeps compact interaction summaries readable without interaction Details panels', async () => {
     const user = userEvent.setup();
     render(<App />);
 
@@ -627,22 +643,11 @@ describe('Dragonfire Roster Lab app', () => {
     expect(providerBlazingFuryItem).toHaveTextContent('One candidate is selected when the activation succeeds; the selected target is unresolved.');
     expect(providerBlazingFuryItem).toHaveTextContent('Activation chance: 20%.');
     expect(providerBlazingFuryItem).toHaveTextContent('Target not guaranteed');
+    expect(within(blazingFuryFireItem as HTMLElement).queryByRole('button', { name: /details/i })).toBeNull();
+    expect(within(blazingFuryFireItem as HTMLElement).queryByText(/full explanation/i)).toBeNull();
 
-    const details = within(blazingFuryFireItem as HTMLElement).getByRole('button', { name: 'Details' });
-    expect(details).toHaveAttribute('aria-expanded', 'false');
-    await user.click(details);
-    expect(within(blazingFuryFireItem as HTMLElement).getByRole('button', { name: 'Hide details' })).toHaveAttribute(
-      'aria-expanded',
-      'true',
-    );
-    expect(blazingFuryFireItem).toHaveTextContent('Full explanation');
-    expect(blazingFuryFireItem).toHaveTextContent('Confidence');
-
-    await user.keyboard('{Enter}');
-    expect(within(blazingFuryFireItem as HTMLElement).getByRole('button', { name: 'Details' })).toHaveAttribute(
-      'aria-expanded',
-      'false',
-    );
+    const commandRegion = within(caraxes).getByRole('region', { name: 'Command' });
+    expect(within(commandRegion).getByRole('button', { name: 'Details' })).toHaveAttribute('aria-expanded', 'false');
   });
 
   it('renders Dragon\'s Cunning with a single collapsed target fact while preserving expanded target details', () => {

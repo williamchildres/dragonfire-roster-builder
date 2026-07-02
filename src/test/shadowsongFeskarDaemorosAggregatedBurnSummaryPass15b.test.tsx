@@ -151,11 +151,10 @@ describe('Shadowsong/Feskar/Daemoros aggregated burn summary pass 15B', () => {
     expect(countOccurrences(burnCardText, '60%')).toBe(1);
     expect(countOccurrences(burnCardText, '40%')).toBe(2);
 
-    await user.click(within(burnCardDom as HTMLElement).getByRole('button', { name: /details/i }));
-    const expandedText = burnCardDom!.textContent ?? '';
+    expect(within(burnCardDom as HTMLElement).queryByRole('button', { name: /details/i })).toBeNull();
+    expect(burnCardDom!.textContent ?? '').not.toContain('Known possible overlap windows');
     for (const windowText of overlapWindows) {
-      expect(expandedText).toContain(windowText);
+      expect(burnCard.details.join(' ')).toContain(windowText);
     }
-    expect(expandedText).toContain('Known possible overlap windows');
   });
 });

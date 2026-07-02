@@ -159,9 +159,9 @@ describe('Feskar/Rhysarion/Daemoros Control aggregation pass 16', () => {
     expect(bullets).toEqual(card.summaryLines);
     expect(bullets).toHaveLength(4);
     expect(domCard.textContent ?? '').not.toMatch(/Base current|Enhanced current|Conditional multiplier|1\.5x/i);
-    await user.click(within(domCard).getByRole('button', { name: /details/i }));
-    const expandedText = domCard.textContent ?? '';
-    expect(expandedText).toContain('Round 2 from a successful Round 2 application only if Unyielding Grasp resolves before Dawnsong that round');
-    expect(expandedText).toContain('Round 5 from a successful Round 5 application only if Shroud of Shadows resolves before Dawnsong that round');
+    expect(within(domCard).queryByRole('button', { name: /details/i })).toBeNull();
+    expect(domCard.textContent ?? '').not.toContain('Round 2 from a successful Round 2 application only if Unyielding Grasp resolves before Dawnsong that round');
+    expect(card.details.join(' ')).toContain('Round 2 from a successful Round 2 application only if Unyielding Grasp resolves before Dawnsong that round');
+    expect(card.details.join(' ')).toContain('Round 5 from a successful Round 5 application only if Shroud of Shadows resolves before Dawnsong that round');
   });
 });

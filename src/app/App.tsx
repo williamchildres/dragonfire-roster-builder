@@ -1169,10 +1169,8 @@ function CardInteractionSection({
 }) {
   const expanded = expandedSections[cardKey] === true;
   const [compactOverflows, setCompactOverflows] = useState(false);
-  const [openDetailIds, setOpenDetailIds] = useState<Set<string>>(() => new Set());
   const bodyRef = useRef<HTMLDivElement | null>(null);
-  const detailsOpen = openDetailIds.size > 0;
-  const sectionExpanded = expanded || detailsOpen;
+  const sectionExpanded = expanded;
   const visible = getCompactInteractions(interactions, sectionExpanded);
   const compactVisible = getCompactInteractions(interactions, false);
   const countOverflow = interactions.length > compactVisible.length;
@@ -1201,17 +1199,6 @@ function CardInteractionSection({
     window.addEventListener('resize', updateCompactOverflow);
     return () => window.removeEventListener('resize', updateCompactOverflow);
   }, [interactions, visible.length, updateCompactOverflow]);
-  const handleDetailsOpenChange = useCallback((interactionId: string, open: boolean) => {
-    setOpenDetailIds((current) => {
-      const next = new Set(current);
-      if (open) {
-        next.add(interactionId);
-      } else {
-        next.delete(interactionId);
-      }
-      return next;
-    });
-  }, []);
   const handleExpandedToggle = () => {
     onExpandedSectionsChange({ ...expandedSections, [cardKey]: !expanded });
   };
@@ -1235,14 +1222,13 @@ function CardInteractionSection({
           <ul className="card-interaction-list">
             {visible.map((interaction) => (
               <li key={interaction.id}>
-                <CardInteractionItem
-                  interaction={interaction}
-                  active={activeRelationship === interaction.relationshipId}
-                  onRelationshipActive={onRelationshipActive}
-                  onDetailsOpenChange={handleDetailsOpenChange}
-                />
-              </li>
-            ))}
+              <CardInteractionItem
+                interaction={interaction}
+                active={activeRelationship === interaction.relationshipId}
+                onRelationshipActive={onRelationshipActive}
+              />
+            </li>
+          ))}
           </ul>
         ) : (
           <p className="interaction-empty-state">{emptyText}</p>
@@ -1267,17 +1253,12 @@ function CardInteractionItem({
   interaction,
   active,
   onRelationshipActive,
-  onDetailsOpenChange,
 }: {
   interaction: FormationCardInteraction;
   active: boolean;
   onRelationshipActive: (relationshipId: string | null) => void;
-  onDetailsOpenChange?: (interactionId: string, open: boolean) => void;
 }) {
-  const [detailsOpen, setDetailsOpen] = useState(false);
-  const detailsId = `interaction-details-${interaction.id.replace(/[^a-zA-Z0-9_-]/g, '-')}`;
   const hasTargetUncertainty = interaction.isCandidate || (interaction.candidateTotal ?? 0) > 1;
-  useEffect(() => () => onDetailsOpenChange?.(interaction.id, false), [interaction.id, onDetailsOpenChange]);
   return (
     <article
       className={`card-interaction-item state-${interaction.state}${active ? ' is-linked' : ''}`}
@@ -1302,75 +1283,7 @@ function CardInteractionItem({
         {hasTargetUncertainty ? <span className="target-note">Target not guaranteed</span> : null}
         {interaction.isEnemyFacing ? <span className="target-note">Enemy-facing team benefit</span> : null}
       </div>
-      <button
-        type="button"
-        className="text-button compact-action interaction-details-toggle"
-        aria-expanded={detailsOpen}
-        aria-controls={detailsId}
-        onClick={() => setDetailsOpen((current) => {
-          const next = !current;
-          onDetailsOpenChange?.(interaction.id, next);
-          return next;
-        })}
-      >
-        {detailsOpen ? 'Hide details' : 'Details'}
-      </button>
-      {detailsOpen ? <InteractionDetails id={detailsId} interaction={interaction} /> : null}
     </article>
-  );
-}
-
-function InteractionDetails({ id, interaction }: { id: string; interaction: FormationCardInteraction }) {
-  const openRequirements = interaction.requirements.filter((requirement) => requirement.satisfied !== true);
-  const hasTargetUncertainty = interaction.isCandidate || (interaction.candidateTotal ?? 0) > 1;
-  return (
-    <div className="interaction-details" id={id}>
-      <div>
-        <strong>Full explanation</strong>
-        {interaction.details.map((detail) => (
-          <p key={detail}>{detail}</p>
-        ))}
-      </div>
-      {interaction.effects.length > 0 ? (
-        <div>
-          <strong>Effect details</strong>
-          <ul className="plain-list compact-list">
-            {interaction.effects.map((effect) => (
-              <li key={effect}>{effect}</li>
-            ))}
-          </ul>
-        </div>
-      ) : null}
-      {interaction.targetSummary || interaction.candidateTotal ? (
-        <div>
-          <strong>Target selection</strong>
-          <p>
-            {interaction.targetSummary ?? `One of ${interaction.candidateTotal ?? 0} eligible recipients.`}
-            {hasTargetUncertainty ? ' Target is not guaranteed.' : ''}
-          </p>
-        </div>
-      ) : null}
-      <div>
-        <strong>State</strong>
-        <p>{stateLabel(interaction.state)}</p>
-      </div>
-      {openRequirements.length > 0 ? (
-        <div>
-          <strong>Blockers or unknown requirements</strong>
-          <ul className="plain-list compact-list">
-            {openRequirements.map((requirement) => (
-              <li key={`${requirement.id}-${requirement.label}`}>
-                {requirement.label}: requires {requirement.expected}; current {requirement.actual ?? 'unknown'}
-              </li>
-            ))}
-          </ul>
-        </div>
-      ) : null}
-      <div>
-        <strong>Confidence</strong>
-        <p>{interaction.confidence === 'mixed' ? 'Mixed' : formatToken(interaction.confidence)}</p>
-      </div>
-    </div>
   );
 }
 
