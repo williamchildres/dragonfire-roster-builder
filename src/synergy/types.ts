@@ -7,13 +7,11 @@ export type SignalConfidence = 'verified' | 'provisional';
 export interface ProgressionRequirement {
   minimumStarRank?: number;
   minimumDragonLevel?: number;
-  minimumHabitLevel?: number;
 }
 
 export interface DragonProgression {
   starRank?: number | null;
   dragonLevel?: number | null;
-  habitLevel?: number | null;
 }
 
 export interface SynergySignal {

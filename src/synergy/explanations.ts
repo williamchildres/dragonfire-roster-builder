@@ -1,4 +1,20 @@
+import type { FormationPosition } from '../models/dragon';
+import { formatPosition } from './positionRules';
+import { SYNERGY_TAG_LABELS } from './tags';
 import type { DragonSynergyProfile, PositionClaim, ProgressionRequirement, SynergySignal } from './types';
+
+export type PositionBlockReason =
+  | {
+      kind: 'provider-position';
+      requiredPosition: FormationPosition;
+    }
+  | {
+      kind: 'beneficiary-position';
+      requiredPosition: FormationPosition;
+    }
+  | {
+      kind: 'adjacency';
+    };
 
 export function explainSetupPayoff(
   provider: DragonSynergyProfile,
@@ -35,17 +51,25 @@ export function explainAmplifierOutput(
 }
 
 export function explainMissingEnabler(beneficiary: DragonSynergyProfile, benefit: SynergySignal): string {
-  if (benefit.tag === 'status:panic') {
-    return `${beneficiary.dragonName} benefits from Panic, but this formation has no Panic provider.`;
-  }
-
-  return `${beneficiary.dragonName} benefits from ${benefit.description}, but this formation has no provider.`;
+  const label = SYNERGY_TAG_LABELS[benefit.tag];
+  return `${beneficiary.dragonName} benefits from ${label}, but this formation has no ${label} provider.`;
 }
 
 export function explainPositionBlocked(
   provider: DragonSynergyProfile,
+  providerSignal: SynergySignal,
   beneficiary: DragonSynergyProfile,
+  beneficiarySignal: SynergySignal,
+  reason: PositionBlockReason,
 ): string {
+  if (reason.kind === 'provider-position') {
+    return `${provider.dragonName} must be deployed in ${formatPosition(reason.requiredPosition)} for ${providerSignal.abilityName}.`;
+  }
+
+  if (reason.kind === 'beneficiary-position') {
+    return `${beneficiary.dragonName} must be deployed in ${formatPosition(reason.requiredPosition)} for ${beneficiarySignal.abilityName}.`;
+  }
+
   return `${provider.dragonName} and ${beneficiary.dragonName} are not adjacent in this formation.`;
 }
 
@@ -55,7 +79,7 @@ export function explainPositionConflict(
   second: DragonSynergyProfile,
   secondClaim: PositionClaim,
 ): string {
-  return `${first.dragonName} and ${second.dragonName} both require Vanguard for their Level 16 Traits; only one can receive the full positional benefit from ${firstClaim.abilityName} and ${secondClaim.abilityName}.`;
+  return `${first.dragonName}'s ${firstClaim.abilityName} and ${second.dragonName}'s ${secondClaim.abilityName} both require ${formatPosition(firstClaim.requiredPosition)}; only one dragon can receive that positional benefit.`;
 }
 
 export function explainProgressionLocked(
@@ -69,10 +93,6 @@ export function explainProgressionLocked(
 
   if (requirement.minimumDragonLevel !== undefined) {
     return `This relationship unlocks when ${provider.dragonName} reaches Dragon Level ${requirement.minimumDragonLevel}.`;
-  }
-
-  if (requirement.minimumHabitLevel !== undefined) {
-    return `This relationship unlocks when ${provider.dragonName}'s ${signal.abilityName} reaches Habit Level ${requirement.minimumHabitLevel}.`;
   }
 
   return `This relationship is locked by ${provider.dragonName}'s saved progression.`;

@@ -94,6 +94,17 @@ describe('simple synergy foundation', () => {
     );
   });
 
+  it('reports Caraxes missing a First-Strike enabler with grammatical tag-label wording', () => {
+    const results = evaluate(formation('caraxes', null, null));
+
+    expect(resultOfKind('missing-enabler', results)).toContainEqual(
+      expect.objectContaining({
+        id: 'missing-enabler:caraxes:caraxes-infernal-burst:status:first-strike',
+        explanation: 'Caraxes benefits from First-Strike, but this formation has no First-Strike provider.',
+      }),
+    );
+  });
+
   it('matches Syrax First-Strike to Caraxes First-Strike benefit', () => {
     const results = evaluate(formation('syrax', 'caraxes', null));
 
@@ -147,6 +158,21 @@ describe('simple synergy foundation', () => {
     expect(resultOfKind('position-blocked', results)).toContainEqual(
       expect.objectContaining({
         id: 'position-blocked:setup-payoff:malachite:malachite-wardens-rally:effect:recovery:sheepstealer:sheepstealer-hunters-cunning',
+        explanation: "Sheepstealer must be deployed in Vanguard for Hunter's Cunning.",
+      }),
+    );
+    expect(resultOfKind('position-blocked', results).map((result) => result.explanation)).not.toContain(
+      'Malachite and Sheepstealer are not adjacent in this formation.',
+    );
+  });
+
+  it("reports Sheepstealer missing a Recovery provider when Hunter's Cunning is unlocked and Vanguard", () => {
+    const results = evaluate(formation(null, 'sheepstealer', null));
+
+    expect(resultOfKind('missing-enabler', results)).toContainEqual(
+      expect.objectContaining({
+        id: 'missing-enabler:sheepstealer:sheepstealer-hunters-cunning:effect:recovery',
+        explanation: 'Sheepstealer benefits from Recovery, but this formation has no Recovery provider.',
       }),
     );
   });
@@ -178,7 +204,55 @@ describe('simple synergy foundation', () => {
     expect(resultOfKind('position-conflict', results)).toEqual([
       expect.objectContaining({
         explanation:
-          "Caraxes and Sheepstealer both require Vanguard for their Level 16 Traits; only one can receive the full positional benefit from Hunter's Wrath and Hunter's Cunning.",
+          "Caraxes's Hunter's Wrath and Sheepstealer's Hunter's Cunning both require Vanguard; only one dragon can receive that positional benefit.",
+      }),
+    ]);
+  });
+
+  it('identifies provider ability and required position for provider-position blocks', () => {
+    const profiles: DragonSynergyProfile[] = [
+      {
+        dragonId: 'provider',
+        dragonName: 'Provider',
+        outputs: [
+          {
+            id: 'provider-output',
+            tag: 'status:first-strike',
+            abilityId: 'provider-vanguard-output',
+            abilityName: 'Provider Vanguard Output',
+            description: 'grants First-Strike',
+            requiredSelfPosition: 'vanguard',
+            confidence: 'verified',
+          },
+        ],
+        supports: [],
+        benefitsFrom: [],
+        positionClaims: [],
+      },
+      {
+        dragonId: 'beneficiary',
+        dragonName: 'Beneficiary',
+        outputs: [],
+        supports: [],
+        benefitsFrom: [
+          {
+            id: 'beneficiary-payoff',
+            tag: 'status:first-strike',
+            abilityId: 'beneficiary-payoff',
+            abilityName: 'Beneficiary Payoff',
+            description: 'benefits from First-Strike',
+            confidence: 'verified',
+          },
+        ],
+        positionClaims: [],
+      },
+    ];
+
+    const results = evaluate(formation('provider', 'beneficiary', null), {}, profiles);
+
+    expect(resultOfKind('position-blocked', results)).toEqual([
+      expect.objectContaining({
+        explanation: 'Provider must be deployed in Vanguard for Provider Vanguard Output.',
       }),
     ]);
   });
@@ -212,6 +286,70 @@ describe('simple synergy foundation', () => {
     };
 
     expect(evaluate(formation('solo', null, null), {}, [selfProfile])).toHaveLength(0);
+  });
+
+  it('does not let self-scoped signals enable or support another dragon', () => {
+    const profiles: DragonSynergyProfile[] = [
+      {
+        dragonId: 'self-provider',
+        dragonName: 'Self Provider',
+        outputs: [
+          {
+            id: 'self-provider-first-strike',
+            tag: 'status:first-strike',
+            abilityId: 'self-provider-first-strike',
+            abilityName: 'Self Provider First-Strike',
+            description: 'grants First-Strike to self',
+            friendlyScope: 'self',
+            confidence: 'verified',
+          },
+        ],
+        supports: [
+          {
+            id: 'self-provider-fire-support',
+            tag: 'damage:fire',
+            abilityId: 'self-provider-fire-support',
+            abilityName: 'Self Provider Fire Support',
+            description: 'improves own Fire Damage',
+            friendlyScope: 'self',
+            confidence: 'verified',
+          },
+        ],
+        benefitsFrom: [],
+        positionClaims: [],
+      },
+      {
+        dragonId: 'teammate',
+        dragonName: 'Teammate',
+        outputs: [
+          {
+            id: 'teammate-fire',
+            tag: 'damage:fire',
+            abilityId: 'teammate-fire',
+            abilityName: 'Teammate Fire',
+            description: 'deals Fire Damage',
+            confidence: 'verified',
+          },
+        ],
+        supports: [],
+        benefitsFrom: [
+          {
+            id: 'teammate-first-strike-payoff',
+            tag: 'status:first-strike',
+            abilityId: 'teammate-first-strike-payoff',
+            abilityName: 'Teammate First-Strike Payoff',
+            description: 'benefits from First-Strike',
+            confidence: 'verified',
+          },
+        ],
+        positionClaims: [],
+      },
+    ];
+
+    const results = evaluate(formation('self-provider', 'teammate', null), {}, profiles);
+
+    expect(resultOfKind('setup-payoff', results)).toHaveLength(0);
+    expect(resultOfKind('amplifier-output', results)).toHaveLength(0);
   });
 
   it('deduplicates semantically identical relationships', () => {

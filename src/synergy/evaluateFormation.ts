@@ -7,6 +7,7 @@ import {
   explainPositionConflict,
   explainProgressionLocked,
   explainSetupPayoff,
+  type PositionBlockReason,
 } from './explanations';
 import type {
   DragonProgression,
@@ -15,7 +16,6 @@ import type {
   EvaluateFormationResult,
   PositionClaim,
   ProgressionRequirement,
-  SimpleFriendlyScope,
   SimpleSynergyResult,
   SimpleSynergyResultKind,
   SynergySignal,
@@ -79,7 +79,7 @@ function addSetupPayoffResults(
   const providers = selected.filter(
     (provider) =>
       provider.profile.dragonId !== beneficiary.profile.dragonId &&
-      provider.profile.outputs.some((output) => output.tag === benefit.tag),
+      provider.profile.outputs.some((output) => output.tag === benefit.tag && signalCanReachTeammate(output)),
   );
 
   if (providers.length === 0 && selfProvidesTag) {
@@ -99,7 +99,9 @@ function addSetupPayoffResults(
   }
 
   for (const provider of providers) {
-    for (const output of provider.profile.outputs.filter((candidate) => candidate.tag === benefit.tag)) {
+    for (const output of provider.profile.outputs.filter(
+      (candidate) => candidate.tag === benefit.tag && signalCanReachTeammate(candidate),
+    )) {
       addRelationshipResult(results, input, 'setup-payoff', provider, output, beneficiary, benefit);
     }
   }
@@ -112,6 +114,10 @@ function addAmplifierOutputResults(
   supporter: SelectedProfile,
   support: SynergySignal,
 ): void {
+  if (!signalCanReachTeammate(support)) {
+    return;
+  }
+
   for (const producer of selected) {
     if (producer.profile.dragonId === supporter.profile.dragonId) {
       continue;
@@ -155,14 +161,21 @@ function addRelationshipResult(
     return;
   }
 
-  if (!positionsAllowSignal(provider, providerSignal, beneficiary, beneficiarySignal)) {
+  const positionBlockReason = getPositionBlockReason(provider, providerSignal, beneficiary, beneficiarySignal);
+  if (positionBlockReason) {
     addResult(results, {
       id: `position-blocked:${semanticId}`,
       kind: 'position-blocked',
       tag: providerSignal.tag,
       dragonIds: [provider.profile.dragonId, beneficiary.profile.dragonId],
       abilityIds: [providerSignal.abilityId, beneficiarySignal.abilityId],
-      explanation: explainPositionBlocked(provider.profile, beneficiary.profile),
+      explanation: explainPositionBlocked(
+        provider.profile,
+        providerSignal,
+        beneficiary.profile,
+        beneficiarySignal,
+        positionBlockReason,
+      ),
     });
     return;
   }
@@ -218,33 +231,35 @@ function addPositionConflictResults(
   }
 }
 
-function positionsAllowSignal(
+function getPositionBlockReason(
   provider: SelectedProfile,
   providerSignal: SynergySignal,
   beneficiary: SelectedProfile,
   beneficiarySignal: SynergySignal,
-): boolean {
-  return (
-    selfPositionAllows(providerSignal, provider.position) &&
-    selfPositionAllows(beneficiarySignal, beneficiary.position) &&
-    friendlyScopeAllows(providerSignal.friendlyScope, provider.position, beneficiary.position)
-  );
-}
-
-function selfPositionAllows(signal: SynergySignal, position: FormationPosition): boolean {
-  return signal.requiredSelfPosition === undefined || signal.requiredSelfPosition === position;
-}
-
-function friendlyScopeAllows(
-  scope: SimpleFriendlyScope | undefined,
-  providerPosition: FormationPosition,
-  beneficiaryPosition: FormationPosition,
-): boolean {
-  if (scope !== 'adjacent') {
-    return true;
+): PositionBlockReason | null {
+  if (
+    providerSignal.requiredSelfPosition !== undefined &&
+    providerSignal.requiredSelfPosition !== provider.position
+  ) {
+    return { kind: 'provider-position', requiredPosition: providerSignal.requiredSelfPosition };
   }
 
-  return areAdjacent(providerPosition, beneficiaryPosition);
+  if (
+    beneficiarySignal.requiredSelfPosition !== undefined &&
+    beneficiarySignal.requiredSelfPosition !== beneficiary.position
+  ) {
+    return { kind: 'beneficiary-position', requiredPosition: beneficiarySignal.requiredSelfPosition };
+  }
+
+  if (providerSignal.friendlyScope === 'adjacent' && !areAdjacent(provider.position, beneficiary.position)) {
+    return { kind: 'adjacency' };
+  }
+
+  return null;
+}
+
+function signalCanReachTeammate(signal: SynergySignal): boolean {
+  return signal.friendlyScope !== 'self';
 }
 
 function firstLockedSignal(
@@ -298,13 +313,6 @@ function unmetRequirement(
     (progression?.dragonLevel ?? 0) < requirement.minimumDragonLevel
   ) {
     return { minimumDragonLevel: requirement.minimumDragonLevel };
-  }
-
-  if (
-    requirement.minimumHabitLevel !== undefined &&
-    (progression?.habitLevel ?? 0) < requirement.minimumHabitLevel
-  ) {
-    return { minimumHabitLevel: requirement.minimumHabitLevel };
   }
 
   return null;
