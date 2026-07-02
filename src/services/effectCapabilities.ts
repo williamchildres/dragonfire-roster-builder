@@ -3807,7 +3807,7 @@ function analyzeStatScalingSupport(
   const traces: SynergyTrace[] = [];
   for (const modifier of modifiers.filter(
     (capability) =>
-      capability.role === 'ally-support' &&
+      isStatScalingSourceModifier(capability) &&
       capability.channel === 'stat' &&
       capability.operation === 'increase' &&
       modifierCapabilityVisible(capability, options),
@@ -3824,6 +3824,7 @@ function analyzeStatScalingSupport(
       }
       const matchedOutputs = outputs.filter(
         (output) =>
+          modifier.role === 'ally-support' &&
           output.dragonId === recipientId &&
           outputCapabilityVisible(output, options) &&
           output.outputKind !== 'status-application' &&
@@ -3833,7 +3834,6 @@ function analyzeStatScalingSupport(
         (dependent) =>
           dependent.id !== modifier.id &&
           dependent.dragonId === recipientId &&
-          dependent.role !== 'ally-support' &&
           modifierCapabilityVisible(dependent, options) &&
           (dependent.scalingStats ?? []).includes(statId),
       );
@@ -3913,33 +3913,35 @@ function analyzeStatScalingSupport(
               : undefined,
         }));
       }
-      if (matchedModifiers.length > 0) {
-        const modifierSummary = statScalingDependentSummary([], matchedModifiers);
+      const matchedModifierGroups = groupModifierCapabilitiesByAbility(matchedModifiers);
+      for (const abilityMatchedModifiers of matchedModifierGroups) {
+        const modifierSummary = statScalingDependentSummary([], abilityMatchedModifiers);
         const explanation = selectionUncertain
           ? `${provider.name}'s ${modifier.abilityName} can increase ${recipient.name}'s ${statLabel(statId)}, which supports ${modifierSummary}. This consequence applies only if ${recipient.name} resolves as the selected highest ${statLabel(statId)} ally.`
           : `${provider.name}'s ${modifier.abilityName} can increase ${recipient.name}'s ${statLabel(statId)}, which supports ${modifierSummary}.`;
+        const dependentAbilityId = abilityMatchedModifiers[0]?.abilityId ?? null;
         traces.push(makeDependencyTrace({
-          id: `stat-modifier-scaling-${modifier.id}-${recipientId}-${statId}`,
+          id: `stat-modifier-scaling-${modifier.id}-${recipientId}-${statId}${matchedModifierGroups.length > 1 && dependentAbilityId ? `-${dependentAbilityId}` : ''}`,
           matchKind: 'stat-scaling-support',
           ruleId: 'stat-scaling-support',
           source: provider,
           sourceAbilityId: modifier.abilityId,
           recipient,
-          recipientAbilityId: matchedModifiers[0]?.abilityId ?? null,
+          recipientAbilityId: dependentAbilityId,
           channel: 'stat',
           title: `${statLabel(statId)} Scaling Support`,
           explanation,
           requirements: [
             ...baseRequirements,
-            ...matchedModifiers.flatMap((dependent) => providerRequirementTraces(dependent, formation, dragons, options)),
+            ...abilityMatchedModifiers.flatMap((dependent) => providerRequirementTraces(dependent, formation, dragons, options)),
           ],
           matchedFacts: [
             ...commonFacts,
-            ...matchedModifiers.map((dependent) => `${dependentModifierSummary(dependent)} scales with ${recipient.name}'s ${statLabel(statId)}.`),
+            ...abilityMatchedModifiers.map((dependent) => `${dependentModifierSummary(dependent)} scales with ${recipient.name}'s ${statLabel(statId)}.`),
           ],
           effects: [`${statLabel(statId)} support for ${modifierSummary}`, ...modifierDetails],
           sourceEvidenceIds: modifier.evidenceIds,
-          recipientEvidenceIds: matchedModifiers.flatMap((dependent) => dependent.evidenceIds),
+          recipientEvidenceIds: abilityMatchedModifiers.flatMap((dependent) => dependent.evidenceIds),
           assumptions: [
             'Exact stat-to-effect conversion formula is unknown.',
             'Modifier-combination behavior is unresolved.',
@@ -3950,21 +3952,37 @@ function analyzeStatScalingSupport(
             ...(selectionUncertain ? ['Selected recipient identity, candidate comparison values, and tie resolution remain unresolved.'] : []),
           ],
           futureOrConditional: capabilityFutureOrConditional(modifier, options) ||
-            matchedModifiers.some((dependent) => capabilityFutureOrConditional(dependent, options) || dependent.conditional) ||
+            abilityMatchedModifiers.some((dependent) => capabilityFutureOrConditional(dependent, options) || dependent.conditional) ||
             modifier.conditional ||
             selectionUncertain,
           modifierCapabilityIds: [modifier.id],
-          matchedModifierCapabilityIds: matchedModifiers.map((dependent) => dependent.id),
+          matchedModifierCapabilityIds: abilityMatchedModifiers.map((dependent) => dependent.id),
           exactResultUnknownReason: selectionUncertain
             ? `Exact final ${statLabel(statId)} support cannot be calculated because selected recipient identity, candidate comparison values, tie resolution, and final stat formula remain unresolved.`
             : activationUncertain
               ? `${recipient.name} is the resolved recipient if ${modifier.abilityName} activates; activation success and the final modifier-scaling formula remain unresolved.`
-              : `Exact final ${dependentModifierExactResultSubject(matchedModifiers)} cannot be calculated because modifier-combination behavior and the final ${statLabel(statId)}-scaling formula remain unresolved.`,
+              : `Exact final ${dependentModifierExactResultSubject(abilityMatchedModifiers)} cannot be calculated because modifier-combination behavior and the final ${statLabel(statId)}-scaling formula remain unresolved.`,
         }));
       }
     }
   }
   return traces;
+}
+
+function isStatScalingSourceModifier(capability: ModifierCapability): boolean {
+  if (capability.role === 'ally-support') {
+    return true;
+  }
+  return capability.role === 'self-amplification' &&
+    (capability.targetSelector.selection === 'self' || capability.targetSelector.side === 'self');
+}
+
+function groupModifierCapabilitiesByAbility(modifiers: ModifierCapability[]): ModifierCapability[][] {
+  const grouped = new Map<string, ModifierCapability[]>();
+  for (const modifier of modifiers) {
+    grouped.set(modifier.abilityId, [...(grouped.get(modifier.abilityId) ?? []), modifier]);
+  }
+  return [...grouped.values()];
 }
 
 function statScalingDependentSummary(outputs: OutputCapability[], modifiers: ModifierCapability[]): string {
@@ -3977,10 +3995,14 @@ function statScalingDependentSummary(outputs: OutputCapability[], modifiers: Mod
 function dependentModifierSummary(modifier: ModifierCapability): string {
   const stat = statIdFromText(modifier.label);
   if (modifier.role === 'enemy-debuff' && stat) {
-    return `${modifier.abilityName}'s Enemy ${statLabel(stat)} reduction`;
+    return `${possessiveName(modifier.abilityName)} Enemy ${statLabel(stat)} reduction`;
+  }
+  if (modifier.role === 'ally-support' && modifier.operation === 'increase' && stat) {
+    const scope = modifier.targetSelector.side === 'ally' ? 'allied ' : '';
+    return `${possessiveName(modifier.abilityName)} ${scope}${statLabel(stat)} increase`;
   }
   const label = modifier.label.split(':').pop()?.trim() ?? channelLabel(modifier.channel);
-  return `${modifier.abilityName}'s ${label.replace(/\bDown\b/i, 'reduction').replace(/\bUp\b/i, 'increase')}`;
+  return `${possessiveName(modifier.abilityName)} ${label.replace(/\bDown\b/i, 'reduction').replace(/\bUp\b/i, 'increase')}`;
 }
 
 function dependentModifierExactResultSubject(modifiers: ModifierCapability[]): string {
@@ -3992,7 +4014,15 @@ function dependentModifierExactResultSubject(modifiers: ModifierCapability[]): s
     }
     return dependentModifierSummary(modifier);
   }
-  return 'dependent modifier values';
+  const abilityName = modifiers[0]?.abilityName ?? 'dependent';
+  const summaries = modifiers.map((modifier) => dependentModifierSummary(modifier));
+  const prefix = `${possessiveName(abilityName)} `;
+  const suffixes = summaries.map((summary) => summary.startsWith(prefix) ? summary.slice(prefix.length) : summary);
+  return `${abilityName} ${joinEnglishList(suffixes)}`;
+}
+
+function possessiveName(value: string): string {
+  return value.endsWith('s') ? `${value}'` : `${value}'s`;
 }
 
 function targetCandidatePositions(

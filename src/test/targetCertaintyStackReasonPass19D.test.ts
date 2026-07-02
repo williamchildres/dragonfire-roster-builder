@@ -188,13 +188,13 @@ describe('Pass 19D highest-stat certainty and stack reason routing', () => {
     expect(currentTraces.some((trace) => trace.sourceAbilityId === 'malachite-collective-might' && trace.recipientDragonId === 'venator' && trace.status === 'active')).toBe(true);
 
     expect(statusCounts(currentTraces)).toMatchObject({
-      active: 22,
-      potential: 28,
-      inactive: 7,
+      active: 24,
+      potential: 31,
+      inactive: 9,
       blocked: 1,
       'not-applicable': 1,
       unknown: 1,
     });
-    expect(currentTraces).toHaveLength(60);
+    expect(currentTraces).toHaveLength(67);
   });
 });

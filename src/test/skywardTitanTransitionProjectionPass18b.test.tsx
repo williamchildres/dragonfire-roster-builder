@@ -31,10 +31,10 @@ describe('Pass 18B Skyward Titan transition projection routing', () => {
   it('keeps the third-stack attack as enemy-side technical analysis without creating a Vhagar support card', async () => {
     const { roster, traces, presentation } = pass18Analysis();
     const counts = countByStatus(traces);
-    expect(traces).toHaveLength(58);
-    expect(counts.active).toBe(23);
+    expect(traces).toHaveLength(62);
+    expect(counts.active).toBe(26);
     expect(counts.potential).toBe(23);
-    expect(counts.inactive).toBe(10);
+    expect(counts.inactive).toBe(11);
     expect(counts.blocked).toBe(1);
     expect(counts['not-applicable'] ?? 0).toBe(0);
     expect(counts.unknown).toBe(1);

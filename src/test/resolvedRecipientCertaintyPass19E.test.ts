@@ -60,11 +60,11 @@ describe('Resolved recipient certainty pass 19E', () => {
   it('distinguishes Rhysarion as the resolved Lightning Strike recipient while preserving activation uncertainty', () => {
     const { traces, presentation } = buildAnalysis(lightningFormation);
 
-    expect(traces).toHaveLength(73);
+    expect(traces).toHaveLength(76);
     expect(countByStatus(traces)).toEqual({
       active: 40,
-      potential: 22,
-      inactive: 9,
+      potential: 24,
+      inactive: 10,
       blocked: 1,
       'not-applicable': 1,
       unknown: 0,

@@ -96,8 +96,8 @@ describe('Daemoros/Rhysarion/Vaeldra prerequisite projection pass 17B', () => {
       acc[trace.status] = (acc[trace.status] ?? 0) + 1;
       return acc;
     }, {});
-    expect(traces).toHaveLength(74);
-    expect(counts).toMatchObject({ active: 31, potential: 33, inactive: 9, blocked: 1 });
+    expect(traces).toHaveLength(77);
+    expect(counts).toMatchObject({ active: 31, potential: 36, inactive: 9, blocked: 1 });
     expect(counts['not-applicable'] ?? 0).toBe(0);
     expect(counts.unknown ?? 0).toBe(0);
     expect(new Set(traces.map(technicalAnalysisTraceIdentity)).size).toBe(traces.length);

@@ -98,9 +98,9 @@ describe('Pass 19C recovery-dealt reason routing', () => {
       vaeldra: 26,
     });
     const counts = countByStatus(pass19cTraces);
-    expect(pass19cTraces).toHaveLength(74);
+    expect(pass19cTraces).toHaveLength(77);
     expect(counts.active).toBe(31);
-    expect(counts.potential).toBe(33);
+    expect(counts.potential).toBe(36);
     expect(counts.inactive).toBe(9);
     expect(counts.blocked).toBe(1);
     expect(counts['not-applicable'] ?? 0).toBe(0);
@@ -268,9 +268,9 @@ describe('Pass 19C recovery-dealt reason routing', () => {
     });
     const counts = countByStatus(traces);
 
-    expect(traces).toHaveLength(74);
+    expect(traces).toHaveLength(77);
     expect(counts.active).toBe(31);
-    expect(counts.potential).toBe(33);
+    expect(counts.potential).toBe(36);
     expect(counts.inactive).toBe(9);
     expect(counts.blocked).toBe(1);
     expect(counts['not-applicable'] ?? 0).toBe(0);

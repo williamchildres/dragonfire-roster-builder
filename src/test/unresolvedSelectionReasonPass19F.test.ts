@@ -179,11 +179,11 @@ describe('Unresolved selection reason pass 19F', () => {
 
   it('keeps the formation technical analysis and card counts unchanged', () => {
     const { traces, presentation } = buildAnalysis(formation);
-    expect(traces).toHaveLength(73);
+    expect(traces).toHaveLength(76);
     expect(countByStatus(traces)).toEqual({
       active: 40,
-      potential: 22,
-      inactive: 9,
+      potential: 24,
+      inactive: 10,
       blocked: 1,
       'not-applicable': 1,
       unknown: 0,

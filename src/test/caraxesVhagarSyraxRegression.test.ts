@@ -74,8 +74,8 @@ function interactionText(item: {
 describe('Caraxes, Vhagar, and Syrax review regression', () => {
   it('preserves the reviewed trace counts and exact trace identities', () => {
     const traces = reviewTraces();
-    expect(traces).toHaveLength(62);
-    expect(traceCounts(traces)).toMatchObject({ active: 29, potential: 22, inactive: 9, blocked: 1, unknown: 1 });
+    expect(traces).toHaveLength(64);
+    expect(traceCounts(traces)).toMatchObject({ active: 30, potential: 22, inactive: 10, blocked: 1, unknown: 1 });
     expect(new Set(traces.map(technicalAnalysisTraceIdentity)).size).toBe(traces.length);
   });
 

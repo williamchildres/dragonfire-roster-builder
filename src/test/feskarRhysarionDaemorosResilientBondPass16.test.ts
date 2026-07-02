@@ -55,8 +55,8 @@ describe('Feskar/Rhysarion/Daemoros Resilient Bond pass 16', () => {
       return acc;
     }, {});
 
-    expect(traces).toHaveLength(71);
-    expect(counts).toMatchObject({ active: 33, potential: 26, inactive: 11, blocked: 1 });
+    expect(traces).toHaveLength(76);
+    expect(counts).toMatchObject({ active: 33, potential: 29, inactive: 13, blocked: 1 });
     expect(counts['not-applicable'] ?? 0).toBe(0);
     expect(counts.unknown ?? 0).toBe(0);
     expect(new Set(traces.map(technicalAnalysisTraceIdentity)).size).toBe(traces.length);
