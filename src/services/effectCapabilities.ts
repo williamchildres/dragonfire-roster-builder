@@ -199,43 +199,44 @@ export function effectiveAbilitySchedules(
         description: override.description,
         evidenceIds: override.evidenceIds,
       };
-      schedules = schedules.map((schedule) => {
+      schedules = schedules.flatMap((schedule) => {
         if (schedule.id !== override.targetScheduleId) {
-          return schedule;
+          return [schedule];
         }
         if (override.operation === 'replace-schedule' && override.replacementSchedule) {
-          return { ...override.replacementSchedule, effectiveOverride: provenance };
+          return [{ ...override.replacementSchedule, effectiveOverride: provenance }];
         }
         if (override.operation === 'replace-effect-roll' && override.targetEffectId && override.replacementEffect) {
           if (override.replacementSchedule) {
-            return {
+            const replacement = {
               ...override.replacementSchedule,
-              id: schedule.id,
               effectiveOverride: provenance,
               effects: schedule.effects.map((effect) =>
                 effect.id === override.targetEffectId ? override.replacementEffect! : effect,
               ),
             };
+            const residual = residualScheduleAfterPartialReplacement(schedule, override.replacementSchedule, provenance);
+            return residual ? [replacement, residual] : [replacement];
           }
-          return {
+          return [{
             ...schedule,
             effectiveOverride: provenance,
             effects: schedule.effects.map((effect) =>
               effect.id === override.targetEffectId ? override.replacementEffect! : effect,
             ),
-          };
+          }];
         }
         if (override.operation === 'replace-effect' && override.targetEffectId && override.replacementEffect) {
-          return {
+          return [{
             ...schedule,
             effectiveOverride: provenance,
             effects: schedule.effects.map((effect) =>
               effect.id === override.targetEffectId ? override.replacementEffect! : effect,
             ),
-          };
+          }];
         }
         if (override.operation === 'patch-schedule' && override.replacementSchedule) {
-          return {
+          return [{
             ...schedule,
             ...override.replacementSchedule,
             id: schedule.id,
@@ -243,13 +244,36 @@ export function effectiveAbilitySchedules(
             effects: override.replacementSchedule.effects.length > 0
               ? override.replacementSchedule.effects
               : schedule.effects,
-          };
+          }];
         }
-        return schedule;
+        return [schedule];
       });
     }
   }
   return schedules;
+}
+
+function residualScheduleAfterPartialReplacement(
+  schedule: AbilitySchedule,
+  replacementSchedule: AbilitySchedule,
+  provenance: AbilitySchedule['effectiveOverride'],
+): AbilitySchedule | null {
+  const baseRounds = scheduleRoundsForOverlap(schedule);
+  const replacementRounds = scheduleRoundsForOverlap(replacementSchedule);
+  if (!baseRounds || !replacementRounds) {
+    return null;
+  }
+  const replacementRoundSet = new Set(replacementRounds);
+  const residualRounds = baseRounds.filter((round) => !replacementRoundSet.has(round));
+  if (residualRounds.length === 0 || residualRounds.length === baseRounds.length) {
+    return null;
+  }
+  return {
+    ...schedule,
+    id: `${schedule.id}-residual-after-${provenance?.id ?? replacementSchedule.id}`,
+    rounds: residualRounds,
+    roundSelector: { kind: 'explicit', rounds: residualRounds },
+  };
 }
 
 export function deriveModifierCapabilities(dragons: Dragon[]): ModifierCapability[] {
