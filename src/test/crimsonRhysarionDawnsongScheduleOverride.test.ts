@@ -12,6 +12,12 @@ const formation = {
   'right-flank': 'crimson',
 } as const satisfies FormationAnalysisInput;
 
+const blazingConductorFormation = {
+  'left-flank': 'shadowsong',
+  vanguard: 'feskar',
+  'right-flank': 'vaeldra',
+} as const satisfies FormationAnalysisInput;
+
 function currentRoster() {
   const roster = createEmptyRoster(dragons);
   for (const dragonId of ['daemoros', 'rhysarion', 'crimson']) {
@@ -23,6 +29,18 @@ function currentRoster() {
     for (const habitId of Object.keys(entry.habitLevels)) {
       entry.habitLevels[habitId] = 1;
     }
+  }
+  return roster;
+}
+
+function blazingConductorRoster() {
+  const roster = createEmptyRoster(dragons);
+  for (const dragonId of ['shadowsong', 'feskar', 'vaeldra']) {
+    const entry = roster[dragonId]!;
+    entry.owned = true;
+    entry.collection.state = 'hatched';
+    entry.starRank = 10;
+    entry.reignLevel = 26;
   }
   return roster;
 }
@@ -81,9 +99,21 @@ describe('Crimson Vermin\'s Bane partial Stun override feeding Dawnsong', () => 
       trace.title === 'Stun enables Dawnsong'
     );
 
-    expect(stunTraces.length).toBeGreaterThanOrEqual(1);
+    expect(stunTraces).toHaveLength(2);
     const stunText = stunTraces.map(traceText).join(' ');
+    const roundOneTrace = stunTraces.find((trace) => traceText(trace).includes('Supplier schedule: Start of Round 1.'));
+    const residualTrace = stunTraces.find((trace) => traceText(trace).includes('Supplier schedule: Rounds 3, 5, 7, and 9.'));
+    expect(roundOneTrace).toBeDefined();
+    expect(residualTrace).toBeDefined();
+    const roundOneText = traceText(roundOneTrace!);
+    const residualText = traceText(residualTrace!);
     expect(stunText).toContain('Stun is a verified member of Control.');
+    expect(stunText).not.toMatch(/first added target|second added target|different second target/i);
+    expect(roundOneText).toContain("Vermin's Bane replaces Bloodscale Terror's Round 1 Stun chance.");
+    expect(roundOneText).toContain("At effective Vermin's Bane Habit Level 1");
+    expect(roundOneText).toContain('Bloodscale Terror has a 40% chance on start of Round 1 to apply Stun to one enemy in any lane.');
+    expect(roundOneText).not.toContain('20% chance on start of Round 1');
+    expect(residualText).toContain('Bloodscale Terror has a 20% chance on Rounds 3, 5, 7, and 9 to apply Stun to one enemy in any lane.');
     expect(stunText).toContain('Round 2 after a successful Round 1 application');
     expect(stunText).toContain('Round 5 from a successful Round 5 application only if Bloodscale Terror resolves before Dawnsong that round');
     expect(stunText).toContain('Round 8 after a successful Round 7 application');
@@ -94,19 +124,32 @@ describe('Crimson Vermin\'s Bane partial Stun override feeding Dawnsong', () => 
     expect(stunText).not.toMatch(/Panic is a verified member of Control|Burn is a verified member of Control/i);
 
     const rhysarion = presentation.cards.find((card) => card.dragonId === 'rhysarion')!;
+    const crimson = presentation.cards.find((card) => card.dragonId === 'crimson')!;
     const stunTraceIds = stunTraces.map((trace) => trace.id);
     const stunCards = rhysarion.receives.filter((item) =>
       item.sourceDragonId === 'crimson' &&
       item.recipientDragonId === 'rhysarion' &&
       item.effectTitle === 'Bloodscale Terror - Stun enhances Dawnsong damage rate'
     );
+    const providerCards = crimson.provides.filter((item) =>
+      item.sourceDragonId === 'crimson' &&
+      item.recipientDragonId === 'rhysarion' &&
+      item.effectTitle === 'Bloodscale Terror - Stun enhances Dawnsong damage rate'
+    );
     expect(stunCards).toHaveLength(1);
+    expect(providerCards).toHaveLength(1);
     expect(stunTraceIds.every((traceId) => stunCards[0]!.traceIds.includes(traceId))).toBe(true);
+    expect(stunTraceIds.every((traceId) => providerCards[0]!.traceIds.includes(traceId))).toBe(true);
     const cardText = [
       ...stunCards[0]!.summaryLines,
       ...stunCards[0]!.details,
       ...stunCards[0]!.effects,
+      ...providerCards[0]!.summaryLines,
+      ...providerCards[0]!.details,
+      ...providerCards[0]!.effects,
     ].join(' ');
+    expect(cardText).not.toMatch(/first added target|second added target|different second target/i);
+    expect(cardText).not.toContain('Stun on Rounds 2, 5, and 8');
     expect(cardText).toContain('Effective Vermin\'s Bane Habit Level: 1');
     expect(cardText).toContain('Start of Round 1');
     expect(cardText).toContain('Rounds 3, 5, 7, and 9');
@@ -135,5 +178,33 @@ describe('Crimson Vermin\'s Bane partial Stun override feeding Dawnsong', () => 
       /Taunt/i.test(trace.title) &&
       trace.recipientAbilityId === 'crimson-bloodscale-fury'
     )).toBe(false);
+  });
+
+  it('preserves Blazing Conductor first-target and distinct second-target Burn projection', () => {
+    const roster = blazingConductorRoster();
+    const traces = analyzeFormationTraces(blazingConductorFormation, dragons, {
+      roster,
+      dragonLevels: { shadowsong: 26, feskar: 26, vaeldra: 26 },
+      previewMaxRankInteractions: false,
+    });
+    const presentation = buildFormationCardPresentation(blazingConductorFormation, dragons, traces, {
+      roster,
+      previewEnabled: false,
+    });
+    const text = [
+      JSON.stringify(traces),
+      ...presentation.cards.flatMap((card) =>
+        [...card.receives, ...card.provides].flatMap((item) => [
+          item.effectTitle,
+          ...item.summaryLines,
+          ...item.details,
+          ...item.effects,
+        ]),
+      ),
+    ].join(' ');
+
+    expect(text).toContain('40% chance on the first added target and 20% chance on the second added target, which must differ from the first.');
+    expect(text).toContain('Second added target must differ from the first added target.');
+    expect(text).toContain('Blazing Conductor attempts Burn on Rounds 2, 5, and 8: 40% on the first added target and 20% on a different second target; Burn lasts 2 rounds.');
   });
 });

@@ -2674,7 +2674,7 @@ function aggregateInteractions(
   const grouped = new Map<string, FormationCardInteraction[]>();
   for (const interaction of interactions) {
     const sharedProviderBenefitKey = direction === 'provides'
-      ? (statusDependencyProviderBenefitKey(interaction, direction) ?? sharedStatusRecipientBenefitKey(interaction))
+      ? (sameSourceStatusDependencyKey(interaction) ?? statusDependencyProviderBenefitKey(interaction, direction) ?? sharedStatusRecipientBenefitKey(interaction))
       : null;
     const key =
       direction === 'receives'
@@ -2695,7 +2695,7 @@ function aggregateInteractions(
       }
       return [mergeInteractions(items, direction, selectedIds)];
     }
-    if (items.every((item) => sharedStatusRecipientBenefitKey(item) !== null || statusDependencyProviderBenefitKey(item, direction) !== null)) {
+    if (items.every((item) => sharedStatusRecipientBenefitKey(item) !== null || statusDependencyProviderBenefitKey(item, direction) !== null || sameSourceStatusDependencyKey(item) !== null)) {
       return [mergeInteractions(items, direction, selectedIds)];
     }
     if (items.some((item) => item.candidateTotal !== null || item.targetLabel !== null || item.isCandidate)) {
