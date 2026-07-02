@@ -407,6 +407,7 @@ export interface StatusOutputCapability {
   availability: CapabilityAvailabilityContext;
   directlyVerified: boolean;
   evidenceIds: string[];
+  scheduleId?: string | null;
   sourceEffectId?: string | null;
   activationGroupId?: string | null;
   activationChanceFixed?: number | null;

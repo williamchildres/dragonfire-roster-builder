@@ -325,6 +325,7 @@ export function deriveStatusOutputCapabilities(dragons: Dragon[]): StatusOutputC
             availability: availabilityContext(dragon.id, ability.unlockStarRank, ability.minimumDragonLevel),
             directlyVerified: derivedEffect.directlyVerified !== false,
             evidenceIds: ability.evidenceIds,
+            scheduleId: schedule.id,
             sourceEffectId: derivedEffect.id,
             activationGroupId: activationGroupId(schedule, derivedEffect),
             activationChanceFixed: derivedEffect.activationRoll?.chanceFixed ?? schedule.activationRoll?.chanceFixed ?? schedule.triggerChanceFixed,
@@ -7377,7 +7378,8 @@ function statusSupplierFacts(
     .filter((candidate) =>
       candidate.dragonId === statusOutput.dragonId &&
       candidate.abilityId === statusOutput.abilityId &&
-      candidate.statusId === statusOutput.statusId,
+      candidate.statusId === statusOutput.statusId &&
+      (candidate.scheduleId ?? null) === (statusOutput.scheduleId ?? null)
     )
     .slice()
     .sort((left, right) => (left.sourceEffectId ?? left.id).localeCompare(right.sourceEffectId ?? right.id));
