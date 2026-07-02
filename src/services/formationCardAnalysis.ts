@@ -2709,6 +2709,10 @@ function aggregateInteractions(
 }
 
 function receivesAggregationKey(interaction: FormationCardInteraction): string {
+  const sameSourceStatusKey = sameSourceStatusDependencyKey(interaction);
+  if (sameSourceStatusKey) {
+    return sameSourceStatusKey;
+  }
   const sharedBenefitKey = statusDependencyProviderBenefitKey(interaction, 'receives') ?? sharedStatusRecipientBenefitKey(interaction);
   if (sharedBenefitKey) {
     return [
@@ -2724,6 +2728,34 @@ function receivesAggregationKey(interaction: FormationCardInteraction): string {
     interaction.recipientDragonId ?? interaction.targetLabel ?? 'team',
     interaction.presentationFamily,
     receivesInteractionMechanicKey(interaction),
+    interaction.state,
+  ].join('|');
+}
+
+function sameSourceStatusDependencyKey(interaction: FormationCardInteraction): string | null {
+  if (
+    interaction.isCandidate ||
+    interaction.targetLabel
+  ) {
+    return null;
+  }
+  if (
+    interaction.sourceDragonId !== 'crimson' ||
+    interaction.abilityName !== 'Bloodscale Terror' ||
+    interaction.title !== 'Stun enables Dawnsong'
+  ) {
+    return null;
+  }
+  if (!/\benhances .+ damage rate\b/i.test(interaction.effectTitle) || !/ enables /i.test(interaction.title)) {
+    return null;
+  }
+  return [
+    interaction.recipientDragonId ?? 'team',
+    'same-source-status-dependency',
+    interaction.sourceDragonId,
+    interaction.abilityName,
+    interaction.effectTitle,
+    interaction.title,
     interaction.state,
   ].join('|');
 }
@@ -2847,6 +2879,9 @@ function canAggregateReceivesGroup(items: FormationCardInteraction[]): boolean {
     return true;
   }
   if (items.every((item) => statusDependencyProviderBenefitKey(item, 'receives') !== null)) {
+    return true;
+  }
+  if (items.every((item) => sameSourceStatusDependencyKey(item) !== null)) {
     return true;
   }
   if (items.every((item) => sharedStatusRecipientBenefitKey(item) !== null)) {
