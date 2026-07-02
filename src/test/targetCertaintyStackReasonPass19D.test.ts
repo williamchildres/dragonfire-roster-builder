@@ -189,12 +189,12 @@ describe('Pass 19D highest-stat certainty and stack reason routing', () => {
 
     expect(statusCounts(currentTraces)).toMatchObject({
       active: 24,
-      potential: 31,
+      potential: 32,
       inactive: 9,
       blocked: 1,
       'not-applicable': 1,
       unknown: 1,
     });
-    expect(currentTraces).toHaveLength(67);
+    expect(currentTraces).toHaveLength(68);
   });
 });

@@ -115,6 +115,41 @@ describe('trigger, schedule override, periodic damage framework regression', () 
       channel: 'tactical-damage',
       statusId: 'panic',
     });
+
+    const desperateDamage = outputs.find((output) => output.id === 'venator-desperate-ambush-desperate-ambush-physical-output');
+    expect(desperateDamage).toMatchObject({
+      outputKind: 'direct-damage',
+      channel: 'physical-damage',
+      targetSide: 'enemy',
+      targetCount: 1,
+    });
+    const desperateOverwhelm = statusOutputs.find((output) => output.id === 'venator-desperate-ambush-desperate-ambush-overwhelm-overwhelm-status-output');
+    expect(desperateOverwhelm).toMatchObject({
+      statusId: 'overwhelm',
+      targetSide: 'enemy',
+      requiredHabitLevel: 1,
+      durationRounds: 2,
+      sourceEffectId: 'desperate-ambush-overwhelm',
+      activationGroupId: 'desperate-ambush-target',
+    });
+    expect(desperateOverwhelm?.chanceByHabitLevel[0]).toMatchObject({ level: 1, value: 12, unit: 'percent' });
+    expect(desperateOverwhelm?.conditions.map((condition) => condition.description)).toContain('Venator is strictly below 50% Troop Capacity.');
+    const desperateContext = dragons.find((dragon) => dragon.id === 'venator')?.habits
+      .find((habit) => habit.id === 'venator-desperate-ambush')?.schedules[0];
+    const desperatePhysicalEffect = desperateContext?.effects.find((effect) => effect.id === 'desperate-ambush-physical');
+    const desperateOverwhelmEffect = desperateContext?.effects.find((effect) => effect.id === 'desperate-ambush-overwhelm');
+    expect(desperateContext?.roundSelector).toMatchObject({ kind: 'each-round' });
+    expect(desperatePhysicalEffect?.targetSelection).toMatchObject({
+      preference: 'Hunter breed',
+      fallback: 'another eligible enemy',
+      sharedSelectionGroupId: 'desperate-ambush-target',
+    });
+    expect(desperateOverwhelmEffect?.targetSelection?.references).toEqual([
+      expect.objectContaining({
+        kind: 'same-target-as-effect',
+        referencedEffectId: 'desperate-ambush-physical',
+      }),
+    ]);
   });
 
   it('repairs Malachite, Venator, and Vermax trigger and presentation traces', () => {
@@ -123,8 +158,8 @@ describe('trigger, schedule override, periodic damage framework regression', () 
     const presentation = reviewPresentation(malachiteFormation, traces);
     const cardText = allCardText(presentation);
 
-    expect(traces).toHaveLength(67);
-    expect(counts).toMatchObject({ active: 24, potential: 31, inactive: 9, blocked: 1, unknown: 1, 'not-applicable': 1 });
+    expect(traces).toHaveLength(68);
+    expect(counts).toMatchObject({ active: 24, potential: 32, inactive: 9, blocked: 1, unknown: 1, 'not-applicable': 1 });
     expect(new Set(traces.map(technicalAnalysisTraceIdentity)).size).toBe(traces.length);
 
     const override = traces.find((trace) => trace.ruleId === 'schedule-override' && trace.sourceAbilityId === 'venator-feral-strike');
@@ -305,9 +340,28 @@ describe('trigger, schedule override, periodic damage framework regression', () 
     const presentation = reviewPresentation(kalspireFormation, traces);
     const cardText = allCardText(presentation);
 
-    expect(traces).toHaveLength(60);
-    expect(counts).toMatchObject({ active: 26, potential: 21, inactive: 11, blocked: 1, unknown: 1, 'not-applicable': 0 });
+    expect(traces).toHaveLength(61);
+    expect(counts).toMatchObject({ active: 26, potential: 22, inactive: 11, blocked: 1, unknown: 1, 'not-applicable': 0 });
     expect(new Set(traces.map(technicalAnalysisTraceIdentity)).size).toBe(traces.length);
+    expect(Object.fromEntries(presentation.cards.map((card) => [card.dragonId, {
+      receives: card.receives.length,
+      provides: card.provides.length,
+    }]))).toMatchObject({
+      kalspire: { receives: 7, provides: 9 },
+      venator: { receives: 2, provides: 4 },
+      vermax: { receives: 1, provides: 4 },
+    });
+
+    const activeTraits = presentation.cards
+      .map((card) => card.traitStatus)
+      .filter((trait) => trait?.state === 'active');
+    expect(activeTraits).toEqual([
+      expect.objectContaining({ dragonId: 'venator', abilityName: "Warrior's Zeal" }),
+    ]);
+    const vanguardBlockers = presentation.cards
+      .map((card) => `${card.traitStatus?.summary ?? ''} ${card.traitStatus?.detail ?? ''}`)
+      .filter((text) => /Vanguard/i.test(text) && /requires/i.test(text));
+    expect(vanguardBlockers.length).toBeGreaterThanOrEqual(1);
 
     const overrideText = traceText(traces.find((trace) => trace.ruleId === 'schedule-override' && trace.sourceAbilityId === 'venator-feral-strike'));
     expect(overrideText).toContain('Double-Strike');
@@ -424,6 +478,70 @@ describe('trigger, schedule override, periodic damage framework regression', () 
     expect(reactiveKalspire?.status).toBe('potential');
     expect(traceStatusReason(reactiveKalspire!)).toContain('selected recipient identity, candidate comparison values, tie resolution, and final stat formula remain unresolved.');
 
+    const reactiveSelectionTrace = traces.find((trace) =>
+      trace.sourceAbilityId === 'vermax-reactive-instincts' &&
+      trace.ruleId === 'direct-stat-support' &&
+      trace.recipientDragonId === null &&
+      trace.targetSelectionGroup?.selection === 'highest-stat'
+    );
+    expect(reactiveSelectionTrace).toBeDefined();
+    expect(reactiveSelectionTrace?.status).toBe('active');
+    expect(reactiveSelectionTrace?.targetSelectionGroup).toMatchObject({
+      targetCount: 1,
+      eligibleRecipientDragonIds: ['kalspire', 'venator', 'vermax'],
+      selectionUncertain: true,
+      selection: 'highest-stat',
+      selectionStat: 'instinct',
+    });
+    expect(reactiveSelectionTrace?.targetSelectionGroup?.candidateStats).toEqual([
+      { dragonId: 'kalspire', statId: 'instinct', value: 69.3 },
+      { dragonId: 'venator', statId: 'instinct', value: null },
+      { dragonId: 'vermax', statId: 'instinct', value: 73.7 },
+    ]);
+    const reactiveSelectionText = traceText(reactiveSelectionTrace);
+    expect(reactiveSelectionText).toContain('Start of Combat');
+    expect(reactiveSelectionText).toContain('one ally selected by highest Instinct');
+    expect(reactiveSelectionText).toContain('Eligible recipients: Kalspire, Venator and Vermax');
+    expect(reactiveSelectionText).toContain('exactly one eligible ally is selected by Instinct comparison');
+    expect(reactiveSelectionText).toContain('Instinct +18% at effective Habit Level 1.');
+    expect(reactiveSelectionText).toContain('Initiative +9% at effective Habit Level 1.');
+    expect(reactiveSelectionText).toContain('Enhanced by Strength.');
+    expect(reactiveSelectionText).toContain('Duration: until end of combat.');
+    expect(reactiveSelectionText).not.toMatch(/activation succeeds|activation success remains unresolved|activation chance|compete for the same activation/i);
+    expect(traceStatusReason(reactiveSelectionTrace!)).toBe('The final selected recipient remains unresolved because one or more comparison values are unavailable.');
+
+    const desperateOverwhelmTraces = traces.filter((trace) =>
+      trace.ruleId === 'status-source-output' &&
+      trace.sourceDragonId === 'venator' &&
+      trace.sourceAbilityId === 'venator-desperate-ambush' &&
+      /Overwhelm/.test(trace.title)
+    );
+    expect(desperateOverwhelmTraces).toHaveLength(1);
+    const desperateOverwhelmTrace = desperateOverwhelmTraces[0]!;
+    const desperateOverwhelmText = traceText(desperateOverwhelmTrace);
+    expect(desperateOverwhelmTrace.status).toBe('potential');
+    expect(desperateOverwhelmTrace.interactionScope).toBe('enemy-side');
+    expect(desperateOverwhelmText).toContain('Desperate Ambush');
+    expect(desperateOverwhelmText).toContain('Supplied status: Overwhelm.');
+    expect(desperateOverwhelmText).toContain('Activation timing: Each round.');
+    expect(desperateOverwhelmText).toContain('Runtime condition: Venator is strictly below 50% Troop Capacity.');
+    expect(desperateOverwhelmText).toContain('Target: one enemy.');
+    expect(desperateOverwhelmText).toContain('Priority: Hunter breed is preferred, not guaranteed.');
+    expect(desperateOverwhelmText).toContain('Fallback target: another eligible enemy; fallback selection is not guaranteed.');
+    expect(desperateOverwhelmText).toContain('Status application chance: 12% at effective Habit Level 1.');
+    expect(desperateOverwhelmText).toContain('Duration: 2 rounds.');
+    expect(desperateOverwhelmText).toContain('Target reference desperate-ambush-damage-target: Overwhelm uses the damage target. References source effect desperate-ambush-physical.');
+    expect(desperateOverwhelmText).toContain('Desperate Ambush effect desperate-ambush-overwhelm uses the same selected target as desperate-ambush-physical.');
+    expect(desperateOverwhelmText).toContain('Selected enemy identity is unresolved.');
+    expect(desperateOverwhelmText).toContain('Overwhelm application success is unresolved.');
+    expect(desperateOverwhelmTrace.exactResultUnknownReason).toContain('trigger-condition satisfaction');
+    expect(desperateOverwhelmTrace.exactResultUnknownReason).toContain('selected enemy identity');
+    expect(desperateOverwhelmTrace.exactResultUnknownReason).toContain('application success');
+    expect(desperateOverwhelmTrace.exactResultUnknownReason).toContain('uptime');
+    expect(presentation.cards.flatMap((card) => [...card.provides, ...card.receives]).some((item) =>
+      item.traceIds.includes(desperateOverwhelmTrace.id)
+    )).toBe(false);
+
     const radiantStunText = traceText(traces.find((trace) => trace.ruleId === 'self-status-output' && trace.sourceAbilityId === 'kalspire-radiant-conqueror' && /Stun/.test(trace.title)));
     expect(radiantStunText).toContain('Stun application is deterministic');
     expect(radiantStunText).not.toContain('Stun application success is unresolved');
@@ -455,8 +573,18 @@ describe('trigger, schedule override, periodic damage framework regression', () 
       .filter((item) => item.recipientName === 'Kalspire')
       .map(interactionText)
       .join(' ');
+    expect(reactiveCardText).toContain('Eligible selected-target candidates: Kalspire or Venator or Vermax.');
+    expect(reactiveCardText).toContain("The highest-Instinct ally is unresolved because Venator's Instinct is unavailable.");
     expect(reactiveCardText).toContain('Instinct +18% at effective Habit Level 1.');
     expect(reactiveCardText).toContain('Initiative +9% at effective Habit Level 1.');
+    expect(reactiveCardText).toContain('Duration: until end of combat.');
+    expect(reactiveCardText).toContain('Enhanced by Strength.');
+    expect(reactiveCardText).not.toMatch(/when the activation succeeds|activation success remains unresolved|activation chance|compete for the same activation/i);
+
+    const spreadingBlazeText = cardsFor(presentation, 'Spreading Blaze').map(interactionText).join(' ');
+    expect(spreadingBlazeText).toContain('Activation chance: 20%');
+    expect(spreadingBlazeText).toContain('20% chance to grant Kalspire one Spreading Blaze stack.');
+    expect(spreadingBlazeText).toContain('trigger chance and target selection');
 
     const armorBreakText = traces
       .filter((trace) => trace.sourceAbilityId === 'venator-armor-break' && trace.matchKind === 'enemy-damage-received-increase')
