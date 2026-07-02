@@ -1,9 +1,5 @@
-import { render, screen, within } from '@testing-library/react';
-import userEvent from '@testing-library/user-event';
 import { describe, expect, it } from 'vitest';
-import { App } from '../app/App';
 import { createSynergyAuditExport, technicalAnalysisTraceIdentity } from '../services/synergyTrace';
-import { FORMATION_STORAGE_KEY, ROSTER_SCHEMA_VERSION, STORAGE_KEY } from '../services/rosterStorage';
 import { countByStatus, pass18Analysis, pass18Formation, traceText } from './pass18Helpers';
 
 const outputCapabilityId = 'vhagar-skyward-titan-skyward-titan-third-stack-damage-output';
@@ -12,23 +8,8 @@ const exactReason =
 const staleGenericReason =
   'Threshold branch applicability, exact boundary behavior, activation success, modifier uptime, and final formula remain unresolved.';
 
-async function renderPass18Formation() {
-  const user = userEvent.setup();
-  const { roster } = pass18Analysis();
-  window.localStorage.setItem(STORAGE_KEY, JSON.stringify({
-    format: 'dragonfire-roster-lab-local',
-    schemaVersion: ROSTER_SCHEMA_VERSION,
-    updatedAt: new Date().toISOString(),
-    roster: Object.values(roster),
-  }));
-  window.localStorage.setItem(FORMATION_STORAGE_KEY, JSON.stringify(pass18Formation));
-  render(<App />);
-  await user.click(screen.getAllByRole('button', { name: /formation builder/i })[0]!);
-  return user;
-}
-
 describe('Pass 18B Skyward Titan transition projection routing', () => {
-  it('keeps the third-stack attack as enemy-side technical analysis without creating a Vhagar support card', async () => {
+  it('keeps the third-stack attack as enemy-side technical analysis without creating a Vhagar support card', () => {
     const { roster, traces, presentation } = pass18Analysis();
     const counts = countByStatus(traces);
     expect(traces).toHaveLength(62);
@@ -76,11 +57,5 @@ describe('Pass 18B Skyward Titan transition projection routing', () => {
     expect(serviceCardText).not.toContain('Skyward Titan - Physical Damage support');
     expect(serviceCardText).not.toContain('Increases Skyward Titan Physical Damage.');
 
-    await renderPass18Formation();
-    const vanguard = screen.getByRole('article', { name: 'Vanguard' });
-    const provides = within(vanguard).getByRole('region', { name: 'Provides' });
-    expect(provides).toHaveTextContent('8');
-    expect(vanguard.textContent ?? '').not.toContain('Skyward Titan - Physical Damage support');
-    expect(vanguard.textContent ?? '').not.toContain('Increases Skyward Titan Physical Damage.');
   });
 });

@@ -651,6 +651,25 @@ dd {
   margin: 0;
 }
 
+.profile-coverage {
+  background: rgba(127, 176, 143, 0.12);
+}
+
+.raw-ability-text {
+  color: var(--muted);
+  display: grid;
+  font-size: 0.88rem;
+  gap: 0.45rem;
+  line-height: 1.45;
+  max-height: 9rem;
+  overflow-y: auto;
+  padding-right: 0.2rem;
+}
+
+.raw-ability-text p {
+  margin: 0;
+}
+
 .mini-section-heading {
   align-items: center;
   display: flex;
@@ -937,6 +956,35 @@ dd {
   margin: 0;
 }
 
+.simple-formation-analysis {
+  display: grid;
+  gap: 1rem;
+}
+
+.simple-analysis-summary,
+.coverage-summary {
+  display: grid;
+  gap: 0.35rem;
+}
+
+.simple-analysis-summary {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.simple-analysis-summary p,
+.coverage-summary p {
+  margin: 0;
+}
+
+.simple-result-section {
+  display: grid;
+  gap: 0.45rem;
+}
+
+.simple-result-section h4 {
+  margin: 0;
+}
+
 .wide-panel {
   grid-column: 1 / -1;
 }
@@ -1159,6 +1207,10 @@ th {
   }
 
   .team-affinity-strip {
+    grid-template-columns: 1fr;
+  }
+
+  .simple-analysis-summary {
     grid-template-columns: 1fr;
   }
 }

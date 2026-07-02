@@ -12,12 +12,12 @@ Screenshot placeholder: add a production screenshot after the first GitHub Pages
 - Versioned localStorage persistence with schema migration
 - JSON roster export and runtime-validated import
 - Three-position Formation Builder for Left Flank, Vanguard, and Right Flank
-- Enhanced Formation Builder cards with equal-height desktop columns, compact Trait and Command panels, affinity chips, bounded Receives/Provides regions, target-candidate labels, max-rank preview labels, compact state badges, readable summaries, per-item Details, and overflow controls
+- Simple Formation Builder cards with selector controls, movement, clear actions, Command, Trait, affinity, and high-level profile coverage
+- Formation-level simple synergy analysis for strong synergies, missing enablers, placement issues, position conflicts, and future unlocks
 - Confirmed linear formation adjacency: Left Flank and Right Flank each touch Vanguard, but not each other
 - Shareable formation URL hash that preserves positions
-- Synergy engine with structured trace output, audit export, and no unsupported numerical scores
-- Production debug view for active, inactive, potential, blocked, and unknown formation interactions, including provider-to-recipient amplification traces
-- Generic effect-capability framework for Physical Damage, Tactical Damage, Fire Damage, Recovery, stat, and Damage Received support matching
+- Curated simple synergy profiles for representative dragons, separate from the legacy combat trace framework
+- Retained legacy effect-capability framework and reports for internal review, without driving the live Formation Builder UI
 - Damage capability matrix and `npm run report:synergy` review report for the currently populated combat datasets
 - Partially verified combat datasets for Syrax, Caraxes, Malachite, Seasmoke, Sheepstealer, and Vermax
 - Manual-review records for the current screenshot-normalized datasets
@@ -43,27 +43,9 @@ Manual ability-text review confirms that "Other Ally" and "Other Allies" exclude
 
 Unqualified Damage Dealt modifiers apply to all qualifying damage sources unless the ability text explicitly restricts or excludes a source. Vermax Warrior's Zeal is combat-log confirmed to affect Vermax Basic Attack Physical Damage. Malachite Forest's Instinct remains non-basic because its wording explicitly excludes Basic Attacks.
 
-Formation analysis can now trace provider-to-recipient amplification. For example, Malachite's Warden's Rally provides Recovery to Sheepstealer, and Sheepstealer's Hunter's Cunning can amplify Recovery Received while Sheepstealer is Level 16+ and deployed in Vanguard. The player-facing card keeps those responsibilities separate: Malachite provides Warden's Rally Recovery, while Hunter's Cunning remains Sheepstealer's own recipient-side modifier and never counts as a Malachite-provided benefit.
+The live Formation Builder now uses the simple synergy domain described in `docs/PRODUCT_SCOPE.md`. It answers which selected dragons complement one another, why, whether placement allows the relationship, which enablers are missing, which exclusive positions conflict, and which relationships are locked by saved Star Rank or Dragon Level. It does not model exact combat execution, target overlap, proc timing, stack behavior, damage formulas, expected damage, win probability, or numerical synergy scores.
 
-Phase 3.7 adds a reusable capability framework instead of relying on one-off dragon pair checks. Dragons expose every verified output channel they can produce and every channel modifier they can provide. Outgoing amplification matches a support modifier, such as Fire Damage Dealt, to recipient outputs in the same channel. Incoming amplification matches an ally-targeted output, such as Recovery, to a recipient-side modifier, such as Recovery Received. Mixed-damage dragons are not reduced to a single tag; primary damage is only a human-readable summary.
-
-The framework honors source scope, position requirements, unlock state, user progression, and preview mode. Unqualified damage modifiers apply to all qualifying sources, while explicit exclusions such as "excluding Basic Attacks" block Basic Attack matches. Locked capabilities can appear as future or potential in preview analysis but are not active for the user's current roster.
-
-Phase 3.7.1 separates modifier roles. A dragon may amplify its own damage without supporting teammates. Self amplification such as Stolen Flock, Warrior's Zeal, Rallying Flame, and Wise Vigor is shown in capability review but cannot create cross-dragon support traces. Ally support, recipient-side amplification, and enemy debuffs are separate roles. Capability availability is also labeled by context: canonical kit, observed account state, and visitor roster state.
-
-Phase 3.8 adds Syrax and Caraxes combat records and expands the framework with status output capabilities, capability dependencies, and periodic damage definitions. The matcher can now explain status-condition enablement, such as Syrax First-Strike enabling Caraxes Infernal Burst's First-Strike multiplier, stat-scaling support, enemy mitigation reduction, and periodic damage amplification for Burn. These traces remain explanatory and do not produce numerical synergy scores.
-
-Phase 3.8.1 reconciles normal Formation Analysis, debug traces, audit exports, and the framework report around the same trace generator. Normal analysis distinguishes eligibility from activation: a dragon can be an eligible target for a support effect while actual execution remains chance-based, target-selection-dependent, locked, or timing-dependent. Targeting facts such as Warden's Rally including Malachite are not displayed as standalone synergies unless another dragon meaningfully modifies or benefits from that effect.
-
-Version 0.5.2 repairs Formation Analysis filtering and aggregation. Every friendly trace reference is constrained to the three selected formation dragons before normal presentation, debug output, reports, and project-context exports. Hard battlefield failures such as provider position, recipient position, adjacency, source scope, and selected-formation membership take precedence over unknown level or previewed progression. Damage Received ally support is modeled separately from outgoing damage amplification and recipient-side Recovery amplification; Seasmoke Champion's Brilliance now produces a Right Flank defensive support trace. Single-target effects with multiple eligible recipients are grouped as target-selection interactions, and Burn remains a Fire output with periodic debug metadata rather than a second normal buff.
-
-Version 0.5.3 normalizes Formation Analysis presentation without changing the roster or local roster schema. Direct stat support now aggregates sibling effects from the same ability, such as Instinct plus Initiative, while stat-scaling child traces remain stat-specific. Defensive support records `damageScope` so Forest's Instinct remains Tactical Damage Received, Trial by Flame remains Fire Damage Received, and Champion's Brilliance remains all Damage Received. Troop-capacity thresholds are exported as strict below conditions rather than target counts. Highest-stat and one-adjacent target selectors create one recipient or one grouped candidate interaction instead of simultaneous support cards. Internal same-dragon interactions remain in debug/export but are excluded from cross-dragon normal sections. Previewing max Habit rank does not override a failed observed Dragon Level requirement.
-
-Version 0.5.4 repairs normal Unmet requirements as a pure presentation summary for the current formation and preview mode. Global unmet items now show selected Trait placement failures and concrete progression blockers only when hard placement and targeting pass, while blockers already displayed on visible active or potential cards stay on those cards. The summary dedupes by semantic identity, uses canonical names, resets across preview toggles and formation switches, and preserves raw debug/export requirements. Trial by Flame groups selected recipients and threshold tiers in one normal card, and grouped stat cards keep different sibling values such as Reactive Instincts Instinct +36% and Initiative +18%.
-
-Version 0.5.5 moves dragon-specific presentation into the three Formation Builder cards. A pure card-presentation layer maps existing normal traces into Receives, Provides, Trait status, affinities, candidate-target labels, preview labels, and overflow sections without changing the trace engine or verified game mechanics. Raw effect tags now live in technical analysis details instead of the normal Formation Summary.
-
-Version 0.5.6 polishes those cards into consistent planner columns. Desktop and wide tablet layouts stretch the three outer cards to equal row height while keeping the position heading, selector, movement controls, Command, Trait, affinities, Receives, and Provides in normal top-to-bottom flow. Command panels describe the selected dragon's own Command and do not count as synergies. Receives and Provides show three compact items by default, expand inside bounded scrollable regions with corrected `View more` / `Show fewer` behavior, preserve overflow counts, and use inline state badges instead of large status bubbles. Interaction cards use purpose-built summaries, identify affected Commands such as Cleansing Wrath Fire Damage, aggregate same-ability presentation when it clarifies related effects, keep recipient-side modifiers owned by the recipient dragon, suppress redundant blocked Trait cards already covered by Trait status and Formation Blockers, and include per-item Details controls for full explanations, effects, target selection, requirements, and confidence. Formation Builder analysis uses current roster Reign Level and progression data rather than stale selected-dragon snapshots. Mobile cards stack in natural height without forced desktop spacing.
+The older capability and trace framework remains in source and test coverage for internal reports and historical validation. It is not imported by the live Formation Builder and is not used as a fallback for simple formation analysis.
 
 Threshold wording is interpreted literally: "above 50%" means `> 50`, and "below 50%" means `< 50`. Exactly 50% matches neither wording until combat logs confirm otherwise.
 
@@ -86,7 +68,7 @@ npm run preview
 npm run report:synergy
 ```
 
-`npm run report:synergy` prints the revised capability matrix, availability context, modifier roles, generated cross-dragon synergies, Formation Analysis repair review, Normal Requirement Summary Review, Formation Card Presentation Review, exact current/preview outputs for the eight reviewed formations, integrity checks, and unresolved framework assumptions. It is read-only and does not modify source files or localStorage.
+`npm run report:synergy` prints the retained legacy capability matrix, availability context, generated cross-dragon synergies, historical Formation Analysis reviews, integrity checks, and unresolved framework assumptions. It is read-only and does not modify source files or localStorage.
 
 ## Official Roster Check
 
@@ -133,7 +115,7 @@ Dragonfire Roster Lab is an unofficial community project and is not affiliated w
 
 ## Project Status
 
-Version `0.5.6` polishes Formation Builder card layout while preserving the verified trace engine. Data schema is `9`; local roster schema remains `3`.
+Version `0.5.7` cuts the live Formation Builder over to curated simple synergy analysis while preserving the legacy framework for reports and tests. Data schema is `9`; local roster schema remains `3`.
 
 ## Planned Next Steps
 

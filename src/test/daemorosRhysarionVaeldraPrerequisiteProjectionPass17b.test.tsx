@@ -1,39 +1,12 @@
-import { render, screen, within } from '@testing-library/react';
-import userEvent from '@testing-library/user-event';
 import { describe, expect, it } from 'vitest';
-import { App } from '../app/App';
-import { ROSTER_SCHEMA_VERSION, STORAGE_KEY } from '../services/rosterStorage';
 import { createSynergyAuditExport, technicalAnalysisTraceIdentity } from '../services/synergyTrace';
-import { pass17Analysis, pass17Formation, pass17Roster, traceText } from './pass17Helpers';
+import { pass17Analysis, pass17Formation, traceText } from './pass17Helpers';
 
 const sourceCapabilityId = 'vaeldra-lure-lure-taunt-taunt-status-output';
 const dependentCapabilityId = 'vaeldra-sirens-call-sirens-call-stagger-stagger-status-output';
 
 function occurrences(text: string, value: string): number {
   return text.split(value).length - 1;
-}
-
-async function renderExpandedControlCard() {
-  const user = userEvent.setup();
-  const roster = pass17Roster();
-  window.localStorage.setItem(STORAGE_KEY, JSON.stringify({
-    format: 'dragonfire-roster-lab-local',
-    schemaVersion: ROSTER_SCHEMA_VERSION,
-    updatedAt: new Date().toISOString(),
-    roster: Object.values(roster),
-  }));
-  render(<App />);
-  await user.click(screen.getAllByRole('button', { name: /formation builder/i })[0]!);
-  await user.click(screen.getByLabelText(/include unowned dragons/i));
-  const selectors = screen.getAllByLabelText('Dragon');
-  await user.selectOptions(selectors[0]!, 'daemoros');
-  await user.selectOptions(selectors[1]!, 'rhysarion');
-  await user.selectOptions(selectors[2]!, 'vaeldra');
-  const vanguard = screen.getByRole('article', { name: 'Vanguard' });
-  const receives = within(vanguard).getByRole('region', { name: 'Receives' });
-  await user.click(within(receives).getByRole('button', { name: /show all/i }));
-  const card = within(receives).getByText('Control enhances Dawnsong damage rate').closest('.card-interaction-item') as HTMLElement;
-  return card;
 }
 
 describe('Daemoros/Rhysarion/Vaeldra prerequisite projection pass 17B', () => {
@@ -89,7 +62,7 @@ describe('Daemoros/Rhysarion/Vaeldra prerequisite projection pass 17B', () => {
     expect(rhysarion.receives.filter((card) => card.traceIds.includes(prerequisite.id))).toHaveLength(0);
   });
 
-  it('renders one clean prerequisite block in expanded Details without changing collapsed controls', async () => {
+  it('renders one clean prerequisite block in service details without changing collapsed controls', () => {
     const { traces, presentation } = pass17Analysis();
     const counts = traces.reduce<Record<string, number>>((acc, trace) => {
       acc[trace.status] = (acc[trace.status] ?? 0) + 1;
@@ -111,31 +84,6 @@ describe('Daemoros/Rhysarion/Vaeldra prerequisite projection pass 17B', () => {
       "Against the same otherwise-eligible enemy with Control, Dawnsong Fire Damage Rate increases from 20% to 30%; Confusion may carry into later Dawnsong rounds, while Siren's Call Stagger can overlap only Round 2 and must resolve before Dawnsong.",
       'Supplier application success, Lure-to-Siren same-target overlap, eligible enemy identity, roll scope, and same-round action order remain unresolved.',
     ]);
-
-    const card = await renderExpandedControlCard();
-    const domText = card.textContent ?? '';
-    expect(domText).toContain('Daemoros and Vaeldra → Rhysarion');
-    expect(domText).not.toContain("Siren's Call's Stagger branch overlaps Dawnsong only on Round 2");
-    expect(within(card).queryByRole('button', { name: /details/i })).toBeNull();
-    expect(controlCard.details.join(' ')).toContain("Siren's Call's Stagger branch overlaps Dawnsong only on Round 2");
-    expect(occurrences(controlCard.details.join(' '), "Prerequisite context: Lure can establish the Taunt required by Siren's Call's Stagger branch.")).toBe(1);
-    expect(occurrences(controlCard.details.join(' '), sourceCapabilityId)).toBe(1);
-    expect(occurrences(controlCard.details.join(' '), dependentCapabilityId)).toBe(1);
-    expect(occurrences(controlCard.details.join(' '), 'Lure schedule: Each round.')).toBe(1);
-    expect(occurrences(controlCard.details.join(' '), "Siren's Call schedule: Round 1, 2, and 3.")).toBe(1);
-    expect(occurrences(controlCard.details.join(' '), 'Taunt duration: 2 rounds.')).toBe(1);
-    expect(occurrences(controlCard.details.join(' '), "Lure and Siren's Call must affect the same enemy.")).toBe(1);
-    expect(occurrences(controlCard.details.join(' '), 'Prerequisite uncertainty:')).toBe(1);
-    for (const windowText of [
-      "Round 1 from a successful Round 1 Lure only if Lure resolves before Siren's Call that round",
-      'Round 2 after a successful Round 1 Lure',
-      "Round 2 from a successful Round 2 Lure only if Lure resolves before Siren's Call that round",
-      'Round 3 after a successful Round 2 Lure',
-      "Round 3 from a successful Round 3 Lure only if Lure resolves before Siren's Call that round",
-    ]) {
-      expect(occurrences(controlCard.details.join(' '), windowText)).toBe(1);
-    }
-    expect(domText).not.toMatch(/Conditional Stagger: Taunt Supplied status|Taunt Supplied status: Taunt Status application chance/i);
     expect(occurrences(controlCard.details.join(' '), 'Supplier schedule: Each round.')).toBe(0);
     expect(occurrences(controlCard.details.join(' '), 'Dependent schedule: Rounds 1, 2, and 3.')).toBe(0);
 

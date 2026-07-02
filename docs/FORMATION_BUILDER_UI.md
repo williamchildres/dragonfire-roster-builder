@@ -1,102 +1,83 @@
 # Formation Builder UI
 
-Version 0.5.6 refines the card layout and spacing added in 0.5.5. It is a presentation-only update; the trace engine, verified mechanics, card-analysis mapping, data schema, local roster schema, and game build remain unchanged.
+The live Formation Builder is a high-level formation planner. It uses the curated simple synergy profiles in `src/synergy` and does not run the legacy trace, capability, audit, or card-analysis presentation engines.
 
-Version 0.5.5 adds an inline presentation layer for Formation Builder cards. The trace engine remains authoritative; the UI maps existing normal traces onto the selected Left Flank, Vanguard, and Right Flank dragons.
+## Position Cards
 
-## Enhanced Cards
+Each of the three position cards represents one lane:
 
-Each selected position card shows the position heading, selector, movement controls, Command panel, Trait status, affinity strip, Receives, Provides, and overflow controls. The Vanguard card keeps restrained visual emphasis.
+- Left Flank
+- Vanguard
+- Right Flank
 
-On desktop, the Formation Builder uses three equal-width columns with stretched outer card shells so Left Flank, Vanguard, and Right Flank align at their top and bottom edges. The card internals stay in normal document flow: heading, selector, movement controls, Command, Trait, affinities, Receives, then Provides. Equal height comes from the row/card structure and bounded interaction regions, not from inserting large flexible gaps above controls.
+Each card keeps only the planner controls and identity details needed for formation building:
 
-Movement controls use the same grid in every position card: two move actions and a full-width clear action. This keeps the upper control area consistent even when labels differ by position.
+- Dragon selector.
+- Move-to-position buttons.
+- Clear-position button.
+- Selected dragon identity through the selector value.
+- High-level synergy profile coverage.
+- Command panel using the selected dragon's source wording.
+- Trait panel with recorded Star Rank, Dragon Level, and position requirements.
+- Favorable and unfavorable troop affinities.
 
-Receives contains normal cross-dragon interactions where the card dragon is the recipient. Provides contains normal interactions where the card dragon is the source, including enemy-facing team benefits. Internal same-dragon traces remain excluded from Receives and Provides.
+The cards do not contain per-dragon Receives or Provides regions, interaction overflow controls, trace cards, target-candidate labels, technical debug controls, or raw effect tag displays.
 
-Command panels describe the selected dragon's own Command. They use structured schedule summaries and do not inherit active, conditional, blocked, or progression-unknown state from other dragons. A Command panel is not a formation synergy and never changes Receives, Provides, or team interaction counts.
+## Formation Analysis
 
-The current Command summaries preserve independent schedules and targets:
+The formation-level analysis panel groups simple evaluator results into player-facing sections:
 
-- Malachite - Warden's Rally: rounds 2, 4, 7, and 9 Tactical Damage to one same-lane enemy; rounds 3, 6, and 9 Recovery to three allies.
-- Seasmoke - Cleansing Wrath: each-round cleanse attempts; rounds 3, 6, and 9 Fire Damage to one enemy.
-- Sheepstealer - Wild Hunt: Prey application when no enemy has Prey; rounds 1, 4, 7, and 10 Fire Damage to one enemy.
+- Strong synergies: active setup/payoff and amplifier/output relationships.
+- Missing enablers: selected dragons that benefit from a tag no selected teammate currently provides.
+- Placement issues: relationships blocked by required position or adjacency.
+- Position conflicts: selected dragons competing for the same exclusive meaningful position.
+- Future unlocks: relationships available only after saved Star Rank or Dragon Level progression.
 
-## Interaction States
+Single selected dragons do not show missing-enabler warnings in the UI. Missing-enabler messages appear only once at least two dragons are selected.
 
-- Active: current requirements are satisfied.
-- Conditional: current-mode chance, timing, targeting, or unresolved conditions apply.
-- Max-rank preview: preview mode exposes a future locked interaction.
-- Progression unknown: Level, Star Rank, Habit Level, or collection state is unknown.
-- Blocked: placement or progression fails.
+## Progression Mapping
 
-Every state has an icon, text label, tooltip text, and non-color visual treatment.
+The UI maps local roster progression into the simple evaluator as follows:
 
-## Target Candidates
+- `OwnedDragon.starRank` becomes simple `starRank`.
+- `OwnedDragon.reignLevel` becomes simple `dragonLevel`.
 
-Single-target grouped traces render one Provides item on the source card. Each eligible selected recipient gets a Receives candidate item labeled as not guaranteed. Candidate cards never imply simultaneous or guaranteed selection.
+Habit Level is not part of the current simple Formation Builder analysis.
 
-Multi-target traces stay direct Receives/Provides entries and do not use candidate wording.
+## Placement Contract
 
-## Trait Status
+The Formation Builder uses the shared linear formation contract:
 
-Trait status is summarized on the owning card. Vanguard placement can be active, placement-valid with unknown progression, or inactive because Level/Star/Habit progression fails. Flank dragons with Vanguard-only Traits show inactive placement. Full requirement details remain in technical analysis.
+- Left Flank is adjacent only to Vanguard.
+- Right Flank is adjacent only to Vanguard.
+- Vanguard is adjacent to both flanks.
+- The two flanks are not adjacent.
 
-Trait panels use shared padding, badge placement, and a modest minimum height so cards do not collapse unevenly when Trait text is short.
+An adjacent relationship can be active when one dragon is Vanguard and the other is a flank. The same relationship is placement-blocked when the two dragons occupy opposite flanks.
 
-## Affinities
+## Non-Goals
 
-Each dragon card shows favorable and unfavorable troop affinities using existing dragon affinity data. Chips include `+` or `-`, player-facing troop names, and accessible labels. The team affinity strip summarizes covered, weak/missing, and vulnerable troop types with contributing dragon names in tooltips and accessible labels.
+The live Formation Builder does not show or calculate:
 
-Affinity panels use a two-row label-and-chip grid. `None verified` aligns with chip rows, chips wrap inside the card, and the Formation Affinity Coverage strip uses matching spacing and alignment.
+- Exact combat rounds.
+- Proc timing or activation percentages.
+- Target candidates or target-selection probability.
+- Per-target behavior.
+- Stack duration or refresh behavior.
+- Damage formulas, expected damage, or win probability.
+- Legacy trace cards, audit controls, or technical analysis status.
+- Numerical synergy scores or optimizer recommendations.
 
-## Limits And Overflow
+Legacy services and pure service tests remain in the repository for historical framework coverage and reporting, but production Formation Builder UI does not import them.
 
-Receives and Provides show up to three prioritized interactions by default. Priority is Active, Conditional, Progression unknown, Max-rank preview, then Blocked. Overflow buttons expose `aria-expanded`, show all items, and can collapse back to the compact view.
+## Review Cases
 
-Expanded Receives and Provides render all available items inside bounded scrollable section bodies instead of allowing one card to grow without a practical limit. Each section keeps its header and count visible, empty sections keep a compact structural minimum, and `View N more` / `Show fewer` preserves the correct overflow count, reveals more visible content than the collapsed three-item view, restores the original compact view when collapsed, and keeps the `aria-controls` relationship.
+Use these cases when reviewing the cutover:
 
-Compact interaction items show relationship, compact inline state badge, ability/effect title, one or more short benefit lines, and target/candidate warnings where applicable. State badges use only their content width and never reserve a large status column. Summaries are generated from structured trace fields rather than the opening words of verbose explanations, so stat values, target uncertainty, and key mechanics remain visible.
-
-Cross-dragon cards identify the source dragon and the benefiting dragon. The benefiting card's Receives section names the source and the affected Command when that is the meaningful output. For example, Sentinel's Presence support on Seasmoke identifies Cleansing Wrath Fire Damage instead of a generic Fire Damage line.
-
-Recipient-side modifiers remain owned by the recipient dragon. Warden's Rally Recovery support remains a Malachite-provided interaction, while Sheepstealer's Hunter's Cunning Recovery Received amplification is shown as an active or unavailable modifier line on Sheepstealer's Receives item. Hunter's Cunning is not counted as a Malachite-provided benefit, and Warden's Rally is not colored blocked because Hunter's Cunning fails Sheepstealer's Vanguard requirement.
-
-Active, conditional, blocked, and progression-unknown states are evaluated independently for the source support and any recipient-side modifier notes. Formation Builder analysis reads the current local roster Reign Level, Star Rank, collection state, and Habit Levels when recalculating card state, so roster progression edits refresh existing formations without rebuilding the selected slots.
-
-Each interaction item includes a Details disclosure. Details exposes the full player-facing explanation, effect details, target-selection behavior, current or preview state, blockers or unknown requirements, and confidence. Show analysis details still preserves raw technical trace cards and evidence, but it is not required just to understand one card item.
-
-When one provider ability creates multiple meaningful effects for the same recipient, the card presentation may aggregate those child traces into one item. For example, Syrax's Blazing Fury can show Fire Damage candidacy and Caraxes First-Strike support together while preserving both child trace IDs for technical analysis. If aggregation would blur distinct purposes, the visible title includes the purpose, such as `Flight Mastery - Enemy mitigation reduction`.
-
-Redundant blocked Trait interactions are suppressed from Receives and Provides when the source card's Trait panel and lower Formation Blockers already explain the hard placement failure. The blocked traces remain available in technical analysis and generated exports.
-
-## Relationship Highlighting
-
-Hovering, focusing, or tapping an interaction sets a shared relationship id. The provider card, recipient card, and matching item use the same highlight path. The information is still readable without hover.
-
-## Summary And Technical Details
-
-The normal Formation Summary contains dragons, rarity distribution, breed distribution, compact affinity coverage, interaction counts, warnings, and data confidence. Raw uppercase effect tags are moved to Show analysis details.
-
-The lower Formation Analysis panel now summarizes team-level interaction groups, formation blockers, unresolved conditions, and the availability of technical details. Show analysis details preserves full trace cards, requirements, confidence, evidence, internal interactions, raw tags, and raw affinity coverage.
-
-Full technical/debug traces remain available for audit and project-context export, including child traces and recipient-side modifier traces that are merged into normal player-facing cards. Normal cards prioritize clarity without deleting or rewriting trace mechanics.
-
-## Responsive And Accessibility Behavior
-
-Desktop uses equal-width, equal-height cards in one row where space permits. Tablet and mobile stack without horizontal scrolling while preserving Left Flank, Vanguard, Right Flank order. Stacked cards use natural height rather than forced desktop row height. Movement controls remain keyboard-accessible labeled buttons. Affinity chips and interaction states do not rely on color alone, Details controls are keyboard reachable with `aria-expanded` and `aria-controls`, and expanded scroll regions are keyboard reachable without trapping focus.
-
-## Visual Validation Cases
-
-Use these manual cases when reviewing presentation changes:
-
-- Preview OFF: Left Sheepstealer, Vanguard Caraxes, Right Syrax.
-- Preview ON collapsed: Left Sheepstealer, Vanguard Caraxes, Right Syrax.
-- Preview ON expanded: expand Sheepstealer Receives, Caraxes Receives, and Syrax Provides.
-- Low content: select a formation with few or no interactions and verify empty sections retain structure.
-- Formation 1 Preview ON: Left Malachite, Vanguard Sheepstealer, Right Vermax.
-- Warden active modifier: Left Malachite, Vanguard Sheepstealer, Right Caraxes.
-- Warden blocked modifier: Left Malachite, Vanguard Caraxes, Right Sheepstealer.
-- Command summaries: inspect Malachite, Seasmoke, and Sheepstealer Command panels.
-
-Final review status: these visual/manual review cases pass for the completed Formation Builder card polish.
+- Daemoros plus Shadowsong: Panic provider improves Shadowsong's Panic-dependent ability.
+- Syrax plus Caraxes: First-Strike and Fire Damage relationships appear under Strong synergies.
+- Malachite plus Sheepstealer: Recovery relationship is active when Sheepstealer is Vanguard and Level 16+.
+- Malachite plus Caraxes: Malachite's adjacent First-Strike support works beside Vanguard and is blocked across opposite flanks.
+- Caraxes plus Sheepstealer: both unlocked Vanguard claims produce a position conflict.
+- One selected dragon: card details render, but missing enabler warnings remain hidden.
+- An unmapped dragon such as Seasmoke: profile coverage reports that high-level synergy data is not yet mapped.

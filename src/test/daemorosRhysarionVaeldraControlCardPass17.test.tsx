@@ -1,31 +1,8 @@
-import { render, screen, within } from '@testing-library/react';
-import userEvent from '@testing-library/user-event';
 import { describe, expect, it } from 'vitest';
-import { App } from '../app/App';
-import { ROSTER_SCHEMA_VERSION, STORAGE_KEY } from '../services/rosterStorage';
-import { pass17Analysis, pass17Roster } from './pass17Helpers';
-
-async function renderPass17Formation() {
-  const user = userEvent.setup();
-  const roster = pass17Roster();
-  window.localStorage.setItem(STORAGE_KEY, JSON.stringify({
-    format: 'dragonfire-roster-lab-local',
-    schemaVersion: ROSTER_SCHEMA_VERSION,
-    updatedAt: new Date().toISOString(),
-    roster: Object.values(roster),
-  }));
-  render(<App />);
-  await user.click(screen.getAllByRole('button', { name: /formation builder/i })[0]!);
-  await user.click(screen.getByLabelText(/include unowned dragons/i));
-  const selectors = screen.getAllByLabelText('Dragon');
-  await user.selectOptions(selectors[0]!, 'daemoros');
-  await user.selectOptions(selectors[1]!, 'rhysarion');
-  await user.selectOptions(selectors[2]!, 'vaeldra');
-  return user;
-}
+import { pass17Analysis } from './pass17Helpers';
 
 describe('Daemoros/Rhysarion/Vaeldra Control card pass 17', () => {
-  it('projects one four-bullet Control card with Lure prerequisite context', async () => {
+  it('projects one four-bullet Control card with Lure prerequisite context', () => {
     const { presentation } = pass17Analysis();
     const rhysarion = presentation.cards.find((card) => card.dragonId === 'rhysarion')!;
     expect(rhysarion.receives).toHaveLength(4);
@@ -48,21 +25,6 @@ describe('Daemoros/Rhysarion/Vaeldra Control card pass 17', () => {
     expect(card.details.join(' ')).toContain("Prerequisite context: Lure can establish the Taunt required by Siren's Call's Stagger branch.");
     expect(card.details.join(' ')).not.toMatch(/Lure .*direct .*Control supplier|Taunt directly enhances Dawnsong/i);
 
-    const user = await renderPass17Formation();
-    const vanguard = screen.getByRole('article', { name: 'Vanguard' });
-    const receives = within(vanguard).getByRole('region', { name: 'Receives' });
-    expect(receives).toHaveTextContent('4');
-    await user.click(within(receives).getByRole('button', { name: /show all/i }));
-    const title = within(receives).getByText('Control enhances Dawnsong damage rate');
-    const domCard = title.closest('.card-interaction-item') as HTMLElement;
-    expect(domCard).not.toBeNull();
-    expect(within(domCard).getByText('Daemoros and Vaeldra → Rhysarion')).toBeInTheDocument();
-    const bullets = within(domCard).getAllByRole('listitem').map((item) => item.textContent?.trim() ?? '');
-    expect(bullets).toEqual(card.summaryLines);
-    expect(bullets).toHaveLength(4);
-    expect(domCard.textContent ?? '').not.toMatch(/Team → Rhysarion|Base current|Enhanced current|Conditional multiplier|1\.5x/i);
-    expect(within(domCard).queryByRole('button', { name: /details/i })).toBeNull();
-    expect(domCard.textContent ?? '').not.toContain('Round 8 after a successful Round 7 application');
     expect(card.details.join(' ')).toContain('Round 8 after a successful Round 7 application');
     expect(card.details.join(' ')).toContain("Known possible overlap windows: Round 1 from a successful Round 1 Lure only if Lure resolves before Siren's Call that round");
     expect(card.details.join(' ')).not.toMatch(/Taunt directly enhances Dawnsong/i);
