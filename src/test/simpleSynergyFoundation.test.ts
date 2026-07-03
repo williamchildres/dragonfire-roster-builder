@@ -172,7 +172,8 @@ describe('simple synergy foundation', () => {
     expect(resultsOfKind('progression-locked', caraxesLocked)).toContainEqual(
       expect.objectContaining({
         tag: 'status:slow',
-        explanation: 'This relationship unlocks when Caraxes reaches Star Rank 6.',
+        explanation:
+          "Caraxes's Crippling Inferno Slow setup for Syrax's Strategic Revival unlocks when Caraxes reaches Star Rank 6.",
       }),
     );
 
@@ -183,7 +184,8 @@ describe('simple synergy foundation', () => {
     expect(resultsOfKind('progression-locked', syraxLocked)).toContainEqual(
       expect.objectContaining({
         tag: 'status:slow',
-        explanation: 'This relationship unlocks when Syrax reaches Star Rank 6.',
+        explanation:
+          "Caraxes's Crippling Inferno Slow setup for Syrax's Strategic Revival unlocks when Syrax reaches Star Rank 6.",
       }),
     );
   });
@@ -205,7 +207,11 @@ describe('simple synergy foundation', () => {
       expect.objectContaining({ id: 'setup-payoff:vhagar:status:taunt:crimson' }),
     );
     expect(resultsOfKind('setup-payoff', evaluate(formation('crimson', 'rhysarion', null)))).toContainEqual(
-      expect.objectContaining({ id: 'setup-payoff:crimson:status:control:rhysarion' }),
+      expect.objectContaining({
+        id: 'setup-payoff:crimson:status:control:rhysarion',
+        explanation:
+          "Crimson's Bloodscale Terror can apply Stun, which counts as Control and improves Rhysarion's Dawnsong.",
+      }),
     );
 
     expect(evaluate(formation('vhagar', 'vaeldra', null)).map((result) => result.id)).not.toContain(
@@ -470,10 +476,30 @@ describe('simple synergy foundation', () => {
     expect(resultsOfKind('progression-locked', results)).toEqual([
       expect.objectContaining({
         id: 'progression-locked:amplifier-output:supporter:damage:fire:producer',
-        explanation: 'This relationship unlocks when Supporter reaches Star Rank 4.',
+        explanation: "Supporter's Early Fire Fire Damage support for Producer's Producer Fire unlocks when Supporter reaches Star Rank 4.",
         unlock: { minimumStarRank: 4 },
       }),
     ]);
+  });
+
+  it('uses relationship-specific future unlock explanations without duplicate visible wording', () => {
+    const results = evaluate(formation('crimson', 'rhysarion', 'venator'), {
+      ...unlockedProgression,
+      crimson: { starRank: 7, dragonLevel: 16 },
+    });
+    const futureUnlocks = resultsOfKind('progression-locked', results);
+
+    expect(futureUnlocks).toContainEqual(
+      expect.objectContaining({
+        id: 'progression-locked:amplifier-output:crimson:damage:fire:rhysarion',
+        explanation:
+          "Crimson's Unlikely Hero Fire Damage support for Rhysarion's Dawnsong unlocks when Crimson reaches Star Rank 8.",
+      }),
+    );
+    expect(new Set(futureUnlocks.map((result) => result.explanation)).size).toBe(futureUnlocks.length);
+    expect(futureUnlocks.map((result) => result.explanation)).not.toContain(
+      'This relationship unlocks when Crimson reaches Star Rank 8.',
+    );
   });
 
   it('uses active setup/payoff paths to suppress locked alternate setup/payoff paths', () => {

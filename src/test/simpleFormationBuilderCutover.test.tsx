@@ -96,7 +96,9 @@ describe('Formation Builder simple synergy cutover', () => {
     await openFormationBuilder(user);
     await selectFormation(user, { 'left-flank': 'daemoros', vanguard: 'shadowsong' });
 
-    expect(sectionText('Future unlocks')).toContain('This relationship unlocks when Daemoros reaches Star Rank 2.');
+    expect(sectionText('Future unlocks')).toContain(
+      "Daemoros's Instill Fear Panic setup for Shadowsong's Breath of Fire and Scorched Earth unlocks when Daemoros reaches Star Rank 2.",
+    );
     expect(sectionText('Strong synergies')).not.toContain('Daemoros applies Panic');
     expect(analysisText()).not.toMatch(/potential|unknown|timing-dependent/i);
   });
@@ -156,6 +158,21 @@ describe('Formation Builder simple synergy cutover', () => {
     expect(analysisText()).not.toMatch(/target not guaranteed|candidate|activation chance/i);
   });
 
+  it('names the concrete Control alias in Crimson and Rhysarion synergy wording', async () => {
+    const user = userEvent.setup();
+    seedRoster({ crimson: {}, rhysarion: {} });
+
+    await openFormationBuilder(user);
+    await selectFormation(user, { 'left-flank': 'crimson', vanguard: 'rhysarion' });
+
+    expect(sectionItems('Strong synergies')).toContain(
+      "Crimson's Bloodscale Terror can apply Stun, which counts as Control and improves Rhysarion's Dawnsong.",
+    );
+    expect(sectionItems('Strong synergies')).not.toContain(
+      "Crimson can apply Control, which improves Rhysarion's Dawnsong.",
+    );
+  });
+
   it('does not show Fire future unlocks when Syrax and Caraxes have a base Fire relationship', async () => {
     const user = userEvent.setup();
     seedRoster({ syrax: { starRank: 1, reignLevel: 1 }, caraxes: { starRank: 1, reignLevel: 1 } });
@@ -166,7 +183,6 @@ describe('Formation Builder simple synergy cutover', () => {
     expect(sectionItems('Strong synergies').filter((item) => item === 'Syrax improves allied Fire Damage, and Caraxes deals Fire Damage.')).toHaveLength(1);
     expect(sectionText('Future unlocks')).not.toContain('Fire Damage');
     expect(sectionText('Future unlocks')).not.toContain('Tactical Inferno');
-    expect(sectionText('Future unlocks')).not.toContain('Crippling Inferno');
   });
 
   it('distinguishes adjacency placement from a Vanguard-only beneficiary requirement', async () => {
@@ -198,7 +214,7 @@ describe('Formation Builder simple synergy cutover', () => {
     await openFormationBuilder(user);
     await selectFormation(user, { 'left-flank': 'malachite', vanguard: 'sheepstealer', 'right-flank': 'caraxes' });
     expect(sectionText('Future unlocks')).toContain(
-      'This relationship unlocks when Sheepstealer reaches Dragon Level 16.',
+      "Malachite's Warden's Rally Recovery setup for Sheepstealer's Hunter's Cunning unlocks when Sheepstealer reaches Dragon Level 16.",
     );
 
     await user.click(screen.getByRole('button', { name: /dragon database/i }));
