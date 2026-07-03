@@ -43,6 +43,8 @@ Raw ability descriptions may preserve these details for reference, but those det
 - Unresolved timing details must not block an otherwise clear high-level relationship.
 - New shared concepts may be added only when they apply broadly and change a player-facing recommendation.
 - One unusual dragon mechanic must not cause a new generic subsystem.
+- Hard recipient-position targeting is allowed only when verified ability text requires a specific friendly position.
+- Status aliases may roll up to a high-level requirement only when the receiving ability explicitly names the broader requirement. Stun, Stagger, Overwhelm, and Confusion satisfy the current high-level Control requirement.
 - The linear formation contract remains:
   - Left Flank is adjacent only to Vanguard.
   - Right Flank is adjacent only to Vanguard.

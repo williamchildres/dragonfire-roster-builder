@@ -17,11 +17,13 @@ export interface DragonProgression {
 export interface SynergySignal {
   id: string;
   tag: SynergyTag;
+  tags?: SynergyTag[];
   abilityId: string;
   abilityName: string;
   description: string;
   unlock?: ProgressionRequirement;
   requiredSelfPosition?: FormationPosition;
+  requiredRecipientPosition?: FormationPosition;
   friendlyScope?: SimpleFriendlyScope;
   confidence: SignalConfidence;
 }

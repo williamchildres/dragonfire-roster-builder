@@ -1,5 +1,6 @@
 import type { FormationPosition } from '../models/dragon';
 import { areAdjacent, SIMPLE_FORMATION_POSITIONS } from './positionRules';
+import { CONTROL_ALIAS_TAGS, type SynergyTag } from './tags';
 import {
   explainAmplifierOutput,
   explainMissingEnabler,
@@ -26,6 +27,11 @@ interface SelectedProfile {
   position: FormationPosition;
 }
 
+interface RelationshipCandidate {
+  rank: number;
+  result: SimpleSynergyResult;
+}
+
 const resultKindOrder: Record<SimpleSynergyResultKind, number> = {
   'setup-payoff': 0,
   'amplifier-output': 1,
@@ -38,17 +44,22 @@ const resultKindOrder: Record<SimpleSynergyResultKind, number> = {
 export function evaluateFormation(input: EvaluateFormationInput): EvaluateFormationResult {
   const selected = selectedProfiles(input);
   const results = new Map<string, SimpleSynergyResult>();
+  const relationshipCandidates = new Map<string, RelationshipCandidate>();
 
   for (const beneficiary of selected) {
     for (const benefit of beneficiary.profile.benefitsFrom) {
-      addSetupPayoffResults(results, input, selected, beneficiary, benefit);
+      addSetupPayoffResults(results, relationshipCandidates, input, selected, beneficiary, benefit);
     }
   }
 
   for (const supporter of selected) {
     for (const support of supporter.profile.supports) {
-      addAmplifierOutputResults(results, input, selected, supporter, support);
+      addAmplifierOutputResults(relationshipCandidates, input, selected, supporter, support);
     }
+  }
+
+  for (const candidate of relationshipCandidates.values()) {
+    addResult(results, candidate.result);
   }
 
   addPositionConflictResults(results, input, selected);
@@ -70,16 +81,20 @@ function selectedProfiles(input: EvaluateFormationInput): SelectedProfile[] {
 
 function addSetupPayoffResults(
   results: Map<string, SimpleSynergyResult>,
+  relationshipCandidates: Map<string, RelationshipCandidate>,
   input: EvaluateFormationInput,
   selected: SelectedProfile[],
   beneficiary: SelectedProfile,
   benefit: SynergySignal,
 ): void {
-  const selfOutputsTag = beneficiary.profile.outputs.some((output) => output.tag === benefit.tag);
+  const benefitTags = signalTags(benefit);
+  const selfOutputsTag = beneficiary.profile.outputs.some((output) =>
+    signalTags(output).some((outputTag) => benefitTags.some((benefitTag) => tagsAreCompatible(outputTag, benefitTag))),
+  );
   const providers = selected.filter(
     (provider) =>
       provider.profile.dragonId !== beneficiary.profile.dragonId &&
-      provider.profile.outputs.some((output) => output.tag === benefit.tag && signalCanReachTeammate(output)),
+      provider.profile.outputs.some((output) => matchingTag(output, benefit) && signalCanReachTeammate(output)),
   );
 
   if (providers.length === 0 && selfOutputsTag) {
@@ -88,7 +103,7 @@ function addSetupPayoffResults(
 
   if (providers.length === 0 && isUnlocked(benefit, input.progression[beneficiary.profile.dragonId])) {
     addResult(results, {
-      id: `missing-enabler:${beneficiary.profile.dragonId}:${benefit.abilityId}:${benefit.tag}`,
+      id: `missing-enabler:${beneficiary.profile.dragonId}:${benefit.tag}`,
       kind: 'missing-enabler',
       tag: benefit.tag,
       dragonIds: [beneficiary.profile.dragonId],
@@ -99,16 +114,26 @@ function addSetupPayoffResults(
   }
 
   for (const provider of providers) {
-    for (const output of provider.profile.outputs.filter(
-      (candidate) => candidate.tag === benefit.tag && signalCanReachTeammate(candidate),
-    )) {
-      addRelationshipResult(results, input, 'setup-payoff', provider, output, beneficiary, benefit);
+    for (const output of provider.profile.outputs.filter((candidate) => matchingTag(candidate, benefit) && signalCanReachTeammate(candidate))) {
+      const tag = matchingTag(output, benefit);
+      if (tag) {
+        addRelationshipCandidate(
+          relationshipCandidates,
+          input,
+          'setup-payoff',
+          provider,
+          output,
+          beneficiary,
+          benefit,
+          tag,
+        );
+      }
     }
   }
 }
 
 function addAmplifierOutputResults(
-  results: Map<string, SimpleSynergyResult>,
+  relationshipCandidates: Map<string, RelationshipCandidate>,
   input: EvaluateFormationInput,
   selected: SelectedProfile[],
   supporter: SelectedProfile,
@@ -123,74 +148,173 @@ function addAmplifierOutputResults(
       continue;
     }
 
-    for (const output of producer.profile.outputs.filter((candidate) => candidate.tag === support.tag)) {
-      addRelationshipResult(results, input, 'amplifier-output', supporter, support, producer, output);
+    for (const output of producer.profile.outputs.filter((candidate) => matchingTag(support, candidate))) {
+      const tag = matchingTag(support, output);
+      if (tag) {
+        addRelationshipCandidate(
+          relationshipCandidates,
+          input,
+          'amplifier-output',
+          supporter,
+          support,
+          producer,
+          output,
+          tag,
+        );
+      }
     }
   }
 }
 
-function addRelationshipResult(
-  results: Map<string, SimpleSynergyResult>,
+function addRelationshipCandidate(
+  relationshipCandidates: Map<string, RelationshipCandidate>,
   input: EvaluateFormationInput,
   activeKind: 'setup-payoff' | 'amplifier-output',
   provider: SelectedProfile,
   providerSignal: SynergySignal,
   beneficiary: SelectedProfile,
   beneficiarySignal: SynergySignal,
+  tag: SynergyTag,
 ): void {
   const locked = firstLockedSignal(input, provider.profile, providerSignal, beneficiary.profile, beneficiarySignal);
-  const semanticId = [
-    activeKind,
-    provider.profile.dragonId,
-    providerSignal.abilityId,
-    providerSignal.tag,
-    beneficiary.profile.dragonId,
-    beneficiarySignal.abilityId,
-  ].join(':');
+  const semanticId =
+    activeKind === 'setup-payoff'
+      ? [activeKind, provider.profile.dragonId, tag, beneficiary.profile.dragonId].join(':')
+      : [activeKind, provider.profile.dragonId, tag, beneficiary.profile.dragonId].join(':');
 
   if (locked) {
-    addResult(results, {
-      id: `progression-locked:${semanticId}`,
-      kind: 'progression-locked',
-      tag: providerSignal.tag,
-      dragonIds: [provider.profile.dragonId, beneficiary.profile.dragonId],
-      abilityIds: [providerSignal.abilityId, beneficiarySignal.abilityId],
-      explanation: explainProgressionLocked(locked.profile, locked.signal, locked.requirement),
-      unlock: locked.requirement,
+    addCandidate(relationshipCandidates, semanticId, {
+      rank: 1,
+      result: {
+        id: `progression-locked:${semanticId}`,
+        kind: 'progression-locked',
+        tag,
+        dragonIds: [provider.profile.dragonId, beneficiary.profile.dragonId],
+        abilityIds: [providerSignal.abilityId, beneficiarySignal.abilityId],
+        explanation: explainProgressionLocked(locked.profile, locked.signal, locked.requirement),
+        unlock: locked.requirement,
+      },
     });
     return;
   }
 
   const positionBlockReason = getPositionBlockReason(provider, providerSignal, beneficiary, beneficiarySignal);
   if (positionBlockReason) {
-    addResult(results, {
-      id: `position-blocked:${semanticId}`,
-      kind: 'position-blocked',
-      tag: providerSignal.tag,
-      dragonIds: [provider.profile.dragonId, beneficiary.profile.dragonId],
-      abilityIds: [providerSignal.abilityId, beneficiarySignal.abilityId],
-      explanation: explainPositionBlocked(
-        provider.profile,
-        providerSignal,
-        beneficiary.profile,
-        beneficiarySignal,
-        positionBlockReason,
-      ),
+    addCandidate(relationshipCandidates, semanticId, {
+      rank: 2,
+      result: {
+        id: `position-blocked:${semanticId}`,
+        kind: 'position-blocked',
+        tag,
+        dragonIds: [provider.profile.dragonId, beneficiary.profile.dragonId],
+        abilityIds: [providerSignal.abilityId, beneficiarySignal.abilityId],
+        explanation: explainPositionBlocked(
+          provider.profile,
+          providerSignal,
+          beneficiary.profile,
+          beneficiarySignal,
+          positionBlockReason,
+        ),
+      },
     });
     return;
   }
 
-  addResult(results, {
-    id: semanticId,
-    kind: activeKind,
-    tag: providerSignal.tag,
-    dragonIds: [provider.profile.dragonId, beneficiary.profile.dragonId],
-    abilityIds: [providerSignal.abilityId, beneficiarySignal.abilityId],
-    explanation:
-      activeKind === 'setup-payoff'
-        ? explainSetupPayoff(provider.profile, providerSignal, beneficiary.profile, beneficiarySignal)
-        : explainAmplifierOutput(provider.profile, providerSignal, beneficiary.profile, beneficiarySignal),
+  addCandidate(relationshipCandidates, semanticId, {
+    rank: 3,
+    result: {
+      id: semanticId,
+      kind: activeKind,
+      tag,
+      dragonIds: [provider.profile.dragonId, beneficiary.profile.dragonId],
+      abilityIds: [providerSignal.abilityId, beneficiarySignal.abilityId],
+      explanation:
+        activeKind === 'setup-payoff'
+          ? explainSetupPayoff(provider.profile, providerSignal, beneficiary.profile, beneficiarySignal, tag)
+          : explainAmplifierOutput(provider.profile, providerSignal, beneficiary.profile, beneficiarySignal, tag),
+    },
   });
+}
+
+function addCandidate(
+  candidates: Map<string, RelationshipCandidate>,
+  relationshipKey: string,
+  candidate: RelationshipCandidate,
+): void {
+  const current = candidates.get(relationshipKey);
+  if (!current) {
+    candidates.set(relationshipKey, normalizeCandidate(candidate));
+    return;
+  }
+
+  if (candidate.rank < current.rank) {
+    return;
+  }
+
+  if (candidate.rank > current.rank || compareCandidate(candidate, current) < 0) {
+    candidates.set(relationshipKey, mergeCandidateAbilityIds(candidate, current));
+    return;
+  }
+
+  current.result.abilityIds = uniqueSorted([...current.result.abilityIds, ...candidate.result.abilityIds]);
+}
+
+function normalizeCandidate(candidate: RelationshipCandidate): RelationshipCandidate {
+  return {
+    ...candidate,
+    result: {
+      ...candidate.result,
+      abilityIds: uniqueSorted(candidate.result.abilityIds),
+    },
+  };
+}
+
+function mergeCandidateAbilityIds(
+  preferred: RelationshipCandidate,
+  other: RelationshipCandidate,
+): RelationshipCandidate {
+  return {
+    ...preferred,
+    result: {
+      ...preferred.result,
+      abilityIds: uniqueSorted([...preferred.result.abilityIds, ...other.result.abilityIds]),
+    },
+  };
+}
+
+function compareCandidate(left: RelationshipCandidate, right: RelationshipCandidate): number {
+  return (
+    compareUnlocks(left.result.unlock, right.result.unlock) ||
+    left.result.abilityIds.join(':').localeCompare(right.result.abilityIds.join(':')) ||
+    left.result.explanation.localeCompare(right.result.explanation)
+  );
+}
+
+function compareUnlocks(
+  left: ProgressionRequirement | undefined,
+  right: ProgressionRequirement | undefined,
+): number {
+  return requirementSortValue(left) - requirementSortValue(right);
+}
+
+function requirementSortValue(requirement: ProgressionRequirement | undefined): number {
+  if (!requirement) {
+    return 0;
+  }
+
+  if (requirement.minimumStarRank !== undefined) {
+    return requirement.minimumStarRank;
+  }
+
+  if (requirement.minimumDragonLevel !== undefined) {
+    return 100 + requirement.minimumDragonLevel;
+  }
+
+  return 0;
+}
+
+function uniqueSorted(values: string[]): string[] {
+  return [...new Set(values)].sort();
 }
 
 function addPositionConflictResults(
@@ -204,28 +328,15 @@ function addPositionConflictResults(
       .map((claim) => ({ ...entry, claim })),
   );
 
-  for (let firstIndex = 0; firstIndex < claims.length; firstIndex += 1) {
-    for (let secondIndex = firstIndex + 1; secondIndex < claims.length; secondIndex += 1) {
-      const first = claims[firstIndex];
-      const second = claims[secondIndex];
-
-      if (!first || !second || first.claim.requiredPosition !== second.claim.requiredPosition) {
-        continue;
-      }
-
+  for (const position of SIMPLE_FORMATION_POSITIONS) {
+    const positionClaims = claims.filter((claim) => claim.claim.requiredPosition === position);
+    if (positionClaims.length > 1) {
       addResult(results, {
-        id: [
-          'position-conflict',
-          first.claim.requiredPosition,
-          first.profile.dragonId,
-          first.claim.abilityId,
-          second.profile.dragonId,
-          second.claim.abilityId,
-        ].join(':'),
+        id: ['position-conflict', position, ...positionClaims.map((claim) => `${claim.profile.dragonId}:${claim.claim.abilityId}`)].join(':'),
         kind: 'position-conflict',
-        dragonIds: [first.profile.dragonId, second.profile.dragonId],
-        abilityIds: [first.claim.abilityId, second.claim.abilityId],
-        explanation: explainPositionConflict(first.profile, first.claim, second.profile, second.claim),
+        dragonIds: positionClaims.map((claim) => claim.profile.dragonId),
+        abilityIds: positionClaims.map((claim) => claim.claim.abilityId),
+        explanation: explainPositionConflict(positionClaims),
       });
     }
   }
@@ -251,6 +362,13 @@ function getPositionBlockReason(
     return { kind: 'beneficiary-position', requiredPosition: beneficiarySignal.requiredSelfPosition };
   }
 
+  if (
+    providerSignal.requiredRecipientPosition !== undefined &&
+    providerSignal.requiredRecipientPosition !== beneficiary.position
+  ) {
+    return { kind: 'recipient-position', requiredPosition: providerSignal.requiredRecipientPosition };
+  }
+
   if (providerSignal.friendlyScope === 'adjacent' && !areAdjacent(provider.position, beneficiary.position)) {
     return { kind: 'adjacency' };
   }
@@ -260,6 +378,29 @@ function getPositionBlockReason(
 
 function signalCanReachTeammate(signal: SynergySignal): boolean {
   return signal.friendlyScope !== 'self';
+}
+
+function signalTags(signal: SynergySignal): SynergyTag[] {
+  return signal.tags ?? [signal.tag];
+}
+
+function matchingTag(provider: SynergySignal, beneficiary: SynergySignal): SynergyTag | null {
+  for (const providerTag of signalTags(provider)) {
+    for (const beneficiaryTag of signalTags(beneficiary)) {
+      if (tagsAreCompatible(providerTag, beneficiaryTag)) {
+        return beneficiaryTag === 'status:control' ? 'status:control' : providerTag;
+      }
+    }
+  }
+
+  return null;
+}
+
+function tagsAreCompatible(providerTag: SynergyTag, beneficiaryTag: SynergyTag): boolean {
+  return (
+    providerTag === beneficiaryTag ||
+    (beneficiaryTag === 'status:control' && CONTROL_ALIAS_TAGS.includes(providerTag as (typeof CONTROL_ALIAS_TAGS)[number]))
+  );
 }
 
 function firstLockedSignal(
