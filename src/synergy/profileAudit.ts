@@ -131,7 +131,7 @@ export const simpleSynergyAbilityReviews = [
     'syrax',
     'syrax-tactical-inferno',
     'habit',
-    represented(['syrax-tactical-inferno-damage-support'], 'The habit improves allied Tactical and Fire Damage without a hard flank requirement.'),
+    represented(['syrax-tactical-inferno-damage-support'], 'The Tactical Damage support is distinct; the Fire Damage component reinforces Syrax as a Fire supporter and is aggregated with Blazing Fury.'),
   ),
   review(
     'syrax',
@@ -205,7 +205,7 @@ export const simpleSynergyAbilityReviews = [
     'habit',
     represented(
       ['caraxes-crippling-inferno-slow', 'caraxes-crippling-inferno-burn', 'caraxes-crippling-inferno-fire'],
-      'Crippling Inferno supplies Slow for Syrax, Burn for Burn payoffs, and high-level Fire output through Burn.',
+      'Crippling Inferno supplies distinct Slow and Burn setup; its high-level Fire output through Burn reinforces Caraxes as a Fire output dragon and is aggregated with Infernal Burst.',
     ),
   ),
   review('caraxes', 'caraxes-mass-enfeeble', 'habit', noCross('Enemy non-Basic Physical Damage reduction has no current pair-specific payoff.')),
@@ -497,7 +497,7 @@ export const simpleSynergyAbilityReviews = [
   ),
   review('vermax', 'vermax-trial-by-flame', 'habit', generalOnly('Threshold Fire resistance and Resistance are defensive support without a current explicit payoff.')),
   review('vermax', 'vermax-reactive-instincts', 'habit', represented(['vermax-reactive-instincts-stats'], 'The habit improves Instinct and Initiative of an ally.')),
-  review('vermax', 'vermax-rallying-flame', 'habit', represented(['vermax-rallying-flame-tactical'], 'The habit reinforces Spreading Blaze Tactical support.')),
+  review('vermax', 'vermax-rallying-flame', 'habit', reinforces(['vermax-rallying-flame-tactical'], 'The habit reinforces Vermax as a Tactical Damage supporter without adding a separate visible relationship beyond Spreading Blaze.')),
   review('vermax', 'vermax-dragons-valor', 'habit', selfOnly('The Damage Received reduction and Strength increase apply only to Vermax.')),
   review('vermax', 'vermax-unyielding-resolve', 'habit', selfOnly('The Weakened payoff is explicitly self-owned and cannot be enabled by a teammate.')),
 ] as const satisfies readonly AbilitySynergyReview[];

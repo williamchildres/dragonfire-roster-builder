@@ -35,6 +35,8 @@ The formation-level analysis panel groups simple evaluator results into player-f
 
 Single selected dragons do not show missing-enabler warnings in the UI. Missing-enabler messages appear only once at least two dragons are selected.
 
+Repeated ability paths are aggregated before presentation. For setup/payoff relationships, the visible key is provider dragon, condition tag, and beneficiary dragon. For amplifier/output relationships, the visible key is supporter dragon, supported tag, and output dragon. If any path for that relationship is active, later locked or blocked paths do not render separate Future unlock or Placement issue bullets.
+
 ## Progression Mapping
 
 The UI maps local roster progression into the simple evaluator as follows:

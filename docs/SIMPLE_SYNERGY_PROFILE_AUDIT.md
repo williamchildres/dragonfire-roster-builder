@@ -33,14 +33,20 @@ Exact timing, chance, target overlap, duration, stack acquisition, refresh behav
 
 ## Disposition Counts
 
-- represented: 70.
-- reinforces-existing: 1.
+- represented: 69.
+- reinforces-existing: 2.
 - self-only: 20.
 - general-support-only: 5.
 - no-cross-dragon-synergy: 9.
 - not-modeled: 0.
 
 Every detailed Command, Trait, and Habit has exactly one disposition in `src/synergy/profileAudit.ts`. Every represented or reinforcing disposition references at least one simple profile signal.
+
+## Repeated Path Aggregation
+
+The evaluator groups setup/payoff paths by provider dragon, condition tag, and beneficiary dragon. It groups amplifier/output paths by supporter dragon, supported tag, and output dragon. Individual ability IDs are retained on the chosen result as deduplicated provenance, but they are not part of the visible relationship identity.
+
+When multiple paths exist for the same semantic relationship, the evaluator emits one result using active, then position-blocked, then progression-locked precedence. An active base relationship suppresses future-unlock or placement messages for later reinforcing paths. Syrax's Tactical Inferno Fire component reinforces Blazing Fury's Fire support, Caraxes's Crippling Inferno Fire output reinforces Infernal Burst's Fire output, and Vermax's Rallying Flame reinforces Spreading Blaze Tactical support.
 
 ## Explicit Condition And Payoff Matrix
 
@@ -105,4 +111,4 @@ General support only: Syrax Mother's Mercy; Vhagar Eclipse Cover; Seasmoke Loyal
 
 No current cross-dragon synergy: Caraxes Battle Dread and Mass Enfeeble; Crimson Enervate and Vermin's Bane; Kalspire Battle Cunning and Radiant Conqueror; Venator Hunter's Bane; Shadowsong Ensnare; Vaeldra Ensnare.
 
-Daemoros Darkening Fear reinforces Daemoros's existing Panic provider signal and is not emitted as a separate duplicate relationship.
+Daemoros Darkening Fear reinforces Daemoros's existing Panic provider signal and is not emitted as a separate duplicate relationship. Vermax Rallying Flame reinforces Vermax's existing Tactical Damage support and is likewise aggregated with the base Tactical support relationship.

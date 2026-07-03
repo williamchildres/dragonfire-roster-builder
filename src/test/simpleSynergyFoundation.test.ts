@@ -221,19 +221,19 @@ describe('simple synergy foundation', () => {
 
   it('matches representative damage, vulnerability, Recovery, and stat support channels', () => {
     expect(resultsOfKind('amplifier-output', evaluate(formation('vhagar', 'venator', null)))).toContainEqual(
-      expect.objectContaining({ id: 'amplifier-output:vhagar:vhagar-battle-leader:damage:physical:venator:venator-feral-strike' }),
+      expect.objectContaining({ id: 'amplifier-output:vhagar:damage:physical:venator' }),
     );
     expect(resultsOfKind('amplifier-output', evaluate(formation('syrax', 'kalspire', null)))).toContainEqual(
-      expect.objectContaining({ id: 'amplifier-output:syrax:syrax-tactical-inferno:damage:tactical:kalspire:kalspire-tactical-strike' }),
+      expect.objectContaining({ id: 'amplifier-output:syrax:damage:tactical:kalspire' }),
     );
     expect(resultsOfKind('amplifier-output', evaluate(formation('caraxes', 'malachite', null)))).toContainEqual(
-      expect.objectContaining({ id: 'amplifier-output:malachite:malachite-sentinels-presence:damage:fire:caraxes:caraxes-infernal-burst' }),
+      expect.objectContaining({ id: 'amplifier-output:malachite:damage:fire:caraxes' }),
     );
     expect(resultsOfKind('amplifier-output', evaluate(formation('rhysarion', 'malachite', null)))).toContainEqual(
-      expect.objectContaining({ id: 'amplifier-output:rhysarion:rhysarion-unbroken-devotion:effect:recovery:malachite:malachite-wardens-rally' }),
+      expect.objectContaining({ id: 'amplifier-output:rhysarion:effect:recovery:malachite' }),
     );
     expect(resultsOfKind('amplifier-output', evaluate(formation('venator', 'vhagar', null)))).toContainEqual(
-      expect.objectContaining({ id: 'amplifier-output:venator:venator-armor-break:damage:physical:vhagar:vhagar-fiery-bonds' }),
+      expect.objectContaining({ id: 'amplifier-output:venator:damage:physical:vhagar' }),
     );
 
     expect(resultsOfKind('amplifier-output', evaluate(formation('malachite', 'venator', null)))).toContainEqual(
@@ -259,10 +259,13 @@ describe('simple synergy foundation', () => {
   it('enforces hard recipient positions while leaving preferred flank supports flexible', () => {
     const leftSupported = resultsOfKind('amplifier-output', evaluate(formation('caraxes', 'malachite', null)));
     expect(leftSupported).toContainEqual(
-      expect.objectContaining({ id: 'amplifier-output:malachite:malachite-sentinels-presence:damage:fire:caraxes:caraxes-infernal-burst' }),
+      expect.objectContaining({ id: 'amplifier-output:malachite:damage:fire:caraxes' }),
     );
 
-    const wrongRecipient = evaluate(formation(null, 'malachite', 'caraxes'));
+    const wrongRecipient = evaluate(formation(null, 'malachite', 'caraxes'), {
+      ...unlockedProgression,
+      malachite: { starRank: 5, dragonLevel: 16 },
+    });
     expect(resultsOfKind('position-blocked', wrongRecipient)).toContainEqual(
       expect.objectContaining({
         explanation: "Caraxes must be deployed in Left Flank to receive Malachite's Sentinel's Presence.",
@@ -385,6 +388,170 @@ describe('simple synergy foundation', () => {
     expect(resultsOfKind('setup-payoff', evaluate(formation('provider', 'beneficiary', null), {}, profiles))).toHaveLength(1);
   });
 
+  it('aggregates repeated Syrax and Caraxes Fire paths while keeping other tags separate at full progression', () => {
+    const results = evaluate(formation('syrax', 'caraxes', null));
+    const fireResults = results.filter(
+      (result) =>
+        result.kind === 'amplifier-output' &&
+        result.tag === 'damage:fire' &&
+        result.dragonIds[0] === 'syrax' &&
+        result.dragonIds[1] === 'caraxes',
+    );
+
+    expect(fireResults).toEqual([
+      expect.objectContaining({
+        id: 'amplifier-output:syrax:damage:fire:caraxes',
+        explanation: 'Syrax improves allied Fire Damage, and Caraxes deals Fire Damage.',
+        abilityIds: ['caraxes-crippling-inferno', 'caraxes-infernal-burst', 'syrax-blazing-fury', 'syrax-tactical-inferno'],
+      }),
+    ]);
+    expect(results.filter((result) => result.explanation === 'Syrax improves allied Fire Damage, and Caraxes deals Fire Damage.')).toHaveLength(1);
+    expect(resultsOfKind('setup-payoff', results)).toContainEqual(
+      expect.objectContaining({ id: 'setup-payoff:syrax:status:first-strike:caraxes' }),
+    );
+    expect(resultsOfKind('amplifier-output', results)).toContainEqual(
+      expect.objectContaining({ id: 'amplifier-output:syrax:stat:intelligence:caraxes' }),
+    );
+  });
+
+  it('keeps base Syrax and Caraxes Fire active without emitting Fire future unlocks for reinforcing paths', () => {
+    const results = evaluate(formation('syrax', 'caraxes', null), {
+      ...unlockedProgression,
+      syrax: { starRank: 1, dragonLevel: 1 },
+      caraxes: { starRank: 1, dragonLevel: 1 },
+    });
+    const fireExplanation = 'Syrax improves allied Fire Damage, and Caraxes deals Fire Damage.';
+
+    expect(results.filter((result) => result.explanation === fireExplanation)).toHaveLength(1);
+    expect(results).toContainEqual(
+      expect.objectContaining({
+        id: 'amplifier-output:syrax:damage:fire:caraxes',
+        abilityIds: ['caraxes-infernal-burst', 'syrax-blazing-fury'],
+      }),
+    );
+    expect(resultsOfKind('progression-locked', results).filter((result) => result.tag === 'damage:fire')).toHaveLength(0);
+    expect(resultsOfKind('progression-locked', results).map((result) => result.tag)).toEqual([
+      'stat:initiative',
+      'stat:intelligence',
+      'status:slow',
+    ]);
+  });
+
+  it('prefers an active candidate over blocked and locked alternate paths for the same amplifier relationship', () => {
+    const profiles = pathPrecedenceProfiles();
+    const results = evaluate(formation('supporter', 'producer', null), {}, profiles);
+
+    expect(results).toEqual([
+      expect.objectContaining({
+        id: 'amplifier-output:supporter:damage:fire:producer',
+        kind: 'amplifier-output',
+        abilityIds: ['producer-fire', 'supporter-active-fire'],
+      }),
+    ]);
+  });
+
+  it('emits one placement issue when every unlocked candidate path is blocked', () => {
+    const profiles = pathPrecedenceProfiles({ includeActive: false });
+    const results = evaluate(formation('supporter', null, 'producer'), {}, profiles);
+
+    expect(resultsOfKind('position-blocked', results)).toEqual([
+      expect.objectContaining({
+        id: 'position-blocked:amplifier-output:supporter:damage:fire:producer',
+        explanation: "Producer must be deployed in Left Flank to receive Supporter's Blocked Fire.",
+      }),
+    ]);
+    expect(resultsOfKind('progression-locked', results)).toHaveLength(0);
+  });
+
+  it('emits one deterministic future unlock when every candidate path is locked', () => {
+    const profiles = pathPrecedenceProfiles({ includeActive: false, includeBlocked: false });
+    const results = evaluate(formation('supporter', 'producer', null), {}, profiles);
+
+    expect(resultsOfKind('progression-locked', results)).toEqual([
+      expect.objectContaining({
+        id: 'progression-locked:amplifier-output:supporter:damage:fire:producer',
+        explanation: 'This relationship unlocks when Supporter reaches Star Rank 4.',
+        unlock: { minimumStarRank: 4 },
+      }),
+    ]);
+  });
+
+  it('uses active setup/payoff paths to suppress locked alternate setup/payoff paths', () => {
+    const profiles: DragonSynergyProfile[] = [
+      {
+        dragonId: 'provider',
+        dragonName: 'Provider',
+        outputs: [
+          {
+            id: 'provider-base-panic',
+            tag: 'status:panic',
+            abilityId: 'provider-base-panic',
+            abilityName: 'Base Panic',
+            description: 'applies Panic',
+            confidence: 'verified',
+          },
+          {
+            id: 'provider-later-panic',
+            tag: 'status:panic',
+            abilityId: 'provider-later-panic',
+            abilityName: 'Later Panic',
+            description: 'applies Panic later',
+            unlock: { minimumStarRank: 8 },
+            confidence: 'verified',
+          },
+        ],
+        supports: [],
+        benefitsFrom: [],
+        positionClaims: [],
+      },
+      {
+        dragonId: 'beneficiary',
+        dragonName: 'Beneficiary',
+        outputs: [],
+        supports: [],
+        benefitsFrom: [
+          {
+            id: 'beneficiary-base-payoff',
+            tag: 'status:panic',
+            abilityId: 'beneficiary-base-payoff',
+            abilityName: 'Base Payoff',
+            description: 'benefits from Panic',
+            confidence: 'verified',
+          },
+          {
+            id: 'beneficiary-later-payoff',
+            tag: 'status:panic',
+            abilityId: 'beneficiary-later-payoff',
+            abilityName: 'Later Payoff',
+            description: 'also benefits from Panic',
+            unlock: { minimumStarRank: 10 },
+            confidence: 'verified',
+          },
+        ],
+        positionClaims: [],
+      },
+    ];
+    const results = evaluate(formation('provider', 'beneficiary', null), {
+      provider: { starRank: 1 },
+      beneficiary: { starRank: 1 },
+    }, profiles);
+
+    expect(resultsOfKind('setup-payoff', results)).toHaveLength(1);
+    expect(resultsOfKind('progression-locked', results)).toHaveLength(0);
+    expect(resultsOfKind('missing-enabler', evaluate(formation('beneficiary', null, null), {}, profiles))).toHaveLength(1);
+  });
+
+  it('does not emit duplicate visible semantic relationships within one evaluator result set', () => {
+    const results = evaluate(formation('syrax', 'caraxes', 'malachite'));
+    const seen = new Set<string>();
+
+    for (const result of results.filter((candidate) => candidate.kind !== 'position-conflict')) {
+      const key = [result.kind, result.dragonIds.join('>'), result.tag ?? 'none'].join('|');
+      expect(seen.has(key), key).toBe(false);
+      seen.add(key);
+    }
+  });
+
   it('keeps the new domain independent from legacy trace and capability modules', () => {
     const synergyRoot = join(__dirname, '..', 'synergy');
     const files = collectFiles(synergyRoot).filter((file) => file.endsWith('.ts'));
@@ -416,4 +583,84 @@ function collectFiles(directory: string): string[] {
     const path = join(directory, entry.name);
     return entry.isDirectory() ? collectFiles(path) : [path];
   });
+}
+
+function pathPrecedenceProfiles({
+  includeActive = true,
+  includeBlocked = true,
+}: {
+  includeActive?: boolean;
+  includeBlocked?: boolean;
+} = {}): DragonSynergyProfile[] {
+  return [
+    {
+      dragonId: 'supporter',
+      dragonName: 'Supporter',
+      outputs: [],
+      supports: [
+        ...(includeActive
+          ? [
+              {
+                id: 'supporter-active-fire',
+                tag: 'damage:fire' as const,
+                abilityId: 'supporter-active-fire',
+                abilityName: 'Active Fire',
+                description: 'improves Fire Damage',
+                confidence: 'verified' as const,
+              },
+            ]
+          : []),
+        ...(includeBlocked
+          ? [
+              {
+                id: 'supporter-blocked-fire',
+                tag: 'damage:fire' as const,
+                abilityId: 'supporter-blocked-fire',
+                abilityName: 'Blocked Fire',
+                description: 'improves Left Flank Fire Damage',
+                requiredRecipientPosition: 'left-flank' as const,
+                confidence: 'verified' as const,
+              },
+            ]
+          : []),
+        {
+          id: 'supporter-locked-fire-late',
+          tag: 'damage:fire' as const,
+          abilityId: 'supporter-locked-fire-late',
+          abilityName: 'Late Fire',
+          description: 'improves Fire Damage later',
+          unlock: { minimumStarRank: 8 },
+          confidence: 'verified',
+        },
+        {
+          id: 'supporter-locked-fire-early',
+          tag: 'damage:fire' as const,
+          abilityId: 'supporter-locked-fire-early',
+          abilityName: 'Early Fire',
+          description: 'improves Fire Damage earlier',
+          unlock: { minimumStarRank: 4 },
+          confidence: 'verified',
+        },
+      ],
+      benefitsFrom: [],
+      positionClaims: [],
+    },
+    {
+      dragonId: 'producer',
+      dragonName: 'Producer',
+      outputs: [
+        {
+          id: 'producer-fire',
+          tag: 'damage:fire',
+          abilityId: 'producer-fire',
+          abilityName: 'Producer Fire',
+          description: 'deals Fire Damage',
+          confidence: 'verified',
+        },
+      ],
+      supports: [],
+      benefitsFrom: [],
+      positionClaims: [],
+    },
+  ];
 }

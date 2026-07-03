@@ -66,6 +66,12 @@ describe('Formation Builder simple synergy cutover', () => {
     return heading?.closest('section')?.textContent ?? '';
   }
 
+  function sectionItems(title: string) {
+    const heading = screen.queryByRole('heading', { name: title });
+    const section = heading?.closest('section');
+    return section ? within(section).queryAllByRole('listitem').map((item) => item.textContent ?? '') : [];
+  }
+
   it('shows active Daemoros and Shadowsong synergy and hides old technical controls', async () => {
     const user = userEvent.setup();
     seedRoster({ daemoros: { starRank: 2 }, shadowsong: {}, caraxes: {} });
@@ -145,8 +151,22 @@ describe('Formation Builder simple synergy cutover', () => {
 
     const strong = sectionText('Strong synergies');
     expect(strong).toContain("Syrax can grant First-Strike, which improves Caraxes's Infernal Burst.");
-    expect(strong).toContain('Syrax improves allied Fire Damage, and Caraxes deals Fire Damage.');
+    expect(sectionItems('Strong synergies').filter((item) => item === 'Syrax improves allied Fire Damage, and Caraxes deals Fire Damage.')).toHaveLength(1);
+    expect(new Set(sectionItems('Strong synergies')).size).toBe(sectionItems('Strong synergies').length);
     expect(analysisText()).not.toMatch(/target not guaranteed|candidate|activation chance/i);
+  });
+
+  it('does not show Fire future unlocks when Syrax and Caraxes have a base Fire relationship', async () => {
+    const user = userEvent.setup();
+    seedRoster({ syrax: { starRank: 1, reignLevel: 1 }, caraxes: { starRank: 1, reignLevel: 1 } });
+
+    await openFormationBuilder(user);
+    await selectFormation(user, { 'left-flank': 'syrax', vanguard: 'caraxes' });
+
+    expect(sectionItems('Strong synergies').filter((item) => item === 'Syrax improves allied Fire Damage, and Caraxes deals Fire Damage.')).toHaveLength(1);
+    expect(sectionText('Future unlocks')).not.toContain('Fire Damage');
+    expect(sectionText('Future unlocks')).not.toContain('Tactical Inferno');
+    expect(sectionText('Future unlocks')).not.toContain('Crippling Inferno');
   });
 
   it('distinguishes adjacency placement from a Vanguard-only beneficiary requirement', async () => {
@@ -226,7 +246,7 @@ describe('Formation Builder simple synergy cutover', () => {
 
     expect(analysisText()).toContain('Synergy data not yet mapped: Tashix.');
     expect(sectionText('Strong synergies')).toContain("Syrax can grant First-Strike, which improves Caraxes's Infernal Burst.");
-    expect(sectionText('Strong synergies')).toContain('Syrax improves allied Fire Damage, and Caraxes deals Fire Damage.');
+    expect(sectionItems('Strong synergies').filter((item) => item === 'Syrax improves allied Fire Damage, and Caraxes deals Fire Damage.')).toHaveLength(1);
     expect(sectionText('Missing enablers')).toContain(incompleteMissingEnablerNotice);
     const vanguardSyraxOption = within(screen.getAllByLabelText('Dragon')[1]!).getByRole('option', { name: /Syrax/ });
     expect(vanguardSyraxOption).toBeDisabled();
