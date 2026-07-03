@@ -3,6 +3,12 @@ import { formatPosition } from './positionRules';
 import { SYNERGY_TAG_LABELS, type SynergyTag } from './tags';
 import type { DragonSynergyProfile, PositionClaim, ProgressionRequirement, SynergySignal } from './types';
 
+interface SynergyTagMatch {
+  semanticTag: SynergyTag;
+  providerTag: SynergyTag;
+  beneficiaryTag: SynergyTag;
+}
+
 export type PositionBlockReason =
   | {
       kind: 'provider-position';
@@ -25,8 +31,14 @@ export function explainSetupPayoff(
   output: SynergySignal,
   beneficiary: DragonSynergyProfile,
   benefit: SynergySignal,
-  tag: SynergyTag = output.tag,
+  tagMatch: SynergyTagMatch = {
+    semanticTag: output.tag,
+    providerTag: output.tag,
+    beneficiaryTag: output.tag,
+  },
 ): string {
+  const tag = tagMatch.semanticTag;
+
   if (tag === 'status:panic') {
     return `${provider.dragonName} applies Panic, which improves ${beneficiary.dragonName}'s ${benefit.abilityName}.`;
   }
@@ -48,6 +60,11 @@ export function explainSetupPayoff(
   }
 
   if (tag === 'status:control') {
+    if (tagMatch.providerTag !== 'status:control') {
+      const providerLabel = SYNERGY_TAG_LABELS[tagMatch.providerTag];
+      return `${provider.dragonName}'s ${output.abilityName} can apply ${providerLabel}, which counts as Control and improves ${beneficiary.dragonName}'s ${benefit.abilityName}.`;
+    }
+
     return `${provider.dragonName} can apply Control, which improves ${beneficiary.dragonName}'s ${benefit.abilityName}.`;
   }
 
@@ -129,17 +146,51 @@ export function explainPositionConflict(
 }
 
 export function explainProgressionLocked(
+  relationshipKind: 'setup-payoff' | 'amplifier-output',
   provider: DragonSynergyProfile,
-  signal: SynergySignal | PositionClaim,
+  providerSignal: SynergySignal,
+  beneficiary: DragonSynergyProfile,
+  beneficiarySignal: SynergySignal,
+  tagMatch: SynergyTagMatch,
+  lockedProfile: DragonSynergyProfile,
   requirement: ProgressionRequirement,
 ): string {
+  const relationship = describeLockedRelationship(
+    relationshipKind,
+    provider,
+    providerSignal,
+    beneficiary,
+    beneficiarySignal,
+    tagMatch,
+  );
+
   if (requirement.minimumStarRank !== undefined) {
-    return `This relationship unlocks when ${provider.dragonName} reaches Star Rank ${requirement.minimumStarRank}.`;
+    return `${relationship} unlocks when ${lockedProfile.dragonName} reaches Star Rank ${requirement.minimumStarRank}.`;
   }
 
   if (requirement.minimumDragonLevel !== undefined) {
-    return `This relationship unlocks when ${provider.dragonName} reaches Dragon Level ${requirement.minimumDragonLevel}.`;
+    return `${relationship} unlocks when ${lockedProfile.dragonName} reaches Dragon Level ${requirement.minimumDragonLevel}.`;
   }
 
-  return `This relationship is locked by ${provider.dragonName}'s saved progression.`;
+  return `${relationship} is locked by ${lockedProfile.dragonName}'s saved progression.`;
+}
+
+function describeLockedRelationship(
+  relationshipKind: 'setup-payoff' | 'amplifier-output',
+  provider: DragonSynergyProfile,
+  providerSignal: SynergySignal,
+  beneficiary: DragonSynergyProfile,
+  beneficiarySignal: SynergySignal,
+  tagMatch: SynergyTagMatch,
+): string {
+  if (relationshipKind === 'setup-payoff') {
+    const label = SYNERGY_TAG_LABELS[tagMatch.providerTag];
+    const aliasText =
+      tagMatch.semanticTag === 'status:control' && tagMatch.providerTag !== 'status:control'
+        ? `${label}-as-Control`
+        : label;
+    return `${provider.dragonName}'s ${providerSignal.abilityName} ${aliasText} setup for ${beneficiary.dragonName}'s ${beneficiarySignal.abilityName}`;
+  }
+
+  return `${provider.dragonName}'s ${providerSignal.abilityName} ${SYNERGY_TAG_LABELS[tagMatch.semanticTag]} support for ${beneficiary.dragonName}'s ${beneficiarySignal.abilityName}`;
 }
