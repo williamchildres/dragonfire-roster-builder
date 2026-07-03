@@ -16,10 +16,10 @@ Screenshot placeholder: add a production screenshot after the first GitHub Pages
 - Formation-level simple synergy analysis for strong synergies, missing enablers, placement issues, position conflicts, and future unlocks
 - Confirmed linear formation adjacency: Left Flank and Right Flank each touch Vanguard, but not each other
 - Shareable formation URL hash that preserves positions
-- Curated simple synergy profiles for representative dragons, separate from the legacy combat trace framework
+- Curated simple synergy profiles for all 15 dragons with detailed ability data, separate from the legacy combat trace framework
 - Retained legacy effect-capability framework and reports for internal review, without driving the live Formation Builder UI
 - Damage capability matrix and `npm run report:synergy` review report for the currently populated combat datasets
-- Partially verified combat datasets for Syrax, Caraxes, Malachite, Seasmoke, Sheepstealer, and Vermax
+- Partially verified or provisionally verified combat datasets for Syrax, Vhagar, Caraxes, Seasmoke, Crimson, Kalspire, Malachite, Venator, Daemoros, Feskar, Rhysarion, Shadowsong, Vaeldra, Sheepstealer, and Vermax
 - Manual-review records for the current screenshot-normalized datasets
 - Collection state and shard tracking for not-collected, not-hatched, and hatched dragons
 - Status glossary entries for screenshot-verified status effects such as First-Strike, Slow, Burn, Control, Prey, Spreading Blaze, Stolen Flock, Rallying Flame, Advantage, Resistance, and Weakened
@@ -29,7 +29,7 @@ Screenshot placeholder: add a production screenshot after the first GitHub Pages
 
 ## Data Limitations
 
-Most dragons still contain official public identity metadata only. Syrax, Caraxes, Malachite, Seasmoke, Sheepstealer, and Vermax have partial screenshot-verified combat datasets reviewed against game build `26.6.53509`. Sheepstealer and Vermax are recorded as in-game verified pending official-site dragons, so their official profile URLs are intentionally null until they appear on the public roster page. Canonical base stats, exact scaling formulas, enemy-formation adjacency, stack expiration behavior, and several source details are not guessed. Unknown values display as `Not yet verified`.
+Half of the current roster still contains official public identity metadata only. Syrax, Vhagar, Caraxes, Seasmoke, Crimson, Kalspire, Malachite, Venator, Daemoros, Feskar, Rhysarion, Shadowsong, Vaeldra, Sheepstealer, and Vermax have detailed Command, Trait, and Habit data reviewed for high-level simple-synergy coverage. Sheepstealer and Vermax are recorded as in-game verified pending official-site dragons, so their official profile URLs are intentionally null until they appear on the public roster page. Canonical base stats, exact scaling formulas, enemy-formation adjacency, stack expiration behavior, and several source details are not guessed. Unknown values display as `Not yet verified`.
 
 Star Rank is 1-10. Habit Level is separate: `null` means not recorded, `0` means explicitly recorded with no Habit upgrades, and `1-5` are upgraded Habit levels.
 
@@ -44,6 +44,8 @@ Manual ability-text review confirms that "Other Ally" and "Other Allies" exclude
 Unqualified Damage Dealt modifiers apply to all qualifying damage sources unless the ability text explicitly restricts or excludes a source. Vermax Warrior's Zeal is combat-log confirmed to affect Vermax Basic Attack Physical Damage. Malachite Forest's Instinct remains non-basic because its wording explicitly excludes Basic Attacks.
 
 The live Formation Builder now uses the simple synergy domain described in `docs/PRODUCT_SCOPE.md`. It answers which selected dragons complement one another, why, whether placement allows the relationship, which enablers are missing, which exclusive positions conflict, and which relationships are locked by saved Star Rank or Dragon Level. It does not model exact combat execution, target overlap, proc timing, stack behavior, damage formulas, expected damage, win probability, or numerical synergy scores.
+
+The simple profile audit lives in `docs/SIMPLE_SYNERGY_PROFILE_AUDIT.md`. It records the 30-dragon roster split, the 105 reviewed detailed abilities, the controlled tag vocabulary, explicit condition/payoff relationships, damage and Recovery support summaries, stat support, and intentional exclusions.
 
 The older capability and trace framework remains in source and test coverage for internal reports and historical validation. It is not imported by the live Formation Builder and is not used as a fallback for simple formation analysis.
 
@@ -102,6 +104,7 @@ See:
 - `docs/SYNERGY_CAPABILITY_FRAMEWORK.md`
 - `docs/FORMATION_REVIEW_FINDINGS.md`
 - `docs/FORMATION_BUILDER_UI.md`
+- `docs/SIMPLE_SYNERGY_PROFILE_AUDIT.md`
 
 Combat data requires source evidence, field-level verification, and manual-review state when available. Screenshot evidence may be described without committing screenshots or copied game artwork to the public repository. Do not submit credentials, private information, private APIs, extracted assets, or unsourced guesses.
 

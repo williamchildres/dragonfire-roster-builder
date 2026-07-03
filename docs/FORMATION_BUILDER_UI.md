@@ -29,8 +29,8 @@ The formation-level analysis panel groups simple evaluator results into player-f
 
 - Strong synergies: active setup/payoff and amplifier/output relationships.
 - Missing enablers: selected dragons that benefit from a tag no selected teammate currently provides.
-- Placement issues: relationships blocked by required position or adjacency.
-- Position conflicts: selected dragons competing for the same exclusive meaningful position.
+- Placement issues: relationships blocked by provider position, recipient position, or adjacency.
+- Position conflicts: selected dragons competing for the same exclusive meaningful position, grouped once per position.
 - Future unlocks: relationships available only after saved Star Rank or Dragon Level progression.
 
 Single selected dragons do not show missing-enabler warnings in the UI. Missing-enabler messages appear only once at least two dragons are selected.
@@ -55,6 +55,8 @@ The Formation Builder uses the shared linear formation contract:
 
 An adjacent relationship can be active when one dragon is Vanguard and the other is a flank. The same relationship is placement-blocked when the two dragons occupy opposite flanks.
 
+Some verified Traits have hard recipient positions. For example, a Left Flank-only support only activates for the selected Left Flank dragon, and a Right Flank-only support only activates for the selected Right Flank dragon. Preferred flank targeting with fallback remains formation-wide and is not hard-blocked outside the preferred flank.
+
 ## Non-Goals
 
 The live Formation Builder does not show or calculate:
@@ -78,6 +80,7 @@ Use these cases when reviewing the cutover:
 - Syrax plus Caraxes: First-Strike and Fire Damage relationships appear under Strong synergies.
 - Malachite plus Sheepstealer: Recovery relationship is active when Sheepstealer is Vanguard and Level 16+.
 - Malachite plus Caraxes: Malachite's adjacent First-Strike support works beside Vanguard and is blocked across opposite flanks.
-- Caraxes plus Sheepstealer: both unlocked Vanguard claims produce a position conflict.
+- Daemoros plus Syrax plus Caraxes with Level 16 Traits: all unlocked Vanguard claims produce one grouped position conflict.
+- Caraxes plus Syrax: Slow from Crippling Inferno improves Strategic Revival when both Star Rank unlocks are available.
 - One selected dragon: card details render, but missing enabler warnings remain hidden.
-- An unmapped dragon such as Seasmoke: profile coverage reports that high-level synergy data is not yet mapped.
+- A metadata-only dragon such as Tashix: profile coverage reports that high-level synergy data is not yet mapped.

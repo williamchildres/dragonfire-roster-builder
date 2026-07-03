@@ -74,7 +74,7 @@ describe('Formation Builder simple synergy cutover', () => {
     await selectFormation(user, { 'left-flank': 'daemoros', vanguard: 'shadowsong', 'right-flank': 'caraxes' });
 
     expect(sectionText('Strong synergies')).toContain(
-      "Daemoros applies Panic, which improves Shadowsong's Breath of Fire.",
+      "Daemoros applies Panic, which improves Shadowsong's Breath of Fire and Scorched Earth.",
     );
     expect(screen.queryByLabelText(/preview max-rank interactions/i)).not.toBeInTheDocument();
     expect(screen.queryByLabelText(/show analysis details/i)).not.toBeInTheDocument();
@@ -112,26 +112,26 @@ describe('Formation Builder simple synergy cutover', () => {
     expect(analysisText()).not.toContain(incompleteMissingEnablerNotice);
   });
 
-  it('treats Panic missing-enabler checks as incomplete when a selected dragon is unmapped', async () => {
+  it('treats Panic missing-enabler checks as incomplete when a selected dragon is metadata-only', async () => {
     const user = userEvent.setup();
-    seedRoster({ shadowsong: {}, seasmoke: {} });
+    seedRoster({ shadowsong: {}, tashix: {} });
 
     await openFormationBuilder(user);
-    await selectFormation(user, { 'left-flank': 'shadowsong', vanguard: 'seasmoke' });
+    await selectFormation(user, { 'left-flank': 'shadowsong', vanguard: 'tashix' });
 
-    expect(analysisText()).toContain('Synergy data not yet mapped: Seasmoke.');
+    expect(analysisText()).toContain('Synergy data not yet mapped: Tashix.');
     expect(sectionText('Missing enablers')).toContain(incompleteMissingEnablerNotice);
     expect(analysisText()).not.toContain('this formation has no Panic provider');
   });
 
-  it('treats First-Strike missing-enabler checks as incomplete when a selected dragon is unmapped', async () => {
+  it('treats First-Strike missing-enabler checks as incomplete when a selected dragon is metadata-only', async () => {
     const user = userEvent.setup();
-    seedRoster({ caraxes: {}, seasmoke: {} });
+    seedRoster({ caraxes: {}, tashix: {} });
 
     await openFormationBuilder(user);
-    await selectFormation(user, { 'left-flank': 'caraxes', vanguard: 'seasmoke' });
+    await selectFormation(user, { 'left-flank': 'caraxes', vanguard: 'tashix' });
 
-    expect(analysisText()).toContain('Synergy data not yet mapped: Seasmoke.');
+    expect(analysisText()).toContain('Synergy data not yet mapped: Tashix.');
     expect(sectionText('Missing enablers')).toContain(incompleteMissingEnablerNotice);
     expect(analysisText()).not.toContain('this formation has no First-Strike provider');
   });
@@ -196,7 +196,7 @@ describe('Formation Builder simple synergy cutover', () => {
       "Malachite provides Recovery, which Sheepstealer benefits from through Hunter's Cunning.",
     );
     expect(sectionText('Position conflicts')).toContain(
-      "Sheepstealer's Hunter's Cunning and Caraxes's Hunter's Wrath both require Vanguard; only one dragon can receive that positional benefit.",
+      "Malachite's Sentinel's Presence, Sheepstealer's Hunter's Cunning, and Caraxes's Hunter's Wrath require Vanguard; only one dragon can receive that positional benefit.",
     );
   });
 
@@ -207,11 +207,11 @@ describe('Formation Builder simple synergy cutover', () => {
       configurable: true,
       value: { writeText },
     });
-    seedRoster({ syrax: {}, caraxes: {}, seasmoke: { owned: false } });
+    seedRoster({ syrax: {}, caraxes: {}, tashix: { owned: false } });
 
     await openFormationBuilder(user);
     await user.click(screen.getByLabelText(/include unowned dragons/i));
-    await selectFormation(user, { 'left-flank': 'syrax', vanguard: 'caraxes', 'right-flank': 'seasmoke' });
+    await selectFormation(user, { 'left-flank': 'syrax', vanguard: 'caraxes', 'right-flank': 'tashix' });
 
     for (const position of ['Left Flank', 'Vanguard', 'Right Flank']) {
       const card = screen.getByRole('article', { name: position });
@@ -224,7 +224,7 @@ describe('Formation Builder simple synergy cutover', () => {
       expect(within(card).getByRole('region', { name: /high-level synergy profile/i })).toBeInTheDocument();
     }
 
-    expect(analysisText()).toContain('Synergy data not yet mapped: Seasmoke.');
+    expect(analysisText()).toContain('Synergy data not yet mapped: Tashix.');
     expect(sectionText('Strong synergies')).toContain("Syrax can grant First-Strike, which improves Caraxes's Infernal Burst.");
     expect(sectionText('Strong synergies')).toContain('Syrax improves allied Fire Damage, and Caraxes deals Fire Damage.');
     expect(sectionText('Missing enablers')).toContain(incompleteMissingEnablerNotice);
