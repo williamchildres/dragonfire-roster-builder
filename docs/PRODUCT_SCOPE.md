@@ -38,7 +38,7 @@ Raw ability descriptions may preserve these details for reference, but those det
 
 ## Architecture Rules
 
-- High-level synergy data is curated explicitly rather than inferred from detailed `AbilityEffect` execution records.
+- High-level synergy data is curated explicitly rather than inferred from detailed combat execution records.
 - Ordinary dragon additions should be data-only changes.
 - Unresolved timing details must not block an otherwise clear high-level relationship.
 - New shared concepts may be added only when they apply broadly and change a player-facing recommendation.
@@ -52,3 +52,7 @@ Raw ability descriptions may preserve these details for reference, but those det
   - The two flanks are not adjacent.
 - No numerical synergy score is part of this PR.
 - Future recommendation scores must represent relative formation fit, not predicted combat performance.
+
+## Ability Data
+
+Canonical ability records preserve stable IDs, names, unlocks, hard position requirements, verification, evidence, descriptive tags, and raw verified wording. They do not store execution schedules, rolls, target-selection groups, stacks, structured effects, capability dependencies, traces, expected interactions, or unresolved mechanic reports.

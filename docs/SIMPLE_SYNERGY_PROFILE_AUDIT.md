@@ -1,6 +1,6 @@
 # Simple Synergy Profile Audit
 
-This audit covers the curated simple-synergy profiles used by the live Formation Builder. It is intentionally separate from the retained legacy trace and capability framework.
+This audit covers the curated simple-synergy profiles used by the live Formation Builder.
 
 ## Coverage
 

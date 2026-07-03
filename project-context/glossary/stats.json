@@ -1,88 +1,88 @@
 [
   {
-    "canonicalFormulaKnown": false,
-    "category": "combat",
-    "defensiveEffects": [],
-    "description": "Increases Physical Damage Dealt in combat.",
     "id": "strength",
     "name": "Strength",
+    "category": "combat",
+    "description": "Increases Physical Damage Dealt in combat.",
     "offensiveEffects": [
       "Increases Physical Damage Dealt"
-    ]
+    ],
+    "defensiveEffects": [],
+    "canonicalFormulaKnown": false
   },
   {
-    "canonicalFormulaKnown": false,
+    "id": "instinct",
+    "name": "Instinct",
     "category": "combat",
+    "description": "Increases Tactical Damage Dealt and reduces Physical Damage Received.",
+    "offensiveEffects": [
+      "Increases Tactical Damage Dealt"
+    ],
     "defensiveEffects": [
       "Reduces Physical Damage Received"
     ],
-    "description": "Increases Tactical Damage Dealt and reduces Physical Damage Received.",
-    "id": "instinct",
-    "name": "Instinct",
-    "offensiveEffects": [
-      "Increases Tactical Damage Dealt"
-    ]
+    "canonicalFormulaKnown": false
   },
   {
-    "canonicalFormulaKnown": false,
+    "id": "intelligence",
+    "name": "Intelligence",
     "category": "combat",
+    "description": "Increases Fire Damage Dealt and reduces Tactical Damage Received.",
+    "offensiveEffects": [
+      "Increases Fire Damage Dealt"
+    ],
     "defensiveEffects": [
       "Reduces Tactical Damage Received"
     ],
-    "description": "Increases Fire Damage Dealt and reduces Tactical Damage Received.",
-    "id": "intelligence",
-    "name": "Intelligence",
-    "offensiveEffects": [
-      "Increases Fire Damage Dealt"
-    ]
+    "canonicalFormulaKnown": false
   },
   {
-    "canonicalFormulaKnown": false,
+    "id": "initiative",
+    "name": "Initiative",
     "category": "combat",
+    "description": "Reduces Fire Damage Received and determines turn order in combat.",
+    "offensiveEffects": [
+      "Determines turn order in combat"
+    ],
     "defensiveEffects": [
       "Reduces Fire Damage Received"
     ],
-    "description": "Reduces Fire Damage Received and determines turn order in combat.",
-    "id": "initiative",
-    "name": "Initiative",
-    "offensiveEffects": [
-      "Determines turn order in combat"
-    ]
+    "canonicalFormulaKnown": false
   },
   {
-    "canonicalFormulaKnown": false,
-    "category": "operational",
-    "defensiveEffects": [],
-    "description": "Rate of travel to the destination.",
     "id": "march-speed",
     "name": "March Speed",
-    "offensiveEffects": []
+    "category": "operational",
+    "description": "Rate of travel to the destination.",
+    "offensiveEffects": [],
+    "defensiveEffects": [],
+    "canonicalFormulaKnown": false
   },
   {
-    "canonicalFormulaKnown": false,
-    "category": "operational",
-    "defensiveEffects": [],
-    "description": "Dragon actions consume Stamina. Dragons recover 1 Stamina every 4.5 minutes.",
     "id": "stamina",
     "name": "Stamina",
-    "offensiveEffects": []
+    "category": "operational",
+    "description": "Dragon actions consume Stamina. Dragons recover 1 Stamina every 4.5 minutes.",
+    "offensiveEffects": [],
+    "defensiveEffects": [],
+    "canonicalFormulaKnown": false
   },
   {
-    "canonicalFormulaKnown": false,
-    "category": "derived",
-    "defensiveEffects": [],
-    "description": "Number of troops the dragon can carry. Displayed in-game as base value plus upgrades.",
     "id": "troop-capacity",
     "name": "Troop Capacity",
-    "offensiveEffects": []
+    "category": "derived",
+    "description": "Number of troops the dragon can carry. Displayed in-game as base value plus upgrades.",
+    "offensiveEffects": [],
+    "defensiveEffects": [],
+    "canonicalFormulaKnown": false
   },
   {
-    "canonicalFormulaKnown": false,
-    "category": "derived",
-    "defensiveEffects": [],
-    "description": "Aggregate power affected by levels, Star Rank, Habits, and other progression.",
     "id": "dragon-power",
     "name": "Dragon Power",
-    "offensiveEffects": []
+    "category": "derived",
+    "description": "Aggregate power affected by levels, Star Rank, Habits, and other progression.",
+    "offensiveEffects": [],
+    "defensiveEffects": [],
+    "canonicalFormulaKnown": false
   }
 ]

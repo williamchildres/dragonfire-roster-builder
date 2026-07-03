@@ -1,0 +1,1498 @@
+[
+  {
+    "dragonId": "syrax",
+    "dragonName": "Syrax",
+    "outputs": [
+      {
+        "id": "syrax-blazing-fury-first-strike",
+        "tag": "status:first-strike",
+        "abilityId": "syrax-blazing-fury",
+        "abilityName": "Blazing Fury",
+        "description": "grants First-Strike to a teammate",
+        "friendlyScope": "formation",
+        "confidence": "verified"
+      },
+      {
+        "id": "syrax-blazing-fury-tactical",
+        "tag": "damage:tactical",
+        "tags": [
+          "damage:tactical",
+          "stat:instinct"
+        ],
+        "abilityId": "syrax-blazing-fury",
+        "abilityName": "Blazing Fury",
+        "description": "deals Tactical Damage using Instinct",
+        "confidence": "verified"
+      },
+      {
+        "id": "syrax-strategic-revival-recovery",
+        "tag": "effect:recovery",
+        "tags": [
+          "effect:recovery",
+          "stat:initiative"
+        ],
+        "abilityId": "syrax-strategic-revival",
+        "abilityName": "Strategic Revival",
+        "description": "provides Recovery that is enhanced by Initiative",
+        "unlock": {
+          "minimumStarRank": 6
+        },
+        "friendlyScope": "formation",
+        "confidence": "verified"
+      }
+    ],
+    "supports": [
+      {
+        "id": "syrax-blazing-fury-fire-support",
+        "tag": "damage:fire",
+        "abilityId": "syrax-blazing-fury",
+        "abilityName": "Blazing Fury",
+        "description": "improves allied Fire Damage",
+        "friendlyScope": "formation",
+        "confidence": "verified"
+      },
+      {
+        "id": "syrax-sentinels-wit-left-stats",
+        "tag": "stat:instinct",
+        "tags": [
+          "stat:instinct",
+          "stat:initiative"
+        ],
+        "abilityId": "syrax-sentinels-wit",
+        "abilityName": "Sentinel's Wit",
+        "description": "improves Instinct and Initiative of the Left Flank ally",
+        "unlock": {
+          "minimumDragonLevel": 16
+        },
+        "requiredSelfPosition": "vanguard",
+        "requiredRecipientPosition": "left-flank",
+        "friendlyScope": "formation",
+        "confidence": "verified"
+      },
+      {
+        "id": "syrax-mindful-synergy-stats",
+        "tag": "stat:intelligence",
+        "tags": [
+          "stat:intelligence",
+          "stat:instinct"
+        ],
+        "abilityId": "syrax-mindful-synergy",
+        "abilityName": "Mindful Synergy",
+        "description": "improves allied Intelligence and Instinct",
+        "unlock": {
+          "minimumStarRank": 2
+        },
+        "friendlyScope": "formation",
+        "confidence": "verified"
+      },
+      {
+        "id": "syrax-flight-mastery-initiative",
+        "tag": "stat:initiative",
+        "abilityId": "syrax-flight-mastery",
+        "abilityName": "Flight Mastery",
+        "description": "improves allied Initiative",
+        "unlock": {
+          "minimumStarRank": 4
+        },
+        "friendlyScope": "formation",
+        "confidence": "verified"
+      },
+      {
+        "id": "syrax-tactical-inferno-damage-support",
+        "tag": "damage:tactical",
+        "tags": [
+          "damage:tactical",
+          "damage:fire"
+        ],
+        "abilityId": "syrax-tactical-inferno",
+        "abilityName": "Tactical Inferno",
+        "description": "improves allied Tactical Damage and Fire Damage",
+        "unlock": {
+          "minimumStarRank": 8
+        },
+        "friendlyScope": "formation",
+        "confidence": "verified"
+      }
+    ],
+    "benefitsFrom": [
+      {
+        "id": "syrax-strategic-revival-slow-payoff",
+        "tag": "status:slow",
+        "abilityId": "syrax-strategic-revival",
+        "abilityName": "Strategic Revival",
+        "description": "Slow improves Strategic Revival Recovery",
+        "unlock": {
+          "minimumStarRank": 6
+        },
+        "friendlyScope": "formation",
+        "confidence": "verified"
+      }
+    ],
+    "positionClaims": [
+      {
+        "id": "syrax-sentinels-wit-vanguard",
+        "abilityId": "syrax-sentinels-wit",
+        "abilityName": "Sentinel's Wit",
+        "requiredPosition": "vanguard",
+        "unlock": {
+          "minimumDragonLevel": 16
+        },
+        "description": "Sentinel's Wit requires Vanguard",
+        "confidence": "verified"
+      }
+    ]
+  },
+  {
+    "dragonId": "vhagar",
+    "dragonName": "Vhagar",
+    "outputs": [
+      {
+        "id": "vhagar-fiery-bonds-taunt",
+        "tag": "status:taunt",
+        "abilityId": "vhagar-fiery-bonds",
+        "abilityName": "Fiery Bonds",
+        "description": "applies Taunt",
+        "friendlyScope": "formation",
+        "confidence": "verified"
+      },
+      {
+        "id": "vhagar-fiery-bonds-physical",
+        "tag": "damage:physical",
+        "tags": [
+          "damage:physical",
+          "stat:strength"
+        ],
+        "abilityId": "vhagar-fiery-bonds",
+        "abilityName": "Fiery Bonds",
+        "description": "deals Physical Damage using Strength",
+        "confidence": "verified"
+      },
+      {
+        "id": "vhagar-skyward-titan-physical",
+        "tag": "damage:physical",
+        "tags": [
+          "damage:physical",
+          "stat:strength"
+        ],
+        "abilityId": "vhagar-skyward-titan",
+        "abilityName": "Skyward Titan",
+        "description": "deals Physical Damage using Strength",
+        "unlock": {
+          "minimumStarRank": 10
+        },
+        "confidence": "verified"
+      }
+    ],
+    "supports": [
+      {
+        "id": "vhagar-warriors-resilience-left-tactical",
+        "tag": "damage:tactical",
+        "abilityId": "vhagar-warriors-resilience",
+        "abilityName": "Warrior's Resilience",
+        "description": "improves Tactical Damage of the Left Flank ally",
+        "unlock": {
+          "minimumDragonLevel": 16
+        },
+        "requiredSelfPosition": "vanguard",
+        "requiredRecipientPosition": "left-flank",
+        "friendlyScope": "formation",
+        "confidence": "verified"
+      },
+      {
+        "id": "vhagar-battle-leader-physical",
+        "tag": "damage:physical",
+        "abilityId": "vhagar-battle-leader",
+        "abilityName": "Battle Leader",
+        "description": "improves non-Basic Physical Damage",
+        "unlock": {
+          "minimumStarRank": 4
+        },
+        "friendlyScope": "formation",
+        "confidence": "verified"
+      },
+      {
+        "id": "vhagar-blazing-onslaught-vulnerability",
+        "tag": "damage:fire",
+        "tags": [
+          "damage:fire",
+          "damage:physical"
+        ],
+        "abilityId": "vhagar-blazing-onslaught",
+        "abilityName": "Blazing Onslaught",
+        "description": "increases enemy Fire and non-Basic Physical Damage Received",
+        "unlock": {
+          "minimumStarRank": 8
+        },
+        "friendlyScope": "formation",
+        "confidence": "verified"
+      }
+    ],
+    "benefitsFrom": [
+      {
+        "id": "vhagar-fiery-bonds-burn-payoff",
+        "tag": "status:burn",
+        "abilityId": "vhagar-fiery-bonds",
+        "abilityName": "Fiery Bonds",
+        "description": "Burn improves Fiery Bonds Taunt application",
+        "friendlyScope": "formation",
+        "confidence": "verified"
+      }
+    ],
+    "positionClaims": [
+      {
+        "id": "vhagar-warriors-resilience-vanguard",
+        "abilityId": "vhagar-warriors-resilience",
+        "abilityName": "Warrior's Resilience",
+        "requiredPosition": "vanguard",
+        "unlock": {
+          "minimumDragonLevel": 16
+        },
+        "description": "Warrior's Resilience requires Vanguard",
+        "confidence": "verified"
+      }
+    ]
+  },
+  {
+    "dragonId": "caraxes",
+    "dragonName": "Caraxes",
+    "outputs": [
+      {
+        "id": "caraxes-infernal-burst-fire",
+        "tag": "damage:fire",
+        "tags": [
+          "damage:fire",
+          "stat:intelligence"
+        ],
+        "abilityId": "caraxes-infernal-burst",
+        "abilityName": "Infernal Burst",
+        "description": "deals Fire Damage using Intelligence",
+        "confidence": "verified"
+      },
+      {
+        "id": "caraxes-crippling-inferno-slow",
+        "tag": "status:slow",
+        "abilityId": "caraxes-crippling-inferno",
+        "abilityName": "Crippling Inferno",
+        "description": "applies Slow",
+        "unlock": {
+          "minimumStarRank": 6
+        },
+        "friendlyScope": "formation",
+        "confidence": "verified"
+      },
+      {
+        "id": "caraxes-crippling-inferno-burn",
+        "tag": "status:burn",
+        "abilityId": "caraxes-crippling-inferno",
+        "abilityName": "Crippling Inferno",
+        "description": "applies Burn",
+        "unlock": {
+          "minimumStarRank": 6
+        },
+        "friendlyScope": "formation",
+        "confidence": "verified"
+      },
+      {
+        "id": "caraxes-crippling-inferno-fire",
+        "tag": "damage:fire",
+        "tags": [
+          "damage:fire",
+          "stat:intelligence"
+        ],
+        "abilityId": "caraxes-crippling-inferno",
+        "abilityName": "Crippling Inferno",
+        "description": "Burn contributes Fire Damage",
+        "unlock": {
+          "minimumStarRank": 6
+        },
+        "confidence": "verified"
+      }
+    ],
+    "supports": [
+      {
+        "id": "caraxes-hunters-wrath-right-stats",
+        "tag": "stat:strength",
+        "tags": [
+          "stat:strength",
+          "stat:initiative"
+        ],
+        "abilityId": "caraxes-hunters-wrath",
+        "abilityName": "Hunter's Wrath",
+        "description": "improves Strength and Initiative of the Right Flank ally",
+        "unlock": {
+          "minimumDragonLevel": 16
+        },
+        "requiredSelfPosition": "vanguard",
+        "requiredRecipientPosition": "right-flank",
+        "friendlyScope": "formation",
+        "confidence": "verified"
+      }
+    ],
+    "benefitsFrom": [
+      {
+        "id": "caraxes-infernal-burst-first-strike-payoff",
+        "tag": "status:first-strike",
+        "abilityId": "caraxes-infernal-burst",
+        "abilityName": "Infernal Burst",
+        "description": "First-Strike improves Infernal Burst",
+        "friendlyScope": "formation",
+        "confidence": "verified"
+      }
+    ],
+    "positionClaims": [
+      {
+        "id": "caraxes-hunters-wrath-vanguard",
+        "abilityId": "caraxes-hunters-wrath",
+        "abilityName": "Hunter's Wrath",
+        "requiredPosition": "vanguard",
+        "unlock": {
+          "minimumDragonLevel": 16
+        },
+        "description": "Hunter's Wrath requires Vanguard",
+        "confidence": "verified"
+      }
+    ]
+  },
+  {
+    "dragonId": "seasmoke",
+    "dragonName": "Seasmoke",
+    "outputs": [
+      {
+        "id": "seasmoke-cleansing-wrath-fire",
+        "tag": "damage:fire",
+        "tags": [
+          "damage:fire",
+          "stat:intelligence"
+        ],
+        "abilityId": "seasmoke-cleansing-wrath",
+        "abilityName": "Cleansing Wrath",
+        "description": "deals Fire Damage using Intelligence",
+        "confidence": "verified"
+      },
+      {
+        "id": "seasmoke-infectious-wrath-physical",
+        "tag": "damage:physical",
+        "abilityId": "seasmoke-infectious-wrath",
+        "abilityName": "Infectious Wrath",
+        "description": "deals Physical Damage",
+        "unlock": {
+          "minimumStarRank": 6
+        },
+        "confidence": "verified"
+      }
+    ],
+    "supports": [
+      {
+        "id": "seasmoke-clever-maneuver-stats",
+        "tag": "stat:intelligence",
+        "tags": [
+          "stat:intelligence",
+          "stat:initiative"
+        ],
+        "abilityId": "seasmoke-clever-maneuver",
+        "abilityName": "Clever Maneuver",
+        "description": "improves Intelligence and Initiative of an ally",
+        "unlock": {
+          "minimumStarRank": 2
+        },
+        "friendlyScope": "formation",
+        "confidence": "verified"
+      },
+      {
+        "id": "seasmoke-winds-favor-initiative",
+        "tag": "stat:initiative",
+        "abilityId": "seasmoke-winds-favor",
+        "abilityName": "Wind's Favor",
+        "description": "improves allied Initiative",
+        "unlock": {
+          "minimumStarRank": 4
+        },
+        "friendlyScope": "formation",
+        "confidence": "verified"
+      },
+      {
+        "id": "seasmoke-cunning-ferocity-fire-intelligence",
+        "tag": "damage:fire",
+        "tags": [
+          "damage:fire",
+          "stat:intelligence"
+        ],
+        "abilityId": "seasmoke-cunning-ferocity",
+        "abilityName": "Cunning Ferocity",
+        "description": "improves adjacent allies Fire Damage and Intelligence",
+        "unlock": {
+          "minimumStarRank": 8
+        },
+        "friendlyScope": "adjacent",
+        "confidence": "verified"
+      }
+    ],
+    "benefitsFrom": [
+      {
+        "id": "seasmoke-infectious-wrath-panic-payoff",
+        "tag": "status:panic",
+        "abilityId": "seasmoke-infectious-wrath",
+        "abilityName": "Infectious Wrath",
+        "description": "Panic improves Infectious Wrath Physical Damage",
+        "unlock": {
+          "minimumStarRank": 6
+        },
+        "friendlyScope": "formation",
+        "confidence": "verified"
+      }
+    ],
+    "positionClaims": [
+      {
+        "id": "seasmoke-champions-brilliance-vanguard",
+        "abilityId": "seasmoke-champions-brilliance",
+        "abilityName": "Champion's Brilliance",
+        "requiredPosition": "vanguard",
+        "unlock": {
+          "minimumDragonLevel": 16
+        },
+        "description": "Champion's Brilliance requires Vanguard",
+        "confidence": "verified"
+      }
+    ]
+  },
+  {
+    "dragonId": "crimson",
+    "dragonName": "Crimson",
+    "outputs": [
+      {
+        "id": "crimson-bloodscale-terror-stun",
+        "tag": "status:stun",
+        "abilityId": "crimson-bloodscale-terror",
+        "abilityName": "Bloodscale Terror",
+        "description": "applies Stun as Control",
+        "friendlyScope": "formation",
+        "confidence": "verified"
+      },
+      {
+        "id": "crimson-bloodscale-terror-fire",
+        "tag": "damage:fire",
+        "tags": [
+          "damage:fire",
+          "stat:intelligence"
+        ],
+        "abilityId": "crimson-bloodscale-terror",
+        "abilityName": "Bloodscale Terror",
+        "description": "deals Fire Damage using Intelligence",
+        "confidence": "verified"
+      }
+    ],
+    "supports": [
+      {
+        "id": "crimson-hunters-cunning-right-physical",
+        "tag": "damage:physical",
+        "abilityId": "crimson-hunters-cunning",
+        "abilityName": "Hunter's Cunning",
+        "description": "improves Physical Damage of the Right Flank ally",
+        "unlock": {
+          "minimumDragonLevel": 16
+        },
+        "requiredSelfPosition": "vanguard",
+        "requiredRecipientPosition": "right-flank",
+        "friendlyScope": "formation",
+        "confidence": "verified"
+      },
+      {
+        "id": "crimson-unlikely-hero-vulnerability",
+        "tag": "damage:physical",
+        "tags": [
+          "damage:physical",
+          "damage:fire"
+        ],
+        "abilityId": "crimson-unlikely-hero",
+        "abilityName": "Unlikely Hero",
+        "description": "increases enemy non-Basic Physical and Fire Damage Received",
+        "unlock": {
+          "minimumStarRank": 8
+        },
+        "friendlyScope": "formation",
+        "confidence": "verified"
+      }
+    ],
+    "benefitsFrom": [
+      {
+        "id": "crimson-bloodscale-fury-taunt-payoff",
+        "tag": "status:taunt",
+        "abilityId": "crimson-bloodscale-fury",
+        "abilityName": "Bloodscale Fury",
+        "description": "Taunt improves Bloodscale Fury Weakened application",
+        "unlock": {
+          "minimumStarRank": 6
+        },
+        "friendlyScope": "formation",
+        "confidence": "verified"
+      }
+    ],
+    "positionClaims": [
+      {
+        "id": "crimson-hunters-cunning-vanguard",
+        "abilityId": "crimson-hunters-cunning",
+        "abilityName": "Hunter's Cunning",
+        "requiredPosition": "vanguard",
+        "unlock": {
+          "minimumDragonLevel": 16
+        },
+        "description": "Hunter's Cunning requires Vanguard",
+        "confidence": "verified"
+      }
+    ]
+  },
+  {
+    "dragonId": "kalspire",
+    "dragonName": "Kalspire",
+    "outputs": [
+      {
+        "id": "kalspire-tactical-strike-tactical",
+        "tag": "damage:tactical",
+        "tags": [
+          "damage:tactical",
+          "stat:instinct"
+        ],
+        "abilityId": "kalspire-tactical-strike",
+        "abilityName": "Tactical Strike",
+        "description": "deals Tactical Damage using Instinct",
+        "confidence": "verified"
+      },
+      {
+        "id": "kalspire-tactical-assault-physical",
+        "tag": "damage:physical",
+        "tags": [
+          "damage:physical",
+          "stat:strength"
+        ],
+        "abilityId": "kalspire-tactical-assault",
+        "abilityName": "Tactical Assault",
+        "description": "deals Physical Damage using Strength",
+        "unlock": {
+          "minimumStarRank": 6
+        },
+        "confidence": "verified"
+      },
+      {
+        "id": "kalspire-tactical-assault-panic",
+        "tag": "status:panic",
+        "abilityId": "kalspire-tactical-assault",
+        "abilityName": "Tactical Assault",
+        "description": "applies Panic",
+        "unlock": {
+          "minimumStarRank": 6
+        },
+        "friendlyScope": "formation",
+        "confidence": "verified"
+      }
+    ],
+    "supports": [],
+    "benefitsFrom": [],
+    "positionClaims": [
+      {
+        "id": "kalspire-champions-brilliance-vanguard",
+        "abilityId": "kalspire-champions-brilliance",
+        "abilityName": "Champion's Brilliance",
+        "requiredPosition": "vanguard",
+        "unlock": {
+          "minimumDragonLevel": 16
+        },
+        "description": "Champion's Brilliance requires Vanguard",
+        "confidence": "verified"
+      }
+    ]
+  },
+  {
+    "dragonId": "malachite",
+    "dragonName": "Malachite",
+    "outputs": [
+      {
+        "id": "malachite-wardens-rally-tactical",
+        "tag": "damage:tactical",
+        "tags": [
+          "damage:tactical",
+          "stat:instinct"
+        ],
+        "abilityId": "malachite-wardens-rally",
+        "abilityName": "Warden's Rally",
+        "description": "deals Tactical Damage using Instinct",
+        "confidence": "verified"
+      },
+      {
+        "id": "malachite-wardens-rally-recovery",
+        "tag": "effect:recovery",
+        "tags": [
+          "effect:recovery",
+          "stat:instinct"
+        ],
+        "abilityId": "malachite-wardens-rally",
+        "abilityName": "Warden's Rally",
+        "description": "provides Recovery enhanced by Instinct",
+        "friendlyScope": "formation",
+        "confidence": "verified"
+      },
+      {
+        "id": "malachite-lightning-strike-first-strike",
+        "tag": "status:first-strike",
+        "abilityId": "malachite-lightning-strike",
+        "abilityName": "Lightning Strike",
+        "description": "grants First-Strike to an adjacent other ally",
+        "unlock": {
+          "minimumStarRank": 10
+        },
+        "friendlyScope": "adjacent",
+        "confidence": "verified"
+      }
+    ],
+    "supports": [
+      {
+        "id": "malachite-sentinels-presence-left-fire",
+        "tag": "damage:fire",
+        "abilityId": "malachite-sentinels-presence",
+        "abilityName": "Sentinel's Presence",
+        "description": "improves Fire Damage of the Left Flank ally",
+        "unlock": {
+          "minimumDragonLevel": 16
+        },
+        "requiredSelfPosition": "vanguard",
+        "requiredRecipientPosition": "left-flank",
+        "friendlyScope": "formation",
+        "confidence": "verified"
+      },
+      {
+        "id": "malachite-forests-instinct-physical",
+        "tag": "damage:physical",
+        "abilityId": "malachite-forests-instinct",
+        "abilityName": "Forest's Instinct",
+        "description": "improves non-Basic Physical Damage of other allies",
+        "unlock": {
+          "minimumStarRank": 2
+        },
+        "friendlyScope": "formation",
+        "confidence": "verified"
+      },
+      {
+        "id": "malachite-thunderous-roar-damage",
+        "tag": "damage:physical",
+        "tags": [
+          "damage:physical",
+          "damage:tactical",
+          "damage:fire"
+        ],
+        "abilityId": "malachite-thunderous-roar",
+        "abilityName": "Thunderous Roar",
+        "description": "improves other allies Damage Dealt",
+        "unlock": {
+          "minimumStarRank": 6
+        },
+        "friendlyScope": "formation",
+        "confidence": "verified"
+      },
+      {
+        "id": "malachite-collective-might-strength",
+        "tag": "stat:strength",
+        "abilityId": "malachite-collective-might",
+        "abilityName": "Collective Might",
+        "description": "improves allied Strength",
+        "unlock": {
+          "minimumStarRank": 8
+        },
+        "friendlyScope": "formation",
+        "confidence": "verified"
+      },
+      {
+        "id": "malachite-lightning-strike-strength",
+        "tag": "stat:strength",
+        "abilityId": "malachite-lightning-strike",
+        "abilityName": "Lightning Strike",
+        "description": "improves Strength of an adjacent other ally",
+        "unlock": {
+          "minimumStarRank": 10
+        },
+        "friendlyScope": "adjacent",
+        "confidence": "verified"
+      }
+    ],
+    "benefitsFrom": [],
+    "positionClaims": [
+      {
+        "id": "malachite-sentinels-presence-vanguard",
+        "abilityId": "malachite-sentinels-presence",
+        "abilityName": "Sentinel's Presence",
+        "requiredPosition": "vanguard",
+        "unlock": {
+          "minimumDragonLevel": 16
+        },
+        "description": "Sentinel's Presence requires Vanguard",
+        "confidence": "verified"
+      }
+    ]
+  },
+  {
+    "dragonId": "venator",
+    "dragonName": "Venator",
+    "outputs": [
+      {
+        "id": "venator-feral-strike-physical",
+        "tag": "damage:physical",
+        "tags": [
+          "damage:physical",
+          "stat:strength"
+        ],
+        "abilityId": "venator-feral-strike",
+        "abilityName": "Feral Strike",
+        "description": "deals Physical Damage using Strength",
+        "confidence": "verified"
+      },
+      {
+        "id": "venator-feral-precision-physical",
+        "tag": "damage:physical",
+        "tags": [
+          "damage:physical",
+          "stat:strength"
+        ],
+        "abilityId": "venator-feral-precision",
+        "abilityName": "Feral Precision",
+        "description": "adds Physical Damage using Strength",
+        "unlock": {
+          "minimumStarRank": 6
+        },
+        "confidence": "verified"
+      },
+      {
+        "id": "venator-desperate-ambush-overwhelm",
+        "tag": "status:overwhelm",
+        "abilityId": "venator-desperate-ambush",
+        "abilityName": "Desperate Ambush",
+        "description": "applies Overwhelm as Control",
+        "unlock": {
+          "minimumStarRank": 10
+        },
+        "friendlyScope": "formation",
+        "confidence": "verified"
+      }
+    ],
+    "supports": [
+      {
+        "id": "venator-warriors-zeal-left-stats",
+        "tag": "stat:instinct",
+        "tags": [
+          "stat:instinct",
+          "stat:initiative"
+        ],
+        "abilityId": "venator-warriors-zeal",
+        "abilityName": "Warrior's Zeal",
+        "description": "improves Instinct and Initiative of the Left Flank ally",
+        "unlock": {
+          "minimumDragonLevel": 16
+        },
+        "requiredSelfPosition": "vanguard",
+        "requiredRecipientPosition": "left-flank",
+        "friendlyScope": "formation",
+        "confidence": "verified"
+      },
+      {
+        "id": "venator-armor-break-physical",
+        "tag": "damage:physical",
+        "abilityId": "venator-armor-break",
+        "abilityName": "Armor Break",
+        "description": "increases enemy Physical Damage Received",
+        "unlock": {
+          "minimumStarRank": 8
+        },
+        "friendlyScope": "formation",
+        "confidence": "verified"
+      }
+    ],
+    "benefitsFrom": [],
+    "positionClaims": [
+      {
+        "id": "venator-warriors-zeal-vanguard",
+        "abilityId": "venator-warriors-zeal",
+        "abilityName": "Warrior's Zeal",
+        "requiredPosition": "vanguard",
+        "unlock": {
+          "minimumDragonLevel": 16
+        },
+        "description": "Warrior's Zeal requires Vanguard",
+        "confidence": "verified"
+      }
+    ]
+  },
+  {
+    "dragonId": "daemoros",
+    "dragonName": "Daemoros",
+    "outputs": [
+      {
+        "id": "daemoros-shadowflame-physical",
+        "tag": "damage:physical",
+        "tags": [
+          "damage:physical",
+          "stat:strength"
+        ],
+        "abilityId": "daemoros-shadowflame",
+        "abilityName": "Shadowflame",
+        "description": "deals Physical Damage using Strength",
+        "confidence": "verified"
+      },
+      {
+        "id": "daemoros-shadowflame-burn",
+        "tag": "status:burn",
+        "abilityId": "daemoros-shadowflame",
+        "abilityName": "Shadowflame",
+        "description": "applies Burn",
+        "friendlyScope": "formation",
+        "confidence": "verified"
+      },
+      {
+        "id": "daemoros-instill-fear-panic",
+        "tag": "status:panic",
+        "abilityId": "daemoros-instill-fear",
+        "abilityName": "Instill Fear",
+        "description": "applies Panic",
+        "unlock": {
+          "minimumStarRank": 2
+        },
+        "friendlyScope": "formation",
+        "confidence": "verified"
+      },
+      {
+        "id": "daemoros-shroud-of-shadows-confusion",
+        "tag": "status:confusion",
+        "abilityId": "daemoros-shroud-of-shadows",
+        "abilityName": "Shroud of Shadows",
+        "description": "applies Confusion as Control",
+        "unlock": {
+          "minimumStarRank": 6
+        },
+        "friendlyScope": "formation",
+        "confidence": "verified"
+      }
+    ],
+    "supports": [
+      {
+        "id": "daemoros-warriors-zeal-left-stats",
+        "tag": "stat:instinct",
+        "tags": [
+          "stat:instinct",
+          "stat:initiative"
+        ],
+        "abilityId": "daemoros-warriors-zeal",
+        "abilityName": "Warrior's Zeal",
+        "description": "improves Instinct and Initiative of the Left Flank ally",
+        "unlock": {
+          "minimumDragonLevel": 16
+        },
+        "requiredSelfPosition": "vanguard",
+        "requiredRecipientPosition": "left-flank",
+        "friendlyScope": "formation",
+        "confidence": "verified"
+      }
+    ],
+    "benefitsFrom": [],
+    "positionClaims": [
+      {
+        "id": "daemoros-warriors-zeal-vanguard",
+        "abilityId": "daemoros-warriors-zeal",
+        "abilityName": "Warrior's Zeal",
+        "requiredPosition": "vanguard",
+        "unlock": {
+          "minimumDragonLevel": 16
+        },
+        "description": "Warrior's Zeal requires Vanguard",
+        "confidence": "verified"
+      }
+    ]
+  },
+  {
+    "dragonId": "feskar",
+    "dragonName": "Feskar",
+    "outputs": [
+      {
+        "id": "feskar-calculated-assault-tactical",
+        "tag": "damage:tactical",
+        "tags": [
+          "damage:tactical",
+          "stat:instinct"
+        ],
+        "abilityId": "feskar-calculated-assault",
+        "abilityName": "Calculated Assault",
+        "description": "deals Tactical Damage using Instinct",
+        "confidence": "verified"
+      },
+      {
+        "id": "feskar-emerald-inferno-fire",
+        "tag": "damage:fire",
+        "tags": [
+          "damage:fire",
+          "stat:intelligence"
+        ],
+        "abilityId": "feskar-emerald-inferno",
+        "abilityName": "Emerald Inferno",
+        "description": "deals Fire Damage using Intelligence",
+        "unlock": {
+          "minimumStarRank": 6
+        },
+        "confidence": "verified"
+      },
+      {
+        "id": "feskar-unyielding-grasp-stagger",
+        "tag": "status:stagger",
+        "abilityId": "feskar-unyielding-grasp",
+        "abilityName": "Unyielding Grasp",
+        "description": "applies Stagger as Control",
+        "unlock": {
+          "minimumStarRank": 10
+        },
+        "friendlyScope": "formation",
+        "confidence": "verified"
+      }
+    ],
+    "supports": [
+      {
+        "id": "feskar-insightful-allies-instinct",
+        "tag": "stat:instinct",
+        "abilityId": "feskar-insightful-allies",
+        "abilityName": "Insightful Allies",
+        "description": "improves allied Instinct",
+        "unlock": {
+          "minimumStarRank": 4
+        },
+        "friendlyScope": "formation",
+        "confidence": "verified"
+      }
+    ],
+    "benefitsFrom": [
+      {
+        "id": "feskar-emerald-inferno-burn-payoff",
+        "tag": "status:burn",
+        "abilityId": "feskar-emerald-inferno",
+        "abilityName": "Emerald Inferno",
+        "description": "Burn improves Emerald Inferno Fire Damage",
+        "unlock": {
+          "minimumStarRank": 6
+        },
+        "friendlyScope": "formation",
+        "confidence": "verified"
+      }
+    ],
+    "positionClaims": [
+      {
+        "id": "feskar-champions-brilliance-vanguard",
+        "abilityId": "feskar-champions-brilliance",
+        "abilityName": "Champion's Brilliance",
+        "requiredPosition": "vanguard",
+        "unlock": {
+          "minimumDragonLevel": 16
+        },
+        "description": "Champion's Brilliance requires Vanguard",
+        "confidence": "verified"
+      }
+    ]
+  },
+  {
+    "dragonId": "rhysarion",
+    "dragonName": "Rhysarion",
+    "outputs": [
+      {
+        "id": "rhysarion-dawnsong-physical",
+        "tag": "damage:physical",
+        "tags": [
+          "damage:physical",
+          "stat:strength"
+        ],
+        "abilityId": "rhysarion-dawnsong",
+        "abilityName": "Dawnsong",
+        "description": "deals Physical Damage using Strength",
+        "confidence": "verified"
+      },
+      {
+        "id": "rhysarion-dawnsong-fire",
+        "tag": "damage:fire",
+        "tags": [
+          "damage:fire",
+          "stat:intelligence"
+        ],
+        "abilityId": "rhysarion-dawnsong",
+        "abilityName": "Dawnsong",
+        "description": "deals Fire Damage using Intelligence",
+        "confidence": "verified"
+      },
+      {
+        "id": "rhysarion-ebbing-fury-recovery",
+        "tag": "effect:recovery",
+        "tags": [
+          "effect:recovery",
+          "stat:strength"
+        ],
+        "abilityId": "rhysarion-ebbing-fury",
+        "abilityName": "Ebbing Fury",
+        "description": "provides Recovery enhanced by Strength",
+        "unlock": {
+          "minimumStarRank": 2
+        },
+        "friendlyScope": "formation",
+        "confidence": "verified"
+      },
+      {
+        "id": "rhysarion-echoing-melody-recovery",
+        "tag": "effect:recovery",
+        "tags": [
+          "effect:recovery",
+          "stat:intelligence"
+        ],
+        "abilityId": "rhysarion-echoing-melody",
+        "abilityName": "Echoing Melody",
+        "description": "provides Recovery enhanced by Intelligence",
+        "unlock": {
+          "minimumStarRank": 6
+        },
+        "friendlyScope": "formation",
+        "confidence": "verified"
+      }
+    ],
+    "supports": [
+      {
+        "id": "rhysarion-champions-vigor-right-damage",
+        "tag": "damage:physical",
+        "tags": [
+          "damage:physical",
+          "damage:tactical",
+          "damage:fire"
+        ],
+        "abilityId": "rhysarion-champions-vigor",
+        "abilityName": "Champion's Vigor",
+        "description": "improves Damage Dealt of the Right Flank ally",
+        "unlock": {
+          "minimumDragonLevel": 16
+        },
+        "requiredSelfPosition": "vanguard",
+        "requiredRecipientPosition": "right-flank",
+        "friendlyScope": "formation",
+        "confidence": "verified"
+      },
+      {
+        "id": "rhysarion-unbroken-devotion-recovery",
+        "tag": "effect:recovery",
+        "abilityId": "rhysarion-unbroken-devotion",
+        "abilityName": "Unbroken Devotion",
+        "description": "improves Recovery Received of other allies",
+        "unlock": {
+          "minimumStarRank": 8
+        },
+        "friendlyScope": "formation",
+        "confidence": "verified"
+      },
+      {
+        "id": "rhysarion-inspiring-melody-initiative",
+        "tag": "stat:initiative",
+        "abilityId": "rhysarion-inspiring-melody",
+        "abilityName": "Inspiring Melody",
+        "description": "improves Initiative of an adjacent other ally",
+        "unlock": {
+          "minimumStarRank": 10
+        },
+        "friendlyScope": "adjacent",
+        "confidence": "verified"
+      }
+    ],
+    "benefitsFrom": [
+      {
+        "id": "rhysarion-dawnsong-control-payoff",
+        "tag": "status:control",
+        "abilityId": "rhysarion-dawnsong",
+        "abilityName": "Dawnsong",
+        "description": "Control improves Dawnsong Fire Damage",
+        "friendlyScope": "formation",
+        "confidence": "verified"
+      }
+    ],
+    "positionClaims": [
+      {
+        "id": "rhysarion-champions-vigor-vanguard",
+        "abilityId": "rhysarion-champions-vigor",
+        "abilityName": "Champion's Vigor",
+        "requiredPosition": "vanguard",
+        "unlock": {
+          "minimumDragonLevel": 16
+        },
+        "description": "Champion's Vigor requires Vanguard",
+        "confidence": "verified"
+      }
+    ]
+  },
+  {
+    "dragonId": "shadowsong",
+    "dragonName": "Shadowsong",
+    "outputs": [
+      {
+        "id": "shadowsong-breath-of-fire-fire",
+        "tag": "damage:fire",
+        "tags": [
+          "damage:fire",
+          "stat:intelligence"
+        ],
+        "abilityId": "shadowsong-breath-of-fire",
+        "abilityName": "Breath of Fire",
+        "description": "deals Fire Damage using Intelligence",
+        "confidence": "verified"
+      },
+      {
+        "id": "shadowsong-blazing-conductor-burn",
+        "tag": "status:burn",
+        "abilityId": "shadowsong-blazing-conductor",
+        "abilityName": "Blazing Conductor",
+        "description": "applies Burn",
+        "unlock": {
+          "minimumStarRank": 10
+        },
+        "friendlyScope": "formation",
+        "confidence": "verified"
+      },
+      {
+        "id": "shadowsong-scorched-earth-vulnerable",
+        "tag": "damage:physical",
+        "tags": [
+          "damage:physical",
+          "damage:tactical",
+          "damage:fire"
+        ],
+        "abilityId": "shadowsong-scorched-earth",
+        "abilityName": "Scorched Earth",
+        "description": "increases enemy generic Damage Received through Vulnerable",
+        "unlock": {
+          "minimumStarRank": 6
+        },
+        "friendlyScope": "formation",
+        "confidence": "verified"
+      }
+    ],
+    "supports": [
+      {
+        "id": "shadowsong-hunters-wrath-right-stats",
+        "tag": "stat:strength",
+        "tags": [
+          "stat:strength",
+          "stat:initiative"
+        ],
+        "abilityId": "shadowsong-hunters-wrath",
+        "abilityName": "Hunter's Wrath",
+        "description": "improves Strength and Initiative of the Right Flank ally",
+        "unlock": {
+          "minimumDragonLevel": 16
+        },
+        "requiredSelfPosition": "vanguard",
+        "requiredRecipientPosition": "right-flank",
+        "friendlyScope": "formation",
+        "confidence": "verified"
+      },
+      {
+        "id": "shadowsong-blazing-onslaught-vulnerability",
+        "tag": "damage:fire",
+        "tags": [
+          "damage:fire",
+          "damage:physical"
+        ],
+        "abilityId": "shadowsong-blazing-onslaught",
+        "abilityName": "Blazing Onslaught",
+        "description": "increases enemy Fire and non-Basic Physical Damage Received",
+        "unlock": {
+          "minimumStarRank": 4
+        },
+        "friendlyScope": "formation",
+        "confidence": "verified"
+      }
+    ],
+    "benefitsFrom": [
+      {
+        "id": "shadowsong-panic-payoff",
+        "tag": "status:panic",
+        "abilityId": "shadowsong-breath-of-fire",
+        "abilityName": "Breath of Fire and Scorched Earth",
+        "description": "Panic improves Breath of Fire damage and Scorched Earth application",
+        "friendlyScope": "formation",
+        "confidence": "verified"
+      }
+    ],
+    "positionClaims": [
+      {
+        "id": "shadowsong-hunters-wrath-vanguard",
+        "abilityId": "shadowsong-hunters-wrath",
+        "abilityName": "Hunter's Wrath",
+        "requiredPosition": "vanguard",
+        "unlock": {
+          "minimumDragonLevel": 16
+        },
+        "description": "Hunter's Wrath requires Vanguard",
+        "confidence": "verified"
+      }
+    ]
+  },
+  {
+    "dragonId": "vaeldra",
+    "dragonName": "Vaeldra",
+    "outputs": [
+      {
+        "id": "vaeldra-lure-taunt",
+        "tag": "status:taunt",
+        "abilityId": "vaeldra-lure",
+        "abilityName": "Lure",
+        "description": "applies Taunt",
+        "friendlyScope": "formation",
+        "confidence": "verified"
+      },
+      {
+        "id": "vaeldra-lure-physical",
+        "tag": "damage:physical",
+        "tags": [
+          "damage:physical",
+          "stat:strength"
+        ],
+        "abilityId": "vaeldra-lure",
+        "abilityName": "Lure",
+        "description": "deals Physical Damage using Strength",
+        "confidence": "verified"
+      },
+      {
+        "id": "vaeldra-sirens-call-stagger",
+        "tag": "status:stagger",
+        "abilityId": "vaeldra-sirens-call",
+        "abilityName": "Siren's Call",
+        "description": "applies Stagger as Control",
+        "unlock": {
+          "minimumStarRank": 10
+        },
+        "friendlyScope": "formation",
+        "confidence": "verified"
+      }
+    ],
+    "supports": [
+      {
+        "id": "vaeldra-warriors-resilience-left-tactical",
+        "tag": "damage:tactical",
+        "abilityId": "vaeldra-warriors-resilience",
+        "abilityName": "Warrior's Resilience",
+        "description": "improves Tactical Damage of the Left Flank ally",
+        "unlock": {
+          "minimumDragonLevel": 16
+        },
+        "requiredSelfPosition": "vanguard",
+        "requiredRecipientPosition": "left-flank",
+        "friendlyScope": "formation",
+        "confidence": "verified"
+      },
+      {
+        "id": "vaeldra-tempting-distraction-vulnerability",
+        "tag": "damage:physical",
+        "tags": [
+          "damage:physical",
+          "damage:fire"
+        ],
+        "abilityId": "vaeldra-tempting-distraction",
+        "abilityName": "Tempting Distraction",
+        "description": "increases Fire and non-Basic Physical Damage Received after Vaeldra's own Taunt",
+        "unlock": {
+          "minimumStarRank": 6
+        },
+        "friendlyScope": "formation",
+        "confidence": "verified"
+      },
+      {
+        "id": "vaeldra-infernal-force-damage",
+        "tag": "damage:fire",
+        "tags": [
+          "damage:fire",
+          "damage:physical"
+        ],
+        "abilityId": "vaeldra-infernal-force",
+        "abilityName": "Infernal Force",
+        "description": "improves allied Fire and non-Basic Physical Damage",
+        "unlock": {
+          "minimumStarRank": 8
+        },
+        "friendlyScope": "formation",
+        "confidence": "verified"
+      }
+    ],
+    "benefitsFrom": [],
+    "positionClaims": [
+      {
+        "id": "vaeldra-warriors-resilience-vanguard",
+        "abilityId": "vaeldra-warriors-resilience",
+        "abilityName": "Warrior's Resilience",
+        "requiredPosition": "vanguard",
+        "unlock": {
+          "minimumDragonLevel": 16
+        },
+        "description": "Warrior's Resilience requires Vanguard",
+        "confidence": "verified"
+      }
+    ]
+  },
+  {
+    "dragonId": "sheepstealer",
+    "dragonName": "Sheepstealer",
+    "outputs": [
+      {
+        "id": "sheepstealer-wild-hunt-fire",
+        "tag": "damage:fire",
+        "tags": [
+          "damage:fire",
+          "stat:intelligence"
+        ],
+        "abilityId": "sheepstealer-wild-hunt",
+        "abilityName": "Wild Hunt",
+        "description": "deals Fire Damage using Intelligence",
+        "confidence": "verified"
+      },
+      {
+        "id": "sheepstealer-savage-claim-recovery",
+        "tag": "effect:recovery",
+        "tags": [
+          "effect:recovery",
+          "stat:intelligence"
+        ],
+        "abilityId": "sheepstealer-savage-claim",
+        "abilityName": "Savage Claim",
+        "description": "provides self Recovery enhanced by Intelligence",
+        "unlock": {
+          "minimumStarRank": 10
+        },
+        "friendlyScope": "self",
+        "confidence": "verified"
+      }
+    ],
+    "supports": [
+      {
+        "id": "sheepstealer-hunters-cunning-right-physical",
+        "tag": "damage:physical",
+        "abilityId": "sheepstealer-hunters-cunning",
+        "abilityName": "Hunter's Cunning",
+        "description": "improves Physical Damage of the Right Flank ally",
+        "unlock": {
+          "minimumDragonLevel": 16
+        },
+        "requiredSelfPosition": "vanguard",
+        "requiredRecipientPosition": "right-flank",
+        "friendlyScope": "formation",
+        "confidence": "verified"
+      }
+    ],
+    "benefitsFrom": [
+      {
+        "id": "sheepstealer-hunters-cunning-recovery-payoff",
+        "tag": "effect:recovery",
+        "abilityId": "sheepstealer-hunters-cunning",
+        "abilityName": "Hunter's Cunning",
+        "description": "Hunter's Cunning improves incoming Recovery",
+        "unlock": {
+          "minimumDragonLevel": 16
+        },
+        "requiredSelfPosition": "vanguard",
+        "friendlyScope": "formation",
+        "confidence": "verified"
+      }
+    ],
+    "positionClaims": [
+      {
+        "id": "sheepstealer-hunters-cunning-vanguard",
+        "abilityId": "sheepstealer-hunters-cunning",
+        "abilityName": "Hunter's Cunning",
+        "requiredPosition": "vanguard",
+        "unlock": {
+          "minimumDragonLevel": 16
+        },
+        "description": "Hunter's Cunning requires Vanguard",
+        "confidence": "verified"
+      }
+    ]
+  },
+  {
+    "dragonId": "vermax",
+    "dragonName": "Vermax",
+    "outputs": [
+      {
+        "id": "vermax-spreading-blaze-physical",
+        "tag": "damage:physical",
+        "tags": [
+          "damage:physical",
+          "stat:strength"
+        ],
+        "abilityId": "vermax-spreading-blaze",
+        "abilityName": "Spreading Blaze",
+        "description": "deals Physical Damage using Strength",
+        "confidence": "verified"
+      }
+    ],
+    "supports": [
+      {
+        "id": "vermax-spreading-blaze-tactical",
+        "tag": "damage:tactical",
+        "abilityId": "vermax-spreading-blaze",
+        "abilityName": "Spreading Blaze",
+        "description": "supports an ally that deals Tactical Damage",
+        "friendlyScope": "formation",
+        "confidence": "verified"
+      },
+      {
+        "id": "vermax-warriors-zeal-left-stats",
+        "tag": "stat:instinct",
+        "tags": [
+          "stat:instinct",
+          "stat:initiative"
+        ],
+        "abilityId": "vermax-warriors-zeal",
+        "abilityName": "Warrior's Zeal",
+        "description": "improves Instinct and Initiative of the Left Flank ally",
+        "unlock": {
+          "minimumDragonLevel": 16
+        },
+        "requiredSelfPosition": "vanguard",
+        "requiredRecipientPosition": "left-flank",
+        "friendlyScope": "formation",
+        "confidence": "verified"
+      },
+      {
+        "id": "vermax-reactive-instincts-stats",
+        "tag": "stat:instinct",
+        "tags": [
+          "stat:instinct",
+          "stat:initiative"
+        ],
+        "abilityId": "vermax-reactive-instincts",
+        "abilityName": "Reactive Instincts",
+        "description": "improves Instinct and Initiative of an ally",
+        "unlock": {
+          "minimumStarRank": 4
+        },
+        "friendlyScope": "formation",
+        "confidence": "verified"
+      },
+      {
+        "id": "vermax-rallying-flame-tactical",
+        "tag": "damage:tactical",
+        "abilityId": "vermax-rallying-flame",
+        "abilityName": "Rallying Flame",
+        "description": "supports an ally that deals Tactical Damage",
+        "unlock": {
+          "minimumStarRank": 6
+        },
+        "friendlyScope": "formation",
+        "confidence": "verified"
+      }
+    ],
+    "benefitsFrom": [],
+    "positionClaims": [
+      {
+        "id": "vermax-warriors-zeal-vanguard",
+        "abilityId": "vermax-warriors-zeal",
+        "abilityName": "Warrior's Zeal",
+        "requiredPosition": "vanguard",
+        "unlock": {
+          "minimumDragonLevel": 16
+        },
+        "description": "Warrior's Zeal requires Vanguard",
+        "confidence": "verified"
+      }
+    ]
+  }
+]

@@ -1,307 +1,277 @@
 {
-  "contextVersion": 1,
   "count": 30,
+  "detailedDragonCount": 15,
+  "metadataOnlyDragonCount": 15,
   "dragons": [
     {
-      "breed": "Sentinel",
-      "dataStatus": "community-verified",
-      "file": "dragons/syrax.json",
       "id": "syrax",
+      "slug": "syrax",
       "name": "Syrax",
-      "profileCompleteness": "detailed-combat-data",
       "rarity": "Legendary",
-      "slug": "syrax"
+      "breed": "Sentinel",
+      "profileCompleteness": "detailed-abilities",
+      "simpleProfileStatus": "curated"
     },
     {
-      "breed": "Warrior",
-      "dataStatus": "community-verified",
-      "file": "dragons/vhagar.json",
       "id": "vhagar",
+      "slug": "vhagar",
       "name": "Vhagar",
-      "profileCompleteness": "detailed-combat-data",
       "rarity": "Legendary",
-      "slug": "vhagar"
+      "breed": "Warrior",
+      "profileCompleteness": "detailed-abilities",
+      "simpleProfileStatus": "curated"
     },
     {
-      "breed": "Hunter",
-      "dataStatus": "community-verified",
-      "file": "dragons/caraxes.json",
       "id": "caraxes",
+      "slug": "caraxes",
       "name": "Caraxes",
-      "profileCompleteness": "detailed-combat-data",
       "rarity": "Legendary",
-      "slug": "caraxes"
+      "breed": "Hunter",
+      "profileCompleteness": "detailed-abilities",
+      "simpleProfileStatus": "curated"
     },
     {
-      "breed": "Champion",
-      "dataStatus": "community-verified",
-      "file": "dragons/seasmoke.json",
       "id": "seasmoke",
+      "slug": "seasmoke",
       "name": "Seasmoke",
-      "profileCompleteness": "detailed-combat-data",
       "rarity": "Legendary",
-      "slug": "seasmoke"
+      "breed": "Champion",
+      "profileCompleteness": "detailed-abilities",
+      "simpleProfileStatus": "curated"
     },
     {
-      "breed": "Champion",
-      "dataStatus": "official-metadata-only",
-      "file": "dragons/solstryker.json",
       "id": "solstryker",
+      "slug": "solstryker",
       "name": "Solstryker",
-      "profileCompleteness": "metadata-only",
       "rarity": "Rare",
-      "slug": "solstryker"
+      "breed": "Champion",
+      "profileCompleteness": "metadata-only",
+      "simpleProfileStatus": "metadata-only-unmapped"
     },
     {
-      "breed": "Hunter",
-      "dataStatus": "community-verified",
-      "file": "dragons/crimson.json",
       "id": "crimson",
+      "slug": "crimson",
       "name": "Crimson",
-      "profileCompleteness": "detailed-combat-data",
       "rarity": "Legendary",
-      "slug": "crimson"
+      "breed": "Hunter",
+      "profileCompleteness": "detailed-abilities",
+      "simpleProfileStatus": "curated"
     },
     {
-      "breed": "Champion",
-      "dataStatus": "community-verified",
-      "file": "dragons/kalspire.json",
       "id": "kalspire",
+      "slug": "kalspire",
       "name": "Kalspire",
-      "profileCompleteness": "detailed-combat-data",
       "rarity": "Legendary",
-      "slug": "kalspire"
+      "breed": "Champion",
+      "profileCompleteness": "detailed-abilities",
+      "simpleProfileStatus": "curated"
     },
     {
-      "breed": "Sentinel",
-      "dataStatus": "community-verified",
-      "file": "dragons/malachite.json",
       "id": "malachite",
+      "slug": "malachite",
       "name": "Malachite",
-      "profileCompleteness": "detailed-combat-data",
       "rarity": "Legendary",
-      "slug": "malachite"
+      "breed": "Sentinel",
+      "profileCompleteness": "detailed-abilities",
+      "simpleProfileStatus": "curated"
     },
     {
-      "breed": "Warrior",
-      "dataStatus": "community-verified",
-      "file": "dragons/venator.json",
       "id": "venator",
+      "slug": "venator",
       "name": "Venator",
-      "profileCompleteness": "detailed-combat-data",
       "rarity": "Legendary",
-      "slug": "venator"
+      "breed": "Warrior",
+      "profileCompleteness": "detailed-abilities",
+      "simpleProfileStatus": "curated"
     },
     {
-      "breed": "Warrior",
-      "dataStatus": "community-verified",
-      "file": "dragons/daemoros.json",
       "id": "daemoros",
+      "slug": "daemoros",
       "name": "Daemoros",
-      "profileCompleteness": "detailed-combat-data",
       "rarity": "Epic",
-      "slug": "daemoros"
+      "breed": "Warrior",
+      "profileCompleteness": "detailed-abilities",
+      "simpleProfileStatus": "curated"
     },
     {
-      "breed": "Champion",
-      "dataStatus": "community-verified",
-      "file": "dragons/feskar.json",
       "id": "feskar",
+      "slug": "feskar",
       "name": "Feskar",
-      "profileCompleteness": "detailed-combat-data",
       "rarity": "Epic",
-      "slug": "feskar"
+      "breed": "Champion",
+      "profileCompleteness": "detailed-abilities",
+      "simpleProfileStatus": "curated"
     },
     {
-      "breed": "Champion",
-      "dataStatus": "community-verified",
-      "file": "dragons/rhysarion.json",
       "id": "rhysarion",
+      "slug": "rhysarion",
       "name": "Rhysarion",
-      "profileCompleteness": "detailed-combat-data",
       "rarity": "Epic",
-      "slug": "rhysarion"
+      "breed": "Champion",
+      "profileCompleteness": "detailed-abilities",
+      "simpleProfileStatus": "curated"
     },
     {
-      "breed": "Hunter",
-      "dataStatus": "community-verified",
-      "file": "dragons/shadowsong.json",
       "id": "shadowsong",
+      "slug": "shadowsong",
       "name": "Shadowsong",
-      "profileCompleteness": "detailed-combat-data",
       "rarity": "Epic",
-      "slug": "shadowsong"
+      "breed": "Hunter",
+      "profileCompleteness": "detailed-abilities",
+      "simpleProfileStatus": "curated"
     },
     {
-      "breed": "Hunter",
-      "dataStatus": "official-metadata-only",
-      "file": "dragons/tashix.json",
       "id": "tashix",
+      "slug": "tashix",
       "name": "Tashix",
-      "profileCompleteness": "metadata-only",
       "rarity": "Epic",
-      "slug": "tashix"
+      "breed": "Hunter",
+      "profileCompleteness": "metadata-only",
+      "simpleProfileStatus": "metadata-only-unmapped"
     },
     {
-      "breed": "Warrior",
-      "dataStatus": "community-verified",
-      "file": "dragons/vaeldra.json",
       "id": "vaeldra",
+      "slug": "vaeldra",
       "name": "Vaeldra",
-      "profileCompleteness": "detailed-combat-data",
       "rarity": "Epic",
-      "slug": "vaeldra"
+      "breed": "Warrior",
+      "profileCompleteness": "detailed-abilities",
+      "simpleProfileStatus": "curated"
     },
     {
-      "breed": "Sentinel",
-      "dataStatus": "official-metadata-only",
-      "file": "dragons/velar.json",
       "id": "velar",
+      "slug": "velar",
       "name": "Velar",
-      "profileCompleteness": "metadata-only",
       "rarity": "Epic",
-      "slug": "velar"
+      "breed": "Sentinel",
+      "profileCompleteness": "metadata-only",
+      "simpleProfileStatus": "metadata-only-unmapped"
     },
     {
-      "breed": "Sentinel",
-      "dataStatus": "official-metadata-only",
-      "file": "dragons/zivern.json",
       "id": "zivern",
+      "slug": "zivern",
       "name": "Zivern",
-      "profileCompleteness": "metadata-only",
       "rarity": "Epic",
-      "slug": "zivern"
+      "breed": "Sentinel",
+      "profileCompleteness": "metadata-only",
+      "simpleProfileStatus": "metadata-only-unmapped"
     },
     {
-      "breed": "Hunter",
-      "dataStatus": "official-metadata-only",
-      "file": "dragons/antares.json",
       "id": "antares",
+      "slug": "antares",
       "name": "Antares",
-      "profileCompleteness": "metadata-only",
       "rarity": "Rare",
-      "slug": "antares"
+      "breed": "Hunter",
+      "profileCompleteness": "metadata-only",
+      "simpleProfileStatus": "metadata-only-unmapped"
     },
     {
-      "breed": "Sentinel",
-      "dataStatus": "official-metadata-only",
-      "file": "dragons/shimmer.json",
       "id": "shimmer",
+      "slug": "shimmer",
       "name": "Shimmer",
-      "profileCompleteness": "metadata-only",
       "rarity": "Rare",
-      "slug": "shimmer"
+      "breed": "Sentinel",
+      "profileCompleteness": "metadata-only",
+      "simpleProfileStatus": "metadata-only-unmapped"
     },
     {
-      "breed": "Hunter",
-      "dataStatus": "official-metadata-only",
-      "file": "dragons/jagadrix.json",
       "id": "jagadrix",
+      "slug": "jagadrix",
       "name": "Jagadrix",
-      "profileCompleteness": "metadata-only",
       "rarity": "Rare",
-      "slug": "jagadrix"
-    },
-    {
-      "breed": "Champion",
-      "dataStatus": "official-metadata-only",
-      "file": "dragons/bevlorin.json",
-      "id": "bevlorin",
-      "name": "Bevlorin",
-      "profileCompleteness": "metadata-only",
-      "rarity": "Rare",
-      "slug": "bevlorin"
-    },
-    {
-      "breed": "Warrior",
-      "dataStatus": "official-metadata-only",
-      "file": "dragons/shadowrend.json",
-      "id": "shadowrend",
-      "name": "Shadowrend",
-      "profileCompleteness": "metadata-only",
-      "rarity": "Rare",
-      "slug": "shadowrend"
-    },
-    {
-      "breed": "Warrior",
-      "dataStatus": "official-metadata-only",
-      "file": "dragons/thunderstrike.json",
-      "id": "thunderstrike",
-      "name": "Thunderstrike",
-      "profileCompleteness": "metadata-only",
-      "rarity": "Rare",
-      "slug": "thunderstrike"
-    },
-    {
-      "breed": "Sentinel",
-      "dataStatus": "official-metadata-only",
-      "file": "dragons/vesper.json",
-      "id": "vesper",
-      "name": "Vesper",
-      "profileCompleteness": "metadata-only",
-      "rarity": "Rare",
-      "slug": "vesper"
-    },
-    {
-      "breed": "Champion",
-      "dataStatus": "official-metadata-only",
-      "file": "dragons/arulix.json",
-      "id": "arulix",
-      "name": "Arulix",
-      "profileCompleteness": "metadata-only",
-      "rarity": "Rare",
-      "slug": "arulix"
-    },
-    {
-      "breed": "Champion",
-      "dataStatus": "official-metadata-only",
-      "file": "dragons/nyrena.json",
-      "id": "nyrena",
-      "name": "Nyrena",
-      "profileCompleteness": "metadata-only",
-      "rarity": "Rare",
-      "slug": "nyrena"
-    },
-    {
-      "breed": "Sentinel",
-      "dataStatus": "official-metadata-only",
-      "file": "dragons/dawnseeker.json",
-      "id": "dawnseeker",
-      "name": "Dawnseeker",
-      "profileCompleteness": "metadata-only",
-      "rarity": "Rare",
-      "slug": "dawnseeker"
-    },
-    {
-      "breed": "Warrior",
-      "dataStatus": "official-metadata-only",
-      "file": "dragons/arrax.json",
-      "id": "arrax",
-      "name": "Arrax",
-      "profileCompleteness": "metadata-only",
-      "rarity": "Rare",
-      "slug": "arrax"
-    },
-    {
       "breed": "Hunter",
-      "dataStatus": "community-verified",
-      "file": "dragons/sheepstealer.json",
-      "id": "sheepstealer",
-      "name": "Sheepstealer",
-      "profileCompleteness": "detailed-combat-data",
-      "rarity": "Legendary",
-      "slug": "sheepstealer"
+      "profileCompleteness": "metadata-only",
+      "simpleProfileStatus": "metadata-only-unmapped"
     },
     {
+      "id": "bevlorin",
+      "slug": "bevlorin",
+      "name": "Bevlorin",
+      "rarity": "Rare",
+      "breed": "Champion",
+      "profileCompleteness": "metadata-only",
+      "simpleProfileStatus": "metadata-only-unmapped"
+    },
+    {
+      "id": "shadowrend",
+      "slug": "shadowrend",
+      "name": "Shadowrend",
+      "rarity": "Rare",
       "breed": "Warrior",
-      "dataStatus": "community-verified",
-      "file": "dragons/vermax.json",
+      "profileCompleteness": "metadata-only",
+      "simpleProfileStatus": "metadata-only-unmapped"
+    },
+    {
+      "id": "thunderstrike",
+      "slug": "thunderstrike",
+      "name": "Thunderstrike",
+      "rarity": "Rare",
+      "breed": "Warrior",
+      "profileCompleteness": "metadata-only",
+      "simpleProfileStatus": "metadata-only-unmapped"
+    },
+    {
+      "id": "vesper",
+      "slug": "vesper",
+      "name": "Vesper",
+      "rarity": "Rare",
+      "breed": "Sentinel",
+      "profileCompleteness": "metadata-only",
+      "simpleProfileStatus": "metadata-only-unmapped"
+    },
+    {
+      "id": "arulix",
+      "slug": "arulix",
+      "name": "Arulix",
+      "rarity": "Rare",
+      "breed": "Champion",
+      "profileCompleteness": "metadata-only",
+      "simpleProfileStatus": "metadata-only-unmapped"
+    },
+    {
+      "id": "nyrena",
+      "slug": "nyrena",
+      "name": "Nyrena",
+      "rarity": "Rare",
+      "breed": "Champion",
+      "profileCompleteness": "metadata-only",
+      "simpleProfileStatus": "metadata-only-unmapped"
+    },
+    {
+      "id": "dawnseeker",
+      "slug": "dawnseeker",
+      "name": "Dawnseeker",
+      "rarity": "Rare",
+      "breed": "Sentinel",
+      "profileCompleteness": "metadata-only",
+      "simpleProfileStatus": "metadata-only-unmapped"
+    },
+    {
+      "id": "arrax",
+      "slug": "arrax",
+      "name": "Arrax",
+      "rarity": "Rare",
+      "breed": "Warrior",
+      "profileCompleteness": "metadata-only",
+      "simpleProfileStatus": "metadata-only-unmapped"
+    },
+    {
+      "id": "sheepstealer",
+      "slug": "sheepstealer",
+      "name": "Sheepstealer",
+      "rarity": "Legendary",
+      "breed": "Hunter",
+      "profileCompleteness": "detailed-abilities",
+      "simpleProfileStatus": "curated"
+    },
+    {
       "id": "vermax",
+      "slug": "vermax",
       "name": "Vermax",
-      "profileCompleteness": "detailed-combat-data",
       "rarity": "Epic",
-      "slug": "vermax"
+      "breed": "Warrior",
+      "profileCompleteness": "detailed-abilities",
+      "simpleProfileStatus": "curated"
     }
-  ],
-  "format": "dragonfire-dragon-profile-index"
+  ]
 }

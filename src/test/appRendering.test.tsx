@@ -2,6 +2,7 @@ import { render, screen, within } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { afterEach, describe, expect, it, vi } from 'vitest';
 import { App, RawWordingDisclosure } from '../app/App';
+import { dragons } from '../data/dragons';
 import { STORAGE_KEY } from '../services/rosterStorage';
 
 
@@ -23,6 +24,30 @@ describe('Dragonfire Roster Lab app', () => {
     expect(screen.getByRole('heading', { name: 'Syrax' })).toBeInTheDocument();
   });
 
+  it('renders current Overview and About product copy', async () => {
+    const user = userEvent.setup();
+    const detailedAbilityCount = dragons.filter(
+      (dragon) => dragon.command && dragon.trait && dragon.habits.length > 0,
+    ).length;
+
+    render(<App />);
+
+    const detailedAbilityCard = screen.getByText('Detailed ability records').closest('.stat-card');
+    expect(detailedAbilityCard).toHaveTextContent(String(detailedAbilityCount));
+    const notice = screen.getByText(/The database currently includes detailed Command, Trait, and Habit wording/i);
+    expect(notice).toHaveTextContent(`profiles for ${detailedAbilityCount} dragons`);
+    expect(screen.queryByText(/prepare for verified community combat data/i)).not.toBeInTheDocument();
+    expect(screen.queryByText(/Malachite, Seasmoke, Sheepstealer, and Vermax/i)).not.toBeInTheDocument();
+    expect(screen.queryByText(/unverified mechanics remain marked/i)).not.toBeInTheDocument();
+
+    await user.click(screen.getByRole('button', { name: /about/i }));
+    expect(
+      screen.getByText(/Ability evidence and curated profile updates require sourced community submissions/i),
+    ).toBeInTheDocument();
+    expect(screen.queryByText(/Combat data will require sourced community submissions/i)).not.toBeInTheDocument();
+    expect(screen.getByText(/should never submit account credentials/i)).toBeInTheDocument();
+  });
+
   it('displays unknown combat values as Not yet verified', async () => {
     const user = userEvent.setup();
     render(<App />);
@@ -36,7 +61,7 @@ describe('Dragonfire Roster Lab app', () => {
     expect(within(dialog).getAllByText('Not yet verified').length).toBeGreaterThan(4);
   });
 
-  it("renders Phantom's Veil one-of options with derived Level 1 values", async () => {
+  it("renders Phantom's Veil as descriptive raw wording with saved Habit Level controls", async () => {
     const user = userEvent.setup();
     render(<App />);
 
@@ -52,20 +77,17 @@ describe('Dragonfire Roster Lab app', () => {
     expect(phantomCard).not.toBeNull();
 
     expect(phantomCard).toHaveTextContent('Unlocked or available');
-    expect(phantomCard).toHaveTextContent('Current selected values: Habit Level 1 (derived from unlock)');
-    expect(phantomCard).toHaveTextContent('Current selected value: 15%');
-    expect(phantomCard).toHaveTextContent('Mutually exclusive alternatives: exactly one option applies');
-    expect(phantomCard).toHaveTextContent('these reductions are not simultaneous');
-    expect(phantomCard).toHaveTextContent('Physical Damage Received: reduce Physical Damage Received by 15%');
-    expect(phantomCard).toHaveTextContent('Tactical Damage Received: reduce Tactical Damage Received by 15%');
-    expect(phantomCard).toHaveTextContent('Fire Damage Received: reduce Fire Damage Received by 15%');
-    expect(phantomCard).toHaveTextContent('target Self');
-    expect(phantomCard).toHaveTextContent('duration Until end of current round');
-    expect(phantomCard).toHaveTextContent('Selector method: unknown');
-    expect(phantomCard).not.toHaveTextContent('value: Not yet verified');
+    expect(phantomCard).toHaveTextContent('Saved Habit LevelNot recorded');
+    expect(phantomCard).toHaveTextContent('Tags: DAMAGE_RECEIVED_DOWN');
+    const rawSummary = within(phantomCard as HTMLElement).getByText('Raw verified wording');
+    await user.click(rawSummary);
+    expect(rawSummary.closest('details')).toHaveTextContent('reduce exactly one of Physical, Tactical, or Fire Damage Received');
+    expect(rawSummary.closest('details')).toHaveTextContent('Selection method is not stated');
+    expect(phantomCard).not.toHaveTextContent('Current selected value:');
+    expect(phantomCard).not.toHaveTextContent('Mutually exclusive alternatives');
   });
 
-  it("renders Phantom's Veil explicit upgraded and locked-preview option values without mutating Habit storage", async () => {
+  it("persists Phantom's Veil Habit Level separately from Star Rank locking", async () => {
     const user = userEvent.setup();
     render(<App />);
 
@@ -81,18 +103,14 @@ describe('Dragonfire Roster Lab app', () => {
     expect(phantomCard).not.toBeNull();
     await user.selectOptions(within(phantomCard as HTMLElement).getByLabelText(/habit level/i), '3');
 
-    expect(phantomCard).toHaveTextContent('Current selected value: 24%');
-    expect(phantomCard).not.toHaveTextContent('Current selected value: 15%');
-    expect(phantomCard).toHaveTextContent('Mutually exclusive alternatives');
+    expect(phantomCard).toHaveTextContent('Saved Habit Level3');
+    expect(phantomCard).not.toHaveTextContent('Current selected value:');
 
     await user.selectOptions(within(dialog).getByLabelText(/star rank/i), '1');
     await user.selectOptions(within(phantomCard as HTMLElement).getByLabelText(/habit level/i), '');
     phantomCard = within(dialog).getByRole('heading', { name: "Phantom's Veil" }).closest('article');
     expect(phantomCard).toHaveTextContent('Locked preview');
-    expect(phantomCard).toHaveTextContent('Mutually exclusive alternatives: exactly one option applies');
-    expect(phantomCard).toHaveTextContent('Physical Damage Received');
-    expect(phantomCard).toHaveTextContent('Tactical Damage Received');
-    expect(phantomCard).toHaveTextContent('Fire Damage Received');
+    expect(phantomCard).toHaveTextContent('Physical, Tactical, or Fire Damage Received');
 
     const stored = JSON.parse(window.localStorage.getItem(STORAGE_KEY) ?? '{}') as {
       roster?: Array<{ dragonId: string; habitLevels?: Record<string, unknown> }>;
@@ -111,13 +129,9 @@ describe('Dragonfire Roster Lab app', () => {
     const sirensCallCard = within(dialog).getByRole('heading', { name: "Siren's Call" }).closest('article');
     expect(sirensCallCard).not.toBeNull();
 
-    expect(sirensCallCard).toHaveTextContent('Conditional branches: exactly one branch applies to each target');
-    expect(sirensCallCard).toHaveTextContent('Selector method: condition per target');
-    expect(sirensCallCard).toHaveTextContent('Stagger if already Taunted');
-    expect(sirensCallCard).toHaveTextContent('Target is already Taunted. apply Stagger instead');
-    expect(sirensCallCard).toHaveTextContent('Taunt if not already Taunted');
-    expect(sirensCallCard).toHaveTextContent('Target is not already Taunted. apply Taunt');
-    expect(sirensCallCard).not.toHaveTextContent('apply Taunt and Stagger');
+    expect(sirensCallCard).toHaveTextContent('apply Taunt to each non-Taunted enemy');
+    expect(sirensCallCard).toHaveTextContent('Stagger to each already Taunted enemy');
+    expect(sirensCallCard).not.toHaveTextContent('Conditional branches');
   });
 
   it('shows raw verified command wording with preserved paragraphs and a safe fallback', async () => {
@@ -216,7 +230,7 @@ describe('Dragonfire Roster Lab app', () => {
     expect(rendered.container).toBeEmptyDOMElement();
   });
 
-  it('renders the complete legacy command wording for Crimson, Sheepstealer, and Kalspire', async () => {
+  it('renders the complete command wording for Crimson, Sheepstealer, and Kalspire', async () => {
     const user = userEvent.setup();
     render(<App />);
 

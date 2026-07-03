@@ -1,233 +1,164 @@
 [
   {
-    "definition": "Increases Damage Dealt. Magnitude may vary by ability.",
     "id": "advantage",
     "term": "Advantage",
-    "unresolvedQuestions": [],
+    "definition": "Increases Damage Dealt. Magnitude may vary by ability.",
     "verification": "partially-verified"
   },
   {
-    "definition": "Reduces Damage Received. Magnitude and duration are supplied by the source ability.",
     "id": "resistance",
     "term": "Resistance",
-    "unresolvedQuestions": [
-      "Stacking and refresh behavior are not yet verified."
-    ],
+    "definition": "Reduces Damage Received. Magnitude and duration are supplied by the source ability.",
     "verification": "verified"
   },
   {
-    "definition": "Target acts before all other combatants each round. Caraxes Infernal Burst separately verifies a First-Strike conditional damage multiplier.",
     "id": "first-strike",
     "term": "First-Strike",
-    "unresolvedQuestions": [],
+    "definition": "Target acts before all other combatants each round. Caraxes Infernal Burst separately verifies a First-Strike conditional damage multiplier.",
     "verification": "verified"
   },
   {
-    "definition": "Target attacks after all other combatants each round.",
     "id": "slow",
     "term": "Slow",
-    "unresolvedQuestions": [
-      "Whether Slow interacts with every turn-order modifier before Initiative is not yet modeled."
-    ],
+    "definition": "Target attacks after all other combatants each round.",
     "verification": "verified"
   },
   {
-    "definition": "Deals Fire Damage each round. Verified Burn damage scales with attacker Intelligence and is mitigated by target Initiative.",
     "id": "burn",
     "term": "Burn",
-    "unresolvedQuestions": [
-      "Stacking, refresh, and overlapping Burn-source behavior are not yet verified."
-    ],
+    "definition": "Deals Fire Damage each round. Verified Burn damage scales with attacker Intelligence and is mitigated by target Initiative.",
     "verification": "verified"
   },
   {
-    "definition": "Control is a status category that includes Stun, Stagger, Overwhelm, and Confusion.",
     "id": "control",
     "term": "Control",
-    "unresolvedQuestions": [
-      "Whether cleansing one Control also consumes one Negative-effect cleanse slot remains unresolved."
-    ],
+    "definition": "Control is a status category that includes Stun, Stagger, Overwhelm, and Confusion.",
     "verification": "verified"
   },
   {
-    "definition": "Target gains a second Basic Attack each round.",
     "id": "double-strike",
     "term": "Double-Strike",
-    "unresolvedQuestions": [],
+    "definition": "Target gains a second Basic Attack each round.",
     "verification": "verified"
   },
   {
-    "definition": "Reduces Recovery Received per stack. Maximum three stacks. Exact per-stack value depends on Seasmoke Habit Level.",
     "id": "infectious-wrath",
     "term": "Infectious Wrath",
-    "unresolvedQuestions": [
-      "Refresh behavior is unknown."
-    ],
+    "definition": "Reduces Recovery Received per stack. Maximum three stacks. Exact per-stack value depends on Seasmoke Habit Level.",
     "verification": "verified"
   },
   {
-    "definition": "Deals periodic Tactical Damage each round. Kalspire verifies +20% Damage Rate and two-round duration for its Panic source.",
     "id": "panic",
     "term": "Panic",
-    "unresolvedQuestions": [
-      "Periodic status first-tick, refresh, stacking, and overlapping-source behavior are not yet verified."
-    ],
+    "definition": "Deals periodic Tactical Damage each round. Kalspire verifies +20% Damage Rate and two-round duration for its Panic source.",
     "verification": "partially-verified"
   },
   {
-    "definition": "Deals periodic Physical Damage each round. Kalspire verifies +20% Damage Rate and two-round duration for its Bleed source.",
     "id": "bleed",
     "term": "Bleed",
-    "unresolvedQuestions": [
-      "Periodic status first-tick, refresh, stacking, and overlapping-source behavior are not yet verified."
-    ],
+    "definition": "Deals periodic Physical Damage each round. Kalspire verifies +20% Damage Rate and two-round duration for its Bleed source.",
     "verification": "partially-verified"
   },
   {
-    "definition": "Prevents the target from activating Commands, activating Habits, and launching Basic Attacks on its turn.",
     "id": "stun",
     "term": "Stun",
-    "unresolvedQuestions": [
-      "Exact action-denial ordering within a round is not simulated."
-    ],
+    "definition": "Prevents the target from activating Commands, activating Habits, and launching Basic Attacks on its turn.",
     "verification": "verified"
   },
   {
-    "definition": "Forces the target to launch its Basic Attack against the dragon that applied Taunt.",
     "id": "taunt",
     "term": "Taunt",
-    "unresolvedQuestions": [
-      "Taunt retargeting order relative to other targeting effects is not yet combat-log verified."
-    ],
+    "definition": "Forces the target to launch its Basic Attack against the dragon that applied Taunt.",
     "verification": "verified"
   },
   {
-    "definition": "Control status that prevents Attack Modifier Commands and Basic Attacks on the target turn. It does not automatically block all Commands or Habits.",
     "id": "stagger",
     "term": "Stagger",
-    "unresolvedQuestions": [
-      "Exact action-denial ordering within a round is not simulated."
-    ],
+    "definition": "Control status that prevents Attack Modifier Commands and Basic Attacks on the target turn. It does not automatically block all Commands or Habits.",
     "verification": "verified"
   },
   {
-    "definition": "Control status: affected Command, Habit, and Basic Attack actions have a 50% chance to mistake allies and enemies.",
     "id": "confusion",
     "term": "Confusion",
-    "unresolvedQuestions": [
-      "Redirected target resolution is not simulated.",
-      "Refresh behavior is not verified."
-    ],
+    "definition": "Control status: affected Command, Habit, and Basic Attack actions have a 50% chance to mistake allies and enemies.",
     "verification": "verified"
   },
   {
-    "definition": "Prevents Active Commands and Habits. It does not prevent Basic Attacks.",
     "id": "overwhelm",
     "term": "Overwhelm",
-    "unresolvedQuestions": [
-      "Exact action-denial ordering within a round is not simulated."
-    ],
+    "definition": "Prevents Active Commands and Habits. It does not prevent Basic Attacks.",
     "verification": "verified"
   },
   {
-    "definition": "Stack status. Vhagar verifies a maximum of five stacks that last until end of combat, with per-stack Strength increase and Physical/Tactical Damage Received reduction.",
     "id": "bulwark",
     "term": "Bulwark",
-    "unresolvedQuestions": [
-      "Bulwark stack acquisition timing and third-stack trigger ordering remain unresolved."
-    ],
+    "definition": "Stack status. Vhagar verifies a maximum of five stacks that last until end of combat, with per-stack Strength increase and Physical/Tactical Damage Received reduction.",
     "verification": "verified"
   },
   {
-    "definition": "Wild Hunt's mark reduces Recovery Received by 30% for three rounds.",
     "id": "prey",
     "term": "Prey",
-    "unresolvedQuestions": [],
+    "definition": "Wild Hunt's mark reduces Recovery Received by 30% for three rounds.",
     "verification": "verified"
   },
   {
-    "definition": "Increases Damage Received.",
     "id": "vulnerable",
     "term": "Vulnerable",
-    "unresolvedQuestions": [],
+    "definition": "Increases Damage Received.",
     "verification": "verified"
   },
   {
-    "definition": "Gives each incoming damage instance a chance to be ignored.",
     "id": "evade",
     "term": "Evade",
-    "unresolvedQuestions": [],
+    "definition": "Gives each incoming damage instance a chance to be ignored.",
     "verification": "verified"
   },
   {
-    "definition": "Increases Sheepstealer Fire Damage Dealt per stack. Maximum 10 stacks. Value depends on Habit Level.",
     "id": "stolen-flock",
     "term": "Stolen Flock",
-    "unresolvedQuestions": [
-      "Refresh behavior is unknown."
-    ],
+    "definition": "Increases Sheepstealer Fire Damage Dealt per stack. Maximum 10 stacks. Value depends on Habit Level.",
     "verification": "verified"
   },
   {
-    "definition": "Increases Vermax Physical Damage Dealt by 5% per stack. Maximum four stacks.",
     "id": "rallying-flame",
     "term": "Rallying Flame",
-    "unresolvedQuestions": [
-      "Refresh behavior is unknown."
-    ],
+    "definition": "Increases Vermax Physical Damage Dealt by 5% per stack. Maximum four stacks.",
     "verification": "verified"
   },
   {
-    "definition": "Increases Tactical Damage Dealt by 2.5% per stack. Maximum 10 stacks.",
     "id": "spreading-blaze",
     "term": "Spreading Blaze",
-    "unresolvedQuestions": [
-      "Refresh behavior is unknown."
-    ],
+    "definition": "Increases Tactical Damage Dealt by 2.5% per stack. Maximum 10 stacks.",
     "verification": "verified"
   },
   {
-    "definition": "Reduces Damage Dealt. Crimson and Vhagar verify a 20% value for their Weakened sources.",
     "id": "weakened",
     "term": "Weakened",
-    "unresolvedQuestions": [
-      "Stacking and refresh behavior are not yet verified."
-    ],
+    "definition": "Reduces Damage Dealt. Crimson and Vhagar verify a 20% value for their Weakened sources.",
     "verification": "verified"
   },
   {
-    "definition": "A beneficial effect that may be removed by Cleanse Positive.",
     "id": "positive-effect",
     "term": "Positive Effect",
-    "unresolvedQuestions": [
-      "Complete positive-effect taxonomy is not yet verified."
-    ],
+    "definition": "A beneficial effect that may be removed by Cleanse Positive.",
     "verification": "partially-verified"
   },
   {
-    "definition": "A harmful effect that may be removed by cleanse mechanics. Control effects can also be negative effects depending on the effect.",
     "id": "negative-effect",
     "term": "Negative Effect",
-    "unresolvedQuestions": [
-      "Complete negative-effect taxonomy is not yet verified.",
-      "Cleanse overlap between Control and Negative Effect is unresolved."
-    ],
+    "definition": "A harmful effect that may be removed by cleanse mechanics. Control effects can also be negative effects depending on the effect.",
     "verification": "partially-verified"
   },
   {
-    "definition": "Removes one Positive effect from an enemy.",
     "id": "cleanse-positive",
     "term": "Cleanse Positive",
-    "unresolvedQuestions": [],
+    "definition": "Removes one Positive effect from an enemy.",
     "verification": "verified"
   },
   {
-    "definition": "Restores troops to the target. Recovery may scale with Level or attributes by ability.",
     "id": "recovery",
     "term": "Recovery",
-    "unresolvedQuestions": [
-      "Exact formulas are not verified."
-    ],
+    "definition": "Restores troops to the target. Recovery may scale with Level or attributes by ability.",
     "verification": "partially-verified"
   }
 ]

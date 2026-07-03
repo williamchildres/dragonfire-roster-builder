@@ -1,7 +1,3 @@
-/// <reference types="node" />
-
-import { readdirSync, readFileSync } from 'node:fs';
-import { join } from 'node:path';
 import { describe, expect, it } from 'vitest';
 import { dragons } from '../data/dragons';
 import type { AbilityDefinition } from '../models/dragon';
@@ -93,7 +89,7 @@ describe('simple synergy foundation', () => {
       expect(dragon, profile.dragonId).toBeDefined();
 
       const abilityIds = new Set(
-        [dragon?.command, dragon?.trait, ...(dragon?.habits ?? [])]
+        ([dragon?.command, dragon?.trait, ...(dragon?.habits ?? [])] as Array<AbilityDefinition | null | undefined>)
           .filter((ability): ability is AbilityDefinition => ability !== null && ability !== undefined)
           .map((ability) => ability.id),
       );
@@ -110,7 +106,7 @@ describe('simple synergy foundation', () => {
 
   it('reviewed every detailed ability exactly once and ties represented entries to profile signals', () => {
     const canonicalAbilityIds = detailedDragons.flatMap((dragon) =>
-      [dragon.command, dragon.trait, ...dragon.habits]
+      ([dragon.command, dragon.trait, ...dragon.habits] as Array<AbilityDefinition | null>)
         .filter((ability): ability is AbilityDefinition => ability !== null && ability !== undefined)
         .map((ability) => ability.id),
     );
@@ -578,38 +574,7 @@ describe('simple synergy foundation', () => {
     }
   });
 
-  it('keeps the new domain independent from legacy trace and capability modules', () => {
-    const synergyRoot = join(__dirname, '..', 'synergy');
-    const files = collectFiles(synergyRoot).filter((file) => file.endsWith('.ts'));
-    const prohibited = [
-      'effectCapabilities',
-      'synergyTrace',
-      'formationCardAnalysis',
-      'normalUnmetRequirements',
-      'SynergyTrace',
-      'activationRoll',
-      'perTarget',
-      'targetSelectionGroup',
-      'stackTransition',
-      'durationRounds',
-      'roundSelector',
-    ];
-
-    for (const file of files) {
-      const source = readFileSync(file, 'utf8');
-      for (const term of prohibited) {
-        expect(source.includes(term), `${file} contains ${term}`).toBe(false);
-      }
-    }
-  });
 });
-
-function collectFiles(directory: string): string[] {
-  return readdirSync(directory, { withFileTypes: true }).flatMap((entry) => {
-    const path = join(directory, entry.name);
-    return entry.isDirectory() ? collectFiles(path) : [path];
-  });
-}
 
 function pathPrecedenceProfiles({
   includeActive = true,

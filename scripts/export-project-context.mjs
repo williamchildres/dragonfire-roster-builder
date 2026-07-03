@@ -78,8 +78,9 @@ for (const [filePath, content] of Object.entries(exportSet.files)) {
 
 console.log(`Project context exported at ${generatedAt}`);
 console.log(`Dragon files: ${exportSet.summary.dragonFileCount}`);
-console.log(`Populated dragons: ${exportSet.summary.populatedDragonCount}`);
+console.log(`Detailed dragons: ${exportSet.summary.detailedDragonCount}`);
 console.log(`Metadata-only dragons: ${exportSet.summary.metadataOnlyDragonCount}`);
-console.log(`Formation review cases: ${exportSet.summary.formationReviewCaseCount}`);
-console.log(`Unresolved mechanics: ${exportSet.summary.unresolvedMechanicsCount}`);
+console.log(`Simple profiles: ${exportSet.summary.simpleProfileCount}`);
+console.log(`Profile-audit reviews: ${exportSet.summary.profileAuditReviewCount}`);
+console.log(`Project context bytes: ${exportSet.summary.totalBytes}`);
 await exporter.close();
