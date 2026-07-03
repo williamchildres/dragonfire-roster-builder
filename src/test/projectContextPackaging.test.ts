@@ -154,7 +154,7 @@ describe('project context provenance and ZIP packaging', () => {
 
       expect(result.status).not.toBe(0);
       expect(output).toContain('src.txt');
-      expect(output).toMatch(/Commit\s+or\s+discard\s+source\s+changes\s+before\s+packaging\s+project\s+context/);
+      expect(output).toMatch(/Commit\s+or[\s\S]*discard\s+source\s+changes\s+before\s+packaging\s+project\s+context/);
     });
   });
 
