@@ -1,7 +1,7 @@
 {
   "count": 30,
-  "detailedDragonCount": 15,
-  "metadataOnlyDragonCount": 15,
+  "detailedDragonCount": 18,
+  "metadataOnlyDragonCount": 12,
   "dragons": [
     {
       "id": "syrax",
@@ -126,8 +126,8 @@
       "name": "Tashix",
       "rarity": "Epic",
       "breed": "Hunter",
-      "profileCompleteness": "metadata-only",
-      "simpleProfileStatus": "metadata-only-unmapped"
+      "profileCompleteness": "detailed-abilities",
+      "simpleProfileStatus": "curated"
     },
     {
       "id": "vaeldra",
@@ -144,8 +144,8 @@
       "name": "Velar",
       "rarity": "Epic",
       "breed": "Sentinel",
-      "profileCompleteness": "metadata-only",
-      "simpleProfileStatus": "metadata-only-unmapped"
+      "profileCompleteness": "detailed-abilities",
+      "simpleProfileStatus": "curated"
     },
     {
       "id": "zivern",
@@ -153,8 +153,8 @@
       "name": "Zivern",
       "rarity": "Epic",
       "breed": "Sentinel",
-      "profileCompleteness": "metadata-only",
-      "simpleProfileStatus": "metadata-only-unmapped"
+      "profileCompleteness": "detailed-abilities",
+      "simpleProfileStatus": "curated"
     },
     {
       "id": "antares",

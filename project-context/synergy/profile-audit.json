@@ -1,17 +1,14 @@
 {
-  "reviewedAbilityCount": 105,
+  "reviewedAbilityCount": 126,
   "dispositionCounts": {
-    "represented": 69,
-    "general-support-only": 5,
-    "self-only": 20,
+    "represented": 84,
+    "general-support-only": 8,
+    "self-only": 22,
     "no-cross-dragon-synergy": 9,
-    "reinforces-existing": 2
+    "reinforces-existing": 3
   },
   "metadataOnlyDragonIds": [
     "solstryker",
-    "tashix",
-    "velar",
-    "zivern",
     "antares",
     "shimmer",
     "jagadrix",
@@ -960,9 +957,10 @@
         "kind": "represented",
         "signalIds": [
           "shadowsong-scorched-earth-vulnerable",
+          "shadowsong-scorched-earth-vulnerable-status",
           "shadowsong-panic-payoff"
         ],
-        "rationale": "The habit provides generic vulnerability and also benefits from Panic without a duplicate visible Panic relationship."
+        "rationale": "The habit provides generic Damage Received vulnerability, emits Vulnerable setup for Zivern, and also benefits from Panic without a duplicate visible Panic relationship."
       }
     },
     {
@@ -1215,6 +1213,254 @@
       "disposition": {
         "kind": "self-only",
         "rationale": "The Weakened payoff is explicitly self-owned and cannot be enabled by a teammate."
+      }
+    },
+    {
+      "dragonId": "tashix",
+      "abilityId": "tashix-shimmering-mirage",
+      "abilityKind": "command",
+      "disposition": {
+        "kind": "represented",
+        "signalIds": [
+          "tashix-shimmering-mirage-fire"
+        ],
+        "rationale": "Shimmering Mirage establishes Tashix as an Intelligence-based Fire Damage output; Mirage stacks remain self-owned raw wording."
+      }
+    },
+    {
+      "dragonId": "tashix",
+      "abilityId": "tashix-hunters-cunning",
+      "abilityKind": "trait",
+      "disposition": {
+        "kind": "represented",
+        "signalIds": [
+          "tashix-hunters-cunning-right-physical",
+          "tashix-hunters-cunning-recovery-payoff",
+          "tashix-hunters-cunning-vanguard"
+        ],
+        "rationale": "The Vanguard trait gives hard Right Flank Physical support, improves Tashix incoming Recovery, and creates an exclusive Vanguard claim."
+      }
+    },
+    {
+      "dragonId": "tashix",
+      "abilityId": "tashix-enervate",
+      "abilityKind": "habit",
+      "disposition": {
+        "kind": "general-support-only",
+        "rationale": "Enemy Tactical Damage reduction is useful prevention but has no current explicit teammate payoff."
+      }
+    },
+    {
+      "dragonId": "tashix",
+      "abilityId": "tashix-dragons-cunning",
+      "abilityKind": "habit",
+      "disposition": {
+        "kind": "represented",
+        "signalIds": [
+          "tashix-dragons-cunning-physical",
+          "tashix-dragons-cunning-initiative-payoff"
+        ],
+        "rationale": "Enemy Instinct reduction supports allied Physical Damage, and the Initiative scaling creates an Initiative-support payoff for Tashix."
+      }
+    },
+    {
+      "dragonId": "tashix",
+      "abilityId": "tashix-cunning-ruse",
+      "abilityKind": "habit",
+      "disposition": {
+        "kind": "general-support-only",
+        "rationale": "Mirage is self-owned and Weakened has no current explicit teammate payoff in the simple profile set."
+      }
+    },
+    {
+      "dragonId": "tashix",
+      "abilityId": "tashix-battle-guile",
+      "abilityKind": "habit",
+      "disposition": {
+        "kind": "represented",
+        "signalIds": [
+          "tashix-battle-guile-fire"
+        ],
+        "rationale": "Enemy Initiative reduction supports allied Fire Damage because Initiative reduces Fire Damage Received."
+      }
+    },
+    {
+      "dragonId": "tashix",
+      "abilityId": "tashix-veiled-ambush",
+      "abilityKind": "habit",
+      "disposition": {
+        "kind": "reinforces-existing",
+        "signalIds": [
+          "tashix-shimmering-mirage-fire"
+        ],
+        "rationale": "The later Mirage payoff reinforces Tashix as a Fire Damage output without creating a duplicate visible Fire relationship."
+      }
+    },
+    {
+      "dragonId": "velar",
+      "abilityId": "velar-whirlwind",
+      "abilityKind": "command",
+      "disposition": {
+        "kind": "represented",
+        "signalIds": [
+          "velar-whirlwind-tactical",
+          "velar-whirlwind-advantage-damage"
+        ],
+        "rationale": "Whirlwind deals Instinct-based Tactical Damage and represents Advantage through the current generic damage-channel support pattern; Cleanse is general support only."
+      }
+    },
+    {
+      "dragonId": "velar",
+      "abilityId": "velar-sentinels-wit",
+      "abilityKind": "trait",
+      "disposition": {
+        "kind": "represented",
+        "signalIds": [
+          "velar-sentinels-wit-left-stats",
+          "velar-sentinels-wit-vanguard"
+        ],
+        "rationale": "The Vanguard trait gives hard Left Flank Instinct and Initiative support and creates an exclusive Vanguard claim."
+      }
+    },
+    {
+      "dragonId": "velar",
+      "abilityId": "velar-strategic-leader",
+      "abilityKind": "habit",
+      "disposition": {
+        "kind": "represented",
+        "signalIds": [
+          "velar-strategic-leader-tactical"
+        ],
+        "rationale": "The habit improves allied Tactical Damage; Vanguard is only a targeting preference with fallback."
+      }
+    },
+    {
+      "dragonId": "velar",
+      "abilityId": "velar-quick-reflexes",
+      "abilityKind": "habit",
+      "disposition": {
+        "kind": "self-only",
+        "rationale": "The Instinct and Initiative increases apply only to Velar."
+      }
+    },
+    {
+      "dragonId": "velar",
+      "abilityId": "velar-gales-of-power",
+      "abilityKind": "habit",
+      "disposition": {
+        "kind": "represented",
+        "signalIds": [
+          "velar-gales-of-power-first-strike",
+          "velar-gales-of-power-slow"
+        ],
+        "rationale": "The habit grants First-Strike setup and applies Slow setup."
+      }
+    },
+    {
+      "dragonId": "velar",
+      "abilityId": "velar-fierce-unity",
+      "abilityKind": "habit",
+      "disposition": {
+        "kind": "represented",
+        "signalIds": [
+          "velar-fierce-unity-stats",
+          "velar-fierce-unity-initiative-payoff"
+        ],
+        "rationale": "The habit improves allied Strength and Instinct and creates an Initiative-support payoff through its scaling."
+      }
+    },
+    {
+      "dragonId": "velar",
+      "abilityId": "velar-breath-of-renewal",
+      "abilityKind": "habit",
+      "disposition": {
+        "kind": "represented",
+        "signalIds": [
+          "velar-breath-of-renewal-recovery"
+        ],
+        "rationale": "The augmentation provides Initiative-enhanced Recovery; Cleanse remains general support only."
+      }
+    },
+    {
+      "dragonId": "zivern",
+      "abilityId": "zivern-silent-shade",
+      "abilityKind": "command",
+      "disposition": {
+        "kind": "represented",
+        "signalIds": [
+          "zivern-silent-shade-tactical",
+          "zivern-silent-shade-tactical-vulnerability"
+        ],
+        "rationale": "Silent Shade deals Instinct-based Tactical Damage and increases enemy Tactical Damage Received for allied Tactical outputs."
+      }
+    },
+    {
+      "dragonId": "zivern",
+      "abilityId": "zivern-sentinels-wit",
+      "abilityKind": "trait",
+      "disposition": {
+        "kind": "represented",
+        "signalIds": [
+          "zivern-sentinels-wit-left-stats",
+          "zivern-sentinels-wit-vanguard"
+        ],
+        "rationale": "The Vanguard trait gives hard Left Flank Instinct and Initiative support and creates an exclusive Vanguard claim."
+      }
+    },
+    {
+      "dragonId": "zivern",
+      "abilityId": "zivern-battle-mastery",
+      "abilityKind": "habit",
+      "disposition": {
+        "kind": "represented",
+        "signalIds": [
+          "zivern-battle-mastery-physical",
+          "zivern-battle-mastery-intelligence-payoff"
+        ],
+        "rationale": "Enemy Instinct reduction supports allied Physical Damage, and Intelligence scaling creates an Intelligence-support payoff for Zivern."
+      }
+    },
+    {
+      "dragonId": "zivern",
+      "abilityId": "zivern-keen-instinct",
+      "abilityKind": "habit",
+      "disposition": {
+        "kind": "self-only",
+        "rationale": "The Intelligence and Instinct increases apply only to Zivern."
+      }
+    },
+    {
+      "dragonId": "zivern",
+      "abilityId": "zivern-fearsome-reach",
+      "abilityKind": "habit",
+      "disposition": {
+        "kind": "represented",
+        "signalIds": [
+          "zivern-fearsome-reach-panic"
+        ],
+        "rationale": "The habit applies Panic and reinforces Battle Mastery's Physical-support and Intelligence-scaling paths without duplicate signals."
+      }
+    },
+    {
+      "dragonId": "zivern",
+      "abilityId": "zivern-steel-shroud",
+      "abilityKind": "habit",
+      "disposition": {
+        "kind": "general-support-only",
+        "rationale": "The allied defensive support remains visible as raw ability text but has no current explicit teammate payoff."
+      }
+    },
+    {
+      "dragonId": "zivern",
+      "abilityId": "zivern-cloak-of-terror",
+      "abilityKind": "habit",
+      "disposition": {
+        "kind": "represented",
+        "signalIds": [
+          "zivern-cloak-of-terror-overwhelm",
+          "zivern-cloak-of-terror-vulnerable-payoff"
+        ],
+        "rationale": "The habit applies Overwhelm as Control and explicitly benefits from Vulnerable setup."
       }
     }
   ]

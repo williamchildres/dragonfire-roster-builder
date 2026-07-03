@@ -169,6 +169,22 @@ function addAmplifierOutputResults(
         );
       }
     }
+
+    for (const benefit of producer.profile.benefitsFrom.filter((candidate) => candidate.tag.startsWith('stat:') && matchingTag(support, candidate) !== null)) {
+      const tagMatch = matchingTag(support, benefit);
+      if (tagMatch) {
+        addRelationshipCandidate(
+          relationshipCandidates,
+          input,
+          'amplifier-output',
+          supporter,
+          support,
+          producer,
+          benefit,
+          tagMatch,
+        );
+      }
+    }
   }
 }
 

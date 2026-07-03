@@ -5,23 +5,208 @@
   "rarity": "Epic",
   "breed": "Hunter",
   "rosterSourceStatus": "official-website",
-  "dataStatus": "official-metadata-only",
-  "lastVerified": "2026-06-23",
-  "profileCompleteness": "metadata-only",
+  "dataStatus": "community-verified",
+  "lastVerified": "2026-07-03",
+  "profileCompleteness": "detailed-abilities",
   "officialProfileUrl": "https://gotdragonfire.com/dragons/tashix/",
-  "abilities": [],
+  "abilities": [
+    {
+      "id": "tashix-shimmering-mirage",
+      "kind": "command",
+      "name": "Shimmering Mirage",
+      "abilityClass": "active",
+      "unlockStarRank": null,
+      "minimumDragonLevel": null,
+      "positionRequirement": null,
+      "verification": {
+        "status": "screenshot-verified",
+        "source": "Tashix Shimmering Mirage summary screenshots",
+        "capturedAt": "2026-07-03",
+        "gameVersion": null,
+        "reviewedManually": true
+      },
+      "evidenceIds": [
+        "tashix-shimmering-mirage-summary-2026-07-03"
+      ],
+      "tags": [
+        "FIRE_DAMAGE",
+        "MIRAGE",
+        "ADJACENT_TARGET",
+        "INTELLIGENCE_SCALING"
+      ],
+      "rawDescription": "Each Round: 50% chance to gain 1 stack of Mirage (Max 10 Stacks).\n\nRounds 3, 6, 9: Deal Fire Damage to 1 Enemy within adjacency (Damage Rate: +200%).\n\nMirage:\nIncrease your Fire Damage Dealt by +2.5% per stack. Max 10 stacks."
+    },
+    {
+      "id": "tashix-hunters-cunning",
+      "kind": "trait",
+      "name": "Hunter's Cunning",
+      "abilityClass": "passive",
+      "unlockStarRank": 1,
+      "minimumDragonLevel": 16,
+      "positionRequirement": "vanguard",
+      "verification": {
+        "status": "screenshot-verified",
+        "source": "Tashix Hunter's Cunning screenshot",
+        "capturedAt": "2026-07-03",
+        "gameVersion": null,
+        "reviewedManually": true
+      },
+      "evidenceIds": [
+        "tashix-hunters-cunning-2026-07-03"
+      ],
+      "tags": [
+        "RECOVERY_RECEIVED_UP",
+        "INTELLIGENCE_UP",
+        "PHYSICAL_DAMAGE_UP",
+        "VANGUARD_REQUIRED",
+        "RIGHT_FLANK_TARGET"
+      ],
+      "rawDescription": "At Level 16+ and deployed in the Vanguard, increase your Recovery Received by +20% and Intelligence by +25. Increase Physical Damage Dealt by +10% of the Ally deployed in the Right Flank."
+    },
+    {
+      "id": "tashix-enervate",
+      "kind": "habit",
+      "name": "Enervate",
+      "abilityClass": "passive",
+      "unlockStarRank": 2,
+      "minimumDragonLevel": null,
+      "positionRequirement": null,
+      "verification": {
+        "status": "screenshot-verified",
+        "source": "Tashix Enervate screenshot",
+        "capturedAt": "2026-07-03",
+        "gameVersion": null,
+        "reviewedManually": true
+      },
+      "evidenceIds": [
+        "tashix-enervate-2026-07-03"
+      ],
+      "tags": [
+        "TACTICAL_DAMAGE_DOWN",
+        "ENEMY_DEBUFF"
+      ],
+      "rawDescription": "Start of Combat: Reduce Tactical Damage Dealt by -10% of 1 Enemy that deals Tactical Damage until the end of combat.\n\nProgression: Habit Level 1: -10.5%; Habit Level 2: -12.6%; Habit Level 3: -14.7%; Habit Level 4: -17.85%; Habit Level 5: -21%."
+    },
+    {
+      "id": "tashix-dragons-cunning",
+      "kind": "habit",
+      "name": "Dragon's Cunning",
+      "abilityClass": "passive",
+      "unlockStarRank": 4,
+      "minimumDragonLevel": null,
+      "positionRequirement": null,
+      "verification": {
+        "status": "screenshot-verified",
+        "source": "Tashix Dragon's Cunning screenshot",
+        "capturedAt": "2026-07-03",
+        "gameVersion": null,
+        "reviewedManually": true
+      },
+      "evidenceIds": [
+        "tashix-dragons-cunning-2026-07-03"
+      ],
+      "tags": [
+        "INTELLIGENCE_UP",
+        "DEBUFF_INSTINCTS",
+        "INITIATIVE_SCALING",
+        "ADJACENT_TARGET",
+        "BUFF_SELF"
+      ],
+      "rawDescription": "Start of Combat: Increase your Intelligence by +12% and reduce Instinct by -10% (enhanced by Initiative) of 2 Enemies within adjacency. Each effect lasts until the end of combat.\n\nProgression: Habit Level 1: Intelligence +12%; enemy Instinct -10%; Habit Level 2: Intelligence +14.4%; enemy Instinct -12%; Habit Level 3: Intelligence +16.8%; enemy Instinct -14%; Habit Level 4: Intelligence +20.4%; enemy Instinct -17%; Habit Level 5: Intelligence +24%; enemy Instinct -20%."
+    },
+    {
+      "id": "tashix-cunning-ruse",
+      "kind": "habit",
+      "name": "Cunning Ruse",
+      "abilityClass": "passive",
+      "unlockStarRank": 6,
+      "minimumDragonLevel": null,
+      "positionRequirement": null,
+      "verification": {
+        "status": "screenshot-verified",
+        "source": "Tashix Cunning Ruse screenshot",
+        "capturedAt": "2026-07-03",
+        "gameVersion": null,
+        "reviewedManually": true
+      },
+      "evidenceIds": [
+        "tashix-cunning-ruse-2026-07-03"
+      ],
+      "tags": [
+        "MIRAGE",
+        "FIRE_DAMAGE_UP",
+        "WEAKENED",
+        "ANY_LANE_TARGET",
+        "BUFF_SELF"
+      ],
+      "rawDescription": "Each Round: 25% chance to gain 1 stack of Mirage (Max 10 Stacks).\n\nEach stack of Mirage increases your Fire Damage Dealt by +2.5% until the end of combat.\n\nEach Round: If you have 4 or more stacks of Mirage, there is a 10% chance to afflict 3 Enemies in any lane with Weakened (-15%) for 2 round(s). This chance is checked separately for each target and is doubled (20%) against targets that deal Tactical Damage.\n\nWeakened reduces the target's Damage Dealt.\n\nProgression: Habit Level 1: Weakened chance 10%; Habit Level 2: 12%; Habit Level 3: 14%; Habit Level 4: 17%; Habit Level 5: 20%."
+    },
+    {
+      "id": "tashix-battle-guile",
+      "kind": "habit",
+      "name": "Battle Guile",
+      "abilityClass": "passive",
+      "unlockStarRank": 8,
+      "minimumDragonLevel": null,
+      "positionRequirement": null,
+      "verification": {
+        "status": "screenshot-verified",
+        "source": "Tashix Battle Guile screenshot",
+        "capturedAt": "2026-07-03",
+        "gameVersion": null,
+        "reviewedManually": true
+      },
+      "evidenceIds": [
+        "tashix-battle-guile-2026-07-03"
+      ],
+      "tags": [
+        "DEBUFF_INSTINCTS",
+        "DEBUFF_INITIATIVE",
+        "INITIATIVE_SCALING",
+        "ANY_LANE_TARGET"
+      ],
+      "rawDescription": "Start of Combat: Reduce Instinct and Initiative by -5% (enhanced by Initiative) of 3 Enemies in any lane until the end of combat.\n\nProgression: Habit Level 1: -5%; Habit Level 2: -6%; Habit Level 3: -7%; Habit Level 4: -8.85%; Habit Level 5: -10.5%."
+    },
+    {
+      "id": "tashix-veiled-ambush",
+      "kind": "habit",
+      "name": "Veiled Ambush",
+      "abilityClass": "passive",
+      "unlockStarRank": 10,
+      "minimumDragonLevel": null,
+      "positionRequirement": null,
+      "verification": {
+        "status": "screenshot-verified",
+        "source": "Tashix Veiled Ambush screenshot",
+        "capturedAt": "2026-07-03",
+        "gameVersion": null,
+        "reviewedManually": true
+      },
+      "evidenceIds": [
+        "tashix-veiled-ambush-2026-07-03"
+      ],
+      "tags": [
+        "MIRAGE",
+        "FIRE_DAMAGE",
+        "FIRE_DAMAGE_UP",
+        "MOST_TROOPS_TARGET",
+        "BUFF_SELF"
+      ],
+      "rawDescription": "Each Round: 25% chance to gain 1 stack of Mirage (Max 10 Stacks).\n\nEach stack of Mirage increases your Fire Damage Dealt by +2.5% until the end of combat.\n\nEach Round: If you have 7 or more stacks of Mirage, deal Fire Damage (Damage Rate: +150%) to the Enemy with the most troops. This effect can only trigger once per combat.\n\nProgression: Habit Level 1: Fire Damage Rate 150%; Habit Level 2: 220%; Habit Level 3: 290%; Habit Level 4: 380%; Habit Level 5: 500%."
+    }
+  ],
   "affinities": {
     "Cavalry": "unknown",
     "Shieldbearers": "unknown",
-    "Archers": "unknown",
+    "Archers": "positive",
     "Spearmen": "unknown",
-    "Siege": "unknown"
+    "Siege": "negative"
   },
   "verification": {
     "identity": {
-      "status": "officially-confirmed",
-      "source": "Official public roster page",
-      "capturedAt": "2026-06-23",
+      "status": "screenshot-verified",
+      "source": "Tashix main screen screenshot",
+      "capturedAt": "2026-07-03",
       "gameVersion": null,
       "reviewedManually": true
     },
@@ -38,9 +223,45 @@
       "capturedAt": "2026-06-23",
       "gameVersion": null,
       "reviewedManually": true
+    },
+    "command": {
+      "status": "screenshot-verified",
+      "source": "Tashix Shimmering Mirage summary screenshots",
+      "capturedAt": "2026-07-03",
+      "gameVersion": null,
+      "reviewedManually": true
+    },
+    "trait": {
+      "status": "screenshot-verified",
+      "source": "Tashix Hunter's Cunning screenshot",
+      "capturedAt": "2026-07-03",
+      "gameVersion": null,
+      "reviewedManually": true
+    },
+    "habits": {
+      "status": "screenshot-verified",
+      "source": "Tashix Habit screenshots",
+      "capturedAt": "2026-07-03",
+      "gameVersion": null,
+      "reviewedManually": true
+    },
+    "affinities": {
+      "status": "screenshot-verified",
+      "source": "Tashix main screen screenshot",
+      "capturedAt": "2026-07-03",
+      "gameVersion": null,
+      "reviewedManually": true
     }
   },
-  "evidenceIds": [],
-  "simpleProfileId": null,
-  "simpleProfileStatus": "metadata-only-unmapped"
+  "evidenceIds": [
+    "tashix-battle-guile-2026-07-03",
+    "tashix-cunning-ruse-2026-07-03",
+    "tashix-dragons-cunning-2026-07-03",
+    "tashix-enervate-2026-07-03",
+    "tashix-hunters-cunning-2026-07-03",
+    "tashix-shimmering-mirage-summary-2026-07-03",
+    "tashix-veiled-ambush-2026-07-03"
+  ],
+  "simpleProfileId": "tashix",
+  "simpleProfileStatus": "curated"
 }

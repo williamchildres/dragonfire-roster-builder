@@ -5,23 +5,209 @@
   "rarity": "Epic",
   "breed": "Sentinel",
   "rosterSourceStatus": "official-website",
-  "dataStatus": "official-metadata-only",
-  "lastVerified": "2026-06-23",
-  "profileCompleteness": "metadata-only",
+  "dataStatus": "community-verified",
+  "lastVerified": "2026-07-03",
+  "profileCompleteness": "detailed-abilities",
   "officialProfileUrl": "https://gotdragonfire.com/dragons/zivern/",
-  "abilities": [],
+  "abilities": [
+    {
+      "id": "zivern-silent-shade",
+      "kind": "command",
+      "name": "Silent Shade",
+      "abilityClass": "active",
+      "unlockStarRank": null,
+      "minimumDragonLevel": null,
+      "positionRequirement": null,
+      "verification": {
+        "status": "screenshot-verified",
+        "source": "Zivern Silent Shade summary screenshots",
+        "capturedAt": "2026-07-03",
+        "gameVersion": null,
+        "reviewedManually": true
+      },
+      "evidenceIds": [
+        "zivern-silent-shade-summary-2026-07-03"
+      ],
+      "tags": [
+        "TACTICAL_DAMAGE",
+        "TACTICAL_DAMAGE_RECEIVED_UP",
+        "SAME_LANE_TARGET",
+        "ADJACENT_TARGET",
+        "ENHANCED_BY_INSTINCT"
+      ],
+      "rawDescription": "Rounds 1, 4, 6, 9: 40% chance to increase the Tactical Damage Received of 1 Enemy in the same lane by +15% for 2 round(s).\n\nRounds 1, 4, 6, 9: Deal Tactical Damage to 2 Enemies within adjacency (Damage Rate: +75%)."
+    },
+    {
+      "id": "zivern-sentinels-wit",
+      "kind": "trait",
+      "name": "Sentinel's Wit",
+      "abilityClass": "passive",
+      "unlockStarRank": 1,
+      "minimumDragonLevel": 16,
+      "positionRequirement": "vanguard",
+      "verification": {
+        "status": "screenshot-verified",
+        "source": "Zivern Sentinel's Wit screenshot",
+        "capturedAt": "2026-07-03",
+        "gameVersion": null,
+        "reviewedManually": true
+      },
+      "evidenceIds": [
+        "zivern-sentinels-wit-2026-07-03"
+      ],
+      "tags": [
+        "TACTICAL_DAMAGE",
+        "INSTINCT_UP",
+        "BUFF_INITIATIVE",
+        "VANGUARD_REQUIRED",
+        "LEFT_FLANK_TARGET"
+      ],
+      "rawDescription": "At Level 16+ and deployed in the Vanguard, increase your Tactical Damage Dealt by +16%. Increase Instinct and Initiative by +20 of the Ally deployed in the Left Flank."
+    },
+    {
+      "id": "zivern-battle-mastery",
+      "kind": "habit",
+      "name": "Battle Mastery",
+      "abilityClass": "passive",
+      "unlockStarRank": 2,
+      "minimumDragonLevel": null,
+      "positionRequirement": null,
+      "verification": {
+        "status": "screenshot-verified",
+        "source": "Zivern Battle Mastery screenshot",
+        "capturedAt": "2026-07-03",
+        "gameVersion": null,
+        "reviewedManually": true
+      },
+      "evidenceIds": [
+        "zivern-battle-mastery-2026-07-03"
+      ],
+      "tags": [
+        "DEBUFF_STRENGTH",
+        "DEBUFF_INSTINCTS",
+        "INTELLIGENCE_SCALING",
+        "ENEMY_DEBUFF"
+      ],
+      "rawDescription": "Start of Combat: Reduce the Strength and Instinct (enhanced by Intelligence) of 3 Enemies by -5% until the end of combat.\n\nProgression: Habit Level 1: -5%; Habit Level 2: -6%; Habit Level 3: -7%; Habit Level 4: -8.85%; Habit Level 5: -10.5%."
+    },
+    {
+      "id": "zivern-keen-instinct",
+      "kind": "habit",
+      "name": "Keen Instinct",
+      "abilityClass": "passive",
+      "unlockStarRank": 4,
+      "minimumDragonLevel": null,
+      "positionRequirement": null,
+      "verification": {
+        "status": "screenshot-verified",
+        "source": "Zivern Keen Instinct screenshot",
+        "capturedAt": "2026-07-03",
+        "gameVersion": null,
+        "reviewedManually": true
+      },
+      "evidenceIds": [
+        "zivern-keen-instinct-2026-07-03"
+      ],
+      "tags": [
+        "INTELLIGENCE_UP",
+        "INSTINCT_UP",
+        "BUFF_SELF"
+      ],
+      "rawDescription": "Start of Combat: Increase your Intelligence and Instinct by +16% until the end of combat.\n\nProgression: Habit Level 1: +16%; Habit Level 2: +19.2%; Habit Level 3: +22.4%; Habit Level 4: +27.2%; Habit Level 5: +32%."
+    },
+    {
+      "id": "zivern-fearsome-reach",
+      "kind": "habit",
+      "name": "Fearsome Reach",
+      "abilityClass": "passive",
+      "unlockStarRank": 6,
+      "minimumDragonLevel": null,
+      "positionRequirement": null,
+      "verification": {
+        "status": "screenshot-verified",
+        "source": "Zivern Fearsome Reach screenshot",
+        "capturedAt": "2026-07-03",
+        "gameVersion": null,
+        "reviewedManually": true
+      },
+      "evidenceIds": [
+        "zivern-fearsome-reach-2026-07-03"
+      ],
+      "tags": [
+        "DEBUFF_INSTINCTS",
+        "INTELLIGENCE_SCALING",
+        "PANIC",
+        "TACTICAL_DAMAGE",
+        "ANY_LANE_TARGET"
+      ],
+      "rawDescription": "Odd-numbered Rounds: 30% chance to reduce the Instinct (enhanced by Intelligence) by -15% and afflict Panic (Damage Rate: +20%) on 3 Enemies in any lane for 2 round(s).\n\nPanic deals Tactical Damage to the target each round.\n\nProgression: Habit Level 1: Fearsome Reach chance 30%; Habit Level 2: 36%; Habit Level 3: 42%; Habit Level 4: 51%; Habit Level 5: 60%."
+    },
+    {
+      "id": "zivern-steel-shroud",
+      "kind": "habit",
+      "name": "Steel Shroud",
+      "abilityClass": "passive",
+      "unlockStarRank": 8,
+      "minimumDragonLevel": null,
+      "positionRequirement": null,
+      "verification": {
+        "status": "screenshot-verified",
+        "source": "Zivern Steel Shroud screenshot",
+        "capturedAt": "2026-07-03",
+        "gameVersion": null,
+        "reviewedManually": true
+      },
+      "evidenceIds": [
+        "zivern-steel-shroud-2026-07-03"
+      ],
+      "tags": [
+        "DAMAGE_RECEIVED_DOWN",
+        "TACTICAL_DAMAGE_RECEIVED_DOWN",
+        "EXCLUDES_BASIC_ATTACKS",
+        "OTHER_ALLIES_TARGET",
+        "ANY_LANE_TARGET"
+      ],
+      "rawDescription": "Start of Combat: Reduce Physical Damage Received, excluding Basic Attacks, and Tactical Damage Received by -3% of 2 other Allies in any lane until the end of combat.\n\nProgression: Habit Level 1: -3.5%; Habit Level 2: -4.2%; Habit Level 3: -4.9%; Habit Level 4: -5.95%; Habit Level 5: -7%."
+    },
+    {
+      "id": "zivern-cloak-of-terror",
+      "kind": "habit",
+      "name": "Cloak of Terror",
+      "abilityClass": "passive",
+      "unlockStarRank": 10,
+      "minimumDragonLevel": null,
+      "positionRequirement": null,
+      "verification": {
+        "status": "screenshot-verified",
+        "source": "Zivern Cloak of Terror screenshot",
+        "capturedAt": "2026-07-03",
+        "gameVersion": null,
+        "reviewedManually": true
+      },
+      "evidenceIds": [
+        "zivern-cloak-of-terror-2026-07-03"
+      ],
+      "tags": [
+        "OVERWHELM",
+        "CONTROL",
+        "VULNERABLE",
+        "ADJACENT_TARGET"
+      ],
+      "rawDescription": "Odd-numbered Rounds: 10% chance to afflict Overwhelm on 2 Enemies within adjacency for 2 round(s). This chance is doubled (20%) if the target is afflicted with Vulnerable.\n\nOverwhelm prevents the target from using Active Commands and Habits on their turn.\n\nProgression: Habit Level 1: Overwhelm chance 10%; Habit Level 2: 13%; Habit Level 3: 16%; Habit Level 4: 20%; Habit Level 5: 25%."
+    }
+  ],
   "affinities": {
     "Cavalry": "unknown",
     "Shieldbearers": "unknown",
-    "Archers": "unknown",
+    "Archers": "positive",
     "Spearmen": "unknown",
-    "Siege": "unknown"
+    "Siege": "positive"
   },
   "verification": {
     "identity": {
-      "status": "officially-confirmed",
-      "source": "Official public roster page",
-      "capturedAt": "2026-06-23",
+      "status": "screenshot-verified",
+      "source": "Zivern main screen screenshot",
+      "capturedAt": "2026-07-03",
       "gameVersion": null,
       "reviewedManually": true
     },
@@ -38,9 +224,45 @@
       "capturedAt": "2026-06-23",
       "gameVersion": null,
       "reviewedManually": true
+    },
+    "command": {
+      "status": "screenshot-verified",
+      "source": "Zivern Silent Shade summary screenshots",
+      "capturedAt": "2026-07-03",
+      "gameVersion": null,
+      "reviewedManually": true
+    },
+    "trait": {
+      "status": "screenshot-verified",
+      "source": "Zivern Sentinel's Wit screenshot",
+      "capturedAt": "2026-07-03",
+      "gameVersion": null,
+      "reviewedManually": true
+    },
+    "habits": {
+      "status": "screenshot-verified",
+      "source": "Zivern Habit screenshots",
+      "capturedAt": "2026-07-03",
+      "gameVersion": null,
+      "reviewedManually": true
+    },
+    "affinities": {
+      "status": "screenshot-verified",
+      "source": "Zivern main screen screenshot",
+      "capturedAt": "2026-07-03",
+      "gameVersion": null,
+      "reviewedManually": true
     }
   },
-  "evidenceIds": [],
-  "simpleProfileId": null,
-  "simpleProfileStatus": "metadata-only-unmapped"
+  "evidenceIds": [
+    "zivern-battle-mastery-2026-07-03",
+    "zivern-cloak-of-terror-2026-07-03",
+    "zivern-fearsome-reach-2026-07-03",
+    "zivern-keen-instinct-2026-07-03",
+    "zivern-sentinels-wit-2026-07-03",
+    "zivern-silent-shade-summary-2026-07-03",
+    "zivern-steel-shroud-2026-07-03"
+  ],
+  "simpleProfileId": "zivern",
+  "simpleProfileStatus": "curated"
 }

@@ -5,23 +5,210 @@
   "rarity": "Epic",
   "breed": "Sentinel",
   "rosterSourceStatus": "official-website",
-  "dataStatus": "official-metadata-only",
-  "lastVerified": "2026-06-23",
-  "profileCompleteness": "metadata-only",
+  "dataStatus": "community-verified",
+  "lastVerified": "2026-07-03",
+  "profileCompleteness": "detailed-abilities",
   "officialProfileUrl": "https://gotdragonfire.com/dragons/velar/",
-  "abilities": [],
+  "abilities": [
+    {
+      "id": "velar-whirlwind",
+      "kind": "command",
+      "name": "Whirlwind",
+      "abilityClass": "active",
+      "unlockStarRank": null,
+      "minimumDragonLevel": null,
+      "positionRequirement": null,
+      "verification": {
+        "status": "screenshot-verified",
+        "source": "Velar Whirlwind summary screenshots",
+        "capturedAt": "2026-07-03",
+        "gameVersion": null,
+        "reviewedManually": true
+      },
+      "evidenceIds": [
+        "velar-whirlwind-summary-2026-07-03"
+      ],
+      "tags": [
+        "ADVANTAGE",
+        "TACTICAL_DAMAGE",
+        "ANY_LANE_TARGET",
+        "CLEANSE_NEGATIVE",
+        "RECOVERY",
+        "INITIATIVE_SCALING",
+        "COMMAND_AUGMENTATION"
+      ],
+      "rawDescription": "Rounds 2, 4, 6, 8: 20% chance to grant 2 other Allies in any lane Advantage (+15%) for 2 round(s).\n\nRounds 3, 5, 7, 9: Deal Tactical Damage to 3 Enemies in any lane (Damage Rate: +45%).\n\nAt 10 Stars:\n\nEach Round: 12% chance to Cleanse 1 instance of Bleed, Panic, or Burn from each Ally. This chance is checked separately per target.\n\nRounds 2, 4, 6, 8: Apply Recovery to 3 Allies in any lane (Recovery Rate: +18%, enhanced by Initiative)."
+    },
+    {
+      "id": "velar-sentinels-wit",
+      "kind": "trait",
+      "name": "Sentinel's Wit",
+      "abilityClass": "passive",
+      "unlockStarRank": 1,
+      "minimumDragonLevel": 16,
+      "positionRequirement": "vanguard",
+      "verification": {
+        "status": "screenshot-verified",
+        "source": "Velar Sentinel's Wit screenshot",
+        "capturedAt": "2026-07-03",
+        "gameVersion": null,
+        "reviewedManually": true
+      },
+      "evidenceIds": [
+        "velar-sentinels-wit-2026-07-03"
+      ],
+      "tags": [
+        "TACTICAL_DAMAGE",
+        "INSTINCT_UP",
+        "BUFF_INITIATIVE",
+        "VANGUARD_REQUIRED",
+        "LEFT_FLANK_TARGET"
+      ],
+      "rawDescription": "At Level 16+ and deployed in the Vanguard, increase your Tactical Damage Dealt by +16%. Increase Instinct and Initiative by +20 of the Ally deployed in the Left Flank."
+    },
+    {
+      "id": "velar-strategic-leader",
+      "kind": "habit",
+      "name": "Strategic Leader",
+      "abilityClass": "passive",
+      "unlockStarRank": 2,
+      "minimumDragonLevel": null,
+      "positionRequirement": null,
+      "verification": {
+        "status": "screenshot-verified",
+        "source": "Velar Strategic Leader screenshot",
+        "capturedAt": "2026-07-03",
+        "gameVersion": null,
+        "reviewedManually": true
+      },
+      "evidenceIds": [
+        "velar-strategic-leader-2026-07-03"
+      ],
+      "tags": [
+        "TACTICAL_DAMAGE",
+        "BUFF_ALLIES",
+        "ANY_LANE_TARGET"
+      ],
+      "rawDescription": "Start of Combat: Increase Tactical Damage Dealt by +10% of 1 Ally in any lane, prioritizing the Vanguard, until the end of combat.\n\nProgression: Habit Level 1: +10%; Habit Level 2: +12%; Habit Level 3: +14%; Habit Level 4: +17%; Habit Level 5: +20%."
+    },
+    {
+      "id": "velar-quick-reflexes",
+      "kind": "habit",
+      "name": "Quick Reflexes",
+      "abilityClass": "passive",
+      "unlockStarRank": 4,
+      "minimumDragonLevel": null,
+      "positionRequirement": null,
+      "verification": {
+        "status": "screenshot-verified",
+        "source": "Velar Quick Reflexes screenshot",
+        "capturedAt": "2026-07-03",
+        "gameVersion": null,
+        "reviewedManually": true
+      },
+      "evidenceIds": [
+        "velar-quick-reflexes-2026-07-03"
+      ],
+      "tags": [
+        "INSTINCT_UP",
+        "BUFF_INITIATIVE",
+        "BUFF_SELF"
+      ],
+      "rawDescription": "Start of Combat: Increase your Instinct and Initiative by +16% until the end of combat.\n\nProgression: Habit Level 1: +16%; Habit Level 2: +19.2%; Habit Level 3: +22.4%; Habit Level 4: +27.2%; Habit Level 5: +32%."
+    },
+    {
+      "id": "velar-gales-of-power",
+      "kind": "habit",
+      "name": "Gales of Power",
+      "abilityClass": "passive",
+      "unlockStarRank": 6,
+      "minimumDragonLevel": null,
+      "positionRequirement": null,
+      "verification": {
+        "status": "screenshot-verified",
+        "source": "Velar Gales of Power screenshot",
+        "capturedAt": "2026-07-03",
+        "gameVersion": null,
+        "reviewedManually": true
+      },
+      "evidenceIds": [
+        "velar-gales-of-power-2026-07-03"
+      ],
+      "tags": [
+        "FIRST_STRIKE",
+        "SLOW",
+        "ANY_LANE_TARGET",
+        "BUFF_ALLIES"
+      ],
+      "rawDescription": "Rounds 2, 4, 6, 8: 12% chance to grant First-Strike to 3 Allies in any lane and afflict Slow on 3 Enemies in any lane. Each effect is checked separately per target and lasts for 2 round(s).\n\nFirst-Strike causes the target to attack before all other combatants each round.\n\nSlow causes the target to attack after all other combatants each round.\n\nProgression: Habit Level 1: First-Strike chance 12%; Slow chance 12%; Habit Level 2: 14.4%; 14.4%; Habit Level 3: 16.8%; 16.8%; Habit Level 4: 20.4%; 20.4%; Habit Level 5: 24%; 24%."
+    },
+    {
+      "id": "velar-fierce-unity",
+      "kind": "habit",
+      "name": "Fierce Unity",
+      "abilityClass": "passive",
+      "unlockStarRank": 8,
+      "minimumDragonLevel": null,
+      "positionRequirement": null,
+      "verification": {
+        "status": "screenshot-verified",
+        "source": "Velar Fierce Unity screenshot",
+        "capturedAt": "2026-07-03",
+        "gameVersion": null,
+        "reviewedManually": true
+      },
+      "evidenceIds": [
+        "velar-fierce-unity-2026-07-03"
+      ],
+      "tags": [
+        "STRENGTH_UP",
+        "INSTINCT_UP",
+        "INITIATIVE_SCALING",
+        "BUFF_ALLIES",
+        "ANY_LANE_TARGET"
+      ],
+      "rawDescription": "Start of Combat: Increase Strength and Instinct by +5% (enhanced by Initiative) of 3 Allies in any lane until the end of combat.\n\nProgression: Habit Level 1: +5%; Habit Level 2: +6%; Habit Level 3: +7%; Habit Level 4: +8.5%; Habit Level 5: +10%."
+    },
+    {
+      "id": "velar-breath-of-renewal",
+      "kind": "habit",
+      "name": "Breath of Renewal",
+      "abilityClass": "passive",
+      "unlockStarRank": 10,
+      "minimumDragonLevel": null,
+      "positionRequirement": null,
+      "verification": {
+        "status": "screenshot-verified",
+        "source": "Velar Breath of Renewal screenshot",
+        "capturedAt": "2026-07-03",
+        "gameVersion": null,
+        "reviewedManually": true
+      },
+      "evidenceIds": [
+        "velar-breath-of-renewal-2026-07-03"
+      ],
+      "tags": [
+        "COMMAND_AUGMENTATION",
+        "CLEANSE_NEGATIVE",
+        "RECOVERY",
+        "INITIATIVE_SCALING",
+        "ANY_LANE_TARGET"
+      ],
+      "rawDescription": "Whirlwind gains:\n\nEach Round: 12% chance to Cleanse 1 instance of Bleed, Panic, or Burn from each Ally. This chance is checked separately per target.\n\nRounds 2, 4, 6, 8: Apply Recovery to 3 Allies in any lane (Recovery Rate: +18%, enhanced by Initiative).\n\nProgression: Habit Level 1: Cleanse chance 12%; Recovery Rate 18%; Habit Level 2: 16%; 23.4%; Habit Level 3: 19%; 28.8%; Habit Level 4: 24%; 36%; Habit Level 5: 30%; 45%."
+    }
+  ],
   "affinities": {
     "Cavalry": "unknown",
-    "Shieldbearers": "unknown",
+    "Shieldbearers": "positive",
     "Archers": "unknown",
     "Spearmen": "unknown",
     "Siege": "unknown"
   },
   "verification": {
     "identity": {
-      "status": "officially-confirmed",
-      "source": "Official public roster page",
-      "capturedAt": "2026-06-23",
+      "status": "screenshot-verified",
+      "source": "Velar main screen screenshot",
+      "capturedAt": "2026-07-03",
       "gameVersion": null,
       "reviewedManually": true
     },
@@ -38,9 +225,45 @@
       "capturedAt": "2026-06-23",
       "gameVersion": null,
       "reviewedManually": true
+    },
+    "command": {
+      "status": "screenshot-verified",
+      "source": "Velar Whirlwind summary screenshots",
+      "capturedAt": "2026-07-03",
+      "gameVersion": null,
+      "reviewedManually": true
+    },
+    "trait": {
+      "status": "screenshot-verified",
+      "source": "Velar Sentinel's Wit screenshot",
+      "capturedAt": "2026-07-03",
+      "gameVersion": null,
+      "reviewedManually": true
+    },
+    "habits": {
+      "status": "screenshot-verified",
+      "source": "Velar Habit screenshots",
+      "capturedAt": "2026-07-03",
+      "gameVersion": null,
+      "reviewedManually": true
+    },
+    "affinities": {
+      "status": "screenshot-verified",
+      "source": "Velar main screen screenshot",
+      "capturedAt": "2026-07-03",
+      "gameVersion": null,
+      "reviewedManually": true
     }
   },
-  "evidenceIds": [],
-  "simpleProfileId": null,
-  "simpleProfileStatus": "metadata-only-unmapped"
+  "evidenceIds": [
+    "velar-breath-of-renewal-2026-07-03",
+    "velar-fierce-unity-2026-07-03",
+    "velar-gales-of-power-2026-07-03",
+    "velar-quick-reflexes-2026-07-03",
+    "velar-sentinels-wit-2026-07-03",
+    "velar-strategic-leader-2026-07-03",
+    "velar-whirlwind-summary-2026-07-03"
+  ],
+  "simpleProfileId": "velar",
+  "simpleProfileStatus": "curated"
 }
