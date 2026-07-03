@@ -51,6 +51,9 @@ function Get-SourceProvenance {
   try {
     $branch = Invoke-Git -Arguments @('branch', '--show-current')
     if ([string]::IsNullOrWhiteSpace($branch)) {
+      $branch = Invoke-Git -Arguments @('rev-parse', '--abbrev-ref', 'HEAD')
+    }
+    if ([string]::IsNullOrWhiteSpace($branch)) {
       throw 'Source branch must be non-empty before packaging project context.'
     }
 

@@ -120,7 +120,7 @@ describe('project context provenance and ZIP packaging', () => {
 
   it('defaults exporter source provenance to the current branch and HEAD', () =>
     withPreservedContextAndZip(() => {
-      const sourceBranch = git(['branch', '--show-current']);
+      const sourceBranch = git(['rev-parse', '--abbrev-ref', 'HEAD']);
       const sourceCommit = git(['rev-parse', 'HEAD']);
 
       execFileSync(process.execPath, [exportScriptPath, '--generated-at', '2026-07-03T00:00:00.000Z'], {
@@ -154,7 +154,7 @@ describe('project context provenance and ZIP packaging', () => {
 
       expect(result.status).not.toBe(0);
       expect(output).toContain('src.txt');
-      expect(output).toContain('Commit or discard source changes before packaging project context');
+      expect(output).toMatch(/Commit\s+or\s+discard\s+source\s+changes\s+before\s+packaging\s+project\s+context/);
     });
   });
 
