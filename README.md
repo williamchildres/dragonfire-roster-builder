@@ -42,6 +42,16 @@ npm run package:context
 
 If `npm` is unavailable in the local shell, run the equivalent direct Node entry points through the installed dependencies.
 
+Project-context packaging must start from a clean committed source tree:
+
+```powershell
+git status --short
+git commit -m "<source changes>"
+npm run package:context
+```
+
+`package:context` records the current branch and committed source SHA, regenerates and validates `project-context/`, creates a deterministic `project-context.zip`, compares ZIP entries to the generated tree, rejects retired filenames, and enforces the 2 MB context limit. `project-context.zip` is ignored and should not be committed. The generated `project-context/` directory may be committed afterward; that generated-context commit can follow the source commit recorded inside the context.
+
 There is no `report:synergy` command. The old combat-analysis report and framework have been removed.
 
 ## Data Contribution Workflow

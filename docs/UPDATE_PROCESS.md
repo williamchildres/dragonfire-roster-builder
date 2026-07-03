@@ -22,10 +22,25 @@ npm run test
 npm run build
 npm run export:context
 npm run validate:context
+npm run package:context
 git diff --check
 ```
 
 If `npm` is unavailable, use equivalent direct Node entry points and report the exact commands.
+
+## Project Context Packaging
+
+Package project context only from a clean committed source tree:
+
+```powershell
+git status --short
+git commit -m "<source changes>"
+npm run package:context
+```
+
+The packaging command captures the current branch and full HEAD SHA before export, refuses source changes outside `project-context/**` and `project-context.zip`, passes that captured provenance into the exporter, validates the generated context, packages exactly the generated `project-context/` directory, compares ZIP entries to generated files, rejects retired filenames, and enforces the 2 MB limit.
+
+`project-context.zip` is ignored and not committed. The generated `project-context/` directory may be committed after packaging. In that normal workflow, the generated-context commit can be one commit after the source SHA recorded inside the context; standalone validation checks that the recorded commit exists and is internally consistent, not that it equals the current HEAD.
 
 ## Visual Review
 

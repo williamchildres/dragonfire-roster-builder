@@ -10,8 +10,49 @@ function readArg(name) {
   return index >= 0 ? process.argv[index + 1] : undefined;
 }
 
+function hasArg(name) {
+  return process.argv.includes(name);
+}
+
 function git(args) {
   return execFileSync('git', args, { cwd: root, encoding: 'utf8' }).trim();
+}
+
+function fail(message) {
+  console.error(message);
+  process.exit(1);
+}
+
+function resolveSourceBranch() {
+  const supplied = readArg('--source-branch');
+  if (hasArg('--source-branch')) {
+    if (!supplied || supplied.startsWith('--')) {
+      fail('--source-branch requires a non-empty branch name.');
+    }
+    return supplied;
+  }
+
+  return git(['rev-parse', '--abbrev-ref', 'HEAD']);
+}
+
+function resolveSourceCommit() {
+  const supplied = readArg('--source-commit');
+  if (hasArg('--source-commit')) {
+    if (!supplied || supplied.startsWith('--')) {
+      fail('--source-commit requires a full 40-character commit SHA.');
+    }
+    if (!/^[a-f0-9]{40}$/i.test(supplied)) {
+      fail(`--source-commit must be a full 40-character hexadecimal Git SHA: ${supplied}`);
+    }
+    try {
+      git(['cat-file', '-e', `${supplied}^{commit}`]);
+    } catch {
+      fail(`--source-commit does not name a known commit: ${supplied}`);
+    }
+    return supplied;
+  }
+
+  return git(['rev-parse', 'HEAD']);
 }
 
 async function loadExporter() {
@@ -58,8 +99,8 @@ function countTests() {
 }
 
 const generatedAt = readArg('--generated-at') ?? new Date().toISOString();
-const branch = git(['rev-parse', '--abbrev-ref', 'HEAD']);
-const commit = git(['rev-parse', 'HEAD']);
+const branch = resolveSourceBranch();
+const commit = resolveSourceCommit();
 const exporter = await loadExporter();
 const { buildProjectContextFiles } = exporter.module;
 const exportSet = buildProjectContextFiles({
