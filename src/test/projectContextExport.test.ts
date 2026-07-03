@@ -1,6 +1,13 @@
 import { describe, expect, it } from 'vitest';
 import { dragons } from '../data/dragons';
-import { buildProjectContextFiles, populatedDragonIds, validateProjectContextFiles } from '../services/projectContextExport';
+import {
+  buildProjectContextFiles,
+  populatedDragonIds,
+  projectContextSizeLimitBytes,
+  validateProjectContextFiles,
+} from '../services/projectContextExport';
+import { metadataOnlyDragonIds } from '../synergy/profileAudit';
+import { simpleSynergyProfiles } from '../synergy/profiles';
 
 const fixedOptions = {
   generatedAt: '2026-06-24T00:00:00.000Z',
@@ -33,17 +40,20 @@ function stripGeneratedAt(value: unknown): unknown {
 }
 
 describe('project context export', () => {
-  it('generates all required files and validates the schemas', () => {
+  it('generates the current simple-product file set and validates it', () => {
     const exportSet = buildProjectContextFiles(fixedOptions);
     const validation = validateProjectContextFiles(exportSet.files, fixedOptions);
 
     expect(exportSet.files['project-context/README.md']).toBeDefined();
     expect(exportSet.files['project-context/PROJECT_CONTEXT.md']).toBeDefined();
     expect(exportSet.files['project-context/dragonfire-project-context.json']).toBeDefined();
+    expect(exportSet.files['project-context/synergy/simple-profiles.json']).toBeDefined();
+    expect(exportSet.files['project-context/synergy/profile-audit.json']).toBeDefined();
     expect(exportSet.files['project-context/schemas/project-context.schema.json']).toContain('https://json-schema.org/draft/2020-12/schema');
+    expect(Object.keys(exportSet.files).some((file) => /capability|expected-interaction|formation-review|unresolved/i.test(file))).toBe(false);
     expect(validation.errors).toEqual([]);
     expect(validation.passed).toBe(true);
-    expect(validation.summary.schemaValidatedFiles).toBeGreaterThanOrEqual(32);
+    expect(validation.summary.schemaValidatedFiles).toBe(31);
   });
 
   it('exports exactly one profile for each known dragon', () => {
@@ -56,117 +66,77 @@ describe('project context export', () => {
     expect(index.dragons.map((dragon) => dragon.slug).sort()).toEqual(dragons.map((dragon) => dragon.slug).sort());
   });
 
-  it('keeps populated dragons complete and metadata-only dragons empty', () => {
+  it('keeps detailed dragons complete and metadata-only dragons unmapped', () => {
     const exportSet = buildProjectContextFiles(fixedOptions);
 
     for (const dragonId of populatedDragonIds) {
       const dragon = dragons.find((item) => item.id === dragonId)!;
       const profile = jsonFile<{
-        command: unknown;
-        trait: unknown;
-        habits: unknown[];
-        abilities: unknown[];
+        abilities: Array<{ id: string; kind: string; rawDescription: string }>;
         profileCompleteness: string;
+        simpleProfileStatus: string;
       }>(exportSet.files, `project-context/dragons/${dragon.slug}.json`);
 
-      expect(profile.profileCompleteness).toBe('detailed-combat-data');
-      expect(profile.command).not.toBeNull();
-      expect(profile.trait).not.toBeNull();
-      expect(profile.habits.length).toBeGreaterThan(0);
-      expect(profile.abilities.length).toBe(2 + dragon.habits.length);
+      expect(profile.profileCompleteness).toBe('detailed-abilities');
+      expect(profile.simpleProfileStatus).toBe('curated');
+      expect(profile.abilities.some((ability) => ability.kind === 'command')).toBe(true);
+      expect(profile.abilities.some((ability) => ability.kind === 'trait')).toBe(true);
+      expect(profile.abilities.filter((ability) => ability.kind === 'habit').length).toBe(dragon.habits.length);
+      expect(profile.abilities.every((ability) => ability.id && ability.rawDescription.trim().length > 0)).toBe(true);
     }
 
-    for (const dragon of dragons.filter((item) => !(populatedDragonIds as readonly string[]).includes(item.id))) {
-      const profile = jsonFile<{
-        command: unknown;
-        trait: unknown;
-        habits: unknown[];
-        outputCapabilities: unknown[];
-        modifierCapabilities: unknown[];
-        profileCompleteness: string;
-      }>(exportSet.files, `project-context/dragons/${dragon.slug}.json`);
+    for (const dragonId of metadataOnlyDragonIds) {
+      const dragon = dragons.find((item) => item.id === dragonId)!;
+      const profile = jsonFile<{ abilities: unknown[]; profileCompleteness: string; simpleProfileStatus: string }>(
+        exportSet.files,
+        `project-context/dragons/${dragon.slug}.json`,
+      );
 
       expect(profile.profileCompleteness).toBe('metadata-only');
-      expect(profile.command).toBeNull();
-      expect(profile.trait).toBeNull();
-      expect(profile.habits).toEqual([]);
-      expect(profile.outputCapabilities).toEqual([]);
-      expect(profile.modifierCapabilities).toEqual([]);
+      expect(profile.simpleProfileStatus).toBe('metadata-only-unmapped');
+      expect(profile.abilities).toEqual([]);
     }
   });
 
-  it('includes every modular section in the consolidated context', () => {
+  it('includes simple profiles, audit dispositions, and formation adjacency in the consolidated context', () => {
     const exportSet = buildProjectContextFiles(fixedOptions);
     const context = jsonFile<{
       source: { commit: string };
       dragons: unknown[];
+      simpleSynergy: { profiles: unknown[]; profileAudit: { reviewedAbilityCount: number } };
+      formationRules: { adjacency: Record<string, string[]> };
       statusGlossary: unknown[];
       statDefinitions: unknown[];
-      formationRules: unknown;
-      capabilityFramework: unknown;
-      expectedInteractions: unknown[];
       manualReviews: unknown[];
       evidenceSummary: unknown[];
-      formationReviewCases: unknown[];
-      unresolvedMechanics: unknown[];
     }>(exportSet.files, 'project-context/dragonfire-project-context.json');
-    const cases = jsonFile<unknown[]>(exportSet.files, 'project-context/formation-review-cases.json');
-    const unresolved = jsonFile<unknown[]>(exportSet.files, 'project-context/unresolved-mechanics.json');
 
     expect(context.source.commit).toMatch(/^[a-f0-9]{40}$/);
     expect(context.dragons).toHaveLength(30);
+    expect(context.simpleSynergy.profiles).toHaveLength(simpleSynergyProfiles.length);
+    expect(context.simpleSynergy.profileAudit.reviewedAbilityCount).toBeGreaterThan(0);
+    expect(context.formationRules.adjacency['left-flank']).toEqual(['vanguard']);
+    expect(context.formationRules.adjacency.vanguard).toEqual(['left-flank', 'right-flank']);
     expect(context.statusGlossary.length).toBeGreaterThan(0);
     expect(context.statDefinitions.length).toBeGreaterThan(0);
-    expect(context.formationRules).toBeDefined();
-    expect(context.capabilityFramework).toBeDefined();
-    expect(context.expectedInteractions.length).toBeGreaterThan(0);
     expect(context.manualReviews.length).toBeGreaterThan(0);
     expect(context.evidenceSummary.length).toBeGreaterThan(0);
-    expect(context.formationReviewCases).toHaveLength(cases.length);
-    expect(context.unresolvedMechanics).toHaveLength(unresolved.length);
   });
 
-  it('exports formation review cases with confirmed Phase 3.8.1 cases and pending repair batches', () => {
-    const exportSet = buildProjectContextFiles(fixedOptions);
-    const cases = jsonFile<Array<{ caseId: string; reviewStatus: string; currentModeExpectedInteractions: unknown[]; previewModeExpectedInteractions: unknown[] }>>(
-      exportSet.files,
-      'project-context/formation-review-cases.json',
-    );
-
-    expect(cases).toHaveLength(16);
-    expect(cases.filter((reviewCase) => reviewCase.caseId.startsWith('phase-3-8-1-')).map((reviewCase) => reviewCase.reviewStatus)).toEqual([
-      'confirmed',
-      'confirmed',
-      'confirmed',
-      'confirmed',
-    ]);
-    expect(cases.filter((reviewCase) => /^batch-[12]-formation-/.test(reviewCase.caseId)).map((reviewCase) => reviewCase.reviewStatus)).toEqual([
-      'pending',
-      'pending',
-      'pending',
-      'pending',
-      'pending',
-      'pending',
-      'pending',
-      'pending',
-    ]);
-    expect(cases.filter((reviewCase) => /^df-lg-(0[135]|11)$/.test(reviewCase.caseId)).map((reviewCase) => reviewCase.reviewStatus)).toEqual([
-      'confirmed',
-      'confirmed',
-      'confirmed',
-      'confirmed',
-    ]);
-    expect(cases.every((reviewCase) => reviewCase.previewModeExpectedInteractions.length >= reviewCase.currentModeExpectedInteractions.length)).toBe(true);
-  });
-
-  it('does not emit local paths, browser storage dumps, or secret-like tokens', () => {
+  it('does not emit local paths, browser storage dumps, secret-like tokens, or legacy framework payloads', () => {
     const exportSet = buildProjectContextFiles(fixedOptions);
     const combined = Object.values(exportSet.files).join('\n');
 
     expect(combined).not.toMatch(/[A-Za-z]:\\Users\\/);
     expect(combined).not.toMatch(/\/Users\//);
     expect(combined).not.toMatch(/localStorage/i);
-    expect(combined).not.toMatch(/github_pat_|ghp_[A-Za-z0-9]/);
+    expect(combined).not.toMatch(/github_pat_|ghp_[A-Za-z0-9]|sk-[A-Za-z0-9]{20,}/);
+  });
+
+  it('stays below the committed context size limit', () => {
+    const exportSet = buildProjectContextFiles(fixedOptions);
+
+    expect(exportSet.summary.totalBytes).toBeLessThan(projectContextSizeLimitBytes);
   });
 
   it('is deterministic for controlled inputs and only generatedAt changes when requested', () => {

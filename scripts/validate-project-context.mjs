@@ -67,8 +67,11 @@ for (const error of result.errors) {
 
 console.log(`Schema-validated files: ${result.summary.schemaValidatedFiles}`);
 console.log(`Dragon files: ${result.summary.dragonFileCount}`);
-console.log(`Formation review cases: ${result.summary.formationReviewCaseCount}`);
-console.log(`Unresolved mechanics: ${result.summary.unresolvedMechanicsCount}`);
+console.log(`Detailed dragons: ${result.summary.detailedDragonCount}`);
+console.log(`Metadata-only dragons: ${result.summary.metadataOnlyDragonCount}`);
+console.log(`Simple profiles: ${result.summary.simpleProfileCount}`);
+console.log(`Profile-audit reviews: ${result.summary.profileAuditReviewCount}`);
+console.log(`Project context bytes: ${result.summary.totalBytes}`);
 console.log(`Validation: ${result.passed ? 'passed' : 'failed'}`);
 
 if (!result.passed) {

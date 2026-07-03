@@ -1,63 +1,41 @@
 {
-  "completedPhases": [
-    "Phase 3.6 combat confirmations",
-    "Phase 3.7 capability framework",
-    "Phase 3.7.1 capability scope review",
-    "Phase 3.8 Syrax and Caraxes combat data with dependency tracing",
-    "Phase 3.8.1 formation trace reconciliation",
-    "Phase 3.8.2 formation analysis normalization",
-    "Version 0.5.4 normal unmet requirement summary repair",
-    "Version 0.5.5 formation card analysis presentation redesign",
-    "Version 0.5.6 formation card layout polish",
-    "Version 0.6.0 legendary dragon schema hardening",
-    "Legendary/full-profile formation-output validation exit suite"
-  ],
-  "contextVersion": 1,
-  "currentArchitectureSummary": [
-    "Typed dragon records are stored in src/data/dragons.ts.",
-    "Evidence, manual reviews, observations, statuses, and stat definitions are separate source modules.",
-    "Capability derivation is computed from structured AbilityEffect records in effectCapabilities.ts.",
-    "Formation analysis uses structured SynergyTrace records and does not produce an arbitrary numerical score.",
-    "Formation normalization preserves defensive scope, target-selection groups, visible-card requirement ownership, source ability identity, interaction scope, pure normal unmet summaries, and debug/export trace retention.",
-    "Formation card presentation maps existing normal traces into per-dragon Receives, Provides, Trait status, affinity, candidate, and preview summaries without changing mechanics; layout polish keeps desktop cards equal-height with bounded interaction regions, inline badges, readable summaries, per-item Details, and presentation-only aggregation."
-  ],
-  "currentReviewPhase": "Legendary/full-profile formation validation complete; Epic ingestion active with Daemoros and Vaeldra as the first detailed Epic batch after Vermax.",
-  "format": "dragonfire-project-state",
-  "generatedAt": "2026-07-02T01:21:23.552Z",
-  "plannedNextPhase": [
-    "continue Epic dragon ingestion in batches of two after the latest merged context is available",
-    "fetch latest merged main and create a new feature branch before each future Epic implementation batch",
-    "inspect supplied screenshots and extract Commands, Traits, Habits, targeting, timing, progression, glossary entries, and evidence",
-    "compare each mechanic against the current schema and capability framework",
-    "identify unsupported, ambiguous, provisional, or unresolved behavior"
-  ],
-  "rosterCounts": {
-    "detailedDataDragonCount": 15,
-    "knownRosterCount": 30,
-    "metadataOnlyDragonCount": 15
-  },
+  "generatedAt": "2026-07-03T00:00:00.000Z",
   "source": {
-    "branch": "fix/pass20c-semantic-card-bullet-dedup",
-    "commit": "01101cb74619a5ba9fc284712dac2b1f4937d15d",
+    "repository": "https://github.com/williamchildres/dragonfire-roster-builder",
+    "branch": "refactor/remove-legacy-combat-framework",
+    "commit": "7ce6bc73737bf630d8c67ba9dafd607b1a23df26",
     "databaseVersion": "0.6.2",
-    "dataSchemaVersion": 12,
-    "gameBuild": "26.6.53509",
+    "dataSchemaVersion": 13,
     "localRosterSchemaVersion": 3,
-    "repository": "https://github.com/williamchildres/dragonfire-roster-builder"
+    "gameBuild": "26.6.53509"
+  },
+  "contextVersion": 2,
+  "format": "dragonfire-lab-project-context",
+  "rosterSummary": {
+    "totalDragons": 30,
+    "detailedDragons": 15,
+    "metadataOnlyDragons": 15,
+    "curatedSimpleProfiles": 15,
+    "profileAuditReviews": 105,
+    "evidenceSources": 133,
+    "manualReviews": 28
+  },
+  "profileAuditSummary": {
+    "reviewedAbilityCount": 105,
+    "dispositionCounts": {
+      "represented": 69,
+      "general-support-only": 5,
+      "self-only": 20,
+      "no-cross-dragon-synergy": 9,
+      "reinforces-existing": 2
+    }
   },
   "testTotals": {
-    "countingMethod": "static working-tree test declaration scan; runtime pass/fail is reported by npm run test",
-    "lastRunStatus": "not-run-by-exporter",
     "runner": "vitest",
-    "testCaseCount": 488,
-    "testFileCount": 62
+    "testFileCount": 10,
+    "testCaseCount": 77,
+    "lastRunStatus": "not-run-by-exporter",
+    "countingMethod": "static working-tree test declaration scan; runtime pass/fail is reported by npm run test"
   },
-  "unresolvedMechanicsCount": 169,
-  "versions": {
-    "contextVersion": 1,
-    "databaseVersion": "0.6.2",
-    "dataSchemaVersion": 12,
-    "gameBuild": "26.6.53509",
-    "localRosterSchemaVersion": 3
-  }
+  "sizeLimitBytes": 2000000
 }

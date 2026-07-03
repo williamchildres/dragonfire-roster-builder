@@ -1,6 +1,17 @@
 [
   {
+    "id": "feskar-profile-review-2026-06-26",
     "dragonId": "feskar",
+    "scope": "habits",
+    "status": "confirmed",
+    "reviewedAt": "2026-06-26",
+    "reviewedAgainstGameBuild": "26.6.53509",
+    "reviewer": "repository-owner",
+    "notes": [
+      "Feskar Command, Trait, Habits, progression values, affinities, and unresolved mechanics were normalized from user-supplied in-game screenshots.",
+      "Observed account stats are retained only as non-canonical observation data.",
+      "Resilient Bond persistent ally reference and unknown maximum stack count are preserved as typed data."
+    ],
     "evidenceIds": [
       "feskar-main-screen-2026-06-26",
       "feskar-calculated-assault-2026-06-26",
@@ -10,21 +21,21 @@
       "feskar-emerald-inferno-2026-06-26",
       "feskar-quick-witted-2026-06-26",
       "feskar-unyielding-grasp-2026-06-26"
-    ],
-    "id": "feskar-profile-review-2026-06-26",
-    "notes": [
-      "Feskar Command, Trait, Habits, progression values, affinities, and unresolved mechanics were normalized from user-supplied in-game screenshots.",
-      "Observed account stats are retained only as non-canonical observation data.",
-      "Resilient Bond persistent ally reference and unknown maximum stack count are preserved as typed data."
-    ],
-    "reviewedAgainstGameBuild": "26.6.53509",
-    "reviewedAt": "2026-06-26",
-    "reviewer": "repository-owner",
-    "scope": "habits",
-    "status": "confirmed"
+    ]
   },
   {
+    "id": "rhysarion-profile-review-2026-06-26",
     "dragonId": "rhysarion",
+    "scope": "habits",
+    "status": "confirmed",
+    "reviewedAt": "2026-06-26",
+    "reviewedAgainstGameBuild": "26.6.53509",
+    "reviewer": "repository-owner",
+    "notes": [
+      "Rhysarion Command, Trait, Habits, progression values, affinities, and unresolved mechanics were normalized from user-supplied in-game screenshots.",
+      "Control-conditioned Dawnsong uses the verified Control status category only.",
+      "Ebbing Fury allied Damage Dealt reduction is intentionally modeled as a harmful friendly impairment."
+    ],
     "evidenceIds": [
       "rhysarion-main-screen-2026-06-26",
       "rhysarion-dawnsong-2026-06-26",
@@ -34,21 +45,21 @@
       "rhysarion-echoing-melody-2026-06-26",
       "rhysarion-unbroken-devotion-2026-06-26",
       "rhysarion-inspiring-melody-2026-06-26"
-    ],
-    "id": "rhysarion-profile-review-2026-06-26",
-    "notes": [
-      "Rhysarion Command, Trait, Habits, progression values, affinities, and unresolved mechanics were normalized from user-supplied in-game screenshots.",
-      "Control-conditioned Dawnsong uses the verified Control status category only.",
-      "Ebbing Fury allied Damage Dealt reduction is intentionally modeled as a harmful friendly impairment."
-    ],
-    "reviewedAgainstGameBuild": "26.6.53509",
-    "reviewedAt": "2026-06-26",
-    "reviewer": "repository-owner",
-    "scope": "habits",
-    "status": "confirmed"
+    ]
   },
   {
+    "id": "shadowsong-profile-review-2026-06-26",
     "dragonId": "shadowsong",
+    "scope": "habits",
+    "status": "confirmed",
+    "reviewedAt": "2026-06-26",
+    "reviewedAgainstGameBuild": "26.6.53509",
+    "reviewer": "repository-owner",
+    "notes": [
+      "Shadowsong Command, Trait, Habits, progression values, affinities, and unresolved mechanics were normalized from user-supplied in-game screenshots.",
+      "Blazing Conductor keeps the two ordered added targets and their Burn chances separate.",
+      "Scorched Earth Panic-conditioned chance is per target; exact roll scope remains unresolved."
+    ],
     "evidenceIds": [
       "shadowsong-main-screen-2026-06-26",
       "shadowsong-breath-of-fire-2026-06-26",
@@ -58,301 +69,301 @@
       "shadowsong-scorched-earth-2026-06-26",
       "shadowsong-dragons-intellect-2026-06-26",
       "shadowsong-blazing-conductor-2026-06-26"
-    ],
-    "id": "shadowsong-profile-review-2026-06-26",
-    "notes": [
-      "Shadowsong Command, Trait, Habits, progression values, affinities, and unresolved mechanics were normalized from user-supplied in-game screenshots.",
-      "Blazing Conductor keeps the two ordered added targets and their Burn chances separate.",
-      "Scorched Earth Panic-conditioned chance is per target; exact roll scope remains unresolved."
-    ],
-    "reviewedAgainstGameBuild": "26.6.53509",
-    "reviewedAt": "2026-06-26",
-    "reviewer": "repository-owner",
-    "scope": "habits",
-    "status": "confirmed"
+    ]
   },
   {
-    "dragonId": "malachite",
-    "evidenceIds": [
-      "malachite-wardens-rally-summary-2026-06-23",
-      "malachite-wardens-rally-combat-log-self-recovery-2026-06-24"
-    ],
     "id": "malachite-command-review-2026-06-24",
+    "dragonId": "malachite",
+    "scope": "command",
+    "status": "confirmed",
+    "reviewedAt": "2026-06-24",
+    "reviewedAgainstGameBuild": "26.6.53509",
+    "reviewer": "repository-owner",
     "notes": [
       "Warden's Rally data matches manual in-game observation.",
       "Combat logs showed Warden's Rally applying Recovery to Malachite itself.",
       "This confirms that the exact \"3 Allies\" target includes the caster for this effect."
     ],
-    "reviewedAgainstGameBuild": "26.6.53509",
-    "reviewedAt": "2026-06-24",
-    "reviewer": "repository-owner",
-    "scope": "command",
-    "status": "confirmed"
+    "evidenceIds": [
+      "malachite-wardens-rally-summary-2026-06-23",
+      "malachite-wardens-rally-combat-log-self-recovery-2026-06-24"
+    ]
   },
   {
-    "dragonId": "malachite",
-    "evidenceIds": [
-      "malachite-sentinels-presence-2026-06-23"
-    ],
     "id": "malachite-trait-review-2026-06-24",
+    "dragonId": "malachite",
+    "scope": "trait",
+    "status": "confirmed",
+    "reviewedAt": "2026-06-24",
+    "reviewedAgainstGameBuild": "26.6.53509",
+    "reviewer": "repository-owner",
     "notes": [
       "Sentinel's Presence transcription and normalization match manual review."
     ],
-    "reviewedAgainstGameBuild": "26.6.53509",
-    "reviewedAt": "2026-06-24",
-    "reviewer": "repository-owner",
-    "scope": "trait",
-    "status": "confirmed"
+    "evidenceIds": [
+      "malachite-sentinels-presence-2026-06-23"
+    ]
   },
   {
+    "id": "malachite-habits-review-2026-06-24",
     "dragonId": "malachite",
+    "scope": "habits",
+    "status": "confirmed",
+    "reviewedAt": "2026-06-24",
+    "reviewedAgainstGameBuild": "26.6.53509",
+    "reviewer": "repository-owner",
+    "notes": [
+      "All five Malachite Habits match manual in-game observation."
+    ],
     "evidenceIds": [
       "malachite-forests-instinct-2026-06-23",
       "malachite-wise-vigor-2026-06-23",
       "malachite-thunderous-roar-2026-06-23",
       "malachite-collective-might-2026-06-23",
       "malachite-lightning-strike-2026-06-23"
-    ],
-    "id": "malachite-habits-review-2026-06-24",
-    "notes": [
-      "All five Malachite Habits match manual in-game observation."
-    ],
-    "reviewedAgainstGameBuild": "26.6.53509",
-    "reviewedAt": "2026-06-24",
-    "reviewer": "repository-owner",
-    "scope": "habits",
-    "status": "confirmed"
+    ]
   },
   {
-    "dragonId": "malachite",
-    "evidenceIds": [
-      "malachite-wardens-rally-combat-log-self-recovery-2026-06-24"
-    ],
     "id": "malachite-combat-log-review-2026-06-24",
+    "dragonId": "malachite",
+    "scope": "combat-log-behavior",
+    "status": "confirmed",
+    "reviewedAt": "2026-06-24",
+    "reviewedAgainstGameBuild": "26.6.53509",
+    "reviewer": "repository-owner",
     "notes": [
       "Warden's Rally Recovery selected Malachite as a recipient in combat logs."
     ],
-    "reviewedAgainstGameBuild": "26.6.53509",
-    "reviewedAt": "2026-06-24",
-    "reviewer": "repository-owner",
-    "scope": "combat-log-behavior",
-    "status": "confirmed"
+    "evidenceIds": [
+      "malachite-wardens-rally-combat-log-self-recovery-2026-06-24"
+    ]
   },
   {
-    "dragonId": "seasmoke",
-    "evidenceIds": [
-      "seasmoke-main-screen-2026-06-23"
-    ],
     "id": "seasmoke-identity-review-2026-06-24",
+    "dragonId": "seasmoke",
+    "scope": "identity",
+    "status": "confirmed",
+    "reviewedAt": "2026-06-24",
+    "reviewedAgainstGameBuild": "26.6.53509",
+    "reviewer": "repository-owner",
     "notes": [
       "Seasmoke identity and screenshot-normalized data match the game."
     ],
-    "reviewedAgainstGameBuild": "26.6.53509",
-    "reviewedAt": "2026-06-24",
-    "reviewer": "repository-owner",
-    "scope": "identity",
-    "status": "confirmed"
+    "evidenceIds": [
+      "seasmoke-main-screen-2026-06-23"
+    ]
   },
   {
-    "dragonId": "seasmoke",
-    "evidenceIds": [
-      "seasmoke-cleansing-wrath-summary-2026-06-23"
-    ],
     "id": "seasmoke-command-review-2026-06-24",
+    "dragonId": "seasmoke",
+    "scope": "command",
+    "status": "confirmed",
+    "reviewedAt": "2026-06-24",
+    "reviewedAgainstGameBuild": "26.6.53509",
+    "reviewer": "repository-owner",
     "notes": [
       "Cleansing Wrath transcription matches the game."
     ],
-    "reviewedAgainstGameBuild": "26.6.53509",
-    "reviewedAt": "2026-06-24",
-    "reviewer": "repository-owner",
-    "scope": "command",
-    "status": "confirmed"
+    "evidenceIds": [
+      "seasmoke-cleansing-wrath-summary-2026-06-23"
+    ]
   },
   {
-    "dragonId": "seasmoke",
-    "evidenceIds": [
-      "seasmoke-champions-brilliance-2026-06-23"
-    ],
     "id": "seasmoke-trait-review-2026-06-24",
+    "dragonId": "seasmoke",
+    "scope": "trait",
+    "status": "confirmed",
+    "reviewedAt": "2026-06-24",
+    "reviewedAgainstGameBuild": "26.6.53509",
+    "reviewer": "repository-owner",
     "notes": [
       "Champion's Brilliance transcription matches the game."
     ],
-    "reviewedAgainstGameBuild": "26.6.53509",
-    "reviewedAt": "2026-06-24",
-    "reviewer": "repository-owner",
-    "scope": "trait",
-    "status": "confirmed"
+    "evidenceIds": [
+      "seasmoke-champions-brilliance-2026-06-23"
+    ]
   },
   {
+    "id": "seasmoke-habits-review-2026-06-24",
     "dragonId": "seasmoke",
+    "scope": "habits",
+    "status": "confirmed",
+    "reviewedAt": "2026-06-24",
+    "reviewedAgainstGameBuild": "26.6.53509",
+    "reviewer": "repository-owner",
+    "notes": [
+      "General Seasmoke Habit screenshot-normalized data matches the game."
+    ],
     "evidenceIds": [
       "seasmoke-clever-maneuver-2026-06-23",
       "seasmoke-winds-favor-2026-06-23",
       "seasmoke-infectious-wrath-2026-06-23",
       "seasmoke-cunning-ferocity-2026-06-23",
       "seasmoke-loyal-bond-2026-06-23"
-    ],
-    "id": "seasmoke-habits-review-2026-06-24",
-    "notes": [
-      "General Seasmoke Habit screenshot-normalized data matches the game."
-    ],
-    "reviewedAgainstGameBuild": "26.6.53509",
-    "reviewedAt": "2026-06-24",
-    "reviewer": "repository-owner",
-    "scope": "habits",
-    "status": "confirmed"
+    ]
   },
   {
-    "dragonId": "seasmoke",
-    "evidenceIds": [
-      "seasmoke-infectious-wrath-2026-06-23"
-    ],
     "id": "seasmoke-infectious-wrath-normalization-review-2026-06-24",
+    "dragonId": "seasmoke",
+    "scope": "synergy-normalization",
+    "status": "needs-follow-up",
+    "reviewedAt": "2026-06-24",
+    "reviewedAgainstGameBuild": "26.6.53509",
+    "reviewer": "repository-owner",
     "notes": [
       "Infectious Wrath's augmentation of Cleansing Wrath needs detailed presentation review.",
       "This follow-up does not block ordinary synergy analysis because the unresolved details do not determine the main formation interactions currently modeled."
     ],
-    "reviewedAgainstGameBuild": "26.6.53509",
-    "reviewedAt": "2026-06-24",
-    "reviewer": "repository-owner",
-    "scope": "synergy-normalization",
-    "status": "needs-follow-up"
+    "evidenceIds": [
+      "seasmoke-infectious-wrath-2026-06-23"
+    ]
   },
   {
-    "dragonId": "sheepstealer",
-    "evidenceIds": [
-      "sheepstealer-main-screen-2026-06-23"
-    ],
     "id": "sheepstealer-identity-review-2026-06-24",
+    "dragonId": "sheepstealer",
+    "scope": "identity",
+    "status": "confirmed",
+    "reviewedAt": "2026-06-24",
+    "reviewedAgainstGameBuild": "26.6.53509",
+    "reviewer": "repository-owner",
     "notes": [
       "Sheepstealer identity is confirmed from in-game screenshots."
     ],
-    "reviewedAgainstGameBuild": "26.6.53509",
-    "reviewedAt": "2026-06-24",
-    "reviewer": "repository-owner",
-    "scope": "identity",
-    "status": "confirmed"
+    "evidenceIds": [
+      "sheepstealer-main-screen-2026-06-23"
+    ]
   },
   {
-    "dragonId": "sheepstealer",
-    "evidenceIds": [
-      "sheepstealer-hunters-cunning-2026-06-23"
-    ],
     "id": "sheepstealer-trait-review-2026-06-24",
+    "dragonId": "sheepstealer",
+    "scope": "trait",
+    "status": "confirmed",
+    "reviewedAt": "2026-06-24",
+    "reviewedAgainstGameBuild": "26.6.53509",
+    "reviewer": "repository-owner",
     "notes": [
       "Hunter's Cunning transcription matches manual review."
     ],
-    "reviewedAgainstGameBuild": "26.6.53509",
-    "reviewedAt": "2026-06-24",
-    "reviewer": "repository-owner",
-    "scope": "trait",
-    "status": "confirmed"
+    "evidenceIds": [
+      "sheepstealer-hunters-cunning-2026-06-23"
+    ]
   },
   {
-    "dragonId": "sheepstealer",
-    "evidenceIds": [
-      "sheepstealer-wild-hunt-summary-2026-06-23",
-      "sheepstealer-wild-hunt-recovery-priority-combat-log-2026-06-24"
-    ],
     "id": "sheepstealer-command-review-2026-06-24",
+    "dragonId": "sheepstealer",
+    "scope": "command",
+    "status": "confirmed",
+    "reviewedAt": "2026-06-24",
+    "reviewedAgainstGameBuild": "26.6.53509",
+    "reviewer": "repository-owner",
     "notes": [
       "Wild Hunt transcription matches manual review.",
       "Combat-log observation confirms that new Prey selection prioritizes an eligible enemy that received Recovery during the previous round.",
       "The priority applies only while no enemy is currently marked as Prey."
     ],
-    "reviewedAgainstGameBuild": "26.6.53509",
-    "reviewedAt": "2026-06-24",
-    "reviewer": "repository-owner",
-    "scope": "command",
-    "status": "confirmed"
+    "evidenceIds": [
+      "sheepstealer-wild-hunt-summary-2026-06-23",
+      "sheepstealer-wild-hunt-recovery-priority-combat-log-2026-06-24"
+    ]
   },
   {
+    "id": "sheepstealer-habits-review-2026-06-24",
     "dragonId": "sheepstealer",
+    "scope": "habits",
+    "status": "provisional",
+    "reviewedAt": "2026-06-24",
+    "reviewedAgainstGameBuild": "26.6.53509",
+    "reviewer": "repository-owner",
+    "notes": [
+      "Brief manual review found no mismatches; detailed combat-log behavior remains pending."
+    ],
     "evidenceIds": [
       "sheepstealer-stolen-flock-2026-06-23",
       "sheepstealer-dragons-cunning-2026-06-23",
       "sheepstealer-baited-kill-2026-06-23",
       "sheepstealer-wary-beast-2026-06-23",
       "sheepstealer-savage-claim-2026-06-23"
-    ],
-    "id": "sheepstealer-habits-review-2026-06-24",
-    "notes": [
-      "Brief manual review found no mismatches; detailed combat-log behavior remains pending."
-    ],
-    "reviewedAgainstGameBuild": "26.6.53509",
-    "reviewedAt": "2026-06-24",
-    "reviewer": "repository-owner",
-    "scope": "habits",
-    "status": "provisional"
+    ]
   },
   {
-    "dragonId": "sheepstealer",
-    "evidenceIds": [
-      "sheepstealer-dragons-cunning-2026-06-23"
-    ],
     "id": "sheepstealer-dragons-cunning-normalization-review-2026-06-24",
+    "dragonId": "sheepstealer",
+    "scope": "synergy-normalization",
+    "status": "provisional",
+    "reviewedAt": "2026-06-24",
+    "reviewedAgainstGameBuild": "26.6.53509",
+    "reviewer": "repository-owner",
     "notes": [
       "Current best interpretation: self Intelligence increase is normal, enemy Instinct reduction is enhanced by Initiative.",
       "Combat-log confirmation is not yet available."
     ],
-    "reviewedAgainstGameBuild": "26.6.53509",
-    "reviewedAt": "2026-06-24",
-    "reviewer": "repository-owner",
-    "scope": "synergy-normalization",
-    "status": "provisional"
+    "evidenceIds": [
+      "sheepstealer-dragons-cunning-2026-06-23"
+    ]
   },
   {
-    "dragonId": "vermax",
-    "evidenceIds": [
-      "vermax-main-screen-2026-06-23"
-    ],
     "id": "vermax-identity-review-2026-06-24",
+    "dragonId": "vermax",
+    "scope": "identity",
+    "status": "confirmed",
+    "reviewedAt": "2026-06-24",
+    "reviewedAgainstGameBuild": "26.6.53509",
+    "reviewer": "repository-owner",
     "notes": [
       "Vermax identity and screenshot transcription are confirmed."
     ],
-    "reviewedAgainstGameBuild": "26.6.53509",
-    "reviewedAt": "2026-06-24",
-    "reviewer": "repository-owner",
-    "scope": "identity",
-    "status": "confirmed"
+    "evidenceIds": [
+      "vermax-main-screen-2026-06-23"
+    ]
   },
   {
-    "dragonId": "vermax",
-    "evidenceIds": [
-      "vermax-warriors-zeal-2026-06-23",
-      "vermax-warriors-zeal-basic-attack-combat-log-2026-06-24"
-    ],
     "id": "vermax-warriors-zeal-normalization-review-2026-06-24",
+    "dragonId": "vermax",
+    "scope": "synergy-normalization",
+    "status": "confirmed",
+    "reviewedAt": "2026-06-24",
+    "reviewedAgainstGameBuild": "26.6.53509",
+    "reviewer": "repository-owner",
     "notes": [
       "Warrior's Zeal source scope is combat-log confirmed.",
       "Warrior's Zeal increases Vermax's own Basic Attack Physical Damage.",
       "The unqualified Physical Damage Dealt modifier applies to all verified Physical Damage sources unless a source explicitly restricts or excludes one."
     ],
-    "reviewedAgainstGameBuild": "26.6.53509",
-    "reviewedAt": "2026-06-24",
-    "reviewer": "repository-owner",
-    "scope": "synergy-normalization",
-    "status": "confirmed"
+    "evidenceIds": [
+      "vermax-warriors-zeal-2026-06-23",
+      "vermax-warriors-zeal-basic-attack-combat-log-2026-06-24"
+    ]
   },
   {
-    "dragonId": "malachite",
-    "evidenceIds": [
-      "ally-targeting-language-review-2026-06-24"
-    ],
     "id": "ally-targeting-language-review-2026-06-24",
+    "dragonId": "malachite",
+    "scope": "synergy-normalization",
+    "status": "confirmed",
+    "reviewedAt": "2026-06-24",
+    "reviewedAgainstGameBuild": "26.6.53509",
+    "reviewer": "repository-owner",
     "notes": [
       "Repeated manual ability-text review confirms that Other Ally and Other Allies exclude the caster.",
       "Plain Ally and Allies allow the caster to be selected when otherwise eligible.",
       "Spatial targeting still controls eligibility; a caster is not adjacent to itself."
     ],
-    "reviewedAgainstGameBuild": "26.6.53509",
-    "reviewedAt": "2026-06-24",
-    "reviewer": "repository-owner",
-    "scope": "synergy-normalization",
-    "status": "confirmed"
+    "evidenceIds": [
+      "ally-targeting-language-review-2026-06-24"
+    ]
   },
   {
+    "id": "syrax-combat-data-review-2026-06-24",
     "dragonId": "syrax",
+    "scope": "habits",
+    "status": "confirmed",
+    "reviewedAt": "2026-06-24",
+    "reviewedAgainstGameBuild": "26.6.53509",
+    "reviewer": "repository-owner",
+    "notes": [
+      "Syrax command, trait, affinities, observation state, and five Habits were normalized from screenshot evidence.",
+      "Enemy adjacency for Blazing Fury Tactical Damage remains unresolved and is kept as an explicit assumption.",
+      "Observation values are account-specific and not canonical base stats."
+    ],
     "evidenceIds": [
       "syrax-main-screen-2026-06-24",
       "syrax-sentinels-wit-2026-06-24",
@@ -363,21 +374,22 @@
       "syrax-strategic-revival-2026-06-24",
       "syrax-tactical-inferno-2026-06-24",
       "syrax-mothers-mercy-2026-06-24"
-    ],
-    "id": "syrax-combat-data-review-2026-06-24",
-    "notes": [
-      "Syrax command, trait, affinities, observation state, and five Habits were normalized from screenshot evidence.",
-      "Enemy adjacency for Blazing Fury Tactical Damage remains unresolved and is kept as an explicit assumption.",
-      "Observation values are account-specific and not canonical base stats."
-    ],
-    "reviewedAgainstGameBuild": "26.6.53509",
-    "reviewedAt": "2026-06-24",
-    "reviewer": "repository-owner",
-    "scope": "habits",
-    "status": "confirmed"
+    ]
   },
   {
+    "id": "caraxes-combat-data-review-2026-06-24",
     "dragonId": "caraxes",
+    "scope": "habits",
+    "status": "confirmed",
+    "reviewedAt": "2026-06-24",
+    "reviewedAgainstGameBuild": "26.6.53509",
+    "reviewer": "repository-owner",
+    "notes": [
+      "Caraxes command, trait, affinities, observation state, and five Habits were normalized from screenshot evidence.",
+      "Crippling Inferno stores Slow and Burn as independently checked per target.",
+      "Battle Dread and Mass Enfeeble preserve the visible text/table discrepancy.",
+      "Observation values are account-specific and not canonical base stats."
+    ],
     "evidenceIds": [
       "caraxes-main-screen-2026-06-24",
       "caraxes-hunters-wrath-2026-06-24",
@@ -387,22 +399,22 @@
       "caraxes-crippling-inferno-2026-06-24",
       "caraxes-mass-enfeeble-2026-06-24",
       "caraxes-blood-wyrm-2026-06-24"
-    ],
-    "id": "caraxes-combat-data-review-2026-06-24",
-    "notes": [
-      "Caraxes command, trait, affinities, observation state, and five Habits were normalized from screenshot evidence.",
-      "Crippling Inferno stores Slow and Burn as independently checked per target.",
-      "Battle Dread and Mass Enfeeble preserve the visible text/table discrepancy.",
-      "Observation values are account-specific and not canonical base stats."
-    ],
-    "reviewedAgainstGameBuild": "26.6.53509",
-    "reviewedAt": "2026-06-24",
-    "reviewer": "repository-owner",
-    "scope": "habits",
-    "status": "confirmed"
+    ]
   },
   {
+    "id": "crimson-combat-data-review-2026-06-25",
     "dragonId": "crimson",
+    "scope": "habits",
+    "status": "confirmed",
+    "reviewedAt": "2026-06-25",
+    "reviewedAgainstGameBuild": "26.6.53509",
+    "reviewer": "repository-owner",
+    "notes": [
+      "Crimson command, trait, affinities, observation state, and five Habits were normalized from screenshot evidence.",
+      "Vermin's Bane is modeled as a Round 1 Stun chance override, not as an additional roll.",
+      "Unlikely Hero preserves the Damage Received interpretation from full text and records the table discrepancy.",
+      "Observation values are account-preview values and are not canonical base stats."
+    ],
     "evidenceIds": [
       "crimson-main-screen-2026-06-25",
       "crimson-bloodscale-terror-summary-2026-06-25",
@@ -412,22 +424,22 @@
       "crimson-bloodscale-fury-2026-06-25",
       "crimson-unlikely-hero-2026-06-25",
       "crimson-vermins-bane-2026-06-25"
-    ],
-    "id": "crimson-combat-data-review-2026-06-25",
-    "notes": [
-      "Crimson command, trait, affinities, observation state, and five Habits were normalized from screenshot evidence.",
-      "Vermin's Bane is modeled as a Round 1 Stun chance override, not as an additional roll.",
-      "Unlikely Hero preserves the Damage Received interpretation from full text and records the table discrepancy.",
-      "Observation values are account-preview values and are not canonical base stats."
-    ],
-    "reviewedAgainstGameBuild": "26.6.53509",
-    "reviewedAt": "2026-06-25",
-    "reviewer": "repository-owner",
-    "scope": "habits",
-    "status": "confirmed"
+    ]
   },
   {
+    "id": "kalspire-combat-data-review-2026-06-25",
     "dragonId": "kalspire",
+    "scope": "habits",
+    "status": "confirmed",
+    "reviewedAt": "2026-06-25",
+    "reviewedAgainstGameBuild": "26.6.53509",
+    "reviewer": "repository-owner",
+    "notes": [
+      "Kalspire command, trait, affinities, observation state, and five Habits were normalized from screenshot evidence.",
+      "Bleed and Panic use independent per-target checks where the screenshots explicitly say checks are separate.",
+      "Radiant Conqueror self-Stun is preserved as a real Control status with cleanse timing unresolved.",
+      "Observation values are account-preview values and are not canonical base stats."
+    ],
     "evidenceIds": [
       "kalspire-main-screen-2026-06-25",
       "kalspire-tactical-strike-summary-2026-06-25",
@@ -437,22 +449,22 @@
       "kalspire-tactical-assault-2026-06-25",
       "kalspire-dragons-insight-2026-06-25",
       "kalspire-radiant-conqueror-2026-06-25"
-    ],
-    "id": "kalspire-combat-data-review-2026-06-25",
-    "notes": [
-      "Kalspire command, trait, affinities, observation state, and five Habits were normalized from screenshot evidence.",
-      "Bleed and Panic use independent per-target checks where the screenshots explicitly say checks are separate.",
-      "Radiant Conqueror self-Stun is preserved as a real Control status with cleanse timing unresolved.",
-      "Observation values are account-preview values and are not canonical base stats."
-    ],
-    "reviewedAgainstGameBuild": "26.6.53509",
-    "reviewedAt": "2026-06-25",
-    "reviewer": "repository-owner",
-    "scope": "habits",
-    "status": "confirmed"
+    ]
   },
   {
+    "id": "vhagar-combat-data-review-2026-06-25",
     "dragonId": "vhagar",
+    "scope": "habits",
+    "status": "confirmed",
+    "reviewedAt": "2026-06-25",
+    "reviewedAgainstGameBuild": "26.6.53509",
+    "reviewer": "repository-owner",
+    "notes": [
+      "Vhagar command, trait, affinities, observation state, and five Habits were normalized from screenshot evidence.",
+      "Fiery Bonds Taunt roll scope remains unknown because the screenshot does not state shared or per-target checks.",
+      "Skyward Titan damage is modeled as a transition into the third Bulwark stack, not a continuous at-three-stacks effect.",
+      "Observation values are account-preview values and are not canonical base stats."
+    ],
     "evidenceIds": [
       "vhagar-main-screen-2026-06-25",
       "vhagar-fiery-bonds-summary-2026-06-25",
@@ -462,22 +474,22 @@
       "vhagar-eclipse-cover-2026-06-25",
       "vhagar-blazing-onslaught-2026-06-25",
       "vhagar-skyward-titan-2026-06-25"
-    ],
-    "id": "vhagar-combat-data-review-2026-06-25",
-    "notes": [
-      "Vhagar command, trait, affinities, observation state, and five Habits were normalized from screenshot evidence.",
-      "Fiery Bonds Taunt roll scope remains unknown because the screenshot does not state shared or per-target checks.",
-      "Skyward Titan damage is modeled as a transition into the third Bulwark stack, not a continuous at-three-stacks effect.",
-      "Observation values are account-preview values and are not canonical base stats."
-    ],
-    "reviewedAgainstGameBuild": "26.6.53509",
-    "reviewedAt": "2026-06-25",
-    "reviewer": "repository-owner",
-    "scope": "habits",
-    "status": "confirmed"
+    ]
   },
   {
+    "id": "venator-combat-data-review-2026-06-25",
     "dragonId": "venator",
+    "scope": "habits",
+    "status": "confirmed",
+    "reviewedAt": "2026-06-25",
+    "reviewedAgainstGameBuild": "26.6.53509",
+    "reviewer": "repository-owner",
+    "notes": [
+      "Venator command, trait, affinities, observation state, and five Habits were normalized from screenshot evidence.",
+      "Feral Strike stores two independently targeted Physical Damage instances and allows the same enemy to receive both.",
+      "Feral Precision is modeled as a Double-Strike chance override on rounds 4, 6, and 8, not a second roll.",
+      "Armor Break opposing-position targeting is retained as provisional and normalized to same-lane compatibility."
+    ],
     "evidenceIds": [
       "venator-main-screen-2026-06-25",
       "venator-feral-strike-summary-2026-06-25",
@@ -487,22 +499,22 @@
       "venator-feral-precision-2026-06-25",
       "venator-armor-break-2026-06-25",
       "venator-desperate-ambush-2026-06-25"
-    ],
-    "id": "venator-combat-data-review-2026-06-25",
-    "notes": [
-      "Venator command, trait, affinities, observation state, and five Habits were normalized from screenshot evidence.",
-      "Feral Strike stores two independently targeted Physical Damage instances and allows the same enemy to receive both.",
-      "Feral Precision is modeled as a Double-Strike chance override on rounds 4, 6, and 8, not a second roll.",
-      "Armor Break opposing-position targeting is retained as provisional and normalized to same-lane compatibility."
-    ],
-    "reviewedAgainstGameBuild": "26.6.53509",
-    "reviewedAt": "2026-06-25",
-    "reviewer": "repository-owner",
-    "scope": "habits",
-    "status": "confirmed"
+    ]
   },
   {
+    "id": "daemoros-combat-data-review-2026-06-26",
     "dragonId": "daemoros",
+    "scope": "habits",
+    "status": "confirmed",
+    "reviewedAt": "2026-06-26",
+    "reviewedAgainstGameBuild": "26.6.53509",
+    "reviewer": "repository-owner",
+    "notes": [
+      "Daemoros command, trait, affinity, observation state, and five Habits were normalized from supplied screenshot evidence.",
+      "Phantom's Veil uses typed one-of effect options so Physical, Tactical, and Fire defenses are not derived as three simultaneous active modifiers.",
+      "Warrior's Zeal uses the established all-qualifying Physical source-scope semantic inherited from Vermax.",
+      "Observation values are account-specific and are not canonical base stats."
+    ],
     "evidenceIds": [
       "daemoros-main-screen-2026-06-26",
       "daemoros-shadowflame-2026-06-26",
@@ -512,22 +524,22 @@
       "daemoros-shroud-of-shadows-2026-06-26",
       "daemoros-darkening-fear-2026-06-26",
       "daemoros-phantoms-veil-2026-06-26"
-    ],
-    "id": "daemoros-combat-data-review-2026-06-26",
-    "notes": [
-      "Daemoros command, trait, affinity, observation state, and five Habits were normalized from supplied screenshot evidence.",
-      "Phantom's Veil uses typed one-of effect options so Physical, Tactical, and Fire defenses are not derived as three simultaneous active modifiers.",
-      "Warrior's Zeal uses the established all-qualifying Physical source-scope semantic inherited from Vermax.",
-      "Observation values are account-specific and are not canonical base stats."
-    ],
-    "reviewedAgainstGameBuild": "26.6.53509",
-    "reviewedAt": "2026-06-26",
-    "reviewer": "repository-owner",
-    "scope": "habits",
-    "status": "confirmed"
+    ]
   },
   {
+    "id": "vaeldra-combat-data-review-2026-06-26",
     "dragonId": "vaeldra",
+    "scope": "habits",
+    "status": "confirmed",
+    "reviewedAt": "2026-06-26",
+    "reviewedAgainstGameBuild": "26.6.53509",
+    "reviewer": "repository-owner",
+    "notes": [
+      "Vaeldra command, trait, affinity, observation state, and five Habits were normalized from supplied screenshot evidence.",
+      "Siren's Call uses conditional effect options so a target receives either Taunt or Stagger, never both from one activation.",
+      "Tempting Distraction is modeled as a successful-Taunt same-target trigger and preserves non-Basic Physical source scope.",
+      "Observation values are account-specific and are not canonical base stats."
+    ],
     "evidenceIds": [
       "vaeldra-main-screen-2026-06-26",
       "vaeldra-lure-2026-06-26",
@@ -537,18 +549,6 @@
       "vaeldra-tempting-distraction-2026-06-26",
       "vaeldra-infernal-force-2026-06-26",
       "vaeldra-sirens-call-2026-06-26"
-    ],
-    "id": "vaeldra-combat-data-review-2026-06-26",
-    "notes": [
-      "Vaeldra command, trait, affinity, observation state, and five Habits were normalized from supplied screenshot evidence.",
-      "Siren's Call uses conditional effect options so a target receives either Taunt or Stagger, never both from one activation.",
-      "Tempting Distraction is modeled as a successful-Taunt same-target trigger and preserves non-Basic Physical source scope.",
-      "Observation values are account-specific and are not canonical base stats."
-    ],
-    "reviewedAgainstGameBuild": "26.6.53509",
-    "reviewedAt": "2026-06-26",
-    "reviewer": "repository-owner",
-    "scope": "habits",
-    "status": "confirmed"
+    ]
   }
 ]

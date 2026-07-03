@@ -1,88 +1,55 @@
 # Formation Builder UI
 
-The live Formation Builder is a high-level formation planner. It uses the curated simple synergy profiles in `src/synergy` and does not run the legacy trace, capability, audit, or card-analysis presentation engines.
+The live Formation Builder is a high-level formation planner. It uses curated simple synergy profiles in `src/synergy` and does not run a combat-analysis, trace, capability, audit, or card-projection engine.
 
 ## Position Cards
 
-Each of the three position cards represents one lane:
+Each position card represents one lane:
 
 - Left Flank
 - Vanguard
 - Right Flank
 
-Each card keeps only the planner controls and identity details needed for formation building:
+Cards keep the planner controls and selected-dragon details needed for formation building:
 
 - Dragon selector.
 - Move-to-position buttons.
 - Clear-position button.
-- Selected dragon identity through the selector value.
-- High-level synergy profile coverage.
-- Command panel using the selected dragon's source wording.
-- Trait panel with recorded Star Rank, Dragon Level, and position requirements.
+- Selected dragon identity.
+- High-level profile coverage.
+- Command panel using source wording.
+- Trait panel with unlock and hard position requirement.
 - Favorable and unfavorable troop affinities.
 
-The cards do not contain per-dragon Receives or Provides regions, interaction overflow controls, trace cards, target-candidate labels, technical debug controls, or raw effect tag displays.
+Cards do not contain Receives/Provides regions, trace cards, target-candidate labels, technical debug controls, or raw effect execution fields.
 
 ## Formation Analysis
 
-The formation-level analysis panel groups simple evaluator results into player-facing sections:
+The formation analysis panel groups simple evaluator results into:
 
-- Strong synergies: active setup/payoff and amplifier/output relationships.
-- Missing enablers: selected dragons that benefit from a tag no selected teammate currently provides.
-- Placement issues: relationships blocked by provider position, recipient position, or adjacency.
-- Position conflicts: selected dragons competing for the same exclusive meaningful position, grouped once per position.
-- Future unlocks: relationships available only after saved Star Rank or Dragon Level progression.
+- Strong synergies.
+- Missing enablers.
+- Placement issues.
+- Position conflicts.
+- Future unlocks.
 
-Single selected dragons do not show missing-enabler warnings in the UI. Missing-enabler messages appear only once at least two dragons are selected.
-
-Repeated ability paths are aggregated before presentation. For setup/payoff relationships, the visible key is provider dragon, condition tag, and beneficiary dragon. For amplifier/output relationships, the visible key is supporter dragon, supported tag, and output dragon. If any path for that relationship is active, later locked or blocked paths do not render separate Future unlock or Placement issue bullets.
+Single selected dragons do not show missing-enabler warnings. Repeated ability paths are aggregated by semantic relationship, and active paths suppress duplicate locked or blocked variants of the same relationship.
 
 ## Progression Mapping
 
-The UI maps local roster progression into the simple evaluator as follows:
-
 - `OwnedDragon.starRank` becomes simple `starRank`.
 - `OwnedDragon.reignLevel` becomes simple `dragonLevel`.
-
-Habit Level is not part of the current simple Formation Builder analysis.
+- Habit Level is tracked as roster investment data and does not affect current simple analysis.
 
 ## Placement Contract
-
-The Formation Builder uses the shared linear formation contract:
 
 - Left Flank is adjacent only to Vanguard.
 - Right Flank is adjacent only to Vanguard.
 - Vanguard is adjacent to both flanks.
 - The two flanks are not adjacent.
 
-An adjacent relationship can be active when one dragon is Vanguard and the other is a flank. The same relationship is placement-blocked when the two dragons occupy opposite flanks.
-
-Some verified Traits have hard recipient positions. For example, a Left Flank-only support only activates for the selected Left Flank dragon, and a Right Flank-only support only activates for the selected Right Flank dragon. Preferred flank targeting with fallback remains formation-wide and is not hard-blocked outside the preferred flank.
+Hard recipient-position support only applies when verified wording requires that recipient position. Preferred targeting with fallback is not treated as a hard block.
 
 ## Non-Goals
 
-The live Formation Builder does not show or calculate:
-
-- Exact combat rounds.
-- Proc timing or activation percentages.
-- Target candidates or target-selection probability.
-- Per-target behavior.
-- Stack duration or refresh behavior.
-- Damage formulas, expected damage, or win probability.
-- Legacy trace cards, audit controls, or technical analysis status.
-- Numerical synergy scores or optimizer recommendations.
-
-Legacy services and pure service tests remain in the repository for historical framework coverage and reporting, but production Formation Builder UI does not import them.
-
-## Review Cases
-
-Use these cases when reviewing the cutover:
-
-- Daemoros plus Shadowsong: Panic provider improves Shadowsong's Panic-dependent ability.
-- Syrax plus Caraxes: First-Strike and Fire Damage relationships appear under Strong synergies.
-- Malachite plus Sheepstealer: Recovery relationship is active when Sheepstealer is Vanguard and Level 16+.
-- Malachite plus Caraxes: Malachite's adjacent First-Strike support works beside Vanguard and is blocked across opposite flanks.
-- Daemoros plus Syrax plus Caraxes with Level 16 Traits: all unlocked Vanguard claims produce one grouped position conflict.
-- Caraxes plus Syrax: Slow from Crippling Inferno improves Strategic Revival when both Star Rank unlocks are available.
-- One selected dragon: card details render, but missing enabler warnings remain hidden.
-- A metadata-only dragon such as Tashix: profile coverage reports that high-level synergy data is not yet mapped.
+The Formation Builder does not calculate exact combat rounds, proc timing, activation percentages, target probability, stack behavior, damage formulas, expected damage, win probability, numerical scores, or optimizer recommendations.

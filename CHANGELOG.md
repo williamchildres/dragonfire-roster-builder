@@ -1,5 +1,13 @@
 # Changelog
 
+## Unreleased - PR 4
+
+- Removed the legacy combat-analysis framework, including capability derivation, trace generation, formation card projection, unmet-requirement routing, the synergy report script, and generated expected-interaction/unresolved-mechanic context files.
+- Simplified canonical abilities to descriptive source data: stable IDs, names, unlock metadata, hard position requirements, verification, evidence, tags, and raw verified wording.
+- Replaced the Data Status capability matrix with current dragon/profile coverage.
+- Rebuilt project-context export around the simple product contract and added a 2 MB validation limit.
+- Kept local roster schema `3` unchanged; source data schema increased to `13`.
+
 ## 0.5.6 - 2026-06-24
 
 - Polished Formation Builder card layout so desktop position cards use equal-width, equal-height columns without stretching blank space through the selector and movement-control area.

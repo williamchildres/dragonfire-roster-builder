@@ -32,7 +32,6 @@ import {
   TROOP_TYPES,
   VERIFICATION_STATUSES,
   type AbilityDefinition,
-  type AbilityEffect,
   type Dragon,
   type DragonBreed,
   type DragonCollectionState,
@@ -41,13 +40,6 @@ import {
   type OwnedDragon,
   type VerificationStatus,
 } from '../models/dragon';
-import {
-  buildCapabilityMatrix,
-  deriveDragonEffectProfiles,
-  deriveModifierCapabilities,
-  deriveOutputCapabilities,
-} from '../services/effectCapabilities';
-import { rankedValueForHabitLevel, resolveEffectiveHabitLevelForAbility, type EffectiveHabitLevel } from '../services/habitLevels';
 import { defaultFilters, filterDragons, sortDragons, type DragonFilters, type DragonSort } from '../services/rosterFilters';
 import {
   createEmptyRoster,
@@ -70,6 +62,7 @@ import {
 } from '../services/teamShare';
 import { evaluateFormation } from '../synergy/evaluateFormation';
 import { buildSimpleFormationPresentation } from '../synergy/formationPresentation';
+import { metadataOnlyDragonIds } from '../synergy/profileAudit';
 import { simpleSynergyProfiles } from '../synergy/profiles';
 import type { SimpleProgressionByDragonId } from '../synergy/types';
 
@@ -650,31 +643,38 @@ function dragonName(dragonId: string | null) {
   return dragonId ? dragons.find((dragon) => dragon.id === dragonId)?.name ?? dragonId : unknown;
 }
 
+function hasDetailedAbilities(dragon: Dragon) {
+  return Boolean(dragon.command && dragon.trait && dragon.habits.length > 0);
+}
+
 function DataStatusSection() {
   const officialCount = dragons.filter((dragon) => dragon.rosterSourceStatus === 'official-website').length;
   const pendingCount = dragons.filter(
     (dragon) => dragon.rosterSourceStatus === 'in-game-verified-pending-official-site',
   ).length;
-  const capabilityMatrix = buildCapabilityMatrix(dragons);
+  const detailedCount = dragons.filter(hasDetailedAbilities).length;
+  const mappedProfileIds = new Set(simpleSynergyProfiles.map((profile) => profile.dragonId));
+  const metadataOnlyIds = new Set<string>(metadataOnlyDragonIds);
+  const metadataOnlyCount = dragons.filter((dragon) => metadataOnlyIds.has(dragon.id)).length;
 
   return (
     <section aria-labelledby="status-title">
       <SectionHeading
         eyebrow={`Database ${databaseMetadata.databaseVersion} - Schema ${databaseMetadata.schemaVersion}`}
         title="Data Status"
-        description="The current release distinguishes official roster metadata, pending in-game sightings, and screenshot-verified combat fields."
+        description="The current release tracks official roster metadata, screenshot-verified ability wording, and curated simple synergy profile coverage."
       />
       <div className="panel readable">
         <p>
           {officialCount} dragons are listed on the ordinary public roster site. {pendingCount} dragons
           are verified from in-game screenshots but are pending official public roster pages. Commands,
-          Traits, Habits, affinities, status effects, and combat observations require field-level
-          evidence before they appear in the app.
+          Traits, Habits, affinities, and high-level simple synergy profiles require field-level
+          evidence or curated review before they appear in the app.
         </p>
         <p>
-          Last verification date: <strong>{databaseMetadata.officialRosterLastChecked}</strong>. Unknown
-          values, canonical formulas, exact adjacency, and ambiguous target rules are not guessed because
-          invented data would make roster planning less useful.
+          Last verification date: <strong>{databaseMetadata.officialRosterLastChecked}</strong>. Exact
+          timing, rolls, target overlap, stacks, damage formulas, and combat simulation are not modeled.
+          Raw wording remains visible for player reference.
         </p>
         <p>
           Account observation snapshots are dynamic player-specific records. They can reflect dragon
@@ -684,9 +684,11 @@ function DataStatusSection() {
       </div>
       <div className="stats-grid" aria-label="Data source summary">
         <StatCard label="Known in-game dragons" value={dragons.length} />
+        <StatCard label="Detailed ability records" value={detailedCount} />
+        <StatCard label="Curated simple profiles" value={simpleSynergyProfiles.length} />
+        <StatCard label="Metadata-only dragons" value={metadataOnlyCount} />
         <StatCard label="Official-site entries" value={officialCount} />
         <StatCard label="Pending official site" value={pendingCount} />
-        <StatCard label="Status glossary entries" value={statusGlossary.length} />
       </div>
       <div className="status-legend">
         {VERIFICATION_STATUSES.map((status) => (
@@ -696,47 +698,16 @@ function DataStatusSection() {
           </div>
         ))}
       </div>
-      <div className="panel readable">
-        <h3>Effect Capability Matrix</h3>
-        <p>
-          The matrix is derived from normalized output and modifier capabilities. Primary damage is
-          descriptive only; matching uses every verified capability.
-        </p>
-        <div className="table-wrap">
-          <table>
-            <caption>Reviewed dragon effect capabilities</caption>
-            <thead>
-              <tr>
-                {Object.keys(capabilityMatrix[0] ?? {}).map((column) => (
-                  <th key={column}>{column}</th>
-                ))}
-              </tr>
-            </thead>
-            <tbody>
-              {capabilityMatrix.map((row) => (
-                <tr key={row.Dragon}>
-                  {Object.entries(row).map(([column, value]) => (
-                    <td key={column}>{value}</td>
-                  ))}
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
-      </div>
       <div className="table-wrap">
         <table>
-          <caption>Dragon data completeness</caption>
+          <caption>Dragon profile coverage</caption>
           <thead>
             <tr>
               <th>Dragon</th>
               <th>Roster Source</th>
-              <th>Identity</th>
-              <th>Command</th>
-              <th>Trait</th>
-              <th>Habits</th>
-              <th>Affinities</th>
-              <th>Stats</th>
+              <th>Ability Wording</th>
+              <th>Simple Profile</th>
+              <th>Coverage Status</th>
               <th>Sources</th>
             </tr>
           </thead>
@@ -745,24 +716,9 @@ function DataStatusSection() {
               <tr key={dragon.id}>
                 <td>{dragon.name}</td>
                 <td>{formatRosterSourceStatus(dragon.rosterSourceStatus)}</td>
-                <td>{dragon.officialProfileUrl ? 'Official public roster' : 'In-game screenshot'}</td>
-                <td>{dragon.command ? verificationLabel(dragon.command.verification.status) : unknown}</td>
-                <td>{dragon.trait ? verificationLabel(dragon.trait.verification.status) : unknown}</td>
-                <td>{dragon.habits.length > 0 ? 'Screenshot verified' : unknown}</td>
-                <td>
-                  {Object.values(dragon.affinities).every((value) => value !== 'unknown')
-                    ? 'Complete'
-                    : Object.values(dragon.affinities).some((value) => value !== 'unknown')
-                      ? 'Partial'
-                      : unknown}
-                </td>
-                <td>
-                  {Object.values(dragon.stats).every((value) => value !== null)
-                    ? 'Canonical complete'
-                    : dragonObservationSnapshots.some((snapshot) => snapshot.dragonId === dragon.id)
-                      ? 'Observation only'
-                      : unknown}
-                </td>
+                <td>{hasDetailedAbilities(dragon) ? 'Command, Trait, and Habits recorded' : 'Metadata only'}</td>
+                <td>{mappedProfileIds.has(dragon.id) ? 'Curated' : 'Unmapped'}</td>
+                <td>{metadataOnlyIds.has(dragon.id) ? 'Neutral metadata-only' : mappedProfileIds.has(dragon.id) ? 'Detailed and mapped' : 'Needs simple profile review'}</td>
                 <td>
                   {evidenceSources.some(
                     (source) =>
@@ -1041,7 +997,6 @@ function DragonDetailsDialog({
             <h3>Ownership</h3>
             <RosterFields dragon={dragon} rosterEntry={rosterEntry} onUpdateRoster={onUpdateRoster} />
           </section>
-          <EffectProfilePanel dragon={dragon} />
           <section className="panel wide-panel">
             <h3>Command</h3>
             {dragon.command ? (
@@ -1149,18 +1104,6 @@ function DragonDetailsDialog({
               ))}
             </ul>
           </section>
-          <section className="panel">
-            <h3>Unresolved Questions</h3>
-            {dragon.unresolvedQuestions.length > 0 ? (
-              <ul className="plain-list">
-                {dragon.unresolvedQuestions.map((question) => (
-                  <li key={question}>{question}</li>
-                ))}
-              </ul>
-            ) : (
-              <p>{unknown}</p>
-            )}
-          </section>
         </div>
       </div>
     </div>
@@ -1182,7 +1125,6 @@ function AbilityCard({
     ability.unlockStarRank !== null &&
     (starRank === null || starRank < ability.unlockStarRank);
   const habitLevel = rosterEntry?.habitLevels[ability.id] ?? null;
-  const effectiveHabitLevel = resolveEffectiveHabitLevelForAbility(ability, rosterEntry);
 
   return (
     <article className="ability-card">
@@ -1191,7 +1133,7 @@ function AbilityCard({
           <h4>{ability.name}</h4>
           <p>
             <span className="badge">{titleCase(ability.kind)}</span>
-            <span className="badge">{titleCase(ability.abilityClass)}</span>
+            <span className="badge">{ability.abilityClass ? titleCase(ability.abilityClass) : 'Unknown Class'}</span>
             <span className="badge">{verificationLabel(ability.verification.status)}</span>
             {locked ? <span className="badge">Locked preview</span> : <span className="badge">Unlocked or available</span>}
           </p>
@@ -1214,6 +1156,12 @@ function AbilityCard({
           <dt>Evidence</dt>
           <dd>{ability.evidenceIds.length > 0 ? ability.evidenceIds.length : unknown}</dd>
         </div>
+        {ability.kind === 'habit' ? (
+          <div>
+            <dt>Saved Habit Level</dt>
+            <dd>{habitLevel ?? 'Not recorded'}</dd>
+          </div>
+        ) : null}
       </dl>
       {ability.kind === 'habit' ? (
         <label>
@@ -1238,138 +1186,13 @@ function AbilityCard({
           </select>
         </label>
       ) : null}
-      <div className="ability-stack">
-        {ability.schedules.map((abilitySchedule) => (
-          <section className="mini-panel" key={abilitySchedule.id}>
-            <h5>{titleCase(abilitySchedule.timing.replaceAll('-', ' '))}</h5>
-            <dl className="detail-list">
-              <div>
-                <dt>Specific rounds</dt>
-                <dd>{abilitySchedule.rounds.length > 0 ? abilitySchedule.rounds.join(', ') : unknown}</dd>
-              </div>
-              <div>
-                <dt>Target priority</dt>
-                <dd>{abilitySchedule.targetPriority ? formatToken(abilitySchedule.targetPriority) : unknown}</dd>
-              </div>
-              <div>
-                <dt>Battle context</dt>
-                <dd>{abilitySchedule.battleContext ? formatToken(abilitySchedule.battleContext) : 'Any or unresolved'}</dd>
-              </div>
-              <div>
-                <dt>Trigger chance</dt>
-                <dd>
-                  {abilitySchedule.triggerChanceFixed !== null
-                    ? `${abilitySchedule.triggerChanceFixed}%`
-                    : abilitySchedule.triggerChanceByHabitLevel.length > 0
-                      ? rankedLabel(abilitySchedule.triggerChanceByHabitLevel)
-                      : unknown}
-                </dd>
-              </div>
-            </dl>
-            {abilitySchedule.attempts ? (
-              <p>
-                <strong>Attempts:</strong> {abilitySchedule.attempts.attemptCount ?? unknown} attempt(s);
-                chance {abilitySchedule.attempts.chanceFixed ?? unknown}
-                {abilitySchedule.attempts.chanceFixed !== null ? '%' : ''};
-                independently rolled: {abilitySchedule.attempts.independentlyRolled ? 'yes' : 'no'};
-                independently targeted: {abilitySchedule.attempts.independentlyTargeted ? 'yes' : 'no'}
-              </p>
-            ) : null}
-            {abilitySchedule.repeat ? (
-              <p>
-                <strong>Repeat:</strong> {formatToken(abilitySchedule.repeat.mode)} - {abilitySchedule.repeat.description}
-              </p>
-            ) : null}
-            {abilitySchedule.conditions && abilitySchedule.conditions.length > 0 ? (
-              <ul className="plain-list">
-                {abilitySchedule.conditions.map((condition) => (
-                  <li key={condition.id}>
-                    <strong>Condition:</strong> {condition.description}
-                    {condition.unresolved ? ' (unresolved)' : ''}
-                  </li>
-                ))}
-              </ul>
-            ) : null}
-            <ul className="plain-list">
-              {abilitySchedule.effects.map((effect) => (
-                <li key={effect.id}>
-                  <EffectSummary effect={effect} effectiveHabitLevel={effectiveHabitLevel} />
-                </li>
-              ))}
-            </ul>
-          </section>
-        ))}
-      </div>
-      {ability.powerByHabitLevel.length > 0 ? (
+      {ability.tags.length > 0 ? (
         <p>
-          <strong>Power progression:</strong> {rankedLabel(ability.powerByHabitLevel)}
+          <strong>Tags:</strong> {ability.tags.join(', ')}
         </p>
-      ) : ability.kind === 'habit' ? (
-        <p>
-          <strong>Power progression:</strong> {unknown}
-        </p>
-      ) : null}
-      {effectiveHabitLevel !== null ? (
-        <p>
-          <strong>Current selected values:</strong> Habit Level {effectiveHabitLevel}
-          {habitLevel === null || habitLevel === 0 ? ' (derived from unlock)' : ''}
-        </p>
-      ) : null}
-      {ability.glossaryEntries.length > 0 ? (
-        <ul className="plain-list">
-          {ability.glossaryEntries.map((entry) => (
-            <li key={entry.term}>
-              <strong>{entry.term}:</strong> {entry.definition}
-            </li>
-          ))}
-        </ul>
-      ) : null}
-      <p>
-        <strong>Tags:</strong> {ability.tags.join(', ')}
-      </p>
-      {ability.augmentations.length > 0 ? (
-        <div>
-          <h5>Command Augmentations</h5>
-          <ul className="plain-list">
-            {ability.augmentations.map((augmentation) => (
-              <li key={augmentation.id}>
-                Star {augmentation.minimumDragonStarRank}: {augmentation.rawDescription}
-              </li>
-            ))}
-          </ul>
-        </div>
       ) : null}
       <RawWordingDisclosure rawText={ability.rawDescription} />
-      {ability.unresolvedQuestions.length > 0 ? (
-        <ul className="plain-list">
-          {ability.unresolvedQuestions.map((question) => (
-            <li key={question}>Unresolved: {question}</li>
-          ))}
-        </ul>
-      ) : null}
     </article>
-  );
-}
-
-function EffectSummary({
-  effect,
-  effectiveHabitLevel,
-}: {
-  effect: AbilityEffect;
-  effectiveHabitLevel: EffectiveHabitLevel | null;
-}) {
-  if (effect.effectOptions) {
-    return <EffectOptionsSummary effect={effect} effectiveHabitLevel={effectiveHabitLevel} />;
-  }
-
-  return (
-    <>
-      <strong>{effect.type}</strong> - target: {effect.target}; scope:{' '}
-      {titleCase(effect.targetScope.replaceAll('-', ' '))}; duration: {effectDurationLabel(effect)}; value:{' '}
-      {effectValueLabel(effect, effectiveHabitLevel)}
-      {effect.rankedValues.length > 0 ? `; progression: ${rankedLabel(effect.rankedValues)}` : ''}
-      {effectDetailSuffix(effect)}
-    </>
   );
 }
 
@@ -1395,261 +1218,6 @@ export function RawWordingDisclosure({ rawText }: { rawText: string | null }) {
       ))}
     </details>
   );
-}
-
-function EffectOptionsSummary({
-  effect,
-  effectiveHabitLevel,
-}: {
-  effect: AbilityEffect;
-  effectiveHabitLevel: EffectiveHabitLevel | null;
-}) {
-  const sharedValue = sharedOptionValueLabel(effect, effectiveHabitLevel);
-  return (
-    <div className="effect-options-summary">
-      <p>
-        <strong>{effect.type}</strong> - target: {effect.target}; scope:{' '}
-        {titleCase(effect.targetScope.replaceAll('-', ' '))}; duration: {effectDurationLabel(effect)}.
-      </p>
-      <p>
-        {effect.effectOptions?.mode === 'one-of'
-          ? 'Mutually exclusive alternatives: exactly one option applies; these reductions are not simultaneous.'
-          : 'Conditional branches: exactly one branch applies to each target based on its condition.'}
-        {' '}Selection timing: {effect.effectOptions?.selectionTiming}. Selector method:{' '}
-        {effect.effectOptions?.selectorMethod === 'unknown' ? 'unknown' : 'condition per target'}.
-      </p>
-      {effect.effectOptions?.description ? <p>{effect.effectOptions.description}</p> : null}
-      {sharedValue ? <p>Current selected value: {sharedValue}.</p> : null}
-      <ul className="plain-list">
-        {effect.effectOptions?.options.map((option) => (
-          <li key={option.id}>
-            {effect.effectOptions?.mode === 'one-of'
-              ? oneOfOptionSummary(option.label, option.effect, effectiveHabitLevel)
-              : conditionalOptionSummary(option.label, option.condition?.description ?? null, option.effect, effectiveHabitLevel)}
-          </li>
-        ))}
-      </ul>
-      {effectDetailSuffix(effect)}
-    </div>
-  );
-}
-
-function oneOfOptionSummary(
-  label: string,
-  optionEffect: AbilityEffect,
-  effectiveHabitLevel: EffectiveHabitLevel | null,
-): string {
-  const value = effectValueLabel(optionEffect, effectiveHabitLevel);
-  const action = optionEffect.type.includes('Down') || optionEffect.type.includes('Reduction') ? 'reduce' : 'apply';
-  const valueText = value === unknown ? '' : ` by ${value}`;
-  return `${label}: ${action} ${label}${valueText}; target ${optionEffect.target}; duration ${effectDurationLabel(optionEffect)}.`;
-}
-
-function conditionalOptionSummary(
-  label: string,
-  condition: string | null,
-  optionEffect: AbilityEffect,
-  effectiveHabitLevel: EffectiveHabitLevel | null,
-): string {
-  const value = effectValueLabel(optionEffect, effectiveHabitLevel);
-  const valueText = value === unknown ? '' : ` by ${value}`;
-  const instead = /already/i.test(label) && !/not already/i.test(label) ? ' instead' : '';
-  const conditionText = condition ? `${condition} ` : '';
-  return `${label}: ${conditionText}apply ${optionEffect.type}${instead}${valueText}; target ${optionEffect.target}; duration ${effectDurationLabel(optionEffect)}.`;
-}
-
-function sharedOptionValueLabel(
-  effect: AbilityEffect,
-  effectiveHabitLevel: EffectiveHabitLevel | null,
-): string | null {
-  const values = effect.effectOptions?.options
-    .map((option) => effectValueLabel(option.effect, effectiveHabitLevel))
-    .filter((value) => value !== unknown) ?? [];
-  if (values.length === 0) {
-    return null;
-  }
-  return values.every((value) => value === values[0]) ? values[0]! : null;
-}
-
-function effectValueLabel(effect: AbilityEffect, effectiveHabitLevel: EffectiveHabitLevel | null): string {
-  const rankedValue = rankedValueForHabitLevel(effect.rankedValues, effectiveHabitLevel);
-  if (rankedValue) {
-    return rankedValueLabel(rankedValue);
-  }
-  if (effect.magnitude !== null) {
-    return `${effect.magnitude}${effect.unit === 'percent' || effect.unit === 'rate' ? '%' : effect.unit === 'flat' ? ' flat' : ''}`;
-  }
-  return unknown;
-}
-
-function effectDurationLabel(effect: AbilityEffect): string {
-  return effect.duration ?? (effect.durationRounds ? `${effect.durationRounds} rounds` : unknown);
-}
-
-function effectDetailSuffix(effect: AbilityEffect): string {
-  return `${effect.scaling.length > 0 ? `; scaling: ${effect.scaling.join(', ')}` : ''}${
-    effect.excludes.length > 0 ? `; excludes: ${effect.excludes.join(', ')}` : ''
-  }${effect.sourceScope ? `; source scope: ${formatToken(effect.sourceScope)}` : ''}${
-    effect.targetPriority ? `; priority: ${formatToken(effect.targetPriority)}` : ''
-  }${
-    effect.stack
-      ? `; stack: ${effect.stack.statusId}, max ${effect.stack.maximumStacks}, ${effect.stack.untilEndOfCombat ? 'until end of combat' : effect.stack.durationRounds ? `${effect.stack.durationRounds} rounds` : 'duration unknown'}${effect.stack.valuePerStackFixed !== null ? `, ${effect.stack.valuePerStackFixed} per stack` : ''}${effect.stack.valuePerStackByHabitLevel.length > 0 ? `, ${rankedLabel(effect.stack.valuePerStackByHabitLevel)} per stack` : ''}`
-      : ''
-  }${
-    effect.conditionalMultipliers && effect.conditionalMultipliers.length > 0
-      ? `; multipliers: ${effect.conditionalMultipliers
-          .map((item) => `${item.multiplier}x when ${item.condition.description}`)
-          .join('; ')}`
-      : ''
-  }${
-    effect.conditions && effect.conditions.length > 0
-      ? `; conditions: ${effect.conditions.map((condition) => condition.description).join('; ')}`
-      : ''
-  }${effect.calculated ? '; calculated from verified base values' : ''}${
-    effect.directlyVerified === false ? '; not directly verified' : ''
-  }${effect.notes.length > 0 ? `; notes: ${effect.notes.join('; ')}` : ''}`;
-}
-
-function EffectProfilePanel({ dragon }: { dragon: Dragon }) {
-  const outputs = deriveOutputCapabilities(dragons).filter((capability) => capability.dragonId === dragon.id);
-  const modifiers = deriveModifierCapabilities(dragons).filter((capability) => capability.dragonId === dragon.id);
-  const profile = deriveDragonEffectProfiles(dragons).find((item) => item.dragonId === dragon.id);
-  const deals = [
-    ['Physical Damage', 'physical-damage'],
-    ['Tactical Damage', 'tactical-damage'],
-    ['Fire Damage', 'fire-damage'],
-    ['Recovery', 'recovery'],
-  ] as const;
-  const allySupport = [
-    ['Physical Damage support', 'physical-damage'],
-    ['Tactical Damage support', 'tactical-damage'],
-    ['Fire Damage support', 'fire-damage'],
-    ['Other support', 'stat'],
-  ] as const;
-  const selfAmplifiers = [
-    ['Self Physical Damage', 'physical-damage', 'dealt', 'self-amplification'],
-    ['Self Tactical Damage', 'tactical-damage', 'dealt', 'self-amplification'],
-    ['Self Fire Damage', 'fire-damage', 'dealt', 'self-amplification'],
-    ['Recovery Received', 'recovery', 'received', 'recipient-side-amplification'],
-    ['Other self modifiers', 'stat', 'dealt', 'self-amplification'],
-  ] as const;
-
-  return (
-    <section className="panel wide-panel">
-      <h3>Effect Profile</h3>
-      <p>
-        <strong>Primary summary:</strong>{' '}
-        {profile?.primaryDamageChannel ? formatToken(profile.primaryDamageChannel) : unknown}
-        {profile ? ` (${formatToken(profile.primaryDamageChannelBasis)})` : ''}
-      </p>
-      <div className="summary-layout compact">
-        <div>
-          <h4>Deals</h4>
-          <ul className="plain-list">
-            {deals.map(([label, channel]) => {
-              const matches = outputs.filter((capability) => capability.channel === channel);
-              return (
-                <li key={channel}>
-                  <details>
-                    <summary>
-                      <span className="badge">{label}</span>{' '}
-                      {matches.length > 0 ? capabilitySummary(matches) : 'No verified capability'}
-                    </summary>
-                    <CapabilityList items={matches} />
-                  </details>
-                </li>
-              );
-            })}
-          </ul>
-        </div>
-        <div>
-          <h4>Supports Allies</h4>
-          <ul className="plain-list">
-            {allySupport.map(([label, channel]) => {
-              const matches = modifiers.filter(
-                (capability) => capability.channel === channel && capability.role === 'ally-support',
-              );
-              return (
-                <li key={channel}>
-                  <details>
-                    <summary>
-                      <span className="badge">{label}</span>{' '}
-                      {matches.length > 0 ? capabilitySummary(matches) : 'No verified capability'}
-                    </summary>
-                    <CapabilityList items={matches} />
-                  </details>
-                </li>
-              );
-            })}
-          </ul>
-        </div>
-        <div>
-          <h4>Self and Incoming Amplifiers</h4>
-          <ul className="plain-list">
-            {selfAmplifiers.map(([label, channel, direction, role]) => {
-              const matches = modifiers.filter(
-                (capability) =>
-                  capability.channel === channel &&
-                  capability.direction === direction &&
-                  capability.role === role,
-              );
-              return (
-                <li key={`${channel}-${direction}-${role}`}>
-                  <details>
-                    <summary>
-                      <span className="badge">{label}</span>{' '}
-                      {matches.length > 0 ? capabilitySummary(matches) : 'No verified capability'}
-                    </summary>
-                    <CapabilityList items={matches} />
-                  </details>
-                </li>
-              );
-            })}
-          </ul>
-        </div>
-      </div>
-    </section>
-  );
-}
-
-function CapabilityList({
-  items,
-}: {
-  items: Array<{
-    id: string;
-    abilityName: string;
-    currentlyAvailable: boolean;
-    futureAvailable: boolean;
-    conditional: boolean;
-    combatLogConfirmed: boolean;
-    confidence: string;
-    role?: string;
-    availability?: { reportLabel: string };
-  }>;
-}) {
-  if (items.length === 0) {
-    return <p>{unknown}</p>;
-  }
-  return (
-    <ul className="plain-list">
-      {items.map((item) => (
-        <li key={item.id}>
-          <strong>{item.abilityName}</strong> - {item.availability?.reportLabel ?? (item.currentlyAvailable ? 'base/current' : item.futureAvailable ? 'future/locked' : 'conditional')}
-          {item.role ? `; ${formatToken(item.role)}` : ''}
-          {item.conditional ? '; conditional' : ''}
-          {item.combatLogConfirmed ? '; combat-log confirmed' : `; ${formatToken(item.confidence)}`}
-        </li>
-      ))}
-    </ul>
-  );
-}
-
-function capabilitySummary(items: Array<{ conditional: boolean; abilityName: string; availability?: { reportLabel: string } }>) {
-  const states = [
-    ...new Set(items.map((item) => item.availability?.reportLabel).filter(Boolean)),
-    items.some((item) => item.conditional) ? 'conditional' : null,
-  ].filter(Boolean);
-  return `${states.join(', ') || 'verified'}: ${[...new Set(items.map((item) => item.abilityName))].join(', ')}`;
 }
 
 function ObservationPanel({ dragon }: { dragon: Dragon }) {
@@ -2034,16 +1602,6 @@ function getInitialFormation(): Formation {
     window.localStorage.removeItem('dragonfire-roster-lab:last-team');
     return emptyFormation();
   }
-}
-
-function rankedLabel(values: Array<{ level: number; value: number; unit: string }>) {
-  return values
-    .map((value) => `L${value.level}: ${rankedValueLabel(value)}`)
-    .join(', ');
-}
-
-function rankedValueLabel(value: { value: number; unit: string }) {
-  return `${value.value}${value.unit === 'percent' ? '%' : value.unit === 'power' ? ' power' : value.unit === 'flat' ? ' flat' : ''}`;
 }
 
 function verificationLabel(status: string) {

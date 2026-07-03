@@ -1,0 +1,1221 @@
+{
+  "reviewedAbilityCount": 105,
+  "dispositionCounts": {
+    "represented": 69,
+    "general-support-only": 5,
+    "self-only": 20,
+    "no-cross-dragon-synergy": 9,
+    "reinforces-existing": 2
+  },
+  "metadataOnlyDragonIds": [
+    "solstryker",
+    "tashix",
+    "velar",
+    "zivern",
+    "antares",
+    "shimmer",
+    "jagadrix",
+    "bevlorin",
+    "shadowrend",
+    "thunderstrike",
+    "vesper",
+    "arulix",
+    "nyrena",
+    "dawnseeker",
+    "arrax"
+  ],
+  "reviews": [
+    {
+      "dragonId": "syrax",
+      "abilityId": "syrax-blazing-fury",
+      "abilityKind": "command",
+      "disposition": {
+        "kind": "represented",
+        "signalIds": [
+          "syrax-blazing-fury-first-strike",
+          "syrax-blazing-fury-tactical",
+          "syrax-blazing-fury-fire-support"
+        ],
+        "rationale": "Blazing Fury grants First-Strike, supports Fire Damage, and deals Tactical Damage that can receive Instinct/Tactical support."
+      }
+    },
+    {
+      "dragonId": "syrax",
+      "abilityId": "syrax-sentinels-wit",
+      "abilityKind": "trait",
+      "disposition": {
+        "kind": "represented",
+        "signalIds": [
+          "syrax-sentinels-wit-left-stats",
+          "syrax-sentinels-wit-vanguard"
+        ],
+        "rationale": "The Vanguard trait gives hard Left Flank Instinct and Initiative support and creates an exclusive Vanguard claim."
+      }
+    },
+    {
+      "dragonId": "syrax",
+      "abilityId": "syrax-mindful-synergy",
+      "abilityKind": "habit",
+      "disposition": {
+        "kind": "represented",
+        "signalIds": [
+          "syrax-mindful-synergy-stats"
+        ],
+        "rationale": "Formation-wide Intelligence and Instinct support matches verified scaling channels."
+      }
+    },
+    {
+      "dragonId": "syrax",
+      "abilityId": "syrax-flight-mastery",
+      "abilityKind": "habit",
+      "disposition": {
+        "kind": "represented",
+        "signalIds": [
+          "syrax-flight-mastery-initiative"
+        ],
+        "rationale": "Formation-wide Initiative support is modeled only for recipients with explicit Initiative scaling."
+      }
+    },
+    {
+      "dragonId": "syrax",
+      "abilityId": "syrax-strategic-revival",
+      "abilityKind": "habit",
+      "disposition": {
+        "kind": "represented",
+        "signalIds": [
+          "syrax-strategic-revival-recovery",
+          "syrax-strategic-revival-slow-payoff"
+        ],
+        "rationale": "The augmentation provides Recovery and explicitly improves that Recovery when any enemy has Slow."
+      }
+    },
+    {
+      "dragonId": "syrax",
+      "abilityId": "syrax-tactical-inferno",
+      "abilityKind": "habit",
+      "disposition": {
+        "kind": "represented",
+        "signalIds": [
+          "syrax-tactical-inferno-damage-support"
+        ],
+        "rationale": "The Tactical Damage support is distinct; the Fire Damage component reinforces Syrax as a Fire supporter and is aggregated with Blazing Fury."
+      }
+    },
+    {
+      "dragonId": "syrax",
+      "abilityId": "syrax-mothers-mercy",
+      "abilityKind": "habit",
+      "disposition": {
+        "kind": "general-support-only",
+        "rationale": "Cleanse is useful but has no current kit-specific teammate dependency in the simple profile set."
+      }
+    },
+    {
+      "dragonId": "vhagar",
+      "abilityId": "vhagar-fiery-bonds",
+      "abilityKind": "command",
+      "disposition": {
+        "kind": "represented",
+        "signalIds": [
+          "vhagar-fiery-bonds-taunt",
+          "vhagar-fiery-bonds-physical",
+          "vhagar-fiery-bonds-burn-payoff"
+        ],
+        "rationale": "Fiery Bonds applies Taunt, deals Strength-based Physical Damage, and explicitly benefits from Burned targets."
+      }
+    },
+    {
+      "dragonId": "vhagar",
+      "abilityId": "vhagar-warriors-resilience",
+      "abilityKind": "trait",
+      "disposition": {
+        "kind": "represented",
+        "signalIds": [
+          "vhagar-warriors-resilience-left-tactical",
+          "vhagar-warriors-resilience-vanguard"
+        ],
+        "rationale": "The Vanguard trait gives hard Left Flank Tactical Damage support and creates an exclusive Vanguard claim."
+      }
+    },
+    {
+      "dragonId": "vhagar",
+      "abilityId": "vhagar-ancestral-shield",
+      "abilityKind": "habit",
+      "disposition": {
+        "kind": "self-only",
+        "rationale": "The defensive and Recovery Received effects apply only to Vhagar."
+      }
+    },
+    {
+      "dragonId": "vhagar",
+      "abilityId": "vhagar-battle-leader",
+      "abilityKind": "habit",
+      "disposition": {
+        "kind": "represented",
+        "signalIds": [
+          "vhagar-battle-leader-physical"
+        ],
+        "rationale": "The habit improves a teammate non-Basic Physical Damage channel."
+      }
+    },
+    {
+      "dragonId": "vhagar",
+      "abilityId": "vhagar-eclipse-cover",
+      "abilityKind": "habit",
+      "disposition": {
+        "kind": "general-support-only",
+        "rationale": "Advantage and Weakened are broad effects with no current explicit teammate payoff."
+      }
+    },
+    {
+      "dragonId": "vhagar",
+      "abilityId": "vhagar-blazing-onslaught",
+      "abilityKind": "habit",
+      "disposition": {
+        "kind": "represented",
+        "signalIds": [
+          "vhagar-blazing-onslaught-vulnerability"
+        ],
+        "rationale": "The habit increases enemy Fire and non-Basic Physical Damage Received."
+      }
+    },
+    {
+      "dragonId": "vhagar",
+      "abilityId": "vhagar-skyward-titan",
+      "abilityKind": "habit",
+      "disposition": {
+        "kind": "represented",
+        "signalIds": [
+          "vhagar-skyward-titan-physical"
+        ],
+        "rationale": "The third Bulwark event deals Strength-based Physical Damage; the stack loop itself is self-only."
+      }
+    },
+    {
+      "dragonId": "caraxes",
+      "abilityId": "caraxes-infernal-burst",
+      "abilityKind": "command",
+      "disposition": {
+        "kind": "represented",
+        "signalIds": [
+          "caraxes-infernal-burst-fire",
+          "caraxes-infernal-burst-first-strike-payoff"
+        ],
+        "rationale": "Infernal Burst is Intelligence-based Fire Damage and explicitly benefits from First-Strike."
+      }
+    },
+    {
+      "dragonId": "caraxes",
+      "abilityId": "caraxes-hunters-wrath",
+      "abilityKind": "trait",
+      "disposition": {
+        "kind": "represented",
+        "signalIds": [
+          "caraxes-hunters-wrath-right-stats",
+          "caraxes-hunters-wrath-vanguard"
+        ],
+        "rationale": "The Vanguard trait gives hard Right Flank Strength and Initiative support and creates an exclusive Vanguard claim."
+      }
+    },
+    {
+      "dragonId": "caraxes",
+      "abilityId": "caraxes-battle-dread",
+      "abilityKind": "habit",
+      "disposition": {
+        "kind": "no-cross-dragon-synergy",
+        "rationale": "Enemy stat reduction is generally useful but does not match a current explicit teammate payoff."
+      }
+    },
+    {
+      "dragonId": "caraxes",
+      "abilityId": "caraxes-dragons-flair",
+      "abilityKind": "habit",
+      "disposition": {
+        "kind": "self-only",
+        "rationale": "The Fire Damage increase applies only to Caraxes."
+      }
+    },
+    {
+      "dragonId": "caraxes",
+      "abilityId": "caraxes-crippling-inferno",
+      "abilityKind": "habit",
+      "disposition": {
+        "kind": "represented",
+        "signalIds": [
+          "caraxes-crippling-inferno-slow",
+          "caraxes-crippling-inferno-burn",
+          "caraxes-crippling-inferno-fire"
+        ],
+        "rationale": "Crippling Inferno supplies distinct Slow and Burn setup; its high-level Fire output through Burn reinforces Caraxes as a Fire output dragon and is aggregated with Infernal Burst."
+      }
+    },
+    {
+      "dragonId": "caraxes",
+      "abilityId": "caraxes-mass-enfeeble",
+      "abilityKind": "habit",
+      "disposition": {
+        "kind": "no-cross-dragon-synergy",
+        "rationale": "Enemy non-Basic Physical Damage reduction has no current pair-specific payoff."
+      }
+    },
+    {
+      "dragonId": "caraxes",
+      "abilityId": "caraxes-blood-wyrm",
+      "abilityKind": "habit",
+      "disposition": {
+        "kind": "self-only",
+        "rationale": "The Fire Damage and Recovery effects are conditional self benefits."
+      }
+    },
+    {
+      "dragonId": "seasmoke",
+      "abilityId": "seasmoke-cleansing-wrath",
+      "abilityKind": "command",
+      "disposition": {
+        "kind": "represented",
+        "signalIds": [
+          "seasmoke-cleansing-wrath-fire"
+        ],
+        "rationale": "The command deals Intelligence-based Fire Damage."
+      }
+    },
+    {
+      "dragonId": "seasmoke",
+      "abilityId": "seasmoke-champions-brilliance",
+      "abilityKind": "trait",
+      "disposition": {
+        "kind": "represented",
+        "signalIds": [
+          "seasmoke-champions-brilliance-vanguard"
+        ],
+        "rationale": "The trait requires Vanguard; its teammate Damage Received reduction is general support only."
+      }
+    },
+    {
+      "dragonId": "seasmoke",
+      "abilityId": "seasmoke-clever-maneuver",
+      "abilityKind": "habit",
+      "disposition": {
+        "kind": "represented",
+        "signalIds": [
+          "seasmoke-clever-maneuver-stats"
+        ],
+        "rationale": "The habit improves Intelligence and Initiative for a stat-scaling ally."
+      }
+    },
+    {
+      "dragonId": "seasmoke",
+      "abilityId": "seasmoke-winds-favor",
+      "abilityKind": "habit",
+      "disposition": {
+        "kind": "represented",
+        "signalIds": [
+          "seasmoke-winds-favor-initiative"
+        ],
+        "rationale": "The habit improves allied Initiative."
+      }
+    },
+    {
+      "dragonId": "seasmoke",
+      "abilityId": "seasmoke-infectious-wrath",
+      "abilityKind": "habit",
+      "disposition": {
+        "kind": "represented",
+        "signalIds": [
+          "seasmoke-infectious-wrath-physical",
+          "seasmoke-infectious-wrath-panic-payoff"
+        ],
+        "rationale": "The augmentation adds Physical Damage that is explicitly improved by Panic."
+      }
+    },
+    {
+      "dragonId": "seasmoke",
+      "abilityId": "seasmoke-cunning-ferocity",
+      "abilityKind": "habit",
+      "disposition": {
+        "kind": "represented",
+        "signalIds": [
+          "seasmoke-cunning-ferocity-fire-intelligence"
+        ],
+        "rationale": "The habit gives adjacent Fire Damage and Intelligence support."
+      }
+    },
+    {
+      "dragonId": "seasmoke",
+      "abilityId": "seasmoke-loyal-bond",
+      "abilityKind": "habit",
+      "disposition": {
+        "kind": "general-support-only",
+        "rationale": "Advantage and Resistance are broad survivability/damage effects without a current explicit payoff."
+      }
+    },
+    {
+      "dragonId": "crimson",
+      "abilityId": "crimson-bloodscale-terror",
+      "abilityKind": "command",
+      "disposition": {
+        "kind": "represented",
+        "signalIds": [
+          "crimson-bloodscale-terror-stun",
+          "crimson-bloodscale-terror-fire"
+        ],
+        "rationale": "The command supplies Stun as Control and Intelligence-based Fire Damage."
+      }
+    },
+    {
+      "dragonId": "crimson",
+      "abilityId": "crimson-hunters-cunning",
+      "abilityKind": "trait",
+      "disposition": {
+        "kind": "represented",
+        "signalIds": [
+          "crimson-hunters-cunning-right-physical",
+          "crimson-hunters-cunning-vanguard"
+        ],
+        "rationale": "The Vanguard trait gives hard Right Flank Physical support and creates an exclusive Vanguard claim."
+      }
+    },
+    {
+      "dragonId": "crimson",
+      "abilityId": "crimson-enervate",
+      "abilityKind": "habit",
+      "disposition": {
+        "kind": "no-cross-dragon-synergy",
+        "rationale": "Enemy Tactical Damage reduction targets enemy output and has no current pair-specific teammate payoff."
+      }
+    },
+    {
+      "dragonId": "crimson",
+      "abilityId": "crimson-dragons-intellect",
+      "abilityKind": "habit",
+      "disposition": {
+        "kind": "self-only",
+        "rationale": "The Damage Received reduction and Intelligence increase apply only to Crimson."
+      }
+    },
+    {
+      "dragonId": "crimson",
+      "abilityId": "crimson-bloodscale-fury",
+      "abilityKind": "habit",
+      "disposition": {
+        "kind": "represented",
+        "signalIds": [
+          "crimson-bloodscale-fury-taunt-payoff"
+        ],
+        "rationale": "Bloodscale Fury explicitly improves when a target has Taunt."
+      }
+    },
+    {
+      "dragonId": "crimson",
+      "abilityId": "crimson-unlikely-hero",
+      "abilityKind": "habit",
+      "disposition": {
+        "kind": "represented",
+        "signalIds": [
+          "crimson-unlikely-hero-vulnerability"
+        ],
+        "rationale": "The habit increases enemy non-Basic Physical and Fire Damage Received."
+      }
+    },
+    {
+      "dragonId": "crimson",
+      "abilityId": "crimson-vermins-bane",
+      "abilityKind": "habit",
+      "disposition": {
+        "kind": "no-cross-dragon-synergy",
+        "rationale": "The Command augmentation adds enemy stat reductions but no current teammate payoff."
+      }
+    },
+    {
+      "dragonId": "kalspire",
+      "abilityId": "kalspire-tactical-strike",
+      "abilityKind": "command",
+      "disposition": {
+        "kind": "represented",
+        "signalIds": [
+          "kalspire-tactical-strike-tactical"
+        ],
+        "rationale": "The command deals Instinct-based Tactical Damage; Bleed has no current explicit payoff."
+      }
+    },
+    {
+      "dragonId": "kalspire",
+      "abilityId": "kalspire-champions-brilliance",
+      "abilityKind": "trait",
+      "disposition": {
+        "kind": "represented",
+        "signalIds": [
+          "kalspire-champions-brilliance-vanguard"
+        ],
+        "rationale": "The trait requires Vanguard; its teammate Damage Received reduction is general support only."
+      }
+    },
+    {
+      "dragonId": "kalspire",
+      "abilityId": "kalspire-robust-insight",
+      "abilityKind": "habit",
+      "disposition": {
+        "kind": "self-only",
+        "rationale": "The Strength and Instinct increases apply only to Kalspire."
+      }
+    },
+    {
+      "dragonId": "kalspire",
+      "abilityId": "kalspire-battle-cunning",
+      "abilityKind": "habit",
+      "disposition": {
+        "kind": "no-cross-dragon-synergy",
+        "rationale": "Enemy Strength and Intelligence reductions have no current pair-specific payoff."
+      }
+    },
+    {
+      "dragonId": "kalspire",
+      "abilityId": "kalspire-tactical-assault",
+      "abilityKind": "habit",
+      "disposition": {
+        "kind": "represented",
+        "signalIds": [
+          "kalspire-tactical-assault-physical",
+          "kalspire-tactical-assault-panic"
+        ],
+        "rationale": "The augmentation adds Strength-based Physical Damage and Panic setup."
+      }
+    },
+    {
+      "dragonId": "kalspire",
+      "abilityId": "kalspire-dragons-insight",
+      "abilityKind": "habit",
+      "disposition": {
+        "kind": "self-only",
+        "rationale": "The Damage Received reduction and Instinct increase apply only to Kalspire."
+      }
+    },
+    {
+      "dragonId": "kalspire",
+      "abilityId": "kalspire-radiant-conqueror",
+      "abilityKind": "habit",
+      "disposition": {
+        "kind": "no-cross-dragon-synergy",
+        "rationale": "The self-Stun is source-bound and enemy damage reductions have no current explicit teammate payoff."
+      }
+    },
+    {
+      "dragonId": "malachite",
+      "abilityId": "malachite-wardens-rally",
+      "abilityKind": "command",
+      "disposition": {
+        "kind": "represented",
+        "signalIds": [
+          "malachite-wardens-rally-tactical",
+          "malachite-wardens-rally-recovery"
+        ],
+        "rationale": "Warden's Rally deals Instinct-based Tactical Damage and provides Instinct-enhanced Recovery."
+      }
+    },
+    {
+      "dragonId": "malachite",
+      "abilityId": "malachite-sentinels-presence",
+      "abilityKind": "trait",
+      "disposition": {
+        "kind": "represented",
+        "signalIds": [
+          "malachite-sentinels-presence-left-fire",
+          "malachite-sentinels-presence-vanguard"
+        ],
+        "rationale": "The Vanguard trait gives hard Left Flank Fire support and creates an exclusive Vanguard claim."
+      }
+    },
+    {
+      "dragonId": "malachite",
+      "abilityId": "malachite-forests-instinct",
+      "abilityKind": "habit",
+      "disposition": {
+        "kind": "represented",
+        "signalIds": [
+          "malachite-forests-instinct-physical"
+        ],
+        "rationale": "The habit improves other allies non-Basic Physical Damage."
+      }
+    },
+    {
+      "dragonId": "malachite",
+      "abilityId": "malachite-wise-vigor",
+      "abilityKind": "habit",
+      "disposition": {
+        "kind": "self-only",
+        "rationale": "The Instinct and Recovery Dealt increases apply only to Malachite."
+      }
+    },
+    {
+      "dragonId": "malachite",
+      "abilityId": "malachite-thunderous-roar",
+      "abilityKind": "habit",
+      "disposition": {
+        "kind": "represented",
+        "signalIds": [
+          "malachite-thunderous-roar-damage"
+        ],
+        "rationale": "Advantage is represented as broad Damage Dealt support."
+      }
+    },
+    {
+      "dragonId": "malachite",
+      "abilityId": "malachite-collective-might",
+      "abilityKind": "habit",
+      "disposition": {
+        "kind": "represented",
+        "signalIds": [
+          "malachite-collective-might-strength"
+        ],
+        "rationale": "The habit improves allied Strength."
+      }
+    },
+    {
+      "dragonId": "malachite",
+      "abilityId": "malachite-lightning-strike",
+      "abilityKind": "habit",
+      "disposition": {
+        "kind": "represented",
+        "signalIds": [
+          "malachite-lightning-strike-first-strike",
+          "malachite-lightning-strike-strength"
+        ],
+        "rationale": "The habit grants adjacent First-Strike and Strength support."
+      }
+    },
+    {
+      "dragonId": "venator",
+      "abilityId": "venator-feral-strike",
+      "abilityKind": "command",
+      "disposition": {
+        "kind": "represented",
+        "signalIds": [
+          "venator-feral-strike-physical"
+        ],
+        "rationale": "The command deals Strength-based Physical Damage."
+      }
+    },
+    {
+      "dragonId": "venator",
+      "abilityId": "venator-warriors-zeal",
+      "abilityKind": "trait",
+      "disposition": {
+        "kind": "represented",
+        "signalIds": [
+          "venator-warriors-zeal-left-stats",
+          "venator-warriors-zeal-vanguard"
+        ],
+        "rationale": "The Vanguard trait gives hard Left Flank Instinct and Initiative support and creates an exclusive Vanguard claim."
+      }
+    },
+    {
+      "dragonId": "venator",
+      "abilityId": "venator-hunters-bane",
+      "abilityKind": "habit",
+      "disposition": {
+        "kind": "no-cross-dragon-synergy",
+        "rationale": "Enemy Intelligence reduction has no current pair-specific payoff."
+      }
+    },
+    {
+      "dragonId": "venator",
+      "abilityId": "venator-dragons-might",
+      "abilityKind": "habit",
+      "disposition": {
+        "kind": "self-only",
+        "rationale": "The non-Basic Physical Damage increase applies only to Venator."
+      }
+    },
+    {
+      "dragonId": "venator",
+      "abilityId": "venator-feral-precision",
+      "abilityKind": "habit",
+      "disposition": {
+        "kind": "represented",
+        "signalIds": [
+          "venator-feral-precision-physical"
+        ],
+        "rationale": "The augmentation adds Strength-based Physical Damage."
+      }
+    },
+    {
+      "dragonId": "venator",
+      "abilityId": "venator-armor-break",
+      "abilityKind": "habit",
+      "disposition": {
+        "kind": "represented",
+        "signalIds": [
+          "venator-armor-break-physical"
+        ],
+        "rationale": "The habit increases enemy Physical Damage Received."
+      }
+    },
+    {
+      "dragonId": "venator",
+      "abilityId": "venator-desperate-ambush",
+      "abilityKind": "habit",
+      "disposition": {
+        "kind": "represented",
+        "signalIds": [
+          "venator-desperate-ambush-overwhelm"
+        ],
+        "rationale": "The habit applies Overwhelm, which satisfies the high-level Control setup."
+      }
+    },
+    {
+      "dragonId": "daemoros",
+      "abilityId": "daemoros-shadowflame",
+      "abilityKind": "command",
+      "disposition": {
+        "kind": "represented",
+        "signalIds": [
+          "daemoros-shadowflame-physical",
+          "daemoros-shadowflame-burn"
+        ],
+        "rationale": "The command deals Strength-based Physical Damage and can apply Burn."
+      }
+    },
+    {
+      "dragonId": "daemoros",
+      "abilityId": "daemoros-warriors-zeal",
+      "abilityKind": "trait",
+      "disposition": {
+        "kind": "represented",
+        "signalIds": [
+          "daemoros-warriors-zeal-left-stats",
+          "daemoros-warriors-zeal-vanguard"
+        ],
+        "rationale": "The Vanguard trait gives hard Left Flank Instinct and Initiative support and creates an exclusive Vanguard claim."
+      }
+    },
+    {
+      "dragonId": "daemoros",
+      "abilityId": "daemoros-instill-fear",
+      "abilityKind": "habit",
+      "disposition": {
+        "kind": "represented",
+        "signalIds": [
+          "daemoros-instill-fear-panic"
+        ],
+        "rationale": "The habit applies Panic."
+      }
+    },
+    {
+      "dragonId": "daemoros",
+      "abilityId": "daemoros-powerful-reflexes",
+      "abilityKind": "habit",
+      "disposition": {
+        "kind": "self-only",
+        "rationale": "The Strength and Initiative increases apply only to Daemoros."
+      }
+    },
+    {
+      "dragonId": "daemoros",
+      "abilityId": "daemoros-shroud-of-shadows",
+      "abilityKind": "habit",
+      "disposition": {
+        "kind": "represented",
+        "signalIds": [
+          "daemoros-shroud-of-shadows-confusion"
+        ],
+        "rationale": "The habit applies Confusion, which satisfies Control."
+      }
+    },
+    {
+      "dragonId": "daemoros",
+      "abilityId": "daemoros-darkening-fear",
+      "abilityKind": "habit",
+      "disposition": {
+        "kind": "reinforces-existing",
+        "signalIds": [
+          "daemoros-instill-fear-panic"
+        ],
+        "rationale": "The later Panic ability reinforces Daemoros as a Panic provider without adding a distinct visible relationship."
+      }
+    },
+    {
+      "dragonId": "daemoros",
+      "abilityId": "daemoros-phantoms-veil",
+      "abilityKind": "habit",
+      "disposition": {
+        "kind": "self-only",
+        "rationale": "The exclusive Damage Received reduction applies only to Daemoros."
+      }
+    },
+    {
+      "dragonId": "feskar",
+      "abilityId": "feskar-calculated-assault",
+      "abilityKind": "command",
+      "disposition": {
+        "kind": "represented",
+        "signalIds": [
+          "feskar-calculated-assault-tactical"
+        ],
+        "rationale": "The base command deals Instinct-based Tactical Damage; the Fire augmentation is reviewed on Emerald Inferno."
+      }
+    },
+    {
+      "dragonId": "feskar",
+      "abilityId": "feskar-champions-brilliance",
+      "abilityKind": "trait",
+      "disposition": {
+        "kind": "represented",
+        "signalIds": [
+          "feskar-champions-brilliance-vanguard"
+        ],
+        "rationale": "The trait requires Vanguard; its teammate Damage Received reduction is general support only."
+      }
+    },
+    {
+      "dragonId": "feskar",
+      "abilityId": "feskar-resilient-bond",
+      "abilityKind": "habit",
+      "disposition": {
+        "kind": "general-support-only",
+        "rationale": "The adjacent defensive bond is survivability support without a current explicit payoff."
+      }
+    },
+    {
+      "dragonId": "feskar",
+      "abilityId": "feskar-insightful-allies",
+      "abilityKind": "habit",
+      "disposition": {
+        "kind": "represented",
+        "signalIds": [
+          "feskar-insightful-allies-instinct"
+        ],
+        "rationale": "The habit improves allied Instinct."
+      }
+    },
+    {
+      "dragonId": "feskar",
+      "abilityId": "feskar-emerald-inferno",
+      "abilityKind": "habit",
+      "disposition": {
+        "kind": "represented",
+        "signalIds": [
+          "feskar-emerald-inferno-fire",
+          "feskar-emerald-inferno-burn-payoff"
+        ],
+        "rationale": "The augmentation adds Intelligence-based Fire Damage that explicitly benefits from Burn."
+      }
+    },
+    {
+      "dragonId": "feskar",
+      "abilityId": "feskar-quick-witted",
+      "abilityKind": "habit",
+      "disposition": {
+        "kind": "self-only",
+        "rationale": "The Intelligence and Initiative increases apply only to Feskar."
+      }
+    },
+    {
+      "dragonId": "feskar",
+      "abilityId": "feskar-unyielding-grasp",
+      "abilityKind": "habit",
+      "disposition": {
+        "kind": "represented",
+        "signalIds": [
+          "feskar-unyielding-grasp-stagger"
+        ],
+        "rationale": "The habit applies Stagger, which satisfies Control."
+      }
+    },
+    {
+      "dragonId": "rhysarion",
+      "abilityId": "rhysarion-dawnsong",
+      "abilityKind": "command",
+      "disposition": {
+        "kind": "represented",
+        "signalIds": [
+          "rhysarion-dawnsong-physical",
+          "rhysarion-dawnsong-fire",
+          "rhysarion-dawnsong-control-payoff"
+        ],
+        "rationale": "Dawnsong deals Physical and Fire Damage and explicitly improves Fire Damage against Control."
+      }
+    },
+    {
+      "dragonId": "rhysarion",
+      "abilityId": "rhysarion-champions-vigor",
+      "abilityKind": "trait",
+      "disposition": {
+        "kind": "represented",
+        "signalIds": [
+          "rhysarion-champions-vigor-right-damage",
+          "rhysarion-champions-vigor-vanguard"
+        ],
+        "rationale": "The Vanguard trait gives hard Right Flank generic Damage support and creates an exclusive Vanguard claim."
+      }
+    },
+    {
+      "dragonId": "rhysarion",
+      "abilityId": "rhysarion-ebbing-fury",
+      "abilityKind": "habit",
+      "disposition": {
+        "kind": "represented",
+        "signalIds": [
+          "rhysarion-ebbing-fury-recovery"
+        ],
+        "rationale": "The habit provides Strength-enhanced Recovery."
+      }
+    },
+    {
+      "dragonId": "rhysarion",
+      "abilityId": "rhysarion-sharp-resolve",
+      "abilityKind": "habit",
+      "disposition": {
+        "kind": "self-only",
+        "rationale": "The Strength and Intelligence increases apply only to Rhysarion."
+      }
+    },
+    {
+      "dragonId": "rhysarion",
+      "abilityId": "rhysarion-echoing-melody",
+      "abilityKind": "habit",
+      "disposition": {
+        "kind": "represented",
+        "signalIds": [
+          "rhysarion-echoing-melody-recovery"
+        ],
+        "rationale": "The augmentation provides Intelligence-enhanced Recovery to other allies."
+      }
+    },
+    {
+      "dragonId": "rhysarion",
+      "abilityId": "rhysarion-unbroken-devotion",
+      "abilityKind": "habit",
+      "disposition": {
+        "kind": "represented",
+        "signalIds": [
+          "rhysarion-unbroken-devotion-recovery"
+        ],
+        "rationale": "The habit improves other allies Recovery Received."
+      }
+    },
+    {
+      "dragonId": "rhysarion",
+      "abilityId": "rhysarion-inspiring-melody",
+      "abilityKind": "habit",
+      "disposition": {
+        "kind": "represented",
+        "signalIds": [
+          "rhysarion-inspiring-melody-initiative"
+        ],
+        "rationale": "The habit gives adjacent Initiative support; Resistance is general support only."
+      }
+    },
+    {
+      "dragonId": "shadowsong",
+      "abilityId": "shadowsong-breath-of-fire",
+      "abilityKind": "command",
+      "disposition": {
+        "kind": "represented",
+        "signalIds": [
+          "shadowsong-breath-of-fire-fire",
+          "shadowsong-panic-payoff"
+        ],
+        "rationale": "Breath of Fire deals Intelligence-based Fire Damage and explicitly benefits from Panic."
+      }
+    },
+    {
+      "dragonId": "shadowsong",
+      "abilityId": "shadowsong-hunters-wrath",
+      "abilityKind": "trait",
+      "disposition": {
+        "kind": "represented",
+        "signalIds": [
+          "shadowsong-hunters-wrath-right-stats",
+          "shadowsong-hunters-wrath-vanguard"
+        ],
+        "rationale": "The Vanguard trait gives hard Right Flank Strength and Initiative support and creates an exclusive Vanguard claim."
+      }
+    },
+    {
+      "dragonId": "shadowsong",
+      "abilityId": "shadowsong-ensnare",
+      "abilityKind": "habit",
+      "disposition": {
+        "kind": "no-cross-dragon-synergy",
+        "rationale": "Enemy Instinct and Initiative reductions have no current pair-specific payoff."
+      }
+    },
+    {
+      "dragonId": "shadowsong",
+      "abilityId": "shadowsong-blazing-onslaught",
+      "abilityKind": "habit",
+      "disposition": {
+        "kind": "represented",
+        "signalIds": [
+          "shadowsong-blazing-onslaught-vulnerability"
+        ],
+        "rationale": "The habit increases enemy Fire and non-Basic Physical Damage Received."
+      }
+    },
+    {
+      "dragonId": "shadowsong",
+      "abilityId": "shadowsong-scorched-earth",
+      "abilityKind": "habit",
+      "disposition": {
+        "kind": "represented",
+        "signalIds": [
+          "shadowsong-scorched-earth-vulnerable",
+          "shadowsong-panic-payoff"
+        ],
+        "rationale": "The habit provides generic vulnerability and also benefits from Panic without a duplicate visible Panic relationship."
+      }
+    },
+    {
+      "dragonId": "shadowsong",
+      "abilityId": "shadowsong-dragons-intellect",
+      "abilityKind": "habit",
+      "disposition": {
+        "kind": "self-only",
+        "rationale": "The Damage Received reduction and Intelligence increase apply only to Shadowsong."
+      }
+    },
+    {
+      "dragonId": "shadowsong",
+      "abilityId": "shadowsong-blazing-conductor",
+      "abilityKind": "habit",
+      "disposition": {
+        "kind": "represented",
+        "signalIds": [
+          "shadowsong-blazing-conductor-burn"
+        ],
+        "rationale": "The augmentation adds Burn setup and additional Fire Damage already covered by Breath of Fire output."
+      }
+    },
+    {
+      "dragonId": "vaeldra",
+      "abilityId": "vaeldra-lure",
+      "abilityKind": "command",
+      "disposition": {
+        "kind": "represented",
+        "signalIds": [
+          "vaeldra-lure-taunt",
+          "vaeldra-lure-physical"
+        ],
+        "rationale": "Lure applies Taunt and deals Strength-based Physical Damage."
+      }
+    },
+    {
+      "dragonId": "vaeldra",
+      "abilityId": "vaeldra-warriors-resilience",
+      "abilityKind": "trait",
+      "disposition": {
+        "kind": "represented",
+        "signalIds": [
+          "vaeldra-warriors-resilience-left-tactical",
+          "vaeldra-warriors-resilience-vanguard"
+        ],
+        "rationale": "The Vanguard trait gives hard Left Flank Tactical support and creates an exclusive Vanguard claim."
+      }
+    },
+    {
+      "dragonId": "vaeldra",
+      "abilityId": "vaeldra-dragons-valor",
+      "abilityKind": "habit",
+      "disposition": {
+        "kind": "self-only",
+        "rationale": "The Damage Received reduction and Strength increase apply only to Vaeldra."
+      }
+    },
+    {
+      "dragonId": "vaeldra",
+      "abilityId": "vaeldra-ensnare",
+      "abilityKind": "habit",
+      "disposition": {
+        "kind": "no-cross-dragon-synergy",
+        "rationale": "Enemy Instinct and Initiative reductions have no current pair-specific payoff."
+      }
+    },
+    {
+      "dragonId": "vaeldra",
+      "abilityId": "vaeldra-tempting-distraction",
+      "abilityKind": "habit",
+      "disposition": {
+        "kind": "represented",
+        "signalIds": [
+          "vaeldra-tempting-distraction-vulnerability"
+        ],
+        "rationale": "The vulnerability is represented as Vaeldra-owned support and is not modeled as benefiting from another dragon's Taunt."
+      }
+    },
+    {
+      "dragonId": "vaeldra",
+      "abilityId": "vaeldra-infernal-force",
+      "abilityKind": "habit",
+      "disposition": {
+        "kind": "represented",
+        "signalIds": [
+          "vaeldra-infernal-force-damage"
+        ],
+        "rationale": "The habit improves allied Fire and non-Basic Physical Damage."
+      }
+    },
+    {
+      "dragonId": "vaeldra",
+      "abilityId": "vaeldra-sirens-call",
+      "abilityKind": "habit",
+      "disposition": {
+        "kind": "represented",
+        "signalIds": [
+          "vaeldra-sirens-call-stagger"
+        ],
+        "rationale": "The habit applies Stagger as Control; its self defense is self-only."
+      }
+    },
+    {
+      "dragonId": "sheepstealer",
+      "abilityId": "sheepstealer-wild-hunt",
+      "abilityKind": "command",
+      "disposition": {
+        "kind": "represented",
+        "signalIds": [
+          "sheepstealer-wild-hunt-fire"
+        ],
+        "rationale": "Wild Hunt deals Intelligence-based Fire Damage; Prey is a self-owned loop."
+      }
+    },
+    {
+      "dragonId": "sheepstealer",
+      "abilityId": "sheepstealer-hunters-cunning",
+      "abilityKind": "trait",
+      "disposition": {
+        "kind": "represented",
+        "signalIds": [
+          "sheepstealer-hunters-cunning-right-physical",
+          "sheepstealer-hunters-cunning-recovery-payoff",
+          "sheepstealer-hunters-cunning-vanguard"
+        ],
+        "rationale": "The Vanguard trait gives hard Right Flank Physical support, improves incoming Recovery, and creates an exclusive Vanguard claim."
+      }
+    },
+    {
+      "dragonId": "sheepstealer",
+      "abilityId": "sheepstealer-stolen-flock",
+      "abilityKind": "habit",
+      "disposition": {
+        "kind": "self-only",
+        "rationale": "The Fire Damage and Stolen Flock stack loop is self-owned."
+      }
+    },
+    {
+      "dragonId": "sheepstealer",
+      "abilityId": "sheepstealer-dragons-cunning",
+      "abilityKind": "habit",
+      "disposition": {
+        "kind": "self-only",
+        "rationale": "The Intelligence increase is self-only; the enemy Instinct reduction has no explicit teammate payoff."
+      }
+    },
+    {
+      "dragonId": "sheepstealer",
+      "abilityId": "sheepstealer-baited-kill",
+      "abilityKind": "habit",
+      "disposition": {
+        "kind": "self-only",
+        "rationale": "The Prey/Vulnerable loop is source-bound to Sheepstealer and does not create a teammate requirement."
+      }
+    },
+    {
+      "dragonId": "sheepstealer",
+      "abilityId": "sheepstealer-wary-beast",
+      "abilityKind": "habit",
+      "disposition": {
+        "kind": "self-only",
+        "rationale": "Evade is self-only and enemy Recovery Received reduction has no current teammate payoff."
+      }
+    },
+    {
+      "dragonId": "sheepstealer",
+      "abilityId": "sheepstealer-savage-claim",
+      "abilityKind": "habit",
+      "disposition": {
+        "kind": "represented",
+        "signalIds": [
+          "sheepstealer-savage-claim-recovery"
+        ],
+        "rationale": "The augmentation adds self Recovery; its Prey condition remains self-owned."
+      }
+    },
+    {
+      "dragonId": "vermax",
+      "abilityId": "vermax-spreading-blaze",
+      "abilityKind": "command",
+      "disposition": {
+        "kind": "represented",
+        "signalIds": [
+          "vermax-spreading-blaze-physical",
+          "vermax-spreading-blaze-tactical"
+        ],
+        "rationale": "The command deals Strength-based Physical Damage and supports an ally that deals Tactical Damage."
+      }
+    },
+    {
+      "dragonId": "vermax",
+      "abilityId": "vermax-warriors-zeal",
+      "abilityKind": "trait",
+      "disposition": {
+        "kind": "represented",
+        "signalIds": [
+          "vermax-warriors-zeal-left-stats",
+          "vermax-warriors-zeal-vanguard"
+        ],
+        "rationale": "The Vanguard trait gives hard Left Flank Instinct and Initiative support and creates an exclusive Vanguard claim."
+      }
+    },
+    {
+      "dragonId": "vermax",
+      "abilityId": "vermax-trial-by-flame",
+      "abilityKind": "habit",
+      "disposition": {
+        "kind": "general-support-only",
+        "rationale": "Threshold Fire resistance and Resistance are defensive support without a current explicit payoff."
+      }
+    },
+    {
+      "dragonId": "vermax",
+      "abilityId": "vermax-reactive-instincts",
+      "abilityKind": "habit",
+      "disposition": {
+        "kind": "represented",
+        "signalIds": [
+          "vermax-reactive-instincts-stats"
+        ],
+        "rationale": "The habit improves Instinct and Initiative of an ally."
+      }
+    },
+    {
+      "dragonId": "vermax",
+      "abilityId": "vermax-rallying-flame",
+      "abilityKind": "habit",
+      "disposition": {
+        "kind": "reinforces-existing",
+        "signalIds": [
+          "vermax-rallying-flame-tactical"
+        ],
+        "rationale": "The habit reinforces Vermax as a Tactical Damage supporter without adding a separate visible relationship beyond Spreading Blaze."
+      }
+    },
+    {
+      "dragonId": "vermax",
+      "abilityId": "vermax-dragons-valor",
+      "abilityKind": "habit",
+      "disposition": {
+        "kind": "self-only",
+        "rationale": "The Damage Received reduction and Strength increase apply only to Vermax."
+      }
+    },
+    {
+      "dragonId": "vermax",
+      "abilityId": "vermax-unyielding-resolve",
+      "abilityKind": "habit",
+      "disposition": {
+        "kind": "self-only",
+        "rationale": "The Weakened payoff is explicitly self-owned and cannot be enabled by a teammate."
+      }
+    }
+  ]
+}
