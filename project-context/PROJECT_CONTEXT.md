@@ -2,7 +2,7 @@
 
 Generated: 2026-07-03T00:00:00.000Z
 Branch: refactor/remove-legacy-combat-framework
-Commit: 7ce6bc73737bf630d8c67ba9dafd607b1a23df26
+Commit: 52a026da3c5a48012d80c5adb365b1188dbc8632
 
 Dragonfire Roster Lab is a curated dragon knowledge base and transparent tag-and-position formation recommender. It is not a combat simulator.
 

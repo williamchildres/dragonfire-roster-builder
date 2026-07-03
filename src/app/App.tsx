@@ -116,9 +116,7 @@ export function App() {
   }, [formation]);
 
   const ownedCount = Object.values(roster).filter((entry) => entry.owned).length;
-  const verifiedCombatCount = dragons.filter(
-    (dragon) => dragon.command || dragon.trait || dragon.habits.length > 0,
-  ).length;
+  const detailedAbilityCount = dragons.filter(hasDetailedAbilities).length;
 
   const filteredDragons = useMemo(
     () => sortDragons(filterDragons(dragons, roster, filters), roster, databaseSort),
@@ -262,7 +260,7 @@ export function App() {
         {activeSection === 'home' ? (
           <HomeSection
             ownedCount={ownedCount}
-            verifiedCombatCount={verifiedCombatCount}
+            detailedAbilityCount={detailedAbilityCount}
             onBrowse={() => selectSection('database')}
             onTeam={() => selectSection('team')}
           />
@@ -331,12 +329,12 @@ export function App() {
 
 function HomeSection({
   ownedCount,
-  verifiedCombatCount,
+  detailedAbilityCount,
   onBrowse,
   onTeam,
 }: {
   ownedCount: number;
-  verifiedCombatCount: number;
+  detailedAbilityCount: number;
   onBrowse: () => void;
   onTeam: () => void;
 }) {
@@ -352,9 +350,9 @@ function HomeSection({
         <p className="eyebrow">Roster manager and formation lab</p>
         <h2 id="overview-title">Build your dragon roster without guessing the data.</h2>
         <p>
-          Track ownership, plan three-position formations, and prepare for verified community combat data
-        while keeping official-site roster entries, pending in-game observations, and player notes
-        separate from each other.
+          Track ownership, review verified ability wording, and plan three-position formations
+          using curated high-level synergy profiles while keeping official-site roster entries,
+          pending in-game observations, and player notes separate from each other.
         </p>
         <div className="button-row">
           <button type="button" className="primary-button" onClick={onBrowse}>
@@ -379,7 +377,7 @@ function HomeSection({
           }
         />
         <StatCard label="Owned by you" value={ownedCount} />
-        <StatCard label="Screenshot combat records" value={verifiedCombatCount} />
+        <StatCard label="Detailed ability records" value={detailedAbilityCount} />
         {RARITIES.map((rarity) => (
           <StatCard key={rarity} label={rarity} value={rarityCounts[rarity] ?? 0} />
         ))}
@@ -388,9 +386,9 @@ function HomeSection({
         ))}
       </div>
       <div className="notice-panel">
-        The database now combines official public roster metadata with screenshot-verified combat
-        records for Malachite, Seasmoke, Sheepstealer, and Vermax. Canonical base stats, formulas,
-        and unverified mechanics remain marked as {unknown}.
+        The database currently includes detailed Command, Trait, and Habit wording and curated
+        high-level synergy profiles for {detailedAbilityCount} dragons. Dragons without verified
+        ability data remain metadata-only until sourced evidence is available.
       </div>
     </section>
   );
@@ -791,8 +789,9 @@ function AboutSection() {
           does not ask for credentials, and stores roster notes only in your browser.
         </p>
         <p>
-          Combat data will require sourced community submissions. Users should never submit account
-          credentials, private profile information, or confidential material.
+          Ability evidence and curated profile updates require sourced community submissions. Users
+          should never submit account credentials, private profile information, or confidential
+          material.
         </p>
         <p>
           The project is open source on{' '}

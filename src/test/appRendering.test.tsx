@@ -2,6 +2,7 @@ import { render, screen, within } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { afterEach, describe, expect, it, vi } from 'vitest';
 import { App, RawWordingDisclosure } from '../app/App';
+import { dragons } from '../data/dragons';
 import { STORAGE_KEY } from '../services/rosterStorage';
 
 
@@ -21,6 +22,30 @@ describe('Dragonfire Roster Lab app', () => {
     await user.type(screen.getByLabelText(/search by name/i), 'Syrax');
     expect(screen.getByText(/showing 1 of 30 dragons/i)).toBeInTheDocument();
     expect(screen.getByRole('heading', { name: 'Syrax' })).toBeInTheDocument();
+  });
+
+  it('renders current Overview and About product copy', async () => {
+    const user = userEvent.setup();
+    const detailedAbilityCount = dragons.filter(
+      (dragon) => dragon.command && dragon.trait && dragon.habits.length > 0,
+    ).length;
+
+    render(<App />);
+
+    const detailedAbilityCard = screen.getByText('Detailed ability records').closest('.stat-card');
+    expect(detailedAbilityCard).toHaveTextContent(String(detailedAbilityCount));
+    const notice = screen.getByText(/The database currently includes detailed Command, Trait, and Habit wording/i);
+    expect(notice).toHaveTextContent(`profiles for ${detailedAbilityCount} dragons`);
+    expect(screen.queryByText(/prepare for verified community combat data/i)).not.toBeInTheDocument();
+    expect(screen.queryByText(/Malachite, Seasmoke, Sheepstealer, and Vermax/i)).not.toBeInTheDocument();
+    expect(screen.queryByText(/unverified mechanics remain marked/i)).not.toBeInTheDocument();
+
+    await user.click(screen.getByRole('button', { name: /about/i }));
+    expect(
+      screen.getByText(/Ability evidence and curated profile updates require sourced community submissions/i),
+    ).toBeInTheDocument();
+    expect(screen.queryByText(/Combat data will require sourced community submissions/i)).not.toBeInTheDocument();
+    expect(screen.getByText(/should never submit account credentials/i)).toBeInTheDocument();
   });
 
   it('displays unknown combat values as Not yet verified', async () => {

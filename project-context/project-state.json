@@ -3,7 +3,7 @@
   "source": {
     "repository": "https://github.com/williamchildres/dragonfire-roster-builder",
     "branch": "refactor/remove-legacy-combat-framework",
-    "commit": "7ce6bc73737bf630d8c67ba9dafd607b1a23df26",
+    "commit": "52a026da3c5a48012d80c5adb365b1188dbc8632",
     "databaseVersion": "0.6.2",
     "dataSchemaVersion": 13,
     "localRosterSchemaVersion": 3,
@@ -33,7 +33,7 @@
   "testTotals": {
     "runner": "vitest",
     "testFileCount": 10,
-    "testCaseCount": 77,
+    "testCaseCount": 78,
     "lastRunStatus": "not-run-by-exporter",
     "countingMethod": "static working-tree test declaration scan; runtime pass/fail is reported by npm run test"
   },
