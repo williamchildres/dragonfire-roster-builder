@@ -1,9 +1,9 @@
 {
-  "generatedAt": "2026-07-03T20:16:26.286Z",
+  "generatedAt": "2026-07-03T20:51:54.192Z",
   "source": {
     "repository": "https://github.com/williamchildres/dragonfire-roster-builder",
     "branch": "data/add-final-epic-dragons",
-    "commit": "569b9c377391ff347b6a536fb49d5150795f70fc",
+    "commit": "11bcbac76945f65ef335358831060801af58efcf",
     "databaseVersion": "0.6.3",
     "dataSchemaVersion": 13,
     "localRosterSchemaVersion": 3,
@@ -33,7 +33,7 @@
   "testTotals": {
     "runner": "vitest",
     "testFileCount": 11,
-    "testCaseCount": 82,
+    "testCaseCount": 85,
     "lastRunStatus": "not-run-by-exporter",
     "countingMethod": "static working-tree test declaration scan; runtime pass/fail is reported by npm run test"
   },
