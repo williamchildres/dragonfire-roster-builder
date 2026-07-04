@@ -31,6 +31,10 @@ A profile signal is included when verified or provisionally verified ability tex
 
 Exact timing, chance, target overlap, duration, stack acquisition, refresh behavior, target selection, and damage or Recovery values are not modeled.
 
+Output signal `tag`/`tags` values describe what the dragon actually emits or provides. Scaling stats for that output are recorded separately as inbound support metadata and must not be treated as provided setup or support.
+
+The live false-attribution defects came from mixing those meanings in one tag list. Damage and Recovery outputs carried their scaling stats in emitted `tags`, so the evaluator could match an output as though it provided that stat to a teammate. The same directional leak also allowed Initiative-support provenance to be considered for recipient outputs whose source ability did not actually provide Initiative. Flight Mastery remains Syrax-owned; any Velar/Flight Mastery explanation was a relationship-construction defect rather than a canonical Velar signal.
+
 ## Disposition Counts
 
 - represented: 69.
@@ -54,8 +58,8 @@ When multiple paths exist for the same semantic relationship, the evaluator emit
 | Provider | Provider ability | Tag | Beneficiary | Beneficiary ability | Provider unlock | Beneficiary unlock | Position or adjacency | Confidence |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- |
 | Caraxes | Crippling Inferno | Slow | Syrax | Strategic Revival | Star Rank 6 | Star Rank 6 | None | verified |
-| Daemoros | Instill Fear | Panic | Shadowsong | Breath of Fire and Scorched Earth | Star Rank 2 | Base | None | verified |
-| Kalspire | Tactical Assault | Panic | Shadowsong | Breath of Fire and Scorched Earth | Star Rank 6 | Base | None | verified |
+| Daemoros | Instill Fear | Panic | Shadowsong | Breath of Fire | Star Rank 2 | Base | None | verified |
+| Kalspire | Tactical Assault | Panic | Shadowsong | Breath of Fire | Star Rank 6 | Base | None | verified |
 | Daemoros | Instill Fear | Panic | Seasmoke | Infectious Wrath | Star Rank 2 | Star Rank 6 | None | verified |
 | Kalspire | Tactical Assault | Panic | Seasmoke | Infectious Wrath | Star Rank 6 | Star Rank 6 | None | verified |
 | Daemoros | Shadowflame | Burn | Feskar | Emerald Inferno | Base | Star Rank 6 | None | verified |
@@ -73,7 +77,7 @@ When multiple paths exist for the same semantic relationship, the evaluator emit
 | Feskar | Unyielding Grasp | Control | Rhysarion | Dawnsong | Star Rank 10 | Base | None | verified |
 | Venator | Desperate Ambush | Control | Rhysarion | Dawnsong | Star Rank 10 | Base | None | verified |
 | Vaeldra | Siren's Call | Control | Rhysarion | Dawnsong | Star Rank 10 | Base | None | verified |
-| Zivern | Fearsome Reach | Panic | Shadowsong | Breath of Fire and Scorched Earth | Star Rank 6 | Base | None | verified |
+| Zivern | Fearsome Reach | Panic | Shadowsong | Breath of Fire | Star Rank 6 | Base | None | verified |
 | Zivern | Cloak of Terror | Control | Rhysarion | Dawnsong | Star Rank 10 | Base | None | verified |
 | Shadowsong | Scorched Earth | Vulnerable | Zivern | Cloak of Terror | Star Rank 6 | Star Rank 10 | None | verified |
 

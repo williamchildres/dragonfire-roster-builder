@@ -18,6 +18,7 @@ export interface SynergySignal {
   id: string;
   tag: SynergyTag;
   tags?: SynergyTag[];
+  scalesWith?: SynergyTag[];
   abilityId: string;
   abilityName: string;
   description: string;

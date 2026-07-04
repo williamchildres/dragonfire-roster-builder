@@ -28,7 +28,7 @@ export const simpleSynergyProfiles = [
       output({
         id: 'syrax-blazing-fury-tactical',
         tag: 'damage:tactical',
-        tags: ['damage:tactical', 'stat:instinct'],
+        scalesWith: ['stat:instinct'],
         abilityId: 'syrax-blazing-fury',
         abilityName: 'Blazing Fury',
         description: 'deals Tactical Damage using Instinct',
@@ -36,10 +36,10 @@ export const simpleSynergyProfiles = [
       output({
         id: 'syrax-strategic-revival-recovery',
         tag: 'effect:recovery',
-        tags: ['effect:recovery', 'stat:initiative'],
+        scalesWith: ['stat:intelligence'],
         abilityId: 'syrax-strategic-revival',
         abilityName: 'Strategic Revival',
-        description: 'provides Recovery that is enhanced by Initiative',
+        description: 'provides Recovery that is enhanced by Intelligence',
         unlock: { minimumStarRank: 6 },
         friendlyScope: 'formation',
       }),
@@ -132,7 +132,7 @@ export const simpleSynergyProfiles = [
       output({
         id: 'vhagar-fiery-bonds-physical',
         tag: 'damage:physical',
-        tags: ['damage:physical', 'stat:strength'],
+        scalesWith: ['stat:strength'],
         abilityId: 'vhagar-fiery-bonds',
         abilityName: 'Fiery Bonds',
         description: 'deals Physical Damage using Strength',
@@ -140,7 +140,7 @@ export const simpleSynergyProfiles = [
       output({
         id: 'vhagar-skyward-titan-physical',
         tag: 'damage:physical',
-        tags: ['damage:physical', 'stat:strength'],
+        scalesWith: ['stat:strength'],
         abilityId: 'vhagar-skyward-titan',
         abilityName: 'Skyward Titan',
         description: 'deals Physical Damage using Strength',
@@ -207,7 +207,7 @@ export const simpleSynergyProfiles = [
       output({
         id: 'caraxes-infernal-burst-fire',
         tag: 'damage:fire',
-        tags: ['damage:fire', 'stat:intelligence'],
+        scalesWith: ['stat:intelligence'],
         abilityId: 'caraxes-infernal-burst',
         abilityName: 'Infernal Burst',
         description: 'deals Fire Damage using Intelligence',
@@ -233,7 +233,7 @@ export const simpleSynergyProfiles = [
       output({
         id: 'caraxes-crippling-inferno-fire',
         tag: 'damage:fire',
-        tags: ['damage:fire', 'stat:intelligence'],
+        scalesWith: ['stat:intelligence'],
         abilityId: 'caraxes-crippling-inferno',
         abilityName: 'Crippling Inferno',
         description: 'Burn contributes Fire Damage',
@@ -282,7 +282,7 @@ export const simpleSynergyProfiles = [
       output({
         id: 'seasmoke-cleansing-wrath-fire',
         tag: 'damage:fire',
-        tags: ['damage:fire', 'stat:intelligence'],
+        scalesWith: ['stat:intelligence'],
         abilityId: 'seasmoke-cleansing-wrath',
         abilityName: 'Cleansing Wrath',
         description: 'deals Fire Damage using Intelligence',
@@ -364,7 +364,7 @@ export const simpleSynergyProfiles = [
       output({
         id: 'crimson-bloodscale-terror-fire',
         tag: 'damage:fire',
-        tags: ['damage:fire', 'stat:intelligence'],
+        scalesWith: ['stat:intelligence'],
         abilityId: 'crimson-bloodscale-terror',
         abilityName: 'Bloodscale Terror',
         description: 'deals Fire Damage using Intelligence',
@@ -422,7 +422,7 @@ export const simpleSynergyProfiles = [
       output({
         id: 'kalspire-tactical-strike-tactical',
         tag: 'damage:tactical',
-        tags: ['damage:tactical', 'stat:instinct'],
+        scalesWith: ['stat:instinct'],
         abilityId: 'kalspire-tactical-strike',
         abilityName: 'Tactical Strike',
         description: 'deals Tactical Damage using Instinct',
@@ -430,7 +430,7 @@ export const simpleSynergyProfiles = [
       output({
         id: 'kalspire-tactical-assault-physical',
         tag: 'damage:physical',
-        tags: ['damage:physical', 'stat:strength'],
+        scalesWith: ['stat:strength'],
         abilityId: 'kalspire-tactical-assault',
         abilityName: 'Tactical Assault',
         description: 'deals Physical Damage using Strength',
@@ -466,7 +466,7 @@ export const simpleSynergyProfiles = [
       output({
         id: 'malachite-wardens-rally-tactical',
         tag: 'damage:tactical',
-        tags: ['damage:tactical', 'stat:instinct'],
+        scalesWith: ['stat:instinct'],
         abilityId: 'malachite-wardens-rally',
         abilityName: "Warden's Rally",
         description: 'deals Tactical Damage using Instinct',
@@ -474,7 +474,7 @@ export const simpleSynergyProfiles = [
       output({
         id: 'malachite-wardens-rally-recovery',
         tag: 'effect:recovery',
-        tags: ['effect:recovery', 'stat:instinct'],
+        scalesWith: ['stat:instinct'],
         abilityId: 'malachite-wardens-rally',
         abilityName: "Warden's Rally",
         description: 'provides Recovery enhanced by Instinct',
@@ -559,7 +559,7 @@ export const simpleSynergyProfiles = [
       output({
         id: 'venator-feral-strike-physical',
         tag: 'damage:physical',
-        tags: ['damage:physical', 'stat:strength'],
+        scalesWith: ['stat:strength'],
         abilityId: 'venator-feral-strike',
         abilityName: 'Feral Strike',
         description: 'deals Physical Damage using Strength',
@@ -567,7 +567,7 @@ export const simpleSynergyProfiles = [
       output({
         id: 'venator-feral-precision-physical',
         tag: 'damage:physical',
-        tags: ['damage:physical', 'stat:strength'],
+        scalesWith: ['stat:strength'],
         abilityId: 'venator-feral-precision',
         abilityName: 'Feral Precision',
         description: 'adds Physical Damage using Strength',
@@ -625,7 +625,7 @@ export const simpleSynergyProfiles = [
       output({
         id: 'daemoros-shadowflame-physical',
         tag: 'damage:physical',
-        tags: ['damage:physical', 'stat:strength'],
+        scalesWith: ['stat:strength'],
         abilityId: 'daemoros-shadowflame',
         abilityName: 'Shadowflame',
         description: 'deals Physical Damage using Strength',
@@ -690,7 +690,7 @@ export const simpleSynergyProfiles = [
       output({
         id: 'feskar-calculated-assault-tactical',
         tag: 'damage:tactical',
-        tags: ['damage:tactical', 'stat:instinct'],
+        scalesWith: ['stat:instinct'],
         abilityId: 'feskar-calculated-assault',
         abilityName: 'Calculated Assault',
         description: 'deals Tactical Damage using Instinct',
@@ -698,7 +698,7 @@ export const simpleSynergyProfiles = [
       output({
         id: 'feskar-emerald-inferno-fire',
         tag: 'damage:fire',
-        tags: ['damage:fire', 'stat:intelligence'],
+        scalesWith: ['stat:intelligence'],
         abilityId: 'feskar-emerald-inferno',
         abilityName: 'Emerald Inferno',
         description: 'deals Fire Damage using Intelligence',
@@ -754,7 +754,7 @@ export const simpleSynergyProfiles = [
       output({
         id: 'rhysarion-dawnsong-physical',
         tag: 'damage:physical',
-        tags: ['damage:physical', 'stat:strength'],
+        scalesWith: ['stat:strength'],
         abilityId: 'rhysarion-dawnsong',
         abilityName: 'Dawnsong',
         description: 'deals Physical Damage using Strength',
@@ -762,7 +762,7 @@ export const simpleSynergyProfiles = [
       output({
         id: 'rhysarion-dawnsong-fire',
         tag: 'damage:fire',
-        tags: ['damage:fire', 'stat:intelligence'],
+        scalesWith: ['stat:intelligence'],
         abilityId: 'rhysarion-dawnsong',
         abilityName: 'Dawnsong',
         description: 'deals Fire Damage using Intelligence',
@@ -770,7 +770,7 @@ export const simpleSynergyProfiles = [
       output({
         id: 'rhysarion-ebbing-fury-recovery',
         tag: 'effect:recovery',
-        tags: ['effect:recovery', 'stat:strength'],
+        scalesWith: ['stat:strength'],
         abilityId: 'rhysarion-ebbing-fury',
         abilityName: 'Ebbing Fury',
         description: 'provides Recovery enhanced by Strength',
@@ -780,7 +780,7 @@ export const simpleSynergyProfiles = [
       output({
         id: 'rhysarion-echoing-melody-recovery',
         tag: 'effect:recovery',
-        tags: ['effect:recovery', 'stat:intelligence'],
+        scalesWith: ['stat:intelligence'],
         abilityId: 'rhysarion-echoing-melody',
         abilityName: 'Echoing Melody',
         description: 'provides Recovery enhanced by Intelligence',
@@ -848,7 +848,7 @@ export const simpleSynergyProfiles = [
       output({
         id: 'shadowsong-breath-of-fire-fire',
         tag: 'damage:fire',
-        tags: ['damage:fire', 'stat:intelligence'],
+        scalesWith: ['stat:intelligence'],
         abilityId: 'shadowsong-breath-of-fire',
         abilityName: 'Breath of Fire',
         description: 'deals Fire Damage using Intelligence',
@@ -911,7 +911,7 @@ export const simpleSynergyProfiles = [
         id: 'shadowsong-panic-payoff',
         tag: 'status:panic',
         abilityId: 'shadowsong-breath-of-fire',
-        abilityName: 'Breath of Fire and Scorched Earth',
+        abilityName: 'Breath of Fire',
         description: 'Panic improves Breath of Fire damage and Scorched Earth application',
         friendlyScope: 'formation',
       }),
@@ -942,7 +942,7 @@ export const simpleSynergyProfiles = [
       output({
         id: 'vaeldra-lure-physical',
         tag: 'damage:physical',
-        tags: ['damage:physical', 'stat:strength'],
+        scalesWith: ['stat:strength'],
         abilityId: 'vaeldra-lure',
         abilityName: 'Lure',
         description: 'deals Physical Damage using Strength',
@@ -1009,7 +1009,7 @@ export const simpleSynergyProfiles = [
       output({
         id: 'sheepstealer-wild-hunt-fire',
         tag: 'damage:fire',
-        tags: ['damage:fire', 'stat:intelligence'],
+        scalesWith: ['stat:intelligence'],
         abilityId: 'sheepstealer-wild-hunt',
         abilityName: 'Wild Hunt',
         description: 'deals Fire Damage using Intelligence',
@@ -1017,7 +1017,7 @@ export const simpleSynergyProfiles = [
       output({
         id: 'sheepstealer-savage-claim-recovery',
         tag: 'effect:recovery',
-        tags: ['effect:recovery', 'stat:intelligence'],
+        scalesWith: ['stat:intelligence'],
         abilityId: 'sheepstealer-savage-claim',
         abilityName: 'Savage Claim',
         description: 'provides self Recovery enhanced by Intelligence',
@@ -1068,7 +1068,7 @@ export const simpleSynergyProfiles = [
       output({
         id: 'vermax-spreading-blaze-physical',
         tag: 'damage:physical',
-        tags: ['damage:physical', 'stat:strength'],
+        scalesWith: ['stat:strength'],
         abilityId: 'vermax-spreading-blaze',
         abilityName: 'Spreading Blaze',
         description: 'deals Physical Damage using Strength',
@@ -1134,7 +1134,7 @@ export const simpleSynergyProfiles = [
       output({
         id: 'tashix-shimmering-mirage-fire',
         tag: 'damage:fire',
-        tags: ['damage:fire', 'stat:intelligence'],
+        scalesWith: ['stat:intelligence'],
         abilityId: 'tashix-shimmering-mirage',
         abilityName: 'Shimmering Mirage',
         description: 'deals Fire Damage using Intelligence',
@@ -1210,7 +1210,7 @@ export const simpleSynergyProfiles = [
       output({
         id: 'velar-whirlwind-tactical',
         tag: 'damage:tactical',
-        tags: ['damage:tactical', 'stat:instinct'],
+        scalesWith: ['stat:instinct'],
         abilityId: 'velar-whirlwind',
         abilityName: 'Whirlwind',
         description: 'deals Tactical Damage using Instinct',
@@ -1236,7 +1236,7 @@ export const simpleSynergyProfiles = [
       output({
         id: 'velar-breath-of-renewal-recovery',
         tag: 'effect:recovery',
-        tags: ['effect:recovery', 'stat:initiative'],
+        scalesWith: ['stat:initiative'],
         abilityId: 'velar-breath-of-renewal',
         abilityName: 'Breath of Renewal',
         description: 'provides Recovery enhanced by Initiative',
@@ -1315,7 +1315,7 @@ export const simpleSynergyProfiles = [
       output({
         id: 'zivern-silent-shade-tactical',
         tag: 'damage:tactical',
-        tags: ['damage:tactical', 'stat:instinct'],
+        scalesWith: ['stat:instinct'],
         abilityId: 'zivern-silent-shade',
         abilityName: 'Silent Shade',
         description: 'deals Tactical Damage using Instinct',
