@@ -51,7 +51,7 @@ function allSignals(profile: DragonSynergyProfile) {
 }
 
 function signalTags(signal: SynergySignal) {
-  return signal.tags ?? [signal.tag];
+  return [...(signal.tags ?? [signal.tag]), ...(signal.scalesWith ?? [])];
 }
 
 describe('simple synergy foundation', () => {
@@ -100,25 +100,49 @@ describe('simple synergy foundation', () => {
 
   it('references existing dragon IDs and ability IDs from every simple profile', () => {
     const dragonsById = new Map(dragons.map((dragon) => [dragon.id, dragon]));
+    const signalIds = new Set<string>();
 
     for (const profile of simpleSynergyProfiles) {
       const dragon = dragonsById.get(profile.dragonId);
       expect(dragon, profile.dragonId).toBeDefined();
 
-      const abilityIds = new Set(
+      const abilitiesById = new Map(
         ([dragon?.command, dragon?.trait, ...(dragon?.habits ?? [])] as Array<AbilityDefinition | null | undefined>)
           .filter((ability): ability is AbilityDefinition => ability !== null && ability !== undefined)
-          .map((ability) => ability.id),
+          .map((ability) => [ability.id, ability]),
       );
 
       for (const signal of allSignals(profile)) {
-        expect(abilityIds.has(signal.abilityId), `${profile.dragonId}:${signal.abilityId}`).toBe(true);
+        expect(signalIds.has(signal.id), signal.id).toBe(false);
+        signalIds.add(signal.id);
+
+        const ability = abilitiesById.get(signal.abilityId);
+        expect(ability, `${profile.dragonId}:${signal.abilityId}`).toBeDefined();
+        expect(signal.abilityName, `${profile.dragonId}:${signal.id}`).toBe(ability?.name);
       }
 
       for (const positionClaim of profile.positionClaims) {
-        expect(abilityIds.has(positionClaim.abilityId), `${profile.dragonId}:${positionClaim.abilityId}`).toBe(true);
+        expect(signalIds.has(positionClaim.id), positionClaim.id).toBe(false);
+        signalIds.add(positionClaim.id);
+
+        const ability = abilitiesById.get(positionClaim.abilityId);
+        expect(ability, `${profile.dragonId}:${positionClaim.abilityId}`).toBeDefined();
+        expect(positionClaim.abilityName, `${profile.dragonId}:${positionClaim.id}`).toBe(ability?.name);
       }
     }
+  });
+
+  it('keeps Flight Mastery and signal ownership attributed to the canonical dragon', () => {
+    const flightMasterySignals = simpleSynergyProfiles.flatMap((profile) =>
+      allSignals(profile)
+        .filter((signal) => signal.abilityName === 'Flight Mastery' || signal.abilityId.includes('flight-mastery'))
+        .map((signal) => `${profile.dragonId}:${signal.id}`),
+    );
+    const velarSignals = allSignals(simpleSynergyProfiles.find((profile) => profile.dragonId === 'velar')!);
+
+    expect(flightMasterySignals).toEqual(['syrax:syrax-flight-mastery-initiative']);
+    expect(velarSignals.map((signal) => signal.abilityName)).not.toContain('Flight Mastery');
+    expect(velarSignals.map((signal) => signal.abilityId)).not.toContain('syrax-flight-mastery');
   });
 
   it('reviewed every detailed ability exactly once and ties represented entries to profile signals', () => {
@@ -167,6 +191,34 @@ describe('simple synergy foundation', () => {
       expect(usedTags.has(tag), `${tag} is unused`).toBe(true);
     }
     expect(CONTROL_ALIAS_TAGS).toEqual(['status:stun', 'status:stagger', 'status:overwhelm', 'status:confusion']);
+  });
+
+  it('keeps output scaling metadata separate from emitted output tags', () => {
+    for (const profile of simpleSynergyProfiles) {
+      for (const output of profile.outputs) {
+        const providedTags = output.tags ?? [output.tag];
+        expect(
+          providedTags.filter((tag) => tag.startsWith('stat:')),
+          `${profile.dragonId}:${output.id}`,
+        ).toEqual([]);
+
+        for (const tag of output.scalesWith ?? []) {
+          expect(tag.startsWith('stat:'), `${profile.dragonId}:${output.id}:${tag}`).toBe(true);
+        }
+      }
+    }
+  });
+
+  it('records verified output scaling tags on the intended profile signals', () => {
+    const profilesById = new Map(simpleSynergyProfiles.map((profile) => [profile.dragonId, profile]));
+    const signal = (dragonId: string, signalId: string) =>
+      profilesById.get(dragonId)?.outputs.find((candidate) => candidate.id === signalId);
+
+    expect(signal('syrax', 'syrax-strategic-revival-recovery')?.scalesWith).toEqual(['stat:intelligence']);
+    expect(signal('malachite', 'malachite-wardens-rally-recovery')?.scalesWith).toEqual(['stat:instinct']);
+    expect(signal('velar', 'velar-breath-of-renewal-recovery')?.scalesWith).toEqual(['stat:initiative']);
+    expect(signal('tashix', 'tashix-shimmering-mirage-fire')?.scalesWith).toEqual(['stat:intelligence']);
+    expect(signal('zivern', 'zivern-silent-shade-tactical')?.scalesWith).toEqual(['stat:instinct']);
   });
 
   it('stores complete screenshot-verified records for the final three Epic dragons', () => {
@@ -248,7 +300,7 @@ describe('simple synergy foundation', () => {
     expect(resultsOfKind('setup-payoff', evaluate(formation('daemoros', 'shadowsong', null)))).toContainEqual(
       expect.objectContaining({
         id: 'setup-payoff:daemoros:status:panic:shadowsong',
-        explanation: "Daemoros applies Panic, which improves Shadowsong's Breath of Fire and Scorched Earth.",
+        explanation: "Daemoros applies Panic, which improves Shadowsong's Breath of Fire.",
       }),
     );
     expect(resultsOfKind('setup-payoff', evaluate(formation('daemoros', 'feskar', null)))).toContainEqual(
@@ -305,7 +357,7 @@ describe('simple synergy foundation', () => {
     expect(resultsOfKind('amplifier-output', evaluate(formation('syrax', 'caraxes', null)))).toContainEqual(
       expect.objectContaining({ tag: 'stat:intelligence' }),
     );
-    expect(resultsOfKind('amplifier-output', evaluate(formation(null, 'caraxes', 'syrax')))).toContainEqual(
+    expect(resultsOfKind('amplifier-output', evaluate(formation(null, 'caraxes', 'syrax')))).not.toContainEqual(
       expect.objectContaining({ tag: 'stat:initiative' }),
     );
 
@@ -314,6 +366,78 @@ describe('simple synergy foundation', () => {
         (result) => result.tag === 'stat:strength' && result.dragonIds.includes('caraxes'),
       ),
     ).toBe(false);
+  });
+
+  it('treats output scaling as inbound support rather than provided setup', () => {
+    const profiles = directionalScalingProfiles();
+
+    expect(resultsOfKind('amplifier-output', evaluate(formation('int-supporter', 'fire-producer', null), {}, profiles))).toContainEqual(
+      expect.objectContaining({ id: 'amplifier-output:int-supporter:stat:intelligence:fire-producer' }),
+    );
+    expect(resultsOfKind('setup-payoff', evaluate(formation('fire-producer', 'int-beneficiary', null), {}, profiles))).toHaveLength(0);
+    expect(resultsOfKind('missing-enabler', evaluate(formation('fire-producer', 'int-beneficiary', null), {}, profiles))).toContainEqual(
+      expect.objectContaining({ id: 'missing-enabler:int-beneficiary:stat:intelligence' }),
+    );
+
+    expect(resultsOfKind('amplifier-output', evaluate(formation('instinct-supporter', 'tactical-producer', null), {}, profiles))).toContainEqual(
+      expect.objectContaining({ id: 'amplifier-output:instinct-supporter:stat:instinct:tactical-producer' }),
+    );
+    expect(resultsOfKind('setup-payoff', evaluate(formation('tactical-producer', 'instinct-beneficiary', null), {}, profiles))).toHaveLength(0);
+
+    expect(resultsOfKind('amplifier-output', evaluate(formation('strength-supporter', 'physical-producer', null), {}, profiles))).toContainEqual(
+      expect.objectContaining({ id: 'amplifier-output:strength-supporter:stat:strength:physical-producer' }),
+    );
+    expect(resultsOfKind('setup-payoff', evaluate(formation('physical-producer', 'strength-beneficiary', null), {}, profiles))).toHaveLength(0);
+  });
+
+  it('matches verified Recovery scaling without letting Recovery outputs provide scaling stats', () => {
+    const malachiteWithInstinct = resultsOfKind('amplifier-output', evaluate(formation('feskar', 'malachite', null)));
+    const malachiteInstinctResult = malachiteWithInstinct.find((result) => result.id === 'amplifier-output:feskar:stat:instinct:malachite');
+    expect(malachiteInstinctResult).toBeDefined();
+    expect(malachiteInstinctResult?.abilityIds).toEqual(expect.arrayContaining(['feskar-insightful-allies', 'malachite-wardens-rally']));
+
+    const velarWithInitiative = resultsOfKind('amplifier-output', evaluate(formation('syrax', 'velar', null)));
+    const velarInitiativeResult = velarWithInitiative.find((result) => result.id === 'amplifier-output:syrax:stat:initiative:velar');
+    expect(velarInitiativeResult).toBeDefined();
+    expect(velarInitiativeResult?.abilityIds).toEqual(expect.arrayContaining(['syrax-flight-mastery', 'velar-breath-of-renewal']));
+    expect(resultsOfKind('amplifier-output', evaluate(formation('syrax', 'malachite', null)))).not.toContainEqual(
+      expect.objectContaining({ id: 'amplifier-output:syrax:stat:initiative:malachite' }),
+    );
+
+    const profiles: DragonSynergyProfile[] = [
+      simpleSynergyProfiles.find((profile) => profile.dragonId === 'malachite')!,
+      simpleSynergyProfiles.find((profile) => profile.dragonId === 'velar')!,
+      {
+        dragonId: 'stat-beneficiary',
+        dragonName: 'Stat Beneficiary',
+        outputs: [],
+        supports: [],
+        benefitsFrom: [
+          {
+            id: 'stat-beneficiary-instinct',
+            tag: 'stat:instinct',
+            abilityId: 'stat-beneficiary-instinct',
+            abilityName: 'Instinct Need',
+            description: 'benefits from Instinct',
+            confidence: 'verified',
+          },
+          {
+            id: 'stat-beneficiary-initiative',
+            tag: 'stat:initiative',
+            abilityId: 'stat-beneficiary-initiative',
+            abilityName: 'Initiative Need',
+            description: 'benefits from Initiative',
+            confidence: 'verified',
+          },
+        ],
+        positionClaims: [],
+      },
+    ];
+
+    expect(resultsOfKind('setup-payoff', evaluate(formation('malachite', 'stat-beneficiary', null), {}, profiles))).toHaveLength(0);
+    expect(resultsOfKind('setup-payoff', evaluate(formation('velar', 'stat-beneficiary', null), {}, profiles))).not.toContainEqual(
+      expect.objectContaining({ id: 'setup-payoff:velar:stat:initiative:stat-beneficiary' }),
+    );
   });
 
   it('enforces hard recipient positions while leaving preferred flank supports flexible', () => {
@@ -506,6 +630,12 @@ describe('simple synergy foundation', () => {
     expect(resultsOfKind('amplifier-output', evaluate(formation('syrax', 'tashix', null)))).toContainEqual(
       expect.objectContaining({ id: 'amplifier-output:syrax:stat:initiative:tashix' }),
     );
+    expect(resultsOfKind('setup-payoff', evaluate(formation('tashix', 'zivern', null)))).not.toContainEqual(
+      expect.objectContaining({ id: 'setup-payoff:tashix:stat:intelligence:zivern' }),
+    );
+    expect(resultsOfKind('missing-enabler', evaluate(formation('tashix', 'zivern', null)))).toContainEqual(
+      expect.objectContaining({ id: 'missing-enabler:zivern:stat:intelligence' }),
+    );
 
     const tashixSignals = simpleSynergyProfiles.find((profile) => profile.dragonId === 'tashix')!;
     expect(allSignals(tashixSignals).map((signal) => signal.id)).not.toEqual(
@@ -536,15 +666,45 @@ describe('simple synergy foundation', () => {
     expect(resultsOfKind('amplifier-output', evaluate(formation('kalspire', 'velar', null)))).toContainEqual(
       expect.objectContaining({ id: 'amplifier-output:velar:damage:tactical:kalspire' }),
     );
-    expect(resultsOfKind('position-blocked', evaluate(formation('velar', 'caraxes', 'syrax')))).toContainEqual(
+    expect(resultsOfKind('position-blocked', evaluate(formation('tashix', 'caraxes', 'velar')))).toContainEqual(
       expect.objectContaining({ explanation: "Velar must be deployed in Vanguard for Sentinel's Wit." }),
     );
-    expect(resultsOfKind('position-blocked', evaluate(formation('caraxes', 'velar', 'syrax')))).toContainEqual(
-      expect.objectContaining({ explanation: "Syrax must be deployed in Left Flank to receive Velar's Sentinel's Wit." }),
+    expect(resultsOfKind('position-blocked', evaluate(formation('caraxes', 'velar', 'tashix')))).toContainEqual(
+      expect.objectContaining({ explanation: "Tashix must be deployed in Left Flank to receive Velar's Sentinel's Wit." }),
     );
 
     const velarTags = allSignals(simpleSynergyProfiles.find((profile) => profile.dragonId === 'velar')!).flatMap(signalTags);
     expect(velarTags).not.toEqual(expect.arrayContaining(['status:advantage', 'effect:cleanse']));
+  });
+
+  it('keeps Formation A directional relationships owned by the real provider signals', () => {
+    const results = evaluate(formation('velar', 'caraxes', 'syrax'));
+    const explanations = results.map((result) => result.explanation);
+
+    expect(resultsOfKind('setup-payoff', results)).toEqual(
+      expect.arrayContaining([
+        expect.objectContaining({ id: 'setup-payoff:syrax:status:first-strike:caraxes' }),
+        expect.objectContaining({ id: 'setup-payoff:velar:status:first-strike:caraxes' }),
+        expect.objectContaining({ id: 'setup-payoff:velar:status:slow:syrax' }),
+      ]),
+    );
+    expect(resultsOfKind('amplifier-output', results)).toEqual(
+      expect.arrayContaining([
+        expect.objectContaining({ id: 'amplifier-output:syrax:damage:fire:caraxes' }),
+        expect.objectContaining({ id: 'amplifier-output:syrax:stat:intelligence:caraxes' }),
+        expect.objectContaining({ id: 'amplifier-output:velar:damage:fire:caraxes' }),
+        expect.objectContaining({ id: 'amplifier-output:velar:damage:tactical:syrax' }),
+      ]),
+    );
+
+    const syraxInitiativeForVelar = results.find((result) => result.id === 'amplifier-output:syrax:stat:initiative:velar');
+    expect(syraxInitiativeForVelar).toBeDefined();
+    expect(syraxInitiativeForVelar?.abilityIds).toEqual(expect.arrayContaining(['syrax-flight-mastery', 'velar-fierce-unity']));
+    expect(syraxInitiativeForVelar?.abilityIds).not.toContain('velar-whirlwind');
+
+    expect(explanations.join('\n')).not.toContain("Velar's Flight Mastery");
+    expect(explanations.join('\n')).not.toContain('Strategic Revival Initiative');
+    expect(explanations.join('\n')).not.toContain("Caraxes's Hunter's Wrath Initiative support for Syrax's Strategic Revival");
   });
 
   it('models the representative Zivern relationships including Overwhelm-as-Control and Vulnerable payoff', () => {
@@ -593,6 +753,29 @@ describe('simple synergy foundation', () => {
     expect(zivernSignals).not.toContain('zivern-keen-instinct-self');
   });
 
+  it('keeps Formation B scaling stats from becoming false Intelligence providers', () => {
+    const results = evaluate(formation('zivern', 'rhysarion', 'shadowsong'));
+    const explanations = results.map((result) => result.explanation).join('\n');
+
+    expect(resultsOfKind('setup-payoff', results).map((result) => result.id).sort()).toEqual([
+      'setup-payoff:shadowsong:status:vulnerable:zivern',
+      'setup-payoff:zivern:status:control:rhysarion',
+      'setup-payoff:zivern:status:panic:shadowsong',
+    ]);
+    expect(resultsOfKind('missing-enabler', results)).toContainEqual(
+      expect.objectContaining({ id: 'missing-enabler:zivern:stat:intelligence' }),
+    );
+    expect(results.map((result) => result.id)).not.toEqual(
+      expect.arrayContaining([
+        'setup-payoff:rhysarion:stat:intelligence:zivern',
+        'setup-payoff:shadowsong:stat:intelligence:zivern',
+      ]),
+    );
+    expect(explanations).not.toContain('provides deals');
+    expect(explanations).not.toContain("Rhysarion provides deals Fire Damage using Intelligence, which improves Zivern's Battle Mastery.");
+    expect(explanations).not.toContain("Shadowsong provides deals Fire Damage using Intelligence, which improves Zivern's Battle Mastery.");
+  });
+
   it('keeps base Syrax and Caraxes Fire active without emitting Fire future unlocks for reinforcing paths', () => {
     const results = evaluate(formation('syrax', 'caraxes', null), {
       ...unlockedProgression,
@@ -610,7 +793,6 @@ describe('simple synergy foundation', () => {
     );
     expect(resultsOfKind('progression-locked', results).filter((result) => result.tag === 'damage:fire')).toHaveLength(0);
     expect(resultsOfKind('progression-locked', results).map((result) => result.tag)).toEqual([
-      'stat:initiative',
       'stat:intelligence',
       'status:slow',
     ]);
@@ -751,7 +933,205 @@ describe('simple synergy foundation', () => {
     }
   });
 
+  it('does not emit relationship results for duplicated malformed formation entries of the same dragon', () => {
+    const results = evaluate(formation('solo', 'solo', 'solo'), {}, [
+      {
+        dragonId: 'solo',
+        dragonName: 'Solo',
+        outputs: [
+          {
+            id: 'solo-panic',
+            tag: 'status:panic',
+            abilityId: 'solo-panic',
+            abilityName: 'Solo Panic',
+            description: 'applies Panic',
+            confidence: 'verified',
+            friendlyScope: 'formation',
+          },
+          {
+            id: 'solo-fire',
+            tag: 'damage:fire',
+            scalesWith: ['stat:intelligence'],
+            abilityId: 'solo-fire',
+            abilityName: 'Solo Fire',
+            description: 'deals Fire Damage using Intelligence',
+            confidence: 'verified',
+          },
+        ],
+        supports: [
+          {
+            id: 'solo-intelligence',
+            tag: 'stat:intelligence',
+            abilityId: 'solo-intelligence',
+            abilityName: 'Solo Intelligence',
+            description: 'improves Intelligence',
+            confidence: 'verified',
+            friendlyScope: 'formation',
+          },
+        ],
+        benefitsFrom: [
+          {
+            id: 'solo-panic-payoff',
+            tag: 'status:panic',
+            abilityId: 'solo-panic-payoff',
+            abilityName: 'Solo Panic Payoff',
+            description: 'benefits from Panic',
+            confidence: 'verified',
+          },
+        ],
+        positionClaims: [],
+      },
+    ]);
+
+    expect(results.filter((result) => result.kind === 'setup-payoff' || result.kind === 'amplifier-output')).toHaveLength(0);
+    for (const result of results) {
+      expect(new Set(result.dragonIds).size, result.id).toBe(result.dragonIds.length);
+    }
+  });
+
+  it('keeps generated relationship explanations grammatical and ability-owned across profile pairings', () => {
+    const forbidden = [
+      'provides deals',
+      'improves deals',
+      'provides applies',
+      'undefined',
+      'Strategic Revival Initiative',
+      "Velar's Flight Mastery",
+      'Velar’s Flight Mastery',
+      'Fire Damage using Intelligence, which improves Zivern',
+    ];
+
+    for (const provider of simpleSynergyProfiles) {
+      for (const beneficiary of simpleSynergyProfiles) {
+        if (provider.dragonId === beneficiary.dragonId) {
+          continue;
+        }
+
+        const results = evaluate(formation(provider.dragonId, beneficiary.dragonId, null));
+        for (const result of results) {
+          for (const phrase of forbidden) {
+            expect(result.explanation, `${provider.dragonId}:${beneficiary.dragonId}:${result.id}`).not.toContain(phrase);
+          }
+        }
+      }
+    }
+  });
+
 });
+
+function directionalScalingProfiles(): DragonSynergyProfile[] {
+  return [
+    {
+      dragonId: 'fire-producer',
+      dragonName: 'Fire Producer',
+      outputs: [
+        {
+          id: 'fire-producer-fire',
+          tag: 'damage:fire',
+          scalesWith: ['stat:intelligence'],
+          abilityId: 'fire-producer-fire',
+          abilityName: 'Fire Output',
+          description: 'deals Fire Damage using Intelligence',
+          confidence: 'verified',
+        },
+      ],
+      supports: [],
+      benefitsFrom: [],
+      positionClaims: [],
+    },
+    {
+      dragonId: 'tactical-producer',
+      dragonName: 'Tactical Producer',
+      outputs: [
+        {
+          id: 'tactical-producer-tactical',
+          tag: 'damage:tactical',
+          scalesWith: ['stat:instinct'],
+          abilityId: 'tactical-producer-tactical',
+          abilityName: 'Tactical Output',
+          description: 'deals Tactical Damage using Instinct',
+          confidence: 'verified',
+        },
+      ],
+      supports: [],
+      benefitsFrom: [],
+      positionClaims: [],
+    },
+    {
+      dragonId: 'physical-producer',
+      dragonName: 'Physical Producer',
+      outputs: [
+        {
+          id: 'physical-producer-physical',
+          tag: 'damage:physical',
+          scalesWith: ['stat:strength'],
+          abilityId: 'physical-producer-physical',
+          abilityName: 'Physical Output',
+          description: 'deals Physical Damage using Strength',
+          confidence: 'verified',
+        },
+      ],
+      supports: [],
+      benefitsFrom: [],
+      positionClaims: [],
+    },
+    statSupporter('int-supporter', 'Int Supporter', 'stat:intelligence'),
+    statSupporter('instinct-supporter', 'Instinct Supporter', 'stat:instinct'),
+    statSupporter('strength-supporter', 'Strength Supporter', 'stat:strength'),
+    statBeneficiary('int-beneficiary', 'Int Beneficiary', 'stat:intelligence'),
+    statBeneficiary('instinct-beneficiary', 'Instinct Beneficiary', 'stat:instinct'),
+    statBeneficiary('strength-beneficiary', 'Strength Beneficiary', 'stat:strength'),
+  ];
+}
+
+function statSupporter(
+  dragonId: string,
+  dragonName: string,
+  tag: 'stat:intelligence' | 'stat:instinct' | 'stat:strength',
+): DragonSynergyProfile {
+  return {
+    dragonId,
+    dragonName,
+    outputs: [],
+    supports: [
+      {
+        id: `${dragonId}-support`,
+        tag,
+        abilityId: `${dragonId}-support`,
+        abilityName: `${dragonName} Support`,
+        description: `improves ${SYNERGY_TAG_LABELS[tag]}`,
+        confidence: 'verified',
+        friendlyScope: 'formation',
+      },
+    ],
+    benefitsFrom: [],
+    positionClaims: [],
+  };
+}
+
+function statBeneficiary(
+  dragonId: string,
+  dragonName: string,
+  tag: 'stat:intelligence' | 'stat:instinct' | 'stat:strength',
+): DragonSynergyProfile {
+  return {
+    dragonId,
+    dragonName,
+    outputs: [],
+    supports: [],
+    benefitsFrom: [
+      {
+        id: `${dragonId}-benefit`,
+        tag,
+        abilityId: `${dragonId}-benefit`,
+        abilityName: `${dragonName} Benefit`,
+        description: `benefits from ${SYNERGY_TAG_LABELS[tag]}`,
+        confidence: 'verified',
+      },
+    ],
+    positionClaims: [],
+  };
+}
 
 function pathPrecedenceProfiles({
   includeActive = true,

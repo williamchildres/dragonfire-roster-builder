@@ -93,14 +93,14 @@ function addSetupPayoffResults(
   beneficiary: SelectedProfile,
   benefit: SynergySignal,
 ): void {
-  const benefitTags = signalTags(benefit);
+  const benefitTags = providedTags(benefit);
   const selfOutputsTag = beneficiary.profile.outputs.some((output) =>
-    signalTags(output).some((outputTag) => benefitTags.some((benefitTag) => tagsAreCompatible(outputTag, benefitTag))),
+    providedTags(output).some((outputTag) => benefitTags.some((benefitTag) => tagsAreCompatible(outputTag, benefitTag))),
   );
   const providers = selected.filter(
     (provider) =>
       provider.profile.dragonId !== beneficiary.profile.dragonId &&
-      provider.profile.outputs.some((output) => matchingTag(output, benefit) !== null && signalCanReachTeammate(output)),
+      provider.profile.outputs.some((output) => matchingSetupTag(output, benefit) !== null && signalCanReachTeammate(output)),
   );
 
   if (providers.length === 0 && selfOutputsTag) {
@@ -120,8 +120,8 @@ function addSetupPayoffResults(
   }
 
   for (const provider of providers) {
-    for (const output of provider.profile.outputs.filter((candidate) => matchingTag(candidate, benefit) !== null && signalCanReachTeammate(candidate))) {
-      const tagMatch = matchingTag(output, benefit);
+    for (const output of provider.profile.outputs.filter((candidate) => matchingSetupTag(candidate, benefit) !== null && signalCanReachTeammate(candidate))) {
+      const tagMatch = matchingSetupTag(output, benefit);
       if (tagMatch) {
         addRelationshipCandidate(
           relationshipCandidates,
@@ -154,8 +154,8 @@ function addAmplifierOutputResults(
       continue;
     }
 
-    for (const output of producer.profile.outputs.filter((candidate) => matchingTag(support, candidate) !== null)) {
-      const tagMatch = matchingTag(support, output);
+    for (const output of producer.profile.outputs.filter((candidate) => matchingSupportTag(support, candidate) !== null)) {
+      const tagMatch = matchingSupportTag(support, output);
       if (tagMatch) {
         addRelationshipCandidate(
           relationshipCandidates,
@@ -170,8 +170,8 @@ function addAmplifierOutputResults(
       }
     }
 
-    for (const benefit of producer.profile.benefitsFrom.filter((candidate) => candidate.tag.startsWith('stat:') && matchingTag(support, candidate) !== null)) {
-      const tagMatch = matchingTag(support, benefit);
+    for (const benefit of producer.profile.benefitsFrom.filter((candidate) => candidate.tag.startsWith('stat:') && matchingSupportTag(support, candidate) !== null)) {
+      const tagMatch = matchingSupportTag(support, benefit);
       if (tagMatch) {
         addRelationshipCandidate(
           relationshipCandidates,
@@ -198,6 +198,10 @@ function addRelationshipCandidate(
   beneficiarySignal: SynergySignal,
   tagMatch: SynergyTagMatch,
 ): void {
+  if (provider.profile.dragonId === beneficiary.profile.dragonId) {
+    return;
+  }
+
   const locked = firstLockedSignal(input, provider.profile, providerSignal, beneficiary.profile, beneficiarySignal);
   const tag = tagMatch.semanticTag;
   const semanticId =
@@ -412,13 +416,29 @@ function signalCanReachTeammate(signal: SynergySignal): boolean {
   return signal.friendlyScope !== 'self';
 }
 
-function signalTags(signal: SynergySignal): SynergyTag[] {
+function providedTags(signal: SynergySignal): SynergyTag[] {
   return signal.tags ?? [signal.tag];
 }
 
-function matchingTag(provider: SynergySignal, beneficiary: SynergySignal): SynergyTagMatch | null {
-  for (const providerTag of signalTags(provider)) {
-    for (const beneficiaryTag of signalTags(beneficiary)) {
+function supportableTags(signal: SynergySignal): SynergyTag[] {
+  return uniqueTags([...providedTags(signal), ...(signal.scalesWith ?? [])]);
+}
+
+function uniqueTags(tags: SynergyTag[]): SynergyTag[] {
+  return [...new Set(tags)];
+}
+
+function matchingSetupTag(provider: SynergySignal, beneficiary: SynergySignal): SynergyTagMatch | null {
+  return matchingTagFromLists(providedTags(provider), providedTags(beneficiary));
+}
+
+function matchingSupportTag(provider: SynergySignal, beneficiary: SynergySignal): SynergyTagMatch | null {
+  return matchingTagFromLists(providedTags(provider), supportableTags(beneficiary));
+}
+
+function matchingTagFromLists(providerTags: SynergyTag[], beneficiaryTags: SynergyTag[]): SynergyTagMatch | null {
+  for (const providerTag of providerTags) {
+    for (const beneficiaryTag of beneficiaryTags) {
       if (tagsAreCompatible(providerTag, beneficiaryTag)) {
         return {
           semanticTag: beneficiaryTag === 'status:control' ? 'status:control' : providerTag,

@@ -80,7 +80,7 @@ describe('Formation Builder simple synergy cutover', () => {
     await selectFormation(user, { 'left-flank': 'daemoros', vanguard: 'shadowsong', 'right-flank': 'caraxes' });
 
     expect(sectionText('Strong synergies')).toContain(
-      "Daemoros applies Panic, which improves Shadowsong's Breath of Fire and Scorched Earth.",
+      "Daemoros applies Panic, which improves Shadowsong's Breath of Fire.",
     );
     expect(screen.queryByLabelText(/preview max-rank interactions/i)).not.toBeInTheDocument();
     expect(screen.queryByLabelText(/show analysis details/i)).not.toBeInTheDocument();
@@ -97,7 +97,7 @@ describe('Formation Builder simple synergy cutover', () => {
     await selectFormation(user, { 'left-flank': 'daemoros', vanguard: 'shadowsong' });
 
     expect(sectionText('Future unlocks')).toContain(
-      "Daemoros's Instill Fear Panic setup for Shadowsong's Breath of Fire and Scorched Earth unlocks when Daemoros reaches Star Rank 2.",
+      "Daemoros's Instill Fear Panic setup for Shadowsong's Breath of Fire unlocks when Daemoros reaches Star Rank 2.",
     );
     expect(sectionText('Strong synergies')).not.toContain('Daemoros applies Panic');
     expect(analysisText()).not.toMatch(/potential|unknown|timing-dependent/i);
