@@ -1,11 +1,11 @@
 {
   "format": "dragonfire-lab-project-context",
   "contextVersion": 2,
-  "generatedAt": "2026-07-03T20:51:54.192Z",
+  "generatedAt": "2026-07-04T02:08:41.510Z",
   "source": {
     "repository": "https://github.com/williamchildres/dragonfire-roster-builder",
-    "branch": "data/add-final-epic-dragons",
-    "commit": "11bcbac76945f65ef335358831060801af58efcf",
+    "branch": "fix/directional-synergy-tags",
+    "commit": "50b3d6075c5a8866131bd4ea0a7cdf2f7b6719c1",
     "databaseVersion": "0.6.3",
     "dataSchemaVersion": 13,
     "localRosterSchemaVersion": 3,
@@ -5218,8 +5218,7 @@
           {
             "id": "syrax-blazing-fury-tactical",
             "tag": "damage:tactical",
-            "tags": [
-              "damage:tactical",
+            "scalesWith": [
               "stat:instinct"
             ],
             "abilityId": "syrax-blazing-fury",
@@ -5230,13 +5229,12 @@
           {
             "id": "syrax-strategic-revival-recovery",
             "tag": "effect:recovery",
-            "tags": [
-              "effect:recovery",
-              "stat:initiative"
+            "scalesWith": [
+              "stat:intelligence"
             ],
             "abilityId": "syrax-strategic-revival",
             "abilityName": "Strategic Revival",
-            "description": "provides Recovery that is enhanced by Initiative",
+            "description": "provides Recovery that is enhanced by Intelligence",
             "unlock": {
               "minimumStarRank": 6
             },
@@ -5361,8 +5359,7 @@
           {
             "id": "vhagar-fiery-bonds-physical",
             "tag": "damage:physical",
-            "tags": [
-              "damage:physical",
+            "scalesWith": [
               "stat:strength"
             ],
             "abilityId": "vhagar-fiery-bonds",
@@ -5373,8 +5370,7 @@
           {
             "id": "vhagar-skyward-titan-physical",
             "tag": "damage:physical",
-            "tags": [
-              "damage:physical",
+            "scalesWith": [
               "stat:strength"
             ],
             "abilityId": "vhagar-skyward-titan",
@@ -5462,8 +5458,7 @@
           {
             "id": "caraxes-infernal-burst-fire",
             "tag": "damage:fire",
-            "tags": [
-              "damage:fire",
+            "scalesWith": [
               "stat:intelligence"
             ],
             "abilityId": "caraxes-infernal-burst",
@@ -5498,8 +5493,7 @@
           {
             "id": "caraxes-crippling-inferno-fire",
             "tag": "damage:fire",
-            "tags": [
-              "damage:fire",
+            "scalesWith": [
               "stat:intelligence"
             ],
             "abilityId": "caraxes-crippling-inferno",
@@ -5563,8 +5557,7 @@
           {
             "id": "seasmoke-cleansing-wrath-fire",
             "tag": "damage:fire",
-            "tags": [
-              "damage:fire",
+            "scalesWith": [
               "stat:intelligence"
             ],
             "abilityId": "seasmoke-cleansing-wrath",
@@ -5674,8 +5667,7 @@
           {
             "id": "crimson-bloodscale-terror-fire",
             "tag": "damage:fire",
-            "tags": [
-              "damage:fire",
+            "scalesWith": [
               "stat:intelligence"
             ],
             "abilityId": "crimson-bloodscale-terror",
@@ -5751,8 +5743,7 @@
           {
             "id": "kalspire-tactical-strike-tactical",
             "tag": "damage:tactical",
-            "tags": [
-              "damage:tactical",
+            "scalesWith": [
               "stat:instinct"
             ],
             "abilityId": "kalspire-tactical-strike",
@@ -5763,8 +5754,7 @@
           {
             "id": "kalspire-tactical-assault-physical",
             "tag": "damage:physical",
-            "tags": [
-              "damage:physical",
+            "scalesWith": [
               "stat:strength"
             ],
             "abilityId": "kalspire-tactical-assault",
@@ -5811,8 +5801,7 @@
           {
             "id": "malachite-wardens-rally-tactical",
             "tag": "damage:tactical",
-            "tags": [
-              "damage:tactical",
+            "scalesWith": [
               "stat:instinct"
             ],
             "abilityId": "malachite-wardens-rally",
@@ -5823,8 +5812,7 @@
           {
             "id": "malachite-wardens-rally-recovery",
             "tag": "effect:recovery",
-            "tags": [
-              "effect:recovery",
+            "scalesWith": [
               "stat:instinct"
             ],
             "abilityId": "malachite-wardens-rally",
@@ -5937,8 +5925,7 @@
           {
             "id": "venator-feral-strike-physical",
             "tag": "damage:physical",
-            "tags": [
-              "damage:physical",
+            "scalesWith": [
               "stat:strength"
             ],
             "abilityId": "venator-feral-strike",
@@ -5949,8 +5936,7 @@
           {
             "id": "venator-feral-precision-physical",
             "tag": "damage:physical",
-            "tags": [
-              "damage:physical",
+            "scalesWith": [
               "stat:strength"
             ],
             "abilityId": "venator-feral-precision",
@@ -6028,8 +6014,7 @@
           {
             "id": "daemoros-shadowflame-physical",
             "tag": "damage:physical",
-            "tags": [
-              "damage:physical",
+            "scalesWith": [
               "stat:strength"
             ],
             "abilityId": "daemoros-shadowflame",
@@ -6113,8 +6098,7 @@
           {
             "id": "feskar-calculated-assault-tactical",
             "tag": "damage:tactical",
-            "tags": [
-              "damage:tactical",
+            "scalesWith": [
               "stat:instinct"
             ],
             "abilityId": "feskar-calculated-assault",
@@ -6125,8 +6109,7 @@
           {
             "id": "feskar-emerald-inferno-fire",
             "tag": "damage:fire",
-            "tags": [
-              "damage:fire",
+            "scalesWith": [
               "stat:intelligence"
             ],
             "abilityId": "feskar-emerald-inferno",
@@ -6199,8 +6182,7 @@
           {
             "id": "rhysarion-dawnsong-physical",
             "tag": "damage:physical",
-            "tags": [
-              "damage:physical",
+            "scalesWith": [
               "stat:strength"
             ],
             "abilityId": "rhysarion-dawnsong",
@@ -6211,8 +6193,7 @@
           {
             "id": "rhysarion-dawnsong-fire",
             "tag": "damage:fire",
-            "tags": [
-              "damage:fire",
+            "scalesWith": [
               "stat:intelligence"
             ],
             "abilityId": "rhysarion-dawnsong",
@@ -6223,8 +6204,7 @@
           {
             "id": "rhysarion-ebbing-fury-recovery",
             "tag": "effect:recovery",
-            "tags": [
-              "effect:recovery",
+            "scalesWith": [
               "stat:strength"
             ],
             "abilityId": "rhysarion-ebbing-fury",
@@ -6239,8 +6219,7 @@
           {
             "id": "rhysarion-echoing-melody-recovery",
             "tag": "effect:recovery",
-            "tags": [
-              "effect:recovery",
+            "scalesWith": [
               "stat:intelligence"
             ],
             "abilityId": "rhysarion-echoing-melody",
@@ -6330,8 +6309,7 @@
           {
             "id": "shadowsong-breath-of-fire-fire",
             "tag": "damage:fire",
-            "tags": [
-              "damage:fire",
+            "scalesWith": [
               "stat:intelligence"
             ],
             "abilityId": "shadowsong-breath-of-fire",
@@ -6422,7 +6400,7 @@
             "id": "shadowsong-panic-payoff",
             "tag": "status:panic",
             "abilityId": "shadowsong-breath-of-fire",
-            "abilityName": "Breath of Fire and Scorched Earth",
+            "abilityName": "Breath of Fire",
             "description": "Panic improves Breath of Fire damage and Scorched Earth application",
             "friendlyScope": "formation",
             "confidence": "verified"
@@ -6458,8 +6436,7 @@
           {
             "id": "vaeldra-lure-physical",
             "tag": "damage:physical",
-            "tags": [
-              "damage:physical",
+            "scalesWith": [
               "stat:strength"
             ],
             "abilityId": "vaeldra-lure",
@@ -6550,8 +6527,7 @@
           {
             "id": "sheepstealer-wild-hunt-fire",
             "tag": "damage:fire",
-            "tags": [
-              "damage:fire",
+            "scalesWith": [
               "stat:intelligence"
             ],
             "abilityId": "sheepstealer-wild-hunt",
@@ -6562,8 +6538,7 @@
           {
             "id": "sheepstealer-savage-claim-recovery",
             "tag": "effect:recovery",
-            "tags": [
-              "effect:recovery",
+            "scalesWith": [
               "stat:intelligence"
             ],
             "abilityId": "sheepstealer-savage-claim",
@@ -6628,8 +6603,7 @@
           {
             "id": "vermax-spreading-blaze-physical",
             "tag": "damage:physical",
-            "tags": [
-              "damage:physical",
+            "scalesWith": [
               "stat:strength"
             ],
             "abilityId": "vermax-spreading-blaze",
@@ -6717,8 +6691,7 @@
           {
             "id": "tashix-shimmering-mirage-fire",
             "tag": "damage:fire",
-            "tags": [
-              "damage:fire",
+            "scalesWith": [
               "stat:intelligence"
             ],
             "abilityId": "tashix-shimmering-mirage",
@@ -6815,8 +6788,7 @@
           {
             "id": "velar-whirlwind-tactical",
             "tag": "damage:tactical",
-            "tags": [
-              "damage:tactical",
+            "scalesWith": [
               "stat:instinct"
             ],
             "abilityId": "velar-whirlwind",
@@ -6851,8 +6823,7 @@
           {
             "id": "velar-breath-of-renewal-recovery",
             "tag": "effect:recovery",
-            "tags": [
-              "effect:recovery",
+            "scalesWith": [
               "stat:initiative"
             ],
             "abilityId": "velar-breath-of-renewal",
@@ -6962,8 +6933,7 @@
           {
             "id": "zivern-silent-shade-tactical",
             "tag": "damage:tactical",
-            "tags": [
-              "damage:tactical",
+            "scalesWith": [
               "stat:instinct"
             ],
             "abilityId": "zivern-silent-shade",
