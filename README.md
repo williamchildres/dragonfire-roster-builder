@@ -7,9 +7,9 @@ It is not a combat simulator.
 ## Current Features
 
 - Dragon Database for 30 known dragons.
-- Full raw Command, Trait, and Habit wording for 15 detailed dragons.
-- Curated simple synergy profiles for all 15 detailed dragons.
-- Metadata-only handling for unmapped dragons.
+- Full raw Command, Trait, and Habit wording for 18 detailed dragons.
+- Curated simple synergy profiles for all 18 detailed dragons.
+- Metadata-only handling for the remaining 12 unmapped dragons.
 - Roster ownership, collection state, Star Rank, Dragon Level, notes, and Habit Level tracking.
 - Formation Builder with placement, progression locks, missing-enabler, position conflict, and future-unlock explanations.
 - Formation share links and roster JSON import/export.
@@ -37,9 +37,20 @@ npm run test
 npm run build
 npm run export:context
 npm run validate:context
+npm run package:context
 ```
 
 If `npm` is unavailable in the local shell, run the equivalent direct Node entry points through the installed dependencies.
+
+Project-context packaging must start from a clean committed source tree:
+
+```powershell
+git status --short
+git commit -m "<source changes>"
+npm run package:context
+```
+
+`package:context` records the current branch and committed source SHA, regenerates and validates `project-context/`, creates a deterministic `project-context.zip`, compares ZIP entries to the generated tree, rejects retired filenames, and enforces the 2 MB context limit. `project-context.zip` is ignored and should not be committed. The generated `project-context/` directory may be committed afterward; that generated-context commit can follow the source commit recorded inside the context.
 
 There is no `report:synergy` command. The old combat-analysis report and framework have been removed.
 
@@ -50,7 +61,7 @@ There is no `report:synergy` command. The old combat-analysis report and framewo
 3. Record unlock and hard position requirements.
 4. Add or update the curated simple synergy profile.
 5. Add one profile-audit disposition for each detailed ability.
-6. Run lint, tests, build, context export, and context validation.
+6. Run lint, tests, build, context export, context validation, and context ZIP packaging.
 7. Visually confirm the Dragon Database and Formation Builder.
 
 Do not add capability outputs, modifier capabilities, traces, expected interactions, formation-specific regression passes, or combat-simulation machinery.

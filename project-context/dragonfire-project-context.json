@@ -1,12 +1,12 @@
 {
   "format": "dragonfire-lab-project-context",
   "contextVersion": 2,
-  "generatedAt": "2026-07-03T00:00:00.000Z",
+  "generatedAt": "2026-07-03T20:51:54.192Z",
   "source": {
     "repository": "https://github.com/williamchildres/dragonfire-roster-builder",
-    "branch": "refactor/remove-legacy-combat-framework",
-    "commit": "52a026da3c5a48012d80c5adb365b1188dbc8632",
-    "databaseVersion": "0.6.2",
+    "branch": "data/add-final-epic-dragons",
+    "commit": "11bcbac76945f65ef335358831060801af58efcf",
+    "databaseVersion": "0.6.3",
     "dataSchemaVersion": 13,
     "localRosterSchemaVersion": 3,
     "gameBuild": "26.6.53509"
@@ -30,12 +30,12 @@
   },
   "rosterSummary": {
     "totalDragons": 30,
-    "detailedDragons": 15,
-    "metadataOnlyDragons": 15,
-    "curatedSimpleProfiles": 15,
-    "profileAuditReviews": 105,
-    "evidenceSources": 133,
-    "manualReviews": 28
+    "detailedDragons": 18,
+    "metadataOnlyDragons": 12,
+    "curatedSimpleProfiles": 18,
+    "profileAuditReviews": 126,
+    "evidenceSources": 157,
+    "manualReviews": 31
   },
   "dragons": [
     {
@@ -3136,23 +3136,208 @@
       "rarity": "Epic",
       "breed": "Hunter",
       "rosterSourceStatus": "official-website",
-      "dataStatus": "official-metadata-only",
-      "lastVerified": "2026-06-23",
-      "profileCompleteness": "metadata-only",
+      "dataStatus": "community-verified",
+      "lastVerified": "2026-07-03",
+      "profileCompleteness": "detailed-abilities",
       "officialProfileUrl": "https://gotdragonfire.com/dragons/tashix/",
-      "abilities": [],
+      "abilities": [
+        {
+          "id": "tashix-shimmering-mirage",
+          "kind": "command",
+          "name": "Shimmering Mirage",
+          "abilityClass": "active",
+          "unlockStarRank": null,
+          "minimumDragonLevel": null,
+          "positionRequirement": null,
+          "verification": {
+            "status": "screenshot-verified",
+            "source": "Tashix Shimmering Mirage summary screenshots",
+            "capturedAt": "2026-07-03",
+            "gameVersion": null,
+            "reviewedManually": true
+          },
+          "evidenceIds": [
+            "tashix-shimmering-mirage-summary-2026-07-03"
+          ],
+          "tags": [
+            "FIRE_DAMAGE",
+            "MIRAGE",
+            "ADJACENT_TARGET",
+            "INTELLIGENCE_SCALING"
+          ],
+          "rawDescription": "Each Round: 50% chance to gain 1 stack of Mirage (Max 10 Stacks).\n\nRounds 3, 6, 9: Deal Fire Damage to 1 Enemy within adjacency (Damage Rate: +200%).\n\nMirage:\nIncrease your Fire Damage Dealt by +2.5% per stack. Max 10 stacks."
+        },
+        {
+          "id": "tashix-hunters-cunning",
+          "kind": "trait",
+          "name": "Hunter's Cunning",
+          "abilityClass": "passive",
+          "unlockStarRank": 1,
+          "minimumDragonLevel": 16,
+          "positionRequirement": "vanguard",
+          "verification": {
+            "status": "screenshot-verified",
+            "source": "Tashix Hunter's Cunning screenshot",
+            "capturedAt": "2026-07-03",
+            "gameVersion": null,
+            "reviewedManually": true
+          },
+          "evidenceIds": [
+            "tashix-hunters-cunning-2026-07-03"
+          ],
+          "tags": [
+            "RECOVERY_RECEIVED_UP",
+            "INTELLIGENCE_UP",
+            "PHYSICAL_DAMAGE_UP",
+            "VANGUARD_REQUIRED",
+            "RIGHT_FLANK_TARGET"
+          ],
+          "rawDescription": "At Level 16+ and deployed in the Vanguard, increase your Recovery Received by +20% and Intelligence by +25. Increase Physical Damage Dealt by +10% of the Ally deployed in the Right Flank."
+        },
+        {
+          "id": "tashix-enervate",
+          "kind": "habit",
+          "name": "Enervate",
+          "abilityClass": "passive",
+          "unlockStarRank": 2,
+          "minimumDragonLevel": null,
+          "positionRequirement": null,
+          "verification": {
+            "status": "screenshot-verified",
+            "source": "Tashix Enervate screenshot",
+            "capturedAt": "2026-07-03",
+            "gameVersion": null,
+            "reviewedManually": true
+          },
+          "evidenceIds": [
+            "tashix-enervate-2026-07-03"
+          ],
+          "tags": [
+            "TACTICAL_DAMAGE_DOWN",
+            "ENEMY_DEBUFF"
+          ],
+          "rawDescription": "Start of Combat: Reduce Tactical Damage Dealt by -10% of 1 Enemy that deals Tactical Damage until the end of combat.\n\nProgression: Habit Level 1: -10.5%; Habit Level 2: -12.6%; Habit Level 3: -14.7%; Habit Level 4: -17.85%; Habit Level 5: -21%."
+        },
+        {
+          "id": "tashix-dragons-cunning",
+          "kind": "habit",
+          "name": "Dragon's Cunning",
+          "abilityClass": "passive",
+          "unlockStarRank": 4,
+          "minimumDragonLevel": null,
+          "positionRequirement": null,
+          "verification": {
+            "status": "screenshot-verified",
+            "source": "Tashix Dragon's Cunning screenshot",
+            "capturedAt": "2026-07-03",
+            "gameVersion": null,
+            "reviewedManually": true
+          },
+          "evidenceIds": [
+            "tashix-dragons-cunning-2026-07-03"
+          ],
+          "tags": [
+            "INTELLIGENCE_UP",
+            "DEBUFF_INSTINCTS",
+            "INITIATIVE_SCALING",
+            "ADJACENT_TARGET",
+            "BUFF_SELF"
+          ],
+          "rawDescription": "Start of Combat: Increase your Intelligence by +12% and reduce Instinct by -10% (enhanced by Initiative) of 2 Enemies within adjacency. Each effect lasts until the end of combat.\n\nProgression: Habit Level 1: Intelligence +12%; enemy Instinct -10%; Habit Level 2: Intelligence +14.4%; enemy Instinct -12%; Habit Level 3: Intelligence +16.8%; enemy Instinct -14%; Habit Level 4: Intelligence +20.4%; enemy Instinct -17%; Habit Level 5: Intelligence +24%; enemy Instinct -20%."
+        },
+        {
+          "id": "tashix-cunning-ruse",
+          "kind": "habit",
+          "name": "Cunning Ruse",
+          "abilityClass": "passive",
+          "unlockStarRank": 6,
+          "minimumDragonLevel": null,
+          "positionRequirement": null,
+          "verification": {
+            "status": "screenshot-verified",
+            "source": "Tashix Cunning Ruse screenshot",
+            "capturedAt": "2026-07-03",
+            "gameVersion": null,
+            "reviewedManually": true
+          },
+          "evidenceIds": [
+            "tashix-cunning-ruse-2026-07-03"
+          ],
+          "tags": [
+            "MIRAGE",
+            "FIRE_DAMAGE_UP",
+            "WEAKENED",
+            "ANY_LANE_TARGET",
+            "BUFF_SELF"
+          ],
+          "rawDescription": "Each Round: 25% chance to gain 1 stack of Mirage (Max 10 Stacks).\n\nEach stack of Mirage increases your Fire Damage Dealt by +2.5% until the end of combat.\n\nEach Round: If you have 4 or more stacks of Mirage, there is a 10% chance to afflict 3 Enemies in any lane with Weakened (-15%) for 2 round(s). This chance is checked separately for each target and is doubled (20%) against targets that deal Tactical Damage.\n\nWeakened reduces the target's Damage Dealt.\n\nProgression: Habit Level 1: Weakened chance 10%; Habit Level 2: 12%; Habit Level 3: 14%; Habit Level 4: 17%; Habit Level 5: 20%."
+        },
+        {
+          "id": "tashix-battle-guile",
+          "kind": "habit",
+          "name": "Battle Guile",
+          "abilityClass": "passive",
+          "unlockStarRank": 8,
+          "minimumDragonLevel": null,
+          "positionRequirement": null,
+          "verification": {
+            "status": "screenshot-verified",
+            "source": "Tashix Battle Guile screenshot",
+            "capturedAt": "2026-07-03",
+            "gameVersion": null,
+            "reviewedManually": true
+          },
+          "evidenceIds": [
+            "tashix-battle-guile-2026-07-03"
+          ],
+          "tags": [
+            "DEBUFF_INSTINCTS",
+            "DEBUFF_INITIATIVE",
+            "INITIATIVE_SCALING",
+            "ANY_LANE_TARGET"
+          ],
+          "rawDescription": "Start of Combat: Reduce Instinct and Initiative by -5% (enhanced by Initiative) of 3 Enemies in any lane until the end of combat.\n\nProgression: Habit Level 1: -5%; Habit Level 2: -6%; Habit Level 3: -7%; Habit Level 4: -8.85%; Habit Level 5: -10.5%."
+        },
+        {
+          "id": "tashix-veiled-ambush",
+          "kind": "habit",
+          "name": "Veiled Ambush",
+          "abilityClass": "passive",
+          "unlockStarRank": 10,
+          "minimumDragonLevel": null,
+          "positionRequirement": null,
+          "verification": {
+            "status": "screenshot-verified",
+            "source": "Tashix Veiled Ambush screenshot",
+            "capturedAt": "2026-07-03",
+            "gameVersion": null,
+            "reviewedManually": true
+          },
+          "evidenceIds": [
+            "tashix-veiled-ambush-2026-07-03"
+          ],
+          "tags": [
+            "MIRAGE",
+            "FIRE_DAMAGE",
+            "FIRE_DAMAGE_UP",
+            "MOST_TROOPS_TARGET",
+            "BUFF_SELF"
+          ],
+          "rawDescription": "Each Round: 25% chance to gain 1 stack of Mirage (Max 10 Stacks).\n\nEach stack of Mirage increases your Fire Damage Dealt by +2.5% until the end of combat.\n\nEach Round: If you have 7 or more stacks of Mirage, deal Fire Damage (Damage Rate: +150%) to the Enemy with the most troops. This effect can only trigger once per combat.\n\nProgression: Habit Level 1: Fire Damage Rate 150%; Habit Level 2: 220%; Habit Level 3: 290%; Habit Level 4: 380%; Habit Level 5: 500%."
+        }
+      ],
       "affinities": {
         "Cavalry": "unknown",
         "Shieldbearers": "unknown",
-        "Archers": "unknown",
+        "Archers": "positive",
         "Spearmen": "unknown",
-        "Siege": "unknown"
+        "Siege": "negative"
       },
       "verification": {
         "identity": {
-          "status": "officially-confirmed",
-          "source": "Official public roster page",
-          "capturedAt": "2026-06-23",
+          "status": "screenshot-verified",
+          "source": "Tashix main screen screenshot",
+          "capturedAt": "2026-07-03",
           "gameVersion": null,
           "reviewedManually": true
         },
@@ -3169,11 +3354,47 @@
           "capturedAt": "2026-06-23",
           "gameVersion": null,
           "reviewedManually": true
+        },
+        "command": {
+          "status": "screenshot-verified",
+          "source": "Tashix Shimmering Mirage summary screenshots",
+          "capturedAt": "2026-07-03",
+          "gameVersion": null,
+          "reviewedManually": true
+        },
+        "trait": {
+          "status": "screenshot-verified",
+          "source": "Tashix Hunter's Cunning screenshot",
+          "capturedAt": "2026-07-03",
+          "gameVersion": null,
+          "reviewedManually": true
+        },
+        "habits": {
+          "status": "screenshot-verified",
+          "source": "Tashix Habit screenshots",
+          "capturedAt": "2026-07-03",
+          "gameVersion": null,
+          "reviewedManually": true
+        },
+        "affinities": {
+          "status": "screenshot-verified",
+          "source": "Tashix main screen screenshot",
+          "capturedAt": "2026-07-03",
+          "gameVersion": null,
+          "reviewedManually": true
         }
       },
-      "evidenceIds": [],
-      "simpleProfileId": null,
-      "simpleProfileStatus": "metadata-only-unmapped"
+      "evidenceIds": [
+        "tashix-battle-guile-2026-07-03",
+        "tashix-cunning-ruse-2026-07-03",
+        "tashix-dragons-cunning-2026-07-03",
+        "tashix-enervate-2026-07-03",
+        "tashix-hunters-cunning-2026-07-03",
+        "tashix-shimmering-mirage-summary-2026-07-03",
+        "tashix-veiled-ambush-2026-07-03"
+      ],
+      "simpleProfileId": "tashix",
+      "simpleProfileStatus": "curated"
     },
     {
       "id": "vaeldra",
@@ -3425,23 +3646,210 @@
       "rarity": "Epic",
       "breed": "Sentinel",
       "rosterSourceStatus": "official-website",
-      "dataStatus": "official-metadata-only",
-      "lastVerified": "2026-06-23",
-      "profileCompleteness": "metadata-only",
+      "dataStatus": "community-verified",
+      "lastVerified": "2026-07-03",
+      "profileCompleteness": "detailed-abilities",
       "officialProfileUrl": "https://gotdragonfire.com/dragons/velar/",
-      "abilities": [],
+      "abilities": [
+        {
+          "id": "velar-whirlwind",
+          "kind": "command",
+          "name": "Whirlwind",
+          "abilityClass": "active",
+          "unlockStarRank": null,
+          "minimumDragonLevel": null,
+          "positionRequirement": null,
+          "verification": {
+            "status": "screenshot-verified",
+            "source": "Velar Whirlwind summary screenshots",
+            "capturedAt": "2026-07-03",
+            "gameVersion": null,
+            "reviewedManually": true
+          },
+          "evidenceIds": [
+            "velar-whirlwind-summary-2026-07-03"
+          ],
+          "tags": [
+            "ADVANTAGE",
+            "TACTICAL_DAMAGE",
+            "ANY_LANE_TARGET",
+            "CLEANSE_NEGATIVE",
+            "RECOVERY",
+            "INITIATIVE_SCALING",
+            "COMMAND_AUGMENTATION"
+          ],
+          "rawDescription": "Rounds 2, 4, 6, 8: 20% chance to grant 2 other Allies in any lane Advantage (+15%) for 2 round(s).\n\nRounds 3, 5, 7, 9: Deal Tactical Damage to 3 Enemies in any lane (Damage Rate: +45%).\n\nAt 10 Stars:\n\nEach Round: 12% chance to Cleanse 1 instance of Bleed, Panic, or Burn from each Ally. This chance is checked separately per target.\n\nRounds 2, 4, 6, 8: Apply Recovery to 3 Allies in any lane (Recovery Rate: +18%, enhanced by Initiative)."
+        },
+        {
+          "id": "velar-sentinels-wit",
+          "kind": "trait",
+          "name": "Sentinel's Wit",
+          "abilityClass": "passive",
+          "unlockStarRank": 1,
+          "minimumDragonLevel": 16,
+          "positionRequirement": "vanguard",
+          "verification": {
+            "status": "screenshot-verified",
+            "source": "Velar Sentinel's Wit screenshot",
+            "capturedAt": "2026-07-03",
+            "gameVersion": null,
+            "reviewedManually": true
+          },
+          "evidenceIds": [
+            "velar-sentinels-wit-2026-07-03"
+          ],
+          "tags": [
+            "TACTICAL_DAMAGE",
+            "INSTINCT_UP",
+            "BUFF_INITIATIVE",
+            "VANGUARD_REQUIRED",
+            "LEFT_FLANK_TARGET"
+          ],
+          "rawDescription": "At Level 16+ and deployed in the Vanguard, increase your Tactical Damage Dealt by +16%. Increase Instinct and Initiative by +20 of the Ally deployed in the Left Flank."
+        },
+        {
+          "id": "velar-strategic-leader",
+          "kind": "habit",
+          "name": "Strategic Leader",
+          "abilityClass": "passive",
+          "unlockStarRank": 2,
+          "minimumDragonLevel": null,
+          "positionRequirement": null,
+          "verification": {
+            "status": "screenshot-verified",
+            "source": "Velar Strategic Leader screenshot",
+            "capturedAt": "2026-07-03",
+            "gameVersion": null,
+            "reviewedManually": true
+          },
+          "evidenceIds": [
+            "velar-strategic-leader-2026-07-03"
+          ],
+          "tags": [
+            "TACTICAL_DAMAGE",
+            "BUFF_ALLIES",
+            "ANY_LANE_TARGET"
+          ],
+          "rawDescription": "Start of Combat: Increase Tactical Damage Dealt by +10% of 1 Ally in any lane, prioritizing the Vanguard, until the end of combat.\n\nProgression: Habit Level 1: +10%; Habit Level 2: +12%; Habit Level 3: +14%; Habit Level 4: +17%; Habit Level 5: +20%."
+        },
+        {
+          "id": "velar-quick-reflexes",
+          "kind": "habit",
+          "name": "Quick Reflexes",
+          "abilityClass": "passive",
+          "unlockStarRank": 4,
+          "minimumDragonLevel": null,
+          "positionRequirement": null,
+          "verification": {
+            "status": "screenshot-verified",
+            "source": "Velar Quick Reflexes screenshot",
+            "capturedAt": "2026-07-03",
+            "gameVersion": null,
+            "reviewedManually": true
+          },
+          "evidenceIds": [
+            "velar-quick-reflexes-2026-07-03"
+          ],
+          "tags": [
+            "INSTINCT_UP",
+            "BUFF_INITIATIVE",
+            "BUFF_SELF"
+          ],
+          "rawDescription": "Start of Combat: Increase your Instinct and Initiative by +16% until the end of combat.\n\nProgression: Habit Level 1: +16%; Habit Level 2: +19.2%; Habit Level 3: +22.4%; Habit Level 4: +27.2%; Habit Level 5: +32%."
+        },
+        {
+          "id": "velar-gales-of-power",
+          "kind": "habit",
+          "name": "Gales of Power",
+          "abilityClass": "passive",
+          "unlockStarRank": 6,
+          "minimumDragonLevel": null,
+          "positionRequirement": null,
+          "verification": {
+            "status": "screenshot-verified",
+            "source": "Velar Gales of Power screenshot",
+            "capturedAt": "2026-07-03",
+            "gameVersion": null,
+            "reviewedManually": true
+          },
+          "evidenceIds": [
+            "velar-gales-of-power-2026-07-03"
+          ],
+          "tags": [
+            "FIRST_STRIKE",
+            "SLOW",
+            "ANY_LANE_TARGET",
+            "BUFF_ALLIES"
+          ],
+          "rawDescription": "Rounds 2, 4, 6, 8: 12% chance to grant First-Strike to 3 Allies in any lane and afflict Slow on 3 Enemies in any lane. Each effect is checked separately per target and lasts for 2 round(s).\n\nFirst-Strike causes the target to attack before all other combatants each round.\n\nSlow causes the target to attack after all other combatants each round.\n\nProgression: Habit Level 1: First-Strike chance 12%; Slow chance 12%; Habit Level 2: 14.4%; 14.4%; Habit Level 3: 16.8%; 16.8%; Habit Level 4: 20.4%; 20.4%; Habit Level 5: 24%; 24%."
+        },
+        {
+          "id": "velar-fierce-unity",
+          "kind": "habit",
+          "name": "Fierce Unity",
+          "abilityClass": "passive",
+          "unlockStarRank": 8,
+          "minimumDragonLevel": null,
+          "positionRequirement": null,
+          "verification": {
+            "status": "screenshot-verified",
+            "source": "Velar Fierce Unity screenshot",
+            "capturedAt": "2026-07-03",
+            "gameVersion": null,
+            "reviewedManually": true
+          },
+          "evidenceIds": [
+            "velar-fierce-unity-2026-07-03"
+          ],
+          "tags": [
+            "STRENGTH_UP",
+            "INSTINCT_UP",
+            "INITIATIVE_SCALING",
+            "BUFF_ALLIES",
+            "ANY_LANE_TARGET"
+          ],
+          "rawDescription": "Start of Combat: Increase Strength and Instinct by +5% (enhanced by Initiative) of 3 Allies in any lane until the end of combat.\n\nProgression: Habit Level 1: +5%; Habit Level 2: +6%; Habit Level 3: +7%; Habit Level 4: +8.5%; Habit Level 5: +10%."
+        },
+        {
+          "id": "velar-breath-of-renewal",
+          "kind": "habit",
+          "name": "Breath of Renewal",
+          "abilityClass": "passive",
+          "unlockStarRank": 10,
+          "minimumDragonLevel": null,
+          "positionRequirement": null,
+          "verification": {
+            "status": "screenshot-verified",
+            "source": "Velar Breath of Renewal screenshot",
+            "capturedAt": "2026-07-03",
+            "gameVersion": null,
+            "reviewedManually": true
+          },
+          "evidenceIds": [
+            "velar-breath-of-renewal-2026-07-03"
+          ],
+          "tags": [
+            "COMMAND_AUGMENTATION",
+            "CLEANSE_NEGATIVE",
+            "RECOVERY",
+            "INITIATIVE_SCALING",
+            "ANY_LANE_TARGET"
+          ],
+          "rawDescription": "Whirlwind gains:\n\nEach Round: 12% chance to Cleanse 1 instance of Bleed, Panic, or Burn from each Ally. This chance is checked separately per target.\n\nRounds 2, 4, 6, 8: Apply Recovery to 3 Allies in any lane (Recovery Rate: +18%, enhanced by Initiative).\n\nProgression: Habit Level 1: Cleanse chance 12%; Recovery Rate 18%; Habit Level 2: 16%; 23.4%; Habit Level 3: 19%; 28.8%; Habit Level 4: 24%; 36%; Habit Level 5: 30%; 45%."
+        }
+      ],
       "affinities": {
         "Cavalry": "unknown",
-        "Shieldbearers": "unknown",
+        "Shieldbearers": "positive",
         "Archers": "unknown",
         "Spearmen": "unknown",
         "Siege": "unknown"
       },
       "verification": {
         "identity": {
-          "status": "officially-confirmed",
-          "source": "Official public roster page",
-          "capturedAt": "2026-06-23",
+          "status": "screenshot-verified",
+          "source": "Velar main screen screenshot",
+          "capturedAt": "2026-07-03",
           "gameVersion": null,
           "reviewedManually": true
         },
@@ -3458,11 +3866,47 @@
           "capturedAt": "2026-06-23",
           "gameVersion": null,
           "reviewedManually": true
+        },
+        "command": {
+          "status": "screenshot-verified",
+          "source": "Velar Whirlwind summary screenshots",
+          "capturedAt": "2026-07-03",
+          "gameVersion": null,
+          "reviewedManually": true
+        },
+        "trait": {
+          "status": "screenshot-verified",
+          "source": "Velar Sentinel's Wit screenshot",
+          "capturedAt": "2026-07-03",
+          "gameVersion": null,
+          "reviewedManually": true
+        },
+        "habits": {
+          "status": "screenshot-verified",
+          "source": "Velar Habit screenshots",
+          "capturedAt": "2026-07-03",
+          "gameVersion": null,
+          "reviewedManually": true
+        },
+        "affinities": {
+          "status": "screenshot-verified",
+          "source": "Velar main screen screenshot",
+          "capturedAt": "2026-07-03",
+          "gameVersion": null,
+          "reviewedManually": true
         }
       },
-      "evidenceIds": [],
-      "simpleProfileId": null,
-      "simpleProfileStatus": "metadata-only-unmapped"
+      "evidenceIds": [
+        "velar-breath-of-renewal-2026-07-03",
+        "velar-fierce-unity-2026-07-03",
+        "velar-gales-of-power-2026-07-03",
+        "velar-quick-reflexes-2026-07-03",
+        "velar-sentinels-wit-2026-07-03",
+        "velar-strategic-leader-2026-07-03",
+        "velar-whirlwind-summary-2026-07-03"
+      ],
+      "simpleProfileId": "velar",
+      "simpleProfileStatus": "curated"
     },
     {
       "id": "zivern",
@@ -3471,23 +3915,209 @@
       "rarity": "Epic",
       "breed": "Sentinel",
       "rosterSourceStatus": "official-website",
-      "dataStatus": "official-metadata-only",
-      "lastVerified": "2026-06-23",
-      "profileCompleteness": "metadata-only",
+      "dataStatus": "community-verified",
+      "lastVerified": "2026-07-03",
+      "profileCompleteness": "detailed-abilities",
       "officialProfileUrl": "https://gotdragonfire.com/dragons/zivern/",
-      "abilities": [],
+      "abilities": [
+        {
+          "id": "zivern-silent-shade",
+          "kind": "command",
+          "name": "Silent Shade",
+          "abilityClass": "active",
+          "unlockStarRank": null,
+          "minimumDragonLevel": null,
+          "positionRequirement": null,
+          "verification": {
+            "status": "screenshot-verified",
+            "source": "Zivern Silent Shade summary screenshots",
+            "capturedAt": "2026-07-03",
+            "gameVersion": null,
+            "reviewedManually": true
+          },
+          "evidenceIds": [
+            "zivern-silent-shade-summary-2026-07-03"
+          ],
+          "tags": [
+            "TACTICAL_DAMAGE",
+            "TACTICAL_DAMAGE_RECEIVED_UP",
+            "SAME_LANE_TARGET",
+            "ADJACENT_TARGET",
+            "ENHANCED_BY_INSTINCT"
+          ],
+          "rawDescription": "Rounds 1, 4, 6, 9: 40% chance to increase the Tactical Damage Received of 1 Enemy in the same lane by +15% for 2 round(s).\n\nRounds 1, 4, 6, 9: Deal Tactical Damage to 2 Enemies within adjacency (Damage Rate: +75%)."
+        },
+        {
+          "id": "zivern-sentinels-wit",
+          "kind": "trait",
+          "name": "Sentinel's Wit",
+          "abilityClass": "passive",
+          "unlockStarRank": 1,
+          "minimumDragonLevel": 16,
+          "positionRequirement": "vanguard",
+          "verification": {
+            "status": "screenshot-verified",
+            "source": "Zivern Sentinel's Wit screenshot",
+            "capturedAt": "2026-07-03",
+            "gameVersion": null,
+            "reviewedManually": true
+          },
+          "evidenceIds": [
+            "zivern-sentinels-wit-2026-07-03"
+          ],
+          "tags": [
+            "TACTICAL_DAMAGE",
+            "INSTINCT_UP",
+            "BUFF_INITIATIVE",
+            "VANGUARD_REQUIRED",
+            "LEFT_FLANK_TARGET"
+          ],
+          "rawDescription": "At Level 16+ and deployed in the Vanguard, increase your Tactical Damage Dealt by +16%. Increase Instinct and Initiative by +20 of the Ally deployed in the Left Flank."
+        },
+        {
+          "id": "zivern-battle-mastery",
+          "kind": "habit",
+          "name": "Battle Mastery",
+          "abilityClass": "passive",
+          "unlockStarRank": 2,
+          "minimumDragonLevel": null,
+          "positionRequirement": null,
+          "verification": {
+            "status": "screenshot-verified",
+            "source": "Zivern Battle Mastery screenshot",
+            "capturedAt": "2026-07-03",
+            "gameVersion": null,
+            "reviewedManually": true
+          },
+          "evidenceIds": [
+            "zivern-battle-mastery-2026-07-03"
+          ],
+          "tags": [
+            "DEBUFF_STRENGTH",
+            "DEBUFF_INSTINCTS",
+            "INTELLIGENCE_SCALING",
+            "ENEMY_DEBUFF"
+          ],
+          "rawDescription": "Start of Combat: Reduce the Strength and Instinct (enhanced by Intelligence) of 3 Enemies by -5% until the end of combat.\n\nProgression: Habit Level 1: -5%; Habit Level 2: -6%; Habit Level 3: -7%; Habit Level 4: -8.85%; Habit Level 5: -10.5%."
+        },
+        {
+          "id": "zivern-keen-instinct",
+          "kind": "habit",
+          "name": "Keen Instinct",
+          "abilityClass": "passive",
+          "unlockStarRank": 4,
+          "minimumDragonLevel": null,
+          "positionRequirement": null,
+          "verification": {
+            "status": "screenshot-verified",
+            "source": "Zivern Keen Instinct screenshot",
+            "capturedAt": "2026-07-03",
+            "gameVersion": null,
+            "reviewedManually": true
+          },
+          "evidenceIds": [
+            "zivern-keen-instinct-2026-07-03"
+          ],
+          "tags": [
+            "INTELLIGENCE_UP",
+            "INSTINCT_UP",
+            "BUFF_SELF"
+          ],
+          "rawDescription": "Start of Combat: Increase your Intelligence and Instinct by +16% until the end of combat.\n\nProgression: Habit Level 1: +16%; Habit Level 2: +19.2%; Habit Level 3: +22.4%; Habit Level 4: +27.2%; Habit Level 5: +32%."
+        },
+        {
+          "id": "zivern-fearsome-reach",
+          "kind": "habit",
+          "name": "Fearsome Reach",
+          "abilityClass": "passive",
+          "unlockStarRank": 6,
+          "minimumDragonLevel": null,
+          "positionRequirement": null,
+          "verification": {
+            "status": "screenshot-verified",
+            "source": "Zivern Fearsome Reach screenshot",
+            "capturedAt": "2026-07-03",
+            "gameVersion": null,
+            "reviewedManually": true
+          },
+          "evidenceIds": [
+            "zivern-fearsome-reach-2026-07-03"
+          ],
+          "tags": [
+            "DEBUFF_INSTINCTS",
+            "INTELLIGENCE_SCALING",
+            "PANIC",
+            "TACTICAL_DAMAGE",
+            "ANY_LANE_TARGET"
+          ],
+          "rawDescription": "Odd-numbered Rounds: 30% chance to reduce the Instinct (enhanced by Intelligence) by -15% and afflict Panic (Damage Rate: +20%) on 3 Enemies in any lane for 2 round(s).\n\nPanic deals Tactical Damage to the target each round.\n\nProgression: Habit Level 1: Fearsome Reach chance 30%; Habit Level 2: 36%; Habit Level 3: 42%; Habit Level 4: 51%; Habit Level 5: 60%."
+        },
+        {
+          "id": "zivern-steel-shroud",
+          "kind": "habit",
+          "name": "Steel Shroud",
+          "abilityClass": "passive",
+          "unlockStarRank": 8,
+          "minimumDragonLevel": null,
+          "positionRequirement": null,
+          "verification": {
+            "status": "screenshot-verified",
+            "source": "Zivern Steel Shroud screenshot",
+            "capturedAt": "2026-07-03",
+            "gameVersion": null,
+            "reviewedManually": true
+          },
+          "evidenceIds": [
+            "zivern-steel-shroud-2026-07-03"
+          ],
+          "tags": [
+            "DAMAGE_RECEIVED_DOWN",
+            "TACTICAL_DAMAGE_RECEIVED_DOWN",
+            "EXCLUDES_BASIC_ATTACKS",
+            "OTHER_ALLIES_TARGET",
+            "ANY_LANE_TARGET"
+          ],
+          "rawDescription": "Start of Combat: Reduce Physical Damage Received, excluding Basic Attacks, and Tactical Damage Received by -3% of 2 other Allies in any lane until the end of combat.\n\nProgression: Habit Level 1: -3.5%; Habit Level 2: -4.2%; Habit Level 3: -4.9%; Habit Level 4: -5.95%; Habit Level 5: -7%."
+        },
+        {
+          "id": "zivern-cloak-of-terror",
+          "kind": "habit",
+          "name": "Cloak of Terror",
+          "abilityClass": "passive",
+          "unlockStarRank": 10,
+          "minimumDragonLevel": null,
+          "positionRequirement": null,
+          "verification": {
+            "status": "screenshot-verified",
+            "source": "Zivern Cloak of Terror screenshot",
+            "capturedAt": "2026-07-03",
+            "gameVersion": null,
+            "reviewedManually": true
+          },
+          "evidenceIds": [
+            "zivern-cloak-of-terror-2026-07-03"
+          ],
+          "tags": [
+            "OVERWHELM",
+            "CONTROL",
+            "VULNERABLE",
+            "ADJACENT_TARGET"
+          ],
+          "rawDescription": "Odd-numbered Rounds: 10% chance to afflict Overwhelm on 2 Enemies within adjacency for 2 round(s). This chance is doubled (20%) if the target is afflicted with Vulnerable.\n\nOverwhelm prevents the target from using Active Commands and Habits on their turn.\n\nProgression: Habit Level 1: Overwhelm chance 10%; Habit Level 2: 13%; Habit Level 3: 16%; Habit Level 4: 20%; Habit Level 5: 25%."
+        }
+      ],
       "affinities": {
         "Cavalry": "unknown",
         "Shieldbearers": "unknown",
-        "Archers": "unknown",
+        "Archers": "positive",
         "Spearmen": "unknown",
-        "Siege": "unknown"
+        "Siege": "positive"
       },
       "verification": {
         "identity": {
-          "status": "officially-confirmed",
-          "source": "Official public roster page",
-          "capturedAt": "2026-06-23",
+          "status": "screenshot-verified",
+          "source": "Zivern main screen screenshot",
+          "capturedAt": "2026-07-03",
           "gameVersion": null,
           "reviewedManually": true
         },
@@ -3504,11 +4134,47 @@
           "capturedAt": "2026-06-23",
           "gameVersion": null,
           "reviewedManually": true
+        },
+        "command": {
+          "status": "screenshot-verified",
+          "source": "Zivern Silent Shade summary screenshots",
+          "capturedAt": "2026-07-03",
+          "gameVersion": null,
+          "reviewedManually": true
+        },
+        "trait": {
+          "status": "screenshot-verified",
+          "source": "Zivern Sentinel's Wit screenshot",
+          "capturedAt": "2026-07-03",
+          "gameVersion": null,
+          "reviewedManually": true
+        },
+        "habits": {
+          "status": "screenshot-verified",
+          "source": "Zivern Habit screenshots",
+          "capturedAt": "2026-07-03",
+          "gameVersion": null,
+          "reviewedManually": true
+        },
+        "affinities": {
+          "status": "screenshot-verified",
+          "source": "Zivern main screen screenshot",
+          "capturedAt": "2026-07-03",
+          "gameVersion": null,
+          "reviewedManually": true
         }
       },
-      "evidenceIds": [],
-      "simpleProfileId": null,
-      "simpleProfileStatus": "metadata-only-unmapped"
+      "evidenceIds": [
+        "zivern-battle-mastery-2026-07-03",
+        "zivern-cloak-of-terror-2026-07-03",
+        "zivern-fearsome-reach-2026-07-03",
+        "zivern-keen-instinct-2026-07-03",
+        "zivern-sentinels-wit-2026-07-03",
+        "zivern-silent-shade-summary-2026-07-03",
+        "zivern-steel-shroud-2026-07-03"
+      ],
+      "simpleProfileId": "zivern",
+      "simpleProfileStatus": "curated"
     },
     {
       "id": "antares",
@@ -4519,6 +5185,7 @@
       "status:stagger",
       "status:overwhelm",
       "status:confusion",
+      "status:vulnerable",
       "damage:physical",
       "damage:tactical",
       "damage:fire",
@@ -5700,6 +6367,18 @@
             },
             "friendlyScope": "formation",
             "confidence": "verified"
+          },
+          {
+            "id": "shadowsong-scorched-earth-vulnerable-status",
+            "tag": "status:vulnerable",
+            "abilityId": "shadowsong-scorched-earth",
+            "abilityName": "Scorched Earth",
+            "description": "applies Vulnerable",
+            "unlock": {
+              "minimumStarRank": 6
+            },
+            "friendlyScope": "formation",
+            "confidence": "verified"
           }
         ],
         "supports": [
@@ -6030,22 +6709,386 @@
             "confidence": "verified"
           }
         ]
+      },
+      {
+        "dragonId": "tashix",
+        "dragonName": "Tashix",
+        "outputs": [
+          {
+            "id": "tashix-shimmering-mirage-fire",
+            "tag": "damage:fire",
+            "tags": [
+              "damage:fire",
+              "stat:intelligence"
+            ],
+            "abilityId": "tashix-shimmering-mirage",
+            "abilityName": "Shimmering Mirage",
+            "description": "deals Fire Damage using Intelligence",
+            "confidence": "verified"
+          }
+        ],
+        "supports": [
+          {
+            "id": "tashix-hunters-cunning-right-physical",
+            "tag": "damage:physical",
+            "abilityId": "tashix-hunters-cunning",
+            "abilityName": "Hunter's Cunning",
+            "description": "improves Physical Damage of the Right Flank ally",
+            "unlock": {
+              "minimumDragonLevel": 16
+            },
+            "requiredSelfPosition": "vanguard",
+            "requiredRecipientPosition": "right-flank",
+            "friendlyScope": "formation",
+            "confidence": "verified"
+          },
+          {
+            "id": "tashix-dragons-cunning-physical",
+            "tag": "damage:physical",
+            "abilityId": "tashix-dragons-cunning",
+            "abilityName": "Dragon's Cunning",
+            "description": "reduces enemy Instinct to support allied Physical Damage",
+            "unlock": {
+              "minimumStarRank": 4
+            },
+            "friendlyScope": "formation",
+            "confidence": "verified"
+          },
+          {
+            "id": "tashix-battle-guile-fire",
+            "tag": "damage:fire",
+            "abilityId": "tashix-battle-guile",
+            "abilityName": "Battle Guile",
+            "description": "reduces enemy Initiative to support allied Fire Damage",
+            "unlock": {
+              "minimumStarRank": 8
+            },
+            "friendlyScope": "formation",
+            "confidence": "verified"
+          }
+        ],
+        "benefitsFrom": [
+          {
+            "id": "tashix-hunters-cunning-recovery-payoff",
+            "tag": "effect:recovery",
+            "abilityId": "tashix-hunters-cunning",
+            "abilityName": "Hunter's Cunning",
+            "description": "Hunter's Cunning improves incoming Recovery",
+            "unlock": {
+              "minimumDragonLevel": 16
+            },
+            "requiredSelfPosition": "vanguard",
+            "friendlyScope": "formation",
+            "confidence": "verified"
+          },
+          {
+            "id": "tashix-dragons-cunning-initiative-payoff",
+            "tag": "stat:initiative",
+            "abilityId": "tashix-dragons-cunning",
+            "abilityName": "Dragon's Cunning",
+            "description": "Initiative improves Dragon's Cunning and Battle Guile",
+            "unlock": {
+              "minimumStarRank": 4
+            },
+            "friendlyScope": "formation",
+            "confidence": "verified"
+          }
+        ],
+        "positionClaims": [
+          {
+            "id": "tashix-hunters-cunning-vanguard",
+            "abilityId": "tashix-hunters-cunning",
+            "abilityName": "Hunter's Cunning",
+            "requiredPosition": "vanguard",
+            "unlock": {
+              "minimumDragonLevel": 16
+            },
+            "description": "Hunter's Cunning requires Vanguard",
+            "confidence": "verified"
+          }
+        ]
+      },
+      {
+        "dragonId": "velar",
+        "dragonName": "Velar",
+        "outputs": [
+          {
+            "id": "velar-whirlwind-tactical",
+            "tag": "damage:tactical",
+            "tags": [
+              "damage:tactical",
+              "stat:instinct"
+            ],
+            "abilityId": "velar-whirlwind",
+            "abilityName": "Whirlwind",
+            "description": "deals Tactical Damage using Instinct",
+            "confidence": "verified"
+          },
+          {
+            "id": "velar-gales-of-power-first-strike",
+            "tag": "status:first-strike",
+            "abilityId": "velar-gales-of-power",
+            "abilityName": "Gales of Power",
+            "description": "grants First-Strike to teammates",
+            "unlock": {
+              "minimumStarRank": 6
+            },
+            "friendlyScope": "formation",
+            "confidence": "verified"
+          },
+          {
+            "id": "velar-gales-of-power-slow",
+            "tag": "status:slow",
+            "abilityId": "velar-gales-of-power",
+            "abilityName": "Gales of Power",
+            "description": "applies Slow",
+            "unlock": {
+              "minimumStarRank": 6
+            },
+            "friendlyScope": "formation",
+            "confidence": "verified"
+          },
+          {
+            "id": "velar-breath-of-renewal-recovery",
+            "tag": "effect:recovery",
+            "tags": [
+              "effect:recovery",
+              "stat:initiative"
+            ],
+            "abilityId": "velar-breath-of-renewal",
+            "abilityName": "Breath of Renewal",
+            "description": "provides Recovery enhanced by Initiative",
+            "unlock": {
+              "minimumStarRank": 10
+            },
+            "friendlyScope": "formation",
+            "confidence": "verified"
+          }
+        ],
+        "supports": [
+          {
+            "id": "velar-whirlwind-advantage-damage",
+            "tag": "damage:physical",
+            "tags": [
+              "damage:physical",
+              "damage:tactical",
+              "damage:fire"
+            ],
+            "abilityId": "velar-whirlwind",
+            "abilityName": "Whirlwind",
+            "description": "grants Advantage as generic Damage Dealt support",
+            "friendlyScope": "formation",
+            "confidence": "verified"
+          },
+          {
+            "id": "velar-strategic-leader-tactical",
+            "tag": "damage:tactical",
+            "abilityId": "velar-strategic-leader",
+            "abilityName": "Strategic Leader",
+            "description": "improves allied Tactical Damage",
+            "unlock": {
+              "minimumStarRank": 2
+            },
+            "friendlyScope": "formation",
+            "confidence": "verified"
+          },
+          {
+            "id": "velar-fierce-unity-stats",
+            "tag": "stat:strength",
+            "tags": [
+              "stat:strength",
+              "stat:instinct"
+            ],
+            "abilityId": "velar-fierce-unity",
+            "abilityName": "Fierce Unity",
+            "description": "improves allied Strength and Instinct",
+            "unlock": {
+              "minimumStarRank": 8
+            },
+            "friendlyScope": "formation",
+            "confidence": "verified"
+          },
+          {
+            "id": "velar-sentinels-wit-left-stats",
+            "tag": "stat:instinct",
+            "tags": [
+              "stat:instinct",
+              "stat:initiative"
+            ],
+            "abilityId": "velar-sentinels-wit",
+            "abilityName": "Sentinel's Wit",
+            "description": "improves Instinct and Initiative of the Left Flank ally",
+            "unlock": {
+              "minimumDragonLevel": 16
+            },
+            "requiredSelfPosition": "vanguard",
+            "requiredRecipientPosition": "left-flank",
+            "friendlyScope": "formation",
+            "confidence": "verified"
+          }
+        ],
+        "benefitsFrom": [
+          {
+            "id": "velar-fierce-unity-initiative-payoff",
+            "tag": "stat:initiative",
+            "abilityId": "velar-fierce-unity",
+            "abilityName": "Fierce Unity",
+            "description": "Initiative improves Fierce Unity and Breath of Renewal",
+            "unlock": {
+              "minimumStarRank": 8
+            },
+            "friendlyScope": "formation",
+            "confidence": "verified"
+          }
+        ],
+        "positionClaims": [
+          {
+            "id": "velar-sentinels-wit-vanguard",
+            "abilityId": "velar-sentinels-wit",
+            "abilityName": "Sentinel's Wit",
+            "requiredPosition": "vanguard",
+            "unlock": {
+              "minimumDragonLevel": 16
+            },
+            "description": "Sentinel's Wit requires Vanguard",
+            "confidence": "verified"
+          }
+        ]
+      },
+      {
+        "dragonId": "zivern",
+        "dragonName": "Zivern",
+        "outputs": [
+          {
+            "id": "zivern-silent-shade-tactical",
+            "tag": "damage:tactical",
+            "tags": [
+              "damage:tactical",
+              "stat:instinct"
+            ],
+            "abilityId": "zivern-silent-shade",
+            "abilityName": "Silent Shade",
+            "description": "deals Tactical Damage using Instinct",
+            "confidence": "verified"
+          },
+          {
+            "id": "zivern-fearsome-reach-panic",
+            "tag": "status:panic",
+            "abilityId": "zivern-fearsome-reach",
+            "abilityName": "Fearsome Reach",
+            "description": "applies Panic",
+            "unlock": {
+              "minimumStarRank": 6
+            },
+            "friendlyScope": "formation",
+            "confidence": "verified"
+          },
+          {
+            "id": "zivern-cloak-of-terror-overwhelm",
+            "tag": "status:overwhelm",
+            "abilityId": "zivern-cloak-of-terror",
+            "abilityName": "Cloak of Terror",
+            "description": "applies Overwhelm as Control",
+            "unlock": {
+              "minimumStarRank": 10
+            },
+            "friendlyScope": "formation",
+            "confidence": "verified"
+          }
+        ],
+        "supports": [
+          {
+            "id": "zivern-silent-shade-tactical-vulnerability",
+            "tag": "damage:tactical",
+            "abilityId": "zivern-silent-shade",
+            "abilityName": "Silent Shade",
+            "description": "increases enemy Tactical Damage Received",
+            "friendlyScope": "formation",
+            "confidence": "verified"
+          },
+          {
+            "id": "zivern-battle-mastery-physical",
+            "tag": "damage:physical",
+            "abilityId": "zivern-battle-mastery",
+            "abilityName": "Battle Mastery",
+            "description": "reduces enemy Instinct to support allied Physical Damage",
+            "unlock": {
+              "minimumStarRank": 2
+            },
+            "friendlyScope": "formation",
+            "confidence": "verified"
+          },
+          {
+            "id": "zivern-sentinels-wit-left-stats",
+            "tag": "stat:instinct",
+            "tags": [
+              "stat:instinct",
+              "stat:initiative"
+            ],
+            "abilityId": "zivern-sentinels-wit",
+            "abilityName": "Sentinel's Wit",
+            "description": "improves Instinct and Initiative of the Left Flank ally",
+            "unlock": {
+              "minimumDragonLevel": 16
+            },
+            "requiredSelfPosition": "vanguard",
+            "requiredRecipientPosition": "left-flank",
+            "friendlyScope": "formation",
+            "confidence": "verified"
+          }
+        ],
+        "benefitsFrom": [
+          {
+            "id": "zivern-battle-mastery-intelligence-payoff",
+            "tag": "stat:intelligence",
+            "abilityId": "zivern-battle-mastery",
+            "abilityName": "Battle Mastery",
+            "description": "Intelligence improves Battle Mastery and Fearsome Reach",
+            "unlock": {
+              "minimumStarRank": 2
+            },
+            "friendlyScope": "formation",
+            "confidence": "verified"
+          },
+          {
+            "id": "zivern-cloak-of-terror-vulnerable-payoff",
+            "tag": "status:vulnerable",
+            "abilityId": "zivern-cloak-of-terror",
+            "abilityName": "Cloak of Terror",
+            "description": "Vulnerable improves Cloak of Terror's Overwhelm application",
+            "unlock": {
+              "minimumStarRank": 10
+            },
+            "friendlyScope": "formation",
+            "confidence": "verified"
+          }
+        ],
+        "positionClaims": [
+          {
+            "id": "zivern-sentinels-wit-vanguard",
+            "abilityId": "zivern-sentinels-wit",
+            "abilityName": "Sentinel's Wit",
+            "requiredPosition": "vanguard",
+            "unlock": {
+              "minimumDragonLevel": 16
+            },
+            "description": "Sentinel's Wit requires Vanguard",
+            "confidence": "verified"
+          }
+        ]
       }
     ],
     "profileAudit": {
-      "reviewedAbilityCount": 105,
+      "reviewedAbilityCount": 126,
       "dispositionCounts": {
-        "represented": 69,
-        "general-support-only": 5,
-        "self-only": 20,
+        "represented": 84,
+        "general-support-only": 8,
+        "self-only": 22,
         "no-cross-dragon-synergy": 9,
-        "reinforces-existing": 2
+        "reinforces-existing": 3
       },
       "metadataOnlyDragonIds": [
         "solstryker",
-        "tashix",
-        "velar",
-        "zivern",
         "antares",
         "shimmer",
         "jagadrix",
@@ -6994,9 +8037,10 @@
             "kind": "represented",
             "signalIds": [
               "shadowsong-scorched-earth-vulnerable",
+              "shadowsong-scorched-earth-vulnerable-status",
               "shadowsong-panic-payoff"
             ],
-            "rationale": "The habit provides generic vulnerability and also benefits from Panic without a duplicate visible Panic relationship."
+            "rationale": "The habit provides generic Damage Received vulnerability, emits Vulnerable setup for Zivern, and also benefits from Panic without a duplicate visible Panic relationship."
           }
         },
         {
@@ -7250,6 +8294,254 @@
             "kind": "self-only",
             "rationale": "The Weakened payoff is explicitly self-owned and cannot be enabled by a teammate."
           }
+        },
+        {
+          "dragonId": "tashix",
+          "abilityId": "tashix-shimmering-mirage",
+          "abilityKind": "command",
+          "disposition": {
+            "kind": "represented",
+            "signalIds": [
+              "tashix-shimmering-mirage-fire"
+            ],
+            "rationale": "Shimmering Mirage establishes Tashix as an Intelligence-based Fire Damage output; Mirage stacks remain self-owned raw wording."
+          }
+        },
+        {
+          "dragonId": "tashix",
+          "abilityId": "tashix-hunters-cunning",
+          "abilityKind": "trait",
+          "disposition": {
+            "kind": "represented",
+            "signalIds": [
+              "tashix-hunters-cunning-right-physical",
+              "tashix-hunters-cunning-recovery-payoff",
+              "tashix-hunters-cunning-vanguard"
+            ],
+            "rationale": "The Vanguard trait gives hard Right Flank Physical support, improves Tashix incoming Recovery, and creates an exclusive Vanguard claim."
+          }
+        },
+        {
+          "dragonId": "tashix",
+          "abilityId": "tashix-enervate",
+          "abilityKind": "habit",
+          "disposition": {
+            "kind": "general-support-only",
+            "rationale": "Enemy Tactical Damage reduction is useful prevention but has no current explicit teammate payoff."
+          }
+        },
+        {
+          "dragonId": "tashix",
+          "abilityId": "tashix-dragons-cunning",
+          "abilityKind": "habit",
+          "disposition": {
+            "kind": "represented",
+            "signalIds": [
+              "tashix-dragons-cunning-physical",
+              "tashix-dragons-cunning-initiative-payoff"
+            ],
+            "rationale": "Enemy Instinct reduction supports allied Physical Damage, and the Initiative scaling creates an Initiative-support payoff for Tashix."
+          }
+        },
+        {
+          "dragonId": "tashix",
+          "abilityId": "tashix-cunning-ruse",
+          "abilityKind": "habit",
+          "disposition": {
+            "kind": "general-support-only",
+            "rationale": "Mirage is self-owned and Weakened has no current explicit teammate payoff in the simple profile set."
+          }
+        },
+        {
+          "dragonId": "tashix",
+          "abilityId": "tashix-battle-guile",
+          "abilityKind": "habit",
+          "disposition": {
+            "kind": "represented",
+            "signalIds": [
+              "tashix-battle-guile-fire"
+            ],
+            "rationale": "Enemy Initiative reduction supports allied Fire Damage because Initiative reduces Fire Damage Received."
+          }
+        },
+        {
+          "dragonId": "tashix",
+          "abilityId": "tashix-veiled-ambush",
+          "abilityKind": "habit",
+          "disposition": {
+            "kind": "reinforces-existing",
+            "signalIds": [
+              "tashix-shimmering-mirage-fire"
+            ],
+            "rationale": "The later Mirage payoff reinforces Tashix as a Fire Damage output without creating a duplicate visible Fire relationship."
+          }
+        },
+        {
+          "dragonId": "velar",
+          "abilityId": "velar-whirlwind",
+          "abilityKind": "command",
+          "disposition": {
+            "kind": "represented",
+            "signalIds": [
+              "velar-whirlwind-tactical",
+              "velar-whirlwind-advantage-damage"
+            ],
+            "rationale": "Whirlwind deals Instinct-based Tactical Damage and represents Advantage through the current generic damage-channel support pattern; Cleanse is general support only."
+          }
+        },
+        {
+          "dragonId": "velar",
+          "abilityId": "velar-sentinels-wit",
+          "abilityKind": "trait",
+          "disposition": {
+            "kind": "represented",
+            "signalIds": [
+              "velar-sentinels-wit-left-stats",
+              "velar-sentinels-wit-vanguard"
+            ],
+            "rationale": "The Vanguard trait gives hard Left Flank Instinct and Initiative support and creates an exclusive Vanguard claim."
+          }
+        },
+        {
+          "dragonId": "velar",
+          "abilityId": "velar-strategic-leader",
+          "abilityKind": "habit",
+          "disposition": {
+            "kind": "represented",
+            "signalIds": [
+              "velar-strategic-leader-tactical"
+            ],
+            "rationale": "The habit improves allied Tactical Damage; Vanguard is only a targeting preference with fallback."
+          }
+        },
+        {
+          "dragonId": "velar",
+          "abilityId": "velar-quick-reflexes",
+          "abilityKind": "habit",
+          "disposition": {
+            "kind": "self-only",
+            "rationale": "The Instinct and Initiative increases apply only to Velar."
+          }
+        },
+        {
+          "dragonId": "velar",
+          "abilityId": "velar-gales-of-power",
+          "abilityKind": "habit",
+          "disposition": {
+            "kind": "represented",
+            "signalIds": [
+              "velar-gales-of-power-first-strike",
+              "velar-gales-of-power-slow"
+            ],
+            "rationale": "The habit grants First-Strike setup and applies Slow setup."
+          }
+        },
+        {
+          "dragonId": "velar",
+          "abilityId": "velar-fierce-unity",
+          "abilityKind": "habit",
+          "disposition": {
+            "kind": "represented",
+            "signalIds": [
+              "velar-fierce-unity-stats",
+              "velar-fierce-unity-initiative-payoff"
+            ],
+            "rationale": "The habit improves allied Strength and Instinct and creates an Initiative-support payoff through its scaling."
+          }
+        },
+        {
+          "dragonId": "velar",
+          "abilityId": "velar-breath-of-renewal",
+          "abilityKind": "habit",
+          "disposition": {
+            "kind": "represented",
+            "signalIds": [
+              "velar-breath-of-renewal-recovery"
+            ],
+            "rationale": "The augmentation provides Initiative-enhanced Recovery; Cleanse remains general support only."
+          }
+        },
+        {
+          "dragonId": "zivern",
+          "abilityId": "zivern-silent-shade",
+          "abilityKind": "command",
+          "disposition": {
+            "kind": "represented",
+            "signalIds": [
+              "zivern-silent-shade-tactical",
+              "zivern-silent-shade-tactical-vulnerability"
+            ],
+            "rationale": "Silent Shade deals Instinct-based Tactical Damage and increases enemy Tactical Damage Received for allied Tactical outputs."
+          }
+        },
+        {
+          "dragonId": "zivern",
+          "abilityId": "zivern-sentinels-wit",
+          "abilityKind": "trait",
+          "disposition": {
+            "kind": "represented",
+            "signalIds": [
+              "zivern-sentinels-wit-left-stats",
+              "zivern-sentinels-wit-vanguard"
+            ],
+            "rationale": "The Vanguard trait gives hard Left Flank Instinct and Initiative support and creates an exclusive Vanguard claim."
+          }
+        },
+        {
+          "dragonId": "zivern",
+          "abilityId": "zivern-battle-mastery",
+          "abilityKind": "habit",
+          "disposition": {
+            "kind": "represented",
+            "signalIds": [
+              "zivern-battle-mastery-physical",
+              "zivern-battle-mastery-intelligence-payoff"
+            ],
+            "rationale": "Enemy Instinct reduction supports allied Physical Damage, and Intelligence scaling creates an Intelligence-support payoff for Zivern."
+          }
+        },
+        {
+          "dragonId": "zivern",
+          "abilityId": "zivern-keen-instinct",
+          "abilityKind": "habit",
+          "disposition": {
+            "kind": "self-only",
+            "rationale": "The Intelligence and Instinct increases apply only to Zivern."
+          }
+        },
+        {
+          "dragonId": "zivern",
+          "abilityId": "zivern-fearsome-reach",
+          "abilityKind": "habit",
+          "disposition": {
+            "kind": "represented",
+            "signalIds": [
+              "zivern-fearsome-reach-panic"
+            ],
+            "rationale": "The habit applies Panic and reinforces Battle Mastery's Physical-support and Intelligence-scaling paths without duplicate signals."
+          }
+        },
+        {
+          "dragonId": "zivern",
+          "abilityId": "zivern-steel-shroud",
+          "abilityKind": "habit",
+          "disposition": {
+            "kind": "general-support-only",
+            "rationale": "The allied defensive support remains visible as raw ability text but has no current explicit teammate payoff."
+          }
+        },
+        {
+          "dragonId": "zivern",
+          "abilityId": "zivern-cloak-of-terror",
+          "abilityKind": "habit",
+          "disposition": {
+            "kind": "represented",
+            "signalIds": [
+              "zivern-cloak-of-terror-overwhelm",
+              "zivern-cloak-of-terror-vulnerable-payoff"
+            ],
+            "rationale": "The habit applies Overwhelm as Control and explicitly benefits from Vulnerable setup."
+          }
         }
       ]
     }
@@ -7380,6 +8672,12 @@
       "id": "vulnerable",
       "term": "Vulnerable",
       "definition": "Increases Damage Received.",
+      "verification": "verified"
+    },
+    {
+      "id": "mirage",
+      "term": "Mirage",
+      "definition": "Stack status used by Tashix. Each stack increases Tashix Fire Damage Dealt by 2.5%. Maximum 10 stacks.",
       "verification": "verified"
     },
     {
@@ -9201,6 +10499,318 @@
       "verificationStatus": "community-verified"
     },
     {
+      "id": "tashix-main-screen-2026-07-03",
+      "type": "in-game-screenshot",
+      "title": "Tashix main screen",
+      "description": "Descriptive evidence label only. Screenshot files are not committed to the public repository.",
+      "url": null,
+      "capturedAt": "2026-07-03",
+      "language": "English",
+      "gameVersion": null,
+      "submittedBy": "repository owner",
+      "reviewedManually": true,
+      "verificationStatus": "community-verified"
+    },
+    {
+      "id": "tashix-shimmering-mirage-summary-2026-07-03",
+      "type": "in-game-screenshot",
+      "title": "Tashix Shimmering Mirage summary",
+      "description": "Descriptive evidence label only. Screenshot files are not committed to the public repository.",
+      "url": null,
+      "capturedAt": "2026-07-03",
+      "language": "English",
+      "gameVersion": null,
+      "submittedBy": "repository owner",
+      "reviewedManually": true,
+      "verificationStatus": "community-verified"
+    },
+    {
+      "id": "tashix-hunters-cunning-2026-07-03",
+      "type": "in-game-screenshot",
+      "title": "Tashix Hunter's Cunning",
+      "description": "Descriptive evidence label only. Screenshot files are not committed to the public repository.",
+      "url": null,
+      "capturedAt": "2026-07-03",
+      "language": "English",
+      "gameVersion": null,
+      "submittedBy": "repository owner",
+      "reviewedManually": true,
+      "verificationStatus": "community-verified"
+    },
+    {
+      "id": "tashix-enervate-2026-07-03",
+      "type": "in-game-screenshot",
+      "title": "Tashix Enervate",
+      "description": "Descriptive evidence label only. Screenshot files are not committed to the public repository.",
+      "url": null,
+      "capturedAt": "2026-07-03",
+      "language": "English",
+      "gameVersion": null,
+      "submittedBy": "repository owner",
+      "reviewedManually": true,
+      "verificationStatus": "community-verified"
+    },
+    {
+      "id": "tashix-dragons-cunning-2026-07-03",
+      "type": "in-game-screenshot",
+      "title": "Tashix Dragon's Cunning",
+      "description": "Descriptive evidence label only. Screenshot files are not committed to the public repository.",
+      "url": null,
+      "capturedAt": "2026-07-03",
+      "language": "English",
+      "gameVersion": null,
+      "submittedBy": "repository owner",
+      "reviewedManually": true,
+      "verificationStatus": "community-verified"
+    },
+    {
+      "id": "tashix-cunning-ruse-2026-07-03",
+      "type": "in-game-screenshot",
+      "title": "Tashix Cunning Ruse",
+      "description": "Descriptive evidence label only. Screenshot files are not committed to the public repository.",
+      "url": null,
+      "capturedAt": "2026-07-03",
+      "language": "English",
+      "gameVersion": null,
+      "submittedBy": "repository owner",
+      "reviewedManually": true,
+      "verificationStatus": "community-verified"
+    },
+    {
+      "id": "tashix-battle-guile-2026-07-03",
+      "type": "in-game-screenshot",
+      "title": "Tashix Battle Guile",
+      "description": "Descriptive evidence label only. Screenshot files are not committed to the public repository.",
+      "url": null,
+      "capturedAt": "2026-07-03",
+      "language": "English",
+      "gameVersion": null,
+      "submittedBy": "repository owner",
+      "reviewedManually": true,
+      "verificationStatus": "community-verified"
+    },
+    {
+      "id": "tashix-veiled-ambush-2026-07-03",
+      "type": "in-game-screenshot",
+      "title": "Tashix Veiled Ambush",
+      "description": "Descriptive evidence label only. Screenshot files are not committed to the public repository.",
+      "url": null,
+      "capturedAt": "2026-07-03",
+      "language": "English",
+      "gameVersion": null,
+      "submittedBy": "repository owner",
+      "reviewedManually": true,
+      "verificationStatus": "community-verified"
+    },
+    {
+      "id": "velar-main-screen-2026-07-03",
+      "type": "in-game-screenshot",
+      "title": "Velar main screen",
+      "description": "Descriptive evidence label only. Screenshot files are not committed to the public repository.",
+      "url": null,
+      "capturedAt": "2026-07-03",
+      "language": "English",
+      "gameVersion": null,
+      "submittedBy": "repository owner",
+      "reviewedManually": true,
+      "verificationStatus": "community-verified"
+    },
+    {
+      "id": "velar-whirlwind-summary-2026-07-03",
+      "type": "in-game-screenshot",
+      "title": "Velar Whirlwind summary",
+      "description": "Descriptive evidence label only. Screenshot files are not committed to the public repository.",
+      "url": null,
+      "capturedAt": "2026-07-03",
+      "language": "English",
+      "gameVersion": null,
+      "submittedBy": "repository owner",
+      "reviewedManually": true,
+      "verificationStatus": "community-verified"
+    },
+    {
+      "id": "velar-sentinels-wit-2026-07-03",
+      "type": "in-game-screenshot",
+      "title": "Velar Sentinel's Wit",
+      "description": "Descriptive evidence label only. Screenshot files are not committed to the public repository.",
+      "url": null,
+      "capturedAt": "2026-07-03",
+      "language": "English",
+      "gameVersion": null,
+      "submittedBy": "repository owner",
+      "reviewedManually": true,
+      "verificationStatus": "community-verified"
+    },
+    {
+      "id": "velar-strategic-leader-2026-07-03",
+      "type": "in-game-screenshot",
+      "title": "Velar Strategic Leader",
+      "description": "Descriptive evidence label only. Screenshot files are not committed to the public repository.",
+      "url": null,
+      "capturedAt": "2026-07-03",
+      "language": "English",
+      "gameVersion": null,
+      "submittedBy": "repository owner",
+      "reviewedManually": true,
+      "verificationStatus": "community-verified"
+    },
+    {
+      "id": "velar-quick-reflexes-2026-07-03",
+      "type": "in-game-screenshot",
+      "title": "Velar Quick Reflexes",
+      "description": "Descriptive evidence label only. Screenshot files are not committed to the public repository.",
+      "url": null,
+      "capturedAt": "2026-07-03",
+      "language": "English",
+      "gameVersion": null,
+      "submittedBy": "repository owner",
+      "reviewedManually": true,
+      "verificationStatus": "community-verified"
+    },
+    {
+      "id": "velar-gales-of-power-2026-07-03",
+      "type": "in-game-screenshot",
+      "title": "Velar Gales of Power",
+      "description": "Descriptive evidence label only. Screenshot files are not committed to the public repository.",
+      "url": null,
+      "capturedAt": "2026-07-03",
+      "language": "English",
+      "gameVersion": null,
+      "submittedBy": "repository owner",
+      "reviewedManually": true,
+      "verificationStatus": "community-verified"
+    },
+    {
+      "id": "velar-fierce-unity-2026-07-03",
+      "type": "in-game-screenshot",
+      "title": "Velar Fierce Unity",
+      "description": "Descriptive evidence label only. Screenshot files are not committed to the public repository.",
+      "url": null,
+      "capturedAt": "2026-07-03",
+      "language": "English",
+      "gameVersion": null,
+      "submittedBy": "repository owner",
+      "reviewedManually": true,
+      "verificationStatus": "community-verified"
+    },
+    {
+      "id": "velar-breath-of-renewal-2026-07-03",
+      "type": "in-game-screenshot",
+      "title": "Velar Breath of Renewal",
+      "description": "Descriptive evidence label only. Screenshot files are not committed to the public repository.",
+      "url": null,
+      "capturedAt": "2026-07-03",
+      "language": "English",
+      "gameVersion": null,
+      "submittedBy": "repository owner",
+      "reviewedManually": true,
+      "verificationStatus": "community-verified"
+    },
+    {
+      "id": "zivern-main-screen-2026-07-03",
+      "type": "in-game-screenshot",
+      "title": "Zivern main screen",
+      "description": "Descriptive evidence label only. Screenshot files are not committed to the public repository.",
+      "url": null,
+      "capturedAt": "2026-07-03",
+      "language": "English",
+      "gameVersion": null,
+      "submittedBy": "repository owner",
+      "reviewedManually": true,
+      "verificationStatus": "community-verified"
+    },
+    {
+      "id": "zivern-silent-shade-summary-2026-07-03",
+      "type": "in-game-screenshot",
+      "title": "Zivern Silent Shade summary",
+      "description": "Descriptive evidence label only. Screenshot files are not committed to the public repository.",
+      "url": null,
+      "capturedAt": "2026-07-03",
+      "language": "English",
+      "gameVersion": null,
+      "submittedBy": "repository owner",
+      "reviewedManually": true,
+      "verificationStatus": "community-verified"
+    },
+    {
+      "id": "zivern-sentinels-wit-2026-07-03",
+      "type": "in-game-screenshot",
+      "title": "Zivern Sentinel's Wit",
+      "description": "Descriptive evidence label only. Screenshot files are not committed to the public repository.",
+      "url": null,
+      "capturedAt": "2026-07-03",
+      "language": "English",
+      "gameVersion": null,
+      "submittedBy": "repository owner",
+      "reviewedManually": true,
+      "verificationStatus": "community-verified"
+    },
+    {
+      "id": "zivern-battle-mastery-2026-07-03",
+      "type": "in-game-screenshot",
+      "title": "Zivern Battle Mastery",
+      "description": "Descriptive evidence label only. Screenshot files are not committed to the public repository.",
+      "url": null,
+      "capturedAt": "2026-07-03",
+      "language": "English",
+      "gameVersion": null,
+      "submittedBy": "repository owner",
+      "reviewedManually": true,
+      "verificationStatus": "community-verified"
+    },
+    {
+      "id": "zivern-keen-instinct-2026-07-03",
+      "type": "in-game-screenshot",
+      "title": "Zivern Keen Instinct",
+      "description": "Descriptive evidence label only. Screenshot files are not committed to the public repository.",
+      "url": null,
+      "capturedAt": "2026-07-03",
+      "language": "English",
+      "gameVersion": null,
+      "submittedBy": "repository owner",
+      "reviewedManually": true,
+      "verificationStatus": "community-verified"
+    },
+    {
+      "id": "zivern-fearsome-reach-2026-07-03",
+      "type": "in-game-screenshot",
+      "title": "Zivern Fearsome Reach",
+      "description": "Descriptive evidence label only. Screenshot files are not committed to the public repository.",
+      "url": null,
+      "capturedAt": "2026-07-03",
+      "language": "English",
+      "gameVersion": null,
+      "submittedBy": "repository owner",
+      "reviewedManually": true,
+      "verificationStatus": "community-verified"
+    },
+    {
+      "id": "zivern-steel-shroud-2026-07-03",
+      "type": "in-game-screenshot",
+      "title": "Zivern Steel Shroud",
+      "description": "Descriptive evidence label only. Screenshot files are not committed to the public repository.",
+      "url": null,
+      "capturedAt": "2026-07-03",
+      "language": "English",
+      "gameVersion": null,
+      "submittedBy": "repository owner",
+      "reviewedManually": true,
+      "verificationStatus": "community-verified"
+    },
+    {
+      "id": "zivern-cloak-of-terror-2026-07-03",
+      "type": "in-game-screenshot",
+      "title": "Zivern Cloak of Terror",
+      "description": "Descriptive evidence label only. Screenshot files are not committed to the public repository.",
+      "url": null,
+      "capturedAt": "2026-07-03",
+      "language": "English",
+      "gameVersion": null,
+      "submittedBy": "repository owner",
+      "reviewedManually": true,
+      "verificationStatus": "community-verified"
+    },
+    {
       "id": "malachite-wardens-rally-combat-log-self-recovery-2026-06-24",
       "type": "manual-combat-log-observation",
       "title": "Warden's Rally Recovery included Malachite",
@@ -9254,6 +10864,78 @@
     }
   ],
   "manualReviews": [
+    {
+      "id": "tashix-profile-review-2026-07-03",
+      "dragonId": "tashix",
+      "scope": "habits",
+      "status": "confirmed",
+      "reviewedAt": "2026-07-03",
+      "reviewedAgainstGameBuild": "not yet verified",
+      "reviewer": "repository-owner",
+      "notes": [
+        "Tashix Command, Trait, Habits, progression values, affinities, and simple profile were normalized from user-supplied in-game screenshots.",
+        "Mirage is preserved as raw wording and glossary context, not as a simple-synergy tag.",
+        "Displayed account stats were not stored as canonical base stats."
+      ],
+      "evidenceIds": [
+        "tashix-main-screen-2026-07-03",
+        "tashix-shimmering-mirage-summary-2026-07-03",
+        "tashix-hunters-cunning-2026-07-03",
+        "tashix-enervate-2026-07-03",
+        "tashix-dragons-cunning-2026-07-03",
+        "tashix-cunning-ruse-2026-07-03",
+        "tashix-battle-guile-2026-07-03",
+        "tashix-veiled-ambush-2026-07-03"
+      ]
+    },
+    {
+      "id": "velar-profile-review-2026-07-03",
+      "dragonId": "velar",
+      "scope": "habits",
+      "status": "confirmed",
+      "reviewedAt": "2026-07-03",
+      "reviewedAgainstGameBuild": "not yet verified",
+      "reviewer": "repository-owner",
+      "notes": [
+        "Velar Command, Trait, Habits, progression values, affinities, and simple profile were normalized from user-supplied in-game screenshots.",
+        "Advantage is represented through the existing generic damage-channel support pattern; Cleanse remains general support only.",
+        "Displayed account stats were not stored as canonical base stats."
+      ],
+      "evidenceIds": [
+        "velar-main-screen-2026-07-03",
+        "velar-whirlwind-summary-2026-07-03",
+        "velar-sentinels-wit-2026-07-03",
+        "velar-strategic-leader-2026-07-03",
+        "velar-quick-reflexes-2026-07-03",
+        "velar-gales-of-power-2026-07-03",
+        "velar-fierce-unity-2026-07-03",
+        "velar-breath-of-renewal-2026-07-03"
+      ]
+    },
+    {
+      "id": "zivern-profile-review-2026-07-03",
+      "dragonId": "zivern",
+      "scope": "habits",
+      "status": "confirmed",
+      "reviewedAt": "2026-07-03",
+      "reviewedAgainstGameBuild": "not yet verified",
+      "reviewer": "repository-owner",
+      "notes": [
+        "Zivern Command, Trait, Habits, progression values, affinities, and simple profile were normalized from user-supplied in-game screenshots.",
+        "Overwhelm continues to satisfy the existing high-level Control requirement. Vulnerable is added as a simple setup/payoff tag for Cloak of Terror.",
+        "Displayed account stats were not stored as canonical base stats."
+      ],
+      "evidenceIds": [
+        "zivern-main-screen-2026-07-03",
+        "zivern-silent-shade-summary-2026-07-03",
+        "zivern-sentinels-wit-2026-07-03",
+        "zivern-battle-mastery-2026-07-03",
+        "zivern-keen-instinct-2026-07-03",
+        "zivern-fearsome-reach-2026-07-03",
+        "zivern-steel-shroud-2026-07-03",
+        "zivern-cloak-of-terror-2026-07-03"
+      ]
+    },
     {
       "id": "feskar-profile-review-2026-06-26",
       "dragonId": "feskar",

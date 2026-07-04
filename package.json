@@ -1,6 +1,6 @@
 {
   "name": "dragonfire-roster-builder",
-  "version": "0.6.2",
+  "version": "0.6.3",
   "private": true,
   "type": "module",
   "scripts": {
@@ -12,7 +12,8 @@
     "preview": "vite preview --host 127.0.0.1",
     "check:roster": "node scripts/check-official-roster.mjs",
     "export:context": "node scripts/export-project-context.mjs",
-    "validate:context": "node scripts/validate-project-context.mjs"
+    "validate:context": "node scripts/validate-project-context.mjs",
+    "package:context": "powershell -NoProfile -ExecutionPolicy Bypass -File scripts/package-project-context.ps1"
   },
   "dependencies": {
     "@vitejs/plugin-react": "latest",

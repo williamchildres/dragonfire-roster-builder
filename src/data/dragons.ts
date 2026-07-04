@@ -3392,21 +3392,211 @@ export const dragons = [
     "breed": "Hunter",
     "officialProfileUrl": "https://gotdragonfire.com/dragons/tashix/",
     "rosterSourceStatus": "official-website",
-    "firstObservedInGame": null,
+    "firstObservedInGame": "2026-07-03",
     "gameVersion": null,
     "isNew": false,
-    "dataStatus": "official-metadata-only",
-    "lastVerified": "2026-06-23",
+    "dataStatus": "community-verified",
+    "lastVerified": "2026-07-03",
     "notes": null,
-    "command": null,
-    "trait": null,
-    "habits": [],
+    "command": {
+      "id": "tashix-shimmering-mirage",
+      "dragonId": "tashix",
+      "kind": "command",
+      "name": "Shimmering Mirage",
+      "abilityClass": "active",
+      "unlockStarRank": null,
+      "minimumDragonLevel": null,
+      "positionRequirement": null,
+      "rawDescription": "Each Round: 50% chance to gain 1 stack of Mirage (Max 10 Stacks).\n\nRounds 3, 6, 9: Deal Fire Damage to 1 Enemy within adjacency (Damage Rate: +200%).\n\nMirage:\nIncrease your Fire Damage Dealt by +2.5% per stack. Max 10 stacks.",
+      "verification": {
+        "status": "screenshot-verified",
+        "source": "Tashix Shimmering Mirage summary screenshots",
+        "capturedAt": "2026-07-03",
+        "gameVersion": null,
+        "reviewedManually": true
+      },
+      "evidenceIds": [
+        "tashix-shimmering-mirage-summary-2026-07-03"
+      ],
+      "tags": [
+        "FIRE_DAMAGE",
+        "MIRAGE",
+        "ADJACENT_TARGET",
+        "INTELLIGENCE_SCALING"
+      ]
+    },
+    "trait": {
+      "id": "tashix-hunters-cunning",
+      "dragonId": "tashix",
+      "kind": "trait",
+      "name": "Hunter's Cunning",
+      "abilityClass": "passive",
+      "unlockStarRank": 1,
+      "minimumDragonLevel": 16,
+      "positionRequirement": "vanguard",
+      "rawDescription": "At Level 16+ and deployed in the Vanguard, increase your Recovery Received by +20% and Intelligence by +25. Increase Physical Damage Dealt by +10% of the Ally deployed in the Right Flank.",
+      "verification": {
+        "status": "screenshot-verified",
+        "source": "Tashix Hunter's Cunning screenshot",
+        "capturedAt": "2026-07-03",
+        "gameVersion": null,
+        "reviewedManually": true
+      },
+      "evidenceIds": [
+        "tashix-hunters-cunning-2026-07-03"
+      ],
+      "tags": [
+        "RECOVERY_RECEIVED_UP",
+        "INTELLIGENCE_UP",
+        "PHYSICAL_DAMAGE_UP",
+        "VANGUARD_REQUIRED",
+        "RIGHT_FLANK_TARGET"
+      ]
+    },
+    "habits": [
+      {
+        "id": "tashix-enervate",
+        "dragonId": "tashix",
+        "kind": "habit",
+        "name": "Enervate",
+        "abilityClass": "passive",
+        "unlockStarRank": 2,
+        "minimumDragonLevel": null,
+        "positionRequirement": null,
+        "rawDescription": "Start of Combat: Reduce Tactical Damage Dealt by -10% of 1 Enemy that deals Tactical Damage until the end of combat.\n\nProgression: Habit Level 1: -10.5%; Habit Level 2: -12.6%; Habit Level 3: -14.7%; Habit Level 4: -17.85%; Habit Level 5: -21%.",
+        "verification": {
+          "status": "screenshot-verified",
+          "source": "Tashix Enervate screenshot",
+          "capturedAt": "2026-07-03",
+          "gameVersion": null,
+          "reviewedManually": true
+        },
+        "evidenceIds": [
+          "tashix-enervate-2026-07-03"
+        ],
+        "tags": [
+          "TACTICAL_DAMAGE_DOWN",
+          "ENEMY_DEBUFF"
+        ]
+      },
+      {
+        "id": "tashix-dragons-cunning",
+        "dragonId": "tashix",
+        "kind": "habit",
+        "name": "Dragon's Cunning",
+        "abilityClass": "passive",
+        "unlockStarRank": 4,
+        "minimumDragonLevel": null,
+        "positionRequirement": null,
+        "rawDescription": "Start of Combat: Increase your Intelligence by +12% and reduce Instinct by -10% (enhanced by Initiative) of 2 Enemies within adjacency. Each effect lasts until the end of combat.\n\nProgression: Habit Level 1: Intelligence +12%; enemy Instinct -10%; Habit Level 2: Intelligence +14.4%; enemy Instinct -12%; Habit Level 3: Intelligence +16.8%; enemy Instinct -14%; Habit Level 4: Intelligence +20.4%; enemy Instinct -17%; Habit Level 5: Intelligence +24%; enemy Instinct -20%.",
+        "verification": {
+          "status": "screenshot-verified",
+          "source": "Tashix Dragon's Cunning screenshot",
+          "capturedAt": "2026-07-03",
+          "gameVersion": null,
+          "reviewedManually": true
+        },
+        "evidenceIds": [
+          "tashix-dragons-cunning-2026-07-03"
+        ],
+        "tags": [
+          "INTELLIGENCE_UP",
+          "DEBUFF_INSTINCTS",
+          "INITIATIVE_SCALING",
+          "ADJACENT_TARGET",
+          "BUFF_SELF"
+        ]
+      },
+      {
+        "id": "tashix-cunning-ruse",
+        "dragonId": "tashix",
+        "kind": "habit",
+        "name": "Cunning Ruse",
+        "abilityClass": "passive",
+        "unlockStarRank": 6,
+        "minimumDragonLevel": null,
+        "positionRequirement": null,
+        "rawDescription": "Each Round: 25% chance to gain 1 stack of Mirage (Max 10 Stacks).\n\nEach stack of Mirage increases your Fire Damage Dealt by +2.5% until the end of combat.\n\nEach Round: If you have 4 or more stacks of Mirage, there is a 10% chance to afflict 3 Enemies in any lane with Weakened (-15%) for 2 round(s). This chance is checked separately for each target and is doubled (20%) against targets that deal Tactical Damage.\n\nWeakened reduces the target's Damage Dealt.\n\nProgression: Habit Level 1: Weakened chance 10%; Habit Level 2: 12%; Habit Level 3: 14%; Habit Level 4: 17%; Habit Level 5: 20%.",
+        "verification": {
+          "status": "screenshot-verified",
+          "source": "Tashix Cunning Ruse screenshot",
+          "capturedAt": "2026-07-03",
+          "gameVersion": null,
+          "reviewedManually": true
+        },
+        "evidenceIds": [
+          "tashix-cunning-ruse-2026-07-03"
+        ],
+        "tags": [
+          "MIRAGE",
+          "FIRE_DAMAGE_UP",
+          "WEAKENED",
+          "ANY_LANE_TARGET",
+          "BUFF_SELF"
+        ]
+      },
+      {
+        "id": "tashix-battle-guile",
+        "dragonId": "tashix",
+        "kind": "habit",
+        "name": "Battle Guile",
+        "abilityClass": "passive",
+        "unlockStarRank": 8,
+        "minimumDragonLevel": null,
+        "positionRequirement": null,
+        "rawDescription": "Start of Combat: Reduce Instinct and Initiative by -5% (enhanced by Initiative) of 3 Enemies in any lane until the end of combat.\n\nProgression: Habit Level 1: -5%; Habit Level 2: -6%; Habit Level 3: -7%; Habit Level 4: -8.85%; Habit Level 5: -10.5%.",
+        "verification": {
+          "status": "screenshot-verified",
+          "source": "Tashix Battle Guile screenshot",
+          "capturedAt": "2026-07-03",
+          "gameVersion": null,
+          "reviewedManually": true
+        },
+        "evidenceIds": [
+          "tashix-battle-guile-2026-07-03"
+        ],
+        "tags": [
+          "DEBUFF_INSTINCTS",
+          "DEBUFF_INITIATIVE",
+          "INITIATIVE_SCALING",
+          "ANY_LANE_TARGET"
+        ]
+      },
+      {
+        "id": "tashix-veiled-ambush",
+        "dragonId": "tashix",
+        "kind": "habit",
+        "name": "Veiled Ambush",
+        "abilityClass": "passive",
+        "unlockStarRank": 10,
+        "minimumDragonLevel": null,
+        "positionRequirement": null,
+        "rawDescription": "Each Round: 25% chance to gain 1 stack of Mirage (Max 10 Stacks).\n\nEach stack of Mirage increases your Fire Damage Dealt by +2.5% until the end of combat.\n\nEach Round: If you have 7 or more stacks of Mirage, deal Fire Damage (Damage Rate: +150%) to the Enemy with the most troops. This effect can only trigger once per combat.\n\nProgression: Habit Level 1: Fire Damage Rate 150%; Habit Level 2: 220%; Habit Level 3: 290%; Habit Level 4: 380%; Habit Level 5: 500%.",
+        "verification": {
+          "status": "screenshot-verified",
+          "source": "Tashix Veiled Ambush screenshot",
+          "capturedAt": "2026-07-03",
+          "gameVersion": null,
+          "reviewedManually": true
+        },
+        "evidenceIds": [
+          "tashix-veiled-ambush-2026-07-03"
+        ],
+        "tags": [
+          "MIRAGE",
+          "FIRE_DAMAGE",
+          "FIRE_DAMAGE_UP",
+          "MOST_TROOPS_TARGET",
+          "BUFF_SELF"
+        ]
+      }
+    ],
     "affinities": {
       "Cavalry": "unknown",
       "Shieldbearers": "unknown",
-      "Archers": "unknown",
+      "Archers": "positive",
       "Spearmen": "unknown",
-      "Siege": "unknown"
+      "Siege": "negative"
     },
     "stats": {
       "strength": null,
@@ -3414,12 +3604,32 @@ export const dragons = [
       "instinct": null,
       "initiative": null
     },
-    "tags": [],
+    "tags": [
+      "FIRE_DAMAGE",
+      "MIRAGE",
+      "ADJACENT_TARGET",
+      "INTELLIGENCE_SCALING",
+      "RECOVERY_RECEIVED_UP",
+      "INTELLIGENCE_UP",
+      "PHYSICAL_DAMAGE_UP",
+      "VANGUARD_REQUIRED",
+      "RIGHT_FLANK_TARGET",
+      "TACTICAL_DAMAGE_DOWN",
+      "ENEMY_DEBUFF",
+      "DEBUFF_INSTINCTS",
+      "INITIATIVE_SCALING",
+      "BUFF_SELF",
+      "FIRE_DAMAGE_UP",
+      "WEAKENED",
+      "ANY_LANE_TARGET",
+      "DEBUFF_INITIATIVE",
+      "MOST_TROOPS_TARGET"
+    ],
     "fieldVerification": {
       "identity": {
-        "status": "officially-confirmed",
-        "source": "Official public roster page",
-        "capturedAt": "2026-06-23",
+        "status": "screenshot-verified",
+        "source": "Tashix main screen screenshot",
+        "capturedAt": "2026-07-03",
         "gameVersion": null,
         "reviewedManually": true
       },
@@ -3434,6 +3644,34 @@ export const dragons = [
         "status": "officially-confirmed",
         "source": "Official public roster page",
         "capturedAt": "2026-06-23",
+        "gameVersion": null,
+        "reviewedManually": true
+      },
+      "command": {
+        "status": "screenshot-verified",
+        "source": "Tashix Shimmering Mirage summary screenshots",
+        "capturedAt": "2026-07-03",
+        "gameVersion": null,
+        "reviewedManually": true
+      },
+      "trait": {
+        "status": "screenshot-verified",
+        "source": "Tashix Hunter's Cunning screenshot",
+        "capturedAt": "2026-07-03",
+        "gameVersion": null,
+        "reviewedManually": true
+      },
+      "habits": {
+        "status": "screenshot-verified",
+        "source": "Tashix Habit screenshots",
+        "capturedAt": "2026-07-03",
+        "gameVersion": null,
+        "reviewedManually": true
+      },
+      "affinities": {
+        "status": "screenshot-verified",
+        "source": "Tashix main screen screenshot",
+        "capturedAt": "2026-07-03",
         "gameVersion": null,
         "reviewedManually": true
       }
@@ -3712,18 +3950,210 @@ export const dragons = [
     "breed": "Sentinel",
     "officialProfileUrl": "https://gotdragonfire.com/dragons/velar/",
     "rosterSourceStatus": "official-website",
-    "firstObservedInGame": null,
+    "firstObservedInGame": "2026-07-03",
     "gameVersion": null,
     "isNew": false,
-    "dataStatus": "official-metadata-only",
-    "lastVerified": "2026-06-23",
+    "dataStatus": "community-verified",
+    "lastVerified": "2026-07-03",
     "notes": null,
-    "command": null,
-    "trait": null,
-    "habits": [],
+    "command": {
+      "id": "velar-whirlwind",
+      "dragonId": "velar",
+      "kind": "command",
+      "name": "Whirlwind",
+      "abilityClass": "active",
+      "unlockStarRank": null,
+      "minimumDragonLevel": null,
+      "positionRequirement": null,
+      "rawDescription": "Rounds 2, 4, 6, 8: 20% chance to grant 2 other Allies in any lane Advantage (+15%) for 2 round(s).\n\nRounds 3, 5, 7, 9: Deal Tactical Damage to 3 Enemies in any lane (Damage Rate: +45%).\n\nAt 10 Stars:\n\nEach Round: 12% chance to Cleanse 1 instance of Bleed, Panic, or Burn from each Ally. This chance is checked separately per target.\n\nRounds 2, 4, 6, 8: Apply Recovery to 3 Allies in any lane (Recovery Rate: +18%, enhanced by Initiative).",
+      "verification": {
+        "status": "screenshot-verified",
+        "source": "Velar Whirlwind summary screenshots",
+        "capturedAt": "2026-07-03",
+        "gameVersion": null,
+        "reviewedManually": true
+      },
+      "evidenceIds": [
+        "velar-whirlwind-summary-2026-07-03"
+      ],
+      "tags": [
+        "ADVANTAGE",
+        "TACTICAL_DAMAGE",
+        "ANY_LANE_TARGET",
+        "CLEANSE_NEGATIVE",
+        "RECOVERY",
+        "INITIATIVE_SCALING",
+        "COMMAND_AUGMENTATION"
+      ]
+    },
+    "trait": {
+      "id": "velar-sentinels-wit",
+      "dragonId": "velar",
+      "kind": "trait",
+      "name": "Sentinel's Wit",
+      "abilityClass": "passive",
+      "unlockStarRank": 1,
+      "minimumDragonLevel": 16,
+      "positionRequirement": "vanguard",
+      "rawDescription": "At Level 16+ and deployed in the Vanguard, increase your Tactical Damage Dealt by +16%. Increase Instinct and Initiative by +20 of the Ally deployed in the Left Flank.",
+      "verification": {
+        "status": "screenshot-verified",
+        "source": "Velar Sentinel's Wit screenshot",
+        "capturedAt": "2026-07-03",
+        "gameVersion": null,
+        "reviewedManually": true
+      },
+      "evidenceIds": [
+        "velar-sentinels-wit-2026-07-03"
+      ],
+      "tags": [
+        "TACTICAL_DAMAGE",
+        "INSTINCT_UP",
+        "BUFF_INITIATIVE",
+        "VANGUARD_REQUIRED",
+        "LEFT_FLANK_TARGET"
+      ]
+    },
+    "habits": [
+      {
+        "id": "velar-strategic-leader",
+        "dragonId": "velar",
+        "kind": "habit",
+        "name": "Strategic Leader",
+        "abilityClass": "passive",
+        "unlockStarRank": 2,
+        "minimumDragonLevel": null,
+        "positionRequirement": null,
+        "rawDescription": "Start of Combat: Increase Tactical Damage Dealt by +10% of 1 Ally in any lane, prioritizing the Vanguard, until the end of combat.\n\nProgression: Habit Level 1: +10%; Habit Level 2: +12%; Habit Level 3: +14%; Habit Level 4: +17%; Habit Level 5: +20%.",
+        "verification": {
+          "status": "screenshot-verified",
+          "source": "Velar Strategic Leader screenshot",
+          "capturedAt": "2026-07-03",
+          "gameVersion": null,
+          "reviewedManually": true
+        },
+        "evidenceIds": [
+          "velar-strategic-leader-2026-07-03"
+        ],
+        "tags": [
+          "TACTICAL_DAMAGE",
+          "BUFF_ALLIES",
+          "ANY_LANE_TARGET"
+        ]
+      },
+      {
+        "id": "velar-quick-reflexes",
+        "dragonId": "velar",
+        "kind": "habit",
+        "name": "Quick Reflexes",
+        "abilityClass": "passive",
+        "unlockStarRank": 4,
+        "minimumDragonLevel": null,
+        "positionRequirement": null,
+        "rawDescription": "Start of Combat: Increase your Instinct and Initiative by +16% until the end of combat.\n\nProgression: Habit Level 1: +16%; Habit Level 2: +19.2%; Habit Level 3: +22.4%; Habit Level 4: +27.2%; Habit Level 5: +32%.",
+        "verification": {
+          "status": "screenshot-verified",
+          "source": "Velar Quick Reflexes screenshot",
+          "capturedAt": "2026-07-03",
+          "gameVersion": null,
+          "reviewedManually": true
+        },
+        "evidenceIds": [
+          "velar-quick-reflexes-2026-07-03"
+        ],
+        "tags": [
+          "INSTINCT_UP",
+          "BUFF_INITIATIVE",
+          "BUFF_SELF"
+        ]
+      },
+      {
+        "id": "velar-gales-of-power",
+        "dragonId": "velar",
+        "kind": "habit",
+        "name": "Gales of Power",
+        "abilityClass": "passive",
+        "unlockStarRank": 6,
+        "minimumDragonLevel": null,
+        "positionRequirement": null,
+        "rawDescription": "Rounds 2, 4, 6, 8: 12% chance to grant First-Strike to 3 Allies in any lane and afflict Slow on 3 Enemies in any lane. Each effect is checked separately per target and lasts for 2 round(s).\n\nFirst-Strike causes the target to attack before all other combatants each round.\n\nSlow causes the target to attack after all other combatants each round.\n\nProgression: Habit Level 1: First-Strike chance 12%; Slow chance 12%; Habit Level 2: 14.4%; 14.4%; Habit Level 3: 16.8%; 16.8%; Habit Level 4: 20.4%; 20.4%; Habit Level 5: 24%; 24%.",
+        "verification": {
+          "status": "screenshot-verified",
+          "source": "Velar Gales of Power screenshot",
+          "capturedAt": "2026-07-03",
+          "gameVersion": null,
+          "reviewedManually": true
+        },
+        "evidenceIds": [
+          "velar-gales-of-power-2026-07-03"
+        ],
+        "tags": [
+          "FIRST_STRIKE",
+          "SLOW",
+          "ANY_LANE_TARGET",
+          "BUFF_ALLIES"
+        ]
+      },
+      {
+        "id": "velar-fierce-unity",
+        "dragonId": "velar",
+        "kind": "habit",
+        "name": "Fierce Unity",
+        "abilityClass": "passive",
+        "unlockStarRank": 8,
+        "minimumDragonLevel": null,
+        "positionRequirement": null,
+        "rawDescription": "Start of Combat: Increase Strength and Instinct by +5% (enhanced by Initiative) of 3 Allies in any lane until the end of combat.\n\nProgression: Habit Level 1: +5%; Habit Level 2: +6%; Habit Level 3: +7%; Habit Level 4: +8.5%; Habit Level 5: +10%.",
+        "verification": {
+          "status": "screenshot-verified",
+          "source": "Velar Fierce Unity screenshot",
+          "capturedAt": "2026-07-03",
+          "gameVersion": null,
+          "reviewedManually": true
+        },
+        "evidenceIds": [
+          "velar-fierce-unity-2026-07-03"
+        ],
+        "tags": [
+          "STRENGTH_UP",
+          "INSTINCT_UP",
+          "INITIATIVE_SCALING",
+          "BUFF_ALLIES",
+          "ANY_LANE_TARGET"
+        ]
+      },
+      {
+        "id": "velar-breath-of-renewal",
+        "dragonId": "velar",
+        "kind": "habit",
+        "name": "Breath of Renewal",
+        "abilityClass": "passive",
+        "unlockStarRank": 10,
+        "minimumDragonLevel": null,
+        "positionRequirement": null,
+        "rawDescription": "Whirlwind gains:\n\nEach Round: 12% chance to Cleanse 1 instance of Bleed, Panic, or Burn from each Ally. This chance is checked separately per target.\n\nRounds 2, 4, 6, 8: Apply Recovery to 3 Allies in any lane (Recovery Rate: +18%, enhanced by Initiative).\n\nProgression: Habit Level 1: Cleanse chance 12%; Recovery Rate 18%; Habit Level 2: 16%; 23.4%; Habit Level 3: 19%; 28.8%; Habit Level 4: 24%; 36%; Habit Level 5: 30%; 45%.",
+        "verification": {
+          "status": "screenshot-verified",
+          "source": "Velar Breath of Renewal screenshot",
+          "capturedAt": "2026-07-03",
+          "gameVersion": null,
+          "reviewedManually": true
+        },
+        "evidenceIds": [
+          "velar-breath-of-renewal-2026-07-03"
+        ],
+        "tags": [
+          "COMMAND_AUGMENTATION",
+          "CLEANSE_NEGATIVE",
+          "RECOVERY",
+          "INITIATIVE_SCALING",
+          "ANY_LANE_TARGET"
+        ]
+      }
+    ],
     "affinities": {
       "Cavalry": "unknown",
-      "Shieldbearers": "unknown",
+      "Shieldbearers": "positive",
       "Archers": "unknown",
       "Spearmen": "unknown",
       "Siege": "unknown"
@@ -3734,12 +4164,29 @@ export const dragons = [
       "instinct": null,
       "initiative": null
     },
-    "tags": [],
+    "tags": [
+      "ADVANTAGE",
+      "TACTICAL_DAMAGE",
+      "ANY_LANE_TARGET",
+      "CLEANSE_NEGATIVE",
+      "RECOVERY",
+      "INITIATIVE_SCALING",
+      "COMMAND_AUGMENTATION",
+      "INSTINCT_UP",
+      "BUFF_INITIATIVE",
+      "VANGUARD_REQUIRED",
+      "LEFT_FLANK_TARGET",
+      "BUFF_ALLIES",
+      "BUFF_SELF",
+      "FIRST_STRIKE",
+      "SLOW",
+      "STRENGTH_UP"
+    ],
     "fieldVerification": {
       "identity": {
-        "status": "officially-confirmed",
-        "source": "Official public roster page",
-        "capturedAt": "2026-06-23",
+        "status": "screenshot-verified",
+        "source": "Velar main screen screenshot",
+        "capturedAt": "2026-07-03",
         "gameVersion": null,
         "reviewedManually": true
       },
@@ -3754,6 +4201,34 @@ export const dragons = [
         "status": "officially-confirmed",
         "source": "Official public roster page",
         "capturedAt": "2026-06-23",
+        "gameVersion": null,
+        "reviewedManually": true
+      },
+      "command": {
+        "status": "screenshot-verified",
+        "source": "Velar Whirlwind summary screenshots",
+        "capturedAt": "2026-07-03",
+        "gameVersion": null,
+        "reviewedManually": true
+      },
+      "trait": {
+        "status": "screenshot-verified",
+        "source": "Velar Sentinel's Wit screenshot",
+        "capturedAt": "2026-07-03",
+        "gameVersion": null,
+        "reviewedManually": true
+      },
+      "habits": {
+        "status": "screenshot-verified",
+        "source": "Velar Habit screenshots",
+        "capturedAt": "2026-07-03",
+        "gameVersion": null,
+        "reviewedManually": true
+      },
+      "affinities": {
+        "status": "screenshot-verified",
+        "source": "Velar main screen screenshot",
+        "capturedAt": "2026-07-03",
         "gameVersion": null,
         "reviewedManually": true
       }
@@ -3767,21 +4242,212 @@ export const dragons = [
     "breed": "Sentinel",
     "officialProfileUrl": "https://gotdragonfire.com/dragons/zivern/",
     "rosterSourceStatus": "official-website",
-    "firstObservedInGame": null,
+    "firstObservedInGame": "2026-07-03",
     "gameVersion": null,
     "isNew": false,
-    "dataStatus": "official-metadata-only",
-    "lastVerified": "2026-06-23",
+    "dataStatus": "community-verified",
+    "lastVerified": "2026-07-03",
     "notes": null,
-    "command": null,
-    "trait": null,
-    "habits": [],
+    "command": {
+      "id": "zivern-silent-shade",
+      "dragonId": "zivern",
+      "kind": "command",
+      "name": "Silent Shade",
+      "abilityClass": "active",
+      "unlockStarRank": null,
+      "minimumDragonLevel": null,
+      "positionRequirement": null,
+      "rawDescription": "Rounds 1, 4, 6, 9: 40% chance to increase the Tactical Damage Received of 1 Enemy in the same lane by +15% for 2 round(s).\n\nRounds 1, 4, 6, 9: Deal Tactical Damage to 2 Enemies within adjacency (Damage Rate: +75%).",
+      "verification": {
+        "status": "screenshot-verified",
+        "source": "Zivern Silent Shade summary screenshots",
+        "capturedAt": "2026-07-03",
+        "gameVersion": null,
+        "reviewedManually": true
+      },
+      "evidenceIds": [
+        "zivern-silent-shade-summary-2026-07-03"
+      ],
+      "tags": [
+        "TACTICAL_DAMAGE",
+        "TACTICAL_DAMAGE_RECEIVED_UP",
+        "SAME_LANE_TARGET",
+        "ADJACENT_TARGET",
+        "ENHANCED_BY_INSTINCT"
+      ]
+    },
+    "trait": {
+      "id": "zivern-sentinels-wit",
+      "dragonId": "zivern",
+      "kind": "trait",
+      "name": "Sentinel's Wit",
+      "abilityClass": "passive",
+      "unlockStarRank": 1,
+      "minimumDragonLevel": 16,
+      "positionRequirement": "vanguard",
+      "rawDescription": "At Level 16+ and deployed in the Vanguard, increase your Tactical Damage Dealt by +16%. Increase Instinct and Initiative by +20 of the Ally deployed in the Left Flank.",
+      "verification": {
+        "status": "screenshot-verified",
+        "source": "Zivern Sentinel's Wit screenshot",
+        "capturedAt": "2026-07-03",
+        "gameVersion": null,
+        "reviewedManually": true
+      },
+      "evidenceIds": [
+        "zivern-sentinels-wit-2026-07-03"
+      ],
+      "tags": [
+        "TACTICAL_DAMAGE",
+        "INSTINCT_UP",
+        "BUFF_INITIATIVE",
+        "VANGUARD_REQUIRED",
+        "LEFT_FLANK_TARGET"
+      ]
+    },
+    "habits": [
+      {
+        "id": "zivern-battle-mastery",
+        "dragonId": "zivern",
+        "kind": "habit",
+        "name": "Battle Mastery",
+        "abilityClass": "passive",
+        "unlockStarRank": 2,
+        "minimumDragonLevel": null,
+        "positionRequirement": null,
+        "rawDescription": "Start of Combat: Reduce the Strength and Instinct (enhanced by Intelligence) of 3 Enemies by -5% until the end of combat.\n\nProgression: Habit Level 1: -5%; Habit Level 2: -6%; Habit Level 3: -7%; Habit Level 4: -8.85%; Habit Level 5: -10.5%.",
+        "verification": {
+          "status": "screenshot-verified",
+          "source": "Zivern Battle Mastery screenshot",
+          "capturedAt": "2026-07-03",
+          "gameVersion": null,
+          "reviewedManually": true
+        },
+        "evidenceIds": [
+          "zivern-battle-mastery-2026-07-03"
+        ],
+        "tags": [
+          "DEBUFF_STRENGTH",
+          "DEBUFF_INSTINCTS",
+          "INTELLIGENCE_SCALING",
+          "ENEMY_DEBUFF"
+        ]
+      },
+      {
+        "id": "zivern-keen-instinct",
+        "dragonId": "zivern",
+        "kind": "habit",
+        "name": "Keen Instinct",
+        "abilityClass": "passive",
+        "unlockStarRank": 4,
+        "minimumDragonLevel": null,
+        "positionRequirement": null,
+        "rawDescription": "Start of Combat: Increase your Intelligence and Instinct by +16% until the end of combat.\n\nProgression: Habit Level 1: +16%; Habit Level 2: +19.2%; Habit Level 3: +22.4%; Habit Level 4: +27.2%; Habit Level 5: +32%.",
+        "verification": {
+          "status": "screenshot-verified",
+          "source": "Zivern Keen Instinct screenshot",
+          "capturedAt": "2026-07-03",
+          "gameVersion": null,
+          "reviewedManually": true
+        },
+        "evidenceIds": [
+          "zivern-keen-instinct-2026-07-03"
+        ],
+        "tags": [
+          "INTELLIGENCE_UP",
+          "INSTINCT_UP",
+          "BUFF_SELF"
+        ]
+      },
+      {
+        "id": "zivern-fearsome-reach",
+        "dragonId": "zivern",
+        "kind": "habit",
+        "name": "Fearsome Reach",
+        "abilityClass": "passive",
+        "unlockStarRank": 6,
+        "minimumDragonLevel": null,
+        "positionRequirement": null,
+        "rawDescription": "Odd-numbered Rounds: 30% chance to reduce the Instinct (enhanced by Intelligence) by -15% and afflict Panic (Damage Rate: +20%) on 3 Enemies in any lane for 2 round(s).\n\nPanic deals Tactical Damage to the target each round.\n\nProgression: Habit Level 1: Fearsome Reach chance 30%; Habit Level 2: 36%; Habit Level 3: 42%; Habit Level 4: 51%; Habit Level 5: 60%.",
+        "verification": {
+          "status": "screenshot-verified",
+          "source": "Zivern Fearsome Reach screenshot",
+          "capturedAt": "2026-07-03",
+          "gameVersion": null,
+          "reviewedManually": true
+        },
+        "evidenceIds": [
+          "zivern-fearsome-reach-2026-07-03"
+        ],
+        "tags": [
+          "DEBUFF_INSTINCTS",
+          "INTELLIGENCE_SCALING",
+          "PANIC",
+          "TACTICAL_DAMAGE",
+          "ANY_LANE_TARGET"
+        ]
+      },
+      {
+        "id": "zivern-steel-shroud",
+        "dragonId": "zivern",
+        "kind": "habit",
+        "name": "Steel Shroud",
+        "abilityClass": "passive",
+        "unlockStarRank": 8,
+        "minimumDragonLevel": null,
+        "positionRequirement": null,
+        "rawDescription": "Start of Combat: Reduce Physical Damage Received, excluding Basic Attacks, and Tactical Damage Received by -3% of 2 other Allies in any lane until the end of combat.\n\nProgression: Habit Level 1: -3.5%; Habit Level 2: -4.2%; Habit Level 3: -4.9%; Habit Level 4: -5.95%; Habit Level 5: -7%.",
+        "verification": {
+          "status": "screenshot-verified",
+          "source": "Zivern Steel Shroud screenshot",
+          "capturedAt": "2026-07-03",
+          "gameVersion": null,
+          "reviewedManually": true
+        },
+        "evidenceIds": [
+          "zivern-steel-shroud-2026-07-03"
+        ],
+        "tags": [
+          "DAMAGE_RECEIVED_DOWN",
+          "TACTICAL_DAMAGE_RECEIVED_DOWN",
+          "EXCLUDES_BASIC_ATTACKS",
+          "OTHER_ALLIES_TARGET",
+          "ANY_LANE_TARGET"
+        ]
+      },
+      {
+        "id": "zivern-cloak-of-terror",
+        "dragonId": "zivern",
+        "kind": "habit",
+        "name": "Cloak of Terror",
+        "abilityClass": "passive",
+        "unlockStarRank": 10,
+        "minimumDragonLevel": null,
+        "positionRequirement": null,
+        "rawDescription": "Odd-numbered Rounds: 10% chance to afflict Overwhelm on 2 Enemies within adjacency for 2 round(s). This chance is doubled (20%) if the target is afflicted with Vulnerable.\n\nOverwhelm prevents the target from using Active Commands and Habits on their turn.\n\nProgression: Habit Level 1: Overwhelm chance 10%; Habit Level 2: 13%; Habit Level 3: 16%; Habit Level 4: 20%; Habit Level 5: 25%.",
+        "verification": {
+          "status": "screenshot-verified",
+          "source": "Zivern Cloak of Terror screenshot",
+          "capturedAt": "2026-07-03",
+          "gameVersion": null,
+          "reviewedManually": true
+        },
+        "evidenceIds": [
+          "zivern-cloak-of-terror-2026-07-03"
+        ],
+        "tags": [
+          "OVERWHELM",
+          "CONTROL",
+          "VULNERABLE",
+          "ADJACENT_TARGET"
+        ]
+      }
+    ],
     "affinities": {
       "Cavalry": "unknown",
       "Shieldbearers": "unknown",
-      "Archers": "unknown",
+      "Archers": "positive",
       "Spearmen": "unknown",
-      "Siege": "unknown"
+      "Siege": "positive"
     },
     "stats": {
       "strength": null,
@@ -3789,12 +4455,37 @@ export const dragons = [
       "instinct": null,
       "initiative": null
     },
-    "tags": [],
+    "tags": [
+      "TACTICAL_DAMAGE",
+      "TACTICAL_DAMAGE_RECEIVED_UP",
+      "SAME_LANE_TARGET",
+      "ADJACENT_TARGET",
+      "ENHANCED_BY_INSTINCT",
+      "INSTINCT_UP",
+      "BUFF_INITIATIVE",
+      "VANGUARD_REQUIRED",
+      "LEFT_FLANK_TARGET",
+      "DEBUFF_STRENGTH",
+      "DEBUFF_INSTINCTS",
+      "INTELLIGENCE_SCALING",
+      "ENEMY_DEBUFF",
+      "INTELLIGENCE_UP",
+      "BUFF_SELF",
+      "PANIC",
+      "ANY_LANE_TARGET",
+      "DAMAGE_RECEIVED_DOWN",
+      "TACTICAL_DAMAGE_RECEIVED_DOWN",
+      "EXCLUDES_BASIC_ATTACKS",
+      "OTHER_ALLIES_TARGET",
+      "OVERWHELM",
+      "CONTROL",
+      "VULNERABLE"
+    ],
     "fieldVerification": {
       "identity": {
-        "status": "officially-confirmed",
-        "source": "Official public roster page",
-        "capturedAt": "2026-06-23",
+        "status": "screenshot-verified",
+        "source": "Zivern main screen screenshot",
+        "capturedAt": "2026-07-03",
         "gameVersion": null,
         "reviewedManually": true
       },
@@ -3809,6 +4500,34 @@ export const dragons = [
         "status": "officially-confirmed",
         "source": "Official public roster page",
         "capturedAt": "2026-06-23",
+        "gameVersion": null,
+        "reviewedManually": true
+      },
+      "command": {
+        "status": "screenshot-verified",
+        "source": "Zivern Silent Shade summary screenshots",
+        "capturedAt": "2026-07-03",
+        "gameVersion": null,
+        "reviewedManually": true
+      },
+      "trait": {
+        "status": "screenshot-verified",
+        "source": "Zivern Sentinel's Wit screenshot",
+        "capturedAt": "2026-07-03",
+        "gameVersion": null,
+        "reviewedManually": true
+      },
+      "habits": {
+        "status": "screenshot-verified",
+        "source": "Zivern Habit screenshots",
+        "capturedAt": "2026-07-03",
+        "gameVersion": null,
+        "reviewedManually": true
+      },
+      "affinities": {
+        "status": "screenshot-verified",
+        "source": "Zivern main screen screenshot",
+        "capturedAt": "2026-07-03",
         "gameVersion": null,
         "reviewedManually": true
       }

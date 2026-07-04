@@ -42,6 +42,20 @@ function git(args) {
   return execFileSync('git', args, { cwd: root, encoding: 'utf8' }).trim();
 }
 
+function validateRecordedCommitExists(consolidated) {
+  const commit = consolidated.source?.commit;
+  if (typeof commit !== 'string' || !/^[a-f0-9]{40}$/i.test(commit)) {
+    return [`Recorded source commit is not a full 40-character SHA: ${JSON.stringify(commit)}`];
+  }
+
+  try {
+    const type = git(['cat-file', '-t', commit]);
+    return type === 'commit' ? [] : [`Recorded source commit is not a commit object: ${commit}`];
+  } catch {
+    return [`Recorded source commit does not exist in this repository: ${commit}`];
+  }
+}
+
 if (!existsSync(contextRoot)) {
   console.error('project-context directory is missing. Run npm run export:context first.');
   process.exit(1);
@@ -49,6 +63,7 @@ if (!existsSync(contextRoot)) {
 
 const files = readFiles(contextRoot);
 const consolidated = JSON.parse(files['project-context/dragonfire-project-context.json']);
+const sourceCommitErrors = validateRecordedCommitExists(consolidated);
 const exporter = await loadExporter();
 const { validateProjectContextFiles } = exporter.module;
 const result = validateProjectContextFiles(files, {
@@ -57,6 +72,9 @@ const result = validateProjectContextFiles(files, {
   commit: consolidated.source?.commit ?? git(['rev-parse', 'HEAD']),
   testTotals: JSON.parse(files['project-context/project-state.json']).testTotals,
 });
+
+result.errors.push(...sourceCommitErrors);
+result.passed = result.errors.length === 0;
 
 for (const warning of result.warnings) {
   console.warn(`Warning: ${warning}`);

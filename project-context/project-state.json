@@ -1,10 +1,10 @@
 {
-  "generatedAt": "2026-07-03T00:00:00.000Z",
+  "generatedAt": "2026-07-03T20:51:54.192Z",
   "source": {
     "repository": "https://github.com/williamchildres/dragonfire-roster-builder",
-    "branch": "refactor/remove-legacy-combat-framework",
-    "commit": "52a026da3c5a48012d80c5adb365b1188dbc8632",
-    "databaseVersion": "0.6.2",
+    "branch": "data/add-final-epic-dragons",
+    "commit": "11bcbac76945f65ef335358831060801af58efcf",
+    "databaseVersion": "0.6.3",
     "dataSchemaVersion": 13,
     "localRosterSchemaVersion": 3,
     "gameBuild": "26.6.53509"
@@ -13,27 +13,27 @@
   "format": "dragonfire-lab-project-context",
   "rosterSummary": {
     "totalDragons": 30,
-    "detailedDragons": 15,
-    "metadataOnlyDragons": 15,
-    "curatedSimpleProfiles": 15,
-    "profileAuditReviews": 105,
-    "evidenceSources": 133,
-    "manualReviews": 28
+    "detailedDragons": 18,
+    "metadataOnlyDragons": 12,
+    "curatedSimpleProfiles": 18,
+    "profileAuditReviews": 126,
+    "evidenceSources": 157,
+    "manualReviews": 31
   },
   "profileAuditSummary": {
-    "reviewedAbilityCount": 105,
+    "reviewedAbilityCount": 126,
     "dispositionCounts": {
-      "represented": 69,
-      "general-support-only": 5,
-      "self-only": 20,
+      "represented": 84,
+      "general-support-only": 8,
+      "self-only": 22,
       "no-cross-dragon-synergy": 9,
-      "reinforces-existing": 2
+      "reinforces-existing": 3
     }
   },
   "testTotals": {
     "runner": "vitest",
-    "testFileCount": 10,
-    "testCaseCount": 78,
+    "testFileCount": 11,
+    "testCaseCount": 85,
     "lastRunStatus": "not-run-by-exporter",
     "countingMethod": "static working-tree test declaration scan; runtime pass/fail is reported by npm run test"
   },

@@ -59,6 +59,10 @@ export function explainSetupPayoff(
     return `${provider.dragonName} can apply Taunt, which improves ${beneficiary.dragonName}'s ${benefit.abilityName}.`;
   }
 
+  if (tag === 'status:vulnerable') {
+    return `${provider.dragonName} can apply Vulnerable, which improves ${beneficiary.dragonName}'s ${benefit.abilityName}.`;
+  }
+
   if (tag === 'status:control') {
     if (tagMatch.providerTag !== 'status:control') {
       const providerLabel = SYNERGY_TAG_LABELS[tagMatch.providerTag];

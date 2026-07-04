@@ -122,24 +122,24 @@ describe('Formation Builder simple synergy cutover', () => {
 
   it('treats Panic missing-enabler checks as incomplete when a selected dragon is metadata-only', async () => {
     const user = userEvent.setup();
-    seedRoster({ shadowsong: {}, tashix: {} });
+    seedRoster({ shadowsong: {}, antares: {} });
 
     await openFormationBuilder(user);
-    await selectFormation(user, { 'left-flank': 'shadowsong', vanguard: 'tashix' });
+    await selectFormation(user, { 'left-flank': 'shadowsong', vanguard: 'antares' });
 
-    expect(analysisText()).toContain('Synergy data not yet mapped: Tashix.');
+    expect(analysisText()).toContain('Synergy data not yet mapped: Antares.');
     expect(sectionText('Missing enablers')).toContain(incompleteMissingEnablerNotice);
     expect(analysisText()).not.toContain('this formation has no Panic provider');
   });
 
   it('treats First-Strike missing-enabler checks as incomplete when a selected dragon is metadata-only', async () => {
     const user = userEvent.setup();
-    seedRoster({ caraxes: {}, tashix: {} });
+    seedRoster({ caraxes: {}, antares: {} });
 
     await openFormationBuilder(user);
-    await selectFormation(user, { 'left-flank': 'caraxes', vanguard: 'tashix' });
+    await selectFormation(user, { 'left-flank': 'caraxes', vanguard: 'antares' });
 
-    expect(analysisText()).toContain('Synergy data not yet mapped: Tashix.');
+    expect(analysisText()).toContain('Synergy data not yet mapped: Antares.');
     expect(sectionText('Missing enablers')).toContain(incompleteMissingEnablerNotice);
     expect(analysisText()).not.toContain('this formation has no First-Strike provider');
   });
@@ -243,11 +243,11 @@ describe('Formation Builder simple synergy cutover', () => {
       configurable: true,
       value: { writeText },
     });
-    seedRoster({ syrax: {}, caraxes: {}, tashix: { owned: false } });
+    seedRoster({ syrax: {}, caraxes: {}, antares: { owned: false } });
 
     await openFormationBuilder(user);
     await user.click(screen.getByLabelText(/include unowned dragons/i));
-    await selectFormation(user, { 'left-flank': 'syrax', vanguard: 'caraxes', 'right-flank': 'tashix' });
+    await selectFormation(user, { 'left-flank': 'syrax', vanguard: 'caraxes', 'right-flank': 'antares' });
 
     for (const position of ['Left Flank', 'Vanguard', 'Right Flank']) {
       const card = screen.getByRole('article', { name: position });
@@ -260,7 +260,7 @@ describe('Formation Builder simple synergy cutover', () => {
       expect(within(card).getByRole('region', { name: /high-level synergy profile/i })).toBeInTheDocument();
     }
 
-    expect(analysisText()).toContain('Synergy data not yet mapped: Tashix.');
+    expect(analysisText()).toContain('Synergy data not yet mapped: Antares.');
     expect(sectionText('Strong synergies')).toContain("Syrax can grant First-Strike, which improves Caraxes's Infernal Burst.");
     expect(sectionItems('Strong synergies').filter((item) => item === 'Syrax improves allied Fire Damage, and Caraxes deals Fire Damage.')).toHaveLength(1);
     expect(sectionText('Missing enablers')).toContain(incompleteMissingEnablerNotice);

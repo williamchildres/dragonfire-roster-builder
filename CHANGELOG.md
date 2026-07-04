@@ -1,7 +1,13 @@
 # Changelog
 
-## Unreleased - PR 4
+## Unreleased
 
+- Added screenshot-verified detailed records and curated simple-synergy profiles for Tashix, Velar, and Zivern, bringing coverage to 18 detailed dragons, 18 simple profiles, and 12 metadata-only dragons.
+- Added the `status:vulnerable` simple setup/payoff relationship so Shadowsong's Scorched Earth can improve Zivern's Cloak of Terror.
+- Added the Mirage glossary entry and new evidence/manual-review records for the final three Epic metadata-only dragons.
+- Added deterministic `npm run package:context` ZIP packaging with stale-file cleanup verification, forbidden legacy filename scanning, exact entry comparison, and the existing 2 MB context limit.
+- Corrected project-context source provenance and packaging-test isolation so generated context records a committed source SHA and tests restore `project-context/` and `project-context.zip`.
+- Increased database/package version to `0.6.3`; source data schema remains `13` and local roster schema remains `3`.
 - Removed the legacy combat-analysis framework, including capability derivation, trace generation, formation card projection, unmet-requirement routing, the synergy report script, and generated expected-interaction/unresolved-mechanic context files.
 - Simplified canonical abilities to descriptive source data: stable IDs, names, unlock metadata, hard position requirements, verification, evidence, tags, and raw verified wording.
 - Replaced the Data Status capability matrix with current dragon/profile coverage.

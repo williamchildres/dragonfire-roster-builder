@@ -108,6 +108,12 @@
     "verification": "verified"
   },
   {
+    "id": "mirage",
+    "term": "Mirage",
+    "definition": "Stack status used by Tashix. Each stack increases Tashix Fire Damage Dealt by 2.5%. Maximum 10 stacks.",
+    "verification": "verified"
+  },
+  {
     "id": "evade",
     "term": "Evade",
     "definition": "Gives each incoming damage instance a chance to be ignored.",

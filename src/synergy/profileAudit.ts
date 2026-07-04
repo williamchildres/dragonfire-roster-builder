@@ -71,9 +71,6 @@ const review = (
 
 export const metadataOnlyDragonIds = [
   'solstryker',
-  'tashix',
-  'velar',
-  'zivern',
   'antares',
   'shimmer',
   'jagadrix',
@@ -439,7 +436,7 @@ export const simpleSynergyAbilityReviews = [
   ),
   review('shadowsong', 'shadowsong-ensnare', 'habit', noCross('Enemy Instinct and Initiative reductions have no current pair-specific payoff.')),
   review('shadowsong', 'shadowsong-blazing-onslaught', 'habit', represented(['shadowsong-blazing-onslaught-vulnerability'], 'The habit increases enemy Fire and non-Basic Physical Damage Received.')),
-  review('shadowsong', 'shadowsong-scorched-earth', 'habit', represented(['shadowsong-scorched-earth-vulnerable', 'shadowsong-panic-payoff'], 'The habit provides generic vulnerability and also benefits from Panic without a duplicate visible Panic relationship.')),
+  review('shadowsong', 'shadowsong-scorched-earth', 'habit', represented(['shadowsong-scorched-earth-vulnerable', 'shadowsong-scorched-earth-vulnerable-status', 'shadowsong-panic-payoff'], 'The habit provides generic Damage Received vulnerability, emits Vulnerable setup for Zivern, and also benefits from Panic without a duplicate visible Panic relationship.')),
   review('shadowsong', 'shadowsong-dragons-intellect', 'habit', selfOnly('The Damage Received reduction and Intelligence increase apply only to Shadowsong.')),
   review('shadowsong', 'shadowsong-blazing-conductor', 'habit', represented(['shadowsong-blazing-conductor-burn'], 'The augmentation adds Burn setup and additional Fire Damage already covered by Breath of Fire output.')),
 
@@ -500,4 +497,122 @@ export const simpleSynergyAbilityReviews = [
   review('vermax', 'vermax-rallying-flame', 'habit', reinforces(['vermax-rallying-flame-tactical'], 'The habit reinforces Vermax as a Tactical Damage supporter without adding a separate visible relationship beyond Spreading Blaze.')),
   review('vermax', 'vermax-dragons-valor', 'habit', selfOnly('The Damage Received reduction and Strength increase apply only to Vermax.')),
   review('vermax', 'vermax-unyielding-resolve', 'habit', selfOnly('The Weakened payoff is explicitly self-owned and cannot be enabled by a teammate.')),
+
+  review(
+    'tashix',
+    'tashix-shimmering-mirage',
+    'command',
+    represented(['tashix-shimmering-mirage-fire'], 'Shimmering Mirage establishes Tashix as an Intelligence-based Fire Damage output; Mirage stacks remain self-owned raw wording.'),
+  ),
+  review(
+    'tashix',
+    'tashix-hunters-cunning',
+    'trait',
+    represented(
+      ['tashix-hunters-cunning-right-physical', 'tashix-hunters-cunning-recovery-payoff', 'tashix-hunters-cunning-vanguard'],
+      'The Vanguard trait gives hard Right Flank Physical support, improves Tashix incoming Recovery, and creates an exclusive Vanguard claim.',
+    ),
+  ),
+  review('tashix', 'tashix-enervate', 'habit', generalOnly('Enemy Tactical Damage reduction is useful prevention but has no current explicit teammate payoff.')),
+  review(
+    'tashix',
+    'tashix-dragons-cunning',
+    'habit',
+    represented(
+      ['tashix-dragons-cunning-physical', 'tashix-dragons-cunning-initiative-payoff'],
+      'Enemy Instinct reduction supports allied Physical Damage, and the Initiative scaling creates an Initiative-support payoff for Tashix.',
+    ),
+  ),
+  review('tashix', 'tashix-cunning-ruse', 'habit', generalOnly('Mirage is self-owned and Weakened has no current explicit teammate payoff in the simple profile set.')),
+  review(
+    'tashix',
+    'tashix-battle-guile',
+    'habit',
+    represented(['tashix-battle-guile-fire'], 'Enemy Initiative reduction supports allied Fire Damage because Initiative reduces Fire Damage Received.'),
+  ),
+  review(
+    'tashix',
+    'tashix-veiled-ambush',
+    'habit',
+    reinforces(['tashix-shimmering-mirage-fire'], 'The later Mirage payoff reinforces Tashix as a Fire Damage output without creating a duplicate visible Fire relationship.'),
+  ),
+
+  review(
+    'velar',
+    'velar-whirlwind',
+    'command',
+    represented(
+      ['velar-whirlwind-tactical', 'velar-whirlwind-advantage-damage'],
+      'Whirlwind deals Instinct-based Tactical Damage and represents Advantage through the current generic damage-channel support pattern; Cleanse is general support only.',
+    ),
+  ),
+  review(
+    'velar',
+    'velar-sentinels-wit',
+    'trait',
+    represented(
+      ['velar-sentinels-wit-left-stats', 'velar-sentinels-wit-vanguard'],
+      'The Vanguard trait gives hard Left Flank Instinct and Initiative support and creates an exclusive Vanguard claim.',
+    ),
+  ),
+  review('velar', 'velar-strategic-leader', 'habit', represented(['velar-strategic-leader-tactical'], 'The habit improves allied Tactical Damage; Vanguard is only a targeting preference with fallback.')),
+  review('velar', 'velar-quick-reflexes', 'habit', selfOnly('The Instinct and Initiative increases apply only to Velar.')),
+  review(
+    'velar',
+    'velar-gales-of-power',
+    'habit',
+    represented(['velar-gales-of-power-first-strike', 'velar-gales-of-power-slow'], 'The habit grants First-Strike setup and applies Slow setup.'),
+  ),
+  review(
+    'velar',
+    'velar-fierce-unity',
+    'habit',
+    represented(['velar-fierce-unity-stats', 'velar-fierce-unity-initiative-payoff'], 'The habit improves allied Strength and Instinct and creates an Initiative-support payoff through its scaling.'),
+  ),
+  review(
+    'velar',
+    'velar-breath-of-renewal',
+    'habit',
+    represented(['velar-breath-of-renewal-recovery'], 'The augmentation provides Initiative-enhanced Recovery; Cleanse remains general support only.'),
+  ),
+
+  review(
+    'zivern',
+    'zivern-silent-shade',
+    'command',
+    represented(
+      ['zivern-silent-shade-tactical', 'zivern-silent-shade-tactical-vulnerability'],
+      'Silent Shade deals Instinct-based Tactical Damage and increases enemy Tactical Damage Received for allied Tactical outputs.',
+    ),
+  ),
+  review(
+    'zivern',
+    'zivern-sentinels-wit',
+    'trait',
+    represented(
+      ['zivern-sentinels-wit-left-stats', 'zivern-sentinels-wit-vanguard'],
+      'The Vanguard trait gives hard Left Flank Instinct and Initiative support and creates an exclusive Vanguard claim.',
+    ),
+  ),
+  review(
+    'zivern',
+    'zivern-battle-mastery',
+    'habit',
+    represented(
+      ['zivern-battle-mastery-physical', 'zivern-battle-mastery-intelligence-payoff'],
+      'Enemy Instinct reduction supports allied Physical Damage, and Intelligence scaling creates an Intelligence-support payoff for Zivern.',
+    ),
+  ),
+  review('zivern', 'zivern-keen-instinct', 'habit', selfOnly('The Intelligence and Instinct increases apply only to Zivern.')),
+  review('zivern', 'zivern-fearsome-reach', 'habit', represented(['zivern-fearsome-reach-panic'], "The habit applies Panic and reinforces Battle Mastery's Physical-support and Intelligence-scaling paths without duplicate signals.")),
+  review('zivern', 'zivern-steel-shroud', 'habit', generalOnly('The allied defensive support remains visible as raw ability text but has no current explicit teammate payoff.')),
+  review(
+    'zivern',
+    'zivern-cloak-of-terror',
+    'habit',
+    represented(
+      ['zivern-cloak-of-terror-overwhelm', 'zivern-cloak-of-terror-vulnerable-payoff'],
+      'The habit applies Overwhelm as Control and explicitly benefits from Vulnerable setup.',
+    ),
+  ),
 ] as const satisfies readonly AbilitySynergyReview[];

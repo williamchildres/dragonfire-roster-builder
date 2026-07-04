@@ -70,9 +70,26 @@ describe('simple synergy foundation', () => {
       'Feskar',
       'Rhysarion',
       'Shadowsong',
+      'Tashix',
       'Vaeldra',
+      'Velar',
+      'Zivern',
       'Sheepstealer',
       'Vermax',
+    ]);
+    expect(metadataOnlyDragons.map((dragon) => dragon.name)).toEqual([
+      'Solstryker',
+      'Antares',
+      'Shimmer',
+      'Jagadrix',
+      'Bevlorin',
+      'Shadowrend',
+      'Thunderstrike',
+      'Vesper',
+      'Arulix',
+      'Nyrena',
+      'Dawnseeker',
+      'Arrax',
     ]);
     expect(metadataOnlyDragons.map((dragon) => dragon.id).sort()).toEqual([...metadataOnlyDragonIds].sort());
     expect(simpleSynergyProfiles.map((profile) => profile.dragonId).sort()).toEqual(
@@ -150,6 +167,47 @@ describe('simple synergy foundation', () => {
       expect(usedTags.has(tag), `${tag} is unused`).toBe(true);
     }
     expect(CONTROL_ALIAS_TAGS).toEqual(['status:stun', 'status:stagger', 'status:overwhelm', 'status:confusion']);
+  });
+
+  it('stores complete screenshot-verified records for the final three Epic dragons', () => {
+    for (const id of ['tashix', 'velar', 'zivern']) {
+      const dragon = dragons.find((candidate) => candidate.id === id)!;
+      const abilities = ([dragon.command, dragon.trait, ...dragon.habits] as Array<AbilityDefinition | null>).filter(
+        (ability): ability is AbilityDefinition => Boolean(ability),
+      );
+
+      expect(dragon.command, id).toBeTruthy();
+      expect(dragon.trait, id).toBeTruthy();
+      expect(dragon.habits.map((habit) => habit.unlockStarRank)).toEqual([2, 4, 6, 8, 10]);
+      expect(abilities).toHaveLength(7);
+      expect(abilities.every((ability) => ability.id && ability.rawDescription?.trim())).toBe(true);
+      expect(abilities.every((ability) => ability.verification.status === 'screenshot-verified')).toBe(true);
+      expect(abilities.every((ability) => ability.evidenceIds.length > 0)).toBe(true);
+      expect(Object.values(dragon.stats).every((value) => value === null)).toBe(true);
+      expect(JSON.stringify(dragon)).not.toMatch(/activationRoll|targetSelectionGroup|effectOptions|stackTransition|durationRounds/);
+    }
+
+    expect(dragons.find((dragon) => dragon.id === 'tashix')!.affinities).toMatchObject({
+      Archers: 'positive',
+      Siege: 'negative',
+      Cavalry: 'unknown',
+      Shieldbearers: 'unknown',
+      Spearmen: 'unknown',
+    });
+    expect(dragons.find((dragon) => dragon.id === 'velar')!.affinities).toMatchObject({
+      Shieldbearers: 'positive',
+      Cavalry: 'unknown',
+      Archers: 'unknown',
+      Spearmen: 'unknown',
+      Siege: 'unknown',
+    });
+    expect(dragons.find((dragon) => dragon.id === 'zivern')!.affinities).toMatchObject({
+      Archers: 'positive',
+      Siege: 'positive',
+      Cavalry: 'unknown',
+      Shieldbearers: 'unknown',
+      Spearmen: 'unknown',
+    });
   });
 
   it('matches the required Caraxes Slow to Syrax Strategic Revival relationship and progression-locks each side', () => {
@@ -414,6 +472,125 @@ describe('simple synergy foundation', () => {
     expect(resultsOfKind('amplifier-output', results)).toContainEqual(
       expect.objectContaining({ id: 'amplifier-output:syrax:stat:intelligence:caraxes' }),
     );
+  });
+
+  it('models the representative Tashix relationships without unsupported Mirage or Weakened paths', () => {
+    const fire = resultsOfKind('amplifier-output', evaluate(formation('syrax', 'tashix', null)));
+    expect(fire).toContainEqual(expect.objectContaining({ id: 'amplifier-output:syrax:damage:fire:tashix' }));
+    expect(fire).toContainEqual(expect.objectContaining({ id: 'amplifier-output:syrax:stat:intelligence:tashix' }));
+
+    expect(resultsOfKind('setup-payoff', evaluate(formation('malachite', 'tashix', null)))).toContainEqual(
+      expect.objectContaining({ id: 'setup-payoff:malachite:effect:recovery:tashix' }),
+    );
+    expect(resultsOfKind('amplifier-output', evaluate(formation('caraxes', 'tashix', 'venator')))).toContainEqual(
+      expect.objectContaining({ id: 'amplifier-output:tashix:damage:physical:venator' }),
+    );
+    expect(resultsOfKind('position-blocked', evaluate(formation('tashix', 'caraxes', 'venator'), {
+      ...unlockedProgression,
+      tashix: { starRank: 3, dragonLevel: 16 },
+    }))).toContainEqual(
+      expect.objectContaining({ explanation: "Tashix must be deployed in Vanguard for Hunter's Cunning." }),
+    );
+    expect(resultsOfKind('position-blocked', evaluate(formation('venator', 'tashix', 'syrax'), {
+      ...unlockedProgression,
+      tashix: { starRank: 3, dragonLevel: 16 },
+    }))).toContainEqual(
+      expect.objectContaining({ explanation: "Venator must be deployed in Right Flank to receive Tashix's Hunter's Cunning." }),
+    );
+    expect(resultsOfKind('amplifier-output', evaluate(formation('tashix', 'venator', null)))).toContainEqual(
+      expect.objectContaining({ id: 'amplifier-output:tashix:damage:physical:venator' }),
+    );
+    expect(resultsOfKind('amplifier-output', evaluate(formation('tashix', 'caraxes', null)))).toContainEqual(
+      expect.objectContaining({ id: 'amplifier-output:tashix:damage:fire:caraxes' }),
+    );
+    expect(resultsOfKind('amplifier-output', evaluate(formation('syrax', 'tashix', null)))).toContainEqual(
+      expect.objectContaining({ id: 'amplifier-output:syrax:stat:initiative:tashix' }),
+    );
+
+    const tashixSignals = simpleSynergyProfiles.find((profile) => profile.dragonId === 'tashix')!;
+    expect(allSignals(tashixSignals).map((signal) => signal.id)).not.toEqual(
+      expect.arrayContaining(['tashix-cunning-ruse-weakened', 'tashix-mirage']),
+    );
+    expect(resultsOfKind('amplifier-output', evaluate(formation('tashix', 'caraxes', null))).filter((result) => result.tag === 'damage:fire')).toHaveLength(1);
+  });
+
+  it('models the representative Velar relationships and keeps Advantage and Cleanse implicit', () => {
+    expect(resultsOfKind('amplifier-output', evaluate(formation('velar', 'kalspire', null)))).toContainEqual(
+      expect.objectContaining({ id: 'amplifier-output:velar:damage:tactical:kalspire' }),
+    );
+    expect(resultsOfKind('setup-payoff', evaluate(formation('velar', 'caraxes', null)))).toContainEqual(
+      expect.objectContaining({ id: 'setup-payoff:velar:status:first-strike:caraxes' }),
+    );
+    expect(resultsOfKind('setup-payoff', evaluate(formation('velar', 'syrax', null)))).toContainEqual(
+      expect.objectContaining({ id: 'setup-payoff:velar:status:slow:syrax' }),
+    );
+    expect(resultsOfKind('setup-payoff', evaluate(formation('velar', 'sheepstealer', null)))).toContainEqual(
+      expect.objectContaining({ id: 'setup-payoff:velar:effect:recovery:sheepstealer' }),
+    );
+    expect(resultsOfKind('amplifier-output', evaluate(formation('velar', 'venator', null)))).toContainEqual(
+      expect.objectContaining({ tag: 'stat:strength' }),
+    );
+    expect(resultsOfKind('amplifier-output', evaluate(formation('syrax', 'velar', null)))).toContainEqual(
+      expect.objectContaining({ id: 'amplifier-output:syrax:stat:initiative:velar' }),
+    );
+    expect(resultsOfKind('amplifier-output', evaluate(formation('kalspire', 'velar', null)))).toContainEqual(
+      expect.objectContaining({ id: 'amplifier-output:velar:damage:tactical:kalspire' }),
+    );
+    expect(resultsOfKind('position-blocked', evaluate(formation('velar', 'caraxes', 'syrax')))).toContainEqual(
+      expect.objectContaining({ explanation: "Velar must be deployed in Vanguard for Sentinel's Wit." }),
+    );
+    expect(resultsOfKind('position-blocked', evaluate(formation('caraxes', 'velar', 'syrax')))).toContainEqual(
+      expect.objectContaining({ explanation: "Syrax must be deployed in Left Flank to receive Velar's Sentinel's Wit." }),
+    );
+
+    const velarTags = allSignals(simpleSynergyProfiles.find((profile) => profile.dragonId === 'velar')!).flatMap(signalTags);
+    expect(velarTags).not.toEqual(expect.arrayContaining(['status:advantage', 'effect:cleanse']));
+  });
+
+  it('models the representative Zivern relationships including Overwhelm-as-Control and Vulnerable payoff', () => {
+    expect(resultsOfKind('amplifier-output', evaluate(formation('syrax', 'zivern', null)))).toContainEqual(
+      expect.objectContaining({ id: 'amplifier-output:syrax:stat:instinct:zivern' }),
+    );
+    expect(resultsOfKind('amplifier-output', evaluate(formation('zivern', 'kalspire', null)))).toContainEqual(
+      expect.objectContaining({ id: 'amplifier-output:zivern:damage:tactical:kalspire' }),
+    );
+    expect(resultsOfKind('amplifier-output', evaluate(formation('zivern', 'venator', null)))).toContainEqual(
+      expect.objectContaining({ id: 'amplifier-output:zivern:damage:physical:venator' }),
+    );
+    expect(resultsOfKind('setup-payoff', evaluate(formation('zivern', 'shadowsong', null)))).toContainEqual(
+      expect.objectContaining({ id: 'setup-payoff:zivern:status:panic:shadowsong' }),
+    );
+    expect(resultsOfKind('setup-payoff', evaluate(formation('zivern', 'rhysarion', null)))).toContainEqual(
+      expect.objectContaining({
+        id: 'setup-payoff:zivern:status:control:rhysarion',
+        explanation:
+          "Zivern's Cloak of Terror can apply Overwhelm, which counts as Control and improves Rhysarion's Dawnsong.",
+      }),
+    );
+    expect(resultsOfKind('setup-payoff', evaluate(formation('shadowsong', 'zivern', null)))).toContainEqual(
+      expect.objectContaining({
+        id: 'setup-payoff:shadowsong:status:vulnerable:zivern',
+        explanation: "Shadowsong can apply Vulnerable, which improves Zivern's Cloak of Terror.",
+      }),
+    );
+    expect(resultsOfKind('progression-locked', evaluate(formation('shadowsong', 'zivern', null), {
+      ...unlockedProgression,
+      shadowsong: { starRank: 5, dragonLevel: 16 },
+    }))).toContainEqual(expect.objectContaining({ tag: 'status:vulnerable', unlock: { minimumStarRank: 6 } }));
+    expect(resultsOfKind('progression-locked', evaluate(formation('shadowsong', 'zivern', null), {
+      ...unlockedProgression,
+      zivern: { starRank: 9, dragonLevel: 16 },
+    }))).toContainEqual(expect.objectContaining({ tag: 'status:vulnerable', unlock: { minimumStarRank: 10 } }));
+    expect(resultsOfKind('amplifier-output', evaluate(formation('syrax', 'zivern', null)))).toContainEqual(
+      expect.objectContaining({ id: 'amplifier-output:syrax:stat:intelligence:zivern' }),
+    );
+    expect(resultsOfKind('position-blocked', evaluate(formation('caraxes', 'zivern', 'syrax')))).toContainEqual(
+      expect.objectContaining({ explanation: "Syrax must be deployed in Left Flank to receive Zivern's Sentinel's Wit." }),
+    );
+
+    const zivernSignals = allSignals(simpleSynergyProfiles.find((profile) => profile.dragonId === 'zivern')!).map((signal) => signal.id);
+    expect(zivernSignals).not.toContain('zivern-steel-shroud-defense');
+    expect(zivernSignals).not.toContain('zivern-keen-instinct-self');
   });
 
   it('keeps base Syrax and Caraxes Fire active without emitting Fire future unlocks for reinforcing paths', () => {

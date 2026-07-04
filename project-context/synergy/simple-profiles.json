@@ -1164,6 +1164,18 @@
         },
         "friendlyScope": "formation",
         "confidence": "verified"
+      },
+      {
+        "id": "shadowsong-scorched-earth-vulnerable-status",
+        "tag": "status:vulnerable",
+        "abilityId": "shadowsong-scorched-earth",
+        "abilityName": "Scorched Earth",
+        "description": "applies Vulnerable",
+        "unlock": {
+          "minimumStarRank": 6
+        },
+        "friendlyScope": "formation",
+        "confidence": "verified"
       }
     ],
     "supports": [
@@ -1491,6 +1503,373 @@
           "minimumDragonLevel": 16
         },
         "description": "Warrior's Zeal requires Vanguard",
+        "confidence": "verified"
+      }
+    ]
+  },
+  {
+    "dragonId": "tashix",
+    "dragonName": "Tashix",
+    "outputs": [
+      {
+        "id": "tashix-shimmering-mirage-fire",
+        "tag": "damage:fire",
+        "tags": [
+          "damage:fire",
+          "stat:intelligence"
+        ],
+        "abilityId": "tashix-shimmering-mirage",
+        "abilityName": "Shimmering Mirage",
+        "description": "deals Fire Damage using Intelligence",
+        "confidence": "verified"
+      }
+    ],
+    "supports": [
+      {
+        "id": "tashix-hunters-cunning-right-physical",
+        "tag": "damage:physical",
+        "abilityId": "tashix-hunters-cunning",
+        "abilityName": "Hunter's Cunning",
+        "description": "improves Physical Damage of the Right Flank ally",
+        "unlock": {
+          "minimumDragonLevel": 16
+        },
+        "requiredSelfPosition": "vanguard",
+        "requiredRecipientPosition": "right-flank",
+        "friendlyScope": "formation",
+        "confidence": "verified"
+      },
+      {
+        "id": "tashix-dragons-cunning-physical",
+        "tag": "damage:physical",
+        "abilityId": "tashix-dragons-cunning",
+        "abilityName": "Dragon's Cunning",
+        "description": "reduces enemy Instinct to support allied Physical Damage",
+        "unlock": {
+          "minimumStarRank": 4
+        },
+        "friendlyScope": "formation",
+        "confidence": "verified"
+      },
+      {
+        "id": "tashix-battle-guile-fire",
+        "tag": "damage:fire",
+        "abilityId": "tashix-battle-guile",
+        "abilityName": "Battle Guile",
+        "description": "reduces enemy Initiative to support allied Fire Damage",
+        "unlock": {
+          "minimumStarRank": 8
+        },
+        "friendlyScope": "formation",
+        "confidence": "verified"
+      }
+    ],
+    "benefitsFrom": [
+      {
+        "id": "tashix-hunters-cunning-recovery-payoff",
+        "tag": "effect:recovery",
+        "abilityId": "tashix-hunters-cunning",
+        "abilityName": "Hunter's Cunning",
+        "description": "Hunter's Cunning improves incoming Recovery",
+        "unlock": {
+          "minimumDragonLevel": 16
+        },
+        "requiredSelfPosition": "vanguard",
+        "friendlyScope": "formation",
+        "confidence": "verified"
+      },
+      {
+        "id": "tashix-dragons-cunning-initiative-payoff",
+        "tag": "stat:initiative",
+        "abilityId": "tashix-dragons-cunning",
+        "abilityName": "Dragon's Cunning",
+        "description": "Initiative improves Dragon's Cunning and Battle Guile",
+        "unlock": {
+          "minimumStarRank": 4
+        },
+        "friendlyScope": "formation",
+        "confidence": "verified"
+      }
+    ],
+    "positionClaims": [
+      {
+        "id": "tashix-hunters-cunning-vanguard",
+        "abilityId": "tashix-hunters-cunning",
+        "abilityName": "Hunter's Cunning",
+        "requiredPosition": "vanguard",
+        "unlock": {
+          "minimumDragonLevel": 16
+        },
+        "description": "Hunter's Cunning requires Vanguard",
+        "confidence": "verified"
+      }
+    ]
+  },
+  {
+    "dragonId": "velar",
+    "dragonName": "Velar",
+    "outputs": [
+      {
+        "id": "velar-whirlwind-tactical",
+        "tag": "damage:tactical",
+        "tags": [
+          "damage:tactical",
+          "stat:instinct"
+        ],
+        "abilityId": "velar-whirlwind",
+        "abilityName": "Whirlwind",
+        "description": "deals Tactical Damage using Instinct",
+        "confidence": "verified"
+      },
+      {
+        "id": "velar-gales-of-power-first-strike",
+        "tag": "status:first-strike",
+        "abilityId": "velar-gales-of-power",
+        "abilityName": "Gales of Power",
+        "description": "grants First-Strike to teammates",
+        "unlock": {
+          "minimumStarRank": 6
+        },
+        "friendlyScope": "formation",
+        "confidence": "verified"
+      },
+      {
+        "id": "velar-gales-of-power-slow",
+        "tag": "status:slow",
+        "abilityId": "velar-gales-of-power",
+        "abilityName": "Gales of Power",
+        "description": "applies Slow",
+        "unlock": {
+          "minimumStarRank": 6
+        },
+        "friendlyScope": "formation",
+        "confidence": "verified"
+      },
+      {
+        "id": "velar-breath-of-renewal-recovery",
+        "tag": "effect:recovery",
+        "tags": [
+          "effect:recovery",
+          "stat:initiative"
+        ],
+        "abilityId": "velar-breath-of-renewal",
+        "abilityName": "Breath of Renewal",
+        "description": "provides Recovery enhanced by Initiative",
+        "unlock": {
+          "minimumStarRank": 10
+        },
+        "friendlyScope": "formation",
+        "confidence": "verified"
+      }
+    ],
+    "supports": [
+      {
+        "id": "velar-whirlwind-advantage-damage",
+        "tag": "damage:physical",
+        "tags": [
+          "damage:physical",
+          "damage:tactical",
+          "damage:fire"
+        ],
+        "abilityId": "velar-whirlwind",
+        "abilityName": "Whirlwind",
+        "description": "grants Advantage as generic Damage Dealt support",
+        "friendlyScope": "formation",
+        "confidence": "verified"
+      },
+      {
+        "id": "velar-strategic-leader-tactical",
+        "tag": "damage:tactical",
+        "abilityId": "velar-strategic-leader",
+        "abilityName": "Strategic Leader",
+        "description": "improves allied Tactical Damage",
+        "unlock": {
+          "minimumStarRank": 2
+        },
+        "friendlyScope": "formation",
+        "confidence": "verified"
+      },
+      {
+        "id": "velar-fierce-unity-stats",
+        "tag": "stat:strength",
+        "tags": [
+          "stat:strength",
+          "stat:instinct"
+        ],
+        "abilityId": "velar-fierce-unity",
+        "abilityName": "Fierce Unity",
+        "description": "improves allied Strength and Instinct",
+        "unlock": {
+          "minimumStarRank": 8
+        },
+        "friendlyScope": "formation",
+        "confidence": "verified"
+      },
+      {
+        "id": "velar-sentinels-wit-left-stats",
+        "tag": "stat:instinct",
+        "tags": [
+          "stat:instinct",
+          "stat:initiative"
+        ],
+        "abilityId": "velar-sentinels-wit",
+        "abilityName": "Sentinel's Wit",
+        "description": "improves Instinct and Initiative of the Left Flank ally",
+        "unlock": {
+          "minimumDragonLevel": 16
+        },
+        "requiredSelfPosition": "vanguard",
+        "requiredRecipientPosition": "left-flank",
+        "friendlyScope": "formation",
+        "confidence": "verified"
+      }
+    ],
+    "benefitsFrom": [
+      {
+        "id": "velar-fierce-unity-initiative-payoff",
+        "tag": "stat:initiative",
+        "abilityId": "velar-fierce-unity",
+        "abilityName": "Fierce Unity",
+        "description": "Initiative improves Fierce Unity and Breath of Renewal",
+        "unlock": {
+          "minimumStarRank": 8
+        },
+        "friendlyScope": "formation",
+        "confidence": "verified"
+      }
+    ],
+    "positionClaims": [
+      {
+        "id": "velar-sentinels-wit-vanguard",
+        "abilityId": "velar-sentinels-wit",
+        "abilityName": "Sentinel's Wit",
+        "requiredPosition": "vanguard",
+        "unlock": {
+          "minimumDragonLevel": 16
+        },
+        "description": "Sentinel's Wit requires Vanguard",
+        "confidence": "verified"
+      }
+    ]
+  },
+  {
+    "dragonId": "zivern",
+    "dragonName": "Zivern",
+    "outputs": [
+      {
+        "id": "zivern-silent-shade-tactical",
+        "tag": "damage:tactical",
+        "tags": [
+          "damage:tactical",
+          "stat:instinct"
+        ],
+        "abilityId": "zivern-silent-shade",
+        "abilityName": "Silent Shade",
+        "description": "deals Tactical Damage using Instinct",
+        "confidence": "verified"
+      },
+      {
+        "id": "zivern-fearsome-reach-panic",
+        "tag": "status:panic",
+        "abilityId": "zivern-fearsome-reach",
+        "abilityName": "Fearsome Reach",
+        "description": "applies Panic",
+        "unlock": {
+          "minimumStarRank": 6
+        },
+        "friendlyScope": "formation",
+        "confidence": "verified"
+      },
+      {
+        "id": "zivern-cloak-of-terror-overwhelm",
+        "tag": "status:overwhelm",
+        "abilityId": "zivern-cloak-of-terror",
+        "abilityName": "Cloak of Terror",
+        "description": "applies Overwhelm as Control",
+        "unlock": {
+          "minimumStarRank": 10
+        },
+        "friendlyScope": "formation",
+        "confidence": "verified"
+      }
+    ],
+    "supports": [
+      {
+        "id": "zivern-silent-shade-tactical-vulnerability",
+        "tag": "damage:tactical",
+        "abilityId": "zivern-silent-shade",
+        "abilityName": "Silent Shade",
+        "description": "increases enemy Tactical Damage Received",
+        "friendlyScope": "formation",
+        "confidence": "verified"
+      },
+      {
+        "id": "zivern-battle-mastery-physical",
+        "tag": "damage:physical",
+        "abilityId": "zivern-battle-mastery",
+        "abilityName": "Battle Mastery",
+        "description": "reduces enemy Instinct to support allied Physical Damage",
+        "unlock": {
+          "minimumStarRank": 2
+        },
+        "friendlyScope": "formation",
+        "confidence": "verified"
+      },
+      {
+        "id": "zivern-sentinels-wit-left-stats",
+        "tag": "stat:instinct",
+        "tags": [
+          "stat:instinct",
+          "stat:initiative"
+        ],
+        "abilityId": "zivern-sentinels-wit",
+        "abilityName": "Sentinel's Wit",
+        "description": "improves Instinct and Initiative of the Left Flank ally",
+        "unlock": {
+          "minimumDragonLevel": 16
+        },
+        "requiredSelfPosition": "vanguard",
+        "requiredRecipientPosition": "left-flank",
+        "friendlyScope": "formation",
+        "confidence": "verified"
+      }
+    ],
+    "benefitsFrom": [
+      {
+        "id": "zivern-battle-mastery-intelligence-payoff",
+        "tag": "stat:intelligence",
+        "abilityId": "zivern-battle-mastery",
+        "abilityName": "Battle Mastery",
+        "description": "Intelligence improves Battle Mastery and Fearsome Reach",
+        "unlock": {
+          "minimumStarRank": 2
+        },
+        "friendlyScope": "formation",
+        "confidence": "verified"
+      },
+      {
+        "id": "zivern-cloak-of-terror-vulnerable-payoff",
+        "tag": "status:vulnerable",
+        "abilityId": "zivern-cloak-of-terror",
+        "abilityName": "Cloak of Terror",
+        "description": "Vulnerable improves Cloak of Terror's Overwhelm application",
+        "unlock": {
+          "minimumStarRank": 10
+        },
+        "friendlyScope": "formation",
+        "confidence": "verified"
+      }
+    ],
+    "positionClaims": [
+      {
+        "id": "zivern-sentinels-wit-vanguard",
+        "abilityId": "zivern-sentinels-wit",
+        "abilityName": "Sentinel's Wit",
+        "requiredPosition": "vanguard",
+        "unlock": {
+          "minimumDragonLevel": 16
+        },
+        "description": "Sentinel's Wit requires Vanguard",
         "confidence": "verified"
       }
     ]
