@@ -12,10 +12,10 @@ import {
   Swords,
   Upload,
   Users,
-  X,
   type LucideIcon,
 } from 'lucide-react';
-import { useEffect, useMemo, useRef, useState, type ChangeEvent, type KeyboardEvent } from 'react';
+import { useEffect, useMemo, useState, type ChangeEvent } from 'react';
+import { DragonDetailsDialog } from './DragonDetailModal';
 import { SimpleFormationAnalysis } from './SimpleFormationAnalysis';
 import { SimpleFormationCard } from './SimpleFormationCard';
 import dragonfireHero from '../assets/dragonfire-hero.png';
@@ -23,17 +23,12 @@ import { databaseMetadata, repository } from '../data/databaseMetadata';
 import { dragons } from '../data/dragons';
 import { evidenceSources } from '../data/evidence';
 import { manualReviewRecords } from '../data/manualReviews';
-import { dragonObservationSnapshots } from '../data/observations';
-import { dragonStatDefinitions } from '../data/statDefinitions';
-import { statusGlossary } from '../data/statusGlossary';
 import { troopMatchupRules } from '../data/troopMatchups';
 import {
   BREEDS,
   FORMATION_POSITIONS,
   RARITIES,
-  TROOP_TYPES,
   VERIFICATION_STATUSES,
-  type AbilityDefinition,
   type Dragon,
   type DragonBreed,
   type DragonCollectionState,
@@ -57,7 +52,6 @@ import {
   emptyFormation,
   moveFormationDragon,
   parseSharedFormation,
-  positionLabels,
   preventDuplicateFormationPlacement,
   sanitizeFormation,
   type Formation,
@@ -67,6 +61,7 @@ import { buildSimpleFormationPresentation } from '../synergy/formationPresentati
 import { metadataOnlyDragonIds } from '../synergy/profileAudit';
 import { simpleSynergyProfiles } from '../synergy/profiles';
 import type { SimpleProgressionByDragonId } from '../synergy/types';
+export { RawWordingDisclosure } from './DragonDetailModal';
 
 type Section = 'home' | 'database' | 'roster' | 'team' | 'status' | 'about';
 type StatusMessage = { kind: 'success' | 'error' | 'info'; text: string };
@@ -975,429 +970,6 @@ function DragonCard({
   );
 }
 
-function DragonDetailsDialog({
-  dragon,
-  rosterEntry,
-  onClose,
-  onUpdateRoster,
-}: {
-  dragon: Dragon;
-  rosterEntry?: OwnedDragon;
-  onClose: () => void;
-  onUpdateRoster: (dragonId: string, patch: Partial<OwnedDragon>) => void;
-}) {
-  const dialogRef = useRef<HTMLDivElement>(null);
-  const previousFocus = useRef<HTMLElement | null>(null);
-
-  useEffect(() => {
-    previousFocus.current = document.activeElement instanceof HTMLElement ? document.activeElement : null;
-    dialogRef.current?.focus();
-    document.body.classList.add('modal-open');
-    return () => {
-      document.body.classList.remove('modal-open');
-      previousFocus.current?.focus();
-    };
-  }, []);
-
-  const handleKeyDown = (event: KeyboardEvent<HTMLDivElement>) => {
-    if (event.key === 'Escape') {
-      onClose();
-      return;
-    }
-
-    if (event.key !== 'Tab' || !dialogRef.current) {
-      return;
-    }
-
-    const focusable = dialogRef.current.querySelectorAll<HTMLElement>(
-      'a[href], button:not([disabled]), input:not([disabled]), select:not([disabled]), textarea:not([disabled]), [tabindex]:not([tabindex="-1"])',
-    );
-    const first = focusable[0];
-    const last = focusable[focusable.length - 1];
-    if (!first || !last) {
-      return;
-    }
-    if (event.shiftKey && document.activeElement === first) {
-      event.preventDefault();
-      last.focus();
-    } else if (!event.shiftKey && document.activeElement === last) {
-      event.preventDefault();
-      first.focus();
-    }
-  };
-
-  return (
-    <div className="modal-backdrop" role="presentation">
-      <div
-        aria-labelledby="dragon-dialog-title"
-        aria-modal="true"
-        className="details-dialog"
-        onKeyDown={handleKeyDown}
-        ref={dialogRef}
-        role="dialog"
-        tabIndex={-1}
-      >
-        <div className="dialog-header">
-          <div className="card-topline">
-            <DragonEmblem dragon={dragon} />
-            <div>
-              <p className="eyebrow">Dragon details</p>
-              <h2 id="dragon-dialog-title">{dragon.name}</h2>
-            </div>
-          </div>
-          <button type="button" className="icon-button" onClick={onClose} aria-label="Close details">
-            <X size={22} aria-hidden="true" />
-          </button>
-        </div>
-        <div className="details-grid">
-          <section className="panel">
-            <h3>Identity</h3>
-            <dl className="detail-list">
-              <div>
-                <dt>Rarity</dt>
-                <dd>{dragon.rarity}</dd>
-              </div>
-              <div>
-                <dt>Breed</dt>
-                <dd>{dragon.breed}</dd>
-              </div>
-              <div>
-                <dt>Verification status</dt>
-                <dd>{formatStatus(dragon.dataStatus)}</dd>
-              </div>
-              <div>
-                <dt>Roster source</dt>
-                <dd>{formatRosterSourceStatus(dragon.rosterSourceStatus)}</dd>
-              </div>
-              <div>
-                <dt>First observed in game</dt>
-                <dd>{dragon.firstObservedInGame ?? unknown}</dd>
-              </div>
-              <div>
-                <dt>Game version</dt>
-                <dd>{dragon.gameVersion ?? unknown}</dd>
-              </div>
-              <div>
-                <dt>Last verified</dt>
-                <dd>{dragon.lastVerified}</dd>
-              </div>
-            </dl>
-            {dragon.officialProfileUrl ? (
-              <a href={dragon.officialProfileUrl} target="_blank" rel="noreferrer" className="inline-link">
-                Official profile <ExternalLink size={14} aria-hidden="true" />
-              </a>
-            ) : (
-              <p className="notice-text">Official profile pending on the public roster site.</p>
-            )}
-          </section>
-          <section className="panel">
-            <h3>Ownership</h3>
-            <RosterFields dragon={dragon} rosterEntry={rosterEntry} onUpdateRoster={onUpdateRoster} />
-          </section>
-          <section className="panel wide-panel">
-            <h3>Command</h3>
-            {dragon.command ? (
-              <AbilityCard ability={dragon.command} rosterEntry={rosterEntry} onUpdateRoster={onUpdateRoster} />
-            ) : (
-              <p>{unknown}</p>
-            )}
-          </section>
-          <section className="panel wide-panel">
-            <h3>Star Trait</h3>
-            {dragon.trait ? (
-              <AbilityCard ability={dragon.trait} rosterEntry={rosterEntry} onUpdateRoster={onUpdateRoster} />
-            ) : (
-              <p>{unknown}</p>
-            )}
-          </section>
-          <section className="panel wide-panel">
-            <h3>Habits</h3>
-            {dragon.habits.length > 0 ? (
-              <div className="ability-stack">
-                {dragon.habits.map((habit) => (
-                  <AbilityCard
-                    ability={habit}
-                    key={habit.id}
-                    rosterEntry={rosterEntry}
-                    onUpdateRoster={onUpdateRoster}
-                  />
-                ))}
-              </div>
-            ) : (
-              <p>{unknown}</p>
-            )}
-          </section>
-          <section className="panel">
-            <h3>Troop Affinities</h3>
-            <dl className="detail-list">
-              {TROOP_TYPES.map((troop) => (
-                <div key={troop}>
-                  <dt>{troop}</dt>
-                  <dd>{dragon.affinities[troop] === 'unknown' ? unknown : dragon.affinities[troop]}</dd>
-                </div>
-              ))}
-            </dl>
-          </section>
-          <section className="panel">
-            <h3>Stat Definitions</h3>
-            <ul className="plain-list">
-              {dragonStatDefinitions.map((definition) => (
-                <li key={definition.id}>
-                  <strong>{definition.name}:</strong> {definition.description}{' '}
-                  {definition.canonicalFormulaKnown ? 'Formula known.' : 'Formula not yet verified.'}
-                </li>
-              ))}
-            </ul>
-          </section>
-          <ObservationPanel dragon={dragon} />
-          <section className="panel">
-            <h3>Structured Tags</h3>
-            <p>{dragon.tags.length > 0 ? dragon.tags.join(', ') : unknown}</p>
-          </section>
-          <section className="panel">
-            <h3>Status Glossary</h3>
-            {statusGlossary.some((entry) =>
-              dragon.tags.some((tag) => tag.toLowerCase().replaceAll('_', '-') === entry.id),
-            ) ? (
-              <ul className="plain-list">
-                {statusGlossary
-                  .filter((entry) =>
-                    dragon.tags.some((tag) => tag.toLowerCase().replaceAll('_', '-') === entry.id),
-                  )
-                  .map((entry) => (
-                    <li key={entry.id}>
-                      <strong>{entry.term}:</strong> {entry.definition}
-                    </li>
-                  ))}
-              </ul>
-            ) : (
-              <p>{unknown}</p>
-            )}
-          </section>
-          <section className="panel">
-            <h3>Evidence</h3>
-            <ul className="plain-list">
-              {evidenceSources
-                .filter(
-                  (source) =>
-                    source.id === 'official-roster-2026-06-23' ||
-                    [dragon.command, dragon.trait, ...dragon.habits]
-                      .filter(Boolean)
-                      .flatMap((ability) => ability?.evidenceIds ?? [])
-                      .includes(source.id) ||
-                    source.id.startsWith(dragon.id),
-                )
-                .map((source) => (
-                <li key={source.id}>
-                  {source.url ? (
-                    <a href={source.url} target="_blank" rel="noreferrer">
-                      {source.title}
-                    </a>
-                  ) : (
-                    <span>{source.title}</span>
-                  )}
-                  <span> - {formatStatus(source.verificationStatus)}</span>
-                </li>
-              ))}
-            </ul>
-          </section>
-        </div>
-      </div>
-    </div>
-  );
-}
-
-function AbilityCard({
-  ability,
-  rosterEntry,
-  onUpdateRoster,
-}: {
-  ability: AbilityDefinition;
-  rosterEntry?: OwnedDragon;
-  onUpdateRoster: (dragonId: string, patch: Partial<OwnedDragon>) => void;
-}) {
-  const starRank = rosterEntry?.starRank ?? null;
-  const locked =
-    ability.kind === 'habit' &&
-    ability.unlockStarRank !== null &&
-    (starRank === null || starRank < ability.unlockStarRank);
-  const habitLevel = rosterEntry?.habitLevels[ability.id] ?? null;
-
-  return (
-    <article className="ability-card">
-      <div className="card-topline">
-        <div>
-          <h4>{ability.name}</h4>
-          <p>
-            <span className="badge">{titleCase(ability.kind)}</span>
-            <span className="badge">{ability.abilityClass ? titleCase(ability.abilityClass) : 'Unknown Class'}</span>
-            <span className="badge">{verificationLabel(ability.verification.status)}</span>
-            {locked ? <span className="badge">Locked preview</span> : <span className="badge">Unlocked or available</span>}
-          </p>
-        </div>
-      </div>
-      <dl className="detail-list">
-        <div>
-          <dt>Unlock Star Rank</dt>
-          <dd>{ability.unlockStarRank ?? unknown}</dd>
-        </div>
-        <div>
-          <dt>Minimum Dragon Level</dt>
-          <dd>{ability.minimumDragonLevel ?? unknown}</dd>
-        </div>
-        <div>
-          <dt>Position requirement</dt>
-          <dd>{ability.positionRequirement ? positionLabels[ability.positionRequirement] : unknown}</dd>
-        </div>
-        <div>
-          <dt>Evidence</dt>
-          <dd>{ability.evidenceIds.length > 0 ? ability.evidenceIds.length : unknown}</dd>
-        </div>
-        {ability.kind === 'habit' ? (
-          <div>
-            <dt>Saved Habit Level</dt>
-            <dd>{habitLevel ?? 'Not recorded'}</dd>
-          </div>
-        ) : null}
-      </dl>
-      {ability.kind === 'habit' ? (
-        <label>
-          Habit Level
-          <select
-            value={habitLevel ?? ''}
-            onChange={(event) =>
-              onUpdateRoster(ability.dragonId, {
-                habitLevels: {
-                  ...(rosterEntry?.habitLevels ?? {}),
-                  [ability.id]: event.target.value === '' ? null : (Number(event.target.value) as 0 | 1 | 2 | 3 | 4 | 5),
-                },
-              })
-            }
-          >
-            <option value="">Not recorded</option>
-            {[0, 1, 2, 3, 4, 5].map((level) => (
-              <option key={level} value={level}>
-                {level}
-              </option>
-            ))}
-          </select>
-        </label>
-      ) : null}
-      {ability.tags.length > 0 ? (
-        <p>
-          <strong>Tags:</strong> {ability.tags.join(', ')}
-        </p>
-      ) : null}
-      <RawWordingDisclosure rawText={ability.rawDescription} />
-    </article>
-  );
-}
-
-export function RawWordingDisclosure({ rawText }: { rawText: string | null }) {
-  if (!rawText) {
-    return null;
-  }
-
-  const paragraphs = rawText
-    .split(/\n\s*\n+/)
-    .map((paragraph) => paragraph.trim())
-    .filter(Boolean);
-
-  if (paragraphs.length === 0) {
-    return null;
-  }
-
-  return (
-    <details>
-      <summary>Raw verified wording</summary>
-      {paragraphs.map((paragraph) => (
-        <p key={paragraph}>{paragraph}</p>
-      ))}
-    </details>
-  );
-}
-
-function ObservationPanel({ dragon }: { dragon: Dragon }) {
-  const observation = dragonObservationSnapshots.find((snapshot) => snapshot.dragonId === dragon.id);
-  return (
-    <section className="panel">
-      <h3>Account Observation</h3>
-      {observation ? (
-        <>
-          <p className="notice-text">Account-specific observation - not a canonical base-stat record.</p>
-          <dl className="detail-list">
-            <div>
-              <dt>Dragon Level</dt>
-              <dd>{observation.dragonLevel ?? unknown}</dd>
-            </div>
-            <div>
-              <dt>Star Rank</dt>
-              <dd>{observation.starRank ?? unknown}</dd>
-            </div>
-            <div>
-              <dt>Star Progress</dt>
-              <dd>
-                {observation.starProgressCurrent !== null && observation.starProgressRequired !== null
-                  ? `${observation.starProgressCurrent} / ${observation.starProgressRequired}`
-                  : unknown}
-              </dd>
-            </div>
-            <div>
-              <dt>Collection</dt>
-              <dd>
-                {observation.collection
-                  ? `${formatCollectionState(observation.collection.state)}${
-                      observation.collection.shardsCurrent !== null &&
-                      observation.collection.shardsRequired !== null
-                        ? ` (${observation.collection.shardsCurrent} / ${observation.collection.shardsRequired} shards)`
-                        : ''
-                    }`
-                  : unknown}
-              </dd>
-            </div>
-            {Object.entries(observation.combatStats).map(([key, value]) => (
-              <div key={key}>
-                <dt>{titleCase(key)}</dt>
-                <dd>{value ?? unknown}</dd>
-              </div>
-            ))}
-            <div>
-              <dt>March Speed</dt>
-              <dd>{observation.marchSpeed ?? unknown}</dd>
-            </div>
-            <div>
-              <dt>Stamina</dt>
-              <dd>
-                {observation.staminaCurrent !== null && observation.staminaMaximum !== null
-                  ? `${observation.staminaCurrent} / ${observation.staminaMaximum}`
-                  : unknown}
-              </dd>
-            </div>
-            <div>
-              <dt>Troop Capacity</dt>
-              <dd>{observation.troopCapacity ?? unknown}</dd>
-            </div>
-            <div>
-              <dt>Dragon Power</dt>
-              <dd>{observation.dragonPower ?? unknown}</dd>
-            </div>
-            <div>
-              <dt>Modifier context known</dt>
-              <dd>{observation.modifierContextKnown ? 'Known' : 'Unknown'}</dd>
-            </div>
-            <div>
-              <dt>Canonical</dt>
-              <dd>No</dd>
-            </div>
-          </dl>
-        </>
-      ) : (
-        <p>{unknown}</p>
-      )}
-    </section>
-  );
-}
-
 function RosterFields({
   dragon,
   rosterEntry,
@@ -1699,13 +1271,6 @@ function getInitialFormation(): Formation {
     window.localStorage.removeItem('dragonfire-roster-lab:last-team');
     return emptyFormation();
   }
-}
-
-function verificationLabel(status: string) {
-  return status
-    .split('-')
-    .map((part) => titleCase(part))
-    .join(' ');
 }
 
 function formatStatus(status: VerificationStatus) {
