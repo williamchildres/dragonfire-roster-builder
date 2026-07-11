@@ -32,6 +32,7 @@ export const populatedDragonIds = [
   'tashix',
   'velar',
   'zivern',
+  'tessarion',
 ] as const;
 
 export interface ProjectContextBuildOptions {

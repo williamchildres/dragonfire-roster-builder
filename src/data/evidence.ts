@@ -166,6 +166,16 @@ export const evidenceSources: EvidenceSource[] = [
     ['zivern-fearsome-reach-2026-07-03', 'Zivern Fearsome Reach'],
     ['zivern-steel-shroud-2026-07-03', 'Zivern Steel Shroud'],
     ['zivern-cloak-of-terror-2026-07-03', 'Zivern Cloak of Terror'],
+    ['tessarion-main-screen-2026-07-10', 'Tessarion main screen'],
+    ['tessarion-cobalt-flame-page-1-2026-07-10', 'Tessarion Cobalt Flame page 1'],
+    ['tessarion-cobalt-flame-fire-details-2026-07-10', 'Tessarion Cobalt Flame Fire details'],
+    ['tessarion-cobalt-flame-physical-details-2026-07-10', 'Tessarion Cobalt Flame Physical details'],
+    ['tessarion-champions-brilliance-2026-07-10', "Tessarion Champion's Brilliance"],
+    ['tessarion-sharpened-beauty-2026-07-10', 'Tessarion Sharpened Beauty'],
+    ['tessarion-blazing-leader-2026-07-10', 'Tessarion Blazing Leader'],
+    ['tessarion-molten-armor-2026-07-10', 'Tessarion Molten Armor'],
+    ['tessarion-clever-maneuver-2026-07-10', 'Tessarion Clever Maneuver'],
+    ['tessarion-the-blue-queen-2026-07-10', 'Tessarion The Blue Queen'],
   ] as const
   ).map(([id, title]) => ({
     id,
@@ -174,9 +184,9 @@ export const evidenceSources: EvidenceSource[] = [
     description:
       'Descriptive evidence label only. Screenshot files are not committed to the public repository.',
     url: null,
-    capturedAt: id.includes('2026-07-03') ? '2026-07-03' : id.includes('2026-06-26') ? '2026-06-26' : id.includes('2026-06-25') ? '2026-06-25' : id.includes('2026-06-24') ? '2026-06-24' : '2026-06-23',
+    capturedAt: id.includes('2026-07-10') ? '2026-07-10' : id.includes('2026-07-03') ? '2026-07-03' : id.includes('2026-06-26') ? '2026-06-26' : id.includes('2026-06-25') ? '2026-06-25' : id.includes('2026-06-24') ? '2026-06-24' : '2026-06-23',
     language: 'English' as const,
-    gameVersion: id.includes('2026-07-03') ? null : databaseMetadata.currentDocumentedGameBuild,
+    gameVersion: id.includes('2026-07-03') || id.includes('2026-07-10') ? null : databaseMetadata.currentDocumentedGameBuild,
     submittedBy: 'repository owner',
     reviewedManually: true,
     verificationStatus: 'community-verified' as const,
