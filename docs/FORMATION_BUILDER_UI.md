@@ -50,6 +50,8 @@ Single selected dragons do not show missing-enabler warnings. Repeated ability p
 
 Hard recipient-position support only applies when verified wording requires that recipient position. Preferred targeting with fallback is not treated as a hard block.
 
+Placement requirements are evaluated before progression. A relationship that is both position-blocked and progression-locked appears as a placement issue; once positioned correctly, it may then appear as a Future unlock until the saved progression requirement is met.
+
 ## Non-Goals
 
 The Formation Builder does not calculate exact combat rounds, proc timing, activation percentages, target probability, stack behavior, damage formulas, expected damage, win probability, numerical scores, or optimizer recommendations.

@@ -3,12 +3,14 @@ import { dragons } from '../data/dragons';
 import type { AbilityDefinition } from '../models/dragon';
 import { evaluateFormation } from '../synergy/evaluateFormation';
 import { metadataOnlyDragonIds, simpleSynergyAbilityReviews } from '../synergy/profileAudit';
+import { areAdjacent } from '../synergy/positionRules';
 import { simpleSynergyProfiles } from '../synergy/profiles';
-import { CONTROL_ALIAS_TAGS, SYNERGY_TAG_LABELS, SYNERGY_TAGS } from '../synergy/tags';
+import { CONTROL_ALIAS_TAGS, SYNERGY_TAG_LABELS, SYNERGY_TAGS, type SynergyTag } from '../synergy/tags';
 import type {
   DragonSynergyProfile,
   SimpleFormation,
   SimpleProgressionByDragonId,
+  SimpleSynergyResult,
   SimpleSynergyResultKind,
   SynergySignal,
 } from '../synergy/types';
@@ -474,6 +476,85 @@ describe('simple synergy foundation', () => {
     );
   });
 
+  it('prioritizes provider placement over progression locks for one candidate path', () => {
+    const profiles = singleSupportPathProfiles({
+      unlock: { minimumDragonLevel: 16 },
+      requiredSelfPosition: 'vanguard',
+    });
+    const results = evaluate(formation('supporter', 'producer', null), { supporter: { dragonLevel: 1 } }, profiles);
+
+    expect(resultsOfKind('position-blocked', results)).toEqual([
+      expect.objectContaining({
+        explanation: 'Supporter must be deployed in Vanguard for Locked Fire.',
+      }),
+    ]);
+    expect(resultsOfKind('progression-locked', results)).toHaveLength(0);
+  });
+
+  it('prioritizes recipient placement over progression locks for one candidate path', () => {
+    const profiles = singleSupportPathProfiles({
+      unlock: { minimumDragonLevel: 16 },
+      requiredRecipientPosition: 'right-flank',
+    });
+    const results = evaluate(formation('producer', 'supporter', null), { supporter: { dragonLevel: 1 } }, profiles);
+
+    expect(resultsOfKind('position-blocked', results)).toEqual([
+      expect.objectContaining({
+        explanation: "Producer must be deployed in Right Flank to receive Supporter's Locked Fire.",
+      }),
+    ]);
+    expect(resultsOfKind('progression-locked', results)).toHaveLength(0);
+  });
+
+  it('combines provider and recipient placement blockers once before progression locks', () => {
+    const profiles = singleSupportPathProfiles({
+      unlock: { minimumDragonLevel: 16 },
+      requiredSelfPosition: 'vanguard',
+      requiredRecipientPosition: 'right-flank',
+    });
+    const results = evaluate(formation(null, 'producer', 'supporter'), { supporter: { dragonLevel: 1 } }, profiles);
+
+    expect(resultsOfKind('position-blocked', results)).toEqual([
+      expect.objectContaining({
+        explanation:
+          'Supporter must be deployed in Vanguard, and Producer must be deployed in Right Flank, for Locked Fire to support Producer Fire.',
+      }),
+    ]);
+    expect(resultsOfKind('progression-locked', results)).toHaveLength(0);
+  });
+
+  it('uses adjacency placement before progression locks when no hard position fails', () => {
+    const profiles = singleSupportPathProfiles({
+      unlock: { minimumDragonLevel: 16 },
+      friendlyScope: 'adjacent',
+    });
+    const results = evaluate(formation('supporter', null, 'producer'), { supporter: { dragonLevel: 1 } }, profiles);
+
+    expect(resultsOfKind('position-blocked', results)).toEqual([
+      expect.objectContaining({
+        explanation: 'Supporter and Producer are not adjacent in this formation.',
+      }),
+    ]);
+    expect(resultsOfKind('progression-locked', results)).toHaveLength(0);
+  });
+
+  it('keeps correctly positioned locked candidate paths in future unlocks', () => {
+    const profiles = singleSupportPathProfiles({
+      unlock: { minimumDragonLevel: 16 },
+      requiredSelfPosition: 'vanguard',
+      requiredRecipientPosition: 'right-flank',
+    });
+    const results = evaluate(formation(null, 'supporter', 'producer'), { supporter: { dragonLevel: 1 } }, profiles);
+
+    expect(resultsOfKind('progression-locked', results)).toEqual([
+      expect.objectContaining({
+        explanation:
+          "Supporter's Locked Fire Fire Damage support for Producer's Producer Fire unlocks when Supporter reaches Dragon Level 16.",
+      }),
+    ]);
+    expect(resultsOfKind('position-blocked', results)).toHaveLength(0);
+  });
+
   it('groups position conflicts and missing enablers deterministically', () => {
     const conflict = resultsOfKind('position-conflict', evaluate(formation('daemoros', 'syrax', 'caraxes')));
     expect(conflict).toEqual([
@@ -707,6 +788,49 @@ describe('simple synergy foundation', () => {
     expect(explanations.join('\n')).not.toContain("Caraxes's Hunter's Wrath Initiative support for Syrax's Strategic Revival");
   });
 
+  it('keeps blocked-and-locked Formation A relationships under placement issues', () => {
+    const results = evaluate(formation('velar', 'caraxes', 'syrax'), {
+      ...unlockedProgression,
+      velar: { starRank: 6, dragonLevel: 15 },
+      caraxes: { starRank: 5, dragonLevel: 15 },
+      syrax: { starRank: 6, dragonLevel: 15 },
+    });
+    const futureUnlockText = resultsOfKind('progression-locked', results).map((result) => result.explanation).join('\n');
+    const allText = results.map((result) => result.explanation).join('\n');
+
+    expect(resultsOfKind('position-blocked', results)).toContainEqual(
+      expect.objectContaining({
+        id: 'position-blocked:amplifier-output:caraxes:stat:initiative:velar',
+        explanation: "Velar must be deployed in Right Flank to receive Caraxes's Hunter's Wrath.",
+      }),
+    );
+    expect(futureUnlockText).not.toContain("Caraxes's Hunter's Wrath Initiative support for Velar's Breath of Renewal");
+    expect(results.filter((result) => result.id.includes('caraxes:stat:initiative:velar'))).toHaveLength(1);
+
+    expect(resultsOfKind('setup-payoff', results)).toEqual(
+      expect.arrayContaining([
+        expect.objectContaining({ id: 'setup-payoff:syrax:status:first-strike:caraxes' }),
+        expect.objectContaining({ id: 'setup-payoff:velar:status:first-strike:caraxes' }),
+        expect.objectContaining({ id: 'setup-payoff:velar:status:slow:syrax' }),
+      ]),
+    );
+    expect(resultsOfKind('amplifier-output', results)).toEqual(
+      expect.arrayContaining([
+        expect.objectContaining({ id: 'amplifier-output:syrax:damage:fire:caraxes' }),
+        expect.objectContaining({ id: 'amplifier-output:syrax:stat:instinct:velar' }),
+        expect.objectContaining({ id: 'amplifier-output:syrax:stat:intelligence:caraxes' }),
+      ]),
+    );
+    expect(resultsOfKind('progression-locked', results)).toEqual(
+      expect.arrayContaining([
+        expect.objectContaining({ id: 'progression-locked:amplifier-output:syrax:damage:tactical:velar' }),
+        expect.objectContaining({ id: 'progression-locked:setup-payoff:caraxes:status:slow:syrax' }),
+      ]),
+    );
+    expect(allText).not.toContain("Velar's Flight Mastery");
+    expect(results.some((result) => new Set(result.dragonIds).size !== result.dragonIds.length)).toBe(false);
+  });
+
   it('models the representative Zivern relationships including Overwhelm-as-Control and Vulnerable payoff', () => {
     expect(resultsOfKind('amplifier-output', evaluate(formation('syrax', 'zivern', null)))).toContainEqual(
       expect.objectContaining({ id: 'amplifier-output:syrax:stat:instinct:zivern' }),
@@ -776,6 +900,85 @@ describe('simple synergy foundation', () => {
     expect(explanations).not.toContain("Shadowsong provides deals Fire Damage using Intelligence, which improves Zivern's Battle Mastery.");
   });
 
+  it('keeps blocked-and-locked Formation B relationships under placement issues', () => {
+    const results = evaluate(formation('zivern', 'rhysarion', 'shadowsong'), {
+      ...unlockedProgression,
+      zivern: { starRank: 10, dragonLevel: 15 },
+      rhysarion: { starRank: 10, dragonLevel: 15 },
+      shadowsong: { starRank: 6, dragonLevel: 15 },
+    });
+    const futureUnlockText = resultsOfKind('progression-locked', results).map((result) => result.explanation).join('\n');
+    const placementText = resultsOfKind('position-blocked', results).map((result) => result.explanation).join('\n');
+
+    expect(resultsOfKind('position-blocked', results)).toEqual(
+      expect.arrayContaining([
+        expect.objectContaining({
+          id: 'position-blocked:amplifier-output:rhysarion:damage:tactical:zivern',
+          explanation: "Zivern must be deployed in Right Flank to receive Rhysarion's Champion's Vigor.",
+        }),
+        expect.objectContaining({
+          id: 'position-blocked:amplifier-output:shadowsong:stat:strength:rhysarion',
+          explanation:
+            "Shadowsong must be deployed in Vanguard, and Rhysarion must be deployed in Right Flank, for Hunter's Wrath to support Dawnsong.",
+        }),
+      ]),
+    );
+    expect(placementText.match(/Hunter's Wrath to support Dawnsong/g)).toHaveLength(1);
+    expect(futureUnlockText).not.toContain("Rhysarion's Champion's Vigor Tactical Damage support for Zivern's Silent Shade");
+    expect(futureUnlockText).not.toContain("Shadowsong's Hunter's Wrath Strength support for Rhysarion's Dawnsong");
+
+    expect(resultsOfKind('progression-locked', results)).toEqual(
+      expect.arrayContaining([
+        expect.objectContaining({ id: 'progression-locked:amplifier-output:rhysarion:damage:fire:shadowsong' }),
+        expect.objectContaining({ id: 'progression-locked:amplifier-output:rhysarion:damage:physical:shadowsong' }),
+      ]),
+    );
+    expect(resultsOfKind('setup-payoff', results).map((result) => result.id).sort()).toEqual([
+      'setup-payoff:shadowsong:status:vulnerable:zivern',
+      'setup-payoff:zivern:status:control:rhysarion',
+      'setup-payoff:zivern:status:panic:shadowsong',
+    ]);
+    expect(resultsOfKind('missing-enabler', results)).toContainEqual(
+      expect.objectContaining({ id: 'missing-enabler:zivern:stat:intelligence' }),
+    );
+    expect(results.map((result) => result.id)).not.toEqual(
+      expect.arrayContaining([
+        'setup-payoff:rhysarion:stat:intelligence:zivern',
+        'setup-payoff:shadowsong:stat:intelligence:zivern',
+      ]),
+    );
+  });
+
+  it('emits progression locks only for candidate paths whose positions are already valid', () => {
+    const cases: Array<{ selectedFormation: SimpleFormation; progression: SimpleProgressionByDragonId }> = [
+      {
+        selectedFormation: formation('velar', 'caraxes', 'syrax'),
+        progression: {
+          ...unlockedProgression,
+          velar: { starRank: 6, dragonLevel: 15 },
+          caraxes: { starRank: 5, dragonLevel: 15 },
+          syrax: { starRank: 6, dragonLevel: 15 },
+        },
+      },
+      {
+        selectedFormation: formation('zivern', 'rhysarion', 'shadowsong'),
+        progression: {
+          ...unlockedProgression,
+          zivern: { starRank: 10, dragonLevel: 15 },
+          rhysarion: { starRank: 10, dragonLevel: 15 },
+          shadowsong: { starRank: 6, dragonLevel: 15 },
+        },
+      },
+    ];
+
+    for (const { selectedFormation, progression } of cases) {
+      const results = evaluate(selectedFormation, progression);
+      for (const result of resultsOfKind('progression-locked', results)) {
+        expect(hasPositionValidCandidatePath(result, selectedFormation), result.explanation).toBe(true);
+      }
+    }
+  });
+
   it('keeps base Syrax and Caraxes Fire active without emitting Fire future unlocks for reinforcing paths', () => {
     const results = evaluate(formation('syrax', 'caraxes', null), {
       ...unlockedProgression,
@@ -809,6 +1012,20 @@ describe('simple synergy foundation', () => {
         abilityIds: ['producer-fire', 'supporter-active-fire'],
       }),
     ]);
+  });
+
+  it('prefers an active candidate over a locked alternate path for the same amplifier relationship', () => {
+    const profiles = pathPrecedenceProfiles({ includeBlocked: false });
+    const results = evaluate(formation('supporter', 'producer', null), {}, profiles);
+
+    expect(resultsOfKind('amplifier-output', results)).toEqual([
+      expect.objectContaining({
+        id: 'amplifier-output:supporter:damage:fire:producer',
+        abilityIds: ['producer-fire', 'supporter-active-fire'],
+      }),
+    ]);
+    expect(resultsOfKind('position-blocked', results)).toHaveLength(0);
+    expect(resultsOfKind('progression-locked', results)).toHaveLength(0);
   });
 
   it('emits one placement issue when every unlocked candidate path is blocked', () => {
@@ -1018,6 +1235,147 @@ describe('simple synergy foundation', () => {
   });
 
 });
+
+function hasPositionValidCandidatePath(result: SimpleSynergyResult, selectedFormation: SimpleFormation): boolean {
+  const parsed = parseRelationshipResultId(result);
+  const provider = simpleSynergyProfiles.find((profile) => profile.dragonId === parsed.providerId);
+  const beneficiary = simpleSynergyProfiles.find((profile) => profile.dragonId === parsed.beneficiaryId);
+  const providerPosition = findFormationPosition(selectedFormation, parsed.providerId);
+  const beneficiaryPosition = findFormationPosition(selectedFormation, parsed.beneficiaryId);
+  if (!provider || !beneficiary || !providerPosition || !beneficiaryPosition) {
+    return false;
+  }
+
+  const providerSignals = parsed.kind === 'setup-payoff' ? provider.outputs : provider.supports;
+  const beneficiarySignals =
+    parsed.kind === 'setup-payoff'
+      ? beneficiary.benefitsFrom
+      : [
+          ...beneficiary.outputs,
+          ...beneficiary.benefitsFrom.filter((signal) => signal.tag.startsWith('stat:')),
+        ];
+
+  return providerSignals.some((providerSignal) =>
+    beneficiarySignals.some((beneficiarySignal) => {
+      if (!result.abilityIds.includes(providerSignal.abilityId) || !result.abilityIds.includes(beneficiarySignal.abilityId)) {
+        return false;
+      }
+
+      const semanticTag =
+        parsed.kind === 'setup-payoff'
+          ? matchingSemanticTag(providedTags(providerSignal), providedTags(beneficiarySignal))
+          : matchingSemanticTag(providedTags(providerSignal), supportableTags(beneficiarySignal));
+
+      return (
+        semanticTag === parsed.tag &&
+        positionsAreValid(providerSignal, providerPosition, beneficiarySignal, beneficiaryPosition)
+      );
+    }),
+  );
+}
+
+function parseRelationshipResultId(result: SimpleSynergyResult): {
+  kind: 'setup-payoff' | 'amplifier-output';
+  providerId: string;
+  tag: SynergyTag;
+  beneficiaryId: string;
+} {
+  const parts = result.id.replace(/^progression-locked:/, '').split(':');
+  return {
+    kind: parts[0] as 'setup-payoff' | 'amplifier-output',
+    providerId: parts[1]!,
+    tag: parts.slice(2, -1).join(':') as SynergyTag,
+    beneficiaryId: parts[parts.length - 1]!,
+  };
+}
+
+function findFormationPosition(selectedFormation: SimpleFormation, dragonId: string) {
+  return Object.entries(selectedFormation).find(([, selectedDragonId]) => selectedDragonId === dragonId)?.[0] as
+    | keyof SimpleFormation
+    | undefined;
+}
+
+function positionsAreValid(
+  providerSignal: SynergySignal,
+  providerPosition: keyof SimpleFormation,
+  beneficiarySignal: SynergySignal,
+  beneficiaryPosition: keyof SimpleFormation,
+): boolean {
+  return (
+    (providerSignal.requiredSelfPosition === undefined || providerSignal.requiredSelfPosition === providerPosition) &&
+    (beneficiarySignal.requiredSelfPosition === undefined || beneficiarySignal.requiredSelfPosition === beneficiaryPosition) &&
+    (providerSignal.requiredRecipientPosition === undefined || providerSignal.requiredRecipientPosition === beneficiaryPosition) &&
+    (providerSignal.friendlyScope !== 'adjacent' || areAdjacent(providerPosition, beneficiaryPosition))
+  );
+}
+
+function providedTags(signal: SynergySignal): SynergyTag[] {
+  return signal.tags ?? [signal.tag];
+}
+
+function supportableTags(signal: SynergySignal): SynergyTag[] {
+  return [...new Set([...providedTags(signal), ...(signal.scalesWith ?? [])])];
+}
+
+function matchingSemanticTag(providerTags: SynergyTag[], beneficiaryTags: SynergyTag[]): SynergyTag | null {
+  for (const providerTag of providerTags) {
+    for (const beneficiaryTag of beneficiaryTags) {
+      if (providerTag === beneficiaryTag) {
+        return providerTag;
+      }
+
+      if (beneficiaryTag === 'status:control' && CONTROL_ALIAS_TAGS.includes(providerTag as (typeof CONTROL_ALIAS_TAGS)[number])) {
+        return 'status:control';
+      }
+    }
+  }
+
+  return null;
+}
+
+function singleSupportPathProfiles(
+  supportOverrides: Partial<
+    Pick<SynergySignal, 'unlock' | 'requiredSelfPosition' | 'requiredRecipientPosition' | 'friendlyScope'>
+  >,
+): DragonSynergyProfile[] {
+  return [
+    {
+      dragonId: 'supporter',
+      dragonName: 'Supporter',
+      outputs: [],
+      supports: [
+        {
+          id: 'supporter-locked-fire',
+          tag: 'damage:fire',
+          abilityId: 'supporter-locked-fire',
+          abilityName: 'Locked Fire',
+          description: 'improves Fire Damage',
+          confidence: 'verified',
+          ...supportOverrides,
+        },
+      ],
+      benefitsFrom: [],
+      positionClaims: [],
+    },
+    {
+      dragonId: 'producer',
+      dragonName: 'Producer',
+      outputs: [
+        {
+          id: 'producer-fire',
+          tag: 'damage:fire',
+          abilityId: 'producer-fire',
+          abilityName: 'Producer Fire',
+          description: 'deals Fire Damage',
+          confidence: 'verified',
+        },
+      ],
+      supports: [],
+      benefitsFrom: [],
+      positionClaims: [],
+    },
+  ];
+}
 
 function directionalScalingProfiles(): DragonSynergyProfile[] {
   return [

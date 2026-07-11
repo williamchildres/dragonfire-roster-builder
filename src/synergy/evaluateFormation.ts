@@ -38,6 +38,17 @@ interface SynergyTagMatch {
   beneficiaryTag: SynergyTag;
 }
 
+interface RelationshipEligibility {
+  positionBlockReason: PositionBlockReason | null;
+  locked:
+    | {
+        profile: DragonSynergyProfile;
+        signal: SynergySignal;
+        requirement: ProgressionRequirement;
+      }
+    | null;
+}
+
 const resultKindOrder: Record<SimpleSynergyResultKind, number> = {
   'setup-payoff': 0,
   'amplifier-output': 1,
@@ -202,14 +213,35 @@ function addRelationshipCandidate(
     return;
   }
 
-  const locked = firstLockedSignal(input, provider.profile, providerSignal, beneficiary.profile, beneficiarySignal);
   const tag = tagMatch.semanticTag;
   const semanticId =
     activeKind === 'setup-payoff'
       ? [activeKind, provider.profile.dragonId, tag, beneficiary.profile.dragonId].join(':')
       : [activeKind, provider.profile.dragonId, tag, beneficiary.profile.dragonId].join(':');
+  const eligibility = getRelationshipEligibility(input, provider, providerSignal, beneficiary, beneficiarySignal);
 
-  if (locked) {
+  if (eligibility.positionBlockReason) {
+    addCandidate(relationshipCandidates, semanticId, {
+      rank: 2,
+      result: {
+        id: `position-blocked:${semanticId}`,
+        kind: 'position-blocked',
+        tag,
+        dragonIds: [provider.profile.dragonId, beneficiary.profile.dragonId],
+        abilityIds: [providerSignal.abilityId, beneficiarySignal.abilityId],
+        explanation: explainPositionBlocked(
+          provider.profile,
+          providerSignal,
+          beneficiary.profile,
+          beneficiarySignal,
+          eligibility.positionBlockReason,
+        ),
+      },
+    });
+    return;
+  }
+
+  if (eligibility.locked) {
     addCandidate(relationshipCandidates, semanticId, {
       rank: 1,
       result: {
@@ -225,32 +257,10 @@ function addRelationshipCandidate(
           beneficiary.profile,
           beneficiarySignal,
           tagMatch,
-          locked.profile,
-          locked.requirement,
+          eligibility.locked.profile,
+          eligibility.locked.requirement,
         ),
-        unlock: locked.requirement,
-      },
-    });
-    return;
-  }
-
-  const positionBlockReason = getPositionBlockReason(provider, providerSignal, beneficiary, beneficiarySignal);
-  if (positionBlockReason) {
-    addCandidate(relationshipCandidates, semanticId, {
-      rank: 2,
-      result: {
-        id: `position-blocked:${semanticId}`,
-        kind: 'position-blocked',
-        tag,
-        dragonIds: [provider.profile.dragonId, beneficiary.profile.dragonId],
-        abilityIds: [providerSignal.abilityId, beneficiarySignal.abilityId],
-        explanation: explainPositionBlocked(
-          provider.profile,
-          providerSignal,
-          beneficiary.profile,
-          beneficiarySignal,
-          positionBlockReason,
-        ),
+        unlock: eligibility.locked.requirement,
       },
     });
     return;
@@ -378,31 +388,65 @@ function addPositionConflictResults(
   }
 }
 
+function getRelationshipEligibility(
+  input: EvaluateFormationInput,
+  provider: SelectedProfile,
+  providerSignal: SynergySignal,
+  beneficiary: SelectedProfile,
+  beneficiarySignal: SynergySignal,
+): RelationshipEligibility {
+  return {
+    positionBlockReason: getPositionBlockReason(provider, providerSignal, beneficiary, beneficiarySignal),
+    locked: firstLockedSignal(input, provider.profile, providerSignal, beneficiary.profile, beneficiarySignal),
+  };
+}
+
 function getPositionBlockReason(
   provider: SelectedProfile,
   providerSignal: SynergySignal,
   beneficiary: SelectedProfile,
   beneficiarySignal: SynergySignal,
 ): PositionBlockReason | null {
+  const hardRequirements: Exclude<PositionBlockReason, { kind: 'adjacency' }>['requirements'] = [];
+  const seenHardRequirements = new Set<string>();
+
+  const addHardRequirement = (
+    kind: (typeof hardRequirements)[number]['kind'],
+    dragonId: string,
+    requiredPosition: FormationPosition,
+  ) => {
+    const key = `${dragonId}:${requiredPosition}`;
+    if (seenHardRequirements.has(key)) {
+      return;
+    }
+
+    seenHardRequirements.add(key);
+    hardRequirements.push({ kind, requiredPosition });
+  };
+
   if (
     providerSignal.requiredSelfPosition !== undefined &&
     providerSignal.requiredSelfPosition !== provider.position
   ) {
-    return { kind: 'provider-position', requiredPosition: providerSignal.requiredSelfPosition };
+    addHardRequirement('provider-position', provider.profile.dragonId, providerSignal.requiredSelfPosition);
   }
 
   if (
     beneficiarySignal.requiredSelfPosition !== undefined &&
     beneficiarySignal.requiredSelfPosition !== beneficiary.position
   ) {
-    return { kind: 'beneficiary-position', requiredPosition: beneficiarySignal.requiredSelfPosition };
+    addHardRequirement('beneficiary-position', beneficiary.profile.dragonId, beneficiarySignal.requiredSelfPosition);
   }
 
   if (
     providerSignal.requiredRecipientPosition !== undefined &&
     providerSignal.requiredRecipientPosition !== beneficiary.position
   ) {
-    return { kind: 'recipient-position', requiredPosition: providerSignal.requiredRecipientPosition };
+    addHardRequirement('recipient-position', beneficiary.profile.dragonId, providerSignal.requiredRecipientPosition);
+  }
+
+  if (hardRequirements.length > 0) {
+    return { kind: 'hard-position', requirements: hardRequirements };
   }
 
   if (providerSignal.friendlyScope === 'adjacent' && !areAdjacent(provider.position, beneficiary.position)) {

@@ -9,18 +9,17 @@ interface SynergyTagMatch {
   beneficiaryTag: SynergyTag;
 }
 
+export type HardPositionBlockKind = 'provider-position' | 'beneficiary-position' | 'recipient-position';
+
+export interface HardPositionBlockReason {
+  kind: HardPositionBlockKind;
+  requiredPosition: FormationPosition;
+}
+
 export type PositionBlockReason =
   | {
-      kind: 'provider-position';
-      requiredPosition: FormationPosition;
-    }
-  | {
-      kind: 'beneficiary-position';
-      requiredPosition: FormationPosition;
-    }
-  | {
-      kind: 'recipient-position';
-      requiredPosition: FormationPosition;
+      kind: 'hard-position';
+      requirements: HardPositionBlockReason[];
     }
   | {
       kind: 'adjacency';
@@ -121,19 +120,37 @@ export function explainPositionBlocked(
   beneficiarySignal: SynergySignal,
   reason: PositionBlockReason,
 ): string {
-  if (reason.kind === 'provider-position') {
-    return `${provider.dragonName} must be deployed in ${formatPosition(reason.requiredPosition)} for ${providerSignal.abilityName}.`;
-  }
+  if (reason.kind === 'hard-position') {
+    if (reason.requirements.length === 1) {
+      const requirement = reason.requirements[0]!;
+      if (requirement.kind === 'provider-position') {
+        return `${provider.dragonName} must be deployed in ${formatPosition(requirement.requiredPosition)} for ${providerSignal.abilityName}.`;
+      }
 
-  if (reason.kind === 'beneficiary-position') {
-    return `${beneficiary.dragonName} must be deployed in ${formatPosition(reason.requiredPosition)} for ${beneficiarySignal.abilityName}.`;
-  }
+      if (requirement.kind === 'beneficiary-position') {
+        return `${beneficiary.dragonName} must be deployed in ${formatPosition(requirement.requiredPosition)} for ${beneficiarySignal.abilityName}.`;
+      }
 
-  if (reason.kind === 'recipient-position') {
-    return `${beneficiary.dragonName} must be deployed in ${formatPosition(reason.requiredPosition)} to receive ${provider.dragonName}'s ${providerSignal.abilityName}.`;
+      return `${beneficiary.dragonName} must be deployed in ${formatPosition(requirement.requiredPosition)} to receive ${provider.dragonName}'s ${providerSignal.abilityName}.`;
+    }
+
+    const requirements = reason.requirements.map((requirement) => {
+      const dragonName = requirement.kind === 'provider-position' ? provider.dragonName : beneficiary.dragonName;
+      return `${dragonName} must be deployed in ${formatPosition(requirement.requiredPosition)}`;
+    });
+
+    return `${joinRequirementClauses(requirements)}, for ${providerSignal.abilityName} to support ${beneficiarySignal.abilityName}.`;
   }
 
   return `${provider.dragonName} and ${beneficiary.dragonName} are not adjacent in this formation.`;
+}
+
+function joinRequirementClauses(requirements: string[]): string {
+  if (requirements.length === 2) {
+    return `${requirements[0]}, and ${requirements[1]}`;
+  }
+
+  return `${requirements.slice(0, -1).join(', ')}, and ${requirements[requirements.length - 1]}`;
 }
 
 export function explainPositionConflict(

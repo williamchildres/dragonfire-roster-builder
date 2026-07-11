@@ -2,6 +2,7 @@
 
 ## Unreleased
 
+- Prioritized placement requirements before progression locks in the simple Formation Builder, so relationships that are both mispositioned and under-leveled appear as Placement issues before they can become Future unlocks.
 - Separated emitted synergy output tags from inbound scaling support tags so damage and Recovery outputs no longer act as providers for their scaling stats.
 - Added screenshot-verified detailed records and curated simple-synergy profiles for Tashix, Velar, and Zivern, bringing coverage to 18 detailed dragons, 18 simple profiles, and 12 metadata-only dragons.
 - Added the `status:vulnerable` simple setup/payoff relationship so Shadowsong's Scorched Earth can improve Zivern's Cloak of Terror.
