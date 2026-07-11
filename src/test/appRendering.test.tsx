@@ -24,21 +24,65 @@ describe('Dragonfire Roster Lab app', () => {
     expect(screen.getByRole('heading', { name: 'Syrax' })).toBeInTheDocument();
   });
 
-  it('renders current Overview and About product copy', async () => {
+  it('renders the polished Overview landing content and About copy', async () => {
     const user = userEvent.setup();
-    const detailedAbilityCount = dragons.filter(
-      (dragon) => dragon.command && dragon.trait && dragon.habits.length > 0,
-    ).length;
+    const detailedAbilityCount = dragons.filter((dragon) => dragon.command && dragon.trait && dragon.habits.length > 0).length;
+    const rarityCounts = dragons.reduce<Record<string, number>>((counts, dragon) => {
+      counts[dragon.rarity] = (counts[dragon.rarity] ?? 0) + 1;
+      return counts;
+    }, {});
+    const breedCounts = dragons.reduce<Record<string, number>>((counts, dragon) => {
+      counts[dragon.breed] = (counts[dragon.breed] ?? 0) + 1;
+      return counts;
+    }, {});
 
     render(<App />);
 
-    const detailedAbilityCard = screen.getByText('Detailed ability records').closest('.stat-card');
-    expect(detailedAbilityCard).toHaveTextContent(String(detailedAbilityCount));
-    const notice = screen.getByText(/The database currently includes detailed Command, Trait, and Habit wording/i);
-    expect(notice).toHaveTextContent(`profiles for ${detailedAbilityCount} dragons`);
-    expect(screen.queryByText(/prepare for verified community combat data/i)).not.toBeInTheDocument();
-    expect(screen.queryByText(/Malachite, Seasmoke, Sheepstealer, and Vermax/i)).not.toBeInTheDocument();
-    expect(screen.queryByText(/unverified mechanics remain marked/i)).not.toBeInTheDocument();
+    expect(
+      screen.getByRole('heading', {
+        name: /plan stronger dragonfire formations from verified dragon data/i,
+      }),
+    ).toBeInTheDocument();
+    expect(screen.getByRole('img', { name: /dragonfire roster lab dragon emblem/i })).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: /browse dragons/i })).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: /open formation builder/i })).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: /update my roster/i })).toBeInTheDocument();
+
+    expect(screen.getByRole('heading', { name: 'Track Your Roster' })).toBeInTheDocument();
+    expect(screen.getByRole('heading', { name: 'Compare Verified Dragons' })).toBeInTheDocument();
+    expect(screen.getByRole('heading', { name: 'Build Formations' })).toBeInTheDocument();
+
+    expect(screen.getByText('Detailed profile coverage')).toBeInTheDocument();
+    expect(screen.getByText(/19 \/ 31 dragons mapped/i)).toBeInTheDocument();
+    expect(screen.getByText('61%')).toBeInTheDocument();
+
+    const databaseCoverage = screen.getByRole('heading', { name: 'Database Coverage' }).closest('.overview-stat-group');
+    expect(databaseCoverage).not.toBeNull();
+    expect(within(databaseCoverage as HTMLElement).getByText('Known dragons').closest('.stat-card')).toHaveTextContent('31');
+    expect(within(databaseCoverage as HTMLElement).getByText('Detailed ability records').closest('.stat-card')).toHaveTextContent(String(detailedAbilityCount));
+    expect(within(databaseCoverage as HTMLElement).getByText('Curated simple profiles').closest('.stat-card')).toHaveTextContent('19');
+    expect(within(databaseCoverage as HTMLElement).getByText('Metadata-only dragons').closest('.stat-card')).toHaveTextContent('12');
+
+    const rosterBreakdown = screen.getByRole('heading', { name: 'Roster Breakdown' }).closest('.overview-stat-group');
+    expect(rosterBreakdown).not.toBeNull();
+    expect(within(rosterBreakdown as HTMLElement).getByText('Legendary').closest('.stat-card')).toHaveTextContent(String(rarityCounts.Legendary));
+    expect(within(rosterBreakdown as HTMLElement).getByText('Epic').closest('.stat-card')).toHaveTextContent(String(rarityCounts.Epic));
+    expect(within(rosterBreakdown as HTMLElement).getByText('Rare').closest('.stat-card')).toHaveTextContent(String(rarityCounts.Rare));
+
+    const roleBreakdown = screen.getByRole('heading', { name: 'Role Breakdown' }).closest('.overview-stat-group');
+    expect(roleBreakdown).not.toBeNull();
+    expect(within(roleBreakdown as HTMLElement).getByText('Champion').closest('.stat-card')).toHaveTextContent(String(breedCounts.Champion));
+    expect(within(roleBreakdown as HTMLElement).getByText('Hunter').closest('.stat-card')).toHaveTextContent(String(breedCounts.Hunter));
+    expect(within(roleBreakdown as HTMLElement).getByText('Sentinel').closest('.stat-card')).toHaveTextContent(String(breedCounts.Sentinel));
+    expect(within(roleBreakdown as HTMLElement).getByText('Warrior').closest('.stat-card')).toHaveTextContent(String(breedCounts.Warrior));
+
+    const latestUpdate = screen.getByRole('heading', { name: /latest update - v0\.6\.4/i }).closest('.latest-update-panel');
+    expect(latestUpdate).not.toBeNull();
+    expect(latestUpdate).toHaveTextContent('Tessarion added with verified ability wording and a curated synergy profile.');
+
+    expect(screen.getByText(/No login required\./i)).toBeInTheDocument();
+    expect(screen.getByText(/stored locally in your browser/i)).toBeInTheDocument();
+    expect(screen.getByText(/does not use private game APIs/i)).toBeInTheDocument();
 
     await user.click(screen.getByRole('button', { name: /about/i }));
     expect(
@@ -313,7 +357,7 @@ describe('Dragonfire Roster Lab app', () => {
     firstRender.unmount();
     render(<App />);
 
-    await user.click(screen.getByRole('button', { name: /my roster/i }));
+    await user.click(screen.getAllByRole('button', { name: /my roster/i })[0]!);
     expect(screen.getByRole('heading', { name: 'Syrax' })).toBeInTheDocument();
     expect(screen.getAllByText('3').length).toBeGreaterThan(0);
   });

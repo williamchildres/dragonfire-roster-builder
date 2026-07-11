@@ -13,10 +13,12 @@ import {
   Upload,
   Users,
   X,
+  type LucideIcon,
 } from 'lucide-react';
 import { useEffect, useMemo, useRef, useState, type ChangeEvent, type KeyboardEvent } from 'react';
 import { SimpleFormationAnalysis } from './SimpleFormationAnalysis';
 import { SimpleFormationCard } from './SimpleFormationCard';
+import dragonfireHero from '../assets/dragonfire-hero.png';
 import { databaseMetadata, repository } from '../data/databaseMetadata';
 import { dragons } from '../data/dragons';
 import { evidenceSources } from '../data/evidence';
@@ -115,7 +117,6 @@ export function App() {
     window.localStorage.setItem(FORMATION_STORAGE_KEY, JSON.stringify(formation));
   }, [formation]);
 
-  const ownedCount = Object.values(roster).filter((entry) => entry.owned).length;
   const detailedAbilityCount = dragons.filter(hasDetailedAbilities).length;
 
   const filteredDragons = useMemo(
@@ -259,10 +260,10 @@ export function App() {
 
         {activeSection === 'home' ? (
           <HomeSection
-            ownedCount={ownedCount}
             detailedAbilityCount={detailedAbilityCount}
             onBrowse={() => selectSection('database')}
             onTeam={() => selectSection('team')}
+            onRoster={() => selectSection('roster')}
           />
         ) : null}
 
@@ -328,67 +329,164 @@ export function App() {
 }
 
 function HomeSection({
-  ownedCount,
   detailedAbilityCount,
   onBrowse,
   onTeam,
+  onRoster,
 }: {
-  ownedCount: number;
   detailedAbilityCount: number;
   onBrowse: () => void;
   onTeam: () => void;
+  onRoster: () => void;
 }) {
   const rarityCounts = countValues(dragons.map((dragon) => dragon.rarity));
   const breedCounts = countValues(dragons.map((dragon) => dragon.breed));
+  const metadataOnlyIds = new Set<string>(metadataOnlyDragonIds);
+  const metadataOnlyCount = dragons.filter((dragon) => metadataOnlyIds.has(dragon.id)).length;
+  const coveragePercent = Math.round((detailedAbilityCount / dragons.length) * 100);
+  const versionLabel = `v${databaseMetadata.databaseVersion}`;
 
   return (
-    <section className="hero-section" aria-labelledby="overview-title">
-      <div className="hero-art" aria-hidden="true">
-        <div className="dragon-silhouette" />
-      </div>
-      <div className="hero-copy">
-        <p className="eyebrow">Roster manager and formation lab</p>
-        <h2 id="overview-title">Build your dragon roster without guessing the data.</h2>
-        <p>
-          Track ownership, review verified ability wording, and plan three-position formations
-          using curated high-level synergy profiles while keeping official-site roster entries,
-          pending in-game observations, and player notes separate from each other.
-        </p>
-        <div className="button-row">
-          <button type="button" className="primary-button" onClick={onBrowse}>
-            Browse dragons
-          </button>
-          <button type="button" className="secondary-button" onClick={onTeam}>
-            Open formation builder
-          </button>
+    <section className="overview-section" aria-labelledby="overview-title">
+      <div className="hero-section">
+        <div className="hero-art hero-art-panel">
+          <img
+            alt="Dragonfire Roster Lab dragon emblem"
+            className="hero-image"
+            src={dragonfireHero}
+          />
+          <div className="hero-art-overlay" aria-hidden="true" />
+        </div>
+        <div className="hero-copy">
+          <p className="eyebrow">Local-first formation planning</p>
+          <h2 id="overview-title">Plan stronger Dragonfire formations from verified dragon data.</h2>
+          <p>
+            Track your roster, compare verified abilities, and discover high-level formation
+            synergies without recreating the combat engine.
+          </p>
+          <div className="button-row hero-actions">
+            <button type="button" className="primary-button" onClick={onBrowse}>
+              Browse dragons
+            </button>
+            <button type="button" className="secondary-button" onClick={onTeam}>
+              Open formation builder
+            </button>
+            <button type="button" className="secondary-button" onClick={onRoster}>
+              Update my roster
+            </button>
+          </div>
         </div>
       </div>
-      <div className="stats-grid" aria-label="Roster summary">
-        <StatCard label="Known in-game dragons" value={dragons.length} />
-        <StatCard
-          label="Official-site dragons"
-          value={dragons.filter((dragon) => dragon.rosterSourceStatus === 'official-website').length}
+
+      <div className="feature-grid" aria-label="Overview highlights">
+        <FeatureCard
+          icon={Users}
+          title="Track Your Roster"
+          description="Save ownership, Star Rank, Dragon Level, Habit Levels, and notes locally in your browser."
         />
-        <StatCard
-          label="Pending official site"
-          value={
-            dragons.filter((dragon) => dragon.rosterSourceStatus === 'in-game-verified-pending-official-site')
-              .length
-          }
+        <FeatureCard
+          icon={Shield}
+          title="Compare Verified Dragons"
+          description="Review Command, Trait, Habit wording, affinities, evidence, and profile coverage."
         />
-        <StatCard label="Owned by you" value={ownedCount} />
-        <StatCard label="Detailed ability records" value={detailedAbilityCount} />
-        {RARITIES.map((rarity) => (
-          <StatCard key={rarity} label={rarity} value={rarityCounts[rarity] ?? 0} />
-        ))}
-        {BREEDS.map((breed) => (
-          <StatCard key={breed} label={breed} value={breedCounts[breed] ?? 0} />
-        ))}
+        <FeatureCard
+          icon={Swords}
+          title="Build Formations"
+          description="See high-level synergies, missing enablers, placement issues, and Vanguard conflicts."
+        />
       </div>
-      <div className="notice-panel">
-        The database currently includes detailed Command, Trait, and Habit wording and curated
-        high-level synergy profiles for {detailedAbilityCount} dragons. Dragons without verified
-        ability data remain metadata-only until sourced evidence is available.
+
+      <div className="coverage-panel" aria-labelledby="coverage-title">
+        <div className="coverage-copy">
+          <p className="eyebrow">Coverage</p>
+          <h3 id="coverage-title">Detailed profile coverage</h3>
+          <p>
+            <strong>{detailedAbilityCount} / {dragons.length} dragons mapped</strong>
+          </p>
+          <p>{coveragePercent}%</p>
+        </div>
+        <progress value={detailedAbilityCount} max={dragons.length} aria-label="Detailed profile coverage" />
+      </div>
+
+      <div className="overview-stats-layout">
+        <StatGroup
+          title="Database Coverage"
+          cards={[
+            { label: 'Known dragons', value: dragons.length },
+            { label: 'Detailed ability records', value: detailedAbilityCount },
+            { label: 'Curated simple profiles', value: simpleSynergyProfiles.length },
+            { label: 'Metadata-only dragons', value: metadataOnlyCount },
+          ]}
+        />
+        <StatGroup
+          title="Roster Breakdown"
+          cards={[
+            { label: 'Legendary', value: rarityCounts.Legendary ?? 0 },
+            { label: 'Epic', value: rarityCounts.Epic ?? 0 },
+            { label: 'Rare', value: rarityCounts.Rare ?? 0 },
+          ]}
+        />
+        <StatGroup
+          title="Role Breakdown"
+          cards={[
+            { label: 'Champion', value: breedCounts.Champion ?? 0 },
+            { label: 'Hunter', value: breedCounts.Hunter ?? 0 },
+            { label: 'Sentinel', value: breedCounts.Sentinel ?? 0 },
+            { label: 'Warrior', value: breedCounts.Warrior ?? 0 },
+          ]}
+        />
+      </div>
+
+      <div className="overview-footer-grid">
+        <div className="latest-update-panel panel readable">
+          <p className="eyebrow">Latest update</p>
+          <h3>Latest update - {versionLabel}</h3>
+          <p>Tessarion added with verified ability wording and a curated synergy profile.</p>
+        </div>
+        <div className="notice-panel trust-note">
+          No login required. Your roster is stored locally in your browser. This is an unofficial
+          community tool and does not use private game APIs.
+        </div>
+      </div>
+    </section>
+  );
+}
+
+function FeatureCard({
+  icon: Icon,
+  title,
+  description,
+}: {
+  icon: LucideIcon;
+  title: string;
+  description: string;
+}) {
+  return (
+    <article className="feature-card">
+      <div className="feature-icon" aria-hidden="true">
+        <Icon size={18} />
+      </div>
+      <h3>{title}</h3>
+      <p>{description}</p>
+    </article>
+  );
+}
+
+function StatGroup({
+  title,
+  cards,
+}: {
+  title: string;
+  cards: Array<{ label: string; value: number }>;
+}) {
+  const groupId = title.toLowerCase().replaceAll(' ', '-');
+  return (
+    <section className="overview-stat-group" aria-labelledby={groupId}>
+      <h3 id={groupId}>{title}</h3>
+      <div className="stats-grid overview-stats-grid">
+        {cards.map((card) => (
+          <StatCard key={card.label} label={card.label} value={card.value} />
+        ))}
       </div>
     </section>
   );
