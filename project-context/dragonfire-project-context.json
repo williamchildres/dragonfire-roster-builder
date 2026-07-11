@@ -1,11 +1,11 @@
 {
   "format": "dragonfire-lab-project-context",
   "contextVersion": 2,
-  "generatedAt": "2026-07-04T02:08:41.510Z",
+  "generatedAt": "2026-07-11T00:49:38.715Z",
   "source": {
     "repository": "https://github.com/williamchildres/dragonfire-roster-builder",
-    "branch": "fix/directional-synergy-tags",
-    "commit": "50b3d6075c5a8866131bd4ea0a7cdf2f7b6719c1",
+    "branch": "fix/position-before-progression",
+    "commit": "d5ec5519da7095da09307cba2ff11a299f8df558",
     "databaseVersion": "0.6.3",
     "dataSchemaVersion": 13,
     "localRosterSchemaVersion": 3,

@@ -207,6 +207,37 @@ describe('Formation Builder simple synergy cutover', () => {
     expect(sectionText('Placement issues')).not.toContain('Malachite and Sheepstealer are not adjacent');
   });
 
+  it('renders blocked-and-locked relationships as placement issues instead of future unlocks', async () => {
+    const user = userEvent.setup();
+    seedRoster({
+      zivern: { starRank: 10, reignLevel: 15 },
+      rhysarion: { starRank: 10, reignLevel: 15 },
+      shadowsong: { starRank: 6, reignLevel: 15 },
+    });
+
+    await openFormationBuilder(user);
+    await selectFormation(user, { 'left-flank': 'zivern', vanguard: 'rhysarion', 'right-flank': 'shadowsong' });
+
+    const placementIssues = sectionItems('Placement issues');
+    const futureUnlocks = sectionText('Future unlocks');
+
+    expect(placementIssues).toContain("Zivern must be deployed in Right Flank to receive Rhysarion's Champion's Vigor.");
+    expect(placementIssues).toContain(
+      "Shadowsong must be deployed in Vanguard, and Rhysarion must be deployed in Right Flank, for Hunter's Wrath to support Dawnsong.",
+    );
+    expect(
+      placementIssues.filter((item) =>
+        item ===
+        "Shadowsong must be deployed in Vanguard, and Rhysarion must be deployed in Right Flank, for Hunter's Wrath to support Dawnsong.",
+      ),
+    ).toHaveLength(1);
+    expect(futureUnlocks).not.toContain("Rhysarion's Champion's Vigor Tactical Damage support for Zivern's Silent Shade");
+    expect(futureUnlocks).not.toContain("Shadowsong's Hunter's Wrath Strength support for Rhysarion's Dawnsong");
+    expect(futureUnlocks).toContain(
+      "Rhysarion's Champion's Vigor Fire Damage support for Shadowsong's Breath of Fire unlocks when Rhysarion reaches Dragon Level 16.",
+    );
+  });
+
   it('maps roster Reign Level to Sheepstealer Recovery unlocks and Vanguard conflicts', async () => {
     const user = userEvent.setup();
     seedRoster({ malachite: {}, sheepstealer: { reignLevel: 15 }, caraxes: { reignLevel: 16 } });
