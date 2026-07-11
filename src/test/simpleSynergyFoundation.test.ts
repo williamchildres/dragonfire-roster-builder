@@ -58,7 +58,7 @@ function signalTags(signal: SynergySignal) {
 
 describe('simple synergy foundation', () => {
   it('covers every detailed dragon and excludes metadata-only dragons', () => {
-    expect(dragons).toHaveLength(30);
+    expect(dragons).toHaveLength(31);
     expect(detailedDragons.map((dragon) => dragon.name)).toEqual([
       'Syrax',
       'Vhagar',
@@ -76,6 +76,7 @@ describe('simple synergy foundation', () => {
       'Vaeldra',
       'Velar',
       'Zivern',
+      'Tessarion',
       'Sheepstealer',
       'Vermax',
     ]);
@@ -97,6 +98,7 @@ describe('simple synergy foundation', () => {
     expect(simpleSynergyProfiles.map((profile) => profile.dragonId).sort()).toEqual(
       detailedDragons.map((dragon) => dragon.id).sort(),
     );
+    expect(simpleSynergyProfiles).toHaveLength(19);
     expect(new Set(simpleSynergyProfiles.map((profile) => profile.dragonId)).size).toBe(simpleSynergyProfiles.length);
   });
 
@@ -162,6 +164,7 @@ describe('simple synergy foundation', () => {
     );
     const referencedSignalIds = new Set<string>();
 
+    expect(simpleSynergyAbilityReviews).toHaveLength(133);
     expect(reviewedAbilityIds.sort()).toEqual(canonicalAbilityIds.sort());
     expect(new Set(reviewedAbilityIds).size).toBe(reviewedAbilityIds.length);
 
@@ -221,6 +224,8 @@ describe('simple synergy foundation', () => {
     expect(signal('velar', 'velar-breath-of-renewal-recovery')?.scalesWith).toEqual(['stat:initiative']);
     expect(signal('tashix', 'tashix-shimmering-mirage-fire')?.scalesWith).toEqual(['stat:intelligence']);
     expect(signal('zivern', 'zivern-silent-shade-tactical')?.scalesWith).toEqual(['stat:instinct']);
+    expect(signal('tessarion', 'tessarion-cobalt-flame-fire')?.scalesWith).toEqual(['stat:intelligence']);
+    expect(signal('tessarion', 'tessarion-cobalt-flame-physical')?.scalesWith).toEqual(['stat:strength']);
   });
 
   it('stores complete screenshot-verified records for the final three Epic dragons', () => {
@@ -262,6 +267,133 @@ describe('simple synergy foundation', () => {
       Shieldbearers: 'unknown',
       Spearmen: 'unknown',
     });
+  });
+
+  it('stores Tessarion simple signals without forbidden inferred support tags', () => {
+    const profile = simpleSynergyProfiles.find((candidate) => candidate.dragonId === 'tessarion');
+    expect(profile).toBeDefined();
+
+    const fireOutput = profile!.outputs.find((signal) => signal.id === 'tessarion-cobalt-flame-fire');
+    const physicalOutput = profile!.outputs.find((signal) => signal.id === 'tessarion-cobalt-flame-physical');
+    const blazingLeader = profile!.supports.find((signal) => signal.id === 'tessarion-blazing-leader-fire');
+    const cleverManeuver = profile!.supports.find((signal) => signal.id === 'tessarion-clever-maneuver-stats');
+
+    expect(fireOutput).toMatchObject({
+      tag: 'damage:fire',
+      scalesWith: ['stat:intelligence'],
+      abilityId: 'tessarion-cobalt-flame',
+    });
+    expect(physicalOutput).toMatchObject({
+      tag: 'damage:physical',
+      scalesWith: ['stat:strength'],
+      abilityId: 'tessarion-cobalt-flame',
+    });
+    expect(providedTags(fireOutput!)).not.toContain('stat:intelligence');
+    expect(providedTags(physicalOutput!)).not.toContain('stat:strength');
+
+    expect(blazingLeader).toMatchObject({
+      tag: 'damage:fire',
+      unlock: { minimumStarRank: 4 },
+      friendlyScope: 'formation',
+    });
+    expect(blazingLeader?.requiredRecipientPosition).toBeUndefined();
+
+    expect(cleverManeuver).toMatchObject({
+      tag: 'stat:intelligence',
+      tags: ['stat:intelligence', 'stat:initiative'],
+      unlock: { minimumStarRank: 8 },
+      friendlyScope: 'formation',
+    });
+    expect(profile!.supports.filter((signal) => providedTags(signal).includes('stat:intelligence')).map((signal) => signal.abilityId)).toEqual([
+      'tessarion-clever-maneuver',
+    ]);
+
+    expect(profile!.positionClaims).toContainEqual(
+      expect.objectContaining({
+        id: 'tessarion-champions-brilliance-vanguard',
+        requiredPosition: 'vanguard',
+        unlock: { minimumDragonLevel: 16 },
+      }),
+    );
+    expect(profile!.benefitsFrom).toEqual([]);
+    const tessarionProvidedTags = allSignals(profile!).flatMap(providedTags) as string[];
+    expect(tessarionProvidedTags).not.toEqual(expect.arrayContaining(['status:panic', 'status:advantage', 'effect:troop-capacity']));
+  });
+
+  it('models Tessarion Fire support without making Blazing Leader Left Flank priority mandatory', () => {
+    const results = evaluate(formation('tessarion', 'caraxes', 'syrax'), {
+      ...unlockedProgression,
+      tessarion: { starRank: 4, dragonLevel: 1 },
+    });
+
+    const tessarionFireSupport = resultsOfKind('amplifier-output', results).find(
+      (result) => result.id === 'amplifier-output:tessarion:damage:fire:caraxes',
+    );
+    expect(tessarionFireSupport).toBeDefined();
+    expect(tessarionFireSupport?.abilityIds).toEqual(expect.arrayContaining(['caraxes-infernal-burst', 'tessarion-blazing-leader']));
+    expect(resultsOfKind('position-blocked', results).map((result) => result.abilityIds)).not.toContainEqual(
+      expect.arrayContaining(['tessarion-blazing-leader']),
+    );
+    expect(results.map((result) => result.id)).not.toEqual(expect.arrayContaining(['setup-payoff:tessarion:status:advantage:caraxes']));
+  });
+
+  it('models Tessarion Clever Maneuver as high-level Intelligence support for Fire allies only after Star Rank 8', () => {
+    const locked = evaluate(formation('tessarion', 'caraxes', null), {
+      ...unlockedProgression,
+      tessarion: { starRank: 7, dragonLevel: 16 },
+    });
+    expect(resultsOfKind('progression-locked', locked)).toContainEqual(
+      expect.objectContaining({
+        id: 'progression-locked:amplifier-output:tessarion:stat:intelligence:caraxes',
+        explanation:
+          "Tessarion's Clever Maneuver Intelligence support for Caraxes's Infernal Burst unlocks when Tessarion reaches Star Rank 8.",
+      }),
+    );
+
+    const unlocked = evaluate(formation('tessarion', 'caraxes', null));
+    expect(resultsOfKind('amplifier-output', unlocked)).toContainEqual(
+      expect.objectContaining({ id: 'amplifier-output:tessarion:stat:intelligence:caraxes' }),
+    );
+    expect(resultsOfKind('amplifier-output', unlocked)).not.toContainEqual(
+      expect.objectContaining({ id: 'amplifier-output:caraxes:stat:intelligence:tessarion' }),
+    );
+  });
+
+  it('lets Tessarion Physical output receive real Strength support without providing Strength by dealing Physical Damage', () => {
+    const results = evaluate(formation('malachite', 'tessarion', 'venator'));
+
+    const tessarionStrengthSupport = resultsOfKind('amplifier-output', results).find(
+      (result) => result.id === 'amplifier-output:malachite:stat:strength:tessarion',
+    );
+    expect(tessarionStrengthSupport).toBeDefined();
+    expect(tessarionStrengthSupport?.abilityIds).toEqual(expect.arrayContaining(['malachite-collective-might', 'tessarion-cobalt-flame']));
+    expect(resultsOfKind('amplifier-output', results)).not.toContainEqual(
+      expect.objectContaining({ id: 'amplifier-output:tessarion:stat:strength:venator' }),
+    );
+  });
+
+  it('includes Tessarion Champion Brilliance in grouped Vanguard conflicts without duplicate bullets', () => {
+    const conflicts = resultsOfKind('position-conflict', evaluate(formation('tessarion', 'daemoros', null)));
+
+    expect(conflicts).toEqual([
+      expect.objectContaining({
+        dragonIds: ['tessarion', 'daemoros'],
+        abilityIds: ['tessarion-champions-brilliance', 'daemoros-warriors-zeal'],
+        explanation:
+          "Tessarion's Champion's Brilliance and Daemoros's Warrior's Zeal require Vanguard; only one dragon can receive that positional benefit.",
+      }),
+    ]);
+  });
+
+  it('does not turn Tessarion Molten Armor Panic self-condition into a teammate Panic payoff', () => {
+    const results = evaluate(formation('daemoros', 'tessarion', 'shadowsong'));
+    const ids = results.map((result) => result.id);
+
+    expect(ids).not.toContain('setup-payoff:daemoros:status:panic:tessarion');
+    expect(ids).not.toContain('missing-enabler:tessarion:status:panic');
+    expect(resultsOfKind('setup-payoff', results)).toContainEqual(
+      expect.objectContaining({ id: 'setup-payoff:daemoros:status:panic:shadowsong' }),
+    );
   });
 
   it('matches the required Caraxes Slow to Syrax Strategic Revival relationship and progression-locks each side', () => {

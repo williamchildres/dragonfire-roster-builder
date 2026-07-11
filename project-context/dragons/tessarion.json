@@ -1,0 +1,262 @@
+{
+  "id": "tessarion",
+  "slug": "tessarion",
+  "name": "Tessarion",
+  "rarity": "Epic",
+  "breed": "Champion",
+  "rosterSourceStatus": "in-game-verified-pending-official-site",
+  "dataStatus": "community-verified",
+  "lastVerified": "2026-07-10",
+  "profileCompleteness": "detailed-abilities",
+  "officialProfileUrl": null,
+  "abilities": [
+    {
+      "id": "tessarion-cobalt-flame",
+      "kind": "command",
+      "name": "Cobalt Flame",
+      "abilityClass": "active",
+      "unlockStarRank": null,
+      "minimumDragonLevel": null,
+      "positionRequirement": null,
+      "verification": {
+        "status": "screenshot-verified",
+        "source": "Tessarion Cobalt Flame screenshots",
+        "capturedAt": "2026-07-10",
+        "gameVersion": "26.6.53509",
+        "reviewedManually": true
+      },
+      "evidenceIds": [
+        "tessarion-cobalt-flame-page-1-2026-07-10",
+        "tessarion-cobalt-flame-fire-details-2026-07-10",
+        "tessarion-cobalt-flame-physical-details-2026-07-10"
+      ],
+      "tags": [
+        "FIRE_DAMAGE",
+        "PHYSICAL_DAMAGE",
+        "DAMAGE_DEALT_DOWN",
+        "ANY_LANE_TARGET",
+        "SAME_LANE_TARGET",
+        "INTELLIGENCE_SCALING",
+        "STRENGTH_SCALING"
+      ],
+      "rawDescription": "Rounds 1, 4, 7: Deal Fire Damage to 1 Enemy in any lane, prioritizes targets that deals Physical Damage, excluding Basic Attacks, Damage Rate: +95%. Additionally, 50% chance to reduce the target's Damage Dealt by -10% for 2 round(s). Double this effect (-20%) if the target deals Physical Damage, excluding Basic Attacks.\n\nRounds 3, 6, 9: Deal Physical Damage to 1 Enemy in the same lane, Damage Rate: +60%.\n\nFire Damage:\nDeal Fire Damage to the target. Fire Damage is increased by the attacker's Intelligence and mitigated by the target's Initiative.\n\nDamage Dealt Modifier:\nModify the target's Damage Dealt by -10%.\n\nPhysical Damage:\nDeal Physical Damage to the target. Physical Damage is increased by the attacker's Strength and mitigated by the target's Instinct."
+    },
+    {
+      "id": "tessarion-champions-brilliance",
+      "kind": "trait",
+      "name": "Champion's Brilliance",
+      "abilityClass": "passive",
+      "unlockStarRank": 1,
+      "minimumDragonLevel": 16,
+      "positionRequirement": "vanguard",
+      "verification": {
+        "status": "screenshot-verified",
+        "source": "Tessarion Champion's Brilliance screenshot",
+        "capturedAt": "2026-07-10",
+        "gameVersion": "26.6.53509",
+        "reviewedManually": true
+      },
+      "evidenceIds": [
+        "tessarion-champions-brilliance-2026-07-10"
+      ],
+      "tags": [
+        "STRENGTH_UP",
+        "INTELLIGENCE_UP",
+        "INSTINCT_UP",
+        "DAMAGE_RECEIVED_DOWN",
+        "VANGUARD_REQUIRED",
+        "RIGHT_FLANK_TARGET"
+      ],
+      "rawDescription": "At Level 16+ and deployed in the Vanguard, Increase your Strength, Intelligence, and Instinct by +15. Reduce Damage Received by -8% of the Ally deployed in the Right Flank."
+    },
+    {
+      "id": "tessarion-sharpened-beauty",
+      "kind": "habit",
+      "name": "Sharpened Beauty",
+      "abilityClass": "passive",
+      "unlockStarRank": 2,
+      "minimumDragonLevel": null,
+      "positionRequirement": null,
+      "verification": {
+        "status": "screenshot-verified",
+        "source": "Tessarion Sharpened Beauty screenshot",
+        "capturedAt": "2026-07-10",
+        "gameVersion": "26.6.53509",
+        "reviewedManually": true
+      },
+      "evidenceIds": [
+        "tessarion-sharpened-beauty-2026-07-10"
+      ],
+      "tags": [
+        "PHYSICAL_DAMAGE_UP",
+        "FIRE_DAMAGE_UP",
+        "ADVANTAGE",
+        "TROOP_CAPACITY_CONDITION",
+        "BUFF_SELF"
+      ],
+      "rawDescription": "Start of Each Round: Increase your Physical and Fire Damage Dealt by +8.4% until the end of the round. Double these effects (+16.8%) if you are above 75% Troop Capacity or if you have Advantage.\n\nProgression table:\nHabit Level 1: Physical and Fire Damage Dealt +7%\nHabit Level 2: +8.4%\nHabit Level 3: +9.8%\nHabit Level 4: +11.9%\nHabit Level 5: +14%"
+    },
+    {
+      "id": "tessarion-blazing-leader",
+      "kind": "habit",
+      "name": "Blazing Leader",
+      "abilityClass": "passive",
+      "unlockStarRank": 4,
+      "minimumDragonLevel": null,
+      "positionRequirement": null,
+      "verification": {
+        "status": "screenshot-verified",
+        "source": "Tessarion Blazing Leader screenshot",
+        "capturedAt": "2026-07-10",
+        "gameVersion": "26.6.53509",
+        "reviewedManually": true
+      },
+      "evidenceIds": [
+        "tessarion-blazing-leader-2026-07-10"
+      ],
+      "tags": [
+        "FIRE_DAMAGE_UP",
+        "ANY_LANE_TARGET",
+        "LEFT_FLANK_TARGET"
+      ],
+      "rawDescription": "Start of Combat: Increase the Fire Damage Dealt by +10% of 1 Ally in any lane, prioritizes the Left Flank, until the end of combat.\n\nProgression table:\nHabit Level 1: Fire Damage Dealt +10%\nHabit Level 2: +12%\nHabit Level 3: +14%\nHabit Level 4: +17%\nHabit Level 5: +20%"
+    },
+    {
+      "id": "tessarion-molten-armor",
+      "kind": "habit",
+      "name": "Molten Armor",
+      "abilityClass": "passive",
+      "unlockStarRank": 6,
+      "minimumDragonLevel": null,
+      "positionRequirement": null,
+      "verification": {
+        "status": "screenshot-verified",
+        "source": "Tessarion Molten Armor screenshot",
+        "capturedAt": "2026-07-10",
+        "gameVersion": "26.6.53509",
+        "reviewedManually": true
+      },
+      "evidenceIds": [
+        "tessarion-molten-armor-2026-07-10"
+      ],
+      "tags": [
+        "FIRE_DAMAGE_UP",
+        "DAMAGE_RECEIVED_DOWN",
+        "PANIC",
+        "ANY_LANE_TARGET",
+        "BUFF_SELF"
+      ],
+      "rawDescription": "Start of Odd-numbered Rounds: 25% chance to increase your Fire Damage Dealt by +12% and reduce Physical Damage Received by -12% of 2 other Allies in any lane. If you are afflicted with Panic, also apply the reduced Physical Damage Received effect to yourself. Each effect lasts for 2 round(s).\n\nProgression table:\nHabit Level 1: Molten Armor Chance 25%\nHabit Level 2: 30%\nHabit Level 3: 35%\nHabit Level 4: 42.5%\nHabit Level 5: 50%"
+    },
+    {
+      "id": "tessarion-clever-maneuver",
+      "kind": "habit",
+      "name": "Clever Maneuver",
+      "abilityClass": "passive",
+      "unlockStarRank": 8,
+      "minimumDragonLevel": null,
+      "positionRequirement": null,
+      "verification": {
+        "status": "screenshot-verified",
+        "source": "Tessarion Clever Maneuver screenshot",
+        "capturedAt": "2026-07-10",
+        "gameVersion": "26.6.53509",
+        "reviewedManually": true
+      },
+      "evidenceIds": [
+        "tessarion-clever-maneuver-2026-07-10"
+      ],
+      "tags": [
+        "INTELLIGENCE_UP",
+        "BUFF_INITIATIVE",
+        "ENHANCED_BY_INSTINCT",
+        "HIGHEST_INTELLIGENCE_TARGET"
+      ],
+      "rawDescription": "Start of Combat: Increase Intelligence by +18% and Initiative by +9% of the Ally with the highest Intelligence until the end of combat. Both effects are enhanced by Instinct.\n\nProgression table:\nHabit Level 1: Intelligence +18%; Initiative +9%\nHabit Level 2: Intelligence +21.6%; Initiative +10.8%\nHabit Level 3: Intelligence +25.2%; Initiative +12.6%\nHabit Level 4: Intelligence +30.6%; Initiative +15.3%\nHabit Level 5: Intelligence +36%; Initiative +18%"
+    },
+    {
+      "id": "tessarion-the-blue-queen",
+      "kind": "habit",
+      "name": "The Blue Queen",
+      "abilityClass": "passive",
+      "unlockStarRank": 10,
+      "minimumDragonLevel": null,
+      "positionRequirement": null,
+      "verification": {
+        "status": "screenshot-verified",
+        "source": "Tessarion The Blue Queen screenshot",
+        "capturedAt": "2026-07-10",
+        "gameVersion": "26.6.53509",
+        "reviewedManually": true
+      },
+      "evidenceIds": [
+        "tessarion-the-blue-queen-2026-07-10"
+      ],
+      "tags": [
+        "INTELLIGENCE_UP",
+        "DAMAGE_RECEIVED_DOWN",
+        "FIRE_DAMAGE_ALLY_TARGET",
+        "TROOP_CAPACITY_CONDITION",
+        "ANY_LANE_TARGET"
+      ],
+      "rawDescription": "Start of Odd-numbered Rounds: 40% chance to reduce the Damage Received by -10% and increase the Intelligence, enhanced by Intelligence, by +15% of 1 other Ally in any lane that deals Fire Damage for 2 round(s). If you are above 75% Troop Capacity, double the Damage Received reduction (-20%) and Intelligence increase (+30%).\n\nProgression table:\nHabit Level 1: The Blue Queen Chance 40%\nHabit Level 2: 52%\nHabit Level 3: 64%\nHabit Level 4: 80%\nHabit Level 5: 100%"
+    }
+  ],
+  "affinities": {
+    "Cavalry": "positive",
+    "Shieldbearers": "unknown",
+    "Archers": "unknown",
+    "Spearmen": "positive",
+    "Siege": "positive"
+  },
+  "verification": {
+    "identity": {
+      "status": "screenshot-verified",
+      "source": "Tessarion main screen screenshot",
+      "capturedAt": "2026-07-10",
+      "gameVersion": "26.6.53509",
+      "reviewedManually": true
+    },
+    "command": {
+      "status": "screenshot-verified",
+      "source": "Tessarion Cobalt Flame screenshots",
+      "capturedAt": "2026-07-10",
+      "gameVersion": "26.6.53509",
+      "reviewedManually": true
+    },
+    "trait": {
+      "status": "screenshot-verified",
+      "source": "Tessarion Champion's Brilliance screenshot",
+      "capturedAt": "2026-07-10",
+      "gameVersion": "26.6.53509",
+      "reviewedManually": true
+    },
+    "habits": {
+      "status": "screenshot-verified",
+      "source": "Tessarion Habit screenshots",
+      "capturedAt": "2026-07-10",
+      "gameVersion": "26.6.53509",
+      "reviewedManually": true
+    },
+    "affinities": {
+      "status": "partially-screenshot-verified",
+      "source": "Tessarion main screen screenshot",
+      "capturedAt": "2026-07-10",
+      "gameVersion": "26.6.53509",
+      "reviewedManually": true
+    }
+  },
+  "evidenceIds": [
+    "tessarion-blazing-leader-2026-07-10",
+    "tessarion-champions-brilliance-2026-07-10",
+    "tessarion-clever-maneuver-2026-07-10",
+    "tessarion-cobalt-flame-fire-details-2026-07-10",
+    "tessarion-cobalt-flame-page-1-2026-07-10",
+    "tessarion-cobalt-flame-physical-details-2026-07-10",
+    "tessarion-molten-armor-2026-07-10",
+    "tessarion-sharpened-beauty-2026-07-10",
+    "tessarion-the-blue-queen-2026-07-10"
+  ],
+  "simpleProfileId": "tessarion",
+  "simpleProfileStatus": "curated"
+}

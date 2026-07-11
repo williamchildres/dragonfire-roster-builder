@@ -101,8 +101,13 @@ export type EffectTag =
   | 'CLEANSE_NEGATIVE'
   | 'MIRAGE'
   | 'INTELLIGENCE_SCALING'
+  | 'STRENGTH_SCALING'
   | 'INITIATIVE_SCALING'
-  | 'MOST_TROOPS_TARGET';
+  | 'MOST_TROOPS_TARGET'
+  | 'DAMAGE_DEALT_DOWN'
+  | 'TROOP_CAPACITY_CONDITION'
+  | 'HIGHEST_INTELLIGENCE_TARGET'
+  | 'FIRE_DAMAGE_ALLY_TARGET';
 
 export type AbilityKind = 'command' | 'trait' | 'habit';
 

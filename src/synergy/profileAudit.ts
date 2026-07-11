@@ -615,4 +615,62 @@ export const simpleSynergyAbilityReviews = [
       'The habit applies Overwhelm as Control and explicitly benefits from Vulnerable setup.',
     ),
   ),
+
+  review(
+    'tessarion',
+    'tessarion-cobalt-flame',
+    'command',
+    represented(
+      ['tessarion-cobalt-flame-fire', 'tessarion-cobalt-flame-physical'],
+      'Cobalt Flame deals Intelligence-based Fire Damage and Strength-based Physical Damage; the Damage Dealt reduction remains descriptive enemy mitigation.',
+    ),
+  ),
+  review(
+    'tessarion',
+    'tessarion-champions-brilliance',
+    'trait',
+    represented(
+      ['tessarion-champions-brilliance-vanguard'],
+      "The trait requires Vanguard; its self stat increases are self-only and its Right Flank Damage Received reduction is general support only.",
+    ),
+  ),
+  review(
+    'tessarion',
+    'tessarion-sharpened-beauty',
+    'habit',
+    reinforces(
+      ['tessarion-cobalt-flame-fire', 'tessarion-cobalt-flame-physical'],
+      "The self Physical and Fire Damage increases reinforce Tessarion's existing output without adding Advantage or Troop Capacity as simple tags.",
+    ),
+  ),
+  review(
+    'tessarion',
+    'tessarion-blazing-leader',
+    'habit',
+    represented(['tessarion-blazing-leader-fire'], 'The habit provides formation-wide Fire Damage support; Left Flank is only a priority, not a hard recipient requirement.'),
+  ),
+  review(
+    'tessarion',
+    'tessarion-molten-armor',
+    'habit',
+    reinforces(
+      ['tessarion-cobalt-flame-fire'],
+      "The Fire boost reinforces Tessarion's Fire output; allied Physical defense is general support only and the Panic clause is self-conditional.",
+    ),
+  ),
+  review(
+    'tessarion',
+    'tessarion-clever-maneuver',
+    'habit',
+    represented(['tessarion-clever-maneuver-stats'], 'The habit provides high-level Intelligence and Initiative support without modeling highest-Intelligence target selection.'),
+  ),
+  review(
+    'tessarion',
+    'tessarion-the-blue-queen',
+    'habit',
+    reinforces(
+      ['tessarion-blazing-leader-fire'],
+      'The Fire-ally support reinforces Blazing Leader as Tessarion primary Fire support; the defensive and Troop Capacity clauses remain descriptive.',
+    ),
+  ),
 ] as const satisfies readonly AbilitySynergyReview[];

@@ -53,7 +53,7 @@ describe('project context export', () => {
     expect(Object.keys(exportSet.files).some((file) => /capability|expected-interaction|formation-review|unresolved/i.test(file))).toBe(false);
     expect(validation.errors).toEqual([]);
     expect(validation.passed).toBe(true);
-    expect(validation.summary.schemaValidatedFiles).toBe(31);
+    expect(validation.summary.schemaValidatedFiles).toBe(32);
   });
 
   it('exports exactly one profile for each known dragon', () => {
@@ -61,8 +61,8 @@ describe('project context export', () => {
     const dragonFiles = Object.keys(exportSet.files).filter((file) => /^project-context\/dragons\/(?!index\.json$)[^/]+\.json$/.test(file));
     const index = jsonFile<{ count: number; dragons: Array<{ slug: string }> }>(exportSet.files, 'project-context/dragons/index.json');
 
-    expect(dragonFiles).toHaveLength(30);
-    expect(index.count).toBe(30);
+    expect(dragonFiles).toHaveLength(31);
+    expect(index.count).toBe(31);
     expect(index.dragons.map((dragon) => dragon.slug).sort()).toEqual(dragons.map((dragon) => dragon.slug).sort());
   });
 
@@ -112,7 +112,7 @@ describe('project context export', () => {
     }>(exportSet.files, 'project-context/dragonfire-project-context.json');
 
     expect(context.source.commit).toMatch(/^[a-f0-9]{40}$/);
-    expect(context.dragons).toHaveLength(30);
+    expect(context.dragons).toHaveLength(31);
     expect(context.simpleSynergy.profiles).toHaveLength(simpleSynergyProfiles.length);
     expect(context.simpleSynergy.profileAudit.reviewedAbilityCount).toBeGreaterThan(0);
     expect(context.formationRules.adjacency['left-flank']).toEqual(['vanguard']);

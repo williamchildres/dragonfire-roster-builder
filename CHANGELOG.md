@@ -2,6 +2,9 @@
 
 ## Unreleased
 
+- Added screenshot-verified detailed records and a curated simple-synergy profile for Tessarion, bringing coverage to 31 dragons, 19 detailed dragons, 19 simple profiles, and 12 metadata-only dragons.
+- Modeled Tessarion's Cobalt Flame Fire/Physical output, Blazing Leader Fire support, Clever Maneuver Intelligence/Initiative support, and Champion's Brilliance Vanguard claim; defensive, Advantage, Troop Capacity, and Panic self-condition clauses remain descriptive rather than standalone synergy tags.
+- Increased database/package version to `0.6.4`; source data schema remains `13` and local roster schema remains `3`.
 - Prioritized placement requirements before progression locks in the simple Formation Builder, so relationships that are both mispositioned and under-leveled appear as Placement issues before they can become Future unlocks.
 - Separated emitted synergy output tags from inbound scaling support tags so damage and Recovery outputs no longer act as providers for their scaling stats.
 - Added screenshot-verified detailed records and curated simple-synergy profiles for Tashix, Velar, and Zivern, bringing coverage to 18 detailed dragons, 18 simple profiles, and 12 metadata-only dragons.

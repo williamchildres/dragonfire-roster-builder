@@ -1,11 +1,11 @@
 {
-  "reviewedAbilityCount": 126,
+  "reviewedAbilityCount": 133,
   "dispositionCounts": {
-    "represented": 84,
+    "represented": 88,
     "general-support-only": 8,
     "self-only": 22,
     "no-cross-dragon-synergy": 9,
-    "reinforces-existing": 3
+    "reinforces-existing": 6
   },
   "metadataOnlyDragonIds": [
     "solstryker",
@@ -1461,6 +1461,92 @@
           "zivern-cloak-of-terror-vulnerable-payoff"
         ],
         "rationale": "The habit applies Overwhelm as Control and explicitly benefits from Vulnerable setup."
+      }
+    },
+    {
+      "dragonId": "tessarion",
+      "abilityId": "tessarion-cobalt-flame",
+      "abilityKind": "command",
+      "disposition": {
+        "kind": "represented",
+        "signalIds": [
+          "tessarion-cobalt-flame-fire",
+          "tessarion-cobalt-flame-physical"
+        ],
+        "rationale": "Cobalt Flame deals Intelligence-based Fire Damage and Strength-based Physical Damage; the Damage Dealt reduction remains descriptive enemy mitigation."
+      }
+    },
+    {
+      "dragonId": "tessarion",
+      "abilityId": "tessarion-champions-brilliance",
+      "abilityKind": "trait",
+      "disposition": {
+        "kind": "represented",
+        "signalIds": [
+          "tessarion-champions-brilliance-vanguard"
+        ],
+        "rationale": "The trait requires Vanguard; its self stat increases are self-only and its Right Flank Damage Received reduction is general support only."
+      }
+    },
+    {
+      "dragonId": "tessarion",
+      "abilityId": "tessarion-sharpened-beauty",
+      "abilityKind": "habit",
+      "disposition": {
+        "kind": "reinforces-existing",
+        "signalIds": [
+          "tessarion-cobalt-flame-fire",
+          "tessarion-cobalt-flame-physical"
+        ],
+        "rationale": "The self Physical and Fire Damage increases reinforce Tessarion's existing output without adding Advantage or Troop Capacity as simple tags."
+      }
+    },
+    {
+      "dragonId": "tessarion",
+      "abilityId": "tessarion-blazing-leader",
+      "abilityKind": "habit",
+      "disposition": {
+        "kind": "represented",
+        "signalIds": [
+          "tessarion-blazing-leader-fire"
+        ],
+        "rationale": "The habit provides formation-wide Fire Damage support; Left Flank is only a priority, not a hard recipient requirement."
+      }
+    },
+    {
+      "dragonId": "tessarion",
+      "abilityId": "tessarion-molten-armor",
+      "abilityKind": "habit",
+      "disposition": {
+        "kind": "reinforces-existing",
+        "signalIds": [
+          "tessarion-cobalt-flame-fire"
+        ],
+        "rationale": "The Fire boost reinforces Tessarion's Fire output; allied Physical defense is general support only and the Panic clause is self-conditional."
+      }
+    },
+    {
+      "dragonId": "tessarion",
+      "abilityId": "tessarion-clever-maneuver",
+      "abilityKind": "habit",
+      "disposition": {
+        "kind": "represented",
+        "signalIds": [
+          "tessarion-clever-maneuver-stats"
+        ],
+        "rationale": "The habit provides high-level Intelligence and Initiative support without modeling highest-Intelligence target selection."
+      }
+    },
+    {
+      "dragonId": "tessarion",
+      "abilityId": "tessarion-the-blue-queen",
+      "abilityKind": "habit",
+      "disposition": {
+        "kind": "reinforces-existing",
+        "signalIds": [
+          "tessarion-blazing-leader-fire"
+        ],
+        "rationale": "The Fire-ally support reinforces Blazing Leader as Tessarion primary Fire support; the defensive and Troop Capacity clauses remain descriptive."
       }
     }
   ]

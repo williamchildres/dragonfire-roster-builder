@@ -4,14 +4,14 @@ This audit covers the curated simple-synergy profiles used by the live Formation
 
 ## Coverage
 
-- Total roster: 30 dragons.
-- Detailed ability data: 18 dragons.
+- Total roster: 31 dragons.
+- Detailed ability data: 19 dragons.
 - Metadata-only and unmapped: 12 dragons.
-- Detailed abilities reviewed: 126 Commands, Traits, and Habits.
-- Simple profiles before this pass: 6.
-- Simple profiles after this pass: 18.
+- Detailed abilities reviewed: 133 Commands, Traits, and Habits.
+- Simple profiles before this pass: 18.
+- Simple profiles after this pass: 19.
 
-Mapped dragons: Syrax, Vhagar, Caraxes, Seasmoke, Crimson, Kalspire, Malachite, Venator, Daemoros, Feskar, Rhysarion, Shadowsong, Vaeldra, Sheepstealer, Vermax, Tashix, Velar, Zivern.
+Mapped dragons: Syrax, Vhagar, Caraxes, Seasmoke, Crimson, Kalspire, Malachite, Venator, Daemoros, Feskar, Rhysarion, Shadowsong, Vaeldra, Sheepstealer, Vermax, Tashix, Velar, Zivern, Tessarion.
 
 Metadata-only dragons: Solstryker, Antares, Shimmer, Jagadrix, Bevlorin, Shadowrend, Thunderstrike, Vesper, Arulix, Nyrena, Dawnseeker, Arrax.
 
@@ -37,9 +37,8 @@ The live false-attribution defects came from mixing those meanings in one tag li
 
 ## Disposition Counts
 
-- represented: 69.
-- represented: 84.
-- reinforces-existing: 3.
+- represented: 88.
+- reinforces-existing: 6.
 - self-only: 22.
 - general-support-only: 8.
 - no-cross-dragon-synergy: 9.
@@ -89,9 +88,11 @@ Velar contributes Instinct-based Tactical Damage through Whirlwind, generic dama
 
 Zivern contributes Instinct-based Tactical Damage and Tactical vulnerability through Silent Shade, Physical support and Intelligence scaling through Battle Mastery, Panic through Fearsome Reach, and Overwhelm-as-Control plus Vulnerable payoff through Cloak of Terror.
 
+Tessarion contributes Intelligence-based Fire Damage and Strength-based Physical Damage through Cobalt Flame, formation-wide Fire Damage support through Blazing Leader, Intelligence and Initiative support through Clever Maneuver, and a Vanguard claim through Champion's Brilliance. Sharpened Beauty and Molten Armor reinforce Tessarion's existing output. The Blue Queen reinforces the same Fire-ally support direction already represented by Blazing Leader; its defensive and Troop Capacity clauses remain descriptive.
+
 ## Damage Support Summary
 
-Fire Damage support comes from Syrax Blazing Fury, Syrax Tactical Inferno, Malachite Sentinel's Presence, Seasmoke Cunning Ferocity, Vhagar Blazing Onslaught, Crimson Unlikely Hero, Shadowsong Blazing Onslaught, Vaeldra Tempting Distraction, Vaeldra Infernal Force, Tashix Battle Guile, and generic Damage Dealt support from Rhysarion Champion's Vigor, Malachite Thunderous Roar, and Velar Whirlwind.
+Fire Damage support comes from Syrax Blazing Fury, Syrax Tactical Inferno, Malachite Sentinel's Presence, Seasmoke Cunning Ferocity, Vhagar Blazing Onslaught, Crimson Unlikely Hero, Shadowsong Blazing Onslaught, Vaeldra Tempting Distraction, Vaeldra Infernal Force, Tashix Battle Guile, Tessarion Blazing Leader, and generic Damage Dealt support from Rhysarion Champion's Vigor, Malachite Thunderous Roar, and Velar Whirlwind.
 
 Tactical Damage support comes from Syrax Tactical Inferno, Vhagar Warrior's Resilience, Vaeldra Warrior's Resilience, Vermax Spreading Blaze, Vermax Rallying Flame, Velar Strategic Leader, Zivern Silent Shade, Rhysarion Champion's Vigor, Malachite Thunderous Roar, and Velar Whirlwind.
 
@@ -107,9 +108,9 @@ Strength support is represented for Malachite Collective Might, Malachite Lightn
 
 Instinct support is represented for Syrax Mindful Synergy, Syrax Sentinel's Wit, Feskar Insightful Allies, Vermax Warrior's Zeal, Vermax Reactive Instincts, Venator Warrior's Zeal, Daemoros Warrior's Zeal, Velar Sentinel's Wit, Velar Fierce Unity, Zivern Sentinel's Wit, and Malachite Warden's Rally recipients that explicitly use Instinct.
 
-Intelligence support is represented for Syrax Mindful Synergy and Seasmoke Cunning Ferocity when the recipient output explicitly uses Intelligence. Zivern Battle Mastery benefits from external Intelligence support.
+Intelligence support is represented for Syrax Mindful Synergy, Seasmoke Cunning Ferocity, and Tessarion Clever Maneuver when the recipient output explicitly uses Intelligence. Zivern Battle Mastery benefits from external Intelligence support.
 
-Initiative support is represented for Syrax Flight Mastery, Seasmoke Clever Maneuver, Seasmoke Wind's Favor, Rhysarion Inspiring Melody, hard flank Trait support where the recipient output explicitly uses Initiative, and Tashix/Velar Initiative-scaling payoffs.
+Initiative support is represented for Syrax Flight Mastery, Seasmoke Clever Maneuver, Seasmoke Wind's Favor, Tessarion Clever Maneuver, Rhysarion Inspiring Melody, hard flank Trait support where the recipient output explicitly uses Initiative, and Tashix/Velar Initiative-scaling payoffs.
 
 ## Position Claims
 
@@ -121,8 +122,8 @@ Hard recipient-position supports are modeled with `requiredRecipientPosition`. A
 
 Self-only abilities: Vhagar Ancestral Shield; Caraxes Dragon's Flair and Blood Wyrm; Crimson Dragon's Intellect; Kalspire Robust Insight and Dragon's Insight; Malachite Wise Vigor; Venator Dragon's Might; Daemoros Powerful Reflexes and Phantom's Veil; Feskar Quick-Witted; Rhysarion Sharp Resolve; Shadowsong Dragon's Intellect; Vaeldra Dragon's Valor; Sheepstealer Stolen Flock, Dragon's Cunning, Baited Kill, Wary Beast; Vermax Dragon's Valor and Unyielding Resolve; Velar Quick Reflexes; Zivern Keen Instinct.
 
-General support only: Syrax Mother's Mercy; Vhagar Eclipse Cover; Seasmoke Loyal Bond; Feskar Resilient Bond; Vermax Trial by Flame; Tashix Enervate; Tashix Cunning Ruse; Zivern Steel Shroud.
+General support only: Syrax Mother's Mercy; Vhagar Eclipse Cover; Seasmoke Loyal Bond; Feskar Resilient Bond; Vermax Trial by Flame; Tashix Enervate; Tashix Cunning Ruse; Zivern Steel Shroud; Tessarion Champion's Brilliance Right Flank defensive support, Molten Armor allied Physical defense, and The Blue Queen defensive support.
 
 No current cross-dragon synergy: Caraxes Battle Dread and Mass Enfeeble; Crimson Enervate and Vermin's Bane; Kalspire Battle Cunning and Radiant Conqueror; Venator Hunter's Bane; Shadowsong Ensnare; Vaeldra Ensnare.
 
-Daemoros Darkening Fear reinforces Daemoros's existing Panic provider signal and is not emitted as a separate duplicate relationship. Vermax Rallying Flame reinforces Vermax's existing Tactical Damage support and is likewise aggregated with the base Tactical support relationship. Tashix Veiled Ambush reinforces Tashix's existing Fire output instead of creating a duplicate visible Fire relationship.
+Daemoros Darkening Fear reinforces Daemoros's existing Panic provider signal and is not emitted as a separate duplicate relationship. Vermax Rallying Flame reinforces Vermax's existing Tactical Damage support and is likewise aggregated with the base Tactical support relationship. Tashix Veiled Ambush reinforces Tashix's existing Fire output instead of creating a duplicate visible Fire relationship. Tessarion Sharpened Beauty and Molten Armor reinforce Tessarion's own Fire/Physical output, and The Blue Queen reinforces Tessarion's Fire support without adding standalone Advantage, Troop Capacity, or Panic self-condition simple tags.

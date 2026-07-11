@@ -6,9 +6,9 @@ It is not a combat simulator.
 
 ## Current Features
 
-- Dragon Database for 30 known dragons.
-- Full raw Command, Trait, and Habit wording for 18 detailed dragons.
-- Curated simple synergy profiles for all 18 detailed dragons.
+- Dragon Database for 31 known dragons.
+- Full raw Command, Trait, and Habit wording for 19 detailed dragons.
+- Curated simple synergy profiles for all 19 detailed dragons.
 - Metadata-only handling for the remaining 12 unmapped dragons.
 - Roster ownership, collection state, Star Rank, Dragon Level, notes, and Habit Level tracking.
 - Formation Builder with placement, progression locks, missing-enabler, position conflict, and future-unlock explanations.

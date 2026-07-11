@@ -1,6 +1,6 @@
 {
-  "count": 30,
-  "detailedDragonCount": 18,
+  "count": 31,
+  "detailedDragonCount": 19,
   "metadataOnlyDragonCount": 12,
   "dragons": [
     {
@@ -254,6 +254,15 @@
       "breed": "Warrior",
       "profileCompleteness": "metadata-only",
       "simpleProfileStatus": "metadata-only-unmapped"
+    },
+    {
+      "id": "tessarion",
+      "slug": "tessarion",
+      "name": "Tessarion",
+      "rarity": "Epic",
+      "breed": "Champion",
+      "profileCompleteness": "detailed-abilities",
+      "simpleProfileStatus": "curated"
     },
     {
       "id": "sheepstealer",

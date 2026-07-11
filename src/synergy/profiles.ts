@@ -1401,4 +1401,58 @@ export const simpleSynergyProfiles = [
       }),
     ],
   },
+  {
+    dragonId: 'tessarion',
+    dragonName: 'Tessarion',
+    outputs: [
+      output({
+        id: 'tessarion-cobalt-flame-fire',
+        tag: 'damage:fire',
+        scalesWith: ['stat:intelligence'],
+        abilityId: 'tessarion-cobalt-flame',
+        abilityName: 'Cobalt Flame',
+        description: 'deals Fire Damage using Intelligence',
+      }),
+      output({
+        id: 'tessarion-cobalt-flame-physical',
+        tag: 'damage:physical',
+        scalesWith: ['stat:strength'],
+        abilityId: 'tessarion-cobalt-flame',
+        abilityName: 'Cobalt Flame',
+        description: 'deals Physical Damage using Strength',
+      }),
+    ],
+    supports: [
+      output({
+        id: 'tessarion-blazing-leader-fire',
+        tag: 'damage:fire',
+        abilityId: 'tessarion-blazing-leader',
+        abilityName: 'Blazing Leader',
+        description: 'improves allied Fire Damage',
+        unlock: { minimumStarRank: 4 },
+        friendlyScope: 'formation',
+      }),
+      output({
+        id: 'tessarion-clever-maneuver-stats',
+        tag: 'stat:intelligence',
+        tags: ['stat:intelligence', 'stat:initiative'],
+        abilityId: 'tessarion-clever-maneuver',
+        abilityName: 'Clever Maneuver',
+        description: 'improves Intelligence and Initiative of a high-Intelligence ally',
+        unlock: { minimumStarRank: 8 },
+        friendlyScope: 'formation',
+      }),
+    ],
+    benefitsFrom: [],
+    positionClaims: [
+      claim({
+        id: 'tessarion-champions-brilliance-vanguard',
+        abilityId: 'tessarion-champions-brilliance',
+        abilityName: "Champion's Brilliance",
+        requiredPosition: 'vanguard',
+        unlock: { minimumDragonLevel: 16 },
+        description: "Champion's Brilliance requires Vanguard",
+      }),
+    ],
+  },
 ] satisfies DragonSynergyProfile[];
