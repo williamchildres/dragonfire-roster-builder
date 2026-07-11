@@ -120,6 +120,14 @@ a {
   gap: 0.75rem;
 }
 
+.button-row {
+  flex-wrap: wrap;
+}
+
+.hero-actions {
+  margin-top: 1rem;
+}
+
 .brand-mark {
   align-items: center;
   background: linear-gradient(135deg, #30150b, #9a3d21);
@@ -255,6 +263,11 @@ main {
   grid-template-columns: minmax(0, 1.05fr) minmax(18rem, 0.95fr);
 }
 
+.overview-section {
+  display: grid;
+  gap: 1.4rem;
+}
+
 .hero-copy {
   align-self: center;
   min-width: 0;
@@ -280,6 +293,30 @@ main {
   overflow: hidden;
 }
 
+.hero-art-panel {
+  position: relative;
+}
+
+.hero-image {
+  display: block;
+  height: 100%;
+  object-fit: contain;
+  padding: 1rem;
+  position: relative;
+  width: 100%;
+  z-index: 1;
+}
+
+.hero-art-overlay {
+  background:
+    radial-gradient(circle at 50% 40%, rgba(255, 211, 107, 0.08), transparent 45%),
+    linear-gradient(180deg, rgba(12, 11, 10, 0.08), rgba(12, 11, 10, 0.46));
+  inset: 0;
+  pointer-events: none;
+  position: absolute;
+  z-index: 2;
+}
+
 .dragon-silhouette {
   background:
     radial-gradient(circle at 54% 36%, #f4ead2 0 7%, transparent 7.3%),
@@ -295,6 +332,10 @@ main {
   gap: 0.75rem;
   grid-column: 1 / -1;
   grid-template-columns: repeat(auto-fit, minmax(9.5rem, 1fr));
+}
+
+.overview-stats-grid {
+  grid-template-columns: repeat(auto-fit, minmax(10rem, 1fr));
 }
 
 .stat-card,
@@ -328,6 +369,104 @@ main {
 .panel p,
 .empty-state p {
   color: var(--muted);
+}
+
+.feature-grid,
+.overview-stats-layout,
+.overview-footer-grid {
+  display: grid;
+  gap: 1rem;
+}
+
+.feature-grid {
+  grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr));
+}
+
+.feature-card {
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.06), rgba(255, 255, 255, 0.03));
+  border: 1px solid var(--line-soft);
+  border-radius: 0.5rem;
+  box-shadow: var(--shadow);
+  display: grid;
+  gap: 0.65rem;
+  padding: 1rem;
+}
+
+.feature-card h3,
+.feature-card p {
+  margin: 0;
+}
+
+.feature-icon {
+  align-items: center;
+  background: rgba(242, 138, 46, 0.14);
+  border: 1px solid rgba(255, 211, 107, 0.28);
+  border-radius: 999px;
+  color: var(--focus);
+  display: inline-flex;
+  height: 2.25rem;
+  justify-content: center;
+  width: 2.25rem;
+}
+
+.coverage-panel {
+  align-items: center;
+  background: linear-gradient(180deg, rgba(242, 138, 46, 0.11), rgba(255, 255, 255, 0.03));
+  border: 1px solid rgba(255, 211, 107, 0.22);
+  border-radius: 0.5rem;
+  box-shadow: var(--shadow);
+  display: grid;
+  gap: 1rem;
+  grid-template-columns: minmax(0, 1fr) minmax(14rem, 0.7fr);
+  padding: 1rem;
+}
+
+.coverage-copy h3,
+.coverage-copy p {
+  margin-bottom: 0.35rem;
+}
+
+.coverage-copy p:last-child {
+  margin-bottom: 0;
+}
+
+.coverage-panel progress {
+  appearance: none;
+  border: 0;
+  height: 0.9rem;
+  width: 100%;
+}
+
+.coverage-panel progress::-webkit-progress-bar {
+  background: rgba(0, 0, 0, 0.28);
+  border-radius: 999px;
+}
+
+.coverage-panel progress::-webkit-progress-value {
+  background: linear-gradient(90deg, var(--ember), var(--fire), var(--gold));
+  border-radius: 999px;
+}
+
+.coverage-panel progress::-moz-progress-bar {
+  background: linear-gradient(90deg, var(--ember), var(--fire), var(--gold));
+  border-radius: 999px;
+}
+
+.overview-stat-group {
+  display: grid;
+  gap: 0.75rem;
+}
+
+.overview-stat-group h3 {
+  margin-bottom: 0;
+}
+
+.overview-footer-grid {
+  grid-template-columns: repeat(auto-fit, minmax(18rem, 1fr));
+}
+
+.latest-update-panel h3 {
+  margin-bottom: 0.5rem;
 }
 
 .notice-panel,
@@ -1177,8 +1316,8 @@ th {
     grid-template-columns: 1fr;
   }
 
-  .hero-art {
-    order: -1;
+  .coverage-panel {
+    grid-template-columns: 1fr;
   }
 
   .team-slots,
@@ -1233,6 +1372,14 @@ th {
   }
 
   .dragon-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .feature-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .overview-footer-grid {
     grid-template-columns: 1fr;
   }
 
