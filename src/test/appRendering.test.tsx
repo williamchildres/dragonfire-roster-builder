@@ -3,7 +3,7 @@ import userEvent from '@testing-library/user-event';
 import { afterEach, describe, expect, it, vi } from 'vitest';
 import { App, RawWordingDisclosure } from '../app/App';
 import { dragons } from '../data/dragons';
-import { STORAGE_KEY } from '../services/rosterStorage';
+import { createEmptyRoster, saveRoster, STORAGE_KEY } from '../services/rosterStorage';
 
 
 describe('Dragonfire Roster Lab app', () => {
@@ -105,6 +105,121 @@ describe('Dragonfire Roster Lab app', () => {
     expect(within(dialog).getAllByText('Not yet verified').length).toBeGreaterThan(4);
   });
 
+  it('renders the polished Daemoros details layout with at-a-glance summary and ownership controls', async () => {
+    const user = userEvent.setup();
+    render(<App />);
+
+    await user.click(screen.getByRole('button', { name: /dragon database/i }));
+    await user.type(screen.getByLabelText(/search by name/i), 'Daemoros');
+    const daemorosCard = screen.getByRole('heading', { name: 'Daemoros' }).closest('article');
+    expect(daemorosCard).not.toBeNull();
+    await user.click(within(daemorosCard as HTMLElement).getByRole('button', { name: /view details/i }));
+
+    const dialog = screen.getByRole('dialog', { name: /daemoros/i });
+    expect(dialog).toHaveTextContent('Daemoros');
+    expect(dialog).toHaveTextContent('Epic');
+    expect(dialog).toHaveTextContent('Warrior');
+    expect(dialog).toHaveTextContent('Community Verified');
+    expect(dialog).toHaveTextContent('At a glance');
+    expect(dialog).toHaveTextContent('Provides');
+    expect(dialog).toHaveTextContent('Benefits from');
+    expect(dialog).toHaveTextContent('Placement notes');
+    expect(dialog).toHaveTextContent('Panic');
+    expect(dialog).toHaveTextContent('Burn');
+    expect(dialog).toHaveTextContent('Physical Damage');
+    expect(dialog).toHaveTextContent('Vanguard trait');
+    expect(dialog).toHaveTextContent('Shadowflame');
+    expect(dialog).toHaveTextContent("Warrior's Zeal");
+    expect(dialog).toHaveTextContent('Instill Fear');
+    expect(dialog).toHaveTextContent('Powerful Reflexes');
+    expect(dialog).toHaveTextContent('Shroud of Shadows');
+    expect(dialog).toHaveTextContent('Darkening Fear');
+    expect(dialog).toHaveTextContent("Phantom's Veil");
+    expect(dialog).toHaveTextContent('Owned');
+    expect(dialog).toHaveTextContent('Collection State');
+    expect(dialog).toHaveTextContent('Star Rank');
+    expect(dialog).toHaveTextContent('Reign Level');
+    expect(dialog).toHaveTextContent('Personal notes');
+
+    const phantomCard = within(dialog).getByRole('heading', { name: "Phantom's Veil" }).closest('article');
+    expect(phantomCard).not.toBeNull();
+    expect(phantomCard).toHaveTextContent('Plain summary');
+    expect(phantomCard).toHaveTextContent('Reduces Damage Received');
+    const verifiedWording = within(phantomCard as HTMLElement).getByText('Verified wording');
+    expect(verifiedWording.closest('details')).not.toHaveAttribute('open');
+    await user.click(verifiedWording);
+    expect(verifiedWording.closest('details')).toHaveTextContent('reduce exactly one of Physical, Tactical, or Fire Damage Received');
+
+    expect(within(dialog).getByText('Structured tags').closest('details')).not.toHaveAttribute('open');
+    expect(within(dialog).getByRole('heading', { name: 'Evidence & technical details' })).toBeInTheDocument();
+  });
+
+  it('renders metadata-only dragon details without broken ability cards', async () => {
+    const user = userEvent.setup();
+    render(<App />);
+
+    await user.click(screen.getByRole('button', { name: /dragon database/i }));
+    await user.type(screen.getByLabelText(/search by name/i), 'Solstryker');
+    const dragonCard = screen.getByRole('heading', { name: 'Solstryker' }).closest('article');
+    expect(dragonCard).not.toBeNull();
+    await user.click(within(dragonCard as HTMLElement).getByRole('button', { name: /view details/i }));
+
+    const dialog = screen.getByRole('dialog', { name: /solstryker/i });
+    expect(dialog).toHaveTextContent('Metadata-only record. Ability details not yet verified.');
+    expect(dialog).toHaveTextContent('At a glance');
+    expect(dialog).toHaveTextContent('No formation-wide output profile recorded.');
+    expect(dialog).toHaveTextContent('No specific benefit profile recorded.');
+    expect(dialog).toHaveTextContent('No special placement requirement recorded.');
+    expect(within(dialog).queryByText('Plain summary')).toBeNull();
+    expect(within(dialog).queryByRole('heading', { name: 'Evidence & technical details' })).toBeInTheDocument();
+    expect(within(dialog).queryByRole('heading', { name: 'What it does' })).toBeInTheDocument();
+  });
+
+  it('renders Tessarion details with the new player-facing summary', async () => {
+    const user = userEvent.setup();
+    render(<App />);
+
+    await user.click(screen.getByRole('button', { name: /dragon database/i }));
+    await user.type(screen.getByLabelText(/search by name/i), 'Tessarion');
+    const dragonCard = screen.getByRole('heading', { name: 'Tessarion' }).closest('article');
+    expect(dragonCard).not.toBeNull();
+    await user.click(within(dragonCard as HTMLElement).getByRole('button', { name: /view details/i }));
+
+    const dialog = screen.getByRole('dialog', { name: /tessarion/i });
+    expect(dialog).toHaveTextContent('Cobalt Flame');
+    expect(dialog).toHaveTextContent("Champion's Brilliance");
+    expect(dialog).toHaveTextContent('At a glance');
+    expect(dialog).toHaveTextContent('Fire Damage');
+    expect(dialog).toHaveTextContent('Physical Damage');
+    expect(dialog).toHaveTextContent('Fire Damage support');
+    expect(dialog).toHaveTextContent('Intelligence support');
+    expect(dialog).toHaveTextContent('Boosts Intelligence');
+    expect(dialog).toHaveTextContent('Vanguard trait');
+  });
+
+  it('opens dragon details from My Roster and keeps ownership controls interactive', async () => {
+    const user = userEvent.setup();
+    const roster = createEmptyRoster(dragons);
+    roster.syrax!.owned = true;
+    roster.syrax!.collection.state = 'hatched';
+    roster.syrax!.starRank = 3;
+    saveRoster(window.localStorage, roster);
+
+    render(<App />);
+
+    await user.click(screen.getByRole('button', { name: /^my roster$/i }));
+    const syraxCard = screen.getByRole('heading', { name: 'Syrax' }).closest('article');
+    expect(syraxCard).not.toBeNull();
+    await user.click(within(syraxCard as HTMLElement).getByRole('button', { name: /view details/i }));
+
+    const dialog = screen.getByRole('dialog', { name: /syrax/i });
+    expect(within(dialog).getByRole('checkbox', { name: /owned/i })).toBeChecked();
+    expect(within(dialog).getByLabelText(/collection state/i)).toHaveValue('hatched');
+    expect(within(dialog).getByLabelText(/star rank/i)).toHaveValue('3');
+    expect(within(dialog).getByLabelText(/reign level/i)).toBeInTheDocument();
+    expect(within(dialog).getByLabelText(/personal notes/i)).toBeInTheDocument();
+  });
+
   it("renders Phantom's Veil as descriptive raw wording with saved Habit Level controls", async () => {
     const user = userEvent.setup();
     render(<App />);
@@ -122,8 +237,9 @@ describe('Dragonfire Roster Lab app', () => {
 
     expect(phantomCard).toHaveTextContent('Unlocked or available');
     expect(phantomCard).toHaveTextContent('Saved Habit LevelNot recorded');
-    expect(phantomCard).toHaveTextContent('Tags: DAMAGE_RECEIVED_DOWN');
-    const rawSummary = within(phantomCard as HTMLElement).getByText('Raw verified wording');
+    expect(phantomCard).toHaveTextContent('Plain summary');
+    expect(phantomCard).toHaveTextContent('Reduces Damage Received');
+    const rawSummary = within(phantomCard as HTMLElement).getByText('Verified wording');
     await user.click(rawSummary);
     expect(rawSummary.closest('details')).toHaveTextContent('reduce exactly one of Physical, Tactical, or Fire Damage Received');
     expect(rawSummary.closest('details')).toHaveTextContent('Selection method is not stated');
@@ -191,7 +307,7 @@ describe('Dragonfire Roster Lab app', () => {
     const dialog = screen.getByRole('dialog', { name: /feskar/i });
     const commandCard = within(dialog).getByRole('heading', { name: 'Calculated Assault' }).closest('article');
     expect(commandCard).not.toBeNull();
-    const rawSummary = within(commandCard as HTMLElement).getByText('Raw verified wording');
+    const rawSummary = within(commandCard as HTMLElement).getByText('Verified wording');
     expect(rawSummary.closest('details')).not.toHaveAttribute('open');
     await user.click(rawSummary);
 
@@ -213,7 +329,7 @@ describe('Dragonfire Roster Lab app', () => {
     let dragonDialog = screen.getByRole('dialog', { name: /rhysarion/i });
     let commandSection = within(dragonDialog).getByRole('heading', { name: 'Dawnsong' }).closest('article');
     expect(commandSection).not.toBeNull();
-    const rhysarionSummary = within(commandSection as HTMLElement).getByText('Raw verified wording');
+    const rhysarionSummary = within(commandSection as HTMLElement).getByText('Verified wording');
     await user.click(rhysarionSummary);
     let commandRaw = rhysarionSummary.closest('details');
     expect(commandRaw).not.toBeNull();
@@ -233,7 +349,7 @@ describe('Dragonfire Roster Lab app', () => {
     dragonDialog = screen.getByRole('dialog', { name: /shadowsong/i });
     commandSection = within(dragonDialog).getByRole('heading', { name: 'Breath of Fire' }).closest('article');
     expect(commandSection).not.toBeNull();
-    const shadowsongSummary = within(commandSection as HTMLElement).getByText('Raw verified wording');
+    const shadowsongSummary = within(commandSection as HTMLElement).getByText('Verified wording');
     await user.click(shadowsongSummary);
     commandRaw = shadowsongSummary.closest('details');
     expect(commandRaw).not.toBeNull();
@@ -258,7 +374,7 @@ describe('Dragonfire Roster Lab app', () => {
     dragonDialog = screen.getByRole('dialog', { name: /syrax/i });
     commandSection = within(dragonDialog).getByRole('heading', { name: 'Blazing Fury' }).closest('article');
     expect(commandSection).not.toBeNull();
-    const syraxSummary = within(commandSection as HTMLElement).getByText('Raw verified wording');
+    const syraxSummary = within(commandSection as HTMLElement).getByText('Verified wording');
     await user.click(syraxSummary);
     commandRaw = syraxSummary.closest('details');
     expect(commandRaw).not.toBeNull();
@@ -288,7 +404,7 @@ describe('Dragonfire Roster Lab app', () => {
     let dialog = screen.getByRole('dialog', { name: /crimson/i });
     let commandCard = within(dialog).getByRole('heading', { name: 'Bloodscale Terror' }).closest('article');
     expect(commandCard).not.toBeNull();
-    let rawToggle = within(commandCard as HTMLElement).getByText('Raw verified wording');
+    let rawToggle = within(commandCard as HTMLElement).getByText('Verified wording');
     await user.click(rawToggle);
     let raw = rawToggle.closest('details');
     expect(raw).not.toBeNull();
@@ -308,7 +424,7 @@ describe('Dragonfire Roster Lab app', () => {
     dialog = screen.getByRole('dialog', { name: /sheepstealer/i });
     commandCard = within(dialog).getByRole('heading', { name: 'Wild Hunt' }).closest('article');
     expect(commandCard).not.toBeNull();
-    rawToggle = within(commandCard as HTMLElement).getByText('Raw verified wording');
+    rawToggle = within(commandCard as HTMLElement).getByText('Verified wording');
     await user.click(rawToggle);
     raw = rawToggle.closest('details');
     expect(raw).not.toBeNull();
@@ -330,7 +446,7 @@ describe('Dragonfire Roster Lab app', () => {
     dialog = screen.getByRole('dialog', { name: /kalspire/i });
     commandCard = within(dialog).getByRole('heading', { name: 'Tactical Strike' }).closest('article');
     expect(commandCard).not.toBeNull();
-    rawToggle = within(commandCard as HTMLElement).getByText('Raw verified wording');
+    rawToggle = within(commandCard as HTMLElement).getByText('Verified wording');
     await user.click(rawToggle);
     raw = rawToggle.closest('details');
     expect(raw).not.toBeNull();

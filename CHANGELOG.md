@@ -2,6 +2,7 @@
 
 ## Unreleased
 
+- Polished the Dragon Details modal into a wider, more readable player-facing layout with an at-a-glance summary, clearer ability cards, and collapsed raw verified wording plus technical sections.
 - Polished the Overview page into a public-release landing/dashboard with new hero artwork, clearer feature cards, grouped coverage summary cards, and a local-first trust note.
 - Added screenshot-verified detailed records and a curated simple-synergy profile for Tessarion, bringing coverage to 31 dragons, 19 detailed dragons, 19 simple profiles, and 12 metadata-only dragons.
 - Modeled Tessarion's Cobalt Flame Fire/Physical output, Blazing Leader Fire support, Clever Maneuver Intelligence/Initiative support, and Champion's Brilliance Vanguard claim; defensive, Advantage, Troop Capacity, and Panic self-condition clauses remain descriptive rather than standalone synergy tags.

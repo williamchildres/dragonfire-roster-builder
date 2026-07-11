@@ -507,7 +507,7 @@ main {
 .team-slots,
 .formation-board,
 .summary-layout,
-.details-grid {
+.details-layout {
   display: grid;
   gap: 1rem;
 }
@@ -1147,24 +1147,158 @@ dd {
 .mini-panel {
   background: rgba(0, 0, 0, 0.18);
   border: 1px solid var(--line-soft);
+  border-radius: 0.5rem;
+  padding: 0.95rem;
+}
+
+.ability-card {
+  display: grid;
+  gap: 0.8rem;
+}
+
+.ability-card-header {
+  display: flex;
+  justify-content: space-between;
+  gap: 0.75rem;
+}
+
+.ability-card h4 {
+  margin-bottom: 0.25rem;
+}
+
+.ability-badges {
+  margin-bottom: 0;
+}
+
+.ability-summary {
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid var(--line-soft);
   border-radius: 0.45rem;
-  padding: 0.9rem;
+  display: grid;
+  gap: 0.6rem;
+  padding: 0.8rem;
 }
 
-.ability-card details {
-  margin-top: 0.75rem;
+.ability-summary-label {
+  color: var(--gold);
+  font-size: 0.82rem;
+  font-weight: 800;
+  margin-bottom: 0;
+  text-transform: uppercase;
 }
 
-.ability-card summary {
+.ability-summary-text {
+  color: var(--text);
+  line-height: 1.55;
+  margin-bottom: 0;
+}
+
+.ability-chip-list {
+  margin-top: 0.1rem;
+}
+
+.ability-meta {
+  margin-top: 0;
+}
+
+.ability-habit-level {
+  max-width: 18rem;
+}
+
+.ability-technical-disclosure,
+.technical-disclosure {
+  background: rgba(255, 255, 255, 0.025);
+  border: 1px solid var(--line-soft);
+  border-radius: 0.45rem;
+  color: var(--muted);
+  display: grid;
+  gap: 0.55rem;
+  padding: 0.7rem 0.8rem;
+}
+
+.ability-technical-disclosure summary,
+.technical-disclosure summary {
   color: var(--gold);
   cursor: pointer;
   font-weight: 800;
 }
 
-.summary-layout,
-.details-grid {
+.ability-technical-disclosure p,
+.technical-disclosure p {
+  margin-bottom: 0;
+}
+
+.technical-disclosure-stack {
+  display: grid;
+  gap: 0.75rem;
+}
+
+.details-layout {
+  grid-template-columns: minmax(0, 1.6fr) minmax(20rem, 0.95fr);
+  margin-top: 0;
+  min-width: 0;
+}
+
+.details-main,
+.details-side {
+  display: grid;
+  gap: 1rem;
+  min-width: 0;
+}
+
+.at-a-glance-panel,
+.details-abilities-panel,
+.technical-panel {
+  min-width: 0;
+}
+
+.at-a-glance-grid {
+  display: grid;
+  gap: 0.75rem;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.glance-card {
+  background: rgba(0, 0, 0, 0.16);
+  border: 1px solid var(--line-soft);
+  border-radius: 0.45rem;
+  display: grid;
+  gap: 0.65rem;
+  min-width: 0;
+  padding: 0.85rem;
+}
+
+.glance-card h4 {
+  margin-bottom: 0;
+}
+
+.chip-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.45rem;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.chip {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid var(--line-soft);
+  border-radius: 999px;
+  color: var(--text);
+  font-size: 0.82rem;
+  font-weight: 800;
+  line-height: 1.3;
+  padding: 0.28rem 0.55rem;
+}
+
+.roster-fields-wide {
   grid-template-columns: repeat(2, minmax(0, 1fr));
-  margin-top: 1rem;
+}
+
+.roster-fields-wide .check-row,
+.roster-fields-wide label:last-child {
+  grid-column: 1 / -1;
 }
 
 .debug-section,
@@ -1235,12 +1369,13 @@ th {
 }
 
 .modal-backdrop {
-  align-items: center;
+  align-items: flex-start;
   background: rgba(0, 0, 0, 0.72);
   display: flex;
   inset: 0;
   justify-content: center;
-  padding: 1rem;
+  overflow-y: auto;
+  padding: clamp(0.75rem, 2vw, 1.5rem);
   position: fixed;
   z-index: 30;
 }
@@ -1250,28 +1385,64 @@ th {
     radial-gradient(circle at top left, rgba(242, 138, 46, 0.13), transparent 24rem),
     var(--panel);
   border: 1px solid var(--line);
-  border-radius: 0.5rem;
+  border-radius: 0.75rem;
   box-shadow: var(--shadow);
-  max-height: min(88vh, 58rem);
-  max-width: 62rem;
-  overflow: auto;
-  padding: 1rem;
+  display: grid;
+  gap: 1rem;
+  max-height: 90vh;
+  max-width: 74rem;
+  overflow-x: hidden;
+  overflow-y: auto;
+  padding: clamp(1rem, 2vw, 1.25rem);
   width: 100%;
 }
 
-.dialog-header {
+.details-header {
   align-items: center;
   border-bottom: 1px solid var(--line-soft);
   display: flex;
   justify-content: space-between;
-  margin-bottom: 1rem;
+  gap: 1rem;
   padding-bottom: 1rem;
+  position: sticky;
+  top: 0;
+  z-index: 1;
+  background: linear-gradient(180deg, rgba(25, 22, 18, 0.98), rgba(25, 22, 18, 0.92));
+  backdrop-filter: blur(14px);
 }
 
 .inline-link {
   align-items: center;
   display: inline-flex;
   gap: 0.25rem;
+}
+
+.details-heading {
+  align-items: center;
+  display: flex;
+  gap: 1rem;
+  min-width: 0;
+}
+
+.details-heading-copy {
+  min-width: 0;
+}
+
+.details-subtitle {
+  color: var(--gold);
+  font-size: 0.95rem;
+  font-weight: 800;
+  margin-bottom: 0.25rem;
+}
+
+.details-summary-line {
+  color: var(--muted);
+  line-height: 1.5;
+  margin-bottom: 0;
+}
+
+.details-notice {
+  margin-bottom: 0;
 }
 
 .status-legend {
@@ -1312,7 +1483,7 @@ th {
 
   .hero-section,
   .summary-layout,
-  .details-grid {
+  .details-layout {
     grid-template-columns: 1fr;
   }
 
@@ -1381,6 +1552,25 @@ th {
 
   .overview-footer-grid {
     grid-template-columns: 1fr;
+  }
+
+  .details-header {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .details-heading {
+    align-items: flex-start;
+  }
+
+  .at-a-glance-grid,
+  .roster-fields-wide {
+    grid-template-columns: 1fr;
+  }
+
+  .roster-fields-wide .check-row,
+  .roster-fields-wide label:last-child {
+    grid-column: auto;
   }
 
   .roster-fields.compact {
