@@ -1,11 +1,11 @@
 {
   "format": "dragonfire-lab-project-context",
   "contextVersion": 2,
-  "generatedAt": "2026-07-11T01:42:50.328Z",
+  "generatedAt": "2026-07-11T02:17:00.482Z",
   "source": {
     "repository": "https://github.com/williamchildres/dragonfire-roster-builder",
-    "branch": "data/add-tessarion",
-    "commit": "52a73644aa8cca386559f46e4628049bfe4d259b",
+    "branch": "ui/polish-overview-page",
+    "commit": "efbdfb0118b723fce0f4a789dcd96a1bc71d478d",
     "databaseVersion": "0.6.4",
     "dataSchemaVersion": 13,
     "localRosterSchemaVersion": 3,
