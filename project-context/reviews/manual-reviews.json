@@ -1,5 +1,32 @@
 [
   {
+    "id": "tessarion-profile-review-2026-07-10",
+    "dragonId": "tessarion",
+    "scope": "habits",
+    "status": "confirmed",
+    "reviewedAt": "2026-07-10",
+    "reviewedAgainstGameBuild": "not yet verified",
+    "reviewer": "repository-owner",
+    "notes": [
+      "Tessarion Command, Trait, Habits, progression values, affinities, and simple profile were normalized from user-supplied in-game screenshots.",
+      "Cobalt Flame is represented as Fire and Physical output; Blazing Leader and Clever Maneuver are the modeled cross-dragon support signals.",
+      "Defensive, Advantage, Troop Capacity, and Panic self-condition clauses remain descriptive and do not create standalone simple-synergy tags.",
+      "Displayed account stats were not stored as canonical base stats."
+    ],
+    "evidenceIds": [
+      "tessarion-main-screen-2026-07-10",
+      "tessarion-cobalt-flame-page-1-2026-07-10",
+      "tessarion-cobalt-flame-fire-details-2026-07-10",
+      "tessarion-cobalt-flame-physical-details-2026-07-10",
+      "tessarion-champions-brilliance-2026-07-10",
+      "tessarion-sharpened-beauty-2026-07-10",
+      "tessarion-blazing-leader-2026-07-10",
+      "tessarion-molten-armor-2026-07-10",
+      "tessarion-clever-maneuver-2026-07-10",
+      "tessarion-the-blue-queen-2026-07-10"
+    ]
+  },
+  {
     "id": "tashix-profile-review-2026-07-03",
     "dragonId": "tashix",
     "scope": "habits",

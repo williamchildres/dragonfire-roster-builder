@@ -1,12 +1,12 @@
 {
   "format": "dragonfire-lab-project-context",
   "contextVersion": 2,
-  "generatedAt": "2026-07-11T00:49:38.715Z",
+  "generatedAt": "2026-07-11T01:42:50.328Z",
   "source": {
     "repository": "https://github.com/williamchildres/dragonfire-roster-builder",
-    "branch": "fix/position-before-progression",
-    "commit": "d5ec5519da7095da09307cba2ff11a299f8df558",
-    "databaseVersion": "0.6.3",
+    "branch": "data/add-tessarion",
+    "commit": "52a73644aa8cca386559f46e4628049bfe4d259b",
+    "databaseVersion": "0.6.4",
     "dataSchemaVersion": 13,
     "localRosterSchemaVersion": 3,
     "gameBuild": "26.6.53509"
@@ -29,13 +29,13 @@
     ]
   },
   "rosterSummary": {
-    "totalDragons": 30,
-    "detailedDragons": 18,
+    "totalDragons": 31,
+    "detailedDragons": 19,
     "metadataOnlyDragons": 12,
-    "curatedSimpleProfiles": 18,
-    "profileAuditReviews": 126,
-    "evidenceSources": 157,
-    "manualReviews": 31
+    "curatedSimpleProfiles": 19,
+    "profileAuditReviews": 133,
+    "evidenceSources": 167,
+    "manualReviews": 32
   },
   "dragons": [
     {
@@ -4683,6 +4683,268 @@
       "simpleProfileStatus": "metadata-only-unmapped"
     },
     {
+      "id": "tessarion",
+      "slug": "tessarion",
+      "name": "Tessarion",
+      "rarity": "Epic",
+      "breed": "Champion",
+      "rosterSourceStatus": "in-game-verified-pending-official-site",
+      "dataStatus": "community-verified",
+      "lastVerified": "2026-07-10",
+      "profileCompleteness": "detailed-abilities",
+      "officialProfileUrl": null,
+      "abilities": [
+        {
+          "id": "tessarion-cobalt-flame",
+          "kind": "command",
+          "name": "Cobalt Flame",
+          "abilityClass": "active",
+          "unlockStarRank": null,
+          "minimumDragonLevel": null,
+          "positionRequirement": null,
+          "verification": {
+            "status": "screenshot-verified",
+            "source": "Tessarion Cobalt Flame screenshots",
+            "capturedAt": "2026-07-10",
+            "gameVersion": "26.6.53509",
+            "reviewedManually": true
+          },
+          "evidenceIds": [
+            "tessarion-cobalt-flame-page-1-2026-07-10",
+            "tessarion-cobalt-flame-fire-details-2026-07-10",
+            "tessarion-cobalt-flame-physical-details-2026-07-10"
+          ],
+          "tags": [
+            "FIRE_DAMAGE",
+            "PHYSICAL_DAMAGE",
+            "DAMAGE_DEALT_DOWN",
+            "ANY_LANE_TARGET",
+            "SAME_LANE_TARGET",
+            "INTELLIGENCE_SCALING",
+            "STRENGTH_SCALING"
+          ],
+          "rawDescription": "Rounds 1, 4, 7: Deal Fire Damage to 1 Enemy in any lane, prioritizes targets that deals Physical Damage, excluding Basic Attacks, Damage Rate: +95%. Additionally, 50% chance to reduce the target's Damage Dealt by -10% for 2 round(s). Double this effect (-20%) if the target deals Physical Damage, excluding Basic Attacks.\n\nRounds 3, 6, 9: Deal Physical Damage to 1 Enemy in the same lane, Damage Rate: +60%.\n\nFire Damage:\nDeal Fire Damage to the target. Fire Damage is increased by the attacker's Intelligence and mitigated by the target's Initiative.\n\nDamage Dealt Modifier:\nModify the target's Damage Dealt by -10%.\n\nPhysical Damage:\nDeal Physical Damage to the target. Physical Damage is increased by the attacker's Strength and mitigated by the target's Instinct."
+        },
+        {
+          "id": "tessarion-champions-brilliance",
+          "kind": "trait",
+          "name": "Champion's Brilliance",
+          "abilityClass": "passive",
+          "unlockStarRank": 1,
+          "minimumDragonLevel": 16,
+          "positionRequirement": "vanguard",
+          "verification": {
+            "status": "screenshot-verified",
+            "source": "Tessarion Champion's Brilliance screenshot",
+            "capturedAt": "2026-07-10",
+            "gameVersion": "26.6.53509",
+            "reviewedManually": true
+          },
+          "evidenceIds": [
+            "tessarion-champions-brilliance-2026-07-10"
+          ],
+          "tags": [
+            "STRENGTH_UP",
+            "INTELLIGENCE_UP",
+            "INSTINCT_UP",
+            "DAMAGE_RECEIVED_DOWN",
+            "VANGUARD_REQUIRED",
+            "RIGHT_FLANK_TARGET"
+          ],
+          "rawDescription": "At Level 16+ and deployed in the Vanguard, Increase your Strength, Intelligence, and Instinct by +15. Reduce Damage Received by -8% of the Ally deployed in the Right Flank."
+        },
+        {
+          "id": "tessarion-sharpened-beauty",
+          "kind": "habit",
+          "name": "Sharpened Beauty",
+          "abilityClass": "passive",
+          "unlockStarRank": 2,
+          "minimumDragonLevel": null,
+          "positionRequirement": null,
+          "verification": {
+            "status": "screenshot-verified",
+            "source": "Tessarion Sharpened Beauty screenshot",
+            "capturedAt": "2026-07-10",
+            "gameVersion": "26.6.53509",
+            "reviewedManually": true
+          },
+          "evidenceIds": [
+            "tessarion-sharpened-beauty-2026-07-10"
+          ],
+          "tags": [
+            "PHYSICAL_DAMAGE_UP",
+            "FIRE_DAMAGE_UP",
+            "ADVANTAGE",
+            "TROOP_CAPACITY_CONDITION",
+            "BUFF_SELF"
+          ],
+          "rawDescription": "Start of Each Round: Increase your Physical and Fire Damage Dealt by +8.4% until the end of the round. Double these effects (+16.8%) if you are above 75% Troop Capacity or if you have Advantage.\n\nProgression table:\nHabit Level 1: Physical and Fire Damage Dealt +7%\nHabit Level 2: +8.4%\nHabit Level 3: +9.8%\nHabit Level 4: +11.9%\nHabit Level 5: +14%"
+        },
+        {
+          "id": "tessarion-blazing-leader",
+          "kind": "habit",
+          "name": "Blazing Leader",
+          "abilityClass": "passive",
+          "unlockStarRank": 4,
+          "minimumDragonLevel": null,
+          "positionRequirement": null,
+          "verification": {
+            "status": "screenshot-verified",
+            "source": "Tessarion Blazing Leader screenshot",
+            "capturedAt": "2026-07-10",
+            "gameVersion": "26.6.53509",
+            "reviewedManually": true
+          },
+          "evidenceIds": [
+            "tessarion-blazing-leader-2026-07-10"
+          ],
+          "tags": [
+            "FIRE_DAMAGE_UP",
+            "ANY_LANE_TARGET",
+            "LEFT_FLANK_TARGET"
+          ],
+          "rawDescription": "Start of Combat: Increase the Fire Damage Dealt by +10% of 1 Ally in any lane, prioritizes the Left Flank, until the end of combat.\n\nProgression table:\nHabit Level 1: Fire Damage Dealt +10%\nHabit Level 2: +12%\nHabit Level 3: +14%\nHabit Level 4: +17%\nHabit Level 5: +20%"
+        },
+        {
+          "id": "tessarion-molten-armor",
+          "kind": "habit",
+          "name": "Molten Armor",
+          "abilityClass": "passive",
+          "unlockStarRank": 6,
+          "minimumDragonLevel": null,
+          "positionRequirement": null,
+          "verification": {
+            "status": "screenshot-verified",
+            "source": "Tessarion Molten Armor screenshot",
+            "capturedAt": "2026-07-10",
+            "gameVersion": "26.6.53509",
+            "reviewedManually": true
+          },
+          "evidenceIds": [
+            "tessarion-molten-armor-2026-07-10"
+          ],
+          "tags": [
+            "FIRE_DAMAGE_UP",
+            "DAMAGE_RECEIVED_DOWN",
+            "PANIC",
+            "ANY_LANE_TARGET",
+            "BUFF_SELF"
+          ],
+          "rawDescription": "Start of Odd-numbered Rounds: 25% chance to increase your Fire Damage Dealt by +12% and reduce Physical Damage Received by -12% of 2 other Allies in any lane. If you are afflicted with Panic, also apply the reduced Physical Damage Received effect to yourself. Each effect lasts for 2 round(s).\n\nProgression table:\nHabit Level 1: Molten Armor Chance 25%\nHabit Level 2: 30%\nHabit Level 3: 35%\nHabit Level 4: 42.5%\nHabit Level 5: 50%"
+        },
+        {
+          "id": "tessarion-clever-maneuver",
+          "kind": "habit",
+          "name": "Clever Maneuver",
+          "abilityClass": "passive",
+          "unlockStarRank": 8,
+          "minimumDragonLevel": null,
+          "positionRequirement": null,
+          "verification": {
+            "status": "screenshot-verified",
+            "source": "Tessarion Clever Maneuver screenshot",
+            "capturedAt": "2026-07-10",
+            "gameVersion": "26.6.53509",
+            "reviewedManually": true
+          },
+          "evidenceIds": [
+            "tessarion-clever-maneuver-2026-07-10"
+          ],
+          "tags": [
+            "INTELLIGENCE_UP",
+            "BUFF_INITIATIVE",
+            "ENHANCED_BY_INSTINCT",
+            "HIGHEST_INTELLIGENCE_TARGET"
+          ],
+          "rawDescription": "Start of Combat: Increase Intelligence by +18% and Initiative by +9% of the Ally with the highest Intelligence until the end of combat. Both effects are enhanced by Instinct.\n\nProgression table:\nHabit Level 1: Intelligence +18%; Initiative +9%\nHabit Level 2: Intelligence +21.6%; Initiative +10.8%\nHabit Level 3: Intelligence +25.2%; Initiative +12.6%\nHabit Level 4: Intelligence +30.6%; Initiative +15.3%\nHabit Level 5: Intelligence +36%; Initiative +18%"
+        },
+        {
+          "id": "tessarion-the-blue-queen",
+          "kind": "habit",
+          "name": "The Blue Queen",
+          "abilityClass": "passive",
+          "unlockStarRank": 10,
+          "minimumDragonLevel": null,
+          "positionRequirement": null,
+          "verification": {
+            "status": "screenshot-verified",
+            "source": "Tessarion The Blue Queen screenshot",
+            "capturedAt": "2026-07-10",
+            "gameVersion": "26.6.53509",
+            "reviewedManually": true
+          },
+          "evidenceIds": [
+            "tessarion-the-blue-queen-2026-07-10"
+          ],
+          "tags": [
+            "INTELLIGENCE_UP",
+            "DAMAGE_RECEIVED_DOWN",
+            "FIRE_DAMAGE_ALLY_TARGET",
+            "TROOP_CAPACITY_CONDITION",
+            "ANY_LANE_TARGET"
+          ],
+          "rawDescription": "Start of Odd-numbered Rounds: 40% chance to reduce the Damage Received by -10% and increase the Intelligence, enhanced by Intelligence, by +15% of 1 other Ally in any lane that deals Fire Damage for 2 round(s). If you are above 75% Troop Capacity, double the Damage Received reduction (-20%) and Intelligence increase (+30%).\n\nProgression table:\nHabit Level 1: The Blue Queen Chance 40%\nHabit Level 2: 52%\nHabit Level 3: 64%\nHabit Level 4: 80%\nHabit Level 5: 100%"
+        }
+      ],
+      "affinities": {
+        "Cavalry": "positive",
+        "Shieldbearers": "unknown",
+        "Archers": "unknown",
+        "Spearmen": "positive",
+        "Siege": "positive"
+      },
+      "verification": {
+        "identity": {
+          "status": "screenshot-verified",
+          "source": "Tessarion main screen screenshot",
+          "capturedAt": "2026-07-10",
+          "gameVersion": "26.6.53509",
+          "reviewedManually": true
+        },
+        "command": {
+          "status": "screenshot-verified",
+          "source": "Tessarion Cobalt Flame screenshots",
+          "capturedAt": "2026-07-10",
+          "gameVersion": "26.6.53509",
+          "reviewedManually": true
+        },
+        "trait": {
+          "status": "screenshot-verified",
+          "source": "Tessarion Champion's Brilliance screenshot",
+          "capturedAt": "2026-07-10",
+          "gameVersion": "26.6.53509",
+          "reviewedManually": true
+        },
+        "habits": {
+          "status": "screenshot-verified",
+          "source": "Tessarion Habit screenshots",
+          "capturedAt": "2026-07-10",
+          "gameVersion": "26.6.53509",
+          "reviewedManually": true
+        },
+        "affinities": {
+          "status": "partially-screenshot-verified",
+          "source": "Tessarion main screen screenshot",
+          "capturedAt": "2026-07-10",
+          "gameVersion": "26.6.53509",
+          "reviewedManually": true
+        }
+      },
+      "evidenceIds": [
+        "tessarion-blazing-leader-2026-07-10",
+        "tessarion-champions-brilliance-2026-07-10",
+        "tessarion-clever-maneuver-2026-07-10",
+        "tessarion-cobalt-flame-fire-details-2026-07-10",
+        "tessarion-cobalt-flame-page-1-2026-07-10",
+        "tessarion-cobalt-flame-physical-details-2026-07-10",
+        "tessarion-molten-armor-2026-07-10",
+        "tessarion-sharpened-beauty-2026-07-10",
+        "tessarion-the-blue-queen-2026-07-10"
+      ],
+      "simpleProfileId": "tessarion",
+      "simpleProfileStatus": "curated"
+    },
+    {
       "id": "sheepstealer",
       "slug": "sheepstealer",
       "name": "Sheepstealer",
@@ -7046,16 +7308,88 @@
             "confidence": "verified"
           }
         ]
+      },
+      {
+        "dragonId": "tessarion",
+        "dragonName": "Tessarion",
+        "outputs": [
+          {
+            "id": "tessarion-cobalt-flame-fire",
+            "tag": "damage:fire",
+            "scalesWith": [
+              "stat:intelligence"
+            ],
+            "abilityId": "tessarion-cobalt-flame",
+            "abilityName": "Cobalt Flame",
+            "description": "deals Fire Damage using Intelligence",
+            "confidence": "verified"
+          },
+          {
+            "id": "tessarion-cobalt-flame-physical",
+            "tag": "damage:physical",
+            "scalesWith": [
+              "stat:strength"
+            ],
+            "abilityId": "tessarion-cobalt-flame",
+            "abilityName": "Cobalt Flame",
+            "description": "deals Physical Damage using Strength",
+            "confidence": "verified"
+          }
+        ],
+        "supports": [
+          {
+            "id": "tessarion-blazing-leader-fire",
+            "tag": "damage:fire",
+            "abilityId": "tessarion-blazing-leader",
+            "abilityName": "Blazing Leader",
+            "description": "improves allied Fire Damage",
+            "unlock": {
+              "minimumStarRank": 4
+            },
+            "friendlyScope": "formation",
+            "confidence": "verified"
+          },
+          {
+            "id": "tessarion-clever-maneuver-stats",
+            "tag": "stat:intelligence",
+            "tags": [
+              "stat:intelligence",
+              "stat:initiative"
+            ],
+            "abilityId": "tessarion-clever-maneuver",
+            "abilityName": "Clever Maneuver",
+            "description": "improves Intelligence and Initiative of a high-Intelligence ally",
+            "unlock": {
+              "minimumStarRank": 8
+            },
+            "friendlyScope": "formation",
+            "confidence": "verified"
+          }
+        ],
+        "benefitsFrom": [],
+        "positionClaims": [
+          {
+            "id": "tessarion-champions-brilliance-vanguard",
+            "abilityId": "tessarion-champions-brilliance",
+            "abilityName": "Champion's Brilliance",
+            "requiredPosition": "vanguard",
+            "unlock": {
+              "minimumDragonLevel": 16
+            },
+            "description": "Champion's Brilliance requires Vanguard",
+            "confidence": "verified"
+          }
+        ]
       }
     ],
     "profileAudit": {
-      "reviewedAbilityCount": 126,
+      "reviewedAbilityCount": 133,
       "dispositionCounts": {
-        "represented": 84,
+        "represented": 88,
         "general-support-only": 8,
         "self-only": 22,
         "no-cross-dragon-synergy": 9,
-        "reinforces-existing": 3
+        "reinforces-existing": 6
       },
       "metadataOnlyDragonIds": [
         "solstryker",
@@ -8511,6 +8845,92 @@
               "zivern-cloak-of-terror-vulnerable-payoff"
             ],
             "rationale": "The habit applies Overwhelm as Control and explicitly benefits from Vulnerable setup."
+          }
+        },
+        {
+          "dragonId": "tessarion",
+          "abilityId": "tessarion-cobalt-flame",
+          "abilityKind": "command",
+          "disposition": {
+            "kind": "represented",
+            "signalIds": [
+              "tessarion-cobalt-flame-fire",
+              "tessarion-cobalt-flame-physical"
+            ],
+            "rationale": "Cobalt Flame deals Intelligence-based Fire Damage and Strength-based Physical Damage; the Damage Dealt reduction remains descriptive enemy mitigation."
+          }
+        },
+        {
+          "dragonId": "tessarion",
+          "abilityId": "tessarion-champions-brilliance",
+          "abilityKind": "trait",
+          "disposition": {
+            "kind": "represented",
+            "signalIds": [
+              "tessarion-champions-brilliance-vanguard"
+            ],
+            "rationale": "The trait requires Vanguard; its self stat increases are self-only and its Right Flank Damage Received reduction is general support only."
+          }
+        },
+        {
+          "dragonId": "tessarion",
+          "abilityId": "tessarion-sharpened-beauty",
+          "abilityKind": "habit",
+          "disposition": {
+            "kind": "reinforces-existing",
+            "signalIds": [
+              "tessarion-cobalt-flame-fire",
+              "tessarion-cobalt-flame-physical"
+            ],
+            "rationale": "The self Physical and Fire Damage increases reinforce Tessarion's existing output without adding Advantage or Troop Capacity as simple tags."
+          }
+        },
+        {
+          "dragonId": "tessarion",
+          "abilityId": "tessarion-blazing-leader",
+          "abilityKind": "habit",
+          "disposition": {
+            "kind": "represented",
+            "signalIds": [
+              "tessarion-blazing-leader-fire"
+            ],
+            "rationale": "The habit provides formation-wide Fire Damage support; Left Flank is only a priority, not a hard recipient requirement."
+          }
+        },
+        {
+          "dragonId": "tessarion",
+          "abilityId": "tessarion-molten-armor",
+          "abilityKind": "habit",
+          "disposition": {
+            "kind": "reinforces-existing",
+            "signalIds": [
+              "tessarion-cobalt-flame-fire"
+            ],
+            "rationale": "The Fire boost reinforces Tessarion's Fire output; allied Physical defense is general support only and the Panic clause is self-conditional."
+          }
+        },
+        {
+          "dragonId": "tessarion",
+          "abilityId": "tessarion-clever-maneuver",
+          "abilityKind": "habit",
+          "disposition": {
+            "kind": "represented",
+            "signalIds": [
+              "tessarion-clever-maneuver-stats"
+            ],
+            "rationale": "The habit provides high-level Intelligence and Initiative support without modeling highest-Intelligence target selection."
+          }
+        },
+        {
+          "dragonId": "tessarion",
+          "abilityId": "tessarion-the-blue-queen",
+          "abilityKind": "habit",
+          "disposition": {
+            "kind": "reinforces-existing",
+            "signalIds": [
+              "tessarion-blazing-leader-fire"
+            ],
+            "rationale": "The Fire-ally support reinforces Blazing Leader as Tessarion primary Fire support; the defensive and Troop Capacity clauses remain descriptive."
           }
         }
       ]
@@ -10781,6 +11201,136 @@
       "verificationStatus": "community-verified"
     },
     {
+      "id": "tessarion-main-screen-2026-07-10",
+      "type": "in-game-screenshot",
+      "title": "Tessarion main screen",
+      "description": "Descriptive evidence label only. Screenshot files are not committed to the public repository.",
+      "url": null,
+      "capturedAt": "2026-07-10",
+      "language": "English",
+      "gameVersion": null,
+      "submittedBy": "repository owner",
+      "reviewedManually": true,
+      "verificationStatus": "community-verified"
+    },
+    {
+      "id": "tessarion-cobalt-flame-page-1-2026-07-10",
+      "type": "in-game-screenshot",
+      "title": "Tessarion Cobalt Flame page 1",
+      "description": "Descriptive evidence label only. Screenshot files are not committed to the public repository.",
+      "url": null,
+      "capturedAt": "2026-07-10",
+      "language": "English",
+      "gameVersion": null,
+      "submittedBy": "repository owner",
+      "reviewedManually": true,
+      "verificationStatus": "community-verified"
+    },
+    {
+      "id": "tessarion-cobalt-flame-fire-details-2026-07-10",
+      "type": "in-game-screenshot",
+      "title": "Tessarion Cobalt Flame Fire details",
+      "description": "Descriptive evidence label only. Screenshot files are not committed to the public repository.",
+      "url": null,
+      "capturedAt": "2026-07-10",
+      "language": "English",
+      "gameVersion": null,
+      "submittedBy": "repository owner",
+      "reviewedManually": true,
+      "verificationStatus": "community-verified"
+    },
+    {
+      "id": "tessarion-cobalt-flame-physical-details-2026-07-10",
+      "type": "in-game-screenshot",
+      "title": "Tessarion Cobalt Flame Physical details",
+      "description": "Descriptive evidence label only. Screenshot files are not committed to the public repository.",
+      "url": null,
+      "capturedAt": "2026-07-10",
+      "language": "English",
+      "gameVersion": null,
+      "submittedBy": "repository owner",
+      "reviewedManually": true,
+      "verificationStatus": "community-verified"
+    },
+    {
+      "id": "tessarion-champions-brilliance-2026-07-10",
+      "type": "in-game-screenshot",
+      "title": "Tessarion Champion's Brilliance",
+      "description": "Descriptive evidence label only. Screenshot files are not committed to the public repository.",
+      "url": null,
+      "capturedAt": "2026-07-10",
+      "language": "English",
+      "gameVersion": null,
+      "submittedBy": "repository owner",
+      "reviewedManually": true,
+      "verificationStatus": "community-verified"
+    },
+    {
+      "id": "tessarion-sharpened-beauty-2026-07-10",
+      "type": "in-game-screenshot",
+      "title": "Tessarion Sharpened Beauty",
+      "description": "Descriptive evidence label only. Screenshot files are not committed to the public repository.",
+      "url": null,
+      "capturedAt": "2026-07-10",
+      "language": "English",
+      "gameVersion": null,
+      "submittedBy": "repository owner",
+      "reviewedManually": true,
+      "verificationStatus": "community-verified"
+    },
+    {
+      "id": "tessarion-blazing-leader-2026-07-10",
+      "type": "in-game-screenshot",
+      "title": "Tessarion Blazing Leader",
+      "description": "Descriptive evidence label only. Screenshot files are not committed to the public repository.",
+      "url": null,
+      "capturedAt": "2026-07-10",
+      "language": "English",
+      "gameVersion": null,
+      "submittedBy": "repository owner",
+      "reviewedManually": true,
+      "verificationStatus": "community-verified"
+    },
+    {
+      "id": "tessarion-molten-armor-2026-07-10",
+      "type": "in-game-screenshot",
+      "title": "Tessarion Molten Armor",
+      "description": "Descriptive evidence label only. Screenshot files are not committed to the public repository.",
+      "url": null,
+      "capturedAt": "2026-07-10",
+      "language": "English",
+      "gameVersion": null,
+      "submittedBy": "repository owner",
+      "reviewedManually": true,
+      "verificationStatus": "community-verified"
+    },
+    {
+      "id": "tessarion-clever-maneuver-2026-07-10",
+      "type": "in-game-screenshot",
+      "title": "Tessarion Clever Maneuver",
+      "description": "Descriptive evidence label only. Screenshot files are not committed to the public repository.",
+      "url": null,
+      "capturedAt": "2026-07-10",
+      "language": "English",
+      "gameVersion": null,
+      "submittedBy": "repository owner",
+      "reviewedManually": true,
+      "verificationStatus": "community-verified"
+    },
+    {
+      "id": "tessarion-the-blue-queen-2026-07-10",
+      "type": "in-game-screenshot",
+      "title": "Tessarion The Blue Queen",
+      "description": "Descriptive evidence label only. Screenshot files are not committed to the public repository.",
+      "url": null,
+      "capturedAt": "2026-07-10",
+      "language": "English",
+      "gameVersion": null,
+      "submittedBy": "repository owner",
+      "reviewedManually": true,
+      "verificationStatus": "community-verified"
+    },
+    {
       "id": "malachite-wardens-rally-combat-log-self-recovery-2026-06-24",
       "type": "manual-combat-log-observation",
       "title": "Warden's Rally Recovery included Malachite",
@@ -10834,6 +11384,33 @@
     }
   ],
   "manualReviews": [
+    {
+      "id": "tessarion-profile-review-2026-07-10",
+      "dragonId": "tessarion",
+      "scope": "habits",
+      "status": "confirmed",
+      "reviewedAt": "2026-07-10",
+      "reviewedAgainstGameBuild": "not yet verified",
+      "reviewer": "repository-owner",
+      "notes": [
+        "Tessarion Command, Trait, Habits, progression values, affinities, and simple profile were normalized from user-supplied in-game screenshots.",
+        "Cobalt Flame is represented as Fire and Physical output; Blazing Leader and Clever Maneuver are the modeled cross-dragon support signals.",
+        "Defensive, Advantage, Troop Capacity, and Panic self-condition clauses remain descriptive and do not create standalone simple-synergy tags.",
+        "Displayed account stats were not stored as canonical base stats."
+      ],
+      "evidenceIds": [
+        "tessarion-main-screen-2026-07-10",
+        "tessarion-cobalt-flame-page-1-2026-07-10",
+        "tessarion-cobalt-flame-fire-details-2026-07-10",
+        "tessarion-cobalt-flame-physical-details-2026-07-10",
+        "tessarion-champions-brilliance-2026-07-10",
+        "tessarion-sharpened-beauty-2026-07-10",
+        "tessarion-blazing-leader-2026-07-10",
+        "tessarion-molten-armor-2026-07-10",
+        "tessarion-clever-maneuver-2026-07-10",
+        "tessarion-the-blue-queen-2026-07-10"
+      ]
+    },
     {
       "id": "tashix-profile-review-2026-07-03",
       "dragonId": "tashix",
