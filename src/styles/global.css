@@ -918,6 +918,42 @@ dd {
   white-space: nowrap;
 }
 
+.formation-selector-dialog {
+  max-height: min(88vh, 56rem);
+}
+
+.formation-selector-filters {
+  grid-template-columns: repeat(3, minmax(11rem, 1fr));
+}
+
+.formation-selector-list {
+  max-height: min(52vh, 34rem);
+  overflow-y: auto;
+  padding-right: 0.2rem;
+}
+
+.formation-selector-row {
+  align-items: start;
+}
+
+.formation-selector-row .card-topline {
+  align-items: start;
+}
+
+.formation-selector-signals {
+  margin-top: 0.55rem;
+}
+
+.compact-signal-preview {
+  gap: 0.3rem;
+}
+
+.compact-signal-title {
+  color: var(--muted);
+  font-size: 0.78rem;
+  font-weight: 900;
+}
+
 .team-slots,
 .formation-board {
   align-items: stretch;
@@ -990,6 +1026,35 @@ dd {
   grid-template-columns: repeat(2, minmax(0, 1fr));
 }
 
+.formation-card-actions,
+.empty-formation-slot,
+.formation-dragon-summary,
+.formation-selector-signals,
+.compact-signal-preview {
+  display: grid;
+  gap: var(--formation-control-gap);
+  min-width: 0;
+}
+
+.formation-dragon-summary h3 {
+  color: var(--text);
+  font-size: 1.12rem;
+  margin: 0 0 0.45rem;
+}
+
+.empty-formation-slot {
+  align-content: center;
+  background: rgba(0, 0, 0, 0.12);
+  border: 1px dashed rgba(255, 211, 107, 0.32);
+  border-radius: 0.45rem;
+  min-height: 12rem;
+  padding: var(--formation-panel-padding);
+}
+
+.empty-formation-slot .primary-button {
+  justify-self: start;
+}
+
 .compact-action {
   min-height: 2.25rem;
   padding: 0.35rem 0.55rem;
@@ -1015,10 +1080,6 @@ dd {
 
 .card-mini-section p {
   margin: 0;
-}
-
-.profile-coverage {
-  background: rgba(127, 176, 143, 0.12);
 }
 
 .raw-ability-text {
@@ -1062,6 +1123,44 @@ dd {
 
 .command-panel {
   align-content: start;
+}
+
+.formation-signal-panel {
+  align-content: start;
+}
+
+.formation-chip-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem;
+  list-style: none;
+  margin: 0;
+  min-width: 0;
+  padding: 0;
+}
+
+.formation-signal-chip.signal-active {
+  background: rgba(127, 176, 143, 0.2);
+  border-color: rgba(127, 176, 143, 0.72);
+}
+
+.formation-signal-chip.signal-inactive {
+  background: rgba(211, 108, 87, 0.14);
+  border-color: rgba(211, 108, 87, 0.62);
+}
+
+.compact-ability-badges {
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  margin: 0;
+}
+
+.compact-ability-summary {
+  background: rgba(255, 255, 255, 0.025);
+  border: 1px solid var(--line-soft);
+  border-radius: 0.4rem;
+  gap: 0.45rem;
+  padding: 0.55rem;
 }
 
 .card-mini-section[aria-label$='affinities'] {

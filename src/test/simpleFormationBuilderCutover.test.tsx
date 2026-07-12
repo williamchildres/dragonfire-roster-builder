@@ -46,14 +46,45 @@ describe('Formation Builder simple synergy cutover', () => {
     user: ReturnType<typeof userEvent.setup>,
     formation: Partial<Record<'left-flank' | 'vanguard' | 'right-flank', string>>,
   ) {
-    const selectors = screen.getAllByLabelText('Dragon');
     const order = ['left-flank', 'vanguard', 'right-flank'] as const;
-    for (const [index, position] of order.entries()) {
+    for (const position of order) {
       const dragonId = formation[position];
       if (dragonId) {
-        await user.selectOptions(selectors[index]!, dragonId);
+        await chooseDragonForPosition(user, position, dragonId);
       }
     }
+  }
+
+  async function chooseDragonForPosition(
+    user: ReturnType<typeof userEvent.setup>,
+    position: 'left-flank' | 'vanguard' | 'right-flank',
+    dragonId: string,
+  ) {
+    const labels = {
+      'left-flank': 'Left Flank',
+      vanguard: 'Vanguard',
+      'right-flank': 'Right Flank',
+    };
+    const dragon = dragons.find((candidate) => candidate.id === dragonId);
+    expect(dragon).toBeDefined();
+    const card = screen.getByRole('article', { name: labels[position] });
+    const chooseButton =
+      within(card).queryByRole('button', { name: /\+ add dragon/i }) ??
+      within(card).getByRole('button', { name: /change dragon/i });
+
+    await user.click(chooseButton);
+    const dialog = screen.getByRole('dialog', { name: new RegExp(`choose a dragon for ${labels[position]}`, 'i') });
+    const search = within(dialog).getByLabelText(/search by dragon name/i);
+    await user.clear(search);
+    await user.type(search, dragon!.name);
+    const row = within(dialog).getByRole('heading', { name: dragon!.name }).closest('article');
+    expect(row).not.toBeNull();
+    await user.click(within(row as HTMLElement).getByRole('button', { name: /^select$/i }));
+    expect(screen.queryByRole('dialog', { name: new RegExp(`choose a dragon for ${labels[position]}`, 'i') })).not.toBeInTheDocument();
+  }
+
+  async function clearPosition(user: ReturnType<typeof userEvent.setup>, label: string) {
+    await user.click(within(screen.getByRole('article', { name: label })).getByRole('button', { name: /clear position/i }));
   }
 
   function analysisText() {
@@ -84,7 +115,6 @@ describe('Formation Builder simple synergy cutover', () => {
     expect(screen.queryByLabelText(/preview max-rank interactions/i)).not.toBeInTheDocument();
     expect(screen.queryByLabelText(/show analysis details/i)).not.toBeInTheDocument();
     expect(screen.queryByRole('heading', { name: /Receives/i })).not.toBeInTheDocument();
-    expect(screen.queryByRole('heading', { name: /Provides/i })).not.toBeInTheDocument();
     expect(analysisText()).not.toMatch(/target candidate|trace|raw effect tags/i);
   });
 
@@ -194,12 +224,13 @@ describe('Formation Builder simple synergy cutover', () => {
       "Malachite can grant First-Strike, which improves Caraxes's Infernal Burst.",
     );
 
-    await user.selectOptions(screen.getAllByLabelText('Dragon')[1]!, '');
-    await user.selectOptions(screen.getAllByLabelText('Dragon')[2]!, 'caraxes');
+    await clearPosition(user, 'Vanguard');
+    await chooseDragonForPosition(user, 'right-flank', 'caraxes');
     expect(sectionText('Placement issues')).toContain('Malachite and Caraxes are not adjacent in this formation.');
 
-    await user.selectOptions(screen.getAllByLabelText('Dragon')[2]!, 'sheepstealer');
-    await user.selectOptions(screen.getAllByLabelText('Dragon')[1]!, 'malachite');
+    await clearPosition(user, 'Left Flank');
+    await chooseDragonForPosition(user, 'right-flank', 'sheepstealer');
+    await chooseDragonForPosition(user, 'vanguard', 'malachite');
     expect(sectionText('Placement issues')).toContain(
       "Sheepstealer must be deployed in Vanguard for Hunter's Cunning.",
     );
@@ -265,6 +296,98 @@ describe('Formation Builder simple synergy cutover', () => {
     );
   });
 
+  it('renders selected-card signal summaries with active and inactive context states', async () => {
+    const user = userEvent.setup();
+    seedRoster({ syrax: {}, caraxes: { reignLevel: 26 }, vhagar: {} });
+
+    await openFormationBuilder(user);
+    await selectFormation(user, { 'left-flank': 'syrax', vanguard: 'caraxes', 'right-flank': 'vhagar' });
+
+    const caraxesCard = screen.getByRole('article', { name: 'Vanguard' });
+    expect(within(caraxesCard).getByRole('region', { name: 'Provides' })).toHaveTextContent('Slow');
+    expect(within(caraxesCard).getByRole('region', { name: 'Provides' })).toHaveTextContent('Control');
+    expect(within(caraxesCard).getByLabelText(/First-Strike active/i)).toHaveAttribute('data-state', 'active');
+    expect(within(caraxesCard).getByLabelText(/Fire Damage active/i)).toHaveAttribute('data-state', 'active');
+
+    const vhagarCard = screen.getByRole('article', { name: 'Right Flank' });
+    expect(within(vhagarCard).getByRole('region', { name: 'Benefits from' })).toHaveTextContent('Burn');
+    expect(within(vhagarCard).getByLabelText(/Burn active/i)).toHaveAttribute('data-state', 'active');
+
+    await clearPosition(user, 'Vanguard');
+    const updatedVhagarCard = screen.getByRole('article', { name: 'Right Flank' });
+    expect(within(updatedVhagarCard).getByLabelText(/Burn inactive/i)).toHaveAttribute('data-state', 'inactive');
+  });
+
+  it('marks Provides chips inactive when progression or Vanguard placement blocks the source', async () => {
+    const user = userEvent.setup();
+    seedRoster({ caraxes: { reignLevel: 15 }, syrax: { reignLevel: 26 } });
+
+    await openFormationBuilder(user);
+    await selectFormation(user, { vanguard: 'caraxes', 'right-flank': 'syrax' });
+
+    const vanguardCard = screen.getByRole('article', { name: 'Vanguard' });
+    expect(within(vanguardCard).getByLabelText(/Strength support inactive/i)).toHaveAttribute('data-state', 'inactive');
+    expect(within(vanguardCard).getByLabelText(/Strength support inactive/i)).toHaveAccessibleName(/Dragon Level 16/i);
+
+    await user.click(within(vanguardCard).getByRole('button', { name: /move to right flank/i }));
+    const rightCard = screen.getByRole('article', { name: 'Right Flank' });
+    expect(within(rightCard).getByLabelText(/Strength support inactive/i)).toHaveAccessibleName(/requires Vanguard/i);
+  });
+
+  it('opens Dragon Details from a Formation Builder card and returns to a usable formation', async () => {
+    const user = userEvent.setup();
+    seedRoster({ vhagar: {} });
+
+    await openFormationBuilder(user);
+    await selectFormation(user, { vanguard: 'vhagar' });
+
+    await user.click(within(screen.getByRole('article', { name: 'Vanguard' })).getByRole('button', { name: /view details/i }));
+    const dialog = screen.getByRole('dialog', { name: /vhagar/i });
+    expect(dialog).toHaveTextContent('At a glance');
+    expect(dialog).toHaveTextContent("Warrior's Resilience");
+
+    await user.click(within(dialog).getByRole('button', { name: /close details/i }));
+    expect(screen.getByRole('article', { name: 'Vanguard' })).toHaveTextContent('Vhagar');
+    await clearPosition(user, 'Vanguard');
+    expect(within(screen.getByRole('article', { name: 'Vanguard' })).getByRole('button', { name: /\+ add dragon/i })).toBeInTheDocument();
+  });
+
+  it('filters the Formation Builder dragon selector by name, metadata, Provides, and Benefits from tags', async () => {
+    const user = userEvent.setup();
+    seedRoster({ caraxes: {}, syrax: {}, vhagar: {}, daemoros: {} });
+
+    await openFormationBuilder(user);
+    await user.click(within(screen.getByRole('article', { name: 'Left Flank' })).getByRole('button', { name: /\+ add dragon/i }));
+    const dialog = screen.getByRole('dialog', { name: /choose a dragon for left flank/i });
+
+    expect(within(dialog).getByLabelText(/search by dragon name/i)).toBeInTheDocument();
+    expect(within(dialog).getByLabelText(/^rarity$/i)).toBeInTheDocument();
+    expect(within(dialog).getByLabelText(/^breed$/i)).toBeInTheDocument();
+    expect(within(dialog).getByLabelText(/^verification$/i)).toBeInTheDocument();
+    expect(within(dialog).getByLabelText(/provides tag/i)).toBeInTheDocument();
+    expect(within(dialog).getByLabelText(/benefits from tag/i)).toBeInTheDocument();
+
+    await user.type(within(dialog).getByLabelText(/search by dragon name/i), 'Caraxes');
+    expect(within(dialog).getByRole('heading', { name: 'Caraxes' })).toBeInTheDocument();
+    expect(within(dialog).queryByRole('heading', { name: 'Syrax' })).not.toBeInTheDocument();
+
+    await user.clear(within(dialog).getByLabelText(/search by dragon name/i));
+    await user.selectOptions(within(dialog).getByLabelText(/provides tag/i), 'Slow');
+    expect(within(dialog).getByRole('heading', { name: 'Caraxes' })).toBeInTheDocument();
+    expect(within(dialog).queryByRole('heading', { name: 'Syrax' })).not.toBeInTheDocument();
+
+    await user.selectOptions(within(dialog).getByLabelText(/provides tag/i), 'all');
+    await user.selectOptions(within(dialog).getByLabelText(/benefits from tag/i), 'Burn');
+    expect(within(dialog).getByRole('heading', { name: 'Vhagar' })).toBeInTheDocument();
+    expect(within(dialog).queryByRole('heading', { name: 'Daemoros' })).not.toBeInTheDocument();
+
+    await user.selectOptions(within(dialog).getByLabelText(/benefits from tag/i), 'all');
+    await user.selectOptions(within(dialog).getByLabelText(/^rarity$/i), 'Legendary');
+    await user.selectOptions(within(dialog).getByLabelText(/^breed$/i), 'Warrior');
+    await user.selectOptions(within(dialog).getByLabelText(/^verification$/i), 'community-verified');
+    expect(within(dialog).getByRole('heading', { name: 'Vhagar' })).toBeInTheDocument();
+  });
+
   it('shows static position cards, profile coverage, movement, clearing, and share-link behavior', async () => {
     const user = userEvent.setup();
     const writeText = vi.fn().mockResolvedValue(undefined);
@@ -280,37 +403,50 @@ describe('Formation Builder simple synergy cutover', () => {
 
     for (const position of ['Left Flank', 'Vanguard', 'Right Flank']) {
       const card = screen.getByRole('article', { name: position });
-      expect(within(card).getByLabelText('Dragon')).toBeInTheDocument();
+      expect(within(card).queryByLabelText('Dragon')).not.toBeInTheDocument();
+      expect(within(card).getByRole('button', { name: /change dragon/i })).toBeInTheDocument();
+      expect(within(card).getByRole('button', { name: /view details/i })).toBeInTheDocument();
       expect(within(card).getByLabelText(/movement controls/i)).toBeInTheDocument();
       expect(within(card).getByRole('button', { name: /clear position/i })).toBeInTheDocument();
       expect(within(card).getByRole('region', { name: 'Command' })).toBeInTheDocument();
-      expect(within(card).getByRole('region', { name: /trait status/i })).toBeInTheDocument();
+      expect(within(card).getByRole('region', { name: 'Provides' })).toBeInTheDocument();
+      expect(within(card).getByRole('region', { name: 'Benefits from' })).toBeInTheDocument();
       expect(within(card).getByRole('region', { name: /affinities/i })).toBeInTheDocument();
-      expect(within(card).getByRole('region', { name: /curated profile/i })).toBeInTheDocument();
+      expect(within(card).queryByRole('region', { name: /curated profile/i })).not.toBeInTheDocument();
     }
+    expect(within(screen.getByRole('article', { name: 'Left Flank' })).queryByRole('region', { name: /trait status/i })).not.toBeInTheDocument();
+    expect(within(screen.getByRole('article', { name: 'Vanguard' })).getByRole('region', { name: /trait status/i })).toHaveTextContent('Vanguard Trait');
+    expect(within(screen.getByRole('article', { name: 'Right Flank' })).queryByRole('region', { name: /trait status/i })).not.toBeInTheDocument();
+    expect(screen.queryByText('Curated profile available.')).not.toBeInTheDocument();
+    expect(screen.queryByText('No recorded unlock requirement.')).not.toBeInTheDocument();
 
     expect(analysisText()).toContain('Synergy data not yet mapped: Antares.');
     expect(sectionText('Strong synergies')).toContain("Syrax can grant First-Strike, which improves Caraxes's Infernal Burst.");
     expect(sectionItems('Strong synergies').filter((item) => item === 'Syrax improves allied Fire Damage, and Caraxes deals Fire Damage.')).toHaveLength(1);
     expect(sectionText('Missing enablers')).toContain(incompleteMissingEnablerNotice);
-    const vanguardSyraxOption = within(screen.getAllByLabelText('Dragon')[1]!).getByRole('option', { name: /Syrax/ });
-    expect(vanguardSyraxOption).toBeDisabled();
+    await user.click(within(screen.getByRole('article', { name: 'Vanguard' })).getByRole('button', { name: /change dragon/i }));
+    const selector = screen.getByRole('dialog', { name: /choose a dragon for vanguard/i });
+    await user.type(within(selector).getByLabelText(/search by dragon name/i), 'Syrax');
+    const syraxRow = within(selector).getByRole('heading', { name: 'Syrax' }).closest('article');
+    expect(syraxRow).not.toBeNull();
+    expect(within(syraxRow as HTMLElement).getByRole('button', { name: /already selected/i })).toBeDisabled();
+    await user.click(within(selector).getByRole('button', { name: /close dragon selector/i }));
 
     await user.click(
       within(screen.getByRole('article', { name: 'Left Flank' })).getByRole('button', { name: /move to right flank/i }),
     );
     expect(screen.getByRole('article', { name: 'Right Flank' })).toHaveTextContent('Syrax');
-    expect(screen.getByRole('article', { name: 'Left Flank' })).toHaveTextContent('Seasmoke');
+    expect(screen.getByRole('article', { name: 'Left Flank' })).toHaveTextContent('Antares');
 
     await user.click(
       within(screen.getByRole('article', { name: 'Right Flank' })).getByRole('button', { name: /clear position/i }),
     );
-    expect(within(screen.getByRole('article', { name: 'Right Flank' })).getByLabelText('Dragon')).toHaveValue('');
+    expect(within(screen.getByRole('article', { name: 'Right Flank' })).getByRole('button', { name: /\+ add dragon/i })).toBeInTheDocument();
 
     await user.click(screen.getByRole('button', { name: /copy share link/i }));
     expect(writeText).toHaveBeenCalledWith(expect.stringContaining('#formation='));
 
     await user.click(screen.getByRole('button', { name: /clear formation/i }));
-    expect(screen.getAllByText(/choose a dragon to see command, trait, affinity, and curated profile coverage/i)).toHaveLength(3);
+    expect(screen.getAllByText(/add a dragon to review command, vanguard trait, affinities, and synergy signals/i)).toHaveLength(3);
   });
 });

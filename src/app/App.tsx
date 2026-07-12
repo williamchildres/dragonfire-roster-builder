@@ -19,6 +19,12 @@ import { useEffect, useMemo, useRef, useState, type ChangeEvent, type KeyboardEv
 import { DragonDetailsDialog } from './DragonDetailModal';
 import { SimpleFormationAnalysis } from './SimpleFormationAnalysis';
 import { SimpleFormationCard } from './SimpleFormationCard';
+import {
+  buildFormationFilterOptions,
+  buildFormationSignalChips,
+  profileBenefitsFromLabel,
+  profileProvidesLabel,
+} from './formationCardPresentation';
 import { getPublicVerificationLabel, getPublicVerificationTone } from './publicCardLabels';
 import dragonfireHero from '../assets/dragonfire-hero.png';
 import { databaseMetadata, repository } from '../data/databaseMetadata';
@@ -64,6 +70,14 @@ const buyMeACoffeeUrl = 'https://buymeacoffee.com/williamchildres';
 type Section = 'home' | 'roster' | 'team' | 'about';
 type StatusMessage = { kind: 'success' | 'error' | 'info'; text: string };
 type RosterSuccessMessage = { text: string };
+type FormationSelectorFilters = {
+  search: string;
+  rarity: DragonRarity | 'all';
+  breed: DragonBreed | 'all';
+  status: VerificationStatus | 'all';
+  provides: string;
+  benefitsFrom: string;
+};
 
 const rosterSuccessMessageTimeoutMs = 4000;
 
@@ -87,6 +101,15 @@ const verificationStatusOptions: VerificationStatus[] = [
   'community-verified',
   'officially-confirmed',
 ];
+
+const defaultFormationSelectorFilters: FormationSelectorFilters = {
+  search: '',
+  rarity: 'all',
+  breed: 'all',
+  status: 'all',
+  provides: 'all',
+  benefitsFrom: 'all',
+};
 
 export function App() {
   const [activeSection, setActiveSection] = useState<Section>(getInitialSection);
@@ -323,6 +346,7 @@ export function App() {
             formation={formation}
             onIncludeUnownedChange={setIncludeUnowned}
             onFormationChange={setFormation}
+            onOpenDetails={setSelectedDragon}
             onShare={() => void shareFormation()}
 
           />
@@ -852,6 +876,7 @@ function FormationBuilderSection({
   formation,
   onIncludeUnownedChange,
   onFormationChange,
+  onOpenDetails,
   onShare,
 }: {
   includeUnowned: boolean;
@@ -859,9 +884,16 @@ function FormationBuilderSection({
   formation: Formation;
   onIncludeUnownedChange: (value: boolean) => void;
   onFormationChange: (formation: Formation) => void;
+  onOpenDetails: (dragon: Dragon) => void;
   onShare: () => void;
 }) {
+  const [selectorPosition, setSelectorPosition] = useState<FormationPosition | null>(null);
+  const [selectorFilters, setSelectorFilters] = useState<FormationSelectorFilters>(defaultFormationSelectorFilters);
   const selectableDragons = dragons.filter((dragon) => includeUnowned || roster[dragon.id]?.owned);
+  const profilesById = useMemo(
+    () => new Map(simpleSynergyProfiles.map((profile) => [profile.dragonId, profile])),
+    [],
+  );
   const progression = useMemo<SimpleProgressionByDragonId>(
     () =>
       Object.fromEntries(
@@ -904,6 +936,17 @@ function FormationBuilderSection({
   const updatePosition = (position: FormationPosition, nextId: string | null) => {
     onFormationChange(preventDuplicateFormationPlacement(formation, position, nextId));
   };
+  const openSelector = (position: FormationPosition) => {
+    setSelectorFilters(defaultFormationSelectorFilters);
+    setSelectorPosition(position);
+  };
+  const chooseDragon = (dragonId: string) => {
+    if (!selectorPosition) {
+      return;
+    }
+    updatePosition(selectorPosition, dragonId);
+    setSelectorPosition(null);
+  };
 
   return (
     <section aria-labelledby="team-title">
@@ -938,12 +981,17 @@ function FormationBuilderSection({
             <SimpleFormationCard
               key={position}
               position={position}
-              formation={formation}
               dragon={dragon}
-              selectableDragons={selectableDragons}
               rosterEntry={dragon ? roster[dragon.id] : undefined}
-              hasSimpleProfile={dragon ? mappedProfileIds.has(dragon.id) : false}
-              onDragonChange={(nextId) => updatePosition(position, nextId)}
+              signalChips={buildFormationSignalChips({
+                profile: dragon ? profilesById.get(dragon.id) : undefined,
+                position,
+                formation,
+                profiles: simpleSynergyProfiles,
+                progression,
+              })}
+              onChooseDragon={() => openSelector(position)}
+              onOpenDetails={onOpenDetails}
               onMove={(target) => onFormationChange(moveFormationDragon(formation, position, target))}
               onClear={() => updatePosition(position, null)}
             />
@@ -951,7 +999,315 @@ function FormationBuilderSection({
         })}
       </div>
       <SimpleFormationAnalysis presentation={presentation} dragons={dragons} formation={formation} />
+      {selectorPosition ? (
+        <FormationDragonSelectorDialog
+          filters={selectorFilters}
+          formation={formation}
+          includeUnowned={includeUnowned}
+          position={selectorPosition}
+          profilesById={profilesById}
+          roster={roster}
+          selectableDragons={selectableDragons}
+          onClose={() => setSelectorPosition(null)}
+          onFiltersChange={setSelectorFilters}
+          onOpenDetails={(dragon) => {
+            setSelectorPosition(null);
+            onOpenDetails(dragon);
+          }}
+          onSelect={chooseDragon}
+        />
+      ) : null}
     </section>
+  );
+}
+
+function FormationDragonSelectorDialog({
+  filters,
+  formation,
+  includeUnowned,
+  position,
+  profilesById,
+  roster,
+  selectableDragons,
+  onClose,
+  onFiltersChange,
+  onOpenDetails,
+  onSelect,
+}: {
+  filters: FormationSelectorFilters;
+  formation: Formation;
+  includeUnowned: boolean;
+  position: FormationPosition;
+  profilesById: Map<string, (typeof simpleSynergyProfiles)[number]>;
+  roster: Record<string, OwnedDragon>;
+  selectableDragons: Dragon[];
+  onClose: () => void;
+  onFiltersChange: (filters: FormationSelectorFilters) => void;
+  onOpenDetails: (dragon: Dragon) => void;
+  onSelect: (dragonId: string) => void;
+}) {
+  const dialogRef = useRef<HTMLDivElement>(null);
+  const previousFocus = useRef<HTMLElement | null>(null);
+  const filterOptions = useMemo(() => buildFormationFilterOptions(simpleSynergyProfiles), []);
+  const selectedDragonIds = new Set(Object.values(formation).filter((dragonId): dragonId is string => Boolean(dragonId)));
+  const filteredDragons = useMemo(() => {
+    const search = filters.search.trim().toLowerCase();
+    return selectableDragons
+      .filter((dragon) => (search ? dragon.name.toLowerCase().includes(search) : true))
+      .filter((dragon) => (filters.rarity === 'all' ? true : dragon.rarity === filters.rarity))
+      .filter((dragon) => (filters.breed === 'all' ? true : dragon.breed === filters.breed))
+      .filter((dragon) => (filters.status === 'all' ? true : dragon.dataStatus === filters.status))
+      .filter((dragon) =>
+        filters.provides === 'all' ? true : profileProvidesLabel(profilesById.get(dragon.id), filters.provides),
+      )
+      .filter((dragon) =>
+        filters.benefitsFrom === 'all'
+          ? true
+          : profileBenefitsFromLabel(profilesById.get(dragon.id), filters.benefitsFrom),
+      )
+      .sort((left, right) => left.name.localeCompare(right.name));
+  }, [filters, profilesById, selectableDragons]);
+  const update = (patch: Partial<FormationSelectorFilters>) => onFiltersChange({ ...filters, ...patch });
+  const positionLabel = formatFormationPosition(position);
+
+  useEffect(() => {
+    previousFocus.current = document.activeElement instanceof HTMLElement ? document.activeElement : null;
+    dialogRef.current?.focus();
+    document.body.classList.add('modal-open');
+    return () => {
+      document.body.classList.remove('modal-open');
+      previousFocus.current?.focus();
+    };
+  }, []);
+
+  const handleKeyDown = (event: KeyboardEvent<HTMLDivElement>) => {
+    if (event.key === 'Escape') {
+      onClose();
+      return;
+    }
+
+    if (event.key !== 'Tab' || !dialogRef.current) {
+      return;
+    }
+
+    const focusable = dialogRef.current.querySelectorAll<HTMLElement>(
+      'a[href], button:not([disabled]), input:not([disabled]), select:not([disabled]), textarea:not([disabled]), [tabindex]:not([tabindex="-1"])',
+    );
+    const first = focusable[0];
+    const last = focusable[focusable.length - 1];
+    if (!first || !last) {
+      return;
+    }
+    if (event.shiftKey && document.activeElement === first) {
+      event.preventDefault();
+      last.focus();
+    } else if (!event.shiftKey && document.activeElement === last) {
+      event.preventDefault();
+      first.focus();
+    }
+  };
+
+  return (
+    <div className="modal-backdrop" role="presentation">
+      <div
+        aria-labelledby="formation-dragon-selector-title"
+        aria-modal="true"
+        className="details-dialog add-dragon-dialog formation-selector-dialog"
+        onKeyDown={handleKeyDown}
+        ref={dialogRef}
+        role="dialog"
+        tabIndex={-1}
+      >
+        <header className="details-header">
+          <div className="details-heading-copy">
+            <p className="eyebrow">Formation slot</p>
+            <h2 id="formation-dragon-selector-title">Choose a dragon for {positionLabel}</h2>
+            <p className="details-summary-line">
+              {includeUnowned ? 'Showing owned and unowned dragons.' : 'Showing owned dragons only.'}
+            </p>
+          </div>
+          <button type="button" className="icon-button" onClick={onClose} aria-label="Close dragon selector">
+            <X size={22} aria-hidden="true" />
+          </button>
+        </header>
+
+        <div className="add-dragon-filters formation-selector-filters" aria-label="Formation dragon filters">
+          <label>
+            Search by dragon name
+            <input
+              type="search"
+              value={filters.search}
+              onChange={(event) => update({ search: event.target.value })}
+              placeholder="Search dragons"
+            />
+          </label>
+          <label>
+            Rarity
+            <select value={filters.rarity} onChange={(event) => update({ rarity: event.target.value as DragonRarity | 'all' })}>
+              <option value="all">All rarities</option>
+              {RARITIES.map((rarity) => (
+                <option key={rarity} value={rarity}>
+                  {rarity}
+                </option>
+              ))}
+            </select>
+          </label>
+          <label>
+            Breed
+            <select value={filters.breed} onChange={(event) => update({ breed: event.target.value as DragonBreed | 'all' })}>
+              <option value="all">All breeds</option>
+              {BREEDS.map((breed) => (
+                <option key={breed} value={breed}>
+                  {breed}
+                </option>
+              ))}
+            </select>
+          </label>
+          <label>
+            Verification
+            <select
+              value={filters.status}
+              onChange={(event) => update({ status: event.target.value as VerificationStatus | 'all' })}
+            >
+              <option value="all">All statuses</option>
+              {verificationStatusOptions.map((status) => (
+                <option key={status} value={status}>
+                  {getPublicVerificationLabel(status) ?? titleCase(status.replaceAll('-', ' '))}
+                </option>
+              ))}
+            </select>
+          </label>
+          <label>
+            Provides tag
+            <select value={filters.provides} onChange={(event) => update({ provides: event.target.value })}>
+              <option value="all">All Provides tags</option>
+              {filterOptions.provides.map((label) => (
+                <option key={label} value={label}>
+                  {label}
+                </option>
+              ))}
+            </select>
+          </label>
+          <label>
+            Benefits from tag
+            <select value={filters.benefitsFrom} onChange={(event) => update({ benefitsFrom: event.target.value })}>
+              <option value="all">All Benefits from tags</option>
+              {filterOptions.benefitsFrom.map((label) => (
+                <option key={label} value={label}>
+                  {label}
+                </option>
+              ))}
+            </select>
+          </label>
+        </div>
+
+        <p className="result-count" role="status">
+          Showing {filteredDragons.length} of {selectableDragons.length} dragons.
+        </p>
+        {filteredDragons.length > 0 ? (
+          <div className="add-dragon-list formation-selector-list" aria-label="Formation dragon choices">
+            {filteredDragons.map((dragon) => (
+              <FormationDragonSelectorRow
+                dragon={dragon}
+                isAlreadySelected={selectedDragonIds.has(dragon.id)}
+                isOwned={roster[dragon.id]?.owned === true}
+                key={dragon.id}
+                profile={profilesById.get(dragon.id)}
+                onOpenDetails={onOpenDetails}
+                onSelect={onSelect}
+              />
+            ))}
+          </div>
+        ) : (
+          <div className="empty-state">
+            <h3>No dragons match those filters.</h3>
+            <p>Clear search or filters to broaden the formation selector.</p>
+          </div>
+        )}
+      </div>
+    </div>
+  );
+}
+
+function FormationDragonSelectorRow({
+  dragon,
+  isAlreadySelected,
+  isOwned,
+  profile,
+  onOpenDetails,
+  onSelect,
+}: {
+  dragon: Dragon;
+  isAlreadySelected: boolean;
+  isOwned: boolean;
+  profile: (typeof simpleSynergyProfiles)[number] | undefined;
+  onOpenDetails: (dragon: Dragon) => void;
+  onSelect: (dragonId: string) => void;
+}) {
+  const verificationLabel = getPublicVerificationLabel(dragon.dataStatus);
+  const verificationTone = getPublicVerificationTone(dragon.dataStatus);
+  const signalPreview = buildFormationSignalChips({
+    profile,
+    position: 'vanguard',
+    formation: emptyFormation(),
+    profiles: simpleSynergyProfiles,
+    progression: {},
+  });
+
+  return (
+    <article className="add-dragon-row formation-selector-row">
+      <div className="card-topline">
+        <DragonEmblem dragon={dragon} />
+        <div className="dragon-card-title">
+          <h3>{dragon.name}</h3>
+          <div className="dragon-card-chips" aria-label={`${dragon.name} metadata`}>
+            <span className="badge">{dragon.rarity}</span>
+            <span className="badge">{dragon.breed}</span>
+            {verificationLabel ? (
+              <span className={`badge verification-${verificationTone ?? 'verified'}`}>{verificationLabel}</span>
+            ) : null}
+            <span className="badge">{isOwned ? 'Owned / Hatched' : 'Not owned'}</span>
+            {isAlreadySelected ? <span className="badge">Already selected</span> : null}
+          </div>
+          <div className="formation-selector-signals">
+            <CompactSignalPreview title="Provides" labels={signalPreview.provides.map((chip) => chip.label)} />
+            <CompactSignalPreview title="Benefits from" labels={signalPreview.benefitsFrom.map((chip) => chip.label)} />
+          </div>
+        </div>
+      </div>
+      <div className="add-dragon-actions">
+        <button type="button" className="secondary-button" onClick={() => onOpenDetails(dragon)}>
+          View details
+        </button>
+        <button
+          type="button"
+          className={isAlreadySelected ? 'secondary-button' : 'primary-button'}
+          disabled={isAlreadySelected}
+          onClick={() => onSelect(dragon.id)}
+        >
+          {isAlreadySelected ? 'Already selected' : 'Select'}
+        </button>
+      </div>
+    </article>
+  );
+}
+
+function CompactSignalPreview({ title, labels }: { title: 'Provides' | 'Benefits from'; labels: string[] }) {
+  return (
+    <div className="compact-signal-preview" aria-label={title}>
+      <span className="compact-signal-title">{title}</span>
+      {labels.length > 0 ? (
+        <ul className="chip-list formation-chip-list">
+          {labels.slice(0, 6).map((label) => (
+            <li key={label} className="chip">
+              {label}
+            </li>
+          ))}
+        </ul>
+      ) : (
+        <span className="muted-inline">None mapped</span>
+      )}
+    </div>
   );
 }
 
@@ -1258,4 +1614,15 @@ function getInitialFormation(): Formation {
 
 function titleCase(value: string) {
   return value.charAt(0).toUpperCase() + value.slice(1);
+}
+
+function formatFormationPosition(position: FormationPosition) {
+  switch (position) {
+    case 'left-flank':
+      return 'Left Flank';
+    case 'vanguard':
+      return 'Vanguard';
+    case 'right-flank':
+      return 'Right Flank';
+  }
 }

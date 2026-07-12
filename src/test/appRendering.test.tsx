@@ -26,7 +26,7 @@ describe('Dragonfire Roster Lab app', () => {
     const index = readFileSync('index.html', 'utf8');
     const cname = readFileSync('public/CNAME', 'utf8');
 
-    expect(cname).toBe('dragonfirelab.com\n');
+    expect(cname.replace(/\r\n/g, '\n')).toBe('dragonfirelab.com\n');
     expect(index).toContain('<title>Dragonfire Lab</title>');
     expect(index).toContain('<link rel="canonical" href="https://dragonfirelab.com" />');
     expect(index).toContain('<meta property="og:site_name" content="Dragonfire Lab" />');
