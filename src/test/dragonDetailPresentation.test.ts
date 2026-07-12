@@ -13,7 +13,9 @@ describe('dragon detail presentation helpers', () => {
     expect(presentation.headerLine).toContain('Burn');
     expect(presentation.headerLine).toContain('Physical Damage');
     expect(presentation.headerLine).toContain('Vanguard trait');
-    expect(presentation.provides).toEqual(expect.arrayContaining(['Panic', 'Burn', 'Physical Damage']));
+    expect(presentation.provides).toEqual(
+      expect.arrayContaining(['Panic', 'Burn', 'Physical Damage', 'Confusion', 'Instinct support', 'Initiative support']),
+    );
     expect(presentation.placementNotes).toEqual(expect.arrayContaining(['Requires Vanguard', 'Supports Left Flank ally']));
     expect(presentation.benefitsFrom).toHaveLength(0);
 
@@ -35,7 +37,13 @@ describe('dragon detail presentation helpers', () => {
     expect(presentation.headerLine).toContain('Intelligence support');
     expect(presentation.headerLine).toContain('Vanguard trait');
     expect(presentation.provides).toEqual(
-      expect.arrayContaining(['Fire Damage', 'Physical Damage', 'Fire Damage support', 'Intelligence support']),
+      expect.arrayContaining([
+        'Fire Damage',
+        'Physical Damage',
+        'Fire Damage support',
+        'Intelligence support',
+        'Initiative support',
+      ]),
     );
     expect(presentation.placementNotes).toEqual(['Requires Vanguard']);
 
@@ -44,6 +52,7 @@ describe('dragon detail presentation helpers', () => {
     expect(summarizeAbility(tessarion.trait!).plainSummary).toContain('Boosts Strength');
     expect(summarizeAbility(tessarion.trait!).plainSummary).toContain('Boosts Intelligence');
     expect(summarizeAbility(tessarion.command!).plainSummary).not.toMatch(/provides deals|improves deals|applies Damage Received Down|undefined/i);
+    expect(presentation.provides).not.toContain('undefined');
   });
 
   it('returns the metadata-only fallback cleanly', () => {

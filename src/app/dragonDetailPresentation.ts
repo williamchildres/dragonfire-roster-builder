@@ -186,9 +186,11 @@ function describeSignals(
   labels: Partial<Record<string, string>> = OUTPUT_LABELS,
 ): string[] {
   return collectUnique(
-    signals
-      .map((signal) => labels[signal.tag] ?? null)
-      .filter((label): label is string => Boolean(label)),
+    signals.flatMap((signal) =>
+      [signal.tag, ...(signal.tags ?? [])]
+        .map((tag) => labels[tag] ?? null)
+        .filter((label): label is string => Boolean(label)),
+    ),
   ).sort((left, right) => headlinePriority(left) - headlinePriority(right));
 }
 

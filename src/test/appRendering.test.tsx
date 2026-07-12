@@ -128,6 +128,7 @@ describe('Dragonfire Roster Lab app', () => {
     expect(dialog).toHaveTextContent('Burn');
     expect(dialog).toHaveTextContent('Physical Damage');
     expect(dialog).toHaveTextContent('Vanguard trait');
+    expect(dialog).toHaveTextContent('Initiative support');
     expect(dialog).toHaveTextContent('Shadowflame');
     expect(dialog).toHaveTextContent("Warrior's Zeal");
     expect(dialog).toHaveTextContent('Instill Fear');
@@ -168,7 +169,7 @@ describe('Dragonfire Roster Lab app', () => {
     expect(dialog).toHaveTextContent('Metadata-only record. Ability details not yet verified.');
     expect(dialog).toHaveTextContent('At a glance');
     expect(dialog).toHaveTextContent('No formation-wide output profile recorded.');
-    expect(dialog).toHaveTextContent('No specific benefit profile recorded.');
+    expect(dialog).toHaveTextContent('No mapped incoming synergy yet.');
     expect(dialog).toHaveTextContent('No special placement requirement recorded.');
     expect(within(dialog).queryByText('Plain summary')).toBeNull();
     expect(within(dialog).queryByRole('heading', { name: 'Evidence & technical details' })).toBeInTheDocument();
@@ -193,6 +194,7 @@ describe('Dragonfire Roster Lab app', () => {
     expect(dialog).toHaveTextContent('Physical Damage');
     expect(dialog).toHaveTextContent('Fire Damage support');
     expect(dialog).toHaveTextContent('Intelligence support');
+    expect(dialog).toHaveTextContent('Initiative support');
     expect(dialog).toHaveTextContent('Boosts Intelligence');
     expect(dialog).toHaveTextContent('Vanguard trait');
   });
