@@ -2,6 +2,7 @@
 
 ## Unreleased
 
+- Removed the redundant Overview hero heading, made the feature cards actionable, added Rare coverage context, and aligned the public footer branding with Dragonfire Lab.
 - Updated the visible public brand to Dragonfire Lab, simplified the Overview hero around the three feature cards, and replaced the roster/role breakdown blocks with rarity coverage.
 - Polished Dragon Details ability cards by renaming "What it does" to "Abilities", moving unlock requirements into compact header badges, removing redundant placement/evidence rows from public ability cards, and fixing at-a-glance chip stretching.
 - Corrected Dragon Details so Benefits from reflects mapped incoming synergy signals such as Burn when profile data includes them.
