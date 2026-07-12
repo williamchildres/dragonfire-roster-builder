@@ -1,11 +1,11 @@
 {
   "format": "dragonfire-lab-project-context",
   "contextVersion": 2,
-  "generatedAt": "2026-07-12T03:42:01.685Z",
+  "generatedAt": "2026-07-12T04:12:23.631Z",
   "source": {
     "repository": "https://github.com/williamchildres/dragonfire-roster-builder",
-    "branch": "ui/release-readiness-polish",
-    "commit": "121cac56c2eedc8be9b8965ef83ee0391ec990dc",
+    "branch": "ui/remove-data-status-page",
+    "commit": "32b547d5eeb0b0ea885952b475fe0044b5d1ba15",
     "databaseVersion": "0.6.4",
     "dataSchemaVersion": 13,
     "localRosterSchemaVersion": 4,
