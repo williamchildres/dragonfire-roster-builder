@@ -4,6 +4,7 @@ import { afterEach, describe, expect, it, vi } from 'vitest';
 import { App } from '../app/App';
 import { dragons } from '../data/dragons';
 import { createEmptyRoster, ROSTER_SCHEMA_VERSION, STORAGE_KEY } from '../services/rosterStorage';
+import { createFormationShareHash } from '../services/teamShare';
 
 type ProgressionSeed = Record<string, { starRank?: number | null; reignLevel?: number | null; owned?: boolean }>;
 const incompleteMissingEnablerNotice =
@@ -100,6 +101,13 @@ describe('Formation Builder simple synergy cutover', () => {
     const heading = screen.queryByRole('heading', { name: title });
     const section = heading?.closest('section');
     return section ? within(section).queryAllByRole('listitem').map((item) => item.textContent ?? '') : [];
+  }
+
+  function ratingPanel() {
+    const heading = screen.getByRole('heading', { name: 'Formation Rating' });
+    const section = heading.closest('section');
+    expect(section).not.toBeNull();
+    return section as HTMLElement;
   }
 
   it('shows active Daemoros and Shadowsong synergy and hides old technical controls', async () => {
@@ -318,6 +326,68 @@ describe('Formation Builder simple synergy cutover', () => {
     await clearPosition(user, 'Vanguard');
     const updatedVhagarCard = screen.getByRole('article', { name: 'Right Flank' });
     expect(within(updatedVhagarCard).getByLabelText(/Burn missing/i)).toHaveAttribute('data-state', 'missing');
+  });
+
+  it('renders an explainable Formation Rating panel with score, tier, breakdown, strengths, and opportunities', async () => {
+    const user = userEvent.setup();
+    seedRoster({ syrax: {}, vhagar: {}, caraxes: { reignLevel: 26 } });
+
+    await openFormationBuilder(user);
+    await selectFormation(user, { 'left-flank': 'syrax', vanguard: 'vhagar', 'right-flank': 'caraxes' });
+
+    const panel = ratingPanel();
+    expect(panel).toHaveTextContent(/\/ 100/);
+    expect(panel).toHaveTextContent(/Strong|Solid|Developing|Weak|Excellent/);
+    expect(panel).toHaveTextContent('Synergy payoff');
+    expect(panel).toHaveTextContent('Support usefulness');
+    expect(panel).toHaveTextContent('Strengths');
+    expect(panel).toHaveTextContent('Weaknesses / opportunities');
+    expect(panel).toHaveTextContent('Caraxes can apply Burn');
+    expect(panel).toHaveTextContent('Syrax can grant First-Strike');
+    expect(panel).toHaveTextContent('not a combat simulation');
+  });
+
+  it('updates Formation Rating when a dragon changes and when a position is cleared', async () => {
+    const user = userEvent.setup();
+    seedRoster({ syrax: {}, vhagar: {}, caraxes: { reignLevel: 26 }, shadowsong: {} });
+
+    await openFormationBuilder(user);
+    await selectFormation(user, { 'left-flank': 'syrax', vanguard: 'vhagar', 'right-flank': 'caraxes' });
+    const initialLabel = within(ratingPanel()).getByLabelText(/Formation rating .* out of 100/i).getAttribute('aria-label');
+
+    await clearPosition(user, 'Right Flank');
+    expect(ratingPanel()).toHaveTextContent('Incomplete');
+    expect(ratingPanel()).toHaveTextContent('Assign all three positions');
+
+    await chooseDragonForPosition(user, 'right-flank', 'shadowsong');
+    const updatedLabel = within(ratingPanel()).getByLabelText(/Formation rating .* out of 100/i).getAttribute('aria-label');
+    expect(updatedLabel).not.toBe(initialLabel);
+  });
+
+  it('shows Incomplete guidance for partial formations', async () => {
+    const user = userEvent.setup();
+    seedRoster({ syrax: {} });
+
+    await openFormationBuilder(user);
+    await selectFormation(user, { 'left-flank': 'syrax' });
+
+    expect(ratingPanel()).toHaveTextContent('Incomplete');
+    expect(ratingPanel()).toHaveTextContent('Assign all three positions');
+  });
+
+  it('renders Formation Rating for share-link-loaded formations', () => {
+    seedRoster({ syrax: {}, vhagar: {}, caraxes: { reignLevel: 26 } });
+    window.history.replaceState(
+      null,
+      '',
+      createFormationShareHash({ 'left-flank': 'syrax', vanguard: 'vhagar', 'right-flank': 'caraxes' }),
+    );
+
+    render(<App />);
+
+    expect(screen.getByRole('heading', { name: 'Formation Builder' })).toBeInTheDocument();
+    expect(ratingPanel()).toHaveTextContent(/\/ 100/);
+    expect(ratingPanel()).toHaveTextContent('Caraxes can apply Burn');
   });
 
   it('shows Malachite unused Physical and Tactical support as available instead of used', async () => {
