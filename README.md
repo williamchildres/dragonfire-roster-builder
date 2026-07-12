@@ -4,6 +4,8 @@ Dragonfire Lab is an unofficial community tool for Game of Thrones: Dragonfire. 
 
 It is not a combat simulator.
 
+Public site: https://dragonfirelab.com
+
 ## Current Features
 
 - My Roster as the central local dragon-management page, with Add Dragon search/filter flow for 31 known dragons.
