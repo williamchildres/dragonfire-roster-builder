@@ -60,6 +60,7 @@ import {
   sanitizeFormation,
   type Formation,
 } from '../services/teamShare';
+import { rateFormation } from '../services/formationRating';
 import { evaluateFormation } from '../synergy/evaluateFormation';
 import { buildSimpleFormationPresentation } from '../synergy/formationPresentation';
 import { simpleSynergyProfiles } from '../synergy/profiles';
@@ -935,6 +936,42 @@ function FormationBuilderSection({
     mappedProfileIds,
     results: simpleResults,
   });
+  const signalChipsByPosition = useMemo(
+    () =>
+      Object.fromEntries(
+        FORMATION_POSITIONS.map((position) => {
+          const dragonId = formation[position];
+          return [
+            position,
+            buildFormationSignalChips({
+              profile: dragonId ? profilesById.get(dragonId) : undefined,
+              position,
+              formation,
+              profiles: simpleSynergyProfiles,
+              progression,
+            }),
+          ];
+        }),
+      ) as Record<FormationPosition, ReturnType<typeof buildFormationSignalChips>>,
+    [formation, profilesById, progression],
+  );
+  const signalChipsByDragonId = useMemo(
+    () =>
+      Object.fromEntries(
+        FORMATION_POSITIONS.flatMap((position) => {
+          const dragonId = formation[position];
+          return dragonId ? [[dragonId, signalChipsByPosition[position]]] : [];
+        }),
+      ),
+    [formation, signalChipsByPosition],
+  );
+  const rating = rateFormation({
+    formation,
+    dragons,
+    profiles: simpleSynergyProfiles,
+    presentation,
+    signalChipsByDragonId,
+  });
 
   const updatePosition = (position: FormationPosition, nextId: string | null) => {
     onFormationChange(preventDuplicateFormationPlacement(formation, position, nextId));
@@ -986,13 +1023,7 @@ function FormationBuilderSection({
               position={position}
               dragon={dragon}
               rosterEntry={dragon ? roster[dragon.id] : undefined}
-              signalChips={buildFormationSignalChips({
-                profile: dragon ? profilesById.get(dragon.id) : undefined,
-                position,
-                formation,
-                profiles: simpleSynergyProfiles,
-                progression,
-              })}
+              signalChips={signalChipsByPosition[position]}
               onChooseDragon={() => openSelector(position)}
               onOpenDetails={onOpenDetails}
               onMove={(target) => onFormationChange(moveFormationDragon(formation, position, target))}
@@ -1001,7 +1032,7 @@ function FormationBuilderSection({
           );
         })}
       </div>
-      <SimpleFormationAnalysis presentation={presentation} dragons={dragons} formation={formation} />
+      <SimpleFormationAnalysis presentation={presentation} dragons={dragons} formation={formation} rating={rating} />
       {selectorPosition ? (
         <FormationDragonSelectorDialog
           filters={selectorFilters}

@@ -13,7 +13,7 @@ Public site: https://dragonfirelab.com
 - Curated simple synergy profiles for all 19 detailed dragons.
 - Metadata-only handling for the remaining 12 unmapped dragons.
 - Owned / Hatched roster tracking with Star Rank, Dragon Level, notes, and Habit Levels.
-- Formation Builder with placement, progression locks, missing-enabler, position conflict, and future-unlock explanations.
+- Formation Builder with explainable local rating, placement, progression locks, missing-enabler, position conflict, and future-unlock explanations.
 - Formation share links and roster JSON import/export.
 - Lightweight project-context export for handoffs.
 
@@ -27,9 +27,9 @@ The repository does not store execution-level schedules, rolls, attempts, target
 
 The live Formation Builder uses curated simple profiles in `src/synergy`. Ordinary dragon additions should be data and profile-audit changes, not engine changes.
 
-Selected Formation Builder cards show current Damage Profile, Provides, and Benefits from signal sections. Chip states distinguish supported or used relationships from available-but-unused, missing, and inactive signals before any scoring layer is added.
+Selected Formation Builder cards show current Damage Profile, Provides, and Benefits from signal sections. Chip states distinguish supported or used relationships from available-but-unused, missing, and inactive signals, and the Formation Rating summarizes those mapped signals without simulating combat.
 
-The simple evaluator models high-level setup/payoff and support relationships, progression locks, adjacency, hard recipient positions, grouped Vanguard conflicts, missing enablers, and duplicate relationship aggregation. It does not model exact timing, rolls, target overlap, stacks, damage formulas, or scores.
+The simple evaluator models high-level setup/payoff and support relationships, progression locks, adjacency, hard recipient positions, grouped Vanguard conflicts, missing enablers, and duplicate relationship aggregation. The rating is a deterministic UI summary of those mapped signals; it does not model exact timing, rolls, target overlap, stacks, damage formulas, or battle outcomes.
 
 ## Development
 
