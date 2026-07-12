@@ -1,5 +1,4 @@
 ﻿import {
-  BookOpen,
   Database,
   Download,
   ExternalLink,
@@ -18,13 +17,10 @@ import { useEffect, useMemo, useState, type ChangeEvent } from 'react';
 import { DragonDetailsDialog } from './DragonDetailModal';
 import { SimpleFormationAnalysis } from './SimpleFormationAnalysis';
 import { SimpleFormationCard } from './SimpleFormationCard';
-import { getPublicRosterSourceLabel, getPublicVerificationLabel, getPublicVerificationTone } from './publicCardLabels';
+import { getPublicVerificationLabel, getPublicVerificationTone } from './publicCardLabels';
 import dragonfireHero from '../assets/dragonfire-hero.png';
 import { databaseMetadata, repository } from '../data/databaseMetadata';
 import { dragons } from '../data/dragons';
-import { evidenceSources } from '../data/evidence';
-import { manualReviewRecords } from '../data/manualReviews';
-import { troopMatchupRules } from '../data/troopMatchups';
 import {
   BREEDS,
   FORMATION_POSITIONS,
@@ -62,15 +58,15 @@ import { simpleSynergyProfiles } from '../synergy/profiles';
 import type { SimpleProgressionByDragonId } from '../synergy/types';
 export { RawWordingDisclosure } from './DragonDetailModal';
 
-type Section = 'home' | 'database' | 'roster' | 'team' | 'status' | 'about';
+type Section = 'home' | 'database' | 'roster' | 'team' | 'about';
 type StatusMessage = { kind: 'success' | 'error' | 'info'; text: string };
 
+const publicSections: Section[] = ['home', 'database', 'roster', 'team', 'about'];
 const sectionLabels: Record<Section, string> = {
   home: 'Overview',
   database: 'Dragon Database',
   roster: 'My Roster',
   team: 'Formation Builder',
-  status: 'Data Status',
   about: 'About',
 };
 
@@ -79,7 +75,6 @@ const sectionIcons = {
   database: Database,
   roster: Users,
   team: Swords,
-  status: BookOpen,
   about: Info,
 };
 
@@ -89,8 +84,6 @@ const verificationStatusOptions: VerificationStatus[] = [
   'community-verified',
   'officially-confirmed',
 ];
-
-const unknown = 'Not verified yet';
 
 export function App() {
   const [activeSection, setActiveSection] = useState<Section>(() =>
@@ -230,7 +223,7 @@ export function App() {
           </div>
         </div>
         <nav aria-label="Primary sections" className="section-nav">
-          {(Object.keys(sectionLabels) as Section[]).map((section) => {
+          {publicSections.map((section) => {
             const Icon = sectionIcons[section];
             return (
               <button
@@ -301,8 +294,6 @@ export function App() {
 
           />
         ) : null}
-
-        {activeSection === 'status' ? <DataStatusSection /> : null}
         {activeSection === 'about' ? <AboutSection /> : null}
       </main>
 
@@ -739,170 +730,8 @@ function FormationBuilderSection({
   );
 }
 
-function dragonName(dragonId: string | null) {
-  return dragonId ? dragons.find((dragon) => dragon.id === dragonId)?.name ?? dragonId : unknown;
-}
-
 function hasDetailedAbilities(dragon: Dragon) {
   return Boolean(dragon.command && dragon.trait && dragon.habits.length > 0);
-}
-
-function DataStatusSection() {
-  const officialCount = dragons.filter((dragon) => dragon.rosterSourceStatus === 'official-website').length;
-  const pendingCount = dragons.filter(
-    (dragon) => dragon.rosterSourceStatus === 'in-game-verified-pending-official-site',
-  ).length;
-  const detailedCount = dragons.filter(hasDetailedAbilities).length;
-  const mappedProfileIds = new Set(simpleSynergyProfiles.map((profile) => profile.dragonId));
-  const metadataOnlyIds = new Set<string>(metadataOnlyDragonIds);
-  const metadataOnlyCount = dragons.filter((dragon) => metadataOnlyIds.has(dragon.id)).length;
-
-  return (
-    <section aria-labelledby="status-title">
-      <SectionHeading
-        eyebrow="Release data status"
-        title="Data Status"
-        description="This page shows how much of the dragon catalog is verified, mapped, or still metadata-only."
-      />
-      <div className="panel readable">
-        <h3>What this page means</h3>
-        <p>
-          The catalog is organized around what has been publicly checked and what still needs a fuller
-          record. Verified dragons have screenshot-backed ability wording or official confirmation.
-          Metadata-only dragons are known by identity, but their ability details are not verified yet.
-        </p>
-        <p>
-          Curated profiles are the dragons with a mapped profile available. Official entries appear on
-          the public roster source, and some dragons still have in-game evidence while waiting for a
-          public official page.
-        </p>
-      </div>
-      <div className="stats-grid" aria-label="Coverage summary">
-        <StatCard label="Known dragons" value={dragons.length} />
-        <StatCard label="Detailed ability records" value={detailedCount} />
-        <StatCard label="Curated simple profiles" value={simpleSynergyProfiles.length} />
-        <StatCard label="Metadata-only dragons" value={metadataOnlyCount} />
-        <StatCard label="Official-site entries" value={officialCount} />
-        <StatCard label="Pending official site" value={pendingCount} />
-      </div>
-      <div className="panel readable">
-        <h3>Verification labels</h3>
-        <div className="status-legend">
-          <div className="legend-item">
-            <span className="badge verification-verified">Verified</span>
-            <span>Ability wording has been checked from screenshots or community evidence.</span>
-          </div>
-          <div className="legend-item">
-            <span className="badge verification-metadata-only">Metadata Only</span>
-            <span>Identity is known, but ability details are not verified yet.</span>
-          </div>
-          <div className="legend-item">
-            <span className="badge">Official entry</span>
-            <span>The dragon appears on the public roster source.</span>
-          </div>
-          <div className="legend-item">
-            <span className="badge">Pending official site</span>
-            <span>The dragon has in-game evidence, but no public official page yet.</span>
-          </div>
-        </div>
-      </div>
-      <div className="panel readable">
-        <h3>Coverage table</h3>
-        <div className="table-wrap">
-          <table>
-            <caption>Dragon profile coverage</caption>
-            <thead>
-              <tr>
-                <th>Dragon</th>
-                <th>Source</th>
-                <th>Ability Data</th>
-                <th>Synergy Profile</th>
-                <th>Status</th>
-                <th>Evidence</th>
-              </tr>
-            </thead>
-            <tbody>
-              {dragons.map((dragon) => (
-                <tr key={dragon.id}>
-                  <td>{dragon.name}</td>
-                  <td>{getPublicRosterSourceLabel(dragon.rosterSourceStatus)}</td>
-                  <td>{hasDetailedAbilities(dragon) ? 'Verified' : 'Metadata Only'}</td>
-                  <td>{mappedProfileIds.has(dragon.id) ? 'Curated' : 'Unmapped'}</td>
-                  <td>{getPublicVerificationLabel(dragon.dataStatus) ?? 'Not verified'}</td>
-                  <td>
-                    {evidenceSources.some(
-                      (source) =>
-                        source.id === 'official-roster-2026-06-23' || source.id.startsWith(dragon.id),
-                    )
-                      ? 'Recorded'
-                      : 'Not recorded'}
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
-      </div>
-      <div className="panel readable">
-        <h3>Limitations</h3>
-        <p>
-          Exact timing, rolls, damage formulas, target overlap, stacking, and full combat simulation are
-          not modeled.
-        </p>
-        <p>
-          Raw wording is preserved where available, and account observation snapshots are player-specific
-          records rather than canonical base stats.
-        </p>
-      </div>
-      <div className="panel readable">
-        <h3>Support tables</h3>
-        <div className="table-wrap">
-          <table>
-            <caption>Troop matchup rules</caption>
-            <thead>
-              <tr>
-                <th>Matchup</th>
-                <th>Status</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td>Current verified matchup rules</td>
-                <td>{troopMatchupRules.length}</td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-        <div className="table-wrap">
-          <table>
-            <caption>Manual review status</caption>
-            <thead>
-              <tr>
-                <th>Dragon</th>
-                <th>Scope</th>
-                <th>Status</th>
-                <th>Reviewed</th>
-                <th>Build</th>
-                <th>Notes</th>
-              </tr>
-            </thead>
-            <tbody>
-              {manualReviewRecords.map((review) => (
-                <tr key={review.id}>
-                  <td>{dragonName(review.dragonId)}</td>
-                  <td>{formatToken(review.scope)}</td>
-                  <td>{formatToken(review.status)}</td>
-                  <td>{review.reviewedAt}</td>
-                  <td>{review.reviewedAgainstGameBuild}</td>
-                  <td>{review.notes.join(' ')}</td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
-      </div>
-    </section>
-  );
 }
 
 function AboutSection() {
@@ -1264,13 +1093,6 @@ function getInitialFormation(): Formation {
     window.localStorage.removeItem('dragonfire-roster-lab:last-team');
     return emptyFormation();
   }
-}
-
-function formatToken(value: string) {
-  return value
-    .split('-')
-    .map((part) => titleCase(part))
-    .join(' ');
 }
 
 function titleCase(value: string) {
