@@ -27,9 +27,9 @@ The repository does not store execution-level schedules, rolls, attempts, target
 
 The live Formation Builder uses curated simple profiles in `src/synergy`. Ordinary dragon additions should be data and profile-audit changes, not engine changes.
 
-Selected Formation Builder cards show current Damage Profile, Provides, and Benefits from signal sections. Chip states distinguish supported or used relationships from available-but-unused, missing, and inactive signals, and the Formation Rating compares the current selected formation using realized mapped signals without simulating combat.
+Selected Formation Builder cards show current Damage Profile, Provides, and Benefits from signal sections. Chip states distinguish supported or used relationships from available-but-unused, missing, and inactive signals, and the Formation Rating compares the current selected formation using realized mapped signals without simulating combat. Support Usefulness is gated by active payoff and satisfied Benefits so raw damage outputs remain Damage Profile signals instead of generic support score drivers.
 
-The simple evaluator models high-level setup/payoff and support relationships, progression locks, adjacency, hard recipient positions, grouped Vanguard conflicts, missing enablers, and duplicate relationship aggregation. The rating is a deterministic UI summary of those mapped signals, with detailed evaluator output collapsed behind a secondary control; it does not model exact timing, rolls, target overlap, stacks, damage formulas, or battle outcomes.
+The simple evaluator models high-level setup/payoff and support relationships, progression locks, adjacency, hard recipient positions, grouped Vanguard conflicts, missing enablers, and duplicate relationship aggregation. The rating is a deterministic UI summary of those mapped signals with Excellent guardrails for payoff, missing Benefits, and placement collapse, while detailed evaluator output stays collapsed behind a secondary control; it does not model exact timing, rolls, target overlap, stacks, damage formulas, or battle outcomes.
 
 ## Development
 
