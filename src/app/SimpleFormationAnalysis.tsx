@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import type { Dragon } from '../models/dragon';
 import { positionLabels, type Formation } from '../services/teamShare';
 import type { FormationRatingResult } from '../services/formationRating';
@@ -27,21 +28,47 @@ export function SimpleFormationAnalysis({
       {selectedCount < 2 ? (
         <p className="empty-card-note">Select at least two dragons to review formation synergies.</p>
       ) : (
-        <>
-          {!hasActiveSynergy ? (
-            <p className="empty-card-note">No active curated relationship is mapped for this formation yet.</p>
-          ) : null}
-          <ResultSection title="Strong synergies" results={presentation.activeSynergies} />
-          {!presentation.hasCompleteProfileCoverage ? <IncompleteMissingEnablerNotice /> : null}
-          <ResultSection title="Missing enablers" results={presentation.missingEnablers} />
-          <ResultSection title="Placement issues" results={presentation.placementIssues} />
-          <ResultSection title="Position conflicts" results={presentation.positionConflicts} />
-          <ResultSection title="Future unlocks" results={presentation.futureUnlocks} />
-        </>
+        <DetailedSignalTrace hasActiveSynergy={hasActiveSynergy} presentation={presentation} />
       )}
       <p className="notice-text">
         Formation adjacency is linear: Left Flank and Right Flank are adjacent only to Vanguard.
       </p>
+    </section>
+  );
+}
+
+function DetailedSignalTrace({
+  hasActiveSynergy,
+  presentation,
+}: {
+  hasActiveSynergy: boolean;
+  presentation: SimpleFormationPresentation;
+}) {
+  const [isOpen, setIsOpen] = useState(false);
+
+  return (
+    <section className="detailed-signal-trace" aria-label="Detailed signal trace">
+      <button
+        type="button"
+        className="secondary-button detailed-signal-trace-toggle"
+        aria-expanded={isOpen}
+        onClick={() => setIsOpen((current) => !current)}
+      >
+        {isOpen ? 'Hide detailed signal trace' : 'Show detailed signal trace'}
+      </button>
+      {isOpen ? (
+        <div className="detailed-signal-trace-body">
+        {!hasActiveSynergy ? (
+          <p className="empty-card-note">No active curated relationship is mapped for this formation yet.</p>
+        ) : null}
+        <ResultSection title="Strong synergies" results={presentation.activeSynergies} />
+        {!presentation.hasCompleteProfileCoverage ? <IncompleteMissingEnablerNotice /> : null}
+        <ResultSection title="Missing enablers" results={presentation.missingEnablers} />
+        <ResultSection title="Placement issues" results={presentation.placementIssues} />
+        <ResultSection title="Position conflicts" results={presentation.positionConflicts} />
+        <ResultSection title="Future unlocks" results={presentation.futureUnlocks} />
+      </div>
+      ) : null}
     </section>
   );
 }

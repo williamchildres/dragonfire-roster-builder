@@ -1565,6 +1565,22 @@ dd {
   min-width: 0;
 }
 
+.detailed-signal-trace {
+  border-top: 1px solid var(--line-soft);
+  display: grid;
+  gap: 0.75rem;
+  padding-top: 0.75rem;
+}
+
+.detailed-signal-trace-toggle {
+  justify-self: start;
+}
+
+.detailed-signal-trace-body {
+  display: grid;
+  gap: 0.8rem;
+}
+
 .simple-result-section {
   display: grid;
   gap: 0.45rem;

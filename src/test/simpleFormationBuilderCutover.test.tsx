@@ -110,12 +110,20 @@ describe('Formation Builder simple synergy cutover', () => {
     return section as HTMLElement;
   }
 
+  async function openDetailedSignalTrace(user: ReturnType<typeof userEvent.setup>) {
+    const toggle = screen.getByRole('button', { name: /detailed signal trace/i });
+    if (toggle.getAttribute('aria-expanded') !== 'true') {
+      await user.click(toggle);
+    }
+  }
+
   it('shows active Daemoros and Shadowsong synergy and hides old technical controls', async () => {
     const user = userEvent.setup();
     seedRoster({ daemoros: { starRank: 2 }, shadowsong: {}, caraxes: {} });
 
     await openFormationBuilder(user);
     await selectFormation(user, { 'left-flank': 'daemoros', vanguard: 'shadowsong', 'right-flank': 'caraxes' });
+    await openDetailedSignalTrace(user);
 
     expect(sectionText('Strong synergies')).toContain(
       "Daemoros applies Panic, which improves Shadowsong's Breath of Fire.",
@@ -123,7 +131,7 @@ describe('Formation Builder simple synergy cutover', () => {
     expect(screen.queryByLabelText(/preview max-rank interactions/i)).not.toBeInTheDocument();
     expect(screen.queryByLabelText(/show analysis details/i)).not.toBeInTheDocument();
     expect(screen.queryByRole('heading', { name: /Receives/i })).not.toBeInTheDocument();
-    expect(analysisText()).not.toMatch(/target candidate|trace|raw effect tags/i);
+    expect(analysisText()).not.toMatch(/target candidate|raw effect tags/i);
   });
 
   it('maps roster Star Rank to progression-locked simple relationships', async () => {
@@ -132,6 +140,7 @@ describe('Formation Builder simple synergy cutover', () => {
 
     await openFormationBuilder(user);
     await selectFormation(user, { 'left-flank': 'daemoros', vanguard: 'shadowsong' });
+    await openDetailedSignalTrace(user);
 
     expect(sectionText('Future unlocks')).toContain(
       "Daemoros's Instill Fear Panic setup for Shadowsong's Breath of Fire unlocks when Daemoros reaches Star Rank 2.",
@@ -149,6 +158,7 @@ describe('Formation Builder simple synergy cutover', () => {
     expect(screen.queryByRole('heading', { name: 'Missing enablers' })).not.toBeInTheDocument();
 
     await selectFormation(user, { vanguard: 'caraxes', 'right-flank': 'sheepstealer' });
+    await openDetailedSignalTrace(user);
 
     const missing = sectionText('Missing enablers');
     expect(missing).toContain('Shadowsong benefits from Panic, but this formation has no Panic provider.');
@@ -163,6 +173,7 @@ describe('Formation Builder simple synergy cutover', () => {
 
     await openFormationBuilder(user);
     await selectFormation(user, { 'left-flank': 'shadowsong', vanguard: 'antares' });
+    await openDetailedSignalTrace(user);
 
     expect(analysisText()).toContain('Synergy data not yet mapped: Antares.');
     expect(sectionText('Missing enablers')).toContain(incompleteMissingEnablerNotice);
@@ -175,6 +186,7 @@ describe('Formation Builder simple synergy cutover', () => {
 
     await openFormationBuilder(user);
     await selectFormation(user, { 'left-flank': 'caraxes', vanguard: 'antares' });
+    await openDetailedSignalTrace(user);
 
     expect(analysisText()).toContain('Synergy data not yet mapped: Antares.');
     expect(sectionText('Missing enablers')).toContain(incompleteMissingEnablerNotice);
@@ -187,6 +199,7 @@ describe('Formation Builder simple synergy cutover', () => {
 
     await openFormationBuilder(user);
     await selectFormation(user, { 'left-flank': 'syrax', vanguard: 'caraxes' });
+    await openDetailedSignalTrace(user);
 
     const strong = sectionText('Strong synergies');
     expect(strong).toContain("Syrax can grant First-Strike, which improves Caraxes's Infernal Burst.");
@@ -201,6 +214,7 @@ describe('Formation Builder simple synergy cutover', () => {
 
     await openFormationBuilder(user);
     await selectFormation(user, { 'left-flank': 'crimson', vanguard: 'rhysarion' });
+    await openDetailedSignalTrace(user);
 
     expect(sectionItems('Strong synergies')).toContain(
       "Crimson's Bloodscale Terror can apply Stun, which counts as Control and improves Rhysarion's Dawnsong.",
@@ -216,6 +230,7 @@ describe('Formation Builder simple synergy cutover', () => {
 
     await openFormationBuilder(user);
     await selectFormation(user, { 'left-flank': 'syrax', vanguard: 'caraxes' });
+    await openDetailedSignalTrace(user);
 
     expect(sectionItems('Strong synergies').filter((item) => item === 'Syrax improves allied Fire Damage, and Caraxes deals Fire Damage.')).toHaveLength(1);
     expect(sectionText('Future unlocks')).not.toContain('Fire Damage');
@@ -228,17 +243,20 @@ describe('Formation Builder simple synergy cutover', () => {
 
     await openFormationBuilder(user);
     await selectFormation(user, { 'left-flank': 'malachite', vanguard: 'caraxes' });
+    await openDetailedSignalTrace(user);
     expect(sectionText('Strong synergies')).toContain(
       "Malachite can grant First-Strike, which improves Caraxes's Infernal Burst.",
     );
 
     await clearPosition(user, 'Vanguard');
     await chooseDragonForPosition(user, 'right-flank', 'caraxes');
+    await openDetailedSignalTrace(user);
     expect(sectionText('Placement issues')).toContain('Malachite and Caraxes are not adjacent in this formation.');
 
     await clearPosition(user, 'Left Flank');
     await chooseDragonForPosition(user, 'right-flank', 'sheepstealer');
     await chooseDragonForPosition(user, 'vanguard', 'malachite');
+    await openDetailedSignalTrace(user);
     expect(sectionText('Placement issues')).toContain(
       "Sheepstealer must be deployed in Vanguard for Hunter's Cunning.",
     );
@@ -255,6 +273,7 @@ describe('Formation Builder simple synergy cutover', () => {
 
     await openFormationBuilder(user);
     await selectFormation(user, { 'left-flank': 'zivern', vanguard: 'rhysarion', 'right-flank': 'shadowsong' });
+    await openDetailedSignalTrace(user);
 
     const placementIssues = sectionItems('Placement issues');
     const futureUnlocks = sectionText('Future unlocks');
@@ -282,6 +301,7 @@ describe('Formation Builder simple synergy cutover', () => {
 
     await openFormationBuilder(user);
     await selectFormation(user, { 'left-flank': 'malachite', vanguard: 'sheepstealer', 'right-flank': 'caraxes' });
+    await openDetailedSignalTrace(user);
     expect(sectionText('Future unlocks')).toContain(
       "Malachite's Warden's Rally Recovery setup for Sheepstealer's Hunter's Cunning unlocks when Sheepstealer reaches Dragon Level 16.",
     );
@@ -296,6 +316,7 @@ describe('Formation Builder simple synergy cutover', () => {
     await user.click(screen.getByRole('button', { name: /close details/i }));
 
     await user.click(screen.getAllByRole('button', { name: /formation builder/i })[0]!);
+    await openDetailedSignalTrace(user);
     expect(sectionText('Strong synergies')).toContain(
       "Malachite provides Recovery, which Sheepstealer benefits from through Hunter's Cunning.",
     );
@@ -338,13 +359,20 @@ describe('Formation Builder simple synergy cutover', () => {
     const panel = ratingPanel();
     expect(panel).toHaveTextContent(/\/ 100/);
     expect(panel).toHaveTextContent(/Strong|Solid|Developing|Weak|Excellent/);
-    expect(panel).toHaveTextContent('Synergy payoff');
+    expect(panel).toHaveTextContent('Realized synergy payoff');
     expect(panel).toHaveTextContent('Support usefulness');
     expect(panel).toHaveTextContent('Strengths');
     expect(panel).toHaveTextContent('Weaknesses / opportunities');
     expect(panel).toHaveTextContent('Caraxes can apply Burn');
     expect(panel).toHaveTextContent('Syrax can grant First-Strike');
     expect(panel).toHaveTextContent('not a combat simulation');
+    expect(screen.queryByRole('heading', { name: 'Strong synergies' })).not.toBeInTheDocument();
+    expect(screen.queryByRole('heading', { name: 'Missing enablers' })).not.toBeInTheDocument();
+    expect(screen.queryByRole('heading', { name: 'Placement issues' })).not.toBeInTheDocument();
+    expect(screen.queryByRole('heading', { name: 'Position conflicts' })).not.toBeInTheDocument();
+
+    await openDetailedSignalTrace(user);
+    expect(screen.getByRole('heading', { name: 'Strong synergies' })).toBeInTheDocument();
   });
 
   it('updates Formation Rating when a dragon changes and when a position is cleared', async () => {
@@ -552,6 +580,7 @@ describe('Formation Builder simple synergy cutover', () => {
     expect(caraxesTrait).toHaveTextContent('At Level 16+ and deployed in Vanguard');
 
     expect(analysisText()).toContain('Synergy data not yet mapped: Antares.');
+    await openDetailedSignalTrace(user);
     expect(sectionText('Strong synergies')).toContain("Syrax can grant First-Strike, which improves Caraxes's Infernal Burst.");
     expect(sectionItems('Strong synergies').filter((item) => item === 'Syrax improves allied Fire Damage, and Caraxes deals Fire Damage.')).toHaveLength(1);
     expect(sectionText('Missing enablers')).toContain(incompleteMissingEnablerNotice);

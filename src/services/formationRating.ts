@@ -38,6 +38,11 @@ interface SelectedDragon {
   chips: FormationRatingSignalChips;
 }
 
+interface RatingListCandidate {
+  key: string;
+  text: string;
+}
+
 const emptyChips: FormationRatingSignalChips = {
   damageProfile: [],
   provides: [],
@@ -62,13 +67,13 @@ export function rateFormation({
   const readiness = readinessScore(selected, presentation);
   const synergyPayoff = synergyPayoffScore(selected, presentation);
   const supportUsefulness = supportUsefulnessScore(selected);
-  const placement = placementScore(selected, presentation);
+  const placement = placementScore(presentation);
   const score = clampScore(readiness.score + synergyPayoff.score + supportUsefulness.score + placement.score);
   const tier = selectedCount < 3 ? 'Incomplete' : tierForScore(score);
   const strengths = selectStrengths(selected, presentation);
   const weaknesses = selectWeaknesses(selected, presentation);
   const notes = [
-    'Rating is based on mapped synergy signals, current progression, placement, and conflicts. It is not a combat simulation.',
+    'Rating compares the currently selected formation using mapped active signals, current progression, placement, and conflicts. It is not a combat simulation.',
   ];
 
   if (presentation.unmappedDragonIds.length > 0) {
@@ -138,83 +143,111 @@ function readinessScore(
   selected: SelectedDragon[],
   presentation: SimpleFormationPresentation,
 ): FormationRatingBreakdownItem {
-  const filledPoints = Math.min(selected.length, 3) * 5;
-  const profilePoints = selected.length === 0 ? 0 : Math.round((presentation.mappedDragonIds.length / selected.length) * 5);
-  const score = clampCategory(filledPoints + profilePoints, 20);
+  const filledPoints = Math.min(selected.length, 3) * 4;
+  const profilePoints = selected.length === 0 ? 0 : Math.round((presentation.mappedDragonIds.length / selected.length) * 3);
+  const score = clampCategory(filledPoints + profilePoints, 15);
   const unmappedCount = presentation.unmappedDragonIds.length;
   const explanation =
     selected.length === 3 && unmappedCount === 0
       ? 'All positions are filled with curated profiles.'
       : `${selected.length} of 3 positions filled; ${presentation.mappedDragonIds.length} selected profiles are curated.`;
 
-  return { label: 'Formation readiness', score, max: 20, explanation };
+  return { label: 'Readiness / profile confidence', score, max: 15, explanation };
 }
 
 function synergyPayoffScore(
   selected: SelectedDragon[],
   presentation: SimpleFormationPresentation,
 ): FormationRatingBreakdownItem {
-  const activeSetupCount = presentation.activeSynergies.filter((result) => result.kind === 'setup-payoff').length;
-  const activeAmplifierCount = presentation.activeSynergies.filter((result) => result.kind === 'amplifier-output').length;
-  const satisfiedBenefitCount = selected.flatMap((dragon) => dragon.chips.benefitsFrom).filter((chip) => chip.state === 'satisfied').length;
+  const activeSetupCount = uniqueKeys(
+    presentation.activeSynergies
+      .filter((result) => result.kind === 'setup-payoff')
+      .map((result) => relationshipKey(result.kind, result.dragonIds, result.tag)),
+  ).length;
+  const activeAmplifierCount = uniqueKeys(
+    presentation.activeSynergies
+      .filter((result) => result.kind === 'amplifier-output')
+      .map((result) => relationshipKey(result.kind, result.dragonIds, result.tag)),
+  ).length;
+  const satisfiedBenefitCount = uniqueKeys(
+    selected.flatMap((dragon) =>
+      dragon.chips.benefitsFrom
+        .filter((chip) => chip.state === 'satisfied')
+        .map((chip) => missingBenefitKey(dragon.dragonId, chip.label)),
+    ),
+  ).length;
   const participatingDragonCount = new Set(presentation.activeSynergies.flatMap((result) => result.dragonIds)).size;
-  const relationshipPoints = Math.min(activeSetupCount * 7 + activeAmplifierCount * 4, 25);
-  const benefitPoints = Math.min(satisfiedBenefitCount * 3, 6);
-  const participationPoints = participatingDragonCount >= 3 ? 4 : participatingDragonCount >= 2 ? 2 : 0;
-  const score = clampCategory(relationshipPoints + benefitPoints + participationPoints, 35);
+  const setupPoints = Math.min(activeSetupCount * 8, 24);
+  const amplifierPoints = Math.min(activeAmplifierCount * 2, 12);
+  const benefitPoints = Math.min(satisfiedBenefitCount * 4, 12);
+  const participationPoints = participatingDragonCount >= 3 ? 3 : participatingDragonCount >= 2 ? 1 : 0;
+  const score = clampCategory(setupPoints + amplifierPoints + benefitPoints + participationPoints, 45);
   const explanation =
     presentation.activeSynergies.length > 0
       ? `${presentation.activeSynergies.length} mapped active relationship${presentation.activeSynergies.length === 1 ? '' : 's'} found.`
       : 'No active mapped payoff relationship is available yet.';
 
-  return { label: 'Synergy payoff', score, max: 35, explanation };
+  return { label: 'Realized synergy payoff', score, max: 45, explanation };
 }
 
 function supportUsefulnessScore(selected: SelectedDragon[]): FormationRatingBreakdownItem {
-  const usedProvidesCount = selected.flatMap((dragon) => dragon.chips.provides).filter((chip) => chip.state === 'used').length;
-  const supportedDamageCount = selected.flatMap((dragon) => dragon.chips.damageProfile).filter((chip) => chip.state === 'supported').length;
-  const usedProvidePoints = Math.min(usedProvidesCount * 4, 12);
-  const supportedDamagePoints = Math.min(supportedDamageCount * 4, 8);
-  const score = clampCategory(usedProvidePoints + supportedDamagePoints, 20);
+  const usedProvidesCount = uniqueKeys(
+    selected.flatMap((dragon) =>
+      dragon.chips.provides
+        .filter((chip) => chip.state === 'used')
+        .map((chip) => `used:${dragon.dragonId}:${normalizeMeaning(chip.label)}:${recipientFromReason(chip.reason)}`),
+    ),
+  ).length;
+  const supportedDamageCount = uniqueKeys(
+    selected.flatMap((dragon) =>
+      dragon.chips.damageProfile
+        .filter((chip) => chip.state === 'supported')
+        .map((chip) => `supported:${dragon.dragonId}:${normalizeMeaning(chip.label)}:${recipientFromReason(chip.reason)}`),
+    ),
+  ).length;
+  const usedProvidePoints = Math.min(usedProvidesCount * 3, 15);
+  const supportedDamagePoints = Math.min(supportedDamageCount * 5, 10);
+  const score = clampCategory(usedProvidePoints + supportedDamagePoints, 25);
   const explanation =
     usedProvidesCount + supportedDamageCount > 0
       ? `${usedProvidesCount} Provides signal${usedProvidesCount === 1 ? '' : 's'} used and ${supportedDamageCount} damage profile${supportedDamageCount === 1 ? '' : 's'} supported.`
       : 'Available support has not been matched to selected allies.';
 
-  return { label: 'Support usefulness', score, max: 20, explanation };
+  return { label: 'Support usefulness', score, max: 25, explanation };
 }
 
 function placementScore(
-  selected: SelectedDragon[],
   presentation: SimpleFormationPresentation,
 ): FormationRatingBreakdownItem {
-  const inactivePositionSignals = selected
-    .flatMap((dragon) => [...dragon.chips.provides, ...dragon.chips.benefitsFrom, ...dragon.chips.damageProfile])
-    .filter((chip) => chip.state === 'inactive' && chip.reason.includes('requires ')).length;
   const penalty =
-    presentation.placementIssues.length * 6 +
-    presentation.positionConflicts.length * 8 +
-    presentation.futureUnlocks.length * 2 +
-    Math.min(inactivePositionSignals * 2, 6);
-  const score = clampCategory(25 - penalty, 25);
+    Math.min(presentation.placementIssues.length * 3, 6) +
+    Math.min(presentation.positionConflicts.length * 4, 5) +
+    Math.min(presentation.futureUnlocks.length, 2);
+  const score = clampCategory(15 - penalty, 15);
   const explanation =
     penalty === 0
       ? 'No mapped placement issue or position conflict is active.'
       : `${presentation.placementIssues.length} placement issue${presentation.placementIssues.length === 1 ? '' : 's'} and ${presentation.positionConflicts.length} position conflict${presentation.positionConflicts.length === 1 ? '' : 's'} reduce this category.`;
 
-  return { label: 'Placement and conflicts', score, max: 25, explanation };
+  return { label: 'Placement / conflict risk', score, max: 15, explanation };
 }
 
 function selectStrengths(
   selected: SelectedDragon[],
   presentation: SimpleFormationPresentation,
 ): string[] {
-  const strengths = uniqueOrdered([
-    ...presentation.activeSynergies.map((result) => result.explanation),
+  const strengths = uniqueCandidates([
+    ...presentation.activeSynergies.map((result) => ({
+      key: relationshipKey(result.kind, result.dragonIds, result.tag),
+      text: result.explanation,
+    })),
     ...selected.flatMap((dragon) =>
       dragon.chips.damageProfile
         .filter((chip) => chip.state === 'supported')
-        .map((chip) => `${dragon.dragonName}'s ${chip.label} is supported. ${chip.reason}`),
+        .map((chip) => ({
+          key: `supported-damage:${dragon.dragonId}:${normalizeMeaning(chip.label)}:${recipientFromReason(chip.reason)}`,
+          text: `${dragon.dragonName}'s ${chip.label} is supported. ${chip.reason}`,
+        })),
     ),
   ]);
 
@@ -230,37 +263,59 @@ function selectWeaknesses(
     unfilledCount > 0 ? [`Assign all three positions for a full rating; ${unfilledCount} position${unfilledCount === 1 ? ' is' : 's are'} empty.`] : [];
   const unmappedWeaknesses = presentation.unmappedDragonIds.map((dragonId) => {
     const dragonName = selected.find((dragon) => dragon.dragonId === dragonId)?.dragonName ?? dragonId;
-    return `${dragonName} has limited mapped profile data, so rating confidence is lower.`;
+    return {
+      key: `unmapped:${dragonId}`,
+      text: `${dragonName} has limited mapped profile data, so rating confidence is lower.`,
+    };
   });
   const missingBenefitWeaknesses = selected.flatMap((dragon) =>
     dragon.chips.benefitsFrom
       .filter((chip) => chip.state === 'missing')
-      .map((chip) => `${dragon.dragonName} benefits from ${chip.label}, but no selected ally actively provides it.`),
+      .map((chip) => ({
+        key: missingBenefitKey(dragon.dragonId, chip.label),
+        text: `${dragon.dragonName} benefits from ${chip.label}, but no selected ally actively provides it.`,
+      })),
   );
   const unusedProvidesWeaknesses = selected
     .flatMap((dragon) =>
       dragon.chips.provides
         .filter((chip) => chip.state === 'available')
         .map((chip) => ({
+          key: `unused-provides:${dragon.dragonId}:${normalizeMeaning(chip.label)}`,
           label: chip.label,
           text: `${dragon.dragonName}'s ${chip.label} is available but not used by this formation.`,
         })),
     )
     .sort((left, right) => unusedProvidePriority(left.label) - unusedProvidePriority(right.label))
-    .map((entry) => entry.text);
+    .map(({ key, text }) => ({ key, text }));
   const inactiveWeaknesses = selected.flatMap((dragon) =>
     dragon.chips.provides
       .filter((chip) => chip.state === 'inactive')
-      .map((chip) => `${dragon.dragonName}'s ${chip.label} is inactive. ${chip.reason}`),
+      .map((chip) => ({
+        key: `inactive-provides:${dragon.dragonId}:${normalizeMeaning(chip.label)}:${normalizeMeaning(chip.reason)}`,
+        text: `${dragon.dragonName}'s ${chip.label} is an alternate placement or progression opportunity. ${chip.reason}`,
+      })),
   );
-  const weaknesses = uniqueOrdered([
-    ...unfilledWeakness,
+  const weaknesses = uniqueCandidates([
+    ...unfilledWeakness.map((text) => ({ key: 'incomplete-formation', text })),
     ...unmappedWeaknesses,
-    ...presentation.positionConflicts.map((result) => result.explanation),
-    ...presentation.placementIssues.map((result) => result.explanation),
-    ...presentation.missingEnablers.map((result) => result.explanation),
+    ...presentation.positionConflicts.map((result) => ({
+      key: relationshipKey(result.kind, result.dragonIds, result.tag),
+      text: result.explanation,
+    })),
+    ...presentation.placementIssues.map((result) => ({
+      key: relationshipKey(result.kind, result.dragonIds, result.tag),
+      text: result.explanation,
+    })),
+    ...presentation.missingEnablers.map((result) => ({
+      key: missingBenefitKey(result.dragonIds[0] ?? 'unknown', normalizedMeaningFromTag(result.tag)),
+      text: result.explanation,
+    })),
     ...missingBenefitWeaknesses,
-    ...presentation.futureUnlocks.map((result) => result.explanation),
+    ...presentation.futureUnlocks.map((result) => ({
+      key: relationshipKey(result.kind, result.dragonIds, result.tag),
+      text: result.explanation,
+    })),
     ...unusedProvidesWeaknesses.slice(0, 3),
     ...inactiveWeaknesses,
   ]);
@@ -306,21 +361,48 @@ function clampCategory(score: number, max: number): number {
   return Math.max(0, Math.min(max, Math.round(score)));
 }
 
-function uniqueOrdered(values: string[]): string[] {
+function uniqueCandidates(values: RatingListCandidate[]): string[] {
   const seen = new Set<string>();
   const results: string[] = [];
 
   for (const value of values) {
-    if (seen.has(value)) {
+    if (seen.has(value.key)) {
       continue;
     }
-    seen.add(value);
-    results.push(value);
+    seen.add(value.key);
+    results.push(value.text);
   }
 
   return results;
 }
 
+function uniqueKeys(values: string[]): string[] {
+  return [...new Set(values)];
+}
+
 function unusedProvidePriority(label: string): number {
   return label.includes('support') ? 0 : 1;
+}
+
+function relationshipKey(kind: string, dragonIds: string[], tag: string | undefined): string {
+  return `${kind}:${dragonIds.join('>')}:${normalizedMeaningFromTag(tag)}`;
+}
+
+function missingBenefitKey(dragonId: string, label: string | undefined): string {
+  return `missing-benefit:${dragonId}:${normalizeMeaning(label ?? 'unknown')}`;
+}
+
+function normalizedMeaningFromTag(tag: string | undefined): string {
+  if (!tag) {
+    return 'unknown';
+  }
+  return normalizeMeaning(tag.split(':').slice(1).join(':') || tag);
+}
+
+function normalizeMeaning(value: string): string {
+  return value.toLowerCase().replaceAll(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
+}
+
+function recipientFromReason(reason: string): string {
+  return normalizeMeaning(reason.replace(/^(Used|Supported) by /, '').replace(/\.$/, ''));
 }

@@ -2,6 +2,7 @@
 
 ## Unreleased
 
+- Recalibrated Formation Rating to prioritize realized active synergy paths, reduce over-penalty from optional Vanguard trait conflicts, de-duplicate strengths and weaknesses, and collapse repeated detailed analysis output below the rating.
 - Added an explainable Formation Rating panel that scores mapped synergy signals, current progression, placement, and conflicts while clearly avoiding combat simulation.
 - Added a Formation Builder Damage Profile section, refined Provides and Benefits from chip states to distinguish used/satisfied, available, missing, and inactive signals, collapsed full Command and Vanguard Trait wording by default, removed redundant selected-card chips, and audited formation tag display before scoring work.
 - Cleaned Formation Builder selected-dragon cards by removing repeated curated-profile blocks and command unlock-noise rows, while showing Vanguard Traits only for the Vanguard slot.
