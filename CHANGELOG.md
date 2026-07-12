@@ -2,6 +2,8 @@
 
 ## Unreleased
 
+- Corrected Dragon Details so Benefits from reflects mapped incoming synergy signals such as Burn when profile data includes them.
+- Preserved specific status labels such as Stagger in Dragon Details ability summaries and at-a-glance chips while retaining broad family rollups such as Control.
 - Add Dragon success banner now names the added dragon, auto-dismisses after a few seconds, and clears immediately when leaving My Roster.
 - Consolidated the standalone Dragon Database surface into My Roster, making My Roster the central local dragon-management page.
 - Added a My Roster Add Dragon modal with catalog search, rarity/breed/verification filters, already-added handling, add-to-roster actions, and details access.

@@ -1,6 +1,6 @@
 import type { FormationPosition } from '../models/dragon';
 import { areAdjacent, SIMPLE_FORMATION_POSITIONS } from './positionRules';
-import { CONTROL_ALIAS_TAGS, type SynergyTag } from './tags';
+import { tagSatisfies, type SynergyTag } from './tags';
 import {
   explainAmplifierOutput,
   explainMissingEnabler,
@@ -497,10 +497,7 @@ function matchingTagFromLists(providerTags: SynergyTag[], beneficiaryTags: Syner
 }
 
 function tagsAreCompatible(providerTag: SynergyTag, beneficiaryTag: SynergyTag): boolean {
-  return (
-    providerTag === beneficiaryTag ||
-    (beneficiaryTag === 'status:control' && CONTROL_ALIAS_TAGS.includes(providerTag as (typeof CONTROL_ALIAS_TAGS)[number]))
-  );
+  return tagSatisfies(providerTag, beneficiaryTag);
 }
 
 function firstLockedSignal(

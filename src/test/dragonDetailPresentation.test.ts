@@ -1,9 +1,13 @@
 import { describe, expect, it } from 'vitest';
 import { dragons } from '../data/dragons';
 import { simpleSynergyProfiles } from '../synergy/profiles';
+import { CONTROL_ALIAS_TAGS, SYNERGY_TAG_LABELS, type SynergyTag } from '../synergy/tags';
 import { buildDragonDetailPresentation, summarizeAbility } from '../app/dragonDetailPresentation';
 
 describe('dragon detail presentation helpers', () => {
+  const profileById = (dragonId: string) => simpleSynergyProfiles.find((candidate) => candidate.dragonId === dragonId)!;
+  const dragonById = (dragonId: string) => dragons.find((dragon) => dragon.id === dragonId)!;
+
   it('summarizes Daemoros with player-facing highlights and placement notes', () => {
     const daemoros = dragons.find((dragon) => dragon.id === 'daemoros')!;
     const profile = simpleSynergyProfiles.find((candidate) => candidate.dragonId === 'daemoros');
@@ -63,5 +67,78 @@ describe('dragon detail presentation helpers', () => {
     expect(presentation.provides).toEqual([]);
     expect(presentation.benefitsFrom).toEqual([]);
     expect(presentation.placementNotes).toEqual([]);
+  });
+
+  it('shows Vhagar mapped incoming Burn synergy instead of the empty incoming fallback', () => {
+    const presentation = buildDragonDetailPresentation(profileById('vhagar'));
+
+    expect(presentation.benefitsFrom).toContain('Burn');
+    expect(presentation.benefitsFrom).not.toHaveLength(0);
+    expect(presentation.benefitsFrom.join(' ')).not.toContain('No mapped incoming synergy yet');
+  });
+
+  it('keeps real incoming signals visible while allowing genuinely empty incoming profiles', () => {
+    for (const profile of simpleSynergyProfiles.filter((candidate) => candidate.benefitsFrom.length > 0)) {
+      expect(buildDragonDetailPresentation(profile).benefitsFrom.length, profile.dragonId).toBeGreaterThan(0);
+    }
+
+    expect(buildDragonDetailPresentation(profileById('kalspire')).benefitsFrom).toEqual([]);
+  });
+
+  it('preserves Feskar Stagger in ability summaries while retaining the Control family chip', () => {
+    const feskar = dragonById('feskar');
+    const unyieldingGrasp = feskar.habits.find((habit) => habit.id === 'feskar-unyielding-grasp')!;
+    const summary = summarizeAbility(unyieldingGrasp);
+
+    expect(summary.plainSummary).toBe('Applies Stagger.');
+    expect(summary.plainSummary).not.toBe('Applies Control.');
+    expect(summary.chips).toEqual(expect.arrayContaining(['Applies Stagger', 'Control']));
+  });
+
+  it('shows Feskar Stagger as a specific provided signal and Control as a category rollup', () => {
+    const presentation = buildDragonDetailPresentation(profileById('feskar'));
+
+    expect(presentation.provides).toEqual(expect.arrayContaining(['Stagger', 'Control']));
+  });
+
+  it('preserves known specific status labels in Dragon Details when those signals are present', () => {
+    const usedStatusTags = new Set(
+      simpleSynergyProfiles.flatMap((profile) =>
+        [...profile.outputs, ...profile.supports, ...profile.benefitsFrom].flatMap((signal) => signal.tags ?? [signal.tag]),
+      ),
+    );
+    const expectedSpecificStatuses = [
+      'status:burn',
+      'status:slow',
+      'status:stun',
+      'status:stagger',
+      'status:panic',
+      'status:vulnerable',
+    ] as const satisfies readonly SynergyTag[];
+
+    for (const tag of expectedSpecificStatuses.filter((candidate) => usedStatusTags.has(candidate))) {
+      const label = SYNERGY_TAG_LABELS[tag];
+      const preservingProfiles = simpleSynergyProfiles.filter((profile) =>
+        buildDragonDetailPresentation(profile).provides.includes(label) ||
+        buildDragonDetailPresentation(profile).benefitsFrom.includes(label),
+      );
+
+      expect(preservingProfiles.map((profile) => profile.dragonId), tag).not.toEqual([]);
+    }
+  });
+
+  it('keeps broad Control rollups from erasing specific provider labels', () => {
+    for (const tag of CONTROL_ALIAS_TAGS) {
+      const label = SYNERGY_TAG_LABELS[tag];
+      const profilesWithTag = simpleSynergyProfiles.filter((profile) =>
+        profile.outputs.some((signal) => (signal.tags ?? [signal.tag]).includes(tag)),
+      );
+
+      for (const profile of profilesWithTag) {
+        const presentation = buildDragonDetailPresentation(profile);
+        expect(presentation.provides, `${profile.dragonId}:${tag}`).toContain(label);
+        expect(presentation.provides, `${profile.dragonId}:${tag}`).toContain('Control');
+      }
+    }
   });
 });

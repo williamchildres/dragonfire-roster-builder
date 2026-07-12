@@ -45,12 +45,54 @@ export const SYNERGY_TAG_LABELS: Record<SynergyTag, string> = {
 };
 
 export const CONTROL_ALIAS_TAGS = [
+  'status:slow',
   'status:stun',
   'status:stagger',
   'status:overwhelm',
   'status:confusion',
 ] as const satisfies readonly SynergyTag[];
 
+const CATEGORY_ROLLUPS: Partial<Record<SynergyTag, readonly SynergyTag[]>> = Object.fromEntries(
+  CONTROL_ALIAS_TAGS.map((tag) => [tag, ['status:control'] as const]),
+);
+
+const BROAD_CATEGORY_TAGS = ['status:control'] as const satisfies readonly SynergyTag[];
+
+export function categoryTagsFor(tag: SynergyTag): SynergyTag[] {
+  return [...(CATEGORY_ROLLUPS[tag] ?? [])];
+}
+
+export function tagSatisfies(providerTag: SynergyTag, beneficiaryTag: SynergyTag): boolean {
+  return providerTag === beneficiaryTag || categoryTagsFor(providerTag).includes(beneficiaryTag);
+}
+
+export function specificTagsFrom(tags: readonly SynergyTag[]): SynergyTag[] {
+  const uniqueTags = uniqueSynergyTags(tags);
+  const hasSpecificControlAlias = uniqueTags.some((tag) =>
+    CONTROL_ALIAS_TAGS.includes(tag as (typeof CONTROL_ALIAS_TAGS)[number]),
+  );
+
+  return uniqueTags.filter(
+    (tag) => !(tag === 'status:control' && hasSpecificControlAlias),
+  );
+}
+
+export function categoryTagsFrom(tags: readonly SynergyTag[]): SynergyTag[] {
+  const uniqueTags = uniqueSynergyTags(tags);
+  return uniqueSynergyTags([
+    ...uniqueTags.filter((tag) => BROAD_CATEGORY_TAGS.includes(tag as (typeof BROAD_CATEGORY_TAGS)[number])),
+    ...uniqueTags.flatMap((tag) => categoryTagsFor(tag)),
+  ]);
+}
+
+export function displayTagsFrom(tags: readonly SynergyTag[]): SynergyTag[] {
+  return uniqueSynergyTags([...specificTagsFrom(tags), ...categoryTagsFrom(tags)]);
+}
+
 export function isSynergyTag(value: string): value is SynergyTag {
   return (SYNERGY_TAGS as readonly string[]).includes(value);
+}
+
+function uniqueSynergyTags(tags: readonly SynergyTag[]): SynergyTag[] {
+  return [...new Set(tags)];
 }

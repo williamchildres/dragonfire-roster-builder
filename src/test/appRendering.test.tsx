@@ -345,6 +345,37 @@ describe('Dragonfire Roster Lab app', () => {
     expect(dialog).toHaveTextContent('Vanguard trait');
   });
 
+  it('renders Dragon Details incoming and specific status synergy signals', async () => {
+    const user = userEvent.setup();
+    render(<App />);
+
+    await openAddDragon(user);
+    await user.type(screen.getByLabelText(/search by dragon name/i), 'Vhagar');
+    let dragonCard = screen.getByRole('heading', { name: 'Vhagar' }).closest('article');
+    expect(dragonCard).not.toBeNull();
+    await user.click(within(dragonCard as HTMLElement).getByRole('button', { name: /view details/i }));
+
+    let dialog = screen.getByRole('dialog', { name: /vhagar/i });
+    const benefitsCard = within(dialog).getByRole('heading', { name: 'Benefits from' }).closest('article');
+    expect(benefitsCard).not.toBeNull();
+    expect(benefitsCard).toHaveTextContent('Burn');
+    expect(benefitsCard).not.toHaveTextContent('No mapped incoming synergy yet.');
+
+    await user.click(within(dialog).getByRole('button', { name: /close details/i }));
+    await openAddDragon(user);
+    await user.clear(screen.getByLabelText(/search by dragon name/i));
+    await user.type(screen.getByLabelText(/search by dragon name/i), 'Feskar');
+    dragonCard = screen.getByRole('heading', { name: 'Feskar' }).closest('article');
+    expect(dragonCard).not.toBeNull();
+    await user.click(within(dragonCard as HTMLElement).getByRole('button', { name: /view details/i }));
+
+    dialog = screen.getByRole('dialog', { name: /feskar/i });
+    const unyieldingGrasp = within(dialog).getByRole('heading', { name: 'Unyielding Grasp' }).closest('article');
+    expect(unyieldingGrasp).not.toBeNull();
+    expect(unyieldingGrasp).toHaveTextContent('Applies Stagger.');
+    expect(unyieldingGrasp).not.toHaveTextContent('Applies Control.');
+  });
+
   it('opens dragon details from My Roster and keeps ownership controls interactive', async () => {
     const user = userEvent.setup();
     const roster = createEmptyRoster(dragons);
