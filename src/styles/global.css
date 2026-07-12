@@ -446,61 +446,71 @@ main {
   box-shadow: var(--shadow);
   display: grid;
   gap: 1rem;
-  grid-template-columns: minmax(0, 1fr) minmax(14rem, 0.7fr);
   padding: 1rem;
 }
 
-.rarity-coverage-grid {
+.combined-coverage-panel {
   display: grid;
-  gap: 1rem;
-  grid-template-columns: repeat(auto-fit, minmax(12rem, 1fr));
+  gap: 0.95rem;
+}
+
+.combined-coverage-bar {
+  background: rgba(0, 0, 0, 0.2);
+  border: 1px solid rgba(255, 211, 107, 0.14);
+  border-radius: 999px;
+  display: flex;
+  height: 1rem;
+  overflow: hidden;
+}
+
+.combined-coverage-segment {
+  display: flex;
+  min-width: 0;
+  padding: 0.1rem;
+}
+
+.combined-coverage-fill {
+  border-radius: 999px;
+  min-width: 0.2rem;
+}
+
+.rarity-legendary .combined-coverage-fill {
+  background: linear-gradient(90deg, rgba(255, 211, 107, 0.45), rgba(255, 211, 107, 0.95));
+}
+
+.rarity-epic .combined-coverage-fill {
+  background: linear-gradient(90deg, rgba(171, 122, 184, 0.45), rgba(171, 122, 184, 0.95));
+}
+
+.rarity-rare .combined-coverage-fill {
+  background: linear-gradient(90deg, rgba(122, 161, 184, 0.45), rgba(122, 161, 184, 0.95));
+}
+
+.coverage-counts {
+  display: grid;
+  gap: 0.5rem;
+  grid-template-columns: repeat(auto-fit, minmax(8rem, 1fr));
+}
+
+.coverage-count {
+  display: grid;
+  gap: 0.2rem;
+}
+
+.coverage-count-label {
+  color: var(--text);
+  font-weight: 800;
+}
+
+.coverage-count-value {
+  color: var(--muted);
+  font-size: 0.98rem;
 }
 
 .rarity-note {
   color: var(--muted);
   font-size: 0.98rem;
   margin: -0.2rem 0 0;
-}
-
-.coverage-card {
-  background: linear-gradient(180deg, rgba(255, 255, 255, 0.055), rgba(255, 255, 255, 0.025));
-  border: 1px solid var(--line-soft);
-  border-radius: 0.5rem;
-  box-shadow: var(--shadow);
-  display: grid;
-  gap: 0.75rem;
-  padding: 1rem;
-}
-
-.coverage-card-copy h3,
-.coverage-card-copy p {
-  margin-bottom: 0.35rem;
-}
-
-.coverage-card-copy p:last-child {
-  margin-bottom: 0;
-}
-
-.coverage-card progress {
-  appearance: none;
-  border: 0;
-  height: 0.55rem;
-  width: 100%;
-}
-
-.coverage-card progress::-webkit-progress-bar {
-  background: rgba(0, 0, 0, 0.28);
-  border-radius: 999px;
-}
-
-.coverage-card progress::-webkit-progress-value {
-  background: linear-gradient(90deg, var(--ember), var(--fire), var(--gold));
-  border-radius: 999px;
-}
-
-.coverage-card progress::-moz-progress-bar {
-  background: linear-gradient(90deg, var(--ember), var(--fire), var(--gold));
-  border-radius: 999px;
 }
 
 .coverage-copy h3,
@@ -510,28 +520,6 @@ main {
 
 .coverage-copy p:last-child {
   margin-bottom: 0;
-}
-
-.coverage-panel progress {
-  appearance: none;
-  border: 0;
-  height: 0.9rem;
-  width: 100%;
-}
-
-.coverage-panel progress::-webkit-progress-bar {
-  background: rgba(0, 0, 0, 0.28);
-  border-radius: 999px;
-}
-
-.coverage-panel progress::-webkit-progress-value {
-  background: linear-gradient(90deg, var(--ember), var(--fire), var(--gold));
-  border-radius: 999px;
-}
-
-.coverage-panel progress::-moz-progress-bar {
-  background: linear-gradient(90deg, var(--ember), var(--fire), var(--gold));
-  border-radius: 999px;
 }
 
 .overview-footer-grid {
@@ -1814,10 +1802,6 @@ th {
     grid-template-columns: 1fr;
   }
 
-  .coverage-panel {
-    grid-template-columns: 1fr;
-  }
-
   .team-slots,
   .formation-board {
     grid-template-columns: 1fr;
@@ -1913,8 +1897,7 @@ th {
     justify-self: start;
   }
 
-  .hero-feature-stack,
-  .rarity-coverage-grid {
+  .hero-feature-stack {
     grid-template-columns: 1fr;
   }
 

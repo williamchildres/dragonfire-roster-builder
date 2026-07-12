@@ -2,6 +2,7 @@
 
 ## Unreleased
 
+- Removed the Compare Verified Dragons hero card, replaced the separate rarity coverage cards with one combined segmented coverage bar, and kept the overview compact.
 - Removed the redundant Overview hero heading, made the feature cards actionable, added Rare coverage context, and aligned the public footer branding with Dragonfire Lab.
 - Updated the visible public brand to Dragonfire Lab, simplified the Overview hero around the three feature cards, and replaced the roster/role breakdown blocks with rarity coverage.
 - Polished Dragon Details ability cards by renaming "What it does" to "Abilities", moving unlock requirements into compact header badges, removing redundant placement/evidence rows from public ability cards, and fixing at-a-glance chip stretching.

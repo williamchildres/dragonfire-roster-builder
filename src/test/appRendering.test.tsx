@@ -180,28 +180,30 @@ describe('Dragonfire Roster Lab app', () => {
     expect(screen.queryByRole('button', { name: /open formation builder/i })).not.toBeInTheDocument();
 
     expect(screen.getByRole('heading', { name: 'Track Your Roster' })).toBeInTheDocument();
-    expect(screen.getByRole('heading', { name: 'Compare Verified Dragons' })).toBeInTheDocument();
     expect(screen.getByRole('heading', { name: 'Build Formations' })).toBeInTheDocument();
     expect(screen.getByRole('button', { name: /track your roster/i })).toBeInTheDocument();
-    expect(screen.getByRole('button', { name: /compare verified dragons/i })).toBeInTheDocument();
     expect(screen.getByRole('button', { name: /build formations/i })).toBeInTheDocument();
+    expect(screen.queryByRole('heading', { name: 'Compare Verified Dragons' })).not.toBeInTheDocument();
+    expect(screen.queryByRole('button', { name: /compare verified dragons/i })).not.toBeInTheDocument();
 
-    expect(screen.getByText('Detailed profile coverage')).toBeInTheDocument();
     expect(screen.getByText(/19 \/ 31 dragons mapped/i)).toBeInTheDocument();
     expect(screen.getByText('61%')).toBeInTheDocument();
 
-    const rarityCoverage = [
-      { name: 'Legendary coverage', text: '9 / 9 mapped' },
-      { name: 'Epic coverage', text: '10 / 10 mapped' },
-      { name: 'Rare coverage', text: '0 / 12 mapped' },
-    ];
-
-    for (const coverage of rarityCoverage) {
-      const card = screen.getByRole('heading', { name: coverage.name }).closest('.coverage-card');
-      expect(card).not.toBeNull();
-      expect(card).toHaveTextContent(coverage.text);
-    }
+    expect(screen.getByRole('heading', { name: 'Profile coverage' })).toBeInTheDocument();
+    expect(screen.getByLabelText('Coverage by rarity')).toBeInTheDocument();
+    expect(screen.getByLabelText('Coverage by rarity counts')).toBeInTheDocument();
+    expect(screen.getByText('Legendary')).toBeInTheDocument();
+    expect(screen.getByText('Epic')).toBeInTheDocument();
+    expect(screen.getByText('Rare')).toBeInTheDocument();
+    expect(screen.getByText('9 / 9 mapped')).toBeInTheDocument();
+    expect(screen.getByText('10 / 10 mapped')).toBeInTheDocument();
+    expect(screen.getByText('0 / 12 mapped')).toBeInTheDocument();
     expect(screen.getByText('Legendary and Epic profiles are mapped first. Rare dragons are next.')).toBeInTheDocument();
+
+    expect(screen.queryByRole('heading', { name: 'Detailed profile coverage' })).not.toBeInTheDocument();
+    expect(screen.queryByRole('heading', { name: 'Legendary coverage' })).not.toBeInTheDocument();
+    expect(screen.queryByRole('heading', { name: 'Epic coverage' })).not.toBeInTheDocument();
+    expect(screen.queryByRole('heading', { name: 'Rare coverage' })).not.toBeInTheDocument();
 
     const latestUpdate = screen.getByRole('heading', { name: /latest update - v0\.6\.4/i }).closest('.latest-update-panel');
     expect(latestUpdate).not.toBeNull();
@@ -228,10 +230,6 @@ describe('Dragonfire Roster Lab app', () => {
     render(<App />);
 
     await user.click(screen.getByRole('button', { name: /track your roster/i }));
-    expect(screen.getByRole('heading', { name: 'My Roster' })).toBeInTheDocument();
-
-    await user.click(screen.getByRole('button', { name: /overview/i }));
-    await user.click(screen.getByRole('button', { name: /compare verified dragons/i }));
     expect(screen.getByRole('heading', { name: 'My Roster' })).toBeInTheDocument();
 
     await user.click(screen.getByRole('button', { name: /overview/i }));
