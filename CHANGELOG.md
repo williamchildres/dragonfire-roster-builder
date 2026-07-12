@@ -2,6 +2,7 @@
 
 ## Unreleased
 
+- Polished the Dragon Database and My Roster cards into lighter player-facing roster cards, reduced repeated ownership/status rows, and kept ownership toggles, details access, Star Rank, Reign Level, and import/export behavior intact.
 - Simplified roster ownership to a single Owned / Hatched state, removed public shard and collection-state controls, and preserved backward compatibility for existing saved/exported roster data.
 - Increased local roster schema to `4`; source data schema remains `13`.
 - Corrected the Dragon Details at-a-glance summary so multi-tag support signals like Tessarion's Initiative support stay visible, and updated the empty Benefits from wording to "No mapped incoming synergy yet."

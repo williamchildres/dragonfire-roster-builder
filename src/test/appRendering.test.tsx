@@ -3,7 +3,7 @@ import userEvent from '@testing-library/user-event';
 import { afterEach, describe, expect, it, vi } from 'vitest';
 import { App, RawWordingDisclosure } from '../app/App';
 import { dragons } from '../data/dragons';
-import { createEmptyRoster, saveRoster, STORAGE_KEY } from '../services/rosterStorage';
+import { createEmptyRoster, saveRoster, serializeRosterExport, STORAGE_KEY } from '../services/rosterStorage';
 
 
 describe('Dragonfire Roster Lab app', () => {
@@ -165,6 +165,13 @@ describe('Dragonfire Roster Lab app', () => {
     await user.type(screen.getByLabelText(/search by name/i), 'Solstryker');
     const dragonCard = screen.getByRole('heading', { name: 'Solstryker' }).closest('article');
     expect(dragonCard).not.toBeNull();
+    expect(dragonCard).toHaveTextContent('Rare');
+    expect(dragonCard).toHaveTextContent('Champion');
+    expect(dragonCard).toHaveTextContent('Official Metadata Only');
+    expect(dragonCard).toHaveTextContent('Not owned');
+    expect(dragonCard).toHaveTextContent('Ability details not verified');
+    expect(dragonCard).toHaveTextContent('View details');
+    expect(dragonCard).toHaveTextContent('My Roster');
     await user.click(within(dragonCard as HTMLElement).getByRole('button', { name: /view details/i }));
 
     const dialog = screen.getByRole('dialog', { name: /solstryker/i });
@@ -493,6 +500,9 @@ describe('Dragonfire Roster Lab app', () => {
     const syraxCard = screen.getByRole('heading', { name: 'Syrax' }).closest('article');
     expect(syraxCard).not.toBeNull();
     expect(syraxCard).toHaveTextContent('Not owned');
+    expect(syraxCard).toHaveTextContent('Community Verified');
+    expect(syraxCard).toHaveTextContent('View details');
+    expect(syraxCard).toHaveTextContent('My Roster');
     expect(syraxCard).not.toHaveTextContent('Collection:');
     expect(syraxCard).not.toHaveTextContent('Hatched');
     expect(syraxCard).not.toHaveTextContent('Not collected');
@@ -519,15 +529,31 @@ describe('Dragonfire Roster Lab app', () => {
     await user.click(screen.getByRole('button', { name: /^my roster$/i }));
     const syraxCard = screen.getByRole('heading', { name: 'Syrax' }).closest('article');
     expect(syraxCard).not.toBeNull();
+    expect(syraxCard).toHaveTextContent('Community Verified');
     expect(syraxCard).toHaveTextContent('Owned / Hatched');
+    expect(syraxCard).toHaveTextContent('View details');
     expect(within(syraxCard as HTMLElement).getByRole('checkbox', { name: /owned \/ hatched/i })).toBeChecked();
-    expect(within(syraxCard as HTMLElement).queryByLabelText(/collection state/i)).not.toBeInTheDocument();
-    expect(within(syraxCard as HTMLElement).queryByLabelText(/^shards$/i)).not.toBeInTheDocument();
-    expect(within(syraxCard as HTMLElement).queryByLabelText(/shards required/i)).not.toBeInTheDocument();
+    expect(within(syraxCard as HTMLElement).queryByRole('checkbox', { name: /my roster/i })).not.toBeInTheDocument();
     expect(within(syraxCard as HTMLElement).getByLabelText(/star rank/i)).toHaveValue('4');
     expect(within(syraxCard as HTMLElement).getByLabelText(/reign level/i)).toHaveValue(9);
     expect(screen.getByRole('button', { name: /export json/i })).toBeInTheDocument();
     expect(screen.getByText(/import json/i)).toBeInTheDocument();
+  });
+
+  it('imports a simplified roster export and shows a success message', async () => {
+    const user = userEvent.setup();
+    const roster = createEmptyRoster(dragons);
+    roster.syrax!.owned = true;
+    roster.syrax!.starRank = 4;
+
+    render(<App />);
+
+    await user.click(screen.getByRole('button', { name: /^my roster$/i }));
+    const importInput = screen.getByLabelText(/import json/i);
+    await user.upload(importInput, new File([serializeRosterExport(roster)], 'roster.json', { type: 'application/json' }));
+
+    expect(await screen.findByRole('status')).toHaveTextContent('Roster imported successfully.');
+    expect(screen.getByRole('heading', { name: 'Syrax' })).toBeInTheDocument();
   });
 
   it('keeps retired roster ownership wording out of rendered public roster UI', async () => {

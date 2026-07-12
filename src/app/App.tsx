@@ -1,4 +1,4 @@
-import {
+﻿import {
   BookOpen,
   Database,
   Download,
@@ -564,7 +564,7 @@ function RosterSection({
       <SectionHeading
         eyebrow="Stored in your browser"
         title="My Roster"
-        description="Manage ownership, star rank, reign level, and personal notes with localStorage persistence."
+        description="Manage ownership, star rank, and reign level with localStorage persistence."
       />
       <div className="toolbar">
         <label>
@@ -906,70 +906,78 @@ function DragonCard({
   onUpdateRoster: (dragonId: string, patch: Partial<OwnedDragon>) => void;
 }) {
   const owned = rosterEntry?.owned === true;
+  const starRank = rosterEntry?.starRank ?? null;
+  const verificationLabel = formatStatus(dragon.dataStatus);
+  const rosterSourceLabel = formatRosterSourceStatus(dragon.rosterSourceStatus);
+  const isMetadataOnly = dragon.dataStatus === 'official-metadata-only';
+  const sourceChip = dragon.rosterSourceStatus === 'official-website' ? null : rosterSourceLabel;
+  const ownershipSummary = owned ? 'Owned / Hatched' : 'Not owned';
+  const starSummary = owned ? (starRank !== null ? `Star ${starRank}` : 'Star unknown') : null;
+  const summaryNote = !owned && isMetadataOnly ? 'Ability details not verified' : null;
+
   return (
     <article className={`dragon-card rarity-${dragon.rarity.toLowerCase()}`}>
-      <div className="card-topline">
-        <DragonEmblem dragon={dragon} />
-        <div>
-          <h3>{dragon.name}</h3>
-          <p>
-            <span className="badge">{dragon.rarity}</span> <span className="badge">{dragon.breed}</span>
-            {dragon.isNew ? <span className="badge new">New</span> : null}
-            <span className="badge">{formatRosterSourceStatus(dragon.rosterSourceStatus)}</span>
-          </p>
+      <div className="dragon-card-header">
+        <div className="card-topline">
+          <DragonEmblem dragon={dragon} />
+          <div className="dragon-card-title">
+            <h3>{dragon.name}</h3>
+            <div className="dragon-card-chips" aria-label={`${dragon.name} metadata`}>
+              <span className="badge">{dragon.rarity}</span>
+              <span className="badge">{dragon.breed}</span>
+              <span className={`badge verification-${dragon.dataStatus}`}>{verificationLabel}</span>
+              {sourceChip ? <span className="badge">{sourceChip}</span> : null}
+              {dragon.isNew ? <span className="badge new">New</span> : null}
+            </div>
+          </div>
         </div>
+        {!editable ? (
+          <div className="dragon-card-summary" aria-label={`${dragon.name} roster summary`}>
+            <span className="dragon-card-summary-main">{ownershipSummary}</span>
+            {starSummary ? <span className="dragon-card-summary-chip">{starSummary}</span> : null}
+            {summaryNote ? <span className="dragon-card-summary-note">{summaryNote}</span> : null}
+          </div>
+        ) : null}
       </div>
-      <dl className="compact-details">
-        <div>
-          <dt>Ownership</dt>
-          <dd>{owned ? 'Owned / Hatched' : 'Not owned'}</dd>
-        </div>
-        <div>
-          <dt>Star Rank</dt>
-          <dd>{rosterEntry?.starRank ?? unknown}</dd>
-        </div>
-        <div>
-          <dt>Verification</dt>
-          <dd>{formatStatus(dragon.dataStatus)}</dd>
-        </div>
-      </dl>
+
       {editable ? (
-        <RosterFields dragon={dragon} rosterEntry={rosterEntry} onUpdateRoster={onUpdateRoster} compact />
+        <RosterEditControls dragon={dragon} rosterEntry={rosterEntry} onUpdateRoster={onUpdateRoster} />
       ) : null}
+
       <div className="card-actions">
         <button type="button" className="secondary-button" onClick={() => onOpenDetails(dragon)}>
           View details
         </button>
-        <label className="check-row">
-          <input
-            type="checkbox"
-            checked={owned}
-            onChange={(event) =>
-              onUpdateRoster(dragon.id, {
-                owned: event.target.checked,
-              })
-            }
-          />
-          My Roster
-        </label>
+        {editable ? null : (
+          <label className="check-row">
+            <input
+              type="checkbox"
+              checked={owned}
+              onChange={(event) =>
+                onUpdateRoster(dragon.id, {
+                  owned: event.target.checked,
+                })
+              }
+            />
+            My Roster
+          </label>
+        )}
       </div>
     </article>
   );
 }
 
-function RosterFields({
+function RosterEditControls({
   dragon,
   rosterEntry,
   onUpdateRoster,
-  compact = false,
 }: {
   dragon: Dragon;
   rosterEntry?: OwnedDragon;
   onUpdateRoster: (dragonId: string, patch: Partial<OwnedDragon>) => void;
-  compact?: boolean;
 }) {
   return (
-    <div className={compact ? 'roster-fields compact' : 'roster-fields'}>
+    <div className="roster-fields">
       <label className="check-row">
         <input
           type="checkbox"
@@ -1015,17 +1023,6 @@ function RosterFields({
           }
         />
       </label>
-      {!compact ? (
-        <label>
-          Personal notes
-          <textarea
-            maxLength={1000}
-            rows={4}
-            value={rosterEntry?.notes ?? ''}
-            onChange={(event) => onUpdateRoster(dragon.id, { notes: event.target.value })}
-          />
-        </label>
-      ) : null}
     </div>
   );
 }
