@@ -1,19 +1,20 @@
-﻿import {
-  Database,
+import {
   Download,
   ExternalLink,
   Flame,
   Home,
   Info,
   Link,
+  Plus,
   RotateCcw,
   Shield,
   Swords,
   Upload,
   Users,
+  X,
   type LucideIcon,
 } from 'lucide-react';
-import { useEffect, useMemo, useState, type ChangeEvent } from 'react';
+import { useEffect, useMemo, useRef, useState, type ChangeEvent, type KeyboardEvent } from 'react';
 import { DragonDetailsDialog } from './DragonDetailModal';
 import { SimpleFormationAnalysis } from './SimpleFormationAnalysis';
 import { SimpleFormationCard } from './SimpleFormationCard';
@@ -60,12 +61,11 @@ export { RawWordingDisclosure } from './DragonDetailModal';
 
 const buyMeACoffeeUrl = 'https://buymeacoffee.com/williamchildres';
 
-type Section = 'home' | 'database' | 'roster' | 'team' | 'about';
+type Section = 'home' | 'roster' | 'team' | 'about';
 type StatusMessage = { kind: 'success' | 'error' | 'info'; text: string };
 
 const sectionLabels: Record<Section, string> = {
   home: 'Overview',
-  database: 'Dragon Database',
   roster: 'My Roster',
   team: 'Formation Builder',
   about: 'About',
@@ -73,7 +73,6 @@ const sectionLabels: Record<Section, string> = {
 
 const sectionIcons = {
   home: Home,
-  database: Database,
   roster: Users,
   team: Swords,
   about: Info,
@@ -87,22 +86,18 @@ const verificationStatusOptions: VerificationStatus[] = [
 ];
 
 export function App() {
-  const [activeSection, setActiveSection] = useState<Section>(() =>
-    typeof window !== 'undefined' &&
-    FORMATION_POSITIONS.some((position) => parseSharedFormation(window.location.hash, dragons)[position])
-      ? 'team'
-      : 'home',
-  );
+  const [activeSection, setActiveSection] = useState<Section>(getInitialSection);
   const [roster, setRoster] = useState<Record<string, OwnedDragon>>(() =>
     typeof window === 'undefined' ? createEmptyRoster(dragons) : loadRoster(window.localStorage, dragons),
   );
-  const [filters, setFilters] = useState<DragonFilters>(defaultFilters);
-  const [databaseSort, setDatabaseSort] = useState<DragonSort>('name');
+  const [addDragonFilters, setAddDragonFilters] = useState<DragonFilters>(defaultFilters);
   const [rosterSort, setRosterSort] = useState<DragonSort>('name');
   const [selectedDragon, setSelectedDragon] = useState<Dragon | null>(null);
   const [message, setMessage] = useState<StatusMessage | null>(null);
   const [includeUnowned, setIncludeUnowned] = useState(false);
   const [formation, setFormation] = useState<Formation>(() => getInitialFormation());
+  const [isAddDragonOpen, setIsAddDragonOpen] = useState(false);
+  const [showAlreadyAdded, setShowAlreadyAdded] = useState(false);
 
   useEffect(() => {
     saveRoster(window.localStorage, roster);
@@ -113,7 +108,7 @@ export function App() {
   }, [formation]);
 
   useEffect(() => {
-    if (window.location.hash !== '#data-status') {
+    if (!isStalePublicHash(window.location.hash)) {
       return;
     }
 
@@ -121,11 +116,6 @@ export function App() {
   }, []);
 
   const detailedAbilityCount = dragons.filter(hasDetailedAbilities).length;
-
-  const filteredDragons = useMemo(
-    () => sortDragons(filterDragons(dragons, roster, filters), roster, databaseSort),
-    [databaseSort, filters, roster],
-  );
 
   const ownedDragons = useMemo(
     () =>
@@ -158,6 +148,17 @@ export function App() {
         dragonId,
       },
     }));
+  };
+
+  const addDragonToRoster = (dragonId: string) => {
+    updateRoster(dragonId, { owned: true });
+    setMessage({ kind: 'success', text: 'Added to roster.' });
+  };
+
+  const openAddDragon = () => {
+    setAddDragonFilters(defaultFilters);
+    setShowAlreadyAdded(false);
+    setIsAddDragonOpen(true);
   };
 
   const selectSection = (section: Section) => {
@@ -259,22 +260,8 @@ export function App() {
         {activeSection === 'home' ? (
           <HomeSection
             detailedAbilityCount={detailedAbilityCount}
-            onBrowse={() => selectSection('database')}
             onTeam={() => selectSection('team')}
             onRoster={() => selectSection('roster')}
-          />
-        ) : null}
-
-        {activeSection === 'database' ? (
-          <DatabaseSection
-            filteredDragons={filteredDragons}
-            filters={filters}
-            roster={roster}
-            sortBy={databaseSort}
-            onFiltersChange={setFilters}
-            onSortChange={setDatabaseSort}
-            onOpenDetails={setSelectedDragon}
-            onUpdateRoster={updateRoster}
           />
         ) : null}
 
@@ -286,6 +273,7 @@ export function App() {
             onSortChange={setRosterSort}
             onUpdateRoster={updateRoster}
             onOpenDetails={setSelectedDragon}
+            onOpenAddDragon={openAddDragon}
             onExport={exportRoster}
             onImport={(event) => void importRoster(event)}
             onClear={clearRoster}
@@ -339,18 +327,32 @@ export function App() {
           onUpdateRoster={updateRoster}
         />
       ) : null}
+
+      {isAddDragonOpen ? (
+        <AddDragonDialog
+          filters={addDragonFilters}
+          roster={roster}
+          showAlreadyAdded={showAlreadyAdded}
+          onAdd={addDragonToRoster}
+          onClose={() => setIsAddDragonOpen(false)}
+          onFiltersChange={setAddDragonFilters}
+          onOpenDetails={(dragon) => {
+            setIsAddDragonOpen(false);
+            setSelectedDragon(dragon);
+          }}
+          onShowAlreadyAddedChange={setShowAlreadyAdded}
+        />
+      ) : null}
     </div>
   );
 }
 
 function HomeSection({
   detailedAbilityCount,
-  onBrowse,
   onTeam,
   onRoster,
 }: {
   detailedAbilityCount: number;
-  onBrowse: () => void;
   onTeam: () => void;
   onRoster: () => void;
 }) {
@@ -380,14 +382,11 @@ function HomeSection({
             synergies without recreating the combat engine.
           </p>
           <div className="button-row hero-actions">
-            <button type="button" className="primary-button" onClick={onBrowse}>
-              Browse dragons
+            <button type="button" className="primary-button" onClick={onRoster}>
+              Build my roster
             </button>
             <button type="button" className="secondary-button" onClick={onTeam}>
               Open formation builder
-            </button>
-            <button type="button" className="secondary-button" onClick={onRoster}>
-              Update my roster
             </button>
           </div>
         </div>
@@ -425,7 +424,7 @@ function HomeSection({
 
       <div className="overview-stats-layout">
         <StatGroup
-          title="Database Coverage"
+          title="Catalog Coverage"
           cards={[
             { label: 'Known dragons', value: dragons.length },
             { label: 'Detailed ability records', value: detailedAbilityCount },
@@ -507,63 +506,6 @@ function StatGroup({
   );
 }
 
-function DatabaseSection({
-  filteredDragons,
-  filters,
-  roster,
-  sortBy,
-  onFiltersChange,
-  onSortChange,
-  onOpenDetails,
-  onUpdateRoster,
-}: {
-  filteredDragons: Dragon[];
-  filters: DragonFilters;
-  roster: Record<string, OwnedDragon>;
-  sortBy: DragonSort;
-  onFiltersChange: (filters: DragonFilters) => void;
-  onSortChange: (sort: DragonSort) => void;
-  onOpenDetails: (dragon: Dragon) => void;
-  onUpdateRoster: (dragonId: string, patch: Partial<OwnedDragon>) => void;
-}) {
-  return (
-    <section aria-labelledby="database-title">
-      <SectionHeading
-        eyebrow="Public roster metadata"
-        title="Dragon Database"
-        description="Search, filter, and mark ownership for the currently seeded dragons."
-      />
-      <FilterPanel
-        filters={filters}
-        sortBy={sortBy}
-        onFiltersChange={onFiltersChange}
-        onSortChange={onSortChange}
-      />
-      <p className="result-count" role="status">
-        Showing {filteredDragons.length} of {dragons.length} dragons.
-      </p>
-      {filteredDragons.length > 0 ? (
-        <div className="dragon-grid">
-          {filteredDragons.map((dragon) => (
-            <DragonCard
-              dragon={dragon}
-              key={dragon.id}
-              rosterEntry={roster[dragon.id]}
-              onOpenDetails={onOpenDetails}
-              onUpdateRoster={onUpdateRoster}
-            />
-          ))}
-        </div>
-      ) : (
-        <div className="empty-state">
-          <h3>No dragons match those filters.</h3>
-          <p>Clear filters or try a broader search term.</p>
-        </div>
-      )}
-    </section>
-  );
-}
-
 function RosterSection({
   ownedDragons,
   roster,
@@ -571,6 +513,7 @@ function RosterSection({
   onSortChange,
   onUpdateRoster,
   onOpenDetails,
+  onOpenAddDragon,
   onExport,
   onImport,
   onClear,
@@ -581,6 +524,7 @@ function RosterSection({
   onSortChange: (sort: DragonSort) => void;
   onUpdateRoster: (dragonId: string, patch: Partial<OwnedDragon>) => void;
   onOpenDetails: (dragon: Dragon) => void;
+  onOpenAddDragon: () => void;
   onExport: () => void;
   onImport: (event: ChangeEvent<HTMLInputElement>) => void;
   onClear: () => void;
@@ -603,6 +547,10 @@ function RosterSection({
           </select>
         </label>
         <div className="button-row">
+          <button type="button" className="primary-button" onClick={onOpenAddDragon}>
+            <Plus size={18} aria-hidden="true" />
+            + Add Dragon
+          </button>
           <button type="button" className="secondary-button" onClick={onExport}>
             <Download size={18} aria-hidden="true" />
             Export JSON
@@ -633,11 +581,240 @@ function RosterSection({
         </div>
       ) : (
         <div className="empty-state">
-          <h3>Your roster is empty.</h3>
-          <p>Mark dragons as owned from the Dragon Database to start tracking them here.</p>
+          <h3>No dragons in your roster yet.</h3>
+          <p>Add a dragon to start tracking Star Rank, Reign Level, and formation options. Use the Add Dragon button to begin.</p>
+          <button type="button" className="primary-button" onClick={onOpenAddDragon}>
+            <Plus size={18} aria-hidden="true" />
+            + Add Dragon
+          </button>
         </div>
       )}
     </section>
+  );
+}
+
+function AddDragonDialog({
+  filters,
+  roster,
+  showAlreadyAdded,
+  onAdd,
+  onClose,
+  onFiltersChange,
+  onOpenDetails,
+  onShowAlreadyAddedChange,
+}: {
+  filters: DragonFilters;
+  roster: Record<string, OwnedDragon>;
+  showAlreadyAdded: boolean;
+  onAdd: (dragonId: string) => void;
+  onClose: () => void;
+  onFiltersChange: (filters: DragonFilters) => void;
+  onOpenDetails: (dragon: Dragon) => void;
+  onShowAlreadyAddedChange: (value: boolean) => void;
+}) {
+  const dialogRef = useRef<HTMLDivElement>(null);
+  const previousFocus = useRef<HTMLElement | null>(null);
+  const modalFilters = useMemo<DragonFilters>(
+    () => ({
+      ...filters,
+      owned: showAlreadyAdded ? 'all' : 'unowned',
+    }),
+    [filters, showAlreadyAdded],
+  );
+  const filteredDragons = useMemo(
+    () => sortDragons(filterDragons(dragons, roster, modalFilters), roster, 'name'),
+    [modalFilters, roster],
+  );
+  const update = (patch: Partial<DragonFilters>) => onFiltersChange({ ...filters, ...patch });
+
+  useEffect(() => {
+    previousFocus.current = document.activeElement instanceof HTMLElement ? document.activeElement : null;
+    dialogRef.current?.focus();
+    document.body.classList.add('modal-open');
+    return () => {
+      document.body.classList.remove('modal-open');
+      previousFocus.current?.focus();
+    };
+  }, []);
+
+  const handleKeyDown = (event: KeyboardEvent<HTMLDivElement>) => {
+    if (event.key === 'Escape') {
+      onClose();
+      return;
+    }
+
+    if (event.key !== 'Tab' || !dialogRef.current) {
+      return;
+    }
+
+    const focusable = dialogRef.current.querySelectorAll<HTMLElement>(
+      'a[href], button:not([disabled]), input:not([disabled]), select:not([disabled]), textarea:not([disabled]), [tabindex]:not([tabindex="-1"])',
+    );
+    const first = focusable[0];
+    const last = focusable[focusable.length - 1];
+    if (!first || !last) {
+      return;
+    }
+    if (event.shiftKey && document.activeElement === first) {
+      event.preventDefault();
+      last.focus();
+    } else if (!event.shiftKey && document.activeElement === last) {
+      event.preventDefault();
+      first.focus();
+    }
+  };
+
+  return (
+    <div className="modal-backdrop" role="presentation">
+      <div
+        aria-labelledby="add-dragon-title"
+        aria-modal="true"
+        className="details-dialog add-dragon-dialog"
+        onKeyDown={handleKeyDown}
+        ref={dialogRef}
+        role="dialog"
+        tabIndex={-1}
+      >
+        <header className="details-header">
+          <div className="details-heading-copy">
+            <p className="eyebrow">Catalog</p>
+            <h2 id="add-dragon-title">Add dragons to your roster</h2>
+            <p className="details-summary-line">
+              Search the catalog and add dragons you own. Ability details remain marked as Verified or Metadata Only.
+            </p>
+          </div>
+          <button type="button" className="icon-button" onClick={onClose} aria-label="Close add dragon">
+            <X size={22} aria-hidden="true" />
+          </button>
+        </header>
+
+        <div className="add-dragon-filters" aria-label="Add dragon filters">
+          <label>
+            Search by dragon name
+            <input
+              type="search"
+              value={filters.search}
+              onChange={(event) => update({ search: event.target.value })}
+              placeholder="Search dragons"
+            />
+          </label>
+          <label>
+            Rarity
+            <select value={filters.rarity} onChange={(event) => update({ rarity: event.target.value as DragonRarity | 'all' })}>
+              <option value="all">All rarities</option>
+              {RARITIES.map((rarity) => (
+                <option key={rarity} value={rarity}>
+                  {rarity}
+                </option>
+              ))}
+            </select>
+          </label>
+          <label>
+            Breed
+            <select value={filters.breed} onChange={(event) => update({ breed: event.target.value as DragonBreed | 'all' })}>
+              <option value="all">All breeds</option>
+              {BREEDS.map((breed) => (
+                <option key={breed} value={breed}>
+                  {breed}
+                </option>
+              ))}
+            </select>
+          </label>
+          <label>
+            Verification
+            <select
+              value={filters.status}
+              onChange={(event) => update({ status: event.target.value as VerificationStatus | 'all' })}
+            >
+              <option value="all">All statuses</option>
+              {verificationStatusOptions.map((status) => (
+                <option key={status} value={status}>
+                  {getPublicVerificationLabel(status) ?? titleCase(status.replaceAll('-', ' '))}
+                </option>
+              ))}
+            </select>
+          </label>
+          <label className="check-row add-dragon-show-added">
+            <input
+              type="checkbox"
+              checked={showAlreadyAdded}
+              onChange={(event) => onShowAlreadyAddedChange(event.target.checked)}
+            />
+            Show already added
+          </label>
+        </div>
+
+        <p className="result-count" role="status">
+          Showing {filteredDragons.length} of {dragons.length} dragons.
+        </p>
+        {filteredDragons.length > 0 ? (
+          <div className="add-dragon-list" aria-label="Available dragons">
+            {filteredDragons.map((dragon) => (
+              <AddDragonRow
+                dragon={dragon}
+                isOwned={roster[dragon.id]?.owned === true}
+                key={dragon.id}
+                onAdd={onAdd}
+                onOpenDetails={onOpenDetails}
+              />
+            ))}
+          </div>
+        ) : (
+          <div className="empty-state">
+            <h3>No dragons match those filters.</h3>
+            <p>Clear filters or show already added dragons to broaden the catalog.</p>
+          </div>
+        )}
+      </div>
+    </div>
+  );
+}
+
+function AddDragonRow({
+  dragon,
+  isOwned,
+  onAdd,
+  onOpenDetails,
+}: {
+  dragon: Dragon;
+  isOwned: boolean;
+  onAdd: (dragonId: string) => void;
+  onOpenDetails: (dragon: Dragon) => void;
+}) {
+  const verificationLabel = getPublicVerificationLabel(dragon.dataStatus);
+  const verificationTone = getPublicVerificationTone(dragon.dataStatus);
+  const summaryNote = verificationLabel === 'Metadata Only' ? 'Ability details not verified' : null;
+
+  return (
+    <article className="add-dragon-row">
+      <div className="card-topline">
+        <DragonEmblem dragon={dragon} />
+        <div className="dragon-card-title">
+          <h3>{dragon.name}</h3>
+          <div className="dragon-card-chips" aria-label={`${dragon.name} metadata`}>
+            <span className="badge">{dragon.rarity}</span>
+            <span className="badge">{dragon.breed}</span>
+            {verificationLabel ? (
+              <span className={`badge verification-${verificationTone ?? 'verified'}`}>{verificationLabel}</span>
+            ) : null}
+          </div>
+          {summaryNote ? <p className="add-dragon-note">{summaryNote}</p> : null}
+        </div>
+      </div>
+      <div className="add-dragon-actions">
+        <button type="button" className="secondary-button" onClick={() => onOpenDetails(dragon)}>
+          View details
+        </button>
+        <button
+          type="button"
+          className={isOwned ? 'secondary-button' : 'primary-button'}
+          disabled={isOwned}
+          onClick={() => onAdd(dragon.id)}
+        >
+          {isOwned ? 'Added' : 'Add to roster'}
+        </button>
+      </div>
+    </article>
   );
 }
 
@@ -821,7 +998,7 @@ function AboutSection() {
             rel="noopener noreferrer"
             target="_blank"
           >
-            🐉 Buy me a dragon <ExternalLink size={16} aria-hidden="true" />
+            ?? Buy me a dragon <ExternalLink size={16} aria-hidden="true" />
           </a>
         </p>
       </div>
@@ -961,89 +1138,6 @@ function RosterEditControls({
   );
 }
 
-function FilterPanel({
-  filters,
-  sortBy,
-  onFiltersChange,
-  onSortChange,
-}: {
-  filters: DragonFilters;
-  sortBy: DragonSort;
-  onFiltersChange: (filters: DragonFilters) => void;
-  onSortChange: (sort: DragonSort) => void;
-}) {
-  const update = (patch: Partial<DragonFilters>) => onFiltersChange({ ...filters, ...patch });
-
-  return (
-    <div className="filter-panel" aria-label="Dragon filters">
-      <label>
-        Search by name
-        <input
-          type="search"
-          value={filters.search}
-          onChange={(event) => update({ search: event.target.value })}
-          placeholder="Search dragons"
-        />
-      </label>
-      <label>
-        Rarity
-        <select value={filters.rarity} onChange={(event) => update({ rarity: event.target.value as DragonRarity | 'all' })}>
-          <option value="all">All rarities</option>
-          {RARITIES.map((rarity) => (
-            <option key={rarity} value={rarity}>
-              {rarity}
-            </option>
-          ))}
-        </select>
-      </label>
-      <label>
-        Breed
-        <select value={filters.breed} onChange={(event) => update({ breed: event.target.value as DragonBreed | 'all' })}>
-          <option value="all">All breeds</option>
-          {BREEDS.map((breed) => (
-            <option key={breed} value={breed}>
-              {breed}
-            </option>
-          ))}
-        </select>
-      </label>
-      <label>
-        Owned
-        <select value={filters.owned} onChange={(event) => update({ owned: event.target.value as DragonFilters['owned'] })}>
-          <option value="all">All</option>
-          <option value="owned">Owned</option>
-          <option value="unowned">Unowned</option>
-        </select>
-      </label>
-      <label>
-        Verification
-        <select
-          value={filters.status}
-          onChange={(event) => update({ status: event.target.value as VerificationStatus | 'all' })}
-        >
-          <option value="all">All statuses</option>
-          {verificationStatusOptions.map((status) => (
-            <option key={status} value={status}>
-              {getPublicVerificationLabel(status) ?? titleCase(status.replaceAll('-', ' '))}
-            </option>
-          ))}
-        </select>
-      </label>
-      <label>
-        Sort by
-        <select value={sortBy} onChange={(event) => onSortChange(event.target.value as DragonSort)}>
-          <option value="name">Name</option>
-          <option value="rarity">Rarity</option>
-          <option value="breed">Breed</option>
-        </select>
-      </label>
-      <button type="button" className="secondary-button" onClick={() => onFiltersChange(defaultFilters)}>
-        Clear filters
-      </button>
-    </div>
-  );
-}
-
 function DragonEmblem({ dragon }: { dragon: Dragon }) {
   return (
     <div className={`dragon-emblem breed-${dragon.breed.toLowerCase()}`} aria-hidden="true">
@@ -1088,6 +1182,26 @@ function countValues<T extends string>(values: T[]): Record<T, number> {
     },
     {} as Record<T, number>,
   );
+}
+
+function getInitialSection(): Section {
+  if (typeof window === 'undefined') {
+    return 'home';
+  }
+
+  if (FORMATION_POSITIONS.some((position) => parseSharedFormation(window.location.hash, dragons)[position])) {
+    return 'team';
+  }
+
+  return isStaleDragonDatabaseHash(window.location.hash) ? 'roster' : 'home';
+}
+
+function isStalePublicHash(hash: string): boolean {
+  return hash === '#data-status' || isStaleDragonDatabaseHash(hash);
+}
+
+function isStaleDragonDatabaseHash(hash: string): boolean {
+  return hash === '#database' || hash === '#dragon-database' || hash === '#dragons';
 }
 
 function getInitialFormation(): Formation {

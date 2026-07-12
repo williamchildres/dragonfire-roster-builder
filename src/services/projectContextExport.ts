@@ -342,7 +342,7 @@ function buildProjectRules() {
       'Add or update the curated simple synergy profile.',
       'Add an audit disposition for each ability.',
       'Run lint, tests, build, context export, and context validation.',
-      'Visually confirm the Dragon Database and Formation Builder.',
+      'Visually confirm My Roster, the Add Dragon flow, and Formation Builder.',
     ],
   };
 }

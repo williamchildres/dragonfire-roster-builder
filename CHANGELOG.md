@@ -2,10 +2,14 @@
 
 ## Unreleased
 
+- Consolidated the standalone Dragon Database surface into My Roster, making My Roster the central local dragon-management page.
+- Added a My Roster Add Dragon modal with catalog search, rarity/breed/verification filters, already-added handling, add-to-roster actions, and details access.
+- Removed the Dragon Database top-nav/page surface and routed stale Dragon Database hashes back to My Roster while keeping Formation Builder share links intact.
+- Preserved local roster import/export/clear behavior, saved Star Rank/Reign Level/Habit Level/notes data, and About/footer Buy Me a Coffee support links.
 - Removed the lingering Data Status nav/page after the support-link polish, while preserving the optional Buy Me a Coffee support links and the existing local-first/privacy, verification, and roster behavior.
-- Simplified the public verification labels on Dragon Database and My Roster cards so community-verified dragons read as `Verified`, metadata-only dragons read as `Metadata Only`, and metadata-only cards show `Ability details not verified` without changing the underlying roster or dragon data.
+- Simplified the public verification labels on roster/catalog cards so community-verified dragons read as `Verified`, metadata-only dragons read as `Metadata Only`, and metadata-only cards show `Ability details not verified` without changing the underlying roster or dragon data.
 - Removed the public source-detail chip noise from cards while preserving the existing ownership toggles, details access, Star Rank, Reign Level, import/export behavior, and internal evidence wording.
-- Polished the Dragon Database and My Roster cards into lighter player-facing roster cards, reduced repeated ownership/status rows, and kept ownership toggles, details access, Star Rank, Reign Level, and import/export behavior intact.
+- Polished the roster/catalog cards into lighter player-facing cards, reduced repeated ownership/status rows, and kept ownership toggles, details access, Star Rank, Reign Level, and import/export behavior intact.
 - Simplified roster ownership to a single Owned / Hatched state, removed public shard and collection-state controls, and preserved backward compatibility for existing saved/exported roster data.
 - Increased local roster schema to `4`; source data schema remains `13`.
 - Corrected the Dragon Details at-a-glance summary so multi-tag support signals like Tessarion's Initiative support stay visible, and updated the empty Benefits from wording to "No mapped incoming synergy yet."
