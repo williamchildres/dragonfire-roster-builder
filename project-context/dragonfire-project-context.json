@@ -1,11 +1,11 @@
 {
   "format": "dragonfire-lab-project-context",
   "contextVersion": 2,
-  "generatedAt": "2026-07-12T04:49:52.545Z",
+  "generatedAt": "2026-07-12T05:23:29.655Z",
   "source": {
     "repository": "https://github.com/williamchildres/dragonfire-roster-builder",
-    "branch": "fix/remove-data-status-after-support",
-    "commit": "08832713eba4a7b2b1c6e66ee69100ac7046ee93",
+    "branch": "ui/consolidate-roster-database",
+    "commit": "ffa4acabfe75e96fe14945fbe33c9180397956d2",
     "databaseVersion": "0.6.4",
     "dataSchemaVersion": 13,
     "localRosterSchemaVersion": 4,
@@ -25,7 +25,7 @@
       "Add or update the curated simple synergy profile.",
       "Add an audit disposition for each ability.",
       "Run lint, tests, build, context export, and context validation.",
-      "Visually confirm the Dragon Database and Formation Builder."
+      "Visually confirm My Roster, the Add Dragon flow, and Formation Builder."
     ]
   },
   "rosterSummary": {

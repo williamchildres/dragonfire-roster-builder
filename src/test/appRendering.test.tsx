@@ -12,16 +12,80 @@ describe('Dragonfire Roster Lab app', () => {
     window.localStorage.clear();
   });
 
-  it('renders all dragons through the database and supports search', async () => {
+  async function openAddDragon(user: ReturnType<typeof userEvent.setup>) {
+    await user.click(screen.getByRole('button', { name: /^my roster$/i }));
+    await user.click(screen.getAllByRole('button', { name: /\+ add dragon/i })[0]!);
+  }
+
+  it('renders unowned dragons through the add dragon modal and supports search', async () => {
     const user = userEvent.setup();
     render(<App />);
 
-    await user.click(screen.getByRole('button', { name: /dragon database/i }));
+    await openAddDragon(user);
     expect(screen.getByText(/showing 31 of 31 dragons/i)).toBeInTheDocument();
 
-    await user.type(screen.getByLabelText(/search by name/i), 'Syrax');
+    await user.type(screen.getByLabelText(/search by dragon name/i), 'Syrax');
     expect(screen.getByText(/showing 1 of 31 dragons/i)).toBeInTheDocument();
     expect(screen.getByRole('heading', { name: 'Syrax' })).toBeInTheDocument();
+  });
+
+  it('filters the Add Dragon modal by rarity, breed, and verification status', async () => {
+    const user = userEvent.setup();
+    render(<App />);
+
+    await openAddDragon(user);
+    expect(screen.getByRole('dialog', { name: /add dragons to your roster/i })).toBeInTheDocument();
+    expect(screen.getByLabelText(/search by dragon name/i)).toBeInTheDocument();
+    expect(screen.getByLabelText(/^rarity$/i)).toBeInTheDocument();
+    expect(screen.getByLabelText(/^breed$/i)).toBeInTheDocument();
+    expect(screen.getByLabelText(/^verification$/i)).toBeInTheDocument();
+
+    await user.selectOptions(screen.getByLabelText(/^rarity$/i), 'Rare');
+    expect(screen.getByRole('heading', { name: 'Solstryker' })).toBeInTheDocument();
+    expect(screen.queryByRole('heading', { name: 'Syrax' })).not.toBeInTheDocument();
+
+    await user.selectOptions(screen.getByLabelText(/^breed$/i), 'Champion');
+    expect(screen.getByRole('heading', { name: 'Solstryker' })).toBeInTheDocument();
+    expect(screen.queryByRole('heading', { name: 'Shimmer' })).not.toBeInTheDocument();
+
+    await user.selectOptions(screen.getByLabelText(/^verification$/i), 'official-metadata-only');
+    expect(screen.getByRole('heading', { name: 'Solstryker' })).toBeInTheDocument();
+    const solstrykerRow = screen.getByRole('heading', { name: 'Solstryker' }).closest('article');
+    expect(solstrykerRow).not.toBeNull();
+    expect(within(solstrykerRow as HTMLElement).getByText(/ability details not verified/i)).toBeInTheDocument();
+  });
+
+  it('adds a dragon from the modal, preserves saved fields, and exposes details from the modal', async () => {
+    const user = userEvent.setup();
+    const roster = createEmptyRoster(dragons);
+    roster.syrax!.starRank = 5;
+    roster.syrax!.reignLevel = 12;
+    roster.syrax!.notes = 'Keep with fire support.';
+    saveRoster(window.localStorage, roster);
+
+    render(<App />);
+
+    await openAddDragon(user);
+    await user.type(screen.getByLabelText(/search by dragon name/i), 'Syrax');
+    const syraxRow = screen.getByRole('heading', { name: 'Syrax' }).closest('article');
+    expect(syraxRow).not.toBeNull();
+    await user.click(within(syraxRow as HTMLElement).getByRole('button', { name: /view details/i }));
+    expect(screen.getByRole('dialog', { name: /syrax/i })).toBeInTheDocument();
+    await user.click(screen.getByRole('button', { name: /close details/i }));
+
+    await openAddDragon(user);
+    await user.type(screen.getByLabelText(/search by dragon name/i), 'Syrax');
+    await user.click(screen.getByRole('button', { name: /add to roster/i }));
+    expect(screen.getByText('Added to roster.')).toBeInTheDocument();
+    expect(within(screen.getByRole('dialog', { name: /add dragons to your roster/i })).queryByRole('heading', { name: 'Syrax' })).not.toBeInTheDocument();
+    await user.click(screen.getByRole('button', { name: /close add dragon/i }));
+
+    const syraxCard = screen.getByRole('heading', { name: 'Syrax' }).closest('article');
+    expect(syraxCard).not.toBeNull();
+    expect(within(syraxCard as HTMLElement).getByLabelText(/star rank/i)).toHaveValue('5');
+    expect(within(syraxCard as HTMLElement).getByLabelText(/reign level/i)).toHaveValue(12);
+    await user.click(within(syraxCard as HTMLElement).getByRole('button', { name: /view details/i }));
+    expect(screen.getByLabelText(/personal notes/i)).toHaveValue('Keep with fire support.');
   });
 
   it('renders the polished Overview landing content and About copy', async () => {
@@ -44,9 +108,10 @@ describe('Dragonfire Roster Lab app', () => {
       }),
     ).toBeInTheDocument();
     expect(screen.getByRole('img', { name: /dragonfire roster lab dragon emblem/i })).toBeInTheDocument();
-    expect(screen.getByRole('button', { name: /browse dragons/i })).toBeInTheDocument();
+    expect(screen.queryByRole('button', { name: /browse dragons/i })).not.toBeInTheDocument();
+    expect(screen.getByRole('button', { name: /build my roster/i })).toBeInTheDocument();
     expect(screen.getByRole('button', { name: /open formation builder/i })).toBeInTheDocument();
-    expect(screen.getByRole('button', { name: /update my roster/i })).toBeInTheDocument();
+    expect(screen.queryByRole('button', { name: /update my roster/i })).not.toBeInTheDocument();
 
     expect(screen.getByRole('heading', { name: 'Track Your Roster' })).toBeInTheDocument();
     expect(screen.getByRole('heading', { name: 'Compare Verified Dragons' })).toBeInTheDocument();
@@ -56,7 +121,7 @@ describe('Dragonfire Roster Lab app', () => {
     expect(screen.getByText(/19 \/ 31 dragons mapped/i)).toBeInTheDocument();
     expect(screen.getByText('61%')).toBeInTheDocument();
 
-    const databaseCoverage = screen.getByRole('heading', { name: 'Database Coverage' }).closest('.overview-stat-group');
+    const databaseCoverage = screen.getByRole('heading', { name: 'Catalog Coverage' }).closest('.overview-stat-group');
     expect(databaseCoverage).not.toBeNull();
     expect(within(databaseCoverage as HTMLElement).getByText('Known dragons').closest('.stat-card')).toHaveTextContent('31');
     expect(within(databaseCoverage as HTMLElement).getByText('Detailed ability records').closest('.stat-card')).toHaveTextContent(String(detailedAbilityCount));
@@ -99,7 +164,7 @@ describe('Dragonfire Roster Lab app', () => {
     const user = userEvent.setup();
     render(<App />);
 
-    await user.click(screen.getByRole('button', { name: /dragon database/i }));
+    await openAddDragon(user);
     const syraxCard = screen.getByRole('heading', { name: 'Syrax' }).closest('article');
     expect(syraxCard).not.toBeNull();
     await user.click(within(syraxCard as HTMLElement).getByRole('button', { name: /view details/i }));
@@ -112,8 +177,8 @@ describe('Dragonfire Roster Lab app', () => {
     const user = userEvent.setup();
     render(<App />);
 
-    await user.click(screen.getByRole('button', { name: /dragon database/i }));
-    await user.type(screen.getByLabelText(/search by name/i), 'Daemoros');
+    await openAddDragon(user);
+    await user.type(screen.getByLabelText(/search by dragon name/i), 'Daemoros');
     const daemorosCard = screen.getByRole('heading', { name: 'Daemoros' }).closest('article');
     expect(daemorosCard).not.toBeNull();
     await user.click(within(daemorosCard as HTMLElement).getByRole('button', { name: /view details/i }));
@@ -164,18 +229,17 @@ describe('Dragonfire Roster Lab app', () => {
     const user = userEvent.setup();
     render(<App />);
 
-    await user.click(screen.getByRole('button', { name: /dragon database/i }));
-    await user.type(screen.getByLabelText(/search by name/i), 'Solstryker');
+    await openAddDragon(user);
+    await user.type(screen.getByLabelText(/search by dragon name/i), 'Solstryker');
     const dragonCard = screen.getByRole('heading', { name: 'Solstryker' }).closest('article');
     expect(dragonCard).not.toBeNull();
     expect(dragonCard).toHaveTextContent('Rare');
     expect(dragonCard).toHaveTextContent('Champion');
     expect(dragonCard).toHaveTextContent('Metadata Only');
     expect(dragonCard).not.toHaveTextContent('Official Metadata Only');
-    expect(dragonCard).toHaveTextContent('Not owned');
     expect(dragonCard).toHaveTextContent('Ability details not verified');
     expect(dragonCard).toHaveTextContent('View details');
-    expect(dragonCard).toHaveTextContent('My Roster');
+    expect(dragonCard).toHaveTextContent('Add to roster');
     await user.click(within(dragonCard as HTMLElement).getByRole('button', { name: /view details/i }));
 
     const dialog = screen.getByRole('dialog', { name: /solstryker/i });
@@ -195,8 +259,8 @@ describe('Dragonfire Roster Lab app', () => {
     const user = userEvent.setup();
     render(<App />);
 
-    await user.click(screen.getByRole('button', { name: /dragon database/i }));
-    await user.type(screen.getByLabelText(/search by name/i), 'Tessarion');
+    await openAddDragon(user);
+    await user.type(screen.getByLabelText(/search by dragon name/i), 'Tessarion');
     const dragonCard = screen.getByRole('heading', { name: 'Tessarion' }).closest('article');
     expect(dragonCard).not.toBeNull();
     await user.click(within(dragonCard as HTMLElement).getByRole('button', { name: /view details/i }));
@@ -242,8 +306,8 @@ describe('Dragonfire Roster Lab app', () => {
     const user = userEvent.setup();
     render(<App />);
 
-    await user.click(screen.getByRole('button', { name: /dragon database/i }));
-    await user.type(screen.getByLabelText(/search by name/i), 'Daemoros');
+    await openAddDragon(user);
+    await user.type(screen.getByLabelText(/search by dragon name/i), 'Daemoros');
     const daemorosCard = screen.getByRole('heading', { name: 'Daemoros' }).closest('article');
     expect(daemorosCard).not.toBeNull();
     await user.click(within(daemorosCard as HTMLElement).getByRole('button', { name: /view details/i }));
@@ -269,8 +333,8 @@ describe('Dragonfire Roster Lab app', () => {
     const user = userEvent.setup();
     render(<App />);
 
-    await user.click(screen.getByRole('button', { name: /dragon database/i }));
-    await user.type(screen.getByLabelText(/search by name/i), 'Daemoros');
+    await openAddDragon(user);
+    await user.type(screen.getByLabelText(/search by dragon name/i), 'Daemoros');
     const daemorosCard = screen.getByRole('heading', { name: 'Daemoros' }).closest('article');
     expect(daemorosCard).not.toBeNull();
     await user.click(within(daemorosCard as HTMLElement).getByRole('button', { name: /view details/i }));
@@ -298,8 +362,9 @@ describe('Dragonfire Roster Lab app', () => {
     ).toBeNull();
 
     await user.click(within(dialog).getByRole('button', { name: /close details/i }));
-    await user.clear(screen.getByLabelText(/search by name/i));
-    await user.type(screen.getByLabelText(/search by name/i), 'Vaeldra');
+    await openAddDragon(user);
+    await user.clear(screen.getByLabelText(/search by dragon name/i));
+    await user.type(screen.getByLabelText(/search by dragon name/i), 'Vaeldra');
     const vaeldraCard = screen.getByRole('heading', { name: 'Vaeldra' }).closest('article');
     expect(vaeldraCard).not.toBeNull();
     await user.click(within(vaeldraCard as HTMLElement).getByRole('button', { name: /view details/i }));
@@ -316,8 +381,8 @@ describe('Dragonfire Roster Lab app', () => {
     const user = userEvent.setup();
     render(<App />);
 
-    await user.click(screen.getByRole('button', { name: /dragon database/i }));
-    await user.type(screen.getByLabelText(/search by name/i), 'Feskar');
+    await openAddDragon(user);
+    await user.type(screen.getByLabelText(/search by dragon name/i), 'Feskar');
     const feskarCard = screen.getByRole('heading', { name: 'Feskar' }).closest('article');
     expect(feskarCard).not.toBeNull();
     await user.click(within(feskarCard as HTMLElement).getByRole('button', { name: /view details/i }));
@@ -339,8 +404,9 @@ describe('Dragonfire Roster Lab app', () => {
     expect(rawContent).toHaveTextContent('Deal Fire Damage to all enemies that deal Physical Damage, excluding Basic Attacks, at a 40% Damage Rate.');
 
     await user.click(within(dialog).getByRole('button', { name: /close details/i }));
-    await user.clear(screen.getByLabelText(/search by name/i));
-    await user.type(screen.getByLabelText(/search by name/i), 'Rhysarion');
+    await openAddDragon(user);
+    await user.clear(screen.getByLabelText(/search by dragon name/i));
+    await user.type(screen.getByLabelText(/search by dragon name/i), 'Rhysarion');
     const rhysarionCard = screen.getByRole('heading', { name: 'Rhysarion' }).closest('article');
     expect(rhysarionCard).not.toBeNull();
     await user.click(within(rhysarionCard as HTMLElement).getByRole('button', { name: /view details/i }));
@@ -359,8 +425,9 @@ describe('Dragonfire Roster Lab app', () => {
     expect(commandRaw).toHaveTextContent('60% Recovery Rate');
 
     await user.click(within(dragonDialog).getByRole('button', { name: /close details/i }));
-    await user.clear(screen.getByLabelText(/search by name/i));
-    await user.type(screen.getByLabelText(/search by name/i), 'Shadowsong');
+    await openAddDragon(user);
+    await user.clear(screen.getByLabelText(/search by dragon name/i));
+    await user.type(screen.getByLabelText(/search by dragon name/i), 'Shadowsong');
     const shadowsongCard = screen.getByRole('heading', { name: 'Shadowsong' }).closest('article');
     expect(shadowsongCard).not.toBeNull();
     await user.click(within(shadowsongCard as HTMLElement).getByRole('button', { name: /view details/i }));
@@ -384,8 +451,9 @@ describe('Dragonfire Roster Lab app', () => {
     expect(commandRaw).toHaveTextContent('2 rounds');
 
     await user.click(within(dragonDialog).getByRole('button', { name: /close details/i }));
-    await user.clear(screen.getByLabelText(/search by name/i));
-    await user.type(screen.getByLabelText(/search by name/i), 'Syrax');
+    await openAddDragon(user);
+    await user.clear(screen.getByLabelText(/search by dragon name/i));
+    await user.type(screen.getByLabelText(/search by dragon name/i), 'Syrax');
     const syraxCard = screen.getByRole('heading', { name: 'Syrax' }).closest('article');
     expect(syraxCard).not.toBeNull();
     await user.click(within(syraxCard as HTMLElement).getByRole('button', { name: /view details/i }));
@@ -412,10 +480,10 @@ describe('Dragonfire Roster Lab app', () => {
     const user = userEvent.setup();
     render(<App />);
 
-    await user.click(screen.getByRole('button', { name: /dragon database/i }));
+    await openAddDragon(user);
 
-    await user.clear(screen.getByLabelText(/search by name/i));
-    await user.type(screen.getByLabelText(/search by name/i), 'Crimson');
+    await user.clear(screen.getByLabelText(/search by dragon name/i));
+    await user.type(screen.getByLabelText(/search by dragon name/i), 'Crimson');
     let dragonCard = screen.getByRole('heading', { name: 'Crimson' }).closest('article');
     expect(dragonCard).not.toBeNull();
     await user.click(within(dragonCard as HTMLElement).getByRole('button', { name: /view details/i }));
@@ -434,8 +502,9 @@ describe('Dragonfire Roster Lab app', () => {
     expect(raw).toHaveTextContent('12% for 2 rounds');
 
     await user.click(within(dialog).getByRole('button', { name: /close details/i }));
-    await user.clear(screen.getByLabelText(/search by name/i));
-    await user.type(screen.getByLabelText(/search by name/i), 'Sheepstealer');
+    await openAddDragon(user);
+    await user.clear(screen.getByLabelText(/search by dragon name/i));
+    await user.type(screen.getByLabelText(/search by dragon name/i), 'Sheepstealer');
     dragonCard = screen.getByRole('heading', { name: 'Sheepstealer' }).closest('article');
     expect(dragonCard).not.toBeNull();
     await user.click(within(dragonCard as HTMLElement).getByRole('button', { name: /view details/i }));
@@ -456,8 +525,9 @@ describe('Dragonfire Roster Lab app', () => {
     expect(raw).toHaveTextContent('30% Recovery');
 
     await user.click(within(dialog).getByRole('button', { name: /close details/i }));
-    await user.clear(screen.getByLabelText(/search by name/i));
-    await user.type(screen.getByLabelText(/search by name/i), 'Kalspire');
+    await openAddDragon(user);
+    await user.clear(screen.getByLabelText(/search by dragon name/i));
+    await user.type(screen.getByLabelText(/search by dragon name/i), 'Kalspire');
     dragonCard = screen.getByRole('heading', { name: 'Kalspire' }).closest('article');
     expect(dragonCard).not.toBeNull();
     await user.click(within(dragonCard as HTMLElement).getByRole('button', { name: /view details/i }));
@@ -480,12 +550,16 @@ describe('Dragonfire Roster Lab app', () => {
     const user = userEvent.setup();
     const firstRender = render(<App />);
 
-    await user.click(screen.getByRole('button', { name: /dragon database/i }));
+    await openAddDragon(user);
     const syraxCard = screen.getByRole('heading', { name: 'Syrax' }).closest('article');
     expect(syraxCard).not.toBeNull();
-    await user.click(within(syraxCard as HTMLElement).getByLabelText(/my roster/i));
-    await user.click(within(syraxCard as HTMLElement).getByRole('button', { name: /view details/i }));
-    await user.selectOptions(screen.getByLabelText(/star rank/i), '3');
+    await user.click(within(syraxCard as HTMLElement).getByRole('button', { name: /add to roster/i }));
+    await user.click(screen.getByRole('button', { name: /close add dragon/i }));
+    const rosterSyraxCard = screen.getByRole('heading', { name: 'Syrax' }).closest('article');
+    expect(rosterSyraxCard).not.toBeNull();
+    await user.click(within(rosterSyraxCard as HTMLElement).getByRole('button', { name: /view details/i }));
+    const syraxDialog = screen.getByRole('dialog', { name: /syrax/i });
+    await user.selectOptions(within(syraxDialog).getByLabelText(/star rank/i), '3');
     await user.click(screen.getByRole('button', { name: /close details/i }));
 
     firstRender.unmount();
@@ -496,27 +570,27 @@ describe('Dragonfire Roster Lab app', () => {
     expect(screen.getAllByText('3').length).toBeGreaterThan(0);
   });
 
-  it('shows simplified ownership on Dragon Database cards and keeps My Roster toggle wired to owned state', async () => {
+  it('shows simplified ownership in the Add Dragon modal and keeps Add to roster wired to owned state', async () => {
     const user = userEvent.setup();
     render(<App />);
 
-    await user.click(screen.getByRole('button', { name: /dragon database/i }));
+    await openAddDragon(user);
     const daemorosCard = screen.getByRole('heading', { name: 'Daemoros' }).closest('article');
     expect(daemorosCard).not.toBeNull();
-    expect(daemorosCard).toHaveTextContent('Not owned');
     expect(daemorosCard).toHaveTextContent('Verified');
     expect(daemorosCard).not.toHaveTextContent('Community Verified');
     expect(daemorosCard).not.toHaveTextContent('In-game verified, pending official site');
     expect(daemorosCard).toHaveTextContent('View details');
-    expect(daemorosCard).toHaveTextContent('My Roster');
+    expect(daemorosCard).toHaveTextContent('Add to roster');
     expect(daemorosCard).not.toHaveTextContent('Collection:');
     expect(daemorosCard).not.toHaveTextContent('Hatched');
     expect(daemorosCard).not.toHaveTextContent('Not collected');
     expect(daemorosCard).not.toHaveTextContent('Not hatched');
     expect(daemorosCard).not.toHaveTextContent('Shards');
 
-    await user.click(within(daemorosCard as HTMLElement).getByLabelText(/my roster/i));
-    expect(daemorosCard).toHaveTextContent('Owned / Hatched');
+    await user.click(within(daemorosCard as HTMLElement).getByRole('button', { name: /add to roster/i }));
+    expect(within(screen.getByRole('dialog', { name: /add dragons to your roster/i })).queryByRole('heading', { name: 'Daemoros' })).not.toBeInTheDocument();
+    await user.click(screen.getByRole('button', { name: /close add dragon/i }));
 
     await user.click(screen.getByRole('button', { name: /^my roster$/i }));
     expect(screen.getByRole('heading', { name: 'Daemoros' })).toBeInTheDocument();
@@ -548,6 +622,17 @@ describe('Dragonfire Roster Lab app', () => {
     expect(screen.getByText(/import json/i)).toBeInTheDocument();
   });
 
+  it('shows the empty roster state with a visible add action', async () => {
+    const user = userEvent.setup();
+    render(<App />);
+
+    await user.click(screen.getByRole('button', { name: /^my roster$/i }));
+
+    expect(screen.getByText(/No dragons in your roster yet/i)).toBeInTheDocument();
+    expect(screen.getByText(/start tracking Star Rank, Reign Level, and formation options/i)).toBeInTheDocument();
+    expect(screen.getAllByRole('button', { name: /\+ add dragon/i }).length).toBeGreaterThanOrEqual(1);
+  });
+
   it('shows metadata-only public labels on My Roster cards and keeps the roster controls visible', async () => {
     const user = userEvent.setup();
     const roster = createEmptyRoster(dragons);
@@ -572,7 +657,7 @@ describe('Dragonfire Roster Lab app', () => {
     expect(screen.getByRole('dialog', { name: /solstryker/i })).toBeInTheDocument();
   });
 
-  it('keeps public card verification labels simplified on both Dragon Database and My Roster surfaces', async () => {
+  it('keeps public card verification labels simplified on Add Dragon and My Roster surfaces', async () => {
     const user = userEvent.setup();
     const roster = createEmptyRoster(dragons);
     roster.solstryker!.owned = true;
@@ -581,7 +666,7 @@ describe('Dragonfire Roster Lab app', () => {
 
     render(<App />);
 
-    await user.click(screen.getByRole('button', { name: /dragon database/i }));
+    await openAddDragon(user);
     const daemorosCard = screen.getByRole('heading', { name: 'Daemoros' }).closest('article');
     expect(daemorosCard).not.toBeNull();
     expect(daemorosCard).toHaveTextContent('Verified');
@@ -594,6 +679,7 @@ describe('Dragonfire Roster Lab app', () => {
     expect(daemorosCard).not.toHaveTextContent('Shards');
     expect(daemorosCard).not.toHaveTextContent('Shards Required');
 
+    await user.click(screen.getByRole('button', { name: /close add dragon/i }));
     await user.click(screen.getByRole('button', { name: /^my roster$/i }));
     const solstrykerCard = screen.getByRole('heading', { name: 'Solstryker' }).closest('article');
     expect(solstrykerCard).not.toBeNull();
@@ -630,8 +716,8 @@ describe('Dragonfire Roster Lab app', () => {
     const user = userEvent.setup();
     render(<App />);
 
-    await user.click(screen.getByRole('button', { name: /dragon database/i }));
-    await user.type(screen.getByLabelText(/search by name/i), 'Syrax');
+    await openAddDragon(user);
+    await user.type(screen.getByLabelText(/search by dragon name/i), 'Syrax');
     await user.click(screen.getByRole('button', { name: /view details/i }));
     await user.click(screen.getByRole('button', { name: /close details/i }));
     await user.click(screen.getByRole('button', { name: /^my roster$/i }));
@@ -640,6 +726,19 @@ describe('Dragonfire Roster Lab app', () => {
     expect(screen.queryByText('Not hatched')).not.toBeInTheDocument();
     expect(screen.queryByText('Not collected')).not.toBeInTheDocument();
     expect(screen.queryByText('Shards Required')).not.toBeInTheDocument();
+  });
+
+  it('keeps retired public navigation and roster copy out of the rendered app UI', () => {
+    render(<App />);
+
+    const nav = screen.getByRole('navigation', { name: /primary sections/i });
+    expect(within(nav).queryByRole('button', { name: /dragon database/i })).not.toBeInTheDocument();
+    expect(within(nav).queryByRole('button', { name: /data status/i })).not.toBeInTheDocument();
+    expect(screen.queryByText('Collection State')).not.toBeInTheDocument();
+    expect(screen.queryByText('Shards')).not.toBeInTheDocument();
+    expect(screen.queryByText('Shards Required')).not.toBeInTheDocument();
+    expect(screen.queryByText('Not hatched')).not.toBeInTheDocument();
+    expect(screen.queryByText('Not collected')).not.toBeInTheDocument();
   });
 
   it('renders the three named formation positions', async () => {

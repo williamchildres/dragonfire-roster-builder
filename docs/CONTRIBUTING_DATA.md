@@ -10,7 +10,7 @@ Use this workflow for ordinary dragon additions and corrections.
 4. Add or update the curated simple synergy profile.
 5. Add one profile-audit disposition for each detailed ability.
 6. Run lint, tests, build, context export, and context validation.
-7. Visually confirm Dragon Database and Formation Builder behavior.
+7. Visually confirm My Roster, Add Dragon, and Formation Builder behavior.
 
 ## Ability Wording
 

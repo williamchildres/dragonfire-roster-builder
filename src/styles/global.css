@@ -480,6 +480,12 @@ main {
   padding: 1rem;
 }
 
+.empty-state {
+  display: grid;
+  gap: 0.75rem;
+  justify-items: start;
+}
+
 .section-heading {
   margin-bottom: 1.25rem;
   max-width: 56rem;
@@ -784,6 +790,68 @@ dd {
   flex-wrap: wrap;
   justify-content: space-between;
   margin-bottom: 1rem;
+}
+
+.toolbar > label {
+  min-width: min(100%, 14rem);
+}
+
+.add-dragon-dialog {
+  max-width: 62rem;
+}
+
+.add-dragon-dialog .details-header h2 {
+  font-size: clamp(1.8rem, 4vw, 3rem);
+}
+
+.add-dragon-filters {
+  display: grid;
+  gap: 0.8rem;
+  grid-template-columns: repeat(auto-fit, minmax(12rem, 1fr));
+}
+
+.add-dragon-show-added {
+  align-self: end;
+  min-height: 2.75rem;
+}
+
+.add-dragon-list {
+  display: grid;
+  gap: 0.75rem;
+  max-height: min(52vh, 38rem);
+  overflow-x: hidden;
+  overflow-y: auto;
+  padding-right: 0.25rem;
+}
+
+.add-dragon-row {
+  align-items: center;
+  background: rgba(255, 255, 255, 0.045);
+  border: 1px solid var(--line-soft);
+  border-radius: 0.5rem;
+  display: grid;
+  gap: 0.8rem;
+  grid-template-columns: minmax(0, 1fr) auto;
+  min-width: 0;
+  padding: 0.8rem;
+}
+
+.add-dragon-note {
+  color: var(--muted);
+  font-size: 0.9rem;
+  line-height: 1.4;
+  margin: 0;
+}
+
+.add-dragon-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.55rem;
+  justify-content: flex-end;
+}
+
+.add-dragon-actions button {
+  white-space: nowrap;
 }
 
 .team-slots,
@@ -1677,6 +1745,18 @@ th {
   .card-actions,
   .roster-fields {
     gap: 0.65rem;
+  }
+
+  .add-dragon-row {
+    grid-template-columns: 1fr;
+  }
+
+  .add-dragon-actions {
+    justify-content: stretch;
+  }
+
+  .add-dragon-actions button {
+    flex: 1 1 12rem;
   }
 
   .card-actions {

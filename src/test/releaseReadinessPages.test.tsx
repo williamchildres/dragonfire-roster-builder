@@ -10,15 +10,16 @@ describe('release readiness pages', () => {
     window.history.replaceState(null, '', '/');
   });
 
-  it('renders the public top navigation without Data Status', () => {
+  it('renders the public top navigation without retired public pages', () => {
     render(<App />);
 
     const nav = screen.getByRole('navigation', { name: /primary sections/i });
     const navButtons = within(nav).getAllByRole('button').map((button) => button.textContent?.trim());
 
-    expect(navButtons).toEqual(['Overview', 'Dragon Database', 'My Roster', 'Formation Builder', 'About']);
+    expect(navButtons).toEqual(['Overview', 'My Roster', 'Formation Builder', 'About']);
+    expect(within(nav).queryByRole('button', { name: /dragon database/i })).not.toBeInTheDocument();
     expect(within(nav).queryByRole('button', { name: /data status/i })).not.toBeInTheDocument();
-    expect(screen.queryByRole('button', { name: /support the project/i })).not.toBeInTheDocument();
+    expect(within(nav).queryByRole('button', { name: /support/i })).not.toBeInTheDocument();
   });
 
   it('renders the support surfaces with the Buy Me a Coffee link intact', async () => {
@@ -61,15 +62,21 @@ describe('release readiness pages', () => {
     expect(window.location.hash).toBe('');
   });
 
+  it('falls back to My Roster when a stale Dragon Database hash is present', () => {
+    window.history.replaceState(null, '', '#dragon-database');
+
+    render(<App />);
+
+    expect(screen.getByRole('heading', { name: 'My Roster' })).toBeInTheDocument();
+    expect(window.location.hash).toBe('');
+  });
+
   it('renders the public pages without errors', async () => {
     const user = userEvent.setup();
     render(<App />);
 
     await user.click(screen.getByRole('button', { name: /overview/i }));
     expect(screen.getByRole('heading', { name: /plan stronger dragonfire formations from verified dragon data/i })).toBeInTheDocument();
-
-    await user.click(screen.getByRole('button', { name: /dragon database/i }));
-    expect(screen.getByRole('heading', { name: 'Dragon Database' })).toBeInTheDocument();
 
     await user.click(screen.getByRole('button', { name: /^my roster$/i }));
     expect(screen.getByRole('heading', { name: 'My Roster' })).toBeInTheDocument();

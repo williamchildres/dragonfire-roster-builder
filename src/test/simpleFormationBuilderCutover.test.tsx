@@ -247,14 +247,13 @@ describe('Formation Builder simple synergy cutover', () => {
       "Malachite's Warden's Rally Recovery setup for Sheepstealer's Hunter's Cunning unlocks when Sheepstealer reaches Dragon Level 16.",
     );
 
-    await user.click(screen.getByRole('button', { name: /dragon database/i }));
-    await user.clear(screen.getByLabelText(/search by name/i));
-    await user.type(screen.getByLabelText(/search by name/i), 'Sheepstealer');
+    await user.click(screen.getByRole('button', { name: /^my roster$/i }));
     const sheepstealerCard = screen.getByRole('heading', { name: 'Sheepstealer' }).closest('article');
     expect(sheepstealerCard).not.toBeNull();
     await user.click(within(sheepstealerCard as HTMLElement).getByRole('button', { name: /view details/i }));
-    await user.clear(screen.getByLabelText(/reign level/i));
-    await user.type(screen.getByLabelText(/reign level/i), '16');
+    const detailsDialog = screen.getByRole('dialog', { name: /sheepstealer/i });
+    await user.clear(within(detailsDialog).getByLabelText(/reign level/i));
+    await user.type(within(detailsDialog).getByLabelText(/reign level/i), '16');
     await user.click(screen.getByRole('button', { name: /close details/i }));
 
     await user.click(screen.getAllByRole('button', { name: /formation builder/i })[0]!);

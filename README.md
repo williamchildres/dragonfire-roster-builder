@@ -6,7 +6,7 @@ It is not a combat simulator.
 
 ## Current Features
 
-- Dragon Database for 31 known dragons.
+- My Roster as the central local dragon-management page, with Add Dragon search/filter flow for 31 known dragons.
 - Full raw Command, Trait, and Habit wording for 19 detailed dragons.
 - Curated simple synergy profiles for all 19 detailed dragons.
 - Metadata-only handling for the remaining 12 unmapped dragons.
@@ -62,7 +62,7 @@ There is no `report:synergy` command. The old combat-analysis report and framewo
 4. Add or update the curated simple synergy profile.
 5. Add one profile-audit disposition for each detailed ability.
 6. Run lint, tests, build, context export, context validation, and context ZIP packaging.
-7. Visually confirm the Dragon Database and Formation Builder.
+7. Visually confirm My Roster, the Add Dragon flow, and Formation Builder.
 
 Do not add capability outputs, modifier capabilities, traces, expected interactions, formation-specific regression passes, or combat-simulation machinery.
 

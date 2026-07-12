@@ -46,7 +46,7 @@ The packaging command captures the current branch and full HEAD SHA before expor
 
 Confirm:
 
-- Dragon Database shows raw ability wording in full.
+- My Roster Add Dragon details show raw ability wording in full.
 - Habit Level selectors still save and load.
 - Formation Builder cards render selected Command and Trait wording.
 - Simple formation analysis still handles setup/payoff, support, missing enablers, future unlocks, adjacency, hard positions, and Vanguard conflicts.
