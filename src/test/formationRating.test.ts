@@ -85,10 +85,10 @@ describe('formation rating helper', () => {
     expect(rating.tier).toBeTruthy();
     expect(rating.summary).toBeTruthy();
     expect(rating.breakdown.map((item) => item.label)).toEqual([
-      'Formation readiness',
-      'Synergy payoff',
+      'Readiness / profile confidence',
+      'Realized synergy payoff',
       'Support usefulness',
-      'Placement and conflicts',
+      'Placement / conflict risk',
     ]);
     expect(rating.strengths.length).toBeGreaterThan(0);
     expect(rating.weaknesses.length).toBeGreaterThan(0);
@@ -108,8 +108,8 @@ describe('formation rating helper', () => {
     const incomplete = ratingFor(formation('syrax', 'vhagar', null));
 
     expect(complete.score).toBeGreaterThan(incomplete.score);
-    expect(breakdown(complete, 'Formation readiness').score).toBeGreaterThan(
-      breakdown(incomplete, 'Formation readiness').score,
+    expect(breakdown(complete, 'Readiness / profile confidence').score).toBeGreaterThan(
+      breakdown(incomplete, 'Readiness / profile confidence').score,
     );
   });
 
@@ -117,8 +117,8 @@ describe('formation rating helper', () => {
     const satisfied = ratingFor(formation('syrax', 'vhagar', 'caraxes'));
     const missing = ratingFor(formation('syrax', 'vhagar', null));
 
-    expect(breakdown(satisfied, 'Synergy payoff').score).toBeGreaterThan(
-      breakdown(missing, 'Synergy payoff').score,
+    expect(breakdown(satisfied, 'Realized synergy payoff').score).toBeGreaterThan(
+      breakdown(missing, 'Realized synergy payoff').score,
     );
     expect(missing.weaknesses.join(' ')).toContain('benefits from Burn');
   });
@@ -137,9 +137,9 @@ describe('formation rating helper', () => {
     const placementIssue = ratingFor(formation('syrax', 'vhagar', 'caraxes'));
     const positionConflict = ratingFor(formation('daemoros', 'syrax', 'caraxes'));
 
-    expect(breakdown(placementIssue, 'Placement and conflicts').score).toBeLessThan(25);
+    expect(breakdown(placementIssue, 'Placement / conflict risk').score).toBeLessThan(15);
     expect(placementIssue.weaknesses.join(' ')).toContain('must be deployed in Vanguard');
-    expect(breakdown(positionConflict, 'Placement and conflicts').score).toBeLessThan(25);
+    expect(breakdown(positionConflict, 'Placement / conflict risk').score).toBeLessThan(15);
     expect(positionConflict.weaknesses.join(' ')).toContain('only one dragon can receive that positional benefit');
   });
 
@@ -147,8 +147,8 @@ describe('formation rating helper', () => {
     const curated = ratingFor(formation('syrax', 'vhagar', 'caraxes'));
     const unmapped = ratingFor(formation('syrax', 'vhagar', 'antares'));
 
-    expect(breakdown(unmapped, 'Formation readiness').score).toBeLessThan(
-      breakdown(curated, 'Formation readiness').score,
+    expect(breakdown(unmapped, 'Readiness / profile confidence').score).toBeLessThan(
+      breakdown(curated, 'Readiness / profile confidence').score,
     );
     expect(unmapped.summary).toContain('limited profile coverage');
     expect(unmapped.weaknesses.join(' ')).toContain('Antares has limited mapped profile data');
@@ -174,5 +174,40 @@ describe('formation rating helper', () => {
     expect(strengths).toContain('Sheepstealer');
     expect(breakdown(rating, 'Support usefulness').explanation).toContain('2 Provides signals used');
     expect(rating.weaknesses.join(' ')).toContain('Physical Damage support is available but not used');
+  });
+
+  it('rates Syrax, Vhagar, and Caraxes at least as high as Syrax, Vhagar, and Crimson from realized payoff', () => {
+    const caraxes = ratingFor(formation('syrax', 'vhagar', 'caraxes'));
+    const crimson = ratingFor(formation('syrax', 'vhagar', 'crimson'));
+
+    expect(caraxes.score).toBeGreaterThanOrEqual(crimson.score);
+    expect(breakdown(caraxes, 'Realized synergy payoff').score).toBeGreaterThan(
+      breakdown(crimson, 'Realized synergy payoff').score,
+    );
+  });
+
+  it('shows Syrax, Vhagar, and Crimson missing Slow and Burn once each', () => {
+    const rating = ratingFor(formation('syrax', 'vhagar', 'crimson'));
+    const weaknesses = rating.weaknesses.join(' ');
+
+    expect(weaknesses).toContain('Syrax benefits from Slow');
+    expect(weaknesses).toContain('Vhagar benefits from Burn');
+    expect(rating.weaknesses.filter((weakness) => weakness.includes('Vhagar') && weakness.includes('Burn'))).toHaveLength(1);
+  });
+
+  it('caps placement and conflict risk so it cannot overpower active synergy paths', () => {
+    const rating = ratingFor(formation('syrax', 'vhagar', 'caraxes'));
+    const placement = breakdown(rating, 'Placement / conflict risk');
+
+    expect(placement.max).toBe(15);
+    expect(placement.score).toBeGreaterThanOrEqual(8);
+    expect(breakdown(rating, 'Realized synergy payoff').score).toBeGreaterThan(placement.max);
+  });
+
+  it('treats non-Vanguard inactive traits as opportunities instead of severe score penalties', () => {
+    const rating = ratingFor(formation('syrax', 'vhagar', 'caraxes'));
+
+    expect(rating.weaknesses.join(' ')).toContain('alternate placement or progression opportunity');
+    expect(breakdown(rating, 'Placement / conflict risk').score).toBeGreaterThan(0);
   });
 });
