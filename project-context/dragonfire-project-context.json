@@ -1,11 +1,11 @@
 {
   "format": "dragonfire-lab-project-context",
   "contextVersion": 2,
-  "generatedAt": "2026-07-12T22:17:13.124Z",
+  "generatedAt": "2026-07-12T22:46:38.762Z",
   "source": {
     "repository": "https://github.com/williamchildres/dragonfire-roster-builder",
-    "branch": "feature/formation-rating",
-    "commit": "0d281cc457292270df13cd70a5c92eb6e96a8e1e",
+    "branch": "fix/formation-rating-calibration",
+    "commit": "edc2fa45c50be951534265da894c6705b7b5ee04",
     "databaseVersion": "0.6.4",
     "dataSchemaVersion": 13,
     "localRosterSchemaVersion": 4,
