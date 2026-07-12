@@ -20,9 +20,9 @@ export interface AbilitySummaryPresentation {
   technicalTags: string[];
 }
 
-const OUTPUT_LABELS: Partial<Record<SynergyTag, string>> = SYNERGY_TAG_LABELS;
+export const OUTPUT_SIGNAL_LABELS: Partial<Record<SynergyTag, string>> = SYNERGY_TAG_LABELS;
 
-const SUPPORT_LABELS: Partial<Record<SynergyTag, string>> = {
+export const SUPPORT_SIGNAL_LABELS: Partial<Record<SynergyTag, string>> = {
   'damage:fire': 'Fire Damage support',
   'damage:physical': 'Physical Damage support',
   'damage:tactical': 'Tactical Damage support',
@@ -33,7 +33,7 @@ const SUPPORT_LABELS: Partial<Record<SynergyTag, string>> = {
   'stat:initiative': 'Initiative support',
 };
 
-const BENEFIT_LABELS: Partial<Record<SynergyTag, string>> = {
+export const BENEFIT_SIGNAL_LABELS: Partial<Record<SynergyTag, string>> = {
   ...SYNERGY_TAG_LABELS,
   'stat:strength': 'Strength support',
   'stat:instinct': 'Instinct support',
@@ -145,11 +145,11 @@ export function buildDragonDetailPresentation(
 ): DragonDetailPresentation {
   const provides = profile
     ? collectUnique([
-        ...describeSignals(profile.outputs, OUTPUT_LABELS),
-        ...describeSignals(profile.supports, SUPPORT_LABELS),
+        ...describeSignals(profile.outputs, OUTPUT_SIGNAL_LABELS),
+        ...describeSignals(profile.supports, SUPPORT_SIGNAL_LABELS),
       ])
     : [];
-  const benefitsFrom = profile ? collectUnique(describeSignals(profile.benefitsFrom, BENEFIT_LABELS)) : [];
+  const benefitsFrom = profile ? collectUnique(describeSignals(profile.benefitsFrom, BENEFIT_SIGNAL_LABELS)) : [];
   const placementNotes = profile ? collectUnique(describePlacementNotes(profile)) : [];
   const headerLine = profile ? buildHeadlineLine(profile) : 'Metadata-only record. Ability details not verified.';
 
@@ -187,9 +187,20 @@ export function summarizeAbility(ability: AbilityDefinition): AbilitySummaryPres
   };
 }
 
+export function describeSignalLabels(
+  signals: SynergySignal[],
+  labels: Partial<Record<SynergyTag, string>> = OUTPUT_SIGNAL_LABELS,
+): string[] {
+  return describeSignals(signals, labels);
+}
+
+export function labelPriority(left: string, right: string): number {
+  return headlinePriority(left) - headlinePriority(right) || left.localeCompare(right);
+}
+
 function describeSignals(
   signals: SynergySignal[],
-  labels: Partial<Record<SynergyTag, string>> = OUTPUT_LABELS,
+  labels: Partial<Record<SynergyTag, string>> = OUTPUT_SIGNAL_LABELS,
 ): string[] {
   return collectUnique(
     signals.flatMap((signal) =>
@@ -236,13 +247,13 @@ function buildHeadlineLine(profile: DragonSynergyProfile): string {
 
 function headlineLabelsForOutput(signal: SynergySignal): string[] {
   return displayTagsFrom(providedTags(signal)).flatMap((tag) => {
-    const label = OUTPUT_LABELS[tag] ?? null;
+    const label = OUTPUT_SIGNAL_LABELS[tag] ?? null;
     return label ? [label] : [];
   });
 }
 
 function headlineLabelsForSupport(signal: SynergySignal): string[] {
-  const label = SUPPORT_LABELS[signal.tag] ?? null;
+  const label = SUPPORT_SIGNAL_LABELS[signal.tag] ?? null;
   if (!label) {
     return [];
   }

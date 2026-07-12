@@ -2,6 +2,10 @@
 
 ## Unreleased
 
+- Cleaned Formation Builder selected-dragon cards by removing repeated curated-profile blocks and command unlock-noise rows, while showing Vanguard Traits only for the Vanguard slot.
+- Added compact Provides and Benefits from signal chips to Formation Builder cards with active/inactive formation-context state.
+- Replaced Formation Builder dragon dropdowns with a searchable Add/Change Dragon selector with rarity, breed, verification, Provides, and Benefits from filters.
+- Added View details actions to Formation Builder cards and selector rows using the shared Dragon Details modal.
 - Aligned public site metadata and docs with https://dragonfirelab.com.
 - Added the GitHub Pages CNAME for `dragonfirelab.com`.
 - Reviewed the Vite deployment base path for the custom domain and kept the existing relative asset base for root-domain Pages builds.
