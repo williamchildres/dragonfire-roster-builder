@@ -1,11 +1,11 @@
 {
   "format": "dragonfire-lab-project-context",
   "contextVersion": 2,
-  "generatedAt": "2026-07-12T21:10:25.303Z",
+  "generatedAt": "2026-07-12T21:55:59.162Z",
   "source": {
     "repository": "https://github.com/williamchildres/dragonfire-roster-builder",
-    "branch": "ui/polish-formation-builder-ui",
-    "commit": "56c1893e33702f0d3ec229e1b89db684bc7ba59f",
+    "branch": "fix/formation-tag-audit-display",
+    "commit": "2ff8c1ebb93595376ce4ba7766c41d4f4fa03d63",
     "databaseVersion": "0.6.4",
     "dataSchemaVersion": 13,
     "localRosterSchemaVersion": 4,

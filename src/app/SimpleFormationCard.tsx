@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import type { AbilityDefinition, Dragon, FormationPosition, OwnedDragon, TroopType } from '../models/dragon';
 import { FORMATION_POSITIONS } from '../models/dragon';
 import { positionLabels } from '../services/teamShare';
@@ -20,14 +21,16 @@ export function SimpleFormationCard({
   position: FormationPosition;
   dragon: Dragon | null;
   rosterEntry?: OwnedDragon;
-  signalChips: { provides: FormationSignalChip[]; benefitsFrom: FormationSignalChip[] };
+  signalChips: {
+    damageProfile: FormationSignalChip[];
+    provides: FormationSignalChip[];
+    benefitsFrom: FormationSignalChip[];
+  };
   onChooseDragon: () => void;
   onOpenDetails: (dragon: Dragon) => void;
   onMove: (position: FormationPosition) => void;
   onClear: () => void;
 }) {
-  const verificationLabel = dragon ? getPublicVerificationLabel(dragon.dataStatus) : null;
-  const verificationTone = dragon ? getPublicVerificationTone(dragon.dataStatus) : null;
   const owned = dragon ? rosterEntry?.owned === true : false;
   const starSummary = dragon && owned ? (rosterEntry?.starRank !== null && rosterEntry?.starRank !== undefined ? `Star ${rosterEntry.starRank}` : 'Star unknown') : null;
 
@@ -49,14 +52,11 @@ export function SimpleFormationCard({
               <div className="dragon-card-chips" aria-label={`${dragon.name} metadata`}>
                 <span className="badge">{dragon.rarity}</span>
                 <span className="badge">{dragon.breed}</span>
-                {verificationLabel ? (
-                  <span className={`badge verification-${verificationTone ?? 'verified'}`}>{verificationLabel}</span>
-                ) : null}
-                <span className="badge">{owned ? 'Owned / Hatched' : 'Not owned'}</span>
                 {starSummary ? <span className="badge">{starSummary}</span> : null}
               </div>
             </div>
           </div>
+          <FormationSignalPanel title="Damage profile" chips={signalChips.damageProfile} fallback="No current damage profile recorded." />
           <FormationSignalPanel title="Provides" chips={signalChips.provides} fallback="No formation-wide output profile recorded." />
           <FormationSignalPanel title="Benefits from" chips={signalChips.benefitsFrom} fallback="No mapped incoming synergy yet." />
           <SimpleCommandPanel command={dragon.command} />
@@ -161,7 +161,7 @@ function FormationSignalPanel({
   chips,
   fallback,
 }: {
-  title: 'Provides' | 'Benefits from';
+  title: 'Damage profile' | 'Provides' | 'Benefits from';
   chips: FormationSignalChip[];
   fallback: string;
 }) {
@@ -210,15 +210,6 @@ function AbilitySummary({ ability }: { ability: AbilityDefinition }) {
   return (
     <div className="ability-summary compact-ability-summary">
       <p className="ability-summary-text">{summary.plainSummary}</p>
-      {summary.chips.length > 0 ? (
-        <ul className="chip-list ability-chip-list">
-          {summary.chips.map((chip) => (
-            <li key={chip} className="chip">
-              {chip}
-            </li>
-          ))}
-        </ul>
-      ) : null}
     </div>
   );
 }
@@ -268,12 +259,26 @@ function TraitPositionStatus({
 }
 
 function RawDescription({ text }: { text: string }) {
+  const [expanded, setExpanded] = useState(false);
+
   return (
-    <div className="raw-ability-text">
-      {text.split(/\n\n+/).map((paragraph) => (
-        <p key={paragraph}>{paragraph}</p>
-      ))}
-    </div>
+    <>
+      <button
+        type="button"
+        className="text-button formation-wording-toggle"
+        aria-expanded={expanded}
+        onClick={() => setExpanded((current) => !current)}
+      >
+        {expanded ? 'Hide full wording' : 'Show full wording'}
+      </button>
+      {expanded ? (
+        <div className="raw-ability-text">
+          {text.split(/\n\n+/).map((paragraph) => (
+            <p key={paragraph}>{paragraph}</p>
+          ))}
+        </div>
+      ) : null}
+    </>
   );
 }
 
