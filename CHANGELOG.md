@@ -2,6 +2,7 @@
 
 ## Unreleased
 
+- Polished Dragon Details ability cards by renaming "What it does" to "Abilities", moving unlock requirements into compact header badges, removing redundant placement/evidence rows from public ability cards, and fixing at-a-glance chip stretching.
 - Corrected Dragon Details so Benefits from reflects mapped incoming synergy signals such as Burn when profile data includes them.
 - Preserved specific status labels such as Stagger in Dragon Details ability summaries and at-a-glance chips while retaining broad family rollups such as Control.
 - Add Dragon success banner now names the added dragon, auto-dismisses after a few seconds, and clears immediately when leaving My Roster.

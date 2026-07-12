@@ -12,7 +12,6 @@ import type {
   VerificationStatus,
 } from '../models/dragon';
 import { simpleSynergyProfiles } from '../synergy/profiles';
-import { positionLabels } from '../services/teamShare';
 import { buildDragonDetailPresentation, summarizeAbility, type DragonDetailPresentation } from './dragonDetailPresentation';
 import { getPublicRosterSourceLabel, getPublicVerificationLabel, getPublicVerificationTone } from './publicCardLabels';
 
@@ -111,7 +110,7 @@ export function DragonDetailsDialog({
           <div className="details-main">
             <DragonAtAGlance presentation={presentation} />
             <section className="panel details-abilities-panel">
-              <h3>What it does</h3>
+              <h3>Abilities</h3>
               <div className="ability-stack">
                 {dragon.command ? (
                   <DragonAbilityCard ability={dragon.command} rosterEntry={rosterEntry} onUpdateRoster={onUpdateRoster} />
@@ -196,11 +195,6 @@ function DragonAtAGlance({ presentation }: { presentation: DragonDetailPresentat
           items={presentation.benefitsFrom}
           fallback="No mapped incoming synergy yet."
         />
-        <AtAGlanceCard
-          title="Placement notes"
-          items={presentation.placementNotes}
-          fallback="No special placement requirement recorded."
-        />
       </div>
     </section>
   );
@@ -249,21 +243,23 @@ function DragonAbilityCard({
     ability.unlockStarRank !== null &&
     (starRank === null || starRank < ability.unlockStarRank);
   const habitLevel = rosterEntry?.habitLevels[ability.id] ?? null;
+  const requirementBadge = formatRequirementBadge(ability);
 
   return (
     <article className="ability-card">
       <div className="ability-card-header">
-        <div>
+        <div className="ability-card-title">
           <h4>{ability.name}</h4>
           <p className="ability-badges">
-            <span className="badge">{titleCase(ability.kind)}</span>
+            <span className="badge">{publicAbilityKindLabel(ability)}</span>
             <span className="badge">{ability.abilityClass ? titleCase(ability.abilityClass) : 'Unknown Class'}</span>
             <span className={`badge verification-${getPublicVerificationTone(ability.verification.status) ?? 'verified'}`}>
               {getPublicVerificationLabel(ability.verification.status) ?? verificationLabel(ability.verification.status)}
             </span>
-            {locked ? <span className="badge">Locked preview</span> : <span className="badge">Unlocked or available</span>}
+            {locked ? <span className="badge">Locked preview</span> : null}
           </p>
         </div>
+        {requirementBadge ? <span className="requirement-badge">{requirementBadge}</span> : null}
       </div>
 
       <div className="ability-summary">
@@ -279,27 +275,6 @@ function DragonAbilityCard({
           </ul>
         ) : null}
       </div>
-
-      <dl className="detail-list ability-meta">
-        <div>
-          <dt>Unlock requirement</dt>
-          <dd>{formatUnlockRequirement(ability)}</dd>
-        </div>
-        <div>
-          <dt>Position requirement</dt>
-          <dd>{ability.positionRequirement ? positionLabels[ability.positionRequirement] : 'No special position requirement'}</dd>
-        </div>
-        <div>
-          <dt>Evidence</dt>
-          <dd>{ability.evidenceIds.length > 0 ? ability.evidenceIds.length : unknown}</dd>
-        </div>
-        {ability.kind === 'habit' ? (
-          <div>
-            <dt>Saved Habit Level</dt>
-            <dd>{habitLevel ?? 'Not recorded'}</dd>
-          </div>
-        ) : null}
-      </dl>
 
       {ability.kind === 'habit' ? (
         <label className="ability-habit-level">
@@ -587,15 +562,21 @@ function RosterFields({
   );
 }
 
-function formatUnlockRequirement(ability: AbilityDefinition) {
-  const unlockParts: string[] = [];
-  if (ability.unlockStarRank !== null) {
-    unlockParts.push(`Star Rank ${ability.unlockStarRank}`);
+function publicAbilityKindLabel(ability: AbilityDefinition) {
+  if (ability.kind === 'trait') {
+    return 'Vanguard Trait';
   }
-  if (ability.minimumDragonLevel !== null) {
-    unlockParts.push(`Level ${ability.minimumDragonLevel}+`);
+  return titleCase(ability.kind);
+}
+
+function formatRequirementBadge(ability: AbilityDefinition) {
+  if (ability.kind === 'trait' && ability.minimumDragonLevel !== null) {
+    return `Level ${ability.minimumDragonLevel}+`;
   }
-  return unlockParts.length > 0 ? unlockParts.join(' / ') : 'No star rank requirement recorded';
+  if (ability.kind === 'habit' && ability.unlockStarRank !== null) {
+    return `★ ${ability.unlockStarRank}`;
+  }
+  return null;
 }
 
 function verificationLabel(status: string) {
