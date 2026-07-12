@@ -18,6 +18,7 @@ import { useEffect, useMemo, useState, type ChangeEvent } from 'react';
 import { DragonDetailsDialog } from './DragonDetailModal';
 import { SimpleFormationAnalysis } from './SimpleFormationAnalysis';
 import { SimpleFormationCard } from './SimpleFormationCard';
+import { getPublicVerificationLabel, getPublicVerificationTone } from './publicCardLabels';
 import dragonfireHero from '../assets/dragonfire-hero.png';
 import { databaseMetadata, repository } from '../data/databaseMetadata';
 import { dragons } from '../data/dragons';
@@ -907,13 +908,11 @@ function DragonCard({
 }) {
   const owned = rosterEntry?.owned === true;
   const starRank = rosterEntry?.starRank ?? null;
-  const verificationLabel = formatStatus(dragon.dataStatus);
-  const rosterSourceLabel = formatRosterSourceStatus(dragon.rosterSourceStatus);
-  const isMetadataOnly = dragon.dataStatus === 'official-metadata-only';
-  const sourceChip = dragon.rosterSourceStatus === 'official-website' ? null : rosterSourceLabel;
+  const verificationLabel = getPublicVerificationLabel(dragon.dataStatus);
+  const verificationTone = getPublicVerificationTone(dragon.dataStatus);
   const ownershipSummary = owned ? 'Owned / Hatched' : 'Not owned';
   const starSummary = owned ? (starRank !== null ? `Star ${starRank}` : 'Star unknown') : null;
-  const summaryNote = !owned && isMetadataOnly ? 'Ability details not verified' : null;
+  const summaryNote = verificationLabel === 'Metadata Only' ? 'Ability details not verified' : null;
 
   return (
     <article className={`dragon-card rarity-${dragon.rarity.toLowerCase()}`}>
@@ -925,19 +924,18 @@ function DragonCard({
             <div className="dragon-card-chips" aria-label={`${dragon.name} metadata`}>
               <span className="badge">{dragon.rarity}</span>
               <span className="badge">{dragon.breed}</span>
-              <span className={`badge verification-${dragon.dataStatus}`}>{verificationLabel}</span>
-              {sourceChip ? <span className="badge">{sourceChip}</span> : null}
+              {verificationLabel ? (
+                <span className={`badge verification-${verificationTone ?? 'verified'}`}>{verificationLabel}</span>
+              ) : null}
               {dragon.isNew ? <span className="badge new">New</span> : null}
             </div>
           </div>
         </div>
-        {!editable ? (
-          <div className="dragon-card-summary" aria-label={`${dragon.name} roster summary`}>
-            <span className="dragon-card-summary-main">{ownershipSummary}</span>
-            {starSummary ? <span className="dragon-card-summary-chip">{starSummary}</span> : null}
-            {summaryNote ? <span className="dragon-card-summary-note">{summaryNote}</span> : null}
-          </div>
-        ) : null}
+        <div className="dragon-card-summary" aria-label={`${dragon.name} roster summary`}>
+          <span className="dragon-card-summary-main">{ownershipSummary}</span>
+          {starSummary ? <span className="dragon-card-summary-chip">{starSummary}</span> : null}
+          {summaryNote ? <span className="dragon-card-summary-note">{summaryNote}</span> : null}
+        </div>
       </div>
 
       {editable ? (
