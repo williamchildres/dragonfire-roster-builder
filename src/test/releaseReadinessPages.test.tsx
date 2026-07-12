@@ -58,7 +58,7 @@ describe('release readiness pages', () => {
 
     render(<App />);
 
-    expect(screen.getByRole('heading', { name: /plan stronger dragonfire formations from verified dragon data/i })).toBeInTheDocument();
+    expect(screen.getByRole('heading', { name: 'Overview' })).toBeInTheDocument();
     expect(window.location.hash).toBe('');
   });
 
@@ -76,7 +76,7 @@ describe('release readiness pages', () => {
     render(<App />);
 
     await user.click(screen.getByRole('button', { name: /overview/i }));
-    expect(screen.getByRole('heading', { name: /plan stronger dragonfire formations from verified dragon data/i })).toBeInTheDocument();
+    expect(screen.getByRole('heading', { name: 'Overview' })).toBeInTheDocument();
 
     await user.click(screen.getByRole('button', { name: /^my roster$/i }));
     expect(screen.getByRole('heading', { name: 'My Roster' })).toBeInTheDocument();

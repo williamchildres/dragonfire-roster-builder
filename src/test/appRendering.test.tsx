@@ -14,6 +14,14 @@ describe('Dragonfire Roster Lab app', () => {
     window.localStorage.clear();
   });
 
+  it('renders Dragonfire Lab in the public header and not the old visible brand text', () => {
+    render(<App />);
+
+    const banner = screen.getByRole('banner');
+    expect(within(banner).getByRole('heading', { name: 'Dragonfire Lab' })).toBeInTheDocument();
+    expect(within(banner).queryByText('Dragonfire Roster Lab')).not.toBeInTheDocument();
+  });
+
   async function openAddDragon(user: ReturnType<typeof userEvent.setup>) {
     await user.click(screen.getByRole('button', { name: /^my roster$/i }));
     await user.click(screen.getAllByRole('button', { name: /\+ add dragon/i })[0]!);
@@ -158,28 +166,18 @@ describe('Dragonfire Roster Lab app', () => {
 
   it('renders the polished Overview landing content and About copy', async () => {
     const user = userEvent.setup();
-    const detailedAbilityCount = dragons.filter((dragon) => dragon.command && dragon.trait && dragon.habits.length > 0).length;
-    const rarityCounts = dragons.reduce<Record<string, number>>((counts, dragon) => {
-      counts[dragon.rarity] = (counts[dragon.rarity] ?? 0) + 1;
-      return counts;
-    }, {});
-    const breedCounts = dragons.reduce<Record<string, number>>((counts, dragon) => {
-      counts[dragon.breed] = (counts[dragon.breed] ?? 0) + 1;
-      return counts;
-    }, {});
-
     render(<App />);
 
+    expect(screen.getByRole('heading', { name: 'Overview' })).toBeInTheDocument();
+    expect(screen.getByRole('img', { name: /dragonfire lab dragon emblem/i })).toBeInTheDocument();
+    expect(screen.queryByText(/local-first formation planning/i)).not.toBeInTheDocument();
     expect(
-      screen.getByRole('heading', {
+      screen.queryByRole('heading', {
         name: /plan stronger dragonfire formations from verified dragon data/i,
       }),
-    ).toBeInTheDocument();
-    expect(screen.getByRole('img', { name: /dragonfire roster lab dragon emblem/i })).toBeInTheDocument();
-    expect(screen.queryByRole('button', { name: /browse dragons/i })).not.toBeInTheDocument();
-    expect(screen.getByRole('button', { name: /build my roster/i })).toBeInTheDocument();
-    expect(screen.getByRole('button', { name: /open formation builder/i })).toBeInTheDocument();
-    expect(screen.queryByRole('button', { name: /update my roster/i })).not.toBeInTheDocument();
+    ).not.toBeInTheDocument();
+    expect(screen.queryByRole('button', { name: /build my roster/i })).not.toBeInTheDocument();
+    expect(screen.queryByRole('button', { name: /open formation builder/i })).not.toBeInTheDocument();
 
     expect(screen.getByRole('heading', { name: 'Track Your Roster' })).toBeInTheDocument();
     expect(screen.getByRole('heading', { name: 'Compare Verified Dragons' })).toBeInTheDocument();
@@ -189,25 +187,17 @@ describe('Dragonfire Roster Lab app', () => {
     expect(screen.getByText(/19 \/ 31 dragons mapped/i)).toBeInTheDocument();
     expect(screen.getByText('61%')).toBeInTheDocument();
 
-    const databaseCoverage = screen.getByRole('heading', { name: 'Catalog Coverage' }).closest('.overview-stat-group');
-    expect(databaseCoverage).not.toBeNull();
-    expect(within(databaseCoverage as HTMLElement).getByText('Known dragons').closest('.stat-card')).toHaveTextContent('31');
-    expect(within(databaseCoverage as HTMLElement).getByText('Detailed ability records').closest('.stat-card')).toHaveTextContent(String(detailedAbilityCount));
-    expect(within(databaseCoverage as HTMLElement).getByText('Curated simple profiles').closest('.stat-card')).toHaveTextContent('19');
-    expect(within(databaseCoverage as HTMLElement).getByText('Metadata-only dragons').closest('.stat-card')).toHaveTextContent('12');
+    const rarityCoverage = [
+      { name: 'Legendary coverage', text: '9 / 9 mapped' },
+      { name: 'Epic coverage', text: '10 / 10 mapped' },
+      { name: 'Rare coverage', text: '0 / 12 mapped' },
+    ];
 
-    const rosterBreakdown = screen.getByRole('heading', { name: 'Roster Breakdown' }).closest('.overview-stat-group');
-    expect(rosterBreakdown).not.toBeNull();
-    expect(within(rosterBreakdown as HTMLElement).getByText('Legendary').closest('.stat-card')).toHaveTextContent(String(rarityCounts.Legendary));
-    expect(within(rosterBreakdown as HTMLElement).getByText('Epic').closest('.stat-card')).toHaveTextContent(String(rarityCounts.Epic));
-    expect(within(rosterBreakdown as HTMLElement).getByText('Rare').closest('.stat-card')).toHaveTextContent(String(rarityCounts.Rare));
-
-    const roleBreakdown = screen.getByRole('heading', { name: 'Role Breakdown' }).closest('.overview-stat-group');
-    expect(roleBreakdown).not.toBeNull();
-    expect(within(roleBreakdown as HTMLElement).getByText('Champion').closest('.stat-card')).toHaveTextContent(String(breedCounts.Champion));
-    expect(within(roleBreakdown as HTMLElement).getByText('Hunter').closest('.stat-card')).toHaveTextContent(String(breedCounts.Hunter));
-    expect(within(roleBreakdown as HTMLElement).getByText('Sentinel').closest('.stat-card')).toHaveTextContent(String(breedCounts.Sentinel));
-    expect(within(roleBreakdown as HTMLElement).getByText('Warrior').closest('.stat-card')).toHaveTextContent(String(breedCounts.Warrior));
+    for (const coverage of rarityCoverage) {
+      const card = screen.getByRole('heading', { name: coverage.name }).closest('.coverage-card');
+      expect(card).not.toBeNull();
+      expect(card).toHaveTextContent(coverage.text);
+    }
 
     const latestUpdate = screen.getByRole('heading', { name: /latest update - v0\.6\.4/i }).closest('.latest-update-panel');
     expect(latestUpdate).not.toBeNull();

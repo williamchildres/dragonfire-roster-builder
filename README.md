@@ -1,6 +1,6 @@
-# Dragonfire Roster Lab
+# Dragonfire Lab
 
-Dragonfire Roster Lab is an unofficial community tool for Game of Thrones: Dragonfire. It is a curated dragon knowledge base and transparent tag-and-position formation recommender.
+Dragonfire Lab is an unofficial community tool for Game of Thrones: Dragonfire. It is a curated dragon knowledge base and transparent tag-and-position formation recommender.
 
 It is not a combat simulator.
 
