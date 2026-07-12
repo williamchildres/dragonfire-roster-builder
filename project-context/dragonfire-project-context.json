@@ -1,11 +1,11 @@
 {
   "format": "dragonfire-lab-project-context",
   "contextVersion": 2,
-  "generatedAt": "2026-07-11T06:11:56.877Z",
+  "generatedAt": "2026-07-12T01:25:30.113Z",
   "source": {
     "repository": "https://github.com/williamchildres/dragonfire-roster-builder",
-    "branch": "ui/polish-dragon-details",
-    "commit": "632b2327f8fe1e90c05e750239e9a07a276a70c0",
+    "branch": "fix/dragon-detail-summary",
+    "commit": "c3514e12b473146c18140ce40103ef11e5e042a5",
     "databaseVersion": "0.6.4",
     "dataSchemaVersion": 13,
     "localRosterSchemaVersion": 3,
