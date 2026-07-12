@@ -653,5 +653,24 @@ describe('Dragonfire Roster Lab app', () => {
     expect(screen.getByText('Right Flank')).toBeInTheDocument();
   });
 
+  it('shows optional Buy Me a Coffee support links in About and the footer', async () => {
+    const user = userEvent.setup();
+    render(<App />);
+
+    await user.click(screen.getByRole('button', { name: /about/i }));
+
+    const aboutSupportLink = screen.getByRole('link', { name: /buy me a dragon/i });
+    expect(aboutSupportLink).toHaveAttribute('href', 'https://buymeacoffee.com/williamchildres');
+    expect(aboutSupportLink).toHaveAttribute('target', '_blank');
+    expect(aboutSupportLink).toHaveAttribute('rel', expect.stringContaining('noopener'));
+    expect(aboutSupportLink).toHaveAttribute('rel', expect.stringContaining('noreferrer'));
+
+    const footerSupportLink = screen.getByRole('link', { name: /support the project/i });
+    expect(footerSupportLink).toHaveAttribute('href', 'https://buymeacoffee.com/williamchildres');
+    expect(footerSupportLink).toHaveAttribute('target', '_blank');
+    expect(footerSupportLink).toHaveAttribute('rel', expect.stringContaining('noopener'));
+    expect(footerSupportLink).toHaveAttribute('rel', expect.stringContaining('noreferrer'));
+  });
+
 
 });

@@ -1540,6 +1540,22 @@ th {
   margin-bottom: 0;
 }
 
+.support-link {
+  text-decoration: none;
+  width: fit-content;
+}
+
+.site-footer-inner {
+  display: grid;
+  gap: 0.4rem;
+  margin: 0 auto;
+  max-width: 70rem;
+}
+
+.site-footer-copy {
+  margin-bottom: 0;
+}
+
 .status-legend {
   display: grid;
   gap: 0.7rem;
@@ -1566,15 +1582,16 @@ th {
   text-align: center;
 }
 
-.site-footer-inner {
-  display: grid;
-  gap: 0.4rem;
-  margin: 0 auto;
-  max-width: 70rem;
+.site-footer p {
+  margin-bottom: 0.5rem;
 }
 
-.site-footer-copy {
+.site-footer-support {
   margin-bottom: 0;
+}
+
+.site-footer-support .support-link {
+  margin: 0 auto;
 }
 
 @media (max-width: 900px) {

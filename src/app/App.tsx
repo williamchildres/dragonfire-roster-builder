@@ -62,6 +62,8 @@ import { simpleSynergyProfiles } from '../synergy/profiles';
 import type { SimpleProgressionByDragonId } from '../synergy/types';
 export { RawWordingDisclosure } from './DragonDetailModal';
 
+const buyMeACoffeeUrl = 'https://buymeacoffee.com/williamchildres';
+
 type Section = 'home' | 'database' | 'roster' | 'team' | 'status' | 'about';
 type StatusMessage = { kind: 'success' | 'error' | 'info'; text: string };
 
@@ -316,6 +318,16 @@ export function App() {
           <p className="site-footer-copy">
             Roster data stays in your browser. Public verification wording is summarized from official
             roster pages, screenshot evidence, and curated community review.
+          </p>
+          <p className="site-footer-support">
+            <a
+              className="secondary-button support-link"
+              href={buyMeACoffeeUrl}
+              rel="noopener noreferrer"
+              target="_blank"
+            >
+              Support the project <ExternalLink size={16} aria-hidden="true" />
+            </a>
           </p>
         </div>
       </footer>
@@ -957,6 +969,24 @@ function AboutSection() {
             . Issues and contributions can be used for sourced corrections.
           </p>
         </div>
+      </div>
+      <div className="support-panel panel readable">
+        <p className="eyebrow">Optional support</p>
+        <h3>Keep the lab running</h3>
+        <p>
+          Dragonfire Roster Lab is free to use. If the tool helps you, you can optionally support
+          development, hosting, and continued data entry.
+        </p>
+        <p>
+          <a
+            className="primary-button support-link"
+            href={buyMeACoffeeUrl}
+            rel="noopener noreferrer"
+            target="_blank"
+          >
+            🐉 Buy me a dragon <ExternalLink size={16} aria-hidden="true" />
+          </a>
+        </p>
       </div>
     </section>
   );
