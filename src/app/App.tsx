@@ -18,7 +18,7 @@ import { useEffect, useMemo, useState, type ChangeEvent } from 'react';
 import { DragonDetailsDialog } from './DragonDetailModal';
 import { SimpleFormationAnalysis } from './SimpleFormationAnalysis';
 import { SimpleFormationCard } from './SimpleFormationCard';
-import { getPublicVerificationLabel, getPublicVerificationTone } from './publicCardLabels';
+import { getPublicRosterSourceLabel, getPublicVerificationLabel, getPublicVerificationTone } from './publicCardLabels';
 import dragonfireHero from '../assets/dragonfire-hero.png';
 import { databaseMetadata, repository } from '../data/databaseMetadata';
 import { dragons } from '../data/dragons';
@@ -29,7 +29,6 @@ import {
   BREEDS,
   FORMATION_POSITIONS,
   RARITIES,
-  VERIFICATION_STATUSES,
   type Dragon,
   type DragonBreed,
   type DragonRarity,
@@ -84,7 +83,14 @@ const sectionIcons = {
   about: Info,
 };
 
-const unknown = 'Not yet verified';
+const verificationStatusOptions: VerificationStatus[] = [
+  'official-metadata-only',
+  'community-unverified',
+  'community-verified',
+  'officially-confirmed',
+];
+
+const unknown = 'Not verified yet';
 
 export function App() {
   const [activeSection, setActiveSection] = useState<Section>(() =>
@@ -301,9 +307,17 @@ export function App() {
       </main>
 
       <footer className="site-footer">
-        Dragonfire Roster Lab is an unofficial community project and is not affiliated with or
-        endorsed by Warner Bros. Entertainment, HBO, or the developers of Game of Thrones:
-        Dragonfire. Game names and related trademarks belong to their respective owners.
+        <div className="site-footer-inner">
+          <p className="site-footer-copy">
+            Dragonfire Roster Lab is an unofficial community tool. It is not affiliated with or
+            endorsed by Warner Bros. Entertainment, HBO, or the developers of Game of Thrones:
+            Dragonfire.
+          </p>
+          <p className="site-footer-copy">
+            Roster data stays in your browser. Public verification wording is summarized from official
+            roster pages, screenshot evidence, and curated community review.
+          </p>
+        </div>
       </footer>
 
       {selectedDragon ? (
@@ -506,7 +520,7 @@ function DatabaseSection({
       <SectionHeading
         eyebrow="Public roster metadata"
         title="Dragon Database"
-        description="Search, filter, and mark ownership for all currently seeded dragons."
+        description="Search, filter, and mark ownership for the currently seeded dragons."
       />
       <FilterPanel
         filters={filters}
@@ -565,7 +579,7 @@ function RosterSection({
       <SectionHeading
         eyebrow="Stored in your browser"
         title="My Roster"
-        description="Manage ownership, star rank, and reign level with localStorage persistence."
+        description="Manage ownership, star rank, and reign level with local browser storage."
       />
       <div className="toolbar">
         <label>
@@ -680,7 +694,7 @@ function FormationBuilderSection({
       <SectionHeading
         eyebrow="Three-position planner"
         title="Formation Builder"
-        description="Assign one unique dragon to each position and review curated high-level formation relationships."
+        description="Assign one unique dragon to each position and review curated profile relationships."
       />
       <div className="toolbar">
         <label className="check-row">
@@ -746,91 +760,119 @@ function DataStatusSection() {
   return (
     <section aria-labelledby="status-title">
       <SectionHeading
-        eyebrow={`Database ${databaseMetadata.databaseVersion} - Schema ${databaseMetadata.schemaVersion}`}
+        eyebrow="Release data status"
         title="Data Status"
-        description="The current release tracks official roster metadata, screenshot-verified ability wording, and curated simple synergy profile coverage."
+        description="This page shows how much of the dragon catalog is verified, mapped, or still metadata-only."
       />
       <div className="panel readable">
+        <h3>What this page means</h3>
         <p>
-          {officialCount} dragons are listed on the ordinary public roster site. {pendingCount} dragons
-          are verified from in-game screenshots but are pending official public roster pages. Commands,
-          Traits, Habits, affinities, and high-level simple synergy profiles require field-level
-          evidence or curated review before they appear in the app.
+          The catalog is organized around what has been publicly checked and what still needs a fuller
+          record. Verified dragons have screenshot-backed ability wording or official confirmation.
+          Metadata-only dragons are known by identity, but their ability details are not verified yet.
         </p>
         <p>
-          Last verification date: <strong>{databaseMetadata.officialRosterLastChecked}</strong>. Exact
-          timing, rolls, target overlap, stacks, damage formulas, and combat simulation are not modeled.
-          Raw wording remains visible for player reference.
-        </p>
-        <p>
-          Account observation snapshots are dynamic player-specific records. They can reflect dragon
-          level, Star Rank, Stronghold upgrades, faction bonuses, alliance bonuses, stamina state, and
-          other modifiers, so they are not used for generic comparison or synergy scoring.
+          Curated profiles are the dragons with a mapped profile available. Official entries appear on
+          the public roster source, and some dragons still have in-game evidence while waiting for a
+          public official page.
         </p>
       </div>
-      <div className="stats-grid" aria-label="Data source summary">
-        <StatCard label="Known in-game dragons" value={dragons.length} />
+      <div className="stats-grid" aria-label="Coverage summary">
+        <StatCard label="Known dragons" value={dragons.length} />
         <StatCard label="Detailed ability records" value={detailedCount} />
         <StatCard label="Curated simple profiles" value={simpleSynergyProfiles.length} />
         <StatCard label="Metadata-only dragons" value={metadataOnlyCount} />
         <StatCard label="Official-site entries" value={officialCount} />
         <StatCard label="Pending official site" value={pendingCount} />
       </div>
-      <div className="status-legend">
-        {VERIFICATION_STATUSES.map((status) => (
-          <div className="legend-item" key={status}>
-            <span className="badge">{formatStatus(status)}</span>
-            <span>{statusDescription(status)}</span>
+      <div className="panel readable">
+        <h3>Verification labels</h3>
+        <div className="status-legend">
+          <div className="legend-item">
+            <span className="badge verification-verified">Verified</span>
+            <span>Ability wording has been checked from screenshots or community evidence.</span>
           </div>
-        ))}
+          <div className="legend-item">
+            <span className="badge verification-metadata-only">Metadata Only</span>
+            <span>Identity is known, but ability details are not verified yet.</span>
+          </div>
+          <div className="legend-item">
+            <span className="badge">Official entry</span>
+            <span>The dragon appears on the public roster source.</span>
+          </div>
+          <div className="legend-item">
+            <span className="badge">Pending official site</span>
+            <span>The dragon has in-game evidence, but no public official page yet.</span>
+          </div>
+        </div>
       </div>
-      <div className="table-wrap">
-        <table>
-          <caption>Dragon profile coverage</caption>
-          <thead>
-            <tr>
-              <th>Dragon</th>
-              <th>Roster Source</th>
-              <th>Ability Wording</th>
-              <th>Simple Profile</th>
-              <th>Coverage Status</th>
-              <th>Sources</th>
-            </tr>
-          </thead>
-          <tbody>
-            {dragons.map((dragon) => (
-              <tr key={dragon.id}>
-                <td>{dragon.name}</td>
-                <td>{formatRosterSourceStatus(dragon.rosterSourceStatus)}</td>
-                <td>{hasDetailedAbilities(dragon) ? 'Command, Trait, and Habits recorded' : 'Metadata only'}</td>
-                <td>{mappedProfileIds.has(dragon.id) ? 'Curated' : 'Unmapped'}</td>
-                <td>{metadataOnlyIds.has(dragon.id) ? 'Neutral metadata-only' : mappedProfileIds.has(dragon.id) ? 'Detailed and mapped' : 'Needs simple profile review'}</td>
-                <td>
-                  {evidenceSources.some(
-                    (source) =>
-                      source.id === 'official-roster-2026-06-23' || source.id.startsWith(dragon.id),
-                  )
-                    ? 'Recorded'
-                    : unknown}
-                </td>
+      <div className="panel readable">
+        <h3>Coverage table</h3>
+        <div className="table-wrap">
+          <table>
+            <caption>Dragon profile coverage</caption>
+            <thead>
+              <tr>
+                <th>Dragon</th>
+                <th>Source</th>
+                <th>Ability Data</th>
+                <th>Synergy Profile</th>
+                <th>Status</th>
+                <th>Evidence</th>
               </tr>
-            ))}
-          </tbody>
-        </table>
+            </thead>
+            <tbody>
+              {dragons.map((dragon) => (
+                <tr key={dragon.id}>
+                  <td>{dragon.name}</td>
+                  <td>{getPublicRosterSourceLabel(dragon.rosterSourceStatus)}</td>
+                  <td>{hasDetailedAbilities(dragon) ? 'Verified' : 'Metadata Only'}</td>
+                  <td>{mappedProfileIds.has(dragon.id) ? 'Curated' : 'Unmapped'}</td>
+                  <td>{getPublicVerificationLabel(dragon.dataStatus) ?? 'Not verified'}</td>
+                  <td>
+                    {evidenceSources.some(
+                      (source) =>
+                        source.id === 'official-roster-2026-06-23' || source.id.startsWith(dragon.id),
+                    )
+                      ? 'Recorded'
+                      : 'Not recorded'}
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
       </div>
       <div className="panel readable">
-        <h3>Troop Matchup Rules</h3>
+        <h3>Limitations</h3>
         <p>
-          Troop matchup rules are stored separately from dragon troop affinities. Current verified
-          matchup records: {troopMatchupRules.length}.
+          Exact timing, rolls, damage formulas, target overlap, stacking, and full combat simulation are
+          not modeled.
+        </p>
+        <p>
+          Raw wording is preserved where available, and account observation snapshots are player-specific
+          records rather than canonical base stats.
         </p>
       </div>
       <div className="panel readable">
-        <h3>Manual Review Records</h3>
-        <p>
-          Current documented game build: <strong>{databaseMetadata.currentDocumentedGameBuild}</strong>.
-          Manual review records are separate from screenshot capture dates and data schema versions.
-        </p>
+        <h3>Support tables</h3>
+        <div className="table-wrap">
+          <table>
+            <caption>Troop matchup rules</caption>
+            <thead>
+              <tr>
+                <th>Matchup</th>
+                <th>Status</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Current verified matchup rules</td>
+                <td>{troopMatchupRules.length}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
         <div className="table-wrap">
           <table>
             <caption>Manual review status</caption>
@@ -869,25 +911,52 @@ function AboutSection() {
       <SectionHeading
         eyebrow="Open source fan project"
         title="About"
-        description="A local-first tool for organizing Dragonfire roster planning without private APIs or account access."
+        description="A local-first roster and formation planning tool for Dragonfire."
       />
-      <div className="panel readable">
-        <p>
-          Dragonfire Roster Lab is an unofficial fan project. It does not use a private game API,
-          does not ask for credentials, and stores roster notes only in your browser.
-        </p>
-        <p>
-          Ability evidence and curated profile updates require sourced community submissions. Users
-          should never submit account credentials, private profile information, or confidential
-          material.
-        </p>
-        <p>
-          The project is open source on{' '}
-          <a href={repository.url} target="_blank" rel="noreferrer">
-            GitHub <ExternalLink size={14} aria-hidden="true" />
-          </a>
-          .
-        </p>
+      <div className="about-grid">
+        <div className="panel readable">
+          <h3>What it is</h3>
+          <p>A local-first roster and formation planning tool for Dragonfire.</p>
+
+          <h3>What it does</h3>
+          <ul className="plain-list">
+            <li>Track owned dragons.</li>
+            <li>Review verified ability wording.</li>
+            <li>Compare dragon metadata.</li>
+            <li>Build three-position formations.</li>
+            <li>See curated high-level synergies, missing enablers, and placement conflicts.</li>
+          </ul>
+        </div>
+
+        <div className="panel readable">
+          <h3>Privacy and local-first storage</h3>
+          <p>No login is required. There is no private game API, no credential collection, and roster data plus notes stay in your browser.</p>
+        </div>
+
+        <div className="panel readable">
+          <h3>Data policy</h3>
+          <p>
+            Ability and profile updates require sourced community evidence. Please do not submit
+            credentials, private profile information, or confidential material.
+          </p>
+        </div>
+
+        <div className="panel readable">
+          <h3>Unofficial disclaimer</h3>
+          <p>
+            Dragonfire Roster Lab is an unofficial community tool and is not affiliated with or
+            endorsed by Warner Bros. Entertainment, HBO, or the developers of Game of Thrones:
+            Dragonfire.
+          </p>
+          <h3>Open source</h3>
+          <p>
+            The project is open source on{' '}
+            <a href={repository.url} target="_blank" rel="noreferrer">
+              GitHub <ExternalLink size={14} aria-hidden="true" />
+            </a>
+            . Issues and contributions can be used for sourced corrections.
+          </p>
+        </div>
       </div>
     </section>
   );
@@ -1086,9 +1155,9 @@ function FilterPanel({
           onChange={(event) => update({ status: event.target.value as VerificationStatus | 'all' })}
         >
           <option value="all">All statuses</option>
-          {VERIFICATION_STATUSES.map((status) => (
+          {verificationStatusOptions.map((status) => (
             <option key={status} value={status}>
-              {formatStatus(status)}
+              {getPublicVerificationLabel(status) ?? titleCase(status.replaceAll('-', ' '))}
             </option>
           ))}
         </select>
@@ -1194,37 +1263,6 @@ function getInitialFormation(): Formation {
   } catch {
     window.localStorage.removeItem('dragonfire-roster-lab:last-team');
     return emptyFormation();
-  }
-}
-
-function formatStatus(status: VerificationStatus) {
-  return status
-    .split('-')
-    .map((part) => titleCase(part))
-    .join(' ');
-}
-
-function statusDescription(status: VerificationStatus) {
-  switch (status) {
-    case 'official-metadata-only':
-      return 'Identity fields are sourced from public official roster pages; combat data is unknown.';
-    case 'community-unverified':
-      return 'Submitted by the community but not yet checked.';
-    case 'community-verified':
-      return 'Checked against community evidence.';
-    case 'officially-confirmed':
-      return 'Confirmed by official public material.';
-  }
-}
-
-function formatRosterSourceStatus(status: Dragon['rosterSourceStatus']) {
-  switch (status) {
-    case 'official-website':
-      return 'Official website';
-    case 'in-game-verified-pending-official-site':
-      return 'In-game verified, pending official site';
-    case 'community-unverified':
-      return 'Community unverified';
   }
 }
 

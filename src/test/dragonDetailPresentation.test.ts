@@ -58,8 +58,8 @@ describe('dragon detail presentation helpers', () => {
   it('returns the metadata-only fallback cleanly', () => {
     const presentation = buildDragonDetailPresentation(undefined);
 
-    expect(presentation.metadataNotice).toBe('Metadata-only record. Ability details not yet verified.');
-    expect(presentation.headerLine).toBe('Metadata-only record. Ability details not yet verified.');
+    expect(presentation.metadataNotice).toBe('Metadata-only record. Ability details not verified.');
+    expect(presentation.headerLine).toBe('Metadata-only record. Ability details not verified.');
     expect(presentation.provides).toEqual([]);
     expect(presentation.benefitsFrom).toEqual([]);
     expect(presentation.placementNotes).toEqual([]);

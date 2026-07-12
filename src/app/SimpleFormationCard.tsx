@@ -2,7 +2,7 @@ import type { Dragon, FormationPosition, OwnedDragon, TroopType } from '../model
 import { FORMATION_POSITIONS } from '../models/dragon';
 import { positionLabels, type Formation } from '../services/teamShare';
 
-const unknown = 'Not yet verified';
+const unknown = 'Not verified yet';
 
 export function SimpleFormationCard({
   position,
@@ -74,7 +74,7 @@ export function SimpleFormationCard({
           <DragonAffinityStrip dragonName={dragon.name} affinities={dragon.affinities} />
         </>
       ) : (
-        <p className="empty-card-note">Choose a dragon to see Command, Trait, affinity, and high-level profile coverage.</p>
+        <p className="empty-card-note">Choose a dragon to see command, trait, affinity, and curated profile coverage.</p>
       )}
     </article>
   );
@@ -82,9 +82,9 @@ export function SimpleFormationCard({
 
 function ProfileCoverageIndicator({ mapped }: { mapped: boolean }) {
   return (
-    <section className="card-mini-section profile-coverage" aria-label="High-level synergy profile">
-      <h4>High-level synergy</h4>
-      <p>{mapped ? 'High-level synergy profile available.' : 'High-level synergy profile not yet mapped.'}</p>
+    <section className="card-mini-section profile-coverage" aria-label="Curated profile">
+      <h4>Curated profile</h4>
+      <p>{mapped ? 'Curated profile available.' : 'Curated profile not yet mapped.'}</p>
     </section>
   );
 }
@@ -94,7 +94,7 @@ function SimpleCommandPanel({ command }: { command: Dragon['command'] }) {
     return (
       <section className="card-mini-section command-panel" aria-label="Command">
         <h4>Command</h4>
-        <p>Command data not yet verified.</p>
+        <p>Ability details not verified.</p>
       </section>
     );
   }
@@ -124,7 +124,7 @@ function SimpleTraitPanel({
     return (
       <section className="card-mini-section" aria-label="Trait status">
         <h4>Trait</h4>
-        <p>Trait data not yet verified.</p>
+        <p>Ability details not verified.</p>
       </section>
     );
   }
@@ -211,11 +211,11 @@ function DragonAffinityStrip({
       <h4>Affinities</h4>
       <div className="affinity-row">
         <span className="affinity-label">Favorable</span>
-        <AffinityIconList troopTypes={favorable} polarity="positive" emptyText="None verified" />
+        <AffinityIconList troopTypes={favorable} polarity="positive" emptyText="None recorded" />
       </div>
       <div className="affinity-row">
         <span className="affinity-label">Unfavorable</span>
-        <AffinityIconList troopTypes={unfavorable} polarity="negative" emptyText="None verified" />
+        <AffinityIconList troopTypes={unfavorable} polarity="negative" emptyText="None recorded" />
       </div>
     </section>
   );

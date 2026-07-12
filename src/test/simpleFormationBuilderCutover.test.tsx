@@ -7,7 +7,7 @@ import { createEmptyRoster, ROSTER_SCHEMA_VERSION, STORAGE_KEY } from '../servic
 
 type ProgressionSeed = Record<string, { starRank?: number | null; reignLevel?: number | null; owned?: boolean }>;
 const incompleteMissingEnablerNotice =
-  'Missing-enabler checks are incomplete until all selected dragons have high-level synergy profiles.';
+  'Missing-enabler checks are incomplete until all selected dragons have curated profiles.';
 
 describe('Formation Builder simple synergy cutover', () => {
   afterEach(() => {
@@ -287,7 +287,7 @@ describe('Formation Builder simple synergy cutover', () => {
       expect(within(card).getByRole('region', { name: 'Command' })).toBeInTheDocument();
       expect(within(card).getByRole('region', { name: /trait status/i })).toBeInTheDocument();
       expect(within(card).getByRole('region', { name: /affinities/i })).toBeInTheDocument();
-      expect(within(card).getByRole('region', { name: /high-level synergy profile/i })).toBeInTheDocument();
+      expect(within(card).getByRole('region', { name: /curated profile/i })).toBeInTheDocument();
     }
 
     expect(analysisText()).toContain('Synergy data not yet mapped: Antares.');
@@ -312,6 +312,6 @@ describe('Formation Builder simple synergy cutover', () => {
     expect(writeText).toHaveBeenCalledWith(expect.stringContaining('#formation='));
 
     await user.click(screen.getByRole('button', { name: /clear formation/i }));
-    expect(screen.getAllByText(/choose a dragon to see command, trait, affinity, and high-level profile coverage/i)).toHaveLength(3);
+    expect(screen.getAllByText(/choose a dragon to see command, trait, affinity, and curated profile coverage/i)).toHaveLength(3);
   });
 });
