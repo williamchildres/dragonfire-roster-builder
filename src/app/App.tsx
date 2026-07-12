@@ -424,12 +424,6 @@ function HomeSection({
               onClick={onRoster}
             />
             <FeatureCard
-              icon={Shield}
-              title="Compare Verified Dragons"
-              description="Review verified ability wording, metadata-only entries, affinities, evidence, and profile coverage."
-              onClick={onRoster}
-            />
-            <FeatureCard
               icon={Swords}
               title="Build Formations"
               description="See synergies, missing enablers, placement issues, and Vanguard conflicts."
@@ -439,27 +433,40 @@ function HomeSection({
         </div>
       </div>
 
-      <div className="coverage-panel" aria-labelledby="coverage-title">
+      <div className="coverage-panel combined-coverage-panel" aria-labelledby="coverage-title">
         <div className="coverage-copy">
           <p className="eyebrow">Coverage</p>
-          <h3 id="coverage-title">Detailed profile coverage</h3>
+          <h3 id="coverage-title">Profile coverage</h3>
           <p>
             <strong>{detailedAbilityCount} / {dragons.length} dragons mapped</strong>
           </p>
           <p>{coveragePercent}%</p>
         </div>
-        <progress value={detailedAbilityCount} max={dragons.length} aria-label="Detailed profile coverage" />
-      </div>
-
-      <div className="rarity-coverage-grid" aria-label="Rarity coverage">
-        {rarityCoverage.map((coverage) => (
-          <CoverageCard
-            key={coverage.rarity}
-            mapped={coverage.mapped}
-            total={coverage.total}
-            title={`${coverage.rarity} coverage`}
-          />
-        ))}
+        <div className="combined-coverage-bar" aria-label="Coverage by rarity">
+          {rarityCoverage.map((coverage) => {
+            const width = (coverage.total / dragons.length) * 100;
+            const fill = coverage.total === 0 ? 0 : (coverage.mapped / coverage.total) * 100;
+            return (
+              <div
+                key={coverage.rarity}
+                className={`combined-coverage-segment rarity-${coverage.rarity.toLowerCase()}`}
+                style={{ flexBasis: `${width}%` }}
+              >
+                <div className="combined-coverage-fill" style={{ width: `${fill}%` }} />
+              </div>
+            );
+          })}
+        </div>
+        <div className="coverage-counts" aria-label="Coverage by rarity counts">
+          {rarityCoverage.map((coverage) => (
+            <div className="coverage-count" key={coverage.rarity}>
+              <span className="coverage-count-label">{coverage.rarity}</span>
+              <span className="coverage-count-value">
+                {coverage.mapped} / {coverage.total} mapped
+              </span>
+            </div>
+          ))}
+        </div>
       </div>
       <p className="rarity-note">
         Legendary and Epic profiles are mapped first. Rare dragons are next.
@@ -1183,33 +1190,6 @@ function SectionHeading({
       <h2>{title}</h2>
       <p>{description}</p>
     </div>
-  );
-}
-
-function CoverageCard({
-  title,
-  mapped,
-  total,
-}: {
-  title: string;
-  mapped: number;
-  total: number;
-}) {
-  const percent = total === 0 ? 0 : Math.round((mapped / total) * 100);
-  const coverageId = title.toLowerCase().replaceAll(' ', '-');
-  return (
-    <section className="coverage-card" aria-labelledby={coverageId}>
-      <div className="coverage-card-copy">
-        <h3 id={coverageId}>{title}</h3>
-        <p>
-          <strong>
-            {mapped} / {total} mapped
-          </strong>
-        </p>
-        <p>{percent}%</p>
-      </div>
-      <progress value={mapped} max={total} aria-label={`${title} progress`} />
-    </section>
   );
 }
 
