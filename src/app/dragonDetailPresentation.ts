@@ -1,4 +1,9 @@
 import type { AbilityDefinition } from '../models/dragon';
+import {
+  displayTagsFrom,
+  SYNERGY_TAG_LABELS,
+  type SynergyTag,
+} from '../synergy/tags';
 import type { DragonSynergyProfile, PositionClaim, SynergySignal } from '../synergy/types';
 
 export interface DragonDetailPresentation {
@@ -15,23 +20,9 @@ export interface AbilitySummaryPresentation {
   technicalTags: string[];
 }
 
-const OUTPUT_LABELS: Partial<Record<string, string>> = {
-  'status:panic': 'Panic',
-  'status:burn': 'Burn',
-  'status:confusion': 'Confusion',
-  'status:stun': 'Stun',
-  'status:slow': 'Slow',
-  'status:taunt': 'Taunt',
-  'status:control': 'Control',
-  'status:vulnerable': 'Vulnerable',
-  'status:first-strike': 'First-Strike',
-  'effect:recovery': 'Recovery',
-  'damage:physical': 'Physical Damage',
-  'damage:fire': 'Fire Damage',
-  'damage:tactical': 'Tactical Damage',
-};
+const OUTPUT_LABELS: Partial<Record<SynergyTag, string>> = SYNERGY_TAG_LABELS;
 
-const SUPPORT_LABELS: Partial<Record<string, string>> = {
+const SUPPORT_LABELS: Partial<Record<SynergyTag, string>> = {
   'damage:fire': 'Fire Damage support',
   'damage:physical': 'Physical Damage support',
   'damage:tactical': 'Tactical Damage support',
@@ -42,10 +33,8 @@ const SUPPORT_LABELS: Partial<Record<string, string>> = {
   'stat:initiative': 'Initiative support',
 };
 
-const BENEFIT_LABELS: Partial<Record<string, string>> = {
-  'status:first-strike': 'First-Strike',
-  'status:slow': 'Slow',
-  'effect:recovery': 'Recovery',
+const BENEFIT_LABELS: Partial<Record<SynergyTag, string>> = {
+  ...SYNERGY_TAG_LABELS,
   'stat:strength': 'Strength support',
   'stat:instinct': 'Instinct support',
   'stat:intelligence': 'Intelligence support',
@@ -58,6 +47,8 @@ const ABILITY_SUMMARY_LABELS: Partial<Record<string, string>> = {
   CONFUSION: 'Applies Confusion',
   STUN: 'Applies Stun',
   SLOW: 'Applies Slow',
+  TAUNT: 'Applies Taunt',
+  STAGGER: 'Applies Stagger',
   OVERWHELM: 'Applies Overwhelm',
   VULNERABLE: 'Applies Vulnerable',
   CONTROL: 'Applies Control',
@@ -101,6 +92,10 @@ const HEADLINE_PRIORITY = [
   'Tactical Damage',
   'First-Strike',
   'Recovery',
+  'Slow',
+  'Stun',
+  'Stagger',
+  'Overwhelm',
   'Vanguard trait',
   'Left Flank support',
   'Right Flank support',
@@ -123,11 +118,13 @@ const SUMMARY_PRIORITY = [
   'CONFUSION',
   'FIRST_STRIKE',
   'RECOVERY',
+  'TAUNT',
   'STUN',
   'SLOW',
-  'CONTROL',
+  'STAGGER',
   'VULNERABLE',
   'OVERWHELM',
+  'CONTROL',
   'DAMAGE_RECEIVED_DOWN',
   'DAMAGE_DEALT_DOWN',
   'PHYSICAL_DAMAGE_UP',
@@ -167,12 +164,21 @@ export function buildDragonDetailPresentation(
 
 export function summarizeAbility(ability: AbilityDefinition): AbilitySummaryPresentation {
   const technicalTags = ability.tags.map((tag) => tag);
+  const hasSpecificControlTag = ability.tags.some((tag) =>
+    ['STUN', 'SLOW', 'STAGGER', 'OVERWHELM', 'CONFUSION'].includes(tag),
+  );
   const summaryCandidates = ability.tags
     .filter((tag) => SUMMARY_PRIORITY.includes(tag))
-    .map((tag) => ABILITY_SUMMARY_LABELS[tag] ?? null)
-    .filter((label): label is string => Boolean(label));
-  const chips = collectUnique(summaryCandidates).slice(0, 5);
-  const plainSummary = chips.length > 0 ? joinClauses(chips.slice(0, 3)) : 'Verified wording available below.';
+    .map((tag) => ({
+      tag,
+      chipLabel: abilityChipLabel(tag, hasSpecificControlTag),
+      plainLabel: tag === 'CONTROL' && hasSpecificControlTag ? null : ABILITY_SUMMARY_LABELS[tag] ?? null,
+    }))
+    .filter((candidate) => Boolean(candidate.chipLabel || candidate.plainLabel));
+  const chips = collectUnique(summaryCandidates.map((candidate) => candidate.chipLabel)).slice(0, 5);
+  const plainCandidates = collectUnique(summaryCandidates.map((candidate) => candidate.plainLabel));
+  const plainSummary =
+    plainCandidates.length > 0 ? joinClauses(plainCandidates.slice(0, 3)) : 'Verified wording available below.';
 
   return {
     plainSummary,
@@ -183,11 +189,11 @@ export function summarizeAbility(ability: AbilityDefinition): AbilitySummaryPres
 
 function describeSignals(
   signals: SynergySignal[],
-  labels: Partial<Record<string, string>> = OUTPUT_LABELS,
+  labels: Partial<Record<SynergyTag, string>> = OUTPUT_LABELS,
 ): string[] {
   return collectUnique(
     signals.flatMap((signal) =>
-      [signal.tag, ...(signal.tags ?? [])]
+      displayTagsFrom(providedTags(signal))
         .map((tag) => labels[tag] ?? null)
         .filter((label): label is string => Boolean(label)),
     ),
@@ -229,11 +235,10 @@ function buildHeadlineLine(profile: DragonSynergyProfile): string {
 }
 
 function headlineLabelsForOutput(signal: SynergySignal): string[] {
-  const label = OUTPUT_LABELS[signal.tag] ?? null;
-  if (!label) {
-    return [];
-  }
-  return [label];
+  return displayTagsFrom(providedTags(signal)).flatMap((tag) => {
+    const label = OUTPUT_LABELS[tag] ?? null;
+    return label ? [label] : [];
+  });
 }
 
 function headlineLabelsForSupport(signal: SynergySignal): string[] {
@@ -262,6 +267,18 @@ function collectUnique(values: Array<string | null | undefined>): string[] {
     output.push(value);
   }
   return output;
+}
+
+function providedTags(signal: SynergySignal): SynergyTag[] {
+  return signal.tags ?? [signal.tag];
+}
+
+function abilityChipLabel(tag: string, hasSpecificControlTag: boolean): string | null {
+  if (tag === 'CONTROL' && hasSpecificControlTag) {
+    return 'Control';
+  }
+
+  return ABILITY_SUMMARY_LABELS[tag] ?? null;
 }
 
 function joinClauses(values: string[]): string {

@@ -195,7 +195,13 @@ describe('simple synergy foundation', () => {
       expect(SYNERGY_TAG_LABELS[tag]).toBeTruthy();
       expect(usedTags.has(tag), `${tag} is unused`).toBe(true);
     }
-    expect(CONTROL_ALIAS_TAGS).toEqual(['status:stun', 'status:stagger', 'status:overwhelm', 'status:confusion']);
+    expect(CONTROL_ALIAS_TAGS).toEqual([
+      'status:slow',
+      'status:stun',
+      'status:stagger',
+      'status:overwhelm',
+      'status:confusion',
+    ]);
   });
 
   it('keeps output scaling metadata separate from emitted output tags', () => {
@@ -451,6 +457,13 @@ describe('simple synergy foundation', () => {
         id: 'setup-payoff:crimson:status:control:rhysarion',
         explanation:
           "Crimson's Bloodscale Terror can apply Stun, which counts as Control and improves Rhysarion's Dawnsong.",
+      }),
+    );
+    expect(resultsOfKind('setup-payoff', evaluate(formation('caraxes', 'rhysarion', null)))).toContainEqual(
+      expect.objectContaining({
+        id: 'setup-payoff:caraxes:status:control:rhysarion',
+        explanation:
+          "Caraxes's Crippling Inferno can apply Slow, which counts as Control and improves Rhysarion's Dawnsong.",
       }),
     );
 
