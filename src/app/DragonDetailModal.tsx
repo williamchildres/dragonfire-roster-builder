@@ -1,4 +1,4 @@
-import { ExternalLink, X } from 'lucide-react';
+import { X } from 'lucide-react';
 import { useEffect, useMemo, useRef, type KeyboardEvent } from 'react';
 import { dragonObservationSnapshots } from '../data/observations';
 import { dragonStatDefinitions } from '../data/statDefinitions';
@@ -13,7 +13,7 @@ import type {
 } from '../models/dragon';
 import { simpleSynergyProfiles } from '../synergy/profiles';
 import { buildDragonDetailPresentation, summarizeAbility, type DragonDetailPresentation } from './dragonDetailPresentation';
-import { getPublicRosterSourceLabel, getPublicVerificationLabel, getPublicVerificationTone } from './publicCardLabels';
+import { getPublicVerificationLabel, getPublicVerificationTone } from './publicCardLabels';
 
 const unknown = 'Not verified yet';
 
@@ -74,7 +74,6 @@ export function DragonDetailsDialog({
   };
 
   const dataStatusLabel = getPublicVerificationLabel(dragon.dataStatus) ?? 'Verification pending';
-  const rosterSourceLabel = getPublicRosterSourceLabel(dragon.rosterSourceStatus);
 
   return (
     <div className="modal-backdrop" role="presentation">
@@ -96,18 +95,20 @@ export function DragonDetailsDialog({
               <p className="details-subtitle">
                 {dragon.rarity} - {dragon.breed} - {dataStatusLabel}
               </p>
-              <p className="details-summary-line">{presentation.headerLine}</p>
             </div>
           </div>
-          <button type="button" className="icon-button" onClick={onClose} aria-label="Close details">
-            <X size={22} aria-hidden="true" />
-          </button>
+          <div className="details-header-controls">
+            <RosterOwnershipFields dragon={dragon} rosterEntry={rosterEntry} onUpdateRoster={onUpdateRoster} />
+            <button type="button" className="icon-button" onClick={onClose} aria-label="Close details">
+              <X size={22} aria-hidden="true" />
+            </button>
+          </div>
         </header>
 
-        {presentation.metadataNotice ? <p className="notice-text details-notice">{presentation.metadataNotice}</p> : null}
+        <div className="details-body">
+          {presentation.metadataNotice ? <p className="notice-text details-notice">{presentation.metadataNotice}</p> : null}
 
-        <div className="details-layout">
-          <div className="details-main">
+          <div className="details-layout">
             <DragonAtAGlance presentation={presentation} />
             <section className="panel details-abilities-panel">
               <h3>Abilities</h3>
@@ -132,48 +133,8 @@ export function DragonDetailsDialog({
                 )}
               </div>
             </section>
-            <DragonTechnicalDetails dragon={dragon} />
+            <DragonTechnicalDetails dragon={dragon} rosterEntry={rosterEntry} onUpdateRoster={onUpdateRoster} />
           </div>
-
-          <aside className="details-side">
-            <section className="panel">
-              <h3>Ownership</h3>
-              <RosterFields dragon={dragon} rosterEntry={rosterEntry} onUpdateRoster={onUpdateRoster} />
-            </section>
-
-            <section className="panel">
-              <h3>Identity</h3>
-              <dl className="detail-list">
-                <div>
-                  <dt>Verification status</dt>
-                  <dd>{dataStatusLabel}</dd>
-                </div>
-                <div>
-                  <dt>Roster source</dt>
-                  <dd>{rosterSourceLabel}</dd>
-                </div>
-                <div>
-                  <dt>First observed in game</dt>
-                  <dd>{dragon.firstObservedInGame ?? unknown}</dd>
-                </div>
-                <div>
-                  <dt>Game version</dt>
-                  <dd>{dragon.gameVersion ?? unknown}</dd>
-                </div>
-                <div>
-                  <dt>Last verified</dt>
-                  <dd>{dragon.lastVerified}</dd>
-                </div>
-              </dl>
-              {dragon.officialProfileUrl ? (
-                <a href={dragon.officialProfileUrl} target="_blank" rel="noreferrer" className="inline-link">
-                  Official profile <ExternalLink size={14} aria-hidden="true" />
-                </a>
-              ) : (
-                <p className="notice-text">Official profile pending on the public roster site.</p>
-              )}
-            </section>
-          </aside>
         </div>
       </div>
     </div>
@@ -314,7 +275,15 @@ function DragonAbilityCard({
   );
 }
 
-function DragonTechnicalDetails({ dragon }: { dragon: Dragon }) {
+function DragonTechnicalDetails({
+  dragon,
+  rosterEntry,
+  onUpdateRoster,
+}: {
+  dragon: Dragon;
+  rosterEntry?: OwnedDragon;
+  onUpdateRoster: (dragonId: string, patch: Partial<OwnedDragon>) => void;
+}) {
   const observation = dragonObservationSnapshots.find((snapshot) => snapshot.dragonId === dragon.id);
   const hasStatusGlossary = statusGlossary.some((entry) =>
     dragon.tags.some((tag) => tag.toLowerCase().replaceAll('_', '-') === entry.id),
@@ -331,8 +300,10 @@ function DragonTechnicalDetails({ dragon }: { dragon: Dragon }) {
 
   return (
     <section className="panel technical-panel">
-      <h3>Evidence & technical details</h3>
+      <h3>Evidence, Technical Details & Notes</h3>
       <div className="technical-disclosure-stack">
+        <PersonalNotesField dragon={dragon} rosterEntry={rosterEntry} onUpdateRoster={onUpdateRoster} />
+
         <details className="technical-disclosure">
           <summary>Structured tags</summary>
           <p>{dragon.tags.length > 0 ? dragon.tags.join(', ') : unknown}</p>
@@ -493,7 +464,7 @@ export function RawWordingDisclosure({ rawText }: { rawText: string | null }) {
   );
 }
 
-function RosterFields({
+function RosterOwnershipFields({
   dragon,
   rosterEntry,
   onUpdateRoster,
@@ -503,7 +474,7 @@ function RosterFields({
   onUpdateRoster: (dragonId: string, patch: Partial<OwnedDragon>) => void;
 }) {
   return (
-    <div className="roster-fields roster-fields-wide">
+    <div className="roster-fields details-roster-fields">
       <label className="check-row">
         <input
           type="checkbox"
@@ -549,16 +520,29 @@ function RosterFields({
           }
         />
       </label>
-      <label>
-        Personal notes
-        <textarea
-          maxLength={1000}
-          rows={4}
-          value={rosterEntry?.notes ?? ''}
-          onChange={(event) => onUpdateRoster(dragon.id, { notes: event.target.value })}
-        />
-      </label>
     </div>
+  );
+}
+
+function PersonalNotesField({
+  dragon,
+  rosterEntry,
+  onUpdateRoster,
+}: {
+  dragon: Dragon;
+  rosterEntry?: OwnedDragon;
+  onUpdateRoster: (dragonId: string, patch: Partial<OwnedDragon>) => void;
+}) {
+  return (
+    <label className="personal-notes-field">
+      Personal notes
+      <textarea
+        maxLength={1000}
+        rows={4}
+        value={rosterEntry?.notes ?? ''}
+        onChange={(event) => onUpdateRoster(dragon.id, { notes: event.target.value })}
+      />
+    </label>
   );
 }
 

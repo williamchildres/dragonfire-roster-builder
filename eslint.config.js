@@ -4,7 +4,19 @@ import reactRefresh from 'eslint-plugin-react-refresh';
 import tseslint from 'typescript-eslint';
 
 export default tseslint.config(
-  { ignores: ['dist', 'coverage', 'src/test/officialRosterChecker.test.mjs'] },
+  {
+    ignores: [
+      '.pnpm-store',
+      '.worktrees',
+      'Scratch',
+      'coverage',
+      'dist',
+      'project-context',
+      'project-context.zip',
+      'src/test/officialRosterChecker.test.mjs',
+      'visual-validation',
+    ],
+  },
   js.configs.recommended,
   ...tseslint.configs.recommendedTypeChecked,
   {
