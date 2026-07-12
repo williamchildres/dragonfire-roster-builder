@@ -1,11 +1,11 @@
 {
   "format": "dragonfire-lab-project-context",
   "contextVersion": 2,
-  "generatedAt": "2026-07-12T05:23:29.655Z",
+  "generatedAt": "2026-07-12T15:35:23.729Z",
   "source": {
     "repository": "https://github.com/williamchildres/dragonfire-roster-builder",
-    "branch": "ui/consolidate-roster-database",
-    "commit": "ffa4acabfe75e96fe14945fbe33c9180397956d2",
+    "branch": "fix/add-dragon-banner",
+    "commit": "dfec27761b1b13bfa2a3f7199fe9a07cf93a0c11",
     "databaseVersion": "0.6.4",
     "dataSchemaVersion": 13,
     "localRosterSchemaVersion": 4,

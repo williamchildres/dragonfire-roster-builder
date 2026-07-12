@@ -63,6 +63,9 @@ const buyMeACoffeeUrl = 'https://buymeacoffee.com/williamchildres';
 
 type Section = 'home' | 'roster' | 'team' | 'about';
 type StatusMessage = { kind: 'success' | 'error' | 'info'; text: string };
+type RosterSuccessMessage = { text: string };
+
+const rosterSuccessMessageTimeoutMs = 4000;
 
 const sectionLabels: Record<Section, string> = {
   home: 'Overview',
@@ -94,10 +97,12 @@ export function App() {
   const [rosterSort, setRosterSort] = useState<DragonSort>('name');
   const [selectedDragon, setSelectedDragon] = useState<Dragon | null>(null);
   const [message, setMessage] = useState<StatusMessage | null>(null);
+  const [rosterSuccessMessage, setRosterSuccessMessage] = useState<RosterSuccessMessage | null>(null);
   const [includeUnowned, setIncludeUnowned] = useState(false);
   const [formation, setFormation] = useState<Formation>(() => getInitialFormation());
   const [isAddDragonOpen, setIsAddDragonOpen] = useState(false);
   const [showAlreadyAdded, setShowAlreadyAdded] = useState(false);
+  const rosterSuccessTimerRef = useRef<number | null>(null);
 
   useEffect(() => {
     saveRoster(window.localStorage, roster);
@@ -106,6 +111,32 @@ export function App() {
   useEffect(() => {
     window.localStorage.setItem(FORMATION_STORAGE_KEY, JSON.stringify(formation));
   }, [formation]);
+
+  useEffect(() => {
+    if (!rosterSuccessMessage) {
+      if (rosterSuccessTimerRef.current !== null) {
+        window.clearTimeout(rosterSuccessTimerRef.current);
+        rosterSuccessTimerRef.current = null;
+      }
+      return;
+    }
+
+    if (rosterSuccessTimerRef.current !== null) {
+      window.clearTimeout(rosterSuccessTimerRef.current);
+    }
+
+    rosterSuccessTimerRef.current = window.setTimeout(() => {
+      rosterSuccessTimerRef.current = null;
+      setRosterSuccessMessage(null);
+    }, rosterSuccessMessageTimeoutMs);
+
+    return () => {
+      if (rosterSuccessTimerRef.current !== null) {
+        window.clearTimeout(rosterSuccessTimerRef.current);
+        rosterSuccessTimerRef.current = null;
+      }
+    };
+  }, [rosterSuccessMessage]);
 
   useEffect(() => {
     if (!isStalePublicHash(window.location.hash)) {
@@ -151,8 +182,9 @@ export function App() {
   };
 
   const addDragonToRoster = (dragonId: string) => {
+    const dragonName = dragons.find((dragon) => dragon.id === dragonId)?.name ?? 'Unknown dragon';
     updateRoster(dragonId, { owned: true });
-    setMessage({ kind: 'success', text: 'Added to roster.' });
+    setRosterSuccessMessage({ text: `Added ${dragonName} to roster.` });
   };
 
   const openAddDragon = () => {
@@ -163,6 +195,9 @@ export function App() {
 
   const selectSection = (section: Section) => {
     setActiveSection(section);
+    if (section !== 'roster') {
+      setRosterSuccessMessage(null);
+    }
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
@@ -269,6 +304,7 @@ export function App() {
           <RosterSection
             ownedDragons={ownedDragons}
             roster={roster}
+            successMessage={rosterSuccessMessage}
             sortBy={rosterSort}
             onSortChange={setRosterSort}
             onUpdateRoster={updateRoster}
@@ -509,6 +545,7 @@ function StatGroup({
 function RosterSection({
   ownedDragons,
   roster,
+  successMessage,
   sortBy,
   onSortChange,
   onUpdateRoster,
@@ -520,6 +557,7 @@ function RosterSection({
 }: {
   ownedDragons: Dragon[];
   roster: Record<string, OwnedDragon>;
+  successMessage: RosterSuccessMessage | null;
   sortBy: DragonSort;
   onSortChange: (sort: DragonSort) => void;
   onUpdateRoster: (dragonId: string, patch: Partial<OwnedDragon>) => void;
@@ -536,6 +574,11 @@ function RosterSection({
         title="My Roster"
         description="Manage ownership, star rank, and reign level with local browser storage."
       />
+      {successMessage ? (
+        <div className="status-message success" role="status" aria-live="polite">
+          {successMessage.text}
+        </div>
+      ) : null}
       <div className="toolbar">
         <label>
           Sort owned dragons
