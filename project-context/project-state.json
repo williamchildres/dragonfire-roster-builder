@@ -1,9 +1,9 @@
 {
-  "generatedAt": "2026-07-12T18:47:48.510Z",
+  "generatedAt": "2026-07-12T19:31:02.487Z",
   "source": {
     "repository": "https://github.com/williamchildres/dragonfire-roster-builder",
-    "branch": "ui/polish-dragon-detail-layout",
-    "commit": "30b9d141367cd2db5a010490465a258a4ff213ab",
+    "branch": "ui/polish-overview-page-v2",
+    "commit": "b33f3eee8179fd4e40dea2317cdec6e0f0ef3638",
     "databaseVersion": "0.6.4",
     "dataSchemaVersion": 13,
     "localRosterSchemaVersion": 4,
@@ -33,7 +33,7 @@
   "testTotals": {
     "runner": "vitest",
     "testFileCount": 14,
-    "testCaseCount": 150,
+    "testCaseCount": 151,
     "lastRunStatus": "not-run-by-exporter",
     "countingMethod": "static working-tree test declaration scan; runtime pass/fail is reported by npm run test"
   },

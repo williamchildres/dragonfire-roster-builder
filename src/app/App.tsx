@@ -54,7 +54,6 @@ import {
 } from '../services/teamShare';
 import { evaluateFormation } from '../synergy/evaluateFormation';
 import { buildSimpleFormationPresentation } from '../synergy/formationPresentation';
-import { metadataOnlyDragonIds } from '../synergy/profileAudit';
 import { simpleSynergyProfiles } from '../synergy/profiles';
 import type { SimpleProgressionByDragonId } from '../synergy/types';
 export { RawWordingDisclosure } from './DragonDetailModal';
@@ -258,13 +257,13 @@ export function App() {
         Skip to content
       </a>
       <header className="site-header">
-        <div className="brand-lockup" aria-label="Dragonfire Roster Lab">
+        <div className="brand-lockup" aria-label="Dragonfire Lab">
           <span className="brand-mark" aria-hidden="true">
             <Flame size={28} />
           </span>
           <div>
             <p className="eyebrow">Unofficial community tool</p>
-            <h1>Dragonfire Roster Lab</h1>
+            <h1>Dragonfire Lab</h1>
           </div>
         </div>
         <nav aria-label="Primary sections" className="section-nav">
@@ -293,11 +292,7 @@ export function App() {
         ) : null}
 
         {activeSection === 'home' ? (
-          <HomeSection
-            detailedAbilityCount={detailedAbilityCount}
-            onTeam={() => selectSection('team')}
-            onRoster={() => selectSection('roster')}
-          />
+          <HomeSection detailedAbilityCount={detailedAbilityCount} />
         ) : null}
 
         {activeSection === 'roster' ? (
@@ -385,65 +380,52 @@ export function App() {
 
 function HomeSection({
   detailedAbilityCount,
-  onTeam,
-  onRoster,
 }: {
   detailedAbilityCount: number;
-  onTeam: () => void;
-  onRoster: () => void;
 }) {
-  const rarityCounts = countValues(dragons.map((dragon) => dragon.rarity));
-  const breedCounts = countValues(dragons.map((dragon) => dragon.breed));
-  const metadataOnlyIds = new Set<string>(metadataOnlyDragonIds);
-  const metadataOnlyCount = dragons.filter((dragon) => metadataOnlyIds.has(dragon.id)).length;
   const coveragePercent = Math.round((detailedAbilityCount / dragons.length) * 100);
   const versionLabel = `v${databaseMetadata.databaseVersion}`;
+  const rarityCoverage = ['Legendary', 'Epic', 'Rare'].map((rarity) => {
+    const rarityDragons = dragons.filter((dragon) => dragon.rarity === rarity);
+    const mapped = rarityDragons.filter(hasDetailedAbilities).length;
+    return {
+      rarity,
+      mapped,
+      total: rarityDragons.length,
+    };
+  });
 
   return (
     <section className="overview-section" aria-labelledby="overview-title">
       <div className="hero-section">
         <div className="hero-art hero-art-panel">
           <img
-            alt="Dragonfire Roster Lab dragon emblem"
+            alt="Dragonfire Lab dragon emblem"
             className="hero-image"
             src={dragonfireHero}
           />
           <div className="hero-art-overlay" aria-hidden="true" />
         </div>
         <div className="hero-copy">
-          <p className="eyebrow">Local-first formation planning</p>
-          <h2 id="overview-title">Plan stronger Dragonfire formations from verified dragon data.</h2>
-          <p>
-            Track your roster, compare verified abilities, and discover high-level formation
-            synergies without recreating the combat engine.
-          </p>
-          <div className="button-row hero-actions">
-            <button type="button" className="primary-button" onClick={onRoster}>
-              Build my roster
-            </button>
-            <button type="button" className="secondary-button" onClick={onTeam}>
-              Open formation builder
-            </button>
+          <h2 id="overview-title">Overview</h2>
+          <div className="hero-feature-stack" aria-label="Overview highlights">
+            <FeatureCard
+              icon={Users}
+              title="Track Your Roster"
+              description="Save Owned / Hatched status, Star Rank, Dragon Level, Habit Levels, and notes locally in your browser."
+            />
+            <FeatureCard
+              icon={Shield}
+              title="Compare Verified Dragons"
+              description="Review verified ability wording, metadata-only entries, affinities, evidence, and profile coverage."
+            />
+            <FeatureCard
+              icon={Swords}
+              title="Build Formations"
+              description="See synergies, missing enablers, placement issues, and Vanguard conflicts."
+            />
           </div>
         </div>
-      </div>
-
-      <div className="feature-grid" aria-label="Overview highlights">
-        <FeatureCard
-          icon={Users}
-          title="Track Your Roster"
-          description="Save Owned / Hatched status, Star Rank, Dragon Level, Habit Levels, and notes locally in your browser."
-        />
-        <FeatureCard
-          icon={Shield}
-          title="Compare Verified Dragons"
-          description="Review Command, Trait, Habit wording, affinities, evidence, and profile coverage."
-        />
-        <FeatureCard
-          icon={Swords}
-          title="Build Formations"
-          description="See high-level synergies, missing enablers, placement issues, and Vanguard conflicts."
-        />
       </div>
 
       <div className="coverage-panel" aria-labelledby="coverage-title">
@@ -458,33 +440,15 @@ function HomeSection({
         <progress value={detailedAbilityCount} max={dragons.length} aria-label="Detailed profile coverage" />
       </div>
 
-      <div className="overview-stats-layout">
-        <StatGroup
-          title="Catalog Coverage"
-          cards={[
-            { label: 'Known dragons', value: dragons.length },
-            { label: 'Detailed ability records', value: detailedAbilityCount },
-            { label: 'Curated simple profiles', value: simpleSynergyProfiles.length },
-            { label: 'Metadata-only dragons', value: metadataOnlyCount },
-          ]}
-        />
-        <StatGroup
-          title="Roster Breakdown"
-          cards={[
-            { label: 'Legendary', value: rarityCounts.Legendary ?? 0 },
-            { label: 'Epic', value: rarityCounts.Epic ?? 0 },
-            { label: 'Rare', value: rarityCounts.Rare ?? 0 },
-          ]}
-        />
-        <StatGroup
-          title="Role Breakdown"
-          cards={[
-            { label: 'Champion', value: breedCounts.Champion ?? 0 },
-            { label: 'Hunter', value: breedCounts.Hunter ?? 0 },
-            { label: 'Sentinel', value: breedCounts.Sentinel ?? 0 },
-            { label: 'Warrior', value: breedCounts.Warrior ?? 0 },
-          ]}
-        />
+      <div className="rarity-coverage-grid" aria-label="Rarity coverage">
+        {rarityCoverage.map((coverage) => (
+          <CoverageCard
+            key={coverage.rarity}
+            mapped={coverage.mapped}
+            total={coverage.total}
+            title={`${coverage.rarity} coverage`}
+          />
+        ))}
       </div>
 
       <div className="overview-footer-grid">
@@ -519,26 +483,6 @@ function FeatureCard({
       <h3>{title}</h3>
       <p>{description}</p>
     </article>
-  );
-}
-
-function StatGroup({
-  title,
-  cards,
-}: {
-  title: string;
-  cards: Array<{ label: string; value: number }>;
-}) {
-  const groupId = title.toLowerCase().replaceAll(' ', '-');
-  return (
-    <section className="overview-stat-group" aria-labelledby={groupId}>
-      <h3 id={groupId}>{title}</h3>
-      <div className="stats-grid overview-stats-grid">
-        {cards.map((card) => (
-          <StatCard key={card.label} label={card.label} value={card.value} />
-        ))}
-      </div>
-    </section>
   );
 }
 
@@ -1208,22 +1152,30 @@ function SectionHeading({
   );
 }
 
-function StatCard({ label, value }: { label: string; value: number }) {
+function CoverageCard({
+  title,
+  mapped,
+  total,
+}: {
+  title: string;
+  mapped: number;
+  total: number;
+}) {
+  const percent = total === 0 ? 0 : Math.round((mapped / total) * 100);
+  const coverageId = title.toLowerCase().replaceAll(' ', '-');
   return (
-    <div className="stat-card">
-      <span>{value}</span>
-      <p>{label}</p>
-    </div>
-  );
-}
-
-function countValues<T extends string>(values: T[]): Record<T, number> {
-  return values.reduce<Record<T, number>>(
-    (counts, value) => {
-      counts[value] = (counts[value] ?? 0) + 1;
-      return counts;
-    },
-    {} as Record<T, number>,
+    <section className="coverage-card" aria-labelledby={coverageId}>
+      <div className="coverage-card-copy">
+        <h3 id={coverageId}>{title}</h3>
+        <p>
+          <strong>
+            {mapped} / {total} mapped
+          </strong>
+        </p>
+        <p>{percent}%</p>
+      </div>
+      <progress value={mapped} max={total} aria-label={`${title} progress`} />
+    </section>
   );
 }
 
