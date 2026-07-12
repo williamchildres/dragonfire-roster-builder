@@ -1,5 +1,6 @@
-import { render, screen, within } from '@testing-library/react';
+import { fireEvent, render, screen, within } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
+import { act } from 'react';
 import { afterEach, describe, expect, it, vi } from 'vitest';
 import { App, RawWordingDisclosure } from '../app/App';
 import { dragons } from '../data/dragons';
@@ -55,6 +56,18 @@ describe('Dragonfire Roster Lab app', () => {
     expect(within(solstrykerRow as HTMLElement).getByText(/ability details not verified/i)).toBeInTheDocument();
   });
 
+  it('shows a named success banner when Feskar is added from the modal', async () => {
+    const user = userEvent.setup();
+    render(<App />);
+
+    await openAddDragon(user);
+    await user.type(screen.getByLabelText(/search by dragon name/i), 'Feskar');
+    await user.click(screen.getByRole('button', { name: /add to roster/i }));
+
+    expect(screen.getByText('Added Feskar to roster.')).toBeInTheDocument();
+    expect(screen.queryByText(/^Added to roster\.$/i)).not.toBeInTheDocument();
+  });
+
   it('adds a dragon from the modal, preserves saved fields, and exposes details from the modal', async () => {
     const user = userEvent.setup();
     const roster = createEmptyRoster(dragons);
@@ -76,7 +89,8 @@ describe('Dragonfire Roster Lab app', () => {
     await openAddDragon(user);
     await user.type(screen.getByLabelText(/search by dragon name/i), 'Syrax');
     await user.click(screen.getByRole('button', { name: /add to roster/i }));
-    expect(screen.getByText('Added to roster.')).toBeInTheDocument();
+    expect(screen.getByText('Added Syrax to roster.')).toBeInTheDocument();
+    expect(screen.queryByText(/^Added to roster\.$/i)).not.toBeInTheDocument();
     expect(within(screen.getByRole('dialog', { name: /add dragons to your roster/i })).queryByRole('heading', { name: 'Syrax' })).not.toBeInTheDocument();
     await user.click(screen.getByRole('button', { name: /close add dragon/i }));
 
@@ -86,6 +100,59 @@ describe('Dragonfire Roster Lab app', () => {
     expect(within(syraxCard as HTMLElement).getByLabelText(/reign level/i)).toHaveValue(12);
     await user.click(within(syraxCard as HTMLElement).getByRole('button', { name: /view details/i }));
     expect(screen.getByLabelText(/personal notes/i)).toHaveValue('Keep with fire support.');
+  });
+
+  it('auto-dismisses and refreshes the roster success banner for the latest dragon', () => {
+    vi.useFakeTimers();
+    try {
+      render(<App />);
+
+      fireEvent.click(screen.getByRole('button', { name: /^my roster$/i }));
+      fireEvent.click(screen.getAllByRole('button', { name: /\+ add dragon/i })[0]!);
+      fireEvent.change(screen.getByLabelText(/search by dragon name/i), { target: { value: 'Feskar' } });
+      fireEvent.click(screen.getByRole('button', { name: /add to roster/i }));
+
+      expect(screen.getByText('Added Feskar to roster.')).toBeInTheDocument();
+
+      fireEvent.click(screen.getByRole('button', { name: /close add dragon/i }));
+      fireEvent.click(screen.getAllByRole('button', { name: /\+ add dragon/i })[0]!);
+      fireEvent.change(screen.getByLabelText(/search by dragon name/i), { target: { value: 'Tessarion' } });
+      fireEvent.click(screen.getByRole('button', { name: /add to roster/i }));
+
+      expect(screen.getByText('Added Tessarion to roster.')).toBeInTheDocument();
+
+      act(() => {
+        vi.advanceTimersByTime(3999);
+      });
+      expect(screen.getByText('Added Tessarion to roster.')).toBeInTheDocument();
+
+      act(() => {
+        vi.advanceTimersByTime(1);
+      });
+      expect(screen.queryByText(/Added Tessarion to roster\./i)).not.toBeInTheDocument();
+    } finally {
+      vi.useRealTimers();
+    }
+  });
+
+  it('clears the roster success banner when navigating away from My Roster', async () => {
+    const user = userEvent.setup();
+    render(<App />);
+
+    await openAddDragon(user);
+    await user.type(screen.getByLabelText(/search by dragon name/i), 'Feskar');
+    await user.click(screen.getByRole('button', { name: /add to roster/i }));
+
+    expect(screen.getByText('Added Feskar to roster.')).toBeInTheDocument();
+
+    await user.click(screen.getByRole('button', { name: /overview/i }));
+    expect(screen.queryByText(/Added Feskar to roster\./i)).not.toBeInTheDocument();
+
+    await user.click(screen.getByRole('navigation', { name: /primary sections/i }).querySelectorAll('button')[2]!);
+    expect(screen.queryByText(/Added Feskar to roster\./i)).not.toBeInTheDocument();
+
+    await user.click(screen.getByRole('button', { name: /about/i }));
+    expect(screen.queryByText(/Added Feskar to roster\./i)).not.toBeInTheDocument();
   });
 
   it('renders the polished Overview landing content and About copy', async () => {

@@ -2,6 +2,7 @@
 
 ## Unreleased
 
+- Add Dragon success banner now names the added dragon, auto-dismisses after a few seconds, and clears immediately when leaving My Roster.
 - Consolidated the standalone Dragon Database surface into My Roster, making My Roster the central local dragon-management page.
 - Added a My Roster Add Dragon modal with catalog search, rarity/breed/verification filters, already-added handling, add-to-roster actions, and details access.
 - Removed the Dragon Database top-nav/page surface and routed stale Dragon Database hashes back to My Roster while keeping Formation Builder share links intact.
