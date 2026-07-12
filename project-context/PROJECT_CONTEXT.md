@@ -1,8 +1,8 @@
 # Dragonfire Roster Lab Project Context
 
-Generated: 2026-07-12T16:02:54.020Z
-Branch: fix/dragon-detail-synergy-signals
-Commit: 5a56b4e91be8d86e325323f26224f7066f3560e8
+Generated: 2026-07-12T16:59:50.312Z
+Branch: ui/polish-dragon-details-abilities
+Commit: 3c4357a74bd78efcf30616bf49896baf008f4679
 
 Dragonfire Roster Lab is a curated dragon knowledge base and transparent tag-and-position formation recommender. It is not a combat simulator.
 
