@@ -193,7 +193,7 @@ function DragonAtAGlance({ presentation }: { presentation: DragonDetailPresentat
         <AtAGlanceCard
           title="Benefits from"
           items={presentation.benefitsFrom}
-          fallback="No specific benefit profile recorded."
+          fallback="No mapped incoming synergy yet."
         />
         <AtAGlanceCard
           title="Placement notes"

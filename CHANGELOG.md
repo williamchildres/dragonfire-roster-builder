@@ -2,6 +2,7 @@
 
 ## Unreleased
 
+- Corrected the Dragon Details at-a-glance summary so multi-tag support signals like Tessarion's Initiative support stay visible, and updated the empty Benefits from wording to "No mapped incoming synergy yet."
 - Polished the Dragon Details modal into a wider, more readable player-facing layout with an at-a-glance summary, clearer ability cards, and collapsed raw verified wording plus technical sections.
 - Polished the Overview page into a public-release landing/dashboard with new hero artwork, clearer feature cards, grouped coverage summary cards, and a local-first trust note.
 - Added screenshot-verified detailed records and a curated simple-synergy profile for Tessarion, bringing coverage to 31 dragons, 19 detailed dragons, 19 simple profiles, and 12 metadata-only dragons.
