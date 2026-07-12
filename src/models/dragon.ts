@@ -182,7 +182,6 @@ export interface Dragon {
 export interface OwnedDragon {
   dragonId: string;
   owned: boolean;
-  collection: DragonCollectionProgress;
   starRank: number | null;
   reignLevel: number | null;
   notes: string;

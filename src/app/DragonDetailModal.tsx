@@ -524,19 +524,6 @@ function RosterFields({
   rosterEntry?: OwnedDragon;
   onUpdateRoster: (dragonId: string, patch: Partial<OwnedDragon>) => void;
 }) {
-  const collection = rosterEntry?.collection ?? {
-    state: 'not-collected' as DragonCollectionState,
-    shardsCurrent: null,
-    shardsRequired: null,
-  };
-  const updateCollection = (patch: Partial<OwnedDragon['collection']>) => {
-    const nextCollection = { ...collection, ...patch };
-    onUpdateRoster(dragon.id, {
-      collection: nextCollection,
-      owned: nextCollection.state === 'hatched',
-    });
-  };
-
   return (
     <div className="roster-fields roster-fields-wide">
       <label className="check-row">
@@ -546,55 +533,10 @@ function RosterFields({
           onChange={(event) =>
             onUpdateRoster(dragon.id, {
               owned: event.target.checked,
-              collection: {
-                ...collection,
-                state: event.target.checked ? 'hatched' : 'not-collected',
-              },
             })
           }
         />
-        Owned
-      </label>
-      <label>
-        Collection State
-        <select
-          value={collection.state}
-          onChange={(event) => updateCollection({ state: event.target.value as DragonCollectionState })}
-        >
-          <option value="not-collected">Not collected</option>
-          <option value="not-hatched">Not hatched</option>
-          <option value="hatched">Hatched</option>
-        </select>
-      </label>
-      <label>
-        Shards
-        <input
-          min={0}
-          step={1}
-          type="number"
-          value={collection.shardsCurrent ?? ''}
-          placeholder="Current"
-          onChange={(event) =>
-            updateCollection({
-              shardsCurrent: event.target.value === '' ? null : Math.max(0, Number.parseInt(event.target.value, 10)),
-            })
-          }
-        />
-      </label>
-      <label>
-        Shards Required
-        <input
-          min={0}
-          step={1}
-          type="number"
-          value={collection.shardsRequired ?? ''}
-          placeholder="Required"
-          onChange={(event) =>
-            updateCollection({
-              shardsRequired: event.target.value === '' ? null : Math.max(0, Number.parseInt(event.target.value, 10)),
-            })
-          }
-        />
+        Owned / Hatched
       </label>
       <label>
         Star Rank

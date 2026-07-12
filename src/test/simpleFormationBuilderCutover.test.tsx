@@ -3,7 +3,7 @@ import userEvent from '@testing-library/user-event';
 import { afterEach, describe, expect, it, vi } from 'vitest';
 import { App } from '../app/App';
 import { dragons } from '../data/dragons';
-import { createEmptyRoster, STORAGE_KEY } from '../services/rosterStorage';
+import { createEmptyRoster, ROSTER_SCHEMA_VERSION, STORAGE_KEY } from '../services/rosterStorage';
 
 type ProgressionSeed = Record<string, { starRank?: number | null; reignLevel?: number | null; owned?: boolean }>;
 const incompleteMissingEnablerNotice =
@@ -22,7 +22,6 @@ describe('Formation Builder simple synergy cutover', () => {
       const entry = roster[dragonId];
       expect(entry).toBeDefined();
       entry!.owned = progression.owned ?? true;
-      entry!.collection.state = entry!.owned ? 'hatched' : 'not-collected';
       entry!.starRank = progression.starRank ?? 10;
       entry!.reignLevel = progression.reignLevel ?? 26;
     }
@@ -31,7 +30,7 @@ describe('Formation Builder simple synergy cutover', () => {
       STORAGE_KEY,
       JSON.stringify({
         format: 'dragonfire-roster-lab-local',
-        schemaVersion: 3,
+        schemaVersion: ROSTER_SCHEMA_VERSION,
         updatedAt: '2026-07-02T00:00:00.000Z',
         roster: Object.values(roster),
       }),

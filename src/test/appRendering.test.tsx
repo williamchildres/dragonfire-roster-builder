@@ -136,8 +136,10 @@ describe('Dragonfire Roster Lab app', () => {
     expect(dialog).toHaveTextContent('Shroud of Shadows');
     expect(dialog).toHaveTextContent('Darkening Fear');
     expect(dialog).toHaveTextContent("Phantom's Veil");
-    expect(dialog).toHaveTextContent('Owned');
-    expect(dialog).toHaveTextContent('Collection State');
+    expect(dialog).toHaveTextContent('Owned / Hatched');
+    expect(dialog).not.toHaveTextContent('Collection State');
+    expect(dialog).not.toHaveTextContent('Shards');
+    expect(dialog).not.toHaveTextContent('Shards Required');
     expect(dialog).toHaveTextContent('Star Rank');
     expect(dialog).toHaveTextContent('Reign Level');
     expect(dialog).toHaveTextContent('Personal notes');
@@ -174,6 +176,8 @@ describe('Dragonfire Roster Lab app', () => {
     expect(within(dialog).queryByText('Plain summary')).toBeNull();
     expect(within(dialog).queryByRole('heading', { name: 'Evidence & technical details' })).toBeInTheDocument();
     expect(within(dialog).queryByRole('heading', { name: 'What it does' })).toBeInTheDocument();
+    await user.click(within(dialog).getByRole('checkbox', { name: /owned \/ hatched/i }));
+    expect(within(dialog).getByRole('checkbox', { name: /owned \/ hatched/i })).toBeChecked();
   });
 
   it('renders Tessarion details with the new player-facing summary', async () => {
@@ -203,7 +207,6 @@ describe('Dragonfire Roster Lab app', () => {
     const user = userEvent.setup();
     const roster = createEmptyRoster(dragons);
     roster.syrax!.owned = true;
-    roster.syrax!.collection.state = 'hatched';
     roster.syrax!.starRank = 3;
     saveRoster(window.localStorage, roster);
 
@@ -215,8 +218,10 @@ describe('Dragonfire Roster Lab app', () => {
     await user.click(within(syraxCard as HTMLElement).getByRole('button', { name: /view details/i }));
 
     const dialog = screen.getByRole('dialog', { name: /syrax/i });
-    expect(within(dialog).getByRole('checkbox', { name: /owned/i })).toBeChecked();
-    expect(within(dialog).getByLabelText(/collection state/i)).toHaveValue('hatched');
+    expect(within(dialog).getByRole('checkbox', { name: /owned \/ hatched/i })).toBeChecked();
+    expect(within(dialog).queryByLabelText(/collection state/i)).not.toBeInTheDocument();
+    expect(within(dialog).queryByLabelText(/^shards$/i)).not.toBeInTheDocument();
+    expect(within(dialog).queryByLabelText(/shards required/i)).not.toBeInTheDocument();
     expect(within(dialog).getByLabelText(/star rank/i)).toHaveValue('3');
     expect(within(dialog).getByLabelText(/reign level/i)).toBeInTheDocument();
     expect(within(dialog).getByLabelText(/personal notes/i)).toBeInTheDocument();
@@ -478,6 +483,67 @@ describe('Dragonfire Roster Lab app', () => {
     await user.click(screen.getAllByRole('button', { name: /my roster/i })[0]!);
     expect(screen.getByRole('heading', { name: 'Syrax' })).toBeInTheDocument();
     expect(screen.getAllByText('3').length).toBeGreaterThan(0);
+  });
+
+  it('shows simplified ownership on Dragon Database cards and keeps My Roster toggle wired to owned state', async () => {
+    const user = userEvent.setup();
+    render(<App />);
+
+    await user.click(screen.getByRole('button', { name: /dragon database/i }));
+    const syraxCard = screen.getByRole('heading', { name: 'Syrax' }).closest('article');
+    expect(syraxCard).not.toBeNull();
+    expect(syraxCard).toHaveTextContent('Not owned');
+    expect(syraxCard).not.toHaveTextContent('Collection:');
+    expect(syraxCard).not.toHaveTextContent('Hatched');
+    expect(syraxCard).not.toHaveTextContent('Not collected');
+    expect(syraxCard).not.toHaveTextContent('Not hatched');
+    expect(syraxCard).not.toHaveTextContent('Shards');
+
+    await user.click(within(syraxCard as HTMLElement).getByLabelText(/my roster/i));
+    expect(syraxCard).toHaveTextContent('Owned / Hatched');
+
+    await user.click(screen.getByRole('button', { name: /^my roster$/i }));
+    expect(screen.getByRole('heading', { name: 'Syrax' })).toBeInTheDocument();
+  });
+
+  it('renders compact My Roster cards without collection or shard controls', async () => {
+    const user = userEvent.setup();
+    const roster = createEmptyRoster(dragons);
+    roster.syrax!.owned = true;
+    roster.syrax!.starRank = 4;
+    roster.syrax!.reignLevel = 9;
+    saveRoster(window.localStorage, roster);
+
+    render(<App />);
+
+    await user.click(screen.getByRole('button', { name: /^my roster$/i }));
+    const syraxCard = screen.getByRole('heading', { name: 'Syrax' }).closest('article');
+    expect(syraxCard).not.toBeNull();
+    expect(syraxCard).toHaveTextContent('Owned / Hatched');
+    expect(within(syraxCard as HTMLElement).getByRole('checkbox', { name: /owned \/ hatched/i })).toBeChecked();
+    expect(within(syraxCard as HTMLElement).queryByLabelText(/collection state/i)).not.toBeInTheDocument();
+    expect(within(syraxCard as HTMLElement).queryByLabelText(/^shards$/i)).not.toBeInTheDocument();
+    expect(within(syraxCard as HTMLElement).queryByLabelText(/shards required/i)).not.toBeInTheDocument();
+    expect(within(syraxCard as HTMLElement).getByLabelText(/star rank/i)).toHaveValue('4');
+    expect(within(syraxCard as HTMLElement).getByLabelText(/reign level/i)).toHaveValue(9);
+    expect(screen.getByRole('button', { name: /export json/i })).toBeInTheDocument();
+    expect(screen.getByText(/import json/i)).toBeInTheDocument();
+  });
+
+  it('keeps retired roster ownership wording out of rendered public roster UI', async () => {
+    const user = userEvent.setup();
+    render(<App />);
+
+    await user.click(screen.getByRole('button', { name: /dragon database/i }));
+    await user.type(screen.getByLabelText(/search by name/i), 'Syrax');
+    await user.click(screen.getByRole('button', { name: /view details/i }));
+    await user.click(screen.getByRole('button', { name: /close details/i }));
+    await user.click(screen.getByRole('button', { name: /^my roster$/i }));
+
+    expect(screen.queryByText('Collection State')).not.toBeInTheDocument();
+    expect(screen.queryByText('Not hatched')).not.toBeInTheDocument();
+    expect(screen.queryByText('Not collected')).not.toBeInTheDocument();
+    expect(screen.queryByText('Shards Required')).not.toBeInTheDocument();
   });
 
   it('renders the three named formation positions', async () => {

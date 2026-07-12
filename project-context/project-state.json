@@ -1,12 +1,12 @@
 {
-  "generatedAt": "2026-07-12T01:25:30.113Z",
+  "generatedAt": "2026-07-12T01:59:23.331Z",
   "source": {
     "repository": "https://github.com/williamchildres/dragonfire-roster-builder",
-    "branch": "fix/dragon-detail-summary",
-    "commit": "c3514e12b473146c18140ce40103ef11e5e042a5",
+    "branch": "ui/simplify-roster-ownership",
+    "commit": "c3799a488a7d9456f494ad5f8f92dd0daa14764c",
     "databaseVersion": "0.6.4",
     "dataSchemaVersion": 13,
-    "localRosterSchemaVersion": 3,
+    "localRosterSchemaVersion": 4,
     "gameBuild": "26.6.53509"
   },
   "contextVersion": 2,
@@ -33,7 +33,7 @@
   "testTotals": {
     "runner": "vitest",
     "testFileCount": 12,
-    "testCaseCount": 118,
+    "testCaseCount": 122,
     "lastRunStatus": "not-run-by-exporter",
     "countingMethod": "static working-tree test declaration scan; runtime pass/fail is reported by npm run test"
   },
