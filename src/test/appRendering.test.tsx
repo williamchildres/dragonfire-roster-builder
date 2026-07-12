@@ -1,5 +1,6 @@
 import { fireEvent, render, screen, within } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
+import { readFileSync } from 'node:fs';
 import { act } from 'react';
 import { afterEach, describe, expect, it, vi } from 'vitest';
 import { App, RawWordingDisclosure } from '../app/App';
@@ -258,7 +259,9 @@ describe('Dragonfire Roster Lab app', () => {
     expect(dialog).toHaveTextContent('At a glance');
     expect(dialog).toHaveTextContent('Provides');
     expect(dialog).toHaveTextContent('Benefits from');
-    expect(dialog).toHaveTextContent('Placement notes');
+    expect(dialog).not.toHaveTextContent('Placement notes');
+    expect(within(dialog).getByRole('heading', { name: 'Abilities' })).toBeInTheDocument();
+    expect(within(dialog).queryByRole('heading', { name: 'What it does' })).not.toBeInTheDocument();
     expect(dialog).toHaveTextContent('Panic');
     expect(dialog).toHaveTextContent('Burn');
     expect(dialog).toHaveTextContent('Physical Damage');
@@ -281,6 +284,9 @@ describe('Dragonfire Roster Lab app', () => {
 
     const phantomCard = within(dialog).getByRole('heading', { name: "Phantom's Veil" }).closest('article');
     expect(phantomCard).not.toBeNull();
+    expect(phantomCard).not.toHaveTextContent('Unlock requirement');
+    expect(phantomCard).not.toHaveTextContent('Position requirement');
+    expect(phantomCard).not.toHaveTextContent('Evidence');
     expect(phantomCard).toHaveTextContent('Plain summary');
     expect(phantomCard).toHaveTextContent('Reduces Damage Received');
     const verifiedWording = within(phantomCard as HTMLElement).getByText('Verified wording');
@@ -314,10 +320,12 @@ describe('Dragonfire Roster Lab app', () => {
     expect(dialog).toHaveTextContent('At a glance');
     expect(dialog).toHaveTextContent('No formation-wide output profile recorded.');
     expect(dialog).toHaveTextContent('No mapped incoming synergy yet.');
-    expect(dialog).toHaveTextContent('No special placement requirement recorded.');
+    expect(dialog).not.toHaveTextContent('Placement notes');
+    expect(dialog).not.toHaveTextContent('No special placement requirement recorded.');
     expect(within(dialog).queryByText('Plain summary')).toBeNull();
     expect(within(dialog).queryByRole('heading', { name: 'Evidence & technical details' })).toBeInTheDocument();
-    expect(within(dialog).queryByRole('heading', { name: 'What it does' })).toBeInTheDocument();
+    expect(within(dialog).queryByRole('heading', { name: 'Abilities' })).toBeInTheDocument();
+    expect(within(dialog).queryByRole('heading', { name: 'What it does' })).not.toBeInTheDocument();
     await user.click(within(dialog).getByRole('checkbox', { name: /owned \/ hatched/i }));
     expect(within(dialog).getByRole('checkbox', { name: /owned \/ hatched/i })).toBeChecked();
   });
@@ -345,6 +353,63 @@ describe('Dragonfire Roster Lab app', () => {
     expect(dialog).toHaveTextContent('Vanguard trait');
   });
 
+  it('renders Dragon Details ability cards with public labels and compact requirement badges', async () => {
+    const user = userEvent.setup();
+    render(<App />);
+
+    await openAddDragon(user);
+    await user.type(screen.getByLabelText(/search by dragon name/i), 'Feskar');
+    const dragonCard = screen.getByRole('heading', { name: 'Feskar' }).closest('article');
+    expect(dragonCard).not.toBeNull();
+    await user.click(within(dragonCard as HTMLElement).getByRole('button', { name: /view details/i }));
+
+    const dialog = screen.getByRole('dialog', { name: /feskar/i });
+    expect(within(dialog).getByRole('heading', { name: 'Abilities' })).toBeInTheDocument();
+    expect(within(dialog).queryByRole('heading', { name: 'What it does' })).not.toBeInTheDocument();
+    expect(dialog).not.toHaveTextContent('Placement notes');
+
+    const calculatedAssault = within(dialog).getByRole('heading', { name: 'Calculated Assault' }).closest('article');
+    expect(calculatedAssault).not.toBeNull();
+    expect(calculatedAssault).toHaveTextContent('Command');
+    expect(calculatedAssault).not.toHaveTextContent('Unlock requirement');
+    expect(calculatedAssault).not.toHaveTextContent('Position requirement');
+    expect(calculatedAssault).not.toHaveTextContent('Evidence');
+    expect(calculatedAssault).not.toHaveTextContent('Unlocked or available');
+    expect(calculatedAssault).not.toHaveTextContent('Level 16+');
+    expect(calculatedAssault).not.toHaveTextContent('★');
+
+    const championsBrilliance = within(dialog).getByRole('heading', { name: "Champion's Brilliance" }).closest('article');
+    expect(championsBrilliance).not.toBeNull();
+    expect(championsBrilliance).toHaveTextContent('Vanguard Trait');
+    expect(championsBrilliance).not.toHaveTextContent(/^Trait$/);
+    expect(championsBrilliance).toHaveTextContent('Level 16+');
+    expect(championsBrilliance).not.toHaveTextContent('Position requirement');
+    expect(championsBrilliance).not.toHaveTextContent('Unlock requirement');
+    expect(championsBrilliance).not.toHaveTextContent('Evidence');
+
+    const resilientBond = within(dialog).getByRole('heading', { name: 'Resilient Bond' }).closest('article');
+    const insightfulAllies = within(dialog).getByRole('heading', { name: 'Insightful Allies' }).closest('article');
+    const emeraldInferno = within(dialog).getByRole('heading', { name: 'Emerald Inferno' }).closest('article');
+    const quickWitted = within(dialog).getByRole('heading', { name: 'Quick-Witted' }).closest('article');
+    const unyieldingGrasp = within(dialog).getByRole('heading', { name: 'Unyielding Grasp' }).closest('article');
+    expect(resilientBond).not.toBeNull();
+    expect(insightfulAllies).not.toBeNull();
+    expect(emeraldInferno).not.toBeNull();
+    expect(quickWitted).not.toBeNull();
+    expect(unyieldingGrasp).not.toBeNull();
+    expect(resilientBond).toHaveTextContent('Habit');
+    expect(resilientBond).toHaveTextContent('★ 2');
+    expect(insightfulAllies).toHaveTextContent('Habit');
+    expect(insightfulAllies).toHaveTextContent('★ 4');
+    expect(emeraldInferno).toHaveTextContent('★ 6');
+    expect(quickWitted).toHaveTextContent('★ 8');
+    expect(unyieldingGrasp).toHaveTextContent('★ 10');
+    expect(unyieldingGrasp).not.toHaveTextContent('Unlock requirement');
+    expect(unyieldingGrasp).not.toHaveTextContent('Evidence');
+    expect(unyieldingGrasp).toHaveTextContent('Applies Stagger.');
+    expect(within(unyieldingGrasp as HTMLElement).getByText('Control')).toBeInTheDocument();
+  });
+
   it('renders Dragon Details incoming and specific status synergy signals', async () => {
     const user = userEvent.setup();
     render(<App />);
@@ -360,6 +425,7 @@ describe('Dragonfire Roster Lab app', () => {
     expect(benefitsCard).not.toBeNull();
     expect(benefitsCard).toHaveTextContent('Burn');
     expect(benefitsCard).not.toHaveTextContent('No mapped incoming synergy yet.');
+    expect(dialog).not.toHaveTextContent('Placement notes');
 
     await user.click(within(dialog).getByRole('button', { name: /close details/i }));
     await openAddDragon(user);
@@ -374,6 +440,37 @@ describe('Dragonfire Roster Lab app', () => {
     expect(unyieldingGrasp).not.toBeNull();
     expect(unyieldingGrasp).toHaveTextContent('Applies Stagger.');
     expect(unyieldingGrasp).not.toHaveTextContent('Applies Control.');
+    expect(within(unyieldingGrasp as HTMLElement).getByText('Control')).toBeInTheDocument();
+
+    await user.click(within(dialog).getByRole('button', { name: /close details/i }));
+    await openAddDragon(user);
+    await user.clear(screen.getByLabelText(/search by dragon name/i));
+    await user.type(screen.getByLabelText(/search by dragon name/i), 'Caraxes');
+    dragonCard = screen.getByRole('heading', { name: 'Caraxes' }).closest('article');
+    expect(dragonCard).not.toBeNull();
+    await user.click(within(dragonCard as HTMLElement).getByRole('button', { name: /view details/i }));
+
+    dialog = screen.getByRole('dialog', { name: /caraxes/i });
+    const caraxesProvides = within(dialog).getByRole('heading', { name: 'Provides' }).closest('article');
+    const caraxesBenefits = within(dialog).getByRole('heading', { name: 'Benefits from' }).closest('article');
+    expect(caraxesProvides).not.toBeNull();
+    expect(caraxesBenefits).not.toBeNull();
+    expect(caraxesProvides).toHaveTextContent('Slow');
+    expect(caraxesProvides).toHaveTextContent('Control');
+    expect(caraxesBenefits).toHaveTextContent('First-Strike');
+
+    await user.click(within(dialog).getByRole('button', { name: /close details/i }));
+    await openAddDragon(user);
+    await user.clear(screen.getByLabelText(/search by dragon name/i));
+    await user.type(screen.getByLabelText(/search by dragon name/i), 'Shadowsong');
+    dragonCard = screen.getByRole('heading', { name: 'Shadowsong' }).closest('article');
+    expect(dragonCard).not.toBeNull();
+    await user.click(within(dragonCard as HTMLElement).getByRole('button', { name: /view details/i }));
+
+    dialog = screen.getByRole('dialog', { name: /shadowsong/i });
+    expect(dialog).toHaveTextContent('Burn');
+    expect(dialog).toHaveTextContent('Vulnerable');
+    expect(dialog).toHaveTextContent('Panic');
   });
 
   it('opens dragon details from My Roster and keeps ownership controls interactive', async () => {
@@ -415,8 +512,8 @@ describe('Dragonfire Roster Lab app', () => {
     const phantomCard = within(dialog).getByRole('heading', { name: "Phantom's Veil" }).closest('article');
     expect(phantomCard).not.toBeNull();
 
-    expect(phantomCard).toHaveTextContent('Unlocked or available');
-    expect(phantomCard).toHaveTextContent('Saved Habit LevelNot recorded');
+    expect(phantomCard).not.toHaveTextContent('Unlocked or available');
+    expect(phantomCard).not.toHaveTextContent('Saved Habit Level');
     expect(phantomCard).toHaveTextContent('Plain summary');
     expect(phantomCard).toHaveTextContent('Reduces Damage Received');
     const rawSummary = within(phantomCard as HTMLElement).getByText('Verified wording');
@@ -443,7 +540,8 @@ describe('Dragonfire Roster Lab app', () => {
     expect(phantomCard).not.toBeNull();
     await user.selectOptions(within(phantomCard as HTMLElement).getByLabelText(/habit level/i), '3');
 
-    expect(phantomCard).toHaveTextContent('Saved Habit Level3');
+    expect(within(phantomCard as HTMLElement).getByLabelText(/habit level/i)).toHaveValue('3');
+    expect(phantomCard).not.toHaveTextContent('Saved Habit Level');
     expect(phantomCard).not.toHaveTextContent('Current selected value:');
 
     await user.selectOptions(within(dialog).getByLabelText(/star rank/i), '1');
@@ -830,6 +928,12 @@ describe('Dragonfire Roster Lab app', () => {
     render(<App />);
 
     const nav = screen.getByRole('navigation', { name: /primary sections/i });
+    expect(within(nav).getAllByRole('button').map((button) => button.textContent)).toEqual([
+      'Overview',
+      'My Roster',
+      'Formation Builder',
+      'About',
+    ]);
     expect(within(nav).queryByRole('button', { name: /dragon database/i })).not.toBeInTheDocument();
     expect(within(nav).queryByRole('button', { name: /data status/i })).not.toBeInTheDocument();
     expect(screen.queryByText('Collection State')).not.toBeInTheDocument();
@@ -867,6 +971,29 @@ describe('Dragonfire Roster Lab app', () => {
     expect(footerSupportLink).toHaveAttribute('target', '_blank');
     expect(footerSupportLink).toHaveAttribute('rel', expect.stringContaining('noopener'));
     expect(footerSupportLink).toHaveAttribute('rel', expect.stringContaining('noreferrer'));
+  });
+
+  it('keeps Dragon Details at-a-glance chips on compact wrapping classes', async () => {
+    const user = userEvent.setup();
+    render(<App />);
+
+    await openAddDragon(user);
+    await user.type(screen.getByLabelText(/search by dragon name/i), 'Vhagar');
+    const dragonCard = screen.getByRole('heading', { name: 'Vhagar' }).closest('article');
+    expect(dragonCard).not.toBeNull();
+    await user.click(within(dragonCard as HTMLElement).getByRole('button', { name: /view details/i }));
+
+    const dialog = screen.getByRole('dialog', { name: /vhagar/i });
+    const benefitsCard = within(dialog).getByRole('heading', { name: 'Benefits from' }).closest('article');
+    expect(benefitsCard?.querySelector('ul')).toHaveClass('chip-list');
+    expect(benefitsCard?.querySelector('li')).toHaveClass('chip');
+
+    const css = readFileSync('src/styles/global.css', 'utf8');
+    expect(css).toContain('.at-a-glance-grid');
+    expect(css).toContain('align-items: start');
+    expect(css).toContain('flex-wrap: wrap');
+    expect(css).toContain('width: fit-content');
+    expect(css).toContain('.requirement-badge');
   });
 
 
