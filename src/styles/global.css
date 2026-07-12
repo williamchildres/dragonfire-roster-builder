@@ -377,6 +377,12 @@ main {
   gap: 1rem;
 }
 
+.about-grid {
+  display: grid;
+  gap: 1rem;
+  grid-template-columns: repeat(auto-fit, minmax(18rem, 1fr));
+}
+
 .feature-grid {
   grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr));
 }
@@ -1560,6 +1566,17 @@ th {
   text-align: center;
 }
 
+.site-footer-inner {
+  display: grid;
+  gap: 0.4rem;
+  margin: 0 auto;
+  max-width: 70rem;
+}
+
+.site-footer-copy {
+  margin-bottom: 0;
+}
+
 @media (max-width: 900px) {
   .site-header {
     align-items: stretch;
@@ -1658,6 +1675,10 @@ th {
   }
 
   .overview-footer-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .about-grid {
     grid-template-columns: 1fr;
   }
 

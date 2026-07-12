@@ -25,7 +25,7 @@ export function SimpleFormationAnalysis({
       ) : (
         <>
           {!hasActiveSynergy ? (
-            <p className="empty-card-note">No active high-level relationship is mapped for this formation yet.</p>
+            <p className="empty-card-note">No active curated relationship is mapped for this formation yet.</p>
           ) : null}
           <ResultSection title="Strong synergies" results={presentation.activeSynergies} />
           {!presentation.hasCompleteProfileCoverage ? <IncompleteMissingEnablerNotice /> : null}
@@ -46,9 +46,7 @@ function IncompleteMissingEnablerNotice() {
   return (
     <section className="simple-result-section" aria-labelledby="simple-incomplete-missing-enablers">
       <h4 id="simple-incomplete-missing-enablers">Missing enablers</h4>
-      <p className="notice-text">
-        Missing-enabler checks are incomplete until all selected dragons have high-level synergy profiles.
-      </p>
+      <p className="notice-text">Missing-enabler checks are incomplete until all selected dragons have curated profiles.</p>
     </section>
   );
 }
@@ -85,7 +83,7 @@ function CoverageSummary({
   return (
     <div className="coverage-summary">
       <p>
-        High-level synergy profiles are available for {presentation.mappedDragonIds.length} of the {selectedCount} selected dragons.
+        Curated profiles are available for {presentation.mappedDragonIds.length} of the {selectedCount} selected dragons.
       </p>
       {unmappedNames.length > 0 ? (
         <p>Synergy data not yet mapped: {unmappedNames.join(', ')}.</p>

@@ -154,11 +154,11 @@ export function buildDragonDetailPresentation(
     : [];
   const benefitsFrom = profile ? collectUnique(describeSignals(profile.benefitsFrom, BENEFIT_LABELS)) : [];
   const placementNotes = profile ? collectUnique(describePlacementNotes(profile)) : [];
-  const headerLine = profile ? buildHeadlineLine(profile) : 'Metadata-only record. Ability details not yet verified.';
+  const headerLine = profile ? buildHeadlineLine(profile) : 'Metadata-only record. Ability details not verified.';
 
   return {
     headerLine,
-    metadataNotice: profile ? null : 'Metadata-only record. Ability details not yet verified.',
+    metadataNotice: profile ? null : 'Metadata-only record. Ability details not verified.',
     provides,
     benefitsFrom,
     placementNotes,

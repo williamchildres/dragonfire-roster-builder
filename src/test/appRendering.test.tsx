@@ -86,13 +86,16 @@ describe('Dragonfire Roster Lab app', () => {
 
     await user.click(screen.getByRole('button', { name: /about/i }));
     expect(
-      screen.getByText(/Ability evidence and curated profile updates require sourced community submissions/i),
+      screen.getByText(/Ability and profile updates require sourced community evidence/i),
     ).toBeInTheDocument();
-    expect(screen.queryByText(/Combat data will require sourced community submissions/i)).not.toBeInTheDocument();
-    expect(screen.getByText(/should never submit account credentials/i)).toBeInTheDocument();
+    expect(screen.getByText(/No login is required\./i)).toBeInTheDocument();
+    expect(screen.getByText(/no private game API/i)).toBeInTheDocument();
+    expect(screen.getByText(/roster data plus notes stay in your browser/i)).toBeInTheDocument();
+    expect(screen.getByText(/Issues and contributions can be used for sourced corrections/i)).toBeInTheDocument();
+    expect(screen.getByText(/Please do not submit credentials/i)).toBeInTheDocument();
   });
 
-  it('displays unknown combat values as Not yet verified', async () => {
+  it('displays unknown combat values as Not verified yet', async () => {
     const user = userEvent.setup();
     render(<App />);
 
@@ -102,7 +105,7 @@ describe('Dragonfire Roster Lab app', () => {
     await user.click(within(syraxCard as HTMLElement).getByRole('button', { name: /view details/i }));
 
     const dialog = screen.getByRole('dialog', { name: /syrax/i });
-    expect(within(dialog).getAllByText('Not yet verified').length).toBeGreaterThan(4);
+    expect(within(dialog).getAllByText('Not verified yet').length).toBeGreaterThan(4);
   });
 
   it('renders the polished Daemoros details layout with at-a-glance summary and ownership controls', async () => {
@@ -119,7 +122,7 @@ describe('Dragonfire Roster Lab app', () => {
     expect(dialog).toHaveTextContent('Daemoros');
     expect(dialog).toHaveTextContent('Epic');
     expect(dialog).toHaveTextContent('Warrior');
-    expect(dialog).toHaveTextContent('Community Verified');
+    expect(dialog).toHaveTextContent('Verified');
     expect(dialog).toHaveTextContent('At a glance');
     expect(dialog).toHaveTextContent('Provides');
     expect(dialog).toHaveTextContent('Benefits from');
@@ -176,7 +179,7 @@ describe('Dragonfire Roster Lab app', () => {
     await user.click(within(dragonCard as HTMLElement).getByRole('button', { name: /view details/i }));
 
     const dialog = screen.getByRole('dialog', { name: /solstryker/i });
-    expect(dialog).toHaveTextContent('Metadata-only record. Ability details not yet verified.');
+    expect(dialog).toHaveTextContent('Metadata-only record. Ability details not verified.');
     expect(dialog).toHaveTextContent('At a glance');
     expect(dialog).toHaveTextContent('No formation-wide output profile recorded.');
     expect(dialog).toHaveTextContent('No mapped incoming synergy yet.');

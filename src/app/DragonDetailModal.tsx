@@ -14,8 +14,9 @@ import type {
 import { simpleSynergyProfiles } from '../synergy/profiles';
 import { positionLabels } from '../services/teamShare';
 import { buildDragonDetailPresentation, summarizeAbility, type DragonDetailPresentation } from './dragonDetailPresentation';
+import { getPublicRosterSourceLabel, getPublicVerificationLabel, getPublicVerificationTone } from './publicCardLabels';
 
-const unknown = 'Not yet verified';
+const unknown = 'Not verified yet';
 
 export function DragonDetailsDialog({
   dragon,
@@ -73,8 +74,8 @@ export function DragonDetailsDialog({
     }
   };
 
-  const dataStatusLabel = formatStatus(dragon.dataStatus);
-  const rosterSourceLabel = formatRosterSourceStatus(dragon.rosterSourceStatus);
+  const dataStatusLabel = getPublicVerificationLabel(dragon.dataStatus) ?? 'Verification pending';
+  const rosterSourceLabel = getPublicRosterSourceLabel(dragon.rosterSourceStatus);
 
   return (
     <div className="modal-backdrop" role="presentation">
@@ -128,7 +129,7 @@ export function DragonDetailsDialog({
                     />
                   ))
                 ) : dragon.command || dragon.trait ? null : (
-                  <p className="notice-text">Ability details not yet verified.</p>
+                  <p className="notice-text">Ability details not verified.</p>
                 )}
               </div>
             </section>
@@ -257,7 +258,9 @@ function DragonAbilityCard({
           <p className="ability-badges">
             <span className="badge">{titleCase(ability.kind)}</span>
             <span className="badge">{ability.abilityClass ? titleCase(ability.abilityClass) : 'Unknown Class'}</span>
-            <span className="badge">{verificationLabel(ability.verification.status)}</span>
+            <span className={`badge verification-${getPublicVerificationTone(ability.verification.status) ?? 'verified'}`}>
+              {getPublicVerificationLabel(ability.verification.status) ?? verificationLabel(ability.verification.status)}
+            </span>
             {locked ? <span className="badge">Locked preview</span> : <span className="badge">Unlocked or available</span>}
           </p>
         </div>
@@ -366,7 +369,7 @@ function DragonTechnicalDetails({ dragon }: { dragon: Dragon }) {
             {dragonStatDefinitions.map((definition) => (
               <li key={definition.id}>
                 <strong>{definition.name}:</strong> {definition.description}{' '}
-                {definition.canonicalFormulaKnown ? 'Formula known.' : 'Formula not yet verified.'}
+                {definition.canonicalFormulaKnown ? 'Formula known.' : 'Formula not verified yet.'}
               </li>
             ))}
           </ul>
@@ -402,7 +405,7 @@ function DragonTechnicalDetails({ dragon }: { dragon: Dragon }) {
                   ) : (
                     <span>{source.title}</span>
                   )}
-                  <span> - {formatStatus(source.verificationStatus)}</span>
+                  <span> - {getPublicVerificationLabel(source.verificationStatus) ?? formatStatus(source.verificationStatus)}</span>
                 </li>
               ))}
             </ul>
@@ -603,21 +606,8 @@ function verificationLabel(status: string) {
 }
 
 function formatStatus(status: VerificationStatus) {
-  return status
-    .split('-')
-    .map((part) => titleCase(part))
-    .join(' ');
-}
-
-function formatRosterSourceStatus(status: Dragon['rosterSourceStatus']) {
-  switch (status) {
-    case 'official-website':
-      return 'Official website';
-    case 'in-game-verified-pending-official-site':
-      return 'In-game verified, pending official site';
-    case 'community-unverified':
-      return 'Community unverified';
-  }
+  const label = getPublicVerificationLabel(status);
+  return label ?? status.split('-').map((part) => titleCase(part)).join(' ');
 }
 
 function formatCollectionState(state: DragonCollectionState) {

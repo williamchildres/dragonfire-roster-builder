@@ -2,6 +2,7 @@
 
 ## Unreleased
 
+- Polished the Data Status, About, footer, and mobile-facing public copy for release readiness, clarified local-first/privacy and verification wording, and kept dragon data, profiles, evidence, affinities, roster persistence, and import/export behavior unchanged.
 - Simplified the public verification labels on Dragon Database and My Roster cards so community-verified dragons read as `Verified`, metadata-only dragons read as `Metadata Only`, and metadata-only cards show `Ability details not verified` without changing the underlying roster or dragon data.
 - Removed the public source-detail chip noise from cards while preserving the existing ownership toggles, details access, Star Rank, Reign Level, import/export behavior, and internal evidence wording.
 - Polished the Dragon Database and My Roster cards into lighter player-facing roster cards, reduced repeated ownership/status rows, and kept ownership toggles, details access, Star Rank, Reign Level, and import/export behavior intact.
