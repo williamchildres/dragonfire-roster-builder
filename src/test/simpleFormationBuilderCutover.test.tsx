@@ -296,7 +296,7 @@ describe('Formation Builder simple synergy cutover', () => {
     );
   });
 
-  it('renders selected-card signal summaries with active and inactive context states', async () => {
+  it('renders selected-card signal summaries with supported, used, satisfied, and missing states', async () => {
     const user = userEvent.setup();
     seedRoster({ syrax: {}, caraxes: { reignLevel: 26 }, vhagar: {} });
 
@@ -304,18 +304,42 @@ describe('Formation Builder simple synergy cutover', () => {
     await selectFormation(user, { 'left-flank': 'syrax', vanguard: 'caraxes', 'right-flank': 'vhagar' });
 
     const caraxesCard = screen.getByRole('article', { name: 'Vanguard' });
+    expect(within(caraxesCard).getByRole('region', { name: 'Damage profile' })).toHaveTextContent('Fire Damage');
     expect(within(caraxesCard).getByRole('region', { name: 'Provides' })).toHaveTextContent('Slow');
     expect(within(caraxesCard).getByRole('region', { name: 'Provides' })).toHaveTextContent('Control');
-    expect(within(caraxesCard).getByLabelText(/First-Strike active/i)).toHaveAttribute('data-state', 'active');
-    expect(within(caraxesCard).getByLabelText(/Fire Damage active/i)).toHaveAttribute('data-state', 'active');
+    expect(within(caraxesCard).getByLabelText(/Fire Damage supported/i)).toHaveAttribute('data-state', 'supported');
+    expect(within(caraxesCard).getByLabelText(/First-Strike satisfied/i)).toHaveAttribute('data-state', 'satisfied');
+    expect(within(caraxesCard).getByLabelText(/Slow used/i)).toHaveAttribute('data-state', 'used');
 
     const vhagarCard = screen.getByRole('article', { name: 'Right Flank' });
     expect(within(vhagarCard).getByRole('region', { name: 'Benefits from' })).toHaveTextContent('Burn');
-    expect(within(vhagarCard).getByLabelText(/Burn active/i)).toHaveAttribute('data-state', 'active');
+    expect(within(vhagarCard).getByLabelText(/Burn satisfied/i)).toHaveAttribute('data-state', 'satisfied');
 
     await clearPosition(user, 'Vanguard');
     const updatedVhagarCard = screen.getByRole('article', { name: 'Right Flank' });
-    expect(within(updatedVhagarCard).getByLabelText(/Burn inactive/i)).toHaveAttribute('data-state', 'inactive');
+    expect(within(updatedVhagarCard).getByLabelText(/Burn missing/i)).toHaveAttribute('data-state', 'missing');
+  });
+
+  it('shows Malachite unused Physical and Tactical support as available instead of used', async () => {
+    const user = userEvent.setup();
+    seedRoster({ malachite: {}, sheepstealer: { reignLevel: 16 }, caraxes: {} });
+
+    await openFormationBuilder(user);
+    await selectFormation(user, { 'left-flank': 'malachite', vanguard: 'sheepstealer', 'right-flank': 'caraxes' });
+
+    const malachiteCard = screen.getByRole('article', { name: 'Left Flank' });
+    expect(within(malachiteCard).getByLabelText(/Physical Damage support available/i)).toHaveAttribute(
+      'data-state',
+      'available',
+    );
+    expect(within(malachiteCard).getByLabelText(/Tactical Damage support available/i)).toHaveAttribute(
+      'data-state',
+      'available',
+    );
+    expect(within(malachiteCard).getByLabelText(/Recovery used/i)).toHaveAttribute('data-state', 'used');
+
+    const caraxesCard = screen.getByRole('article', { name: 'Right Flank' });
+    expect(within(caraxesCard).getByLabelText(/Fire Damage supported/i)).toHaveAttribute('data-state', 'supported');
   });
 
   it('marks Provides chips inactive when progression or Vanguard placement blocks the source', async () => {
@@ -352,7 +376,7 @@ describe('Formation Builder simple synergy cutover', () => {
     expect(within(screen.getByRole('article', { name: 'Vanguard' })).getByRole('button', { name: /\+ add dragon/i })).toBeInTheDocument();
   });
 
-  it('filters the Formation Builder dragon selector by name, metadata, Provides, and Benefits from tags', async () => {
+  it('filters the Formation Builder dragon selector by name, metadata, Damage profile, Provides, and Benefits from tags', async () => {
     const user = userEvent.setup();
     seedRoster({ caraxes: {}, syrax: {}, vhagar: {}, daemoros: {} });
 
@@ -364,14 +388,25 @@ describe('Formation Builder simple synergy cutover', () => {
     expect(within(dialog).getByLabelText(/^rarity$/i)).toBeInTheDocument();
     expect(within(dialog).getByLabelText(/^breed$/i)).toBeInTheDocument();
     expect(within(dialog).getByLabelText(/^verification$/i)).toBeInTheDocument();
+    expect(within(dialog).getByRole('combobox', { name: /damage profile/i })).toBeInTheDocument();
     expect(within(dialog).getByLabelText(/provides tag/i)).toBeInTheDocument();
     expect(within(dialog).getByLabelText(/benefits from tag/i)).toBeInTheDocument();
 
     await user.type(within(dialog).getByLabelText(/search by dragon name/i), 'Caraxes');
     expect(within(dialog).getByRole('heading', { name: 'Caraxes' })).toBeInTheDocument();
+    const caraxesRow = within(dialog).getByRole('heading', { name: 'Caraxes' }).closest('article');
+    expect(caraxesRow).not.toBeNull();
+    expect(within(caraxesRow as HTMLElement).getByLabelText('Damage profile')).toHaveTextContent('Fire Damage');
+    expect(within(caraxesRow as HTMLElement).getByLabelText('Provides')).toHaveTextContent('Slow');
+    expect(within(caraxesRow as HTMLElement).getByLabelText('Benefits from')).toHaveTextContent('First-Strike');
     expect(within(dialog).queryByRole('heading', { name: 'Syrax' })).not.toBeInTheDocument();
 
     await user.clear(within(dialog).getByLabelText(/search by dragon name/i));
+    await user.selectOptions(within(dialog).getByRole('combobox', { name: /damage profile/i }), 'Fire Damage');
+    expect(within(dialog).getByRole('heading', { name: 'Caraxes' })).toBeInTheDocument();
+    expect(within(dialog).queryByRole('heading', { name: 'Syrax' })).not.toBeInTheDocument();
+
+    await user.selectOptions(within(dialog).getByRole('combobox', { name: /damage profile/i }), 'all');
     await user.selectOptions(within(dialog).getByLabelText(/provides tag/i), 'Slow');
     expect(within(dialog).getByRole('heading', { name: 'Caraxes' })).toBeInTheDocument();
     expect(within(dialog).queryByRole('heading', { name: 'Syrax' })).not.toBeInTheDocument();
@@ -409,6 +444,7 @@ describe('Formation Builder simple synergy cutover', () => {
       expect(within(card).getByLabelText(/movement controls/i)).toBeInTheDocument();
       expect(within(card).getByRole('button', { name: /clear position/i })).toBeInTheDocument();
       expect(within(card).getByRole('region', { name: 'Command' })).toBeInTheDocument();
+      expect(within(card).getByRole('region', { name: 'Damage profile' })).toBeInTheDocument();
       expect(within(card).getByRole('region', { name: 'Provides' })).toBeInTheDocument();
       expect(within(card).getByRole('region', { name: 'Benefits from' })).toBeInTheDocument();
       expect(within(card).getByRole('region', { name: /affinities/i })).toBeInTheDocument();
@@ -419,6 +455,31 @@ describe('Formation Builder simple synergy cutover', () => {
     expect(within(screen.getByRole('article', { name: 'Right Flank' })).queryByRole('region', { name: /trait status/i })).not.toBeInTheDocument();
     expect(screen.queryByText('Curated profile available.')).not.toBeInTheDocument();
     expect(screen.queryByText('No recorded unlock requirement.')).not.toBeInTheDocument();
+
+    const syrax = dragons.find((dragon) => dragon.id === 'syrax')!;
+    const syraxCard = screen.getByRole('article', { name: 'Left Flank' });
+    const syraxMetadata = within(syraxCard).getByLabelText(/Syrax metadata/i);
+    expect(syraxMetadata).toHaveTextContent(syrax.rarity);
+    expect(syraxMetadata).toHaveTextContent(syrax.breed);
+    expect(syraxMetadata).toHaveTextContent('Star 10');
+    expect(syraxMetadata).not.toHaveTextContent('Verified');
+    expect(syraxMetadata).not.toHaveTextContent('Owned / Hatched');
+
+    const syraxCommand = within(syraxCard).getByRole('region', { name: 'Command' });
+    expect(syraxCommand).toHaveTextContent('Deals Tactical Damage');
+    expect(within(syraxCommand).queryByRole('list')).not.toBeInTheDocument();
+    expect(syraxCommand).not.toHaveTextContent('Each Round: 20% chance');
+    await user.click(within(syraxCommand).getByRole('button', { name: /show full wording/i }));
+    expect(syraxCommand).toHaveTextContent('Each Round: 20% chance');
+    await user.click(within(syraxCommand).getByRole('button', { name: /hide full wording/i }));
+    expect(syraxCommand).not.toHaveTextContent('Each Round: 20% chance');
+
+    const caraxesTrait = within(screen.getByRole('article', { name: 'Vanguard' })).getByRole('region', {
+      name: /trait status/i,
+    });
+    expect(caraxesTrait).not.toHaveTextContent('At Level 16+ and deployed in Vanguard');
+    await user.click(within(caraxesTrait).getByRole('button', { name: /show full wording/i }));
+    expect(caraxesTrait).toHaveTextContent('At Level 16+ and deployed in Vanguard');
 
     expect(analysisText()).toContain('Synergy data not yet mapped: Antares.');
     expect(sectionText('Strong synergies')).toContain("Syrax can grant First-Strike, which improves Caraxes's Infernal Burst.");

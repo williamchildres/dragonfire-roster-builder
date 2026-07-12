@@ -1139,14 +1139,27 @@ dd {
   padding: 0;
 }
 
-.formation-signal-chip.signal-active {
+.formation-signal-chip.signal-supported,
+.formation-signal-chip.signal-used,
+.formation-signal-chip.signal-satisfied {
   background: rgba(127, 176, 143, 0.2);
   border-color: rgba(127, 176, 143, 0.72);
 }
 
+.formation-signal-chip.signal-available {
+  background: rgba(255, 255, 255, 0.05);
+  border-color: var(--line-soft);
+}
+
+.formation-signal-chip.signal-missing,
 .formation-signal-chip.signal-inactive {
   background: rgba(211, 108, 87, 0.14);
   border-color: rgba(211, 108, 87, 0.62);
+}
+
+.formation-wording-toggle {
+  justify-self: start;
+  min-height: 2rem;
 }
 
 .compact-ability-badges {

@@ -27,6 +27,8 @@ The repository does not store execution-level schedules, rolls, attempts, target
 
 The live Formation Builder uses curated simple profiles in `src/synergy`. Ordinary dragon additions should be data and profile-audit changes, not engine changes.
 
+Selected Formation Builder cards show current Damage Profile, Provides, and Benefits from signal sections. Chip states distinguish supported or used relationships from available-but-unused, missing, and inactive signals before any scoring layer is added.
+
 The simple evaluator models high-level setup/payoff and support relationships, progression locks, adjacency, hard recipient positions, grouped Vanguard conflicts, missing enablers, and duplicate relationship aggregation. It does not model exact timing, rolls, target overlap, stacks, damage formulas, or scores.
 
 ## Development

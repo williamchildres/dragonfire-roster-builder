@@ -23,6 +23,7 @@ import {
   buildFormationFilterOptions,
   buildFormationSignalChips,
   profileBenefitsFromLabel,
+  profileDamageProfileLabel,
   profileProvidesLabel,
 } from './formationCardPresentation';
 import { getPublicVerificationLabel, getPublicVerificationTone } from './publicCardLabels';
@@ -75,6 +76,7 @@ type FormationSelectorFilters = {
   rarity: DragonRarity | 'all';
   breed: DragonBreed | 'all';
   status: VerificationStatus | 'all';
+  damageProfile: string;
   provides: string;
   benefitsFrom: string;
 };
@@ -107,6 +109,7 @@ const defaultFormationSelectorFilters: FormationSelectorFilters = {
   rarity: 'all',
   breed: 'all',
   status: 'all',
+  damageProfile: 'all',
   provides: 'all',
   benefitsFrom: 'all',
 };
@@ -1058,6 +1061,11 @@ function FormationDragonSelectorDialog({
       .filter((dragon) => (filters.breed === 'all' ? true : dragon.breed === filters.breed))
       .filter((dragon) => (filters.status === 'all' ? true : dragon.dataStatus === filters.status))
       .filter((dragon) =>
+        filters.damageProfile === 'all'
+          ? true
+          : profileDamageProfileLabel(profilesById.get(dragon.id), filters.damageProfile),
+      )
+      .filter((dragon) =>
         filters.provides === 'all' ? true : profileProvidesLabel(profilesById.get(dragon.id), filters.provides),
       )
       .filter((dragon) =>
@@ -1178,6 +1186,17 @@ function FormationDragonSelectorDialog({
             </select>
           </label>
           <label>
+            Damage profile
+            <select value={filters.damageProfile} onChange={(event) => update({ damageProfile: event.target.value })}>
+              <option value="all">All Damage profiles</option>
+              {filterOptions.damageProfile.map((label) => (
+                <option key={label} value={label}>
+                  {label}
+                </option>
+              ))}
+            </select>
+          </label>
+          <label>
             Provides tag
             <select value={filters.provides} onChange={(event) => update({ provides: event.target.value })}>
               <option value="all">All Provides tags</option>
@@ -1270,6 +1289,7 @@ function FormationDragonSelectorRow({
             {isAlreadySelected ? <span className="badge">Already selected</span> : null}
           </div>
           <div className="formation-selector-signals">
+            <CompactSignalPreview title="Damage profile" labels={signalPreview.damageProfile.map((chip) => chip.label)} />
             <CompactSignalPreview title="Provides" labels={signalPreview.provides.map((chip) => chip.label)} />
             <CompactSignalPreview title="Benefits from" labels={signalPreview.benefitsFrom.map((chip) => chip.label)} />
           </div>
@@ -1292,7 +1312,7 @@ function FormationDragonSelectorRow({
   );
 }
 
-function CompactSignalPreview({ title, labels }: { title: 'Provides' | 'Benefits from'; labels: string[] }) {
+function CompactSignalPreview({ title, labels }: { title: 'Damage profile' | 'Provides' | 'Benefits from'; labels: string[] }) {
   return (
     <div className="compact-signal-preview" aria-label={title}>
       <span className="compact-signal-title">{title}</span>

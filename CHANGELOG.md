@@ -2,6 +2,7 @@
 
 ## Unreleased
 
+- Added a Formation Builder Damage Profile section, refined Provides and Benefits from chip states to distinguish used/satisfied, available, missing, and inactive signals, collapsed full Command and Vanguard Trait wording by default, removed redundant selected-card chips, and audited formation tag display before scoring work.
 - Cleaned Formation Builder selected-dragon cards by removing repeated curated-profile blocks and command unlock-noise rows, while showing Vanguard Traits only for the Vanguard slot.
 - Added compact Provides and Benefits from signal chips to Formation Builder cards with active/inactive formation-context state.
 - Replaced Formation Builder dragon dropdowns with a searchable Add/Change Dragon selector with rarity, breed, verification, Provides, and Benefits from filters.
