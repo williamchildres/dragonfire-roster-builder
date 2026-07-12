@@ -39,7 +39,7 @@ describe('release readiness pages', () => {
     expect(aboutSupportLink).toHaveAttribute('rel', expect.stringContaining('noreferrer'));
 
     const footer = screen.getByRole('contentinfo');
-    expect(within(footer).getByText(/unofficial community tool/i)).toBeInTheDocument();
+    expect(within(footer).getByText(/Dragonfire Lab is an unofficial community tool/i)).toBeInTheDocument();
     expect(
       within(footer).getByText(/not affiliated with or endorsed by Warner Bros\. Entertainment, HBO, or the developers/i),
     ).toBeInTheDocument();
@@ -58,7 +58,8 @@ describe('release readiness pages', () => {
 
     render(<App />);
 
-    expect(screen.getByRole('heading', { name: 'Overview' })).toBeInTheDocument();
+    expect(screen.queryByRole('heading', { name: 'Overview' })).not.toBeInTheDocument();
+    expect(screen.getByRole('heading', { name: 'Track Your Roster' })).toBeInTheDocument();
     expect(window.location.hash).toBe('');
   });
 
@@ -76,7 +77,8 @@ describe('release readiness pages', () => {
     render(<App />);
 
     await user.click(screen.getByRole('button', { name: /overview/i }));
-    expect(screen.getByRole('heading', { name: 'Overview' })).toBeInTheDocument();
+    expect(screen.queryByRole('heading', { name: 'Overview' })).not.toBeInTheDocument();
+    expect(screen.getByRole('heading', { name: 'Track Your Roster' })).toBeInTheDocument();
 
     await user.click(screen.getByRole('button', { name: /^my roster$/i }));
     expect(screen.getByRole('heading', { name: 'My Roster' })).toBeInTheDocument();

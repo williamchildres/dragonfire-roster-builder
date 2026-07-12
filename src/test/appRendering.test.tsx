@@ -168,7 +168,7 @@ describe('Dragonfire Roster Lab app', () => {
     const user = userEvent.setup();
     render(<App />);
 
-    expect(screen.getByRole('heading', { name: 'Overview' })).toBeInTheDocument();
+    expect(screen.queryByRole('heading', { name: 'Overview' })).not.toBeInTheDocument();
     expect(screen.getByRole('img', { name: /dragonfire lab dragon emblem/i })).toBeInTheDocument();
     expect(screen.queryByText(/local-first formation planning/i)).not.toBeInTheDocument();
     expect(
@@ -182,6 +182,9 @@ describe('Dragonfire Roster Lab app', () => {
     expect(screen.getByRole('heading', { name: 'Track Your Roster' })).toBeInTheDocument();
     expect(screen.getByRole('heading', { name: 'Compare Verified Dragons' })).toBeInTheDocument();
     expect(screen.getByRole('heading', { name: 'Build Formations' })).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: /track your roster/i })).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: /compare verified dragons/i })).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: /build formations/i })).toBeInTheDocument();
 
     expect(screen.getByText('Detailed profile coverage')).toBeInTheDocument();
     expect(screen.getByText(/19 \/ 31 dragons mapped/i)).toBeInTheDocument();
@@ -198,6 +201,7 @@ describe('Dragonfire Roster Lab app', () => {
       expect(card).not.toBeNull();
       expect(card).toHaveTextContent(coverage.text);
     }
+    expect(screen.getByText('Legendary and Epic profiles are mapped first. Rare dragons are next.')).toBeInTheDocument();
 
     const latestUpdate = screen.getByRole('heading', { name: /latest update - v0\.6\.4/i }).closest('.latest-update-panel');
     expect(latestUpdate).not.toBeNull();
@@ -206,6 +210,7 @@ describe('Dragonfire Roster Lab app', () => {
     expect(screen.getByText(/No login required\./i)).toBeInTheDocument();
     expect(screen.getByText(/stored locally in your browser/i)).toBeInTheDocument();
     expect(screen.getByText(/does not use private game APIs/i)).toBeInTheDocument();
+    expect(screen.getByText(/Dragonfire Lab is an unofficial community tool/i)).toBeInTheDocument();
 
     await user.click(screen.getByRole('button', { name: /about/i }));
     expect(
@@ -216,6 +221,22 @@ describe('Dragonfire Roster Lab app', () => {
     expect(screen.getByText(/roster data plus notes stay in your browser/i)).toBeInTheDocument();
     expect(screen.getByText(/Issues and contributions can be used for sourced corrections/i)).toBeInTheDocument();
     expect(screen.getByText(/Please do not submit credentials/i)).toBeInTheDocument();
+  });
+
+  it('navigates from the Overview feature cards to the matching public pages', async () => {
+    const user = userEvent.setup();
+    render(<App />);
+
+    await user.click(screen.getByRole('button', { name: /track your roster/i }));
+    expect(screen.getByRole('heading', { name: 'My Roster' })).toBeInTheDocument();
+
+    await user.click(screen.getByRole('button', { name: /overview/i }));
+    await user.click(screen.getByRole('button', { name: /compare verified dragons/i }));
+    expect(screen.getByRole('heading', { name: 'My Roster' })).toBeInTheDocument();
+
+    await user.click(screen.getByRole('button', { name: /overview/i }));
+    await user.click(screen.getByRole('button', { name: /build formations/i }));
+    expect(screen.getByRole('heading', { name: 'Formation Builder' })).toBeInTheDocument();
   });
 
   it('displays unknown combat values as Not verified yet', async () => {

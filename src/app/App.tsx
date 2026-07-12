@@ -5,6 +5,7 @@ import {
   Home,
   Info,
   Link,
+  ChevronRight,
   Plus,
   RotateCcw,
   Shield,
@@ -292,7 +293,11 @@ export function App() {
         ) : null}
 
         {activeSection === 'home' ? (
-          <HomeSection detailedAbilityCount={detailedAbilityCount} />
+          <HomeSection
+            detailedAbilityCount={detailedAbilityCount}
+            onRoster={() => selectSection('roster')}
+            onTeam={() => selectSection('team')}
+          />
         ) : null}
 
         {activeSection === 'roster' ? (
@@ -329,7 +334,7 @@ export function App() {
       <footer className="site-footer">
         <div className="site-footer-inner">
           <p className="site-footer-copy">
-            Dragonfire Roster Lab is an unofficial community tool. It is not affiliated with or
+            Dragonfire Lab is an unofficial community tool. It is not affiliated with or
             endorsed by Warner Bros. Entertainment, HBO, or the developers of Game of Thrones:
             Dragonfire.
           </p>
@@ -380,8 +385,12 @@ export function App() {
 
 function HomeSection({
   detailedAbilityCount,
+  onRoster,
+  onTeam,
 }: {
   detailedAbilityCount: number;
+  onRoster: () => void;
+  onTeam: () => void;
 }) {
   const coveragePercent = Math.round((detailedAbilityCount / dragons.length) * 100);
   const versionLabel = `v${databaseMetadata.databaseVersion}`;
@@ -396,7 +405,7 @@ function HomeSection({
   });
 
   return (
-    <section className="overview-section" aria-labelledby="overview-title">
+    <section className="overview-section" aria-label="Overview">
       <div className="hero-section">
         <div className="hero-art hero-art-panel">
           <img
@@ -407,22 +416,24 @@ function HomeSection({
           <div className="hero-art-overlay" aria-hidden="true" />
         </div>
         <div className="hero-copy">
-          <h2 id="overview-title">Overview</h2>
           <div className="hero-feature-stack" aria-label="Overview highlights">
             <FeatureCard
               icon={Users}
               title="Track Your Roster"
               description="Save Owned / Hatched status, Star Rank, Dragon Level, Habit Levels, and notes locally in your browser."
+              onClick={onRoster}
             />
             <FeatureCard
               icon={Shield}
               title="Compare Verified Dragons"
               description="Review verified ability wording, metadata-only entries, affinities, evidence, and profile coverage."
+              onClick={onRoster}
             />
             <FeatureCard
               icon={Swords}
               title="Build Formations"
               description="See synergies, missing enablers, placement issues, and Vanguard conflicts."
+              onClick={onTeam}
             />
           </div>
         </div>
@@ -450,6 +461,9 @@ function HomeSection({
           />
         ))}
       </div>
+      <p className="rarity-note">
+        Legendary and Epic profiles are mapped first. Rare dragons are next.
+      </p>
 
       <div className="overview-footer-grid">
         <div className="latest-update-panel panel readable">
@@ -470,20 +484,40 @@ function FeatureCard({
   icon: Icon,
   title,
   description,
+  onClick,
 }: {
   icon: LucideIcon;
   title: string;
   description: string;
+  onClick?: () => void;
 }) {
-  return (
-    <article className="feature-card">
+  const classes = onClick ? 'feature-card feature-card-button' : 'feature-card';
+  const content = (
+    <>
       <div className="feature-icon" aria-hidden="true">
         <Icon size={18} />
       </div>
-      <h3>{title}</h3>
-      <p>{description}</p>
-    </article>
+      <div className="feature-card-copy">
+        <h3>{title}</h3>
+        <p>{description}</p>
+      </div>
+      {onClick ? (
+        <span className="feature-card-action" aria-hidden="true">
+          Open <ChevronRight size={14} />
+        </span>
+      ) : null}
+    </>
   );
+
+  if (onClick) {
+    return (
+      <button type="button" className={classes} onClick={onClick}>
+        {content}
+      </button>
+    );
+  }
+
+  return <article className={classes}>{content}</article>;
 }
 
 function RosterSection({
