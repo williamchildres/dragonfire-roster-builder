@@ -43,6 +43,13 @@ interface RatingListCandidate {
   text: string;
 }
 
+interface PayoffMetrics {
+  activeSetupCount: number;
+  activeAmplifierCount: number;
+  satisfiedBenefitCount: number;
+  participatingDragonCount: number;
+}
+
 const emptyChips: FormationRatingSignalChips = {
   damageProfile: [],
   provides: [],
@@ -64,12 +71,21 @@ export function rateFormation({
 }): FormationRatingResult {
   const selected = selectedDragons(formation, dragons, profiles, signalChipsByDragonId);
   const selectedCount = selected.length;
+  const payoffMetrics = collectPayoffMetrics(selected, presentation);
   const readiness = readinessScore(selected, presentation);
-  const synergyPayoff = synergyPayoffScore(selected, presentation);
-  const supportUsefulness = supportUsefulnessScore(selected);
+  const synergyPayoff = synergyPayoffScore(presentation, payoffMetrics);
+  const supportUsefulness = supportUsefulnessScore(selected, payoffMetrics, synergyPayoff.score);
   const placement = placementScore(presentation);
   const score = clampScore(readiness.score + synergyPayoff.score + supportUsefulness.score + placement.score);
-  const tier = selectedCount < 3 ? 'Incomplete' : tierForScore(score);
+  const tier = tierForFormation({
+    selected,
+    selectedCount,
+    score,
+    synergyPayoff,
+    supportUsefulness,
+    placement,
+    presentation,
+  });
   const strengths = selectStrengths(selected, presentation);
   const weaknesses = selectWeaknesses(selected, presentation);
   const notes = [
@@ -155,10 +171,10 @@ function readinessScore(
   return { label: 'Readiness / profile confidence', score, max: 15, explanation };
 }
 
-function synergyPayoffScore(
+function collectPayoffMetrics(
   selected: SelectedDragon[],
   presentation: SimpleFormationPresentation,
-): FormationRatingBreakdownItem {
+): PayoffMetrics {
   const activeSetupCount = uniqueKeys(
     presentation.activeSynergies
       .filter((result) => result.kind === 'setup-payoff')
@@ -177,6 +193,20 @@ function synergyPayoffScore(
     ),
   ).length;
   const participatingDragonCount = new Set(presentation.activeSynergies.flatMap((result) => result.dragonIds)).size;
+
+  return {
+    activeSetupCount,
+    activeAmplifierCount,
+    satisfiedBenefitCount,
+    participatingDragonCount,
+  };
+}
+
+function synergyPayoffScore(
+  presentation: SimpleFormationPresentation,
+  metrics: PayoffMetrics,
+): FormationRatingBreakdownItem {
+  const { activeSetupCount, activeAmplifierCount, satisfiedBenefitCount, participatingDragonCount } = metrics;
   const setupPoints = Math.min(activeSetupCount * 8, 24);
   const amplifierPoints = Math.min(activeAmplifierCount * 2, 12);
   const benefitPoints = Math.min(satisfiedBenefitCount * 4, 12);
@@ -190,12 +220,16 @@ function synergyPayoffScore(
   return { label: 'Realized synergy payoff', score, max: 45, explanation };
 }
 
-function supportUsefulnessScore(selected: SelectedDragon[]): FormationRatingBreakdownItem {
+function supportUsefulnessScore(
+  selected: SelectedDragon[],
+  payoffMetrics: PayoffMetrics,
+  payoffScore: number,
+): FormationRatingBreakdownItem {
   const usedProvidesCount = uniqueKeys(
     selected.flatMap((dragon) =>
       dragon.chips.provides
-        .filter((chip) => chip.state === 'used')
-        .map((chip) => `used:${dragon.dragonId}:${normalizeMeaning(chip.label)}:${recipientFromReason(chip.reason)}`),
+        .filter((chip) => chip.state === 'used' && countsAsUsedSupport(chip.label))
+        .map((chip) => usedSupportKey(dragon.dragonId, chip.label, chip.reason)),
     ),
   ).length;
   const supportedDamageCount = uniqueKeys(
@@ -207,13 +241,44 @@ function supportUsefulnessScore(selected: SelectedDragon[]): FormationRatingBrea
   ).length;
   const usedProvidePoints = Math.min(usedProvidesCount * 3, 15);
   const supportedDamagePoints = Math.min(supportedDamageCount * 5, 10);
-  const score = clampCategory(usedProvidePoints + supportedDamagePoints, 25);
+  const uncappedScore = clampCategory(usedProvidePoints + supportedDamagePoints, 25);
+  const cap = supportUsefulnessCap(payoffMetrics, payoffScore, supportedDamageCount);
+  const score = Math.min(uncappedScore, cap);
+  const capExplanation = score < uncappedScore ? ` Capped at ${cap} until more payoff or satisfied Benefits are active.` : '';
   const explanation =
     usedProvidesCount + supportedDamageCount > 0
-      ? `${usedProvidesCount} Provides signal${usedProvidesCount === 1 ? '' : 's'} used and ${supportedDamageCount} damage profile${supportedDamageCount === 1 ? '' : 's'} supported.`
+      ? `${usedProvidesCount} Provides signal${usedProvidesCount === 1 ? '' : 's'} used and ${supportedDamageCount} damage profile${supportedDamageCount === 1 ? '' : 's'} supported.${capExplanation}`
       : 'Available support has not been matched to selected allies.';
 
   return { label: 'Support usefulness', score, max: 25, explanation };
+}
+
+function supportUsefulnessCap(
+  payoffMetrics: PayoffMetrics,
+  payoffScore: number,
+  supportedDamageCount: number,
+): number {
+  const relationshipCap =
+    6 +
+    Math.min(payoffMetrics.satisfiedBenefitCount, 3) * 4 +
+    Math.min(payoffMetrics.activeSetupCount, 2) * 3 +
+    Math.min(payoffMetrics.activeAmplifierCount, 3) * 2 +
+    (supportedDamageCount > 0 ? 3 : 0);
+  let cap = Math.min(25, relationshipCap);
+
+  if (payoffScore < 15) {
+    cap = Math.min(cap, supportedDamageCount > 0 ? 10 : 6);
+  } else if (payoffScore < 25) {
+    cap = Math.min(cap, 14);
+  } else if (payoffScore < 35) {
+    cap = Math.min(cap, 20);
+  }
+
+  if (payoffMetrics.satisfiedBenefitCount === 0) {
+    cap = Math.min(cap, supportedDamageCount > 0 ? 10 : 6);
+  }
+
+  return clampCategory(cap, 25);
 }
 
 function placementScore(
@@ -230,6 +295,45 @@ function placementScore(
       : `${presentation.placementIssues.length} placement issue${presentation.placementIssues.length === 1 ? '' : 's'} and ${presentation.positionConflicts.length} position conflict${presentation.positionConflicts.length === 1 ? '' : 's'} reduce this category.`;
 
   return { label: 'Placement / conflict risk', score, max: 15, explanation };
+}
+
+function tierForFormation({
+  selected,
+  selectedCount,
+  score,
+  synergyPayoff,
+  supportUsefulness,
+  placement,
+  presentation,
+}: {
+  selected: SelectedDragon[];
+  selectedCount: number;
+  score: number;
+  synergyPayoff: FormationRatingBreakdownItem;
+  supportUsefulness: FormationRatingBreakdownItem;
+  placement: FormationRatingBreakdownItem;
+  presentation: SimpleFormationPresentation;
+}): FormationRatingTier {
+  if (selectedCount < 3) {
+    return 'Incomplete';
+  }
+
+  const scoreTier = tierForScore(score);
+  if (scoreTier !== 'Excellent') {
+    return scoreTier;
+  }
+
+  const missingBenefitCount = countMissingBenefits(selected, presentation);
+  const hasStrongPayoff = synergyPayoff.score >= 35;
+  const hasTooManyMissingBenefits = missingBenefitCount >= 3 && synergyPayoff.score < 42;
+  const hasSeverePlacementCollapse = placement.score <= 5;
+  const isSupportHeavyWithoutPayoff = supportUsefulness.score >= 20 && synergyPayoff.score < 35;
+
+  if (!hasStrongPayoff || hasTooManyMissingBenefits || hasSeverePlacementCollapse || isSupportHeavyWithoutPayoff) {
+    return 'Strong';
+  }
+
+  return 'Excellent';
 }
 
 function selectStrengths(
@@ -281,30 +385,35 @@ function selectWeaknesses(
       dragon.chips.provides
         .filter((chip) => chip.state === 'available')
         .map((chip) => ({
-          key: `unused-provides:${dragon.dragonId}:${normalizeMeaning(chip.label)}`,
+          key: unusedSupportKey(dragon.dragonId, chip.label, chip.reason),
           label: chip.label,
           text: `${dragon.dragonName}'s ${chip.label} is available but not used by this formation.`,
         })),
     )
     .sort((left, right) => unusedProvidePriority(left.label) - unusedProvidePriority(right.label))
     .map(({ key, text }) => ({ key, text }));
+  const conflictDragonIds = new Set(presentation.positionConflicts.flatMap((result) => result.dragonIds));
   const inactiveWeaknesses = selected.flatMap((dragon) =>
     dragon.chips.provides
-      .filter((chip) => chip.state === 'inactive')
+      .filter(
+        (chip) =>
+          chip.state === 'inactive' &&
+          !(conflictDragonIds.has(dragon.dragonId) && isVanguardInactiveReason(chip.reason)),
+      )
       .map((chip) => ({
         key: `inactive-provides:${dragon.dragonId}:${normalizeMeaning(chip.label)}:${normalizeMeaning(chip.reason)}`,
-        text: `${dragon.dragonName}'s ${chip.label} is an alternate placement or progression opportunity. ${chip.reason}`,
+        text: inactiveSignalText(dragon.dragonName, chip),
       })),
   );
   const weaknesses = uniqueCandidates([
     ...unfilledWeakness.map((text) => ({ key: 'incomplete-formation', text })),
     ...unmappedWeaknesses,
     ...presentation.positionConflicts.map((result) => ({
-      key: relationshipKey(result.kind, result.dragonIds, result.tag),
+      key: vanguardConflictKey(result.dragonIds),
       text: result.explanation,
     })),
     ...presentation.placementIssues.map((result) => ({
-      key: relationshipKey(result.kind, result.dragonIds, result.tag),
+      key: placementIssueKey(result),
       text: result.explanation,
     })),
     ...presentation.missingEnablers.map((result) => ({
@@ -313,7 +422,7 @@ function selectWeaknesses(
     })),
     ...missingBenefitWeaknesses,
     ...presentation.futureUnlocks.map((result) => ({
-      key: relationshipKey(result.kind, result.dragonIds, result.tag),
+      key: futureUnlockKey(result),
       text: result.explanation,
     })),
     ...unusedProvidesWeaknesses.slice(0, 3),
@@ -380,6 +489,19 @@ function uniqueKeys(values: string[]): string[] {
   return [...new Set(values)];
 }
 
+function countMissingBenefits(selected: SelectedDragon[], presentation: SimpleFormationPresentation): number {
+  return uniqueKeys([
+    ...presentation.missingEnablers.map((result) =>
+      missingBenefitKey(result.dragonIds[0] ?? 'unknown', normalizedMeaningFromTag(result.tag)),
+    ),
+    ...selected.flatMap((dragon) =>
+      dragon.chips.benefitsFrom
+        .filter((chip) => chip.state === 'missing')
+        .map((chip) => missingBenefitKey(dragon.dragonId, chip.label)),
+    ),
+  ]).length;
+}
+
 function unusedProvidePriority(label: string): number {
   return label.includes('support') ? 0 : 1;
 }
@@ -390,6 +512,42 @@ function relationshipKey(kind: string, dragonIds: string[], tag: string | undefi
 
 function missingBenefitKey(dragonId: string, label: string | undefined): string {
   return `missing-benefit:${dragonId}:${normalizeMeaning(label ?? 'unknown')}`;
+}
+
+function usedSupportKey(dragonId: string, label: string, reason: string): string {
+  return `used-support:${dragonId}:${normalizeMeaning(label)}:${recipientFromReason(reason)}`;
+}
+
+function unusedSupportKey(dragonId: string, label: string, reason: string): string {
+  return `unused-support:${dragonId}:${normalizeMeaning(label)}:${recipientFromReason(reason)}`;
+}
+
+function placementIssueKey(result: { kind: string; dragonIds: string[]; abilityIds: string[]; tag?: string }): string {
+  return `placement:${result.dragonIds.join('>')}:${result.abilityIds.join('>')}:${normalizedMeaningFromTag(result.tag)}`;
+}
+
+function vanguardConflictKey(dragonIds: string[]): string {
+  return `vanguard-conflict:${[...dragonIds].sort().join('>')}`;
+}
+
+function futureUnlockKey(result: { kind: string; dragonIds: string[]; abilityIds: string[]; tag?: string }): string {
+  return `future:${result.dragonIds.join('>')}:${result.abilityIds.join('>')}:${normalizedMeaningFromTag(result.tag)}`;
+}
+
+function countsAsUsedSupport(label: string): boolean {
+  return !['fire-damage', 'physical-damage', 'tactical-damage'].includes(normalizeMeaning(label));
+}
+
+function isVanguardInactiveReason(reason: string): boolean {
+  return normalizeMeaning(reason).includes('requires-vanguard');
+}
+
+function inactiveSignalText(dragonName: string, chip: FormationSignalChip): string {
+  if (isVanguardInactiveReason(chip.reason)) {
+    return `${dragonName}'s ${chip.label} could be activated from Vanguard as an alternate placement option. ${chip.reason}`;
+  }
+
+  return `${dragonName}'s ${chip.label} is an alternate placement or progression opportunity. ${chip.reason}`;
 }
 
 function normalizedMeaningFromTag(tag: string | undefined): string {
