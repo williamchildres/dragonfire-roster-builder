@@ -238,7 +238,7 @@ describe('Dragonfire Roster Lab app', () => {
     await user.click(within(syraxCard as HTMLElement).getByRole('button', { name: /view details/i }));
 
     const dialog = screen.getByRole('dialog', { name: /syrax/i });
-    expect(within(dialog).getAllByText('Not verified yet').length).toBeGreaterThan(4);
+    expect(within(dialog).getAllByText('Not verified yet').length).toBeGreaterThanOrEqual(3);
   });
 
   it('renders the polished Daemoros details layout with at-a-glance summary and ownership controls', async () => {
@@ -265,7 +265,7 @@ describe('Dragonfire Roster Lab app', () => {
     expect(dialog).toHaveTextContent('Panic');
     expect(dialog).toHaveTextContent('Burn');
     expect(dialog).toHaveTextContent('Physical Damage');
-    expect(dialog).toHaveTextContent('Vanguard trait');
+    expect(dialog).toHaveTextContent('Vanguard Trait');
     expect(dialog).toHaveTextContent('Initiative support');
     expect(dialog).toHaveTextContent('Shadowflame');
     expect(dialog).toHaveTextContent("Warrior's Zeal");
@@ -274,13 +274,34 @@ describe('Dragonfire Roster Lab app', () => {
     expect(dialog).toHaveTextContent('Shroud of Shadows');
     expect(dialog).toHaveTextContent('Darkening Fear');
     expect(dialog).toHaveTextContent("Phantom's Veil");
+    const detailsHeader = dialog.querySelector('.details-header');
+    expect(detailsHeader).not.toBeNull();
+    expect(detailsHeader).toHaveTextContent('Daemoros');
+    expect(detailsHeader).not.toHaveTextContent('Panic');
+    expect(detailsHeader).not.toHaveTextContent('Burn');
+    expect(detailsHeader).not.toHaveTextContent('Physical Damage');
+    expect(detailsHeader).not.toHaveTextContent('Vanguard trait');
+    expect(detailsHeader).not.toHaveTextContent('Initiative support');
+    expect(within(detailsHeader as HTMLElement).getByRole('checkbox', { name: /owned \/ hatched/i })).toBeInTheDocument();
+    expect(within(detailsHeader as HTMLElement).getByLabelText(/star rank/i)).toBeInTheDocument();
+    expect(within(detailsHeader as HTMLElement).getByLabelText(/reign level/i)).toBeInTheDocument();
     expect(dialog).toHaveTextContent('Owned / Hatched');
     expect(dialog).not.toHaveTextContent('Collection State');
     expect(dialog).not.toHaveTextContent('Shards');
     expect(dialog).not.toHaveTextContent('Shards Required');
     expect(dialog).toHaveTextContent('Star Rank');
     expect(dialog).toHaveTextContent('Reign Level');
-    expect(dialog).toHaveTextContent('Personal notes');
+    expect(within(dialog).queryByRole('heading', { name: 'Identity' })).not.toBeInTheDocument();
+    expect(dialog).not.toHaveTextContent('Verification status');
+    expect(dialog).not.toHaveTextContent('Roster source');
+    expect(dialog).not.toHaveTextContent('First observed in game');
+    expect(dialog).not.toHaveTextContent('Game version');
+    expect(dialog).not.toHaveTextContent('Last verified');
+    const technicalPanel = within(dialog)
+      .getByRole('heading', { name: 'Evidence, Technical Details & Notes' })
+      .closest('section');
+    expect(technicalPanel).not.toBeNull();
+    expect(within(technicalPanel as HTMLElement).getByLabelText(/personal notes/i)).toBeInTheDocument();
 
     const phantomCard = within(dialog).getByRole('heading', { name: "Phantom's Veil" }).closest('article');
     expect(phantomCard).not.toBeNull();
@@ -295,7 +316,7 @@ describe('Dragonfire Roster Lab app', () => {
     expect(verifiedWording.closest('details')).toHaveTextContent('reduce exactly one of Physical, Tactical, or Fire Damage Received');
 
     expect(within(dialog).getByText('Structured tags').closest('details')).not.toHaveAttribute('open');
-    expect(within(dialog).getByRole('heading', { name: 'Evidence & technical details' })).toBeInTheDocument();
+    expect(within(dialog).queryByRole('heading', { name: 'Evidence & technical details' })).not.toBeInTheDocument();
   });
 
   it('renders metadata-only dragon details without broken ability cards', async () => {
@@ -323,7 +344,7 @@ describe('Dragonfire Roster Lab app', () => {
     expect(dialog).not.toHaveTextContent('Placement notes');
     expect(dialog).not.toHaveTextContent('No special placement requirement recorded.');
     expect(within(dialog).queryByText('Plain summary')).toBeNull();
-    expect(within(dialog).queryByRole('heading', { name: 'Evidence & technical details' })).toBeInTheDocument();
+    expect(within(dialog).queryByRole('heading', { name: 'Evidence, Technical Details & Notes' })).toBeInTheDocument();
     expect(within(dialog).queryByRole('heading', { name: 'Abilities' })).toBeInTheDocument();
     expect(within(dialog).queryByRole('heading', { name: 'What it does' })).not.toBeInTheDocument();
     await user.click(within(dialog).getByRole('checkbox', { name: /owned \/ hatched/i }));
@@ -350,7 +371,7 @@ describe('Dragonfire Roster Lab app', () => {
     expect(dialog).toHaveTextContent('Intelligence support');
     expect(dialog).toHaveTextContent('Initiative support');
     expect(dialog).toHaveTextContent('Boosts Intelligence');
-    expect(dialog).toHaveTextContent('Vanguard trait');
+    expect(dialog).toHaveTextContent('Vanguard Trait');
   });
 
   it('renders Dragon Details ability cards with public labels and compact requirement badges', async () => {
@@ -994,6 +1015,9 @@ describe('Dragonfire Roster Lab app', () => {
     expect(css).toContain('flex-wrap: wrap');
     expect(css).toContain('width: fit-content');
     expect(css).toContain('.requirement-badge');
+    expect(css).toContain('grid-template-columns: minmax(0, 1fr)');
+    expect(css).toContain('z-index: 5');
+    expect(css).toContain('var(--panel-strong)');
   });
 
 
