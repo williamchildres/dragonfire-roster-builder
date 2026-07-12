@@ -634,7 +634,7 @@ textarea {
 .dragon-card-chips {
   display: flex;
   flex-wrap: wrap;
-  gap: 0.35rem;
+  gap: 0.3rem;
 }
 
 .dragon-card-summary {
@@ -645,8 +645,9 @@ textarea {
   color: var(--text);
   display: flex;
   flex-wrap: wrap;
-  gap: 0.45rem;
-  padding: 0.6rem 0.7rem;
+  gap: 0.35rem;
+  margin-top: 0.1rem;
+  padding: 0.5rem 0.65rem;
 }
 
 .dragon-card-summary-main,
@@ -681,8 +682,18 @@ textarea {
   background: rgba(122, 161, 184, 0.14);
 }
 
+.badge.verification-metadata-only {
+  background: rgba(122, 161, 184, 0.16);
+  color: #e7f3f8;
+}
+
 .verification-community-verified {
   background: rgba(127, 176, 143, 0.14);
+}
+
+.badge.verification-verified {
+  background: rgba(127, 176, 143, 0.18);
+  color: #effff3;
 }
 
 .verification-officially-confirmed {

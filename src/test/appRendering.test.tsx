@@ -167,7 +167,8 @@ describe('Dragonfire Roster Lab app', () => {
     expect(dragonCard).not.toBeNull();
     expect(dragonCard).toHaveTextContent('Rare');
     expect(dragonCard).toHaveTextContent('Champion');
-    expect(dragonCard).toHaveTextContent('Official Metadata Only');
+    expect(dragonCard).toHaveTextContent('Metadata Only');
+    expect(dragonCard).not.toHaveTextContent('Official Metadata Only');
     expect(dragonCard).toHaveTextContent('Not owned');
     expect(dragonCard).toHaveTextContent('Ability details not verified');
     expect(dragonCard).toHaveTextContent('View details');
@@ -497,23 +498,25 @@ describe('Dragonfire Roster Lab app', () => {
     render(<App />);
 
     await user.click(screen.getByRole('button', { name: /dragon database/i }));
-    const syraxCard = screen.getByRole('heading', { name: 'Syrax' }).closest('article');
-    expect(syraxCard).not.toBeNull();
-    expect(syraxCard).toHaveTextContent('Not owned');
-    expect(syraxCard).toHaveTextContent('Community Verified');
-    expect(syraxCard).toHaveTextContent('View details');
-    expect(syraxCard).toHaveTextContent('My Roster');
-    expect(syraxCard).not.toHaveTextContent('Collection:');
-    expect(syraxCard).not.toHaveTextContent('Hatched');
-    expect(syraxCard).not.toHaveTextContent('Not collected');
-    expect(syraxCard).not.toHaveTextContent('Not hatched');
-    expect(syraxCard).not.toHaveTextContent('Shards');
+    const daemorosCard = screen.getByRole('heading', { name: 'Daemoros' }).closest('article');
+    expect(daemorosCard).not.toBeNull();
+    expect(daemorosCard).toHaveTextContent('Not owned');
+    expect(daemorosCard).toHaveTextContent('Verified');
+    expect(daemorosCard).not.toHaveTextContent('Community Verified');
+    expect(daemorosCard).not.toHaveTextContent('In-game verified, pending official site');
+    expect(daemorosCard).toHaveTextContent('View details');
+    expect(daemorosCard).toHaveTextContent('My Roster');
+    expect(daemorosCard).not.toHaveTextContent('Collection:');
+    expect(daemorosCard).not.toHaveTextContent('Hatched');
+    expect(daemorosCard).not.toHaveTextContent('Not collected');
+    expect(daemorosCard).not.toHaveTextContent('Not hatched');
+    expect(daemorosCard).not.toHaveTextContent('Shards');
 
-    await user.click(within(syraxCard as HTMLElement).getByLabelText(/my roster/i));
-    expect(syraxCard).toHaveTextContent('Owned / Hatched');
+    await user.click(within(daemorosCard as HTMLElement).getByLabelText(/my roster/i));
+    expect(daemorosCard).toHaveTextContent('Owned / Hatched');
 
     await user.click(screen.getByRole('button', { name: /^my roster$/i }));
-    expect(screen.getByRole('heading', { name: 'Syrax' })).toBeInTheDocument();
+    expect(screen.getByRole('heading', { name: 'Daemoros' })).toBeInTheDocument();
   });
 
   it('renders compact My Roster cards without collection or shard controls', async () => {
@@ -529,13 +532,77 @@ describe('Dragonfire Roster Lab app', () => {
     await user.click(screen.getByRole('button', { name: /^my roster$/i }));
     const syraxCard = screen.getByRole('heading', { name: 'Syrax' }).closest('article');
     expect(syraxCard).not.toBeNull();
-    expect(syraxCard).toHaveTextContent('Community Verified');
+    expect(syraxCard).toHaveTextContent('Verified');
+    expect(syraxCard).not.toHaveTextContent('Community Verified');
+    expect(syraxCard).not.toHaveTextContent('In-game verified, pending official site');
     expect(syraxCard).toHaveTextContent('Owned / Hatched');
     expect(syraxCard).toHaveTextContent('View details');
     expect(within(syraxCard as HTMLElement).getByRole('checkbox', { name: /owned \/ hatched/i })).toBeChecked();
     expect(within(syraxCard as HTMLElement).queryByRole('checkbox', { name: /my roster/i })).not.toBeInTheDocument();
     expect(within(syraxCard as HTMLElement).getByLabelText(/star rank/i)).toHaveValue('4');
     expect(within(syraxCard as HTMLElement).getByLabelText(/reign level/i)).toHaveValue(9);
+    expect(screen.getByRole('button', { name: /export json/i })).toBeInTheDocument();
+    expect(screen.getByText(/import json/i)).toBeInTheDocument();
+  });
+
+  it('shows metadata-only public labels on My Roster cards and keeps the roster controls visible', async () => {
+    const user = userEvent.setup();
+    const roster = createEmptyRoster(dragons);
+    roster.solstryker!.owned = true;
+    roster.solstryker!.starRank = 2;
+    saveRoster(window.localStorage, roster);
+
+    render(<App />);
+
+    await user.click(screen.getByRole('button', { name: /^my roster$/i }));
+    const solstrykerCard = screen.getByRole('heading', { name: 'Solstryker' }).closest('article');
+    expect(solstrykerCard).not.toBeNull();
+    expect(solstrykerCard).toHaveTextContent('Metadata Only');
+    expect(solstrykerCard).not.toHaveTextContent('Official Metadata Only');
+    expect(solstrykerCard).toHaveTextContent('Ability details not verified');
+    expect(solstrykerCard).toHaveTextContent('Owned / Hatched');
+    expect(solstrykerCard).toHaveTextContent('View details');
+    expect(within(solstrykerCard as HTMLElement).getByRole('checkbox', { name: /owned \/ hatched/i })).toBeChecked();
+    expect(within(solstrykerCard as HTMLElement).getByLabelText(/star rank/i)).toHaveValue('2');
+    expect(within(solstrykerCard as HTMLElement).getByLabelText(/reign level/i)).toBeInTheDocument();
+    await user.click(within(solstrykerCard as HTMLElement).getByRole('button', { name: /view details/i }));
+    expect(screen.getByRole('dialog', { name: /solstryker/i })).toBeInTheDocument();
+  });
+
+  it('keeps public card verification labels simplified on both Dragon Database and My Roster surfaces', async () => {
+    const user = userEvent.setup();
+    const roster = createEmptyRoster(dragons);
+    roster.solstryker!.owned = true;
+    roster.solstryker!.starRank = 1;
+    saveRoster(window.localStorage, roster);
+
+    render(<App />);
+
+    await user.click(screen.getByRole('button', { name: /dragon database/i }));
+    const daemorosCard = screen.getByRole('heading', { name: 'Daemoros' }).closest('article');
+    expect(daemorosCard).not.toBeNull();
+    expect(daemorosCard).toHaveTextContent('Verified');
+    expect(daemorosCard).not.toHaveTextContent('Community Verified');
+    expect(daemorosCard).not.toHaveTextContent('Official Metadata Only');
+    expect(daemorosCard).not.toHaveTextContent('In-game verified, pending official site');
+    expect(daemorosCard).not.toHaveTextContent('Collection State');
+    expect(daemorosCard).not.toHaveTextContent('Not hatched');
+    expect(daemorosCard).not.toHaveTextContent('Not collected');
+    expect(daemorosCard).not.toHaveTextContent('Shards');
+    expect(daemorosCard).not.toHaveTextContent('Shards Required');
+
+    await user.click(screen.getByRole('button', { name: /^my roster$/i }));
+    const solstrykerCard = screen.getByRole('heading', { name: 'Solstryker' }).closest('article');
+    expect(solstrykerCard).not.toBeNull();
+    expect(solstrykerCard).toHaveTextContent('Metadata Only');
+    expect(solstrykerCard).not.toHaveTextContent('Community Verified');
+    expect(solstrykerCard).not.toHaveTextContent('Official Metadata Only');
+    expect(solstrykerCard).not.toHaveTextContent('In-game verified, pending official site');
+    expect(solstrykerCard).not.toHaveTextContent('Collection State');
+    expect(solstrykerCard).not.toHaveTextContent('Not hatched');
+    expect(solstrykerCard).not.toHaveTextContent('Not collected');
+    expect(solstrykerCard).not.toHaveTextContent('Shards');
+    expect(solstrykerCard).not.toHaveTextContent('Shards Required');
     expect(screen.getByRole('button', { name: /export json/i })).toBeInTheDocument();
     expect(screen.getByText(/import json/i)).toBeInTheDocument();
   });
