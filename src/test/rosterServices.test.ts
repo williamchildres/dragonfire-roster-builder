@@ -61,12 +61,13 @@ describe('roster storage and import/export', () => {
     const exported = JSON.parse(serializeRosterExport(createEmptyRoster(dragons))) as {
       format: string;
       schemaVersion: number;
-      roster: unknown[];
+      roster: Array<Record<string, unknown>>;
     };
 
     expect(exported.format).toBe('dragonfire-roster-lab');
     expect(exported.schemaVersion).toBe(ROSTER_SCHEMA_VERSION);
     expect(exported.roster).toHaveLength(31);
+    expect(exported.roster[0]).not.toHaveProperty('collection');
   });
 
   it('validates imported roster JSON', () => {
@@ -172,25 +173,57 @@ describe('roster storage and import/export', () => {
     expect(migrated.malachite!.starRank).toBe(1);
     expect(migrated.malachite!.reignLevel).toBe(2);
     expect(migrated.malachite!.notes).toBe('Existing user note');
-    expect(migrated.malachite!.collection.state).toBe('hatched');
     expect(Object.keys(migrated.malachite!.habitLevels)).toHaveLength(5);
     expect(Object.values(migrated.malachite!.habitLevels).every((level) => level === null)).toBe(true);
   });
 
-  it('migrates schema 2 data to schema 3 collection defaults without clearing values', () => {
+  it('normalizes legacy collection states and ignores shard values without clearing values', () => {
     window.localStorage.setItem(
       STORAGE_KEY,
       JSON.stringify({
         format: 'dragonfire-roster-lab-local',
-        schemaVersion: 2,
+        schemaVersion: 3,
         updatedAt: '2026-06-23T00:00:00.000Z',
         roster: [
           {
             dragonId: 'seasmoke',
-            owned: false,
+            collection: { state: 'hatched', shardsCurrent: 10, shardsRequired: 15 },
             starRank: null,
             reignLevel: 4,
             notes: 'Ten shards in screenshot',
+            habitLevels: {},
+          },
+          {
+            dragonId: 'arrax',
+            owned: true,
+            collection: { state: 'not-collected', shardsCurrent: 0, shardsRequired: null },
+            starRank: 2,
+            reignLevel: 6,
+            notes: 'Owned flag wins',
+            habitLevels: {},
+          },
+          {
+            dragonId: 'malachite',
+            owned: false,
+            collection: { state: 'not-hatched', shardsCurrent: 5, shardsRequired: 15 },
+            starRank: 3,
+            reignLevel: 7,
+            notes: 'Not hatched yet',
+            habitLevels: {
+              'malachite-forests-instinct': 0,
+              'malachite-wise-vigor': 1,
+              'malachite-thunderous-roar': 2,
+              'malachite-collective-might': 3,
+              'malachite-lightning-strike': 5,
+            },
+          },
+          {
+            dragonId: 'caraxes',
+            owned: false,
+            collection: { state: 'not-collected', shardsCurrent: 0, shardsRequired: null },
+            starRank: 4,
+            reignLevel: 8,
+            notes: 'Not collected',
             habitLevels: {},
           },
         ],
@@ -199,21 +232,25 @@ describe('roster storage and import/export', () => {
 
     const migrated = loadRoster(window.localStorage, dragons);
 
-    expect(migrated.seasmoke!.owned).toBe(false);
-    expect(migrated.seasmoke!.collection).toEqual({
-      state: 'not-collected',
-      shardsCurrent: null,
-      shardsRequired: null,
-    });
+    expect(migrated.seasmoke!.owned).toBe(true);
     expect(migrated.seasmoke!.reignLevel).toBe(4);
     expect(migrated.seasmoke!.notes).toBe('Ten shards in screenshot');
+    expect(migrated.arrax!.owned).toBe(true);
+    expect(migrated.arrax!.starRank).toBe(2);
+    expect(migrated.arrax!.reignLevel).toBe(6);
+    expect(migrated.malachite!.owned).toBe(false);
+    expect(migrated.malachite!.starRank).toBe(3);
+    expect(migrated.malachite!.reignLevel).toBe(7);
+    expect(migrated.malachite!.notes).toBe('Not hatched yet');
+    expect(migrated.malachite!.habitLevels['malachite-lightning-strike']).toBe(5);
+    expect(migrated.caraxes!.owned).toBe(false);
   });
 
-  it('validates collection state and shard progress during imports', () => {
+  it('imports old exported JSON with collection and shard fields as simplified ownership', () => {
     const valid = validateRosterImport(
       JSON.stringify({
         format: 'dragonfire-roster-lab',
-        schemaVersion: ROSTER_SCHEMA_VERSION,
+        schemaVersion: 3,
         roster: [
           {
             dragonId: 'seasmoke',
@@ -230,23 +267,19 @@ describe('roster storage and import/export', () => {
               'seasmoke-loyal-bond': null,
             },
           },
-        ],
-      }),
-      dragons,
-    );
-    const invalid = validateRosterImport(
-      JSON.stringify({
-        format: 'dragonfire-roster-lab',
-        schemaVersion: ROSTER_SCHEMA_VERSION,
-        roster: [
           {
-            dragonId: 'seasmoke',
-            owned: false,
-            collection: { state: 'not-hatched', shardsCurrent: -1, shardsRequired: 15 },
-            starRank: null,
-            reignLevel: null,
-            notes: '',
-            habitLevels: {},
+            dragonId: 'syrax',
+            collection: { state: 'hatched', shardsCurrent: -1, shardsRequired: 15 },
+            starRank: 7,
+            reignLevel: 12,
+            notes: 'Legacy shard values are ignored',
+            habitLevels: {
+              'syrax-mindful-synergy': 1,
+              'syrax-flight-mastery': 2,
+              'syrax-strategic-revival': 3,
+              'syrax-tactical-inferno': 4,
+              'syrax-mothers-mercy': 5,
+            },
           },
         ],
       }),
@@ -254,11 +287,34 @@ describe('roster storage and import/export', () => {
     );
 
     expect(valid.ok).toBe(true);
-    expect(valid.roster?.seasmoke!.collection).toEqual({
-      state: 'not-hatched',
-      shardsCurrent: 10,
-      shardsRequired: 15,
-    });
-    expect(invalid.ok).toBe(false);
+    expect(valid.roster?.seasmoke!.owned).toBe(false);
+    expect(valid.roster?.syrax!.owned).toBe(true);
+    expect(valid.roster?.syrax!.starRank).toBe(7);
+    expect(valid.roster?.syrax!.reignLevel).toBe(12);
+    expect(valid.roster?.syrax!.notes).toBe('Legacy shard values are ignored');
+    expect(valid.roster?.syrax!.habitLevels['syrax-mothers-mercy']).toBe(5);
+  });
+
+  it('round-trips simplified exports through import without shard or collection fields', () => {
+    const roster = createEmptyRoster(dragons);
+    roster.syrax!.owned = true;
+    roster.syrax!.starRank = 5;
+    roster.syrax!.reignLevel = 11;
+    roster.syrax!.notes = 'Ready for vanguard testing';
+    roster.syrax!.habitLevels['syrax-mothers-mercy'] = 4;
+
+    const exported = serializeRosterExport(roster);
+    expect(exported).not.toContain('shardsCurrent');
+    expect(exported).not.toContain('shardsRequired');
+    expect(exported).not.toContain('collection');
+
+    const imported = validateRosterImport(exported, dragons);
+
+    expect(imported.ok).toBe(true);
+    expect(imported.roster?.syrax!.owned).toBe(true);
+    expect(imported.roster?.syrax!.starRank).toBe(5);
+    expect(imported.roster?.syrax!.reignLevel).toBe(11);
+    expect(imported.roster?.syrax!.notes).toBe('Ready for vanguard testing');
+    expect(imported.roster?.syrax!.habitLevels['syrax-mothers-mercy']).toBe(4);
   });
 });

@@ -10,7 +10,7 @@ It is not a combat simulator.
 - Full raw Command, Trait, and Habit wording for 19 detailed dragons.
 - Curated simple synergy profiles for all 19 detailed dragons.
 - Metadata-only handling for the remaining 12 unmapped dragons.
-- Roster ownership, collection state, Star Rank, Dragon Level, notes, and Habit Level tracking.
+- Owned / Hatched roster tracking with Star Rank, Dragon Level, notes, and Habit Levels.
 - Formation Builder with placement, progression locks, missing-enabler, position conflict, and future-unlock explanations.
 - Formation share links and roster JSON import/export.
 - Lightweight project-context export for handoffs.
@@ -68,4 +68,4 @@ Do not add capability outputs, modifier capabilities, traces, expected interacti
 
 ## Version Notes
 
-Current source data schema: `13`. Local roster schema remains `3`; saved ownership, collection state, Star Rank, Dragon Level, Habit Levels, notes, and formations remain compatible.
+Current source data schema: `13`. Local roster schema is `4`; saved/exported ownership, collection-state, and shard data from earlier versions migrate to the simplified Owned / Hatched roster state while preserving Star Rank, Dragon Level, Habit Levels, notes, and formations.

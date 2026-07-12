@@ -31,7 +31,6 @@ import {
   VERIFICATION_STATUSES,
   type Dragon,
   type DragonBreed,
-  type DragonCollectionState,
   type DragonRarity,
   type FormationPosition,
   type OwnedDragon,
@@ -136,11 +135,6 @@ export function App() {
         ...(current[dragonId] ?? {
           dragonId,
           owned: false,
-          collection: {
-            state: 'not-collected',
-            shardsCurrent: null,
-            shardsRequired: null,
-          },
           starRank: null,
           reignLevel: null,
           notes: '',
@@ -377,7 +371,7 @@ function HomeSection({
         <FeatureCard
           icon={Users}
           title="Track Your Roster"
-          description="Save ownership, Star Rank, Dragon Level, Habit Levels, and notes locally in your browser."
+          description="Save Owned / Hatched status, Star Rank, Dragon Level, Habit Levels, and notes locally in your browser."
         />
         <FeatureCard
           icon={Shield}
@@ -912,8 +906,6 @@ function DragonCard({
   onUpdateRoster: (dragonId: string, patch: Partial<OwnedDragon>) => void;
 }) {
   const owned = rosterEntry?.owned === true;
-  const collectionState = rosterEntry?.collection.state ?? 'not-collected';
-
   return (
     <article className={`dragon-card rarity-${dragon.rarity.toLowerCase()}`}>
       <div className="card-topline">
@@ -929,8 +921,8 @@ function DragonCard({
       </div>
       <dl className="compact-details">
         <div>
-          <dt>Collection</dt>
-          <dd>{formatCollectionState(collectionState)}</dd>
+          <dt>Ownership</dt>
+          <dd>{owned ? 'Owned / Hatched' : 'Not owned'}</dd>
         </div>
         <div>
           <dt>Star Rank</dt>
@@ -955,11 +947,6 @@ function DragonCard({
             onChange={(event) =>
               onUpdateRoster(dragon.id, {
                 owned: event.target.checked,
-                collection: {
-                  state: event.target.checked ? 'hatched' : 'not-collected',
-                  shardsCurrent: rosterEntry?.collection.shardsCurrent ?? null,
-                  shardsRequired: rosterEntry?.collection.shardsRequired ?? null,
-                },
               })
             }
           />
@@ -981,19 +968,6 @@ function RosterFields({
   onUpdateRoster: (dragonId: string, patch: Partial<OwnedDragon>) => void;
   compact?: boolean;
 }) {
-  const collection = rosterEntry?.collection ?? {
-    state: 'not-collected' as DragonCollectionState,
-    shardsCurrent: null,
-    shardsRequired: null,
-  };
-  const updateCollection = (patch: Partial<OwnedDragon['collection']>) => {
-    const nextCollection = { ...collection, ...patch };
-    onUpdateRoster(dragon.id, {
-      collection: nextCollection,
-      owned: nextCollection.state === 'hatched',
-    });
-  };
-
   return (
     <div className={compact ? 'roster-fields compact' : 'roster-fields'}>
       <label className="check-row">
@@ -1003,55 +977,10 @@ function RosterFields({
           onChange={(event) =>
             onUpdateRoster(dragon.id, {
               owned: event.target.checked,
-              collection: {
-                ...collection,
-                state: event.target.checked ? 'hatched' : 'not-collected',
-              },
             })
           }
         />
-        Owned
-      </label>
-      <label>
-        Collection State
-        <select
-          value={collection.state}
-          onChange={(event) => updateCollection({ state: event.target.value as DragonCollectionState })}
-        >
-          <option value="not-collected">Not collected</option>
-          <option value="not-hatched">Not hatched</option>
-          <option value="hatched">Hatched</option>
-        </select>
-      </label>
-      <label>
-        Shards
-        <input
-          min={0}
-          step={1}
-          type="number"
-          value={collection.shardsCurrent ?? ''}
-          placeholder="Current"
-          onChange={(event) =>
-            updateCollection({
-              shardsCurrent: event.target.value === '' ? null : Math.max(0, Number.parseInt(event.target.value, 10)),
-            })
-          }
-        />
-      </label>
-      <label>
-        Shards Required
-        <input
-          min={0}
-          step={1}
-          type="number"
-          value={collection.shardsRequired ?? ''}
-          placeholder="Required"
-          onChange={(event) =>
-            updateCollection({
-              shardsRequired: event.target.value === '' ? null : Math.max(0, Number.parseInt(event.target.value, 10)),
-            })
-          }
-        />
+        Owned / Hatched
       </label>
       <label>
         Star Rank
@@ -1301,17 +1230,6 @@ function formatRosterSourceStatus(status: Dragon['rosterSourceStatus']) {
       return 'In-game verified, pending official site';
     case 'community-unverified':
       return 'Community unverified';
-  }
-}
-
-function formatCollectionState(state: DragonCollectionState) {
-  switch (state) {
-    case 'not-collected':
-      return 'Not collected';
-    case 'not-hatched':
-      return 'Not hatched';
-    case 'hatched':
-      return 'Hatched';
   }
 }
 

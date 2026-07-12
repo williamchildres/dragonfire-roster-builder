@@ -3,8 +3,9 @@ import type { Dragon, OwnedDragon } from '../models/dragon';
 export const STORAGE_KEY = 'dragonfire-roster-lab:roster';
 export const TEAM_STORAGE_KEY = 'dragonfire-roster-lab:last-team';
 export const FORMATION_STORAGE_KEY = 'dragonfire-roster-lab:last-formation';
-export const ROSTER_SCHEMA_VERSION = 3;
+export const ROSTER_SCHEMA_VERSION = 4;
 export const MAX_NOTES_LENGTH = 1000;
+const SUPPORTED_ROSTER_SCHEMA_VERSIONS = new Set([1, 2, 3, ROSTER_SCHEMA_VERSION]);
 
 export interface StoredRoster {
   format: 'dragonfire-roster-lab-local';
@@ -27,6 +28,15 @@ export interface ImportResult {
 }
 
 type HabitLevel = OwnedDragon['habitLevels'][string];
+type LegacyCollectionState = 'not-collected' | 'not-hatched' | 'hatched';
+type LegacyCollectionProgress = {
+  state?: unknown;
+  shardsCurrent?: unknown;
+  shardsRequired?: unknown;
+};
+type RosterImportEntry = Partial<OwnedDragon> & {
+  collection?: LegacyCollectionProgress;
+};
 
 const clampText = (value: string) => value.slice(0, MAX_NOTES_LENGTH);
 
@@ -37,11 +47,6 @@ export function createEmptyRoster(dragons: Dragon[]): Record<string, OwnedDragon
       {
         dragonId: dragon.id,
         owned: false,
-        collection: {
-          state: 'not-collected',
-          shardsCurrent: null,
-          shardsRequired: null,
-        },
         starRank: null,
         reignLevel: null,
         notes: '',
@@ -53,7 +58,7 @@ export function createEmptyRoster(dragons: Dragon[]): Record<string, OwnedDragon
 
 export function normalizeRoster(
   dragons: Dragon[],
-  partial: Partial<OwnedDragon>[] = [],
+  partial: RosterImportEntry[] = [],
 ): Record<string, OwnedDragon> {
   const next = createEmptyRoster(dragons);
   const validIds = new Set(dragons.map((dragon) => dragon.id));
@@ -65,8 +70,7 @@ export function normalizeRoster(
 
     next[entry.dragonId] = {
       dragonId: entry.dragonId,
-      owned: entry.owned === true,
-      collection: normalizeCollection(entry.collection, entry.owned),
+      owned: normalizeOwnedState(entry),
       starRank: isValidStarRank(entry.starRank) ? entry.starRank : null,
       reignLevel: isValidReignLevel(entry.reignLevel) ? entry.reignLevel : null,
       notes: typeof entry.notes === 'string' ? clampText(entry.notes) : '',
@@ -89,11 +93,7 @@ export function loadRoster(storage: Storage, dragons: Dragon[]): Record<string, 
       return createEmptyRoster(dragons);
     }
 
-    if (
-      parsed.schemaVersion !== 1 &&
-      parsed.schemaVersion !== 2 &&
-      parsed.schemaVersion !== ROSTER_SCHEMA_VERSION
-    ) {
+    if (!SUPPORTED_ROSTER_SCHEMA_VERSIONS.has(parsed.schemaVersion ?? 0)) {
       return createEmptyRoster(dragons);
     }
 
@@ -142,7 +142,7 @@ export function validateRosterImport(json: string, dragons: Dragon[]): ImportRes
     errors.push('Unsupported roster format.');
   }
 
-  if (parsed.schemaVersion !== ROSTER_SCHEMA_VERSION) {
+  if (!SUPPORTED_ROSTER_SCHEMA_VERSIONS.has(Number(parsed.schemaVersion))) {
     errors.push('Unsupported roster schema version.');
   }
 
@@ -155,7 +155,7 @@ export function validateRosterImport(json: string, dragons: Dragon[]): ImportRes
   }
 
   const validIds = new Set(dragons.map((dragon) => dragon.id));
-  const imported: OwnedDragon[] = [];
+  const imported: RosterImportEntry[] = [];
 
   parsed.roster.forEach((entry, index) => {
     if (!isRecord(entry)) {
@@ -169,25 +169,25 @@ export function validateRosterImport(json: string, dragons: Dragon[]): ImportRes
       return;
     }
 
-    if (typeof entry.owned !== 'boolean') {
+    if (entry.owned !== undefined && typeof entry.owned !== 'boolean') {
       errors.push(`${dragonId}: owned must be true or false.`);
     }
 
-    if (!isValidCollection(entry.collection)) {
-      errors.push(`${dragonId}: collection must contain a valid state and nullable shard counts.`);
+    if (!isLegacyCollection(entry.collection)) {
+      errors.push(`${dragonId}: collection must contain a valid state when provided.`);
     }
 
-    if (!isValidStarRank(entry.starRank)) {
+    if (entry.starRank !== undefined && !isValidStarRank(entry.starRank)) {
       errors.push(`${dragonId}: starRank must be null or an integer from 1 through 10.`);
     }
 
-    if (!isValidReignLevel(entry.reignLevel)) {
+    if (entry.reignLevel !== undefined && !isValidReignLevel(entry.reignLevel)) {
       errors.push(`${dragonId}: reignLevel must be null or a nonnegative integer.`);
     }
 
-    if (typeof entry.notes !== 'string') {
+    if (entry.notes !== undefined && typeof entry.notes !== 'string') {
       errors.push(`${dragonId}: notes must be text.`);
-    } else if (entry.notes.length > MAX_NOTES_LENGTH) {
+    } else if (typeof entry.notes === 'string' && entry.notes.length > MAX_NOTES_LENGTH) {
       errors.push(`${dragonId}: notes must be ${MAX_NOTES_LENGTH} characters or fewer.`);
     }
 
@@ -198,11 +198,11 @@ export function validateRosterImport(json: string, dragons: Dragon[]): ImportRes
     if (errors.length === 0) {
       imported.push({
         dragonId,
-        owned: entry.owned as boolean,
-        collection: normalizeCollection(entry.collection, entry.owned),
-        starRank: entry.starRank as number | null,
-        reignLevel: entry.reignLevel as number | null,
-        notes: entry.notes as string,
+        owned: entry.owned as boolean | undefined,
+        collection: entry.collection as LegacyCollectionProgress | undefined,
+        starRank: entry.starRank as number | null | undefined,
+        reignLevel: entry.reignLevel as number | null | undefined,
+        notes: entry.notes as string | undefined,
         habitLevels: normalizeHabitLevels(dragonHabitIds(dragonId, dragons), entry.habitLevels),
       });
     }
@@ -223,40 +223,34 @@ export function isValidReignLevel(value: unknown): value is number | null {
   return value === null || (Number.isInteger(value) && Number(value) >= 0);
 }
 
-export function isValidShardValue(value: unknown): value is number | null {
-  return value === null || (Number.isInteger(value) && Number(value) >= 0);
-}
-
 function isRecord(value: unknown): value is Record<string, unknown> {
   return typeof value === 'object' && value !== null && !Array.isArray(value);
 }
 
-function normalizeCollection(value: unknown, legacyOwned: unknown): OwnedDragon['collection'] {
-  if (isRecord(value) && isValidCollection(value)) {
-    return {
-      state: value.state,
-      shardsCurrent: value.shardsCurrent,
-      shardsRequired: value.shardsRequired,
-    };
+function normalizeOwnedState(entry: RosterImportEntry): boolean {
+  if (entry.owned === true) {
+    return true;
   }
 
-  return {
-    state: legacyOwned === true ? 'hatched' : 'not-collected',
-    shardsCurrent: null,
-    shardsRequired: null,
-  };
+  return getLegacyCollectionState(entry.collection) === 'hatched';
 }
 
-export function isValidCollection(value: unknown): value is OwnedDragon['collection'] {
+function getLegacyCollectionState(value: unknown): LegacyCollectionState | null {
+  if (!isRecord(value)) {
+    return null;
+  }
+
+  return value.state === 'not-collected' || value.state === 'not-hatched' || value.state === 'hatched'
+    ? value.state
+    : null;
+}
+
+function isLegacyCollection(value: unknown): value is LegacyCollectionProgress | undefined {
   if (!isRecord(value)) {
     return value === undefined;
   }
 
-  return (
-    (value.state === 'not-collected' || value.state === 'not-hatched' || value.state === 'hatched') &&
-    isValidShardValue(value.shardsCurrent) &&
-    isValidShardValue(value.shardsRequired)
-  );
+  return getLegacyCollectionState(value) !== null;
 }
 
 export function isValidHabitLevel(value: unknown): value is HabitLevel {
@@ -285,7 +279,7 @@ function isValidHabitLevelRecord(value: unknown, habitIds: string[]): boolean {
     return value === undefined || isRecord(value);
   }
   if (!isRecord(value)) {
-    return false;
+    return value === undefined;
   }
   return habitIds.every((habitId) => isValidHabitLevel(value[habitId]));
 }

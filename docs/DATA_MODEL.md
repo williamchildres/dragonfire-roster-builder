@@ -51,4 +51,4 @@ Exact timing, rolls, target overlap, stacks, and damage simulation are not model
 
 ## Persistence
 
-The local roster schema remains separate from source data. It preserves owned status, collection state, Star Rank, Dragon Level, Habit Levels, notes, and saved formations. Source-data schema changes must not clear or invalidate local storage unless the persisted roster shape changes.
+The local roster schema remains separate from source data. Schema `4` stores a simplified roster state: `owned` means Owned / Hatched, with Star Rank, Dragon Level, Habit Levels, notes, and saved formations preserved. Older saved/exported roster data that includes collection state or shard progress is accepted during migration/import and normalized into the simplified ownership flag. Source-data schema changes must not clear or invalidate local storage unless the persisted roster shape changes.

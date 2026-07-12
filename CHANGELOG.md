@@ -2,6 +2,8 @@
 
 ## Unreleased
 
+- Simplified roster ownership to a single Owned / Hatched state, removed public shard and collection-state controls, and preserved backward compatibility for existing saved/exported roster data.
+- Increased local roster schema to `4`; source data schema remains `13`.
 - Corrected the Dragon Details at-a-glance summary so multi-tag support signals like Tessarion's Initiative support stay visible, and updated the empty Benefits from wording to "No mapped incoming synergy yet."
 - Polished the Dragon Details modal into a wider, more readable player-facing layout with an at-a-glance summary, clearer ability cards, and collapsed raw verified wording plus technical sections.
 - Polished the Overview page into a public-release landing/dashboard with new hero artwork, clearer feature cards, grouped coverage summary cards, and a local-first trust note.

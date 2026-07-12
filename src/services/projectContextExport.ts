@@ -115,7 +115,7 @@ const sourceBase = (options: ProjectContextBuildOptions) => ({
   commit: options.commit,
   databaseVersion: databaseMetadata.databaseVersion,
   dataSchemaVersion: databaseMetadata.schemaVersion,
-  localRosterSchemaVersion: 3,
+  localRosterSchemaVersion: 4,
   gameBuild: databaseMetadata.currentDocumentedGameBuild,
 });
 
