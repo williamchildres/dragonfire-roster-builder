@@ -2,6 +2,9 @@
 
 ## Unreleased
 
+- Aligned public site metadata and docs with https://dragonfirelab.com.
+- Added the GitHub Pages CNAME for `dragonfirelab.com`.
+- Reviewed the Vite deployment base path for the custom domain and kept the existing relative asset base for root-domain Pages builds.
 - Removed the Compare Verified Dragons hero card, replaced the separate rarity coverage cards with one combined segmented coverage bar, and kept the overview compact.
 - Removed the redundant Overview hero heading, made the feature cards actionable, added Rare coverage context, and aligned the public footer branding with Dragonfire Lab.
 - Updated the visible public brand to Dragonfire Lab, simplified the Overview hero around the three feature cards, and replaced the roster/role breakdown blocks with rarity coverage.

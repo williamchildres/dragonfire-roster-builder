@@ -22,6 +22,18 @@ describe('Dragonfire Roster Lab app', () => {
     expect(within(banner).queryByText('Dragonfire Roster Lab')).not.toBeInTheDocument();
   });
 
+  it('ships custom-domain metadata and the GitHub Pages CNAME asset', () => {
+    const index = readFileSync('index.html', 'utf8');
+    const cname = readFileSync('public/CNAME', 'utf8');
+
+    expect(cname).toBe('dragonfirelab.com\n');
+    expect(index).toContain('<title>Dragonfire Lab</title>');
+    expect(index).toContain('<link rel="canonical" href="https://dragonfirelab.com" />');
+    expect(index).toContain('<meta property="og:site_name" content="Dragonfire Lab" />');
+    expect(index).toContain('<meta property="og:url" content="https://dragonfirelab.com" />');
+    expect(index).toContain('local-first unofficial Dragonfire roster and formation planning tool');
+  });
+
   async function openAddDragon(user: ReturnType<typeof userEvent.setup>) {
     await user.click(screen.getByRole('button', { name: /^my roster$/i }));
     await user.click(screen.getAllByRole('button', { name: /\+ add dragon/i })[0]!);
