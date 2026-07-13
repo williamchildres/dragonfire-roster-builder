@@ -1,9 +1,9 @@
 {
-  "generatedAt": "2026-07-13T01:49:16.180Z",
+  "generatedAt": "2026-07-13T02:14:27.003Z",
   "source": {
     "repository": "https://github.com/williamchildres/dragonfire-roster-builder",
-    "branch": "ui/formation-builder-mode-toggle",
-    "commit": "362e449644c7380e4c9cdc707711629d8f2e421a",
+    "branch": "codex/formation-card-compression",
+    "commit": "41a22527e00b8ab5cf10fbe1a3a44a13a315ba12",
     "databaseVersion": "0.6.4",
     "dataSchemaVersion": 13,
     "localRosterSchemaVersion": 4,
