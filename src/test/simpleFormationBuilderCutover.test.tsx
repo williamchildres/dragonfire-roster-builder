@@ -361,6 +361,8 @@ describe('Formation Builder simple synergy cutover', () => {
     expect(panel).toHaveTextContent(/Strong|Solid|Developing|Weak|Excellent/);
     expect(panel).toHaveTextContent('Realized synergy payoff');
     expect(panel).toHaveTextContent('Support usefulness');
+    expect(panel).toHaveTextContent('Kit utilization');
+    expect(panel).toHaveTextContent(/mapped opportunities realized/);
     expect(panel).toHaveTextContent('Strengths');
     expect(panel).toHaveTextContent('Weaknesses / opportunities');
     expect(panel).toHaveTextContent('Caraxes can apply Burn');

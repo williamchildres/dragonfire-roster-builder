@@ -133,6 +133,7 @@ describe('formation rating helper', () => {
       'Readiness / profile confidence',
       'Realized synergy payoff',
       'Support usefulness',
+      'Kit utilization',
       'Placement / conflict risk',
     ]);
     expect(rating.strengths.length).toBeGreaterThan(0);
@@ -173,7 +174,7 @@ describe('formation rating helper', () => {
     const support = breakdown(rating, 'Support usefulness');
 
     expect(support.score).toBeGreaterThan(0);
-    expect(support.score).toBeLessThan(25);
+    expect(support.score).toBeLessThan(20);
     expect(support.explanation).toContain('2 Provides signals used');
     expect(rating.weaknesses.join(' ')).toContain("Malachite's Physical Damage support is available but not used");
     expect(rating.weaknesses.join(' ')).toContain("Malachite's Tactical Damage support is available but not used");
@@ -362,7 +363,52 @@ describe('formation rating helper', () => {
     });
 
     expect(rating.tier).not.toBe('Excellent');
-    expect(breakdown(rating, 'Support usefulness').score).toBeLessThan(25);
+    expect(breakdown(rating, 'Support usefulness').score).toBeLessThan(20);
+  });
+
+  it('scores Kit utilization from realized and unused mapped opportunities', () => {
+    const rating = manualRating({
+      presentation: {
+        activeSynergies: [synergyResult('setup-payoff', 'caraxes', 'vhagar', 'status:burn', 1)],
+      },
+      signalChipsByDragonId: {
+        caraxes: {
+          damageProfile: [{ label: 'Fire Damage', state: 'supported', reason: 'Supported by Syrax.' }],
+          provides: [
+            { label: 'Burn', state: 'used', reason: 'Used by Vhagar.' },
+            { label: 'Slow', state: 'available', reason: 'Available but not used by this formation.' },
+          ],
+          benefitsFrom: [],
+        },
+        vhagar: {
+          damageProfile: [],
+          provides: [],
+          benefitsFrom: [
+            { label: 'Burn', state: 'satisfied', reason: 'Satisfied by Caraxes.' },
+            { label: 'Control', state: 'missing', reason: 'No selected dragon actively provides this signal.' },
+          ],
+        },
+        syrax: {
+          damageProfile: [],
+          provides: [
+            {
+              label: 'Initiative support',
+              state: 'inactive',
+              reason: 'Provides inactive: requires Vanguard.',
+            },
+          ],
+          benefitsFrom: [],
+        },
+      },
+    });
+    const utilization = breakdown(rating, 'Kit utilization');
+
+    expect(utilization.max).toBe(20);
+    expect(utilization.score).toBe(12);
+    expect(utilization.explanation).toContain('3 of 6 mapped opportunities realized');
+    expect(utilization.explanation).toContain('1 missing Benefit');
+    expect(utilization.explanation).toContain('1 unused Provide');
+    expect(utilization.explanation).toContain('1 inactive Vanguard opportunity');
   });
 
   it('guards Excellent when three or more Benefits remain missing without top payoff strength', () => {
@@ -409,6 +455,7 @@ describe('formation rating helper', () => {
 
     expect(rating.score).toBeGreaterThanOrEqual(90);
     expect(rating.tier).toBe('Strong');
+    expect(breakdown(rating, 'Kit utilization').score).toBeLessThan(20);
   });
 
   it('caps placement and conflict risk so it cannot overpower active synergy paths', () => {
