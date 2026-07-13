@@ -1,11 +1,11 @@
 {
   "format": "dragonfire-lab-project-context",
   "contextVersion": 2,
-  "generatedAt": "2026-07-13T01:06:45.567Z",
+  "generatedAt": "2026-07-13T01:21:50.848Z",
   "source": {
     "repository": "https://github.com/williamchildres/dragonfire-roster-builder",
     "branch": "fix/formation-vanguard-trait-copy",
-    "commit": "b66309637476dd419ea818852581e6fca550bd59",
+    "commit": "b13dcaae86e7544c56c5b5b55f07f92189494456",
     "databaseVersion": "0.6.4",
     "dataSchemaVersion": 13,
     "localRosterSchemaVersion": 4,

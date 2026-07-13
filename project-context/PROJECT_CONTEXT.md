@@ -1,8 +1,8 @@
 # Dragonfire Roster Lab Project Context
 
-Generated: 2026-07-13T01:06:45.567Z
+Generated: 2026-07-13T01:21:50.848Z
 Branch: fix/formation-vanguard-trait-copy
-Commit: b66309637476dd419ea818852581e6fca550bd59
+Commit: b13dcaae86e7544c56c5b5b55f07f92189494456
 
 Dragonfire Roster Lab is a curated dragon knowledge base and transparent tag-and-position formation recommender. It is not a combat simulator.
 
