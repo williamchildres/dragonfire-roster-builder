@@ -396,7 +396,8 @@ describe('Formation Builder simple synergy cutover', () => {
 
     expect(traitSection).toHaveTextContent('Vanguard Trait');
     expect(traitSection).toHaveTextContent("Hunter's Wrath");
-    expect(traitSection).toHaveTextContent('Show full wording');
+    expect(traitSection).toHaveTextContent('At Level 16+ and deployed in Vanguard');
+    expect(within(traitSection).queryByRole('button', { name: /show full wording/i })).not.toBeInTheDocument();
     expect(traitSection).not.toHaveTextContent('Requirement: Star Rank 1, Dragon Level 16, Vanguard');
     expect(traitSection).not.toHaveTextContent('Position requirement met.');
   });
@@ -666,6 +667,10 @@ describe('Formation Builder simple synergy cutover', () => {
 
     const syraxCommand = within(syraxCard).getByRole('region', { name: 'Command' });
     expect(syraxCommand).toHaveTextContent('Deals Tactical Damage');
+    expect(within(syraxCommand).queryByRole('heading', { name: 'Command' })).not.toBeInTheDocument();
+    expect(within(syraxCommand).getAllByText('Command')).toHaveLength(1);
+    expect(syraxCommand).not.toHaveTextContent('Active');
+    expect(syraxCommand).not.toHaveTextContent('Verified');
     expect(within(syraxCommand).queryByRole('list')).not.toBeInTheDocument();
     expect(syraxCommand).not.toHaveTextContent('Each Round: 20% chance');
     await user.click(within(syraxCommand).getByRole('button', { name: /show full wording/i }));
@@ -676,8 +681,11 @@ describe('Formation Builder simple synergy cutover', () => {
     const caraxesTrait = within(screen.getByRole('article', { name: 'Vanguard' })).getByRole('region', {
       name: /trait status/i,
     });
-    expect(caraxesTrait).not.toHaveTextContent('At Level 16+ and deployed in Vanguard');
-    await user.click(within(caraxesTrait).getByRole('button', { name: /show full wording/i }));
+    expect(within(caraxesTrait).queryByRole('heading', { name: 'Vanguard Trait' })).not.toBeInTheDocument();
+    expect(within(caraxesTrait).getAllByText('Vanguard Trait')).toHaveLength(1);
+    expect(caraxesTrait).not.toHaveTextContent('Passive');
+    expect(caraxesTrait).not.toHaveTextContent('Verified');
+    expect(within(caraxesTrait).queryByRole('button', { name: /show full wording/i })).not.toBeInTheDocument();
     expect(caraxesTrait).toHaveTextContent('At Level 16+ and deployed in Vanguard');
 
     expect(analysisText()).toContain('Synergy data not yet mapped: Antares.');

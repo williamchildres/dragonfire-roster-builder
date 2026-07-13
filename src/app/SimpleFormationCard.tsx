@@ -4,7 +4,6 @@ import { FORMATION_POSITIONS } from '../models/dragon';
 import { positionLabels } from '../services/teamShare';
 import { summarizeAbility } from './dragonDetailPresentation';
 import type { FormationSignalChip } from './formationCardPresentation';
-import { getPublicVerificationLabel, getPublicVerificationTone } from './publicCardLabels';
 
 const unknown = 'Not verified yet';
 
@@ -106,12 +105,9 @@ function SimpleCommandPanel({ command }: { command: Dragon['command'] }) {
   return (
     <section className="card-mini-section command-panel" aria-label="Command">
       <div className="mini-section-heading">
-        <h4>Command</h4>
-        <AbilityBadges ability={command} />
+        <h4>{command.name}</h4>
+        <AbilityTypeBadge label="Command" />
       </div>
-      <p>
-        <strong>{command.name}</strong>
-      </p>
       <AbilitySummary ability={command} />
       {command.rawDescription ? <RawDescription text={command.rawDescription} /> : <p>{unknown}</p>}
     </section>
@@ -141,13 +137,10 @@ function SimpleTraitPanel({
   return (
     <section className="card-mini-section" aria-label="Trait status">
       <div className="mini-section-heading">
-        <h4>Vanguard Trait</h4>
-        <AbilityBadges ability={trait} />
+        <h4>{trait.name}</h4>
+        <AbilityTypeBadge label="Vanguard Trait" />
       </div>
-      <p>
-        <strong>{trait.name}</strong>
-      </p>
-      {trait.rawDescription ? <RawDescription text={trait.rawDescription} /> : <p>{unknown}</p>}
+      {trait.rawDescription ? <FullAbilityText text={trait.rawDescription} /> : <p>{unknown}</p>}
     </section>
   );
 }
@@ -185,17 +178,10 @@ function FormationSignalPanel({
   );
 }
 
-function AbilityBadges({ ability }: { ability: AbilityDefinition }) {
-  const verificationLabel = getPublicVerificationLabel(ability.verification.status);
-  const verificationTone = getPublicVerificationTone(ability.verification.status);
-
+function AbilityTypeBadge({ label }: { label: 'Command' | 'Vanguard Trait' }) {
   return (
     <p className="ability-badges compact-ability-badges">
-      <span className="badge">{ability.kind === 'trait' ? 'Vanguard Trait' : titleCase(ability.kind)}</span>
-      {ability.abilityClass ? <span className="badge">{titleCase(ability.abilityClass)}</span> : null}
-      {verificationLabel ? (
-        <span className={`badge verification-${verificationTone ?? 'verified'}`}>{verificationLabel}</span>
-      ) : null}
+      <span className="badge">{label}</span>
     </p>
   );
 }
@@ -231,6 +217,16 @@ function RawDescription({ text }: { text: string }) {
         </div>
       ) : null}
     </>
+  );
+}
+
+function FullAbilityText({ text }: { text: string }) {
+  return (
+    <div className="raw-ability-text">
+      {text.split(/\n\n+/).map((paragraph) => (
+        <p key={paragraph}>{paragraph}</p>
+      ))}
+    </div>
   );
 }
 
@@ -292,8 +288,4 @@ function AffinityIconList({
       ))}
     </span>
   );
-}
-
-function titleCase(value: string) {
-  return value.charAt(0).toUpperCase() + value.slice(1);
 }
