@@ -349,6 +349,23 @@ describe('Formation Builder simple synergy cutover', () => {
     expect(within(updatedVhagarCard).getByLabelText(/Burn missing/i)).toHaveAttribute('data-state', 'missing');
   });
 
+  it('renders Vanguard Trait cards without redundant requirement or position text', async () => {
+    const user = userEvent.setup();
+    seedRoster({ caraxes: { starRank: 10, reignLevel: 26 } });
+
+    await openFormationBuilder(user);
+    await selectFormation(user, { vanguard: 'caraxes' });
+
+    const vanguardCard = screen.getByRole('article', { name: 'Vanguard' });
+    const traitSection = within(vanguardCard).getByRole('region', { name: /trait status/i });
+
+    expect(traitSection).toHaveTextContent('Vanguard Trait');
+    expect(traitSection).toHaveTextContent("Hunter's Wrath");
+    expect(traitSection).toHaveTextContent('Show full wording');
+    expect(traitSection).not.toHaveTextContent('Requirement: Star Rank 1, Dragon Level 16, Vanguard');
+    expect(traitSection).not.toHaveTextContent('Position requirement met.');
+  });
+
   it('renders an explainable Formation Rating panel with score, tier, breakdown, strengths, and opportunities', async () => {
     const user = userEvent.setup();
     seedRoster({ syrax: {}, vhagar: {}, caraxes: { reignLevel: 26 } });

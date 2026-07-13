@@ -60,7 +60,7 @@ export function SimpleFormationCard({
           <FormationSignalPanel title="Provides" chips={signalChips.provides} fallback="No formation-wide output profile recorded." />
           <FormationSignalPanel title="Benefits from" chips={signalChips.benefitsFrom} fallback="No mapped incoming synergy yet." />
           <SimpleCommandPanel command={dragon.command} />
-          <SimpleTraitPanel trait={dragon.trait} position={position} rosterEntry={rosterEntry} />
+          <SimpleTraitPanel trait={dragon.trait} position={position} />
           <DragonAffinityStrip dragonName={dragon.name} affinities={dragon.affinities} />
           <div className="formation-card-actions">
             <button type="button" className="secondary-button compact-action" onClick={onChooseDragon}>
@@ -121,11 +121,9 @@ function SimpleCommandPanel({ command }: { command: Dragon['command'] }) {
 function SimpleTraitPanel({
   trait,
   position,
-  rosterEntry,
 }: {
   trait: Dragon['trait'];
   position: FormationPosition;
-  rosterEntry?: OwnedDragon;
 }) {
   if (position !== 'vanguard') {
     return null;
@@ -149,8 +147,6 @@ function SimpleTraitPanel({
       <p>
         <strong>{trait.name}</strong>
       </p>
-      <RequirementList ability={trait} />
-      <TraitPositionStatus trait={trait} position={position} rosterEntry={rosterEntry} />
       {trait.rawDescription ? <RawDescription text={trait.rawDescription} /> : <p>{unknown}</p>}
     </section>
   );
@@ -212,50 +208,6 @@ function AbilitySummary({ ability }: { ability: AbilityDefinition }) {
       <p className="ability-summary-text">{summary.plainSummary}</p>
     </div>
   );
-}
-
-function RequirementList({ ability }: { ability: AbilityDefinition }) {
-  const requirements = [
-    ability.unlockStarRank !== null ? `Star Rank ${ability.unlockStarRank}` : null,
-    ability.minimumDragonLevel !== null ? `Dragon Level ${ability.minimumDragonLevel}` : null,
-    ability.positionRequirement ? positionLabels[ability.positionRequirement] : null,
-  ].filter((item): item is string => item !== null);
-
-  if (requirements.length === 0) {
-    return null;
-  }
-
-  return (
-    <p className="notice-text">
-      Requirement: {requirements.join(', ')}
-    </p>
-  );
-}
-
-function TraitPositionStatus({
-  trait,
-  position,
-  rosterEntry,
-}: {
-  trait: NonNullable<Dragon['trait']>;
-  position: FormationPosition;
-  rosterEntry?: OwnedDragon;
-}) {
-  const levelBlocked = trait.minimumDragonLevel !== null && (rosterEntry?.reignLevel ?? 0) < trait.minimumDragonLevel;
-
-  if (trait.positionRequirement && trait.positionRequirement !== position) {
-    return <p className="notice-text">Requires {positionLabels[trait.positionRequirement]}.</p>;
-  }
-
-  if (levelBlocked) {
-    return <p className="notice-text">Requires Dragon Level {trait.minimumDragonLevel}.</p>;
-  }
-
-  if (trait.positionRequirement) {
-    return <p className="notice-text">Position requirement met.</p>;
-  }
-
-  return null;
 }
 
 function RawDescription({ text }: { text: string }) {

@@ -428,6 +428,9 @@ describe('Dragonfire Roster Lab app', () => {
     expect(championsBrilliance).not.toHaveTextContent('Position requirement');
     expect(championsBrilliance).not.toHaveTextContent('Unlock requirement');
     expect(championsBrilliance).not.toHaveTextContent('Evidence');
+    const championsBrillianceWording = within(championsBrilliance as HTMLElement).getByText('Verified wording');
+    await user.click(championsBrillianceWording);
+    expect(championsBrilliance as HTMLElement).toHaveTextContent('At Level 16+ and deployed in Vanguard');
 
     const resilientBond = within(dialog).getByRole('heading', { name: 'Resilient Bond' }).closest('article');
     const insightfulAllies = within(dialog).getByRole('heading', { name: 'Insightful Allies' }).closest('article');
