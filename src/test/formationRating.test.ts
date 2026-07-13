@@ -3,10 +3,11 @@ import { buildFormationSignalChips } from '../app/formationCardPresentation';
 import { dragons } from '../data/dragons';
 import { evaluateFormation } from '../synergy/evaluateFormation';
 import { buildSimpleFormationPresentation } from '../synergy/formationPresentation';
+import type { SimpleFormationPresentation } from '../synergy/formationPresentation';
 import { simpleSynergyProfiles } from '../synergy/profiles';
 import { rateFormation, type FormationRatingResult } from '../services/formationRating';
 import type { Formation } from '../services/teamShare';
-import type { SimpleProgressionByDragonId } from '../synergy/types';
+import type { SimpleProgressionByDragonId, SimpleSynergyResult } from '../synergy/types';
 
 const profilesById = new Map(simpleSynergyProfiles.map((profile) => [profile.dragonId, profile]));
 const mappedProfileIds = new Set(simpleSynergyProfiles.map((profile) => profile.dragonId));
@@ -76,6 +77,50 @@ function breakdown(rating: FormationRatingResult, label: string) {
   return item!;
 }
 
+function manualRating({
+  presentation,
+  signalChipsByDragonId,
+}: {
+  presentation: Partial<SimpleFormationPresentation>;
+  signalChipsByDragonId: Parameters<typeof rateFormation>[0]['signalChipsByDragonId'];
+}): FormationRatingResult {
+  return rateFormation({
+    formation: formation('syrax', 'vhagar', 'caraxes'),
+    dragons,
+    profiles: simpleSynergyProfiles,
+    presentation: {
+      activeSynergies: [],
+      missingEnablers: [],
+      placementIssues: [],
+      positionConflicts: [],
+      futureUnlocks: [],
+      mappedDragonIds: ['syrax', 'vhagar', 'caraxes'],
+      unmappedDragonIds: [],
+      selectedDragonIds: ['syrax', 'vhagar', 'caraxes'],
+      hasCompleteProfileCoverage: true,
+      ...presentation,
+    },
+    signalChipsByDragonId,
+  });
+}
+
+function synergyResult(
+  kind: SimpleSynergyResult['kind'],
+  providerId: string,
+  beneficiaryId: string,
+  tag: SimpleSynergyResult['tag'],
+  index: number,
+): SimpleSynergyResult {
+  return {
+    id: `${kind}:${providerId}:${tag}:${beneficiaryId}:${index}`,
+    kind,
+    tag,
+    dragonIds: [providerId, beneficiaryId],
+    abilityIds: [`${providerId}-ability-${index}`, `${beneficiaryId}-ability-${index}`],
+    explanation: `${providerId} ${tag} ${beneficiaryId}`,
+  };
+}
+
 describe('formation rating helper', () => {
   it('returns a structured, bounded rating result', () => {
     const rating = ratingFor(formation('syrax', 'vhagar', 'caraxes'));
@@ -88,6 +133,7 @@ describe('formation rating helper', () => {
       'Readiness / profile confidence',
       'Realized synergy payoff',
       'Support usefulness',
+      'Kit utilization',
       'Placement / conflict risk',
     ]);
     expect(rating.strengths.length).toBeGreaterThan(0);
@@ -128,9 +174,101 @@ describe('formation rating helper', () => {
     const support = breakdown(rating, 'Support usefulness');
 
     expect(support.score).toBeGreaterThan(0);
+    expect(support.score).toBeLessThan(20);
     expect(support.explanation).toContain('2 Provides signals used');
     expect(rating.weaknesses.join(' ')).toContain("Malachite's Physical Damage support is available but not used");
     expect(rating.weaknesses.join(' ')).toContain("Malachite's Tactical Damage support is available but not used");
+  });
+
+  it('caps Support usefulness when realized payoff and satisfied Benefits are low', () => {
+    const rating = manualRating({
+      presentation: {},
+      signalChipsByDragonId: {
+        syrax: {
+          damageProfile: [],
+          provides: [
+            { label: 'Fire Damage support', state: 'used', reason: 'Used by Caraxes.' },
+            { label: 'Physical Damage support', state: 'used', reason: 'Used by Caraxes.' },
+            { label: 'Tactical Damage support', state: 'used', reason: 'Used by Caraxes.' },
+            { label: 'Strength support', state: 'used', reason: 'Used by Vhagar.' },
+            { label: 'Instinct support', state: 'used', reason: 'Used by Vhagar.' },
+            { label: 'Initiative support', state: 'used', reason: 'Used by Vhagar.' },
+          ],
+          benefitsFrom: [],
+        },
+      },
+    });
+    const support = breakdown(rating, 'Support usefulness');
+
+    expect(breakdown(rating, 'Realized synergy payoff').score).toBe(0);
+    expect(support.score).toBeLessThan(10);
+    expect(support.explanation).toContain('Capped');
+  });
+
+  it('keeps raw direct damage labels out of used support scoring', () => {
+    const rating = manualRating({
+      presentation: {
+        activeSynergies: [synergyResult('amplifier-output', 'syrax', 'caraxes', 'damage:fire', 1)],
+      },
+      signalChipsByDragonId: {
+        syrax: {
+          damageProfile: [],
+          provides: [
+            { label: 'Fire Damage', state: 'used', reason: 'Used by Caraxes.' },
+            { label: 'Physical Damage', state: 'used', reason: 'Used by Caraxes.' },
+            { label: 'Tactical Damage', state: 'used', reason: 'Used by Caraxes.' },
+          ],
+          benefitsFrom: [],
+        },
+      },
+    });
+
+    expect(breakdown(rating, 'Support usefulness').score).toBe(0);
+  });
+
+  it('allows explicit damage support labels to score when matched to an ally', () => {
+    const rating = manualRating({
+      presentation: {
+        activeSynergies: [synergyResult('amplifier-output', 'syrax', 'caraxes', 'damage:fire', 1)],
+      },
+      signalChipsByDragonId: {
+        syrax: {
+          damageProfile: [],
+          provides: [{ label: 'Fire Damage support', state: 'used', reason: 'Used by Caraxes.' }],
+          benefitsFrom: [],
+        },
+        caraxes: {
+          damageProfile: [{ label: 'Fire Damage', state: 'supported', reason: 'Supported by Syrax.' }],
+          provides: [],
+          benefitsFrom: [],
+        },
+      },
+    });
+
+    expect(breakdown(rating, 'Support usefulness').score).toBeGreaterThan(0);
+  });
+
+  it('scores used status support tied to a satisfied Benefits from signal', () => {
+    const rating = manualRating({
+      presentation: {
+        activeSynergies: [synergyResult('setup-payoff', 'caraxes', 'vhagar', 'status:burn', 1)],
+      },
+      signalChipsByDragonId: {
+        caraxes: {
+          damageProfile: [],
+          provides: [{ label: 'Burn', state: 'used', reason: 'Used by Vhagar.' }],
+          benefitsFrom: [],
+        },
+        vhagar: {
+          damageProfile: [],
+          provides: [],
+          benefitsFrom: [{ label: 'Burn', state: 'satisfied', reason: 'Satisfied by Caraxes.' }],
+        },
+      },
+    });
+
+    expect(breakdown(rating, 'Realized synergy payoff').score).toBeGreaterThan(0);
+    expect(breakdown(rating, 'Support usefulness').score).toBeGreaterThan(0);
   });
 
   it('reduces placement and conflict score for placement issues and position conflicts', () => {
@@ -186,6 +324,16 @@ describe('formation rating helper', () => {
     );
   });
 
+  it('keeps top benchmark formations Excellent when active payoff paths justify it', () => {
+    const caraxesFeskarSyrax = ratingFor(formation('caraxes', 'feskar', 'syrax'));
+    const seasmokeShadowsongZivern = ratingFor(formation('seasmoke', 'shadowsong', 'zivern'));
+
+    expect(caraxesFeskarSyrax.tier).toBe('Excellent');
+    expect(seasmokeShadowsongZivern.tier).toBe('Excellent');
+    expect(breakdown(caraxesFeskarSyrax, 'Realized synergy payoff').score).toBeGreaterThanOrEqual(35);
+    expect(breakdown(seasmokeShadowsongZivern, 'Realized synergy payoff').score).toBeGreaterThanOrEqual(35);
+  });
+
   it('shows Syrax, Vhagar, and Crimson missing Slow and Burn once each', () => {
     const rating = ratingFor(formation('syrax', 'vhagar', 'crimson'));
     const weaknesses = rating.weaknesses.join(' ');
@@ -193,6 +341,121 @@ describe('formation rating helper', () => {
     expect(weaknesses).toContain('Syrax benefits from Slow');
     expect(weaknesses).toContain('Vhagar benefits from Burn');
     expect(rating.weaknesses.filter((weakness) => weakness.includes('Vhagar') && weakness.includes('Burn'))).toHaveLength(1);
+    expect(rating.weaknesses.filter((weakness) => weakness.includes('Syrax') && weakness.includes('Slow'))).toHaveLength(1);
+  });
+
+  it('does not let high support volume make a low-payoff formation Excellent', () => {
+    const rating = manualRating({
+      presentation: {},
+      signalChipsByDragonId: {
+        syrax: {
+          damageProfile: [{ label: 'Tactical Damage', state: 'supported', reason: 'Supported by Vhagar.' }],
+          provides: [
+            { label: 'Fire Damage support', state: 'used', reason: 'Used by Caraxes.' },
+            { label: 'Physical Damage support', state: 'used', reason: 'Used by Caraxes.' },
+            { label: 'Tactical Damage support', state: 'used', reason: 'Used by Caraxes.' },
+            { label: 'Strength support', state: 'used', reason: 'Used by Vhagar.' },
+            { label: 'Instinct support', state: 'used', reason: 'Used by Vhagar.' },
+          ],
+          benefitsFrom: [],
+        },
+      },
+    });
+
+    expect(rating.tier).not.toBe('Excellent');
+    expect(breakdown(rating, 'Support usefulness').score).toBeLessThan(20);
+  });
+
+  it('scores Kit utilization from realized and unused mapped opportunities', () => {
+    const rating = manualRating({
+      presentation: {
+        activeSynergies: [synergyResult('setup-payoff', 'caraxes', 'vhagar', 'status:burn', 1)],
+      },
+      signalChipsByDragonId: {
+        caraxes: {
+          damageProfile: [{ label: 'Fire Damage', state: 'supported', reason: 'Supported by Syrax.' }],
+          provides: [
+            { label: 'Burn', state: 'used', reason: 'Used by Vhagar.' },
+            { label: 'Slow', state: 'available', reason: 'Available but not used by this formation.' },
+          ],
+          benefitsFrom: [],
+        },
+        vhagar: {
+          damageProfile: [],
+          provides: [],
+          benefitsFrom: [
+            { label: 'Burn', state: 'satisfied', reason: 'Satisfied by Caraxes.' },
+            { label: 'Control', state: 'missing', reason: 'No selected dragon actively provides this signal.' },
+          ],
+        },
+        syrax: {
+          damageProfile: [],
+          provides: [
+            {
+              label: 'Initiative support',
+              state: 'inactive',
+              reason: 'Provides inactive: requires Vanguard.',
+            },
+          ],
+          benefitsFrom: [],
+        },
+      },
+    });
+    const utilization = breakdown(rating, 'Kit utilization');
+
+    expect(utilization.max).toBe(20);
+    expect(utilization.score).toBe(12);
+    expect(utilization.explanation).toContain('3 of 6 mapped opportunities realized');
+    expect(utilization.explanation).toContain('1 missing Benefit');
+    expect(utilization.explanation).toContain('1 unused Provide');
+    expect(utilization.explanation).toContain('1 inactive Vanguard opportunity');
+  });
+
+  it('guards Excellent when three or more Benefits remain missing without top payoff strength', () => {
+    const rating = manualRating({
+      presentation: {
+        activeSynergies: [
+          synergyResult('setup-payoff', 'caraxes', 'vhagar', 'status:burn', 1),
+          synergyResult('setup-payoff', 'caraxes', 'syrax', 'status:slow', 2),
+          synergyResult('setup-payoff', 'syrax', 'caraxes', 'status:first-strike', 3),
+          synergyResult('amplifier-output', 'syrax', 'caraxes', 'damage:fire', 4),
+          synergyResult('amplifier-output', 'vhagar', 'syrax', 'damage:tactical', 5),
+          synergyResult('amplifier-output', 'caraxes', 'vhagar', 'stat:strength', 6),
+          synergyResult('amplifier-output', 'syrax', 'vhagar', 'stat:instinct', 7),
+        ],
+      },
+      signalChipsByDragonId: {
+        syrax: {
+          damageProfile: [{ label: 'Tactical Damage', state: 'supported', reason: 'Supported by Vhagar.' }],
+          provides: [
+            { label: 'Fire Damage support', state: 'used', reason: 'Used by Caraxes.' },
+            { label: 'Instinct support', state: 'used', reason: 'Used by Vhagar.' },
+            { label: 'Initiative support', state: 'used', reason: 'Used by Vhagar.' },
+          ],
+          benefitsFrom: [
+            { label: 'Slow', state: 'missing', reason: 'No selected dragon actively provides this signal.' },
+            { label: 'Burn', state: 'satisfied', reason: 'Satisfied by Caraxes.' },
+          ],
+        },
+        vhagar: {
+          damageProfile: [{ label: 'Physical Damage', state: 'supported', reason: 'Supported by Syrax.' }],
+          provides: [{ label: 'Strength support', state: 'used', reason: 'Used by Caraxes.' }],
+          benefitsFrom: [
+            { label: 'Burn', state: 'missing', reason: 'No selected dragon actively provides this signal.' },
+            { label: 'Control', state: 'missing', reason: 'No selected dragon actively provides this signal.' },
+          ],
+        },
+        caraxes: {
+          damageProfile: [{ label: 'Fire Damage', state: 'supported', reason: 'Supported by Syrax.' }],
+          provides: [{ label: 'First-Strike', state: 'used', reason: 'Used by Syrax.' }],
+          benefitsFrom: [],
+        },
+      },
+    });
+
+    expect(rating.score).toBeGreaterThanOrEqual(90);
+    expect(rating.tier).toBe('Strong');
+    expect(breakdown(rating, 'Kit utilization').score).toBeLessThan(20);
   });
 
   it('caps placement and conflict risk so it cannot overpower active synergy paths', () => {
@@ -206,8 +469,10 @@ describe('formation rating helper', () => {
 
   it('treats non-Vanguard inactive traits as opportunities instead of severe score penalties', () => {
     const rating = ratingFor(formation('syrax', 'vhagar', 'caraxes'));
+    const weaknesses = rating.weaknesses.join(' ');
 
-    expect(rating.weaknesses.join(' ')).toContain('alternate placement or progression opportunity');
+    expect(weaknesses).toContain('only one dragon can receive that positional benefit');
+    expect(weaknesses).not.toContain('could be activated from Vanguard as an alternate placement option');
     expect(breakdown(rating, 'Placement / conflict risk').score).toBeGreaterThan(0);
   });
 });

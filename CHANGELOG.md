@@ -2,6 +2,8 @@
 
 ## Unreleased
 
+- Added Kit Utilization to Formation Rating so scores now compare realized synergy against mapped kit potential, surface unused support or missing Benefits as opportunities, and require stronger utilization for Excellent ratings.
+- Tightened Formation Rating Support Usefulness scoring so matched support is capped by realized payoff and satisfied Benefits, direct damage stays in Damage Profile instead of generic support scoring, Excellent requires meaningful payoff guardrails, duplicate weakness/opportunity wording is reduced, and optional inactive Vanguard wording is softened.
 - Recalibrated Formation Rating to prioritize realized active synergy paths, reduce over-penalty from optional Vanguard trait conflicts, de-duplicate strengths and weaknesses, and collapse repeated detailed analysis output below the rating.
 - Added an explainable Formation Rating panel that scores mapped synergy signals, current progression, placement, and conflicts while clearly avoiding combat simulation.
 - Added a Formation Builder Damage Profile section, refined Provides and Benefits from chip states to distinguish used/satisfied, available, missing, and inactive signals, collapsed full Command and Vanguard Trait wording by default, removed redundant selected-card chips, and audited formation tag display before scoring work.
