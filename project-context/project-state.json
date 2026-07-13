@@ -1,9 +1,9 @@
 {
-  "generatedAt": "2026-07-12T22:46:38.762Z",
+  "generatedAt": "2026-07-13T01:06:45.567Z",
   "source": {
     "repository": "https://github.com/williamchildres/dragonfire-roster-builder",
-    "branch": "fix/formation-rating-calibration",
-    "commit": "edc2fa45c50be951534265da894c6705b7b5ee04",
+    "branch": "fix/formation-vanguard-trait-copy",
+    "commit": "b66309637476dd419ea818852581e6fca550bd59",
     "databaseVersion": "0.6.4",
     "dataSchemaVersion": 13,
     "localRosterSchemaVersion": 4,
@@ -33,7 +33,7 @@
   "testTotals": {
     "runner": "vitest",
     "testFileCount": 16,
-    "testCaseCount": 181,
+    "testCaseCount": 182,
     "lastRunStatus": "not-run-by-exporter",
     "countingMethod": "static working-tree test declaration scan; runtime pass/fail is reported by npm run test"
   },
