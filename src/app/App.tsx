@@ -1085,6 +1085,9 @@ function FormationBuilderSection({
           </button>
         </div>
       </div>
+      <p className="formation-chip-legend" role="note">
+        Green = active or satisfied · Red = missing or inactive · Neutral = available
+      </p>
       <div className="formation-board" aria-label="Formation positions">
         {FORMATION_POSITIONS.map((position) => {
           const dragon = dragons.find((candidate) => candidate.id === formation[position]) ?? null;
@@ -1312,9 +1315,9 @@ function FormationDragonSelectorDialog({
             </select>
           </label>
           <label>
-            Benefits from tag
+            Synergy needs tag
             <select value={filters.benefitsFrom} onChange={(event) => update({ benefitsFrom: event.target.value })}>
-              <option value="all">All Benefits from tags</option>
+              <option value="all">All Synergy needs tags</option>
               {filterOptions.benefitsFrom.map((label) => (
                 <option key={label} value={label}>
                   {label}
@@ -1404,7 +1407,7 @@ function FormationDragonSelectorRow({
           <div className="formation-selector-signals">
             <CompactSignalPreview title="Damage profile" labels={signalPreview.damageProfile.map((chip) => chip.label)} />
             <CompactSignalPreview title="Provides" labels={signalPreview.provides.map((chip) => chip.label)} />
-            <CompactSignalPreview title="Benefits from" labels={signalPreview.benefitsFrom.map((chip) => chip.label)} />
+            <CompactSignalPreview title="Synergy needs" labels={signalPreview.benefitsFrom.map((chip) => chip.label)} />
           </div>
         </div>
       </div>
@@ -1425,7 +1428,7 @@ function FormationDragonSelectorRow({
   );
 }
 
-function CompactSignalPreview({ title, labels }: { title: 'Damage profile' | 'Provides' | 'Benefits from'; labels: string[] }) {
+function CompactSignalPreview({ title, labels }: { title: 'Damage profile' | 'Provides' | 'Synergy needs'; labels: string[] }) {
   return (
     <div className="compact-signal-preview" aria-label={title}>
       <span className="compact-signal-title">{title}</span>
