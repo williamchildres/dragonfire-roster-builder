@@ -72,6 +72,7 @@ const buyMeACoffeeUrl = 'https://buymeacoffee.com/williamchildres';
 type Section = 'home' | 'roster' | 'team' | 'about';
 type StatusMessage = { kind: 'success' | 'error' | 'info'; text: string };
 type RosterSuccessMessage = { text: string };
+type FormationDragonPoolMode = 'all-star-10' | 'roster';
 type FormationSelectorFilters = {
   search: string;
   rarity: DragonRarity | 'all';
@@ -125,7 +126,7 @@ export function App() {
   const [selectedDragon, setSelectedDragon] = useState<Dragon | null>(null);
   const [message, setMessage] = useState<StatusMessage | null>(null);
   const [rosterSuccessMessage, setRosterSuccessMessage] = useState<RosterSuccessMessage | null>(null);
-  const [includeUnowned, setIncludeUnowned] = useState(false);
+  const [formationDragonPoolMode, setFormationDragonPoolMode] = useState<FormationDragonPoolMode>('all-star-10');
   const [formation, setFormation] = useState<Formation>(() => getInitialFormation());
   const [isAddDragonOpen, setIsAddDragonOpen] = useState(false);
   const [showAlreadyAdded, setShowAlreadyAdded] = useState(false);
@@ -279,6 +280,35 @@ export function App() {
     }
   };
 
+  const changeFormationDragonPoolMode = (mode: FormationDragonPoolMode) => {
+    setFormationDragonPoolMode(mode);
+
+    if (mode !== 'roster') {
+      return;
+    }
+
+    const unavailablePositions = FORMATION_POSITIONS.filter((position) => {
+      const dragonId = formation[position];
+      return dragonId ? roster[dragonId]?.owned !== true : false;
+    });
+
+    if (unavailablePositions.length === 0) {
+      return;
+    }
+
+    const nextFormation = { ...formation };
+    for (const position of unavailablePositions) {
+      nextFormation[position] = null;
+    }
+    setFormation(nextFormation);
+    setMessage({
+      kind: 'info',
+      text: `Roster Dragons mode cleared unavailable slot${unavailablePositions.length === 1 ? '' : 's'}: ${unavailablePositions
+        .map(formatFormationPosition)
+        .join(', ')}.`,
+    });
+  };
+
   return (
     <div className="app-shell">
       <a className="skip-link" href="#main-content">
@@ -345,10 +375,10 @@ export function App() {
 
         {activeSection === 'team' ? (
           <FormationBuilderSection
-            includeUnowned={includeUnowned}
+            dragonPoolMode={formationDragonPoolMode}
             roster={roster}
             formation={formation}
-            onIncludeUnownedChange={setIncludeUnowned}
+            onDragonPoolModeChange={changeFormationDragonPoolMode}
             onFormationChange={setFormation}
             onOpenDetails={setSelectedDragon}
             onShare={() => void shareFormation()}
@@ -874,26 +904,58 @@ function AddDragonRow({
   );
 }
 
+function formationRosterEntryForDragon(
+  dragon: Dragon,
+  roster: Record<string, OwnedDragon>,
+  mode: FormationDragonPoolMode,
+): OwnedDragon | undefined {
+  if (mode === 'roster') {
+    return roster[dragon.id];
+  }
+
+  const saved = roster[dragon.id];
+  return {
+    dragonId: dragon.id,
+    owned: true,
+    starRank: 10,
+    reignLevel: saved?.reignLevel ?? null,
+    notes: saved?.notes ?? '',
+    habitLevels: saved?.habitLevels ?? Object.fromEntries(dragon.habits.map((habit) => [habit.id, null])),
+  };
+}
+
+function formationProgressionForDragon(
+  dragonId: string,
+  roster: Record<string, OwnedDragon>,
+  mode: FormationDragonPoolMode,
+) {
+  const entry = roster[dragonId];
+  return {
+    starRank: mode === 'all-star-10' ? 10 : entry?.starRank ?? null,
+    dragonLevel: entry?.reignLevel ?? null,
+  };
+}
+
 function FormationBuilderSection({
-  includeUnowned,
+  dragonPoolMode,
   roster,
   formation,
-  onIncludeUnownedChange,
+  onDragonPoolModeChange,
   onFormationChange,
   onOpenDetails,
   onShare,
 }: {
-  includeUnowned: boolean;
+  dragonPoolMode: FormationDragonPoolMode;
   roster: Record<string, OwnedDragon>;
   formation: Formation;
-  onIncludeUnownedChange: (value: boolean) => void;
+  onDragonPoolModeChange: (mode: FormationDragonPoolMode) => void;
   onFormationChange: (formation: Formation) => void;
   onOpenDetails: (dragon: Dragon) => void;
   onShare: () => void;
 }) {
   const [selectorPosition, setSelectorPosition] = useState<FormationPosition | null>(null);
   const [selectorFilters, setSelectorFilters] = useState<FormationSelectorFilters>(defaultFormationSelectorFilters);
-  const selectableDragons = dragons.filter((dragon) => includeUnowned || roster[dragon.id]?.owned);
+  const selectableDragons = dragons.filter((dragon) => dragonPoolMode === 'all-star-10' || roster[dragon.id]?.owned);
   const profilesById = useMemo(
     () => new Map(simpleSynergyProfiles.map((profile) => [profile.dragonId, profile])),
     [],
@@ -906,19 +968,15 @@ function FormationBuilderSection({
           if (!dragonId) {
             return [];
           }
-          const entry = roster[dragonId];
           return [
             [
               dragonId,
-              {
-                starRank: entry?.starRank ?? null,
-                dragonLevel: entry?.reignLevel ?? null,
-              },
+              formationProgressionForDragon(dragonId, roster, dragonPoolMode),
             ],
           ];
         }),
       ),
-    [formation, roster],
+    [dragonPoolMode, formation, roster],
   );
   const selectedCount = FORMATION_POSITIONS.filter((position) => formation[position]).length;
   const simpleResults =
@@ -996,14 +1054,27 @@ function FormationBuilderSection({
         description="Assign one unique dragon to each position and review curated profile relationships."
       />
       <div className="toolbar">
-        <label className="check-row">
-          <input
-            type="checkbox"
-            checked={includeUnowned}
-            onChange={(event) => onIncludeUnownedChange(event.target.checked)}
-          />
-          Include unowned dragons
-        </label>
+        <fieldset className="formation-mode-toggle" aria-label="Formation dragon pool">
+          <legend className="sr-only">Formation dragon pool</legend>
+          <label className={dragonPoolMode === 'all-star-10' ? 'formation-mode-option is-active' : 'formation-mode-option'}>
+            <input
+              type="radio"
+              name="formation-dragon-pool"
+              checked={dragonPoolMode === 'all-star-10'}
+              onChange={() => onDragonPoolModeChange('all-star-10')}
+            />
+            <span>All 10 Star Dragons</span>
+          </label>
+          <label className={dragonPoolMode === 'roster' ? 'formation-mode-option is-active' : 'formation-mode-option'}>
+            <input
+              type="radio"
+              name="formation-dragon-pool"
+              checked={dragonPoolMode === 'roster'}
+              onChange={() => onDragonPoolModeChange('roster')}
+            />
+            <span>Roster Dragons</span>
+          </label>
+        </fieldset>
         <div className="button-row">
           <button type="button" className="secondary-button" onClick={() => onFormationChange(emptyFormation())}>
             Clear formation
@@ -1022,7 +1093,7 @@ function FormationBuilderSection({
               key={position}
               position={position}
               dragon={dragon}
-              rosterEntry={dragon ? roster[dragon.id] : undefined}
+              rosterEntry={dragon ? formationRosterEntryForDragon(dragon, roster, dragonPoolMode) : undefined}
               signalChips={signalChipsByPosition[position]}
               onChooseDragon={() => openSelector(position)}
               onOpenDetails={onOpenDetails}
@@ -1037,7 +1108,7 @@ function FormationBuilderSection({
         <FormationDragonSelectorDialog
           filters={selectorFilters}
           formation={formation}
-          includeUnowned={includeUnowned}
+          dragonPoolMode={dragonPoolMode}
           position={selectorPosition}
           profilesById={profilesById}
           roster={roster}
@@ -1058,7 +1129,7 @@ function FormationBuilderSection({
 function FormationDragonSelectorDialog({
   filters,
   formation,
-  includeUnowned,
+  dragonPoolMode,
   position,
   profilesById,
   roster,
@@ -1070,7 +1141,7 @@ function FormationDragonSelectorDialog({
 }: {
   filters: FormationSelectorFilters;
   formation: Formation;
-  includeUnowned: boolean;
+  dragonPoolMode: FormationDragonPoolMode;
   position: FormationPosition;
   profilesById: Map<string, (typeof simpleSynergyProfiles)[number]>;
   roster: Record<string, OwnedDragon>;
@@ -1162,7 +1233,9 @@ function FormationDragonSelectorDialog({
             <p className="eyebrow">Formation slot</p>
             <h2 id="formation-dragon-selector-title">Choose a dragon for {positionLabel}</h2>
             <p className="details-summary-line">
-              {includeUnowned ? 'Showing owned and unowned dragons.' : 'Showing owned dragons only.'}
+              {dragonPoolMode === 'all-star-10'
+                ? 'Planning with every mapped dragon at Star 10.'
+                : 'Showing only dragons saved to your roster.'}
             </p>
           </div>
           <button type="button" className="icon-button" onClick={onClose} aria-label="Close dragon selector">
@@ -1259,10 +1332,12 @@ function FormationDragonSelectorDialog({
             {filteredDragons.map((dragon) => (
               <FormationDragonSelectorRow
                 dragon={dragon}
+                dragonPoolMode={dragonPoolMode}
                 isAlreadySelected={selectedDragonIds.has(dragon.id)}
-                isOwned={roster[dragon.id]?.owned === true}
                 key={dragon.id}
                 profile={profilesById.get(dragon.id)}
+                rosterEntry={roster[dragon.id]}
+                roster={roster}
                 onOpenDetails={onOpenDetails}
                 onSelect={onSelect}
               />
@@ -1281,27 +1356,37 @@ function FormationDragonSelectorDialog({
 
 function FormationDragonSelectorRow({
   dragon,
+  dragonPoolMode,
   isAlreadySelected,
-  isOwned,
   profile,
+  roster,
+  rosterEntry,
   onOpenDetails,
   onSelect,
 }: {
   dragon: Dragon;
+  dragonPoolMode: FormationDragonPoolMode;
   isAlreadySelected: boolean;
-  isOwned: boolean;
   profile: (typeof simpleSynergyProfiles)[number] | undefined;
+  roster: Record<string, OwnedDragon>;
+  rosterEntry?: OwnedDragon;
   onOpenDetails: (dragon: Dragon) => void;
   onSelect: (dragonId: string) => void;
 }) {
-  const verificationLabel = getPublicVerificationLabel(dragon.dataStatus);
-  const verificationTone = getPublicVerificationTone(dragon.dataStatus);
+  const starSummary =
+    dragonPoolMode === 'all-star-10'
+      ? 'Star 10'
+      : rosterEntry?.starRank !== null && rosterEntry?.starRank !== undefined
+        ? `Star ${rosterEntry.starRank}`
+        : 'Star unknown';
   const signalPreview = buildFormationSignalChips({
     profile,
     position: 'vanguard',
     formation: emptyFormation(),
     profiles: simpleSynergyProfiles,
-    progression: {},
+    progression: {
+      [dragon.id]: formationProgressionForDragon(dragon.id, roster, dragonPoolMode),
+    },
   });
 
   return (
@@ -1313,10 +1398,7 @@ function FormationDragonSelectorRow({
           <div className="dragon-card-chips" aria-label={`${dragon.name} metadata`}>
             <span className="badge">{dragon.rarity}</span>
             <span className="badge">{dragon.breed}</span>
-            {verificationLabel ? (
-              <span className={`badge verification-${verificationTone ?? 'verified'}`}>{verificationLabel}</span>
-            ) : null}
-            <span className="badge">{isOwned ? 'Owned / Hatched' : 'Not owned'}</span>
+            <span className="badge">{starSummary}</span>
             {isAlreadySelected ? <span className="badge">Already selected</span> : null}
           </div>
           <div className="formation-selector-signals">

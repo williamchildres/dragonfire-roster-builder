@@ -43,6 +43,10 @@ describe('Formation Builder simple synergy cutover', () => {
     await user.click(screen.getAllByRole('button', { name: /formation builder/i })[0]!);
   }
 
+  async function switchFormationMode(user: ReturnType<typeof userEvent.setup>, mode: 'All 10 Star Dragons' | 'Roster Dragons') {
+    await user.click(screen.getByRole('radio', { name: mode }));
+  }
+
   async function selectFormation(
     user: ReturnType<typeof userEvent.setup>,
     formation: Partial<Record<'left-flank' | 'vanguard' | 'right-flank', string>>,
@@ -134,12 +138,43 @@ describe('Formation Builder simple synergy cutover', () => {
     expect(analysisText()).not.toMatch(/target candidate|raw effect tags/i);
   });
 
+  it('replaces Include unowned dragons with the Formation dragon pool mode toggle', async () => {
+    const user = userEvent.setup();
+    seedRoster({ syrax: {} });
+
+    await openFormationBuilder(user);
+
+    expect(screen.queryByText('Include unowned dragons')).not.toBeInTheDocument();
+    const modeGroup = screen.getByRole('group', { name: /formation dragon pool/i });
+    const allMode = within(modeGroup).getByRole('radio', { name: 'All 10 Star Dragons' });
+    const rosterMode = within(modeGroup).getByRole('radio', { name: 'Roster Dragons' });
+
+    expect(allMode).toBeChecked();
+    expect(rosterMode).not.toBeChecked();
+
+    await user.click(rosterMode);
+    expect(rosterMode).toBeChecked();
+    expect(allMode).not.toBeChecked();
+
+    await user.click(allMode);
+    expect(allMode).toBeChecked();
+    expect(rosterMode).not.toBeChecked();
+  });
+
   it('maps roster Star Rank to progression-locked simple relationships', async () => {
     const user = userEvent.setup();
     seedRoster({ daemoros: { starRank: 1 }, shadowsong: {} });
 
     await openFormationBuilder(user);
     await selectFormation(user, { 'left-flank': 'daemoros', vanguard: 'shadowsong' });
+    await openDetailedSignalTrace(user);
+
+    expect(sectionText('Strong synergies')).toContain(
+      "Daemoros applies Panic, which improves Shadowsong's Breath of Fire.",
+    );
+    expect(sectionText('Future unlocks')).not.toContain('Daemoros reaches Star Rank 2');
+
+    await switchFormationMode(user, 'Roster Dragons');
     await openDetailedSignalTrace(user);
 
     expect(sectionText('Future unlocks')).toContain(
@@ -540,6 +575,54 @@ describe('Formation Builder simple synergy cutover', () => {
     expect(within(dialog).getByRole('heading', { name: 'Vhagar' })).toBeInTheDocument();
   });
 
+  it('opens the selector in All 10 Star Dragons mode and marks selected dragons unavailable there', async () => {
+    const user = userEvent.setup();
+    seedRoster({ syrax: {} });
+
+    await openFormationBuilder(user);
+    await user.click(within(screen.getByRole('article', { name: 'Left Flank' })).getByRole('button', { name: /\+ add dragon/i }));
+    let dialog = screen.getByRole('dialog', { name: /choose a dragon for left flank/i });
+    await user.type(within(dialog).getByLabelText(/search by dragon name/i), 'Antares');
+
+    const antaresRow = within(dialog).getByRole('heading', { name: 'Antares' }).closest('article');
+    expect(antaresRow).not.toBeNull();
+    expect(antaresRow).toHaveTextContent('Star 10');
+    await user.click(within(antaresRow as HTMLElement).getByRole('button', { name: /^select$/i }));
+
+    expect(within(screen.getByRole('article', { name: 'Left Flank' })).getByLabelText(/Antares metadata/i)).toHaveTextContent(
+      'Star 10',
+    );
+
+    await user.click(screen.getByRole('radio', { name: 'Roster Dragons' }));
+    expect(screen.getByRole('status')).toHaveTextContent('Roster Dragons mode cleared unavailable slot: Left Flank.');
+    expect(within(screen.getByRole('article', { name: 'Left Flank' })).getByRole('button', { name: /\+ add dragon/i })).toBeInTheDocument();
+
+    await user.click(within(screen.getByRole('article', { name: 'Left Flank' })).getByRole('button', { name: /\+ add dragon/i }));
+    dialog = screen.getByRole('dialog', { name: /choose a dragon for left flank/i });
+    await user.type(within(dialog).getByLabelText(/search by dragon name/i), 'Antares');
+    expect(within(dialog).queryByRole('heading', { name: 'Antares' })).not.toBeInTheDocument();
+  });
+
+  it('opens the selector in Roster Dragons mode and uses saved card progression', async () => {
+    const user = userEvent.setup();
+    seedRoster({ syrax: { starRank: 4 }, caraxes: { starRank: 7 } });
+
+    await openFormationBuilder(user);
+    await switchFormationMode(user, 'Roster Dragons');
+    await user.click(within(screen.getByRole('article', { name: 'Left Flank' })).getByRole('button', { name: /\+ add dragon/i }));
+    const dialog = screen.getByRole('dialog', { name: /choose a dragon for left flank/i });
+
+    await user.type(within(dialog).getByLabelText(/search by dragon name/i), 'Syrax');
+    const syraxRow = within(dialog).getByRole('heading', { name: 'Syrax' }).closest('article');
+    expect(syraxRow).not.toBeNull();
+    expect(syraxRow).toHaveTextContent('Star 4');
+    await user.click(within(syraxRow as HTMLElement).getByRole('button', { name: /^select$/i }));
+
+    expect(within(screen.getByRole('article', { name: 'Left Flank' })).getByLabelText(/Syrax metadata/i)).toHaveTextContent(
+      'Star 4',
+    );
+  });
+
   it('shows static position cards, profile coverage, movement, clearing, and share-link behavior', async () => {
     const user = userEvent.setup();
     const writeText = vi.fn().mockResolvedValue(undefined);
@@ -550,7 +633,6 @@ describe('Formation Builder simple synergy cutover', () => {
     seedRoster({ syrax: {}, caraxes: {}, antares: { owned: false } });
 
     await openFormationBuilder(user);
-    await user.click(screen.getByLabelText(/include unowned dragons/i));
     await selectFormation(user, { 'left-flank': 'syrax', vanguard: 'caraxes', 'right-flank': 'antares' });
 
     for (const position of ['Left Flank', 'Vanguard', 'Right Flank']) {
