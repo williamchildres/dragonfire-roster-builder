@@ -1,11 +1,11 @@
 {
   "format": "dragonfire-lab-project-context",
   "contextVersion": 2,
-  "generatedAt": "2026-07-13T02:14:27.003Z",
+  "generatedAt": "2026-07-13T02:48:26.866Z",
   "source": {
     "repository": "https://github.com/williamchildres/dragonfire-roster-builder",
-    "branch": "codex/formation-card-compression",
-    "commit": "41a22527e00b8ab5cf10fbe1a3a44a13a315ba12",
+    "branch": "ui/formation-builder-density-polish",
+    "commit": "617760c3f91d9026a95c9d06a4885ea1c322eb21",
     "databaseVersion": "0.6.4",
     "dataSchemaVersion": 13,
     "localRosterSchemaVersion": 4,

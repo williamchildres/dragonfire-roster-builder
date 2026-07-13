@@ -174,7 +174,7 @@ function buildBenefitsChips(
         mergeChip(chips, {
           label,
           state: 'inactive',
-          reason: signalStateReason(benefit, beneficiary.position, progression, 'Benefits from'),
+          reason: signalStateReason(benefit, beneficiary.position, progression, 'Synergy needs'),
         });
       }
       continue;
@@ -330,7 +330,7 @@ function signalStateReason(
   signal: SynergySignal,
   position: FormationPosition,
   progression: DragonProgression | undefined,
-  prefix: 'Damage output' | 'Provides' | 'Benefits from',
+  prefix: 'Damage output' | 'Provides' | 'Synergy needs',
 ): string {
   if (signal.requiredSelfPosition !== undefined && signal.requiredSelfPosition !== position) {
     return `${prefix} inactive: requires ${positionLabels[signal.requiredSelfPosition]}.`;

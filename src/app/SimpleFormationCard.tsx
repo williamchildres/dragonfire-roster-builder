@@ -57,27 +57,29 @@ export function SimpleFormationCard({
           </div>
           <FormationSignalPanel title="Damage profile" chips={signalChips.damageProfile} fallback="No current damage profile recorded." />
           <FormationSignalPanel title="Provides" chips={signalChips.provides} fallback="No formation-wide output profile recorded." />
-          <FormationSignalPanel title="Benefits from" chips={signalChips.benefitsFrom} fallback="No mapped incoming synergy yet." />
+          <FormationSignalPanel title="Synergy needs" chips={signalChips.benefitsFrom} fallback="No mapped incoming synergy yet." />
           <SimpleCommandPanel command={dragon.command} />
           <SimpleTraitPanel trait={dragon.trait} position={position} />
           <DragonAffinityStrip dragonName={dragon.name} affinities={dragon.affinities} />
           <div className="formation-card-actions">
-            <button type="button" className="secondary-button compact-action" onClick={onChooseDragon}>
-              Change dragon
-            </button>
-            <button type="button" className="secondary-button compact-action" onClick={() => onOpenDetails(dragon)}>
-              View details
-            </button>
+            <div className="formation-card-primary-actions">
+              <button type="button" className="secondary-button compact-action" onClick={onChooseDragon}>
+                Change dragon
+              </button>
+              <button type="button" className="secondary-button compact-action" onClick={() => onOpenDetails(dragon)}>
+                View details
+              </button>
+            </div>
             <div className="movement-controls" aria-label={`${positionLabels[position]} movement controls`}>
               {FORMATION_POSITIONS.filter((target) => target !== position).map((target) => (
                 <button className="secondary-button compact-action" key={target} type="button" onClick={() => onMove(target)}>
-                  Move to {positionLabels[target]}
+                  {positionLabels[target]}
                 </button>
               ))}
-              <button type="button" className="secondary-button compact-action clear-position-action" onClick={onClear}>
-                Clear position
-              </button>
             </div>
+            <button type="button" className="text-button compact-action clear-position-action" onClick={onClear}>
+              Clear position
+            </button>
           </div>
         </>
       ) : (
@@ -150,12 +152,12 @@ function FormationSignalPanel({
   chips,
   fallback,
 }: {
-  title: 'Damage profile' | 'Provides' | 'Benefits from';
+  title: 'Damage profile' | 'Provides' | 'Synergy needs';
   chips: FormationSignalChip[];
   fallback: string;
 }) {
   return (
-    <section className="card-mini-section formation-signal-panel" aria-label={title}>
+    <section className="card-mini-section formation-signal-panel formation-signal-panel--light" aria-label={title}>
       <h4>{title}</h4>
       {chips.length > 0 ? (
         <ul className="chip-list formation-chip-list">

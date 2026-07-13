@@ -161,6 +161,17 @@ describe('Formation Builder simple synergy cutover', () => {
     expect(rosterMode).not.toBeChecked();
   });
 
+  it('shows the chip-state legend near the Formation Builder controls', async () => {
+    const user = userEvent.setup();
+    seedRoster({ syrax: {} });
+
+    await openFormationBuilder(user);
+
+    expect(screen.getByRole('note')).toHaveTextContent(
+      'Green = active or satisfied · Red = missing or inactive · Neutral = available',
+    );
+  });
+
   it('maps roster Star Rank to progression-locked simple relationships', async () => {
     const user = userEvent.setup();
     seedRoster({ daemoros: { starRank: 1 }, shadowsong: {} });
@@ -376,8 +387,9 @@ describe('Formation Builder simple synergy cutover', () => {
     expect(within(caraxesCard).getByLabelText(/Slow used/i)).toHaveAttribute('data-state', 'used');
 
     const vhagarCard = screen.getByRole('article', { name: 'Right Flank' });
-    expect(within(vhagarCard).getByRole('region', { name: 'Benefits from' })).toHaveTextContent('Burn');
+    expect(within(vhagarCard).getByRole('region', { name: 'Synergy needs' })).toHaveTextContent('Burn');
     expect(within(vhagarCard).getByLabelText(/Burn satisfied/i)).toHaveAttribute('data-state', 'satisfied');
+    expect(within(vhagarCard).queryByRole('region', { name: 'Benefits from' })).not.toBeInTheDocument();
 
     await clearPosition(user, 'Vanguard');
     const updatedVhagarCard = screen.getByRole('article', { name: 'Right Flank' });
@@ -506,7 +518,7 @@ describe('Formation Builder simple synergy cutover', () => {
     expect(within(vanguardCard).getByLabelText(/Strength support inactive/i)).toHaveAttribute('data-state', 'inactive');
     expect(within(vanguardCard).getByLabelText(/Strength support inactive/i)).toHaveAccessibleName(/Dragon Level 16/i);
 
-    await user.click(within(vanguardCard).getByRole('button', { name: /move to right flank/i }));
+    await user.click(within(vanguardCard).getByRole('button', { name: /^right flank$/i }));
     const rightCard = screen.getByRole('article', { name: 'Right Flank' });
     expect(within(rightCard).getByLabelText(/Strength support inactive/i)).toHaveAccessibleName(/requires Vanguard/i);
   });
@@ -529,7 +541,7 @@ describe('Formation Builder simple synergy cutover', () => {
     expect(within(screen.getByRole('article', { name: 'Vanguard' })).getByRole('button', { name: /\+ add dragon/i })).toBeInTheDocument();
   });
 
-  it('filters the Formation Builder dragon selector by name, metadata, Damage profile, Provides, and Benefits from tags', async () => {
+  it('filters the Formation Builder dragon selector by name, metadata, Damage profile, Provides, and Synergy needs tags', async () => {
     const user = userEvent.setup();
     seedRoster({ caraxes: {}, syrax: {}, vhagar: {}, daemoros: {} });
 
@@ -543,7 +555,7 @@ describe('Formation Builder simple synergy cutover', () => {
     expect(within(dialog).getByLabelText(/^verification$/i)).toBeInTheDocument();
     expect(within(dialog).getByRole('combobox', { name: /damage profile/i })).toBeInTheDocument();
     expect(within(dialog).getByLabelText(/provides tag/i)).toBeInTheDocument();
-    expect(within(dialog).getByLabelText(/benefits from tag/i)).toBeInTheDocument();
+    expect(within(dialog).getByLabelText(/synergy needs tag/i)).toBeInTheDocument();
 
     await user.type(within(dialog).getByLabelText(/search by dragon name/i), 'Caraxes');
     expect(within(dialog).getByRole('heading', { name: 'Caraxes' })).toBeInTheDocument();
@@ -551,7 +563,7 @@ describe('Formation Builder simple synergy cutover', () => {
     expect(caraxesRow).not.toBeNull();
     expect(within(caraxesRow as HTMLElement).getByLabelText('Damage profile')).toHaveTextContent('Fire Damage');
     expect(within(caraxesRow as HTMLElement).getByLabelText('Provides')).toHaveTextContent('Slow');
-    expect(within(caraxesRow as HTMLElement).getByLabelText('Benefits from')).toHaveTextContent('First-Strike');
+    expect(within(caraxesRow as HTMLElement).getByLabelText('Synergy needs')).toHaveTextContent('First-Strike');
     expect(within(dialog).queryByRole('heading', { name: 'Syrax' })).not.toBeInTheDocument();
 
     await user.clear(within(dialog).getByLabelText(/search by dragon name/i));
@@ -565,11 +577,11 @@ describe('Formation Builder simple synergy cutover', () => {
     expect(within(dialog).queryByRole('heading', { name: 'Syrax' })).not.toBeInTheDocument();
 
     await user.selectOptions(within(dialog).getByLabelText(/provides tag/i), 'all');
-    await user.selectOptions(within(dialog).getByLabelText(/benefits from tag/i), 'Burn');
+    await user.selectOptions(within(dialog).getByLabelText(/synergy needs tag/i), 'Burn');
     expect(within(dialog).getByRole('heading', { name: 'Vhagar' })).toBeInTheDocument();
     expect(within(dialog).queryByRole('heading', { name: 'Daemoros' })).not.toBeInTheDocument();
 
-    await user.selectOptions(within(dialog).getByLabelText(/benefits from tag/i), 'all');
+    await user.selectOptions(within(dialog).getByLabelText(/synergy needs tag/i), 'all');
     await user.selectOptions(within(dialog).getByLabelText(/^rarity$/i), 'Legendary');
     await user.selectOptions(within(dialog).getByLabelText(/^breed$/i), 'Warrior');
     await user.selectOptions(within(dialog).getByLabelText(/^verification$/i), 'community-verified');
@@ -646,7 +658,7 @@ describe('Formation Builder simple synergy cutover', () => {
       expect(within(card).getByRole('region', { name: 'Command' })).toBeInTheDocument();
       expect(within(card).getByRole('region', { name: 'Damage profile' })).toBeInTheDocument();
       expect(within(card).getByRole('region', { name: 'Provides' })).toBeInTheDocument();
-      expect(within(card).getByRole('region', { name: 'Benefits from' })).toBeInTheDocument();
+      expect(within(card).getByRole('region', { name: 'Synergy needs' })).toBeInTheDocument();
       expect(within(card).getByRole('region', { name: /affinities/i })).toBeInTheDocument();
       expect(within(card).queryByRole('region', { name: /curated profile/i })).not.toBeInTheDocument();
     }
@@ -701,9 +713,7 @@ describe('Formation Builder simple synergy cutover', () => {
     expect(within(syraxRow as HTMLElement).getByRole('button', { name: /already selected/i })).toBeDisabled();
     await user.click(within(selector).getByRole('button', { name: /close dragon selector/i }));
 
-    await user.click(
-      within(screen.getByRole('article', { name: 'Left Flank' })).getByRole('button', { name: /move to right flank/i }),
-    );
+    await user.click(within(screen.getByRole('article', { name: 'Left Flank' })).getByRole('button', { name: /^right flank$/i }));
     expect(screen.getByRole('article', { name: 'Right Flank' })).toHaveTextContent('Syrax');
     expect(screen.getByRole('article', { name: 'Left Flank' })).toHaveTextContent('Antares');
 
