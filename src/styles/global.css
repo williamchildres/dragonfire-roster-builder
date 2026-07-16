@@ -917,6 +917,7 @@ dd {
 
 .add-dragon-dialog > :not(.details-header) {
   margin-inline: clamp(1rem, 2vw, 1.25rem);
+  min-width: 0;
 }
 
 .add-dragon-dialog > :last-child {
@@ -979,28 +980,46 @@ dd {
 
 .formation-selector-dialog {
   max-height: min(88vh, 56rem);
+  max-width: min(62rem, calc(100vw - 1rem));
+  width: min(100%, calc(100vw - 1rem));
 }
 
 .formation-selector-filters {
   grid-template-columns: repeat(3, minmax(11rem, 1fr));
+  min-width: 0;
 }
 
 .formation-selector-list {
   max-height: min(52vh, 34rem);
+  overflow-x: hidden;
   overflow-y: auto;
   padding-right: 0.2rem;
 }
 
 .formation-selector-row {
   align-items: start;
+  min-width: 0;
 }
 
 .formation-selector-row .card-topline {
   align-items: start;
+  min-width: 0;
 }
 
 .formation-selector-signals {
   margin-top: 0.55rem;
+}
+
+.formation-selector-row .formation-selector-signals,
+.formation-selector-row .compact-signal-preview,
+.formation-selector-row .chip-list,
+.formation-selector-row .add-dragon-actions {
+  min-width: 0;
+}
+
+.formation-selector-row .add-dragon-actions button {
+  min-width: 0;
+  white-space: normal;
 }
 
 .compact-signal-preview {
@@ -2203,6 +2222,24 @@ th {
   .details-header-controls {
     flex: 1 1 auto;
     width: 100%;
+  }
+}
+
+@media (max-width: 760px) {
+  .formation-selector-filters {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .formation-selector-row {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .formation-selector-row .add-dragon-actions {
+    justify-content: stretch;
+  }
+
+  .formation-selector-row .add-dragon-actions button {
+    flex: 1 1 10rem;
   }
 }
 
