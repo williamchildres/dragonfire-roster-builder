@@ -216,26 +216,26 @@ describe('Formation Builder simple synergy cutover', () => {
 
   it('treats Panic missing-enabler checks as incomplete when a selected dragon is metadata-only', async () => {
     const user = userEvent.setup();
-    seedRoster({ shadowsong: {}, shimmer: {} });
+    seedRoster({ shadowsong: {}, bevlorin: {} });
 
     await openFormationBuilder(user);
-    await selectFormation(user, { 'left-flank': 'shadowsong', vanguard: 'shimmer' });
+    await selectFormation(user, { 'left-flank': 'shadowsong', vanguard: 'bevlorin' });
     await openDetailedSignalTrace(user);
 
-    expect(analysisText()).toContain('Synergy data not yet mapped: Shimmer.');
+    expect(analysisText()).toContain('Synergy data not yet mapped: Bevlorin.');
     expect(sectionText('Missing enablers')).toContain(incompleteMissingEnablerNotice);
     expect(analysisText()).not.toContain('this formation has no Panic provider');
   });
 
   it('treats First-Strike missing-enabler checks as incomplete when a selected dragon is metadata-only', async () => {
     const user = userEvent.setup();
-    seedRoster({ caraxes: {}, shimmer: {} });
+    seedRoster({ caraxes: {}, bevlorin: {} });
 
     await openFormationBuilder(user);
-    await selectFormation(user, { 'left-flank': 'caraxes', vanguard: 'shimmer' });
+    await selectFormation(user, { 'left-flank': 'caraxes', vanguard: 'bevlorin' });
     await openDetailedSignalTrace(user);
 
-    expect(analysisText()).toContain('Synergy data not yet mapped: Shimmer.');
+    expect(analysisText()).toContain('Synergy data not yet mapped: Bevlorin.');
     expect(sectionText('Missing enablers')).toContain(incompleteMissingEnablerNotice);
     expect(analysisText()).not.toContain('this formation has no First-Strike provider');
   });
@@ -683,7 +683,13 @@ describe('Formation Builder simple synergy cutover', () => {
 
     await user.click(within(card).getByRole('button', { name: /view details/i }));
     const details = screen.getByRole('dialog', { name: 'Arulix' });
+    const commandDetails = within(details).getByRole('heading', { name: 'Gleaming Spiral' }).closest('article');
+    expect(commandDetails).not.toBeNull();
+    expect(commandDetails).not.toHaveTextContent('Deals Physical Damage');
+    expect(commandDetails).toHaveTextContent('gains Physical Damage at 6\u2605');
     await user.selectOptions(within(details).getByRole('combobox', { name: 'Star Rank' }), '6');
+    expect(commandDetails).toHaveTextContent('Deals Physical Damage');
+    expect(commandDetails).not.toHaveTextContent('gains Physical Damage at 6\u2605');
     await user.click(within(details).getByRole('button', { name: /close details/i }));
 
     card = screen.getByRole('article', { name: 'Left Flank' });

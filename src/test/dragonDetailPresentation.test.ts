@@ -18,7 +18,7 @@ describe('dragon detail presentation helpers', () => {
     expect(presentation.headerLine).toContain('Physical Damage');
     expect(presentation.headerLine).toContain('Vanguard trait');
     expect(presentation.provides).toEqual(
-      expect.arrayContaining(['Panic', 'Burn', 'Physical Damage', 'Confusion', 'Instinct support', 'Initiative support']),
+      expect.arrayContaining(['Applies Panic', 'Burn', 'Physical Damage', 'Confusion', 'Instinct support', 'Initiative support']),
     );
     expect(presentation.placementNotes).toEqual(expect.arrayContaining(['Requires Vanguard', 'Supports Left Flank ally']));
     expect(presentation.benefitsFrom).toHaveLength(0);
@@ -136,7 +136,8 @@ describe('dragon detail presentation helpers', () => {
 
       for (const profile of profilesWithTag) {
         const presentation = buildDragonDetailPresentation(profile);
-        expect(presentation.provides, `${profile.dragonId}:${tag}`).toContain(label);
+        const signal = profile.outputs.find((candidate) => (candidate.tags ?? [candidate.tag]).includes(tag));
+        expect(presentation.provides, `${profile.dragonId}:${tag}`).toContain(signal?.publicLabel ?? label);
         expect(presentation.provides, `${profile.dragonId}:${tag}`).toContain('Control');
       }
     }

@@ -70,9 +70,6 @@ const review = (
 });
 
 export const metadataOnlyDragonIds = [
-  'solstryker',
-  'shimmer',
-  'jagadrix',
   'bevlorin',
   'shadowrend',
   'thunderstrike',
@@ -117,8 +114,8 @@ export const simpleSynergyAbilityReviews = [
     'syrax-strategic-revival',
     'habit',
     represented(
-      ['syrax-strategic-revival-recovery', 'syrax-strategic-revival-slow-payoff'],
-      'The augmentation provides Recovery and explicitly improves that Recovery when any enemy has Slow.',
+      ['syrax-strategic-revival-recovery', 'syrax-strategic-revival-resistance', 'syrax-strategic-revival-slow-payoff'],
+      'The augmentation provides Recovery, explicitly grants named Resistance, and improves Recovery when any enemy has Slow.',
     ),
   ),
   review(
@@ -234,7 +231,7 @@ export const simpleSynergyAbilityReviews = [
     'habit',
     represented(['seasmoke-cunning-ferocity-fire-intelligence'], 'The habit gives adjacent Fire Damage and Intelligence support.'),
   ),
-  review('seasmoke', 'seasmoke-loyal-bond', 'habit', generalOnly('Advantage and Resistance are broad survivability/damage effects without a current explicit payoff.')),
+  review('seasmoke', 'seasmoke-loyal-bond', 'habit', represented(['seasmoke-loyal-bond-resistance'], 'The verified wording explicitly grants named Resistance below 50% Troop Capacity; conditional Advantage remains general support only.')),
 
   review(
     'crimson',
@@ -414,7 +411,7 @@ export const simpleSynergyAbilityReviews = [
   review('rhysarion', 'rhysarion-sharp-resolve', 'habit', selfOnly('The Strength and Intelligence increases apply only to Rhysarion.')),
   review('rhysarion', 'rhysarion-echoing-melody', 'habit', represented(['rhysarion-echoing-melody-recovery'], 'The augmentation provides Intelligence-enhanced Recovery to other allies.')),
   review('rhysarion', 'rhysarion-unbroken-devotion', 'habit', represented(['rhysarion-unbroken-devotion-recovery'], 'The habit improves other allies Recovery Received.')),
-  review('rhysarion', 'rhysarion-inspiring-melody', 'habit', represented(['rhysarion-inspiring-melody-initiative'], 'The habit gives adjacent Initiative support; Resistance is general support only.')),
+  review('rhysarion', 'rhysarion-inspiring-melody', 'habit', represented(['rhysarion-inspiring-melody-initiative', 'rhysarion-inspiring-melody-resistance'], 'The verified wording gives adjacent Initiative support and explicitly grants named Resistance to the same ally.')),
 
   review(
     'shadowsong',
@@ -703,6 +700,30 @@ export const simpleSynergyAbilityReviews = [
   review('arrax', 'arrax-adaptive-guard', 'habit', generalOnly('Both defensive branches remain troop-gated and inactive because Formation Builder has no selected troop context.')),
   review('arrax', 'arrax-fire-ward', 'habit', generalOnly('Fire Ward remains a distinct defensive status and does not become offensive Fire Damage support.')),
   review('arrax', 'arrax-turn-the-line', 'habit', represented(['arrax-turn-the-line-physical'], 'The Star Rank 10 habit directly increases enemy Physical Damage Received without inventing named Vulnerable.')),
+
+  review('solstryker', 'solstryker-tactical-onslaught', 'command', represented(['solstryker-tactical-onslaught-physical', 'solstryker-tactical-onslaught-tactical', 'solstryker-tactical-onslaught-vulnerable-payoff', 'solstryker-tactical-onslaught-strength-payoff', 'solstryker-tactical-onslaught-instinct-payoff'], 'The Command provides Physical and Tactical output with one Strength need, one Instinct need, and a base Vulnerable payoff; typed enemy Physical suppression is non-scoring.')),
+  review('solstryker', 'solstryker-champions-brilliance', 'trait', represented(['solstryker-champions-brilliance-vanguard'], 'The trait requires Vanguard; self stats and Right Flank defensive support do not create ordinary support signals.')),
+  review('solstryker', 'solstryker-steady-erosion', 'habit', noCross('Steady Erosion is a named stacking enemy Strength debuff, not Vulnerable, Weakened, or Control.')),
+  review('solstryker', 'solstryker-energy-drain', 'habit', noCross('Direct enemy Strength and Initiative reductions are detailed and non-scoring.')),
+  review('solstryker', 'solstryker-oppressive-onslaught', 'habit', represented(['solstryker-oppressive-onslaught-overwhelm'], 'The Habit applies specifically visible Overwhelm, which satisfies Control through one alias path at Star Rank 6.')),
+  review('solstryker', 'solstryker-robust-insight', 'habit', selfOnly('The Strength and Instinct increases apply only to Solstryker.')),
+  review('solstryker', 'solstryker-amplified-drain', 'habit', noCross('The independent Round 4 enemy stat reduction is detailed and non-scoring.')),
+
+  review('shimmer', 'shimmer-unbreakable-loyalty', 'command', represented(['shimmer-unbreakable-loyalty-tactical', 'shimmer-unbreakable-loyalty-stats', 'shimmer-unbreakable-loyalty-instinct-payoff'], 'The Command deals Tactical Damage and gives paired Strength/Initiative support to one deterministic highest-Strength other ally.')),
+  review('shimmer', 'shimmer-sentinels-presence', 'trait', represented(['shimmer-sentinels-presence-left-fire', 'shimmer-sentinels-presence-vanguard'], 'The Vanguard trait supports Left Flank Fire Damage; self Recovery and Instinct increases remain self-only.')),
+  review('shimmer', 'shimmer-crushing-force', 'habit', represented(['shimmer-crushing-force-physical', 'shimmer-crushing-force-tactical'], 'Two independent priority selectors preserve Left Flank non-Basic Physical and Right Flank Tactical support without unrestricted fallback or self-synergy.')),
+  review('shimmer', 'shimmer-dragons-insight', 'habit', selfOnly('Damage Received reduction and Instinct increase apply only to Shimmer.')),
+  review('shimmer', 'shimmer-loyal-shield', 'habit', represented(['shimmer-loyal-shield-recovery', 'shimmer-loyal-shield-resistance-payoff'], 'The augmentation adds one Recovery path at Star Rank 6 and a per-recipient Resistance doubling payoff.')),
+  review('shimmer', 'shimmer-unbroken-devotion', 'habit', represented(['shimmer-unbroken-devotion-recovery'], 'The Habit improves Recovery Received of both other allies and cannot support Shimmer herself.')),
+  review('shimmer', 'shimmer-sneak-attack', 'habit', represented(['shimmer-sneak-attack-first-strike', 'shimmer-sneak-attack-physical'], 'One activation grants paired Physical support and First-Strike to the same highest-Strength other ally at Star Rank 10.')),
+
+  review('jagadrix', 'jagadrix-cunning-whispers', 'command', represented(['jagadrix-cunning-whispers-fire', 'jagadrix-cunning-whispers-intelligence-payoff', 'jagadrix-cunning-whispers-initiative-payoff'], 'The Command deals Fire Damage and exposes Intelligence, Initiative, and Fire support compatibility; enemy same-lane reductions remain battlefield-facing.')),
+  review('jagadrix', 'jagadrix-hunters-wrath', 'trait', represented(['jagadrix-hunters-wrath-right-stats', 'jagadrix-hunters-wrath-vanguard'], 'The Vanguard trait supports Right Flank Strength and Initiative while its Fire increase is self-only.')),
+  review('jagadrix', 'jagadrix-enervate', 'habit', noCross('Enemy Tactical Damage suppression is not Weakened or allied Tactical support.')),
+  review('jagadrix', 'jagadrix-second-wind', 'habit', selfOnly('Damage, immediate Recovery, and subsequent Nullify Recovery are ordered self-only effects with no static cross-dragon relationship.')),
+  review('jagadrix', 'jagadrix-whispering-sabotage', 'habit', represented(['jagadrix-whispering-sabotage-weakened'], 'The Habit provides one Weakened path at Star Rank 6 without a Control alias.')),
+  review('jagadrix', 'jagadrix-quick-witted', 'habit', selfOnly('Intelligence and Initiative increases apply only to Jagadrix.')),
+  review('jagadrix', 'jagadrix-echoes-of-deceit', 'habit', represented(['jagadrix-echoes-of-deceit-fire', 'jagadrix-echoes-of-deceit-panic-payoff'], 'The augmentation adds one extra Fire path and one Panic payoff at Star Rank 10 without adding Tactical Damage.')),
 
   review(
     'tessarion',

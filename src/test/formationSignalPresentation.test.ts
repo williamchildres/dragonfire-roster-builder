@@ -63,12 +63,19 @@ describe('Formation Builder signal presentation helpers', () => {
         'Slow',
         'Stun',
         'Stagger',
-        'Panic',
+        'Applies Panic',
         'Vulnerable',
         'Control',
         'Overwhelm',
         'Confusion',
         'Weakened',
+        'Grants Resistance',
+        'Applies Overwhelm',
+        'Applies Weakened',
+        'Provides Recovery',
+        'Grants First-Strike',
+        'Non-Basic Physical support (prioritizes Left Flank)',
+        'Tactical support (prioritizes Right Flank)',
       ]),
     );
     expect(options.provides).not.toEqual(
@@ -86,6 +93,9 @@ describe('Formation Builder signal presentation helpers', () => {
         'Slow',
         'Panic',
         'Bleed',
+        'Benefits from Vulnerable',
+        'Resistance doubles Recovery',
+        'Deals double damage to enemies with Panic',
       ]),
     );
   });

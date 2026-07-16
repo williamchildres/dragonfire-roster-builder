@@ -1,9 +1,22 @@
-import type { FormationPosition } from '../models/dragon';
+import type { EffectTag, FormationPosition } from '../models/dragon';
 import type { SynergyTag } from './tags';
 
 export type SimpleFriendlyScope = 'formation' | 'adjacent' | 'self';
 export type SignalConfidence = 'verified' | 'provisional';
 export type DamageScope = 'non-basic-attack';
+export type TargetingStat = 'strength' | 'intelligence' | 'instinct' | 'initiative';
+
+export type FriendlyRecipientSelector =
+  | {
+      kind: 'highest-stat';
+      stat: TargetingStat;
+      excludeSelf: boolean;
+    }
+  | {
+      kind: 'position-priority';
+      preferredPosition: FormationPosition;
+      allowSelf: boolean;
+    };
 
 export interface ProgressionRequirement {
   minimumStarRank?: number;
@@ -13,6 +26,7 @@ export interface ProgressionRequirement {
 export interface DragonProgression {
   starRank?: number | null;
   dragonLevel?: number | null;
+  combatStats?: Partial<Record<TargetingStat, number | null>>;
 }
 
 export interface SynergySignal {
@@ -24,10 +38,15 @@ export interface SynergySignal {
   abilityId: string;
   abilityName: string;
   description: string;
+  publicLabel?: string;
   unlock?: ProgressionRequirement;
   requiredSelfPosition?: FormationPosition;
   requiredRecipientPosition?: FormationPosition;
+  recipientSelector?: FriendlyRecipientSelector;
   friendlyScope?: SimpleFriendlyScope;
+  summaryAbilityId?: string;
+  summaryUnlockLabel?: string;
+  summaryHiddenEffectTags?: EffectTag[];
   confidence: SignalConfidence;
 }
 

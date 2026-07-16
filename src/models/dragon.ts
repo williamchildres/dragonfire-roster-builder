@@ -23,6 +23,9 @@ export type EffectTag =
   | 'BURN'
   | 'BLEED'
   | 'BLEED_PAYOFF'
+  | 'PANIC_PAYOFF'
+  | 'VULNERABLE_PAYOFF'
+  | 'RESISTANCE_PAYOFF'
   | 'STUN'
   | 'SILENCE'
   | 'HEAL'
@@ -117,7 +120,10 @@ export type EffectTag =
   | 'TROOP_CAPACITY_CONDITION'
   | 'TROOP_TYPE_CONDITION'
   | 'HIGHEST_INTELLIGENCE_TARGET'
-  | 'FIRE_DAMAGE_ALLY_TARGET';
+  | 'FIRE_DAMAGE_ALLY_TARGET'
+  | 'HIGHEST_STRENGTH_TARGET'
+  | 'STEADY_EROSION'
+  | 'NULLIFY_RECOVERY';
 
 export type AbilityKind = 'command' | 'trait' | 'habit';
 
