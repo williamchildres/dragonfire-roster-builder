@@ -5,11 +5,208 @@
   "rarity": "Rare",
   "breed": "Warrior",
   "rosterSourceStatus": "official-website",
-  "dataStatus": "official-metadata-only",
-  "lastVerified": "2026-06-23",
-  "profileCompleteness": "metadata-only",
+  "dataStatus": "community-verified",
+  "lastVerified": "2026-07-16",
+  "profileCompleteness": "detailed-abilities",
   "officialProfileUrl": "https://gotdragonfire.com/dragons/shadowrend/",
-  "abilities": [],
+  "abilities": [
+    {
+      "id": "shadowrend-eclipse-fervor",
+      "kind": "command",
+      "name": "Eclipse Fervor",
+      "abilityClass": "active",
+      "unlockStarRank": null,
+      "minimumDragonLevel": null,
+      "positionRequirement": null,
+      "verification": {
+        "status": "screenshot-verified",
+        "source": "Shadowrend Eclipse Fervor screenshots",
+        "capturedAt": "2026-07-16",
+        "gameVersion": null,
+        "reviewedManually": true
+      },
+      "evidenceIds": [
+        "shadowrend-eclipse-fervor-2026-07-16"
+      ],
+      "tags": [
+        "PANIC",
+        "TACTICAL_DAMAGE",
+        "PHYSICAL_DAMAGE",
+        "ADJACENT_TARGET",
+        "ANY_LANE_TARGET",
+        "SPECIFIC_ROUNDS",
+        "STRENGTH_SCALING",
+        "ENHANCED_BY_INSTINCT",
+        "COMMAND_AUGMENTATION"
+      ],
+      "rawDescription": "Each round: 25% chance to apply Panic to 1 enemy within adjacency for 2 rounds. Panic deals Tactical Damage each round at a +20% Damage Rate. Panic stat scaling and mitigation are not stated.\n\nRounds 4, 7, 9, and 10: deal Physical Damage to 2 enemies within adjacency at a +80% Damage Rate, scaling with Strength and mitigated by target Instinct.\n\nAt 10 Stars, Event Horizon augments Eclipse Fervor on Round 9 with an additional Physical and Tactical attack against the same group of 3 enemies in any lane. The rate for each type comes from Event Horizon. Direct Physical Damage scales with Strength; direct Tactical Damage scales with Instinct. The base Round 9 Physical attack remains and target-group overlap is unresolved."
+    },
+    {
+      "id": "shadowrend-warriors-zeal",
+      "kind": "trait",
+      "name": "Warrior's Zeal",
+      "abilityClass": "passive",
+      "unlockStarRank": 1,
+      "minimumDragonLevel": 16,
+      "positionRequirement": "vanguard",
+      "verification": {
+        "status": "screenshot-verified",
+        "source": "Shadowrend Warrior's Zeal screenshot",
+        "capturedAt": "2026-07-16",
+        "gameVersion": null,
+        "reviewedManually": true
+      },
+      "evidenceIds": [
+        "shadowrend-warriors-zeal-2026-07-16"
+      ],
+      "tags": [
+        "PHYSICAL_DAMAGE_UP",
+        "EXCLUDES_BASIC_ATTACKS",
+        "BUFF_SELF",
+        "INSTINCT_UP",
+        "BUFF_INITIATIVE",
+        "BUFF_ALLIES",
+        "VANGUARD_REQUIRED",
+        "LEFT_FLANK_TARGET"
+      ],
+      "rawDescription": "At Dragon Level 16+ while Shadowrend is Vanguard: increase Shadowrend's Physical Damage from Active Commands and Habits by +16%. Increase Instinct and Initiative of the same Left Flank ally by +20 each. The self Physical boost excludes Basic Attacks."
+    },
+    {
+      "id": "shadowrend-midnight-aura",
+      "kind": "habit",
+      "name": "Midnight Aura",
+      "abilityClass": "passive",
+      "unlockStarRank": 2,
+      "minimumDragonLevel": null,
+      "positionRequirement": null,
+      "verification": {
+        "status": "screenshot-verified",
+        "source": "Shadowrend Midnight Aura screenshot",
+        "capturedAt": "2026-07-16",
+        "gameVersion": null,
+        "reviewedManually": true
+      },
+      "evidenceIds": [
+        "shadowrend-midnight-aura-2026-07-16"
+      ],
+      "tags": [
+        "STRENGTH_UP",
+        "INSTINCT_UP",
+        "BUFF_ALLIES",
+        "ANY_LANE_TARGET",
+        "SPECIFIC_ROUNDS",
+        "INITIATIVE_SCALING"
+      ],
+      "rawDescription": "At the start of rounds 7, 8, 9, and 10: increase Strength and Instinct of the same 3 Allies in any lane, including Shadowrend, until end of the current round. Both are enhanced by Shadowrend's Initiative.\n\nProgression (Strength and Instinct): Habit Level 1: +40%; Level 2: +48%; Level 3: +56%; Level 4: +68%; Level 5: +80%.\n\nPower: 250 / 550 / 900 / 1300 / 1800"
+    },
+    {
+      "id": "shadowrend-nimble-resilience",
+      "kind": "habit",
+      "name": "Nimble Resilience",
+      "abilityClass": "passive",
+      "unlockStarRank": 4,
+      "minimumDragonLevel": null,
+      "positionRequirement": null,
+      "verification": {
+        "status": "screenshot-verified",
+        "source": "Shadowrend Nimble Resilience screenshot",
+        "capturedAt": "2026-07-16",
+        "gameVersion": null,
+        "reviewedManually": true
+      },
+      "evidenceIds": [
+        "shadowrend-nimble-resilience-2026-07-16"
+      ],
+      "tags": [
+        "DAMAGE_RECEIVED_DOWN",
+        "BUFF_INITIATIVE",
+        "BUFF_SELF"
+      ],
+      "rawDescription": "Start of combat until end: reduce Shadowrend Damage Received and increase Shadowrend Initiative. Self-only.\n\nProgression: Habit Level 1: Damage Received -4%, Initiative +5%; Level 2: -4.8%, +6%; Level 3: -5.6%, +7%; Level 4: -6.8%, +8.5%; Level 5: -8%, +10%.\n\nPower: 250 / 550 / 900 / 1300 / 1800"
+    },
+    {
+      "id": "shadowrend-fueled-by-darkness",
+      "kind": "habit",
+      "name": "Fueled by Darkness",
+      "abilityClass": "passive",
+      "unlockStarRank": 6,
+      "minimumDragonLevel": null,
+      "positionRequirement": null,
+      "verification": {
+        "status": "screenshot-verified",
+        "source": "Shadowrend Fueled by Darkness screenshot",
+        "capturedAt": "2026-07-16",
+        "gameVersion": null,
+        "reviewedManually": true
+      },
+      "evidenceIds": [
+        "shadowrend-fueled-by-darkness-2026-07-16"
+      ],
+      "tags": [
+        "ADVANTAGE",
+        "BUFF_ALLIES",
+        "ANY_LANE_TARGET",
+        "SPECIFIC_ROUNDS"
+      ],
+      "rawDescription": "Each round: one activation roll grants Advantage (+10%) to exactly 2 Allies in any lane for 2 rounds. All three formation members, including Shadowrend, are eligible; recipient selection is unresolved. During Midnight Aura on rounds 7–10, the activation chance is doubled from the current upgraded base chance. The exact meaning of Advantage +10% is unresolved.\n\nProgression (base / during Midnight Aura): Habit Level 1: 10% / 20%; Level 2: 12% / 24%; Level 3: 14% / 28%; Level 4: 17% / 34%; Level 5: 20% / 40%.\n\nPower: 250 / 550 / 900 / 1300 / 1800"
+    },
+    {
+      "id": "shadowrend-midnight-mastery",
+      "kind": "habit",
+      "name": "Midnight Mastery",
+      "abilityClass": "passive",
+      "unlockStarRank": 8,
+      "minimumDragonLevel": null,
+      "positionRequirement": null,
+      "verification": {
+        "status": "screenshot-verified",
+        "source": "Shadowrend Midnight Mastery screenshot",
+        "capturedAt": "2026-07-16",
+        "gameVersion": null,
+        "reviewedManually": true
+      },
+      "evidenceIds": [
+        "shadowrend-midnight-mastery-2026-07-16"
+      ],
+      "tags": [
+        "PHYSICAL_DAMAGE_UP",
+        "TACTICAL_DAMAGE_UP",
+        "BUFF_ALLIES",
+        "ANY_LANE_TARGET",
+        "SPECIFIC_ROUNDS"
+      ],
+      "rawDescription": "At the start of rounds 7, 8, 9, and 10: increase Physical and Tactical Damage Dealt by the same 3 Allies, including Shadowrend, until end of the current round.\n\nProgression (Physical and Tactical Damage Dealt): Habit Level 1: +7%; Level 2: +8.4%; Level 3: +9.8%; Level 4: +11.9%; Level 5: +14%.\n\nPower: 250 / 550 / 900 / 1300 / 1800"
+    },
+    {
+      "id": "shadowrend-event-horizon",
+      "kind": "habit",
+      "name": "Event Horizon",
+      "abilityClass": "passive",
+      "unlockStarRank": 10,
+      "minimumDragonLevel": null,
+      "positionRequirement": null,
+      "verification": {
+        "status": "screenshot-verified",
+        "source": "Shadowrend Event Horizon screenshot",
+        "capturedAt": "2026-07-16",
+        "gameVersion": null,
+        "reviewedManually": true
+      },
+      "evidenceIds": [
+        "shadowrend-event-horizon-2026-07-16"
+      ],
+      "tags": [
+        "PHYSICAL_DAMAGE",
+        "TACTICAL_DAMAGE",
+        "STRENGTH_SCALING",
+        "ENHANCED_BY_INSTINCT",
+        "ANY_LANE_TARGET",
+        "SPECIFIC_ROUNDS",
+        "COMMAND_AUGMENTATION"
+      ],
+      "rawDescription": "Augments Eclipse Fervor on Round 9 with one additional attack that deals Physical and Tactical Damage to the same group of 3 enemies in any lane. The base Round 9 Physical attack remains.\n\nProgression (rate per type): Habit Level 1: +100%; Level 2: +130%; Level 3: +160%; Level 4: +200%; Level 5: +250%.\n\nPower: 250 / 580 / 1000 / 1600 / 2300"
+    }
+  ],
   "affinities": {
     "Cavalry": "unknown",
     "Shieldbearers": "unknown",
@@ -38,9 +235,45 @@
       "capturedAt": "2026-06-23",
       "gameVersion": null,
       "reviewedManually": true
+    },
+    "command": {
+      "status": "screenshot-verified",
+      "source": "Shadowrend Eclipse Fervor screenshots",
+      "capturedAt": "2026-07-16",
+      "gameVersion": null,
+      "reviewedManually": true
+    },
+    "trait": {
+      "status": "screenshot-verified",
+      "source": "Shadowrend Warrior's Zeal screenshot",
+      "capturedAt": "2026-07-16",
+      "gameVersion": null,
+      "reviewedManually": true
+    },
+    "habits": {
+      "status": "screenshot-verified",
+      "source": "Shadowrend Habit screenshots",
+      "capturedAt": "2026-07-16",
+      "gameVersion": null,
+      "reviewedManually": true
+    },
+    "affinities": {
+      "status": "unknown",
+      "source": "Affinity icons were not text-verified",
+      "capturedAt": "2026-07-16",
+      "gameVersion": null,
+      "reviewedManually": true
     }
   },
-  "evidenceIds": [],
-  "simpleProfileId": null,
-  "simpleProfileStatus": "metadata-only-unmapped"
+  "evidenceIds": [
+    "shadowrend-eclipse-fervor-2026-07-16",
+    "shadowrend-event-horizon-2026-07-16",
+    "shadowrend-fueled-by-darkness-2026-07-16",
+    "shadowrend-midnight-aura-2026-07-16",
+    "shadowrend-midnight-mastery-2026-07-16",
+    "shadowrend-nimble-resilience-2026-07-16",
+    "shadowrend-warriors-zeal-2026-07-16"
+  ],
+  "simpleProfileId": "shadowrend",
+  "simpleProfileStatus": "curated"
 }

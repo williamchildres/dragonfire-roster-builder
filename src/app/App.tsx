@@ -548,7 +548,7 @@ function HomeSection({
         <div className="latest-update-panel panel readable">
           <p className="eyebrow">Current data</p>
           <h3>Latest release — {versionLabel}</h3>
-          <p>Solstryker, Shimmer, and Jagadrix added with verified ability data and curated profiles.</p>
+          <p>Bevlorin, Shadowrend, and Thunderstrike added with verified ability data and curated profiles.</p>
         </div>
         <div className="notice-panel trust-note readable">
           <p className="eyebrow">Local first</p>

@@ -70,9 +70,6 @@ const review = (
 });
 
 export const metadataOnlyDragonIds = [
-  'bevlorin',
-  'shadowrend',
-  'thunderstrike',
   'vesper',
   'nyrena',
   'dawnseeker',
@@ -724,6 +721,30 @@ export const simpleSynergyAbilityReviews = [
   review('jagadrix', 'jagadrix-whispering-sabotage', 'habit', represented(['jagadrix-whispering-sabotage-weakened'], 'The Habit provides one Weakened path at Star Rank 6 without a Control alias.')),
   review('jagadrix', 'jagadrix-quick-witted', 'habit', selfOnly('Intelligence and Initiative increases apply only to Jagadrix.')),
   review('jagadrix', 'jagadrix-echoes-of-deceit', 'habit', represented(['jagadrix-echoes-of-deceit-fire', 'jagadrix-echoes-of-deceit-panic-payoff'], 'The augmentation adds one extra Fire path and one Panic payoff at Star Rank 10 without adding Tactical Damage.')),
+
+  review('bevlorin', 'bevlorin-natures-reckoning', 'command', represented(['bevlorin-natures-reckoning-physical', 'bevlorin-natures-reckoning-fire', 'bevlorin-natures-reckoning-strength-payoff', 'bevlorin-natures-reckoning-intelligence-payoff'], "The Command provides Strength-based Physical and Intelligence-based Fire output; enemy Fire suppression remains battlefield-facing and Renewal is reviewed as one augmentation path.")),
+  review('bevlorin', 'bevlorin-champions-vigor', 'trait', represented(['bevlorin-champions-vigor-right-damage', 'bevlorin-champions-vigor-vanguard'], 'The Vanguard trait provides one generic Damage Dealt relationship to a damaging Right Flank recipient; self Recovery and Initiative remain self-only.')),
+  review('bevlorin', 'bevlorin-fire-ward', 'habit', generalOnly('Fire Ward remains named defensive support and never becomes offensive Fire support.')),
+  review('bevlorin', 'bevlorin-dragons-fury', 'habit', selfOnly('The Physical and Fire increases apply only to Bevlorin.')),
+  review('bevlorin', 'bevlorin-renewal', 'habit', represented(['bevlorin-renewal-recovery'], "The Command augmentation creates one Strength-enhanced full-formation Recovery path while self relationships remain suppressed.")),
+  review('bevlorin', 'bevlorin-vital-essence', 'habit', selfOnly('The Strength and Recovery Dealt increases apply only to Bevlorin.')),
+  review('bevlorin', 'bevlorin-bountiful-gifts', 'habit', represented(['bevlorin-bountiful-gifts-strength', 'bevlorin-bountiful-gifts-intelligence', 'bevlorin-bountiful-gifts-instinct', 'bevlorin-bountiful-gifts-initiative'], 'Four independent highest-stat selectors allow self, require unique known maxima, and create no self relationship.')),
+
+  review('shadowrend', 'shadowrend-eclipse-fervor', 'command', represented(['shadowrend-eclipse-fervor-physical', 'shadowrend-eclipse-fervor-panic', 'shadowrend-eclipse-fervor-tactical', 'shadowrend-strength-payoff'], 'The base Command provides Strength-based Physical Damage and one named Panic path whose recurring damage establishes Tactical output without a Control alias.')),
+  review('shadowrend', 'shadowrend-warriors-zeal', 'trait', represented(['shadowrend-warriors-zeal-left-stats', 'shadowrend-warriors-zeal-vanguard'], "The Vanguard trait supports Left Flank Instinct and Initiative; Shadowrend's non-Basic Physical increase is self-only.")),
+  review('shadowrend', 'shadowrend-midnight-aura', 'habit', represented(['shadowrend-midnight-aura-strength', 'shadowrend-midnight-aura-instinct', 'shadowrend-initiative-payoff'], 'The full-formation Strength and Instinct support is explicitly limited to rounds 7–10 and exposes its Initiative scaling without self-synergy.')),
+  review('shadowrend', 'shadowrend-nimble-resilience', 'habit', selfOnly('Damage Received reduction and Initiative apply only to Shadowrend.')),
+  review('shadowrend', 'shadowrend-fueled-by-darkness', 'habit', represented(['shadowrend-fueled-by-darkness-advantage'], 'Advantage remains visible through an unresolved two-of-three selector that scores no guessed recipient and creates no utilization penalty.')),
+  review('shadowrend', 'shadowrend-midnight-mastery', 'habit', represented(['shadowrend-midnight-mastery-physical', 'shadowrend-midnight-mastery-tactical'], 'Physical and Tactical full-formation support is represented once per type and explicitly limited to rounds 7–10.')),
+  review('shadowrend', 'shadowrend-event-horizon', 'habit', represented(['shadowrend-event-horizon-physical', 'shadowrend-event-horizon-tactical', 'shadowrend-instinct-payoff'], 'The augmentation adds one direct Physical and one direct Instinct-based Tactical path at 10 Stars while preserving the base Round 9 attack.')),
+
+  review('thunderstrike', 'thunderstrike-tail-whip', 'command', represented(['thunderstrike-tail-whip-physical', 'thunderstrike-strength-payoff'], 'The base Command provides odd-round Strength-based Physical Damage; same-lane enemy targeting creates no ally placement rule.')),
+  review('thunderstrike', 'thunderstrike-warriors-zeal', 'trait', represented(['thunderstrike-warriors-zeal-left-stats', 'thunderstrike-warriors-zeal-vanguard'], "The Vanguard trait supports Left Flank Instinct and Initiative; Thunderstrike's non-Basic Physical increase is self-only.")),
+  review('thunderstrike', 'thunderstrike-battle-rush', 'habit', noCross('Self Initiative and direct enemy Instinct reduction remain detailed and non-scoring.')),
+  review('thunderstrike', 'thunderstrike-dragons-might', 'habit', selfOnly('The non-Basic Physical increase applies only to Thunderstrike.')),
+  review('thunderstrike', 'thunderstrike-barbed-lash', 'habit', represented(['thunderstrike-barbed-lash-physical', 'thunderstrike-barbed-lash-bleed'], 'The Command augmentation adds one even-round Physical output and one specifically named Bleed provider at 6 Stars.')),
+  review('thunderstrike', 'thunderstrike-armor-break', 'habit', represented(['thunderstrike-armor-break-physical'], 'Direct Physical Damage Received amplification provides broad Physical support without becoming Vulnerable or creating an ally placement rule.')),
+  review('thunderstrike', 'thunderstrike-staggering-assault', 'habit', represented(['thunderstrike-staggering-assault-stagger', 'thunderstrike-staggering-assault-advantage-payoff'], 'The Habit provides one specifically named Stagger output that satisfies Control through aliasing and one self-recipient Advantage duration payoff.')),
 
   review(
     'tessarion',

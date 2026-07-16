@@ -1,7 +1,7 @@
 {
   "count": 31,
-  "detailedDragonCount": 25,
-  "metadataOnlyDragonCount": 6,
+  "detailedDragonCount": 28,
+  "metadataOnlyDragonCount": 3,
   "dragons": [
     {
       "id": "syrax",
@@ -189,8 +189,8 @@
       "name": "Bevlorin",
       "rarity": "Rare",
       "breed": "Champion",
-      "profileCompleteness": "metadata-only",
-      "simpleProfileStatus": "metadata-only-unmapped"
+      "profileCompleteness": "detailed-abilities",
+      "simpleProfileStatus": "curated"
     },
     {
       "id": "shadowrend",
@@ -198,8 +198,8 @@
       "name": "Shadowrend",
       "rarity": "Rare",
       "breed": "Warrior",
-      "profileCompleteness": "metadata-only",
-      "simpleProfileStatus": "metadata-only-unmapped"
+      "profileCompleteness": "detailed-abilities",
+      "simpleProfileStatus": "curated"
     },
     {
       "id": "thunderstrike",
@@ -207,8 +207,8 @@
       "name": "Thunderstrike",
       "rarity": "Rare",
       "breed": "Warrior",
-      "profileCompleteness": "metadata-only",
-      "simpleProfileStatus": "metadata-only-unmapped"
+      "profileCompleteness": "detailed-abilities",
+      "simpleProfileStatus": "curated"
     },
     {
       "id": "vesper",

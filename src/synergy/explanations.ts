@@ -100,6 +100,10 @@ export function explainAmplifierOutput(
   output: SynergySignal,
   tag: SynergyTag = support.tag,
 ): string {
+  if (tag === 'damage:any') {
+    return `${supporter.dragonName} increases Damage Dealt, and ${producer.dragonName} has a damaging output.`;
+  }
+
   if (tag === 'damage:fire') {
     return `${supporter.dragonName} improves allied Fire Damage, and ${producer.dragonName} deals Fire Damage.`;
   }

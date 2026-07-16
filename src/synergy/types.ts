@@ -16,6 +16,11 @@ export type FriendlyRecipientSelector =
       kind: 'position-priority';
       preferredPosition: FormationPosition;
       allowSelf: boolean;
+    }
+  | {
+      kind: 'unresolved-group';
+      recipientCount: number;
+      includeSelf: boolean;
     };
 
 export interface ProgressionRequirement {

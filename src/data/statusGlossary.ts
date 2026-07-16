@@ -9,8 +9,8 @@ export const statusGlossary: StatusGlossaryEntry[] = [
   {
     id: 'advantage',
     term: 'Advantage',
-    definition: 'Increases Damage Dealt. Magnitude may vary by ability.',
-    verification: 'partially-verified',
+    definition: 'Named beneficial status. Its exact +10% meaning is unresolved in the currently verified evidence; source abilities define duration and targeting.',
+    verification: 'unresolved',
   },
   {
     id: 'resistance',

@@ -216,26 +216,26 @@ describe('Formation Builder simple synergy cutover', () => {
 
   it('treats Panic missing-enabler checks as incomplete when a selected dragon is metadata-only', async () => {
     const user = userEvent.setup();
-    seedRoster({ shadowsong: {}, bevlorin: {} });
+    seedRoster({ shadowsong: {}, vesper: {} });
 
     await openFormationBuilder(user);
-    await selectFormation(user, { 'left-flank': 'shadowsong', vanguard: 'bevlorin' });
+    await selectFormation(user, { 'left-flank': 'shadowsong', vanguard: 'vesper' });
     await openDetailedSignalTrace(user);
 
-    expect(analysisText()).toContain('Synergy data not yet mapped: Bevlorin.');
+    expect(analysisText()).toContain('Synergy data not yet mapped: Vesper.');
     expect(sectionText('Missing enablers')).toContain(incompleteMissingEnablerNotice);
     expect(analysisText()).not.toContain('this formation has no Panic provider');
   });
 
   it('treats First-Strike missing-enabler checks as incomplete when a selected dragon is metadata-only', async () => {
     const user = userEvent.setup();
-    seedRoster({ caraxes: {}, bevlorin: {} });
+    seedRoster({ caraxes: {}, vesper: {} });
 
     await openFormationBuilder(user);
-    await selectFormation(user, { 'left-flank': 'caraxes', vanguard: 'bevlorin' });
+    await selectFormation(user, { 'left-flank': 'caraxes', vanguard: 'vesper' });
     await openDetailedSignalTrace(user);
 
-    expect(analysisText()).toContain('Synergy data not yet mapped: Bevlorin.');
+    expect(analysisText()).toContain('Synergy data not yet mapped: Vesper.');
     expect(sectionText('Missing enablers')).toContain(incompleteMissingEnablerNotice);
     expect(analysisText()).not.toContain('this formation has no First-Strike provider');
   });

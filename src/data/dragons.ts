@@ -5282,12 +5282,64 @@ export const dragons = [
     "firstObservedInGame": null,
     "gameVersion": null,
     "isNew": false,
-    "dataStatus": "official-metadata-only",
-    "lastVerified": "2026-06-23",
-    "notes": null,
-    "command": null,
-    "trait": null,
-    "habits": [],
+    "dataStatus": "community-verified",
+    "lastVerified": "2026-07-16",
+    "notes": "Affinity icons were not text-verified and remain unknown. Nature's Reckoning's incorrect in-game Fire Damage Received heading is retained as an evidence discrepancy; the verified body and summary establish Fire Damage Dealt suppression.",
+    "command": {
+      "id": "bevlorin-natures-reckoning",
+      "dragonId": "bevlorin",
+      "kind": "command",
+      "name": "Nature's Reckoning",
+      "abilityClass": "active",
+      "unlockStarRank": null,
+      "minimumDragonLevel": null,
+      "positionRequirement": null,
+      "rawDescription": "Each round: one 20% group activation roll reduces Fire Damage Dealt by -10% for 2 rounds for up to 3 enemies in any lane that deal Fire Damage. The detailed in-game heading incorrectly says Fire Damage Received Modifier; the body and Command summary say Fire Damage Dealt. This enemy suppression is not Weakened.\n\nRounds 1, 5, and 9: deal Physical Damage to 3 enemies in any lane at a +30% Damage Rate, scaling with Strength and mitigated by target Instinct.\n\nRounds 3 and 7: deal Fire Damage to 1 enemy in the same lane at a +90% Damage Rate, scaling with Intelligence and mitigated by target Initiative.\n\nAt 6+ Stars, Renewal augments Nature's Reckoning on odd-numbered rounds 1, 3, 5, 7, and 9: apply Strength-enhanced Recovery to 3 Allies in any lane, including Bevlorin. The Recovery Rate comes from Renewal's current Habit Level. The damage and Recovery effects occur together on their scheduled odd rounds.",
+      "verification": { "status": "screenshot-verified", "source": "Bevlorin Nature's Reckoning screenshots", "capturedAt": "2026-07-16", "gameVersion": null, "reviewedManually": true },
+      "evidenceIds": ["bevlorin-natures-reckoning-2026-07-16"],
+      "tags": ["FIRE_DAMAGE_DEALT_DOWN", "ENEMY_DEBUFF", "PHYSICAL_DAMAGE", "FIRE_DAMAGE", "STRENGTH_SCALING", "INTELLIGENCE_SCALING", "SPECIFIC_ROUNDS", "ANY_LANE_TARGET", "SAME_LANE_TARGET", "RECOVERY", "BUFF_ALLIES", "COMMAND_AUGMENTATION"]
+    },
+    "trait": {
+      "id": "bevlorin-champions-vigor",
+      "dragonId": "bevlorin",
+      "kind": "trait",
+      "name": "Champion's Vigor",
+      "abilityClass": "passive",
+      "unlockStarRank": 1,
+      "minimumDragonLevel": 16,
+      "positionRequirement": "vanguard",
+      "rawDescription": "At Dragon Level 16+ while Bevlorin is Vanguard: increase Bevlorin Recovery Dealt by +15% and Initiative by +25. Increase Damage Dealt by the Right Flank ally by +8%. The Recovery and Initiative increases are self-only; the Right Flank increase is one generic damaging-output support effect.",
+      "verification": { "status": "screenshot-verified", "source": "Bevlorin Champion's Vigor screenshot", "capturedAt": "2026-07-16", "gameVersion": null, "reviewedManually": true },
+      "evidenceIds": ["bevlorin-champions-vigor-2026-07-16"],
+      "tags": ["RECOVERY_DEALT_UP", "BUFF_INITIATIVE", "BUFF_SELF", "DAMAGE_DEALT_UP", "VANGUARD_REQUIRED", "RIGHT_FLANK_TARGET"]
+    },
+    "habits": [
+      {
+        "id": "bevlorin-fire-ward", "dragonId": "bevlorin", "kind": "habit", "name": "Fire Ward", "abilityClass": "passive", "unlockStarRank": 2, "minimumDragonLevel": null, "positionRequirement": null,
+        "rawDescription": "Start of combat: grant Bevlorin 1 stack of Fire Ward and grant 1 other adjacent Ally 1 stack of Fire Ward. At the start of each round, if that selected Ally retreated in the previous round, grant Bevlorin 1 additional stack. Each stack reduces Fire Damage Received and lasts until end of combat. Maximum stacks and cleanse/removal/refresh behavior are unresolved.\n\nProgression (Fire Damage Received per stack): Habit Level 1: -5%; Level 2: -6%; Level 3: -7%; Level 4: -8.5%; Level 5: -10%.\n\nPower: 250 / 550 / 900 / 1300 / 1800",
+        "verification": { "status": "screenshot-verified", "source": "Bevlorin Fire Ward screenshot", "capturedAt": "2026-07-16", "gameVersion": null, "reviewedManually": true }, "evidenceIds": ["bevlorin-fire-ward-2026-07-16"], "tags": ["FIRE_WARD", "FIRE_DAMAGE_RECEIVED_DOWN", "BUFF_SELF", "BUFF_ALLIES", "ADJACENT_TARGET"]
+      },
+      {
+        "id": "bevlorin-dragons-fury", "dragonId": "bevlorin", "kind": "habit", "name": "Dragon's Fury", "abilityClass": "passive", "unlockStarRank": 4, "minimumDragonLevel": null, "positionRequirement": null,
+        "rawDescription": "Start of combat until end: increase Bevlorin's Physical Damage from Active Commands and Habits and increase Bevlorin's Fire Damage Dealt. The Physical branch excludes Basic Attacks; the Fire branch has no displayed Basic-Attack exclusion. Self-only.\n\nProgression (Physical and Fire Damage Dealt): Habit Level 1: +4%; Level 2: +4.8%; Level 3: +5.6%; Level 4: +6.8%; Level 5: +8%.\n\nPower: 250 / 550 / 900 / 1300 / 1800",
+        "verification": { "status": "screenshot-verified", "source": "Bevlorin Dragon's Fury screenshot", "capturedAt": "2026-07-16", "gameVersion": null, "reviewedManually": true }, "evidenceIds": ["bevlorin-dragons-fury-2026-07-16"], "tags": ["PHYSICAL_DAMAGE_UP", "FIRE_DAMAGE_UP", "EXCLUDES_BASIC_ATTACKS", "BUFF_SELF"]
+      },
+      {
+        "id": "bevlorin-renewal", "dragonId": "bevlorin", "kind": "habit", "name": "Renewal", "abilityClass": "passive", "unlockStarRank": 6, "minimumDragonLevel": null, "positionRequirement": null,
+        "rawDescription": "Augments Nature's Reckoning. On odd-numbered rounds, apply Recovery to 3 Allies in any lane, including Bevlorin. Recovery is enhanced by Bevlorin's Strength. This is one effective Command output path.\n\nProgression (Recovery Rate): Habit Level 1: 17.5%; Level 2: 21%; Level 3: 24.5%; Level 4: 29.75%; Level 5: 35%.\n\nPower: 250 / 550 / 900 / 1300 / 1800",
+        "verification": { "status": "screenshot-verified", "source": "Bevlorin Renewal screenshot", "capturedAt": "2026-07-16", "gameVersion": null, "reviewedManually": true }, "evidenceIds": ["bevlorin-renewal-2026-07-16"], "tags": ["RECOVERY", "ENHANCED_BY_STRENGTH", "STRENGTH_SCALING", "BUFF_ALLIES", "ANY_LANE_TARGET", "SPECIFIC_ROUNDS", "COMMAND_AUGMENTATION"]
+      },
+      {
+        "id": "bevlorin-vital-essence", "dragonId": "bevlorin", "kind": "habit", "name": "Vital Essence", "abilityClass": "passive", "unlockStarRank": 8, "minimumDragonLevel": null, "positionRequirement": null,
+        "rawDescription": "Start of combat until end: increase Bevlorin Strength and Recovery Dealt. Self-only.\n\nProgression: Habit Level 1: Strength +10%, Recovery Dealt +15%; Level 2: +12%, +18%; Level 3: +14%, +21%; Level 4: +17%, +25.5%; Level 5: +20%, +30%.\n\nPower: 250 / 550 / 900 / 1300 / 1800",
+        "verification": { "status": "screenshot-verified", "source": "Bevlorin Vital Essence screenshot", "capturedAt": "2026-07-16", "gameVersion": null, "reviewedManually": true }, "evidenceIds": ["bevlorin-vital-essence-2026-07-16"], "tags": ["STRENGTH_UP", "RECOVERY_DEALT_UP", "BUFF_SELF"]
+      },
+      {
+        "id": "bevlorin-bountiful-gifts", "dragonId": "bevlorin", "kind": "habit", "name": "Bountiful Gifts", "abilityClass": "passive", "unlockStarRank": 10, "minimumDragonLevel": null, "positionRequirement": null,
+        "rawDescription": "Each round: separately check a 20% activation chance to increase Strength of the Ally with highest Strength, Intelligence of the Ally with highest Intelligence, Instinct of the Ally with highest Instinct, and Initiative of the Ally with highest Initiative. Each stat-target pair has its own activation check, lasts 2 rounds, and is enhanced by Bevlorin's Intelligence. Ally includes Bevlorin. Each selector requires a unique known maximum; ties and missing combat stats remain unresolved.\n\nProgression (each stat increase): Habit Level 1: +16%; Level 2: +20.8%; Level 3: +25.6%; Level 4: +32%; Level 5: +40%.\n\nPower: 250 / 580 / 1000 / 1600 / 2300",
+        "verification": { "status": "screenshot-verified", "source": "Bevlorin Bountiful Gifts screenshot", "capturedAt": "2026-07-16", "gameVersion": null, "reviewedManually": true }, "evidenceIds": ["bevlorin-bountiful-gifts-2026-07-16"], "tags": ["STRENGTH_UP", "INTELLIGENCE_UP", "INSTINCT_UP", "BUFF_INITIATIVE", "BUFF_ALLIES", "INTELLIGENCE_SCALING"]
+      }
+    ],
     "affinities": {
       "Cavalry": "unknown",
       "Shieldbearers": "unknown",
@@ -5301,7 +5353,7 @@ export const dragons = [
       "instinct": null,
       "initiative": null
     },
-    "tags": [],
+    "tags": ["FIRE_DAMAGE_DEALT_DOWN", "ENEMY_DEBUFF", "PHYSICAL_DAMAGE", "FIRE_DAMAGE", "STRENGTH_SCALING", "INTELLIGENCE_SCALING", "SPECIFIC_ROUNDS", "ANY_LANE_TARGET", "SAME_LANE_TARGET", "RECOVERY", "BUFF_ALLIES", "COMMAND_AUGMENTATION", "RECOVERY_DEALT_UP", "BUFF_INITIATIVE", "BUFF_SELF", "DAMAGE_DEALT_UP", "VANGUARD_REQUIRED", "RIGHT_FLANK_TARGET", "FIRE_WARD", "FIRE_DAMAGE_RECEIVED_DOWN", "ADJACENT_TARGET", "PHYSICAL_DAMAGE_UP", "FIRE_DAMAGE_UP", "EXCLUDES_BASIC_ATTACKS", "ENHANCED_BY_STRENGTH", "STRENGTH_UP", "INTELLIGENCE_UP", "INSTINCT_UP"],
     "fieldVerification": {
       "identity": {
         "status": "officially-confirmed",
@@ -5323,7 +5375,11 @@ export const dragons = [
         "capturedAt": "2026-06-23",
         "gameVersion": null,
         "reviewedManually": true
-      }
+      },
+      "command": { "status": "screenshot-verified", "source": "Bevlorin Nature's Reckoning screenshots", "capturedAt": "2026-07-16", "gameVersion": null, "reviewedManually": true },
+      "trait": { "status": "screenshot-verified", "source": "Bevlorin Champion's Vigor screenshot", "capturedAt": "2026-07-16", "gameVersion": null, "reviewedManually": true },
+      "habits": { "status": "screenshot-verified", "source": "Bevlorin Habit screenshots", "capturedAt": "2026-07-16", "gameVersion": null, "reviewedManually": true },
+      "affinities": { "status": "unknown", "source": "Affinity icons were not text-verified", "capturedAt": "2026-07-16", "gameVersion": null, "reviewedManually": true }
     }
   },
   {
@@ -5337,12 +5393,48 @@ export const dragons = [
     "firstObservedInGame": null,
     "gameVersion": null,
     "isNew": false,
-    "dataStatus": "official-metadata-only",
-    "lastVerified": "2026-06-23",
-    "notes": null,
-    "command": null,
-    "trait": null,
-    "habits": [],
+    "dataStatus": "community-verified",
+    "lastVerified": "2026-07-16",
+    "notes": "Affinity icons were not text-verified and remain unknown. Fueled by Darkness recipient selection and the exact meaning of Advantage +10% remain unresolved.",
+    "command": {
+      "id": "shadowrend-eclipse-fervor", "dragonId": "shadowrend", "kind": "command", "name": "Eclipse Fervor", "abilityClass": "active", "unlockStarRank": null, "minimumDragonLevel": null, "positionRequirement": null,
+      "rawDescription": "Each round: 25% chance to apply Panic to 1 enemy within adjacency for 2 rounds. Panic deals Tactical Damage each round at a +20% Damage Rate. Panic stat scaling and mitigation are not stated.\n\nRounds 4, 7, 9, and 10: deal Physical Damage to 2 enemies within adjacency at a +80% Damage Rate, scaling with Strength and mitigated by target Instinct.\n\nAt 10 Stars, Event Horizon augments Eclipse Fervor on Round 9 with an additional Physical and Tactical attack against the same group of 3 enemies in any lane. The rate for each type comes from Event Horizon. Direct Physical Damage scales with Strength; direct Tactical Damage scales with Instinct. The base Round 9 Physical attack remains and target-group overlap is unresolved.",
+      "verification": { "status": "screenshot-verified", "source": "Shadowrend Eclipse Fervor screenshots", "capturedAt": "2026-07-16", "gameVersion": null, "reviewedManually": true }, "evidenceIds": ["shadowrend-eclipse-fervor-2026-07-16"],
+      "tags": ["PANIC", "TACTICAL_DAMAGE", "PHYSICAL_DAMAGE", "ADJACENT_TARGET", "ANY_LANE_TARGET", "SPECIFIC_ROUNDS", "STRENGTH_SCALING", "ENHANCED_BY_INSTINCT", "COMMAND_AUGMENTATION"]
+    },
+    "trait": {
+      "id": "shadowrend-warriors-zeal", "dragonId": "shadowrend", "kind": "trait", "name": "Warrior's Zeal", "abilityClass": "passive", "unlockStarRank": 1, "minimumDragonLevel": 16, "positionRequirement": "vanguard",
+      "rawDescription": "At Dragon Level 16+ while Shadowrend is Vanguard: increase Shadowrend's Physical Damage from Active Commands and Habits by +16%. Increase Instinct and Initiative of the same Left Flank ally by +20 each. The self Physical boost excludes Basic Attacks.",
+      "verification": { "status": "screenshot-verified", "source": "Shadowrend Warrior's Zeal screenshot", "capturedAt": "2026-07-16", "gameVersion": null, "reviewedManually": true }, "evidenceIds": ["shadowrend-warriors-zeal-2026-07-16"],
+      "tags": ["PHYSICAL_DAMAGE_UP", "EXCLUDES_BASIC_ATTACKS", "BUFF_SELF", "INSTINCT_UP", "BUFF_INITIATIVE", "BUFF_ALLIES", "VANGUARD_REQUIRED", "LEFT_FLANK_TARGET"]
+    },
+    "habits": [
+      {
+        "id": "shadowrend-midnight-aura", "dragonId": "shadowrend", "kind": "habit", "name": "Midnight Aura", "abilityClass": "passive", "unlockStarRank": 2, "minimumDragonLevel": null, "positionRequirement": null,
+        "rawDescription": "At the start of rounds 7, 8, 9, and 10: increase Strength and Instinct of the same 3 Allies in any lane, including Shadowrend, until end of the current round. Both are enhanced by Shadowrend's Initiative.\n\nProgression (Strength and Instinct): Habit Level 1: +40%; Level 2: +48%; Level 3: +56%; Level 4: +68%; Level 5: +80%.\n\nPower: 250 / 550 / 900 / 1300 / 1800",
+        "verification": { "status": "screenshot-verified", "source": "Shadowrend Midnight Aura screenshot", "capturedAt": "2026-07-16", "gameVersion": null, "reviewedManually": true }, "evidenceIds": ["shadowrend-midnight-aura-2026-07-16"], "tags": ["STRENGTH_UP", "INSTINCT_UP", "BUFF_ALLIES", "ANY_LANE_TARGET", "SPECIFIC_ROUNDS", "INITIATIVE_SCALING"]
+      },
+      {
+        "id": "shadowrend-nimble-resilience", "dragonId": "shadowrend", "kind": "habit", "name": "Nimble Resilience", "abilityClass": "passive", "unlockStarRank": 4, "minimumDragonLevel": null, "positionRequirement": null,
+        "rawDescription": "Start of combat until end: reduce Shadowrend Damage Received and increase Shadowrend Initiative. Self-only.\n\nProgression: Habit Level 1: Damage Received -4%, Initiative +5%; Level 2: -4.8%, +6%; Level 3: -5.6%, +7%; Level 4: -6.8%, +8.5%; Level 5: -8%, +10%.\n\nPower: 250 / 550 / 900 / 1300 / 1800",
+        "verification": { "status": "screenshot-verified", "source": "Shadowrend Nimble Resilience screenshot", "capturedAt": "2026-07-16", "gameVersion": null, "reviewedManually": true }, "evidenceIds": ["shadowrend-nimble-resilience-2026-07-16"], "tags": ["DAMAGE_RECEIVED_DOWN", "BUFF_INITIATIVE", "BUFF_SELF"]
+      },
+      {
+        "id": "shadowrend-fueled-by-darkness", "dragonId": "shadowrend", "kind": "habit", "name": "Fueled by Darkness", "abilityClass": "passive", "unlockStarRank": 6, "minimumDragonLevel": null, "positionRequirement": null,
+        "rawDescription": "Each round: one activation roll grants Advantage (+10%) to exactly 2 Allies in any lane for 2 rounds. All three formation members, including Shadowrend, are eligible; recipient selection is unresolved. During Midnight Aura on rounds 7–10, the activation chance is doubled from the current upgraded base chance. The exact meaning of Advantage +10% is unresolved.\n\nProgression (base / during Midnight Aura): Habit Level 1: 10% / 20%; Level 2: 12% / 24%; Level 3: 14% / 28%; Level 4: 17% / 34%; Level 5: 20% / 40%.\n\nPower: 250 / 550 / 900 / 1300 / 1800",
+        "verification": { "status": "screenshot-verified", "source": "Shadowrend Fueled by Darkness screenshot", "capturedAt": "2026-07-16", "gameVersion": null, "reviewedManually": true }, "evidenceIds": ["shadowrend-fueled-by-darkness-2026-07-16"], "tags": ["ADVANTAGE", "BUFF_ALLIES", "ANY_LANE_TARGET", "SPECIFIC_ROUNDS"]
+      },
+      {
+        "id": "shadowrend-midnight-mastery", "dragonId": "shadowrend", "kind": "habit", "name": "Midnight Mastery", "abilityClass": "passive", "unlockStarRank": 8, "minimumDragonLevel": null, "positionRequirement": null,
+        "rawDescription": "At the start of rounds 7, 8, 9, and 10: increase Physical and Tactical Damage Dealt by the same 3 Allies, including Shadowrend, until end of the current round.\n\nProgression (Physical and Tactical Damage Dealt): Habit Level 1: +7%; Level 2: +8.4%; Level 3: +9.8%; Level 4: +11.9%; Level 5: +14%.\n\nPower: 250 / 550 / 900 / 1300 / 1800",
+        "verification": { "status": "screenshot-verified", "source": "Shadowrend Midnight Mastery screenshot", "capturedAt": "2026-07-16", "gameVersion": null, "reviewedManually": true }, "evidenceIds": ["shadowrend-midnight-mastery-2026-07-16"], "tags": ["PHYSICAL_DAMAGE_UP", "TACTICAL_DAMAGE_UP", "BUFF_ALLIES", "ANY_LANE_TARGET", "SPECIFIC_ROUNDS"]
+      },
+      {
+        "id": "shadowrend-event-horizon", "dragonId": "shadowrend", "kind": "habit", "name": "Event Horizon", "abilityClass": "passive", "unlockStarRank": 10, "minimumDragonLevel": null, "positionRequirement": null,
+        "rawDescription": "Augments Eclipse Fervor on Round 9 with one additional attack that deals Physical and Tactical Damage to the same group of 3 enemies in any lane. The base Round 9 Physical attack remains.\n\nProgression (rate per type): Habit Level 1: +100%; Level 2: +130%; Level 3: +160%; Level 4: +200%; Level 5: +250%.\n\nPower: 250 / 580 / 1000 / 1600 / 2300",
+        "verification": { "status": "screenshot-verified", "source": "Shadowrend Event Horizon screenshot", "capturedAt": "2026-07-16", "gameVersion": null, "reviewedManually": true }, "evidenceIds": ["shadowrend-event-horizon-2026-07-16"], "tags": ["PHYSICAL_DAMAGE", "TACTICAL_DAMAGE", "STRENGTH_SCALING", "ENHANCED_BY_INSTINCT", "ANY_LANE_TARGET", "SPECIFIC_ROUNDS", "COMMAND_AUGMENTATION"]
+      }
+    ],
     "affinities": {
       "Cavalry": "unknown",
       "Shieldbearers": "unknown",
@@ -5356,7 +5448,7 @@ export const dragons = [
       "instinct": null,
       "initiative": null
     },
-    "tags": [],
+    "tags": ["PANIC", "TACTICAL_DAMAGE", "PHYSICAL_DAMAGE", "ADJACENT_TARGET", "ANY_LANE_TARGET", "SPECIFIC_ROUNDS", "STRENGTH_SCALING", "ENHANCED_BY_INSTINCT", "COMMAND_AUGMENTATION", "PHYSICAL_DAMAGE_UP", "EXCLUDES_BASIC_ATTACKS", "BUFF_SELF", "INSTINCT_UP", "BUFF_INITIATIVE", "BUFF_ALLIES", "VANGUARD_REQUIRED", "LEFT_FLANK_TARGET", "STRENGTH_UP", "INITIATIVE_SCALING", "DAMAGE_RECEIVED_DOWN", "ADVANTAGE", "TACTICAL_DAMAGE_UP"],
     "fieldVerification": {
       "identity": {
         "status": "officially-confirmed",
@@ -5378,7 +5470,11 @@ export const dragons = [
         "capturedAt": "2026-06-23",
         "gameVersion": null,
         "reviewedManually": true
-      }
+      },
+      "command": { "status": "screenshot-verified", "source": "Shadowrend Eclipse Fervor screenshots", "capturedAt": "2026-07-16", "gameVersion": null, "reviewedManually": true },
+      "trait": { "status": "screenshot-verified", "source": "Shadowrend Warrior's Zeal screenshot", "capturedAt": "2026-07-16", "gameVersion": null, "reviewedManually": true },
+      "habits": { "status": "screenshot-verified", "source": "Shadowrend Habit screenshots", "capturedAt": "2026-07-16", "gameVersion": null, "reviewedManually": true },
+      "affinities": { "status": "unknown", "source": "Affinity icons were not text-verified", "capturedAt": "2026-07-16", "gameVersion": null, "reviewedManually": true }
     }
   },
   {
@@ -5392,12 +5488,48 @@ export const dragons = [
     "firstObservedInGame": null,
     "gameVersion": null,
     "isNew": false,
-    "dataStatus": "official-metadata-only",
-    "lastVerified": "2026-06-23",
-    "notes": null,
-    "command": null,
-    "trait": null,
-    "habits": [],
+    "dataStatus": "community-verified",
+    "lastVerified": "2026-07-16",
+    "notes": "Affinity icon was not text-verified and remains unknown. Armor Break's opposing-enemy selection remains unresolved enemy-targeting language.",
+    "command": {
+      "id": "thunderstrike-tail-whip", "dragonId": "thunderstrike", "kind": "command", "name": "Tail Whip", "abilityClass": "active", "unlockStarRank": null, "minimumDragonLevel": null, "positionRequirement": null,
+      "rawDescription": "Odd-numbered rounds 1, 3, 5, 7, and 9: deal Physical Damage to 1 enemy in the same lane at a +100% Damage Rate, scaling with Strength and mitigated by target Instinct.\n\nAt 6+ Stars, Barbed Lash augments Tail Whip on even-numbered rounds 2, 4, 6, 8, and 10: deal Physical Damage to 1 enemy in the same lane using Barbed Lash's direct rate, then attempt Bleed on the same target for 2 rounds. Bleed deals Physical Damage each round at a fixed +20% rate; Bleed scaling and mitigation are not stated. At 6+ Stars Thunderstrike attacks on every numbered round.",
+      "verification": { "status": "screenshot-verified", "source": "Thunderstrike Tail Whip screenshots", "capturedAt": "2026-07-16", "gameVersion": null, "reviewedManually": true }, "evidenceIds": ["thunderstrike-tail-whip-2026-07-16"],
+      "tags": ["PHYSICAL_DAMAGE", "STRENGTH_SCALING", "SAME_LANE_TARGET", "SPECIFIC_ROUNDS", "BLEED", "COMMAND_AUGMENTATION"]
+    },
+    "trait": {
+      "id": "thunderstrike-warriors-zeal", "dragonId": "thunderstrike", "kind": "trait", "name": "Warrior's Zeal", "abilityClass": "passive", "unlockStarRank": 1, "minimumDragonLevel": 16, "positionRequirement": "vanguard",
+      "rawDescription": "At Dragon Level 16+ while Thunderstrike is Vanguard: increase Thunderstrike's Physical Damage from Active Commands and Habits by +16%. Increase Instinct and Initiative of the same Left Flank ally by +20 each. The self Physical boost excludes Basic Attacks.",
+      "verification": { "status": "screenshot-verified", "source": "Thunderstrike Warrior's Zeal screenshot", "capturedAt": "2026-07-16", "gameVersion": null, "reviewedManually": true }, "evidenceIds": ["thunderstrike-warriors-zeal-2026-07-16"],
+      "tags": ["PHYSICAL_DAMAGE_UP", "EXCLUDES_BASIC_ATTACKS", "BUFF_SELF", "INSTINCT_UP", "BUFF_INITIATIVE", "BUFF_ALLIES", "VANGUARD_REQUIRED", "LEFT_FLANK_TARGET"]
+    },
+    "habits": [
+      {
+        "id": "thunderstrike-battle-rush", "dragonId": "thunderstrike", "kind": "habit", "name": "Battle Rush", "abilityClass": "passive", "unlockStarRank": 2, "minimumDragonLevel": null, "positionRequirement": null,
+        "rawDescription": "Start of Round 1 for 3 rounds: increase Thunderstrike Initiative and reduce Instinct of the same 2 enemies within adjacency. Strength enhances the enemy Instinct reduction, not the self Initiative increase. The enemy reduction is direct and is not a named status.\n\nProgression: Habit Level 1: self Initiative +25%, enemy Instinct -15%; Level 2: +30%, -18%; Level 3: +35%, -21%; Level 4: +42.5%, -25.5%; Level 5: +50%, -30%.\n\nPower: 250 / 550 / 900 / 1300 / 1800",
+        "verification": { "status": "screenshot-verified", "source": "Thunderstrike Battle Rush screenshot", "capturedAt": "2026-07-16", "gameVersion": null, "reviewedManually": true }, "evidenceIds": ["thunderstrike-battle-rush-2026-07-16"], "tags": ["BUFF_INITIATIVE", "BUFF_SELF", "DEBUFF_INSTINCTS", "ENHANCED_BY_STRENGTH", "ENEMY_DEBUFF", "ADJACENT_TARGET", "SPECIFIC_ROUNDS"]
+      },
+      {
+        "id": "thunderstrike-dragons-might", "dragonId": "thunderstrike", "kind": "habit", "name": "Dragon's Might", "abilityClass": "passive", "unlockStarRank": 4, "minimumDragonLevel": null, "positionRequirement": null,
+        "rawDescription": "Start of combat until end: increase Thunderstrike's Physical Damage from Active Commands and Habits. Self-only; excludes Basic Attacks.\n\nProgression: Habit Level 1: +8%; Level 2: +9.6%; Level 3: +11.2%; Level 4: +13.6%; Level 5: +16%.\n\nPower: 250 / 550 / 900 / 1300 / 1800",
+        "verification": { "status": "screenshot-verified", "source": "Thunderstrike Dragon's Might screenshot", "capturedAt": "2026-07-16", "gameVersion": null, "reviewedManually": true }, "evidenceIds": ["thunderstrike-dragons-might-2026-07-16"], "tags": ["PHYSICAL_DAMAGE_UP", "EXCLUDES_BASIC_ATTACKS", "BUFF_SELF"]
+      },
+      {
+        "id": "thunderstrike-barbed-lash", "dragonId": "thunderstrike", "kind": "habit", "name": "Barbed Lash", "abilityClass": "passive", "unlockStarRank": 6, "minimumDragonLevel": null, "positionRequirement": null,
+        "rawDescription": "Augments Tail Whip on even-numbered rounds with one direct Physical strike and one Bleed attempt against the same target. Bleed lasts 2 rounds and its Damage Rate remains +20% each round. The table rate applies only to the direct strike.\n\nProgression (Bleed chance / even-round direct rate): Habit Level 1: 25% / +50%; Level 2: 30% / +60%; Level 3: 35% / +70%; Level 4: 42.5% / +85%; Level 5: 50% / +100%.\n\nPower: 250 / 550 / 900 / 1300 / 1800",
+        "verification": { "status": "screenshot-verified", "source": "Thunderstrike Barbed Lash screenshot", "capturedAt": "2026-07-16", "gameVersion": null, "reviewedManually": true }, "evidenceIds": ["thunderstrike-barbed-lash-2026-07-16"], "tags": ["PHYSICAL_DAMAGE", "BLEED", "SAME_LANE_TARGET", "SPECIFIC_ROUNDS", "COMMAND_AUGMENTATION"]
+      },
+      {
+        "id": "thunderstrike-armor-break", "dragonId": "thunderstrike", "kind": "habit", "name": "Armor Break", "abilityClass": "passive", "unlockStarRank": 8, "minimumDragonLevel": null, "positionRequirement": null,
+        "rawDescription": "Start of combat until end: increase Physical Damage Received by 1 opposing enemy. This is direct typed Physical amplification, not the named Vulnerable status. The exact meaning of opposing enemy remains unresolved and creates no ally placement rule.\n\nProgression: Habit Level 1: +4.8%; Level 2: +5.67%; Level 3: +6.72%; Level 4: +8.16%; Level 5: +9.6%.\n\nPower: 250 / 550 / 900 / 1300 / 1800",
+        "verification": { "status": "screenshot-verified", "source": "Thunderstrike Armor Break screenshot", "capturedAt": "2026-07-16", "gameVersion": null, "reviewedManually": true }, "evidenceIds": ["thunderstrike-armor-break-2026-07-16"], "tags": ["PHYSICAL_DAMAGE_RECEIVED_UP", "ENEMY_DEBUFF"]
+      },
+      {
+        "id": "thunderstrike-staggering-assault", "dragonId": "thunderstrike", "kind": "habit", "name": "Staggering Assault", "abilityClass": "passive", "unlockStarRank": 10, "minimumDragonLevel": null, "positionRequirement": null,
+        "rawDescription": "Each round: chance to apply Stagger to 1 enemy in the same lane for 1 round. Stagger prevents Attack Modifier Commands and Basic Attacks. If Thunderstrike has Advantage, Stagger lasts 2 rounds instead; Advantage changes duration, not activation chance. Stagger satisfies the broad Control family without becoming a duplicate provider.\n\nProgression (Stagger chance): Habit Level 1: 10%; Level 2: 13%; Level 3: 16%; Level 4: 20%; Level 5: 25%.\n\nPower: 250 / 580 / 1000 / 1600 / 2300",
+        "verification": { "status": "screenshot-verified", "source": "Thunderstrike Staggering Assault screenshot", "capturedAt": "2026-07-16", "gameVersion": null, "reviewedManually": true }, "evidenceIds": ["thunderstrike-staggering-assault-2026-07-16"], "tags": ["STAGGER", "CONTROL", "SAME_LANE_TARGET"]
+      }
+    ],
     "affinities": {
       "Cavalry": "unknown",
       "Shieldbearers": "unknown",
@@ -5411,7 +5543,7 @@ export const dragons = [
       "instinct": null,
       "initiative": null
     },
-    "tags": [],
+    "tags": ["PHYSICAL_DAMAGE", "STRENGTH_SCALING", "SAME_LANE_TARGET", "SPECIFIC_ROUNDS", "BLEED", "COMMAND_AUGMENTATION", "PHYSICAL_DAMAGE_UP", "EXCLUDES_BASIC_ATTACKS", "BUFF_SELF", "INSTINCT_UP", "BUFF_INITIATIVE", "BUFF_ALLIES", "VANGUARD_REQUIRED", "LEFT_FLANK_TARGET", "DEBUFF_INSTINCTS", "ENHANCED_BY_STRENGTH", "ENEMY_DEBUFF", "ADJACENT_TARGET", "PHYSICAL_DAMAGE_RECEIVED_UP", "STAGGER", "CONTROL"],
     "fieldVerification": {
       "identity": {
         "status": "officially-confirmed",
@@ -5433,7 +5565,11 @@ export const dragons = [
         "capturedAt": "2026-06-23",
         "gameVersion": null,
         "reviewedManually": true
-      }
+      },
+      "command": { "status": "screenshot-verified", "source": "Thunderstrike Tail Whip screenshots", "capturedAt": "2026-07-16", "gameVersion": null, "reviewedManually": true },
+      "trait": { "status": "screenshot-verified", "source": "Thunderstrike Warrior's Zeal screenshot", "capturedAt": "2026-07-16", "gameVersion": null, "reviewedManually": true },
+      "habits": { "status": "screenshot-verified", "source": "Thunderstrike Habit screenshots", "capturedAt": "2026-07-16", "gameVersion": null, "reviewedManually": true },
+      "affinities": { "status": "unknown", "source": "Affinity icon was not text-verified", "capturedAt": "2026-07-16", "gameVersion": null, "reviewedManually": true }
     }
   },
   {

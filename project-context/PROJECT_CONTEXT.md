@@ -1,20 +1,20 @@
 # Dragonfire Roster Lab Project Context
 
-Generated: 2026-07-16T18:53:29.839Z
-Branch: data/add-rare-batch-2
-Commit: e1aff5a201d28a988f8b31e3c47521553d5b482e
+Generated: 2026-07-16T20:35:04.015Z
+Branch: data/add-rare-batch-3
+Commit: 71bc114e9afb2fc9368cb276bc40f7c476b92de0
 
 Dragonfire Roster Lab is a curated dragon knowledge base and transparent tag-and-position formation recommender. It is not a combat simulator.
 
 ## Summary
 
 - Total dragons: 31
-- Detailed ability records: 25
-- Metadata-only dragons: 6
-- Curated simple profiles: 25
-- Profile-audit reviews: 175
-- Evidence sources: 209
-- Manual reviews: 38
+- Detailed ability records: 28
+- Metadata-only dragons: 3
+- Curated simple profiles: 28
+- Profile-audit reviews: 196
+- Evidence sources: 230
+- Manual reviews: 41
 
 ## Validation
 
