@@ -503,6 +503,19 @@ function matchingSupportTag(provider: SynergySignal, beneficiary: SynergySignal)
     return null;
   }
 
+  if (providedTags(provider).includes('damage:any')) {
+    const damagingOutput = providedTags(beneficiary).find((tag) =>
+      ['damage:physical', 'damage:tactical', 'damage:fire'].includes(tag),
+    );
+    if (damagingOutput) {
+      return {
+        semanticTag: 'damage:any',
+        providerTag: 'damage:any',
+        beneficiaryTag: damagingOutput,
+      };
+    }
+  }
+
   return matchingTagFromLists(providedTags(provider), supportableTags(beneficiary));
 }
 

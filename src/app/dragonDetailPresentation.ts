@@ -23,6 +23,7 @@ export interface AbilitySummaryPresentation {
 export const OUTPUT_SIGNAL_LABELS: Partial<Record<SynergyTag, string>> = SYNERGY_TAG_LABELS;
 
 export const SUPPORT_SIGNAL_LABELS: Partial<Record<SynergyTag, string>> = {
+  'damage:any': 'Generic Damage Dealt support',
   'damage:fire': 'Fire Damage support',
   'damage:physical': 'Physical Damage support',
   'damage:tactical': 'Tactical Damage support',
@@ -57,7 +58,7 @@ const ABILITY_SUMMARY_LABELS: Partial<Record<string, string>> = {
   BLEED: 'Applies Bleed',
   BLEED_PAYOFF: 'Bleed improves Weakened chance',
   FIRE_WARD: 'Grants Fire Ward',
-  ADVANTAGE: 'References Advantage',
+  ADVANTAGE: 'Grants Advantage',
   RESISTANCE: 'Grants Resistance',
   RESISTANCE_PAYOFF: 'Resistance doubles Recovery',
   IMMUNITY: 'Grants status immunity',
@@ -126,12 +127,14 @@ const HEADLINE_PRIORITY = [
   'Instinct support',
   'Intelligence support',
   'Initiative support',
+  'Generic Damage Dealt support',
   'Confusion',
 ];
 
 const SUMMARY_PRIORITY = [
   'PHYSICAL_DAMAGE',
   'FIRE_DAMAGE',
+  'RECOVERY',
   'TACTICAL_DAMAGE',
   'FIRE_DAMAGE_DEALT_DOWN',
   'BURN',
@@ -139,7 +142,6 @@ const SUMMARY_PRIORITY = [
   'PANIC_PAYOFF',
   'CONFUSION',
   'FIRST_STRIKE',
-  'RECOVERY',
   'TAUNT',
   'STUN',
   'SLOW',

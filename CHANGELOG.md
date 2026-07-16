@@ -2,6 +2,9 @@
 
 ## Unreleased
 
+- Added screenshot-verified detailed records and curated simple-synergy profiles for Rare dragons Bevlorin, Shadowrend, and Thunderstrike. Coverage is now 31 known dragons, 28 detailed dragons, 28 simple profiles, and 3 metadata-only dragons, with Rare coverage at 9 / 12.
+- Added one generic Damage Dealt support channel, self-eligible highest-stat targeting, explicit rounds 7–10 support wording, and conservative unresolved two-of-three Advantage recipients. New cross-batch relationships connect Shadowrend Panic to Jagadrix and Thunderstrike Bleed to Arrax without status or Command-augmentation duplication.
+- Increased database/package version to `0.6.7`; source data schema remains `13`, local roster schema remains `4`, and import/export/share-link contracts are unchanged.
 - Added screenshot-verified detailed records and curated simple-synergy profiles for Rare dragons Solstryker, Shimmer, and Jagadrix. Coverage is now 31 known dragons, 25 detailed dragons, 25 simple profiles, and 6 metadata-only dragons, with Rare coverage at 6 / 12.
 - Added deterministic highest-stat and flank-priority recipient selectors, Star-aware Command augmentation summaries, named Resistance provider/payoff presentation, Steady Erosion and Nullify Recovery details, and scoped non-Basic Physical support without changing Formation Rating calibration.
 - Re-audited verified named Resistance providers and exposed Syrax Strategic Revival, Seasmoke Loyal Bond, and Rhysarion Inspiring Melody. Existing verified Panic providers remain Kalspire, Daemoros, and Zivern; no provider was invented.

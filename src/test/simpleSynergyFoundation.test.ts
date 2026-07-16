@@ -80,6 +80,9 @@ describe('simple synergy foundation', () => {
       'Antares',
       'Shimmer',
       'Jagadrix',
+      'Bevlorin',
+      'Shadowrend',
+      'Thunderstrike',
       'Arulix',
       'Arrax',
       'Tessarion',
@@ -87,9 +90,6 @@ describe('simple synergy foundation', () => {
       'Vermax',
     ]);
     expect(metadataOnlyDragons.map((dragon) => dragon.name)).toEqual([
-      'Bevlorin',
-      'Shadowrend',
-      'Thunderstrike',
       'Vesper',
       'Nyrena',
       'Dawnseeker',
@@ -98,7 +98,7 @@ describe('simple synergy foundation', () => {
     expect(simpleSynergyProfiles.map((profile) => profile.dragonId).sort()).toEqual(
       detailedDragons.map((dragon) => dragon.id).sort(),
     );
-    expect(simpleSynergyProfiles).toHaveLength(25);
+    expect(simpleSynergyProfiles).toHaveLength(28);
     expect(new Set(simpleSynergyProfiles.map((profile) => profile.dragonId)).size).toBe(simpleSynergyProfiles.length);
   });
 
@@ -164,7 +164,7 @@ describe('simple synergy foundation', () => {
     );
     const referencedSignalIds = new Set<string>();
 
-    expect(simpleSynergyAbilityReviews).toHaveLength(175);
+    expect(simpleSynergyAbilityReviews).toHaveLength(196);
     expect(reviewedAbilityIds.sort()).toEqual(canonicalAbilityIds.sort());
     expect(new Set(reviewedAbilityIds).size).toBe(reviewedAbilityIds.length);
 

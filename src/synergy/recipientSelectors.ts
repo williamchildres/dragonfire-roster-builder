@@ -35,6 +35,10 @@ export function signalTargetsRecipient({
     return preferred.dragonId === recipient.dragonId;
   }
 
+  if (selector.kind === 'unresolved-group') {
+    return false;
+  }
+
   const eligible = selected.filter(
     (candidate) => !selector.excludeSelf || candidate.dragonId !== provider.dragonId,
   );

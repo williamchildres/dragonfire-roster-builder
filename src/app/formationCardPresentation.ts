@@ -414,6 +414,10 @@ function matchingSupportTag(provider: SynergySignal, beneficiary: SynergySignal)
     return false;
   }
 
+  if (providedTags(provider).includes('damage:any') && hasDamagingOutput(beneficiary)) {
+    return true;
+  }
+
   return matchingTagFromLists(providedTags(provider), supportableTags(beneficiary));
 }
 
@@ -426,9 +430,19 @@ function matchingSupportTagForDisplayedTag(
   providerTag: SynergyTag,
   beneficiary: SynergySignal,
 ): boolean {
+  if (providerTag === 'damage:any' && hasDamagingOutput(beneficiary)) {
+    return damageScopesAreCompatible(provider, beneficiary);
+  }
+
   return (
     damageScopesAreCompatible(provider, beneficiary) &&
     matchingTagFromLists(providerTagsForDisplayedTag(providerTag, beneficiary), supportableTags(beneficiary))
+  );
+}
+
+function hasDamagingOutput(signal: SynergySignal): boolean {
+  return providedTags(signal).some((tag) =>
+    ['damage:physical', 'damage:tactical', 'damage:fire'].includes(tag),
   );
 }
 
