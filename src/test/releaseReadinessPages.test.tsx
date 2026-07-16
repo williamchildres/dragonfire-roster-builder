@@ -22,15 +22,16 @@ describe('release readiness pages', () => {
     expect(within(nav).queryByRole('button', { name: /support/i })).not.toBeInTheDocument();
   });
 
-  it('renders the support surfaces with the Buy Me a Coffee link intact', async () => {
+  it('renders About support and suppresses the duplicate footer action', async () => {
     const user = userEvent.setup();
     render(<App />);
 
     await user.click(screen.getByRole('button', { name: /about/i }));
 
     expect(screen.getByRole('heading', { name: 'About' })).toBeInTheDocument();
-    expect(screen.getByRole('heading', { name: 'Keep the lab running' })).toBeInTheDocument();
-    expect(screen.getByText(/Optional support/i)).toBeInTheDocument();
+    expect(screen.getByRole('heading', { name: 'Support Dragonfire Lab' })).toBeInTheDocument();
+    expect(screen.getByText('Optional support')).toBeInTheDocument();
+    expect(screen.getByText(/Optional support helps cover hosting/i)).toBeInTheDocument();
 
     const aboutSupportLink = screen.getByRole('link', { name: /buy me a dragon/i });
     expect(aboutSupportLink).toHaveAttribute('href', 'https://buymeacoffee.com/williamchildres');
@@ -44,9 +45,13 @@ describe('release readiness pages', () => {
       within(footer).getByText(/not affiliated with or endorsed by Warner Bros\. Entertainment, HBO, or the developers/i),
     ).toBeInTheDocument();
     expect(within(footer).getByText(/Roster data stays in your browser/i)).toBeInTheDocument();
-    expect(within(footer).getByText(/Support the project/i)).toBeInTheDocument();
+    expect(within(footer).queryByText(/Support the project/i)).not.toBeInTheDocument();
+  });
 
-    const footerSupportLink = within(footer).getByRole('link', { name: /support the project/i });
+  it('keeps the footer support link on non-About pages', () => {
+    render(<App />);
+
+    const footerSupportLink = within(screen.getByRole('contentinfo')).getByRole('link', { name: /support the project/i });
     expect(footerSupportLink).toHaveAttribute('href', 'https://buymeacoffee.com/williamchildres');
     expect(footerSupportLink).toHaveAttribute('target', '_blank');
     expect(footerSupportLink).toHaveAttribute('rel', expect.stringContaining('noopener'));

@@ -8,7 +8,7 @@ import { dragons } from '../data/dragons';
 import { createEmptyRoster, saveRoster, serializeRosterExport, STORAGE_KEY } from '../services/rosterStorage';
 
 
-describe('Dragonfire Roster Lab app', () => {
+describe('Dragonfire Lab app', () => {
   afterEach(() => {
     vi.restoreAllMocks();
     window.localStorage.clear();
@@ -193,8 +193,12 @@ describe('Dragonfire Roster Lab app', () => {
 
     expect(screen.getByRole('heading', { name: 'Track Your Roster' })).toBeInTheDocument();
     expect(screen.getByRole('heading', { name: 'Build Formations' })).toBeInTheDocument();
+    expect(screen.getByRole('heading', { name: 'Understand Formation Ratings' })).toBeInTheDocument();
     expect(screen.getByRole('button', { name: /track your roster/i })).toBeInTheDocument();
     expect(screen.getByRole('button', { name: /build formations/i })).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: /understand formation ratings/i })).toBeInTheDocument();
+    expect(screen.getByText(/compare explainable ratings/i)).toBeInTheDocument();
+    expect(screen.getByText(/realized synergy, support usefulness, Kit Utilization/i)).toBeInTheDocument();
     expect(screen.queryByRole('heading', { name: 'Compare Verified Dragons' })).not.toBeInTheDocument();
     expect(screen.queryByRole('button', { name: /compare verified dragons/i })).not.toBeInTheDocument();
 
@@ -210,6 +214,10 @@ describe('Dragonfire Roster Lab app', () => {
     expect(screen.getByText('9 / 9 mapped')).toBeInTheDocument();
     expect(screen.getByText('10 / 10 mapped')).toBeInTheDocument();
     expect(screen.getByText('0 / 12 mapped')).toBeInTheDocument();
+    expect(document.querySelectorAll('.coverage-marker')).toHaveLength(3);
+    expect(document.querySelector('.coverage-marker.rarity-legendary')).toBeInTheDocument();
+    expect(document.querySelector('.coverage-marker.rarity-epic')).toBeInTheDocument();
+    expect(document.querySelector('.coverage-marker.rarity-rare')).toBeInTheDocument();
     expect(screen.getByText('Legendary and Epic profiles are mapped first. Rare dragons are next.')).toBeInTheDocument();
 
     expect(screen.queryByRole('heading', { name: 'Detailed profile coverage' })).not.toBeInTheDocument();
@@ -217,24 +225,32 @@ describe('Dragonfire Roster Lab app', () => {
     expect(screen.queryByRole('heading', { name: 'Epic coverage' })).not.toBeInTheDocument();
     expect(screen.queryByRole('heading', { name: 'Rare coverage' })).not.toBeInTheDocument();
 
-    const latestUpdate = screen.getByRole('heading', { name: /latest update - v0\.6\.4/i }).closest('.latest-update-panel');
+    const latestUpdate = screen.getByRole('heading', { name: /latest release — v0\.6\.4/i }).closest('.latest-update-panel');
     expect(latestUpdate).not.toBeNull();
     expect(latestUpdate).toHaveTextContent('Tessarion added with verified ability wording and a curated synergy profile.');
 
-    expect(screen.getByText(/No login required\./i)).toBeInTheDocument();
-    expect(screen.getByText(/stored locally in your browser/i)).toBeInTheDocument();
+    expect(screen.getByText(/No login is required\./i)).toBeInTheDocument();
+    expect(screen.getByRole('heading', { name: 'Private by design' })).toBeInTheDocument();
+    expect(screen.getByText(/Your roster stays in your browser/i)).toBeInTheDocument();
     expect(screen.getByText(/does not use private game APIs/i)).toBeInTheDocument();
     expect(screen.getByText(/Dragonfire Lab is an unofficial community tool/i)).toBeInTheDocument();
 
     await user.click(screen.getByRole('button', { name: /about/i }));
+    expect(screen.queryByText('Dragonfire Roster Lab')).not.toBeInTheDocument();
+    expect(screen.getByRole('heading', { name: 'What Dragonfire Lab does' })).toBeInTheDocument();
+    expect(screen.getByRole('heading', { name: 'Privacy and local storage' })).toBeInTheDocument();
+    expect(screen.getByRole('heading', { name: 'Community data and contributions' })).toBeInTheDocument();
+    expect(screen.getByRole('heading', { name: 'Unofficial and open source' })).toBeInTheDocument();
+    expect(screen.getByText(/Compare explainable Formation Ratings/i)).toBeInTheDocument();
+    expect(screen.getByText(/active synergy, Kit Utilization, and placement risks/i)).toBeInTheDocument();
     expect(
       screen.getByText(/Ability and profile updates require sourced community evidence/i),
     ).toBeInTheDocument();
     expect(screen.getByText(/No login is required\./i)).toBeInTheDocument();
-    expect(screen.getByText(/no private game API/i)).toBeInTheDocument();
-    expect(screen.getByText(/roster data plus notes stay in your browser/i)).toBeInTheDocument();
+    expect(screen.getByText(/does not use private game APIs/i)).toBeInTheDocument();
+    expect(screen.getByText(/Your roster and notes stay in your browser/i)).toBeInTheDocument();
     expect(screen.getByText(/Issues and contributions can be used for sourced corrections/i)).toBeInTheDocument();
-    expect(screen.getByText(/Please do not submit credentials/i)).toBeInTheDocument();
+    expect(screen.getByText(/Never submit credentials/i)).toBeInTheDocument();
   });
 
   it('navigates from the Overview feature cards to the matching public pages', async () => {
@@ -999,7 +1015,7 @@ describe('Dragonfire Roster Lab app', () => {
     expect(screen.getByText('Right Flank')).toBeInTheDocument();
   });
 
-  it('shows optional Buy Me a Coffee support links in About and the footer', async () => {
+  it('shows About support without duplicating the footer support action', async () => {
     const user = userEvent.setup();
     render(<App />);
 
@@ -1011,11 +1027,8 @@ describe('Dragonfire Roster Lab app', () => {
     expect(aboutSupportLink).toHaveAttribute('rel', expect.stringContaining('noopener'));
     expect(aboutSupportLink).toHaveAttribute('rel', expect.stringContaining('noreferrer'));
 
-    const footerSupportLink = screen.getByRole('link', { name: /support the project/i });
-    expect(footerSupportLink).toHaveAttribute('href', 'https://buymeacoffee.com/williamchildres');
-    expect(footerSupportLink).toHaveAttribute('target', '_blank');
-    expect(footerSupportLink).toHaveAttribute('rel', expect.stringContaining('noopener'));
-    expect(footerSupportLink).toHaveAttribute('rel', expect.stringContaining('noreferrer'));
+    expect(aboutSupportLink).not.toHaveTextContent(/\?\?|�/);
+    expect(within(screen.getByRole('contentinfo')).queryByRole('link', { name: /support the project/i })).not.toBeInTheDocument();
   });
 
   it('keeps Dragon Details at-a-glance chips on compact wrapping classes', async () => {
