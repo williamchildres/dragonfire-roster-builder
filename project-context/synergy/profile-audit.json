@@ -1,25 +1,22 @@
 {
-  "reviewedAbilityCount": 133,
+  "reviewedAbilityCount": 154,
   "dispositionCounts": {
-    "represented": 88,
-    "general-support-only": 8,
-    "self-only": 22,
-    "no-cross-dragon-synergy": 9,
-    "reinforces-existing": 6
+    "represented": 99,
+    "general-support-only": 12,
+    "self-only": 26,
+    "no-cross-dragon-synergy": 10,
+    "reinforces-existing": 7
   },
   "metadataOnlyDragonIds": [
     "solstryker",
-    "antares",
     "shimmer",
     "jagadrix",
     "bevlorin",
     "shadowrend",
     "thunderstrike",
     "vesper",
-    "arulix",
     "nyrena",
-    "dawnseeker",
-    "arrax"
+    "dawnseeker"
   ],
   "reviews": [
     {
@@ -430,9 +427,10 @@
       "disposition": {
         "kind": "represented",
         "signalIds": [
-          "kalspire-tactical-strike-tactical"
+          "kalspire-tactical-strike-tactical",
+          "kalspire-tactical-strike-bleed"
         ],
-        "rationale": "The command deals Instinct-based Tactical Damage; Bleed has no current explicit payoff."
+        "rationale": "The command deals Instinct-based Tactical Damage and provides the specific Bleed setup used by Arrax."
       }
     },
     {
@@ -1461,6 +1459,239 @@
           "zivern-cloak-of-terror-vulnerable-payoff"
         ],
         "rationale": "The habit applies Overwhelm as Control and explicitly benefits from Vulnerable setup."
+      }
+    },
+    {
+      "dragonId": "antares",
+      "abilityId": "antares-relentless-pursuit",
+      "abilityKind": "command",
+      "disposition": {
+        "kind": "represented",
+        "signalIds": [
+          "antares-relentless-pursuit-fire",
+          "antares-relentless-pursuit-vulnerable"
+        ],
+        "rationale": "The Command deals Intelligence-based Fire Damage and applies the named Vulnerable status; its later Slow payoff is reviewed on Fiery Precision."
+      }
+    },
+    {
+      "dragonId": "antares",
+      "abilityId": "antares-hunters-wrath",
+      "abilityKind": "trait",
+      "disposition": {
+        "kind": "represented",
+        "signalIds": [
+          "antares-hunters-wrath-right-stats",
+          "antares-hunters-wrath-vanguard"
+        ],
+        "rationale": "The Vanguard trait gives hard Right Flank Strength and Initiative support; Antares's Fire increase remains self-only."
+      }
+    },
+    {
+      "dragonId": "antares",
+      "abilityId": "antares-blazing-onslaught",
+      "abilityKind": "habit",
+      "disposition": {
+        "kind": "represented",
+        "signalIds": [
+          "antares-blazing-onslaught-fire-vulnerability",
+          "antares-blazing-onslaught-non-basic-physical-vulnerability"
+        ],
+        "rationale": "The habit increases enemy Fire Damage Received broadly while its Physical branch matches only outputs explicitly typed as non-Basic-Attack damage."
+      }
+    },
+    {
+      "dragonId": "antares",
+      "abilityId": "antares-dragons-flair",
+      "abilityKind": "habit",
+      "disposition": {
+        "kind": "self-only",
+        "rationale": "The Fire Damage increase applies only to Antares."
+      }
+    },
+    {
+      "dragonId": "antares",
+      "abilityId": "antares-fiery-precision",
+      "abilityKind": "habit",
+      "disposition": {
+        "kind": "represented",
+        "signalIds": [
+          "antares-fiery-precision-slow-payoff"
+        ],
+        "rationale": "The augmentation creates the Star Rank 6 Slow payoff while its Fire output remains the single Relentless Pursuit Damage Profile path."
+      }
+    },
+    {
+      "dragonId": "antares",
+      "abilityId": "antares-dragons-intellect",
+      "abilityKind": "habit",
+      "disposition": {
+        "kind": "self-only",
+        "rationale": "The Damage Received reduction and Intelligence increase apply only to Antares."
+      }
+    },
+    {
+      "dragonId": "antares",
+      "abilityId": "antares-redemption",
+      "abilityKind": "habit",
+      "disposition": {
+        "kind": "self-only",
+        "rationale": "The stat increases and shared-roll Vulnerable/Weakened immunity apply only to Antares and do not imply cleanse behavior."
+      }
+    },
+    {
+      "dragonId": "arulix",
+      "abilityId": "arulix-gleaming-spiral",
+      "abilityKind": "command",
+      "disposition": {
+        "kind": "represented",
+        "signalIds": [
+          "arulix-gleaming-spiral-tactical",
+          "arulix-gleaming-spiral-physical"
+        ],
+        "rationale": "The Command deals Instinct-based Tactical Damage and gains one Strength-based Physical Damage path at Star Rank 6; enemy Fire suppression and battlefield target typing remain descriptive."
+      }
+    },
+    {
+      "dragonId": "arulix",
+      "abilityId": "arulix-champions-brilliance",
+      "abilityKind": "trait",
+      "disposition": {
+        "kind": "represented",
+        "signalIds": [
+          "arulix-champions-brilliance-vanguard"
+        ],
+        "rationale": "The trait requires Vanguard; its self stats are self-only and its Right Flank Damage Received reduction is non-scoring defensive support."
+      }
+    },
+    {
+      "dragonId": "arulix",
+      "abilityId": "arulix-hypnotic-helix",
+      "abilityKind": "habit",
+      "disposition": {
+        "kind": "represented",
+        "signalIds": [
+          "arulix-hypnotic-helix-overwhelm",
+          "arulix-hypnotic-helix-stagger"
+        ],
+        "rationale": "The habit preserves distinct Overwhelm and Stagger outputs, both of which satisfy Control without collapsing their labels."
+      }
+    },
+    {
+      "dragonId": "arulix",
+      "abilityId": "arulix-battle-cunning",
+      "abilityKind": "habit",
+      "disposition": {
+        "kind": "represented",
+        "signalIds": [
+          "arulix-battle-cunning-instinct-payoff"
+        ],
+        "rationale": "External Instinct support improves Battle Cunning; direct enemy stat reductions do not invent damage-type relationships."
+      }
+    },
+    {
+      "dragonId": "arulix",
+      "abilityId": "arulix-spiral-surge",
+      "abilityKind": "habit",
+      "disposition": {
+        "kind": "reinforces-existing",
+        "signalIds": [
+          "arulix-gleaming-spiral-physical"
+        ],
+        "rationale": "The Command augmentation adds one progression-gated Physical Damage path and derives later-round rates from the current upgraded base."
+      }
+    },
+    {
+      "dragonId": "arulix",
+      "abilityId": "arulix-iron-shell",
+      "abilityKind": "habit",
+      "disposition": {
+        "kind": "general-support-only",
+        "rationale": "The non-Basic Physical and Fire Damage Received reductions are typed defensive support without a scored offensive consumer model."
+      }
+    },
+    {
+      "dragonId": "arulix",
+      "abilityId": "arulix-mimicry",
+      "abilityKind": "habit",
+      "disposition": {
+        "kind": "no-cross-dragon-synergy",
+        "rationale": "Mimicry copies battlefield-present effects through two conditional branches and does not provide any copied status unconditionally."
+      }
+    },
+    {
+      "dragonId": "arrax",
+      "abilityId": "arrax-sudden-strike",
+      "abilityKind": "command",
+      "disposition": {
+        "kind": "represented",
+        "signalIds": [
+          "arrax-sudden-strike-physical",
+          "arrax-sudden-strike-weakened",
+          "arrax-sudden-strike-bleed-payoff"
+        ],
+        "rationale": "The Command deals Strength-based Physical Damage, applies Weakened, and explicitly improves that application chance against Bleed without treating either status as Control."
+      }
+    },
+    {
+      "dragonId": "arrax",
+      "abilityId": "arrax-warriors-resilience",
+      "abilityKind": "trait",
+      "disposition": {
+        "kind": "represented",
+        "signalIds": [
+          "arrax-warriors-resilience-left-tactical",
+          "arrax-warriors-resilience-vanguard"
+        ],
+        "rationale": "The Vanguard trait gives hard Left Flank Tactical support while Arrax Damage Received reduction remains self-only."
+      }
+    },
+    {
+      "dragonId": "arrax",
+      "abilityId": "arrax-headlong-into-danger",
+      "abilityKind": "habit",
+      "disposition": {
+        "kind": "self-only",
+        "rationale": "The positive effects and displayed penalties apply only to Arrax and do not create named status or allied support signals."
+      }
+    },
+    {
+      "dragonId": "arrax",
+      "abilityId": "arrax-stone-bulwark",
+      "abilityKind": "habit",
+      "disposition": {
+        "kind": "general-support-only",
+        "rationale": "The Tactical and Fire Damage Received reductions are typed defensive support, not offensive Tactical or Fire support."
+      }
+    },
+    {
+      "dragonId": "arrax",
+      "abilityId": "arrax-adaptive-guard",
+      "abilityKind": "habit",
+      "disposition": {
+        "kind": "general-support-only",
+        "rationale": "Both defensive branches remain troop-gated and inactive because Formation Builder has no selected troop context."
+      }
+    },
+    {
+      "dragonId": "arrax",
+      "abilityId": "arrax-fire-ward",
+      "abilityKind": "habit",
+      "disposition": {
+        "kind": "general-support-only",
+        "rationale": "Fire Ward remains a distinct defensive status and does not become offensive Fire Damage support."
+      }
+    },
+    {
+      "dragonId": "arrax",
+      "abilityId": "arrax-turn-the-line",
+      "abilityKind": "habit",
+      "disposition": {
+        "kind": "represented",
+        "signalIds": [
+          "arrax-turn-the-line-physical"
+        ],
+        "rationale": "The Star Rank 10 habit directly increases enemy Physical Damage Received without inventing named Vulnerable."
       }
     },
     {
