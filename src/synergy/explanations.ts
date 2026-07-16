@@ -47,7 +47,8 @@ export function explainSetupPayoff(
   }
 
   if (tag === 'status:slow') {
-    return `${provider.dragonName} can apply Slow, which improves ${beneficiary.dragonName}'s ${benefit.abilityName} Recovery.`;
+    const recoverySuffix = /Recovery/i.test(benefit.description) ? ' Recovery' : '';
+    return `${provider.dragonName} can apply Slow, which improves ${beneficiary.dragonName}'s ${benefit.abilityName}${recoverySuffix}.`;
   }
 
   if (tag === 'status:burn') {
@@ -71,6 +72,10 @@ export function explainSetupPayoff(
     return `${provider.dragonName} can apply Control, which improves ${beneficiary.dragonName}'s ${benefit.abilityName}.`;
   }
 
+  if (tag.startsWith('status:')) {
+    return `${provider.dragonName} can apply ${SYNERGY_TAG_LABELS[tag]}, which improves ${beneficiary.dragonName}'s ${benefit.abilityName}.`;
+  }
+
   if (tag === 'effect:recovery') {
     return `${provider.dragonName} provides Recovery, which ${beneficiary.dragonName} benefits from through ${benefit.abilityName}.`;
   }
@@ -90,7 +95,8 @@ export function explainAmplifierOutput(
   }
 
   if (tag === 'damage:physical') {
-    return `${supporter.dragonName} improves Physical Damage, and ${producer.dragonName} deals Physical Damage.`;
+    const supportedDamage = support.damageScope === 'non-basic-attack' ? 'non-Basic Physical Damage' : 'Physical Damage';
+    return `${supporter.dragonName} improves ${supportedDamage}, and ${producer.dragonName} deals Physical Damage.`;
   }
 
   if (tag === 'damage:tactical') {

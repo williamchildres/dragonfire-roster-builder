@@ -5,25 +5,25 @@ This audit covers the curated simple-synergy profiles used by the live Formation
 ## Coverage
 
 - Total roster: 31 dragons.
-- Detailed ability data: 19 dragons.
-- Metadata-only and unmapped: 12 dragons.
-- Detailed abilities reviewed: 133 Commands, Traits, and Habits.
-- Simple profiles before this pass: 18.
-- Simple profiles after this pass: 19.
+- Detailed ability data: 22 dragons.
+- Metadata-only and unmapped: 9 dragons.
+- Detailed abilities reviewed: 154 Commands, Traits, and Habits.
+- Simple profiles before this pass: 19.
+- Simple profiles after this pass: 22.
 
-Mapped dragons: Syrax, Vhagar, Caraxes, Seasmoke, Crimson, Kalspire, Malachite, Venator, Daemoros, Feskar, Rhysarion, Shadowsong, Vaeldra, Sheepstealer, Vermax, Tashix, Velar, Zivern, Tessarion.
+Mapped dragons: Syrax, Vhagar, Caraxes, Seasmoke, Crimson, Kalspire, Malachite, Venator, Daemoros, Feskar, Rhysarion, Shadowsong, Vaeldra, Sheepstealer, Vermax, Tashix, Velar, Zivern, Tessarion, Antares, Arrax, Arulix.
 
-Metadata-only dragons: Solstryker, Antares, Shimmer, Jagadrix, Bevlorin, Shadowrend, Thunderstrike, Vesper, Arulix, Nyrena, Dawnseeker, Arrax.
+Metadata-only dragons: Solstryker, Shimmer, Jagadrix, Bevlorin, Shadowrend, Thunderstrike, Vesper, Nyrena, Dawnseeker.
 
 ## Controlled Vocabulary
 
 The simple engine uses only these tags:
 
-- Conditions: Panic, First-Strike, Burn, Slow, Taunt, Control, Stun, Stagger, Overwhelm, Confusion, Vulnerable.
+- Conditions: Panic, First-Strike, Burn, Slow, Taunt, Control, Stun, Stagger, Overwhelm, Confusion, Vulnerable, Weakened, Bleed.
 - Damage and Recovery: Physical Damage, Tactical Damage, Fire Damage, Recovery.
 - Stats: Strength, Instinct, Intelligence, Initiative.
 
-Stun, Stagger, Overwhelm, and Confusion are Control aliases for Rhysarion's Control payoff. They are not simulated as separate combat mechanics.
+Slow, Stun, Stagger, Overwhelm, and Confusion are Control aliases for broad Control payoffs. They remain specifically visible and are not simulated as separate combat mechanics. Weakened and Bleed do not satisfy Control, and Bleed is not treated as Physical Damage.
 
 ## Inclusion Rules
 
@@ -37,11 +37,11 @@ The live false-attribution defects came from mixing those meanings in one tag li
 
 ## Disposition Counts
 
-- represented: 88.
-- reinforces-existing: 6.
-- self-only: 22.
-- general-support-only: 8.
-- no-cross-dragon-synergy: 9.
+- represented: 99.
+- reinforces-existing: 7.
+- self-only: 26.
+- general-support-only: 12.
+- no-cross-dragon-synergy: 10.
 - not-modeled: 0.
 
 Every detailed Command, Trait, and Habit has exactly one disposition in `src/synergy/profileAudit.ts`. Every represented or reinforcing disposition references at least one simple profile signal.
@@ -89,6 +89,14 @@ Velar contributes Instinct-based Tactical Damage through Whirlwind, generic dama
 Zivern contributes Instinct-based Tactical Damage and Tactical vulnerability through Silent Shade, Physical support and Intelligence scaling through Battle Mastery, Panic through Fearsome Reach, and Overwhelm-as-Control plus Vulnerable payoff through Cloak of Terror.
 
 Tessarion contributes Intelligence-based Fire Damage and Strength-based Physical Damage through Cobalt Flame, formation-wide Fire Damage support through Blazing Leader, Intelligence and Initiative support through Clever Maneuver, and a Vanguard claim through Champion's Brilliance. Sharpened Beauty and Molten Armor reinforce Tessarion's existing output. The Blue Queen reinforces the same Fire-ally support direction already represented by Blazing Leader; its defensive and Troop Capacity clauses remain descriptive.
+
+Antares contributes Intelligence-based Fire Damage and Vulnerable through Relentless Pursuit, Fire and non-Basic Physical vulnerability support through Blazing Onslaught, hard Right Flank Strength/Initiative support through Hunter's Wrath, and a Slow payoff beginning at Star Rank 6 through Fiery Precision. Fiery Precision augments the Command through one effective Fire output path.
+
+Arrax contributes Strength-based Physical Damage and Weakened through Sudden Strike, explicitly benefits from Bleed, gives hard Left Flank Tactical support through Warrior's Resilience, and adds Physical Damage support through Turn the Line at Star Rank 10. Kalspire's Tactical Strike now exposes its verified Bleed output so the new payoff can be realized. Weakened and Bleed remain specific non-Control statuses.
+
+Arulix contributes Instinct-based Tactical Damage through Gleaming Spiral, gains one Strength-based Physical Damage path at Star Rank 6 through Spiral Surge, preserves Overwhelm and Stagger as distinct Control aliases through Hypnotic Helix, and benefits from Instinct support through Battle Cunning. Spiral Surge's Round 5 and Round 8 values derive from the current upgraded base rate.
+
+Typed defensive support has no neutral signal channel in the current simple-profile model. Stone Bulwark, Adaptive Guard, Fire Ward, Champion's Brilliance ally defense, Iron Shell, and enemy Fire Damage suppression therefore remain visible in detailed ability wording and audit rationales but are excluded from outputs, supports, benefits, filters, score relationships, and Kit Utilization. Adaptive Guard remains unresolved without troop context. Mimicry remains detailed-only because it copies battlefield-present effects conditionally rather than providing them unconditionally.
 
 ## Damage Support Summary
 

@@ -4544,12 +4544,203 @@ export const dragons = [
     "firstObservedInGame": null,
     "gameVersion": null,
     "isNew": false,
-    "dataStatus": "official-metadata-only",
-    "lastVerified": "2026-06-23",
-    "notes": null,
-    "command": null,
-    "trait": null,
-    "habits": [],
+    "dataStatus": "community-verified",
+    "lastVerified": "2026-07-15",
+    "notes": "Affinity icons were not text-verified and remain unknown.",
+    "command": {
+      "id": "antares-relentless-pursuit",
+      "dragonId": "antares",
+      "kind": "command",
+      "name": "Relentless Pursuit",
+      "abilityClass": "active",
+      "unlockStarRank": null,
+      "minimumDragonLevel": null,
+      "positionRequirement": null,
+      "rawDescription": "Each round: 20% chance to apply Vulnerable to 1 enemy within adjacency for 2 rounds. Vulnerable increases Damage Received by +10%.\n\nRounds 3, 6, and 9: deal Fire Damage to 2 enemies within adjacency at a +65% Damage Rate. Fire Damage is increased by the attacker's Intelligence and mitigated by the target's Initiative.\n\nAt 6+ Stars, Fiery Precision augments Relentless Pursuit. Each round, also deal Fire Damage to 3 enemies in any lane afflicted with Slow. The Damage Rate uses Fiery Precision's current Habit Level: +20% / +24% / +28% / +34% / +40%. This added Slow-conditioned attack is additive to the base Command and is represented once.",
+      "verification": {
+        "status": "screenshot-verified",
+        "source": "Antares Relentless Pursuit screenshots",
+        "capturedAt": "2026-07-15",
+        "gameVersion": null,
+        "reviewedManually": true
+      },
+      "evidenceIds": [
+        "antares-relentless-pursuit-2026-07-15"
+      ],
+      "tags": [
+        "VULNERABLE",
+        "FIRE_DAMAGE",
+        "ADJACENT_TARGET",
+        "SPECIFIC_ROUNDS",
+        "INTELLIGENCE_SCALING",
+        "ANY_LANE_TARGET",
+        "COMMAND_AUGMENTATION"
+      ]
+    },
+    "trait": {
+      "id": "antares-hunters-wrath",
+      "dragonId": "antares",
+      "kind": "trait",
+      "name": "Hunter's Wrath",
+      "abilityClass": "passive",
+      "unlockStarRank": 1,
+      "minimumDragonLevel": 16,
+      "positionRequirement": "vanguard",
+      "rawDescription": "At Dragon Level 16+ while Antares is deployed in Vanguard: increase Antares Fire Damage Dealt by +16%. Increase Strength of the Right Flank ally by +20 and Initiative of the Right Flank ally by +20.",
+      "verification": {
+        "status": "screenshot-verified",
+        "source": "Antares Hunter's Wrath screenshot",
+        "capturedAt": "2026-07-15",
+        "gameVersion": null,
+        "reviewedManually": true
+      },
+      "evidenceIds": [
+        "antares-hunters-wrath-2026-07-15"
+      ],
+      "tags": [
+        "FIRE_DAMAGE_UP",
+        "STRENGTH_UP",
+        "BUFF_INITIATIVE",
+        "VANGUARD_REQUIRED",
+        "RIGHT_FLANK_TARGET"
+      ]
+    },
+    "habits": [
+      {
+        "id": "antares-blazing-onslaught",
+        "dragonId": "antares",
+        "kind": "habit",
+        "name": "Blazing Onslaught",
+        "abilityClass": "passive",
+        "unlockStarRank": 2,
+        "minimumDragonLevel": null,
+        "positionRequirement": null,
+        "rawDescription": "Start of Round 1 for 3 rounds: increase Fire Damage Received of 1 enemy in any lane, prioritizing Left Flank. Separately increase non-Basic-Attack Physical Damage Received of 1 enemy in any lane, prioritizing Right Flank. The target selections are independent; distinctness is not stated, so the same target is allowed but not required. This direct typed Damage Received amplification is not the named Vulnerable status.\n\nProgression table (Fire and non-Basic Physical Damage Received increase):\nHabit Level 1: +11%\nHabit Level 2: +13.2%\nHabit Level 3: +15.4%\nHabit Level 4: +18.7%\nHabit Level 5: +22%\n\nPower: 250 / 550 / 900 / 1300 / 1800",
+        "verification": {
+          "status": "screenshot-verified",
+          "source": "Antares Blazing Onslaught screenshot",
+          "capturedAt": "2026-07-15",
+          "gameVersion": null,
+          "reviewedManually": true
+        },
+        "evidenceIds": [
+          "antares-blazing-onslaught-2026-07-15"
+        ],
+        "tags": [
+          "FIRE_DAMAGE_RECEIVED_UP",
+          "PHYSICAL_DAMAGE_RECEIVED_UP",
+          "EXCLUDES_BASIC_ATTACKS",
+          "ANY_LANE_TARGET",
+          "LEFT_FLANK_TARGET",
+          "RIGHT_FLANK_TARGET",
+          "ENEMY_DEBUFF"
+        ]
+      },
+      {
+        "id": "antares-dragons-flair",
+        "dragonId": "antares",
+        "kind": "habit",
+        "name": "Dragon's Flair",
+        "abilityClass": "passive",
+        "unlockStarRank": 4,
+        "minimumDragonLevel": null,
+        "positionRequirement": null,
+        "rawDescription": "Start of combat until end of combat: increase Antares Fire Damage Dealt. Self-only.\n\nProgression table:\nHabit Level 1: +8%\nHabit Level 2: +9.6%\nHabit Level 3: +11.2%\nHabit Level 4: +13.6%\nHabit Level 5: +16%\n\nPower: 250 / 550 / 900 / 1300 / 1800",
+        "verification": {
+          "status": "screenshot-verified",
+          "source": "Antares Dragon's Flair screenshot",
+          "capturedAt": "2026-07-15",
+          "gameVersion": null,
+          "reviewedManually": true
+        },
+        "evidenceIds": [
+          "antares-dragons-flair-2026-07-15"
+        ],
+        "tags": [
+          "FIRE_DAMAGE_UP",
+          "BUFF_SELF"
+        ]
+      },
+      {
+        "id": "antares-fiery-precision",
+        "dragonId": "antares",
+        "kind": "habit",
+        "name": "Fiery Precision",
+        "abilityClass": "passive",
+        "unlockStarRank": 6,
+        "minimumDragonLevel": null,
+        "positionRequirement": null,
+        "rawDescription": "Fiery Precision augments Relentless Pursuit. Each round: deal Fire Damage to 3 enemies in any lane afflicted with Slow. This is additive to the base Command and uses one effective output path.\n\nProgression table (Damage Rate):\nHabit Level 1: +20%\nHabit Level 2: +24%\nHabit Level 3: +28%\nHabit Level 4: +34%\nHabit Level 5: +40%\n\nPower: 250 / 550 / 900 / 1300 / 1800",
+        "verification": {
+          "status": "screenshot-verified",
+          "source": "Antares Fiery Precision screenshot",
+          "capturedAt": "2026-07-15",
+          "gameVersion": null,
+          "reviewedManually": true
+        },
+        "evidenceIds": [
+          "antares-fiery-precision-2026-07-15"
+        ],
+        "tags": [
+          "FIRE_DAMAGE",
+          "ANY_LANE_TARGET",
+          "COMMAND_AUGMENTATION"
+        ]
+      },
+      {
+        "id": "antares-dragons-intellect",
+        "dragonId": "antares",
+        "kind": "habit",
+        "name": "Dragon's Intellect",
+        "abilityClass": "passive",
+        "unlockStarRank": 8,
+        "minimumDragonLevel": null,
+        "positionRequirement": null,
+        "rawDescription": "Start of combat until end of combat: reduce Antares Damage Received and increase Antares Intelligence. Self-only.\n\nProgression table (Damage Received; Intelligence):\nHabit Level 1: -4%; +5%\nHabit Level 2: -4.8%; +6%\nHabit Level 3: -5.6%; +7%\nHabit Level 4: -6.8%; +8.5%\nHabit Level 5: -8%; +10%\n\nPower: 250 / 550 / 900 / 1300 / 1800",
+        "verification": {
+          "status": "screenshot-verified",
+          "source": "Antares Dragon's Intellect screenshot",
+          "capturedAt": "2026-07-15",
+          "gameVersion": null,
+          "reviewedManually": true
+        },
+        "evidenceIds": [
+          "antares-dragons-intellect-2026-07-15"
+        ],
+        "tags": [
+          "DAMAGE_RECEIVED_DOWN",
+          "INTELLIGENCE_UP",
+          "BUFF_SELF"
+        ]
+      },
+      {
+        "id": "antares-redemption",
+        "dragonId": "antares",
+        "kind": "habit",
+        "name": "Redemption",
+        "abilityClass": "passive",
+        "unlockStarRank": 10,
+        "minimumDragonLevel": null,
+        "positionRequirement": null,
+        "rawDescription": "Start of combat until end of combat: increase Antares Intelligence and Initiative. Start of each round: make one activation roll; on success, grant Antares immunity to both Vulnerable and Weakened for 2 rounds. The two immunities share one successful roll, not two independent rolls. The screenshot does not confirm cleansing an already active status, refresh behavior, or stacking behavior. Self-only.\n\nProgression table (Intelligence and Initiative; immunity chance):\nHabit Level 1: +6%; 10%\nHabit Level 2: +7.8%; 13%\nHabit Level 3: +9.6%; 16%\nHabit Level 4: +12%; 20%\nHabit Level 5: +15%; 25%\n\nPower: 250 / 580 / 1000 / 1600 / 2300",
+        "verification": {
+          "status": "screenshot-verified",
+          "source": "Antares Redemption screenshot",
+          "capturedAt": "2026-07-15",
+          "gameVersion": null,
+          "reviewedManually": true
+        },
+        "evidenceIds": [
+          "antares-redemption-2026-07-15"
+        ],
+        "tags": [
+          "INTELLIGENCE_UP",
+          "BUFF_INITIATIVE",
+          "IMMUNITY",
+          "BUFF_SELF"
+        ]
+      }
+    ],
     "affinities": {
       "Cavalry": "unknown",
       "Shieldbearers": "unknown",
@@ -4563,7 +4754,29 @@ export const dragons = [
       "instinct": null,
       "initiative": null
     },
-    "tags": [],
+    "tags": [
+      "VULNERABLE",
+      "FIRE_DAMAGE",
+      "ADJACENT_TARGET",
+      "SPECIFIC_ROUNDS",
+      "INTELLIGENCE_SCALING",
+      "ANY_LANE_TARGET",
+      "COMMAND_AUGMENTATION",
+      "FIRE_DAMAGE_UP",
+      "STRENGTH_UP",
+      "BUFF_INITIATIVE",
+      "VANGUARD_REQUIRED",
+      "RIGHT_FLANK_TARGET",
+      "FIRE_DAMAGE_RECEIVED_UP",
+      "PHYSICAL_DAMAGE_RECEIVED_UP",
+      "EXCLUDES_BASIC_ATTACKS",
+      "ENEMY_DEBUFF",
+      "BUFF_SELF",
+      "DAMAGE_RECEIVED_DOWN",
+      "INTELLIGENCE_UP",
+      "WEAKENED",
+      "IMMUNITY"
+    ],
     "fieldVerification": {
       "identity": {
         "status": "officially-confirmed",
@@ -4583,6 +4796,34 @@ export const dragons = [
         "status": "officially-confirmed",
         "source": "Official public roster page",
         "capturedAt": "2026-06-23",
+        "gameVersion": null,
+        "reviewedManually": true
+      },
+      "command": {
+        "status": "screenshot-verified",
+        "source": "Antares Relentless Pursuit screenshots",
+        "capturedAt": "2026-07-15",
+        "gameVersion": null,
+        "reviewedManually": true
+      },
+      "trait": {
+        "status": "screenshot-verified",
+        "source": "Antares Hunter's Wrath screenshot",
+        "capturedAt": "2026-07-15",
+        "gameVersion": null,
+        "reviewedManually": true
+      },
+      "habits": {
+        "status": "screenshot-verified",
+        "source": "Antares Habit screenshots",
+        "capturedAt": "2026-07-15",
+        "gameVersion": null,
+        "reviewedManually": true
+      },
+      "affinities": {
+        "status": "unknown",
+        "source": "Affinity icons were not text-verified",
+        "capturedAt": "2026-07-15",
         "gameVersion": null,
         "reviewedManually": true
       }
@@ -4929,12 +5170,210 @@ export const dragons = [
     "firstObservedInGame": null,
     "gameVersion": null,
     "isNew": true,
-    "dataStatus": "official-metadata-only",
-    "lastVerified": "2026-06-23",
-    "notes": null,
-    "command": null,
-    "trait": null,
-    "habits": [],
+    "dataStatus": "community-verified",
+    "lastVerified": "2026-07-15",
+    "notes": "Affinity icons were not text-verified and remain unknown.",
+    "command": {
+      "id": "arulix-gleaming-spiral",
+      "dragonId": "arulix",
+      "kind": "command",
+      "name": "Gleaming Spiral",
+      "abilityClass": "active",
+      "unlockStarRank": null,
+      "minimumDragonLevel": null,
+      "positionRequirement": null,
+      "rawDescription": "Each round: 25% chance to reduce Fire Damage Dealt by -15% for 1 round for all enemies that deal Fire Damage. This is enemy typed Damage Dealt suppression, not Weakened.\n\nRounds 1, 2, 3, 5, and 8: deal Tactical Damage to all enemies that deal Physical Damage excluding Basic Attacks at a +45% Damage Rate. Tactical Damage is increased by the attacker's Instinct and mitigated by the target's Intelligence. The enemy damage-type condition is battlefield-facing.\n\nAt 6+ Stars, Spiral Surge augments Gleaming Spiral on the same rounds with one Physical Damage output to 2 enemies in any lane. The current Spiral Surge base Damage Rate is +20% / +24% / +28% / +34% / +40% by Habit Level. Round 5 uses 1.5× the current upgraded base rate and Round 8 uses 2× the current upgraded base rate. Physical Damage is increased by the attacker's Strength and mitigated by the target's Instinct. The augmentation is represented once.",
+      "verification": {
+        "status": "screenshot-verified",
+        "source": "Arulix Gleaming Spiral screenshots",
+        "capturedAt": "2026-07-15",
+        "gameVersion": null,
+        "reviewedManually": true
+      },
+      "evidenceIds": [
+        "arulix-gleaming-spiral-2026-07-15"
+      ],
+      "tags": [
+        "TACTICAL_DAMAGE",
+        "PHYSICAL_DAMAGE",
+        "FIRE_DAMAGE_DEALT_DOWN",
+        "DAMAGE_DEALT_DOWN",
+        "EXCLUDES_BASIC_ATTACKS",
+        "SPECIFIC_ROUNDS",
+        "ANY_LANE_TARGET",
+        "ENHANCED_BY_INSTINCT",
+        "STRENGTH_SCALING",
+        "COMMAND_AUGMENTATION"
+      ]
+    },
+    "trait": {
+      "id": "arulix-champions-brilliance",
+      "dragonId": "arulix",
+      "kind": "trait",
+      "name": "Champion's Brilliance",
+      "abilityClass": "passive",
+      "unlockStarRank": 1,
+      "minimumDragonLevel": 16,
+      "positionRequirement": "vanguard",
+      "rawDescription": "At Dragon Level 16+ while Arulix is deployed in Vanguard: increase Arulix Strength by +15, Intelligence by +15, and Instinct by +15. Reduce Damage Received of the Right Flank ally by -8%. The self stat increases are self-only; the Right Flank reduction is outward defensive support.",
+      "verification": {
+        "status": "screenshot-verified",
+        "source": "Arulix Champion's Brilliance screenshot",
+        "capturedAt": "2026-07-15",
+        "gameVersion": null,
+        "reviewedManually": true
+      },
+      "evidenceIds": [
+        "arulix-champions-brilliance-2026-07-15"
+      ],
+      "tags": [
+        "STRENGTH_UP",
+        "INTELLIGENCE_UP",
+        "INSTINCT_UP",
+        "DAMAGE_RECEIVED_DOWN",
+        "VANGUARD_REQUIRED",
+        "RIGHT_FLANK_TARGET"
+      ]
+    },
+    "habits": [
+      {
+        "id": "arulix-hypnotic-helix",
+        "dragonId": "arulix",
+        "kind": "habit",
+        "name": "Hypnotic Helix",
+        "abilityClass": "passive",
+        "unlockStarRank": 2,
+        "minimumDragonLevel": null,
+        "positionRequirement": null,
+        "rawDescription": "Rounds 1, 3, 6, and 8: chance to apply Overwhelm to 1 enemy in any lane for 2 rounds, prioritizing Fire Damage dealers. Overwhelm prevents Active Commands and Habits on the target's turn.\n\nRounds 2, 4, 7, and 9: chance to apply Stagger to 1 enemy in any lane for 2 rounds, prioritizing Physical Damage dealers. Stagger prevents Attack Modifier Commands and Basic Attacks on the target's turn.\n\nThe prose displays the Habit Level 1 chance rounded to 13%; the progression table gives 12.5%. Both values are retained.\n\nProgression table (Overwhelm/Stagger chance):\nHabit Level 1: 12.5%\nHabit Level 2: 15%\nHabit Level 3: 17.5%\nHabit Level 4: 21.3%\nHabit Level 5: 25%\n\nPower: 250 / 550 / 900 / 1300 / 1800",
+        "verification": {
+          "status": "screenshot-verified",
+          "source": "Arulix Hypnotic Helix screenshot",
+          "capturedAt": "2026-07-15",
+          "gameVersion": null,
+          "reviewedManually": true
+        },
+        "evidenceIds": [
+          "arulix-hypnotic-helix-2026-07-15"
+        ],
+        "tags": [
+          "OVERWHELM",
+          "STAGGER",
+          "CONTROL",
+          "ANY_LANE_TARGET",
+          "SPECIFIC_ROUNDS"
+        ]
+      },
+      {
+        "id": "arulix-battle-cunning",
+        "dragonId": "arulix",
+        "kind": "habit",
+        "name": "Battle Cunning",
+        "abilityClass": "passive",
+        "unlockStarRank": 4,
+        "minimumDragonLevel": null,
+        "positionRequirement": null,
+        "rawDescription": "Start of combat until end of combat: reduce Strength and Intelligence of the same 3 enemies in any lane. The effect is enhanced by Arulix's Instinct. This is direct enemy stat reduction, not a named status.\n\nProgression table (Strength and Intelligence reduction):\nHabit Level 1: -4%\nHabit Level 2: -4.8%\nHabit Level 3: -5.6%\nHabit Level 4: -6.8%\nHabit Level 5: -8%\n\nPower: 250 / 550 / 900 / 1300 / 1800",
+        "verification": {
+          "status": "screenshot-verified",
+          "source": "Arulix Battle Cunning screenshot",
+          "capturedAt": "2026-07-15",
+          "gameVersion": null,
+          "reviewedManually": true
+        },
+        "evidenceIds": [
+          "arulix-battle-cunning-2026-07-15"
+        ],
+        "tags": [
+          "DEBUFF_STRENGTH",
+          "DEBUFF_INTELLIGENCE",
+          "ENHANCED_BY_INSTINCT",
+          "ANY_LANE_TARGET",
+          "ENEMY_DEBUFF"
+        ]
+      },
+      {
+        "id": "arulix-spiral-surge",
+        "dragonId": "arulix",
+        "kind": "habit",
+        "name": "Spiral Surge",
+        "abilityClass": "passive",
+        "unlockStarRank": 6,
+        "minimumDragonLevel": null,
+        "positionRequirement": null,
+        "rawDescription": "Spiral Surge augments Gleaming Spiral. Rounds 1, 2, 3, 5, and 8: deal Physical Damage to 2 enemies in any lane. Round 5 is 1.5× the current upgraded base rate; Round 8 is 2× the current upgraded base rate.\n\nProgression table (base Damage Rate):\nHabit Level 1: +20% (Round 5 +30%; Round 8 +40%)\nHabit Level 2: +24% (Round 5 +36%; Round 8 +48%)\nHabit Level 3: +28% (Round 5 +42%; Round 8 +56%)\nHabit Level 4: +34% (Round 5 +51%; Round 8 +68%)\nHabit Level 5: +40% (Round 5 +60%; Round 8 +80%)\n\nPower: 250 / 550 / 900 / 1300 / 1800",
+        "verification": {
+          "status": "screenshot-verified",
+          "source": "Arulix Spiral Surge screenshot",
+          "capturedAt": "2026-07-15",
+          "gameVersion": null,
+          "reviewedManually": true
+        },
+        "evidenceIds": [
+          "arulix-spiral-surge-2026-07-15"
+        ],
+        "tags": [
+          "PHYSICAL_DAMAGE",
+          "STRENGTH_SCALING",
+          "SPECIFIC_ROUNDS",
+          "ANY_LANE_TARGET",
+          "COMMAND_AUGMENTATION"
+        ]
+      },
+      {
+        "id": "arulix-iron-shell",
+        "dragonId": "arulix",
+        "kind": "habit",
+        "name": "Iron Shell",
+        "abilityClass": "passive",
+        "unlockStarRank": 8,
+        "minimumDragonLevel": null,
+        "positionRequirement": null,
+        "rawDescription": "Start of combat until end of combat: reduce non-Basic-Attack Physical Damage Received and Fire Damage Received of the same 2 other allies in any lane. In a three-dragon formation, this targets both other formation members; no adjacency is required. The Physical protection excludes Basic Attacks; the Fire protection has no shown Basic-Attack exclusion.\n\nThe prose displays -2%; the Habit Level 1 table displays -2.5%. Both values are retained.\n\nProgression table (Damage Received reduction):\nHabit Level 1: -2.5%\nHabit Level 2: -3%\nHabit Level 3: -3.5%\nHabit Level 4: -4.25%\nHabit Level 5: -5%\n\nPower: 250 / 550 / 900 / 1300 / 1800",
+        "verification": {
+          "status": "screenshot-verified",
+          "source": "Arulix Iron Shell screenshot",
+          "capturedAt": "2026-07-15",
+          "gameVersion": null,
+          "reviewedManually": true
+        },
+        "evidenceIds": [
+          "arulix-iron-shell-2026-07-15"
+        ],
+        "tags": [
+          "PHYSICAL_DAMAGE_RECEIVED_DOWN",
+          "FIRE_DAMAGE_RECEIVED_DOWN",
+          "EXCLUDES_BASIC_ATTACKS",
+          "OTHER_ALLIES_TARGET",
+          "ANY_LANE_TARGET"
+        ]
+      },
+      {
+        "id": "arulix-mimicry",
+        "dragonId": "arulix",
+        "kind": "habit",
+        "name": "Mimicry",
+        "abilityClass": "passive",
+        "unlockStarRank": 10,
+        "minimumDragonLevel": null,
+        "positionRequirement": null,
+        "rawDescription": "At the start of each round, evaluate two separate conditional branches.\n\nNegative-effect branch: if any ally is afflicted with Weakened or Vulnerable, chance to copy that same effect to 1 enemy in any lane for 2 rounds. The ally must itself be afflicted; merely applying Vulnerable to an enemy does not qualify.\n\nPositive-effect branch: if any enemy is enhanced by Advantage or Resistance, chance to copy that same effect to 1 ally in any lane for 2 rounds.\n\nBoth branches may be eligible in one round. Copied effects are not removed from the original target. Selection priority with multiple valid effects and exact branch resolution order are not stated. Mimicry is conditional and is not an unconditional source of Weakened, Vulnerable, Advantage, or Resistance.\n\nProgression table (Mimicry chance):\nHabit Level 1: 25%\nHabit Level 2: 32.5%\nHabit Level 3: 40%\nHabit Level 4: 50%\nHabit Level 5: 62.5%\n\nPower: 250 / 580 / 1000 / 1600 / 2300",
+        "verification": {
+          "status": "screenshot-verified",
+          "source": "Arulix Mimicry screenshot",
+          "capturedAt": "2026-07-15",
+          "gameVersion": null,
+          "reviewedManually": true
+        },
+        "evidenceIds": [
+          "arulix-mimicry-2026-07-15"
+        ],
+        "tags": [
+          "CONDITIONAL_STATUS_COPY",
+          "ANY_LANE_TARGET"
+        ]
+      }
+    ],
     "affinities": {
       "Cavalry": "unknown",
       "Shieldbearers": "unknown",
@@ -4948,7 +5387,34 @@ export const dragons = [
       "instinct": null,
       "initiative": null
     },
-    "tags": [],
+    "tags": [
+      "TACTICAL_DAMAGE",
+      "PHYSICAL_DAMAGE",
+      "DAMAGE_DEALT_DOWN",
+      "FIRE_DAMAGE_DEALT_DOWN",
+      "EXCLUDES_BASIC_ATTACKS",
+      "SPECIFIC_ROUNDS",
+      "ANY_LANE_TARGET",
+      "ENHANCED_BY_INSTINCT",
+      "STRENGTH_SCALING",
+      "COMMAND_AUGMENTATION",
+      "STRENGTH_UP",
+      "INTELLIGENCE_UP",
+      "INSTINCT_UP",
+      "DAMAGE_RECEIVED_DOWN",
+      "VANGUARD_REQUIRED",
+      "RIGHT_FLANK_TARGET",
+      "OVERWHELM",
+      "STAGGER",
+      "CONTROL",
+      "DEBUFF_STRENGTH",
+      "DEBUFF_INTELLIGENCE",
+      "ENEMY_DEBUFF",
+      "PHYSICAL_DAMAGE_RECEIVED_DOWN",
+      "FIRE_DAMAGE_RECEIVED_DOWN",
+      "OTHER_ALLIES_TARGET",
+      "CONDITIONAL_STATUS_COPY"
+    ],
     "fieldVerification": {
       "identity": {
         "status": "officially-confirmed",
@@ -4968,6 +5434,34 @@ export const dragons = [
         "status": "officially-confirmed",
         "source": "Official public roster page",
         "capturedAt": "2026-06-23",
+        "gameVersion": null,
+        "reviewedManually": true
+      },
+      "command": {
+        "status": "screenshot-verified",
+        "source": "Arulix Gleaming Spiral screenshots",
+        "capturedAt": "2026-07-15",
+        "gameVersion": null,
+        "reviewedManually": true
+      },
+      "trait": {
+        "status": "screenshot-verified",
+        "source": "Arulix Champion's Brilliance screenshot",
+        "capturedAt": "2026-07-15",
+        "gameVersion": null,
+        "reviewedManually": true
+      },
+      "habits": {
+        "status": "screenshot-verified",
+        "source": "Arulix Habit screenshots",
+        "capturedAt": "2026-07-15",
+        "gameVersion": null,
+        "reviewedManually": true
+      },
+      "affinities": {
+        "status": "unknown",
+        "source": "Affinity icons were not text-verified",
+        "capturedAt": "2026-07-15",
         "gameVersion": null,
         "reviewedManually": true
       }
@@ -5094,12 +5588,205 @@ export const dragons = [
     "firstObservedInGame": null,
     "gameVersion": null,
     "isNew": true,
-    "dataStatus": "official-metadata-only",
-    "lastVerified": "2026-06-23",
-    "notes": null,
-    "command": null,
-    "trait": null,
-    "habits": [],
+    "dataStatus": "community-verified",
+    "lastVerified": "2026-07-15",
+    "notes": "Affinity icons were not text-verified and remain unknown.",
+    "command": {
+      "id": "arrax-sudden-strike",
+      "dragonId": "arrax",
+      "kind": "command",
+      "name": "Sudden Strike",
+      "abilityClass": "active",
+      "unlockStarRank": null,
+      "minimumDragonLevel": null,
+      "positionRequirement": null,
+      "rawDescription": "Rounds 2, 4, 6, and 8: 25% chance to apply Weakened to 1 enemy within adjacency. Double the chance to 50% if the target is afflicted with Bleed. Weakened reduces the target's Damage Dealt by -10%.\n\nRounds 2, 4, 5, 6, and 8: deal Physical Damage to 2 enemies within adjacency at a +40% Damage Rate. Physical Damage is increased by the attacker's Strength and mitigated by the target's Instinct.\n\nThe Weakened target selection and Physical Damage target selection are independent. The screenshot does not state that the Weakened target must overlap a damaged target.",
+      "verification": {
+        "status": "screenshot-verified",
+        "source": "Arrax Sudden Strike screenshots",
+        "capturedAt": "2026-07-15",
+        "gameVersion": null,
+        "reviewedManually": true
+      },
+      "evidenceIds": [
+        "arrax-sudden-strike-2026-07-15"
+      ],
+      "tags": [
+        "WEAKENED",
+        "BLEED_PAYOFF",
+        "PHYSICAL_DAMAGE",
+        "ADJACENT_TARGET",
+        "SPECIFIC_ROUNDS",
+        "STRENGTH_SCALING",
+        "DAMAGE_DEALT_DOWN"
+      ]
+    },
+    "trait": {
+      "id": "arrax-warriors-resilience",
+      "dragonId": "arrax",
+      "kind": "trait",
+      "name": "Warrior's Resilience",
+      "abilityClass": "passive",
+      "unlockStarRank": 1,
+      "minimumDragonLevel": 16,
+      "positionRequirement": "vanguard",
+      "rawDescription": "At Dragon Level 16+ while Arrax is deployed in Vanguard: reduce Arrax Damage Received by -8%. Increase Tactical Damage Dealt of the Left Flank ally by +16%. The Damage Received reduction is self-only.",
+      "verification": {
+        "status": "screenshot-verified",
+        "source": "Arrax Warrior's Resilience screenshot",
+        "capturedAt": "2026-07-15",
+        "gameVersion": null,
+        "reviewedManually": true
+      },
+      "evidenceIds": [
+        "arrax-warriors-resilience-2026-07-15"
+      ],
+      "tags": [
+        "DAMAGE_RECEIVED_DOWN",
+        "TACTICAL_DAMAGE_UP",
+        "LEFT_FLANK_TARGET",
+        "VANGUARD_REQUIRED"
+      ]
+    },
+    "habits": [
+      {
+        "id": "arrax-headlong-into-danger",
+        "dragonId": "arrax",
+        "kind": "habit",
+        "name": "Headlong into Danger",
+        "abilityClass": "passive",
+        "unlockStarRank": 2,
+        "minimumDragonLevel": null,
+        "positionRequirement": null,
+        "rawDescription": "Start of Round 4 for 4 rounds: increase Arrax Strength by +25%, Initiative by +10%, and Physical Damage Dealt by +25%. Also increase Arrax Physical Damage Received and reduce Arrax Instinct. All effects are self-only. The penalties are not Vulnerable or Weakened. At Habit Level 5 the displayed penalties become zero while the positive effects remain.\n\nProgression table (Physical Damage Received; Instinct):\nHabit Level 1: +10%; -40%\nHabit Level 2: +8%; -32%\nHabit Level 3: +6%; -24%\nHabit Level 4: +3%; -12%\nHabit Level 5: 0%; 0%\n\nPower: 250 / 550 / 900 / 1300 / 1800",
+        "verification": {
+          "status": "screenshot-verified",
+          "source": "Arrax Headlong into Danger screenshot",
+          "capturedAt": "2026-07-15",
+          "gameVersion": null,
+          "reviewedManually": true
+        },
+        "evidenceIds": [
+          "arrax-headlong-into-danger-2026-07-15"
+        ],
+        "tags": [
+          "STRENGTH_UP",
+          "BUFF_INITIATIVE",
+          "PHYSICAL_DAMAGE_UP",
+          "PHYSICAL_DAMAGE_RECEIVED_UP",
+          "DEBUFF_INSTINCTS",
+          "BUFF_SELF"
+        ]
+      },
+      {
+        "id": "arrax-stone-bulwark",
+        "dragonId": "arrax",
+        "kind": "habit",
+        "name": "Stone Bulwark",
+        "abilityClass": "passive",
+        "unlockStarRank": 4,
+        "minimumDragonLevel": null,
+        "positionRequirement": null,
+        "rawDescription": "Start of combat until end of combat: reduce Tactical Damage Received and Fire Damage Received of the same 2 other allies in any lane. In a three-dragon formation, this targets both other formation members; no adjacency is required.\n\nThe prose displays -2%; the Habit Level 1 table displays -2.5%. Both values are retained.\n\nProgression table (Tactical and Fire Damage Received):\nHabit Level 1: -2.5%\nHabit Level 2: -3%\nHabit Level 3: -3.5%\nHabit Level 4: -4.25%\nHabit Level 5: -5%\n\nPower: 250 / 550 / 900 / 1300 / 1800",
+        "verification": {
+          "status": "screenshot-verified",
+          "source": "Arrax Stone Bulwark screenshot",
+          "capturedAt": "2026-07-15",
+          "gameVersion": null,
+          "reviewedManually": true
+        },
+        "evidenceIds": [
+          "arrax-stone-bulwark-2026-07-15"
+        ],
+        "tags": [
+          "TACTICAL_DAMAGE_RECEIVED_DOWN",
+          "FIRE_DAMAGE_RECEIVED_DOWN",
+          "OTHER_ALLIES_TARGET",
+          "ANY_LANE_TARGET"
+        ]
+      },
+      {
+        "id": "arrax-adaptive-guard",
+        "dragonId": "arrax",
+        "kind": "habit",
+        "name": "Adaptive Guard",
+        "abilityClass": "passive",
+        "unlockStarRank": 6,
+        "minimumDragonLevel": null,
+        "positionRequirement": null,
+        "rawDescription": "When leading Archers, at the start of Round 4 reduce Tactical Damage Received of 3 allies in any lane for 4 rounds. When leading Shieldbearers, at the start of Round 4 reduce Fire Damage Received of 3 allies in any lane for 4 rounds. These are separate troop-gated branches. Formation Builder has no selected troop context, so neither branch is treated as active or scored and neither creates a utilization penalty.\n\nProgression table (Damage Received reduction):\nHabit Level 1: -9%\nHabit Level 2: -10.8%\nHabit Level 3: -12.6%\nHabit Level 4: -15.3%\nHabit Level 5: -18%\n\nPower: 250 / 550 / 900 / 1300 / 1800",
+        "verification": {
+          "status": "screenshot-verified",
+          "source": "Arrax Adaptive Guard screenshot",
+          "capturedAt": "2026-07-15",
+          "gameVersion": null,
+          "reviewedManually": true
+        },
+        "evidenceIds": [
+          "arrax-adaptive-guard-2026-07-15"
+        ],
+        "tags": [
+          "TACTICAL_DAMAGE_RECEIVED_DOWN",
+          "FIRE_DAMAGE_RECEIVED_DOWN",
+          "TROOP_TYPE_CONDITION",
+          "BUFF_ALLIES",
+          "ANY_LANE_TARGET"
+        ]
+      },
+      {
+        "id": "arrax-fire-ward",
+        "dragonId": "arrax",
+        "kind": "habit",
+        "name": "Fire Ward",
+        "abilityClass": "passive",
+        "unlockStarRank": 8,
+        "minimumDragonLevel": null,
+        "positionRequirement": null,
+        "rawDescription": "Start of combat: grant Arrax 1 stack of Fire Ward and grant 1 other adjacent ally 1 stack of Fire Ward. Start of each round, if the selected target ally retreated in the previous round, grant Arrax 1 additional stack of Fire Ward. Each stack reduces Fire Damage Received and lasts until end of combat. The maximum stack count is not stated; no cap is inferred. The ally receives the initial stack, while subsequent retreat-triggered stacks are granted to Arrax. Fire Ward is a named beneficial status and is not offensive Fire Damage support.\n\nProgression table (Fire Damage Received per stack):\nHabit Level 1: -5%\nHabit Level 2: -6%\nHabit Level 3: -7%\nHabit Level 4: -8.5%\nHabit Level 5: -10%\n\nPower: 250 / 550 / 900 / 1300 / 1800",
+        "verification": {
+          "status": "screenshot-verified",
+          "source": "Arrax Fire Ward screenshot",
+          "capturedAt": "2026-07-15",
+          "gameVersion": null,
+          "reviewedManually": true
+        },
+        "evidenceIds": [
+          "arrax-fire-ward-2026-07-15"
+        ],
+        "tags": [
+          "FIRE_WARD",
+          "FIRE_DAMAGE_RECEIVED_DOWN",
+          "ADJACENT_TARGET",
+          "OTHER_ALLIES_TARGET"
+        ]
+      },
+      {
+        "id": "arrax-turn-the-line",
+        "dragonId": "arrax",
+        "kind": "habit",
+        "name": "Turn the Line",
+        "abilityClass": "passive",
+        "unlockStarRank": 10,
+        "minimumDragonLevel": null,
+        "positionRequirement": null,
+        "rawDescription": "Start of Round 4 for 4 rounds: increase Physical Damage Received of 2 enemies within adjacency. This is direct typed Physical Damage Received amplification, not the named Vulnerable status.\n\nProgression table (Physical Damage Received):\nHabit Level 1: +9%\nHabit Level 2: +11.7%\nHabit Level 3: +14.4%\nHabit Level 4: +18%\nHabit Level 5: +22.5%\n\nPower: 250 / 580 / 1000 / 1600 / 2300",
+        "verification": {
+          "status": "screenshot-verified",
+          "source": "Arrax Turn the Line screenshot",
+          "capturedAt": "2026-07-15",
+          "gameVersion": null,
+          "reviewedManually": true
+        },
+        "evidenceIds": [
+          "arrax-turn-the-line-2026-07-15"
+        ],
+        "tags": [
+          "PHYSICAL_DAMAGE_RECEIVED_UP",
+          "ADJACENT_TARGET",
+          "ENEMY_DEBUFF"
+        ]
+      }
+    ],
     "affinities": {
       "Cavalry": "unknown",
       "Shieldbearers": "unknown",
@@ -5113,7 +5800,33 @@ export const dragons = [
       "instinct": null,
       "initiative": null
     },
-    "tags": [],
+    "tags": [
+      "WEAKENED",
+      "BLEED_PAYOFF",
+      "PHYSICAL_DAMAGE",
+      "ADJACENT_TARGET",
+      "SPECIFIC_ROUNDS",
+      "STRENGTH_SCALING",
+      "DAMAGE_DEALT_DOWN",
+      "DAMAGE_RECEIVED_DOWN",
+      "TACTICAL_DAMAGE_UP",
+      "LEFT_FLANK_TARGET",
+      "VANGUARD_REQUIRED",
+      "STRENGTH_UP",
+      "BUFF_INITIATIVE",
+      "PHYSICAL_DAMAGE_UP",
+      "PHYSICAL_DAMAGE_RECEIVED_UP",
+      "DEBUFF_INSTINCTS",
+      "BUFF_SELF",
+      "TACTICAL_DAMAGE_RECEIVED_DOWN",
+      "FIRE_DAMAGE_RECEIVED_DOWN",
+      "OTHER_ALLIES_TARGET",
+      "ANY_LANE_TARGET",
+      "TROOP_TYPE_CONDITION",
+      "BUFF_ALLIES",
+      "FIRE_WARD",
+      "ENEMY_DEBUFF"
+    ],
     "fieldVerification": {
       "identity": {
         "status": "officially-confirmed",
@@ -5133,6 +5846,34 @@ export const dragons = [
         "status": "officially-confirmed",
         "source": "Official public roster page",
         "capturedAt": "2026-06-23",
+        "gameVersion": null,
+        "reviewedManually": true
+      },
+      "command": {
+        "status": "screenshot-verified",
+        "source": "Arrax Sudden Strike screenshots",
+        "capturedAt": "2026-07-15",
+        "gameVersion": null,
+        "reviewedManually": true
+      },
+      "trait": {
+        "status": "screenshot-verified",
+        "source": "Arrax Warrior's Resilience screenshot",
+        "capturedAt": "2026-07-15",
+        "gameVersion": null,
+        "reviewedManually": true
+      },
+      "habits": {
+        "status": "screenshot-verified",
+        "source": "Arrax Habit screenshots",
+        "capturedAt": "2026-07-15",
+        "gameVersion": null,
+        "reviewedManually": true
+      },
+      "affinities": {
+        "status": "unknown",
+        "source": "Affinity icons were not text-verified",
+        "capturedAt": "2026-07-15",
         "gameVersion": null,
         "reviewedManually": true
       }

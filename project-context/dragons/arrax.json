@@ -5,11 +5,199 @@
   "rarity": "Rare",
   "breed": "Warrior",
   "rosterSourceStatus": "official-website",
-  "dataStatus": "official-metadata-only",
-  "lastVerified": "2026-06-23",
-  "profileCompleteness": "metadata-only",
+  "dataStatus": "community-verified",
+  "lastVerified": "2026-07-15",
+  "profileCompleteness": "detailed-abilities",
   "officialProfileUrl": "https://gotdragonfire.com/dragons/arrax/",
-  "abilities": [],
+  "abilities": [
+    {
+      "id": "arrax-sudden-strike",
+      "kind": "command",
+      "name": "Sudden Strike",
+      "abilityClass": "active",
+      "unlockStarRank": null,
+      "minimumDragonLevel": null,
+      "positionRequirement": null,
+      "verification": {
+        "status": "screenshot-verified",
+        "source": "Arrax Sudden Strike screenshots",
+        "capturedAt": "2026-07-15",
+        "gameVersion": null,
+        "reviewedManually": true
+      },
+      "evidenceIds": [
+        "arrax-sudden-strike-2026-07-15"
+      ],
+      "tags": [
+        "WEAKENED",
+        "BLEED_PAYOFF",
+        "PHYSICAL_DAMAGE",
+        "ADJACENT_TARGET",
+        "SPECIFIC_ROUNDS",
+        "STRENGTH_SCALING",
+        "DAMAGE_DEALT_DOWN"
+      ],
+      "rawDescription": "Rounds 2, 4, 6, and 8: 25% chance to apply Weakened to 1 enemy within adjacency. Double the chance to 50% if the target is afflicted with Bleed. Weakened reduces the target's Damage Dealt by -10%.\n\nRounds 2, 4, 5, 6, and 8: deal Physical Damage to 2 enemies within adjacency at a +40% Damage Rate. Physical Damage is increased by the attacker's Strength and mitigated by the target's Instinct.\n\nThe Weakened target selection and Physical Damage target selection are independent. The screenshot does not state that the Weakened target must overlap a damaged target."
+    },
+    {
+      "id": "arrax-warriors-resilience",
+      "kind": "trait",
+      "name": "Warrior's Resilience",
+      "abilityClass": "passive",
+      "unlockStarRank": 1,
+      "minimumDragonLevel": 16,
+      "positionRequirement": "vanguard",
+      "verification": {
+        "status": "screenshot-verified",
+        "source": "Arrax Warrior's Resilience screenshot",
+        "capturedAt": "2026-07-15",
+        "gameVersion": null,
+        "reviewedManually": true
+      },
+      "evidenceIds": [
+        "arrax-warriors-resilience-2026-07-15"
+      ],
+      "tags": [
+        "DAMAGE_RECEIVED_DOWN",
+        "TACTICAL_DAMAGE_UP",
+        "LEFT_FLANK_TARGET",
+        "VANGUARD_REQUIRED"
+      ],
+      "rawDescription": "At Dragon Level 16+ while Arrax is deployed in Vanguard: reduce Arrax Damage Received by -8%. Increase Tactical Damage Dealt of the Left Flank ally by +16%. The Damage Received reduction is self-only."
+    },
+    {
+      "id": "arrax-headlong-into-danger",
+      "kind": "habit",
+      "name": "Headlong into Danger",
+      "abilityClass": "passive",
+      "unlockStarRank": 2,
+      "minimumDragonLevel": null,
+      "positionRequirement": null,
+      "verification": {
+        "status": "screenshot-verified",
+        "source": "Arrax Headlong into Danger screenshot",
+        "capturedAt": "2026-07-15",
+        "gameVersion": null,
+        "reviewedManually": true
+      },
+      "evidenceIds": [
+        "arrax-headlong-into-danger-2026-07-15"
+      ],
+      "tags": [
+        "STRENGTH_UP",
+        "BUFF_INITIATIVE",
+        "PHYSICAL_DAMAGE_UP",
+        "PHYSICAL_DAMAGE_RECEIVED_UP",
+        "DEBUFF_INSTINCTS",
+        "BUFF_SELF"
+      ],
+      "rawDescription": "Start of Round 4 for 4 rounds: increase Arrax Strength by +25%, Initiative by +10%, and Physical Damage Dealt by +25%. Also increase Arrax Physical Damage Received and reduce Arrax Instinct. All effects are self-only. The penalties are not Vulnerable or Weakened. At Habit Level 5 the displayed penalties become zero while the positive effects remain.\n\nProgression table (Physical Damage Received; Instinct):\nHabit Level 1: +10%; -40%\nHabit Level 2: +8%; -32%\nHabit Level 3: +6%; -24%\nHabit Level 4: +3%; -12%\nHabit Level 5: 0%; 0%\n\nPower: 250 / 550 / 900 / 1300 / 1800"
+    },
+    {
+      "id": "arrax-stone-bulwark",
+      "kind": "habit",
+      "name": "Stone Bulwark",
+      "abilityClass": "passive",
+      "unlockStarRank": 4,
+      "minimumDragonLevel": null,
+      "positionRequirement": null,
+      "verification": {
+        "status": "screenshot-verified",
+        "source": "Arrax Stone Bulwark screenshot",
+        "capturedAt": "2026-07-15",
+        "gameVersion": null,
+        "reviewedManually": true
+      },
+      "evidenceIds": [
+        "arrax-stone-bulwark-2026-07-15"
+      ],
+      "tags": [
+        "TACTICAL_DAMAGE_RECEIVED_DOWN",
+        "FIRE_DAMAGE_RECEIVED_DOWN",
+        "OTHER_ALLIES_TARGET",
+        "ANY_LANE_TARGET"
+      ],
+      "rawDescription": "Start of combat until end of combat: reduce Tactical Damage Received and Fire Damage Received of the same 2 other allies in any lane. In a three-dragon formation, this targets both other formation members; no adjacency is required.\n\nThe prose displays -2%; the Habit Level 1 table displays -2.5%. Both values are retained.\n\nProgression table (Tactical and Fire Damage Received):\nHabit Level 1: -2.5%\nHabit Level 2: -3%\nHabit Level 3: -3.5%\nHabit Level 4: -4.25%\nHabit Level 5: -5%\n\nPower: 250 / 550 / 900 / 1300 / 1800"
+    },
+    {
+      "id": "arrax-adaptive-guard",
+      "kind": "habit",
+      "name": "Adaptive Guard",
+      "abilityClass": "passive",
+      "unlockStarRank": 6,
+      "minimumDragonLevel": null,
+      "positionRequirement": null,
+      "verification": {
+        "status": "screenshot-verified",
+        "source": "Arrax Adaptive Guard screenshot",
+        "capturedAt": "2026-07-15",
+        "gameVersion": null,
+        "reviewedManually": true
+      },
+      "evidenceIds": [
+        "arrax-adaptive-guard-2026-07-15"
+      ],
+      "tags": [
+        "TACTICAL_DAMAGE_RECEIVED_DOWN",
+        "FIRE_DAMAGE_RECEIVED_DOWN",
+        "TROOP_TYPE_CONDITION",
+        "BUFF_ALLIES",
+        "ANY_LANE_TARGET"
+      ],
+      "rawDescription": "When leading Archers, at the start of Round 4 reduce Tactical Damage Received of 3 allies in any lane for 4 rounds. When leading Shieldbearers, at the start of Round 4 reduce Fire Damage Received of 3 allies in any lane for 4 rounds. These are separate troop-gated branches. Formation Builder has no selected troop context, so neither branch is treated as active or scored and neither creates a utilization penalty.\n\nProgression table (Damage Received reduction):\nHabit Level 1: -9%\nHabit Level 2: -10.8%\nHabit Level 3: -12.6%\nHabit Level 4: -15.3%\nHabit Level 5: -18%\n\nPower: 250 / 550 / 900 / 1300 / 1800"
+    },
+    {
+      "id": "arrax-fire-ward",
+      "kind": "habit",
+      "name": "Fire Ward",
+      "abilityClass": "passive",
+      "unlockStarRank": 8,
+      "minimumDragonLevel": null,
+      "positionRequirement": null,
+      "verification": {
+        "status": "screenshot-verified",
+        "source": "Arrax Fire Ward screenshot",
+        "capturedAt": "2026-07-15",
+        "gameVersion": null,
+        "reviewedManually": true
+      },
+      "evidenceIds": [
+        "arrax-fire-ward-2026-07-15"
+      ],
+      "tags": [
+        "FIRE_WARD",
+        "FIRE_DAMAGE_RECEIVED_DOWN",
+        "ADJACENT_TARGET",
+        "OTHER_ALLIES_TARGET"
+      ],
+      "rawDescription": "Start of combat: grant Arrax 1 stack of Fire Ward and grant 1 other adjacent ally 1 stack of Fire Ward. Start of each round, if the selected target ally retreated in the previous round, grant Arrax 1 additional stack of Fire Ward. Each stack reduces Fire Damage Received and lasts until end of combat. The maximum stack count is not stated; no cap is inferred. The ally receives the initial stack, while subsequent retreat-triggered stacks are granted to Arrax. Fire Ward is a named beneficial status and is not offensive Fire Damage support.\n\nProgression table (Fire Damage Received per stack):\nHabit Level 1: -5%\nHabit Level 2: -6%\nHabit Level 3: -7%\nHabit Level 4: -8.5%\nHabit Level 5: -10%\n\nPower: 250 / 550 / 900 / 1300 / 1800"
+    },
+    {
+      "id": "arrax-turn-the-line",
+      "kind": "habit",
+      "name": "Turn the Line",
+      "abilityClass": "passive",
+      "unlockStarRank": 10,
+      "minimumDragonLevel": null,
+      "positionRequirement": null,
+      "verification": {
+        "status": "screenshot-verified",
+        "source": "Arrax Turn the Line screenshot",
+        "capturedAt": "2026-07-15",
+        "gameVersion": null,
+        "reviewedManually": true
+      },
+      "evidenceIds": [
+        "arrax-turn-the-line-2026-07-15"
+      ],
+      "tags": [
+        "PHYSICAL_DAMAGE_RECEIVED_UP",
+        "ADJACENT_TARGET",
+        "ENEMY_DEBUFF"
+      ],
+      "rawDescription": "Start of Round 4 for 4 rounds: increase Physical Damage Received of 2 enemies within adjacency. This is direct typed Physical Damage Received amplification, not the named Vulnerable status.\n\nProgression table (Physical Damage Received):\nHabit Level 1: +9%\nHabit Level 2: +11.7%\nHabit Level 3: +14.4%\nHabit Level 4: +18%\nHabit Level 5: +22.5%\n\nPower: 250 / 580 / 1000 / 1600 / 2300"
+    }
+  ],
   "affinities": {
     "Cavalry": "unknown",
     "Shieldbearers": "unknown",
@@ -38,9 +226,45 @@
       "capturedAt": "2026-06-23",
       "gameVersion": null,
       "reviewedManually": true
+    },
+    "command": {
+      "status": "screenshot-verified",
+      "source": "Arrax Sudden Strike screenshots",
+      "capturedAt": "2026-07-15",
+      "gameVersion": null,
+      "reviewedManually": true
+    },
+    "trait": {
+      "status": "screenshot-verified",
+      "source": "Arrax Warrior's Resilience screenshot",
+      "capturedAt": "2026-07-15",
+      "gameVersion": null,
+      "reviewedManually": true
+    },
+    "habits": {
+      "status": "screenshot-verified",
+      "source": "Arrax Habit screenshots",
+      "capturedAt": "2026-07-15",
+      "gameVersion": null,
+      "reviewedManually": true
+    },
+    "affinities": {
+      "status": "unknown",
+      "source": "Affinity icons were not text-verified",
+      "capturedAt": "2026-07-15",
+      "gameVersion": null,
+      "reviewedManually": true
     }
   },
-  "evidenceIds": [],
-  "simpleProfileId": null,
-  "simpleProfileStatus": "metadata-only-unmapped"
+  "evidenceIds": [
+    "arrax-adaptive-guard-2026-07-15",
+    "arrax-fire-ward-2026-07-15",
+    "arrax-headlong-into-danger-2026-07-15",
+    "arrax-stone-bulwark-2026-07-15",
+    "arrax-sudden-strike-2026-07-15",
+    "arrax-turn-the-line-2026-07-15",
+    "arrax-warriors-resilience-2026-07-15"
+  ],
+  "simpleProfileId": "arrax",
+  "simpleProfileStatus": "curated"
 }

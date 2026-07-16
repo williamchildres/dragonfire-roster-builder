@@ -477,7 +477,15 @@ function matchingSetupTag(provider: SynergySignal, beneficiary: SynergySignal): 
 }
 
 function matchingSupportTag(provider: SynergySignal, beneficiary: SynergySignal): SynergyTagMatch | null {
+  if (!damageScopesAreCompatible(provider, beneficiary)) {
+    return null;
+  }
+
   return matchingTagFromLists(providedTags(provider), supportableTags(beneficiary));
+}
+
+function damageScopesAreCompatible(provider: SynergySignal, beneficiary: SynergySignal): boolean {
+  return provider.damageScope === undefined || provider.damageScope === beneficiary.damageScope;
 }
 
 function matchingTagFromLists(providerTags: SynergyTag[], beneficiaryTags: SynergyTag[]): SynergyTagMatch | null {

@@ -549,6 +549,15 @@
         "confidence": "verified"
       },
       {
+        "id": "kalspire-tactical-strike-bleed",
+        "tag": "status:bleed",
+        "abilityId": "kalspire-tactical-strike",
+        "abilityName": "Tactical Strike",
+        "description": "applies Bleed",
+        "friendlyScope": "formation",
+        "confidence": "verified"
+      },
+      {
         "id": "kalspire-tactical-assault-physical",
         "tag": "damage:physical",
         "scalesWith": [
@@ -1840,6 +1849,267 @@
           "minimumDragonLevel": 16
         },
         "description": "Sentinel's Wit requires Vanguard",
+        "confidence": "verified"
+      }
+    ]
+  },
+  {
+    "dragonId": "antares",
+    "dragonName": "Antares",
+    "outputs": [
+      {
+        "id": "antares-relentless-pursuit-fire",
+        "tag": "damage:fire",
+        "scalesWith": [
+          "stat:intelligence"
+        ],
+        "abilityId": "antares-relentless-pursuit",
+        "abilityName": "Relentless Pursuit",
+        "description": "deals Fire Damage using Intelligence, including one Slow-conditioned augmentation at 6 Stars",
+        "confidence": "verified"
+      },
+      {
+        "id": "antares-relentless-pursuit-vulnerable",
+        "tag": "status:vulnerable",
+        "abilityId": "antares-relentless-pursuit",
+        "abilityName": "Relentless Pursuit",
+        "description": "applies Vulnerable",
+        "friendlyScope": "formation",
+        "confidence": "verified"
+      }
+    ],
+    "supports": [
+      {
+        "id": "antares-hunters-wrath-right-stats",
+        "tag": "stat:strength",
+        "tags": [
+          "stat:strength",
+          "stat:initiative"
+        ],
+        "abilityId": "antares-hunters-wrath",
+        "abilityName": "Hunter's Wrath",
+        "description": "improves Strength and Initiative of the Right Flank ally",
+        "unlock": {
+          "minimumDragonLevel": 16
+        },
+        "requiredSelfPosition": "vanguard",
+        "requiredRecipientPosition": "right-flank",
+        "friendlyScope": "formation",
+        "confidence": "verified"
+      },
+      {
+        "id": "antares-blazing-onslaught-fire-vulnerability",
+        "tag": "damage:fire",
+        "abilityId": "antares-blazing-onslaught",
+        "abilityName": "Blazing Onslaught",
+        "description": "increases enemy Fire Damage Received",
+        "unlock": {
+          "minimumStarRank": 2
+        },
+        "friendlyScope": "formation",
+        "confidence": "verified"
+      },
+      {
+        "id": "antares-blazing-onslaught-non-basic-physical-vulnerability",
+        "tag": "damage:physical",
+        "damageScope": "non-basic-attack",
+        "abilityId": "antares-blazing-onslaught",
+        "abilityName": "Blazing Onslaught",
+        "description": "increases enemy non-Basic-Attack Physical Damage Received",
+        "unlock": {
+          "minimumStarRank": 2
+        },
+        "friendlyScope": "formation",
+        "confidence": "verified"
+      }
+    ],
+    "benefitsFrom": [
+      {
+        "id": "antares-fiery-precision-slow-payoff",
+        "tag": "status:slow",
+        "abilityId": "antares-fiery-precision",
+        "abilityName": "Fiery Precision",
+        "description": "Slow enables the added Relentless Pursuit Fire attack",
+        "unlock": {
+          "minimumStarRank": 6
+        },
+        "friendlyScope": "formation",
+        "confidence": "verified"
+      }
+    ],
+    "positionClaims": [
+      {
+        "id": "antares-hunters-wrath-vanguard",
+        "abilityId": "antares-hunters-wrath",
+        "abilityName": "Hunter's Wrath",
+        "requiredPosition": "vanguard",
+        "unlock": {
+          "minimumDragonLevel": 16
+        },
+        "description": "Hunter's Wrath requires Vanguard",
+        "confidence": "verified"
+      }
+    ]
+  },
+  {
+    "dragonId": "arulix",
+    "dragonName": "Arulix",
+    "outputs": [
+      {
+        "id": "arulix-gleaming-spiral-tactical",
+        "tag": "damage:tactical",
+        "scalesWith": [
+          "stat:instinct"
+        ],
+        "abilityId": "arulix-gleaming-spiral",
+        "abilityName": "Gleaming Spiral",
+        "description": "deals Tactical Damage using Instinct",
+        "confidence": "verified"
+      },
+      {
+        "id": "arulix-gleaming-spiral-physical",
+        "tag": "damage:physical",
+        "damageScope": "non-basic-attack",
+        "scalesWith": [
+          "stat:strength"
+        ],
+        "abilityId": "arulix-gleaming-spiral",
+        "abilityName": "Gleaming Spiral",
+        "description": "deals Physical Damage using Strength through the Spiral Surge augmentation",
+        "unlock": {
+          "minimumStarRank": 6
+        },
+        "confidence": "verified"
+      },
+      {
+        "id": "arulix-hypnotic-helix-overwhelm",
+        "tag": "status:overwhelm",
+        "abilityId": "arulix-hypnotic-helix",
+        "abilityName": "Hypnotic Helix",
+        "description": "applies Overwhelm as Control",
+        "unlock": {
+          "minimumStarRank": 2
+        },
+        "friendlyScope": "formation",
+        "confidence": "verified"
+      },
+      {
+        "id": "arulix-hypnotic-helix-stagger",
+        "tag": "status:stagger",
+        "abilityId": "arulix-hypnotic-helix",
+        "abilityName": "Hypnotic Helix",
+        "description": "applies Stagger as Control",
+        "unlock": {
+          "minimumStarRank": 2
+        },
+        "friendlyScope": "formation",
+        "confidence": "verified"
+      }
+    ],
+    "supports": [],
+    "benefitsFrom": [
+      {
+        "id": "arulix-battle-cunning-instinct-payoff",
+        "tag": "stat:instinct",
+        "abilityId": "arulix-battle-cunning",
+        "abilityName": "Battle Cunning",
+        "description": "Instinct improves Battle Cunning",
+        "unlock": {
+          "minimumStarRank": 4
+        },
+        "friendlyScope": "formation",
+        "confidence": "verified"
+      }
+    ],
+    "positionClaims": [
+      {
+        "id": "arulix-champions-brilliance-vanguard",
+        "abilityId": "arulix-champions-brilliance",
+        "abilityName": "Champion's Brilliance",
+        "requiredPosition": "vanguard",
+        "unlock": {
+          "minimumDragonLevel": 16
+        },
+        "description": "Champion's Brilliance requires Vanguard",
+        "confidence": "verified"
+      }
+    ]
+  },
+  {
+    "dragonId": "arrax",
+    "dragonName": "Arrax",
+    "outputs": [
+      {
+        "id": "arrax-sudden-strike-physical",
+        "tag": "damage:physical",
+        "damageScope": "non-basic-attack",
+        "scalesWith": [
+          "stat:strength"
+        ],
+        "abilityId": "arrax-sudden-strike",
+        "abilityName": "Sudden Strike",
+        "description": "deals Physical Damage using Strength",
+        "confidence": "verified"
+      },
+      {
+        "id": "arrax-sudden-strike-weakened",
+        "tag": "status:weakened",
+        "abilityId": "arrax-sudden-strike",
+        "abilityName": "Sudden Strike",
+        "description": "applies Weakened",
+        "friendlyScope": "formation",
+        "confidence": "verified"
+      }
+    ],
+    "supports": [
+      {
+        "id": "arrax-warriors-resilience-left-tactical",
+        "tag": "damage:tactical",
+        "abilityId": "arrax-warriors-resilience",
+        "abilityName": "Warrior's Resilience",
+        "description": "improves Tactical Damage of the Left Flank ally",
+        "unlock": {
+          "minimumDragonLevel": 16
+        },
+        "requiredSelfPosition": "vanguard",
+        "requiredRecipientPosition": "left-flank",
+        "friendlyScope": "formation",
+        "confidence": "verified"
+      },
+      {
+        "id": "arrax-turn-the-line-physical",
+        "tag": "damage:physical",
+        "abilityId": "arrax-turn-the-line",
+        "abilityName": "Turn the Line",
+        "description": "increases enemy Physical Damage Received",
+        "unlock": {
+          "minimumStarRank": 10
+        },
+        "friendlyScope": "formation",
+        "confidence": "verified"
+      }
+    ],
+    "benefitsFrom": [
+      {
+        "id": "arrax-sudden-strike-bleed-payoff",
+        "tag": "status:bleed",
+        "abilityId": "arrax-sudden-strike",
+        "abilityName": "Sudden Strike",
+        "description": "Bleed doubles the Weakened application chance",
+        "friendlyScope": "formation",
+        "confidence": "verified"
+      }
+    ],
+    "positionClaims": [
+      {
+        "id": "arrax-warriors-resilience-vanguard",
+        "abilityId": "arrax-warriors-resilience",
+        "abilityName": "Warrior's Resilience",
+        "requiredPosition": "vanguard",
+        "unlock": {
+          "minimumDragonLevel": 16
+        },
+        "description": "Warrior's Resilience requires Vanguard",
         "confidence": "verified"
       }
     ]

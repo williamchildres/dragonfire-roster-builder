@@ -2,7 +2,8 @@ import { useState } from 'react';
 import type { AbilityDefinition, Dragon, FormationPosition, OwnedDragon, TroopType } from '../models/dragon';
 import { FORMATION_POSITIONS } from '../models/dragon';
 import { positionLabels } from '../services/teamShare';
-import { summarizeAbility } from './dragonDetailPresentation';
+import type { DragonSynergyProfile } from '../synergy/types';
+import { summarizeAbilityForProgression } from './dragonDetailPresentation';
 import type { FormationSignalChip } from './formationCardPresentation';
 
 const unknown = 'Not verified yet';
@@ -11,6 +12,7 @@ export function SimpleFormationCard({
   position,
   dragon,
   rosterEntry,
+  profile,
   signalChips,
   onChooseDragon,
   onOpenDetails,
@@ -20,6 +22,7 @@ export function SimpleFormationCard({
   position: FormationPosition;
   dragon: Dragon | null;
   rosterEntry?: OwnedDragon;
+  profile?: DragonSynergyProfile;
   signalChips: {
     damageProfile: FormationSignalChip[];
     provides: FormationSignalChip[];
@@ -58,7 +61,7 @@ export function SimpleFormationCard({
           <FormationSignalPanel title="Damage profile" chips={signalChips.damageProfile} fallback="No current damage profile recorded." />
           <FormationSignalPanel title="Provides" chips={signalChips.provides} fallback="No formation-wide output profile recorded." />
           <FormationSignalPanel title="Synergy needs" chips={signalChips.benefitsFrom} fallback="No mapped incoming synergy yet." />
-          <SimpleCommandPanel command={dragon.command} />
+          <SimpleCommandPanel command={dragon.command} profile={profile} rosterEntry={rosterEntry} />
           <SimpleTraitPanel trait={dragon.trait} position={position} />
           <DragonAffinityStrip dragonName={dragon.name} affinities={dragon.affinities} />
           <div className="formation-card-actions">
@@ -94,7 +97,15 @@ export function SimpleFormationCard({
   );
 }
 
-function SimpleCommandPanel({ command }: { command: Dragon['command'] }) {
+function SimpleCommandPanel({
+  command,
+  profile,
+  rosterEntry,
+}: {
+  command: Dragon['command'];
+  profile?: DragonSynergyProfile;
+  rosterEntry?: OwnedDragon;
+}) {
   if (!command) {
     return (
       <section className="card-mini-section command-panel" aria-label="Command">
@@ -110,7 +121,7 @@ function SimpleCommandPanel({ command }: { command: Dragon['command'] }) {
         <h4>{command.name}</h4>
         <AbilityTypeBadge label="Command" />
       </div>
-      <AbilitySummary ability={command} />
+      <AbilitySummary ability={command} profile={profile} rosterEntry={rosterEntry} />
       {command.rawDescription ? <RawDescription text={command.rawDescription} /> : <p>{unknown}</p>}
     </section>
   );
@@ -188,8 +199,19 @@ function AbilityTypeBadge({ label }: { label: 'Command' | 'Vanguard Trait' }) {
   );
 }
 
-function AbilitySummary({ ability }: { ability: AbilityDefinition }) {
-  const summary = summarizeAbility(ability);
+function AbilitySummary({
+  ability,
+  profile,
+  rosterEntry,
+}: {
+  ability: AbilityDefinition;
+  profile?: DragonSynergyProfile;
+  rosterEntry?: OwnedDragon;
+}) {
+  const summary = summarizeAbilityForProgression(ability, profile?.outputs ?? [], {
+    starRank: rosterEntry?.starRank ?? null,
+    dragonLevel: rosterEntry?.reignLevel ?? null,
+  });
 
   return (
     <div className="ability-summary compact-ability-summary">

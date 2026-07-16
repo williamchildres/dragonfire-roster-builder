@@ -11,6 +11,7 @@ import type {
 import {
   BENEFIT_SIGNAL_LABELS,
   labelPriority,
+  labelForSignalTag,
   OUTPUT_SIGNAL_LABELS,
   SUPPORT_SIGNAL_LABELS,
 } from './dragonDetailPresentation';
@@ -243,7 +244,7 @@ function selectedUseForProviderSignal(
     if (isSupportSignal(provider.profile, signal)) {
       const matchingOutput = recipient.profile.outputs.find(
         (output) =>
-          matchingSupportTagForDisplayedTag(displayedTag, output) &&
+          matchingSupportTagForDisplayedTag(signal, displayedTag, output) &&
           relationshipIsCurrentlyActive(provider, signal, recipient, output, progression),
       );
       if (matchingOutput) {
@@ -253,7 +254,7 @@ function selectedUseForProviderSignal(
       const matchingBenefit = recipient.profile.benefitsFrom.find(
         (benefit) =>
           benefit.tag.startsWith('stat:') &&
-          matchingSupportTagForDisplayedTag(displayedTag, benefit) &&
+          matchingSupportTagForDisplayedTag(signal, displayedTag, benefit) &&
           relationshipIsCurrentlyActive(provider, signal, recipient, benefit, progression),
       );
       if (matchingBenefit) {
@@ -398,6 +399,10 @@ function supportableTags(signal: SynergySignal): SynergyTag[] {
 }
 
 function matchingSupportTag(provider: SynergySignal, beneficiary: SynergySignal): boolean {
+  if (!damageScopesAreCompatible(provider, beneficiary)) {
+    return false;
+  }
+
   return matchingTagFromLists(providedTags(provider), supportableTags(beneficiary));
 }
 
@@ -405,8 +410,19 @@ function matchingSetupTagForDisplayedTag(providerTag: SynergyTag, beneficiary: S
   return matchingTagFromLists(providerTagsForDisplayedTag(providerTag, beneficiary), providedTags(beneficiary));
 }
 
-function matchingSupportTagForDisplayedTag(providerTag: SynergyTag, beneficiary: SynergySignal): boolean {
-  return matchingTagFromLists(providerTagsForDisplayedTag(providerTag, beneficiary), supportableTags(beneficiary));
+function matchingSupportTagForDisplayedTag(
+  provider: SynergySignal,
+  providerTag: SynergyTag,
+  beneficiary: SynergySignal,
+): boolean {
+  return (
+    damageScopesAreCompatible(provider, beneficiary) &&
+    matchingTagFromLists(providerTagsForDisplayedTag(providerTag, beneficiary), supportableTags(beneficiary))
+  );
+}
+
+function damageScopesAreCompatible(provider: SynergySignal, beneficiary: SynergySignal): boolean {
+  return provider.damageScope === undefined || provider.damageScope === beneficiary.damageScope;
 }
 
 function matchingTagFromLists(providerTags: SynergyTag[], beneficiaryTags: SynergyTag[]): boolean {
@@ -446,7 +462,7 @@ function labelledDisplayTagsForSignal(
 ): Array<{ label: string; tag: SynergyTag }> {
   return displayTagsFrom(providedTags(signal))
     .map((tag) => {
-      const label = labels[tag] ?? null;
+      const label = labelForSignalTag(signal, tag, labels);
       return label ? { label, tag } : null;
     })
     .filter((entry): entry is { label: string; tag: SynergyTag } => entry !== null);

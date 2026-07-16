@@ -5,11 +5,204 @@
   "rarity": "Rare",
   "breed": "Champion",
   "rosterSourceStatus": "official-website",
-  "dataStatus": "official-metadata-only",
-  "lastVerified": "2026-06-23",
-  "profileCompleteness": "metadata-only",
+  "dataStatus": "community-verified",
+  "lastVerified": "2026-07-15",
+  "profileCompleteness": "detailed-abilities",
   "officialProfileUrl": "https://gotdragonfire.com/dragons/arulix/",
-  "abilities": [],
+  "abilities": [
+    {
+      "id": "arulix-gleaming-spiral",
+      "kind": "command",
+      "name": "Gleaming Spiral",
+      "abilityClass": "active",
+      "unlockStarRank": null,
+      "minimumDragonLevel": null,
+      "positionRequirement": null,
+      "verification": {
+        "status": "screenshot-verified",
+        "source": "Arulix Gleaming Spiral screenshots",
+        "capturedAt": "2026-07-15",
+        "gameVersion": null,
+        "reviewedManually": true
+      },
+      "evidenceIds": [
+        "arulix-gleaming-spiral-2026-07-15"
+      ],
+      "tags": [
+        "TACTICAL_DAMAGE",
+        "PHYSICAL_DAMAGE",
+        "FIRE_DAMAGE_DEALT_DOWN",
+        "DAMAGE_DEALT_DOWN",
+        "EXCLUDES_BASIC_ATTACKS",
+        "SPECIFIC_ROUNDS",
+        "ANY_LANE_TARGET",
+        "ENHANCED_BY_INSTINCT",
+        "STRENGTH_SCALING",
+        "COMMAND_AUGMENTATION"
+      ],
+      "rawDescription": "Each round: 25% chance to reduce Fire Damage Dealt by -15% for 1 round for all enemies that deal Fire Damage. This is enemy typed Damage Dealt suppression, not Weakened.\n\nRounds 1, 2, 3, 5, and 8: deal Tactical Damage to all enemies that deal Physical Damage excluding Basic Attacks at a +45% Damage Rate. Tactical Damage is increased by the attacker's Instinct and mitigated by the target's Intelligence. The enemy damage-type condition is battlefield-facing.\n\nAt 6+ Stars, Spiral Surge augments Gleaming Spiral on the same rounds with one Physical Damage output to 2 enemies in any lane. The current Spiral Surge base Damage Rate is +20% / +24% / +28% / +34% / +40% by Habit Level. Round 5 uses 1.5× the current upgraded base rate and Round 8 uses 2× the current upgraded base rate. Physical Damage is increased by the attacker's Strength and mitigated by the target's Instinct. The augmentation is represented once."
+    },
+    {
+      "id": "arulix-champions-brilliance",
+      "kind": "trait",
+      "name": "Champion's Brilliance",
+      "abilityClass": "passive",
+      "unlockStarRank": 1,
+      "minimumDragonLevel": 16,
+      "positionRequirement": "vanguard",
+      "verification": {
+        "status": "screenshot-verified",
+        "source": "Arulix Champion's Brilliance screenshot",
+        "capturedAt": "2026-07-15",
+        "gameVersion": null,
+        "reviewedManually": true
+      },
+      "evidenceIds": [
+        "arulix-champions-brilliance-2026-07-15"
+      ],
+      "tags": [
+        "STRENGTH_UP",
+        "INTELLIGENCE_UP",
+        "INSTINCT_UP",
+        "DAMAGE_RECEIVED_DOWN",
+        "VANGUARD_REQUIRED",
+        "RIGHT_FLANK_TARGET"
+      ],
+      "rawDescription": "At Dragon Level 16+ while Arulix is deployed in Vanguard: increase Arulix Strength by +15, Intelligence by +15, and Instinct by +15. Reduce Damage Received of the Right Flank ally by -8%. The self stat increases are self-only; the Right Flank reduction is outward defensive support."
+    },
+    {
+      "id": "arulix-hypnotic-helix",
+      "kind": "habit",
+      "name": "Hypnotic Helix",
+      "abilityClass": "passive",
+      "unlockStarRank": 2,
+      "minimumDragonLevel": null,
+      "positionRequirement": null,
+      "verification": {
+        "status": "screenshot-verified",
+        "source": "Arulix Hypnotic Helix screenshot",
+        "capturedAt": "2026-07-15",
+        "gameVersion": null,
+        "reviewedManually": true
+      },
+      "evidenceIds": [
+        "arulix-hypnotic-helix-2026-07-15"
+      ],
+      "tags": [
+        "OVERWHELM",
+        "STAGGER",
+        "CONTROL",
+        "ANY_LANE_TARGET",
+        "SPECIFIC_ROUNDS"
+      ],
+      "rawDescription": "Rounds 1, 3, 6, and 8: chance to apply Overwhelm to 1 enemy in any lane for 2 rounds, prioritizing Fire Damage dealers. Overwhelm prevents Active Commands and Habits on the target's turn.\n\nRounds 2, 4, 7, and 9: chance to apply Stagger to 1 enemy in any lane for 2 rounds, prioritizing Physical Damage dealers. Stagger prevents Attack Modifier Commands and Basic Attacks on the target's turn.\n\nThe prose displays the Habit Level 1 chance rounded to 13%; the progression table gives 12.5%. Both values are retained.\n\nProgression table (Overwhelm/Stagger chance):\nHabit Level 1: 12.5%\nHabit Level 2: 15%\nHabit Level 3: 17.5%\nHabit Level 4: 21.3%\nHabit Level 5: 25%\n\nPower: 250 / 550 / 900 / 1300 / 1800"
+    },
+    {
+      "id": "arulix-battle-cunning",
+      "kind": "habit",
+      "name": "Battle Cunning",
+      "abilityClass": "passive",
+      "unlockStarRank": 4,
+      "minimumDragonLevel": null,
+      "positionRequirement": null,
+      "verification": {
+        "status": "screenshot-verified",
+        "source": "Arulix Battle Cunning screenshot",
+        "capturedAt": "2026-07-15",
+        "gameVersion": null,
+        "reviewedManually": true
+      },
+      "evidenceIds": [
+        "arulix-battle-cunning-2026-07-15"
+      ],
+      "tags": [
+        "DEBUFF_STRENGTH",
+        "DEBUFF_INTELLIGENCE",
+        "ENHANCED_BY_INSTINCT",
+        "ANY_LANE_TARGET",
+        "ENEMY_DEBUFF"
+      ],
+      "rawDescription": "Start of combat until end of combat: reduce Strength and Intelligence of the same 3 enemies in any lane. The effect is enhanced by Arulix's Instinct. This is direct enemy stat reduction, not a named status.\n\nProgression table (Strength and Intelligence reduction):\nHabit Level 1: -4%\nHabit Level 2: -4.8%\nHabit Level 3: -5.6%\nHabit Level 4: -6.8%\nHabit Level 5: -8%\n\nPower: 250 / 550 / 900 / 1300 / 1800"
+    },
+    {
+      "id": "arulix-spiral-surge",
+      "kind": "habit",
+      "name": "Spiral Surge",
+      "abilityClass": "passive",
+      "unlockStarRank": 6,
+      "minimumDragonLevel": null,
+      "positionRequirement": null,
+      "verification": {
+        "status": "screenshot-verified",
+        "source": "Arulix Spiral Surge screenshot",
+        "capturedAt": "2026-07-15",
+        "gameVersion": null,
+        "reviewedManually": true
+      },
+      "evidenceIds": [
+        "arulix-spiral-surge-2026-07-15"
+      ],
+      "tags": [
+        "PHYSICAL_DAMAGE",
+        "STRENGTH_SCALING",
+        "SPECIFIC_ROUNDS",
+        "ANY_LANE_TARGET",
+        "COMMAND_AUGMENTATION"
+      ],
+      "rawDescription": "Spiral Surge augments Gleaming Spiral. Rounds 1, 2, 3, 5, and 8: deal Physical Damage to 2 enemies in any lane. Round 5 is 1.5× the current upgraded base rate; Round 8 is 2× the current upgraded base rate.\n\nProgression table (base Damage Rate):\nHabit Level 1: +20% (Round 5 +30%; Round 8 +40%)\nHabit Level 2: +24% (Round 5 +36%; Round 8 +48%)\nHabit Level 3: +28% (Round 5 +42%; Round 8 +56%)\nHabit Level 4: +34% (Round 5 +51%; Round 8 +68%)\nHabit Level 5: +40% (Round 5 +60%; Round 8 +80%)\n\nPower: 250 / 550 / 900 / 1300 / 1800"
+    },
+    {
+      "id": "arulix-iron-shell",
+      "kind": "habit",
+      "name": "Iron Shell",
+      "abilityClass": "passive",
+      "unlockStarRank": 8,
+      "minimumDragonLevel": null,
+      "positionRequirement": null,
+      "verification": {
+        "status": "screenshot-verified",
+        "source": "Arulix Iron Shell screenshot",
+        "capturedAt": "2026-07-15",
+        "gameVersion": null,
+        "reviewedManually": true
+      },
+      "evidenceIds": [
+        "arulix-iron-shell-2026-07-15"
+      ],
+      "tags": [
+        "PHYSICAL_DAMAGE_RECEIVED_DOWN",
+        "FIRE_DAMAGE_RECEIVED_DOWN",
+        "EXCLUDES_BASIC_ATTACKS",
+        "OTHER_ALLIES_TARGET",
+        "ANY_LANE_TARGET"
+      ],
+      "rawDescription": "Start of combat until end of combat: reduce non-Basic-Attack Physical Damage Received and Fire Damage Received of the same 2 other allies in any lane. In a three-dragon formation, this targets both other formation members; no adjacency is required. The Physical protection excludes Basic Attacks; the Fire protection has no shown Basic-Attack exclusion.\n\nThe prose displays -2%; the Habit Level 1 table displays -2.5%. Both values are retained.\n\nProgression table (Damage Received reduction):\nHabit Level 1: -2.5%\nHabit Level 2: -3%\nHabit Level 3: -3.5%\nHabit Level 4: -4.25%\nHabit Level 5: -5%\n\nPower: 250 / 550 / 900 / 1300 / 1800"
+    },
+    {
+      "id": "arulix-mimicry",
+      "kind": "habit",
+      "name": "Mimicry",
+      "abilityClass": "passive",
+      "unlockStarRank": 10,
+      "minimumDragonLevel": null,
+      "positionRequirement": null,
+      "verification": {
+        "status": "screenshot-verified",
+        "source": "Arulix Mimicry screenshot",
+        "capturedAt": "2026-07-15",
+        "gameVersion": null,
+        "reviewedManually": true
+      },
+      "evidenceIds": [
+        "arulix-mimicry-2026-07-15"
+      ],
+      "tags": [
+        "CONDITIONAL_STATUS_COPY",
+        "ANY_LANE_TARGET"
+      ],
+      "rawDescription": "At the start of each round, evaluate two separate conditional branches.\n\nNegative-effect branch: if any ally is afflicted with Weakened or Vulnerable, chance to copy that same effect to 1 enemy in any lane for 2 rounds. The ally must itself be afflicted; merely applying Vulnerable to an enemy does not qualify.\n\nPositive-effect branch: if any enemy is enhanced by Advantage or Resistance, chance to copy that same effect to 1 ally in any lane for 2 rounds.\n\nBoth branches may be eligible in one round. Copied effects are not removed from the original target. Selection priority with multiple valid effects and exact branch resolution order are not stated. Mimicry is conditional and is not an unconditional source of Weakened, Vulnerable, Advantage, or Resistance.\n\nProgression table (Mimicry chance):\nHabit Level 1: 25%\nHabit Level 2: 32.5%\nHabit Level 3: 40%\nHabit Level 4: 50%\nHabit Level 5: 62.5%\n\nPower: 250 / 580 / 1000 / 1600 / 2300"
+    }
+  ],
   "affinities": {
     "Cavalry": "unknown",
     "Shieldbearers": "unknown",
@@ -38,9 +231,45 @@
       "capturedAt": "2026-06-23",
       "gameVersion": null,
       "reviewedManually": true
+    },
+    "command": {
+      "status": "screenshot-verified",
+      "source": "Arulix Gleaming Spiral screenshots",
+      "capturedAt": "2026-07-15",
+      "gameVersion": null,
+      "reviewedManually": true
+    },
+    "trait": {
+      "status": "screenshot-verified",
+      "source": "Arulix Champion's Brilliance screenshot",
+      "capturedAt": "2026-07-15",
+      "gameVersion": null,
+      "reviewedManually": true
+    },
+    "habits": {
+      "status": "screenshot-verified",
+      "source": "Arulix Habit screenshots",
+      "capturedAt": "2026-07-15",
+      "gameVersion": null,
+      "reviewedManually": true
+    },
+    "affinities": {
+      "status": "unknown",
+      "source": "Affinity icons were not text-verified",
+      "capturedAt": "2026-07-15",
+      "gameVersion": null,
+      "reviewedManually": true
     }
   },
-  "evidenceIds": [],
-  "simpleProfileId": null,
-  "simpleProfileStatus": "metadata-only-unmapped"
+  "evidenceIds": [
+    "arulix-battle-cunning-2026-07-15",
+    "arulix-champions-brilliance-2026-07-15",
+    "arulix-gleaming-spiral-2026-07-15",
+    "arulix-hypnotic-helix-2026-07-15",
+    "arulix-iron-shell-2026-07-15",
+    "arulix-mimicry-2026-07-15",
+    "arulix-spiral-surge-2026-07-15"
+  ],
+  "simpleProfileId": "arulix",
+  "simpleProfileStatus": "curated"
 }

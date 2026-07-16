@@ -32,6 +32,9 @@ export const populatedDragonIds = [
   'tashix',
   'velar',
   'zivern',
+  'antares',
+  'arulix',
+  'arrax',
   'tessarion',
 ] as const;
 

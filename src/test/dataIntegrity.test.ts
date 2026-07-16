@@ -5,7 +5,7 @@ import { BREEDS, RARITIES, TROOP_TYPES } from '../models/dragon';
 
 describe('seeded dragon data integrity', () => {
   it('contains exactly 31 seeded dragons and keeps unsupported combat data unknown', () => {
-    const combatDragonIds = new Set(['syrax', 'vhagar', 'caraxes', 'seasmoke', 'crimson', 'kalspire', 'malachite', 'venator', 'daemoros', 'vaeldra', 'sheepstealer', 'vermax', 'feskar', 'rhysarion', 'shadowsong', 'tashix', 'velar', 'zivern', 'tessarion']);
+    const combatDragonIds = new Set(['syrax', 'vhagar', 'caraxes', 'seasmoke', 'crimson', 'kalspire', 'malachite', 'venator', 'daemoros', 'vaeldra', 'sheepstealer', 'vermax', 'feskar', 'rhysarion', 'shadowsong', 'tashix', 'velar', 'zivern', 'antares', 'arulix', 'arrax', 'tessarion']);
 
     expect(dragons).toHaveLength(31);
     expect(new Set(dragons.map((dragon) => dragon.id))).toHaveLength(31);

@@ -5,11 +5,197 @@
   "rarity": "Rare",
   "breed": "Hunter",
   "rosterSourceStatus": "official-website",
-  "dataStatus": "official-metadata-only",
-  "lastVerified": "2026-06-23",
-  "profileCompleteness": "metadata-only",
+  "dataStatus": "community-verified",
+  "lastVerified": "2026-07-15",
+  "profileCompleteness": "detailed-abilities",
   "officialProfileUrl": "https://gotdragonfire.com/dragons/antares/",
-  "abilities": [],
+  "abilities": [
+    {
+      "id": "antares-relentless-pursuit",
+      "kind": "command",
+      "name": "Relentless Pursuit",
+      "abilityClass": "active",
+      "unlockStarRank": null,
+      "minimumDragonLevel": null,
+      "positionRequirement": null,
+      "verification": {
+        "status": "screenshot-verified",
+        "source": "Antares Relentless Pursuit screenshots",
+        "capturedAt": "2026-07-15",
+        "gameVersion": null,
+        "reviewedManually": true
+      },
+      "evidenceIds": [
+        "antares-relentless-pursuit-2026-07-15"
+      ],
+      "tags": [
+        "VULNERABLE",
+        "FIRE_DAMAGE",
+        "ADJACENT_TARGET",
+        "SPECIFIC_ROUNDS",
+        "INTELLIGENCE_SCALING",
+        "ANY_LANE_TARGET",
+        "COMMAND_AUGMENTATION"
+      ],
+      "rawDescription": "Each round: 20% chance to apply Vulnerable to 1 enemy within adjacency for 2 rounds. Vulnerable increases Damage Received by +10%.\n\nRounds 3, 6, and 9: deal Fire Damage to 2 enemies within adjacency at a +65% Damage Rate. Fire Damage is increased by the attacker's Intelligence and mitigated by the target's Initiative.\n\nAt 6+ Stars, Fiery Precision augments Relentless Pursuit. Each round, also deal Fire Damage to 3 enemies in any lane afflicted with Slow. The Damage Rate uses Fiery Precision's current Habit Level: +20% / +24% / +28% / +34% / +40%. This added Slow-conditioned attack is additive to the base Command and is represented once."
+    },
+    {
+      "id": "antares-hunters-wrath",
+      "kind": "trait",
+      "name": "Hunter's Wrath",
+      "abilityClass": "passive",
+      "unlockStarRank": 1,
+      "minimumDragonLevel": 16,
+      "positionRequirement": "vanguard",
+      "verification": {
+        "status": "screenshot-verified",
+        "source": "Antares Hunter's Wrath screenshot",
+        "capturedAt": "2026-07-15",
+        "gameVersion": null,
+        "reviewedManually": true
+      },
+      "evidenceIds": [
+        "antares-hunters-wrath-2026-07-15"
+      ],
+      "tags": [
+        "FIRE_DAMAGE_UP",
+        "STRENGTH_UP",
+        "BUFF_INITIATIVE",
+        "VANGUARD_REQUIRED",
+        "RIGHT_FLANK_TARGET"
+      ],
+      "rawDescription": "At Dragon Level 16+ while Antares is deployed in Vanguard: increase Antares Fire Damage Dealt by +16%. Increase Strength of the Right Flank ally by +20 and Initiative of the Right Flank ally by +20."
+    },
+    {
+      "id": "antares-blazing-onslaught",
+      "kind": "habit",
+      "name": "Blazing Onslaught",
+      "abilityClass": "passive",
+      "unlockStarRank": 2,
+      "minimumDragonLevel": null,
+      "positionRequirement": null,
+      "verification": {
+        "status": "screenshot-verified",
+        "source": "Antares Blazing Onslaught screenshot",
+        "capturedAt": "2026-07-15",
+        "gameVersion": null,
+        "reviewedManually": true
+      },
+      "evidenceIds": [
+        "antares-blazing-onslaught-2026-07-15"
+      ],
+      "tags": [
+        "FIRE_DAMAGE_RECEIVED_UP",
+        "PHYSICAL_DAMAGE_RECEIVED_UP",
+        "EXCLUDES_BASIC_ATTACKS",
+        "ANY_LANE_TARGET",
+        "LEFT_FLANK_TARGET",
+        "RIGHT_FLANK_TARGET",
+        "ENEMY_DEBUFF"
+      ],
+      "rawDescription": "Start of Round 1 for 3 rounds: increase Fire Damage Received of 1 enemy in any lane, prioritizing Left Flank. Separately increase non-Basic-Attack Physical Damage Received of 1 enemy in any lane, prioritizing Right Flank. The target selections are independent; distinctness is not stated, so the same target is allowed but not required. This direct typed Damage Received amplification is not the named Vulnerable status.\n\nProgression table (Fire and non-Basic Physical Damage Received increase):\nHabit Level 1: +11%\nHabit Level 2: +13.2%\nHabit Level 3: +15.4%\nHabit Level 4: +18.7%\nHabit Level 5: +22%\n\nPower: 250 / 550 / 900 / 1300 / 1800"
+    },
+    {
+      "id": "antares-dragons-flair",
+      "kind": "habit",
+      "name": "Dragon's Flair",
+      "abilityClass": "passive",
+      "unlockStarRank": 4,
+      "minimumDragonLevel": null,
+      "positionRequirement": null,
+      "verification": {
+        "status": "screenshot-verified",
+        "source": "Antares Dragon's Flair screenshot",
+        "capturedAt": "2026-07-15",
+        "gameVersion": null,
+        "reviewedManually": true
+      },
+      "evidenceIds": [
+        "antares-dragons-flair-2026-07-15"
+      ],
+      "tags": [
+        "FIRE_DAMAGE_UP",
+        "BUFF_SELF"
+      ],
+      "rawDescription": "Start of combat until end of combat: increase Antares Fire Damage Dealt. Self-only.\n\nProgression table:\nHabit Level 1: +8%\nHabit Level 2: +9.6%\nHabit Level 3: +11.2%\nHabit Level 4: +13.6%\nHabit Level 5: +16%\n\nPower: 250 / 550 / 900 / 1300 / 1800"
+    },
+    {
+      "id": "antares-fiery-precision",
+      "kind": "habit",
+      "name": "Fiery Precision",
+      "abilityClass": "passive",
+      "unlockStarRank": 6,
+      "minimumDragonLevel": null,
+      "positionRequirement": null,
+      "verification": {
+        "status": "screenshot-verified",
+        "source": "Antares Fiery Precision screenshot",
+        "capturedAt": "2026-07-15",
+        "gameVersion": null,
+        "reviewedManually": true
+      },
+      "evidenceIds": [
+        "antares-fiery-precision-2026-07-15"
+      ],
+      "tags": [
+        "FIRE_DAMAGE",
+        "ANY_LANE_TARGET",
+        "COMMAND_AUGMENTATION"
+      ],
+      "rawDescription": "Fiery Precision augments Relentless Pursuit. Each round: deal Fire Damage to 3 enemies in any lane afflicted with Slow. This is additive to the base Command and uses one effective output path.\n\nProgression table (Damage Rate):\nHabit Level 1: +20%\nHabit Level 2: +24%\nHabit Level 3: +28%\nHabit Level 4: +34%\nHabit Level 5: +40%\n\nPower: 250 / 550 / 900 / 1300 / 1800"
+    },
+    {
+      "id": "antares-dragons-intellect",
+      "kind": "habit",
+      "name": "Dragon's Intellect",
+      "abilityClass": "passive",
+      "unlockStarRank": 8,
+      "minimumDragonLevel": null,
+      "positionRequirement": null,
+      "verification": {
+        "status": "screenshot-verified",
+        "source": "Antares Dragon's Intellect screenshot",
+        "capturedAt": "2026-07-15",
+        "gameVersion": null,
+        "reviewedManually": true
+      },
+      "evidenceIds": [
+        "antares-dragons-intellect-2026-07-15"
+      ],
+      "tags": [
+        "DAMAGE_RECEIVED_DOWN",
+        "INTELLIGENCE_UP",
+        "BUFF_SELF"
+      ],
+      "rawDescription": "Start of combat until end of combat: reduce Antares Damage Received and increase Antares Intelligence. Self-only.\n\nProgression table (Damage Received; Intelligence):\nHabit Level 1: -4%; +5%\nHabit Level 2: -4.8%; +6%\nHabit Level 3: -5.6%; +7%\nHabit Level 4: -6.8%; +8.5%\nHabit Level 5: -8%; +10%\n\nPower: 250 / 550 / 900 / 1300 / 1800"
+    },
+    {
+      "id": "antares-redemption",
+      "kind": "habit",
+      "name": "Redemption",
+      "abilityClass": "passive",
+      "unlockStarRank": 10,
+      "minimumDragonLevel": null,
+      "positionRequirement": null,
+      "verification": {
+        "status": "screenshot-verified",
+        "source": "Antares Redemption screenshot",
+        "capturedAt": "2026-07-15",
+        "gameVersion": null,
+        "reviewedManually": true
+      },
+      "evidenceIds": [
+        "antares-redemption-2026-07-15"
+      ],
+      "tags": [
+        "INTELLIGENCE_UP",
+        "BUFF_INITIATIVE",
+        "IMMUNITY",
+        "BUFF_SELF"
+      ],
+      "rawDescription": "Start of combat until end of combat: increase Antares Intelligence and Initiative. Start of each round: make one activation roll; on success, grant Antares immunity to both Vulnerable and Weakened for 2 rounds. The two immunities share one successful roll, not two independent rolls. The screenshot does not confirm cleansing an already active status, refresh behavior, or stacking behavior. Self-only.\n\nProgression table (Intelligence and Initiative; immunity chance):\nHabit Level 1: +6%; 10%\nHabit Level 2: +7.8%; 13%\nHabit Level 3: +9.6%; 16%\nHabit Level 4: +12%; 20%\nHabit Level 5: +15%; 25%\n\nPower: 250 / 580 / 1000 / 1600 / 2300"
+    }
+  ],
   "affinities": {
     "Cavalry": "unknown",
     "Shieldbearers": "unknown",
@@ -38,9 +224,45 @@
       "capturedAt": "2026-06-23",
       "gameVersion": null,
       "reviewedManually": true
+    },
+    "command": {
+      "status": "screenshot-verified",
+      "source": "Antares Relentless Pursuit screenshots",
+      "capturedAt": "2026-07-15",
+      "gameVersion": null,
+      "reviewedManually": true
+    },
+    "trait": {
+      "status": "screenshot-verified",
+      "source": "Antares Hunter's Wrath screenshot",
+      "capturedAt": "2026-07-15",
+      "gameVersion": null,
+      "reviewedManually": true
+    },
+    "habits": {
+      "status": "screenshot-verified",
+      "source": "Antares Habit screenshots",
+      "capturedAt": "2026-07-15",
+      "gameVersion": null,
+      "reviewedManually": true
+    },
+    "affinities": {
+      "status": "unknown",
+      "source": "Affinity icons were not text-verified",
+      "capturedAt": "2026-07-15",
+      "gameVersion": null,
+      "reviewedManually": true
     }
   },
-  "evidenceIds": [],
-  "simpleProfileId": null,
-  "simpleProfileStatus": "metadata-only-unmapped"
+  "evidenceIds": [
+    "antares-blazing-onslaught-2026-07-15",
+    "antares-dragons-flair-2026-07-15",
+    "antares-dragons-intellect-2026-07-15",
+    "antares-fiery-precision-2026-07-15",
+    "antares-hunters-wrath-2026-07-15",
+    "antares-redemption-2026-07-15",
+    "antares-relentless-pursuit-2026-07-15"
+  ],
+  "simpleProfileId": "antares",
+  "simpleProfileStatus": "curated"
 }

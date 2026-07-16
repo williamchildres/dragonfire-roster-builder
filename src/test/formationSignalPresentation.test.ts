@@ -68,6 +68,7 @@ describe('Formation Builder signal presentation helpers', () => {
         'Control',
         'Overwhelm',
         'Confusion',
+        'Weakened',
       ]),
     );
     expect(options.provides).not.toEqual(
@@ -84,6 +85,7 @@ describe('Formation Builder signal presentation helpers', () => {
         'Control',
         'Slow',
         'Panic',
+        'Bleed',
       ]),
     );
   });

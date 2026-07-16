@@ -1,7 +1,7 @@
 {
   "count": 31,
-  "detailedDragonCount": 19,
-  "metadataOnlyDragonCount": 12,
+  "detailedDragonCount": 22,
+  "metadataOnlyDragonCount": 9,
   "dragons": [
     {
       "id": "syrax",
@@ -162,8 +162,8 @@
       "name": "Antares",
       "rarity": "Rare",
       "breed": "Hunter",
-      "profileCompleteness": "metadata-only",
-      "simpleProfileStatus": "metadata-only-unmapped"
+      "profileCompleteness": "detailed-abilities",
+      "simpleProfileStatus": "curated"
     },
     {
       "id": "shimmer",
@@ -225,8 +225,8 @@
       "name": "Arulix",
       "rarity": "Rare",
       "breed": "Champion",
-      "profileCompleteness": "metadata-only",
-      "simpleProfileStatus": "metadata-only-unmapped"
+      "profileCompleteness": "detailed-abilities",
+      "simpleProfileStatus": "curated"
     },
     {
       "id": "nyrena",
@@ -252,8 +252,8 @@
       "name": "Arrax",
       "rarity": "Rare",
       "breed": "Warrior",
-      "profileCompleteness": "metadata-only",
-      "simpleProfileStatus": "metadata-only-unmapped"
+      "profileCompleteness": "detailed-abilities",
+      "simpleProfileStatus": "curated"
     },
     {
       "id": "tessarion",
