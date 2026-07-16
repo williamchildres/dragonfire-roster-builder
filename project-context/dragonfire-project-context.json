@@ -1,11 +1,11 @@
 {
   "format": "dragonfire-lab-project-context",
   "contextVersion": 2,
-  "generatedAt": "2026-07-13T02:48:26.866Z",
+  "generatedAt": "2026-07-16T01:46:09.671Z",
   "source": {
     "repository": "https://github.com/williamchildres/dragonfire-roster-builder",
-    "branch": "ui/formation-builder-density-polish",
-    "commit": "617760c3f91d9026a95c9d06a4885ea1c322eb21",
+    "branch": "fix/mobile-formation-selector-modal",
+    "commit": "55302fa123450181d8295fd7bccb6f6fc3afde5b",
     "databaseVersion": "0.6.4",
     "dataSchemaVersion": 13,
     "localRosterSchemaVersion": 4,
