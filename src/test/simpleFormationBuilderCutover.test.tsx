@@ -1,5 +1,6 @@
 import { render, screen, within } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
+import { readFileSync } from 'node:fs';
 import { afterEach, describe, expect, it, vi } from 'vitest';
 import { App } from '../app/App';
 import { dragons } from '../data/dragons';
@@ -586,6 +587,34 @@ describe('Formation Builder simple synergy cutover', () => {
     await user.selectOptions(within(dialog).getByLabelText(/^breed$/i), 'Warrior');
     await user.selectOptions(within(dialog).getByLabelText(/^verification$/i), 'community-verified');
     expect(within(dialog).getByRole('heading', { name: 'Vhagar' })).toBeInTheDocument();
+  });
+
+  it('keeps the Formation Builder selector on mobile-safe responsive classes', async () => {
+    const user = userEvent.setup();
+    seedRoster({ caraxes: {}, syrax: {}, vhagar: {} });
+
+    await openFormationBuilder(user);
+    await user.click(within(screen.getByRole('article', { name: 'Left Flank' })).getByRole('button', { name: /\+ add dragon/i }));
+
+    const dialog = screen.getByRole('dialog', { name: /choose a dragon for left flank/i });
+    expect(dialog).toHaveClass('formation-selector-dialog');
+    expect(within(dialog).getByLabelText(/formation dragon filters/i)).toHaveClass('formation-selector-filters');
+    expect(within(dialog).getByLabelText(/formation dragon choices/i)).toHaveClass('formation-selector-list');
+    const firstRow = within(dialog).getAllByRole('article')[0];
+    if (!firstRow) {
+      throw new Error('Expected at least one dragon row in the formation selector');
+    }
+    expect(within(firstRow).getByRole('button', { name: /view details/i })).toBeInTheDocument();
+    expect(within(firstRow).getByRole('button', { name: /^select$/i })).toBeInTheDocument();
+
+    const css = readFileSync('src/styles/global.css', 'utf8');
+    expect(css).toContain('.formation-selector-dialog {');
+    expect(css).toContain('max-width: min(62rem, calc(100vw - 1rem));');
+    expect(css).toContain('width: min(100%, calc(100vw - 1rem));');
+    expect(css).toContain('.formation-selector-row .add-dragon-actions button');
+    expect(css).toContain('white-space: normal');
+    expect(css).toContain('@media (max-width: 760px)');
+    expect(css).toContain('grid-template-columns: minmax(0, 1fr);');
   });
 
   it('opens the selector in All 10 Star Dragons mode and marks selected dragons unavailable there', async () => {
