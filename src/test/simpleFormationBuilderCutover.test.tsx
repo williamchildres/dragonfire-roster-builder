@@ -601,6 +601,9 @@ describe('Formation Builder simple synergy cutover', () => {
     expect(within(dialog).getByLabelText(/formation dragon filters/i)).toHaveClass('formation-selector-filters');
     expect(within(dialog).getByLabelText(/formation dragon choices/i)).toHaveClass('formation-selector-list');
     const firstRow = within(dialog).getAllByRole('article')[0];
+    if (!firstRow) {
+      throw new Error('Expected at least one dragon row in the formation selector');
+    }
     expect(within(firstRow).getByRole('button', { name: /view details/i })).toBeInTheDocument();
     expect(within(firstRow).getByRole('button', { name: /^select$/i })).toBeInTheDocument();
 
