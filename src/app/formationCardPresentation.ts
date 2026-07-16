@@ -1,6 +1,7 @@
 import type { FormationPosition } from '../models/dragon';
 import { positionLabels, type Formation } from '../services/teamShare';
 import { areAdjacent } from '../synergy/positionRules';
+import { signalTargetsRecipient } from '../synergy/recipientSelectors';
 import { CONTROL_ALIAS_TAGS, displayTagsFrom, tagSatisfies, type SynergyTag } from '../synergy/tags';
 import type {
   DragonProgression,
@@ -65,7 +66,7 @@ export function buildFormationSignalChips({
   return {
     damageProfile: buildDamageProfileChips(selectedProfile, selected, progression),
     provides: buildProvidesChips(selectedProfile, selected, progression),
-    benefitsFrom: buildBenefitsChips(selectedProfile, activeProvideSources, progression[profile.dragonId]),
+    benefitsFrom: buildBenefitsChips(selectedProfile, selected, activeProvideSources, progression),
   };
 }
 
@@ -164,18 +165,19 @@ function buildProvidesChips(
 
 function buildBenefitsChips(
   beneficiary: SelectedProfile,
+  selected: SelectedProfile[],
   activeProvideSources: ProvideSource[],
-  progression: DragonProgression | undefined,
+  progression: Record<string, DragonProgression | undefined>,
 ): FormationSignalChip[] {
   const chips = new Map<string, FormationSignalChip>();
 
   for (const benefit of beneficiary.profile.benefitsFrom) {
-    if (!isSignalActive(benefit, beneficiary.position, progression)) {
+    if (!isSignalActive(benefit, beneficiary.position, progression[beneficiary.profile.dragonId])) {
       for (const label of labelsForSignal(benefit, BENEFIT_SIGNAL_LABELS)) {
         mergeChip(chips, {
           label,
           state: 'inactive',
-          reason: signalStateReason(benefit, beneficiary.position, progression, 'Synergy needs'),
+          reason: signalStateReason(benefit, beneficiary.position, progression[beneficiary.profile.dragonId], 'Synergy needs'),
         });
       }
       continue;
@@ -185,7 +187,8 @@ function buildBenefitsChips(
     const matchingProvider = activeProvideSources.find(
       (source) =>
         source.profile.dragonId !== beneficiary.profile.dragonId &&
-        source.tags.some((providerTag) => benefitTags.some((benefitTag) => tagSatisfies(providerTag, benefitTag))),
+        source.tags.some((providerTag) => benefitTags.some((benefitTag) => tagSatisfies(providerTag, benefitTag))) &&
+        relationshipIsCurrentlyActive(source, source.signal, beneficiary, benefit, selected, progression),
     );
     const state: FormationSignalState = matchingProvider ? 'satisfied' : 'missing';
     const reason = matchingProvider
@@ -245,7 +248,7 @@ function selectedUseForProviderSignal(
       const matchingOutput = recipient.profile.outputs.find(
         (output) =>
           matchingSupportTagForDisplayedTag(signal, displayedTag, output) &&
-          relationshipIsCurrentlyActive(provider, signal, recipient, output, progression),
+          relationshipIsCurrentlyActive(provider, signal, recipient, output, selected, progression),
       );
       if (matchingOutput) {
         return { used: true, reason: `Used by ${recipient.profile.dragonName}.` };
@@ -255,7 +258,7 @@ function selectedUseForProviderSignal(
         (benefit) =>
           benefit.tag.startsWith('stat:') &&
           matchingSupportTagForDisplayedTag(signal, displayedTag, benefit) &&
-          relationshipIsCurrentlyActive(provider, signal, recipient, benefit, progression),
+          relationshipIsCurrentlyActive(provider, signal, recipient, benefit, selected, progression),
       );
       if (matchingBenefit) {
         return { used: true, reason: `Used by ${recipient.profile.dragonName}.` };
@@ -266,7 +269,7 @@ function selectedUseForProviderSignal(
     const matchingBenefit = recipient.profile.benefitsFrom.find(
       (benefit) =>
         matchingSetupTagForDisplayedTag(displayedTag, benefit) &&
-        relationshipIsCurrentlyActive(provider, signal, recipient, benefit, progression),
+        relationshipIsCurrentlyActive(provider, signal, recipient, benefit, selected, progression),
     );
     if (matchingBenefit) {
       return { used: true, reason: `Used by ${recipient.profile.dragonName}.` };
@@ -290,7 +293,7 @@ function matchingActiveSupportForOutput(
       supporter.profile.supports.some(
         (support) =>
           matchingSupportTag(support, output) &&
-          relationshipIsCurrentlyActive(supporter, support, producer, output, progression),
+          relationshipIsCurrentlyActive(supporter, support, producer, output, selected, progression),
       )
     ) {
       return supporter;
@@ -305,6 +308,7 @@ function relationshipIsCurrentlyActive(
   providerSignal: SynergySignal,
   beneficiary: SelectedProfile,
   beneficiarySignal: SynergySignal,
+  selected: SelectedProfile[],
   progression: Record<string, DragonProgression | undefined>,
 ): boolean {
   return (
@@ -313,7 +317,14 @@ function relationshipIsCurrentlyActive(
     isSignalActive(providerSignal, provider.position, progression[provider.profile.dragonId]) &&
     isSignalActive(beneficiarySignal, beneficiary.position, progression[beneficiary.profile.dragonId]) &&
     (providerSignal.requiredRecipientPosition === undefined || providerSignal.requiredRecipientPosition === beneficiary.position) &&
-    (providerSignal.friendlyScope !== 'adjacent' || areAdjacent(provider.position, beneficiary.position))
+    (providerSignal.friendlyScope !== 'adjacent' || areAdjacent(provider.position, beneficiary.position)) &&
+    signalTargetsRecipient({
+      provider: { dragonId: provider.profile.dragonId, position: provider.position },
+      signal: providerSignal,
+      recipient: { dragonId: beneficiary.profile.dragonId, position: beneficiary.position },
+      selected: selected.map((entry) => ({ dragonId: entry.profile.dragonId, position: entry.position })),
+      progression,
+    })
   );
 }
 

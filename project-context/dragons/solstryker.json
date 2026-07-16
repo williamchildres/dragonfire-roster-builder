@@ -5,11 +5,201 @@
   "rarity": "Rare",
   "breed": "Champion",
   "rosterSourceStatus": "official-website",
-  "dataStatus": "official-metadata-only",
-  "lastVerified": "2026-06-23",
-  "profileCompleteness": "metadata-only",
+  "dataStatus": "community-verified",
+  "lastVerified": "2026-07-16",
+  "profileCompleteness": "detailed-abilities",
   "officialProfileUrl": "https://gotdragonfire.com/dragons/solstryker/",
-  "abilities": [],
+  "abilities": [
+    {
+      "id": "solstryker-tactical-onslaught",
+      "kind": "command",
+      "name": "Tactical Onslaught",
+      "abilityClass": "active",
+      "unlockStarRank": null,
+      "minimumDragonLevel": null,
+      "positionRequirement": null,
+      "verification": {
+        "status": "screenshot-verified",
+        "source": "Solstryker Tactical Onslaught screenshots",
+        "capturedAt": "2026-07-16",
+        "gameVersion": null,
+        "reviewedManually": true
+      },
+      "evidenceIds": [
+        "solstryker-tactical-onslaught-2026-07-16"
+      ],
+      "tags": [
+        "PHYSICAL_DAMAGE",
+        "TACTICAL_DAMAGE",
+        "STRENGTH_SCALING",
+        "ENHANCED_BY_INSTINCT",
+        "DAMAGE_DEALT_DOWN",
+        "ENEMY_DEBUFF",
+        "VULNERABLE_PAYOFF",
+        "ANY_LANE_TARGET"
+      ],
+      "rawDescription": "Odd-numbered rounds, after each Basic Attack: deal Physical Damage to the same target at a +30% Damage Rate. Physical Damage scales with Solstryker's Strength and is mitigated by target Instinct. Separately, there is a 20% chance to reduce that target's Physical Damage Dealt by -12% for 2 rounds. This typed enemy suppression is not Weakened.\n\nEven-numbered rounds, after each Basic Attack: deal Tactical Damage to 3 enemies in any lane at a +12.5% Damage Rate. Tactical Damage scales with Solstryker's Instinct and is mitigated by target Intelligence. Damage is doubled separately against each target afflicted with Vulnerable; the multiplier is 2x rather than a separate fixed rate."
+    },
+    {
+      "id": "solstryker-champions-brilliance",
+      "kind": "trait",
+      "name": "Champion's Brilliance",
+      "abilityClass": "passive",
+      "unlockStarRank": 1,
+      "minimumDragonLevel": 16,
+      "positionRequirement": "vanguard",
+      "verification": {
+        "status": "screenshot-verified",
+        "source": "Solstryker Champion's Brilliance screenshot",
+        "capturedAt": "2026-07-16",
+        "gameVersion": null,
+        "reviewedManually": true
+      },
+      "evidenceIds": [
+        "solstryker-champions-brilliance-2026-07-16"
+      ],
+      "tags": [
+        "STRENGTH_UP",
+        "INTELLIGENCE_UP",
+        "INSTINCT_UP",
+        "DAMAGE_RECEIVED_DOWN",
+        "VANGUARD_REQUIRED",
+        "RIGHT_FLANK_TARGET",
+        "BUFF_SELF"
+      ],
+      "rawDescription": "At Dragon Level 16+ while Solstryker is Vanguard: increase Solstryker Strength, Intelligence, and Instinct by +15. Reduce Damage Received of the Right Flank ally by -8%. The stat increases are self-only; the defensive ally effect is detailed but non-scoring."
+    },
+    {
+      "id": "solstryker-steady-erosion",
+      "kind": "habit",
+      "name": "Steady Erosion",
+      "abilityClass": "passive",
+      "unlockStarRank": 2,
+      "minimumDragonLevel": null,
+      "positionRequirement": null,
+      "verification": {
+        "status": "screenshot-verified",
+        "source": "Solstryker Steady Erosion screenshot",
+        "capturedAt": "2026-07-16",
+        "gameVersion": null,
+        "reviewedManually": true
+      },
+      "evidenceIds": [
+        "solstryker-steady-erosion-2026-07-16"
+      ],
+      "tags": [
+        "STEADY_EROSION",
+        "DEBUFF_STRENGTH",
+        "ENHANCED_BY_STRENGTH",
+        "ENEMY_DEBUFF"
+      ],
+      "rawDescription": "At the start of each round, add 1 stack of Steady Erosion to all enemies, up to 10 stacks. Each stack reduces target Strength until the end of combat and is enhanced by Solstryker's Strength. The exact enhancement formula and cleanse/removal behavior are unresolved. Steady Erosion is not Vulnerable, Weakened, or Control.\n\nProgression table (Strength reduction per stack):\nHabit Level 1: -2%\nHabit Level 2: -2.4%\nHabit Level 3: -2.8%\nHabit Level 4: -3.4%\nHabit Level 5: -4%\n\nPower: 250 / 550 / 900 / 1300 / 1800"
+    },
+    {
+      "id": "solstryker-energy-drain",
+      "kind": "habit",
+      "name": "Energy Drain",
+      "abilityClass": "passive",
+      "unlockStarRank": 4,
+      "minimumDragonLevel": null,
+      "positionRequirement": null,
+      "verification": {
+        "status": "screenshot-verified",
+        "source": "Solstryker Energy Drain screenshot",
+        "capturedAt": "2026-07-16",
+        "gameVersion": null,
+        "reviewedManually": true
+      },
+      "evidenceIds": [
+        "solstryker-energy-drain-2026-07-16"
+      ],
+      "tags": [
+        "DEBUFF_STRENGTH",
+        "DEBUFF_INITIATIVE",
+        "ENHANCED_BY_INSTINCT",
+        "ADJACENT_TARGET",
+        "ENEMY_DEBUFF"
+      ],
+      "rawDescription": "Round 1: reduce Strength and Initiative of the same 2 enemies within adjacency for 3 rounds, enhanced by Solstryker's Instinct. This is direct enemy stat reduction, not a named status. The exact enhancement formula and stacking/refresh behavior are unresolved.\n\nProgression table (Strength and Initiative):\nHabit Level 1: -15%\nHabit Level 2: -18%\nHabit Level 3: -21%\nHabit Level 4: -25.5%\nHabit Level 5: -30%\n\nPower: 250 / 550 / 900 / 1300 / 1800"
+    },
+    {
+      "id": "solstryker-oppressive-onslaught",
+      "kind": "habit",
+      "name": "Oppressive Onslaught",
+      "abilityClass": "passive",
+      "unlockStarRank": 6,
+      "minimumDragonLevel": null,
+      "positionRequirement": null,
+      "verification": {
+        "status": "screenshot-verified",
+        "source": "Solstryker Oppressive Onslaught screenshot",
+        "capturedAt": "2026-07-16",
+        "gameVersion": null,
+        "reviewedManually": true
+      },
+      "evidenceIds": [
+        "solstryker-oppressive-onslaught-2026-07-16"
+      ],
+      "tags": [
+        "OVERWHELM",
+        "CONTROL",
+        "ANY_LANE_TARGET"
+      ],
+      "rawDescription": "Each round: chance to apply Overwhelm to 1 enemy in any lane for 2 rounds. Overwhelm prevents Active Commands and Habits on the target's turn; it satisfies the broad Control family while remaining specifically visible.\n\nProgression table (Overwhelm chance):\nHabit Level 1: 10%\nHabit Level 2: 12%\nHabit Level 3: 14%\nHabit Level 4: 17%\nHabit Level 5: 20%\n\nPower: 250 / 550 / 900 / 1300 / 1800"
+    },
+    {
+      "id": "solstryker-robust-insight",
+      "kind": "habit",
+      "name": "Robust Insight",
+      "abilityClass": "passive",
+      "unlockStarRank": 8,
+      "minimumDragonLevel": null,
+      "positionRequirement": null,
+      "verification": {
+        "status": "screenshot-verified",
+        "source": "Solstryker Robust Insight screenshot",
+        "capturedAt": "2026-07-16",
+        "gameVersion": null,
+        "reviewedManually": true
+      },
+      "evidenceIds": [
+        "solstryker-robust-insight-2026-07-16"
+      ],
+      "tags": [
+        "STRENGTH_UP",
+        "INSTINCT_UP",
+        "BUFF_SELF"
+      ],
+      "rawDescription": "Start of combat until end of combat: increase Solstryker Strength and Instinct. Self-only.\n\nProgression table (Strength and Instinct):\nHabit Level 1: +12.5%\nHabit Level 2: +15%\nHabit Level 3: +17.5%\nHabit Level 4: +21.25%\nHabit Level 5: +25%\n\nPower: 250 / 550 / 900 / 1300 / 1800"
+    },
+    {
+      "id": "solstryker-amplified-drain",
+      "kind": "habit",
+      "name": "Amplified Drain",
+      "abilityClass": "passive",
+      "unlockStarRank": 10,
+      "minimumDragonLevel": null,
+      "positionRequirement": null,
+      "verification": {
+        "status": "screenshot-verified",
+        "source": "Solstryker Amplified Drain screenshot",
+        "capturedAt": "2026-07-16",
+        "gameVersion": null,
+        "reviewedManually": true
+      },
+      "evidenceIds": [
+        "solstryker-amplified-drain-2026-07-16"
+      ],
+      "tags": [
+        "DEBUFF_STRENGTH",
+        "DEBUFF_INITIATIVE",
+        "ENHANCED_BY_INSTINCT",
+        "ADJACENT_TARGET",
+        "ENEMY_DEBUFF"
+      ],
+      "rawDescription": "Round 4: independently select 2 enemies within adjacency and reduce their Strength and Initiative for 5 rounds, enhanced by Solstryker's Instinct. This is separate from Energy Drain, not a Command augmentation. Its stacking or refresh interaction with other reductions is unresolved.\n\nProgression table (Strength and Initiative):\nHabit Level 1: -15%\nHabit Level 2: -19.5%\nHabit Level 3: -24%\nHabit Level 4: -30%\nHabit Level 5: -37.5%\n\nPower: 250 / 580 / 1000 / 1600 / 2300"
+    }
+  ],
   "affinities": {
     "Cavalry": "unknown",
     "Shieldbearers": "unknown",
@@ -38,9 +228,45 @@
       "capturedAt": "2026-06-23",
       "gameVersion": null,
       "reviewedManually": true
+    },
+    "command": {
+      "status": "screenshot-verified",
+      "source": "Solstryker Tactical Onslaught screenshots",
+      "capturedAt": "2026-07-16",
+      "gameVersion": null,
+      "reviewedManually": true
+    },
+    "trait": {
+      "status": "screenshot-verified",
+      "source": "Solstryker Champion's Brilliance screenshot",
+      "capturedAt": "2026-07-16",
+      "gameVersion": null,
+      "reviewedManually": true
+    },
+    "habits": {
+      "status": "screenshot-verified",
+      "source": "Solstryker Habit screenshots",
+      "capturedAt": "2026-07-16",
+      "gameVersion": null,
+      "reviewedManually": true
+    },
+    "affinities": {
+      "status": "unknown",
+      "source": "Affinity icons were not text-verified",
+      "capturedAt": "2026-07-16",
+      "gameVersion": null,
+      "reviewedManually": true
     }
   },
-  "evidenceIds": [],
-  "simpleProfileId": null,
-  "simpleProfileStatus": "metadata-only-unmapped"
+  "evidenceIds": [
+    "solstryker-amplified-drain-2026-07-16",
+    "solstryker-champions-brilliance-2026-07-16",
+    "solstryker-energy-drain-2026-07-16",
+    "solstryker-oppressive-onslaught-2026-07-16",
+    "solstryker-robust-insight-2026-07-16",
+    "solstryker-steady-erosion-2026-07-16",
+    "solstryker-tactical-onslaught-2026-07-16"
+  ],
+  "simpleProfileId": "solstryker",
+  "simpleProfileStatus": "curated"
 }

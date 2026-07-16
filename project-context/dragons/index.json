@@ -1,7 +1,7 @@
 {
   "count": 31,
-  "detailedDragonCount": 22,
-  "metadataOnlyDragonCount": 9,
+  "detailedDragonCount": 25,
+  "metadataOnlyDragonCount": 6,
   "dragons": [
     {
       "id": "syrax",
@@ -45,8 +45,8 @@
       "name": "Solstryker",
       "rarity": "Rare",
       "breed": "Champion",
-      "profileCompleteness": "metadata-only",
-      "simpleProfileStatus": "metadata-only-unmapped"
+      "profileCompleteness": "detailed-abilities",
+      "simpleProfileStatus": "curated"
     },
     {
       "id": "crimson",
@@ -171,8 +171,8 @@
       "name": "Shimmer",
       "rarity": "Rare",
       "breed": "Sentinel",
-      "profileCompleteness": "metadata-only",
-      "simpleProfileStatus": "metadata-only-unmapped"
+      "profileCompleteness": "detailed-abilities",
+      "simpleProfileStatus": "curated"
     },
     {
       "id": "jagadrix",
@@ -180,8 +180,8 @@
       "name": "Jagadrix",
       "rarity": "Rare",
       "breed": "Hunter",
-      "profileCompleteness": "metadata-only",
-      "simpleProfileStatus": "metadata-only-unmapped"
+      "profileCompleteness": "detailed-abilities",
+      "simpleProfileStatus": "curated"
     },
     {
       "id": "bevlorin",

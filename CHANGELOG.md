@@ -2,6 +2,10 @@
 
 ## Unreleased
 
+- Added screenshot-verified detailed records and curated simple-synergy profiles for Rare dragons Solstryker, Shimmer, and Jagadrix. Coverage is now 31 known dragons, 25 detailed dragons, 25 simple profiles, and 6 metadata-only dragons, with Rare coverage at 6 / 12.
+- Added deterministic highest-stat and flank-priority recipient selectors, Star-aware Command augmentation summaries, named Resistance provider/payoff presentation, Steady Erosion and Nullify Recovery details, and scoped non-Basic Physical support without changing Formation Rating calibration.
+- Re-audited verified named Resistance providers and exposed Syrax Strategic Revival, Seasmoke Loyal Bond, and Rhysarion Inspiring Melody. Existing verified Panic providers remain Kalspire, Daemoros, and Zivern; no provider was invented.
+- Increased database/package version to `0.6.6`; source data schema remains `13`, local roster schema remains `4`, and import/export/share-link contracts are unchanged.
 - Added screenshot-verified detailed records and curated simple-synergy profiles for the first Rare batch: Antares, Arrax, and Arulix. Coverage is now 31 known dragons, 22 detailed dragons, 22 simple profiles, and 9 metadata-only dragons, with Rare coverage at 3 / 12.
 - Added specific Weakened and Bleed simple tags while preserving Overwhelm and Stagger as distinct Control aliases. Defensive support, troop-gated Adaptive Guard, battlefield-only target conditions, and conditional Mimicry effects remain detailed and non-scoring.
 - Increased database/package version to `0.6.5`; source data schema remains `13` and local roster schema remains `4`.

@@ -1,16 +1,13 @@
 {
-  "reviewedAbilityCount": 154,
+  "reviewedAbilityCount": 175,
   "dispositionCounts": {
-    "represented": 99,
-    "general-support-only": 12,
-    "self-only": 26,
-    "no-cross-dragon-synergy": 10,
+    "represented": 113,
+    "general-support-only": 11,
+    "self-only": 30,
+    "no-cross-dragon-synergy": 14,
     "reinforces-existing": 7
   },
   "metadataOnlyDragonIds": [
-    "solstryker",
-    "shimmer",
-    "jagadrix",
     "bevlorin",
     "shadowrend",
     "thunderstrike",
@@ -78,9 +75,10 @@
         "kind": "represented",
         "signalIds": [
           "syrax-strategic-revival-recovery",
+          "syrax-strategic-revival-resistance",
           "syrax-strategic-revival-slow-payoff"
         ],
-        "rationale": "The augmentation provides Recovery and explicitly improves that Recovery when any enemy has Slow."
+        "rationale": "The augmentation provides Recovery, explicitly grants named Resistance, and improves Recovery when any enemy has Slow."
       }
     },
     {
@@ -339,8 +337,11 @@
       "abilityId": "seasmoke-loyal-bond",
       "abilityKind": "habit",
       "disposition": {
-        "kind": "general-support-only",
-        "rationale": "Advantage and Resistance are broad survivability/damage effects without a current explicit payoff."
+        "kind": "represented",
+        "signalIds": [
+          "seasmoke-loyal-bond-resistance"
+        ],
+        "rationale": "The verified wording explicitly grants named Resistance below 50% Troop Capacity; conditional Advantage remains general support only."
       }
     },
     {
@@ -895,9 +896,10 @@
       "disposition": {
         "kind": "represented",
         "signalIds": [
-          "rhysarion-inspiring-melody-initiative"
+          "rhysarion-inspiring-melody-initiative",
+          "rhysarion-inspiring-melody-resistance"
         ],
-        "rationale": "The habit gives adjacent Initiative support; Resistance is general support only."
+        "rationale": "The verified wording gives adjacent Initiative support and explicitly grants named Resistance to the same ally."
       }
     },
     {
@@ -1692,6 +1694,248 @@
           "arrax-turn-the-line-physical"
         ],
         "rationale": "The Star Rank 10 habit directly increases enemy Physical Damage Received without inventing named Vulnerable."
+      }
+    },
+    {
+      "dragonId": "solstryker",
+      "abilityId": "solstryker-tactical-onslaught",
+      "abilityKind": "command",
+      "disposition": {
+        "kind": "represented",
+        "signalIds": [
+          "solstryker-tactical-onslaught-physical",
+          "solstryker-tactical-onslaught-tactical",
+          "solstryker-tactical-onslaught-vulnerable-payoff",
+          "solstryker-tactical-onslaught-strength-payoff",
+          "solstryker-tactical-onslaught-instinct-payoff"
+        ],
+        "rationale": "The Command provides Physical and Tactical output with one Strength need, one Instinct need, and a base Vulnerable payoff; typed enemy Physical suppression is non-scoring."
+      }
+    },
+    {
+      "dragonId": "solstryker",
+      "abilityId": "solstryker-champions-brilliance",
+      "abilityKind": "trait",
+      "disposition": {
+        "kind": "represented",
+        "signalIds": [
+          "solstryker-champions-brilliance-vanguard"
+        ],
+        "rationale": "The trait requires Vanguard; self stats and Right Flank defensive support do not create ordinary support signals."
+      }
+    },
+    {
+      "dragonId": "solstryker",
+      "abilityId": "solstryker-steady-erosion",
+      "abilityKind": "habit",
+      "disposition": {
+        "kind": "no-cross-dragon-synergy",
+        "rationale": "Steady Erosion is a named stacking enemy Strength debuff, not Vulnerable, Weakened, or Control."
+      }
+    },
+    {
+      "dragonId": "solstryker",
+      "abilityId": "solstryker-energy-drain",
+      "abilityKind": "habit",
+      "disposition": {
+        "kind": "no-cross-dragon-synergy",
+        "rationale": "Direct enemy Strength and Initiative reductions are detailed and non-scoring."
+      }
+    },
+    {
+      "dragonId": "solstryker",
+      "abilityId": "solstryker-oppressive-onslaught",
+      "abilityKind": "habit",
+      "disposition": {
+        "kind": "represented",
+        "signalIds": [
+          "solstryker-oppressive-onslaught-overwhelm"
+        ],
+        "rationale": "The Habit applies specifically visible Overwhelm, which satisfies Control through one alias path at Star Rank 6."
+      }
+    },
+    {
+      "dragonId": "solstryker",
+      "abilityId": "solstryker-robust-insight",
+      "abilityKind": "habit",
+      "disposition": {
+        "kind": "self-only",
+        "rationale": "The Strength and Instinct increases apply only to Solstryker."
+      }
+    },
+    {
+      "dragonId": "solstryker",
+      "abilityId": "solstryker-amplified-drain",
+      "abilityKind": "habit",
+      "disposition": {
+        "kind": "no-cross-dragon-synergy",
+        "rationale": "The independent Round 4 enemy stat reduction is detailed and non-scoring."
+      }
+    },
+    {
+      "dragonId": "shimmer",
+      "abilityId": "shimmer-unbreakable-loyalty",
+      "abilityKind": "command",
+      "disposition": {
+        "kind": "represented",
+        "signalIds": [
+          "shimmer-unbreakable-loyalty-tactical",
+          "shimmer-unbreakable-loyalty-stats",
+          "shimmer-unbreakable-loyalty-instinct-payoff"
+        ],
+        "rationale": "The Command deals Tactical Damage and gives paired Strength/Initiative support to one deterministic highest-Strength other ally."
+      }
+    },
+    {
+      "dragonId": "shimmer",
+      "abilityId": "shimmer-sentinels-presence",
+      "abilityKind": "trait",
+      "disposition": {
+        "kind": "represented",
+        "signalIds": [
+          "shimmer-sentinels-presence-left-fire",
+          "shimmer-sentinels-presence-vanguard"
+        ],
+        "rationale": "The Vanguard trait supports Left Flank Fire Damage; self Recovery and Instinct increases remain self-only."
+      }
+    },
+    {
+      "dragonId": "shimmer",
+      "abilityId": "shimmer-crushing-force",
+      "abilityKind": "habit",
+      "disposition": {
+        "kind": "represented",
+        "signalIds": [
+          "shimmer-crushing-force-physical",
+          "shimmer-crushing-force-tactical"
+        ],
+        "rationale": "Two independent priority selectors preserve Left Flank non-Basic Physical and Right Flank Tactical support without unrestricted fallback or self-synergy."
+      }
+    },
+    {
+      "dragonId": "shimmer",
+      "abilityId": "shimmer-dragons-insight",
+      "abilityKind": "habit",
+      "disposition": {
+        "kind": "self-only",
+        "rationale": "Damage Received reduction and Instinct increase apply only to Shimmer."
+      }
+    },
+    {
+      "dragonId": "shimmer",
+      "abilityId": "shimmer-loyal-shield",
+      "abilityKind": "habit",
+      "disposition": {
+        "kind": "represented",
+        "signalIds": [
+          "shimmer-loyal-shield-recovery",
+          "shimmer-loyal-shield-resistance-payoff"
+        ],
+        "rationale": "The augmentation adds one Recovery path at Star Rank 6 and a per-recipient Resistance doubling payoff."
+      }
+    },
+    {
+      "dragonId": "shimmer",
+      "abilityId": "shimmer-unbroken-devotion",
+      "abilityKind": "habit",
+      "disposition": {
+        "kind": "represented",
+        "signalIds": [
+          "shimmer-unbroken-devotion-recovery"
+        ],
+        "rationale": "The Habit improves Recovery Received of both other allies and cannot support Shimmer herself."
+      }
+    },
+    {
+      "dragonId": "shimmer",
+      "abilityId": "shimmer-sneak-attack",
+      "abilityKind": "habit",
+      "disposition": {
+        "kind": "represented",
+        "signalIds": [
+          "shimmer-sneak-attack-first-strike",
+          "shimmer-sneak-attack-physical"
+        ],
+        "rationale": "One activation grants paired Physical support and First-Strike to the same highest-Strength other ally at Star Rank 10."
+      }
+    },
+    {
+      "dragonId": "jagadrix",
+      "abilityId": "jagadrix-cunning-whispers",
+      "abilityKind": "command",
+      "disposition": {
+        "kind": "represented",
+        "signalIds": [
+          "jagadrix-cunning-whispers-fire",
+          "jagadrix-cunning-whispers-intelligence-payoff",
+          "jagadrix-cunning-whispers-initiative-payoff"
+        ],
+        "rationale": "The Command deals Fire Damage and exposes Intelligence, Initiative, and Fire support compatibility; enemy same-lane reductions remain battlefield-facing."
+      }
+    },
+    {
+      "dragonId": "jagadrix",
+      "abilityId": "jagadrix-hunters-wrath",
+      "abilityKind": "trait",
+      "disposition": {
+        "kind": "represented",
+        "signalIds": [
+          "jagadrix-hunters-wrath-right-stats",
+          "jagadrix-hunters-wrath-vanguard"
+        ],
+        "rationale": "The Vanguard trait supports Right Flank Strength and Initiative while its Fire increase is self-only."
+      }
+    },
+    {
+      "dragonId": "jagadrix",
+      "abilityId": "jagadrix-enervate",
+      "abilityKind": "habit",
+      "disposition": {
+        "kind": "no-cross-dragon-synergy",
+        "rationale": "Enemy Tactical Damage suppression is not Weakened or allied Tactical support."
+      }
+    },
+    {
+      "dragonId": "jagadrix",
+      "abilityId": "jagadrix-second-wind",
+      "abilityKind": "habit",
+      "disposition": {
+        "kind": "self-only",
+        "rationale": "Damage, immediate Recovery, and subsequent Nullify Recovery are ordered self-only effects with no static cross-dragon relationship."
+      }
+    },
+    {
+      "dragonId": "jagadrix",
+      "abilityId": "jagadrix-whispering-sabotage",
+      "abilityKind": "habit",
+      "disposition": {
+        "kind": "represented",
+        "signalIds": [
+          "jagadrix-whispering-sabotage-weakened"
+        ],
+        "rationale": "The Habit provides one Weakened path at Star Rank 6 without a Control alias."
+      }
+    },
+    {
+      "dragonId": "jagadrix",
+      "abilityId": "jagadrix-quick-witted",
+      "abilityKind": "habit",
+      "disposition": {
+        "kind": "self-only",
+        "rationale": "Intelligence and Initiative increases apply only to Jagadrix."
+      }
+    },
+    {
+      "dragonId": "jagadrix",
+      "abilityId": "jagadrix-echoes-of-deceit",
+      "abilityKind": "habit",
+      "disposition": {
+        "kind": "represented",
+        "signalIds": [
+          "jagadrix-echoes-of-deceit-fire",
+          "jagadrix-echoes-of-deceit-panic-payoff"
+        ],
+        "rationale": "The augmentation adds one extra Fire path and one Panic payoff at Star Rank 10 without adding Tactical Damage."
       }
     },
     {

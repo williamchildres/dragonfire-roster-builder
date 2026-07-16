@@ -45,10 +45,10 @@ function signalsFor(dragonId: string): SynergySignal[] {
 describe('first Rare dragon batch', () => {
   it('upgrades one canonical Rare record per dragon with complete verified abilities and unknown affinities', () => {
     expect(dragons).toHaveLength(31);
-    expect(dragons.filter((dragon) => dragon.command !== null)).toHaveLength(22);
-    expect(simpleSynergyProfiles).toHaveLength(22);
-    expect(metadataOnlyDragonIds).toHaveLength(9);
-    expect(dragons.filter((dragon) => dragon.rarity === 'Rare' && dragon.command !== null)).toHaveLength(3);
+    expect(dragons.filter((dragon) => dragon.command !== null)).toHaveLength(25);
+    expect(simpleSynergyProfiles).toHaveLength(25);
+    expect(metadataOnlyDragonIds).toHaveLength(6);
+    expect(dragons.filter((dragon) => dragon.rarity === 'Rare' && dragon.command !== null)).toHaveLength(6);
 
     const expectedBreeds = { antares: 'Hunter', arrax: 'Warrior', arulix: 'Champion' } as const;
     for (const id of rareIds) {
@@ -65,7 +65,7 @@ describe('first Rare dragon batch', () => {
       expect(Object.values(dragon.stats).every((value) => value === null)).toBe(true);
     }
 
-    expect(databaseMetadata).toMatchObject({ databaseVersion: '0.6.5', schemaVersion: 13 });
+    expect(databaseMetadata).toMatchObject({ databaseVersion: '0.6.6', schemaVersion: 13 });
     expect(ROSTER_SCHEMA_VERSION).toBe(4);
   });
 

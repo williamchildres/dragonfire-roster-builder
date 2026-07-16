@@ -1109,12 +1109,130 @@ export const dragons = [
     "firstObservedInGame": null,
     "gameVersion": null,
     "isNew": false,
-    "dataStatus": "official-metadata-only",
-    "lastVerified": "2026-06-23",
-    "notes": null,
-    "command": null,
-    "trait": null,
-    "habits": [],
+    "dataStatus": "community-verified",
+    "lastVerified": "2026-07-16",
+    "notes": "Affinity icons were not text-verified and remain unknown.",
+    "command": {
+      "id": "solstryker-tactical-onslaught",
+      "dragonId": "solstryker",
+      "kind": "command",
+      "name": "Tactical Onslaught",
+      "abilityClass": "active",
+      "unlockStarRank": null,
+      "minimumDragonLevel": null,
+      "positionRequirement": null,
+      "rawDescription": "Odd-numbered rounds, after each Basic Attack: deal Physical Damage to the same target at a +30% Damage Rate. Physical Damage scales with Solstryker's Strength and is mitigated by target Instinct. Separately, there is a 20% chance to reduce that target's Physical Damage Dealt by -12% for 2 rounds. This typed enemy suppression is not Weakened.\n\nEven-numbered rounds, after each Basic Attack: deal Tactical Damage to 3 enemies in any lane at a +12.5% Damage Rate. Tactical Damage scales with Solstryker's Instinct and is mitigated by target Intelligence. Damage is doubled separately against each target afflicted with Vulnerable; the multiplier is 2x rather than a separate fixed rate.",
+      "verification": {
+        "status": "screenshot-verified",
+        "source": "Solstryker Tactical Onslaught screenshots",
+        "capturedAt": "2026-07-16",
+        "gameVersion": null,
+        "reviewedManually": true
+      },
+      "evidenceIds": ["solstryker-tactical-onslaught-2026-07-16"],
+      "tags": [
+        "PHYSICAL_DAMAGE",
+        "TACTICAL_DAMAGE",
+        "STRENGTH_SCALING",
+        "ENHANCED_BY_INSTINCT",
+        "DAMAGE_DEALT_DOWN",
+        "ENEMY_DEBUFF",
+        "VULNERABLE_PAYOFF",
+        "ANY_LANE_TARGET"
+      ]
+    },
+    "trait": {
+      "id": "solstryker-champions-brilliance",
+      "dragonId": "solstryker",
+      "kind": "trait",
+      "name": "Champion's Brilliance",
+      "abilityClass": "passive",
+      "unlockStarRank": 1,
+      "minimumDragonLevel": 16,
+      "positionRequirement": "vanguard",
+      "rawDescription": "At Dragon Level 16+ while Solstryker is Vanguard: increase Solstryker Strength, Intelligence, and Instinct by +15. Reduce Damage Received of the Right Flank ally by -8%. The stat increases are self-only; the defensive ally effect is detailed but non-scoring.",
+      "verification": {
+        "status": "screenshot-verified",
+        "source": "Solstryker Champion's Brilliance screenshot",
+        "capturedAt": "2026-07-16",
+        "gameVersion": null,
+        "reviewedManually": true
+      },
+      "evidenceIds": ["solstryker-champions-brilliance-2026-07-16"],
+      "tags": ["STRENGTH_UP", "INTELLIGENCE_UP", "INSTINCT_UP", "DAMAGE_RECEIVED_DOWN", "VANGUARD_REQUIRED", "RIGHT_FLANK_TARGET", "BUFF_SELF"]
+    },
+    "habits": [
+      {
+        "id": "solstryker-steady-erosion",
+        "dragonId": "solstryker",
+        "kind": "habit",
+        "name": "Steady Erosion",
+        "abilityClass": "passive",
+        "unlockStarRank": 2,
+        "minimumDragonLevel": null,
+        "positionRequirement": null,
+        "rawDescription": "At the start of each round, add 1 stack of Steady Erosion to all enemies, up to 10 stacks. Each stack reduces target Strength until the end of combat and is enhanced by Solstryker's Strength. The exact enhancement formula and cleanse/removal behavior are unresolved. Steady Erosion is not Vulnerable, Weakened, or Control.\n\nProgression table (Strength reduction per stack):\nHabit Level 1: -2%\nHabit Level 2: -2.4%\nHabit Level 3: -2.8%\nHabit Level 4: -3.4%\nHabit Level 5: -4%\n\nPower: 250 / 550 / 900 / 1300 / 1800",
+        "verification": {"status": "screenshot-verified", "source": "Solstryker Steady Erosion screenshot", "capturedAt": "2026-07-16", "gameVersion": null, "reviewedManually": true},
+        "evidenceIds": ["solstryker-steady-erosion-2026-07-16"],
+        "tags": ["STEADY_EROSION", "DEBUFF_STRENGTH", "ENHANCED_BY_STRENGTH", "ENEMY_DEBUFF"]
+      },
+      {
+        "id": "solstryker-energy-drain",
+        "dragonId": "solstryker",
+        "kind": "habit",
+        "name": "Energy Drain",
+        "abilityClass": "passive",
+        "unlockStarRank": 4,
+        "minimumDragonLevel": null,
+        "positionRequirement": null,
+        "rawDescription": "Round 1: reduce Strength and Initiative of the same 2 enemies within adjacency for 3 rounds, enhanced by Solstryker's Instinct. This is direct enemy stat reduction, not a named status. The exact enhancement formula and stacking/refresh behavior are unresolved.\n\nProgression table (Strength and Initiative):\nHabit Level 1: -15%\nHabit Level 2: -18%\nHabit Level 3: -21%\nHabit Level 4: -25.5%\nHabit Level 5: -30%\n\nPower: 250 / 550 / 900 / 1300 / 1800",
+        "verification": {"status": "screenshot-verified", "source": "Solstryker Energy Drain screenshot", "capturedAt": "2026-07-16", "gameVersion": null, "reviewedManually": true},
+        "evidenceIds": ["solstryker-energy-drain-2026-07-16"],
+        "tags": ["DEBUFF_STRENGTH", "DEBUFF_INITIATIVE", "ENHANCED_BY_INSTINCT", "ADJACENT_TARGET", "ENEMY_DEBUFF"]
+      },
+      {
+        "id": "solstryker-oppressive-onslaught",
+        "dragonId": "solstryker",
+        "kind": "habit",
+        "name": "Oppressive Onslaught",
+        "abilityClass": "passive",
+        "unlockStarRank": 6,
+        "minimumDragonLevel": null,
+        "positionRequirement": null,
+        "rawDescription": "Each round: chance to apply Overwhelm to 1 enemy in any lane for 2 rounds. Overwhelm prevents Active Commands and Habits on the target's turn; it satisfies the broad Control family while remaining specifically visible.\n\nProgression table (Overwhelm chance):\nHabit Level 1: 10%\nHabit Level 2: 12%\nHabit Level 3: 14%\nHabit Level 4: 17%\nHabit Level 5: 20%\n\nPower: 250 / 550 / 900 / 1300 / 1800",
+        "verification": {"status": "screenshot-verified", "source": "Solstryker Oppressive Onslaught screenshot", "capturedAt": "2026-07-16", "gameVersion": null, "reviewedManually": true},
+        "evidenceIds": ["solstryker-oppressive-onslaught-2026-07-16"],
+        "tags": ["OVERWHELM", "CONTROL", "ANY_LANE_TARGET"]
+      },
+      {
+        "id": "solstryker-robust-insight",
+        "dragonId": "solstryker",
+        "kind": "habit",
+        "name": "Robust Insight",
+        "abilityClass": "passive",
+        "unlockStarRank": 8,
+        "minimumDragonLevel": null,
+        "positionRequirement": null,
+        "rawDescription": "Start of combat until end of combat: increase Solstryker Strength and Instinct. Self-only.\n\nProgression table (Strength and Instinct):\nHabit Level 1: +12.5%\nHabit Level 2: +15%\nHabit Level 3: +17.5%\nHabit Level 4: +21.25%\nHabit Level 5: +25%\n\nPower: 250 / 550 / 900 / 1300 / 1800",
+        "verification": {"status": "screenshot-verified", "source": "Solstryker Robust Insight screenshot", "capturedAt": "2026-07-16", "gameVersion": null, "reviewedManually": true},
+        "evidenceIds": ["solstryker-robust-insight-2026-07-16"],
+        "tags": ["STRENGTH_UP", "INSTINCT_UP", "BUFF_SELF"]
+      },
+      {
+        "id": "solstryker-amplified-drain",
+        "dragonId": "solstryker",
+        "kind": "habit",
+        "name": "Amplified Drain",
+        "abilityClass": "passive",
+        "unlockStarRank": 10,
+        "minimumDragonLevel": null,
+        "positionRequirement": null,
+        "rawDescription": "Round 4: independently select 2 enemies within adjacency and reduce their Strength and Initiative for 5 rounds, enhanced by Solstryker's Instinct. This is separate from Energy Drain, not a Command augmentation. Its stacking or refresh interaction with other reductions is unresolved.\n\nProgression table (Strength and Initiative):\nHabit Level 1: -15%\nHabit Level 2: -19.5%\nHabit Level 3: -24%\nHabit Level 4: -30%\nHabit Level 5: -37.5%\n\nPower: 250 / 580 / 1000 / 1600 / 2300",
+        "verification": {"status": "screenshot-verified", "source": "Solstryker Amplified Drain screenshot", "capturedAt": "2026-07-16", "gameVersion": null, "reviewedManually": true},
+        "evidenceIds": ["solstryker-amplified-drain-2026-07-16"],
+        "tags": ["DEBUFF_STRENGTH", "DEBUFF_INITIATIVE", "ENHANCED_BY_INSTINCT", "ADJACENT_TARGET", "ENEMY_DEBUFF"]
+      }
+    ],
     "affinities": {
       "Cavalry": "unknown",
       "Shieldbearers": "unknown",
@@ -1128,7 +1246,7 @@ export const dragons = [
       "instinct": null,
       "initiative": null
     },
-    "tags": [],
+    "tags": ["PHYSICAL_DAMAGE", "TACTICAL_DAMAGE", "STRENGTH_SCALING", "ENHANCED_BY_INSTINCT", "DAMAGE_DEALT_DOWN", "VULNERABLE_PAYOFF", "VANGUARD_REQUIRED", "STEADY_EROSION", "DEBUFF_STRENGTH", "DEBUFF_INITIATIVE", "OVERWHELM", "CONTROL", "STRENGTH_UP", "INSTINCT_UP"],
     "fieldVerification": {
       "identity": {
         "status": "officially-confirmed",
@@ -1150,6 +1268,18 @@ export const dragons = [
         "capturedAt": "2026-06-23",
         "gameVersion": null,
         "reviewedManually": true
+      },
+      "command": {
+        "status": "screenshot-verified", "source": "Solstryker Tactical Onslaught screenshots", "capturedAt": "2026-07-16", "gameVersion": null, "reviewedManually": true
+      },
+      "trait": {
+        "status": "screenshot-verified", "source": "Solstryker Champion's Brilliance screenshot", "capturedAt": "2026-07-16", "gameVersion": null, "reviewedManually": true
+      },
+      "habits": {
+        "status": "screenshot-verified", "source": "Solstryker Habit screenshots", "capturedAt": "2026-07-16", "gameVersion": null, "reviewedManually": true
+      },
+      "affinities": {
+        "status": "unknown", "source": "Affinity icons were not text-verified", "capturedAt": "2026-07-16", "gameVersion": null, "reviewedManually": true
       }
     }
   },
@@ -4840,12 +4970,109 @@ export const dragons = [
     "firstObservedInGame": null,
     "gameVersion": null,
     "isNew": false,
-    "dataStatus": "official-metadata-only",
-    "lastVerified": "2026-06-23",
-    "notes": null,
-    "command": null,
-    "trait": null,
-    "habits": [],
+    "dataStatus": "community-verified",
+    "lastVerified": "2026-07-16",
+    "notes": "Affinity icons were not text-verified and remain unknown.",
+    "command": {
+      "id": "shimmer-unbreakable-loyalty",
+      "dragonId": "shimmer",
+      "kind": "command",
+      "name": "Unbreakable Loyalty",
+      "abilityClass": "active",
+      "unlockStarRank": null,
+      "minimumDragonLevel": null,
+      "positionRequirement": null,
+      "rawDescription": "Each round: one 30% activation roll. On success, select the other ally with the highest Strength, then increase that same ally's Strength by +18% and Initiative by +9%, both enhanced by Shimmer's Instinct, for 2 rounds. Shimmer is excluded. Equal-highest-Strength tie-breaking and repeated refresh/stacking are unresolved.\n\nRounds 2, 4, 7, and 9: deal Tactical Damage to 2 enemies within adjacency at a +50% Damage Rate. Tactical Damage scales with Shimmer's Instinct and is mitigated by target Intelligence.\n\nAt 6+ Stars, Loyal Shield augments Unbreakable Loyalty on rounds 2, 4, 7, and 9 with Recovery to 2 other allies in any lane. Recovery uses Loyal Shield's current base rate, is enhanced by Shimmer's Instinct, and is doubled separately for each recipient that has Resistance. One recipient's Resistance does not affect the other recipient.",
+      "verification": {"status": "screenshot-verified", "source": "Shimmer Unbreakable Loyalty screenshots", "capturedAt": "2026-07-16", "gameVersion": null, "reviewedManually": true},
+      "evidenceIds": ["shimmer-unbreakable-loyalty-2026-07-16"],
+      "tags": ["BUFF_STRENGTH", "BUFF_INITIATIVE", "HIGHEST_STRENGTH_TARGET", "TACTICAL_DAMAGE", "ENHANCED_BY_INSTINCT", "SPECIFIC_ROUNDS", "ADJACENT_TARGET", "RECOVERY", "RESISTANCE_PAYOFF", "COMMAND_AUGMENTATION", "OTHER_ALLIES_TARGET"]
+    },
+    "trait": {
+      "id": "shimmer-sentinels-presence",
+      "dragonId": "shimmer",
+      "kind": "trait",
+      "name": "Sentinel's Presence",
+      "abilityClass": "passive",
+      "unlockStarRank": 1,
+      "minimumDragonLevel": 16,
+      "positionRequirement": "vanguard",
+      "rawDescription": "At Dragon Level 16+ while Shimmer is Vanguard: increase Shimmer Recovery Dealt by +15% and Instinct by +25. Increase Fire Damage Dealt of the Left Flank ally by +16%. Shimmer's Recovery and Instinct increases are self-only.",
+      "verification": {"status": "screenshot-verified", "source": "Shimmer Sentinel's Presence screenshot", "capturedAt": "2026-07-16", "gameVersion": null, "reviewedManually": true},
+      "evidenceIds": ["shimmer-sentinels-presence-2026-07-16"],
+      "tags": ["RECOVERY_DEALT_UP", "INSTINCT_UP", "FIRE_DAMAGE_UP", "VANGUARD_REQUIRED", "LEFT_FLANK_TARGET", "BUFF_SELF"]
+    },
+    "habits": [
+      {
+        "id": "shimmer-crushing-force",
+        "dragonId": "shimmer",
+        "kind": "habit",
+        "name": "Crushing Force",
+        "abilityClass": "passive",
+        "unlockStarRank": 2,
+        "minimumDragonLevel": null,
+        "positionRequirement": null,
+        "rawDescription": "Start of Round 1 for 3 rounds, make two independent ally selections. Physical branch: increase Physical Damage Dealt from Active Commands and Habits of 1 Ally in any lane, prioritizing Left Flank; Basic Attacks are excluded. Tactical branch: increase Tactical Damage Dealt of 1 Ally in any lane, prioritizing Right Flank. Ally does not exclude Shimmer, distinct targets are not required, and a branch may select Shimmer in the prioritized position. Fallback after a prioritized target becomes unavailable and convergence during fallback are unresolved.\n\nProgression table (both Damage Dealt increases):\nHabit Level 1: +9%\nHabit Level 2: +10.8%\nHabit Level 3: +12.6%\nHabit Level 4: +15.3%\nHabit Level 5: +18%\n\nPower: 250 / 550 / 900 / 1300 / 1800",
+        "verification": {"status": "screenshot-verified", "source": "Shimmer Crushing Force screenshot", "capturedAt": "2026-07-16", "gameVersion": null, "reviewedManually": true},
+        "evidenceIds": ["shimmer-crushing-force-2026-07-16"],
+        "tags": ["PHYSICAL_DAMAGE_UP", "TACTICAL_DAMAGE_UP", "EXCLUDES_BASIC_ATTACKS", "ANY_LANE_TARGET", "LEFT_FLANK_TARGET", "RIGHT_FLANK_TARGET", "BUFF_ALLIES"]
+      },
+      {
+        "id": "shimmer-dragons-insight",
+        "dragonId": "shimmer",
+        "kind": "habit",
+        "name": "Dragon's Insight",
+        "abilityClass": "passive",
+        "unlockStarRank": 4,
+        "minimumDragonLevel": null,
+        "positionRequirement": null,
+        "rawDescription": "Start of combat until end of combat: reduce Shimmer Damage Received and increase Shimmer Instinct. Self-only.\n\nProgression table (Damage Received; Instinct):\nHabit Level 1: -4%; +5%\nHabit Level 2: -4.8%; +6%\nHabit Level 3: -5.6%; +7%\nHabit Level 4: -6.8%; +8.5%\nHabit Level 5: -8%; +10%\n\nPower: 250 / 550 / 900 / 1300 / 1800",
+        "verification": {"status": "screenshot-verified", "source": "Shimmer Dragon's Insight screenshot", "capturedAt": "2026-07-16", "gameVersion": null, "reviewedManually": true},
+        "evidenceIds": ["shimmer-dragons-insight-2026-07-16"],
+        "tags": ["DAMAGE_RECEIVED_DOWN", "INSTINCT_UP", "BUFF_SELF"]
+      },
+      {
+        "id": "shimmer-loyal-shield",
+        "dragonId": "shimmer",
+        "kind": "habit",
+        "name": "Loyal Shield",
+        "abilityClass": "passive",
+        "unlockStarRank": 6,
+        "minimumDragonLevel": null,
+        "positionRequirement": null,
+        "rawDescription": "Augments Unbreakable Loyalty on rounds 2, 4, 7, and 9: apply Recovery to 2 other allies in any lane, enhanced by Shimmer's Instinct. Double the current base rate separately for each recipient with Resistance.\n\nProgression table (base Recovery Rate; doubled with Resistance):\nHabit Level 1: 30%; 60%\nHabit Level 2: 36%; 72%\nHabit Level 3: 42%; 84%\nHabit Level 4: 51%; 102%\nHabit Level 5: 60%; 120%\n\nPower: 250 / 550 / 900 / 1300 / 1800",
+        "verification": {"status": "screenshot-verified", "source": "Shimmer Loyal Shield screenshot", "capturedAt": "2026-07-16", "gameVersion": null, "reviewedManually": true},
+        "evidenceIds": ["shimmer-loyal-shield-2026-07-16"],
+        "tags": ["COMMAND_AUGMENTATION", "RECOVERY", "RESISTANCE_PAYOFF", "OTHER_ALLIES_TARGET", "ENHANCED_BY_INSTINCT"]
+      },
+      {
+        "id": "shimmer-unbroken-devotion",
+        "dragonId": "shimmer",
+        "kind": "habit",
+        "name": "Unbroken Devotion",
+        "abilityClass": "passive",
+        "unlockStarRank": 8,
+        "minimumDragonLevel": null,
+        "positionRequirement": null,
+        "rawDescription": "Start of combat until end of combat: increase Recovery Received of 2 other allies in any lane. Shimmer is excluded.\n\nProgression table (Recovery Received):\nHabit Level 1: +15%\nHabit Level 2: +18%\nHabit Level 3: +21%\nHabit Level 4: +25.5%\nHabit Level 5: +30%\n\nPower: 250 / 550 / 900 / 1300 / 1800",
+        "verification": {"status": "screenshot-verified", "source": "Shimmer Unbroken Devotion screenshot", "capturedAt": "2026-07-16", "gameVersion": null, "reviewedManually": true},
+        "evidenceIds": ["shimmer-unbroken-devotion-2026-07-16"],
+        "tags": ["RECOVERY_RECEIVED_UP", "OTHER_ALLIES_TARGET", "BUFF_ALLIES"]
+      },
+      {
+        "id": "shimmer-sneak-attack",
+        "dragonId": "shimmer",
+        "kind": "habit",
+        "name": "Sneak Attack",
+        "abilityClass": "passive",
+        "unlockStarRank": 10,
+        "minimumDragonLevel": null,
+        "positionRequirement": null,
+        "rawDescription": "Each round: make one activation roll. On success, select the other ally with the highest Strength, increase that same ally's Physical Damage Dealt by +10%, and grant that same ally First-Strike for 2 rounds. First-Strike makes the recipient attack before all other combatants each round. Shimmer is excluded and equal-highest-Strength tie-breaking is unresolved.\n\nProgression table (activation chance):\nHabit Level 1: 14%\nHabit Level 2: 18.2%\nHabit Level 3: 22.4%\nHabit Level 4: 28%\nHabit Level 5: 35%\n\nPower: 250 / 580 / 1000 / 1600 / 2300",
+        "verification": {"status": "screenshot-verified", "source": "Shimmer Sneak Attack screenshot", "capturedAt": "2026-07-16", "gameVersion": null, "reviewedManually": true},
+        "evidenceIds": ["shimmer-sneak-attack-2026-07-16"],
+        "tags": ["PHYSICAL_DAMAGE_UP", "FIRST_STRIKE", "HIGHEST_STRENGTH_TARGET", "OTHER_ALLIES_TARGET"]
+      }
+    ],
     "affinities": {
       "Cavalry": "unknown",
       "Shieldbearers": "unknown",
@@ -4859,7 +5086,7 @@ export const dragons = [
       "instinct": null,
       "initiative": null
     },
-    "tags": [],
+    "tags": ["BUFF_STRENGTH", "BUFF_INITIATIVE", "HIGHEST_STRENGTH_TARGET", "TACTICAL_DAMAGE", "ENHANCED_BY_INSTINCT", "RECOVERY", "RESISTANCE_PAYOFF", "COMMAND_AUGMENTATION", "FIRE_DAMAGE_UP", "VANGUARD_REQUIRED", "PHYSICAL_DAMAGE_UP", "TACTICAL_DAMAGE_UP", "EXCLUDES_BASIC_ATTACKS", "DAMAGE_RECEIVED_DOWN", "RECOVERY_RECEIVED_UP", "FIRST_STRIKE"],
     "fieldVerification": {
       "identity": {
         "status": "officially-confirmed",
@@ -4881,7 +5108,11 @@ export const dragons = [
         "capturedAt": "2026-06-23",
         "gameVersion": null,
         "reviewedManually": true
-      }
+      },
+      "command": {"status": "screenshot-verified", "source": "Shimmer Unbreakable Loyalty screenshots", "capturedAt": "2026-07-16", "gameVersion": null, "reviewedManually": true},
+      "trait": {"status": "screenshot-verified", "source": "Shimmer Sentinel's Presence screenshot", "capturedAt": "2026-07-16", "gameVersion": null, "reviewedManually": true},
+      "habits": {"status": "screenshot-verified", "source": "Shimmer Habit screenshots", "capturedAt": "2026-07-16", "gameVersion": null, "reviewedManually": true},
+      "affinities": {"status": "unknown", "source": "Affinity icons were not text-verified", "capturedAt": "2026-07-16", "gameVersion": null, "reviewedManually": true}
     }
   },
   {
@@ -4895,12 +5126,109 @@ export const dragons = [
     "firstObservedInGame": null,
     "gameVersion": null,
     "isNew": false,
-    "dataStatus": "official-metadata-only",
-    "lastVerified": "2026-06-23",
-    "notes": null,
-    "command": null,
-    "trait": null,
-    "habits": [],
+    "dataStatus": "community-verified",
+    "lastVerified": "2026-07-16",
+    "notes": "Adult life stage was shown. Affinity icon was not text-verified and remains unknown.",
+    "command": {
+      "id": "jagadrix-cunning-whispers",
+      "dragonId": "jagadrix",
+      "kind": "command",
+      "name": "Cunning Whispers",
+      "abilityClass": "active",
+      "unlockStarRank": null,
+      "minimumDragonLevel": null,
+      "positionRequirement": null,
+      "rawDescription": "Each round: one 30% activation roll targets 1 enemy in the same lane. Reduce that same target's Instinct and Initiative by -15%, both enhanced by Jagadrix's Initiative, for 2 rounds. Same-lane targeting is battlefield-facing. Fallback with no valid same-lane enemy and repeated reduction stacking/refresh are unresolved.\n\nRounds 2, 5, and 8: deal Fire Damage to 1 enemy in the same lane at a +120% Damage Rate. Fire Damage scales with Jagadrix's Intelligence and is mitigated by target Initiative.\n\nAt 10 Stars, Echoes of Deceit augments Cunning Whispers. Round 1: choose the enemy with highest Instinct and reduce its Instinct and Initiative until end of combat, enhanced by Jagadrix's Initiative. This selection is separate from the base each-round activation. Rounds 3, 6, and 9: deal Fire Damage to all enemies that deal Tactical Damage, using Echoes of Deceit's current rate. Damage is doubled separately against each eligible target afflicted with Panic. The multiplier is 2x, and this does not add Tactical Damage to Jagadrix's Damage Profile.",
+      "verification": {"status": "screenshot-verified", "source": "Jagadrix Cunning Whispers screenshots", "capturedAt": "2026-07-16", "gameVersion": null, "reviewedManually": true},
+      "evidenceIds": ["jagadrix-cunning-whispers-2026-07-16"],
+      "tags": ["DEBUFF_INSTINCTS", "DEBUFF_INITIATIVE", "INITIATIVE_SCALING", "SAME_LANE_TARGET", "FIRE_DAMAGE", "INTELLIGENCE_SCALING", "SPECIFIC_ROUNDS", "COMMAND_AUGMENTATION", "PANIC_PAYOFF", "ANY_LANE_TARGET"]
+    },
+    "trait": {
+      "id": "jagadrix-hunters-wrath",
+      "dragonId": "jagadrix",
+      "kind": "trait",
+      "name": "Hunter's Wrath",
+      "abilityClass": "passive",
+      "unlockStarRank": 1,
+      "minimumDragonLevel": 16,
+      "positionRequirement": "vanguard",
+      "rawDescription": "At Dragon Level 16+ while Jagadrix is Vanguard: increase Jagadrix Fire Damage Dealt by +16%. Increase Strength and Initiative of the Right Flank ally by +20. Jagadrix's Fire increase is self-only.",
+      "verification": {"status": "screenshot-verified", "source": "Jagadrix Hunter's Wrath screenshot", "capturedAt": "2026-07-16", "gameVersion": null, "reviewedManually": true},
+      "evidenceIds": ["jagadrix-hunters-wrath-2026-07-16"],
+      "tags": ["FIRE_DAMAGE_UP", "STRENGTH_UP", "BUFF_INITIATIVE", "VANGUARD_REQUIRED", "RIGHT_FLANK_TARGET", "BUFF_SELF"]
+    },
+    "habits": [
+      {
+        "id": "jagadrix-enervate",
+        "dragonId": "jagadrix",
+        "kind": "habit",
+        "name": "Enervate",
+        "abilityClass": "passive",
+        "unlockStarRank": 2,
+        "minimumDragonLevel": null,
+        "positionRequirement": null,
+        "rawDescription": "Start of combat: target 1 enemy that deals Tactical Damage and reduce that enemy's Tactical Damage Dealt until end of combat. This typed enemy suppression is not Weakened and is not allied Tactical support. Selection among multiple valid enemies is unresolved.\n\nProgression table (Tactical Damage Dealt):\nHabit Level 1: -8%\nHabit Level 2: -9.6%\nHabit Level 3: -11.2%\nHabit Level 4: -13.6%\nHabit Level 5: -16%\n\nPower: 250 / 550 / 900 / 1300 / 1800",
+        "verification": {"status": "screenshot-verified", "source": "Jagadrix Enervate screenshot", "capturedAt": "2026-07-16", "gameVersion": null, "reviewedManually": true},
+        "evidenceIds": ["jagadrix-enervate-2026-07-16"],
+        "tags": ["TACTICAL_DAMAGE_DOWN", "DAMAGE_DEALT_DOWN", "ENEMY_DEBUFF"]
+      },
+      {
+        "id": "jagadrix-second-wind",
+        "dragonId": "jagadrix",
+        "kind": "habit",
+        "name": "Second Wind",
+        "abilityClass": "passive",
+        "unlockStarRank": 4,
+        "minimumDragonLevel": null,
+        "positionRequirement": null,
+        "rawDescription": "Round 6, resolve in this order: (1) increase Jagadrix Damage Dealt until end of combat; (2) apply Recovery to Jagadrix; then (3) apply Nullify Recovery to Jagadrix until end of combat. Nullify Recovery prevents receiving later Recovery. The immediate self-Recovery resolves before Nullify Recovery. All effects are self-only and non-scoring. Timing with external Recovery amplification, cleanse/removal/immunity behavior, and already-restored-troop behavior are unresolved.\n\nProgression table (Damage Dealt; Recovery Rate):\nHabit Level 1: +10%; +150%\nHabit Level 2: +12%; +180%\nHabit Level 3: +14%; +210%\nHabit Level 4: +17%; +255%\nHabit Level 5: +20%; +300%\n\nPower: 250 / 550 / 900 / 1300 / 1800",
+        "verification": {"status": "screenshot-verified", "source": "Jagadrix Second Wind screenshot", "capturedAt": "2026-07-16", "gameVersion": null, "reviewedManually": true},
+        "evidenceIds": ["jagadrix-second-wind-2026-07-16"],
+        "tags": ["DAMAGE_DEALT_UP", "RECOVERY", "NULLIFY_RECOVERY", "BUFF_SELF", "SPECIFIC_ROUNDS"]
+      },
+      {
+        "id": "jagadrix-whispering-sabotage",
+        "dragonId": "jagadrix",
+        "kind": "habit",
+        "name": "Whispering Sabotage",
+        "abilityClass": "passive",
+        "unlockStarRank": 6,
+        "minimumDragonLevel": null,
+        "positionRequirement": null,
+        "rawDescription": "Each round: chance to apply Weakened (-10% Damage Dealt) to 1 enemy in the same lane for 2 rounds. Same-lane targeting is battlefield-facing. Weakened does not satisfy Control.\n\nProgression table (Weakened chance):\nHabit Level 1: 25%\nHabit Level 2: 30%\nHabit Level 3: 35%\nHabit Level 4: 42.5%\nHabit Level 5: 50%\n\nPower: 250 / 550 / 900 / 1300 / 1800",
+        "verification": {"status": "screenshot-verified", "source": "Jagadrix Whispering Sabotage screenshot", "capturedAt": "2026-07-16", "gameVersion": null, "reviewedManually": true},
+        "evidenceIds": ["jagadrix-whispering-sabotage-2026-07-16"],
+        "tags": ["WEAKENED", "DAMAGE_DEALT_DOWN", "SAME_LANE_TARGET", "ENEMY_DEBUFF"]
+      },
+      {
+        "id": "jagadrix-quick-witted",
+        "dragonId": "jagadrix",
+        "kind": "habit",
+        "name": "Quick-Witted",
+        "abilityClass": "passive",
+        "unlockStarRank": 8,
+        "minimumDragonLevel": null,
+        "positionRequirement": null,
+        "rawDescription": "Start of combat until end of combat: increase Jagadrix Intelligence and Initiative. Self-only.\n\nProgression table (Intelligence and Initiative):\nHabit Level 1: +12.5%\nHabit Level 2: +15%\nHabit Level 3: +17.5%\nHabit Level 4: +21.25%\nHabit Level 5: +25%\n\nPower: 250 / 550 / 900 / 1300 / 1800",
+        "verification": {"status": "screenshot-verified", "source": "Jagadrix Quick-Witted screenshot", "capturedAt": "2026-07-16", "gameVersion": null, "reviewedManually": true},
+        "evidenceIds": ["jagadrix-quick-witted-2026-07-16"],
+        "tags": ["INTELLIGENCE_UP", "BUFF_INITIATIVE", "BUFF_SELF"]
+      },
+      {
+        "id": "jagadrix-echoes-of-deceit",
+        "dragonId": "jagadrix",
+        "kind": "habit",
+        "name": "Echoes of Deceit",
+        "abilityClass": "passive",
+        "unlockStarRank": 10,
+        "minimumDragonLevel": null,
+        "positionRequirement": null,
+        "rawDescription": "Augments Cunning Whispers. Round 1: independently select the enemy with the highest Instinct and reduce its Instinct and Initiative until end of combat, enhanced by Jagadrix's Initiative. Rounds 3, 6, and 9: deal Fire Damage to all enemies that deal Tactical Damage. Double damage separately against each eligible target with Panic. Equal-highest-Instinct tie-breaking and overlap/stacking with the base Round 1 reductions are unresolved.\n\nProgression table (Instinct and Initiative; Fire Damage Rate):\nHabit Level 1: -6%; +30%\nHabit Level 2: -7.8%; +39%\nHabit Level 3: -9.6%; +48%\nHabit Level 4: -12%; +60%\nHabit Level 5: -15%; +75%\n\nPower: 250 / 580 / 1000 / 1600 / 2300",
+        "verification": {"status": "screenshot-verified", "source": "Jagadrix Echoes of Deceit screenshot", "capturedAt": "2026-07-16", "gameVersion": null, "reviewedManually": true},
+        "evidenceIds": ["jagadrix-echoes-of-deceit-2026-07-16"],
+        "tags": ["COMMAND_AUGMENTATION", "DEBUFF_INSTINCTS", "DEBUFF_INITIATIVE", "INITIATIVE_SCALING", "FIRE_DAMAGE", "PANIC_PAYOFF", "SPECIFIC_ROUNDS", "ANY_LANE_TARGET"]
+      }
+    ],
     "affinities": {
       "Cavalry": "unknown",
       "Shieldbearers": "unknown",
@@ -4914,7 +5242,7 @@ export const dragons = [
       "instinct": null,
       "initiative": null
     },
-    "tags": [],
+    "tags": ["DEBUFF_INSTINCTS", "DEBUFF_INITIATIVE", "INITIATIVE_SCALING", "SAME_LANE_TARGET", "FIRE_DAMAGE", "INTELLIGENCE_SCALING", "COMMAND_AUGMENTATION", "PANIC_PAYOFF", "FIRE_DAMAGE_UP", "STRENGTH_UP", "BUFF_INITIATIVE", "VANGUARD_REQUIRED", "TACTICAL_DAMAGE_DOWN", "DAMAGE_DEALT_DOWN", "DAMAGE_DEALT_UP", "RECOVERY", "NULLIFY_RECOVERY", "WEAKENED", "INTELLIGENCE_UP"],
     "fieldVerification": {
       "identity": {
         "status": "officially-confirmed",
@@ -4936,7 +5264,11 @@ export const dragons = [
         "capturedAt": "2026-06-23",
         "gameVersion": null,
         "reviewedManually": true
-      }
+      },
+      "command": {"status": "screenshot-verified", "source": "Jagadrix Cunning Whispers screenshots", "capturedAt": "2026-07-16", "gameVersion": null, "reviewedManually": true},
+      "trait": {"status": "screenshot-verified", "source": "Jagadrix Hunter's Wrath screenshot", "capturedAt": "2026-07-16", "gameVersion": null, "reviewedManually": true},
+      "habits": {"status": "screenshot-verified", "source": "Jagadrix Habit screenshots", "capturedAt": "2026-07-16", "gameVersion": null, "reviewedManually": true},
+      "affinities": {"status": "unknown", "source": "Affinity icon was not text-verified", "capturedAt": "2026-07-16", "gameVersion": null, "reviewedManually": true}
     }
   },
   {

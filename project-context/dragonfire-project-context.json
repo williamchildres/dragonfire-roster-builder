@@ -1,12 +1,12 @@
 {
   "format": "dragonfire-lab-project-context",
   "contextVersion": 2,
-  "generatedAt": "2026-07-16T04:37:29.679Z",
+  "generatedAt": "2026-07-16T18:53:29.839Z",
   "source": {
     "repository": "https://github.com/williamchildres/dragonfire-roster-builder",
-    "branch": "data/add-rare-batch-1",
-    "commit": "6d7cb9a04fcc6df2a2b39994bd61ee5639f5ac95",
-    "databaseVersion": "0.6.5",
+    "branch": "data/add-rare-batch-2",
+    "commit": "e1aff5a201d28a988f8b31e3c47521553d5b482e",
+    "databaseVersion": "0.6.6",
     "dataSchemaVersion": 13,
     "localRosterSchemaVersion": 4,
     "gameBuild": "26.6.53509"
@@ -30,12 +30,12 @@
   },
   "rosterSummary": {
     "totalDragons": 31,
-    "detailedDragons": 22,
-    "metadataOnlyDragons": 9,
-    "curatedSimpleProfiles": 22,
-    "profileAuditReviews": 154,
-    "evidenceSources": 188,
-    "manualReviews": 35
+    "detailedDragons": 25,
+    "metadataOnlyDragons": 6,
+    "curatedSimpleProfiles": 25,
+    "profileAuditReviews": 175,
+    "evidenceSources": 209,
+    "manualReviews": 38
   },
   "dragons": [
     {
@@ -1050,11 +1050,201 @@
       "rarity": "Rare",
       "breed": "Champion",
       "rosterSourceStatus": "official-website",
-      "dataStatus": "official-metadata-only",
-      "lastVerified": "2026-06-23",
-      "profileCompleteness": "metadata-only",
+      "dataStatus": "community-verified",
+      "lastVerified": "2026-07-16",
+      "profileCompleteness": "detailed-abilities",
       "officialProfileUrl": "https://gotdragonfire.com/dragons/solstryker/",
-      "abilities": [],
+      "abilities": [
+        {
+          "id": "solstryker-tactical-onslaught",
+          "kind": "command",
+          "name": "Tactical Onslaught",
+          "abilityClass": "active",
+          "unlockStarRank": null,
+          "minimumDragonLevel": null,
+          "positionRequirement": null,
+          "verification": {
+            "status": "screenshot-verified",
+            "source": "Solstryker Tactical Onslaught screenshots",
+            "capturedAt": "2026-07-16",
+            "gameVersion": null,
+            "reviewedManually": true
+          },
+          "evidenceIds": [
+            "solstryker-tactical-onslaught-2026-07-16"
+          ],
+          "tags": [
+            "PHYSICAL_DAMAGE",
+            "TACTICAL_DAMAGE",
+            "STRENGTH_SCALING",
+            "ENHANCED_BY_INSTINCT",
+            "DAMAGE_DEALT_DOWN",
+            "ENEMY_DEBUFF",
+            "VULNERABLE_PAYOFF",
+            "ANY_LANE_TARGET"
+          ],
+          "rawDescription": "Odd-numbered rounds, after each Basic Attack: deal Physical Damage to the same target at a +30% Damage Rate. Physical Damage scales with Solstryker's Strength and is mitigated by target Instinct. Separately, there is a 20% chance to reduce that target's Physical Damage Dealt by -12% for 2 rounds. This typed enemy suppression is not Weakened.\n\nEven-numbered rounds, after each Basic Attack: deal Tactical Damage to 3 enemies in any lane at a +12.5% Damage Rate. Tactical Damage scales with Solstryker's Instinct and is mitigated by target Intelligence. Damage is doubled separately against each target afflicted with Vulnerable; the multiplier is 2x rather than a separate fixed rate."
+        },
+        {
+          "id": "solstryker-champions-brilliance",
+          "kind": "trait",
+          "name": "Champion's Brilliance",
+          "abilityClass": "passive",
+          "unlockStarRank": 1,
+          "minimumDragonLevel": 16,
+          "positionRequirement": "vanguard",
+          "verification": {
+            "status": "screenshot-verified",
+            "source": "Solstryker Champion's Brilliance screenshot",
+            "capturedAt": "2026-07-16",
+            "gameVersion": null,
+            "reviewedManually": true
+          },
+          "evidenceIds": [
+            "solstryker-champions-brilliance-2026-07-16"
+          ],
+          "tags": [
+            "STRENGTH_UP",
+            "INTELLIGENCE_UP",
+            "INSTINCT_UP",
+            "DAMAGE_RECEIVED_DOWN",
+            "VANGUARD_REQUIRED",
+            "RIGHT_FLANK_TARGET",
+            "BUFF_SELF"
+          ],
+          "rawDescription": "At Dragon Level 16+ while Solstryker is Vanguard: increase Solstryker Strength, Intelligence, and Instinct by +15. Reduce Damage Received of the Right Flank ally by -8%. The stat increases are self-only; the defensive ally effect is detailed but non-scoring."
+        },
+        {
+          "id": "solstryker-steady-erosion",
+          "kind": "habit",
+          "name": "Steady Erosion",
+          "abilityClass": "passive",
+          "unlockStarRank": 2,
+          "minimumDragonLevel": null,
+          "positionRequirement": null,
+          "verification": {
+            "status": "screenshot-verified",
+            "source": "Solstryker Steady Erosion screenshot",
+            "capturedAt": "2026-07-16",
+            "gameVersion": null,
+            "reviewedManually": true
+          },
+          "evidenceIds": [
+            "solstryker-steady-erosion-2026-07-16"
+          ],
+          "tags": [
+            "STEADY_EROSION",
+            "DEBUFF_STRENGTH",
+            "ENHANCED_BY_STRENGTH",
+            "ENEMY_DEBUFF"
+          ],
+          "rawDescription": "At the start of each round, add 1 stack of Steady Erosion to all enemies, up to 10 stacks. Each stack reduces target Strength until the end of combat and is enhanced by Solstryker's Strength. The exact enhancement formula and cleanse/removal behavior are unresolved. Steady Erosion is not Vulnerable, Weakened, or Control.\n\nProgression table (Strength reduction per stack):\nHabit Level 1: -2%\nHabit Level 2: -2.4%\nHabit Level 3: -2.8%\nHabit Level 4: -3.4%\nHabit Level 5: -4%\n\nPower: 250 / 550 / 900 / 1300 / 1800"
+        },
+        {
+          "id": "solstryker-energy-drain",
+          "kind": "habit",
+          "name": "Energy Drain",
+          "abilityClass": "passive",
+          "unlockStarRank": 4,
+          "minimumDragonLevel": null,
+          "positionRequirement": null,
+          "verification": {
+            "status": "screenshot-verified",
+            "source": "Solstryker Energy Drain screenshot",
+            "capturedAt": "2026-07-16",
+            "gameVersion": null,
+            "reviewedManually": true
+          },
+          "evidenceIds": [
+            "solstryker-energy-drain-2026-07-16"
+          ],
+          "tags": [
+            "DEBUFF_STRENGTH",
+            "DEBUFF_INITIATIVE",
+            "ENHANCED_BY_INSTINCT",
+            "ADJACENT_TARGET",
+            "ENEMY_DEBUFF"
+          ],
+          "rawDescription": "Round 1: reduce Strength and Initiative of the same 2 enemies within adjacency for 3 rounds, enhanced by Solstryker's Instinct. This is direct enemy stat reduction, not a named status. The exact enhancement formula and stacking/refresh behavior are unresolved.\n\nProgression table (Strength and Initiative):\nHabit Level 1: -15%\nHabit Level 2: -18%\nHabit Level 3: -21%\nHabit Level 4: -25.5%\nHabit Level 5: -30%\n\nPower: 250 / 550 / 900 / 1300 / 1800"
+        },
+        {
+          "id": "solstryker-oppressive-onslaught",
+          "kind": "habit",
+          "name": "Oppressive Onslaught",
+          "abilityClass": "passive",
+          "unlockStarRank": 6,
+          "minimumDragonLevel": null,
+          "positionRequirement": null,
+          "verification": {
+            "status": "screenshot-verified",
+            "source": "Solstryker Oppressive Onslaught screenshot",
+            "capturedAt": "2026-07-16",
+            "gameVersion": null,
+            "reviewedManually": true
+          },
+          "evidenceIds": [
+            "solstryker-oppressive-onslaught-2026-07-16"
+          ],
+          "tags": [
+            "OVERWHELM",
+            "CONTROL",
+            "ANY_LANE_TARGET"
+          ],
+          "rawDescription": "Each round: chance to apply Overwhelm to 1 enemy in any lane for 2 rounds. Overwhelm prevents Active Commands and Habits on the target's turn; it satisfies the broad Control family while remaining specifically visible.\n\nProgression table (Overwhelm chance):\nHabit Level 1: 10%\nHabit Level 2: 12%\nHabit Level 3: 14%\nHabit Level 4: 17%\nHabit Level 5: 20%\n\nPower: 250 / 550 / 900 / 1300 / 1800"
+        },
+        {
+          "id": "solstryker-robust-insight",
+          "kind": "habit",
+          "name": "Robust Insight",
+          "abilityClass": "passive",
+          "unlockStarRank": 8,
+          "minimumDragonLevel": null,
+          "positionRequirement": null,
+          "verification": {
+            "status": "screenshot-verified",
+            "source": "Solstryker Robust Insight screenshot",
+            "capturedAt": "2026-07-16",
+            "gameVersion": null,
+            "reviewedManually": true
+          },
+          "evidenceIds": [
+            "solstryker-robust-insight-2026-07-16"
+          ],
+          "tags": [
+            "STRENGTH_UP",
+            "INSTINCT_UP",
+            "BUFF_SELF"
+          ],
+          "rawDescription": "Start of combat until end of combat: increase Solstryker Strength and Instinct. Self-only.\n\nProgression table (Strength and Instinct):\nHabit Level 1: +12.5%\nHabit Level 2: +15%\nHabit Level 3: +17.5%\nHabit Level 4: +21.25%\nHabit Level 5: +25%\n\nPower: 250 / 550 / 900 / 1300 / 1800"
+        },
+        {
+          "id": "solstryker-amplified-drain",
+          "kind": "habit",
+          "name": "Amplified Drain",
+          "abilityClass": "passive",
+          "unlockStarRank": 10,
+          "minimumDragonLevel": null,
+          "positionRequirement": null,
+          "verification": {
+            "status": "screenshot-verified",
+            "source": "Solstryker Amplified Drain screenshot",
+            "capturedAt": "2026-07-16",
+            "gameVersion": null,
+            "reviewedManually": true
+          },
+          "evidenceIds": [
+            "solstryker-amplified-drain-2026-07-16"
+          ],
+          "tags": [
+            "DEBUFF_STRENGTH",
+            "DEBUFF_INITIATIVE",
+            "ENHANCED_BY_INSTINCT",
+            "ADJACENT_TARGET",
+            "ENEMY_DEBUFF"
+          ],
+          "rawDescription": "Round 4: independently select 2 enemies within adjacency and reduce their Strength and Initiative for 5 rounds, enhanced by Solstryker's Instinct. This is separate from Energy Drain, not a Command augmentation. Its stacking or refresh interaction with other reductions is unresolved.\n\nProgression table (Strength and Initiative):\nHabit Level 1: -15%\nHabit Level 2: -19.5%\nHabit Level 3: -24%\nHabit Level 4: -30%\nHabit Level 5: -37.5%\n\nPower: 250 / 580 / 1000 / 1600 / 2300"
+        }
+      ],
       "affinities": {
         "Cavalry": "unknown",
         "Shieldbearers": "unknown",
@@ -1083,11 +1273,47 @@
           "capturedAt": "2026-06-23",
           "gameVersion": null,
           "reviewedManually": true
+        },
+        "command": {
+          "status": "screenshot-verified",
+          "source": "Solstryker Tactical Onslaught screenshots",
+          "capturedAt": "2026-07-16",
+          "gameVersion": null,
+          "reviewedManually": true
+        },
+        "trait": {
+          "status": "screenshot-verified",
+          "source": "Solstryker Champion's Brilliance screenshot",
+          "capturedAt": "2026-07-16",
+          "gameVersion": null,
+          "reviewedManually": true
+        },
+        "habits": {
+          "status": "screenshot-verified",
+          "source": "Solstryker Habit screenshots",
+          "capturedAt": "2026-07-16",
+          "gameVersion": null,
+          "reviewedManually": true
+        },
+        "affinities": {
+          "status": "unknown",
+          "source": "Affinity icons were not text-verified",
+          "capturedAt": "2026-07-16",
+          "gameVersion": null,
+          "reviewedManually": true
         }
       },
-      "evidenceIds": [],
-      "simpleProfileId": null,
-      "simpleProfileStatus": "metadata-only-unmapped"
+      "evidenceIds": [
+        "solstryker-amplified-drain-2026-07-16",
+        "solstryker-champions-brilliance-2026-07-16",
+        "solstryker-energy-drain-2026-07-16",
+        "solstryker-oppressive-onslaught-2026-07-16",
+        "solstryker-robust-insight-2026-07-16",
+        "solstryker-steady-erosion-2026-07-16",
+        "solstryker-tactical-onslaught-2026-07-16"
+      ],
+      "simpleProfileId": "solstryker",
+      "simpleProfileStatus": "curated"
     },
     {
       "id": "crimson",
@@ -4451,11 +4677,205 @@
       "rarity": "Rare",
       "breed": "Sentinel",
       "rosterSourceStatus": "official-website",
-      "dataStatus": "official-metadata-only",
-      "lastVerified": "2026-06-23",
-      "profileCompleteness": "metadata-only",
+      "dataStatus": "community-verified",
+      "lastVerified": "2026-07-16",
+      "profileCompleteness": "detailed-abilities",
       "officialProfileUrl": "https://gotdragonfire.com/dragons/shimmer/",
-      "abilities": [],
+      "abilities": [
+        {
+          "id": "shimmer-unbreakable-loyalty",
+          "kind": "command",
+          "name": "Unbreakable Loyalty",
+          "abilityClass": "active",
+          "unlockStarRank": null,
+          "minimumDragonLevel": null,
+          "positionRequirement": null,
+          "verification": {
+            "status": "screenshot-verified",
+            "source": "Shimmer Unbreakable Loyalty screenshots",
+            "capturedAt": "2026-07-16",
+            "gameVersion": null,
+            "reviewedManually": true
+          },
+          "evidenceIds": [
+            "shimmer-unbreakable-loyalty-2026-07-16"
+          ],
+          "tags": [
+            "BUFF_STRENGTH",
+            "BUFF_INITIATIVE",
+            "HIGHEST_STRENGTH_TARGET",
+            "TACTICAL_DAMAGE",
+            "ENHANCED_BY_INSTINCT",
+            "SPECIFIC_ROUNDS",
+            "ADJACENT_TARGET",
+            "RECOVERY",
+            "RESISTANCE_PAYOFF",
+            "COMMAND_AUGMENTATION",
+            "OTHER_ALLIES_TARGET"
+          ],
+          "rawDescription": "Each round: one 30% activation roll. On success, select the other ally with the highest Strength, then increase that same ally's Strength by +18% and Initiative by +9%, both enhanced by Shimmer's Instinct, for 2 rounds. Shimmer is excluded. Equal-highest-Strength tie-breaking and repeated refresh/stacking are unresolved.\n\nRounds 2, 4, 7, and 9: deal Tactical Damage to 2 enemies within adjacency at a +50% Damage Rate. Tactical Damage scales with Shimmer's Instinct and is mitigated by target Intelligence.\n\nAt 6+ Stars, Loyal Shield augments Unbreakable Loyalty on rounds 2, 4, 7, and 9 with Recovery to 2 other allies in any lane. Recovery uses Loyal Shield's current base rate, is enhanced by Shimmer's Instinct, and is doubled separately for each recipient that has Resistance. One recipient's Resistance does not affect the other recipient."
+        },
+        {
+          "id": "shimmer-sentinels-presence",
+          "kind": "trait",
+          "name": "Sentinel's Presence",
+          "abilityClass": "passive",
+          "unlockStarRank": 1,
+          "minimumDragonLevel": 16,
+          "positionRequirement": "vanguard",
+          "verification": {
+            "status": "screenshot-verified",
+            "source": "Shimmer Sentinel's Presence screenshot",
+            "capturedAt": "2026-07-16",
+            "gameVersion": null,
+            "reviewedManually": true
+          },
+          "evidenceIds": [
+            "shimmer-sentinels-presence-2026-07-16"
+          ],
+          "tags": [
+            "RECOVERY_DEALT_UP",
+            "INSTINCT_UP",
+            "FIRE_DAMAGE_UP",
+            "VANGUARD_REQUIRED",
+            "LEFT_FLANK_TARGET",
+            "BUFF_SELF"
+          ],
+          "rawDescription": "At Dragon Level 16+ while Shimmer is Vanguard: increase Shimmer Recovery Dealt by +15% and Instinct by +25. Increase Fire Damage Dealt of the Left Flank ally by +16%. Shimmer's Recovery and Instinct increases are self-only."
+        },
+        {
+          "id": "shimmer-crushing-force",
+          "kind": "habit",
+          "name": "Crushing Force",
+          "abilityClass": "passive",
+          "unlockStarRank": 2,
+          "minimumDragonLevel": null,
+          "positionRequirement": null,
+          "verification": {
+            "status": "screenshot-verified",
+            "source": "Shimmer Crushing Force screenshot",
+            "capturedAt": "2026-07-16",
+            "gameVersion": null,
+            "reviewedManually": true
+          },
+          "evidenceIds": [
+            "shimmer-crushing-force-2026-07-16"
+          ],
+          "tags": [
+            "PHYSICAL_DAMAGE_UP",
+            "TACTICAL_DAMAGE_UP",
+            "EXCLUDES_BASIC_ATTACKS",
+            "ANY_LANE_TARGET",
+            "LEFT_FLANK_TARGET",
+            "RIGHT_FLANK_TARGET",
+            "BUFF_ALLIES"
+          ],
+          "rawDescription": "Start of Round 1 for 3 rounds, make two independent ally selections. Physical branch: increase Physical Damage Dealt from Active Commands and Habits of 1 Ally in any lane, prioritizing Left Flank; Basic Attacks are excluded. Tactical branch: increase Tactical Damage Dealt of 1 Ally in any lane, prioritizing Right Flank. Ally does not exclude Shimmer, distinct targets are not required, and a branch may select Shimmer in the prioritized position. Fallback after a prioritized target becomes unavailable and convergence during fallback are unresolved.\n\nProgression table (both Damage Dealt increases):\nHabit Level 1: +9%\nHabit Level 2: +10.8%\nHabit Level 3: +12.6%\nHabit Level 4: +15.3%\nHabit Level 5: +18%\n\nPower: 250 / 550 / 900 / 1300 / 1800"
+        },
+        {
+          "id": "shimmer-dragons-insight",
+          "kind": "habit",
+          "name": "Dragon's Insight",
+          "abilityClass": "passive",
+          "unlockStarRank": 4,
+          "minimumDragonLevel": null,
+          "positionRequirement": null,
+          "verification": {
+            "status": "screenshot-verified",
+            "source": "Shimmer Dragon's Insight screenshot",
+            "capturedAt": "2026-07-16",
+            "gameVersion": null,
+            "reviewedManually": true
+          },
+          "evidenceIds": [
+            "shimmer-dragons-insight-2026-07-16"
+          ],
+          "tags": [
+            "DAMAGE_RECEIVED_DOWN",
+            "INSTINCT_UP",
+            "BUFF_SELF"
+          ],
+          "rawDescription": "Start of combat until end of combat: reduce Shimmer Damage Received and increase Shimmer Instinct. Self-only.\n\nProgression table (Damage Received; Instinct):\nHabit Level 1: -4%; +5%\nHabit Level 2: -4.8%; +6%\nHabit Level 3: -5.6%; +7%\nHabit Level 4: -6.8%; +8.5%\nHabit Level 5: -8%; +10%\n\nPower: 250 / 550 / 900 / 1300 / 1800"
+        },
+        {
+          "id": "shimmer-loyal-shield",
+          "kind": "habit",
+          "name": "Loyal Shield",
+          "abilityClass": "passive",
+          "unlockStarRank": 6,
+          "minimumDragonLevel": null,
+          "positionRequirement": null,
+          "verification": {
+            "status": "screenshot-verified",
+            "source": "Shimmer Loyal Shield screenshot",
+            "capturedAt": "2026-07-16",
+            "gameVersion": null,
+            "reviewedManually": true
+          },
+          "evidenceIds": [
+            "shimmer-loyal-shield-2026-07-16"
+          ],
+          "tags": [
+            "COMMAND_AUGMENTATION",
+            "RECOVERY",
+            "RESISTANCE_PAYOFF",
+            "OTHER_ALLIES_TARGET",
+            "ENHANCED_BY_INSTINCT"
+          ],
+          "rawDescription": "Augments Unbreakable Loyalty on rounds 2, 4, 7, and 9: apply Recovery to 2 other allies in any lane, enhanced by Shimmer's Instinct. Double the current base rate separately for each recipient with Resistance.\n\nProgression table (base Recovery Rate; doubled with Resistance):\nHabit Level 1: 30%; 60%\nHabit Level 2: 36%; 72%\nHabit Level 3: 42%; 84%\nHabit Level 4: 51%; 102%\nHabit Level 5: 60%; 120%\n\nPower: 250 / 550 / 900 / 1300 / 1800"
+        },
+        {
+          "id": "shimmer-unbroken-devotion",
+          "kind": "habit",
+          "name": "Unbroken Devotion",
+          "abilityClass": "passive",
+          "unlockStarRank": 8,
+          "minimumDragonLevel": null,
+          "positionRequirement": null,
+          "verification": {
+            "status": "screenshot-verified",
+            "source": "Shimmer Unbroken Devotion screenshot",
+            "capturedAt": "2026-07-16",
+            "gameVersion": null,
+            "reviewedManually": true
+          },
+          "evidenceIds": [
+            "shimmer-unbroken-devotion-2026-07-16"
+          ],
+          "tags": [
+            "RECOVERY_RECEIVED_UP",
+            "OTHER_ALLIES_TARGET",
+            "BUFF_ALLIES"
+          ],
+          "rawDescription": "Start of combat until end of combat: increase Recovery Received of 2 other allies in any lane. Shimmer is excluded.\n\nProgression table (Recovery Received):\nHabit Level 1: +15%\nHabit Level 2: +18%\nHabit Level 3: +21%\nHabit Level 4: +25.5%\nHabit Level 5: +30%\n\nPower: 250 / 550 / 900 / 1300 / 1800"
+        },
+        {
+          "id": "shimmer-sneak-attack",
+          "kind": "habit",
+          "name": "Sneak Attack",
+          "abilityClass": "passive",
+          "unlockStarRank": 10,
+          "minimumDragonLevel": null,
+          "positionRequirement": null,
+          "verification": {
+            "status": "screenshot-verified",
+            "source": "Shimmer Sneak Attack screenshot",
+            "capturedAt": "2026-07-16",
+            "gameVersion": null,
+            "reviewedManually": true
+          },
+          "evidenceIds": [
+            "shimmer-sneak-attack-2026-07-16"
+          ],
+          "tags": [
+            "PHYSICAL_DAMAGE_UP",
+            "FIRST_STRIKE",
+            "HIGHEST_STRENGTH_TARGET",
+            "OTHER_ALLIES_TARGET"
+          ],
+          "rawDescription": "Each round: make one activation roll. On success, select the other ally with the highest Strength, increase that same ally's Physical Damage Dealt by +10%, and grant that same ally First-Strike for 2 rounds. First-Strike makes the recipient attack before all other combatants each round. Shimmer is excluded and equal-highest-Strength tie-breaking is unresolved.\n\nProgression table (activation chance):\nHabit Level 1: 14%\nHabit Level 2: 18.2%\nHabit Level 3: 22.4%\nHabit Level 4: 28%\nHabit Level 5: 35%\n\nPower: 250 / 580 / 1000 / 1600 / 2300"
+        }
+      ],
       "affinities": {
         "Cavalry": "unknown",
         "Shieldbearers": "unknown",
@@ -4484,11 +4904,47 @@
           "capturedAt": "2026-06-23",
           "gameVersion": null,
           "reviewedManually": true
+        },
+        "command": {
+          "status": "screenshot-verified",
+          "source": "Shimmer Unbreakable Loyalty screenshots",
+          "capturedAt": "2026-07-16",
+          "gameVersion": null,
+          "reviewedManually": true
+        },
+        "trait": {
+          "status": "screenshot-verified",
+          "source": "Shimmer Sentinel's Presence screenshot",
+          "capturedAt": "2026-07-16",
+          "gameVersion": null,
+          "reviewedManually": true
+        },
+        "habits": {
+          "status": "screenshot-verified",
+          "source": "Shimmer Habit screenshots",
+          "capturedAt": "2026-07-16",
+          "gameVersion": null,
+          "reviewedManually": true
+        },
+        "affinities": {
+          "status": "unknown",
+          "source": "Affinity icons were not text-verified",
+          "capturedAt": "2026-07-16",
+          "gameVersion": null,
+          "reviewedManually": true
         }
       },
-      "evidenceIds": [],
-      "simpleProfileId": null,
-      "simpleProfileStatus": "metadata-only-unmapped"
+      "evidenceIds": [
+        "shimmer-crushing-force-2026-07-16",
+        "shimmer-dragons-insight-2026-07-16",
+        "shimmer-loyal-shield-2026-07-16",
+        "shimmer-sentinels-presence-2026-07-16",
+        "shimmer-sneak-attack-2026-07-16",
+        "shimmer-unbreakable-loyalty-2026-07-16",
+        "shimmer-unbroken-devotion-2026-07-16"
+      ],
+      "simpleProfileId": "shimmer",
+      "simpleProfileStatus": "curated"
     },
     {
       "id": "jagadrix",
@@ -4497,11 +4953,205 @@
       "rarity": "Rare",
       "breed": "Hunter",
       "rosterSourceStatus": "official-website",
-      "dataStatus": "official-metadata-only",
-      "lastVerified": "2026-06-23",
-      "profileCompleteness": "metadata-only",
+      "dataStatus": "community-verified",
+      "lastVerified": "2026-07-16",
+      "profileCompleteness": "detailed-abilities",
       "officialProfileUrl": "https://gotdragonfire.com/dragons/jagadrix/",
-      "abilities": [],
+      "abilities": [
+        {
+          "id": "jagadrix-cunning-whispers",
+          "kind": "command",
+          "name": "Cunning Whispers",
+          "abilityClass": "active",
+          "unlockStarRank": null,
+          "minimumDragonLevel": null,
+          "positionRequirement": null,
+          "verification": {
+            "status": "screenshot-verified",
+            "source": "Jagadrix Cunning Whispers screenshots",
+            "capturedAt": "2026-07-16",
+            "gameVersion": null,
+            "reviewedManually": true
+          },
+          "evidenceIds": [
+            "jagadrix-cunning-whispers-2026-07-16"
+          ],
+          "tags": [
+            "DEBUFF_INSTINCTS",
+            "DEBUFF_INITIATIVE",
+            "INITIATIVE_SCALING",
+            "SAME_LANE_TARGET",
+            "FIRE_DAMAGE",
+            "INTELLIGENCE_SCALING",
+            "SPECIFIC_ROUNDS",
+            "COMMAND_AUGMENTATION",
+            "PANIC_PAYOFF",
+            "ANY_LANE_TARGET"
+          ],
+          "rawDescription": "Each round: one 30% activation roll targets 1 enemy in the same lane. Reduce that same target's Instinct and Initiative by -15%, both enhanced by Jagadrix's Initiative, for 2 rounds. Same-lane targeting is battlefield-facing. Fallback with no valid same-lane enemy and repeated reduction stacking/refresh are unresolved.\n\nRounds 2, 5, and 8: deal Fire Damage to 1 enemy in the same lane at a +120% Damage Rate. Fire Damage scales with Jagadrix's Intelligence and is mitigated by target Initiative.\n\nAt 10 Stars, Echoes of Deceit augments Cunning Whispers. Round 1: choose the enemy with highest Instinct and reduce its Instinct and Initiative until end of combat, enhanced by Jagadrix's Initiative. This selection is separate from the base each-round activation. Rounds 3, 6, and 9: deal Fire Damage to all enemies that deal Tactical Damage, using Echoes of Deceit's current rate. Damage is doubled separately against each eligible target afflicted with Panic. The multiplier is 2x, and this does not add Tactical Damage to Jagadrix's Damage Profile."
+        },
+        {
+          "id": "jagadrix-hunters-wrath",
+          "kind": "trait",
+          "name": "Hunter's Wrath",
+          "abilityClass": "passive",
+          "unlockStarRank": 1,
+          "minimumDragonLevel": 16,
+          "positionRequirement": "vanguard",
+          "verification": {
+            "status": "screenshot-verified",
+            "source": "Jagadrix Hunter's Wrath screenshot",
+            "capturedAt": "2026-07-16",
+            "gameVersion": null,
+            "reviewedManually": true
+          },
+          "evidenceIds": [
+            "jagadrix-hunters-wrath-2026-07-16"
+          ],
+          "tags": [
+            "FIRE_DAMAGE_UP",
+            "STRENGTH_UP",
+            "BUFF_INITIATIVE",
+            "VANGUARD_REQUIRED",
+            "RIGHT_FLANK_TARGET",
+            "BUFF_SELF"
+          ],
+          "rawDescription": "At Dragon Level 16+ while Jagadrix is Vanguard: increase Jagadrix Fire Damage Dealt by +16%. Increase Strength and Initiative of the Right Flank ally by +20. Jagadrix's Fire increase is self-only."
+        },
+        {
+          "id": "jagadrix-enervate",
+          "kind": "habit",
+          "name": "Enervate",
+          "abilityClass": "passive",
+          "unlockStarRank": 2,
+          "minimumDragonLevel": null,
+          "positionRequirement": null,
+          "verification": {
+            "status": "screenshot-verified",
+            "source": "Jagadrix Enervate screenshot",
+            "capturedAt": "2026-07-16",
+            "gameVersion": null,
+            "reviewedManually": true
+          },
+          "evidenceIds": [
+            "jagadrix-enervate-2026-07-16"
+          ],
+          "tags": [
+            "TACTICAL_DAMAGE_DOWN",
+            "DAMAGE_DEALT_DOWN",
+            "ENEMY_DEBUFF"
+          ],
+          "rawDescription": "Start of combat: target 1 enemy that deals Tactical Damage and reduce that enemy's Tactical Damage Dealt until end of combat. This typed enemy suppression is not Weakened and is not allied Tactical support. Selection among multiple valid enemies is unresolved.\n\nProgression table (Tactical Damage Dealt):\nHabit Level 1: -8%\nHabit Level 2: -9.6%\nHabit Level 3: -11.2%\nHabit Level 4: -13.6%\nHabit Level 5: -16%\n\nPower: 250 / 550 / 900 / 1300 / 1800"
+        },
+        {
+          "id": "jagadrix-second-wind",
+          "kind": "habit",
+          "name": "Second Wind",
+          "abilityClass": "passive",
+          "unlockStarRank": 4,
+          "minimumDragonLevel": null,
+          "positionRequirement": null,
+          "verification": {
+            "status": "screenshot-verified",
+            "source": "Jagadrix Second Wind screenshot",
+            "capturedAt": "2026-07-16",
+            "gameVersion": null,
+            "reviewedManually": true
+          },
+          "evidenceIds": [
+            "jagadrix-second-wind-2026-07-16"
+          ],
+          "tags": [
+            "DAMAGE_DEALT_UP",
+            "RECOVERY",
+            "NULLIFY_RECOVERY",
+            "BUFF_SELF",
+            "SPECIFIC_ROUNDS"
+          ],
+          "rawDescription": "Round 6, resolve in this order: (1) increase Jagadrix Damage Dealt until end of combat; (2) apply Recovery to Jagadrix; then (3) apply Nullify Recovery to Jagadrix until end of combat. Nullify Recovery prevents receiving later Recovery. The immediate self-Recovery resolves before Nullify Recovery. All effects are self-only and non-scoring. Timing with external Recovery amplification, cleanse/removal/immunity behavior, and already-restored-troop behavior are unresolved.\n\nProgression table (Damage Dealt; Recovery Rate):\nHabit Level 1: +10%; +150%\nHabit Level 2: +12%; +180%\nHabit Level 3: +14%; +210%\nHabit Level 4: +17%; +255%\nHabit Level 5: +20%; +300%\n\nPower: 250 / 550 / 900 / 1300 / 1800"
+        },
+        {
+          "id": "jagadrix-whispering-sabotage",
+          "kind": "habit",
+          "name": "Whispering Sabotage",
+          "abilityClass": "passive",
+          "unlockStarRank": 6,
+          "minimumDragonLevel": null,
+          "positionRequirement": null,
+          "verification": {
+            "status": "screenshot-verified",
+            "source": "Jagadrix Whispering Sabotage screenshot",
+            "capturedAt": "2026-07-16",
+            "gameVersion": null,
+            "reviewedManually": true
+          },
+          "evidenceIds": [
+            "jagadrix-whispering-sabotage-2026-07-16"
+          ],
+          "tags": [
+            "WEAKENED",
+            "DAMAGE_DEALT_DOWN",
+            "SAME_LANE_TARGET",
+            "ENEMY_DEBUFF"
+          ],
+          "rawDescription": "Each round: chance to apply Weakened (-10% Damage Dealt) to 1 enemy in the same lane for 2 rounds. Same-lane targeting is battlefield-facing. Weakened does not satisfy Control.\n\nProgression table (Weakened chance):\nHabit Level 1: 25%\nHabit Level 2: 30%\nHabit Level 3: 35%\nHabit Level 4: 42.5%\nHabit Level 5: 50%\n\nPower: 250 / 550 / 900 / 1300 / 1800"
+        },
+        {
+          "id": "jagadrix-quick-witted",
+          "kind": "habit",
+          "name": "Quick-Witted",
+          "abilityClass": "passive",
+          "unlockStarRank": 8,
+          "minimumDragonLevel": null,
+          "positionRequirement": null,
+          "verification": {
+            "status": "screenshot-verified",
+            "source": "Jagadrix Quick-Witted screenshot",
+            "capturedAt": "2026-07-16",
+            "gameVersion": null,
+            "reviewedManually": true
+          },
+          "evidenceIds": [
+            "jagadrix-quick-witted-2026-07-16"
+          ],
+          "tags": [
+            "INTELLIGENCE_UP",
+            "BUFF_INITIATIVE",
+            "BUFF_SELF"
+          ],
+          "rawDescription": "Start of combat until end of combat: increase Jagadrix Intelligence and Initiative. Self-only.\n\nProgression table (Intelligence and Initiative):\nHabit Level 1: +12.5%\nHabit Level 2: +15%\nHabit Level 3: +17.5%\nHabit Level 4: +21.25%\nHabit Level 5: +25%\n\nPower: 250 / 550 / 900 / 1300 / 1800"
+        },
+        {
+          "id": "jagadrix-echoes-of-deceit",
+          "kind": "habit",
+          "name": "Echoes of Deceit",
+          "abilityClass": "passive",
+          "unlockStarRank": 10,
+          "minimumDragonLevel": null,
+          "positionRequirement": null,
+          "verification": {
+            "status": "screenshot-verified",
+            "source": "Jagadrix Echoes of Deceit screenshot",
+            "capturedAt": "2026-07-16",
+            "gameVersion": null,
+            "reviewedManually": true
+          },
+          "evidenceIds": [
+            "jagadrix-echoes-of-deceit-2026-07-16"
+          ],
+          "tags": [
+            "COMMAND_AUGMENTATION",
+            "DEBUFF_INSTINCTS",
+            "DEBUFF_INITIATIVE",
+            "INITIATIVE_SCALING",
+            "FIRE_DAMAGE",
+            "PANIC_PAYOFF",
+            "SPECIFIC_ROUNDS",
+            "ANY_LANE_TARGET"
+          ],
+          "rawDescription": "Augments Cunning Whispers. Round 1: independently select the enemy with the highest Instinct and reduce its Instinct and Initiative until end of combat, enhanced by Jagadrix's Initiative. Rounds 3, 6, and 9: deal Fire Damage to all enemies that deal Tactical Damage. Double damage separately against each eligible target with Panic. Equal-highest-Instinct tie-breaking and overlap/stacking with the base Round 1 reductions are unresolved.\n\nProgression table (Instinct and Initiative; Fire Damage Rate):\nHabit Level 1: -6%; +30%\nHabit Level 2: -7.8%; +39%\nHabit Level 3: -9.6%; +48%\nHabit Level 4: -12%; +60%\nHabit Level 5: -15%; +75%\n\nPower: 250 / 580 / 1000 / 1600 / 2300"
+        }
+      ],
       "affinities": {
         "Cavalry": "unknown",
         "Shieldbearers": "unknown",
@@ -4530,11 +5180,47 @@
           "capturedAt": "2026-06-23",
           "gameVersion": null,
           "reviewedManually": true
+        },
+        "command": {
+          "status": "screenshot-verified",
+          "source": "Jagadrix Cunning Whispers screenshots",
+          "capturedAt": "2026-07-16",
+          "gameVersion": null,
+          "reviewedManually": true
+        },
+        "trait": {
+          "status": "screenshot-verified",
+          "source": "Jagadrix Hunter's Wrath screenshot",
+          "capturedAt": "2026-07-16",
+          "gameVersion": null,
+          "reviewedManually": true
+        },
+        "habits": {
+          "status": "screenshot-verified",
+          "source": "Jagadrix Habit screenshots",
+          "capturedAt": "2026-07-16",
+          "gameVersion": null,
+          "reviewedManually": true
+        },
+        "affinities": {
+          "status": "unknown",
+          "source": "Affinity icon was not text-verified",
+          "capturedAt": "2026-07-16",
+          "gameVersion": null,
+          "reviewedManually": true
         }
       },
-      "evidenceIds": [],
-      "simpleProfileId": null,
-      "simpleProfileStatus": "metadata-only-unmapped"
+      "evidenceIds": [
+        "jagadrix-cunning-whispers-2026-07-16",
+        "jagadrix-echoes-of-deceit-2026-07-16",
+        "jagadrix-enervate-2026-07-16",
+        "jagadrix-hunters-wrath-2026-07-16",
+        "jagadrix-quick-witted-2026-07-16",
+        "jagadrix-second-wind-2026-07-16",
+        "jagadrix-whispering-sabotage-2026-07-16"
+      ],
+      "simpleProfileId": "jagadrix",
+      "simpleProfileStatus": "curated"
     },
     {
       "id": "bevlorin",
@@ -6125,6 +6811,7 @@
       "status:vulnerable",
       "status:weakened",
       "status:bleed",
+      "status:resistance",
       "damage:physical",
       "damage:tactical",
       "damage:fire",
@@ -6175,6 +6862,19 @@
             "abilityId": "syrax-strategic-revival",
             "abilityName": "Strategic Revival",
             "description": "provides Recovery that is enhanced by Intelligence",
+            "unlock": {
+              "minimumStarRank": 6
+            },
+            "friendlyScope": "formation",
+            "confidence": "verified"
+          },
+          {
+            "id": "syrax-strategic-revival-resistance",
+            "tag": "status:resistance",
+            "abilityId": "syrax-strategic-revival",
+            "abilityName": "Strategic Revival",
+            "description": "grants named Resistance to the selected Ally",
+            "publicLabel": "Grants Resistance",
             "unlock": {
               "minimumStarRank": 6
             },
@@ -6515,6 +7215,19 @@
               "minimumStarRank": 6
             },
             "confidence": "verified"
+          },
+          {
+            "id": "seasmoke-loyal-bond-resistance",
+            "tag": "status:resistance",
+            "abilityId": "seasmoke-loyal-bond",
+            "abilityName": "Loyal Bond",
+            "description": "grants named Resistance to other allies below 50% Troop Capacity",
+            "publicLabel": "Grants Resistance",
+            "unlock": {
+              "minimumStarRank": 10
+            },
+            "friendlyScope": "formation",
+            "confidence": "verified"
           }
         ],
         "supports": [
@@ -6720,6 +7433,7 @@
             "abilityId": "kalspire-tactical-assault",
             "abilityName": "Tactical Assault",
             "description": "applies Panic",
+            "publicLabel": "Applies Panic",
             "unlock": {
               "minimumStarRank": 6
             },
@@ -6986,6 +7700,7 @@
             "abilityId": "daemoros-instill-fear",
             "abilityName": "Instill Fear",
             "description": "applies Panic",
+            "publicLabel": "Applies Panic",
             "unlock": {
               "minimumStarRank": 2
             },
@@ -7178,6 +7893,19 @@
               "minimumStarRank": 6
             },
             "friendlyScope": "formation",
+            "confidence": "verified"
+          },
+          {
+            "id": "rhysarion-inspiring-melody-resistance",
+            "tag": "status:resistance",
+            "abilityId": "rhysarion-inspiring-melody",
+            "abilityName": "Inspiring Melody",
+            "description": "grants named Resistance to the same adjacent other ally",
+            "publicLabel": "Grants Resistance",
+            "unlock": {
+              "minimumStarRank": 10
+            },
+            "friendlyScope": "adjacent",
             "confidence": "verified"
           }
         ],
@@ -7896,6 +8624,7 @@
             "abilityId": "zivern-fearsome-reach",
             "abilityName": "Fearsome Reach",
             "description": "applies Panic",
+            "publicLabel": "Applies Panic",
             "unlock": {
               "minimumStarRank": 6
             },
@@ -8258,6 +8987,407 @@
         ]
       },
       {
+        "dragonId": "solstryker",
+        "dragonName": "Solstryker",
+        "outputs": [
+          {
+            "id": "solstryker-tactical-onslaught-physical",
+            "tag": "damage:physical",
+            "scalesWith": [
+              "stat:strength"
+            ],
+            "abilityId": "solstryker-tactical-onslaught",
+            "abilityName": "Tactical Onslaught",
+            "description": "deals Physical Damage using Strength",
+            "confidence": "verified"
+          },
+          {
+            "id": "solstryker-tactical-onslaught-tactical",
+            "tag": "damage:tactical",
+            "scalesWith": [
+              "stat:instinct"
+            ],
+            "abilityId": "solstryker-tactical-onslaught",
+            "abilityName": "Tactical Onslaught",
+            "description": "deals Tactical Damage using Instinct",
+            "confidence": "verified"
+          },
+          {
+            "id": "solstryker-oppressive-onslaught-overwhelm",
+            "tag": "status:overwhelm",
+            "abilityId": "solstryker-oppressive-onslaught",
+            "abilityName": "Oppressive Onslaught",
+            "description": "applies Overwhelm as Control",
+            "publicLabel": "Applies Overwhelm",
+            "unlock": {
+              "minimumStarRank": 6
+            },
+            "friendlyScope": "formation",
+            "confidence": "verified"
+          }
+        ],
+        "supports": [],
+        "benefitsFrom": [
+          {
+            "id": "solstryker-tactical-onslaught-vulnerable-payoff",
+            "tag": "status:vulnerable",
+            "abilityId": "solstryker-tactical-onslaught",
+            "abilityName": "Tactical Onslaught",
+            "description": "Vulnerable doubles the even-round Tactical Damage per target",
+            "publicLabel": "Benefits from Vulnerable",
+            "friendlyScope": "formation",
+            "confidence": "verified"
+          },
+          {
+            "id": "solstryker-tactical-onslaught-strength-payoff",
+            "tag": "stat:strength",
+            "abilityId": "solstryker-tactical-onslaught",
+            "abilityName": "Tactical Onslaught",
+            "description": "Strength improves the Physical attack",
+            "friendlyScope": "formation",
+            "confidence": "verified"
+          },
+          {
+            "id": "solstryker-tactical-onslaught-instinct-payoff",
+            "tag": "stat:instinct",
+            "abilityId": "solstryker-tactical-onslaught",
+            "abilityName": "Tactical Onslaught",
+            "description": "Instinct improves the Tactical attack",
+            "friendlyScope": "formation",
+            "confidence": "verified"
+          }
+        ],
+        "positionClaims": [
+          {
+            "id": "solstryker-champions-brilliance-vanguard",
+            "abilityId": "solstryker-champions-brilliance",
+            "abilityName": "Champion's Brilliance",
+            "requiredPosition": "vanguard",
+            "unlock": {
+              "minimumDragonLevel": 16
+            },
+            "description": "Champion's Brilliance requires Vanguard",
+            "confidence": "verified"
+          }
+        ]
+      },
+      {
+        "dragonId": "shimmer",
+        "dragonName": "Shimmer",
+        "outputs": [
+          {
+            "id": "shimmer-unbreakable-loyalty-tactical",
+            "tag": "damage:tactical",
+            "scalesWith": [
+              "stat:instinct"
+            ],
+            "abilityId": "shimmer-unbreakable-loyalty",
+            "abilityName": "Unbreakable Loyalty",
+            "description": "deals Tactical Damage using Instinct",
+            "confidence": "verified"
+          },
+          {
+            "id": "shimmer-loyal-shield-recovery",
+            "tag": "effect:recovery",
+            "scalesWith": [
+              "stat:instinct"
+            ],
+            "abilityId": "shimmer-loyal-shield",
+            "abilityName": "Loyal Shield",
+            "description": "provides Recovery to both other allies",
+            "publicLabel": "Provides Recovery",
+            "unlock": {
+              "minimumStarRank": 6
+            },
+            "friendlyScope": "formation",
+            "summaryAbilityId": "shimmer-unbreakable-loyalty",
+            "summaryUnlockLabel": "Recovery and its Resistance payoff",
+            "summaryHiddenEffectTags": [
+              "RECOVERY",
+              "RESISTANCE_PAYOFF"
+            ],
+            "confidence": "verified"
+          },
+          {
+            "id": "shimmer-sneak-attack-first-strike",
+            "tag": "status:first-strike",
+            "abilityId": "shimmer-sneak-attack",
+            "abilityName": "Sneak Attack",
+            "description": "grants First-Strike to the highest-Strength other ally",
+            "publicLabel": "Grants First-Strike",
+            "unlock": {
+              "minimumStarRank": 10
+            },
+            "recipientSelector": {
+              "kind": "highest-stat",
+              "stat": "strength",
+              "excludeSelf": true
+            },
+            "friendlyScope": "formation",
+            "confidence": "verified"
+          }
+        ],
+        "supports": [
+          {
+            "id": "shimmer-unbreakable-loyalty-stats",
+            "tag": "stat:strength",
+            "tags": [
+              "stat:strength",
+              "stat:initiative"
+            ],
+            "abilityId": "shimmer-unbreakable-loyalty",
+            "abilityName": "Unbreakable Loyalty",
+            "description": "improves Strength and Initiative of the same highest-Strength other ally",
+            "publicLabel": "Strength support to highest-Strength other ally",
+            "recipientSelector": {
+              "kind": "highest-stat",
+              "stat": "strength",
+              "excludeSelf": true
+            },
+            "friendlyScope": "formation",
+            "confidence": "verified"
+          },
+          {
+            "id": "shimmer-sentinels-presence-left-fire",
+            "tag": "damage:fire",
+            "abilityId": "shimmer-sentinels-presence",
+            "abilityName": "Sentinel's Presence",
+            "description": "improves Fire Damage of the Left Flank ally",
+            "unlock": {
+              "minimumDragonLevel": 16
+            },
+            "requiredSelfPosition": "vanguard",
+            "requiredRecipientPosition": "left-flank",
+            "friendlyScope": "formation",
+            "confidence": "verified"
+          },
+          {
+            "id": "shimmer-crushing-force-physical",
+            "tag": "damage:physical",
+            "damageScope": "non-basic-attack",
+            "abilityId": "shimmer-crushing-force",
+            "abilityName": "Crushing Force",
+            "description": "improves non-Basic Physical Damage while prioritizing Left Flank",
+            "publicLabel": "Non-Basic Physical support (prioritizes Left Flank)",
+            "unlock": {
+              "minimumStarRank": 2
+            },
+            "recipientSelector": {
+              "kind": "position-priority",
+              "preferredPosition": "left-flank",
+              "allowSelf": true
+            },
+            "friendlyScope": "formation",
+            "confidence": "verified"
+          },
+          {
+            "id": "shimmer-crushing-force-tactical",
+            "tag": "damage:tactical",
+            "abilityId": "shimmer-crushing-force",
+            "abilityName": "Crushing Force",
+            "description": "improves Tactical Damage while prioritizing Right Flank",
+            "publicLabel": "Tactical support (prioritizes Right Flank)",
+            "unlock": {
+              "minimumStarRank": 2
+            },
+            "recipientSelector": {
+              "kind": "position-priority",
+              "preferredPosition": "right-flank",
+              "allowSelf": true
+            },
+            "friendlyScope": "formation",
+            "confidence": "verified"
+          },
+          {
+            "id": "shimmer-unbroken-devotion-recovery",
+            "tag": "effect:recovery",
+            "abilityId": "shimmer-unbroken-devotion",
+            "abilityName": "Unbroken Devotion",
+            "description": "improves Recovery Received of both other allies",
+            "publicLabel": "Recovery support to both other allies",
+            "unlock": {
+              "minimumStarRank": 8
+            },
+            "friendlyScope": "formation",
+            "confidence": "verified"
+          },
+          {
+            "id": "shimmer-sneak-attack-physical",
+            "tag": "damage:physical",
+            "abilityId": "shimmer-sneak-attack",
+            "abilityName": "Sneak Attack",
+            "description": "improves Physical Damage of the highest-Strength other ally",
+            "publicLabel": "Physical support to highest-Strength other ally",
+            "unlock": {
+              "minimumStarRank": 10
+            },
+            "recipientSelector": {
+              "kind": "highest-stat",
+              "stat": "strength",
+              "excludeSelf": true
+            },
+            "friendlyScope": "formation",
+            "confidence": "verified"
+          }
+        ],
+        "benefitsFrom": [
+          {
+            "id": "shimmer-unbreakable-loyalty-instinct-payoff",
+            "tag": "stat:instinct",
+            "abilityId": "shimmer-unbreakable-loyalty",
+            "abilityName": "Unbreakable Loyalty",
+            "description": "Instinct improves the Command buffs, Tactical Damage, and Recovery",
+            "friendlyScope": "formation",
+            "confidence": "verified"
+          },
+          {
+            "id": "shimmer-loyal-shield-resistance-payoff",
+            "tag": "status:resistance",
+            "abilityId": "shimmer-loyal-shield",
+            "abilityName": "Loyal Shield",
+            "description": "Resistance doubles Recovery separately for each recipient",
+            "publicLabel": "Resistance doubles Recovery",
+            "unlock": {
+              "minimumStarRank": 6
+            },
+            "friendlyScope": "formation",
+            "summaryAbilityId": "shimmer-unbreakable-loyalty",
+            "summaryUnlockLabel": "Recovery and its Resistance payoff",
+            "confidence": "verified"
+          }
+        ],
+        "positionClaims": [
+          {
+            "id": "shimmer-sentinels-presence-vanguard",
+            "abilityId": "shimmer-sentinels-presence",
+            "abilityName": "Sentinel's Presence",
+            "requiredPosition": "vanguard",
+            "unlock": {
+              "minimumDragonLevel": 16
+            },
+            "description": "Sentinel's Presence requires Vanguard",
+            "confidence": "verified"
+          }
+        ]
+      },
+      {
+        "dragonId": "jagadrix",
+        "dragonName": "Jagadrix",
+        "outputs": [
+          {
+            "id": "jagadrix-cunning-whispers-fire",
+            "tag": "damage:fire",
+            "scalesWith": [
+              "stat:intelligence"
+            ],
+            "abilityId": "jagadrix-cunning-whispers",
+            "abilityName": "Cunning Whispers",
+            "description": "deals Fire Damage using Intelligence",
+            "confidence": "verified"
+          },
+          {
+            "id": "jagadrix-echoes-of-deceit-fire",
+            "tag": "damage:fire",
+            "scalesWith": [
+              "stat:intelligence"
+            ],
+            "abilityId": "jagadrix-echoes-of-deceit",
+            "abilityName": "Echoes of Deceit",
+            "description": "adds a separate Fire Damage attack on rounds 3, 6, and 9",
+            "unlock": {
+              "minimumStarRank": 10
+            },
+            "summaryAbilityId": "jagadrix-cunning-whispers",
+            "summaryUnlockLabel": "an additional Fire attack and Panic payoff",
+            "summaryHiddenEffectTags": [
+              "PANIC_PAYOFF"
+            ],
+            "confidence": "verified"
+          },
+          {
+            "id": "jagadrix-whispering-sabotage-weakened",
+            "tag": "status:weakened",
+            "abilityId": "jagadrix-whispering-sabotage",
+            "abilityName": "Whispering Sabotage",
+            "description": "applies Weakened",
+            "publicLabel": "Applies Weakened",
+            "unlock": {
+              "minimumStarRank": 6
+            },
+            "friendlyScope": "formation",
+            "confidence": "verified"
+          }
+        ],
+        "supports": [
+          {
+            "id": "jagadrix-hunters-wrath-right-stats",
+            "tag": "stat:strength",
+            "tags": [
+              "stat:strength",
+              "stat:initiative"
+            ],
+            "abilityId": "jagadrix-hunters-wrath",
+            "abilityName": "Hunter's Wrath",
+            "description": "improves Strength and Initiative of the Right Flank ally",
+            "unlock": {
+              "minimumDragonLevel": 16
+            },
+            "requiredSelfPosition": "vanguard",
+            "requiredRecipientPosition": "right-flank",
+            "friendlyScope": "formation",
+            "confidence": "verified"
+          }
+        ],
+        "benefitsFrom": [
+          {
+            "id": "jagadrix-cunning-whispers-intelligence-payoff",
+            "tag": "stat:intelligence",
+            "abilityId": "jagadrix-cunning-whispers",
+            "abilityName": "Cunning Whispers",
+            "description": "Intelligence improves Fire Damage",
+            "friendlyScope": "formation",
+            "confidence": "verified"
+          },
+          {
+            "id": "jagadrix-cunning-whispers-initiative-payoff",
+            "tag": "stat:initiative",
+            "abilityId": "jagadrix-cunning-whispers",
+            "abilityName": "Cunning Whispers",
+            "description": "Initiative improves the enemy stat reductions",
+            "friendlyScope": "formation",
+            "confidence": "verified"
+          },
+          {
+            "id": "jagadrix-echoes-of-deceit-panic-payoff",
+            "tag": "status:panic",
+            "abilityId": "jagadrix-echoes-of-deceit",
+            "abilityName": "Echoes of Deceit",
+            "description": "Panic doubles the additional Fire Damage per target",
+            "publicLabel": "Deals double damage to enemies with Panic",
+            "unlock": {
+              "minimumStarRank": 10
+            },
+            "friendlyScope": "formation",
+            "summaryAbilityId": "jagadrix-cunning-whispers",
+            "summaryUnlockLabel": "an additional Fire attack and Panic payoff",
+            "confidence": "verified"
+          }
+        ],
+        "positionClaims": [
+          {
+            "id": "jagadrix-hunters-wrath-vanguard",
+            "abilityId": "jagadrix-hunters-wrath",
+            "abilityName": "Hunter's Wrath",
+            "requiredPosition": "vanguard",
+            "unlock": {
+              "minimumDragonLevel": 16
+            },
+            "description": "Hunter's Wrath requires Vanguard",
+            "confidence": "verified"
+          }
+        ]
+      },
+      {
         "dragonId": "tessarion",
         "dragonName": "Tessarion",
         "outputs": [
@@ -8331,18 +9461,15 @@
       }
     ],
     "profileAudit": {
-      "reviewedAbilityCount": 154,
+      "reviewedAbilityCount": 175,
       "dispositionCounts": {
-        "represented": 99,
-        "general-support-only": 12,
-        "self-only": 26,
-        "no-cross-dragon-synergy": 10,
+        "represented": 113,
+        "general-support-only": 11,
+        "self-only": 30,
+        "no-cross-dragon-synergy": 14,
         "reinforces-existing": 7
       },
       "metadataOnlyDragonIds": [
-        "solstryker",
-        "shimmer",
-        "jagadrix",
         "bevlorin",
         "shadowrend",
         "thunderstrike",
@@ -8410,9 +9537,10 @@
             "kind": "represented",
             "signalIds": [
               "syrax-strategic-revival-recovery",
+              "syrax-strategic-revival-resistance",
               "syrax-strategic-revival-slow-payoff"
             ],
-            "rationale": "The augmentation provides Recovery and explicitly improves that Recovery when any enemy has Slow."
+            "rationale": "The augmentation provides Recovery, explicitly grants named Resistance, and improves Recovery when any enemy has Slow."
           }
         },
         {
@@ -8671,8 +9799,11 @@
           "abilityId": "seasmoke-loyal-bond",
           "abilityKind": "habit",
           "disposition": {
-            "kind": "general-support-only",
-            "rationale": "Advantage and Resistance are broad survivability/damage effects without a current explicit payoff."
+            "kind": "represented",
+            "signalIds": [
+              "seasmoke-loyal-bond-resistance"
+            ],
+            "rationale": "The verified wording explicitly grants named Resistance below 50% Troop Capacity; conditional Advantage remains general support only."
           }
         },
         {
@@ -9227,9 +10358,10 @@
           "disposition": {
             "kind": "represented",
             "signalIds": [
-              "rhysarion-inspiring-melody-initiative"
+              "rhysarion-inspiring-melody-initiative",
+              "rhysarion-inspiring-melody-resistance"
             ],
-            "rationale": "The habit gives adjacent Initiative support; Resistance is general support only."
+            "rationale": "The verified wording gives adjacent Initiative support and explicitly grants named Resistance to the same ally."
           }
         },
         {
@@ -10027,6 +11159,248 @@
           }
         },
         {
+          "dragonId": "solstryker",
+          "abilityId": "solstryker-tactical-onslaught",
+          "abilityKind": "command",
+          "disposition": {
+            "kind": "represented",
+            "signalIds": [
+              "solstryker-tactical-onslaught-physical",
+              "solstryker-tactical-onslaught-tactical",
+              "solstryker-tactical-onslaught-vulnerable-payoff",
+              "solstryker-tactical-onslaught-strength-payoff",
+              "solstryker-tactical-onslaught-instinct-payoff"
+            ],
+            "rationale": "The Command provides Physical and Tactical output with one Strength need, one Instinct need, and a base Vulnerable payoff; typed enemy Physical suppression is non-scoring."
+          }
+        },
+        {
+          "dragonId": "solstryker",
+          "abilityId": "solstryker-champions-brilliance",
+          "abilityKind": "trait",
+          "disposition": {
+            "kind": "represented",
+            "signalIds": [
+              "solstryker-champions-brilliance-vanguard"
+            ],
+            "rationale": "The trait requires Vanguard; self stats and Right Flank defensive support do not create ordinary support signals."
+          }
+        },
+        {
+          "dragonId": "solstryker",
+          "abilityId": "solstryker-steady-erosion",
+          "abilityKind": "habit",
+          "disposition": {
+            "kind": "no-cross-dragon-synergy",
+            "rationale": "Steady Erosion is a named stacking enemy Strength debuff, not Vulnerable, Weakened, or Control."
+          }
+        },
+        {
+          "dragonId": "solstryker",
+          "abilityId": "solstryker-energy-drain",
+          "abilityKind": "habit",
+          "disposition": {
+            "kind": "no-cross-dragon-synergy",
+            "rationale": "Direct enemy Strength and Initiative reductions are detailed and non-scoring."
+          }
+        },
+        {
+          "dragonId": "solstryker",
+          "abilityId": "solstryker-oppressive-onslaught",
+          "abilityKind": "habit",
+          "disposition": {
+            "kind": "represented",
+            "signalIds": [
+              "solstryker-oppressive-onslaught-overwhelm"
+            ],
+            "rationale": "The Habit applies specifically visible Overwhelm, which satisfies Control through one alias path at Star Rank 6."
+          }
+        },
+        {
+          "dragonId": "solstryker",
+          "abilityId": "solstryker-robust-insight",
+          "abilityKind": "habit",
+          "disposition": {
+            "kind": "self-only",
+            "rationale": "The Strength and Instinct increases apply only to Solstryker."
+          }
+        },
+        {
+          "dragonId": "solstryker",
+          "abilityId": "solstryker-amplified-drain",
+          "abilityKind": "habit",
+          "disposition": {
+            "kind": "no-cross-dragon-synergy",
+            "rationale": "The independent Round 4 enemy stat reduction is detailed and non-scoring."
+          }
+        },
+        {
+          "dragonId": "shimmer",
+          "abilityId": "shimmer-unbreakable-loyalty",
+          "abilityKind": "command",
+          "disposition": {
+            "kind": "represented",
+            "signalIds": [
+              "shimmer-unbreakable-loyalty-tactical",
+              "shimmer-unbreakable-loyalty-stats",
+              "shimmer-unbreakable-loyalty-instinct-payoff"
+            ],
+            "rationale": "The Command deals Tactical Damage and gives paired Strength/Initiative support to one deterministic highest-Strength other ally."
+          }
+        },
+        {
+          "dragonId": "shimmer",
+          "abilityId": "shimmer-sentinels-presence",
+          "abilityKind": "trait",
+          "disposition": {
+            "kind": "represented",
+            "signalIds": [
+              "shimmer-sentinels-presence-left-fire",
+              "shimmer-sentinels-presence-vanguard"
+            ],
+            "rationale": "The Vanguard trait supports Left Flank Fire Damage; self Recovery and Instinct increases remain self-only."
+          }
+        },
+        {
+          "dragonId": "shimmer",
+          "abilityId": "shimmer-crushing-force",
+          "abilityKind": "habit",
+          "disposition": {
+            "kind": "represented",
+            "signalIds": [
+              "shimmer-crushing-force-physical",
+              "shimmer-crushing-force-tactical"
+            ],
+            "rationale": "Two independent priority selectors preserve Left Flank non-Basic Physical and Right Flank Tactical support without unrestricted fallback or self-synergy."
+          }
+        },
+        {
+          "dragonId": "shimmer",
+          "abilityId": "shimmer-dragons-insight",
+          "abilityKind": "habit",
+          "disposition": {
+            "kind": "self-only",
+            "rationale": "Damage Received reduction and Instinct increase apply only to Shimmer."
+          }
+        },
+        {
+          "dragonId": "shimmer",
+          "abilityId": "shimmer-loyal-shield",
+          "abilityKind": "habit",
+          "disposition": {
+            "kind": "represented",
+            "signalIds": [
+              "shimmer-loyal-shield-recovery",
+              "shimmer-loyal-shield-resistance-payoff"
+            ],
+            "rationale": "The augmentation adds one Recovery path at Star Rank 6 and a per-recipient Resistance doubling payoff."
+          }
+        },
+        {
+          "dragonId": "shimmer",
+          "abilityId": "shimmer-unbroken-devotion",
+          "abilityKind": "habit",
+          "disposition": {
+            "kind": "represented",
+            "signalIds": [
+              "shimmer-unbroken-devotion-recovery"
+            ],
+            "rationale": "The Habit improves Recovery Received of both other allies and cannot support Shimmer herself."
+          }
+        },
+        {
+          "dragonId": "shimmer",
+          "abilityId": "shimmer-sneak-attack",
+          "abilityKind": "habit",
+          "disposition": {
+            "kind": "represented",
+            "signalIds": [
+              "shimmer-sneak-attack-first-strike",
+              "shimmer-sneak-attack-physical"
+            ],
+            "rationale": "One activation grants paired Physical support and First-Strike to the same highest-Strength other ally at Star Rank 10."
+          }
+        },
+        {
+          "dragonId": "jagadrix",
+          "abilityId": "jagadrix-cunning-whispers",
+          "abilityKind": "command",
+          "disposition": {
+            "kind": "represented",
+            "signalIds": [
+              "jagadrix-cunning-whispers-fire",
+              "jagadrix-cunning-whispers-intelligence-payoff",
+              "jagadrix-cunning-whispers-initiative-payoff"
+            ],
+            "rationale": "The Command deals Fire Damage and exposes Intelligence, Initiative, and Fire support compatibility; enemy same-lane reductions remain battlefield-facing."
+          }
+        },
+        {
+          "dragonId": "jagadrix",
+          "abilityId": "jagadrix-hunters-wrath",
+          "abilityKind": "trait",
+          "disposition": {
+            "kind": "represented",
+            "signalIds": [
+              "jagadrix-hunters-wrath-right-stats",
+              "jagadrix-hunters-wrath-vanguard"
+            ],
+            "rationale": "The Vanguard trait supports Right Flank Strength and Initiative while its Fire increase is self-only."
+          }
+        },
+        {
+          "dragonId": "jagadrix",
+          "abilityId": "jagadrix-enervate",
+          "abilityKind": "habit",
+          "disposition": {
+            "kind": "no-cross-dragon-synergy",
+            "rationale": "Enemy Tactical Damage suppression is not Weakened or allied Tactical support."
+          }
+        },
+        {
+          "dragonId": "jagadrix",
+          "abilityId": "jagadrix-second-wind",
+          "abilityKind": "habit",
+          "disposition": {
+            "kind": "self-only",
+            "rationale": "Damage, immediate Recovery, and subsequent Nullify Recovery are ordered self-only effects with no static cross-dragon relationship."
+          }
+        },
+        {
+          "dragonId": "jagadrix",
+          "abilityId": "jagadrix-whispering-sabotage",
+          "abilityKind": "habit",
+          "disposition": {
+            "kind": "represented",
+            "signalIds": [
+              "jagadrix-whispering-sabotage-weakened"
+            ],
+            "rationale": "The Habit provides one Weakened path at Star Rank 6 without a Control alias."
+          }
+        },
+        {
+          "dragonId": "jagadrix",
+          "abilityId": "jagadrix-quick-witted",
+          "abilityKind": "habit",
+          "disposition": {
+            "kind": "self-only",
+            "rationale": "Intelligence and Initiative increases apply only to Jagadrix."
+          }
+        },
+        {
+          "dragonId": "jagadrix",
+          "abilityId": "jagadrix-echoes-of-deceit",
+          "abilityKind": "habit",
+          "disposition": {
+            "kind": "represented",
+            "signalIds": [
+              "jagadrix-echoes-of-deceit-fire",
+              "jagadrix-echoes-of-deceit-panic-payoff"
+            ],
+            "rationale": "The augmentation adds one extra Fire path and one Panic payoff at Star Rank 10 without adding Tactical Damage."
+          }
+        },
+        {
           "dragonId": "tessarion",
           "abilityId": "tessarion-cobalt-flame",
           "abilityKind": "command",
@@ -10223,6 +11597,18 @@
       "id": "overwhelm",
       "term": "Overwhelm",
       "definition": "Prevents Active Commands and Habits. It does not prevent Basic Attacks.",
+      "verification": "verified"
+    },
+    {
+      "id": "steady-erosion",
+      "term": "Steady Erosion",
+      "definition": "Solstryker applies one stack each round to all enemies, up to 10 stacks. Each stack reduces Strength until end of combat; exact enhancement and removal behavior remain unresolved.",
+      "verification": "verified"
+    },
+    {
+      "id": "nullify-recovery",
+      "term": "Nullify Recovery",
+      "definition": "Prevents the affected target from receiving Recovery. Jagadrix applies it to self after Second Wind's immediate Recovery resolves.",
       "verification": "verified"
     },
     {
@@ -12517,7 +13903,7 @@
       "url": null,
       "capturedAt": "2026-07-15",
       "language": "English",
-      "gameVersion": "26.6.53509",
+      "gameVersion": null,
       "submittedBy": "repository owner",
       "reviewedManually": true,
       "verificationStatus": "community-verified"
@@ -12530,7 +13916,7 @@
       "url": null,
       "capturedAt": "2026-07-15",
       "language": "English",
-      "gameVersion": "26.6.53509",
+      "gameVersion": null,
       "submittedBy": "repository owner",
       "reviewedManually": true,
       "verificationStatus": "community-verified"
@@ -12543,7 +13929,7 @@
       "url": null,
       "capturedAt": "2026-07-15",
       "language": "English",
-      "gameVersion": "26.6.53509",
+      "gameVersion": null,
       "submittedBy": "repository owner",
       "reviewedManually": true,
       "verificationStatus": "community-verified"
@@ -12556,7 +13942,7 @@
       "url": null,
       "capturedAt": "2026-07-15",
       "language": "English",
-      "gameVersion": "26.6.53509",
+      "gameVersion": null,
       "submittedBy": "repository owner",
       "reviewedManually": true,
       "verificationStatus": "community-verified"
@@ -12569,7 +13955,7 @@
       "url": null,
       "capturedAt": "2026-07-15",
       "language": "English",
-      "gameVersion": "26.6.53509",
+      "gameVersion": null,
       "submittedBy": "repository owner",
       "reviewedManually": true,
       "verificationStatus": "community-verified"
@@ -12582,7 +13968,7 @@
       "url": null,
       "capturedAt": "2026-07-15",
       "language": "English",
-      "gameVersion": "26.6.53509",
+      "gameVersion": null,
       "submittedBy": "repository owner",
       "reviewedManually": true,
       "verificationStatus": "community-verified"
@@ -12595,7 +13981,7 @@
       "url": null,
       "capturedAt": "2026-07-15",
       "language": "English",
-      "gameVersion": "26.6.53509",
+      "gameVersion": null,
       "submittedBy": "repository owner",
       "reviewedManually": true,
       "verificationStatus": "community-verified"
@@ -12608,7 +13994,7 @@
       "url": null,
       "capturedAt": "2026-07-15",
       "language": "English",
-      "gameVersion": "26.6.53509",
+      "gameVersion": null,
       "submittedBy": "repository owner",
       "reviewedManually": true,
       "verificationStatus": "community-verified"
@@ -12621,7 +14007,7 @@
       "url": null,
       "capturedAt": "2026-07-15",
       "language": "English",
-      "gameVersion": "26.6.53509",
+      "gameVersion": null,
       "submittedBy": "repository owner",
       "reviewedManually": true,
       "verificationStatus": "community-verified"
@@ -12634,7 +14020,7 @@
       "url": null,
       "capturedAt": "2026-07-15",
       "language": "English",
-      "gameVersion": "26.6.53509",
+      "gameVersion": null,
       "submittedBy": "repository owner",
       "reviewedManually": true,
       "verificationStatus": "community-verified"
@@ -12647,7 +14033,7 @@
       "url": null,
       "capturedAt": "2026-07-15",
       "language": "English",
-      "gameVersion": "26.6.53509",
+      "gameVersion": null,
       "submittedBy": "repository owner",
       "reviewedManually": true,
       "verificationStatus": "community-verified"
@@ -12660,7 +14046,7 @@
       "url": null,
       "capturedAt": "2026-07-15",
       "language": "English",
-      "gameVersion": "26.6.53509",
+      "gameVersion": null,
       "submittedBy": "repository owner",
       "reviewedManually": true,
       "verificationStatus": "community-verified"
@@ -12673,7 +14059,7 @@
       "url": null,
       "capturedAt": "2026-07-15",
       "language": "English",
-      "gameVersion": "26.6.53509",
+      "gameVersion": null,
       "submittedBy": "repository owner",
       "reviewedManually": true,
       "verificationStatus": "community-verified"
@@ -12686,7 +14072,7 @@
       "url": null,
       "capturedAt": "2026-07-15",
       "language": "English",
-      "gameVersion": "26.6.53509",
+      "gameVersion": null,
       "submittedBy": "repository owner",
       "reviewedManually": true,
       "verificationStatus": "community-verified"
@@ -12699,7 +14085,7 @@
       "url": null,
       "capturedAt": "2026-07-15",
       "language": "English",
-      "gameVersion": "26.6.53509",
+      "gameVersion": null,
       "submittedBy": "repository owner",
       "reviewedManually": true,
       "verificationStatus": "community-verified"
@@ -12712,7 +14098,7 @@
       "url": null,
       "capturedAt": "2026-07-15",
       "language": "English",
-      "gameVersion": "26.6.53509",
+      "gameVersion": null,
       "submittedBy": "repository owner",
       "reviewedManually": true,
       "verificationStatus": "community-verified"
@@ -12725,7 +14111,7 @@
       "url": null,
       "capturedAt": "2026-07-15",
       "language": "English",
-      "gameVersion": "26.6.53509",
+      "gameVersion": null,
       "submittedBy": "repository owner",
       "reviewedManually": true,
       "verificationStatus": "community-verified"
@@ -12738,7 +14124,7 @@
       "url": null,
       "capturedAt": "2026-07-15",
       "language": "English",
-      "gameVersion": "26.6.53509",
+      "gameVersion": null,
       "submittedBy": "repository owner",
       "reviewedManually": true,
       "verificationStatus": "community-verified"
@@ -12751,7 +14137,7 @@
       "url": null,
       "capturedAt": "2026-07-15",
       "language": "English",
-      "gameVersion": "26.6.53509",
+      "gameVersion": null,
       "submittedBy": "repository owner",
       "reviewedManually": true,
       "verificationStatus": "community-verified"
@@ -12764,7 +14150,7 @@
       "url": null,
       "capturedAt": "2026-07-15",
       "language": "English",
-      "gameVersion": "26.6.53509",
+      "gameVersion": null,
       "submittedBy": "repository owner",
       "reviewedManually": true,
       "verificationStatus": "community-verified"
@@ -12777,7 +14163,280 @@
       "url": null,
       "capturedAt": "2026-07-15",
       "language": "English",
-      "gameVersion": "26.6.53509",
+      "gameVersion": null,
+      "submittedBy": "repository owner",
+      "reviewedManually": true,
+      "verificationStatus": "community-verified"
+    },
+    {
+      "id": "solstryker-tactical-onslaught-2026-07-16",
+      "type": "in-game-screenshot",
+      "title": "Solstryker Tactical Onslaught",
+      "description": "Descriptive evidence label only. Screenshot files are not committed to the public repository.",
+      "url": null,
+      "capturedAt": "2026-07-16",
+      "language": "English",
+      "gameVersion": null,
+      "submittedBy": "repository owner",
+      "reviewedManually": true,
+      "verificationStatus": "community-verified"
+    },
+    {
+      "id": "solstryker-champions-brilliance-2026-07-16",
+      "type": "in-game-screenshot",
+      "title": "Solstryker Champion's Brilliance",
+      "description": "Descriptive evidence label only. Screenshot files are not committed to the public repository.",
+      "url": null,
+      "capturedAt": "2026-07-16",
+      "language": "English",
+      "gameVersion": null,
+      "submittedBy": "repository owner",
+      "reviewedManually": true,
+      "verificationStatus": "community-verified"
+    },
+    {
+      "id": "solstryker-steady-erosion-2026-07-16",
+      "type": "in-game-screenshot",
+      "title": "Solstryker Steady Erosion",
+      "description": "Descriptive evidence label only. Screenshot files are not committed to the public repository.",
+      "url": null,
+      "capturedAt": "2026-07-16",
+      "language": "English",
+      "gameVersion": null,
+      "submittedBy": "repository owner",
+      "reviewedManually": true,
+      "verificationStatus": "community-verified"
+    },
+    {
+      "id": "solstryker-energy-drain-2026-07-16",
+      "type": "in-game-screenshot",
+      "title": "Solstryker Energy Drain",
+      "description": "Descriptive evidence label only. Screenshot files are not committed to the public repository.",
+      "url": null,
+      "capturedAt": "2026-07-16",
+      "language": "English",
+      "gameVersion": null,
+      "submittedBy": "repository owner",
+      "reviewedManually": true,
+      "verificationStatus": "community-verified"
+    },
+    {
+      "id": "solstryker-oppressive-onslaught-2026-07-16",
+      "type": "in-game-screenshot",
+      "title": "Solstryker Oppressive Onslaught",
+      "description": "Descriptive evidence label only. Screenshot files are not committed to the public repository.",
+      "url": null,
+      "capturedAt": "2026-07-16",
+      "language": "English",
+      "gameVersion": null,
+      "submittedBy": "repository owner",
+      "reviewedManually": true,
+      "verificationStatus": "community-verified"
+    },
+    {
+      "id": "solstryker-robust-insight-2026-07-16",
+      "type": "in-game-screenshot",
+      "title": "Solstryker Robust Insight",
+      "description": "Descriptive evidence label only. Screenshot files are not committed to the public repository.",
+      "url": null,
+      "capturedAt": "2026-07-16",
+      "language": "English",
+      "gameVersion": null,
+      "submittedBy": "repository owner",
+      "reviewedManually": true,
+      "verificationStatus": "community-verified"
+    },
+    {
+      "id": "solstryker-amplified-drain-2026-07-16",
+      "type": "in-game-screenshot",
+      "title": "Solstryker Amplified Drain",
+      "description": "Descriptive evidence label only. Screenshot files are not committed to the public repository.",
+      "url": null,
+      "capturedAt": "2026-07-16",
+      "language": "English",
+      "gameVersion": null,
+      "submittedBy": "repository owner",
+      "reviewedManually": true,
+      "verificationStatus": "community-verified"
+    },
+    {
+      "id": "shimmer-unbreakable-loyalty-2026-07-16",
+      "type": "in-game-screenshot",
+      "title": "Shimmer Unbreakable Loyalty",
+      "description": "Descriptive evidence label only. Screenshot files are not committed to the public repository.",
+      "url": null,
+      "capturedAt": "2026-07-16",
+      "language": "English",
+      "gameVersion": null,
+      "submittedBy": "repository owner",
+      "reviewedManually": true,
+      "verificationStatus": "community-verified"
+    },
+    {
+      "id": "shimmer-sentinels-presence-2026-07-16",
+      "type": "in-game-screenshot",
+      "title": "Shimmer Sentinel's Presence",
+      "description": "Descriptive evidence label only. Screenshot files are not committed to the public repository.",
+      "url": null,
+      "capturedAt": "2026-07-16",
+      "language": "English",
+      "gameVersion": null,
+      "submittedBy": "repository owner",
+      "reviewedManually": true,
+      "verificationStatus": "community-verified"
+    },
+    {
+      "id": "shimmer-crushing-force-2026-07-16",
+      "type": "in-game-screenshot",
+      "title": "Shimmer Crushing Force",
+      "description": "Descriptive evidence label only. Screenshot files are not committed to the public repository.",
+      "url": null,
+      "capturedAt": "2026-07-16",
+      "language": "English",
+      "gameVersion": null,
+      "submittedBy": "repository owner",
+      "reviewedManually": true,
+      "verificationStatus": "community-verified"
+    },
+    {
+      "id": "shimmer-dragons-insight-2026-07-16",
+      "type": "in-game-screenshot",
+      "title": "Shimmer Dragon's Insight",
+      "description": "Descriptive evidence label only. Screenshot files are not committed to the public repository.",
+      "url": null,
+      "capturedAt": "2026-07-16",
+      "language": "English",
+      "gameVersion": null,
+      "submittedBy": "repository owner",
+      "reviewedManually": true,
+      "verificationStatus": "community-verified"
+    },
+    {
+      "id": "shimmer-loyal-shield-2026-07-16",
+      "type": "in-game-screenshot",
+      "title": "Shimmer Loyal Shield",
+      "description": "Descriptive evidence label only. Screenshot files are not committed to the public repository.",
+      "url": null,
+      "capturedAt": "2026-07-16",
+      "language": "English",
+      "gameVersion": null,
+      "submittedBy": "repository owner",
+      "reviewedManually": true,
+      "verificationStatus": "community-verified"
+    },
+    {
+      "id": "shimmer-unbroken-devotion-2026-07-16",
+      "type": "in-game-screenshot",
+      "title": "Shimmer Unbroken Devotion",
+      "description": "Descriptive evidence label only. Screenshot files are not committed to the public repository.",
+      "url": null,
+      "capturedAt": "2026-07-16",
+      "language": "English",
+      "gameVersion": null,
+      "submittedBy": "repository owner",
+      "reviewedManually": true,
+      "verificationStatus": "community-verified"
+    },
+    {
+      "id": "shimmer-sneak-attack-2026-07-16",
+      "type": "in-game-screenshot",
+      "title": "Shimmer Sneak Attack",
+      "description": "Descriptive evidence label only. Screenshot files are not committed to the public repository.",
+      "url": null,
+      "capturedAt": "2026-07-16",
+      "language": "English",
+      "gameVersion": null,
+      "submittedBy": "repository owner",
+      "reviewedManually": true,
+      "verificationStatus": "community-verified"
+    },
+    {
+      "id": "jagadrix-cunning-whispers-2026-07-16",
+      "type": "in-game-screenshot",
+      "title": "Jagadrix Cunning Whispers",
+      "description": "Descriptive evidence label only. Screenshot files are not committed to the public repository.",
+      "url": null,
+      "capturedAt": "2026-07-16",
+      "language": "English",
+      "gameVersion": null,
+      "submittedBy": "repository owner",
+      "reviewedManually": true,
+      "verificationStatus": "community-verified"
+    },
+    {
+      "id": "jagadrix-hunters-wrath-2026-07-16",
+      "type": "in-game-screenshot",
+      "title": "Jagadrix Hunter's Wrath",
+      "description": "Descriptive evidence label only. Screenshot files are not committed to the public repository.",
+      "url": null,
+      "capturedAt": "2026-07-16",
+      "language": "English",
+      "gameVersion": null,
+      "submittedBy": "repository owner",
+      "reviewedManually": true,
+      "verificationStatus": "community-verified"
+    },
+    {
+      "id": "jagadrix-enervate-2026-07-16",
+      "type": "in-game-screenshot",
+      "title": "Jagadrix Enervate",
+      "description": "Descriptive evidence label only. Screenshot files are not committed to the public repository.",
+      "url": null,
+      "capturedAt": "2026-07-16",
+      "language": "English",
+      "gameVersion": null,
+      "submittedBy": "repository owner",
+      "reviewedManually": true,
+      "verificationStatus": "community-verified"
+    },
+    {
+      "id": "jagadrix-second-wind-2026-07-16",
+      "type": "in-game-screenshot",
+      "title": "Jagadrix Second Wind",
+      "description": "Descriptive evidence label only. Screenshot files are not committed to the public repository.",
+      "url": null,
+      "capturedAt": "2026-07-16",
+      "language": "English",
+      "gameVersion": null,
+      "submittedBy": "repository owner",
+      "reviewedManually": true,
+      "verificationStatus": "community-verified"
+    },
+    {
+      "id": "jagadrix-whispering-sabotage-2026-07-16",
+      "type": "in-game-screenshot",
+      "title": "Jagadrix Whispering Sabotage",
+      "description": "Descriptive evidence label only. Screenshot files are not committed to the public repository.",
+      "url": null,
+      "capturedAt": "2026-07-16",
+      "language": "English",
+      "gameVersion": null,
+      "submittedBy": "repository owner",
+      "reviewedManually": true,
+      "verificationStatus": "community-verified"
+    },
+    {
+      "id": "jagadrix-quick-witted-2026-07-16",
+      "type": "in-game-screenshot",
+      "title": "Jagadrix Quick-Witted",
+      "description": "Descriptive evidence label only. Screenshot files are not committed to the public repository.",
+      "url": null,
+      "capturedAt": "2026-07-16",
+      "language": "English",
+      "gameVersion": null,
+      "submittedBy": "repository owner",
+      "reviewedManually": true,
+      "verificationStatus": "community-verified"
+    },
+    {
+      "id": "jagadrix-echoes-of-deceit-2026-07-16",
+      "type": "in-game-screenshot",
+      "title": "Jagadrix Echoes of Deceit",
+      "description": "Descriptive evidence label only. Screenshot files are not committed to the public repository.",
+      "url": null,
+      "capturedAt": "2026-07-16",
+      "language": "English",
+      "gameVersion": null,
       "submittedBy": "repository owner",
       "reviewedManually": true,
       "verificationStatus": "community-verified"
@@ -12836,6 +14495,81 @@
     }
   ],
   "manualReviews": [
+    {
+      "id": "solstryker-profile-review-2026-07-16",
+      "dragonId": "solstryker",
+      "scope": "habits",
+      "status": "confirmed",
+      "reviewedAt": "2026-07-16",
+      "reviewedAgainstGameBuild": "unknown",
+      "reviewer": "repository-owner",
+      "notes": [
+        "Solstryker Command, Trait, five Habits, progression values, and curated profile were normalized from controller-confirmed screenshot interpretations.",
+        "Tactical Onslaught keeps the base Vulnerable payoff, Strength and Instinct scaling, and enemy Physical suppression distinct from Weakened or allied support.",
+        "Steady Erosion remains a named 10-stack enemy debuff and does not satisfy Vulnerable, Weakened, or Control.",
+        "Oppressive Onslaught exposes one Overwhelm provider at Star Rank 6; Control is satisfied only through the existing alias path.",
+        "Unresolved: enhancement formulas, Steady Erosion removal, direct-reduction stacking/refresh, typed suppression interaction with Weakened, and icon-only affinity."
+      ],
+      "evidenceIds": [
+        "solstryker-tactical-onslaught-2026-07-16",
+        "solstryker-champions-brilliance-2026-07-16",
+        "solstryker-steady-erosion-2026-07-16",
+        "solstryker-energy-drain-2026-07-16",
+        "solstryker-oppressive-onslaught-2026-07-16",
+        "solstryker-robust-insight-2026-07-16",
+        "solstryker-amplified-drain-2026-07-16"
+      ]
+    },
+    {
+      "id": "shimmer-profile-review-2026-07-16",
+      "dragonId": "shimmer",
+      "scope": "habits",
+      "status": "confirmed",
+      "reviewedAt": "2026-07-16",
+      "reviewedAgainstGameBuild": "unknown",
+      "reviewer": "repository-owner",
+      "notes": [
+        "Shimmer Command, Trait, five Habits, progression values, and curated profile were normalized from controller-confirmed screenshot interpretations.",
+        "Highest-Strength paired effects share one deterministic other-ally selector; equal-stat ties remain unresolved and non-scoring.",
+        "Crushing Force uses two independent flank-priority selectors. Occupied preferred positions resolve first, self-targeted branches create no relationship, and fallback is not invented.",
+        "Loyal Shield adds one Recovery path at Star Rank 6; upgraded doubled values derive from the current base and Resistance is evaluated per recipient.",
+        "Unresolved: equal-Strength ties, refresh/stacking, priority fallback/convergence, exact Instinct enhancement, Resistance timing, and icon-only affinities."
+      ],
+      "evidenceIds": [
+        "shimmer-unbreakable-loyalty-2026-07-16",
+        "shimmer-sentinels-presence-2026-07-16",
+        "shimmer-crushing-force-2026-07-16",
+        "shimmer-dragons-insight-2026-07-16",
+        "shimmer-loyal-shield-2026-07-16",
+        "shimmer-unbroken-devotion-2026-07-16",
+        "shimmer-sneak-attack-2026-07-16"
+      ]
+    },
+    {
+      "id": "jagadrix-profile-review-2026-07-16",
+      "dragonId": "jagadrix",
+      "scope": "habits",
+      "status": "confirmed",
+      "reviewedAt": "2026-07-16",
+      "reviewedAgainstGameBuild": "unknown",
+      "reviewer": "repository-owner",
+      "notes": [
+        "Jagadrix Command, Trait, five Habits, progression values, and curated profile were normalized from controller-confirmed screenshot interpretations.",
+        "Same-lane and enemy Tactical-Damage-dealer conditions remain battlefield-facing and do not become formation placement rules.",
+        "Second Wind preserves Recovery-before-Nullify Recovery ordering and remains self-only/non-scoring.",
+        "Echoes of Deceit adds one Fire path and one Panic payoff at Star Rank 10 without adding Tactical Damage.",
+        "Unresolved: same-lane fallback, reduction stacking/refresh, highest-Instinct ties, Round 1 overlap, Recovery amplification timing, Nullify Recovery removal/immunity, exact Initiative enhancement, and icon-only affinity."
+      ],
+      "evidenceIds": [
+        "jagadrix-cunning-whispers-2026-07-16",
+        "jagadrix-hunters-wrath-2026-07-16",
+        "jagadrix-enervate-2026-07-16",
+        "jagadrix-second-wind-2026-07-16",
+        "jagadrix-whispering-sabotage-2026-07-16",
+        "jagadrix-quick-witted-2026-07-16",
+        "jagadrix-echoes-of-deceit-2026-07-16"
+      ]
+    },
     {
       "id": "antares-profile-review-2026-07-15",
       "dragonId": "antares",

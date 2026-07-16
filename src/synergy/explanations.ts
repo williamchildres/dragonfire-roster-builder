@@ -39,7 +39,14 @@ export function explainSetupPayoff(
   const tag = tagMatch.semanticTag;
 
   if (tag === 'status:panic') {
+    if (/double/i.test(benefit.description)) {
+      return `${provider.dragonName} applies Panic, which lets ${beneficiary.dragonName} deal double damage to eligible enemies with ${benefit.abilityName}.`;
+    }
     return `${provider.dragonName} applies Panic, which improves ${beneficiary.dragonName}'s ${benefit.abilityName}.`;
+  }
+
+  if (tag === 'status:resistance') {
+    return `${provider.dragonName} grants Resistance, which doubles ${beneficiary.dragonName}'s Recovery through ${benefit.abilityName}.`;
   }
 
   if (tag === 'status:first-strike') {
@@ -60,6 +67,9 @@ export function explainSetupPayoff(
   }
 
   if (tag === 'status:vulnerable') {
+    if (/double/i.test(benefit.description)) {
+      return `${provider.dragonName} can apply Vulnerable, which lets ${beneficiary.dragonName} deal double Tactical Damage to afflicted targets with ${benefit.abilityName}.`;
+    }
     return `${provider.dragonName} can apply Vulnerable, which improves ${beneficiary.dragonName}'s ${benefit.abilityName}.`;
   }
 

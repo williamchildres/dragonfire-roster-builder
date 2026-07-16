@@ -1,5 +1,6 @@
 import type { FormationPosition } from '../models/dragon';
 import { areAdjacent, SIMPLE_FORMATION_POSITIONS } from './positionRules';
+import { signalTargetsRecipient } from './recipientSelectors';
 import { tagSatisfies, type SynergyTag } from './tags';
 import {
   explainAmplifierOutput,
@@ -131,7 +132,12 @@ function addSetupPayoffResults(
   }
 
   for (const provider of providers) {
-    for (const output of provider.profile.outputs.filter((candidate) => matchingSetupTag(candidate, benefit) !== null && signalCanReachTeammate(candidate))) {
+    for (const output of provider.profile.outputs.filter(
+      (candidate) =>
+        matchingSetupTag(candidate, benefit) !== null &&
+        signalCanReachTeammate(candidate) &&
+        targetsBeneficiary(input, selected, provider, candidate, beneficiary),
+    )) {
       const tagMatch = matchingSetupTag(output, benefit);
       if (tagMatch) {
         addRelationshipCandidate(
@@ -167,7 +173,7 @@ function addAmplifierOutputResults(
 
     for (const output of producer.profile.outputs.filter((candidate) => matchingSupportTag(support, candidate) !== null)) {
       const tagMatch = matchingSupportTag(support, output);
-      if (tagMatch) {
+      if (tagMatch && targetsBeneficiary(input, selected, supporter, support, producer)) {
         addRelationshipCandidate(
           relationshipCandidates,
           input,
@@ -183,7 +189,7 @@ function addAmplifierOutputResults(
 
     for (const benefit of producer.profile.benefitsFrom.filter((candidate) => candidate.tag.startsWith('stat:') && matchingSupportTag(support, candidate) !== null)) {
       const tagMatch = matchingSupportTag(support, benefit);
-      if (tagMatch) {
+      if (tagMatch && targetsBeneficiary(input, selected, supporter, support, producer)) {
         addRelationshipCandidate(
           relationshipCandidates,
           input,
@@ -197,6 +203,22 @@ function addAmplifierOutputResults(
       }
     }
   }
+}
+
+function targetsBeneficiary(
+  input: EvaluateFormationInput,
+  selected: SelectedProfile[],
+  provider: SelectedProfile,
+  signal: SynergySignal,
+  beneficiary: SelectedProfile,
+): boolean {
+  return signalTargetsRecipient({
+    provider: { dragonId: provider.profile.dragonId, position: provider.position },
+    signal,
+    recipient: { dragonId: beneficiary.profile.dragonId, position: beneficiary.position },
+    selected: selected.map((entry) => ({ dragonId: entry.profile.dragonId, position: entry.position })),
+    progression: input.progression,
+  });
 }
 
 function addRelationshipCandidate(

@@ -12,7 +12,12 @@ import type {
   VerificationStatus,
 } from '../models/dragon';
 import { simpleSynergyProfiles } from '../synergy/profiles';
-import { buildDragonDetailPresentation, summarizeAbility, type DragonDetailPresentation } from './dragonDetailPresentation';
+import type { SynergySignal } from '../synergy/types';
+import {
+  buildDragonDetailPresentation,
+  summarizeAbilityForProgression,
+  type DragonDetailPresentation,
+} from './dragonDetailPresentation';
 import { getPublicVerificationLabel, getPublicVerificationTone } from './publicCardLabels';
 
 const unknown = 'Not verified yet';
@@ -114,10 +119,20 @@ export function DragonDetailsDialog({
               <h3>Abilities</h3>
               <div className="ability-stack">
                 {dragon.command ? (
-                  <DragonAbilityCard ability={dragon.command} rosterEntry={rosterEntry} onUpdateRoster={onUpdateRoster} />
+                  <DragonAbilityCard
+                    ability={dragon.command}
+                    rosterEntry={rosterEntry}
+                    signals={profile?.outputs ?? []}
+                    onUpdateRoster={onUpdateRoster}
+                  />
                 ) : null}
                 {dragon.trait ? (
-                  <DragonAbilityCard ability={dragon.trait} rosterEntry={rosterEntry} onUpdateRoster={onUpdateRoster} />
+                  <DragonAbilityCard
+                    ability={dragon.trait}
+                    rosterEntry={rosterEntry}
+                    signals={[]}
+                    onUpdateRoster={onUpdateRoster}
+                  />
                 ) : null}
                 {dragon.habits.length > 0 ? (
                   dragon.habits.map((habit) => (
@@ -125,6 +140,7 @@ export function DragonDetailsDialog({
                       ability={habit}
                       key={habit.id}
                       rosterEntry={rosterEntry}
+                      signals={[]}
                       onUpdateRoster={onUpdateRoster}
                     />
                   ))
@@ -191,14 +207,19 @@ function AtAGlanceCard({
 function DragonAbilityCard({
   ability,
   rosterEntry,
+  signals,
   onUpdateRoster,
 }: {
   ability: AbilityDefinition;
   rosterEntry?: OwnedDragon;
+  signals: SynergySignal[];
   onUpdateRoster: (dragonId: string, patch: Partial<OwnedDragon>) => void;
 }) {
-  const presentation = summarizeAbility(ability);
   const starRank = rosterEntry?.starRank ?? null;
+  const presentation = summarizeAbilityForProgression(ability, signals, {
+    starRank,
+    dragonLevel: rosterEntry?.reignLevel ?? null,
+  });
   const locked =
     ability.kind === 'habit' &&
     ability.unlockStarRank !== null &&

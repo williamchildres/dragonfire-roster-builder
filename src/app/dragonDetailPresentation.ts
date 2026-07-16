@@ -44,6 +44,7 @@ export const BENEFIT_SIGNAL_LABELS: Partial<Record<SynergyTag, string>> = {
 const ABILITY_SUMMARY_LABELS: Partial<Record<string, string>> = {
   BURN: 'Applies Burn',
   PANIC: 'Applies Panic',
+  PANIC_PAYOFF: 'Deals double damage to enemies with Panic',
   CONFUSION: 'Applies Confusion',
   STUN: 'Applies Stun',
   SLOW: 'Applies Slow',
@@ -51,12 +52,14 @@ const ABILITY_SUMMARY_LABELS: Partial<Record<string, string>> = {
   STAGGER: 'Applies Stagger',
   OVERWHELM: 'Applies Overwhelm',
   VULNERABLE: 'Applies Vulnerable',
+  VULNERABLE_PAYOFF: 'Benefits from Vulnerable',
   WEAKENED: 'Applies Weakened',
   BLEED: 'Applies Bleed',
   BLEED_PAYOFF: 'Bleed improves Weakened chance',
   FIRE_WARD: 'Grants Fire Ward',
   ADVANTAGE: 'References Advantage',
-  RESISTANCE: 'References Resistance',
+  RESISTANCE: 'Grants Resistance',
+  RESISTANCE_PAYOFF: 'Resistance doubles Recovery',
   IMMUNITY: 'Grants status immunity',
   CONDITIONAL_STATUS_COPY: 'Copies conditional statuses',
   CONTROL: 'Applies Control',
@@ -96,6 +99,9 @@ const ABILITY_SUMMARY_LABELS: Partial<Record<string, string>> = {
   FIRE_DAMAGE_ALLY_TARGET: 'Targets a Fire Damage ally',
   TROOP_CAPACITY_CONDITION: 'Checks troop capacity',
   COMMAND_AUGMENTATION: 'Augments a command',
+  HIGHEST_STRENGTH_TARGET: 'Targets the highest-Strength other ally',
+  STEADY_EROSION: 'Applies Steady Erosion',
+  NULLIFY_RECOVERY: 'Applies Nullify Recovery',
 };
 
 const HEADLINE_PRIORITY = [
@@ -130,6 +136,7 @@ const SUMMARY_PRIORITY = [
   'FIRE_DAMAGE_DEALT_DOWN',
   'BURN',
   'PANIC',
+  'PANIC_PAYOFF',
   'CONFUSION',
   'FIRST_STRIKE',
   'RECOVERY',
@@ -138,13 +145,17 @@ const SUMMARY_PRIORITY = [
   'SLOW',
   'STAGGER',
   'VULNERABLE',
+  'VULNERABLE_PAYOFF',
   'WEAKENED',
   'BLEED',
   'BLEED_PAYOFF',
+  'RESISTANCE_PAYOFF',
   'FIRE_WARD',
   'IMMUNITY',
   'CONDITIONAL_STATUS_COPY',
   'OVERWHELM',
+  'STEADY_EROSION',
+  'NULLIFY_RECOVERY',
   'CONTROL',
   'DAMAGE_RECEIVED_DOWN',
   'FIRE_DAMAGE_RECEIVED_DOWN',
@@ -200,7 +211,8 @@ export function summarizeAbility(ability: AbilityDefinition): AbilitySummaryPres
       chipLabel: abilityChipLabel(tag, hasSpecificControlTag, ability.tags),
       plainLabel: abilityPlainLabel(tag, hasSpecificControlTag, ability.tags),
     }))
-    .filter((candidate) => Boolean(candidate.chipLabel || candidate.plainLabel));
+    .filter((candidate) => Boolean(candidate.chipLabel || candidate.plainLabel))
+    .sort((left, right) => SUMMARY_PRIORITY.indexOf(left.tag) - SUMMARY_PRIORITY.indexOf(right.tag));
   const chips = collectUnique(summaryCandidates.map((candidate) => candidate.chipLabel)).slice(0, 5);
   const plainCandidates = collectUnique(summaryCandidates.map((candidate) => candidate.plainLabel));
   const plainSummary =
@@ -218,25 +230,42 @@ export function summarizeAbilityForProgression(
   signals: SynergySignal[],
   progression: DragonProgression | undefined,
 ): AbilitySummaryPresentation {
-  const lockedDamageSignals = signals.filter(
+  const lockedSignals = signals.filter(
     (signal) =>
-      signal.abilityId === ability.id &&
-      signal.tag.startsWith('damage:') &&
+      (signal.summaryAbilityId ?? signal.abilityId) === ability.id &&
       signal.unlock?.minimumStarRank !== undefined &&
       (progression?.starRank ?? 0) < signal.unlock.minimumStarRank,
   );
-  if (lockedDamageSignals.length === 0) {
+  if (lockedSignals.length === 0) {
     return summarizeAbility(ability);
   }
 
-  const lockedTags = new Set(lockedDamageSignals.map((signal) => effectTagForDamageSignal(signal.tag)));
+  const associatedSignals = signals.filter(
+    (signal) => (signal.summaryAbilityId ?? signal.abilityId) === ability.id,
+  );
+  const lockedTags = new Set(
+    lockedSignals.flatMap((signal) => {
+      if (signal.summaryHiddenEffectTags) {
+        return signal.summaryHiddenEffectTags;
+      }
+      const hasActiveSignalForTag = associatedSignals.some(
+        (candidate) =>
+          candidate.id !== signal.id &&
+          candidate.tag === signal.tag &&
+          (candidate.unlock?.minimumStarRank === undefined ||
+            (progression?.starRank ?? 0) >= candidate.unlock.minimumStarRank),
+      );
+      const effectTag = effectTagForDamageSignal(signal.tag);
+      return !hasActiveSignalForTag && effectTag ? [effectTag] : [];
+    }),
+  );
   const activeSummary = summarizeAbility({
     ...ability,
     tags: ability.tags.filter((tag) => !lockedTags.has(tag)),
   });
   const unlocks = collectUnique(
-    lockedDamageSignals.map((signal) => {
-      const label = OUTPUT_SIGNAL_LABELS[signal.tag];
+    lockedSignals.map((signal) => {
+      const label = signal.summaryUnlockLabel ?? OUTPUT_SIGNAL_LABELS[signal.tag];
       return label && signal.unlock?.minimumStarRank !== undefined
         ? `${label} at ${signal.unlock.minimumStarRank}★`
         : null;
@@ -328,6 +357,10 @@ export function labelForSignalTag(
   tag: SynergyTag,
   labels: Partial<Record<SynergyTag, string>>,
 ): string | null {
+  if (signal.publicLabel && tag === signal.tag) {
+    return signal.publicLabel;
+  }
+
   if (signal.damageScope === 'non-basic-attack' && tag === 'damage:physical' && labels[tag] === 'Physical Damage support') {
     return 'Non-Basic Physical Damage support';
   }

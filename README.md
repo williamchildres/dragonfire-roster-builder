@@ -9,9 +9,9 @@ Public site: https://dragonfirelab.com
 ## Current Features
 
 - My Roster as the central local dragon-management page, with Add Dragon search/filter flow for 31 known dragons.
-- Full raw Command, Trait, and Habit wording for 22 detailed dragons.
-- Curated simple synergy profiles for all 22 detailed dragons.
-- Metadata-only handling for the remaining 9 unmapped dragons.
+- Full raw Command, Trait, and Habit wording for 25 detailed dragons.
+- Curated simple synergy profiles for all 25 detailed dragons.
+- Metadata-only handling for the remaining 6 unmapped dragons.
 - Owned / Hatched roster tracking with Star Rank, Dragon Level, notes, and Habit Levels.
 - Formation Builder with explainable local rating, placement, progression locks, missing-enabler, position conflict, and future-unlock explanations.
 - Formation share links and roster JSON import/export.
@@ -31,7 +31,7 @@ Formation Builder opens in `All 10 Star Dragons` mode for sandbox planning with 
 
 Selected Formation Builder cards show current Damage Profile, Provides, and Synergy needs signal sections. Chip states distinguish supported or used relationships from available-but-unused, missing, and inactive signals, and the Formation Rating compares the current selected formation using realized mapped signals without simulating combat. Support Usefulness is gated by active payoff and satisfied Synergy needs so raw damage outputs remain Damage Profile signals instead of generic support score drivers. Kit Utilization compares realized Synergy needs, used Provides, and supported Damage Profile outputs against mapped opportunities so unused support and missing Synergy needs can lower near-perfect scores without overwhelming meaningful active paths. A small legend near the formation controls explains the chip colors.
 
-The simple evaluator models high-level setup/payoff and support relationships, progression locks, adjacency, hard recipient positions, grouped Vanguard conflicts, missing enablers, and duplicate relationship aggregation. The rating is a deterministic UI summary of those mapped signals with Excellent guardrails for payoff, kit utilization, missing Benefits, and placement collapse, while detailed evaluator output stays collapsed behind a secondary control; it does not model exact timing, rolls, target overlap, stacks, damage formulas, or battle outcomes.
+The simple evaluator models high-level setup/payoff and support relationships, progression locks, adjacency, hard recipient positions, deterministic highest-stat recipients when unique combat-stat values are available, safe flank-priority recipients, grouped Vanguard conflicts, missing enablers, and duplicate relationship aggregation. Unknown or tied highest-stat values and unresolved priority fallback remain non-scoring. The rating is a deterministic UI summary of those mapped signals with Excellent guardrails for payoff, kit utilization, missing Benefits, and placement collapse, while detailed evaluator output stays collapsed behind a secondary control; it does not model exact timing, rolls, target overlap, stacks, damage formulas, or battle outcomes.
 
 Typed defensive support, battlefield-only conditions, troop-gated effects without selected troop context, and conditional status-copy mechanics remain in detailed verified ability wording instead of scored simple-profile signals. This keeps those mechanics visible without treating defense as offensive support or changing Formation Rating.
 
