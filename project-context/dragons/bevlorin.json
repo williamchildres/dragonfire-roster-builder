@@ -5,11 +5,209 @@
   "rarity": "Rare",
   "breed": "Champion",
   "rosterSourceStatus": "official-website",
-  "dataStatus": "official-metadata-only",
-  "lastVerified": "2026-06-23",
-  "profileCompleteness": "metadata-only",
+  "dataStatus": "community-verified",
+  "lastVerified": "2026-07-16",
+  "profileCompleteness": "detailed-abilities",
   "officialProfileUrl": "https://gotdragonfire.com/dragons/bevlorin/",
-  "abilities": [],
+  "abilities": [
+    {
+      "id": "bevlorin-natures-reckoning",
+      "kind": "command",
+      "name": "Nature's Reckoning",
+      "abilityClass": "active",
+      "unlockStarRank": null,
+      "minimumDragonLevel": null,
+      "positionRequirement": null,
+      "verification": {
+        "status": "screenshot-verified",
+        "source": "Bevlorin Nature's Reckoning screenshots",
+        "capturedAt": "2026-07-16",
+        "gameVersion": null,
+        "reviewedManually": true
+      },
+      "evidenceIds": [
+        "bevlorin-natures-reckoning-2026-07-16"
+      ],
+      "tags": [
+        "FIRE_DAMAGE_DEALT_DOWN",
+        "ENEMY_DEBUFF",
+        "PHYSICAL_DAMAGE",
+        "FIRE_DAMAGE",
+        "STRENGTH_SCALING",
+        "INTELLIGENCE_SCALING",
+        "SPECIFIC_ROUNDS",
+        "ANY_LANE_TARGET",
+        "SAME_LANE_TARGET",
+        "RECOVERY",
+        "BUFF_ALLIES",
+        "COMMAND_AUGMENTATION"
+      ],
+      "rawDescription": "Each round: one 20% group activation roll reduces Fire Damage Dealt by -10% for 2 rounds for up to 3 enemies in any lane that deal Fire Damage. The detailed in-game heading incorrectly says Fire Damage Received Modifier; the body and Command summary say Fire Damage Dealt. This enemy suppression is not Weakened.\n\nRounds 1, 5, and 9: deal Physical Damage to 3 enemies in any lane at a +30% Damage Rate, scaling with Strength and mitigated by target Instinct.\n\nRounds 3 and 7: deal Fire Damage to 1 enemy in the same lane at a +90% Damage Rate, scaling with Intelligence and mitigated by target Initiative.\n\nAt 6+ Stars, Renewal augments Nature's Reckoning on odd-numbered rounds 1, 3, 5, 7, and 9: apply Strength-enhanced Recovery to 3 Allies in any lane, including Bevlorin. The Recovery Rate comes from Renewal's current Habit Level. The damage and Recovery effects occur together on their scheduled odd rounds."
+    },
+    {
+      "id": "bevlorin-champions-vigor",
+      "kind": "trait",
+      "name": "Champion's Vigor",
+      "abilityClass": "passive",
+      "unlockStarRank": 1,
+      "minimumDragonLevel": 16,
+      "positionRequirement": "vanguard",
+      "verification": {
+        "status": "screenshot-verified",
+        "source": "Bevlorin Champion's Vigor screenshot",
+        "capturedAt": "2026-07-16",
+        "gameVersion": null,
+        "reviewedManually": true
+      },
+      "evidenceIds": [
+        "bevlorin-champions-vigor-2026-07-16"
+      ],
+      "tags": [
+        "RECOVERY_DEALT_UP",
+        "BUFF_INITIATIVE",
+        "BUFF_SELF",
+        "DAMAGE_DEALT_UP",
+        "VANGUARD_REQUIRED",
+        "RIGHT_FLANK_TARGET"
+      ],
+      "rawDescription": "At Dragon Level 16+ while Bevlorin is Vanguard: increase Bevlorin Recovery Dealt by +15% and Initiative by +25. Increase Damage Dealt by the Right Flank ally by +8%. The Recovery and Initiative increases are self-only; the Right Flank increase is one generic damaging-output support effect."
+    },
+    {
+      "id": "bevlorin-fire-ward",
+      "kind": "habit",
+      "name": "Fire Ward",
+      "abilityClass": "passive",
+      "unlockStarRank": 2,
+      "minimumDragonLevel": null,
+      "positionRequirement": null,
+      "verification": {
+        "status": "screenshot-verified",
+        "source": "Bevlorin Fire Ward screenshot",
+        "capturedAt": "2026-07-16",
+        "gameVersion": null,
+        "reviewedManually": true
+      },
+      "evidenceIds": [
+        "bevlorin-fire-ward-2026-07-16"
+      ],
+      "tags": [
+        "FIRE_WARD",
+        "FIRE_DAMAGE_RECEIVED_DOWN",
+        "BUFF_SELF",
+        "BUFF_ALLIES",
+        "ADJACENT_TARGET"
+      ],
+      "rawDescription": "Start of combat: grant Bevlorin 1 stack of Fire Ward and grant 1 other adjacent Ally 1 stack of Fire Ward. At the start of each round, if that selected Ally retreated in the previous round, grant Bevlorin 1 additional stack. Each stack reduces Fire Damage Received and lasts until end of combat. Maximum stacks and cleanse/removal/refresh behavior are unresolved.\n\nProgression (Fire Damage Received per stack): Habit Level 1: -5%; Level 2: -6%; Level 3: -7%; Level 4: -8.5%; Level 5: -10%.\n\nPower: 250 / 550 / 900 / 1300 / 1800"
+    },
+    {
+      "id": "bevlorin-dragons-fury",
+      "kind": "habit",
+      "name": "Dragon's Fury",
+      "abilityClass": "passive",
+      "unlockStarRank": 4,
+      "minimumDragonLevel": null,
+      "positionRequirement": null,
+      "verification": {
+        "status": "screenshot-verified",
+        "source": "Bevlorin Dragon's Fury screenshot",
+        "capturedAt": "2026-07-16",
+        "gameVersion": null,
+        "reviewedManually": true
+      },
+      "evidenceIds": [
+        "bevlorin-dragons-fury-2026-07-16"
+      ],
+      "tags": [
+        "PHYSICAL_DAMAGE_UP",
+        "FIRE_DAMAGE_UP",
+        "EXCLUDES_BASIC_ATTACKS",
+        "BUFF_SELF"
+      ],
+      "rawDescription": "Start of combat until end: increase Bevlorin's Physical Damage from Active Commands and Habits and increase Bevlorin's Fire Damage Dealt. The Physical branch excludes Basic Attacks; the Fire branch has no displayed Basic-Attack exclusion. Self-only.\n\nProgression (Physical and Fire Damage Dealt): Habit Level 1: +4%; Level 2: +4.8%; Level 3: +5.6%; Level 4: +6.8%; Level 5: +8%.\n\nPower: 250 / 550 / 900 / 1300 / 1800"
+    },
+    {
+      "id": "bevlorin-renewal",
+      "kind": "habit",
+      "name": "Renewal",
+      "abilityClass": "passive",
+      "unlockStarRank": 6,
+      "minimumDragonLevel": null,
+      "positionRequirement": null,
+      "verification": {
+        "status": "screenshot-verified",
+        "source": "Bevlorin Renewal screenshot",
+        "capturedAt": "2026-07-16",
+        "gameVersion": null,
+        "reviewedManually": true
+      },
+      "evidenceIds": [
+        "bevlorin-renewal-2026-07-16"
+      ],
+      "tags": [
+        "RECOVERY",
+        "ENHANCED_BY_STRENGTH",
+        "STRENGTH_SCALING",
+        "BUFF_ALLIES",
+        "ANY_LANE_TARGET",
+        "SPECIFIC_ROUNDS",
+        "COMMAND_AUGMENTATION"
+      ],
+      "rawDescription": "Augments Nature's Reckoning. On odd-numbered rounds, apply Recovery to 3 Allies in any lane, including Bevlorin. Recovery is enhanced by Bevlorin's Strength. This is one effective Command output path.\n\nProgression (Recovery Rate): Habit Level 1: 17.5%; Level 2: 21%; Level 3: 24.5%; Level 4: 29.75%; Level 5: 35%.\n\nPower: 250 / 550 / 900 / 1300 / 1800"
+    },
+    {
+      "id": "bevlorin-vital-essence",
+      "kind": "habit",
+      "name": "Vital Essence",
+      "abilityClass": "passive",
+      "unlockStarRank": 8,
+      "minimumDragonLevel": null,
+      "positionRequirement": null,
+      "verification": {
+        "status": "screenshot-verified",
+        "source": "Bevlorin Vital Essence screenshot",
+        "capturedAt": "2026-07-16",
+        "gameVersion": null,
+        "reviewedManually": true
+      },
+      "evidenceIds": [
+        "bevlorin-vital-essence-2026-07-16"
+      ],
+      "tags": [
+        "STRENGTH_UP",
+        "RECOVERY_DEALT_UP",
+        "BUFF_SELF"
+      ],
+      "rawDescription": "Start of combat until end: increase Bevlorin Strength and Recovery Dealt. Self-only.\n\nProgression: Habit Level 1: Strength +10%, Recovery Dealt +15%; Level 2: +12%, +18%; Level 3: +14%, +21%; Level 4: +17%, +25.5%; Level 5: +20%, +30%.\n\nPower: 250 / 550 / 900 / 1300 / 1800"
+    },
+    {
+      "id": "bevlorin-bountiful-gifts",
+      "kind": "habit",
+      "name": "Bountiful Gifts",
+      "abilityClass": "passive",
+      "unlockStarRank": 10,
+      "minimumDragonLevel": null,
+      "positionRequirement": null,
+      "verification": {
+        "status": "screenshot-verified",
+        "source": "Bevlorin Bountiful Gifts screenshot",
+        "capturedAt": "2026-07-16",
+        "gameVersion": null,
+        "reviewedManually": true
+      },
+      "evidenceIds": [
+        "bevlorin-bountiful-gifts-2026-07-16"
+      ],
+      "tags": [
+        "STRENGTH_UP",
+        "INTELLIGENCE_UP",
+        "INSTINCT_UP",
+        "BUFF_INITIATIVE",
+        "BUFF_ALLIES",
+        "INTELLIGENCE_SCALING"
+      ],
+      "rawDescription": "Each round: separately check a 20% activation chance to increase Strength of the Ally with highest Strength, Intelligence of the Ally with highest Intelligence, Instinct of the Ally with highest Instinct, and Initiative of the Ally with highest Initiative. Each stat-target pair has its own activation check, lasts 2 rounds, and is enhanced by Bevlorin's Intelligence. Ally includes Bevlorin. Each selector requires a unique known maximum; ties and missing combat stats remain unresolved.\n\nProgression (each stat increase): Habit Level 1: +16%; Level 2: +20.8%; Level 3: +25.6%; Level 4: +32%; Level 5: +40%.\n\nPower: 250 / 580 / 1000 / 1600 / 2300"
+    }
+  ],
   "affinities": {
     "Cavalry": "unknown",
     "Shieldbearers": "unknown",
@@ -38,9 +236,45 @@
       "capturedAt": "2026-06-23",
       "gameVersion": null,
       "reviewedManually": true
+    },
+    "command": {
+      "status": "screenshot-verified",
+      "source": "Bevlorin Nature's Reckoning screenshots",
+      "capturedAt": "2026-07-16",
+      "gameVersion": null,
+      "reviewedManually": true
+    },
+    "trait": {
+      "status": "screenshot-verified",
+      "source": "Bevlorin Champion's Vigor screenshot",
+      "capturedAt": "2026-07-16",
+      "gameVersion": null,
+      "reviewedManually": true
+    },
+    "habits": {
+      "status": "screenshot-verified",
+      "source": "Bevlorin Habit screenshots",
+      "capturedAt": "2026-07-16",
+      "gameVersion": null,
+      "reviewedManually": true
+    },
+    "affinities": {
+      "status": "unknown",
+      "source": "Affinity icons were not text-verified",
+      "capturedAt": "2026-07-16",
+      "gameVersion": null,
+      "reviewedManually": true
     }
   },
-  "evidenceIds": [],
-  "simpleProfileId": null,
-  "simpleProfileStatus": "metadata-only-unmapped"
+  "evidenceIds": [
+    "bevlorin-bountiful-gifts-2026-07-16",
+    "bevlorin-champions-vigor-2026-07-16",
+    "bevlorin-dragons-fury-2026-07-16",
+    "bevlorin-fire-ward-2026-07-16",
+    "bevlorin-natures-reckoning-2026-07-16",
+    "bevlorin-renewal-2026-07-16",
+    "bevlorin-vital-essence-2026-07-16"
+  ],
+  "simpleProfileId": "bevlorin",
+  "simpleProfileStatus": "curated"
 }

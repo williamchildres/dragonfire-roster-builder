@@ -5,11 +5,200 @@
   "rarity": "Rare",
   "breed": "Warrior",
   "rosterSourceStatus": "official-website",
-  "dataStatus": "official-metadata-only",
-  "lastVerified": "2026-06-23",
-  "profileCompleteness": "metadata-only",
+  "dataStatus": "community-verified",
+  "lastVerified": "2026-07-16",
+  "profileCompleteness": "detailed-abilities",
   "officialProfileUrl": "https://gotdragonfire.com/dragons/thunderstrike/",
-  "abilities": [],
+  "abilities": [
+    {
+      "id": "thunderstrike-tail-whip",
+      "kind": "command",
+      "name": "Tail Whip",
+      "abilityClass": "active",
+      "unlockStarRank": null,
+      "minimumDragonLevel": null,
+      "positionRequirement": null,
+      "verification": {
+        "status": "screenshot-verified",
+        "source": "Thunderstrike Tail Whip screenshots",
+        "capturedAt": "2026-07-16",
+        "gameVersion": null,
+        "reviewedManually": true
+      },
+      "evidenceIds": [
+        "thunderstrike-tail-whip-2026-07-16"
+      ],
+      "tags": [
+        "PHYSICAL_DAMAGE",
+        "STRENGTH_SCALING",
+        "SAME_LANE_TARGET",
+        "SPECIFIC_ROUNDS",
+        "BLEED",
+        "COMMAND_AUGMENTATION"
+      ],
+      "rawDescription": "Odd-numbered rounds 1, 3, 5, 7, and 9: deal Physical Damage to 1 enemy in the same lane at a +100% Damage Rate, scaling with Strength and mitigated by target Instinct.\n\nAt 6+ Stars, Barbed Lash augments Tail Whip on even-numbered rounds 2, 4, 6, 8, and 10: deal Physical Damage to 1 enemy in the same lane using Barbed Lash's direct rate, then attempt Bleed on the same target for 2 rounds. Bleed deals Physical Damage each round at a fixed +20% rate; Bleed scaling and mitigation are not stated. At 6+ Stars Thunderstrike attacks on every numbered round."
+    },
+    {
+      "id": "thunderstrike-warriors-zeal",
+      "kind": "trait",
+      "name": "Warrior's Zeal",
+      "abilityClass": "passive",
+      "unlockStarRank": 1,
+      "minimumDragonLevel": 16,
+      "positionRequirement": "vanguard",
+      "verification": {
+        "status": "screenshot-verified",
+        "source": "Thunderstrike Warrior's Zeal screenshot",
+        "capturedAt": "2026-07-16",
+        "gameVersion": null,
+        "reviewedManually": true
+      },
+      "evidenceIds": [
+        "thunderstrike-warriors-zeal-2026-07-16"
+      ],
+      "tags": [
+        "PHYSICAL_DAMAGE_UP",
+        "EXCLUDES_BASIC_ATTACKS",
+        "BUFF_SELF",
+        "INSTINCT_UP",
+        "BUFF_INITIATIVE",
+        "BUFF_ALLIES",
+        "VANGUARD_REQUIRED",
+        "LEFT_FLANK_TARGET"
+      ],
+      "rawDescription": "At Dragon Level 16+ while Thunderstrike is Vanguard: increase Thunderstrike's Physical Damage from Active Commands and Habits by +16%. Increase Instinct and Initiative of the same Left Flank ally by +20 each. The self Physical boost excludes Basic Attacks."
+    },
+    {
+      "id": "thunderstrike-battle-rush",
+      "kind": "habit",
+      "name": "Battle Rush",
+      "abilityClass": "passive",
+      "unlockStarRank": 2,
+      "minimumDragonLevel": null,
+      "positionRequirement": null,
+      "verification": {
+        "status": "screenshot-verified",
+        "source": "Thunderstrike Battle Rush screenshot",
+        "capturedAt": "2026-07-16",
+        "gameVersion": null,
+        "reviewedManually": true
+      },
+      "evidenceIds": [
+        "thunderstrike-battle-rush-2026-07-16"
+      ],
+      "tags": [
+        "BUFF_INITIATIVE",
+        "BUFF_SELF",
+        "DEBUFF_INSTINCTS",
+        "ENHANCED_BY_STRENGTH",
+        "ENEMY_DEBUFF",
+        "ADJACENT_TARGET",
+        "SPECIFIC_ROUNDS"
+      ],
+      "rawDescription": "Start of Round 1 for 3 rounds: increase Thunderstrike Initiative and reduce Instinct of the same 2 enemies within adjacency. Strength enhances the enemy Instinct reduction, not the self Initiative increase. The enemy reduction is direct and is not a named status.\n\nProgression: Habit Level 1: self Initiative +25%, enemy Instinct -15%; Level 2: +30%, -18%; Level 3: +35%, -21%; Level 4: +42.5%, -25.5%; Level 5: +50%, -30%.\n\nPower: 250 / 550 / 900 / 1300 / 1800"
+    },
+    {
+      "id": "thunderstrike-dragons-might",
+      "kind": "habit",
+      "name": "Dragon's Might",
+      "abilityClass": "passive",
+      "unlockStarRank": 4,
+      "minimumDragonLevel": null,
+      "positionRequirement": null,
+      "verification": {
+        "status": "screenshot-verified",
+        "source": "Thunderstrike Dragon's Might screenshot",
+        "capturedAt": "2026-07-16",
+        "gameVersion": null,
+        "reviewedManually": true
+      },
+      "evidenceIds": [
+        "thunderstrike-dragons-might-2026-07-16"
+      ],
+      "tags": [
+        "PHYSICAL_DAMAGE_UP",
+        "EXCLUDES_BASIC_ATTACKS",
+        "BUFF_SELF"
+      ],
+      "rawDescription": "Start of combat until end: increase Thunderstrike's Physical Damage from Active Commands and Habits. Self-only; excludes Basic Attacks.\n\nProgression: Habit Level 1: +8%; Level 2: +9.6%; Level 3: +11.2%; Level 4: +13.6%; Level 5: +16%.\n\nPower: 250 / 550 / 900 / 1300 / 1800"
+    },
+    {
+      "id": "thunderstrike-barbed-lash",
+      "kind": "habit",
+      "name": "Barbed Lash",
+      "abilityClass": "passive",
+      "unlockStarRank": 6,
+      "minimumDragonLevel": null,
+      "positionRequirement": null,
+      "verification": {
+        "status": "screenshot-verified",
+        "source": "Thunderstrike Barbed Lash screenshot",
+        "capturedAt": "2026-07-16",
+        "gameVersion": null,
+        "reviewedManually": true
+      },
+      "evidenceIds": [
+        "thunderstrike-barbed-lash-2026-07-16"
+      ],
+      "tags": [
+        "PHYSICAL_DAMAGE",
+        "BLEED",
+        "SAME_LANE_TARGET",
+        "SPECIFIC_ROUNDS",
+        "COMMAND_AUGMENTATION"
+      ],
+      "rawDescription": "Augments Tail Whip on even-numbered rounds with one direct Physical strike and one Bleed attempt against the same target. Bleed lasts 2 rounds and its Damage Rate remains +20% each round. The table rate applies only to the direct strike.\n\nProgression (Bleed chance / even-round direct rate): Habit Level 1: 25% / +50%; Level 2: 30% / +60%; Level 3: 35% / +70%; Level 4: 42.5% / +85%; Level 5: 50% / +100%.\n\nPower: 250 / 550 / 900 / 1300 / 1800"
+    },
+    {
+      "id": "thunderstrike-armor-break",
+      "kind": "habit",
+      "name": "Armor Break",
+      "abilityClass": "passive",
+      "unlockStarRank": 8,
+      "minimumDragonLevel": null,
+      "positionRequirement": null,
+      "verification": {
+        "status": "screenshot-verified",
+        "source": "Thunderstrike Armor Break screenshot",
+        "capturedAt": "2026-07-16",
+        "gameVersion": null,
+        "reviewedManually": true
+      },
+      "evidenceIds": [
+        "thunderstrike-armor-break-2026-07-16"
+      ],
+      "tags": [
+        "PHYSICAL_DAMAGE_RECEIVED_UP",
+        "ENEMY_DEBUFF"
+      ],
+      "rawDescription": "Start of combat until end: increase Physical Damage Received by 1 opposing enemy. This is direct typed Physical amplification, not the named Vulnerable status. The exact meaning of opposing enemy remains unresolved and creates no ally placement rule.\n\nProgression: Habit Level 1: +4.8%; Level 2: +5.67%; Level 3: +6.72%; Level 4: +8.16%; Level 5: +9.6%.\n\nPower: 250 / 550 / 900 / 1300 / 1800"
+    },
+    {
+      "id": "thunderstrike-staggering-assault",
+      "kind": "habit",
+      "name": "Staggering Assault",
+      "abilityClass": "passive",
+      "unlockStarRank": 10,
+      "minimumDragonLevel": null,
+      "positionRequirement": null,
+      "verification": {
+        "status": "screenshot-verified",
+        "source": "Thunderstrike Staggering Assault screenshot",
+        "capturedAt": "2026-07-16",
+        "gameVersion": null,
+        "reviewedManually": true
+      },
+      "evidenceIds": [
+        "thunderstrike-staggering-assault-2026-07-16"
+      ],
+      "tags": [
+        "STAGGER",
+        "CONTROL",
+        "SAME_LANE_TARGET"
+      ],
+      "rawDescription": "Each round: chance to apply Stagger to 1 enemy in the same lane for 1 round. Stagger prevents Attack Modifier Commands and Basic Attacks. If Thunderstrike has Advantage, Stagger lasts 2 rounds instead; Advantage changes duration, not activation chance. Stagger satisfies the broad Control family without becoming a duplicate provider.\n\nProgression (Stagger chance): Habit Level 1: 10%; Level 2: 13%; Level 3: 16%; Level 4: 20%; Level 5: 25%.\n\nPower: 250 / 580 / 1000 / 1600 / 2300"
+    }
+  ],
   "affinities": {
     "Cavalry": "unknown",
     "Shieldbearers": "unknown",
@@ -38,9 +227,45 @@
       "capturedAt": "2026-06-23",
       "gameVersion": null,
       "reviewedManually": true
+    },
+    "command": {
+      "status": "screenshot-verified",
+      "source": "Thunderstrike Tail Whip screenshots",
+      "capturedAt": "2026-07-16",
+      "gameVersion": null,
+      "reviewedManually": true
+    },
+    "trait": {
+      "status": "screenshot-verified",
+      "source": "Thunderstrike Warrior's Zeal screenshot",
+      "capturedAt": "2026-07-16",
+      "gameVersion": null,
+      "reviewedManually": true
+    },
+    "habits": {
+      "status": "screenshot-verified",
+      "source": "Thunderstrike Habit screenshots",
+      "capturedAt": "2026-07-16",
+      "gameVersion": null,
+      "reviewedManually": true
+    },
+    "affinities": {
+      "status": "unknown",
+      "source": "Affinity icon was not text-verified",
+      "capturedAt": "2026-07-16",
+      "gameVersion": null,
+      "reviewedManually": true
     }
   },
-  "evidenceIds": [],
-  "simpleProfileId": null,
-  "simpleProfileStatus": "metadata-only-unmapped"
+  "evidenceIds": [
+    "thunderstrike-armor-break-2026-07-16",
+    "thunderstrike-barbed-lash-2026-07-16",
+    "thunderstrike-battle-rush-2026-07-16",
+    "thunderstrike-dragons-might-2026-07-16",
+    "thunderstrike-staggering-assault-2026-07-16",
+    "thunderstrike-tail-whip-2026-07-16",
+    "thunderstrike-warriors-zeal-2026-07-16"
+  ],
+  "simpleProfileId": "thunderstrike",
+  "simpleProfileStatus": "curated"
 }

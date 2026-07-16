@@ -1,16 +1,13 @@
 {
-  "reviewedAbilityCount": 175,
+  "reviewedAbilityCount": 196,
   "dispositionCounts": {
-    "represented": 113,
-    "general-support-only": 11,
-    "self-only": 30,
-    "no-cross-dragon-synergy": 14,
+    "represented": 128,
+    "general-support-only": 12,
+    "self-only": 34,
+    "no-cross-dragon-synergy": 15,
     "reinforces-existing": 7
   },
   "metadataOnlyDragonIds": [
-    "bevlorin",
-    "shadowrend",
-    "thunderstrike",
     "vesper",
     "nyrena",
     "dawnseeker"
@@ -1936,6 +1933,260 @@
           "jagadrix-echoes-of-deceit-panic-payoff"
         ],
         "rationale": "The augmentation adds one extra Fire path and one Panic payoff at Star Rank 10 without adding Tactical Damage."
+      }
+    },
+    {
+      "dragonId": "bevlorin",
+      "abilityId": "bevlorin-natures-reckoning",
+      "abilityKind": "command",
+      "disposition": {
+        "kind": "represented",
+        "signalIds": [
+          "bevlorin-natures-reckoning-physical",
+          "bevlorin-natures-reckoning-fire",
+          "bevlorin-natures-reckoning-strength-payoff",
+          "bevlorin-natures-reckoning-intelligence-payoff"
+        ],
+        "rationale": "The Command provides Strength-based Physical and Intelligence-based Fire output; enemy Fire suppression remains battlefield-facing and Renewal is reviewed as one augmentation path."
+      }
+    },
+    {
+      "dragonId": "bevlorin",
+      "abilityId": "bevlorin-champions-vigor",
+      "abilityKind": "trait",
+      "disposition": {
+        "kind": "represented",
+        "signalIds": [
+          "bevlorin-champions-vigor-right-damage",
+          "bevlorin-champions-vigor-vanguard"
+        ],
+        "rationale": "The Vanguard trait provides one generic Damage Dealt relationship to a damaging Right Flank recipient; self Recovery and Initiative remain self-only."
+      }
+    },
+    {
+      "dragonId": "bevlorin",
+      "abilityId": "bevlorin-fire-ward",
+      "abilityKind": "habit",
+      "disposition": {
+        "kind": "general-support-only",
+        "rationale": "Fire Ward remains named defensive support and never becomes offensive Fire support."
+      }
+    },
+    {
+      "dragonId": "bevlorin",
+      "abilityId": "bevlorin-dragons-fury",
+      "abilityKind": "habit",
+      "disposition": {
+        "kind": "self-only",
+        "rationale": "The Physical and Fire increases apply only to Bevlorin."
+      }
+    },
+    {
+      "dragonId": "bevlorin",
+      "abilityId": "bevlorin-renewal",
+      "abilityKind": "habit",
+      "disposition": {
+        "kind": "represented",
+        "signalIds": [
+          "bevlorin-renewal-recovery"
+        ],
+        "rationale": "The Command augmentation creates one Strength-enhanced full-formation Recovery path while self relationships remain suppressed."
+      }
+    },
+    {
+      "dragonId": "bevlorin",
+      "abilityId": "bevlorin-vital-essence",
+      "abilityKind": "habit",
+      "disposition": {
+        "kind": "self-only",
+        "rationale": "The Strength and Recovery Dealt increases apply only to Bevlorin."
+      }
+    },
+    {
+      "dragonId": "bevlorin",
+      "abilityId": "bevlorin-bountiful-gifts",
+      "abilityKind": "habit",
+      "disposition": {
+        "kind": "represented",
+        "signalIds": [
+          "bevlorin-bountiful-gifts-strength",
+          "bevlorin-bountiful-gifts-intelligence",
+          "bevlorin-bountiful-gifts-instinct",
+          "bevlorin-bountiful-gifts-initiative"
+        ],
+        "rationale": "Four independent highest-stat selectors allow self, require unique known maxima, and create no self relationship."
+      }
+    },
+    {
+      "dragonId": "shadowrend",
+      "abilityId": "shadowrend-eclipse-fervor",
+      "abilityKind": "command",
+      "disposition": {
+        "kind": "represented",
+        "signalIds": [
+          "shadowrend-eclipse-fervor-physical",
+          "shadowrend-eclipse-fervor-panic",
+          "shadowrend-eclipse-fervor-tactical",
+          "shadowrend-strength-payoff"
+        ],
+        "rationale": "The base Command provides Strength-based Physical Damage and one named Panic path whose recurring damage establishes Tactical output without a Control alias."
+      }
+    },
+    {
+      "dragonId": "shadowrend",
+      "abilityId": "shadowrend-warriors-zeal",
+      "abilityKind": "trait",
+      "disposition": {
+        "kind": "represented",
+        "signalIds": [
+          "shadowrend-warriors-zeal-left-stats",
+          "shadowrend-warriors-zeal-vanguard"
+        ],
+        "rationale": "The Vanguard trait supports Left Flank Instinct and Initiative; Shadowrend's non-Basic Physical increase is self-only."
+      }
+    },
+    {
+      "dragonId": "shadowrend",
+      "abilityId": "shadowrend-midnight-aura",
+      "abilityKind": "habit",
+      "disposition": {
+        "kind": "represented",
+        "signalIds": [
+          "shadowrend-midnight-aura-strength",
+          "shadowrend-midnight-aura-instinct",
+          "shadowrend-initiative-payoff"
+        ],
+        "rationale": "The full-formation Strength and Instinct support is explicitly limited to rounds 7–10 and exposes its Initiative scaling without self-synergy."
+      }
+    },
+    {
+      "dragonId": "shadowrend",
+      "abilityId": "shadowrend-nimble-resilience",
+      "abilityKind": "habit",
+      "disposition": {
+        "kind": "self-only",
+        "rationale": "Damage Received reduction and Initiative apply only to Shadowrend."
+      }
+    },
+    {
+      "dragonId": "shadowrend",
+      "abilityId": "shadowrend-fueled-by-darkness",
+      "abilityKind": "habit",
+      "disposition": {
+        "kind": "represented",
+        "signalIds": [
+          "shadowrend-fueled-by-darkness-advantage"
+        ],
+        "rationale": "Advantage remains visible through an unresolved two-of-three selector that scores no guessed recipient and creates no utilization penalty."
+      }
+    },
+    {
+      "dragonId": "shadowrend",
+      "abilityId": "shadowrend-midnight-mastery",
+      "abilityKind": "habit",
+      "disposition": {
+        "kind": "represented",
+        "signalIds": [
+          "shadowrend-midnight-mastery-physical",
+          "shadowrend-midnight-mastery-tactical"
+        ],
+        "rationale": "Physical and Tactical full-formation support is represented once per type and explicitly limited to rounds 7–10."
+      }
+    },
+    {
+      "dragonId": "shadowrend",
+      "abilityId": "shadowrend-event-horizon",
+      "abilityKind": "habit",
+      "disposition": {
+        "kind": "represented",
+        "signalIds": [
+          "shadowrend-event-horizon-physical",
+          "shadowrend-event-horizon-tactical",
+          "shadowrend-instinct-payoff"
+        ],
+        "rationale": "The augmentation adds one direct Physical and one direct Instinct-based Tactical path at 10 Stars while preserving the base Round 9 attack."
+      }
+    },
+    {
+      "dragonId": "thunderstrike",
+      "abilityId": "thunderstrike-tail-whip",
+      "abilityKind": "command",
+      "disposition": {
+        "kind": "represented",
+        "signalIds": [
+          "thunderstrike-tail-whip-physical",
+          "thunderstrike-strength-payoff"
+        ],
+        "rationale": "The base Command provides odd-round Strength-based Physical Damage; same-lane enemy targeting creates no ally placement rule."
+      }
+    },
+    {
+      "dragonId": "thunderstrike",
+      "abilityId": "thunderstrike-warriors-zeal",
+      "abilityKind": "trait",
+      "disposition": {
+        "kind": "represented",
+        "signalIds": [
+          "thunderstrike-warriors-zeal-left-stats",
+          "thunderstrike-warriors-zeal-vanguard"
+        ],
+        "rationale": "The Vanguard trait supports Left Flank Instinct and Initiative; Thunderstrike's non-Basic Physical increase is self-only."
+      }
+    },
+    {
+      "dragonId": "thunderstrike",
+      "abilityId": "thunderstrike-battle-rush",
+      "abilityKind": "habit",
+      "disposition": {
+        "kind": "no-cross-dragon-synergy",
+        "rationale": "Self Initiative and direct enemy Instinct reduction remain detailed and non-scoring."
+      }
+    },
+    {
+      "dragonId": "thunderstrike",
+      "abilityId": "thunderstrike-dragons-might",
+      "abilityKind": "habit",
+      "disposition": {
+        "kind": "self-only",
+        "rationale": "The non-Basic Physical increase applies only to Thunderstrike."
+      }
+    },
+    {
+      "dragonId": "thunderstrike",
+      "abilityId": "thunderstrike-barbed-lash",
+      "abilityKind": "habit",
+      "disposition": {
+        "kind": "represented",
+        "signalIds": [
+          "thunderstrike-barbed-lash-physical",
+          "thunderstrike-barbed-lash-bleed"
+        ],
+        "rationale": "The Command augmentation adds one even-round Physical output and one specifically named Bleed provider at 6 Stars."
+      }
+    },
+    {
+      "dragonId": "thunderstrike",
+      "abilityId": "thunderstrike-armor-break",
+      "abilityKind": "habit",
+      "disposition": {
+        "kind": "represented",
+        "signalIds": [
+          "thunderstrike-armor-break-physical"
+        ],
+        "rationale": "Direct Physical Damage Received amplification provides broad Physical support without becoming Vulnerable or creating an ally placement rule."
+      }
+    },
+    {
+      "dragonId": "thunderstrike",
+      "abilityId": "thunderstrike-staggering-assault",
+      "abilityKind": "habit",
+      "disposition": {
+        "kind": "represented",
+        "signalIds": [
+          "thunderstrike-staggering-assault-stagger",
+          "thunderstrike-staggering-assault-advantage-payoff"
+        ],
+        "rationale": "The Habit provides one specifically named Stagger output that satisfies Control through aliasing and one self-recipient Advantage duration payoff."
       }
     },
     {

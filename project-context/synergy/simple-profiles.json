@@ -2558,6 +2558,521 @@
     ]
   },
   {
+    "dragonId": "bevlorin",
+    "dragonName": "Bevlorin",
+    "outputs": [
+      {
+        "id": "bevlorin-natures-reckoning-physical",
+        "tag": "damage:physical",
+        "damageScope": "non-basic-attack",
+        "scalesWith": [
+          "stat:strength"
+        ],
+        "abilityId": "bevlorin-natures-reckoning",
+        "abilityName": "Nature's Reckoning",
+        "description": "deals Physical Damage using Strength",
+        "confidence": "verified"
+      },
+      {
+        "id": "bevlorin-natures-reckoning-fire",
+        "tag": "damage:fire",
+        "scalesWith": [
+          "stat:intelligence"
+        ],
+        "abilityId": "bevlorin-natures-reckoning",
+        "abilityName": "Nature's Reckoning",
+        "description": "deals Fire Damage using Intelligence",
+        "confidence": "verified"
+      },
+      {
+        "id": "bevlorin-renewal-recovery",
+        "tag": "effect:recovery",
+        "scalesWith": [
+          "stat:strength"
+        ],
+        "abilityId": "bevlorin-renewal",
+        "abilityName": "Renewal",
+        "description": "provides Recovery to the full formation on odd-numbered rounds",
+        "publicLabel": "Provides Recovery",
+        "unlock": {
+          "minimumStarRank": 6
+        },
+        "friendlyScope": "formation",
+        "summaryAbilityId": "bevlorin-natures-reckoning",
+        "summaryUnlockLabel": "Recovery through Renewal",
+        "summaryHiddenEffectTags": [
+          "RECOVERY"
+        ],
+        "confidence": "verified"
+      }
+    ],
+    "supports": [
+      {
+        "id": "bevlorin-champions-vigor-right-damage",
+        "tag": "damage:any",
+        "abilityId": "bevlorin-champions-vigor",
+        "abilityName": "Champion's Vigor",
+        "description": "increases Damage Dealt by the Right Flank ally",
+        "publicLabel": "Increases Damage Dealt (Right Flank)",
+        "unlock": {
+          "minimumDragonLevel": 16
+        },
+        "requiredSelfPosition": "vanguard",
+        "requiredRecipientPosition": "right-flank",
+        "friendlyScope": "formation",
+        "confidence": "verified"
+      },
+      {
+        "id": "bevlorin-bountiful-gifts-strength",
+        "tag": "stat:strength",
+        "abilityId": "bevlorin-bountiful-gifts",
+        "abilityName": "Bountiful Gifts",
+        "description": "improves strength of the unique highest-strength ally through an independent activation check",
+        "publicLabel": "Strength support to highest-strength ally",
+        "unlock": {
+          "minimumStarRank": 10
+        },
+        "recipientSelector": {
+          "kind": "highest-stat",
+          "stat": "strength",
+          "excludeSelf": false
+        },
+        "friendlyScope": "formation",
+        "confidence": "verified"
+      },
+      {
+        "id": "bevlorin-bountiful-gifts-intelligence",
+        "tag": "stat:intelligence",
+        "abilityId": "bevlorin-bountiful-gifts",
+        "abilityName": "Bountiful Gifts",
+        "description": "improves intelligence of the unique highest-intelligence ally through an independent activation check",
+        "publicLabel": "Intelligence support to highest-intelligence ally",
+        "unlock": {
+          "minimumStarRank": 10
+        },
+        "recipientSelector": {
+          "kind": "highest-stat",
+          "stat": "intelligence",
+          "excludeSelf": false
+        },
+        "friendlyScope": "formation",
+        "confidence": "verified"
+      },
+      {
+        "id": "bevlorin-bountiful-gifts-instinct",
+        "tag": "stat:instinct",
+        "abilityId": "bevlorin-bountiful-gifts",
+        "abilityName": "Bountiful Gifts",
+        "description": "improves instinct of the unique highest-instinct ally through an independent activation check",
+        "publicLabel": "Instinct support to highest-instinct ally",
+        "unlock": {
+          "minimumStarRank": 10
+        },
+        "recipientSelector": {
+          "kind": "highest-stat",
+          "stat": "instinct",
+          "excludeSelf": false
+        },
+        "friendlyScope": "formation",
+        "confidence": "verified"
+      },
+      {
+        "id": "bevlorin-bountiful-gifts-initiative",
+        "tag": "stat:initiative",
+        "abilityId": "bevlorin-bountiful-gifts",
+        "abilityName": "Bountiful Gifts",
+        "description": "improves initiative of the unique highest-initiative ally through an independent activation check",
+        "publicLabel": "Initiative support to highest-initiative ally",
+        "unlock": {
+          "minimumStarRank": 10
+        },
+        "recipientSelector": {
+          "kind": "highest-stat",
+          "stat": "initiative",
+          "excludeSelf": false
+        },
+        "friendlyScope": "formation",
+        "confidence": "verified"
+      }
+    ],
+    "benefitsFrom": [
+      {
+        "id": "bevlorin-natures-reckoning-strength-payoff",
+        "tag": "stat:strength",
+        "abilityId": "bevlorin-natures-reckoning",
+        "abilityName": "Nature's Reckoning",
+        "description": "Strength improves Physical Damage and, from 6 Stars, Recovery",
+        "friendlyScope": "formation",
+        "confidence": "verified"
+      },
+      {
+        "id": "bevlorin-natures-reckoning-intelligence-payoff",
+        "tag": "stat:intelligence",
+        "abilityId": "bevlorin-natures-reckoning",
+        "abilityName": "Nature's Reckoning",
+        "description": "Intelligence improves Fire Damage",
+        "friendlyScope": "formation",
+        "confidence": "verified"
+      }
+    ],
+    "positionClaims": [
+      {
+        "id": "bevlorin-champions-vigor-vanguard",
+        "abilityId": "bevlorin-champions-vigor",
+        "abilityName": "Champion's Vigor",
+        "requiredPosition": "vanguard",
+        "unlock": {
+          "minimumDragonLevel": 16
+        },
+        "description": "Champion's Vigor requires Vanguard",
+        "confidence": "verified"
+      }
+    ]
+  },
+  {
+    "dragonId": "shadowrend",
+    "dragonName": "Shadowrend",
+    "outputs": [
+      {
+        "id": "shadowrend-eclipse-fervor-physical",
+        "tag": "damage:physical",
+        "damageScope": "non-basic-attack",
+        "scalesWith": [
+          "stat:strength"
+        ],
+        "abilityId": "shadowrend-eclipse-fervor",
+        "abilityName": "Eclipse Fervor",
+        "description": "deals Physical Damage using Strength",
+        "confidence": "verified"
+      },
+      {
+        "id": "shadowrend-eclipse-fervor-panic",
+        "tag": "status:panic",
+        "abilityId": "shadowrend-eclipse-fervor",
+        "abilityName": "Eclipse Fervor",
+        "description": "applies Panic",
+        "publicLabel": "Applies Panic",
+        "friendlyScope": "formation",
+        "confidence": "verified"
+      },
+      {
+        "id": "shadowrend-eclipse-fervor-tactical",
+        "tag": "damage:tactical",
+        "abilityId": "shadowrend-eclipse-fervor",
+        "abilityName": "Eclipse Fervor",
+        "description": "deals recurring Tactical Damage through Panic without inferred stat scaling",
+        "confidence": "verified"
+      },
+      {
+        "id": "shadowrend-fueled-by-darkness-advantage",
+        "tag": "status:advantage",
+        "abilityId": "shadowrend-fueled-by-darkness",
+        "abilityName": "Fueled by Darkness",
+        "description": "grants Advantage to an unresolved two-of-three Ally recipient set",
+        "publicLabel": "Grants Advantage conditionally (two of three Allies)",
+        "unlock": {
+          "minimumStarRank": 6
+        },
+        "recipientSelector": {
+          "kind": "unresolved-group",
+          "recipientCount": 2,
+          "includeSelf": true
+        },
+        "friendlyScope": "formation",
+        "confidence": "verified"
+      },
+      {
+        "id": "shadowrend-event-horizon-physical",
+        "tag": "damage:physical",
+        "damageScope": "non-basic-attack",
+        "scalesWith": [
+          "stat:strength"
+        ],
+        "abilityId": "shadowrend-event-horizon",
+        "abilityName": "Event Horizon",
+        "description": "adds a separate Round 9 Physical attack while the base attack remains",
+        "unlock": {
+          "minimumStarRank": 10
+        },
+        "summaryAbilityId": "shadowrend-eclipse-fervor",
+        "summaryUnlockLabel": "the Event Horizon Round 9 dual hit",
+        "confidence": "verified"
+      },
+      {
+        "id": "shadowrend-event-horizon-tactical",
+        "tag": "damage:tactical",
+        "scalesWith": [
+          "stat:instinct"
+        ],
+        "abilityId": "shadowrend-event-horizon",
+        "abilityName": "Event Horizon",
+        "description": "adds direct Round 9 Tactical Damage using Instinct",
+        "unlock": {
+          "minimumStarRank": 10
+        },
+        "summaryAbilityId": "shadowrend-eclipse-fervor",
+        "summaryUnlockLabel": "the Event Horizon Round 9 dual hit",
+        "confidence": "verified"
+      }
+    ],
+    "supports": [
+      {
+        "id": "shadowrend-warriors-zeal-left-stats",
+        "tag": "stat:instinct",
+        "tags": [
+          "stat:instinct",
+          "stat:initiative"
+        ],
+        "abilityId": "shadowrend-warriors-zeal",
+        "abilityName": "Warrior's Zeal",
+        "description": "improves Instinct and Initiative of the Left Flank ally",
+        "unlock": {
+          "minimumDragonLevel": 16
+        },
+        "requiredSelfPosition": "vanguard",
+        "requiredRecipientPosition": "left-flank",
+        "friendlyScope": "formation",
+        "confidence": "verified"
+      },
+      {
+        "id": "shadowrend-midnight-aura-strength",
+        "tag": "stat:strength",
+        "abilityId": "shadowrend-midnight-aura",
+        "abilityName": "Midnight Aura",
+        "description": "improves Strength of the full formation during rounds 7–10",
+        "publicLabel": "Strength support (rounds 7–10)",
+        "unlock": {
+          "minimumStarRank": 2
+        },
+        "friendlyScope": "formation",
+        "confidence": "verified"
+      },
+      {
+        "id": "shadowrend-midnight-aura-instinct",
+        "tag": "stat:instinct",
+        "abilityId": "shadowrend-midnight-aura",
+        "abilityName": "Midnight Aura",
+        "description": "improves Instinct of the full formation during rounds 7–10",
+        "publicLabel": "Instinct support (rounds 7–10)",
+        "unlock": {
+          "minimumStarRank": 2
+        },
+        "friendlyScope": "formation",
+        "confidence": "verified"
+      },
+      {
+        "id": "shadowrend-midnight-mastery-physical",
+        "tag": "damage:physical",
+        "abilityId": "shadowrend-midnight-mastery",
+        "abilityName": "Midnight Mastery",
+        "description": "improves full-formation Physical Damage during rounds 7–10",
+        "publicLabel": "Physical Damage support (rounds 7–10)",
+        "unlock": {
+          "minimumStarRank": 8
+        },
+        "friendlyScope": "formation",
+        "confidence": "verified"
+      },
+      {
+        "id": "shadowrend-midnight-mastery-tactical",
+        "tag": "damage:tactical",
+        "abilityId": "shadowrend-midnight-mastery",
+        "abilityName": "Midnight Mastery",
+        "description": "improves full-formation Tactical Damage during rounds 7–10",
+        "publicLabel": "Tactical Damage support (rounds 7–10)",
+        "unlock": {
+          "minimumStarRank": 8
+        },
+        "friendlyScope": "formation",
+        "confidence": "verified"
+      }
+    ],
+    "benefitsFrom": [
+      {
+        "id": "shadowrend-strength-payoff",
+        "tag": "stat:strength",
+        "abilityId": "shadowrend-eclipse-fervor",
+        "abilityName": "Eclipse Fervor",
+        "description": "Strength improves direct Physical Damage",
+        "friendlyScope": "formation",
+        "confidence": "verified"
+      },
+      {
+        "id": "shadowrend-initiative-payoff",
+        "tag": "stat:initiative",
+        "abilityId": "shadowrend-midnight-aura",
+        "abilityName": "Midnight Aura",
+        "description": "Initiative enhances the timed Strength and Instinct buffs",
+        "unlock": {
+          "minimumStarRank": 2
+        },
+        "friendlyScope": "formation",
+        "confidence": "verified"
+      },
+      {
+        "id": "shadowrend-instinct-payoff",
+        "tag": "stat:instinct",
+        "abilityId": "shadowrend-event-horizon",
+        "abilityName": "Event Horizon",
+        "description": "Instinct improves direct Tactical Damage",
+        "unlock": {
+          "minimumStarRank": 10
+        },
+        "friendlyScope": "formation",
+        "confidence": "verified"
+      }
+    ],
+    "positionClaims": [
+      {
+        "id": "shadowrend-warriors-zeal-vanguard",
+        "abilityId": "shadowrend-warriors-zeal",
+        "abilityName": "Warrior's Zeal",
+        "requiredPosition": "vanguard",
+        "unlock": {
+          "minimumDragonLevel": 16
+        },
+        "description": "Warrior's Zeal requires Vanguard",
+        "confidence": "verified"
+      }
+    ]
+  },
+  {
+    "dragonId": "thunderstrike",
+    "dragonName": "Thunderstrike",
+    "outputs": [
+      {
+        "id": "thunderstrike-tail-whip-physical",
+        "tag": "damage:physical",
+        "damageScope": "non-basic-attack",
+        "scalesWith": [
+          "stat:strength"
+        ],
+        "abilityId": "thunderstrike-tail-whip",
+        "abilityName": "Tail Whip",
+        "description": "deals odd-round Physical Damage using Strength",
+        "confidence": "verified"
+      },
+      {
+        "id": "thunderstrike-barbed-lash-physical",
+        "tag": "damage:physical",
+        "damageScope": "non-basic-attack",
+        "scalesWith": [
+          "stat:strength"
+        ],
+        "abilityId": "thunderstrike-barbed-lash",
+        "abilityName": "Barbed Lash",
+        "description": "adds one even-round Physical attack",
+        "unlock": {
+          "minimumStarRank": 6
+        },
+        "summaryAbilityId": "thunderstrike-tail-whip",
+        "summaryUnlockLabel": "the Barbed Lash even-round attack and Bleed",
+        "confidence": "verified"
+      },
+      {
+        "id": "thunderstrike-barbed-lash-bleed",
+        "tag": "status:bleed",
+        "abilityId": "thunderstrike-barbed-lash",
+        "abilityName": "Barbed Lash",
+        "description": "applies Bleed to the even-round attack target",
+        "publicLabel": "Applies Bleed",
+        "unlock": {
+          "minimumStarRank": 6
+        },
+        "friendlyScope": "formation",
+        "summaryAbilityId": "thunderstrike-tail-whip",
+        "summaryUnlockLabel": "the Barbed Lash even-round attack and Bleed",
+        "summaryHiddenEffectTags": [
+          "BLEED"
+        ],
+        "confidence": "verified"
+      },
+      {
+        "id": "thunderstrike-staggering-assault-stagger",
+        "tag": "status:stagger",
+        "abilityId": "thunderstrike-staggering-assault",
+        "abilityName": "Staggering Assault",
+        "description": "applies Stagger, which satisfies Control",
+        "publicLabel": "Applies Stagger",
+        "unlock": {
+          "minimumStarRank": 10
+        },
+        "friendlyScope": "formation",
+        "confidence": "verified"
+      }
+    ],
+    "supports": [
+      {
+        "id": "thunderstrike-warriors-zeal-left-stats",
+        "tag": "stat:instinct",
+        "tags": [
+          "stat:instinct",
+          "stat:initiative"
+        ],
+        "abilityId": "thunderstrike-warriors-zeal",
+        "abilityName": "Warrior's Zeal",
+        "description": "improves Instinct and Initiative of the Left Flank ally",
+        "unlock": {
+          "minimumDragonLevel": 16
+        },
+        "requiredSelfPosition": "vanguard",
+        "requiredRecipientPosition": "left-flank",
+        "friendlyScope": "formation",
+        "confidence": "verified"
+      },
+      {
+        "id": "thunderstrike-armor-break-physical",
+        "tag": "damage:physical",
+        "abilityId": "thunderstrike-armor-break",
+        "abilityName": "Armor Break",
+        "description": "increases Physical Damage Received by one opposing enemy",
+        "publicLabel": "Increases Physical Damage Received",
+        "unlock": {
+          "minimumStarRank": 8
+        },
+        "friendlyScope": "formation",
+        "confidence": "verified"
+      }
+    ],
+    "benefitsFrom": [
+      {
+        "id": "thunderstrike-strength-payoff",
+        "tag": "stat:strength",
+        "abilityId": "thunderstrike-tail-whip",
+        "abilityName": "Tail Whip",
+        "description": "Strength improves direct Physical Damage",
+        "friendlyScope": "formation",
+        "confidence": "verified"
+      },
+      {
+        "id": "thunderstrike-staggering-assault-advantage-payoff",
+        "tag": "status:advantage",
+        "abilityId": "thunderstrike-staggering-assault",
+        "abilityName": "Staggering Assault",
+        "description": "Advantage extends Stagger from one round to two rounds",
+        "publicLabel": "Advantage extends Stagger",
+        "unlock": {
+          "minimumStarRank": 10
+        },
+        "friendlyScope": "formation",
+        "confidence": "verified"
+      }
+    ],
+    "positionClaims": [
+      {
+        "id": "thunderstrike-warriors-zeal-vanguard",
+        "abilityId": "thunderstrike-warriors-zeal",
+        "abilityName": "Warrior's Zeal",
+        "requiredPosition": "vanguard",
+        "unlock": {
+          "minimumDragonLevel": 16
+        },
+        "description": "Warrior's Zeal requires Vanguard",
+        "confidence": "verified"
+      }
+    ]
+  },
+  {
     "dragonId": "tessarion",
     "dragonName": "Tessarion",
     "outputs": [
