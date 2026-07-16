@@ -129,7 +129,7 @@ describe('Formation Builder signal presentation helpers', () => {
     const caraxes = chipsFor('caraxes', 'right-flank', selected);
     expect(chip(caraxes.benefitsFrom, 'First-Strike')).toMatchObject({ state: 'satisfied' });
     expect(chip(caraxes.provides, 'Slow')).toMatchObject({ state: 'used' });
-    expect(chip(caraxes.provides, 'Control')).toMatchObject({ state: 'used' });
+    expect(caraxes.provides.find((signal) => signal.label === 'Control')).toBeUndefined();
   });
 
   it('keeps locked and position-blocked Vanguard Trait outputs inactive', () => {

@@ -39,7 +39,10 @@ export const populatedDragonIds = [
   'bevlorin',
   'shadowrend',
   'thunderstrike',
+  'vesper',
   'arulix',
+  'nyrena',
+  'dawnseeker',
   'arrax',
   'tessarion',
 ] as const;
@@ -493,7 +496,7 @@ function validateDragonExports(parsed: Map<string, JsonValue>, errors: string[])
 }
 
 function validateSimpleProfileReferences(errors: string[]) {
-  const abilityIds = new Set(dragons.flatMap((dragon) => [dragon.command, dragon.trait, ...dragon.habits].filter(Boolean).map((ability) => ability!.id)));
+  const abilityIds = new Set(dragons.flatMap((dragon) => [dragon.command, dragon.trait, ...dragon.habits].filter(Boolean).map((ability) => ability.id)));
   const profileIds = new Set<string>();
   for (const profile of simpleSynergyProfiles) {
     if (profileIds.has(profile.dragonId)) {

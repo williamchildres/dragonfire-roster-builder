@@ -21,6 +21,11 @@ export type FriendlyRecipientSelector =
       kind: 'unresolved-group';
       recipientCount: number;
       includeSelf: boolean;
+    }
+  | {
+      kind: 'adjacent-group';
+      recipientCount: number;
+      includeSelf: boolean;
     };
 
 export interface ProgressionRequirement {
@@ -48,6 +53,8 @@ export interface SynergySignal {
   requiredSelfPosition?: FormationPosition;
   requiredRecipientPosition?: FormationPosition;
   recipientSelector?: FriendlyRecipientSelector;
+  nonScoring?: boolean;
+  supportOnly?: boolean;
   friendlyScope?: SimpleFriendlyScope;
   summaryAbilityId?: string;
   summaryUnlockLabel?: string;

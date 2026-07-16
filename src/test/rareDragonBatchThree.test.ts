@@ -35,11 +35,11 @@ function chipsFor(dragonId: string, starRank: number) {
 describe('third Rare dragon batch', () => {
   it('upgrades one canonical Rare record each and advances only release coverage metadata', () => {
     expect(dragons).toHaveLength(31);
-    expect(dragons.filter((dragon) => dragon.command)).toHaveLength(28);
-    expect(simpleSynergyProfiles).toHaveLength(28);
-    expect(metadataOnlyDragonIds).toHaveLength(3);
-    expect(dragons.filter((dragon) => dragon.rarity === 'Rare' && dragon.command)).toHaveLength(9);
-    expect(databaseMetadata).toMatchObject({ databaseVersion: '0.6.7', schemaVersion: 13 });
+    expect(dragons.filter((dragon) => dragon.command)).toHaveLength(31);
+    expect(simpleSynergyProfiles).toHaveLength(31);
+    expect(metadataOnlyDragonIds).toHaveLength(0);
+    expect(dragons.filter((dragon) => dragon.rarity === 'Rare' && dragon.command)).toHaveLength(12);
+    expect(databaseMetadata).toMatchObject({ databaseVersion: '0.6.8', schemaVersion: 13 });
     expect(ROSTER_SCHEMA_VERSION).toBe(4);
 
     const breeds = { bevlorin: 'Champion', shadowrend: 'Warrior', thunderstrike: 'Warrior' } as const;
@@ -65,8 +65,8 @@ describe('third Rare dragon batch', () => {
     expect(bevlorin.command?.tags).toContain('FIRE_DAMAGE_DEALT_DOWN');
     expect(bevlorin.command?.tags).not.toContain('WEAKENED');
 
-    const atFive = summarizeAbilityForProgression(bevlorin.command!, profile.outputs, { starRank: 5 });
-    const atSix = summarizeAbilityForProgression(bevlorin.command!, profile.outputs, { starRank: 6 });
+    const atFive = summarizeAbilityForProgression(bevlorin.command, profile.outputs, { starRank: 5 });
+    const atSix = summarizeAbilityForProgression(bevlorin.command, profile.outputs, { starRank: 6 });
     expect(atFive.plainSummary).not.toContain('Provides Recovery');
     expect(atFive.plainSummary).toContain('gains Recovery through Renewal at 6★');
     expect(atSix.plainSummary).toContain('Provides Recovery');
@@ -139,8 +139,8 @@ describe('third Rare dragon batch', () => {
   it('keeps Event Horizon additive and progression-aware without duplicating the command augmentation', () => {
     const profile = profilesById.get('shadowrend')!;
     const shadowrend = dragons.find((dragon) => dragon.id === 'shadowrend')!;
-    const atNine = summarizeAbilityForProgression(shadowrend.command!, profile.outputs, { starRank: 9 });
-    const atTen = summarizeAbilityForProgression(shadowrend.command!, profile.outputs, { starRank: 10 });
+    const atNine = summarizeAbilityForProgression(shadowrend.command, profile.outputs, { starRank: 9 });
+    const atTen = summarizeAbilityForProgression(shadowrend.command, profile.outputs, { starRank: 10 });
     expect(atNine.plainSummary).toContain('gains the Event Horizon Round 9 dual hit at 10★');
     expect(atTen.plainSummary).toContain('Deals Physical Damage');
     expect(profile.outputs.filter((signal) => signal.abilityId === 'shadowrend-event-horizon')).toHaveLength(2);
@@ -151,8 +151,8 @@ describe('third Rare dragon batch', () => {
   it('gates Thunderstrike Bleed, Armor Break, Stagger, and Advantage payoff at exact ranks', () => {
     const profile = profilesById.get('thunderstrike')!;
     const thunderstrike = dragons.find((dragon) => dragon.id === 'thunderstrike')!;
-    const atFive = summarizeAbilityForProgression(thunderstrike.command!, profile.outputs, { starRank: 5 });
-    const atSix = summarizeAbilityForProgression(thunderstrike.command!, profile.outputs, { starRank: 6 });
+    const atFive = summarizeAbilityForProgression(thunderstrike.command, profile.outputs, { starRank: 5 });
+    const atSix = summarizeAbilityForProgression(thunderstrike.command, profile.outputs, { starRank: 6 });
     expect(atFive.plainSummary).not.toContain('Applies Bleed');
     expect(atFive.plainSummary).toContain('gains the Barbed Lash even-round attack and Bleed at 6★');
     expect(atSix.plainSummary).toContain('Applies Bleed');

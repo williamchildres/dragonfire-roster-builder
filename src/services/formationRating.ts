@@ -333,7 +333,7 @@ function collectKitUtilizationMetrics(
   const activeSupportLabels = new Set(
     selected.flatMap((dragon) =>
       dragon.chips.provides
-        .filter((chip) => chip.state === 'used' || chip.state === 'available')
+        .filter((chip) => chip.scoreable !== false && (chip.state === 'used' || chip.state === 'available'))
         .map((chip) => normalizeMeaning(chip.label)),
     ),
   );
@@ -357,14 +357,14 @@ function collectKitUtilizationMetrics(
   const usedProvides = uniqueKeys(
     selected.flatMap((dragon) =>
       dragon.chips.provides
-        .filter((chip) => chip.state === 'used')
+        .filter((chip) => chip.scoreable !== false && chip.state === 'used')
         .map((chip) => usedSupportKey(dragon.dragonId, chip.label, chip.reason)),
     ),
   );
   const unusedProvides = uniqueKeys(
     selected.flatMap((dragon) =>
       dragon.chips.provides
-        .filter((chip) => chip.state === 'available')
+        .filter((chip) => chip.scoreable !== false && chip.state === 'available')
         .map((chip) => unusedSupportKey(dragon.dragonId, chip.label, chip.reason)),
     ),
   );
@@ -526,7 +526,7 @@ function selectWeaknesses(
   const unusedProvidesWeaknesses = selected
     .flatMap((dragon) =>
       dragon.chips.provides
-        .filter((chip) => chip.state === 'available')
+        .filter((chip) => chip.scoreable !== false && chip.state === 'available')
         .map((chip) => ({
           key: unusedSupportKey(dragon.dragonId, chip.label, chip.reason),
           label: chip.label,
@@ -614,14 +614,16 @@ function clampCategory(score: number, max: number): number {
 }
 
 function uniqueCandidates(values: RatingListCandidate[]): string[] {
-  const seen = new Set<string>();
+  const seenKeys = new Set<string>();
+  const seenText = new Set<string>();
   const results: string[] = [];
 
   for (const value of values) {
-    if (seen.has(value.key)) {
+    if (seenKeys.has(value.key) || seenText.has(value.text)) {
       continue;
     }
-    seen.add(value.key);
+    seenKeys.add(value.key);
+    seenText.add(value.text);
     results.push(value.text);
   }
 

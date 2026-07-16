@@ -99,12 +99,7 @@ const sectionIcons = {
   about: Info,
 };
 
-const verificationStatusOptions: VerificationStatus[] = [
-  'official-metadata-only',
-  'community-unverified',
-  'community-verified',
-  'officially-confirmed',
-];
+const verificationStatusOptions = [...new Set(dragons.map((dragon) => dragon.dataStatus))] as VerificationStatus[];
 
 const defaultFormationSelectorFilters: FormationSelectorFilters = {
   search: '',
@@ -541,14 +536,14 @@ function HomeSection({
         </div>
       </div>
       <p className="rarity-note">
-        Legendary and Epic profiles are fully mapped. Rare mapping is underway.
+        Legendary, Epic, and Rare profiles are fully mapped.
       </p>
 
       <div className="overview-footer-grid">
         <div className="latest-update-panel panel readable">
           <p className="eyebrow">Current data</p>
           <h3>Latest release — {versionLabel}</h3>
-          <p>Bevlorin, Shadowrend, and Thunderstrike added with verified ability data and curated profiles.</p>
+          <p>Vesper, Nyrena, and Dawnseeker complete verified ability data and curated profiles for all 31 dragons.</p>
         </div>
         <div className="notice-panel trust-note readable">
           <p className="eyebrow">Local first</p>
@@ -784,7 +779,7 @@ function AddDragonDialog({
             <p className="eyebrow">Catalog</p>
             <h2 id="add-dragon-title">Add dragons to your roster</h2>
             <p className="details-summary-line">
-              Search the catalog and add dragons you own. Ability details remain marked as Verified or Metadata Only.
+              Search the catalog and add dragons you own. All ability details are marked as Verified.
             </p>
           </div>
           <button type="button" className="icon-button" onClick={onClose} aria-label="Close add dragon">

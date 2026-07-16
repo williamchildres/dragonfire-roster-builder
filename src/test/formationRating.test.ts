@@ -141,6 +141,13 @@ describe('formation rating helper', () => {
     expect(rating.notes.join(' ')).toContain('not a combat simulation');
   });
 
+  it('deduplicates equivalent weakness wording before rendering rating lists', () => {
+    const rating = ratingFor(formation('shadowrend', 'bevlorin', 'thunderstrike'));
+
+    expect(new Set(rating.weaknesses).size).toBe(rating.weaknesses.length);
+    expect(rating.weaknesses.filter((weakness) => weakness.includes("Thunderstrike must be deployed in Vanguard for Warrior's Zeal"))).toHaveLength(1);
+  });
+
   it('returns Incomplete guidance for partial formations', () => {
     const rating = ratingFor(formation('syrax', null, null));
 
@@ -281,15 +288,16 @@ describe('formation rating helper', () => {
     expect(positionConflict.weaknesses.join(' ')).toContain('only one dragon can receive that positional benefit');
   });
 
-  it('lowers readiness and confidence when a selected dragon is unmapped metadata-only', () => {
+  it('keeps full readiness and confidence when Vesper is selected', () => {
     const curated = ratingFor(formation('syrax', 'vhagar', 'caraxes'));
-    const unmapped = ratingFor(formation('syrax', 'vhagar', 'vesper'));
+    const withVesper = ratingFor(formation('syrax', 'vhagar', 'vesper'));
 
-    expect(breakdown(unmapped, 'Readiness / profile confidence').score).toBeLessThan(
+    expect(breakdown(withVesper, 'Readiness / profile confidence').score).toBe(
       breakdown(curated, 'Readiness / profile confidence').score,
     );
-    expect(unmapped.summary).toContain('limited profile coverage');
-    expect(unmapped.weaknesses.join(' ')).toContain('Vesper has limited mapped profile data');
+    expect(breakdown(withVesper, 'Readiness / profile confidence').score).toBe(10);
+    expect(withVesper.summary).not.toContain('limited profile coverage');
+    expect(withVesper.weaknesses.join(' ')).not.toContain('Vesper has limited mapped profile data');
   });
 
   it('explains Syrax, Vhagar, and Caraxes with Burn, First-Strike, and modeled placement limits', () => {

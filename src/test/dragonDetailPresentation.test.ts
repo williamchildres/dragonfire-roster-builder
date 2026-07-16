@@ -23,10 +23,10 @@ describe('dragon detail presentation helpers', () => {
     expect(presentation.placementNotes).toEqual(expect.arrayContaining(['Requires Vanguard', 'Supports Left Flank ally']));
     expect(presentation.benefitsFrom).toHaveLength(0);
 
-    expect(summarizeAbility(daemoros.command!).plainSummary).toContain('Deals Physical Damage');
-    expect(summarizeAbility(daemoros.command!).plainSummary).toContain('Applies Burn');
-    expect(summarizeAbility(daemoros.trait!).plainSummary).toContain('Boosts Physical Damage');
-    expect(summarizeAbility(daemoros.trait!).plainSummary).toContain('Boosts Instinct');
+    expect(summarizeAbility(daemoros.command).plainSummary).toContain('Deals Physical Damage');
+    expect(summarizeAbility(daemoros.command).plainSummary).toContain('Applies Burn');
+    expect(summarizeAbility(daemoros.trait).plainSummary).toContain('Boosts Physical Damage');
+    expect(summarizeAbility(daemoros.trait).plainSummary).toContain('Boosts Instinct');
     expect(summarizeAbility(daemoros.habits[4]!).plainSummary).toBe('Reduces Damage Received.');
   });
 
@@ -51,11 +51,11 @@ describe('dragon detail presentation helpers', () => {
     );
     expect(presentation.placementNotes).toEqual(['Requires Vanguard']);
 
-    expect(summarizeAbility(tessarion.command!).plainSummary).toContain('Deals Fire Damage');
-    expect(summarizeAbility(tessarion.command!).plainSummary).toContain('Deals Physical Damage');
-    expect(summarizeAbility(tessarion.trait!).plainSummary).toContain('Boosts Strength');
-    expect(summarizeAbility(tessarion.trait!).plainSummary).toContain('Boosts Intelligence');
-    expect(summarizeAbility(tessarion.command!).plainSummary).not.toMatch(/provides deals|improves deals|applies Damage Received Down|undefined/i);
+    expect(summarizeAbility(tessarion.command).plainSummary).toContain('Deals Fire Damage');
+    expect(summarizeAbility(tessarion.command).plainSummary).toContain('Deals Physical Damage');
+    expect(summarizeAbility(tessarion.trait).plainSummary).toContain('Boosts Strength');
+    expect(summarizeAbility(tessarion.trait).plainSummary).toContain('Boosts Intelligence');
+    expect(summarizeAbility(tessarion.command).plainSummary).not.toMatch(/provides deals|improves deals|applies Damage Received Down|undefined/i);
     expect(presentation.provides).not.toContain('undefined');
   });
 

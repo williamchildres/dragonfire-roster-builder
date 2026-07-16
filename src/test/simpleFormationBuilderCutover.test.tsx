@@ -214,7 +214,7 @@ describe('Formation Builder simple synergy cutover', () => {
     expect(analysisText()).not.toContain(incompleteMissingEnablerNotice);
   });
 
-  it('treats Panic missing-enabler checks as incomplete when a selected dragon is metadata-only', async () => {
+  it('evaluates Panic missing-enabler checks with newly mapped Vesper', async () => {
     const user = userEvent.setup();
     seedRoster({ shadowsong: {}, vesper: {} });
 
@@ -222,12 +222,12 @@ describe('Formation Builder simple synergy cutover', () => {
     await selectFormation(user, { 'left-flank': 'shadowsong', vanguard: 'vesper' });
     await openDetailedSignalTrace(user);
 
-    expect(analysisText()).toContain('Synergy data not yet mapped: Vesper.');
-    expect(sectionText('Missing enablers')).toContain(incompleteMissingEnablerNotice);
-    expect(analysisText()).not.toContain('this formation has no Panic provider');
+    expect(analysisText()).not.toContain('Synergy data not yet mapped: Vesper.');
+    expect(sectionText('Missing enablers')).toContain('Shadowsong benefits from Panic, but this formation has no Panic provider.');
+    expect(analysisText()).not.toContain(incompleteMissingEnablerNotice);
   });
 
-  it('treats First-Strike missing-enabler checks as incomplete when a selected dragon is metadata-only', async () => {
+  it('evaluates First-Strike missing-enabler checks with newly mapped Vesper', async () => {
     const user = userEvent.setup();
     seedRoster({ caraxes: {}, vesper: {} });
 
@@ -235,9 +235,9 @@ describe('Formation Builder simple synergy cutover', () => {
     await selectFormation(user, { 'left-flank': 'caraxes', vanguard: 'vesper' });
     await openDetailedSignalTrace(user);
 
-    expect(analysisText()).toContain('Synergy data not yet mapped: Vesper.');
-    expect(sectionText('Missing enablers')).toContain(incompleteMissingEnablerNotice);
-    expect(analysisText()).not.toContain('this formation has no First-Strike provider');
+    expect(analysisText()).not.toContain('Synergy data not yet mapped: Vesper.');
+    expect(sectionText('Missing enablers')).toContain('Caraxes benefits from First-Strike, but this formation has no First-Strike provider.');
+    expect(analysisText()).not.toContain(incompleteMissingEnablerNotice);
   });
 
   it('shows Syrax and Caraxes First-Strike and Fire Damage relationships without target-probability wording', async () => {
@@ -382,7 +382,7 @@ describe('Formation Builder simple synergy cutover', () => {
     const caraxesCard = screen.getByRole('article', { name: 'Vanguard' });
     expect(within(caraxesCard).getByRole('region', { name: 'Damage profile' })).toHaveTextContent('Fire Damage');
     expect(within(caraxesCard).getByRole('region', { name: 'Provides' })).toHaveTextContent('Slow');
-    expect(within(caraxesCard).getByRole('region', { name: 'Provides' })).toHaveTextContent('Control');
+    expect(within(caraxesCard).getByRole('region', { name: 'Provides' })).not.toHaveTextContent('Control');
     expect(within(caraxesCard).getByLabelText(/Fire Damage supported/i)).toHaveAttribute('data-state', 'supported');
     expect(within(caraxesCard).getByLabelText(/First-Strike satisfied/i)).toHaveAttribute('data-state', 'satisfied');
     expect(within(caraxesCard).getByLabelText(/Slow used/i)).toHaveAttribute('data-state', 'used');

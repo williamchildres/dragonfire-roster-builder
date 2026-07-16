@@ -23,6 +23,7 @@ export interface FormationSignalChip {
   label: string;
   state: FormationSignalState;
   reason: string;
+  scoreable?: boolean;
 }
 
 interface SelectedProfile {
@@ -138,6 +139,29 @@ function buildDamageProfileChips(
   return [...chips.values()].sort((left, right) => labelPriority(left.label, right.label));
 }
 
+function signalHasResolvedTeammateTarget(
+  provider: SelectedProfile,
+  signal: SynergySignal,
+  selected: SelectedProfile[],
+  progression: Record<string, DragonProgression | undefined>,
+): boolean {
+  if (!signal.recipientSelector) {
+    return true;
+  }
+
+  return selected.some(
+    (recipient) =>
+      recipient.profile.dragonId !== provider.profile.dragonId &&
+      signalTargetsRecipient({
+        provider: { dragonId: provider.profile.dragonId, position: provider.position },
+        signal,
+        recipient: { dragonId: recipient.profile.dragonId, position: recipient.position },
+        selected: selected.map((entry) => ({ dragonId: entry.profile.dragonId, position: entry.position })),
+        progression,
+      }),
+  );
+}
+
 function buildProvidesChips(
   provider: SelectedProfile,
   selected: SelectedProfile[],
@@ -156,7 +180,14 @@ function buildProvidesChips(
       const use = active ? selectedUseForProviderSignal(provider, source.signal, tag, selected, progression) : null;
       const state: FormationSignalState = active ? (use?.used ? 'used' : 'available') : 'inactive';
       const reason = active ? (use?.reason ?? 'Available but not used by this formation.') : inactiveReason;
-      mergeChip(chips, { label, state, reason });
+      mergeChip(chips, {
+        label,
+        state,
+        reason,
+        scoreable:
+          source.signal.nonScoring !== true &&
+          signalHasResolvedTeammateTarget(provider, source.signal, selected, progression),
+      });
     }
   }
 
@@ -187,6 +218,7 @@ function buildBenefitsChips(
     const matchingProvider = activeProvideSources.find(
       (source) =>
         source.profile.dragonId !== beneficiary.profile.dragonId &&
+        (!benefit.supportOnly || isSupportSignal(source.profile, source.signal)) &&
         source.tags.some((providerTag) => benefitTags.some((benefitTag) => tagSatisfies(providerTag, benefitTag))) &&
         relationshipIsCurrentlyActive(source, source.signal, beneficiary, benefit, selected, progression),
     );

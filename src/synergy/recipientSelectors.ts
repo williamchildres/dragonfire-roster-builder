@@ -1,4 +1,5 @@
 import type { FormationPosition } from '../models/dragon';
+import { areAdjacent } from './positionRules';
 import type { DragonProgression, SynergySignal } from './types';
 
 export interface RecipientCandidate {
@@ -37,6 +38,15 @@ export function signalTargetsRecipient({
 
   if (selector.kind === 'unresolved-group') {
     return false;
+  }
+
+  if (selector.kind === 'adjacent-group') {
+    const eligible = selected.filter(
+      (candidate) =>
+        (selector.includeSelf && candidate.dragonId === provider.dragonId) ||
+        (candidate.dragonId !== provider.dragonId && areAdjacent(provider.position, candidate.position)),
+    );
+    return eligible.length <= selector.recipientCount && eligible.some((candidate) => candidate.dragonId === recipient.dragonId);
   }
 
   const eligible = selected.filter(

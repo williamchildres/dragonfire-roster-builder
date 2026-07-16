@@ -5,25 +5,25 @@ This audit covers the curated simple-synergy profiles used by the live Formation
 ## Coverage
 
 - Total roster: 31 dragons.
-- Detailed ability data: 22 dragons.
-- Metadata-only and unmapped: 9 dragons.
-- Detailed abilities reviewed: 154 Commands, Traits, and Habits.
-- Simple profiles before this pass: 19.
-- Simple profiles after this pass: 22.
+- Detailed ability data: 31 dragons.
+- Metadata-only and unmapped: 0 dragons.
+- Detailed abilities reviewed: 217 Commands, Traits, and Habits.
+- Simple profiles before the final Rare batch: 28.
+- Simple profiles after the final Rare batch: 31.
 
-Mapped dragons: Syrax, Vhagar, Caraxes, Seasmoke, Crimson, Kalspire, Malachite, Venator, Daemoros, Feskar, Rhysarion, Shadowsong, Vaeldra, Sheepstealer, Vermax, Tashix, Velar, Zivern, Tessarion, Antares, Arrax, Arulix.
+Mapped dragons: Syrax, Vhagar, Caraxes, Seasmoke, Solstryker, Crimson, Kalspire, Malachite, Venator, Daemoros, Feskar, Rhysarion, Shadowsong, Tashix, Vaeldra, Velar, Zivern, Antares, Shimmer, Jagadrix, Bevlorin, Shadowrend, Thunderstrike, Vesper, Arulix, Nyrena, Dawnseeker, Arrax, Tessarion, Sheepstealer, Vermax.
 
-Metadata-only dragons: Solstryker, Shimmer, Jagadrix, Bevlorin, Shadowrend, Thunderstrike, Vesper, Nyrena, Dawnseeker.
+Metadata-only dragons: none.
 
 ## Controlled Vocabulary
 
 The simple engine uses only these tags:
 
 - Conditions: Panic, First-Strike, Burn, Slow, Taunt, Control, Stun, Stagger, Overwhelm, Confusion, Vulnerable, Weakened, Bleed.
-- Damage and Recovery: Physical Damage, Tactical Damage, Fire Damage, Recovery.
+- Damage, Recovery, and defense presentation: Physical Damage, Tactical Damage, Fire Damage, Recovery, Recovery Received, generic Damage Received reduction, and Physical Damage Received reduction.
 - Stats: Strength, Instinct, Intelligence, Initiative.
 
-Slow, Stun, Stagger, Overwhelm, and Confusion are Control aliases for broad Control payoffs. They remain specifically visible and are not simulated as separate combat mechanics. Weakened and Bleed do not satisfy Control, and Bleed is not treated as Physical Damage.
+Stun, Stagger, Overwhelm, and Confusion are Control aliases for broad Control payoffs. Slow and First-Strike do not satisfy Control. All specific statuses remain visibly named and are not simulated as separate combat mechanics. Weakened and Bleed do not satisfy Control, and Bleed is not treated as Physical Damage.
 
 ## Inclusion Rules
 
@@ -35,16 +35,9 @@ Output signal `tag`/`tags` values describe what the dragon actually emits or pro
 
 The live false-attribution defects came from mixing those meanings in one tag list. Damage and Recovery outputs carried their scaling stats in emitted `tags`, so the evaluator could match an output as though it provided that stat to a teammate. The same directional leak also allowed Initiative-support provenance to be considered for recipient outputs whose source ability did not actually provide Initiative. Flight Mastery remains Syrax-owned; any Velar/Flight Mastery explanation was a relationship-construction defect rather than a canonical Velar signal.
 
-## Disposition Counts
+## Disposition Coverage
 
-- represented: 99.
-- reinforces-existing: 7.
-- self-only: 26.
-- general-support-only: 12.
-- no-cross-dragon-synergy: 10.
-- not-modeled: 0.
-
-Every detailed Command, Trait, and Habit has exactly one disposition in `src/synergy/profileAudit.ts`. Every represented or reinforcing disposition references at least one simple profile signal.
+All 217 detailed Commands, Traits, and Habits have exactly one disposition in `src/synergy/profileAudit.ts`. Every represented or reinforcing disposition references at least one simple profile signal; automated integrity tests derive and validate the disposition totals from source.
 
 ## Repeated Path Aggregation
 
@@ -96,19 +89,25 @@ Arrax contributes Strength-based Physical Damage and Weakened through Sudden Str
 
 Arulix contributes Instinct-based Tactical Damage through Gleaming Spiral, gains one Strength-based Physical Damage path at Star Rank 6 through Spiral Surge, preserves Overwhelm and Stagger as distinct Control aliases through Hypnotic Helix, and benefits from Instinct support through Battle Cunning. Spiral Surge's Round 5 and Round 8 values derive from the current upgraded base rate.
 
-Typed defensive support has no neutral signal channel in the current simple-profile model. Stone Bulwark, Adaptive Guard, Fire Ward, Champion's Brilliance ally defense, Iron Shell, and enemy Fire Damage suppression therefore remain visible in detailed ability wording and audit rationales but are excluded from outputs, supports, benefits, filters, score relationships, and Kit Utilization. Adaptive Guard remains unresolved without troop context. Mimicry remains detailed-only because it copies battlefield-present effects conditionally rather than providing them unconditionally.
+Vesper contributes Instinct-based Tactical Damage and specifically named Slow through Eventide Strike. Strategic Leader uses self-eligible Vanguard priority, Savior's Waltz grants Resistance to one adjacent other ally, Insightful Allies supports both teammates' Instinct, and Midnight Onslaught contributes specifically named Confusion that satisfies Control once. Slow remains outside Control.
+
+Nyrena contributes Intelligence-based Fire Damage and Instinct-based Tactical Damage through Undermine. Physical Damage Dealt suppression and its Burn duration condition remain battlefield-facing and non-scoring; Fire Damage does not imply Burn. Mindful Synergy supports both teammate stats through one group, Deepen the Breach supports one adjacent other Fire recipient during rounds 6-10, and defensive support remains visibly non-scoring.
+
+Dawnseeker contributes Tactical Damage and self-eligible two-of-adjacent Recovery through Radiant Wings. Tactical Inferno uses independent Left/Right priority branches, Unbroken Devotion presents Recovery Received distinctly from Recovery, Wind's Favor supports both teammates' Initiative, and First Light shares its stat group and grants First-Strike to both other allies without a Control alias. Sunbreak modifies only existing Command rates.
+
+Typed defensive and Recovery Received support use explicit presentation-only, non-scoring channels when needed for public clarity. They are excluded from score relationships and Kit Utilization and never alias to offensive support. Other battlefield defense, troop-gated effects, enemy damage suppression, and conditional copying remain detailed-only. Adaptive Guard remains unresolved without troop context, and Mimicry remains conditional rather than an unconditional provider.
 
 ## Damage Support Summary
 
 Fire Damage support comes from Syrax Blazing Fury, Syrax Tactical Inferno, Malachite Sentinel's Presence, Seasmoke Cunning Ferocity, Vhagar Blazing Onslaught, Crimson Unlikely Hero, Shadowsong Blazing Onslaught, Vaeldra Tempting Distraction, Vaeldra Infernal Force, Tashix Battle Guile, Tessarion Blazing Leader, and generic Damage Dealt support from Rhysarion Champion's Vigor, Malachite Thunderous Roar, and Velar Whirlwind.
 
-Tactical Damage support comes from Syrax Tactical Inferno, Vhagar Warrior's Resilience, Vaeldra Warrior's Resilience, Vermax Spreading Blaze, Vermax Rallying Flame, Velar Strategic Leader, Zivern Silent Shade, Rhysarion Champion's Vigor, Malachite Thunderous Roar, and Velar Whirlwind.
+Tactical Damage support comes from Syrax Tactical Inferno, Vhagar Warrior's Resilience, Vaeldra Warrior's Resilience, Vermax Spreading Blaze, Vermax Rallying Flame, Velar Strategic Leader, Zivern Silent Shade, Vesper Strategic Leader, Dawnseeker Tactical Inferno, Rhysarion Champion's Vigor, Malachite Thunderous Roar, and Velar Whirlwind.
 
 Physical Damage support comes from Vhagar Battle Leader, Crimson Hunter's Cunning, Malachite Forest's Instinct, Venator Armor Break, Sheepstealer Hunter's Cunning, Tashix Hunter's Cunning, Tashix Dragon's Cunning, Zivern Battle Mastery, Vhagar Blazing Onslaught, Crimson Unlikely Hero, Shadowsong Blazing Onslaught, Vaeldra Tempting Distraction, Vaeldra Infernal Force, Rhysarion Champion's Vigor, Malachite Thunderous Roar, and Velar Whirlwind. Non-Basic restrictions remain in the player-facing wording where source text excludes Basic Attacks.
 
 ## Recovery Support Summary
 
-Recovery outputs are represented for Syrax Strategic Revival, Malachite Warden's Rally, Rhysarion Ebbing Fury, Rhysarion Echoing Melody, Sheepstealer Savage Claim, and Velar Breath of Renewal. Recovery amplification is represented for Sheepstealer Hunter's Cunning, Tashix Hunter's Cunning, and Rhysarion Unbroken Devotion. Malachite's self-only Recovery Dealt increases are audited but not modeled as teammate support.
+Recovery outputs are represented for Syrax Strategic Revival, Malachite Warden's Rally, Rhysarion Ebbing Fury, Rhysarion Echoing Melody, Sheepstealer Savage Claim, Velar Breath of Renewal, Shimmer Loyal Shield, and Dawnseeker Radiant Wings. Recovery amplification remains distinct from presentation-only Recovery Received support. Rhysarion, Shimmer, and Dawnseeker Unbroken Devotion therefore do not masquerade as Recovery application or offensive support.
 
 ## Stat Support Summary
 

@@ -83,22 +83,21 @@ describe('simple synergy foundation', () => {
       'Bevlorin',
       'Shadowrend',
       'Thunderstrike',
+      'Vesper',
       'Arulix',
+      'Nyrena',
+      'Dawnseeker',
       'Arrax',
       'Tessarion',
       'Sheepstealer',
       'Vermax',
     ]);
-    expect(metadataOnlyDragons.map((dragon) => dragon.name)).toEqual([
-      'Vesper',
-      'Nyrena',
-      'Dawnseeker',
-    ]);
+    expect(metadataOnlyDragons.map((dragon) => dragon.name)).toEqual([]);
     expect(metadataOnlyDragons.map((dragon) => dragon.id).sort()).toEqual([...metadataOnlyDragonIds].sort());
     expect(simpleSynergyProfiles.map((profile) => profile.dragonId).sort()).toEqual(
       detailedDragons.map((dragon) => dragon.id).sort(),
     );
-    expect(simpleSynergyProfiles).toHaveLength(28);
+    expect(simpleSynergyProfiles).toHaveLength(31);
     expect(new Set(simpleSynergyProfiles.map((profile) => profile.dragonId)).size).toBe(simpleSynergyProfiles.length);
   });
 
@@ -164,7 +163,7 @@ describe('simple synergy foundation', () => {
     );
     const referencedSignalIds = new Set<string>();
 
-    expect(simpleSynergyAbilityReviews).toHaveLength(196);
+    expect(simpleSynergyAbilityReviews).toHaveLength(217);
     expect(reviewedAbilityIds.sort()).toEqual(canonicalAbilityIds.sort());
     expect(new Set(reviewedAbilityIds).size).toBe(reviewedAbilityIds.length);
 
@@ -196,7 +195,6 @@ describe('simple synergy foundation', () => {
       expect(usedTags.has(tag), `${tag} is unused`).toBe(true);
     }
     expect(CONTROL_ALIAS_TAGS).toEqual([
-      'status:slow',
       'status:stun',
       'status:stagger',
       'status:overwhelm',
@@ -459,12 +457,8 @@ describe('simple synergy foundation', () => {
           "Crimson's Bloodscale Terror can apply Stun, which counts as Control and improves Rhysarion's Dawnsong.",
       }),
     );
-    expect(resultsOfKind('setup-payoff', evaluate(formation('caraxes', 'rhysarion', null)))).toContainEqual(
-      expect.objectContaining({
-        id: 'setup-payoff:caraxes:status:control:rhysarion',
-        explanation:
-          "Caraxes's Crippling Inferno can apply Slow, which counts as Control and improves Rhysarion's Dawnsong.",
-      }),
+    expect(resultsOfKind('setup-payoff', evaluate(formation('caraxes', 'rhysarion', null))).map((result) => result.id)).not.toContain(
+      'setup-payoff:caraxes:status:control:rhysarion',
     );
 
     expect(evaluate(formation('vhagar', 'vaeldra', null)).map((result) => result.id)).not.toContain(
@@ -488,8 +482,8 @@ describe('simple synergy foundation', () => {
     expect(resultsOfKind('amplifier-output', evaluate(formation('caraxes', 'malachite', null)))).toContainEqual(
       expect.objectContaining({ id: 'amplifier-output:malachite:damage:fire:caraxes' }),
     );
-    expect(resultsOfKind('amplifier-output', evaluate(formation('rhysarion', 'malachite', null)))).toContainEqual(
-      expect.objectContaining({ id: 'amplifier-output:rhysarion:effect:recovery:malachite' }),
+    expect(resultsOfKind('amplifier-output', evaluate(formation('rhysarion', 'malachite', null))).map((result) => result.id)).not.toContain(
+      'amplifier-output:rhysarion:effect:recovery:malachite',
     );
     expect(resultsOfKind('amplifier-output', evaluate(formation('venator', 'vhagar', null)))).toContainEqual(
       expect.objectContaining({ id: 'amplifier-output:venator:damage:physical:vhagar' }),
