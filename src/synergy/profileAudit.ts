@@ -71,17 +71,14 @@ const review = (
 
 export const metadataOnlyDragonIds = [
   'solstryker',
-  'antares',
   'shimmer',
   'jagadrix',
   'bevlorin',
   'shadowrend',
   'thunderstrike',
   'vesper',
-  'arulix',
   'nyrena',
   'dawnseeker',
-  'arrax',
 ] as const;
 
 export const simpleSynergyAbilityReviews = [
@@ -274,7 +271,7 @@ export const simpleSynergyAbilityReviews = [
     'kalspire',
     'kalspire-tactical-strike',
     'command',
-    represented(['kalspire-tactical-strike-tactical'], 'The command deals Instinct-based Tactical Damage; Bleed has no current explicit payoff.'),
+    represented(['kalspire-tactical-strike-tactical', 'kalspire-tactical-strike-bleed'], 'The command deals Instinct-based Tactical Damage and provides the specific Bleed setup used by Arrax.'),
   ),
   review(
     'kalspire',
@@ -615,6 +612,97 @@ export const simpleSynergyAbilityReviews = [
       'The habit applies Overwhelm as Control and explicitly benefits from Vulnerable setup.',
     ),
   ),
+
+  review(
+    'antares',
+    'antares-relentless-pursuit',
+    'command',
+    represented(
+      ['antares-relentless-pursuit-fire', 'antares-relentless-pursuit-vulnerable'],
+      'The Command deals Intelligence-based Fire Damage and applies the named Vulnerable status; its later Slow payoff is reviewed on Fiery Precision.',
+    ),
+  ),
+  review(
+    'antares',
+    'antares-hunters-wrath',
+    'trait',
+    represented(
+      ['antares-hunters-wrath-right-stats', 'antares-hunters-wrath-vanguard'],
+      "The Vanguard trait gives hard Right Flank Strength and Initiative support; Antares's Fire increase remains self-only.",
+    ),
+  ),
+  review(
+    'antares',
+    'antares-blazing-onslaught',
+    'habit',
+    represented(
+      [
+        'antares-blazing-onslaught-fire-vulnerability',
+        'antares-blazing-onslaught-non-basic-physical-vulnerability',
+      ],
+      'The habit increases enemy Fire Damage Received broadly while its Physical branch matches only outputs explicitly typed as non-Basic-Attack damage.',
+    ),
+  ),
+  review('antares', 'antares-dragons-flair', 'habit', selfOnly('The Fire Damage increase applies only to Antares.')),
+  review('antares', 'antares-fiery-precision', 'habit', represented(['antares-fiery-precision-slow-payoff'], 'The augmentation creates the Star Rank 6 Slow payoff while its Fire output remains the single Relentless Pursuit Damage Profile path.')),
+  review('antares', 'antares-dragons-intellect', 'habit', selfOnly('The Damage Received reduction and Intelligence increase apply only to Antares.')),
+  review('antares', 'antares-redemption', 'habit', selfOnly('The stat increases and shared-roll Vulnerable/Weakened immunity apply only to Antares and do not imply cleanse behavior.')),
+
+  review(
+    'arulix',
+    'arulix-gleaming-spiral',
+    'command',
+    represented(
+      ['arulix-gleaming-spiral-tactical', 'arulix-gleaming-spiral-physical'],
+      'The Command deals Instinct-based Tactical Damage and gains one Strength-based Physical Damage path at Star Rank 6; enemy Fire suppression and battlefield target typing remain descriptive.',
+    ),
+  ),
+  review(
+    'arulix',
+    'arulix-champions-brilliance',
+    'trait',
+    represented(
+      ['arulix-champions-brilliance-vanguard'],
+      'The trait requires Vanguard; its self stats are self-only and its Right Flank Damage Received reduction is non-scoring defensive support.',
+    ),
+  ),
+  review(
+    'arulix',
+    'arulix-hypnotic-helix',
+    'habit',
+    represented(
+      ['arulix-hypnotic-helix-overwhelm', 'arulix-hypnotic-helix-stagger'],
+      'The habit preserves distinct Overwhelm and Stagger outputs, both of which satisfy Control without collapsing their labels.',
+    ),
+  ),
+  review('arulix', 'arulix-battle-cunning', 'habit', represented(['arulix-battle-cunning-instinct-payoff'], 'External Instinct support improves Battle Cunning; direct enemy stat reductions do not invent damage-type relationships.')),
+  review('arulix', 'arulix-spiral-surge', 'habit', reinforces(['arulix-gleaming-spiral-physical'], 'The Command augmentation adds one progression-gated Physical Damage path and derives later-round rates from the current upgraded base.')),
+  review('arulix', 'arulix-iron-shell', 'habit', generalOnly('The non-Basic Physical and Fire Damage Received reductions are typed defensive support without a scored offensive consumer model.')),
+  review('arulix', 'arulix-mimicry', 'habit', noCross('Mimicry copies battlefield-present effects through two conditional branches and does not provide any copied status unconditionally.')),
+
+  review(
+    'arrax',
+    'arrax-sudden-strike',
+    'command',
+    represented(
+      ['arrax-sudden-strike-physical', 'arrax-sudden-strike-weakened', 'arrax-sudden-strike-bleed-payoff'],
+      'The Command deals Strength-based Physical Damage, applies Weakened, and explicitly improves that application chance against Bleed without treating either status as Control.',
+    ),
+  ),
+  review(
+    'arrax',
+    'arrax-warriors-resilience',
+    'trait',
+    represented(
+      ['arrax-warriors-resilience-left-tactical', 'arrax-warriors-resilience-vanguard'],
+      'The Vanguard trait gives hard Left Flank Tactical support while Arrax Damage Received reduction remains self-only.',
+    ),
+  ),
+  review('arrax', 'arrax-headlong-into-danger', 'habit', selfOnly('The positive effects and displayed penalties apply only to Arrax and do not create named status or allied support signals.')),
+  review('arrax', 'arrax-stone-bulwark', 'habit', generalOnly('The Tactical and Fire Damage Received reductions are typed defensive support, not offensive Tactical or Fire support.')),
+  review('arrax', 'arrax-adaptive-guard', 'habit', generalOnly('Both defensive branches remain troop-gated and inactive because Formation Builder has no selected troop context.')),
+  review('arrax', 'arrax-fire-ward', 'habit', generalOnly('Fire Ward remains a distinct defensive status and does not become offensive Fire Damage support.')),
+  review('arrax', 'arrax-turn-the-line', 'habit', represented(['arrax-turn-the-line-physical'], 'The Star Rank 10 habit directly increases enemy Physical Damage Received without inventing named Vulnerable.')),
 
   review(
     'tessarion',

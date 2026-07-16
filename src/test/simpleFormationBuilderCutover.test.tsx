@@ -216,26 +216,26 @@ describe('Formation Builder simple synergy cutover', () => {
 
   it('treats Panic missing-enabler checks as incomplete when a selected dragon is metadata-only', async () => {
     const user = userEvent.setup();
-    seedRoster({ shadowsong: {}, antares: {} });
+    seedRoster({ shadowsong: {}, shimmer: {} });
 
     await openFormationBuilder(user);
-    await selectFormation(user, { 'left-flank': 'shadowsong', vanguard: 'antares' });
+    await selectFormation(user, { 'left-flank': 'shadowsong', vanguard: 'shimmer' });
     await openDetailedSignalTrace(user);
 
-    expect(analysisText()).toContain('Synergy data not yet mapped: Antares.');
+    expect(analysisText()).toContain('Synergy data not yet mapped: Shimmer.');
     expect(sectionText('Missing enablers')).toContain(incompleteMissingEnablerNotice);
     expect(analysisText()).not.toContain('this formation has no Panic provider');
   });
 
   it('treats First-Strike missing-enabler checks as incomplete when a selected dragon is metadata-only', async () => {
     const user = userEvent.setup();
-    seedRoster({ caraxes: {}, antares: {} });
+    seedRoster({ caraxes: {}, shimmer: {} });
 
     await openFormationBuilder(user);
-    await selectFormation(user, { 'left-flank': 'caraxes', vanguard: 'antares' });
+    await selectFormation(user, { 'left-flank': 'caraxes', vanguard: 'shimmer' });
     await openDetailedSignalTrace(user);
 
-    expect(analysisText()).toContain('Synergy data not yet mapped: Antares.');
+    expect(analysisText()).toContain('Synergy data not yet mapped: Shimmer.');
     expect(sectionText('Missing enablers')).toContain(incompleteMissingEnablerNotice);
     expect(analysisText()).not.toContain('this formation has no First-Strike provider');
   });
@@ -665,6 +665,36 @@ describe('Formation Builder simple synergy cutover', () => {
     );
   });
 
+  it('keeps Arulix command and damage-profile wording progression-aware at Star Ranks 5 and 6', async () => {
+    const user = userEvent.setup();
+    seedRoster({ arulix: { starRank: 5 } });
+
+    await openFormationBuilder(user);
+    await switchFormationMode(user, 'Roster Dragons');
+    await chooseDragonForPosition(user, 'left-flank', 'arulix');
+
+    let card = screen.getByRole('article', { name: 'Left Flank' });
+    let damageProfile = within(card).getByRole('region', { name: 'Damage profile' });
+    let command = within(card).getByRole('region', { name: 'Command' });
+    expect(within(damageProfile).getByText('Tactical Damage')).toHaveAttribute('data-state', 'available');
+    expect(within(damageProfile).getByText('Physical Damage')).toHaveAttribute('data-state', 'inactive');
+    expect(command).not.toHaveTextContent('Deals Physical Damage');
+    expect(command).toHaveTextContent('gains Physical Damage at 6★');
+
+    await user.click(within(card).getByRole('button', { name: /view details/i }));
+    const details = screen.getByRole('dialog', { name: 'Arulix' });
+    await user.selectOptions(within(details).getByRole('combobox', { name: 'Star Rank' }), '6');
+    await user.click(within(details).getByRole('button', { name: /close details/i }));
+
+    card = screen.getByRole('article', { name: 'Left Flank' });
+    damageProfile = within(card).getByRole('region', { name: 'Damage profile' });
+    command = within(card).getByRole('region', { name: 'Command' });
+    expect(within(damageProfile).getByText('Tactical Damage')).toHaveAttribute('data-state', 'available');
+    expect(within(damageProfile).getByText('Physical Damage')).toHaveAttribute('data-state', 'available');
+    expect(command).toHaveTextContent('Deals Physical Damage');
+    expect(command).not.toHaveTextContent('gains Physical Damage at 6★');
+  });
+
   it('shows static position cards, profile coverage, movement, clearing, and share-link behavior', async () => {
     const user = userEvent.setup();
     const writeText = vi.fn().mockResolvedValue(undefined);
@@ -729,11 +759,11 @@ describe('Formation Builder simple synergy cutover', () => {
     expect(within(caraxesTrait).queryByRole('button', { name: /show full wording/i })).not.toBeInTheDocument();
     expect(caraxesTrait).toHaveTextContent('At Level 16+ and deployed in Vanguard');
 
-    expect(analysisText()).toContain('Synergy data not yet mapped: Antares.');
+    expect(analysisText()).not.toContain('Synergy data not yet mapped: Antares.');
     await openDetailedSignalTrace(user);
     expect(sectionText('Strong synergies')).toContain("Syrax can grant First-Strike, which improves Caraxes's Infernal Burst.");
     expect(sectionItems('Strong synergies').filter((item) => item === 'Syrax improves allied Fire Damage, and Caraxes deals Fire Damage.')).toHaveLength(1);
-    expect(sectionText('Missing enablers')).toContain(incompleteMissingEnablerNotice);
+    expect(screen.queryByRole('heading', { name: 'Missing enablers' })).not.toBeInTheDocument();
     await user.click(within(screen.getByRole('article', { name: 'Vanguard' })).getByRole('button', { name: /change dragon/i }));
     const selector = screen.getByRole('dialog', { name: /choose a dragon for vanguard/i });
     await user.type(within(selector).getByLabelText(/search by dragon name/i), 'Syrax');

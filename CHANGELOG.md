@@ -2,6 +2,9 @@
 
 ## Unreleased
 
+- Added screenshot-verified detailed records and curated simple-synergy profiles for the first Rare batch: Antares, Arrax, and Arulix. Coverage is now 31 known dragons, 22 detailed dragons, 22 simple profiles, and 9 metadata-only dragons, with Rare coverage at 3 / 12.
+- Added specific Weakened and Bleed simple tags while preserving Overwhelm and Stagger as distinct Control aliases. Defensive support, troop-gated Adaptive Guard, battlefield-only target conditions, and conditional Mimicry effects remain detailed and non-scoring.
+- Increased database/package version to `0.6.5`; source data schema remains `13` and local roster schema remains `4`.
 - Polished the responsive Overview and About layouts, updated explainable Formation Rating and Kit Utilization messaging, normalized Dragonfire Lab branding, clarified coverage and optional support presentation, and fixed the malformed support-button icon.
 - Polished Formation Builder signal group styling to feel lighter and denser, renamed selected-card and selector `Benefits from` labels to `Synergy needs`, added a subtle chip-state legend, and compacted the action stack with shorter movement labels.
 - Replaced the Formation Builder `Include unowned dragons` checkbox with an `All 10 Star Dragons` / `Roster Dragons` toggle, defaulted planning to all mapped dragons at Star 10, and kept Roster Dragons mode restricted to owned roster dragons with saved progression.

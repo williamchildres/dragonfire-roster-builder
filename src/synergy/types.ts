@@ -3,6 +3,7 @@ import type { SynergyTag } from './tags';
 
 export type SimpleFriendlyScope = 'formation' | 'adjacent' | 'self';
 export type SignalConfidence = 'verified' | 'provisional';
+export type DamageScope = 'non-basic-attack';
 
 export interface ProgressionRequirement {
   minimumStarRank?: number;
@@ -19,6 +20,7 @@ export interface SynergySignal {
   tag: SynergyTag;
   tags?: SynergyTag[];
   scalesWith?: SynergyTag[];
+  damageScope?: DamageScope;
   abilityId: string;
   abilityName: string;
   description: string;

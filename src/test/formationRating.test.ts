@@ -283,13 +283,13 @@ describe('formation rating helper', () => {
 
   it('lowers readiness and confidence when a selected dragon is unmapped metadata-only', () => {
     const curated = ratingFor(formation('syrax', 'vhagar', 'caraxes'));
-    const unmapped = ratingFor(formation('syrax', 'vhagar', 'antares'));
+    const unmapped = ratingFor(formation('syrax', 'vhagar', 'shimmer'));
 
     expect(breakdown(unmapped, 'Readiness / profile confidence').score).toBeLessThan(
       breakdown(curated, 'Readiness / profile confidence').score,
     );
     expect(unmapped.summary).toContain('limited profile coverage');
-    expect(unmapped.weaknesses.join(' ')).toContain('Antares has limited mapped profile data');
+    expect(unmapped.weaknesses.join(' ')).toContain('Shimmer has limited mapped profile data');
   });
 
   it('explains Syrax, Vhagar, and Caraxes with Burn, First-Strike, and modeled placement limits', () => {

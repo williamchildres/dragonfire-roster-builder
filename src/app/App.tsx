@@ -541,14 +541,14 @@ function HomeSection({
         </div>
       </div>
       <p className="rarity-note">
-        Legendary and Epic profiles are mapped first. Rare dragons are next.
+        Legendary and Epic profiles are fully mapped. Rare mapping is underway.
       </p>
 
       <div className="overview-footer-grid">
         <div className="latest-update-panel panel readable">
           <p className="eyebrow">Current data</p>
           <h3>Latest release — {versionLabel}</h3>
-          <p>Tessarion added with verified ability wording and a curated synergy profile.</p>
+          <p>Antares, Arrax, and Arulix added with verified ability data and curated profiles.</p>
         </div>
         <div className="notice-panel trust-note readable">
           <p className="eyebrow">Local first</p>
@@ -1115,6 +1115,7 @@ function FormationBuilderSection({
               position={position}
               dragon={dragon}
               rosterEntry={dragon ? formationRosterEntryForDragon(dragon, roster, dragonPoolMode) : undefined}
+              profile={dragon ? profilesById.get(dragon.id) : undefined}
               signalChips={signalChipsByPosition[position]}
               onChooseDragon={() => openSelector(position)}
               onOpenDetails={onOpenDetails}

@@ -202,8 +202,8 @@ describe('Dragonfire Lab app', () => {
     expect(screen.queryByRole('heading', { name: 'Compare Verified Dragons' })).not.toBeInTheDocument();
     expect(screen.queryByRole('button', { name: /compare verified dragons/i })).not.toBeInTheDocument();
 
-    expect(screen.getByText(/19 \/ 31 dragons mapped/i)).toBeInTheDocument();
-    expect(screen.getByText('61%')).toBeInTheDocument();
+    expect(screen.getByText(/22 \/ 31 dragons mapped/i)).toBeInTheDocument();
+    expect(screen.getByText('71%')).toBeInTheDocument();
 
     expect(screen.getByRole('heading', { name: 'Profile coverage' })).toBeInTheDocument();
     expect(screen.getByLabelText('Coverage by rarity')).toBeInTheDocument();
@@ -213,21 +213,21 @@ describe('Dragonfire Lab app', () => {
     expect(screen.getByText('Rare')).toBeInTheDocument();
     expect(screen.getByText('9 / 9 mapped')).toBeInTheDocument();
     expect(screen.getByText('10 / 10 mapped')).toBeInTheDocument();
-    expect(screen.getByText('0 / 12 mapped')).toBeInTheDocument();
+    expect(screen.getByText('3 / 12 mapped')).toBeInTheDocument();
     expect(document.querySelectorAll('.coverage-marker')).toHaveLength(3);
     expect(document.querySelector('.coverage-marker.rarity-legendary')).toBeInTheDocument();
     expect(document.querySelector('.coverage-marker.rarity-epic')).toBeInTheDocument();
     expect(document.querySelector('.coverage-marker.rarity-rare')).toBeInTheDocument();
-    expect(screen.getByText('Legendary and Epic profiles are mapped first. Rare dragons are next.')).toBeInTheDocument();
+    expect(screen.getByText('Legendary and Epic profiles are fully mapped. Rare mapping is underway.')).toBeInTheDocument();
 
     expect(screen.queryByRole('heading', { name: 'Detailed profile coverage' })).not.toBeInTheDocument();
     expect(screen.queryByRole('heading', { name: 'Legendary coverage' })).not.toBeInTheDocument();
     expect(screen.queryByRole('heading', { name: 'Epic coverage' })).not.toBeInTheDocument();
     expect(screen.queryByRole('heading', { name: 'Rare coverage' })).not.toBeInTheDocument();
 
-    const latestUpdate = screen.getByRole('heading', { name: /latest release — v0\.6\.4/i }).closest('.latest-update-panel');
+    const latestUpdate = screen.getByRole('heading', { name: /latest release — v0\.6\.5/i }).closest('.latest-update-panel');
     expect(latestUpdate).not.toBeNull();
-    expect(latestUpdate).toHaveTextContent('Tessarion added with verified ability wording and a curated synergy profile.');
+    expect(latestUpdate).toHaveTextContent('Antares, Arrax, and Arulix added with verified ability data and curated profiles.');
 
     expect(screen.getByText(/No login is required\./i)).toBeInTheDocument();
     expect(screen.getByRole('heading', { name: 'Private by design' })).toBeInTheDocument();

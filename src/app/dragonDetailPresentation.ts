@@ -1,10 +1,10 @@
-import type { AbilityDefinition } from '../models/dragon';
+import type { AbilityDefinition, EffectTag } from '../models/dragon';
 import {
   displayTagsFrom,
   SYNERGY_TAG_LABELS,
   type SynergyTag,
 } from '../synergy/tags';
-import type { DragonSynergyProfile, PositionClaim, SynergySignal } from '../synergy/types';
+import type { DragonProgression, DragonSynergyProfile, PositionClaim, SynergySignal } from '../synergy/types';
 
 export interface DragonDetailPresentation {
   headerLine: string;
@@ -51,6 +51,14 @@ const ABILITY_SUMMARY_LABELS: Partial<Record<string, string>> = {
   STAGGER: 'Applies Stagger',
   OVERWHELM: 'Applies Overwhelm',
   VULNERABLE: 'Applies Vulnerable',
+  WEAKENED: 'Applies Weakened',
+  BLEED: 'Applies Bleed',
+  BLEED_PAYOFF: 'Bleed improves Weakened chance',
+  FIRE_WARD: 'Grants Fire Ward',
+  ADVANTAGE: 'References Advantage',
+  RESISTANCE: 'References Resistance',
+  IMMUNITY: 'Grants status immunity',
+  CONDITIONAL_STATUS_COPY: 'Copies conditional statuses',
   CONTROL: 'Applies Control',
   FIRST_STRIKE: 'Grants First-Strike',
   RECOVERY: 'Provides Recovery',
@@ -58,6 +66,7 @@ const ABILITY_SUMMARY_LABELS: Partial<Record<string, string>> = {
   PHYSICAL_DAMAGE: 'Deals Physical Damage',
   TACTICAL_DAMAGE: 'Deals Tactical Damage',
   FIRE_DAMAGE_UP: 'Boosts Fire Damage',
+  FIRE_DAMAGE_DEALT_DOWN: 'Suppresses enemy Fire Damage',
   PHYSICAL_DAMAGE_UP: 'Boosts Physical Damage',
   TACTICAL_DAMAGE_UP: 'Boosts Tactical Damage',
   STRENGTH_UP: 'Boosts Strength',
@@ -67,6 +76,11 @@ const ABILITY_SUMMARY_LABELS: Partial<Record<string, string>> = {
   INITIATIVE_UP: 'Boosts Initiative',
   DAMAGE_RECEIVED_DOWN: 'Reduces Damage Received',
   DAMAGE_RECEIVED_UP: 'Increases Damage Received',
+  FIRE_DAMAGE_RECEIVED_UP: 'Increases Fire Damage Received',
+  PHYSICAL_DAMAGE_RECEIVED_UP: 'Increases Physical Damage Received',
+  FIRE_DAMAGE_RECEIVED_DOWN: 'Reduces Fire Damage Received',
+  TACTICAL_DAMAGE_RECEIVED_DOWN: 'Reduces Tactical Damage Received',
+  PHYSICAL_DAMAGE_RECEIVED_DOWN: 'Reduces Physical Damage Received',
   DAMAGE_DEALT_DOWN: 'Reduces Damage Dealt',
   DAMAGE_DEALT_UP: 'Boosts Damage Dealt',
   RECOVERY_RECEIVED_UP: 'Boosts Recovery Received',
@@ -113,6 +127,7 @@ const SUMMARY_PRIORITY = [
   'PHYSICAL_DAMAGE',
   'FIRE_DAMAGE',
   'TACTICAL_DAMAGE',
+  'FIRE_DAMAGE_DEALT_DOWN',
   'BURN',
   'PANIC',
   'CONFUSION',
@@ -123,9 +138,20 @@ const SUMMARY_PRIORITY = [
   'SLOW',
   'STAGGER',
   'VULNERABLE',
+  'WEAKENED',
+  'BLEED',
+  'BLEED_PAYOFF',
+  'FIRE_WARD',
+  'IMMUNITY',
+  'CONDITIONAL_STATUS_COPY',
   'OVERWHELM',
   'CONTROL',
   'DAMAGE_RECEIVED_DOWN',
+  'FIRE_DAMAGE_RECEIVED_DOWN',
+  'TACTICAL_DAMAGE_RECEIVED_DOWN',
+  'PHYSICAL_DAMAGE_RECEIVED_DOWN',
+  'FIRE_DAMAGE_RECEIVED_UP',
+  'PHYSICAL_DAMAGE_RECEIVED_UP',
   'DAMAGE_DEALT_DOWN',
   'PHYSICAL_DAMAGE_UP',
   'FIRE_DAMAGE_UP',
@@ -171,8 +197,8 @@ export function summarizeAbility(ability: AbilityDefinition): AbilitySummaryPres
     .filter((tag) => SUMMARY_PRIORITY.includes(tag))
     .map((tag) => ({
       tag,
-      chipLabel: abilityChipLabel(tag, hasSpecificControlTag),
-      plainLabel: tag === 'CONTROL' && hasSpecificControlTag ? null : ABILITY_SUMMARY_LABELS[tag] ?? null,
+      chipLabel: abilityChipLabel(tag, hasSpecificControlTag, ability.tags),
+      plainLabel: abilityPlainLabel(tag, hasSpecificControlTag, ability.tags),
     }))
     .filter((candidate) => Boolean(candidate.chipLabel || candidate.plainLabel));
   const chips = collectUnique(summaryCandidates.map((candidate) => candidate.chipLabel)).slice(0, 5);
@@ -184,6 +210,43 @@ export function summarizeAbility(ability: AbilityDefinition): AbilitySummaryPres
     plainSummary,
     chips,
     technicalTags,
+  };
+}
+
+export function summarizeAbilityForProgression(
+  ability: AbilityDefinition,
+  signals: SynergySignal[],
+  progression: DragonProgression | undefined,
+): AbilitySummaryPresentation {
+  const lockedDamageSignals = signals.filter(
+    (signal) =>
+      signal.abilityId === ability.id &&
+      signal.tag.startsWith('damage:') &&
+      signal.unlock?.minimumStarRank !== undefined &&
+      (progression?.starRank ?? 0) < signal.unlock.minimumStarRank,
+  );
+  if (lockedDamageSignals.length === 0) {
+    return summarizeAbility(ability);
+  }
+
+  const lockedTags = new Set(lockedDamageSignals.map((signal) => effectTagForDamageSignal(signal.tag)));
+  const activeSummary = summarizeAbility({
+    ...ability,
+    tags: ability.tags.filter((tag) => !lockedTags.has(tag)),
+  });
+  const unlocks = collectUnique(
+    lockedDamageSignals.map((signal) => {
+      const label = OUTPUT_SIGNAL_LABELS[signal.tag];
+      return label && signal.unlock?.minimumStarRank !== undefined
+        ? `${label} at ${signal.unlock.minimumStarRank}★`
+        : null;
+    }),
+  );
+  const activeText = activeSummary.plainSummary.replace(/\.$/, '');
+
+  return {
+    ...activeSummary,
+    plainSummary: `${activeText}; gains ${unlocks.join(' and ')}.`,
   };
 }
 
@@ -205,7 +268,7 @@ function describeSignals(
   return collectUnique(
     signals.flatMap((signal) =>
       displayTagsFrom(providedTags(signal))
-        .map((tag) => labels[tag] ?? null)
+        .map((tag) => labelForSignalTag(signal, tag, labels))
         .filter((label): label is string => Boolean(label)),
     ),
   ).sort((left, right) => headlinePriority(left) - headlinePriority(right));
@@ -253,11 +316,36 @@ function headlineLabelsForOutput(signal: SynergySignal): string[] {
 }
 
 function headlineLabelsForSupport(signal: SynergySignal): string[] {
-  const label = SUPPORT_SIGNAL_LABELS[signal.tag] ?? null;
+  const label = labelForSignalTag(signal, signal.tag, SUPPORT_SIGNAL_LABELS);
   if (!label) {
     return [];
   }
   return [label];
+}
+
+export function labelForSignalTag(
+  signal: SynergySignal,
+  tag: SynergyTag,
+  labels: Partial<Record<SynergyTag, string>>,
+): string | null {
+  if (signal.damageScope === 'non-basic-attack' && tag === 'damage:physical' && labels[tag] === 'Physical Damage support') {
+    return 'Non-Basic Physical Damage support';
+  }
+
+  return labels[tag] ?? null;
+}
+
+function effectTagForDamageSignal(tag: SynergyTag): EffectTag | null {
+  if (tag === 'damage:physical') {
+    return 'PHYSICAL_DAMAGE';
+  }
+  if (tag === 'damage:fire') {
+    return 'FIRE_DAMAGE';
+  }
+  if (tag === 'damage:tactical') {
+    return 'TACTICAL_DAMAGE';
+  }
+  return null;
 }
 
 function headlineLabelsForClaim(claim: PositionClaim): string[] {
@@ -284,12 +372,24 @@ function providedTags(signal: SynergySignal): SynergyTag[] {
   return signal.tags ?? [signal.tag];
 }
 
-function abilityChipLabel(tag: string, hasSpecificControlTag: boolean): string | null {
+function abilityChipLabel(tag: string, hasSpecificControlTag: boolean, abilityTags: EffectTag[]): string | null {
   if (tag === 'CONTROL' && hasSpecificControlTag) {
     return 'Control';
   }
 
+  if (tag === 'PHYSICAL_DAMAGE_RECEIVED_UP' && abilityTags.includes('EXCLUDES_BASIC_ATTACKS')) {
+    return 'Increases non-Basic Physical Damage Received';
+  }
+
   return ABILITY_SUMMARY_LABELS[tag] ?? null;
+}
+
+function abilityPlainLabel(tag: string, hasSpecificControlTag: boolean, abilityTags: EffectTag[]): string | null {
+  if (tag === 'CONTROL' && hasSpecificControlTag) {
+    return null;
+  }
+
+  return abilityChipLabel(tag, false, abilityTags);
 }
 
 function joinClauses(values: string[]): string {
