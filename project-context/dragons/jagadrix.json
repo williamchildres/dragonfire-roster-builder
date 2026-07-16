@@ -5,11 +5,205 @@
   "rarity": "Rare",
   "breed": "Hunter",
   "rosterSourceStatus": "official-website",
-  "dataStatus": "official-metadata-only",
-  "lastVerified": "2026-06-23",
-  "profileCompleteness": "metadata-only",
+  "dataStatus": "community-verified",
+  "lastVerified": "2026-07-16",
+  "profileCompleteness": "detailed-abilities",
   "officialProfileUrl": "https://gotdragonfire.com/dragons/jagadrix/",
-  "abilities": [],
+  "abilities": [
+    {
+      "id": "jagadrix-cunning-whispers",
+      "kind": "command",
+      "name": "Cunning Whispers",
+      "abilityClass": "active",
+      "unlockStarRank": null,
+      "minimumDragonLevel": null,
+      "positionRequirement": null,
+      "verification": {
+        "status": "screenshot-verified",
+        "source": "Jagadrix Cunning Whispers screenshots",
+        "capturedAt": "2026-07-16",
+        "gameVersion": null,
+        "reviewedManually": true
+      },
+      "evidenceIds": [
+        "jagadrix-cunning-whispers-2026-07-16"
+      ],
+      "tags": [
+        "DEBUFF_INSTINCTS",
+        "DEBUFF_INITIATIVE",
+        "INITIATIVE_SCALING",
+        "SAME_LANE_TARGET",
+        "FIRE_DAMAGE",
+        "INTELLIGENCE_SCALING",
+        "SPECIFIC_ROUNDS",
+        "COMMAND_AUGMENTATION",
+        "PANIC_PAYOFF",
+        "ANY_LANE_TARGET"
+      ],
+      "rawDescription": "Each round: one 30% activation roll targets 1 enemy in the same lane. Reduce that same target's Instinct and Initiative by -15%, both enhanced by Jagadrix's Initiative, for 2 rounds. Same-lane targeting is battlefield-facing. Fallback with no valid same-lane enemy and repeated reduction stacking/refresh are unresolved.\n\nRounds 2, 5, and 8: deal Fire Damage to 1 enemy in the same lane at a +120% Damage Rate. Fire Damage scales with Jagadrix's Intelligence and is mitigated by target Initiative.\n\nAt 10 Stars, Echoes of Deceit augments Cunning Whispers. Round 1: choose the enemy with highest Instinct and reduce its Instinct and Initiative until end of combat, enhanced by Jagadrix's Initiative. This selection is separate from the base each-round activation. Rounds 3, 6, and 9: deal Fire Damage to all enemies that deal Tactical Damage, using Echoes of Deceit's current rate. Damage is doubled separately against each eligible target afflicted with Panic. The multiplier is 2x, and this does not add Tactical Damage to Jagadrix's Damage Profile."
+    },
+    {
+      "id": "jagadrix-hunters-wrath",
+      "kind": "trait",
+      "name": "Hunter's Wrath",
+      "abilityClass": "passive",
+      "unlockStarRank": 1,
+      "minimumDragonLevel": 16,
+      "positionRequirement": "vanguard",
+      "verification": {
+        "status": "screenshot-verified",
+        "source": "Jagadrix Hunter's Wrath screenshot",
+        "capturedAt": "2026-07-16",
+        "gameVersion": null,
+        "reviewedManually": true
+      },
+      "evidenceIds": [
+        "jagadrix-hunters-wrath-2026-07-16"
+      ],
+      "tags": [
+        "FIRE_DAMAGE_UP",
+        "STRENGTH_UP",
+        "BUFF_INITIATIVE",
+        "VANGUARD_REQUIRED",
+        "RIGHT_FLANK_TARGET",
+        "BUFF_SELF"
+      ],
+      "rawDescription": "At Dragon Level 16+ while Jagadrix is Vanguard: increase Jagadrix Fire Damage Dealt by +16%. Increase Strength and Initiative of the Right Flank ally by +20. Jagadrix's Fire increase is self-only."
+    },
+    {
+      "id": "jagadrix-enervate",
+      "kind": "habit",
+      "name": "Enervate",
+      "abilityClass": "passive",
+      "unlockStarRank": 2,
+      "minimumDragonLevel": null,
+      "positionRequirement": null,
+      "verification": {
+        "status": "screenshot-verified",
+        "source": "Jagadrix Enervate screenshot",
+        "capturedAt": "2026-07-16",
+        "gameVersion": null,
+        "reviewedManually": true
+      },
+      "evidenceIds": [
+        "jagadrix-enervate-2026-07-16"
+      ],
+      "tags": [
+        "TACTICAL_DAMAGE_DOWN",
+        "DAMAGE_DEALT_DOWN",
+        "ENEMY_DEBUFF"
+      ],
+      "rawDescription": "Start of combat: target 1 enemy that deals Tactical Damage and reduce that enemy's Tactical Damage Dealt until end of combat. This typed enemy suppression is not Weakened and is not allied Tactical support. Selection among multiple valid enemies is unresolved.\n\nProgression table (Tactical Damage Dealt):\nHabit Level 1: -8%\nHabit Level 2: -9.6%\nHabit Level 3: -11.2%\nHabit Level 4: -13.6%\nHabit Level 5: -16%\n\nPower: 250 / 550 / 900 / 1300 / 1800"
+    },
+    {
+      "id": "jagadrix-second-wind",
+      "kind": "habit",
+      "name": "Second Wind",
+      "abilityClass": "passive",
+      "unlockStarRank": 4,
+      "minimumDragonLevel": null,
+      "positionRequirement": null,
+      "verification": {
+        "status": "screenshot-verified",
+        "source": "Jagadrix Second Wind screenshot",
+        "capturedAt": "2026-07-16",
+        "gameVersion": null,
+        "reviewedManually": true
+      },
+      "evidenceIds": [
+        "jagadrix-second-wind-2026-07-16"
+      ],
+      "tags": [
+        "DAMAGE_DEALT_UP",
+        "RECOVERY",
+        "NULLIFY_RECOVERY",
+        "BUFF_SELF",
+        "SPECIFIC_ROUNDS"
+      ],
+      "rawDescription": "Round 6, resolve in this order: (1) increase Jagadrix Damage Dealt until end of combat; (2) apply Recovery to Jagadrix; then (3) apply Nullify Recovery to Jagadrix until end of combat. Nullify Recovery prevents receiving later Recovery. The immediate self-Recovery resolves before Nullify Recovery. All effects are self-only and non-scoring. Timing with external Recovery amplification, cleanse/removal/immunity behavior, and already-restored-troop behavior are unresolved.\n\nProgression table (Damage Dealt; Recovery Rate):\nHabit Level 1: +10%; +150%\nHabit Level 2: +12%; +180%\nHabit Level 3: +14%; +210%\nHabit Level 4: +17%; +255%\nHabit Level 5: +20%; +300%\n\nPower: 250 / 550 / 900 / 1300 / 1800"
+    },
+    {
+      "id": "jagadrix-whispering-sabotage",
+      "kind": "habit",
+      "name": "Whispering Sabotage",
+      "abilityClass": "passive",
+      "unlockStarRank": 6,
+      "minimumDragonLevel": null,
+      "positionRequirement": null,
+      "verification": {
+        "status": "screenshot-verified",
+        "source": "Jagadrix Whispering Sabotage screenshot",
+        "capturedAt": "2026-07-16",
+        "gameVersion": null,
+        "reviewedManually": true
+      },
+      "evidenceIds": [
+        "jagadrix-whispering-sabotage-2026-07-16"
+      ],
+      "tags": [
+        "WEAKENED",
+        "DAMAGE_DEALT_DOWN",
+        "SAME_LANE_TARGET",
+        "ENEMY_DEBUFF"
+      ],
+      "rawDescription": "Each round: chance to apply Weakened (-10% Damage Dealt) to 1 enemy in the same lane for 2 rounds. Same-lane targeting is battlefield-facing. Weakened does not satisfy Control.\n\nProgression table (Weakened chance):\nHabit Level 1: 25%\nHabit Level 2: 30%\nHabit Level 3: 35%\nHabit Level 4: 42.5%\nHabit Level 5: 50%\n\nPower: 250 / 550 / 900 / 1300 / 1800"
+    },
+    {
+      "id": "jagadrix-quick-witted",
+      "kind": "habit",
+      "name": "Quick-Witted",
+      "abilityClass": "passive",
+      "unlockStarRank": 8,
+      "minimumDragonLevel": null,
+      "positionRequirement": null,
+      "verification": {
+        "status": "screenshot-verified",
+        "source": "Jagadrix Quick-Witted screenshot",
+        "capturedAt": "2026-07-16",
+        "gameVersion": null,
+        "reviewedManually": true
+      },
+      "evidenceIds": [
+        "jagadrix-quick-witted-2026-07-16"
+      ],
+      "tags": [
+        "INTELLIGENCE_UP",
+        "BUFF_INITIATIVE",
+        "BUFF_SELF"
+      ],
+      "rawDescription": "Start of combat until end of combat: increase Jagadrix Intelligence and Initiative. Self-only.\n\nProgression table (Intelligence and Initiative):\nHabit Level 1: +12.5%\nHabit Level 2: +15%\nHabit Level 3: +17.5%\nHabit Level 4: +21.25%\nHabit Level 5: +25%\n\nPower: 250 / 550 / 900 / 1300 / 1800"
+    },
+    {
+      "id": "jagadrix-echoes-of-deceit",
+      "kind": "habit",
+      "name": "Echoes of Deceit",
+      "abilityClass": "passive",
+      "unlockStarRank": 10,
+      "minimumDragonLevel": null,
+      "positionRequirement": null,
+      "verification": {
+        "status": "screenshot-verified",
+        "source": "Jagadrix Echoes of Deceit screenshot",
+        "capturedAt": "2026-07-16",
+        "gameVersion": null,
+        "reviewedManually": true
+      },
+      "evidenceIds": [
+        "jagadrix-echoes-of-deceit-2026-07-16"
+      ],
+      "tags": [
+        "COMMAND_AUGMENTATION",
+        "DEBUFF_INSTINCTS",
+        "DEBUFF_INITIATIVE",
+        "INITIATIVE_SCALING",
+        "FIRE_DAMAGE",
+        "PANIC_PAYOFF",
+        "SPECIFIC_ROUNDS",
+        "ANY_LANE_TARGET"
+      ],
+      "rawDescription": "Augments Cunning Whispers. Round 1: independently select the enemy with the highest Instinct and reduce its Instinct and Initiative until end of combat, enhanced by Jagadrix's Initiative. Rounds 3, 6, and 9: deal Fire Damage to all enemies that deal Tactical Damage. Double damage separately against each eligible target with Panic. Equal-highest-Instinct tie-breaking and overlap/stacking with the base Round 1 reductions are unresolved.\n\nProgression table (Instinct and Initiative; Fire Damage Rate):\nHabit Level 1: -6%; +30%\nHabit Level 2: -7.8%; +39%\nHabit Level 3: -9.6%; +48%\nHabit Level 4: -12%; +60%\nHabit Level 5: -15%; +75%\n\nPower: 250 / 580 / 1000 / 1600 / 2300"
+    }
+  ],
   "affinities": {
     "Cavalry": "unknown",
     "Shieldbearers": "unknown",
@@ -38,9 +232,45 @@
       "capturedAt": "2026-06-23",
       "gameVersion": null,
       "reviewedManually": true
+    },
+    "command": {
+      "status": "screenshot-verified",
+      "source": "Jagadrix Cunning Whispers screenshots",
+      "capturedAt": "2026-07-16",
+      "gameVersion": null,
+      "reviewedManually": true
+    },
+    "trait": {
+      "status": "screenshot-verified",
+      "source": "Jagadrix Hunter's Wrath screenshot",
+      "capturedAt": "2026-07-16",
+      "gameVersion": null,
+      "reviewedManually": true
+    },
+    "habits": {
+      "status": "screenshot-verified",
+      "source": "Jagadrix Habit screenshots",
+      "capturedAt": "2026-07-16",
+      "gameVersion": null,
+      "reviewedManually": true
+    },
+    "affinities": {
+      "status": "unknown",
+      "source": "Affinity icon was not text-verified",
+      "capturedAt": "2026-07-16",
+      "gameVersion": null,
+      "reviewedManually": true
     }
   },
-  "evidenceIds": [],
-  "simpleProfileId": null,
-  "simpleProfileStatus": "metadata-only-unmapped"
+  "evidenceIds": [
+    "jagadrix-cunning-whispers-2026-07-16",
+    "jagadrix-echoes-of-deceit-2026-07-16",
+    "jagadrix-enervate-2026-07-16",
+    "jagadrix-hunters-wrath-2026-07-16",
+    "jagadrix-quick-witted-2026-07-16",
+    "jagadrix-second-wind-2026-07-16",
+    "jagadrix-whispering-sabotage-2026-07-16"
+  ],
+  "simpleProfileId": "jagadrix",
+  "simpleProfileStatus": "curated"
 }

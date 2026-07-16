@@ -5,11 +5,205 @@
   "rarity": "Rare",
   "breed": "Sentinel",
   "rosterSourceStatus": "official-website",
-  "dataStatus": "official-metadata-only",
-  "lastVerified": "2026-06-23",
-  "profileCompleteness": "metadata-only",
+  "dataStatus": "community-verified",
+  "lastVerified": "2026-07-16",
+  "profileCompleteness": "detailed-abilities",
   "officialProfileUrl": "https://gotdragonfire.com/dragons/shimmer/",
-  "abilities": [],
+  "abilities": [
+    {
+      "id": "shimmer-unbreakable-loyalty",
+      "kind": "command",
+      "name": "Unbreakable Loyalty",
+      "abilityClass": "active",
+      "unlockStarRank": null,
+      "minimumDragonLevel": null,
+      "positionRequirement": null,
+      "verification": {
+        "status": "screenshot-verified",
+        "source": "Shimmer Unbreakable Loyalty screenshots",
+        "capturedAt": "2026-07-16",
+        "gameVersion": null,
+        "reviewedManually": true
+      },
+      "evidenceIds": [
+        "shimmer-unbreakable-loyalty-2026-07-16"
+      ],
+      "tags": [
+        "BUFF_STRENGTH",
+        "BUFF_INITIATIVE",
+        "HIGHEST_STRENGTH_TARGET",
+        "TACTICAL_DAMAGE",
+        "ENHANCED_BY_INSTINCT",
+        "SPECIFIC_ROUNDS",
+        "ADJACENT_TARGET",
+        "RECOVERY",
+        "RESISTANCE_PAYOFF",
+        "COMMAND_AUGMENTATION",
+        "OTHER_ALLIES_TARGET"
+      ],
+      "rawDescription": "Each round: one 30% activation roll. On success, select the other ally with the highest Strength, then increase that same ally's Strength by +18% and Initiative by +9%, both enhanced by Shimmer's Instinct, for 2 rounds. Shimmer is excluded. Equal-highest-Strength tie-breaking and repeated refresh/stacking are unresolved.\n\nRounds 2, 4, 7, and 9: deal Tactical Damage to 2 enemies within adjacency at a +50% Damage Rate. Tactical Damage scales with Shimmer's Instinct and is mitigated by target Intelligence.\n\nAt 6+ Stars, Loyal Shield augments Unbreakable Loyalty on rounds 2, 4, 7, and 9 with Recovery to 2 other allies in any lane. Recovery uses Loyal Shield's current base rate, is enhanced by Shimmer's Instinct, and is doubled separately for each recipient that has Resistance. One recipient's Resistance does not affect the other recipient."
+    },
+    {
+      "id": "shimmer-sentinels-presence",
+      "kind": "trait",
+      "name": "Sentinel's Presence",
+      "abilityClass": "passive",
+      "unlockStarRank": 1,
+      "minimumDragonLevel": 16,
+      "positionRequirement": "vanguard",
+      "verification": {
+        "status": "screenshot-verified",
+        "source": "Shimmer Sentinel's Presence screenshot",
+        "capturedAt": "2026-07-16",
+        "gameVersion": null,
+        "reviewedManually": true
+      },
+      "evidenceIds": [
+        "shimmer-sentinels-presence-2026-07-16"
+      ],
+      "tags": [
+        "RECOVERY_DEALT_UP",
+        "INSTINCT_UP",
+        "FIRE_DAMAGE_UP",
+        "VANGUARD_REQUIRED",
+        "LEFT_FLANK_TARGET",
+        "BUFF_SELF"
+      ],
+      "rawDescription": "At Dragon Level 16+ while Shimmer is Vanguard: increase Shimmer Recovery Dealt by +15% and Instinct by +25. Increase Fire Damage Dealt of the Left Flank ally by +16%. Shimmer's Recovery and Instinct increases are self-only."
+    },
+    {
+      "id": "shimmer-crushing-force",
+      "kind": "habit",
+      "name": "Crushing Force",
+      "abilityClass": "passive",
+      "unlockStarRank": 2,
+      "minimumDragonLevel": null,
+      "positionRequirement": null,
+      "verification": {
+        "status": "screenshot-verified",
+        "source": "Shimmer Crushing Force screenshot",
+        "capturedAt": "2026-07-16",
+        "gameVersion": null,
+        "reviewedManually": true
+      },
+      "evidenceIds": [
+        "shimmer-crushing-force-2026-07-16"
+      ],
+      "tags": [
+        "PHYSICAL_DAMAGE_UP",
+        "TACTICAL_DAMAGE_UP",
+        "EXCLUDES_BASIC_ATTACKS",
+        "ANY_LANE_TARGET",
+        "LEFT_FLANK_TARGET",
+        "RIGHT_FLANK_TARGET",
+        "BUFF_ALLIES"
+      ],
+      "rawDescription": "Start of Round 1 for 3 rounds, make two independent ally selections. Physical branch: increase Physical Damage Dealt from Active Commands and Habits of 1 Ally in any lane, prioritizing Left Flank; Basic Attacks are excluded. Tactical branch: increase Tactical Damage Dealt of 1 Ally in any lane, prioritizing Right Flank. Ally does not exclude Shimmer, distinct targets are not required, and a branch may select Shimmer in the prioritized position. Fallback after a prioritized target becomes unavailable and convergence during fallback are unresolved.\n\nProgression table (both Damage Dealt increases):\nHabit Level 1: +9%\nHabit Level 2: +10.8%\nHabit Level 3: +12.6%\nHabit Level 4: +15.3%\nHabit Level 5: +18%\n\nPower: 250 / 550 / 900 / 1300 / 1800"
+    },
+    {
+      "id": "shimmer-dragons-insight",
+      "kind": "habit",
+      "name": "Dragon's Insight",
+      "abilityClass": "passive",
+      "unlockStarRank": 4,
+      "minimumDragonLevel": null,
+      "positionRequirement": null,
+      "verification": {
+        "status": "screenshot-verified",
+        "source": "Shimmer Dragon's Insight screenshot",
+        "capturedAt": "2026-07-16",
+        "gameVersion": null,
+        "reviewedManually": true
+      },
+      "evidenceIds": [
+        "shimmer-dragons-insight-2026-07-16"
+      ],
+      "tags": [
+        "DAMAGE_RECEIVED_DOWN",
+        "INSTINCT_UP",
+        "BUFF_SELF"
+      ],
+      "rawDescription": "Start of combat until end of combat: reduce Shimmer Damage Received and increase Shimmer Instinct. Self-only.\n\nProgression table (Damage Received; Instinct):\nHabit Level 1: -4%; +5%\nHabit Level 2: -4.8%; +6%\nHabit Level 3: -5.6%; +7%\nHabit Level 4: -6.8%; +8.5%\nHabit Level 5: -8%; +10%\n\nPower: 250 / 550 / 900 / 1300 / 1800"
+    },
+    {
+      "id": "shimmer-loyal-shield",
+      "kind": "habit",
+      "name": "Loyal Shield",
+      "abilityClass": "passive",
+      "unlockStarRank": 6,
+      "minimumDragonLevel": null,
+      "positionRequirement": null,
+      "verification": {
+        "status": "screenshot-verified",
+        "source": "Shimmer Loyal Shield screenshot",
+        "capturedAt": "2026-07-16",
+        "gameVersion": null,
+        "reviewedManually": true
+      },
+      "evidenceIds": [
+        "shimmer-loyal-shield-2026-07-16"
+      ],
+      "tags": [
+        "COMMAND_AUGMENTATION",
+        "RECOVERY",
+        "RESISTANCE_PAYOFF",
+        "OTHER_ALLIES_TARGET",
+        "ENHANCED_BY_INSTINCT"
+      ],
+      "rawDescription": "Augments Unbreakable Loyalty on rounds 2, 4, 7, and 9: apply Recovery to 2 other allies in any lane, enhanced by Shimmer's Instinct. Double the current base rate separately for each recipient with Resistance.\n\nProgression table (base Recovery Rate; doubled with Resistance):\nHabit Level 1: 30%; 60%\nHabit Level 2: 36%; 72%\nHabit Level 3: 42%; 84%\nHabit Level 4: 51%; 102%\nHabit Level 5: 60%; 120%\n\nPower: 250 / 550 / 900 / 1300 / 1800"
+    },
+    {
+      "id": "shimmer-unbroken-devotion",
+      "kind": "habit",
+      "name": "Unbroken Devotion",
+      "abilityClass": "passive",
+      "unlockStarRank": 8,
+      "minimumDragonLevel": null,
+      "positionRequirement": null,
+      "verification": {
+        "status": "screenshot-verified",
+        "source": "Shimmer Unbroken Devotion screenshot",
+        "capturedAt": "2026-07-16",
+        "gameVersion": null,
+        "reviewedManually": true
+      },
+      "evidenceIds": [
+        "shimmer-unbroken-devotion-2026-07-16"
+      ],
+      "tags": [
+        "RECOVERY_RECEIVED_UP",
+        "OTHER_ALLIES_TARGET",
+        "BUFF_ALLIES"
+      ],
+      "rawDescription": "Start of combat until end of combat: increase Recovery Received of 2 other allies in any lane. Shimmer is excluded.\n\nProgression table (Recovery Received):\nHabit Level 1: +15%\nHabit Level 2: +18%\nHabit Level 3: +21%\nHabit Level 4: +25.5%\nHabit Level 5: +30%\n\nPower: 250 / 550 / 900 / 1300 / 1800"
+    },
+    {
+      "id": "shimmer-sneak-attack",
+      "kind": "habit",
+      "name": "Sneak Attack",
+      "abilityClass": "passive",
+      "unlockStarRank": 10,
+      "minimumDragonLevel": null,
+      "positionRequirement": null,
+      "verification": {
+        "status": "screenshot-verified",
+        "source": "Shimmer Sneak Attack screenshot",
+        "capturedAt": "2026-07-16",
+        "gameVersion": null,
+        "reviewedManually": true
+      },
+      "evidenceIds": [
+        "shimmer-sneak-attack-2026-07-16"
+      ],
+      "tags": [
+        "PHYSICAL_DAMAGE_UP",
+        "FIRST_STRIKE",
+        "HIGHEST_STRENGTH_TARGET",
+        "OTHER_ALLIES_TARGET"
+      ],
+      "rawDescription": "Each round: make one activation roll. On success, select the other ally with the highest Strength, increase that same ally's Physical Damage Dealt by +10%, and grant that same ally First-Strike for 2 rounds. First-Strike makes the recipient attack before all other combatants each round. Shimmer is excluded and equal-highest-Strength tie-breaking is unresolved.\n\nProgression table (activation chance):\nHabit Level 1: 14%\nHabit Level 2: 18.2%\nHabit Level 3: 22.4%\nHabit Level 4: 28%\nHabit Level 5: 35%\n\nPower: 250 / 580 / 1000 / 1600 / 2300"
+    }
+  ],
   "affinities": {
     "Cavalry": "unknown",
     "Shieldbearers": "unknown",
@@ -38,9 +232,45 @@
       "capturedAt": "2026-06-23",
       "gameVersion": null,
       "reviewedManually": true
+    },
+    "command": {
+      "status": "screenshot-verified",
+      "source": "Shimmer Unbreakable Loyalty screenshots",
+      "capturedAt": "2026-07-16",
+      "gameVersion": null,
+      "reviewedManually": true
+    },
+    "trait": {
+      "status": "screenshot-verified",
+      "source": "Shimmer Sentinel's Presence screenshot",
+      "capturedAt": "2026-07-16",
+      "gameVersion": null,
+      "reviewedManually": true
+    },
+    "habits": {
+      "status": "screenshot-verified",
+      "source": "Shimmer Habit screenshots",
+      "capturedAt": "2026-07-16",
+      "gameVersion": null,
+      "reviewedManually": true
+    },
+    "affinities": {
+      "status": "unknown",
+      "source": "Affinity icons were not text-verified",
+      "capturedAt": "2026-07-16",
+      "gameVersion": null,
+      "reviewedManually": true
     }
   },
-  "evidenceIds": [],
-  "simpleProfileId": null,
-  "simpleProfileStatus": "metadata-only-unmapped"
+  "evidenceIds": [
+    "shimmer-crushing-force-2026-07-16",
+    "shimmer-dragons-insight-2026-07-16",
+    "shimmer-loyal-shield-2026-07-16",
+    "shimmer-sentinels-presence-2026-07-16",
+    "shimmer-sneak-attack-2026-07-16",
+    "shimmer-unbreakable-loyalty-2026-07-16",
+    "shimmer-unbroken-devotion-2026-07-16"
+  ],
+  "simpleProfileId": "shimmer",
+  "simpleProfileStatus": "curated"
 }

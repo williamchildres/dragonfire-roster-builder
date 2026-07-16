@@ -90,6 +90,18 @@
     "verification": "verified"
   },
   {
+    "id": "steady-erosion",
+    "term": "Steady Erosion",
+    "definition": "Solstryker applies one stack each round to all enemies, up to 10 stacks. Each stack reduces Strength until end of combat; exact enhancement and removal behavior remain unresolved.",
+    "verification": "verified"
+  },
+  {
+    "id": "nullify-recovery",
+    "term": "Nullify Recovery",
+    "definition": "Prevents the affected target from receiving Recovery. Jagadrix applies it to self after Second Wind's immediate Recovery resolves.",
+    "verification": "verified"
+  },
+  {
     "id": "bulwark",
     "term": "Bulwark",
     "definition": "Stack status. Vhagar verifies a maximum of five stacks that last until end of combat, with per-stack Strength increase and Physical/Tactical Damage Received reduction.",
