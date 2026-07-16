@@ -5,11 +5,207 @@
   "rarity": "Rare",
   "breed": "Champion",
   "rosterSourceStatus": "official-website",
-  "dataStatus": "official-metadata-only",
-  "lastVerified": "2026-06-23",
-  "profileCompleteness": "metadata-only",
+  "dataStatus": "community-verified",
+  "lastVerified": "2026-07-16",
+  "profileCompleteness": "detailed-abilities",
   "officialProfileUrl": "https://gotdragonfire.com/dragons/nyrena/",
-  "abilities": [],
+  "abilities": [
+    {
+      "id": "nyrena-undermine",
+      "kind": "command",
+      "name": "Undermine",
+      "abilityClass": "active",
+      "unlockStarRank": null,
+      "minimumDragonLevel": null,
+      "positionRequirement": null,
+      "verification": {
+        "status": "screenshot-verified",
+        "source": "Nyrena Undermine screenshots",
+        "capturedAt": "2026-07-16",
+        "gameVersion": null,
+        "reviewedManually": true
+      },
+      "evidenceIds": [
+        "nyrena-undermine-2026-07-16"
+      ],
+      "tags": [
+        "PHYSICAL_DAMAGE_DEALT_DOWN",
+        "FIRE_DAMAGE",
+        "TACTICAL_DAMAGE",
+        "INTELLIGENCE_SCALING",
+        "ENHANCED_BY_INSTINCT",
+        "ANY_LANE_TARGET",
+        "SAME_LANE_TARGET",
+        "SPECIFIC_ROUNDS",
+        "MULTI_SCHEDULE_COMMAND",
+        "ENEMY_DEBUFF"
+      ],
+      "rawDescription": "Each round: one 10% activation affects up to 3 enemies in any lane, reducing Physical Damage Dealt by -10% for 1 round, or 2 rounds against a target afflicted with Burn. Burn improves duration only; Nyrena does not apply Burn, and Fire Damage does not imply Burn. The Command summary and detailed heading say Physical Damage Dealt, while the detailed body conflicts by saying Physical Damage Received by -10%; Dealt is canonical. Group-roll behavior, fewer-than-three-enemy behavior, Burn evaluation timing, and suppression refresh/stacking remain unresolved.\n\nRounds 1 and 3: deal Fire Damage to 3 enemies in any lane at a +20% Damage Rate, scaling with Intelligence and mitigated by target Initiative.\n\nRounds 5, 7, and 9: deal Tactical Damage to 1 enemy in the same lane at a +80% Damage Rate, scaling with Instinct and mitigated by target Intelligence. Same-lane fallback remains unresolved."
+    },
+    {
+      "id": "nyrena-champions-brilliance",
+      "kind": "trait",
+      "name": "Champion's Brilliance",
+      "abilityClass": "passive",
+      "unlockStarRank": null,
+      "minimumDragonLevel": 16,
+      "positionRequirement": "vanguard",
+      "verification": {
+        "status": "screenshot-verified",
+        "source": "Nyrena Champion's Brilliance screenshot",
+        "capturedAt": "2026-07-16",
+        "gameVersion": null,
+        "reviewedManually": true
+      },
+      "evidenceIds": [
+        "nyrena-champions-brilliance-2026-07-16"
+      ],
+      "tags": [
+        "STRENGTH_UP",
+        "INTELLIGENCE_UP",
+        "INSTINCT_UP",
+        "BUFF_SELF",
+        "DAMAGE_RECEIVED_DOWN",
+        "BUFF_ALLIES",
+        "VANGUARD_REQUIRED",
+        "RIGHT_FLANK_TARGET"
+      ],
+      "rawDescription": "At Dragon Level 16+ while Nyrena is Vanguard: increase Nyrena Strength, Intelligence, and Instinct by +15 each. Reduce Damage Received by the Right Flank ally by -8%. The self stats create no allied support; the Right Flank effect is generic defense, not offensive Physical, Fire, or Tactical support."
+    },
+    {
+      "id": "nyrena-battle-dread",
+      "kind": "habit",
+      "name": "Battle Dread",
+      "abilityClass": "passive",
+      "unlockStarRank": 2,
+      "minimumDragonLevel": null,
+      "positionRequirement": null,
+      "verification": {
+        "status": "screenshot-verified",
+        "source": "Nyrena Battle Dread screenshot",
+        "capturedAt": "2026-07-16",
+        "gameVersion": null,
+        "reviewedManually": true
+      },
+      "evidenceIds": [
+        "nyrena-battle-dread-2026-07-16"
+      ],
+      "tags": [
+        "DEBUFF_STRENGTH",
+        "DEBUFF_INITIATIVE",
+        "INTELLIGENCE_SCALING",
+        "ENEMY_DEBUFF",
+        "ANY_LANE_TARGET"
+      ],
+      "rawDescription": "Start of combat until end: reduce Strength and Initiative of the same 3 enemies, enhanced by Nyrena's Intelligence. This is direct battlefield suppression with no activation roll and is not a named status. The enhancement formula remains unresolved.\n\nProgression (Strength and Initiative): Habit Level 1: -4%; Level 2: -4.8%; Level 3: -5.6%; Level 4: -6.8%; Level 5: -8%.\n\nPower: 250 / 550 / 900 / 1300 / 1800"
+    },
+    {
+      "id": "nyrena-mindful-synergy",
+      "kind": "habit",
+      "name": "Mindful Synergy",
+      "abilityClass": "passive",
+      "unlockStarRank": 4,
+      "minimumDragonLevel": null,
+      "positionRequirement": null,
+      "verification": {
+        "status": "screenshot-verified",
+        "source": "Nyrena Mindful Synergy screenshot",
+        "capturedAt": "2026-07-16",
+        "gameVersion": null,
+        "reviewedManually": true
+      },
+      "evidenceIds": [
+        "nyrena-mindful-synergy-2026-07-16"
+      ],
+      "tags": [
+        "INTELLIGENCE_UP",
+        "INSTINCT_UP",
+        "INITIATIVE_SCALING",
+        "BUFF_ALLIES",
+        "ANY_LANE_TARGET"
+      ],
+      "rawDescription": "Start of combat until end: increase Intelligence and Instinct of the same 3 Allies, including Nyrena and both teammates, enhanced by Nyrena's Initiative. Preserve the self portion without a self relationship. The enhancement formula remains unresolved.\n\nProgression (Intelligence and Instinct): Habit Level 1: +4%; Level 2: +4.8%; Level 3: +5.6%; Level 4: +6.8%; Level 5: +8%.\n\nPower: 250 / 550 / 900 / 1300 / 1800"
+    },
+    {
+      "id": "nyrena-deepen-the-breach",
+      "kind": "habit",
+      "name": "Deepen the Breach",
+      "abilityClass": "passive",
+      "unlockStarRank": 6,
+      "minimumDragonLevel": null,
+      "positionRequirement": null,
+      "verification": {
+        "status": "screenshot-verified",
+        "source": "Nyrena Deepen the Breach screenshot",
+        "capturedAt": "2026-07-16",
+        "gameVersion": null,
+        "reviewedManually": true
+      },
+      "evidenceIds": [
+        "nyrena-deepen-the-breach-2026-07-16"
+      ],
+      "tags": [
+        "FIRE_DAMAGE_UP",
+        "BUFF_SELF",
+        "BUFF_ALLIES",
+        "OTHER_ALLIES_TARGET",
+        "ADJACENT_TARGET",
+        "SPECIFIC_ROUNDS"
+      ],
+      "rawDescription": "Start of Round 1: increase Nyrena Fire Damage Dealt for 5 rounds. Start of Round 6: increase Fire Damage Dealt of 1 other adjacent Ally for 5 rounds. From a flank, the outward recipient is Vanguard. From Vanguard, exactly 1 flank recipient is selected but priority remains unresolved; do not guarantee both flanks. After combat, increase Nyrena Tile Damage Dealt to tile durability. Tile Damage mode details are unresolved and non-scoring.\n\nProgression (Tile Damage; self Fire Damage; ally Fire Damage): Habit Level 1: +10%; +8%; +12%. Level 2: +12%; +9.6%; +14.4%. Level 3: +14%; +11.2%; +16.8%. Level 4: +17%; +13.6%; +20.4%. Level 5: +20%; +16%; +24%.\n\nPower: 250 / 550 / 900 / 1300 / 1800"
+    },
+    {
+      "id": "nyrena-dragons-ire",
+      "kind": "habit",
+      "name": "Dragon's Ire",
+      "abilityClass": "passive",
+      "unlockStarRank": 8,
+      "minimumDragonLevel": null,
+      "positionRequirement": null,
+      "verification": {
+        "status": "screenshot-verified",
+        "source": "Nyrena Dragon's Ire screenshot",
+        "capturedAt": "2026-07-16",
+        "gameVersion": null,
+        "reviewedManually": true
+      },
+      "evidenceIds": [
+        "nyrena-dragons-ire-2026-07-16"
+      ],
+      "tags": [
+        "TACTICAL_DAMAGE_UP",
+        "FIRE_DAMAGE_UP",
+        "BUFF_SELF"
+      ],
+      "rawDescription": "Start of combat until end: increase Nyrena Tactical Damage Dealt and Fire Damage Dealt. Entirely self-only.\n\nProgression (Tactical and Fire Damage Dealt): Habit Level 1: +4%; Level 2: +4.8%; Level 3: +5.6%; Level 4: +6.8%; Level 5: +8%.\n\nPower: 250 / 550 / 900 / 1300 / 1800"
+    },
+    {
+      "id": "nyrena-the-long-siege",
+      "kind": "habit",
+      "name": "The Long Siege",
+      "abilityClass": "passive",
+      "unlockStarRank": 10,
+      "minimumDragonLevel": null,
+      "positionRequirement": null,
+      "verification": {
+        "status": "screenshot-verified",
+        "source": "Nyrena The Long Siege screenshot",
+        "capturedAt": "2026-07-16",
+        "gameVersion": null,
+        "reviewedManually": true
+      },
+      "evidenceIds": [
+        "nyrena-the-long-siege-2026-07-16"
+      ],
+      "tags": [
+        "PHYSICAL_DAMAGE_RECEIVED_DOWN",
+        "BUFF_ALLIES",
+        "ANY_LANE_TARGET",
+        "SPECIFIC_ROUNDS"
+      ],
+      "rawDescription": "At the start of rounds 6, 7, 8, 9, and 10: reduce Physical Damage Received by 3 Allies, including Nyrena and both teammates, until the end of the current round. Double the magnitude while Defending; Defending changes magnitude, not duration, and is not assumed always active. This is timed defensive support, not offensive Physical support. Defending and defensive stacking remain unresolved.\n\nProgression (base; while Defending): Habit Level 1: -5%; -10%. Level 2: -6.5%; -13%. Level 3: -8%; -16%. Level 4: -10%; -20%. Level 5: -12.5%; -25%.\n\nPower: 250 / 580 / 1000 / 1600 / 2300"
+    }
+  ],
   "affinities": {
     "Cavalry": "unknown",
     "Shieldbearers": "unknown",
@@ -38,9 +234,45 @@
       "capturedAt": "2026-06-23",
       "gameVersion": null,
       "reviewedManually": true
+    },
+    "command": {
+      "status": "screenshot-verified",
+      "source": "Nyrena Undermine screenshots",
+      "capturedAt": "2026-07-16",
+      "gameVersion": null,
+      "reviewedManually": true
+    },
+    "trait": {
+      "status": "screenshot-verified",
+      "source": "Nyrena Champion's Brilliance screenshot",
+      "capturedAt": "2026-07-16",
+      "gameVersion": null,
+      "reviewedManually": true
+    },
+    "habits": {
+      "status": "screenshot-verified",
+      "source": "Nyrena Habit screenshots",
+      "capturedAt": "2026-07-16",
+      "gameVersion": null,
+      "reviewedManually": true
+    },
+    "affinities": {
+      "status": "unknown",
+      "source": "Affinity icons were not text-verified",
+      "capturedAt": "2026-07-16",
+      "gameVersion": null,
+      "reviewedManually": true
     }
   },
-  "evidenceIds": [],
-  "simpleProfileId": null,
-  "simpleProfileStatus": "metadata-only-unmapped"
+  "evidenceIds": [
+    "nyrena-battle-dread-2026-07-16",
+    "nyrena-champions-brilliance-2026-07-16",
+    "nyrena-deepen-the-breach-2026-07-16",
+    "nyrena-dragons-ire-2026-07-16",
+    "nyrena-mindful-synergy-2026-07-16",
+    "nyrena-the-long-siege-2026-07-16",
+    "nyrena-undermine-2026-07-16"
+  ],
+  "simpleProfileId": "nyrena",
+  "simpleProfileStatus": "curated"
 }

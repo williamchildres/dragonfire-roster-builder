@@ -61,6 +61,8 @@ describe('Dragonfire Lab app', () => {
     expect(screen.getByLabelText(/^rarity$/i)).toBeInTheDocument();
     expect(screen.getByLabelText(/^breed$/i)).toBeInTheDocument();
     expect(screen.getByLabelText(/^verification$/i)).toBeInTheDocument();
+    expect(screen.getByLabelText(/^verification$/i)).not.toHaveTextContent('Metadata Only');
+    expect(screen.getByRole('dialog', { name: /add dragons to your roster/i })).not.toHaveTextContent('Metadata Only');
 
     await user.selectOptions(screen.getByLabelText(/^rarity$/i), 'Rare');
     expect(screen.getByRole('heading', { name: 'Solstryker' })).toBeInTheDocument();
@@ -70,11 +72,11 @@ describe('Dragonfire Lab app', () => {
     expect(screen.getByRole('heading', { name: 'Solstryker' })).toBeInTheDocument();
     expect(screen.queryByRole('heading', { name: 'Shimmer' })).not.toBeInTheDocument();
 
-    await user.selectOptions(screen.getByLabelText(/^verification$/i), 'official-metadata-only');
+    await user.selectOptions(screen.getByLabelText(/^verification$/i), 'community-verified');
     expect(screen.getByRole('heading', { name: 'Nyrena' })).toBeInTheDocument();
     const nyrenaRow = screen.getByRole('heading', { name: 'Nyrena' }).closest('article');
     expect(nyrenaRow).not.toBeNull();
-    expect(within(nyrenaRow as HTMLElement).getByText(/ability details not verified/i)).toBeInTheDocument();
+    expect(within(nyrenaRow as HTMLElement).getByText('Verified')).toBeInTheDocument();
   });
 
   it('shows a named success banner when Feskar is added from the modal', async () => {
@@ -202,8 +204,8 @@ describe('Dragonfire Lab app', () => {
     expect(screen.queryByRole('heading', { name: 'Compare Verified Dragons' })).not.toBeInTheDocument();
     expect(screen.queryByRole('button', { name: /compare verified dragons/i })).not.toBeInTheDocument();
 
-    expect(screen.getByText(/28 \/ 31 dragons mapped/i)).toBeInTheDocument();
-    expect(screen.getByText('90%')).toBeInTheDocument();
+    expect(screen.getByText(/31 \/ 31 dragons mapped/i)).toBeInTheDocument();
+    expect(screen.getByText('100%')).toBeInTheDocument();
 
     expect(screen.getByRole('heading', { name: 'Profile coverage' })).toBeInTheDocument();
     expect(screen.getByLabelText('Coverage by rarity')).toBeInTheDocument();
@@ -213,21 +215,21 @@ describe('Dragonfire Lab app', () => {
     expect(screen.getByText('Rare')).toBeInTheDocument();
     expect(screen.getByText('9 / 9 mapped')).toBeInTheDocument();
     expect(screen.getByText('10 / 10 mapped')).toBeInTheDocument();
-    expect(screen.getByText('9 / 12 mapped')).toBeInTheDocument();
+    expect(screen.getByText('12 / 12 mapped')).toBeInTheDocument();
     expect(document.querySelectorAll('.coverage-marker')).toHaveLength(3);
     expect(document.querySelector('.coverage-marker.rarity-legendary')).toBeInTheDocument();
     expect(document.querySelector('.coverage-marker.rarity-epic')).toBeInTheDocument();
     expect(document.querySelector('.coverage-marker.rarity-rare')).toBeInTheDocument();
-    expect(screen.getByText('Legendary and Epic profiles are fully mapped. Rare mapping is underway.')).toBeInTheDocument();
+    expect(screen.getByText('Legendary, Epic, and Rare profiles are fully mapped.')).toBeInTheDocument();
 
     expect(screen.queryByRole('heading', { name: 'Detailed profile coverage' })).not.toBeInTheDocument();
     expect(screen.queryByRole('heading', { name: 'Legendary coverage' })).not.toBeInTheDocument();
     expect(screen.queryByRole('heading', { name: 'Epic coverage' })).not.toBeInTheDocument();
     expect(screen.queryByRole('heading', { name: 'Rare coverage' })).not.toBeInTheDocument();
 
-    const latestUpdate = screen.getByRole('heading', { name: /latest release — v0\.6\.7/i }).closest('.latest-update-panel');
+    const latestUpdate = screen.getByRole('heading', { name: /latest release — v0\.6\.8/i }).closest('.latest-update-panel');
     expect(latestUpdate).not.toBeNull();
-    expect(latestUpdate).toHaveTextContent('Bevlorin, Shadowrend, and Thunderstrike added with verified ability data and curated profiles.');
+    expect(latestUpdate).toHaveTextContent('Vesper, Nyrena, and Dawnseeker complete verified ability data and curated profiles for all 31 dragons.');
 
     expect(screen.getByText(/No login is required\./i)).toBeInTheDocument();
     expect(screen.getByRole('heading', { name: 'Private by design' })).toBeInTheDocument();
@@ -356,7 +358,7 @@ describe('Dragonfire Lab app', () => {
     expect(within(dialog).queryByRole('heading', { name: 'Evidence & technical details' })).not.toBeInTheDocument();
   });
 
-  it('renders metadata-only dragon details without broken ability cards', async () => {
+  it('renders newly detailed Nyrena ability cards', async () => {
     const user = userEvent.setup();
     render(<App />);
 
@@ -366,21 +368,18 @@ describe('Dragonfire Lab app', () => {
     expect(dragonCard).not.toBeNull();
     expect(dragonCard).toHaveTextContent('Rare');
     expect(dragonCard).toHaveTextContent('Champion');
-    expect(dragonCard).toHaveTextContent('Metadata Only');
-    expect(dragonCard).not.toHaveTextContent('Official Metadata Only');
-    expect(dragonCard).toHaveTextContent('Ability details not verified');
+    expect(dragonCard).toHaveTextContent('Verified');
+    expect(dragonCard).not.toHaveTextContent('Metadata Only');
     expect(dragonCard).toHaveTextContent('View details');
     expect(dragonCard).toHaveTextContent('Add to roster');
     await user.click(within(dragonCard as HTMLElement).getByRole('button', { name: /view details/i }));
 
     const dialog = screen.getByRole('dialog', { name: /nyrena/i });
-    expect(dialog).toHaveTextContent('Metadata-only record. Ability details not verified.');
+    expect(dialog).toHaveTextContent('Undermine');
+    expect(dialog).toHaveTextContent('Fire Damage');
+    expect(dialog).toHaveTextContent('Tactical Damage');
     expect(dialog).toHaveTextContent('At a glance');
-    expect(dialog).toHaveTextContent('No formation-wide output profile recorded.');
-    expect(dialog).toHaveTextContent('No mapped incoming synergy yet.');
-    expect(dialog).not.toHaveTextContent('Placement notes');
-    expect(dialog).not.toHaveTextContent('No special placement requirement recorded.');
-    expect(within(dialog).queryByText('Plain summary')).toBeNull();
+    expect(within(dialog).getAllByText('Plain summary').length).toBeGreaterThan(0);
     expect(within(dialog).queryByRole('heading', { name: 'Evidence, Technical Details & Notes' })).toBeInTheDocument();
     expect(within(dialog).queryByRole('heading', { name: 'Abilities' })).toBeInTheDocument();
     expect(within(dialog).queryByRole('heading', { name: 'What it does' })).not.toBeInTheDocument();
@@ -517,7 +516,7 @@ describe('Dragonfire Lab app', () => {
     expect(caraxesProvides).not.toBeNull();
     expect(caraxesBenefits).not.toBeNull();
     expect(caraxesProvides).toHaveTextContent('Slow');
-    expect(caraxesProvides).toHaveTextContent('Control');
+    expect(caraxesProvides).not.toHaveTextContent('Control');
     expect(caraxesBenefits).toHaveTextContent('First-Strike');
 
     await user.click(within(dialog).getByRole('button', { name: /close details/i }));
@@ -890,7 +889,7 @@ describe('Dragonfire Lab app', () => {
     expect(screen.getAllByRole('button', { name: /\+ add dragon/i }).length).toBeGreaterThanOrEqual(1);
   });
 
-  it('shows metadata-only public labels on My Roster cards and keeps the roster controls visible', async () => {
+  it('shows verified public labels on newly detailed My Roster cards and keeps the roster controls visible', async () => {
     const user = userEvent.setup();
     const roster = createEmptyRoster(dragons);
     roster.nyrena!.owned = true;
@@ -902,9 +901,8 @@ describe('Dragonfire Lab app', () => {
     await user.click(screen.getByRole('button', { name: /^my roster$/i }));
     const nyrenaCard = screen.getByRole('heading', { name: 'Nyrena' }).closest('article');
     expect(nyrenaCard).not.toBeNull();
-    expect(nyrenaCard).toHaveTextContent('Metadata Only');
-    expect(nyrenaCard).not.toHaveTextContent('Official Metadata Only');
-    expect(nyrenaCard).toHaveTextContent('Ability details not verified');
+    expect(nyrenaCard).toHaveTextContent('Verified');
+    expect(nyrenaCard).not.toHaveTextContent('Metadata Only');
     expect(nyrenaCard).toHaveTextContent('Owned / Hatched');
     expect(nyrenaCard).toHaveTextContent('View details');
     expect(within(nyrenaCard as HTMLElement).getByRole('checkbox', { name: /owned \/ hatched/i })).toBeChecked();
@@ -940,7 +938,8 @@ describe('Dragonfire Lab app', () => {
     await user.click(screen.getByRole('button', { name: /^my roster$/i }));
     const nyrenaCard = screen.getByRole('heading', { name: 'Nyrena' }).closest('article');
     expect(nyrenaCard).not.toBeNull();
-    expect(nyrenaCard).toHaveTextContent('Metadata Only');
+    expect(nyrenaCard).toHaveTextContent('Verified');
+    expect(nyrenaCard).not.toHaveTextContent('Metadata Only');
     expect(nyrenaCard).not.toHaveTextContent('Community Verified');
     expect(nyrenaCard).not.toHaveTextContent('Official Metadata Only');
     expect(nyrenaCard).not.toHaveTextContent('In-game verified, pending official site');

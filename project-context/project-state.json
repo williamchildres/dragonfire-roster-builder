@@ -1,10 +1,10 @@
 {
-  "generatedAt": "2026-07-16T20:35:04.015Z",
+  "generatedAt": "2026-07-16T22:45:25.734Z",
   "source": {
     "repository": "https://github.com/williamchildres/dragonfire-roster-builder",
-    "branch": "data/add-rare-batch-3",
-    "commit": "71bc114e9afb2fc9368cb276bc40f7c476b92de0",
-    "databaseVersion": "0.6.7",
+    "branch": "data/add-rare-batch-4",
+    "commit": "0bdde89ca9fa5e3844efe7d9c1969f6753ef45bf",
+    "databaseVersion": "0.6.8",
     "dataSchemaVersion": 13,
     "localRosterSchemaVersion": 4,
     "gameBuild": "26.6.53509"
@@ -13,27 +13,27 @@
   "format": "dragonfire-lab-project-context",
   "rosterSummary": {
     "totalDragons": 31,
-    "detailedDragons": 28,
-    "metadataOnlyDragons": 3,
-    "curatedSimpleProfiles": 28,
-    "profileAuditReviews": 196,
-    "evidenceSources": 230,
-    "manualReviews": 41
+    "detailedDragons": 31,
+    "metadataOnlyDragons": 0,
+    "curatedSimpleProfiles": 31,
+    "profileAuditReviews": 217,
+    "evidenceSources": 251,
+    "manualReviews": 44
   },
   "profileAuditSummary": {
-    "reviewedAbilityCount": 196,
+    "reviewedAbilityCount": 217,
     "dispositionCounts": {
-      "represented": 128,
+      "represented": 145,
       "general-support-only": 12,
-      "self-only": 34,
-      "no-cross-dragon-synergy": 15,
-      "reinforces-existing": 7
+      "self-only": 36,
+      "no-cross-dragon-synergy": 16,
+      "reinforces-existing": 8
     }
   },
   "testTotals": {
     "runner": "vitest",
-    "testFileCount": 19,
-    "testCaseCount": 218,
+    "testFileCount": 20,
+    "testCaseCount": 230,
     "lastRunStatus": "not-run-by-exporter",
     "countingMethod": "static working-tree test declaration scan; runtime pass/fail is reported by npm run test"
   },

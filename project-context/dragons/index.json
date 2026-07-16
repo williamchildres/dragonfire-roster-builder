@@ -1,7 +1,7 @@
 {
   "count": 31,
-  "detailedDragonCount": 28,
-  "metadataOnlyDragonCount": 3,
+  "detailedDragonCount": 31,
+  "metadataOnlyDragonCount": 0,
   "dragons": [
     {
       "id": "syrax",
@@ -216,8 +216,8 @@
       "name": "Vesper",
       "rarity": "Rare",
       "breed": "Sentinel",
-      "profileCompleteness": "metadata-only",
-      "simpleProfileStatus": "metadata-only-unmapped"
+      "profileCompleteness": "detailed-abilities",
+      "simpleProfileStatus": "curated"
     },
     {
       "id": "arulix",
@@ -234,8 +234,8 @@
       "name": "Nyrena",
       "rarity": "Rare",
       "breed": "Champion",
-      "profileCompleteness": "metadata-only",
-      "simpleProfileStatus": "metadata-only-unmapped"
+      "profileCompleteness": "detailed-abilities",
+      "simpleProfileStatus": "curated"
     },
     {
       "id": "dawnseeker",
@@ -243,8 +243,8 @@
       "name": "Dawnseeker",
       "rarity": "Rare",
       "breed": "Sentinel",
-      "profileCompleteness": "metadata-only",
-      "simpleProfileStatus": "metadata-only-unmapped"
+      "profileCompleteness": "detailed-abilities",
+      "simpleProfileStatus": "curated"
     },
     {
       "id": "arrax",

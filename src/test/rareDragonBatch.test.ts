@@ -45,10 +45,10 @@ function signalsFor(dragonId: string): SynergySignal[] {
 describe('first Rare dragon batch', () => {
   it('upgrades one canonical Rare record per dragon with complete verified abilities and unknown affinities', () => {
     expect(dragons).toHaveLength(31);
-    expect(dragons.filter((dragon) => dragon.command !== null)).toHaveLength(28);
-    expect(simpleSynergyProfiles).toHaveLength(28);
-    expect(metadataOnlyDragonIds).toHaveLength(3);
-    expect(dragons.filter((dragon) => dragon.rarity === 'Rare' && dragon.command !== null)).toHaveLength(9);
+    expect(dragons.filter((dragon) => dragon.command !== null)).toHaveLength(31);
+    expect(simpleSynergyProfiles).toHaveLength(31);
+    expect(metadataOnlyDragonIds).toHaveLength(0);
+    expect(dragons.filter((dragon) => dragon.rarity === 'Rare' && dragon.command !== null)).toHaveLength(12);
 
     const expectedBreeds = { antares: 'Hunter', arrax: 'Warrior', arulix: 'Champion' } as const;
     for (const id of rareIds) {
@@ -65,7 +65,7 @@ describe('first Rare dragon batch', () => {
       expect(Object.values(dragon.stats).every((value) => value === null)).toBe(true);
     }
 
-    expect(databaseMetadata).toMatchObject({ databaseVersion: '0.6.7', schemaVersion: 13 });
+    expect(databaseMetadata).toMatchObject({ databaseVersion: '0.6.8', schemaVersion: 13 });
     expect(ROSTER_SCHEMA_VERSION).toBe(4);
   });
 
@@ -141,9 +141,9 @@ describe('first Rare dragon batch', () => {
 
     const kalspire = dragons.find((dragon) => dragon.id === 'kalspire')!;
     const arrax = dragons.find((dragon) => dragon.id === 'arrax')!;
-    expect(summarizeAbility(kalspire.command!).plainSummary).toContain('Applies Bleed');
-    expect(summarizeAbility(arrax.command!).plainSummary).toContain('Bleed improves Weakened chance');
-    expect(summarizeAbility(arrax.command!).plainSummary).not.toContain('Applies Bleed');
+    expect(summarizeAbility(kalspire.command).plainSummary).toContain('Applies Bleed');
+    expect(summarizeAbility(arrax.command).plainSummary).toContain('Bleed improves Weakened chance');
+    expect(summarizeAbility(arrax.command).plainSummary).not.toContain('Applies Bleed');
 
     const withBleed = evaluate(formation('kalspire', 'arrax', null), {
       kalspire: { starRank: 10, dragonLevel: 16 },
@@ -216,12 +216,12 @@ describe('first Rare dragon batch', () => {
     expect(summarizeAbility(arrax.habits.find((habit) => habit.id === 'arrax-stone-bulwark')!).plainSummary).toContain(
       'Reduces Fire Damage Received',
     );
-    expect(summarizeAbility(arulix.command!).plainSummary).toContain('Suppresses enemy Fire Damage');
+    expect(summarizeAbility(arulix.command).plainSummary).toContain('Suppresses enemy Fire Damage');
     const antares = dragons.find((dragon) => dragon.id === 'antares')!;
     expect(
       summarizeAbility(antares.habits.find((habit) => habit.id === 'antares-blazing-onslaught')!).plainSummary,
     ).toContain('Increases non-Basic Physical Damage Received');
-    expect(summarizeAbility(antares.command!).plainSummary).not.toContain('Applies Slow');
+    expect(summarizeAbility(antares.command).plainSummary).not.toContain('Applies Slow');
     expect(summarizeAbility(antares.habits.find((habit) => habit.id === 'antares-redemption')!).plainSummary).toContain(
       'Grants status immunity',
     );

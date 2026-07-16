@@ -69,11 +69,7 @@ const review = (
   disposition,
 });
 
-export const metadataOnlyDragonIds = [
-  'vesper',
-  'nyrena',
-  'dawnseeker',
-] as const;
+export const metadataOnlyDragonIds: readonly string[] = [];
 
 export const simpleSynergyAbilityReviews = [
   review(
@@ -745,6 +741,30 @@ export const simpleSynergyAbilityReviews = [
   review('thunderstrike', 'thunderstrike-barbed-lash', 'habit', represented(['thunderstrike-barbed-lash-physical', 'thunderstrike-barbed-lash-bleed'], 'The Command augmentation adds one even-round Physical output and one specifically named Bleed provider at 6 Stars.')),
   review('thunderstrike', 'thunderstrike-armor-break', 'habit', represented(['thunderstrike-armor-break-physical'], 'Direct Physical Damage Received amplification provides broad Physical support without becoming Vulnerable or creating an ally placement rule.')),
   review('thunderstrike', 'thunderstrike-staggering-assault', 'habit', represented(['thunderstrike-staggering-assault-stagger', 'thunderstrike-staggering-assault-advantage-payoff'], 'The Habit provides one specifically named Stagger output that satisfies Control through aliasing and one self-recipient Advantage duration payoff.')),
+
+  review('vesper', 'vesper-eventide-strike', 'command', represented(['vesper-eventide-strike-tactical', 'vesper-eventide-strike-slow', 'vesper-instinct-payoff', 'vesper-tactical-payoff'], 'The Command preserves independent Tactical and specifically named Slow paths; Slow does not satisfy Control.')),
+  review('vesper', 'vesper-sentinels-wit', 'trait', represented(['vesper-sentinels-wit-left-stats', 'vesper-sentinels-wit-vanguard'], 'The Vanguard trait supports the same Left Flank ally with Instinct and Initiative while self Tactical amplification remains self-only.')),
+  review('vesper', 'vesper-strategic-leader', 'habit', represented(['vesper-strategic-leader-tactical'], 'The self-eligible Vanguard-priority selector supports Vanguard from a flank and produces no self relationship when Vesper is Vanguard.')),
+  review('vesper', 'vesper-dragons-insight', 'habit', selfOnly('Damage Received reduction and Instinct increase apply only to Vesper.')),
+  review('vesper', 'vesper-saviors-waltz', 'habit', represented(['vesper-saviors-waltz-resistance'], 'One shared activation grants Resistance to self and one adjacent other ally; Vanguard selection remains unresolved and non-scoring.')),
+  review('vesper', 'vesper-insightful-allies', 'habit', represented(['vesper-insightful-allies-instinct'], 'The full-formation Instinct effect supports both teammates while suppressing self relationships.')),
+  review('vesper', 'vesper-midnight-onslaught', 'habit', represented(['vesper-midnight-onslaught-confusion'], 'The standalone Habit provides one specifically named Confusion path that satisfies Control once.')),
+
+  review('nyrena', 'nyrena-undermine', 'command', represented(['nyrena-undermine-fire', 'nyrena-undermine-tactical', 'nyrena-intelligence-payoff', 'nyrena-instinct-payoff', 'nyrena-fire-payoff', 'nyrena-tactical-payoff'], 'Fire and Tactical outputs remain distinct; enemy Physical Damage Dealt suppression and its Burn duration condition are detailed and non-scoring.')),
+  review('nyrena', 'nyrena-champions-brilliance', 'trait', represented(['nyrena-champions-brilliance-right-defense', 'nyrena-champions-brilliance-vanguard'], 'The Vanguard trait presents non-scoring Right Flank defense while all stat increases remain self-only.')),
+  review('nyrena', 'nyrena-battle-dread', 'habit', noCross('Paired battlefield enemy Strength and Initiative suppression is detailed and non-scoring.')),
+  review('nyrena', 'nyrena-mindful-synergy', 'habit', represented(['nyrena-mindful-synergy-stats', 'nyrena-initiative-payoff'], 'The same full-formation recipient group receives Intelligence and Instinct support; Initiative scaling is exposed once.')),
+  review('nyrena', 'nyrena-deepen-the-breach', 'habit', represented(['nyrena-deepen-the-breach-fire'], 'Timed rounds 6-10 Fire support reaches one adjacent other ally; self Fire and post-combat Tile Damage remain non-scoring.')),
+  review('nyrena', 'nyrena-dragons-ire', 'habit', selfOnly('Tactical and Fire Damage increases apply only to Nyrena.')),
+  review('nyrena', 'nyrena-the-long-siege', 'habit', represented(['nyrena-the-long-siege-physical-defense'], 'Timed Physical Damage Received reduction is presented as non-scoring defense and never as offensive Physical support.')),
+
+  review('dawnseeker', 'dawnseeker-radiant-wings', 'command', represented(['dawnseeker-radiant-wings-tactical', 'dawnseeker-radiant-wings-recovery', 'dawnseeker-instinct-payoff', 'dawnseeker-initiative-payoff', 'dawnseeker-tactical-payoff'], 'The Command preserves Tactical Damage and two-of-adjacent Recovery; self stat buffs remain self-only.')),
+  review('dawnseeker', 'dawnseeker-sentinels-presence', 'trait', represented(['dawnseeker-sentinels-presence-left-fire', 'dawnseeker-sentinels-presence-vanguard'], 'The Vanguard trait supports Left Flank Fire Damage while self Recovery and Instinct remain self-only.')),
+  review('dawnseeker', 'dawnseeker-tactical-inferno', 'habit', represented(['dawnseeker-tactical-inferno-tactical', 'dawnseeker-tactical-inferno-fire'], 'Independent self-eligible Left and Right priority selectors retain typed rounds 1-3 support and suppress self relationships.')),
+  review('dawnseeker', 'dawnseeker-unbroken-devotion', 'habit', represented(['dawnseeker-unbroken-devotion-recovery-received'], 'Recovery Received support is presented distinctly from Recovery application and remains non-scoring.')),
+  review('dawnseeker', 'dawnseeker-sunbreak', 'habit', reinforces(['dawnseeker-radiant-wings-tactical', 'dawnseeker-radiant-wings-recovery'], 'The Command augmentation replaces existing Round 1/2 rates without inventing Round 1 Recovery or duplicate outputs.')),
+  review('dawnseeker', 'dawnseeker-winds-favor', 'habit', represented(['dawnseeker-winds-favor-initiative'], 'Full-formation Initiative support reaches both teammates without self-synergy.')),
+  review('dawnseeker', 'dawnseeker-first-light', 'habit', represented(['dawnseeker-first-light-stats', 'dawnseeker-first-light-first-strike'], 'Paired Intelligence and Instinct share one group, while one shared activation grants specifically named First-Strike to both other allies without Control aliasing.')),
 
   review(
     'tessarion',

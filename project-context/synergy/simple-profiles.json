@@ -1101,13 +1101,15 @@
       },
       {
         "id": "rhysarion-unbroken-devotion-recovery",
-        "tag": "effect:recovery",
+        "tag": "effect:recovery-received",
         "abilityId": "rhysarion-unbroken-devotion",
         "abilityName": "Unbroken Devotion",
         "description": "improves Recovery Received of other allies",
+        "publicLabel": "Recovery Received support to other allies",
         "unlock": {
           "minimumStarRank": 8
         },
+        "nonScoring": true,
         "friendlyScope": "formation",
         "confidence": "verified"
       },
@@ -2370,14 +2372,15 @@
       },
       {
         "id": "shimmer-unbroken-devotion-recovery",
-        "tag": "effect:recovery",
+        "tag": "effect:recovery-received",
         "abilityId": "shimmer-unbroken-devotion",
         "abilityName": "Unbroken Devotion",
         "description": "improves Recovery Received of both other allies",
-        "publicLabel": "Recovery support to both other allies",
+        "publicLabel": "Recovery Received support to both other allies",
         "unlock": {
           "minimumStarRank": 8
         },
+        "nonScoring": true,
         "friendlyScope": "formation",
         "confidence": "verified"
       },
@@ -3068,6 +3071,496 @@
           "minimumDragonLevel": 16
         },
         "description": "Warrior's Zeal requires Vanguard",
+        "confidence": "verified"
+      }
+    ]
+  },
+  {
+    "dragonId": "vesper",
+    "dragonName": "Vesper",
+    "outputs": [
+      {
+        "id": "vesper-eventide-strike-tactical",
+        "tag": "damage:tactical",
+        "scalesWith": [
+          "stat:instinct"
+        ],
+        "abilityId": "vesper-eventide-strike",
+        "abilityName": "Eventide Strike",
+        "description": "deals Tactical Damage using Instinct",
+        "confidence": "verified"
+      },
+      {
+        "id": "vesper-eventide-strike-slow",
+        "tag": "status:slow",
+        "abilityId": "vesper-eventide-strike",
+        "abilityName": "Eventide Strike",
+        "description": "applies specifically named Slow independently from the scheduled Tactical attack",
+        "publicLabel": "Applies Slow",
+        "friendlyScope": "formation",
+        "confidence": "verified"
+      },
+      {
+        "id": "vesper-saviors-waltz-resistance",
+        "tag": "status:resistance",
+        "abilityId": "vesper-saviors-waltz",
+        "abilityName": "Savior's Waltz",
+        "description": "grants Resistance to Vesper and one other adjacent ally on one shared activation",
+        "publicLabel": "Grants Resistance to one adjacent other ally",
+        "unlock": {
+          "minimumStarRank": 6
+        },
+        "recipientSelector": {
+          "kind": "adjacent-group",
+          "recipientCount": 1,
+          "includeSelf": false
+        },
+        "friendlyScope": "adjacent",
+        "confidence": "verified"
+      },
+      {
+        "id": "vesper-midnight-onslaught-confusion",
+        "tag": "status:confusion",
+        "abilityId": "vesper-midnight-onslaught",
+        "abilityName": "Midnight Onslaught",
+        "description": "applies specifically named Confusion, which satisfies Control",
+        "publicLabel": "Applies Confusion",
+        "unlock": {
+          "minimumStarRank": 10
+        },
+        "friendlyScope": "formation",
+        "confidence": "verified"
+      }
+    ],
+    "supports": [
+      {
+        "id": "vesper-sentinels-wit-left-stats",
+        "tag": "stat:instinct",
+        "tags": [
+          "stat:instinct",
+          "stat:initiative"
+        ],
+        "abilityId": "vesper-sentinels-wit",
+        "abilityName": "Sentinel's Wit",
+        "description": "improves Instinct and Initiative of the same Left Flank ally",
+        "unlock": {
+          "minimumDragonLevel": 16
+        },
+        "requiredSelfPosition": "vanguard",
+        "requiredRecipientPosition": "left-flank",
+        "friendlyScope": "formation",
+        "confidence": "verified"
+      },
+      {
+        "id": "vesper-strategic-leader-tactical",
+        "tag": "damage:tactical",
+        "abilityId": "vesper-strategic-leader",
+        "abilityName": "Strategic Leader",
+        "description": "improves Tactical Damage of one self-eligible Ally prioritizing Vanguard",
+        "publicLabel": "Tactical support (prioritizes Vanguard)",
+        "unlock": {
+          "minimumStarRank": 2
+        },
+        "recipientSelector": {
+          "kind": "position-priority",
+          "preferredPosition": "vanguard",
+          "allowSelf": true
+        },
+        "friendlyScope": "formation",
+        "confidence": "verified"
+      },
+      {
+        "id": "vesper-insightful-allies-instinct",
+        "tag": "stat:instinct",
+        "abilityId": "vesper-insightful-allies",
+        "abilityName": "Insightful Allies",
+        "description": "improves Instinct of the full formation",
+        "publicLabel": "Instinct support to both teammates",
+        "unlock": {
+          "minimumStarRank": 8
+        },
+        "friendlyScope": "formation",
+        "confidence": "verified"
+      }
+    ],
+    "benefitsFrom": [
+      {
+        "id": "vesper-instinct-payoff",
+        "tag": "stat:instinct",
+        "abilityId": "vesper-eventide-strike",
+        "abilityName": "Eventide Strike",
+        "description": "Instinct improves Tactical Damage",
+        "friendlyScope": "formation",
+        "confidence": "verified"
+      },
+      {
+        "id": "vesper-tactical-payoff",
+        "tag": "damage:tactical",
+        "abilityId": "vesper-eventide-strike",
+        "abilityName": "Eventide Strike",
+        "description": "benefits from Tactical Damage support",
+        "supportOnly": true,
+        "friendlyScope": "formation",
+        "confidence": "verified"
+      }
+    ],
+    "positionClaims": [
+      {
+        "id": "vesper-sentinels-wit-vanguard",
+        "abilityId": "vesper-sentinels-wit",
+        "abilityName": "Sentinel's Wit",
+        "requiredPosition": "vanguard",
+        "unlock": {
+          "minimumDragonLevel": 16
+        },
+        "description": "Sentinel's Wit requires Vanguard",
+        "confidence": "verified"
+      }
+    ]
+  },
+  {
+    "dragonId": "nyrena",
+    "dragonName": "Nyrena",
+    "outputs": [
+      {
+        "id": "nyrena-undermine-fire",
+        "tag": "damage:fire",
+        "scalesWith": [
+          "stat:intelligence"
+        ],
+        "abilityId": "nyrena-undermine",
+        "abilityName": "Undermine",
+        "description": "deals Fire Damage using Intelligence",
+        "confidence": "verified"
+      },
+      {
+        "id": "nyrena-undermine-tactical",
+        "tag": "damage:tactical",
+        "scalesWith": [
+          "stat:instinct"
+        ],
+        "abilityId": "nyrena-undermine",
+        "abilityName": "Undermine",
+        "description": "deals Tactical Damage using Instinct",
+        "confidence": "verified"
+      }
+    ],
+    "supports": [
+      {
+        "id": "nyrena-champions-brilliance-right-defense",
+        "tag": "defense:damage-received",
+        "abilityId": "nyrena-champions-brilliance",
+        "abilityName": "Champion's Brilliance",
+        "description": "reduces generic Damage Received for the Right Flank ally",
+        "publicLabel": "Damage Received reduction (Right Flank)",
+        "unlock": {
+          "minimumDragonLevel": 16
+        },
+        "requiredSelfPosition": "vanguard",
+        "requiredRecipientPosition": "right-flank",
+        "nonScoring": true,
+        "friendlyScope": "formation",
+        "confidence": "verified"
+      },
+      {
+        "id": "nyrena-mindful-synergy-stats",
+        "tag": "stat:intelligence",
+        "tags": [
+          "stat:intelligence",
+          "stat:instinct"
+        ],
+        "abilityId": "nyrena-mindful-synergy",
+        "abilityName": "Mindful Synergy",
+        "description": "improves Intelligence and Instinct of the same full-formation recipient group",
+        "publicLabel": "Intelligence and Instinct support to both teammates",
+        "unlock": {
+          "minimumStarRank": 4
+        },
+        "friendlyScope": "formation",
+        "confidence": "verified"
+      },
+      {
+        "id": "nyrena-deepen-the-breach-fire",
+        "tag": "damage:fire",
+        "abilityId": "nyrena-deepen-the-breach",
+        "abilityName": "Deepen the Breach",
+        "description": "improves Fire Damage of one other adjacent ally during rounds 6-10",
+        "publicLabel": "Fire Damage support to one adjacent other ally (rounds 6-10)",
+        "unlock": {
+          "minimumStarRank": 6
+        },
+        "recipientSelector": {
+          "kind": "adjacent-group",
+          "recipientCount": 1,
+          "includeSelf": false
+        },
+        "friendlyScope": "adjacent",
+        "confidence": "verified"
+      },
+      {
+        "id": "nyrena-the-long-siege-physical-defense",
+        "tag": "defense:physical-damage-received",
+        "abilityId": "nyrena-the-long-siege",
+        "abilityName": "The Long Siege",
+        "description": "reduces Physical Damage Received by the full formation during rounds 6-10",
+        "publicLabel": "Physical Damage Received reduction (rounds 6-10)",
+        "unlock": {
+          "minimumStarRank": 10
+        },
+        "nonScoring": true,
+        "friendlyScope": "formation",
+        "confidence": "verified"
+      }
+    ],
+    "benefitsFrom": [
+      {
+        "id": "nyrena-intelligence-payoff",
+        "tag": "stat:intelligence",
+        "abilityId": "nyrena-undermine",
+        "abilityName": "Undermine",
+        "description": "Intelligence improves Fire Damage",
+        "friendlyScope": "formation",
+        "confidence": "verified"
+      },
+      {
+        "id": "nyrena-instinct-payoff",
+        "tag": "stat:instinct",
+        "abilityId": "nyrena-undermine",
+        "abilityName": "Undermine",
+        "description": "Instinct improves Tactical Damage",
+        "friendlyScope": "formation",
+        "confidence": "verified"
+      },
+      {
+        "id": "nyrena-initiative-payoff",
+        "tag": "stat:initiative",
+        "abilityId": "nyrena-mindful-synergy",
+        "abilityName": "Mindful Synergy",
+        "description": "Initiative enhances the paired Intelligence and Instinct support",
+        "unlock": {
+          "minimumStarRank": 4
+        },
+        "friendlyScope": "formation",
+        "confidence": "verified"
+      },
+      {
+        "id": "nyrena-fire-payoff",
+        "tag": "damage:fire",
+        "abilityId": "nyrena-undermine",
+        "abilityName": "Undermine",
+        "description": "benefits from Fire Damage support",
+        "supportOnly": true,
+        "friendlyScope": "formation",
+        "confidence": "verified"
+      },
+      {
+        "id": "nyrena-tactical-payoff",
+        "tag": "damage:tactical",
+        "abilityId": "nyrena-undermine",
+        "abilityName": "Undermine",
+        "description": "benefits from Tactical Damage support",
+        "supportOnly": true,
+        "friendlyScope": "formation",
+        "confidence": "verified"
+      }
+    ],
+    "positionClaims": [
+      {
+        "id": "nyrena-champions-brilliance-vanguard",
+        "abilityId": "nyrena-champions-brilliance",
+        "abilityName": "Champion's Brilliance",
+        "requiredPosition": "vanguard",
+        "unlock": {
+          "minimumDragonLevel": 16
+        },
+        "description": "Champion's Brilliance requires Vanguard",
+        "confidence": "verified"
+      }
+    ]
+  },
+  {
+    "dragonId": "dawnseeker",
+    "dragonName": "Dawnseeker",
+    "outputs": [
+      {
+        "id": "dawnseeker-radiant-wings-tactical",
+        "tag": "damage:tactical",
+        "scalesWith": [
+          "stat:instinct"
+        ],
+        "abilityId": "dawnseeker-radiant-wings",
+        "abilityName": "Radiant Wings",
+        "description": "deals Tactical Damage using Instinct",
+        "confidence": "verified"
+      },
+      {
+        "id": "dawnseeker-radiant-wings-recovery",
+        "tag": "effect:recovery",
+        "scalesWith": [
+          "stat:initiative"
+        ],
+        "abilityId": "dawnseeker-radiant-wings",
+        "abilityName": "Radiant Wings",
+        "description": "applies Recovery to two self-eligible adjacent Allies",
+        "publicLabel": "Provides Recovery to two adjacent Allies",
+        "recipientSelector": {
+          "kind": "adjacent-group",
+          "recipientCount": 2,
+          "includeSelf": true
+        },
+        "friendlyScope": "adjacent",
+        "confidence": "verified"
+      },
+      {
+        "id": "dawnseeker-first-light-first-strike",
+        "tag": "status:first-strike",
+        "abilityId": "dawnseeker-first-light",
+        "abilityName": "First Light",
+        "description": "grants First-Strike to both other allies on one shared activation during rounds 1-3",
+        "publicLabel": "Grants First-Strike to both teammates (rounds 1-3)",
+        "unlock": {
+          "minimumStarRank": 10
+        },
+        "friendlyScope": "formation",
+        "confidence": "verified"
+      }
+    ],
+    "supports": [
+      {
+        "id": "dawnseeker-sentinels-presence-left-fire",
+        "tag": "damage:fire",
+        "abilityId": "dawnseeker-sentinels-presence",
+        "abilityName": "Sentinel's Presence",
+        "description": "improves Fire Damage of the Left Flank ally",
+        "unlock": {
+          "minimumDragonLevel": 16
+        },
+        "requiredSelfPosition": "vanguard",
+        "requiredRecipientPosition": "left-flank",
+        "friendlyScope": "formation",
+        "confidence": "verified"
+      },
+      {
+        "id": "dawnseeker-tactical-inferno-tactical",
+        "tag": "damage:tactical",
+        "abilityId": "dawnseeker-tactical-inferno",
+        "abilityName": "Tactical Inferno",
+        "description": "improves Tactical Damage during rounds 1-3 while prioritizing Left Flank",
+        "publicLabel": "Tactical support (rounds 1-3, prioritizes Left Flank)",
+        "unlock": {
+          "minimumStarRank": 2
+        },
+        "recipientSelector": {
+          "kind": "position-priority",
+          "preferredPosition": "left-flank",
+          "allowSelf": true
+        },
+        "friendlyScope": "formation",
+        "confidence": "verified"
+      },
+      {
+        "id": "dawnseeker-tactical-inferno-fire",
+        "tag": "damage:fire",
+        "abilityId": "dawnseeker-tactical-inferno",
+        "abilityName": "Tactical Inferno",
+        "description": "improves Fire Damage during rounds 1-3 while prioritizing Right Flank",
+        "publicLabel": "Fire support (rounds 1-3, prioritizes Right Flank)",
+        "unlock": {
+          "minimumStarRank": 2
+        },
+        "recipientSelector": {
+          "kind": "position-priority",
+          "preferredPosition": "right-flank",
+          "allowSelf": true
+        },
+        "friendlyScope": "formation",
+        "confidence": "verified"
+      },
+      {
+        "id": "dawnseeker-unbroken-devotion-recovery-received",
+        "tag": "effect:recovery-received",
+        "abilityId": "dawnseeker-unbroken-devotion",
+        "abilityName": "Unbroken Devotion",
+        "description": "improves Recovery Received of both other allies without applying Recovery",
+        "publicLabel": "Recovery Received support to both teammates",
+        "unlock": {
+          "minimumStarRank": 4
+        },
+        "nonScoring": true,
+        "friendlyScope": "formation",
+        "confidence": "verified"
+      },
+      {
+        "id": "dawnseeker-winds-favor-initiative",
+        "tag": "stat:initiative",
+        "abilityId": "dawnseeker-winds-favor",
+        "abilityName": "Wind's Favor",
+        "description": "improves Initiative of the full formation",
+        "publicLabel": "Initiative support to both teammates",
+        "unlock": {
+          "minimumStarRank": 8
+        },
+        "friendlyScope": "formation",
+        "confidence": "verified"
+      },
+      {
+        "id": "dawnseeker-first-light-stats",
+        "tag": "stat:intelligence",
+        "tags": [
+          "stat:intelligence",
+          "stat:instinct"
+        ],
+        "abilityId": "dawnseeker-first-light",
+        "abilityName": "First Light",
+        "description": "improves Intelligence and Instinct of the same full-formation group during rounds 1-3",
+        "publicLabel": "Intelligence and Instinct support (rounds 1-3)",
+        "unlock": {
+          "minimumStarRank": 10
+        },
+        "friendlyScope": "formation",
+        "confidence": "verified"
+      }
+    ],
+    "benefitsFrom": [
+      {
+        "id": "dawnseeker-instinct-payoff",
+        "tag": "stat:instinct",
+        "abilityId": "dawnseeker-radiant-wings",
+        "abilityName": "Radiant Wings",
+        "description": "Instinct improves Tactical Damage",
+        "friendlyScope": "formation",
+        "confidence": "verified"
+      },
+      {
+        "id": "dawnseeker-initiative-payoff",
+        "tag": "stat:initiative",
+        "abilityId": "dawnseeker-radiant-wings",
+        "abilityName": "Radiant Wings",
+        "description": "Initiative enhances Recovery and later support effects",
+        "friendlyScope": "formation",
+        "confidence": "verified"
+      },
+      {
+        "id": "dawnseeker-tactical-payoff",
+        "tag": "damage:tactical",
+        "abilityId": "dawnseeker-radiant-wings",
+        "abilityName": "Radiant Wings",
+        "description": "benefits from Tactical Damage support",
+        "supportOnly": true,
+        "friendlyScope": "formation",
+        "confidence": "verified"
+      }
+    ],
+    "positionClaims": [
+      {
+        "id": "dawnseeker-sentinels-presence-vanguard",
+        "abilityId": "dawnseeker-sentinels-presence",
+        "abilityName": "Sentinel's Presence",
+        "requiredPosition": "vanguard",
+        "unlock": {
+          "minimumDragonLevel": 16
+        },
+        "description": "Sentinel's Presence requires Vanguard",
         "confidence": "verified"
       }
     ]

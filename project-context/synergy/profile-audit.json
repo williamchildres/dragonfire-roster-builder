@@ -1,17 +1,13 @@
 {
-  "reviewedAbilityCount": 196,
+  "reviewedAbilityCount": 217,
   "dispositionCounts": {
-    "represented": 128,
+    "represented": 145,
     "general-support-only": 12,
-    "self-only": 34,
-    "no-cross-dragon-synergy": 15,
-    "reinforces-existing": 7
+    "self-only": 36,
+    "no-cross-dragon-synergy": 16,
+    "reinforces-existing": 8
   },
-  "metadataOnlyDragonIds": [
-    "vesper",
-    "nyrena",
-    "dawnseeker"
-  ],
+  "metadataOnlyDragonIds": [],
   "reviews": [
     {
       "dragonId": "syrax",
@@ -2187,6 +2183,268 @@
           "thunderstrike-staggering-assault-advantage-payoff"
         ],
         "rationale": "The Habit provides one specifically named Stagger output that satisfies Control through aliasing and one self-recipient Advantage duration payoff."
+      }
+    },
+    {
+      "dragonId": "vesper",
+      "abilityId": "vesper-eventide-strike",
+      "abilityKind": "command",
+      "disposition": {
+        "kind": "represented",
+        "signalIds": [
+          "vesper-eventide-strike-tactical",
+          "vesper-eventide-strike-slow",
+          "vesper-instinct-payoff",
+          "vesper-tactical-payoff"
+        ],
+        "rationale": "The Command preserves independent Tactical and specifically named Slow paths; Slow does not satisfy Control."
+      }
+    },
+    {
+      "dragonId": "vesper",
+      "abilityId": "vesper-sentinels-wit",
+      "abilityKind": "trait",
+      "disposition": {
+        "kind": "represented",
+        "signalIds": [
+          "vesper-sentinels-wit-left-stats",
+          "vesper-sentinels-wit-vanguard"
+        ],
+        "rationale": "The Vanguard trait supports the same Left Flank ally with Instinct and Initiative while self Tactical amplification remains self-only."
+      }
+    },
+    {
+      "dragonId": "vesper",
+      "abilityId": "vesper-strategic-leader",
+      "abilityKind": "habit",
+      "disposition": {
+        "kind": "represented",
+        "signalIds": [
+          "vesper-strategic-leader-tactical"
+        ],
+        "rationale": "The self-eligible Vanguard-priority selector supports Vanguard from a flank and produces no self relationship when Vesper is Vanguard."
+      }
+    },
+    {
+      "dragonId": "vesper",
+      "abilityId": "vesper-dragons-insight",
+      "abilityKind": "habit",
+      "disposition": {
+        "kind": "self-only",
+        "rationale": "Damage Received reduction and Instinct increase apply only to Vesper."
+      }
+    },
+    {
+      "dragonId": "vesper",
+      "abilityId": "vesper-saviors-waltz",
+      "abilityKind": "habit",
+      "disposition": {
+        "kind": "represented",
+        "signalIds": [
+          "vesper-saviors-waltz-resistance"
+        ],
+        "rationale": "One shared activation grants Resistance to self and one adjacent other ally; Vanguard selection remains unresolved and non-scoring."
+      }
+    },
+    {
+      "dragonId": "vesper",
+      "abilityId": "vesper-insightful-allies",
+      "abilityKind": "habit",
+      "disposition": {
+        "kind": "represented",
+        "signalIds": [
+          "vesper-insightful-allies-instinct"
+        ],
+        "rationale": "The full-formation Instinct effect supports both teammates while suppressing self relationships."
+      }
+    },
+    {
+      "dragonId": "vesper",
+      "abilityId": "vesper-midnight-onslaught",
+      "abilityKind": "habit",
+      "disposition": {
+        "kind": "represented",
+        "signalIds": [
+          "vesper-midnight-onslaught-confusion"
+        ],
+        "rationale": "The standalone Habit provides one specifically named Confusion path that satisfies Control once."
+      }
+    },
+    {
+      "dragonId": "nyrena",
+      "abilityId": "nyrena-undermine",
+      "abilityKind": "command",
+      "disposition": {
+        "kind": "represented",
+        "signalIds": [
+          "nyrena-undermine-fire",
+          "nyrena-undermine-tactical",
+          "nyrena-intelligence-payoff",
+          "nyrena-instinct-payoff",
+          "nyrena-fire-payoff",
+          "nyrena-tactical-payoff"
+        ],
+        "rationale": "Fire and Tactical outputs remain distinct; enemy Physical Damage Dealt suppression and its Burn duration condition are detailed and non-scoring."
+      }
+    },
+    {
+      "dragonId": "nyrena",
+      "abilityId": "nyrena-champions-brilliance",
+      "abilityKind": "trait",
+      "disposition": {
+        "kind": "represented",
+        "signalIds": [
+          "nyrena-champions-brilliance-right-defense",
+          "nyrena-champions-brilliance-vanguard"
+        ],
+        "rationale": "The Vanguard trait presents non-scoring Right Flank defense while all stat increases remain self-only."
+      }
+    },
+    {
+      "dragonId": "nyrena",
+      "abilityId": "nyrena-battle-dread",
+      "abilityKind": "habit",
+      "disposition": {
+        "kind": "no-cross-dragon-synergy",
+        "rationale": "Paired battlefield enemy Strength and Initiative suppression is detailed and non-scoring."
+      }
+    },
+    {
+      "dragonId": "nyrena",
+      "abilityId": "nyrena-mindful-synergy",
+      "abilityKind": "habit",
+      "disposition": {
+        "kind": "represented",
+        "signalIds": [
+          "nyrena-mindful-synergy-stats",
+          "nyrena-initiative-payoff"
+        ],
+        "rationale": "The same full-formation recipient group receives Intelligence and Instinct support; Initiative scaling is exposed once."
+      }
+    },
+    {
+      "dragonId": "nyrena",
+      "abilityId": "nyrena-deepen-the-breach",
+      "abilityKind": "habit",
+      "disposition": {
+        "kind": "represented",
+        "signalIds": [
+          "nyrena-deepen-the-breach-fire"
+        ],
+        "rationale": "Timed rounds 6-10 Fire support reaches one adjacent other ally; self Fire and post-combat Tile Damage remain non-scoring."
+      }
+    },
+    {
+      "dragonId": "nyrena",
+      "abilityId": "nyrena-dragons-ire",
+      "abilityKind": "habit",
+      "disposition": {
+        "kind": "self-only",
+        "rationale": "Tactical and Fire Damage increases apply only to Nyrena."
+      }
+    },
+    {
+      "dragonId": "nyrena",
+      "abilityId": "nyrena-the-long-siege",
+      "abilityKind": "habit",
+      "disposition": {
+        "kind": "represented",
+        "signalIds": [
+          "nyrena-the-long-siege-physical-defense"
+        ],
+        "rationale": "Timed Physical Damage Received reduction is presented as non-scoring defense and never as offensive Physical support."
+      }
+    },
+    {
+      "dragonId": "dawnseeker",
+      "abilityId": "dawnseeker-radiant-wings",
+      "abilityKind": "command",
+      "disposition": {
+        "kind": "represented",
+        "signalIds": [
+          "dawnseeker-radiant-wings-tactical",
+          "dawnseeker-radiant-wings-recovery",
+          "dawnseeker-instinct-payoff",
+          "dawnseeker-initiative-payoff",
+          "dawnseeker-tactical-payoff"
+        ],
+        "rationale": "The Command preserves Tactical Damage and two-of-adjacent Recovery; self stat buffs remain self-only."
+      }
+    },
+    {
+      "dragonId": "dawnseeker",
+      "abilityId": "dawnseeker-sentinels-presence",
+      "abilityKind": "trait",
+      "disposition": {
+        "kind": "represented",
+        "signalIds": [
+          "dawnseeker-sentinels-presence-left-fire",
+          "dawnseeker-sentinels-presence-vanguard"
+        ],
+        "rationale": "The Vanguard trait supports Left Flank Fire Damage while self Recovery and Instinct remain self-only."
+      }
+    },
+    {
+      "dragonId": "dawnseeker",
+      "abilityId": "dawnseeker-tactical-inferno",
+      "abilityKind": "habit",
+      "disposition": {
+        "kind": "represented",
+        "signalIds": [
+          "dawnseeker-tactical-inferno-tactical",
+          "dawnseeker-tactical-inferno-fire"
+        ],
+        "rationale": "Independent self-eligible Left and Right priority selectors retain typed rounds 1-3 support and suppress self relationships."
+      }
+    },
+    {
+      "dragonId": "dawnseeker",
+      "abilityId": "dawnseeker-unbroken-devotion",
+      "abilityKind": "habit",
+      "disposition": {
+        "kind": "represented",
+        "signalIds": [
+          "dawnseeker-unbroken-devotion-recovery-received"
+        ],
+        "rationale": "Recovery Received support is presented distinctly from Recovery application and remains non-scoring."
+      }
+    },
+    {
+      "dragonId": "dawnseeker",
+      "abilityId": "dawnseeker-sunbreak",
+      "abilityKind": "habit",
+      "disposition": {
+        "kind": "reinforces-existing",
+        "signalIds": [
+          "dawnseeker-radiant-wings-tactical",
+          "dawnseeker-radiant-wings-recovery"
+        ],
+        "rationale": "The Command augmentation replaces existing Round 1/2 rates without inventing Round 1 Recovery or duplicate outputs."
+      }
+    },
+    {
+      "dragonId": "dawnseeker",
+      "abilityId": "dawnseeker-winds-favor",
+      "abilityKind": "habit",
+      "disposition": {
+        "kind": "represented",
+        "signalIds": [
+          "dawnseeker-winds-favor-initiative"
+        ],
+        "rationale": "Full-formation Initiative support reaches both teammates without self-synergy."
+      }
+    },
+    {
+      "dragonId": "dawnseeker",
+      "abilityId": "dawnseeker-first-light",
+      "abilityKind": "habit",
+      "disposition": {
+        "kind": "represented",
+        "signalIds": [
+          "dawnseeker-first-light-stats",
+          "dawnseeker-first-light-first-strike"
+        ],
+        "rationale": "Paired Intelligence and Instinct share one group, while one shared activation grants specifically named First-Strike to both other allies without Control aliasing."
       }
     },
     {

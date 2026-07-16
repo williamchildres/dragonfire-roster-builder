@@ -9,9 +9,9 @@ Public site: https://dragonfirelab.com
 ## Current Features
 
 - My Roster as the central local dragon-management page, with Add Dragon search/filter flow for 31 known dragons.
-- Full raw Command, Trait, and Habit wording for 28 detailed dragons.
-- Curated simple synergy profiles for all 28 detailed dragons.
-- Metadata-only handling for the remaining 3 unmapped dragons.
+- Full raw Command, Trait, and Habit wording for all 31 known dragons.
+- Curated simple synergy profiles for all 31 known dragons.
+- Complete Legendary (9 / 9), Epic (10 / 10), and Rare (12 / 12) coverage.
 - Owned / Hatched roster tracking with Star Rank, Dragon Level, notes, and Habit Levels.
 - Formation Builder with explainable local rating, placement, progression locks, missing-enabler, position conflict, and future-unlock explanations.
 - Formation share links and roster JSON import/export.
@@ -33,7 +33,7 @@ Selected Formation Builder cards show current Damage Profile, Provides, and Syne
 
 The simple evaluator models high-level setup/payoff and support relationships, progression locks, adjacency, hard recipient positions, deterministic highest-stat recipients when unique combat-stat values are available, safe flank-priority recipients, conservative unresolved group recipients, grouped Vanguard conflicts, missing enablers, and duplicate relationship aggregation. Generic Damage Dealt support matches damaging outputs once without expanding into typed duplicates. Unknown or tied highest-stat values, unresolved group selection, and unresolved priority fallback remain non-scoring. The rating is a deterministic UI summary of those mapped signals with Excellent guardrails for payoff, kit utilization, missing Benefits, and placement collapse, while detailed evaluator output stays collapsed behind a secondary control; it does not model exact timing, rolls, target overlap, stacks, damage formulas, or battle outcomes.
 
-Typed defensive support, battlefield-only conditions, troop-gated effects without selected troop context, and conditional status-copy mechanics remain in detailed verified ability wording instead of scored simple-profile signals. This keeps those mechanics visible without treating defense as offensive support or changing Formation Rating.
+Typed defensive and Recovery Received support may be presented through explicitly non-scoring simple-profile signals. Battlefield-only conditions, troop-gated effects without selected troop context, and conditional status-copy mechanics remain detailed-only. This keeps those mechanics visible without treating defense as offensive support or changing Formation Rating weights or calibration.
 
 ## Development
 

@@ -1,5 +1,77 @@
 [
   {
+    "id": "vesper-profile-review-2026-07-16",
+    "dragonId": "vesper",
+    "scope": "habits",
+    "status": "confirmed",
+    "reviewedAt": "2026-07-16",
+    "reviewedAgainstGameBuild": "unknown",
+    "reviewer": "repository-owner",
+    "notes": [
+      "Eventide Strike keeps independent Slow and Tactical schedules. Slow remains specifically named and outside the Control alias family.",
+      "Savior's Waltz uses the exact 12.5% table value instead of the rounded 13% prose value and preserves one shared activation.",
+      "Strategic Leader self-selection and all other self portions create no source-to-self relationship or rating credit.",
+      "Unresolved: Slow refresh/stacking, same-lane fallback, Strategic Leader fallback, Vanguard Resistance recipient selection, Resistance stacking/refresh, Insightful Allies enhancement, Confusion refresh/stacking, redirected-target resolution, and icon-only affinities."
+    ],
+    "evidenceIds": [
+      "vesper-eventide-strike-2026-07-16",
+      "vesper-sentinels-wit-2026-07-16",
+      "vesper-strategic-leader-2026-07-16",
+      "vesper-dragons-insight-2026-07-16",
+      "vesper-saviors-waltz-2026-07-16",
+      "vesper-insightful-allies-2026-07-16",
+      "vesper-midnight-onslaught-2026-07-16"
+    ]
+  },
+  {
+    "id": "nyrena-profile-review-2026-07-16",
+    "dragonId": "nyrena",
+    "scope": "habits",
+    "status": "confirmed",
+    "reviewedAt": "2026-07-16",
+    "reviewedAgainstGameBuild": "unknown",
+    "reviewer": "repository-owner",
+    "notes": [
+      "Undermine uses Physical Damage Dealt suppression because the Command summary and detailed heading agree; the conflicting Physical Damage Received body text is retained as a discrepancy.",
+      "Fire Damage does not provide Burn. Burn only extends the suppression duration and remains non-scoring.",
+      "Deepen the Breach preserves rounds 1-5 self Fire amplification, rounds 6-10 one-adjacent-other Fire support, and post-combat Tile Damage as distinct pieces.",
+      "Unresolved: Undermine group roll, fewer-than-three behavior, Burn evaluation timing, suppression refresh/stacking, same-lane fallback, Battle Dread and Mindful Synergy enhancement formulas, Vanguard Fire recipient selection, Tile Damage mode details, Defending definition, defensive stacking, and icon-only affinities."
+    ],
+    "evidenceIds": [
+      "nyrena-undermine-2026-07-16",
+      "nyrena-champions-brilliance-2026-07-16",
+      "nyrena-battle-dread-2026-07-16",
+      "nyrena-mindful-synergy-2026-07-16",
+      "nyrena-deepen-the-breach-2026-07-16",
+      "nyrena-dragons-ire-2026-07-16",
+      "nyrena-the-long-siege-2026-07-16"
+    ]
+  },
+  {
+    "id": "dawnseeker-profile-review-2026-07-16",
+    "dragonId": "dawnseeker",
+    "scope": "habits",
+    "status": "confirmed",
+    "reviewedAt": "2026-07-16",
+    "reviewedAgainstGameBuild": "unknown",
+    "reviewer": "repository-owner",
+    "notes": [
+      "Radiant Wings uses one shared self-stat activation and a self-eligible two-of-adjacent Recovery group.",
+      "Sunbreak replaces existing Round 1/2 final rates only; it creates no Round 1 Recovery and no duplicate Command output.",
+      "Unbroken Devotion is Recovery Received support, not Recovery application. First-Strike remains specifically named and outside Control.",
+      "Unresolved: self-stat activation timing and refresh/stacking, Vanguard Recovery recipient selection, same-lane fallback, Initiative enhancement formulas, Tactical Inferno fallback, Recovery Received stacking, First-Strike stacking/refresh, and icon-only affinities."
+    ],
+    "evidenceIds": [
+      "dawnseeker-radiant-wings-2026-07-16",
+      "dawnseeker-sentinels-presence-2026-07-16",
+      "dawnseeker-tactical-inferno-2026-07-16",
+      "dawnseeker-unbroken-devotion-2026-07-16",
+      "dawnseeker-sunbreak-2026-07-16",
+      "dawnseeker-winds-favor-2026-07-16",
+      "dawnseeker-first-light-2026-07-16"
+    ]
+  },
+  {
     "id": "bevlorin-profile-review-2026-07-16",
     "dragonId": "bevlorin",
     "scope": "habits",

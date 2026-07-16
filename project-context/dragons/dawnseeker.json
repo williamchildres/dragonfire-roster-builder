@@ -5,11 +5,213 @@
   "rarity": "Rare",
   "breed": "Sentinel",
   "rosterSourceStatus": "official-website",
-  "dataStatus": "official-metadata-only",
-  "lastVerified": "2026-06-23",
-  "profileCompleteness": "metadata-only",
+  "dataStatus": "community-verified",
+  "lastVerified": "2026-07-16",
+  "profileCompleteness": "detailed-abilities",
   "officialProfileUrl": "https://gotdragonfire.com/dragons/dawnseeker/",
-  "abilities": [],
+  "abilities": [
+    {
+      "id": "dawnseeker-radiant-wings",
+      "kind": "command",
+      "name": "Radiant Wings",
+      "abilityClass": "active",
+      "unlockStarRank": null,
+      "minimumDragonLevel": null,
+      "positionRequirement": null,
+      "verification": {
+        "status": "screenshot-verified",
+        "source": "Dawnseeker Radiant Wings screenshots",
+        "capturedAt": "2026-07-16",
+        "gameVersion": null,
+        "reviewedManually": true
+      },
+      "evidenceIds": [
+        "dawnseeker-radiant-wings-2026-07-16"
+      ],
+      "tags": [
+        "TACTICAL_DAMAGE",
+        "RECOVERY",
+        "INSTINCT_UP",
+        "BUFF_INITIATIVE",
+        "BUFF_SELF",
+        "BUFF_ALLIES",
+        "ADJACENT_TARGET",
+        "SAME_LANE_TARGET",
+        "SPECIFIC_ROUNDS",
+        "MULTI_SCHEDULE_COMMAND",
+        "ENHANCED_BY_INSTINCT",
+        "INITIATIVE_SCALING",
+        "COMMAND_AUGMENTATION"
+      ],
+      "rawDescription": "Each round: one shared 30% activation roll increases Dawnseeker Instinct and Initiative by +20% for 1 round. Both buffs are self-only; activation timing and refresh/stacking remain unresolved.\n\nRounds 1, 2, 4, and 7: deal Tactical Damage to 1 enemy in the same lane at a base +50% Damage Rate, scaling with Instinct and mitigated by target Intelligence. Same-lane fallback remains unresolved.\n\nRounds 2, 5, and 8: apply Recovery to 2 Allies within adjacency at a base +30% Recovery Rate, enhanced by Dawnseeker's Initiative. Dawnseeker is eligible. From a flank, Dawnseeker and Vanguard are the two eligible recipients, so Vanguard is the outward recipient. From Vanguard, 2 of 3 eligible Allies are selected and exact recipients remain unresolved.\n\nAt 6+ Stars, Sunbreak augments only existing Round 1 and Round 2 paths: its current final Tactical rate replaces the base rate on rounds 1 and 2, and its current final Recovery rate replaces the base rate on Round 2. It does not create Round 1 Recovery and does not duplicate any Command path."
+    },
+    {
+      "id": "dawnseeker-sentinels-presence",
+      "kind": "trait",
+      "name": "Sentinel's Presence",
+      "abilityClass": "passive",
+      "unlockStarRank": null,
+      "minimumDragonLevel": 16,
+      "positionRequirement": "vanguard",
+      "verification": {
+        "status": "screenshot-verified",
+        "source": "Dawnseeker Sentinel's Presence screenshot",
+        "capturedAt": "2026-07-16",
+        "gameVersion": null,
+        "reviewedManually": true
+      },
+      "evidenceIds": [
+        "dawnseeker-sentinels-presence-2026-07-16"
+      ],
+      "tags": [
+        "RECOVERY_DEALT_UP",
+        "INSTINCT_UP",
+        "BUFF_SELF",
+        "FIRE_DAMAGE_UP",
+        "BUFF_ALLIES",
+        "VANGUARD_REQUIRED",
+        "LEFT_FLANK_TARGET"
+      ],
+      "rawDescription": "At Dragon Level 16+ while Dawnseeker is Vanguard: increase Dawnseeker Recovery Dealt by +15% and Instinct by +25. Increase Fire Damage Dealt by the Left Flank ally by +16%. The self Recovery and Instinct bonuses create no allied support."
+    },
+    {
+      "id": "dawnseeker-tactical-inferno",
+      "kind": "habit",
+      "name": "Tactical Inferno",
+      "abilityClass": "passive",
+      "unlockStarRank": 2,
+      "minimumDragonLevel": null,
+      "positionRequirement": null,
+      "verification": {
+        "status": "screenshot-verified",
+        "source": "Dawnseeker Tactical Inferno screenshot",
+        "capturedAt": "2026-07-16",
+        "gameVersion": null,
+        "reviewedManually": true
+      },
+      "evidenceIds": [
+        "dawnseeker-tactical-inferno-2026-07-16"
+      ],
+      "tags": [
+        "TACTICAL_DAMAGE_UP",
+        "FIRE_DAMAGE_UP",
+        "BUFF_ALLIES",
+        "ANY_LANE_TARGET",
+        "LEFT_FLANK_TARGET",
+        "RIGHT_FLANK_TARGET",
+        "SPECIFIC_ROUNDS"
+      ],
+      "rawDescription": "Start of Round 1 for 3 rounds: independently increase Tactical Damage Dealt of 1 Ally in any lane prioritizing Left Flank, and Fire Damage Dealt of 1 Ally in any lane prioritizing Right Flank. Ally includes Dawnseeker. A branch selecting Dawnseeker creates no outward relationship. Fallback behavior is unresolved.\n\nProgression (Tactical and Fire Damage Dealt): Habit Level 1: +9%; Level 2: +10.8%; Level 3: +12.6%; Level 4: +15.3%; Level 5: +18%.\n\nPower: 250 / 550 / 900 / 1300 / 1800"
+    },
+    {
+      "id": "dawnseeker-unbroken-devotion",
+      "kind": "habit",
+      "name": "Unbroken Devotion",
+      "abilityClass": "passive",
+      "unlockStarRank": 4,
+      "minimumDragonLevel": null,
+      "positionRequirement": null,
+      "verification": {
+        "status": "screenshot-verified",
+        "source": "Dawnseeker Unbroken Devotion screenshot",
+        "capturedAt": "2026-07-16",
+        "gameVersion": null,
+        "reviewedManually": true
+      },
+      "evidenceIds": [
+        "dawnseeker-unbroken-devotion-2026-07-16"
+      ],
+      "tags": [
+        "RECOVERY_RECEIVED_UP",
+        "BUFF_ALLIES",
+        "OTHER_ALLIES_TARGET",
+        "ANY_LANE_TARGET"
+      ],
+      "rawDescription": "Start of combat until end: increase Recovery Received of 2 other Allies in any lane. Both teammates receive the support; Dawnseeker is excluded. This does not apply Recovery and remains distinct from Recovery application. Recovery Received stacking remains unresolved.\n\nProgression (Recovery Received): Habit Level 1: +15%; Level 2: +18%; Level 3: +21%; Level 4: +25.5%; Level 5: +30%.\n\nPower: 250 / 550 / 900 / 1300 / 1800"
+    },
+    {
+      "id": "dawnseeker-sunbreak",
+      "kind": "habit",
+      "name": "Sunbreak",
+      "abilityClass": "passive",
+      "unlockStarRank": 6,
+      "minimumDragonLevel": null,
+      "positionRequirement": null,
+      "verification": {
+        "status": "screenshot-verified",
+        "source": "Dawnseeker Sunbreak screenshot",
+        "capturedAt": "2026-07-16",
+        "gameVersion": null,
+        "reviewedManually": true
+      },
+      "evidenceIds": [
+        "dawnseeker-sunbreak-2026-07-16"
+      ],
+      "tags": [
+        "TACTICAL_DAMAGE",
+        "RECOVERY",
+        "SPECIFIC_ROUNDS",
+        "COMMAND_AUGMENTATION"
+      ],
+      "rawDescription": "Command augmentation for Radiant Wings. The displayed values are final rates, not additive increases. Round 1 Tactical and Round 2 Tactical use Sunbreak's Tactical rate; Round 2 Recovery uses Sunbreak's Recovery rate. Round 1 Recovery is not created. Rounds 4 and 7 Tactical remain +50%; rounds 5 and 8 Recovery remain +30%.\n\nProgression (rounds 1-2 Tactical; Round 2 Recovery): Habit Level 1: +100%; +60%. Level 2: +110%; +66%. Level 3: +120%; +72%. Level 4: +135%; +81%. Level 5: +150%; +90%.\n\nPower: 250 / 550 / 900 / 1300 / 1800"
+    },
+    {
+      "id": "dawnseeker-winds-favor",
+      "kind": "habit",
+      "name": "Wind's Favor",
+      "abilityClass": "passive",
+      "unlockStarRank": 8,
+      "minimumDragonLevel": null,
+      "positionRequirement": null,
+      "verification": {
+        "status": "screenshot-verified",
+        "source": "Dawnseeker Wind's Favor screenshot",
+        "capturedAt": "2026-07-16",
+        "gameVersion": null,
+        "reviewedManually": true
+      },
+      "evidenceIds": [
+        "dawnseeker-winds-favor-2026-07-16"
+      ],
+      "tags": [
+        "BUFF_INITIATIVE",
+        "INITIATIVE_SCALING",
+        "BUFF_ALLIES",
+        "ANY_LANE_TARGET"
+      ],
+      "rawDescription": "Start of combat until end: increase Initiative of 3 Allies, including Dawnseeker and both teammates, enhanced by Dawnseeker's Initiative. Preserve the self portion without a self relationship. The enhancement formula remains unresolved.\n\nProgression (Initiative): Habit Level 1: +8%; Level 2: +9.6%; Level 3: +11.2%; Level 4: +13.6%; Level 5: +16%.\n\nPower: 250 / 550 / 900 / 1300 / 1800"
+    },
+    {
+      "id": "dawnseeker-first-light",
+      "kind": "habit",
+      "name": "First Light",
+      "abilityClass": "passive",
+      "unlockStarRank": 10,
+      "minimumDragonLevel": null,
+      "positionRequirement": null,
+      "verification": {
+        "status": "screenshot-verified",
+        "source": "Dawnseeker First Light screenshot",
+        "capturedAt": "2026-07-16",
+        "gameVersion": null,
+        "reviewedManually": true
+      },
+      "evidenceIds": [
+        "dawnseeker-first-light-2026-07-16"
+      ],
+      "tags": [
+        "INTELLIGENCE_UP",
+        "INSTINCT_UP",
+        "FIRST_STRIKE",
+        "INITIATIVE_SCALING",
+        "BUFF_ALLIES",
+        "OTHER_ALLIES_TARGET",
+        "ANY_LANE_TARGET",
+        "SPECIFIC_ROUNDS"
+      ],
+      "rawDescription": "Start of Round 1 for 3 rounds: increase Intelligence and Instinct of the same 3 Allies, including Dawnseeker and both teammates, enhanced by Dawnseeker's Initiative. Preserve the self portion without a self relationship.\n\nAt the start of rounds 1, 2, and 3: use one shared activation roll to grant First-Strike to both other Allies until the end of the current round. Dawnseeker is excluded. First-Strike makes recipients act before all other combatants and does not alias to Control. Stat enhancement formulas and First-Strike stacking/refresh remain unresolved.\n\nProgression (Intelligence and Instinct; First-Strike chance): Habit Level 1: +5%; 20%. Level 2: +6.5%; 26%. Level 3: +8%; 32%. Level 4: +10%; 40%. Level 5: +12.5%; 50%.\n\nPower: 250 / 580 / 1000 / 1600 / 2300"
+    }
+  ],
   "affinities": {
     "Cavalry": "unknown",
     "Shieldbearers": "unknown",
@@ -38,9 +240,45 @@
       "capturedAt": "2026-06-23",
       "gameVersion": null,
       "reviewedManually": true
+    },
+    "command": {
+      "status": "screenshot-verified",
+      "source": "Dawnseeker Radiant Wings screenshots",
+      "capturedAt": "2026-07-16",
+      "gameVersion": null,
+      "reviewedManually": true
+    },
+    "trait": {
+      "status": "screenshot-verified",
+      "source": "Dawnseeker Sentinel's Presence screenshot",
+      "capturedAt": "2026-07-16",
+      "gameVersion": null,
+      "reviewedManually": true
+    },
+    "habits": {
+      "status": "screenshot-verified",
+      "source": "Dawnseeker Habit screenshots",
+      "capturedAt": "2026-07-16",
+      "gameVersion": null,
+      "reviewedManually": true
+    },
+    "affinities": {
+      "status": "unknown",
+      "source": "Affinity icons were not text-verified",
+      "capturedAt": "2026-07-16",
+      "gameVersion": null,
+      "reviewedManually": true
     }
   },
-  "evidenceIds": [],
-  "simpleProfileId": null,
-  "simpleProfileStatus": "metadata-only-unmapped"
+  "evidenceIds": [
+    "dawnseeker-first-light-2026-07-16",
+    "dawnseeker-radiant-wings-2026-07-16",
+    "dawnseeker-sentinels-presence-2026-07-16",
+    "dawnseeker-sunbreak-2026-07-16",
+    "dawnseeker-tactical-inferno-2026-07-16",
+    "dawnseeker-unbroken-devotion-2026-07-16",
+    "dawnseeker-winds-favor-2026-07-16"
+  ],
+  "simpleProfileId": "dawnseeker",
+  "simpleProfileStatus": "curated"
 }

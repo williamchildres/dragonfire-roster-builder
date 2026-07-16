@@ -19,6 +19,9 @@ export const SYNERGY_TAGS = [
   'damage:fire',
   'damage:any',
   'effect:recovery',
+  'effect:recovery-received',
+  'defense:damage-received',
+  'defense:physical-damage-received',
   'stat:strength',
   'stat:instinct',
   'stat:intelligence',
@@ -48,6 +51,9 @@ export const SYNERGY_TAG_LABELS: Record<SynergyTag, string> = {
   'damage:fire': 'Fire Damage',
   'damage:any': 'Damage Dealt',
   'effect:recovery': 'Recovery',
+  'effect:recovery-received': 'Recovery Received',
+  'defense:damage-received': 'Damage Received reduction',
+  'defense:physical-damage-received': 'Physical Damage Received reduction',
   'stat:strength': 'Strength',
   'stat:instinct': 'Instinct',
   'stat:intelligence': 'Intelligence',
@@ -55,7 +61,6 @@ export const SYNERGY_TAG_LABELS: Record<SynergyTag, string> = {
 };
 
 export const CONTROL_ALIAS_TAGS = [
-  'status:slow',
   'status:stun',
   'status:stagger',
   'status:overwhelm',

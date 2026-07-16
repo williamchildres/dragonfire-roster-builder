@@ -1,12 +1,12 @@
 {
   "format": "dragonfire-lab-project-context",
   "contextVersion": 2,
-  "generatedAt": "2026-07-16T20:35:04.015Z",
+  "generatedAt": "2026-07-16T22:45:25.734Z",
   "source": {
     "repository": "https://github.com/williamchildres/dragonfire-roster-builder",
-    "branch": "data/add-rare-batch-3",
-    "commit": "71bc114e9afb2fc9368cb276bc40f7c476b92de0",
-    "databaseVersion": "0.6.7",
+    "branch": "data/add-rare-batch-4",
+    "commit": "0bdde89ca9fa5e3844efe7d9c1969f6753ef45bf",
+    "databaseVersion": "0.6.8",
     "dataSchemaVersion": 13,
     "localRosterSchemaVersion": 4,
     "gameBuild": "26.6.53509"
@@ -30,12 +30,12 @@
   },
   "rosterSummary": {
     "totalDragons": 31,
-    "detailedDragons": 28,
-    "metadataOnlyDragons": 3,
-    "curatedSimpleProfiles": 28,
-    "profileAuditReviews": 196,
-    "evidenceSources": 230,
-    "manualReviews": 41
+    "detailedDragons": 31,
+    "metadataOnlyDragons": 0,
+    "curatedSimpleProfiles": 31,
+    "profileAuditReviews": 217,
+    "evidenceSources": 251,
+    "manualReviews": 44
   },
   "dragons": [
     {
@@ -6059,11 +6059,197 @@
       "rarity": "Rare",
       "breed": "Sentinel",
       "rosterSourceStatus": "official-website",
-      "dataStatus": "official-metadata-only",
-      "lastVerified": "2026-06-23",
-      "profileCompleteness": "metadata-only",
+      "dataStatus": "community-verified",
+      "lastVerified": "2026-07-16",
+      "profileCompleteness": "detailed-abilities",
       "officialProfileUrl": "https://gotdragonfire.com/dragons/vesper/",
-      "abilities": [],
+      "abilities": [
+        {
+          "id": "vesper-eventide-strike",
+          "kind": "command",
+          "name": "Eventide Strike",
+          "abilityClass": "active",
+          "unlockStarRank": null,
+          "minimumDragonLevel": null,
+          "positionRequirement": null,
+          "verification": {
+            "status": "screenshot-verified",
+            "source": "Vesper Eventide Strike screenshots",
+            "capturedAt": "2026-07-16",
+            "gameVersion": null,
+            "reviewedManually": true
+          },
+          "evidenceIds": [
+            "vesper-eventide-strike-2026-07-16"
+          ],
+          "tags": [
+            "SLOW",
+            "TACTICAL_DAMAGE",
+            "ENHANCED_BY_INSTINCT",
+            "SAME_LANE_TARGET",
+            "SPECIFIC_ROUNDS",
+            "MULTI_SCHEDULE_COMMAND"
+          ],
+          "rawDescription": "Each round: independently make a 20% attempt to afflict Slow on 1 enemy in the same lane for 2 rounds. Slow makes the target attack after all other combatants each round. Slow is specifically named, is distinct from First-Strike, and does not belong to the verified Control alias category.\n\nRounds 1, 3, 6, and 8: deal Tactical Damage to 1 enemy in the same lane at a +70% Damage Rate. Tactical Damage scales with Instinct and is mitigated by target Intelligence. The scheduled Tactical attack and each-round Slow attempt are independent pieces and may both occur on a scheduled attack round. Same-lane fallback and Slow refresh/stacking remain unresolved."
+        },
+        {
+          "id": "vesper-sentinels-wit",
+          "kind": "trait",
+          "name": "Sentinel's Wit",
+          "abilityClass": "passive",
+          "unlockStarRank": null,
+          "minimumDragonLevel": 16,
+          "positionRequirement": "vanguard",
+          "verification": {
+            "status": "screenshot-verified",
+            "source": "Vesper Sentinel's Wit screenshot",
+            "capturedAt": "2026-07-16",
+            "gameVersion": null,
+            "reviewedManually": true
+          },
+          "evidenceIds": [
+            "vesper-sentinels-wit-2026-07-16"
+          ],
+          "tags": [
+            "TACTICAL_DAMAGE_UP",
+            "INSTINCT_UP",
+            "BUFF_INITIATIVE",
+            "BUFF_SELF",
+            "BUFF_ALLIES",
+            "VANGUARD_REQUIRED",
+            "LEFT_FLANK_TARGET"
+          ],
+          "rawDescription": "At Dragon Level 16+ while Vesper is Vanguard: increase Vesper Tactical Damage Dealt by +16%. Increase Instinct and Initiative of the same Left Flank ally by +20 each. The Tactical increase is self-only and is not allied Tactical support."
+        },
+        {
+          "id": "vesper-strategic-leader",
+          "kind": "habit",
+          "name": "Strategic Leader",
+          "abilityClass": "passive",
+          "unlockStarRank": 2,
+          "minimumDragonLevel": null,
+          "positionRequirement": null,
+          "verification": {
+            "status": "screenshot-verified",
+            "source": "Vesper Strategic Leader screenshot",
+            "capturedAt": "2026-07-16",
+            "gameVersion": null,
+            "reviewedManually": true
+          },
+          "evidenceIds": [
+            "vesper-strategic-leader-2026-07-16"
+          ],
+          "tags": [
+            "TACTICAL_DAMAGE_UP",
+            "BUFF_ALLIES",
+            "ANY_LANE_TARGET"
+          ],
+          "rawDescription": "Start of combat until end: increase Tactical Damage Dealt of 1 Ally in any lane, prioritizing Vanguard. Ally includes Vesper. If Vesper is a flank, the Vanguard ally receives support; if Vesper is Vanguard, Vesper is selected and no outward relationship is created. Fallback with no valid Vanguard remains unresolved.\n\nProgression (Tactical Damage Dealt): Habit Level 1: +8%; Level 2: +9.6%; Level 3: +11.2%; Level 4: +13.6%; Level 5: +16%.\n\nPower: 250 / 550 / 900 / 1300 / 1800"
+        },
+        {
+          "id": "vesper-dragons-insight",
+          "kind": "habit",
+          "name": "Dragon's Insight",
+          "abilityClass": "passive",
+          "unlockStarRank": 4,
+          "minimumDragonLevel": null,
+          "positionRequirement": null,
+          "verification": {
+            "status": "screenshot-verified",
+            "source": "Vesper Dragon's Insight screenshot",
+            "capturedAt": "2026-07-16",
+            "gameVersion": null,
+            "reviewedManually": true
+          },
+          "evidenceIds": [
+            "vesper-dragons-insight-2026-07-16"
+          ],
+          "tags": [
+            "DAMAGE_RECEIVED_DOWN",
+            "INSTINCT_UP",
+            "BUFF_SELF"
+          ],
+          "rawDescription": "Start of combat until end: reduce Vesper Damage Received and increase Vesper Instinct. Entirely self-only.\n\nProgression (Damage Received; Instinct): Habit Level 1: -4%; +5%. Level 2: -4.8%; +6%. Level 3: -5.6%; +7%. Level 4: -6.8%; +8.5%. Level 5: -8%; +10%.\n\nPower: 250 / 550 / 900 / 1300 / 1800"
+        },
+        {
+          "id": "vesper-saviors-waltz",
+          "kind": "habit",
+          "name": "Savior's Waltz",
+          "abilityClass": "passive",
+          "unlockStarRank": 6,
+          "minimumDragonLevel": null,
+          "positionRequirement": null,
+          "verification": {
+            "status": "screenshot-verified",
+            "source": "Vesper Savior's Waltz screenshot",
+            "capturedAt": "2026-07-16",
+            "gameVersion": null,
+            "reviewedManually": true
+          },
+          "evidenceIds": [
+            "vesper-saviors-waltz-2026-07-16"
+          ],
+          "tags": [
+            "RESISTANCE",
+            "BUFF_SELF",
+            "BUFF_ALLIES",
+            "ADJACENT_TARGET"
+          ],
+          "rawDescription": "Each round: one shared activation roll applies Resistance to Vesper and 1 other adjacent Ally for 2 rounds. Resistance reduces Damage Received by 10%. From a flank, the outward recipient is Vanguard. From Vanguard, one of the two adjacent flanks is selected, but priority is unresolved; do not treat both flanks as guaranteed. The prose rounds Habit Level 1 to 13%, while the table gives 12.5%; the exact table value is canonical. Resistance stacking/refresh remains unresolved.\n\nProgression (activation chance): Habit Level 1: 12.5%; Level 2: 15%; Level 3: 17.5%; Level 4: 21.25%; Level 5: 25%.\n\nPower: 250 / 550 / 900 / 1300 / 1800"
+        },
+        {
+          "id": "vesper-insightful-allies",
+          "kind": "habit",
+          "name": "Insightful Allies",
+          "abilityClass": "passive",
+          "unlockStarRank": 8,
+          "minimumDragonLevel": null,
+          "positionRequirement": null,
+          "verification": {
+            "status": "screenshot-verified",
+            "source": "Vesper Insightful Allies screenshot",
+            "capturedAt": "2026-07-16",
+            "gameVersion": null,
+            "reviewedManually": true
+          },
+          "evidenceIds": [
+            "vesper-insightful-allies-2026-07-16"
+          ],
+          "tags": [
+            "INSTINCT_UP",
+            "ENHANCED_BY_INSTINCT",
+            "BUFF_ALLIES",
+            "ANY_LANE_TARGET"
+          ],
+          "rawDescription": "Start of combat until end: increase Instinct of 3 Allies in any lane, including Vesper and both teammates, enhanced by Vesper's Instinct. The exact enhancement formula remains unresolved.\n\nProgression (Instinct): Habit Level 1: +8%; Level 2: +9.6%; Level 3: +11.2%; Level 4: +13.6%; Level 5: +16%.\n\nPower: 250 / 550 / 900 / 1300 / 1800"
+        },
+        {
+          "id": "vesper-midnight-onslaught",
+          "kind": "habit",
+          "name": "Midnight Onslaught",
+          "abilityClass": "passive",
+          "unlockStarRank": 10,
+          "minimumDragonLevel": null,
+          "positionRequirement": null,
+          "verification": {
+            "status": "screenshot-verified",
+            "source": "Vesper Midnight Onslaught screenshot",
+            "capturedAt": "2026-07-16",
+            "gameVersion": null,
+            "reviewedManually": true
+          },
+          "evidenceIds": [
+            "vesper-midnight-onslaught-2026-07-16"
+          ],
+          "tags": [
+            "CONFUSION",
+            "CONTROL",
+            "ADJACENT_TARGET",
+            "SPECIFIC_ROUNDS"
+          ],
+          "rawDescription": "At the start of rounds 6, 7, 8, 9, and 10: chance to afflict Confusion on 1 enemy within adjacency for 2 rounds. Confusion gives affected Command, Habit, and Basic Attack actions a 50% chance to mistake allies for enemies and enemies for allies; it does not simply prevent the action. Confusion is specifically named and satisfies Control through one alias path. It is separate from Slow and is a standalone Habit, not an Eventide Strike augmentation. Confusion refresh/stacking and redirected-target resolution remain unresolved.\n\nProgression (Confusion chance): Habit Level 1: 24%; Level 2: 31.2%; Level 3: 38.4%; Level 4: 48%; Level 5: 60%.\n\nPower: 250 / 580 / 1000 / 1600 / 2300"
+        }
+      ],
       "affinities": {
         "Cavalry": "unknown",
         "Shieldbearers": "unknown",
@@ -6092,11 +6278,47 @@
           "capturedAt": "2026-06-23",
           "gameVersion": null,
           "reviewedManually": true
+        },
+        "command": {
+          "status": "screenshot-verified",
+          "source": "Vesper Eventide Strike screenshots",
+          "capturedAt": "2026-07-16",
+          "gameVersion": null,
+          "reviewedManually": true
+        },
+        "trait": {
+          "status": "screenshot-verified",
+          "source": "Vesper Sentinel's Wit screenshot",
+          "capturedAt": "2026-07-16",
+          "gameVersion": null,
+          "reviewedManually": true
+        },
+        "habits": {
+          "status": "screenshot-verified",
+          "source": "Vesper Habit screenshots",
+          "capturedAt": "2026-07-16",
+          "gameVersion": null,
+          "reviewedManually": true
+        },
+        "affinities": {
+          "status": "unknown",
+          "source": "Affinity icons were not text-verified",
+          "capturedAt": "2026-07-16",
+          "gameVersion": null,
+          "reviewedManually": true
         }
       },
-      "evidenceIds": [],
-      "simpleProfileId": null,
-      "simpleProfileStatus": "metadata-only-unmapped"
+      "evidenceIds": [
+        "vesper-dragons-insight-2026-07-16",
+        "vesper-eventide-strike-2026-07-16",
+        "vesper-insightful-allies-2026-07-16",
+        "vesper-midnight-onslaught-2026-07-16",
+        "vesper-saviors-waltz-2026-07-16",
+        "vesper-sentinels-wit-2026-07-16",
+        "vesper-strategic-leader-2026-07-16"
+      ],
+      "simpleProfileId": "vesper",
+      "simpleProfileStatus": "curated"
     },
     {
       "id": "arulix",
@@ -6380,11 +6602,207 @@
       "rarity": "Rare",
       "breed": "Champion",
       "rosterSourceStatus": "official-website",
-      "dataStatus": "official-metadata-only",
-      "lastVerified": "2026-06-23",
-      "profileCompleteness": "metadata-only",
+      "dataStatus": "community-verified",
+      "lastVerified": "2026-07-16",
+      "profileCompleteness": "detailed-abilities",
       "officialProfileUrl": "https://gotdragonfire.com/dragons/nyrena/",
-      "abilities": [],
+      "abilities": [
+        {
+          "id": "nyrena-undermine",
+          "kind": "command",
+          "name": "Undermine",
+          "abilityClass": "active",
+          "unlockStarRank": null,
+          "minimumDragonLevel": null,
+          "positionRequirement": null,
+          "verification": {
+            "status": "screenshot-verified",
+            "source": "Nyrena Undermine screenshots",
+            "capturedAt": "2026-07-16",
+            "gameVersion": null,
+            "reviewedManually": true
+          },
+          "evidenceIds": [
+            "nyrena-undermine-2026-07-16"
+          ],
+          "tags": [
+            "PHYSICAL_DAMAGE_DEALT_DOWN",
+            "FIRE_DAMAGE",
+            "TACTICAL_DAMAGE",
+            "INTELLIGENCE_SCALING",
+            "ENHANCED_BY_INSTINCT",
+            "ANY_LANE_TARGET",
+            "SAME_LANE_TARGET",
+            "SPECIFIC_ROUNDS",
+            "MULTI_SCHEDULE_COMMAND",
+            "ENEMY_DEBUFF"
+          ],
+          "rawDescription": "Each round: one 10% activation affects up to 3 enemies in any lane, reducing Physical Damage Dealt by -10% for 1 round, or 2 rounds against a target afflicted with Burn. Burn improves duration only; Nyrena does not apply Burn, and Fire Damage does not imply Burn. The Command summary and detailed heading say Physical Damage Dealt, while the detailed body conflicts by saying Physical Damage Received by -10%; Dealt is canonical. Group-roll behavior, fewer-than-three-enemy behavior, Burn evaluation timing, and suppression refresh/stacking remain unresolved.\n\nRounds 1 and 3: deal Fire Damage to 3 enemies in any lane at a +20% Damage Rate, scaling with Intelligence and mitigated by target Initiative.\n\nRounds 5, 7, and 9: deal Tactical Damage to 1 enemy in the same lane at a +80% Damage Rate, scaling with Instinct and mitigated by target Intelligence. Same-lane fallback remains unresolved."
+        },
+        {
+          "id": "nyrena-champions-brilliance",
+          "kind": "trait",
+          "name": "Champion's Brilliance",
+          "abilityClass": "passive",
+          "unlockStarRank": null,
+          "minimumDragonLevel": 16,
+          "positionRequirement": "vanguard",
+          "verification": {
+            "status": "screenshot-verified",
+            "source": "Nyrena Champion's Brilliance screenshot",
+            "capturedAt": "2026-07-16",
+            "gameVersion": null,
+            "reviewedManually": true
+          },
+          "evidenceIds": [
+            "nyrena-champions-brilliance-2026-07-16"
+          ],
+          "tags": [
+            "STRENGTH_UP",
+            "INTELLIGENCE_UP",
+            "INSTINCT_UP",
+            "BUFF_SELF",
+            "DAMAGE_RECEIVED_DOWN",
+            "BUFF_ALLIES",
+            "VANGUARD_REQUIRED",
+            "RIGHT_FLANK_TARGET"
+          ],
+          "rawDescription": "At Dragon Level 16+ while Nyrena is Vanguard: increase Nyrena Strength, Intelligence, and Instinct by +15 each. Reduce Damage Received by the Right Flank ally by -8%. The self stats create no allied support; the Right Flank effect is generic defense, not offensive Physical, Fire, or Tactical support."
+        },
+        {
+          "id": "nyrena-battle-dread",
+          "kind": "habit",
+          "name": "Battle Dread",
+          "abilityClass": "passive",
+          "unlockStarRank": 2,
+          "minimumDragonLevel": null,
+          "positionRequirement": null,
+          "verification": {
+            "status": "screenshot-verified",
+            "source": "Nyrena Battle Dread screenshot",
+            "capturedAt": "2026-07-16",
+            "gameVersion": null,
+            "reviewedManually": true
+          },
+          "evidenceIds": [
+            "nyrena-battle-dread-2026-07-16"
+          ],
+          "tags": [
+            "DEBUFF_STRENGTH",
+            "DEBUFF_INITIATIVE",
+            "INTELLIGENCE_SCALING",
+            "ENEMY_DEBUFF",
+            "ANY_LANE_TARGET"
+          ],
+          "rawDescription": "Start of combat until end: reduce Strength and Initiative of the same 3 enemies, enhanced by Nyrena's Intelligence. This is direct battlefield suppression with no activation roll and is not a named status. The enhancement formula remains unresolved.\n\nProgression (Strength and Initiative): Habit Level 1: -4%; Level 2: -4.8%; Level 3: -5.6%; Level 4: -6.8%; Level 5: -8%.\n\nPower: 250 / 550 / 900 / 1300 / 1800"
+        },
+        {
+          "id": "nyrena-mindful-synergy",
+          "kind": "habit",
+          "name": "Mindful Synergy",
+          "abilityClass": "passive",
+          "unlockStarRank": 4,
+          "minimumDragonLevel": null,
+          "positionRequirement": null,
+          "verification": {
+            "status": "screenshot-verified",
+            "source": "Nyrena Mindful Synergy screenshot",
+            "capturedAt": "2026-07-16",
+            "gameVersion": null,
+            "reviewedManually": true
+          },
+          "evidenceIds": [
+            "nyrena-mindful-synergy-2026-07-16"
+          ],
+          "tags": [
+            "INTELLIGENCE_UP",
+            "INSTINCT_UP",
+            "INITIATIVE_SCALING",
+            "BUFF_ALLIES",
+            "ANY_LANE_TARGET"
+          ],
+          "rawDescription": "Start of combat until end: increase Intelligence and Instinct of the same 3 Allies, including Nyrena and both teammates, enhanced by Nyrena's Initiative. Preserve the self portion without a self relationship. The enhancement formula remains unresolved.\n\nProgression (Intelligence and Instinct): Habit Level 1: +4%; Level 2: +4.8%; Level 3: +5.6%; Level 4: +6.8%; Level 5: +8%.\n\nPower: 250 / 550 / 900 / 1300 / 1800"
+        },
+        {
+          "id": "nyrena-deepen-the-breach",
+          "kind": "habit",
+          "name": "Deepen the Breach",
+          "abilityClass": "passive",
+          "unlockStarRank": 6,
+          "minimumDragonLevel": null,
+          "positionRequirement": null,
+          "verification": {
+            "status": "screenshot-verified",
+            "source": "Nyrena Deepen the Breach screenshot",
+            "capturedAt": "2026-07-16",
+            "gameVersion": null,
+            "reviewedManually": true
+          },
+          "evidenceIds": [
+            "nyrena-deepen-the-breach-2026-07-16"
+          ],
+          "tags": [
+            "FIRE_DAMAGE_UP",
+            "BUFF_SELF",
+            "BUFF_ALLIES",
+            "OTHER_ALLIES_TARGET",
+            "ADJACENT_TARGET",
+            "SPECIFIC_ROUNDS"
+          ],
+          "rawDescription": "Start of Round 1: increase Nyrena Fire Damage Dealt for 5 rounds. Start of Round 6: increase Fire Damage Dealt of 1 other adjacent Ally for 5 rounds. From a flank, the outward recipient is Vanguard. From Vanguard, exactly 1 flank recipient is selected but priority remains unresolved; do not guarantee both flanks. After combat, increase Nyrena Tile Damage Dealt to tile durability. Tile Damage mode details are unresolved and non-scoring.\n\nProgression (Tile Damage; self Fire Damage; ally Fire Damage): Habit Level 1: +10%; +8%; +12%. Level 2: +12%; +9.6%; +14.4%. Level 3: +14%; +11.2%; +16.8%. Level 4: +17%; +13.6%; +20.4%. Level 5: +20%; +16%; +24%.\n\nPower: 250 / 550 / 900 / 1300 / 1800"
+        },
+        {
+          "id": "nyrena-dragons-ire",
+          "kind": "habit",
+          "name": "Dragon's Ire",
+          "abilityClass": "passive",
+          "unlockStarRank": 8,
+          "minimumDragonLevel": null,
+          "positionRequirement": null,
+          "verification": {
+            "status": "screenshot-verified",
+            "source": "Nyrena Dragon's Ire screenshot",
+            "capturedAt": "2026-07-16",
+            "gameVersion": null,
+            "reviewedManually": true
+          },
+          "evidenceIds": [
+            "nyrena-dragons-ire-2026-07-16"
+          ],
+          "tags": [
+            "TACTICAL_DAMAGE_UP",
+            "FIRE_DAMAGE_UP",
+            "BUFF_SELF"
+          ],
+          "rawDescription": "Start of combat until end: increase Nyrena Tactical Damage Dealt and Fire Damage Dealt. Entirely self-only.\n\nProgression (Tactical and Fire Damage Dealt): Habit Level 1: +4%; Level 2: +4.8%; Level 3: +5.6%; Level 4: +6.8%; Level 5: +8%.\n\nPower: 250 / 550 / 900 / 1300 / 1800"
+        },
+        {
+          "id": "nyrena-the-long-siege",
+          "kind": "habit",
+          "name": "The Long Siege",
+          "abilityClass": "passive",
+          "unlockStarRank": 10,
+          "minimumDragonLevel": null,
+          "positionRequirement": null,
+          "verification": {
+            "status": "screenshot-verified",
+            "source": "Nyrena The Long Siege screenshot",
+            "capturedAt": "2026-07-16",
+            "gameVersion": null,
+            "reviewedManually": true
+          },
+          "evidenceIds": [
+            "nyrena-the-long-siege-2026-07-16"
+          ],
+          "tags": [
+            "PHYSICAL_DAMAGE_RECEIVED_DOWN",
+            "BUFF_ALLIES",
+            "ANY_LANE_TARGET",
+            "SPECIFIC_ROUNDS"
+          ],
+          "rawDescription": "At the start of rounds 6, 7, 8, 9, and 10: reduce Physical Damage Received by 3 Allies, including Nyrena and both teammates, until the end of the current round. Double the magnitude while Defending; Defending changes magnitude, not duration, and is not assumed always active. This is timed defensive support, not offensive Physical support. Defending and defensive stacking remain unresolved.\n\nProgression (base; while Defending): Habit Level 1: -5%; -10%. Level 2: -6.5%; -13%. Level 3: -8%; -16%. Level 4: -10%; -20%. Level 5: -12.5%; -25%.\n\nPower: 250 / 580 / 1000 / 1600 / 2300"
+        }
+      ],
       "affinities": {
         "Cavalry": "unknown",
         "Shieldbearers": "unknown",
@@ -6413,11 +6831,47 @@
           "capturedAt": "2026-06-23",
           "gameVersion": null,
           "reviewedManually": true
+        },
+        "command": {
+          "status": "screenshot-verified",
+          "source": "Nyrena Undermine screenshots",
+          "capturedAt": "2026-07-16",
+          "gameVersion": null,
+          "reviewedManually": true
+        },
+        "trait": {
+          "status": "screenshot-verified",
+          "source": "Nyrena Champion's Brilliance screenshot",
+          "capturedAt": "2026-07-16",
+          "gameVersion": null,
+          "reviewedManually": true
+        },
+        "habits": {
+          "status": "screenshot-verified",
+          "source": "Nyrena Habit screenshots",
+          "capturedAt": "2026-07-16",
+          "gameVersion": null,
+          "reviewedManually": true
+        },
+        "affinities": {
+          "status": "unknown",
+          "source": "Affinity icons were not text-verified",
+          "capturedAt": "2026-07-16",
+          "gameVersion": null,
+          "reviewedManually": true
         }
       },
-      "evidenceIds": [],
-      "simpleProfileId": null,
-      "simpleProfileStatus": "metadata-only-unmapped"
+      "evidenceIds": [
+        "nyrena-battle-dread-2026-07-16",
+        "nyrena-champions-brilliance-2026-07-16",
+        "nyrena-deepen-the-breach-2026-07-16",
+        "nyrena-dragons-ire-2026-07-16",
+        "nyrena-mindful-synergy-2026-07-16",
+        "nyrena-the-long-siege-2026-07-16",
+        "nyrena-undermine-2026-07-16"
+      ],
+      "simpleProfileId": "nyrena",
+      "simpleProfileStatus": "curated"
     },
     {
       "id": "dawnseeker",
@@ -6426,11 +6880,213 @@
       "rarity": "Rare",
       "breed": "Sentinel",
       "rosterSourceStatus": "official-website",
-      "dataStatus": "official-metadata-only",
-      "lastVerified": "2026-06-23",
-      "profileCompleteness": "metadata-only",
+      "dataStatus": "community-verified",
+      "lastVerified": "2026-07-16",
+      "profileCompleteness": "detailed-abilities",
       "officialProfileUrl": "https://gotdragonfire.com/dragons/dawnseeker/",
-      "abilities": [],
+      "abilities": [
+        {
+          "id": "dawnseeker-radiant-wings",
+          "kind": "command",
+          "name": "Radiant Wings",
+          "abilityClass": "active",
+          "unlockStarRank": null,
+          "minimumDragonLevel": null,
+          "positionRequirement": null,
+          "verification": {
+            "status": "screenshot-verified",
+            "source": "Dawnseeker Radiant Wings screenshots",
+            "capturedAt": "2026-07-16",
+            "gameVersion": null,
+            "reviewedManually": true
+          },
+          "evidenceIds": [
+            "dawnseeker-radiant-wings-2026-07-16"
+          ],
+          "tags": [
+            "TACTICAL_DAMAGE",
+            "RECOVERY",
+            "INSTINCT_UP",
+            "BUFF_INITIATIVE",
+            "BUFF_SELF",
+            "BUFF_ALLIES",
+            "ADJACENT_TARGET",
+            "SAME_LANE_TARGET",
+            "SPECIFIC_ROUNDS",
+            "MULTI_SCHEDULE_COMMAND",
+            "ENHANCED_BY_INSTINCT",
+            "INITIATIVE_SCALING",
+            "COMMAND_AUGMENTATION"
+          ],
+          "rawDescription": "Each round: one shared 30% activation roll increases Dawnseeker Instinct and Initiative by +20% for 1 round. Both buffs are self-only; activation timing and refresh/stacking remain unresolved.\n\nRounds 1, 2, 4, and 7: deal Tactical Damage to 1 enemy in the same lane at a base +50% Damage Rate, scaling with Instinct and mitigated by target Intelligence. Same-lane fallback remains unresolved.\n\nRounds 2, 5, and 8: apply Recovery to 2 Allies within adjacency at a base +30% Recovery Rate, enhanced by Dawnseeker's Initiative. Dawnseeker is eligible. From a flank, Dawnseeker and Vanguard are the two eligible recipients, so Vanguard is the outward recipient. From Vanguard, 2 of 3 eligible Allies are selected and exact recipients remain unresolved.\n\nAt 6+ Stars, Sunbreak augments only existing Round 1 and Round 2 paths: its current final Tactical rate replaces the base rate on rounds 1 and 2, and its current final Recovery rate replaces the base rate on Round 2. It does not create Round 1 Recovery and does not duplicate any Command path."
+        },
+        {
+          "id": "dawnseeker-sentinels-presence",
+          "kind": "trait",
+          "name": "Sentinel's Presence",
+          "abilityClass": "passive",
+          "unlockStarRank": null,
+          "minimumDragonLevel": 16,
+          "positionRequirement": "vanguard",
+          "verification": {
+            "status": "screenshot-verified",
+            "source": "Dawnseeker Sentinel's Presence screenshot",
+            "capturedAt": "2026-07-16",
+            "gameVersion": null,
+            "reviewedManually": true
+          },
+          "evidenceIds": [
+            "dawnseeker-sentinels-presence-2026-07-16"
+          ],
+          "tags": [
+            "RECOVERY_DEALT_UP",
+            "INSTINCT_UP",
+            "BUFF_SELF",
+            "FIRE_DAMAGE_UP",
+            "BUFF_ALLIES",
+            "VANGUARD_REQUIRED",
+            "LEFT_FLANK_TARGET"
+          ],
+          "rawDescription": "At Dragon Level 16+ while Dawnseeker is Vanguard: increase Dawnseeker Recovery Dealt by +15% and Instinct by +25. Increase Fire Damage Dealt by the Left Flank ally by +16%. The self Recovery and Instinct bonuses create no allied support."
+        },
+        {
+          "id": "dawnseeker-tactical-inferno",
+          "kind": "habit",
+          "name": "Tactical Inferno",
+          "abilityClass": "passive",
+          "unlockStarRank": 2,
+          "minimumDragonLevel": null,
+          "positionRequirement": null,
+          "verification": {
+            "status": "screenshot-verified",
+            "source": "Dawnseeker Tactical Inferno screenshot",
+            "capturedAt": "2026-07-16",
+            "gameVersion": null,
+            "reviewedManually": true
+          },
+          "evidenceIds": [
+            "dawnseeker-tactical-inferno-2026-07-16"
+          ],
+          "tags": [
+            "TACTICAL_DAMAGE_UP",
+            "FIRE_DAMAGE_UP",
+            "BUFF_ALLIES",
+            "ANY_LANE_TARGET",
+            "LEFT_FLANK_TARGET",
+            "RIGHT_FLANK_TARGET",
+            "SPECIFIC_ROUNDS"
+          ],
+          "rawDescription": "Start of Round 1 for 3 rounds: independently increase Tactical Damage Dealt of 1 Ally in any lane prioritizing Left Flank, and Fire Damage Dealt of 1 Ally in any lane prioritizing Right Flank. Ally includes Dawnseeker. A branch selecting Dawnseeker creates no outward relationship. Fallback behavior is unresolved.\n\nProgression (Tactical and Fire Damage Dealt): Habit Level 1: +9%; Level 2: +10.8%; Level 3: +12.6%; Level 4: +15.3%; Level 5: +18%.\n\nPower: 250 / 550 / 900 / 1300 / 1800"
+        },
+        {
+          "id": "dawnseeker-unbroken-devotion",
+          "kind": "habit",
+          "name": "Unbroken Devotion",
+          "abilityClass": "passive",
+          "unlockStarRank": 4,
+          "minimumDragonLevel": null,
+          "positionRequirement": null,
+          "verification": {
+            "status": "screenshot-verified",
+            "source": "Dawnseeker Unbroken Devotion screenshot",
+            "capturedAt": "2026-07-16",
+            "gameVersion": null,
+            "reviewedManually": true
+          },
+          "evidenceIds": [
+            "dawnseeker-unbroken-devotion-2026-07-16"
+          ],
+          "tags": [
+            "RECOVERY_RECEIVED_UP",
+            "BUFF_ALLIES",
+            "OTHER_ALLIES_TARGET",
+            "ANY_LANE_TARGET"
+          ],
+          "rawDescription": "Start of combat until end: increase Recovery Received of 2 other Allies in any lane. Both teammates receive the support; Dawnseeker is excluded. This does not apply Recovery and remains distinct from Recovery application. Recovery Received stacking remains unresolved.\n\nProgression (Recovery Received): Habit Level 1: +15%; Level 2: +18%; Level 3: +21%; Level 4: +25.5%; Level 5: +30%.\n\nPower: 250 / 550 / 900 / 1300 / 1800"
+        },
+        {
+          "id": "dawnseeker-sunbreak",
+          "kind": "habit",
+          "name": "Sunbreak",
+          "abilityClass": "passive",
+          "unlockStarRank": 6,
+          "minimumDragonLevel": null,
+          "positionRequirement": null,
+          "verification": {
+            "status": "screenshot-verified",
+            "source": "Dawnseeker Sunbreak screenshot",
+            "capturedAt": "2026-07-16",
+            "gameVersion": null,
+            "reviewedManually": true
+          },
+          "evidenceIds": [
+            "dawnseeker-sunbreak-2026-07-16"
+          ],
+          "tags": [
+            "TACTICAL_DAMAGE",
+            "RECOVERY",
+            "SPECIFIC_ROUNDS",
+            "COMMAND_AUGMENTATION"
+          ],
+          "rawDescription": "Command augmentation for Radiant Wings. The displayed values are final rates, not additive increases. Round 1 Tactical and Round 2 Tactical use Sunbreak's Tactical rate; Round 2 Recovery uses Sunbreak's Recovery rate. Round 1 Recovery is not created. Rounds 4 and 7 Tactical remain +50%; rounds 5 and 8 Recovery remain +30%.\n\nProgression (rounds 1-2 Tactical; Round 2 Recovery): Habit Level 1: +100%; +60%. Level 2: +110%; +66%. Level 3: +120%; +72%. Level 4: +135%; +81%. Level 5: +150%; +90%.\n\nPower: 250 / 550 / 900 / 1300 / 1800"
+        },
+        {
+          "id": "dawnseeker-winds-favor",
+          "kind": "habit",
+          "name": "Wind's Favor",
+          "abilityClass": "passive",
+          "unlockStarRank": 8,
+          "minimumDragonLevel": null,
+          "positionRequirement": null,
+          "verification": {
+            "status": "screenshot-verified",
+            "source": "Dawnseeker Wind's Favor screenshot",
+            "capturedAt": "2026-07-16",
+            "gameVersion": null,
+            "reviewedManually": true
+          },
+          "evidenceIds": [
+            "dawnseeker-winds-favor-2026-07-16"
+          ],
+          "tags": [
+            "BUFF_INITIATIVE",
+            "INITIATIVE_SCALING",
+            "BUFF_ALLIES",
+            "ANY_LANE_TARGET"
+          ],
+          "rawDescription": "Start of combat until end: increase Initiative of 3 Allies, including Dawnseeker and both teammates, enhanced by Dawnseeker's Initiative. Preserve the self portion without a self relationship. The enhancement formula remains unresolved.\n\nProgression (Initiative): Habit Level 1: +8%; Level 2: +9.6%; Level 3: +11.2%; Level 4: +13.6%; Level 5: +16%.\n\nPower: 250 / 550 / 900 / 1300 / 1800"
+        },
+        {
+          "id": "dawnseeker-first-light",
+          "kind": "habit",
+          "name": "First Light",
+          "abilityClass": "passive",
+          "unlockStarRank": 10,
+          "minimumDragonLevel": null,
+          "positionRequirement": null,
+          "verification": {
+            "status": "screenshot-verified",
+            "source": "Dawnseeker First Light screenshot",
+            "capturedAt": "2026-07-16",
+            "gameVersion": null,
+            "reviewedManually": true
+          },
+          "evidenceIds": [
+            "dawnseeker-first-light-2026-07-16"
+          ],
+          "tags": [
+            "INTELLIGENCE_UP",
+            "INSTINCT_UP",
+            "FIRST_STRIKE",
+            "INITIATIVE_SCALING",
+            "BUFF_ALLIES",
+            "OTHER_ALLIES_TARGET",
+            "ANY_LANE_TARGET",
+            "SPECIFIC_ROUNDS"
+          ],
+          "rawDescription": "Start of Round 1 for 3 rounds: increase Intelligence and Instinct of the same 3 Allies, including Dawnseeker and both teammates, enhanced by Dawnseeker's Initiative. Preserve the self portion without a self relationship.\n\nAt the start of rounds 1, 2, and 3: use one shared activation roll to grant First-Strike to both other Allies until the end of the current round. Dawnseeker is excluded. First-Strike makes recipients act before all other combatants and does not alias to Control. Stat enhancement formulas and First-Strike stacking/refresh remain unresolved.\n\nProgression (Intelligence and Instinct; First-Strike chance): Habit Level 1: +5%; 20%. Level 2: +6.5%; 26%. Level 3: +8%; 32%. Level 4: +10%; 40%. Level 5: +12.5%; 50%.\n\nPower: 250 / 580 / 1000 / 1600 / 2300"
+        }
+      ],
       "affinities": {
         "Cavalry": "unknown",
         "Shieldbearers": "unknown",
@@ -6459,11 +7115,47 @@
           "capturedAt": "2026-06-23",
           "gameVersion": null,
           "reviewedManually": true
+        },
+        "command": {
+          "status": "screenshot-verified",
+          "source": "Dawnseeker Radiant Wings screenshots",
+          "capturedAt": "2026-07-16",
+          "gameVersion": null,
+          "reviewedManually": true
+        },
+        "trait": {
+          "status": "screenshot-verified",
+          "source": "Dawnseeker Sentinel's Presence screenshot",
+          "capturedAt": "2026-07-16",
+          "gameVersion": null,
+          "reviewedManually": true
+        },
+        "habits": {
+          "status": "screenshot-verified",
+          "source": "Dawnseeker Habit screenshots",
+          "capturedAt": "2026-07-16",
+          "gameVersion": null,
+          "reviewedManually": true
+        },
+        "affinities": {
+          "status": "unknown",
+          "source": "Affinity icons were not text-verified",
+          "capturedAt": "2026-07-16",
+          "gameVersion": null,
+          "reviewedManually": true
         }
       },
-      "evidenceIds": [],
-      "simpleProfileId": null,
-      "simpleProfileStatus": "metadata-only-unmapped"
+      "evidenceIds": [
+        "dawnseeker-first-light-2026-07-16",
+        "dawnseeker-radiant-wings-2026-07-16",
+        "dawnseeker-sentinels-presence-2026-07-16",
+        "dawnseeker-sunbreak-2026-07-16",
+        "dawnseeker-tactical-inferno-2026-07-16",
+        "dawnseeker-unbroken-devotion-2026-07-16",
+        "dawnseeker-winds-favor-2026-07-16"
+      ],
+      "simpleProfileId": "dawnseeker",
+      "simpleProfileStatus": "curated"
     },
     {
       "id": "arrax",
@@ -7510,13 +8202,15 @@
       "damage:fire",
       "damage:any",
       "effect:recovery",
+      "effect:recovery-received",
+      "defense:damage-received",
+      "defense:physical-damage-received",
       "stat:strength",
       "stat:instinct",
       "stat:intelligence",
       "stat:initiative"
     ],
     "controlAliases": [
-      "status:slow",
       "status:stun",
       "status:stagger",
       "status:overwhelm",
@@ -8625,13 +9319,15 @@
           },
           {
             "id": "rhysarion-unbroken-devotion-recovery",
-            "tag": "effect:recovery",
+            "tag": "effect:recovery-received",
             "abilityId": "rhysarion-unbroken-devotion",
             "abilityName": "Unbroken Devotion",
             "description": "improves Recovery Received of other allies",
+            "publicLabel": "Recovery Received support to other allies",
             "unlock": {
               "minimumStarRank": 8
             },
+            "nonScoring": true,
             "friendlyScope": "formation",
             "confidence": "verified"
           },
@@ -9894,14 +10590,15 @@
           },
           {
             "id": "shimmer-unbroken-devotion-recovery",
-            "tag": "effect:recovery",
+            "tag": "effect:recovery-received",
             "abilityId": "shimmer-unbroken-devotion",
             "abilityName": "Unbroken Devotion",
             "description": "improves Recovery Received of both other allies",
-            "publicLabel": "Recovery support to both other allies",
+            "publicLabel": "Recovery Received support to both other allies",
             "unlock": {
               "minimumStarRank": 8
             },
+            "nonScoring": true,
             "friendlyScope": "formation",
             "confidence": "verified"
           },
@@ -10597,6 +11294,496 @@
         ]
       },
       {
+        "dragonId": "vesper",
+        "dragonName": "Vesper",
+        "outputs": [
+          {
+            "id": "vesper-eventide-strike-tactical",
+            "tag": "damage:tactical",
+            "scalesWith": [
+              "stat:instinct"
+            ],
+            "abilityId": "vesper-eventide-strike",
+            "abilityName": "Eventide Strike",
+            "description": "deals Tactical Damage using Instinct",
+            "confidence": "verified"
+          },
+          {
+            "id": "vesper-eventide-strike-slow",
+            "tag": "status:slow",
+            "abilityId": "vesper-eventide-strike",
+            "abilityName": "Eventide Strike",
+            "description": "applies specifically named Slow independently from the scheduled Tactical attack",
+            "publicLabel": "Applies Slow",
+            "friendlyScope": "formation",
+            "confidence": "verified"
+          },
+          {
+            "id": "vesper-saviors-waltz-resistance",
+            "tag": "status:resistance",
+            "abilityId": "vesper-saviors-waltz",
+            "abilityName": "Savior's Waltz",
+            "description": "grants Resistance to Vesper and one other adjacent ally on one shared activation",
+            "publicLabel": "Grants Resistance to one adjacent other ally",
+            "unlock": {
+              "minimumStarRank": 6
+            },
+            "recipientSelector": {
+              "kind": "adjacent-group",
+              "recipientCount": 1,
+              "includeSelf": false
+            },
+            "friendlyScope": "adjacent",
+            "confidence": "verified"
+          },
+          {
+            "id": "vesper-midnight-onslaught-confusion",
+            "tag": "status:confusion",
+            "abilityId": "vesper-midnight-onslaught",
+            "abilityName": "Midnight Onslaught",
+            "description": "applies specifically named Confusion, which satisfies Control",
+            "publicLabel": "Applies Confusion",
+            "unlock": {
+              "minimumStarRank": 10
+            },
+            "friendlyScope": "formation",
+            "confidence": "verified"
+          }
+        ],
+        "supports": [
+          {
+            "id": "vesper-sentinels-wit-left-stats",
+            "tag": "stat:instinct",
+            "tags": [
+              "stat:instinct",
+              "stat:initiative"
+            ],
+            "abilityId": "vesper-sentinels-wit",
+            "abilityName": "Sentinel's Wit",
+            "description": "improves Instinct and Initiative of the same Left Flank ally",
+            "unlock": {
+              "minimumDragonLevel": 16
+            },
+            "requiredSelfPosition": "vanguard",
+            "requiredRecipientPosition": "left-flank",
+            "friendlyScope": "formation",
+            "confidence": "verified"
+          },
+          {
+            "id": "vesper-strategic-leader-tactical",
+            "tag": "damage:tactical",
+            "abilityId": "vesper-strategic-leader",
+            "abilityName": "Strategic Leader",
+            "description": "improves Tactical Damage of one self-eligible Ally prioritizing Vanguard",
+            "publicLabel": "Tactical support (prioritizes Vanguard)",
+            "unlock": {
+              "minimumStarRank": 2
+            },
+            "recipientSelector": {
+              "kind": "position-priority",
+              "preferredPosition": "vanguard",
+              "allowSelf": true
+            },
+            "friendlyScope": "formation",
+            "confidence": "verified"
+          },
+          {
+            "id": "vesper-insightful-allies-instinct",
+            "tag": "stat:instinct",
+            "abilityId": "vesper-insightful-allies",
+            "abilityName": "Insightful Allies",
+            "description": "improves Instinct of the full formation",
+            "publicLabel": "Instinct support to both teammates",
+            "unlock": {
+              "minimumStarRank": 8
+            },
+            "friendlyScope": "formation",
+            "confidence": "verified"
+          }
+        ],
+        "benefitsFrom": [
+          {
+            "id": "vesper-instinct-payoff",
+            "tag": "stat:instinct",
+            "abilityId": "vesper-eventide-strike",
+            "abilityName": "Eventide Strike",
+            "description": "Instinct improves Tactical Damage",
+            "friendlyScope": "formation",
+            "confidence": "verified"
+          },
+          {
+            "id": "vesper-tactical-payoff",
+            "tag": "damage:tactical",
+            "abilityId": "vesper-eventide-strike",
+            "abilityName": "Eventide Strike",
+            "description": "benefits from Tactical Damage support",
+            "supportOnly": true,
+            "friendlyScope": "formation",
+            "confidence": "verified"
+          }
+        ],
+        "positionClaims": [
+          {
+            "id": "vesper-sentinels-wit-vanguard",
+            "abilityId": "vesper-sentinels-wit",
+            "abilityName": "Sentinel's Wit",
+            "requiredPosition": "vanguard",
+            "unlock": {
+              "minimumDragonLevel": 16
+            },
+            "description": "Sentinel's Wit requires Vanguard",
+            "confidence": "verified"
+          }
+        ]
+      },
+      {
+        "dragonId": "nyrena",
+        "dragonName": "Nyrena",
+        "outputs": [
+          {
+            "id": "nyrena-undermine-fire",
+            "tag": "damage:fire",
+            "scalesWith": [
+              "stat:intelligence"
+            ],
+            "abilityId": "nyrena-undermine",
+            "abilityName": "Undermine",
+            "description": "deals Fire Damage using Intelligence",
+            "confidence": "verified"
+          },
+          {
+            "id": "nyrena-undermine-tactical",
+            "tag": "damage:tactical",
+            "scalesWith": [
+              "stat:instinct"
+            ],
+            "abilityId": "nyrena-undermine",
+            "abilityName": "Undermine",
+            "description": "deals Tactical Damage using Instinct",
+            "confidence": "verified"
+          }
+        ],
+        "supports": [
+          {
+            "id": "nyrena-champions-brilliance-right-defense",
+            "tag": "defense:damage-received",
+            "abilityId": "nyrena-champions-brilliance",
+            "abilityName": "Champion's Brilliance",
+            "description": "reduces generic Damage Received for the Right Flank ally",
+            "publicLabel": "Damage Received reduction (Right Flank)",
+            "unlock": {
+              "minimumDragonLevel": 16
+            },
+            "requiredSelfPosition": "vanguard",
+            "requiredRecipientPosition": "right-flank",
+            "nonScoring": true,
+            "friendlyScope": "formation",
+            "confidence": "verified"
+          },
+          {
+            "id": "nyrena-mindful-synergy-stats",
+            "tag": "stat:intelligence",
+            "tags": [
+              "stat:intelligence",
+              "stat:instinct"
+            ],
+            "abilityId": "nyrena-mindful-synergy",
+            "abilityName": "Mindful Synergy",
+            "description": "improves Intelligence and Instinct of the same full-formation recipient group",
+            "publicLabel": "Intelligence and Instinct support to both teammates",
+            "unlock": {
+              "minimumStarRank": 4
+            },
+            "friendlyScope": "formation",
+            "confidence": "verified"
+          },
+          {
+            "id": "nyrena-deepen-the-breach-fire",
+            "tag": "damage:fire",
+            "abilityId": "nyrena-deepen-the-breach",
+            "abilityName": "Deepen the Breach",
+            "description": "improves Fire Damage of one other adjacent ally during rounds 6-10",
+            "publicLabel": "Fire Damage support to one adjacent other ally (rounds 6-10)",
+            "unlock": {
+              "minimumStarRank": 6
+            },
+            "recipientSelector": {
+              "kind": "adjacent-group",
+              "recipientCount": 1,
+              "includeSelf": false
+            },
+            "friendlyScope": "adjacent",
+            "confidence": "verified"
+          },
+          {
+            "id": "nyrena-the-long-siege-physical-defense",
+            "tag": "defense:physical-damage-received",
+            "abilityId": "nyrena-the-long-siege",
+            "abilityName": "The Long Siege",
+            "description": "reduces Physical Damage Received by the full formation during rounds 6-10",
+            "publicLabel": "Physical Damage Received reduction (rounds 6-10)",
+            "unlock": {
+              "minimumStarRank": 10
+            },
+            "nonScoring": true,
+            "friendlyScope": "formation",
+            "confidence": "verified"
+          }
+        ],
+        "benefitsFrom": [
+          {
+            "id": "nyrena-intelligence-payoff",
+            "tag": "stat:intelligence",
+            "abilityId": "nyrena-undermine",
+            "abilityName": "Undermine",
+            "description": "Intelligence improves Fire Damage",
+            "friendlyScope": "formation",
+            "confidence": "verified"
+          },
+          {
+            "id": "nyrena-instinct-payoff",
+            "tag": "stat:instinct",
+            "abilityId": "nyrena-undermine",
+            "abilityName": "Undermine",
+            "description": "Instinct improves Tactical Damage",
+            "friendlyScope": "formation",
+            "confidence": "verified"
+          },
+          {
+            "id": "nyrena-initiative-payoff",
+            "tag": "stat:initiative",
+            "abilityId": "nyrena-mindful-synergy",
+            "abilityName": "Mindful Synergy",
+            "description": "Initiative enhances the paired Intelligence and Instinct support",
+            "unlock": {
+              "minimumStarRank": 4
+            },
+            "friendlyScope": "formation",
+            "confidence": "verified"
+          },
+          {
+            "id": "nyrena-fire-payoff",
+            "tag": "damage:fire",
+            "abilityId": "nyrena-undermine",
+            "abilityName": "Undermine",
+            "description": "benefits from Fire Damage support",
+            "supportOnly": true,
+            "friendlyScope": "formation",
+            "confidence": "verified"
+          },
+          {
+            "id": "nyrena-tactical-payoff",
+            "tag": "damage:tactical",
+            "abilityId": "nyrena-undermine",
+            "abilityName": "Undermine",
+            "description": "benefits from Tactical Damage support",
+            "supportOnly": true,
+            "friendlyScope": "formation",
+            "confidence": "verified"
+          }
+        ],
+        "positionClaims": [
+          {
+            "id": "nyrena-champions-brilliance-vanguard",
+            "abilityId": "nyrena-champions-brilliance",
+            "abilityName": "Champion's Brilliance",
+            "requiredPosition": "vanguard",
+            "unlock": {
+              "minimumDragonLevel": 16
+            },
+            "description": "Champion's Brilliance requires Vanguard",
+            "confidence": "verified"
+          }
+        ]
+      },
+      {
+        "dragonId": "dawnseeker",
+        "dragonName": "Dawnseeker",
+        "outputs": [
+          {
+            "id": "dawnseeker-radiant-wings-tactical",
+            "tag": "damage:tactical",
+            "scalesWith": [
+              "stat:instinct"
+            ],
+            "abilityId": "dawnseeker-radiant-wings",
+            "abilityName": "Radiant Wings",
+            "description": "deals Tactical Damage using Instinct",
+            "confidence": "verified"
+          },
+          {
+            "id": "dawnseeker-radiant-wings-recovery",
+            "tag": "effect:recovery",
+            "scalesWith": [
+              "stat:initiative"
+            ],
+            "abilityId": "dawnseeker-radiant-wings",
+            "abilityName": "Radiant Wings",
+            "description": "applies Recovery to two self-eligible adjacent Allies",
+            "publicLabel": "Provides Recovery to two adjacent Allies",
+            "recipientSelector": {
+              "kind": "adjacent-group",
+              "recipientCount": 2,
+              "includeSelf": true
+            },
+            "friendlyScope": "adjacent",
+            "confidence": "verified"
+          },
+          {
+            "id": "dawnseeker-first-light-first-strike",
+            "tag": "status:first-strike",
+            "abilityId": "dawnseeker-first-light",
+            "abilityName": "First Light",
+            "description": "grants First-Strike to both other allies on one shared activation during rounds 1-3",
+            "publicLabel": "Grants First-Strike to both teammates (rounds 1-3)",
+            "unlock": {
+              "minimumStarRank": 10
+            },
+            "friendlyScope": "formation",
+            "confidence": "verified"
+          }
+        ],
+        "supports": [
+          {
+            "id": "dawnseeker-sentinels-presence-left-fire",
+            "tag": "damage:fire",
+            "abilityId": "dawnseeker-sentinels-presence",
+            "abilityName": "Sentinel's Presence",
+            "description": "improves Fire Damage of the Left Flank ally",
+            "unlock": {
+              "minimumDragonLevel": 16
+            },
+            "requiredSelfPosition": "vanguard",
+            "requiredRecipientPosition": "left-flank",
+            "friendlyScope": "formation",
+            "confidence": "verified"
+          },
+          {
+            "id": "dawnseeker-tactical-inferno-tactical",
+            "tag": "damage:tactical",
+            "abilityId": "dawnseeker-tactical-inferno",
+            "abilityName": "Tactical Inferno",
+            "description": "improves Tactical Damage during rounds 1-3 while prioritizing Left Flank",
+            "publicLabel": "Tactical support (rounds 1-3, prioritizes Left Flank)",
+            "unlock": {
+              "minimumStarRank": 2
+            },
+            "recipientSelector": {
+              "kind": "position-priority",
+              "preferredPosition": "left-flank",
+              "allowSelf": true
+            },
+            "friendlyScope": "formation",
+            "confidence": "verified"
+          },
+          {
+            "id": "dawnseeker-tactical-inferno-fire",
+            "tag": "damage:fire",
+            "abilityId": "dawnseeker-tactical-inferno",
+            "abilityName": "Tactical Inferno",
+            "description": "improves Fire Damage during rounds 1-3 while prioritizing Right Flank",
+            "publicLabel": "Fire support (rounds 1-3, prioritizes Right Flank)",
+            "unlock": {
+              "minimumStarRank": 2
+            },
+            "recipientSelector": {
+              "kind": "position-priority",
+              "preferredPosition": "right-flank",
+              "allowSelf": true
+            },
+            "friendlyScope": "formation",
+            "confidence": "verified"
+          },
+          {
+            "id": "dawnseeker-unbroken-devotion-recovery-received",
+            "tag": "effect:recovery-received",
+            "abilityId": "dawnseeker-unbroken-devotion",
+            "abilityName": "Unbroken Devotion",
+            "description": "improves Recovery Received of both other allies without applying Recovery",
+            "publicLabel": "Recovery Received support to both teammates",
+            "unlock": {
+              "minimumStarRank": 4
+            },
+            "nonScoring": true,
+            "friendlyScope": "formation",
+            "confidence": "verified"
+          },
+          {
+            "id": "dawnseeker-winds-favor-initiative",
+            "tag": "stat:initiative",
+            "abilityId": "dawnseeker-winds-favor",
+            "abilityName": "Wind's Favor",
+            "description": "improves Initiative of the full formation",
+            "publicLabel": "Initiative support to both teammates",
+            "unlock": {
+              "minimumStarRank": 8
+            },
+            "friendlyScope": "formation",
+            "confidence": "verified"
+          },
+          {
+            "id": "dawnseeker-first-light-stats",
+            "tag": "stat:intelligence",
+            "tags": [
+              "stat:intelligence",
+              "stat:instinct"
+            ],
+            "abilityId": "dawnseeker-first-light",
+            "abilityName": "First Light",
+            "description": "improves Intelligence and Instinct of the same full-formation group during rounds 1-3",
+            "publicLabel": "Intelligence and Instinct support (rounds 1-3)",
+            "unlock": {
+              "minimumStarRank": 10
+            },
+            "friendlyScope": "formation",
+            "confidence": "verified"
+          }
+        ],
+        "benefitsFrom": [
+          {
+            "id": "dawnseeker-instinct-payoff",
+            "tag": "stat:instinct",
+            "abilityId": "dawnseeker-radiant-wings",
+            "abilityName": "Radiant Wings",
+            "description": "Instinct improves Tactical Damage",
+            "friendlyScope": "formation",
+            "confidence": "verified"
+          },
+          {
+            "id": "dawnseeker-initiative-payoff",
+            "tag": "stat:initiative",
+            "abilityId": "dawnseeker-radiant-wings",
+            "abilityName": "Radiant Wings",
+            "description": "Initiative enhances Recovery and later support effects",
+            "friendlyScope": "formation",
+            "confidence": "verified"
+          },
+          {
+            "id": "dawnseeker-tactical-payoff",
+            "tag": "damage:tactical",
+            "abilityId": "dawnseeker-radiant-wings",
+            "abilityName": "Radiant Wings",
+            "description": "benefits from Tactical Damage support",
+            "supportOnly": true,
+            "friendlyScope": "formation",
+            "confidence": "verified"
+          }
+        ],
+        "positionClaims": [
+          {
+            "id": "dawnseeker-sentinels-presence-vanguard",
+            "abilityId": "dawnseeker-sentinels-presence",
+            "abilityName": "Sentinel's Presence",
+            "requiredPosition": "vanguard",
+            "unlock": {
+              "minimumDragonLevel": 16
+            },
+            "description": "Sentinel's Presence requires Vanguard",
+            "confidence": "verified"
+          }
+        ]
+      },
+      {
         "dragonId": "tessarion",
         "dragonName": "Tessarion",
         "outputs": [
@@ -10670,19 +11857,15 @@
       }
     ],
     "profileAudit": {
-      "reviewedAbilityCount": 196,
+      "reviewedAbilityCount": 217,
       "dispositionCounts": {
-        "represented": 128,
+        "represented": 145,
         "general-support-only": 12,
-        "self-only": 34,
-        "no-cross-dragon-synergy": 15,
-        "reinforces-existing": 7
+        "self-only": 36,
+        "no-cross-dragon-synergy": 16,
+        "reinforces-existing": 8
       },
-      "metadataOnlyDragonIds": [
-        "vesper",
-        "nyrena",
-        "dawnseeker"
-      ],
+      "metadataOnlyDragonIds": [],
       "reviews": [
         {
           "dragonId": "syrax",
@@ -12861,6 +14044,268 @@
           }
         },
         {
+          "dragonId": "vesper",
+          "abilityId": "vesper-eventide-strike",
+          "abilityKind": "command",
+          "disposition": {
+            "kind": "represented",
+            "signalIds": [
+              "vesper-eventide-strike-tactical",
+              "vesper-eventide-strike-slow",
+              "vesper-instinct-payoff",
+              "vesper-tactical-payoff"
+            ],
+            "rationale": "The Command preserves independent Tactical and specifically named Slow paths; Slow does not satisfy Control."
+          }
+        },
+        {
+          "dragonId": "vesper",
+          "abilityId": "vesper-sentinels-wit",
+          "abilityKind": "trait",
+          "disposition": {
+            "kind": "represented",
+            "signalIds": [
+              "vesper-sentinels-wit-left-stats",
+              "vesper-sentinels-wit-vanguard"
+            ],
+            "rationale": "The Vanguard trait supports the same Left Flank ally with Instinct and Initiative while self Tactical amplification remains self-only."
+          }
+        },
+        {
+          "dragonId": "vesper",
+          "abilityId": "vesper-strategic-leader",
+          "abilityKind": "habit",
+          "disposition": {
+            "kind": "represented",
+            "signalIds": [
+              "vesper-strategic-leader-tactical"
+            ],
+            "rationale": "The self-eligible Vanguard-priority selector supports Vanguard from a flank and produces no self relationship when Vesper is Vanguard."
+          }
+        },
+        {
+          "dragonId": "vesper",
+          "abilityId": "vesper-dragons-insight",
+          "abilityKind": "habit",
+          "disposition": {
+            "kind": "self-only",
+            "rationale": "Damage Received reduction and Instinct increase apply only to Vesper."
+          }
+        },
+        {
+          "dragonId": "vesper",
+          "abilityId": "vesper-saviors-waltz",
+          "abilityKind": "habit",
+          "disposition": {
+            "kind": "represented",
+            "signalIds": [
+              "vesper-saviors-waltz-resistance"
+            ],
+            "rationale": "One shared activation grants Resistance to self and one adjacent other ally; Vanguard selection remains unresolved and non-scoring."
+          }
+        },
+        {
+          "dragonId": "vesper",
+          "abilityId": "vesper-insightful-allies",
+          "abilityKind": "habit",
+          "disposition": {
+            "kind": "represented",
+            "signalIds": [
+              "vesper-insightful-allies-instinct"
+            ],
+            "rationale": "The full-formation Instinct effect supports both teammates while suppressing self relationships."
+          }
+        },
+        {
+          "dragonId": "vesper",
+          "abilityId": "vesper-midnight-onslaught",
+          "abilityKind": "habit",
+          "disposition": {
+            "kind": "represented",
+            "signalIds": [
+              "vesper-midnight-onslaught-confusion"
+            ],
+            "rationale": "The standalone Habit provides one specifically named Confusion path that satisfies Control once."
+          }
+        },
+        {
+          "dragonId": "nyrena",
+          "abilityId": "nyrena-undermine",
+          "abilityKind": "command",
+          "disposition": {
+            "kind": "represented",
+            "signalIds": [
+              "nyrena-undermine-fire",
+              "nyrena-undermine-tactical",
+              "nyrena-intelligence-payoff",
+              "nyrena-instinct-payoff",
+              "nyrena-fire-payoff",
+              "nyrena-tactical-payoff"
+            ],
+            "rationale": "Fire and Tactical outputs remain distinct; enemy Physical Damage Dealt suppression and its Burn duration condition are detailed and non-scoring."
+          }
+        },
+        {
+          "dragonId": "nyrena",
+          "abilityId": "nyrena-champions-brilliance",
+          "abilityKind": "trait",
+          "disposition": {
+            "kind": "represented",
+            "signalIds": [
+              "nyrena-champions-brilliance-right-defense",
+              "nyrena-champions-brilliance-vanguard"
+            ],
+            "rationale": "The Vanguard trait presents non-scoring Right Flank defense while all stat increases remain self-only."
+          }
+        },
+        {
+          "dragonId": "nyrena",
+          "abilityId": "nyrena-battle-dread",
+          "abilityKind": "habit",
+          "disposition": {
+            "kind": "no-cross-dragon-synergy",
+            "rationale": "Paired battlefield enemy Strength and Initiative suppression is detailed and non-scoring."
+          }
+        },
+        {
+          "dragonId": "nyrena",
+          "abilityId": "nyrena-mindful-synergy",
+          "abilityKind": "habit",
+          "disposition": {
+            "kind": "represented",
+            "signalIds": [
+              "nyrena-mindful-synergy-stats",
+              "nyrena-initiative-payoff"
+            ],
+            "rationale": "The same full-formation recipient group receives Intelligence and Instinct support; Initiative scaling is exposed once."
+          }
+        },
+        {
+          "dragonId": "nyrena",
+          "abilityId": "nyrena-deepen-the-breach",
+          "abilityKind": "habit",
+          "disposition": {
+            "kind": "represented",
+            "signalIds": [
+              "nyrena-deepen-the-breach-fire"
+            ],
+            "rationale": "Timed rounds 6-10 Fire support reaches one adjacent other ally; self Fire and post-combat Tile Damage remain non-scoring."
+          }
+        },
+        {
+          "dragonId": "nyrena",
+          "abilityId": "nyrena-dragons-ire",
+          "abilityKind": "habit",
+          "disposition": {
+            "kind": "self-only",
+            "rationale": "Tactical and Fire Damage increases apply only to Nyrena."
+          }
+        },
+        {
+          "dragonId": "nyrena",
+          "abilityId": "nyrena-the-long-siege",
+          "abilityKind": "habit",
+          "disposition": {
+            "kind": "represented",
+            "signalIds": [
+              "nyrena-the-long-siege-physical-defense"
+            ],
+            "rationale": "Timed Physical Damage Received reduction is presented as non-scoring defense and never as offensive Physical support."
+          }
+        },
+        {
+          "dragonId": "dawnseeker",
+          "abilityId": "dawnseeker-radiant-wings",
+          "abilityKind": "command",
+          "disposition": {
+            "kind": "represented",
+            "signalIds": [
+              "dawnseeker-radiant-wings-tactical",
+              "dawnseeker-radiant-wings-recovery",
+              "dawnseeker-instinct-payoff",
+              "dawnseeker-initiative-payoff",
+              "dawnseeker-tactical-payoff"
+            ],
+            "rationale": "The Command preserves Tactical Damage and two-of-adjacent Recovery; self stat buffs remain self-only."
+          }
+        },
+        {
+          "dragonId": "dawnseeker",
+          "abilityId": "dawnseeker-sentinels-presence",
+          "abilityKind": "trait",
+          "disposition": {
+            "kind": "represented",
+            "signalIds": [
+              "dawnseeker-sentinels-presence-left-fire",
+              "dawnseeker-sentinels-presence-vanguard"
+            ],
+            "rationale": "The Vanguard trait supports Left Flank Fire Damage while self Recovery and Instinct remain self-only."
+          }
+        },
+        {
+          "dragonId": "dawnseeker",
+          "abilityId": "dawnseeker-tactical-inferno",
+          "abilityKind": "habit",
+          "disposition": {
+            "kind": "represented",
+            "signalIds": [
+              "dawnseeker-tactical-inferno-tactical",
+              "dawnseeker-tactical-inferno-fire"
+            ],
+            "rationale": "Independent self-eligible Left and Right priority selectors retain typed rounds 1-3 support and suppress self relationships."
+          }
+        },
+        {
+          "dragonId": "dawnseeker",
+          "abilityId": "dawnseeker-unbroken-devotion",
+          "abilityKind": "habit",
+          "disposition": {
+            "kind": "represented",
+            "signalIds": [
+              "dawnseeker-unbroken-devotion-recovery-received"
+            ],
+            "rationale": "Recovery Received support is presented distinctly from Recovery application and remains non-scoring."
+          }
+        },
+        {
+          "dragonId": "dawnseeker",
+          "abilityId": "dawnseeker-sunbreak",
+          "abilityKind": "habit",
+          "disposition": {
+            "kind": "reinforces-existing",
+            "signalIds": [
+              "dawnseeker-radiant-wings-tactical",
+              "dawnseeker-radiant-wings-recovery"
+            ],
+            "rationale": "The Command augmentation replaces existing Round 1/2 rates without inventing Round 1 Recovery or duplicate outputs."
+          }
+        },
+        {
+          "dragonId": "dawnseeker",
+          "abilityId": "dawnseeker-winds-favor",
+          "abilityKind": "habit",
+          "disposition": {
+            "kind": "represented",
+            "signalIds": [
+              "dawnseeker-winds-favor-initiative"
+            ],
+            "rationale": "Full-formation Initiative support reaches both teammates without self-synergy."
+          }
+        },
+        {
+          "dragonId": "dawnseeker",
+          "abilityId": "dawnseeker-first-light",
+          "abilityKind": "habit",
+          "disposition": {
+            "kind": "represented",
+            "signalIds": [
+              "dawnseeker-first-light-stats",
+              "dawnseeker-first-light-first-strike"
+            ],
+            "rationale": "Paired Intelligence and Instinct share one group, while one shared activation grants specifically named First-Strike to both other allies without Control aliasing."
+          }
+        },
+        {
           "dragonId": "tessarion",
           "abilityId": "tessarion-cobalt-flame",
           "abilityKind": "command",
@@ -12984,13 +14429,13 @@
     {
       "id": "first-strike",
       "term": "First-Strike",
-      "definition": "Target acts before all other combatants each round. Caraxes Infernal Burst separately verifies a First-Strike conditional damage multiplier.",
+      "definition": "Target acts before all other combatants each round. Caraxes Infernal Burst separately verifies a First-Strike conditional damage multiplier. First-Strike is not Control.",
       "verification": "verified"
     },
     {
       "id": "slow",
       "term": "Slow",
-      "definition": "Target attacks after all other combatants each round.",
+      "definition": "Target attacks after all other combatants each round. Slow is specifically named and does not belong to the verified Control alias category.",
       "verification": "verified"
     },
     {
@@ -16175,6 +17620,279 @@
       "verificationStatus": "community-verified"
     },
     {
+      "id": "vesper-eventide-strike-2026-07-16",
+      "type": "in-game-screenshot",
+      "title": "Vesper Eventide Strike",
+      "description": "Descriptive evidence label only. Screenshot files are not committed to the public repository.",
+      "url": null,
+      "capturedAt": "2026-07-16",
+      "language": "English",
+      "gameVersion": null,
+      "submittedBy": "repository owner",
+      "reviewedManually": true,
+      "verificationStatus": "community-verified"
+    },
+    {
+      "id": "vesper-sentinels-wit-2026-07-16",
+      "type": "in-game-screenshot",
+      "title": "Vesper Sentinel's Wit",
+      "description": "Descriptive evidence label only. Screenshot files are not committed to the public repository.",
+      "url": null,
+      "capturedAt": "2026-07-16",
+      "language": "English",
+      "gameVersion": null,
+      "submittedBy": "repository owner",
+      "reviewedManually": true,
+      "verificationStatus": "community-verified"
+    },
+    {
+      "id": "vesper-strategic-leader-2026-07-16",
+      "type": "in-game-screenshot",
+      "title": "Vesper Strategic Leader",
+      "description": "Descriptive evidence label only. Screenshot files are not committed to the public repository.",
+      "url": null,
+      "capturedAt": "2026-07-16",
+      "language": "English",
+      "gameVersion": null,
+      "submittedBy": "repository owner",
+      "reviewedManually": true,
+      "verificationStatus": "community-verified"
+    },
+    {
+      "id": "vesper-dragons-insight-2026-07-16",
+      "type": "in-game-screenshot",
+      "title": "Vesper Dragon's Insight",
+      "description": "Descriptive evidence label only. Screenshot files are not committed to the public repository.",
+      "url": null,
+      "capturedAt": "2026-07-16",
+      "language": "English",
+      "gameVersion": null,
+      "submittedBy": "repository owner",
+      "reviewedManually": true,
+      "verificationStatus": "community-verified"
+    },
+    {
+      "id": "vesper-saviors-waltz-2026-07-16",
+      "type": "in-game-screenshot",
+      "title": "Vesper Savior's Waltz",
+      "description": "Descriptive evidence label only. Screenshot files are not committed to the public repository.",
+      "url": null,
+      "capturedAt": "2026-07-16",
+      "language": "English",
+      "gameVersion": null,
+      "submittedBy": "repository owner",
+      "reviewedManually": true,
+      "verificationStatus": "community-verified"
+    },
+    {
+      "id": "vesper-insightful-allies-2026-07-16",
+      "type": "in-game-screenshot",
+      "title": "Vesper Insightful Allies",
+      "description": "Descriptive evidence label only. Screenshot files are not committed to the public repository.",
+      "url": null,
+      "capturedAt": "2026-07-16",
+      "language": "English",
+      "gameVersion": null,
+      "submittedBy": "repository owner",
+      "reviewedManually": true,
+      "verificationStatus": "community-verified"
+    },
+    {
+      "id": "vesper-midnight-onslaught-2026-07-16",
+      "type": "in-game-screenshot",
+      "title": "Vesper Midnight Onslaught",
+      "description": "Descriptive evidence label only. Screenshot files are not committed to the public repository.",
+      "url": null,
+      "capturedAt": "2026-07-16",
+      "language": "English",
+      "gameVersion": null,
+      "submittedBy": "repository owner",
+      "reviewedManually": true,
+      "verificationStatus": "community-verified"
+    },
+    {
+      "id": "nyrena-undermine-2026-07-16",
+      "type": "in-game-screenshot",
+      "title": "Nyrena Undermine",
+      "description": "Descriptive evidence label only. Screenshot files are not committed to the public repository.",
+      "url": null,
+      "capturedAt": "2026-07-16",
+      "language": "English",
+      "gameVersion": null,
+      "submittedBy": "repository owner",
+      "reviewedManually": true,
+      "verificationStatus": "community-verified"
+    },
+    {
+      "id": "nyrena-champions-brilliance-2026-07-16",
+      "type": "in-game-screenshot",
+      "title": "Nyrena Champion's Brilliance",
+      "description": "Descriptive evidence label only. Screenshot files are not committed to the public repository.",
+      "url": null,
+      "capturedAt": "2026-07-16",
+      "language": "English",
+      "gameVersion": null,
+      "submittedBy": "repository owner",
+      "reviewedManually": true,
+      "verificationStatus": "community-verified"
+    },
+    {
+      "id": "nyrena-battle-dread-2026-07-16",
+      "type": "in-game-screenshot",
+      "title": "Nyrena Battle Dread",
+      "description": "Descriptive evidence label only. Screenshot files are not committed to the public repository.",
+      "url": null,
+      "capturedAt": "2026-07-16",
+      "language": "English",
+      "gameVersion": null,
+      "submittedBy": "repository owner",
+      "reviewedManually": true,
+      "verificationStatus": "community-verified"
+    },
+    {
+      "id": "nyrena-mindful-synergy-2026-07-16",
+      "type": "in-game-screenshot",
+      "title": "Nyrena Mindful Synergy",
+      "description": "Descriptive evidence label only. Screenshot files are not committed to the public repository.",
+      "url": null,
+      "capturedAt": "2026-07-16",
+      "language": "English",
+      "gameVersion": null,
+      "submittedBy": "repository owner",
+      "reviewedManually": true,
+      "verificationStatus": "community-verified"
+    },
+    {
+      "id": "nyrena-deepen-the-breach-2026-07-16",
+      "type": "in-game-screenshot",
+      "title": "Nyrena Deepen the Breach",
+      "description": "Descriptive evidence label only. Screenshot files are not committed to the public repository.",
+      "url": null,
+      "capturedAt": "2026-07-16",
+      "language": "English",
+      "gameVersion": null,
+      "submittedBy": "repository owner",
+      "reviewedManually": true,
+      "verificationStatus": "community-verified"
+    },
+    {
+      "id": "nyrena-dragons-ire-2026-07-16",
+      "type": "in-game-screenshot",
+      "title": "Nyrena Dragon's Ire",
+      "description": "Descriptive evidence label only. Screenshot files are not committed to the public repository.",
+      "url": null,
+      "capturedAt": "2026-07-16",
+      "language": "English",
+      "gameVersion": null,
+      "submittedBy": "repository owner",
+      "reviewedManually": true,
+      "verificationStatus": "community-verified"
+    },
+    {
+      "id": "nyrena-the-long-siege-2026-07-16",
+      "type": "in-game-screenshot",
+      "title": "Nyrena The Long Siege",
+      "description": "Descriptive evidence label only. Screenshot files are not committed to the public repository.",
+      "url": null,
+      "capturedAt": "2026-07-16",
+      "language": "English",
+      "gameVersion": null,
+      "submittedBy": "repository owner",
+      "reviewedManually": true,
+      "verificationStatus": "community-verified"
+    },
+    {
+      "id": "dawnseeker-radiant-wings-2026-07-16",
+      "type": "in-game-screenshot",
+      "title": "Dawnseeker Radiant Wings",
+      "description": "Descriptive evidence label only. Screenshot files are not committed to the public repository.",
+      "url": null,
+      "capturedAt": "2026-07-16",
+      "language": "English",
+      "gameVersion": null,
+      "submittedBy": "repository owner",
+      "reviewedManually": true,
+      "verificationStatus": "community-verified"
+    },
+    {
+      "id": "dawnseeker-sentinels-presence-2026-07-16",
+      "type": "in-game-screenshot",
+      "title": "Dawnseeker Sentinel's Presence",
+      "description": "Descriptive evidence label only. Screenshot files are not committed to the public repository.",
+      "url": null,
+      "capturedAt": "2026-07-16",
+      "language": "English",
+      "gameVersion": null,
+      "submittedBy": "repository owner",
+      "reviewedManually": true,
+      "verificationStatus": "community-verified"
+    },
+    {
+      "id": "dawnseeker-tactical-inferno-2026-07-16",
+      "type": "in-game-screenshot",
+      "title": "Dawnseeker Tactical Inferno",
+      "description": "Descriptive evidence label only. Screenshot files are not committed to the public repository.",
+      "url": null,
+      "capturedAt": "2026-07-16",
+      "language": "English",
+      "gameVersion": null,
+      "submittedBy": "repository owner",
+      "reviewedManually": true,
+      "verificationStatus": "community-verified"
+    },
+    {
+      "id": "dawnseeker-unbroken-devotion-2026-07-16",
+      "type": "in-game-screenshot",
+      "title": "Dawnseeker Unbroken Devotion",
+      "description": "Descriptive evidence label only. Screenshot files are not committed to the public repository.",
+      "url": null,
+      "capturedAt": "2026-07-16",
+      "language": "English",
+      "gameVersion": null,
+      "submittedBy": "repository owner",
+      "reviewedManually": true,
+      "verificationStatus": "community-verified"
+    },
+    {
+      "id": "dawnseeker-sunbreak-2026-07-16",
+      "type": "in-game-screenshot",
+      "title": "Dawnseeker Sunbreak",
+      "description": "Descriptive evidence label only. Screenshot files are not committed to the public repository.",
+      "url": null,
+      "capturedAt": "2026-07-16",
+      "language": "English",
+      "gameVersion": null,
+      "submittedBy": "repository owner",
+      "reviewedManually": true,
+      "verificationStatus": "community-verified"
+    },
+    {
+      "id": "dawnseeker-winds-favor-2026-07-16",
+      "type": "in-game-screenshot",
+      "title": "Dawnseeker Wind's Favor",
+      "description": "Descriptive evidence label only. Screenshot files are not committed to the public repository.",
+      "url": null,
+      "capturedAt": "2026-07-16",
+      "language": "English",
+      "gameVersion": null,
+      "submittedBy": "repository owner",
+      "reviewedManually": true,
+      "verificationStatus": "community-verified"
+    },
+    {
+      "id": "dawnseeker-first-light-2026-07-16",
+      "type": "in-game-screenshot",
+      "title": "Dawnseeker First Light",
+      "description": "Descriptive evidence label only. Screenshot files are not committed to the public repository.",
+      "url": null,
+      "capturedAt": "2026-07-16",
+      "language": "English",
+      "gameVersion": null,
+      "submittedBy": "repository owner",
+      "reviewedManually": true,
+      "verificationStatus": "community-verified"
+    },
+    {
       "id": "malachite-wardens-rally-combat-log-self-recovery-2026-06-24",
       "type": "manual-combat-log-observation",
       "title": "Warden's Rally Recovery included Malachite",
@@ -16228,6 +17946,78 @@
     }
   ],
   "manualReviews": [
+    {
+      "id": "vesper-profile-review-2026-07-16",
+      "dragonId": "vesper",
+      "scope": "habits",
+      "status": "confirmed",
+      "reviewedAt": "2026-07-16",
+      "reviewedAgainstGameBuild": "unknown",
+      "reviewer": "repository-owner",
+      "notes": [
+        "Eventide Strike keeps independent Slow and Tactical schedules. Slow remains specifically named and outside the Control alias family.",
+        "Savior's Waltz uses the exact 12.5% table value instead of the rounded 13% prose value and preserves one shared activation.",
+        "Strategic Leader self-selection and all other self portions create no source-to-self relationship or rating credit.",
+        "Unresolved: Slow refresh/stacking, same-lane fallback, Strategic Leader fallback, Vanguard Resistance recipient selection, Resistance stacking/refresh, Insightful Allies enhancement, Confusion refresh/stacking, redirected-target resolution, and icon-only affinities."
+      ],
+      "evidenceIds": [
+        "vesper-eventide-strike-2026-07-16",
+        "vesper-sentinels-wit-2026-07-16",
+        "vesper-strategic-leader-2026-07-16",
+        "vesper-dragons-insight-2026-07-16",
+        "vesper-saviors-waltz-2026-07-16",
+        "vesper-insightful-allies-2026-07-16",
+        "vesper-midnight-onslaught-2026-07-16"
+      ]
+    },
+    {
+      "id": "nyrena-profile-review-2026-07-16",
+      "dragonId": "nyrena",
+      "scope": "habits",
+      "status": "confirmed",
+      "reviewedAt": "2026-07-16",
+      "reviewedAgainstGameBuild": "unknown",
+      "reviewer": "repository-owner",
+      "notes": [
+        "Undermine uses Physical Damage Dealt suppression because the Command summary and detailed heading agree; the conflicting Physical Damage Received body text is retained as a discrepancy.",
+        "Fire Damage does not provide Burn. Burn only extends the suppression duration and remains non-scoring.",
+        "Deepen the Breach preserves rounds 1-5 self Fire amplification, rounds 6-10 one-adjacent-other Fire support, and post-combat Tile Damage as distinct pieces.",
+        "Unresolved: Undermine group roll, fewer-than-three behavior, Burn evaluation timing, suppression refresh/stacking, same-lane fallback, Battle Dread and Mindful Synergy enhancement formulas, Vanguard Fire recipient selection, Tile Damage mode details, Defending definition, defensive stacking, and icon-only affinities."
+      ],
+      "evidenceIds": [
+        "nyrena-undermine-2026-07-16",
+        "nyrena-champions-brilliance-2026-07-16",
+        "nyrena-battle-dread-2026-07-16",
+        "nyrena-mindful-synergy-2026-07-16",
+        "nyrena-deepen-the-breach-2026-07-16",
+        "nyrena-dragons-ire-2026-07-16",
+        "nyrena-the-long-siege-2026-07-16"
+      ]
+    },
+    {
+      "id": "dawnseeker-profile-review-2026-07-16",
+      "dragonId": "dawnseeker",
+      "scope": "habits",
+      "status": "confirmed",
+      "reviewedAt": "2026-07-16",
+      "reviewedAgainstGameBuild": "unknown",
+      "reviewer": "repository-owner",
+      "notes": [
+        "Radiant Wings uses one shared self-stat activation and a self-eligible two-of-adjacent Recovery group.",
+        "Sunbreak replaces existing Round 1/2 final rates only; it creates no Round 1 Recovery and no duplicate Command output.",
+        "Unbroken Devotion is Recovery Received support, not Recovery application. First-Strike remains specifically named and outside Control.",
+        "Unresolved: self-stat activation timing and refresh/stacking, Vanguard Recovery recipient selection, same-lane fallback, Initiative enhancement formulas, Tactical Inferno fallback, Recovery Received stacking, First-Strike stacking/refresh, and icon-only affinities."
+      ],
+      "evidenceIds": [
+        "dawnseeker-radiant-wings-2026-07-16",
+        "dawnseeker-sentinels-presence-2026-07-16",
+        "dawnseeker-tactical-inferno-2026-07-16",
+        "dawnseeker-unbroken-devotion-2026-07-16",
+        "dawnseeker-sunbreak-2026-07-16",
+        "dawnseeker-winds-favor-2026-07-16",
+        "dawnseeker-first-light-2026-07-16"
+      ]
+    },
     {
       "id": "bevlorin-profile-review-2026-07-16",
       "dragonId": "bevlorin",

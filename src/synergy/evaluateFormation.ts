@@ -105,6 +105,10 @@ function addSetupPayoffResults(
   beneficiary: SelectedProfile,
   benefit: SynergySignal,
 ): void {
+  if (benefit.supportOnly) {
+    return;
+  }
+
   const benefitTags = providedTags(benefit);
   const selfOutputsTag = beneficiary.profile.outputs.some((output) =>
     providedTags(output).some((outputTag) => benefitTags.some((benefitTag) => tagsAreCompatible(outputTag, benefitTag))),

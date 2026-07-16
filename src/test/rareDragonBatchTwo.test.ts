@@ -41,11 +41,11 @@ function chipsFor(dragonId: string, starRank: number, selected = formation(null,
 describe('second Rare dragon batch', () => {
   it('upgrades exactly one canonical record for each requested Rare and advances coverage/version only', () => {
     expect(dragons).toHaveLength(31);
-    expect(dragons.filter((dragon) => dragon.command)).toHaveLength(28);
-    expect(simpleSynergyProfiles).toHaveLength(28);
-    expect(metadataOnlyDragonIds).toHaveLength(3);
-    expect(dragons.filter((dragon) => dragon.rarity === 'Rare' && dragon.command)).toHaveLength(9);
-    expect(databaseMetadata).toMatchObject({ databaseVersion: '0.6.7', schemaVersion: 13 });
+    expect(dragons.filter((dragon) => dragon.command)).toHaveLength(31);
+    expect(simpleSynergyProfiles).toHaveLength(31);
+    expect(metadataOnlyDragonIds).toHaveLength(0);
+    expect(dragons.filter((dragon) => dragon.rarity === 'Rare' && dragon.command)).toHaveLength(12);
+    expect(databaseMetadata).toMatchObject({ databaseVersion: '0.6.8', schemaVersion: 13 });
     expect(ROSTER_SCHEMA_VERSION).toBe(4);
 
     const breeds = { solstryker: 'Champion', shimmer: 'Sentinel', jagadrix: 'Hunter' } as const;
@@ -84,8 +84,8 @@ describe('second Rare dragon batch', () => {
     expect(withControlPayoff.filter((result) => result.kind === 'setup-payoff' && result.tag === 'status:control')).toHaveLength(1);
 
     const solstryker = dragons.find((dragon) => dragon.id === 'solstryker')!;
-    expect(summarizeAbility(solstryker.command!).plainSummary).toContain('Benefits from Vulnerable');
-    expect(summarizeAbility(solstryker.command!).plainSummary).not.toContain('Applies Weakened');
+    expect(summarizeAbility(solstryker.command).plainSummary).toContain('Benefits from Vulnerable');
+    expect(summarizeAbility(solstryker.command).plainSummary).not.toContain('Applies Weakened');
     expect(solstryker.habits.find((habit) => habit.id === 'solstryker-steady-erosion')?.rawDescription).toContain('up to 10 stacks');
     expect(allSignals('solstryker').map((signal) => signal.abilityId)).not.toEqual(
       expect.arrayContaining(['solstryker-steady-erosion', 'solstryker-energy-drain', 'solstryker-robust-insight', 'solstryker-amplified-drain']),
@@ -158,16 +158,16 @@ describe('second Rare dragon batch', () => {
   it('activates Shimmer Recovery/Resistance, Recovery support, and Sneak Attack at exact progression boundaries', () => {
     const shimmer = dragons.find((dragon) => dragon.id === 'shimmer')!;
     const outputs = profilesById.get('shimmer')!.outputs;
-    const atFive = summarizeAbilityForProgression(shimmer.command!, outputs, { starRank: 5 });
-    const atSix = summarizeAbilityForProgression(shimmer.command!, outputs, { starRank: 6 });
+    const atFive = summarizeAbilityForProgression(shimmer.command, outputs, { starRank: 5 });
+    const atSix = summarizeAbilityForProgression(shimmer.command, outputs, { starRank: 6 });
     expect(atFive.plainSummary).not.toContain('Provides Recovery');
     expect(atFive.plainSummary).not.toContain('Resistance doubles Recovery');
     expect(atFive.plainSummary).toContain('gains Recovery and its Resistance payoff at 6★');
     expect(atSix.plainSummary).toContain('Provides Recovery');
     expect(atSix.plainSummary).toContain('Resistance doubles Recovery');
 
-    expect(chipsFor('shimmer', 7).provides).toContainEqual(expect.objectContaining({ label: 'Recovery support to both other allies', state: 'inactive' }));
-    expect(chipsFor('shimmer', 8).provides).toContainEqual(expect.objectContaining({ label: 'Recovery support to both other allies', state: 'available' }));
+    expect(chipsFor('shimmer', 7).provides).toContainEqual(expect.objectContaining({ label: 'Recovery Received support to both other allies', state: 'inactive' }));
+    expect(chipsFor('shimmer', 8).provides).toContainEqual(expect.objectContaining({ label: 'Recovery Received support to both other allies', state: 'available' }));
     expect(chipsFor('shimmer', 9).provides).toEqual(expect.arrayContaining([
       expect.objectContaining({ label: 'Grants First-Strike', state: 'inactive' }),
       expect.objectContaining({ label: 'Physical support to highest-Strength other ally', state: 'inactive' }),
@@ -195,8 +195,8 @@ describe('second Rare dragon batch', () => {
     expect(chipsFor('jagadrix', 6).provides.map((chip) => chip.label)).not.toContain('Control');
 
     const jagadrix = dragons.find((dragon) => dragon.id === 'jagadrix')!;
-    const atNine = summarizeAbilityForProgression(jagadrix.command!, profile.outputs, { starRank: 9 });
-    const atTen = summarizeAbilityForProgression(jagadrix.command!, profile.outputs, { starRank: 10 });
+    const atNine = summarizeAbilityForProgression(jagadrix.command, profile.outputs, { starRank: 9 });
+    const atTen = summarizeAbilityForProgression(jagadrix.command, profile.outputs, { starRank: 10 });
     expect(atNine.plainSummary).not.toContain('enemies with Panic');
     expect(atNine.plainSummary).toContain('gains an additional Fire attack and Panic payoff at 10★');
     expect(atTen.plainSummary).toContain('Deals double damage to enemies with Panic');
@@ -225,7 +225,7 @@ describe('second Rare dragon batch', () => {
       .filter((profile) => profile.outputs.some((signal) => signal.tag === 'status:panic'))
       .map((profile) => profile.dragonId)
       .sort();
-    expect(resistanceProviders).toEqual(['rhysarion', 'seasmoke', 'syrax']);
+    expect(resistanceProviders).toEqual(['rhysarion', 'seasmoke', 'syrax', 'vesper']);
     expect(panicProviders).toEqual(['daemoros', 'kalspire', 'shadowrend', 'zivern']);
     expect(resistanceProviders).not.toEqual(expect.arrayContaining(['vhagar', 'vermax']));
   });

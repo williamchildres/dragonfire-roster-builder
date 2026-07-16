@@ -22,13 +22,13 @@ export const statusGlossary: StatusGlossaryEntry[] = [
     id: 'first-strike',
     term: 'First-Strike',
     definition:
-      'Target acts before all other combatants each round. Caraxes Infernal Burst separately verifies a First-Strike conditional damage multiplier.',
+      'Target acts before all other combatants each round. Caraxes Infernal Burst separately verifies a First-Strike conditional damage multiplier. First-Strike is not Control.',
     verification: 'verified',
   },
   {
     id: 'slow',
     term: 'Slow',
-    definition: 'Target attacks after all other combatants each round.',
+    definition: 'Target attacks after all other combatants each round. Slow is specifically named and does not belong to the verified Control alias category.',
     verification: 'verified',
   },
   {
