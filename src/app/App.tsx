@@ -259,7 +259,7 @@ export function App() {
   };
 
   const clearRoster = () => {
-    const confirmed = window.confirm('Clear your local Dragonfire Roster Lab data? This cannot be undone.');
+    const confirmed = window.confirm('Clear your local Dragonfire Lab data? This cannot be undone.');
     if (!confirmed) {
       return;
     }
@@ -400,16 +400,18 @@ export function App() {
             Roster data stays in your browser. Public verification wording is summarized from official
             roster pages, screenshot evidence, and curated community review.
           </p>
-          <p className="site-footer-support">
-            <a
-              className="secondary-button support-link"
-              href={buyMeACoffeeUrl}
-              rel="noopener noreferrer"
-              target="_blank"
-            >
-              Support the project <ExternalLink size={16} aria-hidden="true" />
-            </a>
-          </p>
+          {activeSection !== 'about' ? (
+            <p className="site-footer-support">
+              <a
+                className="secondary-button support-link"
+                href={buyMeACoffeeUrl}
+                rel="noopener noreferrer"
+                target="_blank"
+              >
+                Support the project <ExternalLink size={16} aria-hidden="true" />
+              </a>
+            </p>
+          ) : null}
         </div>
       </footer>
 
@@ -478,13 +480,19 @@ function HomeSection({
             <FeatureCard
               icon={Users}
               title="Track Your Roster"
-              description="Save Owned / Hatched status, Star Rank, Dragon Level, Habit Levels, and notes locally in your browser."
+              description="Save ownership, Star Rank, Dragon Level, Habit Levels, and notes locally in your browser."
               onClick={onRoster}
             />
             <FeatureCard
               icon={Swords}
               title="Build Formations"
-              description="See synergies, missing enablers, placement issues, and Vanguard conflicts."
+              description="Build three-dragon formations, compare explainable ratings, and review active synergy and placement risks."
+              onClick={onTeam}
+            />
+            <FeatureCard
+              icon={Flame}
+              title="Understand Formation Ratings"
+              description="Compare realized synergy, support usefulness, Kit Utilization, and conflict risk."
               onClick={onTeam}
             />
           </div>
@@ -518,7 +526,13 @@ function HomeSection({
         <div className="coverage-counts" aria-label="Coverage by rarity counts">
           {rarityCoverage.map((coverage) => (
             <div className="coverage-count" key={coverage.rarity}>
-              <span className="coverage-count-label">{coverage.rarity}</span>
+              <span className="coverage-count-label">
+                <span
+                  aria-hidden="true"
+                  className={`coverage-marker rarity-${coverage.rarity.toLowerCase()}`}
+                />
+                {coverage.rarity}
+              </span>
               <span className="coverage-count-value">
                 {coverage.mapped} / {coverage.total} mapped
               </span>
@@ -532,13 +546,17 @@ function HomeSection({
 
       <div className="overview-footer-grid">
         <div className="latest-update-panel panel readable">
-          <p className="eyebrow">Latest update</p>
-          <h3>Latest update - {versionLabel}</h3>
+          <p className="eyebrow">Current data</p>
+          <h3>Latest release — {versionLabel}</h3>
           <p>Tessarion added with verified ability wording and a curated synergy profile.</p>
         </div>
-        <div className="notice-panel trust-note">
-          No login required. Your roster is stored locally in your browser. This is an unofficial
-          community tool and does not use private game APIs.
+        <div className="notice-panel trust-note readable">
+          <p className="eyebrow">Local first</p>
+          <h3>Private by design</h3>
+          <p>
+            No login is required. Your roster stays in your browser, and Dragonfire Lab does not
+            use private game APIs.
+          </p>
         </div>
       </div>
     </section>
@@ -1453,7 +1471,7 @@ function hasDetailedAbilities(dragon: Dragon) {
 
 function AboutSection() {
   return (
-    <section aria-labelledby="about-title">
+    <section className="about-section" aria-labelledby="about-title">
       <SectionHeading
         eyebrow="Open source fan project"
         title="About"
@@ -1461,40 +1479,39 @@ function AboutSection() {
       />
       <div className="about-grid">
         <div className="panel readable">
-          <h3>What it is</h3>
-          <p>A local-first roster and formation planning tool for Dragonfire.</p>
-
-          <h3>What it does</h3>
+          <h3>What Dragonfire Lab does</h3>
           <ul className="plain-list">
-            <li>Track owned dragons.</li>
-            <li>Review verified ability wording.</li>
-            <li>Compare dragon metadata.</li>
-            <li>Build three-position formations.</li>
-            <li>See curated high-level synergies, missing enablers, and placement conflicts.</li>
+            <li>Track owned dragons and saved progression.</li>
+            <li>Review verified ability and profile information.</li>
+            <li>Build three-dragon formations.</li>
+            <li>Compare explainable Formation Ratings.</li>
+            <li>Review active synergy, Kit Utilization, and placement risks.</li>
           </ul>
         </div>
 
         <div className="panel readable">
-          <h3>Privacy and local-first storage</h3>
-          <p>No login is required. There is no private game API, no credential collection, and roster data plus notes stay in your browser.</p>
+          <h3>Privacy and local storage</h3>
+          <p>
+            No login is required. Dragonfire Lab does not use private game APIs or collect
+            credentials. Your roster and notes stay in your browser.
+          </p>
         </div>
 
         <div className="panel readable">
-          <h3>Data policy</h3>
+          <h3>Community data and contributions</h3>
           <p>
-            Ability and profile updates require sourced community evidence. Please do not submit
+            Ability and profile updates require sourced community evidence. Never submit
             credentials, private profile information, or confidential material.
           </p>
         </div>
 
         <div className="panel readable">
-          <h3>Unofficial disclaimer</h3>
+          <h3>Unofficial and open source</h3>
           <p>
-            Dragonfire Roster Lab is an unofficial community tool and is not affiliated with or
+            Dragonfire Lab is an unofficial community tool and is not affiliated with or
             endorsed by Warner Bros. Entertainment, HBO, or the developers of Game of Thrones:
             Dragonfire.
           </p>
-          <h3>Open source</h3>
           <p>
             The project is open source on{' '}
             <a href={repository.url} target="_blank" rel="noreferrer">
@@ -1506,10 +1523,10 @@ function AboutSection() {
       </div>
       <div className="support-panel panel readable">
         <p className="eyebrow">Optional support</p>
-        <h3>Keep the lab running</h3>
+        <h3>Support Dragonfire Lab</h3>
         <p>
-          Dragonfire Roster Lab is free to use. If the tool helps you, you can optionally support
-          development, hosting, and continued data entry.
+          Dragonfire Lab is free to use. Optional support helps cover hosting, ongoing dragon
+          research, and continued development.
         </p>
         <p>
           <a
@@ -1518,7 +1535,8 @@ function AboutSection() {
             rel="noopener noreferrer"
             target="_blank"
           >
-            ?? Buy me a dragon <ExternalLink size={16} aria-hidden="true" />
+            <Flame size={16} aria-hidden="true" /> Buy me a dragon{' '}
+            <ExternalLink size={16} aria-hidden="true" />
           </a>
         </p>
       </div>

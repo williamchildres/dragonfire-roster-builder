@@ -1,9 +1,9 @@
 {
-  "generatedAt": "2026-07-16T01:46:09.671Z",
+  "generatedAt": "2026-07-16T02:51:28.479Z",
   "source": {
     "repository": "https://github.com/williamchildres/dragonfire-roster-builder",
-    "branch": "fix/mobile-formation-selector-modal",
-    "commit": "55302fa123450181d8295fd7bccb6f6fc3afde5b",
+    "branch": "ui/public-pages-polish",
+    "commit": "5a8ebc8fc77b20156593ac491f7017edcc726a22",
     "databaseVersion": "0.6.4",
     "dataSchemaVersion": 13,
     "localRosterSchemaVersion": 4,
@@ -33,7 +33,7 @@
   "testTotals": {
     "runner": "vitest",
     "testFileCount": 16,
-    "testCaseCount": 195,
+    "testCaseCount": 196,
     "lastRunStatus": "not-run-by-exporter",
     "countingMethod": "static working-tree test declaration scan; runtime pass/fail is reported by npm run test"
   },

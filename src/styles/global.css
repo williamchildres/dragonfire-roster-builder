@@ -296,6 +296,7 @@ main {
 }
 
 .hero-art-panel {
+  aspect-ratio: auto;
   position: relative;
 }
 
@@ -381,7 +382,29 @@ main {
 .about-grid {
   display: grid;
   gap: 1rem;
-  grid-template-columns: repeat(auto-fit, minmax(18rem, 1fr));
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.about-section .section-heading p,
+.about-grid .panel,
+.support-panel,
+.overview-section .feature-card p,
+.overview-footer-grid p {
+  font-size: 1.02rem;
+  line-height: 1.65;
+}
+
+.about-grid .panel {
+  min-width: 0;
+}
+
+.about-grid .plain-list {
+  margin-bottom: 0;
+}
+
+.support-panel {
+  margin-top: 1rem;
+  max-width: none;
 }
 
 .feature-card {
@@ -395,8 +418,15 @@ main {
 }
 
 .hero-feature-stack {
+  align-content: stretch;
   display: grid;
   gap: 0.85rem;
+  height: 100%;
+  grid-template-rows: repeat(3, minmax(0, 1fr));
+}
+
+.hero-feature-stack .feature-card {
+  align-content: center;
 }
 
 .feature-card-button {
@@ -498,8 +528,32 @@ main {
 }
 
 .coverage-count-label {
+  align-items: center;
   color: var(--text);
+  display: inline-flex;
+  gap: 0.5rem;
   font-weight: 800;
+}
+
+.coverage-marker {
+  border: 1px solid rgba(255, 255, 255, 0.42);
+  border-radius: 999px;
+  display: inline-block;
+  flex: 0 0 auto;
+  height: 0.75rem;
+  width: 0.75rem;
+}
+
+.coverage-marker.rarity-legendary {
+  background: rgb(255, 211, 107);
+}
+
+.coverage-marker.rarity-epic {
+  background: rgb(171, 122, 184);
+}
+
+.coverage-marker.rarity-rare {
+  background: rgb(122, 161, 184);
 }
 
 .coverage-count-value {
@@ -528,6 +582,14 @@ main {
 
 .latest-update-panel h3 {
   margin-bottom: 0.5rem;
+}
+
+.trust-note h3 {
+  margin-bottom: 0.5rem;
+}
+
+.trust-note p:last-child {
+  margin-bottom: 0;
 }
 
 .notice-panel,
@@ -2123,6 +2185,8 @@ th {
 }
 
 .site-footer-copy {
+  font-size: 0.96rem;
+  line-height: 1.7;
   margin-bottom: 0;
 }
 
@@ -2180,6 +2244,15 @@ th {
     grid-template-columns: 1fr;
   }
 
+  .hero-feature-stack {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    grid-template-rows: none;
+  }
+
+  .hero-art-panel {
+    aspect-ratio: 1.35;
+  }
+
   .team-slots,
   .formation-board {
     grid-template-columns: 1fr;
@@ -2226,6 +2299,18 @@ th {
 }
 
 @media (max-width: 760px) {
+  .hero-feature-stack {
+    grid-template-columns: 1fr;
+  }
+
+  .about-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .coverage-counts {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
   .formation-selector-filters {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
@@ -2307,6 +2392,15 @@ th {
 
   .about-grid {
     grid-template-columns: 1fr;
+  }
+
+  .coverage-counts {
+    grid-template-columns: 1fr;
+  }
+
+  .coverage-count {
+    align-items: center;
+    grid-template-columns: minmax(0, 1fr) auto;
   }
 
   .details-heading {
