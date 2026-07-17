@@ -14,6 +14,11 @@ export interface StoredRoster {
   roster: OwnedDragon[];
 }
 
+export interface StoredRosterSnapshot {
+  roster: Record<string, OwnedDragon>;
+  updatedAt: string | null;
+}
+
 export interface RosterExport {
   format: 'dragonfire-roster-lab';
   schemaVersion: number;
@@ -82,32 +87,50 @@ export function normalizeRoster(
 }
 
 export function loadRoster(storage: Storage, dragons: Dragon[]): Record<string, OwnedDragon> {
+  return loadStoredRosterSnapshot(storage, dragons).roster;
+}
+
+export function loadStoredRosterSnapshot(
+  storage: Storage,
+  dragons: Dragon[],
+): StoredRosterSnapshot {
   const raw = storage.getItem(STORAGE_KEY);
   if (!raw) {
-    return createEmptyRoster(dragons);
+    return { roster: createEmptyRoster(dragons), updatedAt: null };
   }
 
   try {
     const parsed = JSON.parse(raw) as Partial<StoredRoster>;
     if (parsed.format !== 'dragonfire-roster-lab-local' || !Array.isArray(parsed.roster)) {
-      return createEmptyRoster(dragons);
+      return { roster: createEmptyRoster(dragons), updatedAt: null };
     }
 
     if (!SUPPORTED_ROSTER_SCHEMA_VERSIONS.has(parsed.schemaVersion ?? 0)) {
-      return createEmptyRoster(dragons);
+      return { roster: createEmptyRoster(dragons), updatedAt: null };
     }
 
-    return normalizeRoster(dragons, parsed.roster);
+    return {
+      roster: normalizeRoster(dragons, parsed.roster),
+      updatedAt: isValidTimestamp(parsed.updatedAt) ? parsed.updatedAt : null,
+    };
   } catch {
-    return createEmptyRoster(dragons);
+    return { roster: createEmptyRoster(dragons), updatedAt: null };
   }
 }
 
 export function saveRoster(storage: Storage, roster: Record<string, OwnedDragon>): void {
+  saveRosterSnapshot(storage, roster, new Date().toISOString());
+}
+
+export function saveRosterSnapshot(
+  storage: Storage,
+  roster: Record<string, OwnedDragon>,
+  updatedAt: string,
+): void {
   const payload: StoredRoster = {
     format: 'dragonfire-roster-lab-local',
     schemaVersion: ROSTER_SCHEMA_VERSION,
-    updatedAt: new Date().toISOString(),
+    updatedAt,
     roster: Object.values(roster),
   };
   storage.setItem(STORAGE_KEY, JSON.stringify(payload));
@@ -225,6 +248,10 @@ export function isValidReignLevel(value: unknown): value is number | null {
 
 function isRecord(value: unknown): value is Record<string, unknown> {
   return typeof value === 'object' && value !== null && !Array.isArray(value);
+}
+
+function isValidTimestamp(value: unknown): value is string {
+  return typeof value === 'string' && Number.isFinite(Date.parse(value));
 }
 
 function normalizeOwnedState(entry: RosterImportEntry): boolean {

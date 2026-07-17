@@ -2340,6 +2340,130 @@ th {
   margin: 0 auto;
 }
 
+.header-account-area {
+  align-items: center;
+  display: flex;
+  flex: 0 0 auto;
+  justify-content: flex-end;
+}
+
+.account-action,
+.account-loading {
+  white-space: nowrap;
+}
+
+.account-email-short {
+  color: var(--muted);
+  font-size: 0.78rem;
+  max-width: 12rem;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.roster-sync-panel {
+  align-items: center;
+  background: linear-gradient(135deg, rgba(242, 138, 46, 0.09), rgba(255, 255, 255, 0.02));
+  border: 1px solid var(--line-soft);
+  border-radius: 0.75rem;
+  display: flex;
+  gap: 1rem;
+  justify-content: space-between;
+  margin: 1rem 0;
+  padding: 1rem;
+}
+
+.roster-sync-panel .eyebrow {
+  align-items: center;
+  display: flex;
+  gap: 0.35rem;
+}
+
+.roster-sync-panel strong,
+.roster-sync-panel span {
+  display: block;
+}
+
+.roster-sync-panel span {
+  color: var(--muted);
+  margin-top: 0.2rem;
+}
+
+.account-dialog {
+  max-width: 38rem;
+}
+
+.account-dialog-body {
+  padding: 0 clamp(1rem, 3vw, 1.5rem) clamp(1rem, 3vw, 1.5rem);
+}
+
+.account-dialog-body > :last-child {
+  margin-bottom: 0;
+}
+
+.dialog-field {
+  display: grid;
+  gap: 0.4rem;
+  margin: 1rem 0 0.35rem;
+}
+
+.dialog-actions {
+  align-items: center;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.65rem;
+  margin-top: 1.25rem;
+}
+
+.field-error {
+  color: #ffaaa0;
+  margin-bottom: 0.75rem;
+}
+
+.account-details {
+  display: grid;
+  gap: 0.7rem;
+  margin: 0 0 1rem;
+}
+
+.account-details > div {
+  border-bottom: 1px solid var(--line-soft);
+  display: grid;
+  gap: 0.25rem;
+  grid-template-columns: minmax(8rem, 0.7fr) minmax(0, 1fr);
+  padding-bottom: 0.7rem;
+}
+
+.account-details dt {
+  color: var(--muted);
+  font-weight: 700;
+}
+
+.account-details dd {
+  margin: 0;
+  overflow-wrap: anywhere;
+}
+
+.account-limitation {
+  border-left: 3px solid var(--gold);
+  color: var(--muted);
+  padding-left: 0.8rem;
+}
+
+.comparison-wrap {
+  overflow-x: auto;
+}
+
+.roster-comparison {
+  min-width: 31rem;
+  width: 100%;
+}
+
+.roster-comparison th,
+.roster-comparison td {
+  border-bottom: 1px solid var(--line-soft);
+  padding: 0.65rem;
+}
+
 @media (max-width: 900px) {
   .site-header-inner {
     align-items: stretch;
@@ -2347,6 +2471,10 @@ th {
   }
 
   .section-nav {
+    justify-content: flex-start;
+  }
+
+  .header-account-area {
     justify-content: flex-start;
   }
 
@@ -2458,6 +2586,22 @@ th {
   .toolbar {
     align-items: stretch;
     flex-direction: column;
+  }
+
+  .roster-sync-panel,
+  .account-details > div,
+  .dialog-actions {
+    align-items: stretch;
+    flex-direction: column;
+    grid-template-columns: 1fr;
+  }
+
+  .roster-sync-panel {
+    align-items: stretch;
+  }
+
+  .account-email-short {
+    display: none;
   }
 
   .dragon-grid {

@@ -1,5 +1,14 @@
 # Changelog
 
+## 0.7.0 - 2026-07-17
+
+- Added optional Supabase email magic-link authentication and one-row-per-user roster synchronization without requiring an account for local use.
+- Added explicit first-sign-in migration and conflict decisions, immediate browser persistence, debounced serialized cloud writes, offline/error recovery, and stale-session response protection.
+- Added account, sign-in, roster sync, import confirmation, and local-clear safety UI while keeping formations browser-local.
+- Added the first Supabase migration with RLS ownership policies for authenticated SELECT, INSERT, and UPDATE; no anonymous or DELETE roster access is granted.
+- Added GitHub Pages public-variable wiring, placeholder environment documentation, deterministic fake-service tests, and setup/security guidance.
+- Increased database/package version to `0.7.0`; source data schema remains `13`, local roster schema remains `4`, and import/export/share-link/rating contracts are unchanged.
+
 ## 0.6.10 - 2026-07-17
 
 - Established a wider responsive application shell with documented surface, spacing, typography, control, focus, and motion tokens.

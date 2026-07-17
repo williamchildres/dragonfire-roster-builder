@@ -8,11 +8,12 @@ Public site: https://dragonfirelab.com
 
 ## Current Features
 
-- My Roster as the central local dragon-management page, with Add Dragon search/filter flow for 31 known dragons.
+- My Roster as the central local-first dragon-management page, with Add Dragon search/filter flow for 31 known dragons.
 - Full raw Command, Trait, and Habit wording for all 31 known dragons.
 - Curated simple synergy profiles for all 31 known dragons.
 - Complete Legendary (9 / 9), Epic (10 / 10), and Rare (12 / 12) coverage.
 - Owned / Hatched roster tracking with Star Rank, Dragon Level, notes, and Habit Levels.
+- Optional email magic-link sign-in and account roster synchronization through Supabase; local-only use remains fully supported.
 - Formation Builder with explainable local rating, placement, progression locks, missing-enabler, position conflict, and future-unlock explanations.
 - Formation share links and roster JSON import/export.
 - Lightweight project-context export for handoffs.
@@ -22,6 +23,8 @@ Public site: https://dragonfirelab.com
 Canonical abilities use a minimal descriptive shape: stable ID, dragon ID, kind, name, optional class, Star Rank unlock, Dragon Level unlock, hard position requirement, raw verified wording, verification metadata, evidence IDs, and descriptive tags.
 
 The repository does not store execution-level schedules, rolls, attempts, target-selection groups, structured effects, ranked battle values, capability dependencies, traces, expected interactions, or unresolved-mechanics exports. Raw ability wording may still mention rounds, chances, targets, durations, and percentages because players need the source text.
+
+Account synchronization stores one RLS-protected normalized roster row per authenticated user. It synchronizes ownership, Star Rank, `reignLevel` (shown as Dragon Level), Habit Levels, and dragon notes. Formations remain browser-local. See [`docs/setup/supabase-account-roster.md`](docs/setup/supabase-account-roster.md) for migration, environment, and security setup.
 
 ## Formation Builder
 
@@ -76,4 +79,4 @@ Do not add capability outputs, modifier capabilities, traces, expected interacti
 
 ## Version Notes
 
-Current source data schema: `13`. Local roster schema is `4`; saved/exported ownership, collection-state, and shard data from earlier versions migrate to the simplified Owned / Hatched roster state while preserving Star Rank, Dragon Level, Habit Levels, notes, and formations.
+Current release: `0.7.0`. Source data schema: `13`. Local roster schema: `4`. Supabase migration: `0001` (`202607170001_create_user_rosters.sql`). Saved/exported ownership, collection-state, and shard data from earlier versions migrate to the simplified Owned / Hatched roster state while preserving Star Rank, Dragon Level, Habit Levels, notes, and formations.

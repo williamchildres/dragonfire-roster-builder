@@ -1,6 +1,6 @@
 {
   "name": "dragonfire-roster-builder",
-  "version": "0.6.10",
+  "version": "0.7.0",
   "private": true,
   "type": "module",
   "scripts": {
@@ -18,12 +18,13 @@
     "package:context": "powershell -NoProfile -ExecutionPolicy Bypass -File scripts/package-project-context.ps1"
   },
   "dependencies": {
+    "@supabase/supabase-js": "^2.110.7",
     "@vitejs/plugin-react": "latest",
-    "vite": "latest",
-    "typescript": "6.0.3",
+    "lucide-react": "latest",
     "react": "latest",
     "react-dom": "latest",
-    "lucide-react": "latest"
+    "typescript": "6.0.3",
+    "vite": "latest"
   },
   "devDependencies": {
     "@eslint/js": "latest",
