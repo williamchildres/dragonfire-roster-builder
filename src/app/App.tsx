@@ -1476,6 +1476,10 @@ function AboutSection() {
       <div className="about-grid">
         <div className="panel readable">
           <h3>What Dragonfire Lab does</h3>
+          <p>
+            All 31 known dragons have detailed coverage: Legendary 9/9, Epic 10/10, and Rare
+            12/12.
+          </p>
           <ul className="plain-list">
             <li>Track owned dragons and saved progression.</li>
             <li>Review verified ability and profile information.</li>

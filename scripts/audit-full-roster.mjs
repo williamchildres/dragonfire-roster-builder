@@ -6,16 +6,37 @@ import { fileURLToPath } from 'node:url';
 import { createServer } from 'vite';
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
-const jsonPath = path.join(root, 'docs', 'audits', 'full-roster-regression-0.6.8.json');
-const markdownPath = path.join(root, 'docs', 'audits', 'full-roster-regression-0.6.8.md');
 const writeReports = process.argv.includes('--write');
+const expectedOpenFindingIds = ['FRR-F001', 'FRR-F002'];
+const resolvedFindings = [
+  {
+    id: 'FRR-F003',
+    resolution:
+      'Equivalent active paths still aggregate, while locked and position-inactive alternatives no longer contribute ability IDs or presentation evidence.',
+  },
+  {
+    id: 'FRR-F004',
+    resolution:
+      'Details At a glance now uses selected Star Rank and Dragon Level, and future signals are explicitly labeled inactive with their unlock requirement.',
+  },
+  {
+    id: 'FRR-F005',
+    resolution:
+      'Scoped reusable Details styles allow headings, technical labels, and chips to shrink and wrap within their own boxes.',
+  },
+  {
+    id: 'FRR-F006',
+    resolution:
+      'About now states 31/31 detailed coverage with Legendary 9/9, Epic 10/10, and Rare 12/12.',
+  },
+];
 const browserQaObservation = {
-  status: 'PASS with classified observations',
-  auditedUrl: 'https://dragonfirelab.com',
+  status: 'PASS',
+  auditedUrl: 'local 0.6.9 production build',
   desktop: {
     requestedViewport: { width: 1440, height: 1000 },
     viewport: { width: 1440, height: 1000 },
-    document: { clientWidth: 1425, clientHeight: 1000, scrollWidth: 1425, scrollHeight: 1504 },
+    document: { clientWidth: 1440, clientHeight: 1000, scrollWidth: 1440, scrollHeight: 1365 },
     pageHorizontalOverflow: false,
     selectorDialog: {
       width: 1184,
@@ -27,13 +48,13 @@ const browserQaObservation = {
     detailsDialogMaximum: { width: 1184, height: 900 },
     dialogBeyondViewportCount: 0,
     dialogHorizontalOverflowCount: 0,
-    descendantHorizontalOverflowCount: 10,
+    descendantHorizontalOverflowCount: 0,
     clippedChipCount: 0,
   },
   mobile: {
     requestedViewport: { width: 390, height: 844 },
     viewport: { width: 390, height: 844 },
-    document: { clientWidth: 375, clientHeight: 844, scrollWidth: 375, scrollHeight: 2320 },
+    document: { clientWidth: 390, clientHeight: 844, scrollWidth: 390, scrollHeight: 3479 },
     pageHorizontalOverflow: false,
     selectorDialog: { width: 366, height: 760, clientWidth: 349, scrollWidth: 349, cardCount: 31 },
     detailsDialogSample: {
@@ -45,25 +66,23 @@ const browserQaObservation = {
     },
     dialogBeyondViewportCount: 0,
     dialogHorizontalOverflowCount: 0,
-    descendantHorizontalOverflowCount: 1,
+    descendantHorizontalOverflowCount: 0,
     clippedChipCount: 0,
     navigationUsable: true,
   },
   uniqueSelectorDragonCount: 31,
   selectorTraversalCount: 31,
-  detailDialogsOpened: 70,
-  uniqueDetailDialogsOpened: 31,
+  detailDialogsOpened: 8,
+  uniqueDetailDialogsOpened: 4,
   detailsStructure: {
-    commandPerDragon: 1,
-    vanguardTraitPerDragon: 1,
-    habitsPerDragon: 5,
-    rawWordingControlsPerDragon: 7,
+    sampledDragons: ['Dawnseeker', 'Vesper', 'Shadowrend', 'Thunderstrike'],
+    progressionBoundaries: ['Dawnseeker 9/10 Star and Level 15/16', 'Vesper 9/10 Star'],
     failures: 0,
   },
   searchResultCountForVesper: 1,
   rareFilterResultCount: 12,
   sentinelFilterResultCount: 7,
-  overflowCount: 11,
+  overflowCount: 0,
   clippedChipCount: 0,
   consoleErrors: [],
   consoleWarnings: [],
@@ -76,74 +95,13 @@ const browserQaObservation = {
     deadRoutes: 0,
   },
   shareLink:
-    'PASS — #formation=left-flank:caraxes,vanguard:syrax,right-flank:feskar generated and restored after reload.',
+    'PASS — #formation=left-flank:syrax,vanguard:vhagar,right-flank:solstryker generated and restored after reload.',
   sampledFormationEdges: [
-    'Caraxes/Syrax/Feskar: specific First-Strike, Burn, Slow, Fire, and Instinct relationships rendered without duplicate strengths.',
-    'Vesper/Rhysarion/Feskar: Vesper Confusion and Feskar Stagger each rendered as one specifically named Control setup path.',
-    'Nyrena/Dawnseeker/Antares: typed Fire/Tactical support, priority/position constraints, missing providers, and rating explanations rendered conservatively.',
-    'Dawnseeker 9→10 Star and Vesper 9→10 Star Details boundaries sampled.',
+    'Syrax/Vhagar/Solstryker: three active strengths rendered without duplicates; the locked Vhagar trait remained only under Future unlocks; rating stayed 46.',
+    'Dawnseeker 9→10 Star and Level 15→16 Details boundaries sampled on desktop and mobile.',
+    'Vesper 9→10 Star Details boundaries sampled on desktop and mobile.',
   ],
-  findings: [
-    {
-      id: 'FRR-F004',
-      severity: 'medium',
-      category: 'presentation defect',
-      affectedArea: 'Dragon Details — At a glance progression presentation',
-      affectedAbilityOrSignal:
-        'dawnseeker-first-light-first-strike; vesper-midnight-onslaught-confusion',
-      currentBehavior:
-        'At 9 Stars, the ability cards correctly show First Light and Midnight Onslaught as Locked preview, but At a glance still lists Dawnseeker First-Strike and Vesper Confusion/Control as unqualified Provides signals.',
-      expectedBehavior:
-        'Future signals may remain visible as previews, but the At a glance summary must either exclude them or clearly mark their inactive 10-Star unlock state.',
-      reproducibleSetup:
-        'Open Dawnseeker Details at 9 Stars and compare the locked First Light card with the Provides list; repeat with Vesper Midnight Onslaught at 9 Stars.',
-      fileReferences: ['src/app/dragonDetailPresentation.ts', 'src/app/DragonDetailModal.tsx'],
-      focusedTestReproduction: true,
-      controllerMechanicConfirmationNeeded: false,
-      recommendedNextAction:
-        'Create a narrow Details-presentation follow-up that makes the At a glance summary progression-aware without changing profiles or evaluator behavior.',
-      auditDisposition: 'Not fixed in this audit PR.',
-    },
-    {
-      id: 'FRR-F005',
-      severity: 'low',
-      category: 'browser-only observation',
-      affectedArea: 'Details long-label wrapping',
-      affectedAbilityOrSignal:
-        'Shadowrend and Thunderstrike Details headings; Thunderstrike technical tag label',
-      currentBehavior:
-        'No page or dialog overflows its viewport and no chips are clipped, but 10 desktop descendant elements and one sampled mobile descendant report horizontal scrollWidth beyond clientWidth. Thunderstrike heading descendants exceed their desktop containers by 24–25 px; its mobile technical tag text exceeds by 24 px.',
-      expectedBehavior:
-        'Long names and technical labels should wrap within their own element boxes so the horizontally overflowing element count is zero.',
-      reproducibleSetup:
-        'At 1440×1000 open Shadowrend and Thunderstrike Details at 10 Stars and compare descendant scrollWidth/clientWidth; at 390×844 inspect Thunderstrike technical tags.',
-      fileReferences: ['src/styles/global.css', 'src/app/DragonDetailModal.tsx'],
-      focusedTestReproduction: true,
-      controllerMechanicConfirmationNeeded: false,
-      recommendedNextAction:
-        'Add a narrow CSS wrapping fix and viewport regression test in a separate UI PR.',
-      auditDisposition: 'Not fixed in this audit PR.',
-    },
-    {
-      id: 'FRR-F006',
-      severity: 'low',
-      category: 'presentation defect',
-      affectedArea: 'About coverage copy',
-      affectedAbilityOrSignal: '31/31 roster coverage statement',
-      currentBehavior:
-        'Overview, README, and selectors state complete 31/31 coverage, while About contains no current 31/31 coverage statement.',
-      expectedBehavior:
-        'Overview, README, About, and selectors should consistently communicate current 31/31 coverage.',
-      reproducibleSetup:
-        'Open Overview, About, and the Add Dragon selector, then compare their coverage copy with README.md.',
-      fileReferences: ['src/app/App.tsx', 'README.md'],
-      focusedTestReproduction: true,
-      controllerMechanicConfirmationNeeded: false,
-      recommendedNextAction:
-        'Add one concise 31/31 coverage sentence to About in a separate presentation-only PR.',
-      auditDisposition: 'Not fixed in this audit PR.',
-    },
-  ],
+  findings: [],
 };
 
 const server = await createServer({
@@ -157,23 +115,37 @@ try {
   const module = await server.ssrLoadModule('/src/audit/fullRosterAudit.ts');
   const report = module.runFullRosterAudit();
   const runtimeMs = Math.round(performance.now() - startedAt);
-  const combinedFindings = [...report.findings, ...browserQaObservation.findings];
+  const auditVersion = report.generatedFrom.databaseVersion;
+  const jsonPath = path.join(root, 'docs', 'audits', `full-roster-regression-${auditVersion}.json`);
+  const markdownPath = path.join(root, 'docs', 'audits', `full-roster-regression-${auditVersion}.md`);
+  const combinedFindings = [...report.findings];
   const artifact = {
     ...report,
     sourceOfTruth: {
-      originMainSha: 'a45ec12d4f80f17a6c71b1c20b18261b234e30b5',
-      branch: 'audit/full-roster-regression',
+      originMainSha: 'bf9abb879e14baed062ac45fd0cb8931ef6f6d5c',
+      branch: 'fix/full-roster-audit-findings',
       worktree:
-        'C:/Users/willi/Documents/CodexProjects/Dragonfire Roster Lab/.worktrees/full-roster-regression',
+        'C:/Users/willi/Documents/CodexProjects/Dragonfire Roster Lab/.worktrees/fix-full-roster-audit-findings',
     },
     recordedAuditRuntimeMs: runtimeMs,
     browserQa: browserQaObservation,
+    comparison: {
+      baselineVersion: '0.6.8',
+      baselineDeterministicFullResultHash:
+        '2a4561cdb2aa6d0b9483005f44cc3ee3747d21fb6c4ecb1fe0cc375c1dafbf64',
+      currentVersion: auditVersion,
+      currentDeterministicFullResultHash: report.formationSweep.deterministicFullResultHash,
+      allNumericScoresAndComponentsUnchanged:
+        report.formationSweep.deterministicFullResultHash ===
+        '2a4561cdb2aa6d0b9483005f44cc3ee3747d21fb6c4ecb1fe0cc375c1dafbf64',
+    },
+    resolvedFindings,
     findingSummary: {
       total: combinedFindings.length,
       bySeverity: countValues(combinedFindings.map((finding) => finding.severity)),
       byCategory: countValues(combinedFindings.map((finding) => finding.category)),
     },
-    todoIds: ['FRR-F001', 'FRR-F002', 'FRR-F003', 'FRR-F004', 'FRR-F005', 'FRR-F006'],
+    todoIds: expectedOpenFindingIds,
   };
 
   if (writeReports) {
@@ -183,13 +155,18 @@ try {
     console.log(`Wrote ${path.relative(root, jsonPath)} and ${path.relative(root, markdownPath)}.`);
   } else {
     const committed = JSON.parse(await readFile(jsonPath, 'utf8'));
+    const committedFindingIds = (committed.findings ?? []).map((finding) => finding.id);
     const stableFieldsMatch =
+      committed.auditVersion === auditVersion &&
+      JSON.stringify(committedFindingIds) === JSON.stringify(expectedOpenFindingIds) &&
+      committed.findingSummary?.total === expectedOpenFindingIds.length &&
       committed.formationSweep?.deterministicFullResultHash ===
         report.formationSweep.deterministicFullResultHash &&
       committed.totals?.orderedFormationsEvaluated === report.totals.orderedFormationsEvaluated &&
       committed.totals?.progressionStatesEvaluated === report.totals.progressionStatesEvaluated &&
       committed.totals?.providerPayoffPairsEvaluated ===
         report.totals.providerPayoffPairsEvaluated &&
+      committed.totals?.failedChecks === 0 &&
       committed.totals?.passChecks === report.totals.passChecks &&
       committed.totals?.failedChecks === report.totals.failedChecks;
     if (!stableFieldsMatch) {
@@ -212,11 +189,11 @@ try {
 }
 
 function renderMarkdown(report) {
-  const findings = [...report.findings, ...report.browserQa.findings];
+  const findings = [...report.findings];
   const lines = [
-    '# Full-roster regression audit — 0.6.8',
+    `# Full-roster regression audit — ${report.auditVersion}`,
     '',
-    '> Audit-only baseline. No production dragon data, profile mechanics, evaluator behavior, rating logic, targeting behavior, or UI behavior was corrected by this audit.',
+    '> Regression baseline after resolving the actionable 0.6.8 full-roster findings. Canonical dragon data, profile semantics, targeting, and rating calibration remain unchanged.',
     '',
     '## Executive summary',
     '',
@@ -310,6 +287,14 @@ function renderMarkdown(report) {
     );
   }
   lines.push(
+    '## Resolved findings compared with 0.6.8',
+    '',
+    ...report.resolvedFindings.map((finding) => `- ${finding.id}: ${finding.resolution}`),
+    '',
+    `The 0.6.8 deterministic hash was \`${report.comparison.baselineDeterministicFullResultHash}\`; the ${report.auditVersion} hash is \`${report.comparison.currentDeterministicFullResultHash}\`. All 26,970 numeric scores and component totals unchanged: ${report.comparison.allNumericScoresAndComponentsUnchanged ? 'Yes' : 'No'}.`,
+    '',
+  );
+  lines.push(
     '## Browser QA',
     '',
     `Status: ${report.browserQa.status}. Audited URL: ${report.browserQa.auditedUrl}. Selector traversal: ${report.browserQa.selectorTraversalCount}; Details dialogs opened: ${report.browserQa.detailDialogsOpened}; overflow: ${report.browserQa.overflowCount}; clipped chips: ${report.browserQa.clippedChipCount}; console errors: ${report.browserQa.consoleErrors.length}; console warnings: ${report.browserQa.consoleWarnings.length}; share link: ${report.browserQa.shareLink}.`,
@@ -327,8 +312,9 @@ function renderMarkdown(report) {
     '## Explicit non-changes',
     '',
     '- No formula, weight, threshold, guardrail, placement, or calibration changes.',
-    '- No dragon wording, curated profile, evaluator, targeting, rating, or UI corrections.',
-    '- No schema, import/export, share-link, authentication, payment, hosting, deployment, optimizer, generator, simulator, or version changes.',
+    '- No dragon wording, curated profile, targeting, or rating semantics changed.',
+    '- Source schema 13, local roster schema 4, import/export, and share-link contracts remain unchanged.',
+    '- FRR-F001 and FRR-F002 remain informational and unresolved by design.',
   );
   return `${lines.join('\n')}\n`;
 }

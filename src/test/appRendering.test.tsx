@@ -227,7 +227,7 @@ describe('Dragonfire Lab app', () => {
     expect(screen.queryByRole('heading', { name: 'Epic coverage' })).not.toBeInTheDocument();
     expect(screen.queryByRole('heading', { name: 'Rare coverage' })).not.toBeInTheDocument();
 
-    const latestUpdate = screen.getByRole('heading', { name: /latest release — v0\.6\.8/i }).closest('.latest-update-panel');
+    const latestUpdate = screen.getByRole('heading', { name: /latest release — v0\.6\.9/i }).closest('.latest-update-panel');
     expect(latestUpdate).not.toBeNull();
     expect(latestUpdate).toHaveTextContent('Vesper, Nyrena, and Dawnseeker complete verified ability data and curated profiles for all 31 dragons.');
 
@@ -240,6 +240,11 @@ describe('Dragonfire Lab app', () => {
     await user.click(screen.getByRole('button', { name: /about/i }));
     expect(screen.queryByText('Dragonfire Roster Lab')).not.toBeInTheDocument();
     expect(screen.getByRole('heading', { name: 'What Dragonfire Lab does' })).toBeInTheDocument();
+    expect(
+      screen.getByText(
+        /All 31 known dragons have detailed coverage: Legendary 9\/9, Epic 10\/10, and Rare 12\/12\./i,
+      ),
+    ).toBeInTheDocument();
     expect(screen.getByRole('heading', { name: 'Privacy and local storage' })).toBeInTheDocument();
     expect(screen.getByRole('heading', { name: 'Community data and contributions' })).toBeInTheDocument();
     expect(screen.getByRole('heading', { name: 'Unofficial and open source' })).toBeInTheDocument();

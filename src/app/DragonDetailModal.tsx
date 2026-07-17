@@ -39,7 +39,14 @@ export function DragonDetailsDialog({
     () => simpleSynergyProfiles.find((candidate) => candidate.dragonId === dragon.id),
     [dragon.id],
   );
-  const presentation = useMemo(() => buildDragonDetailPresentation(profile), [profile]);
+  const presentation = useMemo(
+    () =>
+      buildDragonDetailPresentation(profile, {
+        starRank: rosterEntry?.starRank ?? null,
+        dragonLevel: rosterEntry?.reignLevel ?? null,
+      }),
+    [profile, rosterEntry?.reignLevel, rosterEntry?.starRank],
+  );
 
   useEffect(() => {
     previousFocus.current = document.activeElement instanceof HTMLElement ? document.activeElement : null;
@@ -165,11 +172,13 @@ function DragonAtAGlance({ presentation }: { presentation: DragonDetailPresentat
         <AtAGlanceCard
           title="Provides"
           items={presentation.provides}
+          lockedItems={presentation.lockedProvides}
           fallback="No formation-wide output profile recorded."
         />
         <AtAGlanceCard
           title="Benefits from"
           items={presentation.benefitsFrom}
+          lockedItems={presentation.lockedBenefitsFrom}
           fallback="No mapped incoming synergy yet."
         />
       </div>
@@ -180,19 +189,26 @@ function DragonAtAGlance({ presentation }: { presentation: DragonDetailPresentat
 function AtAGlanceCard({
   title,
   items,
+  lockedItems,
   fallback,
 }: {
   title: string;
   items: string[];
+  lockedItems: string[];
   fallback: string;
 }) {
   return (
     <article className="glance-card">
       <h4>{title}</h4>
-      {items.length > 0 ? (
+      {items.length + lockedItems.length > 0 ? (
         <ul className="chip-list">
           {items.map((item) => (
             <li key={item} className="chip">
+              {item}
+            </li>
+          ))}
+          {lockedItems.map((item) => (
+            <li key={item} className="chip chip-inactive">
               {item}
             </li>
           ))}

@@ -65,7 +65,7 @@ describe('first Rare dragon batch', () => {
       expect(Object.values(dragon.stats).every((value) => value === null)).toBe(true);
     }
 
-    expect(databaseMetadata).toMatchObject({ databaseVersion: '0.6.8', schemaVersion: 13 });
+    expect(databaseMetadata).toMatchObject({ databaseVersion: '0.6.9', schemaVersion: 13 });
     expect(ROSTER_SCHEMA_VERSION).toBe(4);
   });
 

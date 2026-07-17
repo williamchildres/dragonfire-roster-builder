@@ -323,7 +323,12 @@ function addCandidate(
     return;
   }
 
-  if (candidate.rank > current.rank || compareCandidate(candidate, current) < 0) {
+  if (candidate.rank > current.rank) {
+    candidates.set(relationshipKey, normalizeCandidate(candidate));
+    return;
+  }
+
+  if (compareCandidate(candidate, current) < 0) {
     candidates.set(relationshipKey, mergeCandidateAbilityIds(candidate, current));
     return;
   }

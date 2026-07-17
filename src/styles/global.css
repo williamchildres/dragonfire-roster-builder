@@ -1996,6 +1996,39 @@ dd {
   width: fit-content;
 }
 
+.chip-inactive {
+  border-style: dashed;
+  color: var(--muted);
+}
+
+.details-dialog :where(
+    .panel,
+    .ability-stack,
+    .ability-card,
+    .ability-card-header,
+    .ability-card-title,
+    .ability-summary,
+    .ability-technical-disclosure,
+    .technical-disclosure,
+    .technical-disclosure-stack,
+    .chip-list,
+    .plain-list,
+    .plain-list li
+  ) {
+  min-width: 0;
+}
+
+.details-dialog :where(h2, h3, h4, p, li, summary, dt, dd, a, strong),
+.details-dialog .chip {
+  max-width: 100%;
+  overflow-wrap: anywhere;
+  word-break: break-word;
+}
+
+.details-dialog .chip {
+  white-space: normal;
+}
+
 .details-roster-fields {
   align-items: end;
   grid-template-columns: repeat(3, minmax(7rem, 1fr));
