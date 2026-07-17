@@ -87,8 +87,8 @@ const rosterSuccessMessageTimeoutMs = 4000;
 
 const sectionLabels: Record<Section, string> = {
   home: 'Overview',
-  roster: 'My Roster',
-  team: 'Formation Builder',
+  roster: 'Roster',
+  team: 'Formations',
   about: 'About',
 };
 
@@ -298,7 +298,7 @@ export function App() {
     setFormation(nextFormation);
     setMessage({
       kind: 'info',
-      text: `Roster Dragons mode cleared unavailable slot${unavailablePositions.length === 1 ? '' : 's'}: ${unavailablePositions
+      text: `My Roster mode cleared unavailable slot${unavailablePositions.length === 1 ? '' : 's'}: ${unavailablePositions
         .map(formatFormationPosition)
         .join(', ')}.`,
     });
@@ -310,31 +310,34 @@ export function App() {
         Skip to content
       </a>
       <header className="site-header">
-        <div className="brand-lockup" aria-label="Dragonfire Lab">
-          <span className="brand-mark" aria-hidden="true">
-            <Flame size={28} />
-          </span>
-          <div>
-            <p className="eyebrow">Unofficial community tool</p>
-            <h1>Dragonfire Lab</h1>
+        <div className="site-header-inner">
+          <div className="brand-lockup" aria-label="Dragonfire Lab">
+            <span className="brand-mark" aria-hidden="true">
+              <Flame size={28} />
+            </span>
+            <div>
+              <p className="eyebrow">Unofficial community tool</p>
+              <h1>Dragonfire Lab</h1>
+            </div>
           </div>
+          <nav aria-label="Primary sections" className="section-nav">
+            {(Object.keys(sectionLabels) as Section[]).map((section) => {
+              const Icon = sectionIcons[section];
+              return (
+                <button
+                  className={activeSection === section ? 'nav-button is-active' : 'nav-button'}
+                  key={section}
+                  type="button"
+                  aria-current={activeSection === section ? 'page' : undefined}
+                  onClick={() => selectSection(section)}
+                >
+                  <Icon size={18} aria-hidden="true" />
+                  <span>{sectionLabels[section]}</span>
+                </button>
+              );
+            })}
+          </nav>
         </div>
-        <nav aria-label="Primary sections" className="section-nav">
-          {(Object.keys(sectionLabels) as Section[]).map((section) => {
-            const Icon = sectionIcons[section];
-            return (
-              <button
-                className={activeSection === section ? 'nav-button is-active' : 'nav-button'}
-                key={section}
-                type="button"
-                onClick={() => selectSection(section)}
-              >
-                <Icon size={18} aria-hidden="true" />
-                <span>{sectionLabels[section]}</span>
-              </button>
-            );
-          })}
-        </nav>
       </header>
 
       <main id="main-content">
@@ -471,17 +474,24 @@ function HomeSection({
           <div className="hero-art-overlay" aria-hidden="true" />
         </div>
         <div className="hero-copy">
+          <div className="hero-introduction">
+            <p className="eyebrow">Roster and formation planner</p>
+            <h2>Build stronger formations from your dragon roster.</h2>
+            <p>
+              Track your dragons, compare explainable formation ratings, and understand which abilities work together.
+            </p>
+          </div>
           <div className="hero-feature-stack" aria-label="Overview highlights">
             <FeatureCard
               icon={Users}
               title="Track Your Roster"
-              description="Save ownership, Star Rank, Dragon Level, Habit Levels, and notes locally in your browser."
+              description="Save ownership, Star Rank, Dragon Level, Habit Levels, and notes in this browser."
               onClick={onRoster}
             />
             <FeatureCard
               icon={Swords}
               title="Build Formations"
-              description="Build three-dragon formations, compare explainable ratings, and review active synergy and placement risks."
+              description="Build three-dragon formations, compare explainable ratings, and review active synergies and placement risks."
               onClick={onTeam}
             />
             <FeatureCard
@@ -549,8 +559,8 @@ function HomeSection({
           <p className="eyebrow">Local first</p>
           <h3>Private by design</h3>
           <p>
-            No login is required. Your roster stays in your browser, and Dragonfire Lab does not
-            use private game APIs.
+            Works without an account. Your roster is stored in this browser, and Dragonfire Lab
+            does not use private game APIs.
           </p>
         </div>
       </div>
@@ -628,7 +638,7 @@ function RosterSection({
       <SectionHeading
         eyebrow="Stored in your browser"
         title="My Roster"
-        description="Manage ownership, star rank, and reign level with local browser storage."
+        description="Manage ownership, Star Rank, and Dragon Level with local browser storage."
       />
       {successMessage ? (
         <div className="status-message success" role="status" aria-live="polite">
@@ -681,7 +691,7 @@ function RosterSection({
       ) : (
         <div className="empty-state">
           <h3>No dragons in your roster yet.</h3>
-          <p>Add a dragon to start tracking Star Rank, Reign Level, and formation options. Use the Add Dragon button to begin.</p>
+          <p>Add a dragon to start tracking Star Rank, Dragon Level, and formation options. Use the Add Dragon button to begin.</p>
           <button type="button" className="primary-button" onClick={onOpenAddDragon}>
             <Plus size={18} aria-hidden="true" />
             + Add Dragon
@@ -1076,7 +1086,7 @@ function FormationBuilderSection({
               checked={dragonPoolMode === 'all-star-10'}
               onChange={() => onDragonPoolModeChange('all-star-10')}
             />
-            <span>All 10 Star Dragons</span>
+            <span>Maxed Dragons</span>
           </label>
           <label className={dragonPoolMode === 'roster' ? 'formation-mode-option is-active' : 'formation-mode-option'}>
             <input
@@ -1085,7 +1095,7 @@ function FormationBuilderSection({
               checked={dragonPoolMode === 'roster'}
               onChange={() => onDragonPoolModeChange('roster')}
             />
-            <span>Roster Dragons</span>
+            <span>My Roster</span>
           </label>
         </fieldset>
         <div className="button-row">
@@ -1658,7 +1668,7 @@ function RosterEditControls({
         </select>
       </label>
       <label>
-        Reign Level
+        Dragon Level
         <input
           min={0}
           step={1}

@@ -228,7 +228,7 @@ function synergyPayoffScore(
   const score = clampCategory(setupPoints + amplifierPoints + benefitPoints + participationPoints, 35);
   const explanation =
     presentation.activeSynergies.length > 0
-      ? `${presentation.activeSynergies.length} mapped active relationship${presentation.activeSynergies.length === 1 ? '' : 's'} found.`
+      ? `${presentation.activeSynergies.length} active ${presentation.activeSynergies.length === 1 ? 'synergy' : 'synergies'} found.`
       : 'No active mapped payoff relationship is available yet.';
 
   return { label: 'Realized synergy payoff', score, max: 35, explanation };
@@ -318,7 +318,7 @@ function kitUtilizationScore(
   ].filter((detail): detail is string => detail !== null);
   const explanation =
     metrics.totalCount > 0
-      ? `${metrics.realizedCount} of ${metrics.totalCount} mapped opportunities realized.${
+      ? `${metrics.realizedCount} of ${metrics.totalCount} kit interactions realized.${
           gapDetails.length > 0 ? ` Gaps: ${gapDetails.join(', ')}.` : ''
         }`
       : 'No mapped kit opportunities are active for this formation yet.';

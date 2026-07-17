@@ -35,7 +35,7 @@ describe('Dragonfire Lab app', () => {
   });
 
   async function openAddDragon(user: ReturnType<typeof userEvent.setup>) {
-    await user.click(screen.getByRole('button', { name: /^my roster$/i }));
+    await user.click(screen.getByRole('button', { name: /^roster$/i }));
     await user.click(screen.getAllByRole('button', { name: /\+ add dragon/i })[0]!);
   }
 
@@ -120,7 +120,7 @@ describe('Dragonfire Lab app', () => {
     const syraxCard = screen.getByRole('heading', { name: 'Syrax' }).closest('article');
     expect(syraxCard).not.toBeNull();
     expect(within(syraxCard as HTMLElement).getByLabelText(/star rank/i)).toHaveValue('5');
-    expect(within(syraxCard as HTMLElement).getByLabelText(/reign level/i)).toHaveValue(12);
+    expect(within(syraxCard as HTMLElement).getByLabelText(/dragon level/i)).toHaveValue(12);
     await user.click(within(syraxCard as HTMLElement).getByRole('button', { name: /view details/i }));
     expect(screen.getByLabelText(/personal notes/i)).toHaveValue('Keep with fire support.');
   });
@@ -130,7 +130,7 @@ describe('Dragonfire Lab app', () => {
     try {
       render(<App />);
 
-      fireEvent.click(screen.getByRole('button', { name: /^my roster$/i }));
+      fireEvent.click(screen.getByRole('button', { name: /^roster$/i }));
       fireEvent.click(screen.getAllByRole('button', { name: /\+ add dragon/i })[0]!);
       fireEvent.change(screen.getByLabelText(/search by dragon name/i), { target: { value: 'Feskar' } });
       fireEvent.click(screen.getByRole('button', { name: /add to roster/i }));
@@ -227,13 +227,19 @@ describe('Dragonfire Lab app', () => {
     expect(screen.queryByRole('heading', { name: 'Epic coverage' })).not.toBeInTheDocument();
     expect(screen.queryByRole('heading', { name: 'Rare coverage' })).not.toBeInTheDocument();
 
+    /*
+
     const latestUpdate = screen.getByRole('heading', { name: /latest release — v0\.6\.9/i }).closest('.latest-update-panel');
     expect(latestUpdate).not.toBeNull();
     expect(latestUpdate).toHaveTextContent('Vesper, Nyrena, and Dawnseeker complete verified ability data and curated profiles for all 31 dragons.');
+    */
+    const latestUpdate = screen.getByRole('heading', { name: /latest release.*v0\.6\.10/i }).closest('.latest-update-panel');
+    expect(latestUpdate).not.toBeNull();
+    expect(latestUpdate).toHaveTextContent('Vesper, Nyrena, and Dawnseeker complete verified ability data and curated profiles for all 31 dragons.');
 
-    expect(screen.getByText(/No login is required\./i)).toBeInTheDocument();
+    expect(screen.getByText(/Works without an account\./i)).toBeInTheDocument();
     expect(screen.getByRole('heading', { name: 'Private by design' })).toBeInTheDocument();
-    expect(screen.getByText(/Your roster stays in your browser/i)).toBeInTheDocument();
+    expect(screen.getByText(/Your roster is stored in this browser/i)).toBeInTheDocument();
     expect(screen.getByText(/does not use private game APIs/i)).toBeInTheDocument();
     expect(screen.getByText(/Dragonfire Lab is an unofficial community tool/i)).toBeInTheDocument();
 
@@ -328,13 +334,13 @@ describe('Dragonfire Lab app', () => {
     expect(detailsHeader).not.toHaveTextContent('Initiative support');
     expect(within(detailsHeader as HTMLElement).getByRole('checkbox', { name: /owned \/ hatched/i })).toBeInTheDocument();
     expect(within(detailsHeader as HTMLElement).getByLabelText(/star rank/i)).toBeInTheDocument();
-    expect(within(detailsHeader as HTMLElement).getByLabelText(/reign level/i)).toBeInTheDocument();
+    expect(within(detailsHeader as HTMLElement).getByLabelText(/dragon level/i)).toBeInTheDocument();
     expect(dialog).toHaveTextContent('Owned / Hatched');
     expect(dialog).not.toHaveTextContent('Collection State');
     expect(dialog).not.toHaveTextContent('Shards');
     expect(dialog).not.toHaveTextContent('Shards Required');
     expect(dialog).toHaveTextContent('Star Rank');
-    expect(dialog).toHaveTextContent('Reign Level');
+    expect(dialog).toHaveTextContent('Dragon Level');
     expect(within(dialog).queryByRole('heading', { name: 'Identity' })).not.toBeInTheDocument();
     expect(dialog).not.toHaveTextContent('Verification status');
     expect(dialog).not.toHaveTextContent('Roster source');
@@ -547,7 +553,7 @@ describe('Dragonfire Lab app', () => {
 
     render(<App />);
 
-    await user.click(screen.getByRole('button', { name: /^my roster$/i }));
+    await user.click(screen.getByRole('button', { name: /^roster$/i }));
     const syraxCard = screen.getByRole('heading', { name: 'Syrax' }).closest('article');
     expect(syraxCard).not.toBeNull();
     await user.click(within(syraxCard as HTMLElement).getByRole('button', { name: /view details/i }));
@@ -558,7 +564,7 @@ describe('Dragonfire Lab app', () => {
     expect(within(dialog).queryByLabelText(/^shards$/i)).not.toBeInTheDocument();
     expect(within(dialog).queryByLabelText(/shards required/i)).not.toBeInTheDocument();
     expect(within(dialog).getByLabelText(/star rank/i)).toHaveValue('3');
-    expect(within(dialog).getByLabelText(/reign level/i)).toBeInTheDocument();
+    expect(within(dialog).getByLabelText(/dragon level/i)).toBeInTheDocument();
     expect(within(dialog).getByLabelText(/personal notes/i)).toBeInTheDocument();
   });
 
@@ -826,7 +832,7 @@ describe('Dragonfire Lab app', () => {
     firstRender.unmount();
     render(<App />);
 
-    await user.click(screen.getAllByRole('button', { name: /my roster/i })[0]!);
+    await user.click(screen.getByRole('button', { name: /^roster$/i }));
     expect(screen.getByRole('heading', { name: 'Syrax' })).toBeInTheDocument();
     expect(screen.getAllByText('3').length).toBeGreaterThan(0);
   });
@@ -853,7 +859,7 @@ describe('Dragonfire Lab app', () => {
     expect(within(screen.getByRole('dialog', { name: /add dragons to your roster/i })).queryByRole('heading', { name: 'Daemoros' })).not.toBeInTheDocument();
     await user.click(screen.getByRole('button', { name: /close add dragon/i }));
 
-    await user.click(screen.getByRole('button', { name: /^my roster$/i }));
+    await user.click(screen.getByRole('button', { name: /^roster$/i }));
     expect(screen.getByRole('heading', { name: 'Daemoros' })).toBeInTheDocument();
   });
 
@@ -867,7 +873,7 @@ describe('Dragonfire Lab app', () => {
 
     render(<App />);
 
-    await user.click(screen.getByRole('button', { name: /^my roster$/i }));
+    await user.click(screen.getByRole('button', { name: /^roster$/i }));
     const syraxCard = screen.getByRole('heading', { name: 'Syrax' }).closest('article');
     expect(syraxCard).not.toBeNull();
     expect(syraxCard).toHaveTextContent('Verified');
@@ -878,7 +884,7 @@ describe('Dragonfire Lab app', () => {
     expect(within(syraxCard as HTMLElement).getByRole('checkbox', { name: /owned \/ hatched/i })).toBeChecked();
     expect(within(syraxCard as HTMLElement).queryByRole('checkbox', { name: /my roster/i })).not.toBeInTheDocument();
     expect(within(syraxCard as HTMLElement).getByLabelText(/star rank/i)).toHaveValue('4');
-    expect(within(syraxCard as HTMLElement).getByLabelText(/reign level/i)).toHaveValue(9);
+    expect(within(syraxCard as HTMLElement).getByLabelText(/dragon level/i)).toHaveValue(9);
     expect(screen.getByRole('button', { name: /export json/i })).toBeInTheDocument();
     expect(screen.getByText(/import json/i)).toBeInTheDocument();
   });
@@ -887,10 +893,10 @@ describe('Dragonfire Lab app', () => {
     const user = userEvent.setup();
     render(<App />);
 
-    await user.click(screen.getByRole('button', { name: /^my roster$/i }));
+    await user.click(screen.getByRole('button', { name: /^roster$/i }));
 
     expect(screen.getByText(/No dragons in your roster yet/i)).toBeInTheDocument();
-    expect(screen.getByText(/start tracking Star Rank, Reign Level, and formation options/i)).toBeInTheDocument();
+    expect(screen.getByText(/start tracking Star Rank, Dragon Level, and formation options/i)).toBeInTheDocument();
     expect(screen.getAllByRole('button', { name: /\+ add dragon/i }).length).toBeGreaterThanOrEqual(1);
   });
 
@@ -903,7 +909,7 @@ describe('Dragonfire Lab app', () => {
 
     render(<App />);
 
-    await user.click(screen.getByRole('button', { name: /^my roster$/i }));
+    await user.click(screen.getByRole('button', { name: /^roster$/i }));
     const nyrenaCard = screen.getByRole('heading', { name: 'Nyrena' }).closest('article');
     expect(nyrenaCard).not.toBeNull();
     expect(nyrenaCard).toHaveTextContent('Verified');
@@ -912,7 +918,7 @@ describe('Dragonfire Lab app', () => {
     expect(nyrenaCard).toHaveTextContent('View details');
     expect(within(nyrenaCard as HTMLElement).getByRole('checkbox', { name: /owned \/ hatched/i })).toBeChecked();
     expect(within(nyrenaCard as HTMLElement).getByLabelText(/star rank/i)).toHaveValue('2');
-    expect(within(nyrenaCard as HTMLElement).getByLabelText(/reign level/i)).toBeInTheDocument();
+    expect(within(nyrenaCard as HTMLElement).getByLabelText(/dragon level/i)).toBeInTheDocument();
     await user.click(within(nyrenaCard as HTMLElement).getByRole('button', { name: /view details/i }));
     expect(screen.getByRole('dialog', { name: /nyrena/i })).toBeInTheDocument();
   });
@@ -940,7 +946,7 @@ describe('Dragonfire Lab app', () => {
     expect(daemorosCard).not.toHaveTextContent('Shards Required');
 
     await user.click(screen.getByRole('button', { name: /close add dragon/i }));
-    await user.click(screen.getByRole('button', { name: /^my roster$/i }));
+    await user.click(screen.getByRole('button', { name: /^roster$/i }));
     const nyrenaCard = screen.getByRole('heading', { name: 'Nyrena' }).closest('article');
     expect(nyrenaCard).not.toBeNull();
     expect(nyrenaCard).toHaveTextContent('Verified');
@@ -965,7 +971,7 @@ describe('Dragonfire Lab app', () => {
 
     render(<App />);
 
-    await user.click(screen.getByRole('button', { name: /^my roster$/i }));
+    await user.click(screen.getByRole('button', { name: /^roster$/i }));
     const importInput = screen.getByLabelText(/import json/i);
     await user.upload(importInput, new File([serializeRosterExport(roster)], 'roster.json', { type: 'application/json' }));
 
@@ -981,7 +987,7 @@ describe('Dragonfire Lab app', () => {
     await user.type(screen.getByLabelText(/search by dragon name/i), 'Syrax');
     await user.click(screen.getByRole('button', { name: /view details/i }));
     await user.click(screen.getByRole('button', { name: /close details/i }));
-    await user.click(screen.getByRole('button', { name: /^my roster$/i }));
+    await user.click(screen.getByRole('button', { name: /^roster$/i }));
 
     expect(screen.queryByText('Collection State')).not.toBeInTheDocument();
     expect(screen.queryByText('Not hatched')).not.toBeInTheDocument();
@@ -995,8 +1001,8 @@ describe('Dragonfire Lab app', () => {
     const nav = screen.getByRole('navigation', { name: /primary sections/i });
     expect(within(nav).getAllByRole('button').map((button) => button.textContent)).toEqual([
       'Overview',
-      'My Roster',
-      'Formation Builder',
+      'Roster',
+      'Formations',
       'About',
     ]);
     expect(within(nav).queryByRole('button', { name: /dragon database/i })).not.toBeInTheDocument();
@@ -1012,7 +1018,7 @@ describe('Dragonfire Lab app', () => {
     const user = userEvent.setup();
     render(<App />);
 
-    await user.click(screen.getAllByRole('button', { name: /formation builder/i })[0]!);
+    await user.click(screen.getByRole('button', { name: /^formations$/i }));
 
     expect(screen.getByText('Left Flank')).toBeInTheDocument();
     expect(screen.getByText('Vanguard')).toBeInTheDocument();

@@ -54,7 +54,7 @@ function DetailedSignalTrace({
         aria-expanded={isOpen}
         onClick={() => setIsOpen((current) => !current)}
       >
-        {isOpen ? 'Hide detailed signal trace' : 'Show detailed signal trace'}
+        {isOpen ? 'Hide full rating breakdown' : 'View full rating breakdown'}
       </button>
       {isOpen ? (
         <div className="detailed-signal-trace-body">

@@ -374,7 +374,7 @@ describe('formation rating helper', () => {
     expect(breakdown(rating, 'Support usefulness').score).toBeLessThan(20);
   });
 
-  it('scores Kit utilization from realized and unused mapped opportunities', () => {
+  it('scores Kit utilization from realized and unused kit interactions', () => {
     const rating = manualRating({
       presentation: {
         activeSynergies: [synergyResult('setup-payoff', 'caraxes', 'vhagar', 'status:burn', 1)],
@@ -413,7 +413,7 @@ describe('formation rating helper', () => {
 
     expect(utilization.max).toBe(20);
     expect(utilization.score).toBe(12);
-    expect(utilization.explanation).toContain('3 of 6 mapped opportunities realized');
+    expect(utilization.explanation).toContain('3 of 6 kit interactions realized');
     expect(utilization.explanation).toContain('1 missing Benefit');
     expect(utilization.explanation).toContain('1 unused Provide');
     expect(utilization.explanation).toContain('1 inactive Vanguard opportunity');
