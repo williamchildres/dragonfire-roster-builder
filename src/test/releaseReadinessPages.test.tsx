@@ -16,7 +16,9 @@ describe('release readiness pages', () => {
     const nav = screen.getByRole('navigation', { name: /primary sections/i });
     const navButtons = within(nav).getAllByRole('button').map((button) => button.textContent?.trim());
 
-    expect(navButtons).toEqual(['Overview', 'My Roster', 'Formation Builder', 'About']);
+    expect(navButtons).toEqual(['Overview', 'Roster', 'Formations', 'About']);
+    expect(within(nav).getByRole('button', { name: 'Overview' })).toHaveAttribute('aria-current', 'page');
+    expect(within(nav).queryByRole('button', { name: /sign in|account|pro|optimizer|saved formation/i })).not.toBeInTheDocument();
     expect(within(nav).queryByRole('button', { name: /dragon database/i })).not.toBeInTheDocument();
     expect(within(nav).queryByRole('button', { name: /data status/i })).not.toBeInTheDocument();
     expect(within(nav).queryByRole('button', { name: /support/i })).not.toBeInTheDocument();
@@ -85,10 +87,10 @@ describe('release readiness pages', () => {
     expect(screen.queryByRole('heading', { name: 'Overview' })).not.toBeInTheDocument();
     expect(screen.getByRole('heading', { name: 'Track Your Roster' })).toBeInTheDocument();
 
-    await user.click(screen.getByRole('button', { name: /^my roster$/i }));
+    await user.click(screen.getByRole('button', { name: /^roster$/i }));
     expect(screen.getByRole('heading', { name: 'My Roster' })).toBeInTheDocument();
 
-    await user.click(screen.getByRole('button', { name: /formation builder/i }));
+    await user.click(screen.getByRole('button', { name: /^formations$/i }));
     expect(screen.getByRole('heading', { name: 'Formation Builder' })).toBeInTheDocument();
 
     await user.click(screen.getByRole('button', { name: /about/i }));

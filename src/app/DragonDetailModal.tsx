@@ -543,7 +543,7 @@ function RosterOwnershipFields({
         </select>
       </label>
       <label>
-        Reign Level
+        Dragon Level
         <input
           min={0}
           step={1}

@@ -1,6 +1,14 @@
 # Changelog
 
-## Unreleased
+## 0.6.10 - 2026-07-17
+
+- Established a wider responsive application shell with documented surface, spacing, typography, control, focus, and motion tokens.
+- Refined Overview, Roster, Formation Builder, About, and footer presentation without changing dragon data, ratings, relationships, or roster persistence.
+- Renamed visible navigation to Roster and Formations; updated player-facing terminology to Maxed Dragons, My Roster, Dragon Level, and View full rating breakdown.
+- Improved keyboard-visible navigation state, chip wrapping, mobile control layouts, and clear destructive-action treatment.
+- Increased database/package version to `0.6.10`; source data schema remains `13`, local roster schema remains `4`, and import/export/share-link contracts are unchanged.
+
+## 0.6.9 - 2026-07-16
 
 - Corrected semantic relationship aggregation so active paths retain only active ability evidence while equivalent active paths still collapse to one relationship with unchanged scoring.
 - Made Dragon Details At a glance progression-aware, added scoped long-label wrapping, and added current 31/31 coverage copy to About.

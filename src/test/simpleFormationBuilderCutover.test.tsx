@@ -41,10 +41,10 @@ describe('Formation Builder simple synergy cutover', () => {
 
   async function openFormationBuilder(user: ReturnType<typeof userEvent.setup>) {
     render(<App />);
-    await user.click(screen.getAllByRole('button', { name: /formation builder/i })[0]!);
+    await user.click(screen.getByRole('button', { name: /^formations$/i }));
   }
 
-  async function switchFormationMode(user: ReturnType<typeof userEvent.setup>, mode: 'All 10 Star Dragons' | 'Roster Dragons') {
+  async function switchFormationMode(user: ReturnType<typeof userEvent.setup>, mode: 'Maxed Dragons' | 'My Roster') {
     await user.click(screen.getByRole('radio', { name: mode }));
   }
 
@@ -116,7 +116,7 @@ describe('Formation Builder simple synergy cutover', () => {
   }
 
   async function openDetailedSignalTrace(user: ReturnType<typeof userEvent.setup>) {
-    const toggle = screen.getByRole('button', { name: /detailed signal trace/i });
+    const toggle = screen.getByRole('button', { name: /full rating breakdown/i });
     if (toggle.getAttribute('aria-expanded') !== 'true') {
       await user.click(toggle);
     }
@@ -147,8 +147,8 @@ describe('Formation Builder simple synergy cutover', () => {
 
     expect(screen.queryByText('Include unowned dragons')).not.toBeInTheDocument();
     const modeGroup = screen.getByRole('group', { name: /formation dragon pool/i });
-    const allMode = within(modeGroup).getByRole('radio', { name: 'All 10 Star Dragons' });
-    const rosterMode = within(modeGroup).getByRole('radio', { name: 'Roster Dragons' });
+    const allMode = within(modeGroup).getByRole('radio', { name: 'Maxed Dragons' });
+    const rosterMode = within(modeGroup).getByRole('radio', { name: 'My Roster' });
 
     expect(allMode).toBeChecked();
     expect(rosterMode).not.toBeChecked();
@@ -186,7 +186,7 @@ describe('Formation Builder simple synergy cutover', () => {
     );
     expect(sectionText('Future unlocks')).not.toContain('Daemoros reaches Star Rank 2');
 
-    await switchFormationMode(user, 'Roster Dragons');
+    await switchFormationMode(user, 'My Roster');
     await openDetailedSignalTrace(user);
 
     expect(sectionText('Future unlocks')).toContain(
@@ -353,16 +353,16 @@ describe('Formation Builder simple synergy cutover', () => {
       "Malachite's Warden's Rally Recovery setup for Sheepstealer's Hunter's Cunning unlocks when Sheepstealer reaches Dragon Level 16.",
     );
 
-    await user.click(screen.getByRole('button', { name: /^my roster$/i }));
+    await user.click(screen.getByRole('button', { name: /^roster$/i }));
     const sheepstealerCard = screen.getByRole('heading', { name: 'Sheepstealer' }).closest('article');
     expect(sheepstealerCard).not.toBeNull();
     await user.click(within(sheepstealerCard as HTMLElement).getByRole('button', { name: /view details/i }));
     const detailsDialog = screen.getByRole('dialog', { name: /sheepstealer/i });
-    await user.clear(within(detailsDialog).getByLabelText(/reign level/i));
-    await user.type(within(detailsDialog).getByLabelText(/reign level/i), '16');
+    await user.clear(within(detailsDialog).getByLabelText(/dragon level/i));
+    await user.type(within(detailsDialog).getByLabelText(/dragon level/i), '16');
     await user.click(screen.getByRole('button', { name: /close details/i }));
 
-    await user.click(screen.getAllByRole('button', { name: /formation builder/i })[0]!);
+    await user.click(screen.getByRole('button', { name: /^formations$/i }));
     await openDetailedSignalTrace(user);
     expect(sectionText('Strong synergies')).toContain(
       "Malachite provides Recovery, which Sheepstealer benefits from through Hunter's Cunning.",
@@ -428,7 +428,7 @@ describe('Formation Builder simple synergy cutover', () => {
     expect(panel).toHaveTextContent('Realized synergy payoff');
     expect(panel).toHaveTextContent('Support usefulness');
     expect(panel).toHaveTextContent('Kit utilization');
-    expect(panel).toHaveTextContent(/mapped opportunities realized/);
+    expect(panel).toHaveTextContent(/kit interactions realized/);
     expect(panel).toHaveTextContent('Strengths');
     expect(panel).toHaveTextContent('Weaknesses / opportunities');
     expect(panel).toHaveTextContent('Caraxes can apply Burn');
@@ -617,7 +617,7 @@ describe('Formation Builder simple synergy cutover', () => {
     expect(css).toContain('grid-template-columns: minmax(0, 1fr);');
   });
 
-  it('opens the selector in All 10 Star Dragons mode and marks selected dragons unavailable there', async () => {
+  it('opens the selector in Maxed Dragons mode and marks selected dragons unavailable there', async () => {
     const user = userEvent.setup();
     seedRoster({ syrax: {} });
 
@@ -635,8 +635,8 @@ describe('Formation Builder simple synergy cutover', () => {
       'Star 10',
     );
 
-    await user.click(screen.getByRole('radio', { name: 'Roster Dragons' }));
-    expect(screen.getByRole('status')).toHaveTextContent('Roster Dragons mode cleared unavailable slot: Left Flank.');
+    await user.click(screen.getByRole('radio', { name: 'My Roster' }));
+    expect(screen.getByRole('status')).toHaveTextContent('My Roster mode cleared unavailable slot: Left Flank.');
     expect(within(screen.getByRole('article', { name: 'Left Flank' })).getByRole('button', { name: /\+ add dragon/i })).toBeInTheDocument();
 
     await user.click(within(screen.getByRole('article', { name: 'Left Flank' })).getByRole('button', { name: /\+ add dragon/i }));
@@ -645,12 +645,12 @@ describe('Formation Builder simple synergy cutover', () => {
     expect(within(dialog).queryByRole('heading', { name: 'Antares' })).not.toBeInTheDocument();
   });
 
-  it('opens the selector in Roster Dragons mode and uses saved card progression', async () => {
+  it('opens the selector in My Roster mode and uses saved card progression', async () => {
     const user = userEvent.setup();
     seedRoster({ syrax: { starRank: 4 }, caraxes: { starRank: 7 } });
 
     await openFormationBuilder(user);
-    await switchFormationMode(user, 'Roster Dragons');
+    await switchFormationMode(user, 'My Roster');
     await user.click(within(screen.getByRole('article', { name: 'Left Flank' })).getByRole('button', { name: /\+ add dragon/i }));
     const dialog = screen.getByRole('dialog', { name: /choose a dragon for left flank/i });
 
@@ -670,7 +670,7 @@ describe('Formation Builder simple synergy cutover', () => {
     seedRoster({ arulix: { starRank: 5 } });
 
     await openFormationBuilder(user);
-    await switchFormationMode(user, 'Roster Dragons');
+    await switchFormationMode(user, 'My Roster');
     await chooseDragonForPosition(user, 'left-flank', 'arulix');
 
     let card = screen.getByRole('article', { name: 'Left Flank' });

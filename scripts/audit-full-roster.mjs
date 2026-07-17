@@ -32,7 +32,7 @@ const resolvedFindings = [
 ];
 const browserQaObservation = {
   status: 'PASS',
-  auditedUrl: 'local 0.6.9 production build',
+  auditedUrl: 'local 0.6.10 production build',
   desktop: {
     requestedViewport: { width: 1440, height: 1000 },
     viewport: { width: 1440, height: 1000 },
@@ -122,10 +122,10 @@ try {
   const artifact = {
     ...report,
     sourceOfTruth: {
-      originMainSha: 'bf9abb879e14baed062ac45fd0cb8931ef6f6d5c',
-      branch: 'fix/full-roster-audit-findings',
+      originMainSha: 'c2e40b68dce6a5569f0a7273604ed1f9193d1795',
+      branch: 'ui/foundation-polish',
       worktree:
-        'C:/Users/willi/Documents/CodexProjects/Dragonfire Roster Lab/.worktrees/fix-full-roster-audit-findings',
+        'C:/Users/willi/Documents/CodexProjects/Dragonfire Roster Lab/.worktrees/foundation-polish',
     },
     recordedAuditRuntimeMs: runtimeMs,
     browserQa: browserQaObservation,
