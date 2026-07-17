@@ -32,7 +32,7 @@ const resolvedFindings = [
 ];
 const browserQaObservation = {
   status: 'PASS',
-  auditedUrl: 'local 0.6.10 production build',
+  auditedUrl: 'local 0.7.0 production build',
   desktop: {
     requestedViewport: { width: 1440, height: 1000 },
     viewport: { width: 1440, height: 1000 },

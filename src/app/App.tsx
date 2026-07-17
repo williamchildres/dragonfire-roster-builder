@@ -15,8 +15,16 @@ import {
   X,
   type LucideIcon,
 } from 'lucide-react';
-import { useEffect, useMemo, useRef, useState, type ChangeEvent, type KeyboardEvent } from 'react';
+import { useCallback, useEffect, useMemo, useRef, useState, type ChangeEvent, type KeyboardEvent } from 'react';
 import { DragonDetailsDialog } from './DragonDetailModal';
+import {
+  AccountDialog,
+  HeaderAccountAction,
+  ImportSyncDialog,
+  RosterDecisionDialog,
+  RosterSyncPanel,
+  SignInDialog,
+} from './AccountUi';
 import { SimpleFormationAnalysis } from './SimpleFormationAnalysis';
 import { SimpleFormationCard } from './SimpleFormationCard';
 import {
@@ -45,10 +53,11 @@ import { defaultFilters, filterDragons, sortDragons, type DragonFilters, type Dr
 import {
   createEmptyRoster,
   FORMATION_STORAGE_KEY,
-  loadRoster,
-  saveRoster,
+  loadStoredRosterSnapshot,
+  saveRosterSnapshot,
   serializeRosterExport,
   STORAGE_KEY,
+  type StoredRosterSnapshot,
   validateRosterImport,
 } from '../services/rosterStorage';
 import {
@@ -65,6 +74,10 @@ import { evaluateFormation } from '../synergy/evaluateFormation';
 import { buildSimpleFormationPresentation } from '../synergy/formationPresentation';
 import { simpleSynergyProfiles } from '../synergy/profiles';
 import type { SimpleProgressionByDragonId } from '../synergy/types';
+import type { AccountServices } from '../cloud/types';
+import { buildAuthRedirectUrl, getProductionAccountServices } from '../cloud/supabaseServices';
+import { useAccountSession } from '../hooks/useAccountSession';
+import { useRosterSync, type RosterSyncStatus } from '../hooks/useRosterSync';
 export { RawWordingDisclosure } from './DragonDetailModal';
 
 const buyMeACoffeeUrl = 'https://buymeacoffee.com/williamchildres';
@@ -111,11 +124,18 @@ const defaultFormationSelectorFilters: FormationSelectorFilters = {
   benefitsFrom: 'all',
 };
 
-export function App() {
-  const [activeSection, setActiveSection] = useState<Section>(getInitialSection);
-  const [roster, setRoster] = useState<Record<string, OwnedDragon>>(() =>
-    typeof window === 'undefined' ? createEmptyRoster(dragons) : loadRoster(window.localStorage, dragons),
+export function App({ accountServices: providedAccountServices }: { accountServices?: AccountServices | null } = {}) {
+  const accountServices = useMemo(
+    () => providedAccountServices === undefined ? getProductionAccountServices() : providedAccountServices,
+    [providedAccountServices],
   );
+  const [activeSection, setActiveSection] = useState<Section>(getInitialSection);
+  const [rosterSnapshot, setRosterSnapshot] = useState<StoredRosterSnapshot>(() =>
+    typeof window === 'undefined'
+      ? { roster: createEmptyRoster(dragons), updatedAt: null }
+      : loadStoredRosterSnapshot(window.localStorage, dragons),
+  );
+  const roster = rosterSnapshot.roster;
   const [addDragonFilters, setAddDragonFilters] = useState<DragonFilters>(defaultFilters);
   const [rosterSort, setRosterSort] = useState<DragonSort>('name');
   const [selectedDragon, setSelectedDragon] = useState<Dragon | null>(null);
@@ -125,11 +145,28 @@ export function App() {
   const [formation, setFormation] = useState<Formation>(() => getInitialFormation());
   const [isAddDragonOpen, setIsAddDragonOpen] = useState(false);
   const [showAlreadyAdded, setShowAlreadyAdded] = useState(false);
+  const [isSignInOpen, setIsSignInOpen] = useState(false);
+  const [isAccountOpen, setIsAccountOpen] = useState(false);
+  const [pendingImportedRoster, setPendingImportedRoster] = useState<Record<string, OwnedDragon> | null>(null);
   const rosterSuccessTimerRef = useRef<number | null>(null);
 
+  const { session, loading: sessionLoading } = useAccountSession(accountServices?.auth ?? null);
+  const applyRosterSnapshot = useCallback((nextSnapshot: StoredRosterSnapshot) => {
+    setRosterSnapshot(nextSnapshot);
+  }, []);
+  const rosterSync = useRosterSync({
+    repository: accountServices?.rosters ?? null,
+    session,
+    sessionLoading,
+    snapshot: rosterSnapshot,
+    onApplyCloud: applyRosterSnapshot,
+  });
+
   useEffect(() => {
-    saveRoster(window.localStorage, roster);
-  }, [roster]);
+    if (rosterSnapshot.updatedAt) {
+      saveRosterSnapshot(window.localStorage, rosterSnapshot.roster, rosterSnapshot.updatedAt);
+    }
+  }, [rosterSnapshot]);
 
   useEffect(() => {
     window.localStorage.setItem(FORMATION_STORAGE_KEY, JSON.stringify(formation));
@@ -182,10 +219,12 @@ export function App() {
   );
 
   const updateRoster = (dragonId: string, patch: Partial<OwnedDragon>) => {
-    setRoster((current) => ({
-      ...current,
-      [dragonId]: {
-        ...(current[dragonId] ?? {
+    setRosterSnapshot((current) => ({
+      updatedAt: new Date().toISOString(),
+      roster: {
+        ...current.roster,
+        [dragonId]: {
+        ...(current.roster[dragonId] ?? {
           dragonId,
           owned: false,
           starRank: null,
@@ -200,6 +239,7 @@ export function App() {
         }),
         ...patch,
         dragonId,
+      },
       },
     }));
   };
@@ -249,18 +289,59 @@ export function App() {
       return;
     }
 
-    setRoster(result.roster);
+    if (session && isActiveRosterSync(rosterSync.status)) {
+      setPendingImportedRoster(result.roster);
+      return;
+    }
+    applyLocalRoster(result.roster);
     setMessage({ kind: 'success', text: 'Roster imported successfully.' });
   };
 
   const clearRoster = () => {
-    const confirmed = window.confirm('Clear your local Dragonfire Lab data? This cannot be undone.');
+    const syncedAccount = Boolean(session && isActiveRosterSync(rosterSync.status));
+    const confirmed = window.confirm(
+      syncedAccount
+        ? 'Clear only this browser roster? Your account roster will not be deleted and may reload until you resolve which roster to use.'
+        : 'Clear your local Dragonfire Lab data? This cannot be undone.',
+    );
     if (!confirmed) {
       return;
     }
+    if (syncedAccount) {
+      rosterSync.pauseForLocalChange();
+    }
     window.localStorage.removeItem(STORAGE_KEY);
-    setRoster(createEmptyRoster(dragons));
-    setMessage({ kind: 'info', text: 'Local roster data was cleared.' });
+    applyLocalRoster(createEmptyRoster(dragons));
+    setMessage({
+      kind: 'info',
+      text: syncedAccount
+        ? 'This browser roster was cleared. Account synchronization is paused.'
+        : 'Local roster data was cleared.',
+    });
+  };
+
+  const applyLocalRoster = (nextRoster: Record<string, OwnedDragon>) => {
+    setRosterSnapshot({ roster: nextRoster, updatedAt: new Date().toISOString() });
+  };
+
+  const requestMagicLink = async (email: string) => {
+    if (!accountServices) {
+      return;
+    }
+    await accountServices.auth.sendMagicLink(email, buildAuthRedirectUrl(window.location));
+  };
+
+  const signOut = async () => {
+    if (!accountServices) {
+      return;
+    }
+    try {
+      await accountServices.auth.signOut();
+      setIsAccountOpen(false);
+      setMessage({ kind: 'info', text: 'Signed out. Your roster remains saved in this browser.' });
+    } catch {
+      setMessage({ kind: 'error', text: 'Could not sign out. Please try again.' });
+    }
   };
 
   const shareFormation = async () => {
@@ -337,6 +418,16 @@ export function App() {
               );
             })}
           </nav>
+          {accountServices ? (
+            <div className="header-account-area">
+              <HeaderAccountAction
+                session={session}
+                sessionLoading={sessionLoading}
+                onOpenAccount={() => setIsAccountOpen(true)}
+                onOpenSignIn={() => setIsSignInOpen(true)}
+              />
+            </div>
+          ) : null}
         </div>
       </header>
 
@@ -368,6 +459,13 @@ export function App() {
             onExport={exportRoster}
             onImport={(event) => void importRoster(event)}
             onClear={clearRoster}
+            accountConfigured={accountServices !== null}
+            session={session}
+            syncStatus={rosterSync.status}
+            onOpenAccount={() => setIsAccountOpen(true)}
+            onOpenSignIn={() => setIsSignInOpen(true)}
+            onResolveSync={rosterSync.reopenDecision}
+            onRetrySync={rosterSync.retry}
           />
         ) : null}
 
@@ -384,7 +482,7 @@ export function App() {
           />
         ) : null}
 
-        {activeSection === 'about' ? <AboutSection /> : null}
+        {activeSection === 'about' ? <AboutSection accountConfigured={accountServices !== null} /> : null}
       </main>
 
       <footer className="site-footer">
@@ -395,8 +493,10 @@ export function App() {
             Dragonfire.
           </p>
           <p className="site-footer-copy">
-            Roster data stays in your browser. Public verification wording is summarized from official
-            roster pages, screenshot evidence, and curated community review.
+            {accountServices
+              ? 'Your roster stays stored in this browser and is only sent to your account after you sign in and choose synchronization.'
+              : 'Roster data stays in your browser.'}{' '}
+            Public verification wording is summarized from official roster pages, screenshot evidence, and curated community review.
           </p>
           {activeSection !== 'about' ? (
             <p className="site-footer-support">
@@ -435,6 +535,53 @@ export function App() {
             setSelectedDragon(dragon);
           }}
           onShowAlreadyAddedChange={setShowAlreadyAdded}
+        />
+      ) : null}
+
+      {isSignInOpen && accountServices ? (
+        <SignInDialog onClose={() => setIsSignInOpen(false)} onRequestLink={requestMagicLink} />
+      ) : null}
+
+      {isAccountOpen && session ? (
+        <AccountDialog
+          session={session}
+          status={rosterSync.status}
+          errorMessage={rosterSync.errorMessage}
+          onClose={() => setIsAccountOpen(false)}
+          onResolve={() => {
+            setIsAccountOpen(false);
+            rosterSync.reopenDecision();
+          }}
+          onRetry={rosterSync.retry}
+          onSignOut={signOut}
+          onSyncNow={rosterSync.syncNow}
+        />
+      ) : null}
+
+      {rosterSync.status === 'migration-required' || rosterSync.status === 'conflict' ? (
+        <RosterDecisionDialog
+          status={rosterSync.status}
+          comparison={rosterSync.comparison}
+          onSaveBrowser={rosterSync.saveBrowserToAccount}
+          onUseAccount={rosterSync.useAccountRoster}
+          onPause={rosterSync.pause}
+        />
+      ) : null}
+
+      {pendingImportedRoster ? (
+        <ImportSyncDialog
+          onCancel={() => setPendingImportedRoster(null)}
+          onReplace={() => {
+            applyLocalRoster(pendingImportedRoster);
+            setPendingImportedRoster(null);
+            setMessage({ kind: 'success', text: 'Roster imported and queued for account synchronization.' });
+          }}
+          onImportLocally={() => {
+            applyLocalRoster(pendingImportedRoster);
+            rosterSync.pauseForLocalChange();
+            setPendingImportedRoster(null);
+            setMessage({ kind: 'info', text: 'Roster imported in this browser. Account synchronization is paused.' });
+          }}
         />
       ) : null}
     </div>
@@ -620,6 +767,13 @@ function RosterSection({
   onExport,
   onImport,
   onClear,
+  accountConfigured,
+  session,
+  syncStatus,
+  onOpenAccount,
+  onOpenSignIn,
+  onResolveSync,
+  onRetrySync,
 }: {
   ownedDragons: Dragon[];
   roster: Record<string, OwnedDragon>;
@@ -632,6 +786,13 @@ function RosterSection({
   onExport: () => void;
   onImport: (event: ChangeEvent<HTMLInputElement>) => void;
   onClear: () => void;
+  accountConfigured: boolean;
+  session: ReturnType<typeof useAccountSession>['session'];
+  syncStatus: RosterSyncStatus;
+  onOpenAccount: () => void;
+  onOpenSignIn: () => void;
+  onResolveSync: () => void;
+  onRetrySync: () => void;
 }) {
   return (
     <section aria-labelledby="roster-title">
@@ -640,6 +801,16 @@ function RosterSection({
         title="My Roster"
         description="Manage ownership, Star Rank, and Dragon Level with local browser storage."
       />
+      {accountConfigured ? (
+        <RosterSyncPanel
+          session={session}
+          status={syncStatus}
+          onOpenAccount={onOpenAccount}
+          onOpenSignIn={onOpenSignIn}
+          onResolve={onResolveSync}
+          onRetry={onRetrySync}
+        />
+      ) : null}
       {successMessage ? (
         <div className="status-message success" role="status" aria-live="polite">
           {successMessage.text}
@@ -1475,7 +1646,7 @@ function hasDetailedAbilities(dragon: Dragon) {
   return Boolean(dragon.command && dragon.trait && dragon.habits.length > 0);
 }
 
-function AboutSection() {
+function AboutSection({ accountConfigured }: { accountConfigured: boolean }) {
   return (
     <section className="about-section" aria-labelledby="about-title">
       <SectionHeading
@@ -1503,7 +1674,9 @@ function AboutSection() {
           <h3>Privacy and local storage</h3>
           <p>
             No login is required. Dragonfire Lab does not use private game APIs or collect
-            credentials. Your roster and notes stay in your browser.
+            game credentials. {accountConfigured
+              ? 'Your roster and notes stay in your browser unless you sign in by email and choose account synchronization.'
+              : 'Your roster and notes stay in your browser.'}
           </p>
         </div>
 
@@ -1789,4 +1962,8 @@ function formatFormationPosition(position: FormationPosition) {
     case 'right-flank':
       return 'Right Flank';
   }
+}
+
+function isActiveRosterSync(status: RosterSyncStatus): boolean {
+  return status === 'synced' || status === 'syncing' || status === 'offline' || status === 'error';
 }
