@@ -199,11 +199,37 @@ describe('initial roster migration and conflict behavior', () => {
     render(<App accountServices={makeServices(new FakeAuth(signedInSession), repository)} />);
 
     const dialog = await screen.findByRole('dialog', { name: 'Choose which roster to use' });
+    const comparison = within(dialog).getByRole('table', { name: 'This browser and account roster comparison' });
     expect(within(dialog).getByText('Owned dragons')).toBeInTheDocument();
     expect(within(dialog).getByText('Recorded Habit Levels')).toBeInTheDocument();
+    expect(within(comparison).getByRole('columnheader', { name: 'Summary' })).toBeInTheDocument();
+    expect(within(comparison).getByRole('columnheader', { name: 'This browser' })).toBeInTheDocument();
+    expect(within(comparison).getByRole('columnheader', { name: 'Account' })).toBeInTheDocument();
+    expect(within(comparison).getByRole('rowheader', { name: 'Last updated' })).toBeInTheDocument();
+    expect(comparison.querySelectorAll('[data-column-label="This browser"]')).toHaveLength(5);
+    expect(comparison.querySelectorAll('[data-column-label="Account"]')).toHaveLength(5);
+    expect(comparison.querySelectorAll('.comparison-value-label[aria-hidden="true"]')).toHaveLength(10);
+    expect(dialog.querySelector('.account-dialog-header')).toBeInTheDocument();
+    expect(within(dialog).getByRole('button', { name: 'Close dialog' })).toBeInTheDocument();
+    expect(within(dialog).getByRole('button', { name: 'Use this browser' })).toBeInTheDocument();
+    expect(within(dialog).getByRole('button', { name: 'Use account roster' })).toBeInTheDocument();
+    expect(within(dialog).getByRole('button', { name: 'Not now' })).toBeInTheDocument();
     expect(repository.upserts).toHaveLength(0);
     await user.click(within(dialog).getByRole('button', { name: 'Use account roster' }));
     await waitFor(() => expect(loadStoredRosterSnapshot(window.localStorage, dragons).roster[dragons[0]!.id]!.notes).toBe('Account note'));
+  });
+
+  it('closes an account dialog with Escape and restores focus to its invoking control', async () => {
+    const user = userEvent.setup();
+    render(<App accountServices={makeServices(new FakeAuth(null), new FakeRosters(null))} />);
+    const open = await screen.findByRole('button', { name: 'Sign in' });
+    open.focus();
+    expect(open).toHaveFocus();
+    await user.keyboard('{Enter}');
+    expect(screen.getByRole('dialog', { name: 'Sign in to Dragonfire Lab' })).toBeInTheDocument();
+    await user.keyboard('{Escape}');
+    expect(screen.queryByRole('dialog', { name: 'Sign in to Dragonfire Lab' })).not.toBeInTheDocument();
+    await waitFor(() => expect(open).toHaveFocus());
   });
 
   it('pauses with Not now and can reopen the unresolved choice from Account', async () => {
